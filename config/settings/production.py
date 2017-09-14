@@ -65,14 +65,16 @@ INSTALLED_APPS += ['gunicorn', ]
 
 # STORAGE CONFIGURATION
 # ------------------------------------------------------------------------------
+STATIC_FILES = ROOT_DIR.path('staticfiles')
+
 # Uploaded Media Files
 # ------------------------
-MEDIA_ROOT = '/app/webfiles/media'
+MEDIA_ROOT = str(STATIC_FILES.path('media'))
 MEDIA_URL = '/media/'
 
 # Static Assets
 # ------------------------
-STATIC_ROOT = '/app/webfiles/static'
+STATIC_ROOT = str(STATIC_FILES.path('static'))
 STATIC_URL = '/static/'
 
 # EMAIL

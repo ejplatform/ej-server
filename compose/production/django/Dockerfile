@@ -22,6 +22,8 @@ RUN chown django /entrypoint.sh
 
 COPY . /app
 
+RUN mkdir /app/staticfiles
+
 RUN chown -R django /app
 
 USER django

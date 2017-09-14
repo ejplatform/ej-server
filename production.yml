@@ -12,6 +12,8 @@ services:
     depends_on:
       - postgres
     env_file: .env
+    volumes:
+      - /app/staticfiles
     command: /gunicorn.sh
 
   postgres:
