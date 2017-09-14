@@ -3,7 +3,6 @@ version: '2'
 volumes:
   postgres_data: {}
   postgres_backup: {}
-  caddy: {}
 
 services:
   django:
@@ -12,7 +11,6 @@ services:
       dockerfile: ./compose/production/django/Dockerfile
     depends_on:
       - postgres
-      - redis
     env_file: .env
     command: /gunicorn.sh
 
@@ -25,19 +23,13 @@ services:
       - postgres_backup:/backups
     env_file: .env
 
-  caddy:
+  nginx:
     build:
       context: .
-      dockerfile: ./compose/production/caddy/Dockerfile
+      dockerfile: ./compose/production/nginx/Dockerfile
+    volumes_from:
+      - django
     depends_on:
       - django
-    volumes:
-      - caddy:/root/.caddy
-    env_file: .env
     ports:
-      - "0.0.0.0:80:80"
-      - "0.0.0.0:443:443"
-
-  redis:
-    image: redis:3.0
-
+      - "80:80"
