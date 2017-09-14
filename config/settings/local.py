@@ -3,7 +3,7 @@ Local settings
 
 - Run in Debug mode
 
-- Use mailhog for emails
+- Use console backend for emails
 
 - Add Django Debug Toolbar
 - Add django-extensions as app
@@ -20,14 +20,16 @@ TEMPLATES[0]['OPTIONS']['debug'] = DEBUG
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
 # Note: This key only used for development and testing.
-SECRET_KEY = env('DJANGO_SECRET_KEY', default='C%hZShhld9#ZuvaYx=xeGWF2YTd5d=RZ.^=W#+jkh7Y)m3SS!v')
+SECRET_KEY = env('DJANGO_SECRET_KEY', default='!Xng`w:eusr3h~3{RL7BF3jgE8p.liKe73*{q@/Amr!;c4*}-k')
 
 # Mail settings
 # ------------------------------------------------------------------------------
 
 EMAIL_PORT = 1025
 
-EMAIL_HOST = env('EMAIL_HOST', default='mailhog')
+EMAIL_HOST = 'localhost'
+EMAIL_BACKEND = env('DJANGO_EMAIL_BACKEND',
+                    default='django.core.mail.backends.console.EmailBackend')
 
 
 # CACHING
@@ -68,11 +70,6 @@ INSTALLED_APPS += ['django_extensions', ]
 # TESTING
 # ------------------------------------------------------------------------------
 TEST_RUNNER = 'django.test.runner.DiscoverRunner'
-
-########## CELERY
-# In development, all tasks will be executed locally by blocking until the task returns
-CELERY_ALWAYS_EAGER = True
-########## END CELERY
 
 # Your local stuff: Below this line define 3rd party library settings
 # ------------------------------------------------------------------------------

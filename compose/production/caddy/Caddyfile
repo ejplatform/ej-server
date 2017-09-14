@@ -1,8 +1,8 @@
-www.{%DOMAIN_NAME%} {
-    redir https://example.com
+www.{$DOMAIN_NAME} {
+    redir https://pushtogether.org.br
 }
 
-{%DOMAIN_NAME%} {
+{$DOMAIN_NAME} {
     proxy / django:5000 {
         header_upstream Host {host}
         header_upstream X-Real-IP {remote}

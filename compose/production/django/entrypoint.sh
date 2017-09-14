@@ -1,5 +1,12 @@
-#!/bin/bash
-set -e
+#!/usr/bin/env bash
+
+set -o errexit
+set -o pipefail
+
+# todo: turn on after #1295
+# set -o nounset
+
+
 cmd="$@"
 
 # This entrypoint is used to play nicely with the current cookiecutter configuration.
@@ -14,8 +21,6 @@ if [ -z "$POSTGRES_USER" ]; then
 fi
 
 export DATABASE_URL=postgres://$POSTGRES_USER:$POSTGRES_PASSWORD@postgres:5432/$POSTGRES_USER
-
-export CELERY_BROKER_URL=$REDIS_URL/0
 
 
 function postgres_ready(){
