@@ -1,8 +1,7 @@
 version: '2'
 
 volumes:
-  postgres_data_local: {}
-  postgres_backup_local: {}
+  db_data: {}
 
 services:
   django:
@@ -21,12 +20,11 @@ services:
     command: /start.sh
 
   postgres:
-    build:
-      context: .
-      dockerfile: ./compose/production/postgres/Dockerfile
+    image: postgres:9.6
+    env_file:
+      - .env
     volumes:
-      - postgres_data_local:/var/lib/postgresql/data
-      - postgres_backup_local:/backups
+      - db_data:/var/lib/postgresql/data
     environment:
       - POSTGRES_USER=pushtogether
 

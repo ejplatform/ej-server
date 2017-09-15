@@ -1,8 +1,7 @@
 version: '2'
 
 volumes:
-  postgres_data: {}
-  postgres_backup: {}
+  db_data: {}
 
 services:
   django:
@@ -17,13 +16,11 @@ services:
     command: /gunicorn.sh
 
   postgres:
-    build:
-      context: .
-      dockerfile: ./compose/production/postgres/Dockerfile
+    image: postgres:9.6
+    env_file:
+      - .env
     volumes:
-      - postgres_data:/var/lib/postgresql/data
-      - postgres_backup:/backups
-    env_file: .env
+      - db_data:/var/lib/postgresql/data
 
   nginx:
     build:
