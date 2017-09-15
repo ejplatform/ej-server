@@ -1,0 +1,75 @@
+---
+image: docker:17.04-git
+services:
+- docker:17.04-dind
+stages:
+- build
+- deploy
+
+variables:
+  DJANGO_RELEASE_IMAGE: $CI_REGISTRY_IMAGE/django:$CI_BUILD_REF_NAME
+  NGINX_RELEASE_IMAGE: $CI_REGISTRY_IMAGE/nginx:$CI_BUILD_REF_NAME
+
+#############
+## Production
+#############
+build to production:
+  stage: build
+  script:
+    - docker login -u "gitlab-ci-token" -p "$CI_JOB_TOKEN" $CI_REGISTRY
+    - docker build -f compose/production/django/Dockerfile -t $DJANGO_RELEASE_IMAGE .
+    - docker tag $DJANGO_RELEASE_IMAGE "$CI_REGISTRY_IMAGE/django:latest"
+    - docker push $DJANGO_RELEASE_IMAGE
+    - docker push "$CI_REGISTRY_IMAGE/django:latest"
+    - docker build -f compose/production/nginx/Dockerfile -t $NGINX_RELEASE_IMAGE .
+    - docker tag $NGINX_RELEASE_IMAGE "$CI_REGISTRY_IMAGE/nginx:latest"
+    - docker push $NGINX_RELEASE_IMAGE
+    - docker push "$CI_REGISTRY_IMAGE/nginx:latest"
+  only:
+    - tags
+  environment: production
+  tags:
+    - docker
+
+deploy to production:
+  stage: deploy
+  image: cdrx/rancher-gitlab-deploy
+  script:
+    - upgrade --environment Production --stack empurrandojuntos-prod --service django --no-finish-upgrade --debug
+  only:
+    - tags
+  environment: production
+  tags:
+    - docker
+
+##########
+## Homolog
+##########
+build to homolog:
+  stage: build
+  script:
+    - docker login -u "gitlab-ci-token" -p "$CI_JOB_TOKEN" $CI_REGISTRY
+    - docker build -f compose/production/django/Dockerfile -t $DJANGO_RELEASE_IMAGE .
+    - docker tag $DJANGO_RELEASE_IMAGE "$CI_REGISTRY_IMAGE/django:master"
+    - docker push $DJANGO_RELEASE_IMAGE
+    - docker push "$CI_REGISTRY_IMAGE/django:master"
+    - docker build -f compose/production/nginx/Dockerfile -t $NGINX_RELEASE_IMAGE .
+    - docker tag $NGINX_RELEASE_IMAGE "$CI_REGISTRY_IMAGE/nginx:master"
+    - docker push $NGINX_RELEASE_IMAGE
+    - docker push "$CI_REGISTRY_IMAGE/nginx:master"
+  only:
+    - /master/
+  environment: homolog
+  tags:
+    - docker
+
+deploy to homolog:
+  stage: deploy
+  image: cdrx/rancher-gitlab-deploy
+  script:
+    - upgrade --environment Production --stack empurrandojuntos-dev --service django --no-finish-upgrade --debug
+  only:
+    - /master/
+  environment: homolog
+  tags:
+    - docker
