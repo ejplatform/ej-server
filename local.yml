@@ -21,8 +21,6 @@ services:
 
   postgres:
     image: postgres:9.6
-    env_file:
-      - .env
     volumes:
       - db_data:/var/lib/postgresql/data
     environment:
