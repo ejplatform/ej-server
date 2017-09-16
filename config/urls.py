@@ -14,6 +14,7 @@ urlpatterns = [
 
     # User management
     url(r'^users/', include('pushtogether.users.urls', namespace='users')),
+    url(r'^polis/', include('pushtogether.polis.urls', namespace='polis')),
     url(r'^accounts/', include('allauth.urls')),
     url(r'^rest-auth/', include('rest_auth.urls')),
     url(r'^rest-auth/registration/', include('rest_auth.registration.urls')),

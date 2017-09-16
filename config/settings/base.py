@@ -63,6 +63,7 @@ THIRD_PARTY_APPS = [
 LOCAL_APPS = [
     # custom users app
     'pushtogether.users.apps.UsersConfig',
+    'pushtogether.polis.apps.PolisConfig',
 
 ]
 
