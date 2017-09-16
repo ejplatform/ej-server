@@ -43,7 +43,10 @@ pytz==2017.2
 django-redis==4.8.0
 redis>=2.10.5
 
-
+django-filter==1.0.2
+djangorestframework==3.6.3
+django-rest-auth[with_social]==0.9.1
+django-cors-headers==1.2.0
 
 
 

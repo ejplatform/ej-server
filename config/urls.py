@@ -14,10 +14,10 @@ urlpatterns = [
 
     # User management
     url(r'^users/', include('pushtogether.users.urls', namespace='users')),
+    url(r'^polis/', include('pushtogether.polis.urls', namespace='polis')),
     url(r'^accounts/', include('allauth.urls')),
-
-    # Your stuff: custom urls includes go here
-
+    url(r'^rest-auth/', include('rest_auth.urls')),
+    url(r'^rest-auth/registration/', include('rest_auth.registration.urls')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
