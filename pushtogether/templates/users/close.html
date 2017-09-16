@@ -6,7 +6,7 @@
     {% if user.is_authenticated %}
     xid: '{{ user.id|escapejs }}',
     x_name: '{{ user.first_name|escapejs }}' + ' {{ user.last_name|escapejs }}',
-    x_profile_image_url: '',
+    x_profile_image_url: '{{ user.image_url|escapejs }}',
     {% else %}
     xid: null,
     x_name: null,
@@ -22,6 +22,6 @@
   // window.postMessage(login_data, '*');
 
   window.opener.parent.postMessage(login_data, '*');
-  window.open('', '_self', ''); window.close();
+  <!-- window.open('', '_self', ''); window.close(); -->
 </script>
 {% endblock content %}

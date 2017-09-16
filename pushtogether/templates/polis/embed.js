@@ -36,7 +36,7 @@
          {% if user.is_authenticated %}
          xid: '{{ user.id|escapejs }}',
          x_name: '{{ user.first_name|escapejs }}' + ' {{ user.last_name|escapejs }}',
-         x_profile_image_url: d.getAttribute("data-x_profile_image_url"),
+         x_profile_image_url: '{{ user.image_url|escapejs }}',
          {% else %}
          xid: d.getAttribute("data-xid"),
          x_name: d.getAttribute("data-x_name"),
@@ -249,7 +249,7 @@
         var config = getConfig(d);
         config.xid = user_data.xid;
         config.x_name = user_data.x_name;
-        config.x_profile_image_url = '';
+        config.x_profile_image_url = user_data.image_url;
         createPolisIframe(d, config);
       }
     }
