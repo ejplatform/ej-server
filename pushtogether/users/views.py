@@ -7,16 +7,24 @@ from .models import User
 
 from allauth.account.views import SignupView
 from allauth.account.forms import LoginForm
+from allauth.socialaccount.views import SocialLogin
 
 
 class LoginSignupView(SignupView):
+
     template_name = 'account/login-signup.html'
+    success_url = '/users/close'
+
     def get_context_data(self, **kwargs):
         # we get context data from original view
         context = super(LoginSignupView,
                         self).get_context_data(**kwargs)
         context['login_form'] = LoginForm() # add form to context
         return context
+
+
+    def get_success_url(self):
+        return self.success_url
 
 
 class UserDetailView(LoginRequiredMixin, DetailView):

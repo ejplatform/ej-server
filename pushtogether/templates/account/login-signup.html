@@ -15,11 +15,11 @@
 <h1>Entrar</h1>
 
 <button class="btn btn-primary">
-  <a href="{% provider_login_url "facebook" method="js_sdk" %}"
+  <a href="{% provider_login_url "facebook" method="js_sdk" next="/users/close" %}"
       style="color: #fff"><i class=""></i>{% trans "Facebook Connect" %}</a>
 </button>
 <button class="btn btn-primary" style="background-color: #55ACEE;">
-  <a href="{% provider_login_url "twitter" %}" style="color: #fff"><i class=""></i>{% trans "Twitter Connect" %}</a>
+  <a href="{% provider_login_url "twitter" next="/users/close" %}" style="color: #fff"><i class=""></i>{% trans "Twitter Connect" %}</a>
 </button>
 <br>
 <br>
@@ -28,7 +28,7 @@
   {% csrf_token %}
   {{ login_form|crispy }}
   {% if redirect_field_value %}
-  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+  <input type="hidden" name="{{ redirect_field_name }}" value="/users/close/" />
   {% endif %}
   <a class="button secondaryAction" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
   <button class="primaryAction btn btn-primary" type="submit">{% trans "Sign In" %}</button>
@@ -43,7 +43,7 @@
   {% csrf_token %}
   {{ form|crispy }}
   {% if redirect_field_value %}
-  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+  <input type="hidden" name="{{ redirect_field_name }}" value="/users/close/" />
   {% endif %}
   <button class="btn btn-primary" type="submit">{% trans "Sign Up" %} &raquo;</button>
 </form>

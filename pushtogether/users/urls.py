@@ -1,6 +1,8 @@
 from django.conf.urls import url
+from django.views.generic import TemplateView
 
 from . import views
+
 
 urlpatterns = [
     url(
@@ -8,6 +10,7 @@ urlpatterns = [
         view=views.LoginSignupView.as_view(),
         name='signin'
     ),
+    url(r'^close/$', TemplateView.as_view(template_name='users/close.html')),
 
     url(
         regex=r'^$',
