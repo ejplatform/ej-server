@@ -1,0 +1,54 @@
+{% extends "account/base.html" %}
+
+{% load i18n %}
+{% load crispy_forms_tags %}
+{% load socialaccount %}
+
+{% block head_title %}{% trans "Signup" %}{% endblock %}
+
+{% block header %}{% endblock header %}
+
+{% block inner %}
+{% providers_media_js %}
+
+<!-- <h1>{% trans "Sign Up" %}</h1> -->
+<h1>Entrar</h1>
+
+<button class="btn btn-primary">
+  <a href="{% provider_login_url "facebook" method="js_sdk" %}"
+      style="color: #fff"><i class=""></i>{% trans "Facebook Connect" %}</a>
+</button>
+<button class="btn btn-primary" style="background-color: #55ACEE;">
+  <a href="{% provider_login_url "twitter" %}" style="color: #fff"><i class=""></i>{% trans "Twitter Connect" %}</a>
+</button>
+<br>
+<br>
+
+<form class="login" method="POST" action="{% url 'account_login' %}">
+  {% csrf_token %}
+  {{ login_form|crispy }}
+  {% if redirect_field_value %}
+  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+  {% endif %}
+  <a class="button secondaryAction" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+  <button class="primaryAction btn btn-primary" type="submit">{% trans "Sign In" %}</button>
+</form>
+
+<br>
+<br>
+<h3>OU</h3>
+<h1> Criar uma conta</h1>
+
+<form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
+  {% csrf_token %}
+  {{ form|crispy }}
+  {% if redirect_field_value %}
+  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+  {% endif %}
+  <button class="btn btn-primary" type="submit">{% trans "Sign Up" %} &raquo;</button>
+</form>
+<br>
+
+
+
+{% endblock %}

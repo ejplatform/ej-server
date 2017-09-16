@@ -4,6 +4,12 @@ from . import views
 
 urlpatterns = [
     url(
+        regex=r'^signin/$',
+        view=views.LoginSignupView.as_view(),
+        name='signin'
+    ),
+
+    url(
         regex=r'^$',
         view=views.UserListView.as_view(),
         name='list'

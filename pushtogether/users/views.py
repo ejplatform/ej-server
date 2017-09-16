@@ -5,6 +5,19 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import User
 
+from allauth.account.views import SignupView
+from allauth.account.forms import LoginForm
+
+
+class LoginSignupView(SignupView):
+    template_name = 'account/login-signup.html'
+    def get_context_data(self, **kwargs):
+        # we get context data from original view
+        context = super(LoginSignupView,
+                        self).get_context_data(**kwargs)
+        context['login_form'] = LoginForm() # add form to context
+        return context
+
 
 class UserDetailView(LoginRequiredMixin, DetailView):
     model = User
