@@ -1,8 +1,8 @@
-{% load account %}{% user_display user as user_display %}{% load i18n %}{% autoescape off %}{% blocktrans with site_name=current_site.name site_domain=current_site.domain %}Hello from {{ site_name }}!
+{% load account %}{% user_display user as user_display %}{% load i18n %}{% autoescape off %}{% blocktrans with site_name=current_site.name site_domain=current_site.domain %}Boas vindas do {{ site_name }}!
 
-You're receiving this e-mail because user {{ user_display }} has given yours as an e-mail address to connect their account.
+Você está recebendo essa mensagem por que o usuário {{ user_display }} se cadastrou com esse endereço de email.
 
-To confirm this is correct, go to {{ activate_url }}
+Pra confirmar que está tudo certo, vá até {{ activate_url }}
 {% endblocktrans %}{% endautoescape %}
-{% blocktrans with site_name=current_site.name site_domain=current_site.domain %}Thank you from {{ site_name }}!
+{% blocktrans with site_name=current_site.name site_domain=current_site.domain %}Um obrigado do {{ site_name }}!
 {{ site_domain }}{% endblocktrans %}
