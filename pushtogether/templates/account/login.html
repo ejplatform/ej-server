@@ -1,10 +1,20 @@
 {% extends "account/base.html" %}
 
-{% load i18n %}
+{% load static i18n %}
 {% load account socialaccount %}
 {% load crispy_forms_tags %}
 
 {% block head_title %}{% trans "Sign In" %}{% endblock %}
+
+{% block javascript %}
+{{ block.super }}
+
+<script src="{% static 'js/twtterLoginWidget.js' %}"></script>
+{% providers_media_js %}
+
+{% endblock javascript %}
+
+{% block header %}{% endblock header %}
 
 {% block inner %}
 
@@ -12,10 +22,18 @@
 
 {% include "socialaccount/snippets/login_extra.html" %}
 
-{% else %}
-<p>{% blocktrans %}If you have not created an account yet, then please
-<a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}</p>
-{% endif %}
+<button class="btn btn-primary">
+  <a href="{% provider_login_url "facebook" method="js_sdk" next="/users/close" %}"
+      style="color: #fff"><i class=""></i>Conectar com Facebook</a>
+</button>
+<button id="twitter-button-link" class="btn btn-primary" style="background-color: #55ACEE;">
+  <a id="twitter-login-link"
+      href="{% provider_login_url "twitter" next="/users/close" %}"
+      style="color: #fff">
+    <i class=""></i>Connectar com Twitter</a>
+</button>
+<br>
+<br>
 
 <form class="login" method="POST" action="{% url 'account_login' %}">
   {% csrf_token %}
