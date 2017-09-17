@@ -80,7 +80,8 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # XFrameOptions disabled needed to login iframe
+    # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
 # MIGRATIONS CONFIGURATION

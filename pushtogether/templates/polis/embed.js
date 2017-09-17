@@ -255,10 +255,27 @@
     }
   }
 
+  function loginModal(build) {
+    $('#pushtogether').remove();
+    $('<iframe>', {
+      src: 'http://localhost:8000/users/signin/?next=/users/close',
+      // src: 'https://ej.brasilqueopovoquer.org.br/users/signin/',
+      id: 'pushtogether',
+      height: '600px',
+      width: '100%',
+      frameborder: 0,
+      // scrolling: 'no'
+    }).appendTo("#modal-content");
+    $('#myModal').modal('show');
+  }
+
   function receiveMessage(event) {
     // if (event.data === 'askForLogin') {
     if (event.data.xid !== undefined) {
       reLoadIframes(event.data);
+      $('#myModal').modal('hide');
+    } else if (event.data === 'askForLogin') {
+      loginModal();
     }
   }
 
