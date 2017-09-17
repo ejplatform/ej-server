@@ -258,8 +258,8 @@
   function loginModal(build) {
     $('#pushtogether').remove();
     $('<iframe>', {
-      src: 'http://localhost:8000/users/signin/?next=/users/close',
-      // src: 'https://ej.brasilqueopovoquer.org.br/users/signin/',
+      // src: 'http://localhost:8000/users/signin/?next=/users/close',
+      src: 'https://ej.brasilqueopovoquer.org.br/users/signin/',
       id: 'pushtogether',
       height: '600px',
       width: '100%',
