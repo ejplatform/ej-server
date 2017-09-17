@@ -1,20 +1,27 @@
 {% extends "base.html" %}
 
+{% block header %}{% endblock header %}
+
 {% block content %}
 <script>
-  var login_data = {
-    {% if user.is_authenticated %}
-    xid: '{{ user.id|escapejs }}',
-    x_name: '{{ user.first_name|escapejs }}' + ' {{ user.last_name|escapejs }}',
-    x_profile_image_url: '{{ user.image_url|escapejs }}',
-    {% else %}
-    xid: null,
-    x_name: null,
-    x_profile_image_url: '',
-    {% endif %}
-  };
+  (function() {
+    document.addEventListener("DOMContentLoaded", function() {
+      var login_data = {
+        {% if user.is_authenticated %}
+        xid: '{{ user.id|escapejs }}',
+        x_name: '{{ user.first_name|escapejs }}' + ' {{ user.last_name|escapejs }}',
+        x_profile_image_url: '{{ user.image_url|escapejs }}',
+        {% else %}
+        xid: null,
+        x_name: null,
+        x_profile_image_url: '',
+        {% endif %}
+      };
 
-  window.parent.postMessage(login_data, '*');
-  window.open('', '_self', ''); window.close();
+      window.parent.postMessage(login_data, '*');
+      window.close();
+    });
+  }());
 </script>
+<p> Feche esta janela para continuar...</p>
 {% endblock content %}
