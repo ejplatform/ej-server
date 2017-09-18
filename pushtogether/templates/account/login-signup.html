@@ -6,6 +6,13 @@
 
 {% block head_title %}{% trans "Signup" %}{% endblock %}
 
+{% block css %}
+{{ block.super }}
+
+<link href="{% static 'css/embed.css' %}" rel="stylesheet">
+
+{% endblock css %}
+
 {% block javascript %}
 {{ block.super }}
 

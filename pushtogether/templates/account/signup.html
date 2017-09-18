@@ -6,6 +6,13 @@
 
 {% block head_title %}{% trans "Signup" %}{% endblock %}
 
+{% block css %}
+{{ block.super }}
+
+<link href="{% static 'css/embed.css' %}" rel="stylesheet">
+
+{% endblock css %}
+
 {% block javascript %}
 {{ block.super }}
 
@@ -13,39 +20,6 @@
 {% providers_media_js %}
 
 {% endblock javascript %}
-
-{% block css %}
-{{ block.super }}
-
-<style>
-
-  .primaryAction {
-    float: right;
-    margin-top: -15px !important;
-  }
-  .btn {
-    margin-top: 10px;
-  }
-  #facebook-button {
-    background-color: #3b5998;
-    border-color: #3b5998;
-  }
-  #twitter-login-link {
-    background-color: #55ACEE;
-    border-color: #55ACEE;
-  }
-  .login {
-    margin-top: 10px;
-  }
-  .login {
-    margin-top: 10px;
-  }
-  .signup {
-    margin-top: 10px;
-  }
-</style>
-
-{% endblock css %}
 
 {% block inner %}
 
