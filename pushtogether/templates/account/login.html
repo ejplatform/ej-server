@@ -14,27 +14,47 @@
 
 {% endblock javascript %}
 
-{% block header %}{% endblock header %}
+{% block css %}
+{{ block.super }}
+
+<style>
+
+  .primaryAction {
+    float: right;
+    margin-top: -15px !important;
+  }
+  .btn {
+    margin-top: 10px;
+  }
+  #facebook-button {
+    background-color: #3b5998;
+    border-color: #3b5998;
+  }
+  #twitter-login-link {
+    background-color: #55ACEE;
+    border-color: #55ACEE;
+  }
+  .login {
+    margin-top: 10px;
+  }
+  .login .signup {
+    margin-top: 10px;
+  }
+</style>
+
+{% endblock css %}
 
 {% block inner %}
 
-<h1>{% trans "Sign In" %}</h1>
-
 {% include "socialaccount/snippets/login_extra.html" %}
 
-<button class="btn btn-primary">
-  <a href="{% provider_login_url "facebook" method="js_sdk" next="/users/close" %}"
-      style="color: #fff"><i class=""></i>Conectar com Facebook</a>
-</button>
-<button id="twitter-button-link" class="btn btn-primary" style="background-color: #55ACEE;">
-  <a id="twitter-login-link"
-      href="{% provider_login_url "twitter" next="/users/close" %}"
-      style="color: #fff">
-    <i class=""></i>Connectar com Twitter</a>
-</button>
-<br>
-<br>
-
+<a id="facebook-button" class="btn btn-primary btn-block" href="{% provider_login_url "facebook" method="js_sdk" next="/users/close" %}"
+    style="color: #fff"><i class=""></i>Conectar com Facebook</a>
+<a id="twitter-login-link"
+    class="btn btn-primary btn-block"
+    href="{% provider_login_url "twitter" next="/users/close" %}"
+    style="color: #fff;">
+  <i class=""></i>Connectar com Twitter</a>
 <form class="login" method="POST" action="{% url 'account_login' %}">
   {% csrf_token %}
   {{ form|crispy }}
@@ -44,5 +64,8 @@
   <a class="button secondaryAction" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
   <button class="primaryAction btn btn-primary" type="submit">{% trans "Sign In" %}</button>
 </form>
+
+  <a class="btn btn-primary btn-block" href="{% url 'account_signup' %}"
+      style="color: #fff"><i class=""></i>Cadastrar-se</a>
 
 {% endblock %}

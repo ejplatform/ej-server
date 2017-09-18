@@ -6,8 +6,6 @@
 
 {% block head_title %}{% trans "Signup" %}{% endblock %}
 
-{% block header %}{% endblock header %}
-
 {% block javascript %}
 {{ block.super }}
 
@@ -18,19 +16,13 @@
 
 {% block inner %}
 
-<!-- <h1>{% trans "Sign Up" %}</h1> -->
-<h1>Entrar</h1>
-
-<button class="btn btn-primary">
-  <a href="{% provider_login_url "facebook" method="js_sdk" next="/users/close" %}"
-      style="color: #fff"><i class=""></i>Conectar com Facebook</a>
-</button>
-<button id="twitter-button-link" class="btn btn-primary" style="background-color: #55ACEE;">
-  <a id="twitter-login-link"
-      href="{% provider_login_url "twitter" next="/users/close" %}"
-      style="color: #fff">
-    <i class=""></i>Connectar com Twitter</a>
-</button>
+<a id="facebook-button" class="btn btn-primary btn-block" href="{% provider_login_url "facebook" method="js_sdk" next="/users/close" %}"
+    style="color: #fff"><i class=""></i>Conectar com Facebook</a>
+<a id="twitter-login-link"
+    class="btn btn-primary btn-block"
+    href="{% provider_login_url "twitter" next="/users/close" %}"
+    style="color: #fff;">
+  <i class=""></i>Connectar com Twitter</a>
 <br>
 <br>
 
@@ -46,8 +38,8 @@
 
 <br>
 <br>
-<h3>OU</h3>
-<h1> Criar uma conta</h1>
+<h5>OU</h5>
+<h3> Criar uma conta</h3>
 
 <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
   {% csrf_token %}

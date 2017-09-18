@@ -12,9 +12,8 @@
     }
 
     if (inIframe) {
-      var twitterButtonLinkEl = document.getElementById('twitter-button-link');
       var twitterLoginLinkEl = document.getElementById('twitter-login-link');
-      twitterButtonLinkEl.addEventListener("click", function(event) {
+      twitterLoginLinkEl.addEventListener("click", function(event) {
         event.preventDefault();
         var twitterLoginUrl = twitterLoginLinkEl.getAttribute("href");
         var params = 'location=0,status=0,width=800,height=400';

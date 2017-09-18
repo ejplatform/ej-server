@@ -264,7 +264,7 @@
       height: '600px',
       width: '100%',
       frameborder: 0,
-      // scrolling: 'no'
+      scrolling: 'no',
     }).appendTo("#modal-content");
     $('#myModal').modal('show');
   }
