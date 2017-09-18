@@ -259,7 +259,7 @@
     $('#pushtogether').remove();
     $('<iframe>', {
       // src: 'http://localhost:8000/accounts/login/?next=/users/close',
-      src: 'https://ej.brasilqueopovoquer.org.br/users/signin/',
+      src: 'https://ej.brasilqueopovoquer.org.br/accounts/login',
       id: 'pushtogether',
       height: '600px',
       width: '100%',
