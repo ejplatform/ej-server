@@ -10,6 +10,9 @@
 {{ block.super }}
 
 <link href="{% static 'css/embed.css' %}" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/lipis/bootstrap-social@5.1.1/bootstrap-social.css" rel="stylesheet">
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
 
 {% endblock css %}
 
@@ -23,13 +26,13 @@
 
 {% block inner %}
 
-<a id="facebook-button" class="btn btn-primary btn-block" href="{% provider_login_url "facebook" method="js_sdk" next="/users/close" %}"
-    style="color: #fff"><i class=""></i>Conectar com Facebook</a>
+<a id="facebook-button" class="btn btn-primary btn-block btn-social btn-facebook" href="{% provider_login_url "facebook" method="js_sdk" next="/users/close" %}"
+    style="color: #fff"><i class="fa fa-facebook"></i>Conectar com Facebook</a>
 <a id="twitter-login-link"
-    class="btn btn-primary btn-block"
+    class="btn btn-primary btn-block btn-social btn-twitter"
     href="{% provider_login_url "twitter" next="/users/close" %}"
     style="color: #fff;">
-  <i class=""></i>Connectar com Twitter</a>
+  <i class="fa fa-twitter"></i>Connectar com Twitter</a>
 
 <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
   {% csrf_token %}
