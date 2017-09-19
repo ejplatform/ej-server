@@ -4,6 +4,8 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.views.generic import TemplateView
 from django.views import defaults as default_views
+from django.views.generic.base import RedirectView
+
 
 urlpatterns = [
     url(r'^$', TemplateView.as_view(template_name='pages/home.html'), name='home'),
@@ -16,6 +18,8 @@ urlpatterns = [
     url(r'^users/', include('pushtogether.users.urls', namespace='users')),
     url(r'^polis/', include('pushtogether.polis.urls', namespace='polis')),
     url(r'^rest-auth/', include('rest_auth.urls')),
+    # TODO: Remove this redirect after october 2017
+    url(r'^rest-auth/registration/account-confirm-email/(?P<key>[-:\w]+)/$', RedirectView.as_view(pattern_name='account_confirm_email'), name='account-confirm-email-redirect'),
     url(r'^rest-auth/registration/', include('rest_auth.registration.urls')),
     url(r'^accounts/', include('allauth.urls')),
 
