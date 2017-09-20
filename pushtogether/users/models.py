@@ -29,4 +29,4 @@ class User(AbstractUser):
             picture = account.get_avatar_url()
             if picture:
                 return picture
-        return "http://www.gravatar.com/avatar/{}?s=40".format(hashlib.md5(self.email.encode('utf-8')).hexdigest())
+        return "https://gravatar.com/avatar/{}?s=40".format(hashlib.md5(self.email.encode('utf-8')).hexdigest())
