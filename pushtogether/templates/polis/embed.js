@@ -249,7 +249,7 @@
         var config = getConfig(d);
         config.xid = user_data.xid;
         config.x_name = user_data.x_name;
-        config.x_profile_image_url = user_data.image_url;
+        config.x_profile_image_url = user_data.x_profile_image_url;
         createPolisIframe(d, config);
       }
     }
