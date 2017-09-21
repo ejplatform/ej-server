@@ -269,9 +269,11 @@ REST_FRAMEWORK = {
 }
 
 # Some really nice defaults
-ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
-ACCOUNT_EMAIL_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = 'optional'
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_SIGNUP_FORM_CLASS = 'pushtogether.users.forms.PushtogetherSignupForm'
 
 ACCOUNT_ALLOW_REGISTRATION = env.bool('DJANGO_ACCOUNT_ALLOW_REGISTRATION', True)
 ACCOUNT_ADAPTER = 'pushtogether.users.adapters.AccountAdapter'
