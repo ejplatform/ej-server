@@ -57,6 +57,7 @@ THIRD_PARTY_APPS = [
     'rest_auth',
     'rest_auth.registration',
     'corsheaders',
+    'captcha',
 ]
 
 # Apps specific for this project go here.
@@ -328,3 +329,8 @@ CORS_ORIGIN_ALLOW_ALL = True
 #     'localhost:8000',
 #     'localhost:5000',
 # )
+
+# Above default keys will aways pass, do not use then in production.
+RECAPTCHA_PUBLIC_KEY = env.bool('DJANGO_RECAPTCHA_PUBLIC_KEY', '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI')
+RECAPTCHA_PRIVATE_KEY = env.bool('DJANGO_RECAPTCHA_PRIVATE_KEY', '6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe')
+NOCAPTCHA = True

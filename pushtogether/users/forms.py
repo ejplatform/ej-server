@@ -1,10 +1,13 @@
 from django import forms
+from captcha.fields import ReCaptchaField
 
 
 class PushtogetherSignupForm(forms.Form):
-    full_name = forms.CharField(max_length=120, label='Nome')
 
-    field_order = ['full_name', 'email']
+    full_name = forms.CharField(max_length=120, label='Nome')
+    captcha = ReCaptchaField(label='')
+
+    field_order = ['full_name', 'email', 'password1', 'password2', 'capcha']
 
     def signup(self, request, user):
 
