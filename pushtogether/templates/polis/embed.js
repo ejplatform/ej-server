@@ -34,9 +34,9 @@
          page_id: d.getAttribute("data-page_id"),
          parent_url: d.getAttribute("data-parent_url"),
          {% if user.is_authenticated %}
-         xid: '{{ user.id|escapejs }}',
-         x_name: '{{ user.first_name|escapejs }}' + ' {{ user.last_name|escapejs }}',
-         x_profile_image_url: '{{ user.image_url|escapejs }}',
+         xid: '{{ user.id }}',
+         x_name: '{{ user.first_name }}' + ' {{ user.last_name }}',
+         x_profile_image_url: '{{ user.image_url }}',
          {% else %}
          xid: d.getAttribute("data-xid"),
          x_name: d.getAttribute("data-x_name"),
