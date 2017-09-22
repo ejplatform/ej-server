@@ -323,12 +323,12 @@ ADMIN_URL = r'^admin/'
 # ------------------------------------------------------------------------------
 
 # FIXME use whitelist instead allow all
-CORS_ORIGIN_ALLOW_ALL = True
-# CORS_ORIGIN_WHITELIST = (
-#     'hostname.example.com',
-#     'localhost:8000',
-#     'localhost:5000',
-# )
+CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_WHITELIST = (
+    'polis.brasilqueopovoquer.org.br',
+    'brasilqueopovoquer.org.br',
+    'ej.brasilqueopovoquer.org.br',
+)
 
 # Above default keys will aways pass, do not use then in production.
 RECAPTCHA_PUBLIC_KEY = env('DJANGO_RECAPTCHA_PUBLIC_KEY', default='6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI')
