@@ -1,4 +1,4 @@
-(function($) {
+(function() {
   var polis = window.polis = window.polis || {};
   var firstRun = !window.polis._hasRun;
   polis._hasRun = 1;
@@ -256,24 +256,33 @@
   }
 
   function loginModal(build) {
-    $('#pushtogether').remove();
-    $('<iframe>', {
-      // src: 'http://localhost:8000/accounts/login/?next=/users/close',
-      src: 'https://ej.brasilqueopovoquer.org.br/accounts/login',
-      id: 'pushtogether',
-      height: '600px',
-      width: '100%',
-      frameborder: 0,
-      scrolling: 'no',
-    }).appendTo("#modal-content");
-    $('#myModal').modal('show');
+    // Remove previous instances before start
+    var loginIframe = document.getElementById('pushtogether');
+    if (loginIframe != null) {
+      loginIframe.parentNode.removeChild(loginIframe);
+    }
+
+    // Creates de iframe
+    var loginIframe = document.createElement("iframe");
+    loginIframe.id = 'pushtogether';
+    // loginIframe.src = 'http://localhost:8000/accounts/login/',
+    loginIframe.src = 'https://ej.brasilqueopovoquer.org.br/accounts/login/',
+    loginIframe.height = 600;
+    loginIframe.width = "100%"; // may be constrained by parent div
+    loginIframe.style["min-width"] = "100%";
+    loginIframe.style.border = '0px';
+    loginIframe.scrolling = "no";
+    document.getElementById('modal-content').appendChild(loginIframe);
+
+    jQuery('#myModal').modal('show');
+
   }
 
   function receiveMessage(event) {
     // if (event.data === 'askForLogin') {
     if (event.data.xid !== undefined) {
       reLoadIframes(event.data);
-      $('#myModal').modal('hide');
+      jQuery('#myModal').modal('hide');
     } else if (event.data === 'askForLogin') {
       loginModal();
     }
@@ -281,4 +290,4 @@
 
   window.addEventListener('message', receiveMessage, false);
 
-}(jQuery));
+}());
