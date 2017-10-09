@@ -16,7 +16,6 @@ class AuthorSerializer(serializers.ModelSerializer):
 
 class ConversationSerializer(serializers.ModelSerializer):
     author = AuthorSerializer(read_only=True)
-    participants = AuthorSerializer(many=True, read_only=True)
     
     class Meta:
         model = Conversation
