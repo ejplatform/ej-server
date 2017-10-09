@@ -8,6 +8,7 @@ from .models import Conversation, Comment, Vote
 from .serializers import AuthorSerializer, ConversationSerializer
 from .serializers import CommentSerializer, VoteSerializer
 
+
 def list_conversations(request):
     """
     List all conversations.
@@ -18,7 +19,6 @@ def list_conversations(request):
         return JsonResponse(serializer.data, safe=False)
     else:
         raise MethodNotAllowed
-
 
 @csrf_exempt
 def create_conversation(request):

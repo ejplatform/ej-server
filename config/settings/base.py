@@ -65,6 +65,7 @@ LOCAL_APPS = [
     # custom users app
     'pushtogether.users.apps.UsersConfig',
     'pushtogether.polis.apps.PolisConfig',
+    'pushtogether.conversations.apps.ConversationsConfig',
 
 ]
 
