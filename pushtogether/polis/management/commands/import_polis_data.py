@@ -6,32 +6,29 @@ class Command(BaseCommand):
     help = "import polis data to EJ backend"
 
     def add_arguments(self, parser):
-        parser.add_argument('-f', '--file', type=str,
-            help='Path to the csv file to import', required=True)
-        parser.add_argument('-t', '--type', type=str,
-            help='Csv file type (comments or votes)', required=True)
+        parser.add_argument('comments', type=str,
+            help='Path to the comments csv file to import')
+        parser.add_argument('votes', type=str,
+            help='Path to the votes csv file to import')
 
     def handle(self, *args, **options):
-        csv_file_path = options['file']
-        csv_file_type = options['type']
+        csv_file_comments_path = options['comments']
+        csv_file_votes_path = options['votes']
 
-        if csv_file_type != 'comments' and csv_file_type != 'votes':
-            raise CommandError('Argument --type must be \'comments\' or \'votes\'')
-
-        with open(csv_file_path, 'r') as csvfile:
-            readf = csv.DictReader(csvfile)
+        with open(csv_file_comments_path, 'r') as csv_file_comments:
+            readf = csv.DictReader(csv_file_comments)
             for row in readf:
-                if csv_file_type == 'comments':
-                    xid = row.get('xid')
-                    comment_id = row.get('comment_id')
-                    ativo = row.get('ativo')
-                    created = row.get('created')
-                    txt = row.get('txt')
-                    #TODO create comment and save
+                xid = row.get('xid')
+                comment_id = row.get('comment_id')
+                ativo = row.get('ativo')
+                created = row.get('created')
+                txt = row.get('txt')
 
-                elif csv_file_type == 'votes':
-                    xid = row.get('xid')
-                    commnet_id = row.get('comment_id')
-                    vote = row.get('vote')
-                    created = row.get('created')
-                    #TODO create vote and save
+        with open(csv_file_votes_path, 'r') as csv_file_votes:
+            readf = csv.DictReader(csv_file_votes)
+            for row in readf:
+                xid = row.get('xid')
+                comment_id = row.get('comment_id')
+                vote = row.get('vote')
+                created = row.get('created')
+                print (xid + comment_id + vote + created)
