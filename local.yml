@@ -14,20 +14,16 @@ services:
       - .:/app
     environment:
       - POSTGRES_USER=pushtogether
-      - POSTGRES_PASSWORD=pushtogether
-      - POSTGRES_DB=pushtogether
       - USE_DOCKER=yes
     ports:
       - "8000:8000"
     command: /start.sh
 
   postgres:
-    build:
-      context: .
-      dockerfile: ./compose/local/postgres/Dockerfile
+    image: postgres:9.6
     volumes:
       - db_data:/var/lib/postgresql/data
     environment:
-      - USER_PG=pushtogether
-      - PASSWORD_PG=pushtogether
-      - DB_PG=pushtogether
+      - POSTGRES_USER=pushtogether
+
+
