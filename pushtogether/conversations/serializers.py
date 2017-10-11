@@ -1,25 +1,25 @@
 from django.conf.urls import url, include
-from .models import Conversation, Comment, Vote
-from rest_framework import routers, serializers, viewsets
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from rest_framework import routers, serializers, viewsets
+from .models import Conversation, Comment, Vote
 
 
 User = get_user_model()
 
-class AuthorSerializer(serializers.ModelSerializer):
+class AuthorSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'name')
+        fields = ('id', 'url', 'name')
 
 
-class ConversationSerializer(serializers.ModelSerializer):
+class ConversationSerializer(serializers.HyperlinkedModelSerializer):
     author = AuthorSerializer(read_only=True)
     
     class Meta:
         model = Conversation
-        fields = ('author', 'participants', 'title','description')
+        fields = ('id', 'url', 'author', 'title','description')
 
 
 class CommentSerializer(serializers.ModelSerializer):

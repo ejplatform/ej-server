@@ -1,83 +1,30 @@
-from django.shortcuts import get_object_or_404, render
-from django.http import HttpResponse, JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-from rest_framework.renderers import JSONRenderer
-from rest_framework.parsers import JSONParser
-from rest_framework.exceptions import MethodNotAllowed
+from rest_framework.viewsets import ModelViewSet
+
+
+from django.contrib.auth import get_user_model
 from .models import Conversation, Comment, Vote
-from .serializers import AuthorSerializer, ConversationSerializer
-from .serializers import CommentSerializer, VoteSerializer
+from .serializers import (
+    VoteSerializer,
+    ConversationSerializer,
+    CommentSerializer,
+    AuthorSerializer,
+)
 
 
-def list_conversations(request):
-    """
-    List all conversations.
-    """
-    if request.method == 'GET':
-        conversations = Conversation.objects.all()
-        serializer = ConversationSerializer(conversations, many=True)
-        return JsonResponse(serializer.data, safe=False)
-    else:
-        raise MethodNotAllowed
+class ConversationViewSet(ModelViewSet):
+    serializer_class = ConversationSerializer
+    queryset = Conversation.objects.all()
 
-@csrf_exempt
-def create_conversation(request):
-    """
-    Create a new conversation.
-    """
-    if request.method == 'POST':
-        data = JSONParser().parse(request)
-        serializer = ConversationSerializer(data=data)
 
-        if serializer.is_valid():
-            serializer.save()
-            return JsonResponse(serializer.data, status=201)
-        else:
-            return JsonResponse(serializer.errors, status=400)
-    else:
-        raise MethodNotAllowed
+class CommentViewSet(ModelViewSet):
+    serializer_class = CommentSerializer
+    queryset = Comment.objects.all()
 
-def conversation_detail(request, pk):
-    """
-    Retrieve a conversation.
-    """
-    conversation = get_object_or_404(Conversation, pk=pk)
 
-    if request.method == 'GET':
-        serializer = ConversationSerializer(conversation)
-        return JsonResponse(serializer.data)
-    else:
-        raise MethodNotAllowed
+class VoteViewSet(ModelViewSet):
+    serializer_class = VoteSerializer
+    queryset = Vote.objects.all()
 
-@csrf_exempt
-def update_conversation(request, pk):
-    """
-    Edit a conversation
-    """
-    conversation = get_object_or_404(Conversation, pk=pk)
-
-    if request.method == 'PUT':
-        data = JSONParser().parse(request)
-        serializer = ConversationSerializer(conversation, data=data)
-
-        if serializer.is_valid():
-            serializer.save()
-            return JsonResponse(serializer.data)
-        else:
-            return JsonResponse(serializer.errors, status=400)
-    else:
-        raise MethodNotAllowed
-
-@csrf_exempt
-def delete_conversation(request, pk):
-    """
-    Remove a conversation
-    """
-
-    conversation = get_object_or_404(Conversation, pk=pk)
-
-    if request.method == 'DELETE':
-        conversation.delete()
-        return HttpResponse(status=204)
-    else:
-        raise MethodNotAllowed
+class AuthorViewSet(ModelViewSet):
+    serializer_class = AuthorSerializer
+    queryset = get_user_model().objects.all()

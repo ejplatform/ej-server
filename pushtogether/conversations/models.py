@@ -18,7 +18,7 @@ class Comment(models.Model):
     polis_id = models.IntegerField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
-class Vode(models.Model):
+class Vote(models.Model):
     VOTE_CHOICES = (
         ('AGREE', 1),
         ('PASS', 0),
