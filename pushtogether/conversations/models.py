@@ -5,7 +5,7 @@ from django.conf import settings
 
 class Conversation(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL)
-    title = models.CharField(max_length=150)
+    title = models.CharField(max_length=255, blank=False)
     description = models.TextField(blank=False)
     polis_id = models.IntegerField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True) 
@@ -14,9 +14,10 @@ class Conversation(models.Model):
 class Comment(models.Model):
     conversation = models.ForeignKey(Conversation, related_name='comments')
     author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='comments')
-    content = models.CharField(max_length=140, blank=False) 
+    content = models.TextField(blank=False) 
     polis_id = models.IntegerField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    approved = models.BooleanField(default=True)
 
 class Vote(models.Model):
     VOTE_CHOICES = (
