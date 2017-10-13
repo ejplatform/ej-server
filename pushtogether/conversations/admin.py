@@ -5,6 +5,9 @@ from .models import Conversation, Comment, Vote
 class CommentInline(admin.TabularInline):
     model = Comment
 
+class VoteInline(admin.TabularInline):
+    model = Vote
+
 
 class ConversationAdmin(admin.ModelAdmin):
     fields = ['author', 'title', 'description', 'polis_id']
@@ -13,9 +16,10 @@ class ConversationAdmin(admin.ModelAdmin):
 
 
 class CommentAdmin(admin.ModelAdmin):
-    fields = ['conversation', 'author', 'content', 'polis_id', 'is_approved']
-    list_display = ['id', 'content', 'conversation', 'created_at', 'is_approved']
-    list_filter = ['is_approved']
+    fields = ['conversation', 'author', 'content', 'polis_id', 'approval']
+    list_display = ['id', 'content', 'conversation', 'created_at', 'approval']
+    list_filter = ['approval']
+    inlines = [VoteInline]
 
 
 admin.site.register(Conversation, ConversationAdmin)
