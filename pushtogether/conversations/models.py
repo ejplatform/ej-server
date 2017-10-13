@@ -14,14 +14,16 @@ class Conversation(models.Model):
     def __str__(self):
         return self.title
     
+
 class Comment(models.Model):
-    APPROVED = "AP"
-    REJECTED = "RE"
-    UNMODERATED = "UN"
+    APPROVED = "APPROVED"
+    REJECTED = "REJECTED"
+    UNMODERATED = "UNMODERATED"
+
     APPROVEMENT_CHOICES = (
-        (APPROVED, 'Approved'),
-        (REJECTED, 'Rejected'),
-        (UNMODERATED, 'Unmoderated'),
+        (APPROVED, 'approved'),
+        (REJECTED, 'rejected'),
+        (UNMODERATED, 'unmoderated'),
     )
 
     conversation = models.ForeignKey(Conversation, related_name='comments')
@@ -29,20 +31,24 @@ class Comment(models.Model):
     content = models.TextField(blank=False) 
     polis_id = models.IntegerField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    is_approved = models.CharField(
-        max_length=2,
-        null=True,
+    approval = models.CharField(
+        max_length=32,
         choices=APPROVEMENT_CHOICES,
     )
 
     def __str__(self):
         return self.content
 
+
 class Vote(models.Model):
+    AGREE = 1
+    PASS = 0
+    DISAGREE = -1
+
     VOTE_CHOICES = (
-        ('AGREE', 1),
-        ('PASS', 0),
-        ('DISAGREE', -1),
+        (AGREE, "AGREE"),
+        (PASS, "PASS"),
+        (DISAGREE, "DISAGREE"),
     )
 
     author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='votes')
