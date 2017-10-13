@@ -1,12 +1,12 @@
 from rest_framework.viewsets import ModelViewSet
 
-
 from django.contrib.auth import get_user_model
 from .models import Conversation, Comment, Vote
 from .serializers import (
     VoteSerializer,
     ConversationSerializer,
     CommentSerializer,
+    CommentReportSerializer,
     AuthorSerializer,
 )
 
@@ -21,9 +21,15 @@ class CommentViewSet(ModelViewSet):
     queryset = Comment.objects.all()
 
 
+class CommentReportViewSet(ModelViewSet):
+    serializer_class = CommentReportSerializer
+    queryset = Comment.objects.all()
+
+
 class VoteViewSet(ModelViewSet):
     serializer_class = VoteSerializer
     queryset = Vote.objects.all()
+
 
 class AuthorViewSet(ModelViewSet):
     serializer_class = AuthorSerializer
