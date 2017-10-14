@@ -5,6 +5,7 @@ from .models import Conversation, Comment, Vote
 from .serializers import (
     VoteSerializer,
     ConversationSerializer,
+    ConversationReportSerializer,
     CommentSerializer,
     CommentReportSerializer,
     AuthorSerializer,
@@ -13,6 +14,11 @@ from .serializers import (
 
 class ConversationViewSet(ModelViewSet):
     serializer_class = ConversationSerializer
+    queryset = Conversation.objects.all()
+
+
+class ConversationReportViewSet(ModelViewSet):
+    serializer_class = ConversationReportSerializer
     queryset = Conversation.objects.all()
 
 

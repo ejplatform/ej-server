@@ -11,15 +11,15 @@ class AuthorSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'url', 'username')
+        fields = ('id', 'username')
 
 
-class ConversationSerializer(serializers.HyperlinkedModelSerializer):
+class VoteSerializer(serializers.ModelSerializer):
     author = AuthorSerializer(read_only=True)
-    
+
     class Meta:
-        model = Conversation
-        fields = ('id', 'url', 'author', 'title','description')
+        model = Vote
+        fields = ('id', 'author','comment', 'value')
 
 
 class CommentReportSerializer(serializers.ModelSerializer):
@@ -47,21 +47,63 @@ class CommentReportSerializer(serializers.ModelSerializer):
 
 
 class CommentSerializer(serializers.HyperlinkedModelSerializer):
-    conversation = ConversationSerializer(read_only=True)
-    comment_report = CommentReportSerializer(read_only=True)
     author = AuthorSerializer(read_only=True)
 
     class Meta:
         model = Comment
-        fields = ('id', 'url', 'conversation', 'author', 'content', 'approval',
-            'comment_report')
+        fields = ('id', 'conversation', 'author', 'content', 'approval', 'votes')
 
 
-class VoteSerializer(serializers.ModelSerializer):
-    conversation = ConversationSerializer(read_only=True)
-    author = AuthorSerializer(read_only=True)
-    comment = CommentSerializer(read_only=True)
+class ConversationReportSerializer(serializers.ModelSerializer):
+    total_votes = serializers.SerializerMethodField()
+    agree_votes = serializers.SerializerMethodField()
+    disagree_votes = serializers.SerializerMethodField()
+    pass_votes = serializers.SerializerMethodField()
+    total_comments = serializers.SerializerMethodField()
+    approved_comments = serializers.SerializerMethodField()
+    rejected_comments = serializers.SerializerMethodField()
+    unmoderated_comments = serializers.SerializerMethodField()
 
     class Meta:
-        model = Vote
-        fields = ('conversation', 'author','comment', 'value')
+        model = Conversation
+        fields = ('id', 'total_votes', 'agree_votes', 'disagree_votes',
+            'pass_votes', 'total_comments', 'approved_comments',
+            'rejected_comments', 'unmoderated_comments')
+
+    def get_agree_votes(self, obj):
+        return Vote.objects.filter(comment__conversation_id=obj.id,
+            value=Vote.AGREE).count()
+
+    def get_disagree_votes(self, obj):
+        return Vote.objects.filter(comment__conversation_id=obj.id,
+            value=Vote.DISAGREE).count()
+
+    def get_pass_votes(self, obj):
+        return Vote.objects.filter(comment__conversation_id=obj.id,
+            value=Vote.PASS).count()
+
+    def get_total_votes(self, obj):
+        return Vote.objects.filter(comment__conversation_id=obj.id).count()
+
+    def get_approved_comments(self, obj):
+        return Comment.objects.filter(conversation_id=obj.id,
+            approval=Comment.APPROVED).count()
+
+    def get_rejected_comments(self, obj):
+        return Comment.objects.filter(conversation_id=obj.id,
+            approval=Comment.REJECTED).count()
+
+    def get_unmoderated_comments(self, obj):
+        return Comment.objects.filter(conversation_id=obj.id,
+            approval=Comment.UNMODERATED).count()
+
+    def get_total_comments(self, obj):
+        return obj.comments.count()
+
+
+class ConversationSerializer(serializers.HyperlinkedModelSerializer):
+    author = AuthorSerializer(read_only=True)
+    
+    class Meta:
+        model = Conversation
+        fields = ('id', 'title', 'description', 'author', 'comments')
