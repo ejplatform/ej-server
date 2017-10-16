@@ -9,4 +9,5 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'url', 'name')
+        fields = ('id', 'url', 'name', 'email', 'city', 'state', 'country',
+            'race', 'gender', 'occupation', 'age', 'political_movement')
