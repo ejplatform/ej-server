@@ -7,13 +7,56 @@ from django.utils.translation import ugettext_lazy as _
 from allauth.socialaccount.models import SocialAccount
 import hashlib
 
-
 @python_2_unicode_compatible
 class User(AbstractUser):
+
+    RACE_CHOICES = (
+        ('BLACK', 'Preta'),
+        ('BROWN', 'Parda'),
+        ('WHITE', 'Branca'),
+        ('YELLOW', 'Amarela'),
+        ('INDIGENOUS', 'Indígena'),
+        ('DO_NOT_KNOW', 'Não sei'),
+        ('UNDECLARED', 'Não declarada'),
+    )
+
+    GENDER_CHOICES = (
+        ('FEMALE', 'Mulher'),
+        ('MALE', 'Homem'),
+        ('CIS_FEMALE', 'Mulher Cis'),
+        ('CIS_MALE', 'Homem Cis'),
+        ('AGENDER', 'Agênero'),
+        ('GENDERQUEER', 'Genderquer'),
+        ('GENDERFLUID', 'Gênero Fluído'),
+        ('NON-CONFORMIST_GENDER', 'Gênero Não-conformista'),
+        ('VARIANT_GENDER', 'Gênero Variante'),
+        ('INTERSEX', 'Intersex'),
+        ('NON-BINARY', 'Não-binário'),
+        ('TRANSGENDERED', 'Transgênero'),
+        ('PANGENDER', 'Pangênero'),
+        ('TRANSSEXUAL_WOMAN', 'Mulher Transexual'),
+        ('TRANSSEXUAL_MAN', 'Homem Transexual'),
+        ('TRANSFEMINAL', 'Transfeminino'),
+        ('TRANSMASCULINE', 'Transmasculino'),
+        ('DO_NOT_KNOW', 'Não sei'),
+        ('NONE', 'Nenhum'),
+        ('OTHER', 'Outro')
+    )
 
     # First Name and Last Name do not cover name patterns
     # around the globe.
     name = models.CharField(_('Name of User'), blank=True, max_length=255)
+    email = models.CharField(null=True, max_length=255)
+    city = models.CharField(null=True, max_length=255)
+    state = models.CharField(null=True, max_length=255)
+    country = models.CharField(null=True, max_length=255)
+    race = models.CharField(null=True, choices=RACE_CHOICES, max_length=255)
+    gender = models.CharField(null=True, choices=GENDER_CHOICES, max_length=255)
+    occupation = models.CharField(null=True, max_length=255)
+    age = models.IntegerField(null=True, blank=True)
+    political_movement = models.CharField(null=True, max_length=255)
+
+
 
     def __str__(self):
         return self.username
