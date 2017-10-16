@@ -1,8 +1,11 @@
+from rest_framework.routers import SimpleRouter
 from django.conf.urls import url
 from django.views.generic import TemplateView
 
 from . import views
 
+router = SimpleRouter()
+router.register(r'', views.UserViewSet),
 
 urlpatterns = [
     url(
@@ -33,3 +36,7 @@ urlpatterns = [
         name='update'
     ),
 ]
+
+# TODO Check which user endpoint already created will remain and then
+# add the django rest framework urls to the urlpatterns
+# urlpatterns.extend(router.urls)

@@ -1,3 +1,5 @@
+from rest_framework.viewsets import ModelViewSet
+
 from django.core.urlresolvers import reverse
 from django.views.generic import DetailView, ListView, RedirectView, UpdateView
 
@@ -8,6 +10,12 @@ from .models import User
 from allauth.account.views import SignupView
 from allauth.account.forms import LoginForm
 from allauth.socialaccount.views import SocialLogin
+
+from .serializers import UserSerializer
+
+class UserViewSet(ModelViewSet):
+    serializer_class = UserSerializer
+    queryset = User.objects.all()
 
 
 class LoginSignupView(SignupView):
