@@ -10,51 +10,51 @@ import hashlib
 class User(AbstractUser):
 
     RACE_CHOICES = (
-        ('BLACK', 'Preta'),
-        ('BROWN', 'Parda'),
-        ('WHITE', 'Branca'),
-        ('YELLOW', 'Amarela'),
-        ('INDIGENOUS', 'Indígena'),
-        ('DO_NOT_KNOW', 'Não sei'),
-        ('UNDECLARED', 'Não declarada'),
+        ('BLACK', _('Black')),
+        ('BROWN', _('Brown')),
+        ('WHITE', _('White')),
+        ('YELLOW', _('Yellow')),
+        ('INDIGENOUS', _('Indigenous')),
+        ('DO_NOT_KNOW', _('Do not know')),
+        ('UNDECLARED', _('Undeclared')),
     )
 
     GENDER_CHOICES = (
-        ('FEMALE', 'Mulher'),
-        ('MALE', 'Homem'),
-        ('CIS_FEMALE', 'Mulher Cis'),
-        ('CIS_MALE', 'Homem Cis'),
-        ('AGENDER', 'Agênero'),
-        ('GENDERQUEER', 'Genderquer'),
-        ('GENDERFLUID', 'Gênero Fluído'),
-        ('NON-CONFORMIST_GENDER', 'Gênero Não-conformista'),
-        ('VARIANT_GENDER', 'Gênero Variante'),
-        ('INTERSEX', 'Intersex'),
-        ('NON-BINARY', 'Não-binário'),
-        ('TRANSGENDERED', 'Transgênero'),
-        ('PANGENDER', 'Pangênero'),
-        ('TRANSSEXUAL_WOMAN', 'Mulher Transexual'),
-        ('TRANSSEXUAL_MAN', 'Homem Transexual'),
-        ('TRANSFEMINAL', 'Transfeminino'),
-        ('TRANSMASCULINE', 'Transmasculino'),
-        ('DO_NOT_KNOW', 'Não sei'),
-        ('NONE', 'Nenhum'),
-        ('OTHER', 'Outro')
+        ('FEMALE', _('Female')),
+        ('MALE', _('Male')),
+        ('CIS_FEMALE', _('Cis Female')),
+        ('CIS_MALE', _('Cis Male')),
+        ('AGENDER', _('Agender')),
+        ('GENDERQUEER', _('Genderqueer')),
+        ('GENDERFLUID', _('Genderfluid')),
+        ('NON-CONFORMIST_GENDER', _('Non conformist gender')),
+        ('VARIANT_GENDER', _('Variant gender')),
+        ('INTERSEX', _('Intersex')),
+        ('NON-BINARY', _('Non binary')),
+        ('TRANSGENDERED', _('Transgendered')),
+        ('PANGENDER', _('Pangender')),
+        ('TRANSSEXUAL_WOMAN', _('Transsexual woman')),
+        ('TRANSSEXUAL_MAN', _('Transsexual man')),
+        ('TRANSFEMINAL', _('Transfeminal')),
+        ('TRANSMASCULINE', _('Transmasculine')),
+        ('DO_NOT_KNOW', _('Do not know')),
+        ('NONE', _('None')),
+        ('OTHER', _('Other'))
     )
 
     # First Name and Last Name do not cover name patterns
     # around the globe.
     name = models.CharField(_('Name of User'), blank=True, max_length=255)
-    email = models.EmailField(null=True)
-    city = models.CharField(null=True, max_length=255)
-    state = models.CharField(null=True, max_length=255)
-    country = models.CharField(null=True, max_length=255)
-    race = models.CharField(null=True, choices=RACE_CHOICES, max_length=255)
-    gender = models.CharField(null=True, choices=GENDER_CHOICES, max_length=255)
-    gender_other = models.CharField(null=True, max_length=255)
-    occupation = models.CharField(null=True, max_length=255)
-    age = models.IntegerField(null=True, blank=True)
-    political_movement = models.CharField(null=True, max_length=255)
+    email = models.EmailField(_('Email'), null=True)
+    city = models.CharField(_('City'), null=True, max_length=255)
+    state = models.CharField(_('State'), null=True, max_length=255)
+    country = models.CharField(_('Country'), null=True, max_length=255)
+    race = models.CharField(_('Race'), null=True, choices=RACE_CHOICES, max_length=255)
+    gender = models.CharField(_('Gender'), null=True, choices=GENDER_CHOICES, max_length=255)
+    gender_other = models.CharField(_('Other type of gender'), null=True, max_length=255)
+    occupation = models.CharField(_('Occupation'), null=True, max_length=255)
+    age = models.IntegerField(_('Age'), null=True, blank=True)
+    political_movement = models.CharField(_('Participates in any political movement?'), null=True, max_length=255)
 
     def __str__(self):
         return self.username
