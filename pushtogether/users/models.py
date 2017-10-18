@@ -7,6 +7,7 @@ from django.utils.translation import ugettext_lazy as _
 from allauth.socialaccount.models import SocialAccount
 import hashlib
 
+
 class User(AbstractUser):
 
     RACE_CHOICES = (
@@ -49,12 +50,29 @@ class User(AbstractUser):
     city = models.CharField(_('City'), null=True, max_length=255)
     state = models.CharField(_('State'), null=True, max_length=255)
     country = models.CharField(_('Country'), null=True, max_length=255)
-    race = models.CharField(_('Race'), null=True, choices=RACE_CHOICES, max_length=255)
-    gender = models.CharField(_('Gender'), null=True, choices=GENDER_CHOICES, max_length=255)
-    gender_other = models.CharField(_('Other type of gender'), null=True, max_length=255)
     occupation = models.CharField(_('Occupation'), null=True, max_length=255)
     age = models.IntegerField(_('Age'), null=True, blank=True)
-    political_movement = models.CharField(_('Participates in any political movement?'), null=True, max_length=255)
+    gender = models.CharField(
+        _('Gender'),
+        null=True,
+        choices=GENDER_CHOICES,
+        max_length=255
+    )
+    gender_other = models.CharField(
+        _('Other type of gender'),
+        null=True, max_length=255
+    )
+    political_movement = models.CharField(
+        _('Participates in any political movement?'),
+        null=True,
+        max_length=255
+    )
+    race = models.CharField(
+        _('Race'),
+        null=True,
+        choices=RACE_CHOICES,
+        max_length=255
+    )
 
     def __str__(self):
         return self.username

@@ -13,6 +13,7 @@ from allauth.socialaccount.views import SocialLogin
 
 from .serializers import UserSerializer
 
+
 class UserViewSet(ModelViewSet):
     serializer_class = UserSerializer
     queryset = User.objects.all()
