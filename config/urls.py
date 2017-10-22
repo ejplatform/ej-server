@@ -5,6 +5,7 @@ from django.contrib import admin
 from django.views.generic import TemplateView
 from django.views import defaults as default_views
 from django.views.generic.base import RedirectView
+from rest_framework.documentation import include_docs_urls
 
 
 urlpatterns = [
@@ -14,6 +15,7 @@ urlpatterns = [
     # Django Admin, use {% url 'admin:index' %}
     url(settings.ADMIN_URL, admin.site.urls),
 
+    url(r'^api/docs/', include_docs_urls(title='pushtogether API Docs', public=False)),
     # User management
     url(r'^users/', include('pushtogether.users.urls', namespace='users')),
     url(r'^polis/', include('pushtogether.polis.urls', namespace='polis')),
