@@ -67,7 +67,7 @@ deploy to homolog:
   stage: deploy
   image: cdrx/rancher-gitlab-deploy
   script:
-    - upgrade --environment FPAbramo --stack empurrandojuntos-dev --service django --no-finish-upgrade --debug
+    - upgrade --environment FPAbramo --stack brasilqueopovoquer-empurrandojuntos-dev --service django --no-finish-upgrade --debug
   only:
     - /master/
   environment: homolog
