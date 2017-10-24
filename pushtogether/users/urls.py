@@ -7,37 +7,23 @@ from . import views
 router = SimpleRouter()
 router.register(r'', views.UserViewSet),
 
-# urlpatterns = [
-#     url(
-#         regex=r'^signin/$',
-#         view=views.LoginSignupView.as_view(),
-#         name='signin'
-#     ),
-#     url(r'^close/$', TemplateView.as_view(template_name='users/close.html')),
-#
-#     url(
-#         regex=r'^$',
-#         view=views.UserListView.as_view(),
-#         name='list'
-#     ),
-#     url(
-#         regex=r'^~redirect/$',
-#         view=views.UserRedirectView.as_view(),
-#         name='redirect'
-#     ),
-#     url(
-#         regex=r'^(?P<username>[\w.@+-]+)/$',
-#         view=views.UserDetailView.as_view(),
-#         name='detail'
-#     ),
-#     url(
-#         regex=r'^~update/$',
-#         view=views.UserUpdateView.as_view(),
-#         name='update'
-#     ),
-# ]
+urlpatterns = [
+    url(
+        regex=r'^signin/$',
+        view=views.LoginSignupView.as_view(),
+        name='signin'
+    ),
+    url(r'^close/$', TemplateView.as_view(template_name='users/close.html')),
+    url(
+        regex=r'^~redirect/$',
+        view=views.UserRedirectView.as_view(),
+        name='redirect'
+    ),
+    url(
+        regex=r'^~update/$',
+        view=views.UserUpdateView.as_view(),
+        name='update'
+    ),
+]
 
-# TODO Check which user endpoints already created that
-# does not belong to api will remain
-
-urlpatterns = router.urls
+urlpatterns.extend(router.urls)
