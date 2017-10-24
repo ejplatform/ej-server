@@ -31,13 +31,13 @@ class Conversation(models.Model):
         return self.title
 
     def get_user_participation_ratio(self, user):
-        total_votes = Vote.objects.filter(
-            comment__conversation_id=self.id).count()
+        total_approved_comments = self.comments.filter(
+            approval=Comment.APPROVED).count()
         user_votes = Vote.objects.filter(
             comment__conversation_id=self.id,
             author=user).count()
 
-        return user_votes/total_votes if total_votes else 0;
+        return user_votes/total_approved_comments if total_approved_comments else 0;
     
 
 class Comment(models.Model):

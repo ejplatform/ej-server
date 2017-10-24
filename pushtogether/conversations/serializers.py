@@ -112,7 +112,7 @@ class ConversationReportSerializer(serializers.ModelSerializer):
 class ConversationSerializer(serializers.HyperlinkedModelSerializer):
     author = AuthorSerializer(read_only=True)
     total_votes = serializers.SerializerMethodField()
-    total_comments = serializers.SerializerMethodField()
+    total_approved_comments = serializers.SerializerMethodField()
     user_participation_ratio = serializers.SerializerMethodField()
     created_at = serializers.DateTimeField(format="%d-%m-%Y")
     updated_at = serializers.DateTimeField(format="%d-%m-%Y")
@@ -121,23 +121,19 @@ class ConversationSerializer(serializers.HyperlinkedModelSerializer):
         model = Conversation
         fields = ('id', 'url', 'title', 'description', 'author',
                   'background_color', 'background_image', 'dialog', 'response', 
-                  'total_votes', 'total_comments', 'user_participation_ratio',
+                  'total_votes', 'total_approved_comments', 'user_participation_ratio',
                   'created_at', 'updated_at')
 
     def _get_current_user(self):
-        user = self.context['request'].user
-        return user
+        return self.context['request'].user
 
     def get_user_participation_ratio(self, obj):
         user = self._get_current_user()
-        participation_ratio = obj.get_user_participation_ratio(user)
-        return participation_ratio
+        return obj.get_user_participation_ratio(user)
 
     def get_total_votes(self, obj):
         return Vote.objects.filter(comment__conversation_id=obj.id).count()
 
-    def get_total_comments(self, obj):
-        return obj.comments.count()
-
-    def print_timestamp(timestamp):
-                return time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(ts))
+    def get_total_approved_comments(self, obj):
+        return Comment.objects.filter(conversation_id=obj.id,
+            approval=Comment.APPROVED).count()
