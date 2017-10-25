@@ -1,3 +1,5 @@
+import time
+
 from django.conf.urls import url, include
 from django.conf import settings
 from django.contrib.auth import get_user_model
@@ -7,11 +9,16 @@ from .models import Conversation, Comment, Vote
 
 User = get_user_model()
 
+
 class AuthorSerializer(serializers.HyperlinkedModelSerializer):
+    name = serializers.SerializerMethodField()
 
     class Meta:
         model = User
-        fields = ('id', 'username')
+        fields = ('id', 'username', 'name')
+
+    def get_name(self, obj):
+        return obj.get_full_name()
 
 
 class VoteSerializer(serializers.ModelSerializer):
@@ -103,7 +110,29 @@ class ConversationReportSerializer(serializers.ModelSerializer):
 
 class ConversationSerializer(serializers.HyperlinkedModelSerializer):
     author = AuthorSerializer(read_only=True)
+    total_votes = serializers.SerializerMethodField()
+    total_approved_comments = serializers.SerializerMethodField()
+    user_participation_ratio = serializers.SerializerMethodField()
+    created_at = serializers.DateTimeField(format="%d-%m-%Y")
+    updated_at = serializers.DateTimeField(format="%d-%m-%Y")
     
     class Meta:
         model = Conversation
-        fields = ('id', 'title', 'description', 'author', 'comments')
+        fields = ('id', 'url', 'title', 'description', 'author',
+                  'background_color', 'background_image', 'dialog', 'response', 
+                  'total_votes', 'total_approved_comments', 'user_participation_ratio',
+                  'created_at', 'updated_at')
+
+    def _get_current_user(self):
+        return self.context['request'].user
+
+    def get_user_participation_ratio(self, obj):
+        user = self._get_current_user()
+        return obj.get_user_participation_ratio(user)
+
+    def get_total_votes(self, obj):
+        return Vote.objects.filter(comment__conversation_id=obj.id).count()
+
+    def get_total_approved_comments(self, obj):
+        return Comment.objects.filter(conversation_id=obj.id,
+            approval=Comment.APPROVED).count()

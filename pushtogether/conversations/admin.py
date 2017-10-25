@@ -10,7 +10,9 @@ class VoteInline(admin.TabularInline):
 
 
 class ConversationAdmin(admin.ModelAdmin):
-    fields = ['author', 'title', 'description', 'polis_id']
+    fields = ['author', 'title', 'description', 'dialog', 'response',
+        'polis_id', 'comment_nudge', 'comment_nudge_interval',
+        'background_image', 'background_color']
     list_display = ['id', 'title', 'author', 'created_at', 'updated_at']
     inlines = [CommentInline]
 
