@@ -58,8 +58,7 @@ class CommentSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Comment
-        fields = ('id', 'conversation', 'author', 'content', 'approval',
-        'votes', 'background_image', 'background_color')
+        fields = ('id', 'conversation', 'author', 'content', 'approval', 'votes')
 
 
 class ConversationReportSerializer(serializers.ModelSerializer):
