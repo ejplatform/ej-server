@@ -1,8 +1,11 @@
 import re
+from random import randint
 
 from django.db import models
 from django.core.validators import MinValueValidator
+from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
+from django.db.models import Q
 
 from .validators import validate_color
     
@@ -38,7 +41,24 @@ class Conversation(models.Model):
             author=user).count()
 
         return user_votes/total_approved_comments if total_approved_comments else 0;
-    
+
+    def get_random_unvoted_comment(self, user):
+        user_unvoted_comments = self.comments.filter(
+            ~Q(votes__author_id__exact=user.id),
+            approval=Comment.APPROVED)
+
+        pks = user_unvoted_comments.values_list('pk', flat=True)
+        comment_counter = len(pks)
+        if comment_counter:
+            random_idx = randint(0, len(pks))
+            while(random_idx == len(pks)):
+                random_idx = randint(0, len(pks))
+        else:
+            raise DoesNotExist(_('There is no comments available for this user'))
+
+        random_comment = user_unvoted_comments.get(pk=pks[random_idx])
+        return random_comment
+
 
 class Comment(models.Model):
     APPROVED = "APPROVED"
