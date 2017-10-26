@@ -79,10 +79,10 @@ class Command(BaseCommand):
                     with transaction.atomic():
                         vote = Vote.objects.create(comment=comment,
                         author=user, value=vote, polis_id=vote_id, created_at=created)
-                    print('created vote, polis_id:' + vote.polis_id)
+                    print('created vote, polis_id:' + str(vote.polis_id))
                 except IntegrityError as e:
                     vote = Vote.objects.get(polis_id=1)
-                    print('found vote, polis_id: ' + vote.polis_id)
+                    print('found vote, polis_id: ' + str(vote.polis_id))
                     continue
 
                 count += 1
