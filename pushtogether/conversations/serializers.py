@@ -87,11 +87,11 @@ class ConversationSerializer(serializers.HyperlinkedModelSerializer):
     user_participation_ratio = serializers.SerializerMethodField()
     created_at = serializers.DateTimeField(format="%d-%m-%Y")
     updated_at = serializers.DateTimeField(format="%d-%m-%Y")
-    
+
     class Meta:
         model = Conversation
         fields = ('id', 'url', 'title', 'description', 'author',
-                  'background_color', 'background_image', 'dialog', 'response', 
+                  'background_color', 'background_image', 'dialog', 'response',
                   'total_votes', 'approved_comments', 'user_participation_ratio',
                   'created_at', 'updated_at')
 
