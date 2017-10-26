@@ -39,7 +39,6 @@ class NextCommentViewSet(RetrieveModelMixin, GenericViewSet):
         current_user = self.request.user
         conversation = get_object_or_404(queryset, pk=self.kwargs['pk'])
         return conversation.get_random_unvoted_comment(current_user)
-            
 
 
 class CommentReportViewSet(ModelViewSet):
