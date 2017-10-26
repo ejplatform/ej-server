@@ -3,12 +3,15 @@ from random import randint
 
 from django.db import models
 from django.core.validators import MinValueValidator
+from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 from django.db.models import Q
 
 from .validators import validate_color
     
+User = get_user_model()
+
 
 class Conversation(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL)
@@ -32,6 +35,45 @@ class Conversation(models.Model):
     
     def __str__(self):
         return self.title
+
+    @property
+    def total_participants(self):
+        return User.objects.filter(votes__comment__conversation_id=self.id).count()
+
+    @property
+    def agree_votes(self):
+        return Vote.objects.filter(comment__conversation_id=self.id,
+            value=Vote.AGREE).count()
+
+    @property
+    def disagree_votes(self):
+        return Vote.objects.filter(comment__conversation_id=self.id,
+            value=Vote.DISAGREE).count()
+
+    @property
+    def pass_votes(self):
+        return Vote.objects.filter(comment__conversation_id=self.id,
+            value=Vote.PASS).count()
+
+    @property
+    def total_votes(self):
+        return Vote.objects.filter(comment__conversation_id=self.id).count()
+
+    @property
+    def approved_comments(self):
+        return self.comments.filter(approval=Comment.APPROVED).count()
+
+    @property
+    def rejected_comments(self):
+        return self.comments.filter(approval=Comment.REJECTED).count()
+
+    @property
+    def unmoderated_comments(self):
+        return self.comments.filter(approval=Comment.UNMODERATED).count()
+
+    @property
+    def total_comments(self):
+        return self.comments.count()
 
     def get_user_participation_ratio(self, user):
         total_approved_comments = self.comments.filter(
@@ -83,6 +125,22 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.content
+
+    @property
+    def agree_votes(self):
+        return self.votes.filter(value=Vote.AGREE).count()
+
+    @property
+    def disagree_votes(self):
+        return self.votes.filter(value=Vote.DISAGREE).count()
+
+    @property
+    def pass_votes(self):
+        return self.votes.filter(value=Vote.PASS).count()
+
+    @property
+    def total_votes(self):
+        return self.votes.count()
 
 
 class Vote(models.Model):
