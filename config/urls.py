@@ -15,11 +15,13 @@ urlpatterns = [
     # Django Admin, use {% url 'admin:index' %}
     url(settings.ADMIN_URL, admin.site.urls),
 
+    # url(r'^cities_light/api/', include('cities_light.contrib.restframework3')),
+
     url(r'^api/docs/', include_docs_urls(title='pushtogether API Docs', public=False)),
     # User management
-    url(r'^users/', include('pushtogether.users.urls', namespace='users')),
+    url(r'^api/profile/', include('pushtogether.users.urls', namespace='users')),
     url(r'^polis/', include('pushtogether.polis.urls', namespace='polis')),
-    url(r'^api/', include('pushtogether.conversations.urls')),
+    url(r'^api/', include('pushtogether.conversations.urls', namespace='v1')),
     url(r'^rest-auth/', include('rest_auth.urls')),
     # TODO: Remove this redirect after october 2017
     url(r'^rest-auth/registration/account-confirm-email/(?P<key>[-:\w]+)/$', RedirectView.as_view(pattern_name='account_confirm_email'), name='account-confirm-email-redirect'),
