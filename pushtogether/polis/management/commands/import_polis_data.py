@@ -30,9 +30,9 @@ class Command(BaseCommand):
             for row in readf:
                 xid = row.get('xid')
                 comment_id = row.get('comment_id')
-                ativo = row.get('ativo')
                 created = row.get('created')
                 txt = row.get('txt')
+                mod = self.get_moderation_state(int(row.get('mod')))
                 user = self.find_user_by_xid(xid)
                 if not user:
                     continue
@@ -43,7 +43,7 @@ class Command(BaseCommand):
                 try:
                     with transaction.atomic():
                         comment = Comment.objects.create(conversation=conversation,
-                        author=user, content=txt, polis_id=comment_id, created_at=created)
+                        author=user, content=txt, polis_id=comment_id, created_at=created, approval=mod)
                     print('created comment, polis_id:' + comment.polis_id)
                 except IntegrityError as e:
                     comment = Comment.objects.get(polis_id=comment_id)
@@ -79,10 +79,10 @@ class Command(BaseCommand):
                     with transaction.atomic():
                         vote = Vote.objects.create(comment=comment,
                         author=user, value=vote, polis_id=vote_id, created_at=created)
-                    print('created vote, polis_id:' + vote.polis_id)
+                    print('created vote, polis_id:' + str(vote.polis_id))
                 except IntegrityError as e:
                     vote = Vote.objects.get(polis_id=1)
-                    print('found vote, polis_id: ' + vote.polis_id)
+                    print('found vote, polis_id: ' + str(vote.polis_id))
                     continue
 
                 count += 1
@@ -100,3 +100,11 @@ class Command(BaseCommand):
             #TODO get user with admin id
             user = User.objects.get(id=1)
         return user
+
+    def get_moderation_state(self, mod):
+        switcher = {
+            0: 'UNMODERATED',
+            1: 'APPROVED',
+            -1: 'REJECTED',
+        }
+        return switcher.get(mod, 'nothing')

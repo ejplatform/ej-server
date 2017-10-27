@@ -33,10 +33,33 @@ class VoteSerializer(serializers.ModelSerializer):
 
 class CommentReportSerializer(serializers.HyperlinkedModelSerializer):
     author = AuthorSerializer(read_only=True)
+    agreement_consensus = serializers.SerializerMethodField()
+    disagreement_consensus = serializers.SerializerMethodField()
+    uncertainty = serializers.SerializerMethodField()
+
     class Meta:
         model = Comment
-        fields = ('id', 'author', 'total_votes', 'agree_votes',
-            'disagree_votes', 'pass_votes', 'approval')
+        fields = ('id', 'author', 'content', 'created_at', 'total_votes', 'agree_votes',
+            'disagree_votes', 'pass_votes', 'agreement_consensus',
+            'disagreement_consensus','uncertainty', 'approval',)
+
+    def get_agreement_consensus(self, obj):
+        try:
+            return (obj.agree_votes/obj.total_votes > 0.6)
+        except ZeroDivisionError:
+            return False
+
+    def get_disagreement_consensus(self, obj):
+        try:
+            return (obj.disagree_votes/obj.total_votes > 0.6)
+        except ZeroDivisionError:
+            return False
+
+    def get_uncertainty(self, obj):
+        try:
+            return (obj.pass_votes/obj.total_votes > 0.3)
+        except ZeroDivisionError:
+            return False
 
 
 class CommentSerializer(serializers.HyperlinkedModelSerializer):
@@ -64,11 +87,11 @@ class ConversationSerializer(serializers.HyperlinkedModelSerializer):
     user_participation_ratio = serializers.SerializerMethodField()
     created_at = serializers.DateTimeField(format="%d-%m-%Y")
     updated_at = serializers.DateTimeField(format="%d-%m-%Y")
-    
+
     class Meta:
         model = Conversation
         fields = ('id', 'url', 'title', 'description', 'author',
-                  'background_color', 'background_image', 'dialog', 'response', 
+                  'background_color', 'background_image', 'dialog', 'response',
                   'total_votes', 'approved_comments', 'user_participation_ratio',
                   'created_at', 'updated_at')
 

@@ -9,7 +9,7 @@ from django.conf import settings
 from django.db.models import Q
 
 from .validators import validate_color
-    
+
 User = get_user_model()
 
 
@@ -20,7 +20,7 @@ class Conversation(models.Model):
     polis_id = models.IntegerField(null=True, blank=True)
     dialog = models.TextField(null=True, blank=True)
     response = models.TextField(null=True, blank=True)
-    created_at = models.DateTimeField(auto_now_add=True) 
+    created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     #Conversation's configuration
@@ -32,13 +32,13 @@ class Conversation(models.Model):
     background_color = models.CharField(
         max_length=7, validators=[validate_color],
         null=True, blank=True)
-    
+
     def __str__(self):
         return self.title
 
     @property
     def total_participants(self):
-        return User.objects.filter(votes__comment__conversation_id=self.id).count()
+        return User.objects.filter(votes__comment__conversation_id=self.id).distinct().count()
 
     @property
     def agree_votes(self):
@@ -115,7 +115,7 @@ class Comment(models.Model):
 
     conversation = models.ForeignKey(Conversation, related_name='comments')
     author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='comments')
-    content = models.TextField(blank=False) 
+    content = models.TextField(blank=False)
     polis_id = models.IntegerField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     approval = models.CharField(
