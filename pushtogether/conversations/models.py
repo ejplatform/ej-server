@@ -38,7 +38,7 @@ class Conversation(models.Model):
 
     @property
     def total_participants(self):
-        return User.objects.filter(votes__comment__conversation_id=self.id).count()
+        return User.objects.filter(votes__comment__conversation_id=self.id).distinct().count()
 
     @property
     def agree_votes(self):
