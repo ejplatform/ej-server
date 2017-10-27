@@ -10,6 +10,7 @@ from django.views.generic import DetailView, ListView, RedirectView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import User
+from .permissions import IsOwnerOrReadOnly
 
 from allauth.account.views import SignupView
 from allauth.account.forms import LoginForm
@@ -25,6 +26,7 @@ from .serializers import UserSerializer
 class UserViewSet(ModelViewSet):
     serializer_class = UserSerializer
     queryset = User.objects.all()
+    permission_classes = (IsOwnerOrReadOnly,)
 
     @detail_route(methods=['POST'])
     @parser_classes((FormParser, MultiPartParser))
