@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework.parsers import FormParser, MultiPartParser
 from rest_framework import status
 
+from django.http import Http404
 from django.core.urlresolvers import reverse
 from django.views.generic import DetailView, ListView, RedirectView, UpdateView
 
@@ -45,6 +46,9 @@ class UserViewSet(ModelViewSet):
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
     def retrieve(self, request, pk=None):
+        if self.request.user.id is None:
+            raise Http404
+
         serializer = UserSerializer(self.request.user)
         return Response(serializer.data)
 
