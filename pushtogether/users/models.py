@@ -43,15 +43,35 @@ class User(AbstractUser):
         ('OTHER', _('Other'))
     )
 
+    age = models.IntegerField(_('Age'), null=True, blank=True)
+    city = models.CharField(_('City'), null=True, blank=True, max_length=255)
+    state = models.CharField(_('State'), null=True, blank=True, max_length=255)
     # First Name and Last Name do not cover name patterns
     # around the globe.
-    name = models.CharField(_('Name of User'), blank=True, max_length=255)
-    email = models.EmailField(_('Email'), null=True)
-    city = models.CharField(_('City'), null=True, max_length=255)
-    state = models.CharField(_('State'), null=True, max_length=255)
-    country = models.CharField(_('Country'), null=True, max_length=255)
-    occupation = models.CharField(_('Occupation'), null=True, max_length=255)
-    age = models.IntegerField(_('Age'), null=True, blank=True)
+    name = models.CharField(
+        _('Name of User'),
+        blank=True,
+        max_length=255,
+        null=True
+    )
+    country = models.CharField(
+        _('Country'),
+        null=True,
+        blank=True,
+        max_length=255
+    )
+    occupation = models.CharField(
+        _('Occupation'),
+        null=True,
+        blank=True,
+        max_length=255
+    )
+    image = models.ImageField(
+        _('Image'),
+        blank=True,
+        null=True,
+        upload_to='profile_images'
+    )
     gender = models.CharField(
         _('Gender'),
         null=True,
