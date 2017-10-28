@@ -12,7 +12,7 @@ from .models import Conversation, Comment, Vote
 User = get_user_model()
 
 
-class AuthorSerializer(serializers.HyperlinkedModelSerializer):
+class AuthorSerializer(serializers.ModelSerializer):
     name = serializers.SerializerMethodField()
 
     class Meta:
@@ -31,7 +31,7 @@ class VoteSerializer(serializers.ModelSerializer):
         fields = ('id', 'author','comment', 'value')
 
 
-class CommentReportSerializer(serializers.HyperlinkedModelSerializer):
+class CommentReportSerializer(serializers.ModelSerializer):
     author = AuthorSerializer(read_only=True)
     agreement_consensus = serializers.SerializerMethodField()
     disagreement_consensus = serializers.SerializerMethodField()
@@ -62,7 +62,7 @@ class CommentReportSerializer(serializers.HyperlinkedModelSerializer):
             return False
 
 
-class CommentSerializer(serializers.HyperlinkedModelSerializer):
+class CommentSerializer(serializers.ModelSerializer):
     author = AuthorSerializer(read_only=True)
 
     class Meta:
@@ -70,7 +70,7 @@ class CommentSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('id', 'conversation', 'author', 'content', 'approval', 'votes')
 
 
-class ConversationReportSerializer(serializers.HyperlinkedModelSerializer):
+class ConversationReportSerializer(serializers.ModelSerializer):
     author = AuthorSerializer(read_only=True)
     comments = CommentReportSerializer(read_only=True, many=True)
 
@@ -82,7 +82,7 @@ class ConversationReportSerializer(serializers.HyperlinkedModelSerializer):
             'comments')
 
 
-class ConversationSerializer(serializers.HyperlinkedModelSerializer):
+class ConversationSerializer(serializers.ModelSerializer):
     author = AuthorSerializer(read_only=True)
     user_participation_ratio = serializers.SerializerMethodField()
     created_at = serializers.DateTimeField(format="%d-%m-%Y")
@@ -90,10 +90,10 @@ class ConversationSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Conversation
-        fields = ('id', 'url', 'title', 'description', 'author',
-                  'background_color', 'background_image', 'dialog', 'response',
-                  'total_votes', 'approved_comments', 'user_participation_ratio',
-                  'created_at', 'updated_at')
+        fields = ('id', 'title', 'description', 'author', 'background_color',
+                  'background_image', 'dialog', 'response', 'total_votes',
+                  'approved_comments', 'user_participation_ratio', 'created_at',
+                  'updated_at')
 
     def _get_current_user(self):
         return self.context['request'].user
