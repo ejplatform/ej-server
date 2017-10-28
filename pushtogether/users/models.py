@@ -46,6 +46,7 @@ class User(AbstractUser):
     age = models.IntegerField(_('Age'), null=True, blank=True)
     city = models.CharField(_('City'), null=True, blank=True, max_length=255)
     state = models.CharField(_('State'), null=True, blank=True, max_length=255)
+    biography = models.TextField(_('Biography'), blank=True)
     # First Name and Last Name do not cover name patterns
     # around the globe.
     name = models.CharField(
