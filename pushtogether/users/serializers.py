@@ -5,9 +5,10 @@ from rest_framework import routers, serializers, viewsets
 from .models import User
 
 
-class UserSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'name', 'email', 'city', 'state', 'country',
-                  'race', 'gender', 'occupation', 'age', 'political_movement')
+        fields = ('id', 'image', 'name', 'email', 'city', 'state', 'country',
+                  'username', 'race', 'gender', 'occupation', 'age',
+                  'political_movement')
