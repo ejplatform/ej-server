@@ -90,7 +90,7 @@ class ConversationSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Conversation
-        fields = ('id', 'url', 'title', 'description', 'author',
+        fields = ('id', 'title', 'description', 'author',
                   'background_color', 'background_image', 'dialog', 'response',
                   'total_votes', 'approved_comments', 'user_participation_ratio',
                   'created_at', 'updated_at')
