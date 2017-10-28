@@ -44,6 +44,10 @@ class UserViewSet(ModelViewSet):
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
+    def retrieve(self, request, pk=None):
+        serializer = UserSerializer(self.request.user)
+        return Response(serializer.data)
+
 
 class LoginSignupView(SignupView):
 
