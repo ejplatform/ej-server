@@ -38,5 +38,5 @@ class MyUserAdmin(AuthUserAdmin):
                 'gender', 'occupation', 'age', 'political_movement'
             )}),
     ) + AuthUserAdmin.fieldsets
-    list_display = ('username', 'name', 'is_superuser')
-    search_fields = ['name']
+    list_display = ('username', 'name', 'email', 'is_superuser')
+    search_fields = ['name', 'email', 'username']
