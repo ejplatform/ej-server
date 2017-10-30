@@ -33,6 +33,9 @@ class Conversation(models.Model):
         max_length=7, validators=[validate_color],
         null=True, blank=True)
 
+    polis_slug = models.CharField(_('Polis slug'), max_length=255, null=True, blank=True)
+    polis_url = models.CharField(_('Polis url'), max_length=255, null=True, blank=True)
+
     def __str__(self):
         return self.title
 
