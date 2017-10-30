@@ -93,7 +93,7 @@ class ConversationSerializer(serializers.ModelSerializer):
         fields = ('id', 'title', 'description', 'author', 'background_color',
                   'background_image', 'dialog', 'response', 'total_votes',
                   'approved_comments', 'user_participation_ratio', 'created_at',
-                  'updated_at')
+                  'updated_at', 'polis_url', 'polis_slug')
 
     def _get_current_user(self):
         return self.context['request'].user
