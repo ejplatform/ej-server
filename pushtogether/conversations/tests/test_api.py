@@ -88,13 +88,13 @@ class DjangoRestFrameworkTests(APITestCase):
         user_serializer = AuthorSerializer(self.user)
         author_json_data = user_serializer.data
 
-        data = JSONRenderer().render({
+        data = {
             "title": "test_title",
             "description": "test_description",
             "author": author_json_data,
             "created_at": str(timezone.now()),
             "updated_at": str(timezone.now()),
-        })
+        }
 
         pprint(data)
 
