@@ -8,7 +8,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 from django.db.models import Q
 
-from .validators import validate_color
+from .validators import validate_color, validate_comment_nudge
 
 User = get_user_model()
 
@@ -144,6 +144,10 @@ class Comment(models.Model):
     @property
     def total_votes(self):
         return self.votes.count()
+
+    def save(self, *args, **kwargs):
+        validate_comment_nudge(self)
+        super(Comment, self).save(*args, **kwargs)
 
 
 class Vote(models.Model):
