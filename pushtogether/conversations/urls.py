@@ -11,7 +11,7 @@ from .views import (
 
 router = SimpleRouter()
 router.register(r'authors', AuthorViewSet)
-router.register(r'conversations', ConversationViewSet)
+router.register(r'conversations', ConversationViewSet, base_name='conversation')
 router.register(r'comments', CommentViewSet)
 router.register(r'votes', VoteViewSet)
 router.register(r'conversations_report', ConversationReportViewSet,
