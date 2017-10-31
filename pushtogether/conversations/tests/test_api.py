@@ -26,31 +26,31 @@ class DjangoRestFrameworkTests(APITestCase):
         user = get_user_model().objects.create(
             username="test_user",
             password="test_password",
-            is_superuser = True,
+            is_superuser=True,
         )
         user.save()
 
         conversation = Conversation.objects.create(
-            author = user,
-            title = "test_title",
-            description = "test_description",
+            author=user,
+            title="test_title",
+            description="test_description",
         )
         conversation.save()
 
         comment = Comment.objects.create(
-            author = user,
-            conversation = conversation,
-            content = "test_content",
-            polis_id = '1234',
-            approval = Comment.APPROVED
+            author=user,
+            conversation=conversation,
+            content="test_content",
+            polis_id='1234',
+            approval=Comment.APPROVED
         )
         comment.save()
 
         vote = Vote.objects.create(
-            author = user,
-            comment = comment,
-            polis_id = '12345',
-            value = Vote.AGREE
+            author=user,
+            comment=comment,
+            polis_id='12345',
+            value=Vote.AGREE
         )
         vote.save()
 
@@ -73,7 +73,7 @@ class DjangoRestFrameworkTests(APITestCase):
         self.client.force_login(self.user)
         response = self.client.get(self.create_read_url)
 
-        #Is the title in the content
+        # Is the title in the content
         self.assertContains(response, 'test_title')
 
     def test_create_conversation(self):
@@ -82,7 +82,7 @@ class DjangoRestFrameworkTests(APITestCase):
         """
         self.client.force_authenticate(self.user)
         last_conversation_counter = Conversation.objects.count()
-        
+
         data = {
             "title": "test_title",
             "description": "test_description",
@@ -108,7 +108,7 @@ class DjangoRestFrameworkTests(APITestCase):
             "title": "new_test_title",
             "description": "new_test_description",
         }
-        
+
         pre_response = self.client.get(self.create_read_url)
         update_response = self.client.patch(update_url, data, format='json')
         post_response = self.client.get(self.create_read_url)

@@ -28,7 +28,7 @@ class VoteSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Vote
-        fields = ('id', 'author','comment', 'value')
+        fields = ('id', 'author', 'comment', 'value')
 
 
 class CommentReportSerializer(serializers.ModelSerializer):
@@ -39,9 +39,9 @@ class CommentReportSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Comment
-        fields = ('id', 'author', 'content', 'created_at', 'total_votes', 'agree_votes',
-            'disagree_votes', 'pass_votes', 'agreement_consensus',
-            'disagreement_consensus','uncertainty', 'approval',)
+        fields = ('id', 'author', 'content', 'created_at', 'total_votes',
+                  'agree_votes', 'disagree_votes', 'pass_votes', 'approval',
+                  'agreement_consensus', 'disagreement_consensus', 'uncertainty')
 
     def get_agreement_consensus(self, obj):
         try:
@@ -76,10 +76,10 @@ class ConversationReportSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Conversation
-        fields = ('id', 'author', 'total_votes', 'agree_votes', 'disagree_votes',
-            'pass_votes', 'total_comments', 'approved_comments',
-            'rejected_comments', 'unmoderated_comments', 'total_participants',
-            'comments')
+        fields = ('id', 'author', 'total_votes', 'agree_votes', 'pass_votes',
+                  'disagree_votes', 'pass_votes', 'total_comments',
+                  'approved_comments', 'rejected_comments',
+                  'unmoderated_comments', 'total_participants', 'comments')
 
 
 class ConversationSerializer(serializers.ModelSerializer):

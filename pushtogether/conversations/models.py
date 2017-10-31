@@ -23,9 +23,9 @@ class Conversation(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    #Conversation's configuration
+    # Conversation's configuration
     comment_nudge = models.IntegerField(null=True, blank=True)
-    comment_nudge_interval = models.IntegerField(null=True, blank=True) #seconds
+    comment_nudge_interval = models.IntegerField(null=True, blank=True)  # seconds
     background_image = models.ImageField(
         upload_to='conversations/images/backgrouds',
         null=True, blank=True)
@@ -46,17 +46,17 @@ class Conversation(models.Model):
     @property
     def agree_votes(self):
         return Vote.objects.filter(comment__conversation_id=self.id,
-            value=Vote.AGREE).count()
+                                   value=Vote.AGREE).count()
 
     @property
     def disagree_votes(self):
         return Vote.objects.filter(comment__conversation_id=self.id,
-            value=Vote.DISAGREE).count()
+                                   value=Vote.DISAGREE).count()
 
     @property
     def pass_votes(self):
         return Vote.objects.filter(comment__conversation_id=self.id,
-            value=Vote.PASS).count()
+                                   value=Vote.PASS).count()
 
     @property
     def total_votes(self):
@@ -85,7 +85,7 @@ class Conversation(models.Model):
             comment__conversation_id=self.id,
             author=user).count()
 
-        return user_votes/total_approved_comments if total_approved_comments else 0;
+        return user_votes/total_approved_comments if total_approved_comments else 0
 
     def get_random_unvoted_comment(self, user):
         user_unvoted_comments = self.comments.filter(
