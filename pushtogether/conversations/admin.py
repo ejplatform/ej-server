@@ -14,7 +14,6 @@ class ConversationAdmin(admin.ModelAdmin):
         'polis_id', 'comment_nudge', 'comment_nudge_interval',
         'background_image', 'background_color', 'polis_url', 'polis_slug']
     list_display = ['id', 'title', 'author', 'created_at', 'updated_at']
-    inlines = [CommentInline]
 
 
 class CommentAdmin(admin.ModelAdmin):
