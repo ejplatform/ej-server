@@ -54,19 +54,17 @@ class CommentViewSet(AuthorAsCurrentUserMixin, ModelViewSet):
         if serializer.is_valid():
             conversation = Conversation.objects.get(pk=request.data['conversation'])
             user  = User.objects.get(pk=request.data['author'])
-            if (not conversation.can_user_post_comment(user)):
-                response = {
-                    "errors":[
-                        {"too_many_comments":_("You can't write too many comments")}
-                    ]
-                }
-                return Response(response, status=status.HTTP_429_TOO_MANY_REQUESTS)
+            conversation_nudge = conversation.get_nudge_status(user)
+            response_data = {"nudge": conversation_nudge.value}
+            if conversation_nudge.value['errors']:
+                return Response(response_data, status=conversation_nudge.value['status_code'])
             else:
                 self.perform_create(serializer)
                 headers = self.get_success_headers(serializer.data)
                 self.create
-                return Response(serializer.data, status=status.HTTP_201_CREATED,
-                                headers=headers)
+                response_data.update(serializer.data)
+                return Response(response_data, headers=headers,
+                                status=conversation_nudge.value['status_code'])
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
