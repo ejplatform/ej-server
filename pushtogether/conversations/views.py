@@ -9,6 +9,7 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet, GenericViewSet, ReadOnlyModelViewSet
 from rest_framework.mixins import RetrieveModelMixin
 from rest_framework.decorators import detail_route, list_route
+from django_filters.rest_framework import DjangoFilterBackend
 
 from .models import Conversation, Comment, Vote
 from .serializers import (
@@ -45,6 +46,8 @@ class ConversationReportViewSet(ModelViewSet):
 class CommentViewSet(AuthorAsCurrentUserMixin, ModelViewSet):
     serializer_class = CommentSerializer
     queryset = Comment.objects.all()
+    filter_backends = (DjangoFilterBackend,)
+    filter_fields = ('polis_id',)
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
