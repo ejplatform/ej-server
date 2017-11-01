@@ -1,8 +1,14 @@
+from pprint import pprint
+
+from django.shortcuts import get_object_or_404
+from django.contrib.auth import get_user_model
+from django.utils.translation import ugettext_lazy as _
+
+from rest_framework import status
+from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from rest_framework.mixins import RetrieveModelMixin
-
-from django.contrib.auth import get_user_model
-from django.shortcuts import get_object_or_404
+from rest_framework.decorators import detail_route, list_route
 
 from .models import Conversation, Comment, Vote
 from .serializers import (
@@ -14,6 +20,8 @@ from .serializers import (
     AuthorSerializer,
 )
 
+
+User = get_user_model()
 
 class ConversationViewSet(ModelViewSet):
     serializer_class = ConversationSerializer
@@ -28,6 +36,22 @@ class ConversationReportViewSet(ModelViewSet):
 class CommentViewSet(ModelViewSet):
     serializer_class = CommentSerializer
     queryset = Comment.objects.all()
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            conversation = Conversation.objects.get(pk=request.data['conversation'])
+            user  = User.objects.get(pk=request.data['author'])
+            if (not conversation.can_user_post_comment(user)):
+                return Response({"Error":_("Sorry, you can't write too many comments")},
+                    status=status.HTTP_429_TOO_MANY_REQUESTS)
+            else:
+                self.perform_create(serializer)
+                headers = self.get_success_headers(serializer.data)
+                self.create
+                return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class NextCommentViewSet(RetrieveModelMixin, GenericViewSet):
@@ -53,4 +77,4 @@ class VoteViewSet(ModelViewSet):
 
 class AuthorViewSet(ModelViewSet):
     serializer_class = AuthorSerializer
-    queryset = get_user_model().objects.all()
+    queryset = User.objects.all()

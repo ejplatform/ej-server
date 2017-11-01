@@ -1,4 +1,5 @@
 import re
+import datetime
 from random import randint
 
 from django.db import models
@@ -7,8 +8,9 @@ from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 from django.db.models import Q
+from django.utils.timezone import make_aware, get_current_timezone
 
-from .validators import validate_color, validate_comment_nudge
+from .validators import validate_color
 
 User = get_user_model()
 
@@ -104,6 +106,24 @@ class Conversation(models.Model):
         random_comment = user_unvoted_comments.get(pk=pks[random_idx])
         return random_comment
 
+    def can_user_post_comment(self, user):
+        '''
+        User cannot write too many comments.
+        The limit is set by the conversation's comment_nudge and
+        comment_nudge_interval
+        '''
+        nudge_interval = self.comment_nudge_interval
+        nudge = self.comment_nudge
+        if(nudge_interval and nudge):
+            timedelta = datetime.timedelta(seconds=nudge_interval)
+            time_limit = datetime.datetime.now() - timedelta
+            aware_time_limit = make_aware(time_limit, get_current_timezone())
+            nudge_interval_comments_counter = user.comments.filter(
+                created_at__gt=aware_time_limit,
+                conversation_id=self.id).count()
+
+            return nudge_interval_comments_counter < nudge
+
 
 class Comment(models.Model):
     APPROVED = "APPROVED"
@@ -145,9 +165,6 @@ class Comment(models.Model):
     def total_votes(self):
         return self.votes.count()
 
-    def save(self, *args, **kwargs):
-        validate_comment_nudge(self)
-        super(Comment, self).save(*args, **kwargs)
 
 
 class Vote(models.Model):

@@ -63,7 +63,6 @@ class CommentReportSerializer(serializers.ModelSerializer):
 
 
 class CommentSerializer(serializers.ModelSerializer):
-    author = AuthorSerializer(read_only=True)
 
     class Meta:
         model = Comment
@@ -83,7 +82,6 @@ class ConversationReportSerializer(serializers.ModelSerializer):
 
 
 class ConversationSerializer(serializers.ModelSerializer):
-    author = AuthorSerializer(read_only=True)
     user_participation_ratio = serializers.SerializerMethodField()
     created_at = serializers.DateTimeField(format="%d-%m-%Y")
     updated_at = serializers.DateTimeField(format="%d-%m-%Y")
