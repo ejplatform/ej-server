@@ -28,7 +28,7 @@ class VoteSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Vote
-        fields = ('id', 'author','comment', 'value')
+        fields = ('id', 'author', 'comment', 'value')
 
 
 class CommentReportSerializer(serializers.ModelSerializer):
@@ -39,9 +39,9 @@ class CommentReportSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Comment
-        fields = ('id', 'author', 'content', 'created_at', 'total_votes', 'agree_votes',
-            'disagree_votes', 'pass_votes', 'agreement_consensus',
-            'disagreement_consensus','uncertainty', 'approval',)
+        fields = ('id', 'author', 'content', 'created_at', 'total_votes',
+                  'agree_votes', 'disagree_votes', 'pass_votes', 'approval',
+                  'agreement_consensus', 'disagreement_consensus', 'uncertainty')
 
     def get_agreement_consensus(self, obj):
         try:
@@ -68,6 +68,7 @@ class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = ('id', 'conversation', 'author', 'content', 'approval', 'votes')
+        read_only_fields = ('id', 'author', 'approval', 'votes')
 
 
 class ConversationReportSerializer(serializers.ModelSerializer):
@@ -76,14 +77,13 @@ class ConversationReportSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Conversation
-        fields = ('id', 'author', 'total_votes', 'agree_votes', 'disagree_votes',
-            'pass_votes', 'total_comments', 'approved_comments',
-            'rejected_comments', 'unmoderated_comments', 'total_participants',
-            'comments')
+        fields = ('id', 'author', 'total_votes', 'agree_votes', 'pass_votes',
+                  'disagree_votes', 'pass_votes', 'total_comments',
+                  'approved_comments', 'rejected_comments',
+                  'unmoderated_comments', 'total_participants', 'comments')
 
 
 class ConversationSerializer(serializers.ModelSerializer):
-    author = AuthorSerializer(read_only=True)
     user_participation_ratio = serializers.SerializerMethodField()
     created_at = serializers.DateTimeField(format="%d-%m-%Y")
     updated_at = serializers.DateTimeField(format="%d-%m-%Y")
@@ -100,4 +100,6 @@ class ConversationSerializer(serializers.ModelSerializer):
 
     def get_user_participation_ratio(self, obj):
         user = self._get_current_user()
-        return obj.get_user_participation_ratio(user)
+        if user.is_authenticated():
+            return obj.get_user_participation_ratio(user)
+        return
