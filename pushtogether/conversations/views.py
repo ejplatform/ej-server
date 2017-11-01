@@ -53,8 +53,7 @@ class CommentViewSet(AuthorAsCurrentUserMixin, ModelViewSet):
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
             conversation = Conversation.objects.get(pk=request.data['conversation'])
-            user  = User.objects.get(pk=request.data['author'])
-            conversation_nudge = conversation.get_nudge_status(user)
+            conversation_nudge = conversation.get_nudge_status(self.request.user)
             response_data = {"nudge": conversation_nudge.value}
             if conversation_nudge.value['errors']:
                 return Response(response_data, status=conversation_nudge.value['status_code'])
