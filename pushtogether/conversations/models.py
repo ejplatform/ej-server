@@ -1,6 +1,7 @@
 import re
 import datetime
 from random import randint
+from enum import Enum
 
 from django.db import models
 from django.core.validators import MinValueValidator
@@ -25,11 +26,8 @@ class Conversation(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    # Conversation's configuration
-    comment_nudge = models.IntegerField(null=True, blank=True)
-    comment_nudge_interval = models.IntegerField(null=True, blank=True)  # seconds
     background_image = models.ImageField(
-        upload_to='conversations/images/backgrouds',
+        upload_to='conversations/backgrounds',
         null=True, blank=True)
     background_color = models.CharField(
         max_length=7, validators=[validate_color],
@@ -37,6 +35,38 @@ class Conversation(models.Model):
 
     polis_slug = models.CharField(_('Polis slug'), max_length=255, null=True, blank=True)
     polis_url = models.CharField(_('Polis url'), max_length=255, null=True, blank=True)
+
+    # Nudge configuration
+    comment_nudge = models.IntegerField(null=True, blank=True) # number of comments
+    comment_nudge_interval = models.IntegerField(null=True, blank=True)  # seconds
+    comment_nudge_global_limit = models.IntegerField(null=True, blank=True) # number of comments
+
+    class NUDGE(Enum):
+        interval_blocked = {
+            'state': 'interval_blocked',
+            'message': _('Sorry, you are actually blocked. Please wait be able to post again'),
+            'status_code': 429,
+            'errors': True,
+        }
+        global_blocked = {
+            'state': 'global_blocked',
+            'message': _('Sorry, you cannot post more comments in this conversation'),
+            'status_code': 429,
+            'errors': True,
+        }
+        eager = {
+            'state': 'eager',
+            'message': _('Please, be careful posting too many comments'),
+            'status_code': 200,
+            'errors': False,
+        }
+        normal = {
+            'state': 'normal',
+            'message': _('You can still posting comments'),
+            'status_code': 200,
+            'errors': False,
+        }
+
 
     def __str__(self):
         return self.title
@@ -106,24 +136,76 @@ class Conversation(models.Model):
         random_comment = user_unvoted_comments.get(pk=pks[random_idx])
         return random_comment
 
-    def can_user_post_comment(self, user):
+    def get_nudge_status(self, user):
         '''
-        User cannot write too many comments.
-        The limit is set by the conversation's comment_nudge and
+        Verify specific user nudge status in a conversation
+        '''
+        if(self._is_user_nudge_global_limit_blocked(user)):
+            return self.NUDGE.global_blocked
+
+        user_comments = self._get_nudge_interval_comments(user)
+        user_comments_counter = user_comments.count()
+
+        if(self._is_user_nudge_interval_blocked(user_comments_counter)):
+            return self.NUDGE.interval_blocked
+        elif(self._is_user_nudge_eager(user_comments_counter, user_comments)):
+            return self.NUDGE.eager
+        else:
+            return self.NUDGE.normal
+        
+    def _is_user_nudge_global_limit_blocked(self, user):
+        '''
+        Check number of user's comments is lower than the global limit
+        '''
+        if(self.comment_nudge_global_limit):
+            user_comments_counter = user.comments.filter(
+                conversation_id=self.id).count()
+            return user_comments_counter >= self.comment_nudge_global_limit
+        else:
+            return False
+
+    def _is_user_nudge_interval_blocked(self, user_comments_counter):
+        '''
+        User cannot write too many comments. The limit is set by the
+        conversation's comment_nudge and comment_nudge_interval
+        '''
+        if(self.comment_nudge):
+            return user_comments_counter >= self.comment_nudge
+        else:
+            return False
+
+    def _is_user_nudge_eager(self, user_comments_counter, user_comments):
+        '''
+        A user is an eager user when he creates half of the comments that
+        is possible in the middle of the nudge interval
+        '''
+        if(self.comment_nudge and self.comment_nudge_interval):
+            half_nudge = self.comment_nudge//2 - 1
+            half_nudge_interval = self.comment_nudge_interval//2
+            if(user_comments_counter > half_nudge):
+                datetime_limit = self._get_datetime_interval(half_nudge_interval) 
+                return user_comments[half_nudge].created_at >= datetime_limit
+        return False
+
+    def _get_nudge_interval_comments(self, user):
+        '''
+        Returns how many comments user has between now and past
         comment_nudge_interval
         '''
+        nudge_interval_comments = []
         nudge_interval = self.comment_nudge_interval
-        nudge = self.comment_nudge
-        if(nudge_interval and nudge):
-            timedelta = datetime.timedelta(seconds=nudge_interval)
-            time_limit = datetime.datetime.now() - timedelta
-            aware_time_limit = make_aware(time_limit, get_current_timezone())
-            nudge_interval_comments_counter = user.comments.filter(
-                created_at__gt=aware_time_limit,
-                conversation_id=self.id).count()
+        if(nudge_interval):
+            datetime_limit = self._get_datetime_interval(nudge_interval)
+            nudge_interval_comments = user.comments.filter(
+                created_at__gt=datetime_limit,
+                conversation_id=self.id)
+        return nudge_interval_comments
 
-            return nudge_interval_comments_counter < nudge
-
+    def _get_datetime_interval(self, interval):
+        timedelta = datetime.timedelta(seconds=interval)
+        time_limit = datetime.datetime.now() - timedelta
+        return make_aware(time_limit, get_current_timezone())
+ 
 
 class Comment(models.Model):
     APPROVED = "APPROVED"
@@ -131,9 +213,9 @@ class Comment(models.Model):
     UNMODERATED = "UNMODERATED"
 
     APPROVEMENT_CHOICES = (
-        (APPROVED, 'approved'),
-        (REJECTED, 'rejected'),
-        (UNMODERATED, 'unmoderated'),
+        (APPROVED, _('approved')),
+        (REJECTED, _('rejected')),
+        (UNMODERATED, _('unmoderated')),
     )
 
     conversation = models.ForeignKey(Conversation, related_name='comments')
@@ -173,9 +255,9 @@ class Vote(models.Model):
     DISAGREE = -1
 
     VOTE_CHOICES = (
-        (AGREE, "AGREE"),
-        (PASS, "PASS"),
-        (DISAGREE, "DISAGREE"),
+        (AGREE, _('AGREE')),
+        (PASS, _('PASS')),
+        (DISAGREE, _('DISAGREE')),
     )
 
     author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='votes')
