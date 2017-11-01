@@ -43,13 +43,18 @@ class CommentViewSet(ModelViewSet):
             conversation = Conversation.objects.get(pk=request.data['conversation'])
             user  = User.objects.get(pk=request.data['author'])
             if (not conversation.can_user_post_comment(user)):
-                return Response({"Error":_("Sorry, you can't write too many comments")},
-                    status=status.HTTP_429_TOO_MANY_REQUESTS)
+                response = {
+                    "errors":[
+                        {"too_many_comments":_("You can't write too many comments")}
+                    ]
+                }
+                return Response(response, status=status.HTTP_429_TOO_MANY_REQUESTS)
             else:
                 self.perform_create(serializer)
                 headers = self.get_success_headers(serializer.data)
                 self.create
-                return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+                return Response(serializer.data, status=status.HTTP_201_CREATED,
+                                headers=headers)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
