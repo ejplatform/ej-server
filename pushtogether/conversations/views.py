@@ -6,7 +6,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.viewsets import ModelViewSet, GenericViewSet
+from rest_framework.viewsets import ModelViewSet, GenericViewSet, ReadOnlyModelViewSet
 from rest_framework.mixins import RetrieveModelMixin
 from rest_framework.decorators import detail_route, list_route
 
@@ -23,6 +23,15 @@ from .serializers import (
 
 User = get_user_model()
 
+class AuthorAsCurrentUserMixin():
+
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
+
+    def perform_update(self, serializer):
+        serializer.save(author=self.request.user)
+
+
 class ConversationViewSet(ModelViewSet):
     serializer_class = ConversationSerializer
     queryset = Conversation.objects.all()
@@ -33,7 +42,7 @@ class ConversationReportViewSet(ModelViewSet):
     queryset = Conversation.objects.all()
 
 
-class CommentViewSet(ModelViewSet):
+class CommentViewSet(AuthorAsCurrentUserMixin, ModelViewSet):
     serializer_class = CommentSerializer
     queryset = Comment.objects.all()
 
@@ -75,11 +84,11 @@ class CommentReportViewSet(ModelViewSet):
     queryset = Comment.objects.all()
 
 
-class VoteViewSet(ModelViewSet):
+class VoteViewSet(AuthorAsCurrentUserMixin, ModelViewSet):
     serializer_class = VoteSerializer
     queryset = Vote.objects.all()
 
 
-class AuthorViewSet(ModelViewSet):
+class AuthorViewSet(ReadOnlyModelViewSet):
     serializer_class = AuthorSerializer
     queryset = User.objects.all()
