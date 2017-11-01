@@ -100,4 +100,6 @@ class ConversationSerializer(serializers.ModelSerializer):
 
     def get_user_participation_ratio(self, obj):
         user = self._get_current_user()
-        return obj.get_user_participation_ratio(user)
+        if user.is_authenticated():
+            return obj.get_user_participation_ratio(user)
+        return
