@@ -186,3 +186,6 @@ class Vote(models.Model):
         blank=False,
         choices=VOTE_CHOICES,
     )
+
+    class Meta:
+        unique_together = ("author", "comment")
