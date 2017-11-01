@@ -226,6 +226,7 @@ class Comment(models.Model):
     approval = models.CharField(
         max_length=32,
         choices=APPROVEMENT_CHOICES,
+        default=APPROVEMENT_CHOICES[2][0]
     )
 
     def __str__(self):

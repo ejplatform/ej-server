@@ -63,10 +63,12 @@ class CommentReportSerializer(serializers.ModelSerializer):
 
 
 class CommentSerializer(serializers.ModelSerializer):
+    author = AuthorSerializer(read_only=True)
 
     class Meta:
         model = Comment
         fields = ('id', 'conversation', 'author', 'content', 'approval', 'votes')
+        read_only_fields = ('id', 'author', 'approval', 'votes')
 
 
 class ConversationReportSerializer(serializers.ModelSerializer):
