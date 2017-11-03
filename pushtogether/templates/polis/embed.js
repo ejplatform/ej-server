@@ -175,6 +175,14 @@
     return result;
   }
 
+  function outerIframeSetHeightMsg() {
+    var data = {
+      name: 'outerIframeSetHeightMsg',
+      height: window.document.body.scrollHeight
+    };
+    window.top.postMessage(data, '*');
+  }
+
   if (firstRun) {
     window.addEventListener("message", function(event) {
       var data = event.data||{};
@@ -207,6 +215,7 @@
             iframe.style["min-width"] = "100%";
             iframe.setAttribute("width", "1px");
             iframe.setAttribute("scrolling", "no");
+            outerIframeSetHeightMsg();
           }
         }
       }
@@ -289,5 +298,7 @@
   }
 
   window.addEventListener('message', receiveMessage, false);
+
+  window.onload = outerIframeSetHeightMsg();
 
 }());
