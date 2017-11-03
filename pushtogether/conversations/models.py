@@ -251,6 +251,7 @@ class Comment(models.Model):
 
 
 class Vote(models.Model):
+    # Be aware this is the oposite of polis. Eg. in polis, agree is -1.
     AGREE = 1
     PASS = 0
     DISAGREE = -1

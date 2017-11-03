@@ -280,11 +280,11 @@
 
   function receiveMessage(event) {
     // if (event.data === 'askForLogin') {
-    if (event.data.xid !== undefined) {
+    if (event.data && event.data.xid !== undefined) {
       reLoadIframes(event.data);
       jQuery('#myModal').modal('hide');
     } else if (event.data === 'askForLogin') {
-      loginModal();
+      // loginModal();
     }
   }
 
