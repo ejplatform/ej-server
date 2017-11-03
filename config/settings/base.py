@@ -320,15 +320,14 @@ AUTOSLUG_SLUGIFY_FUNCTION = 'slugify.slugify'
 # Location of root django.contrib.admin URL, use {% url 'admin:index' %}
 ADMIN_URL = r'^admin/'
 
-# Your common stuff: Below this line define 3rd party library settings
+# Django cors
 # ------------------------------------------------------------------------------
-
-# FIXME use whitelist instead allow all
 CORS_ORIGIN_ALLOW_ALL = False
 CORS_ORIGIN_WHITELIST = (
     'polis.brasilqueopovoquer.org.br',
     'brasilqueopovoquer.org.br',
     'ej.brasilqueopovoquer.org.br',
+    'app.brasilqueopovoquer.org.br',
 )
 
 # Above default keys will aways pass, do not use then in production.
