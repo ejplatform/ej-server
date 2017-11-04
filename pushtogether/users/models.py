@@ -46,7 +46,7 @@ class User(AbstractUser):
     age = models.IntegerField(_('Age'), null=True, blank=True)
     city = models.CharField(_('City'), null=True, blank=True, max_length=255)
     state = models.CharField(_('State'), null=True, blank=True, max_length=255)
-    biography = models.TextField(_('Biography'), blank=True)
+    biography = models.TextField(_('Biography'), blank=True, null=True)
     # First Name and Last Name do not cover name patterns
     # around the globe.
     name = models.CharField(
@@ -77,20 +77,24 @@ class User(AbstractUser):
         _('Gender'),
         null=True,
         choices=GENDER_CHOICES,
-        max_length=255
+        max_length=255,
+        blank=True
     )
     gender_other = models.CharField(
         _('Other type of gender'),
-        null=True, max_length=255
+        null=True, max_length=255,
+        blank=True
     )
     political_movement = models.CharField(
         _('Participates in any political movement?'),
         null=True,
+        blank=True,
         max_length=255
     )
     race = models.CharField(
         _('Race'),
         null=True,
+        blank=True,
         choices=RACE_CHOICES,
         max_length=255
     )
