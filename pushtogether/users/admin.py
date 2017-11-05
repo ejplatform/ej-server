@@ -35,7 +35,7 @@ class MyUserAdmin(AuthUserAdmin):
     fieldsets = (
             ('User Profile', {'fields': (
                 'name', 'email', 'city', 'state', 'country', 'race',
-                'gender', 'occupation', 'age', 'political_movement', 'biography',
+                'gender', 'occupation', 'age', 'political_movement', 'biography', 'image',
             )}),
     ) + AuthUserAdmin.fieldsets
     list_display = ('username', 'name', 'email', 'is_superuser')
