@@ -3,6 +3,7 @@ from rest_framework.decorators import detail_route, parser_classes
 from rest_framework.response import Response
 from rest_framework.parsers import FormParser, MultiPartParser
 from rest_framework import status
+from rest_framework import permissions
 
 from django.http import Http404
 from django.core.urlresolvers import reverse
@@ -11,7 +12,7 @@ from django.views.generic import DetailView, ListView, RedirectView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import User
-from .permissions import IsOwnerOrReadOnly
+from .permissions import IsCurrentUserOrAdmin
 
 from allauth.account.views import SignupView
 from allauth.account.forms import LoginForm
@@ -27,7 +28,6 @@ from .serializers import UserSerializer
 class UserViewSet(ModelViewSet):
     serializer_class = UserSerializer
     queryset = User.objects.all()
-    permission_classes = (IsOwnerOrReadOnly,)
 
     @detail_route(methods=['POST'])
     @parser_classes((FormParser, MultiPartParser))
@@ -51,6 +51,13 @@ class UserViewSet(ModelViewSet):
 
         serializer = UserSerializer(self.request.user)
         return Response(serializer.data)
+
+    def get_permissions(self):
+        if self.action == 'list':
+            self.permission_classes = [permissions.IsAdminUser, ]
+        elif self.action == 'retrieve':
+            self.permission_classes = [IsCurrentUserOrAdmin]
+        return super(self.__class__, self).get_permissions()
 
 
 class LoginSignupView(SignupView):
