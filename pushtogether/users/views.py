@@ -2,10 +2,11 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import detail_route, parser_classes
 from rest_framework.response import Response
 from rest_framework.parsers import FormParser, MultiPartParser
+from rest_framework.authtoken.models import Token
 from rest_framework import status
 from rest_framework import permissions
 
-from django.http import Http404
+from django.http import Http404, JsonResponse
 from django.core.urlresolvers import reverse
 from django.views.generic import DetailView, ListView, RedirectView, UpdateView
 
@@ -109,3 +110,11 @@ class FacebookLogin(SocialLoginView):
 class TwitterLogin(LoginView):
     serializer_class = TwitterLoginSerializer
     adapter_class = TwitterOAuthAdapter
+
+
+def get_api_key(request):
+    if request.user.id is None:
+            raise Http404
+
+    token = Token.objects.get_or_create(user=request.user)
+    return JsonResponse({ 'key': token[0].key }, status=200)
