@@ -38,7 +38,7 @@ class Command(BaseCommand):
                     continue
 
                 #TODO get conversation created
-                conversation = Conversation.objects.get(id=1)
+                conversation = Conversation.objects.get(id=7)
 
                 try:
                     with transaction.atomic():
