@@ -21,7 +21,8 @@ class ConversationAdmin(admin.ModelAdmin):
 class CommentAdmin(admin.ModelAdmin):
     fields = ['conversation', 'author', 'content', 'polis_id', 'approval']
     list_display = ['id', 'content', 'conversation', 'created_at', 'approval']
-    list_filter = ['approval']
+    list_editable = ['approval',]
+    list_filter = ['conversation', 'approval']
     inlines = [VoteInline]
 
 
