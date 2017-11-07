@@ -111,13 +111,13 @@ class Conversation(models.Model):
         return self.comments.count()
 
     def get_user_participation_ratio(self, user):
-        total_approved_comments = self.comments.filter(
-            approval=Comment.APPROVED).count()
+        others_approved_comments = self.comments.filter(
+            approval=Comment.APPROVED).exclude(author=user).count()
         user_votes = Vote.objects.filter(
             comment__conversation_id=self.id,
             author=user).count()
 
-        return user_votes/total_approved_comments if total_approved_comments else 0
+        return user_votes/others_approved_comments if others_approved_comments else 0
 
     def get_random_unvoted_comment(self, user):
         user_unvoted_comments = self.comments.filter(
