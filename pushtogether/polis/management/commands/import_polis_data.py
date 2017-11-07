@@ -12,15 +12,15 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument('comments', type=str,
             help='Path to the comments csv file to import')
-        parser.add_argument('votes', type=str,
-            help='Path to the votes csv file to import')
+        # parser.add_argument('votes', type=str,
+        #     help='Path to the votes csv file to import')
 
     def handle(self, *args, **options):
         csv_file_comments_path = options['comments']
-        csv_file_votes_path = options['votes']
+        # csv_file_votes_path = options['votes']
 
         self.create_comments(csv_file_comments_path)
-        self.create_votes(csv_file_votes_path)
+        # self.create_votes(csv_file_votes_path)
 
     @transaction.atomic
     def create_comments(self, csv_file_comments_path):
