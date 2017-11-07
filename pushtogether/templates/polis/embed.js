@@ -293,7 +293,7 @@
       reLoadIframes(event.data);
       jQuery('#myModal').modal('hide');
     } else if (event.data === 'askForLogin') {
-      loginModal();
+      // loginModal();
     }
   }
 
