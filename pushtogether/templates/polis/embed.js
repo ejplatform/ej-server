@@ -151,7 +151,7 @@
     }
 
     iframe.src = src;
-    iframe.width = "100%"; // may be constrained by parent div
+    iframe.width = "1px"; // may be constrained by parent div
     iframe.style["min-width"] = "100%";
     iframe.scrolling = "no";
     iframe.height = o.height || 930;
