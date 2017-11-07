@@ -64,7 +64,7 @@ class UserViewSet(ModelViewSet):
 class LoginSignupView(SignupView):
 
     template_name = 'account/login-signup.html'
-    success_url = '/users/close'
+    success_url = '/api/profile/close'
 
     def get_context_data(self, **kwargs):
         # we get context data from original view
