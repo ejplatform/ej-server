@@ -49,7 +49,7 @@ class CommentViewSet(AuthorAsCurrentUserMixin, ModelViewSet):
     serializer_class = CommentSerializer
     queryset = Comment.objects.all()
     filter_backends = (DjangoFilterBackend,)
-    filter_fields = ('polis_id', 'conversation__id', 'polis_slug',)
+    filter_fields = ('polis_id', 'conversation__id', 'conversation__polis_slug',)
     permission_classes = (IsAuthenticatedOrReadOnly,)
 
     def create(self, request, *args, **kwargs):
