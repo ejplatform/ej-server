@@ -22,7 +22,7 @@
         var popupTick = setInterval(function() {
           if (twitterLoginWindow.closed) {
             clearInterval(popupTick);
-            window.location.replace("/users/close");
+            window.location.replace("/api/profile/close");
           }
         }, 500);
       });

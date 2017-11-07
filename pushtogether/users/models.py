@@ -107,6 +107,8 @@ class User(AbstractUser):
 
     @property
     def image_url(self):
+        if self.image:
+            return self.image.url
         social_accounts = SocialAccount.objects.filter(user_id=self.id)
 
         for account in social_accounts:
