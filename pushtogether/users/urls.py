@@ -25,6 +25,11 @@ urlpatterns = [
         view=views.UserUpdateView.as_view(),
         name='update'
     ),
+    url(
+        regex=r'^key/$',
+        view=views.get_api_key,
+        name='api-key'
+    ),
 ]
 
 urlpatterns.extend(router.urls)

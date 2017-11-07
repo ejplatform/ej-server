@@ -207,7 +207,7 @@
           console.log(data.polisFrameId);
           var frameId = "polis_" + data.polisFrameId;
           var iframe = document.getElementById(frameId);
-          var h = data.height + 20;
+          var h = data.height + 70;
           if (h > maxHeightsSeen[frameId] || typeof maxHeightsSeen[frameId] === "undefined") {
             // Prevents resize loops and excessive scrollbar flashing by only allowing iframe to expand.
             maxHeightsSeen[frameId] = h;
