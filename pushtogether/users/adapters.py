@@ -13,9 +13,8 @@ class SocialAccountAdapter(DefaultSocialAccountAdapter):
         return getattr(settings, 'ACCOUNT_ALLOW_REGISTRATION', True)
 
     def populate_user(self, request, sociallogin, data):
-        super().populate_user(request, sociallogin, data)
+        user = super().populate_user(request, sociallogin, data)
 
-        user = sociallogin.user
         user.name = data.get('name')
 
         return user
