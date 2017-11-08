@@ -21,6 +21,7 @@ class Command(BaseCommand):
     @transaction.atomic
     def create_votes(self, csv_file_votes_path):
         with open(csv_file_votes_path, 'r') as csv_file_votes:
+            conversation_id = 7
             readf = csv.DictReader(csv_file_votes)
             count = 0
             for row in readf:
@@ -34,7 +35,7 @@ class Command(BaseCommand):
                     continue
 
                 try:
-                    comment = Comment.objects.get(polis_id=comment_id)
+                    comment = Comment.objects.get(polis_id=comment_id, conversation=conversation_id)
                 except  Comment.DoesNotExist:
                     self.stdout.write('comment does not exist, polis_id: ' + comment_id)
                     continue
