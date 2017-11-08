@@ -23,7 +23,7 @@ from rest_auth.views import LoginView
 from rest_auth.registration.views import SocialLoginView
 from rest_auth.social_serializers import TwitterLoginSerializer
 
-from .serializers import UserSerializer
+from .serializers import UserSerializer, FixSocialLoginSerializer
 
 
 class UserViewSet(ModelViewSet):
@@ -105,6 +105,7 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
 
 class FacebookLogin(SocialLoginView):
     adapter_class = FacebookOAuth2Adapter
+    serializer_class = FixSocialLoginSerializer
 
 
 class TwitterLogin(LoginView):
