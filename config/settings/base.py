@@ -279,7 +279,6 @@ ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_SIGNUP_FORM_CLASS = 'pushtogether.users.forms.PushtogetherSignupForm'
 
 ACCOUNT_ALLOW_REGISTRATION = env.bool('DJANGO_ACCOUNT_ALLOW_REGISTRATION', True)
-ACCOUNT_ADAPTER = 'pushtogether.users.adapters.AccountAdapter'
 SOCIALACCOUNT_ADAPTER = 'pushtogether.users.adapters.SocialAccountAdapter'
 SOCIALACCOUNT_QUERY_EMAIL = True
 
@@ -311,7 +310,7 @@ SOCIALACCOUNT_PROVIDERS = {
 # Custom user app defaults
 # Select the correct user model
 AUTH_USER_MODEL = 'users.User'
-LOGIN_REDIRECT_URL = '/users/close'
+LOGIN_REDIRECT_URL = '/api/profile/close'
 LOGIN_URL = 'account_login'
 
 # SLUGLIFIER
