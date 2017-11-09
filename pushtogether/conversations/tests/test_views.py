@@ -40,11 +40,7 @@ class ConversationViewTests(TestCase):
         self.user = user
         self.create_read_url = reverse('%s:%s' % ('v1','conversation-list'))
 
-    def test_index_without_login(self):
-        response = self.client.get(self.create_read_url)
-        assert response.status_code == 401
-
-    def test_index_logged_in(self):
+    def test_index(self):
         self.client.force_login(self.user)
         response = self.client.get(self.create_read_url)
         assert response.status_code == 200
