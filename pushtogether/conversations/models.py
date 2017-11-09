@@ -25,8 +25,8 @@ class Conversation(models.Model):
     response = models.TextField(_('Respose'), null=True, blank=True)
     created_at = models.DateTimeField(_('Created at'), auto_now_add=True)
     updated_at = models.DateTimeField(_('Updated at'), auto_now=True)
-    is_new = models.BooleanField(_('Is new'), default=True)
     position = models.IntegerField(_('Position'), null=True, blank=True, default=0)
+    is_new = models.BooleanField(_('Is new'), default=True)
 
     background_image = models.ImageField(
         _('Background image'),
@@ -116,15 +116,6 @@ class Conversation(models.Model):
     @property
     def total_comments(self):
         return self.comments.count()
-
-    @property
-    def is_new(self):
-        time_limit_for_novelty = self._get_datetime_interval(700000)
-        return self.created_at >= time_limit_for_novelty
-
-    @property
-    def priority(self):
-        return 1
 
     def get_user_participation_ratio(self, user):
         others_approved_comments = self.comments.filter(
