@@ -65,7 +65,7 @@ class DjangoRestFrameworkTests(APITestCase):
 
     def test_get_list_without_login_should_return_401(self):
         response = self.client.get(self.create_read_url)
-        assert response.status_code == 200
+        assert response.status_code == 401
 
     def test_get_list_logged_in_should_return_200(self):
         self.client.force_login(self.user)
@@ -89,9 +89,9 @@ class DjangoRestFrameworkTests(APITestCase):
         author_json_data = user_serializer.data
 
         data = {
-            "author": self.user.id,
-            "description": "test_description",
             "title": "test_title",
+            "description": "test_description",
+            "author": author_json_data,
             "created_at": str(timezone.now()),
             "updated_at": str(timezone.now()),
         }
@@ -102,7 +102,7 @@ class DjangoRestFrameworkTests(APITestCase):
 
         assert response.status_code == status.HTTP_201_CREATED
         assert Conversation.objects.count() > last_conversation_count
-        assert Conversation.objects.last().title == 'test_title'
+        assert Conversation.objects.last().name == 'test_title'
 
     def test_update_conversation(self):
         """

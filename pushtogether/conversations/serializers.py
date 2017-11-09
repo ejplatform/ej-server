@@ -67,8 +67,7 @@ class CommentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Comment
-        fields = ('id', 'conversation', 'content', 'polis_id', 'author',
-                  'approval', 'votes')
+        fields = ('id', 'conversation', 'content', 'polis_id', 'author',  'approval', 'votes')
         read_only_fields = ('id', 'author', 'approval', 'votes')
 
 
@@ -94,7 +93,7 @@ class ConversationSerializer(serializers.ModelSerializer):
         fields = ('id', 'title', 'description', 'author', 'background_color',
                   'background_image', 'dialog', 'response', 'total_votes',
                   'approved_comments', 'user_participation_ratio', 'created_at',
-                  'updated_at', 'polis_url', 'polis_slug', 'is_new', 'position')
+                  'updated_at', 'polis_url', 'polis_slug')
 
     def _get_current_user(self):
         return self.context['request'].user
