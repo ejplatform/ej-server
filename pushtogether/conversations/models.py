@@ -18,18 +18,22 @@ User = get_user_model()
 
 class Conversation(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL)
-    title = models.CharField(max_length=255, blank=False)
-    description = models.TextField(blank=False)
-    polis_id = models.IntegerField(null=True, blank=True)
-    dialog = models.TextField(null=True, blank=True)
-    response = models.TextField(null=True, blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    title = models.CharField(_("Title"), max_length=255, blank=False)
+    description = models.TextField(_('Description'), blank=False)
+    polis_id = models.IntegerField(_('Polis id'), null=True, blank=True)
+    dialog = models.TextField(_('Dialog'), null=True, blank=True)
+    response = models.TextField(_('Respose'), null=True, blank=True)
+    created_at = models.DateTimeField(_('Created at'), auto_now_add=True)
+    updated_at = models.DateTimeField(_('Updated at'), auto_now=True)
+    position = models.IntegerField(_('Position'), null=True, blank=True, default=0)
+    is_new = models.BooleanField(_('Is new'), default=True)
 
     background_image = models.ImageField(
+        _('Background image'),
         upload_to='conversations/backgrounds',
         null=True, blank=True)
     background_color = models.CharField(
+        _('Background color'),
         max_length=7, validators=[validate_color],
         null=True, blank=True)
 
@@ -37,9 +41,12 @@ class Conversation(models.Model):
     polis_url = models.CharField(_('Polis url'), max_length=255, null=True, blank=True)
 
     # Nudge configuration
-    comment_nudge = models.IntegerField(null=True, blank=True) # number of comments
-    comment_nudge_interval = models.IntegerField(null=True, blank=True)  # seconds
-    comment_nudge_global_limit = models.IntegerField(null=True, blank=True) # number of comments
+    comment_nudge = models.IntegerField(
+        _('Comment nudge'),null=True, blank=True) # number of comments
+    comment_nudge_interval = models.IntegerField(
+        _('Comment nudge interval'), null=True, blank=True)  # seconds
+    comment_nudge_global_limit = models.IntegerField(
+        _('Comment nudge global limit'), null=True, blank=True) # number of comments
 
     class NUDGE(Enum):
         interval_blocked = {
@@ -120,6 +127,9 @@ class Conversation(models.Model):
         return user_votes/others_approved_comments if others_approved_comments else 0
 
     def get_random_unvoted_comment(self, user):
+        '''
+        Returns a random comment that user didn't vote yet
+        '''
         user_unvoted_comments = self.comments.filter(
             ~Q(votes__author_id__exact=user.id),
             approval=Comment.APPROVED)
@@ -201,9 +211,16 @@ class Conversation(models.Model):
                 conversation_id=self.id)
         return nudge_interval_comments
 
-    def _get_datetime_interval(self, interval):
+    def _get_datetime_interval(self, interval, datetime_reference=None):
+        '''
+        Returns the the datetime_reference past interval
+        interval param should be in seconds
+        '''
+        if not datetime_reference:
+            datetime_reference = datetime.datetime.now()
+
         timedelta = datetime.timedelta(seconds=interval)
-        time_limit = datetime.datetime.now() - timedelta
+        time_limit = datetime_reference - timedelta
         return make_aware(time_limit, get_current_timezone())
  
 
@@ -220,10 +237,11 @@ class Comment(models.Model):
 
     conversation = models.ForeignKey(Conversation, related_name='comments')
     author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='comments')
-    content = models.TextField(blank=False)
-    polis_id = models.IntegerField(null=True, blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+    content = models.TextField(_('Content'), blank=False)
+    polis_id = models.IntegerField(_('Polis id'), null=True, blank=True)
+    created_at = models.DateTimeField(_('Created at'), auto_now_add=True)
     approval = models.CharField(
+        _('Approval'),
         max_length=32,
         choices=APPROVEMENT_CHOICES,
         default=APPROVEMENT_CHOICES[2][0]
@@ -264,9 +282,10 @@ class Vote(models.Model):
 
     author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='votes')
     comment = models.ForeignKey(Comment, related_name='votes')
-    polis_id = models.IntegerField(null=True, blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+    polis_id = models.IntegerField(_('Polis id'), null=True, blank=True)
+    created_at = models.DateTimeField(_('Created at'), auto_now_add=True)
     value = models.IntegerField(
+        _('Value'),
         blank=False,
         choices=VOTE_CHOICES,
     )
