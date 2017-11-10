@@ -1,6 +1,5 @@
 (function() {
   var polis = window.polis = window.polis || {};
-  var firstRun = !window.polis._hasRun;
   polis._hasRun = 1;
   var iframes = [];
   var maxHeightsSeen = {};
@@ -183,44 +182,42 @@
     window.top.postMessage(data, '*');
   }
 
-  if (firstRun) {
-    window.addEventListener("message", function(event) {
-      var data = event.data||{};
+  window.addEventListener("message", function(event) {
+    var data = event.data||{};
 
-      var cbList = polis.on[data.name]||[];
-      var cbResults = [];
-      for (var i = 0; i < cbList.length; i++) {
-        cbResults.push(cbList[i]({
-          iframe: document.getElementById("polis_" + data.polisFrameId),
-          data: data
-        }));
-      }
+    var cbList = polis.on[data.name]||[];
+    var cbResults = [];
+    for (var i = 0; i < cbList.length; i++) {
+      cbResults.push(cbList[i]({
+        iframe: document.getElementById("polis_" + data.polisFrameId),
+        data: data
+      }));
+    }
 
-      if (data.name === "resize") {
-        var resizeWasHandled = false;
-        for (var j = 0; j < cbResults.length; j++) {
-          if (cbResults[j] === true) {
-            resizeWasHandled = true;
-          }
-        }
-        if (!resizeWasHandled) {
-          console.log(data.polisFrameId);
-          var frameId = "polis_" + data.polisFrameId;
-          var iframe = document.getElementById(frameId);
-          var h = data.height + 70;
-          if (h > maxHeightsSeen[frameId] || typeof maxHeightsSeen[frameId] === "undefined") {
-            // Prevents resize loops and excessive scrollbar flashing by only allowing iframe to expand.
-            maxHeightsSeen[frameId] = h;
-            iframe.setAttribute("height", h);
-            iframe.style["min-width"] = "100%";
-            iframe.setAttribute("width", "1px");
-            iframe.setAttribute("scrolling", "no");
-            outerIframeSetHeightMsg();
-          }
+    if (data.name === "resize") {
+      var resizeWasHandled = false;
+      for (var j = 0; j < cbResults.length; j++) {
+        if (cbResults[j] === true) {
+          resizeWasHandled = true;
         }
       }
-    }, false);
-  }
+      if (!resizeWasHandled) {
+        console.log(data.polisFrameId);
+        var frameId = "polis_" + data.polisFrameId;
+        var iframe = document.getElementById(frameId);
+        var h = data.height + 70;
+        if (h > maxHeightsSeen[frameId] || typeof maxHeightsSeen[frameId] === "undefined") {
+          // Prevents resize loops and excessive scrollbar flashing by only allowing iframe to expand.
+          maxHeightsSeen[frameId] = h;
+          iframe.setAttribute("height", h);
+          iframe.style["min-width"] = "100%";
+          iframe.setAttribute("width", "1px");
+          iframe.setAttribute("scrolling", "no");
+          outerIframeSetHeightMsg();
+        }
+      }
+    }
+  }, false);
 
   var loadIframes = function() {
 
