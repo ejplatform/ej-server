@@ -17,7 +17,7 @@ class AuthorSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'name')
+        fields = ('id', 'username', 'name', 'image_url')
 
     def get_name(self, obj):
         return obj.get_full_name()
@@ -68,7 +68,7 @@ class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = ('id', 'conversation', 'content', 'polis_id', 'author',
-                  'approval', 'votes')
+                  'approval', 'votes', 'created_at',)
         read_only_fields = ('id', 'author', 'approval', 'votes')
 
 

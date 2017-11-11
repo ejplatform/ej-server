@@ -10,6 +10,8 @@ from rest_framework.viewsets import ModelViewSet, GenericViewSet, ReadOnlyModelV
 from rest_framework.mixins import RetrieveModelMixin
 from rest_framework.decorators import detail_route, list_route
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.pagination import PageNumberPagination
+from rest_framework import filters
 from django_filters.rest_framework import DjangoFilterBackend
 
 from .models import Conversation, Comment, Vote
@@ -48,9 +50,12 @@ class ConversationReportViewSet(ModelViewSet):
 class CommentViewSet(AuthorAsCurrentUserMixin, ModelViewSet):
     serializer_class = CommentSerializer
     queryset = Comment.objects.all()
-    filter_backends = (DjangoFilterBackend,)
-    filter_fields = ('polis_id', 'conversation__id', 'conversation__polis_slug',)
+    filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter,)
+    filter_fields = ('polis_id', 'conversation__id', 'conversation__polis_slug', 'approval',)
     permission_classes = (IsAuthenticatedOrReadOnly,)
+    search_fields = ('content', 'author__name')
+    ordering_fields = ('created_at', )
+    pagination_class = PageNumberPagination
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
