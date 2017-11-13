@@ -6,6 +6,7 @@ from pprint import pprint
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.utils.timezone import make_aware, get_current_timezone
+from django.db.utils import IntegrityError
 
 from pushtogether.conversations.models import (
     Conversation,
@@ -44,6 +45,10 @@ class TestConversation:
         comment.save()
 
         return comment
+
+    def create_valid_comments(self, number, conversation, user, approval=Comment.APPROVED):
+        return [self.create_valid_comment(conversation, user, approval)
+                for x in range(number)]
 
     def create_valid_user(self, username):
         user = get_user_model().objects.create(
@@ -92,10 +97,9 @@ class TestConversation:
         self.conversation.comment_nudge_interval = 1  # seconds
         self.create_valid_comment(self.conversation, self.user)
         time.sleep(2);
-        self.create_valid_comment(self.conversation, self.user)
-        self.create_valid_comment(self.conversation, self.user)
+        self.create_valid_comments(2, self.conversation, self.user)
         recent_user_comments = self.conversation._get_nudge_interval_comments(self.user)
-        
+
         assert recent_user_comments.count() == 2
 
     def test_nudge_is_user_eager_with_a_comment(self):
@@ -107,7 +111,7 @@ class TestConversation:
         self.create_valid_comment(self.conversation, self.user)
         user_comments = self.conversation._get_nudge_interval_comments(
             self.user)
-        
+
         assert self.conversation._is_user_nudge_eager(
             user_comments.count(), user_comments) == True
 
@@ -117,12 +121,10 @@ class TestConversation:
         '''
         self.conversation.comment_nudge = 6
         self.conversation.comment_nudge_interval = 2
-        self.create_valid_comment(self.conversation, self.user)
-        self.create_valid_comment(self.conversation, self.user)
-        self.create_valid_comment(self.conversation, self.user)
+        self.create_valid_comments(3, self.conversation, self.user)
         user_comments = self.conversation._get_nudge_interval_comments(
             self.user)
-        
+
         assert self.conversation._is_user_nudge_eager(
             user_comments.count(), user_comments) == True
 
@@ -135,7 +137,7 @@ class TestConversation:
         self.create_valid_comment(self.conversation, self.user)
         user_comments = self.conversation._get_nudge_interval_comments(
             self.user)
-        
+
         assert self.conversation._is_user_nudge_eager(
             user_comments.count(), user_comments) == False
 
@@ -150,7 +152,7 @@ class TestConversation:
         self.create_valid_comment(self.conversation, self.user)
         user_comments = self.conversation._get_nudge_interval_comments(
             self.user)
-        
+
         assert self.conversation._is_user_nudge_eager(
             user_comments.count(), user_comments) == False
 
@@ -229,8 +231,7 @@ class TestConversation:
         self.conversation.comment_nudge_global_limit = 5
         self.conversation.comment_nudge = 4
         self.conversation.comment_nudge_interval = 2
-        self.create_valid_comment(self.conversation, self.user)
-        self.create_valid_comment(self.conversation, self.user)
+        self.create_valid_comments(2, self.conversation, self.user)
 
         nudge_status = self.conversation.get_nudge_status(self.user)
 
@@ -244,8 +245,7 @@ class TestConversation:
         self.conversation.comment_nudge_global_limit = 5
         self.conversation.comment_nudge = 2
         self.conversation.comment_nudge_interval = 10
-        self.create_valid_comment(self.conversation, self.user)
-        self.create_valid_comment(self.conversation, self.user)
+        self.create_valid_comments(2, self.conversation, self.user)
 
         nudge_status = self.conversation.get_nudge_status(self.user)
 
@@ -255,12 +255,8 @@ class TestConversation:
         '''
         Should return global blocked post the global limit of comments
         '''
-        self.conversation.comment_nudge_global_limit = 2
-        self.conversation.comment_nudge = 1
-        self.conversation.comment_nudge_interval = 20
+        self.conversation.comment_nudge_global_limit = 1
         self.create_valid_comment(self.conversation, self.user)
-        self.create_valid_comment(self.conversation, self.user)
-
         nudge_status = self.conversation.get_nudge_status(self.user)
 
         assert nudge_status == Conversation.NUDGE.global_blocked
@@ -275,8 +271,7 @@ class TestConversation:
         '''
         Should return a conversation's comment
         '''
-        comments = [self.create_valid_comment(self.conversation, self.user)
-                    for x in range(3)]
+        comments = self.create_valid_comments(3, self.conversation, self.user)
         random_comment = self.conversation.get_random_unvoted_comment(self.other_user)
 
         assert random_comment in comments
@@ -309,22 +304,72 @@ class TestConversation:
 
         with pytest.raises(Comment.DoesNotExist) as err:
             self.conversation.get_random_unvoted_comment(self.user)
-        
 
-class TestComment:
+    def test_get_user_participation_ratio(self):
+        '''
+        User participation ratio should be the total of user votes divided by
+        the total of comments maden by other users
+        '''
+        comment = self.create_valid_comment(self.conversation, self.other_user)
+        self.create_valid_comment(self.conversation, self.user)
+        comment.votes.create(author=self.user, value=Vote.DISAGREE)
+
+        user_partipation_ratio = self.conversation.get_user_participation_ratio(
+            self.user)
+
+        assert user_partipation_ratio == 1.0
+
+    def test_user_participation_ratio_should_be_zero(self):
+        '''
+        If there are no other user's comments, the participation ratio should
+        be zero
+        '''
+        user_partipation_ratio = self.conversation.get_user_participation_ratio(
+            self.user)
+
+        assert user_partipation_ratio == 0
+
+
+class TestVote:
     def setup(self):
-        self.user = get_user_model().objects.create(
-            username="test_user",
+        self.user = self.create_valid_user("test_user")
+        self.other_user = self.create_valid_user("other_user")
+        self.conversation = self.create_valid_conversation(self.user)
+        self.comment = self.create_valid_comment(self.conversation, self.user)
+
+    def create_valid_conversation(self, user):
+        conversation = Conversation.objects.create(
+            author=user,
+            title="test_title",
+            description="test_description",
+        )
+        conversation.save()
+        return conversation
+
+    def create_valid_comment(self, conversation, user, approval=Comment.APPROVED):
+        comment = Comment.objects.create(
+            author=user,
+            conversation=conversation,
+            content="test_content",
+            polis_id='1234',
+            approval=approval
+        )
+        comment.save()
+        return comment
+
+    def create_valid_user(self, username):
+        user = get_user_model().objects.create(
+            username=username,
             password="test_password",
             first_name="test",
             last_name="user",
             is_superuser=True,
         )
-        self.user.save()
+        user.save()
+        return user
 
-        self.conversation = Conversation.objects.create(
-            author=self.user,
-            title="test_title",
-            description="test_description",
-        )
-        self.conversation.save()
+    def test_unique_vote_per_comment(self):
+        self.comment.votes.create(author=self.other_user, value=Vote.AGREE)
+
+        with pytest.raises(IntegrityError) as err:
+            self.comment.votes.create(author=self.other_user, value=Vote.AGREE)
