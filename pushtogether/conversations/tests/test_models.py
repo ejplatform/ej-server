@@ -19,14 +19,8 @@ pytestmark = pytest.mark.django_db
 
 class TestConversation:
     def setup(self):
-        self.user = get_user_model().objects.create(
-            username="test_user",
-            password="test_password",
-            first_name="test",
-            last_name="user",
-            is_superuser=True,
-        )
-        self.user.save()
+        self.user = self.create_valid_user("test_user")
+        self.other_user = self.create_valid_user("other_user")
 
         self.conversation = Conversation.objects.create(
             author=self.user,
@@ -39,15 +33,29 @@ class TestConversation:
         self.conversation.comments.all().delete()
         assert self.conversation.comments.count() == 0
 
-    def create_valid_comment(self, conversation, user):
+    def create_valid_comment(self, conversation, user, approval=Comment.APPROVED):
         comment = Comment.objects.create(
             author=user,
             conversation=conversation,
             content="test_content",
             polis_id='1234',
-            approval=Comment.APPROVED
+            approval=approval
         )
         comment.save()
+
+        return comment
+
+    def create_valid_user(self, username):
+        user = get_user_model().objects.create(
+            username=username,
+            password="test_password",
+            first_name="test",
+            last_name="user",
+            is_superuser=True,
+        )
+        user.save()
+
+        return user
 
     def test_create_valid_comment(self):
         old_counter = self.conversation.comments.count()
@@ -256,6 +264,52 @@ class TestConversation:
         nudge_status = self.conversation.get_nudge_status(self.user)
 
         assert nudge_status == Conversation.NUDGE.global_blocked
+
+    def test_nudge_should_be_calculated_only_with_approved_comments(self):
+        '''
+        Should be implemented
+        '''
+        pass
+
+    def test_get_random_comment(self):
+        '''
+        Should return a conversation's comment
+        '''
+        comments = [self.create_valid_comment(self.conversation, self.user)
+                    for x in range(3)]
+        random_comment = self.conversation.get_random_unvoted_comment(self.other_user)
+
+        assert random_comment in comments
+
+    def test_get_random_comment_should_return_only_approved_comments(self):
+        '''
+        Should not return rejected or unmoderated comments
+        '''
+        comments = [self.create_valid_comment(self.conversation, self.user, approval)
+                    for approval in [Comment.REJECTED, Comment.UNMODERATED]]
+
+        with pytest.raises(Comment.DoesNotExist) as err:
+            self.conversation.get_random_unvoted_comment(self.other_user)
+
+    def test_get_random_comment_should_return_only_unvoted_comments(self):
+        '''
+        Should not return any comment because the only one is already voted
+        '''
+        comment = self.create_valid_comment(self.conversation, self.user)
+        comment.votes.create(author=self.other_user, value=Vote.AGREE)
+
+        with pytest.raises(Comment.DoesNotExist) as err:
+            self.conversation.get_random_unvoted_comment(self.other_user)
+
+    def test_random_comment_should_not_be_of_current_user(self):
+        '''
+        User can't get its own comment
+        '''
+        self.create_valid_comment(self.conversation, self.user)
+
+        with pytest.raises(Comment.DoesNotExist) as err:
+            self.conversation.get_random_unvoted_comment(self.user)
+        
 
 class TestComment:
     def setup(self):
