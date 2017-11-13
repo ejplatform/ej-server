@@ -1,5 +1,6 @@
 import pytest
 import datetime
+import time
 from pprint import pprint
 
 from django.contrib.auth import get_user_model
@@ -80,13 +81,181 @@ class TestConversation:
         '''
         It should return only comments in specific interval
         '''
-        self.conversation.comment_nudge_interval = 10  # seconds
+        self.conversation.comment_nudge_interval = 1  # seconds
+        self.create_valid_comment(self.conversation, self.user)
+        time.sleep(2);
         self.create_valid_comment(self.conversation, self.user)
         self.create_valid_comment(self.conversation, self.user)
         recent_user_comments = self.conversation._get_nudge_interval_comments(self.user)
         
-        assert recent_user_comments.count() == self.conversation.comments.count()
+        assert recent_user_comments.count() == 2
 
+    def test_nudge_is_user_eager_with_a_comment(self):
+        '''
+        Should return true if user is trying to post too much comments
+        '''
+        self.conversation.comment_nudge = 2
+        self.conversation.comment_nudge_interval = 2
+        self.create_valid_comment(self.conversation, self.user)
+        user_comments = self.conversation._get_nudge_interval_comments(
+            self.user)
+        
+        assert self.conversation._is_user_nudge_eager(
+            user_comments.count(), user_comments) == True
+
+    def test_nudge_is_user_eager_with_multiple_comments(self):
+        '''
+        Should return true if user is trying to post too much comments
+        '''
+        self.conversation.comment_nudge = 6
+        self.conversation.comment_nudge_interval = 2
+        self.create_valid_comment(self.conversation, self.user)
+        self.create_valid_comment(self.conversation, self.user)
+        self.create_valid_comment(self.conversation, self.user)
+        user_comments = self.conversation._get_nudge_interval_comments(
+            self.user)
+        
+        assert self.conversation._is_user_nudge_eager(
+            user_comments.count(), user_comments) == True
+
+    def test_nudge_is_user_eager_respecting_time_limit(self):
+        '''
+        Should return false if user respect the time limit
+        '''
+        self.conversation.comment_nudge = 4
+        self.conversation.comment_nudge_interval = 2
+        self.create_valid_comment(self.conversation, self.user)
+        user_comments = self.conversation._get_nudge_interval_comments(
+            self.user)
+        
+        assert self.conversation._is_user_nudge_eager(
+            user_comments.count(), user_comments) == False
+
+    def test_nudge_is_user_eager_distributing_comments_in_the_time(self):
+        '''
+        Should return false if user respect the total time limit
+        '''
+        self.conversation.comment_nudge = 4
+        self.conversation.comment_nudge_interval = 1
+        self.create_valid_comment(self.conversation, self.user)
+        time.sleep(2)
+        self.create_valid_comment(self.conversation, self.user)
+        user_comments = self.conversation._get_nudge_interval_comments(
+            self.user)
+        
+        assert self.conversation._is_user_nudge_eager(
+            user_comments.count(), user_comments) == False
+
+    def test_nudge_is_user_interval_blocked(self):
+        '''
+        Should return true if user post too many comments disrescpecting time
+        limits
+        '''
+        self.conversation.comment_nudge = 1
+        self.conversation.comment_nudge_interval = 10
+        self.create_valid_comment(self.conversation, self.user)
+        user_comments_counter = self.conversation._get_nudge_interval_comments(
+            self.user).count()
+        is_user_blocked = self.conversation._is_user_nudge_interval_blocked(
+            user_comments_counter)
+
+        assert is_user_blocked == True
+
+    def test_nudge_is_user_interval_blocked_respecting_limits(self):
+        '''
+        Should return false if user post comments moderately
+        '''
+        self.conversation.comment_nudge = 2
+        self.conversation.comment_nudge_interval = 10
+        self.create_valid_comment(self.conversation, self.user)
+        user_comments_counter = self.conversation._get_nudge_interval_comments(
+            self.user).count()
+        is_user_blocked = self.conversation._is_user_nudge_interval_blocked(
+            user_comments_counter)
+
+        assert is_user_blocked == False
+
+    def test_nudge_is_user_global_limit_blocked(self):
+        '''
+        Should return true if user post many comments disrespecting the
+        nudge global limits
+        '''
+        self.conversation.comment_nudge_global_limit = 1
+        self.create_valid_comment(self.conversation, self.user)
+        is_user_blocked = self.conversation._is_user_nudge_global_limit_blocked(
+            self.user)
+
+        assert is_user_blocked == True
+
+    def test_nudge_is_user_global_limit_blocked_respecting_global_limit(self):
+        '''
+        Should return False if user post many comments disrespecting the
+        nudge global limits
+        '''
+        self.conversation.comment_nudge_global_limit = 2
+        self.create_valid_comment(self.conversation, self.user)
+        is_user_blocked = self.conversation._is_user_nudge_global_limit_blocked(
+            self.user)
+
+        assert is_user_blocked == False
+
+    def test_nudge_status_should_return_normal(self):
+        '''
+        Should return normal if user is respecting nudge limits and post
+        moderately
+        '''
+        self.conversation.comment_nudge_global_limit = 5
+        self.conversation.comment_nudge = 4
+        self.conversation.comment_nudge_interval = 4
+        self.create_valid_comment(self.conversation, self.user)
+
+        nudge_status = self.conversation.get_nudge_status(self.user)
+
+        assert nudge_status == Conversation.NUDGE.normal
+
+    def test_nudge_status_should_return_eager(self):
+        '''
+        Should return eager if user is respecting nudge limits but post too
+        many comments in a short time
+        '''
+        self.conversation.comment_nudge_global_limit = 5
+        self.conversation.comment_nudge = 4
+        self.conversation.comment_nudge_interval = 2
+        self.create_valid_comment(self.conversation, self.user)
+        self.create_valid_comment(self.conversation, self.user)
+
+        nudge_status = self.conversation.get_nudge_status(self.user)
+
+        assert nudge_status == Conversation.NUDGE.eager
+
+    def test_nudge_status_should_return_interval_blocked(self):
+        '''
+        Should return interval blocked if user isn't respecting nudge limits
+        posting too many comments in a short time
+        '''
+        self.conversation.comment_nudge_global_limit = 5
+        self.conversation.comment_nudge = 2
+        self.conversation.comment_nudge_interval = 10
+        self.create_valid_comment(self.conversation, self.user)
+        self.create_valid_comment(self.conversation, self.user)
+
+        nudge_status = self.conversation.get_nudge_status(self.user)
+
+        assert nudge_status == Conversation.NUDGE.interval_blocked
+
+    def test_nudge_status_should_return_global_blocked(self):
+        '''
+        Should return global blocked post the global limit of comments
+        '''
+        self.conversation.comment_nudge_global_limit = 2
+        self.conversation.comment_nudge = 1
+        self.conversation.comment_nudge_interval = 20
+        self.create_valid_comment(self.conversation, self.user)
+        self.create_valid_comment(self.conversation, self.user)
+
+        nudge_status = self.conversation.get_nudge_status(self.user)
+
+        assert nudge_status == Conversation.NUDGE.global_blocked
 
 class TestComment:
     def setup(self):
