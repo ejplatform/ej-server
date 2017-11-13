@@ -90,6 +90,12 @@ class NextCommentViewSet(RetrieveModelMixin, GenericViewSet):
 class CommentReportViewSet(ModelViewSet):
     serializer_class = CommentReportSerializer
     queryset = Comment.objects.all()
+    filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter,)
+    filter_fields = ('polis_id', 'conversation__id', 'conversation__polis_slug', 'approval',)
+    permission_classes = (IsAuthenticatedOrReadOnly,)
+    search_fields = ('content', 'author__name')
+    ordering_fields = ('created_at', )
+    pagination_class = PageNumberPagination
 
 
 class VoteViewSet(AuthorAsCurrentUserMixin, ModelViewSet):
