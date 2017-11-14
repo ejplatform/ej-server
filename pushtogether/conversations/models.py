@@ -248,6 +248,7 @@ class Comment(models.Model):
         choices=APPROVEMENT_CHOICES,
         default=APPROVEMENT_CHOICES[2][0]
     )
+    rejection_reason = models.TextField(_('Rejection reason'), null=True, blank=True)
 
     def __str__(self):
         return self.content

@@ -49,7 +49,7 @@ class CommentReportSerializer(serializers.ModelSerializer):
         fields = ('id', 'author', 'content', 'created_at', 'total_votes',
                   'agree_votes', 'disagree_votes', 'pass_votes', 'approval',
                   'agreement_consensus', 'disagreement_consensus', 'uncertainty',
-                  'conversation')
+                  'conversation', 'rejection_reason')
 
     def get_agreement_consensus(self, obj):
         try:
@@ -76,7 +76,7 @@ class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = ('id', 'conversation', 'content', 'polis_id', 'author',
-                  'approval', 'votes', 'created_at',)
+                  'approval', 'votes', 'created_at', 'rejection_reason')
         read_only_fields = ('id', 'author', 'approval', 'votes')
 
 

@@ -20,7 +20,7 @@ class ConversationAdmin(admin.ModelAdmin):
 
 
 class CommentAdmin(admin.ModelAdmin):
-    fields = ['conversation', 'author', 'content', 'polis_id', 'approval']
+    fields = ['conversation', 'author', 'content', 'polis_id', 'approval', 'rejection_reason']
     list_display = ['id', 'content', 'conversation', 'created_at', 'approval']
     list_editable = ['approval',]
     list_filter = ['conversation', 'approval']
