@@ -31,17 +31,25 @@ class VoteSerializer(serializers.ModelSerializer):
         fields = ('id', 'author', 'comment', 'value')
 
 
+class ConversationSimpleReportSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Conversation
+        fields = ('id', 'title', 'description', 'total_votes', 'created_at',)
+
+
 class CommentReportSerializer(serializers.ModelSerializer):
     author = AuthorSerializer(read_only=True)
     agreement_consensus = serializers.SerializerMethodField()
     disagreement_consensus = serializers.SerializerMethodField()
     uncertainty = serializers.SerializerMethodField()
+    conversation = ConversationSimpleReportSerializer(read_only=True)
 
     class Meta:
         model = Comment
         fields = ('id', 'author', 'content', 'created_at', 'total_votes',
                   'agree_votes', 'disagree_votes', 'pass_votes', 'approval',
-                  'agreement_consensus', 'disagreement_consensus', 'uncertainty')
+                  'agreement_consensus', 'disagreement_consensus', 'uncertainty',
+                  'conversation')
 
     def get_agreement_consensus(self, obj):
         try:
