@@ -131,6 +131,7 @@ class Conversation(models.Model):
         Returns a random comment that user didn't vote yet
         '''
         user_unvoted_comments = self.comments.filter(
+            ~Q(author=user),
             ~Q(votes__author_id__exact=user.id),
             approval=Comment.APPROVED)
 
@@ -141,7 +142,8 @@ class Conversation(models.Model):
             while(random_idx == len(pks)):
                 random_idx = randint(0, len(pks))
         else:
-            raise DoesNotExist(_('There is no comments available for this user'))
+            raise Comment.DoesNotExist(
+                _('There is no comments available for this user'))
 
         random_comment = user_unvoted_comments.get(pk=pks[random_idx])
         return random_comment
