@@ -50,12 +50,9 @@ class ConversationReportViewSet(viewsets.ModelViewSet):
 class CommentViewSet(AuthorAsCurrentUserMixin, viewsets.ModelViewSet):
     serializer_class = CommentSerializer
     queryset = Comment.objects.all()
-    filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter,)
+    filter_backends = (DjangoFilterBackend, )
+    filter_fields = ('polis_id', 'conversation__id',)
     permission_classes = (permissions.IsAuthenticated,)
-    filter_fields = ('polis_id', 'conversation__id', 'conversation__polis_slug', 'approval',)
-    search_fields = ('content', 'author__name')
-    ordering_fields = ('created_at', )
-    pagination_class = PageNumberPagination
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
