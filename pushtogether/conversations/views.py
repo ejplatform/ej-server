@@ -6,8 +6,8 @@ from django.utils.translation import ugettext_lazy as _
 
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.viewsets import ModelViewSet, GenericViewSet, ReadOnlyModelViewSet
-from rest_framework.mixins import RetrieveModelMixin
+from rest_framework import viewsets
+from rest_framework import mixins
 from rest_framework.decorators import detail_route, list_route
 from rest_framework import permissions
 from rest_framework.pagination import PageNumberPagination
@@ -36,18 +36,18 @@ class AuthorAsCurrentUserMixin():
         serializer.save(author=self.request.user)
 
 
-class ConversationViewSet(ModelViewSet):
+class ConversationViewSet(viewsets.ModelViewSet):
     serializer_class = ConversationSerializer
     queryset = Conversation.objects.all()
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
 
-class ConversationReportViewSet(ModelViewSet):
+class ConversationReportViewSet(viewsets.ModelViewSet):
     serializer_class = ConversationReportSerializer
     queryset = Conversation.objects.all()
 
 
-class CommentViewSet(AuthorAsCurrentUserMixin, ModelViewSet):
+class CommentViewSet(AuthorAsCurrentUserMixin, viewsets.ModelViewSet):
     serializer_class = CommentSerializer
     queryset = Comment.objects.all()
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter,)
@@ -83,7 +83,7 @@ class CommentViewSet(AuthorAsCurrentUserMixin, ModelViewSet):
             return Comment.objects.filter(author=user)
 
 
-class NextCommentViewSet(RetrieveModelMixin, GenericViewSet):
+class NextCommentViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
     serializer_class = CommentSerializer
     queryset = Conversation.objects.all()
 
@@ -94,7 +94,7 @@ class NextCommentViewSet(RetrieveModelMixin, GenericViewSet):
         return conversation.get_random_unvoted_comment(current_user)
 
 
-class CommentReportViewSet(ModelViewSet):
+class CommentReportViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = CommentReportSerializer
     queryset = Comment.objects.all()
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter,)
@@ -105,11 +105,11 @@ class CommentReportViewSet(ModelViewSet):
     pagination_class = PageNumberPagination
 
 
-class VoteViewSet(AuthorAsCurrentUserMixin, ModelViewSet):
+class VoteViewSet(AuthorAsCurrentUserMixin, viewsets.ModelViewSet):
     serializer_class = VoteSerializer
     queryset = Vote.objects.all()
 
 
-class AuthorViewSet(ReadOnlyModelViewSet):
+class AuthorViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = AuthorSerializer
     queryset = User.objects.all()
