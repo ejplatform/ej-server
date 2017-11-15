@@ -77,10 +77,10 @@ class CommentViewSet(AuthorAsCurrentUserMixin, viewsets.ModelViewSet):
 
     def get_queryset(self):
         user = self.request.user
-        if user.is_superuser:
-            return Comment.objects.all()
-        else:
-            return Comment.objects.filter(author=user)
+        queryset = super(CommentViewSet, self).get_queryset()
+        if user.is_authenticated and not user.is_superuser:
+            queryset = queryset.filter(author=user)
+        return queryset
 
 
 class NextCommentViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
@@ -99,10 +99,17 @@ class CommentReportViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Comment.objects.all()
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter,)
     filter_fields = ('polis_id', 'conversation__id', 'conversation__polis_slug', 'approval',)
-    permission_classes = (IsAuthenticatedOrReadOnly,)
     search_fields = ('content', 'author__name')
     ordering_fields = ('created_at', )
     pagination_class = PageNumberPagination
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get_queryset(self):
+        user = self.request.user
+        queryset = super(CommentReportViewSet, self).get_queryset()
+        if user.is_authenticated and not user.is_superuser:
+            queryset = queryset.filter(author=user)
+        return queryset
 
 
 class VoteViewSet(AuthorAsCurrentUserMixin, viewsets.ModelViewSet):
