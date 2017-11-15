@@ -9,7 +9,7 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet, GenericViewSet, ReadOnlyModelViewSet
 from rest_framework.mixins import RetrieveModelMixin
 from rest_framework.decorators import detail_route, list_route
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework import permissions
 from rest_framework.pagination import PageNumberPagination
 from rest_framework import filters
 from django_filters.rest_framework import DjangoFilterBackend
@@ -39,7 +39,7 @@ class AuthorAsCurrentUserMixin():
 class ConversationViewSet(ModelViewSet):
     serializer_class = ConversationSerializer
     queryset = Conversation.objects.all()
-    permission_classes = (IsAuthenticatedOrReadOnly,)
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
 
 class ConversationReportViewSet(ModelViewSet):
@@ -51,8 +51,8 @@ class CommentViewSet(AuthorAsCurrentUserMixin, ModelViewSet):
     serializer_class = CommentSerializer
     queryset = Comment.objects.all()
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter,)
+    permission_classes = (permissions.IsAuthenticated,)
     filter_fields = ('polis_id', 'conversation__id', 'conversation__polis_slug', 'approval',)
-    permission_classes = (IsAuthenticatedOrReadOnly,)
     search_fields = ('content', 'author__name')
     ordering_fields = ('created_at', )
     pagination_class = PageNumberPagination
@@ -74,6 +74,13 @@ class CommentViewSet(AuthorAsCurrentUserMixin, ModelViewSet):
                                 status=conversation_nudge.value['status_code'])
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_superuser:
+            return Comment.objects.all()
+        else:
+            return Comment.objects.filter(author=user)
 
 
 class NextCommentViewSet(RetrieveModelMixin, GenericViewSet):
