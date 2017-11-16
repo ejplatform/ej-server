@@ -6,10 +6,10 @@ from django.utils.translation import ugettext_lazy as _
 
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.viewsets import ModelViewSet, GenericViewSet, ReadOnlyModelViewSet
-from rest_framework.mixins import RetrieveModelMixin
+from rest_framework import viewsets
+from rest_framework import mixins
 from rest_framework.decorators import detail_route, list_route
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework import permissions
 from rest_framework.pagination import PageNumberPagination
 from rest_framework import filters
 from django_filters.rest_framework import DjangoFilterBackend
@@ -36,26 +36,23 @@ class AuthorAsCurrentUserMixin():
         serializer.save(author=self.request.user)
 
 
-class ConversationViewSet(ModelViewSet):
+class ConversationViewSet(viewsets.ModelViewSet):
     serializer_class = ConversationSerializer
     queryset = Conversation.objects.all()
-    permission_classes = (IsAuthenticatedOrReadOnly,)
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
 
-class ConversationReportViewSet(ModelViewSet):
+class ConversationReportViewSet(viewsets.ModelViewSet):
     serializer_class = ConversationReportSerializer
     queryset = Conversation.objects.all()
 
 
-class CommentViewSet(AuthorAsCurrentUserMixin, ModelViewSet):
+class CommentViewSet(AuthorAsCurrentUserMixin, viewsets.ModelViewSet):
     serializer_class = CommentSerializer
     queryset = Comment.objects.all()
-    filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter,)
-    filter_fields = ('polis_id', 'conversation__id', 'conversation__polis_slug', 'approval',)
-    permission_classes = (IsAuthenticatedOrReadOnly,)
-    search_fields = ('content', 'author__name')
-    ordering_fields = ('created_at', )
-    pagination_class = PageNumberPagination
+    filter_backends = (DjangoFilterBackend, )
+    filter_fields = ('polis_id', 'conversation__id',)
+    permission_classes = (permissions.IsAuthenticated,)
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -75,8 +72,15 @@ class CommentViewSet(AuthorAsCurrentUserMixin, ModelViewSet):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    def get_queryset(self):
+        user = self.request.user
+        queryset = super(CommentViewSet, self).get_queryset()
+        if user.is_authenticated and not user.is_superuser:
+            queryset = queryset.filter(author=user)
+        return queryset
 
-class NextCommentViewSet(RetrieveModelMixin, GenericViewSet):
+
+class NextCommentViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
     serializer_class = CommentSerializer
     queryset = Conversation.objects.all()
 
@@ -87,22 +91,29 @@ class NextCommentViewSet(RetrieveModelMixin, GenericViewSet):
         return conversation.get_random_unvoted_comment(current_user)
 
 
-class CommentReportViewSet(ModelViewSet):
+class CommentReportViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = CommentReportSerializer
     queryset = Comment.objects.all()
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter,)
     filter_fields = ('polis_id', 'conversation__id', 'conversation__polis_slug', 'approval',)
-    permission_classes = (IsAuthenticatedOrReadOnly,)
     search_fields = ('content', 'author__name')
     ordering_fields = ('created_at', )
     pagination_class = PageNumberPagination
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get_queryset(self):
+        user = self.request.user
+        queryset = super(CommentReportViewSet, self).get_queryset()
+        if user.is_authenticated and not user.is_superuser:
+            queryset = queryset.filter(author=user)
+        return queryset
 
 
-class VoteViewSet(AuthorAsCurrentUserMixin, ModelViewSet):
+class VoteViewSet(AuthorAsCurrentUserMixin, viewsets.ModelViewSet):
     serializer_class = VoteSerializer
     queryset = Vote.objects.all()
 
 
-class AuthorViewSet(ReadOnlyModelViewSet):
+class AuthorViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = AuthorSerializer
     queryset = User.objects.all()
