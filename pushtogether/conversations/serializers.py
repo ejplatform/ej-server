@@ -77,7 +77,7 @@ class CommentSerializer(serializers.ModelSerializer):
         model = Comment
         fields = ('id', 'conversation', 'content', 'polis_id', 'author',
                   'approval', 'votes', 'created_at', 'rejection_reason')
-        read_only_fields = ('id', 'author', 'approval', 'votes')
+        read_only_fields = ('id', 'author', 'votes')
 
 
 class ConversationReportSerializer(serializers.ModelSerializer):
