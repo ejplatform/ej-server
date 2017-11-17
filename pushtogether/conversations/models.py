@@ -22,7 +22,7 @@ class Conversation(models.Model):
     description = models.TextField(_('Description'), blank=False)
     polis_id = models.IntegerField(_('Polis id'), null=True, blank=True)
     dialog = models.TextField(_('Dialog'), null=True, blank=True)
-    response = models.TextField(_('Respose'), null=True, blank=True)
+    response = models.TextField(_('Response'), null=True, blank=True)
     created_at = models.DateTimeField(_('Created at'), auto_now_add=True)
     updated_at = models.DateTimeField(_('Updated at'), auto_now=True)
     position = models.IntegerField(_('Position'), null=True, blank=True, default=0)
