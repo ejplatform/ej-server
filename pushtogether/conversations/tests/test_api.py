@@ -1,4 +1,5 @@
 import json
+import pytest
 from pprint import pprint
 
 from django.utils import timezone
@@ -20,70 +21,41 @@ from pushtogether.conversations.models import (
     Vote,
 )
 
+from .helpers import TestBase
 
-class DjangoRestFrameworkTests(APITestCase):
+pytestmark = pytest.mark.django_db
 
-    def setUp(self):
-        user = get_user_model().objects.create(
-            username="test_user",
-            password="test_password",
-            first_name="test",
-            last_name="user",
-            is_superuser=True,
+class TestConversationAPI(TestBase):
+
+    def setup(self):
+        super(TestConversationAPI, self).setup()
+        self.create_read_url = reverse(
+            "{version}:{name}".format(
+                version='v1',
+                name='conversation-list'
+            )
         )
-        user.save()
 
-        conversation = Conversation.objects.create(
-            author=user,
-            title="test_title",
-            description="test_description",
-        )
-        conversation.save()
-
-        comment = Comment.objects.create(
-            author=user,
-            conversation=conversation,
-            content="test_content",
-            polis_id='1234',
-            approval=Comment.APPROVED
-        )
-        comment.save()
-
-        vote = Vote.objects.create(
-            author=user,
-            comment=comment,
-            polis_id='12345',
-            value=Vote.AGREE
-        )
-        vote.save()
-
-        self.user = user
-        self.conversation = conversation
-        self.comment = comment
-        self.vote = vote
-        self.create_read_url = reverse("%s:%s" % ('v1','conversation-list'))
-
-    def test_get_list_without_login_should_return_401(self):
-        response = self.client.get(self.create_read_url)
+    def test_get_list_without_login_should_return_401(self, client):
+        response = client.get(self.create_read_url)
         assert response.status_code == 200
 
-    def test_get_list_logged_in_should_return_200(self):
-        self.client.force_login(self.user)
-        response = self.client.get(self.create_read_url)
+    def test_get_list_logged_in_should_return_200(self, client):
+        client.force_login(self.user)
+        response = client.get(self.create_read_url)
         assert response.status_code == 200
 
-    def test_get_list_should_contains_this_conversation(self):
-        self.client.force_login(self.user)
-        response = self.client.get(self.create_read_url)
+    def test_get_list_should_contains_this_conversation(self, client):
+        client.force_login(self.user)
+        response = client.get(self.create_read_url)
 
-        # Is the title in the content
-        self.assertContains(response, 'test_title')
+        assert 'test_title' in str(response.content)
 
-    def test_create_conversation(self):
+    def test_create_conversation(self, client):
         """
         Ensure we can create a new conversation object.
         """
-        self.client.force_authenticate(self.user)
+        client.force_login(self.user)
         last_conversation_count = Conversation.objects.count()
         user_serializer = AuthorSerializer(self.user)
         author_json_data = user_serializer.data
@@ -98,29 +70,32 @@ class DjangoRestFrameworkTests(APITestCase):
 
         pprint(data)
 
-        response = self.client.post(self.create_read_url, data, format='json')
+        response = client.post(self.create_read_url, data, format='json')
 
         assert response.status_code == status.HTTP_201_CREATED
         assert Conversation.objects.count() > last_conversation_count
         assert Conversation.objects.last().title == 'test_title'
 
-    def test_update_conversation(self):
+    def test_update_conversation(self, client):
         """
         Ensure we can update a conversation object.
         """
-        self.client.force_authenticate(self.user)
+        client.force_login(self.user)
 
         update_url = reverse("%s:%s" % ('v1', 'conversation-detail'),
                              args=(self.conversation.id,))
 
-        data = {
+        data = json.dumps({
             "title": "new_test_title",
             "description": "new_test_description",
-        }
+        })
 
-        pre_update_response = self.client.get(self.create_read_url)
-        update_response = self.client.patch(update_url, data, format='json')
-        post_update_response = self.client.get(self.create_read_url)
+        pre_update_response = client.get(self.create_read_url)
+        update_response = client.patch(
+            update_url, data,
+            content_type='application/json'
+        )
+        post_update_response = client.get(self.create_read_url)
 
 
         assert pre_update_response.status_code == status.HTTP_200_OK
@@ -130,16 +105,16 @@ class DjangoRestFrameworkTests(APITestCase):
         assert 'new_test_title' == post_update_response.data[0]['title']
         assert Conversation.objects.last().title == 'new_test_title'
 
-    def test_delete_conversations(self):
+    def test_delete_conversations(self, client):
         """
         Ensure we can delete a conversation object.
         """
-        self.client.force_authenticate(self.user)
+        client.force_login(self.user)
         last_conversation_counter = Conversation.objects.count()
         delete_url = reverse("%s:%s" % ('v1', 'conversation-detail'),
                              args=(self.conversation.id,))
 
-        response = self.client.delete(delete_url)
+        response = client.delete(delete_url)
 
         assert response.status_code == status.HTTP_204_NO_CONTENT
         assert Conversation.objects.count() < last_conversation_counter
