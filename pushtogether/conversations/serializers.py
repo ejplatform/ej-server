@@ -31,25 +31,26 @@ class VoteSerializer(serializers.ModelSerializer):
         fields = ('id', 'author', 'comment', 'value')
 
 
-class ConversationSimpleReportSerializer(serializers.ModelSerializer):
+class SimpleConversationReportSerializer(serializers.ModelSerializer):
     class Meta:
         model = Conversation
         fields = ('id', 'title', 'description', 'total_votes', 'created_at',)
 
 
-class CommentReportSerializer(serializers.ModelSerializer):
+class SimpleCommentReportSerializer(serializers.ModelSerializer):
     author = AuthorSerializer(read_only=True)
     agreement_consensus = serializers.SerializerMethodField()
     disagreement_consensus = serializers.SerializerMethodField()
     uncertainty = serializers.SerializerMethodField()
-    conversation = ConversationSimpleReportSerializer(read_only=True)
 
     class Meta:
         model = Comment
-        fields = ('id', 'author', 'content', 'created_at', 'total_votes',
-                  'agree_votes', 'disagree_votes', 'pass_votes', 'approval',
-                  'agreement_consensus', 'disagreement_consensus', 'uncertainty',
-                  'conversation', 'rejection_reason')
+        fields = (
+            'id', 'author', 'content', 'created_at', 'total_votes',
+            'agree_votes', 'disagree_votes', 'pass_votes', 'approval',
+            'agreement_consensus', 'disagreement_consensus', 'uncertainty',
+            'rejection_reason',
+        )
 
     def get_agreement_consensus(self, obj):
         try:
@@ -69,6 +70,18 @@ class CommentReportSerializer(serializers.ModelSerializer):
         except ZeroDivisionError:
             return False
 
+class CommentReportSerializer(SimpleCommentReportSerializer):
+    conversation = SimpleConversationReportSerializer(read_only=True)
+
+    class Meta:
+        model = Comment
+        fields = (
+            'id', 'author', 'content', 'created_at', 'total_votes',
+            'agree_votes', 'disagree_votes', 'pass_votes', 'approval',
+            'agreement_consensus', 'disagreement_consensus', 'uncertainty',
+            'conversation', 'rejection_reason',
+        )
+
 
 class CommentSerializer(serializers.ModelSerializer):
     author = AuthorSerializer(read_only=True)
@@ -82,7 +95,7 @@ class CommentSerializer(serializers.ModelSerializer):
 
 class ConversationReportSerializer(serializers.ModelSerializer):
     author = AuthorSerializer(read_only=True)
-    comments = CommentReportSerializer(read_only=True, many=True)
+    comments = SimpleCommentReportSerializer(read_only=True, many=True)
 
     class Meta:
         model = Conversation
