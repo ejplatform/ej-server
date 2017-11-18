@@ -1,7 +1,6 @@
 import pytest
 import datetime
 import time
-from pprint import pprint
 
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
@@ -14,53 +13,20 @@ from pushtogether.conversations.models import (
     Vote,
 )
 
+from .helpers import TestBase
+
 
 pytestmark = pytest.mark.django_db
 
 
-class TestConversation:
+class TestConversation(TestBase):
     def setup(self):
         self.user = self.create_valid_user("test_user")
         self.other_user = self.create_valid_user("other_user")
-
-        self.conversation = Conversation.objects.create(
-            author=self.user,
-            title="test_title",
-            description="test_description",
-        )
-        self.conversation.save()
+        self.conversation = self.create_valid_conversation(self.user)
 
     def teardown(self):
         self.conversation.comments.all().delete()
-        assert self.conversation.comments.count() == 0
-
-    def create_valid_comment(self, conversation, user, approval=Comment.APPROVED):
-        comment = Comment.objects.create(
-            author=user,
-            conversation=conversation,
-            content="test_content",
-            polis_id='1234',
-            approval=approval
-        )
-        comment.save()
-
-        return comment
-
-    def create_valid_comments(self, number, conversation, user, approval=Comment.APPROVED):
-        return [self.create_valid_comment(conversation, user, approval)
-                for x in range(number)]
-
-    def create_valid_user(self, username):
-        user = get_user_model().objects.create(
-            username=username,
-            password="test_password",
-            first_name="test",
-            last_name="user",
-            is_superuser=True,
-        )
-        user.save()
-
-        return user
 
     def test_create_valid_comment(self):
         old_counter = self.conversation.comments.count()
@@ -261,12 +227,6 @@ class TestConversation:
 
         assert nudge_status == Conversation.NUDGE.global_blocked
 
-    def test_nudge_should_be_calculated_only_with_approved_comments(self):
-        '''
-        Should be implemented
-        '''
-        pass
-
     def test_get_random_comment(self):
         '''
         Should return a conversation's comment
@@ -330,44 +290,7 @@ class TestConversation:
         assert user_partipation_ratio == 0
 
 
-class TestVote:
-    def setup(self):
-        self.user = self.create_valid_user("test_user")
-        self.other_user = self.create_valid_user("other_user")
-        self.conversation = self.create_valid_conversation(self.user)
-        self.comment = self.create_valid_comment(self.conversation, self.user)
-
-    def create_valid_conversation(self, user):
-        conversation = Conversation.objects.create(
-            author=user,
-            title="test_title",
-            description="test_description",
-        )
-        conversation.save()
-        return conversation
-
-    def create_valid_comment(self, conversation, user, approval=Comment.APPROVED):
-        comment = Comment.objects.create(
-            author=user,
-            conversation=conversation,
-            content="test_content",
-            polis_id='1234',
-            approval=approval
-        )
-        comment.save()
-        return comment
-
-    def create_valid_user(self, username):
-        user = get_user_model().objects.create(
-            username=username,
-            password="test_password",
-            first_name="test",
-            last_name="user",
-            is_superuser=True,
-        )
-        user.save()
-        return user
-
+class TestVote(TestBase):
     def test_unique_vote_per_comment(self):
         self.comment.votes.create(author=self.other_user, value=Vote.AGREE)
 
