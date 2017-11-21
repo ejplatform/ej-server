@@ -42,11 +42,11 @@ class Conversation(models.Model):
 
     # Nudge configuration
     comment_nudge = models.IntegerField(
-        _('Comment nudge'),null=True, blank=True) # number of comments
+        _('Comment nudge'), null=True, blank=True)  # number of comments
     comment_nudge_interval = models.IntegerField(
         _('Comment nudge interval'), null=True, blank=True)  # seconds
     comment_nudge_global_limit = models.IntegerField(
-        _('Comment nudge global limit'), null=True, blank=True) # number of comments
+        _('Comment nudge global limit'), null=True, blank=True)  # number of comments
 
     class NUDGE(Enum):
         interval_blocked = {
@@ -73,7 +73,6 @@ class Conversation(models.Model):
             'status_code': 200,
             'errors': False,
         }
-
 
     def __str__(self):
         return self.title
@@ -124,12 +123,12 @@ class Conversation(models.Model):
             comment__conversation_id=self.id,
             author=user).count()
 
-        return user_votes/others_approved_comments if others_approved_comments else 0
+        return user_votes / others_approved_comments if others_approved_comments else 0
 
     def get_random_unvoted_comment(self, user):
-        '''
+        """
         Returns a random comment that user didn't vote yet
-        '''
+        """
         user_unvoted_comments = self.comments.filter(
             ~Q(author=user),
             ~Q(votes__author_id__exact=user.id),
@@ -149,30 +148,30 @@ class Conversation(models.Model):
         return random_comment
 
     def get_nudge_status(self, user):
-        '''
+        """
         Verify specific user nudge status in a conversation
-        '''
+        """
         if user:
-            if(self._is_user_nudge_global_limit_blocked(user)):
+            if self._is_user_nudge_global_limit_blocked(user):
                 return self.NUDGE.global_blocked
-            if(self.comment_nudge and self.comment_nudge_interval):
+            if self.comment_nudge and self.comment_nudge_interval:
                 user_comments = self._get_nudge_interval_comments(user)
                 user_comments_counter = user_comments.count()
 
-                if(self._is_user_nudge_interval_blocked(user_comments_counter)):
+                if self._is_user_nudge_interval_blocked(user_comments_counter):
                     return self.NUDGE.interval_blocked
-                elif(self._is_user_nudge_eager(user_comments_counter, user_comments)):
+                elif self._is_user_nudge_eager(user_comments_counter, user_comments):
                     return self.NUDGE.eager
             return self.NUDGE.normal
         else:
             raise User.DoesNotExist(_('User not found'))
-        
+
     def _is_user_nudge_global_limit_blocked(self, user):
-        '''
+        """
         Check number of user's comments is lower than the global limit
-        '''
+        """
         nudge_global_limit = self.comment_nudge_global_limit
-        if(self.comment_nudge_global_limit):
+        if self.comment_nudge_global_limit:
             user_comments_counter = user.comments.filter(
                 conversation_id=self.id).count()
             return user_comments_counter >= self.comment_nudge_global_limit
@@ -180,25 +179,25 @@ class Conversation(models.Model):
             return False
 
     def _is_user_nudge_interval_blocked(self, user_comments_counter):
-        '''
+        """
         User cannot write too many comments. The limit is set by the
         conversation's comment_nudge and comment_nudge_interval
-        '''
-        if(self.comment_nudge):
+        """
+        if self.comment_nudge:
             return user_comments_counter >= self.comment_nudge
         else:
             return False
 
     def _is_user_nudge_eager(self, user_comments_counter, user_comments):
-        '''
+        """
         A user is an eager user when he creates half of the comments that
         is possible in the middle of the nudge interval
-        '''
-        if(self.comment_nudge and self.comment_nudge_interval):
-            half_nudge = self.comment_nudge//2
-            half_nudge_interval = self.comment_nudge_interval//2
-            if(user_comments_counter >= half_nudge):
-                datetime_limit = self._get_datetime_interval(half_nudge_interval) 
+        """
+        if self.comment_nudge and self.comment_nudge_interval:
+            half_nudge = self.comment_nudge // 2
+            half_nudge_interval = self.comment_nudge_interval // 2
+            if user_comments_counter >= half_nudge:
+                datetime_limit = self._get_datetime_interval(half_nudge_interval)
                 half_time_comments = user_comments.filter(
                     created_at__gt=datetime_limit
                 )
@@ -206,13 +205,13 @@ class Conversation(models.Model):
         return False
 
     def _get_nudge_interval_comments(self, user):
-        '''
+        """
         Returns how many comments user has between now and past
         comment_nudge_interval
-        '''
+        """
         nudge_interval_comments = []
         nudge_interval = self.comment_nudge_interval
-        if(nudge_interval):
+        if nudge_interval:
             datetime_limit = self._get_datetime_interval(nudge_interval)
             nudge_interval_comments = user.comments.filter(
                 created_at__gt=datetime_limit,
@@ -220,17 +219,17 @@ class Conversation(models.Model):
         return nudge_interval_comments
 
     def _get_datetime_interval(self, interval, datetime_reference=None):
-        '''
+        """
         Returns the the datetime_reference past interval
         interval param should be in seconds
-        '''
+        """
         if not datetime_reference:
             datetime_reference = datetime.datetime.now()
 
         timedelta = datetime.timedelta(seconds=interval)
         time_limit = datetime_reference - timedelta
         return make_aware(time_limit, get_current_timezone())
- 
+
 
 class Comment(models.Model):
     APPROVED = "APPROVED"
@@ -274,7 +273,6 @@ class Comment(models.Model):
     @property
     def total_votes(self):
         return self.votes.count()
-
 
 
 class Vote(models.Model):

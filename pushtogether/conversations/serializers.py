@@ -54,21 +54,22 @@ class SimpleCommentReportSerializer(serializers.ModelSerializer):
 
     def get_agreement_consensus(self, obj):
         try:
-            return (obj.agree_votes/obj.total_votes > 0.6)
+            return (obj.agree_votes / obj.total_votes > 0.6)
         except ZeroDivisionError:
             return False
 
     def get_disagreement_consensus(self, obj):
         try:
-            return (obj.disagree_votes/obj.total_votes > 0.6)
+            return (obj.disagree_votes / obj.total_votes > 0.6)
         except ZeroDivisionError:
             return False
 
     def get_uncertainty(self, obj):
         try:
-            return (obj.pass_votes/obj.total_votes > 0.3)
+            return (obj.pass_votes / obj.total_votes > 0.3)
         except ZeroDivisionError:
             return False
+
 
 class CommentReportSerializer(SimpleCommentReportSerializer):
     conversation = SimpleConversationReportSerializer(read_only=True)

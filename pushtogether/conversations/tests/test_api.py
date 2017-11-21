@@ -108,7 +108,6 @@ class TestConversationAPI(TestBase):
         )
         post_update_response = client.get(self.create_read_url)
 
-
         assert update_response.status_code == status.HTTP_200_OK
         assert 'new_test_title' in str(post_update_response.content)
 
@@ -141,9 +140,9 @@ class TestConversationAPI(TestBase):
         return response
 
     def test_nudge_is_user_eager_with_multiple_comments(self, client):
-        '''
+        """
         Should return true if user is trying to post too much comments
-        '''
+        """
         client.force_login(self.user)
         self.conversation.comment_nudge = 6
         self.conversation.comment_nudge_interval = 10
@@ -154,9 +153,9 @@ class TestConversationAPI(TestBase):
         assert response.data['nudge'] == Conversation.NUDGE.eager.value
 
     def test_nudge_is_user_eager_respecting_time_limit(self, client):
-        '''
+        """
         Should return not an eager if user respect the time limit
-        '''
+        """
         client.force_login(self.user)
         self.conversation.comment_nudge = 4
         self.conversation.comment_nudge_interval = 2
@@ -167,9 +166,9 @@ class TestConversationAPI(TestBase):
         assert response.data['nudge'] != Conversation.NUDGE.eager.value
 
     def test_nudge_is_user_eager_distributing_comments_in_the_time(self, client):
-        '''
+        """
         Should return not an eager if user respect the total time limit
-        '''
+        """
         client.force_login(self.user)
         self.conversation.comment_nudge = 4
         self.conversation.comment_nudge_interval = 1
@@ -182,10 +181,10 @@ class TestConversationAPI(TestBase):
         assert response.data['nudge'] != Conversation.NUDGE.eager
 
     def test_nudge_is_user_interval_blocked(self, client):
-        '''
+        """
         Should return interval blocked if user post too many comments,
         disrespecting time limits
-        '''
+        """
         client.force_login(self.user)
         self.conversation.comment_nudge = 1
         self.conversation.comment_nudge_interval = 10
@@ -196,10 +195,10 @@ class TestConversationAPI(TestBase):
         assert response.data['nudge'] == Conversation.NUDGE.interval_blocked.value
 
     def test_nudge_is_user_global_limit_blocked(self, client):
-        '''
+        """
         Should not return global_blocked if user post many comments disrespecting
         the nudge global limits
-        '''
+        """
         client.force_login(self.user)
         self.conversation.comment_nudge_global_limit = 1
         self.conversation.save()
@@ -208,12 +207,11 @@ class TestConversationAPI(TestBase):
 
         assert response.data['nudge'] == Conversation.NUDGE.normal.value
 
-
     def test_nudge_status_should_return_normal(self, client):
-        '''
+        """
         Should return normal if user is respecting nudge limits and post
         moderately
-        '''
+        """
         client.force_login(self.user)
         self.conversation.comment_nudge_global_limit = 5
         self.conversation.comment_nudge = 4
