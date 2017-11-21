@@ -152,23 +152,26 @@ class Conversation(models.Model):
         '''
         Verify specific user nudge status in a conversation
         '''
-        if(self._is_user_nudge_global_limit_blocked(user)):
-            return self.NUDGE.global_blocked
+        if user:
+            if(self._is_user_nudge_global_limit_blocked(user)):
+                return self.NUDGE.global_blocked
+            if(self.comment_nudge and self.comment_nudge_interval):
+                user_comments = self._get_nudge_interval_comments(user)
+                user_comments_counter = user_comments.count()
 
-        user_comments = self._get_nudge_interval_comments(user)
-        user_comments_counter = user_comments.count()
-
-        if(self._is_user_nudge_interval_blocked(user_comments_counter)):
-            return self.NUDGE.interval_blocked
-        elif(self._is_user_nudge_eager(user_comments_counter, user_comments)):
-            return self.NUDGE.eager
-        else:
+                if(self._is_user_nudge_interval_blocked(user_comments_counter)):
+                    return self.NUDGE.interval_blocked
+                elif(self._is_user_nudge_eager(user_comments_counter, user_comments)):
+                    return self.NUDGE.eager
             return self.NUDGE.normal
+        else:
+            raise User.DoesNotExist(_('User not found'))
         
     def _is_user_nudge_global_limit_blocked(self, user):
         '''
         Check number of user's comments is lower than the global limit
         '''
+        nudge_global_limit = self.comment_nudge_global_limit
         if(self.comment_nudge_global_limit):
             user_comments_counter = user.comments.filter(
                 conversation_id=self.id).count()
@@ -192,11 +195,14 @@ class Conversation(models.Model):
         is possible in the middle of the nudge interval
         '''
         if(self.comment_nudge and self.comment_nudge_interval):
-            half_nudge = self.comment_nudge//2 - 1
+            half_nudge = self.comment_nudge//2
             half_nudge_interval = self.comment_nudge_interval//2
-            if(user_comments_counter > half_nudge):
+            if(user_comments_counter >= half_nudge):
                 datetime_limit = self._get_datetime_interval(half_nudge_interval) 
-                return user_comments[half_nudge].created_at >= datetime_limit
+                half_time_comments = user_comments.filter(
+                    created_at__gt=datetime_limit
+                )
+                return half_time_comments.count() >= half_nudge
         return False
 
     def _get_nudge_interval_comments(self, user):
