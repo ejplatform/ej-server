@@ -18,8 +18,6 @@ class TestBase:
         self.user = self.create_valid_user("test_user")
         self.other_user = self.create_valid_user("other_user")
         self.conversation = self.create_valid_conversation(self.user)
-        self.comment = self.create_valid_comment(self.conversation, self.user)
-        self.vote = self.create_valid_vote(self.comment, self.user)
 
     def create_valid_user(self, username):
         user = get_user_model().objects.create(
@@ -29,6 +27,7 @@ class TestBase:
             last_name="user",
             is_superuser=True,
         )
+        user.set_password("test_password")
         user.save()
         return user
 

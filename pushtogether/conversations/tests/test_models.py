@@ -291,6 +291,11 @@ class TestConversation(TestBase):
 
 
 class TestVote(TestBase):
+    def setup(self):
+        super(TestVote, self).setup()
+        self.comment = self.create_valid_comment(self.conversation, self.user)
+        self.vote = self.create_valid_vote(self.comment, self.user)
+
     def test_unique_vote_per_comment(self):
         self.comment.votes.create(author=self.other_user, value=Vote.AGREE)
 

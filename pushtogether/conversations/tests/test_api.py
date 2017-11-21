@@ -1,5 +1,6 @@
 import json
 import pytest
+import time
 from pprint import pprint
 
 from django.utils import timezone
@@ -25,6 +26,7 @@ from .helpers import TestBase
 
 pytestmark = pytest.mark.django_db
 
+
 class TestConversationAPI(TestBase):
 
     def setup(self):
@@ -35,6 +37,21 @@ class TestConversationAPI(TestBase):
                 name='conversation-list'
             )
         )
+        self.update_url = reverse(
+            "{version}:{name}".format(
+                version='v1',
+                name='conversation-detail'),
+            args=(self.conversation.id,)
+        )
+        self.delete_url = reverse(
+            "{version}:{name}".format(
+                version='v1',
+                name='conversation-detail'),
+            args=(self.conversation.id,)
+        )
+
+    def teardown(self):
+        self.conversation.comments.all().delete()
 
     def test_get_list_without_login_should_return_401(self, client):
         response = client.get(self.create_read_url)
@@ -57,8 +74,6 @@ class TestConversationAPI(TestBase):
         """
         client.force_login(self.user)
         last_conversation_count = Conversation.objects.count()
-        user_serializer = AuthorSerializer(self.user)
-        author_json_data = user_serializer.data
 
         data = {
             "author": self.user.id,
@@ -82,28 +97,20 @@ class TestConversationAPI(TestBase):
         """
         client.force_login(self.user)
 
-        update_url = reverse("%s:%s" % ('v1', 'conversation-detail'),
-                             args=(self.conversation.id,))
-
         data = json.dumps({
             "title": "new_test_title",
             "description": "new_test_description",
         })
 
-        pre_update_response = client.get(self.create_read_url)
         update_response = client.patch(
-            update_url, data,
+            self.update_url, data,
             content_type='application/json'
         )
         post_update_response = client.get(self.create_read_url)
 
 
-        assert pre_update_response.status_code == status.HTTP_200_OK
         assert update_response.status_code == status.HTTP_200_OK
-        assert post_update_response.status_code == status.HTTP_200_OK
-        assert 'test_title' == pre_update_response.data[0]['title']
-        assert 'new_test_title' == post_update_response.data[0]['title']
-        assert Conversation.objects.last().title == 'new_test_title'
+        assert 'new_test_title' in str(post_update_response.content)
 
     def test_delete_conversations(self, client):
         """
@@ -111,10 +118,108 @@ class TestConversationAPI(TestBase):
         """
         client.force_login(self.user)
         last_conversation_counter = Conversation.objects.count()
-        delete_url = reverse("%s:%s" % ('v1', 'conversation-detail'),
-                             args=(self.conversation.id,))
 
-        response = client.delete(delete_url)
+        response = client.delete(self.delete_url)
 
         assert response.status_code == status.HTTP_204_NO_CONTENT
         assert Conversation.objects.count() < last_conversation_counter
+
+    # [TODO] should be a helper function
+    def post_valid_comment(self, client, conversation, number=1):
+        data = json.dumps({
+            "conversation": conversation.id,
+            "content": "test_content",
+        })
+        create_comment_url = reverse(
+            "{version}:{name}".format(
+                version='v1',
+                name='comment-list')
+        )
+        for i in range(number):
+            response = client.post(
+                create_comment_url, data, content_type='application/json')
+        return response
+
+    def test_nudge_is_user_eager_with_multiple_comments(self, client):
+        '''
+        Should return true if user is trying to post too much comments
+        '''
+        client.force_login(self.user)
+        self.conversation.comment_nudge = 6
+        self.conversation.comment_nudge_interval = 10
+        self.conversation.save()
+
+        response = self.post_valid_comment(client, self.conversation, number=4)
+
+        assert response.data['nudge'] == Conversation.NUDGE.eager.value
+
+    def test_nudge_is_user_eager_respecting_time_limit(self, client):
+        '''
+        Should return not an eager if user respect the time limit
+        '''
+        client.force_login(self.user)
+        self.conversation.comment_nudge = 4
+        self.conversation.comment_nudge_interval = 2
+        self.conversation.save()
+
+        response = self.post_valid_comment(client, self.conversation)
+
+        assert response.data['nudge'] != Conversation.NUDGE.eager.value
+
+    def test_nudge_is_user_eager_distributing_comments_in_the_time(self, client):
+        '''
+        Should return not an eager if user respect the total time limit
+        '''
+        client.force_login(self.user)
+        self.conversation.comment_nudge = 4
+        self.conversation.comment_nudge_interval = 1
+        self.conversation.save()
+
+        self.post_valid_comment(client, self.conversation)
+        time.sleep(2)
+        response = self.post_valid_comment(client, self.conversation)
+
+        assert response.data['nudge'] != Conversation.NUDGE.eager
+
+    def test_nudge_is_user_interval_blocked(self, client):
+        '''
+        Should return interval blocked if user post too many comments,
+        disrespecting time limits
+        '''
+        client.force_login(self.user)
+        self.conversation.comment_nudge = 1
+        self.conversation.comment_nudge_interval = 10
+        self.conversation.save()
+
+        response = self.post_valid_comment(client, self.conversation, number=2)
+
+        assert response.data['nudge'] == Conversation.NUDGE.interval_blocked.value
+
+    def test_nudge_is_user_global_limit_blocked(self, client):
+        '''
+        Should not return global_blocked if user post many comments disrespecting
+        the nudge global limits
+        '''
+        client.force_login(self.user)
+        self.conversation.comment_nudge_global_limit = 1
+        self.conversation.save()
+
+        response = self.post_valid_comment(client, self.conversation)
+
+        assert response.data['nudge'] == Conversation.NUDGE.normal.value
+
+
+    def test_nudge_status_should_return_normal(self, client):
+        '''
+        Should return normal if user is respecting nudge limits and post
+        moderately
+        '''
+        client.force_login(self.user)
+        self.conversation.comment_nudge_global_limit = 5
+        self.conversation.comment_nudge = 4
+        self.conversation.comment_nudge_interval = 4
+        self.conversation.save()
+
+        response = self.post_valid_comment(client, self.conversation)
+
+        assert response.data['nudge'] == Conversation.NUDGE.normal.value
