@@ -87,31 +87,27 @@ class TestConversationAPI:
 
         response = client.post(self.create_read_url(), data, format='json')
 
-        assert response.status_code == status.HTTP_201_CREATED
-        assert Conversation.objects.count() > last_conversation_count
-        assert Conversation.objects.last().title == 'test_title'
+        assert response.status_code == status.HTTP_405_METHOD_NOT_ALLOWED
+        assert Conversation.objects.count() == last_conversation_count
 
-    def test_update_conversation(self, client, user, conversation):
+    def test_user_cant_update_conversation(self, client, user, conversation):
         """
         Ensure we can update a conversation object.
         """
         client.force_login(user)
-
         data = json.dumps({
             "title": "new_test_title",
             "description": "new_test_description",
         })
-
         update_response = client.patch(
             self.update_url(conversation), data,
             content_type='application/json'
         )
         post_update_response = client.get(self.create_read_url())
 
-        assert update_response.status_code == status.HTTP_200_OK
-        assert 'new_test_title' in str(post_update_response.content)
+        assert update_response.status_code == status.HTTP_405_METHOD_NOT_ALLOWED
 
-    def test_delete_conversations(self, client, user, conversation):
+    def test_user_cant_delete_conversations(self, client, user, conversation):
         """
         Ensure we can delete a conversation object.
         """
@@ -120,8 +116,8 @@ class TestConversationAPI:
 
         response = client.delete(self.delete_url(conversation))
 
-        assert response.status_code == status.HTTP_204_NO_CONTENT
-        assert Conversation.objects.count() < last_conversation_counter
+        assert response.status_code == status.HTTP_405_METHOD_NOT_ALLOWED
+        assert Conversation.objects.count() == last_conversation_counter
 
     def test_nudge_is_user_eager_with_multiple_comments(self, client, user, conversation):
         """
