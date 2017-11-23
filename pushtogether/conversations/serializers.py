@@ -17,7 +17,7 @@ class AuthorSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'name', 'image_url')
+        fields = ('id', 'username', 'name', 'image_url', 'is_superuser',)
 
     def get_name(self, obj):
         return obj.get_full_name()
