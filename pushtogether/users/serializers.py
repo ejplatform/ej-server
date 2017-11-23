@@ -17,7 +17,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         model = User
         fields = ('id', 'image', 'name', 'email', 'biography', 'city',
                   'state', 'country', 'username', 'race', 'gender',
-                  'occupation', 'age', 'political_movement')
+                  'occupation', 'age', 'political_movement', 'is_superuser', )
 
 
 class FixSocialLoginSerializer(SocialLoginSerializer):
