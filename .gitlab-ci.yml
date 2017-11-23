@@ -11,19 +11,6 @@ variables:
   DJANGO_RELEASE_IMAGE: $CI_REGISTRY_IMAGE/django:$CI_BUILD_REF_NAME
   NGINX_RELEASE_IMAGE: $CI_REGISTRY_IMAGE/nginx:$CI_BUILD_REF_NAME
 
-test:
-  image: $DJANGO_RELEASE_IMAGE
-  stage: test
-  services:
-  - docker:dind
-  script:
-  - pytest
-  only:
-  - /develop|app_conversations/
-  environment: development
-  tags:
-  - docker
-
 #############
 ## Production
 #############
@@ -76,6 +63,19 @@ build to homolog:
   environment: homolog
   tags:
     - docker
+
+test to homolog:
+  image: $DJANGO_RELEASE_IMAGE
+  stage: test
+  services:
+  - docker:dind
+  script:
+  - pytest
+  only:
+  - /master/
+  environment: development
+  tags:
+  - docker
 
 deploy to homolog:
   stage: deploy
