@@ -4,11 +4,25 @@ services:
 - docker:17.04-dind
 stages:
 - build
+- test
 - deploy
 
 variables:
   DJANGO_RELEASE_IMAGE: $CI_REGISTRY_IMAGE/django:$CI_BUILD_REF_NAME
   NGINX_RELEASE_IMAGE: $CI_REGISTRY_IMAGE/nginx:$CI_BUILD_REF_NAME
+
+test:
+  image: $DJANGO_RELEASE_IMAGE
+  stage: test
+  services:
+  - docker:dind
+  script:
+  - pytest
+  only:
+  - /develop|app_conversations/
+  environment: development
+  tags:
+  - docker
 
 #############
 ## Production
