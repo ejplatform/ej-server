@@ -14,7 +14,7 @@ class VoteInline(admin.TabularInline):
 class ConversationAdmin(admin.ModelAdmin):
     fields = ['author', 'title', 'description', 'dialog', 'response', 'polis_id',
               'comment_nudge', 'comment_nudge_interval', 'comment_nudge_global_limit',
-              'background_image', 'background_color', 'polis_url','polis_slug',
+              'background_image', 'background_color', 'polis_url', 'polis_slug',
               'position', 'is_new']
     list_display = ['id', 'title', 'author', 'created_at', 'updated_at']
 
@@ -22,7 +22,7 @@ class ConversationAdmin(admin.ModelAdmin):
 class CommentAdmin(admin.ModelAdmin):
     fields = ['conversation', 'author', 'content', 'polis_id', 'approval', 'rejection_reason']
     list_display = ['id', 'content', 'conversation', 'created_at', 'approval']
-    list_editable = ['approval',]
+    list_editable = ['approval', ]
     list_filter = ['conversation', 'approval']
     inlines = [VoteInline]
 

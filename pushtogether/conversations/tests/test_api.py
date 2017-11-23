@@ -1,4 +1,6 @@
+import pytest
 import json
+import time
 from pprint import pprint
 
 from django.utils import timezone
@@ -19,77 +21,62 @@ from pushtogether.conversations.models import (
     Comment,
     Vote,
 )
+from .helpers import post_valid_comment
 
 
-class DjangoRestFrameworkTests(APITestCase):
+pytestmark = pytest.mark.django_db
 
-    def setUp(self):
-        user = get_user_model().objects.create(
-            username="test_user",
-            password="test_password",
-            first_name="test",
-            last_name="user",
-            is_superuser=True,
+
+class TestConversationAPI:
+
+    def update_url(self, conversation):
+        return reverse(
+            "{version}:{name}".format(
+                version='v1',
+                name='conversation-detail'),
+            args=(conversation.id,)
         )
-        user.save()
 
-        conversation = Conversation.objects.create(
-            author=user,
-            title="test_title",
-            description="test_description",
+    def delete_url(self, conversation):
+        return reverse(
+            "{version}:{name}".format(
+                version='v1',
+                name='conversation-detail'),
+            args=(conversation.id,)
         )
-        conversation.save()
 
-        comment = Comment.objects.create(
-            author=user,
-            conversation=conversation,
-            content="test_content",
-            polis_id='1234',
-            approval=Comment.APPROVED
+    def create_read_url(self):
+        return reverse(
+            "{version}:{name}".format(
+                version='v1',
+                name='conversation-list'
+            )
         )
-        comment.save()
 
-        vote = Vote.objects.create(
-            author=user,
-            comment=comment,
-            polis_id='12345',
-            value=Vote.AGREE
-        )
-        vote.save()
-
-        self.user = user
-        self.conversation = conversation
-        self.comment = comment
-        self.vote = vote
-        self.create_read_url = reverse("%s:%s" % ('v1','conversation-list'))
-
-    def test_get_list_without_login_should_return_401(self):
-        response = self.client.get(self.create_read_url)
+    def test_get_list_without_login_should_return_200(self, client):
+        response = client.get(self.create_read_url())
         assert response.status_code == 200
 
-    def test_get_list_logged_in_should_return_200(self):
-        self.client.force_login(self.user)
-        response = self.client.get(self.create_read_url)
+    def test_get_list_logged_in_should_return_200(self, client, user):
+        client.force_login(user)
+        response = client.get(self.create_read_url())
         assert response.status_code == 200
 
-    def test_get_list_should_contains_this_conversation(self):
-        self.client.force_login(self.user)
-        response = self.client.get(self.create_read_url)
+    def test_get_list_should_contains_this_conversation(self, client, user, conversation):
+        client.force_login(user)
+        response = client.get(self.create_read_url())
 
-        # Is the title in the content
-        self.assertContains(response, 'test_title')
+        assert conversation.title in str(response.content)
 
-    def test_create_conversation(self):
+    def test_create_conversation(self, client, user):
         """
         Ensure we can create a new conversation object.
         """
-        self.client.force_authenticate(self.user)
+        client.force_login(user)
         last_conversation_count = Conversation.objects.count()
-        user_serializer = AuthorSerializer(self.user)
-        author_json_data = user_serializer.data
 
         data = {
-            "author": self.user.id,
+            "author": user.id,
             "description": "test_description",
             "title": "test_title",
             "created_at": str(timezone.now()),
@@ -98,48 +85,119 @@ class DjangoRestFrameworkTests(APITestCase):
 
         pprint(data)
 
-        response = self.client.post(self.create_read_url, data, format='json')
+        response = client.post(self.create_read_url(), data, format='json')
 
-        assert response.status_code == status.HTTP_201_CREATED
-        assert Conversation.objects.count() > last_conversation_count
-        assert Conversation.objects.last().title == 'test_title'
+        assert response.status_code == status.HTTP_405_METHOD_NOT_ALLOWED
+        assert Conversation.objects.count() == last_conversation_count
 
-    def test_update_conversation(self):
+    def test_user_cant_update_conversation(self, client, user, conversation):
         """
         Ensure we can update a conversation object.
         """
-        self.client.force_authenticate(self.user)
-
-        update_url = reverse("%s:%s" % ('v1', 'conversation-detail'),
-                             args=(self.conversation.id,))
-
-        data = {
+        client.force_login(user)
+        data = json.dumps({
             "title": "new_test_title",
             "description": "new_test_description",
-        }
+        })
+        update_response = client.patch(
+            self.update_url(conversation), data,
+            content_type='application/json'
+        )
+        post_update_response = client.get(self.create_read_url())
 
-        pre_update_response = self.client.get(self.create_read_url)
-        update_response = self.client.patch(update_url, data, format='json')
-        post_update_response = self.client.get(self.create_read_url)
+        assert update_response.status_code == status.HTTP_405_METHOD_NOT_ALLOWED
 
-
-        assert pre_update_response.status_code == status.HTTP_200_OK
-        assert update_response.status_code == status.HTTP_200_OK
-        assert post_update_response.status_code == status.HTTP_200_OK
-        assert 'test_title' == pre_update_response.data[0]['title']
-        assert 'new_test_title' == post_update_response.data[0]['title']
-        assert Conversation.objects.last().title == 'new_test_title'
-
-    def test_delete_conversations(self):
+    def test_user_cant_delete_conversations(self, client, user, conversation):
         """
         Ensure we can delete a conversation object.
         """
-        self.client.force_authenticate(self.user)
+        client.force_login(user)
         last_conversation_counter = Conversation.objects.count()
-        delete_url = reverse("%s:%s" % ('v1', 'conversation-detail'),
-                             args=(self.conversation.id,))
 
-        response = self.client.delete(delete_url)
+        response = client.delete(self.delete_url(conversation))
 
-        assert response.status_code == status.HTTP_204_NO_CONTENT
-        assert Conversation.objects.count() < last_conversation_counter
+        assert response.status_code == status.HTTP_405_METHOD_NOT_ALLOWED
+        assert Conversation.objects.count() == last_conversation_counter
+
+    def test_nudge_is_user_eager_with_multiple_comments(self, client, user, conversation):
+        """
+        Should return true if user is trying to post too much comments
+        """
+        client.force_login(user)
+        conversation.comment_nudge = 6
+        conversation.comment_nudge_interval = 10
+        conversation.save()
+
+        response = post_valid_comment(client, conversation, number=4)
+
+        assert response.data['nudge'] == Conversation.NUDGE.eager.value
+
+    def test_nudge_is_user_eager_respecting_time_limit(self, client, user, conversation):
+        """
+        Should return not an eager if user respect the time limit
+        """
+        client.force_login(user)
+        conversation.comment_nudge = 4
+        conversation.comment_nudge_interval = 2
+        conversation.save()
+
+        response = post_valid_comment(client, conversation)
+
+        assert response.data['nudge'] != Conversation.NUDGE.eager.value
+
+    def test_nudge_is_user_eager_distributing_comments_in_the_time(self, client, user, conversation):
+        """
+        Should return not an eager if user respect the total time limit
+        """
+        client.force_login(user)
+        conversation.comment_nudge = 4
+        conversation.comment_nudge_interval = 1
+        conversation.save()
+
+        post_valid_comment(client, conversation)
+        time.sleep(2)
+        response = post_valid_comment(client, conversation)
+
+        assert response.data['nudge'] != Conversation.NUDGE.eager
+
+    def test_nudge_is_user_interval_blocked(self, client, user, conversation):
+        """
+        Should return interval blocked if user post too many comments,
+        disrespecting time limits
+        """
+        client.force_login(user)
+        conversation.comment_nudge = 1
+        conversation.comment_nudge_interval = 10
+        conversation.save()
+
+        response = post_valid_comment(client, conversation, number=2)
+
+        assert response.data['nudge'] == Conversation.NUDGE.interval_blocked.value
+
+    def test_nudge_is_user_global_limit_blocked(self, client, user, conversation):
+        """
+        Should not return global_blocked if user post many comments disrespecting
+        the nudge global limits
+        """
+        client.force_login(user)
+        conversation.comment_nudge_global_limit = 1
+        conversation.save()
+
+        response = post_valid_comment(client, conversation)
+
+        assert response.data['nudge'] == Conversation.NUDGE.normal.value
+
+    def test_nudge_status_should_return_normal(self, client, user, conversation):
+        """
+        Should return normal if user is respecting nudge limits and post
+        moderately
+        """
+        client.force_login(user)
+        conversation.comment_nudge_global_limit = 5
+        conversation.comment_nudge = 4
+        conversation.comment_nudge_interval = 4
+        conversation.save()
+
+        response = post_valid_comment(client, conversation)
+
+        assert response.data['nudge'] == Conversation.NUDGE.normal.value

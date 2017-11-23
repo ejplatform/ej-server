@@ -4,6 +4,7 @@ services:
 - docker:17.04-dind
 stages:
 - build
+- test
 - deploy
 
 variables:
@@ -62,6 +63,19 @@ build to homolog:
   environment: homolog
   tags:
     - docker
+
+test to homolog:
+  image: $DJANGO_RELEASE_IMAGE
+  stage: test
+  services:
+  - docker:dind
+  script:
+  - pytest
+  only:
+  - /master/
+  environment: development
+  tags:
+  - docker
 
 deploy to homolog:
   stage: deploy

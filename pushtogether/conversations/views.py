@@ -28,6 +28,7 @@ from .serializers import (
 
 User = get_user_model()
 
+
 class AuthorAsCurrentUserMixin():
 
     def perform_create(self, serializer):

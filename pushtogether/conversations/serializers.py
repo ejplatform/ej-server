@@ -31,43 +31,57 @@ class VoteSerializer(serializers.ModelSerializer):
         fields = ('id', 'author', 'comment', 'value')
 
 
-class ConversationSimpleReportSerializer(serializers.ModelSerializer):
+class SimpleConversationReportSerializer(serializers.ModelSerializer):
     class Meta:
         model = Conversation
         fields = ('id', 'title', 'description', 'total_votes', 'created_at',)
 
 
-class CommentReportSerializer(serializers.ModelSerializer):
+class SimpleCommentReportSerializer(serializers.ModelSerializer):
     author = AuthorSerializer(read_only=True)
     agreement_consensus = serializers.SerializerMethodField()
     disagreement_consensus = serializers.SerializerMethodField()
     uncertainty = serializers.SerializerMethodField()
-    conversation = ConversationSimpleReportSerializer(read_only=True)
 
     class Meta:
         model = Comment
-        fields = ('id', 'author', 'content', 'created_at', 'total_votes',
-                  'agree_votes', 'disagree_votes', 'pass_votes', 'approval',
-                  'agreement_consensus', 'disagreement_consensus', 'uncertainty',
-                  'conversation', 'rejection_reason')
+        fields = (
+            'id', 'author', 'content', 'created_at', 'total_votes',
+            'agree_votes', 'disagree_votes', 'pass_votes', 'approval',
+            'agreement_consensus', 'disagreement_consensus', 'uncertainty',
+            'rejection_reason',
+        )
 
     def get_agreement_consensus(self, obj):
         try:
-            return (obj.agree_votes/obj.total_votes > 0.6)
+            return (obj.agree_votes / obj.total_votes > 0.6)
         except ZeroDivisionError:
             return False
 
     def get_disagreement_consensus(self, obj):
         try:
-            return (obj.disagree_votes/obj.total_votes > 0.6)
+            return (obj.disagree_votes / obj.total_votes > 0.6)
         except ZeroDivisionError:
             return False
 
     def get_uncertainty(self, obj):
         try:
-            return (obj.pass_votes/obj.total_votes > 0.3)
+            return (obj.pass_votes / obj.total_votes > 0.3)
         except ZeroDivisionError:
             return False
+
+
+class CommentReportSerializer(SimpleCommentReportSerializer):
+    conversation = SimpleConversationReportSerializer(read_only=True)
+
+    class Meta:
+        model = Comment
+        fields = (
+            'id', 'author', 'content', 'created_at', 'total_votes',
+            'agree_votes', 'disagree_votes', 'pass_votes', 'approval',
+            'agreement_consensus', 'disagreement_consensus', 'uncertainty',
+            'conversation', 'rejection_reason',
+        )
 
 
 class CommentSerializer(serializers.ModelSerializer):
@@ -89,7 +103,7 @@ class CommentApprovalSerializer(serializers.ModelSerializer):
 
 class ConversationReportSerializer(serializers.ModelSerializer):
     author = AuthorSerializer(read_only=True)
-    comments = CommentReportSerializer(read_only=True, many=True)
+    comments = SimpleCommentReportSerializer(read_only=True, many=True)
 
     class Meta:
         model = Conversation
