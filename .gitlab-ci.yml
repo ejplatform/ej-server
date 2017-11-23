@@ -87,3 +87,30 @@ deploy to homolog:
   environment: homolog
   tags:
     - docker
+
+##########
+## Develop
+##########
+build to develop:
+  stage: build
+  script:
+    - docker login -u "gitlab-ci-token" -p "$CI_JOB_TOKEN" $CI_REGISTRY
+    - docker build -f compose/dev/django/Dockerfile -t $DJANGO_RELEASE_IMAGE .
+    - docker tag $DJANGO_RELEASE_IMAGE "$CI_REGISTRY_IMAGE/django:develop"
+    - docker push "$CI_REGISTRY_IMAGE/django:develop"
+  only:
+    - /develop/
+  environment: development
+  tags:
+    - docker
+
+test to develop:
+  stage: test
+  script:
+    - docker run -d --env-file=./compose/dev/test_env --name=postgres postgres:9.6
+    - docker run --env-file=./compose/dev/test_env --link=postgres:postgres "$CI_REGISTRY_IMAGE/django:develop" /test.sh
+  only:
+    - /develop/
+  environment: development
+  tags:
+    - docker
