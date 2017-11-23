@@ -20,6 +20,7 @@ from .serializers import (
     ConversationSerializer,
     ConversationReportSerializer,
     CommentSerializer,
+    CommentApprovalSerializer,
     CommentReportSerializer,
     AuthorSerializer,
 )
@@ -48,7 +49,7 @@ class ConversationReportViewSet(viewsets.ModelViewSet):
     queryset = Conversation.objects.all()
 
 
-class CommentViewSet(AuthorAsCurrentUserMixin, viewsets.ModelViewSet):
+class CommentViewSet(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
     queryset = Comment.objects.all()
     filter_backends = (DjangoFilterBackend, )
@@ -73,12 +74,26 @@ class CommentViewSet(AuthorAsCurrentUserMixin, viewsets.ModelViewSet):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
+
     def get_queryset(self):
         user = self.request.user
         queryset = super(CommentViewSet, self).get_queryset()
         if user.is_authenticated and not user.is_superuser:
             queryset = queryset.filter(author=user)
         return queryset
+
+    def get_serializer_class(self):
+        if self.action in ('update', 'partial_update'):
+            return CommentApprovalSerializer
+        else:
+            return self.serializer_class
+
+    def get_permissions(self):
+        if self.action in ('update', 'partial_update'):
+            self.permission_classes = [permissions.IsAdminUser, ]
+        return super(self.__class__, self).get_permissions()
 
 
 class NextCommentViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
