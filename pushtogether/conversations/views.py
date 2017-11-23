@@ -38,13 +38,13 @@ class AuthorAsCurrentUserMixin():
         serializer.save(author=self.request.user)
 
 
-class ConversationViewSet(viewsets.ModelViewSet):
+class ConversationViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = ConversationSerializer
     queryset = Conversation.objects.all()
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
 
-class ConversationReportViewSet(viewsets.ModelViewSet):
+class ConversationReportViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = ConversationReportSerializer
     queryset = Conversation.objects.all()
 
