@@ -86,7 +86,7 @@ build to develop:
     - docker tag $DJANGO_RELEASE_IMAGE "$CI_REGISTRY_IMAGE/django:develop"
     - docker push "$CI_REGISTRY_IMAGE/django:develop"
   only:
-    - /develop|app_conversations/
+    - /develop/
   environment: development
   tags:
     - docker
@@ -97,10 +97,7 @@ test to develop:
     - docker run -d --env-file=./compose/dev/test_env --name=postgres postgres:9.6
     - docker run --env-file=./compose/dev/test_env --link=postgres:postgres "$CI_REGISTRY_IMAGE/django:develop" /test.sh
   only:
-    - /develop|app_conversations/
+    - /develop/
   environment: development
   tags:
     - docker
-  variables:
-    POSTGRES_USER: "pushtogether"
-    USE_DOCKER: "yes"
