@@ -11,19 +11,6 @@ variables:
   DJANGO_RELEASE_IMAGE: $CI_REGISTRY_IMAGE/django:$CI_BUILD_REF_NAME
   NGINX_RELEASE_IMAGE: $CI_REGISTRY_IMAGE/nginx:$CI_BUILD_REF_NAME
 
-test:
-  image: $DJANGO_RELEASE_IMAGE
-  stage: test
-  services:
-  - docker:dind
-  script:
-  - pytest
-  only:
-  - /develop|app_conversations/
-  environment: development
-  tags:
-  - docker
-
 #############
 ## Production
 #############
@@ -87,3 +74,33 @@ deploy to homolog:
   environment: homolog
   tags:
     - docker
+
+##########
+## Develop
+##########
+build to develop:
+  stage: build
+  script:
+    - docker login -u "gitlab-ci-token" -p "$CI_JOB_TOKEN" $CI_REGISTRY
+    - docker build -f compose/dev/django/Dockerfile -t $DJANGO_RELEASE_IMAGE .
+    - docker tag $DJANGO_RELEASE_IMAGE "$CI_REGISTRY_IMAGE/django:develop"
+    - docker push "$CI_REGISTRY_IMAGE/django:develop"
+  only:
+    - /develop|app_conversations/
+  environment: development
+  tags:
+    - docker
+
+test to develop:
+  stage: test
+  script:
+    - docker run -d --env-file=./compose/dev/test_env --name=postgres postgres:9.6
+    - docker run --env-file=./compose/dev/test_env --link=postgres:postgres "$CI_REGISTRY_IMAGE/django:develop" /test.sh
+  only:
+    - /develop|app_conversations/
+  environment: development
+  tags:
+    - docker
+  variables:
+    POSTGRES_USER: "pushtogether"
+    USE_DOCKER: "yes"
