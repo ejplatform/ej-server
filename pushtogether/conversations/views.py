@@ -80,8 +80,10 @@ class CommentViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         user = self.request.user
         queryset = super(CommentViewSet, self).get_queryset()
-        if user.is_authenticated and not user.is_superuser:
-            queryset = queryset.filter(author=user)
+
+        # TODO: uncomment this when
+        # if user.is_authenticated and not user.is_superuser:
+        #     queryset = queryset.filter(author=user)
         return queryset
 
     def get_serializer_class(self):
