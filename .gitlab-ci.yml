@@ -1,11 +1,11 @@
 ---
 image: docker:17.04-git
 services:
-- docker:17.04-dind
+  - docker:17.04-dind
 stages:
-- build
-- test
-- deploy
+  - test
+  - build
+  - deploy
 
 variables:
   DJANGO_RELEASE_IMAGE: $CI_REGISTRY_IMAGE/django:$CI_BUILD_REF_NAME
@@ -50,10 +50,6 @@ build to homolog:
   stage: build
   script:
     - docker login -u "gitlab-ci-token" -p "$CI_JOB_TOKEN" $CI_REGISTRY
-    - docker build -f compose/dev/django/Dockerfile -t $DJANGO_RELEASE_IMAGE .
-    - docker tag $DJANGO_RELEASE_IMAGE "$CI_REGISTRY_IMAGE/django:test"
-    - docker push "$CI_REGISTRY_IMAGE/django:test"
-    - docker login -u "gitlab-ci-token" -p "$CI_JOB_TOKEN" $CI_REGISTRY
     - docker build -f compose/production/django/Dockerfile -t $DJANGO_RELEASE_IMAGE .
     - docker tag $DJANGO_RELEASE_IMAGE "$CI_REGISTRY_IMAGE/django:master"
     - docker push $DJANGO_RELEASE_IMAGE
@@ -71,6 +67,8 @@ build to homolog:
 test to homolog:
   stage: test
   script:
+    - docker build -f compose/dev/django/Dockerfile -t $DJANGO_RELEASE_IMAGE .
+    - docker tag $DJANGO_RELEASE_IMAGE "$CI_REGISTRY_IMAGE/django:test"
     - docker run -d --env-file=./compose/dev/test_env --name=postgres postgres:9.6
     - docker run --env-file=./compose/dev/test_env --link=postgres:postgres "$CI_REGISTRY_IMAGE/django:test" /test.sh
   only:
