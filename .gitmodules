@@ -1,0 +1,3 @@
+[submodule "ext-apps/django-courier"]
+	path = ext-apps/django-courier
+	url = git@gitlab.com:empurrandojuntos/django-courier.git

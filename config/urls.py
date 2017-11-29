@@ -31,6 +31,7 @@ urlpatterns = [
     url(r'^rest-auth/registration/account-confirm-email/(?P<key>[-:\w]+)/$', RedirectView.as_view(pattern_name='account_confirm_email'), name='account-confirm-email-redirect'),
     url(r'^rest-auth/registration/', include('rest_auth.registration.urls')),
     url(r'^accounts/', include('allauth.urls')),
+    url(r'^api/', include('courier.urls', namespace='courier')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
