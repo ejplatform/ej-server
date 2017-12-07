@@ -14,6 +14,10 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework import filters
 from django_filters.rest_framework import DjangoFilterBackend
 
+from django.db.models import Q
+import operator
+from functools import reduce
+
 from .models import Conversation, Comment, Vote
 from .serializers import (
     VoteSerializer,
@@ -42,6 +46,15 @@ class ConversationViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = ConversationSerializer
     queryset = Conversation.objects.all()
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+
+    def get_object(self):
+        queryset = self.get_queryset()
+        conversation = None
+        try:
+            conversation = get_object_or_404(queryset, pk=self.kwargs['pk'])
+        except ValueError:
+            conversation = get_object_or_404(queryset, slug=self.kwargs['pk'])
+        return conversation
 
 
 class ConversationReportViewSet(viewsets.ReadOnlyModelViewSet):
