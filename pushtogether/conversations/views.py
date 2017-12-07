@@ -14,10 +14,6 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework import filters
 from django_filters.rest_framework import DjangoFilterBackend
 
-from django.db.models import Q
-import operator
-from functools import reduce
-
 from .models import Conversation, Comment, Vote
 from .serializers import (
     VoteSerializer,
