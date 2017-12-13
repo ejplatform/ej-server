@@ -13,8 +13,13 @@ from django.utils.timezone import make_aware, get_current_timezone
 
 from .validators import validate_color
 
+from autoslug import AutoSlugField
+from autoslug.settings import slugify as default_slugify
+
 User = get_user_model()
 
+def custom_slugify(value):
+    return default_slugify(value).lower()
 
 class Conversation(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL)
@@ -27,6 +32,7 @@ class Conversation(models.Model):
     updated_at = models.DateTimeField(_('Updated at'), auto_now=True)
     position = models.IntegerField(_('Position'), null=True, blank=True, default=0)
     is_new = models.BooleanField(_('Is new'), default=True)
+    slug = AutoSlugField(null=True, default=None, unique=True, populate_from='title', slugify=custom_slugify)
 
     background_image = models.ImageField(
         _('Background image'),
@@ -229,6 +235,7 @@ class Conversation(models.Model):
         timedelta = datetime.timedelta(seconds=interval)
         time_limit = datetime_reference - timedelta
         return make_aware(time_limit, get_current_timezone())
+
 
 
 class Comment(models.Model):
