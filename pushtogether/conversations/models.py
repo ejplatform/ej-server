@@ -33,6 +33,7 @@ class Conversation(models.Model):
     position = models.IntegerField(_('Position'), null=True, blank=True, default=0)
     is_new = models.BooleanField(_('Is new'), default=True)
     slug = AutoSlugField(null=True, default=None, unique=True, populate_from='title', slugify=custom_slugify)
+    opinion = models.TextField(_('Our Opinion'), null=True, blank=True)
 
     background_image = models.ImageField(
         _('Background image'),
