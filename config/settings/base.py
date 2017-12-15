@@ -58,7 +58,9 @@ THIRD_PARTY_APPS = [
     'rest_auth.registration',
     'corsheaders',
     'captcha',
-    'courier'
+    'courier',
+    'courier.pushnotifications',
+    'courier.pushnotifications.providers.onesignal'
 ]
 
 # Apps specific for this project go here.
