@@ -3,4 +3,4 @@ from django.apps import AppConfig
 
 class MathConfig(AppConfig):
     name = 'pushtogether.math'
-    verbose_name = "MathWorker"
+    verbose_name = "Math"
