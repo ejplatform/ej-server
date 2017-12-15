@@ -68,7 +68,7 @@ DEBUG_TOOLBAR_CONFIG = {
 
 # django-extensions and math module
 # ------------------------------------------------------------------------------
-INSTALLED_APPS += ['django_extensions', 'pushtogether-math']
+INSTALLED_APPS += ['django_extensions', 'pushtogether_math']
 
 # TESTING
 # ------------------------------------------------------------------------------

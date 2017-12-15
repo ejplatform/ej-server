@@ -73,6 +73,7 @@ LOCAL_APPS = [
     'pushtogether.polis.apps.PolisConfig',
     'pushtogether.conversations.apps.ConversationsConfig',
     'pushtogether.gamification.apps.GamificationConfig',
+    'pushtogether.math.apps.MathConfig',
 ]
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps

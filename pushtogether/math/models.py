@@ -2,8 +2,6 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.postgres.fields import JSONField, ArrayField
 
-from .tasks import TASK_MAPPING
-
 class Job(models.Model):  
     """Class describing a computational job"""
 
@@ -41,5 +39,6 @@ class Job(models.Model):
         """Save model and if job is in pending state, schedule it"""
         super(Job, self).save(*args, **kwargs)
         if self.status == self.PENDING:
+            from .tasks import TASK_MAPPING
             task = TASK_MAPPING[self.type]
             task.delay(job_id=self.id, n=self.argument)
