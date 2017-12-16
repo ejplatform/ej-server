@@ -41,4 +41,5 @@ class Job(models.Model):
         if self.status == self.PENDING:
             from .tasks import TASK_MAPPING
             task = TASK_MAPPING[self.type]
-            task.delay(job_id=self.id, n=self.argument)
+            print(self.argument)
+            task.delay(job_id=self.id, votes=self.argument)

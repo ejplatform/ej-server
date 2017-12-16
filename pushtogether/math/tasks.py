@@ -14,16 +14,17 @@ def update_job(fn):
     def wrapper(job_id, *args, **kwargs):
         job = Job.objects.get(id=job_id)
         job.status = 'started'
+        print("STAAAAAAAAAAAAARTED")
         job.save()
         try:
             # execute the function fn
             result = fn(*args, **kwargs)
             job.result = result
-            job.status = 'finished'
+            job.status = Job.STATUS.FINISHED
             job.save()
         except:
             job.result = None
-            job.status = 'failed'
+            job.status = Job.STATUS.FAILED
         job.save()
     return wrapper
 
@@ -31,8 +32,9 @@ def update_job(fn):
 @app.task
 @update_job
 def get_clusters(votes):
+    print("HOOOOOOOOOOOOOOOOOO")
+    print("Votes" + str(votes))
     return cluster.get_clusters(votes)
-
 
 TASK_MAPPING = {  
     'CLUSTERS': get_clusters,
