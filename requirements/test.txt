@@ -1,10 +1,6 @@
 # Test dependencies go here.
 -r base.txt
 
-# Python-PostgreSQL Database Adapter
-# If using Win for dev, this assumes Unix in test/prod
-psycopg2==2.7.3.1
-
 coverage==4.4.1
 flake8==3.4.1 # pyup: != 2.6.0
 django-test-plus==1.0.18
