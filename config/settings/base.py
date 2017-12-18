@@ -58,6 +58,9 @@ THIRD_PARTY_APPS = [
     'rest_auth.registration',
     'corsheaders',
     'captcha',
+    'courier',
+    'courier.pushnotifications',
+    'courier.pushnotifications.providers.onesignal'
 ]
 
 # Apps specific for this project go here.
@@ -66,7 +69,6 @@ LOCAL_APPS = [
     'pushtogether.users.apps.UsersConfig',
     'pushtogether.polis.apps.PolisConfig',
     'pushtogether.conversations.apps.ConversationsConfig',
-
 ]
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
