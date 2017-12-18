@@ -21,6 +21,8 @@ services:
 
   postgres:
     image: postgres:9.6
+    ports:
+      - "5432:5432"
     volumes:
       - db_data:/var/lib/postgresql/data
     environment:

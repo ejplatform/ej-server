@@ -117,11 +117,12 @@ class ConversationSerializer(serializers.ModelSerializer):
     user_participation_ratio = serializers.SerializerMethodField()
     created_at = serializers.DateTimeField(format="%d-%m-%Y")
     updated_at = serializers.DateTimeField(format="%d-%m-%Y")
+    lookup_fields = ('id', 'slug')
 
     class Meta:
         model = Conversation
         fields = ('id', 'title', 'description', 'author', 'background_color',
-                  'background_image', 'dialog', 'response', 'total_votes',
+                  'background_image', 'dialog', 'response', 'total_votes', 'slug',
                   'approved_comments', 'user_participation_ratio', 'created_at',
                   'updated_at', 'polis_url', 'polis_slug', 'is_new', 'position')
 

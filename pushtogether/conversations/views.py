@@ -43,6 +43,15 @@ class ConversationViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Conversation.objects.all()
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
+    def get_object(self):
+        queryset = self.get_queryset()
+        conversation = None
+        try:
+            conversation = get_object_or_404(queryset, pk=self.kwargs['pk'])
+        except ValueError:
+            conversation = get_object_or_404(queryset, slug=self.kwargs['pk'])
+        return conversation
+
 
 class ConversationReportViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = ConversationReportSerializer

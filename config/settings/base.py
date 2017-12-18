@@ -61,6 +61,9 @@ THIRD_PARTY_APPS = [
     'actstream',
     'pinax.points',
     'pinax.badges'
+    'courier',
+    'courier.pushnotifications',
+    'courier.pushnotifications.providers.onesignal'
 ]
 
 # Apps specific for this project go here.

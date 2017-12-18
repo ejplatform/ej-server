@@ -21,4 +21,6 @@ django-anymail==0.11.1
 # --------------------------
 raven==6.1.0
 
+# django-courier
+git+https://gitlab.com/empurrandojuntos/django-courier.git
 
