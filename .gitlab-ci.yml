@@ -3,7 +3,6 @@ image: docker:17.04-git
 services:
   - docker:17.04-dind
 stages:
-  - test
   - build
   - deploy
 
