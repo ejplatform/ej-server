@@ -60,7 +60,7 @@ THIRD_PARTY_APPS = [
     'captcha',
     'actstream',
     'pinax.points',
-    'pinax.badges'
+    'pinax.badges',
     'courier',
     'courier.pushnotifications',
     'courier.pushnotifications.providers.onesignal'
