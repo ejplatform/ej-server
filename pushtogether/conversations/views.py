@@ -115,7 +115,20 @@ class NextCommentViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
         queryset = self.get_queryset()
         current_user = self.request.user
         conversation = get_object_or_404(queryset, pk=self.kwargs['pk'])
-        return conversation.get_random_unvoted_comment(current_user)
+
+        try:
+            return conversation.get_random_unvoted_comment(current_user)
+        except Comment.DoesNotExist as e:
+            return None
+
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+
+        if instance:
+            serializer = self.get_serializer(instance)
+            return Response(serializer.data)
+
+        return Response(status=status.HTTP_404_NOT_FOUND)
 
 
 class CommentReportViewSet(viewsets.ReadOnlyModelViewSet):
