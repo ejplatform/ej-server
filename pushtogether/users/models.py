@@ -116,3 +116,14 @@ class User(AbstractUser):
             if picture:
                 return picture
         return "https://gravatar.com/avatar/{}?s=40&d=mm".format(hashlib.md5(self.email.encode('utf-8')).hexdigest())
+
+    @property
+    def profile_filled(self):
+        # First if: checking image
+        if self.image or SocialAccount.objects.filter(user_id=self.id):
+            # Second if: checking all other fields
+            if self.age and self.city and self.state and self.biography and self.name and self.country and self.occupation \
+                and (self.gender or self.gender_other) and self.political_movement and self.race:
+                return True
+
+        return False

@@ -47,6 +47,9 @@ django-filter==1.0.2
 djangorestframework==3.7.1
 django-rest-auth[with_social]==0.9.1
 django-cors-headers==1.2.0
+django-activity-stream==0.6.4
+pinax-badges==1.0.2
+git+https://github.com/tiagofassoni/pinax-points.git
 
 django-recaptcha==1.3.1
 

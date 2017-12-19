@@ -58,6 +58,12 @@ THIRD_PARTY_APPS = [
     'rest_auth.registration',
     'corsheaders',
     'captcha',
+    'actstream',
+    'pinax.points',
+    'pinax.badges',
+    'courier',
+    'courier.pushnotifications',
+    'courier.pushnotifications.providers.onesignal'
 ]
 
 # Apps specific for this project go here.
@@ -66,7 +72,7 @@ LOCAL_APPS = [
     'pushtogether.users.apps.UsersConfig',
     'pushtogether.polis.apps.PolisConfig',
     'pushtogether.conversations.apps.ConversationsConfig',
-
+    'pushtogether.gamification.apps.GamificationConfig',
 ]
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -335,3 +341,12 @@ CORS_ORIGIN_WHITELIST = (
 RECAPTCHA_PUBLIC_KEY = env('DJANGO_RECAPTCHA_PUBLIC_KEY', default='6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI')
 RECAPTCHA_PRIVATE_KEY = env('DJANGO_RECAPTCHA_PRIVATE_KEY', default='6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe')
 NOCAPTCHA = True
+
+# Django-Activity-Stream
+# ACTSTREAM_SETTINGS = {
+#
+# }
+
+# DEBUG_STUFF
+RUNSERVER_PLUS_PRINT_SQL_TRUNCATE = 10**7
+SHELL_PLUS_PRINT_SQL_TRUNCATE = 10**7
