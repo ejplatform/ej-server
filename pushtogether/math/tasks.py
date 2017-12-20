@@ -13,8 +13,7 @@ def update_job(fn):
     @wraps(fn)
     def wrapper(job_id, *args, **kwargs):
         job = Job.objects.get(id=job_id)
-        job.status = 'started'
-        print("STAAAAAAAAAAAAARTED")
+        job.status = Job.STATUS.STARTED
         job.save()
         try:
             # execute the function fn
@@ -29,11 +28,11 @@ def update_job(fn):
     return wrapper
 
 
+#@app.task
+#@update_job
 @app.task
-@update_job
 def get_clusters(votes):
-    print("HOOOOOOOOOOOOOOOOOO")
-    print("Votes" + str(votes))
+    print("HOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
     return cluster.get_clusters(votes)
 
 TASK_MAPPING = {  

@@ -1,6 +1,6 @@
 # Local development dependencies go here
---extra-index-url https://test.pypi.org/simple
 -r base.txt
+--extra-index-url https://test.pypi.org/simple
 
 -e ext-apps/django-courier
 
@@ -24,3 +24,4 @@ pytest-sugar==0.9.0
 # pushtogether math module
 pushtogether-math
 celery
+flower
