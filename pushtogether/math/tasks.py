@@ -1,5 +1,6 @@
 from pushtogether_math import cluster
 from functools import wraps
+from celery import shared_task
 
 from .models import Job
 from .celeryconf import app
@@ -30,9 +31,8 @@ def update_job(fn):
 
 #@app.task
 #@update_job
-@app.task
+@shared_task
 def get_clusters(votes):
-    print("HOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
     return cluster.get_clusters(votes)
 
 TASK_MAPPING = {  
