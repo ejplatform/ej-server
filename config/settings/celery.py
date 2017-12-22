@@ -1,8 +1,8 @@
 import os
 from kombu import Exchange, Queue
 
-#CELERY_ENABLE_UTC = True
-#CELERY_TIMEZONE = "UTC"
+CELERY_ENABLE_UTC = True
+CELERY_TIMEZONE = "UTC"
 
 # Redis
 
@@ -12,12 +12,12 @@ CELERY_REDIS_HOST = os.environ.get('REDIS_PORT_6379_TCP_ADDR', 'redis')
 
 RABBIT_HOSTNAME = os.environ.get('RABBIT_PORT_5672_TCP', 'rabbit')
 
-#if RABBIT_HOSTNAME.startswith('tcp://'):  
-#    RABBIT_HOSTNAME = RABBIT_HOSTNAME.split('//')[1]
+if RABBIT_HOSTNAME.startswith('tcp://'):
+    RABBIT_HOSTNAME = RABBIT_HOSTNAME.split('//')[1]
 
-#CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL', None)
-#if not CELERY_BROKER_URL:  
-CELERY_BROKER_URL = 'amqp://{user}:{password}@{hostname}/{vhost}/'.format(
+CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL', None)
+if not CELERY_BROKER_URL:
+    CELERY_BROKER_URL = 'amqp://{user}:{password}@{hostname}/{vhost}/'.format(
         user=os.environ.get('RABBIT_ENV_USER', 'admin'),
         password=os.environ.get('RABBIT_ENV_RABBITMQ_PASS', 'mypass'),
         hostname=RABBIT_HOSTNAME,
@@ -25,9 +25,9 @@ CELERY_BROKER_URL = 'amqp://{user}:{password}@{hostname}/{vhost}/'.format(
 
 # We don't want to have dead connections stored on rabbitmq,
 # so we have to negotiate using heartbeats
-#CELERY_BROKER_HEARTBEAT = 30
-#CELERY_BROKER_POOL_LIMIT = 10
-#CELERY_BROKER_CONNECTION_TIMEOUT = 10
+CELERY_BROKER_HEARTBEAT = 30
+CELERY_BROKER_POOL_LIMIT = 10
+CELERY_BROKER_CONNECTION_TIMEOUT = 10
 
 # Celery configuration
 
@@ -38,12 +38,11 @@ CELERY_BROKER_URL = 'amqp://{user}:{password}@{hostname}/{vhost}/'.format(
 #)
 
 # Sensible settings for celery
-#CELERY_TASK_ALWAYS_EAGER = False
-#CELERY_TASK_ACKS_LATE = True
-#CELERY_TASK_PUBLISH_RETRY = True  
-#CELERY_WORKER_DISABLE_RATE_LIMITS = False
+CELERY_TASK_ALWAYS_EAGER = False
+CELERY_TASK_ACKS_LATE = True
+CELERY_TASK_PUBLISH_RETRY = True
+CELERY_WORKER_DISABLE_RATE_LIMITS = False
 
-# By default we will ignore result
 # If you want to see results and try out tasks interactively, change it to False
 # Or change this setting on tasks level
 #CELERY_TASK_IGNORE_RESULT = False
@@ -56,9 +55,7 @@ CELERY_RESULT_BACKEND = 'redis://{host}:{port}/{db}'.format(
 #CELERY_REDIS_MAX_CONNECTIONS = 20
 
 # Don't use pickle as serializer, json is much safer
-#CELERY_TASK_SERIALIZER = "json"
-#CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = "json"
+CELERY_ACCEPT_CONTENT = ['application/json']
 
-#CELERY_WORKER_HIJACK_ROOT_LOGGER = False
-#CELERY_WORKER_PREFETCH_MULTIPLIER = 1
-#CELERY_WORKER__MAX_TASKS_PER_CHILD = 1000
+CELERY_WORKER_MAX_TASKS_PER_CHILD = 1000
