@@ -2,7 +2,8 @@ from django.db import models, transaction
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.postgres.fields import JSONField, ArrayField
 
-class Job(models.Model):  
+
+class Job(models.Model):
     """Class describing a computational job"""
 
     # currently, available types of job are:
@@ -38,9 +39,7 @@ class Job(models.Model):
     def save(self, *args, **kwargs):
         """Save model and if job is in pending state, schedule it"""
         super(Job, self).save(*args, **kwargs)
-        print("LAST JOB ID (DJANGO)" + str(Job.objects.last().id))
         if self.status == self.PENDING:
             from .tasks import TASK_MAPPING
             task = TASK_MAPPING[self.type]
-            print("JOB ID=" + str(self.id))
             transaction.on_commit(lambda: task.delay(job_id=self.id, votes=self.argument))

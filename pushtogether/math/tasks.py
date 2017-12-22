@@ -7,13 +7,12 @@ from .celeryconf import app
 
 
 # decorator to avoid code duplication
-def update_job(fn):  
+def update_job(fn):
     """Decorator that will update Job with result of the function"""
 
     # wraps will make the name and docstring of fn available for introspection
     @wraps(fn)
     def wrapper(job_id, *args, **kwargs):
-        print("LAST ID=" + str(Job.objects.last().id))
         job = Job.objects.get(pk=job_id)
         job.status = Job.STARTED
         job.save()
@@ -35,6 +34,7 @@ def update_job(fn):
 def get_clusters(votes):
     return cluster.get_clusters(votes)
 
-TASK_MAPPING = {  
+
+TASK_MAPPING = {
     'CLUSTERS': get_clusters,
 }
