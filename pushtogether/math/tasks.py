@@ -13,25 +13,25 @@ def update_job(fn):
     # wraps will make the name and docstring of fn available for introspection
     @wraps(fn)
     def wrapper(job_id, *args, **kwargs):
-        job = Job.objects.get(id=job_id)
-        job.status = Job.STATUS.STARTED
+        print("LAST ID=" + str(Job.objects.last().id))
+        job = Job.objects.get(pk=job_id)
+        job.status = Job.STARTED
         job.save()
         try:
             # execute the function fn
             result = fn(*args, **kwargs)
             job.result = result
-            job.status = Job.STATUS.FINISHED
+            job.status = Job.FINISHED
             job.save()
         except:
             job.result = None
-            job.status = Job.STATUS.FAILED
+            job.status = Job.FAILED
         job.save()
     return wrapper
 
 
-#@app.task
-#@update_job
 @shared_task
+@update_job
 def get_clusters(votes):
     return cluster.get_clusters(votes)
 

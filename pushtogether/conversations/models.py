@@ -12,6 +12,7 @@ from django.db.models import Q
 from django.utils.timezone import make_aware, get_current_timezone
 
 from .validators import validate_color
+from pushtogether.math.models import Job
 
 from autoslug import AutoSlugField
 from autoslug.settings import slugify as default_slugify
@@ -236,6 +237,13 @@ class Conversation(models.Model):
         time_limit = datetime_reference - timedelta
         return make_aware(time_limit, get_current_timezone())
 
+    def list_votes(self):
+        votes_queryset = Vote.objects.filter(comment__conversation_id=self.id)
+        votes = [[vote.value, vote.author.id, vote.comment.id]
+                 for vote in votes_queryset]
+        return votes
+
+
 
 
 class Comment(models.Model):
@@ -306,3 +314,13 @@ class Vote(models.Model):
 
     class Meta:
         unique_together = ("author", "comment")
+
+    def save(self, *args, **kwargs):
+        super(Vote, self).save(*args, **kwargs)
+        conversation = self.comment.conversation
+        clustering_job = Job(
+            type=Job.CLUSTERS,
+            status=Job.PENDING,
+            argument=conversation.list_votes()
+        )
+        clustering_job.save()
