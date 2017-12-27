@@ -13,6 +13,10 @@ class User(AbstractUser):
     TOUR_CHOICES = (
         ('STEP_ONE', _('Step One')),
         ('STEP_TWO', _('Step Two')),
+        ('STEP_THREE', _('Step Three')),
+        ('STEP_FOUR', _('Step Four')),
+        ('STEP_FIVE', _('Step Five')),
+        ('STEP_SIX', _('Step Six')),
         ('STEP_FINISH', _('Final Step')),
     )
 
