@@ -15,6 +15,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='user',
             name='tour_step',
-            field=models.TextField(blank=True, verbose_name='Current Tour Step'),
+            field=models.TextField(blank=True, null=True, verbose_name='Current Tour Step'),
         ),
     ]

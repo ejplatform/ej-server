@@ -17,6 +17,13 @@ class User(AbstractUser):
         ('STEP_FOUR', _('Step Four')),
         ('STEP_FIVE', _('Step Five')),
         ('STEP_SIX', _('Step Six')),
+        ('STEP_SEVEN', _('Step Seven')),
+        ('STEP_EIGHT', _('Step Eight')),
+        ('STEP_NINE', _('Step Nine')),
+        ('STEP_TEN', _('Step Ten')),
+        ('STEP_ELEVEN', _('Step Eleven')),
+        ('STEP_TWELVE', _('Step Twelve')),
+        ('STEP_THIRTEEN', _('Step Thirteen')),
         ('STEP_FINISH', _('Final Step')),
     )
 
