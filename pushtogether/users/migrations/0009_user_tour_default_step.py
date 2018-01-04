@@ -7,7 +7,7 @@ from ..models import User
 
 def migrate_data_forward(apps, schema_editor):
     for instance in User.objects.all():
-        instance.tour_step = 'STEP_ONE'
+        instance.tour_step = 'STEP_FINISH'
         instance.save()
 
 def migrate_data_backward(apps, schema_editor):
