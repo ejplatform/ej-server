@@ -278,6 +278,10 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 50,
 }
 
+REST_AUTH_REGISTER_SERIALIZERS = {
+  'REGISTER_SERIALIZER': 'pushtogether.users.serializers.RegistrationSerializer'
+}
+
 # Some really nice defaults
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True

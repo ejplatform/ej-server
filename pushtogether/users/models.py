@@ -10,6 +10,23 @@ import hashlib
 
 class User(AbstractUser):
 
+    TOUR_CHOICES = (
+        ('STEP_ONE', _('Step One')),
+        ('STEP_TWO', _('Step Two')),
+        ('STEP_THREE', _('Step Three')),
+        ('STEP_FOUR', _('Step Four')),
+        ('STEP_FIVE', _('Step Five')),
+        ('STEP_SIX', _('Step Six')),
+        ('STEP_SEVEN', _('Step Seven')),
+        ('STEP_EIGHT', _('Step Eight')),
+        ('STEP_NINE', _('Step Nine')),
+        ('STEP_TEN', _('Step Ten')),
+        ('STEP_ELEVEN', _('Step Eleven')),
+        ('STEP_TWELVE', _('Step Twelve')),
+        ('STEP_THIRTEEN', _('Step Thirteen')),
+        ('STEP_FINISH', _('Final Step')),
+    )
+
     RACE_CHOICES = (
         ('BLACK', _('Black')),
         ('BROWN', _('Brown')),
@@ -96,6 +113,13 @@ class User(AbstractUser):
         null=True,
         blank=True,
         choices=RACE_CHOICES,
+        max_length=255
+    )
+    tour_step = models.CharField(
+        _('Current tour step'),
+        null=True,
+        blank=True,
+        choices=TOUR_CHOICES,
         max_length=255
     )
 
