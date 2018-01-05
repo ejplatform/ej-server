@@ -9,5 +9,6 @@ class GamificationConfig(AppConfig):
 
     def ready(self):
         import pushtogether.gamification.badges
+        import pushtogether.gamification.signals
     #     badges.register(UserCreatedBadge)
     #     badges.register(UserProfileFilledBadge)
