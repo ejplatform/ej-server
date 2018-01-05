@@ -10,14 +10,12 @@ from django.contrib.auth import get_user_model
 
 
 class AwardedPointsView(views.APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
     def get(self, request):
         user = self.request.user
-        if user.is_authenticated():
-            my_points = sum([aw.points for aw in AwardedPointValue.objects.filter(target_user=user)])
-            return Response({'status': 'success', 'points': my_points})
-        else:
-            return Response({'status': 'error', 'message': _('You are not logged in')},
-                            status=status.HTTP_401_UNAUTHORIZED)
+        my_points = sum([aw.points for aw in AwardedPointValue.objects.filter(target_user=user)])
+        return Response({'status': 'success', 'points': my_points})
 
 
 class PointsLeaderBoardView(views.APIView):
