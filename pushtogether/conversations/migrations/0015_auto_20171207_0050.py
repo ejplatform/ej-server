@@ -5,9 +5,10 @@ from __future__ import unicode_literals
 from django.db import migrations, models
 from autoslug import AutoSlugField
 from autoslug.settings import slugify as default_slugify
-from ..models import Conversation
+# from ..models import Conversation
 
 def migrate_data_forward(apps, schema_editor):
+    Conversation = apps.get_model('conversations', 'Conversation')
     for instance in Conversation.objects.all():
         print("Generating slug for %s" % instance)
         instance.save()
