@@ -15,9 +15,9 @@ services:
     environment:
       - POSTGRES_USER=pushtogether
       - USE_DOCKER=yes
-      - COURIER_DEFAULT_PROVIDER = onesignal
-      - COURIER_ONESIGNAL_APP_ID = 660977f0-30ad-4f69-a9a4-2873b8f5de7e
-      - COURIER_ONESIGNAL_USER_ID = NTlmYjI5NDktYzA1Zi00ODk4LTllZGQtYWEzY2Q4ZjA3YzM5
+      - COURIER_DEFAULT_PROVIDER=onesignal
+      - COURIER_ONESIGNAL_APP_ID=660977f0-30ad-4f69-a9a4-2873b8f5de7e
+      - COURIER_ONESIGNAL_USER_ID=NTlmYjI5NDktYzA1Zi00ODk4LTllZGQtYWEzY2Q4ZjA3YzM5
     ports:
       - "8000:8000"
     command: /start.sh
