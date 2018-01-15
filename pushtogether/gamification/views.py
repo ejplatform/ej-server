@@ -36,16 +36,17 @@ class BadgeViewSet(viewsets.ViewSet):
             user_badges = []
 
         badges_awarded = BadgeAward.objects.values("slug", "level").annotate(num=Count("pk"))
-        badges_list = []
+        badges_dict = []
         for badge in badges_awarded:
-            if (badge["slug"], badge["level"]) in user_badges:
-                badges_list.append( { badge["slug"]: {
-                    "levels": {
-                        "level": badge["level"],
-                        "name": badges._registry[badge["slug"]].levels[badge["level"]].name,
-                        "description": badges._registry[badge["slug"]].levels[badge["level"]].description,
-                        "user_has": (badge["slug"], badge["level"]) in user_badges
-                    }}})
+            badges_dict.append({
+                "slug": badge["slug"],
+                "levels": {
+                    "level": badge["level"],
+                    "name": badges._registry[badge["slug"]].levels[badge["level"]].name,
+                    "description": badges._registry[badge["slug"]].levels[badge["level"]].description,
+                    "user_has": (badge["slug"], badge["level"]) in user_badges
+                }
+            })
 
-        return Response(badges_list)
+        return Response(badges_dict)
 
