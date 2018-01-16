@@ -1,4 +1,5 @@
 from pprint import pprint
+from random import randint
 
 from django.shortcuts import get_object_or_404
 from django.contrib.auth import get_user_model
@@ -129,6 +130,24 @@ class NextCommentViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
             return Response(serializer.data)
 
         return Response(status=status.HTTP_404_NOT_FOUND)
+
+
+class RandomConversationViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = ConversationSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    queryset = Conversation.objects.all()
+
+    def retrieve(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        how_many_conversations = queryset.count()
+        random_conversation = queryset.all()[randint(0, how_many_conversations - 1)]
+        serializer = self.get_serializer(random_conversation)
+        return Response(serializer.data)
+
+    def get_object(self):
+        queryset = self.get_queryset()
+        conversation = get_object_or_404(queryset)
+        return conversation
 
 
 class CommentReportViewSet(viewsets.ReadOnlyModelViewSet):

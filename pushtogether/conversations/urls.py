@@ -7,7 +7,9 @@ from .views import (
     CommentReportViewSet,
     VoteViewSet,
     AuthorViewSet,
+    RandomConversationViewSet
 )
+from django.conf.urls import url
 
 router = SimpleRouter()
 router.register(r'authors', AuthorViewSet)
@@ -21,4 +23,12 @@ router.register(r'comments-report', CommentReportViewSet,
 router.register(r'next_comment', NextCommentViewSet,
                 base_name='conversation-next-comment')
 
-urlpatterns = router.urls
+urlpatterns = [
+    url(
+        regex=r'^random-conversation/$',
+        view=RandomConversationViewSet.as_view({'get': 'retrieve'}),
+        name='random-conversation'
+    ),
+]
+
+urlpatterns.extend(router.urls)
