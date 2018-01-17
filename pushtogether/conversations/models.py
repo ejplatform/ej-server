@@ -238,12 +238,25 @@ class Conversation(models.Model):
         return make_aware(time_limit, get_current_timezone())
 
     def list_votes(self):
+        """
+        Returns a list of votes according to the following pattern:
+        [[value, author, comment],...]
+        """
         votes_queryset = Vote.objects.filter(comment__conversation_id=self.id)
         votes = [[vote.value, vote.author.id, vote.comment.id]
                  for vote in votes_queryset]
         return votes
 
-
+    def update_statistics(self):
+        """
+        Creates a Job to update the clusters of users
+        """
+        clustering_job = Job(
+            type=Job.CLUSTERS,
+            status=Job.PENDING,
+            argument=self.list_votes()
+        )
+        clustering_job.save()
 
 
 class Comment(models.Model):
@@ -318,9 +331,4 @@ class Vote(models.Model):
     def save(self, *args, **kwargs):
         super(Vote, self).save(*args, **kwargs)
         conversation = self.comment.conversation
-        clustering_job = Job(
-            type=Job.CLUSTERS,
-            status=Job.PENDING,
-            argument=conversation.list_votes()
-        )
-        clustering_job.save()
+        conversation.update_statistics()

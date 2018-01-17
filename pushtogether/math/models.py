@@ -24,10 +24,10 @@ class Job(models.Model):
         (FAILED, _('FAILED')),
     )
 
-    type = models.CharField(choices=TYPE, max_length=20)
-    status = models.CharField(choices=STATUS, max_length=20)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    type = models.CharField(_("Type"), choices=TYPE, max_length=20)
+    status = models.CharField(_("Status"), choices=STATUS, max_length=20)
+    created_at = models.DateTimeField(_("Created at"), auto_now_add=True)
+    updated_at = models.DateTimeField(_("Updated at"), auto_now=True)
     argument = ArrayField(
         ArrayField(
             models.IntegerField(),
