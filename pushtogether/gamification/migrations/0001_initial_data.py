@@ -33,7 +33,7 @@ def reverse_func(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('pinax_points', '0001_initial_data'),
+        ('pinax_points', '0001_initial'),
     ]
 
     operations = [
