@@ -1,11 +1,12 @@
 from rest_framework import viewsets, views, status, permissions
-from pinax.badges.models import BadgeAward
 from django.db.models import Count, Sum
 from django.db.models.functions import Coalesce
+from django.contrib.auth import get_user_model
+
 from rest_framework.response import Response
 from pinax.badges.registry import badges
+from pinax.badges.models import BadgeAward
 from pinax.points.models import AwardedPointValue
-from django.contrib.auth import get_user_model
 
 
 class AwardedPointsView(views.APIView):
@@ -35,17 +36,17 @@ class BadgeViewSet(viewsets.ViewSet):
         else:
             user_badges = []
 
-        badges_awarded = BadgeAward.objects.values("slug", "level").annotate(num=Count("pk"))
+        all_badges = badges._registry
         badges_dict = []
-        for badge in badges_awarded:
+        for key, badge in all_badges.items():
             badges_dict.append({
-                "slug": badge["slug"],
-                "levels": {
-                    "level": badge["level"],
-                    "name": badges._registry[badge["slug"]].levels[badge["level"]].name,
-                    "description": badges._registry[badge["slug"]].levels[badge["level"]].description,
-                    "user_has": (badge["slug"], badge["level"]) in user_badges
-                }
+                "slug": badge.slug,
+                "levels": [{
+                    "level": i,
+                    "name": level.name,
+                    "description": level.description,
+                    "user_has": (badge.slug, i) in user_badges
+                } for i, level in enumerate(badge.levels)]
             })
 
         return Response(badges_dict)
