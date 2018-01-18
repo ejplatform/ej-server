@@ -12,7 +12,6 @@ from django.db.models import Q
 from django.utils.timezone import make_aware, get_current_timezone
 
 from .validators import validate_color
-from pushtogether.math.models import Job
 
 from autoslug import AutoSlugField
 from autoslug.settings import slugify as default_slugify
@@ -237,6 +236,7 @@ class Conversation(models.Model):
         time_limit = datetime_reference - timedelta
         return make_aware(time_limit, get_current_timezone())
 
+
     def list_votes(self):
         """
         Returns a list of votes according to the following pattern:
@@ -251,12 +251,12 @@ class Conversation(models.Model):
         """
         Creates a Job to update the clusters of users
         """
-        clustering_job = Job(
-            type=Job.CLUSTERS,
-            status=Job.PENDING,
-            argument=self.list_votes()
-        )
-        clustering_job.save()
+        if self._can_update_statistics():
+            self.math_jobs.create(type="CLUSTERS")
+
+    def _can_update_statistics(self):
+        #[TODO] Time approachment
+        return True
 
 
 class Comment(models.Model):

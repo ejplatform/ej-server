@@ -4,6 +4,7 @@ from celery import shared_task
 
 from .models import Job
 from .celeryconf import app
+from ..conversations.models import Conversation
 
 
 # decorator to avoid code duplication
@@ -31,7 +32,9 @@ def update_job(fn):
 
 @shared_task
 @update_job
-def get_clusters(votes):
+def get_clusters(conversation_id):
+    conversation = Conversation.objects.get(pk=conversation_id)
+    votes = conversation.list_votes()
     return cluster.get_clusters(votes)
 
 
