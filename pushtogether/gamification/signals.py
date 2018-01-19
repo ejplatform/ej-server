@@ -61,8 +61,7 @@ def actions_when_vote_created(instance):
         award_points(instance.author, 'voted_first_time_in_new_conversation_after_second', reason='Voted first time in new conversation', source=instance)
 
     # And finally, the badges
-    badges.possibly_award_badge('opinionator_badge', user=instance.author)
-    badges.possibly_award_badge('know_it_all_badge', user=instance.author)
+    badges.possibly_award_badge('vote_cast', user=instance.author)
 
 
 def actions_when_conversation_created(instance):
