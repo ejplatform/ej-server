@@ -43,7 +43,6 @@ class OpinionatorBadge(Badge):
     multiple = False
 
     def award(self, **state):
-        print('Entrou no first three votes')
         user = state["user"]
         vote_count = Vote.objects.filter(author=user).count()
         if vote_count == 3:
