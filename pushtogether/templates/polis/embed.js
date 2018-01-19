@@ -298,4 +298,6 @@
 
   window.onload = outerIframeSetHeightMsg();
 
+  window.loadIframes = loadIframes;
+
 }());
