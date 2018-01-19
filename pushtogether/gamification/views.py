@@ -24,10 +24,13 @@ class PointsLeaderBoardView(views.APIView):
         response = [{'name': u.get_full_name() if u.get_full_name() else u.username, 'points': u.num_points} for u in qs]
         return Response({'status': 'success', 'leaderboard': response})
 
+
 class BadgeViewSet(viewsets.ViewSet):
     permission_classes = (permissions.IsAuthenticated,)
 
     def list(self, request):
+
+        user_badges = {}
         if request.user.is_authenticated():
             user_badges = set(
                 (slug, level) for slug, level in
