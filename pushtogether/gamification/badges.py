@@ -13,7 +13,6 @@ class UserCreatedBadge(Badge):
     multiple = False
 
     def award(self, **state):
-        print('entrou no user created badge')
         return BadgeAwarded(level=1)
 
 
@@ -26,7 +25,6 @@ class UserProfileFilledBadge(Badge):
     multiple = False
 
     def award(self, **state):
-        print('entrou no user profile created badge')
         user = state["user"]
         if user.profile_filled:
             return BadgeAwarded(level=1)
