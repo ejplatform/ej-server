@@ -1,8 +1,14 @@
 from django.core.management.base import BaseCommand, CommandError
 from pushtogether.users.models import User
 from pushtogether.conversations.models import Comment, Conversation, Vote
+from django.contrib.auth import get_user_model
 from django.db.utils import IntegrityError
 from django.db import transaction
+from datetime import datetime, timezone
+from decimal import Decimal
+from django.contrib.auth import get_user_model
+# from django.db import connection, reset_queries
+# from pprint import pprint
 
 import csv
 
@@ -21,50 +27,76 @@ class Command(BaseCommand):
     @transaction.atomic
     def create_votes(self, csv_file_votes_path):
         with open(csv_file_votes_path, 'r') as csv_file_votes:
-            conversation_id = 7
-            readf = csv.DictReader(csv_file_votes)
+            readf = csv.DictReader(csv_file_votes, quoting=csv.QUOTE_MINIMAL, quotechar='"', delimiter=',')
             count = 0
             for row in readf:
-                xid = row.get('xid')
-                comment_id = row.get('comment_id')
+                conversation_slug = row.get('conversation_slug')
+                xid= row.get('xid')
                 vote = self.get_vote_value(row.get('vote'))
-                created = row.get('created')
-                vote_id = row.get('vote_id')
-                user = self.find_user_by_xid(xid)
-                if not user:
+                created = datetime.fromtimestamp(Decimal(row.get('created'))/1000, timezone.utc)
+                comment_id = row.get('comment_id')
+                if not xid:
+                    print('xid for comment_id {}, created {} does not exist'.format(comment_id, created))
+                    continue
+                try:
+                    user = get_user_model().objects.get(id=xid)
+                except get_user_model().DoesNotExist:
+                    print('user with xid {} does not exist'.format(xid))
                     continue
 
                 try:
-                    comment = Comment.objects.get(polis_id=comment_id, conversation=conversation_id)
-                except  Comment.DoesNotExist:
-                    self.stdout.write('comment does not exist, polis_id: ' + comment_id)
+                    comment = Comment.objects.get(polis_id=comment_id, conversation__polis_slug=conversation_slug)
+
+                except Comment.MultipleObjectsReturned:
+                    print('INCONSISTÊNCIA. conversation_slug {}, comment_id {} é repetido'.format(conversation_slug, comment_id))
+                    continue
+                except Comment.DoesNotExist:
+                    print('Conversation_slug {}, comment_id {} não existe'.format(conversation_slug, comment_id))
                     continue
 
+                # try:
+                #     print('começou PERF voto')
+                #     if Vote.objects.get(comment__polis_id=comment_id, comment__conversation__polis_slug=conversation_slug, author__id=xid):
+                #         print('Vote with comment_id {}, author__id {} already exists'.format(comment_id, xid))
+                #         continue
+                # except Vote.DoesNotExist:
+                #     pass
+                # except Vote.MultipleObjectsReturned:
+                #     print('INCONSISTÊNCIA. comment_id {}, author__id {} tá repetido'.format(comment_id, xid))
+                #
+                # print('terminou PERF voto')
                 try:
-                    with transaction.atomic():
-                        vote = Vote.objects.create(comment=comment,
-                            author=user, value=vote, polis_id=vote_id, created_at=created)
-                    print('created vote, polis_id:' + str(vote.polis_id))
-                except IntegrityError as e:
-                    vote = Vote.objects.get(comment=comment, author=user)
-                    print('found vote, polis_id: ' + str(vote.polis_id))
-                    continue
+                    if Vote.objects.get(comment=comment, author=user):
+                        print('Vote with comment_id {}, author {} already exists'.format(comment_id, user))
+                        continue
+                except Vote.DoesNotExist:
+                    pass
+                except Vote.MultipleObjectsReturned:
+                    print('INCONSISTÊNCIA. comment_id {}, author {} tá repetido'.format(comment_id, user))
+
+                # print('começou PERF CRIAR voto')
+                # with transaction.atomic():
+                #     vote = Vote.objects.create(comment__polis_id=comment_id, comment__conversation__polis_slug=conversation_slug,
+                #                                author_id=xid, value=vote, created_at=created)
+                #     vote.created_at = created
+                #     vote.save()
+                # print('terminou PERF CRIAR voto')
+
+                with transaction.atomic():
+                    vote = Vote.objects.create(comment=comment,
+                        author=user, value=vote, created_at=created)
+                    vote.created_at = created
+                    vote.save()
+                    print('Vote with comment_id {}, user_id {} created'.format(comment.id, user.id))
+
+                # pprint(connection.queries)
+                # reset_queries()
 
                 count += 1
+                if count % 1000 == 0:
+                    print('Foram {} votos'.format(count))
 
             self.stdout.write('Votes created: ' + str(count))
-
-    def find_user_by_xid(self, xid):
-        if xid:
-            try:
-                user = User.objects.get(id=xid)
-            except  User.DoesNotExist:
-                self.stdout.write('user does not exist')
-                user = None
-        else:
-            #TODO get user with admin id
-            user = User.objects.get(id=1)
-        return user
 
     def get_vote_value(self, vote):
         switcher = {
