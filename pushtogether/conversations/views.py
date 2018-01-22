@@ -71,13 +71,14 @@ class CommentViewSet(viewsets.ModelViewSet):
         if serializer.is_valid():
             conversation = Conversation.objects.get(pk=request.data['conversation'])
             conversation_nudge = conversation.get_nudge_status(self.request.user)
-            response_data = {"nudge": conversation_nudge.value}
             if conversation_nudge.value['errors']:
+                response_data = {"nudge": conversation_nudge.value}
                 return Response(response_data, status=conversation_nudge.value['status_code'])
             else:
                 self.perform_create(serializer)
                 headers = self.get_success_headers(serializer.data)
                 self.create
+                response_data = {"nudge": conversation.get_nudge_status(self.request.user).value}
                 response_data.update(serializer.data)
                 return Response(response_data, headers=headers,
                                 status=conversation_nudge.value['status_code'])
