@@ -44,14 +44,14 @@ class OpinionatorBadge(Badge):
     def award(self, **state):
         user = state["user"]
         vote_count = Vote.objects.filter(author=user).count()
-        if vote_count == 3:
-            return BadgeAwarded(level=1)
-        if vote_count == 40:
-            return BadgeAwarded(level=2)
-        if vote_count == 80:
-            return BadgeAwarded(level=3)
-        if vote_count == 120:
+        if vote_count >= 120:
             return BadgeAwarded(level=4)
+        elif vote_count >= 80:
+            return BadgeAwarded(level=3)
+        elif vote_count >= 40:
+            return BadgeAwarded(level=2)
+        elif vote_count >= 3:
+            return BadgeAwarded(level=1)
 
 
 class KnowItAllBadge(Badge):
