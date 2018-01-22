@@ -34,7 +34,7 @@
          parent_url: d.getAttribute("data-parent_url"),
          {% if user.is_authenticated %}
          xid: '{{ user.id }}',
-         x_name: '{{ user.first_name }}' + ' {{ user.last_name }}',
+         x_name: '{{ user.name }}',
          x_profile_image_url: '{{ user.image_url }}',
          {% else %}
          xid: d.getAttribute("data-xid"),

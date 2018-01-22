@@ -16,7 +16,7 @@ class ConversationAdmin(admin.ModelAdmin):
               'comment_nudge', 'comment_nudge_interval', 'comment_nudge_global_limit',
               'background_image', 'background_color', 'polis_url', 'polis_slug',
               'position', 'is_new']
-    list_display = ['id', 'title', 'author', 'created_at', 'updated_at']
+    list_display = ['id', 'title', 'author', 'position', 'created_at', 'updated_at']
 
 
 class CommentAdmin(admin.ModelAdmin):
