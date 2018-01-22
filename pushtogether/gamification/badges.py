@@ -1,7 +1,6 @@
-from pinax.badges.base import Badge, BadgeAwarded, BadgeDetail
+from pinax.badges.base import Badge, BadgeAwarded, BadgeAward, BadgeDetail
 from pinax.badges.registry import badges
-from pushtogether.conversations.models import Vote
-from pinax.points.models import AwardedPointValue
+from pushtogether.conversations.models import Vote, Conversation
 
 class UserCreatedBadge(Badge):
     slug = "user_created_badge"
@@ -61,11 +60,38 @@ class KnowItAllBadge(Badge):
         BadgeDetail("know_it_all_level_1", "Know-it-all Level 1"),
         BadgeDetail("know_it_all_level_2", "Know-it-all Level 2"),
         BadgeDetail("know_it_all_level_3", "Know-it-all level 3"),
-        BadgeDetail("know_it_all_level_4", "Know-it-all level 4")
+        BadgeDetail("know_it_all_level_4", "Know-it-all level 4"),
+        BadgeDetail("know_it_all_level_5", "Know-it-all level 5"),
+        BadgeDetail("know_it_all_level_6", "Know-it-all level 6"),
+        BadgeDetail("know_it_all_level_7", "Know-it-all level 7"),
+        BadgeDetail("know_it_all_level_8", "Know-it-all level 8"),
+        BadgeDetail("know_it_all_level_9", "Know-it-all level 9"),
+        BadgeDetail("know_it_all_level_10", "Know-it-all level 10"),
+        BadgeDetail("know_it_all_level_11", "Know-it-all level 11"),
+        BadgeDetail("know_it_all_level_12", "Know-it-all level 12"),
+        BadgeDetail("know_it_all_level_13", "Know-it-all level 13"),
+        BadgeDetail("know_it_all_level_14", "Know-it-all level 14"),
+        BadgeDetail("know_it_all_level_15", "Know-it-all level 15"),
+        BadgeDetail("know_it_all_level_16", "Know-it-all level 16"),
+        BadgeDetail("know_it_all_level_17", "Know-it-all level 17"),
+        BadgeDetail("know_it_all_level_18", "Know-it-all level 18"),
+        BadgeDetail("know_it_all_level_19", "Know-it-all level 19"),
+        BadgeDetail("know_it_all_level_20", "Know-it-all level 20"),
     ]
-    # events
+    events = ["vote_cast",]
+    multiple = False
+
+    def award(self, **state):
+        user = state["user"]
+        votes_list = [Vote.objects.filter(comment__conversation=c, author=user).count() for c in Conversation.objects.all()]
+        threshold = sum([i >= 30 for i in votes_list])
+
+        for number_of_conversations in range(20,0,-1):
+            if threshold >= number_of_conversations:
+                return BadgeAwarded(level=number_of_conversations)
 
 
 badges.register(UserCreatedBadge)
 badges.register(UserProfileFilledBadge)
 badges.register(OpinionatorBadge)
+badges.register(KnowItAllBadge)

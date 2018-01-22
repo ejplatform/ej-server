@@ -6,6 +6,7 @@ from actstream.models import Action
 from pushtogether.gamification.signals import actions_when_vote_created, \
     actions_when_user_created, actions_when_comment_saved, \
     actions_when_user_profile_filled, actions_when_conversation_created
+from pinax.badges.registry import badges
 
 
 class Command(BaseCommand):
@@ -15,8 +16,8 @@ class Command(BaseCommand):
 
         vote_type = ContentType.objects.get_for_model(Vote)
         for vote in Vote.objects.all():
+            badges.possibly_award_badge('vote_cast', user=vote.author)
             if not Action.objects.filter(action_object_content_type_id=vote_type.id, action_object_object_id=vote.id):
-                print('entrou no if not')
                 actions_when_vote_created(vote)
 
         conversation_type = ContentType.objects.get_for_model(Conversation)
