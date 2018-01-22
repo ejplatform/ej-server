@@ -7,10 +7,9 @@ from django.db import transaction
 from datetime import datetime, timezone
 from decimal import Decimal
 from django.contrib.auth import get_user_model
-# from django.db import connection, reset_queries
-# from pprint import pprint
 
 import csv
+
 
 class Command(BaseCommand):
     help = 'import polis votes to EJ backend'
@@ -46,7 +45,6 @@ class Command(BaseCommand):
 
                 try:
                     comment = Comment.objects.get(polis_id=comment_id, conversation__polis_slug=conversation_slug)
-
                 except Comment.MultipleObjectsReturned:
                     print('INCONSISTÊNCIA. conversation_slug {}, comment_id {} é repetido'.format(conversation_slug, comment_id))
                     continue
@@ -54,17 +52,6 @@ class Command(BaseCommand):
                     print('Conversation_slug {}, comment_id {} não existe'.format(conversation_slug, comment_id))
                     continue
 
-                # try:
-                #     print('começou PERF voto')
-                #     if Vote.objects.get(comment__polis_id=comment_id, comment__conversation__polis_slug=conversation_slug, author__id=xid):
-                #         print('Vote with comment_id {}, author__id {} already exists'.format(comment_id, xid))
-                #         continue
-                # except Vote.DoesNotExist:
-                #     pass
-                # except Vote.MultipleObjectsReturned:
-                #     print('INCONSISTÊNCIA. comment_id {}, author__id {} tá repetido'.format(comment_id, xid))
-                #
-                # print('terminou PERF voto')
                 try:
                     if Vote.objects.get(comment=comment, author=user):
                         print('Vote with comment_id {}, author {} already exists'.format(comment_id, user))
@@ -74,23 +61,12 @@ class Command(BaseCommand):
                 except Vote.MultipleObjectsReturned:
                     print('INCONSISTÊNCIA. comment_id {}, author {} tá repetido'.format(comment_id, user))
 
-                # print('começou PERF CRIAR voto')
-                # with transaction.atomic():
-                #     vote = Vote.objects.create(comment__polis_id=comment_id, comment__conversation__polis_slug=conversation_slug,
-                #                                author_id=xid, value=vote, created_at=created)
-                #     vote.created_at = created
-                #     vote.save()
-                # print('terminou PERF CRIAR voto')
-
                 with transaction.atomic():
                     vote = Vote.objects.create(comment=comment,
                         author=user, value=vote, created_at=created)
                     vote.created_at = created
                     vote.save()
                     print('Vote with comment_id {}, user_id {} created'.format(comment.id, user.id))
-
-                # pprint(connection.queries)
-                # reset_queries()
 
                 count += 1
                 if count % 1000 == 0:
