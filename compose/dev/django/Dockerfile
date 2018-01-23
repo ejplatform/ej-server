@@ -8,7 +8,7 @@ WORKDIR /app
 # ext-apps need to be pulled here too, or live-reloading won't work
 COPY ./requirements /app/requirements
 COPY ./ext-apps /app/ext-apps
-RUN pip install -r /app/requirements/local.txt
+RUN pip install -r /app/requirements/test.txt
 
 COPY ./compose/production/django/entrypoint.sh /entrypoint.sh
 RUN sed -i 's/\r//' /entrypoint.sh
