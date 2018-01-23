@@ -71,13 +71,13 @@ class Conversation(models.Model):
         eager = {
             'state': 'eager',
             'message': _('Please, be careful posting too many comments'),
-            'status_code': 200,
+            'status_code': 201,
             'errors': False,
         }
         normal = {
             'state': 'normal',
             'message': _('You can still posting comments'),
-            'status_code': 200,
+            'status_code': 201,
             'errors': False,
         }
 

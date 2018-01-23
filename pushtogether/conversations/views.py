@@ -69,21 +69,33 @@ class CommentViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
+            user = self.request.user
             conversation = Conversation.objects.get(pk=request.data['conversation'])
-            conversation_nudge = conversation.get_nudge_status(self.request.user)
-            if conversation_nudge.value['errors']:
-                response_data = {"nudge": conversation_nudge.value}
-                return Response(response_data, status=conversation_nudge.value['status_code'])
-            else:
-                self.perform_create(serializer)
-                headers = self.get_success_headers(serializer.data)
-                self.create
-                response_data = {"nudge": conversation.get_nudge_status(self.request.user).value}
-                response_data.update(serializer.data)
-                return Response(response_data, headers=headers,
-                                status=conversation_nudge.value['status_code'])
+            response_args = self.process_the_request(user, conversation, serializer)
+            return Response(**response_args)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def process_the_request(self, user, conversation, serializer):
+        response_args = {}
+        previous_conversation_nudge = conversation.get_nudge_status(user)
+        response_status_code = previous_conversation_nudge.value['status_code']
+        response_args = {
+            'data': {'nudge': previous_conversation_nudge.value},
+            'status': response_status_code,
+        }
+
+        if not previous_conversation_nudge.value['errors']:
+            self.perform_create(serializer)
+            response_args['headers'] = self.get_success_headers(serializer.data)
+            self.create
+            # we should update the nudge status before respond the request
+            # because the creation of a new comment may alter the status
+            new_nudge_status = conversation.get_nudge_status(user).value
+            response_args['data']['nudge'] = new_nudge_status
+            response_args['data'].update(serializer.data)
+
+        return response_args
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
