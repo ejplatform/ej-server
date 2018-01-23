@@ -55,12 +55,12 @@ class TestConversationAPI:
 
     def test_get_list_without_login_should_return_200(self, client):
         response = client.get(self.create_read_url())
-        assert response.status_code == 200
+        assert response.status_code == status.HTTP_200_OK
 
     def test_get_list_logged_in_should_return_200(self, client, user):
         client.force_login(user)
         response = client.get(self.create_read_url())
-        assert response.status_code == 200
+        assert response.status_code == status.HTTP_200_OK
 
     def test_get_list_should_contains_this_conversation(self, client, user, conversation):
         client.force_login(user)
@@ -128,7 +128,7 @@ class TestConversationAPI:
         conversation.comment_nudge_interval = 10
         conversation.save()
 
-        response = post_valid_comment(client, conversation, number=4)
+        response = post_valid_comment(client, conversation, number=5)
 
         assert response.data['nudge'] == Conversation.NUDGE.eager.value
 
@@ -185,7 +185,9 @@ class TestConversationAPI:
 
         response = post_valid_comment(client, conversation)
 
-        assert response.data['nudge'] == Conversation.NUDGE.normal.value
+        assert response.data['nudge'] == Conversation.NUDGE.global_blocked.value
+        assert response.status_code == status.HTTP_201_CREATED
+
 
     def test_nudge_status_should_return_normal(self, client, user, conversation):
         """
