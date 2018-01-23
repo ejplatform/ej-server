@@ -22,6 +22,24 @@ Dependendo do seu papel neste projeto como desenvovedor, há duas maneiras de li
 
 - Você modifica repositórios internos: entre na pasta do submódulo e use `git checkout` para seguir um branch. Para publicar suas modificações na app principal, além de usar `commit` e `push` no repositório-filho, é necessário repetir esse processo no repositório-pai
 
+## Testes
+
+Existem duas maneiras de se executar os testes automatizados localmente:
+
+- Você já executou o comando `docker-compose -f local.yml up` e o servidor está funcionando.
+
+```
+docker-compose -f local.yml exec django pytest
+```
+
+- Você deseja apenas executar os testes sem necessariamente levantar o servidor. Antes é necessário construir a imagem do backend e disponibilizar o banco de dados para então executar o pytest via `docker run`
+
+```
+docker build -f compose/dev/django/Dockerfile -t ej_django_test .
+docker run -d --env-file=./compose/dev/test_env --name=ej_postgres_test postgres:9.6
+docker run --env-file=./compose/dev/test_env --link=ej_postgres_test:postgres \
+  ej_django_test /test.sh
+```
 
 ## Produção
 
