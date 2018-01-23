@@ -50,24 +50,36 @@ class Command(BaseCommand):
                 except Conversation.DoesNotExist:
                     print('Conversation for comment_id {}, conversation_slug {} does not exist'.format(comment_id, conversation_slug))
 
+                # Try to find this exact comment on the database
                 try:
+                    # If you're successful, there's no need to change it
+                    comment = Comment.objects.get(conversation=conversation, polis_id=comment_id)
+                    continue
+                except Comment.DoesNotExist:
+                    pass
+                except Comment.MultipleObjectsReturned:
+                    conta_repetidos = conta_repetidos + 1
+                    print('content {}, polis_id {} é repetido'.format(txt, comment_id))
+                    continue
 
-                    if Comment.objects.get(content=txt, polis_id=comment_id):
+                # Try to find a similar comment on the database
+                try:
+                    comment = Comment.objects.get(content=txt, polis_id=comment_id)
+                    if comment:
                         # Now let's take a good look at the comment object. There are objects in the database
                         # inconsistent with Polis database. We have to look at those inconsistencies and only skip
                         # inserting if it is an EXACT COPY.
-                        c = Comment.objects.get(content=txt, polis_id=comment_id)
 
-                        if c.approval == mod and c.conversation == conversation:
+                        if comment.approval == mod and comment.conversation == conversation:
                             print('Comment_id {}, conversation_slug {} already exists'.format(comment_id, conversation_slug))
-                            continue
                         else:
-                            # c.author = user
-                            c.approval = mod
-                            c.conversation = conversation
-                            # c.created_at = created
-                            c.save()
+                            # comment.author = user
+                            comment.approval = mod
+                            comment.conversation = conversation
+                            # comment.created_at = created
+                            comment.save()
                             print('Inconsistência encontrada no comment_id {}. Consertando...'.format(comment_id))
+                        continue
                 except Comment.DoesNotExist:
                     pass
                 except Comment.MultipleObjectsReturned:
