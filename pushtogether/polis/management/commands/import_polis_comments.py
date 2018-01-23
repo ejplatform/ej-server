@@ -57,11 +57,16 @@ class Command(BaseCommand):
                         # inconsistent with Polis database. We have to look at those inconsistencies and only skip
                         # inserting if it is an EXACT COPY.
                         c = Comment.objects.get(content=txt, polis_id=comment_id)
+
                         if c.author == user and c.approval == mod and c.conversation == conversation and c.created_at == created:
                             print('Comment_id {}, conversation_slug {} already exists'.format(comment_id, conversation_slug))
                             continue
                         else:
-                            c.delete()
+                            # c.author = user
+                            c.approval = mod
+                            c.conversation = conversation
+                            # c.created_at = created
+                            c.save()
                             print('Inconsistência encontrada no comment_id {}. Consertando...'.format(comment_id))
                 except Comment.DoesNotExist:
                     pass
