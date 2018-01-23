@@ -40,8 +40,8 @@ class TestConversation:
         """
         assert conversation.NUDGE.interval_blocked.value['status_code'] == 429
         assert conversation.NUDGE.global_blocked.value['status_code'] == 429
-        assert conversation.NUDGE.eager.value['status_code'] == 200
-        assert conversation.NUDGE.normal.value['status_code'] == 200
+        assert conversation.NUDGE.eager.value['status_code'] == 201
+        assert conversation.NUDGE.normal.value['status_code'] == 201
 
     def test_nudge_get_datetime_interval(self, conversation):
         """
@@ -81,7 +81,7 @@ class TestConversation:
         """
         Should return true if user is trying to post too much comments
         """
-        conversation.comment_nudge = 6
+        conversation.comment_nudge = 4
         conversation.comment_nudge_interval = 2
         create_valid_comments(3, conversation, user)
         user_comments = conversation._get_nudge_interval_comments(user)
@@ -183,7 +183,7 @@ class TestConversation:
         conversation.comment_nudge_global_limit = 5
         conversation.comment_nudge = 4
         conversation.comment_nudge_interval = 2
-        create_valid_comments(2, conversation, user)
+        create_valid_comments(3, conversation, user)
         nudge_status = conversation.get_nudge_status(user)
 
         assert nudge_status == Conversation.NUDGE.eager

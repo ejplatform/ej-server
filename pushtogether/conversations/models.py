@@ -71,13 +71,13 @@ class Conversation(models.Model):
         eager = {
             'state': 'eager',
             'message': _('Please, be careful posting too many comments'),
-            'status_code': 200,
+            'status_code': 201,
             'errors': False,
         }
         normal = {
             'state': 'normal',
             'message': _('You can still posting comments'),
-            'status_code': 200,
+            'status_code': 201,
             'errors': False,
         }
 
@@ -201,14 +201,13 @@ class Conversation(models.Model):
         is possible in the middle of the nudge interval
         """
         if self.comment_nudge and self.comment_nudge_interval:
-            half_nudge = self.comment_nudge // 2
-            half_nudge_interval = self.comment_nudge_interval // 2
-            if user_comments_counter >= half_nudge:
-                datetime_limit = self._get_datetime_interval(half_nudge_interval)
-                half_time_comments = user_comments.filter(
+            nudge_limit = self.comment_nudge - 1
+            if user_comments_counter >= nudge_limit:
+                datetime_limit = self._get_datetime_interval(self.comment_nudge_interval)
+                comments_in_limit = user_comments.filter(
                     created_at__gt=datetime_limit
                 )
-                return half_time_comments.count() >= half_nudge
+                return comments_in_limit.count() >= nudge_limit
         return False
 
     def _get_nudge_interval_comments(self, user):

@@ -2,9 +2,13 @@ FROM python:3.5
 
 ENV PYTHONUNBUFFERED 1
 
-# Requirements have to be pulled and installed here, otherwise caching won't work
-COPY ./requirements /requirements
-RUN pip install -r /requirements/test.txt
+
+WORKDIR /app
+
+# ext-apps need to be pulled here too, or live-reloading won't work
+COPY ./requirements /app/requirements
+COPY ./ext-apps /app/ext-apps
+RUN pip install -r /app/requirements/test.txt
 
 COPY ./compose/production/django/entrypoint.sh /entrypoint.sh
 RUN sed -i 's/\r//' /entrypoint.sh
@@ -19,6 +23,5 @@ RUN sed -i 's/\r//' /start.sh
 RUN chmod +x /start.sh
 
 COPY . /app
-WORKDIR /app
 
 ENTRYPOINT ["/entrypoint.sh"]
