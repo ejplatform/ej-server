@@ -205,7 +205,7 @@ class RandomConversationViewSet(viewsets.ReadOnlyModelViewSet):
 
 class CommentReportViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = CommentReportSerializer
-    queryset = Comment.objects.all()
+    queryset = Comment.objects.all().order_by('-pk')
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter,)
     filter_fields = ('polis_id', 'conversation__id', 'conversation__polis_slug', 'approval',)
     search_fields = ('content', 'author__name')
