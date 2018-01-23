@@ -58,7 +58,7 @@ class Command(BaseCommand):
                         # inserting if it is an EXACT COPY.
                         c = Comment.objects.get(content=txt, polis_id=comment_id)
 
-                        if c.author == user and c.approval == mod and c.conversation == conversation and c.created_at == created:
+                        if c.approval == mod and c.conversation == conversation:
                             print('Comment_id {}, conversation_slug {} already exists'.format(comment_id, conversation_slug))
                             continue
                         else:
