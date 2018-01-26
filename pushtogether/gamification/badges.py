@@ -2,6 +2,7 @@ from pinax.badges.base import Badge, BadgeAwarded, BadgeAward, BadgeDetail
 from pinax.badges.registry import badges
 from pushtogether.conversations.models import Vote, Conversation
 
+
 class UserCreatedBadge(Badge):
     slug = "user_created_badge"
     levels = [
@@ -82,13 +83,25 @@ class KnowItAllBadge(Badge):
     multiple = False
 
     def award(self, **state):
+        award_level = 0
+
         user = state["user"]
         votes_list = [Vote.objects.filter(comment__conversation=c, author=user).count() for c in Conversation.objects.all()]
-        threshold = sum([i >= 30 for i in votes_list])
 
-        for number_of_conversations in range(20,0,-1):
-            if threshold >= number_of_conversations:
-                return BadgeAwarded(level=number_of_conversations)
+        # If the user has any number of votes in at least two conversations, give him the level 1
+        if sum(i > 0 for i in votes_list) >= 2:
+            award_level = 1
+
+        # major_participations stores the number of conversations in wich the user voted 30 or more times
+        major_participations = sum([i >= 30 for i in votes_list])
+        award_level = award_level + major_participations
+
+        # Ensure that you'll never award a level that is not set yet
+        available_levels = len(KnowItAllBadge.levels)
+        if award_level > available_levels:
+            return BadgeAwarded(level=available_levels)
+
+        return BadgeAwarded(level=award_level)
 
 
 badges.register(UserCreatedBadge)
