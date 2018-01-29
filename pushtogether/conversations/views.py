@@ -21,6 +21,7 @@ from .serializers import (
     VoteSerializer,
     ConversationSerializer,
     ConversationReportSerializer,
+    ConversationClustersSerializer,
     CommentSerializer,
     CommentApprovalSerializer,
     CommentReportSerializer,
@@ -60,6 +61,11 @@ class ConversationViewSet(viewsets.ReadOnlyModelViewSet):
 
 class ConversationReportViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = ConversationReportSerializer
+    queryset = Conversation.objects.all()
+
+
+class ConversationClustersViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = ConversationClustersSerializer
     queryset = Conversation.objects.all()
 
 

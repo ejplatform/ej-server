@@ -123,6 +123,14 @@ class Conversation(models.Model):
     def total_comments(self):
         return self.comments.count()
 
+    @property
+    def participation_clusters(self):
+        return (self.math_jobs
+            .filter(type='CLUSTERS', status='FINISHED')
+            .order_by('created_at')
+            .last()
+        )
+
     def get_user_participation_ratio(self, user):
         others_approved_comments = self.comments.filter(
             approval=Comment.APPROVED).exclude(author=user).count()

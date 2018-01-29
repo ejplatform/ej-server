@@ -125,7 +125,7 @@ class ConversationSerializer(serializers.ModelSerializer):
                   'background_image', 'dialog', 'response', 'total_votes', 'slug',
                   'approved_comments', 'user_participation_ratio', 'created_at',
                   'updated_at', 'polis_url', 'polis_slug', 'is_new', 'position',
-                  'opinion')
+                  'opinion', 'participation_clusters')
 
     def _get_current_user(self):
         return self.context['request'].user
@@ -135,3 +135,9 @@ class ConversationSerializer(serializers.ModelSerializer):
         if user.is_authenticated():
             return obj.get_user_participation_ratio(user)
         return
+
+class ConversationClustersSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Conversation
+        fields = ('participation_clusters',)
