@@ -10,7 +10,6 @@ Local settings
 """
 
 from .base import *  # noqa
-from .celery import *
 
 # DEBUG
 # ------------------------------------------------------------------------------

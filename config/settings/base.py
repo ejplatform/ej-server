@@ -8,6 +8,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/dev/ref/settings/
 """
 import environ
+from .celery import *
 
 ROOT_DIR = environ.Path(__file__) - 3  # (pushtogether/config/settings/base.py - 3 = pushtogether/)
 APPS_DIR = ROOT_DIR.path('pushtogether')
