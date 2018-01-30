@@ -35,7 +35,7 @@ def update_job(fn):
 def get_clusters(conversation_id):
     conversation = Conversation.objects.get(pk=conversation_id)
     votes = conversation.list_votes()
-    return cluster.get_clusters(votes)
+    return cluster.get_clusters(votes, range(2,5))
 
 
 TASK_MAPPING = {
