@@ -1,8 +1,8 @@
 import os
 from kombu import Exchange, Queue
 
-CELERY_ENABLE_UTC = True
-CELERY_TIMEZONE = "UTC"
+CELERY_ENABLE_UTC = False
+CELERY_TIMEZONE = 'America/Sao_Paulo'
 
 # Redis
 
