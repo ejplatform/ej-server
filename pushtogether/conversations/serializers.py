@@ -7,6 +7,7 @@ from django.contrib.auth import get_user_model
 from rest_framework import routers, serializers, viewsets
 
 from .models import Conversation, Comment, Vote
+from ..math.serializers import JobSerializer
 
 
 User = get_user_model()
@@ -114,6 +115,7 @@ class ConversationReportSerializer(serializers.ModelSerializer):
 
 
 class ConversationSerializer(serializers.ModelSerializer):
+    participation_clusters = JobSerializer(read_only=True)
     user_participation_ratio = serializers.SerializerMethodField()
     created_at = serializers.DateTimeField(format="%d-%m-%Y")
     updated_at = serializers.DateTimeField(format="%d-%m-%Y")
@@ -137,6 +139,7 @@ class ConversationSerializer(serializers.ModelSerializer):
         return
 
 class ConversationClustersSerializer(serializers.ModelSerializer):
+    participation_clusters = JobSerializer(read_only=True)
 
     class Meta:
         model = Conversation

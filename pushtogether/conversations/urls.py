@@ -1,59 +1,52 @@
 from rest_framework.routers import SimpleRouter
-from .views import (
-    ConversationViewSet,
-    ConversationReportViewSet,
-    CommentViewSet,
-    NextCommentViewSet,
-    CommentReportViewSet,
-    VoteViewSet,
-    AuthorViewSet,
-    RandomConversationViewSet
-)
+
 from django.conf.urls import url
+
+from . import views
 
 router = SimpleRouter()
 router.register(
     r'authors',
-    AuthorViewSet
+    views.AuthorViewSet
 )
 router.register(
     r'conversations',
-    ConversationViewSet,
+    views.ConversationViewSet,
     base_name='conversation'
 )
 router.register(
     r'comments',
-    CommentViewSet
+    views.CommentViewSet
 )
 router.register(
     r'votes',
-    VoteViewSet
+    views.VoteViewSet
 )
 router.register(
     r'conversations-report',
-    ConversationReportViewSet,
+    views.ConversationReportViewSet,
     base_name='conversation-report'
 )
 router.register(
     r'comments-report',
-    CommentReportViewSet,
+    views.CommentReportViewSet,
     base_name='comment-report'
 )
 router.register(
     r'next_comment',
-    NextCommentViewSet,
+    views.NextCommentViewSet,
     base_name='conversation-next-comment'
 )
 router.register(
     r'conversations-clusters',
-    ConversationClustersViewSet,
+    views.ConversationClustersViewSet,
     base_name='conversation-cluster'
 )
 
 urlpatterns = [
     url(
         regex=r'^random-conversation/$',
-        view=RandomConversationViewSet.as_view({'get': 'retrieve'}),
+        view=views.RandomConversationViewSet.as_view({'get': 'retrieve'}),
         name='random-conversation'
     ),
 ]
