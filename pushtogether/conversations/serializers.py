@@ -114,8 +114,14 @@ class ConversationReportSerializer(serializers.ModelSerializer):
                   'unmoderated_comments', 'total_participants', 'comments')
 
 
-class ConversationSerializer(serializers.ModelSerializer):
+class ConversationJobSerializer(serializers.ModelSerializer):
     participation_clusters = JobSerializer(read_only=True)
+
+    class Meta:
+        model = Conversation
+        fields = ('participation_clusters',)
+
+class ConversationSerializer(serializers.ModelSerializer):
     user_participation_ratio = serializers.SerializerMethodField()
     created_at = serializers.DateTimeField(format="%d-%m-%Y")
     updated_at = serializers.DateTimeField(format="%d-%m-%Y")
@@ -127,7 +133,7 @@ class ConversationSerializer(serializers.ModelSerializer):
                   'background_image', 'dialog', 'response', 'total_votes', 'slug',
                   'approved_comments', 'user_participation_ratio', 'created_at',
                   'updated_at', 'polis_url', 'polis_slug', 'is_new', 'position',
-                  'opinion', 'participation_clusters')
+                  'opinion')
 
     def _get_current_user(self):
         return self.context['request'].user
@@ -137,10 +143,3 @@ class ConversationSerializer(serializers.ModelSerializer):
         if user.is_authenticated():
             return obj.get_user_participation_ratio(user)
         return
-
-class ConversationClustersSerializer(serializers.ModelSerializer):
-    participation_clusters = JobSerializer(read_only=True)
-
-    class Meta:
-        model = Conversation
-        fields = ('participation_clusters',)

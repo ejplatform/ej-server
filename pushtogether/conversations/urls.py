@@ -38,9 +38,9 @@ router.register(
     base_name='conversation-next-comment'
 )
 router.register(
-    r'conversations-clusters',
-    views.ConversationClustersViewSet,
-    base_name='conversation-cluster'
+    r'conversation-clusters',
+    views.ClustersViewSet,
+    base_name='conversation-clusters'
 )
 
 urlpatterns = [

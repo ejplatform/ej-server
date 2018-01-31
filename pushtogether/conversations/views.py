@@ -17,16 +17,7 @@ from rest_framework import filters
 from django_filters.rest_framework import DjangoFilterBackend
 
 from .models import Conversation, Comment, Vote
-from .serializers import (
-    VoteSerializer,
-    ConversationSerializer,
-    ConversationReportSerializer,
-    ConversationClustersSerializer,
-    CommentSerializer,
-    CommentApprovalSerializer,
-    CommentReportSerializer,
-    AuthorSerializer,
-)
+from . import serializers
 
 import requests
 import json
@@ -45,7 +36,7 @@ class AuthorAsCurrentUserMixin():
 
 
 class ConversationViewSet(viewsets.ReadOnlyModelViewSet):
-    serializer_class = ConversationSerializer
+    serializer_class = serializers.ConversationSerializer
     queryset = Conversation.objects.all()
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
@@ -60,17 +51,12 @@ class ConversationViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class ConversationReportViewSet(viewsets.ReadOnlyModelViewSet):
-    serializer_class = ConversationReportSerializer
-    queryset = Conversation.objects.all()
-
-
-class ConversationClustersViewSet(viewsets.ReadOnlyModelViewSet):
-    serializer_class = ConversationClustersSerializer
+    serializer_class = serializers.ConversationReportSerializer
     queryset = Conversation.objects.all()
 
 
 class CommentViewSet(viewsets.ModelViewSet):
-    serializer_class = CommentSerializer
+    serializer_class = serializers.CommentSerializer
     queryset = Comment.objects.all()
     filter_backends = (DjangoFilterBackend, )
     filter_fields = ('polis_id', 'conversation__id',)
@@ -157,7 +143,7 @@ class CommentViewSet(viewsets.ModelViewSet):
 
     def get_serializer_class(self):
         if self.action in ('update', 'partial_update'):
-            return CommentApprovalSerializer
+            return serializers.CommentApprovalSerializer
         else:
             return self.serializer_class
 
@@ -168,7 +154,7 @@ class CommentViewSet(viewsets.ModelViewSet):
 
 
 class NextCommentViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
-    serializer_class = CommentSerializer
+    serializer_class = serializers.CommentSerializer
     queryset = Conversation.objects.all()
 
     def get_object(self):
@@ -192,7 +178,7 @@ class NextCommentViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
 
 
 class RandomConversationViewSet(viewsets.ReadOnlyModelViewSet):
-    serializer_class = ConversationSerializer
+    serializer_class = serializers.ConversationSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     queryset = Conversation.objects.all()
 
@@ -210,7 +196,7 @@ class RandomConversationViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class CommentReportViewSet(viewsets.ReadOnlyModelViewSet):
-    serializer_class = CommentReportSerializer
+    serializer_class = serializers.CommentReportSerializer
     queryset = Comment.objects.all().order_by('-pk')
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter,)
     filter_fields = ('polis_id', 'conversation__id', 'conversation__polis_slug', 'approval',)
@@ -227,11 +213,16 @@ class CommentReportViewSet(viewsets.ReadOnlyModelViewSet):
         return queryset
 
 
+class ClustersViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = serializers.ConversationJobSerializer
+    queryset = Conversation.objects.all()
+
+
 class VoteViewSet(AuthorAsCurrentUserMixin, viewsets.ModelViewSet):
-    serializer_class = VoteSerializer
+    serializer_class = serializers.VoteSerializer
     queryset = Vote.objects.all()
 
 
 class AuthorViewSet(viewsets.ReadOnlyModelViewSet):
-    serializer_class = AuthorSerializer
+    serializer_class = serializers.AuthorSerializer
     queryset = User.objects.all()
