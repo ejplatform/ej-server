@@ -27,7 +27,6 @@ SECRET_KEY = env('DJANGO_SECRET_KEY', default='!Xng`w:eusr3h~3{RL7BF3jgE8p.liKe7
 
 # Mail settings
 # ------------------------------------------------------------------------------
-
 EMAIL_PORT = 1025
 
 EMAIL_HOST = 'localhost'
@@ -51,6 +50,7 @@ INSTALLED_APPS += ['debug_toolbar', ]
 
 INTERNAL_IPS = ['127.0.0.1', '10.0.2.2', ]
 
+ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=['localhost',])
 
 import socket
 import os

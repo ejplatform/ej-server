@@ -13,7 +13,9 @@ services:
     volumes:
       - .:/app
     environment:
+      - POSTGRES_DB=pushtogether
       - POSTGRES_USER=pushtogether
+      - POSTGRES_PASSWORD=pushtogether
       - USE_DOCKER=yes
       - COURIER_DEFAULT_PROVIDER=onesignal
       - COURIER_ONESIGNAL_APP_ID=660977f0-30ad-4f69-a9a4-2873b8f5de7e
@@ -27,6 +29,6 @@ services:
     volumes:
       - db_data:/var/lib/postgresql/data
     environment:
+      - POSTGRES_DB=pushtogether
       - POSTGRES_USER=pushtogether
-
-
+      - POSTGRES_PASSWORD=pushtogether

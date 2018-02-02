@@ -129,14 +129,13 @@ MANAGERS = ADMINS
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
 # Raises ImproperlyConfigured exception if database variables aren't in os.environ
-DATABASES['default'] = env.db('DATABASE_URL')
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.getenv('POSTGRES_DB'),
-        'USER': os.getenv('POSTGRES_USER'),
-        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
-        'HOST': os.getenv('POSTGRES_HOST', default='postgres'),
+        'HOST': env('POSTGRES_HOST', default='postgres'),
+        'NAME': env('POSTGRES_DB'),
+        'USER': env('POSTGRES_USER'),
+        'PASSWORD': env('POSTGRES_PASSWORD'),
     },
 }
 DATABASES['default']['ATOMIC_REQUESTS'] = True
@@ -349,7 +348,7 @@ CORS_ORIGIN_WHITELIST = (
     'app.brasilqueopovoquer.org.br',
 )
 
-# Above default keys will aways pass, do not use then in production.
+# Above default keys will always pass, do not use then in production.
 RECAPTCHA_PUBLIC_KEY = env('DJANGO_RECAPTCHA_PUBLIC_KEY', default='6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI')
 RECAPTCHA_PRIVATE_KEY = env('DJANGO_RECAPTCHA_PRIVATE_KEY', default='6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe')
 NOCAPTCHA = True

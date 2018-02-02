@@ -31,3 +31,4 @@ USER django
 WORKDIR /app
 
 ENTRYPOINT ["/entrypoint.sh"]
+CMD ["/gunicorn.sh"]
