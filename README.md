@@ -41,18 +41,56 @@ docker run --env-file=./compose/dev/test_env --link=ej_postgres_test:postgres \
   ej_django_test /test.sh
 ```
 
-## Produção
+## Variáveis de ambiente
+### Banco de dados
+- POSTGRES_HOST - opcional; padrão 'postgres'
+- POSTGRES_DB - obrigatório
+- POSTGRES_USER - obrigatório
+- POSTGRES_PASSWORD - obrigatório
+
+### Email
+- MAILGUN_SENDER_DOMAIN - obrigatório em produção
+- DJANGO_DEFAULT_FROM_EMAIL - obrigatório em produção
+- DJANGO_MAILGUN_API_KEY - obrigatório em produção
+
+### Django
+- DJANGO_ALLOWED_HOSTS - obrigatório em produção
+- DJANGO_ADMIN_URL - obrigatório em produção
+- DJANGO_SETTINGS_MODULE - opcional; use `config.settings.production` em produção
+- DJANGO_ACCOUNT_ALLOW_REGISTRATION - opcional; padrão True
+- DJANGO_SECRET_KEY - obrigatório em produção
+- USE_DOCKER - opcional; desnecessário em produção; em ambientes locais, escreva 'yes' se estiver usando Docker
+
+### ReCaptha
+- DJANGO_RECAPTCHA_PRIVATE_KEY - obrigatório em produção
+- DJANGO_RECAPTCHA_PUBLIC_KEY - obrigatório em produção
+
+### Redis
+- REDIS_URL - obrigatório em produção; exemplo: `redis://127.0.0.1:6379`
+
+### Sentry
+- DJANGO_SENTRY_DSN - obrigatório em produção
+
+### Polis
+- POLIS_BASE_URL - opcional
+- POLIS_API_KEY - opcional
+
+### django-courier
+- COURIER_ONESIGNAL_USER_ID - obrigatório
+- COURIER_ONESIGNAL_APP_ID - obrigatório
+- COURIER_DEFAULT_PROVIDER - obrigatório
+
+## Depoly em produção
 
 Um exemplo de deploy em produção pode ser encontrado no arquivo `production.yml`.
 
-Para rodá-lo localmente, e assim tem o máximo de aderência com o ambiente final, cire um arquivo `.env` baseado em `env.example` com as configurações necessárias e execute:
+Para rodá-lo localmente, e assim ter o máximo de aderência com o ambiente final, cire um arquivo `.env` baseado em `env.example` com as configurações necessárias e execute:
 
 ```
 docker-compose -f production.yml up
 ```
 
-## Deploy
-
+## Integrações de deploy
 **Commits no branch `master`** fazem releases da versão em **desenvolvimento** (ainda sem URL pública).
 
 **Tags** fazem releases em [**produção**](https://ej.brasilqueopovoquer.org.br/).
