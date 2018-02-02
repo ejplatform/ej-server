@@ -20,7 +20,7 @@ services:
       - COURIER_ONESIGNAL_USER_ID=NTlmYjI5NDktYzA1Zi00ODk4LTllZGQtYWEzY2Q4ZjA3YzM5
     ports:
       - "8000:8000"
-    command: /start.sh
+    command: /runserver.sh
 
   postgres:
     image: postgres:9.6

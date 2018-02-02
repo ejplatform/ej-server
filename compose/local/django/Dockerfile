@@ -14,8 +14,8 @@ COPY ./compose/production/django/entrypoint.sh /entrypoint.sh
 RUN sed -i 's/\r//' /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
-COPY ./compose/local/django/start.sh /start.sh
-RUN sed -i 's/\r//' /start.sh
-RUN chmod +x /start.sh
+COPY ./compose/local/django/runserver.sh /runserver.sh
+RUN sed -i 's/\r//' /runserver.sh
+RUN chmod +x /runserver.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
