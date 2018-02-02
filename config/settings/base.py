@@ -128,8 +128,16 @@ MANAGERS = ADMINS
 # DATABASE CONFIGURATION
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
+# Raises ImproperlyConfigured exception if database variables aren't in os.environ
+DATABASES['default'] = env.db('DATABASE_URL')
 DATABASES = {
-    'default': env.db('DATABASE_URL', default='postgres://localhost/pushtogether'),
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': os.getenv('POSTGRES_DB'),
+        'USER': os.getenv('POSTGRES_USER'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
+        'HOST': os.getenv('POSTGRES_HOST', default='postgres'),
+    },
 }
 DATABASES['default']['ATOMIC_REQUESTS'] = True
 

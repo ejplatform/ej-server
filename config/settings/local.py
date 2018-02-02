@@ -25,13 +25,6 @@ SHELL_PLUS_PRINT_SQL_TRUNCATE = 10**7
 # Note: This key only used for development and testing.
 SECRET_KEY = env('DJANGO_SECRET_KEY', default='!Xng`w:eusr3h~3{RL7BF3jgE8p.liKe73*{q@/Amr!;c4*}-k')
 
-# DATABASE CONFIGURATION
-# ------------------------------------------------------------------------------
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
-DATABASES = {
-    'default': env.db('DATABASE_URL', default='postgres://pushtogether:@postgres:5432/pushtogether'),
-}
-
 # Mail settings
 # ------------------------------------------------------------------------------
 
