@@ -19,7 +19,7 @@ django-anymail==0.11.1
 
 # Raven is the Sentry client
 # --------------------------
-raven==6.1.0
+raven==6.5.0
 
 # django-courier
 git+https://gitlab.com/empurrandojuntos/django-courier.git
