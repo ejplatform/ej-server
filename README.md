@@ -59,6 +59,7 @@ docker run --env-file=./compose/dev/test_env --link=ej_postgres_test:postgres \
 - DJANGO_SETTINGS_MODULE - opcional; use `config.settings.production` em produção
 - DJANGO_ACCOUNT_ALLOW_REGISTRATION - opcional; padrão True
 - DJANGO_SECRET_KEY - obrigatório em produção
+- USE_CACHE - opcional; padrão True
 - USE_DOCKER - opcional; desnecessário em produção; em ambientes locais, escreva 'yes' se estiver usando Docker
 
 ### ReCaptha
