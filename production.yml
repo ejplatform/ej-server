@@ -1,34 +1,61 @@
-version: '2'
+###
+### This compose file mimics very closely the deploy that hacklab uses for the EJ platform and can be used as a reference if needed
+###
 
+version: '2'
 volumes:
-  db_data: {}
+  postgres_data: {}
+  user_media: {}
 
 services:
   django:
-    build:
-      context: .
-      dockerfile: ./compose/production/django/Dockerfile
-    depends_on:
-      - postgres
-    env_file: .env
+    image: registry.gitlab.com/empurrandojuntos/backend/django:latest
+    environment:
+      DJANGO_DEFAULT_FROM_EMAIL: ''
+      COURIER_ONESIGNAL_USER_ID: ''
+      POSTGRES_USER: ''
+      COURIER_ONESIGNAL_APP_ID: ''
+      POSTGRES_PASSWORD: ''
+      MAILGUN_SENDER_DOMAIN: ''
+      DJANGO_ALLOWED_HOSTS: ''
+      POSTGRES_DB: ''
+      DJANGO_RECAPTCHA_PUBLIC_KEY: ''
+      DJANGO_ADMIN_URL: ''
+      COURIER_DEFAULT_PROVIDER: ''
+      POLIS_BASE_URL: ''
+      DJANGO_SETTINGS_MODULE: ''
+      POLIS_API_KEY: ''
+      DJANGO_MAILGUN_API_KEY: ''
+      DJANGO_RECAPTCHA_PRIVATE_KEY: ''
+      DJANGO_ACCOUNT_ALLOW_REGISTRATION: ''
+      DJANGO_SECRET_KEY: ''
+      DJANGO_SENTRY_DSN: ''
+      REDIS_URL: ''
     volumes:
-      - /app/staticfiles
-    command: /gunicorn.sh
-
+    - user_media:/app/staticfiles/media
+  lb:
+    image: rancher/lb-service-haproxy:v0.6.2
+    expose:
+    - 80:80/tcp
+    labels:
+      rap.le_email: ''
+      rap.le_host: ''
+      rap.host: ''
+      rap.client_max_body_size: 200m
+  backend:
+    image: registry.gitlab.com/empurrandojuntos/backend/nginx:latest
+    volumes:
+    - user_media:/usr/share/nginx/html/media
   postgres:
     image: postgres:9.6
-    env_file:
-      - .env
+    environment:
+      POSTGRES_PASSWORD: ''
+      POSTGRES_USER: ''
+      POSTGRES_DB: ''
     volumes:
-      - db_data:/var/lib/postgresql/data
-
-  nginx:
-    build:
-      context: .
-      dockerfile: ./compose/production/nginx/Dockerfile
-    volumes_from:
-      - django
-    depends_on:
-      - django
-    ports:
-      - "80:80"
+    - postgres_data:/var/lib/postgresql/data
+  frontend:
+    image: registry.gitlab.com/empurrandojuntos/frontend:latest
+    volumes:
+  redis:
+    image: redis:3
