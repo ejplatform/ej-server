@@ -10,7 +10,8 @@ django-coverage-plugin==1.5.0
 
 # pytest
 pytest-django==3.1.2
-pytest-sugar==0.9.0
+# temporarily disabled
+# pytest-sugar==0.9.0
 
 # django-courier
 git+https://gitlab.com/empurrandojuntos/django-courier.git
