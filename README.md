@@ -55,7 +55,7 @@ docker run --env-file=./compose/dev/test_env --link=ej_postgres_test:postgres \
 
 ### Django
 - DJANGO_ALLOWED_HOSTS - obrigatório em produção
-- DJANGO_ADMIN_URL - obrigatório em produção
+- DJANGO_ADMIN_URL - opcional
 - DJANGO_SETTINGS_MODULE - opcional; use `config.settings.production` em produção
 - DJANGO_ACCOUNT_ALLOW_REGISTRATION - opcional; padrão True
 - DJANGO_SECRET_KEY - obrigatório em produção
