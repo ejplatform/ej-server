@@ -24,7 +24,8 @@ COPY . /app
 
 RUN mkdir /app/staticfiles
 
-RUN python /app/manage.py collectstatic --noinput
+RUN export $(cat /app/env.example | grep -v ^# | xargs) && \
+    python /app/manage.py collectstatic --noinput
 
 RUN chown -R django /app
 
@@ -39,4 +40,4 @@ CMD ["/gunicorn.sh"]
 FROM nginx:1.13 as nginx
 
 COPY ./compose/production/nginx/default.conf /etc/nginx/conf.d/default.conf
-COPY --from=django /app/staticfiles /usr/share/nginx/html/static
+COPY --from=django /app/staticfiles/static/ /usr/share/nginx/html/static/
