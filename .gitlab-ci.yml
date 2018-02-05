@@ -17,11 +17,11 @@ build to production:
   stage: build
   script:
     - docker login -u "gitlab-ci-token" -p "$CI_JOB_TOKEN" $CI_REGISTRY
-    - docker build -f compose/production/django/Dockerfile -t $DJANGO_RELEASE_IMAGE .
+    - docker build -f compose/production/Dockerfile --target django -t $DJANGO_RELEASE_IMAGE .
     - docker tag $DJANGO_RELEASE_IMAGE "$CI_REGISTRY_IMAGE/django:latest"
     - docker push $DJANGO_RELEASE_IMAGE
     - docker push "$CI_REGISTRY_IMAGE/django:latest"
-    - docker build -f compose/production/nginx/Dockerfile -t $NGINX_RELEASE_IMAGE .
+    - docker build -f compose/production/Dockerfile --target nginx -t $NGINX_RELEASE_IMAGE .
     - docker tag $NGINX_RELEASE_IMAGE "$CI_REGISTRY_IMAGE/nginx:latest"
     - docker push $NGINX_RELEASE_IMAGE
     - docker push "$CI_REGISTRY_IMAGE/nginx:latest"
@@ -35,7 +35,7 @@ deploy to production:
   stage: deploy
   image: cdrx/rancher-gitlab-deploy
   script:
-    - upgrade --environment FPAbramo --stack empurrandojuntos-prod --service django --no-finish-upgrade --debug
+    - upgrade --environment FPAbramo --stack empurrandojuntos-prod --service backend --no-finish-upgrade --debug
   only:
     - tags
   environment: production
@@ -49,11 +49,11 @@ build to homolog:
   stage: build
   script:
     - docker login -u "gitlab-ci-token" -p "$CI_JOB_TOKEN" $CI_REGISTRY
-    - docker build -f compose/production/django/Dockerfile -t $DJANGO_RELEASE_IMAGE .
+    - docker build -f compose/production/Dockerfile  --target django -t $DJANGO_RELEASE_IMAGE .
     - docker tag $DJANGO_RELEASE_IMAGE "$CI_REGISTRY_IMAGE/django:master"
     - docker push $DJANGO_RELEASE_IMAGE
     - docker push "$CI_REGISTRY_IMAGE/django:master"
-    - docker build -f compose/production/nginx/Dockerfile -t $NGINX_RELEASE_IMAGE .
+    - docker build -f compose/production/Dockerfile  --target nginx -t $NGINX_RELEASE_IMAGE .
     - docker tag $NGINX_RELEASE_IMAGE "$CI_REGISTRY_IMAGE/nginx:master"
     - docker push $NGINX_RELEASE_IMAGE
     - docker push "$CI_REGISTRY_IMAGE/nginx:master"
@@ -80,7 +80,7 @@ deploy to homolog:
   stage: deploy
   image: cdrx/rancher-gitlab-deploy
   script:
-    - upgrade --environment FPAbramo --stack brasilqueopovoquer-empurrandojuntos-dev --new-image $CI_REGISTRY_IMAGE/django:$CI_BUILD_REF_NAME --service django --no-finish-upgrade --debug
+    - upgrade --environment FPAbramo --stack brasilqueopovoquer-empurrandojuntos-dev --service backend --no-finish-upgrade --debug
   only:
     - /master/
   environment: homolog

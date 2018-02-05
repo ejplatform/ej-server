@@ -1,4 +1,4 @@
-FROM python:3.5
+FROM python:3.5 as django
 
 ENV PYTHONUNBUFFERED 1
 
@@ -24,6 +24,8 @@ COPY . /app
 
 RUN mkdir /app/staticfiles
 
+RUN python /app/manage.py collectstatic --noinput
+
 RUN chown -R django /app
 
 USER django
@@ -32,3 +34,9 @@ WORKDIR /app
 
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["/gunicorn.sh"]
+
+
+FROM nginx:1.13 as nginx
+
+COPY ./compose/production/nginx/default.conf /etc/nginx/conf.d/default.conf
+COPY --from=django /app/staticfiles /usr/share/nginx/html/static
