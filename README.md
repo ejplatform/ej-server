@@ -70,7 +70,7 @@ docker run --env-file=./compose/dev/test_env --link=ej_postgres_test:postgres \
 - REDIS_URL - obrigatório em produção; exemplo: `redis://127.0.0.1:6379`
 
 ### Sentry
-- DJANGO_SENTRY_DSN - obrigatório em produção
+- DJANGO_SENTRY_DSN - opcional; só válido em produção
 
 ### Polis
 - POLIS_BASE_URL - opcional
