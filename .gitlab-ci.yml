@@ -1,7 +1,7 @@
 ---
-image: docker:17.04-git
+image: docker:18.01.0-ce-git
 services:
-  - docker:17.04-dind
+  - docker:18.01.0-ce-dind
 stages:
   - build
   - deploy
