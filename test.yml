@@ -1,0 +1,48 @@
+version: '2'
+
+volumes:
+  db_data: {}
+
+services:
+
+  redis:
+    image: redis:2.8.19
+    hostname: redis
+
+  rabbit:
+    hostname: rabbit
+    image: rabbitmq:3.6.14-management
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=mypass
+
+  postgres:
+    image: postgres:9.6
+    environment:
+      - POSTGRES_USER=pushtogether
+
+  django: &django
+    #image: registry.gitlab.com/empurrandojuntos/backend/django:develop
+    build:
+      context: .
+      dockerfile: ./compose/dev/django/Dockerfile
+
+    depends_on:
+      - postgres
+    env_file: ./compose/dev/test_env
+    links:
+      - postgres
+      - rabbit
+      - redis
+    command: /test.sh
+
+  worker:
+    << : *django
+    links:
+      - postgres
+      - rabbit
+      - redis
+    depends_on:
+      - django
+      - rabbit
+    command: compose/local/worker/run_celery.sh

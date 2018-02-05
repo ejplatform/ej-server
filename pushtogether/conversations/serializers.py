@@ -121,6 +121,7 @@ class ConversationJobSerializer(serializers.ModelSerializer):
         model = Conversation
         fields = ('participation_clusters',)
 
+
 class ConversationSerializer(serializers.ModelSerializer):
     user_participation_ratio = serializers.SerializerMethodField()
     created_at = serializers.DateTimeField(format="%d-%m-%Y")
