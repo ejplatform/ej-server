@@ -70,11 +70,10 @@ class TestConversationAPI:
 
     def test_create_conversation(self, client, user):
         """
-        Ensure we can create a new conversation object.
+        Ensure we can't create a new conversation object.
         """
         client.force_login(user)
         last_conversation_count = Conversation.objects.count()
-
         data = {
             "author": user.id,
             "description": "test_description",
@@ -83,8 +82,6 @@ class TestConversationAPI:
             "updated_at": str(timezone.now()),
         }
 
-        pprint(data)
-
         response = client.post(self.create_read_url(), data, format='json')
 
         assert response.status_code == status.HTTP_405_METHOD_NOT_ALLOWED
@@ -92,7 +89,7 @@ class TestConversationAPI:
 
     def test_user_cant_update_conversation(self, client, user, conversation):
         """
-        Ensure we can update a conversation object.
+        Ensure we can't update a conversation object.
         """
         client.force_login(user)
         data = json.dumps({
@@ -103,13 +100,12 @@ class TestConversationAPI:
             self.update_url(conversation), data,
             content_type='application/json'
         )
-        post_update_response = client.get(self.create_read_url())
 
         assert update_response.status_code == status.HTTP_405_METHOD_NOT_ALLOWED
 
     def test_user_cant_delete_conversations(self, client, user, conversation):
         """
-        Ensure we can delete a conversation object.
+        Ensure we can't delete a conversation object.
         """
         client.force_login(user)
         last_conversation_counter = Conversation.objects.count()

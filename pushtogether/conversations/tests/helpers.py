@@ -26,6 +26,7 @@ def create_valid_user(username):
     user.save()
     return user
 
+
 def create_valid_conversation(user):
     conversation = Conversation.objects.create(
         author=user,
@@ -34,6 +35,7 @@ def create_valid_conversation(user):
     )
     conversation.save()
     return conversation
+
 
 def create_valid_comment(conversation, user, approval=Comment.APPROVED):
     comment = Comment.objects.create(
@@ -46,9 +48,11 @@ def create_valid_comment(conversation, user, approval=Comment.APPROVED):
     comment.save()
     return comment
 
+
 def create_valid_comments(number, conversation, user, approval=Comment.APPROVED):
     return [create_valid_comment(conversation, user, approval)
             for x in range(number)]
+
 
 def create_valid_vote(comment, user, value=Vote.AGREE):
     vote = Vote.objects.create(
@@ -59,6 +63,7 @@ def create_valid_vote(comment, user, value=Vote.AGREE):
     )
     vote.save()
     return vote
+
 
 def post_valid_comment(client, conversation, number=1):
     data = json.dumps({
