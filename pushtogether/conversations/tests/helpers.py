@@ -1,5 +1,6 @@
 import pytest
 import json
+import random
 
 from django.contrib.auth import get_user_model
 from django.urls import reverse
@@ -14,17 +15,22 @@ from pushtogether.conversations.models import (
 pytestmark = pytest.mark.django_db
 
 
-def create_valid_user(username):
+def create_valid_user(username, is_superuser=True):
     user = get_user_model().objects.create(
         username=username,
         password="test_password",
         first_name="test",
         last_name="user",
-        is_superuser=True,
+        is_superuser=is_superuser,
     )
     user.set_password("test_password")
     user.save()
     return user
+
+
+def create_valid_users(number):
+    return [create_valid_user("test_user_" + str(x), is_superuser=False)
+            for x in range(number)]
 
 
 def create_valid_conversation(user):
@@ -63,6 +69,25 @@ def create_valid_vote(comment, user, value=Vote.AGREE):
     )
     vote.save()
     return vote
+
+
+def populate_conversation_comments(conversation, users_list, n_comments_per_user=1):
+    for user in users_list:
+        create_valid_comments(n_comments_per_user, conversation, user)
+    return conversation.comments
+
+
+def populate_conversation_votes(conversation, users_list, max_votes_per_user):
+    possible_votes = [Vote.AGREE, Vote.DISAGREE]
+    comments_count = conversation.comments.count()
+    if max_votes_per_user > comments_count:
+        max_votes_per_user = comments_count
+
+    list_of_comments = list(conversation.comments.all())
+    for user in users_list:
+        for comment in random.sample(list_of_comments, max_votes_per_user):
+            if comment.author != user:
+                create_valid_vote(comment, user, value=random.choice(possible_votes))
 
 
 def post_valid_comment(client, conversation, number=1):

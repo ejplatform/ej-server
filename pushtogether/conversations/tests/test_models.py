@@ -14,10 +14,13 @@ from pushtogether.conversations.models import (
 )
 from .helpers import (
     create_valid_user,
+    create_valid_users,
     create_valid_conversation,
     create_valid_comment,
     create_valid_comments,
-    create_valid_vote
+    create_valid_vote,
+    populate_conversation_comments,
+    populate_conversation_votes,
 )
 
 pytestmark = pytest.mark.django_db
@@ -257,9 +260,7 @@ class TestConversation:
         comment = create_valid_comment(conversation, other_user)
         create_valid_comment(conversation, user)
         comment.votes.create(author=user, value=Vote.DISAGREE)
-
-        user_partipation_ratio = conversation.get_user_participation_ratio(
-            user)
+        user_partipation_ratio = conversation.get_user_participation_ratio(user)
 
         assert user_partipation_ratio == 1.0
 
@@ -268,10 +269,51 @@ class TestConversation:
         If there are no other user's comments, the participation ratio should
         be zero
         """
-        user_partipation_ratio = conversation.get_user_participation_ratio(
-            user)
-
+        user_partipation_ratio = conversation.get_user_participation_ratio(user)
         assert user_partipation_ratio == 0
+
+
+class TestConversationJobs:
+    def test_jobs_cannot_be_created_without_sufficient_users(self, conversation):
+        """
+        Jobs can't be created if there are less than 5 participants
+        """
+        users_list = create_valid_users(4)
+        populate_conversation_comments(conversation, users_list, n_comments_per_user=5)
+        populate_conversation_votes(conversation, users_list, max_votes_per_user=3)
+
+        assert conversation._can_update_statistics(math_refresh_time=0) == False
+
+    def test_jobs_cannot_be_created_without_sufficient_users(self, user, conversation):
+        """
+        Jobs can't be created if there are less than 5 comments
+        """
+        users_list = create_valid_users(5)
+        create_valid_comments(4, conversation, user)
+        populate_conversation_votes(conversation, users_list, max_votes_per_user=1)
+
+        assert conversation._can_update_statistics(math_refresh_time=0) == False
+
+    def test_jobs_cannot_be_created_without_sufficient_comments(self, conversation):
+        pass
+
+    def test_jobs_cannot_be_created_without_sufficient_votes(self, conversation):
+        pass
+
+    def test_jobs_can_be_created_with_sufficient_users_and_comments(self, conversation):
+        pass
+
+    def test_jobs_cannot_be_created_if_there_is_a_pending_job(self, conversation):
+        pass
+
+    def test_jobs_can_be_created_if_there_are_no_jobs_and_sufficient_resources(self, conversation):
+        pass
+
+    def test_jobs_cannot_be_created_if_there_is_a_success_job_in_the_time_limit(self, conversation):
+        pass
+
+    def test_jobs_can_be_created_if_there_are_failed_jobs_in_the_time_limit(self, conversation):
+        pass
 
 
 class TestVote:
