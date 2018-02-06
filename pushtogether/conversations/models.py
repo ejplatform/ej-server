@@ -16,10 +16,13 @@ from .validators import validate_color
 from autoslug import AutoSlugField
 from autoslug.settings import slugify as default_slugify
 
+
 User = get_user_model()
+
 
 def custom_slugify(value):
     return default_slugify(value).lower()
+
 
 class Conversation(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL)
@@ -54,6 +57,11 @@ class Conversation(models.Model):
         _('Comment nudge interval'), null=True, blank=True)  # seconds
     comment_nudge_global_limit = models.IntegerField(
         _('Comment nudge global limit'), null=True, blank=True)  # number of comments
+
+    # Math configuration
+    # you can override this variable in django settings variable MATH_REFRESH_TIME
+    # passing a integer value in seconds
+    math_refresh_time = settings.MATH_REFRESH_TIME if hasattr(settings, 'MATH_REFRESH_TIME') else 150
 
     class NUDGE(Enum):
         interval_blocked = {
@@ -262,9 +270,21 @@ class Conversation(models.Model):
         if self._can_update_statistics():
             self.math_jobs.create(type="CLUSTERS")
 
-    def _can_update_statistics(self):
-        #[TODO] Time approachment
-        return True
+    def _can_update_statistics(self, math_refresh_time=None):
+        """
+        Statistics can be updated when the last math job created respect the
+        time limit defined by the MATH_REFRESH_TIME django settings variable.
+        This time can be overridden by passing as argument a integer time value
+        in seconds to this method.
+        """
+        if self.total_participants < 5 or self.total_comments < 5:
+            return False
+
+        if math_refresh_time is None:
+            math_refresh_time = self.math_refresh_time
+        math_refresh_limit = self._get_datetime_interval(math_refresh_time)
+        jobs_in_limit = self.math_jobs.filter(created_at__gt=math_refresh_limit)
+        return not jobs_in_limit
 
 
 class Comment(models.Model):
