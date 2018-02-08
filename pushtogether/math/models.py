@@ -1,6 +1,7 @@
 from django.db import models, transaction
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.postgres.fields import JSONField, ArrayField
+from django.conf import settings
 
 from pushtogether.conversations.models import Conversation
 
