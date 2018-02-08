@@ -4,7 +4,7 @@ from random import randint
 from enum import Enum
 
 from django.db import models
-from django.core.validators import MinValueValidator
+from django.core.validators import MinValueValidator, MaxLengthValidator
 from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
@@ -251,7 +251,7 @@ class Comment(models.Model):
 
     conversation = models.ForeignKey(Conversation, related_name='comments')
     author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='comments')
-    content = models.TextField(_('Content'), blank=False)
+    content = models.TextField(_('Content'), blank=False, validators=[MaxLengthValidator(140)])
     polis_id = models.IntegerField(_('Polis id'), null=True, blank=True)
     created_at = models.DateTimeField(_('Created at'), auto_now_add=True)
     approval = models.CharField(
