@@ -3,13 +3,10 @@ import pytest
 from pushtogether.math.models import Job
 
 
-pytestmark = pytest.mark.django_db
-
-
 def create_valid_job(conversation, type=Job.CLUSTERS):
-    job = Job.objects.create(
+    job = Job(
         type=type,
         conversation=conversation
     )
-    job.save()
-    return job
+    job.save(delay=False)
+    return Job.objects.get(pk=job.id)
