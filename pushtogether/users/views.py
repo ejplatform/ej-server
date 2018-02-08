@@ -41,8 +41,8 @@ class UserViewSet(ModelViewSet):
 
             user_profile.image.save(upload.name, upload)
 
-            return Response(status=status.HTTP_201_CREATED,
-                            headers={'Location': user_profile.image.url})
+            serializer = UserSerializer(user_profile)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
