@@ -1,48 +1,26 @@
 version: '2'
 
-volumes:
-  db_data: {}
-
 services:
-
-  redis:
-    image: redis:2.8.19
-    hostname: redis
-
-  rabbit:
-    hostname: rabbit
-    image: rabbitmq:3.6.14-management
-    environment:
-      - RABBITMQ_DEFAULT_USER=admin
-      - RABBITMQ_DEFAULT_PASS=mypass
-
   postgres:
     image: postgres:9.6
     environment:
-      - POSTGRES_USER=pushtogether
+      POSTGRES_USER: 'pushtogether'
+      POSTGRES_DB: 'pushtogether_test'
+      POSTGRES_PASSWORD: 'pushtogether'
 
-  django: &django
-    #image: registry.gitlab.com/empurrandojuntos/backend/django:develop
+  django:
     build:
       context: .
       dockerfile: ./compose/dev/django/Dockerfile
-
     depends_on:
       - postgres
-    env_file: ./compose/dev/test_env
-    links:
-      - postgres
-      - rabbit
-      - redis
+    environment:
+      POSTGRES_USER: 'pushtogether'
+      POSTGRES_DB: 'pushtogether_test'
+      POSTGRES_PASSWORD: 'pushtogether'
+      USE_DOCKER: 'yes'
+      COURIER_DEFAULT_PROVIDER: 'onesignal'
+      COURIER_ONESIGNAL_APP_ID: '660977f0-30ad-4f69-a9a4-2873b8f5de7e'
+      COURIER_ONESIGNAL_USER_ID: 'NTlmYjI5NDktYzA1Zi00ODk4LTllZGQtYWEzY2Q4ZjA3YzM5'
+      DJANGO_SETTINGS_MODULE: 'config.settings.test'
     command: /test.sh
-
-  worker:
-    << : *django
-    links:
-      - postgres
-      - rabbit
-      - redis
-    depends_on:
-      - django
-      - rabbit
-    command: compose/local/worker/run_celery.sh
