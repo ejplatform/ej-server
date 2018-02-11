@@ -46,6 +46,8 @@ class AuthorAsCurrentUserMixin():
 class ConversationViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = ConversationSerializer
     queryset = Conversation.objects.all()
+    filter_backends = (DjangoFilterBackend, )
+    filter_fields = ('promoted', )
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
     def get_object(self):

@@ -15,7 +15,7 @@ class ConversationAdmin(admin.ModelAdmin):
     fields = ['author', 'title', 'description', 'dialog', 'response', 'opinion', 'polis_id',
               'comment_nudge', 'comment_nudge_interval', 'comment_nudge_global_limit',
               'background_image', 'background_color', 'polis_url', 'polis_slug',
-              'position', 'is_new']
+              'position', 'is_new', 'promoted']
     list_display = ['id', 'title', 'author', 'position', 'created_at', 'updated_at']
 
 
