@@ -1,16 +1,13 @@
-from pprint import pprint
 from random import randint
 
 from django.conf import settings
 from django.shortcuts import get_object_or_404
 from django.contrib.auth import get_user_model
-from django.utils.translation import ugettext_lazy as _
 
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework import viewsets
 from rest_framework import mixins
-from rest_framework.decorators import detail_route, list_route
 from rest_framework import permissions
 from rest_framework.pagination import PageNumberPagination
 from rest_framework import filters
