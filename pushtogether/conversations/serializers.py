@@ -9,14 +9,10 @@ User = get_user_model()
 
 
 class AuthorSerializer(serializers.ModelSerializer):
-    name = serializers.SerializerMethodField()
 
     class Meta:
         model = User
         fields = ('id', 'username', 'name', 'image_url', 'is_superuser',)
-
-    def get_name(self, obj):
-        return obj.get_full_name()
 
 
 class VoteSerializer(serializers.ModelSerializer):
