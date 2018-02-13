@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
 from .models import Conversation, Comment, Vote
+from ..math.serializers import JobSerializer
 
 
 User = get_user_model()
@@ -103,6 +104,14 @@ class ConversationReportSerializer(serializers.ModelSerializer):
                   'disagree_votes', 'pass_votes', 'total_comments',
                   'approved_comments', 'rejected_comments',
                   'unmoderated_comments', 'total_participants', 'comments')
+
+
+class ConversationJobSerializer(serializers.ModelSerializer):
+    participation_clusters = JobSerializer(read_only=True)
+
+    class Meta:
+        model = Conversation
+        fields = ('participation_clusters',)
 
 
 class ConversationSerializer(serializers.ModelSerializer):

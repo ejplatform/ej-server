@@ -1,0 +1,26 @@
+version: '2'
+
+services:
+  postgres:
+    image: postgres:9.6
+    environment:
+      POSTGRES_USER: 'pushtogether'
+      POSTGRES_DB: 'pushtogether_test'
+      POSTGRES_PASSWORD: 'pushtogether'
+
+  django:
+    build:
+      context: .
+      dockerfile: ./compose/dev/django/Dockerfile
+    depends_on:
+      - postgres
+    environment:
+      POSTGRES_USER: 'pushtogether'
+      POSTGRES_DB: 'pushtogether_test'
+      POSTGRES_PASSWORD: 'pushtogether'
+      USE_DOCKER: 'yes'
+      COURIER_DEFAULT_PROVIDER: 'onesignal'
+      COURIER_ONESIGNAL_APP_ID: '660977f0-30ad-4f69-a9a4-2873b8f5de7e'
+      COURIER_ONESIGNAL_USER_ID: 'NTlmYjI5NDktYzA1Zi00ODk4LTllZGQtYWEzY2Q4ZjA3YzM5'
+      DJANGO_SETTINGS_MODULE: 'config.settings.test'
+    command: /test.sh

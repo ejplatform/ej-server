@@ -24,3 +24,5 @@ raven==6.5.0
 # django-courier
 git+https://gitlab.com/empurrandojuntos/django-courier.git
 
+# pushtogether math module
+pushtogether-math

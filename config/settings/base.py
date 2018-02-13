@@ -8,6 +8,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/dev/ref/settings/
 """
 import environ
+from .celery import *
 
 ROOT_DIR = environ.Path(__file__) - 3  # (pushtogether/config/settings/base.py - 3 = pushtogether/)
 APPS_DIR = ROOT_DIR.path('pushtogether')
@@ -73,6 +74,7 @@ LOCAL_APPS = [
     'pushtogether.polis.apps.PolisConfig',
     'pushtogether.conversations.apps.ConversationsConfig',
     'pushtogether.gamification.apps.GamificationConfig',
+    'pushtogether.math.apps.MathConfig',
 ]
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -362,6 +364,12 @@ NOCAPTCHA = True
 COURIER_DEFAULT_PROVIDER = env('COURIER_DEFAULT_PROVIDER')
 COURIER_ONESIGNAL_APP_ID = env('COURIER_ONESIGNAL_APP_ID')
 COURIER_ONESIGNAL_USER_ID = env('COURIER_ONESIGNAL_USER_ID')
+
+# Pushtogether Math
+STATISTICS_REFRESH_TIME = env('STATISTICS_REFRESH_TIME', default=150)  # seconds
+MATH_MIN_USERS = env('MATH_MIN_USERS', default=5)
+MATH_MIN_COMMENTS = env('MATH_MIN_COMMENTS', default=5)
+MATH_MIN_VOTES = env('MATH_MIN_VOTES', default=5)
 
 # Polis instance data
 POLIS_BASE_URL = env('POLIS_BASE_URL', default=None)

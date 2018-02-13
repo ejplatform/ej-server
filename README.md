@@ -32,14 +32,12 @@ Existem duas maneiras de se executar os testes automatizados localmente:
 docker-compose -f local.yml exec django pytest
 ```
 
-- Você deseja apenas executar os testes sem necessariamente levantar o servidor. Antes é necessário construir a imagem do backend e disponibilizar o banco de dados para então executar o pytest via `docker run`
+- Você deseja apenas executar os testes sem necessariamente levantar toda a infraestrutura fornecida no ambiente local, o arquivo de configuração do docker-compose `test.yml` irá construir apenas o django e o postgres.
 
 ```
-docker build -f compose/dev/django/Dockerfile -t ej_django_test .
-docker run -d --env-file=./compose/dev/test_env --name=ej_postgres_test postgres:9.6
-docker run --env-file=./compose/dev/test_env --link=ej_postgres_test:postgres \
-  ej_django_test /test.sh
+docker-compose -f test.yml up
 ```
+
 
 ## Variáveis de ambiente
 ### Banco de dados

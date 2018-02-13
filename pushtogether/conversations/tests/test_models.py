@@ -14,10 +14,13 @@ from pushtogether.conversations.models import (
 )
 from .helpers import (
     create_valid_user,
+    create_valid_users,
     create_valid_conversation,
     create_valid_comment,
     create_valid_comments,
-    create_valid_vote
+    create_valid_vote,
+    populate_conversation_comments,
+    populate_conversation_votes,
 )
 
 pytestmark = pytest.mark.django_db
@@ -257,9 +260,7 @@ class TestConversation:
         comment = create_valid_comment(conversation, other_user)
         create_valid_comment(conversation, user)
         comment.votes.create(author=user, value=Vote.DISAGREE)
-
-        user_partipation_ratio = conversation.get_user_participation_ratio(
-            user)
+        user_partipation_ratio = conversation.get_user_participation_ratio(user)
 
         assert user_partipation_ratio == 1.0
 
@@ -268,9 +269,7 @@ class TestConversation:
         If there are no other user's comments, the participation ratio should
         be zero
         """
-        user_partipation_ratio = conversation.get_user_participation_ratio(
-            user)
-
+        user_partipation_ratio = conversation.get_user_participation_ratio(user)
         assert user_partipation_ratio == 0
 
 

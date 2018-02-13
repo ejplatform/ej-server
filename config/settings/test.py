@@ -43,7 +43,7 @@ CACHES = {
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
 DATABASES = {
     'default': env.db('DATABASE_URL',
-        default='postgres://pushtogether:@postgres:5432/pushtogether_test'),
+        default='postgres://pushtogether:pushtogether@postgres:5432/pushtogether_test'),
 }
 
 # TESTING
@@ -67,3 +67,7 @@ TEMPLATES[0]['OPTIONS']['loaders'] = [
         'django.template.loaders.app_directories.Loader',
     ], ],
 ]
+
+# Celery should run locally
+CELERY_TASK_ALWAYS_EAGER = True
+CELERY_TASK_EAGER_PROPAGATES=True

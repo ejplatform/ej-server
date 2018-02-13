@@ -16,10 +16,13 @@ from .validators import validate_color
 from autoslug import AutoSlugField
 from autoslug.settings import slugify as default_slugify
 
+
 User = get_user_model()
+
 
 def custom_slugify(value):
     return default_slugify(value).lower()
+
 
 class Conversation(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL)
@@ -56,6 +59,11 @@ class Conversation(models.Model):
     comment_nudge_global_limit = models.IntegerField(
         _('Comment nudge global limit'), null=True, blank=True)  # number of comments
 
+    # Statistics configuration
+    # you can override this variable in django settings variable MATH_REFRESH_TIME
+    # passing a integer value in seconds
+    STATISTICS_REFRESH_TIME = getattr(settings, 'CONVERSATION_STATISTICS_REFRESH_TIME', 0)
+
     class NUDGE(Enum):
         interval_blocked = {
             'state': 'interval_blocked',
@@ -87,26 +95,44 @@ class Conversation(models.Model):
 
     @property
     def total_participants(self):
-        return User.objects.filter(votes__comment__conversation_id=self.id).distinct().count()
+        return (
+            User.objects
+            .filter(votes__comment__conversation_id=self.id)
+            .distinct()
+            .count()
+        )
 
     @property
     def agree_votes(self):
-        return Vote.objects.filter(comment__conversation_id=self.id,
-                                   value=Vote.AGREE).count()
+        return (
+            Vote.objects
+            .filter(comment__conversation_id=self.id,value=Vote.AGREE)
+            .count()
+        )
 
     @property
     def disagree_votes(self):
-        return Vote.objects.filter(comment__conversation_id=self.id,
-                                   value=Vote.DISAGREE).count()
+        return (
+            Vote.objects
+            .filter(comment__conversation_id=self.id,value=Vote.DISAGREE)
+            .count()
+        )
 
     @property
     def pass_votes(self):
-        return Vote.objects.filter(comment__conversation_id=self.id,
-                                   value=Vote.PASS).count()
+        return (
+            Vote.objects
+            .filter(comment__conversation_id=self.id,value=Vote.PASS)
+            .count()
+        )
 
     @property
     def total_votes(self):
-        return Vote.objects.filter(comment__conversation_id=self.id).count()
+        return (
+            Vote.objects
+            .filter(comment__conversation_id=self.id)
+            .count()
+        )
 
     @property
     def approved_comments(self):
@@ -123,6 +149,15 @@ class Conversation(models.Model):
     @property
     def total_comments(self):
         return self.comments.count()
+
+    @property
+    def participation_clusters(self):
+        return (
+            self.math_jobs
+            .filter(type='CLUSTERS', status='FINISHED')
+            .order_by('created_at')
+            .last()
+        )
 
     def get_user_participation_ratio(self, user):
         others_approved_comments = self.comments.filter(
@@ -238,6 +273,37 @@ class Conversation(models.Model):
         return make_aware(time_limit, get_current_timezone())
 
 
+    def list_votes(self):
+        """
+        Returns a list of votes according to the following pattern:
+        [[value, author, comment],...]
+        """
+        votes_queryset = Vote.objects.filter(comment__conversation_id=self.id)
+        votes = [[vote.value, vote.author.id, vote.comment.id]
+                 for vote in votes_queryset]
+        return votes
+
+    def update_statistics(self):
+        """
+        Creates a Job to update the clusters of users
+        """
+        if self._can_update_statistics():
+            self.math_jobs.create(type="CLUSTERS")
+
+    def _can_update_statistics(self, statistics_refresh_time=None):
+        """
+        Statistics can be updated when the last math job created respect the
+        time limit defined by the MATH_REFRESH_TIME django settings variable.
+        This time can be overridden by passing as argument a integer time value
+        in seconds to this method.
+        """
+        if statistics_refresh_time is None:
+            statistics_refresh_time = Conversation.STATISTICS_REFRESH_TIME
+
+        math_refresh_limit = self._get_datetime_interval(statistics_refresh_time)
+        jobs_in_limit = self.math_jobs.filter(created_at__gt=math_refresh_limit)
+        return not jobs_in_limit
+
 
 class Comment(models.Model):
     APPROVED = "APPROVED"
@@ -307,3 +373,8 @@ class Vote(models.Model):
 
     class Meta:
         unique_together = ("author", "comment")
+
+    def save(self, *args, **kwargs):
+        super(Vote, self).save(*args, **kwargs)
+        conversation = self.comment.conversation
+        conversation.update_statistics()
