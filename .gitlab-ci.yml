@@ -81,6 +81,8 @@ deploy to homolog:
   image: cdrx/rancher-gitlab-deploy
   script:
     - upgrade --environment FPAbramo --stack brasilqueopovoquer-empurrandojuntos-dev --service backend --no-finish-upgrade --sidekicks
+    - upgrade --environment FPAbramo --stack brasilqueopovoquer-empurrandojuntos-dev --service flower --no-finish-upgrade
+    - upgrade --environment FPAbramo --stack brasilqueopovoquer-empurrandojuntos-dev --service worker --no-finish-upgrade
   only:
     - /master/
   environment: homolog
