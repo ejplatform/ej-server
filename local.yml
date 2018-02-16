@@ -1,16 +1,20 @@
-version: '2'
+version: '3.5'
 
 volumes:
   db_data: {}
 
-services:
+networks:
+  empurrando-juntos:
+    name: empurrando-juntos
 
+services:
   redis:
     image: redis:3.2
     hostname: redis
+    networks:
+      - empurrando-juntos
 
   rabbit:
-    hostname: rabbit
     image: rabbitmq:3.6.14-management
     environment:
       - RABBITMQ_DEFAULT_USER=admin
@@ -18,6 +22,8 @@ services:
     ports:
       - '5672:5672'  # we forward this port because it's useful for debugging
       - '15672:15672'  # here, we can access rabbitmq management plugin
+    networks:
+      - empurrando-juntos
 
   django: &django
     build:
@@ -42,6 +48,8 @@ services:
     ports:
       - '8000:8000'
     command: /runserver.sh
+    networks:
+      - empurrando-juntos
 
   postgres:
     image: postgres:9.6
@@ -51,6 +59,8 @@ services:
       - POSTGRES_DB=pushtogether
       - POSTGRES_USER=pushtogether
       - POSTGRES_PASSWORD=pushtogether
+    networks:
+      - empurrando-juntos
 
   worker:
     << : *django
@@ -65,6 +75,8 @@ services:
       - rabbit
     ports: []
     command: compose/local/worker/run_celery.sh
+    networks:
+      - empurrando-juntos
 
   flower:
     << : *django
@@ -80,3 +92,5 @@ services:
     ports:
       - '8001:8001'
     command: compose/local/flower/start_flower.sh
+    networks:
+      - empurrando-juntos
