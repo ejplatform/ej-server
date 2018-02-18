@@ -13,7 +13,7 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework import filters
 from django_filters.rest_framework import DjangoFilterBackend
 
-from .models import Conversation, Comment, Vote
+from .models import Conversation, Comment, Vote, Category
 from . import serializers
 
 import requests
@@ -36,7 +36,7 @@ class ConversationViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = serializers.ConversationSerializer
     queryset = Conversation.objects.all()
     filter_backends = (DjangoFilterBackend, )
-    filter_fields = ('promoted', )
+    filter_fields = ('promoted', 'category_id', )
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
     def get_object(self):
@@ -47,6 +47,21 @@ class ConversationViewSet(viewsets.ReadOnlyModelViewSet):
         except ValueError:
             conversation = get_object_or_404(queryset, slug=self.kwargs['pk'])
         return conversation
+
+
+class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = serializers.CategorySerializer
+    queryset = Category.objects.all()
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+
+    def get_object(self):
+        queryset = self.get_queryset()
+        category = None
+        try:
+            category = get_object_or_404(queryset, pk=self.kwargs['pk'])
+        except ValueError:
+            category = get_object_or_404(queryset, slug=self.kwargs['pk'])
+        return category
 
 
 class ConversationReportViewSet(viewsets.ReadOnlyModelViewSet):

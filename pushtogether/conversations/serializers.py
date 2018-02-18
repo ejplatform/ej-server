@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 
 from rest_framework import serializers
 
-from .models import Conversation, Comment, Vote
+from .models import Conversation, Comment, Vote, Category
 from ..math.serializers import JobSerializer
 
 
@@ -126,7 +126,7 @@ class ConversationSerializer(serializers.ModelSerializer):
                   'background_image', 'dialog', 'response', 'total_votes', 'slug',
                   'approved_comments', 'user_participation_ratio', 'created_at',
                   'updated_at', 'polis_url', 'polis_slug', 'is_new', 'position',
-                  'opinion', 'promoted')
+                  'opinion', 'promoted', 'category_id', 'category_name')
 
     def _get_current_user(self):
         return self.context['request'].user
@@ -136,3 +136,9 @@ class ConversationSerializer(serializers.ModelSerializer):
         if user.is_authenticated():
             return obj.get_user_participation_ratio(user)
         return
+
+
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ('id', 'name', 'styles', 'image', 'image_caption', 'slug')

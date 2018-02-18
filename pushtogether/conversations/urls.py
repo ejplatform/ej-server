@@ -1,7 +1,6 @@
 from rest_framework.routers import SimpleRouter
 
 from django.conf.urls import url
-
 from . import views
 
 router = SimpleRouter()
@@ -41,6 +40,11 @@ router.register(
     r'conversation-clusters',
     views.ClustersViewSet,
     base_name='conversation-clusters'
+)
+router.register(
+    r'categories',
+    views.CategoryViewSet,
+    base_name='category'
 )
 
 urlpatterns = [

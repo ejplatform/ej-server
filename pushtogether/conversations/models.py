@@ -10,6 +10,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 from django.db.models import Q
 from django.utils.timezone import make_aware, get_current_timezone
+import jsonfield
 
 from .validators import validate_color
 
@@ -23,6 +24,20 @@ User = get_user_model()
 def custom_slugify(value):
     return default_slugify(value).lower()
 
+class Category(models.Model):
+    name = models.CharField(_('Name'), max_length=255, blank=False, unique=True)
+    slug = AutoSlugField(null=True, default=None, unique=True, populate_from='name', slugify=custom_slugify)
+    styles = jsonfield.JSONField(_('Styles'))
+    image = models.ImageField(_('Image'), upload_to='conversations/categories', null=True, blank=True)
+    image_caption = models.CharField(_('Image caption'), max_length=255, blank=True)
+    created_at = models.DateTimeField(_('Created at'), auto_now_add=True)
+    updated_at = models.DateTimeField(_('Updated at'), auto_now=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = "categories"
 
 class Conversation(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL)
@@ -38,6 +53,7 @@ class Conversation(models.Model):
     slug = AutoSlugField(null=True, default=None, unique=True, populate_from='title', slugify=custom_slugify)
     opinion = models.TextField(_('Our Opinion'), null=True, blank=True)
     promoted = models.BooleanField(_('Promoted'), default=False)
+    category = models.ForeignKey(Category, related_name='conversations', null=True)
 
     background_image = models.ImageField(
         _('Background image'),
@@ -158,6 +174,10 @@ class Conversation(models.Model):
             .order_by('created_at')
             .last()
         )
+    
+    @property
+    def category_name(self):
+        return self.category.name
 
     def get_user_participation_ratio(self, user):
         others_approved_comments = self.comments.filter(
