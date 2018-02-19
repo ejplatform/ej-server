@@ -1,16 +1,15 @@
-import re
 import datetime
 from random import randint
 from enum import Enum
 
 from django.db import models
-from django.core.validators import MinValueValidator, MaxLengthValidator
+from django.core.validators import MaxLengthValidator
+from django.contrib.postgres.fields import JSONField
 from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 from django.db.models import Q
 from django.utils.timezone import make_aware, get_current_timezone
-import jsonfield
 
 from .validators import validate_color
 
@@ -27,7 +26,7 @@ def custom_slugify(value):
 class Category(models.Model):
     name = models.CharField(_('Name'), max_length=255, blank=False, unique=True)
     slug = AutoSlugField(null=True, default=None, unique=True, populate_from='name', slugify=custom_slugify)
-    styles = jsonfield.JSONField(_('Styles'))
+    styles = JSONField(_('Styles'))
     image = models.ImageField(_('Image'), upload_to='conversations/categories', null=True, blank=True)
     image_caption = models.CharField(_('Image caption'), max_length=255, blank=True)
     created_at = models.DateTimeField(_('Created at'), auto_now_add=True)
@@ -174,7 +173,7 @@ class Conversation(models.Model):
             .order_by('created_at')
             .last()
         )
-    
+
     @property
     def category_name(self):
         return self.category.name

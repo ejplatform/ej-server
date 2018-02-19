@@ -60,7 +60,6 @@ pygments==2.2.0
 markdown==2.6.9
 
 django-autoslug==1.9.3
-django-jsonfield==1.0.1
 
 # needed to pushtogether math module
 celery==4.1.0
