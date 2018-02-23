@@ -52,7 +52,7 @@ class Conversation(models.Model):
     slug = AutoSlugField(null=True, default=None, unique=True, populate_from='title', slugify=custom_slugify)
     opinion = models.TextField(_('Our Opinion'), null=True, blank=True)
     promoted = models.BooleanField(_('Promoted'), default=False)
-    category = models.ForeignKey(Category, related_name='conversations', null=True)
+    category = models.ForeignKey(Category, related_name='conversations', null=True, blank=True)
 
     background_image = models.ImageField(
         _('Background image'),
