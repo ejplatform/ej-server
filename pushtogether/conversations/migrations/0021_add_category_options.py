@@ -20,6 +20,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='category',
             name='is_login_required',
-            field=models.BooleanField(default=True, verbose_name='Has Required Login'),
+            field=models.BooleanField(default=True, verbose_name='Is Login Required'),
         ),
     ]
