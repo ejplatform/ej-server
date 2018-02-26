@@ -27,6 +27,8 @@ class Category(models.Model):
     name = models.CharField(_('Name'), max_length=255, blank=False, unique=True)
     slug = AutoSlugField(null=True, default=None, unique=True, populate_from='name', slugify=custom_slugify)
     styles = JSONField(_('Styles'))
+    has_tour = models.BooleanField(_('Has User Tour'), default=True)
+    is_login_required = models.BooleanField(_('Has Required Login'), default=True)
     image = models.ImageField(_('Image'), upload_to='conversations/categories', null=True, blank=True)
     image_caption = models.CharField(_('Image caption'), max_length=255, blank=True)
     created_at = models.DateTimeField(_('Created at'), auto_now_add=True)

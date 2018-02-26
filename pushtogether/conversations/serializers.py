@@ -141,4 +141,4 @@ class ConversationSerializer(serializers.ModelSerializer):
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = ('id', 'name', 'styles', 'image', 'image_caption', 'slug')
+        fields = ('id', 'name', 'styles', 'image', 'image_caption', 'slug', 'has_tour', 'is_login_required')
