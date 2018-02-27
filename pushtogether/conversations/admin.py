@@ -28,7 +28,7 @@ class CommentAdmin(admin.ModelAdmin):
 
 
 class CategoryAdmin(admin.ModelAdmin):
-    fields = ['name', 'styles', 'image', 'image_caption', 'has_tour', 'is_login_required']
+    fields = ['name', 'customizations', 'image', 'image_caption', 'has_tour', 'is_login_required']
     list_display = ['id', 'name', 'slug', 'created_at', 'updated_at']
 
 

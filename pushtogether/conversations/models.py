@@ -26,7 +26,7 @@ def custom_slugify(value):
 class Category(models.Model):
     name = models.CharField(_('Name'), max_length=255, blank=False, unique=True)
     slug = AutoSlugField(null=True, default=None, unique=True, populate_from='name', slugify=custom_slugify)
-    styles = JSONField(_('Styles'))
+    customizations = JSONField(_('Customizations'))
     has_tour = models.BooleanField(_('Has User Tour'), default=True)
     is_login_required = models.BooleanField(_('Is Login Required'), default=True)
     image = models.ImageField(_('Image'), upload_to='conversations/categories', null=True, blank=True)
