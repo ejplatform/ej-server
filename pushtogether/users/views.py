@@ -6,7 +6,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework import status
 from rest_framework import permissions
 
-from django.http import Http404, JsonResponse
+from django.http import Http404, JsonResponse, HttpResponse
 from django.core.urlresolvers import reverse
 from django.views.generic import DetailView, ListView, RedirectView, UpdateView
 
@@ -118,4 +118,15 @@ def get_api_key(request):
             raise Http404
 
     token = Token.objects.get_or_create(user=request.user)
-    return JsonResponse({ 'key': token[0].key }, status=200)
+    return JsonResponse({'key': token[0].key}, status=status.HTTP_200_OK)
+
+
+# This view exists only to help reset sessionid and csrftoken cookies on the client browser
+# Javascript can't do it itself because csrftoken was previously HTTP_ONLY
+# This cookie needs to be js accessible to allow for CSRF protection on XHR requests
+# FIXME: this view must be deleted when no more users have csrftoken cookies protected by HTTP_ONLY setting
+def clean_cookies(request):
+    response = HttpResponse()
+    response.delete_cookie('sessionid')
+    response.delete_cookie('csrftoken')
+    return response

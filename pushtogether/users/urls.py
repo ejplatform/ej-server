@@ -30,6 +30,11 @@ urlpatterns = [
         view=views.get_api_key,
         name='api-key'
     ),
+    url(
+        regex=r'^reset/$',
+        view=views.clean_cookies,
+        name='clean-cookies'
+    ),
 ]
 
 urlpatterns.extend(router.urls)
