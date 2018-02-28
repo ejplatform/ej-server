@@ -36,6 +36,8 @@ deploy to production:
   image: cdrx/rancher-gitlab-deploy
   script:
     - upgrade --environment FPAbramo --stack empurrandojuntos-prod --service backend --no-finish-upgrade --sidekicks
+    - upgrade --environment FPAbramo --stack empurrandojuntos-prod --service flower --no-finish-upgrade
+    - upgrade --environment FPAbramo --stack empurrandojuntos-prod --service worker --no-finish-upgrade
   only:
     - tags
   environment: production
