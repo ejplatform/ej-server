@@ -126,7 +126,8 @@ class ConversationSerializer(serializers.ModelSerializer):
                   'background_image', 'dialog', 'response', 'total_votes', 'slug',
                   'approved_comments', 'user_participation_ratio', 'created_at',
                   'updated_at', 'polis_url', 'polis_slug', 'is_new', 'position',
-                  'opinion', 'promoted', 'category_id', 'category_name')
+                  'opinion', 'promoted', 'category_id', 'category_name',
+                  'category_customizations', 'category_slug')
 
     def _get_current_user(self):
         return self.context['request'].user

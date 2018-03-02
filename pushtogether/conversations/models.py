@@ -180,6 +180,14 @@ class Conversation(models.Model):
     def category_name(self):
         return self.category.name
 
+    @property
+    def category_customizations(self):
+        return self.category.customizations
+
+    @property
+    def category_slug(self):
+        return self.category.slug
+
     def get_user_participation_ratio(self, user):
         others_approved_comments = self.comments.filter(
             approval=Comment.APPROVED).exclude(author=user).count()
