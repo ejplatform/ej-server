@@ -48,7 +48,6 @@ def create_valid_comment(conversation, user, approval=Comment.APPROVED):
         author=user,
         conversation=conversation,
         content="test_content",
-        polis_id='1234',
         approval=approval
     )
     comment.save()
@@ -64,7 +63,6 @@ def create_valid_vote(comment, user, value=Vote.AGREE):
     vote = Vote.objects.create(
         author=user,
         comment=comment,
-        polis_id='12345',
         value=Vote.AGREE
     )
     vote.save()
