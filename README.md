@@ -1,95 +1,91 @@
-# Empurrando Juntos
+# EJ
 
-Projeto Django baseado no padrão [cookiecutter-django](http://cookiecutter-django.readthedocs.io/en/latest).
+Django project based on [cookiecutter-django](http://cookiecutter-django.readthedocs.io/en/latest).
 
-## Ambiente de desenvolvimento
+## Development environment
 
-Para clonar este repositório e seus [submódulos](https://git-scm.com/book/en/v2/Git-Tools-Submodules), execute:
+To clone this repository and its [submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules), execute:
 
 `git clone --recursive git@gitlab.com:empurrandojuntos/backend.git`
 
-Levante o ambiente de desenvolvimento com `docker-compose -f local.yml up` e acesse [localhost:8000](http://localhost:8000).
+Get up and running your environment with `docker-compose -f local.yml up` and acess [localhost:8000](http://localhost:8000).
 
-Se você já tiver a pasta de um submódulo no seu ambiente local, mas ela estiver vazia, execute o seguinte comando dentro dela:
-
+If you already have a empty folder of a submodule in you local, execute this command: 
 `git submodule update --init --recursive`
 
-### Atualização de submódulos ('git pull' de repositórios internos)
+### Submodule update ('git pull' in internal repositories)
 
-Dependendo do seu papel neste projeto como desenvovedor, há duas maneiras de lidar com submódulos:
+Depending on your role in this project as a developer, there are two manners to deal with submodules:
 
-- Você não modifica repositórios internos: execute o `git pull` tradicional seguido de `git submodule update --recursive`. Com esses comandos, você sempre terá a última versão fixada deles no repositório-pai
+- You do not modify internal repositories: execute a `git pull`, followed by `git submodule update --recursive`. With this instructions you will always get the latest version fixed on parent repository.
+- You modify internal repositories: enter the folder containing the submodule and use `git checkout` to select a desired branch. To publish your modifications in the main app, besides using `commit` and `push` in your child repository, it is necessary to repeat this process in the parent repository.
 
-- Você modifica repositórios internos: entre na pasta do submódulo e use `git checkout` para seguir um branch. Para publicar suas modificações na app principal, além de usar `commit` e `push` no repositório-filho, é necessário repetir esse processo no repositório-pai
+## Tests
 
-## Testes
+There are two ways of executing locally the automated tests:
 
-Existem duas maneiras de se executar os testes automatizados localmente:
-
-- Você já executou o comando `docker-compose -f local.yml up` e o servidor está funcionando.
+- You already ran `docker-compose -f local.yml up` and the server is up.
 
 ```
 docker-compose -f local.yml exec django pytest
 ```
-
-- Você deseja apenas executar os testes sem necessariamente levantar toda a infraestrutura fornecida no ambiente local, o arquivo de configuração do docker-compose `test.yml` irá construir apenas o django e o postgres.
+- You just want to run the tests, without necessarily getting up all the infraestructure available on local environment, the configuration file on docker-compose `teste.yml` will get up only django and postgres. 
 
 ```
 docker-compose -f test.yml up
 ```
 
 
-## Variáveis de ambiente
-### Banco de dados
-- POSTGRES_HOST - opcional; padrão 'postgres'
-- POSTGRES_DB - obrigatório
-- POSTGRES_USER - obrigatório
-- POSTGRES_PASSWORD - obrigatório
+## Environment Variables
+### Database
+- POSTGRES_HOST - optional; default 'postgres'
+- POSTGRES_DB - required
+- POSTGRES_USER - required
+- POSTGRES_PASSWORD - required
 
 ### Email
-- MAILGUN_SENDER_DOMAIN - obrigatório em produção
-- DJANGO_DEFAULT_FROM_EMAIL - obrigatório em produção
-- DJANGO_MAILGUN_API_KEY - obrigatório em produção
+- MAILGUN_SENDER_DOMAIN - required in production
+- DJANGO_DEFAULT_FROM_EMAIL - required in production
+- DJANGO_MAILGUN_API_KEY - required in production
 
 ### Django
-- DJANGO_ALLOWED_HOSTS - obrigatório em produção
-- DJANGO_ADMIN_URL - opcional
-- DJANGO_SETTINGS_MODULE - opcional; use `config.settings.production` em produção
-- DJANGO_ACCOUNT_ALLOW_REGISTRATION - opcional; padrão True
-- DJANGO_SECRET_KEY - obrigatório em produção
-- USE_CACHE - opcional; padrão True
-- USE_DOCKER - opcional; desnecessário em produção; em ambientes locais, escreva 'yes' se estiver usando Docker
+- DJANGO_ALLOWED_HOSTS - required in production
+- DJANGO_ADMIN_URL - optional
+- DJANGO_SETTINGS_MODULE - optional; use `config.settings.production` in production
+- DJANGO_ACCOUNT_ALLOW_REGISTRATION - optional; default True
+- DJANGO_SECRET_KEY - required in production
+- USE_CACHE - optional; default True
+- USE_DOCKER - optional; unnecessary in production; in local environments, write 'yes' if using Docker
 
-### ReCaptha
-- DJANGO_RECAPTCHA_PRIVATE_KEY - obrigatório em produção
-- DJANGO_RECAPTCHA_PUBLIC_KEY - obrigatório em produção
+### ReCaptcha
+- DJANGO_RECAPTCHA_PRIVATE_KEY - required in production
+- DJANGO_RECAPTCHA_PUBLIC_KEY - required in production
 
 ### Redis
-- REDIS_URL - obrigatório em produção; exemplo: `redis://127.0.0.1:6379`
+- REDIS_URL - required in production; example: `redis://127.0.0.1:6379`
 
 ### Sentry
-- DJANGO_SENTRY_DSN - opcional; só válido em produção
+- DJANGO_SENTRY_DSN - optional; valid only in production
 
 ### Polis
 - POLIS_BASE_URL - opcional
 - POLIS_API_KEY - opcional
 
 ### django-courier
-- COURIER_ONESIGNAL_USER_ID - obrigatório
-- COURIER_ONESIGNAL_APP_ID - obrigatório
-- COURIER_DEFAULT_PROVIDER - obrigatório
+- COURIER_ONESIGNAL_USER_ID - required
+- COURIER_ONESIGNAL_APP_ID - required
+- COURIER_DEFAULT_PROVIDER - required
 
-## Depoly em produção
+## Deploy in production
 
-Um exemplo de deploy em produção pode ser encontrado no arquivo `production.yml`.
+An example of deploy in production can be found in `production.yml`
 
-Para rodá-lo localmente, e assim ter o máximo de aderência com o ambiente final, cire um arquivo `.env` baseado em `env.example` com as configurações necessárias e execute:
-
+To run locally and simulate the production environment, create a file `.env` based on `env.example` with all necessary configurations, then run:
 ```
 docker-compose -f production.yml up
 ```
 
-## Integrações de deploy
-**Commits no branch `master`** fazem releases da versão em **desenvolvimento** (ainda sem URL pública).
+## Deploy integrations
+**Commits on branch `master`** create version releases on **development** (without public URL).
 
-**Tags** fazem releases em [**produção**](https://ej.brasilqueopovoquer.org.br/).
+**Tags** Create releases on [**production**](https://ej.brasilqueopovoquer.org.br/).
