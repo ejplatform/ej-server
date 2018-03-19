@@ -293,12 +293,16 @@ tags
 pyvenv.cfg
 pip-selfcheck.json
 
-
-
-
 pushtogether/media/
 
 # Added to maintain local compose files which are ignored by something above.
 # See issue https://github.com/pydanny/cookiecutter-django/issues/1321
 !/compose/local/
 
+## ejplatform context
+
+# IDEA
+.idea/
+
+# Production variables
+compose/production/*.env
