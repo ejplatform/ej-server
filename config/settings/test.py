@@ -38,14 +38,6 @@ CACHES = {
     }
 }
 
-# DATABASE CONFIGURATION
-# ------------------------------------------------------------------------------
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
-DATABASES = {
-    'default': env.db('DATABASE_URL',
-        default='postgres://pushtogether:pushtogether@postgres:5432/pushtogether_test'),
-}
-
 # TESTING
 # ------------------------------------------------------------------------------
 TEST_RUNNER = 'django.test.runner.DiscoverRunner'

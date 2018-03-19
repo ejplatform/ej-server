@@ -1,13 +1,36 @@
-version: '3.5'
+# Local docker-compose file
 
-volumes:
-  db_data: {}
+version: '3.5'
 
 networks:
   empurrando-juntos:
     name: empurrando-juntos
 
+volumes:
+  db_data: {}
+
 services:
+  django: &django
+    build:
+      context: .
+      dockerfile: ./compose/local/django/Dockerfile
+    command: /runserver.sh
+    depends_on:
+      - postgres
+    env_file:
+      - ./compose/local/django.env
+      - ./compose/local/postgres.env
+    links:
+      - postgres
+      - rabbit
+      - redis
+    networks:
+      - empurrando-juntos
+    ports:
+      - '8000:8000'
+    volumes:
+      - .:/app
+
   redis:
     image: redis:3.2
     hostname: redis
@@ -16,81 +39,52 @@ services:
 
   rabbit:
     image: rabbitmq:3.6.14-management
-    environment:
-      - RABBITMQ_DEFAULT_USER=admin
-      - RABBITMQ_DEFAULT_PASS=mypass
+    env_file:
+      - ./compose/local/rabbit.env
+    networks:
+      - empurrando-juntos
     ports:
-      - '5672:5672'  # we forward this port because it's useful for debugging
-      - '15672:15672'  # here, we can access rabbitmq management plugin
-    networks:
-      - empurrando-juntos
-
-  django: &django
-    build:
-      context: .
-      dockerfile: ./compose/local/django/Dockerfile
-    depends_on:
-      - postgres
-    volumes:
-      - .:/app
-    environment:
-      - POSTGRES_DB=pushtogether
-      - POSTGRES_USER=pushtogether
-      - POSTGRES_PASSWORD=pushtogether
-      - USE_DOCKER=yes
-      - COURIER_DEFAULT_PROVIDER=onesignal
-      - COURIER_ONESIGNAL_APP_ID=660977f0-30ad-4f69-a9a4-2873b8f5de7e
-      - COURIER_ONESIGNAL_USER_ID=NTlmYjI5NDktYzA1Zi00ODk4LTllZGQtYWEzY2Q4ZjA3YzM5
-    links:
-      - postgres
-      - rabbit
-      - redis
-    ports:
-      - '8000:8000'
-    command: /runserver.sh
-    networks:
-      - empurrando-juntos
-
-  postgres:
-    image: postgres:9.6
-    volumes:
-      - db_data:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_DB=pushtogether
-      - POSTGRES_USER=pushtogether
-      - POSTGRES_PASSWORD=pushtogether
-    networks:
-      - empurrando-juntos
-
-  worker:
-    << : *django
-    volumes:
-      - .:/app
-    links:
-      - postgres
-      - rabbit
-      - redis
-    depends_on:
-      - django
-      - rabbit
-    ports: []
-    command: compose/local/worker/run_celery.sh
-    networks:
-      - empurrando-juntos
+      - '5672:5672'  # Debugging
+      - '15672:15672'  # RabbitMQ Manager
 
   flower:
     << : *django
+    command: compose/local/flower/start_flower.sh
     depends_on:
       - django
       - rabbit
       - redis
-    volumes:
-      - .:/app
     links:
       - rabbit
       - redis
-    ports:
-      - '8001:8001'
-    command: compose/local/flower/start_flower.sh
     networks:
       - empurrando-juntos
+    ports:
+      - '8001:8001'
+    volumes:
+      - .:/app
+
+  worker:
+    << : *django
+    command: compose/local/worker/run_celery.sh
+    depends_on:
+      - django
+      - rabbit
+    links:
+      - postgres
+      - rabbit
+      - redis
+    networks:
+      - empurrando-juntos
+    ports: []
+    volumes:
+      - .:/app
+
+  postgres:
+    image: postgres:9.6
+    env_file:
+      - ./compose/local/postgres.env
+    networks:
+      - empurrando-juntos
+    volumes:
+      - db_data:/var/lib/postgresql/data
