@@ -71,7 +71,6 @@ THIRD_PARTY_APPS = [
 LOCAL_APPS = [
     # custom users app
     'pushtogether.users.apps.UsersConfig',
-    'pushtogether.polis.apps.PolisConfig',
     'pushtogether.conversations.apps.ConversationsConfig',
     'pushtogether.gamification.apps.GamificationConfig',
     'pushtogether.math.apps.MathConfig',
@@ -340,16 +339,6 @@ AUTOSLUG_SLUGIFY_FUNCTION = 'slugify.slugify'
 # Location of root django.contrib.admin URL, use {% url 'admin:index' %}
 ADMIN_URL = r'^admin/'
 
-# Django cors
-# ------------------------------------------------------------------------------
-CORS_ORIGIN_ALLOW_ALL = False
-CORS_ORIGIN_WHITELIST = (
-    'polis.brasilqueopovoquer.org.br',
-    'brasilqueopovoquer.org.br',
-    'ej.brasilqueopovoquer.org.br',
-    'app.brasilqueopovoquer.org.br',
-)
-
 # Above default keys will always pass, do not use then in production.
 RECAPTCHA_PUBLIC_KEY = env('DJANGO_RECAPTCHA_PUBLIC_KEY', default='6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI')
 RECAPTCHA_PRIVATE_KEY = env('DJANGO_RECAPTCHA_PRIVATE_KEY', default='6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe')
@@ -371,6 +360,3 @@ MATH_MIN_USERS = env('MATH_MIN_USERS', default=5)
 MATH_MIN_COMMENTS = env('MATH_MIN_COMMENTS', default=5)
 MATH_MIN_VOTES = env('MATH_MIN_VOTES', default=5)
 
-# Polis instance data
-POLIS_BASE_URL = env('POLIS_BASE_URL', default=None)
-POLIS_API_KEY = env('POLIS_API_KEY', default=None)

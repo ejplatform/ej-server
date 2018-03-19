@@ -70,10 +70,6 @@ docker-compose -f test.yml up
 ### Sentry
 - DJANGO_SENTRY_DSN - opcional; só válido em produção
 
-### Polis
-- POLIS_BASE_URL - opcional
-- POLIS_API_KEY - opcional
-
 ### django-courier
 - COURIER_ONESIGNAL_USER_ID - obrigatório
 - COURIER_ONESIGNAL_APP_ID - obrigatório

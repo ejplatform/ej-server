@@ -23,7 +23,6 @@ urlpatterns = [
     # User management
     url(r'^api/profile/', include('pushtogether.users.urls', namespace='users')),
     url(r'^api/gamification/', include('pushtogether.gamification.urls', namespace='gamification')),
-    url(r'^polis/', include('pushtogether.polis.urls', namespace='polis')),
     url(r'^api/', include('pushtogether.conversations.urls', namespace='v1')),
     url(r'^api/math/', include('pushtogether.math.urls', namespace='math')),
     url(r'^api/auth/facebook/$', FacebookLogin.as_view(), name='fb_login'),
