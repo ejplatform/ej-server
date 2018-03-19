@@ -1,4 +1,4 @@
 [submodule "ext-apps/django-courier"]
 	path = ext-apps/django-courier
-	url = https://gitlab.com/empurrandojuntos/django-courier.git
+	url = https://github.com/ejplatform/django-courier.git
 	branch = master
