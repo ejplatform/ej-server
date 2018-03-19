@@ -44,7 +44,6 @@ class Conversation(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL)
     title = models.CharField(_("Title"), max_length=255, blank=False)
     description = models.TextField(_('Description'), blank=False)
-    polis_id = models.IntegerField(_('Polis id'), null=True, blank=True)
     dialog = models.TextField(_('Dialog'), null=True, blank=True)
     response = models.TextField(_('Response'), null=True, blank=True)
     created_at = models.DateTimeField(_('Created at'), auto_now_add=True)
@@ -64,9 +63,6 @@ class Conversation(models.Model):
         _('Background color'),
         max_length=7, validators=[validate_color],
         null=True, blank=True)
-
-    polis_slug = models.CharField(_('Polis slug'), max_length=255, null=True, blank=True)
-    polis_url = models.CharField(_('Polis url'), max_length=255, null=True, blank=True)
 
     # Nudge configuration
     comment_nudge = models.IntegerField(
@@ -348,7 +344,6 @@ class Comment(models.Model):
     conversation = models.ForeignKey(Conversation, related_name='comments')
     author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='comments')
     content = models.TextField(_('Content'), blank=False, validators=[MaxLengthValidator(140)])
-    polis_id = models.IntegerField(_('Polis id'), null=True, blank=True)
     created_at = models.DateTimeField(_('Created at'), auto_now_add=True)
     approval = models.CharField(
         _('Approval'),
@@ -392,7 +387,6 @@ class Vote(models.Model):
 
     author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='votes')
     comment = models.ForeignKey(Comment, related_name='votes')
-    polis_id = models.IntegerField(_('Polis id'), null=True, blank=True)
     created_at = models.DateTimeField(_('Created at'), auto_now_add=True)
     value = models.IntegerField(
         _('Value'),

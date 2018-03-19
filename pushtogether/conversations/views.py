@@ -73,7 +73,7 @@ class CommentViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.CommentSerializer
     queryset = Comment.objects.all()
     filter_backends = (DjangoFilterBackend, )
-    filter_fields = ('polis_id', 'conversation__id',)
+    filter_fields = ('conversation__id',)
     permission_classes = (permissions.IsAuthenticated,)
 
     def create(self, request, *args, **kwargs):
@@ -110,41 +110,41 @@ class CommentViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
 
-    def perform_update(self, serializer):
-        # If there is a polis instance set, update its moderation data for the current comment
-        if settings.POLIS_BASE_URL and settings.POLIS_API_KEY:
-            conversation_id = self.request.data['conversation']
-            conversation_slug = Conversation.objects.get(id=conversation_id).polis_slug
-            polis_id = Comment.objects.get(id=self.request.data['id']).polis_id
+    # def perform_update(self, serializer):
+    #     # If there is a polis instance set, update its moderation data for the current comment
+    #     if settings.POLIS_BASE_URL and settings.POLIS_API_KEY:
+    #         conversation_id = self.request.data['conversation']
+    #         conversation_slug = Conversation.objects.get(id=conversation_id).polis_slug
+    #         polis_id = Comment.objects.get(id=self.request.data['id']).polis_id
 
-            # Make the POST call to the polis instance now
-            payload = {
-                'polisApiKey': settings.POLIS_API_KEY,
-                'conversation_id': str(conversation_slug),
-                'tid': polis_id,
-                'mod': self.get_polis_moderation_value(self.request.data['approval']),
-                'active': True,
-                'is_meta': False,
-                'velocity': 1
-            }
-            response = requests.put(settings.POLIS_BASE_URL + '/api/v3/comments',
-                headers={'content-type': 'application/json; charset=UTF-8'}, data=json.dumps(payload), timeout=10)
+    #         # Make the POST call to the polis instance now
+    #         payload = {
+    #             'polisApiKey': settings.POLIS_API_KEY,
+    #             'conversation_id': str(conversation_slug),
+    #             'tid': polis_id,
+    #             'mod': self.get_polis_moderation_value(self.request.data['approval']),
+    #             'active': True,
+    #             'is_meta': False,
+    #             'velocity': 1
+    #         }
+    #         response = requests.put(settings.POLIS_BASE_URL + '/api/v3/comments',
+    #             headers={'content-type': 'application/json; charset=UTF-8'}, data=json.dumps(payload), timeout=10)
 
-            # If the request returned a non 2xx status code, raise an exception now
-            response.raise_for_status()
+    #         # If the request returned a non 2xx status code, raise an exception now
+    #         response.raise_for_status()
 
-        serializer.save()
+    #     serializer.save()
 
-    def get_polis_moderation_value(self, moderation):
-        """
-        Helper function to translate moderation values from pushtogether to polis standards
-        """
-        switcher = {
-            'UNMODERATED': 0,
-            'REJECTED': -1,
-            'APPROVED': 1,
-        }
-        return switcher.get(moderation)
+    # def get_polis_moderation_value(self, moderation):
+    #     """
+    #     Helper function to translate moderation values from pushtogether to polis standards
+    #     """
+    #     switcher = {
+    #         'UNMODERATED': 0,
+    #         'REJECTED': -1,
+    #         'APPROVED': 1,
+    #     }
+    #     return switcher.get(moderation)
 
     def get_queryset(self):
         user = self.request.user
@@ -213,7 +213,7 @@ class CommentReportViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = serializers.CommentReportSerializer
     queryset = Comment.objects.all().order_by('-pk')
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter,)
-    filter_fields = ('polis_id', 'conversation__id', 'conversation__polis_slug', 'approval',)
+    filter_fields = ('conversation__id', 'approval',)
     search_fields = ('content', 'author__name')
     ordering_fields = ('created_at', )
     pagination_class = PageNumberPagination
