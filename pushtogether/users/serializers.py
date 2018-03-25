@@ -132,9 +132,7 @@ class FixSocialLoginSerializer(SocialLoginSerializer):
         return token
 
     def get_adapter(self, request, view):
-        adapter_class = getattr(view, 'adapter_class', None)
-        if not adapter_class:
-            raise serializers.ValidationError(_("Define adapter_class in view"))
+        adapter_class = self.get_attribute(view, "adapter_class")
         adapter = adapter_class(request)
         return adapter
 
