@@ -3,6 +3,7 @@ from django.test import RequestFactory
 from unittest.mock import patch
 from allauth.account.adapter import get_adapter
 from ..serializers import RegistrationSerializer
+from ..serializers import FixSocialLoginSerializer
 
 class TestRegistrationSerializer(TestCase):
 
@@ -41,3 +42,50 @@ class TestRegistrationSerializer(TestCase):
         # Function save_user should be called one time by the serializer instance.
         assert mocked_method.call_count == 1
 
+
+class TestFixSocialLoginSerializer(TestCase):
+    def test_get_view(self):
+        self.serializer = FixSocialLoginSerializer()
+
+        try:
+            self.serializer.get_view()
+        except:
+            assert True
+
+        try:
+            self.serializer.context['view'] = {'mock': True}
+            assert True
+        except:
+            assert False
+
+    def test_get_attribute(self):
+        self.view = {}
+
+        self.serializer = FixSocialLoginSerializer()
+
+        try:
+            self.serializer.get_attribute(self.view,'mock')
+        except:
+            assert True
+
+        try:
+            teste = self.serializer.get_attribute(self,'test_get_attribute')
+            assert True
+            assert teste == self.test_get_attribute
+        except:
+            assert False
+
+    def test_get_adapter(self):
+
+        class Object(object):
+            pass
+
+        self.serializer = FixSocialLoginSerializer()
+        self.factory = RequestFactory()
+
+        request = self.factory.get('/fake-url')
+        self.view = Object()
+        self.view.adapter_class = lambda x:x
+
+        adapter = self.serializer.get_adapter(request, self.view)
+        assert adapter == request
