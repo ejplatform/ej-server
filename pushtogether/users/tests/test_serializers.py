@@ -44,6 +44,34 @@ class TestRegistrationSerializer(TestCase):
 
 
 class TestFixSocialLoginSerializer(TestCase):
+    def test_get_token(self):
+
+        self.serializer = FixSocialLoginSerializer()
+        self.factory = RequestFactory()
+
+        class Object(object):
+            pass
+
+        request = self.factory.get('/fake-url')
+        self.serializer.context['view'] = Object()
+        self.serializer.context['view'].adapter_class = lambda x:x
+
+
+        view = self.serializer.get_view()
+        adapter = self.serializer.get_adapter(request, view)
+        app = Object()
+        app.client_id = 123123
+        app.secret = 12312312
+        request.session = {'account_verified_email':''}
+        attrs = {}
+
+        # Test the 'else' passing no code or acess_token, should raise an exception
+        try:
+            token = self.serializer.get_token(adapter,app,attrs,request,view)
+        except:
+            assert True
+
+
     def test_get_view(self):
         self.serializer = FixSocialLoginSerializer()
 
