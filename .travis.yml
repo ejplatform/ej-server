@@ -1,3 +1,7 @@
+# Attention!
+# This config is currently outdated
+# This config is not in use
+
 sudo: true
 before_install:
   - sudo apt-get update -qq
