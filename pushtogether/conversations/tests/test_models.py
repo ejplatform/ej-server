@@ -228,7 +228,7 @@ class TestConversation:
         Should not return rejected or unmoderated comments
         """
         comments = [create_valid_comment(conversation, user, approval)
-                    for approval in [Comment.REJECTED, Comment.UNMODERATED]]
+                    for approval in [Comment.REJECTED, Comment.PENDING]]
 
         with pytest.raises(Comment.DoesNotExist) as err:
             conversation.get_random_unvoted_comment(other_user)

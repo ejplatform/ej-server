@@ -1,36 +1,81 @@
 import datetime
-from random import randint
 from enum import Enum
-
-from django.db import models
-from django.core.validators import MaxLengthValidator
-from django.contrib.postgres.fields import JSONField
-from django.contrib.auth import get_user_model
-from django.utils.translation import ugettext_lazy as _
-from django.conf import settings
-from django.db.models import Q
-from django.utils.timezone import make_aware, get_current_timezone
-
-from .validators import validate_color
+from random import randrange
 
 from autoslug import AutoSlugField
 from autoslug.settings import slugify as default_slugify
+from django.conf import settings
+from django.contrib.auth import get_user_model
+from django.core.validators import MaxLengthValidator
+from django.db import models
+from django.db.models import Q
+from django.utils.timezone import make_aware, get_current_timezone
+from django.utils.translation import ugettext_lazy as _
+import logging
+
+from .validators import validate_color
+
+
+log = logging.getLogger('conversations')
 
 
 User = get_user_model()
+
+if settings.USE_SQLITE:
+    from jsonfield import JSONField
+else:
+    from django.contrib.postgres.fields import JSONField
+
+NOT_GIVEN = object()
 
 
 def custom_slugify(value):
     return default_slugify(value).lower()
 
+
 class Category(models.Model):
-    name = models.CharField(_('Name'), max_length=255, blank=False, unique=True)
-    slug = AutoSlugField(null=True, default=None, unique=True, populate_from='name', slugify=custom_slugify)
-    customizations = JSONField(_('Customizations'))
-    has_tour = models.BooleanField(_('Has User Tour'), default=True)
-    is_login_required = models.BooleanField(_('Is Login Required'), default=True)
-    image = models.ImageField(_('Image'), upload_to='conversations/categories', null=True, blank=True)
-    image_caption = models.CharField(_('Image caption'), max_length=255, blank=True)
+    """
+    Base category that a conversation belongs to.
+
+    Declares category name and stores some metadata.
+    """
+    # TODO: document customizations JSON field
+
+    name = models.CharField(
+        _('Name'),
+        max_length=255,
+        blank=False,
+        unique=True,
+        help_text=_('Unique category name. Hint: list of categories is public.'),
+    )
+    slug = AutoSlugField(
+        null=True, default=None,
+        unique=True,
+        populate_from='name',
+        slugify=custom_slugify,
+    )
+    customizations = JSONField(
+        _('Customizations'),
+        default={},
+    )
+    has_tour = models.BooleanField(
+        _('Has User Tour'),
+        default=True,
+    )
+    is_login_required = models.BooleanField(
+        _('Is Login Required'),
+        default=True,
+    )
+    image = models.ImageField(
+        _('Image'),
+        upload_to='conversations/categories',
+        null=True, blank=True,
+    )
+    image_caption = models.CharField(
+        _('Image caption'),
+        max_length=255,
+        blank=True,
+    )
     created_at = models.DateTimeField(_('Created at'), auto_now_add=True)
     updated_at = models.DateTimeField(_('Updated at'), auto_now=True)
 
@@ -38,39 +83,102 @@ class Category(models.Model):
         return self.name
 
     class Meta:
-        verbose_name_plural = "categories"
+        verbose_name_plural = 'categories'
+        ordering = ('created_at',)
+
 
 class Conversation(models.Model):
-    author = models.ForeignKey(settings.AUTH_USER_MODEL)
-    title = models.CharField(_("Title"), max_length=255, blank=False)
-    description = models.TextField(_('Description'), blank=False)
-    dialog = models.TextField(_('Dialog'), null=True, blank=True)
-    response = models.TextField(_('Response'), null=True, blank=True)
-    created_at = models.DateTimeField(_('Created at'), auto_now_add=True)
-    updated_at = models.DateTimeField(_('Updated at'), auto_now=True)
-    position = models.IntegerField(_('Position'), null=True, blank=True, default=0)
-    is_new = models.BooleanField(_('Is new'), default=True)
-    slug = AutoSlugField(null=True, default=None, unique=True, populate_from='title', slugify=custom_slugify)
-    opinion = models.TextField(_('Our Opinion'), null=True, blank=True)
-    promoted = models.BooleanField(_('Promoted'), default=False)
-    category = models.ForeignKey(Category, related_name='conversations', null=True, blank=True)
+    """
+    Describes a conversation.
+    """
 
+    author = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+    )
+    title = models.CharField(
+        _('Title'),
+        max_length=255,
+        blank=False,
+    )
+    description = models.TextField(
+        _('Description'),
+        blank=False,
+    )
+    dialog = models.TextField(
+        _('Dialog'),
+        null=True, blank=True,
+    )
+    response = models.TextField(
+        _('Response'),
+        null=True, blank=True,
+    )
+    created_at = models.DateTimeField(
+        _('Created at'),
+        auto_now_add=True,
+    )
+    updated_at = models.DateTimeField(
+        _('Updated at'),
+        auto_now=True,
+    )
+    position = models.IntegerField(
+        _('Position'),
+        null=True, blank=True,
+        default=0,
+    )
+    is_new = models.BooleanField(
+        _('Is new'),
+        default=True,
+    )
+    slug = AutoSlugField(
+        null=True,
+        default=None,
+        unique=True,
+        populate_from='title',
+        slugify=custom_slugify,
+    )
+    opinion = models.TextField(
+        _('Our Opinion'),
+        null=True, blank=True,
+    )
+    promoted = models.BooleanField(
+        _('Promoted'),
+        default=False,
+    )
+    category = models.ForeignKey(
+        Category,
+        related_name='conversations',
+        null=True, blank=True,
+    )
     background_image = models.ImageField(
         _('Background image'),
         upload_to='conversations/backgrounds',
-        null=True, blank=True)
+        null=True, blank=True,
+    )
     background_color = models.CharField(
         _('Background color'),
-        max_length=7, validators=[validate_color],
-        null=True, blank=True)
-
+        max_length=7,
+        validators=[validate_color],
+        null=True, blank=True,
+    )
     # Nudge configuration
     comment_nudge = models.IntegerField(
-        _('Comment nudge'), null=True, blank=True)  # number of comments
+        _('Comment nudge'),
+        null=True, blank=True,
+        help_text=_('Number of comments'),
+    )
     comment_nudge_interval = models.IntegerField(
-        _('Comment nudge interval'), null=True, blank=True)  # seconds
+        _('Comment nudge interval'),
+        null=True, blank=True,
+        help_text=_('Nudge interval in seconds'),
+    )
     comment_nudge_global_limit = models.IntegerField(
-        _('Comment nudge global limit'), null=True, blank=True)  # number of comments
+        _('Comment nudge global limit'),
+        null=True, blank=True,
+        help_text=_('Global number of comments'),
+    )
+
+    class Meta:
+        ordering = ('created_at',)
 
     # Statistics configuration
     # you can override this variable in django settings variable MATH_REFRESH_TIME
@@ -110,41 +218,41 @@ class Conversation(models.Model):
     def total_participants(self):
         return (
             User.objects
-            .filter(votes__comment__conversation_id=self.id)
-            .distinct()
-            .count()
+                .filter(votes__comment__conversation_id=self.id)
+                .distinct()
+                .count()
         )
 
     @property
     def agree_votes(self):
         return (
             Vote.objects
-            .filter(comment__conversation_id=self.id,value=Vote.AGREE)
-            .count()
+                .filter(comment__conversation_id=self.id, value=Vote.AGREE)
+                .count()
         )
 
     @property
     def disagree_votes(self):
         return (
             Vote.objects
-            .filter(comment__conversation_id=self.id,value=Vote.DISAGREE)
-            .count()
+                .filter(comment__conversation_id=self.id, value=Vote.DISAGREE)
+                .count()
         )
 
     @property
     def pass_votes(self):
         return (
             Vote.objects
-            .filter(comment__conversation_id=self.id,value=Vote.PASS)
-            .count()
+                .filter(comment__conversation_id=self.id, value=Vote.PASS)
+                .count()
         )
 
     @property
     def total_votes(self):
         return (
             Vote.objects
-            .filter(comment__conversation_id=self.id)
-            .count()
+                .filter(comment__conversation_id=self.id)
+                .count()
         )
 
     @property
@@ -157,7 +265,7 @@ class Conversation(models.Model):
 
     @property
     def unmoderated_comments(self):
-        return self.comments.filter(approval=Comment.UNMODERATED).count()
+        return self.comments.filter(approval=Comment.PENDING).count()
 
     @property
     def total_comments(self):
@@ -165,55 +273,67 @@ class Conversation(models.Model):
 
     @property
     def participation_clusters(self):
+        from pushtogether.math.models import Job
         return (
             self.math_jobs
-            .filter(type='CLUSTERS', status='FINISHED')
-            .order_by('created_at')
-            .last()
+                .filter(type=Job.CLUSTERS, status=Job.FINISHED)
+                .order_by('created_at')
+                .last()
         )
 
-    @property
-    def category_name(self):
-        return self.category.name
+    category_name = property(lambda self: self.category.name)
+    category_customizations = property(lambda self: self.category.customizations)
+    category_slug = property(lambda self: self.category.slug)
 
-    @property
-    def category_customizations(self):
-        return self.category.customizations
+    def create_comment(self, user, text, commit=True, **kwargs):
+        """
+        Create a new comment object for the given user.
+        """
+        make_comment = Comment.objects.create if commit else Comment
+        return make_comment(author=user, content=text, **kwargs)
 
-    @property
-    def category_slug(self):
-        return self.category.slug
+    def get_absolute_url(self):
+        return '/conversations/' + self.slug
 
     def get_user_participation_ratio(self, user):
-        others_approved_comments = self.comments.filter(
-            approval=Comment.APPROVED).exclude(author=user).count()
-        user_votes = Vote.objects.filter(
-            comment__conversation_id=self.id,
-            author=user).count()
-
-        return user_votes / others_approved_comments if others_approved_comments else 0
-
-    def get_random_unvoted_comment(self, user):
         """
-        Returns a random comment that user didn't vote yet
+        Ratio between "given votes" / "possible votes"
         """
-        user_unvoted_comments = self.comments.filter(
-            ~Q(author=user),
-            ~Q(votes__author_id__exact=user.id),
-            approval=Comment.APPROVED)
-
-        pks = user_unvoted_comments.values_list('pk', flat=True)
-        comment_counter = len(pks)
-        if comment_counter:
-            random_idx = randint(0, len(pks))
-            while(random_idx == len(pks)):
-                random_idx = randint(0, len(pks))
+        comments = (
+            self.comments
+                .filter(approval=Comment.APPROVED)
+                .exclude(author=user)
+                .count()
+        )
+        if not comments:
+            return 0
         else:
-            raise Comment.DoesNotExist(
-                _('There is no comments available for this user'))
+            votes = (
+                Vote.objects
+                    .filter(comment__conversation_id=self.id, author=user)
+                    .count()
+            )
+            return votes / comments
 
-        random_comment = user_unvoted_comments.get(pk=pks[random_idx])
-        return random_comment
+    def get_random_unvoted_comment(self, user, default=NOT_GIVEN):
+        """
+        Returns a random comment that user didn't vote yet.
+
+        If default value is not given, raise an exception if no comments are available for user.
+        """
+        unvoted_comments = self.comments.filter(
+            ~Q(author_id=user.id),
+            ~Q(votes__author_id=user.id),
+            approval=Comment.APPROVED,
+        )
+        size = unvoted_comments.count()
+        if size:
+            return unvoted_comments[randrange(0, size)]
+        elif default is not NOT_GIVEN:
+            return default
+        else:
+            msg = _('There is no comments available for this user')
+            raise Comment.DoesNotExist(msg)
 
     def get_nudge_status(self, user):
         """
@@ -297,16 +417,16 @@ class Conversation(models.Model):
         time_limit = datetime_reference - timedelta
         return make_aware(time_limit, get_current_timezone())
 
-
     def list_votes(self):
         """
-        Returns a list of votes according to the following pattern:
-        [[value, author, comment],...]
+        Return a list of (value, author, comment) for each vote cast in
+        the conversation.
         """
-        votes_queryset = Vote.objects.filter(comment__conversation_id=self.id)
-        votes = [[vote.value, vote.author.id, vote.comment.id]
-                 for vote in votes_queryset]
-        return votes
+        return list(
+            Vote.objects
+                .filter(comment__conversation_id=self.id)
+                .values_list('value', 'author_id', 'comment_id')
+        )
 
     def update_statistics(self):
         """
@@ -331,27 +451,46 @@ class Conversation(models.Model):
 
 
 class Comment(models.Model):
-    APPROVED = "APPROVED"
-    REJECTED = "REJECTED"
-    UNMODERATED = "UNMODERATED"
+    """
+    A comment on a conversation.
+    """
 
-    APPROVEMENT_CHOICES = (
+    APPROVED = 'APPROVED'
+    REJECTED = 'REJECTED'
+    PENDING = 'UNMODERATED'  # FIXME: should be NOT_MODERATED or PENDING ;)
+
+    APPROVAL_CHOICES = (
         (APPROVED, _('approved')),
         (REJECTED, _('rejected')),
-        (UNMODERATED, _('unmoderated')),
+        (PENDING, _('awaiting moderation')),
     )
-
-    conversation = models.ForeignKey(Conversation, related_name='comments')
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='comments')
-    content = models.TextField(_('Content'), blank=False, validators=[MaxLengthValidator(140)])
-    created_at = models.DateTimeField(_('Created at'), auto_now_add=True)
+    conversation = models.ForeignKey(
+        Conversation,
+        related_name='comments',
+    )
+    author = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name='comments',
+    )
+    content = models.TextField(
+        _('Content'),
+        blank=False,
+        validators=[MaxLengthValidator(140)],
+    )
+    created_at = models.DateTimeField(
+        _('Created at'),
+        auto_now_add=True,
+    )
     approval = models.CharField(
         _('Approval'),
         max_length=32,
-        choices=APPROVEMENT_CHOICES,
-        default=APPROVEMENT_CHOICES[2][0]
+        choices=APPROVAL_CHOICES,
+        default=PENDING,
     )
-    rejection_reason = models.TextField(_('Rejection reason'), null=True, blank=True)
+    rejection_reason = models.TextField(
+        _('Rejection reason'),
+        null=True, blank=True,
+    )
 
     def __str__(self):
         return self.content
@@ -372,9 +511,20 @@ class Comment(models.Model):
     def total_votes(self):
         return self.votes.count()
 
+    def vote(self, user, vote, commit=True):
+        """
+        Cast a user vote for the given comment.
+        """
+        log.debug(f'Vote: {user} - {vote}')
+        make_vote = Vote.objects.create if commit else Vote
+        return make_vote(author=user, comment=self, value=vote)
+
 
 class Vote(models.Model):
-    # Be aware this is the oposite of polis. Eg. in polis, agree is -1.
+    """
+    A single vote cast for a comment.
+    """
+    # Be aware this is the opposite of polis. Eg. in polis, agree is -1.
     AGREE = 1
     PASS = 0
     DISAGREE = -1
@@ -384,20 +534,65 @@ class Vote(models.Model):
         (PASS, _('PASS')),
         (DISAGREE, _('DISAGREE')),
     )
-
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='votes')
-    comment = models.ForeignKey(Comment, related_name='votes')
-    created_at = models.DateTimeField(_('Created at'), auto_now_add=True)
+    author = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name='votes',
+    )
+    comment = models.ForeignKey(
+        Comment,
+        related_name='votes',
+    )
+    created_at = models.DateTimeField(
+        _('Created at'),
+        auto_now_add=True,
+    )
     value = models.IntegerField(
         _('Value'),
-        blank=False,
         choices=VOTE_CHOICES,
     )
 
     class Meta:
-        unique_together = ("author", "comment")
+        unique_together = ('author', 'comment')
 
     def save(self, *args, **kwargs):
         super(Vote, self).save(*args, **kwargs)
-        conversation = self.comment.conversation
-        conversation.update_statistics()
+        self.comment.conversation.update_statistics()
+
+
+class Stereotype(models.Model):
+    """
+    A "fake" user created to help with classification.
+    """
+    name = models.CharField(
+        _('Name'),
+        max_length=140,
+        unique=True,
+    )
+    description = models.TextField(
+        _('Description'),
+        blank=True,
+    )
+    conversations = models.ManyToManyField(
+        Conversation,
+        related_name='conversations',
+    )
+
+
+class StereotypeVote(models.Model):
+    """
+    Similar to vote, but it is not associated with a comment.
+
+    It forms a m2m relationship between Stereotypes and comments.
+    """
+    stereotype = models.ForeignKey(
+        Stereotype,
+        related_name='stereotype_votes',
+    )
+    comment = models.ForeignKey(
+        Comment,
+        related_name='stereotype_votes',
+    )
+    value = models.IntegerField(
+        _('Value'),
+        choices=Vote.VOTE_CHOICES,
+    )
