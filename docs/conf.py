@@ -163,7 +163,7 @@ html_static_path = ['_static']
 # html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'pushtogetherdoc'
+htmlhelp_basename = 'ejdoc'
 
 
 # -- Options for LaTeX output --------------------------------------------------
@@ -183,7 +183,7 @@ latex_elements = {
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
     ('index',
-     'pushtogether.tex',
+     'ej.tex',
      'Push Together Documentation',
      """Bruno""", 'manual'),
 ]
@@ -214,7 +214,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'pushtogether', 'Push Together Documentation',
+    ('index', 'ej', 'Push Together Documentation',
      ["""Bruno"""], 1)
 ]
 

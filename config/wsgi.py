@@ -1,5 +1,5 @@
 """
-WSGI config for pushtogether project.
+WSGI config for EJ project.
 
 This module contains the WSGI application used by Django's development server
 and any production WSGI deployments. It should expose a module-level variable
@@ -18,10 +18,9 @@ import sys
 
 from django.core.wsgi import get_wsgi_application
 
-# This allows easy placement of apps within the interior
-# pushtogether directory.
+# This allows easy placement of apps within the interior Ej directory.
 app_path = os.path.dirname(os.path.abspath(__file__)).replace('/config', '')
-sys.path.append(os.path.join(app_path, 'pushtogether'))
+sys.path.append(os.path.join(app_path, 'ej'))
 
 if os.environ.get('DJANGO_SETTINGS_MODULE') == 'config.settings.production':
     from raven.contrib.django.raven_compat.middleware.wsgi import Sentry

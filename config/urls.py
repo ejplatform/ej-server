@@ -7,7 +7,7 @@ from django.views import defaults as default_views
 from django.views.generic.base import RedirectView
 from rest_framework.documentation import include_docs_urls
 
-from pushtogether.users.views import FacebookLogin, TwitterLogin
+from ej.users.views import FacebookLogin, TwitterLogin
 
 
 urlpatterns = [
@@ -21,10 +21,10 @@ urlpatterns = [
 
     url(r'^api/docs/', include_docs_urls(title='pushtogether API Docs', public=False)),
     # User management
-    url(r'^api/profile/', include('pushtogether.users.urls', namespace='users')),
-    url(r'^api/gamification/', include('pushtogether.gamification.urls', namespace='gamification')),
-    url(r'^api/', include('pushtogether.conversations.urls', namespace='v1')),
-    url(r'^api/math/', include('pushtogether.math.urls', namespace='math')),
+    url(r'^api/profile/', include('ej.users.urls', namespace='users')),
+    url(r'^api/gamification/', include('ej.gamification.urls', namespace='gamification')),
+    url(r'^api/', include('ej.conversations.urls', namespace='v1')),
+    url(r'^api/math/', include('ej.math.urls', namespace='math')),
     url(r'^api/auth/facebook/$', FacebookLogin.as_view(), name='fb_login'),
     url(r'^api/auth/twitter/$', TwitterLogin.as_view(), name='tw_login'),
     url(r'^rest-auth/', include('rest_auth.urls')),

@@ -1,5 +1,5 @@
 [run]
-include = pushtogether/*
+include = ej/*
 omit = *migrations*, *tests*
 plugins =
     django_coverage_plugin

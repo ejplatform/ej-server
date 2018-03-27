@@ -60,12 +60,12 @@ INSTALLED_APPS = [
     'courier.pushnotifications.providers.onesignal',
 
     # Custom EJ apps
-    'pushtogether.users.apps.UsersConfig', 
-    'pushtogether.conversations.apps.ConversationsConfig',
-    'pushtogether.gamification.apps.GamificationConfig',
-    'pushtogether.math.apps.MathConfig',
+    'ej.users.apps.UsersConfig',
+    'ej.conversations.apps.ConversationsConfig',
+    'ej.gamification.apps.GamificationConfig',
+    'ej.math.apps.MathConfig',
 ]
- 
+
 # MIDDLEWARE CONFIGURATION
 # ------------------------------------------------------------------------------
 MIDDLEWARE = [
@@ -83,9 +83,9 @@ MIDDLEWARE = [
 # MIGRATIONS CONFIGURATION
 # ------------------------------------------------------------------------------
 MIGRATION_MODULES = {
-    'sites': 'pushtogether.contrib.sites.migrations'
+    'sites': 'ej.contrib.sites.migrations'
 }
- 
+
 # FIXTURE CONFIGURATION
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#std:setting-FIXTURE_DIRS
@@ -106,7 +106,7 @@ ADMINS = [
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#managers
 MANAGERS = ADMINS
- 
+
 # GENERAL CONFIGURATION
 # ------------------------------------------------------------------------------
 # Local time zone for this installation. Choices can be found here:
@@ -191,7 +191,7 @@ STATIC_URL = '/static/'
 
 # See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#std:setting-STATICFILES_DIRS
 STATICFILES_DIRS = [
-    ROOT_DIR / 'pushtogether/static',
+    ROOT_DIR / 'ej/static',
     ROOT_DIR / 'lib/static',
 ]
 
@@ -266,7 +266,7 @@ REST_FRAMEWORK = {
 }
 
 REST_AUTH_REGISTER_SERIALIZERS = {
-    'REGISTER_SERIALIZER': 'pushtogether.users.serializers.RegistrationSerializer'
+    'REGISTER_SERIALIZER': 'ej.users.serializers.RegistrationSerializer'
 }
 
 # Some really nice defaults
@@ -274,10 +274,10 @@ ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = 'optional'
 ACCOUNT_USERNAME_REQUIRED = False
-ACCOUNT_SIGNUP_FORM_CLASS = 'pushtogether.users.forms.PushtogetherSignupForm'
+ACCOUNT_SIGNUP_FORM_CLASS = 'ej.users.forms.PushtogetherSignupForm'
 
 ACCOUNT_ALLOW_REGISTRATION = env.bool('DJANGO_ACCOUNT_ALLOW_REGISTRATION', True)
-SOCIALACCOUNT_ADAPTER = 'pushtogether.users.adapters.SocialAccountAdapter'
+SOCIALACCOUNT_ADAPTER = 'ej.users.adapters.SocialAccountAdapter'
 SOCIALACCOUNT_QUERY_EMAIL = True
 
 SOCIALACCOUNT_PROVIDERS = {
@@ -349,4 +349,4 @@ COURIER_ONESIGNAL_USER_ID = env('COURIER_ONESIGNAL_USER_ID', default='ej-user')
 STATISTICS_REFRESH_TIME = env('STATISTICS_REFRESH_TIME', default=150)  # seconds
 MATH_MIN_USERS = env('MATH_MIN_USERS', default=5)
 MATH_MIN_COMMENTS = env('MATH_MIN_COMMENTS', default=5)
-MATH_MIN_VOTES = env('MATH_MIN_VOTES', default=5) 
+MATH_MIN_VOTES = env('MATH_MIN_VOTES', default=5)
