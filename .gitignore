@@ -22,9 +22,13 @@ parts/
 sdist/
 var/
 wheels/
+htmlcov/
 *.egg-info/
 .installed.cfg
 *.egg
+
+# Database
+db.sqlite3
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
