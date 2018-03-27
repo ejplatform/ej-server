@@ -1,15 +1,13 @@
+import hashlib
+
+from allauth.socialaccount.models import SocialAccount
 from django.contrib.auth.models import AbstractUser
 from django.core.urlresolvers import reverse
 from django.db import models
-from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
-
-from allauth.socialaccount.models import SocialAccount
-import hashlib
 
 
 class User(AbstractUser):
-
     TOUR_CHOICES = (
         ('STEP_ONE', _('Step One')),
         ('STEP_TWO', _('Step Two')),
@@ -64,7 +62,7 @@ class User(AbstractUser):
     # First Name and Last Name do not cover name patterns
     # around the globe.
     name = models.CharField(
-        _('Name of User'),
+        _('Name'),
         blank=True,
         max_length=255,
         null=True
@@ -95,12 +93,13 @@ class User(AbstractUser):
         blank=True
     )
     gender_other = models.CharField(
-        _('Other type of gender'),
-        null=True, max_length=255,
+        _('User provided gender'),
+        null=True,
+        max_length=255,
         blank=True
     )
-    political_movement = models.CharField(
-        _('Participates in any political movement?'),
+    political_movement = models.TextField(
+        _('Political activity'),
         null=True,
         blank=True,
         max_length=255
@@ -128,23 +127,24 @@ class User(AbstractUser):
 
     @property
     def image_url(self):
-        if self.image:
+        try:
             return self.image.url
-        social_accounts = SocialAccount.objects.filter(user_id=self.id)
-
-        for account in social_accounts:
-            picture = account.get_avatar_url()
-            if picture:
-                return picture
-        return "https://gravatar.com/avatar/{}?s=40&d=mm".format(hashlib.md5(self.email.encode('utf-8')).hexdigest())
+        except AttributeError:
+            for account in SocialAccount.objects.filter(user_id=self.id):
+                picture = account.get_avatar_url()
+                if picture:
+                    return picture
+            return gravatar_fallback(self.email)
 
     @property
     def profile_filled(self):
-        # First if: checking image
-        if self.image or SocialAccount.objects.filter(user_id=self.id):
-            # Second if: checking all other fields
-            if self.age and self.city and self.state and self.biography and self.name and self.country and self.occupation \
-                and (self.gender or self.gender_other) and self.political_movement and self.race:
-                return True
+        filled_image = self.image or SocialAccount.objects.filter(user_id=self.id)
+        filled_gender = (self.gender or self.gender_other)
+        return bool(filled_image and self.age and self.city and self.state and self.biography and self.name and
+                    self.country and self.occupation and filled_gender and self.political_movement and self.race)
 
-        return False
+
+def gravatar_fallback(id):
+    "Computes gravatar fallback image URL from a unique string identifier"
+
+    return "https://gravatar.com/avatar/{}?s=40&d=mm".format(hashlib.md5(id.encode('utf-8')).hexdigest())
