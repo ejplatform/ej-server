@@ -1,5 +1,4 @@
-from rest_framework import mixins, viewsets, status
-from rest_framework.response import Response
+from rest_framework import viewsets
 
 from .models import Job
 from .serializers import JobSerializer

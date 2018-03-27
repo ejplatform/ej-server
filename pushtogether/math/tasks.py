@@ -1,10 +1,10 @@
-from pushtogether_math import cluster
 from functools import wraps
-from celery import shared_task
 
-from .models import Job
-from .celeryconf import app
+from celery import shared_task
+from pushtogether_math import cluster
+
 from pushtogether.conversations.models import Conversation
+from .models import Job
 
 
 # decorator to avoid code duplication
@@ -29,7 +29,9 @@ def update_job(fn):
             job.result = None
             job.status = Job.FAILED
         job.save()
+
     return wrapper
+
 
 @shared_task
 @update_job
@@ -42,7 +44,7 @@ def get_clusters(conversation_id):
     conversation = Conversation.objects.get(pk=conversation_id)
     if has_sufficient_data(conversation):
         votes = conversation.list_votes()
-        return cluster.get_clusters(votes, range(2,5))
+        return cluster.get_clusters(votes, range(2, 5))
 
 
 def has_sufficient_data(conversation):
