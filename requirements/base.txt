@@ -4,14 +4,11 @@
 # Verified bug on Python 3.5.1
 wheel==0.30.0
 
-
-# Bleeding edge Django
+# Django
 django~=1.11
 
 # Configuration
 django-environ==0.4.4
-
-
 
 # Forms
 django-crispy-forms==1.6.1
@@ -29,8 +26,7 @@ argon2-cffi==16.3.0
 # Well-built with regular release cycles!
 django-allauth==0.33.0
 
-# On Windows, you must download/install psycopg2 manually
-# from http://www.lfd.uci.edu/~gohlke/pythonlibs/#psycopg
+# Database
 psycopg2~=2.7
 
 # Unicode slugification
@@ -43,24 +39,31 @@ pytz==2017.2
 django-redis==4.8.0
 redis>=2.10.5
 
-django-filter==1.0.2
+# Rest framework
 djangorestframework==3.7.1
 django-rest-auth[with_social]==0.9.1
-django-cors-headers==1.2.0
-django-activity-stream==0.6.4
-pinax-badges==1.0.2
-git+https://github.com/hacklabr/pinax-points.git
-
-django-recaptcha==1.3.1
-
-# libs needed by django-rest-framework api auto documentations
 coreapi==2.3.3
 coreapi-cli==1.0.6
 pygments==2.2.0
 markdown==2.6.9
 
+# Messages
+django-activity-stream==0.6.4
+
+# Gamification
+pinax-badges==1.0.2
+git+https://github.com/hacklabr/pinax-points.git
+
+# Querysets
+django-filter==1.0.2
+
+# Security
+django-cors-headers==1.2.0
+django-recaptcha==1.3.1
+
+# Fields
 django-autoslug==1.9.3
 
-# needed to pushtogether math module
+# Background tasks
 celery==4.1.0
 flower==0.9.2
