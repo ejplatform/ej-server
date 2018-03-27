@@ -70,7 +70,6 @@ class Job(models.Model):
                 'job_id': self.id,
                 'conversation_id': self.conversation.id
             }
-            import pdb; pdb.set_trace()
             if delay:
                 # Avoids the concurrency between celery worker and django core
                 # when the core didn't save the Job into the database and the
