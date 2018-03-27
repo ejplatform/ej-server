@@ -7,31 +7,24 @@ https://docs.djangoproject.com/en/dev/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/dev/ref/settings/
 """
-import environ
-from .celery import *
+import pathlib
 
-ROOT_DIR = environ.Path(__file__) - 3  # (pushtogether/config/settings/base.py - 3 = pushtogether/)
-APPS_DIR = ROOT_DIR.path('pushtogether')
+from config.settings.core import env, DEBUG
 
-# Load operating system environment variables and then prepare to use them
-env = environ.Env()
+# Imports
+from .conf import db
 
-# .env file, should load only in development environment
-READ_DOT_ENV_FILE = env.bool('DJANGO_READ_DOT_ENV_FILE', default=False)
+DATABASES = db.DATABASES
+USE_SQLITE = db.USE_SQLITE
 
-if READ_DOT_ENV_FILE:
-    # Operating System Environment variables have precedence over variables defined in the .env file,
-    # that is to say variables from the .env files will only be used if not defined
-    # as environment variables.
-    env_file = str(ROOT_DIR.path('.env'))
-    print('Loading : {}'.format(env_file))
-    env.read_env(env_file)
-    print('The .env file has been loaded. See base.py for more information')
+
+ROOT_DIR = pathlib.Path(__file__).parent.parent.parent
+APPS_DIR = ROOT_DIR / 'pushtogether'
 
 # APP CONFIGURATION
 # ------------------------------------------------------------------------------
-DJANGO_APPS = [
-    # Default Django apps:
+INSTALLED_APPS = [
+    # Default Django apps + admin
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -44,12 +37,12 @@ DJANGO_APPS = [
 
     # Admin
     'django.contrib.admin',
-]
-THIRD_PARTY_APPS = [
-    'crispy_forms',  # Form layouts
-    'allauth',  # registration
-    'allauth.account',  # registration
-    'allauth.socialaccount',  # registration
+
+    # Third party apps
+    'crispy_forms',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
     'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.twitter',
     'django_filters',
@@ -64,21 +57,15 @@ THIRD_PARTY_APPS = [
     'pinax.badges',
     'courier',
     'courier.pushnotifications',
-    'courier.pushnotifications.providers.onesignal'
-]
+    'courier.pushnotifications.providers.onesignal',
 
-# Apps specific for this project go here.
-LOCAL_APPS = [
-    # custom users app
-    'pushtogether.users.apps.UsersConfig',
+    # Custom EJ apps
+    'pushtogether.users.apps.UsersConfig', 
     'pushtogether.conversations.apps.ConversationsConfig',
     'pushtogether.gamification.apps.GamificationConfig',
     'pushtogether.math.apps.MathConfig',
 ]
-
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
-INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
-
+ 
 # MIDDLEWARE CONFIGURATION
 # ------------------------------------------------------------------------------
 MIDDLEWARE = [
@@ -98,50 +85,28 @@ MIDDLEWARE = [
 MIGRATION_MODULES = {
     'sites': 'pushtogether.contrib.sites.migrations'
 }
-
-# DEBUG
-# ------------------------------------------------------------------------------
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#debug
-DEBUG = env.bool('DJANGO_DEBUG', False)
-
+ 
 # FIXTURE CONFIGURATION
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#std:setting-FIXTURE_DIRS
-FIXTURE_DIRS = (
-    str(APPS_DIR.path('fixtures')),
-)
+FIXTURE_DIRS = [APPS_DIR / 'fixtures']
 
 # EMAIL CONFIGURATION
 # ------------------------------------------------------------------------------
-EMAIL_BACKEND = env('DJANGO_EMAIL_BACKEND', default='django.core.mail.backends.smtp.EmailBackend')
+EMAIL_BACKEND = env('DJANGO_EMAIL_BACKEND',
+                    default='django.core.mail.backends.smtp.EmailBackend')
 
 # MANAGER CONFIGURATION
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#admins
 ADMINS = [
-    ("""Bruno Martin, Luan Guimarães, Ricardo Poppi, Henrique Parra""", 'bruno@hacklab.com.br'),
-    ("""Laury Bueno""", 'laury@hacklab.com.br'),
+    ('Bruno Martin, Luan Guimarães, Ricardo Poppi, Henrique Parra', 'bruno@hacklab.com.br'),
+    ('Laury Bueno', 'laury@hacklab.com.br'),
 ]
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#managers
 MANAGERS = ADMINS
-
-# DATABASE CONFIGURATION
-# ------------------------------------------------------------------------------
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
-# Raises ImproperlyConfigured exception if database variables aren't in os.environ
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'HOST': env('POSTGRES_HOST', default='postgres'),
-        'NAME': env('POSTGRES_DB'),
-        'USER': env('POSTGRES_USER'),
-        'PASSWORD': env('POSTGRES_PASSWORD'),
-    },
-}
-DATABASES['default']['ATOMIC_REQUESTS'] = True
-
-
+ 
 # GENERAL CONFIGURATION
 # ------------------------------------------------------------------------------
 # Local time zone for this installation. Choices can be found here:
@@ -174,7 +139,8 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-dirs
         'DIRS': [
-            str(APPS_DIR.path('templates')),
+            APPS_DIR / 'lib/templates',
+            APPS_DIR / 'templates',
         ],
         'OPTIONS': {
             # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-debug
@@ -195,8 +161,19 @@ TEMPLATES = [
                 'django.template.context_processors.static',
                 'django.template.context_processors.tz',
                 'django.contrib.messages.context_processors.messages',
-                # Your stuff: custom template context processors go here
             ],
+        },
+    },
+    {
+        'BACKEND': 'django.template.backends.jinja2.Jinja2',
+        'DIRS': [
+            ROOT_DIR / 'lib/templates',
+        ],
+        'OPTIONS': {
+            'environment': 'config.jinja2.environment',
+            'extensions': [
+                'jinja2.ext.i18n',
+            ]
         },
     },
 ]
@@ -207,14 +184,15 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 # STATIC FILE CONFIGURATION
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#static-root
-STATIC_ROOT = str(ROOT_DIR('staticfiles'))
+STATIC_ROOT = ROOT_DIR / 'lib/collect'
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#static-url
 STATIC_URL = '/static/'
 
 # See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#std:setting-STATICFILES_DIRS
 STATICFILES_DIRS = [
-    str(APPS_DIR.path('static')),
+    ROOT_DIR / 'pushtogether/static',
+    ROOT_DIR / 'lib/static',
 ]
 
 # See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#staticfiles-finders
@@ -226,7 +204,7 @@ STATICFILES_FINDERS = [
 # MEDIA CONFIGURATION
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#media-root
-MEDIA_ROOT = str(APPS_DIR('media'))
+MEDIA_ROOT = APPS_DIR / 'media'
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#media-url
 MEDIA_URL = '/media/'
@@ -283,11 +261,12 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
     ),
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 20,
 }
 
 REST_AUTH_REGISTER_SERIALIZERS = {
-  'REGISTER_SERIALIZER': 'pushtogether.users.serializers.RegistrationSerializer'
+    'REGISTER_SERIALIZER': 'pushtogether.users.serializers.RegistrationSerializer'
 }
 
 # Some really nice defaults
@@ -339,9 +318,21 @@ AUTOSLUG_SLUGIFY_FUNCTION = 'slugify.slugify'
 # Location of root django.contrib.admin URL, use {% url 'admin:index' %}
 ADMIN_URL = r'^admin/'
 
+# Django cors
+# ------------------------------------------------------------------------------
+CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_WHITELIST = (
+    'polis.brasilqueopovoquer.org.br',
+    'brasilqueopovoquer.org.br',
+    'ej.brasilqueopovoquer.org.br',
+    'app.brasilqueopovoquer.org.br',
+)
+
 # Above default keys will always pass, do not use then in production.
-RECAPTCHA_PUBLIC_KEY = env('DJANGO_RECAPTCHA_PUBLIC_KEY', default='6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI')
-RECAPTCHA_PRIVATE_KEY = env('DJANGO_RECAPTCHA_PRIVATE_KEY', default='6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe')
+RECAPTCHA_PUBLIC_KEY = env('DJANGO_RECAPTCHA_PUBLIC_KEY',
+                           default='6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI')
+RECAPTCHA_PRIVATE_KEY = env('DJANGO_RECAPTCHA_PRIVATE_KEY',
+                            default='6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe')
 NOCAPTCHA = True
 
 # Django-Activity-Stream
@@ -350,13 +341,12 @@ NOCAPTCHA = True
 # }
 
 # Django-courier
-COURIER_DEFAULT_PROVIDER = env('COURIER_DEFAULT_PROVIDER')
-COURIER_ONESIGNAL_APP_ID = env('COURIER_ONESIGNAL_APP_ID')
-COURIER_ONESIGNAL_USER_ID = env('COURIER_ONESIGNAL_USER_ID')
+COURIER_DEFAULT_PROVIDER = env('COURIER_DEFAULT_PROVIDER', default='onesignal')
+COURIER_ONESIGNAL_APP_ID = env('COURIER_ONESIGNAL_APP_ID', default='ej-app')
+COURIER_ONESIGNAL_USER_ID = env('COURIER_ONESIGNAL_USER_ID', default='ej-user')
 
 # Pushtogether Math
 STATISTICS_REFRESH_TIME = env('STATISTICS_REFRESH_TIME', default=150)  # seconds
 MATH_MIN_USERS = env('MATH_MIN_USERS', default=5)
 MATH_MIN_COMMENTS = env('MATH_MIN_COMMENTS', default=5)
-MATH_MIN_VOTES = env('MATH_MIN_VOTES', default=5)
-
+MATH_MIN_VOTES = env('MATH_MIN_VOTES', default=5) 
