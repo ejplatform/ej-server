@@ -4,7 +4,6 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.views.generic import TemplateView
 from django.views import defaults as default_views
-from django.views.generic.base import RedirectView
 from rest_framework.documentation import include_docs_urls
 
 from ej.users.views import FacebookLogin, TwitterLogin
@@ -19,21 +18,20 @@ urlpatterns = [
 
     # url(r'^cities_light/api/', include('cities_light.contrib.restframework3')),
 
-    url(r'^api/docs/', include_docs_urls(title='pushtogether API Docs', public=False)),
+    url(r'^api/v1/docs/', include_docs_urls(title='pushtogether API Docs', public=False)),
+    
     # User management
-    url(r'^api/profile/', include('ej.users.urls', namespace='users')),
-    url(r'^api/gamification/', include('ej.gamification.urls', namespace='gamification')),
-    url(r'^api/', include('ej.conversations.urls', namespace='v1')),
-    url(r'^api/math/', include('ej.math.urls', namespace='math')),
-    url(r'^api/auth/facebook/$', FacebookLogin.as_view(), name='fb_login'),
-    url(r'^api/auth/twitter/$', TwitterLogin.as_view(), name='tw_login'),
+    url(r'^api/v1/profile/', include('ej.users.urls', namespace='v1')),
+    url(r'^api/v1/gamification/', include('ej.gamification.urls', namespace='v1')),
+    url(r'^api/v1/', include('ej.conversations.urls', namespace='v1')),
+    url(r'^api/v1/math/', include('ej.math.urls', namespace='v1')),
+    url(r'^api/v1/auth/facebook/$', FacebookLogin.as_view(), name='fb_login'),
+    url(r'^api/v1/auth/twitter/$', TwitterLogin.as_view(), name='tw_login'),
     url(r'^rest-auth/', include('rest_auth.urls')),
-    # TODO: Remove this redirect after october 2017
-    url(r'^rest-auth/registration/account-confirm-email/(?P<key>[-:\w]+)/$', RedirectView.as_view(pattern_name='account_confirm_email'), name='account-confirm-email-redirect'),
     url(r'^rest-auth/registration/', include('rest_auth.registration.urls')),
     url(r'^accounts/', include('allauth.urls')),
     url(r'^activity/', include('actstream.urls')),
-    url(r'^api/', include('courier.urls', namespace='courier')),
+    url(r'^api/v1/', include('courier.urls', namespace='v1')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
