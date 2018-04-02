@@ -13,6 +13,7 @@ from config.settings.core import env, DEBUG
 
 # Imports
 from .conf import db
+from .celery import *
 
 DATABASES = db.DATABASES
 USE_SQLITE = db.USE_SQLITE
