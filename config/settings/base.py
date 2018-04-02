@@ -1,5 +1,5 @@
 """
-Django settings for pushtogether project.
+Django settings for ej project.
 
 For more information on this file, see
 https://docs.djangoproject.com/en/dev/topics/settings/
@@ -19,7 +19,7 @@ USE_SQLITE = db.USE_SQLITE
 
 
 ROOT_DIR = pathlib.Path(__file__).parent.parent.parent
-APPS_DIR = ROOT_DIR / 'pushtogether'
+APPS_DIR = ROOT_DIR / 'ej'
 
 # APP CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -139,7 +139,6 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-dirs
         'DIRS': [
-            APPS_DIR / 'lib/templates',
             APPS_DIR / 'templates',
         ],
         'OPTIONS': {
@@ -191,8 +190,7 @@ STATIC_URL = '/static/'
 
 # See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#std:setting-STATICFILES_DIRS
 STATICFILES_DIRS = [
-    ROOT_DIR / 'ej/static',
-    ROOT_DIR / 'lib/static',
+    APPS_DIR / 'static',
 ]
 
 # See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#staticfiles-finders
@@ -274,7 +272,7 @@ ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = 'optional'
 ACCOUNT_USERNAME_REQUIRED = False
-ACCOUNT_SIGNUP_FORM_CLASS = 'ej.users.forms.PushtogetherSignupForm'
+ACCOUNT_SIGNUP_FORM_CLASS = 'ej.users.forms.EJSignupForm'
 
 ACCOUNT_ALLOW_REGISTRATION = env.bool('DJANGO_ACCOUNT_ALLOW_REGISTRATION', True)
 SOCIALACCOUNT_ADAPTER = 'ej.users.adapters.SocialAccountAdapter'

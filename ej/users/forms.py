@@ -2,7 +2,7 @@ from captcha.fields import ReCaptchaField
 from django import forms
 
 
-class PushtogetherSignupForm(forms.Form):
+class EJSignupForm(forms.Form):
     full_name = forms.CharField(max_length=120, label='Nome')
     captcha = ReCaptchaField(label='')
 

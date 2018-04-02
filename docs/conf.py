@@ -228,9 +228,9 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    ('index', 'pushtogether', 'Push Together Documentation',
-     """Bruno""", 'Push Together',
-     """A short description of the project.""", 'Miscellaneous'),
+    ('index', 'ej', 'EJ Documentation',
+     'Bruno', 'EJ',
+     'Social participation platform', 'Miscellaneous'),
 ]
 
 # Documents to append as an appendix to all manuals.
