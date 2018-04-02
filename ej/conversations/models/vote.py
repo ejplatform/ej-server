@@ -20,10 +20,12 @@ class Vote(models.Model):
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         related_name='votes',
+        on_delete=models.PROTECT,
     )
     comment = models.ForeignKey(
         'Comment',
         related_name='votes',
+        on_delete=models.CASCADE,
     )
     created_at = models.DateTimeField(
         _('Created at'),

@@ -30,6 +30,7 @@ class Job(models.Model):
     conversation = models.ForeignKey(
         'conversations.Conversation',
         related_name="math_jobs",
+        on_delete=models.CASCADE,
     )
     type = models.CharField(
         _("Type"),

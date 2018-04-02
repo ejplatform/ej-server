@@ -7,6 +7,7 @@ from . import views
 router = SimpleRouter()
 router.register(r'', views.UserViewSet),
 router.register(r'^me/$', views.UserViewSet.as_view({'get': 'retrieve'}), base_name='me'),
+app_name = 'users'
 
 urlpatterns = [
     url(

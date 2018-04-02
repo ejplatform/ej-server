@@ -26,6 +26,7 @@ class Conversation(models.Model):
 
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
+        on_delete=models.PROTECT,
     )
     title = models.CharField(
         _('Title'),
@@ -80,6 +81,7 @@ class Conversation(models.Model):
         Category,
         related_name='conversations',
         null=True, blank=True,
+        on_delete=models.SET_NULL,
     )
     background_image = models.ImageField(
         _('Background image'),

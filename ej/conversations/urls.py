@@ -56,3 +56,4 @@ urlpatterns = [
 ]
 
 urlpatterns.extend(router.urls)
+app_name = 'conversations'
