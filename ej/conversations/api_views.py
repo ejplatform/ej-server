@@ -227,7 +227,7 @@ class CommentReportViewSet(viewsets.ReadOnlyModelViewSet):
         return queryset
 
 
-class ClustersViewSet(viewsets.ReadOnlyModelViewSet):
+class ClusterViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = serializers.ConversationJobSerializer
     queryset = Conversation.objects.all()
 
