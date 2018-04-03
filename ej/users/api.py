@@ -1,5 +1,4 @@
 import ej.users.api_views
-from . import views
 
 
 def register(router):
