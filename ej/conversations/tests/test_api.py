@@ -1,28 +1,14 @@
-import pytest
 import json
 import time
-from pprint import pprint
 
+import pytest
 from django.utils import timezone
-from django.urls import reverse
-from django.contrib.auth import get_user_model
-
 from rest_framework import status
-from rest_framework.test import APITestCase
 
-from ej.conversations.serializers import (
-    AuthorSerializer,
-    ConversationSerializer,
-    CommentSerializer,
-    VoteSerializer,
-)
 from ej.conversations.models import (
     Conversation,
-    Comment,
-    Vote,
 )
 from .helpers import post_valid_comment
-
 
 pytestmark = pytest.mark.django_db
 
@@ -30,28 +16,13 @@ pytestmark = pytest.mark.django_db
 class TestConversationAPI:
 
     def update_url(self, conversation):
-        return reverse(
-            "{version}:{name}".format(
-                version='v1',
-                name='conversation-detail'),
-            args=(conversation.id,)
-        )
+        return f'/api/conversations/{conversation.id}/'
 
     def delete_url(self, conversation):
-        return reverse(
-            "{version}:{name}".format(
-                version='v1',
-                name='conversation-detail'),
-            args=(conversation.id,)
-        )
+        return f'/api/conversations/{conversation.id}/'
 
     def create_read_url(self):
-        return reverse(
-            "{version}:{name}".format(
-                version='v1',
-                name='conversation-list'
-            )
-        )
+        return '/api/conversations/'
 
     def test_get_list_without_login_should_return_200(self, client):
         response = client.get(self.create_read_url())
@@ -183,7 +154,6 @@ class TestConversationAPI:
 
         assert response.data['nudge'] == Conversation.NUDGE.global_blocked.value
         assert response.status_code == status.HTTP_201_CREATED
-
 
     def test_nudge_status_should_return_normal(self, client, user, conversation):
         """

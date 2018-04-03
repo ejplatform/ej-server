@@ -118,7 +118,6 @@ class Conversation(models.Model):
     # you can override this variable in django settings variable MATH_REFRESH_TIME
     # passing a integer value in seconds
     STATISTICS_REFRESH_TIME = getattr(settings, 'CONVERSATION_STATISTICS_REFRESH_TIME', 0)
-
     NUDGE = NUDGE
 
     # Vote count
@@ -327,9 +326,7 @@ def is_user_nudge_eager(conversation, user_comments_counter, user_comments):
         nudge_limit = conversation.comment_nudge - 1
         if user_comments_counter >= nudge_limit:
             datetime_limit = get_datetime_interval(conversation.comment_nudge_interval)
-            comments_in_limit = user_comments.filter(
-                created_at__gt=datetime_limit
-            )
+            comments_in_limit = user_comments.filter(created_at__gt=datetime_limit)
             return comments_in_limit.count() >= nudge_limit
     return False
 
@@ -356,5 +353,5 @@ def comment_count(conversation, type=None):
     ``type=None`` for all comments.
     """
 
-    kwargs = {'type': type} if type is not None else {}
+    kwargs = {'approval': type} if type is not None else {}
     return conversation.comments.filter(**kwargs).count()

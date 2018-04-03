@@ -5,7 +5,9 @@ from django.utils.translation import ugettext_lazy as _
 
 
 class Job(models.Model):
-    """Class describing a computational job"""
+    """
+    Class describing a computational job
+    """
 
     # currently, available types of job are:
     CLUSTERS = 'CLUSTERS'
