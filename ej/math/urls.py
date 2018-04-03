@@ -11,3 +11,4 @@ router.register(
 )
 
 urlpatterns = router.urls
+app_name = 'math'

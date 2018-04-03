@@ -3,8 +3,8 @@
 version: '3.5'
 
 networks:
-  empurrando-juntos:
-    name: empurrando-juntos
+  ej:
+    name: ej
 
 volumes:
   db_data: {}
@@ -25,7 +25,7 @@ services:
       - rabbit
       - redis
     networks:
-      - empurrando-juntos
+      - ej
     ports:
       - '8000:8000'
     volumes:
@@ -35,14 +35,14 @@ services:
     image: redis:3.2
     hostname: redis
     networks:
-      - empurrando-juntos
+      - ej
 
   rabbit:
     image: rabbitmq:3.6.14-management
     env_file:
       - ./compose/local/rabbit.env
     networks:
-      - empurrando-juntos
+      - ej
     ports:
       - '5672:5672'  # Debugging
       - '15672:15672'  # RabbitMQ Manager
@@ -58,7 +58,7 @@ services:
       - rabbit
       - redis
     networks:
-      - empurrando-juntos
+      - ej
     ports:
       - '8001:8001'
     volumes:
@@ -75,7 +75,7 @@ services:
       - rabbit
       - redis
     networks:
-      - empurrando-juntos
+      - ej
     ports: []
     volumes:
       - .:/app
@@ -85,6 +85,6 @@ services:
     env_file:
       - ./compose/local/postgres.env
     networks:
-      - empurrando-juntos
+      - ej
     volumes:
       - db_data:/var/lib/postgresql/data

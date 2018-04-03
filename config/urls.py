@@ -11,15 +11,10 @@ from ej.users.views import FacebookLogin, TwitterLogin
 
 urlpatterns = [
     url(r'^$', TemplateView.as_view(template_name='pages/home.html'), name='home'),
-    url(r'^about/$', TemplateView.as_view(template_name='pages/about.html'), name='about'),
 
     # Django Admin, use {% url 'admin:index' %}
     url(settings.ADMIN_URL, admin.site.urls),
-
-    # url(r'^cities_light/api/', include('cities_light.contrib.restframework3')),
-
-    url(r'^api/v1/docs/', include_docs_urls(title='pushtogether API Docs', public=False)),
-    
+    url(r'^api/docs/', include_docs_urls(title='ej API Docs', public=False)),
     # User management
     url(r'^api/v1/profile/', include('ej.users.urls', namespace='v1')),
     url(r'^api/v1/gamification/', include('ej.gamification.urls', namespace='v1')),

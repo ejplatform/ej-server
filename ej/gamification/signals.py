@@ -1,11 +1,7 @@
 from actstream import action
 from django.db.models import Count
 from django.db.models.signals import post_save
-from actstream import action
-from ej.conversations.models import Comment, Conversation, Vote
-from ej.users.models import User
 from django.dispatch import receiver
-from django.db.models.signals import post_save
 from django.utils.translation import ugettext as _
 from pinax.badges.registry import badges
 from pinax.points.models import award_points
@@ -22,7 +18,8 @@ def actions_when_comment_saved(instance):
                 target=instance.conversation,
                 timestamp=instance.created_at)
     if instance.approval == Comment.APPROVED:
-        award_points(instance.author, 'comment_approved', reason="Comment Approved", source=instance)
+        award_points(instance.author, 'comment_approved',
+                     reason="Comment Approved", source=instance)
         action.send(instance.author,
                     verb='had comment approved',
                     description=_('Had Comment Approved'),
@@ -31,7 +28,8 @@ def actions_when_comment_saved(instance):
 
 
 def actions_when_vote_created(instance):
-    award_points(instance.author, 'voted', reason="Voted on Conversation", source=instance)
+    award_points(instance.author, 'voted', reason="Voted on Conversation",
+                 source=instance)
 
     if instance.value == Vote.AGREE:
         action.send(instance.author,
@@ -65,13 +63,17 @@ def actions_when_vote_created(instance):
             .distinct()
             .annotate(number_of_votes=Count('comments__votes'))
     )
-    number_of_first_votes = sum([x.number_of_votes for x in conversations if x.number_of_votes == 1])
+    number_of_first_votes = sum(
+        [x.number_of_votes for x in conversations if x.number_of_votes == 1])
     if len(conversations) == 2 and number_of_first_votes >= 1:
         award_points(instance.author, 'voted_first_time_in_second_conversation',
-                     reason='Voted first time in second conversation', source=instance)
+                     reason='Voted first time in second conversation',
+                     source=instance)
     if len(conversations) > 2 and number_of_first_votes >= 1:
-        award_points(instance.author, 'voted_first_time_in_new_conversation_after_second',
-                     reason='Voted first time in new conversation', source=instance)
+        award_points(instance.author,
+                     'voted_first_time_in_new_conversation_after_second',
+                     reason='Voted first time in new conversation',
+                     source=instance)
 
     # And finally, the badges
     badges.possibly_award_badge('vote_cast', user=instance.author)

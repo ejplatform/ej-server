@@ -86,8 +86,8 @@ devhelp:
 	@echo
 	@echo "Build finished."
 	@echo "To view the help file:"
-	@echo "# mkdir -p $$HOME/.local/share/devhelp/pushtogether"
-	@echo "# ln -s $(BUILDDIR)/devhelp $$HOME/.local/share/devhelp/pushtogether"
+	@echo "# mkdir -p $$HOME/.local/share/devhelp/ej"
+	@echo "# ln -s $(BUILDDIR)/devhelp $$HOME/.local/share/devhelp/ej"
 	@echo "# devhelp"
 
 epub:

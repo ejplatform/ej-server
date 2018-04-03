@@ -24,10 +24,12 @@ class Comment(models.Model):
     conversation = models.ForeignKey(
         'Conversation',
         related_name='comments',
+        on_delete=models.CASCADE,
     )
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         related_name='comments',
+        on_delete=models.PROTECT,
     )
     content = models.TextField(
         _('Content'),

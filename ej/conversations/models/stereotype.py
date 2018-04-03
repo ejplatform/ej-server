@@ -34,10 +34,12 @@ class StereotypeVote(models.Model):
     stereotype = models.ForeignKey(
         Stereotype,
         related_name='stereotype_votes',
+        on_delete=models.CASCADE,
     )
     comment = models.ForeignKey(
         Comment,
         related_name='stereotype_votes',
+        on_delete=models.CASCADE,
     )
     value = models.IntegerField(
         _('Value'),
