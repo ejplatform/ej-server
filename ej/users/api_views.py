@@ -29,7 +29,33 @@ class UserViewSet(ModelViewSet):
 
     def retrieve(self, request, pk=None, *args, **kwargs):
         # Using the /users/me endpoint
+        if pk == 'me':
+            #for future login verification
+            #if self.request.user.has_real_login():
+            instance = request.user
+            #else:
+                #raise Http404
+        else:
+            instance = self.get_object()
+        serializer = self.get_serializer(instance)
+        return Response(serializer.data)
+
+    def get_permissions(self):
+        if self.action == 'list':
+            self.permission_classes = [permissions.IsAdminUser, ]
+        elif self.action == 'retrieve':
+            self.permission_classes = [IsCurrentUserOrAdmin]
+        return super(self.__class__, self).get_permissions()
+
+
+class MeViewSet(ModelViewSet):
+    serializer_class = UserSerializer
+    queryset = User.objects.all()
+
+    def retrieve(self, request, pk=None, *args, **kwargs):
+        # Using the /users/me endpoint
         if pk is None:
+            print('ENTROUOOOOOOOOOOOIUOUO\n\n\n')
             if self.request.user.has_real_login():
                 instance = request.user
             else:
@@ -38,11 +64,3 @@ class UserViewSet(ModelViewSet):
             instance = self.get_object()
         serializer = self.get_serializer(instance)
         return Response(serializer.data)
-
-
-    def get_permissions(self):
-        if self.action == 'list':
-            self.permission_classes = [permissions.IsAdminUser, ]
-        elif self.action == 'retrieve':
-            self.permission_classes = [IsCurrentUserOrAdmin]
-        return super(self.__class__, self).get_permissions()
