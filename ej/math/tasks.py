@@ -23,7 +23,7 @@ def update_job(fn):
             # execute the function fn
             result = fn(*args, **kwargs)
             job.result = result
-            job.status = Job.FINISHED if result else Job.STUCKED
+            job.status = Job.FINISHED if result else Job.STUCK
             job.save()
         except:
             job.result = None
