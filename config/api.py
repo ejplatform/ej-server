@@ -6,3 +6,4 @@ from .utils import register_module as register
 router_v1 = DefaultRouter()
 register(router_v1, 'ej.users.api')
 register(router_v1, 'ej.conversations.api')
+register(router_v1, 'ej.math.api')
