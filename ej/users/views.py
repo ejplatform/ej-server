@@ -1,3 +1,8 @@
+from django.http import Http404, JsonResponse, HttpResponse
+from django.core.urlresolvers import reverse
+from django.views.generic import DetailView, ListView, RedirectView, UpdateView
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import detail_route, parser_classes
 from rest_framework.response import Response
@@ -5,15 +10,6 @@ from rest_framework.parsers import FormParser, MultiPartParser
 from rest_framework.authtoken.models import Token
 from rest_framework import status
 from rest_framework import permissions
-
-from django.http import Http404, JsonResponse, HttpResponse
-from django.core.urlresolvers import reverse
-from django.views.generic import DetailView, ListView, RedirectView, UpdateView
-
-from django.contrib.auth.mixins import LoginRequiredMixin
-
-from .models import User
-from .permissions import IsCurrentUserOrAdmin
 
 from allauth.account.views import SignupView
 from allauth.account.forms import LoginForm
@@ -24,6 +20,9 @@ from rest_auth.registration.views import SocialLoginView
 from rest_auth.social_serializers import TwitterLoginSerializer
 
 from .serializers import UserSerializer, FixSocialLoginSerializer
+from .models import User
+from .permissions import IsCurrentUserOrAdmin
+
 
 
 class UserViewSet(ModelViewSet):
