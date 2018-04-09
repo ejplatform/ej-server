@@ -1,0 +1,24 @@
+/*
+ COLORS
+ =========================================================================== */
+
+// Map color names to their actual HEX codes.
+// This defines a site-wide color palette.
+$color-red: #f00 !default;
+$color-blue: #00f !default;
+$color-green: #0f0 !default;
+$color-yellow: #ff0 !default;
+$color-white: #fff !default;
+$color-black: #000 !default;
+$color-light-gray: #ccc !default;
+$color-dark-gray: #666 !default;
+
+// Color roles
+$color-primary: #60a976 !default;
+$color-primary-text: $color-white !default;
+$color-accent: rgb(248, 151, 29) !default;
+$color-hint: darken($color-primary, 10) !default;
+
+$color-content: $color-black !default;
+$color-content-bg: $color-white !default;
+$color-content-hint: darken($color-content-bg, 10) !default;

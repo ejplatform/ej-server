@@ -1,0 +1,125 @@
+/**
+ * Conventions and architecture overview:
+ *
+ *   - We adopt a ITCSS architecture with the help of Inuitcss library
+ *   - Naming conventions and classes are based on SUIT CSS
+ *   - It uses Bourbon as a Sass mixin library
+ *   - Bootstrap is imported directly and spread according the ITCSS conventions
+ *   - Use 4 spaces for indentation
+ *   - Multi-line comments are acceptable since we'll strip them away during
+ *     minification
+ *   - Comment unused imports instead of removing them!
+ *
+ *   ITCSS: https://speakerdeck.com/dafed/managing-css-projects-with-itcss
+ *   SUITE CSS: https://suitcss.github.io/
+ */
+
+
+// SETTINGS
+// Global variables, site-wide settings, config switches, etc.
+@import 'settings/config';
+@import 'settings/colors';
+@import 'settings/typography';
+@import 'settings/spacing';
+//@import '../../node_modules/inuitcss/settings/settings.core';
+@import 'settings/global';
+
+// Bootstrap
+//@import '../../node_modules/bootstrap/scss/functions';
+//@import '../../node_modules/bootstrap/scss/variables';
+//@import '../../node_modules/bootstrap/scss/mixins';
+//@import '../../node_modules/bootstrap/scss/root';
+//@import '../../node_modules/bootstrap/scss/reboot';
+//@import '../../node_modules/bootstrap/scss/type';
+
+
+
+// TOOLS
+// Site-wide mixins and functions.
+//@import '../../node_modules/inuitcss/tools/tools.font-size';
+//@import '../../node_modules/inuitcss/tools/tools.clearfix';
+//@import '../../node_modules/inuitcss/tools/tools.hidden';
+//@import '../../node_modules/sass-mq/mq';
+@import 'tools/aliases';
+
+
+
+// GENERIC
+// Low-specificity, far-reaching rulesets (e.g. resets).
+//@import '../../node_modules/inuitcss/generic/generic.normalize';
+@import 'generic/overrides';
+
+
+
+// ELEMENTS
+// Unclassed HTML elements (e.g. a {}, blockquote {}, address {}).
+@import 'elements/elements';
+
+
+
+// OBJECTS
+// Objects, abstractions, and design patterns (e.g. .o-layout {}).
+//@import '../../node_modules/inuitcss/objects/objects.layout';
+//@import '../../node_modules/inuitcss/objects/objects.media';
+//@import '../../node_modules/inuitcss/objects/objects.flag';
+//@import '../../node_modules/inuitcss/objects/objects.list-bare';
+//@import '../../node_modules/inuitcss/objects/objects.list-inline';
+//@import '../../node_modules/inuitcss/objects/objects.box';
+//@import '../../node_modules/inuitcss/objects/objects.block';
+//@import '../../node_modules/inuitcss/objects/objects.table';
+
+
+
+// COMPONENTS
+// Discrete, complete chunks of UI (e.g. .c-carousel {}). This layer is where
+// most application-specific code resides.
+@import 'components/buttons';
+@import 'components/page';
+@import 'components/page-header';
+@import 'components/page-footer';
+@import 'components/page-sidebar';
+
+// Bootstrap
+//@import '../../node_modules/bootstrap/scss/images';
+//@import '../../node_modules/bootstrap/scss/code';
+//@import '../../node_modules/bootstrap/scss/grid';
+//@import '../../node_modules/bootstrap/scss/tables';
+//@import '../../node_modules/bootstrap/scss/forms';
+//@import '../../node_modules/bootstrap/scss/buttons';
+//@import '../../node_modules/bootstrap/scss/transitions';
+//@import '../../node_modules/bootstrap/scss/dropdown';
+//@import '../../node_modules/bootstrap/scss/button-group';
+//@import '../../node_modules/bootstrap/scss/input-group';
+//@import '../../node_modules/bootstrap/scss/custom-forms';
+//@import '../../node_modules/bootstrap/scss/nav';
+//@import '../../node_modules/bootstrap/scss/navbar';
+//@import '../../node_modules/bootstrap/scss/card';
+//@import '../../node_modules/bootstrap/scss/breadcrumb';
+//@import '../../node_modules/bootstrap/scss/pagination';
+//@import '../../node_modules/bootstrap/scss/badge';
+//@import '../../node_modules/bootstrap/scss/jumbotron';
+//@import '../../node_modules/bootstrap/scss/alert';
+//@import '../../node_modules/bootstrap/scss/progress';
+//@import '../../node_modules/bootstrap/scss/media';
+//@import '../../node_modules/bootstrap/scss/list-group';
+//@import '../../node_modules/bootstrap/scss/close';
+//@import '../../node_modules/bootstrap/scss/modal';
+//@import '../../node_modules/bootstrap/scss/tooltip';
+//@import '../../node_modules/bootstrap/scss/popover';
+//@import '../../node_modules/bootstrap/scss/carousel';
+
+
+
+// UTILITIES
+// High-specificity, very explicit selectors. Overrides and helper classes
+// (e.g. .u-hidden {}).
+//@import '../../node_modules/inuitcss/utilities/utilities.clearfix';
+//@import '../../node_modules/inuitcss/utilities/utilities.headings';
+//@import '../../node_modules/inuitcss/utilities/utilities.hide';
+//@import '../../node_modules/inuitcss/utilities/utilities.print';
+//@import '../../node_modules/inuitcss/utilities/utilities.spacings';
+//@import '../../node_modules/inuitcss/utilities/utilities.responsive-spacings';
+//@import '../../node_modules/inuitcss/utilities/utilities.widths';
+//@import '../../node_modules/bootstrap/scss/utilities';
+//@import '../../node_modules/bootstrap/scss/print';
+@import 'utilities/links';

@@ -18,9 +18,14 @@ known_first_party=ej
 multi_line_output=3
 default_section=THIRDPARTY
 
-[*.{html,css,scss,json,yml}]
+[*.{html,json,yml}]
 indent_style = space
 indent_size = 2
+
+[*.{css,scss}]
+indent_style = space
+indent_size = 4
+line_length = 80
 
 [*.md]
 trim_trailing_whitespace = false

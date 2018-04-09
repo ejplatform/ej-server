@@ -1,0 +1,46 @@
+{% extends 'base.jinja2' %}
+{% set content_title = _('Sign on/Sign up') %}
+
+{% block content %}
+  <div class="Login">
+    <h2 class="Login-title">Login</h2>
+    <button>Facebook</button>
+    <button>Twitter</button>
+    <form method="post">
+      {{ csrf_input }}
+      <table>
+        {{ login_form.as_table() }}
+      </table>
+      <div class="Login-toolbar">
+        <a href="#">{{ _('Register') }}</a>
+        <a href="#">{{ _('Login') }}</a>
+        <input type="submit" value="{{ _('Send') }}" name="login">
+        <input type="submit" value="{{ _('Passwordless login') }}" name="passwordless">
+      </div>
+    </form>
+
+    <h2 class="Login-title">Register</h2>
+    <form method="post">
+      {{ csrf_input }}
+      <table>
+        {{ registration_form.as_table() }}
+      </table>
+      <div class="Login-toolbar">
+        <a href="#">{{ _('Register') }}</a>
+        <a href="#">{{ _('Login') }}</a>
+        <input type="submit" value="{{ _('Send') }}" name="register">
+      </div>
+    </form>
+
+  </div>
+{% endblock %}
+
+{% block templates %}
+  {{ super() }}
+  <template id="Login-passwordless">
+    <h1>{{ _('What is passwordles login?') }}</h1>
+    <p>{% trans %}Passwords are inconvenient and often insecure. We suggest our users to choose either social
+      authentication (Facebook or Twitter) or the passwordless method. In this setup, we send a password to
+      your e-mail with a special link that automatically register your account in the platform.{% endtrans %}</p>
+  </template>
+{% endblock %}

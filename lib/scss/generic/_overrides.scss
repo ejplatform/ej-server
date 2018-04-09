@@ -1,0 +1,13 @@
+/*
+ OVERRIDE DEFAULT STYLES FROM OTHER FRAMEWORKS
+ =========================================================================== */
+
+// Intro.js
+.introjs-tooltip {
+    max-width: inherit !important;
+}
+
+////.introjs-tooltipReferenceLayer,
+//.introjs-helperLayer {
+//    pointer-events: none;
+//}

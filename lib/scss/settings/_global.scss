@@ -1,0 +1,23 @@
+/*
+ Global
+ =========================================================================== */
+
+
+// Media query break points
+$breakpoint-mobile-max: 500px;
+$breakpoint-tablet-max: 900px;
+$breakpoint-desktop-max: 1300px;
+
+
+// Standardize UI treatments.
+$global-radius: 3px !default;
+$global-transition: all 200ms ease-in-out !default;
+$global-padding: 10px !default;
+
+
+// Page Layout and components
+$page-head-height: 50px !default;
+$page-head-height-tablet: $page-head-height * 1.25 !default;
+$page-head-height-desktop: $page-head-height * 1.5 !default;
+$page-main-text-padding: 15px !default;
+$page-content-width-max: 700px !default;

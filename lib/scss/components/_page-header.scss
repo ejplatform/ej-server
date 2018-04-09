@@ -1,0 +1,146 @@
+/*
+ PAGE HEADER
+ ============================================================================ */
+
+// Constants
+$color-header-bg: $color-content-bg !default;
+$color-header-text: $color-content !default;
+
+// Component
+.Header {
+    box-shadow: 0 5px 3px -3px rgba(50, 50, 50, 0.3);
+    box-sizing: border-box;
+    color: $color-header-text;
+    background: $color-header-bg;
+    margin: 0;
+    z-index: 100;
+
+    // Resets
+    ul {
+        list-style: none;
+    }
+    a {
+        color: $color-header-text;
+    }
+    a:hover {
+        color: $color-header-text;
+    }
+
+    @media only screen and (min-width: $breakpoint-mobile-max) {
+        align-items: center;
+        background: $color-header-bg;
+        display: flex;
+        height: $page-head-height-tablet;
+        justify-content: space-between;
+        position: fixed;
+        top: 0;
+        width: 100vw;
+    }
+
+    @media only screen and (min-width: $breakpoint-tablet-max) {
+        height: $page-head-height-desktop;
+    }
+
+    // Elements
+    &-logoBar,
+    &-linkBar {
+        align-items: center;
+        background: $color-header-bg;
+        box-sizing: border-box;
+        display: flex;
+        height: $page-head-height;
+        margin: 0;
+        overflow: hidden;
+        padding: 5px 35px 5px 15px;
+        position: fixed;
+        width: 100vw;
+
+        > * {
+            display: block;
+        }
+
+        @media only screen and (min-width: $breakpoint-mobile-max) {
+            box-shadow: none;
+            display: block;
+            opacity: 1;
+            position: initial;
+            height: inherit;
+        }
+    }
+
+    &-logoBar {
+        box-shadow: 0 5px 3px -3px rgba(50, 50, 50, 0.3);
+        justify-content: space-between;
+        top: 0;
+
+        img {
+            height: 0.8 * $page-head-height;
+            box-sizing: border-box;
+            margin: 0;
+        }
+
+        @media only screen and (min-width: $breakpoint-mobile-max) {
+            box-shadow: none;
+            margin: 0;
+            padding: 0 0 0 30px;
+            display: flex;
+            justify-content: start;
+
+            img {
+                height: 80%;
+            }
+            i {
+                display: none;
+            }
+        }
+    }
+
+    &-linkBar {
+        bottom: 0;
+        box-shadow: 0 0 3px 2px rgba(50, 50, 50, 0.3);
+        background: #cccc;
+        justify-content: space-around;
+
+        span {
+            display: none;
+        }
+
+        i.material-icons {
+            font-size: 1.8em;
+            margin-top: 5px;
+        }
+
+        @media only screen and (min-width: $breakpoint-mobile-max) {
+            background: none;
+            box-shadow: none;
+            display: flex;
+            justify-content: flex-end;
+            flex-grow: 1;
+            justify-self: start;
+            text-align: right;
+
+            i.material-icons {
+                display: none;
+            }
+
+            span {
+                display: initial;
+                margin-right: 20px;
+            }
+        }
+    }
+
+    &-notifications {
+        @media only screen and (min-width: $breakpoint-mobile-max) {
+            order: 1;
+            font-size: 1.5em;
+
+            span {
+                display: none;
+            }
+            i.material-icons {
+                display: initial;
+            }
+        }
+    }
+}
