@@ -1,0 +1,30 @@
+from django.conf import settings
+from django.http import HttpResponse, JsonResponse
+from django.shortcuts import redirect
+from django.views.decorators.clickjacking import xframe_options_exempt
+from django.views.decorators.csrf import csrf_exempt
+
+from .decorators import allow_credentials
+from . import helpers
+
+
+@csrf_exempt
+@allow_credentials
+@xframe_options_exempt
+def check_login(request):
+    if not request.user.is_authenticated():
+        return HttpResponse(status=401)
+
+    name = (request.user.first_name + ' ' + request.user.last_name).strip()
+
+    loginToken = helpers.create_user_token(
+        request.user.email,
+        name,
+        request.user.username
+    )
+
+    return JsonResponse({'loginToken': loginToken })
+
+
+def rc_redirect(request):
+    return redirect(settings.ROCKETCHAT_URL)
