@@ -8,6 +8,7 @@ networks:
 
 volumes:
   db_data: {}
+  db_rocketchat_data: {}
 
 services:
   django: &django
@@ -88,3 +89,28 @@ services:
       - ej
     volumes:
       - db_data:/var/lib/postgresql/data
+
+  mongo:
+    image: mongo
+    volumes:
+      - db_rocketchat_data:/data/db
+    networks:
+      - empurrando-juntos
+    command:
+      - mongod
+      - --smallfiles
+      - --oplogSize
+      - '128'
+
+  rocketchat:
+    image: rocketchat/rocket.chat:latest
+    networks:
+      - empurrando-juntos
+    environment:
+      MONGO_URL: mongodb://mongo:27017/rocketchat
+      PORT: '3000'
+      ROOT_URL: http://yourhost:3000
+    links:
+      - mongo
+    ports:
+      - 3000:3000/tcp
