@@ -68,6 +68,7 @@ DEBUG_TOOLBAR_CONFIG = {
 
 # django-extensions and math module
 # ------------------------------------------------------------------------------
+# TODO: Change to ej_math after ej-math deploy
 INSTALLED_APPS += ['django_extensions', 'pushtogether_math']
 
 # TESTING

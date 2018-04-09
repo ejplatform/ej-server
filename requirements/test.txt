@@ -17,4 +17,5 @@ pytest-django==3.1.2
 git+https://gitlab.com/empurrandojuntos/django-courier.git
 
 # ej math module
+# TODO: Change to ej-math after ej-math deploy
 pushtogether-math
