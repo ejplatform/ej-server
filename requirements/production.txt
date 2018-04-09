@@ -25,4 +25,5 @@ raven==6.5.0
 git+https://gitlab.com/empurrandojuntos/django-courier.git
 
 # ej math module
+# TODO: Change to ej-math after ej-math deploy
 pushtogether-math

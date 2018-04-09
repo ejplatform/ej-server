@@ -344,7 +344,7 @@ COURIER_DEFAULT_PROVIDER = env('COURIER_DEFAULT_PROVIDER', default='onesignal')
 COURIER_ONESIGNAL_APP_ID = env('COURIER_ONESIGNAL_APP_ID', default='ej-app')
 COURIER_ONESIGNAL_USER_ID = env('COURIER_ONESIGNAL_USER_ID', default='ej-user')
 
-# Pushtogether Math
+# ej-math
 STATISTICS_REFRESH_TIME = env('STATISTICS_REFRESH_TIME', default=150)  # seconds
 MATH_MIN_USERS = env('MATH_MIN_USERS', default=5)
 MATH_MIN_COMMENTS = env('MATH_MIN_COMMENTS', default=5)

@@ -25,4 +25,5 @@ pytest-cov==2.5.1
 # pytest-sugar==0.9.0
 
 # ej math module
+# TODO: Change to ej-math after ej-math deploy
 pushtogether-math
