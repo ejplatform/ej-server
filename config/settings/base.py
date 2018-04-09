@@ -65,6 +65,7 @@ INSTALLED_APPS = [
     'ej.conversations.apps.ConversationsConfig',
     'ej.gamification.apps.GamificationConfig',
     'ej.math.apps.MathConfig',
+    'ej.rocketchat.apps.RocketchatConfig',
 ]
 
 # MIDDLEWARE CONFIGURATION
@@ -74,11 +75,11 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+#    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    # XFrameOptions disabled needed to login iframe
-    # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # XFrameOptions enabled to login iframe
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
 # MIGRATIONS CONFIGURATION
@@ -320,12 +321,19 @@ ADMIN_URL = r'^admin/'
 # Django cors
 # ------------------------------------------------------------------------------
 CORS_ORIGIN_ALLOW_ALL = False
+
+CORS_ALLOW_CREDENTIALS = True
+
 CORS_ORIGIN_WHITELIST = (
-    'polis.brasilqueopovoquer.org.br',
-    'brasilqueopovoquer.org.br',
-    'ej.brasilqueopovoquer.org.br',
-    'app.brasilqueopovoquer.org.br',
+    'ej.platform.org',
+    'dev.ejplatform.org',
+    'chat.ejplatform.org',
 )
+
+CSRF_TRUSTED_ORIGINS = [
+    'localhost',
+    'rocketchat'
+]
 
 # Above default keys will always pass, do not use then in production.
 RECAPTCHA_PUBLIC_KEY = env('DJANGO_RECAPTCHA_PUBLIC_KEY',
