@@ -1,0 +1,438 @@
+/**
+ * Conventions and architecture overview:
+ *
+ *   - We adopt a ITCSS architecture with the help of Inuitcss library
+ *   - Naming conventions and classes are based on SUIT CSS
+ *   - It uses Bourbon as a Sass mixin library
+ *   - Bootstrap is imported directly and spread according the ITCSS conventions
+ *   - Use 4 spaces for indentation
+ *   - Multi-line comments are acceptable since we'll strip them away during
+ *     minification
+ *   - Comment unused imports instead of removing them!
+ *
+ *   ITCSS: https://speakerdeck.com/dafed/managing-css-projects-with-itcss
+ *   SUITE CSS: https://suitcss.github.io/
+ */
+/*
+ CONFIG
+ =============================================================================*/
+/*
+ COLORS
+ =========================================================================== */
+/*
+ FONTS FAMILIES AND SIZES
+ ============================================================== */
+/*
+ SPACING
+ =========================================================================== */
+/*
+ Global
+ =========================================================================== */
+/*
+ ALIASES
+ =============================================================================*/
+/*
+ OVERRIDE DEFAULT STYLES FROM OTHER FRAMEWORKS
+ =========================================================================== */
+.introjs-tooltip {
+  max-width: inherit !important; }
+
+/*
+ Generic element implementations
+ =====================================================================*/
+html {
+  overflow: hidden;
+  min-height: 100%; }
+
+body {
+  box-sizing: border-box;
+  width: 100vw;
+  font-size: 1em;
+  font-family: "Raleway", sans-serif; }
+
+main {
+  box-sizing: border-box;
+  padding: 0;
+  width: 100%; }
+
+a {
+  line-height: 1.2;
+  text-decoration: none;
+  text-decoration-style: solid; }
+
+code, pre, blockquote {
+  background-color: #e6e6e6; }
+
+table {
+  width: 100%; }
+
+h1 {
+  font-size: 1.6em; }
+
+h2 {
+  font-size: 1.5em; }
+
+h3 {
+  font-size: 1.3em; }
+
+h4 {
+  font-size: 1.2em; }
+
+h5 {
+  font-size: 1.1em; }
+
+h6 {
+  font-size: 1em; }
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Lato", sans-serif;
+  font-weight: 400; }
+
+/*
+ BUTTONS
+ =============================================================================*/
+button,
+.Button {
+  display: inline-block;
+  padding: 10px 10px;
+  vertical-align: middle;
+  text-align: center;
+  font: inherit;
+  margin: 0;
+  cursor: pointer;
+  transition: all 200ms ease-in-out;
+  border-radius: 3px; }
+  button [primary],
+  .Button [primary] {
+    background-color: #4a8ec2; }
+    button [primary], button [primary]:hover, button [primary]:active, button [primary]:focus,
+    .Button [primary],
+    .Button [primary]:hover,
+    .Button [primary]:active,
+    .Button [primary]:focus {
+      text-decoration: none;
+      color: #fff; }
+    button [primary]:hover, button [primary]:focus,
+    .Button [primary]:hover,
+    .Button [primary]:focus {
+      background-color: #3774a2; }
+  button [secondary],
+  .Button [secondary] {
+    background-color: #2f4054; }
+    button [secondary], button [secondary]:hover, button [secondary]:active, button [secondary]:focus,
+    .Button [secondary],
+    .Button [secondary]:hover,
+    .Button [secondary]:active,
+    .Button [secondary]:focus {
+      text-decoration: none;
+      color: #fff; }
+    button [secondary]:hover, button [secondary]:focus,
+    .Button [secondary]:hover,
+    .Button [secondary]:focus {
+      background-color: #1d2733; }
+
+[small] {
+  padding: 10px; }
+
+[large] {
+  padding: 10px; }
+
+[ghost] {
+  border: 2px solid currentColor;
+  padding: 8px 8px; }
+  [ghost], [ghost]:hover, [ghost]:active, [ghost]:focus {
+    background: none; }
+  [ghost] [primary] {
+    color: #4a8ec2; }
+    [ghost] [primary]:hover, [ghost] [primary]:focus {
+      color: #3774a2; }
+  [ghost] [secondary] {
+    color: #2f4054; }
+    [ghost] [secondary]:hover, [ghost] [secondary]:focus {
+      color: #1d2733; }
+
+/*
+ GENERIC PAGE ELEMENTS
+ ======================================================================== */
+.ContentArea {
+  box-sizing: border-box;
+  display: flex;
+  height: 100vh;
+  margin: 50px 0;
+  padding: 0;
+  top: 0;
+  width: 100vw; }
+  .ContentArea-main {
+    display: flex;
+    flex-flow: column;
+    overflow-y: scroll;
+    width: 100%; }
+    @media only screen and (min-width: 500px) {
+      .ContentArea-main {
+        overflow-y: auto; } }
+  .ContentArea main {
+    flex-grow: 1; }
+  @media only screen and (min-width: 500px) {
+    .ContentArea {
+      height: initial;
+      margin-left: 90px;
+      margin-bottom: 0;
+      margin-top: 62.5px;
+      width: initial; } }
+  @media only screen and (min-width: 900px) {
+    .ContentArea {
+      margin-top: 75px; } }
+
+.Page {
+  display: flex;
+  flex-flow: column;
+  max-height: 100vh; }
+  .Page-title {
+    background-image: url(/static/img/bg-title.png);
+    background-repeat: repeat-x;
+    background-size: auto 100%;
+    color: white;
+    margin: 0 0 30px 0;
+    padding: 15px;
+    text-transform: uppercase; }
+    .Page-title h1 {
+      font-size: 1.6em;
+      font-weight: 600;
+      margin: 0 auto;
+      max-width: 700px; }
+  .Page-content {
+    padding: 15px;
+    margin: 0 auto;
+    max-width: 700px; }
+  @media only screen and (min-width: 1020px) {
+    .Page-content, .Page-title h1 {
+      margin: 0 auto 0 100px; } }
+
+/*
+ PAGE HEADER
+ ============================================================================ */
+.Header {
+  box-shadow: 0 5px 3px -3px rgba(50, 50, 50, 0.3);
+  box-sizing: border-box;
+  color: #000;
+  background: #fff;
+  margin: 0;
+  z-index: 100; }
+  .Header ul {
+    list-style: none; }
+  .Header a {
+    color: #000; }
+  .Header a:hover {
+    color: #000; }
+  @media only screen and (min-width: 500px) {
+    .Header {
+      align-items: center;
+      background: #fff;
+      display: flex;
+      height: 62.5px;
+      justify-content: space-between;
+      position: fixed;
+      top: 0;
+      width: 100vw; } }
+  @media only screen and (min-width: 900px) {
+    .Header {
+      height: 75px; } }
+  .Header-logoBar, .Header-linkBar {
+    align-items: center;
+    background: #fff;
+    box-sizing: border-box;
+    display: flex;
+    height: 50px;
+    margin: 0;
+    overflow: hidden;
+    padding: 5px 35px 5px 15px;
+    position: fixed;
+    width: 100vw; }
+    .Header-logoBar > *, .Header-linkBar > * {
+      display: block; }
+    @media only screen and (min-width: 500px) {
+      .Header-logoBar, .Header-linkBar {
+        box-shadow: none;
+        display: block;
+        opacity: 1;
+        position: initial;
+        height: inherit; } }
+  .Header-logoBar {
+    box-shadow: 0 5px 3px -3px rgba(50, 50, 50, 0.3);
+    justify-content: space-between;
+    top: 0; }
+    .Header-logoBar img {
+      height: 40px;
+      box-sizing: border-box;
+      margin: 0; }
+    @media only screen and (min-width: 500px) {
+      .Header-logoBar {
+        box-shadow: none;
+        margin: 0;
+        padding: 0 0 0 30px;
+        display: flex;
+        justify-content: start; }
+        .Header-logoBar img {
+          height: 80%; }
+        .Header-logoBar i {
+          display: none; } }
+  .Header-linkBar {
+    bottom: 0;
+    box-shadow: 0 0 3px 2px rgba(50, 50, 50, 0.3);
+    background: #cccc;
+    justify-content: space-around; }
+    .Header-linkBar span {
+      display: none; }
+    .Header-linkBar i.material-icons {
+      font-size: 1.8em;
+      margin-top: 5px; }
+    @media only screen and (min-width: 500px) {
+      .Header-linkBar {
+        background: none;
+        box-shadow: none;
+        display: flex;
+        justify-content: flex-end;
+        flex-grow: 1;
+        justify-self: start;
+        text-align: right; }
+        .Header-linkBar i.material-icons {
+          display: none; }
+        .Header-linkBar span {
+          display: initial;
+          margin-right: 20px; } }
+  @media only screen and (min-width: 500px) {
+    .Header-notifications {
+      order: 1;
+      font-size: 1.5em; }
+      .Header-notifications span {
+        display: none; }
+      .Header-notifications i.material-icons {
+        display: initial; } }
+
+/*
+ PAGE FOOTER
+ ============================================================================ */
+.Footer {
+  background: #239c47;
+  box-sizing: border-box;
+  color: #fff;
+  height: 0 50px;
+  overflow: hidden;
+  margin-top: 30px;
+  padding: 30px;
+  padding-bottom: 50px;
+  text-align: center;
+  visibility: hidden; }
+  .Footer-badges {
+    display: flex;
+    text-align: center; }
+    .Footer-badges li {
+      margin-left: 0;
+      list-style: none; }
+  @media only screen and (min-width: 500px) {
+    .Footer {
+      visibility: visible; } }
+
+/*
+ PAGE SIDEBAR
+ =========================================================================== */
+@keyframes fade-out {
+  from {
+    opacity: 0; }
+  to {
+    opacity: 1; } }
+@keyframes sidebar-reveal {
+  from {
+    left: -80vw; }
+  to {
+    left: 0; } }
+.Sidebar {
+  background: #396a48;
+  box-shadow: 1px 0 5px 0 rgba(50, 50, 50, 0.2);
+  box-sizing: border-box;
+  color: #e6e6e6;
+  display: none;
+  font-size: 125%;
+  height: 100vh;
+  left: 0;
+  opacity: 0.95;
+  overflow-y: auto;
+  padding: 30px 10px 0 10px;
+  position: fixed;
+  top: 0;
+  width: 80vw;
+  z-index: 90; }
+  .Sidebar-logo {
+    font-weight: bold; }
+  .Sidebar.is-visible {
+    animation: sidebar-reveal 200ms ease-in-out both;
+    display: block; }
+  .Sidebar.overlay {
+    display: none; }
+  .Sidebar :first-child {
+    margin-top: 10px; }
+  .Sidebar a {
+    display: flex;
+    height: 40px;
+    width: 100%;
+    align-items: center;
+    margin: 0 10px 5px 10px;
+    color: #e6e6e6; }
+    .Sidebar a img, .Sidebar a span {
+      margin: 0;
+      padding: 0; }
+    .Sidebar a img {
+      margin-right: 10px; }
+  .Sidebar a:hover {
+    color: #e6e6e6; }
+  .Sidebar ul {
+    padding: 0; }
+  .Sidebar li {
+    list-style: none; }
+  .Sidebar img {
+    width: 30px;
+    margin-bottom: 3px;
+    color: white; }
+  .Sidebar span {
+    display: block;
+    margin-bottom: 10px; }
+  @media only screen and (min-width: 500px) {
+    .Sidebar {
+      background: #60a976;
+      display: block;
+      font-size: 0.8em;
+      opacity: 1;
+      overflow-x: hidden;
+      padding-top: 62.5px;
+      text-align: center;
+      width: 90px; }
+      .Sidebar a {
+        display: block;
+        height: inherit;
+        margin: 0; }
+        .Sidebar a img {
+          margin: 0; }
+      .Sidebar .overlay {
+        display: none;
+        visibility: hidden; } }
+  @media only screen and (min-width: 500px) {
+    .Sidebar {
+      padding-top: 75px; } }
+
+.Sidebar.overlay.is-visible {
+  animation: fade-out 50ms both;
+  background: rgba(0, 0, 0, 0.5);
+  display: block;
+  margin: 0;
+  position: fixed;
+  bottom: 0;
+  top: 0;
+  height: 200vh;
+  width: 200vw;
+  z-index: 80; }
+
+/* 
+ LINKS
+ ============================================================================ */
+
+/*# sourceMappingURL=main.css.map */
