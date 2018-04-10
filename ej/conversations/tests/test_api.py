@@ -16,13 +16,13 @@ pytestmark = pytest.mark.django_db
 class TestConversationAPI:
 
     def update_url(self, conversation):
-        return f'/api/conversations/{conversation.id}/'
+        return f'/api/v1/conversations/{conversation.id}/'
 
     def delete_url(self, conversation):
-        return f'/api/conversations/{conversation.id}/'
+        return f'/api/v1/conversations/{conversation.id}/'
 
     def create_read_url(self):
-        return '/api/conversations/'
+        return '/api/v1/conversations/'
 
     def test_get_list_without_login_should_return_200(self, client):
         response = client.get(self.create_read_url())
