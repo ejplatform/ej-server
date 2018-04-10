@@ -31,7 +31,7 @@ class UserRedirectView(LoginRequiredMixin, RedirectView):
     permanent = False
 
     def get_redirect_url(self):
-        return reverse('users:user-detail',
+        return reverse('v1:user-detail',
                        kwargs={'pk': self.request.user.id})
 
 
@@ -43,7 +43,7 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
 
     # send the user back to their own page after a successful update
     def get_success_url(self):
-        return reverse('users:user-detail',
+        return reverse('v1:user-detail',
                        kwargs={'pk': self.request.user.id})
 
     def get_object(self, queryset=None):

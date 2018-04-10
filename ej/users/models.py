@@ -123,7 +123,7 @@ class User(AbstractUser):
         return self.username
 
     def get_absolute_url(self):
-        return reverse('users:user-detail', kwargs={'pk': self.id})
+        return reverse('v1:user-detail', kwargs={'pk': self.id})
 
     @property
     def image_url(self):
