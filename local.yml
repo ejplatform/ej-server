@@ -95,7 +95,7 @@ services:
     volumes:
       - db_rocketchat_data:/data/db
     networks:
-      - empurrando-juntos
+      - ej
     command:
       - mongod
       - --smallfiles
@@ -105,7 +105,7 @@ services:
   rocketchat:
     image: rocketchat/rocket.chat:latest
     networks:
-      - empurrando-juntos
+      - ej
     environment:
       MONGO_URL: mongodb://mongo:27017/rocketchat
       PORT: '3000'
