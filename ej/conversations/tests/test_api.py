@@ -5,9 +5,7 @@ import pytest
 from django.utils import timezone
 from rest_framework import status
 
-from ej.conversations.models import (
-    Conversation,
-)
+from ej.conversations.models.conversation import Conversation
 from .helpers import post_valid_comment
 
 pytestmark = pytest.mark.django_db
@@ -96,7 +94,6 @@ class TestConversationAPI:
         conversation.save()
 
         response = post_valid_comment(client, conversation, number=5)
-
         assert response.data['nudge'] == Conversation.NUDGE.eager.value
 
     def test_nudge_is_user_eager_respecting_time_limit(self, client, user, conversation):
@@ -167,5 +164,5 @@ class TestConversationAPI:
         conversation.save()
 
         response = post_valid_comment(client, conversation)
-
+        
         assert response.data['nudge'] == Conversation.NUDGE.normal.value

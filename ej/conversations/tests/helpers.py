@@ -5,11 +5,9 @@ import random
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 
-from ej.conversations.models import (
-    Conversation,
-    Comment,
-    Vote,
-)
+from ej.conversations.models.conversation import Conversation
+from ej.conversations.models.comment import Comment
+from ej.conversations.models.vote import Vote
 
 
 pytestmark = pytest.mark.django_db
@@ -90,7 +88,8 @@ def populate_conversation_votes(conversation, users_list, max_votes_per_user):
 
 def post_valid_comment(client, conversation, number=1):
     data = json.dumps({
-        "conversation": conversation.id,
+        "conversation": reverse('v1:conversation-detail', kwargs={'pk': conversation.pk}),
+        "conversation_id": conversation.id,
         "content": "test_content",
     })
     create_comment_url = reverse(
