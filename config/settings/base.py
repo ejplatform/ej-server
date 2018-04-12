@@ -75,7 +75,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-#    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     # XFrameOptions enabled to login iframe
@@ -321,19 +321,31 @@ ADMIN_URL = r'^admin/'
 # Django cors
 # ------------------------------------------------------------------------------
 CORS_ORIGIN_ALLOW_ALL = False
-
 CORS_ALLOW_CREDENTIALS = True
-
 CORS_ORIGIN_WHITELIST = (
-    'ej.platform.org',
-    'dev.ejplatform.org',
+    'ejplatform.org',
     'chat.ejplatform.org',
+    'dev.ejplatform.org',
+    'chat.dev.ejplatform.org',
 )
 
 CSRF_TRUSTED_ORIGINS = [
-    'localhost',
-    'rocketchat'
+    'ejplatform.org',
+    'chat.ejplatform.org',
+    'dev.ejplatform.org',
+    'chat.dev.ejplatform.org',
 ]
+
+
+# RocketChat integration
+MONGO_URL = env('ROCKETCHAT_MONGO_URL', default='mongodb://mongo:27017')
+ROCKETCHAT_URL = env('ROCKETCHAT_URL', default='http://rocketchat:3000')
+# [FIXME] auth token should be set in the user interface
+ROCKETCHAT_AUTH_TOKEN = env('ROCKETCHAT_AUTH_TOKEN',
+    default='yItGp9o3XbkUwBHPo80R-3tCXnZhHaUZnKK3Ix6XoD9')
+ROCKETCHAT_USER_ID = env('ROCKETCHAT_USER_ID', default='62bfHvpYqLoa7we7B')
+X_FRAME_OPTIONS = f'ALLOW-FROM {ROCKETCHAT_URL}'
+
 
 # Above default keys will always pass, do not use then in production.
 RECAPTCHA_PUBLIC_KEY = env('DJANGO_RECAPTCHA_PUBLIC_KEY',

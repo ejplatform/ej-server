@@ -1,4 +1,3 @@
-import hashlib
 import random
 import string
 import requests
@@ -31,15 +30,15 @@ def create_rc_user(email, name, username):
         'email': email,
         'name': name,
         'username': username,
-        'password': generate_token(),
+        'password': make_pass(30),
     }
-    resp = requests.post(
+    res = requests.post(
         settings.ROCKETCHAT_URL + '/api/v1/users.create',
         headers=headers,
         json=json_data,
     )
-    if resp.status_code != 200:
-        raise Exception(f'Error: {resp.content}')
+    if res.status_code != 200:
+        raise Exception(f'Error: {res.content}')
     
 
 def get_user_token(username):
@@ -50,9 +49,16 @@ def get_user_token(username):
     json_data = {
         'username': username,
     }
-    resp = requests.post(
+    res = requests.post(
         settings.ROCKETCHAT_URL + '/api/v1/users.createToken',
         headers=headers,
         data=json_data,
     )
-    return json.loads(resp.content)['data']['authToken']
+    if res.status_code != 200:
+        raise Exception(f'Error: {res.content}')
+    return json.loads(res.content)['data']['authToken']
+
+
+def make_pass(n):
+    return ''.join(random.SystemRandom().choice(
+        string.ascii_uppercase + string.digits) for _ in range(n))
