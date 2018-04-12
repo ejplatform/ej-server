@@ -9,6 +9,7 @@ networks:
 volumes:
   db_rocketchat_data: {}
 
+services:
   mongo:
     image: mongo
     volumes:
