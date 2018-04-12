@@ -3,6 +3,6 @@
 # wait for RabbitMQ server to start
 sleep 10
 
-# run Celery worker for our project myproject with Celery configuration stored in Celeryconf
+# run Celery worker for our project with Celery configurations
 cd /app
 celery worker -A ej.math -l info

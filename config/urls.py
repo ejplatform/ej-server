@@ -30,7 +30,7 @@ urlpatterns = [
     url(r'^accounts/', include('allauth.urls')),
     url(r'^activity/', include('actstream.urls')),
     url(r'^api/', include('courier.urls', namespace='courier')),
-    url(r'^rocketchat/', include('ej.rocketchat.urls')),
+    url(r'^api/v1/rocketchat/', include('ej.ejrocketchat.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:

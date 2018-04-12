@@ -65,7 +65,7 @@ INSTALLED_APPS = [
     'ej.conversations.apps.ConversationsConfig',
     'ej.gamification.apps.GamificationConfig',
     'ej.math.apps.MathConfig',
-    'ej.rocketchat.apps.EJRocketChatConfig',
+    'ej.ejrocketchat.apps.EJRocketChatConfig',
 ]
 
 # MIDDLEWARE CONFIGURATION
