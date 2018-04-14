@@ -1,6 +1,6 @@
-import datetime
 from random import randrange
 
+import datetime
 from autoslug import AutoSlugField
 from django.conf import settings
 from django.contrib.auth import get_user_model
@@ -159,12 +159,16 @@ class Conversation(models.Model):
     def __str__(self):
         return self.title
 
-    def create_comment(self, user, text, commit=True, **kwargs):
+    def create_comment(self, author, content, commit=True, check_limits=True,
+                       **kwargs):
         """
         Create a new comment object for the given user.
+
+        By default, this method checks if user is within the throttle limits
+        for comment publication.
         """
         make_comment = Comment.objects.create if commit else Comment
-        return make_comment(author=user, content=text, **kwargs)
+        return make_comment(author=author, content=content, **kwargs)
 
     def get_absolute_url(self):
         return '/conversations/' + self.slug

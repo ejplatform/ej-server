@@ -43,7 +43,7 @@ def get_clusters(conversation_id):
     """
     conversation = Conversation.objects.get(pk=conversation_id)
     if has_sufficient_data(conversation):
-        votes = conversation.list_votes()
+        votes = conversation.get_vote_data()
         return cluster.get_clusters(votes, range(2, 5))
 
 

@@ -10,6 +10,7 @@ from rest_framework.documentation import include_docs_urls
 from ej.users.views import FacebookLogin, TwitterLogin
 from config import views
 
+print('hello urls!')
 
 urlpatterns = [
     url(r'^$', views.index_view, name='home'),

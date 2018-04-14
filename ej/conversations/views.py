@@ -88,7 +88,7 @@ class CommentViewSet(viewsets.ModelViewSet):
 
     def process_the_request(self, user, conversation, serializer):
         response_args = {}
-        previous_conversation_nudge = conversation.get_nudge_status(user)
+        previous_conversation_nudge = conversation.get_status(user)
         response_status_code = previous_conversation_nudge.value['status_code']
         response_args = {
             'data': {'nudge': previous_conversation_nudge.value},
@@ -101,7 +101,7 @@ class CommentViewSet(viewsets.ModelViewSet):
             self.create
             # we should update the nudge status before respond the request
             # because the creation of a new comment may alter the status
-            new_nudge_status = conversation.get_nudge_status(user).value
+            new_nudge_status = conversation.get_status(user).value
             response_args['data']['nudge'] = new_nudge_status
             response_args['data'].update(serializer.data)
 
@@ -177,7 +177,7 @@ class NextCommentViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
         conversation = get_object_or_404(queryset, pk=self.kwargs['pk'])
 
         try:
-            return conversation.get_random_unvoted_comment(current_user)
+            return conversation.get_next_comment(current_user)
         except Comment.DoesNotExist as e:
             return None
 
