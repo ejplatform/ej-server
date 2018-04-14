@@ -20,13 +20,13 @@ class Job(models.Model):
     STARTED = 'STARTED'
     FINISHED = 'FINISHED'
     FAILED = 'FAILED'
-    STUCKED = 'STUCKED'
+    STUCK = 'STUCK'
     STATUS_CHOICES = (
         (PENDING, _('PENDING')),
         (STARTED, _('STARTED')),
         (FINISHED, _('FINISHED')),
         (FAILED, _('FAILED')),
-        (STUCKED, _('STUCKED')),
+        (STUCK, _('STUCK')),
     )
 
     conversation = models.ForeignKey(
@@ -54,6 +54,9 @@ class Job(models.Model):
         auto_now=True,
     )
     result = JSONField(null=True)
+
+    class Meta:
+        ordering = ['-id']
 
     # Clustering configuration
     MATH_MIN_USERS = getattr(settings, 'MATH_MIN_USERS', 5)

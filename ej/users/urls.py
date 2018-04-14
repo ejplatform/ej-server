@@ -1,40 +1,16 @@
-from rest_framework.routers import SimpleRouter
-from django.conf.urls import url
+from django.urls import path
 from django.views.generic import TemplateView
 
 from . import views
 
-router = SimpleRouter()
-router.register(r'', views.UserViewSet),
 app_name = 'users'
 
 urlpatterns = [
-    url(
-        regex=r'^signin/$',
-        view=views.LoginSignupView.as_view(),
-        name='signin'
-    ),
-    url(r'^close/$', TemplateView.as_view(template_name='users/close.html')),
-    url(
-        regex=r'^~redirect/$',
-        view=views.UserRedirectView.as_view(),
-        name='redirect'
-    ),
-    url(
-        regex=r'^~update/$',
-        view=views.UserUpdateView.as_view(),
-        name='update'
-    ),
-    url(
-        regex=r'^key/$',
-        view=views.get_api_key,
-        name='api-key'
-    ),
-    url(
-        regex=r'^reset/$',
-        view=views.clean_cookies,
-        name='clean-cookies'
-    ),
+    # Overrides allauth endpoints
+    path('login/', views.SignupView.as_view(), name='account_login'),
+    path('close/', TemplateView.as_view(template_name='users/close.html')),
+    path('redirect/', views.UserRedirectView.as_view(), name='redirect'),
+    path('update/', views.UserUpdateView.as_view(), name='update'),
+    path('key/', views.get_api_key, name='api-key'),
+    path('reset/', views.clean_cookies, name='clean-cookies'),
 ]
-
-urlpatterns.extend(router.urls)

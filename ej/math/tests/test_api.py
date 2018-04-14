@@ -14,7 +14,7 @@ class TestJobAPI:
     def update_url(self, job):
         return reverse(
             "{namespace}:{name}".format(
-                namespace='math',
+                namespace='v1',
                 name='job-detail'),
             args=(job.id,)
         )
@@ -22,7 +22,7 @@ class TestJobAPI:
     def delete_url(self, job):
         return reverse(
             "{namespace}:{name}".format(
-                namespace='math',
+                namespace='v1',
                 name='job-detail'),
             args=(job.id,)
         )
@@ -30,7 +30,7 @@ class TestJobAPI:
     def create_read_url(self):
         return reverse(
             "{namespace}:{name}".format(
-                namespace='math',
+                namespace='v1',
                 name='job-list'
             )
         )
