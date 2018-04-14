@@ -10,7 +10,6 @@ from rest_framework.documentation import include_docs_urls
 from ej.users.views import FacebookLogin, TwitterLogin
 from config import views
 
-print('hello urls!')
 
 urlpatterns = [
     url(r'^$', views.index_view, name='home'),
@@ -26,10 +25,9 @@ urlpatterns = [
     url(r'^api/auth/facebook/$', FacebookLogin.as_view(), name='fb_login'),
     url(r'^api/auth/twitter/$', TwitterLogin.as_view(), name='tw_login'),
     url(r'^rest-auth/', include('rest_auth.urls')),
-    # TODO: Remove this redirect after october 2017
     url(r'^rest-auth/registration/account-confirm-email/(?P<key>[-:\w]+)/$', RedirectView.as_view(pattern_name='account_confirm_email'), name='account-confirm-email-redirect'),
     url(r'^rest-auth/registration/', include('rest_auth.registration.urls')),
-    url(r'^accounts/', include('allauth.urls')),
+    url(r'^account/', include('allauth.urls')),
     url(r'^activity/', include('actstream.urls')),
     url(r'^api/', include('courier.urls', namespace='courier')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

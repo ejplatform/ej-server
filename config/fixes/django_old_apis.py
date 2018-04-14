@@ -1,10 +1,11 @@
 #
 # This fix inject old Django APIs on new Django.
 #
-import sys
 import logging
+import sys
 
 log = logging.getLogger('ej-fixes')
+
 
 def fix():
     """
@@ -13,6 +14,7 @@ def fix():
 
     from django import urls
     from django.utils import functional
+    from django.db.models import QuerySet
 
     # Used by Django Activity Stream and Django Autoslug
     sys.modules['django.core.urlresolvers'] = urls
@@ -23,3 +25,7 @@ def fix():
     functional.allow_lazy = functional.keep_lazy
     log.info('django-crispy-forms requires monkey patching to work on Django 2.0')
 
+    # Old queryset API accepts klass as an argument for _clone()
+    # Used by Django Activity Stream
+    clone = QuerySet._clone
+    QuerySet._clone = (lambda self, klass=None: clone(self))
