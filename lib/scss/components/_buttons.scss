@@ -7,7 +7,7 @@ $button-ghost-border-width: 2px;
 button,
 .Button {
     display: inline-block;
-    padding: $space-padding $space-padding;
+    padding: $spacing-padding $spacing-padding;
     vertical-align: middle;
     text-align: center;
     font: inherit;
@@ -50,17 +50,17 @@ button,
 
 // Size variants
 [small] {
-    padding: $space-padding;
+    padding: $spacing-padding;
 }
 
 [large] {
-    padding: $space-padding;
+    padding: $spacing-padding;
 }
 
 // Ghost buttons (see-through backgrounds and are bordered)
 [ghost] {
     border: $button-ghost-border-width solid currentColor;
-    padding: ($space-padding - $button-ghost-border-width) ($space-padding - $button-ghost-border-width);
+    padding: ($spacing-padding - $button-ghost-border-width) ($spacing-padding - $button-ghost-border-width);
     &,
     &:hover,
     &:active,
