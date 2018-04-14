@@ -1,28 +1,16 @@
-# Pro-tip: Try not to put anything here. Avoid dependencies in
-#	production that aren't in development.
 -r base.txt
 
 # WSGI Handler
-# ------------------------------------------------
 gevent==1.2.2
 gunicorn==19.7.1
 
 # Static and Media Storage
-# ------------------------------------------------
 boto3==1.4.7
 django-storages==1.6.5
 Collectfast==0.5.2
 
 # Email backends for Mailgun, Postmark, SendGrid and more
-# -------------------------------------------------------
 django-anymail==0.11.1
 
-# Raven is the Sentry client
-# --------------------------
+# Raven (Sentry client)
 raven==6.5.0
-
-# django-courier
-git+https://gitlab.com/empurrandojuntos/django-courier.git
-
-# ej math module
-pushtogether-math

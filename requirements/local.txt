@@ -1,28 +1,13 @@
 # Local development dependencies go here
--r base.txt
+-r test.txt
 --extra-index-url https://test.pypi.org/simple
 
--e ext-apps/django-courier
+# Improved REPL
+ipdb
+IPython
 
-coverage==4.4.1
-django-coverage-plugin==1.5.0
-
-Sphinx==1.6.3
-django-extensions==1.9.0
-Werkzeug==0.12.2
-django-test-plus==1.0.18
-factory-boy==2.9.2
-
+# Tools
 django-debug-toolbar==1.8
+Sphinx==1.6.3
+Werkzeug==0.12.2
 
-# improved REPL
-ipdb==0.10.3
-
-# pytest
-pytest-django==3.1.2
-pytest-cov==2.5.1
-# temporarily disabled
-# pytest-sugar==0.9.0
-
-# ej math module
-pushtogether-math
