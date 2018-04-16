@@ -30,7 +30,7 @@ class Job(models.Model):
     )
 
     conversation = models.ForeignKey(
-        'conversations.Conversation',
+        'ej_conversations.Conversation',
         related_name="math_jobs",
         on_delete=models.CASCADE,
     )

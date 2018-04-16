@@ -10,34 +10,29 @@ https://docs.djangoproject.com/en/dev/ref/settings/
 import pathlib
 
 from config.settings.core import env, DEBUG
-
 # Imports
 from .conf import db
-from .celery import *
 
 DATABASES = db.DATABASES
 USE_SQLITE = db.USE_SQLITE
-
 
 ROOT_DIR = pathlib.Path(__file__).parent.parent.parent
 APPS_DIR = ROOT_DIR / 'ej'
 
 # APP CONFIGURATION
-# ------------------------------------------------------------------------------
 INSTALLED_APPS = [
-    # Default Django apps + admin
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.sites',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
+    # Inner EJ apps
+    'ej.users.apps.UsersConfig',
+    'ej.gamification.apps.GamificationConfig',
+    'ej.math.apps.MathConfig',
 
-    # Useful template tags:
-    # 'django.contrib.humanize',
+    # External EJ Apps
+    'ej_conversations.apps.EjConversationsConfig',
 
-    # Admin
-    'django.contrib.admin',
+    # External apps created by the EJ team
+    'courier',
+    'courier.pushnotifications',
+    'courier.pushnotifications.providers.onesignal',
 
     # Third party apps
     'crispy_forms',
@@ -56,17 +51,18 @@ INSTALLED_APPS = [
     'actstream',
     'pinax.points',
     'pinax.badges',
-    'courier',
-    'courier.pushnotifications',
-    'courier.pushnotifications.providers.onesignal',
 
-    # Custom EJ apps
-    'ej.users.apps.UsersConfig',
-    'ej.conversations.apps.ConversationsConfig',
-    'ej.gamification.apps.GamificationConfig',
-    'ej.math.apps.MathConfig',
+    # Default Django apps + admin
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.sites',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
 ]
 
+# ------------------------------------------------------------------------------
 # MIDDLEWARE CONFIGURATION
 # ------------------------------------------------------------------------------
 MIDDLEWARE = [
@@ -261,7 +257,8 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 20,
-    'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.NamespaceVersioning',
+    # 'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.URLPathVersioning',
+    'DEFAULT_VERSION': 'v1',
 }
 
 REST_AUTH_REGISTER_SERIALIZERS = {
@@ -312,7 +309,6 @@ LOGIN_URL = 'account_login'
 
 # SLUGLIFIER
 AUTOSLUG_SLUGIFY_FUNCTION = 'slugify.slugify'
-
 
 # Location of root django.contrib.admin URL, use {% url 'admin:index' %}
 ADMIN_URL = 'admin/'

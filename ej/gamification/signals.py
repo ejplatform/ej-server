@@ -6,7 +6,7 @@ from django.utils.translation import ugettext as _
 from pinax.badges.registry import badges
 from pinax.points.models import award_points
 
-from ej.conversations.models import Comment, Conversation, Vote
+from ej_conversations.models import Comment, Conversation, Vote
 from ej.users.models import User
 
 
@@ -16,8 +16,8 @@ def actions_when_comment_saved(instance):
                 description=_('Created Comment'),
                 action_object=instance,
                 target=instance.conversation,
-                timestamp=instance.created_at)
-    if instance.approval == Comment.APPROVED:
+                timestamp=instance.created)
+    if instance.approval == Comment.STATUS.APPROVED:
         award_points(instance.author, 'comment_approved',
                      reason="Comment Approved", source=instance)
         action.send(instance.author,
@@ -37,7 +37,7 @@ def actions_when_vote_created(instance):
                     description=_('Agreed With'),
                     action_object=instance,
                     target=instance.comment,
-                    timestamp=instance.created_at)
+                    timestamp=instance.created)
 
     if instance.value == Vote.PASS:
         action.send(instance.author,
@@ -45,7 +45,7 @@ def actions_when_vote_created(instance):
                     description=_('Passed On'),
                     action_object=instance,
                     target=instance.comment,
-                    timestamp=instance.created_at)
+                    timestamp=instance.created)
 
     if instance.value == Vote.DISAGREE:
         action.send(instance.author,
@@ -53,13 +53,13 @@ def actions_when_vote_created(instance):
                     description=_('Disagreed With'),
                     action_object=instance,
                     target=instance.comment,
-                    timestamp=instance.created_at)
+                    timestamp=instance.created)
 
     # Let's find out whether vote is in a new conversation
     conversations = (
         Conversation.objects
             .filter(comments__votes__author=instance.author,
-                    comments__votes__created_at__lte=instance.created_at)
+                    comments__votes__created__lte=instance.created)
             .distinct()
             .annotate(number_of_votes=Count('comments__votes'))
     )
@@ -84,7 +84,7 @@ def actions_when_conversation_created(instance):
                 verb='created conversation',
                 description=_('Created Conversation'),
                 action_object=instance,
-                timestamp=instance.created_at)
+                timestamp=instance.created)
 
 
 def actions_when_user_created(instance):
@@ -108,30 +108,30 @@ def actions_when_user_profile_filled(instance):
     award_points(instance, 'user_profile_filled')
 
 
-@receiver(post_save, sender=Comment)
-def helper_comment_function(sender, instance, created, **kwargs):
-    actions_when_comment_saved(instance)
-
-
-@receiver(post_save, sender=Vote)
-def vote_cast(sender, instance, created, **kwargs):
-    if created:
-        actions_when_vote_created(instance)
-
-
-@receiver(post_save, sender=Conversation)
-def conversation_saved(sender, instance, created, **kwargs):
-    if created:
-        actions_when_conversation_created(instance)
-
-
-@receiver(post_save, sender=User)
-def user_created(sender, instance, created, **kwargs):
-    if created:
-        actions_when_user_created(instance)
-
-
-@receiver(post_save, sender=User)
-def user_profile_filled(sender, instance, created, **kwargs):
-    if instance.profile_filled:
-        actions_when_user_profile_filled(instance)
+# @receiver(post_save, sender=Comment)
+# def helper_comment_function(sender, instance, created, **kwargs):
+#     actions_when_comment_saved(instance)
+#
+#
+# @receiver(post_save, sender=Vote)
+# def vote_cast(sender, instance, created, **kwargs):
+#     if created:
+#         actions_when_vote_created(instance)
+#
+#
+# @receiver(post_save, sender=Conversation)
+# def conversation_saved(sender, instance, created, **kwargs):
+#     if created:
+#         actions_when_conversation_created(instance)
+#
+#
+# @receiver(post_save, sender=User)
+# def user_created(sender, instance, created, **kwargs):
+#     if created:
+#         actions_when_user_created(instance)
+#
+#
+# @receiver(post_save, sender=User)
+# def user_profile_filled(sender, instance, created, **kwargs):
+#     if instance.profile_filled:
+#         actions_when_user_profile_filled(instance)

@@ -63,3 +63,4 @@ flower ~= 0.9.2
 # Other EJ apps and packages
 pushtogether-math
 git+https://github.com/ejplatform/django-courier.git
+git+https://github.com/ejplatform/ej-conversations.git

@@ -14,7 +14,7 @@ urlpatterns = [
     path(settings.ADMIN_URL, admin.site.urls),
 
     # REST API
-    path('api/v1/', include((router_v1.urls, 'users'), namespace='v1')),
+    path('api/v1/', include(router_v1.urls)),
     path('api/docs/', include_docs_urls(title='ej API Docs', public=False)),
 
     # User management
