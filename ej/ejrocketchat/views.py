@@ -1,8 +1,9 @@
-from django.conf import settings
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect
 from django.views.decorators.clickjacking import xframe_options_exempt
 from django.views.decorators.csrf import csrf_exempt
+
+from constance import config
 
 from .decorators import allow_credentials
 from . import helpers
@@ -27,4 +28,4 @@ def check_login(request):
 
 
 def rc_redirect(request):
-    return redirect(settings.ROCKETCHAT_URL)
+    return redirect(config.ROCKETCHAT_URL)

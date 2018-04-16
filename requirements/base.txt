@@ -10,6 +10,9 @@ django~=1.11
 # Configuration
 django-environ==0.4.4
 
+# Dynamic django settings
+django-constance[database]==2.2.0
+
 # Forms
 django-crispy-forms==1.6.1
 
