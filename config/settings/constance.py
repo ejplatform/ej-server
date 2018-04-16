@@ -15,11 +15,11 @@ CONSTANCE_CONFIG = {
 
     'ROCKETCHAT_AUTH_TOKEN': (
         env('ROCKETCHAT_AUTH_TOKEN',
-            default='yItGp9o3XbkUwBHPo80R-3tCXnZhHaUZnKK3Ix6XoD9'),
+            default=''),
         'RocketChat admin user token', str),
 
     'ROCKETCHAT_USER_ID': (
-        env('ROCKETCHAT_USER_ID', default='62bfHvpYqLoa7we7B'),
+        env('ROCKETCHAT_USER_ID', default=''),
         'RocketChat admin user id', str)
 }
 
