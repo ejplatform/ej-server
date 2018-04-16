@@ -115,5 +115,5 @@ class TestFixSocialLoginSerializer(TestCase):
         view = Object()
         view.adapter_class = lambda x: x
 
-        adapter = serializer.get_adapter(request, self.view)
+        adapter = serializer.get_adapter(request, view)
         assert adapter == request

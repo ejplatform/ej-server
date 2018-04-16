@@ -4,6 +4,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.views import defaults as default_views
 from django.views.generic import TemplateView
+from rest_framework.documentation import include_docs_urls
 
 from .api import router_v1
 
@@ -14,15 +15,10 @@ urlpatterns = [
     url(settings.ADMIN_URL, admin.site.urls),
 
     # Api urls
-    url(r'^api/v1/', include(router_v1.urls)),
+    url(r'^api/v1/', include(router_v1.urls,  namespace='v1')),
 
-    # url(r'^api/docs/', include_docs_urls(title='ej API Docs', public=False)),
-    # url(r'^api/v1/profile/', include('ej.users.urls', namespace='v1')),
-    # url(r'^api/v1/gamification/', include('ej.gamification.urls', namespace='v1')),
-    # url(r'^api/v1/', include('ej.conversations.urls', namespace='v1')),
-    # url(r'^api/v1/math/', include('ej.math.urls', namespace='v1')),
-    # url(r'^api/v1/auth/facebook/$', FacebookLogin.as_view(), name='fb_login'),
-    # url(r'^api/v1/auth/twitter/$', TwitterLogin.as_view(), name='tw_login'),
+    url(r'^api/docs/', include_docs_urls(title='ej API Docs', public=False)),
+    
     url(r'^rest-auth/', include('rest_auth.urls')),
     url(r'^rest-auth/registration/', include('rest_auth.registration.urls')),
 

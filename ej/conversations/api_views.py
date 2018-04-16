@@ -80,7 +80,7 @@ class CommentViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
             user = self.request.user
-            conversation = Conversation.objects.get(pk=request.data['conversation'])
+            conversation = Conversation.objects.get(pk=request.data['conversation_id'])  
             response_args = self.process_the_request(user, conversation, serializer)
             return Response(**response_args)
         else:

@@ -13,4 +13,3 @@ urlpatterns = [
     url(r'^key/$', views.get_api_key, name='api-key'),
     url(r'^reset/$', views.clean_cookies, name='clean-cookies'),
 ]
-
