@@ -6,4 +6,4 @@ from .serializers import JobSerializer
 
 class JobViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = JobSerializer
-    queryset = Job.objects.all()
+    queryset = Job.objects.order_by('id')

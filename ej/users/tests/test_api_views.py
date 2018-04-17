@@ -8,15 +8,15 @@ from ..models import User
 class TestUserViewSet(TestCase):
     def fake_function(self):
         user = User()
-        user.name = "usuarioBuscado"
-        user.email = "usuarioBuscado@arroba.com"
+        user.name = "storedUser"
+        user.email = "storedUser@email.com"
         return user
 
     @patch.object(UserViewSet, 'get_object', fake_function)
     def test_retrieve(self):
         user = User()
-        user.name = "usuarioLogado"
-        user.email = "usuarioLogado@arroba.com"
+        user.name = "loggedUser"
+        user.email = "loggedUser@email.com"
 
         factory = RequestFactory()
         request = factory.get('/fake-url')
@@ -26,9 +26,10 @@ class TestUserViewSet(TestCase):
         viewSet.request = request
         viewSet.format_kwarg = "mock"
 
-        # Busca de usuário
+        # User Search criteria
         response = viewSet.retrieve(request)
-        assert response.data['name'] == "usuarioBuscado"
+        assert response.data['name'] == "storedUser"
+        # required fields
         assert 'email' in response.data
         assert 'biography' in response.data
         assert 'city' in response.data
@@ -45,9 +46,10 @@ class TestUserViewSet(TestCase):
         assert 'is_superuser' in response.data
         assert 'id' in response.data
         assert len(response.data) == 17
-        # Busca do usuário Logado
+
+        # Search for the logged user
         response = viewSet.retrieve(request,pk='me')
-        assert response.data['name'] == "usuarioLogado"
+        assert response.data['name'] == "loggedUser"
 
 
 
