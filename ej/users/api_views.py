@@ -45,4 +45,6 @@ class UserViewSet(ModelViewSet):
             self.permission_classes = [permissions.IsAdminUser, ]
         elif self.action == 'retrieve':
             self.permission_classes = [IsCurrentUserOrAdmin]
+        else:
+            raise ValueError("Viewset action is not set")
         return super(self.__class__, self).get_permissions()
