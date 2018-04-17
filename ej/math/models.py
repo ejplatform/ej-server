@@ -20,13 +20,13 @@ class Job(models.Model):
     STARTED = 'STARTED'
     FINISHED = 'FINISHED'
     FAILED = 'FAILED'
-    STUCKED = 'STUCKED'
+    STUCK = 'STUCK'
     STATUS_CHOICES = (
         (PENDING, _('PENDING')),
         (STARTED, _('STARTED')),
         (FINISHED, _('FINISHED')),
         (FAILED, _('FAILED')),
-        (STUCKED, _('STUCKED')),
+        (STUCK, _('STUCK')),
     )
 
     conversation = models.ForeignKey(

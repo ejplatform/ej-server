@@ -3,7 +3,7 @@ from rest_framework import permissions
 
 class IsCurrentUserOrAdmin(permissions.BasePermission):
 
-    def has_object_permission(self, request, view, obj):
+    def has_object_permission(self, request, obj):
         if request.user:
             if request.user.is_superuser:
                 return True

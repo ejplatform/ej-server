@@ -9,28 +9,28 @@ from ..math.serializers import JobSerializer
 User = get_user_model()
 
 
-class AuthorSerializer(serializers.ModelSerializer):
+class AuthorSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'name', 'image_url', 'is_superuser',)
+        fields = ('id', 'url', 'username', 'name', 'image_url', 'is_superuser',)
 
 
-class VoteSerializer(serializers.ModelSerializer):
+class VoteSerializer(serializers.HyperlinkedModelSerializer):
     author = AuthorSerializer(read_only=True)
 
     class Meta:
         model = Vote
-        fields = ('id', 'author', 'comment', 'value')
+        fields = ('id', 'url', 'author', 'comment', 'value')
 
 
-class SimpleConversationReportSerializer(serializers.ModelSerializer):
+class SimpleConversationReportSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Conversation
-        fields = ('id', 'title', 'description', 'total_votes', 'created_at',)
+        fields = ('id', 'url', 'title', 'description', 'total_votes', 'created_at',)
 
 
-class SimpleCommentReportSerializer(serializers.ModelSerializer):
+class SimpleCommentReportSerializer(serializers.HyperlinkedModelSerializer):
     author = AuthorSerializer(read_only=True)
     agreement_consensus = serializers.SerializerMethodField()
     disagreement_consensus = serializers.SerializerMethodField()
@@ -39,7 +39,7 @@ class SimpleCommentReportSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = (
-            'id', 'author', 'content', 'created_at', 'total_votes',
+            'id', 'url', 'author', 'content', 'created_at', 'total_votes',
             'agree_votes', 'disagree_votes', 'pass_votes', 'approval',
             'agreement_consensus', 'disagreement_consensus', 'uncertainty',
             'rejection_reason',
@@ -70,37 +70,37 @@ class CommentReportSerializer(SimpleCommentReportSerializer):
     class Meta:
         model = Comment
         fields = (
-            'id', 'author', 'content', 'created_at', 'total_votes',
+            'id', 'url', 'author', 'content', 'created_at', 'total_votes',
             'agree_votes', 'disagree_votes', 'pass_votes', 'approval',
             'agreement_consensus', 'disagreement_consensus', 'uncertainty',
             'conversation', 'rejection_reason',
         )
 
 
-class CommentSerializer(serializers.ModelSerializer):
+class CommentSerializer(serializers.HyperlinkedModelSerializer):
     author = AuthorSerializer(read_only=True)
 
     class Meta:
         model = Comment
-        fields = ('id', 'conversation', 'content', 'author',
+        fields = ('id', 'url', 'conversation', 'content', 'author',
                   'approval', 'votes', 'created_at', 'rejection_reason')
         read_only_fields = ('id', 'author', 'votes')
 
 
-class CommentApprovalSerializer(serializers.ModelSerializer):
+class CommentApprovalSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Comment
-        fields = ('id', 'approval', 'rejection_reason')
+        fields = ('id', 'url', 'approval', 'rejection_reason')
 
 
-class ConversationReportSerializer(serializers.ModelSerializer):
+class ConversationReportSerializer(serializers.HyperlinkedModelSerializer):
     author = AuthorSerializer(read_only=True)
     comments = SimpleCommentReportSerializer(read_only=True, many=True)
 
     class Meta:
         model = Conversation
-        fields = ('id', 'author', 'total_votes', 'agree_votes', 'pass_votes',
+        fields = ('id', 'url', 'author', 'total_votes', 'agree_votes', 'pass_votes',
                   'disagree_votes', 'pass_votes', 'total_comments',
                   'approved_comments', 'rejected_comments',
                   'unmoderated_comments', 'total_participants', 'comments')
@@ -114,7 +114,7 @@ class ConversationJobSerializer(serializers.ModelSerializer):
         fields = ('participation_clusters',)
 
 
-class ConversationSerializer(serializers.ModelSerializer):
+class ConversationSerializer(serializers.HyperlinkedModelSerializer):
     user_participation_ratio = serializers.SerializerMethodField()
     created_at = serializers.DateTimeField(format="%d-%m-%Y")
     updated_at = serializers.DateTimeField(format="%d-%m-%Y")
@@ -122,7 +122,7 @@ class ConversationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Conversation
-        fields = ('id', 'title', 'description', 'author', 'background_color',
+        fields = ('id', 'url', 'title', 'description', 'author', 'background_color',
                   'background_image', 'dialog', 'response', 'total_votes', 'slug',
                   'approved_comments', 'user_participation_ratio', 'created_at',
                   'updated_at', 'is_new', 'position', 'opinion', 'promoted',
@@ -138,7 +138,8 @@ class ConversationSerializer(serializers.ModelSerializer):
         return
 
 
-class CategorySerializer(serializers.ModelSerializer):
+class CategorySerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Category
-        fields = ('id', 'name', 'customizations', 'image', 'image_caption', 'slug', 'has_tour', 'is_login_required')
+        fields = ('id', 'url', 'name', 'customizations', 'image', 'image_caption',
+                  'slug', 'has_tour', 'is_login_required')

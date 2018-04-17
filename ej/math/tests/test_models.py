@@ -28,7 +28,7 @@ class TestClusterJob:
         cv_helpers.populate_conversation_votes(conversation, users_list, max_votes_per_user=3)
         job = helpers.create_valid_job(conversation)
 
-        assert job.status == Job.STUCKED
+        assert job.status == Job.STUCK
 
     def test_jobs_cannot_be_created_without_sufficient_comments(self, user, conversation):
         """
@@ -39,7 +39,7 @@ class TestClusterJob:
         cv_helpers.populate_conversation_votes(conversation, users_list, max_votes_per_user=1)
         job = helpers.create_valid_job(conversation)
 
-        assert job.status == Job.STUCKED
+        assert job.status == Job.STUCK
 
     def test_jobs_cannot_be_created_without_sufficient_votes(self, user, conversation):
         """
@@ -50,7 +50,7 @@ class TestClusterJob:
         cv_helpers.create_valid_vote(comments[0], users_list[0])
         job = helpers.create_valid_job(conversation)
 
-        assert job.status == Job.STUCKED
+        assert job.status == Job.STUCK
 
     def test_jobs_can_be_created_with_sufficient_users_and_comments(self, user, conversation):
         """
