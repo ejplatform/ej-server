@@ -3,7 +3,7 @@ from functools import wraps
 from celery import shared_task
 from pushtogether_math import cluster
 
-from ej.conversations.models import Conversation
+from ej_conversations.models import Conversation
 from .models import Job
 
 

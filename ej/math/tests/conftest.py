@@ -1,6 +1,6 @@
 import pytest
 
-from ej.conversations.tests.conftest import *
+# from ej_conversations.tests.conftest import *
 
 from . import helpers
 

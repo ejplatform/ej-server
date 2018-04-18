@@ -2,7 +2,11 @@
 {% from 'compontents/sidebar.jinja2' import render_sidebar %}
 {% from 'compontents/footer.jinja2' import render_footer %}
 
+{% set render_context = request.GET.render | default('all') %}
+{% set render = render | default(render_context) %}
 
+
+{% if render == 'all' %}
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -30,6 +34,7 @@
     <script src="//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.10" defer></script>
     <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.7.0/intro.min.js" defer></script>
+    <script src="/static/js/main.js" defer></script>
   {% endblock javascript %}
 
   <link rel="icon" type="image/x-icon" href="/static/favicon.ico"/>
@@ -67,34 +72,43 @@
   <meta property="fb:app_id" content="1757744567588794">
 </head>
 
-
 <body class="Page">
+{% endif %}
+
 {% block body %}
+{% if render == 'all' or render == 'page' %}
   {{ render_header() }}
 
   <div class="ContentArea">
     {{ render_sidebar() }}
     <div class="ContentArea-main">
-      {% block main %}
-        <main>
-          <div class="Page-title"><h1>{{ content_title }}</h1></div>
-          <article class="Page-content">
-            {% block content %}
-              <p>Please override the "content" block of your template!</p>
-            {% endblock %}
-          </article>
-        </main>
-      {% endblock %}
+{% endif %}
+
+{# MAIN BLOCK #}
+{% block main %}
+<main>
+  <div class="Page-title"><h1>{{ content_title }}</h1></div>
+  <article class="Page-content">
+    {% block content %}
+      <p>Please override the "content" block of your template!</p>
+    {% endblock %}
+  </article>
+</main>
+{% endblock %}
+
+{% if render == 'all' or render == 'page' %}
       {{ render_footer() }}
     </div>
   </div>
+{% endif %}
 {% endblock %}
 
+{% if render == 'all' %}
 {% block modal %}{% endblock modal %}
 
 {% block javascript_body %}
 <!-- Google Analytics -->
-<script>
+<script defer>
   (function (i, s, o, g, r, a, m) {
     i['GoogleAnalyticsObject'] = r;
     i[r] = i[r] || function () {
@@ -120,3 +134,4 @@
 </body>
 
 </html>
+{% endif %}

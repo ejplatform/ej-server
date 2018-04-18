@@ -11,11 +11,11 @@ class TestUserURLs(TestCase):
 
     def test_list_reverse(self):
         """users:user-list should reverse to /api/v1/users/."""
-        self.assertEqual(reverse('v1:user-list'), '/api/v1/users/')
+        self.assertEqual(reverse('user-list'), '/api/v1/users/')
 
     def test_list_resolve(self):
         """/api/v1/users/ should resolve to users:user-list."""
-        self.assertEqual(resolve('/api/v1/users/').view_name, 'v1:user-list')
+        self.assertEqual(resolve('/api/v1/users/').view_name, 'user-list')
 
     def test_redirect_reverse(self):
         """users:redirect should reverse to /accounts/redirect/."""
@@ -31,7 +31,7 @@ class TestUserURLs(TestCase):
     def test_detail_reverse(self):
         """users:user-detail should reverse to /api/v1/users/<pk>."""
         self.assertEqual(
-            reverse('v1:user-detail', kwargs={'pk': self.user.id}),
+            reverse('user-detail', kwargs={'pk': self.user.id}),
             '/api/v1/users/{}/'.format(self.user.id)
         )
 
@@ -39,7 +39,7 @@ class TestUserURLs(TestCase):
         """/api/v1/users/<pk> should resolve to users:user-detail."""
         self.assertEqual(
             resolve('/api/v1/users/{}/'.format(self.user.id)).view_name,
-            'v1:user-detail'
+            'user-detail'
         )
 
     def test_update_reverse(self):

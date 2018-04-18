@@ -1,7 +1,7 @@
 import pytest
 import time
 
-from ej.conversations.tests import helpers as cv_helpers
+from ej_conversations.mommy_recipes import *
 from ej.math.models import Job
 from . import helpers
 
@@ -9,6 +9,7 @@ from . import helpers
 pytestmark = pytest.mark.django_db
 
 
+@pytest.mark.skip('adjusting dependencies with ej_conversations')
 class TestClusterJob:
 
     def test_create_valid_cluster_job(self, conversation):

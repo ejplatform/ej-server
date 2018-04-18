@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 from django.contrib.auth import get_user_model
-from ej.conversations.models import Comment, Conversation, Vote
+from ej_conversations.models import Comment, Conversation, Vote
 from django.contrib.contenttypes.fields import ContentType
 from actstream.models import Action
 from ej.gamification.signals import actions_when_vote_created, \
