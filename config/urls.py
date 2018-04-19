@@ -14,6 +14,10 @@ unregister_admin.unregister_apps()
 
 urlpatterns = [
     path('', views.index_view, name='home'),
+
+    # Admin
+    # path('jet/', include('jet.urls', 'jet')),
+    # path('jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),
     path(settings.ADMIN_URL, admin.site.urls),
 
     # REST API

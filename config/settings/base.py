@@ -52,7 +52,12 @@ INSTALLED_APPS = [
     'pinax.points',
     'pinax.badges',
 
-    # Default Django apps + admin
+    # Alternative admin apps
+    # 'jet.dashboard',
+    # 'jet',
+    # 'suit',
+
+    # Default Django apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -73,8 +78,7 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    # XFrameOptions disabled needed to login iframe
-    # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
 # MIGRATIONS CONFIGURATION
