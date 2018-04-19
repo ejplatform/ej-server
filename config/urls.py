@@ -1,19 +1,20 @@
-from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib import admin
 from django.urls import include, path
 from django.views import defaults as default_views
 from rest_framework.documentation import include_docs_urls
 
 from ej.users.views import FacebookLogin, TwitterLogin
-from . import views
 from .api import router_v1
 from .fixes import unregister_admin
+from .views import get_patterns
 
 unregister_admin.unregister_apps()
 
 urlpatterns = [
-    path('', views.index_view, name='home'),
+    # Main patterns for the site
+    *get_patterns(),
 
     # Admin
     # path('jet/', include('jet.urls', 'jet')),
@@ -37,7 +38,10 @@ urlpatterns = [
     path('api/', include('courier.urls', namespace='courier')),
 
     # Static files for the dev server
-    *static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    *static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),
+
+    # Flat pages
+    path('', include('django.contrib.flatpages.urls')),
 ]
 
 if settings.DEBUG:

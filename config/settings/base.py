@@ -10,7 +10,6 @@ https://docs.djangoproject.com/en/dev/ref/settings/
 import pathlib
 
 from config.settings.core import env, DEBUG
-# Imports
 from .conf import db
 
 DATABASES = db.DATABASES
@@ -58,6 +57,8 @@ INSTALLED_APPS = [
     # 'suit',
 
     # Default Django apps
+    'django.contrib.flatpages',
+    'django.contrib.sitemaps',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
