@@ -58,7 +58,6 @@ INSTALLED_APPS = [
 
     # Default Django apps
     'django.contrib.flatpages',
-    'django.contrib.sitemaps',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

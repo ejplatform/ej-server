@@ -1,2 +1,10 @@
 {% extends 'base.jinja2' %}
+{% from 'compontents/home.jinja2' import home_banner, how_it_works, start_now %}
+{% from 'compontents/conversations.jinja2' import conversation_list_page %}
 
+{% block main %}
+    {{ home_banner() }}
+    {{ how_it_works() }}
+    {{ conversation_list_page() }}
+    {{ start_now() }}
+{% endblock %}

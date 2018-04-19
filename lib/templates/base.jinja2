@@ -1,6 +1,6 @@
-{% from 'compontents/header.jinja2' import render_header %}
-{% from 'compontents/sidebar.jinja2' import render_sidebar %}
-{% from 'compontents/footer.jinja2' import render_footer %}
+{% from 'compontents/page_header.jinja2' import page_header %}
+{% from 'compontents/page_sidebar.jinja2' import sidebar %}
+{% from 'compontents/page_footer.jinja2' import page_footer %}
 
 {% set render_context = request.GET.render | default('all') %}
 {% set render = render | default(render_context) %}
@@ -77,10 +77,10 @@
 
 {% block body %}
 {% if render == 'all' or render == 'page' %}
-  {{ render_header() }}
+  {{ page_header() }}
 
   <div class="ContentArea">
-    {{ render_sidebar() }}
+    {{ sidebar() }}
     <div class="ContentArea-main">
 {% endif %}
 
@@ -97,7 +97,7 @@
 {% endblock %}
 
 {% if render == 'all' or render == 'page' %}
-      {{ render_footer() }}
+      {{ page_footer() }}
     </div>
   </div>
 {% endif %}
