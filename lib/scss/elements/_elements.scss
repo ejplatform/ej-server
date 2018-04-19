@@ -1,0 +1,49 @@
+/*
+ GENERIC ELEMENTS
+ =====================================================================*/
+
+// Structural page elements
+html {
+    overflow: hidden;
+    min-height: 100%;
+    line-height: $line-height / $font-size;
+}
+
+body {
+    box-sizing: border-box;
+    width: 100vw;
+    font-size: $font-size; // Link elements
+    font-family: $font-paragraph;
+}
+
+main {
+    box-sizing: border-box;
+    padding: 0;
+    width: 100%;
+}
+
+// Links
+a {
+    line-height: 1.2;
+    text-decoration: none;
+    text-decoration-style: solid;
+    &:hover {
+    }
+}
+
+// Quotes
+code, pre, blockquote {
+    background-color: $color-content-hint;
+}
+
+// Tables fills up as much space as possible
+table {
+    width: 100%;
+}
+
+// Fluid images
+img {
+    max-width: 100%;
+    font-style: italic;
+    vertical-align: middle;
+}
