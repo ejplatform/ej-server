@@ -1,6 +1,6 @@
+from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
-from django.contrib import admin
 from django.urls import include, path
 from django.views import defaults as default_views
 from rest_framework.documentation import include_docs_urls
@@ -8,6 +8,9 @@ from rest_framework.documentation import include_docs_urls
 from ej.users.views import FacebookLogin, TwitterLogin
 from . import views
 from .api import router_v1
+from .fixes import unregister_admin
+
+unregister_admin.unregister_apps()
 
 urlpatterns = [
     path('', views.index_view, name='home'),
