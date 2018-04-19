@@ -1,0 +1,56 @@
+{% macro conversation_list_page() %}
+    <div class="ConversationListTitle">
+        <h1>{{ title|default(_('Conversas ativas agora')) }}</h1>
+        <h2>{{ subtitle|default(_('Veja as conversas abaixo e dê sua opinião')) }}</h2>
+    </div>
+
+    {# Cards #}
+    <div class="ConversationCardList">
+        {{ conversation_card() }}
+        {{ conversation_card() }}
+    </div>
+    {{ conversation_pagination() }}
+{% endmacro %}
+
+
+{% macro conversation_card() %}
+    <div class="ConversationCard">
+        <div class="ConversationCard-cover">
+            <h1>
+                <a href="/conversations/liberdade-de-expressao" alt="alt">
+                    Em uma democracia para todas e todos, quais os limites da liberdade de expressão?
+                </a>
+            </h1>
+            <dl>
+                <dt>Assunto</dt>
+                <dd>Opinião</dd>
+            </dl>
+        </div>
+        <div class="ConversationCard-actions">
+            <ul class="ConversationCard-statistics">
+                <li>41 comentários</li>
+                <li>713 votos</li>
+            </ul>
+            <button class="ConversationCard-actionButton">Participe agora!</button>
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro conversation_pagination() %}
+    <div class="ConversationPagination">
+        <div class="ConversationPagination-pager">
+            <a href="prev">&lt;</a> ... <a href="prev">&gt;</a>
+        </div>
+        <button class="ConversationPagination-button">Veja mais conversas</button>
+    </div>
+{% endmacro %}
+
+{% macro conversation_breadcrumbs(conversation) %}
+    <ul class="ConversationBreadcrumbs">
+        <li><a href="/">Empurrando Juntes</a></li>
+        <li><a href="/conversations">Conversas</a></li>
+        <li><a href="/conversations/{{ category_slug }}/">{{ conversation.category.title|default(_('Uncategorized')) }}</a></li>
+    </ul>
+{% endmacro %}
+
+

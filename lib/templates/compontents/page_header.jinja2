@@ -1,0 +1,46 @@
+{% set up_transition=up_transition|default('cross-fade') %}
+
+
+{# Generate the header element #}
+{% macro page_header() %}
+  <header class="Header">
+    <div class="Header-logoBar">
+      <a href="/conversations" class="Header-backButton">
+        <i class="material-icons">arrow_back</i>
+      </a>
+      <a href="/conversations" class="Header-logo">
+        <img src="/static/img/logo.svg">
+      </a>
+      <a href="javascript:$('.Sidebar').addClass('is-visible')" class="Header-menuButton">
+        <i class="material-icons">menu</i>
+      </a>
+    </div>
+
+    <ul class="Header-linkBar">
+      <li>
+        <a href="/conversations/" id="conversations-link" up-target=".ContentArea-main" up-transition="{{ up_transition }}">
+          <i class="material-icons">forum</i>
+          <span>Conversas</span>
+        </a>
+      </li>
+      <li>
+        <a href="/profile/" id="profile-link" up-target=".ContentArea-main" up-transition="{{ up_transition }}">
+          <i class="material-icons">person</i>
+          <span>Perfil</span>
+        </a>
+      </li>
+      <li class="Header-notifications">
+        <a href="/notifications/" id="notifications-link" up-target=".ContentArea-main" up-transition="{{ up_transition }}">
+          <i class="material-icons">notifications_active</i>
+          <span>Notificações</span>
+        </a>
+      </li>
+      <li>
+        <a href="/comments/" id="comments-link" up-target=".ContentArea-main" up-transition="{{ up_transition }}">
+          <i class="material-icons">textsms</i>
+          <span>Comentários</span>
+        </a>
+      </li>
+    </ul>
+  </header>
+{% endmacro %}
