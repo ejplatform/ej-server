@@ -1,41 +1,43 @@
 {% extends 'base.jinja2' %}
-{% set content_title = 'Conversas' %}
+{% from 'compontents/conversations.jinja2' import conversation_breadcrumbs %}
 
-{% block content %}
-  <div class="ConversationDetail">
-    <h2>{{ conversation.title }}</h2>
-    {% if comment %}
-      <div class="ConversationComment">
-        <div>{{ comment.author }}</div>
-        <p>Ajude a construir o Brasil que o povo quer!</p>
-        <form method="post">
-          {{ csrf_input }}
-          <input type="hidden" name="vote" value="true">
-          <ul class="ConversationComment-actions">
-            <li><input type="submit" value="Concordo" name="agree"></li>
-            <li><input type="submit" value="Passo" name="pass"></li>
-            <li><input type="submit" value="Discordo" name="disagree"></li>
-          </ul>
-        </form>
-      </div>
-    {% else %}
-      <p>No comments were found</p>
-    {% endif %}
+{% block main %}
+    {{ conversation_breadcrumbs(conversation) }}
 
-    <div class="CommentForm">
-      <h1>Submeta a sua opinião</h1>
-      <form method="post">
-        {{ csrf_input }}
-        <input type="hidden" name="comment" value="true">
-        <textarea name="text"></textarea>
-        <input type="submit" name="submit" value="Enviar comentário">
-      </form>
+    <div class="ConversationDetail">
+        <h2>{{ conversation.title }}</h2>
+        {% if comment %}
+            <div class="ConversationComment">
+                <div>{{ comment.author }}</div>
+                <p>Ajude a construir o Brasil que o povo quer!</p>
+                <form method="post">
+                    {{ csrf_input }}
+                    <input type="hidden" name="vote" value="true">
+                    <ul class="ConversationComment-actions">
+                        <li><input type="submit" value="Concordo" name="agree"></li>
+                        <li><input type="submit" value="Passo" name="pass"></li>
+                        <li><input type="submit" value="Discordo" name="disagree"></li>
+                    </ul>
+                </form>
+            </div>
+        {% else %}
+            <p>No comments were found</p>
+        {% endif %}
+
+        <div class="CommentForm">
+            <h1>Submeta a sua opinião</h1>
+            <form method="post">
+                {{ csrf_input }}
+                <input type="hidden" name="comment" value="true">
+                <textarea name="text"></textarea>
+                <input type="submit" name="submit" value="Enviar comentário">
+            </form>
+        </div>
+
+        <article class="ConversationOpinion">
+            <h1>...</h1>
+            <h2>Nossa opinião</h2>
+            <p>{{ conversation.opinion }}</p>
+        </article>
     </div>
-
-    <article class="ConversationOpinion">
-      <h1>...</h1>
-      <h2>Nossa opinião</h2>
-      <p>{{ conversation.opinion }}</p>
-    </article>
-  </div>
 {% endblock %}

@@ -20,7 +20,7 @@ def login(request):
 @route('conversations/<slug:slug>/')
 def conversation_detail(request, slug):
     conversation = get_object_or_404(Conversation, slug=slug)
-    comment = conversation.get_random_unvoted_comment(request.user, None)
+    comment = conversation.get_next_comment(request.user, None)
     ctx = {
         'conversation': conversation,
         'comment': comment,
