@@ -2,12 +2,13 @@ from invoke import task
 
 
 @task
-def sass(ctx, no_watch=False):
+def sass(ctx, no_watch=False, trace=False):
     """
     Run Sass compiler
     """
-    watch = '' if no_watch else ' --watch'
-    ctx.run('sass lib/scss/main.scss:lib/assets/css/main.css' + watch, pty=True)
+    suffix = '' if no_watch else ' --watch'
+    suffix += ' --trace' if trace else ''
+    ctx.run('sass lib/scss/main.scss:lib/assets/css/main.css' + suffix, pty=True)
 
 
 @task

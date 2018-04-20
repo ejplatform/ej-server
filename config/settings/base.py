@@ -136,6 +136,19 @@ USE_TZ = True
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#templates
 TEMPLATES = [
     {
+        'BACKEND': 'django.template.backends.jinja2.Jinja2',
+        'DIRS': [
+            ROOT_DIR / 'lib/templates',
+        ],
+        'OPTIONS': {
+            'environment': 'config.jinja2.environment',
+            'extensions': [
+                'jinja2.ext.i18n',
+            ],
+            'context_processors': [],
+        },
+    },
+    {
         # See: https://docs.djangoproject.com/en/dev/ref/settings/#std:setting-TEMPLATES-BACKEND
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-dirs
@@ -164,18 +177,7 @@ TEMPLATES = [
             ],
         },
     },
-    {
-        'BACKEND': 'django.template.backends.jinja2.Jinja2',
-        'DIRS': [
-            ROOT_DIR / 'lib/templates',
-        ],
-        'OPTIONS': {
-            'environment': 'config.jinja2.environment',
-            'extensions': [
-                'jinja2.ext.i18n',
-            ]
-        },
-    },
+
 ]
 
 # See: http://django-crispy-forms.readthedocs.io/en/latest/install.html#template-packs

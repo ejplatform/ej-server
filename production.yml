@@ -28,13 +28,14 @@ services:
     volumes:
     - /path/to/media:/app/staticfiles/media
 
-  frontend:
-    image: ejplatform/ej-front:develop
-    stdin_open: true
-    volumes:
-    - /path/to/static:/usr/share/nginx/html/static
-    - /path/to/media:/usr/share/nginx/html/media
-    tty: true
+# Temporarely disable Ng frontend and serve pages from backend
+#  frontend:
+#    image: ejplatform/ej-front:develop
+#    stdin_open: true
+#    volumes:
+#    - /path/to/static:/usr/share/nginx/html/static
+#    - /path/to/media:/usr/share/nginx/html/media
+#    tty: true
 
   backend:
     image: ejplatform/ej-nginx:develop
