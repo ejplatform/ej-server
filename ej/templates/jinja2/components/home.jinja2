@@ -1,0 +1,74 @@
+{% from 'components/elements.jinja2' import rocket_button, action_button %}
+
+
+{% macro home_banner(action='start-now') %}
+    <div class="HomeBanner">
+        <h1>Um lugar para <strong>crianças e adolescentes</strong> debaterem e ajudarem a <strong>melhorar o
+            Brasil</strong></h1>
+        <h2>idenfificando <strong>grupos de opinião</strong> e combatendo a polarização a partir da
+        promoção da <strong>diversidade dos pontos de vista</strong>.</h2>
+        {% if action == 'rocket-chat' %}
+            {{ rocket_button() }}
+        {% elif action == 'start-now' %}
+            {{ action_button('Comece agora!') }}
+        {% else %}
+            Invalid action: {{ action }}
+        {% endif %}
+    </div>
+{% endmacro %}
+
+
+{% macro how_it_works() %}
+    <div class="how-it-works">
+        <h1>Como Funciona?</h1>
+        <h2>A dinâmica de interação acontece em 3 frentes</h2>
+
+        <div class="how-it-works__cards">
+            {% call how_it_works_card(
+                    'child',
+                    'Comitê de Participação do Adolescente',
+                    'O CPA é formado por adolescentes que participam da tomada de decisões dentro do CONANDA') %}
+                {{ rocket_button() }}
+            {% endcall %}
+
+            {{ how_it_works_card(
+                    'hands-helping',
+                    'Grupos de Debate',
+                    'Explica o que são os grupos de acompanhamento e tem link para algum lugar onde mostra os grupos existentes',
+                    action='Conheça os Grupos', link='/groups') }}
+
+            {{ how_it_works_card(
+                    'comments',
+                    'Conversas Participativas',
+                    'Explica o que são as conversas apenas com texto e já ajuda a explicar o que vem na sequência',
+                    action='Acesse as Conversas',
+                    link='/conversations') }}
+
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro how_it_works_card(icon, title, comment, action=None, link='#') %}
+    <article class="how-it-works__card">
+        <i class="fa fa-{{ icon }} how-it-works__card-icon"></i>
+        <div class="how-it-works__card-content">
+            <h1>{{ title }} <i class="fa fa-angle-right"></i></h1>
+            <aside class="how-it-works__card-extra">
+                <p>{{ comment }}</p>
+                {% if action -%}
+                    {{ action_button(action, link) }}
+                {% else -%}
+                    {{ caller() }}
+                {% endif %}
+            </aside>
+        </div>
+    </article>
+{% endmacro %}
+
+{% macro start_now() %}
+    <div class="StartNow">
+        <h1>Venha somar suas opiniões à nossa rede!</h1>
+        <h2>Quanto mais opiniões, mais ricas serão as discussões.</h2>
+        {{ action_button('Começar agora!', '/start') }}
+    </div>
+{% endmacro %}

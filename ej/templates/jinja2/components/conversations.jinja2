@@ -1,0 +1,143 @@
+{% from 'components/elements.jinja2' import action_button, breadcrumbs %}
+
+{#---------------------------------------------------------------------------#
+    CONVERSATION LIST
+ #---------------------------------------------------------------------------#}
+{% macro conversation_list(conversations,
+                           title=_('Conversas ativas agora'),
+                           subtitle=_('Veja as conversas abaixo e dê sua opinião')) %}
+    <div class="ConversationListTitle">
+        <h1>{{ title }}</h1>
+        <h2>{{ subtitle }}</h2>
+    </div>
+
+    {# Cards #}
+    <div class="ConversationCardList">
+        {% for conversation in conversations %}
+            {{ conversation_card(conversation) }}
+        {% endfor %}
+    </div>
+    {{ conversation_pagination() }}
+{% endmacro %}
+
+
+{% macro conversation_card(conversation) %}
+    <div class="ConversationCard">
+        <div class="ConversationCard-cover">
+            <h1>
+                <a href="{{ conversation.get_absolute_url() }}" alt="alt">{{ conversation.title }}</a>
+            </h1>
+            <dl>
+                <dt>Assunto</dt>
+                <dd>{{ conversation.category_name }}</dd>
+            </dl>
+        </div>
+        <div class="ConversationCard-actions">
+            <ul class="ConversationCard-statistics">
+                <li><strong>{{ conversation.comments.count() }}</strong> comentários</li>
+                <li><strong>{{ conversation.votes.count() }}</strong> votos</li>
+            </ul>
+            {{ action_button('Participe agora!', conversation.get_absolute_url()) }}
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro conversation_pagination() %}
+    <div class="ConversationPagination">
+        <div class="ConversationPagination-pager">
+            <a href="prev">&lt;</a> ... <a href="prev">&gt;</a>
+        </div>
+    </div>
+{% endmacro %}
+
+{#---------------------------------------------------------------------------#
+    CONVERSATION DETAIL
+ #---------------------------------------------------------------------------#}
+
+{% macro conversation_detail(conversation) %}
+    <div class="ConversationDetail">
+        <div class="ConversationDetail-banner">
+            {{ conversation_breadcrumbs(conversation) }}
+            <h1>{{ conversation.question }}</h1>
+            <dl class="ConversationDetail-statistics">
+                <dt>Votos</dt>
+                <dd>{{ conversation.votes.count() }}</dd>
+                <dt>Comentários</dt>
+                <dd>{{ conversation.comments.count() }}</dd>
+            </dl>
+        </div>
+
+        {# Current comment #}
+        {% if comment %}
+            {{ comment(comment) }}
+        {% else %}
+            <p class="Comment">Conversa não contêm comentários</p>
+        {% endif %}
+
+        {# Post a new comment #}
+        {{ comment_form() }}
+
+        {# Opinion #}
+        {% if conversation.opinion %}
+            {{ opinion(conversation) }}
+        {% endif %}
+    </div>
+{% endmacro %}
+
+
+{% macro conversation_breadcrumbs(conversation, has_home=True) %}
+    {% set links = [
+        ('conversations', 'Conversas'),
+        (conversation.category.slug, conversation.category.name),
+        (conversation.slug, conversation.title),
+    ] %}
+    {{ breadcrumbs(links, has_home=has_home) }}
+{% endmacro %}
+
+{% macro category_breadcrumbs(category, has_home=True) %}
+    {% set links = [
+        ('conversations', 'Conversas'),
+        (category.slug, category.name),
+    ] %}
+    {{ breadcrumbs(links, has_home=has_home) }}
+{% endmacro %}
+
+
+
+
+{% macro comment_detail(comment) %}
+    <div class="Comment">
+        <div>{{ comment.author }}</div>
+        <p>{{ comment.content }}</p>
+        <form method="post">
+            {{ csrf_input }}
+            <input type="hidden" name="vote" value="true">
+            <ul class="ConversationComment-actions">
+                <li><input type="submit" value="Concordo" name="agree"></li>
+                <li><input type="submit" value="Passo" name="pass"></li>
+                <li><input type="submit" value="Discordo" name="disagree"></li>
+            </ul>
+        </form>
+    </div>
+{% endmacro %}
+
+
+{% macro comment_form() %}
+    <div class="CommentForm">
+        <h1>Envie um comentário</h1>
+        <form method="post">
+            {{ csrf_input }}
+            <input type="hidden" name="comment" value="true">
+            <textarea name="text"></textarea>
+            <input type="submit" name="submit" value="Enviar comentário">
+        </form>
+    </div>
+{% endmacro %}
+
+{% macro opinion(conversation) %}
+    <article class="ConversationOpinion">
+        <h1>...</h1>
+        <h2>Nossa opinião</h2>
+        <p>{{ conversation.opinion }}</p>
+    </article>
+{% endmacro %}

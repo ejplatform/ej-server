@@ -1,0 +1,59 @@
+{# A card for a conversation #}
+{% macro conversation_card() %}
+  <div class="card">
+    <div class="card-cover" style="background-image: url('https://brasilqueopovoquer.org.br/media/conversations/backgrounds/censurasemcolchao.jpg');">
+      <a href="/conversations/liberdade-de-expressao">
+        <div class="card-numbers">
+          <span class="category">Liberdade de expressão </span>
+          <span><strong>176</strong> comentários</span>
+          <span><strong>4.517</strong> votos</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="card-title">
+      <h5>Em uma democracia para todas e todos, quais os limites da liberdade
+        de expressão?</h5>
+    </div>
+
+    <div class="card-block">{{ participate_button() }}</div>
+  </div>
+{% endmacro %}
+
+{% macro participate_button() %}
+  <div class="participation">
+    <div class="button button-action">
+      <a class="btn btn-primary btn-block"
+         href="/conversations/liberdade-de-expressao">
+        <img src="/static/images/icons/conversas_icon.svg" alt="Conversas">
+        <span>ParticipeAgora!</span>
+      </a>
+    </div>
+  </div>
+{% endmacro %}
+
+{% macro participate_bar() %}
+  <div class="participation">
+    <div class="title">
+      <h4>Sua participação</h4>
+    </div>
+
+    <div class="content">
+      <div class="profile">
+        <img src="/static/img/icons/profile_icon.svg" alt="Perfil">
+      </div>
+
+      <p class="bar">
+        <ngb-progressbar showvalue="true" type="warning">
+          <div class="progress">
+            <div aria-valuemin="0" role="progressbar"
+                 class="progress-bar bg-warning" aria-valuenow="0"
+                 aria-valuemax="100" style="width: 0%;">
+              <span>0%</span>
+            </div>
+          </div>
+        </ngb-progressbar>
+      </p>
+    </div>
+  </div>
+{% endmacro %}

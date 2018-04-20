@@ -1,5 +1,6 @@
+from django.http import Http404
 from django.shortcuts import render, get_object_or_404
-from ej_conversations.models import Conversation, Vote
+from ej_conversations.models import Conversation, Vote, Category
 
 from .views_utils import route, get_patterns
 from .forms import ProfileForm, LoginForm, RegistrationForm
@@ -18,8 +19,21 @@ def login(request):
 
 
 @route('conversations/<slug:slug>/')
-def conversation_detail(request, slug):
+def category_list(request, slug):
+    category = get_object_or_404(Category, slug=slug)
+
+    ctx = dict(
+        category=category,
+        conversations=category.conversations.all(),
+    )
+    return render(request, 'pages/category-detail.jinja2', ctx)
+
+
+@route('conversations/<slug:category_slug>/<slug:slug>')
+def conversation_detail(request, slug, category_slug):
     conversation = get_object_or_404(Conversation, slug=slug)
+    if conversation.category.slug != category_slug:
+        raise Http404
     comment = conversation.get_next_comment(request.user, None)
     ctx = {
         'conversation': conversation,

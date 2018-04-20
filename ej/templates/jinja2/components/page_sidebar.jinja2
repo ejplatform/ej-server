@@ -1,0 +1,36 @@
+{% set up_transition=up_transition|default('cross-fade') %}
+
+
+{# Generate the sidebar navigation element #}
+{% macro sidebar() %}
+  <div class="Sidebar overlay" onclick="javascript:$('.Sidebar').removeClass('is-visible')"></div>
+  <aside class="Sidebar">
+    <div class="Sidebar-logo">
+      <span>Empurrando Juntas</span>
+    </div>
+
+    <nav class="Sidebar-main">
+      <ul class="Sidebar-linkBar">
+        <li>{{ sidebar_link('Conversas', 'conversations') }}</li>
+        <li>{{ sidebar_link('Perfil', 'profile') }}</li>
+        <li>{{ sidebar_link('Notificação', 'notifications') }}</li>
+        <li>{{ sidebar_link('Comentários', 'comments') }}</li>
+      </ul>
+    </nav>
+
+    <nav class="Sidebar-extra">
+      <ul>
+        <li>{{ sidebar_link('Perguntas frequentes', 'faq') }}</li>
+        <li>{{ sidebar_link('Sobre nós', 'about') }}</li>
+        <li>{{ sidebar_link('Termos de uso', 'usage') }}</li>
+      </ul>
+    </nav>
+  </aside>
+{% endmacro %}
+
+{% macro sidebar_link(name, href, icon=None) %}
+  <a href="/{{ href }}/" up-target=".ContentArea-main" up-transition="{{ up_transition }}" up-instant>
+    <img src="/static/img/icons/{{ icon or href }}.svg" alt="{{ name }}">
+    <span>{{ name }}</span>
+  </a>
+{% endmacro %}
