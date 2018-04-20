@@ -1,13 +1,12 @@
 /*
  BUTTONS
  =============================================================================*/
-
 $button-ghost-border-width: 2px;
 
 button,
 .Button {
     display: inline-block;
-    padding: $spacing-padding $spacing-padding;
+    padding: $spacing-unit-small;
     vertical-align: middle;
     text-align: center;
     font: inherit;
@@ -17,7 +16,7 @@ button,
     border-radius: $global-radius;
 
     // Button roles
-    [primary] {
+    &[primary] {
         background-color: #4a8ec2;
         &,
         &:hover,
@@ -32,7 +31,7 @@ button,
         }
     }
 
-    [secondary] {
+    &[secondary] {
         background-color: #2f4054;
         &,
         &:hover,
@@ -46,40 +45,42 @@ button,
             background-color: #1d2733;
         }
     }
-}
 
-// Size variants
-[small] {
-    padding: $spacing-padding;
-}
-
-[large] {
-    padding: $spacing-padding;
-}
-
-// Ghost buttons (see-through backgrounds and are bordered)
-[ghost] {
-    border: $button-ghost-border-width solid currentColor;
-    padding: ($spacing-padding - $button-ghost-border-width) ($spacing-padding - $button-ghost-border-width);
-    &,
-    &:hover,
-    &:active,
-    &:focus {
-        background: none;
+    // Size variants
+    &[small] {
+        padding: $spacing-unit-tiny;
     }
 
-    [ primary ] {
-        color: #4a8ec2;
+    &[large] {
+        padding: $spacing-unit;
+    }
+
+    // Ghost buttons (see-through backgrounds and are bordered)
+    &[ghost] {
+        border: $button-ghost-border-width solid currentColor;
+        padding: ($spacing-padding - $button-ghost-border-width) ($spacing-padding - $button-ghost-border-width);
+        &,
         &:hover,
+        &:active,
         &:focus {
-            color: #3774a2;
+            background: none;
+        }
+
+        [ primary ] {
+            color: #4a8ec2;
+            &:hover,
+            &:focus {
+                color: #3774a2;
+            }
+        }
+        [secondary] {
+            color: #2f4054;
+            &:hover,
+            &:focus {
+                color: #1d2733;
+            }
         }
     }
-    [secondary] {
-        color: #2f4054;
-        &:hover,
-        &:focus {
-            color: #1d2733;
-        }
-    }
 }
+
+

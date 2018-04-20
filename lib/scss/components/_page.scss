@@ -5,49 +5,16 @@
 $sidebar-menu-width: 80vw !default;
 $sidebar-width-tablet: 90px !default;
 
-// Content area
-.ContentArea {
-    box-sizing: border-box;
-    display: flex;
-    height: 100vh;
-    margin: $page-head-height 0;
-    padding: 0;
-    top: 0;
-    width: 100vw;
-
-    &-main {
-        display: flex;
-        flex-flow: column;
-        overflow-y: scroll;
-        width: 100%;
-
-        @media only screen and (min-width: $breakpoint-mobile-max) {
-            overflow-y: auto;
-        }
-    }
-
-    main {
-        flex-grow: 1;
-    }
-
-    @media only screen and (min-width: $breakpoint-mobile-max) {
-        height: initial;
-        margin-left: $sidebar-width-tablet;
-        margin-bottom: 0;
-        margin-top: $page-head-height-tablet;
-        width: initial;
-    }
-
-    @media only screen and (min-width: $breakpoint-tablet-max) {
-        margin-top: $page-head-height-desktop;
-    }
-}
 
 // Main title
 .Page {
     display: flex;
     flex-flow: column;
     max-height: 100vh;
+
+    &-data {
+        overflow-y: auto;
+    }
 
     &-title {
         background-image: url(/static/img/bg-title.png);

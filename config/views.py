@@ -46,6 +46,12 @@ def conversation_list(request):
     return render(request, 'pages/conversation-list.jinja2', ctx)
 
 
+@route('')
+def index(request):
+    ctx = {'conversations': Conversation.objects.all()}
+    return render(request, 'pages/index.jinja2', ctx)
+
+
 @route('profile/')
 def profile(request):
     if request.method == 'POST':
@@ -64,7 +70,7 @@ def profile(request):
 #
 # Static pages
 #
-route('', name='index', template_name='pages/index.jinja2')
+route('rocket/', name='rocket', template_name='pages/rocket.jinja2')
 route('faq/', name='faq', template_name='pages/faq.jinja2')
 route('about/', name='about', template_name='pages/about.jinja2')
 route('usage/', name='usage', template_name='pages/usage.jinja2')

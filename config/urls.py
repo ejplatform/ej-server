@@ -41,7 +41,7 @@ urlpatterns = [
     *static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),
 
     # Flat pages
-    path('', include('django.contrib.flatpages.urls')),
+    path('pages/', include('django.contrib.flatpages.urls')),
 ]
 
 if settings.DEBUG:

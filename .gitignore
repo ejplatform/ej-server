@@ -314,3 +314,4 @@ compose/production/*.env
 lib/assests/css/main.css.map
 lib/assests/css/main.css
 node_modules/
+lib/node_modules/
