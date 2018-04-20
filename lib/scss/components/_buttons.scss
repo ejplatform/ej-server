@@ -16,7 +16,8 @@ button,
     border-radius: $global-radius;
 
     // Button roles
-    &[primary] {
+    &[primary],
+    .Button--primary {
         background-color: #4a8ec2;
         &,
         &:hover,
@@ -31,7 +32,8 @@ button,
         }
     }
 
-    &[secondary] {
+    &[secondary],
+    .Button--secondary {
         background-color: #2f4054;
         &,
         &:hover,
@@ -47,16 +49,18 @@ button,
     }
 
     // Size variants
-    &[small] {
+    &[small],
+    .Button--small {
         padding: $spacing-unit-tiny;
     }
 
-    &[large] {
+    .Button--large {
         padding: $spacing-unit;
     }
 
     // Ghost buttons (see-through backgrounds and are bordered)
-    &[ghost] {
+    &[ghost],
+    .Button--ghost {
         border: $button-ghost-border-width solid currentColor;
         padding: ($spacing-padding - $button-ghost-border-width) ($spacing-padding - $button-ghost-border-width);
         &,
@@ -66,14 +70,16 @@ button,
             background: none;
         }
 
-        [ primary ] {
+        [primary],
+        .Button--ghost-primary {
             color: #4a8ec2;
             &:hover,
             &:focus {
                 color: #3774a2;
             }
         }
-        [secondary] {
+        [secondary],
+        .Button--ghost-secondary {
             color: #2f4054;
             &:hover,
             &:focus {

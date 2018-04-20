@@ -2,6 +2,11 @@
  GENERIC ELEMENTS
  =====================================================================*/
 
+// FIXME: error on Sass? This should be $color-hint-bg, but it does not find
+// this variable for some reason (other variables work fine).
+$color-code: #fafafa !default;
+
+
 // Structural page elements
 html {
     overflow: hidden;
@@ -33,7 +38,7 @@ a {
 
 // Quotes
 code, pre, blockquote {
-    background-color: $color-content-hint;
+    background-color: $color-code;
 }
 
 // Tables fills up as much space as possible

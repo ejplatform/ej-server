@@ -1,28 +1,9 @@
 {% from 'components/elements.jinja2' import action_button %}
-{% from 'components/conversations.jinja2' import conversation_card %}
-
+{% from 'components/conversations.jinja2' import conversation_card, conversation_list %}
 {% extends 'base.jinja2' %}
-{% set content_title = 'Conversas' %}
 
 {% block content %}
-    <h3>Qual sua opinião?</h3>
-    <h2>Ajude a construir o Brasil que o povo quer!</h2>
-
-    <ul class="ConversationList-cardList">
-        {% for conversation in conversations %}
-            <li>{{ conversation_card(conversation) }}</li>
-        {% endfor %}
-    </ul>
+    {{ conversation_list(conversations) }}
 {% endblock %}
 
 
-{% macro render_conversation(conversation) %}
-    <article class="ConversationItem{% if conversation.is_new %} ConversationItem--new{% endif %}">
-        <img src="{{ conversation.background_image }}">
-        <h1>{{ conversation.title }}</h1>
-        <h2>Tópico</h2>
-        <p>{{ conversation.approved_comments }} comentários</p>
-        <p>{{ conversation.total_votes }} votos</p>
-        <a class="ConversationItem-link" href="{{ conversation.slug }}">Participe agora!</a>
-    </article>
-{% endmacro %}
