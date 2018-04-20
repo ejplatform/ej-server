@@ -2,23 +2,53 @@ from invoke import task
 
 
 @task
-def sass(ctx, watch=False):
-    watch = ' --watch' if watch else ''
+def sass(ctx, no_watch=False):
+    """
+    Run Sass compiler
+    """
+    watch = '' if no_watch else ' --watch'
     ctx.run('sass lib/scss/main.scss:lib/assets/css/main.css' + watch, pty=True)
 
 
 @task
-def run(ctx, no_toolbar=False, postgres=False):
-    env = {} if postgres else {'USE_SQLITE': 'true'}
+def run(ctx, no_toolbar=False):
+    """
+    Run development server.
+    """
+    env = {}
     if no_toolbar:
         env['DISABLE_DJANGO_DEBUG_TOOLBAR'] = 'true'
     ctx.run('python manage.py runserver', pty=True, env=env)
 
 
 @task
-def db(ctx, migrate_only=False, postgres=False):
-    env = {} if postgres else {'USE_SQLITE': 'true'}
-
+def db(ctx, migrate_only=False):
+    """
+    Perform migrations
+    """
     if not migrate_only:
-        ctx.run('python manage.py makemigrations', pty=True, env=env)
-    ctx.run('python manage.py migrate', pty=True, env=env)
+        ctx.run('python manage.py makemigrations', pty=True)
+    ctx.run('python manage.py migrate', pty=True)
+
+
+@task
+def db_reset(ctx, fake=False, postgres=False):
+    """
+    Reset data in database and optionally fill with fake data
+    """
+    ctx.run('rm db.sqlite3 -f')
+    ctx.run('python manage.py migrate', pty=True)
+    if fake:
+        db_fake(ctx, postgres=postgres)
+
+
+@task
+def db_fake(ctx, no_users=False, no_converations=False, no_admin=False):
+    """
+    Adds fake data to the database.
+    """
+    if not no_users:
+        suffix = '' if no_admin else ' --admin'
+        ctx.run('python manage.py createfakeusers' + suffix, pty=True)
+    if not no_converations:
+        ctx.run('python manage.py createfakeconversations', pty=True)
