@@ -14,5 +14,5 @@ class Command(BaseCommand):
         with open('users.csv', 'w') as csv:
             csv.write('id, name, username, email, last_login,\n')
             for user in User.objects.all():
-                d = '{}, {}, {}, {}, {},\n'.format(str(user.id), str(user.name), str(user.username), str(user.email), str(user.last_login))
+                d = '{}, {}, {}, {}, {},\n'.format(user.id, user.name, user.username, user.email, user.last_login)
                 csv.write(d)
