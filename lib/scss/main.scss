@@ -14,30 +14,30 @@
 
 // SETTINGS
 // Global variables, site-wide settings, config switches, etc.
-@import 'settings/config';
-@import 'settings/colors';
-@import 'settings/spacing';
-@import 'settings/typography';
-@import 'settings/global';
+@import '1_settings/config';
+@import '1_settings/colors';
+@import '1_settings/spacing';
+@import '1_settings/typography';
+@import '1_settings/global';
 
 
 // TOOLS
 // Site-wide mixins and functions.
 // We use Bourbon (https://www.bourbon.io/docs/) as a library of Sass functions
-@import 'tools/bourbon/bourbon';
-@import 'tools/aliases';
+@import '2_tools/bourbon/bourbon';
+@import '2_tools/aliases';
 
 
 // GENERIC
 // Low-specificity, far-reaching rulesets (e.g. resets).
-@import 'generic/normalize';
-@import 'generic/overrides';
+@import '3_generic/normalize';
+@import '3_generic/overrides';
 
 
 // ELEMENTS
 // Unclassed HTML elements (e.g. a {}, blockquote {}, address {}).
-@import 'elements/headings';
-@import 'elements/elements';
+@import '4_elements/headings';
+@import '4_elements/elements';
 
 
 // OBJECTS
@@ -47,17 +47,17 @@
 // COMPONENTS
 // Discrete, complete chunks of UI (e.g. .c-carousel {}). This layer is where
 // most application-specific code resides.
-@import 'components/buttons';
-@import 'components/page';
-@import 'components/page-header';
-@import 'components/page-footer';
+@import '6_components/buttons';
+@import '6_components/elements';
+@import '6_components/home';
+@import '6_components/page';
+@import '6_components/page-header';
+@import '6_components/page-footer';
+@import '6_components/conversations';
 //@import 'components/page-sidebar';
-@import 'components/home';
-@import 'components/conversations';
-@import 'components/elements';
 
 
 // UTILITIES
 // High-specificity, very explicit selectors. Overrides and helper classes
 // (e.g. .hidden {}).
-@import 'utilities/links';
+@import '7_utilities/links';

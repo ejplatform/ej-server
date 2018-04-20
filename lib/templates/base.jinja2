@@ -84,7 +84,7 @@
 {# MAIN BLOCK #}
 {% block main %}
     <main>
-        <div class="Page-title"><h1>{{ content_title }}</h1></div>
+        {% if content_title %}<div class="Page-title"><h1>{{ content_title }}</h1>{% endif %}
         <article class="Page-content">
             {% block content %}
                 <p>Please override the "content" block of your template!</p>

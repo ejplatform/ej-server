@@ -448,7 +448,7 @@ h6 {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: "Raleway", sans-serif;
-  font-weight: 400; }
+  font-weight: 500; }
 
 /*
  GENERIC ELEMENTS
@@ -823,12 +823,67 @@ button,
         color: #1d2733; }
 
 /*
+ GENERIC ELEMENTS
+ ======================================================================== */
+/*
+ HOME PAGE
+ ======================================================================== */
+.HomeBanner {
+  margin-top: 50px;
+  padding: 24px;
+  text-align: center; }
+  .HomeBanner h2 {
+    display: none;
+    font-size: 1.5em; }
+    @media only screen and (min-width: 500px) {
+      .HomeBanner h2 {
+        display: inherit; } }
+
+.how-it-works {
+  background: #eee;
+  padding-top: 48px;
+  text-align: center; }
+  .how-it-works h2 {
+    font-size: 1.3em; }
+  .how-it-works__card {
+    text-align: left;
+    align-items: center;
+    display: flex;
+    border-top: 1px solid #ccc;
+    padding: 24px; }
+    .how-it-works__card h1 {
+      font-size: 1.5em; }
+      .how-it-works__card h1 i {
+        padding-left: 12px;
+        float: right; }
+    .how-it-works__card p {
+      font-size: 1.1em; }
+  .how-it-works__card-content {
+    flex-grow: 1; }
+  .how-it-works__card-icon {
+    color: #666;
+    font-size: 2.85em;
+    margin: 24px;
+    align-self: start; }
+  .how-it-works__card-extra {
+    display: none; }
+
+.StartNow {
+  background: #eee;
+  padding: 24px;
+  text-align: center; }
+  .StartNow h2 {
+    font-size: 1.3em; }
+
+/*
  GENERIC PAGE ELEMENTS
  ======================================================================== */
 .Page {
+  box-sizing: border-box;
   display: flex;
   flex-flow: column;
-  max-height: 100vh; }
+  max-height: 100vh;
+  padding-top: 50px; }
   .Page-data {
     overflow-y: auto; }
   .Page-title {
@@ -845,7 +900,7 @@ button,
       margin: 0 auto;
       max-width: 700px; }
   .Page-content {
-    padding: 15px;
+    padding: 0;
     margin: 0 auto;
     max-width: 700px; }
   @media only screen and (min-width: 1020px) {
@@ -978,52 +1033,6 @@ button,
       visibility: visible; } }
 
 /*
- HOME PAGE
- ======================================================================== */
-.HomeBanner {
-  margin-top: 50px;
-  padding: 24px;
-  text-align: center; }
-  .HomeBanner h2 {
-    font-size: 1.5em; }
-
-.how-it-works {
-  background: #fff;
-  padding-top: 48px;
-  text-align: center; }
-  .how-it-works h2 {
-    font-size: 1.3em; }
-  .how-it-works__card {
-    text-align: left;
-    align-items: center;
-    display: flex;
-    border-top: 1px solid #ccc;
-    padding: 24px; }
-    .how-it-works__card h1 {
-      font-size: 1.5em; }
-      .how-it-works__card h1 i {
-        padding-left: 12px;
-        float: right; }
-    .how-it-works__card p {
-      font-size: 1.1em; }
-  .how-it-works__card-content {
-    flex-grow: 1; }
-  .how-it-works__card-icon {
-    color: #666;
-    font-size: 2.85em;
-    margin: 24px;
-    align-self: start; }
-  .how-it-works__card-extra {
-    display: none; }
-
-.StartNow {
-  background: #fff;
-  padding: 24px;
-  text-align: center; }
-  .StartNow h2 {
-    font-size: 1.3em; }
-
-/*
  CONVERSATIONS
  ======================================================================== */
 .ConversationListTitle {
@@ -1039,15 +1048,24 @@ button,
   margin: 24px; }
 
 .ConversationCard {
-  text-align: center;
-  border: 1px solid black;
-  padding: 12px; }
-  .ConversationCard-cover dl dt {
-    display: inline;
-    font-weight: bold; }
-  .ConversationCard-cover dl dd {
-    display: inline;
-    margin: 0; }
+  border: 1px solid #666;
+  border-radius: 12px;
+  margin: 6px;
+  text-align: center; }
+  .ConversationCard > * {
+    padding: 12px; }
+  .ConversationCard-cover {
+    background: #4d8bc0;
+    border-radius: 12px;
+    color: #fff; }
+    .ConversationCard-cover a, .ConversationCard-cover a:hover, .ConversationCard-cover a:active {
+      color: #fff; }
+    .ConversationCard-cover dl dt {
+      display: inline;
+      font-weight: bold; }
+    .ConversationCard-cover dl dd {
+      display: inline;
+      margin: 0; }
   .ConversationCard-statistics {
     display: flex;
     justify-content: space-between;
@@ -1056,12 +1074,36 @@ button,
     .ConversationCard-statistics li {
       list-style: none; }
 
-.ConversationPagination {
+.ConversationDetail {
+  padding: 0; }
+  .ConversationDetail > * {
+    padding: 24px; }
+  .ConversationDetail-banner {
+    padding-top: 6px;
+    background: #eee; }
+    .ConversationDetail-banner h1 {
+      text-align: center; }
+
+.Comment {
   text-align: center; }
 
-/*
- GENERIC ELEMENTS
- ======================================================================== */
+.CommentForm {
+  text-align: center; }
+  .CommentForm textarea {
+    display: block;
+    width: 100%;
+    min-height: 48px; }
+
+.Breadcrumbs {
+  display: inline;
+  padding-left: 0; }
+  .Breadcrumbs li {
+    display: inline; }
+  .Breadcrumbs li:after {
+    content: ' / '; }
+  .Breadcrumbs li:last-child:after {
+    content: ''; }
+
 /*
  LINKS
  ============================================================================ */
