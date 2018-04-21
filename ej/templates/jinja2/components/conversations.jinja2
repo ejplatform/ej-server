@@ -8,6 +8,7 @@
                            title=_('Conversas ativas agora'),
                            subtitle=_('Veja as conversas abaixo e dê sua opinião')) %}
     <div class="ConversationListTitle">
+        {% if caller %}{{ caller() }}{% endif %}
         <h1>{{ title }}</h1>
         <h2>{{ subtitle }}</h2>
     </div>

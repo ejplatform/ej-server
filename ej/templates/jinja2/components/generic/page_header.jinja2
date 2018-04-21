@@ -1,46 +1,45 @@
+{% from 'components/generic/elements.jinja2' import link %}
 {% set up_transition=up_transition|default('cross-fade') %}
 
 
 {# Generate the header element #}
 {% macro page_header() %}
-  <header class="Header">
-    <div class="Header-logoBar">
-      <a href="/conversations" class="Header-backButton">
-        <i class="material-icons">arrow_back</i>
-      </a>
-      <a href="/conversations" class="Header-logo">
-        <img src="/static/img/logo.svg">
-      </a>
-      <a href="javascript:$('.Sidebar').addClass('is-visible')" class="Header-menuButton">
-        <i class="material-icons">menu</i>
-      </a>
-    </div>
-
-    <ul class="Header-linkBar">
-      <li>
-        <a href="/conversations/" id="conversations-link" up-target=".ContentArea-main" up-transition="{{ up_transition }}">
-          <i class="material-icons">forum</i>
-          <span>Conversas</span>
-        </a>
-      </li>
-      <li>
-        <a href="/profile/" id="profile-link" up-target=".ContentArea-main" up-transition="{{ up_transition }}">
-          <i class="material-icons">person</i>
-          <span>Perfil</span>
-        </a>
-      </li>
-      <li class="Header-notifications">
-        <a href="/notifications/" id="notifications-link" up-target=".ContentArea-main" up-transition="{{ up_transition }}">
-          <i class="material-icons">notifications_active</i>
-          <span>Notificações</span>
-        </a>
-      </li>
-      <li>
-        <a href="/comments/" id="comments-link" up-target=".ContentArea-main" up-transition="{{ up_transition }}">
-          <i class="material-icons">textsms</i>
-          <span>Comentários</span>
-        </a>
-      </li>
-    </ul>
-  </header>
+    <header class="Header">
+        {{ header_top_nav() }}
+        {{ header_lower_nav() }}
+    </header>
 {% endmacro %}
+
+{% macro header_top_nav() %}
+    <nav class="Header-topNav">
+        {% call link('/start/') %}
+            <i class="fa fa-arrow-left"></i>
+        {% endcall %}
+
+        {% call link('/') %}
+            <img src="/static/img/logo/header-logo.png" alt="EJ logo">
+        {% endcall %}
+
+        <a href="/menu/?target=main" title="Navigation menu" up-modal="main">
+            <i class="fa fa-bars"></i>
+        </a>
+    </nav>
+{% endmacro %}
+
+{% macro header_lower_nav() %}
+    <nav class="Header-lowerNav">
+        {% call link('/conversations/', alt='Conversations') %}
+            <i class="fa fa-microphone"></i>{{ _('Conversations') }}
+        {% endcall %}
+
+        {% call link('/rocket/', alt='Canais') %}
+            <i class="fa fa-comments"></i>{{ _('Channels') }}
+        {% endcall %}
+
+        {% call link('/profile/', alt='Profile') %}
+            <i class="fa fa-user"></i>{{ _('Profile') }}
+        {% endcall %}
+    </nav>
+{% endmacro %}
+
+

@@ -1,0 +1,16 @@
+{% set target = request.GET.get('target', 'all') %}
+{% extends 'base.jinja2' %}
+
+{% block content %}
+    <div class="NavMenu">
+    <ul>
+        <li>Conversas</li>
+        <li>Canais</li>
+        <li>Perfil</li>
+        <li>Perguntas frequentes</li>
+        <li>Sobre</li>
+    </ul>
+    </div>
+{% endblock %}
+
+

@@ -2,11 +2,11 @@
 {% from 'components/generic/page_sidebar.jinja2' import sidebar %}
 {% from 'components/generic/page_footer.jinja2' import page_footer %}
 
-{% set render_context = request.GET.render | default('all') %}
-{% set render = render | default(render_context) %}
+{% set target_context = request.GET.target | default('all') %}
+{% set target = target | default(target_context) %}
 
 
-{% if render == 'all' %}
+{% if target == 'all' %}
     <!DOCTYPE html>
     <html lang="pt-br">
 
@@ -75,34 +75,32 @@
         <meta property="fb:app_id" content="1757744567588794">
     </head>
 
-    <body class="Page">
+    <body class="{{ body_class|default('Page') }}">
 {% endif %}
 
 {% block body %}
-    {% if render == 'all' or render == 'page' %}
+    {% if target == 'all' or target == 'page' %}
         {{ page_header() }}
-        <div class="Page-data">
+        <div class="Page-mainContainer">
     {% endif %}
 
-{# MAIN BLOCK #}
-{% block main %}
-    <main>
-        {% if content_title %}<div class="Page-title"><h1>{{ content_title }}</h1>{% endif %}
-        <article class="Page-content">
+    {# MAIN BLOCK #}
+    {% block main %}
+        <main class="Page-content">
+            {% if content_title %}<h1 class="Page-title">{{ content_title }}</h1>{% endif %}
             {% block content %}
                 <p>Please override the "content" block of your template!</p>
             {% endblock %}
-        </article>
-    </main>
+        </main>
+    {% endblock %}
+
+    {% if target == 'all' or target == 'page' %}
+        {{ page_footer() }}
+        </div>
+    {% endif %}
 {% endblock %}
 
-{% if render == 'all' or render == 'page' %}
-    {{ page_footer() }}
-    </div>
-{% endif %}
-{% endblock %}
-
-{% if render == 'all' %}
+{% if target == 'all' %}
     {% block modal %}{% endblock modal %}
 
     {% block javascript_body %}
@@ -130,7 +128,7 @@
             }
         </script>
     {% endblock %}
-    </body>
 
+    </body>
     </html>
 {% endif %}

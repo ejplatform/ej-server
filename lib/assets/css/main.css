@@ -455,15 +455,14 @@ h1, h2, h3, h4, h5, h6 {
  GENERIC ELEMENTS
  =====================================================================*/
 html {
-  overflow: hidden;
   min-height: 100%;
   line-height: 1.5; }
 
 body {
   box-sizing: border-box;
-  width: 100vw;
   font-size: 16px;
-  font-family: "Lato", sans-serif; }
+  font-family: "Lato", sans-serif;
+  width: 100vw; }
 
 main {
   box-sizing: border-box;
@@ -476,7 +475,11 @@ a {
   text-decoration-style: solid; }
 
 code, pre, blockquote {
-  background-color: #fafafa; }
+  color: #111;
+  background-color: #eee; }
+
+code, pre {
+  font-family: "IBM Plex Mono", monospace monospace; }
 
 table {
   width: 100%; }
@@ -487,10 +490,43 @@ img {
   vertical-align: middle; }
 
 /*
+ UNSTYLED FORM ELEMENTS
+ ======================================================================== */
+form label {
+  display: none; }
+
+form[show-labels] label {
+  display: block; }
+
+input,
+textarea,
+label,
+select,
+.FormItem {
+  box-sizing: border-box;
+  font-size: 1em;
+  margin: 0 48px;
+  width: 85%; }
+
+input,
+textarea,
+select,
+.FormItem {
+  border-radius: 3px;
+  border: 1px solid #eee;
+  margin: 6px 48px;
+  padding: 12px; }
+
+label {
+  color: #777777;
+  font-weight: bold;
+  font-size: 1.1em; }
+
+/*
  GENERIC CONTAINER PATTERNS
  =========================================================================== */
-.Container, .Profile, .ProfileEdit {
-  padding: 24px; }
+.Container, .ConversationListTitle, .Profile, .ProfileEdit {
+  padding: 0 24px 24px 24px; }
 
 /*
  DJANGO FORMS STYLING
@@ -508,7 +544,7 @@ button,
 .Button,
 .ActionButton,
 .RocketButton {
-  background: #4056a1;
+  background: #4d8bc0;
   border: none;
   border-radius: 50ch;
   box-sizing: border-box;
@@ -662,8 +698,8 @@ button,
   .ActionButton .Button--ghost,
   .RocketButton .Button--ghost {
     background: none;
-    border: 1px solid #4056a1;
-    color: #4056a1;
+    border: 1px solid #4d8bc0;
+    color: #4d8bc0;
     padding: 11px 23px; }
     button[ghost]:hover, button[ghost]:focus,
     button .Button--ghost:hover,
@@ -785,7 +821,10 @@ button,
  ======================================================================== */
 .Breadcrumbs {
   display: inline;
-  padding-left: 0; }
+  text-align: left; }
+  .Breadcrumbs ul {
+    padding-left: 0;
+    margin: 0; }
   .Breadcrumbs li {
     display: inline; }
   .Breadcrumbs li:after {
@@ -798,7 +837,6 @@ button,
  PAGE HEADER
  ============================================================================ */
 .Header {
-  box-shadow: 0 5px 3px -3px rgba(50, 50, 50, 0.3);
   box-sizing: border-box;
   color: #111;
   background: #fff;
@@ -813,67 +851,66 @@ button,
   @media only screen and (min-width: 500px) {
     .Header {
       align-items: center;
+      box-shadow: 0 0 10px 0px rgba(50, 50, 50, 0.5);
       background: #fff;
       display: flex;
-      height: 62.5px;
+      height: 75px;
       justify-content: space-between;
       position: fixed;
       top: 0;
       width: 100vw; } }
   @media only screen and (min-width: 900px) {
     .Header {
-      height: 75px; } }
-  .Header-logoBar, .Header-linkBar {
+      height: 90px; } }
+  .Header-topNav, .Header-lowerNav {
     align-items: center;
-    background: #fff;
     box-sizing: border-box;
+    box-shadow: 0 0 10px 0px rgba(50, 50, 50, 0.5);
+    background: #fff;
     display: flex;
-    height: 50px;
+    height: 60px;
+    justify-content: space-between;
     margin: 0;
     overflow: hidden;
-    padding: 5px 35px 5px 15px;
+    padding: 0 24px;
     position: fixed;
     width: 100vw; }
-    .Header-logoBar > *, .Header-linkBar > * {
+    .Header-topNav > *, .Header-lowerNav > * {
       display: block; }
     @media only screen and (min-width: 500px) {
-      .Header-logoBar, .Header-linkBar {
+      .Header-topNav, .Header-lowerNav {
         box-shadow: none;
         display: block;
         opacity: 1;
         position: initial;
         height: inherit; } }
-  .Header-logoBar {
-    box-shadow: 0 5px 3px -3px rgba(50, 50, 50, 0.3);
-    justify-content: space-between;
+  .Header-topNav {
     top: 0; }
-    .Header-logoBar img {
-      height: 40px;
+    .Header-topNav img {
+      height: 48px;
       box-sizing: border-box;
       margin: 0; }
     @media only screen and (min-width: 500px) {
-      .Header-logoBar {
+      .Header-topNav {
         box-shadow: none;
         margin: 0;
         padding: 0 0 0 30px;
         display: flex;
         justify-content: start; }
-        .Header-logoBar img {
+        .Header-topNav img {
           height: 80%; }
-        .Header-logoBar i {
+        .Header-topNav i {
           display: none; } }
-  .Header-linkBar {
+  .Header-lowerNav {
     bottom: 0;
-    box-shadow: 0 0 3px 2px rgba(50, 50, 50, 0.3);
-    background: #cccc;
-    justify-content: space-around; }
-    .Header-linkBar span {
+    box-shadow: 0 0 10px 0px rgba(50, 50, 50, 0.5); }
+    .Header-lowerNav span {
       display: none; }
-    .Header-linkBar i.material-icons {
+    .Header-lowerNav i.material-icons {
       font-size: 1.8em;
       margin-top: 5px; }
     @media only screen and (min-width: 500px) {
-      .Header-linkBar {
+      .Header-lowerNav {
         background: none;
         box-shadow: none;
         display: flex;
@@ -881,9 +918,9 @@ button,
         flex-grow: 1;
         justify-self: start;
         text-align: right; }
-        .Header-linkBar i.material-icons {
+        .Header-lowerNav i.material-icons {
           display: none; }
-        .Header-linkBar span {
+        .Header-lowerNav span {
           display: initial;
           margin-right: 20px; } }
   @media only screen and (min-width: 500px) {
@@ -899,25 +936,21 @@ button,
  PAGE FOOTER
  ============================================================================ */
 .Footer {
-  background: #239c47;
+  background: #fff;
   box-sizing: border-box;
-  color: #fff;
-  height: 0 50px;
-  overflow: hidden;
-  margin-top: 30px;
-  padding: 30px;
-  padding-bottom: 50px;
-  text-align: center;
-  visibility: hidden; }
+  color: #111;
+  height: 0 60px;
+  padding: 12px;
+  text-align: center; }
+  .Footer a {
+    color: #111;
+    font-weight: bold; }
   .Footer-badges {
     display: flex;
     text-align: center; }
     .Footer-badges li {
       margin-left: 0;
       list-style: none; }
-  @media only screen and (min-width: 500px) {
-    .Footer {
-      visibility: visible; } }
 
 /*
  PAGE SIDEBAR
@@ -933,7 +966,7 @@ button,
   to {
     left: 0; } }
 .Sidebar {
-  background: #232f58;
+  background: #2c577b;
   box-shadow: 1px 0 5px 0 rgba(50, 50, 50, 0.2);
   box-sizing: border-box;
   color: #e6e6e6;
@@ -984,12 +1017,12 @@ button,
     margin-bottom: 10px; }
   @media only screen and (min-width: 500px) {
     .Sidebar {
-      background: #4056a1;
+      background: #4d8bc0;
       display: block;
       font-size: 12.8px;
       opacity: 1;
       overflow-x: hidden;
-      padding-top: 62.5px;
+      padding-top: 75px;
       text-align: center;
       width: 100px; }
       .Sidebar a {
@@ -1003,7 +1036,7 @@ button,
         visibility: hidden; } }
   @media only screen and (min-width: 500px) {
     .Sidebar {
-      padding-top: 75px; } }
+      padding-top: 90px; } }
 
 .Sidebar.overlay.is-visible {
   animation: fade-out 50ms both;
@@ -1024,23 +1057,11 @@ button,
 .Login {
   padding: 24px;
   text-align: center; }
-  .Register form label,
-  .Login form label {
-    display: none; }
-  .Register form input,
-  .Login form input {
-    box-sizing: border-box;
-    border-radius: 3px;
-    border: 1px solid #ccc;
-    font-size: 1em;
-    margin: 6px 48px;
-    padding: 12px;
-    width: 80%; }
   .Register-icon,
   .Login-icon {
-    border: 12px solid #ccc;
+    border: 12px solid #eee;
     border-radius: 50%;
-    color: #ccc;
+    color: #eee;
     font-size: 96px;
     margin: 48px;
     padding: 24px; }
@@ -1053,7 +1074,7 @@ button,
   .Register-newUser,
   .Login-newUser {
     margin: 24px 0;
-    border-top: 1px solid #ccc; }
+    border-top: 1px solid #eee; }
     .Register-newUser h1,
     .Login-newUser h1 {
       font-size: 1.5em; }
@@ -1062,8 +1083,6 @@ button,
  CONVERSATIONS
  ======================================================================== */
 .ConversationListTitle {
-  padding: 24px;
-  padding-top: 48px;
   text-align: center; }
   .ConversationListTitle h1 {
     font-size: 1.9em; }
@@ -1081,7 +1100,7 @@ button,
   .ConversationCard > * {
     padding: 12px; }
   .ConversationCard-cover {
-    background: #4056a1;
+    background: #4d8bc0;
     border-radius: 12px;
     color: #fff; }
     .ConversationCard-cover a, .ConversationCard-cover a:hover, .ConversationCard-cover a:active {
@@ -1105,7 +1124,7 @@ button,
   .ConversationDetail > * {
     padding: 24px; }
   .ConversationDetail-banner {
-    background: #4056a1;
+    background: #4d8bc0;
     color: #fff;
     padding-top: 6px; }
     .ConversationDetail-banner a {
@@ -1120,14 +1139,12 @@ button,
   text-align: center; }
   .CommentForm textarea {
     display: block;
-    width: 100%;
     min-height: 48px; }
 
 /*
  HOME PAGE
  ======================================================================== */
 .HomeBanner {
-  margin-top: 50px;
   padding: 24px;
   text-align: center; }
   .HomeBanner h2 {
@@ -1147,7 +1164,7 @@ button,
     text-align: left;
     align-items: center;
     display: flex;
-    border-top: 1px solid #ccc;
+    border-top: 1px solid #eee;
     padding: 24px; }
     .how-it-works__card h1 {
       font-size: 1.5em; }
@@ -1180,30 +1197,22 @@ button,
   box-sizing: border-box;
   display: flex;
   flex-flow: column;
-  max-height: 100vh;
-  padding-top: 50px; }
-  .Page-data {
+  height: 100vh;
+  overflow: hidden;
+  padding: 60px 0; }
+  .Page-mainContainer {
+    overflow-x: hidden;
     overflow-y: auto; }
   .Page-title {
-    background-image: url(/static/img/bg-title.png);
-    background-repeat: repeat-x;
-    background-size: auto 100%;
-    color: white;
-    margin: 0 0 30px 0;
-    padding: 15px;
-    text-transform: uppercase; }
+    background: #f13c20;
+    color: #fff;
+    margin-bottom: 24px;
+    padding: 12px; }
     .Page-title h1 {
-      font-size: 1.6em;
-      font-weight: 600;
-      margin: 0 auto;
-      max-width: 700px; }
+      font-size: 2.09em; }
   .Page-content {
     padding: 0;
-    margin: 0 auto;
-    max-width: 700px; }
-  @media only screen and (min-width: 1030px) {
-    .Page-content, .Page-title h1 {
-      margin: 0 auto 0 100px; } }
+    margin: 0 auto; }
 
 /*
  USER PROFILE VIEWS
@@ -1247,9 +1256,6 @@ button,
       font-weight: bold;
       margin: 0 0 12px 0; }
 
-.ProfileEdit form {
-  text-align: center; }
-
 /*
  BUTTONS
  =============================================================================*/
@@ -1263,7 +1269,7 @@ button,
     padding: 24px 0;
     width: 120px; }
   .ColorStyles .primary {
-    background: #4056a1;
+    background: #4d8bc0;
     color: #fff; }
   .ColorStyles .accent {
     background: #f13c20;

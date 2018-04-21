@@ -80,14 +80,16 @@ def profile_detail(request):
 
 @route('profile/edit/')
 def profile_edit(request):
+    profile = request.user
     if request.method == 'POST':
-        form = ProfileForm(request.POST)
+        form = ProfileForm(request.POST, instance=profile)
         if form.is_valid():
             form.save()
+            return redirect('/profile/')
     else:
-        form = ProfileForm()
+        form = ProfileForm(instance=request.user)
 
-    ctx = dict(form=form, profile=request.user)
+    ctx = dict(form=form, profile=profile)
     return render(request, 'pages/profile-edit.jinja2', ctx)
 
 
@@ -147,6 +149,7 @@ def display(request):
 # Static pages
 #
 route('rocket/', name='rocket', template_name='pages/rocket.jinja2')
+route('menu/', name='menu', template_name='pages/menu.jinja2')
 route('faq/', name='faq', template_name='pages/faq.jinja2')
 route('about/', name='about', template_name='pages/about.jinja2')
 route('usage/', name='usage', template_name='pages/usage.jinja2')

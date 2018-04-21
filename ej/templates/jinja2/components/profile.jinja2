@@ -5,13 +5,9 @@
     <div class="ProfileEdit">
         <div class="Profile-breadcrumbs">{{ breadcrumbs([('profile', _('Profile')), ('edit', _('Edit'))]) }}</div>
         <h1>Editar perfil: <em>{{ profile.name }}</em></h1>
-        <form show-labels>
+        <form method="post" show-labels>
             {{ csrf_input }}
-            {% for field in form %}
-                <div>
-                    {{ field }}{{ field.errors }}
-                </div>
-            {% endfor %}
+            {{ form.as_p() }}
             {{ form.non_field_errors() }}
             <input type="submit" name="submit" value="Enviar">
         </form>

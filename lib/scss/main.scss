@@ -38,6 +38,7 @@
 // Unclassed HTML elements (e.g. a {}, blockquote {}, address {}).
 @import '4_elements/headings';
 @import '4_elements/elements';
+@import '4_elements/forms';
 
 
 // OBJECTS
@@ -57,7 +58,7 @@
 @import '6_components/auth';
 @import '6_components/conversations';
 @import '6_components/home';
-@import '6_components/page';
+@import '6_components/generic/page';
 @import '6_components/profile';
 @import '6_components/styles';
 

@@ -1,4 +1,10 @@
-{% macro link(title='Go!', href='#', alt='', target='main') %}
+{% macro link(title='Click me', href='#', alt='', target='main') %}
+    {% if caller %}
+        {% if href == '#' %}
+            {% set href=title %}
+        {% endif %}
+        {% set title = caller() %}
+    {% endif %}
     <a href="{{ href }}" alt="{{ alt }}" up-target="{{ target }}" primary>{{ title }}</a>
 {% endmacro %}
 
@@ -14,14 +20,16 @@
 
 
 {% macro breadcrumbs(links, has_home=True) %}
-    <ul class="Breadcrumbs">
-        {% if has_home %}
-            <li><a href="/"><i class="fa fa-home"></i></a></li>
-        {% endif %}
-        {% set subpaths = [] %}
-        {% for href, link in links %}
-            {{ subpaths.append((subpaths or [''])[-1] + '/' + href) or '' }}
-            <li><a href="{{ subpaths[-1] }}">{{ link }}</a></li>
-        {% endfor %}
-    </ul>
+    <div class="Breadcrumbs">
+        <ul>
+            {% if has_home %}
+                <li><a href="/"><i class="fa fa-home"></i></a></li>
+            {% endif %}
+            {% set subpaths = [] %}
+            {% for href, link in links %}
+                {{ subpaths.append((subpaths or [''])[-1] + '/' + href) or '' }}
+                <li><a href="{{ subpaths[-1] }}">{{ link }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
 {% endmacro %}

@@ -311,7 +311,7 @@ ej/media/
 
 # Production variables
 compose/production/*.env
-lib/assests/css/main.css.map
-lib/assests/css/main.css
+lib/assets/css/main.css.map
+lib/assets/css/main.css
 node_modules/
 lib/node_modules/
