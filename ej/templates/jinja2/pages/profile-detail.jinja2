@@ -1,0 +1,6 @@
+{% extends 'base.jinja2' %}
+{% from 'components/profile.jinja2' import profile_detail %}
+
+{% block content %}
+    {{ profile_detail(request.user, info_tab) }}
+{% endblock %}

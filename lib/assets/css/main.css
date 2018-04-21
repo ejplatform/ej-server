@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /**
  * Conventions and architecture overview:
  *
@@ -486,25 +487,62 @@ img {
   vertical-align: middle; }
 
 /*
+ GENERIC CONTAINER PATTERNS
+ =========================================================================== */
+.Container, .Profile, .ProfileEdit {
+  padding: 24px; }
+
+/*
+ DJANGO FORMS STYLING
+ =========================================================================== */
+ul.errorlist {
+  color: #f13c20;
+  padding: 0; }
+  ul.errorlist li {
+    list-style: none; }
+
+/*
  BUTTONS
  =============================================================================*/
 button,
 .Button,
 .ActionButton,
 .RocketButton {
-  display: inline-block;
-  padding: 12px;
-  vertical-align: middle;
-  text-align: center;
-  font: inherit;
-  margin: 0;
+  background: #4056a1;
+  border: none;
+  border-radius: 50ch;
+  box-sizing: border-box;
+  color: rgba(255, 255, 255, 0.8);
   cursor: pointer;
+  display: inline-block;
+  font: inherit;
+  font-weight: 600;
+  font-family: "Raleway", sans-serif;
+  margin: 6px;
+  padding: 12px 24px;
+  text-align: center;
   transition: all 200ms ease-in-out;
-  border-radius: 3px; }
+  vertical-align: middle; }
+  button, button:hover, button:active, button:focus,
+  .Button,
+  .ActionButton,
+  .RocketButton,
+  .Button:hover,
+  .ActionButton:hover,
+  .RocketButton:hover,
+  .Button:active,
+  .ActionButton:active,
+  .RocketButton:active,
+  .Button:focus,
+  .ActionButton:focus,
+  .RocketButton:focus {
+    text-decoration: none; }
   button[primary],
   button .Button--primary,
   button .ActionButton,
   button .RocketButton,
+  button .Register-button,
+  button .Login-button,
   .Button[primary],
   [primary].ActionButton,
   [primary].RocketButton,
@@ -516,78 +554,26 @@ button,
   .RocketButton .ActionButton,
   .Button .RocketButton,
   .ActionButton .RocketButton,
-  .RocketButton .RocketButton {
-    background-color: #4a8ec2; }
-    button[primary], button[primary]:hover, button[primary]:active, button[primary]:focus,
-    button .Button--primary,
-    button .ActionButton,
-    button .RocketButton,
-    button .Button--primary:hover,
-    button .ActionButton:hover,
-    button .RocketButton:hover,
-    button .Button--primary:active,
-    button .ActionButton:active,
-    button .RocketButton:active,
-    button .Button--primary:focus,
-    button .ActionButton:focus,
-    button .RocketButton:focus,
-    .Button[primary],
-    [primary].ActionButton,
-    [primary].RocketButton,
-    .Button[primary]:hover,
-    [primary].ActionButton:hover,
-    [primary].RocketButton:hover,
-    .Button[primary]:active,
-    [primary].ActionButton:active,
-    [primary].RocketButton:active,
-    .Button[primary]:focus,
-    [primary].ActionButton:focus,
-    [primary].RocketButton:focus,
-    .Button .Button--primary,
-    .ActionButton .Button--primary,
-    .RocketButton .Button--primary,
-    .Button .ActionButton,
-    .ActionButton .ActionButton,
-    .RocketButton .ActionButton,
-    .Button .RocketButton,
-    .ActionButton .RocketButton,
-    .RocketButton .RocketButton,
-    .Button .Button--primary:hover,
-    .ActionButton .Button--primary:hover,
-    .RocketButton .Button--primary:hover,
-    .Button .ActionButton:hover,
-    .ActionButton .ActionButton:hover,
-    .RocketButton .ActionButton:hover,
-    .Button .RocketButton:hover,
-    .ActionButton .RocketButton:hover,
-    .RocketButton .RocketButton:hover,
-    .Button .Button--primary:active,
-    .ActionButton .Button--primary:active,
-    .RocketButton .Button--primary:active,
-    .Button .ActionButton:active,
-    .ActionButton .ActionButton:active,
-    .RocketButton .ActionButton:active,
-    .Button .RocketButton:active,
-    .ActionButton .RocketButton:active,
-    .RocketButton .RocketButton:active,
-    .Button .Button--primary:focus,
-    .ActionButton .Button--primary:focus,
-    .RocketButton .Button--primary:focus,
-    .Button .ActionButton:focus,
-    .ActionButton .ActionButton:focus,
-    .RocketButton .ActionButton:focus,
-    .Button .RocketButton:focus,
-    .ActionButton .RocketButton:focus,
-    .RocketButton .RocketButton:focus {
-      text-decoration: none;
-      color: #fff; }
+  .RocketButton .RocketButton,
+  .Button .Register-button,
+  .ActionButton .Register-button,
+  .RocketButton .Register-button,
+  .Button .Login-button,
+  .ActionButton .Login-button,
+  .RocketButton .Login-button {
+    background-color: #f13c20;
+    color: rgba(255, 255, 255, 0.8); }
     button[primary]:hover, button[primary]:focus,
     button .Button--primary:hover,
     button .ActionButton:hover,
     button .RocketButton:hover,
+    button .Register-button:hover,
+    button .Login-button:hover,
     button .Button--primary:focus,
     button .ActionButton:focus,
     button .RocketButton:focus,
+    button .Register-button:focus,
+    button .Login-button:focus,
     .Button[primary]:hover,
     [primary].ActionButton:hover,
     [primary].RocketButton:hover,
@@ -603,6 +589,12 @@ button,
     .Button .RocketButton:hover,
     .ActionButton .RocketButton:hover,
     .RocketButton .RocketButton:hover,
+    .Button .Register-button:hover,
+    .ActionButton .Register-button:hover,
+    .RocketButton .Register-button:hover,
+    .Button .Login-button:hover,
+    .ActionButton .Login-button:hover,
+    .RocketButton .Login-button:hover,
     .Button .Button--primary:focus,
     .ActionButton .Button--primary:focus,
     .RocketButton .Button--primary:focus,
@@ -611,8 +603,15 @@ button,
     .RocketButton .ActionButton:focus,
     .Button .RocketButton:focus,
     .ActionButton .RocketButton:focus,
-    .RocketButton .RocketButton:focus {
-      background-color: #3774a2; }
+    .RocketButton .RocketButton:focus,
+    .Button .Register-button:focus,
+    .ActionButton .Register-button:focus,
+    .RocketButton .Register-button:focus,
+    .Button .Login-button:focus,
+    .ActionButton .Login-button:focus,
+    .RocketButton .Login-button:focus {
+      background-color: #d1270d;
+      color: #fff; }
   button[secondary],
   button .Button--secondary,
   .Button[secondary],
@@ -621,38 +620,8 @@ button,
   .Button .Button--secondary,
   .ActionButton .Button--secondary,
   .RocketButton .Button--secondary {
-    background-color: #2f4054; }
-    button[secondary], button[secondary]:hover, button[secondary]:active, button[secondary]:focus,
-    button .Button--secondary,
-    button .Button--secondary:hover,
-    button .Button--secondary:active,
-    button .Button--secondary:focus,
-    .Button[secondary],
-    [secondary].ActionButton,
-    [secondary].RocketButton,
-    .Button[secondary]:hover,
-    [secondary].ActionButton:hover,
-    [secondary].RocketButton:hover,
-    .Button[secondary]:active,
-    [secondary].ActionButton:active,
-    [secondary].RocketButton:active,
-    .Button[secondary]:focus,
-    [secondary].ActionButton:focus,
-    [secondary].RocketButton:focus,
-    .Button .Button--secondary,
-    .ActionButton .Button--secondary,
-    .RocketButton .Button--secondary,
-    .Button .Button--secondary:hover,
-    .ActionButton .Button--secondary:hover,
-    .RocketButton .Button--secondary:hover,
-    .Button .Button--secondary:active,
-    .ActionButton .Button--secondary:active,
-    .RocketButton .Button--secondary:active,
-    .Button .Button--secondary:focus,
-    .ActionButton .Button--secondary:focus,
-    .RocketButton .Button--secondary:focus {
-      text-decoration: none;
-      color: #fff; }
+    background-color: #eee;
+    color: rgba(17, 17, 17, 0.8); }
     button[secondary]:hover, button[secondary]:focus,
     button .Button--secondary:hover,
     button .Button--secondary:focus,
@@ -668,7 +637,8 @@ button,
     .Button .Button--secondary:focus,
     .ActionButton .Button--secondary:focus,
     .RocketButton .Button--secondary:focus {
-      background-color: #1d2733; }
+      background-color: #d5d5d5;
+      color: #111; }
   button[small],
   button .Button--small,
   .Button[small],
@@ -691,38 +661,26 @@ button,
   .Button .Button--ghost,
   .ActionButton .Button--ghost,
   .RocketButton .Button--ghost {
-    border: 2px solid currentColor;
-    padding: 8px 8px; }
-    button[ghost], button[ghost]:hover, button[ghost]:active, button[ghost]:focus,
-    button .Button--ghost,
+    background: none;
+    border: 1px solid #4056a1;
+    color: #4056a1;
+    padding: 11px 23px; }
+    button[ghost]:hover, button[ghost]:focus,
     button .Button--ghost:hover,
-    button .Button--ghost:active,
     button .Button--ghost:focus,
-    .Button[ghost],
-    [ghost].ActionButton,
-    [ghost].RocketButton,
     .Button[ghost]:hover,
     [ghost].ActionButton:hover,
     [ghost].RocketButton:hover,
-    .Button[ghost]:active,
-    [ghost].ActionButton:active,
-    [ghost].RocketButton:active,
     .Button[ghost]:focus,
     [ghost].ActionButton:focus,
     [ghost].RocketButton:focus,
-    .Button .Button--ghost,
-    .ActionButton .Button--ghost,
-    .RocketButton .Button--ghost,
     .Button .Button--ghost:hover,
     .ActionButton .Button--ghost:hover,
     .RocketButton .Button--ghost:hover,
-    .Button .Button--ghost:active,
-    .ActionButton .Button--ghost:active,
-    .RocketButton .Button--ghost:active,
     .Button .Button--ghost:focus,
     .ActionButton .Button--ghost:focus,
     .RocketButton .Button--ghost:focus {
-      background: none; }
+      background: rgba(0, 0, 0, 0.05); }
     button[ghost] [primary],
     button[ghost] .Button--ghost-primary,
     button .Button--ghost [primary],
@@ -739,7 +697,7 @@ button,
     .Button .Button--ghost .Button--ghost-primary,
     .ActionButton .Button--ghost .Button--ghost-primary,
     .RocketButton .Button--ghost .Button--ghost-primary {
-      color: #4a8ec2; }
+      color: #f13c20; }
       button[ghost] [primary]:hover, button[ghost] [primary]:focus,
       button[ghost] .Button--ghost-primary:hover,
       button[ghost] .Button--ghost-primary:focus,
@@ -771,7 +729,7 @@ button,
       .Button .Button--ghost .Button--ghost-primary:focus,
       .ActionButton .Button--ghost .Button--ghost-primary:focus,
       .RocketButton .Button--ghost .Button--ghost-primary:focus {
-        color: #3774a2; }
+        color: #d1270d; }
     button[ghost] [secondary],
     button[ghost] .Button--ghost-secondary,
     button .Button--ghost [secondary],
@@ -788,7 +746,7 @@ button,
     .Button .Button--ghost .Button--ghost-secondary,
     .ActionButton .Button--ghost .Button--ghost-secondary,
     .RocketButton .Button--ghost .Button--ghost-secondary {
-      color: #2f4054; }
+      color: #eee; }
       button[ghost] [secondary]:hover, button[ghost] [secondary]:focus,
       button[ghost] .Button--ghost-secondary:hover,
       button[ghost] .Button--ghost-secondary:focus,
@@ -820,92 +778,21 @@ button,
       .Button .Button--ghost .Button--ghost-secondary:focus,
       .ActionButton .Button--ghost .Button--ghost-secondary:focus,
       .RocketButton .Button--ghost .Button--ghost-secondary:focus {
-        color: #1d2733; }
+        color: #d5d5d5; }
 
 /*
  GENERIC ELEMENTS
  ======================================================================== */
-/*
- HOME PAGE
- ======================================================================== */
-.HomeBanner {
-  margin-top: 50px;
-  padding: 24px;
-  text-align: center; }
-  .HomeBanner h2 {
-    display: none;
-    font-size: 1.5em; }
-    @media only screen and (min-width: 500px) {
-      .HomeBanner h2 {
-        display: inherit; } }
-
-.how-it-works {
-  background: #eee;
-  padding-top: 48px;
-  text-align: center; }
-  .how-it-works h2 {
-    font-size: 1.3em; }
-  .how-it-works__card {
-    text-align: left;
-    align-items: center;
-    display: flex;
-    border-top: 1px solid #ccc;
-    padding: 24px; }
-    .how-it-works__card h1 {
-      font-size: 1.5em; }
-      .how-it-works__card h1 i {
-        padding-left: 12px;
-        float: right; }
-    .how-it-works__card p {
-      font-size: 1.1em; }
-  .how-it-works__card-content {
-    flex-grow: 1; }
-  .how-it-works__card-icon {
-    color: #666;
-    font-size: 2.85em;
-    margin: 24px;
-    align-self: start; }
-  .how-it-works__card-extra {
-    display: none; }
-
-.StartNow {
-  background: #eee;
-  padding: 24px;
-  text-align: center; }
-  .StartNow h2 {
-    font-size: 1.3em; }
-
-/*
- GENERIC PAGE ELEMENTS
- ======================================================================== */
-.Page {
-  box-sizing: border-box;
-  display: flex;
-  flex-flow: column;
-  max-height: 100vh;
-  padding-top: 50px; }
-  .Page-data {
-    overflow-y: auto; }
-  .Page-title {
-    background-image: url(/static/img/bg-title.png);
-    background-repeat: repeat-x;
-    background-size: auto 100%;
-    color: white;
-    margin: 0 0 30px 0;
-    padding: 15px;
-    text-transform: uppercase; }
-    .Page-title h1 {
-      font-size: 1.6em;
-      font-weight: 600;
-      margin: 0 auto;
-      max-width: 700px; }
-  .Page-content {
-    padding: 0;
-    margin: 0 auto;
-    max-width: 700px; }
-  @media only screen and (min-width: 1020px) {
-    .Page-content, .Page-title h1 {
-      margin: 0 auto 0 100px; } }
+.Breadcrumbs {
+  display: inline;
+  padding-left: 0; }
+  .Breadcrumbs li {
+    display: inline; }
+  .Breadcrumbs li:after {
+    content: ' » ';
+    opacity: 0.5; }
+  .Breadcrumbs li:last-child:after {
+    content: ''; }
 
 /*
  PAGE HEADER
@@ -913,16 +800,16 @@ button,
 .Header {
   box-shadow: 0 5px 3px -3px rgba(50, 50, 50, 0.3);
   box-sizing: border-box;
-  color: #000;
+  color: #111;
   background: #fff;
   margin: 0;
   z-index: 100; }
   .Header ul {
     list-style: none; }
   .Header a {
-    color: #000; }
+    color: #111; }
   .Header a:hover {
-    color: #000; }
+    color: #111; }
   @media only screen and (min-width: 500px) {
     .Header {
       align-items: center;
@@ -1033,6 +920,145 @@ button,
       visibility: visible; } }
 
 /*
+ PAGE SIDEBAR
+ =========================================================================== */
+@keyframes fade-out {
+  from {
+    opacity: 0; }
+  to {
+    opacity: 1; } }
+@keyframes sidebar-reveal {
+  from {
+    left: -80px; }
+  to {
+    left: 0; } }
+.Sidebar {
+  background: #232f58;
+  box-shadow: 1px 0 5px 0 rgba(50, 50, 50, 0.2);
+  box-sizing: border-box;
+  color: #e6e6e6;
+  display: none;
+  font-size: 125%;
+  height: 100vh;
+  left: 0;
+  opacity: 0.95;
+  overflow-y: auto;
+  padding: 30px 10px 0 10px;
+  position: fixed;
+  top: 0;
+  width: 80px;
+  z-index: 90; }
+  .Sidebar-logo {
+    font-weight: bold; }
+  .Sidebar.is-visible {
+    animation: sidebar-reveal 200ms ease-in-out both;
+    display: block; }
+  .Sidebar.overlay {
+    display: none; }
+  .Sidebar :first-child {
+    margin-top: 10px; }
+  .Sidebar a {
+    display: flex;
+    height: 40px;
+    width: 100%;
+    align-items: center;
+    margin: 0 10px 5px 10px;
+    color: #e6e6e6; }
+    .Sidebar a img, .Sidebar a span {
+      margin: 0;
+      padding: 0; }
+    .Sidebar a img {
+      margin-right: 10px; }
+  .Sidebar a:hover {
+    color: #e6e6e6; }
+  .Sidebar ul {
+    padding: 0; }
+  .Sidebar li {
+    list-style: none; }
+  .Sidebar img {
+    width: 30px;
+    margin-bottom: 3px;
+    color: white; }
+  .Sidebar span {
+    display: block;
+    margin-bottom: 10px; }
+  @media only screen and (min-width: 500px) {
+    .Sidebar {
+      background: #4056a1;
+      display: block;
+      font-size: 12.8px;
+      opacity: 1;
+      overflow-x: hidden;
+      padding-top: 62.5px;
+      text-align: center;
+      width: 100px; }
+      .Sidebar a {
+        display: block;
+        height: inherit;
+        margin: 0; }
+        .Sidebar a img {
+          margin: 0; }
+      .Sidebar .overlay {
+        display: none;
+        visibility: hidden; } }
+  @media only screen and (min-width: 500px) {
+    .Sidebar {
+      padding-top: 75px; } }
+
+.Sidebar.overlay.is-visible {
+  animation: fade-out 50ms both;
+  background: rgba(0, 0, 0, 0.5);
+  display: block;
+  margin: 0;
+  position: fixed;
+  bottom: 0;
+  top: 0;
+  height: 200vh;
+  width: 200vw;
+  z-index: 80; }
+
+/*
+ LOGIN/REGISTER COMPONENTS
+ ======================================================================== */
+.Register,
+.Login {
+  padding: 24px;
+  text-align: center; }
+  .Register form label,
+  .Login form label {
+    display: none; }
+  .Register form input,
+  .Login form input {
+    box-sizing: border-box;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    font-size: 1em;
+    margin: 6px 48px;
+    padding: 12px;
+    width: 80%; }
+  .Register-icon,
+  .Login-icon {
+    border: 12px solid #ccc;
+    border-radius: 50%;
+    color: #ccc;
+    font-size: 96px;
+    margin: 48px;
+    padding: 24px; }
+  .Register-socialButtons,
+  .Login-socialButtons {
+    display: none; }
+    .Register-socialButtons i.fa,
+    .Login-socialButtons i.fa {
+      font-size: 1.9em; }
+  .Register-newUser,
+  .Login-newUser {
+    margin: 24px 0;
+    border-top: 1px solid #ccc; }
+    .Register-newUser h1,
+    .Login-newUser h1 {
+      font-size: 1.5em; }
+
+/*
  CONVERSATIONS
  ======================================================================== */
 .ConversationListTitle {
@@ -1055,7 +1081,7 @@ button,
   .ConversationCard > * {
     padding: 12px; }
   .ConversationCard-cover {
-    background: #4d8bc0;
+    background: #4056a1;
     border-radius: 12px;
     color: #fff; }
     .ConversationCard-cover a, .ConversationCard-cover a:hover, .ConversationCard-cover a:active {
@@ -1079,8 +1105,11 @@ button,
   .ConversationDetail > * {
     padding: 24px; }
   .ConversationDetail-banner {
-    padding-top: 6px;
-    background: #eee; }
+    background: #4056a1;
+    color: #fff;
+    padding-top: 6px; }
+    .ConversationDetail-banner a {
+      color: #fff; }
     .ConversationDetail-banner h1 {
       text-align: center; }
 
@@ -1094,15 +1123,157 @@ button,
     width: 100%;
     min-height: 48px; }
 
-.Breadcrumbs {
-  display: inline;
-  padding-left: 0; }
-  .Breadcrumbs li {
-    display: inline; }
-  .Breadcrumbs li:after {
-    content: ' / '; }
-  .Breadcrumbs li:last-child:after {
-    content: ''; }
+/*
+ HOME PAGE
+ ======================================================================== */
+.HomeBanner {
+  margin-top: 50px;
+  padding: 24px;
+  text-align: center; }
+  .HomeBanner h2 {
+    display: none;
+    font-size: 1.5em; }
+    @media only screen and (min-width: 500px) {
+      .HomeBanner h2 {
+        display: inherit; } }
+
+.how-it-works {
+  background: #eee;
+  padding-top: 48px;
+  text-align: center; }
+  .how-it-works h2 {
+    font-size: 1.3em; }
+  .how-it-works__card {
+    text-align: left;
+    align-items: center;
+    display: flex;
+    border-top: 1px solid #ccc;
+    padding: 24px; }
+    .how-it-works__card h1 {
+      font-size: 1.5em; }
+      .how-it-works__card h1 i {
+        padding-left: 12px;
+        float: right; }
+    .how-it-works__card p {
+      font-size: 1.1em; }
+  .how-it-works__card-content {
+    flex-grow: 1; }
+  .how-it-works__card-icon {
+    color: #666;
+    font-size: 2.85em;
+    margin: 24px;
+    align-self: start; }
+  .how-it-works__card-extra {
+    display: none; }
+
+.StartNow {
+  background: #eee;
+  padding: 24px;
+  text-align: center; }
+  .StartNow h2 {
+    font-size: 1.3em; }
+
+/*
+ GENERIC PAGE ELEMENTS
+ ======================================================================== */
+.Page {
+  box-sizing: border-box;
+  display: flex;
+  flex-flow: column;
+  max-height: 100vh;
+  padding-top: 50px; }
+  .Page-data {
+    overflow-y: auto; }
+  .Page-title {
+    background-image: url(/static/img/bg-title.png);
+    background-repeat: repeat-x;
+    background-size: auto 100%;
+    color: white;
+    margin: 0 0 30px 0;
+    padding: 15px;
+    text-transform: uppercase; }
+    .Page-title h1 {
+      font-size: 1.6em;
+      font-weight: 600;
+      margin: 0 auto;
+      max-width: 700px; }
+  .Page-content {
+    padding: 0;
+    margin: 0 auto;
+    max-width: 700px; }
+  @media only screen and (min-width: 1030px) {
+    .Page-content, .Page-title h1 {
+      margin: 0 auto 0 100px; } }
+
+/*
+ USER PROFILE VIEWS
+ ======================================================================== */
+.Profile {
+  text-align: center; }
+  .Profile h1 {
+    margin-bottom: 0; }
+  .Profile h2 {
+    color: #777777;
+    font-size: 1.3em;
+    margin-top: 0; }
+  .Profile-breadcrumbs {
+    text-align: left; }
+  .Profile-image {
+    width: 192px;
+    height: 192px;
+    border-radius: 50ch; }
+  .Profile-tabs {
+    margin-top: 24px; }
+  .Profile-tabLinks {
+    display: flex;
+    justify-content: space-around;
+    font-size: 1.1em;
+    font-weight: 500; }
+    .Profile-tabLinks > * {
+      margin: 0 24px; }
+  .Profile-tabContainer {
+    background: #eee;
+    text-align: left; }
+  .Profile-info {
+    font-size: 1em;
+    padding: 48px; }
+    .Profile-info > * {
+      display: block; }
+    .Profile-info dl dt {
+      color: #777777;
+      text-transform: lowercase; }
+    .Profile-info dl dd {
+      font-size: 1.1em;
+      font-weight: bold;
+      margin: 0 0 12px 0; }
+
+.ProfileEdit form {
+  text-align: center; }
+
+/*
+ BUTTONS
+ =============================================================================*/
+.ColorStyles {
+  display: flex;
+  flex-wrap: wrap; }
+  .ColorStyles > * {
+    border: 1px solid black;
+    margin: 6px;
+    text-align: center;
+    padding: 24px 0;
+    width: 120px; }
+  .ColorStyles .primary {
+    background: #4056a1;
+    color: #fff; }
+  .ColorStyles .accent {
+    background: #f13c20;
+    color: #fff; }
+  .ColorStyles .content {
+    background: #fff;
+    color: #111; }
+  .ColorStyles .hint {
+    background: #eee;
+    color: #111; }
 
 /*
  LINKS

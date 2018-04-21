@@ -44,12 +44,12 @@ def db_reset(ctx, fake=False, postgres=False):
 
 
 @task
-def db_fake(ctx, no_users=False, no_converations=False, no_admin=False):
+def db_fake(ctx, no_users=False, no_conversations=False, no_admin=False):
     """
     Adds fake data to the database.
     """
     if not no_users:
         suffix = '' if no_admin else ' --admin'
         ctx.run('python manage.py createfakeusers' + suffix, pty=True)
-    if not no_converations:
+    if not no_conversations:
         ctx.run('python manage.py createfakeconversations', pty=True)

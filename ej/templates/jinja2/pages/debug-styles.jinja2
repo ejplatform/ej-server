@@ -1,0 +1,45 @@
+{% extends 'base.jinja2' %}
+{% from 'components/generic/elements.jinja2' import action_button, rocket_button %}
+
+{% block content %}
+    <div class="Container">
+        <h1>EJ styles</h1>
+        <section>
+            <h2>Typography</h2>
+            <div>
+                {% for i in range(1, 7) %}
+                    <h{{ i }}>H{{ i }} Title</h{{ i }}>
+                {% endfor %}
+                <p>This is a paragraph of text and a <a href="#">link</a>.</p>
+                <code>
+                    <pre>pre-formatted text.</pre>
+                </code>
+            </div>
+
+            <h2>Colors</h2>
+            <div class="ColorStyles">
+                <div class="primary">primary</div>
+                <div class="accent">accent</div>
+                <div class="content">content</div>
+                <div class="hint">hint</div>
+            </div>
+
+            <h2>Buttons</h2>
+            <p>
+                <button>button</button>
+                <button primary>button[primary]</button>
+                <button secondary>button[secondary]</button>
+                <button ghost>button[ghost]</button>
+            </p>
+            <p>Links can also be styled as buttons, by adding the ".Button" class like in
+                <code>{{ '<a class="Button">Link</a>' }}</code>.
+            <p><a href="#" class="Button">Link</a></p>
+
+            <h1>Forms</h1>
+            <p>WIP...</p>
+        </section>
+
+        <h1>Components</h1>
+        <section>WIP...</section>
+    </div>
+{% endblock %}

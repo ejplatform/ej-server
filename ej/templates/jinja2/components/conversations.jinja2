@@ -1,4 +1,5 @@
-{% from 'components/elements.jinja2' import action_button, breadcrumbs %}
+{% from 'components/generic/elements.jinja2' import action_button, breadcrumbs %}
+
 
 {#---------------------------------------------------------------------------#
     CONVERSATION LIST
@@ -17,7 +18,7 @@
             {{ conversation_card(conversation) }}
         {% endfor %}
     </div>
-    {{ conversation_pagination() }}
+    {# {{ conversation_pagination() }} #}
 {% endmacro %}
 
 
@@ -69,7 +70,7 @@
 
         {# Current comment #}
         {% if comment %}
-            {{ comment(comment) }}
+            {{ comment_detail(comment) }}
         {% else %}
             <p class="Comment">Conversa não contêm comentários</p>
         {% endif %}
@@ -85,33 +86,13 @@
 {% endmacro %}
 
 
-{% macro conversation_breadcrumbs(conversation, has_home=True) %}
-    {% set links = [
-        ('conversations', 'Conversas'),
-        (conversation.category.slug, conversation.category.name),
-        (conversation.slug, conversation.title),
-    ] %}
-    {{ breadcrumbs(links, has_home=has_home) }}
-{% endmacro %}
-
-{% macro category_breadcrumbs(category, has_home=True) %}
-    {% set links = [
-        ('conversations', 'Conversas'),
-        (category.slug, category.name),
-    ] %}
-    {{ breadcrumbs(links, has_home=has_home) }}
-{% endmacro %}
-
-
-
-
 {% macro comment_detail(comment) %}
     <div class="Comment">
         <div>{{ comment.author }}</div>
         <p>{{ comment.content }}</p>
         <form method="post">
             {{ csrf_input }}
-            <input type="hidden" name="vote" value="true">
+            <input type="hidden" name="action" value="vote">
             <ul class="ConversationComment-actions">
                 <li><input type="submit" value="Concordo" name="agree"></li>
                 <li><input type="submit" value="Passo" name="pass"></li>
@@ -127,8 +108,8 @@
         <h1>Envie um comentário</h1>
         <form method="post">
             {{ csrf_input }}
-            <input type="hidden" name="comment" value="true">
-            <textarea name="text"></textarea>
+            <input type="hidden" name="action" value="comment">
+            <textarea name="comment"></textarea>
             <input type="submit" name="submit" value="Enviar comentário">
         </form>
     </div>
@@ -140,4 +121,27 @@
         <h2>Nossa opinião</h2>
         <p>{{ conversation.opinion }}</p>
     </article>
+{% endmacro %}
+
+
+{#---------------------------------------------------------------------------#
+    AUXILIARY
+ #---------------------------------------------------------------------------#}
+
+{% macro conversation_breadcrumbs(conversation, has_home=True) %}
+    {% set links = [
+        ('conversations', 'Conversas'),
+        (conversation.category.slug, conversation.category.name),
+        (conversation.slug, conversation.title),
+    ] %}
+    {{ breadcrumbs(links, has_home=has_home) }}
+{% endmacro %}
+
+
+{% macro category_breadcrumbs(category, has_home=True) %}
+    {% set links = [
+        ('conversations', 'Conversas'),
+        (category.slug, category.name),
+    ] %}
+    {{ breadcrumbs(links, has_home=has_home) }}
 {% endmacro %}

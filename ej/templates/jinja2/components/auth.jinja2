@@ -1,0 +1,69 @@
+{% macro login(form, csrf_input) %}
+    <div class="Login">
+        <h1 class="Login-title">Fazer login // Cadastrar-se</h1>
+        <i class="fa fa-user Login-icon"></i>
+
+        <form method="post">
+            {{ csrf_input }}
+
+            <input type="text" name="email" required placeholder="E-mail ou nome de usuário">
+            {{ form.email.errors }}
+
+            <input type="password" name="password" required placeholder="Senha">
+            {{ form.password.errors }}
+
+            <input type="submit" class="Login-button" value="{{ _('Login') }}" name="login">
+            {{ form.non_field_errors() }}
+
+            {{ login_options() }}
+
+            <div class="Login-newUser">
+                <h1>Ainda não faz parte do EJ?</h1>
+                <p><a class="Button" href="/register/" primary>Cadastre-se agora</a></p>
+            </div>
+        </form>
+    </div>
+{% endmacro %}
+
+
+{% macro register(form, csrf_input) %}
+    <div class="Register">
+        <h1 class="Register-title">Cadastrar novo usuário</h1>
+
+        <form method="post">
+            {{ csrf_input }}
+            {% for field in form %}
+                {{ field }}
+                {{ field.errors }}
+            {% endfor %}
+
+            <input type="submit" value="{{ _('Register') }}" name="register">
+            {{ form.non_field_errors() }}
+        </form>
+
+        {{ login_options() }}
+    </div>
+{% endmacro %}
+
+{% macro login_options() %}
+    <p><a href="/profile/recover-password/">Esqueceu a senha?</a></p>
+
+    <div class="Login-socialButtons">
+        <p>ou entre por outras redes</p>
+        <div>
+            <i class="fa fa-google-plus-g"></i>
+            <i class="fa fa-twitter"></i>
+            <i class="fa fa-facebook-f"></i>
+        </div>
+    </div>
+{% endmacro %}
+
+
+{% macro passwordless_template() %}
+    <template id="Login-passwordless">
+        <h1>{{ _('What is passwordles login?') }}</h1>
+        <p>{% trans %}Passwords are inconvenient and often insecure. We suggest our users to choose either social
+            authentication (Facebook or Twitter) or the passwordless method. In this setup, we send a password to
+            your e-mail with a special link that automatically register your account in the platform.{% endtrans %}</p>
+    </template>
+{% endmacro %}

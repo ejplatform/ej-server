@@ -1,21 +1,94 @@
+from django.contrib import auth
+from django.db import IntegrityError
 from django.http import Http404
-from django.shortcuts import render, get_object_or_404
-from ej_conversations.models import Conversation, Vote, Category
+from django.shortcuts import render, get_object_or_404, redirect
+from django.utils.translation import ugettext as _
 
-from .views_utils import route, get_patterns
+from ej.users.models import User
+from ej_conversations.models import Conversation, Vote, Category
 from .forms import ProfileForm, LoginForm, RegistrationForm
+from .views_utils import route, get_patterns
+
+get_patterns = get_patterns  # don't count as an unused import
 
 
 #
 # Views
 #
+@route('')
+def index(request):
+    ctx = {'conversations': Conversation.objects.all()}
+    return render(request, 'pages/index.jinja2', ctx)
+
+
+@route('start/')
+def start(request):
+    if request.user.id:
+        return redirect('/conversations/')
+    return redirect('/login/')
+
+
 @route('login/')
 def login(request):
-    data = request.POST if request.method == 'POST' else None
-    login_form = LoginForm(data)
-    registration_form = RegistrationForm(data)
-    ctx = {'user': request.user, 'login_form': login_form, 'registration_form': registration_form}
+    form = LoginForm(request.POST if request.method == 'POST' else None)
+    error_msg = _('Invalid username or password')
+
+    if request.method == 'POST' and form.is_valid():
+        data = form.cleaned_data
+        email, password = data['email'], data['password']
+
+        try:
+            user = User.objects.get_by_email_or_username(email)
+            user = auth.authenticate(request, username=user.username, password=password)
+            auth.login(request, user)
+            if user is None:
+                raise User.DoesNotExist
+        except User.DoesNotExist:
+            form.add_error(None, error_msg)
+        else:
+            return redirect(request.GET.get('redirect', '/'))
+
+    ctx = dict(user=request.user, form=form)
     return render(request, 'pages/login.jinja2', ctx)
+
+
+@route('register/')
+def register(request):
+    form = RegistrationForm(request.POST if request.method == 'POST' else None)
+
+    if request.method == 'POST' and form.is_valid():
+        data = form.cleaned_data
+        name, email, password = data['name'], data['email'], data['password']
+        try:
+            user = User.objects.create_simple_user(name, email, password)
+        except IntegrityError as ex:
+            form.add_error(None, str(ex))
+        else:
+            user = auth.login(request, user)
+            if user:
+                return redirect(request.GET.get('redirect', '/'))
+
+    ctx = dict(user=request.user, form=form)
+    return render(request, 'pages/register.jinja2', ctx)
+
+
+@route('profile/')
+def profile_detail(request):
+    ctx = dict(info_tab=request.GET.get('info', 'profile'))
+    return render(request, 'pages/profile-detail.jinja2', ctx)
+
+
+@route('profile/edit/')
+def profile_edit(request):
+    if request.method == 'POST':
+        form = ProfileForm(request.POST)
+        if form.is_valid():
+            form.save()
+    else:
+        form = ProfileForm()
+
+    ctx = dict(form=form, profile=request.user)
+    return render(request, 'pages/profile-edit.jinja2', ctx)
 
 
 @route('conversations/<slug:slug>/')
@@ -39,18 +112,20 @@ def conversation_detail(request, slug, category_slug):
         'conversation': conversation,
         'comment': comment,
     }
-    if comment and request.method == 'POST':
-        if 'vote' in request.POST:
-            if 'agree' in request.POST:
-                comment.vote(request.user, Vote.AGREE)
-            elif 'pass' in request.POST:
-                comment.vote(request.user, Vote.PASS)
-            elif 'disagree' in request.POST:
-                comment.vote(request.user, Vote.DISAGREE)
-            else:
-                raise ValueError('invalid parameter')
-        elif 'comment' in request.POST:
-            conversation.create_comment(request.user, request.POST['text'])
+    if comment and request.POST.get('action') == 'vote':
+        if 'agree' in request.POST:
+            comment.vote(request.user, 'agree')
+        elif 'pass' in request.POST:
+            comment.vote(request.user, 'skip')
+        elif 'disagree' in request.POST:
+            comment.vote(request.user, 'disagree')
+        else:
+            raise ValueError('invalid parameter')
+
+    elif request.POST.get('action') == 'comment':
+        comment = request.POST['comment'].strip()
+        conversation.create_comment(request.user, comment)
+
     return render(request, 'pages/conversation-detail.jinja2', ctx)
 
 
@@ -60,25 +135,12 @@ def conversation_list(request):
     return render(request, 'pages/conversation-list.jinja2', ctx)
 
 
-@route('')
-def index(request):
-    ctx = {'conversations': Conversation.objects.all()}
-    return render(request, 'pages/index.jinja2', ctx)
-
-
-@route('profile/')
-def profile(request):
-    if request.method == 'POST':
-        form = ProfileForm(request.POST)
-        if form.is_valid():
-            form.save()
-    else:
-        form = ProfileForm()
-
-    ctx = dict(
-        profile_form=form,
-    )
-    return render(request, 'pages/profile.jinja2', ctx)
+#
+# Debug routes
+#
+@route('debug/styles/')
+def display(request):
+    return render(request, 'pages/debug-styles.jinja2', {})
 
 
 #

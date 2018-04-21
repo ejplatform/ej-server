@@ -1,4 +1,4 @@
-{% from 'components/elements.jinja2' import rocket_button, action_button %}
+{% from 'components/generic/elements.jinja2' import rocket_button, action_button %}
 
 
 {% macro home_banner(action='start-now') %}
@@ -10,7 +10,7 @@
         {% if action == 'rocket-chat' %}
             {{ rocket_button() }}
         {% elif action == 'start-now' %}
-            {{ action_button('Comece agora!') }}
+            {{ action_button('Comece agora!', '/start/' ) }}
         {% else %}
             Invalid action: {{ action }}
         {% endif %}
@@ -69,6 +69,6 @@
     <div class="StartNow">
         <h1>Venha somar suas opiniões à nossa rede!</h1>
         <h2>Quanto mais opiniões, mais ricas serão as discussões.</h2>
-        {{ action_button('Começar agora!', '/start') }}
+        {{ action_button('Começar agora!', '/start/') }}
     </div>
 {% endmacro %}
