@@ -15,6 +15,11 @@ def environment(**options):
     )
     env.filters.update(
         markdown=lambda x: Markup(markdown(x)),
+        pc=format_percent,
     )
     env.install_gettext_callables(ugettext, ungettext, newstyle=True)
     return env
+
+
+def format_percent(x):
+    return f'{int(x * 100)}%'

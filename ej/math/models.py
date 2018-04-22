@@ -80,6 +80,6 @@ class Job(models.Model):
                 # Avoids the concurrency between celery worker and django core
                 # when the core didn't save the Job into the database and the
                 # worker tries to access it to change its state.
-                transaction.on_commit(lambda: task.delay(**kwargs))
+                transaction.on_commit(lambda: task.sleep(**kwargs))
             else:
                 task.apply(kwargs=kwargs)

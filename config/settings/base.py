@@ -344,3 +344,9 @@ STATISTICS_REFRESH_TIME = env('STATISTICS_REFRESH_TIME', default=150)  # seconds
 MATH_MIN_USERS = env('MATH_MIN_USERS', default=5)
 MATH_MIN_COMMENTS = env('MATH_MIN_COMMENTS', default=5)
 MATH_MIN_VOTES = env('MATH_MIN_VOTES', default=5)
+
+# EJ Conversations
+EJ_CONVERSATIONS_URLMAP = {
+    'conversation-detail': '/conversations/{conversation.category.slug}/{conversation.slug}/',
+    'conversation-list': '/conversations/',
+}

@@ -149,6 +149,18 @@ def conversation_detail(request, slug, category_slug):
     return render(request, 'pages/conversation-detail.jinja2', ctx)
 
 
+@route('conversations/<slug:category_slug>/<slug:slug>/info/')
+def conversation_info(request, slug, category_slug):
+    conversation = get_object_or_404(Conversation, slug=slug)
+    if conversation.category.slug != category_slug:
+        raise Http404
+    ctx = dict(
+        conversation=conversation,
+        info=conversation.get_statistics(),
+    )
+    return render(request, 'pages/conversation-info.jinja2', ctx)
+
+
 @route('conversations/')
 def conversation_list(request):
     ctx = {'conversations': Conversation.objects.all()}

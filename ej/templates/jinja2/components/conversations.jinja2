@@ -155,3 +155,61 @@
     ] %}
     {{ breadcrumbs(links, has_home=has_home) }}
 {% endmacro %}
+
+
+{#---------------------------------------------------------------------------#
+    CONVERSATION INFO
+ #---------------------------------------------------------------------------#}
+{% macro conversation_info(conversation, info) %}
+    <div class="ConversationInfo Container">
+        <h1>Info: <em>{{ conversation.title }}</em></h1>
+        <article>
+            <dl>
+                {% for name, value in info.items() %}
+                    <dt>{{ name }}</dt>
+                    {% if value.__class__ == dict %}
+                        <dd>
+                            <dl>
+                                {% for k, v in value.items() %}
+                                    <dt>{{ k }}</dt>
+                                    <dd>{{ v }}</dd>
+                                {% endfor %}
+                            </dl>
+                        </dd>
+                    {% else %}
+                        <dd>{{ value }}</dd>
+                    {% endif %}
+                {% endfor %}
+            </dl>
+        </article>
+
+        <h1>Comments</h1>
+        <table>
+            <thead>
+            <tr>
+                <th>Comment</th>
+                <th>Author</th>
+                <th>Votes</th>
+                <th>Agree</th>
+                <th>Disagree</th>
+                <th>Skip</th>
+                <th>Unvoted</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for comment in conversation.comments.all() %}
+                <tr>
+                    {% set stats = comment.get_statistics(ratios=True) %}
+                    <td>{{ comment.content }}</td>
+                    <td>{{ comment.author.name }}</td>
+                    <td>{{ stats.total }}</td>
+                    <td>{{ stats.agree_ratio | pc }}</td>
+                    <td>{{ stats.disagree_ratio | pc }}</td>
+                    <td>{{ stats.skip_ratio | pc }}</td>
+                    <td>{{ stats.missing_ratio | pc }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endmacro %}
