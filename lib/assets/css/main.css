@@ -526,7 +526,7 @@ label {
   margin: 0 auto; }
 
 input[type=submit] {
-  background: #4056a1; }
+  background: #71d0db; }
 
 /*
  GENERIC CONTAINER PATTERNS
@@ -563,7 +563,7 @@ input[type=submit],
 .Button,
 .ActionButton,
 .RocketButton {
-  background: #4056a1;
+  background: #71d0db;
   border: none;
   border-radius: 3px;
   box-sizing: border-box;
@@ -626,7 +626,7 @@ input[type=submit],
   .Button .Login-button,
   .ActionButton .Login-button,
   .RocketButton .Login-button {
-    background-color: #f13c20;
+    background-color: #ff42af;
     border-radius: 50ch;
     color: rgba(255, 255, 255, 0.8); }
     button[primary]:hover, button[primary]:focus,
@@ -688,7 +688,7 @@ input[type=submit],
     .Button .Login-button:focus,
     .ActionButton .Login-button:focus,
     .RocketButton .Login-button:focus {
-      background-color: #d1270d;
+      background-color: #ff0f99;
       color: #fff; }
   button[secondary],
   button .Button--secondary,
@@ -757,8 +757,8 @@ input[type=submit],
   .ActionButton .Button--ghost,
   .RocketButton .Button--ghost {
     background: none;
-    border: 1px solid #4056a1;
-    color: #4056a1;
+    border: 1px solid #71d0db;
+    color: #71d0db;
     padding: 11px 23px; }
     button[ghost]:hover, button[ghost]:focus,
     button .Button--ghost:hover,
@@ -800,7 +800,7 @@ input[type=submit],
     .Button .Button--ghost .Button--ghost-primary,
     .ActionButton .Button--ghost .Button--ghost-primary,
     .RocketButton .Button--ghost .Button--ghost-primary {
-      color: #f13c20;
+      color: #ff42af;
       border-radius: 50ch; }
       button[ghost] [primary]:hover, button[ghost] [primary]:focus,
       button[ghost] .Button--ghost-primary:hover,
@@ -841,7 +841,7 @@ input[type=submit],
       .Button .Button--ghost .Button--ghost-primary:focus,
       .ActionButton .Button--ghost .Button--ghost-primary:focus,
       .RocketButton .Button--ghost .Button--ghost-primary:focus {
-        color: #d1270d; }
+        color: #ff0f99; }
     button[ghost] [secondary],
     button[ghost] .Button--ghost-secondary,
     button .Button--ghost [secondary],
@@ -1072,7 +1072,7 @@ input[type=submit],
   margin: 12px 0 0; }
 
 .NavMenu {
-  background: #e5d191;
+  background: #ff7e8b;
   box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.3);
   box-sizing: border-box;
   color: black;
@@ -1159,7 +1159,7 @@ input[type=submit],
   .ConversationCard h1 {
     font-size: 1.3em; }
   .ConversationCard-cover {
-    background: #4056a1;
+    background: #71d0db;
     border-radius: 12px;
     color: #fff;
     display: flex;
@@ -1194,7 +1194,7 @@ input[type=submit],
   .ConversationDetail > * {
     padding: 24px; }
   .ConversationDetail-banner {
-    background: #4056a1;
+    background: #71d0db;
     color: #fff;
     padding-top: 0; }
     .ConversationDetail-banner a {
@@ -1292,7 +1292,7 @@ input[type=submit],
     overflow-x: hidden;
     overflow-y: auto; }
   .Page-title {
-    background: #4056a1;
+    background: #71d0db;
     color: #fff;
     margin: 0 0 24px 0;
     padding: 12px; }
@@ -1360,22 +1360,107 @@ input[type=submit],
   flex-wrap: wrap; }
   .ColorStyles > * {
     border: 1px solid black;
+    box-sizing: border-box;
     margin: 6px;
+    min-height: 120px;
     text-align: center;
-    padding: 24px 0;
-    width: 120px; }
+    padding: 0;
+    width: 120px;
+    display: flex;
+    flex-flow: column;
+    align-items: stretch;
+    align-content: stretch;
+    justify-content: space-between; }
+  .ColorStyles div > span {
+    display: block;
+    width: 100%;
+    flex-grow: 1; }
   .ColorStyles .primary {
-    background: #4056a1;
+    background: #71d0db;
     color: #fff; }
   .ColorStyles .accent {
-    background: #f13c20;
+    background: #ff42af;
     color: #fff; }
-  .ColorStyles .content {
-    background: #fff;
+  .ColorStyles .alt {
+    background: #ffb1b9;
     color: #111; }
   .ColorStyles .hint {
     background: #eee;
     color: #111; }
+  .ColorStyles .content {
+    background: #fff;
+    color: #111; }
+  .ColorStyles .error {
+    background: #f13c20;
+    color: #111; }
+  .ColorStyles .warning {
+    background: #ffd333;
+    color: #111; }
+  .ColorStyles .action-default {
+    background: #71d0db;
+    color: rgba(255, 255, 255, 0.8); }
+  .ColorStyles .action-primary {
+    background: #ff42af;
+    color: rgba(255, 255, 255, 0.8); }
+  .ColorStyles .action-secondary {
+    background: #eee;
+    color: rgba(17, 17, 17, 0.8); }
+  .ColorStyles .color-white {
+    background: #999;
+    color: white; }
+    .ColorStyles .color-white span:first-child {
+      background: #fff; }
+    .ColorStyles .color-white span:last-child {
+      background: #111; }
+  .ColorStyles .color-gray {
+    background: #999;
+    color: white; }
+    .ColorStyles .color-gray span:first-child {
+      background: #eee; }
+    .ColorStyles .color-gray span:last-child {
+      background: #666; }
+  .ColorStyles .color-blue {
+    background: #4d8bc0;
+    color: white; }
+    .ColorStyles .color-blue span:first-child {
+      background: #71d0db; }
+    .ColorStyles .color-blue span:last-child {
+      background: #354d81; }
+  .ColorStyles .color-green {
+    background: #34ff99;
+    color: white; }
+    .ColorStyles .color-green span:first-child {
+      background: #97ffc0; }
+    .ColorStyles .color-green span:last-child {
+      background: #4cc85c; }
+  .ColorStyles .color-magenta {
+    background: #ff42af;
+    color: white; }
+    .ColorStyles .color-magenta span:first-child {
+      background: #ffd0e2; }
+    .ColorStyles .color-magenta span:last-child {
+      background: #912763; }
+  .ColorStyles .color-purple {
+    background: #4056a1;
+    color: white; }
+    .ColorStyles .color-purple span:first-child {
+      background: #c5cbe3; }
+    .ColorStyles .color-purple span:last-child {
+      background: #1e3155; }
+  .ColorStyles .color-red {
+    background: #f13c20;
+    color: white; }
+    .ColorStyles .color-red span:first-child {
+      background: #ffb1b9; }
+    .ColorStyles .color-red span:last-child {
+      background: #9c2715; }
+  .ColorStyles .color-yellow {
+    background: #ffd333;
+    color: white; }
+    .ColorStyles .color-yellow span:first-child {
+      background: #fffeaf; }
+    .ColorStyles .color-yellow span:last-child {
+      background: #decf36; }
 
 /*
  LINKS

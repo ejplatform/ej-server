@@ -2,27 +2,50 @@
 {% from 'components/generic/elements.jinja2' import action_button, rocket_button %}
 
 {% block content %}
+    {% set colors_main = 'primary accent alt content hint'.split() %}
+    {% set colors_roles = 'error warning action-default action-primary action-secondary'.split() %}
+    {% set colors_named = 'white gray blue green magenta purple red yellow'.split() %}
+
     <div class="Container">
         <h1>EJ styles</h1>
         <section>
             <h2>Typography</h2>
             <div>
                 {% for i in range(1, 7) %}
-                    <h{{ i }}>H{{ i }} Title</h{{ i }}>
+                    <h{{ i }}>H{{ i }} Title (<strong>strong</strong>, <em>em</em>)</h{{ i }}>
                 {% endfor %}
-                <p>This is a paragraph of text and a <a href="#">link</a>.</p>
+                <p>
+                    This is a paragraph of text and a <a href="#">link</a>.
+                    Text can be styled with <strong>strong</strong> and <em>emphasis</em>.
+                </p>
                 <code>
                     <pre>pre-formatted text.</pre>
                 </code>
             </div>
 
             <h2>Colors</h2>
+
+            <h3>Main color scheme</h3>
             <div class="ColorStyles">
-                <div class="primary">primary</div>
-                <div class="accent">accent</div>
-                <div class="content">content</div>
-                <div class="hint">hint</div>
+                {% for color in colors_main %}
+                    <div class="{{ color }}"><span>{{ color }}</span></div>
+                {% endfor %}
             </div>
+
+            <h3>Color roles and actions</h3>
+            <div class="ColorStyles">
+                {% for color in colors_roles %}
+                    <div class="{{ color }}"><span>{{ color }}</span></div>
+                {% endfor %}
+            </div>
+
+            <h3>Named colors</h3>
+            <div class="ColorStyles">
+                {% for color in colors_named %}
+                    <div class="color-{{ color }}"><span>light</span><span>{{ color }}</span><span>dark</span></div>
+                {% endfor %}
+            </div>
+
 
             <h2>Buttons</h2>
             <p>
@@ -36,10 +59,10 @@
             <p><a href="#" class="Button">Link</a></p>
 
             <h1>Forms</h1>
-            <p>WIP...</p>
+            <p>Work in progress...</p>
         </section>
 
-        <h1>Components</h1>
-        <section>WIP...</section>
+        <h1>Generic Components</h1>
+        <section>Work in progress...</section>
     </div>
 {% endblock %}
