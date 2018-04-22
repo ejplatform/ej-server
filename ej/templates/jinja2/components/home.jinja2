@@ -19,11 +19,11 @@
 
 
 {% macro how_it_works() %}
-    <div class="how-it-works">
+    <div class="HowItWorks">
         <h1>Como Funciona?</h1>
         <h2>A dinâmica de interação acontece em 3 frentes</h2>
 
-        <div class="how-it-works__cards">
+        <div class="HowItWorks-cards">
             {% call how_it_works_card(
                     'child',
                     'Comitê de Participação do Adolescente',
@@ -49,11 +49,11 @@
 {% endmacro %}
 
 {% macro how_it_works_card(icon, title, comment, action=None, link='#') %}
-    <article class="how-it-works__card">
-        <i class="fa fa-{{ icon }} how-it-works__card-icon"></i>
-        <div class="how-it-works__card-content">
+    <article class="HowItWorksCard">
+        <i class="fa fa-{{ icon }} HowItWorksCard-icon"></i>
+        <div class="HowItWorksCard-content">
             <h1>{{ title }} <i class="fa fa-angle-right"></i></h1>
-            <aside class="how-it-works__card-extra">
+            <aside class="HowItWorksCard-extra">
                 <p>{{ comment }}</p>
                 {% if action -%}
                     {{ action_button(action, link) }}

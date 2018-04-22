@@ -1,16 +1,8 @@
-{% set target = request.GET.get('target', 'all') %}
 {% extends 'base.jinja2' %}
+{% from 'components/generic/page_menu.jinja2' import menu %}
 
-{% block content %}
-    <div class="NavMenu">
-    <ul>
-        <li>Conversas</li>
-        <li>Canais</li>
-        <li>Perfil</li>
-        <li>Perguntas frequentes</li>
-        <li>Sobre</li>
-    </ul>
-    </div>
+{% block main %}
+    {{ menu() }}
 {% endblock %}
 
 

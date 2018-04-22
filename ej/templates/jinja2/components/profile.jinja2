@@ -15,7 +15,7 @@
 {% endmacro %}
 
 
-{% macro profile_detail(profile, info='profile') %}
+{% macro profile_detail(profile, csrf_input, info='profile') %}
     <div class="Profile">
         <div class="Profile-breadcrumbs">{{ breadcrumbs([('profile', 'Profile')]) }}</div>
 
@@ -24,7 +24,8 @@
         <h2>{{ profile.get_role_description() }}</h2>
 
         <div class="Profile-actionButtons">
-            {{ rocket_button() }}{{ action_button('Conversas', '/conversations/') }}
+            <p>{{ rocket_button() }}</p>
+            <p>{{ action_button('Conversas', '/conversations/') }}</p>
         </div>
 
         <div class="Profile-tabs">
@@ -34,7 +35,7 @@
             </nav>
             <div class="Profile-tabContainer">
                 {% if info == 'profile' %}
-                    {{ profile_info(profile) }}
+                    {{ profile_info(profile, csrf_input) }}
                 {% elif info == 'contributions' %}
                     {{ profile_contributions(profile) }}
                 {% else %}
@@ -46,7 +47,7 @@
 {% endmacro %}
 
 
-{% macro profile_info(profile) %}
+{% macro profile_info(profile, csrf_input) %}
     <div class="Profile-info">
         <dl>
             {% for title, info in profile.get_profile_fields() %}
@@ -56,6 +57,12 @@
         </dl>
         {{ link(_('Edit profile'), '/profile/edit/') }}
         {{ link(_('Delete profile'), '/profile/delete/') }}
+        <div>
+            <form method="post" action="/logout/">
+                {{ csrf_input }}
+                <input class="Button" type="submit" name="logout" value="{{ _('Logout') }}" primary>
+            </form>
+        </div>
     </div>
 {% endmacro %}
 

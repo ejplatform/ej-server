@@ -2,5 +2,5 @@
 {% from 'components/conversations.jinja2' import conversation_detail with context %}
 
 {% block content %}
-    {{ conversation_detail(conversation) }}
+    {{ conversation_detail(conversation, request.user) }}
 {% endblock %}

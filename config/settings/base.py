@@ -303,8 +303,8 @@ SOCIALACCOUNT_PROVIDERS = {
 # Custom user app defaults
 # Select the correct user model
 AUTH_USER_MODEL = 'users.User'
-LOGIN_REDIRECT_URL = '/api/profile/close'
-LOGIN_URL = 'account_login'
+LOGIN_REDIRECT_URL = '/start/'
+LOGIN_URL = 'login'
 
 # SLUGLIFIER
 AUTOSLUG_SLUGIFY_FUNCTION = 'slugify.slugify'

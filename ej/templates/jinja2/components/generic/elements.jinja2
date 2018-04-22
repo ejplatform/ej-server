@@ -1,11 +1,18 @@
-{% macro link(title='Click me', href='#', alt='', target='main') %}
-    {% if caller %}
-        {% if href == '#' %}
-            {% set href=title %}
-        {% endif %}
-        {% set title = caller() %}
-    {% endif %}
-    <a href="{{ href }}" alt="{{ alt }}" up-target="{{ target }}" primary>{{ title }}</a>
+{% macro link(title='Click me', href='#', alt='', target='.Page-mainContainer', action='up-target', instant=True, args='', button=False, class=None, transition='cross-fade', preload=False, scroll=True) %}
+    {%- if caller -%}
+        {%- if href == '#' -%}
+            {%- set href=title -%}
+        {%- endif -%}
+        {%- set title = caller() -%}
+    {%- endif -%}
+    <a href="{{ href }}" alt="{{ alt }}" {{ action }}="{{ target }}"
+             {%- if class %} class="{{ class }}"{% endif %}
+             {%- if button %} class="{{ Button }}"{% endif %}
+             {%- if instant %} up-instant{% endif %}
+             {%- if transition %} up-transition="{{ transition }}"{% endif %}
+             {%- if scroll -%} up-restore-scroll{% endif %}
+             {%- if preload -%} up-preload{% endif %}
+             {{ args }} primary>{{ title }}</a>
 {% endmacro %}
 
 

@@ -1,6 +1,6 @@
 from django.contrib import auth
 from django.db import IntegrityError
-from django.http import Http404
+from django.http import Http404, HttpResponseServerError
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils.translation import ugettext as _
 
@@ -46,10 +46,26 @@ def login(request):
         except User.DoesNotExist:
             form.add_error(None, error_msg)
         else:
-            return redirect(request.GET.get('redirect', '/'))
+            return redirect(request.GET.get('next', '/'))
 
     ctx = dict(user=request.user, form=form)
     return render(request, 'pages/login.jinja2', ctx)
+
+
+@route('logout/', login_required=True)
+def start(request):
+    if request.method == 'POST':
+        auth.logout(request)
+        return redirect('/')
+    return HttpResponseServerError('must use POST to logout')
+
+
+@route('profile/delete/', login_required=True)
+def start(request):
+    ctx = dict(
+        content_html='<h1>Error</h1><p>Not implemented yet!</p>'
+    )
+    return render(request, 'base.jinja2', ctx)
 
 
 @route('register/')
@@ -64,6 +80,8 @@ def register(request):
         except IntegrityError as ex:
             form.add_error(None, str(ex))
         else:
+            user = auth.authenticate(request, username=user.username,
+                                     password=password)
             user = auth.login(request, user)
             if user:
                 return redirect(request.GET.get('redirect', '/'))
@@ -72,13 +90,13 @@ def register(request):
     return render(request, 'pages/register.jinja2', ctx)
 
 
-@route('profile/')
+@route('profile/', login_required=True)
 def profile_detail(request):
     ctx = dict(info_tab=request.GET.get('info', 'profile'))
     return render(request, 'pages/profile-detail.jinja2', ctx)
 
 
-@route('profile/edit/')
+@route('profile/edit/', login_required=True)
 def profile_edit(request):
     profile = request.user
     if request.method == 'POST':
@@ -135,6 +153,14 @@ def conversation_detail(request, slug, category_slug):
 def conversation_list(request):
     ctx = {'conversations': Conversation.objects.all()}
     return render(request, 'pages/conversation-list.jinja2', ctx)
+
+
+@route('groups/')
+def start(request):
+    ctx = dict(
+        content_html='<h1>Error</h1><p>Not implemented yet!</p>'
+    )
+    return render(request, 'base.jinja2', ctx)
 
 
 #

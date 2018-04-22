@@ -1,5 +1,5 @@
 {% from 'components/generic/page_header.jinja2' import page_header %}
-{% from 'components/generic/page_sidebar.jinja2' import sidebar %}
+{% from 'components/generic/page_menu.jinja2' import sidebar %}
 {% from 'components/generic/page_footer.jinja2' import page_footer %}
 
 {% set target_context = request.GET.target | default('all') %}
@@ -89,15 +89,21 @@
         <main class="Page-content">
             {% if content_title %}<h1 class="Page-title">{{ content_title }}</h1>{% endif %}
             {% block content %}
-                <p>Please override the "content" block of your template!</p>
+                {% if content_html %}
+                    <div class="Container">
+                        {{ content_html|safe }}
+                    </div>
+                {% else %}
+                    <p>Please override the "content" block of your template!</p>
+                {% endif %}
             {% endblock %}
         </main>
-    {% endblock %}
 
     {% if target == 'all' or target == 'page' %}
         {{ page_footer() }}
         </div>
     {% endif %}
+    {% endblock %}
 {% endblock %}
 
 {% if target == 'all' %}

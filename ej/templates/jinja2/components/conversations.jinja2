@@ -7,19 +7,21 @@
 {% macro conversation_list(conversations,
                            title=_('Conversas ativas agora'),
                            subtitle=_('Veja as conversas abaixo e dê sua opinião')) %}
-    <div class="ConversationListTitle">
-        {% if caller %}{{ caller() }}{% endif %}
-        <h1>{{ title }}</h1>
-        <h2>{{ subtitle }}</h2>
-    </div>
+    <div class="ConversationList">
+        <div class="ConversationList-title">
+            {% if caller %}{{ caller() }}{% endif %}
+            <h1>{{ title }}</h1>
+            <h2>{{ subtitle }}</h2>
+        </div>
 
-    {# Cards #}
-    <div class="ConversationCardList">
-        {% for conversation in conversations %}
-            {{ conversation_card(conversation) }}
-        {% endfor %}
+        {# Cards #}
+        <div class="ConversationList-cardList">
+            {% for conversation in conversations %}
+                {{ conversation_card(conversation) }}
+            {% endfor %}
+        </div>
+        {# {{ conversation_pagination() }} #}
     </div>
-    {# {{ conversation_pagination() }} #}
 {% endmacro %}
 
 
@@ -56,7 +58,7 @@
     CONVERSATION DETAIL
  #---------------------------------------------------------------------------#}
 
-{% macro conversation_detail(conversation) %}
+{% macro conversation_detail(conversation, user) %}
     <div class="ConversationDetail">
         <div class="ConversationDetail-banner">
             {{ conversation_breadcrumbs(conversation) }}
@@ -71,13 +73,15 @@
 
         {# Current comment #}
         {% if comment %}
-            {{ comment_detail(comment) }}
+            {{ comment_detail(comment, user) }}
         {% else %}
             <p class="Comment">Conversa não contêm comentários</p>
         {% endif %}
 
         {# Post a new comment #}
-        {{ comment_form() }}
+        {% if user.is_authenticated %}
+            {{ comment_form() }}
+        {% endif %}
 
         {# Opinion #}
         {% if conversation.opinion %}
@@ -87,19 +91,24 @@
 {% endmacro %}
 
 
-{% macro comment_detail(comment) %}
+{% macro comment_detail(comment, user) %}
     <div class="Comment">
-        <div>{{ comment.author }}</div>
+        <div>{{ comment.author.name }}</div>
         <p>{{ comment.content }}</p>
-        <form method="post">
-            {{ csrf_input }}
-            <input type="hidden" name="action" value="vote">
-            <ul class="ConversationComment-actions">
-                <li><input type="submit" value="Concordo" name="agree"></li>
-                <li><input type="submit" value="Passo" name="pass"></li>
-                <li><input type="submit" value="Discordo" name="disagree"></li>
-            </ul>
-        </form>
+        {% if user.is_authenticated %}
+            <form method="post">
+                {{ csrf_input }}
+                <input type="hidden" name="action" value="vote">
+                <ul class="ConversationComment-actions">
+                    <li><input type="submit" value="Concordo" name="agree"></li>
+                    <li><input type="submit" value="Passo" name="pass"></li>
+                    <li><input type="submit" value="Discordo" name="disagree"></li>
+                </ul>
+            </form>
+        {% else %}
+            <p class="Comment-loginWarn">É necessário <a href="/login/">registrar-se</a> antes de
+                votar ou enviar um comentário!</p>
+        {% endif %}
     </div>
 {% endmacro %}
 

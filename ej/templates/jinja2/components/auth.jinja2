@@ -6,13 +6,13 @@
         <form method="post">
             {{ csrf_input }}
 
-            <input type="text" name="email" required placeholder="E-mail ou nome de usuário">
+            <div><input type="text" name="email" required placeholder="E-mail ou nome de usuário"></div>
             {{ form.email.errors }}
 
-            <input type="password" name="password" required placeholder="Senha">
+            <div><input type="password" name="password" required placeholder="Senha"></div>
             {{ form.password.errors }}
 
-            <input type="submit" class="Login-button" value="{{ _('Login') }}" name="login">
+            <div><input type="submit" class="Login-button" value="{{ _('Login') }}" name="login"></div>
             {{ form.non_field_errors() }}
 
             {{ login_options() }}
@@ -37,7 +37,7 @@
                 {{ field.errors }}
             {% endfor %}
 
-            <input type="submit" value="{{ _('Register') }}" name="register">
+            <div><input type="submit" value="{{ _('Register') }}" name="register"></div>
             {{ form.non_field_errors() }}
         </form>
 
