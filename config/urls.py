@@ -36,7 +36,7 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('activity/', include('actstream.urls')),
     path('api/', include('courier.urls', namespace='courier')),
-    path('api/v1/rocketchat/', include('ej.ejrocketchat.urls')),
+    path('api/v1/rocketchat/', include('ej.ej_rocketchat.urls')),
 
     # Static files for the dev server
     *static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),

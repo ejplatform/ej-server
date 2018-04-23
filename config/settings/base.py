@@ -27,7 +27,7 @@ INSTALLED_APPS = [
     'ej.gamification.apps.GamificationConfig',
     'ej.math.apps.MathConfig',
     'ej.configurations.apps.ConfigurationsConfig',
-    'ej.ejrocketchat.apps.EJRocketChatConfig',
+    'ej.ej_rocketchat.apps.EJRocketchatConfig',
 
     # External EJ Apps
     'ej_conversations',
