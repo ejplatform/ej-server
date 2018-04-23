@@ -122,7 +122,7 @@ def category_list(request, slug):
     return render(request, 'pages/category-detail.jinja2', ctx)
 
 
-@route('conversations/<slug:category_slug>/<slug:slug>')
+@route('conversations/<slug:category_slug>/<slug:slug>/')
 def conversation_detail(request, slug, category_slug):
     conversation = get_object_or_404(Conversation, slug=slug)
     if conversation.category.slug != category_slug:

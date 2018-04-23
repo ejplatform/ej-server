@@ -14,7 +14,7 @@ def sass(ctx, no_watch=False, trace=False):
 @task
 def run(ctx, no_toolbar=False):
     """
-    Run development server.
+    Run development server
     """
     env = {}
     if no_toolbar:
@@ -46,7 +46,7 @@ def db_reset(ctx, fake=False, postgres=False):
 @task
 def db_fake(ctx, no_users=False, no_conversations=False, no_admin=False):
     """
-    Adds fake data to the database.
+    Adds fake data to the database
     """
     if not no_users:
         suffix = '' if no_admin else ' --admin'
