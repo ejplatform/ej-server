@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'pinax.points',
     'pinax.badges',
     'constance',
+    'constance.backends.database',
 
     # Alternative admin apps
     # 'jet.dashboard',
