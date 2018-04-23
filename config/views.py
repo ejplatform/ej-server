@@ -1,8 +1,11 @@
+import logging
+
 from django.contrib import auth
 from django.db import IntegrityError
 from django.http import Http404, HttpResponseServerError
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils.translation import ugettext as _
+from django.conf import settings
 
 from ej.users.models import User
 from ej_conversations.models import Conversation, Vote, Category
@@ -10,6 +13,9 @@ from .forms import ProfileForm, LoginForm, RegistrationForm
 from .views_utils import route, get_patterns
 
 get_patterns = get_patterns  # don't count as an unused import
+DJANGO_BACKEND = 'django.contrib.auth.backends.ModelBackend',
+ALLAUTH_BACKEND = 'allauth.account.auth_backends.AuthenticationBackend'
+log = logging.getLogger('ej-views')
 
 
 #
@@ -40,10 +46,12 @@ def login(request):
         try:
             user = User.objects.get_by_email_or_username(email)
             user = auth.authenticate(request, username=user.username, password=password)
+            log.info(f'user {user} ({email}) successfully authenticated')
             auth.login(request, user)
             if user is None:
                 raise User.DoesNotExist
         except User.DoesNotExist:
+            log.info(f'invalid login attempt: {email}')
             form.add_error(None, error_msg)
         else:
             return redirect(request.GET.get('next', '/'))

@@ -924,6 +924,38 @@ input[type=submit],
     content: ''; }
 
 /*
+ GENERIC PAGE ELEMENTS
+ ======================================================================== */
+.Page {
+  box-sizing: border-box;
+  display: flex;
+  flex-flow: column;
+  height: 100vh;
+  overflow: hidden;
+  padding: 60px 0 82px 0; }
+  @media only screen and (min-width: 500px) {
+    .Page {
+      padding: 72px 0 0 0; } }
+  .Page-mainContainer {
+    box-sizing: border-box;
+    height: 100vh;
+    display: flex;
+    flex-flow: column;
+    overflow-x: hidden;
+    overflow-y: auto; }
+  .Page-title {
+    background: #71d0db;
+    color: #fff;
+    margin: 0 0 24px 0;
+    padding: 12px; }
+    .Page-title h1 {
+      font-size: 1.87em; }
+  .Page-content {
+    flex-grow: 1;
+    margin: 0 auto;
+    padding: 0; }
+
+/*
  PAGE HEADER
  ============================================================================ */
 .Header {
@@ -1270,38 +1302,6 @@ input[type=submit],
   text-align: center; }
   .StartNow h2 {
     font-size: 1.15em; }
-
-/*
- GENERIC PAGE ELEMENTS
- ======================================================================== */
-.Page {
-  box-sizing: border-box;
-  display: flex;
-  flex-flow: column;
-  height: 100vh;
-  overflow: hidden;
-  padding: 60px 0 82px 0; }
-  @media only screen and (min-width: 500px) {
-    .Page {
-      padding: 72px 0 0 0; } }
-  .Page-mainContainer {
-    box-sizing: border-box;
-    height: 100vh;
-    display: flex;
-    flex-flow: column;
-    overflow-x: hidden;
-    overflow-y: auto; }
-  .Page-title {
-    background: #71d0db;
-    color: #fff;
-    margin: 0 0 24px 0;
-    padding: 12px; }
-    .Page-title h1 {
-      font-size: 1.87em; }
-  .Page-content {
-    flex-grow: 1;
-    margin: 0 auto;
-    padding: 0; }
 
 /*
  USER PROFILE VIEWS

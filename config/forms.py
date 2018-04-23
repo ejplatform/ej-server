@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth import get_user_model
 from django.forms import ModelForm
 from django.utils.translation import ugettext as _
+from django.conf import settings
 
 User = get_user_model()
 
@@ -60,8 +61,11 @@ class LoginForm(forms.Form):
     """
     User login
     """
-    email = forms.EmailField()
-    password = forms.CharField(widget=forms.PasswordInput)
+    if getattr(settings, 'ALLOW_USERNAME_LOGIN', settings.DEBUG):
+        email = forms.CharField(label=_('E-mail'))
+    else:
+        email = forms.EmailField(label=_('E-mail'))
+    password = forms.CharField(label=_('Password'), widget=forms.PasswordInput)
 
 
 class ProfileImageForm(ModelForm):
