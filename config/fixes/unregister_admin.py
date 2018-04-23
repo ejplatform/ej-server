@@ -6,7 +6,7 @@ from django.contrib import admin
 
 UNREGISTER_APPS = [
     # Django
-    'sites',
+    # 'sites',
 
     # 3rd party
     'pinax_badges', 'pinax_points', 'account', 'actstream', 'authtoken',

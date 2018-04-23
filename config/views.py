@@ -188,9 +188,6 @@ def display(request):
 #
 route('rocket/', name='rocket', template_name='pages/rocket.jinja2')
 route('menu/', name='menu', template_name='pages/menu.jinja2')
-route('faq/', name='faq', template_name='pages/faq.jinja2')
-route('about/', name='about', template_name='pages/about.jinja2')
-route('usage/', name='usage', template_name='pages/usage.jinja2')
 route('tour/', name='tour', template_name='pages/tour.jinja2')
 route('comments/', name='comments', template_name='pages/comments.jinja2')
 route('notifications/', name='notifications', template_name='pages/notifications.jinja2')

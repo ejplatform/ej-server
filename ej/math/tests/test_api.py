@@ -1,8 +1,8 @@
+import pytest
 from django.urls import reverse
 from rest_framework import status
 
 from ej.math.models import Job
-from ej_conversations.mommy_recipes import *
 
 pytestmark = pytest.mark.django_db
 

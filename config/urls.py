@@ -39,9 +39,6 @@ urlpatterns = [
 
     # Static files for the dev server
     *static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),
-
-    # Flat pages
-    path('pages/', include('django.contrib.flatpages.urls')),
 ]
 
 if settings.DEBUG:

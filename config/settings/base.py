@@ -24,9 +24,10 @@ INSTALLED_APPS = [
     'ej.users.apps.UsersConfig',
     'ej.gamification.apps.GamificationConfig',
     'ej.math.apps.MathConfig',
+    'ej.configurations.apps.ConfigurationsConfig',
 
     # External EJ Apps
-    'ej_conversations.apps.EjConversationsConfig',
+    'ej_conversations',
 
     # External apps created by the EJ team
     'courier',
@@ -79,6 +80,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
 ]
 
 # MIGRATIONS CONFIGURATION

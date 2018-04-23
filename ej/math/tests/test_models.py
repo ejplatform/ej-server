@@ -1,12 +1,10 @@
 import pytest
-import time
 
-from ej_conversations.mommy_recipes import *
 from ej.math.models import Job
 from . import helpers
 
-
 pytestmark = pytest.mark.django_db
+cv_helpers = None
 
 
 @pytest.mark.skip('adjusting dependencies with ej_conversations')
