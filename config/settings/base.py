@@ -10,8 +10,6 @@ https://docs.djangoproject.com/en/dev/ref/settings/
 import pathlib
 
 from config.settings.core import env, DEBUG
-
-# Imports
 from .conf import db
 from .celery import *
 from .constance import *
@@ -19,26 +17,25 @@ from .constance import *
 DATABASES = db.DATABASES
 USE_SQLITE = db.USE_SQLITE
 
-
 ROOT_DIR = pathlib.Path(__file__).parent.parent.parent
 APPS_DIR = ROOT_DIR / 'ej'
 
 # APP CONFIGURATION
-# ------------------------------------------------------------------------------
 INSTALLED_APPS = [
-    # Default Django apps + admin
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.sites',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
+    # Inner EJ apps
+    'ej.users.apps.UsersConfig',
+    'ej.gamification.apps.GamificationConfig',
+    'ej.math.apps.MathConfig',
+    'ej.configurations.apps.ConfigurationsConfig',
+    'ej.ejrocketchat.apps.EJRocketChatConfig',
 
-    # Useful template tags:
-    # 'django.contrib.humanize',
+    # External EJ Apps
+    'ej_conversations',
 
-    # Admin
-    'django.contrib.admin',
+    # External apps created by the EJ team
+    'courier',
+    'courier.pushnotifications',
+    'courier.pushnotifications.providers.onesignal',
 
     # Third party apps
     'crispy_forms',
@@ -57,20 +54,24 @@ INSTALLED_APPS = [
     'actstream',
     'pinax.points',
     'pinax.badges',
-    'courier',
-    'courier.pushnotifications',
-    'courier.pushnotifications.providers.onesignal',
-    'constance',
-    'constance.backends.database',
 
-    # Custom EJ apps
-    'ej.users.apps.UsersConfig',
-    'ej.conversations.apps.ConversationsConfig',
-    'ej.gamification.apps.GamificationConfig',
-    'ej.math.apps.MathConfig',
-    'ej.ejrocketchat.apps.EJRocketChatConfig',
+    # Alternative admin apps
+    # 'jet.dashboard',
+    # 'jet',
+    # 'suit',
+
+    # Default Django apps
+    'django.contrib.flatpages',
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.sites',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
 ]
 
+# ------------------------------------------------------------------------------
 # MIDDLEWARE CONFIGURATION
 # ------------------------------------------------------------------------------
 MIDDLEWARE = [
@@ -81,8 +82,8 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    # XFrameOptions enabled to login iframe
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
 ]
 
 # MIGRATIONS CONFIGURATION
@@ -140,24 +141,31 @@ USE_TZ = True
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#templates
 TEMPLATES = [
     {
-        # See: https://docs.djangoproject.com/en/dev/ref/settings/#std:setting-TEMPLATES-BACKEND
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-dirs
+        'BACKEND': 'django.template.backends.jinja2.Jinja2',
         'DIRS': [
-            APPS_DIR / 'templates',
+            APPS_DIR / 'templates/jinja2/',
         ],
         'OPTIONS': {
-            # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-debug
+            'environment': 'config.jinja2.environment',
+            'extensions': [
+                'jinja2.ext.i18n',
+            ],
+            'context_processors': [],
+        },
+    },
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [
+            APPS_DIR / 'templates/django',
+        ],
+        'OPTIONS': {
             'debug': DEBUG,
-            # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-loaders
-            # https://docs.djangoproject.com/en/dev/ref/templates/api/#loader-types
             'loaders': [
                 'django.template.loaders.filesystem.Loader',
                 'django.template.loaders.app_directories.Loader',
             ],
-            # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-context-processors
             'context_processors': [
-                'django.template.context_processors.debug',
+                *(['django.template.context_processors.debug'] if DEBUG else ()),
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.template.context_processors.i18n',
@@ -168,18 +176,7 @@ TEMPLATES = [
             ],
         },
     },
-    {
-        'BACKEND': 'django.template.backends.jinja2.Jinja2',
-        'DIRS': [
-            ROOT_DIR / 'lib/templates',
-        ],
-        'OPTIONS': {
-            'environment': 'config.jinja2.environment',
-            'extensions': [
-                'jinja2.ext.i18n',
-            ]
-        },
-    },
+
 ]
 
 # See: http://django-crispy-forms.readthedocs.io/en/latest/install.html#template-packs
@@ -189,13 +186,11 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#static-root
 STATIC_ROOT = ROOT_DIR / 'lib/collect'
-
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#static-url
 STATIC_URL = '/static/'
 
 # See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#std:setting-STATICFILES_DIRS
 STATICFILES_DIRS = [
-    APPS_DIR / 'static',
+    ROOT_DIR / 'lib/assets',
 ]
 
 # See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#staticfiles-finders
@@ -215,6 +210,7 @@ MEDIA_URL = '/media/'
 # URL Configuration
 # ------------------------------------------------------------------------------
 ROOT_URLCONF = 'config.urls'
+APPEND_SLASH = True
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#wsgi-application
 WSGI_APPLICATION = 'config.wsgi.application'
@@ -266,6 +262,8 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 20,
+    # 'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.URLPathVersioning',
+    'DEFAULT_VERSION': 'v1',
 }
 
 REST_AUTH_REGISTER_SERIALIZERS = {
@@ -311,15 +309,14 @@ SOCIALACCOUNT_PROVIDERS = {
 # Custom user app defaults
 # Select the correct user model
 AUTH_USER_MODEL = 'users.User'
-LOGIN_REDIRECT_URL = '/api/profile/close'
-LOGIN_URL = 'account_login'
+LOGIN_REDIRECT_URL = '/start/'
+LOGIN_URL = 'login'
 
 # SLUGLIFIER
 AUTOSLUG_SLUGIFY_FUNCTION = 'slugify.slugify'
 
-
 # Location of root django.contrib.admin URL, use {% url 'admin:index' %}
-ADMIN_URL = r'^admin/'
+ADMIN_URL = 'admin/'
 
 # Django cors
 # ------------------------------------------------------------------------------
@@ -361,3 +358,9 @@ STATISTICS_REFRESH_TIME = env('STATISTICS_REFRESH_TIME', default=150)  # seconds
 MATH_MIN_USERS = env('MATH_MIN_USERS', default=5)
 MATH_MIN_COMMENTS = env('MATH_MIN_COMMENTS', default=5)
 MATH_MIN_VOTES = env('MATH_MIN_VOTES', default=5)
+
+# EJ Conversations
+EJ_CONVERSATIONS_URLMAP = {
+    'conversation-detail': '/conversations/{conversation.category.slug}/{conversation.slug}/',
+    'conversation-list': '/conversations/',
+}

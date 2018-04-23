@@ -1,6 +1,6 @@
 import pandas as pd
 
-from ej.conversations.models import Vote
+from ej_conversations.models import Vote
 
 
 def get_votes(conversation, comments=None):

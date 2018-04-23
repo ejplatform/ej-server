@@ -4,6 +4,9 @@ __pycache__/
 *.py[cod]
 *$py.class
 .pytest_cache/
+node_modules/
+.sass-cache
+local/
 
 # C extensions
 *.so
@@ -16,7 +19,6 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
 lib64/
 parts/
 sdist/
@@ -310,3 +312,7 @@ ej/media/
 
 # Production variables
 compose/production/*.env
+lib/assets/css/main.css.map
+lib/assets/css/main.css
+node_modules/
+lib/node_modules/

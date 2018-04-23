@@ -1,0 +1,50 @@
+{% from 'components/generic/elements.jinja2' import link %}
+{% set up_transition=up_transition|default('cross-fade') %}
+
+
+{# Generate the header element #}
+{% macro page_header() %}
+    <header class="Header">
+        {{ header_top_nav() }}
+        {{ header_lower_nav() }}
+    </header>
+{% endmacro %}
+
+{% macro header_top_nav() %}
+    <nav class="Header-topNav">
+        <a href="/menu/?target=main" title="{{ _("Navigation menu") }}" up-drawer=".NavMenu" class="Header-topIcon">
+            <i class="fa fa-bars"></i>
+        </a>
+
+        {% call link('/') %}
+            <img src="/static/img/logo/header-logo.png" alt="EJ logo">
+        {% endcall %}
+
+        <a href="#" onclick="javascript:$('.Page-mainContainer').scrollTop(0)" class="Header-topIcon">
+            <i class="fa fa-arrow-up"></i>
+        </a>
+    </nav>
+{% endmacro %}
+
+{% macro header_lower_nav() %}
+    <nav class="Header-lowerNav">
+        {% call link('/conversations/', alt=_('Conversations'), preload=True) %}
+            <i class="fa fa-microphone"></i><span>{{ _('Conversations') }}</span>
+        {% endcall %}
+
+        {% call link('/rocket/', alt=_('Canais'), preload=True) %}
+            <i class="fa fa-comments"></i><span>{{ _('Channels') }}</span>
+        {% endcall %}
+
+        {% call link('/faq/', alt=_('FAQ'), preload=True, class='Header-helpButton') %}
+            <i class="fa fa-question"></i><span>{{ _('Help') }}</span>
+        {% endcall %}
+
+
+        {% call link('/profile/', alt='Profile', preload=True) %}
+            <i class="fa fa-user"></i><span>{{ _('Profile') }}</span>
+        {% endcall %}
+    </nav>
+{% endmacro %}
+
+

@@ -1,24 +1,22 @@
-from django.utils.translation import ugettext_lazy as _
-from django.contrib.auth import get_user_model
-from rest_framework import routers, serializers, viewsets
-from rest_auth.registration.serializers import SocialLoginSerializer, RegisterSerializer
+from allauth.account import app_settings as allauth_settings
 from allauth.account.adapter import get_adapter
 from allauth.account.utils import setup_user_email
-from allauth.account import app_settings as allauth_settings
 from allauth.socialaccount.helpers import complete_social_login
+from django.contrib.auth import get_user_model
+from django.utils.translation import ugettext_lazy as _
 from requests.exceptions import HTTPError
+from rest_auth.registration.serializers import SocialLoginSerializer, RegisterSerializer
+from rest_framework import serializers
 
 User = get_user_model()
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
-
     class Meta:
         model = User
-        fields = ('id', 'image', 'name', 'email', 'biography', 'city',
-                  'state', 'country', 'username', 'race', 'gender','tour_step',
-                  'occupation', 'age', 'political_movement', 'is_superuser', )
-
+        fields = ('id', 'url', 'image', 'name', 'email', 'biography', 'city',
+                  'state', 'country', 'username', 'race', 'gender', 'tour_step',
+                  'occupation', 'age', 'political_movement', 'is_superuser',)
 
 
 class RegistrationSerializer(RegisterSerializer):
@@ -30,7 +28,7 @@ class RegistrationSerializer(RegisterSerializer):
             'first_name': self.validated_data.get('first_name', ''),
             'last_name': self.validated_data.get('last_name', ''),
             'name': self.validated_data.get('name', ''),
-            'tour_step':  self.validated_data.get('tour_step', ''),
+            'tour_step': self.validated_data.get('tour_step', ''),
             'username': self.validated_data.get('username', ''),
             'password1': self.validated_data.get('password1', ''),
             'email': self.validated_data.get('email', '')
@@ -51,18 +49,14 @@ class RegistrationSerializer(RegisterSerializer):
 
         return user
 
+
 class FixSocialLoginSerializer(SocialLoginSerializer):
     def validate(self, attrs):
-
         request = self._get_request()
-
         view = self.get_view()
         adapter = self.get_adapter(request, view)
-
         app = adapter.get_provider().get_app(request)
-
         access_token = self.get_token(adapter, app, attrs, request, view)
-
         social_token = adapter.parse_token({'access_token': access_token})
         social_token.app = app
 
@@ -145,7 +139,6 @@ class FixSocialLoginSerializer(SocialLoginSerializer):
         return view
 
     def get_attribute(self, view, attribute_name):
-
         attribute = getattr(view, attribute_name, None)
 
         if attribute:

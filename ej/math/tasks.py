@@ -3,7 +3,7 @@ from functools import wraps
 from celery import shared_task
 from pushtogether_math import cluster
 
-from ej.conversations.models import Conversation
+from ej_conversations.models import Conversation
 from .models import Job
 
 
@@ -23,7 +23,7 @@ def update_job(fn):
             # execute the function fn
             result = fn(*args, **kwargs)
             job.result = result
-            job.status = Job.FINISHED if result else Job.STUCKED
+            job.status = Job.FINISHED if result else Job.STUCK
             job.save()
         except:
             job.result = None
@@ -43,7 +43,7 @@ def get_clusters(conversation_id):
     """
     conversation = Conversation.objects.get(pk=conversation_id)
     if has_sufficient_data(conversation):
-        votes = conversation.list_votes()
+        votes = conversation.get_vote_data()
         return cluster.get_clusters(votes, range(2, 5))
 
 

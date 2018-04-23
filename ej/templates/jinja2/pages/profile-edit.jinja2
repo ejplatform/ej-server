@@ -1,0 +1,6 @@
+{% extends 'base.jinja2' %}
+{% from 'components/profile.jinja2' import profile_edit %}
+
+{% block content %}
+    {{ profile_edit(profile, form, csrf_input) }}
+{% endblock %}

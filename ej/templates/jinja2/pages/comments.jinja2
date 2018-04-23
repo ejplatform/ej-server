@@ -1,0 +1,36 @@
+{% extends 'base.jinja2' %}
+
+{% set content_title='Comentários' %}
+{% block content %}
+  <ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#waiting">Aguardando moderação</a></li>
+    <li><a data-toggle="tab" href="#rejected">Rejeitados</a></li>
+    <li><a data-toggle="tab" href="#aproved">Aprovados</a></li>
+  </ul>
+
+  <div class="tab-content">
+    <article id="waiting" class="tab-pane fade in active">{{ render_comment_tab(aproved) }}</article>
+    <article id="rejected" class="tab-pane fade">{{ render_comment_tab(rejected) }}</article>
+    <article id="aproved" class="tab-pane fade ">{{ render_comment_tab(rejected) }}</article>
+  </div>
+{% endblock %}
+
+
+{% macro render_comment_tab(comments) %}
+  {% if not comments %}
+    <p>Nenhum comentário</p>
+  {% else %}
+    <ul class="Comments-list">
+      {% for comment in comments %}
+        {{ render_comment(comment) }}
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endmacro %}
+
+
+{% macro render_comment(comment) %}
+  <article class="Comment">
+    <h1>{{ comment.title }}</h1>
+  </article>
+{% endmacro %}

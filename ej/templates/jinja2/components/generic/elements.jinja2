@@ -1,0 +1,42 @@
+{% macro link(title='Click me', href='#', alt='', target='.Page-mainContainer', action='up-target', instant=True, args='', button=False, class=None, transition='cross-fade', preload=False, scroll=True) %}
+    {%- if caller -%}
+        {%- if href == '#' -%}
+            {%- set href=title -%}
+        {%- endif -%}
+        {%- set title = caller() -%}
+    {%- endif -%}
+    <a href="{{ href }}" alt="{{ alt }}" {{ action }}="{{ target }}"
+             {%- if class %} class="{{ class }}"{% endif %}
+             {%- if button %} class="{{ Button }}"{% endif %}
+             {%- if instant %} up-instant{% endif %}
+             {%- if transition %} up-transition="{{ transition }}"{% endif %}
+             {%- if scroll -%} up-restore-scroll{% endif %}
+             {%- if preload -%} up-preload{% endif %}
+             {{ args }} primary>{{ title }}</a>
+{% endmacro %}
+
+
+{% macro rocket_button(title='Acesse o Rocket Chat', href='/rocket', target='main') %}
+    <a class="RocketButton" href="{{ href }}" up-target="main"><i class="fa fa-comment"></i>{{ title }}</a>
+{% endmacro %}
+
+
+{% macro action_button(title='Go!', href='#', alt='', target='main') %}
+    <a class="Button" href="{{ href }}" alt="{{ alt }}" up-target="main" primary>{{ title }}</a>
+{% endmacro %}
+
+
+{% macro breadcrumbs(links, has_home=True) %}
+    <div class="Breadcrumbs">
+        <ul>
+            {% if has_home %}
+                <li><a href="/"><i class="fa fa-home"></i></a></li>
+            {% endif %}
+            {% set subpaths = [] %}
+            {% for href, link in links %}
+                {{ subpaths.append((subpaths or [''])[-1] + '/' + href) or '' }}
+                <li><a href="{{ subpaths[-1] }}">{{ link }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endmacro %}

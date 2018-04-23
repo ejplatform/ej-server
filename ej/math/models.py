@@ -20,17 +20,17 @@ class Job(models.Model):
     STARTED = 'STARTED'
     FINISHED = 'FINISHED'
     FAILED = 'FAILED'
-    STUCKED = 'STUCKED'
+    STUCK = 'STUCK'
     STATUS_CHOICES = (
         (PENDING, _('PENDING')),
         (STARTED, _('STARTED')),
         (FINISHED, _('FINISHED')),
         (FAILED, _('FAILED')),
-        (STUCKED, _('STUCKED')),
+        (STUCK, _('STUCK')),
     )
 
     conversation = models.ForeignKey(
-        'conversations.Conversation',
+        'ej_conversations.Conversation',
         related_name="math_jobs",
         on_delete=models.CASCADE,
     )
@@ -55,6 +55,9 @@ class Job(models.Model):
     )
     result = JSONField(null=True)
 
+    class Meta:
+        ordering = ['-id']
+
     # Clustering configuration
     MATH_MIN_USERS = getattr(settings, 'MATH_MIN_USERS', 5)
     MATH_MIN_COMMENTS = getattr(settings, 'MATH_MIN_COMMENTS', 5)
@@ -77,6 +80,6 @@ class Job(models.Model):
                 # Avoids the concurrency between celery worker and django core
                 # when the core didn't save the Job into the database and the
                 # worker tries to access it to change its state.
-                transaction.on_commit(lambda: task.delay(**kwargs))
+                transaction.on_commit(lambda: task.sleep(**kwargs))
             else:
                 task.apply(kwargs=kwargs)

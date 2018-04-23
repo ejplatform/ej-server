@@ -1,0 +1,79 @@
+{% from 'components/generic/elements.jinja2' import breadcrumbs, action_button, rocket_button, link %}
+
+
+{% macro profile_edit(profile, form, csrf_input) %}
+    <div class="ProfileEdit">
+        <div class="Profile-breadcrumbs">{{ breadcrumbs([('profile', _('Profile')), ('edit', _('Edit'))]) }}</div>
+        <h1>Editar perfil: <em>{{ profile.name }}</em></h1>
+        <form method="post" show-labels>
+            {{ csrf_input }}
+            {{ form.as_p() }}
+            {{ form.non_field_errors() }}
+            <input type="submit" name="submit" value="Enviar">
+        </form>
+    </div>
+{% endmacro %}
+
+
+{% macro profile_detail(profile, csrf_input, info='profile') %}
+    <div class="Profile">
+        <div class="Profile-breadcrumbs">{{ breadcrumbs([('profile', 'Profile')]) }}</div>
+
+        <img class="Profile-image" src="{{ profile.image_url }}">
+        <h1>{{ profile.name }}</h1>
+        <h2>{{ profile.get_role_description() }}</h2>
+
+        <div class="Profile-actionButtons">
+            <p>{{ rocket_button() }}</p>
+            <p>{{ action_button('Conversas', '/conversations/') }}</p>
+        </div>
+
+        <div class="Profile-tabs">
+            <nav class="Profile-tabLinks">
+                {{ link(_('Info'), '/profile/', target='.Profile-tabContainer') }}
+                {{ link(_('Contributions'), '/profile/?info=contributions', target='.Profile-tabContainer') }}
+            </nav>
+            <div class="Profile-tabContainer">
+                {% if info == 'profile' %}
+                    {{ profile_info(profile, csrf_input) }}
+                {% elif info == 'contributions' %}
+                    {{ profile_contributions(profile) }}
+                {% else %}
+                    <p>Invalid info parameter: {{ info }}</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endmacro %}
+
+
+{% macro profile_info(profile, csrf_input) %}
+    <div class="Profile-info">
+        <dl>
+            {% for title, info in profile.get_profile_fields() %}
+                <dt>{{ title }}</dt>
+                <dd>{{ info or '-' }}</dd>
+            {% endfor %}
+        </dl>
+        {{ link(_('Edit profile'), '/profile/edit/') }}
+        {{ link(_('Delete profile'), '/profile/delete/') }}
+        <div>
+            <form method="post" action="/logout/">
+                {{ csrf_input }}
+                <input class="Button" type="submit" name="logout" value="{{ _('Logout') }}" primary>
+            </form>
+        </div>
+    </div>
+{% endmacro %}
+
+
+{% macro profile_contributions(profile) %}
+    <div class="Profile-info">
+        <dl>
+            {% for title, info in profile.get_profile_statistics().items() %}
+                <dt>{{ title }}</dt>
+                <dd>{{ info or '-' }}</dd>
+            {% endfor %}
+        </dl>
+    </div>
+{% endmacro %}

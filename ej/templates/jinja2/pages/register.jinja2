@@ -1,0 +1,6 @@
+{% extends 'base.jinja2' %}
+{% from 'components/auth.jinja2' import register %}
+
+{% block content %}
+    {{ register(form, csrf_input) }}
+{% endblock %}

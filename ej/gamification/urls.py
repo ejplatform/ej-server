@@ -1,11 +1,8 @@
-from rest_framework.routers import SimpleRouter
 from django.conf.urls import url
 
 from . import views
 
-router = SimpleRouter()
 
-router.register('badges', views.BadgeViewSet, base_name='badges')
 # router.register('points-leaderboard', views.PointsLeaderBoardView.as_view(), base_name='points-leaderboard')
 
 # urlpatterns = router.urls
@@ -28,5 +25,4 @@ urlpatterns = [
     ),
 ]
 
-urlpatterns.extend(router.urls)
 app_name = 'gamification'

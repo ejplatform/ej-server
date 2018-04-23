@@ -1,0 +1,140 @@
+{% from 'components/generic/page_header.jinja2' import page_header %}
+{% from 'components/generic/page_menu.jinja2' import sidebar %}
+{% from 'components/generic/page_footer.jinja2' import page_footer %}
+
+{% set target_context = request.GET.target | default('all') %}
+{% set target = target | default(target_context) %}
+
+
+{% if target == 'all' %}
+    <!DOCTYPE html>
+    <html lang="pt-br">
+
+    <head>
+        <meta charset="utf-8">
+        <title>{{ page_title|default('Empurando Juntes') }}</title>
+
+        {% block css %}
+            <!-- Google fonts -->
+            <link href="https://fonts.googleapis.com/css?family=Open+Sans|Open+Sans+Condensed:300|Material+Icons|Raleway|Lato|IBM+Plex+Mono" rel="stylesheet">
+
+            <!-- Font awesome -->
+            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
+            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/brands.css" integrity="sha384-KtmfosZaF4BaDBojD9RXBSrq5pNEO79xGiggBxf8tsX+w2dBRpVW5o0BPto2Rb2F" crossorigin="anonymous">
+            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/fontawesome.css" integrity="sha384-8WwquHbb2jqa7gKWSoAwbJBV2Q+/rQRss9UXL5wlvXOZfSodONmVnifo/+5xJIWX" crossorigin="anonymous">
+
+            <!-- Js libs -->
+            <link href="https://unpkg.com/unpoly@0.54.0/dist/unpoly.min.css" rel="stylesheet" integrity="sha384-zsXMcPyhYSZEF/yA0Rprx9nn7gnz84QyiSrxSH5xuo0DalUAlfSmfsxILtkg5fJ/" crossorigin="anonymous">
+            <link href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.7.0/introjs.min.css" rel="stylesheet">
+
+            <!-- Site css -->
+            <link href="/static/css/main.css" rel="stylesheet">
+        {% endblock %}
+
+        {% block javascript %}
+            <!--[if lt IE 9]>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+            <![endif]-->
+
+            <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" crossorigin="anonymous" defer></script>
+            <script src="https://unpkg.com/unpoly@0.54.0/dist/unpoly.min.js" integrity="sha384-6QMkTrFSjoO7UIWKZ1oYV4FCzxclb0Q4gP+TJzTZB93bAUeffVvNLblrRevbIkIw" crossorigin="anonymous" defer></script>
+            <script src="/static/js/main.js" defer></script>
+        {% endblock javascript %}
+
+        <link rel="icon" type="image/x-icon" href="/static/favicon.ico"/>
+
+        <!-- Generic and PWA -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="{{ theme_color|default('#317EFB') }}">
+        <link rel="manifest" href="/static/manifest.json">
+
+        <!-- Cache busting metas -->
+        <meta http-equiv="cache-control" content="{{ cache_control|default('no-cache') }}">
+        <meta http-equiv="expires" content="{{ cache_expires|default(120) }}">
+
+        <!-- Search Engine -->
+        <meta name="image" content="/static/img/logo.svg">
+
+        <!-- Schema.org for Google -->
+        <meta itemprop="name" content="Brasil que o Povo Quer!">
+        <meta itemprop="image" content="/static/img/logo.svg">
+
+        <!-- Twitter -->
+        <meta name="twitter:card" content="summary">
+        <meta name="twitter:title" content="Brasil que o Povo Quer!">
+
+        <!-- Open Graph general (Facebook, Pinterest & Google+) -->
+        <meta property="og:title" content="Brasil que o Povo Quer!">
+        <meta property="og:image" content="/static/img/logo-facebook.png">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta property="og:url" content="https://brasilqueopovoquer.org.br">
+        <meta property="og:site_name" content="Brasil que o Povo Quer!">
+        <meta property="og:locale" content="pt_BR">
+        <meta property="og:type" content="website">
+        <meta property="fb:app_id" content="1757744567588794">
+    </head>
+
+    <body class="{{ body_class|default('Page') }}">
+{% endif %}
+
+{% block body %}
+    {% if target == 'all' or target == 'page' %}
+        {{ page_header() }}
+        <div class="Page-mainContainer">
+    {% endif %}
+
+    {# MAIN BLOCK #}
+    {% block main %}
+        <main class="Page-content">
+            {% if content_title %}<h1 class="Page-title">{{ content_title }}</h1>{% endif %}
+            {% block content %}
+                {% if content_html %}
+                    <div class="Container">
+                        {{ content_html|safe }}
+                    </div>
+                {% else %}
+                    <p>Please override the "content" block of your template!</p>
+                {% endif %}
+            {% endblock %}
+        </main>
+
+    {% if target == 'all' or target == 'page' %}
+        {{ page_footer() }}
+        </div>
+    {% endif %}
+    {% endblock %}
+{% endblock %}
+
+{% if target == 'all' %}
+    {% block modal %}{% endblock modal %}
+
+    {% block javascript_body %}
+        <!-- Google Analytics -->
+        <script defer>
+            (function (i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r;
+                i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date();
+                a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+                a.async = 1;
+                a.src = g;
+                m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+            ga('create', 'UA-104880284-1', 'auto');
+        </script>
+
+        <!-- Service worker -->
+        <script>
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', function () {
+                    navigator.serviceWorker.register('/static/js/serviceworker.js');
+                });
+            }
+        </script>
+    {% endblock %}
+
+    </body>
+    </html>
+{% endif %}
