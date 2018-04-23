@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'actstream',
     'pinax.points',
     'pinax.badges',
+    'constance',
 
     # Alternative admin apps
     # 'jet.dashboard',
