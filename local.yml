@@ -8,7 +8,6 @@ networks:
 
 volumes:
   db_data: {}
-  db_rocketchat_data: {}
 
 services:
   django: &django
