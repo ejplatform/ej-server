@@ -7,7 +7,7 @@ ipdb
 IPython
 
 # Tools
-django-debug-toolbar==1.8
-Sphinx==1.6.3
-Werkzeug==0.12.2
-
+django-debug-toolbar ~= 1.8
+Sphinx ~= 1.6
+Werkzeug  ~= 0.12
+invoke ~= 0.22
