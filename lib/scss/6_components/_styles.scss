@@ -1,0 +1,106 @@
+/*
+ BUTTONS
+ =============================================================================*/
+
+@mixin color-style($bg-color, $font-color: $color-content-text) {
+    background: $bg-color;
+    color: $font-color;
+}
+
+@mixin color-style-triple($color, $dark, $light) {
+    background: $color;
+    color: white;
+
+    span:first-child {
+        background: $light;
+    }
+    span:last-child {
+        background: $dark;
+    }
+}
+
+.ColorStyles {
+    display: flex;
+    flex-wrap: wrap;
+
+    > * {
+        border: 1px solid black;
+        box-sizing: border-box;
+        margin: $spacing-unit-tiny;
+        min-height: 120px;
+        text-align: center;
+        padding: 0;
+        width: 120px;
+        display: flex;
+        flex-flow: column;
+        align-items: stretch;
+        align-content: stretch;
+        justify-content: space-between;
+    }
+
+    div > span {
+        display: block;
+        width: 100%;
+        flex-grow: 1;
+    }
+
+    // Schema
+    .primary {
+        @include color-style($color-primary, $color-primary-text);
+    }
+    .accent {
+        @include color-style($color-accent, $color-accent-text);
+    }
+    .alt {
+        @include color-style($color-alt, $color-alt-text);
+    }
+    .hint {
+        @include color-style($color-hint, $color-hint-text);
+    }
+    .content {
+        @include color-style($color-content, $color-content-text);
+    }
+
+    // Roles
+    .error {
+        @include color-style($color-error);
+    }
+    .warning {
+        @include color-style($color-warning);
+    }
+    .action-default {
+        @include color-style($color-action-default, $color-action-default-text);
+    }
+    .action-primary {
+        @include color-style($color-action-primary, $color-action-primary-text);
+    }
+    .action-secondary {
+        @include color-style($color-action-secondary, $color-action-secondary-text);
+    }
+
+    // Named
+    .color-white {
+        @include color-style-triple($color-gray, $color-black, $color-white);
+    }
+    .color-gray {
+        @include color-style-triple($color-gray, $color-gray-dark, $color-gray-light);
+    }
+    .color-blue {
+        @include color-style-triple($color-blue, $color-blue-dark, $color-blue-light);
+    }
+    .color-green {
+        @include color-style-triple($color-green, $color-green-dark, $color-green-light);
+    }
+    .color-magenta {
+        @include color-style-triple($color-magenta, $color-magenta-dark, $color-magenta-light);
+    }
+    .color-purple {
+        @include color-style-triple($color-purple, $color-purple-dark, $color-purple-light);
+    }
+    .color-red {
+        @include color-style-triple($color-red, $color-red-dark, $color-red-light);
+    }
+    .color-yellow {
+        @include color-style-triple($color-yellow, $color-yellow-dark, $color-yellow-light);
+    }
+}

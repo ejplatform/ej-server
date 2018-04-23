@@ -1,0 +1,100 @@
+/*
+ HOME PAGE
+ ======================================================================== */
+
+$how-it-work-icon-size: 1.5 * $font-size-h1 !default;
+$how-it-work-icon-color: $color-gray-dark !default;
+
+.HomeBanner {
+    @extend .CenteredContainer;
+
+    h2 {
+        display: none;
+        font-size: $font-size-h3;
+
+        @media only screen and (min-width: $breakpoint-small) {
+            display: inherit;
+        }
+    }
+}
+
+.HowItWorks {
+    background: $color-hint;
+    padding-top: $spacing-unit-large;
+
+    > * {
+        @extend .CenteredContainer;
+    }
+
+    h2 {
+        font-size: $font-size-h4;
+    }
+}
+
+.HowItWorksCard {
+    text-align: left;
+    align-items: center;
+    display: flex;
+    border-top: 1px solid rgba($color-black, 0.1);
+
+    h1 {
+        font-size: $font-size-h3;
+
+        i {
+            padding-left: $spacing-unit-small;
+            float: right;
+
+            @media only screen and (min-width: $breakpoint-small) {
+                display: none;
+            }
+        }
+    }
+    p {
+        color: tint($color-hint-text, 10%);
+    }
+
+    &-content {
+        flex-grow: 1;
+    }
+
+    &-icon {
+        align-self: start;
+        box-sizing: border-box;
+        color: $how-it-work-icon-color;
+        display: block;
+        flex-grow: 0;
+        font-size: $how-it-work-icon-size;
+        margin: $spacing-unit 0;
+        text-align: center;
+        min-width: 70px;
+    }
+
+    &-extra {
+        display: none;
+
+        @media only screen and (min-width: $breakpoint-small) {
+            display: block;
+
+            .Button, .RocketButton, button {
+                display: block;
+                margin: $spacing-unit-small auto $spacing-unit auto;
+                max-width: 300px;
+            }
+        }
+    }
+}
+
+.StartNow {
+    background: $color-hint;
+    padding: $spacing-unit;
+    text-align: center;
+
+    > * {
+        @extend .Container;
+    }
+
+    h2 {
+        font-size: $font-size-h4;
+    }
+
+}

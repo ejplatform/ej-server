@@ -85,12 +85,14 @@ def register(request):
         name, email, password = data['name'], data['email'], data['password']
         try:
             user = User.objects.create_simple_user(name, email, password)
+            log.info(f'user {user} ({email}) successfully authenticated')
         except IntegrityError as ex:
             form.add_error(None, str(ex))
         else:
-            user = auth.authenticate(request, username=user.username,
+            user = auth.authenticate(request,
+                                     username=user.username,
                                      password=password)
-            user = auth.login(request, user)
+            user = auth.login(request, user, backend=DJANGO_BACKEND)
             if user:
                 return redirect(request.GET.get('redirect', '/'))
 

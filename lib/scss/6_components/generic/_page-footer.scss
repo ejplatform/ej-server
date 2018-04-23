@@ -1,0 +1,36 @@
+/*
+ PAGE FOOTER
+ ============================================================================ */
+
+// Constants
+$footer-color: darken($color-hint, 10%) !default;
+$footer-color-text: $color-hint-text !default;
+
+// Component
+.Footer {
+    > *  {
+        @extend .CenteredContainer;
+    }
+
+    background: $footer-color;
+    box-sizing: border-box;
+    color: $footer-color-text;
+    height: 0 $header-top-nav-height;
+    padding: $spacing-unit-small;
+
+    a {
+        color: $footer-color-text;
+        font-weight: bold;
+    }
+
+    &-badges {
+        display: flex;
+        text-align: center;
+
+        li {
+            margin-left: 0;
+            list-style: none;
+        }
+    }
+}
+

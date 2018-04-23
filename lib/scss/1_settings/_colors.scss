@@ -1,0 +1,80 @@
+/*
+ COLORS
+ =========================================================================== */
+
+// Map color names to their actual HEX codes.
+// This defines a site-wide color palette.
+$color-black: #111 !default;
+$color-white: #fff !default;
+$color-gray: #999 !default;
+$color-gray-dark: #666 !default;
+$color-gray-light: #eee !default;
+
+$color-blue: #4d8bc0 !default;
+$color-blue-dark: #354d81 !default;
+$color-blue-light: #71d0db !default;
+
+$color-green: #34ff99 !default;
+$color-green-dark: #4cc85c !default;
+$color-green-light: #97ffc0 !default;
+
+$color-magenta: #ff42af !default;
+$color-magenta-dark: #912763 !default;
+$color-magenta-light: #ffd0e2 !default;
+
+$color-purple: #4056a1 !default;
+$color-purple-dark: #1e3155 !default;
+$color-purple-light: #c5cbe3 !default;
+
+$color-red: #f13c20 !default;
+$color-red-dark: #9c2715 !default;
+$color-red-light: #ffb1b9 !default;
+
+$color-yellow: #ffd333 !default;
+$color-yellow-dark: #decf36 !default;
+$color-yellow-light: #fffeaf !default;
+
+//
+// COLOR ROLES
+// -----------------------------------------------------------------------------
+
+// Background and text colors
+$color-content: $color-white !default;
+$color-content-text: $color-black !default;
+$color-content-text-faded: lighten($color-content-text, 40%) !default;
+
+// Color schemes
+$color-primary: $color-blue-light !default;
+$color-primary-text: $color-white !default;
+$color-accent: $color-magenta !default;
+$color-accent-text: $color-white !default;
+$color-navigation: $color-white !default;
+$color-navigation-text: $color-black !default;
+$color-hint: #eee !default;
+$color-hint-text: $color-content-text !default;
+$color-alt: $color-red-light !default;
+$color-alt-text: $color-black !default;
+
+// Modifiers
+$color-hint-degree-pc: 10;
+$color-text-alpha: 0.8;
+
+// Color roles and actions
+$color-error: $color-red !default;
+$color-warning: $color-yellow !default;
+
+$color-action-default: $color-primary !default;
+$color-action-primary: $color-accent !default;
+$color-action-secondary: $color-hint !default;
+
+$color-action-default-text: rgba($color-primary-text, $color-text-alpha) !default;
+$color-action-primary-text: rgba($color-accent-text, $color-text-alpha) !default;
+$color-action-secondary-text: rgba($color-hint-text, $color-text-alpha) !default;
+
+$color-action-default-hover: darken($color-action-default, $color-hint-degree-pc) !default;
+$color-action-primary-hover: darken($color-action-primary, $color-hint-degree-pc) !default;
+$color-action-secondary-hover: darken($color-action-secondary, $color-hint-degree-pc) !default;
+
+$color-action-default-text-hover: $color-primary-text !default;
+$color-action-primary-text-hover: $color-accent-text !default;
+$color-action-secondary-text-hover: $color-hint-text !default;

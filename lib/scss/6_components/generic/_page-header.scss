@@ -1,0 +1,166 @@
+/*
+ PAGE HEADER
+ ============================================================================ */
+
+// Constants
+$header-color: $color-navigation !default;
+$header-color-text: $color-navigation-text !default;
+$header-shadow: 0 0 10px 0px rgba(50, 50, 50, 0.5) !default;
+$logo-width: 84px !default;
+
+// Component
+.Header {
+    box-sizing: border-box;
+    color: $header-color-text;
+    background: $header-color;
+    margin: 0;
+    z-index: 100;
+
+    // Resets
+    ul {
+        list-style: none;
+    }
+    a {
+        color: $header-color-text;
+    }
+    a:hover {
+        color: $header-color-text;
+    }
+
+    @media only screen and (min-width: $breakpoint-small) {
+        align-items: center;
+        box-shadow: $header-shadow;
+        background: $header-color;
+        display: flex;
+        height: $header-height;
+        justify-content: space-between;
+        position: fixed;
+        top: 0;
+        width: 100vw;
+    }
+
+    // Elements
+    &-topNav,
+    &-lowerNav {
+        align-items: center;
+        box-sizing: border-box;
+        box-shadow: $header-shadow;
+        background: $header-color;
+        display: flex;
+        justify-content: space-between;
+        margin: 0;
+        padding: 0 $spacing-unit 0 0;
+        position: fixed;
+        width: 100vw;
+
+        @media only screen and (min-width: $breakpoint-small) {
+            box-shadow: none;
+            display: block;
+            position: initial;
+            width: initial;
+        }
+    }
+
+    &-topNav {
+        height: $header-top-nav-height;
+        min-width: $spacing-unit-large + $logo-width;
+        top: 0;
+
+        img {
+            height: 0.8 * $header-top-nav-height;
+            box-sizing: border-box;
+            margin: 0;
+        }
+
+        @media only screen and (min-width: $breakpoint-small) {
+            box-shadow: none;
+            display: flex;
+            justify-content: start;
+            margin: 0;
+            padding: 0 0 0 $spacing-unit;
+
+            img {
+                height: $header-height;
+                padding: 0;
+                margin: 0;
+            }
+            .Header-topIcon {
+                display: none;
+            }
+        }
+
+        @media only screen and (min-width: $breakpoint-medium) {
+            padding-left: $spacing-unit-large;
+        }
+    }
+
+    &-lowerNav {
+        bottom: 0;
+        box-shadow: $header-shadow;
+        height: $header-bottom-nav-height;
+        font-size: $font-size-small;
+        font-weight: bold;
+        text-transform: lowercase;
+        text-align: center;
+
+        @media only screen and (min-width: $breakpoint-small) {
+            background: transparent;
+            box-shadow: none;
+            display: flex;
+            flex-grow: 1;
+            font-size: $font-size-large;
+            font-weight: normal;
+            justify-content: flex-end;
+            justify-self: start;
+            text-align: right;
+            text-transform: none;
+        }
+
+        a {
+            align-items: center;
+            color: $color-content-text-faded;
+
+            i.fa {
+                color: $color-content-text;
+                display: block;
+                font-size: $font-size-huge;
+                margin: $spacing-unit-tiny;
+
+                @media only screen and (min-width: $breakpoint-small) {
+                    display: none;
+                }
+            }
+
+            span {
+                margin: 0;
+            }
+
+            @media only screen and (min-width: $breakpoint-small) {
+                color: $header-color-text;
+                display: flex;
+                flex-flow: row-reverse;
+                margin-left: $spacing-unit;
+            }
+        }
+
+        a.Header-helpButton {
+            @media only screen and (min-width: $breakpoint-small) {
+                display: none;
+            }
+            @media only screen and (min-width: $breakpoint-medium) {
+                display: flex;
+            }
+        }
+
+        a:last-child {
+            @media only screen and (min-width: $breakpoint-small) {
+                span {
+                    display: none;
+                }
+                i.fa {
+                    display: inline;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,60 @@
+/*
+ FONTS FAMILIES AND SIZES
+ ============================================================== */
+
+
+// Font names aliases
+$font-material-icons: 'Material Icons';
+
+
+// Sans-serif
+$font-roboto: 'Roboto', sans-serif;
+$font-open-sans: 'Open Sans', sans-serif;
+$font-open-sans-condensed: 'Open Sans Condensed', $font-open-sans;
+$font-raleway: 'Raleway', sans-serif;
+$font-lato: 'Lato', sans-serif;
+
+
+// Sans-serif
+$font-georgia: 'Georgia', serif;
+$font-times: 'Times New Roman', serif;
+
+
+// Cursive
+$font-comic-sans: 'Comic Sans', cursive;
+
+
+// Monospace
+$font-ibm-plex: 'IBM Plex Mono', monospace;
+
+
+// Font roles and base styles
+$font-mono: $font-ibm-plex !default;
+$font-sans: $font-lato !default;
+$font-sans-accent: $font-raleway !default;
+$font-serif: $font-georgia !default;
+$font-cursive: $font-comic-sans !default;
+$font-paragraph: $font-sans!default;
+$font-headings: $font-sans-accent !default;
+$font-headings-weight: 500 !default;
+
+
+// Base typographical sizes
+$font-size-tiny: 12px !default;
+$font-size-small: 14px !default;
+$font-size-default: 16px !default;
+$font-size-large: 18px !default;
+$font-size-larger: 22px !default;
+$font-size-huge: 26px !default;
+$font-size: $font-size-default;
+$line-height: ($font-size + $spacing-unit-tiny) !default;
+
+
+// Heading sizes
+$font-size-h1: 1.7em;
+$font-size-h2: 1.5em;
+$font-size-h3: 1.3em;
+$font-size-h4: 1.15em;
+$font-size-h5: 1.1em;
+$font-size-h6: 1em;
+

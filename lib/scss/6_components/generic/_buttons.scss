@@ -1,0 +1,113 @@
+/*
+ BUTTONS
+ =============================================================================*/
+
+$button-ghost-border-width: 1px !default;
+$button-ghost-color: $color-primary !default;
+$button-hpadding: $spacing-unit !default;
+$button-vpadding: $spacing-unit-small !default;
+$button-ghost-color-hover: rgba(0, 0, 0, 0.05);
+$button-font-weight: 600 !default;
+$button-font-family: $font-headings !default;
+$button-border-radius: 50ch;
+
+
+button,
+input[type=submit],
+.Button {
+    background: $color-action-default;
+    border: none;
+    border-radius: $border-radius-small;
+    box-sizing: border-box;
+    color: $color-action-default-text;
+    cursor: pointer;
+    display: inline-block;
+    font: inherit;
+    font-weight: $button-font-weight;
+    font-family: $button-font-family;
+    margin: $spacing-unit-tiny;
+    padding: $button-vpadding $button-hpadding;
+    text-align: center;
+    transition: $global-transition;
+    vertical-align: middle;
+
+    &,
+    &:hover,
+    &:active,
+    &:focus {
+        text-decoration: none;
+    }
+
+    // Button roles
+    &[primary],
+    .Button--primary {
+        background-color: $color-action-primary;
+        border-radius: $button-border-radius;
+        color: $color-action-primary-text;
+
+        &:hover,
+        &:focus {
+            background-color: $color-action-primary-hover;
+            color: $color-action-primary-text-hover;
+        }
+    }
+
+    &[secondary],
+    .Button--secondary {
+        background-color: $color-action-secondary;
+        border-radius: $button-border-radius;
+        color: $color-action-secondary-text;
+        &:hover,
+        &:focus {
+            background-color: $color-action-secondary-hover;
+            color: $color-action-secondary-text-hover;
+        }
+    }
+
+    // Size variants
+    &[small],
+    .Button--small {
+        padding: $spacing-unit-tiny;
+    }
+
+    &[large],
+    .Button--large {
+        padding: $spacing-unit;
+    }
+
+    // Ghost buttons (see-through backgrounds and are bordered)
+    &[ghost],
+    .Button--ghost {
+        background: none;
+        border: $button-ghost-border-width solid $button-ghost-color;
+        color: $button-ghost-color;
+        padding: ($button-vpadding - $button-ghost-border-width) ($button-hpadding - $button-ghost-border-width);
+
+        &:hover,
+        &:focus {
+            background: $button-ghost-color-hover;
+        }
+
+        [primary],
+        .Button--ghost-primary {
+            color: $color-action-primary;
+            border-radius: $button-border-radius;
+
+            &:hover,
+            &:focus {
+                color: $color-action-primary-hover;
+            }
+        }
+
+        [secondary],
+        .Button--ghost-secondary {
+            color: $color-action-secondary;
+            border-radius: $button-border-radius;
+
+            &:hover,
+            &:focus {
+                color: $color-action-secondary-hover;
+            }
+        }
+    }
+}
