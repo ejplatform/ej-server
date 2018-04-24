@@ -1163,8 +1163,7 @@ input[type=submit],
  CONVERSATIONS
  ======================================================================== */
 .ConversationList {
-  max-width: initial;
-  width: 90%; }
+  max-width: 90%; }
   .ConversationList-title {
     text-align: center; }
     .ConversationList-title h1 {

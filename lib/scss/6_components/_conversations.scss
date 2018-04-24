@@ -14,8 +14,7 @@ $conversation-card-cover-height: 7 * $line-height !default;
 
 .ConversationList {
     @extend .Container;
-    max-width: initial;
-    width: 90%;
+    max-width: 90%;
 
     &-title {
         text-align: center;

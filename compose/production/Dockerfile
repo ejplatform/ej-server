@@ -30,6 +30,7 @@ RUN export $(cat /app/env.example | grep -v ^# | xargs) \
     && echo $BUILD >> /app/local/build.info \
     && cd /app \
     && chown -R django /app \
+    && inv db-assets --path local-examples \
     && inv db-fake --safe
 
 WORKDIR /app
