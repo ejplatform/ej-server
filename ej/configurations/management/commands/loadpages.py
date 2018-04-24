@@ -1,16 +1,12 @@
 import os
-import re
-from pathlib import Path
-
-from django.conf import settings
-from django.contrib.flatpages.models import FlatPage
+from ._load import make_url,is_html, is_markdown, validate_path, HTML_TITLE_RE, MARKDOWN_TITLE_RE
 from django.contrib.sites.models import Site
 from django.core.management.base import BaseCommand
-from django.utils.text import slugify
+from django.contrib.flatpages.models import FlatPage
 
-# Not perfect, but works most of the time ;)
-HTML_TITLE_RE = re.compile(r'<h1[^>]*>(?P<title>[^<]*)</h1>')
-MARKDOWN_TITLE_RE = re.compile(r'\# (?P<title>[^\n]*)')
+from django.conf import settings
+from pathlib import Path
+
 SITE_ID = getattr(settings, 'SITE_ID', 1)
 
 
@@ -32,7 +28,7 @@ class Command(BaseCommand):
     def handle(self, *args, path=False, force=False, **options):
         if not path:
             path = 'local'
-        self.validate_path(path)
+        validate_path(path)
 
         base = Path(path)
         urls = ((p, make_url(p)) for p in os.listdir(path))
@@ -66,10 +62,6 @@ class Command(BaseCommand):
         save_file(path, url, MARKDOWN_TITLE_RE,
                   template='flatpages/markdown.html', **kwargs)
 
-    def validate_path(self, path):
-        if not os.path.exists(path):
-            raise SystemExit('Path does not exist: %r' % path)
-
 
 def save_file(path, url, title_re, template, **kwargs):
     data = path.read_text()
@@ -83,24 +75,3 @@ def save_file(path, url, title_re, template, **kwargs):
     print('Saved page: %s' % page)
     return page
 
-
-def make_url(path):
-    name = os.path.splitext(Path(path).name)[0]
-    return '/%s/' % '/'.join(slugify(part) for part in name.split('__'))
-
-
-def has_page(name):
-    FlatPage.objects.filter()
-
-
-def is_valid_extension(path, exts):
-    _, ext = os.path.splitext(path)
-    return ext.lower() in exts
-
-
-def is_html(path):
-    return is_valid_extension(path, {'.html', '.htm'})
-
-
-def is_markdown(path):
-    return is_valid_extension(path, {'.md', '.markdown'})
