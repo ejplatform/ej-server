@@ -17,7 +17,6 @@ def check_login(request):
         return HttpResponse(status=401)
 
     name = (request.user.first_name + ' ' + request.user.last_name).strip()
-
     loginToken = helpers.create_user_token(
         request.user.email,
         name,
