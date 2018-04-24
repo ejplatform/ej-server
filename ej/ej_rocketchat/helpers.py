@@ -10,11 +10,12 @@ from constance import config
 rocketchat_url = lambda uri: config.ROCKETCHAT_URL + uri
 
 
-def create_user_token(email, name, username):
-    if not is_user_registered(username):
+def create_rc_user_token(email, name, username):
+    if not is_rc_user_registered(username):
         create_rc_user(email, name, username)
 
-    return get_user_token(username)
+    enable_rc_user_login(username, True)
+    return get_rc_user_token(username)
 
 
 def create_rc_user(email, name, username):
@@ -33,7 +34,7 @@ def create_rc_user(email, name, username):
         raise Exception(f'Error: {res.content}')
 
 
-def get_user_token(username):
+def get_rc_user_token(username):
     json_data = {
         'username': username,
     }
@@ -47,12 +48,34 @@ def get_user_token(username):
     return json.loads(res.content)['data']['authToken']
 
 
-def is_user_registered(username):
-    res = requests.get(
+def enable_rc_user_login(username, option):
+    info = json.loads(request_rc_user_info(username).content)
+    rc_user_id = info['user']['_id']
+    json_data = {
+        'userId': rc_user_id,
+        'data': {
+            'active': option
+        }
+    }
+    res = requests.post(
+        rocketchat_url('/api/v1/users.update'),
+        headers=get_headers(),
+        json=json_data,
+    )
+    if res.status_code != 200:
+        raise Exception(f'Error: {res.content}')
+
+
+def request_rc_user_info(username):
+    return requests.get(
         rocketchat_url('/api/v1/users.info'),
         headers=get_headers(),
         params=dict(username=username)
     )
+
+
+def is_rc_user_registered(username):
+    res = request_rc_user_info(username) 
     return res.status_code == 200
 
 

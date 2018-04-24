@@ -8,8 +8,6 @@ from constance import config
 from .decorators import allow_credentials
 from . import helpers
 
-import sys
-
 
 @csrf_exempt
 @allow_credentials
@@ -19,7 +17,7 @@ def check_login(request):
         return HttpResponse(status=401)
 
     name = (request.user.first_name + ' ' + request.user.last_name).strip()
-    loginToken = helpers.create_user_token(
+    loginToken = helpers.create_rc_user_token(
         request.user.email,
         name or request.user.username,
         request.user.username
