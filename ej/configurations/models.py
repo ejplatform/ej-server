@@ -1,27 +1,142 @@
-# from django.contrib.postgres.fields import ArrayField
+from django.contrib.flatpages.models import FlatPage
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
+from ej_conversations.validators import validate_color
+from .icons import default_icon_name
+from .validators import validate_icon_name
 
-class SocialMedia(models.Model):
+
+class SocialMediaIcon(models.Model):
+    ICON_MATERIAL = 'material'
+    ICON_AWESOME = 'fa'
     ICON_CHOICES = (
-        ('MATERIAL', _('Material icon')),
-        ('FONT_AWESOME', _('Font-awesome icon')),
+        (ICON_MATERIAL, _('Material Design')),
+        (ICON_AWESOME, _('Font-awesome')),
+    )
+    social_network = models.CharField(
+        _('Social network'),
+        max_length=50,
+        unique=True,
+        help_text=_('Name of the social network'),
+    )
+    icon_name = models.CharField(
+        _('Icon name'),
+        max_length=50,
+        help_text=_('Icon name for the icon font'),
+    )
+    icon_font = models.CharField(
+        _('Icon font'),
+        max_length=10,
+        default=ICON_AWESOME,
+    )
+    ordering = models.PositiveSmallIntegerField(
+        _('Ordering'),
+        unique=True,
+        help_text=_(
+            'You must manually define the ordering that each icon should '
+            'appear in the interface.'
+        ),
+    )
+    url = models.URLField(
+        _('URL'),
+        help_text=_('Link to your social account page.')
     )
 
-    name = models.CharField(_('Name'), blank=True, max_length=255, null=True)
-    material_icon = models.CharField(_('Material_icon'), blank=True, max_length=255, null=True)
-    fa_icon = models.CharField(_('FA_icon'), blank=True, max_length=255, null=True)
-    priority = models.IntegerField(_('Priority'), null=True, blank=True)
-    link = models.CharField(_('Link'), null=True, blank=True, max_length=255)
+    def __str__(self):
+        return self.social_network
+
+    def __html__(self):
+        return self.link_tag()
+
+    def clean(self):
+        # We want to set the default icon for the most common social networks.
+        # TODO: see if this works!
+        if not self.icon_name:
+            self.icon_name = default_icon_name(self.social_network)
+
+        if self.icon_font == self.ICON_MATERIAL:
+            validate_icon_name(self.icon_name, 'material')
+        elif self.icon_font == self.ICON_AWESOME:
+            validate_icon_name(self.icon_name, 'fa')
+
+    def icon_tag(self, classes=()):
+        """
+        Render an icon tag for the given icon.
+
+        >>> icon.icon_tag(classes=['header-icon'])
+        <i class="fa fa-icon header-icon"></i>
+        """
+        raise NotImplementedError
+
+    def link_tag(self, classes=()):
+        """
+        Render an anchor tag with the link for the social network.
+
+        >>> icon.link_tag(classes=['header-icon'])
+        <a href="url"><i class="fa fa-icon header-icon"></i></a>
+        """
+        raise NotImplementedError
+
+
+class Color(models.Model):
+    name = models.CharField(
+        _('Color name'),
+        max_length=150,
+    )
+    hex_value = models.CharField(
+        _('Color'),
+        max_length=30,
+        help_text=_(
+            'Color code in hex (e.g., #RRGGBBAA) format.'
+        ),
+        validators=[validate_color],
+    )
 
     def __str__(self):
-        return self.name
+        return f'self.name ({self.hex_value})'
 
 
-class ColorPallete(models.Model):
-    name = models.CharField(_('Name'), blank=True, max_length=255, null=True)
-    # colors = ArrayField(models.CharField(_('RGBA'), blank=True, max_length=255, null=True), blank=False)
+class Fragment(models.Model):
+    FORMAT_MARKDOWN = 'md'
+    FORMAT_HTML = 'html'
+    ...
 
-    def __str__(self):
-        return self.name
+    name = models.CharField(_('URL'), max_length=100, unique=True, db_index=True)
+    content = models.TextField(_('content'), blank=True)
+    format = models.CharField(max_length=4)
+    editable = models.BooleanField(default=True)
+    deletable = models.BooleanField(default=True)
+
+    def __html__(self):
+        return self.html()
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        if not self.deletable:
+            # conferir se levanta erro .DoesNotExist
+            if self.lock is None:
+                FragmentLock.objects.create(self)
+
+    def html(self, classes=()):
+        data = ...
+        class_attr = ...
+        return f'<div{class_attr}>{data}</div>'
+
+
+# TODO: sanitize!
+def sanitize_html(html):
+    return html
+
+
+def sanitize_markdown(md):
+    return md
+
+
+# GAMBIRA!
+class FragmentLock(models.Model):
+    fragment = models.OneToOneField(
+        Fragment,
+        on_delete=models.PROTECT,
+        related_name='lock',
+    )
