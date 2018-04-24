@@ -2,7 +2,7 @@
 {% from 'components/generic/elements.jinja2' import action_button, rocket_button %}
 
 {% block content %}
-    {% set colors_main = 'primary accent alt content hint'.split() %}
+    {% set colors_main = 'primary accent alt hint content'.split() %}
     {% set colors_roles = 'error warning action-default action-primary action-secondary'.split() %}
     {% set colors_named = 'white gray blue green magenta purple red yellow'.split() %}
 
@@ -46,6 +46,12 @@
                 {% endfor %}
             </div>
 
+            <h2>Color palette</h2>
+            <div class="ColorPalette">
+                {% for color in colors_main[:-1] %}
+                    <div class="{{ color }}">{{ color }}</div>
+                {% endfor %}
+            </div>
 
             <h2>Buttons</h2>
             <p>
