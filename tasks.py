@@ -6,6 +6,13 @@ import pathlib
 python = sys.executable
 
 
+def manage(ctx, cmd, env=None, **kwargs):
+    opts = ' '.join(f'--{k} {"" if v is True else v}' for k, v in kwargs.items())
+    cmd = f'{python} manage.py {cmd} {opts}'
+    print(f'Run: {cmd}')
+    ctx.run(cmd, pty=True, env=(env or {}))
+
+
 @task
 def sass(ctx, no_watch=False, trace=False):
     """
@@ -24,7 +31,7 @@ def run(ctx, no_toolbar=False):
     env = {}
     if no_toolbar:
         env['DISABLE_DJANGO_DEBUG_TOOLBAR'] = 'true'
-    ctx.run(f'{python} manage.py runserver', pty=True, env=env)
+    manage(ctx, 'runserver')
 
 
 @task
@@ -33,8 +40,8 @@ def db(ctx, migrate_only=False):
     Perform migrations
     """
     if not migrate_only:
-        ctx.run(f'{python} manage.py makemigrations', pty=True)
-    ctx.run(f'{python} manage.py migrate', pty=True)
+        manage(ctx, 'makemigrations')
+    manage(ctx, 'migrate')
 
 
 @task
@@ -43,7 +50,7 @@ def db_reset(ctx, fake=False, postgres=False):
     Reset data in database and optionally fill with fake data
     """
     ctx.run('rm db.sqlite3 -f')
-    ctx.run(f'{python} manage.py migrate', pty=True)
+    manage(ctx, 'migrate')
     if fake:
         db_fake(ctx, postgres=postgres)
 
@@ -70,8 +77,17 @@ def db_fake(ctx, no_users=False, no_conversations=False, no_admin=False, safe=Fa
             return print(msg_error)
 
     if not no_users:
-        suffix = '' if no_admin else ' --admin'
-        ctx.run(f'{python} manage.py createfakeusers' + suffix, pty=True)
+        manage(ctx, 'createfakeusers', admin=not no_admin)
     if not no_conversations:
-        ctx.run(f'{python} manage.py createfakeconversations', pty=True)
-        ctx.run(f'{python} manage.py loadpages --path local-example/pages/', pty=True)
+        manage(ctx, 'createfakeconversations')
+        manage(ctx, 'loadpages', path='local-example/pages/')
+
+
+@task
+def db_assets(ctx, path='local'):
+    """
+    Install assets from a local folder in the database.
+    """
+
+    base = pathlib.Path(path)
+    manage(ctx, 'loadpages', path=base / 'pages')

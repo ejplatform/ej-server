@@ -1163,8 +1163,7 @@ input[type=submit],
  CONVERSATIONS
  ======================================================================== */
 .ConversationList {
-  max-width: initial;
-  width: 90%; }
+  max-width: 90%; }
   .ConversationList-title {
     text-align: center; }
     .ConversationList-title h1 {
@@ -1461,7 +1460,7 @@ input[type=submit],
     box-sizing: border-box;
     height: 150px;
     margin: -30px;
-    mix-blend-mode: saturation;
+    mix-blend-mode: multiply;
     min-width: 150px;
     padding: 0; }
 

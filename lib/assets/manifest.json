@@ -1,10 +1,10 @@
 {
   "short_name": "EJ",
-  "name": "Empurrando Juntas - plataforma de participação social",
+  "name": "EJ - plataforma de participação social",
   "background_color": "#2196F3",
   "display": "standalone",
   "orientation": "portrait",
-  "theme_color": "#317EFB",
+  "theme_color": "#00CBD2",
   "icons": [
     {
       "src": "img/icons/launcher-48.png",

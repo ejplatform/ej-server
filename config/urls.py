@@ -17,9 +17,7 @@ urlpatterns = [
     *get_patterns(),
 
     # Admin
-    # path('jet/', include('jet.urls', 'jet')),
-    # path('jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),
-    path(settings.ADMIN_URL, admin.site.urls),
+    path(settings.ADMIN_URL.rstrip('^'), admin.site.urls),
 
     # REST API
     path('api/v1/', include(router_v1.urls)),

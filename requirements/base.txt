@@ -68,3 +68,6 @@ flower ~= 0.9.2
 pushtogether-math
 git+https://github.com/ejplatform/django-messages-courier.git
 git+https://github.com/ejplatform/ej-conversations.git@develop
+
+# Fake data
+Faker ~= 0.8.13

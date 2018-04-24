@@ -15,12 +15,7 @@
             <div><input type="submit" class="Login-button" value="{{ _('Login') }}" name="login"></div>
             {{ form.non_field_errors() }}
 
-            {{ login_options() }}
-
-            <div class="Login-newUser">
-                <h1>Ainda não faz parte do EJ?</h1>
-                <p><a class="Button" href="/register/" primary>Cadastre-se agora</a></p>
-            </div>
+            {{ login_options('/register/', _('Register'), 'Ainda não faz parte do EJ?') }}
         </form>
     </div>
 {% endmacro %}
@@ -40,12 +35,11 @@
             <div><input type="submit" value="{{ _('Register') }}" name="register"></div>
             {{ form.non_field_errors() }}
         </form>
-
-        {{ login_options() }}
+        {{ login_options('/login/', _('Login'), 'Faz parte do EJ?') }}
     </div>
 {% endmacro %}
 
-{% macro login_options() %}
+{% macro login_options(button_href, button_msg, title) %}
     <p><a href="/profile/recover-password/">Esqueceu a senha?</a></p>
 
     <div class="Login-socialButtons">
@@ -55,6 +49,12 @@
             <i class="fa fa-twitter"></i>
             <i class="fa fa-facebook-f"></i>
         </div>
+    </div>
+
+    <div class="Login-newUser">
+        {% set msg = _('Cadastrar') if is_login else _('Login') %}
+        <h1>{{ title }}</h1>
+        <p><a class="Button" href="{{ button_href }}" primary>{{ button_msg }}</a></p>
     </div>
 {% endmacro %}
 
