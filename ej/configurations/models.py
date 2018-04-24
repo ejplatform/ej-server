@@ -67,7 +67,13 @@ class SocialMediaIcon(models.Model):
         >>> icon.icon_tag(classes=['header-icon'])
         <i class="fa fa-icon header-icon"></i>
         """
-        raise NotImplementedError
+
+        if icon_font == self.ICON_MATERIAL:
+            icon_font_slug = 'material-icons'
+        elif icon_font == self.ICON_AWESOME:
+            icon_font_slug = 'fa'            
+        
+        return f'<i class="{icon_font_slug} {" ".join(classes)}></i>'
 
     def link_tag(self, classes=()):
         """
@@ -76,7 +82,13 @@ class SocialMediaIcon(models.Model):
         >>> icon.link_tag(classes=['header-icon'])
         <a href="url"><i class="fa fa-icon header-icon"></i></a>
         """
-        raise NotImplementedError
+        
+        if icon_font == self.ICON_MATERIAL:
+                icon_font_slug = 'material-icons'
+        elif icon_font == self.ICON_AWESOME:
+            icon_font_slug = 'fa'            
+        
+        return f'<a href="{self.url}"><i class="{icon_font_slug} {" ".join(classes)}></i></a>'
 
 
 class Color(models.Model):
