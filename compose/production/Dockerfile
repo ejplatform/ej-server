@@ -11,27 +11,28 @@ RUN pip install --no-cache-dir -r /requirements/production.txt \
     && rm -rf /requirements
 
 COPY ./compose/production/django/gunicorn.sh /gunicorn.sh
-RUN sed -i 's/\r//' /gunicorn.sh
-RUN chmod +x /gunicorn.sh
-RUN chown django /gunicorn.sh
-
 COPY ./compose/production/django/entrypoint.sh /entrypoint.sh
-RUN sed -i 's/\r//' /entrypoint.sh
-RUN chmod +x /entrypoint.sh
-RUN chown django /entrypoint.sh
+RUN sed -i 's/\r//' /gunicorn.sh \
+    && chmod +x /gunicorn.sh \
+    && chown django /gunicorn.sh \
+    && sed -i 's/\r//' /entrypoint.sh \
+    && chmod +x /entrypoint.sh \
+    && chown django /entrypoint.sh
 
 COPY . /app
 
 RUN mkdir /app/staticfiles
 
-RUN export $(cat /app/env.example | grep -v ^# | xargs) && \
-    python /app/manage.py collectstatic --noinput
-
-RUN chown -R django /app
-
+WORKDIR /app
 USER django
 
-WORKDIR /app
+RUN export $(cat /app/env.example | grep -v ^# | xargs) \
+    && mkdir /app/local \
+    && echo $BUILD >> /app/local/build.info \
+    && python /app/manage.py collectstatic --noinput \
+    && chown -R django /app \
+    && cd /app \
+    && inv db-fake --safe
 
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["/gunicorn.sh"]

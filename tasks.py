@@ -1,5 +1,8 @@
 from invoke import task
 import sys
+import os
+import pathlib
+
 python = sys.executable
 
 
@@ -46,10 +49,26 @@ def db_reset(ctx, fake=False, postgres=False):
 
 
 @task
-def db_fake(ctx, no_users=False, no_conversations=False, no_admin=False):
+def db_fake(ctx, no_users=False, no_conversations=False, no_admin=False, safe=False):
     """
     Adds fake data to the database
     """
+    buildfile = 'local/build.info'
+    msg_error = 'Release build. No fake data will be created!'
+
+    if safe:
+        if os.path.exists(buildfile):
+            with open(buildfile) as F:
+                data = F.read()
+                print(f'Found build file at {buildfile}: {data}')
+
+            if data.startswith('develop'):
+                print('Creating fake data...')
+            else:
+                return print(msg_error)
+        else:
+            return print(msg_error)
+
     if not no_users:
         suffix = '' if no_admin else ' --admin'
         ctx.run(f'{python} manage.py createfakeusers' + suffix, pty=True)
