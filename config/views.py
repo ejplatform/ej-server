@@ -21,7 +21,7 @@ log = logging.getLogger('ej-views')
 # Views
 #
 @route('')
-def index(request):
+def home(request):
     ctx = {'conversations': Conversation.objects.all()}
     return render(request, 'pages/index.jinja2', ctx)
 
