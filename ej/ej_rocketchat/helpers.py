@@ -51,7 +51,7 @@ def is_user_registered(username):
     json_data = {
         'username': username,
     }
-    res = request.post(
+    res = requests.post(
         rocketchat_url('/api/v1/users.info'),
         headers=get_headers(),
         params=json_data
