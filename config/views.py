@@ -12,6 +12,8 @@ from ej_conversations.models import Conversation, Vote, Category
 from .forms import ProfileForm, LoginForm, RegistrationForm
 from .views_utils import route, get_patterns
 
+from ej.configurations.views import get_fragment
+
 get_patterns = get_patterns  # don't count as an unused import
 DJANGO_BACKEND = 'django.contrib.auth.backends.ModelBackend',
 ALLAUTH_BACKEND = 'allauth.account.auth_backends.AuthenticationBackend'
@@ -22,8 +24,13 @@ log = logging.getLogger('ej-views')
 # Views
 #
 @route('')
-def index(request):
-    ctx = {'conversations': Conversation.objects.all()}
+def home(request):
+    ctx = {
+        'conversations': Conversation.objects.all(),
+        'home_banner_frag': get_fragment('home_banner'),
+        'how_it_works_frag': get_fragment('how_it_works'),
+        'start_now_frag': get_fragment('start_now'),
+    }
     return render(request, 'pages/index.jinja2', ctx)
 
 
