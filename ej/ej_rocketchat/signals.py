@@ -8,4 +8,5 @@ from . import helpers
 
 @receiver(user_logged_out)
 def logout(sender, user, request, **kwargs):
-   helpers.enable_rc_user_login(user.username, False) 
+    if user:
+        helpers.enable_rc_user_login(user.username, False) 
