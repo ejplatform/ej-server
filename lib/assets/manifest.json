@@ -1,0 +1,31 @@
+{
+  "short_name": "EJ",
+  "name": "EJ - plataforma de participação social",
+  "background_color": "#2196F3",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#00CBD2",
+  "icons": [
+    {
+      "src": "img/icons/launcher-48.png",
+      "type": "image/png",
+      "sizes": "48x48"
+    },
+    {
+      "src": "img/icons/launcher-96.png",
+      "type": "image/png",
+      "sizes": "96x96"
+    },
+    {
+      "src": "img/icons/launcher-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "img/icons/launcher-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/"
+}

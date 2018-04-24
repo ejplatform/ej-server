@@ -4,5 +4,7 @@
 {% set content_title=flatpage.title %}
 
 {% block content %}
-  {{ flatpage.content|markdown }}
+  <div class="Container">
+    {{ flatpage.content|markdown }}
+  </div>
 {% endblock %}

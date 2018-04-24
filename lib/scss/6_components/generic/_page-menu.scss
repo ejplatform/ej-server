@@ -1,0 +1,47 @@
+/*
+ PAGE SIDEBAR
+ =========================================================================== */
+
+// Constants
+$nav-menu-color: darken($color-alt, 10) !default;
+$nav-menu-color-text: darken($color-hint-text, 10) !default;
+$nav-menu-width: 75vw;
+$nav-menu-opacity: 0.95;
+$nav-menu-shadow: 0 0 5px 1px rgba(black, 0.3);
+$color-sidebar-menu-bg: darken($color-primary, 20) !default;
+
+// Element
+.up-modal-content {
+    margin: 0;
+    padding: 0;
+}
+
+.up-modal-close {
+    color: $color-alt-text;
+    margin: $spacing-unit -$spacing-unit-small 0 0;
+}
+
+.NavMenu {
+    background: $nav-menu-color;
+    box-shadow: $nav-menu-shadow;
+    box-sizing: border-box;
+    color: $nav-menu-color-text;
+    font-size: $font-size-large;
+    opacity: $nav-menu-opacity;
+    overflow: auto;
+    padding: $spacing-unit;
+    width: $nav-menu-width;
+    height: 100vh;
+
+    a, a:hover, a:active {
+        color: $color-alt-text;
+    }
+
+    ul {
+        padding: 0;
+    }
+    li {
+        list-style: none;
+        padding-bottom: $spacing-unit-small;
+    }
+}

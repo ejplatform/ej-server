@@ -1,0 +1,54 @@
+/*
+ UNSTYLED FORM ELEMENTS
+ ======================================================================== */
+
+$form-border-color: $color-gray !default;
+$form-element-color: tint($color-hint, 50%) !default;
+$form-element-color-text: $color-hint-text !default;
+
+
+form {
+    label {
+        display: none;
+    }
+}
+
+form[show-labels] {
+    label {
+        display: block;
+    }
+}
+
+input,
+textarea,
+label,
+select,
+.FormItem {
+    box-sizing: border-box;
+    font-size: $font-size-h6;
+    max-width: 0.85 * $breakpoint-small;
+    width: 85%;
+}
+
+input,
+textarea,
+select,
+.FormItem {
+    border-radius: $border-radius-small;
+    background: $form-element-color;
+    border: 1px solid $form-border-color;
+    color: $form-element-color-text;
+    margin: $spacing-unit-tiny auto;
+    padding: $spacing-unit-small;
+}
+
+label {
+    color: $color-content-text-faded;
+    font-weight: bold;
+    font-size: $font-size-h5;
+    margin: 0 auto;
+}
+
+input[type=submit] {
+    background: $color-action-default;
+}

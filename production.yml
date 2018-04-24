@@ -10,7 +10,7 @@ services:
       COURIER_ONESIGNAL_APP_ID: appid
       COURIER_ONESIGNAL_USER_ID: userid
       DJANGO_ACCOUNT_ALLOW_REGISTRATION: 'True'
-      DJANGO_ADMIN_URL: ^admin/
+      DJANGO_ADMIN_URL: admin/
       DJANGO_ALLOWED_HOSTS: hosts
       DJANGO_DEFAULT_FROM_EMAIL: name <noreply@hostname>
       DJANGO_MAILGUN_API_KEY: key
@@ -28,7 +28,7 @@ services:
     volumes:
     - /path/to/media:/app/staticfiles/media
 
-# Temporarely disable Ng frontend and serve pages from backend
+# Temporarily disable Ng frontend and serve pages from backend
 #  frontend:
 #    image: ejplatform/ej-front:develop
 #    stdin_open: true
@@ -48,8 +48,8 @@ services:
       POSTGRES_DB: dbname
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
-      volumes:
-        - /path/to/postgres:/var/lib/postgresql/data
+    volumes:
+      - /path/to/postgres:/var/lib/postgresql/data
 
   redis:
     image: redis:3

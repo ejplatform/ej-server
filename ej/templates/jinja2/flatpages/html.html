@@ -4,5 +4,7 @@
 {% set content_title=flatpage.title %}
 
 {% block content %}
-  {{ flatpage.content|safe }}
+  <div class="Container">
+    {{ flatpage.content|safe }}
+  </div>
 {% endblock %}

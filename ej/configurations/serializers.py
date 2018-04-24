@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import SocialMedia, ColorPallete
+from .models import SocialMedia, Color
 
 
 class SocialMediaSerializer(serializers.HyperlinkedModelSerializer):
@@ -11,5 +11,5 @@ class SocialMediaSerializer(serializers.HyperlinkedModelSerializer):
 
 class ColorPalletSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = ColorPallete
+        model = Color
         fields = ('id', 'url', 'name', 'colors')

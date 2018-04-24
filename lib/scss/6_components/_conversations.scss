@@ -1,0 +1,137 @@
+/*
+ CONVERSATIONS
+ ======================================================================== */
+
+$conversation-card-padding: $spacing-unit-small !default;
+$conversation-card-gutter: $spacing-unit !default;
+$conversation-list-title-font-size-h1: $font-size-h1 !default;
+$conversation-list-title-font-size-h2: $font-size-h3 !default;
+$conversation-card-border: 1px solid $color-gray-dark !default;
+$conversation-card-border-radius: $spacing-unit-small !default;
+$conversation-card-color: $color-primary !default;
+$conversation-card-text-color: $color-white !default;
+$conversation-card-cover-height: 7 * $line-height !default;
+
+.ConversationList {
+    @extend .Container;
+    max-width: 90%;
+
+    &-title {
+        text-align: center;
+
+        h1 {
+            font-size: $conversation-list-title-font-size-h1;
+        }
+        h2 {
+            font-size: $conversation-list-title-font-size-h2;
+        }
+    }
+
+    &-cardList {
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+
+        > * {
+            margin: $conversation-card-gutter;
+        }
+    }
+}
+
+.ConversationCard {
+    box-sizing: border-box;
+    border: $conversation-card-border;
+    border-radius: $conversation-card-border-radius;
+    flex-grow: 1;
+    margin: $spacing-unit-tiny;
+    text-align: center;
+    width: 100%;
+
+    > * {
+        padding: $conversation-card-padding;
+    }
+
+    h1 {
+        font-size: $font-size-h3;
+    }
+
+    &-cover {
+        background: $conversation-card-color;
+        border-radius: $conversation-card-border-radius;
+        color: $conversation-card-text-color;
+        display: flex;
+        flex-flow: column;
+        height: $conversation-card-cover-height;
+        justify-content: space-around;
+
+        a, a:hover, a:active {
+            color: $conversation-card-text-color;
+        }
+
+        dl {
+            margin: 0;
+
+            dt {
+                display: inline;
+                font-weight: bold;
+            }
+            dd {
+                display: inline;
+                margin: 0;
+            }
+        }
+    }
+
+    &-statistics {
+        display: flex;
+        justify-content: space-between;
+        padding: 0;
+
+        li {
+            list-style: none;
+        }
+    }
+
+    @media only screen and (min-width: $breakpoint-small) {
+        max-width: 47%;
+    }
+
+    @media only screen and (min-width: $breakpoint-large) {
+        width: 32%;
+    }
+
+}
+
+.ConversationDetail {
+    padding: 0;
+
+    > * {
+        padding: $spacing-unit;
+    }
+    &-banner {
+        background: $color-primary;
+        color: $color-primary-text;
+        padding-top: 0;
+
+        a {
+            color: $color-primary-text;
+        }
+
+        h1 {
+            text-align: center;
+        }
+    }
+}
+
+.Comment {
+    text-align: center;
+}
+
+.CommentForm {
+    text-align: center;
+
+    textarea {
+        display: block;
+        min-height: 3 * $font-size;
+    }
+}

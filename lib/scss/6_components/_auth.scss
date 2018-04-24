@@ -1,0 +1,51 @@
+/*
+ LOGIN/REGISTER COMPONENTS
+ ======================================================================== */
+
+$login-icon-size: $spacing-unit-huge !default;
+$login-icon-color: $color-gray-light !default;
+$login-icon-border-width: $spacing-unit-small !default;
+$login-social-icons-size: $font-size-h1 !default;
+
+.Register,
+.Login {
+    padding: $spacing-unit;
+    text-align: center;
+
+    input, textarea, select, .FormItem {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    &-icon {
+        border: $login-icon-border-width solid $login-icon-color;
+        border-radius: 50%;
+        color: $login-icon-color;
+        font-size: $login-icon-size;
+        margin: $spacing-unit-large;
+        padding: $spacing-unit;
+    }
+
+    &-button {
+        @extend .Button--primary;
+    }
+
+    &-socialButtons {
+        display: none;
+
+        i.fa {
+            font-size: $login-social-icons-size;
+        }
+    }
+
+    &-newUser {
+        margin: $spacing-unit 0;
+        border-top: 1px solid $color-gray-light;
+
+        h1 {
+            font-size: $font-size-h3;
+        }
+    }
+
+}

@@ -1,0 +1,38 @@
+/*
+ SPACING
+ =========================================================================== */
+
+
+// Baseline grid lines height.
+// Every spacing metric should be based on this.
+$spacing-baseline: 6px !default;
+
+
+// How many grid lines should our spacing unit variants span?
+// Each value should be an unitless integer.
+$spacing-unit-factor-tiny:   1 !default;
+$spacing-unit-factor-small:  2 !default;
+$spacing-unit-factor:        4 !default;
+$spacing-unit-factor-large:  8 !default;
+$spacing-unit-factor-huge:   16 !default;
+
+
+// Spacing values are determined based on your project’s global baseline grid.
+// It is not recommended that you modify these following variables
+// (it can break your vertical rhythm), but if you need to, you can.
+$spacing-unit:       $spacing-baseline * $spacing-unit-factor !default;
+$spacing-unit-tiny:  $spacing-baseline * $spacing-unit-factor-tiny !default;
+$spacing-unit-small: $spacing-baseline * $spacing-unit-factor-small !default;
+$spacing-unit-large: $spacing-baseline * $spacing-unit-factor-large !default;
+$spacing-unit-huge:  $spacing-baseline * $spacing-unit-factor-huge !default;
+
+
+// Global spacing for layouts
+$spacing-padding: 10px !default;
+$spacing-gutter: 10px !default;
+
+
+// Border radius
+$border-radius-small: $spacing-unit-tiny / 2 !default;
+$border-radius: $spacing-unit-tiny !default;
+$border-radius-large: $spacing-unit-small !default;

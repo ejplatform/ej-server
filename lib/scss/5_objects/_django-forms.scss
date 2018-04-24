@@ -1,0 +1,12 @@
+/*
+ DJANGO FORMS STYLING
+ =========================================================================== */
+
+ul.errorlist {
+    color: $color-error;
+    padding: 0;
+
+    li {
+        list-style: none;
+    }
+}

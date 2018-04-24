@@ -1,0 +1,87 @@
+/*
+ USER PROFILE VIEWS
+ ======================================================================== */
+
+$profile-image-size: 2 * $login-icon-size !default;
+
+.Profile {
+    @extend .Container;
+    text-align: center;
+
+    h1 {
+        margin-bottom: 0;
+    }
+    h2 {
+        color: $color-content-text-faded;
+        font-size: $font-size-h4;
+        margin-top: 0;
+
+    }
+
+    &-breadcrumbs {
+        text-align: left;
+    }
+
+    &-image {
+        width: $profile-image-size;
+        height: $profile-image-size;
+        border-radius: 50ch;
+    }
+
+    &-tabs {
+        margin-top: $spacing-unit;
+    }
+
+    &-tabLinks {
+        display: flex;
+        justify-content: space-around;
+        font-size: $font-size-h5;
+        font-weight: $font-headings-weight;
+
+        > * {
+            margin: 0 $spacing-unit;
+        }
+    }
+
+    &-tabContainer {
+        background: $color-hint;
+        text-align: left;
+    }
+
+    &-info {
+        font-size: $font-size-h6;
+        padding: $spacing-unit-large;
+
+        > * {
+            display: block;
+        }
+
+        dl {
+            dt {
+                color: $color-content-text-faded;
+                text-transform: lowercase;
+            }
+
+            dd {
+                font-size: $font-size-h5;
+                font-weight: bold;
+                margin: 0 0 $spacing-unit-small 0;
+            }
+        }
+
+        form {
+            text-align: center;
+        }
+    }
+}
+
+.ProfileEdit {
+    @extend .Container;
+
+    input, textarea, select, .FormItem {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+

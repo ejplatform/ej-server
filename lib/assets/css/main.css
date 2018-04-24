@@ -461,7 +461,7 @@ html {
 body {
   box-sizing: border-box;
   font-size: 16px;
-  font-family: "Comic Sans", cursive;
+  font-family: "Lato", sans-serif;
   width: 100vw; }
 
 main {
@@ -1163,8 +1163,7 @@ input[type=submit],
  CONVERSATIONS
  ======================================================================== */
 .ConversationList {
-  max-width: initial;
-  width: 90%; }
+  max-width: 90%; }
   .ConversationList-title {
     text-align: center; }
     .ConversationList-title h1 {
@@ -1375,21 +1374,6 @@ input[type=submit],
     display: block;
     width: 100%;
     flex-grow: 1; }
-  .ColorStyles .primary {
-    background: #71d0db;
-    color: #fff; }
-  .ColorStyles .accent {
-    background: #ff42af;
-    color: #fff; }
-  .ColorStyles .alt {
-    background: #ffb1b9;
-    color: #111; }
-  .ColorStyles .hint {
-    background: #eee;
-    color: #111; }
-  .ColorStyles .content {
-    background: #fff;
-    color: #111; }
   .ColorStyles .error {
     background: #f13c20;
     color: #111; }
@@ -1461,6 +1445,45 @@ input[type=submit],
       background: #fffeaf; }
     .ColorStyles .color-yellow span:last-child {
       background: #decf36; }
+
+.ColorPalette {
+  align-content: center;
+  background: white;
+  display: flex;
+  flex-flow: column wrap;
+  height: 225px;
+  justify-content: center;
+  padding: 50px auto;
+  text-align: center; }
+  .ColorPalette > * {
+    border-radius: 50%;
+    box-sizing: border-box;
+    height: 150px;
+    margin: -30px;
+    mix-blend-mode: saturation;
+    min-width: 150px;
+    padding: 0; }
+
+.ColorStyles .primary,
+.ColorPalette .primary {
+  background: #71d0db;
+  color: #fff; }
+.ColorStyles .accent,
+.ColorPalette .accent {
+  background: #ff42af;
+  color: #fff; }
+.ColorStyles .alt,
+.ColorPalette .alt {
+  background: #ffb1b9;
+  color: #111; }
+.ColorStyles .hint,
+.ColorPalette .hint {
+  background: #eee;
+  color: #111; }
+.ColorStyles .content,
+.ColorPalette .content {
+  background: #fff;
+  color: #111; }
 
 /*
  LINKS

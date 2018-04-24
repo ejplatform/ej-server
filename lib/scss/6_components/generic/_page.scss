@@ -1,0 +1,45 @@
+/*
+ GENERIC PAGE ELEMENTS
+ ======================================================================== */
+
+$page-title-font-size: 1.1 * $font-size-h1;
+
+
+.Page {
+    box-sizing: border-box;
+    display: flex;
+    flex-flow: column;
+    height: 100vh;
+    overflow: hidden;
+    padding: $header-top-nav-height 0 $header-bottom-nav-height 0;
+
+    @media only screen and (min-width: $breakpoint-small) {
+        padding: $header-height 0 0 0;
+    }
+
+    &-mainContainer {
+        box-sizing: border-box;
+        height: 100vh;
+        display: flex;
+        flex-flow: column;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+
+    &-title {
+        background: $color-primary;
+        color: $color-primary-text;
+        margin: 0 0 $spacing-unit 0;
+        padding: $spacing-unit-small;
+
+        h1 {
+            font-size: $page-title-font-size;
+        }
+    }
+
+    &-content {
+        flex-grow: 1;
+        margin: 0 auto;
+        padding: 0;
+    }
+}

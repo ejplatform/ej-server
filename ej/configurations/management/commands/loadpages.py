@@ -53,8 +53,10 @@ class Command(BaseCommand):
         # Split HTML from markdown
         html_files = {p: url for url, p in url_map.items() if is_html(p)}
         md_files = {p: url for url, p in url_map.items() if is_markdown(p)}
-        [self.handle_html(*args, kwargs) for args in html_files.items()]
-        [self.handle_markdown(*args, kwargs) for args in md_files.items()]
+        return [
+            *[self.handle_html(*args, kwargs) for args in html_files.items()],
+            *[self.handle_markdown(*args, kwargs) for args in md_files.items()],
+        ]
 
     def handle_html(self, path, url, kwargs):
         save_file(path, url, HTML_TITLE_RE,
