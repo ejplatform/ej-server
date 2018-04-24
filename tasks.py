@@ -88,5 +88,6 @@ def db_assets(ctx, path='local'):
     """
     Install assets from a local folder in the database.
     """
+
     base = pathlib.Path(path)
     manage(ctx, 'loadpages', path=base / 'pages')

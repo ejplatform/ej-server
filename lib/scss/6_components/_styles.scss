@@ -105,7 +105,7 @@ $color-palette-radius: 150px;
         box-sizing: border-box;
         height: $color-palette-radius;
         margin: -$color-palette-radius / 5;
-        mix-blend-mode: saturation;
+        mix-blend-mode: multiply;
         min-width: $color-palette-radius;
         padding: 0;
     }
