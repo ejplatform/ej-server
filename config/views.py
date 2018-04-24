@@ -5,7 +5,6 @@ from django.db import IntegrityError
 from django.http import Http404, HttpResponseServerError
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils.translation import ugettext as _
-from django.conf import settings
 
 from ej.users.models import User
 from ej_conversations.models import Conversation, Vote, Category
@@ -85,16 +84,15 @@ def register(request):
         name, email, password = data['name'], data['email'], data['password']
         try:
             user = User.objects.create_simple_user(name, email, password)
-            log.info(f'user {user} ({email}) successfully authenticated')
+            log.info(f'user {user} ({email}) successfully created')
         except IntegrityError as ex:
             form.add_error(None, str(ex))
         else:
             user = auth.authenticate(request,
                                      username=user.username,
                                      password=password)
-            user = auth.login(request, user, backend=DJANGO_BACKEND)
-            if user:
-                return redirect(request.GET.get('redirect', '/'))
+            auth.login(request, user, backend=DJANGO_BACKEND)
+            return redirect(request.GET.get('redirect', '/'))
 
     ctx = dict(user=request.user, form=form)
     return render(request, 'pages/register.jinja2', ctx)
