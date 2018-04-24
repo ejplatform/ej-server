@@ -19,11 +19,9 @@ def check_login(request):
         return HttpResponse(status=401)
 
     name = (request.user.first_name + ' ' + request.user.last_name).strip()
-    print("name: " + request.user.username, file=sys.stderr)
-    print("AAAAAAAAAAAAAAAAAAAAAAAAA\n\n\nAAAAAAAAAAAAAAAAA", file=sys.stderr)
     loginToken = helpers.create_user_token(
         request.user.email,
-        name,
+        name or request.user.username,
         request.user.username
     )
 

@@ -48,13 +48,10 @@ def get_user_token(username):
 
 
 def is_user_registered(username):
-    json_data = {
-        'username': username,
-    }
-    res = requests.post(
+    res = requests.get(
         rocketchat_url('/api/v1/users.info'),
         headers=get_headers(),
-        params=json_data
+        params=dict(username=username)
     )
     return res.status_code == 200
 

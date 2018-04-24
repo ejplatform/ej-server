@@ -183,10 +183,8 @@ def start(request):
     return render(request, 'base.jinja2', ctx)
 
 
-@route('rocket/')
+@route('rocket/', login_required=True)
 def rocket(request):
-    if not request.user.id:
-        return redirect('/login/?next=/rocket')
     return render(request, 'pages/rocket.jinja2', {})
 
 #
@@ -195,6 +193,7 @@ def rocket(request):
 @route('debug/styles/')
 def display(request):
     return render(request, 'pages/debug-styles.jinja2', {})
+
 
 #
 # Static pages
