@@ -2,6 +2,8 @@
  BUTTONS
  =============================================================================*/
 
+$color-palette-radius: 150px;
+
 @mixin color-style($bg-color, $font-color: $color-content-text) {
     background: $bg-color;
     color: $font-color;
@@ -42,23 +44,6 @@
         display: block;
         width: 100%;
         flex-grow: 1;
-    }
-
-    // Schema
-    .primary {
-        @include color-style($color-primary, $color-primary-text);
-    }
-    .accent {
-        @include color-style($color-accent, $color-accent-text);
-    }
-    .alt {
-        @include color-style($color-alt, $color-alt-text);
-    }
-    .hint {
-        @include color-style($color-hint, $color-hint-text);
-    }
-    .content {
-        @include color-style($color-content, $color-content-text);
     }
 
     // Roles
@@ -102,5 +87,46 @@
     }
     .color-yellow {
         @include color-style-triple($color-yellow, $color-yellow-dark, $color-yellow-light);
+    }
+}
+
+.ColorPalette {
+    align-content: center;
+    background: white;
+    display: flex;
+    flex-flow: column wrap;
+    height: 1.5 * $color-palette-radius;
+    justify-content: center;
+    padding: ($color-palette-radius / 3) auto;
+    text-align: center;
+
+    > * {
+        border-radius: 50%;
+        box-sizing: border-box;
+        height: $color-palette-radius;
+        margin: -$color-palette-radius / 5;
+        mix-blend-mode: saturation;
+        min-width: $color-palette-radius;
+        padding: 0;
+    }
+}
+
+// Schema -- Common to styles and palette
+.ColorStyles,
+.ColorPalette {
+    .primary {
+        @include color-style($color-primary, $color-primary-text);
+    }
+    .accent {
+        @include color-style($color-accent, $color-accent-text);
+    }
+    .alt {
+        @include color-style($color-alt, $color-alt-text);
+    }
+    .hint {
+        @include color-style($color-hint, $color-hint-text);
+    }
+    .content {
+        @include color-style($color-content, $color-content-text);
     }
 }
