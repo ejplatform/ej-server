@@ -23,16 +23,17 @@ COPY . /app
 
 RUN mkdir /app/staticfiles
 
+RUN export $(cat /app/env.example | grep -v ^# | xargs) \
+    && python /app/manage.py collectstatic --noinput \
+    && mkdir /app/local \
+    && echo $BUILD >> /app/local/build.info \
+    && cd /app \
+    && chown -R django /app \
+    && inv db-fake --safe
+
 WORKDIR /app
 USER django
 
-RUN export $(cat /app/env.example | grep -v ^# | xargs) \
-    && mkdir /app/local \
-    && echo $BUILD >> /app/local/build.info \
-    && python /app/manage.py collectstatic --noinput \
-    && chown -R django /app \
-    && cd /app \
-    && inv db-fake --safe
 
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["/gunicorn.sh"]
