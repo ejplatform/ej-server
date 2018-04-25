@@ -5,6 +5,7 @@ from django.db import IntegrityError
 from django.http import Http404, HttpResponseServerError
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils.translation import ugettext as _
+from constance import config
 
 from ej.users.models import User
 from ej_conversations.models import Conversation, Vote, Category
@@ -185,7 +186,10 @@ def start(request):
 
 @route('rocket/', login_required=True)
 def rocket(request):
-    return render(request, 'pages/rocket.jinja2', {})
+    ctx = dict(
+        rocketchat_url=config.ROCKETCHAT_URL,
+    )
+    return render(request, 'pages/rocket.jinja2', ctx)
 
 #
 # Debug routes
