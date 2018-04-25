@@ -1460,7 +1460,7 @@ input[type=submit],
     box-sizing: border-box;
     height: 150px;
     margin: -30px;
-    mix-blend-mode: saturation;
+    mix-blend-mode: multiply;
     min-width: 150px;
     padding: 0; }
 

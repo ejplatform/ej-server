@@ -67,7 +67,13 @@ class SocialMediaIcon(models.Model):
         >>> icon.icon_tag(classes=['header-icon'])
         <i class="fa fa-icon header-icon"></i>
         """
-        raise NotImplementedError
+
+        if icon_font == self.ICON_MATERIAL:
+            icon_font_slug = 'material-icons'
+        elif icon_font == self.ICON_AWESOME:
+            icon_font_slug = 'fa'            
+        
+        return f'<i class="{icon_font_slug} {" ".join(classes)}></i>'
 
     def link_tag(self, classes=()):
         """
@@ -76,7 +82,13 @@ class SocialMediaIcon(models.Model):
         >>> icon.link_tag(classes=['header-icon'])
         <a href="url"><i class="fa fa-icon header-icon"></i></a>
         """
-        raise NotImplementedError
+        
+        if icon_font == self.ICON_MATERIAL:
+                icon_font_slug = 'material-icons'
+        elif icon_font == self.ICON_AWESOME:
+            icon_font_slug = 'fa'            
+        
+        return f'<a href="{self.url}"><i class="{icon_font_slug} {" ".join(classes)}></i></a>'
 
 
 class Color(models.Model):
@@ -102,14 +114,36 @@ class Fragment(models.Model):
     FORMAT_HTML = 'html'
     ...
 
-    name = models.CharField(_('URL'), max_length=100, unique=True, db_index=True)
-    content = models.TextField(_('content'), blank=True)
-    format = models.CharField(max_length=4)
-    editable = models.BooleanField(default=True)
-    deletable = models.BooleanField(default=True)
+    name = models.CharField(
+        _('Name'),
+        max_length=100,
+        unique=True,
+        db_index=True,
+        help_text=_('Name of the fragment to help identify some page part.'),
+    )
+    content = models.TextField(
+        _('content'),
+        blank=True,
+        help_text=_('The fragment content in html or markdown that will be displayed')
+    )
+    format = models.CharField(
+        max_length=4,
+        help_text=_('Format of the saved fragment, can be html or md')
+    )
+    editable = models.BooleanField(
+        default=True,
+        help_text=_('Boolean if the fragment its editable after being saved in db'),
+    )
+    deletable = models.BooleanField(
+        default=True,
+        help_text=_('Boolean if its possible to delete this fragment'),
+    )
 
     def __html__(self):
         return self.html()
+
+    def __str__(self):
+        return self.name.replace('_', ' ').replace('-', ' ').replace('/','').capitalize()
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)

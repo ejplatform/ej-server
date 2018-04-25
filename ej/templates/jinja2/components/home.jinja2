@@ -1,12 +1,9 @@
 {% from 'components/generic/elements.jinja2' import rocket_button, action_button %}
 
 
-{% macro home_banner(action='start-now') %}
+{% macro home_banner(home_banner_frag, action='start-now') %}
     <div class="HomeBanner">
-        <h1>Um lugar para <strong>crianças e adolescentes</strong> debaterem e ajudarem a <strong>melhorar o
-            Brasil</strong></h1>
-        <h2>idenfificando <strong>grupos de opinião</strong> e combatendo a polarização a partir da
-        promoção da <strong>diversidade dos pontos de vista</strong>.</h2>
+        {{ home_banner_frag.content|safe}}
         {% if action == 'rocket-chat' %}
             {{ rocket_button() }}
         {% elif action == 'start-now' %}
@@ -18,10 +15,9 @@
 {% endmacro %}
 
 
-{% macro how_it_works() %}
+{% macro how_it_works(how_it_works_frag) %}
     <div class="HowItWorks">
-        <h1>Como Funciona?</h1>
-        <h2>A dinâmica de interação acontece em 3 frentes</h2>
+        {{ how_it_works_frag.content|safe }}
 
         <div class="HowItWorks-cards">
             {% call how_it_works_card(
@@ -65,10 +61,9 @@
     </article>
 {% endmacro %}
 
-{% macro start_now() %}
+{% macro start_now(start_now_frag) %}
     <div class="StartNow">
-        <h1>Venha somar suas opiniões à nossa rede!</h1>
-        <h2>Quanto mais opiniões, mais ricas serão as discussões.</h2>
+        {{ start_now_frag.content|safe }}
         {{ action_button('Começar agora!', '/start/') }}
     </div>
 {% endmacro %}
