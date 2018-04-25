@@ -9,4 +9,4 @@ from . import helpers
 @receiver(user_logged_out)
 def logout(sender, user, request, **kwargs):
     if user:
-        helpers.enable_rc_user_login(user.username, False) 
+        helpers.invalidade_rc_user_token(user.username) 
