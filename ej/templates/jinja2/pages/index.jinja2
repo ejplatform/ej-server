@@ -3,8 +3,8 @@
 {% from 'components/conversations.jinja2' import conversation_list %}
 
 {% block main %}
-    {{ home_banner() }}
-    {{ how_it_works() }}
+    {{ home_banner(home_banner_frag) }}
+    {{ how_it_works(how_it_works_frag) }}
     {{ conversation_list(conversations) }}
-    {{ start_now() }}
+    {{ start_now(start_now_frag) }}
 {% endblock %}
