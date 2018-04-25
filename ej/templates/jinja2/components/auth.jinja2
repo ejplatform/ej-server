@@ -1,4 +1,4 @@
-{% macro login(form, csrf_input) %}
+{% macro login(form, csrf_input, next=None) %}
     <div class="Login">
         <h1 class="Login-title">Fazer login // Cadastrar-se</h1>
         <i class="fa fa-user Login-icon"></i>
@@ -15,7 +15,7 @@
             <div><input type="submit" class="Login-button" value="{{ _('Login') }}" name="login"></div>
             {{ form.non_field_errors() }}
 
-            {{ login_options('/register/', _('Register'), 'Ainda não faz parte do EJ?') }}
+            {{ login_options('/register/' + ('?next=' + next if next else ''), _('Register'), 'Ainda não faz parte do EJ?') }}
         </form>
     </div>
 {% endmacro %}
@@ -38,6 +38,7 @@
         {{ login_options('/login/', _('Login'), 'Faz parte do EJ?') }}
     </div>
 {% endmacro %}
+
 
 {% macro login_options(button_href, button_msg, title) %}
     <p><a href="/profile/recover-password/">Esqueceu a senha?</a></p>

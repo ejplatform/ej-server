@@ -353,3 +353,29 @@ EJ_CONVERSATIONS_URLMAP = {
     'conversation-detail': '/conversations/{conversation.category.slug}/{conversation.slug}/',
     'conversation-list': '/conversations/',
 }
+
+# Logging
+DEFAULT_LOGGER = {
+    'handlers': ['file', 'console'],
+    'level': 'DEBUG',
+    'propagate': True,
+}
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': ROOT_DIR / 'local/debug.log',
+        },
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        # 'django': DEFAULT_LOGGER,
+        'ej': DEFAULT_LOGGER,
+    },
+}

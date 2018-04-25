@@ -14,3 +14,13 @@ model_mommy ~= 1.5.1
 
 # Static analysis
 flake8 ~= 3.4.1
+
+# Improved REPL
+ipdb
+IPython
+
+# Tools
+django-debug-toolbar ~= 1.8
+Sphinx ~= 1.6
+Werkzeug  ~= 0.12
+invoke ~= 0.22
