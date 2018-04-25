@@ -207,6 +207,14 @@ def display(request):
 
 
 #
+# Non-html data
+#
+@route('sw.js')
+def service_worker(request):
+    return render(request, 'js/sw.js', {}, content_type='application/javascript')
+
+
+#
 # Static pages
 #
 route('menu/', name='menu', template_name='pages/menu.jinja2')
