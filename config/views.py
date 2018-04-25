@@ -16,7 +16,7 @@ from ej.configurations.views import get_fragment
 get_patterns = get_patterns  # don't count as an unused import
 DJANGO_BACKEND = 'django.contrib.auth.backends.ModelBackend',
 ALLAUTH_BACKEND = 'allauth.account.auth_backends.AuthenticationBackend'
-log = logging.getLogger('ej-views')
+log = logging.getLogger('ej')
 
 
 #
@@ -85,7 +85,6 @@ def start(request):
 @route('register/')
 def register(request):
     form = RegistrationForm(request.POST if request.method == 'POST' else None)
-
     if request.method == 'POST' and form.is_valid():
         data = form.cleaned_data
         name, email, password = data['name'], data['email'], data['password']
@@ -93,13 +92,15 @@ def register(request):
             user = User.objects.create_simple_user(name, email, password)
             log.info(f'user {user} ({email}) successfully created')
         except IntegrityError as ex:
+            log.info(f'invalid login attempt: {email}')
             form.add_error(None, str(ex))
         else:
             user = auth.authenticate(request,
                                      username=user.username,
                                      password=password)
-            auth.login(request, user, backend=DJANGO_BACKEND)
-            return redirect(request.GET.get('redirect', '/'))
+            auth.login(request, user)
+            log.info(f'user {user} ({email}) logged in')
+            return redirect(request.GET.get('next', '/'))
 
     ctx = dict(user=request.user, form=form)
     return render(request, 'pages/register.jinja2', ctx)

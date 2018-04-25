@@ -106,7 +106,7 @@
                 </ul>
             </form>
         {% else %}
-            <p class="Comment-loginWarn">É necessário <a href="/login/">registrar-se</a> antes de
+            <p class="Comment-loginWarn">É necessário <a href="/login/?next={{ comment.conversation.get_absolute_url() }}">registrar-se</a> antes de
                 votar ou enviar um comentário!</p>
         {% endif %}
     </div>
