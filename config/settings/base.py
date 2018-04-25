@@ -356,7 +356,7 @@ EJ_CONVERSATIONS_URLMAP = {
 
 # Logging
 DEFAULT_LOGGER = {
-    'handlers': ['file', 'console'],
+    'handlers': ['console'],
     'level': 'DEBUG',
     'propagate': True,
 }
