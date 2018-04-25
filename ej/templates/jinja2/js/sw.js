@@ -36,13 +36,7 @@ function registerAllRoutes(workbox) {
             ]
         })
     );
-
-    // Dynamic urls and root page
-    workbox.routing.registerRoute(
-        new RegExp('[a-zA-Z0-9-\/]*'),
-        workbox.strategies.networkFirst()
-    );
-
+    
     log('[sw] all routes registered!');
 }
 registerAllRoutes(workbox);
