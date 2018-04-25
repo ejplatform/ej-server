@@ -3,8 +3,9 @@
  ============================================================================ */
 
 // Constants
-$footer-color: darken($color-hint, 10%) !default;
-$footer-color-text: $color-hint-text !default;
+$footer-color: #464646 !default;
+$footer-color-text: $color-white !default;
+$footer-icon-size: 40px;
 
 // Component
 .Footer {
@@ -23,6 +24,11 @@ $footer-color-text: $color-hint-text !default;
         font-weight: bold;
     }
 
+    p {
+        font-weight: bold;
+        font-size: $font-size-default;
+    }
+
     &-badges {
         display: flex;
         text-align: center;
@@ -30,6 +36,18 @@ $footer-color-text: $color-hint-text !default;
         li {
             margin-left: 0;
             list-style: none;
+        }
+    }
+
+    &-icons {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        font-size: $footer-icon-size;
+
+        li {
+            display: inline;
+            margin: $spacing-unit-small;
         }
     }
 }

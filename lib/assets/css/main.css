@@ -1077,20 +1077,31 @@ input[type=submit],
  PAGE FOOTER
  ============================================================================ */
 .Footer {
-  background: #d5d5d5;
+  background: #464646;
   box-sizing: border-box;
-  color: #111;
+  color: #fff;
   height: 0 60px;
   padding: 12px; }
   .Footer a {
-    color: #111;
+    color: #fff;
     font-weight: bold; }
+  .Footer p {
+    font-weight: bold;
+    font-size: 16px; }
   .Footer-badges {
     display: flex;
     text-align: center; }
     .Footer-badges li {
       margin-left: 0;
       list-style: none; }
+  .Footer-icons {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    font-size: 40px; }
+    .Footer-icons li {
+      display: inline;
+      margin: 12px; }
 
 /*
  PAGE SIDEBAR
