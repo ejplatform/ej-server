@@ -25,7 +25,6 @@
 
             <!-- Js libs -->
             <link href="https://unpkg.com/unpoly@0.54.0/dist/unpoly.min.css" rel="stylesheet" integrity="sha384-zsXMcPyhYSZEF/yA0Rprx9nn7gnz84QyiSrxSH5xuo0DalUAlfSmfsxILtkg5fJ/" crossorigin="anonymous">
-            <link href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.7.0/introjs.min.css" rel="stylesheet">
 
             <!-- Site css -->
             <link href="/static/css/main.css" rel="stylesheet">
@@ -46,6 +45,7 @@
         <!-- Generic and PWA -->
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="{{ theme_color|default('#317EFB') }}">
+        <meta name="description" content="{{ page_description|default(_('EJ - A platform of social participation.')) }}">
         <link rel="manifest" href="/static/manifest.json">
 
         <!-- Cache busting metas -->
@@ -86,7 +86,7 @@
 
     {# MAIN BLOCK #}
     {% block main %}
-        <main class="Page-content">
+        <main class="Page-content" {{ salt_attr()|safe }}>
             {% if content_title %}<h1 class="Page-title">{{ content_title }}</h1>{% endif %}
             {% block content %}
                 {% if content_html %}
@@ -129,7 +129,7 @@
         <script>
             if ('serviceWorker' in navigator) {
                 window.addEventListener('load', function () {
-                    navigator.serviceWorker.register('/static/js/serviceworker.js');
+                    navigator.serviceWorker.register('/sw.js');
                 });
             }
         </script>

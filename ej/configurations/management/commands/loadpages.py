@@ -26,52 +26,66 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, path=False, force=False, **options):
-        if not path:
-            path = 'local'
-        validate_path(path)
-
-        base = Path(path)
-        urls = ((p, make_url(p)) for p in os.listdir(path))
-        urls = ((base / p, url) for p, url in urls if url)
-
-        # Filter out existing urls
-        current_urls = set(FlatPage.objects.values_list('url', flat=True))
-        url_map = {}
-        for p, url in urls:
-            if force or url not in current_urls:
-                url_map[url] = p
-            else:
-                print('Page exists: <base>%s (%s)' % (url, p))
-
-        # Flatpages args
-        kwargs = {}
-
-        # Split HTML from markdown
-        html_files = {p: url for url, p in url_map.items() if is_html(p)}
-        md_files = {p: url for url, p in url_map.items() if is_markdown(p)}
-        return [
-            *[self.handle_html(*args, kwargs) for args in html_files.items()],
-            *[self.handle_markdown(*args, kwargs) for args in md_files.items()],
-        ]
-
-    def handle_html(self, path, url, kwargs):
-        save_file(path, url, HTML_TITLE_RE,
-                  template='flatpages/html.html', **kwargs)
-
-    def handle_markdown(self, path, url, kwargs):
-        save_file(path, url, MARKDOWN_TITLE_RE,
-                  template='flatpages/markdown.html', **kwargs)
+        real_handle(path, force)
 
 
-def save_file(path, url, title_re, template, **kwargs):
+def real_handle(path=False, force=False):
+    if not path:
+        path = 'local'
+    validate_path(path)
+
+    base = Path(path)
+    files = ((base/path, make_url(path)) for path in os.listdir(path))
+
+    # Filter out existing urls
+    saved_pages = list(FlatPage.objects.values_list('url', flat=True))
+    saved_pages = list(map(''.join,saved_pages))
+    new_pages = {}
+    for path, name in files:
+        if force or name not in saved_pages:
+            new_pages[name] = path
+        else:
+            print('Page exists: <base>%s (%s)' % (name, path))
+
+    # Flatpages args
+    kwargs = {}
+
+    # Split HTML from markdown
+    html_files = {path: name for name, path in new_pages.items() if is_html(path)}
+    md_files = {path: name for name, path in new_pages.items() if is_markdown(path)}
+    return [
+        *[handle_html(*args, kwargs) for args in html_files.items()],
+        *[handle_markdown(*args, kwargs) for args in md_files.items()],
+    ]
+
+
+def handle_html(path, file_name, kwargs):
+    save_file(path, file_name, HTML_TITLE_RE,
+              template='flatpages/html.html', **kwargs)
+
+
+def handle_markdown(path, file_name, kwargs):
+    save_file(path, file_name, MARKDOWN_TITLE_RE,
+              template='flatpages/markdown.html', **kwargs)
+
+
+def save_file(path, file_name, title_re, template, **kwargs):
     data = path.read_text()
     title_m = title_re.match(data)
     title = title_m.groupdict()['title'] if title_m else path.name
-    page = FlatPage(url=url, title=title, content=data,
-                    template_name=template, **kwargs)
-    page.full_clean()
-    page.save()
+    page, created = FlatPage.objects.update_or_create(
+        url=file_name,
+        defaults={'title': title,
+                  'content': data,
+                  'template_name': template
+                  },
+        **kwargs)
     page.sites.add(Site.objects.get(id=SITE_ID))
-    print('Saved page: %s' % page)
+
+    if(created):
+        print('Saved page: %s' % page)
+    else:
+        print('Updated page: %s' % page)
+
     return page
 
