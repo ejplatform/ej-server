@@ -5,6 +5,7 @@ from django.db import IntegrityError
 from django.http import Http404, HttpResponseServerError
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils.translation import ugettext as _
+from constance import config
 
 from ej.users.models import User
 from ej_conversations.models import Conversation, Vote, Category
@@ -16,7 +17,7 @@ from ej.configurations.views import get_fragment
 get_patterns = get_patterns  # don't count as an unused import
 DJANGO_BACKEND = 'django.contrib.auth.backends.ModelBackend',
 ALLAUTH_BACKEND = 'allauth.account.auth_backends.AuthenticationBackend'
-log = logging.getLogger('ej-views')
+log = logging.getLogger('ej')
 
 
 #
@@ -85,7 +86,6 @@ def start(request):
 @route('register/')
 def register(request):
     form = RegistrationForm(request.POST if request.method == 'POST' else None)
-
     if request.method == 'POST' and form.is_valid():
         data = form.cleaned_data
         name, email, password = data['name'], data['email'], data['password']
@@ -93,13 +93,15 @@ def register(request):
             user = User.objects.create_simple_user(name, email, password)
             log.info(f'user {user} ({email}) successfully created')
         except IntegrityError as ex:
+            log.info(f'invalid login attempt: {email}')
             form.add_error(None, str(ex))
         else:
             user = auth.authenticate(request,
                                      username=user.username,
                                      password=password)
-            auth.login(request, user, backend=DJANGO_BACKEND)
-            return redirect(request.GET.get('redirect', '/'))
+            auth.login(request, user)
+            log.info(f'user {user} ({email}) logged in')
+            return redirect(request.GET.get('next', '/'))
 
     ctx = dict(user=request.user, form=form)
     return render(request, 'pages/register.jinja2', ctx)
@@ -190,6 +192,13 @@ def start(request):
     return render(request, 'base.jinja2', ctx)
 
 
+@route('talks/', login_required=True)
+def rocket(request):
+    ctx = dict(
+        rocketchat_url=config.ROCKETCHAT_URL,
+    )
+    return render(request, 'pages/rocket.jinja2', ctx)
+
 #
 # Debug routes
 #
@@ -209,7 +218,6 @@ def service_worker(request):
 #
 # Static pages
 #
-route('rocket/', name='rocket', template_name='pages/rocket.jinja2')
 route('menu/', name='menu', template_name='pages/menu.jinja2')
 route('tour/', name='tour', template_name='pages/tour.jinja2')
 route('comments/', name='comments', template_name='pages/comments.jinja2')

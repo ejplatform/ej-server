@@ -6,7 +6,7 @@ WORKDIR /app
 
 # Requirements have to be pulled and installed here, otherwise caching won't work
 COPY ./requirements /app/requirements
-RUN pip install -r /app/requirements/local.txt
+RUN pip install -r /app/requirements/test.txt
 
 COPY ./compose/production/django/entrypoint.sh /entrypoint.sh
 RUN sed -i 's/\r//' /entrypoint.sh

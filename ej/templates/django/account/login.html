@@ -27,7 +27,8 @@
 
 {% include "socialaccount/snippets/login_extra.html" %}
 
-<a id="facebook-button" class="btn btn-primary btn-block btn-social btn-facebook" href="{% provider_login_url "facebook" method="js_sdk" next="/api/profile/close" %}"
+<a id="facebook-button" class="btn btn-primary btn-block btn-social btn-facebook"
+    href="{% provider_login_url "facebook" method="js_sdk" next="/api/profile/close" %}"
     style="color: #fff"><i class="fa fa-facebook"></i>Conectar com Facebook</a>
 <a id="twitter-login-link"
     class="btn btn-primary btn-block btn-social btn-twitter"
@@ -36,7 +37,8 @@
   <i class="fa fa-twitter"></i>Connectar com Twitter</a>
 <form class="login" method="POST" action="{% url 'account_login' %}">
   {% csrf_token %}
-  {{ form|crispy }}
+  <!-- form | crispy decorator not working -->
+  {{ form }}
   {% if redirect_field_value %}
   <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
   {% endif %}

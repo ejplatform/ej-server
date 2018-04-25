@@ -8,7 +8,7 @@ django-environ ~= 0.4.4
 django-crispy-forms ~= 1.6.1
 
 # Admin
-django-constance ~= 2.2.0
+django-constance[database] ~= 2.2.0
 django-configurations ~= 2.0
 
 # Models

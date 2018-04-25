@@ -2,5 +2,5 @@
 {% from 'components/auth.jinja2' import login %}
 
 {% block content %}
-    {{ login(form, csrf_input) }}
+    {{ login(form, csrf_input, request.GET.get('next', None)) }}
 {% endblock %}
