@@ -44,6 +44,8 @@ def real_handle(path, force):
             if (name != saved_name) or force:
                 print("new")
                 new_fragments[name] = path
+            else:
+                print('Fragment exists: <base>%s (%s)' % (name, path))
     print(new_fragments.items())
 
     # Split HTML from markdown
