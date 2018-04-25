@@ -192,7 +192,7 @@ def start(request):
     return render(request, 'base.jinja2', ctx)
 
 
-@route('rocket/', login_required=True)
+@route('talks/', login_required=True)
 def rocket(request):
     ctx = dict(
         rocketchat_url=config.ROCKETCHAT_URL,
