@@ -103,7 +103,7 @@ class Fragment(models.Model):
     ...
 
     name = models.CharField(
-        _('URL'),
+        _('Name'),
         max_length=100,
         unique=True,
         db_index=True,
@@ -116,7 +116,7 @@ class Fragment(models.Model):
     )
     format = models.CharField(
         max_length=4,
-        help_text=_('Format can be FORMAT_HTML or FORMAT_MARKDOWN')
+        help_text=_('Format of the saved fragment, can be html or md')
     )
     editable = models.BooleanField(
         default=True,
@@ -131,7 +131,7 @@ class Fragment(models.Model):
         return self.html()
 
     def __str__(self):
-        return self.name
+        return self.name.replace('_', ' ').replace('-', ' ').replace('/','').capitalize()
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)

@@ -4,7 +4,6 @@ from ._load import make_url, is_html, is_markdown, validate_path, MARKDOWN_TITLE
 from django.core.management.base import BaseCommand
 from ...models import Fragment
 from django.conf import settings
-from django.core.exceptions import ValidationError
 
 SITE_ID = getattr(settings, 'SITE_ID', 1)
 
@@ -18,44 +17,68 @@ class Command(BaseCommand):
             type=str,
             help='Path to look for pages',
         )
+        parser.add_argument(
+            '--force',
+            action='store_true',
+            help='Override existing pages with file data.',
+        )
 
     def handle(self, *args, path=False, force=False, **options):
-        if not path:
-            path = 'local'
-        validate_path(path)
-
-        base = Path(path)
-        urls = ((base/p, make_url(p)) for p in os.listdir(path))
-
-        # TODO: Filter out existing fragments
-        # Fragments don't have unique urls, then url will never be in 'name'
-
-        # Split HTML from markdown
-        html_files = {p: url for p, url in urls if is_html(p)}
-        md_files = {p: url for p, url in urls if is_markdown(p)}
-        return [
-            *[self.handle_html(*args) for args in html_files.items()],
-            *[self.handle_markdown(*args) for args in md_files.items()],
-        ]
-
-    def handle_html(self, path, url):
-        save_fragment(path, HTML_TITLE_RE, Fragment.FORMAT_HTML)
-
-    def handle_markdown(self, path, url):
-        save_fragment(path, MARKDOWN_TITLE_RE, Fragment.FORMAT_MARKDOWN)
+        real_handle(path, force)
 
 
-def save_fragment(path, name_re, fragment_format):
+def real_handle(path, force):
+    if not path:
+        path = 'local'
+    validate_path(path)
+
+    base = Path(path)
+    files = ((base/path, make_url(path)) for path in os.listdir(path))
+
+    # Filter out existing fragments
+    current_fragments = list(Fragment.objects.values_list('name'))
+    new_fragments = {}
+    for path, name in files:
+        for saved_name in current_fragments:
+            saved_name = ''.join(saved_name)
+            if (name != saved_name) or force:
+                print("new")
+                new_fragments[name] = path
+    print(new_fragments.items())
+
+    # Split HTML from markdown
+    html_files = {path: name for name, path in new_fragments.items() if is_html(path)}
+    md_files = {path: name for name, path in new_fragments.items() if is_markdown(path)}
+
+    return [
+        *[handle_html(*args) for args in html_files.items()],
+        *[handle_markdown(*args) for args in md_files.items()],
+    ]
+
+
+def handle_html(path, name):
+    save_fragment(path,name, Fragment.FORMAT_HTML)
+
+
+def handle_markdown(path, name):
+    save_fragment(path, name, Fragment.FORMAT_MARKDOWN)
+
+
+def save_fragment(path, name, fragment_format):
     data = path.read_text()
-    name_m = name_re.match(data)
-    name = name_m.groupdict()['title'] if name_m else path.name
-    fragment = Fragment(name=name, format=fragment_format, content=data, editable=True,
-                        deletable=True)
+    fragment, created = Fragment.objects.update_or_create(
+        name=name,
+        defaults={'format': fragment_format,
+                  'content': data,
+                  'editable': True,
+                  'deletable': True,
+                  }
+    )
 
-    fragment.full_clean()
-    fragment.save()
-    print('Saved fragment: %s' % fragment)
-
+    if(created):
+        print('Saved fragment: %s' % fragment)
+    else:
+        print('Updated fragment: %s' % fragment)
 
     return fragment
 
