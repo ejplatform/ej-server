@@ -11,6 +11,8 @@ import pathlib
 
 from config.settings.core import env, DEBUG
 from .conf import db
+from .celery import *
+from .constance import *
 
 DATABASES = db.DATABASES
 USE_SQLITE = db.USE_SQLITE
@@ -25,6 +27,7 @@ INSTALLED_APPS = [
     'ej.gamification.apps.GamificationConfig',
     'ej.math.apps.MathConfig',
     'ej.configurations.apps.ConfigurationsConfig',
+    'ej.ej_rocketchat.apps.EJRocketchatConfig',
 
     # External EJ Apps
     'ej_conversations',
@@ -51,6 +54,8 @@ INSTALLED_APPS = [
     'actstream',
     'pinax.points',
     'pinax.badges',
+    'constance',
+    'constance.backends.database',
 
     # Alternative admin apps
     # 'jet.dashboard',
@@ -318,12 +323,20 @@ ADMIN_URL = 'admin/'
 # Django cors
 # ------------------------------------------------------------------------------
 CORS_ORIGIN_ALLOW_ALL = False
+CORS_ALLOW_CREDENTIALS = True
 CORS_ORIGIN_WHITELIST = (
-    'polis.brasilqueopovoquer.org.br',
-    'brasilqueopovoquer.org.br',
-    'ej.brasilqueopovoquer.org.br',
-    'app.brasilqueopovoquer.org.br',
+    'ejplatform.org',
+    'chat.ejplatform.org',
+    'dev.ejplatform.org',
+    'chat.dev.ejplatform.org',
 )
+
+CSRF_TRUSTED_ORIGINS = [
+    'ejplatform.org',
+    'chat.ejplatform.org',
+    'dev.ejplatform.org',
+    'chat.dev.ejplatform.org',
+]
 
 # Above default keys will always pass, do not use then in production.
 RECAPTCHA_PUBLIC_KEY = env('DJANGO_RECAPTCHA_PUBLIC_KEY',

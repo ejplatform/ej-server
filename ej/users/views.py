@@ -6,6 +6,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import Http404, JsonResponse, HttpResponse
 from django.urls import reverse
 from django.views.generic import RedirectView, UpdateView
+from django.views.decorators.clickjacking import xframe_options_exempt
+from django.utils.decorators import method_decorator
 from rest_auth.registration.views import SocialLoginView
 from rest_auth.social_serializers import TwitterLoginSerializer
 from rest_auth.views import LoginView
@@ -16,6 +18,7 @@ from .models import User
 from .serializers import FixSocialLoginSerializer
 
 
+@method_decorator(xframe_options_exempt, name='dispatch')
 class SignupView(allauth_views.SignupView):
     template_name = 'account/login-signup.html'
     success_url = '/'
