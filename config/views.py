@@ -44,6 +44,8 @@ def start(request):
 def login(request):
     form = LoginForm(request.POST if request.method == 'POST' else None)
     error_msg = _('Invalid username or password')
+    next = request.GET.get('next', '/')
+    fast = request.GET.get('fast', 'false') == 'true'
 
     if request.method == 'POST' and form.is_valid():
         data = form.cleaned_data
@@ -60,7 +62,9 @@ def login(request):
             log.info(f'invalid login attempt: {email}')
             form.add_error(None, error_msg)
         else:
-            return redirect(request.GET.get('next', '/'))
+            return redirect(next)
+    elif fast and request.user.is_authenticated and next:
+        return redirect(next)
 
     ctx = dict(user=request.user, form=form)
     return render(request, 'pages/login.jinja2', ctx)

@@ -32,14 +32,13 @@
             <i class="fa fa-microphone"></i><span>{{ _('Conversations') }}</span>
         {% endcall %}
 
-        {% call link('/rocket/', alt=_('Canais'), preload=True) %}
+        {% call link('/talks/', alt=_('Canais'), preload=True) %}
             <i class="fa fa-comments"></i><span>{{ _('Channels') }}</span>
         {% endcall %}
 
         {% call link('/faq/', alt=_('FAQ'), preload=True, class='Header-helpButton') %}
             <i class="fa fa-question"></i><span>{{ _('Help') }}</span>
         {% endcall %}
-
 
         {% call link('/profile/', alt='Profile', preload=True) %}
             <i class="fa fa-user"></i><span>{{ _('Profile') }}</span>
