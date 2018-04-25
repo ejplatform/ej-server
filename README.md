@@ -105,7 +105,8 @@ Now, go to the Rocketchat administration page and setup the [IFrame login integr
 
 You have to modify some Django settings to complete the integration. First go to `Django Admin > Constance (Config) > RocketChat Options`.
 
-* `ROCKETCHAT_URL`: set to the external Rocketchat URL, `http://rocketchat:3000`. If you are using a localhost instance of rocketchat, put `rocketchat` on your `/etc/hosts` next to `localhost`, to differentiate a local access on the django server.
+* `ROCKETCHAT_URL`: set to the external accessible Rocketchat URL, `http://localhost:3000`.
+* `ROCKETCHAT_PRIVATE_URL`: set to the rocketchat docker internal network address `http://rocketchat:3000`, or leave blank if there is no rocketchat private URL.
 * `ROCKETCHAT_AUTH_TOKEN`: set to the admin token got on the `curl` command.
 * `ROCKETCHAT_USER_ID`: set to the admin ID got on the `curl` command.
 

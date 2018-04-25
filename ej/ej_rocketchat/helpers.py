@@ -1,13 +1,13 @@
 import random
 import string
 import requests
-import sys
 import json
 
 from constance import config
 
 
-rocketchat_url = lambda uri: config.ROCKETCHAT_URL + uri
+def rocketchat_url(uri):
+    return (config.ROCKETCHAT_PRIVATE_URL or config.ROCKETCHAT_URL) + uri
 
 
 def create_rc_user_token(email, name, username):
