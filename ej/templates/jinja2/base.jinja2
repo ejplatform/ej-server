@@ -98,12 +98,13 @@
                 {% endif %}
             {% endblock %}
         </main>
+    {% endblock %}
 
     {% if target == 'all' or target == 'page' %}
         {{ page_footer() }}
         </div>
     {% endif %}
-    {% endblock %}
+
 {% endblock %}
 
 {% if target == 'all' %}
