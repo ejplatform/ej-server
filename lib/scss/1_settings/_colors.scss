@@ -18,7 +18,7 @@ $color-green: #34ff99 !default;
 $color-green-dark: #4cc85c !default;
 $color-green-light: #97ffc0 !default;
 
-$color-magenta: #ff42af !default;
+$color-magenta: #d23591 !default;
 $color-magenta-dark: #912763 !default;
 $color-magenta-light: #ffd0e2 !default;
 
@@ -44,9 +44,9 @@ $color-content-text: $color-black !default;
 $color-content-text-faded: lighten($color-content-text, 40%) !default;
 
 // Color schemes
-$color-primary: $color-blue-light !default;
+$color-primary: $color-blue !default;
 $color-primary-text: $color-white !default;
-$color-accent: $color-magenta !default;
+$color-accent: $color-magenta-dark !default;
 $color-accent-text: $color-white !default;
 $color-navigation: $color-white !default;
 $color-navigation-text: $color-black !default;
@@ -57,7 +57,7 @@ $color-alt-text: $color-black !default;
 
 // Modifiers
 $color-hint-degree-pc: 10;
-$color-text-alpha: 0.8;
+$color-text-alpha: 0.9;
 
 // Color roles and actions
 $color-error: $color-red !default;
