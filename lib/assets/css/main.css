@@ -475,7 +475,7 @@ a {
   text-decoration-style: solid; }
 
 code, pre, blockquote {
-  color: #111;
+  color: #203D62;
   background-color: #eee; }
 
 code, pre {
@@ -515,18 +515,18 @@ select,
   border-radius: 3px;
   background: #f7f7f7;
   border: 1px solid #999;
-  color: #111;
+  color: #203D62;
   margin: 6px auto;
   padding: 12px; }
 
 label {
-  color: #777777;
+  color: #7aa2d4;
   font-weight: bold;
   font-size: 1.1em;
   margin: 0 auto; }
 
 input[type=submit] {
-  background: #4d8bc0; }
+  background: #96DCDD; }
 
 /*
  GENERIC CONTAINER PATTERNS
@@ -563,7 +563,7 @@ input[type=submit],
 .Button,
 .ActionButton,
 .RocketButton {
-  background: #4d8bc0;
+  background: #96DCDD;
   border: none;
   border-radius: 3px;
   box-sizing: border-box;
@@ -702,7 +702,7 @@ input[type=submit],
   .RocketButton .Button--secondary {
     background-color: #eee;
     border-radius: 50ch;
-    color: rgba(17, 17, 17, 0.9); }
+    color: rgba(32, 61, 98, 0.9); }
     button[secondary]:hover, button[secondary]:focus,
     button .Button--secondary:hover,
     button .Button--secondary:focus,
@@ -723,7 +723,7 @@ input[type=submit],
     .ActionButton .Button--secondary:focus,
     .RocketButton .Button--secondary:focus {
       background-color: #d5d5d5;
-      color: #111; }
+      color: #203D62; }
   button[small],
   button .Button--small,
   input[type=submit][small],
@@ -757,8 +757,8 @@ input[type=submit],
   .ActionButton .Button--ghost,
   .RocketButton .Button--ghost {
     background: none;
-    border: 1px solid #4d8bc0;
-    color: #4d8bc0;
+    border: 1px solid #96DCDD;
+    color: #96DCDD;
     padding: 11px 23px; }
     button[ghost]:hover, button[ghost]:focus,
     button .Button--ghost:hover,
@@ -944,7 +944,7 @@ input[type=submit],
     overflow-x: hidden;
     overflow-y: auto; }
   .Page-title {
-    background: #4d8bc0;
+    background: #96DCDD;
     color: #fff;
     margin: 0 0 24px 0;
     padding: 12px; }
@@ -1044,9 +1044,9 @@ input[type=submit],
         text-transform: none; } }
     .Header-lowerNav a {
       align-items: center;
-      color: #777777; }
+      color: #7aa2d4; }
       .Header-lowerNav a i.fa {
-        color: #111;
+        color: #203D62;
         display: block;
         font-size: 26px;
         margin: 6px; }
@@ -1077,20 +1077,23 @@ input[type=submit],
  PAGE FOOTER
  ============================================================================ */
 .Footer {
-  background: #d5d5d5;
+  background: #96DCDD;
   box-sizing: border-box;
-  color: #111;
+  color: #203D62;
   height: 0 60px;
   padding: 12px; }
-  .Footer a {
-    color: #111;
-    font-weight: bold; }
-  .Footer-badges {
-    display: flex;
-    text-align: center; }
-    .Footer-badges li {
-      margin-left: 0;
-      list-style: none; }
+  .Footer-social p {
+    font-weight: bold;
+    font-size: 16px; }
+  .Footer-icons {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    font-size: 30px;
+    color: #fff; }
+    .Footer-icons li {
+      display: inline;
+      margin: 12px; }
 
 /*
  PAGE SIDEBAR
@@ -1107,7 +1110,7 @@ input[type=submit],
   background: #ff7e8b;
   box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.3);
   box-sizing: border-box;
-  color: black;
+  color: #13253c;
   font-size: 18px;
   opacity: 0.95;
   overflow: auto;
@@ -1190,7 +1193,7 @@ input[type=submit],
   .ConversationCard h1 {
     font-size: 1.3em; }
   .ConversationCard-cover {
-    background: #4d8bc0;
+    background: #96DCDD;
     border-radius: 12px;
     color: #fff;
     display: flex;
@@ -1225,7 +1228,7 @@ input[type=submit],
   .ConversationDetail > * {
     padding: 24px; }
   .ConversationDetail-banner {
-    background: #4d8bc0;
+    background: #96DCDD;
     color: #fff;
     padding-top: 0; }
     .ConversationDetail-banner a {
@@ -1272,7 +1275,7 @@ input[type=submit],
         .HowItWorksCard h1 i {
           display: none; } }
   .HowItWorksCard p {
-    color: #292929; }
+    color: #365072; }
   .HowItWorksCard-content {
     flex-grow: 1; }
   .HowItWorksCard-icon {
@@ -1310,7 +1313,7 @@ input[type=submit],
   .Profile h1 {
     margin-bottom: 0; }
   .Profile h2 {
-    color: #777777;
+    color: #7aa2d4;
     font-size: 1.15em;
     margin-top: 0; }
   .Profile-breadcrumbs {
@@ -1337,7 +1340,7 @@ input[type=submit],
     .Profile-info > * {
       display: block; }
     .Profile-info dl dt {
-      color: #777777;
+      color: #7aa2d4;
       text-transform: lowercase; }
     .Profile-info dl dd {
       font-size: 1.1em;
@@ -1376,19 +1379,19 @@ input[type=submit],
     flex-grow: 1; }
   .ColorStyles .error {
     background: #f13c20;
-    color: #111; }
+    color: #203D62; }
   .ColorStyles .warning {
     background: #ffd333;
-    color: #111; }
+    color: #203D62; }
   .ColorStyles .action-default {
-    background: #4d8bc0;
+    background: #96DCDD;
     color: rgba(255, 255, 255, 0.9); }
   .ColorStyles .action-primary {
     background: #912763;
     color: rgba(255, 255, 255, 0.9); }
   .ColorStyles .action-secondary {
     background: #eee;
-    color: rgba(17, 17, 17, 0.9); }
+    color: rgba(32, 61, 98, 0.9); }
   .ColorStyles .color-white {
     background: #999;
     color: white; }
@@ -1407,7 +1410,7 @@ input[type=submit],
     background: #4d8bc0;
     color: white; }
     .ColorStyles .color-blue span:first-child {
-      background: #71d0db; }
+      background: #96DCDD; }
     .ColorStyles .color-blue span:last-child {
       background: #354d81; }
   .ColorStyles .color-green {
@@ -1430,7 +1433,7 @@ input[type=submit],
     .ColorStyles .color-purple span:first-child {
       background: #c5cbe3; }
     .ColorStyles .color-purple span:last-child {
-      background: #1e3155; }
+      background: #203D62; }
   .ColorStyles .color-red {
     background: #f13c20;
     color: white; }
@@ -1466,7 +1469,7 @@ input[type=submit],
 
 .ColorStyles .primary,
 .ColorPalette .primary {
-  background: #4d8bc0;
+  background: #96DCDD;
   color: #fff; }
 .ColorStyles .accent,
 .ColorPalette .accent {
@@ -1479,11 +1482,11 @@ input[type=submit],
 .ColorStyles .hint,
 .ColorPalette .hint {
   background: #eee;
-  color: #111; }
+  color: #203D62; }
 .ColorStyles .content,
 .ColorPalette .content {
   background: #fff;
-  color: #111; }
+  color: #203D62; }
 
 /*
  LINKS
