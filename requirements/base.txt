@@ -55,6 +55,8 @@ git+https://github.com/hacklabr/pinax-points.git
 # Security
 django-cors-headers ~= 1.2.0
 django-recaptcha ~= 1.3.1
+bleach ~= 2.1.3
+
 
 # Fields
 django-autoslug ~= 1.9.3

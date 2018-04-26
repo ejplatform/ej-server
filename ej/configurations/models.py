@@ -1,7 +1,6 @@
-from django.contrib.flatpages.models import FlatPage
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-
+import bleach
 from ej_conversations.validators import validate_color
 from .icons import default_icon_name
 from .validators import validate_icon_name
@@ -130,12 +129,13 @@ class Fragment(models.Model):
     )
 
     def __html__(self):
-        return self.html()
+        return sanitize_html(self.html())
 
     def __str__(self):
         return self.name.replace('_', ' ').replace('-', ' ').replace('/', '').capitalize()
 
     def save(self, *args, **kwargs):
+
         super().save(*args, **kwargs)
         if not self.deletable:
             # conferir se levanta erro .DoesNotExist
@@ -143,18 +143,13 @@ class Fragment(models.Model):
                 FragmentLock.objects.create(self)
 
     def html(self, classes=()):
-        data = ...
-        class_attr = ...
+        data = self.content
+        class_attr = " ".join(classes)
         return f'<div{class_attr}>{data}</div>'
 
 
-# TODO: sanitize!
 def sanitize_html(html):
-    return html
-
-
-def sanitize_markdown(md):
-    return md
+    return bleach.clean(html)
 
 
 # GAMBIRA!
