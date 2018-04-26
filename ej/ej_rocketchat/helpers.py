@@ -1,8 +1,7 @@
 import random
 import string
-import requests
 import json
-import sys
+import requests
 
 from django.core.cache import cache
 from constance import config
@@ -71,7 +70,7 @@ def invalidade_rc_user_token(username):
         cache.delete(rc_token_cache_key(username))
         if res.status_code != 200:
             raise Exception(f'Error: {res.content}')
-    
+
 
 def request_rc_user_info(username):
     return requests.get(
@@ -82,7 +81,7 @@ def request_rc_user_info(username):
 
 
 def is_rc_user_registered(username):
-    res = request_rc_user_info(username) 
+    res = request_rc_user_info(username)
     return res.status_code == 200
 
 
