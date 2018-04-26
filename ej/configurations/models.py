@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 import bleach
+from markupsafe import Markup
 from ej_conversations.validators import validate_color
 from .icons import default_icon_name
 from .validators import validate_icon_name
@@ -144,9 +145,8 @@ class Fragment(models.Model):
 
     def html(self, classes=()):
         data = sanitize_html(self.content)
-        #data = self.content
         class_attr = " ".join(classes)
-        return f'<div{class_attr}>{data}</div>'
+        return Markup(f'<div{class_attr}>{data}</div>')
 
 
 def sanitize_html(html):
