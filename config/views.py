@@ -12,7 +12,8 @@ from ej_conversations.models import Conversation, Vote, Category
 from .forms import ProfileForm, LoginForm, RegistrationForm
 from .views_utils import route, get_patterns
 
-from ej.configurations.views import get_fragment, get_social_media_icons
+from ej.configurations.views import get_social_media_icons
+from ej.configurations import fragment
 
 get_patterns = get_patterns  # don't count as an unused import
 DJANGO_BACKEND = 'django.contrib.auth.backends.ModelBackend',
@@ -27,10 +28,10 @@ log = logging.getLogger('ej')
 def home(request):
     ctx = {
         'conversations': Conversation.objects.all(),
-        'home_banner_frag': get_fragment('home-banner'),
-        'how_it_works_frag': get_fragment('how-it-works'),
-        'start_now_frag': get_fragment('start-now'),
-        'social_media_icons': get_social_media_icons(), 
+        'home_banner_frag': fragment('home-banner', raises=False),
+        'how_it_works_frag': fragment('how-it-works', raises=False),
+        'start_now_frag': fragment('start-now', raises=False),
+        'social_media_icons': get_social_media_icons(),
     }
     return render(request, 'pages/index.jinja2', ctx)
 
