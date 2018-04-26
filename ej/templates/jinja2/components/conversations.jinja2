@@ -32,16 +32,16 @@
                 <a href="{{ conversation.get_absolute_url() }}" alt="alt">{{ conversation.title }}</a>
             </h1>
             <dl>
-                <dt>Assunto</dt>
+                <dt>Assunto:</dt>
                 <dd>{{ conversation.category_name }}</dd>
             </dl>
         </div>
         <div class="ConversationCard-actions">
             <ul class="ConversationCard-statistics">
-                <li><strong>{{ conversation.comments.count() }}</strong> comentários</li>
-                <li><strong>{{ conversation.votes.count() }}</strong> votos</li>
+                <li>{{ conversation.comments.count() }} comentários</li>
+                <li>{{ conversation.votes.count() }} votos</li>
             </ul>
-            {{ action_button('Participe agora!', conversation.get_absolute_url()) }}
+            {{ action_button('Participar <i class="fa fa-comments"></i>', conversation.get_absolute_url()) }}
         </div>
     </div>
 {% endmacro %}
