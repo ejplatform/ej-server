@@ -449,7 +449,8 @@ h6 {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: "Raleway", sans-serif;
-  font-weight: 500; }
+  font-weight: normal;
+  text-transform: uppercase; }
 
 /*
  GENERIC ELEMENTS
@@ -461,7 +462,7 @@ html {
 body {
   box-sizing: border-box;
   font-size: 16px;
-  font-family: "Lato", sans-serif;
+  font-family: "Raleway", sans-serif;
   width: 100vw; }
 
 main {
@@ -475,8 +476,8 @@ a {
   text-decoration-style: solid; }
 
 code, pre, blockquote {
-  color: #203D62;
-  background-color: #eee; }
+  color: #042049;
+  background-color: #d6f1f3; }
 
 code, pre {
   font-family: "IBM Plex Mono", monospace monospace; }
@@ -513,20 +514,20 @@ textarea,
 select,
 .FormItem {
   border-radius: 3px;
-  background: #f7f7f7;
+  background: #ebf8f9;
   border: 1px solid #999;
-  color: #203D62;
+  color: #042049;
   margin: 6px auto;
   padding: 12px; }
 
 label {
-  color: #7aa2d4;
+  color: #2679f3;
   font-weight: bold;
   font-size: 1.1em;
   margin: 0 auto; }
 
 input[type=submit] {
-  background: #96DCDD; }
+  background: #30c0d3; }
 
 /*
  GENERIC CONTAINER PATTERNS
@@ -563,7 +564,7 @@ input[type=submit],
 .Button,
 .ActionButton,
 .RocketButton {
-  background: #96DCDD;
+  background: #30c0d3;
   border: none;
   border-radius: 3px;
   box-sizing: border-box;
@@ -626,7 +627,7 @@ input[type=submit],
   .Button .Login-button,
   .ActionButton .Login-button,
   .RocketButton .Login-button {
-    background-color: #912763;
+    background-color: #ff3e72;
     border-radius: 50ch;
     color: rgba(255, 255, 255, 0.9); }
     button[primary]:hover, button[primary]:focus,
@@ -688,7 +689,7 @@ input[type=submit],
     .Button .Login-button:focus,
     .ActionButton .Login-button:focus,
     .RocketButton .Login-button:focus {
-      background-color: #691c48;
+      background-color: #ff0b4d;
       color: #fff; }
   button[secondary],
   button .Button--secondary,
@@ -700,9 +701,9 @@ input[type=submit],
   .Button .Button--secondary,
   .ActionButton .Button--secondary,
   .RocketButton .Button--secondary {
-    background-color: #eee;
+    background-color: #d6f1f3;
     border-radius: 50ch;
-    color: rgba(32, 61, 98, 0.9); }
+    color: rgba(4, 32, 73, 0.9); }
     button[secondary]:hover, button[secondary]:focus,
     button .Button--secondary:hover,
     button .Button--secondary:focus,
@@ -722,8 +723,8 @@ input[type=submit],
     .Button .Button--secondary:focus,
     .ActionButton .Button--secondary:focus,
     .RocketButton .Button--secondary:focus {
-      background-color: #d5d5d5;
-      color: #203D62; }
+      background-color: #afe4e7;
+      color: #042049; }
   button[small],
   button .Button--small,
   input[type=submit][small],
@@ -757,8 +758,8 @@ input[type=submit],
   .ActionButton .Button--ghost,
   .RocketButton .Button--ghost {
     background: none;
-    border: 1px solid #96DCDD;
-    color: #96DCDD;
+    border: 1px solid #30c0d3;
+    color: #30c0d3;
     padding: 11px 23px; }
     button[ghost]:hover, button[ghost]:focus,
     button .Button--ghost:hover,
@@ -800,7 +801,7 @@ input[type=submit],
     .Button .Button--ghost .Button--ghost-primary,
     .ActionButton .Button--ghost .Button--ghost-primary,
     .RocketButton .Button--ghost .Button--ghost-primary {
-      color: #912763;
+      color: #ff3e72;
       border-radius: 50ch; }
       button[ghost] [primary]:hover, button[ghost] [primary]:focus,
       button[ghost] .Button--ghost-primary:hover,
@@ -841,7 +842,7 @@ input[type=submit],
       .Button .Button--ghost .Button--ghost-primary:focus,
       .ActionButton .Button--ghost .Button--ghost-primary:focus,
       .RocketButton .Button--ghost .Button--ghost-primary:focus {
-        color: #691c48; }
+        color: #ff0b4d; }
     button[ghost] [secondary],
     button[ghost] .Button--ghost-secondary,
     button .Button--ghost [secondary],
@@ -862,7 +863,7 @@ input[type=submit],
     .Button .Button--ghost .Button--ghost-secondary,
     .ActionButton .Button--ghost .Button--ghost-secondary,
     .RocketButton .Button--ghost .Button--ghost-secondary {
-      color: #eee;
+      color: #d6f1f3;
       border-radius: 50ch; }
       button[ghost] [secondary]:hover, button[ghost] [secondary]:focus,
       button[ghost] .Button--ghost-secondary:hover,
@@ -903,7 +904,7 @@ input[type=submit],
       .Button .Button--ghost .Button--ghost-secondary:focus,
       .ActionButton .Button--ghost .Button--ghost-secondary:focus,
       .RocketButton .Button--ghost .Button--ghost-secondary:focus {
-        color: #d5d5d5; }
+        color: #afe4e7; }
 
 /*
  GENERIC ELEMENTS
@@ -944,7 +945,7 @@ input[type=submit],
     overflow-x: hidden;
     overflow-y: auto; }
   .Page-title {
-    background: #96DCDD;
+    background: #30c0d3;
     color: #fff;
     margin: 0 0 24px 0;
     padding: 12px; }
@@ -960,16 +961,16 @@ input[type=submit],
  ============================================================================ */
 .Header {
   box-sizing: border-box;
-  color: #111;
+  color: #042049;
   background: #fff;
   margin: 0;
   z-index: 100; }
   .Header ul {
     list-style: none; }
   .Header a {
-    color: #111; }
+    color: #042049; }
   .Header a:hover {
-    color: #111; }
+    color: #042049; }
   @media only screen and (min-width: 500px) {
     .Header {
       align-items: center;
@@ -1044,9 +1045,9 @@ input[type=submit],
         text-transform: none; } }
     .Header-lowerNav a {
       align-items: center;
-      color: #7aa2d4; }
+      color: #2679f3; }
       .Header-lowerNav a i.fa {
-        color: #203D62;
+        color: #042049;
         display: block;
         font-size: 26px;
         margin: 6px; }
@@ -1057,7 +1058,7 @@ input[type=submit],
         margin: 0; }
       @media only screen and (min-width: 500px) {
         .Header-lowerNav a {
-          color: #111;
+          color: #042049;
           display: flex;
           flex-flow: row-reverse;
           margin-left: 24px; } }
@@ -1077,13 +1078,12 @@ input[type=submit],
  PAGE FOOTER
  ============================================================================ */
 .Footer {
-  background: #96DCDD;
+  background: #30c0d3;
   box-sizing: border-box;
-  color: #203D62;
+  color: #042049;
   height: 0 60px;
   padding: 12px; }
   .Footer-social p {
-    font-weight: bold;
     font-size: 16px; }
   .Footer-icons {
     list-style-type: none;
@@ -1107,10 +1107,10 @@ input[type=submit],
   margin: 12px 0 0; }
 
 .NavMenu {
-  background: #ff7e8b;
+  background: #7fc8cf;
   box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.3);
   box-sizing: border-box;
-  color: #13253c;
+  color: #010b19;
   font-size: 18px;
   opacity: 0.95;
   overflow: auto;
@@ -1193,7 +1193,7 @@ input[type=submit],
   .ConversationCard h1 {
     font-size: 1.3em; }
   .ConversationCard-cover {
-    background: #96DCDD;
+    background: #30c0d3;
     border-radius: 12px;
     color: #fff;
     display: flex;
@@ -1228,7 +1228,7 @@ input[type=submit],
   .ConversationDetail > * {
     padding: 24px; }
   .ConversationDetail-banner {
-    background: #96DCDD;
+    background: #30c0d3;
     color: #fff;
     padding-top: 0; }
     .ConversationDetail-banner a {
@@ -1256,7 +1256,7 @@ input[type=submit],
       display: inherit; } }
 
 .HowItWorks {
-  background: #eee;
+  background: #d6f1f3;
   padding-top: 48px; }
   .HowItWorks h2 {
     font-size: 1.15em; }
@@ -1275,7 +1275,7 @@ input[type=submit],
         .HowItWorksCard h1 i {
           display: none; } }
   .HowItWorksCard p {
-    color: #365072; }
+    color: #1d365b; }
   .HowItWorksCard-content {
     flex-grow: 1; }
   .HowItWorksCard-icon {
@@ -1299,7 +1299,7 @@ input[type=submit],
           max-width: 300px; } }
 
 .StartNow {
-  background: #eee;
+  background: #d6f1f3;
   padding: 24px;
   text-align: center; }
   .StartNow h2 {
@@ -1313,7 +1313,7 @@ input[type=submit],
   .Profile h1 {
     margin-bottom: 0; }
   .Profile h2 {
-    color: #7aa2d4;
+    color: #2679f3;
     font-size: 1.15em;
     margin-top: 0; }
   .Profile-breadcrumbs {
@@ -1328,11 +1328,11 @@ input[type=submit],
     display: flex;
     justify-content: space-around;
     font-size: 1.1em;
-    font-weight: 500; }
+    font-weight: normal; }
     .Profile-tabLinks > * {
       margin: 0 24px; }
   .Profile-tabContainer {
-    background: #eee;
+    background: #d6f1f3;
     text-align: left; }
   .Profile-info {
     font-size: 1em;
@@ -1340,7 +1340,7 @@ input[type=submit],
     .Profile-info > * {
       display: block; }
     .Profile-info dl dt {
-      color: #7aa2d4;
+      color: #2679f3;
       text-transform: lowercase; }
     .Profile-info dl dd {
       font-size: 1.1em;
@@ -1379,19 +1379,19 @@ input[type=submit],
     flex-grow: 1; }
   .ColorStyles .error {
     background: #f13c20;
-    color: #203D62; }
+    color: #042049; }
   .ColorStyles .warning {
     background: #ffd333;
-    color: #203D62; }
+    color: #042049; }
   .ColorStyles .action-default {
-    background: #96DCDD;
+    background: #30c0d3;
     color: rgba(255, 255, 255, 0.9); }
   .ColorStyles .action-primary {
-    background: #912763;
+    background: #ff3e72;
     color: rgba(255, 255, 255, 0.9); }
   .ColorStyles .action-secondary {
-    background: #eee;
-    color: rgba(32, 61, 98, 0.9); }
+    background: #d6f1f3;
+    color: rgba(4, 32, 73, 0.9); }
   .ColorStyles .color-white {
     background: #999;
     color: white; }
@@ -1407,33 +1407,33 @@ input[type=submit],
     .ColorStyles .color-gray span:last-child {
       background: #666; }
   .ColorStyles .color-blue {
-    background: #4d8bc0;
+    background: #a4d8dd;
     color: white; }
     .ColorStyles .color-blue span:first-child {
-      background: #96DCDD; }
+      background: #d6f1f3; }
     .ColorStyles .color-blue span:last-child {
-      background: #354d81; }
+      background: #30c0d3; }
   .ColorStyles .color-green {
-    background: #34ff99;
+    background: #74b5b8;
     color: white; }
     .ColorStyles .color-green span:first-child {
-      background: #97ffc0; }
+      background: #bdffce; }
     .ColorStyles .color-green span:last-child {
-      background: #4cc85c; }
+      background: #3a997a; }
   .ColorStyles .color-magenta {
-    background: #d23591;
+    background: #ff3e72;
     color: white; }
     .ColorStyles .color-magenta span:first-child {
-      background: #ffd0e2; }
+      background: #ffacd1; }
     .ColorStyles .color-magenta span:last-child {
-      background: #912763; }
+      background: #b62a52; }
   .ColorStyles .color-purple {
-    background: #4056a1;
+    background: #6d2ea7;
     color: white; }
     .ColorStyles .color-purple span:first-child {
-      background: #c5cbe3; }
+      background: #cda4ee; }
     .ColorStyles .color-purple span:last-child {
-      background: #203D62; }
+      background: #042049; }
   .ColorStyles .color-red {
     background: #f13c20;
     color: white; }
@@ -1469,24 +1469,24 @@ input[type=submit],
 
 .ColorStyles .primary,
 .ColorPalette .primary {
-  background: #96DCDD;
+  background: #30c0d3;
   color: #fff; }
 .ColorStyles .accent,
 .ColorPalette .accent {
-  background: #912763;
+  background: #ff3e72;
   color: #fff; }
 .ColorStyles .alt,
 .ColorPalette .alt {
-  background: #ffb1b9;
+  background: #a4d8dd;
   color: #111; }
 .ColorStyles .hint,
 .ColorPalette .hint {
-  background: #eee;
-  color: #203D62; }
+  background: #d6f1f3;
+  color: #042049; }
 .ColorStyles .content,
 .ColorPalette .content {
   background: #fff;
-  color: #203D62; }
+  color: #042049; }
 
 /*
  LINKS

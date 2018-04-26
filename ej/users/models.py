@@ -45,17 +45,18 @@ class UserManager(BaseUserManager):
         Return an available username from name and e-mail information.
         """
         username, _, domain = email.partition('@')
-        domain = domain.replace('.', '_')
+        domain = domain.replace('-', '_')
+        name = name.replace(' ', '_')
         first_name, _, last_name = name.lower().partition(' ')
         last_name = last_name.replace(' ', '_')
 
         tests = [
             username,
-            username + '_at_' + domain,
             first_name,
-            first_name + '_at_' + domain,
+            first_name + '_' + domain,
             last_name,
-            last_name + '_at_' + domain,
+            last_name + '_' + domain,
+            username + '_' + domain,
         ]
 
         existing = set(

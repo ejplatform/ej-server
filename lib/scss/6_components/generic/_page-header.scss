@@ -3,8 +3,9 @@
  ============================================================================ */
 
 // Constants
-$header-color: $color-navigation !default;
-$header-color-text: $color-navigation-text !default;
+// Top and botton navigation bars. Styled as content, but can be overriden.
+$header-color: $color-content !default;
+$header-color-text: $color-content-text !default;
 $header-shadow: 0 0 10px 0px rgba(50, 50, 50, 0.5) !default;
 $logo-width: 84px !default;
 

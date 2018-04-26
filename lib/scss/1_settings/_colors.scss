@@ -10,21 +10,21 @@ $color-gray: #999 !default;
 $color-gray-dark: #666 !default;
 $color-gray-light: #eee !default;
 
-$color-blue: #4d8bc0 !default;
-$color-blue-dark: #354d81 !default;
-$color-blue-light: #96DCDD !default;
+$color-blue: rgba(164,216,221,1) !default;
+$color-blue-dark: rgba(48,192,211,1) !default;
+$color-blue-light: rgba(214,241,243,1) !default;
 
-$color-green: #34ff99 !default;
-$color-green-dark: #4cc85c !default;
-$color-green-light: #97ffc0 !default;
+$color-green: rgba(116,181,184,1) !default;
+$color-green-dark: rgb(58, 153, 122) !default;
+$color-green-light: rgb(189, 255, 206) !default;
 
-$color-magenta: #d23591 !default;
-$color-magenta-dark: #912763 !default;
-$color-magenta-light: #ffd0e2 !default;
+$color-magenta: rgba(255,62,114,1) !default;
+$color-magenta-dark: rgb(182, 42, 82) !default;
+$color-magenta-light: rgb(255, 172, 209) !default;
 
-$color-purple: #4056a1 !default;
-$color-purple-dark: #203D62 !default;
-$color-purple-light: #c5cbe3 !default;
+$color-purple: rgb(109, 46, 167) !default;
+$color-purple-dark: rgba(4,32,73,1) !default;
+$color-purple-light: rgb(205, 164, 238) !default;
 
 $color-red: #f13c20 !default;
 $color-red-dark: #9c2715 !default;
@@ -44,16 +44,26 @@ $color-content-text: $color-purple-dark !default;
 $color-content-text-faded: lighten($color-content-text, 40%) !default;
 
 // Color schemes
-$color-primary: $color-blue-light !default;
+// Buttons and highlighted elements. Strong highlight, usually applied to
+// smaller navigational elements and action buttons.
+$color-primary: $color-blue-dark !default;
 $color-primary-text: $color-white !default;
-$color-accent: $color-magenta-dark !default;
+
+// Primary action buttons, fab, etc
+// Usually has a high contrast compared to primary. Usually applied to the
+// primary action in a UI to attract user attention from secondary actions
+// in the interface.
+$color-accent: $color-magenta !default;
 $color-accent-text: $color-white !default;
-$color-navigation: $color-white !default;
-$color-navigation-text: $color-black !default;
-$color-hint: #eee !default;
+
+// Discreetly highlighted content. We want some emphasis from the default content
+// background, but it should not be highlighted as strongly as primary content.
+$color-hint: $color-blue-light !default;
 $color-hint-text: $color-content-text !default;
-$color-alt: $color-red-light !default;
-$color-alt-text: $color-black !default;
+
+// Stronger hint. Used in Footer component
+$color-emph: $color-blue !default;
+$color-emph-text: $color-black !default;
 
 // Modifiers
 $color-hint-degree-pc: 10;

@@ -6,6 +6,9 @@ import pathlib
 python = sys.executable
 
 
+#
+# Call python manage.py in a more robust way
+#
 def manage(ctx, cmd, env=None, **kwargs):
     opts = ' '.join(f'--{k} {"" if v is True else v}' for k, v in kwargs.items())
     cmd = f'{python} manage.py {cmd} {opts}'
@@ -34,6 +37,9 @@ def run(ctx, no_toolbar=False):
     manage(ctx, 'runserver')
 
 
+#
+# Db tasks
+#
 @task
 def db(ctx, migrate_only=False):
     """
@@ -91,3 +97,27 @@ def db_assets(ctx, path='local'):
 
     base = pathlib.Path(path)
     manage(ctx, 'loadpages', path=base / 'pages')
+
+
+#
+# Docker
+#
+@task
+def docker_clean(ctx, no_sudo=False, all=False, volumes=False, networks=False, images=False, containers=False):
+    """
+    Clean unused docker resources.
+    """
+
+    docker = 'docker' if no_sudo else 'sudo docker'
+    run = lambda cmd: ctx.run(cmd, pty=True)
+    if volumes or all:
+        run(f'{docker} volume rm $({docker} volume ls -qf dangling=true)')
+    if networks or all:
+        run(f'{docker} network rm $({docker} network ls | grep "bridge" | awk \'/ / {" print $1 "}\')')
+    if images or all:
+        run(f'{docker} rmi $({docker} images --filter "dangling=true" -q --no-trunc)')
+    if containers or all:
+        run(f'{docker} rm $({docker} ps -qa --no-trunc --filter "status=exited")')
+
+    if not any([all, volumes, networks, images, containers]):
+        print('You must select one kind of docker resource to clean.', file=sys.stderr)
