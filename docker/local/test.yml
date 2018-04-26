@@ -1,0 +1,21 @@
+# Test docker-compose file
+# Used in CI/CD tools
+
+version: '3.5'
+
+services:
+  django:
+    image: ej-server:local
+    command: /test.sh
+    depends_on:
+      - postgres
+    env_file:
+      - ./env/django.test.env
+      - ./env/postgres.test.env
+    volumes:
+      - ../../:/app
+
+  postgres:
+    image: postgres:9.6
+    env_file:
+      - ./env/postgres.test.env
