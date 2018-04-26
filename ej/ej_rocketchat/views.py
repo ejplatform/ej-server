@@ -26,5 +26,7 @@ def check_login(request):
     return JsonResponse({'loginToken': loginToken })
 
 
+@csrf_exempt
+@xframe_options_exempt
 def rc_redirect(request):
     return redirect(config.ROCKETCHAT_URL)
