@@ -4,7 +4,7 @@
 version: '3.5'
 
 services:
-  django:
+  cicd:
     image: ejplatform/ej-cicd:latest
     build:
       context: ../../

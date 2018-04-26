@@ -4,7 +4,7 @@ version: '3.5'
 
 services:
   django: &django
-    image: ejplatform/ej-server:develop
+    image: ejplatform/ej-server:latest
     environment:
       COURIER_DEFAULT_PROVIDER: onesignal
       COURIER_ONESIGNAL_APP_ID: appid
@@ -29,7 +29,7 @@ services:
       - /path/to/media:/app/staticfiles/media
 
   backend:
-    image: ejplatform/ej-nginx:develop
+    image: ejplatform/ej-nginx:latest
     volumes:
     - /path/to/media:/usr/share/nginx/html/media
 

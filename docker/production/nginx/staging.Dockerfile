@@ -1,4 +1,4 @@
-FROM ejplatform/ej-server:staging as django
+FROM ejplatform/ej-server:develop as django
 
 FROM nginx:1.13
 

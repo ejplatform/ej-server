@@ -5,13 +5,13 @@ version: '3.5'
 
 services:
   django:
-    image: ejplatform/ej-server:staging
+    image: ejplatform/ej-server:develop
     build:
       context: ../../
       dockerfile: ./docker/production/django/Dockerfile
 
   backend:
-    image: ejplatform/ej-nginx:staging
+    image: ejplatform/ej-nginx:develop
     depends_on:
       - django
     build:
