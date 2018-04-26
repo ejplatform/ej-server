@@ -1,5 +1,5 @@
 | Environment | CI Status |  Website |
-|:-:|:-:|:-:|:-:|
+|:-:|:-:|:-:|
 | Production | [![pipeline status](https://gitlab.com/ejplatform/ej-server/badges/master/pipeline.svg)](https://gitlab.com/ejplatform/ej-server/commits/master) | [ejplatform.org](https://ejplatform.org) |
 | Development | [![pipeline status](https://gitlab.com/ejplatform/ej-server/badges/develop/pipeline.svg)](https://gitlab.com/ejplatform/ej-server/commits/develop) | [dev.ejplatform.org](http://dev.ejplatform.org) |
 
