@@ -22,7 +22,7 @@
 
 
 {% macro action_button(title='Go!', href='#', alt='', target='main') %}
-    <a class="Button" href="{{ href }}" alt="{{ alt }}" up-target="main" primary>{{ title }}</a>
+    <a class="Button" href="{{ href }}" alt="{{ alt }}" up-target="main" primary>{{ title | safe }}</a>
 {% endmacro %}
 
 
