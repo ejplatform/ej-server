@@ -129,7 +129,7 @@ class Fragment(models.Model):
     )
 
     def __html__(self):
-        return sanitize_html(self.html())
+        return self.html()
 
     def __str__(self):
         return self.name.replace('_', ' ').replace('-', ' ').replace('/', '').capitalize()
@@ -143,13 +143,14 @@ class Fragment(models.Model):
                 FragmentLock.objects.create(self)
 
     def html(self, classes=()):
-        data = self.content
+        data = sanitize_html(self.content)
+        #data = self.content
         class_attr = " ".join(classes)
         return f'<div{class_attr}>{data}</div>'
 
 
 def sanitize_html(html):
-    return bleach.clean(html)
+    return bleach.clean(html, tags=['h1','h2','h3','h4','a','p','i','img','strong','div'])
 
 
 # GAMBIRA!
