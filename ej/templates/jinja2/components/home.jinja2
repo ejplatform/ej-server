@@ -3,7 +3,7 @@
 
 {% macro home_banner(home_banner_frag, action='start-now') %}
     <div class="HomeBanner">
-        {{ home_banner_frag.content|safe }}
+        {{ home_banner_frag.html()}}
         <p>
             {% if action == 'rocket-chat' %}
                 {{ rocket_button() }}
@@ -19,7 +19,7 @@
 
 {% macro how_it_works(how_it_works_frag) %}
     <div class="HowItWorks">
-        {{ how_it_works_frag.content|safe }}
+        {{ how_it_works_frag.html()}}
 
         <div class="HowItWorks-cards">
             {% call how_it_works_card(
