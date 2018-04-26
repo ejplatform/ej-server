@@ -1,11 +1,11 @@
-| Environment | ej-server CI Status | ej-front CI Status |  Website |
+| Environment | CI Status |  Website |
 |:-:|:-:|:-:|:-:|
-| Development | [![pipeline status](https://gitlab.com/ejplatform/ej-server/badges/develop/pipeline.svg)](https://gitlab.com/ejplatform/ej-server/commits/develop) | [![pipeline status](https://gitlab.com/ejplatform/ej-front/badges/develop/pipeline.svg)](https://gitlab.com/ejplatform/ej-front/commits/develop) | [dev.ejplatform.org](http://dev.ejplatform.org) |
-| Production | [![pipeline status](https://gitlab.com/ejplatform/ej-server/badges/master/pipeline.svg)](https://gitlab.com/ejplatform/ej-server/commits/master) | [![pipeline status](https://gitlab.com/ejplatform/ej-front/badges/master/pipeline.svg)](https://gitlab.com/ejplatform/ej-front/commits/master) | [ejplatform.org](https://ejplatform.org) |
+| Production | [![pipeline status](https://gitlab.com/ejplatform/ej-server/badges/master/pipeline.svg)](https://gitlab.com/ejplatform/ej-server/commits/master) | [ejplatform.org](https://ejplatform.org) |
+| Development | [![pipeline status](https://gitlab.com/ejplatform/ej-server/badges/develop/pipeline.svg)](https://gitlab.com/ejplatform/ej-server/commits/develop) | [dev.ejplatform.org](http://dev.ejplatform.org) |
 
 # ejplatform
 
-Django project template based on [cookiecutter-django](http://cookiecutter-django.readthedocs.io/en/latest) directives.
+Django project template inspired on [cookiecutter-django](http://cookiecutter-django.readthedocs.io/en/latest) directives.
 
 ## Development Environment
 
@@ -24,7 +24,8 @@ git submodule update --init --recursive
 To make your local environment up and running using docker-compose, execute:
 
 ```shell
-sudo docker-compose -f local.yml up
+sudo docker-compose -f ./docker/local/build.yml build
+sudo docker-compose -f ./docker/local/start.yml up -d
 ```
 
 After the command, **ej-server** can be accessed at [http://localhost:8000](http://localhost:8000).
@@ -46,16 +47,16 @@ Depending of your role on this project as a developer, there are two manners to 
 
 There are two ways of executing locally the automated tests using docker-compose:
 
-* If you already ran `docker-compose -f local.yml up` and the server is up and running, execute:
+* If you already ran `sudo docker-compose -f ./docker/local/start.yml up -d` and the server is up and running, execute:
 
 ```bash
-sudo docker-compose -f local.yml exec django pytest
+sudo docker-compose -f ./docker/local/start.yml exec django pytest
 ```
 
-* If you just want to run the tests without necessarily getting up all the services available on local environment, the configuration file on docker-compose [test.yml](https://github.com/ejplatform/ej-server/blob/master/test.yml) will have only the necessary services to run the tests. To run the tests, execute:
+* If you just want to run the tests without necessarily getting up all the services available on local environment, the configuration file on docker-compose [docker/local/test.yml](https://github.com/ejplatform/ej-server/blob/master/docker/local/test.yml) will have only the necessary services to run the tests. To run the tests, execute:
 
 ```bash
-sudo docker-compose -f test.yml run --rm django
+sudo docker-compose -f ./docker/local/test.yml run --rm django
 ```
 
 ## Environment Variables
@@ -64,13 +65,14 @@ The [env.example](https://github.com/ejplatform/ej-server/blob/master/env.exampl
 
 Additionally, the docker-compose environment variables files are defined on their own directory:
 
-* [local.yml](https://github.com/ejplatform/ej-server/blob/master/local.yml): [compose/local/*.env](https://github.com/ejplatform/ej-server/tree/master/compose/local)
-* [test.yml](https://github.com/ejplatform/ej-server/blob/master/test.yml): [compose/dev/*.env](https://github.com/ejplatform/ej-server/tree/master/compose/dev)
-* [production.yml](https://github.com/ejplatform/ej-server/blob/master/production.yml): Example defined on itself
+* [docker/local/start.yml](https://github.com/ejplatform/ej-server/blob/master/docker/local/start.yml): [docker/local/env/*.env](https://github.com/ejplatform/ej-server/tree/master/docker/local/env)
+* [docker/local/idle.yml](https://github.com/ejplatform/ej-server/blob/master/docker/local/idle.yml): [docker/local/env/*.env](https://github.com/ejplatform/ej-server/tree/master/docker/local/env)
+* [docker/local/test.yml](https://github.com/ejplatform/ej-server/blob/master/docker/local/test.yml): [docker/local/env/*.test.env](https://github.com/ejplatform/ej-server/tree/master/docker/local/env)
+* [docker/production/deploy.example.yml](https://github.com/ejplatform/ej-server/blob/master/docker/production/deploy.example.yml): Example defined on itself
 
 ## Deploy in production
 
-An example of deploy in production using docker-compose can be found in [production.yml](https://github.com/ejplatform/ej-server/blob/master/production.yml).
+An example of deploy in production using docker-compose can be found in [docker/production/deploy.example.yml](https://github.com/ejplatform/ej-server/blob/master/docker/production/deploy.example.yml).
 
 ## Deploy integrations
 
@@ -83,7 +85,7 @@ Commits at `master` branch will release to [https://ejplatform.org](https://ejpl
 To deploy the rocketchat local server, you can run its custom docker-compose file:
 
 ```bash
-sudo docker-compose -f rocketchat.yml
+sudo docker-compose -f docker/extensions/rocketchat.yml
 ```
 
 To integrate _ej-server_ with this instance of Rocketchat, first you need to get the rocketchat admin user **token**, and **id**. So, first visit `localhost:3000` and create your admin user. For this example, let's treat his name as _rcadmin_. To get his information call the Rocketchat API using curl:
