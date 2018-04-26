@@ -1,3 +1,5 @@
+from markdown import markdown
+from markupsafe import Markup
 import os
 from pathlib import Path
 from ._load import make_fragment_name, is_html, is_markdown, validate_path, MARKDOWN_TITLE_RE, HTML_TITLE_RE
@@ -45,7 +47,7 @@ def real_handle(path, force):
             new_fragments[name] = path
         else:
             print('Fragment exists: <base>%s (%s)' % (name, path))
-    
+
 
     # Split HTML from markdown
     html_files = {path: name for name, path in new_fragments.items() if is_html(path)}
@@ -67,6 +69,8 @@ def handle_markdown(path, name):
 
 def save_fragment(path, name, fragment_format):
     data = path.read_text()
+    if(fragment_format== Fragment.FORMAT_MARKDOWN):
+        data = Markup(markdown(data))
     fragment, created = Fragment.objects.update_or_create(
         name=name,
         defaults={'format': fragment_format,
