@@ -2,13 +2,17 @@
  PAGE SIDEBAR
  =========================================================================== */
 
-// Constants
-$nav-menu-color: darken($color-emph, 10) !default;
-$nav-menu-color-text: darken($color-hint-text, 10) !default;
-$nav-menu-width: 75vw;
-$nav-menu-opacity: 0.95;
-$nav-menu-shadow: 0 0 5px 1px rgba(black, 0.3);
-$color-sidebar-menu-bg: darken($color-primary, 20) !default;
+// Colors
+$nav-menu-color: $color-primary !default;
+$nav-menu-color-text: $color-primary-text !default;
+$nav-menu-border-color: rgba(#FFF, 0.25) !default;
+$nav-menu-border: 1px solid $nav-menu-border-color !default;
+
+// Layout
+$nav-menu-font-size: $font-size-default !default;
+$nav-menu-opacity: 1.0 !default;
+$nav-menu-shadow: $box-shadow;
+$nav-menu-width: 75vw !default;
 
 // Element
 .up-modal-content {
@@ -17,7 +21,7 @@ $color-sidebar-menu-bg: darken($color-primary, 20) !default;
 }
 
 .up-modal-close {
-    color: $color-emph-text;
+    color: $nav-menu-color-text;
     margin: $spacing-unit -$spacing-unit-small 0 0;
 }
 
@@ -26,22 +30,32 @@ $color-sidebar-menu-bg: darken($color-primary, 20) !default;
     box-shadow: $nav-menu-shadow;
     box-sizing: border-box;
     color: $nav-menu-color-text;
-    font-size: $font-size-large;
+    font-size: $nav-menu-font-size;
+    height: 100vh;
     opacity: $nav-menu-opacity;
     overflow: auto;
     padding: $spacing-unit;
     width: $nav-menu-width;
-    height: 100vh;
 
-    a, a:hover, a:active {
-        color: $color-emph-text;
+    em {
+        font-weight: bold;
+        font-style: normal;
     }
-
-    ul {
-        padding: 0;
+    a, a:hover, a:active {
+        color: $nav-menu-color-text;
+    }
+    img, i {
+        padding-right: $spacing-unit-small;
     }
     li {
         list-style: none;
-        padding-bottom: $spacing-unit-small;
+        padding: $spacing-unit-small 0;
+        border-bottom: $nav-menu-border;
+    }
+    li:last-child {
+        border: none;
+    }
+    ul {
+        padding: 0;
     }
 }

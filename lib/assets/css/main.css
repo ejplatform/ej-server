@@ -527,7 +527,7 @@ label {
   margin: 0 auto; }
 
 input[type=submit] {
-  background: #123066; }
+  background: #30c0d3; }
 
 /*
  GENERIC CONTAINER PATTERNS
@@ -564,7 +564,7 @@ input[type=submit],
 .Button,
 .ActionButton,
 .RocketButton {
-  background: #123066;
+  background: #30c0d3;
   border: none;
   border-radius: 3px;
   box-sizing: border-box;
@@ -758,8 +758,8 @@ input[type=submit],
   .ActionButton .Button--ghost,
   .RocketButton .Button--ghost {
     background: none;
-    border: 1px solid #123066;
-    color: #123066;
+    border: 1px solid #30c0d3;
+    color: #30c0d3;
     padding: 11px 23px; }
     button[ghost]:hover, button[ghost]:focus,
     button .Button--ghost:hover,
@@ -945,7 +945,7 @@ input[type=submit],
     overflow-x: hidden;
     overflow-y: auto; }
   .Page-title {
-    background: #123066;
+    background: #30c0d3;
     color: #fff;
     margin: 0 0 24px 0;
     padding: 12px; }
@@ -1078,7 +1078,7 @@ input[type=submit],
  PAGE FOOTER
  ============================================================================ */
 .Footer {
-  background: #123066;
+  background: #30c0d3;
   box-sizing: border-box;
   color: #042049;
   height: 0 60px;
@@ -1103,27 +1103,35 @@ input[type=submit],
   padding: 0; }
 
 .up-modal-close {
-  color: #111;
+  color: #fff;
   margin: 12px 0 0; }
 
 .NavMenu {
-  background: #249cac;
-  box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.3);
+  background: #30c0d3;
+  box-shadow: 2px 0 4px 0 rgba(18, 48, 102, 0.08);
   box-sizing: border-box;
-  color: #010b19;
-  font-size: 18px;
-  opacity: 0.95;
+  color: #fff;
+  font-size: 16px;
+  height: 100vh;
+  opacity: 1;
   overflow: auto;
   padding: 24px;
-  width: 75vw;
-  height: 100vh; }
+  width: 75vw; }
+  .NavMenu em {
+    font-weight: bold;
+    font-style: normal; }
   .NavMenu a, .NavMenu a:hover, .NavMenu a:active {
-    color: #111; }
-  .NavMenu ul {
-    padding: 0; }
+    color: #fff; }
+  .NavMenu img, .NavMenu i {
+    padding-right: 12px; }
   .NavMenu li {
     list-style: none;
-    padding-bottom: 12px; }
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.25); }
+  .NavMenu li:last-child {
+    border: none; }
+  .NavMenu ul {
+    padding: 0; }
 
 /*
  LOGIN/REGISTER COMPONENTS
@@ -1182,8 +1190,8 @@ input[type=submit],
 
 .ConversationCard {
   box-sizing: border-box;
-  border: 0;
-  border-radius: 48px;
+  border: 1px solid #666;
+  border-radius: 12px;
   flex-grow: 1;
   margin: 6px;
   text-align: center;
@@ -1194,40 +1202,26 @@ input[type=submit],
     font-size: 1.3em; }
   .ConversationCard-cover {
     background: #30c0d3;
-    border-radius: 48px;
+    border-radius: 12px;
     color: #fff;
     display: flex;
     flex-flow: column;
     height: 154px;
-    justify-content: space-around;
-    position: relative;
-    z-index: 2; }
+    justify-content: space-around; }
     .ConversationCard-cover a, .ConversationCard-cover a:hover, .ConversationCard-cover a:active {
       color: #fff; }
     .ConversationCard-cover dl {
-      margin: 0;
-      font-size: 12px; }
+      margin: 0; }
       .ConversationCard-cover dl dt {
-        display: inline; }
+        display: inline;
+        font-weight: bold; }
       .ConversationCard-cover dl dd {
         display: inline;
         margin: 0; }
-  .ConversationCard-actions {
-    background: #d6f1f3;
-    border-radius: 48px;
-    padding-top: 96px;
-    margin-top: -96px; }
-    .ConversationCard-actions .Button[primary], .ConversationCard-actions [primary].ActionButton, .ConversationCard-actions [primary].RocketButton {
-      background-color: #123066;
-      text-transform: lowercase;
-      font-variant: small-caps;
-      font-weight: bold; }
   .ConversationCard-statistics {
     display: flex;
     justify-content: space-between;
-    padding: 0;
-    color: #123066;
-    font-size: 12px; }
+    padding: 0; }
     .ConversationCard-statistics li {
       list-style: none; }
   @media only screen and (min-width: 500px) {
@@ -1242,7 +1236,7 @@ input[type=submit],
   .ConversationDetail > * {
     padding: 24px; }
   .ConversationDetail-banner {
-    background: #123066;
+    background: #30c0d3;
     color: #fff;
     padding-top: 0; }
     .ConversationDetail-banner a {
@@ -1398,7 +1392,7 @@ input[type=submit],
     background: #ffd333;
     color: #042049; }
   .ColorStyles .action-default {
-    background: #123066;
+    background: #30c0d3;
     color: rgba(255, 255, 255, 0.9); }
   .ColorStyles .action-primary {
     background: #ff3e72;
@@ -1421,12 +1415,12 @@ input[type=submit],
     .ColorStyles .color-gray span:last-child {
       background: #666; }
   .ColorStyles .color-blue {
-    background: #30c0d3;
+    background: #a4d8dd;
     color: white; }
     .ColorStyles .color-blue span:first-child {
       background: #d6f1f3; }
     .ColorStyles .color-blue span:last-child {
-      background: #123066; }
+      background: #30c0d3; }
   .ColorStyles .color-green {
     background: #74b5b8;
     color: white; }
@@ -1483,7 +1477,7 @@ input[type=submit],
 
 .ColorStyles .primary,
 .ColorPalette .primary {
-  background: #123066;
+  background: #30c0d3;
   color: #fff; }
 .ColorStyles .accent,
 .ColorPalette .accent {
@@ -1491,7 +1485,7 @@ input[type=submit],
   color: #fff; }
 .ColorStyles .alt,
 .ColorPalette .alt {
-  background: #30c0d3;
+  background: #a4d8dd;
   color: #111; }
 .ColorStyles .hint,
 .ColorPalette .hint {

@@ -88,3 +88,8 @@ $color-action-secondary-hover: darken($color-action-secondary, $color-hint-degre
 $color-action-default-text-hover: $color-primary-text !default;
 $color-action-primary-text-hover: $color-accent-text !default;
 $color-action-secondary-text-hover: $color-hint-text !default;
+
+// Box shadow
+$color-box-shadow: rgba(18, 48, 102, 0.08);
+$box-shadow: 2px 0 4px 0 $color-box-shadow;
+
