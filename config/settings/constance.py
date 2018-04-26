@@ -6,7 +6,7 @@ CONSTANCE_IGNORE_ADMIN_VERSION_CHECK = True
 CONSTANCE_CONFIG = {
     # RocketChat integration
     'ROCKETCHAT_URL': (
-        env('ROCKETCHAT_URL', default='http://localhost:3000'),
+        env('ROCKETCHAT_URL', default=''),
         'External RocketChat URL, used for RC IFrame Integration', str),
 
     'ROCKETCHAT_PRIVATE_URL': (
