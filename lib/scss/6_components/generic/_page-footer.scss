@@ -3,34 +3,36 @@
  ============================================================================ */
 
 // Constants
-$footer-color: darken($color-hint, 10%) !default;
-$footer-color-text: $color-hint-text !default;
-
+$footer-color: $color-primary !default;
+$footer-color-text: $color-content-text !default;
+$footer-icon-size: 30px;
+$footer-text-spacing: 10px;
+$footer-content-info-width: 65%;
+$footer-content-social-width: 35%;
 // Component
 .Footer {
-    > *  {
+    >* {
         @extend .CenteredContainer;
     }
-
     background: $footer-color;
     box-sizing: border-box;
     color: $footer-color-text;
     height: 0 $header-top-nav-height;
     padding: $spacing-unit-small;
-
-    a {
-        color: $footer-color-text;
-        font-weight: bold;
+    &-social {
+        p {
+            font-size: $font-size-default;
+        }
     }
-
-    &-badges {
-        display: flex;
-        text-align: center;
-
+    &-icons {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        font-size: $footer-icon-size;
+        color: $color-white;
         li {
-            margin-left: 0;
-            list-style: none;
+            display: inline;
+            margin: $spacing-unit-small;
         }
     }
 }
-
