@@ -6,49 +6,61 @@
 $footer-color: #464646 !default;
 $footer-color-text: $color-white !default;
 $footer-icon-size: 40px;
-
+$footer-text-spacing: 10px;
+$footer-content-general-width: 65%;
+$footer-content-social-width: 35%;
 // Component
 .Footer {
-    > *  {
+    >* {
         @extend .CenteredContainer;
     }
-
     background: $footer-color;
     box-sizing: border-box;
     color: $footer-color-text;
     height: 0 $header-top-nav-height;
     padding: $spacing-unit-small;
-
-    a {
-        color: $footer-color-text;
-        font-weight: bold;
-    }
-
-    p {
-        font-weight: bold;
-        font-size: $font-size-default;
-    }
-
-    &-badges {
-        display: flex;
-        text-align: center;
-
-        li {
-            margin-left: 0;
-            list-style: none;
+    &-content-general {
+        @media only screen and (min-width: $breakpoint-large) {
+            width: $footer-content-general-width;
+            float: left;
+            h2 {
+                text-align: left;
+            }
         }
     }
-
-    &-icons {
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-        font-size: $footer-icon-size;
-
-        li {
-            display: inline;
-            margin: $spacing-unit-small;
+    &-content-social {
+        p {
+            font-weight: bold;
+            font-size: $font-size-default;
+        }
+        @media only screen and (min-width: $breakpoint-large) {
+            width: $footer-content-social-width;
+            float: right;
+            p {
+                text-align: left;
+                margin-left: $footer-text-spacing;
+            }
+        }
+        &-icons {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            font-size: $footer-icon-size;
+            li {
+                display: inline;
+                margin: $spacing-unit-small;
+            }
+            @media only screen and (min-width: $breakpoint-large) {
+                text-align: left;
+            }
+        }
+        &-badges {
+            display: flex;
+            text-align: center;
+            li {
+                margin-left: 0;
+                list-style: none;
+            }
         }
     }
 }
-

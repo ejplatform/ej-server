@@ -1082,26 +1082,39 @@ input[type=submit],
   color: #fff;
   height: 0 60px;
   padding: 12px; }
-  .Footer a {
-    color: #fff;
-    font-weight: bold; }
-  .Footer p {
+  @media only screen and (min-width: 1100px) {
+    .Footer-content-general {
+      width: 65%;
+      float: left; }
+      .Footer-content-general h2 {
+        text-align: left; } }
+  .Footer-content-social p {
     font-weight: bold;
     font-size: 16px; }
-  .Footer-badges {
-    display: flex;
-    text-align: center; }
-    .Footer-badges li {
-      margin-left: 0;
-      list-style: none; }
-  .Footer-icons {
+  @media only screen and (min-width: 1100px) {
+    .Footer-content-social {
+      width: 35%;
+      float: right; }
+      .Footer-content-social p {
+        text-align: left;
+        margin-left: 10px; } }
+  .Footer-content-social-icons {
     list-style-type: none;
     margin: 0;
     padding: 0;
     font-size: 40px; }
-    .Footer-icons li {
+    .Footer-content-social-icons li {
       display: inline;
       margin: 12px; }
+    @media only screen and (min-width: 1100px) {
+      .Footer-content-social-icons {
+        text-align: left; } }
+  .Footer-content-social-badges {
+    display: flex;
+    text-align: center; }
+    .Footer-content-social-badges li {
+      margin-left: 0;
+      list-style: none; }
 
 /*
  PAGE SIDEBAR
