@@ -68,12 +68,12 @@ class SocialMediaIcon(models.Model):
         <i class="fa fa-icon header-icon"></i>
         """
 
-        if icon_font == self.ICON_MATERIAL:
-            icon_font_slug = 'material-icons'
-        elif icon_font == self.ICON_AWESOME:
-            icon_font_slug = 'fa'            
+        if self.icon_font == self.ICON_MATERIAL:
+            self.icon_font_slug = 'material-icons'
+        elif self.icon_font == self.ICON_AWESOME:
+            self.icon_font_slug = 'fa'            
         
-        return f'<i class="{icon_font_slug} {" ".join(classes)}></i>'
+        return f'<i class="{self.icon_font_slug} {" ".join(classes)}></i>'
 
     def link_tag(self, classes=()):
         """
@@ -82,13 +82,13 @@ class SocialMediaIcon(models.Model):
         >>> icon.link_tag(classes=['header-icon'])
         <a href="url"><i class="fa fa-icon header-icon"></i></a>
         """
-
+        
         if self.icon_font == self.ICON_MATERIAL:
-                icon_font_slug = 'material-icons'
+            self.icon_font_slug = 'material-icons'
         elif self.icon_font == self.ICON_AWESOME:
-            icon_font_slug = 'fa'
-
-        return f'<a href="{self.url}"><i class="{icon_font_slug} {" ".join(classes)}></i></a>'
+            self.icon_font_slug = 'fa'            
+        
+        return f'<a href="{self.url}"><i class="{self.icon_font_slug} {" ".join(classes)}></i></a>'
 
 
 class Color(models.Model):
@@ -143,7 +143,7 @@ class Fragment(models.Model):
         return self.html()
 
     def __str__(self):
-        return self.name.replace('_', ' ').replace('-', ' ').replace('/','').capitalize()
+        return self.name.replace('_', ' ').replace('-', ' ').replace('/', '').capitalize()
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)

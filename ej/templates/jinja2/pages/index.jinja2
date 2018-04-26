@@ -1,10 +1,13 @@
 {% extends 'base.jinja2' %}
 {% from 'components/home.jinja2' import home_banner, how_it_works, start_now %}
 {% from 'components/conversations.jinja2' import conversation_list %}
+{% from 'components/generic/page_footer.jinja2' import page_footer %}
+
 
 {% block main %}
     {{ home_banner(home_banner_frag) }}
     {{ how_it_works(how_it_works_frag) }}
     {{ conversation_list(conversations) }}
     {{ start_now(start_now_frag) }}
+    {{ page_footer(social_media_icons) }}
 {% endblock %}
