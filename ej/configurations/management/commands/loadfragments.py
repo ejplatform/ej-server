@@ -37,16 +37,15 @@ def real_handle(path, force):
 
     # Filter out existing fragments
     current_fragments = list(Fragment.objects.values_list('name'))
+    current_fragments = list(map(''.join, current_fragments))
+
     new_fragments = {}
     for path, name in files:
-        for saved_name in current_fragments:
-            saved_name = ''.join(saved_name)
-            if (name != saved_name) or force:
-                print("new")
-                new_fragments[name] = path
-            else:
-                print('Fragment exists: <base>%s (%s)' % (name, path))
-    print(new_fragments.items())
+        if force or name not in current_fragments:
+            new_fragments[name] = path
+        else:
+            print('Fragment exists: <base>%s (%s)' % (name, path))
+    
 
     # Split HTML from markdown
     html_files = {path: name for name, path in new_fragments.items() if is_html(path)}
