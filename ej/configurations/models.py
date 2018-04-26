@@ -82,12 +82,12 @@ class SocialMediaIcon(models.Model):
         >>> icon.link_tag(classes=['header-icon'])
         <a href="url"><i class="fa fa-icon header-icon"></i></a>
         """
-        
-        if icon_font == self.ICON_MATERIAL:
+
+        if self.icon_font == self.ICON_MATERIAL:
                 icon_font_slug = 'material-icons'
-        elif icon_font == self.ICON_AWESOME:
-            icon_font_slug = 'fa'            
-        
+        elif self.icon_font == self.ICON_AWESOME:
+            icon_font_slug = 'fa'
+
         return f'<a href="{self.url}"><i class="{icon_font_slug} {" ".join(classes)}></i></a>'
 
 
