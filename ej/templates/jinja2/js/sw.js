@@ -42,7 +42,7 @@ function registerAllRoutes(workbox) {
         new RegExp('/?'),
         new RegExp('/conversations/.*/?')
     ];
-    for (var i=0; i < urls.length; i++) {
+    for (var i=0; i < urlpatterns.length; i++) {
         workbox.routing.registerRoute(
             urlpatterns[i],
             workbox.strategies.networkFirst()

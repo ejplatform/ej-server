@@ -3,9 +3,9 @@
  ======================================================================== */
 
 $form-border-color: $color-gray !default;
-$form-element-color: tint($color-hint, 50%) !default;
+$form-element-color: $color-white !default;
 $form-element-color-text: $color-hint-text !default;
-
+$form-input-border-box: inset 0 1px 3px 0 rgba(0, 0, 0, 0.3);
 
 form {
     label {
@@ -30,11 +30,15 @@ select,
     width: 85%;
 }
 
+input, textarea {
+    box-shadow: $form-input-border-box;
+}
+
 input,
 textarea,
 select,
 .FormItem {
-    border-radius: $border-radius-small;
+    border-radius: 2 * $font-size;
     background: $form-element-color;
     border: 1px solid $form-border-color;
     color: $form-element-color-text;
@@ -51,4 +55,5 @@ label {
 
 input[type=submit] {
     background: $color-action-default;
+    width: inherit;
 }

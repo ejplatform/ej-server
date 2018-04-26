@@ -51,7 +51,7 @@ def db(ctx, migrate_only=False):
 
 
 @task
-def db_reset(ctx, fake=False, postgres=False):
+def db_reset(ctx, fake=False, postgres=False, no_assets=False):
     """
     Reset data in database and optionally fill with fake data
     """
@@ -59,6 +59,8 @@ def db_reset(ctx, fake=False, postgres=False):
     manage(ctx, 'migrate')
     if fake:
         db_fake(ctx, postgres=postgres)
+    if not no_assets:
+        db_assets(ctx)
 
 
 @task
@@ -90,11 +92,13 @@ def db_fake(ctx, no_users=False, no_conversations=False, no_admin=False, safe=Fa
 
 
 @task
-def db_assets(ctx, path='local'):
+def db_assets(ctx, path=None):
     """
     Install assets from a local folder in the database.
     """
 
+    if path is None:
+        path = 'local' if os.path.exists('local') else 'local-example'
     base = pathlib.Path(path)
     manage(ctx, 'loadpages', path=base / 'pages')
 

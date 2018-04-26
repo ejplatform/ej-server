@@ -427,138 +427,6 @@ template {
   max-width: inherit !important; }
 
 /*
- HEADINGS
- =====================================================================*/
-h1 {
-  font-size: 1.7em; }
-
-h2 {
-  font-size: 1.5em; }
-
-h3 {
-  font-size: 1.3em; }
-
-h4 {
-  font-size: 1.15em; }
-
-h5 {
-  font-size: 1.1em; }
-
-h6 {
-  font-size: 1em; }
-
-h1, h2, h3, h4, h5, h6 {
-  font-family: "Raleway", sans-serif;
-  font-weight: normal;
-  text-transform: none; }
-
-/*
- GENERIC ELEMENTS
- =====================================================================*/
-html {
-  min-height: 100%;
-  line-height: 1.375; }
-
-body {
-  box-sizing: border-box;
-  background: #fff;
-  color: #042049;
-  font-size: 16px;
-  font-family: "Raleway", sans-serif;
-  width: 100vw; }
-
-main {
-  box-sizing: border-box;
-  padding: 0;
-  width: 100%; }
-
-a {
-  line-height: 1.2;
-  text-decoration: none;
-  text-decoration-style: solid; }
-
-code, pre, blockquote {
-  color: #042049;
-  background-color: #d6f1f3; }
-
-code, pre {
-  font-family: "IBM Plex Mono", monospace monospace; }
-
-table {
-  width: 100%; }
-
-img {
-  max-width: 100%;
-  font-style: italic;
-  vertical-align: middle; }
-
-/*
- UNSTYLED FORM ELEMENTS
- ======================================================================== */
-form label {
-  display: none; }
-
-form[show-labels] label {
-  display: block; }
-
-input,
-textarea,
-label,
-select,
-.FormItem {
-  box-sizing: border-box;
-  font-size: 1em;
-  max-width: 425px;
-  width: 85%; }
-
-input,
-textarea,
-select,
-.FormItem {
-  border-radius: 3px;
-  background: #ebf8f9;
-  border: 1px solid #999;
-  color: #042049;
-  margin: 6px auto;
-  padding: 12px; }
-
-label {
-  color: #2679f3;
-  font-weight: bold;
-  font-size: 1.1em;
-  margin: 0 auto; }
-
-input[type=submit] {
-  background: #30c0d3; }
-
-/*
- GENERIC CONTAINER PATTERNS
- =========================================================================== */
-.Container, .CenteredContainer, .Footer > *, .HomeBanner, .HowItWorks > *, .ConversationList, .StartNow > *, .Profile, .ProfileEdit {
-  padding: 0 12px 12px 12px;
-  margin: 0 auto;
-  max-width: 700px; }
-  @media only screen and (min-width: 500px) {
-    .Container, .CenteredContainer, .Footer > *, .HomeBanner, .HowItWorks > *, .ConversationList, .StartNow > *, .Profile, .ProfileEdit {
-      padding: 0 48px 24px 48px; } }
-  @media only screen and (min-width: 1100px) {
-    .Container, .CenteredContainer, .Footer > *, .HomeBanner, .HowItWorks > *, .ConversationList, .StartNow > *, .Profile, .ProfileEdit {
-      padding: 0 96px 24px 96px;
-      max-width: 900px; } }
-
-.CenteredContainer, .Footer > *, .HomeBanner, .HowItWorks > * {
-  text-align: center; }
-
-/*
- DJANGO FORMS STYLING
- =========================================================================== */
-ul.errorlist {
-  color: #f13c20;
-  padding: 0; }
-  ul.errorlist li {
-    list-style: none; }
-
-/*
  BUTTONS
  =============================================================================*/
 button,
@@ -568,17 +436,18 @@ input[type=submit],
 .RocketButton {
   background: #30c0d3;
   border: none;
-  border-radius: 3px;
+  border-radius: 56px;
   box-sizing: border-box;
   color: rgba(255, 255, 255, 0.9);
   cursor: pointer;
   display: inline-block;
   font: inherit;
-  font-weight: 600;
+  font-weight: bold;
   font-family: "Raleway", sans-serif;
-  margin: 6px;
-  padding: 12px 24px;
+  margin: 7px;
+  padding: 14px 56px;
   text-align: center;
+  text-transform: uppercase;
   transition: all 200ms ease-in-out;
   vertical-align: middle; }
   button, button:hover, button:active, button:focus,
@@ -630,7 +499,7 @@ input[type=submit],
   .ActionButton .Login-button,
   .RocketButton .Login-button {
     background-color: #ff3e72;
-    border-radius: 50ch;
+    border-radius: 56px;
     color: rgba(255, 255, 255, 0.9); }
     button[primary]:hover, button[primary]:focus,
     button .Button--primary:hover,
@@ -704,7 +573,7 @@ input[type=submit],
   .ActionButton .Button--secondary,
   .RocketButton .Button--secondary {
     background-color: #d6f1f3;
-    border-radius: 50ch;
+    border-radius: 56px;
     color: rgba(4, 32, 73, 0.9); }
     button[secondary]:hover, button[secondary]:focus,
     button .Button--secondary:hover,
@@ -737,7 +606,7 @@ input[type=submit],
   .Button .Button--small,
   .ActionButton .Button--small,
   .RocketButton .Button--small {
-    padding: 6px; }
+    padding: 7px; }
   button[large],
   button .Button--large,
   input[type=submit][large],
@@ -748,7 +617,7 @@ input[type=submit],
   .Button .Button--large,
   .ActionButton .Button--large,
   .RocketButton .Button--large {
-    padding: 24px; }
+    padding: 28px; }
   button[ghost],
   button .Button--ghost,
   input[type=submit][ghost],
@@ -762,7 +631,7 @@ input[type=submit],
     background: none;
     border: 1px solid #30c0d3;
     color: #30c0d3;
-    padding: 11px 23px; }
+    padding: 13px 55px; }
     button[ghost]:hover, button[ghost]:focus,
     button .Button--ghost:hover,
     button .Button--ghost:focus,
@@ -804,7 +673,7 @@ input[type=submit],
     .ActionButton .Button--ghost .Button--ghost-primary,
     .RocketButton .Button--ghost .Button--ghost-primary {
       color: #ff3e72;
-      border-radius: 50ch; }
+      border-radius: 56px; }
       button[ghost] [primary]:hover, button[ghost] [primary]:focus,
       button[ghost] .Button--ghost-primary:hover,
       button[ghost] .Button--ghost-primary:focus,
@@ -866,7 +735,7 @@ input[type=submit],
     .ActionButton .Button--ghost .Button--ghost-secondary,
     .RocketButton .Button--ghost .Button--ghost-secondary {
       color: #d6f1f3;
-      border-radius: 50ch; }
+      border-radius: 56px; }
       button[ghost] [secondary]:hover, button[ghost] [secondary]:focus,
       button[ghost] .Button--ghost-secondary:hover,
       button[ghost] .Button--ghost-secondary:focus,
@@ -909,11 +778,147 @@ input[type=submit],
         color: #afe4e7; }
 
 /*
+ HEADINGS
+ =====================================================================*/
+h1 {
+  font-size: 1.7em; }
+
+h2 {
+  font-size: 1.5em; }
+
+h3 {
+  font-size: 1.3em; }
+
+h4 {
+  font-size: 1.15em; }
+
+h5 {
+  font-size: 1.1em; }
+
+h6 {
+  font-size: 1em; }
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Raleway", sans-serif;
+  font-weight: normal;
+  text-transform: none; }
+
+/*
+ GENERIC ELEMENTS
+ =====================================================================*/
+html {
+  min-height: 100%;
+  line-height: 1.4375; }
+
+body {
+  box-sizing: border-box;
+  background: #fff;
+  color: #042049;
+  font-size: 16px;
+  font-family: "Raleway", sans-serif;
+  width: 100vw; }
+
+main {
+  box-sizing: border-box;
+  padding: 0;
+  width: 100%; }
+
+a {
+  line-height: 1.2;
+  text-decoration: none;
+  text-decoration-style: solid; }
+
+code, pre, blockquote {
+  color: #042049;
+  background-color: #d6f1f3; }
+
+code, pre {
+  font-family: "IBM Plex Mono", monospace monospace; }
+
+table {
+  width: 100%; }
+
+img {
+  max-width: 100%;
+  font-style: italic;
+  vertical-align: middle; }
+
+/*
+ UNSTYLED FORM ELEMENTS
+ ======================================================================== */
+form label {
+  display: none; }
+
+form[show-labels] label {
+  display: block; }
+
+input,
+textarea,
+label,
+select,
+.FormItem {
+  box-sizing: border-box;
+  font-size: 1em;
+  max-width: 425px;
+  width: 85%; }
+
+input, textarea {
+  box-shadow: inset 0 1px 3px 0 rgba(0, 0, 0, 0.3); }
+
+input,
+textarea,
+select,
+.FormItem {
+  border-radius: 32px;
+  background: #fff;
+  border: 1px solid #999;
+  color: #042049;
+  margin: 7px auto;
+  padding: 14px; }
+
+label {
+  color: #2679f3;
+  font-weight: bold;
+  font-size: 1.1em;
+  margin: 0 auto; }
+
+input[type=submit] {
+  background: #30c0d3;
+  width: inherit; }
+
+/*
+ GENERIC CONTAINER PATTERNS
+ =========================================================================== */
+.Container, .CenteredContainer, .Footer > *, .HomeBanner, .HowItWorks > *, .ConversationList, .StartNow > *, .Profile, .ProfileEdit {
+  padding: 0 14px 14px 14px;
+  margin: 0 auto;
+  max-width: 700px; }
+  @media only screen and (min-width: 500px) {
+    .Container, .CenteredContainer, .Footer > *, .HomeBanner, .HowItWorks > *, .ConversationList, .StartNow > *, .Profile, .ProfileEdit {
+      padding: 0 56px 28px 56px; } }
+  @media only screen and (min-width: 1100px) {
+    .Container, .CenteredContainer, .Footer > *, .HomeBanner, .HowItWorks > *, .ConversationList, .StartNow > *, .Profile, .ProfileEdit {
+      padding: 0 112px 28px 112px;
+      max-width: 900px; } }
+
+.CenteredContainer, .Footer > *, .HomeBanner, .HowItWorks > * {
+  text-align: center; }
+
+/*
+ DJANGO FORMS STYLING
+ =========================================================================== */
+ul.errorlist {
+  color: #f13c20;
+  padding: 0; }
+  ul.errorlist li {
+    list-style: none; }
+
+/*
  GENERIC ELEMENTS
  ======================================================================== */
 .Breadcrumbs {
   text-align: left;
-  padding: 6px 0 12px 0; }
+  padding: 7px 0 14px 0; }
   .Breadcrumbs ul {
     padding-left: 0;
     margin: 0;
@@ -935,7 +940,7 @@ input[type=submit],
   flex-flow: column;
   height: 100vh;
   overflow: hidden;
-  padding: 60px 0 82px 0; }
+  padding: 60px 0 83px 0; }
   @media only screen and (min-width: 500px) {
     .Page {
       padding: 72px 0 0 0; } }
@@ -949,8 +954,8 @@ input[type=submit],
   .Page-title {
     background: #30c0d3;
     color: #fff;
-    margin: 0 0 24px 0;
-    padding: 12px; }
+    margin: 0 0 28px 0;
+    padding: 14px; }
     .Page-title h1 {
       font-size: 1.87em; }
   .Page-content {
@@ -992,7 +997,7 @@ input[type=submit],
     display: flex;
     justify-content: space-between;
     margin: 0;
-    padding: 0 24px 0 0;
+    padding: 0 28px 0 0;
     position: fixed;
     width: 100vw; }
     @media only screen and (min-width: 500px) {
@@ -1003,7 +1008,7 @@ input[type=submit],
         width: initial; } }
   .Header-topNav {
     height: 60px;
-    min-width: 132px;
+    min-width: 140px;
     top: 0; }
     .Header-topNav img {
       height: 48px;
@@ -1015,7 +1020,7 @@ input[type=submit],
         display: flex;
         justify-content: start;
         margin: 0;
-        padding: 0 0 0 24px; }
+        padding: 0 0 0 28px; }
         .Header-topNav img {
           height: 72px;
           padding: 0;
@@ -1024,11 +1029,11 @@ input[type=submit],
           display: none; } }
     @media only screen and (min-width: 700px) {
       .Header-topNav {
-        padding-left: 48px; } }
+        padding-left: 56px; } }
   .Header-lowerNav {
     bottom: 0;
     box-shadow: 0 0 10px 0px rgba(50, 50, 50, 0.5);
-    height: 82px;
+    height: 83px;
     font-size: 14px;
     font-weight: bold;
     text-transform: lowercase;
@@ -1052,7 +1057,7 @@ input[type=submit],
         color: #042049;
         display: block;
         font-size: 26px;
-        margin: 6px; }
+        margin: 7px; }
         @media only screen and (min-width: 500px) {
           .Header-lowerNav a i.fa {
             display: none; } }
@@ -1063,7 +1068,7 @@ input[type=submit],
           color: #042049;
           display: flex;
           flex-flow: row-reverse;
-          margin-left: 24px; } }
+          margin-left: 28px; } }
     @media only screen and (min-width: 500px) {
       .Header-lowerNav a.Header-helpButton {
         display: none; } }
@@ -1084,7 +1089,7 @@ input[type=submit],
   box-sizing: border-box;
   color: #042049;
   height: 0 60px;
-  padding: 12px; }
+  padding: 14px; }
   .Footer-social p {
     font-size: 16px; }
   .Footer-icons {
@@ -1095,7 +1100,7 @@ input[type=submit],
     color: #fff; }
     .Footer-icons li {
       display: inline;
-      margin: 12px; }
+      margin: 14px; }
 
 /*
  PAGE SIDEBAR
@@ -1106,7 +1111,7 @@ input[type=submit],
 
 .up-modal-close {
   color: #fff;
-  margin: 12px 0 0; }
+  margin: 14px 0 0; }
 
 .NavMenu {
   background: #30c0d3;
@@ -1117,7 +1122,7 @@ input[type=submit],
   height: 100vh;
   opacity: 1;
   overflow: auto;
-  padding: 24px;
+  padding: 28px;
   width: 75vw; }
   .NavMenu em {
     font-weight: bold;
@@ -1125,10 +1130,10 @@ input[type=submit],
   .NavMenu a, .NavMenu a:hover, .NavMenu a:active {
     color: #fff; }
   .NavMenu img, .NavMenu i {
-    padding-right: 12px; }
+    padding-right: 14px; }
   .NavMenu li {
     list-style: none;
-    padding: 12px 0;
+    padding: 14px 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.25); }
   .NavMenu li:last-child {
     border: none; }
@@ -1140,8 +1145,11 @@ input[type=submit],
  ======================================================================== */
 .Register,
 .Login {
-  padding: 24px;
+  padding: 28px;
   text-align: center; }
+  .Register h1,
+  .Login h1 {
+    color: #ff3e72; }
   .Register input, .Register textarea, .Register select, .Register .FormItem,
   .Login input,
   .Login textarea,
@@ -1150,26 +1158,43 @@ input[type=submit],
     display: block;
     margin-left: auto;
     margin-right: auto; }
+  .Register input[type=submit],
+  .Login input[type=submit] {
+    display: block;
+    margin-top: 28px; }
   .Register-icon,
   .Login-icon {
-    border: 12px solid #eee;
+    border: 10px solid #74b5b8;
     border-radius: 50%;
     color: #eee;
-    font-size: 96px;
-    margin: 48px;
-    padding: 24px; }
+    height: 150px;
+    margin: 56px auto;
+    padding: 56px;
+    width: 150px; }
+    .Register-icon img > *,
+    .Login-icon img > * {
+      color: #d6f1f3; }
   .Register-socialButtons,
   .Login-socialButtons {
     display: none; }
     .Register-socialButtons i.fa,
     .Login-socialButtons i.fa {
       font-size: 1.7em; }
+  .Register-password,
+  .Login-password {
+    font-weight: bold;
+    text-transform: lowercase; }
+    .Register-password a,
+    .Login-password a {
+      color: #ff3e72; }
   .Register-newUser,
   .Login-newUser {
-    margin: 24px 0;
-    border-top: 1px solid #eee; }
+    border-top: 1px solid #999;
+    margin: 28px auto;
+    width: 85%; }
     .Register-newUser h1,
     .Login-newUser h1 {
+      color: #042049;
       font-size: 1.3em; }
 
 /*
@@ -1188,35 +1213,35 @@ input[type=submit],
     flex-wrap: wrap;
     width: 100%; }
     .ConversationList-cardList > * {
-      margin: 24px; }
+      margin: 28px; }
 
 .ConversationCard {
   box-sizing: border-box;
   border: 0;
-  border-radius: 48px;
+  border-radius: 56px;
   flex-grow: 1;
-  margin: 6px;
+  margin: 7px;
   text-align: center;
   width: 100%; }
   .ConversationCard > * {
-    padding: 12px; }
+    padding: 14px; }
   .ConversationCard h1 {
     font-size: 1.3em;
     text-transform: none; }
   .ConversationCard-cover {
     background: #30c0d3;
-    border-radius: 48px;
+    border-radius: 56px;
     color: #fff;
     display: flex;
     flex-flow: column;
-    height: 154px;
+    height: 161px;
     justify-content: space-around;
     position: relative;
     z-index: 2; }
     .ConversationCard-cover a, .ConversationCard-cover a:hover, .ConversationCard-cover a:active {
       color: #fff; }
     .ConversationCard-cover dl {
-      margin: 24px;
+      margin: 28px;
       font-size: 12px; }
       .ConversationCard-cover dl dt {
         display: inline; }
@@ -1225,9 +1250,9 @@ input[type=submit],
         margin: 0; }
   .ConversationCard-actions {
     background: #d6f1f3;
-    border-radius: 48px;
-    padding-top: 96px;
-    margin-top: -96px; }
+    border-radius: 56px;
+    padding-top: 112px;
+    margin-top: -112px; }
     .ConversationCard-actions .Button[primary], .ConversationCard-actions [primary].ActionButton, .ConversationCard-actions [primary].RocketButton {
       background-color: #042049;
       text-transform: lowercase;
@@ -1251,7 +1276,7 @@ input[type=submit],
 .ConversationDetail {
   padding: 0; }
   .ConversationDetail > * {
-    padding: 24px; }
+    padding: 28px; }
   .ConversationDetail-banner {
     background: #30c0d3;
     color: #fff;
@@ -1282,7 +1307,7 @@ input[type=submit],
 
 .HowItWorks {
   background: #d6f1f3;
-  padding-top: 48px; }
+  padding-top: 56px; }
   .HowItWorks h2 {
     font-size: 1.15em; }
 
@@ -1294,7 +1319,7 @@ input[type=submit],
   .HowItWorksCard h1 {
     font-size: 1.3em; }
     .HowItWorksCard h1 i {
-      padding-left: 12px;
+      padding-left: 14px;
       float: right; }
       @media only screen and (min-width: 500px) {
         .HowItWorksCard h1 i {
@@ -1310,7 +1335,7 @@ input[type=submit],
     display: block;
     flex-grow: 0;
     font-size: 2.55em;
-    margin: 24px 0;
+    margin: 28px 0;
     text-align: center;
     min-width: 70px; }
   .HowItWorksCard-extra {
@@ -1320,12 +1345,12 @@ input[type=submit],
         display: block; }
         .HowItWorksCard-extra .Button, .HowItWorksCard-extra .ActionButton, .HowItWorksCard-extra .RocketButton, .HowItWorksCard-extra .RocketButton, .HowItWorksCard-extra button {
           display: block;
-          margin: 12px auto 24px auto;
+          margin: 14px auto 28px auto;
           max-width: 300px; } }
 
 .StartNow {
   background: #d6f1f3;
-  padding: 24px;
+  padding: 28px;
   text-align: center; }
   .StartNow h2 {
     font-size: 1.15em; }
@@ -1344,24 +1369,24 @@ input[type=submit],
   .Profile-breadcrumbs {
     text-align: left; }
   .Profile-image {
-    width: 192px;
-    height: 192px;
+    width: 300px;
+    height: 300px;
     border-radius: 50ch; }
   .Profile-tabs {
-    margin-top: 24px; }
+    margin-top: 28px; }
   .Profile-tabLinks {
     display: flex;
     justify-content: space-around;
     font-size: 1.1em;
     font-weight: normal; }
     .Profile-tabLinks > * {
-      margin: 0 24px; }
+      margin: 0 28px; }
   .Profile-tabContainer {
     background: #d6f1f3;
     text-align: left; }
   .Profile-info {
     font-size: 1em;
-    padding: 48px; }
+    padding: 56px; }
     .Profile-info > * {
       display: block; }
     .Profile-info dl dt {
@@ -1370,7 +1395,7 @@ input[type=submit],
     .Profile-info dl dd {
       font-size: 1.1em;
       font-weight: bold;
-      margin: 0 0 12px 0; }
+      margin: 0 0 14px 0; }
     .Profile-info form {
       text-align: center; }
 
@@ -1388,7 +1413,7 @@ input[type=submit],
   .ColorStyles > * {
     border: 1px solid black;
     box-sizing: border-box;
-    margin: 6px;
+    margin: 7px;
     min-height: 120px;
     text-align: center;
     padding: 0;
@@ -1458,7 +1483,7 @@ input[type=submit],
     .ColorStyles .color-purple span:first-child {
       background: #cda4ee; }
     .ColorStyles .color-purple span:last-child {
-      background: #042049; }
+      background: #123066; }
   .ColorStyles .color-red {
     background: #f13c20;
     color: white; }

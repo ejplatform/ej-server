@@ -5,7 +5,7 @@
 
 // Baseline grid lines height.
 // Every spacing metric should be based on this.
-$spacing-baseline: 6px !default;
+$spacing-baseline: 7px !default;
 
 
 // How many grid lines should our spacing unit variants span?
@@ -33,6 +33,6 @@ $spacing-gutter: 10px !default;
 
 
 // Border radius
-$border-radius-small: $spacing-unit-tiny / 2 !default;
-$border-radius: $spacing-unit-tiny !default;
-$border-radius-large: $spacing-unit-small !default;
+$border-radius-small: $spacing-unit-small !default;
+$border-radius: $spacing-unit !default;
+$border-radius-large: $spacing-unit-large !default;
