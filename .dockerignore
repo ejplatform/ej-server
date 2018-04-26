@@ -1,5 +1,11 @@
-.*
-!.coveragerc
-!.env
-!.pylintrc
-local/
+.circleci/
+.git/
+.pytest_cache/
+docker/
+!docker/base/script/*.sh
+!docker/production/nginx/default.conf
+
+.gitattributes
+.gitignore
+.gitlab-ci.yml
+.travis.yml
