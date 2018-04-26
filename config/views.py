@@ -27,9 +27,9 @@ log = logging.getLogger('ej')
 def home(request):
     ctx = {
         'conversations': Conversation.objects.all(),
-        'home_banner_frag': get_fragment('home_banner'),
-        'how_it_works_frag': get_fragment('how_it_works'),
-        'start_now_frag': get_fragment('start_now'),
+        'home_banner_frag': get_fragment('home-banner'),
+        'how_it_works_frag': get_fragment('how-it-works'),
+        'start_now_frag': get_fragment('start-now'),
     }
     return render(request, 'pages/index.jinja2', ctx)
 
