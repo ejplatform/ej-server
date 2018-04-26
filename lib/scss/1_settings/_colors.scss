@@ -12,7 +12,7 @@ $color-gray-light: #eee !default;
 
 $color-blue: #4d8bc0 !default;
 $color-blue-dark: #354d81 !default;
-$color-blue-light: #71d0db !default;
+$color-blue-light: #96DCDD !default;
 
 $color-green: #34ff99 !default;
 $color-green-dark: #4cc85c !default;
@@ -23,7 +23,7 @@ $color-magenta-dark: #912763 !default;
 $color-magenta-light: #ffd0e2 !default;
 
 $color-purple: #4056a1 !default;
-$color-purple-dark: #1e3155 !default;
+$color-purple-dark: #203D62 !default;
 $color-purple-light: #c5cbe3 !default;
 
 $color-red: #f13c20 !default;
@@ -40,11 +40,11 @@ $color-yellow-light: #fffeaf !default;
 
 // Background and text colors
 $color-content: $color-white !default;
-$color-content-text: $color-black !default;
+$color-content-text: $color-purple-dark !default;
 $color-content-text-faded: lighten($color-content-text, 40%) !default;
 
 // Color schemes
-$color-primary: $color-blue !default;
+$color-primary: $color-blue-light !default;
 $color-primary-text: $color-white !default;
 $color-accent: $color-magenta-dark !default;
 $color-accent-text: $color-white !default;

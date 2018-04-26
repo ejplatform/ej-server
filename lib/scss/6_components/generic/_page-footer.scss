@@ -3,11 +3,11 @@
  ============================================================================ */
 
 // Constants
-$footer-color: #464646 !default;
-$footer-color-text: $color-white !default;
-$footer-icon-size: 40px;
+$footer-color: $color-primary !default;
+$footer-color-text: $color-content-text !default;
+$footer-icon-size: 30px;
 $footer-text-spacing: 10px;
-$footer-content-general-width: 65%;
+$footer-content-info-width: 65%;
 $footer-content-social-width: 35%;
 // Component
 .Footer {
@@ -19,48 +19,20 @@ $footer-content-social-width: 35%;
     color: $footer-color-text;
     height: 0 $header-top-nav-height;
     padding: $spacing-unit-small;
-    &-content-general {
-        @media only screen and (min-width: $breakpoint-large) {
-            width: $footer-content-general-width;
-            float: left;
-            h2 {
-                text-align: left;
-            }
-        }
-    }
-    &-content-social {
+    &-social {
         p {
-            font-weight: bold;
             font-size: $font-size-default;
         }
-        @media only screen and (min-width: $breakpoint-large) {
-            width: $footer-content-social-width;
-            float: right;
-            p {
-                text-align: left;
-                margin-left: $footer-text-spacing;
-            }
-        }
-        &-icons {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            font-size: $footer-icon-size;
-            li {
-                display: inline;
-                margin: $spacing-unit-small;
-            }
-            @media only screen and (min-width: $breakpoint-large) {
-                text-align: left;
-            }
-        }
-        &-badges {
-            display: flex;
-            text-align: center;
-            li {
-                margin-left: 0;
-                list-style: none;
-            }
+    }
+    &-icons {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        font-size: $footer-icon-size;
+        color: $color-white;
+        li {
+            display: inline;
+            margin: $spacing-unit-small;
         }
     }
 }

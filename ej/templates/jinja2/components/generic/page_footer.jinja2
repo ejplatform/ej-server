@@ -4,19 +4,15 @@
 {# Page footer with links and other information #}
 {% macro page_footer() %}
   <footer class="Footer">
-    <nav class="Footer-content">
-      <div class="Footer-content-general">
-        <h2>RODAPÉ</h2>
-      </div>
-      <div class="Footer-content-social">
-        <p>Divulgue!</p>
-        <ul class="Footer-content-social-icons">    
+      <div class="Footer-social">
+        <ul class="Footer-icons">    
             <li><i class="fab fa-facebook"></i></li>
             <li><i class="fab fa-twitter"></i></li>
             <li><i class="fab fa-whatsapp"></i></li>
             <li><i class="fab fa-telegram"></i></li>
-        <ul>
-      </div>
-    </nav>
+        </ul>
+        <div class="Footer-info">
+          <p>Pequeno texto falando sobre o MDH e CPA</p>
+        </div>
   </footer>
 {% endmacro %}
