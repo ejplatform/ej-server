@@ -39,7 +39,7 @@ def real_handle(path=False, force=False):
 
     # Filter out existing urls
     saved_pages = list(FlatPage.objects.values_list('url', flat=True))
-    saved_pages = list(map(''.join,saved_pages))
+    saved_pages = list(map(''.join, saved_pages))
     new_pages = {}
     for path, name in files:
         if force or name not in saved_pages:

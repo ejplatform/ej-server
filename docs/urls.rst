@@ -25,6 +25,8 @@ Users cannot see each other's profiles. Those URLs require a successful login.
     Show user profile.
 /profile/edit/:
     Edit profile.
+/profile/comments/
+    Show statistics about all comments created by a user.
 
 
 Conversations
@@ -36,7 +38,14 @@ Public views for displayng information about conversations.
     List all available conversations
 /conversations/<category>/:
     List all conversations in a category
-
+/conversations/<category>/<conversation>/:
+    Detail page for some specific conversation.
+/conversations/<category>/<conversation>/info/:
+    Advanced information about conversation (statistics, graphs, etc) #DOING
+/conversations/<category>/<conversation>/comments/:
+    Show comments in the given conversation #TODO
+/conversations/<category>/<conversation>/comments/<id>/:
+    Show a comment + associated statistics #TODO
 
 
 
@@ -51,5 +60,9 @@ All views in this section require staff permissions.
     Exhibit the main design patterns in the current theme.
 /debug/info/:
     Show basic debug information about the server #TODO
-/debug/import/:
-    Importable resources like statistics,
+/debug/logs/:
+    Platform logs. #TODO?
+/debug/data/:
+    Importable resources like reports, backups, etc. #TODO?
+    * User list
+    * Logs
