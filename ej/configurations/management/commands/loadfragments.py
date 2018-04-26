@@ -1,6 +1,6 @@
 import os
 from pathlib import Path
-from ._load import make_url, is_html, is_markdown, validate_path, MARKDOWN_TITLE_RE, HTML_TITLE_RE
+from ._load import make_fragment_name, is_html, is_markdown, validate_path, MARKDOWN_TITLE_RE, HTML_TITLE_RE
 from django.core.management.base import BaseCommand
 from ...models import Fragment
 from django.conf import settings
@@ -33,7 +33,7 @@ def real_handle(path, force):
     validate_path(path)
 
     base = Path(path)
-    files = ((base/path, make_url(path)) for path in os.listdir(path))
+    files = ((base/path, make_fragment_name(path)) for path in os.listdir(path))
 
     # Filter out existing fragments
     current_fragments = list(Fragment.objects.values_list('name'))
