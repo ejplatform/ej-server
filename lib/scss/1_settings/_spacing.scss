@@ -36,3 +36,6 @@ $spacing-gutter: 10px !default;
 $border-radius-small: $spacing-unit-small !default;
 $border-radius: $spacing-unit !default;
 $border-radius-large: $spacing-unit-large !default;
+
+// Standardize UI treatments.
+$global-transition: all 200ms ease-in-out !default;

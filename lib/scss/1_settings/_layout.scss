@@ -3,14 +3,9 @@
  =========================================================================== */
 
 // Media query break points
-$breakpoint-small: 500px;
-$breakpoint-medium: 700px;
-$breakpoint-large: 1100px;
-
-// Standardize UI treatments.
-$global-radius: $border-radius !default;
-$global-transition: all 200ms ease-in-out !default;
-$global-padding: $spacing-unit-small !default;
+$breakpoint-small: 600px;
+$breakpoint-medium: 800px;
+$breakpoint-large: 1200px;
 
 // Page header layout
 $header-top-nav-height: 60px !default;

@@ -18,7 +18,7 @@ $conversation-card-button-color: $color-blue-dark !default;
 
 .ConversationList {
     @extend .Container;
-    max-width: 90%;
+    //width: 90%;
 
     &-title {
         text-align: center;
@@ -28,6 +28,42 @@ $conversation-card-button-color: $color-blue-dark !default;
         }
         h2 {
             font-size: $conversation-list-title-font-size-h2;
+        }
+    }
+
+    &-categories {
+        background: $color-hint;
+        display: flex;
+        margin: $spacing-unit 0;
+        justify-content: space-between;
+        padding: $spacing-unit-small;
+        text-transform: lowercase;
+
+        > * {
+            margin: 0 $spacing-unit-small;
+        }
+        i {
+            color: $color-primary;
+        }
+        a {
+            color: $color-accent;
+            font-weight: bold;
+        }
+        ul {
+            display: flex;
+            flex-grow: 1;
+            justify-content: flex-start;
+            margin: 0;
+            padding: 0;
+
+            li {
+                display: block;
+                margin: 0 $spacing-unit-tiny;
+                list-style: none;
+                a {
+                    color: $color-hint-text;
+                }
+            }
         }
     }
 

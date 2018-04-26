@@ -3,8 +3,8 @@
 {% from 'components/generic/elements.jinja2' import breadcrumbs %}
 
 {% block content %}
-    {% call conversation_list(conversations) %}
-        {{ breadcrumbs([('conversations', _('Conversations'))]) }}
+    {% call conversation_list(conversations, categories) %}
+{#        {{ breadcrumbs([('conversations', _('Conversations'))]) }}#}
     {% endcall %}
 {% endblock %}
 

@@ -138,6 +138,7 @@ def category_list(request, slug):
 
     ctx = dict(
         category=category,
+        categories=Category.objects.all(),
         conversations=category.conversations.all(),
     )
     return render(request, 'pages/category-detail.jinja2', ctx)
@@ -184,7 +185,11 @@ def conversation_info(request, slug, category_slug):
 
 @route('conversations/')
 def conversation_list(request):
-    ctx = {'conversations': Conversation.objects.all()}
+    print(Category.objects.all())
+    ctx = {
+        'conversations': Conversation.objects.all(),
+        'categories': Category.objects.all(),
+    }
     return render(request, 'pages/conversation-list.jinja2', ctx)
 
 

@@ -859,7 +859,7 @@ select,
 .FormItem {
   box-sizing: border-box;
   font-size: 1em;
-  max-width: 425px;
+  max-width: 510px;
   width: 85%; }
 
 input, textarea {
@@ -890,16 +890,16 @@ input[type=submit] {
  GENERIC CONTAINER PATTERNS
  =========================================================================== */
 .Container, .CenteredContainer, .Footer > *, .HomeBanner, .HowItWorks > *, .ConversationList, .StartNow > *, .Profile, .ProfileEdit {
-  padding: 0 14px 14px 14px;
+  padding: 0 0 14px 0;
   margin: 0 auto;
-  max-width: 700px; }
-  @media only screen and (min-width: 500px) {
+  max-width: 800px; }
+  @media only screen and (min-width: 600px) {
     .Container, .CenteredContainer, .Footer > *, .HomeBanner, .HowItWorks > *, .ConversationList, .StartNow > *, .Profile, .ProfileEdit {
       padding: 0 56px 28px 56px; } }
-  @media only screen and (min-width: 1100px) {
+  @media only screen and (min-width: 1200px) {
     .Container, .CenteredContainer, .Footer > *, .HomeBanner, .HowItWorks > *, .ConversationList, .StartNow > *, .Profile, .ProfileEdit {
       padding: 0 112px 28px 112px;
-      max-width: 900px; } }
+      max-width: 1000px; } }
 
 .CenteredContainer, .Footer > *, .HomeBanner, .HowItWorks > * {
   text-align: center; }
@@ -941,7 +941,7 @@ ul.errorlist {
   height: 100vh;
   overflow: hidden;
   padding: 60px 0 83px 0; }
-  @media only screen and (min-width: 500px) {
+  @media only screen and (min-width: 600px) {
     .Page {
       padding: 72px 0 0 0; } }
   .Page-mainContainer {
@@ -978,7 +978,7 @@ ul.errorlist {
     color: #042049; }
   .Header a:hover {
     color: #042049; }
-  @media only screen and (min-width: 500px) {
+  @media only screen and (min-width: 600px) {
     .Header {
       align-items: center;
       box-shadow: 0 0 10px 0px rgba(50, 50, 50, 0.5);
@@ -1000,7 +1000,7 @@ ul.errorlist {
     padding: 0 28px 0 0;
     position: fixed;
     width: 100vw; }
-    @media only screen and (min-width: 500px) {
+    @media only screen and (min-width: 600px) {
       .Header-topNav, .Header-lowerNav {
         box-shadow: none;
         display: block;
@@ -1014,7 +1014,7 @@ ul.errorlist {
       height: 48px;
       box-sizing: border-box;
       margin: 0; }
-    @media only screen and (min-width: 500px) {
+    @media only screen and (min-width: 600px) {
       .Header-topNav {
         box-shadow: none;
         display: flex;
@@ -1027,7 +1027,7 @@ ul.errorlist {
           margin: 0; }
         .Header-topNav .Header-topIcon {
           display: none; } }
-    @media only screen and (min-width: 700px) {
+    @media only screen and (min-width: 800px) {
       .Header-topNav {
         padding-left: 56px; } }
   .Header-lowerNav {
@@ -1038,7 +1038,7 @@ ul.errorlist {
     font-weight: bold;
     text-transform: lowercase;
     text-align: center; }
-    @media only screen and (min-width: 500px) {
+    @media only screen and (min-width: 600px) {
       .Header-lowerNav {
         background: transparent;
         box-shadow: none;
@@ -1058,24 +1058,24 @@ ul.errorlist {
         display: block;
         font-size: 26px;
         margin: 7px; }
-        @media only screen and (min-width: 500px) {
+        @media only screen and (min-width: 600px) {
           .Header-lowerNav a i.fa {
             display: none; } }
       .Header-lowerNav a span {
         margin: 0; }
-      @media only screen and (min-width: 500px) {
+      @media only screen and (min-width: 600px) {
         .Header-lowerNav a {
           color: #042049;
           display: flex;
           flex-flow: row-reverse;
           margin-left: 28px; } }
-    @media only screen and (min-width: 500px) {
+    @media only screen and (min-width: 600px) {
       .Header-lowerNav a.Header-helpButton {
         display: none; } }
-    @media only screen and (min-width: 700px) {
+    @media only screen and (min-width: 800px) {
       .Header-lowerNav a.Header-helpButton {
         display: flex; } }
-    @media only screen and (min-width: 500px) {
+    @media only screen and (min-width: 600px) {
       .Header-lowerNav a:last-child span {
         display: none; }
       .Header-lowerNav a:last-child i.fa {
@@ -1200,20 +1200,44 @@ ul.errorlist {
 /*
  CONVERSATIONS
  ======================================================================== */
-.ConversationList {
-  max-width: 90%; }
-  .ConversationList-title {
-    text-align: center; }
-    .ConversationList-title h1 {
-      font-size: 1.7em; }
-    .ConversationList-title h2 {
-      font-size: 1.3em; }
-  .ConversationList-cardList {
+.ConversationList-title {
+  text-align: center; }
+  .ConversationList-title h1 {
+    font-size: 1.7em; }
+  .ConversationList-title h2 {
+    font-size: 1.3em; }
+.ConversationList-categories {
+  background: #d6f1f3;
+  display: flex;
+  margin: 28px 0;
+  justify-content: space-between;
+  padding: 14px;
+  text-transform: lowercase; }
+  .ConversationList-categories > * {
+    margin: 0 14px; }
+  .ConversationList-categories i {
+    color: #30c0d3; }
+  .ConversationList-categories a {
+    color: #ff3e72;
+    font-weight: bold; }
+  .ConversationList-categories ul {
     display: flex;
-    flex-wrap: wrap;
-    width: 100%; }
-    .ConversationList-cardList > * {
-      margin: 28px; }
+    flex-grow: 1;
+    justify-content: flex-start;
+    margin: 0;
+    padding: 0; }
+    .ConversationList-categories ul li {
+      display: block;
+      margin: 0 7px;
+      list-style: none; }
+      .ConversationList-categories ul li a {
+        color: #042049; }
+.ConversationList-cardList {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%; }
+  .ConversationList-cardList > * {
+    margin: 28px; }
 
 .ConversationCard {
   box-sizing: border-box;
@@ -1266,10 +1290,10 @@ ul.errorlist {
     font-size: 12px; }
     .ConversationCard-statistics li {
       list-style: none; }
-  @media only screen and (min-width: 500px) {
+  @media only screen and (min-width: 600px) {
     .ConversationCard {
       max-width: 47%; } }
-  @media only screen and (min-width: 1100px) {
+  @media only screen and (min-width: 1200px) {
     .ConversationCard {
       width: 32%; } }
 
@@ -1301,7 +1325,7 @@ ul.errorlist {
 .HomeBanner h2 {
   display: none;
   font-size: 1.3em; }
-  @media only screen and (min-width: 500px) {
+  @media only screen and (min-width: 600px) {
     .HomeBanner h2 {
       display: inherit; } }
 
@@ -1321,7 +1345,7 @@ ul.errorlist {
     .HowItWorksCard h1 i {
       padding-left: 14px;
       float: right; }
-      @media only screen and (min-width: 500px) {
+      @media only screen and (min-width: 600px) {
         .HowItWorksCard h1 i {
           display: none; } }
   .HowItWorksCard p {
@@ -1340,7 +1364,7 @@ ul.errorlist {
     min-width: 70px; }
   .HowItWorksCard-extra {
     display: none; }
-    @media only screen and (min-width: 500px) {
+    @media only screen and (min-width: 600px) {
       .HowItWorksCard-extra {
         display: block; }
         .HowItWorksCard-extra .Button, .HowItWorksCard-extra .ActionButton, .HowItWorksCard-extra .RocketButton, .HowItWorksCard-extra .RocketButton, .HowItWorksCard-extra button {

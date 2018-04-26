@@ -2,7 +2,6 @@
 {% from 'components/conversations.jinja2' import conversation_list, category_breadcrumbs %}
 
 {% block content %}
-    {{ category_breadcrumbs(category) }}
     {{ conversation_list(
             conversations,
             title='Categoria: {category.name}'.format(category=category),
