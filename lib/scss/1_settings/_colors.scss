@@ -11,8 +11,9 @@ $color-gray-dark: #666 !default;
 $color-gray-light: #eee !default;
 
 $color-blue: rgba(48,192,211,1) !default;
-$color-blue-dark: rgba(18,48,102,1) !default;
+$color-blue-dark: rgba(4,32,73,1) !default;
 $color-blue-light: rgba(214,241,243,1) !default;
+$color-blue-nav: rgba(164,216,221,1) !default;
 
 $color-green: rgba(116,181,184,1) !default;
 $color-green-dark: rgb(58, 153, 122) !default;
@@ -40,13 +41,13 @@ $color-yellow-light: #fffeaf !default;
 
 // Background and text colors
 $color-content: $color-white !default;
-$color-content-text: $color-purple-dark !default;
+$color-content-text: $color-blue-dark !default;
 $color-content-text-faded: lighten($color-content-text, 40%) !default;
 
 // Color schemes
 // Buttons and highlighted elements. Strong highlight, usually applied to
 // smaller navigational elements and action buttons.
-$color-primary: $color-blue-dark !default;
+$color-primary: $color-blue !default;
 $color-primary-text: $color-white !default;
 
 // Primary action buttons, fab, etc

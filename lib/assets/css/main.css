@@ -450,7 +450,7 @@ h6 {
 h1, h2, h3, h4, h5, h6 {
   font-family: "Raleway", sans-serif;
   font-weight: normal;
-  text-transform: uppercase; }
+  text-transform: none; }
 
 /*
  GENERIC ELEMENTS
@@ -461,6 +461,8 @@ html {
 
 body {
   box-sizing: border-box;
+  background: #fff;
+  color: #042049;
   font-size: 16px;
   font-family: "Raleway", sans-serif;
   width: 100vw; }
@@ -1078,7 +1080,7 @@ input[type=submit],
  PAGE FOOTER
  ============================================================================ */
 .Footer {
-  background: #30c0d3;
+  background: #a4d8dd;
   box-sizing: border-box;
   color: #042049;
   height: 0 60px;
@@ -1190,8 +1192,8 @@ input[type=submit],
 
 .ConversationCard {
   box-sizing: border-box;
-  border: 1px solid #666;
-  border-radius: 12px;
+  border: 0;
+  border-radius: 48px;
   flex-grow: 1;
   margin: 6px;
   text-align: center;
@@ -1199,29 +1201,44 @@ input[type=submit],
   .ConversationCard > * {
     padding: 12px; }
   .ConversationCard h1 {
-    font-size: 1.3em; }
+    font-size: 1.3em;
+    text-transform: none; }
   .ConversationCard-cover {
     background: #30c0d3;
-    border-radius: 12px;
+    border-radius: 48px;
     color: #fff;
     display: flex;
     flex-flow: column;
     height: 154px;
-    justify-content: space-around; }
+    justify-content: space-around;
+    position: relative;
+    z-index: 2; }
     .ConversationCard-cover a, .ConversationCard-cover a:hover, .ConversationCard-cover a:active {
       color: #fff; }
     .ConversationCard-cover dl {
-      margin: 0; }
+      margin: 24px;
+      font-size: 12px; }
       .ConversationCard-cover dl dt {
-        display: inline;
-        font-weight: bold; }
+        display: inline; }
       .ConversationCard-cover dl dd {
         display: inline;
         margin: 0; }
+  .ConversationCard-actions {
+    background: #d6f1f3;
+    border-radius: 48px;
+    padding-top: 96px;
+    margin-top: -96px; }
+    .ConversationCard-actions .Button[primary], .ConversationCard-actions [primary].ActionButton, .ConversationCard-actions [primary].RocketButton {
+      background-color: #042049;
+      text-transform: lowercase;
+      font-variant: small-caps;
+      font-weight: bold; }
   .ConversationCard-statistics {
     display: flex;
     justify-content: space-between;
-    padding: 0; }
+    padding: 0;
+    color: #042049;
+    font-size: 12px; }
     .ConversationCard-statistics li {
       list-style: none; }
   @media only screen and (min-width: 500px) {
@@ -1415,12 +1432,12 @@ input[type=submit],
     .ColorStyles .color-gray span:last-child {
       background: #666; }
   .ColorStyles .color-blue {
-    background: #a4d8dd;
+    background: #30c0d3;
     color: white; }
     .ColorStyles .color-blue span:first-child {
       background: #d6f1f3; }
     .ColorStyles .color-blue span:last-child {
-      background: #30c0d3; }
+      background: #042049; }
   .ColorStyles .color-green {
     background: #74b5b8;
     color: white; }
@@ -1485,7 +1502,7 @@ input[type=submit],
   color: #fff; }
 .ColorStyles .alt,
 .ColorPalette .alt {
-  background: #a4d8dd;
+  background: #30c0d3;
   color: #111; }
 .ColorStyles .hint,
 .ColorPalette .hint {

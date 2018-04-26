@@ -8,7 +8,7 @@ $conversation-list-title-font-size-h1: $font-size-h1 !default;
 $conversation-list-title-font-size-h2: $font-size-h3 !default;
 $conversation-card-border: 0 !default;
 $conversation-card-border-radius: $spacing-unit-small * 4 !default;
-$conversation-card-color: $color-blue !default;
+$conversation-card-color: $color-primary !default;
 $conversation-card-text-color: $color-white !default;
 $conversation-card-cover-height: 7 * $line-height !default;
 $conversation-card-secondary-color: $color-blue-light !default;
@@ -57,6 +57,7 @@ $conversation-card-button-color: $color-blue-dark !default;
 
     h1 {
         font-size: $font-size-h3;
+        text-transform: none;
     }
 
     &-cover {
@@ -75,7 +76,7 @@ $conversation-card-button-color: $color-blue-dark !default;
         }
 
         dl {
-            margin: 0;
+            margin: $spacing-unit;
             font-size: $conversation-card-font-size-small;
 
             dt {
