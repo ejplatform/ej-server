@@ -82,9 +82,9 @@ CORS_ORIGIN_WHITELIST += (
 )
 CORS_ORIGIN_ALLOW_ALL = True
 
-CSRF_TRUSTED_ORIGINS += [
+CSRF_TRUSTED_ORIGINS += (
     'localhost:8000',
     'localhost:3000'
-]
+)
 
 X_FRAME_OPTIONS = 'ALLOW-FROM http://localhost:3000'
