@@ -4,7 +4,6 @@
 
 $page-title-font-size: 1.1 * $font-size-h1;
 
-
 .Page {
     box-sizing: border-box;
     display: flex;
@@ -30,10 +29,12 @@ $page-title-font-size: 1.1 * $font-size-h1;
         background: $color-primary;
         color: $color-primary-text;
         margin: 0 0 $spacing-unit 0;
-        padding: $spacing-unit-small;
 
         h1 {
+            @extend .Container;
+
             font-size: $page-title-font-size;
+            padding: $spacing-unit-small;
         }
     }
 

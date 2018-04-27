@@ -9,9 +9,7 @@ https://docs.djangoproject.com/en/dev/ref/settings/
 """
 import pathlib
 
-from config.settings.core import env, DEBUG
 from .conf import db
-from .celery import *
 from .constance import *
 
 DATABASES = db.DATABASES
@@ -144,6 +142,7 @@ USE_TZ = True
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.jinja2.Jinja2',
+        'APP_DIRS': True,
         'DIRS': [
             APPS_DIR / 'templates/jinja2/',
         ],

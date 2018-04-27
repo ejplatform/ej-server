@@ -1,19 +1,17 @@
 import logging
 
+from constance import config
 from django.contrib import auth
 from django.db import IntegrityError
 from django.http import Http404, HttpResponseServerError
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils.translation import ugettext as _
-from constance import config
 
+from ej.configurations import fragment, social_media_icons
 from ej.users.models import User
-from ej_conversations.models import Conversation, Vote, Category
+from ej_conversations.models import Conversation, Category
 from .forms import ProfileForm, LoginForm, RegistrationForm
 from .views_utils import route, get_patterns
-
-from ej.configurations.views import get_social_media_icons
-from ej.configurations import fragment
 
 get_patterns = get_patterns  # don't count as an unused import
 DJANGO_BACKEND = 'django.contrib.auth.backends.ModelBackend',
@@ -31,7 +29,7 @@ def home(request):
         'home_banner_frag': fragment('home-banner', raises=False),
         'how_it_works_frag': fragment('how-it-works', raises=False),
         'start_now_frag': fragment('start-now', raises=False),
-        'social_media_icons': get_social_media_icons(),
+        'social_media_icons': social_media_icons(),
     }
     return render(request, 'pages/index.jinja2', ctx)
 
@@ -209,13 +207,6 @@ def rocket(request):
         rocketchat_url=config.ROCKETCHAT_URL,
     )
     return render(request, 'pages/rocket.jinja2', ctx)
-
-#
-# Debug routes
-#
-@route('debug/styles/')
-def display(request):
-    return render(request, 'pages/debug-styles.jinja2', {})
 
 
 #
