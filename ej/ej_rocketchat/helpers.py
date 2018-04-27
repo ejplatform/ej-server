@@ -137,16 +137,21 @@ def invalidade_rc_user_token(username):
     See also:
         https://rocket.chat/docs/developer-guides/rest-api/authentication/logout/
     """
-    user_info = json.loads(request_rc_user_info(username).content)['user']
-    token = cache.get(rc_token_cache_key(username))
-    if token:
-        res = requests.post(
-            rocketchat_url('logout'),
-            headers=get_headers(user_info['_id'], token),
-        )
-        cache.delete(rc_token_cache_key(username))
-        if res.status_code != 200:
-            raise Exception(f'Error: {res.content}')
+    try:
+        user_info = json.loads(request_rc_user_info(username).content)['user']
+        token = cache.get(rc_token_cache_key(username))
+        if token:
+            res = requests.post(
+                rocketchat_url('logout'),
+                headers=get_headers(user_info['_id'], token),
+            )
+            cache.delete(rc_token_cache_key(username))
+            if res.status_code != 200:
+                raise Exception(f'Error: {res.content}')
+    except KeyError:
+        return False
+
+    return True
 
 
 def request_rc_user_info(username):
