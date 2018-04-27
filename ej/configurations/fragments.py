@@ -45,7 +45,7 @@ def _missing_fragment_error(name):
 #
 MISSING_FRAGMENT = '''
 <h1>Missing "{name}" fragment</h1>
-<p>Click <a href="/debug/fragment/{name}/" up-modal="main">here</a> to know more</p>
+<p>Click <a href="/debug/fragments/{name}/" up-modal="main">here</a> to know more</p>
 '''
 
 

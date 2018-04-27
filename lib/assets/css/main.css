@@ -914,6 +914,19 @@ ul.errorlist {
     list-style: none; }
 
 /*
+ UNPOLY EXTRA STYLING
+ =========================================================================== */
+.up-modal-content {
+  padding: 56px !important; }
+
+.up-modal-dialog {
+  max-width: 1200px;
+  width: 90%; }
+
+.up-modal-close {
+  color: #042049; }
+
+/*
  GENERIC ELEMENTS
  ======================================================================== */
 .Breadcrumbs {
