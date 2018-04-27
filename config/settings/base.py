@@ -324,18 +324,13 @@ ADMIN_URL = 'admin/'
 # ------------------------------------------------------------------------------
 CORS_ORIGIN_ALLOW_ALL = False
 CORS_ALLOW_CREDENTIALS = True
-CORS_ORIGIN_WHITELIST = (
-    'ejplatform.org',
-    'chat.ejplatform.org',
-    'dev.ejplatform.org',
-    'chat.dev.ejplatform.org',
-)
+CORS_ORIGIN_REGEX_WHITELIST = (r'^(https?://)?[\w.]*ejplatform\.org$', )
 
 CSRF_TRUSTED_ORIGINS = [
     'ejplatform.org',
-    'chat.ejplatform.org',
+    'talks.ejplatform.org'
     'dev.ejplatform.org',
-    'chat.dev.ejplatform.org',
+    'talks.dev.ejplatform.org',
 ]
 
 # Above default keys will always pass, do not use then in production.

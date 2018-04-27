@@ -12,16 +12,14 @@
 
     <head>
         <meta charset="utf-8">
-        <title>{{ page_title|default('Empurando Juntes') }}</title>
+        <title>{{ page_title|default('Empurrando Juntos') }}</title>
 
         {% block css %}
             <!-- Google fonts -->
-            <link href="https://fonts.googleapis.com/css?family=Open+Sans|Open+Sans+Condensed:300|Material+Icons|Raleway|Lato|IBM+Plex+Mono" rel="stylesheet">
+            <link href="https://fonts.googleapis.com/css?family=Raleway:400,700,900&subset=latin-ext" rel="stylesheet">
 
             <!-- Font awesome -->
-            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
-            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/brands.css" integrity="sha384-KtmfosZaF4BaDBojD9RXBSrq5pNEO79xGiggBxf8tsX+w2dBRpVW5o0BPto2Rb2F" crossorigin="anonymous">
-            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/fontawesome.css" integrity="sha384-8WwquHbb2jqa7gKWSoAwbJBV2Q+/rQRss9UXL5wlvXOZfSodONmVnifo/+5xJIWX" crossorigin="anonymous">
+            <link rel="stylesheet" href="/static/css/fontawesome-all.min.css">
 
             <!-- Js libs -->
             <link href="https://unpkg.com/unpoly@0.54.0/dist/unpoly.min.css" rel="stylesheet" integrity="sha384-zsXMcPyhYSZEF/yA0Rprx9nn7gnz84QyiSrxSH5xuo0DalUAlfSmfsxILtkg5fJ/" crossorigin="anonymous">
@@ -40,7 +38,7 @@
             <script src="/static/js/main.js" defer></script>
         {% endblock javascript %}
 
-        <link rel="icon" type="image/x-icon" href="/static/favicon.ico"/>
+        <link rel="icon" href="static/img/logo/logo2.svg"/>
 
         <!-- Generic and PWA -->
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -101,7 +99,7 @@
     {% endblock %}
 
     {% if target == 'all' or target == 'page' %}
-        {{ page_footer() }}
+        {{ page_footer(social_icons()) }}
         </div>
     {% endif %}
 

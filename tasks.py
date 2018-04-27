@@ -6,6 +6,9 @@ import pathlib
 python = sys.executable
 
 
+#
+# Call python manage.py in a more robust way
+#
 def manage(ctx, cmd, env=None, **kwargs):
     opts = ' '.join(f'--{k} {"" if v is True else v}' for k, v in kwargs.items())
     cmd = f'{python} manage.py {cmd} {opts}'
@@ -34,6 +37,9 @@ def run(ctx, no_toolbar=False):
     manage(ctx, 'runserver')
 
 
+#
+# Db tasks
+#
 @task
 def db(ctx, migrate_only=False):
     """
@@ -45,7 +51,7 @@ def db(ctx, migrate_only=False):
 
 
 @task
-def db_reset(ctx, fake=False, postgres=False):
+def db_reset(ctx, fake=False, postgres=False, no_assets=False):
     """
     Reset data in database and optionally fill with fake data
     """
@@ -53,6 +59,8 @@ def db_reset(ctx, fake=False, postgres=False):
     manage(ctx, 'migrate')
     if fake:
         db_fake(ctx, postgres=postgres)
+    if not no_assets:
+        db_assets(ctx)
 
 
 @task
@@ -84,10 +92,36 @@ def db_fake(ctx, no_users=False, no_conversations=False, no_admin=False, safe=Fa
 
 
 @task
-def db_assets(ctx, path='local'):
+def db_assets(ctx, path=None):
     """
     Install assets from a local folder in the database.
     """
 
+    if path is None:
+        path = 'local' if os.path.exists('local') else 'local-example'
     base = pathlib.Path(path)
     manage(ctx, 'loadpages', path=base / 'pages')
+
+
+#
+# Docker
+#
+@task
+def docker_clean(ctx, no_sudo=False, all=False, volumes=False, networks=False, images=False, containers=False):
+    """
+    Clean unused docker resources.
+    """
+
+    docker = 'docker' if no_sudo else 'sudo docker'
+    run = lambda cmd: ctx.run(cmd, pty=True)
+    if volumes or all:
+        run(f'{docker} volume rm $({docker} volume ls -qf dangling=true)')
+    if networks or all:
+        run(f'{docker} network rm $({docker} network ls | grep "bridge" | awk \'/ / {" print $1 "}\')')
+    if images or all:
+        run(f'{docker} rmi $({docker} images --filter "dangling=true" -q --no-trunc)')
+    if containers or all:
+        run(f'{docker} rm $({docker} ps -qa --no-trunc --filter "status=exited")')
+
+    if not any([all, volumes, networks, images, containers]):
+        print('You must select one kind of docker resource to clean.', file=sys.stderr)

@@ -6,15 +6,19 @@ $conversation-card-padding: $spacing-unit-small !default;
 $conversation-card-gutter: $spacing-unit !default;
 $conversation-list-title-font-size-h1: $font-size-h1 !default;
 $conversation-list-title-font-size-h2: $font-size-h3 !default;
-$conversation-card-border: 1px solid $color-gray-dark !default;
-$conversation-card-border-radius: $spacing-unit-small !default;
+$conversation-card-border: 0 !default;
+$conversation-card-border-radius: $spacing-unit-small * 4 !default;
 $conversation-card-color: $color-primary !default;
 $conversation-card-text-color: $color-white !default;
 $conversation-card-cover-height: 7 * $line-height !default;
+$conversation-card-secondary-color: $color-blue-light !default;
+$conversation-card-statistics-color: $color-blue-dark !default;
+$conversation-card-font-size-small: 12px !default;
+$conversation-card-button-color: $color-blue-dark !default;
 
 .ConversationList {
     @extend .Container;
-    max-width: 90%;
+    //width: 90%;
 
     &-title {
         text-align: center;
@@ -24,6 +28,42 @@ $conversation-card-cover-height: 7 * $line-height !default;
         }
         h2 {
             font-size: $conversation-list-title-font-size-h2;
+        }
+    }
+
+    &-categories {
+        background: $color-hint;
+        display: flex;
+        margin: $spacing-unit 0;
+        justify-content: space-between;
+        padding: $spacing-unit-small;
+        text-transform: lowercase;
+
+        > * {
+            margin: 0 $spacing-unit-small;
+        }
+        i {
+            color: $color-primary;
+        }
+        a {
+            color: $color-accent;
+            font-weight: bold;
+        }
+        ul {
+            display: flex;
+            flex-grow: 1;
+            justify-content: flex-start;
+            margin: 0;
+            padding: 0;
+
+            li {
+                display: block;
+                margin: 0 $spacing-unit-tiny;
+                list-style: none;
+                a {
+                    color: $color-hint-text;
+                }
+            }
         }
     }
 
@@ -53,6 +93,7 @@ $conversation-card-cover-height: 7 * $line-height !default;
 
     h1 {
         font-size: $font-size-h3;
+        text-transform: none;
     }
 
     &-cover {
@@ -63,17 +104,19 @@ $conversation-card-cover-height: 7 * $line-height !default;
         flex-flow: column;
         height: $conversation-card-cover-height;
         justify-content: space-around;
+        position: relative;
+        z-index: 2;
 
         a, a:hover, a:active {
             color: $conversation-card-text-color;
         }
 
         dl {
-            margin: 0;
+            margin: $spacing-unit;
+            font-size: $conversation-card-font-size-small;
 
             dt {
                 display: inline;
-                font-weight: bold;
             }
             dd {
                 display: inline;
@@ -82,10 +125,26 @@ $conversation-card-cover-height: 7 * $line-height !default;
         }
     }
 
+    &-actions {
+        background: $conversation-card-secondary-color;
+        border-radius: $conversation-card-border-radius;
+        padding-top: $conversation-card-border-radius * 2;
+        margin-top: $conversation-card-border-radius * -2;
+
+        .Button[primary] {
+            background-color: $conversation-card-button-color;
+            text-transform: lowercase;
+            font-variant: small-caps;
+            font-weight: bold;
+        }
+    }
+
     &-statistics {
         display: flex;
         justify-content: space-between;
         padding: 0;
+        color: $conversation-card-statistics-color;
+        font-size: $conversation-card-font-size-small;
 
         li {
             list-style: none;

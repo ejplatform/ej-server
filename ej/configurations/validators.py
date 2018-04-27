@@ -10,6 +10,10 @@ ICON_LIBS = {
 LIB_NAMES = {
     'material': _('Material icons'),
     'fa': _('Font-awesome icons'),
+    'fab': _('Font-awesome brands'),
+    'fas': _('Font-awesome solid'),
+    'far': _('Font-awesome regular'),
+    'fal': _('Font-awesome light'),
 }
 
 

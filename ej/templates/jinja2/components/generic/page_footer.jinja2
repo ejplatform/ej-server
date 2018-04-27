@@ -2,17 +2,17 @@
 
 
 {# Page footer with links and other information #}
-{% macro page_footer() %}
+{% macro page_footer(social_media_icons) %}
   <footer class="Footer">
       <div class="Footer-social">
-        <ul class="Footer-icons">    
-            <li><i class="fab fa-facebook"></i></li>
-            <li><i class="fab fa-twitter"></i></li>
-            <li><i class="fab fa-whatsapp"></i></li>
-            <li><i class="fab fa-telegram"></i></li>
+        <ul class="Footer-icons">
+          {% for icon in social_media_icons %}
+            <li>{{ icon.icon_tag(classes=[icon.icon_name])|safe }}</li>
+          {% endfor %}
         </ul>
         <div class="Footer-info">
           <p>Pequeno texto falando sobre o MDH e CPA</p>
         </div>
+      </div>
   </footer>
 {% endmacro %}

@@ -1,7 +1,7 @@
-from django.contrib.flatpages.models import FlatPage
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-
+import bleach
+from markupsafe import Markup
 from ej_conversations.validators import validate_color
 from .icons import default_icon_name
 from .validators import validate_icon_name
@@ -67,13 +67,8 @@ class SocialMediaIcon(models.Model):
         >>> icon.icon_tag(classes=['header-icon'])
         <i class="fa fa-icon header-icon"></i>
         """
-
-        if icon_font == self.ICON_MATERIAL:
-            icon_font_slug = 'material-icons'
-        elif icon_font == self.ICON_AWESOME:
-            icon_font_slug = 'fa'            
         
-        return f'<i class="{icon_font_slug} {" ".join(classes)}></i>'
+        return f'<i class="{self.icon_font} {" ".join(classes)}"></i>'
 
     def link_tag(self, classes=()):
         """
@@ -81,14 +76,9 @@ class SocialMediaIcon(models.Model):
 
         >>> icon.link_tag(classes=['header-icon'])
         <a href="url"><i class="fa fa-icon header-icon"></i></a>
-        """
-        
-        if icon_font == self.ICON_MATERIAL:
-                icon_font_slug = 'material-icons'
-        elif icon_font == self.ICON_AWESOME:
-            icon_font_slug = 'fa'            
-        
-        return f'<a href="{self.url}"><i class="{icon_font_slug} {" ".join(classes)}></i></a>'
+        """          
+
+        return f'<a href="{self.url}"><i class="{self.icon_font} {" ".join(classes)}"></i></a>'
 
 
 class Color(models.Model):
@@ -143,9 +133,10 @@ class Fragment(models.Model):
         return self.html()
 
     def __str__(self):
-        return self.name.replace('_', ' ').replace('-', ' ').replace('/','').capitalize()
+        return self.name.replace('_', ' ').replace('-', ' ').replace('/', '').capitalize()
 
     def save(self, *args, **kwargs):
+
         super().save(*args, **kwargs)
         if not self.deletable:
             # conferir se levanta erro .DoesNotExist
@@ -153,18 +144,13 @@ class Fragment(models.Model):
                 FragmentLock.objects.create(self)
 
     def html(self, classes=()):
-        data = ...
-        class_attr = ...
-        return f'<div{class_attr}>{data}</div>'
+        data = sanitize_html(self.content)
+        class_attr = " ".join(classes)
+        return Markup(f'<div{class_attr}>{data}</div>')
 
 
-# TODO: sanitize!
 def sanitize_html(html):
-    return html
-
-
-def sanitize_markdown(md):
-    return md
+    return bleach.clean(html, tags=['h1','h2','h3','h4','a','p','i','img','strong','div'])
 
 
 # GAMBIRA!

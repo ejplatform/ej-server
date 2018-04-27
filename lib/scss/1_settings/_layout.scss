@@ -1,0 +1,16 @@
+/*
+ Global
+ =========================================================================== */
+
+// Media query break points
+$breakpoint-small: 600px;
+$breakpoint-medium: 800px;
+$breakpoint-large: 1200px;
+
+// Page header layout
+$header-top-nav-height: 60px !default;
+$header-bottom-nav-height: ($header-top-nav-height + $line-height) !default;
+$header-height: $header-top-nav-height * 1.2 !default;
+
+// Custom page layout
+$page-content-width-max: 700px !default;

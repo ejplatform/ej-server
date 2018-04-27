@@ -5,13 +5,25 @@
     CONVERSATION LIST
  #---------------------------------------------------------------------------#}
 {% macro conversation_list(conversations,
+                           categories,
                            title=_('Conversas ativas agora'),
-                           subtitle=_('Veja as conversas abaixo e dê sua opinião')) %}
+                           subtitle=_('Veja abaixo algumas das conversas ativas e dê sua opinião')) %}
     <div class="ConversationList">
         <div class="ConversationList-title">
             {% if caller %}{{ caller() }}{% endif %}
             <h1>{{ title }}</h1>
             <h2>{{ subtitle }}</h2>
+        </div>
+
+        <div class="ConversationList-categories">
+            <i class="fa fa-chevron-left"></i>
+            <a href="/conversations/">Todas</a>
+            <ul>
+                {% for category in categories %}
+                    <li><a href="{{ category.get_absolute_url() }}">{{ category }}</a></li>
+                {% endfor %}
+            </ul>
+            <i class="fa fa-chevron-right"></i>
         </div>
 
         {# Cards #}
@@ -29,19 +41,19 @@
     <div class="ConversationCard">
         <div class="ConversationCard-cover">
             <h1>
-                <a href="{{ conversation.get_absolute_url() }}" alt="alt">{{ conversation.title }}</a>
+                <a href="{{ conversation.get_absolute_url() }}" alt="alt">{{ conversation.question }}</a>
             </h1>
             <dl>
-                <dt>Assunto</dt>
+                <dt>Assunto:</dt>
                 <dd>{{ conversation.category_name }}</dd>
             </dl>
         </div>
         <div class="ConversationCard-actions">
             <ul class="ConversationCard-statistics">
-                <li><strong>{{ conversation.comments.count() }}</strong> comentários</li>
-                <li><strong>{{ conversation.votes.count() }}</strong> votos</li>
+                <li>{{ conversation.comments.count() }} comentários</li>
+                <li>{{ conversation.votes.count() }} votos</li>
             </ul>
-            {{ action_button('Participe agora!', conversation.get_absolute_url()) }}
+            {{ action_button('Participar <i class="fa fa-comments"></i>', conversation.get_absolute_url()) }}
         </div>
     </div>
 {% endmacro %}

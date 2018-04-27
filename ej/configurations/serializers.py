@@ -1,11 +1,11 @@
 from rest_framework import serializers
 
-from .models import SocialMedia, Color
+from .models import SocialMediaIcon, Color
 
 
 class SocialMediaSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = SocialMedia
+        model = SocialMediaIcon
         fields = ('id', 'url', 'name', 'link', 'priority', 'material_icon', 'fa_icon')
 
 

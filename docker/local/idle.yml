@@ -1,0 +1,77 @@
+# Local docker-compose file with commands as sleep infinity
+version: '3.5'
+
+networks:
+  ej:
+    name: ej
+
+volumes:
+  db_data: {}
+
+services:
+  django: &django
+    image: ejplatform/ej-server:base-test
+    command: sleep infinity
+    entrypoint: ''
+    depends_on:
+      - postgres
+    env_file:
+      - ./env/django.env
+      - ./env/postgres.env
+    links:
+      - postgres
+      - rabbit
+      - redis
+    networks:
+      - ej
+    ports:
+      - 8000:8000
+    volumes:
+      - ../../:/app
+
+  redis:
+    image: redis:3.2
+    networks:
+      - ej
+
+  rabbit:
+    image: rabbitmq:3.6.14-management
+    env_file:
+      - ./env/rabbit.env
+    networks:
+      - ej
+    ports:
+      - 5672:5672  # Debugging
+      - 15672:15672  # RabbitMQ Manager
+
+  flower:
+    << : *django
+    depends_on:
+      - django
+      - rabbit
+      - redis
+    links:
+      - rabbit
+      - redis
+    ports:
+      - 8001:8001
+
+  worker:
+    << : *django
+    depends_on:
+      - django
+      - rabbit
+    links:
+      - postgres
+      - rabbit
+      - redis
+    ports: []
+
+  postgres:
+    image: postgres:9.6
+    env_file:
+      - ./env/postgres.env
+    networks:
+      - ej
+    volumes:
+      - db_data:/var/lib/postgresql/data

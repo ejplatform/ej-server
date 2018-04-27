@@ -1,7 +1,9 @@
 {% macro login(form, csrf_input, next=None) %}
     <div class="Login">
-        <h1 class="Login-title">Fazer login // Cadastrar-se</h1>
-        <i class="fa fa-user Login-icon"></i>
+        <h1 class="Login-title">Contribua para discussões mais democráticas!</h1>
+        <div class="Login-icon">
+            <img src="/static/img/login/ej-cat.svg">
+        </div>
 
         <form method="post">
             {{ csrf_input }}
@@ -15,7 +17,7 @@
             <div><input type="submit" class="Login-button" value="{{ _('Login') }}" name="login"></div>
             {{ form.non_field_errors() }}
 
-            {{ login_options('/register/' + ('?next=' + next if next else ''), _('Register'), 'Ainda não faz parte do EJ?') }}
+            {{ login_options('/register/' + ('?next=' + next if next else ''), _('Register now!'), 'Ainda não faz parte do EJ?') }}
         </form>
     </div>
 {% endmacro %}
@@ -32,7 +34,7 @@
                 {{ field.errors }}
             {% endfor %}
 
-            <div><input type="submit" value="{{ _('Register') }}" name="register"></div>
+            <div><input type="submit" value="{{ _('Register now!') }}" name="register"></div>
             {{ form.non_field_errors() }}
         </form>
         {{ login_options('/login/', _('Login'), 'Faz parte do EJ?') }}
@@ -41,7 +43,7 @@
 
 
 {% macro login_options(button_href, button_msg, title) %}
-    <p><a href="/profile/recover-password/">Esqueceu a senha?</a></p>
+    <p class="Login-password"><a href="/profile/recover-password/">Esqueci minha senha</a></p>
 
     <div class="Login-socialButtons">
         <p>ou entre por outras redes</p>
@@ -53,7 +55,7 @@
     </div>
 
     <div class="Login-newUser">
-        {% set msg = _('Cadastrar') if is_login else _('Login') %}
+        {% set msg = _('Register') if is_login else _('Login') %}
         <h1>{{ title }}</h1>
         <p><a class="Button" href="{{ button_href }}" primary>{{ button_msg }}</a></p>
     </div>

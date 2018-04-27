@@ -12,7 +12,8 @@ from ej_conversations.models import Conversation, Vote, Category
 from .forms import ProfileForm, LoginForm, RegistrationForm
 from .views_utils import route, get_patterns
 
-from ej.configurations.views import get_fragment
+from ej.configurations.views import get_social_media_icons
+from ej.configurations import fragment
 
 get_patterns = get_patterns  # don't count as an unused import
 DJANGO_BACKEND = 'django.contrib.auth.backends.ModelBackend',
@@ -27,9 +28,10 @@ log = logging.getLogger('ej')
 def home(request):
     ctx = {
         'conversations': Conversation.objects.all(),
-        'home_banner_frag': get_fragment('home_banner'),
-        'how_it_works_frag': get_fragment('how_it_works'),
-        'start_now_frag': get_fragment('start_now'),
+        'home_banner_frag': fragment('home-banner', raises=False),
+        'how_it_works_frag': fragment('how-it-works', raises=False),
+        'start_now_frag': fragment('start-now', raises=False),
+        'social_media_icons': get_social_media_icons(),
     }
     return render(request, 'pages/index.jinja2', ctx)
 
@@ -138,6 +140,7 @@ def category_list(request, slug):
 
     ctx = dict(
         category=category,
+        categories=Category.objects.all(),
         conversations=category.conversations.all(),
     )
     return render(request, 'pages/category-detail.jinja2', ctx)
@@ -184,7 +187,11 @@ def conversation_info(request, slug, category_slug):
 
 @route('conversations/')
 def conversation_list(request):
-    ctx = {'conversations': Conversation.objects.all()}
+    print(Category.objects.all())
+    ctx = {
+        'conversations': Conversation.objects.all(),
+        'categories': Category.objects.all(),
+    }
     return render(request, 'pages/conversation-list.jinja2', ctx)
 
 

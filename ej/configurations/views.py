@@ -1,16 +1,8 @@
-from .models import Fragment
-from .fragments import DEFAULT_FRAGMENTS
+from .models import SocialMediaIcon
 
 
-def get_fragment(name):
+def get_social_media_icons():
     """
-    Return a fragment with the given name
+    Return all social media icons defined
     """
-    custom_fragment = Fragment.objects.filter(name=name)
-    if custom_fragment:
-        return custom_fragment
-    else:
-        try:
-            return DEFAULT_FRAGMENTS[name]
-        except KeyError:
-            raise ValueError(f'Invalid fragment name "{name}"!')    
+    return list(SocialMediaIcon.objects.all())

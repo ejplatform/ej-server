@@ -76,11 +76,8 @@ TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 
 # Django cors - allow requests from any origin in local environment
 # ------------------------------------------------------------------------------
-CORS_ORIGIN_WHITELIST += (
-    'localhost:8000',
-    'localhost:3000',
-)
 CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_REGEX_WHITELIST += (r'^(http://)?localhost:\d{4,5}$', )
 
 CSRF_TRUSTED_ORIGINS += [
     'localhost:8000',

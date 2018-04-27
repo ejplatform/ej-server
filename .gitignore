@@ -303,7 +303,8 @@ ej/media/
 
 # Added to maintain local compose files which are ignored by something above.
 # See issue https://github.com/pydanny/cookiecutter-django/issues/1321
-!/compose/local/
+!/docker/**/local/
+!/docker/**/env
 
 ## ejplatform context
 
@@ -311,9 +312,10 @@ ej/media/
 .idea/
 
 # Production variables
-compose/production/*.env
 lib/assets/css/main.css.map
 lib/assets/css/main.css
 node_modules/
 lib/node_modules/
 *.css.map
+lib/assets/css/main.css
+lib/assets/css/main.css.map

@@ -121,7 +121,7 @@ $color-palette-radius: 150px;
         @include color-style($color-accent, $color-accent-text);
     }
     .alt {
-        @include color-style($color-alt, $color-alt-text);
+        @include color-style($color-emph, $color-emph-text);
     }
     .hint {
         @include color-style($color-hint, $color-hint-text);

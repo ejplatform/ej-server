@@ -14,6 +14,10 @@ def make_url(path):
     name = os.path.splitext(Path(path).name)[0]
     return '/%s/' % '/'.join(slugify(part) for part in name.split('__'))
 
+def make_fragment_name(path):
+    name = os.path.splitext(Path(path).name)[0]
+    return ''.join(slugify(part) for part in name.split('__'))
+
 
 def has_page(name):
     FlatPage.objects.filter()

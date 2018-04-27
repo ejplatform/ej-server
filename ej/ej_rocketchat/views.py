@@ -5,12 +5,12 @@ from django.views.decorators.csrf import csrf_exempt
 
 from constance import config
 
-from .decorators import allow_credentials
+from .decorators import custom_headers
 from . import helpers
 
 
 @csrf_exempt
-@allow_credentials
+@custom_headers
 @xframe_options_exempt
 def check_login(request):
     if not request.user.is_authenticated:
@@ -27,6 +27,7 @@ def check_login(request):
 
 
 @csrf_exempt
+@custom_headers
 @xframe_options_exempt
 def rc_redirect(request):
     return redirect(config.ROCKETCHAT_URL)

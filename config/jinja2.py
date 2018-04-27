@@ -6,6 +6,7 @@ from jinja2 import Environment
 from markupsafe import Markup
 import random
 import string
+from ej.configurations.models import SocialMediaIcon
 
 SALT_CHARS = string.ascii_letters + string.digits + '-_'
 
@@ -21,6 +22,7 @@ def environment(**options):
         salt_attr=salt_attr,
         salt_tag=salt_tag,
         salt=salt,
+        social_icons=social_icons,
     )
     env.filters.update(
         markdown=lambda x: Markup(markdown(x)),
@@ -31,10 +33,23 @@ def environment(**options):
     return env
 
 
+#
+# Global resources
+#
+def social_icons():
+    return list(SocialMediaIcon.objects.all())
+
+
+#
+# String formatting
+#
 def format_percent(x):
     return f'{int(x * 100)}%'
 
 
+#
+# Security
+#
 def salted(value):
     """
     Protects a value using a random salt. This completely prevents the BREACH

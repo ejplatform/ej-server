@@ -2,15 +2,22 @@
  LOGIN/REGISTER COMPONENTS
  ======================================================================== */
 
-$login-icon-size: $spacing-unit-huge !default;
+$login-icon-size: 150px !default;
 $login-icon-color: $color-gray-light !default;
-$login-icon-border-width: $spacing-unit-small !default;
+$login-icon-border-width: 10px !default;
+$login-icon-border-color: $color-green !default;
 $login-social-icons-size: $font-size-h1 !default;
+$login-title-color: $color-accent;
+$login-new-user-border: 1px solid $color-gray;
 
 .Register,
 .Login {
     padding: $spacing-unit;
     text-align: center;
+
+    h1 {
+        color: $login-title-color;
+    }
 
     input, textarea, select, .FormItem {
         display: block;
@@ -18,13 +25,23 @@ $login-social-icons-size: $font-size-h1 !default;
         margin-right: auto;
     }
 
+    input[type=submit] {
+        display: block;
+        margin-top: $spacing-unit;
+    }
+
     &-icon {
-        border: $login-icon-border-width solid $login-icon-color;
+        border: $login-icon-border-width solid $login-icon-border-color;
         border-radius: 50%;
         color: $login-icon-color;
-        font-size: $login-icon-size;
-        margin: $spacing-unit-large;
-        padding: $spacing-unit;
+        height: $login-icon-size;
+        margin: $spacing-unit-large auto;
+        padding: $spacing-unit-large;
+        width: $login-icon-size;
+
+        img > * {
+            color: $color-hint;
+        }
     }
 
     &-button {
@@ -39,11 +56,22 @@ $login-social-icons-size: $font-size-h1 !default;
         }
     }
 
+    &-password {
+        font-weight: bold;
+        text-transform: lowercase;
+
+        a {
+            color: $color-accent;
+        }
+    }
+
     &-newUser {
-        margin: $spacing-unit 0;
-        border-top: 1px solid $color-gray-light;
+        border-top: $login-new-user-border;
+        margin: $spacing-unit auto;
+        width: 85%;
 
         h1 {
+            color: $color-content-text;
             font-size: $font-size-h3;
         }
     }

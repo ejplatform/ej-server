@@ -1,0 +1,19 @@
+# This docker-compose file is not designed to run
+# Usage: Build & Push
+
+version: '3.5'
+
+services:
+  django:
+    image: ejplatform/ej-server:latest
+    build:
+      context: ../../
+      dockerfile: ./docker/production/django/Dockerfile
+
+  backend:
+    image: ejplatform/ej-nginx:latest
+    depends_on:
+      - django
+    build:
+      context: ../../
+      dockerfile: ./docker/production/nginx/latest.Dockerfile

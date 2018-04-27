@@ -36,7 +36,21 @@ function registerAllRoutes(workbox) {
             ]
         })
     );
-    
+
+    // Inner urls. We classify in a case-by-case basis
+    var urlpatterns = [
+        new RegExp('/?'),
+        new RegExp('/conversations/.*/?')
+    ];
+    for (var i=0; i < urlpatterns.length; i++) {
+        workbox.routing.registerRoute(
+            urlpatterns[i],
+            workbox.strategies.networkFirst()
+        )
+    }
+
+
     log('[sw] all routes registered!');
 }
+
 registerAllRoutes(workbox);

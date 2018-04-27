@@ -1,9 +1,9 @@
-FONT_AWESOME_ICONS = {'bars'}
+FONT_AWESOME_ICONS = {'bars', 'fa-facebook', 'fa-telegram', 'fa-whatsapp', 'fa-twitter'}
 MATERIAL_ICONS = {'menu'}
 
 # A list of pairs of {social network: (fa icon, material icon)}
 NETWORK_ICONS = {
-    'facebook': ('facebook', 'facebook'),
+    'facebook': ('fa-facebook', 'facebook'),
 }
 
 

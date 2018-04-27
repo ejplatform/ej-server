@@ -3,21 +3,23 @@
 
 {% macro home_banner(home_banner_frag, action='start-now') %}
     <div class="HomeBanner">
-        {{ home_banner_frag.content|safe}}
-        {% if action == 'rocket-chat' %}
-            {{ rocket_button() }}
-        {% elif action == 'start-now' %}
-            {{ action_button('Comece agora!', '/start/' ) }}
-        {% else %}
-            Invalid action: {{ action }}
-        {% endif %}
+        {{ home_banner_frag.html()}}
+        <p>
+            {% if action == 'rocket-chat' %}
+                {{ rocket_button() }}
+            {% elif action == 'start-now' %}
+                {{ action_button('Comece agora!', '/start/' ) }}
+            {% else %}
+                Invalid action: {{ action }}
+            {% endif %}
+        </p>
     </div>
 {% endmacro %}
 
 
 {% macro how_it_works(how_it_works_frag) %}
     <div class="HowItWorks">
-        {{ how_it_works_frag.content|safe }}
+        {{ how_it_works_frag.html()}}
 
         <div class="HowItWorks-cards">
             {% call how_it_works_card(
@@ -44,6 +46,7 @@
     </div>
 {% endmacro %}
 
+
 {% macro how_it_works_card(icon, title, comment, action=None, link='#') %}
     <article class="HowItWorksCard">
         <i class="fa fa-{{ icon }} HowItWorksCard-icon"></i>
@@ -61,9 +64,10 @@
     </article>
 {% endmacro %}
 
+
 {% macro start_now(start_now_frag) %}
     <div class="StartNow">
         {{ start_now_frag.content|safe }}
-        {{ action_button('Começar agora!', '/start/') }}
+        <p>{{ action_button('Começar agora!', '/start/') }}</p>
     </div>
 {% endmacro %}
