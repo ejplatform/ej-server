@@ -3,6 +3,7 @@ services:
   - docker:dind
 
 stages:
+  - push base
   - test
   - push image
   - deploy
@@ -10,17 +11,54 @@ stages:
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
 
+# Stage: push base
+push all base images:
+  stage: push base
+  script:
+    - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASS
+    - docker-compose -f ./docker/base/base.build.yml build
+    - docker-compose -f ./docker/base/test.build.yml build
+    - docker-compose -f ./docker/base/production.build.yml build
+    - docker-compose -f ./docker/base/base.build.yml push
+    - docker-compose -f ./docker/base/test.build.yml push
+    - docker-compose -f ./docker/base/production.build.yml push
+  only:
+    - /base/
+  tags:
+    - docker
+
+push test base image:
+  stage: push base
+  script:
+    - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASS
+    - docker-compose -f ./docker/base/test.build.yml build
+    - docker-compose -f ./docker/base/test.build.yml push
+  only:
+    - /base_test/
+  tags:
+    - docker
+
+push production base image:
+  stage: push base
+  script:
+    - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASS
+    - docker-compose -f ./docker/base/production.build.yml build
+    - docker-compose -f ./docker/base/production.build.yml push
+  only:
+    - /base_production/
+  tags:
+    - docker
+
 # Stage: test
 test:
   stage: test
   script:
-    - docker-compose -f ./docker/local/build.yml build
     - docker-compose -f ./docker/local/test.yml run --rm django
   tags:
     - docker
 
 # Stage: push image
-push develop image:
+push develop images:
   stage: push image
   script:
     - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASS
