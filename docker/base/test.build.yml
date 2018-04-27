@@ -4,8 +4,8 @@
 version: '3.5'
 
 services:
-  cicd:
-    image: ejplatform/ej-cicd:latest
+  django:
+    image: ejplatform/ej-server:base-test
     build:
       context: ../../
-      dockerfile: ./docker/cicd/Dockerfile
+      dockerfile: ./docker/base/django/test.Dockerfile

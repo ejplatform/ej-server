@@ -1,4 +1,4 @@
-# Local docker-compose file
+# Local docker-compose file with commands as sleep infinity
 version: '3.5'
 
 networks:
@@ -10,7 +10,7 @@ volumes:
 
 services:
   django: &django
-    image: ej-server:local
+    image: ejplatform/ej-server:base-test
     command: sleep infinity
     entrypoint: ''
     depends_on:

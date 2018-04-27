@@ -1,13 +1,8 @@
-FROM ejplatform/ej-server:base
+FROM ejplatform/ej-server:base-production
 
 RUN groupadd -r django \
     && useradd -r -g django django \
     && chown django:django /*.sh
-
-COPY ./requirements/production.txt /app/requirements/production.txt
-
-RUN pip install -r /app/requirements/production.txt \
-    && pip install invoke
 
 COPY . /app
 

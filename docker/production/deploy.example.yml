@@ -1,4 +1,4 @@
-# Generic production docker-compose file
+# This docker-compose file is an example of deployment configuration
 
 version: '3.5'
 
@@ -31,7 +31,7 @@ services:
   backend:
     image: ejplatform/ej-nginx:latest
     volumes:
-    - /path/to/media:/usr/share/nginx/html/media
+      - /path/to/media:/usr/share/nginx/html/media
 
   postgres:
     image: postgres:9.6
@@ -54,12 +54,8 @@ services:
 
   worker:
     << : *django
-    command:
-    - compose/local/worker/run_celery.sh
+    command: /run_celery.sh
 
   flower:
     << : *django
-    volumes:
-    - /path/to/media:/app/staticfiles/media
-    command:
-    - compose/local/flower/start_flower.sh
+    command: /start_flower.sh

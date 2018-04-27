@@ -10,7 +10,7 @@ volumes:
 
 services:
   django: &django
-    image: ej-server:local
+    image: ejplatform/ej-server:base-test
     command: /runserver.sh
     depends_on:
       - postgres
