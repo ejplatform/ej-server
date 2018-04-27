@@ -1,0 +1,722 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-04-27 17:05-0300\n"
+"PO-Revision-Date: 2018-04-27 17:06-0300\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
+"Language-Team: \n"
+"X-Generator: Poedit 2.0.6\n"
+
+#: config/forms.py:31 config/forms.py:68
+msgid "Password"
+msgstr ""
+
+#: config/forms.py:36
+msgid "Password confirmation"
+msgstr ""
+
+#: config/forms.py:57
+msgid "Passwords do not match"
+msgstr ""
+
+#: config/forms.py:65 config/forms.py:67
+msgid "E-mail"
+msgstr ""
+
+#: config/views.py:47
+msgid "Invalid username or password"
+msgstr ""
+
+#: ej/configurations/models.py:15
+msgid "Material Design"
+msgstr ""
+
+#: ej/configurations/models.py:16
+msgid "Font-awesome"
+msgstr ""
+
+#: ej/configurations/models.py:19
+msgid "Social network"
+msgstr ""
+
+#: ej/configurations/models.py:22
+msgid "Name of the social network"
+msgstr ""
+
+#: ej/configurations/models.py:25
+msgid "Icon name"
+msgstr ""
+
+#: ej/configurations/models.py:27
+msgid "Icon name for the icon font"
+msgstr ""
+
+#: ej/configurations/models.py:30
+msgid "Icon font"
+msgstr ""
+
+#: ej/configurations/models.py:35
+msgid "Ordering"
+msgstr ""
+
+#: ej/configurations/models.py:38
+msgid ""
+"You must manually define the ordering that each icon should appear in the "
+"interface."
+msgstr ""
+
+#: ej/configurations/models.py:43
+msgid "URL"
+msgstr ""
+
+#: ej/configurations/models.py:44
+msgid "Link to your social account page."
+msgstr ""
+
+#: ej/configurations/models.py:87
+msgid "Color name"
+msgstr ""
+
+#: ej/configurations/models.py:91
+msgid "Color"
+msgstr ""
+
+#: ej/configurations/models.py:94
+msgid "Color code in hex (e.g., #RRGGBBAA) format."
+msgstr ""
+
+#: ej/configurations/models.py:107
+msgid "HTML"
+msgstr ""
+
+#: ej/configurations/models.py:108
+msgid "Markdown"
+msgstr ""
+
+#: ej/configurations/models.py:112 ej/users/models.py:124
+msgid "Name"
+msgstr ""
+
+#: ej/configurations/models.py:116
+msgid "Name of the fragment to help identify some page part."
+msgstr ""
+
+#: ej/configurations/models.py:119
+msgid "content"
+msgstr ""
+
+#: ej/configurations/models.py:121
+msgid "The fragment content in html or markdown that will be displayed"
+msgstr ""
+
+#: ej/configurations/models.py:125
+msgid "Format of the saved fragment, can be either HTML or Markdown"
+msgstr ""
+
+#: ej/configurations/models.py:130
+msgid "Boolean if the fragment its editable after being saved in db"
+msgstr ""
+
+#: ej/configurations/models.py:134
+msgid "Boolean if its possible to delete this fragment"
+msgstr ""
+
+#: ej/configurations/validators.py:11
+msgid "Material icons"
+msgstr ""
+
+#: ej/configurations/validators.py:12
+msgid "Font-awesome icons"
+msgstr ""
+
+#: ej/configurations/validators.py:13
+msgid "Font-awesome brands"
+msgstr ""
+
+#: ej/configurations/validators.py:14
+msgid "Font-awesome solid"
+msgstr ""
+
+#: ej/configurations/validators.py:15
+msgid "Font-awesome regular"
+msgstr ""
+
+#: ej/configurations/validators.py:16
+msgid "Font-awesome light"
+msgstr ""
+
+#: ej/configurations/validators.py:22
+#, python-brace-format
+msgid "{icon_name} is an invalid {LIB_NAMES[lib]} icon!"
+msgstr ""
+
+#: ej/configurations/views.py:40
+msgid "Categories"
+msgstr ""
+
+#: ej/configurations/views.py:41
+msgid "Conversations"
+msgstr ""
+
+#: ej/configurations/views.py:42
+msgid "Votes"
+msgstr ""
+
+#: ej/configurations/views.py:43
+msgid "Comments"
+msgstr ""
+
+#: ej/configurations/views.py:44
+msgid "Stereotypes"
+msgstr ""
+
+#: ej/configurations/views.py:45
+msgid "Stereotypes votes"
+msgstr ""
+
+#: ej/gamification/signals.py:16
+msgid "Created Comment"
+msgstr ""
+
+#: ej/gamification/signals.py:25
+msgid "Had Comment Approved"
+msgstr ""
+
+#: ej/gamification/signals.py:37
+msgid "Agreed With"
+msgstr ""
+
+#: ej/gamification/signals.py:45
+msgid "Passed On"
+msgstr ""
+
+#: ej/gamification/signals.py:53
+msgid "Disagreed With"
+msgstr ""
+
+#: ej/gamification/signals.py:85
+msgid "Created Conversation"
+msgstr ""
+
+#: ej/gamification/signals.py:93
+msgid "Was Created"
+msgstr ""
+
+#: ej/gamification/signals.py:104
+msgid "Filled Profile"
+msgstr ""
+
+#: ej/math/models.py:15
+msgid "CLUSTERS"
+msgstr ""
+
+#: ej/math/models.py:25
+msgid "PENDING"
+msgstr ""
+
+#: ej/math/models.py:26
+msgid "STARTED"
+msgstr ""
+
+#: ej/math/models.py:27
+msgid "FINISHED"
+msgstr ""
+
+#: ej/math/models.py:28
+msgid "FAILED"
+msgstr ""
+
+#: ej/math/models.py:29
+msgid "STUCK"
+msgstr ""
+
+#: ej/math/models.py:38
+msgid "Type"
+msgstr ""
+
+#: ej/math/models.py:43
+msgid "Status"
+msgstr ""
+
+#: ej/math/models.py:49
+msgid "Created at"
+msgstr ""
+
+#: ej/math/models.py:53
+msgid "Updated at"
+msgstr ""
+
+#: ej/templates/django/account/account_inactive.html:5
+#: ej/templates/django/account/account_inactive.html:8
+msgid "Account Inactive"
+msgstr "Conta inativa"
+
+#: ej/templates/django/account/account_inactive.html:10
+msgid "This account is inactive."
+msgstr ""
+
+#: ej/templates/django/account/email.html:7
+msgid "Account"
+msgstr "Conta"
+
+#: ej/templates/django/account/email.html:10
+msgid "E-mail Addresses"
+msgstr ""
+
+#: ej/templates/django/account/email.html:13
+msgid "The following e-mail addresses are associated with your account:"
+msgstr ""
+
+#: ej/templates/django/account/email.html:27
+msgid "Verified"
+msgstr ""
+
+#: ej/templates/django/account/email.html:29
+msgid "Unverified"
+msgstr ""
+
+#: ej/templates/django/account/email.html:31
+msgid "Primary"
+msgstr ""
+
+#: ej/templates/django/account/email.html:37
+msgid "Make Primary"
+msgstr ""
+
+#: ej/templates/django/account/email.html:38
+msgid "Re-send Verification"
+msgstr ""
+
+#: ej/templates/django/account/email.html:39
+msgid "Remove"
+msgstr ""
+
+#: ej/templates/django/account/email.html:46
+msgid "Warning:"
+msgstr ""
+
+#: ej/templates/django/account/email.html:46
+msgid ""
+"You currently do not have any e-mail address set up. You should really add "
+"an e-mail address so you can receive notifications, reset your password, etc."
+msgstr ""
+
+#: ej/templates/django/account/email.html:51
+msgid "Add E-mail Address"
+msgstr ""
+
+#: ej/templates/django/account/email.html:56
+msgid "Add E-mail"
+msgstr "Adicionar E-mail"
+
+#: ej/templates/django/account/email.html:66
+msgid "Do you really want to remove the selected e-mail address?"
+msgstr ""
+
+#: ej/templates/django/account/email/email_confirmation_message.txt:1
+#, python-format
+msgid ""
+"Boas vindas do %(site_name)s!\n"
+"\n"
+"Você está recebendo essa mensagem por que o usuário %(user_display)s se "
+"cadastrou com esse endereço de email.\n"
+"\n"
+"Pra confirmar que está tudo certo, vá até %(activate_url)s\n"
+msgstr ""
+
+#: ej/templates/django/account/email/email_confirmation_message.txt:7
+#, python-format
+msgid ""
+"Um obrigado do %(site_name)s!\n"
+"brasilqueopovoquer.org.br"
+msgstr ""
+
+#: ej/templates/django/account/email/email_confirmation_subject.txt:3
+msgid "Por favor confirme seu endereço de email"
+msgstr ""
+
+#: ej/templates/django/account/email/password_reset_key_message.txt:1
+#, python-format
+msgid ""
+"Hello from %(site_name)s!\n"
+"\n"
+"Você está recebendo essa mensagem porque você ou alguém solicitou uma nova "
+"senha para a sua conta de usuário.\n"
+"Se não foi você, pode ignorar essa mensagem. Clique no link abaixo para "
+"refazer sua senha."
+msgstr ""
+
+#: ej/templates/django/account/email/password_reset_key_message.txt:8
+#, python-format
+msgid "Se você esqueceu, seu usuário é %(username)s."
+msgstr ""
+
+#: ej/templates/django/account/email/password_reset_key_message.txt:10
+#, python-format
+msgid ""
+"Obrigado por participar da construção do %(site_name)s!\n"
+"%(site_domain)s"
+msgstr ""
+
+#: ej/templates/django/account/email/password_reset_key_subject.txt:3
+msgid "Pedido para gerar nova senha"
+msgstr ""
+
+#: ej/templates/django/account/email_confirm.html:6
+#: ej/templates/django/account/email_confirm.html:10
+msgid "Confirm E-mail Address"
+msgstr ""
+
+#: ej/templates/django/account/email_confirm.html:16
+#, python-format
+msgid ""
+"Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is an e-mail "
+"address for user %(user_display)s."
+msgstr ""
+
+#: ej/templates/django/account/email_confirm.html:20
+msgid "Confirm"
+msgstr ""
+
+#: ej/templates/django/account/email_confirm.html:27
+#, python-format
+msgid ""
+"This e-mail confirmation link expired or is invalid. Please <a href="
+"\"%(email_url)s\">issue a new e-mail confirmation request</a>."
+msgstr ""
+
+#: ej/templates/django/account/login-signup.html:7
+#: ej/templates/django/account/signup.html:7
+msgid "Signup"
+msgstr ""
+
+#: ej/templates/django/account/login-signup.html:44
+#: ej/templates/django/account/login.html:45
+msgid "Forgot Password?"
+msgstr ""
+
+#: ej/templates/django/account/login-signup.html:45
+#: ej/templates/django/account/login.html:7
+#: ej/templates/django/account/login.html:46 ej/templates/django/base.html:54
+msgid "Sign In"
+msgstr ""
+
+#: ej/templates/django/account/login-signup.html:59
+#: ej/templates/django/account/signup.html:43 ej/templates/django/base.html:50
+msgid "Sign Up"
+msgstr ""
+
+#: ej/templates/django/account/logout.html:5
+#: ej/templates/django/account/logout.html:8
+#: ej/templates/django/account/logout.html:17 ej/templates/django/base.html:45
+msgid "Sign Out"
+msgstr ""
+
+#: ej/templates/django/account/logout.html:10
+msgid "Are you sure you want to sign out?"
+msgstr ""
+
+#: ej/templates/django/account/password_change.html:6
+#: ej/templates/django/account/password_change.html:9
+#: ej/templates/django/account/password_change.html:14
+#: ej/templates/django/account/password_reset_from_key.html:5
+#: ej/templates/django/account/password_reset_from_key.html:8
+#: ej/templates/django/account/password_reset_from_key_done.html:4
+#: ej/templates/django/account/password_reset_from_key_done.html:7
+msgid "Change Password"
+msgstr ""
+
+#: ej/templates/django/account/password_reset.html:7
+#: ej/templates/django/account/password_reset.html:11
+#: ej/templates/django/account/password_reset_done.html:6
+#: ej/templates/django/account/password_reset_done.html:9
+msgid "Password Reset"
+msgstr ""
+
+#: ej/templates/django/account/password_reset.html:16
+msgid ""
+"Forgotten your password? Enter your e-mail address below, and we'll send you "
+"an e-mail allowing you to reset it."
+msgstr ""
+
+#: ej/templates/django/account/password_reset.html:21
+msgid "Reset My Password"
+msgstr ""
+
+#: ej/templates/django/account/password_reset.html:24
+msgid "Please contact us if you have any trouble resetting your password."
+msgstr ""
+
+#: ej/templates/django/account/password_reset_done.html:15
+msgid ""
+"We have sent you an e-mail. Please contact us if you do not receive it "
+"within a few minutes."
+msgstr ""
+
+#: ej/templates/django/account/password_reset_from_key.html:8
+msgid "Bad Token"
+msgstr ""
+
+#: ej/templates/django/account/password_reset_from_key.html:12
+#, python-format
+msgid ""
+"The password reset link was invalid, possibly because it has already been "
+"used.  Please request a <a href=\"%(passwd_reset_url)s\">new password reset</"
+"a>."
+msgstr ""
+
+#: ej/templates/django/account/password_reset_from_key.html:18
+msgid "change password"
+msgstr ""
+
+#: ej/templates/django/account/password_reset_from_key.html:21
+#: ej/templates/django/account/password_reset_from_key_done.html:8
+msgid "Your password is now changed."
+msgstr ""
+
+#: ej/templates/django/account/password_set.html:6
+#: ej/templates/django/account/password_set.html:9
+#: ej/templates/django/account/password_set.html:14
+msgid "Set Password"
+msgstr ""
+
+#: ej/templates/django/account/signup.html:45
+#, python-format
+msgid ""
+"Already have an account? Then please <a href=\"%(login_url)s\">sign in</a>."
+msgstr ""
+
+#: ej/templates/django/account/signup_closed.html:5
+#: ej/templates/django/account/signup_closed.html:8
+msgid "Sign Up Closed"
+msgstr ""
+
+#: ej/templates/django/account/signup_closed.html:10
+msgid "We are sorry, but the sign up is currently closed."
+msgstr ""
+
+#: ej/templates/django/account/verification_sent.html:5
+#: ej/templates/django/account/verification_sent.html:8
+#: ej/templates/django/account/verified_email_required.html:5
+#: ej/templates/django/account/verified_email_required.html:8
+msgid "Verify Your E-mail Address"
+msgstr ""
+
+#: ej/templates/django/account/verification_sent.html:10
+msgid ""
+"We have sent an e-mail to you for verification. Follow the link provided to "
+"finalize the signup process. Please contact us if you do not receive it "
+"within a few minutes."
+msgstr ""
+
+#: ej/templates/django/account/verified_email_required.html:12
+msgid ""
+"This part of the site requires us to verify that\n"
+"you are who you claim to be. For this purpose, we require that you\n"
+"verify ownership of your e-mail address. "
+msgstr ""
+
+#: ej/templates/django/account/verified_email_required.html:16
+msgid ""
+"We have sent an e-mail to you for\n"
+"verification. Please click on the link inside this e-mail. Please\n"
+"contact us if you do not receive it within a few minutes."
+msgstr ""
+
+#: ej/templates/django/account/verified_email_required.html:20
+#, python-format
+msgid ""
+"<strong>Note:</strong> you can still <a href=\"%(email_url)s\">change your e-"
+"mail address</a>."
+msgstr ""
+
+#: ej/users/models.py:85
+msgid "Black"
+msgstr ""
+
+#: ej/users/models.py:86
+msgid "Brown"
+msgstr ""
+
+#: ej/users/models.py:87
+msgid "White"
+msgstr ""
+
+#: ej/users/models.py:88
+msgid "Yellow"
+msgstr ""
+
+#: ej/users/models.py:89
+msgid "Indigenous"
+msgstr ""
+
+#: ej/users/models.py:90 ej/users/models.py:112
+msgid "Do not know"
+msgstr ""
+
+#: ej/users/models.py:91
+msgid "Undeclared"
+msgstr ""
+
+#: ej/users/models.py:95
+msgid "Female"
+msgstr ""
+
+#: ej/users/models.py:96
+msgid "Male"
+msgstr ""
+
+#: ej/users/models.py:97
+msgid "Cis Female"
+msgstr ""
+
+#: ej/users/models.py:98
+msgid "Cis Male"
+msgstr ""
+
+#: ej/users/models.py:99
+msgid "Agender"
+msgstr ""
+
+#: ej/users/models.py:100
+msgid "Genderqueer"
+msgstr ""
+
+#: ej/users/models.py:101
+msgid "Genderfluid"
+msgstr ""
+
+#: ej/users/models.py:102
+msgid "Non conformist gender"
+msgstr ""
+
+#: ej/users/models.py:103
+msgid "Variant gender"
+msgstr ""
+
+#: ej/users/models.py:104
+msgid "Intersex"
+msgstr ""
+
+#: ej/users/models.py:105
+msgid "Non binary"
+msgstr ""
+
+#: ej/users/models.py:106
+msgid "Transgendered"
+msgstr ""
+
+#: ej/users/models.py:107
+msgid "Pangender"
+msgstr ""
+
+#: ej/users/models.py:108
+msgid "Transsexual woman"
+msgstr ""
+
+#: ej/users/models.py:109
+msgid "Transsexual man"
+msgstr ""
+
+#: ej/users/models.py:110
+msgid "Transfeminal"
+msgstr ""
+
+#: ej/users/models.py:111
+msgid "Transmasculine"
+msgstr ""
+
+#: ej/users/models.py:113
+msgid "None"
+msgstr ""
+
+#: ej/users/models.py:114
+msgid "Other"
+msgstr ""
+
+#: ej/users/models.py:117
+msgid "Age"
+msgstr ""
+
+#: ej/users/models.py:118
+msgid "City"
+msgstr ""
+
+#: ej/users/models.py:119
+msgid "State"
+msgstr ""
+
+#: ej/users/models.py:120
+msgid "Biography"
+msgstr ""
+
+#: ej/users/models.py:130
+msgid "Country"
+msgstr ""
+
+#: ej/users/models.py:136
+msgid "Occupation"
+msgstr ""
+
+#: ej/users/models.py:142
+msgid "Image"
+msgstr ""
+
+#: ej/users/models.py:148
+msgid "Gender identity"
+msgstr ""
+
+#: ej/users/models.py:155
+msgid "User provided gender"
+msgstr ""
+
+#: ej/users/models.py:161
+msgid "Political activity"
+msgstr ""
+
+#: ej/users/models.py:167
+msgid "Race"
+msgstr ""
+
+#: ej/users/models.py:229
+msgid "Root"
+msgstr ""
+
+#: ej/users/models.py:231
+msgid "Administrative user"
+msgstr ""
+
+#: ej/users/models.py:232
+msgid "Regular user"
+msgstr ""
+
+#: ej/users/serializers.py:67
+msgid "Incorrect value"
+msgstr ""
+
+#: ej/users/serializers.py:86
+msgid "A user is already registered with this e-mail address."
+msgstr ""
+
+#: ej/users/serializers.py:110
+msgid "Incorrect input. access_token or code is required."
+msgstr ""
+
+#: ej/users/serializers.py:137
+msgid "View is not defined, pass it as a context variable"
+msgstr ""
+
+#: ej/users/serializers.py:148
+msgid "Define "
+msgstr ""

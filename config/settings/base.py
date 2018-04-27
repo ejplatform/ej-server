@@ -122,6 +122,7 @@ MANAGERS = ADMINS
 TIME_ZONE = 'America/Sao_Paulo'
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#language-code
+LOCALE_NAME = 'pt_BR'
 LANGUAGE_CODE = 'pt-br'
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#site-id

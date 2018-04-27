@@ -319,3 +319,4 @@ lib/node_modules/
 *.css.map
 lib/assets/css/main.css
 lib/assets/css/main.css.map
+*.mo
