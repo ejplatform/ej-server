@@ -70,15 +70,25 @@ Additionally, the docker-compose environment variables files are defined on thei
 * [docker/local/test.yml](https://github.com/ejplatform/ej-server/blob/master/docker/local/test.yml): [docker/local/env/*.test.env](https://github.com/ejplatform/ej-server/tree/master/docker/local/env)
 * [docker/production/deploy.example.yml](https://github.com/ejplatform/ej-server/blob/master/docker/production/deploy.example.yml): Example defined on itself
 
-## Deploy in production
+## Deployment
 
 An example of deploy in production using docker-compose can be found in [docker/production/deploy.example.yml](https://github.com/ejplatform/ej-server/blob/master/docker/production/deploy.example.yml).
 
-## Deploy integrations
+## Continuous Integration
 
-Commits at `develop` branch will release to [http://dev.ejplatform.org](http://dev.ejplatform.org)
+Every commit at any branch will run the `test` stage from the `pipeline`.
 
-Commits at `master` branch will release to [https://ejplatform.org](https://ejplatform.org)
+Commits at `base` branch will upgrade the `ej-server:base`, `ej-server:base-test`, and `ej-server:base-production` images. Commits at `base` branch can only be performed if it contain changes in [requirements/base.txt](https://github.com/ejplatform/ej-server/blob/master/requirements/base.txt).
+
+Commits at `base_test` branch will upgrade the `ej-server:base-test` image. Commits at `base_test` branch can only be performed if it contain changes in [requirements/test.txt](https://github.com/ejplatform/ej-server/blob/master/requirements/test.txt).
+
+Commits at `base_production` branch will upgrade the `ej-server:base-production` image. Commits at `base_production` branch can only be performed if it contain changes in [requirements/production.txt](https://github.com/ejplatform/ej-server/blob/master/requirements/production.txt).
+
+## Continuous Deployment
+
+Commits at `develop` branch will release to [http://dev.ejplatform.org](http://dev.ejplatform.org).
+
+Commits at `master` branch will release to [https://ejplatform.org](https://ejplatform.org).
 
 ## Rocketchat Integration
 

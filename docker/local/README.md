@@ -1,12 +1,6 @@
-# Local Docker
+# Local Dockers
 
 The image defined in this directory is used as the development environment, including for testing (manually and inside of CI/CD pipeline).
-
-## Build Locally
-
-```bash
-sudo docker-compose -f docker/local/build.yml build
-```
 
 ## Perform Tests with Compose
 
@@ -27,7 +21,7 @@ sudo docker-compose -f docker/local/start.yml -p ej up -d
 sudo docker-compose -f docker/local/idle.yml -p ej up -d
 ```
 
-* The services `django`, `flower` and `worker` will start as idle.
+* The services `django`, `flower`, and `worker` will start as idle.
 
 ### Start Manually
 
