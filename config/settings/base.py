@@ -324,14 +324,14 @@ ADMIN_URL = 'admin/'
 # ------------------------------------------------------------------------------
 CORS_ORIGIN_ALLOW_ALL = False
 CORS_ALLOW_CREDENTIALS = True
-CORS_ORIGIN_WHITELIST = (
-    'ejplatform.org',
-    'dev.ejplatform.org',
-    'talks.ejplatform.org',
-    'talks.dev.ejplatform.org',
-)
+CORS_ORIGIN_REGEX_WHITELIST = (r'^(https?://)?[\w.]*ejplatform\.org$', )
 
-CSRF_TRUSTED_ORIGINS = CORS_ORIGIN_WHITELIST
+CSRF_TRUSTED_ORIGINS = [
+    'ejplatform.org',
+    'talks.ejplatform.org'
+    'dev.ejplatform.org',
+    'talks.dev.ejplatform.org',
+]
 
 # Above default keys will always pass, do not use then in production.
 RECAPTCHA_PUBLIC_KEY = env('DJANGO_RECAPTCHA_PUBLIC_KEY',

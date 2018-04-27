@@ -14,6 +14,6 @@ def custom_headers(func):
         res = func(*args, **kwargs)
         res['Access-Control-Allow-Credentials'] = 'true'
         res['Content-Security-Policy'] = \
-        'frame-ancestors ' + (' '.join(settings.CORS_ORIGIN_WHITELIST))
+        'frame-ancestors ' + (' '.join(settings.CSRF_TRUSTED_ORIGINS))
         return res
     return wrap
