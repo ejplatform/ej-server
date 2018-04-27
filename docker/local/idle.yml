@@ -12,6 +12,7 @@ services:
   django: &django
     image: ej-server:local
     command: sleep infinity
+    entrypoint: ''
     depends_on:
       - postgres
     env_file:
