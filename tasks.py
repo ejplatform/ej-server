@@ -51,14 +51,14 @@ def db(ctx, migrate_only=False):
 
 
 @task
-def db_reset(ctx, fake=False, postgres=False, no_assets=False):
+def db_reset(ctx, fake=False, no_assets=False):
     """
     Reset data in database and optionally fill with fake data
     """
     ctx.run('rm db.sqlite3 -f')
     manage(ctx, 'migrate')
     if fake:
-        db_fake(ctx, postgres=postgres)
+        db_fake(ctx)
     if not no_assets:
         db_assets(ctx)
 
