@@ -20,6 +20,8 @@ services:
     env_file:
       - ./compose/local/django.env
       - ./compose/local/postgres.env
+    environment:
+      - MANUAL_MODE=${MANUAL_MODE}
     links:
       - postgres
       - rabbit

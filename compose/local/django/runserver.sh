@@ -1,9 +1,5 @@
 #!/usr/bin/env bash
 
-set -o errexit
-set -o pipefail
-set -o xtrace
-
 if [ ! -z $MANUAL_MODE ] && $MANUAL_MODE; then
     echo
     echo "[WARNING] Manual mode active"
@@ -11,6 +7,9 @@ if [ ! -z $MANUAL_MODE ] && $MANUAL_MODE; then
     echo
     sleep infinity
 else
+    set -o errexit
+    set -o pipefail
+    set -o xtrace
     set -o nounset
     python manage.py makemigrations
     python manage.py migrate
