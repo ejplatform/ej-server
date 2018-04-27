@@ -23,7 +23,7 @@ push all base images:
     - docker-compose -f ./docker/base/test.build.yml push
     - docker-compose -f ./docker/base/production.build.yml push
   only:
-    - /base/
+    - base
   tags:
     - docker
 
@@ -34,7 +34,7 @@ push test base image:
     - docker-compose -f ./docker/base/test.build.yml build
     - docker-compose -f ./docker/base/test.build.yml push
   only:
-    - /base_test/
+    - base_test
   tags:
     - docker
 
@@ -45,7 +45,7 @@ push production base image:
     - docker-compose -f ./docker/base/production.build.yml build
     - docker-compose -f ./docker/base/production.build.yml push
   only:
-    - /base_production/
+    - base_production
   tags:
     - docker
 
@@ -54,6 +54,8 @@ test:
   stage: test
   script:
     - docker-compose -f ./docker/local/test.yml run --rm django
+  except:
+    - /base/
   tags:
     - docker
 
@@ -65,7 +67,7 @@ push develop images:
     - docker-compose -f ./docker/production/staging.build.yml build
     - docker-compose -f ./docker/production/staging.build.yml push
   only:
-    - /develop/
+    - develop
   tags:
     - docker
 
@@ -76,7 +78,7 @@ push production images:
     - docker-compose -f ./docker/production/latest.build.yml build
     - docker-compose -f ./docker/production/latest.build.yml push
   only:
-    - /master/
+    - master
   tags:
     - docker
 
@@ -89,7 +91,7 @@ deploy to development:
     - upgrade --environment $RANCHER_ENVIRONMENT --stack $RANCHER_STACK --service flower --no-finish-upgrade
     - upgrade --environment $RANCHER_ENVIRONMENT --stack $RANCHER_STACK --service worker --no-finish-upgrade
   only:
-    - /develop/
+    - develop
   tags:
     - docker
 
@@ -102,6 +104,6 @@ deploy to production:
     - upgrade --environment $RANCHER_ENVIRONMENT --stack $RANCHER_STACK --service flower --no-finish-upgrade
     - upgrade --environment $RANCHER_ENVIRONMENT --stack $RANCHER_STACK --service worker --no-finish-upgrade
   only:
-    - /master/
+    - master
   tags:
     - docker
