@@ -1,0 +1,40 @@
+{% extends 'base.jinja2' %}
+{% set page_title = 'Site info' %}
+{% set content_title = page_title %}
+
+
+{% block content %}
+    <div class="Container SiteInfo">
+        {# USERS #}
+        <h1>Users</h1>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Value</th>
+            </tr>
+
+            <tr>
+                <td>Registered users</td>
+                <td>{{ user_count }}</td>
+            </tr>
+        </table>
+
+
+        {# CONVERSATIONS #}
+        <h1>Conversations</h1>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Value</th>
+            </tr>
+
+            {% for name, value in conversations_counts.items() %}
+                <tr>
+                    <td>{{ name }}</td>
+                    <td>{{ value }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}
+

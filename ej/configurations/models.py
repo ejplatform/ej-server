@@ -1,9 +1,10 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-import bleach
 from markupsafe import Markup
+
 from ej_conversations.validators import validate_color
 from .icons import default_icon_name
+from .sanitizer import sanitize_html
 from .validators import validate_icon_name
 
 
@@ -64,19 +65,19 @@ class SocialMediaIcon(models.Model):
         """
         Render an icon tag for the given icon.
 
-        >>> icon.icon_tag(classes=['header-icon'])
+        >>> icon.icon_tag(classes=['header-icon'])              # doctest: +SKIP
         <i class="fa fa-icon header-icon"></i>
         """
-        
+
         return f'<i class="{self.icon_font} {" ".join(classes)}"></i>'
 
     def link_tag(self, classes=()):
         """
         Render an anchor tag with the link for the social network.
 
-        >>> icon.link_tag(classes=['header-icon'])
+        >>> icon.link_tag(classes=['header-icon'])              # doctest: +SKIP
         <a href="url"><i class="fa fa-icon header-icon"></i></a>
-        """          
+        """
 
         return f'<a href="{self.url}"><i class="{self.icon_font} {" ".join(classes)}"></i></a>'
 
@@ -102,7 +103,10 @@ class Color(models.Model):
 class Fragment(models.Model):
     FORMAT_MARKDOWN = 'md'
     FORMAT_HTML = 'html'
-    ...
+    FORMAT_CHOICES = [
+        (FORMAT_HTML, _('HTML')),
+        (FORMAT_MARKDOWN, _('Markdown')),
+    ]
 
     name = models.CharField(
         _('Name'),
@@ -114,11 +118,12 @@ class Fragment(models.Model):
     content = models.TextField(
         _('content'),
         blank=True,
-        help_text=_('The fragment content in html or markdown that will be displayed')
+        help_text=_('The fragment content in html or markdown that will be displayed'),
     )
     format = models.CharField(
         max_length=4,
-        help_text=_('Format of the saved fragment, can be html or md')
+        help_text=_('Format of the saved fragment, can be either HTML or Markdown'),
+        choices=FORMAT_CHOICES,
     )
     editable = models.BooleanField(
         default=True,
@@ -139,7 +144,7 @@ class Fragment(models.Model):
 
         super().save(*args, **kwargs)
         if not self.deletable:
-            # conferir se levanta erro .DoesNotExist
+            # TODO: conferir se levanta erro .DoesNotExist
             if self.lock is None:
                 FragmentLock.objects.create(self)
 
@@ -149,12 +154,11 @@ class Fragment(models.Model):
         return Markup(f'<div{class_attr}>{data}</div>')
 
 
-def sanitize_html(html):
-    return bleach.clean(html, tags=['h1','h2','h3','h4','a','p','i','img','strong','div'])
-
-
-# GAMBIRA!
 class FragmentLock(models.Model):
+    """
+    ForeignKey reference that prevents protected fragments from being deleted
+    from the database.
+    """
     fragment = models.OneToOneField(
         Fragment,
         on_delete=models.PROTECT,

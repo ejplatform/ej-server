@@ -1,5 +1,7 @@
 {% extends 'base.jinja2' %}
 {% from 'components/generic/elements.jinja2' import action_button, rocket_button %}
+{% set content_title = _('Styles') %}
+
 
 {% block content %}
     {% set colors_main = 'primary accent alt hint content'.split() %}
@@ -7,8 +9,14 @@
     {% set colors_named = 'white gray blue green magenta purple red yellow'.split() %}
 
     <div class="Container">
-        <h1>EJ styles</h1>
+        <p>
+            Reference page for all styles in the current EJ instance. Use this page to tweak the
+            theme to your linking and see the effects of colors, typography and layout elements.
+        </p>
+
+
         <section>
+            <h1>Global configurations and variables</h1>
             <h2>Typography</h2>
             <div>
                 {% for i in range(1, 7) %}
@@ -24,7 +32,6 @@
             </div>
 
             <h2>Colors</h2>
-
             <h3>Main color scheme</h3>
             <div class="ColorStyles">
                 {% for color in colors_main %}
@@ -52,6 +59,10 @@
                     <div class="{{ color }}">{{ color }}</div>
                 {% endfor %}
             </div>
+        </section>
+
+        <section>
+            <h1>Generic Elements</h1>
 
             <h2>Buttons</h2>
             <p>
@@ -64,11 +75,13 @@
                 <code>{{ '<a class="Button">Link</a>' }}</code>.
             <p><a href="#" class="Button">Link</a></p>
 
-            <h1>Forms</h1>
+
+            <h2>Forms</h2>
+            <p>Work in progress...</p>
+
+
+            <h2>Tables</h2>
             <p>Work in progress...</p>
         </section>
-
-        <h1>Generic Components</h1>
-        <section>Work in progress...</section>
     </div>
 {% endblock %}

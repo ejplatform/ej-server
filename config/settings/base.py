@@ -9,9 +9,7 @@ https://docs.djangoproject.com/en/dev/ref/settings/
 """
 import pathlib
 
-from config.settings.core import env, DEBUG
 from .conf import db
-from .celery import *
 from .constance import *
 
 DATABASES = db.DATABASES
@@ -124,6 +122,7 @@ MANAGERS = ADMINS
 TIME_ZONE = 'America/Sao_Paulo'
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#language-code
+LOCALE_NAME = 'pt_BR'
 LANGUAGE_CODE = 'pt-br'
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#site-id
@@ -144,6 +143,7 @@ USE_TZ = True
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.jinja2.Jinja2',
+        'APP_DIRS': True,
         'DIRS': [
             APPS_DIR / 'templates/jinja2/',
         ],

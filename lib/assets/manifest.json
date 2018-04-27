@@ -22,6 +22,11 @@
       "sizes": "192x192"
     },
     {
+      "src": "/static/img/logo/icon-256.png",
+      "type": "image/png",
+      "sizes": "256x256"
+    },
+    {
       "src": "/static/img/logo/icon-512.png",
       "type": "image/png",
       "sizes": "512x512"

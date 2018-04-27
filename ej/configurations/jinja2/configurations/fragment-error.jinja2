@@ -1,0 +1,12 @@
+{% extends 'base.jinja2' %}
+
+
+{% block content %}
+    <h1>Fragment error</h1>
+    <p>
+        You didn't have a "{{ name }}" fragment defined.
+        Create a home-banner.html
+
+        Use the command loadfragments from manage.py to create new fragments or --force to update
+    </p>
+{% endblock %}

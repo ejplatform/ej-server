@@ -889,15 +889,15 @@ input[type=submit] {
 /*
  GENERIC CONTAINER PATTERNS
  =========================================================================== */
-.Container, .CenteredContainer, .Footer > *, .HomeBanner, .HowItWorks > *, .ConversationList, .StartNow > *, .Profile, .ProfileEdit {
+.Container, .CenteredContainer, .Footer > *, .HomeBanner, .HowItWorks > *, .Page-title h1, .ConversationList, .StartNow > *, .Profile, .ProfileEdit {
   padding: 0 0 14px 0;
   margin: 0 auto;
   max-width: 800px; }
   @media only screen and (min-width: 600px) {
-    .Container, .CenteredContainer, .Footer > *, .HomeBanner, .HowItWorks > *, .ConversationList, .StartNow > *, .Profile, .ProfileEdit {
+    .Container, .CenteredContainer, .Footer > *, .HomeBanner, .HowItWorks > *, .Page-title h1, .ConversationList, .StartNow > *, .Profile, .ProfileEdit {
       padding: 0 56px 28px 56px; } }
   @media only screen and (min-width: 1200px) {
-    .Container, .CenteredContainer, .Footer > *, .HomeBanner, .HowItWorks > *, .ConversationList, .StartNow > *, .Profile, .ProfileEdit {
+    .Container, .CenteredContainer, .Footer > *, .HomeBanner, .HowItWorks > *, .Page-title h1, .ConversationList, .StartNow > *, .Profile, .ProfileEdit {
       padding: 0 112px 28px 112px;
       max-width: 1000px; } }
 
@@ -912,6 +912,19 @@ ul.errorlist {
   padding: 0; }
   ul.errorlist li {
     list-style: none; }
+
+/*
+ UNPOLY EXTRA STYLING
+ =========================================================================== */
+.up-modal-content {
+  padding: 56px !important; }
+
+.up-modal-dialog {
+  max-width: 1200px;
+  width: 90%; }
+
+.up-modal-close {
+  color: #042049; }
 
 /*
  GENERIC ELEMENTS
@@ -954,10 +967,10 @@ ul.errorlist {
   .Page-title {
     background: #30c0d3;
     color: #fff;
-    margin: 0 0 28px 0;
-    padding: 14px; }
+    margin: 0 0 28px 0; }
     .Page-title h1 {
-      font-size: 1.87em; }
+      font-size: 1.87em;
+      padding: 14px; }
   .Page-content {
     flex-grow: 1;
     margin: 0 auto;
