@@ -1,0 +1,11 @@
+# This docker-compose file is not designed to run
+# Usage: Build & Push
+
+version: '3.5'
+
+services:
+  cicd:
+    image: ejplatform/ej-cicd:latest
+    build:
+      context: ../../
+      dockerfile: ./docker/cicd/Dockerfile
