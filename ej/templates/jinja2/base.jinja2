@@ -102,7 +102,7 @@
         </main>
     {% endblock %}
 
-    {% if target == 'all' or target == 'page' %}
+    {% if (target == 'all' or target == 'page') and not hide_footer %}
         {{ page_footer(social_icons()) }}
         </div>
     {% endif %}
