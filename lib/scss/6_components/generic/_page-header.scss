@@ -85,7 +85,7 @@ $header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.05) !default;
         @media only screen and (min-width: $breakpoint-small) {
             box-shadow: none;
             margin: 0;
-            padding: 0;
+            padding: 0 0 0 $spacing-unit;
             text-align: left;
 
             img {
@@ -94,6 +94,11 @@ $header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.05) !default;
             .Header-topIcon {
                 display: none;
             }
+        }
+
+        @media only screen and (min-width: $header-wrapper-max-width) {
+            padding: 0;
+            margin-left: $spacing-unit;
         }
     }
 

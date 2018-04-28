@@ -128,14 +128,14 @@
             ga('create', 'UA-104880284-1', 'auto');
         </script>
 
-        <!-- Service worker -->
-        <script>
-            if ('serviceWorker' in navigator) {
-                window.addEventListener('load', function () {
-                    navigator.serviceWorker.register('/sw.js');
-                });
-            }
-        </script>
+{#        <!-- Service worker -->#}
+{#        <script>#}
+{#            if ('serviceWorker' in navigator) {#}
+{#                window.addEventListener('load', function () {#}
+{#                    navigator.serviceWorker.register('/sw.js');#}
+{#                });#}
+{#            }#}
+{#        </script>#}
     {% endblock %}
 
     </body>

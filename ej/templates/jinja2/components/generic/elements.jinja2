@@ -1,18 +1,19 @@
-{% macro link(value='Click me', href='#', title='', target='.Page-mainContainer', action='up-target', instant=True, args='', button=False, class=None, transition='cross-fade', preload=False, scroll=False) %}
+{% macro link(value='Click me', href='#', title='', target='.Page-mainContainer', action='target', instant=True, args='', button=False, class=None, transition='cross-fade', preload=False, scroll=False, primary=False) %}
     {%- if caller -%}
         {%- if href == '#' %}{% set href=value %}{% endif -%}
         {%- set value = caller() -%}
     {%- endif -%}
     <a href="{{ href }}"
-             {%- if title %} title="{{ title }}"{% endif %}
-             {%- if class %} class="{{ class }}"{% endif %}
-             {%- if button %} class="{{ Button }}"{% endif %}
-             {%- if instant %} up-instant{% endif %}
-             {%- if transition %} up-transition="{{ transition }}"{% endif %}
-             {%- if scroll -%} up-restore-scroll{% endif %}
-             {%- if preload -%} up-preload{% endif %}
-             {%- if action %} {{ action + '="' + target + '"'}}{% endif %}
-             {{ args }} primary>{{ value }}</a>
+       {%- if title %} title="{{ title }}"{% endif %}
+       {%- if class %} class="{{ class }}"{% endif %}
+       {%- if button %} class="Button"{% endif %}
+       {%- if primary %} primary{% endif %}
+       {%- if action %} {{ 'up-%s' % action }}="{{ target }}"{% endif %}
+       {%- if instant %} up-instant{% endif %}
+       {%- if transition %} up-transition="{{ transition }}"{% endif %}
+       {%- if scroll -%} up-restore-scroll{% endif %}
+       {%- if preload -%} up-preload{% endif %}
+       {%- if args %} {{ args }}{% endif %}>{{ value }}</a>
 {% endmacro %}
 
 

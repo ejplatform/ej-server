@@ -15,18 +15,16 @@
             <h2>{{ subtitle }}</h2>
         </div>
 
-        {% if categories %}
-            <div class="ConversationList-categories">
-                <i class="fa fa-chevron-left"></i>
-                <a href="/conversations/">Todas</a>
-                <ul>
-                    {% for category in categories %}
-                        <li><a href="{{ category.get_absolute_url() }}">{{ category }}</a></li>
-                    {% endfor %}
-                </ul>
-                <i class="fa fa-chevron-right"></i>
-            </div>
-        {% endif %}
+        <div class="ConversationList-categories">
+            <i class="fa fa-chevron-left"></i>
+            {{ link(_('All'), href='/conversations/') }}
+            <ul>
+                {% for category in categories %}
+                    <li>{{ link(category, href=category.get_absolute_url()) }}</li>
+                {% endfor %}
+            </ul>
+            <i class="fa fa-chevron-right"></i>
+        </div>
 
         {# Cards #}
         <div class="ConversationList-cardList">
@@ -42,18 +40,18 @@
 {% macro conversation_card(conversation) %}
     <div class="ConversationCard">
         <div class="ConversationCard-cover">
-            <h1>
+            <h1 up-expand>
                 <a href="{{ conversation.get_absolute_url() }}" alt="alt">{{ conversation.question }}</a>
             </h1>
             <dl>
                 <dt>Assunto:</dt>
-                <dd>{{ conversation.category_name }}</dd>
+                <dd><a href="{{ conversation.get_absolute_url() }}">{{ conversation.category_name }}</a></dd>
             </dl>
         </div>
         <div class="ConversationCard-actions">
             <ul class="ConversationCard-statistics">
-                <li>{{ conversation.comments.count() }} comentários</li>
-                <li>{{ conversation.votes.count() }} votos</li>
+                <li>{{ gettext('%(count)s comments', count=conversation.comments.count()) }}</li>
+                <li>{{ gettext('%(count)s votes', count=conversation.votes.count()) }}</li>
             </ul>
             {{ action_button('Participar <i class="fa fa-comments"></i>', conversation.get_absolute_url()) }}
         </div>
@@ -73,19 +71,33 @@
  #---------------------------------------------------------------------------#}
 
 {% macro conversation_detail(conversation, user) %}
+    {% set category = conversation.category %}
+
     <div class="ConversationDetail">
         <div class="ConversationDetail-banner">
-            {{ conversation_breadcrumbs(conversation) }}
             <h1>{{ conversation.question }}</h1>
-            <dl class="ConversationDetail-statistics">
-                <dt>Votos</dt>
-                <dd>{{ conversation.votes.count() }}</dd>
-                <dt>Comentários</dt>
-                <dd>{{ conversation.comments.count() }}</dd>
-            </dl>
+            <ul class="ConversationDetail-statistics">
+                <li>{{ gettext('%(count)s comments', count=conversation.comments.count()) }}</li>
+                <li>{{ gettext('%(count)s votes', count=conversation.votes.count()) }}</li>
+            </ul>
         </div>
+        <div class="ConversationDetail-arrow"></div>
+
+        <ul class="ConversationDetail-statisticsBottom">
+            <li>
+                <div>{{ _('category:') }}</div>
+                <div>{{ link(category.name, href=category.get_absolute_url()) }}</div>
+            </li>
+            <li>{{ link(_('see more<br>categories'), href='/conversations/') }}</li>
+        </ul>
 
         {# Current comment #}
+        <div class="ConversationDetail-header">
+            <h1>Opiniões da comunidade</h1>
+            <p>Interaja com as opiniões da comunidade selecionando um dos botões
+                de opção.</p>
+        </div>
+
         {% if comment %}
             {{ comment_detail(comment, user) }}
         {% else %}
@@ -120,7 +132,8 @@
                 </ul>
             </form>
         {% else %}
-            <p class="Comment-loginWarn">É necessário <a href="/login/?next={{ comment.conversation.get_absolute_url() }}">registrar-se</a> antes de
+            <p class="Comment-loginWarn">É necessário <a
+                    href="/login/?next={{ comment.conversation.get_absolute_url() }}">registrar-se</a> antes de
                 votar ou enviar um comentário!</p>
         {% endif %}
     </div>

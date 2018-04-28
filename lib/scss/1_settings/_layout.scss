@@ -18,3 +18,6 @@ $header-height-tablet: $header-top-nav-height * 1.2 !default;
 $page-content-width-max: 700px !default;
 $content-wrapper-max-width: $breakpoint-medium !default;
 $header-wrapper-max-width: $content-wrapper-max-width + 2 * $spacing-unit-large !default;
+
+// Spacing element
+$block-elements-border-radius: $spacing-unit-large;

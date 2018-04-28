@@ -28,6 +28,7 @@ function registerAllRoutes(workbox) {
     workbox.routing.registerRoute(
         new RegExp('.*\.(?:png|jpg|jpeg|svg|gif)'),
         workbox.strategies.cacheFirst({
+            cacheName: 'images',
             plugins: [
                 new workbox.expiration.Plugin({
                     maxEntries: 50,

@@ -893,16 +893,16 @@ input[type=submit] {
 /*
  GENERIC CONTAINER PATTERNS
  =========================================================================== */
-.Container, .CenteredContainer, .Footer > *, .HomeBanner, .HowItWorks > *, .Page-title h1, .ConversationList, .StartNow > *, .Profile, .ProfileEdit {
+.Container, .CenteredContainer, .Footer > *, .HomeBanner, .HowItWorks > *, .Page-title h1, .ConversationList, .ConversationDetail-banner h1, .StartNow > *, .Profile, .ProfileEdit {
   box-sizing: border-box;
   margin: 0 auto;
   max-width: 800px;
   padding: 0 0 14px 0; }
   @media only screen and (min-width: 550px) {
-    .Container, .CenteredContainer, .Footer > *, .HomeBanner, .HowItWorks > *, .Page-title h1, .ConversationList, .StartNow > *, .Profile, .ProfileEdit {
+    .Container, .CenteredContainer, .Footer > *, .HomeBanner, .HowItWorks > *, .Page-title h1, .ConversationList, .ConversationDetail-banner h1, .StartNow > *, .Profile, .ProfileEdit {
       padding: 0 28px 28px 28px; } }
   @media only screen and (min-width: 1200px) {
-    .Container, .CenteredContainer, .Footer > *, .HomeBanner, .HowItWorks > *, .Page-title h1, .ConversationList, .StartNow > *, .Profile, .ProfileEdit {
+    .Container, .CenteredContainer, .Footer > *, .HomeBanner, .HowItWorks > *, .Page-title h1, .ConversationList, .ConversationDetail-banner h1, .StartNow > *, .Profile, .ProfileEdit {
       max-width: 800px;
       padding: 0 0 56px 0; } }
 
@@ -1046,12 +1046,16 @@ ul.errorlist {
       .Header-topNav {
         box-shadow: none;
         margin: 0;
-        padding: 0;
+        padding: 0 0 0 28px;
         text-align: left; }
         .Header-topNav img {
           height: 67.6px; }
         .Header-topNav .Header-topIcon {
           display: none; } }
+    @media only screen and (min-width: 912px) {
+      .Header-topNav {
+        padding: 0;
+        margin-left: 28px; } }
   .Header-lowerNav {
     align-items: stretch;
     bottom: 0;
@@ -1248,6 +1252,7 @@ ul.errorlist {
     margin: 28px; }
 
 .ConversationCard {
+  align-self: stretch;
   box-sizing: border-box;
   border: 0;
   border-radius: 56px;
@@ -1266,15 +1271,19 @@ ul.errorlist {
     color: #fff;
     display: flex;
     flex-flow: column;
-    height: 161px;
-    justify-content: space-around;
+    justify-content: space-between;
+    margin: 0;
+    min-height: 161px;
     position: relative;
     z-index: 2; }
     .ConversationCard-cover a, .ConversationCard-cover a:hover, .ConversationCard-cover a:active {
       color: #fff; }
+    .ConversationCard-cover h1 {
+      align-self: stretch;
+      padding-top: 7px; }
     .ConversationCard-cover dl {
-      margin: 28px;
-      font-size: 12px; }
+      font-size: 12px;
+      margin: 7px 0; }
       .ConversationCard-cover dl dt {
         display: inline; }
       .ConversationCard-cover dl dd {
@@ -1291,11 +1300,11 @@ ul.errorlist {
       font-variant: small-caps;
       font-weight: bold; }
   .ConversationCard-statistics {
-    display: flex;
-    justify-content: space-between;
-    padding: 0;
     color: #042049;
-    font-size: 12px; }
+    display: flex;
+    font-size: 12px;
+    justify-content: space-between;
+    padding: 0 28px; }
     .ConversationCard-statistics li {
       list-style: none; }
   @media only screen and (min-width: 550px) {
@@ -1306,17 +1315,66 @@ ul.errorlist {
       width: 32%; } }
 
 .ConversationDetail {
+  margin: 0 auto;
+  max-width: 912px;
   padding: 0; }
   .ConversationDetail > * {
     padding: 28px; }
+  .ConversationDetail u {
+    margin: 0; }
+  .ConversationDetail li {
+    margin: 0; }
   .ConversationDetail-banner {
-    background: #30c0d3;
-    color: #fff;
+    background: #d6f1f3;
+    border-radius: 0 0 56px 56px;
+    color: #042049;
+    margin: 0;
     padding-top: 0; }
-    .ConversationDetail-banner a {
-      color: #fff; }
     .ConversationDetail-banner h1 {
+      padding: 56px 0 28px 0;
       text-align: center; }
+      @media only screen and (min-width: 1200px) {
+        .ConversationDetail-banner h1 {
+          padding: 56px 0; } }
+  .ConversationDetail-arrow {
+    border-left: 28px solid transparent;
+    border-right: 28px solid transparent;
+    border-top: 28px solid #d6f1f3;
+    height: 0;
+    margin: 0 auto;
+    padding: 0;
+    position: relative;
+    width: 0; }
+  .ConversationDetail-statistics, .ConversationDetail-statisticsBottom {
+    display: flex;
+    font-size: 14px;
+    font-weight: bold;
+    justify-content: space-between;
+    margin: 0 auto;
+    max-width: 576px;
+    padding: 0 14px; }
+    .ConversationDetail-statistics li, .ConversationDetail-statisticsBottom li {
+      list-style: none; }
+  .ConversationDetail-statisticsBottom {
+    bottom: 21px;
+    font-weight: normal;
+    padding: 0 42px;
+    position: relative; }
+    .ConversationDetail-statisticsBottom :first-child a {
+      font-weight: bold; }
+    .ConversationDetail-statisticsBottom :last-child {
+      text-align: right; }
+      .ConversationDetail-statisticsBottom :last-child a {
+        color: #042049; }
+  .ConversationDetail-header {
+    text-align: center;
+    padding-top: 0; }
+    .ConversationDetail-header h1 {
+      font-size: 1.3em;
+      text-transform: uppercase;
+      margin-bottom: 7px; }
+    .ConversationDetail-header p {
+      margin-top: 7px; }
 
 .Comment {
   text-align: center; }
