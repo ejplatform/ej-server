@@ -25,11 +25,10 @@ main {
 
 // Links
 a {
+    color: $color-accent;
     line-height: 1.2;
     text-decoration: none;
     text-decoration-style: solid;
-    &:hover {
-    }
 }
 
 // Code and quotes
@@ -53,4 +52,9 @@ img {
     max-width: 100%;
     font-style: italic;
     vertical-align: middle;
+}
+
+// Iframes
+iframe, embed, object {
+    border: none;
 }

@@ -11,9 +11,9 @@ $header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.05) !default;
 
 // Component
 .Header {
+    background: $header-color;
     box-sizing: border-box;
     color: $header-color-text;
-    background: $header-color;
     margin: 0;
     z-index: 100;
 
@@ -28,15 +28,21 @@ $header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.05) !default;
         color: $header-color-text;
     }
     @media only screen and (min-width: $breakpoint-small) {
-        align-items: center;
         box-shadow: $header-box-shadow-upper;
         background: $header-color;
-        display: flex;
-        height: $header-height;
-        justify-content: space-between;
+        height: $header-height-tablet;
+        padding: $spacing-unit-tiny 0;
         position: fixed;
         top: 0;
         width: 100vw;
+
+        &-wrapper {
+            align-items: center;
+            display: flex;
+            justify-content: space-between;
+            margin: 0 auto;
+            max-width: $header-wrapper-max-width;
+        }
     }
 
     // Elements
@@ -67,36 +73,27 @@ $header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.05) !default;
         top: 0;
 
         img {
-            height: $header-logo-size;
             box-sizing: border-box;
+            height: $header-logo-size;
             margin: 0;
+            z-index: 100;
         }
         i.fa {
             font-size: $font-size-h3;
         }
-        i.fa-chevron-left[href="/"] {
-            visibility: hidden;
-        }
 
         @media only screen and (min-width: $breakpoint-small) {
             box-shadow: none;
-            display: flex;
-            justify-content: start;
             margin: 0;
-            padding: 0 0 0 $spacing-unit;
+            padding: 0;
+            text-align: left;
 
             img {
-                height: $header-height;
-                padding: 0;
-                margin: 0;
+                height: $header-height-tablet - $spacing-unit-small;
             }
             .Header-topIcon {
                 display: none;
             }
-        }
-
-        @media only screen and (min-width: $breakpoint-medium) {
-            padding-left: $spacing-unit-large;
         }
     }
 
@@ -108,26 +105,11 @@ $header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.05) !default;
         text-align: center;
         text-transform: uppercase;
         font-size: $font-size-tiny;
-        font-weight: bold;
-
-        @media only screen and (min-width: $breakpoint-small) {
-            background: transparent;
-            box-shadow: none;
-            display: flex;
-            flex-grow: 1;
-            font-size: $font-size-large;
-            font-weight: normal;
-            justify-content: flex-end;
-            justify-self: start;
-            text-align: right;
-            text-transform: none;
-        }
 
         a {
             align-items: center;
             display: flex;
             flex-flow: column;
-            flex-grow: 1;
             justify-content: center;
             width: 33.3333%;
 
@@ -143,23 +125,31 @@ $header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.05) !default;
             }
         }
 
-        a.Header-helpButton {
-            @media only screen and (min-width: $breakpoint-small) {
-                display: none;
-            }
-            @media only screen and (min-width: $breakpoint-medium) {
-                display: flex;
-            }
-        }
-
         a:last-child {
             @media only screen and (min-width: $breakpoint-small) {
+                margin-left: 0;
+                padding-left: 0;
+
                 span {
                     display: none;
                 }
-                i.fa {
+                img {
                     display: inline;
                 }
+            }
+        }
+
+        @media only screen and (min-width: $breakpoint-small) {
+            background: transparent;
+            box-shadow: none;
+            display: flex;
+            font-size: $font-size-large;
+            justify-content: flex-end;
+            justify-self: start;
+            text-align: right;
+
+            a img {
+                display: none;
             }
         }
     }

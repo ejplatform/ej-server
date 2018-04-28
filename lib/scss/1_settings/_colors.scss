@@ -42,7 +42,7 @@ $color-yellow-light: #fffeaf !default;
 // Background and text colors
 $color-content: $color-white !default;
 $color-content-text: $color-blue-dark !default;
-$color-content-text-faded: lighten($color-content-text, 40%) !default;
+$color-content-text-faded: $color-blue !default;
 
 // Color schemes
 // Buttons and highlighted elements. Strong highlight, usually applied to
