@@ -1,0 +1,26 @@
+/*
+ MIXINS FOR APPLYING COLORS AND STYLES THAT ARE USUALLY APPLIED TOGETHER
+ =============================================================================*/
+
+@mixin color($which) {
+    @if ($which == 'primary') {
+        color: $color-primary-text;
+        background: $color-primary;
+    }
+    @else if ($which == 'accent') {
+        color: $color-accent-text;
+        background: $color-accent;
+    }
+    @else if ($which == 'hint') {
+        color: $color-hint-text;
+        background: $color-hint;
+    }
+    @else if ($which == 'content') {
+        color: $color-content-text;
+        background: $color-content;
+    }
+    @else {
+        @error "invalid color mixin";
+    }
+}
+

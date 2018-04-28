@@ -155,15 +155,10 @@ def conversation_detail(request, slug, category_slug):
         'comment': comment,
     }
     if comment and request.POST.get('action') == 'vote':
-        if 'agree' in request.POST:
-            comment.vote(request.user, 'agree')
-        elif 'pass' in request.POST:
-            comment.vote(request.user, 'skip')
-        elif 'disagree' in request.POST:
-            comment.vote(request.user, 'disagree')
-        else:
-            raise ValueError('invalid parameter')
-
+        vote = request.POST['vote']
+        if vote not in {'agree', 'skip', 'disagree'}:
+            return HttpResponseServerError('invalid parameter')
+        comment.vote(request.user, vote)
     elif request.POST.get('action') == 'comment':
         comment = request.POST['comment'].strip()
         conversation.create_comment(request.user, comment)

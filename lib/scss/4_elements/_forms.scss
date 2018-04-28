@@ -38,12 +38,16 @@ input,
 textarea,
 select,
 .FormItem {
-    border-radius: 2 * $font-size;
+    border-radius: $font-size-large;
     background: $form-element-color;
     border: 1px solid $form-border-color;
     color: $form-element-color-text;
     margin: $spacing-unit-tiny auto;
-    padding: $spacing-unit-small;
+    padding: $spacing-unit-small ($spacing-unit-small $spacing-unit-tiny);
+}
+
+textarea {
+    height: 6 * $font-size-default;
 }
 
 label {

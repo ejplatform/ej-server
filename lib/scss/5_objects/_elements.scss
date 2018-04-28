@@ -1,9 +1,9 @@
 /*
- DJANGO FORMS STYLING
+ GENERIC PATTERNS FOR HTML ELEMENTS
  =========================================================================== */
 
-ul.errorlist {
-    color: $color-role-error;
+// Remove list styles from ul and ol lists
+.Unlist {
     padding: 0;
 
     li {

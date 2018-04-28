@@ -2,6 +2,7 @@
  CONVERSATIONS
  ======================================================================== */
 
+$conversation-button-size: $spacing-unit-small + $spacing-unit-tiny !default;
 $conversation-card-padding: $spacing-unit-small !default;
 $conversation-card-gutter: $spacing-unit !default;
 $conversation-list-title-font-size-h1: $font-size-h1 !default;
@@ -264,11 +265,83 @@ $conversation-card-border-arrow-size: $spacing-unit;
 }
 
 .Comment {
-    text-align: center;
+    @include color('primary');
+
+    box-sizing: border-box;
+    border-radius: $block-elements-border-radius;
+    font-size: $font-size-h3;
+    padding: $spacing-unit + $spacing-unit-small;
+    margin: 0 auto;
+    max-width: $page-content-width-max;
+
+    i.fa {
+        background: $color-primary-text;
+        border: 2px solid $color-primary-text;
+        border-radius: $spacing-unit-large;
+        padding: $spacing-unit-tiny;
+    }
+
+    &-voteArea {
+        button {
+            padding: 0;
+        }
+
+        ul {
+            display: flex;
+            font-weight: bold;
+            margin: 0;
+            padding: 0;
+            text-transform: uppercase;
+            width: 100%;
+
+            span {
+                font-size: $font-size-small;
+            }
+
+            li {
+                @extend .Col--center;
+                list-style: none;
+                flex-grow: 1;
+
+                i.fa {
+                    color: $color-primary;
+                    background: $color-primary-text;
+                    height: $conversation-button-size;
+                    width: $conversation-button-size;
+                }
+
+            }
+
+            li:first-child i.fa {
+                color: $color-role-ok;
+            }
+
+            li:last-child i.fa {
+                color: $color-role-error;
+            }
+        }
+    }
+
+    &-user {
+        font-size: $font-size-h5;
+        i.fa {
+            color: $color-accent;
+            margin-right: $spacing-unit-small;
+        }
+    }
 }
 
 .CommentForm {
     text-align: center;
+
+    h1 {
+        font-size: $font-size-h3;
+        text-transform: uppercase;
+        margin: $spacing-unit-tiny 0;
+    }
+    p {
+        margin: $spacing-unit-tiny 0;
+    }
 
     textarea {
         display: block;

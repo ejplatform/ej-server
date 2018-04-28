@@ -1,5 +1,6 @@
 from markdown import markdown
 from django.contrib.staticfiles.storage import staticfiles_storage
+from django.conf import settings
 from django.urls import reverse
 from django.utils.translation import ugettext, ungettext
 from jinja2 import Environment
@@ -23,6 +24,7 @@ def environment(**options):
         salt_tag=salt_tag,
         salt=salt,
         social_icons=social_icons,
+        service_worker=getattr(settings, 'SERVICE_WORKER', False),
     )
     env.filters.update(
         markdown=lambda x: Markup(markdown(x)),
@@ -61,11 +63,11 @@ def salted(value):
     have a byte-level control of the message, hence salting must be done in
     unicode data. This brings some problems:
 
-    * How to (efficiently) implement XOR for variable length characters?
+    * How to (efficiently) implement XOR for a large alphabet such as unicode?
     * Xor-ing two valid unicode points will not necessarily yield a valid
       unicode value.
     * Client code needs to recover the encoded data, hence the solution must
-      be
+      be portable to Python and Javascript
     """
     # TODO: how to do it with unicode?
     raise NotImplementedError

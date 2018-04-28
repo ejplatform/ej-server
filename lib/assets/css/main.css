@@ -29,6 +29,9 @@
 /*
  ALIASES
  =============================================================================*/
+/*
+ MIXINS FOR APPLYING COLORS AND STYLES THAT ARE USUALLY APPLIED TOGETHER
+ =============================================================================*/
 /*! normalize.css v7.0.0 | MIT License | github.com/necolas/normalize.css */
 /* Document
    ========================================================================== */
@@ -781,22 +784,22 @@ input[type=submit],
  HEADINGS
  =====================================================================*/
 h1 {
-  font-size: 1.7em; }
+  font-size: 27.2px; }
 
 h2 {
-  font-size: 1.5em; }
+  font-size: 24px; }
 
 h3 {
-  font-size: 1.3em; }
+  font-size: 20.8px; }
 
 h4 {
-  font-size: 1.15em; }
+  font-size: 18.4px; }
 
 h5 {
-  font-size: 1.1em; }
+  font-size: 17.6px; }
 
 h6 {
-  font-size: 1em; }
+  font-size: 16px; }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: "Raleway", sans-serif;
@@ -862,7 +865,7 @@ label,
 select,
 .FormItem {
   box-sizing: border-box;
-  font-size: 1em;
+  font-size: 16px;
   max-width: 550px;
   width: 85%; }
 
@@ -873,17 +876,20 @@ input,
 textarea,
 select,
 .FormItem {
-  border-radius: 32px;
+  border-radius: 18px;
   background: #fff;
   border: 1px solid #999;
   color: #042049;
   margin: 7px auto;
-  padding: 14px; }
+  padding: 14px 14px 7px; }
+
+textarea {
+  height: 96px; }
 
 label {
   color: #042049;
   font-weight: bold;
-  font-size: 1.1em;
+  font-size: 17.6px;
   margin: 0 auto; }
 
 input[type=submit] {
@@ -908,6 +914,20 @@ input[type=submit] {
 
 .CenteredContainer, .Footer > *, .HomeBanner, .HowItWorks > * {
   text-align: center; }
+
+.Col--center, .Comment-voteArea ul li {
+  align-items: center;
+  align-content: stretch;
+  display: flex;
+  flex-flow: column; }
+
+/*
+ GENERIC PATTERNS FOR HTML ELEMENTS
+ =========================================================================== */
+.Unlist {
+  padding: 0; }
+  .Unlist li {
+    list-style: none; }
 
 /*
  DJANGO FORMS STYLING
@@ -974,7 +994,7 @@ ul.errorlist {
     color: #fff;
     margin: 0 0 28px 0; }
     .Page-title h1 {
-      font-size: 1.87em;
+      font-size: 29.92px;
       padding: 14px; }
     .Page-title em {
       font-weight: bold;
@@ -1041,7 +1061,7 @@ ul.errorlist {
       margin: 0;
       z-index: 100; }
     .Header-topNav i.fa {
-      font-size: 1.3em; }
+      font-size: 20.8px; }
     @media only screen and (min-width: 550px) {
       .Header-topNav {
         box-shadow: none;
@@ -1191,7 +1211,7 @@ ul.errorlist {
     display: none; }
     .Register-socialButtons i.fa,
     .Login-socialButtons i.fa {
-      font-size: 1.7em; }
+      font-size: 27.2px; }
   .Register-password,
   .Login-password {
     font-weight: bold;
@@ -1207,7 +1227,7 @@ ul.errorlist {
     .Register-newUser h1,
     .Login-newUser h1 {
       color: #042049;
-      font-size: 1.3em; }
+      font-size: 20.8px; }
 
 /*
  CONVERSATIONS
@@ -1215,9 +1235,9 @@ ul.errorlist {
 .ConversationList-title {
   text-align: center; }
   .ConversationList-title h1 {
-    font-size: 1.7em; }
+    font-size: 27.2px; }
   .ConversationList-title h2 {
-    font-size: 1.3em; }
+    font-size: 20.8px; }
 .ConversationList-categories {
   background: #d6f1f3;
   display: flex;
@@ -1263,7 +1283,7 @@ ul.errorlist {
   .ConversationCard > * {
     padding: 14px; }
   .ConversationCard h1 {
-    font-size: 1.3em;
+    font-size: 20.8px;
     text-transform: none; }
   .ConversationCard-cover {
     background: #30c0d3;
@@ -1370,17 +1390,63 @@ ul.errorlist {
     text-align: center;
     padding-top: 0; }
     .ConversationDetail-header h1 {
-      font-size: 1.3em;
+      font-size: 20.8px;
       text-transform: uppercase;
       margin-bottom: 7px; }
     .ConversationDetail-header p {
       margin-top: 7px; }
 
 .Comment {
-  text-align: center; }
+  color: #fff;
+  background: #30c0d3;
+  box-sizing: border-box;
+  border-radius: 56px;
+  font-size: 20.8px;
+  padding: 42px;
+  margin: 0 auto;
+  max-width: 700px; }
+  .Comment i.fa {
+    background: #fff;
+    border: 2px solid #fff;
+    border-radius: 56px;
+    padding: 7px; }
+  .Comment-voteArea button {
+    padding: 0; }
+  .Comment-voteArea ul {
+    display: flex;
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+    text-transform: uppercase;
+    width: 100%; }
+    .Comment-voteArea ul span {
+      font-size: 14px; }
+    .Comment-voteArea ul li {
+      list-style: none;
+      flex-grow: 1; }
+      .Comment-voteArea ul li i.fa {
+        color: #30c0d3;
+        background: #fff;
+        height: 21px;
+        width: 21px; }
+    .Comment-voteArea ul li:first-child i.fa {
+      color: #22b35c; }
+    .Comment-voteArea ul li:last-child i.fa {
+      color: #f13c20; }
+  .Comment-user {
+    font-size: 17.6px; }
+    .Comment-user i.fa {
+      color: #ff3e72;
+      margin-right: 14px; }
 
 .CommentForm {
   text-align: center; }
+  .CommentForm h1 {
+    font-size: 20.8px;
+    text-transform: uppercase;
+    margin: 7px 0; }
+  .CommentForm p {
+    margin: 7px 0; }
   .CommentForm textarea {
     display: block;
     min-height: 48px; }
@@ -1390,7 +1456,7 @@ ul.errorlist {
  ======================================================================== */
 .HomeBanner h2 {
   display: none;
-  font-size: 1.3em; }
+  font-size: 20.8px; }
   @media only screen and (min-width: 550px) {
     .HomeBanner h2 {
       display: inherit; } }
@@ -1399,7 +1465,7 @@ ul.errorlist {
   background: #d6f1f3;
   padding-top: 56px; }
   .HowItWorks h2 {
-    font-size: 1.15em; }
+    font-size: 18.4px; }
 
 .HowItWorksCard {
   text-align: left;
@@ -1407,7 +1473,7 @@ ul.errorlist {
   display: flex;
   border-top: 1px solid rgba(17, 17, 17, 0.1); }
   .HowItWorksCard h1 {
-    font-size: 1.3em; }
+    font-size: 20.8px; }
     .HowItWorksCard h1 i {
       padding-left: 14px;
       float: right; }
@@ -1424,7 +1490,7 @@ ul.errorlist {
     color: #666;
     display: block;
     flex-grow: 0;
-    font-size: 2.55em;
+    font-size: 40.8px;
     margin: 28px 0;
     text-align: center;
     min-width: 70px; }
@@ -1443,7 +1509,7 @@ ul.errorlist {
   padding: 28px;
   text-align: center; }
   .StartNow h2 {
-    font-size: 1.15em; }
+    font-size: 18.4px; }
 
 /*
  USER PROFILE VIEWS
@@ -1454,10 +1520,10 @@ ul.errorlist {
   .Profile h1 {
     margin-bottom: 0;
     color: #123066;
-    font-size: 1.7em; }
+    font-size: 27.2px; }
   .Profile h2 {
     color: #d6f1f3;
-    font-size: 1.15em;
+    font-size: 18.4px;
     margin-top: 0; }
   .Profile-actions p, .Profile-actions form {
     text-align: center; }
@@ -1496,7 +1562,7 @@ ul.errorlist {
   .Profile-tabLinks {
     display: flex;
     justify-content: space-around;
-    font-size: 1.1em;
+    font-size: 17.6px;
     font-weight: normal;
     text-transform: uppercase; }
     .Profile-tabLinks > * {
@@ -1510,7 +1576,7 @@ ul.errorlist {
     background: #d6f1f3;
     text-align: left; }
   .Profile-info {
-    font-size: 1em;
+    font-size: 16px;
     padding: 56px; }
     .Profile-info .Button, .Profile-info .ActionButton, .Profile-info .RocketButton {
       text-transform: none; }
@@ -1520,7 +1586,7 @@ ul.errorlist {
       color: #042049;
       text-transform: lowercase; }
     .Profile-info dl dd {
-      font-size: 1.1em;
+      font-size: 17.6px;
       font-weight: bold;
       margin: 0 0 14px 0;
       color: #123066; }
@@ -1597,7 +1663,7 @@ ul.errorlist {
     .ColorStyles .color-green span:first-child {
       background: #bdffce; }
     .ColorStyles .color-green span:last-child {
-      background: #3a997a; }
+      background: #22b35c; }
   .ColorStyles .color-magenta {
     background: #ff3e72;
     color: white; }

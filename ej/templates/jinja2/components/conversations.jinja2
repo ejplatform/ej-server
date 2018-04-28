@@ -121,16 +121,33 @@
 
 {% macro comment_detail(comment, user) %}
     <div class="Comment">
-        <div>{{ comment.author.name }}</div>
+        <div class="Comment-user">
+            <i class="fa fa-user"></i><span>{{ comment.author.name }}</span>
+        </div>
         <p>{{ comment.content }}</p>
         {% if user.is_authenticated %}
-            <form method="post">
+            <form method="post" class="Comment-voteArea" id="Comment-form">
                 {{ csrf_input }}
                 <input type="hidden" name="action" value="vote">
                 <ul class="ConversationComment-actions">
-                    <li><input type="submit" value="Concordo" name="agree"></li>
-                    <li><input type="submit" value="Passo" name="pass"></li>
-                    <li><input type="submit" value="Discordo" name="disagree"></li>
+                    <li up-expand>
+                        <button type="submit" form="Comment-form" name="vote" value="agree">
+                            <i class="fa fa-check"></i>
+                        </button>
+                        <span>{{ _('Agree') }}</span>
+                    </li>
+                    <li up-expand>
+                        <button type="submit" form="Comment-form" name="vote" value="skip">
+                            <i class="fa fa-arrow-right"></i>
+                        </button>
+                        <span>{{ _('Skip') }}</span>
+                    </li>
+                    <li up-expand>
+                        <button type="submit" form="Comment-form" name="vote" value="disagree">
+                            <i class="fa fa-times"></i>
+                        </button>
+                        <span>{{ _('Disagree') }}</span>
+                    </li>
                 </ul>
             </form>
         {% else %}
@@ -144,12 +161,15 @@
 
 {% macro comment_form() %}
     <div class="CommentForm">
-        <h1>Envie um comentário</h1>
+        <h1>Deixe a sua opinião</h1>
+        <p>Inclua uma nova opinião. Evite postar opiniões semelhantes a outros
+            usuários.
+        </p>
         <form method="post">
             {{ csrf_input }}
             <input type="hidden" name="action" value="comment">
             <textarea name="comment"></textarea>
-            <input type="submit" name="submit" value="Enviar comentário">
+            <input type="submit" name="submit" value="Opinar" primary>
         </form>
     </div>
 {% endmacro %}

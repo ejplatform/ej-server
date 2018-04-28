@@ -23,3 +23,11 @@
     text-align: center;
 }
 
+// Flex box based layouts
+.Col--center {
+    align-items: center;
+    align-content: stretch;
+    display: flex;
+    flex-flow: column;
+}
+

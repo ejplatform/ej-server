@@ -1,5 +1,6 @@
 {% from 'components/generic/elements.jinja2' import link %}
 
+
 {% macro menu() %}
     <nav class="NavMenu">
         <ul>
@@ -13,6 +14,7 @@
         </ul>
     </nav>
 {% endmacro %}
+
 
 {% macro icon_link(text, href, icon, fa=True) %}
     {%- call link(href) %}
