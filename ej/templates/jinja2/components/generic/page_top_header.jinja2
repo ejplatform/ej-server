@@ -1,0 +1,20 @@
+{# Page top_header with links and other information #}
+{% macro page_top_header(social_media_icons) %}
+  <div class="TopHeader">
+    <div class="TopHeader-wrapper">
+      <ul class="TopHeader-links">
+          <li>sobre</li>
+          <li>perguntas frequentes</li>
+          <li>termos de uso</li>
+      </ul>
+
+      <div class="TopHeader-social">
+          <ul class="TopHeader-icons">
+            {% for icon in social_media_icons %}
+              <li>{{ icon.icon_tag(classes=[icon.icon_name])|safe }}</li>
+            {% endfor %}
+          </ul>
+      </div>
+    </div>
+  </div>
+{% endmacro %}
