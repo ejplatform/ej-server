@@ -1,0 +1,66 @@
+{% extends 'base.jinja2' %}
+
+{% set content_title = 'Rocker Intro' %}
+{% set hide_footer = True %}
+
+
+
+
+{% block main %}
+<div class="Rocket">
+    <div class="Rocket-title">
+        <span>Oi! Bem vindo ao </span>
+
+        <h1>PAINEL CPA</h1>
+        <h2>Comitê de Participação do Adolescente</h2>
+
+    </div>
+    <p class="Rocket-detail">
+        Utilize esse espaço para abrir canais de debate em temas específicos onde todas e todos podem entrar, colocar suas próprias ideias e interagir para construir propostas e ações coletivas!
+    </p>
+
+    <div class="Rocket-items">
+        <div class="title"> Aqui você pode: </div>
+        <div class="item">
+            <div class="item-position">1</div>
+            <div class="item-content">criar e participar de CANAIS de diálogo sobre infinitos assuntos</div>
+        </div>
+
+        <div class="item">
+            <div class="item-position">2</div>
+            <div class="item-content">interagir nos debates de maneira estruturada, com respostas a comentários, menções a participantes, anexo de documentos e mais!</div>
+        </div>
+
+        <div class="item">
+            <div class="item-position">3</div>
+            <div class="item-content">acessar e interagir com os grupos do TELEGRAM integrados aqui no painel</div>
+        </div>
+    </div>
+    <div class="Rocket-action">
+        <a href="/directory" class="Button" primary="">Acesse os canais</a>
+    </div>
+</div>
+{# 
+    <iframe class="RocketIFrame"
+    id="myIframe"
+            src="{{rocketchat_url}}"
+            style="width: 100vw; height: 100%">
+    </iframe>
+            <script>
+
+
+
+                window.onload = function() {
+                    alert('bli');
+                                
+$('.RocketIFrame').ready( function() {
+    $('.RocketIFrame').contents().find("head")
+                    alert('bla');
+
+});
+                }
+            </script> #}
+
+
+{% endblock %}
+

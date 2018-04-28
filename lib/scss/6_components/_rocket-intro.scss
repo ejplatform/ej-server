@@ -1,0 +1,53 @@
+.Rocket {
+    &-title {
+        color: $color-hint;
+        font-weight: bold;
+        padding: 0 $spacing-unit-small;
+
+        h1{
+            color: $color-accent;
+            font-weight: bold;
+
+        }
+        h2{
+            color: $color-green;
+            font-weight: bold;
+
+        }
+    }
+    &-detail {
+        padding: $spacing-unit-small;
+    }
+    &-items {
+        background-color: $color-hint;
+        padding: $spacing-unit-small;
+
+        .title{
+            padding: $spacing-unit-small 0;
+            color: $color-green;
+            font-weight: bold;
+        }
+        .item{
+            padding: $spacing-unit-tiny;
+
+
+            .item-position{
+                color: $color-accent;
+                font-size: $font-size-huge;
+                width: auto;
+                float: left;
+            }
+            .item-content{
+                padding-left: $spacing-unit;
+                width: auto;
+            }
+        }
+        
+    }
+
+    &-action {
+        text-align: center;
+        padding: $spacing-unit-tiny;
+    }
+
+}
