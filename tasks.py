@@ -23,6 +23,7 @@ def sass(ctx, no_watch=False, trace=False):
     """
     suffix = '' if no_watch else ' --watch'
     suffix += ' --trace' if trace else ''
+    ctx.run('sass lib/scss/rocket.scss:lib/assets/css/rocket.css' + suffix, pty=True)
     ctx.run('sass lib/scss/main.scss:lib/assets/css/main.css' + suffix, pty=True)
 
 

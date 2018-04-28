@@ -204,6 +204,11 @@ def rocket(request):
     return render(request, 'pages/rocket.jinja2', ctx)
 
 
+@route('rocket-intro/', login_required=True)
+def rocket(request):
+    return render(request, 'pages/rocket-intro.jinja2')
+
+
 #
 # Non-html data
 #
