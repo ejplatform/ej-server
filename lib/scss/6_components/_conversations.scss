@@ -33,23 +33,25 @@ $conversation-card-border-arrow-size: $spacing-unit;
     }
 
     &-categories {
+        align-items: center;
         background: $color-hint;
         display: flex;
         margin: $spacing-unit 0;
         justify-content: space-between;
-        padding: $spacing-unit-small;
+        padding: $spacing-unit-tiny;
         text-transform: lowercase;
 
-        > * {
-            margin: 0 $spacing-unit-small;
-        }
-        i {
+        i.fa {
+            display: block;
             color: $color-primary;
+            margin: 0 $spacing-unit-tiny;
         }
-        a {
+
+        a.color-accent {
             color: $color-accent;
             font-weight: bold;
         }
+
         ul {
             display: flex;
             flex-grow: 1;
@@ -63,6 +65,7 @@ $conversation-card-border-arrow-size: $spacing-unit;
                 list-style: none;
                 a {
                     color: $color-hint-text;
+                    font-weight: normal;
                 }
             }
         }

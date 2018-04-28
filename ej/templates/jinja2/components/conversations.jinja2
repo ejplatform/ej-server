@@ -18,8 +18,8 @@
         {% if categories %}
             <div class="ConversationList-categories">
                 <i class="fa fa-chevron-left"></i>
-                {{ link(_('All'), href='/conversations/') }}
                 <ul>
+                    <li>{{ link(_('All'), href='/conversations/', class='color-accent') }}</li>
                     {% for category in categories %}
                         <li>{{ link(category, href=category.get_absolute_url()) }}</li>
                     {% endfor %}

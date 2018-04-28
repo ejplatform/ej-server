@@ -1239,17 +1239,18 @@ ul.errorlist {
   .ConversationList-title h2 {
     font-size: 20.8px; }
 .ConversationList-categories {
+  align-items: center;
   background: #d6f1f3;
   display: flex;
   margin: 28px 0;
   justify-content: space-between;
-  padding: 14px;
+  padding: 7px;
   text-transform: lowercase; }
-  .ConversationList-categories > * {
-    margin: 0 14px; }
-  .ConversationList-categories i {
-    color: #30c0d3; }
-  .ConversationList-categories a {
+  .ConversationList-categories i.fa {
+    display: block;
+    color: #30c0d3;
+    margin: 0 7px; }
+  .ConversationList-categories a.color-accent {
     color: #ff3e72;
     font-weight: bold; }
   .ConversationList-categories ul {
@@ -1263,7 +1264,8 @@ ul.errorlist {
       margin: 0 7px;
       list-style: none; }
       .ConversationList-categories ul li a {
-        color: #042049; }
+        color: #042049;
+        font-weight: normal; }
 .ConversationList-cardList {
   display: flex;
   flex-wrap: wrap;
