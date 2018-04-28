@@ -35,3 +35,7 @@ You have to modify some Django settings to complete the integration. First go to
 * `ROCKETCHAT_USER_ID`: set to the admin ID got on the `curl` command.
 
 Now each time you try to access Rocketchat without django authentication, the user will be redirected to the EJ login page.
+
+Got to `Administration > Layout > Content` and put the content of the main block in rocket-intro.jinja2 file on Layout Home Body.
+
+Get the content of lib/assets/css/rocket.css and put it on custom css section at `Administration > Layout > Custom CSS`
