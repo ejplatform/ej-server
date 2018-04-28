@@ -26,7 +26,7 @@ select,
 .FormItem {
     box-sizing: border-box;
     font-size: $font-size-h6;
-    max-width: 0.85 * $breakpoint-small;
+    max-width: $breakpoint-small;
     width: 85%;
 }
 
@@ -47,7 +47,7 @@ select,
 }
 
 label {
-    color: $color-content-text-faded;
+    color: $color-content-text;
     font-weight: bold;
     font-size: $font-size-h5;
     margin: 0 auto;

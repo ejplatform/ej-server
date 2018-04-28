@@ -2,19 +2,19 @@
  GENERIC CONTAINER PATTERNS
  =========================================================================== */
 
-
 .Container {
-    padding: 0 0 $spacing-unit-small 0;
+    box-sizing: border-box;
     margin: 0 auto;
-    max-width: $breakpoint-medium;
+    max-width: $content-wrapper-max-width;
+    padding: 0 0 $spacing-unit-small 0;
 
     @media only screen and (min-width: $breakpoint-small) {
-        padding: 0 $spacing-unit-large $spacing-unit $spacing-unit-large;
+        padding: 0 $spacing-unit $spacing-unit $spacing-unit;
     }
 
     @media only screen and (min-width: $breakpoint-large) {
-        padding: 0 $spacing-unit-huge $spacing-unit $spacing-unit-huge;
-        max-width: ($breakpoint-medium + $breakpoint-large) / 2;
+        max-width: $content-wrapper-max-width;
+        padding: 0 0 $spacing-unit-large 0;
     }
 }
 

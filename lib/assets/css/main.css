@@ -824,6 +824,7 @@ main {
   width: 100%; }
 
 a {
+  color: #ff3e72;
   line-height: 1.2;
   text-decoration: none;
   text-decoration-style: solid; }
@@ -843,6 +844,9 @@ img {
   font-style: italic;
   vertical-align: middle; }
 
+iframe, embed, object {
+  border: none; }
+
 /*
  UNSTYLED FORM ELEMENTS
  ======================================================================== */
@@ -859,7 +863,7 @@ select,
 .FormItem {
   box-sizing: border-box;
   font-size: 1em;
-  max-width: 510px;
+  max-width: 550px;
   width: 85%; }
 
 input, textarea {
@@ -877,7 +881,7 @@ select,
   padding: 14px; }
 
 label {
-  color: #2679f3;
+  color: #042049;
   font-weight: bold;
   font-size: 1.1em;
   margin: 0 auto; }
@@ -890,16 +894,17 @@ input[type=submit] {
  GENERIC CONTAINER PATTERNS
  =========================================================================== */
 .Container, .CenteredContainer, .Footer > *, .HomeBanner, .HowItWorks > *, .Page-title h1, .ConversationList, .StartNow > *, .Profile, .ProfileEdit {
-  padding: 0 0 14px 0;
+  box-sizing: border-box;
   margin: 0 auto;
-  max-width: 800px; }
-  @media only screen and (min-width: 600px) {
+  max-width: 800px;
+  padding: 0 0 14px 0; }
+  @media only screen and (min-width: 550px) {
     .Container, .CenteredContainer, .Footer > *, .HomeBanner, .HowItWorks > *, .Page-title h1, .ConversationList, .StartNow > *, .Profile, .ProfileEdit {
-      padding: 0 56px 28px 56px; } }
+      padding: 0 28px 28px 28px; } }
   @media only screen and (min-width: 1200px) {
     .Container, .CenteredContainer, .Footer > *, .HomeBanner, .HowItWorks > *, .Page-title h1, .ConversationList, .StartNow > *, .Profile, .ProfileEdit {
-      padding: 0 112px 28px 112px;
-      max-width: 1000px; } }
+      max-width: 800px;
+      padding: 0 0 56px 0; } }
 
 .CenteredContainer, .Footer > *, .HomeBanner, .HowItWorks > * {
   text-align: center; }
@@ -953,10 +958,10 @@ ul.errorlist {
   flex-flow: column;
   height: 100vh;
   overflow: hidden;
-  padding: 64px 0 69px 0; }
-  @media only screen and (min-width: 600px) {
+  padding: 68px 0 73px 0; }
+  @media only screen and (min-width: 550px) {
     .Page {
-      padding: 76.8px 0 0 0; } }
+      padding: 81.6px 0 0 0; } }
   .Page-mainContainer {
     box-sizing: border-box;
     height: 100vh;
@@ -971,6 +976,9 @@ ul.errorlist {
     .Page-title h1 {
       font-size: 1.87em;
       padding: 14px; }
+    .Page-title em {
+      font-weight: bold;
+      font-style: normal; }
   .Page-content {
     flex-grow: 1;
     margin: 0 auto;
@@ -980,9 +988,9 @@ ul.errorlist {
  PAGE HEADER
  ============================================================================ */
 .Header {
+  background: #fff;
   box-sizing: border-box;
   color: #042049;
-  background: #fff;
   margin: 0;
   z-index: 100; }
   .Header ul {
@@ -991,17 +999,21 @@ ul.errorlist {
     color: #042049; }
   .Header a:hover {
     color: #042049; }
-  @media only screen and (min-width: 600px) {
+  @media only screen and (min-width: 550px) {
     .Header {
-      align-items: center;
       box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
       background: #fff;
-      display: flex;
-      height: 76.8px;
-      justify-content: space-between;
+      height: 81.6px;
+      padding: 7px 0;
       position: fixed;
       top: 0;
-      width: 100vw; } }
+      width: 100vw; }
+      .Header-wrapper {
+        align-items: center;
+        display: flex;
+        justify-content: space-between;
+        margin: 0 auto;
+        max-width: 912px; } }
   .Header-topNav, .Header-lowerNav {
     align-items: center;
     box-sizing: border-box;
@@ -1012,90 +1024,77 @@ ul.errorlist {
     margin: 0;
     position: fixed;
     width: 100vw; }
-    @media only screen and (min-width: 600px) {
+    @media only screen and (min-width: 550px) {
       .Header-topNav, .Header-lowerNav {
         box-shadow: none;
         display: block;
         position: initial;
         width: initial; } }
   .Header-topNav {
-    height: 64px;
-    min-width: 92px;
+    height: 68px;
+    min-width: 96px;
     padding: 0 28px 0 28px;
     top: 0; }
     .Header-topNav img {
-      height: 50px;
       box-sizing: border-box;
-      margin: 0; }
+      height: 54px;
+      margin: 0;
+      z-index: 100; }
     .Header-topNav i.fa {
       font-size: 1.3em; }
-    .Header-topNav i.fa-chevron-left[href="/"] {
-      visibility: hidden; }
-    @media only screen and (min-width: 600px) {
+    @media only screen and (min-width: 550px) {
       .Header-topNav {
         box-shadow: none;
-        display: flex;
-        justify-content: start;
         margin: 0;
-        padding: 0 0 0 28px; }
+        padding: 0;
+        text-align: left; }
         .Header-topNav img {
-          height: 76.8px;
-          padding: 0;
-          margin: 0; }
+          height: 67.6px; }
         .Header-topNav .Header-topIcon {
           display: none; } }
-    @media only screen and (min-width: 800px) {
-      .Header-topNav {
-        padding-left: 56px; } }
   .Header-lowerNav {
     align-items: stretch;
     bottom: 0;
     box-shadow: 0 -2px 4px 0 rgba(0, 0, 0, 0.05);
-    height: 69px;
+    height: 73px;
     text-align: center;
     text-transform: uppercase;
-    font-size: 12px;
-    font-weight: bold; }
-    @media only screen and (min-width: 600px) {
-      .Header-lowerNav {
-        background: transparent;
-        box-shadow: none;
-        display: flex;
-        flex-grow: 1;
-        font-size: 18px;
-        font-weight: normal;
-        justify-content: flex-end;
-        justify-self: start;
-        text-align: right;
-        text-transform: none; } }
+    font-size: 12px; }
     .Header-lowerNav a {
       align-items: center;
       display: flex;
       flex-flow: column;
-      flex-grow: 1;
       justify-content: center;
       width: 33.3333%; }
       .Header-lowerNav a > * {
         display: block; }
-      @media only screen and (min-width: 600px) {
+      @media only screen and (min-width: 550px) {
         .Header-lowerNav a {
           color: #042049;
           display: flex;
           flex-flow: row-reverse;
           margin-left: 28px; } }
-    @media only screen and (min-width: 600px) {
-      .Header-lowerNav a.Header-helpButton {
-        display: none; } }
-    @media only screen and (min-width: 800px) {
-      .Header-lowerNav a.Header-helpButton {
-        display: flex; } }
-    @media only screen and (min-width: 600px) {
-      .Header-lowerNav a:last-child span {
-        display: none; }
-      .Header-lowerNav a:last-child i.fa {
-        display: inline; } }
+    @media only screen and (min-width: 550px) {
+      .Header-lowerNav a:last-child {
+        margin-left: 0;
+        padding-left: 0; }
+        .Header-lowerNav a:last-child span {
+          display: none; }
+        .Header-lowerNav a:last-child img {
+          display: inline; } }
+    @media only screen and (min-width: 550px) {
+      .Header-lowerNav {
+        background: transparent;
+        box-shadow: none;
+        display: flex;
+        font-size: 18px;
+        justify-content: flex-end;
+        justify-self: start;
+        text-align: right; }
+        .Header-lowerNav a img {
+          display: none; } }
   .Header-lowerIcon {
-    height: 36px;
+    height: 40px;
     margin-bottom: 7px; }
 
 /*
@@ -1105,7 +1104,7 @@ ul.errorlist {
   background: #a4d8dd;
   box-sizing: border-box;
   color: #042049;
-  height: 0 64px;
+  height: 0 68px;
   padding: 14px; }
   .Footer-social p {
     font-size: 16px; }
@@ -1299,7 +1298,7 @@ ul.errorlist {
     font-size: 12px; }
     .ConversationCard-statistics li {
       list-style: none; }
-  @media only screen and (min-width: 600px) {
+  @media only screen and (min-width: 550px) {
     .ConversationCard {
       max-width: 47%; } }
   @media only screen and (min-width: 1200px) {
@@ -1334,7 +1333,7 @@ ul.errorlist {
 .HomeBanner h2 {
   display: none;
   font-size: 1.3em; }
-  @media only screen and (min-width: 600px) {
+  @media only screen and (min-width: 550px) {
     .HomeBanner h2 {
       display: inherit; } }
 
@@ -1354,7 +1353,7 @@ ul.errorlist {
     .HowItWorksCard h1 i {
       padding-left: 14px;
       float: right; }
-      @media only screen and (min-width: 600px) {
+      @media only screen and (min-width: 550px) {
         .HowItWorksCard h1 i {
           display: none; } }
   .HowItWorksCard p {
@@ -1373,7 +1372,7 @@ ul.errorlist {
     min-width: 70px; }
   .HowItWorksCard-extra {
     display: none; }
-    @media only screen and (min-width: 600px) {
+    @media only screen and (min-width: 550px) {
       .HowItWorksCard-extra {
         display: block; }
         .HowItWorksCard-extra .Button, .HowItWorksCard-extra .ActionButton, .HowItWorksCard-extra .RocketButton, .HowItWorksCard-extra .RocketButton, .HowItWorksCard-extra button {
@@ -1396,7 +1395,7 @@ ul.errorlist {
   .Profile h1 {
     margin-bottom: 0; }
   .Profile h2 {
-    color: #2679f3;
+    color: #30c0d3;
     font-size: 1.15em;
     margin-top: 0; }
   .Profile-breadcrumbs {
@@ -1423,7 +1422,7 @@ ul.errorlist {
     .Profile-info > * {
       display: block; }
     .Profile-info dl dt {
-      color: #2679f3;
+      color: #30c0d3;
       text-transform: lowercase; }
     .Profile-info dl dd {
       font-size: 1.1em;

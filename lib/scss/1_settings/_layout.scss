@@ -3,16 +3,18 @@
  =========================================================================== */
 
 // Media query break points
-$breakpoint-small: 600px;
+$breakpoint-small: 550px;
 $breakpoint-medium: 800px;
 $breakpoint-large: 1200px;
 
 // Page header layout
-$header-icon-size: 36px !default;
+$header-icon-size: 40px !default;
 $header-logo-size: $header-icon-size + $spacing-unit-small !default;
 $header-top-nav-height: $header-logo-size + 2 * $spacing-unit-tiny !default;
 $header-bottom-nav-height: $header-icon-size + 3 * $spacing-unit-tiny + $font-size-tiny !default;
-$header-height: $header-top-nav-height * 1.2 !default;
+$header-height-tablet: $header-top-nav-height * 1.2 !default;
 
 // Custom page layout
 $page-content-width-max: 700px !default;
+$content-wrapper-max-width: $breakpoint-medium !default;
+$header-wrapper-max-width: $content-wrapper-max-width + 2 * $spacing-unit-large !default;

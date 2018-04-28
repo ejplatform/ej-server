@@ -13,7 +13,7 @@ $page-title-font-size: 1.1 * $font-size-h1;
     padding: $header-top-nav-height 0 $header-bottom-nav-height 0;
 
     @media only screen and (min-width: $breakpoint-small) {
-        padding: $header-height 0 0 0;
+        padding: $header-height-tablet 0 0 0;
     }
 
     &-mainContainer {
@@ -35,6 +35,11 @@ $page-title-font-size: 1.1 * $font-size-h1;
 
             font-size: $page-title-font-size;
             padding: $spacing-unit-small;
+        }
+
+        em {
+            font-weight: bold;
+            font-style: normal;
         }
     }
 

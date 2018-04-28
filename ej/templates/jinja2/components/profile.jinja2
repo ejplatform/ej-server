@@ -4,7 +4,6 @@
 {% macro profile_edit(profile, form, csrf_input) %}
     <div class="ProfileEdit">
         <div class="Profile-breadcrumbs">{{ breadcrumbs([('profile', _('Profile')), ('edit', _('Edit'))]) }}</div>
-        <h1>Editar perfil: <em>{{ profile.name }}</em></h1>
         <form method="post" show-labels>
             {{ csrf_input }}
             {{ form.as_p() }}

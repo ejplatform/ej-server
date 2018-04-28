@@ -5,8 +5,10 @@
 {# Generate the header element #}
 {% macro page_header() %}
     <header class="Header">
-        {{ header_top_nav() }}
-        {{ header_lower_nav() }}
+        <div class="Header-wrapper">
+            {{ header_top_nav() }}
+            {{ header_lower_nav() }}
+        </div>
     </header>
 {% endmacro %}
 
@@ -20,7 +22,8 @@
             <img src="/static/img/logo/logo.svg" alt="EJ logo">
         {% endcall %}
 
-        <a href="/menu/" title="{{ _("Navigation menu") }}" up-drawer=".NavMenu" up-history="false" class="Header-topIcon">
+        <a href="/menu/" title="{{ _("Navigation menu") }}" up-drawer=".NavMenu" up-history="false"
+           class="Header-topIcon">
             <i class="fa fa-bars"></i>
         </a>
     </nav>
@@ -33,9 +36,9 @@
             <span>{{ _('Conversations') }}</span>
         {% endcall %}
 
-        {% call link('/talks/', title=_('Canais'), preload=True) %}
-            <img src="/static/img/icons/talks.svg" title="{{ _('Canais') }}" class="Header-lowerIcon">
-            <span>{{ _('Channels') }}</span>
+        {% call link('/talks/', title=_('Talks'), preload=True) %}
+            <img src="/static/img/icons/talks.svg" title="{{ _('Talks') }}" class="Header-lowerIcon">
+            <span>{{ _('Talks') }}</span>
         {% endcall %}
 
         {% call link('/profile/', title=_('Profile'), preload=True) %}
