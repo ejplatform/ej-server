@@ -11,6 +11,7 @@ $breakpoint-large: 1200px;
 $header-icon-size: 40px !default;
 $header-logo-size: $header-icon-size + $spacing-unit-small !default;
 $header-top-nav-height: $header-logo-size + 2 * $spacing-unit-tiny !default;
+$top-header-height: 40px !default;
 $header-bottom-nav-height: $header-icon-size + 3 * $spacing-unit-tiny + $font-size-tiny !default;
 $header-height-tablet: $header-top-nav-height * 1.2 !default;
 
