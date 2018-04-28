@@ -6,8 +6,8 @@
  #---------------------------------------------------------------------------#}
 {% macro conversation_list(conversations,
                            categories,
-                           title=_('Conversas ativas agora'),
-                           subtitle=_('Veja abaixo algumas das conversas ativas e dê sua opinião')) %}
+                           title=_('Active conversations'),
+                           subtitle=_('See some active conversations and give your opinion')) %}
     <div class="ConversationList">
         <div class="ConversationList-title">
             {% if caller %}{{ caller() }}{% endif %}
@@ -15,16 +15,18 @@
             <h2>{{ subtitle }}</h2>
         </div>
 
-        <div class="ConversationList-categories">
-            <i class="fa fa-chevron-left"></i>
-            {{ link(_('All'), href='/conversations/') }}
-            <ul>
-                {% for category in categories %}
-                    <li>{{ link(category, href=category.get_absolute_url()) }}</li>
-                {% endfor %}
-            </ul>
-            <i class="fa fa-chevron-right"></i>
-        </div>
+        {% if categories %}
+            <div class="ConversationList-categories">
+                <i class="fa fa-chevron-left"></i>
+                {{ link(_('All'), href='/conversations/') }}
+                <ul>
+                    {% for category in categories %}
+                        <li>{{ link(category, href=category.get_absolute_url()) }}</li>
+                    {% endfor %}
+                </ul>
+                <i class="fa fa-chevron-right"></i>
+            </div>
+        {% endif %}
 
         {# Cards #}
         <div class="ConversationList-cardList">

@@ -48,7 +48,7 @@
     </div>
 
     <div class="Profile-conversations">
-        {{ profile_conversations(profile) }}
+        {{ profile_conversations(profile, categories) }}
     </div>
 
     <div class="Profile-rocket">
@@ -94,10 +94,12 @@
     </div>
 {% endmacro %}
 
-{% macro profile_conversations(profile) %}
-    {{ conversation_list(profile.conversations.all(), false, _('Joined conversations')) }}
+
+{% macro profile_conversations(profile, conversations) %}
+    {{ conversation_list(profile.conversations.all(), [], _('Joined conversations')) }}
     <p><a href="/conversations" class="Button" primary>{{ _('More conversations') }}</a></p>
 {% endmacro %}
+
 
 {% macro profile_rocket(profile) %}
     <h2>{{ _('CPA Space') }}</h2>
