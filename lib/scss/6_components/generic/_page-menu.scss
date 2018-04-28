@@ -15,16 +15,6 @@ $nav-menu-shadow: $box-shadow;
 $nav-menu-width: 75vw !default;
 
 // Element
-.up-modal-content {
-    margin: 0;
-    padding: 0;
-}
-
-.up-modal-close {
-    color: $nav-menu-color-text;
-    margin: $spacing-unit -$spacing-unit-small 0 0;
-}
-
 .NavMenu {
     background: $nav-menu-color;
     box-shadow: $nav-menu-shadow;

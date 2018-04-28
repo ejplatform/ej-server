@@ -6,8 +6,8 @@
 // Top and botton navigation bars. Styled as content, but can be overriden.
 $header-color: $color-content !default;
 $header-color-text: $color-content-text !default;
-$header-shadow: 0 0 10px 0px rgba(50, 50, 50, 0.5) !default;
-$logo-width: 84px !default;
+$header-box-shadow-upper: 0 2px 4px 0 rgba(0, 0, 0, 0.05) !default;
+$header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.05) !default;
 
 // Component
 .Header {
@@ -27,10 +27,9 @@ $logo-width: 84px !default;
     a:hover {
         color: $header-color-text;
     }
-
     @media only screen and (min-width: $breakpoint-small) {
         align-items: center;
-        box-shadow: $header-shadow;
+        box-shadow: $header-box-shadow-upper;
         background: $header-color;
         display: flex;
         height: $header-height;
@@ -45,12 +44,11 @@ $logo-width: 84px !default;
     &-lowerNav {
         align-items: center;
         box-sizing: border-box;
-        box-shadow: $header-shadow;
+        box-shadow: $header-box-shadow-upper;
         background: $header-color;
         display: flex;
         justify-content: space-between;
         margin: 0;
-        padding: 0 $spacing-unit 0 0;
         position: fixed;
         width: 100vw;
 
@@ -64,13 +62,20 @@ $logo-width: 84px !default;
 
     &-topNav {
         height: $header-top-nav-height;
-        min-width: $spacing-unit-large + $logo-width;
+        min-width: $spacing-unit-large + $header-icon-size;
+        padding: 0 $spacing-unit 0 $spacing-unit;
         top: 0;
 
         img {
-            height: 0.8 * $header-top-nav-height;
+            height: $header-logo-size;
             box-sizing: border-box;
             margin: 0;
+        }
+        i.fa {
+            font-size: $font-size-h3;
+        }
+        i.fa-chevron-left[href="/"] {
+            visibility: hidden;
         }
 
         @media only screen and (min-width: $breakpoint-small) {
@@ -96,13 +101,14 @@ $logo-width: 84px !default;
     }
 
     &-lowerNav {
+        align-items: stretch;
         bottom: 0;
-        box-shadow: $header-shadow;
+        box-shadow: $header-box-shadow-lower;
         height: $header-bottom-nav-height;
-        font-size: $font-size-small;
-        font-weight: bold;
-        text-transform: lowercase;
         text-align: center;
+        text-transform: uppercase;
+        font-size: $font-size-tiny;
+        font-weight: bold;
 
         @media only screen and (min-width: $breakpoint-small) {
             background: transparent;
@@ -119,21 +125,14 @@ $logo-width: 84px !default;
 
         a {
             align-items: center;
-            color: $color-content-text-faded;
+            display: flex;
+            flex-flow: column;
+            flex-grow: 1;
+            justify-content: center;
+            width: 33.3333%;
 
-            i.fa {
-                color: $color-content-text;
+            > * {
                 display: block;
-                font-size: $font-size-huge;
-                margin: $spacing-unit-tiny;
-
-                @media only screen and (min-width: $breakpoint-small) {
-                    display: none;
-                }
-            }
-
-            span {
-                margin: 0;
             }
 
             @media only screen and (min-width: $breakpoint-small) {
@@ -163,5 +162,10 @@ $logo-width: 84px !default;
                 }
             }
         }
+    }
+
+    &-lowerIcon {
+        height: $header-icon-size;
+        margin-bottom: $spacing-unit-tiny;
     }
 }
