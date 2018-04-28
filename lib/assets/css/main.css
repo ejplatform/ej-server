@@ -1450,8 +1450,7 @@ ul.errorlist {
       min-width: 56px; }
   .Profile-tabContainer {
     background: #d6f1f3;
-    text-align: left;
-    min-height: 900px; }
+    text-align: left; }
   .Profile-info {
     font-size: 1em;
     padding: 56px; }

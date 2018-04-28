@@ -4,7 +4,6 @@
 
 {% macro profile_edit(profile, form, csrf_input) %}
     <div class="ProfileEdit">
-        <h1>Editar perfil: <em>{{ profile.name }}</em></h1>
         <form method="post" show-labels>
             {{ csrf_input }}
             {{ form.as_p() }}
@@ -23,8 +22,8 @@
 
         <div class="Profile-tabs">
             <nav class="Profile-tabLinks">
-                {{ link(_('Info'), '/profile/', target='.Profile-tabContainer') }}
-                {{ link(_('Contributions'), '/profile/?info=contributions', target='.Profile-tabContainer') }}
+                <a href="/profile/">{{ _('Info') }}</a>
+                <a href="/profile/?info=contributions">{{ _('Contributions') }}</a>
             </nav>
             <div class="Profile-arrow"></div>
             <script>
