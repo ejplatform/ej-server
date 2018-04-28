@@ -951,6 +951,145 @@ ul.errorlist {
   margin: 0;
   padding: 0; }
 
+.slick-slider {
+  position: relative;
+  display: block;
+  box-sizing: border-box;
+  user-select: none;
+  touch-action: pan-y;
+  margin: 0;
+  padding: 0; }
+
+.slick-list {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  margin: 0;
+  padding: 0; }
+
+.slick-list:focus {
+  outline: none; }
+
+.slick-list.dragging {
+  cursor: pointer;
+  cursor: hand; }
+
+.slick-slider .slick-track,
+.slick-slider .slick-list {
+  transform: translate3d(0, 0, 0); }
+
+.slick-track {
+  position: relative;
+  top: 0;
+  left: 0;
+  display: block;
+  margin-left: auto;
+  margin-right: auto; }
+
+.slick-track:before,
+.slick-track:after {
+  display: table;
+  content: ''; }
+
+.slick-track:after {
+  clear: both; }
+
+.slick-loading .slick-track {
+  visibility: hidden; }
+
+.slick-slide {
+  display: none;
+  float: left;
+  height: 100%;
+  min-height: 1px; }
+
+[dir='rtl'] .slick-slide {
+  float: right; }
+
+.slick-slide img {
+  display: block; }
+
+.slick-slide.slick-loading img {
+  display: none; }
+
+.slick-slide.dragging img {
+  pointer-events: none; }
+
+.slick-initialized .slick-slide {
+  display: block; }
+
+.slick-loading .slick-slide {
+  visibility: hidden; }
+
+.slick-vertical .slick-slide {
+  display: block;
+  height: auto;
+  border: 1px solid transparent; }
+
+.slick-arrow.slick-hidden {
+  display: none; }
+
+/* Dots */
+.slick-dotted.slick-slider {
+  margin-bottom: 14px; }
+
+.slick-dots {
+  position: absolute;
+  bottom: -25px;
+  display: block;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  text-align: center; }
+
+.slick-dots li {
+  position: relative;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin: 0 5px;
+  padding: 0;
+  cursor: pointer; }
+
+.slick-dots li button {
+  font-size: 0;
+  line-height: 0;
+  display: block;
+  width: 20px;
+  height: 20px;
+  padding: 5px;
+  cursor: pointer;
+  color: transparent;
+  border: 0;
+  outline: none;
+  background: transparent; }
+
+.slick-dots li button:hover,
+.slick-dots li button:focus {
+  outline: none; }
+
+.slick-dots li button:hover:before,
+.slick-dots li button:focus:before {
+  opacity: 1; }
+
+.slick-dots li button:before {
+  font-size: 6px;
+  line-height: 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  content: 'â€¢';
+  text-align: center;
+  opacity: .25;
+  color: black; }
+
+.slick-dots li.slick-active button:before {
+  opacity: .75;
+  color: black; }
+
 /*
  GENERIC ELEMENTS
  ======================================================================== */
@@ -1272,6 +1411,13 @@ ul.errorlist {
   width: 100%; }
   .ConversationList-cardList > * {
     margin: 28px; }
+  .ConversationList-cardList .slick-list {
+    margin: 0;
+    width: 100vw; }
+  .ConversationList-cardList .slick-track > * {
+    margin: 14px;
+    position: relative;
+    width: 100vw; }
 
 .ConversationCard {
   align-self: stretch;
@@ -1279,7 +1425,7 @@ ul.errorlist {
   border: 0;
   border-radius: 56px;
   flex-grow: 1;
-  margin: 7px;
+  margin: 0;
   text-align: center;
   width: 100%; }
   .ConversationCard > * {
@@ -1295,7 +1441,7 @@ ul.errorlist {
     flex-flow: column;
     justify-content: space-between;
     margin: 0;
-    min-height: 161px;
+    min-height: 184px;
     position: relative;
     z-index: 2; }
     .ConversationCard-cover a, .ConversationCard-cover a:hover, .ConversationCard-cover a:active {
@@ -1331,7 +1477,8 @@ ul.errorlist {
       list-style: none; }
   @media only screen and (min-width: 550px) {
     .ConversationCard {
-      max-width: 47%; } }
+      max-width: 47%;
+      margin: 7px; } }
   @media only screen and (min-width: 1200px) {
     .ConversationCard {
       width: 32%; } }
@@ -1452,6 +1599,32 @@ ul.errorlist {
   .CommentForm textarea {
     display: block;
     min-height: 48px; }
+
+.CircleButton {
+  color: #042049;
+  background: #fff;
+  cursor: pointer;
+  display: inline-block;
+  border-radius: 100%;
+  font-size: 24px;
+  height: 21px;
+  padding: 7px;
+  text-align: center;
+  vertical-align: middle;
+  width: 21px; }
+  .CircleButton--leftConversationSlider, .CircleButton--rightConversationSlider {
+    margin: 0;
+    position: absolute;
+    top: 102.5px;
+    z-index: 10; }
+    @media only screen and (width: 550px) {
+      .CircleButton--leftConversationSlider, .CircleButton--rightConversationSlider {
+        visibility: hidden;
+        z-index: -1; } }
+  .CircleButton--leftConversationSlider {
+    left: 7px; }
+  .CircleButton--rightConversationSlider {
+    right: 7px; }
 
 /*
  HOME PAGE

@@ -11,7 +11,7 @@ $conversation-card-border: 0 !default;
 $conversation-card-border-radius: $block-elements-border-radius !default;
 $conversation-card-color: $color-primary !default;
 $conversation-card-text-color: $color-white !default;
-$conversation-card-cover-height: 7 * $line-height !default;
+$conversation-card-cover-height: 8 * $line-height !default;
 $conversation-card-secondary-color: $color-blue-light !default;
 $conversation-card-statistics-color: $color-blue-dark !default;
 $conversation-card-font-size-small: 12px !default;
@@ -79,6 +79,19 @@ $conversation-card-border-arrow-size: $spacing-unit;
         > * {
             margin: $conversation-card-gutter;
         }
+
+        .slick-list {
+            margin: 0;
+            width: 100vw;
+        }
+
+        .slick-track {
+            > * {
+                margin: $spacing-unit-small;
+                position: relative;
+                width: 100vw;
+            }
+        }
     }
 }
 
@@ -88,7 +101,7 @@ $conversation-card-border-arrow-size: $spacing-unit;
     border: $conversation-card-border;
     border-radius: $conversation-card-border-radius;
     flex-grow: 1;
-    margin: $spacing-unit-tiny;
+    margin: 0;
     text-align: center;
     width: 100%;
 
@@ -164,12 +177,12 @@ $conversation-card-border-arrow-size: $spacing-unit;
 
     @media only screen and (min-width: $breakpoint-small) {
         max-width: 47%;
+        margin: $spacing-unit-tiny;
     }
 
     @media only screen and (min-width: $breakpoint-large) {
         width: 32%;
     }
-
 }
 
 .ConversationDetail {
@@ -351,3 +364,40 @@ $conversation-card-border-arrow-size: $spacing-unit;
         min-height: 3 * $font-size;
     }
 }
+
+.CircleButton {
+    @include color('content');
+
+    cursor: pointer;
+    display: inline-block;
+    border-radius: 100%;
+    font-size: $font-size-h2;
+    height: $conversation-button-size;
+    padding: $spacing-unit-tiny;
+    text-align: center;
+    vertical-align: middle;
+    width: $conversation-button-size;
+
+    &--leftConversationSlider,
+    &--rightConversationSlider {
+        margin: 0;
+        position: absolute;
+        top: ($conversation-card-cover-height + $conversation-button-size) / 2;
+        z-index: 10;
+
+        @media only screen and (width: $breakpoint-small) {
+            visibility: hidden;
+            z-index: -1;
+        }
+    }
+
+    &--leftConversationSlider {
+        left: $spacing-unit-tiny;
+    }
+
+    &--rightConversationSlider {
+        right: $spacing-unit-tiny;
+    }
+}
+
+
