@@ -1,4 +1,4 @@
-{% from 'components/generic/elements.jinja2' import action_button, breadcrumbs %}
+{% from 'components/generic/elements.jinja2' import action_button, breadcrumbs, link %}
 
 
 {#---------------------------------------------------------------------------#
@@ -45,7 +45,7 @@
             </h1>
             <dl>
                 <dt>Assunto:</dt>
-                <dd><a href="{{ conversation.get_absolute_url() }}">{{ conversation.category_name }}</a></dd>
+                <dd><a href="{{ conversation.category.get_absolute_url() }}">{{ conversation.category_name }}</a></dd>
             </dl>
         </div>
         <div class="ConversationCard-actions">
