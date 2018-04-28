@@ -28,6 +28,9 @@
 /*
  ALIASES
  =============================================================================*/
+/*
+ MIXINS FOR APPLYING COLORS AND STYLES THAT ARE USUALLY APPLIED TOGETHER
+ =============================================================================*/
 /*! normalize.css v7.0.0 | MIT License | github.com/necolas/normalize.css */
 /* Document
    ========================================================================== */
@@ -515,7 +518,7 @@ template {
 .Rocket-title {
   color: #d6f1f3;
   font-weight: bold;
-  padding: 0 14px; }
+  padding: 0 7px; }
   .Rocket-title h1 {
     color: #ff3e72;
     font-weight: bold; }
@@ -523,12 +526,12 @@ template {
     color: #74b5b8;
     font-weight: bold; }
 .Rocket-detail {
-  padding: 14px; }
+  padding: 7px; }
 .Rocket-items {
   background-color: #d6f1f3;
   padding: 14px; }
   .Rocket-items .title {
-    padding: 14px 0;
+    padding: 7px 0;
     color: #74b5b8;
     font-weight: bold; }
   .Rocket-items .item {

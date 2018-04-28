@@ -432,11 +432,7 @@ template {
 /*
  BUTTONS
  =============================================================================*/
-button,
-input[type=submit],
-.Button,
-.ActionButton,
-.RocketButton {
+.Button, .ActionButton, .RocketButton {
   background: #30c0d3;
   border: none;
   border-radius: 56px;
@@ -453,39 +449,9 @@ input[type=submit],
   text-transform: uppercase;
   transition: all 200ms ease-in-out;
   vertical-align: middle; }
-  button, button:hover, button:active, button:focus,
-  input[type=submit],
-  input[type=submit]:hover,
-  input[type=submit]:active,
-  input[type=submit]:focus,
-  .Button,
-  .ActionButton,
-  .RocketButton,
-  .Button:hover,
-  .ActionButton:hover,
-  .RocketButton:hover,
-  .Button:active,
-  .ActionButton:active,
-  .RocketButton:active,
-  .Button:focus,
-  .ActionButton:focus,
-  .RocketButton:focus {
+  .Button, .ActionButton, .RocketButton, .Button:hover, .ActionButton:hover, .RocketButton:hover, .Button:active, .ActionButton:active, .RocketButton:active, .Button:focus, .ActionButton:focus, .RocketButton:focus {
     text-decoration: none; }
-  button[primary],
-  button .Button--primary,
-  button .ActionButton,
-  button .RocketButton,
-  button .Register-button,
-  button .Login-button,
-  input[type=submit][primary],
-  input[type=submit] .Button--primary,
-  input[type=submit] .ActionButton,
-  input[type=submit] .RocketButton,
-  input[type=submit] .Register-button,
-  input[type=submit] .Login-button,
-  .Button[primary],
-  [primary].ActionButton,
-  [primary].RocketButton,
+  .Button[primary], [primary].ActionButton, [primary].RocketButton,
   .Button .Button--primary,
   .ActionButton .Button--primary,
   .RocketButton .Button--primary,
@@ -504,35 +470,7 @@ input[type=submit],
     background-color: #ff3e72;
     border-radius: 56px;
     color: rgba(255, 255, 255, 0.9); }
-    button[primary]:hover, button[primary]:focus,
-    button .Button--primary:hover,
-    button .ActionButton:hover,
-    button .RocketButton:hover,
-    button .Register-button:hover,
-    button .Login-button:hover,
-    button .Button--primary:focus,
-    button .ActionButton:focus,
-    button .RocketButton:focus,
-    button .Register-button:focus,
-    button .Login-button:focus,
-    input[type=submit][primary]:hover,
-    input[type=submit][primary]:focus,
-    input[type=submit] .Button--primary:hover,
-    input[type=submit] .ActionButton:hover,
-    input[type=submit] .RocketButton:hover,
-    input[type=submit] .Register-button:hover,
-    input[type=submit] .Login-button:hover,
-    input[type=submit] .Button--primary:focus,
-    input[type=submit] .ActionButton:focus,
-    input[type=submit] .RocketButton:focus,
-    input[type=submit] .Register-button:focus,
-    input[type=submit] .Login-button:focus,
-    .Button[primary]:hover,
-    [primary].ActionButton:hover,
-    [primary].RocketButton:hover,
-    .Button[primary]:focus,
-    [primary].ActionButton:focus,
-    [primary].RocketButton:focus,
+    .Button[primary]:hover, [primary].ActionButton:hover, [primary].RocketButton:hover, .Button[primary]:focus, [primary].ActionButton:focus, [primary].RocketButton:focus,
     .Button .Button--primary:hover,
     .ActionButton .Button--primary:hover,
     .RocketButton .Button--primary:hover,
@@ -565,32 +503,14 @@ input[type=submit],
     .RocketButton .Login-button:focus {
       background-color: #ff0b4d;
       color: #fff; }
-  button[secondary],
-  button .Button--secondary,
-  input[type=submit][secondary],
-  input[type=submit] .Button--secondary,
-  .Button[secondary],
-  [secondary].ActionButton,
-  [secondary].RocketButton,
+  .Button[secondary], [secondary].ActionButton, [secondary].RocketButton,
   .Button .Button--secondary,
   .ActionButton .Button--secondary,
   .RocketButton .Button--secondary {
     background-color: #d6f1f3;
     border-radius: 56px;
     color: rgba(4, 32, 73, 0.9); }
-    button[secondary]:hover, button[secondary]:focus,
-    button .Button--secondary:hover,
-    button .Button--secondary:focus,
-    input[type=submit][secondary]:hover,
-    input[type=submit][secondary]:focus,
-    input[type=submit] .Button--secondary:hover,
-    input[type=submit] .Button--secondary:focus,
-    .Button[secondary]:hover,
-    [secondary].ActionButton:hover,
-    [secondary].RocketButton:hover,
-    .Button[secondary]:focus,
-    [secondary].ActionButton:focus,
-    [secondary].RocketButton:focus,
+    .Button[secondary]:hover, [secondary].ActionButton:hover, [secondary].RocketButton:hover, .Button[secondary]:focus, [secondary].ActionButton:focus, [secondary].RocketButton:focus,
     .Button .Button--secondary:hover,
     .ActionButton .Button--secondary:hover,
     .RocketButton .Button--secondary:hover,
@@ -599,35 +519,17 @@ input[type=submit],
     .RocketButton .Button--secondary:focus {
       background-color: #afe4e7;
       color: #042049; }
-  button[small],
-  button .Button--small,
-  input[type=submit][small],
-  input[type=submit] .Button--small,
-  .Button[small],
-  [small].ActionButton,
-  [small].RocketButton,
+  .Button[small], [small].ActionButton, [small].RocketButton,
   .Button .Button--small,
   .ActionButton .Button--small,
   .RocketButton .Button--small {
     padding: 7px; }
-  button[large],
-  button .Button--large,
-  input[type=submit][large],
-  input[type=submit] .Button--large,
-  .Button[large],
-  [large].ActionButton,
-  [large].RocketButton,
+  .Button[large], [large].ActionButton, [large].RocketButton,
   .Button .Button--large,
   .ActionButton .Button--large,
   .RocketButton .Button--large {
     padding: 28px; }
-  button[ghost],
-  button .Button--ghost,
-  input[type=submit][ghost],
-  input[type=submit] .Button--ghost,
-  .Button[ghost],
-  [ghost].ActionButton,
-  [ghost].RocketButton,
+  .Button[ghost], [ghost].ActionButton, [ghost].RocketButton,
   .Button .Button--ghost,
   .ActionButton .Button--ghost,
   .RocketButton .Button--ghost {
@@ -635,19 +537,7 @@ input[type=submit],
     border: 1px solid #30c0d3;
     color: #30c0d3;
     padding: 13px 55px; }
-    button[ghost]:hover, button[ghost]:focus,
-    button .Button--ghost:hover,
-    button .Button--ghost:focus,
-    input[type=submit][ghost]:hover,
-    input[type=submit][ghost]:focus,
-    input[type=submit] .Button--ghost:hover,
-    input[type=submit] .Button--ghost:focus,
-    .Button[ghost]:hover,
-    [ghost].ActionButton:hover,
-    [ghost].RocketButton:hover,
-    .Button[ghost]:focus,
-    [ghost].ActionButton:focus,
-    [ghost].RocketButton:focus,
+    .Button[ghost]:hover, [ghost].ActionButton:hover, [ghost].RocketButton:hover, .Button[ghost]:focus, [ghost].ActionButton:focus, [ghost].RocketButton:focus,
     .Button .Button--ghost:hover,
     .ActionButton .Button--ghost:hover,
     .RocketButton .Button--ghost:hover,
@@ -655,17 +545,7 @@ input[type=submit],
     .ActionButton .Button--ghost:focus,
     .RocketButton .Button--ghost:focus {
       background: rgba(0, 0, 0, 0.05); }
-    button[ghost] [primary],
-    button[ghost] .Button--ghost-primary,
-    button .Button--ghost [primary],
-    button .Button--ghost .Button--ghost-primary,
-    input[type=submit][ghost] [primary],
-    input[type=submit][ghost] .Button--ghost-primary,
-    input[type=submit] .Button--ghost [primary],
-    input[type=submit] .Button--ghost .Button--ghost-primary,
-    .Button[ghost] [primary],
-    [ghost].ActionButton [primary],
-    [ghost].RocketButton [primary],
+    .Button[ghost] [primary], [ghost].ActionButton [primary], [ghost].RocketButton [primary],
     .Button[ghost] .Button--ghost-primary,
     [ghost].ActionButton .Button--ghost-primary,
     [ghost].RocketButton .Button--ghost-primary,
@@ -677,27 +557,7 @@ input[type=submit],
     .RocketButton .Button--ghost .Button--ghost-primary {
       color: #ff3e72;
       border-radius: 56px; }
-      button[ghost] [primary]:hover, button[ghost] [primary]:focus,
-      button[ghost] .Button--ghost-primary:hover,
-      button[ghost] .Button--ghost-primary:focus,
-      button .Button--ghost [primary]:hover,
-      button .Button--ghost [primary]:focus,
-      button .Button--ghost .Button--ghost-primary:hover,
-      button .Button--ghost .Button--ghost-primary:focus,
-      input[type=submit][ghost] [primary]:hover,
-      input[type=submit][ghost] [primary]:focus,
-      input[type=submit][ghost] .Button--ghost-primary:hover,
-      input[type=submit][ghost] .Button--ghost-primary:focus,
-      input[type=submit] .Button--ghost [primary]:hover,
-      input[type=submit] .Button--ghost [primary]:focus,
-      input[type=submit] .Button--ghost .Button--ghost-primary:hover,
-      input[type=submit] .Button--ghost .Button--ghost-primary:focus,
-      .Button[ghost] [primary]:hover,
-      [ghost].ActionButton [primary]:hover,
-      [ghost].RocketButton [primary]:hover,
-      .Button[ghost] [primary]:focus,
-      [ghost].ActionButton [primary]:focus,
-      [ghost].RocketButton [primary]:focus,
+      .Button[ghost] [primary]:hover, [ghost].ActionButton [primary]:hover, [ghost].RocketButton [primary]:hover, .Button[ghost] [primary]:focus, [ghost].ActionButton [primary]:focus, [ghost].RocketButton [primary]:focus,
       .Button[ghost] .Button--ghost-primary:hover,
       [ghost].ActionButton .Button--ghost-primary:hover,
       [ghost].RocketButton .Button--ghost-primary:hover,
@@ -717,17 +577,7 @@ input[type=submit],
       .ActionButton .Button--ghost .Button--ghost-primary:focus,
       .RocketButton .Button--ghost .Button--ghost-primary:focus {
         color: #ff0b4d; }
-    button[ghost] [secondary],
-    button[ghost] .Button--ghost-secondary,
-    button .Button--ghost [secondary],
-    button .Button--ghost .Button--ghost-secondary,
-    input[type=submit][ghost] [secondary],
-    input[type=submit][ghost] .Button--ghost-secondary,
-    input[type=submit] .Button--ghost [secondary],
-    input[type=submit] .Button--ghost .Button--ghost-secondary,
-    .Button[ghost] [secondary],
-    [ghost].ActionButton [secondary],
-    [ghost].RocketButton [secondary],
+    .Button[ghost] [secondary], [ghost].ActionButton [secondary], [ghost].RocketButton [secondary],
     .Button[ghost] .Button--ghost-secondary,
     [ghost].ActionButton .Button--ghost-secondary,
     [ghost].RocketButton .Button--ghost-secondary,
@@ -739,27 +589,7 @@ input[type=submit],
     .RocketButton .Button--ghost .Button--ghost-secondary {
       color: #d6f1f3;
       border-radius: 56px; }
-      button[ghost] [secondary]:hover, button[ghost] [secondary]:focus,
-      button[ghost] .Button--ghost-secondary:hover,
-      button[ghost] .Button--ghost-secondary:focus,
-      button .Button--ghost [secondary]:hover,
-      button .Button--ghost [secondary]:focus,
-      button .Button--ghost .Button--ghost-secondary:hover,
-      button .Button--ghost .Button--ghost-secondary:focus,
-      input[type=submit][ghost] [secondary]:hover,
-      input[type=submit][ghost] [secondary]:focus,
-      input[type=submit][ghost] .Button--ghost-secondary:hover,
-      input[type=submit][ghost] .Button--ghost-secondary:focus,
-      input[type=submit] .Button--ghost [secondary]:hover,
-      input[type=submit] .Button--ghost [secondary]:focus,
-      input[type=submit] .Button--ghost .Button--ghost-secondary:hover,
-      input[type=submit] .Button--ghost .Button--ghost-secondary:focus,
-      .Button[ghost] [secondary]:hover,
-      [ghost].ActionButton [secondary]:hover,
-      [ghost].RocketButton [secondary]:hover,
-      .Button[ghost] [secondary]:focus,
-      [ghost].ActionButton [secondary]:focus,
-      [ghost].RocketButton [secondary]:focus,
+      .Button[ghost] [secondary]:hover, [ghost].ActionButton [secondary]:hover, [ghost].RocketButton [secondary]:hover, .Button[ghost] [secondary]:focus, [ghost].ActionButton [secondary]:focus, [ghost].RocketButton [secondary]:focus,
       .Button[ghost] .Button--ghost-secondary:hover,
       [ghost].ActionButton .Button--ghost-secondary:hover,
       [ghost].RocketButton .Button--ghost-secondary:hover,
@@ -1598,40 +1428,38 @@ ul.errorlist {
   margin-left: auto;
   margin-right: auto; }
 
-.Rocket {
-  padding: 28px; }
-  .Rocket-title {
-    color: #d6f1f3;
-    font-weight: bold;
-    padding: 0 14px; }
-    .Rocket-title h1 {
-      color: #ff3e72;
-      font-weight: bold; }
-    .Rocket-title h2 {
-      color: #74b5b8;
-      font-weight: bold; }
-  .Rocket-detail {
-    padding: 14px; }
-  .Rocket-items {
-    background-color: #d6f1f3;
-    padding: 14px; }
-    .Rocket-items .title {
-      padding: 14px 0;
-      color: #74b5b8;
-      font-weight: bold; }
-    .Rocket-items .item {
-      padding: 7px; }
-      .Rocket-items .item .item-position {
-        color: #ff3e72;
-        font-size: 26px;
-        width: auto;
-        float: left; }
-      .Rocket-items .item .item-content {
-        padding-left: 28px;
-        width: auto; }
-  .Rocket-action {
-    text-align: center;
+.Rocket-title {
+  color: #d6f1f3;
+  font-weight: bold;
+  padding: 0 7px; }
+  .Rocket-title h1 {
+    color: #ff3e72;
+    font-weight: bold; }
+  .Rocket-title h2 {
+    color: #74b5b8;
+    font-weight: bold; }
+.Rocket-detail {
+  padding: 7px; }
+.Rocket-items {
+  background-color: #d6f1f3;
+  padding: 14px; }
+  .Rocket-items .title {
+    padding: 7px 0;
+    color: #74b5b8;
+    font-weight: bold; }
+  .Rocket-items .item {
     padding: 7px; }
+    .Rocket-items .item .item-position {
+      color: #ff3e72;
+      font-size: 26px;
+      width: auto;
+      float: left; }
+    .Rocket-items .item .item-content {
+      padding-left: 28px;
+      width: auto; }
+.Rocket-action {
+  text-align: center;
+  padding: 7px; }
 
 /*
  BUTTONS
