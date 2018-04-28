@@ -15,7 +15,7 @@ $profile-arrow-size: $spacing-unit !default;
         color: $color-purple-dark;
         font-size: $font-size-h1;
     }
-    
+
     h2 {
         color: $color-blue-light;
         font-size: $font-size-h4;
@@ -40,8 +40,8 @@ $profile-arrow-size: $spacing-unit !default;
     }
 
     &-arrow {
-        width: 0; 
-        height: 0; 
+        width: 0;
+        height: 0;
         border-left: $profile-arrow-size solid transparent;
         border-right: $profile-arrow-size solid transparent;
         border-bottom: $profile-arrow-size solid $color-blue-light;
@@ -64,7 +64,7 @@ $profile-arrow-size: $spacing-unit !default;
     &-image {
         width: $profile-image-size;
         height: $profile-image-size;
-        border: $spacing-unit-small solid $color-green; 
+        border: $spacing-unit-small solid $color-green;
         border-radius: 50ch;
     }
 
@@ -105,6 +105,9 @@ $profile-arrow-size: $spacing-unit !default;
     }
 
     &-tabContainer {
+    }
+
+    &-tabContent {
         background: $color-hint;
         text-align: left;
     }

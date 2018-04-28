@@ -22,28 +22,30 @@
 
         <div class="Profile-tabs">
             <nav class="Profile-tabLinks">
-                <a href="/profile/">{{ _('Info') }}</a>
-                <a href="/profile/?info=contributions">{{ _('Contributions') }}</a>
+                {{ link(_('Info'), '/profile/',
+                        target='.Profile-tabs',
+                        transition=None,
+                        class='Profile-tabActive' if info=='profile' else None) }}
+                {{ link(_('Contributions'), '/profile/?info=contributions',
+                        target='.Profile-tabs',
+                        transition=None,
+                        class='Profile-tabActive' if info=='contributions' else None) }}
             </nav>
-            <div class="Profile-arrow"></div>
-            <script>
-                window.onload = function() {
-                    $('.up-current').ready(function() {
-                        var x = $('.Profile-arrow').offset().left;
-                        var current = $('.Profile-tabs .up-current');
-                        $('.Profile-arrow').css('margin-left', current.offset().left - x + (current.width() / 2) - 28);
-                    });
-                }
-            </script>
+
             <div class="Profile-tabContainer">
-                {% if info == 'profile' %}
-                    {{ profile_info(profile, csrf_input) }}
-                {% elif info == 'contributions' %}
-                    {{ profile_contributions(profile) }}
-                {% else %}
-                    <p>Invalid info parameter: {{ info }}</p>
-                {% endif %}
+                <div class="Profile-arrow" style="visibility: hidden"></div>
+
+                <div class="Profile-tabContent">
+                    {% if info == 'profile' %}
+                        {{ profile_info(profile, csrf_input) }}
+                    {% elif info == 'contributions' %}
+                        {{ profile_contributions(profile) }}
+                    {% else %}
+                        <p>Invalid info parameter: {{ info }}</p>
+                    {% endif %}
+                </div>
             </div>
+
         </div>
     </div>
 
@@ -58,7 +60,7 @@
     <div class="Profile-actions">
         <form method="post" action="/logout/">
             {{ csrf_input }}
-            <input type="submit" class="Button" primary value="{{ _('Logout') }}" />
+            <input type="submit" class="Button" primary value="{{ _('Logout') }}"/>
         </form>
         <p><a href="/profile/delete">{{ _('Delete profile') }}</a></p>
     </div>
