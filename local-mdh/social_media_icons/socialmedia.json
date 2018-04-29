@@ -1,26 +1,14 @@
 {
-  "facebook": {
-    "icon_name": "fa-facebook",
-    "icon_font": "fab",
+  "Social Network 1 Name": {
+    "icon_name": "Icon name in the icon library",
+    "icon_font": "Icon library",
     "ordering": 1,
-    "url": ""
+    "url": "URL to be linked in the icon"
   },
-  "twitter": {
-    "icon_name": "fa-twitter",
-    "icon_font": "fab",
+  "Social Network 2 Name": {
+    "icon_name": "Icon name in the icon library",
+    "icon_font": "Icon library",
     "ordering": 2,
-    "url": ""
-  },
-  "whatsapp": {
-    "icon_name": "fa-whatsapp",
-    "icon_font": "fab",
-    "ordering": 3,
-    "url": ""
-  },
-  "telegram": {
-    "icon_name": "fa-telegram",
-    "icon_font": "fab",
-    "ordering": 4,
-    "url": ""
+    "url": "URL to be linked in the icon"
   }
 }
