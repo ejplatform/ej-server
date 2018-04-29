@@ -299,6 +299,9 @@ $conversation-card-border-arrow-size: $spacing-unit;
 
     &-voteArea {
         button {
+            border: none;
+            border-radius: 50%;
+            background: $color-primary-text;
             padding: 0;
         }
 

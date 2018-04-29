@@ -41,7 +41,7 @@ $how-it-work-icon-color: $color-gray-dark !default;
         font-size: $font-size-h3;
 
         i {
-            padding-left: $spacing-unit-small;
+            padding: $spacing-unit-small;
             float: right;
 
             @media only screen and (min-width: $breakpoint-small) {
@@ -49,6 +49,12 @@ $how-it-work-icon-color: $color-gray-dark !default;
             }
         }
     }
+    h1.expanded {
+        i {
+            transform: rotate(90deg);
+        }
+    }
+
     p {
         color: tint($color-hint-text, 10%);
     }
@@ -70,17 +76,14 @@ $how-it-work-icon-color: $color-gray-dark !default;
     }
 
     &-extra {
-        display: none;
-
-        @media only screen and (min-width: $breakpoint-small) {
-            display: block;
-
+        @include breakpoint(small) {
             .Button, .RocketButton, button {
-                display: block;
                 margin: $spacing-unit-small auto $spacing-unit auto;
-                max-width: 300px;
             }
         }
+    }
+    &-extra.hide-on-small {
+        @include responsive-show(small, block);
     }
 }
 

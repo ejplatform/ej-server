@@ -2,8 +2,8 @@
  MIXINS FOR APPLYING COLORS AND STYLES THAT ARE USUALLY APPLIED TOGETHER
  =============================================================================*/
 
-@mixin color($which, $text: '') {
-    @if (not $text) {
+@mixin color($which, $text: null) {
+    @if ($text == null) {
         @if ($which == 'primary') {
             color: $color-primary-text;
             background: $color-primary;

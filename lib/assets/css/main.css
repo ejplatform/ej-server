@@ -32,6 +32,12 @@
 /*
  MIXINS FOR APPLYING COLORS AND STYLES THAT ARE USUALLY APPLIED TOGETHER
  =============================================================================*/
+/*
+ FLEXBOX LAYOUTS
+ =============================================================================*/
+/*
+ MIXINS FOR APPLYING AND TYPOGRAPHICAL STYLES
+ =============================================================================*/
 /*! normalize.css v7.0.0 | MIT License | github.com/necolas/normalize.css */
 /* Document
    ========================================================================== */
@@ -735,7 +741,25 @@ input[type=submit] {
   to {
     background: #ff3e72; } }
 /*
- GENERIC CONTAINER PATTERNS
+ GENERIC PATTERNS FOR HTML ELEMENTS
+ =========================================================================== */
+.unlist, .Header ul, .TopHeader-links {
+  padding: 0;
+  margin: 0; }
+  .unlist li, .Header ul li, .TopHeader-links li {
+    list-style: none; }
+
+/*
+ DJANGO FORMS STYLING
+ =========================================================================== */
+ul.errorlist {
+  color: #f13c20;
+  padding: 0; }
+  ul.errorlist li {
+    list-style: none; }
+
+/*
+ GENERIC LAYOUT PATTERNS
  =========================================================================== */
 .Container, .CenteredContainer, .Footer > *, .HomeBanner, .HowItWorks > *, .Page-title h1, .ConversationList, .ConversationDetail-banner h1, .StartNow > *, .Profile, .ProfileEdit {
   box-sizing: border-box;
@@ -758,24 +782,6 @@ input[type=submit] {
   align-content: stretch;
   display: flex;
   flex-flow: column; }
-
-/*
- GENERIC PATTERNS FOR HTML ELEMENTS
- =========================================================================== */
-.unlist, .Header ul, .TopHeader-links {
-  padding: 0;
-  margin: 0; }
-  .unlist li, .Header ul li, .TopHeader-links li {
-    list-style: none; }
-
-/*
- DJANGO FORMS STYLING
- =========================================================================== */
-ul.errorlist {
-  color: #f13c20;
-  padding: 0; }
-  ul.errorlist li {
-    list-style: none; }
 
 /*
  UNPOLY EXTRA STYLING
@@ -1416,8 +1422,8 @@ ul.errorlist {
       margin-top: 7px; }
 
 .Comment {
-  color: "";
-  background: "primary";
+  color: #fff;
+  background: #30c0d3;
   box-sizing: border-box;
   border-radius: 56px;
   font-size: 20.8px;
@@ -1430,6 +1436,9 @@ ul.errorlist {
     border-radius: 56px;
     padding: 7px; }
   .Comment-voteArea button {
+    border: none;
+    border-radius: 50%;
+    background: #fff;
     padding: 0; }
   .Comment-voteArea ul {
     display: flex;
@@ -1471,8 +1480,8 @@ ul.errorlist {
     min-height: 48px; }
 
 .CircleButton {
-  color: "";
-  background: "content";
+  color: #042049;
+  background: #fff;
   cursor: pointer;
   display: inline-block;
   border-radius: 100%;
@@ -1520,11 +1529,13 @@ ul.errorlist {
   .HowItWorksCard h1 {
     font-size: 20.8px; }
     .HowItWorksCard h1 i {
-      padding-left: 14px;
+      padding: 14px;
       float: right; }
       @media only screen and (min-width: 550px) {
         .HowItWorksCard h1 i {
           display: none; } }
+  .HowItWorksCard h1.expanded i {
+    transform: rotate(90deg); }
   .HowItWorksCard p {
     color: #1d365b; }
   .HowItWorksCard-content {
@@ -1539,15 +1550,14 @@ ul.errorlist {
     margin: 28px 0;
     text-align: center;
     min-width: 70px; }
-  .HowItWorksCard-extra {
+  @media only screen and (min-width: 550px) {
+    .HowItWorksCard-extra .Button, .HowItWorksCard-extra .ActionButton, .HowItWorksCard-extra .RocketButton, .HowItWorksCard-extra .RocketButton, .HowItWorksCard-extra button {
+      margin: 14px auto 28px auto; } }
+  .HowItWorksCard-extra.hide-on-small {
     display: none; }
     @media only screen and (min-width: 550px) {
-      .HowItWorksCard-extra {
-        display: block; }
-        .HowItWorksCard-extra .Button, .HowItWorksCard-extra .ActionButton, .HowItWorksCard-extra .RocketButton, .HowItWorksCard-extra .RocketButton, .HowItWorksCard-extra button {
-          display: block;
-          margin: 14px auto 28px auto;
-          max-width: 300px; } }
+      .HowItWorksCard-extra.hide-on-small {
+        display: block; } }
 
 .StartNow {
   background: #d6f1f3;
