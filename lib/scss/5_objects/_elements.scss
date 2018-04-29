@@ -3,8 +3,9 @@
  =========================================================================== */
 
 // Remove list styles from ul and ol lists
-.Unlist {
+.unlist {
     padding: 0;
+    margin: 0;
 
     li {
         list-style: none;

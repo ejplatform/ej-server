@@ -734,9 +734,6 @@ input[type=submit] {
     background: #fff; }
   to {
     background: #ff3e72; } }
-.Header-topNav a[up-active], .Header-lowerNav a[up-active] {
-  animation: highlight-content 200ms; }
-
 /*
  GENERIC CONTAINER PATTERNS
  =========================================================================== */
@@ -765,9 +762,10 @@ input[type=submit] {
 /*
  GENERIC PATTERNS FOR HTML ELEMENTS
  =========================================================================== */
-.Unlist {
-  padding: 0; }
-  .Unlist li {
+.unlist, .Header ul, .TopHeader-links {
+  padding: 0;
+  margin: 0; }
+  .unlist li, .Header ul li, .TopHeader-links li {
     list-style: none; }
 
 /*
@@ -958,10 +956,10 @@ ul.errorlist {
   flex-flow: column;
   height: 100vh;
   overflow: hidden;
-  padding: 68px 0 73px 0; }
+  padding: 54px 0 73px 0; }
   @media only screen and (min-width: 550px) {
     .Page {
-      padding: 121.6px 0 0 0; } }
+      padding: 84px 0 0 0; } }
   .Page-mainContainer {
     box-sizing: border-box;
     height: 100vh;
@@ -988,26 +986,22 @@ ul.errorlist {
  PAGE HEADER
  ============================================================================ */
 .Header {
+  color: #042049;
   background: #fff;
   box-sizing: border-box;
-  color: #042049;
   margin: 0;
   z-index: 100; }
-  .Header ul {
-    list-style: none; }
   .Header a {
     color: #042049; }
   .Header a:hover {
     color: #042049; }
   @media only screen and (min-width: 550px) {
     .Header {
-      box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
-      background: #fff;
-      height: 81.6px;
-      padding: 7px 0;
+      height: 54px;
+      width: 100vw;
       position: fixed;
-      top: 40px;
-      width: 100vw; }
+      top: 30px;
+      box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05); }
       .Header-wrapper {
         align-items: center;
         display: flex;
@@ -1018,30 +1012,25 @@ ul.errorlist {
     align-items: center;
     box-sizing: border-box;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
-    background: #fff;
     display: flex;
     justify-content: space-between;
-    margin: 0;
     position: fixed;
     width: 100vw; }
-    .Header-topNav a[up-current], .Header-lowerNav a[up-current] {
-      text-decoration: underline; }
-    .Header-topNav a[up-active], .Header-lowerNav a[up-active] {
-      background: #ff3e72 !important; }
     @media only screen and (min-width: 550px) {
       .Header-topNav, .Header-lowerNav {
         box-shadow: none;
         display: block;
-        position: initial;
-        width: initial; } }
+        position: inherit;
+        height: inherit;
+        width: inherit; } }
   .Header-topNav {
-    height: 68px;
+    height: 54px;
     min-width: 96px;
-    padding: 0 28px 0 28px;
+    padding: 0 28px;
     top: 0; }
     .Header-topNav img {
       box-sizing: border-box;
-      height: 54px;
+      height: 40px;
       margin: 0;
       z-index: 100; }
     .Header-topNav i.fa {
@@ -1049,16 +1038,16 @@ ul.errorlist {
     @media only screen and (min-width: 550px) {
       .Header-topNav {
         box-shadow: none;
-        margin: 0;
         padding: 0 0 0 28px;
         text-align: left; }
         .Header-topNav img {
-          height: 67.6px; }
+          height: 40px; }
         .Header-topNav .Header-topIcon {
           display: none; } }
     @media only screen and (min-width: 912px) {
       .Header-topNav {
         padding: 0;
+        height: inherit;
         margin-left: 28px; } }
   .Header-lowerNav {
     align-items: stretch;
@@ -1097,16 +1086,13 @@ ul.errorlist {
         display: flex;
         font-size: 18px;
         justify-content: flex-end;
-        justify-self: start;
+        justify-self: center;
         text-align: right; }
         .Header-lowerNav a img {
           display: none; } }
   .Header-lowerIcon {
     height: 40px;
     margin-bottom: 7px; }
-
-[up-current] {
-  background: red !important; }
 
 /*
  PAGE FOOTER
@@ -1115,7 +1101,7 @@ ul.errorlist {
   background: #a4d8dd;
   box-sizing: border-box;
   color: #042049;
-  height: 0 68px;
+  height: 0 54px;
   padding: 14px; }
   .Footer-social p {
     font-size: 16px; }
@@ -1163,40 +1149,37 @@ ul.errorlist {
  PAGE TOP HEADER
  ============================================================================ */
 .TopHeader {
-  display: none; }
+  display: none;
+  background-color: #e3e6e6;
+  height: 30px;
+  position: absolute;
+  width: 100vw;
+  top: 0;
+  z-index: 200; }
+  .TopHeader-wrapper {
+    align-items: center;
+    display: flex;
+    height: 100%;
+    justify-content: space-between;
+    margin: 0 auto;
+    max-width: 912px; }
+  .TopHeader-links {
+    align-items: center;
+    display: flex;
+    margin: 0;
+    padding: 0; }
+    .TopHeader-links li {
+      color: #042049;
+      display: inline;
+      font-size: 14px;
+      margin: 14px; }
+  .TopHeader-icons li {
+    color: #042049;
+    font-size: 18px;
+    margin: 7px; }
   @media only screen and (min-width: 550px) {
     .TopHeader {
-      display: block;
-      background-color: #666;
-      height: 40px;
-      position: absolute;
-      width: 100vw;
-      top: 0;
-      z-index: 200; }
-      .TopHeader-wrapper {
-        height: 100%;
-        align-items: center;
-        display: flex;
-        justify-content: space-between;
-        margin: 0 auto;
-        max-width: 912px; }
-      .TopHeader-links {
-        height: 100%;
-        display: flex;
-        align-items: center;
-        list-style-type: none;
-        overflow: hidden;
-        margin: 0;
-        padding: 0; }
-        .TopHeader-links li {
-          display: inline;
-          color: #fff;
-          font-size: 14px;
-          margin: 15px; }
-      .TopHeader-icons li {
-        margin: 7px;
-        color: #fff;
-        font-size: 20px; } }
+      display: block; } }
 
 /*
  LOGIN/REGISTER COMPONENTS
@@ -1433,8 +1416,8 @@ ul.errorlist {
       margin-top: 7px; }
 
 .Comment {
-  color: #fff;
-  background: #30c0d3;
+  color: "";
+  background: "primary";
   box-sizing: border-box;
   border-radius: 56px;
   font-size: 20.8px;
@@ -1488,8 +1471,8 @@ ul.errorlist {
     min-height: 48px; }
 
 .CircleButton {
-  color: #042049;
-  background: #fff;
+  color: "";
+  background: "content";
   cursor: pointer;
   display: inline-block;
   border-radius: 100%;

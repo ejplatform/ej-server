@@ -4,52 +4,56 @@
 
 // Constants
 // Top and botton navigation bars. Styled as content, but can be overriden.
-$top-header-color: $color-gray-dark !default;
-$top-header-color-text: $color-white !default;
-$top-header-icon-color: $color-white !default;
-$top-header-links-margin: 15px;
-$top-header-icons-margin: 7px;
+$top-header-color: desaturate($color-hint, 50%) !default;
+$top-header-color-text: $color-hint-text !default;
+$top-header-icon-color: $top-header-color-text !default;
+$top-header-icon-size: $font-size-large !default;
+$top-header-links-margin: $spacing-unit-small;
+$top-header-icons-margin: $spacing-unit-tiny;
+
 // Component
 .TopHeader {
     display: none;
+    background-color: $top-header-color;
+    height: $top-header-height;
+    position: absolute;
+    width: 100vw;
+    top: 0;
+    z-index: 200;
+
+    &-wrapper {
+        align-items: center;
+        display: flex;
+        height: 100%;
+        justify-content: space-between;
+        margin: 0 auto;
+        max-width: $header-wrapper-max-width;
+    }
+
+    &-links {
+        @extend .unlist;
+        align-items: center;
+        display: flex;
+        margin: 0;
+        padding: 0;
+
+        li {
+            color: $top-header-color-text;
+            display: inline;
+            font-size: $font-size-small;
+            margin: $top-header-links-margin;
+        }
+    }
+
+    &-icons {
+        li {
+            color: $top-header-icon-color;
+            font-size: $top-header-icon-size;
+            margin: $top-header-icons-margin;
+        }
+    }
+
     @media only screen and (min-width: $breakpoint-small) {
         display: block;
-        &-wrapper {
-            height: 100%;
-            align-items: center;
-            display: flex;
-            justify-content: space-between;
-            margin: 0 auto;
-            max-width: $header-wrapper-max-width;
-        }
-        background-color: $top-header-color;
-        height: $top-header-height;
-        position: absolute;
-        width: 100vw;
-        top: 0;
-        z-index: 200;
-        &-links {
-            height: 100%;
-            display: flex;
-            align-items: center;
-            list-style-type: none;
-            overflow: hidden;
-            margin: 0;
-            padding: 0;
-            li {
-                display: inline;
-                color: $top-header-color-text;
-                font-size: $font-size-small;
-                margin: $top-header-links-margin;
-            }
-        }
-
-        &-icons {
-            li{
-                margin: $top-header-icons-margin;
-                color: $top-header-icon-color;
-                font-size: 20px;
-            }
-        }
     }
 }

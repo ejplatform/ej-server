@@ -11,15 +11,14 @@ $header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.05) !default;
 
 // Component
 .Header {
-    background: $header-color;
+    @include color($header-color, $header-color-text);
     box-sizing: border-box;
-    color: $header-color-text;
     margin: 0;
     z-index: 100;
 
     // Resets
     ul {
-        list-style: none;
+        @extend .unlist;
     }
     a {
         color: $header-color-text;
@@ -29,13 +28,9 @@ $header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.05) !default;
     }
 
     @media only screen and (min-width: $breakpoint-small) {
+        @include size(100vw, $header-height-tablet);
+        @include position(fixed,  $top-header-height null null null);
         box-shadow: $header-box-shadow-upper;
-        background: $header-color;
-        height: $header-height-tablet;
-        padding: $spacing-unit-tiny 0;
-        position: fixed;
-        top: 40px;
-        width: 100vw;
 
         &-wrapper {
             align-items: center;
@@ -52,25 +47,24 @@ $header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.05) !default;
         align-items: center;
         box-sizing: border-box;
         box-shadow: $header-box-shadow-upper;
-        background: $header-color;
         display: flex;
         justify-content: space-between;
-        margin: 0;
         position: fixed;
         width: 100vw;
 
         @media only screen and (min-width: $breakpoint-small) {
             box-shadow: none;
             display: block;
-            position: initial;
-            width: initial;
+            position: inherit;
+            height: inherit;
+            width: inherit;
         }
     }
 
     &-topNav {
         height: $header-top-nav-height;
         min-width: $spacing-unit-large + $header-icon-size;
-        padding: 0 $spacing-unit 0 $spacing-unit;
+        padding: 0 $spacing-unit;
         top: 0;
 
         img {
@@ -85,7 +79,6 @@ $header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.05) !default;
 
         @media only screen and (min-width: $breakpoint-small) {
             box-shadow: none;
-            margin: 0;
             padding: 0 0 0 $spacing-unit;
             text-align: left;
 
@@ -99,6 +92,7 @@ $header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.05) !default;
 
         @media only screen and (min-width: $header-wrapper-max-width) {
             padding: 0;
+            height: inherit;
             margin-left: $spacing-unit;
         }
     }
@@ -151,7 +145,7 @@ $header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.05) !default;
             display: flex;
             font-size: $font-size-large;
             justify-content: flex-end;
-            justify-self: start;
+            justify-self: center;
             text-align: right;
 
             a img {
