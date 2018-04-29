@@ -27,6 +27,7 @@ $header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.05) !default;
     a:hover {
         color: $header-color-text;
     }
+
     @media only screen and (min-width: $breakpoint-small) {
         box-shadow: $header-box-shadow-upper;
         background: $header-color;

@@ -1,0 +1,17 @@
+/*
+ ANIMATIONS
+ =========================================================================== */
+
+@keyframes highlight-content {
+    from {
+        background: $color-content;
+    }
+    to {
+        background: $color-accent;
+    }
+}
+
+
+%Link--content {
+    animation: highlight-content 200ms;
+}

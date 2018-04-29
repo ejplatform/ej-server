@@ -727,6 +727,17 @@ input[type=submit] {
   width: inherit; }
 
 /*
+ ANIMATIONS
+ =========================================================================== */
+@keyframes highlight-content {
+  from {
+    background: #fff; }
+  to {
+    background: #ff3e72; } }
+.Header-topNav a[up-active], .Header-lowerNav a[up-active] {
+  animation: highlight-content 200ms; }
+
+/*
  GENERIC CONTAINER PATTERNS
  =========================================================================== */
 .Container, .CenteredContainer, .Footer > *, .HomeBanner, .HowItWorks > *, .Page-title h1, .ConversationList, .ConversationDetail-banner h1, .StartNow > *, .Profile, .ProfileEdit {
@@ -1013,6 +1024,10 @@ ul.errorlist {
     margin: 0;
     position: fixed;
     width: 100vw; }
+    .Header-topNav a[up-current], .Header-lowerNav a[up-current] {
+      text-decoration: underline; }
+    .Header-topNav a[up-active], .Header-lowerNav a[up-active] {
+      background: #ff3e72 !important; }
     @media only screen and (min-width: 550px) {
       .Header-topNav, .Header-lowerNav {
         box-shadow: none;
@@ -1089,6 +1104,9 @@ ul.errorlist {
   .Header-lowerIcon {
     height: 40px;
     margin-bottom: 7px; }
+
+[up-current] {
+  background: red !important; }
 
 /*
  PAGE FOOTER
