@@ -1,7 +1,7 @@
 from .fragments import fragment
 
 
-def social_media_icons():
+def social_icons():
     """
     Return all social media icons defined
     """

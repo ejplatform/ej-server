@@ -4,56 +4,44 @@
 
 // Constants
 // Top and botton navigation bars. Styled as content, but can be overriden.
-$top-header-color: desaturate($color-hint, 50%) !default;
-$top-header-color-text: $color-hint-text !default;
+$top-header-color: darken($color-content, 5%) !default;
+$top-header-color-text: $color-content-text !default;
 $top-header-icon-color: $top-header-color-text !default;
-$top-header-icon-size: $font-size-large !default;
-$top-header-links-margin: $spacing-unit-small;
+$top-header-icon-size: $font-size-default !default;
+$top-header-links-margin: $spacing-unit-tiny;
 $top-header-icons-margin: $spacing-unit-tiny;
 
 // Component
 .TopHeader {
+    @include color($top-header-color, $top-header-color-text, $force: true);
+    @include size(100vw, $top-header-height);
     display: none;
-    background-color: $top-header-color;
-    height: $top-header-height;
-    position: absolute;
-    width: 100vw;
+    position: fixed;
     top: 0;
     z-index: 200;
 
     &-wrapper {
-        align-items: center;
-        display: flex;
+        @extend .layout-horizontal;
+        box-sizing: border-box;
         height: 100%;
-        justify-content: space-between;
         margin: 0 auto;
+        padding: 0 $spacing-unit-small;
         max-width: $header-wrapper-max-width;
     }
 
-    &-links {
-        @extend .unlist;
-        align-items: center;
-        display: flex;
-        margin: 0;
-        padding: 0;
-
+    &-links,
+    &-social {
+        @extend .unlist-inline;
+        font-size: $font-size-small;
         li {
-            color: $top-header-color-text;
-            display: inline;
-            font-size: $font-size-small;
             margin: $top-header-links-margin;
+            i {
+                font-size: $top-header-icon-size;
+            }
         }
     }
 
-    &-icons {
-        li {
-            color: $top-header-icon-color;
-            font-size: $top-header-icon-size;
-            margin: $top-header-icons-margin;
-        }
-    }
-
-    @media only screen and (min-width: $breakpoint-small) {
+    @include breakpoint(small) {
         display: block;
     }
 }

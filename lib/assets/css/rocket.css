@@ -31,6 +31,16 @@
 /*
  MIXINS FOR APPLYING COLORS AND STYLES THAT ARE USUALLY APPLIED TOGETHER
  =============================================================================*/
+/**
+ * Mixin that sets text and background colors. If $force, also sets the
+ * text color for child anchor elements.
+ */
+/*
+ FLEXBOX LAYOUTS
+ =============================================================================*/
+/*
+ MIXINS FOR APPLYING AND TYPOGRAPHICAL STYLES
+ =============================================================================*/
 /*! normalize.css v7.0.0 | MIT License | github.com/necolas/normalize.css */
 /* Document
    ========================================================================== */

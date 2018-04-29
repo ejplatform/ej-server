@@ -4,8 +4,8 @@
 
 
 {% block main %}
-    {{ home_banner(home_banner_frag) }}
-    {{ how_it_works(how_it_works_frag) }}
+    {{ home_banner(home_banner_fragment, 'start-now') }}
+    {{ how_it_works(how_it_works_fragment) }}
     {{ conversation_list(conversations) }}
-    {{ start_now(start_now_frag) }}
+    {{ start_now(start_now_fragment) }}
 {% endblock %}

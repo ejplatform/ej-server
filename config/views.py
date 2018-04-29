@@ -7,7 +7,7 @@ from django.http import Http404, HttpResponseServerError
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils.translation import ugettext as _
 
-from ej.configurations import fragment, social_media_icons
+from ej.configurations import fragment, social_icons
 from ej.users.models import User
 from ej_conversations.models import Conversation, Category
 from .forms import ProfileForm, LoginForm, RegistrationForm
@@ -26,12 +26,12 @@ log = logging.getLogger('ej')
 def home(request):
     ctx = {
         'conversations': Conversation.objects.all(),
-        'home_banner_frag': fragment('home-banner', raises=False),
-        'how_it_works_frag': fragment('how-it-works', raises=False),
-        'start_now_frag': fragment('start-now', raises=False),
-        'social_media_icons': social_media_icons(),
+        'home_banner_fragment': fragment('home.banner', raises=False),
+        'how_it_works_fragment': fragment('home.how-it-works', raises=False),
+        'start_now_fragment': fragment('home.start-now', raises=False),
+        'social_media_icons': social_icons(),
     }
-    return render(request, 'pages/index.jinja2', ctx)
+    return render(request, 'pages/home.jinja2', ctx)
 
 
 @route('start/')

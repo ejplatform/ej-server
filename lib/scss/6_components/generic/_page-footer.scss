@@ -12,28 +12,10 @@ $footer-content-social-width: 35%;
 
 // Component
 .Footer {
-    >* {
-        @extend .CenteredContainer;
-    }
-    background: $footer-color;
-    box-sizing: border-box;
-    color: $footer-color-text;
-    height: 0 $header-top-nav-height;
-    padding: $spacing-unit-small;
+    @include color($footer-color, $footer-color-text);
+    text-align: center;
+
     &-social {
-        p {
-            font-size: $font-size-default;
-        }
-    }
-    &-icons {
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-        font-size: $footer-icon-size;
-        color: $color-white;
-        li {
-            display: inline;
-            margin: $spacing-unit-small;
-        }
+        @extend .unlist;
     }
 }

@@ -1,13 +1,15 @@
-from markdown import markdown
-from django.contrib.staticfiles.storage import staticfiles_storage
+import random
+import string
+
 from django.conf import settings
+from django.contrib.staticfiles.storage import staticfiles_storage
 from django.urls import reverse
 from django.utils.translation import ugettext, ungettext
 from jinja2 import Environment
+from markdown import markdown
 from markupsafe import Markup
-import random
-import string
-from ej.configurations.models import SocialMediaIcon
+
+from ej.configurations import social_icons, fragment
 
 SALT_CHARS = string.ascii_letters + string.digits + '-_'
 
@@ -24,6 +26,7 @@ def environment(**options):
         salt_tag=salt_tag,
         salt=salt,
         social_icons=social_icons,
+        footer_data=lambda: fragment('global.footer', raises=False),
         service_worker=getattr(settings, 'SERVICE_WORKER', False),
     )
     env.filters.update(
@@ -33,13 +36,6 @@ def environment(**options):
     )
     env.install_gettext_callables(ugettext, ungettext, newstyle=True)
     return env
-
-
-#
-# Global resources
-#
-def social_icons():
-    return list(SocialMediaIcon.objects.all())
 
 
 #

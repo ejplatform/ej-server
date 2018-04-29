@@ -1,5 +1,5 @@
-{% from 'components/generic/page_top_header.jinja2' import page_top_header %}
 {% from 'components/generic/page_header.jinja2' import page_header %}
+{% from 'components/generic/page_top-header.jinja2' import page_top_header %}
 {% from 'components/generic/page_menu.jinja2' import sidebar %}
 {% from 'components/generic/page_footer.jinja2' import page_footer %}
 
@@ -89,7 +89,7 @@
 
 {% block body %}
     {% if target == 'all' or target == 'page' %}
-        {{page_top_header()}}
+        {{page_top_header(social_icons())}}
         {{ page_header() }}
         <div class="Page-mainContainer">
     {% endif %}
@@ -111,7 +111,7 @@
     {% endblock %}
 
     {% if (target == 'all' or target == 'page') and not hide_footer %}
-        {{ page_footer(social_icons()) }}
+        {{ page_footer(social_icons(), footer_data()) }}
         </div>
     {% endif %}
 

@@ -11,7 +11,8 @@ $header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.05) !default;
 
 // Component
 .Header {
-    @include color($header-color, $header-color-text);
+    @include color($header-color, $header-color-text, $force: true);
+
     box-sizing: border-box;
     margin: 0;
     z-index: 100;
@@ -19,12 +20,6 @@ $header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.05) !default;
     // Resets
     ul {
         @extend .unlist;
-    }
-    a {
-        color: $header-color-text;
-    }
-    a:hover {
-        color: $header-color-text;
     }
 
     @media only screen and (min-width: $breakpoint-small) {

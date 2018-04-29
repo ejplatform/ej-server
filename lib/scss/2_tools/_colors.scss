@@ -2,27 +2,36 @@
  MIXINS FOR APPLYING COLORS AND STYLES THAT ARE USUALLY APPLIED TOGETHER
  =============================================================================*/
 
-@mixin color($which, $text: null) {
+@mixin __color-aux($color, $text, $force) {
+    background: $color;
+    @if ($force) {
+        @include force-text-color($text);
+    } @else {
+        color: $text;
+    }
+}
+
+/**
+ * Mixin that sets text and background colors. If $force, also sets the
+ * text color for child anchor elements.
+ */
+@mixin color($which, $text: null, $force: false) {
     @if ($text == null) {
         @if ($which == 'primary') {
-            color: $color-primary-text;
-            background: $color-primary;
+            @include __color-aux($color-primary, $color-primary-text, $force);
         } @else if ($which == 'accent') {
-            color: $color-accent-text;
-            background: $color-accent;
+            @include __color-aux($color-accent, $color-accent-text, $force);
         } @else if ($which == 'hint') {
-            color: $color-hint-text;
-            background: $color-hint;
+            @include __color-aux($color-hint, $color-hint-text, $force);
+        } @else if ($which == 'emph') {
+            @include __color-aux($color-emph, $color-emph-text, $force);
         } @else if ($which == 'content') {
-            color: $color-content-text;
-            background: $color-content;
+            @include __color-aux($color-content, $color-content-text, $force);
         } @else {
             @error "invalid color mixin";
         }
-    }
-    @else {
-        color: $text;
-        background: $which;
+    } @else {
+        @include __color-aux($which, $text, $force);
     }
 }
 

@@ -32,6 +32,10 @@
 /*
  MIXINS FOR APPLYING COLORS AND STYLES THAT ARE USUALLY APPLIED TOGETHER
  =============================================================================*/
+/**
+ * Mixin that sets text and background colors. If $force, also sets the
+ * text color for child anchor elements.
+ */
 /*
  FLEXBOX LAYOUTS
  =============================================================================*/
@@ -743,11 +747,13 @@ input[type=submit] {
 /*
  GENERIC PATTERNS FOR HTML ELEMENTS
  =========================================================================== */
-.unlist, .Header ul, .TopHeader-links {
+.unlist, .unlist-inline, .TopHeader-links, .TopHeader-social, .Header ul, .Footer-social {
   padding: 0;
-  margin: 0; }
-  .unlist li, .Header ul li, .TopHeader-links li {
-    list-style: none; }
+  margin: 0;
+  list-style: none; }
+
+.unlist-inline > li, .TopHeader-links > li, .TopHeader-social > li {
+  display: inline; }
 
 /*
  DJANGO FORMS STYLING
@@ -761,20 +767,20 @@ ul.errorlist {
 /*
  GENERIC LAYOUT PATTERNS
  =========================================================================== */
-.Container, .CenteredContainer, .Footer > *, .HomeBanner, .HowItWorks > *, .Page-title h1, .ConversationList, .ConversationDetail-banner h1, .StartNow > *, .Profile, .ProfileEdit {
+.Container, .CenteredContainer, .HomeBanner, .HowItWorks > *, .Page-title h1, .ConversationList, .ConversationDetail-banner h1, .StartNow > *, .Profile, .ProfileEdit {
   box-sizing: border-box;
   margin: 0 auto;
   max-width: 800px;
   padding: 0 0 14px 0; }
   @media only screen and (min-width: 550px) {
-    .Container, .CenteredContainer, .Footer > *, .HomeBanner, .HowItWorks > *, .Page-title h1, .ConversationList, .ConversationDetail-banner h1, .StartNow > *, .Profile, .ProfileEdit {
+    .Container, .CenteredContainer, .HomeBanner, .HowItWorks > *, .Page-title h1, .ConversationList, .ConversationDetail-banner h1, .StartNow > *, .Profile, .ProfileEdit {
       padding: 0 28px 28px 28px; } }
   @media only screen and (min-width: 1200px) {
-    .Container, .CenteredContainer, .Footer > *, .HomeBanner, .HowItWorks > *, .Page-title h1, .ConversationList, .ConversationDetail-banner h1, .StartNow > *, .Profile, .ProfileEdit {
+    .Container, .CenteredContainer, .HomeBanner, .HowItWorks > *, .Page-title h1, .ConversationList, .ConversationDetail-banner h1, .StartNow > *, .Profile, .ProfileEdit {
       max-width: 800px;
       padding: 0 0 56px 0; } }
 
-.CenteredContainer, .Footer > *, .HomeBanner, .HowItWorks > * {
+.CenteredContainer, .HomeBanner, .HowItWorks > * {
   text-align: center; }
 
 .Col--center, .Comment-voteArea ul li {
@@ -782,6 +788,15 @@ ul.errorlist {
   align-content: stretch;
   display: flex;
   flex-flow: column; }
+
+.layout-horizontal, .grid-layout-horizontal, .TopHeader-wrapper {
+  align-items: center;
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between; }
+
+.grid-layout-horizontal > * {
+  flex-grow: 1; }
 
 /*
  UNPOLY EXTRA STYLING
@@ -965,7 +980,7 @@ ul.errorlist {
   padding: 54px 0 73px 0; }
   @media only screen and (min-width: 550px) {
     .Page {
-      padding: 84px 0 0 0; } }
+      padding: 79px 0 0 0; } }
   .Page-mainContainer {
     box-sizing: border-box;
     height: 100vh;
@@ -992,21 +1007,19 @@ ul.errorlist {
  PAGE HEADER
  ============================================================================ */
 .Header {
-  color: #042049;
   background: #fff;
+  color: #042049;
   box-sizing: border-box;
   margin: 0;
   z-index: 100; }
-  .Header a {
-    color: #042049; }
-  .Header a:hover {
+  .Header a, .Header a:hover, .Header a:active, .Header a:focus {
     color: #042049; }
   @media only screen and (min-width: 550px) {
     .Header {
       height: 54px;
       width: 100vw;
       position: fixed;
-      top: 30px;
+      top: 25px;
       box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05); }
       .Header-wrapper {
         align-items: center;
@@ -1105,21 +1118,8 @@ ul.errorlist {
  ============================================================================ */
 .Footer {
   background: #a4d8dd;
-  box-sizing: border-box;
   color: #042049;
-  height: 0 54px;
-  padding: 14px; }
-  .Footer-social p {
-    font-size: 16px; }
-  .Footer-icons {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    font-size: 30px;
-    color: #fff; }
-    .Footer-icons li {
-      display: inline;
-      margin: 14px; }
+  text-align: center; }
 
 /*
  PAGE SIDEBAR
@@ -1155,34 +1155,28 @@ ul.errorlist {
  PAGE TOP HEADER
  ============================================================================ */
 .TopHeader {
-  display: none;
-  background-color: #e3e6e6;
-  height: 30px;
-  position: absolute;
+  background: #f2f2f2;
+  color: #042049;
+  height: 25px;
   width: 100vw;
+  display: none;
+  position: fixed;
   top: 0;
   z-index: 200; }
+  .TopHeader a, .TopHeader a:hover, .TopHeader a:active, .TopHeader a:focus {
+    color: #042049; }
   .TopHeader-wrapper {
-    align-items: center;
-    display: flex;
+    box-sizing: border-box;
     height: 100%;
-    justify-content: space-between;
     margin: 0 auto;
+    padding: 0 14px;
     max-width: 912px; }
-  .TopHeader-links {
-    align-items: center;
-    display: flex;
-    margin: 0;
-    padding: 0; }
-    .TopHeader-links li {
-      color: #042049;
-      display: inline;
-      font-size: 14px;
-      margin: 14px; }
-  .TopHeader-icons li {
-    color: #042049;
-    font-size: 18px;
-    margin: 7px; }
+  .TopHeader-links, .TopHeader-social {
+    font-size: 14px; }
+    .TopHeader-links li, .TopHeader-social li {
+      margin: 7px; }
+      .TopHeader-links li i, .TopHeader-social li i {
+        font-size: 16px; }
   @media only screen and (min-width: 550px) {
     .TopHeader {
       display: block; } }
@@ -1422,8 +1416,8 @@ ul.errorlist {
       margin-top: 7px; }
 
 .Comment {
-  color: #fff;
   background: #30c0d3;
+  color: #fff;
   box-sizing: border-box;
   border-radius: 56px;
   font-size: 20.8px;
@@ -1480,8 +1474,8 @@ ul.errorlist {
     min-height: 48px; }
 
 .CircleButton {
-  color: #042049;
   background: #fff;
+  color: #042049;
   cursor: pointer;
   display: inline-block;
   border-radius: 100%;
@@ -1809,8 +1803,8 @@ ul.errorlist {
   color: #fff; }
 .ColorStyles .alt,
 .ColorPalette .alt {
-  background: #30c0d3;
-  color: #111; }
+  background: #a4d8dd;
+  color: #042049; }
 .ColorStyles .hint,
 .ColorPalette .hint {
   background: #d6f1f3;

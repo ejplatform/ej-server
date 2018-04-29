@@ -63,8 +63,8 @@ $color-hint: $color-blue-light !default;
 $color-hint-text: $color-content-text !default;
 
 // Stronger hint. Used in Footer component
-$color-emph: $color-blue !default;
-$color-emph-text: $color-black !default;
+$color-emph: $color-blue-nav !default;
+$color-emph-text: $color-hint-text !default;
 
 // Modifiers
 $color-hint-degree-pc: 10;

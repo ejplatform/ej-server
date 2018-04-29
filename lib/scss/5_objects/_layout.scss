@@ -31,3 +31,17 @@
     flex-flow: column;
 }
 
+.layout-horizontal {
+    align-items: center;
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+}
+
+.grid-layout-horizontal {
+    @extend .layout-horizontal;
+
+    > * {
+        flex-grow: 1;
+    }
+}
