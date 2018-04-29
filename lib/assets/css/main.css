@@ -950,7 +950,7 @@ ul.errorlist {
   padding: 68px 0 73px 0; }
   @media only screen and (min-width: 550px) {
     .Page {
-      padding: 81.6px 0 0 0; } }
+      padding: 121.6px 0 0 0; } }
   .Page-mainContainer {
     box-sizing: border-box;
     height: 100vh;
@@ -995,7 +995,7 @@ ul.errorlist {
       height: 81.6px;
       padding: 7px 0;
       position: fixed;
-      top: 0;
+      top: 40px;
       width: 100vw; }
       .Header-wrapper {
         align-items: center;
@@ -1140,6 +1140,45 @@ ul.errorlist {
     border: none; }
   .NavMenu ul {
     padding: 0; }
+
+/*
+ PAGE TOP HEADER
+ ============================================================================ */
+.TopHeader {
+  display: none; }
+  @media only screen and (min-width: 550px) {
+    .TopHeader {
+      display: block;
+      background-color: #666;
+      height: 40px;
+      position: absolute;
+      width: 100vw;
+      top: 0;
+      z-index: 200; }
+      .TopHeader-wrapper {
+        height: 100%;
+        align-items: center;
+        display: flex;
+        justify-content: space-between;
+        margin: 0 auto;
+        max-width: 912px; }
+      .TopHeader-links {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        list-style-type: none;
+        overflow: hidden;
+        margin: 0;
+        padding: 0; }
+        .TopHeader-links li {
+          display: inline;
+          color: #fff;
+          font-size: 14px;
+          margin: 15px; }
+      .TopHeader-icons li {
+        margin: 7px;
+        color: #fff;
+        font-size: 20px; } }
 
 /*
  LOGIN/REGISTER COMPONENTS

@@ -1,0 +1,31 @@
+{% from 'components/generic/elements.jinja2' import link %}
+
+
+{# Page top_header with links and other information #}
+{% macro page_top_header(social_media_icons) %}
+  <div class="TopHeader">
+    <div class="TopHeader-wrapper">
+      <ul class="TopHeader-links">
+          {% call link('/about/', title=_('About'), preload=True) %}
+          <li>sobre</li>
+          {% endcall %}
+
+          {% call link('/faq/', title=_('FAQ'), preload=True) %}
+            <li>perguntas frequentes</li>
+          {% endcall %}
+
+          {% call link('/usage/', title=_('Usage'), preload=True) %}
+            <li>termos de uso</li>
+          {% endcall %}
+      </ul>
+
+      <div class="TopHeader-social">
+          <ul class="TopHeader-icons">
+            {% for icon in social_media_icons %}
+              <li>{{ icon.icon_tag(classes=[icon.icon_name])|safe }}</li>
+            {% endfor %}
+          </ul>
+      </div>
+    </div>
+  </div>
+{% endmacro %}
