@@ -48,10 +48,10 @@ $color-palette-radius: 150px;
 
     // Roles
     .error {
-        @include color-style($color-error);
+        @include color-style($color-role-error);
     }
     .warning {
-        @include color-style($color-warning);
+        @include color-style($color-role-warning);
     }
     .action-default {
         @include color-style($color-action-default, $color-action-default-text);

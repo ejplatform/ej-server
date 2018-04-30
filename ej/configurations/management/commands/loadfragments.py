@@ -26,16 +26,16 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, path=False, force=False, **options):
-        real_handle(path, force)
+        load_fragments(path, force)
 
 
-def real_handle(path, force):
+def load_fragments(path, force):
     if not path:
         path = 'local'
     validate_path(path)
 
     base = Path(path)
-    files = ((base/path, make_fragment_name(path)) for path in os.listdir(path))
+    files = ((base / path, make_fragment_name(path)) for path in os.listdir(path))
 
     # Filter out existing fragments
     current_fragments = list(Fragment.objects.values_list('name'))
@@ -48,7 +48,6 @@ def real_handle(path, force):
         else:
             print('Fragment exists: <base>%s (%s)' % (name, path))
 
-
     # Split HTML from markdown
     html_files = {path: name for name, path in new_fragments.items() if is_html(path)}
     md_files = {path: name for name, path in new_fragments.items() if is_markdown(path)}
@@ -60,7 +59,7 @@ def real_handle(path, force):
 
 
 def handle_html(path, name):
-    save_fragment(path,name, Fragment.FORMAT_HTML)
+    save_fragment(path, name, Fragment.FORMAT_HTML)
 
 
 def handle_markdown(path, name):
@@ -69,24 +68,14 @@ def handle_markdown(path, name):
 
 def save_fragment(path, name, fragment_format):
     data = path.read_text()
-    if(fragment_format== Fragment.FORMAT_MARKDOWN):
-        data = Markup(markdown(data))
     fragment, created = Fragment.objects.update_or_create(
         name=name,
-        defaults={'format': fragment_format,
-                  'content': data,
-                  'editable': True,
-                  'deletable': True,
-                  }
+        defaults={
+            'format': fragment_format,
+            'content': data,
+            'editable': True,
+        }
     )
-
-    if(created):
-        print('Saved fragment: %s' % fragment)
-    else:
-        print('Updated fragment: %s' % fragment)
-
+    fragment.lock()
+    print('Saved fragment:' if created else 'Updated fragment:', fragment)
     return fragment
-
-
-
-

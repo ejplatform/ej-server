@@ -11,7 +11,7 @@ from .base import *  # noqa
 # ------------------------------------------------------------------------------
 # Turn debug off so tests run faster
 DEBUG = False
-TEMPLATES[0]['OPTIONS']['debug'] = False
+TEMPLATES[1]['OPTIONS']['debug'] = False
 
 # SECRET CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -53,7 +53,7 @@ PASSWORD_HASHERS = [
 # TEMPLATE LOADERS
 # ------------------------------------------------------------------------------
 # Keep templates in memory so tests run faster
-TEMPLATES[0]['OPTIONS']['loaders'] = [
+TEMPLATES[1]['OPTIONS']['loaders'] = [
     ['django.template.loaders.cached.Loader', [
         'django.template.loaders.filesystem.Loader',
         'django.template.loaders.app_directories.Loader',

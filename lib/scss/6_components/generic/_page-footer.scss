@@ -3,37 +3,25 @@
  ============================================================================ */
 
 // Constants
-$footer-color: $color-blue-nav !default;
-$footer-color-text: $color-content-text !default;
-$footer-icon-size: 30px;
+$footer-color: $color-emph !default;
+$footer-color-text: $color-emph-text !default;
+$footer-icon-size: $font-size-h1;
 $footer-text-spacing: 10px;
 $footer-content-info-width: 65%;
 $footer-content-social-width: 35%;
 
 // Component
 .Footer {
-    >* {
-        @extend .CenteredContainer;
-    }
-    background: $footer-color;
-    box-sizing: border-box;
-    color: $footer-color-text;
-    height: 0 $header-top-nav-height;
-    padding: $spacing-unit-small;
+    @include color($footer-color, $footer-color-text);
+    text-align: center;
+
     &-social {
-        p {
-            font-size: $font-size-default;
-        }
-    }
-    &-icons {
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-        font-size: $footer-icon-size;
-        color: $color-white;
-        li {
-            display: inline;
-            margin: $spacing-unit-small;
+
+        @extend .unlist-inline;
+        i {
+            color: $color-white;
+            font-size: $footer-icon-size;
+            margin: $spacing-unit-tiny;
         }
     }
 }

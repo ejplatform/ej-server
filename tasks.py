@@ -1,7 +1,8 @@
-from invoke import task
-import sys
 import os
 import pathlib
+import sys
+
+from invoke import task
 
 python = sys.executable
 
@@ -10,6 +11,7 @@ python = sys.executable
 # Call python manage.py in a more robust way
 #
 def manage(ctx, cmd, env=None, **kwargs):
+    kwargs = {k.replace('_', '-'): v for k, v in kwargs.items() if v is not False}
     opts = ' '.join(f'--{k} {"" if v is True else v}' for k, v in kwargs.items())
     cmd = f'{python} manage.py {cmd} {opts}'
     print(f'Run: {cmd}')
@@ -23,7 +25,9 @@ def sass(ctx, no_watch=False, trace=False):
     """
     suffix = '' if no_watch else ' --watch'
     suffix += ' --trace' if trace else ''
-    ctx.run('sass lib/scss/main.scss:lib/assets/css/main.css' + suffix, pty=True)
+    ctx.run('rm .sass-cache -rf')
+    ctx.run('sass lib/scss/main.scss:lib/assets/css/main.css lib/scss/rocket.scss:lib/assets/css/rocket.css' + suffix,
+            pty=True)
 
 
 @task
@@ -51,14 +55,14 @@ def db(ctx, migrate_only=False):
 
 
 @task
-def db_reset(ctx, fake=False, postgres=False, no_assets=False):
+def db_reset(ctx, fake=False, no_assets=False):
     """
     Reset data in database and optionally fill with fake data
     """
     ctx.run('rm db.sqlite3 -f')
     manage(ctx, 'migrate')
     if fake:
-        db_fake(ctx, postgres=postgres)
+        db_fake(ctx)
     if not no_assets:
         db_assets(ctx)
 
@@ -92,7 +96,7 @@ def db_fake(ctx, no_users=False, no_conversations=False, no_admin=False, safe=Fa
 
 
 @task
-def db_assets(ctx, path=None):
+def db_assets(ctx, path=None, force=False):
     """
     Install assets from a local folder in the database.
     """
@@ -100,7 +104,9 @@ def db_assets(ctx, path=None):
     if path is None:
         path = 'local' if os.path.exists('local') else 'local-example'
     base = pathlib.Path(path)
-    manage(ctx, 'loadpages', path=base / 'pages')
+    manage(ctx, 'loadpages', path=base / 'pages', force=force)
+    manage(ctx, 'loadfragments', path=base / 'fragments', force=force)
+    manage(ctx, 'loadsocialmediaicons', path=base / 'social-icons.json', force=force)
 
 
 #
@@ -125,3 +131,30 @@ def docker_clean(ctx, no_sudo=False, all=False, volumes=False, networks=False, i
 
     if not any([all, volumes, networks, images, containers]):
         print('You must select one kind of docker resource to clean.', file=sys.stderr)
+
+
+#
+# Translations
+#
+@task
+def i18n(ctx, compile=False, edit=False, lang='pt_BR'):
+    if edit:
+        ctx.run(f'poedit locale/{lang}/LC_MESSAGES/django.po')
+    else:
+        print('Collecting messages')
+        manage(ctx, 'makemessages', all=True, keep_pot=True)
+
+        print('Extract Jinja translations')
+        ctx.run('pybabel extract -F babel.cfg -o locale/jinja2.pot .')
+
+        print('Join Django + Jinja translation files')
+        ctx.run('msgcat locale/django.pot locale/jinja2.pot --use-first -o locale/join.pot', pty=True)
+        ctx.run(r'''sed -i '/"Language: \\n"/d' locale/join.pot''', pty=True)
+
+        print(f'Update locale {lang} with Jinja2 messages')
+        ctx.run(f'pybabel update -i locale/join.pot -D django -d locale -l {lang}')
+
+        print('Cleaning up')
+        ctx.run('rm locale/*.pot')
+    if compile:
+        manage(ctx, 'compilemessages')

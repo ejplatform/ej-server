@@ -3,29 +3,82 @@
  ======================================================================== */
 
 $profile-image-size: 2 * $login-icon-size !default;
+$profile-arrow-size: $spacing-unit !default;
 
 .Profile {
     @extend .Container;
     text-align: center;
+    padding-top: $spacing-unit;
 
     h1 {
         margin-bottom: 0;
+        color: $color-purple-dark;
+        font-size: $font-size-h1;
     }
+
     h2 {
-        color: $color-content-text-faded;
+        color: $color-blue-light;
         font-size: $font-size-h4;
         margin-top: 0;
 
+    }
+
+    &-actions {
+        p, form {
+            text-align: center;
+        }
+
+        input[type=submit] {
+            background-color: $color-purple-dark;
+        }
+
+        a {
+            margin: $spacing-unit * 2 0;
+            color: $color-red-dark;
+            display: inline-block;
+        }
+    }
+
+    &-arrow {
+        width: 0;
+        height: 0;
+        border-left: $profile-arrow-size solid transparent;
+        border-right: $profile-arrow-size solid transparent;
+        border-bottom: $profile-arrow-size solid $color-blue-light;
     }
 
     &-breadcrumbs {
         text-align: left;
     }
 
+    &-conversations {
+        .ConversationList-title h1 {
+            text-transform: uppercase;
+        }
+
+        p {
+            text-align: center;
+        }
+    }
+
     &-image {
         width: $profile-image-size;
         height: $profile-image-size;
+        border: $spacing-unit-small solid $color-green;
         border-radius: 50ch;
+    }
+
+    &-rocket {
+        text-align: center;
+        margin-top: $spacing-unit * 4;
+
+        h2 {
+            text-transform: uppercase;
+        }
+
+        .RocketButton {
+            background: $color-blue;
+        }
     }
 
     &-tabs {
@@ -37,13 +90,24 @@ $profile-image-size: 2 * $login-icon-size !default;
         justify-content: space-around;
         font-size: $font-size-h5;
         font-weight: $font-headings-weight;
+        text-transform: uppercase;
 
         > * {
             margin: 0 $spacing-unit;
         }
+
+        a {
+            color: $color-purple-dark;
+            margin: 0;
+            display: inline-block;
+            min-width: $spacing-unit * 2;
+        }
     }
 
     &-tabContainer {
+    }
+
+    &-tabContent {
         background: $color-hint;
         text-align: left;
     }
@@ -52,13 +116,17 @@ $profile-image-size: 2 * $login-icon-size !default;
         font-size: $font-size-h6;
         padding: $spacing-unit-large;
 
+        .Button {
+          text-transform: none;
+        }
+
         > * {
             display: block;
         }
 
         dl {
             dt {
-                color: $color-content-text-faded;
+                color: $color-blue-dark;
                 text-transform: lowercase;
             }
 
@@ -66,6 +134,7 @@ $profile-image-size: 2 * $login-icon-size !default;
                 font-size: $font-size-h5;
                 font-weight: bold;
                 margin: 0 0 $spacing-unit-small 0;
+                color: $color-purple-dark;
             }
         }
 

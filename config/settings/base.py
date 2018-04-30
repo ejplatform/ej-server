@@ -9,7 +9,6 @@ https://docs.djangoproject.com/en/dev/ref/settings/
 """
 import pathlib
 
-from config.settings.core import env, DEBUG
 from .conf import db
 from .celery import *
 from .constance import *
@@ -124,7 +123,13 @@ MANAGERS = ADMINS
 TIME_ZONE = 'America/Sao_Paulo'
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#language-code
+LOCALE_NAME = 'pt_BR'
 LANGUAGE_CODE = 'pt-br'
+LOCALE_PATHS = [ROOT_DIR / 'locale']
+LANGUAGES = [
+    ('en', 'English'),
+    ('pt-br', 'Brazilian Portuguese'),
+]
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#site-id
 SITE_ID = 1
@@ -144,6 +149,7 @@ USE_TZ = True
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.jinja2.Jinja2',
+        'APP_DIRS': True,
         'DIRS': [
             APPS_DIR / 'templates/jinja2/',
         ],
@@ -324,7 +330,7 @@ ADMIN_URL = 'admin/'
 # ------------------------------------------------------------------------------
 CORS_ORIGIN_ALLOW_ALL = False
 CORS_ALLOW_CREDENTIALS = True
-CORS_ORIGIN_REGEX_WHITELIST = (r'^(https?://)?[\w.]*ejplatform\.org$', )
+CORS_ORIGIN_REGEX_WHITELIST = (r'^(https?://)?[\w.]*ejplatform\.org$',)
 
 CSRF_TRUSTED_ORIGINS = [
     'ejplatform.org',

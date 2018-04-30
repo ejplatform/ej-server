@@ -26,7 +26,7 @@ select,
 .FormItem {
     box-sizing: border-box;
     font-size: $font-size-h6;
-    max-width: 0.85 * $breakpoint-small;
+    max-width: $breakpoint-small;
     width: 85%;
 }
 
@@ -38,16 +38,20 @@ input,
 textarea,
 select,
 .FormItem {
-    border-radius: 2 * $font-size;
+    border-radius: $font-size-large;
     background: $form-element-color;
     border: 1px solid $form-border-color;
     color: $form-element-color-text;
     margin: $spacing-unit-tiny auto;
-    padding: $spacing-unit-small;
+    padding: $spacing-unit-small ($spacing-unit-small $spacing-unit-tiny);
+}
+
+textarea {
+    height: 6 * $font-size-default;
 }
 
 label {
-    color: $color-content-text-faded;
+    color: $color-content-text;
     font-weight: bold;
     font-size: $font-size-h5;
     margin: 0 auto;

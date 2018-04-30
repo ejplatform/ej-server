@@ -1,12 +1,15 @@
-from markdown import markdown
-from django.contrib.staticfiles.storage import staticfiles_storage
-from django.urls import reverse
-from django.utils.translation import ugettext, ungettext
-from jinja2 import Environment
-from markupsafe import Markup
 import random
 import string
-from ej.configurations.models import SocialMediaIcon
+
+from django.conf import settings
+from django.contrib.staticfiles.storage import staticfiles_storage
+from django.urls import reverse
+from django.utils import translation
+from jinja2 import Environment
+from markdown import markdown
+from markupsafe import Markup
+
+from ej.configurations import social_icons, fragment
 
 SALT_CHARS = string.ascii_letters + string.digits + '-_'
 
@@ -23,21 +26,16 @@ def environment(**options):
         salt_tag=salt_tag,
         salt=salt,
         social_icons=social_icons,
+        footer_data=lambda: fragment('global.footer', raises=False),
+        service_worker=getattr(settings, 'SERVICE_WORKER', False),
     )
     env.filters.update(
         markdown=lambda x: Markup(markdown(x)),
         pc=format_percent,
         salt=salt,
     )
-    env.install_gettext_callables(ugettext, ungettext, newstyle=True)
+    env.install_gettext_translations(translation, newstyle=True)
     return env
-
-
-#
-# Global resources
-#
-def social_icons():
-    return list(SocialMediaIcon.objects.all())
 
 
 #
@@ -61,11 +59,11 @@ def salted(value):
     have a byte-level control of the message, hence salting must be done in
     unicode data. This brings some problems:
 
-    * How to (efficiently) implement XOR for variable length characters?
+    * How to (efficiently) implement XOR for a large alphabet such as unicode?
     * Xor-ing two valid unicode points will not necessarily yield a valid
       unicode value.
     * Client code needs to recover the encoded data, hence the solution must
-      be
+      be portable to Python and Javascript
     """
     # TODO: how to do it with unicode?
     raise NotImplementedError

@@ -1,14 +1,14 @@
 {% from 'components/generic/elements.jinja2' import rocket_button, action_button %}
 
 
-{% macro home_banner(home_banner_frag, action='start-now') %}
+{% macro home_banner(data, action='start-now') %}
     <div class="HomeBanner">
-        {{ home_banner_frag.html()}}
+        {{ data.html() }}
         <p>
             {% if action == 'rocket-chat' %}
                 {{ rocket_button() }}
             {% elif action == 'start-now' %}
-                {{ action_button('Comece agora!', '/start/' ) }}
+                {{ action_button('Start now!', '/start/' ) }}
             {% else %}
                 Invalid action: {{ action }}
             {% endif %}
@@ -17,9 +17,9 @@
 {% endmacro %}
 
 
-{% macro how_it_works(how_it_works_frag) %}
+{% macro how_it_works(data) %}
     <div class="HowItWorks">
-        {{ how_it_works_frag.html()}}
+        {{ data.html() }}
 
         <div class="HowItWorks-cards">
             {% call how_it_works_card(
@@ -65,9 +65,9 @@
 {% endmacro %}
 
 
-{% macro start_now(start_now_frag) %}
+{% macro start_now(fragment) %}
     <div class="StartNow">
-        {{ start_now_frag.content|safe }}
-        <p>{{ action_button('Começar agora!', '/start/') }}</p>
+        {{ fragment.html() }}
+        <p>{{ action_button(_('Start now!'), '/start/') }}</p>
     </div>
 {% endmacro %}

@@ -16,7 +16,7 @@ $color-blue-light: rgba(214,241,243,1) !default;
 $color-blue-nav: rgba(164,216,221,1) !default;
 
 $color-green: rgba(116,181,184,1) !default;
-$color-green-dark: rgb(58, 153, 122) !default;
+$color-green-dark: rgb(34, 179, 92) !default;
 $color-green-light: rgb(189, 255, 206) !default;
 
 $color-magenta: rgba(255,62,114,1) !default;
@@ -42,7 +42,7 @@ $color-yellow-light: #fffeaf !default;
 // Background and text colors
 $color-content: $color-white !default;
 $color-content-text: $color-blue-dark !default;
-$color-content-text-faded: lighten($color-content-text, 40%) !default;
+$color-content-text-faded: $color-blue !default;
 
 // Color schemes
 // Buttons and highlighted elements. Strong highlight, usually applied to
@@ -63,16 +63,17 @@ $color-hint: $color-blue-light !default;
 $color-hint-text: $color-content-text !default;
 
 // Stronger hint. Used in Footer component
-$color-emph: $color-blue !default;
-$color-emph-text: $color-black !default;
+$color-emph: $color-blue-nav !default;
+$color-emph-text: $color-hint-text !default;
 
 // Modifiers
 $color-hint-degree-pc: 10;
 $color-text-alpha: 0.9;
 
 // Color roles and actions
-$color-error: $color-red !default;
-$color-warning: $color-yellow !default;
+$color-role-ok: $color-green-dark !default;
+$color-role-error: $color-red !default;
+$color-role-warning: $color-yellow !default;
 
 $color-action-default: $color-primary !default;
 $color-action-primary: $color-accent !default;
@@ -93,4 +94,5 @@ $color-action-secondary-text-hover: $color-hint-text !default;
 // Box shadow
 $color-box-shadow: rgba(18, 48, 102, 0.08);
 $box-shadow: 2px 0 4px 0 $color-box-shadow;
+
 

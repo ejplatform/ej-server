@@ -1,0 +1,15 @@
+/*
+ MIXINS FOR APPLYING AND TYPOGRAPHICAL STYLES
+ =============================================================================*/
+
+@mixin headers($sizes, $transform: null, $color: null, $weight: null) {
+}
+
+@mixin force-text-color($color) {
+    color: $color;
+
+    a, a:hover, a:active, a:focus {
+        color: $color;
+    }
+}
+

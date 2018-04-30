@@ -1,0 +1,47 @@
+/*
+ PAGE TOP HEADER
+ ============================================================================ */
+
+// Constants
+// Top and botton navigation bars. Styled as content, but can be overriden.
+$top-header-color: darken($color-content, 5%) !default;
+$top-header-color-text: $color-content-text !default;
+$top-header-icon-color: $top-header-color-text !default;
+$top-header-icon-size: $font-size-default !default;
+$top-header-links-margin: $spacing-unit-tiny;
+$top-header-icons-margin: $spacing-unit-tiny;
+
+// Component
+.TopHeader {
+    @include color($top-header-color, $top-header-color-text, $force: true);
+    @include size(100vw, $top-header-height);
+    display: none;
+    position: fixed;
+    top: 0;
+    z-index: 200;
+
+    &-wrapper {
+        @extend .layout-horizontal;
+        box-sizing: border-box;
+        height: 100%;
+        margin: 0 auto;
+        padding: 0 $spacing-unit-small;
+        max-width: $header-wrapper-max-width;
+    }
+
+    &-links,
+    &-social {
+        @extend .unlist-inline;
+        font-size: $font-size-small;
+        li {
+            margin: $top-header-links-margin;
+            i {
+                font-size: $top-header-icon-size;
+            }
+        }
+    }
+
+    @include breakpoint(small) {
+        display: block;
+    }
+}

@@ -1,19 +1,17 @@
 import logging
 
+from constance import config
 from django.contrib import auth
 from django.db import IntegrityError
 from django.http import Http404, HttpResponseServerError
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils.translation import ugettext as _
-from constance import config
 
+from ej.configurations import fragment, social_icons
 from ej.users.models import User
-from ej_conversations.models import Conversation, Vote, Category
+from ej_conversations.models import Conversation, Category
 from .forms import ProfileForm, LoginForm, RegistrationForm
 from .views_utils import route, get_patterns
-
-from ej.configurations.views import get_social_media_icons
-from ej.configurations import fragment
 
 get_patterns = get_patterns  # don't count as an unused import
 DJANGO_BACKEND = 'django.contrib.auth.backends.ModelBackend',
@@ -28,12 +26,12 @@ log = logging.getLogger('ej')
 def home(request):
     ctx = {
         'conversations': Conversation.objects.all(),
-        'home_banner_frag': fragment('home-banner', raises=False),
-        'how_it_works_frag': fragment('how-it-works', raises=False),
-        'start_now_frag': fragment('start-now', raises=False),
-        'social_media_icons': get_social_media_icons(),
+        'home_banner_fragment': fragment('home.banner', raises=False),
+        'how_it_works_fragment': fragment('home.how-it-works', raises=False),
+        'start_now_fragment': fragment('home.start-now', raises=False),
+        'social_media_icons': social_icons(),
     }
-    return render(request, 'pages/index.jinja2', ctx)
+    return render(request, 'pages/home.jinja2', ctx)
 
 
 @route('start/')
@@ -157,15 +155,10 @@ def conversation_detail(request, slug, category_slug):
         'comment': comment,
     }
     if comment and request.POST.get('action') == 'vote':
-        if 'agree' in request.POST:
-            comment.vote(request.user, 'agree')
-        elif 'pass' in request.POST:
-            comment.vote(request.user, 'skip')
-        elif 'disagree' in request.POST:
-            comment.vote(request.user, 'disagree')
-        else:
-            raise ValueError('invalid parameter')
-
+        vote = request.POST['vote']
+        if vote not in {'agree', 'skip', 'disagree'}:
+            return HttpResponseServerError('invalid parameter')
+        comment.vote(request.user, vote)
     elif request.POST.get('action') == 'comment':
         comment = request.POST['comment'].strip()
         conversation.create_comment(request.user, comment)
@@ -210,12 +203,10 @@ def rocket(request):
     )
     return render(request, 'pages/rocket.jinja2', ctx)
 
-#
-# Debug routes
-#
-@route('debug/styles/')
-def display(request):
-    return render(request, 'pages/debug-styles.jinja2', {})
+
+@route('rocket-intro/', login_required=True)
+def rocket(request):
+    return render(request, 'pages/rocket-intro.jinja2')
 
 
 #

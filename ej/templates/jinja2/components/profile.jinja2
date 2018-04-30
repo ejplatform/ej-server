@@ -1,10 +1,9 @@
-{% from 'components/generic/elements.jinja2' import breadcrumbs, action_button, rocket_button, link %}
+{% from 'components/generic/elements.jinja2' import action_button, rocket_button, link %}
+{% from 'components/conversations.jinja2' import conversation_list %}
 
 
 {% macro profile_edit(profile, form, csrf_input) %}
     <div class="ProfileEdit">
-        <div class="Profile-breadcrumbs">{{ breadcrumbs([('profile', _('Profile')), ('edit', _('Edit'))]) }}</div>
-        <h1>Editar perfil: <em>{{ profile.name }}</em></h1>
         <form method="post" show-labels>
             {{ csrf_input }}
             {{ form.as_p() }}
@@ -17,32 +16,52 @@
 
 {% macro profile_detail(profile, csrf_input, info='profile') %}
     <div class="Profile">
-        <div class="Profile-breadcrumbs">{{ breadcrumbs([('profile', 'Profile')]) }}</div>
-
         <img class="Profile-image" src="{{ profile.image_url }}">
         <h1>{{ profile.name }}</h1>
         <h2>{{ profile.get_role_description() }}</h2>
 
-        <div class="Profile-actionButtons">
-            <p>{{ rocket_button() }}</p>
-            <p>{{ action_button('Conversas', '/conversations/') }}</p>
-        </div>
-
         <div class="Profile-tabs">
             <nav class="Profile-tabLinks">
-                {{ link(_('Info'), '/profile/', target='.Profile-tabContainer') }}
-                {{ link(_('Contributions'), '/profile/?info=contributions', target='.Profile-tabContainer') }}
+                {{ link(_('Info'), '/profile/',
+                        target='.Profile-tabs',
+                        transition=None,
+                        class='Profile-tabActive' if info=='profile' else None) }}
+                {{ link(_('Contributions'), '/profile/?info=contributions',
+                        target='.Profile-tabs',
+                        transition=None,
+                        class='Profile-tabActive' if info=='contributions' else None) }}
             </nav>
+
             <div class="Profile-tabContainer">
-                {% if info == 'profile' %}
-                    {{ profile_info(profile, csrf_input) }}
-                {% elif info == 'contributions' %}
-                    {{ profile_contributions(profile) }}
-                {% else %}
-                    <p>Invalid info parameter: {{ info }}</p>
-                {% endif %}
+                <div class="Profile-arrow" style="visibility: hidden"></div>
+
+                <div class="Profile-tabContent">
+                    {% if info == 'profile' %}
+                        {{ profile_info(profile, csrf_input) }}
+                    {% elif info == 'contributions' %}
+                        {{ profile_contributions(profile) }}
+                    {% else %}
+                        <p>Invalid info parameter: {{ info }}</p>
+                    {% endif %}
+                </div>
             </div>
         </div>
+    </div>
+
+    <div class="Profile-conversations">
+        {{ profile_conversations(profile, categories) }}
+    </div>
+
+    <div class="Profile-rocket">
+        {{ profile_rocket(profile) }}
+    </div>
+
+    <div class="Profile-actions">
+        <form method="post" action="/logout/">
+            {{ csrf_input }}
+            <input type="submit" class="Button" primary value="{{ _('Logout') }}"/>
+        </form>
+        <p><a href="/profile/delete">{{ _('Delete profile') }}</a></p>
     </div>
 {% endmacro %}
 
@@ -55,12 +74,10 @@
                 <dd>{{ info or '-' }}</dd>
             {% endfor %}
         </dl>
-        {{ link(_('Edit profile'), '/profile/edit/') }}
-        {{ link(_('Delete profile'), '/profile/delete/') }}
         <div>
             <form method="post" action="/logout/">
                 {{ csrf_input }}
-                <input class="Button" type="submit" name="logout" value="{{ _('Logout') }}" primary>
+                <a href="/profile/edit" class="Button" primary>{{ _('Edit profile') }}</a>
             </form>
         </div>
     </div>
@@ -76,4 +93,17 @@
             {% endfor %}
         </dl>
     </div>
+{% endmacro %}
+
+
+{% macro profile_conversations(profile, conversations) %}
+    {{ conversation_list(profile.conversations.all(), [], _('Joined conversations')) }}
+    <p><a href="/conversations" class="Button" primary>{{ _('More conversations') }}</a></p>
+{% endmacro %}
+
+
+{% macro profile_rocket(profile) %}
+    <h2>{{ _('CPA Space') }}</h2>
+    <h5>{{ _('See below the spaces you joined') }}</h5>
+    <p>{{ rocket_button() }}</p>
 {% endmacro %}

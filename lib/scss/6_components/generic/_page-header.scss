@@ -6,38 +6,34 @@
 // Top and botton navigation bars. Styled as content, but can be overriden.
 $header-color: $color-content !default;
 $header-color-text: $color-content-text !default;
-$header-shadow: 0 0 10px 0px rgba(50, 50, 50, 0.5) !default;
-$logo-width: 84px !default;
+$header-box-shadow-upper: 0 2px 4px 0 rgba(0, 0, 0, 0.05) !default;
+$header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.05) !default;
 
 // Component
 .Header {
+    @include color($header-color, $header-color-text, $force: true);
+
     box-sizing: border-box;
-    color: $header-color-text;
-    background: $header-color;
     margin: 0;
     z-index: 100;
 
     // Resets
     ul {
-        list-style: none;
-    }
-    a {
-        color: $header-color-text;
-    }
-    a:hover {
-        color: $header-color-text;
+        @extend .unlist;
     }
 
     @media only screen and (min-width: $breakpoint-small) {
-        align-items: center;
-        box-shadow: $header-shadow;
-        background: $header-color;
-        display: flex;
-        height: $header-height;
-        justify-content: space-between;
-        position: fixed;
-        top: 0;
-        width: 100vw;
+        @include size(100vw, $header-height-tablet);
+        @include position(fixed,  $top-header-height null null null);
+        box-shadow: $header-box-shadow-upper;
+
+        &-wrapper {
+            align-items: center;
+            display: flex;
+            justify-content: space-between;
+            margin: 0 auto;
+            max-width: $header-wrapper-max-width;
+        }
     }
 
     // Elements
@@ -45,95 +41,75 @@ $logo-width: 84px !default;
     &-lowerNav {
         align-items: center;
         box-sizing: border-box;
-        box-shadow: $header-shadow;
-        background: $header-color;
+        box-shadow: $header-box-shadow-upper;
         display: flex;
         justify-content: space-between;
-        margin: 0;
-        padding: 0 $spacing-unit 0 0;
         position: fixed;
         width: 100vw;
 
         @media only screen and (min-width: $breakpoint-small) {
             box-shadow: none;
             display: block;
-            position: initial;
-            width: initial;
+            position: inherit;
+            height: inherit;
+            width: inherit;
         }
     }
 
     &-topNav {
         height: $header-top-nav-height;
-        min-width: $spacing-unit-large + $logo-width;
+        min-width: $spacing-unit-large + $header-icon-size;
+        padding: 0 $spacing-unit;
         top: 0;
 
         img {
-            height: 0.8 * $header-top-nav-height;
             box-sizing: border-box;
+            height: $header-logo-size;
             margin: 0;
+            z-index: 100;
+        }
+        i.fa {
+            font-size: $font-size-h3;
         }
 
         @media only screen and (min-width: $breakpoint-small) {
             box-shadow: none;
-            display: flex;
-            justify-content: start;
-            margin: 0;
             padding: 0 0 0 $spacing-unit;
+            text-align: left;
 
             img {
-                height: $header-height;
-                padding: 0;
-                margin: 0;
+                height: $header-height-tablet - $spacing-unit-small;
             }
             .Header-topIcon {
                 display: none;
             }
         }
 
-        @media only screen and (min-width: $breakpoint-medium) {
-            padding-left: $spacing-unit-large;
+        @media only screen and (min-width: $header-wrapper-max-width) {
+            padding: 0;
+            height: inherit;
+            margin-left: $spacing-unit;
         }
     }
 
     &-lowerNav {
+        align-items: stretch;
         bottom: 0;
-        box-shadow: $header-shadow;
+        box-shadow: $header-box-shadow-lower;
         height: $header-bottom-nav-height;
-        font-size: $font-size-small;
-        font-weight: bold;
-        text-transform: lowercase;
         text-align: center;
-
-        @media only screen and (min-width: $breakpoint-small) {
-            background: transparent;
-            box-shadow: none;
-            display: flex;
-            flex-grow: 1;
-            font-size: $font-size-large;
-            font-weight: normal;
-            justify-content: flex-end;
-            justify-self: start;
-            text-align: right;
-            text-transform: none;
-        }
+        text-transform: uppercase;
+        font-size: $font-size-tiny;
 
         a {
             align-items: center;
-            color: $color-content-text-faded;
+            display: flex;
+            flex-flow: column;
+            justify-content: center;
+            width: 33.3333%;
 
-            i.fa {
-                color: $color-content-text;
+            > * {
                 display: block;
-                font-size: $font-size-huge;
-                margin: $spacing-unit-tiny;
-
-                @media only screen and (min-width: $breakpoint-small) {
-                    display: none;
-                }
-            }
-
-            span {
-                margin: 0;
             }
 
             @media only screen and (min-width: $breakpoint-small) {
@@ -144,24 +120,37 @@ $logo-width: 84px !default;
             }
         }
 
-        a.Header-helpButton {
-            @media only screen and (min-width: $breakpoint-small) {
-                display: none;
-            }
-            @media only screen and (min-width: $breakpoint-medium) {
-                display: flex;
-            }
-        }
-
         a:last-child {
             @media only screen and (min-width: $breakpoint-small) {
+                margin-left: 0;
+                padding-left: 0;
+
                 span {
                     display: none;
                 }
-                i.fa {
+                img {
                     display: inline;
                 }
             }
         }
+
+        @media only screen and (min-width: $breakpoint-small) {
+            background: transparent;
+            box-shadow: none;
+            display: flex;
+            font-size: $font-size-large;
+            justify-content: flex-end;
+            justify-self: center;
+            text-align: right;
+
+            a img {
+                display: none;
+            }
+        }
+    }
+
+    &-lowerIcon {
+        height: $header-icon-size;
+        margin-bottom: $spacing-unit-tiny;
     }
 }

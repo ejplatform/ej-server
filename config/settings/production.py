@@ -11,9 +11,7 @@ Production Configurations
 
 """
 
-
 import logging
-
 
 from .base import *  # noqa
 
@@ -23,7 +21,6 @@ from .base import *  # noqa
 # Raises ImproperlyConfigured exception if DJANGO_SECRET_KEY not in os.environ
 SECRET_KEY = env('DJANGO_SECRET_KEY')
 
-
 # This ensures that Django will be able to detect a secure connection
 # properly on Heroku.
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
@@ -32,7 +29,6 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 INSTALLED_APPS += ['raven.contrib.django.raven_compat', ]
 RAVEN_MIDDLEWARE = ['raven.contrib.django.raven_compat.middleware.SentryResponseErrorIdMiddleware']
 MIDDLEWARE = RAVEN_MIDDLEWARE + MIDDLEWARE
-
 
 # SECURITY CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -61,7 +57,6 @@ ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS')
 # END SITE CONFIGURATION
 
 INSTALLED_APPS += ['gunicorn', ]
-
 
 # STORAGE CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -97,8 +92,10 @@ EMAIL_BACKEND = 'anymail.backends.mailgun.MailgunBackend'
 # See:
 # https://docs.djangoproject.com/en/dev/ref/templates/api/#django.template.loaders.cached.Loader
 TEMPLATES[1]['OPTIONS']['loaders'] = [
-    ('django.template.loaders.cached.Loader', [
-        'django.template.loaders.filesystem.Loader', 'django.template.loaders.app_directories.Loader', ]),
+    ['django.template.loaders.cached.Loader', [
+        'django.template.loaders.filesystem.Loader',
+        'django.template.loaders.app_directories.Loader',
+    ]],
 ]
 
 # CACHING
@@ -113,7 +110,7 @@ if env.bool('USE_CACHE', default=True):
             'OPTIONS': {
                 'CLIENT_CLASS': 'django_redis.client.DefaultClient',
                 'IGNORE_EXCEPTIONS': True,  # mimics memcache behavior.
-                                            # http://niwinz.github.io/django-redis/latest/#_memcached_exceptions_behavior
+                # http://niwinz.github.io/django-redis/latest/#_memcached_exceptions_behavior
             }
         }
     }
@@ -133,7 +130,7 @@ if env('DJANGO_SENTRY_DSN', default=False):
         'formatters': {
             'verbose': {
                 'format': '%(levelname)s %(asctime)s %(module)s '
-                        '%(process)d %(thread)d %(message)s'
+                          '%(process)d %(thread)d %(message)s'
             },
         },
         'handlers': {

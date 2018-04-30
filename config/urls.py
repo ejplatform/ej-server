@@ -30,6 +30,7 @@ urlpatterns = [
     path('rest-auth/registration/', include('rest_auth.registration.urls')),
 
     # Other urls
+    path('debug/', include('ej.configurations.urls')),
     path('accounts/', include('ej.users.urls')),
     path('accounts/', include('allauth.urls')),
     path('activity/', include('actstream.urls')),
@@ -38,6 +39,7 @@ urlpatterns = [
 
     # Static files for the dev server
     *static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),
+    *static(settings.STATIC_URL, document_root=settings.STATIC_ROOT),
 ]
 
 if settings.DEBUG:

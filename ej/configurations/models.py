@@ -1,47 +1,46 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-import bleach
 from markupsafe import Markup
+
 from ej_conversations.validators import validate_color
 from .icons import default_icon_name
+from .sanitizer import sanitize_html
 from .validators import validate_icon_name
 
 
 class SocialMediaIcon(models.Model):
-    ICON_MATERIAL = 'material'
-    ICON_AWESOME = 'fa'
-    ICON_CHOICES = (
-        (ICON_MATERIAL, _('Material Design')),
-        (ICON_AWESOME, _('Font-awesome')),
-    )
+    """
+    Configurable reference to a social media icon.
+    """
     social_network = models.CharField(
         _('Social network'),
         max_length=50,
         unique=True,
-        help_text=_('Name of the social network'),
+        help_text=_('Name of the social network (e.g., Facebook)'),
     )
     icon_name = models.CharField(
         _('Icon name'),
         max_length=50,
-        help_text=_('Icon name for the icon font'),
+        help_text=_('Icon name in font-awesome'),
+        validators=[validate_icon_name],
     )
-    icon_font = models.CharField(
-        _('Icon font'),
-        max_length=10,
-        default=ICON_AWESOME,
-    )
-    ordering = models.PositiveSmallIntegerField(
+    index = models.PositiveSmallIntegerField(
         _('Ordering'),
-        unique=True,
         help_text=_(
-            'You must manually define the ordering that each icon should '
-            'appear in the interface.'
+            'You can manually define the ordering that each icon should '
+            'appear in the interface. Otherwise, icons will be shown in '
+            'insertion order.'
         ),
     )
     url = models.URLField(
         _('URL'),
         help_text=_('Link to your social account page.')
     )
+
+    class Meta:
+        ordering = ['index', 'id']
+        verbose_name = _('Social media icon')
+        verbose_name_plural = _('Social media icons')
 
     def __str__(self):
         return self.social_network
@@ -50,38 +49,34 @@ class SocialMediaIcon(models.Model):
         return self.link_tag()
 
     def clean(self):
-        # We want to set the default icon for the most common social networks.
-        # TODO: see if this works!
         if not self.icon_name:
-            self.icon_name = default_icon_name(self.social_network)
-
-        if self.icon_font == self.ICON_MATERIAL:
-            validate_icon_name(self.icon_name, 'material')
-        elif self.icon_font == self.ICON_AWESOME:
-            validate_icon_name(self.icon_name, 'fa')
+            self.icon_name = default_icon_name(self.social_network.casefold())
 
     def icon_tag(self, classes=()):
         """
         Render an icon tag for the given icon.
 
-        >>> icon.icon_tag(classes=['header-icon'])
+        >>> icon.icon_tag(classes=['header-icon'])              # doctest: +SKIP
         <i class="fa fa-icon header-icon"></i>
         """
-        
-        return f'<i class="{self.icon_font} {" ".join(classes)}"></i>'
+        classes = [self.icon_name, *classes]
+        return f'<i {class_string(classes)}"></i>'
 
-    def link_tag(self, classes=()):
+    def link_tag(self, classes=(), icon_classes=()):
         """
         Render an anchor tag with the link for the social network.
 
-        >>> icon.link_tag(classes=['header-icon'])
+        >>> icon.link_tag(classes=['header-icon'])              # doctest: +SKIP
         <a href="url"><i class="fa fa-icon header-icon"></i></a>
-        """          
-
-        return f'<a href="{self.url}"><i class="{self.icon_font} {" ".join(classes)}"></i></a>'
+        """
+        classes = class_string(classes)
+        return f'<a href="{self.url}"{classes}>{self.icon_tag(icon_classes)}</a>'
 
 
 class Color(models.Model):
+    """
+    Generic color reference that can be configured in the admin interface.
+    """
     name = models.CharField(
         _('Color name'),
         max_length=150,
@@ -100,48 +95,55 @@ class Color(models.Model):
 
 
 class Fragment(models.Model):
+    """
+    Configurable HTML fragments that can be inserted in pages.
+    """
+
     FORMAT_MARKDOWN = 'md'
     FORMAT_HTML = 'html'
-    ...
+    FORMAT_CHOICES = [
+        (FORMAT_HTML, _('HTML')),
+        (FORMAT_MARKDOWN, _('Markdown')),
+    ]
 
     name = models.CharField(
         _('Name'),
         max_length=100,
         unique=True,
         db_index=True,
-        help_text=_('Name of the fragment to help identify some page part.'),
+        help_text=_('Unique identifier for fragment name'),
+    )
+    format = models.CharField(
+        max_length=4,
+        choices=FORMAT_CHOICES,
     )
     content = models.TextField(
         _('content'),
         blank=True,
-        help_text=_('The fragment content in html or markdown that will be displayed')
-    )
-    format = models.CharField(
-        max_length=4,
-        help_text=_('Format of the saved fragment, can be html or md')
+        help_text=_('Raw fragment content in HTML or Markdown'),
     )
     editable = models.BooleanField(
         default=True,
-        help_text=_('Boolean if the fragment its editable after being saved in db'),
-    )
-    deletable = models.BooleanField(
-        default=True,
-        help_text=_('Boolean if its possible to delete this fragment'),
+        editable=False,
     )
 
     def __html__(self):
         return self.html()
 
     def __str__(self):
-        return self.name.replace('_', ' ').replace('-', ' ').replace('/', '').capitalize()
+        return self.name
 
-    def save(self, *args, **kwargs):
+    def lock(self):
+        """
+        Prevents fragment from being deleted.
+        """
+        FragmentLock.objects.update_or_create(fragment=self)
 
-        super().save(*args, **kwargs)
-        if not self.deletable:
-            # conferir se levanta erro .DoesNotExist
-            if self.lock is None:
-                FragmentLock.objects.create(self)
+    def unlock(self):
+        """
+        Allows fragment being deleted.
+        """
+        FragmentLock.objects.filter(fragment=self).delete()
 
     def html(self, classes=()):
         data = sanitize_html(self.content)
@@ -149,14 +151,21 @@ class Fragment(models.Model):
         return Markup(f'<div{class_attr}>{data}</div>')
 
 
-def sanitize_html(html):
-    return bleach.clean(html, tags=['h1','h2','h3','h4','a','p','i','img','strong','div'])
-
-
-# GAMBIRA!
 class FragmentLock(models.Model):
+    """
+    ForeignKey reference that prevents protected fragments from being deleted
+    from the database.
+    """
     fragment = models.OneToOneField(
         Fragment,
         on_delete=models.PROTECT,
-        related_name='lock',
+        related_name='lock_ref',
     )
+
+
+def class_string(class_list):
+    if class_list:
+        class_ = ' '.join(class_list)
+        return f' class="{class_}"'
+    else:
+        return ''

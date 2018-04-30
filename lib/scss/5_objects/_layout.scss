@@ -1,0 +1,47 @@
+/*
+ GENERIC LAYOUT PATTERNS
+ =========================================================================== */
+
+.Container {
+    box-sizing: border-box;
+    margin: 0 auto;
+    max-width: $content-wrapper-max-width;
+    padding: 0 0 $spacing-unit-small 0;
+
+    @media only screen and (min-width: $breakpoint-small) {
+        padding: 0 $spacing-unit $spacing-unit $spacing-unit;
+    }
+
+    @media only screen and (min-width: $breakpoint-large) {
+        max-width: $content-wrapper-max-width;
+        padding: 0 0 $spacing-unit-large 0;
+    }
+}
+
+.CenteredContainer {
+    @extend .Container;
+    text-align: center;
+}
+
+// Flex box based layouts
+.Col--center {
+    align-items: center;
+    align-content: stretch;
+    display: flex;
+    flex-flow: column;
+}
+
+.layout-horizontal {
+    align-items: center;
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+}
+
+.grid-layout-horizontal {
+    @extend .layout-horizontal;
+
+    > * {
+        flex-grow: 1;
+    }
+}
