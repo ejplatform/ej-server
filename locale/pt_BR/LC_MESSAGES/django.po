@@ -7,30 +7,30 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-27 17:05-0300\n"
-"PO-Revision-Date: 2018-04-29 20:31-0300\n"
+"POT-Creation-Date: 2018-04-29 22:07-0300\n"
+"PO-Revision-Date: 2018-04-29 22:09-0300\n"
+"Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
+"Language-Team: \n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
-"Language-Team: \n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 2.0.6\n"
 
-#: config/forms.py:31 config/forms.py:68
+#: config/forms.py:32 config/forms.py:69
 msgid "Password"
 msgstr "Senha"
 
-#: config/forms.py:36
+#: config/forms.py:37
 msgid "Password confirmation"
 msgstr "Confirmação de senha"
 
-#: config/forms.py:57
+#: config/forms.py:58
 msgid "Passwords do not match"
 msgstr "Senhas não são iguais"
 
-#: config/forms.py:65 config/forms.py:67
+#: config/forms.py:66 config/forms.py:68
 msgid "E-mail"
 msgstr "Email"
 
@@ -38,127 +38,115 @@ msgstr "Email"
 msgid "Invalid username or password"
 msgstr "Usuário ou senha inválidos"
 
-#: ej/configurations/models.py:15
-msgid "Material Design"
-msgstr "Material Design"
-
 #: ej/configurations/models.py:16
-msgid "Font-awesome"
-msgstr "Font-awesome"
-
-#: ej/configurations/models.py:19
 msgid "Social network"
 msgstr "Rede social"
 
-#: ej/configurations/models.py:22
-msgid "Name of the social network"
-msgstr "Nome da rede social"
+#: ej/configurations/models.py:19
+msgid "Name of the social network (e.g., Facebook)"
+msgstr "Nome da rede social (ex. Facebook)"
 
-#: ej/configurations/models.py:25
+#: ej/configurations/models.py:22
 msgid "Icon name"
 msgstr "Nome do ícone"
 
-#: ej/configurations/models.py:27
-msgid "Icon name for the icon font"
+#: ej/configurations/models.py:24
+#, fuzzy
+#| msgid "Icon name for the icon font"
+msgid "Icon name in font-awesome"
 msgstr "Nome do ícone para a fonte"
 
-#: ej/configurations/models.py:30
-msgid "Icon font"
-msgstr "Fonte do ícone"
-
-#: ej/configurations/models.py:35
+#: ej/configurations/models.py:28
 msgid "Ordering"
 msgstr "Prioridade"
 
-#: ej/configurations/models.py:38
+#: ej/configurations/models.py:30
 msgid ""
-"You must manually define the ordering that each icon should appear in the "
-"interface."
+"You can manually define the ordering that each icon should appear in the "
+"interface. Otherwise, icons will be shown in insertion order."
 msgstr ""
-"Você precisa definir a prioridade com que cada ícone vai aparecer na "
-"interface"
+"Você pode definir a prioridade com que cada ícone vai aparecer na interface. "
+"Caso contrário, aparecerão na ordem de inserção."
 
-#: ej/configurations/models.py:43
+#: ej/configurations/models.py:36
 msgid "URL"
 msgstr "link"
 
-#: ej/configurations/models.py:44
+#: ej/configurations/models.py:37
 msgid "Link to your social account page."
 msgstr "Link para o seu perfil de rede social"
 
-#: ej/configurations/models.py:87
+#: ej/configurations/models.py:42
+msgid "Social media icon"
+msgstr ""
+
+#: ej/configurations/models.py:43
+msgid "Social media icons"
+msgstr "Ícones de mídias sociais"
+
+#: ej/configurations/models.py:81
 msgid "Color name"
 msgstr "Nome da cor"
 
-#: ej/configurations/models.py:91
+#: ej/configurations/models.py:85
 msgid "Color"
 msgstr "Cor"
 
-#: ej/configurations/models.py:94
+#: ej/configurations/models.py:88
 msgid "Color code in hex (e.g., #RRGGBBAA) format."
 msgstr "Código da cor em hexa (ex., #RRGGBBAA)"
 
-#: ej/configurations/models.py:107
+#: ej/configurations/models.py:105
 msgid "HTML"
 msgstr "HTML"
 
-#: ej/configurations/models.py:108
+#: ej/configurations/models.py:106
 msgid "Markdown"
 msgstr "Markdown"
 
-#: ej/configurations/models.py:112 ej/users/models.py:124
+#: ej/configurations/models.py:110 ej/users/models.py:124
 msgid "Name"
 msgstr "Nome"
 
-#: ej/configurations/models.py:116
-msgid "Name of the fragment to help identify some page part."
-msgstr "Nome do fragmento para ajudar a identificar uma parte da página"
+#: ej/configurations/models.py:114
+msgid "Unique identifier for fragment name"
+msgstr ""
 
-#: ej/configurations/models.py:119
+#: ej/configurations/models.py:121
 msgid "content"
 msgstr "conteúdo"
 
-#: ej/configurations/models.py:121
-msgid "The fragment content in html or markdown that will be displayed"
-msgstr "O conteúdo do fragmento em html ou markdown que vai ser exibido"
+#: ej/configurations/models.py:123
+msgid "Raw fragment content in HTML or Markdown"
+msgstr "Formato cru do conteúdo do fragmento"
 
-#: ej/configurations/models.py:125
-msgid "Format of the saved fragment, can be either HTML or Markdown"
-msgstr "Formato do fragmento salvo, pode ser tanto HTML quanto Markdown"
-
-#: ej/configurations/models.py:130
-msgid "Boolean if the fragment its editable after being saved in db"
-msgstr "Booleano se o fragmento é editável depois de salvo no banco"
-
-#: ej/configurations/models.py:134
-msgid "Boolean if its possible to delete this fragment"
-msgstr "Booleano se é possível deletar esse fragmento"
-
-#: ej/configurations/validators.py:11
-msgid "Material icons"
-msgstr "Icones material"
-
-#: ej/configurations/validators.py:12
+#: ej/configurations/validators.py:10
 msgid "Font-awesome icons"
 msgstr "Icones Font-awesome"
 
-#: ej/configurations/validators.py:13
+#: ej/configurations/validators.py:11
 msgid "Font-awesome brands"
 msgstr "Marcas Font-awesome"
 
-#: ej/configurations/validators.py:14
+#: ej/configurations/validators.py:12
 msgid "Font-awesome solid"
 msgstr "Font-awesome solid"
 
-#: ej/configurations/validators.py:15
+#: ej/configurations/validators.py:13
 msgid "Font-awesome regular"
 msgstr "Font-awesome regular"
 
-#: ej/configurations/validators.py:16
+#: ej/configurations/validators.py:14
 msgid "Font-awesome light"
 msgstr "Font-awesome light"
 
-#: ej/configurations/validators.py:22
+#: ej/configurations/validators.py:21
+msgid ""
+"Invalid font awesome icon name. Please use the full format like in \"fab fa-"
+"facebook-f\""
+msgstr ""
+
+#: ej/configurations/validators.py:29
 #, python-brace-format
 msgid "{icon_name} is an invalid {LIB_NAMES[lib]} icon!"
 msgstr "{icon_name} é um icone invalido de {LIB_NAMES[lib]}!"
@@ -748,3 +736,24 @@ msgstr "Visualização não definida, passe como uma variável de contexto"
 #: ej/users/serializers.py:148
 msgid "Define "
 msgstr "Definir"
+
+#~ msgid "Material Design"
+#~ msgstr "Material Design"
+
+#~ msgid "Font-awesome"
+#~ msgstr "Font-awesome"
+
+#~ msgid "Icon font"
+#~ msgstr "Fonte do ícone"
+
+#~ msgid "Name of the fragment to help identify some page part."
+#~ msgstr "Nome do fragmento para ajudar a identificar uma parte da página"
+
+#~ msgid "The fragment content in html or markdown that will be displayed"
+#~ msgstr "O conteúdo do fragmento em html ou markdown que vai ser exibido"
+
+#~ msgid "Boolean if the fragment its editable after being saved in db"
+#~ msgstr "Booleano se o fragmento é editável depois de salvo no banco"
+
+#~ msgid "Boolean if its possible to delete this fragment"
+#~ msgstr "Booleano se é possível deletar esse fragmento"
