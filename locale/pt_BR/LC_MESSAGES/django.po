@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-29 23:30-0300\n"
-"PO-Revision-Date: 2018-04-29 23:52-0300\n"
+"POT-Creation-Date: 2018-04-30 09:21-0300\n"
+"PO-Revision-Date: 2018-04-30 09:21-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
-"Language: pt_BR\n"
 "Language-Team: \n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: pt_BR\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "Generated-By: Babel 2.5.3\n"
 "X-Generator: Poedit 2.0.6\n"
 
@@ -64,8 +64,8 @@ msgid ""
 "You can manually define the ordering that each icon should appear in the "
 "interface. Otherwise, icons will be shown in insertion order."
 msgstr ""
-"Você pode definir a prioridade com que cada ícone vai aparecer na "
-"interface. Caso contrário, aparecerão na ordem de inserção."
+"Você pode definir a prioridade com que cada ícone vai aparecer na interface. "
+"Caso contrário, aparecerão na ordem de inserção."
 
 #: ej/configurations/models.py:36
 msgid "URL"
@@ -298,8 +298,7 @@ msgstr "Aviso:"
 #: ej/templates/django/account/email.html:46
 msgid ""
 "You currently do not have any e-mail address set up. You should really add "
-"an e-mail address so you can receive notifications, reset your password, "
-"etc."
+"an e-mail address so you can receive notifications, reset your password, etc."
 msgstr ""
 "Atualmente você não tem nenhum endereço de email configurado. Você deveria "
 "acrescentar um endereço para receber notificações, reconfigurar sua senha, "
@@ -443,8 +442,8 @@ msgstr "Recriar a senha"
 
 #: ej/templates/django/account/password_reset.html:16
 msgid ""
-"Forgotten your password? Enter your e-mail address below, and we'll send "
-"you an e-mail allowing you to reset it."
+"Forgotten your password? Enter your e-mail address below, and we'll send you "
+"an e-mail allowing you to reset it."
 msgstr ""
 "Esqueceu sua senha? Insira seu endereço de email abaixo, e nós vamos lhe "
 "enviar uma mensagem com instruções para recriar sua senha."
@@ -473,8 +472,8 @@ msgstr "Token inválido"
 #, python-format
 msgid ""
 "The password reset link was invalid, possibly because it has already been "
-"used.  Please request a <a href=\"%(passwd_reset_url)s\">new password "
-"reset</a>."
+"used.  Please request a <a href=\"%(passwd_reset_url)s\">new password reset</"
+"a>."
 msgstr ""
 "O link de reconfiguração da senha é inválido, possivelmente porque já foi "
 "usado. Por favor faça  <a href=\"%(passwd_reset_url)s\">um novo pedido de "
@@ -551,8 +550,8 @@ msgstr ""
 #: ej/templates/django/account/verified_email_required.html:20
 #, python-format
 msgid ""
-"<strong>Note:</strong> you can still <a href=\"%(email_url)s\">change your "
-"e-mail address</a>."
+"<strong>Note:</strong> you can still <a href=\"%(email_url)s\">change your e-"
+"mail address</a>."
 msgstr ""
 "<strong>Nota:</strong> você ainda poe <a href=\"%(email_url)s\">mudar seu "
 "endereço de email</a>."
@@ -737,190 +736,134 @@ msgstr "Visualização não definida, passe como uma variável de contexto"
 msgid "Define "
 msgstr "Definir "
 
-#: ej/templates/jinja2/base.jinja2:8
-msgid "Empurrando Juntos"
-msgstr "Empurrando Juntos"
+#~ msgid "Empurrando Juntos"
+#~ msgstr "Empurrando Juntos"
 
-#: ej/templates/jinja2/base.jinja2:67
-msgid "EJ - A platform of social participation."
-msgstr "EJ - Uma plataforma para participação social."
+#~ msgid "EJ - A platform of social participation."
+#~ msgstr "EJ - Uma plataforma para participação social."
 
-#: ej/templates/jinja2/components/auth.jinja2:17
-#: ej/templates/jinja2/components/auth.jinja2:40
-#: ej/templates/jinja2/components/auth.jinja2:58
-msgid "Login"
-msgstr "Entrar"
+#~ msgid "Login"
+#~ msgstr "Entrar"
 
-#: ej/templates/jinja2/components/auth.jinja2:20
-#: ej/templates/jinja2/components/auth.jinja2:37
-msgid "Register now!"
-msgstr "Registre agora!"
+#~ msgid "Register now!"
+#~ msgstr "Registre agora!"
 
-#: ej/templates/jinja2/components/auth.jinja2:58
-msgid "Register"
-msgstr "Registre-se"
+#~ msgid "Register"
+#~ msgstr "Registre-se"
 
-#: ej/templates/jinja2/components/auth.jinja2:67
-msgid "What is passwordles login?"
-msgstr "O que é login sem senha?"
+#~ msgid "What is passwordles login?"
+#~ msgstr "O que é login sem senha?"
 
-#: ej/templates/jinja2/components/auth.jinja2:68
-msgid ""
-"Passwords are inconvenient and often insecure. We suggest our users to "
-"choose either social\n"
-"            authentication (Facebook or Twitter) or the passwordless "
-"method. In this setup, we send a password to\n"
-"            your e-mail with a special link that automatically register "
-"your account in the platform."
-msgstr ""
+#~ msgid "Active conversations"
+#~ msgstr "Conversas ativas"
 
-#: ej/templates/jinja2/components/conversations.jinja2:9
-msgid "Active conversations"
-msgstr "Conversas ativas"
+#~ msgid "See some active conversations and give your opinion"
+#~ msgstr "Ver conversas ativas para dar sua opinião"
 
-#: ej/templates/jinja2/components/conversations.jinja2:10
-msgid "See some active conversations and give your opinion"
-msgstr "Ver conversas ativas para dar sua opinião"
+#~ msgid "All"
+#~ msgstr "Todos"
 
-#: ej/templates/jinja2/components/conversations.jinja2:22
-msgid "All"
-msgstr "Todos"
+#~ msgid "%(count)s comments"
+#~ msgstr "%(count)s comentários"
 
-#: ej/templates/jinja2/components/conversations.jinja2:55
-#: ej/templates/jinja2/components/conversations.jinja2:82
-#, python-format
-msgid "%(count)s comments"
-msgstr "%(count)s comentários"
+#~ msgid "%(count)s votes"
+#~ msgstr "%(count)s votos"
 
-#: ej/templates/jinja2/components/conversations.jinja2:56
-#: ej/templates/jinja2/components/conversations.jinja2:83
-#, python-format
-msgid "%(count)s votes"
-msgstr "%(count)s votos"
+#~ msgid "category:"
+#~ msgstr "categoria:"
 
-#: ej/templates/jinja2/components/conversations.jinja2:90
-msgid "category:"
-msgstr "categoria:"
+#~ msgid "see more<br>categories"
+#~ msgstr "veja mais<br>categorias"
 
-#: ej/templates/jinja2/components/conversations.jinja2:93
-msgid "see more<br>categories"
-msgstr "veja mais<br>categorias"
+#~ msgid "Agree"
+#~ msgstr "Concorda"
 
-#: ej/templates/jinja2/components/conversations.jinja2:137
-msgid "Agree"
-msgstr "Concorda"
+#~ msgid "Skip"
+#~ msgstr "Pular"
 
-#: ej/templates/jinja2/components/conversations.jinja2:143
-msgid "Skip"
-msgstr "Pular"
+#~ msgid "Disagree"
+#~ msgstr "Discorda"
 
-#: ej/templates/jinja2/components/conversations.jinja2:149
-msgid "Disagree"
-msgstr ""
+#~ msgid "Start now!"
+#~ msgstr "Começar agora!"
 
-#: ej/templates/jinja2/components/home.jinja2:71
-msgid "Start now!"
-msgstr "Começar agora!"
+#~ msgid "Info"
+#~ msgstr "Informações"
 
-#: ej/templates/jinja2/components/profile.jinja2:25
-msgid "Info"
-msgstr "Informações"
+#~ msgid "Contributions"
+#~ msgstr "Contribuições"
 
-#: ej/templates/jinja2/components/profile.jinja2:29
-msgid "Contributions"
-msgstr "Contribuições"
+#~ msgid "Logout"
+#~ msgstr "Sair"
 
-#: ej/templates/jinja2/components/profile.jinja2:62
-msgid "Logout"
-msgstr "Sair"
+#~ msgid "Delete profile"
+#~ msgstr "Apagar perfil"
 
-#: ej/templates/jinja2/components/profile.jinja2:64
-msgid "Delete profile"
-msgstr ""
+#~ msgid "Edit profile"
+#~ msgstr "Editar perfil"
 
-#: ej/templates/jinja2/components/profile.jinja2:80
-msgid "Edit profile"
-msgstr "Editar perfil"
+#~ msgid "Joined conversations"
+#~ msgstr "Conversas em que participou"
 
-#: ej/templates/jinja2/components/profile.jinja2:100
-msgid "Joined conversations"
-msgstr "Conversas em que participou"
+#~ msgid "More conversations"
+#~ msgstr "Mais conversas"
 
-#: ej/templates/jinja2/components/profile.jinja2:101
-msgid "More conversations"
-msgstr "Mais conversas"
+#~ msgid "CPA Space"
+#~ msgstr "Espaço CPA"
 
-#: ej/templates/jinja2/components/profile.jinja2:106
-msgid "CPA Space"
-msgstr "Espaço CPA"
+#~ msgid "See below the spaces you joined"
+#~ msgstr "Veja abaixo os espaços onde você se cadastrou"
 
-#: ej/templates/jinja2/components/profile.jinja2:107
-msgid "See below the spaces you joined"
-msgstr "Veja abaixo os espaços onde você se cadastrou"
+#~ msgid "Access CPA panel"
+#~ msgstr "Acesse o painel do CPA"
 
-#: ej/templates/jinja2/components/generic/page_header.jinja2:17
-msgid "Back"
-msgstr "Voltar"
+#~ msgid "Back"
+#~ msgstr "Voltar"
 
-#: ej/templates/jinja2/components/generic/page_header.jinja2:25
-msgid "Navigation menu"
-msgstr "Menu de navegação"
+#~ msgid "Navigation menu"
+#~ msgstr "Menu de navegação"
 
-#: ej/templates/jinja2/components/generic/page_header.jinja2:39
-#: ej/templates/jinja2/components/generic/page_header.jinja2:40
-#: ej/templates/jinja2/components/generic/page_header.jinja2:41
-msgid "Talks"
-msgstr "Comunicação"
+#~ msgid "Talks"
+#~ msgstr "Comunicação"
 
-#: ej/templates/jinja2/components/generic/page_header.jinja2:44
-#: ej/templates/jinja2/components/generic/page_header.jinja2:45
-#: ej/templates/jinja2/components/generic/page_header.jinja2:46
-#: ej/templates/jinja2/components/generic/page_menu.jinja2:12
-msgid "Profile"
-msgstr "Perfil"
+#~ msgid "Profile"
+#~ msgstr "Perfil"
 
-#: ej/templates/jinja2/components/generic/page_menu.jinja2:7
-#: ej/templates/jinja2/components/generic/page_top-header.jinja2:9
-msgid "About"
-msgstr "Sobre"
+#~ msgid "About"
+#~ msgstr "Sobre"
 
-#: ej/templates/jinja2/components/generic/page_menu.jinja2:8
-#: ej/templates/jinja2/components/generic/page_top-header.jinja2:10
-msgid "FAQ"
-msgstr "Perguntas frequentes"
+#~ msgid "FAQ"
+#~ msgstr "Perguntas frequentes"
 
-#: ej/templates/jinja2/components/generic/page_menu.jinja2:9
-msgid "Usage terms"
-msgstr "Termos de uso"
+#~ msgid "Usage terms"
+#~ msgstr "Termos de uso"
 
-#: ej/templates/jinja2/components/generic/page_menu.jinja2:11
-msgid "Channels"
-msgstr "Canais"
+#~ msgid "Home"
+#~ msgstr "Início"
 
-#: ej/templates/jinja2/components/generic/page_menu.jinja2:13
-msgid "Home"
-msgstr "Início"
+#~ msgid "about"
+#~ msgstr "sobre"
 
-#: ej/templates/jinja2/components/generic/page_top-header.jinja2:9
-msgid "about"
-msgstr "sobre"
+#~ msgid "About us"
+#~ msgstr "Sobre"
 
-#: ej/templates/jinja2/components/generic/page_top-header.jinja2:10
-msgid "frequent questions"
-msgstr "perguntas frequentes"
+#~ msgid "frequent questions"
+#~ msgstr "perguntas frequentes"
 
-#: ej/templates/jinja2/components/generic/page_top-header.jinja2:11
-msgid "terms"
-msgstr "termos"
+#~ msgid "Frequently asked questions"
+#~ msgstr "perguntas frequentes"
 
-#: ej/templates/jinja2/components/generic/page_top-header.jinja2:11
-msgid "Usage"
-msgstr "Uso"
+#~ msgid "usage"
+#~ msgstr "Uso"
 
-#: ej/templates/jinja2/pages/profile-edit.jinja2:4
-#, python-format
-msgid "Edit profile: <em>%(name)s</em>"
-msgstr "Exitar perfil: <em>%(name)s</em>"
+#~ msgid "Edit profile: <em>%(name)s</em>"
+#~ msgstr "Exitar perfil: <em>%(name)s</em>"
+
+#~ msgid "Channels"
+#~ msgstr "Canais"
+
+#~ msgid "terms"
+#~ msgstr "termos"
 
 #~ msgid "Material Design"
 #~ msgstr "Material Design"

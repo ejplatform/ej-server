@@ -4,26 +4,28 @@
         {%- set value = caller() -%}
     {%- endif -%}
     <a href="{{ href }}"
-       {%- if title %} title="{{ title }}"{% endif %}
-       {%- if class %} class="{{ class }}"{% endif %}
-       {%- if button %} class="Button"{% endif %}
-       {%- if primary %} primary{% endif %}
-       {%- if action %} {{ 'up-%s' % action }}="{{ target }}"{% endif %}
-       {%- if instant %} up-instant{% endif %}
-       {%- if transition %} up-transition="{{ transition }}"{% endif %}
-       {%- if scroll -%} up-restore-scroll{% endif %}
-       {%- if preload -%} up-preload{% endif %}
-       {%- if args %} {{ args }}{% endif %}>{{ value }}</a>
+        {%- if title %} title="{{ title }}"{% endif %}
+        {%- if class %} class="{{ class }}"{% endif %}
+        {%- if button %} class="Button"{% endif %}
+        {%- if primary %} primary{% endif %}
+        {%- if action %} {{ 'up-%s' % action }}="{{ target }}"{% endif %}
+        {%- if instant %} up-instant{% endif %}
+        {%- if transition %} up-transition="{{ transition }}"{% endif %}
+        {%- if scroll -%} up-restore-scroll{% endif %}
+        {%- if preload -%} up-preload{% endif %}
+        {%- if args %} {{ args }}{% endif %}>{{ value }}</a>
 {% endmacro %}
 
 
-{% macro rocket_button(title='Acesse o Rocket Chat', href='/talks/', target='main') %}
-    <a class="RocketButton" href="{{ href }}" up-target="main"><i class="fa fa-comment"></i>{{ title }}</a>
+{% macro rocket_button(title=_('Access CPA panel'), href='/talks/') %}
+    {% call link(href, class="RocketButton") %}
+        <i class="fa fa-comment"></i>{{ title }}
+    {% endcall %}
 {% endmacro %}
 
 
 {% macro action_button(title='Go!', href='#', alt='', target='main') %}
-    <a class="Button" href="{{ href }}" alt="{{ alt }}" up-target="main" primary>{{ title | safe }}</a>
+    {{ link(title|safe, href, args='primary', class="Button") }}
 {% endmacro %}
 
 
