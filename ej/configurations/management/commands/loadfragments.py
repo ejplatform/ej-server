@@ -68,8 +68,6 @@ def handle_markdown(path, name):
 
 def save_fragment(path, name, fragment_format):
     data = path.read_text()
-    if (fragment_format == Fragment.FORMAT_MARKDOWN):
-        data = Markup(markdown(data))
     fragment, created = Fragment.objects.update_or_create(
         name=name,
         defaults={
@@ -79,10 +77,5 @@ def save_fragment(path, name, fragment_format):
             'deletable': True,
         }
     )
-
-    if (created):
-        print('Saved fragment: %s' % fragment)
-    else:
-        print('Updated fragment: %s' % fragment)
-
+    print('Saved fragment:' if created else 'Updated fragment:', fragment)
     return fragment

@@ -52,3 +52,4 @@ $RECYCLE.BIN/
 # See issue https://github.com/pydanny/cookiecutter-django/issues/1321
 !/docker/**/local/
 !/docker/**/env
+.cache/

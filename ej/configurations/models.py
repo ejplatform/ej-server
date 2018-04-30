@@ -39,6 +39,8 @@ class SocialMediaIcon(models.Model):
 
     class Meta:
         ordering = ['index', 'id']
+        verbose_name = _('Social media icon')
+        verbose_name_plural = _('Social media icons')
 
     def __str__(self):
         return self.social_network
@@ -57,10 +59,7 @@ class SocialMediaIcon(models.Model):
         >>> icon.icon_tag(classes=['header-icon'])              # doctest: +SKIP
         <i class="fa fa-icon header-icon"></i>
         """
-        print(self.icon_name, classes)
         classes = [self.icon_name, *classes]
-        print(classes)
-        print(class_string(classes))
         return f'<i {class_string(classes)}"></i>'
 
     def link_tag(self, classes=(), icon_classes=()):
@@ -78,7 +77,6 @@ class Color(models.Model):
     """
     Generic color reference that can be configured in the admin interface.
     """
-
     name = models.CharField(
         _('Color name'),
         max_length=150,
@@ -138,7 +136,7 @@ class Fragment(models.Model):
         return self.html()
 
     def __str__(self):
-        return self.name.replace('_', ' ').replace('-', ' ').replace('/', '').capitalize()
+        return self.name
 
     def save(self, *args, **kwargs):
 
