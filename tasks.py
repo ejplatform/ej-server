@@ -138,23 +138,23 @@ def docker_clean(ctx, no_sudo=False, all=False, volumes=False, networks=False, i
 #
 @task
 def i18n(ctx, compile=False, edit=False, lang='pt_BR'):
-    print('Collecting messages')
-    manage(ctx, 'makemessages', all=True, keep_pot=True)
-
-    print('Extract Jinja translations')
-    ctx.run('pybabel extract -F babel.cfg -o locale/jinja2.pot .')
-
-    print('Join Django + Jinja translation files')
-    ctx.run('msgcat locale/django.pot locale/jinja2.pot --use-first -o locale/join.pot', pty=True)
-    ctx.run(r'''sed -i '/"Language: \\n"/d' locale/join.pot''', pty=True)
-
-    print(f'Update locale {lang} with Jinja2 messages')
-    ctx.run(f'pybabel update -i locale/join.pot -D django -d locale -l {lang}')
-
-    print('Cleaning up')
-    ctx.run('rm locale/*.pot')
-
-    if compile:
-        manage(ctx, 'compilemessages')
     if edit:
         ctx.run(f'poedit locale/{lang}/LC_MESSAGES/django.po')
+    else:
+        print('Collecting messages')
+        manage(ctx, 'makemessages', all=True, keep_pot=True)
+
+        print('Extract Jinja translations')
+        ctx.run('pybabel extract -F babel.cfg -o locale/jinja2.pot .')
+
+        print('Join Django + Jinja translation files')
+        ctx.run('msgcat locale/django.pot locale/jinja2.pot --use-first -o locale/join.pot', pty=True)
+        ctx.run(r'''sed -i '/"Language: \\n"/d' locale/join.pot''', pty=True)
+
+        print(f'Update locale {lang} with Jinja2 messages')
+        ctx.run(f'pybabel update -i locale/join.pot -D django -d locale -l {lang}')
+
+        print('Cleaning up')
+        ctx.run('rm locale/*.pot')
+    if compile:
+        manage(ctx, 'compilemessages')

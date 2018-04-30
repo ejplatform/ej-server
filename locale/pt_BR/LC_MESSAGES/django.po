@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-04-29 23:30-0300\n"
-"PO-Revision-Date: 2018-04-29 23:38-0300\n"
+"PO-Revision-Date: 2018-04-29 23:52-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language: pt_BR\n"
 "Language-Team: \n"
@@ -870,7 +870,7 @@ msgstr "Menu de navegação"
 #: ej/templates/jinja2/components/generic/page_header.jinja2:40
 #: ej/templates/jinja2/components/generic/page_header.jinja2:41
 msgid "Talks"
-msgstr "Conversas"
+msgstr "Comunicação"
 
 #: ej/templates/jinja2/components/generic/page_header.jinja2:44
 #: ej/templates/jinja2/components/generic/page_header.jinja2:45
