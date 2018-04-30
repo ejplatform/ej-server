@@ -444,17 +444,16 @@ template {
  =============================================================================*/
 .Button, .ActionButton, .RocketButton {
   background: #30c0d3;
+  color: rgba(255, 255, 255, 0.9);
   border: none;
   border-radius: 56px;
   box-sizing: border-box;
-  color: rgba(255, 255, 255, 0.9);
   cursor: pointer;
   display: inline-block;
-  font: inherit;
+  font: 15px "Raleway", sans-serif;
   font-weight: bold;
-  font-family: "Raleway", sans-serif;
   margin: 7px;
-  padding: 14px 56px;
+  padding: 9px 28px;
   text-align: center;
   text-transform: uppercase;
   transition: all 200ms ease-in-out;
@@ -477,8 +476,7 @@ template {
   .Button .Login-button,
   .ActionButton .Login-button,
   .RocketButton .Login-button {
-    background-color: #ff3e72;
-    border-radius: 56px;
+    background: #ff3e72;
     color: rgba(255, 255, 255, 0.9); }
     .Button[primary]:hover, [primary].ActionButton:hover, [primary].RocketButton:hover, .Button[primary]:focus, [primary].ActionButton:focus, [primary].RocketButton:focus,
     .Button .Button--primary:hover,
@@ -511,14 +509,13 @@ template {
     .Button .Login-button:focus,
     .ActionButton .Login-button:focus,
     .RocketButton .Login-button:focus {
-      background-color: #ff0b4d;
+      background: #ff0b4d;
       color: #fff; }
   .Button[secondary], [secondary].ActionButton, [secondary].RocketButton,
   .Button .Button--secondary,
   .ActionButton .Button--secondary,
   .RocketButton .Button--secondary {
-    background-color: #d6f1f3;
-    border-radius: 56px;
+    background: #d6f1f3;
     color: rgba(4, 32, 73, 0.9); }
     .Button[secondary]:hover, [secondary].ActionButton:hover, [secondary].RocketButton:hover, .Button[secondary]:focus, [secondary].ActionButton:focus, [secondary].RocketButton:focus,
     .Button .Button--secondary:hover,
@@ -527,26 +524,28 @@ template {
     .Button .Button--secondary:focus,
     .ActionButton .Button--secondary:focus,
     .RocketButton .Button--secondary:focus {
-      background-color: #afe4e7;
+      background: #afe4e7;
       color: #042049; }
   .Button[small], [small].ActionButton, [small].RocketButton,
   .Button .Button--small,
   .ActionButton .Button--small,
   .RocketButton .Button--small {
-    padding: 7px; }
+    font-size: 13px;
+    padding: 4.5px 14px; }
   .Button[large], [large].ActionButton, [large].RocketButton,
   .Button .Button--large,
   .ActionButton .Button--large,
   .RocketButton .Button--large {
-    padding: 28px; }
+    font-size: 17px;
+    padding: 18px 56px; }
   .Button[ghost], [ghost].ActionButton, [ghost].RocketButton,
   .Button .Button--ghost,
   .ActionButton .Button--ghost,
   .RocketButton .Button--ghost {
     background: none;
-    border: 1px solid #30c0d3;
     color: #30c0d3;
-    padding: 13px 55px; }
+    border: 1px solid #30c0d3;
+    padding: 8px 27px; }
     .Button[ghost]:hover, [ghost].ActionButton:hover, [ghost].RocketButton:hover, .Button[ghost]:focus, [ghost].ActionButton:focus, [ghost].RocketButton:focus,
     .Button .Button--ghost:hover,
     .ActionButton .Button--ghost:hover,
@@ -565,8 +564,7 @@ template {
     .Button .Button--ghost .Button--ghost-primary,
     .ActionButton .Button--ghost .Button--ghost-primary,
     .RocketButton .Button--ghost .Button--ghost-primary {
-      color: #ff3e72;
-      border-radius: 56px; }
+      color: #ff3e72; }
       .Button[ghost] [primary]:hover, [ghost].ActionButton [primary]:hover, [ghost].RocketButton [primary]:hover, .Button[ghost] [primary]:focus, [ghost].ActionButton [primary]:focus, [ghost].RocketButton [primary]:focus,
       .Button[ghost] .Button--ghost-primary:hover,
       [ghost].ActionButton .Button--ghost-primary:hover,
@@ -597,8 +595,7 @@ template {
     .Button .Button--ghost .Button--ghost-secondary,
     .ActionButton .Button--ghost .Button--ghost-secondary,
     .RocketButton .Button--ghost .Button--ghost-secondary {
-      color: #d6f1f3;
-      border-radius: 56px; }
+      color: #d6f1f3; }
       .Button[ghost] [secondary]:hover, [ghost].ActionButton [secondary]:hover, [ghost].RocketButton [secondary]:hover, .Button[ghost] [secondary]:focus, [ghost].ActionButton [secondary]:focus, [ghost].RocketButton [secondary]:focus,
       .Button[ghost] .Button--ghost-secondary:hover,
       [ghost].ActionButton .Button--ghost-secondary:hover,
@@ -624,38 +621,38 @@ template {
  HEADINGS
  =====================================================================*/
 h1, .h1 {
-  font-size: 24px;
+  font-size: 21px;
   font-family: "Raleway", sans-serif;
   font-weight: normal;
   text-transform: none;
   text-transform: uppercase; }
 
 h2, .h2 {
-  font-size: 21.6px;
+  font-size: 19.5px;
   font-family: "Raleway", sans-serif;
   font-weight: normal;
   text-transform: none; }
 
 h3, .h3 {
-  font-size: 20px;
+  font-size: 18px;
   font-family: "Raleway", sans-serif;
   font-weight: normal;
   text-transform: none; }
 
 h4, .h4 {
-  font-size: 18.4px;
+  font-size: 16.5px;
   font-family: "Raleway", sans-serif;
   font-weight: normal;
   text-transform: none; }
 
 h5, .h5 {
-  font-size: 17.6px;
+  font-size: 15.75px;
   font-family: "Raleway", sans-serif;
   font-weight: normal;
   text-transform: none; }
 
 h6, .h6 {
-  font-size: 16px;
+  font-size: 15px;
   font-family: "Raleway", sans-serif;
   font-weight: normal;
   text-transform: none; }
@@ -665,13 +662,13 @@ h6, .h6 {
  =====================================================================*/
 html {
   min-height: 100%;
-  line-height: 1.4375; }
+  line-height: 1.4666666667; }
 
 body {
   box-sizing: border-box;
   background: #fff;
   color: #042049;
-  font-size: 16px;
+  font-size: 15px;
   font-family: "Raleway", sans-serif;
   width: 100vw; }
 
@@ -719,7 +716,7 @@ label,
 select,
 .FormItem {
   box-sizing: border-box;
-  font-size: 16px;
+  font-size: 15px;
   max-width: 550px;
   width: 85%; }
 
@@ -730,7 +727,7 @@ input,
 textarea,
 select,
 .FormItem {
-  border-radius: 18px;
+  border-radius: 17px;
   background: #fff;
   border: 1px solid #999;
   color: #042049;
@@ -738,12 +735,12 @@ select,
   padding: 14px 14px 7px; }
 
 textarea {
-  height: 96px; }
+  height: 90px; }
 
 label {
   color: #042049;
   font-weight: bold;
-  font-size: 17.6px;
+  font-size: 15.75px;
   margin: 0 auto; }
 
 input[type=submit] {
@@ -1007,7 +1004,7 @@ ul.errorlist {
     color: #fff;
     margin: 0 0 28px 0; }
     .Page-title h1 {
-      font-size: 26.4px;
+      font-size: 23.1px;
       padding: 14px; }
     .Page-title em {
       font-weight: bold;
@@ -1067,7 +1064,7 @@ ul.errorlist {
       margin: 0;
       z-index: 100; }
     .Header-topNav i.fa {
-      font-size: 20px; }
+      font-size: 18px; }
     @media only screen and (min-width: 550px) {
       .Header-topNav {
         box-shadow: none;
@@ -1117,7 +1114,7 @@ ul.errorlist {
         background: transparent;
         box-shadow: none;
         display: flex;
-        font-size: 18px;
+        font-size: 17px;
         justify-content: flex-end;
         justify-self: center;
         text-align: right; }
@@ -1136,7 +1133,7 @@ ul.errorlist {
   text-align: center; }
   .Footer-social i {
     color: #fff;
-    font-size: 24px;
+    font-size: 21px;
     margin: 7px; }
 
 /*
@@ -1149,7 +1146,7 @@ ul.errorlist {
   width: 75vw;
   box-shadow: 2px 0 4px 0 rgba(18, 48, 102, 0.08);
   box-sizing: border-box;
-  font-size: 16px;
+  font-size: 15px;
   opacity: 1;
   overflow: auto;
   padding: 28px; }
@@ -1191,11 +1188,11 @@ ul.errorlist {
     padding: 0 14px;
     max-width: 912px; }
   .TopHeader-links, .TopHeader-social {
-    font-size: 14px; }
+    font-size: 13px; }
     .TopHeader-links li, .TopHeader-social li {
       margin: 7px; }
       .TopHeader-links li i, .TopHeader-social li i {
-        font-size: 16px; }
+        font-size: 15px; }
   @media only screen and (min-width: 550px) {
     .TopHeader {
       display: block; } }
@@ -1239,7 +1236,7 @@ ul.errorlist {
     display: none; }
     .Register-socialButtons i.fa,
     .Login-socialButtons i.fa {
-      font-size: 24px; }
+      font-size: 21px; }
   .Register-password,
   .Login-password {
     font-weight: bold;
@@ -1255,7 +1252,7 @@ ul.errorlist {
     .Register-newUser h1,
     .Login-newUser h1 {
       color: #042049;
-      font-size: 20px; }
+      font-size: 18px; }
 
 /*
  CONVERSATIONS
@@ -1263,9 +1260,9 @@ ul.errorlist {
 .ConversationList-title {
   text-align: center; }
   .ConversationList-title h1 {
-    font-size: 24px; }
+    font-size: 21px; }
   .ConversationList-title h2 {
-    font-size: 20px; }
+    font-size: 18px; }
 .ConversationList-categories {
   align-items: center;
   background: #d6f1f3;
@@ -1320,7 +1317,7 @@ ul.errorlist {
   .ConversationCard > * {
     padding: 14px; }
   .ConversationCard h1 {
-    font-size: 20px;
+    font-size: 18px;
     text-transform: none; }
   .ConversationCard-cover {
     background: #30c0d3;
@@ -1330,7 +1327,7 @@ ul.errorlist {
     flex-flow: column;
     justify-content: space-between;
     margin: 0;
-    min-height: 184px;
+    min-height: 176px;
     position: relative;
     z-index: 2; }
     .ConversationCard-cover a, .ConversationCard-cover a:hover, .ConversationCard-cover a:active {
@@ -1405,7 +1402,7 @@ ul.errorlist {
     width: 0; }
   .ConversationDetail-statistics, .ConversationDetail-statisticsBottom {
     display: flex;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: bold;
     justify-content: space-between;
     margin: 0 auto;
@@ -1428,7 +1425,7 @@ ul.errorlist {
     text-align: center;
     padding-top: 0; }
     .ConversationDetail-header h1 {
-      font-size: 20px;
+      font-size: 18px;
       text-transform: uppercase;
       margin-bottom: 7px; }
     .ConversationDetail-header p {
@@ -1439,7 +1436,7 @@ ul.errorlist {
   color: #fff;
   box-sizing: border-box;
   border-radius: 56px;
-  font-size: 20px;
+  font-size: 18px;
   padding: 42px;
   margin: 0 auto;
   max-width: 700px; }
@@ -1461,7 +1458,7 @@ ul.errorlist {
     text-transform: uppercase;
     width: 100%; }
     .Comment-voteArea ul span {
-      font-size: 14px; }
+      font-size: 13px; }
     .Comment-voteArea ul li {
       list-style: none;
       flex-grow: 1; }
@@ -1475,7 +1472,7 @@ ul.errorlist {
     .Comment-voteArea ul li:last-child i.fa {
       color: #f13c20; }
   .Comment-user {
-    font-size: 17.6px; }
+    font-size: 15.75px; }
     .Comment-user i.fa {
       color: #ff3e72;
       margin-right: 14px; }
@@ -1483,14 +1480,14 @@ ul.errorlist {
 .CommentForm {
   text-align: center; }
   .CommentForm h1 {
-    font-size: 20px;
+    font-size: 18px;
     text-transform: uppercase;
     margin: 7px 0; }
   .CommentForm p {
     margin: 7px 0; }
   .CommentForm textarea {
     display: block;
-    min-height: 48px; }
+    min-height: 45px; }
 
 .CircleButton {
   background: #fff;
@@ -1498,7 +1495,7 @@ ul.errorlist {
   cursor: pointer;
   display: inline-block;
   border-radius: 100%;
-  font-size: 21.6px;
+  font-size: 19.5px;
   height: 21px;
   padding: 7px;
   text-align: center;
@@ -1507,7 +1504,7 @@ ul.errorlist {
   .CircleButton--leftConversationSlider, .CircleButton--rightConversationSlider {
     margin: 0;
     position: absolute;
-    top: 102.5px;
+    top: 98.5px;
     z-index: 10; }
     @media only screen and (width: 550px) {
       .CircleButton--leftConversationSlider, .CircleButton--rightConversationSlider {
@@ -1523,7 +1520,7 @@ ul.errorlist {
  ======================================================================== */
 .HomeBanner h2 {
   display: none;
-  font-size: 20px; }
+  font-size: 18px; }
   @media only screen and (min-width: 550px) {
     .HomeBanner h2 {
       display: inherit; } }
@@ -1532,7 +1529,7 @@ ul.errorlist {
   background: #d6f1f3;
   padding-top: 56px; }
   .HowItWorks h2 {
-    font-size: 18.4px; }
+    font-size: 16.5px; }
 
 .HowItWorksCard {
   text-align: left;
@@ -1540,7 +1537,7 @@ ul.errorlist {
   display: flex;
   border-top: 1px solid rgba(17, 17, 17, 0.1); }
   .HowItWorksCard h1 {
-    font-size: 20px; }
+    font-size: 18px; }
     .HowItWorksCard h1 i {
       padding: 14px;
       float: right; }
@@ -1559,7 +1556,7 @@ ul.errorlist {
     color: #666;
     display: block;
     flex-grow: 0;
-    font-size: 36px;
+    font-size: 31.5px;
     margin: 28px 0;
     text-align: center;
     min-width: 70px; }
@@ -1577,7 +1574,7 @@ ul.errorlist {
   padding: 28px;
   text-align: center; }
   .StartNow h2 {
-    font-size: 18.4px; }
+    font-size: 16.5px; }
 
 /*
  USER PROFILE VIEWS
@@ -1588,10 +1585,10 @@ ul.errorlist {
   .Profile h1 {
     margin-bottom: 0;
     color: #123066;
-    font-size: 24px; }
+    font-size: 21px; }
   .Profile h2 {
     color: #d6f1f3;
-    font-size: 18.4px;
+    font-size: 16.5px;
     margin-top: 0; }
   .Profile-actions p, .Profile-actions form {
     text-align: center; }
@@ -1630,7 +1627,7 @@ ul.errorlist {
   .Profile-tabLinks {
     display: flex;
     justify-content: space-around;
-    font-size: 17.6px;
+    font-size: 15.75px;
     font-weight: normal;
     text-transform: uppercase; }
     .Profile-tabLinks > * {
@@ -1644,7 +1641,7 @@ ul.errorlist {
     background: #d6f1f3;
     text-align: left; }
   .Profile-info {
-    font-size: 16px;
+    font-size: 15px;
     padding: 56px; }
     .Profile-info .Button, .Profile-info .ActionButton, .Profile-info .RocketButton {
       text-transform: none; }
@@ -1654,7 +1651,7 @@ ul.errorlist {
       color: #042049;
       text-transform: lowercase; }
     .Profile-info dl dd {
-      font-size: 17.6px;
+      font-size: 15.75px;
       font-weight: bold;
       margin: 0 0 14px 0;
       color: #123066; }
@@ -1689,7 +1686,7 @@ ul.errorlist {
     padding: 7px; }
     .Rocket-items .item .item-position {
       color: #ff3e72;
-      font-size: 26px;
+      font-size: 24px;
       width: auto;
       float: left; }
     .Rocket-items .item .item-content {
