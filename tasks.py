@@ -138,6 +138,9 @@ def docker_clean(ctx, no_sudo=False, all=False, volumes=False, networks=False, i
 #
 @task
 def i18n(ctx, compile=False, edit=False, lang='pt_BR'):
+    """
+    Extract messages for translation.
+    """
     if edit:
         ctx.run(f'poedit locale/{lang}/LC_MESSAGES/django.po')
     else:
@@ -152,9 +155,21 @@ def i18n(ctx, compile=False, edit=False, lang='pt_BR'):
         ctx.run(r'''sed -i '/"Language: \\n"/d' locale/join.pot''', pty=True)
 
         print(f'Update locale {lang} with Jinja2 messages')
-        ctx.run(f'pybabel update -i locale/join.pot -D django -d locale -l {lang}')
+        # ctx.run(f'pybabel update -i locale/join.pot -D django -d locale -l {lang} --previous')
+        #ctx.run(f'msgmerge -U locale/join.pot -D django -d locale -l {lang} --previous')
 
         print('Cleaning up')
-        ctx.run('rm locale/*.pot')
+        # ctx.run('rm locale/*.pot')
     if compile:
         manage(ctx, 'compilemessages')
+
+
+#
+# Statistics and QA
+#
+@task
+def cloc(ctx):
+    """
+    Use the cloc program to count lines of code.
+    """
+    ctx.run('cloc . --read-lang-def=cloc.txt  --fullpath "--not-match-d=(lib/assets/|\.\w+)"')
