@@ -8,9 +8,9 @@
             {% if action == 'rocket-chat' %}
                 {{ rocket_button() }}
             {% elif action == 'start-now' %}
-                {{ action_button('Start now!', '/start/' ) }}
+                {{ action_button(_('Start now!'), '/start/' ) }}
             {% elif action == 'cpa' %}
-                {{ action_button('Access CPA pannel!', '/talks/' ) }}
+                {{ action_button(_('Access CPA panel!'), '/talks/' ) }}
             {% else %}
                 Invalid action: {{ action }}
             {% endif %}

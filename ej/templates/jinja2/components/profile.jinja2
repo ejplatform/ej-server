@@ -4,7 +4,7 @@
 
 {% macro profile_edit(profile, form, csrf_input) %}
     <div class="ProfileEdit">
-        <form method="post" show-labels>
+        <form method="post" enctype="multipart/form-data" action="" show-labels>
             {{ csrf_input }}
             {{ form.as_p() }}
             {{ form.non_field_errors() }}

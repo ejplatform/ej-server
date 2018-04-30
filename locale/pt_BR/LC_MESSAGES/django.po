@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-29 23:30-0300\n"
-"PO-Revision-Date: 2018-04-29 23:52-0300\n"
+"POT-Creation-Date: 2018-04-30 09:51-0300\n"
+"PO-Revision-Date: 2018-04-30 10:21-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
-"Language: pt_BR\n"
 "Language-Team: \n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: pt_BR\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "Generated-By: Babel 2.5.3\n"
 "X-Generator: Poedit 2.0.6\n"
 
@@ -64,8 +64,8 @@ msgid ""
 "You can manually define the ordering that each icon should appear in the "
 "interface. Otherwise, icons will be shown in insertion order."
 msgstr ""
-"Você pode definir a prioridade com que cada ícone vai aparecer na "
-"interface. Caso contrário, aparecerão na ordem de inserção."
+"Você pode definir a prioridade com que cada ícone vai aparecer na interface. "
+"Caso contrário, aparecerão na ordem de inserção."
 
 #: ej/configurations/models.py:36
 msgid "URL"
@@ -298,8 +298,7 @@ msgstr "Aviso:"
 #: ej/templates/django/account/email.html:46
 msgid ""
 "You currently do not have any e-mail address set up. You should really add "
-"an e-mail address so you can receive notifications, reset your password, "
-"etc."
+"an e-mail address so you can receive notifications, reset your password, etc."
 msgstr ""
 "Atualmente você não tem nenhum endereço de email configurado. Você deveria "
 "acrescentar um endereço para receber notificações, reconfigurar sua senha, "
@@ -443,8 +442,8 @@ msgstr "Recriar a senha"
 
 #: ej/templates/django/account/password_reset.html:16
 msgid ""
-"Forgotten your password? Enter your e-mail address below, and we'll send "
-"you an e-mail allowing you to reset it."
+"Forgotten your password? Enter your e-mail address below, and we'll send you "
+"an e-mail allowing you to reset it."
 msgstr ""
 "Esqueceu sua senha? Insira seu endereço de email abaixo, e nós vamos lhe "
 "enviar uma mensagem com instruções para recriar sua senha."
@@ -473,8 +472,8 @@ msgstr "Token inválido"
 #, python-format
 msgid ""
 "The password reset link was invalid, possibly because it has already been "
-"used.  Please request a <a href=\"%(passwd_reset_url)s\">new password "
-"reset</a>."
+"used.  Please request a <a href=\"%(passwd_reset_url)s\">new password reset</"
+"a>."
 msgstr ""
 "O link de reconfiguração da senha é inválido, possivelmente porque já foi "
 "usado. Por favor faça  <a href=\"%(passwd_reset_url)s\">um novo pedido de "
@@ -551,8 +550,8 @@ msgstr ""
 #: ej/templates/django/account/verified_email_required.html:20
 #, python-format
 msgid ""
-"<strong>Note:</strong> you can still <a href=\"%(email_url)s\">change your "
-"e-mail address</a>."
+"<strong>Note:</strong> you can still <a href=\"%(email_url)s\">change your e-"
+"mail address</a>."
 msgstr ""
 "<strong>Nota:</strong> você ainda poe <a href=\"%(email_url)s\">mudar seu "
 "endereço de email</a>."
@@ -768,10 +767,10 @@ msgstr "O que é login sem senha?"
 msgid ""
 "Passwords are inconvenient and often insecure. We suggest our users to "
 "choose either social\n"
-"            authentication (Facebook or Twitter) or the passwordless "
-"method. In this setup, we send a password to\n"
-"            your e-mail with a special link that automatically register "
-"your account in the platform."
+"            authentication (Facebook or Twitter) or the passwordless method. "
+"In this setup, we send a password to\n"
+"            your e-mail with a special link that automatically register your "
+"account in the platform."
 msgstr ""
 
 #: ej/templates/jinja2/components/conversations.jinja2:9
@@ -818,9 +817,14 @@ msgstr "Pular"
 msgid "Disagree"
 msgstr "Discorda"
 
-#: ej/templates/jinja2/components/home.jinja2:71
+#: ej/templates/jinja2/components/home.jinja2:11
+#: ej/templates/jinja2/components/home.jinja2:73
 msgid "Start now!"
 msgstr "Começar agora!"
+
+#: ej/templates/jinja2/components/home.jinja2:13
+msgid "Access CPA panel!"
+msgstr "Acesse o painel do CPA!"
 
 #: ej/templates/jinja2/components/profile.jinja2:25
 msgid "Info"
@@ -873,8 +877,9 @@ msgstr "Menu de navegação"
 #: ej/templates/jinja2/components/generic/page_header.jinja2:39
 #: ej/templates/jinja2/components/generic/page_header.jinja2:40
 #: ej/templates/jinja2/components/generic/page_header.jinja2:41
+#: ej/templates/jinja2/components/generic/page_menu.jinja2:11
 msgid "Talks"
-msgstr "Comunicação"
+msgstr "Canais"
 
 #: ej/templates/jinja2/components/generic/page_header.jinja2:44
 #: ej/templates/jinja2/components/generic/page_header.jinja2:45
@@ -884,22 +889,17 @@ msgid "Profile"
 msgstr "Perfil"
 
 #: ej/templates/jinja2/components/generic/page_menu.jinja2:7
-#: ej/templates/jinja2/components/generic/page_top-header.jinja2:9
 msgid "About"
 msgstr "Sobre"
 
 #: ej/templates/jinja2/components/generic/page_menu.jinja2:8
-#: ej/templates/jinja2/components/generic/page_top-header.jinja2:10
 msgid "FAQ"
 msgstr "Perguntas frequentes"
 
 #: ej/templates/jinja2/components/generic/page_menu.jinja2:9
+#: ej/templates/jinja2/components/generic/page_top-header.jinja2:11
 msgid "Usage terms"
 msgstr "Termos de uso"
-
-#: ej/templates/jinja2/components/generic/page_menu.jinja2:11
-msgid "Channels"
-msgstr "Canais"
 
 #: ej/templates/jinja2/components/generic/page_menu.jinja2:13
 msgid "Home"
@@ -911,7 +911,7 @@ msgstr "sobre"
 
 #: ej/templates/jinja2/components/generic/page_top-header.jinja2:9
 msgid "About us"
-msgstr "Sobre"
+msgstr "Sobre nós"
 
 #: ej/templates/jinja2/components/generic/page_top-header.jinja2:10
 msgid "frequent questions"
@@ -922,13 +922,13 @@ msgid "Frequently asked questions"
 msgstr "perguntas frequentes"
 
 #: ej/templates/jinja2/components/generic/page_top-header.jinja2:11
-msgid "Usage"
-msgstr "Termos de uso"
+msgid "usage"
+msgstr "termos de uso"
 
 #: ej/templates/jinja2/pages/profile-edit.jinja2:4
 #, python-format
 msgid "Edit profile: <em>%(name)s</em>"
-msgstr "Exitar perfil: <em>%(name)s</em>"
+msgstr ""
 
 #~ msgid "Channels"
 #~ msgstr "Canais"

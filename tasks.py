@@ -143,6 +143,8 @@ def i18n(ctx, compile=False, edit=False, lang='pt_BR'):
     """
     if edit:
         ctx.run(f'poedit locale/{lang}/LC_MESSAGES/django.po')
+    elif compile:
+        manage(ctx, 'compilemessages')
     else:
         print('Collecting messages')
         manage(ctx, 'makemessages', all=True, keep_pot=True)
@@ -155,10 +157,7 @@ def i18n(ctx, compile=False, edit=False, lang='pt_BR'):
         ctx.run(r'''sed -i '/"Language: \\n"/d' locale/join.pot''', pty=True)
 
         print(f'Update locale {lang} with Jinja2 messages')
-        # ctx.run(f'pybabel update -i locale/join.pot -D django -d locale -l {lang} --previous')
         ctx.run(f'msgmerge locale/{lang}/LC_MESSAGES/django.po locale/join.pot -U')
 
         print('Cleaning up')
         ctx.run('rm locale/*.pot')
-    if compile:
-        manage(ctx, 'compilemessages')

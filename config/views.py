@@ -121,7 +121,9 @@ def profile_detail(request):
 def profile_edit(request):
     profile = request.user
     if request.method == 'POST':
-        form = ProfileForm(request.POST, instance=profile)
+        print(request.FILES)
+        print(request.POST)
+        form = ProfileForm(request.POST, instance=profile, files=request.FILES)
         if form.is_valid():
             form.save()
             return redirect('/profile/')

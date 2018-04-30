@@ -207,8 +207,8 @@ class User(AbstractUser):
         result = []
         for field in fields:
             description = field_map[field].verbose_name
-            value = getattr(self, field)
-            result.append((description.capitalize(), value))
+            getter = getattr(self, f'get_{field}_display', lambda: getattr(self, field))
+            result.append((description.capitalize(), getter()))
         return result
 
     def get_profile_statistics(self):

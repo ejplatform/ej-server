@@ -14,6 +14,10 @@ Both views accept a ?next=<url> tag that controls the redirect.
     Login page.
 /register/:
     Register a new user.
+/accounts/recover-password/:
+    Recover user password #TODO
+/accounts/reset-password/:
+    Reset user password #TODO
 
 
 Profile views
