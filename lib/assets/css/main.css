@@ -623,25 +623,39 @@ template {
 /*
  HEADINGS
  =====================================================================*/
-h1 {
-  font-size: 27.2px; }
+h1, .h1 {
+  font-size: 24px;
+  font-family: "Raleway", sans-serif;
+  font-weight: normal;
+  text-transform: none;
+  text-transform: uppercase; }
 
-h2 {
-  font-size: 24px; }
+h2, .h2 {
+  font-size: 21.6px;
+  font-family: "Raleway", sans-serif;
+  font-weight: normal;
+  text-transform: none; }
 
-h3 {
-  font-size: 20.8px; }
+h3, .h3 {
+  font-size: 20px;
+  font-family: "Raleway", sans-serif;
+  font-weight: normal;
+  text-transform: none; }
 
-h4 {
-  font-size: 18.4px; }
+h4, .h4 {
+  font-size: 18.4px;
+  font-family: "Raleway", sans-serif;
+  font-weight: normal;
+  text-transform: none; }
 
-h5 {
-  font-size: 17.6px; }
+h5, .h5 {
+  font-size: 17.6px;
+  font-family: "Raleway", sans-serif;
+  font-weight: normal;
+  text-transform: none; }
 
-h6 {
-  font-size: 16px; }
-
-h1, h2, h3, h4, h5, h6 {
+h6, .h6 {
+  font-size: 16px;
   font-family: "Raleway", sans-serif;
   font-weight: normal;
   text-transform: none; }
@@ -747,12 +761,12 @@ input[type=submit] {
 /*
  GENERIC PATTERNS FOR HTML ELEMENTS
  =========================================================================== */
-.unlist, .unlist-inline, .TopHeader-links, .TopHeader-social, .Header ul, .Footer-social {
+.unlist, .unlist-inline, .Footer-social, .TopHeader-links, .TopHeader-social, .Header ul {
   padding: 0;
   margin: 0;
   list-style: none; }
 
-.unlist-inline > li, .TopHeader-links > li, .TopHeader-social > li {
+.unlist-inline > li, .Footer-social > li, .TopHeader-links > li, .TopHeader-social > li {
   display: inline; }
 
 /*
@@ -993,7 +1007,7 @@ ul.errorlist {
     color: #fff;
     margin: 0 0 28px 0; }
     .Page-title h1 {
-      font-size: 29.92px;
+      font-size: 26.4px;
       padding: 14px; }
     .Page-title em {
       font-weight: bold;
@@ -1053,7 +1067,7 @@ ul.errorlist {
       margin: 0;
       z-index: 100; }
     .Header-topNav i.fa {
-      font-size: 20.8px; }
+      font-size: 20px; }
     @media only screen and (min-width: 550px) {
       .Header-topNav {
         box-shadow: none;
@@ -1120,27 +1134,32 @@ ul.errorlist {
   background: #a4d8dd;
   color: #042049;
   text-align: center; }
+  .Footer-social i {
+    color: #fff;
+    font-size: 24px;
+    margin: 7px; }
 
 /*
  PAGE SIDEBAR
  =========================================================================== */
 .NavMenu {
   background: #30c0d3;
+  color: #fff;
+  height: 100vh;
+  width: 75vw;
   box-shadow: 2px 0 4px 0 rgba(18, 48, 102, 0.08);
   box-sizing: border-box;
-  color: #fff;
   font-size: 16px;
-  height: 100vh;
   opacity: 1;
   overflow: auto;
-  padding: 28px;
-  width: 75vw; }
+  padding: 28px; }
   .NavMenu em {
     font-weight: bold;
     font-style: normal; }
   .NavMenu a, .NavMenu a:hover, .NavMenu a:active {
     color: #fff; }
   .NavMenu img, .NavMenu i {
+    height: 1em;
     padding-right: 14px; }
   .NavMenu li {
     list-style: none;
@@ -1220,7 +1239,7 @@ ul.errorlist {
     display: none; }
     .Register-socialButtons i.fa,
     .Login-socialButtons i.fa {
-      font-size: 27.2px; }
+      font-size: 24px; }
   .Register-password,
   .Login-password {
     font-weight: bold;
@@ -1236,7 +1255,7 @@ ul.errorlist {
     .Register-newUser h1,
     .Login-newUser h1 {
       color: #042049;
-      font-size: 20.8px; }
+      font-size: 20px; }
 
 /*
  CONVERSATIONS
@@ -1244,9 +1263,9 @@ ul.errorlist {
 .ConversationList-title {
   text-align: center; }
   .ConversationList-title h1 {
-    font-size: 27.2px; }
+    font-size: 24px; }
   .ConversationList-title h2 {
-    font-size: 20.8px; }
+    font-size: 20px; }
 .ConversationList-categories {
   align-items: center;
   background: #d6f1f3;
@@ -1301,7 +1320,7 @@ ul.errorlist {
   .ConversationCard > * {
     padding: 14px; }
   .ConversationCard h1 {
-    font-size: 20.8px;
+    font-size: 20px;
     text-transform: none; }
   .ConversationCard-cover {
     background: #30c0d3;
@@ -1409,7 +1428,7 @@ ul.errorlist {
     text-align: center;
     padding-top: 0; }
     .ConversationDetail-header h1 {
-      font-size: 20.8px;
+      font-size: 20px;
       text-transform: uppercase;
       margin-bottom: 7px; }
     .ConversationDetail-header p {
@@ -1420,7 +1439,7 @@ ul.errorlist {
   color: #fff;
   box-sizing: border-box;
   border-radius: 56px;
-  font-size: 20.8px;
+  font-size: 20px;
   padding: 42px;
   margin: 0 auto;
   max-width: 700px; }
@@ -1464,7 +1483,7 @@ ul.errorlist {
 .CommentForm {
   text-align: center; }
   .CommentForm h1 {
-    font-size: 20.8px;
+    font-size: 20px;
     text-transform: uppercase;
     margin: 7px 0; }
   .CommentForm p {
@@ -1479,7 +1498,7 @@ ul.errorlist {
   cursor: pointer;
   display: inline-block;
   border-radius: 100%;
-  font-size: 24px;
+  font-size: 21.6px;
   height: 21px;
   padding: 7px;
   text-align: center;
@@ -1504,7 +1523,7 @@ ul.errorlist {
  ======================================================================== */
 .HomeBanner h2 {
   display: none;
-  font-size: 20.8px; }
+  font-size: 20px; }
   @media only screen and (min-width: 550px) {
     .HomeBanner h2 {
       display: inherit; } }
@@ -1521,7 +1540,7 @@ ul.errorlist {
   display: flex;
   border-top: 1px solid rgba(17, 17, 17, 0.1); }
   .HowItWorksCard h1 {
-    font-size: 20.8px; }
+    font-size: 20px; }
     .HowItWorksCard h1 i {
       padding: 14px;
       float: right; }
@@ -1540,7 +1559,7 @@ ul.errorlist {
     color: #666;
     display: block;
     flex-grow: 0;
-    font-size: 40.8px;
+    font-size: 36px;
     margin: 28px 0;
     text-align: center;
     min-width: 70px; }
@@ -1569,7 +1588,7 @@ ul.errorlist {
   .Profile h1 {
     margin-bottom: 0;
     color: #123066;
-    font-size: 27.2px; }
+    font-size: 24px; }
   .Profile h2 {
     color: #d6f1f3;
     font-size: 18.4px;

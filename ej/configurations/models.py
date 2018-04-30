@@ -111,25 +111,20 @@ class Fragment(models.Model):
         max_length=100,
         unique=True,
         db_index=True,
-        help_text=_('Name of the fragment to help identify some page part.'),
+        help_text=_('Unique identifier for fragment name'),
+    )
+    format = models.CharField(
+        max_length=4,
+        choices=FORMAT_CHOICES,
     )
     content = models.TextField(
         _('content'),
         blank=True,
-        help_text=_('The fragment content in html or markdown that will be displayed'),
-    )
-    format = models.CharField(
-        max_length=4,
-        help_text=_('Format of the saved fragment, can be either HTML or Markdown'),
-        choices=FORMAT_CHOICES,
+        help_text=_('Raw fragment content in HTML or Markdown'),
     )
     editable = models.BooleanField(
         default=True,
-        help_text=_('Boolean if the fragment its editable after being saved in db'),
-    )
-    deletable = models.BooleanField(
-        default=True,
-        help_text=_('Boolean if its possible to delete this fragment'),
+        editable=False,
     )
 
     def __html__(self):
@@ -138,13 +133,17 @@ class Fragment(models.Model):
     def __str__(self):
         return self.name
 
-    def save(self, *args, **kwargs):
+    def lock(self):
+        """
+        Prevents fragment from being deleted.
+        """
+        FragmentLock.objects.update_or_create(fragment=self)
 
-        super().save(*args, **kwargs)
-        if not self.deletable:
-            # TODO: conferir se levanta erro .DoesNotExist
-            if self.lock is None:
-                FragmentLock.objects.create(self)
+    def unlock(self):
+        """
+        Allows fragment being deleted.
+        """
+        FragmentLock.objects.filter(fragment=self).delete()
 
     def html(self, classes=()):
         data = sanitize_html(self.content)
@@ -160,7 +159,7 @@ class FragmentLock(models.Model):
     fragment = models.OneToOneField(
         Fragment,
         on_delete=models.PROTECT,
-        related_name='lock',
+        related_name='lock_ref',
     )
 
 

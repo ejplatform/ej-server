@@ -4,13 +4,13 @@
 {% macro menu() %}
     <nav class="NavMenu">
         <ul>
-            <li><em>{{ icon_link(_('About'), '/about-us/', 'comment') }}</em></li>
-            <li><em>{{ icon_link(_('FAQ'), '/faq/', 'question-circle') }}</em></li>
-            <li><em>{{ icon_link(_('Usage terms'), '/usage/', 'file-alt') }}</em></li>
-            <li>{{ icon_link(_('Conversations'), '/conversations/', 'comments') }}</li>
-            <li>{{ icon_link(_('Channels'), '/talks/', 'rocketchat') }}</li>
-            <li>{{ icon_link(_('Profile'), '/profile/', 'user') }}</li>
-            <li>{{ icon_link(_('Home'), '/', 'home') }}</li>
+            <li><em>{{ icon_link(_('About'), '/about-us/', 'far fa-comment') }}</em></li>
+            <li><em>{{ icon_link(_('FAQ'), '/faq/', 'far fa-question-circle') }}</em></li>
+            <li><em>{{ icon_link(_('Usage terms'), '/usage/', 'far fa-file-alt') }}</em></li>
+            <li>{{ icon_link(_('Conversations'), '/conversations/', 'conversations', fa=False) }}</li>
+            <li>{{ icon_link(_('Channels'), '/talks/', 'talks', fa=False) }}</li>
+            <li>{{ icon_link(_('Profile'), '/profile/', 'profile', fa=False) }}</li>
+            <li><em>{{ icon_link(_('Home'), '/', 'fa fa-home') }}</em></li>
         </ul>
     </nav>
 {% endmacro %}
@@ -18,8 +18,8 @@
 
 {% macro icon_link(text, href, icon, fa=True) %}
     {%- call link(href) %}
-        {%- if fa %}<i class="fa fa-{{ icon }}"></i>
-        {%- else %}<img src="/static/img/icons/menu/{{ icon }}.svg">
+        {%- if fa %}<i class="{{ icon }}"></i>
+        {%- else %}<img src="/static/img/menu/{{ icon }}.svg">
         {%- endif %}{{ text }}
     {% endcall %}
 {% endmacro %}

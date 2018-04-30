@@ -74,8 +74,8 @@ def save_fragment(path, name, fragment_format):
             'format': fragment_format,
             'content': data,
             'editable': True,
-            'deletable': True,
         }
     )
+    fragment.lock()
     print('Saved fragment:' if created else 'Updated fragment:', fragment)
     return fragment

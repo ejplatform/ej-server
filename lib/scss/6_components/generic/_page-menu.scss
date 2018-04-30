@@ -16,16 +16,14 @@ $nav-menu-width: 75vw !default;
 
 // Element
 .NavMenu {
-    background: $nav-menu-color;
+    @include color($nav-menu-color, $nav-menu-color-text);
+    @include size($nav-menu-width, 100vh);
     box-shadow: $nav-menu-shadow;
     box-sizing: border-box;
-    color: $nav-menu-color-text;
     font-size: $nav-menu-font-size;
-    height: 100vh;
     opacity: $nav-menu-opacity;
     overflow: auto;
     padding: $spacing-unit;
-    width: $nav-menu-width;
 
     em {
         font-weight: bold;
@@ -35,6 +33,7 @@ $nav-menu-width: 75vw !default;
         color: $nav-menu-color-text;
     }
     img, i {
+        height: 1em;
         padding-right: $spacing-unit-small;
     }
     li {

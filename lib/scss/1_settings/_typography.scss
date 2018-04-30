@@ -33,7 +33,8 @@ $font-headings: $font-sans-accent !default;
 
 // Transformations and weigh
 $font-headings-weight: normal !default;
-$font-headings-transform: none !default;
+$text-headings-transform: none !default;
+$text-headings-transform-h1: uppercase !default;
 
 // Base typographical sizes
 $font-size-tiny: 12px !default;
@@ -46,9 +47,9 @@ $font-size: $font-size-default;
 $line-height: ($font-size + $spacing-unit-tiny) !default;
 
 // Heading sizes
-$font-size-h1: 1.7 * $font-size-default !default;
-$font-size-h2: 1.5 * $font-size-default !default;
-$font-size-h3: 1.3 * $font-size-default !default;
+$font-size-h1: 1.5 * $font-size-default !default;
+$font-size-h2: 1.35 * $font-size-default !default;
+$font-size-h3: 1.25 * $font-size-default !default;
 $font-size-h4: 1.15 * $font-size-default !default;
 $font-size-h5: 1.1 * $font-size-default !default;
 $font-size-h6: 1 * $font-size-default !default;
