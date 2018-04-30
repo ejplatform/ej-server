@@ -11,7 +11,7 @@ python = sys.executable
 # Call python manage.py in a more robust way
 #
 def manage(ctx, cmd, env=None, **kwargs):
-    kwargs = {k: v for k, v in kwargs.items() if v is not False}
+    kwargs = {k.replace('_', '-'): v for k, v in kwargs.items() if v is not False}
     opts = ' '.join(f'--{k} {"" if v is True else v}' for k, v in kwargs.items())
     cmd = f'{python} manage.py {cmd} {opts}'
     print(f'Run: {cmd}')
@@ -26,7 +26,8 @@ def sass(ctx, no_watch=False, trace=False):
     suffix = '' if no_watch else ' --watch'
     suffix += ' --trace' if trace else ''
     ctx.run('rm .sass-cache -rf')
-    ctx.run('sass lib/scss/main.scss:lib/assets/css/main.css lib/scss/rocket.scss:lib/assets/css/rocket.css' + suffix, pty=True)
+    ctx.run('sass lib/scss/main.scss:lib/assets/css/main.css lib/scss/rocket.scss:lib/assets/css/rocket.css' + suffix,
+            pty=True)
 
 
 @task
@@ -130,3 +131,30 @@ def docker_clean(ctx, no_sudo=False, all=False, volumes=False, networks=False, i
 
     if not any([all, volumes, networks, images, containers]):
         print('You must select one kind of docker resource to clean.', file=sys.stderr)
+
+
+#
+# Translations
+#
+@task
+def i18n(ctx, compile=False, edit=False, lang='pt_BR'):
+    print('Collecting messages')
+    manage(ctx, 'makemessages', all=True, keep_pot=True)
+
+    print('Extract Jinja translations')
+    ctx.run('pybabel extract -F babel.cfg -o locale/jinja2.pot .')
+
+    print('Join Django + Jinja translation files')
+    ctx.run('msgcat locale/django.pot locale/jinja2.pot --use-first -o locale/join.pot', pty=True)
+    ctx.run(r'''sed -i '/"Language: \\n"/d' locale/join.pot''', pty=True)
+
+    print(f'Update locale {lang} with Jinja2 messages')
+    ctx.run(f'pybabel update -i locale/join.pot -D django -d locale -l {lang}')
+
+    print('Cleaning up')
+    ctx.run('rm locale/*.pot')
+
+    if compile:
+        manage(ctx, 'compilemessages')
+    if edit:
+        ctx.run(f'poedit locale/{lang}/LC_MESSAGES/django.po')

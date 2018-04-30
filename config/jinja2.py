@@ -4,7 +4,7 @@ import string
 from django.conf import settings
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.urls import reverse
-from django.utils.translation import ugettext, ungettext
+from django.utils import translation
 from jinja2 import Environment
 from markdown import markdown
 from markupsafe import Markup
@@ -34,7 +34,7 @@ def environment(**options):
         pc=format_percent,
         salt=salt,
     )
-    env.install_gettext_callables(ugettext, ungettext, newstyle=True)
+    env.install_gettext_translations(translation, newstyle=True)
     return env
 
 
