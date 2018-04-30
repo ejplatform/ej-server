@@ -3,7 +3,7 @@
  =============================================================================*/
 
 @mixin __color-aux($color, $text, $force) {
-    background: $color;
+    background-color: $color;
     @if ($force) {
         @include force-text-color($text);
     } @else {

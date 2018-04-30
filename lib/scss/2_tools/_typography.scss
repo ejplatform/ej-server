@@ -2,7 +2,24 @@
  MIXINS FOR APPLYING AND TYPOGRAPHICAL STYLES
  =============================================================================*/
 
-@mixin headers($sizes, $transform: null, $color: null, $weight: null) {
+@mixin headings($sizes, $transform: null, $color: null, $weight: null) {
+    $i: 0;
+
+    @each $size in $sizes {
+        $i: $i + 1;
+        h#{$i} {
+            font-size: $size;
+            @if ($transform != null) {
+                text-transform: $transform;
+            }
+            @if ($color != null) {
+                color: $color;
+            }
+            @if ($weight != null) {
+                font-weight: $weight;
+            }
+        }
+    }
 }
 
 @mixin force-text-color($color) {

@@ -443,7 +443,7 @@ template {
  BUTTONS
  =============================================================================*/
 .Button, .ActionButton, .RocketButton {
-  background: #30c0d3;
+  background-color: #30c0d3;
   color: rgba(255, 255, 255, 0.9);
   border: none;
   border-radius: 56px;
@@ -476,7 +476,7 @@ template {
   .Button .Login-button,
   .ActionButton .Login-button,
   .RocketButton .Login-button {
-    background: #ff3e72;
+    background-color: #ff3e72;
     color: rgba(255, 255, 255, 0.9); }
     .Button[primary]:hover, [primary].ActionButton:hover, [primary].RocketButton:hover, .Button[primary]:focus, [primary].ActionButton:focus, [primary].RocketButton:focus,
     .Button .Button--primary:hover,
@@ -509,13 +509,13 @@ template {
     .Button .Login-button:focus,
     .ActionButton .Login-button:focus,
     .RocketButton .Login-button:focus {
-      background: #ff0b4d;
+      background-color: #ff0b4d;
       color: #fff; }
   .Button[secondary], [secondary].ActionButton, [secondary].RocketButton,
   .Button .Button--secondary,
   .ActionButton .Button--secondary,
   .RocketButton .Button--secondary {
-    background: #d6f1f3;
+    background-color: #d6f1f3;
     color: rgba(4, 32, 73, 0.9); }
     .Button[secondary]:hover, [secondary].ActionButton:hover, [secondary].RocketButton:hover, .Button[secondary]:focus, [secondary].ActionButton:focus, [secondary].RocketButton:focus,
     .Button .Button--secondary:hover,
@@ -524,7 +524,7 @@ template {
     .Button .Button--secondary:focus,
     .ActionButton .Button--secondary:focus,
     .RocketButton .Button--secondary:focus {
-      background: #afe4e7;
+      background-color: #afe4e7;
       color: #042049; }
   .Button[small], [small].ActionButton, [small].RocketButton,
   .Button .Button--small,
@@ -542,7 +542,7 @@ template {
   .Button .Button--ghost,
   .ActionButton .Button--ghost,
   .RocketButton .Button--ghost {
-    background: none;
+    background-color: none;
     color: #30c0d3;
     border: 1px solid #30c0d3;
     padding: 8px 27px; }
@@ -758,7 +758,7 @@ input[type=submit] {
 /*
  GENERIC PATTERNS FOR HTML ELEMENTS
  =========================================================================== */
-.unlist, .unlist-inline, .Footer-social, .TopHeader-links, .TopHeader-social, .Header ul {
+.unlist, .unlist-inline, .Footer-social, .TopHeader-links, .TopHeader-social, .Header ul, .ConversationList-categories ul {
   padding: 0;
   margin: 0;
   list-style: none; }
@@ -1018,7 +1018,7 @@ ul.errorlist {
  PAGE HEADER
  ============================================================================ */
 .Header {
-  background: #fff;
+  background-color: #fff;
   color: #042049;
   box-sizing: border-box;
   margin: 0;
@@ -1128,7 +1128,7 @@ ul.errorlist {
  PAGE FOOTER
  ============================================================================ */
 .Footer {
-  background: #a4d8dd;
+  background-color: #a4d8dd;
   color: #042049;
   text-align: center; }
   .Footer-social i {
@@ -1140,7 +1140,7 @@ ul.errorlist {
  PAGE SIDEBAR
  =========================================================================== */
 .NavMenu {
-  background: #30c0d3;
+  background-color: #30c0d3;
   color: #fff;
   height: 100vh;
   width: 75vw;
@@ -1171,7 +1171,7 @@ ul.errorlist {
  PAGE TOP HEADER
  ============================================================================ */
 .TopHeader {
-  background: #f2f2f2;
+  background-color: #f2f2f2;
   color: #042049;
   height: 25px;
   width: 100vw;
@@ -1260,18 +1260,19 @@ ul.errorlist {
 .ConversationList-title {
   text-align: center; }
   .ConversationList-title h1 {
-    font-size: 21px; }
+    font-size: 19.5px; }
   .ConversationList-title h2 {
-    font-size: 18px; }
+    font-size: 16.5px; }
 .ConversationList-categories {
+  background-color: #d6f1f3;
+  color: #042049;
   align-items: center;
-  background: #d6f1f3;
   display: flex;
   margin: 28px 0;
   justify-content: space-between;
   padding: 7px;
   text-transform: lowercase; }
-  .ConversationList-categories i.fa {
+  .ConversationList-categories i {
     display: block;
     color: #30c0d3;
     margin: 0 7px; }
@@ -1281,13 +1282,10 @@ ul.errorlist {
   .ConversationList-categories ul {
     display: flex;
     flex-grow: 1;
-    justify-content: flex-start;
-    margin: 0;
-    padding: 0; }
+    justify-content: flex-start; }
     .ConversationList-categories ul li {
       display: block;
-      margin: 0 7px;
-      list-style: none; }
+      margin: 0 7px; }
       .ConversationList-categories ul li a {
         color: #042049;
         font-weight: normal; }
@@ -1320,21 +1318,25 @@ ul.errorlist {
     font-size: 18px;
     text-transform: none; }
   .ConversationCard-cover {
-    background: #30c0d3;
-    border-radius: 56px;
+    background-color: #30c0d3;
     color: #fff;
+    border-radius: 56px;
     display: flex;
     flex-flow: column;
-    justify-content: space-between;
     margin: 0;
     min-height: 176px;
+    padding: 0 28px;
     position: relative;
     z-index: 2; }
-    .ConversationCard-cover a, .ConversationCard-cover a:hover, .ConversationCard-cover a:active {
+    .ConversationCard-cover a, .ConversationCard-cover a:hover, .ConversationCard-cover a:active, .ConversationCard-cover a:focus {
       color: #fff; }
     .ConversationCard-cover h1 {
-      align-self: stretch;
-      padding-top: 7px; }
+      flex-grow: 1;
+      display: flex;
+      flex-flow: column;
+      justify-content: space-around;
+      margin: 28px 0 0 0;
+      vertical-align: middle; }
     .ConversationCard-cover dl {
       font-size: 12px;
       margin: 7px 0; }
@@ -1350,15 +1352,19 @@ ul.errorlist {
     margin-top: -112px; }
     .ConversationCard-actions .Button[primary], .ConversationCard-actions [primary].ActionButton, .ConversationCard-actions [primary].RocketButton {
       background-color: #042049;
-      text-transform: lowercase;
-      font-variant: small-caps;
-      font-weight: bold; }
+      color: #fff;
+      font-size: 13px;
+      padding-top: 11px;
+      padding-bottom: 11px; }
+      .ConversationCard-actions .Button[primary] i, .ConversationCard-actions [primary].ActionButton i, .ConversationCard-actions [primary].RocketButton i {
+        margin-left: 7px; }
   .ConversationCard-statistics {
     color: #042049;
     display: flex;
     font-size: 12px;
     justify-content: space-between;
-    padding: 0 28px; }
+    padding: 0 28px;
+    margin: 7px 0; }
     .ConversationCard-statistics li {
       list-style: none; }
   @media only screen and (min-width: 550px) {
@@ -1432,7 +1438,7 @@ ul.errorlist {
       margin-top: 7px; }
 
 .Comment {
-  background: #30c0d3;
+  background-color: #30c0d3;
   color: #fff;
   box-sizing: border-box;
   border-radius: 56px;
@@ -1490,7 +1496,7 @@ ul.errorlist {
     min-height: 45px; }
 
 .CircleButton {
-  background: #fff;
+  background-color: #fff;
   color: #042049;
   cursor: pointer;
   display: inline-block;

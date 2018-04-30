@@ -442,7 +442,7 @@ template {
  BUTTONS
  =============================================================================*/
 .Button {
-  background: #30c0d3;
+  background-color: #30c0d3;
   color: rgba(255, 255, 255, 0.9);
   border: none;
   border-radius: 56px;
@@ -461,21 +461,21 @@ template {
     text-decoration: none; }
   .Button[primary],
   .Button .Button--primary {
-    background: #ff3e72;
+    background-color: #ff3e72;
     color: rgba(255, 255, 255, 0.9); }
     .Button[primary]:hover, .Button[primary]:focus,
     .Button .Button--primary:hover,
     .Button .Button--primary:focus {
-      background: #ff0b4d;
+      background-color: #ff0b4d;
       color: #fff; }
   .Button[secondary],
   .Button .Button--secondary {
-    background: #d6f1f3;
+    background-color: #d6f1f3;
     color: rgba(4, 32, 73, 0.9); }
     .Button[secondary]:hover, .Button[secondary]:focus,
     .Button .Button--secondary:hover,
     .Button .Button--secondary:focus {
-      background: #afe4e7;
+      background-color: #afe4e7;
       color: #042049; }
   .Button[small],
   .Button .Button--small {
@@ -487,7 +487,7 @@ template {
     padding: 18px 56px; }
   .Button[ghost],
   .Button .Button--ghost {
-    background: none;
+    background-color: none;
     color: #30c0d3;
     border: 1px solid #30c0d3;
     padding: 8px 27px; }
