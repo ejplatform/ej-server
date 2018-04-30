@@ -10,6 +10,7 @@ https://docs.djangoproject.com/en/dev/ref/settings/
 import pathlib
 
 from .conf import db
+from .celery import *
 from .constance import *
 
 DATABASES = db.DATABASES
