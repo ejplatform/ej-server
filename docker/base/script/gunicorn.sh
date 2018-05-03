@@ -6,7 +6,7 @@ set -o nounset
 
 printf "\n## Performing Migrations\n\n"
 
-python /app/manage.py migrate
+python3 /app/manage.py migrate
 # inv db-assets
 # inv db-fake --safe
 # echo 'production' > /app/local/build.info
