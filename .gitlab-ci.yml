@@ -11,7 +11,7 @@ variables:
   GIT_SUBMODULE_STRATEGY: recursive
 
 # Stage: test
-test:
+test on develop or master:
   stage: test
   script:
     - /maybe_build_base.sh
