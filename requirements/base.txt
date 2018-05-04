@@ -33,7 +33,7 @@ pygments ~= 2.2.0
 markdown ~= 2.6.9
 
 # Database
-psycopg2 ~= 2.7
+psycopg2-binary ~= 2.7
 
 # Unicode slugification
 awesome-slugify ~= 1.6.5
@@ -77,3 +77,4 @@ Faker ~= 0.8.13
 # Tools
 django-debug-toolbar ~= 1.8
 django-extensions ~= 1.9.0
+invoke ~= 0.22
