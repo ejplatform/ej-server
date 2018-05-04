@@ -46,22 +46,21 @@ class UserManager(BaseUserManager):
         """
         username, _, domain = email.partition('@')
         domain = domain.replace('-', '_')
-        name = name.replace(' ', '_')
-        first_name, _, last_name = name.lower().partition(' ')
+        domain = domain.replace('.com', '')
+        first_name = name.lower().partition(' ')[0]
+        last_name = name.lower().partition(' ')[-1]
         last_name = last_name.replace(' ', '_')
 
         tests = [
             username,
             first_name,
-            first_name + '_' + domain,
             last_name,
             last_name + '_' + domain,
             username + '_' + domain,
         ]
 
         existing = set(
-            self
-                .filter(username__in=tests)
+            self.filter(username__in=tests)
                 .values_list('username', flat=True)
         )
         available = [name for name in tests if name not in existing]
