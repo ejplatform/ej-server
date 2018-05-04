@@ -1,15 +1,11 @@
 from allauth.account import views as allauth_views
 from allauth.account.forms import LoginForm
-from allauth.socialaccount.providers.facebook.views import FacebookOAuth2Adapter
-from allauth.socialaccount.providers.twitter.views import TwitterOAuthAdapter
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import Http404, JsonResponse, HttpResponse
 from django.urls import reverse
 from django.views.generic import RedirectView, UpdateView
 from django.views.decorators.clickjacking import xframe_options_exempt
 from django.utils.decorators import method_decorator
-from rest_auth.registration.views import SocialLoginView
-from rest_auth.social_serializers import TwitterLoginSerializer
 from rest_auth.views import LoginView
 from rest_framework import status
 from rest_framework.authtoken.models import Token
@@ -52,15 +48,6 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
         # Only get the User record for the user making the request
         queryset = User.objects if queryset is None else queryset
         return queryset.get(username=self.request.user.username)
-
-
-class FacebookLogin(SocialLoginView):
-    adapter_class = FacebookOAuth2Adapter
-
-
-class TwitterLogin(LoginView):
-    serializer_class = TwitterLoginSerializer
-    adapter_class = TwitterOAuthAdapter
 
 
 def get_api_key(request):
