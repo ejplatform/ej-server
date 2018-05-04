@@ -7,7 +7,7 @@ RUN groupadd -r django \
 COPY . /app
 
 RUN export $(cat /app/env.example | grep -v ^# | xargs) \
-    && python /app/manage.py collectstatic --noinput \
+    && python3 /app/manage.py collectstatic --noinput \
     && mkdir /app/local \
     && echo $BUILD >> /app/local/build.info \
     && cd /app \
