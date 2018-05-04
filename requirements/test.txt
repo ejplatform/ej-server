@@ -21,4 +21,3 @@ IPython
 # Tools
 Sphinx ~= 1.6
 Werkzeug  ~= 0.12
-invoke ~= 0.22
