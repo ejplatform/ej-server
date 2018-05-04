@@ -15,7 +15,6 @@ from rest_framework import status
 from rest_framework.authtoken.models import Token
 
 from .models import User
-from .serializers import FixSocialLoginSerializer
 
 
 @method_decorator(xframe_options_exempt, name='dispatch')
@@ -57,7 +56,6 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
 
 class FacebookLogin(SocialLoginView):
     adapter_class = FacebookOAuth2Adapter
-    serializer_class = FixSocialLoginSerializer
 
 
 class TwitterLogin(LoginView):
