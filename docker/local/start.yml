@@ -27,6 +27,7 @@ services:
       - 8000:8000
     volumes:
       - ../../:/app
+    working_dir: /app
 
   redis:
     image: redis:3.2
