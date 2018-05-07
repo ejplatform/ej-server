@@ -48,7 +48,7 @@ Every commit at any branch will run the `test` stage from the `pipeline`.
 
 ### Changes in Base Image
 
-Any changes to [requirements/base.txt](https://github.com/ejplatform/ej-server/blob/master/requirements/base.txt), [Gemfile](https://github.com/ejplatform/ej-server/blob/master/Gemfile), or [npm_globals.txt](https://github.com/ejplatform/ej-server/blob/master/npm_globals.txt), must trigger the base build in your branch and the update build in master/develop branches.
+Any changes to [requirements/base.txt](https://github.com/ejplatform/ej-server/blob/master/requirements/base.txt), [Gemfile](https://github.com/ejplatform/ej-server/blob/master/Gemfile), [npm_globals.txt](https://github.com/ejplatform/ej-server/blob/master/npm_globals.txt), or [scripts/base](https://github.com/ejplatform/ej-server/blob/master/scripts/base) files must trigger the base build in your branch and the update build in master/develop branches.
 
 To trigger the scripts, use:
 
@@ -61,7 +61,7 @@ git commit -m "{commit description}" -m "build image <base>" -m "update image <b
 
 ### Changes in Test Base Image
 
-Any changes to [requirements/test.txt](https://github.com/ejplatform/ej-server/blob/master/requirements/test.txt) must trigger the base-test build in your branch and the update build in master/develop branches.
+Any changes to [requirements/test.txt](https://github.com/ejplatform/ej-server/blob/master/requirements/test.txt) or [scripts/test](https://github.com/ejplatform/ej-server/blob/master/scripts/test) filesmust trigger the base-test build in your branch and the update build in master/develop branches.
 
 To trigger the scripts, use:
 
@@ -74,7 +74,7 @@ git commit -m "{commit description}" -m "build image <base-test>" -m "update ima
 
 ### Changes in Production Base Image
 
-Any changes to [requirements/production.txt](https://github.com/ejplatform/ej-server/blob/master/requirements/production.txt) must trigger the base-production build in your branch and the update build in master/develop branches.
+Any changes to [requirements/production.txt](https://github.com/ejplatform/ej-server/blob/master/requirements/production.txt) or [scripts/production](https://github.com/ejplatform/ej-server/blob/master/scripts/production) files must trigger the base-production build in your branch and the update build in master/develop branches.
 
 To trigger the scripts, use:
 

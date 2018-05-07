@@ -10,4 +10,4 @@ python3 manage.py migrate
 
 printf "\n## Performing Tests\n\n"
 
-pytest
+pytest --cov

@@ -40,6 +40,6 @@ COPY ./requirements/base.txt /dependencies/base.txt
 RUN pip install -r base.txt
 
 # Scripts
-COPY ./docker/base/script /
+COPY ./scripts/base/ /
 
 ENTRYPOINT ["/entrypoint.sh"]
