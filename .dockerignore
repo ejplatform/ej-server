@@ -2,7 +2,6 @@
 .git/
 .pytest_cache/
 docker/
-!docker/base/script
 !docker/cicd/script
 !docker/production/nginx/default.conf
 
