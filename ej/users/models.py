@@ -201,7 +201,7 @@ class User(AbstractUser):
         fields.
         """
 
-        fields = ['email', 'city', 'country', 'occupation', 'age', 'gender', 'race', 'political_movement', 'city']
+        fields = ['email', 'city', 'country', 'occupation', 'age', 'gender', 'race', 'political_movement']
         field_map = {field.name: field for field in self._meta.fields}
         result = []
         for field in fields:

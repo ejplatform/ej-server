@@ -2,23 +2,37 @@ from test_plus.test import TestCase
 from allauth.socialaccount.models import SocialAccount
 from ..models import UserManager, User
 
+
 class TestUser(TestCase):
 
     DEFAULT_USER_AVATAR = 'https://gravatar.com/avatar/7ec7606c46a14a7ef514d1f1f9038823?s=40&d=mm'
+    
+    TEST_USER_NAME = 'name test'
+    TEST_USER_EMAIL = 'testfilleduser@example.com'
+    TEST_USER_IMAGE = 'image test'
+    TEST_USER_AGE = 1
+    TEST_USER_COUNTRY = 'country test'
+    TEST_USER_CITY = 'city test'
+    TEST_USER_STATE = 'state test'
+    TEST_USER_BIOGRAPHY = 'biography test'
+    TEST_USER_OCCUPATION = 'occupation test'
+    TEST_USER_GENDER = 'Outro'
+    TEST_USER_POLITICAL_MOVEMENT = 'political movement test'
+    TEST_USER_RACE = 'Não declarado'
 
     def make_filled_user(self):
         filled_user = self.make_user('testfilleduser')
-        filled_user.name = "name test" 
-        filled_user.image = "image test"
-        filled_user.age = 1
-        filled_user.country = "country test"
-        filled_user.city = "city test"
-        filled_user.state = "state test"
-        filled_user.biography = "biography test"
-        filled_user.occupation = "occupation test"
-        filled_user.gender = "OTHER"
-        filled_user.political_movement = "political movement test"
-        filled_user.race = "UNDECLARED"
+        filled_user.name = self.TEST_USER_NAME 
+        filled_user.image = self.TEST_USER_IMAGE
+        filled_user.age = self.TEST_USER_AGE
+        filled_user.country = self.TEST_USER_COUNTRY
+        filled_user.city = self.TEST_USER_CITY
+        filled_user.state = self.TEST_USER_STATE
+        filled_user.biography = self.TEST_USER_BIOGRAPHY
+        filled_user.occupation = self.TEST_USER_OCCUPATION
+        filled_user.gender = self.TEST_USER_GENDER
+        filled_user.political_movement = self.TEST_USER_POLITICAL_MOVEMENT
+        filled_user.race = self.TEST_USER_RACE
 
         return filled_user
 
@@ -56,12 +70,11 @@ class TestUser(TestCase):
         self.user.image.url = None
 
         social_account = SocialAccount(self.user)
-
         
     def test_profile_filled(self):
         """
         By default a user is created partial filled.
-        This method returns True when a user filled
+        The profile_filled method returns True when a user filled
         and False otherwise.
         """
 
@@ -74,6 +87,41 @@ class TestUser(TestCase):
         self.assertTrue(
             self.filled_user.profile_filled
         )
+
+    def test_get_profile_fields(self):
+        """
+        Return the fields (email, city, country, occupation,
+        age, gender, race, political_movment, city) from user
+        """
+        test_user_fields = [
+            self.TEST_USER_EMAIL,
+            self.TEST_USER_CITY,
+            self.TEST_USER_COUNTRY,
+            self.TEST_USER_OCCUPATION,
+            self.TEST_USER_AGE,
+            self.TEST_USER_GENDER,
+            self.TEST_USER_RACE,
+            self.TEST_USER_POLITICAL_MOVEMENT,
+        ]
+
+        fields = self.filled_user.get_profile_fields()
+        for field in fields:    
+            assert True if field[1] in test_user_fields else False
+
+    def test_get_profile_statistics(self):
+        statistics = self.user.get_profile_statistics()
+        self.assertTrue(statistics, {'votes': 0, 'comments': 0, 'conversations': 0})
+
+    def test_get_role_description(self):
+        self.assertTrue(self.user.get_role_description(), 'Regular user')
+        
+        self.user.is_staff = True
+        self.assertTrue(self.user.get_role_description(), 'Administrative user')
+
+        self.user.is_superuser = True
+        self.assertTrue(self.user.get_role_description(), 'Root')
+
+
 class TestUserManager(TestCase):
     def setUp(self):
         self.user_manager = UserManager()
