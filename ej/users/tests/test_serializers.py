@@ -36,7 +36,7 @@ class TestRegistrationSerializer(TestCase):
 
         # Serializer save method raises no exceptions
         try:
-            user = self.serializer.save(request)
+            self.serializer.save(request)
             assert True
         except:
             assert False
