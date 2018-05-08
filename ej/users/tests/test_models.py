@@ -174,28 +174,27 @@ class TestUserManager(TestCase):
 
     def test_available_user_name(self):
 
-        # Test Available Name combinations based on email and name
-        #Email name
+        # Test Available Name combinations to be generated based on email and name
+        # Email name
         self.create_username("empurrando2")
 
-        #First name
+        # First name
         self.create_username("empurrando")
 
-        #Last name
+        # Last name
         self.create_username("juntos")
 
-        #Last name + email domain
+        # Last name + email domain
         self.create_username("juntos_email")
 
-        #Emailname + email domain
+        # Emailname + email domain
         self.create_username("empurrando2_email")
 
-
-        #Test username generation for emailname + numbers from 0 to 1000
+        # Test username generation for emailname + numbers from 0 to 1000
         for i in range(1000):
             self.create_username("empurrando2_" + str(i))
 
-        #After 1000 name should be random
+        # After 1000 name should be random
         username = self.user_manager.available_username("empurrando juntos", "empurrando2@email.com")
         assert username != "empurrando2_1001"
 
