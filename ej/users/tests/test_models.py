@@ -6,7 +6,7 @@ from ..models import UserManager, User
 class TestUser(TestCase):
 
     DEFAULT_USER_AVATAR = 'https://gravatar.com/avatar/7ec7606c46a14a7ef514d1f1f9038823?s=40&d=mm'
-    
+
     TEST_USER_NAME = 'name test'
     TEST_USER_EMAIL = 'testfilleduser@example.com'
     TEST_USER_IMAGE = 'image test'
@@ -22,7 +22,7 @@ class TestUser(TestCase):
 
     def make_filled_user(self):
         filled_user = self.make_user('testfilleduser')
-        filled_user.name = self.TEST_USER_NAME 
+        filled_user.name = self.TEST_USER_NAME
         filled_user.image = self.TEST_USER_IMAGE
         filled_user.age = self.TEST_USER_AGE
         filled_user.country = self.TEST_USER_COUNTRY
@@ -53,7 +53,7 @@ class TestUser(TestCase):
         )
 
     def test_image_url(self):
-        
+
         #Test when user doesn't have a social account
         self.assertEqual(
             self.user.image_url,
@@ -62,7 +62,7 @@ class TestUser(TestCase):
 
         #@TO-DO test when exception
         #Test when user has a social account
-        
+
         class Object(object):
             pass
 
@@ -70,7 +70,7 @@ class TestUser(TestCase):
         self.user.image.url = None
 
         social_account = SocialAccount(self.user)
-        
+
     def test_profile_filled(self):
         """
         By default a user is created partial filled.
@@ -105,7 +105,7 @@ class TestUser(TestCase):
         ]
 
         fields = self.filled_user.get_profile_fields()
-        for field in fields:    
+        for field in fields:
             assert True if field[1] in test_user_fields else False
 
     def test_get_profile_statistics(self):
@@ -114,7 +114,7 @@ class TestUser(TestCase):
 
     def test_get_role_description(self):
         self.assertTrue(self.user.get_role_description(), 'Regular user')
-        
+
         self.user.is_staff = True
         self.assertTrue(self.user.get_role_description(), 'Administrative user')
 
@@ -167,33 +167,33 @@ class TestUserManager(TestCase):
     def create_user(self, username):
         self.user_manager.create_user(username=username, email="empurrando2@email.com", password="abcd")
 
-    def create_username(self, username):
+    def create_username(self, p_username):
         username = self.user_manager.available_username("empurrando juntos", "empurrando2@email.com")
-        assert username == username
+        assert username == p_username
         self.create_user(username)
 
     def test_available_user_name(self):
 
         # Test Available Name combinations based on email and name
         #Email name
-        self.create_user("empurrando2")
+        self.create_username("empurrando2")
 
         #First name
-        self.create_user("empurrando")
+        self.create_username("empurrando")
 
         #Last name
-        self.create_user("juntos")
+        self.create_username("juntos")
 
         #Last name + email domain
-        self.create_user("juntos_email")
+        self.create_username("juntos_email")
 
         #Emailname + email domain
-        self.create_user("empurrando2_email")
+        self.create_username("empurrando2_email")
 
 
         #Test username generation for emailname + numbers from 0 to 1000
         for i in range(1000):
-            self.create_user("empurrando2_" + str(i))
+            self.create_username("empurrando2_" + str(i))
 
         #After 1000 name should be random
         username = self.user_manager.available_username("empurrando juntos", "empurrando2@email.com")
