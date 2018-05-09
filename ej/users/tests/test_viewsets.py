@@ -8,6 +8,25 @@ from ..permissions import IsCurrentUserOrAdmin
 
 class TestUserViewSet(TestCase):
 
+    TEST_KEYS = [
+        'id',
+        'url',
+        'image',
+        'name',
+        'email',
+        'biography',
+        'city',
+        'state',
+        'country',
+        'username',
+        'race',
+        'gender',
+        'occupation',
+        'age',
+        'political_movement',
+        'is_superuser',
+    ]
+
     def setUp(self):
         self.factory = RequestFactory()
         self.viewset = UserViewSet()
@@ -22,27 +41,9 @@ class TestUserViewSet(TestCase):
         # Test if condition of the method
         response = self.viewset.retrieve(request, 'me')
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(
-            response.data,
-            {
-                'id': 1,
-                'url': 'http://testserver/api/v1/users/1/',
-                'image': None,
-                'name': None,
-                'email': 'testuser@example.com',
-                'biography': None,
-                'city': None,
-                'state': None,
-                'country': None,
-                'username': 'testuser',
-                'race': None,
-                'gender': None,
-                'occupation': None,
-                'age': None,
-                'political_movement': None,
-                'is_superuser': False,
-            }
-        )
+
+        for test_key in self.TEST_KEYS:
+            assert True if test_key in response.data.keys() else False
 
     def test_get_permissions(self):
         self.viewset.action = 'list'
