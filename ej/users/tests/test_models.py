@@ -197,11 +197,3 @@ class TestUserManager(TestCase):
         # After 1000 name should be random
         username = self.user_manager.available_username("empurrando juntos", "empurrando2@email.com")
         assert username != "empurrando2_1001"
-
-
-
-
-
-
-
-
