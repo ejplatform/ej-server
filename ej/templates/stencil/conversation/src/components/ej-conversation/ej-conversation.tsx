@@ -12,9 +12,6 @@ export class Conversation {
   
   @State() conversation: ConversationModel;
 
-  // @Prop({ connect: 'ion-toast-controller' }) toastCtrl: ToastController;
-  // @Element() el: Element;
-
   async componentDidLoad() {
     console.log('ej-conversation componentDidLoad antes')
     this.setUpConversation();
@@ -22,15 +19,11 @@ export class Conversation {
   }
 
   async setUpConversation() {
-    // set up with first bit of content
     try {
       this.conversation = await fetchConversation();
-      console.log('wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww')
-      console.log(this.conversation);
     }
     catch (err) {
       console.log(err);
-      // this.showErrorToast();
     }
   }
 
@@ -38,12 +31,28 @@ export class Conversation {
     if (this.conversation) {
       return (
         <div class='ej-conversation'>
-          <p>
-            Minha conversa é {this.conversation.title}
-          </p>
-          <div class='bli'>
-            <h1>Titulo Grande</h1>
-            testando conteudo com variavel global
+          <div class="ConversationDetail">
+            <div class="ConversationDetail-banner">
+              <h1>{ this.conversation.title }</h1>
+              <ul class="ConversationDetail-statistics">
+                <li>1</li>
+                <li>3</li>
+              </ul>
+            </div>
+            <div class="ConversationDetail-arrow"></div>
+
+            <ul class="ConversationDetail-statisticsBottom">
+              <li>
+                <div>Categoria</div>
+                <div>Tecnica</div>
+              </li>
+              <li>veja mais categorias</li>
+            </ul>
+            <div class="ConversationDetail-header">
+              <h1>Opiniões da comunidade</h1>
+              <p>Interaja com as opiniões da comunidade selecionando um dos botões
+                de opção.</p>
+            </div>
           </div>
         </div>
         );

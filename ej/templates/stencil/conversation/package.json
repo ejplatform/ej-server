@@ -1,6 +1,6 @@
 {
   "name": "ej-conversation",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "EJ Conversation Web Component",
   "main": "dist/ejconversation.js",
   "types": "dist/types/components.d.ts",
