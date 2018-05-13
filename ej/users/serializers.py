@@ -15,20 +15,18 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'url', 'image', 'name', 'email', 'biography', 'city',
-                  'state', 'country', 'username', 'race', 'gender', 'tour_step',
+                  'state', 'country', 'username', 'race', 'gender',
                   'occupation', 'age', 'political_movement', 'is_superuser',)
 
 
 class RegistrationSerializer(RegisterSerializer):
     name = serializers.CharField()
-    tour_step = serializers.CharField()
 
     def get_cleaned_data(self):
         return {
             'first_name': self.validated_data.get('first_name', ''),
             'last_name': self.validated_data.get('last_name', ''),
             'name': self.validated_data.get('name', ''),
-            'tour_step': self.validated_data.get('tour_step', ''),
             'username': self.validated_data.get('username', ''),
             'password1': self.validated_data.get('password1', ''),
             'email': self.validated_data.get('email', '')
@@ -40,7 +38,6 @@ class RegistrationSerializer(RegisterSerializer):
 
         self.cleaned_data = self.get_cleaned_data()
         user.name = self.cleaned_data.get('name')
-        user.tour_step = self.cleaned_data.get('tour_step')
 
         adapter.save_user(request, user, self)
 

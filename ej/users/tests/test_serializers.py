@@ -21,7 +21,6 @@ class TestRegistrationSerializer(TestCase):
         assert "first_name" in data
         assert "last_name" in data
         assert "name" in data
-        assert "tour_step" in data
         assert "username" in data
         assert "password1" in data
         assert "email" in data
