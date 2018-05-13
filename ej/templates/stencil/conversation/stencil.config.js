@@ -15,9 +15,17 @@ exports.config = {
     sass({
       injectGlobalPaths: [
         'src/global/variables.scss',
-        // 'src/global/mixins.scss'
       ]
     })
+  ],
+  collections: [
+    { name: '@ionic/core' },
+    { name: 'ionicons' }
+  ],
+  bundles: [
+    { components: ['ion-card', 'ion-card-header', 'ion-card-content'] },
+    // { components: ['ion-button', 'ion-buttons', 'ion-icon'] },
+
   ]
 };
 

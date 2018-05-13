@@ -1,6 +1,6 @@
 {
   "name": "ej-conversation",
-  "version": "0.0.7",
+  "version": "0.0.9",
   "description": "EJ Conversation Web Component",
   "main": "dist/ejconversation.js",
   "types": "dist/types/components.d.ts",
@@ -18,7 +18,10 @@
     "test.watch": "jest --watch --no-cache"
   },
   "dependencies": {
-    "@stencil/sass": "0.0.5"
+    "@ionic/core": "^4.0.0-alpha.6",
+    "@stencil/sass": "0.0.5",
+    "font-awesome": "^4.7.0",
+    "ionicons": "^4.0.0-19"
   },
   "devDependencies": {
     "@stencil/core": "^0.7.22",
