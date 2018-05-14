@@ -7,6 +7,7 @@ from django.contrib.auth.models import AbstractUser, UserManager as BaseUserMana
 from django.db import models, IntegrityError
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
+from rest_framework.authtoken.models import Token
 
 
 class UserManager(BaseUserManager):
@@ -177,6 +178,11 @@ class User(AbstractUser):
 
     def get_absolute_url(self):
         return reverse('user-detail', kwargs={'pk': self.id})
+
+    @property
+    def token(self):
+        token = Token.objects.get_or_create(user=self)
+        return token[0].key
 
     @property
     def image_url(self):

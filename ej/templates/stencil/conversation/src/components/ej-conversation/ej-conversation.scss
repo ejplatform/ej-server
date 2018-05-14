@@ -1,0 +1,186 @@
+$conversation-button-size: $spacing-unit-small + $spacing-unit-tiny !default;
+$conversation-card-padding: $spacing-unit-small !default;
+$conversation-card-gutter: $spacing-unit !default;
+$conversation-card-border: 0 !default;
+$conversation-card-border-radius: $block-elements-border-radius !default;
+$conversation-card-color: $color-primary !default;
+$conversation-card-text-color: $color-white !default;
+$conversation-card-cover-height: 8 * $line-height !default;
+$conversation-card-secondary-color: $color-blue-light !default;
+$conversation-card-statistics-color: $color-blue-dark !default;
+$conversation-card-font-size-small: 12px !default;
+$conversation-card-button-color: $color-content-text !default;
+$conversation-card-button-color-text: $color-content !default;
+$conversation-card-border-arrow-size: $spacing-unit;
+
+.ej-conversation {
+
+.ConversationDetail {
+  margin: 0 auto;
+  max-width: $header-wrapper-max-width;
+  padding: 0;
+
+  > * {
+      padding: $spacing-unit;
+  }
+  u {
+      margin: 0;
+  }
+  li {
+      margin: 0;
+  }
+
+  &-banner {
+      background: $color-hint;
+      border-radius: 0 0 $block-elements-border-radius $block-elements-border-radius;
+      color: $color-hint-text;
+      margin: 0;
+      padding-top: 0;
+
+      h1 {
+          @extend .Container;
+
+          padding: $spacing-unit-large 0 $spacing-unit 0;
+          text-align: center;
+
+          @media only screen and (min-width: $breakpoint-large) {
+              padding: $spacing-unit-large 0;
+          }
+      }
+  }
+
+  &-arrow {
+      border-left: $conversation-card-border-arrow-size solid transparent;
+      border-right: $conversation-card-border-arrow-size solid transparent;
+      border-top: $conversation-card-border-arrow-size solid $color-hint;
+      height: 0;
+      margin: 0 auto;
+      padding: 0;
+      position: relative;
+      width: 0;
+  }
+
+  &-statistics,
+  &-statisticsBottom {
+      display: flex;
+      font-size: $font-size-small;
+      font-weight: bold;
+      justify-content: space-between;
+      margin: 0 auto;
+      max-width: $content-wrapper-max-width - 2 * $spacing-unit-huge;
+      padding: 0 $spacing-unit-small;
+
+      li {
+          list-style: none;
+      }
+  }
+
+  &-statisticsBottom {
+      bottom: ($conversation-card-border-arrow-size - $spacing-unit-tiny);
+      font-weight: normal;
+      padding: 0 ($spacing-unit + $spacing-unit-small);
+      position: relative;
+
+      :first-child {
+          a {
+              font-weight: bold;
+          }
+      }
+
+      :last-child {
+          text-align: right;
+          a {
+              color: $color-content-text;
+          }
+      }
+  }
+
+  &-header {
+      text-align: center;
+      padding-top: 0;
+
+      h1 {
+          font-size: $font-size-h3;
+          text-transform: uppercase;
+          margin-bottom: $spacing-unit-tiny;
+      }
+      p {
+          margin-top: $spacing-unit-tiny;
+      }
+  }
+}
+
+
+.Comment {
+  @include color('primary');
+
+  box-sizing: border-box;
+  border-radius: $block-elements-border-radius;
+  font-size: $font-size-h3;
+  padding: $spacing-unit + $spacing-unit-small;
+  margin: 0 auto;
+  max-width: $page-content-width-max;
+
+  i.fa {
+      background: $color-primary-text;
+      border: 2px solid $color-primary-text;
+      border-radius: $spacing-unit-large;
+      padding: $spacing-unit-tiny;
+  }
+
+  &-voteArea {
+      button {
+          border: none;
+          border-radius: 50%;
+          background: $color-primary-text;
+          padding: 0;
+      }
+
+      ul {
+          display: flex;
+          font-weight: bold;
+          margin: 0;
+          padding: 0;
+          text-transform: uppercase;
+          width: 100%;
+
+          span {
+              font-size: $font-size-small;
+          }
+
+          li {
+              @extend .Col--center;
+              list-style: none;
+              flex-grow: 1;
+
+              i.fa {
+                  color: $color-primary;
+                  background: $color-primary-text;
+                  height: $conversation-button-size;
+                  width: $conversation-button-size;
+              }
+
+          }
+
+          li:first-child i.fa {
+              color: $color-role-ok;
+          }
+
+          li:last-child i.fa {
+              color: $color-role-error;
+          }
+      }
+  }
+
+  &-user {
+      font-size: $font-size-h5;
+      i.fa {
+          color: $color-accent;
+          margin-right: $spacing-unit-small;
+      }
+  }
+}
+
+
+}
+

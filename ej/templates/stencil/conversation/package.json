@@ -1,0 +1,56 @@
+{
+  "name": "ej-conversation",
+  "version": "0.0.9",
+  "description": "EJ Conversation Web Component",
+  "main": "dist/ejconversation.js",
+  "types": "dist/types/components.d.ts",
+  "collection": "dist/collection/collection-manifest.json",
+  "files": [
+    "dist/"
+  ],
+  "browser": "dist/ejconversation.js",
+  "scripts": {
+    "build": "stencil build",
+    "dev": "sd concurrent \"stencil build --dev --watch\" \"stencil-dev-server\" ",
+    "serve": "stencil-dev-server",
+    "start": "npm run dev",
+    "test": "jest --no-cache",
+    "test.watch": "jest --watch --no-cache"
+  },
+  "dependencies": {
+    "@ionic/core": "^4.0.0-alpha.6",
+    "@stencil/sass": "0.0.5",
+    "font-awesome": "^4.7.0",
+    "ionicons": "^4.0.0-19"
+  },
+  "devDependencies": {
+    "@stencil/core": "^0.7.22",
+    "@stencil/dev-server": "latest",
+    "@stencil/utils": "latest",
+    "@types/jest": "^21.1.1",
+    "jest": "^21.2.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ejplatform/ej-front.git"
+  },
+  "author": "Ionic Team",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ejplatform/ej-front"
+  },
+  "homepage": "https://github.com/ejplatform/ej-front",
+  "jest": {
+    "transform": {
+      "^.+\\.(ts|tsx)$": "<rootDir>/node_modules/@stencil/core/testing/jest.preprocessor.js"
+    },
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(tsx?|jsx?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "json",
+      "jsx"
+    ]
+  }
+}
