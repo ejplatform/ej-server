@@ -9,8 +9,7 @@ export interface ConversationModel {
 export interface CommentModel {
   id: number,
   author_name: string,
-  content: string,
-  // category_name: string
+  content: string
 }
 
 export class VoteModel {

@@ -48,26 +48,16 @@ const saveVote = (comment: CommentModel, action: number) => {
   vote.comment = comment.id.toString();
   vote.value = action;
 
-  //FIXME remove " from token
   let token = localStorage.getItem("token").substr(1).slice(0, -1);;
-
-
-  console.log('salavndoooooooooooooooooooooooooo', token, vote, comment)
-  console.log(JSON.stringify(vote))
-  const response = fetch('http://localhost:8000/api/v1/votes/', {
+  const response = fetch(`http://localhost:8000/api/v1/votes/`, {
     method: 'post',
     body: JSON.stringify(vote),
     headers: {'Content-Type': 'application/json', 'Authorization': 'Token ' + token }
   })
 
   return response.then((response) => {
-    console.log('NO SERVICEOooooooooooooooo')
     return response.json();
   })
-  // const data = response.();
-  // console.log(comment, vote);
-
-  // this.bars = data;
 }
 
 export { fetchConversation, fetchRandomComent, getToken, saveVote, login };

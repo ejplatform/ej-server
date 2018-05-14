@@ -49,11 +49,8 @@ export class Conversation {
   }
 
   async agree(comment: CommentModel) {
-    console.log('metodo agree', comment);
     try {
       await saveVote(comment, VoteModel.AGREE);
-      console.log('agreeeeeeeeeeeeeeeeeeeeeeee');
-
     }
     catch (err) {
       console.log(err);
@@ -61,11 +58,8 @@ export class Conversation {
   }
 
   async skip(comment: CommentModel) {
-    console.log('metodo skip', comment);
     try {
       await saveVote(comment, VoteModel.PASS);
-      console.log('skippppppppppppppppppppp');
-
     }
     catch (err) {
       console.log(err);
@@ -73,11 +67,8 @@ export class Conversation {
   }
 
   async disagree(comment: CommentModel) {
-    console.log('metodo disagree', comment);
     try {
       await saveVote(comment, VoteModel.DISAGREE);
-      console.log('disssssssssssssssssssssssssssagree');
-
     }
     catch (err) {
       console.log(err);
@@ -92,8 +83,8 @@ export class Conversation {
             <div class="ConversationDetail-banner">
               <h1>{this.conversation.title}</h1>
               <ul class="ConversationDetail-statistics">
-                <li>{this.conversation.statistics.comments.total}</li>
-                <li>{this.conversation.statistics.votes.total}</li>
+                <li>{this.conversation.statistics.comments.total} comentários</li>
+                <li>{this.conversation.statistics.votes.total} votos</li>
               </ul>
             </div>
             <div class="ConversationDetail-arrow"></div>
