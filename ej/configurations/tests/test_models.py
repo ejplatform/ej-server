@@ -1,8 +1,7 @@
 import pytest
 from django.db import IntegrityError
-
-from ej.configurations.models import SocialMediaIcon, Color, Fragment
 from markupsafe import Markup
+from ej.configurations.models import SocialMediaIcon, Color, Fragment
 
 
 class TestSocialMediaIcon:
