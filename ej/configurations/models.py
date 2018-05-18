@@ -91,7 +91,10 @@ class Color(models.Model):
     )
 
     def __str__(self):
-        return f'self.name ({self.hex_value})'
+        return f'{self.name}: {self.hex_value}'
+
+    def __html__(self):
+        return self.hex_value
 
 
 class Fragment(models.Model):

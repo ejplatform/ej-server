@@ -1,5 +1,5 @@
-import ej.users.api_views
+from .api_views import UserViewSet
 
 
 def register(router):
-    router.register(r'users', ej.users.api_views.UserViewSet)
+    router.register(r'users', UserViewSet)

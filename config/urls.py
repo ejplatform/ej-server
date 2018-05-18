@@ -5,7 +5,6 @@ from django.urls import include, path
 from django.views import defaults as default_views
 from rest_framework.documentation import include_docs_urls
 
-from ej.users.views import FacebookLogin, TwitterLogin
 from .api import router_v1
 from .fixes import unregister_admin
 from .views import get_patterns
@@ -24,8 +23,6 @@ urlpatterns = [
     path('api/docs/', include_docs_urls(title='ej API Docs', public=False)),
 
     # User management
-    path('api/auth/facebook/', FacebookLogin.as_view(), name='fb_login'),
-    path('api/auth/twitter/', TwitterLogin.as_view(), name='tw_login'),
     path('rest-auth/', include('rest_auth.urls')),
     path('rest-auth/registration/', include('rest_auth.registration.urls')),
 
