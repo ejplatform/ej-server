@@ -3,10 +3,9 @@ from allauth.account.forms import LoginForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import Http404, JsonResponse, HttpResponse
 from django.urls import reverse
-from django.views.generic import RedirectView, UpdateView
-from django.views.decorators.clickjacking import xframe_options_exempt
 from django.utils.decorators import method_decorator
-from rest_auth.views import LoginView
+from django.views.decorators.clickjacking import xframe_options_exempt
+from django.views.generic import RedirectView, UpdateView
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 

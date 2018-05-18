@@ -1,10 +1,10 @@
-from test_plus.test import TestCase
 from allauth.socialaccount.models import SocialAccount
+from test_plus.test import TestCase
+
 from ..models import UserManager, User
 
 
 class TestUser(TestCase):
-
     DEFAULT_USER_AVATAR = 'https://gravatar.com/avatar/7ec7606c46a14a7ef514d1f1f9038823?s=40&d=mm'
 
     TEST_USER_NAME = 'name test'
@@ -53,15 +53,14 @@ class TestUser(TestCase):
         )
 
     def test_image_url(self):
-
-        #Test when user doesn't have a social account
+        # Test when user doesn't have a social account
         self.assertEqual(
             self.user.image_url,
             self.DEFAULT_USER_AVATAR
         )
 
-        #@TO-DO test when exception
-        #Test when user has a social account
+        # @TO-DO test when exception
+        # Test when user has a social account
 
         class Object(object):
             pass
@@ -69,7 +68,7 @@ class TestUser(TestCase):
         self.user.image = Object()
         self.user.image.url = None
 
-        social_account = SocialAccount(self.user)
+        SocialAccount(self.user)
 
     def test_profile_filled(self):
         """
@@ -131,17 +130,17 @@ class TestUserManager(TestCase):
         self.user_manager.create_user(username="asd2", email="fake2@to.populate", password="abcd")
 
     def test_get_by_email_or_username(self):
-        #Find by username
+        # Find by username
         user = self.user_manager.get_by_email_or_username("ej")
         assert user.email == "empurrando@email.com"
         assert user.username == "ej"
 
-        #Find by email
+        # Find by email
         user = self.user_manager.get_by_email_or_username("empurrando@email.com")
         assert user.username == "ej"
         assert user.email == "empurrando@email.com"
 
-        #Raise error if not found
+        # Raise error if not found
         try:
             self.user_manager.get_by_email_or_username("do not exist")
             assert False

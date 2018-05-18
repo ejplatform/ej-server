@@ -55,7 +55,7 @@ class TestFragment:
 
     def test_fragment_string_representation(self, fragment):
         assert str(fragment) == 'name'
- 
+
     def test_locked_fragment_cannot_be_deleted(self, fragment_db):
         fragment_db.lock()
         with pytest.raises(IntegrityError):

@@ -14,4 +14,3 @@ class UsersConfig(AppConfig):
         if 'actstream' in settings.INSTALLED_APPS:
             from actstream import registry
             registry.register(self.get_model('User'))
-

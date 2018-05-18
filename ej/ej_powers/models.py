@@ -1,11 +1,11 @@
-from django.core.exceptions import ValidationError
-from django.db import models
 from functools import lru_cache
-from model_utils.models import StatusModel
+
+from django.db import models
+from django.utils.translation import ugettext_lazy as _
 from model_utils import Choices
+from model_utils.models import StatusModel
 
 from ej.ej_math.models import UserRef, CommentRef, ConversationRef
-from django.utils.translation import ugettext_lazy as _
 
 NO_PROMOTE_MSG = _('user does not have the right to promote this comment')
 

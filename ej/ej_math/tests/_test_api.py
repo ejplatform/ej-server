@@ -6,6 +6,7 @@ from ej.ej_jobs.models import Job
 
 pytestmark = pytest.mark.django_db
 
+
 @pytest.mark.skip('breakage due to change to conversations-app')
 class TestJobAPI:
 

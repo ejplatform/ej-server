@@ -23,7 +23,7 @@ def check_login(request):
         request.user.username
     )
 
-    return JsonResponse({'loginToken': loginToken })
+    return JsonResponse({'loginToken': loginToken})
 
 
 @csrf_exempt

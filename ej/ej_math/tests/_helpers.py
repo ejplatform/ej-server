@@ -1,5 +1,3 @@
-import pytest
-
 from ej.ej_jobs.models import Job
 
 

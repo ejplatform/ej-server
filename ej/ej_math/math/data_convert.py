@@ -2,6 +2,8 @@ import pandas as pd
 
 from ej_conversations.models import Vote
 
+StereotypeVote = Vote
+
 
 def get_votes(conversation, comments=None, fillna=None):
     """
@@ -22,12 +24,10 @@ def get_votes(conversation, comments=None, fillna=None):
         comments = conversation.comments.all()
 
     # Fetch all votes in a single query
-    comment_ids = comments.values_list('id', flat=True)
-    votes = (
-        Vote.objects
-            .filter(comment_id__in=comment_ids)
-            .values_list('author__username', 'comment_id', 'value')
-    )
+    filter = dict(comment_id__in=comments.values_list('id', flat=True))
+    values = ['author__username', 'comment_id', 'value']
+    votes = Vote.objects.filter(**filter).values_list(*values)
+
     return build_dataframe(votes, fillna=fillna)
 
 
@@ -42,12 +42,9 @@ def get_votes_with_stereotypes(conversation, comments=None, fillna=None):
     user_votes = get_votes(conversation, comments)
 
     # Fetch all votes in a single query
-    comment_ids = comments.values_list('id', flat=True)
-    votes = (
-        Vote.objects
-            .filter(comment_id__in=comments)
-            .values_list('author__username', 'comment_id', 'value')
-    )
+    filter = dict(comment_id__in=comments.values_list('id', flat=True))
+    values = ['author__username', 'comment_id', 'value']
+    votes = StereotypeVote.objects.filter(**filter).values_list(*values)
     stereotype_votes = build_dataframe(votes, fillna=fillna)
     return user_votes, stereotype_votes
 

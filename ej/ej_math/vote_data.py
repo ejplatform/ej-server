@@ -70,9 +70,9 @@ class Math:
             df = base_stats(self.num_users, votes, average, **kwargs)
 
         labels = self.user_labels
-        # if labels is not None:
-        #     df['cluster'] = labels
-        #     df['op_bridge'] = opinion_bridge_index(self.votes, labels)
+        if labels is not None:
+            df['cluster'] = labels
+            df['op_bridge'] = opinion_bridge_index(self.votes, labels)
 
         return df
 

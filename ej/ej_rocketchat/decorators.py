@@ -1,5 +1,5 @@
-from constance import config
 from django.conf import settings
+
 
 def custom_headers(func):
     """
@@ -10,10 +10,12 @@ def custom_headers(func):
         func (callable):
             A view function to be decorated with the headers
     """
+
     def wrap(*args, **kwargs):
         res = func(*args, **kwargs)
         res['Access-Control-Allow-Credentials'] = 'true'
         res['Content-Security-Policy'] = \
-        'frame-ancestors ' + (' '.join(settings.CSRF_TRUSTED_ORIGINS))
+            'frame-ancestors ' + (' '.join(settings.CSRF_TRUSTED_ORIGINS))
         return res
+
     return wrap

@@ -1,5 +1,5 @@
-from django.test import RequestFactory
 from test_plus.test import TestCase
+
 from ..permissions import IsCurrentUserOrAdmin
 
 
@@ -8,6 +8,7 @@ class TestIsCurrentUserOrAdmin(TestCase):
     def test_has_object_permission(self):
         class Mock(object):
             pass
+
         obj = Mock()
         request = Mock()
         request.user = Mock()
@@ -30,5 +31,4 @@ class TestIsCurrentUserOrAdmin(TestCase):
 
         # No User passed
         request.user = None
-        assert permission.has_object_permission(request,obj) is False
-
+        assert permission.has_object_permission(request, obj) is False

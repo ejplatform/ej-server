@@ -54,7 +54,7 @@ def has_sufficient_data(conversation):
     """
     if (conversation.total_participants < Job.MATH_MIN_USERS or
         conversation.total_comments < Job.MATH_MIN_COMMENTS or
-        conversation.total_votes < Job.MATH_MIN_VOTES):
+            conversation.total_votes < Job.MATH_MIN_VOTES):
         return False
     return True
 

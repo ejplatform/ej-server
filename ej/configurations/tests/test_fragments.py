@@ -11,6 +11,7 @@ MISSING_FRAGMENT_HTML = '''
 <p>Click <a href="/debug/fragments/name/" up-modal="main">here</a> to know more</p>
 '''
 
+
 @pytest.fixture
 def fragment_db(db):
     fragment = Fragment(
@@ -20,6 +21,7 @@ def fragment_db(db):
     )
     fragment.save()
     return fragment
+
 
 def test_get_non_existent_fragment_withouth_default_fragment():
     # test method call raising error
@@ -31,6 +33,7 @@ def test_get_non_existent_fragment_withouth_default_fragment():
     # test method call without raise error
     test_fragment = fragments.fragment('name', False)
     assert test_fragment.content == MISSING_FRAGMENT_HTML
+
 
 def test_get_existent_fragment(fragment_db):
     test_fragment = fragments.fragment('name')

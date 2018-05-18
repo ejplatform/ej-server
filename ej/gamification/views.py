@@ -17,6 +17,8 @@ class AwardedPointsView(views.APIView):
 
 class PointsLeaderBoardView(views.APIView):
     def get(self, request):
-        qs = get_user_model().objects.annotate(num_points=Coalesce(Sum('awardedpointvalue_targets__points'), 0)).order_by('-num_points')[:50]
-        response = [{'name': u.get_full_name() if u.get_full_name() else u.username, 'points': u.num_points} for u in qs]
+        qs = get_user_model().objects.annotate(num_points=Coalesce(
+            Sum('awardedpointvalue_targets__points'), 0)).order_by('-num_points')[:50]
+        response = [{'name': u.get_full_name() if u.get_full_name() else u.username, 'points': u.num_points}
+                    for u in qs]
         return Response({'status': 'success', 'leaderboard': response})

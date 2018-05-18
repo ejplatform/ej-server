@@ -69,8 +69,8 @@ class UserManager(BaseUserManager):
 
         names = set(
             self
-                .filter(username__startswith=username)
-                .values_list('username', flat=True)
+            .filter(username__startswith=username)
+            .values_list('username', flat=True)
         )
         for i in range(1000):
             test = '%s_%s' % (username, i)
@@ -229,7 +229,6 @@ class User(AbstractUser):
         if self.is_staff:
             return _('Administrative user')
         return _('Regular user')
-
 
 
 def gravatar_fallback(id):

@@ -37,7 +37,7 @@ class TestUserViewSet(TestCase):
         self.viewset.request = request
         self.viewset.format_kwarg = None
         self.viewset.view = None
-        
+
         # Test if condition of the method
         response = self.viewset.retrieve(request, 'me')
         self.assertEqual(response.status_code, 200)
@@ -51,4 +51,3 @@ class TestUserViewSet(TestCase):
 
         self.viewset.action = 'retrieve'
         self.assertEqual(self.viewset.get_permissions()[0].__class__, IsCurrentUserOrAdmin)
-        

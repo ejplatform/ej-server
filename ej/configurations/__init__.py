@@ -1,4 +1,4 @@
-from .fragments import fragment
+from .fragments import fragment  # noqa: F401
 
 
 def social_icons():

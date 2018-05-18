@@ -26,7 +26,8 @@ class Cluster(TimeStampedModel):
     stereotypes = models.ManyToManyField(
         'ej_clusters.Stereotype',
     )
-    __str__ = lambda self: self.name
+
+    __str__ = (lambda self: self.name)
 
 
 class Stereotype(models.Model):
@@ -42,7 +43,8 @@ class Stereotype(models.Model):
         _('Description'),
         blank=True,
     )
-    __str__ = lambda self: self.name
+
+    __str__ = (lambda self: self.name)
 
 
 class StereotypeVote(models.Model):

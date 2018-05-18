@@ -1,9 +1,11 @@
+from unittest.mock import patch
+
+from captcha.fields import ReCaptchaField
+from django.test import RequestFactory
 from test_plus.test import TestCase
+
 from ..forms import EJSignupForm
 from ..models import User
-from django.test import RequestFactory
-from unittest.mock import patch
-from captcha.fields import ReCaptchaField
 
 
 class TestEjSignupForm(TestCase):
@@ -19,9 +21,9 @@ class TestEjSignupForm(TestCase):
         user.email = "ej@ej.com"
 
         self.factory = RequestFactory()
-        request = self.factory.get('/fake-url')
+        self.factory.get('/fake-url')
 
-        assert(form.is_valid())
+        assert (form.is_valid())
 
         form.signup(user)
         userFound = User.objects.filter(username="TestUsername").first()

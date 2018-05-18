@@ -1,5 +1,5 @@
-import pytest
 from django.core.exceptions import ValidationError
+
 from ej.configurations.validators import validate_icon_name
 
 INVALID_FA_ICON_NAME_MSG = [
@@ -10,6 +10,7 @@ INVALID_FA_ICON_NAME_MSG = [
 INVALID_FA_ICON_MSG = [
     'fa fa-test is an invalid Icones Font-awesome icon!'
 ]
+
 
 def test_invalid_fa_icon_name():
     try:

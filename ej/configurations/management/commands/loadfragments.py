@@ -1,11 +1,11 @@
-from markdown import markdown
-from markupsafe import Markup
 import os
 from pathlib import Path
-from ._load import make_fragment_name, is_html, is_markdown, validate_path, MARKDOWN_TITLE_RE, HTML_TITLE_RE
-from django.core.management.base import BaseCommand
-from ...models import Fragment
+
 from django.conf import settings
+from django.core.management.base import BaseCommand
+
+from ._load import make_fragment_name, is_html, is_markdown, validate_path
+from ...models import Fragment
 
 SITE_ID = getattr(settings, 'SITE_ID', 1)
 
