@@ -13,6 +13,7 @@ from .conf import db
 from .celery import *
 from .constance import *
 
+DEBUG = env('DEBUG', default=True)
 DATABASES = db.DATABASES
 USE_SQLITE = db.USE_SQLITE
 
@@ -24,7 +25,6 @@ INSTALLED_APPS = [
     # Inner EJ apps
     'ej.users.apps.UsersConfig',
     'ej.gamification.apps.GamificationConfig',
-    'ej.math.apps.MathConfig',
     'ej.configurations.apps.ConfigurationsConfig',
     'ej.ej_rocketchat.apps.EJRocketchatConfig',
 
@@ -369,9 +369,14 @@ EJ_CONVERSATIONS_URLMAP = {
 }
 
 # Logging
-DEFAULT_LOGGER = {
+DEBUG_LOGGER = {
     'handlers': ['console'],
     'level': 'DEBUG',
+    'propagate': True,
+}
+DEFAULT_LOGGER = {
+    'handlers': ['console'],
+    'level': 'INFO',
     'propagate': True,
 }
 LOGGING = {
@@ -389,7 +394,8 @@ LOGGING = {
         },
     },
     'loggers': {
-        # 'django': DEFAULT_LOGGER,
-        'ej': DEFAULT_LOGGER,
+        'ej': DEBUG_LOGGER,
+        'django': DEFAULT_LOGGER,
+        'celery': DEFAULT_LOGGER,
     },
 }
