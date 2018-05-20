@@ -27,6 +27,7 @@ test:
     - docker pull $MASTER_IMAGE || true
     - docker-compose -f ./docker/production/django/build.yml build
     - docker tag $MASTER_IMAGE $DEVELOP_IMAGE
+    - docker-compose -f ./docker/develop/test.yml build
     - docker-compose -f ./docker/develop/test.yml run --rm django
     - docker save $MASTER_IMAGE image.tar
   tags:
@@ -54,6 +55,7 @@ push master images:
     key: image
     paths:
       - image.tar
+    policy: pull
 
 push latest images:
   stage: push
@@ -70,6 +72,7 @@ push latest images:
     key: image
     paths:
       - image.tar
+    policy: pull
 
 #
 # Rancher service upgrade
