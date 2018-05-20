@@ -1,4 +1,4 @@
-# Local docker-compose file
+# Local docker-compose file with commands as sleep infinity
 version: '3.5'
 
 networks:
@@ -10,8 +10,12 @@ volumes:
 
 services:
   django: &django
-    image: ejplatform/ej-server:base-test
-    command: /runserver.sh
+    image: ejplatform/ej-server:develop
+    build:
+      context: ../../
+      dockerfile: ./docker/develop/django/Dockerfile
+    command: sleep infinity
+    entrypoint: ''
     depends_on:
       - postgres
     env_file:
@@ -27,7 +31,6 @@ services:
       - 8000:8000
     volumes:
       - ../../:/app
-    working_dir: /app
 
   redis:
     image: redis:3.2
@@ -46,7 +49,6 @@ services:
 
   flower:
     << : *django
-    command: /start_flower.sh
     depends_on:
       - django
       - rabbit
@@ -59,7 +61,6 @@ services:
 
   worker:
     << : *django
-    command: /run_celery.sh
     depends_on:
       - django
       - rabbit

@@ -1,0 +1,36 @@
+# RocketChat integration docker-compose file
+
+version: '3.5'
+
+networks:
+  ej:
+    name: ej
+
+volumes:
+  db_rocketchat_data: {}
+
+services:
+  mongo:
+    image: mongo
+    volumes:
+      - db_rocketchat_data:/data/db
+    networks:
+      - ej
+    command:
+      - mongod
+      - --smallfiles
+      - --oplogSize
+      - '128'
+
+  rocketchat:
+    image: rocketchat/rocket.chat:latest
+    networks:
+      - ej
+    environment:
+      MONGO_URL: mongodb://mongo:27017/rocketchat
+      PORT: '3000'
+      ROOT_URL: http://yourhost:3000
+    links:
+      - mongo
+    ports:
+      - 3000:3000/tcp

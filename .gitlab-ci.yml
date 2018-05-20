@@ -8,27 +8,17 @@ stages:
   - deploy
 
 variables:
+  DOCKER_DRIVER: overlay2
   GIT_SUBMODULE_STRATEGY: recursive
+  LATEST_IMAGE: "ejplatform/ej-server:latest"
 
 # Stage: test
 test on develop or master:
   stage: test
   script:
-    - /maybe_build_base.sh
+    - docker pull $LATEST_IMAGE
+    - docker-compose -f ./docker/production/django/build.yml build
     - docker-compose -f ./docker/local/test.yml run --rm django
-    - /maybe_push_base.sh
-  only:
-    - /^master$|^develop$/
-  tags:
-    - docker
-
-test:
-  stage: test
-  script:
-    - /maybe_build_base.sh
-    - docker-compose -f ./docker/local/test.yml run --rm django
-  except:
-    - /^master$|^develop$/
   tags:
     - docker
 
