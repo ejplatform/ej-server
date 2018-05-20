@@ -12,6 +12,7 @@ services:
     volumes:
       - ../../:/app
     working_dir: /app
+
   docker:
     image: docker:dind
     privileged: true

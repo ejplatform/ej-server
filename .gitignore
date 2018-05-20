@@ -53,3 +53,5 @@ $RECYCLE.BIN/
 !/docker/local
 !/docker/**/env
 .cache/
+dump.rdb
+.ipynb_checkpoints/

@@ -1,11 +1,12 @@
 import os
-from ._load import make_url,is_html, is_markdown, validate_path, HTML_TITLE_RE, MARKDOWN_TITLE_RE
-from django.contrib.sites.models import Site
-from django.core.management.base import BaseCommand
-from django.contrib.flatpages.models import FlatPage
+from pathlib import Path
 
 from django.conf import settings
-from pathlib import Path
+from django.contrib.flatpages.models import FlatPage
+from django.contrib.sites.models import Site
+from django.core.management.base import BaseCommand
+
+from ._load import make_url, is_html, is_markdown, validate_path, HTML_TITLE_RE, MARKDOWN_TITLE_RE
 
 SITE_ID = getattr(settings, 'SITE_ID', 1)
 
@@ -35,7 +36,7 @@ def real_handle(path=False, force=False):
     validate_path(path)
 
     base = Path(path)
-    files = ((base/path, make_url(path)) for path in os.listdir(path))
+    files = ((base / path, make_url(path)) for path in os.listdir(path))
 
     # Filter out existing urls
     saved_pages = list(FlatPage.objects.values_list('url', flat=True))
@@ -82,10 +83,9 @@ def save_file(path, file_name, title_re, template, **kwargs):
         **kwargs)
     page.sites.add(Site.objects.get(id=SITE_ID))
 
-    if(created):
+    if (created):
         print('Saved page: %s' % page)
     else:
         print('Updated page: %s' % page)
 
     return page
-

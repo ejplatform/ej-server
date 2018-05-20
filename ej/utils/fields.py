@@ -1,6 +1,8 @@
 from django.conf import settings
 
 if settings.USE_SQLITE:
-    from jsonfield import JSONField
+    import jsonfield
 else:
-    from django.contrib.postgres.fields import JSONField
+    import django.contrib.postgres.fields as jsonfield
+
+JSONField = jsonfield.JSONField

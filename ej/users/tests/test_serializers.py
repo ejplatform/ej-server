@@ -4,7 +4,6 @@ from allauth.account.adapter import get_adapter
 from django.test import RequestFactory
 from test_plus.test import TestCase
 
-from ..serializers import FixSocialLoginSerializer
 from ..serializers import RegistrationSerializer
 
 
@@ -37,83 +36,10 @@ class TestRegistrationSerializer(TestCase):
 
         # Serializer save method raises no exceptions
         try:
-            user = self.serializer.save(request)
+            self.serializer.save(request)
             assert True
         except:
             assert False
 
         # Function save_user should be called one time by the serializer instance.
         assert mocked_method.call_count == 1
-
-
-class TestFixSocialLoginSerializer(TestCase):
-    def test_get_token(self):
-
-        self.serializer = FixSocialLoginSerializer()
-        self.factory = RequestFactory()
-
-        class Object(object):
-            pass
-
-        request = self.factory.get('/fake-url')
-        self.serializer.context['view'] = Object()
-        self.serializer.context['view'].adapter_class = lambda x: x
-
-        view = self.serializer.get_view()
-        adapter = self.serializer.get_adapter(request, view)
-        app = Object()
-        app.client_id = 123123
-        app.secret = 12312312
-        request.session = {'account_verified_email': ''}
-        attrs = {}
-
-        # Test the 'else' passing no code or acess_token, should raise an exception
-        try:
-            token = self.serializer.get_token(adapter, app, attrs, request, view)
-        except:
-            assert True
-
-    def test_get_view(self):
-        self.serializer = FixSocialLoginSerializer()
-
-        try:
-            self.serializer.get_view()
-        except:
-            assert True
-
-        try:
-            self.serializer.context['view'] = {'mock': True}
-            assert True
-        except:
-            assert False
-
-    def test_get_attribute(self):
-        self.view = {}
-
-        self.serializer = FixSocialLoginSerializer()
-
-        try:
-            self.serializer.get_attribute(self.view, 'mock')
-        except:
-            assert True
-
-        try:
-            teste = self.serializer.get_attribute(self, 'test_get_attribute')
-            assert True
-            assert teste == self.test_get_attribute
-        except:
-            assert False
-
-    def test_get_adapter(self):
-
-        class Object(object):
-            pass
-
-        serializer = FixSocialLoginSerializer()
-        factory = RequestFactory()
-        request = factory.get('/fake-url')
-        view = Object()
-        view.adapter_class = lambda x: x
-
-        adapter = serializer.get_adapter(request, view)
-        assert adapter == request

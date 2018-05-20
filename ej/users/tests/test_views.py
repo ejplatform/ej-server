@@ -4,7 +4,8 @@ from test_plus.test import TestCase
 
 from ..views import (
     UserRedirectView,
-    UserUpdateView
+    UserUpdateView,
+    SignupView
 )
 
 
@@ -13,6 +14,13 @@ class BaseUserTestCase(TestCase):
     def setUp(self):
         self.user = self.make_user()
         self.factory = RequestFactory()
+
+
+class TestSignupView(BaseUserTestCase):
+    view = SignupView()
+
+    def test_get_success_url(self):
+        self.assertEqual(self.view.get_success_url(), '/')
 
 
 class TestUserRedirectView(BaseUserTestCase):

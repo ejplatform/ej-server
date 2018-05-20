@@ -4,59 +4,78 @@ services:
 
 stages:
   - test
-  - push image
+  - push
   - deploy
 
 variables:
+  DOCKER_DRIVER: overlay2
   GIT_SUBMODULE_STRATEGY: recursive
+  MASTER_IMAGE: "ejplatform/ej-server:master"
+  LATEST_IMAGE: "ejplatform/ej-server:latest"
 
-# Stage: test
-test on develop or master:
-  stage: test
-  script:
-    - /maybe_build_base.sh
-    - docker-compose -f ./docker/local/test.yml run --rm django
-    - /maybe_push_base.sh
-  only:
-    - /^master$|^develop$/
-  tags:
-    - docker
+before_script:
+  - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASS
+
+#
+# Testing
+#
 
 test:
   stage: test
   script:
-    - /maybe_build_base.sh
-    - docker-compose -f ./docker/local/test.yml run --rm django
-  except:
-    - /^master$|^develop$/
+    - docker pull $MASTER_IMAGE || true
+    - docker-compose -f ./docker/production/django/build.yml build
+    - docker-compose -f ./docker/develop/test.yml run --rm django
+    - docker save $MASTER_IMAGE -o image.tar
   tags:
     - docker
+  cache:
+    key: image
+    paths:
+      - image.tar
 
-# Stage: push image
-push develop images:
-  stage: push image
-  script:
-    - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASS
-    - docker-compose -f ./docker/production/staging.build.yml build
-    - docker-compose -f ./docker/production/staging.build.yml push
-  only:
-    - develop
-  tags:
-    - docker
+#
+# Pushing images to registry
+#
 
-push production images:
-  stage: push image
+push master images:
+  stage: push
   script:
-    - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASS
-    - docker-compose -f ./docker/production/latest.build.yml build
-    - docker-compose -f ./docker/production/latest.build.yml push
+    - docker load -i image.tar
+    - docker-compose -f ./docker/production/master.build.yml build
+    - docker-compose -f ./docker/production/master.build.yml push
   only:
     - master
   tags:
     - docker
+  cache:
+    key: image
+    paths:
+      - image.tar
+    policy: pull
 
-# Stage: deploy
-deploy to development:
+push latest images:
+  stage: push
+  script:
+    - docker load -i image.tar
+    - docker tag $MASTER_IMAGE $LATEST_IMAGE
+    - docker-compose -f ./docker/production/latest.build.yml build
+    - docker-compose -f ./docker/production/latest.build.yml push
+  only:
+    - tags
+  tags:
+    - docker
+  cache:
+    key: image
+    paths:
+      - image.tar
+    policy: pull
+
+#
+# Rancher service upgrade
+#
+
+deploy master images:
   stage: deploy
   environment: develop
   script:
@@ -64,19 +83,18 @@ deploy to development:
     - upgrade --environment $RANCHER_ENVIRONMENT --stack $RANCHER_STACK --service flower --no-finish-upgrade
     - upgrade --environment $RANCHER_ENVIRONMENT --stack $RANCHER_STACK --service worker --no-finish-upgrade
   only:
-    - develop
+    - master
   tags:
     - docker
 
-deploy to production:
+deploy latest images:
   stage: deploy
-  image: cdrx/rancher-gitlab-deploy
   environment: production
   script:
     - upgrade --environment $RANCHER_ENVIRONMENT --stack $RANCHER_STACK --service backend --no-finish-upgrade --sidekicks
     - upgrade --environment $RANCHER_ENVIRONMENT --stack $RANCHER_STACK --service flower --no-finish-upgrade
     - upgrade --environment $RANCHER_ENVIRONMENT --stack $RANCHER_STACK --service worker --no-finish-upgrade
   only:
-    - master
+    - tags
   tags:
     - docker

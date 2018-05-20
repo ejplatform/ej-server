@@ -1,11 +1,12 @@
 import functools
+
 from django.contrib.auth import get_user_model
 from django.contrib.flatpages.models import FlatPage
+from django.http import HttpResponseForbidden
 from django.shortcuts import render
 from django.utils.translation import ugettext as _
-from django.http import HttpResponseForbidden
 
-from ej_conversations.models import Category, Conversation, Comment, Vote, Stereotype, StereotypeVote
+from ej_conversations.models import Category, Conversation, Comment, Vote
 
 User = get_user_model()
 
@@ -41,8 +42,6 @@ def info(request):
             _('Conversations'): count(Conversation),
             _('Votes'): count(Vote),
             _('Comments'): count(Comment),
-            _('Stereotypes'): count(Stereotype),
-            _('Stereotypes votes'): count(StereotypeVote),
         }
     )
     return render(request, 'configurations/info.jinja2', ctx)

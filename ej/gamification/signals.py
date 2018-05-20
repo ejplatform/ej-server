@@ -1,13 +1,10 @@
 from actstream import action
 from django.db.models import Count
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 from django.utils.translation import ugettext as _
 from pinax.badges.registry import badges
 from pinax.points.models import award_points
 
 from ej_conversations.models import Comment, Conversation, Vote
-from ej.users.models import User
 
 
 def actions_when_comment_saved(instance):
@@ -106,7 +103,6 @@ def actions_when_user_profile_filled(instance):
                 target=instance)
     badges.possibly_award_badge("user_profile_filled", user=instance)
     award_points(instance, 'user_profile_filled')
-
 
 # @receiver(post_save, sender=Comment)
 # def helper_comment_function(sender, instance, created, **kwargs):

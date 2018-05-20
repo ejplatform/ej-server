@@ -1,7 +1,6 @@
 from functools import lru_cache
 
 
-
 #
 # Load fragments by name
 #

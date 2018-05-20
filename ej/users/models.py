@@ -46,22 +46,21 @@ class UserManager(BaseUserManager):
         """
         username, _, domain = email.partition('@')
         domain = domain.replace('-', '_')
-        name = name.replace(' ', '_')
-        first_name, _, last_name = name.lower().partition(' ')
+        domain = domain.replace('.com', '')
+        first_name = name.lower().partition(' ')[0]
+        last_name = name.lower().partition(' ')[-1]
         last_name = last_name.replace(' ', '_')
 
         tests = [
             username,
             first_name,
-            first_name + '_' + domain,
             last_name,
             last_name + '_' + domain,
             username + '_' + domain,
         ]
 
         existing = set(
-            self
-                .filter(username__in=tests)
+            self.filter(username__in=tests)
                 .values_list('username', flat=True)
         )
         available = [name for name in tests if name not in existing]
@@ -70,8 +69,8 @@ class UserManager(BaseUserManager):
 
         names = set(
             self
-                .filter(username__startswith=username)
-                .values_list('username', flat=True)
+            .filter(username__startswith=username)
+            .values_list('username', flat=True)
         )
         for i in range(1000):
             test = '%s_%s' % (username, i)
@@ -202,7 +201,7 @@ class User(AbstractUser):
         fields.
         """
 
-        fields = ['email', 'city', 'country', 'occupation', 'age', 'gender', 'race', 'political_movement', 'city']
+        fields = ['email', 'city', 'country', 'occupation', 'age', 'gender', 'race', 'political_movement']
         field_map = {field.name: field for field in self._meta.fields}
         result = []
         for field in fields:
@@ -230,7 +229,6 @@ class User(AbstractUser):
         if self.is_staff:
             return _('Administrative user')
         return _('Regular user')
-
 
 
 def gravatar_fallback(id):

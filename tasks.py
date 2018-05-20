@@ -68,29 +68,21 @@ def db_reset(ctx, fake=False, no_assets=False):
 
 
 @task
-def db_fake(ctx, no_users=False, no_conversations=False, no_admin=False, safe=False):
+def db_fake(ctx, users=True, conversations=True, admin=True, safe=False):
     """
     Adds fake data to the database
     """
-    buildfile = 'local/build.info'
     msg_error = 'Release build. No fake data will be created!'
 
     if safe:
-        if os.path.exists(buildfile):
-            with open(buildfile) as F:
-                data = F.read()
-                print(f'Found build file at {buildfile}: {data}')
-
-            if data.startswith('develop'):
-                print('Creating fake data...')
-            else:
-                return print(msg_error)
+        if os.environ.get("FAKE_DB") == 'true':
+            print('Creating fake data...')
         else:
             return print(msg_error)
 
-    if not no_users:
-        manage(ctx, 'createfakeusers', admin=not no_admin)
-    if not no_conversations:
+    if users:
+        manage(ctx, 'createfakeusers', admin=admin)
+    if conversations:
         manage(ctx, 'createfakeconversations')
         manage(ctx, 'loadpages', path='local-example/pages/')
 
