@@ -4,10 +4,18 @@
 version: '3.5'
 
 services:
-  ej-server:
+  django:
     image: ejplatform/ej-server:master
     build:
-      context: ../../../
+      context: ../../
       dockerfile: ./docker/production/django/Dockerfile
       cache_from:
         - ejplatform/ej-server:master
+
+  backend:
+    image: ejplatform/ej-nginx:master
+    depends_on:
+      - django
+    build:
+      context: ../../
+      dockerfile: ./docker/production/nginx/master.Dockerfile
