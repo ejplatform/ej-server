@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -y \
     libc6-dev \
     libdpkg-perl \
     make \
-    nodejs=8.11.1~dfsg-2 \
+    nodejs=8.11.2~dfsg-1 \
     python3=3.6.4-1 \
     python3-dev=3.6.4-1 \
     python3-pip \
