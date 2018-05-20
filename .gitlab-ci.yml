@@ -26,8 +26,6 @@ test:
   script:
     - docker pull $MASTER_IMAGE || true
     - docker-compose -f ./docker/production/django/build.yml build
-    - docker tag $MASTER_IMAGE $DEVELOP_IMAGE
-    - docker-compose -f ./docker/develop/test.yml build
     - docker-compose -f ./docker/develop/test.yml run --rm django
     - docker save $MASTER_IMAGE image.tar
   tags:
