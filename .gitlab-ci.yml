@@ -18,7 +18,7 @@ test on develop or master:
   script:
     - docker pull $LATEST_IMAGE
     - docker-compose -f ./docker/production/django/build.yml build
-    - docker-compose -f ./docker/local/test.yml run --rm django
+    - docker-compose -f ./docker/develop/test.yml run --rm django
   tags:
     - docker
 
