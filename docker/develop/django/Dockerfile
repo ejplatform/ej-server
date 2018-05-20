@@ -1,4 +1,4 @@
-FROM ejplatform/ej-server:latest
+FROM ejplatform/ej-server:master
 
 USER root
 
