@@ -11,7 +11,6 @@ variables:
   DOCKER_DRIVER: overlay2
   GIT_SUBMODULE_STRATEGY: recursive
   MASTER_IMAGE: "ejplatform/ej-server:master"
-  DEVELOP_IMAGE: "ejplatform/ej-server:develop"
   LATEST_IMAGE: "ejplatform/ej-server:latest"
 
 before_script:
@@ -27,7 +26,7 @@ test:
     - docker pull $MASTER_IMAGE || true
     - docker-compose -f ./docker/production/django/build.yml build
     - docker-compose -f ./docker/develop/test.yml run --rm django
-    - docker save $MASTER_IMAGE image.tar
+    - docker save $MASTER_IMAGE -o image.tar
   tags:
     - docker
   cache:
