@@ -18,7 +18,7 @@ variables:
   DJANGO_TEST_ENV: "./docker/develop/env/django.test.env"
   POSTGRES_TEST_ENV: "./docker/develop/env/postgres.test.env"
 
-.builder:
+.builder: &builder
   before_script:
     - docker pull $DJANGO_MASTER_IMAGE || true
     - docker build --cache-from $DJANGO_MASTER_IMAGE -t $DJANGO_MASTER_IMAGE -f ./docker/production/django/Dockerfile .
