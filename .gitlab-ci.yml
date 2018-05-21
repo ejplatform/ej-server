@@ -63,36 +63,22 @@ cache build:
       - image.tar
     policy: pull
 
-push master backend:
+push master images:
   << : *pusher
   stage: push
   script:
     - docker build -t $BACKEND_MASTER_IMAGE -f ./docker/production/nginx/master.Dockerfile .
     - docker push $BACKEND_MASTER_IMAGE
-  only:
-    - master
-
-push master django:
-  << : *pusher
-  stage: push
-  script:
     - docker push $DJANGO_MASTER_IMAGE
   only:
     - master
 
-push latest backend:
+push latest images:
   << : *pusher
   stage: push
   script:
     - docker build -t $BACKEND_LATEST_IMAGE -f ./docker/production/nginx/latest.Dockerfile .
     - docker push $BACKEND_LATEST_IMAGE
-  only:
-    - tags
-
-push latest django:
-  << : *pusher
-  stage: push
-  script:
     - docker push $DJANGO_LATEST_IMAGE
   only:
     - tags
