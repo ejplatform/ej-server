@@ -13,6 +13,9 @@ variables:
   DJANGO_LATEST_IMAGE: "ejplatform/ej-server:latest"
   BACKEND_MASTER_IMAGE: "ejplatform/ej-nginx:master"
   BACKEND_LATEST_IMAGE: "ejplatform/ej-nginx:latest"
+  CACHED_IMAGE: "${CI_COMMIT_SHA}.image.tar"
+  DJANGO_TEST_ENV: "./docker/develop/env/django.test.env"
+  POSTGRES_TEST_ENV: "./docker/develop/env/postgres.test.env"
 
 
 #
@@ -21,13 +24,12 @@ variables:
 
 test:
   stage: test
-  image: ejplatform/ej-cicd:latest
+  image: docker
   script:
     - docker pull $DJANGO_MASTER_IMAGE || true
     - docker build --cache-from $DJANGO_MASTER_IMAGE -t $DJANGO_MASTER_IMAGE -f ./docker/production/django/Dockerfile .
-    - docker-compose -f ./docker/develop/test.yml run --rm django
-#    - docker run -d --env-file=./compose/dev/test_env --name=postgres postgres:9.6
-#    - docker run --env-file=./compose/dev/test_env --link=postgres:postgres "$CI_REGISTRY_IMAGE/django:test" /test.sh
+    - docker run -d --env-file=$POSTGRES_TEST_ENV --name=postgres postgres:9.6
+    - docker run --env-file=$DJANGO_TEST_ENV --env-file=$POSTGRES_TEST_ENV --link=postgres:postgres $DJANGO_MASTER_IMAGE /test.sh
   tags:
     - docker
 
@@ -37,17 +39,17 @@ cache:image:
   script:
     - docker pull $DJANGO_MASTER_IMAGE || true
     - docker build --cache-from $DJANGO_MASTER_IMAGE -t $DJANGO_MASTER_IMAGE -f ./docker/production/django/Dockerfile .
-    - docker save $DJANGO_MASTER_IMAGE -o "${CI_COMMIT_SHA}.image.tar"
+    - docker save $DJANGO_MASTER_IMAGE -o $CACHED_IMAGE
   only:
     - master
     - tags
   tags:
     - docker
   artifacts:
-    expires_in: '20 mins'
-    name: "${CI_COMMIT_SHA}"
+    expire_in: '20 mins'
+    name: $CI_COMMIT_SHA
     paths:
-      - "${CI_COMMIT_SHA}.image.tar"
+      - $CACHED_IMAGE
 
 #
 # Pushing images to registry
