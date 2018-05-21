@@ -34,7 +34,7 @@ TEMPLATES = [
             APPS_DIR / 'templates/jinja2/',
         ],
         'OPTIONS': {
-            'environment': 'config.jinja2.environment',
+            'environment': 'ej.jinja2.environment',
             'extensions': [
                 'jinja2.ext.i18n',
             ],
