@@ -1,4 +1,3 @@
-image: ejplatform/ej-cicd:latest
 services:
   - docker:dind
 
@@ -22,6 +21,7 @@ variables:
 
 test:
   stage: test
+  image: ejplatform/ej-cicd:latest
   script:
     - docker pull $DJANGO_MASTER_IMAGE || true
     - docker build --cache-from $DJANGO_MASTER_IMAGE -t $DJANGO_MASTER_IMAGE -f ./docker/production/django/Dockerfile .
@@ -40,6 +40,7 @@ test:
 
 push master images:
   stage: push
+  image: docker
   before_script:
     - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASS
   script:
@@ -59,6 +60,7 @@ push master images:
 
 push latest images:
   stage: push
+  image: docker
   before_script:
     - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASS
   script:
@@ -82,6 +84,7 @@ push latest images:
 
 deploy master images:
   stage: deploy
+  image: cdrx/rancher-gitlab-deploy
   environment: develop
   script:
     - upgrade --environment $RANCHER_ENVIRONMENT --stack $RANCHER_STACK --service backend --no-finish-upgrade --sidekicks
@@ -94,6 +97,7 @@ deploy master images:
 
 deploy latest images:
   stage: deploy
+  image: cdrx/rancher-gitlab-deploy
   environment: production
   script:
     - upgrade --environment $RANCHER_ENVIRONMENT --stack $RANCHER_STACK --service backend --no-finish-upgrade --sidekicks
