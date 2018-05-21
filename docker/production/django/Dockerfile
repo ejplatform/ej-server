@@ -47,9 +47,9 @@ RUN groupadd -r django \
 
 COPY . /app
 
-# [FIXME] RUN export $(cat /app/env.example | grep -v ^# | xargs) \
-
-RUN python3 /app/manage.py collectstatic --noinput \
+# [FIXME] should not use .example file
+RUN export $(cat /app/env.example | grep -v ^# | xargs) \
+    && python3 /app/manage.py collectstatic --noinput \
     && mkdir /app/local \
     && chown -R django:django /app
 
