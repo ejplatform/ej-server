@@ -25,7 +25,7 @@ test:
   script:
     - docker pull $DJANGO_MASTER_IMAGE || true
     - docker build --cache-from $DJANGO_MASTER_IMAGE -t $DJANGO_MASTER_IMAGE -f ./docker/production/django/Dockerfile .
-    - docker-compose -f ./docker/develop/test.yml run
+    - docker-compose -f ./docker/develop/test.yml run --rm django
     - docker save $DJANGO_MASTER_IMAGE -o image.tar
   tags:
     - docker
