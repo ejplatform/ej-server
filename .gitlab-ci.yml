@@ -10,11 +10,11 @@ stages:
 variables:
   DOCKER_DRIVER: overlay2
   GIT_SUBMODULE_STRATEGY: recursive
-  MASTER_IMAGE: "ejplatform/ej-server:master"
-  LATEST_IMAGE: "ejplatform/ej-server:latest"
+  DJANGO_MASTER_IMAGE: "ejplatform/ej-server:master"
+  DJANGO_LATEST_IMAGE: "ejplatform/ej-server:latest"
+  BACKEND_MASTER_IMAGE: "ejplatform/ej-nginx:master"
+  BACKEND_LATEST_IMAGE: "ejplatform/ej-nginx:latest"
 
-before_script:
-  - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASS
 
 #
 # Testing
@@ -23,10 +23,10 @@ before_script:
 test:
   stage: test
   script:
-    - docker pull $MASTER_IMAGE || true
-    - docker-compose -f ./docker/production/django/build.yml build
-    - docker-compose -f ./docker/develop/test.yml run --rm django
-    - docker save $MASTER_IMAGE -o image.tar
+    - docker pull $DJANGO_MASTER_IMAGE || true
+    - docker build --cache-from $DJANGO_MASTER_IMAGE -t $DJANGO_MASTER_IMAGE -f ./docker/production/django/Dockerfile .
+    - docker-compose -f ./docker/develop/test.yml run
+    - docker save $DJANGO_MASTER_IMAGE -o image.tar
   tags:
     - docker
   cache:
@@ -40,10 +40,13 @@ test:
 
 push master images:
   stage: push
+  before_script:
+    - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASS
   script:
     - docker load -i image.tar
-    - docker-compose -f ./docker/production/master.build.yml build
-    - docker-compose -f ./docker/production/master.build.yml push
+    - docker build -t $BACKEND_MASTER_IMAGE -f ./docker/production/nginx/master.Dockerfile .
+    - docker push $BACKEND_MASTER_IMAGE
+    - docker push $DJANGO_MASTER_IMAGE
   only:
     - master
   tags:
@@ -56,11 +59,13 @@ push master images:
 
 push latest images:
   stage: push
+  before_script:
+    - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASS
   script:
     - docker load -i image.tar
-    - docker tag $MASTER_IMAGE $LATEST_IMAGE
-    - docker-compose -f ./docker/production/latest.build.yml build
-    - docker-compose -f ./docker/production/latest.build.yml push
+    - docker build -t $BACKEND_LATEST_IMAGE -f ./docker/production/nginx/latest.Dockerfile .
+    - docker push $BACKEND_LATEST_IMAGE
+    - docker push $DJANGO_LATEST_IMAGE
   only:
     - tags
   tags:
