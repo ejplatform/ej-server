@@ -26,25 +26,28 @@ test:
     - docker pull $DJANGO_MASTER_IMAGE || true
     - docker build --cache-from $DJANGO_MASTER_IMAGE -t $DJANGO_MASTER_IMAGE -f ./docker/production/django/Dockerfile .
     - docker-compose -f ./docker/develop/test.yml run --rm django
+#    - docker run -d --env-file=./compose/dev/test_env --name=postgres postgres:9.6
+#    - docker run --env-file=./compose/dev/test_env --link=postgres:postgres "$CI_REGISTRY_IMAGE/django:test" /test.sh
   tags:
     - docker
 
-cache build:
+cache:image:
   stage: test
   image: ejplatform/ej-cicd:latest
   script:
     - docker pull $DJANGO_MASTER_IMAGE || true
     - docker build --cache-from $DJANGO_MASTER_IMAGE -t $DJANGO_MASTER_IMAGE -f ./docker/production/django/Dockerfile .
-    - docker save $DJANGO_MASTER_IMAGE -o image.tar
+    - docker save $DJANGO_MASTER_IMAGE -o "${CI_COMMIT_SHA}.image.tar"
   only:
     - master
     - tags
   tags:
     - docker
-  cache:
-    key: "$CI_PIPELINE_ID"
+  artifacts:
+    expires_in: '20 mins'
+    name: "${CI_COMMIT_SHA}"
     paths:
-      - image.tar
+      - "${CI_COMMIT_SHA}.image.tar"
 
 #
 # Pushing images to registry
@@ -54,16 +57,13 @@ cache build:
   image: docker
   before_script:
     - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASS
-    - docker load -i image.tar
+    - docker load -i "${CI_COMMIT_SHA}.image.tar"
   tags:
     - docker
-  cache:
-    key: "$CI_PIPELINE_ID"
-    paths:
-      - image.tar
-    policy: pull
+  dependencies:
+    - cache:image
 
-push master images:
+push:master:
   << : *pusher
   stage: push
   script:
@@ -73,7 +73,7 @@ push master images:
   only:
     - master
 
-push latest images:
+push:latest:
   << : *pusher
   stage: push
   script:
@@ -98,14 +98,14 @@ push latest images:
   tags:
     - docker
 
-deploy master images:
+deploy:master:
   << : *deployer
   stage: deploy
   environment: develop
   only:
     - master
 
-deploy latest images:
+deploy:latest:
   << : *deployer
   stage: deploy
   environment: production
