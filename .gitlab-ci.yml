@@ -19,6 +19,7 @@ variables:
   POSTGRES_TEST_ENV: "./docker/develop/env/postgres.test.env"
 
 .builder: &builder
+  image: docker
   before_script:
     - docker pull $DJANGO_MASTER_IMAGE || true
     - docker build --cache-from $DJANGO_MASTER_IMAGE -t $DJANGO_MASTER_IMAGE -f ./docker/production/django/Dockerfile .
@@ -32,7 +33,6 @@ variables:
 test:
   << : *builder
   stage: test
-  image: docker
   script:
     - docker build -t $DJANGO_DEVELOP_IMAGE -f ./docker/develop/django/Dockerfile .
     - docker run -d --env-file=$POSTGRES_TEST_ENV --name=postgres postgres:9.6
