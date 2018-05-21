@@ -18,85 +18,65 @@ variables:
   DJANGO_TEST_ENV: "./docker/develop/env/django.test.env"
   POSTGRES_TEST_ENV: "./docker/develop/env/postgres.test.env"
 
+.builder:
+  before_script:
+    - docker pull $DJANGO_MASTER_IMAGE || true
+    - docker build --cache-from $DJANGO_MASTER_IMAGE -t $DJANGO_MASTER_IMAGE -f ./docker/production/django/Dockerfile .
+  tags:
+    - docker
 
 #
 # Testing
 #
 
 test:
+  << : *builder
   stage: test
   image: docker
   script:
-    - docker pull $DJANGO_MASTER_IMAGE || true
-    - docker build --cache-from $DJANGO_MASTER_IMAGE -t $DJANGO_MASTER_IMAGE -f ./docker/production/django/Dockerfile .
     - docker build -t $DJANGO_DEVELOP_IMAGE -f ./docker/develop/django/Dockerfile .
     - docker run -d --env-file=$POSTGRES_TEST_ENV --name=postgres postgres:9.6
     - docker run --env-file=$DJANGO_TEST_ENV --env-file=$POSTGRES_TEST_ENV --link=postgres:postgres $DJANGO_DEVELOP_IMAGE /test.sh
-  tags:
-    - docker
-
-cache:image:
-  stage: test
-  image: ejplatform/ej-cicd:latest
-  script:
-    - docker pull $DJANGO_MASTER_IMAGE || true
-    - docker build --cache-from $DJANGO_MASTER_IMAGE -t $DJANGO_MASTER_IMAGE -f ./docker/production/django/Dockerfile .
-    - docker save $DJANGO_MASTER_IMAGE -o $CACHED_IMAGE
-  only:
-    - master
-    - tags
-  tags:
-    - docker
-  artifacts:
-    expire_in: '20 mins'
-    name: $CI_COMMIT_SHA
-    paths:
-      - $CACHED_IMAGE
 
 #
 # Pushing images to registry
 #
 
-.pusher: &pusher
-  image: docker
-  before_script:
-    - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASS
-    - docker load -i $CACHED_IMAGE
-  tags:
-    - docker
-  dependencies:
-    - cache:image
-
 push:master:nginx:
-  << : *pusher
+  << : *builder
   stage: push
   script:
+    - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASS
     - docker build -t $BACKEND_MASTER_IMAGE -f ./docker/production/nginx/master.Dockerfile .
     - docker push $BACKEND_MASTER_IMAGE
   only:
     - master
 
 push:master:django:
-  << : *pusher
+  << : *builder
   stage: push
   script:
+    - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASS
     - docker push $DJANGO_MASTER_IMAGE
   only:
     - master
 
 push:latest:nginx:
-  << : *pusher
+  << : *builder
   stage: push
   script:
+    - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASS
     - docker build -t $BACKEND_LATEST_IMAGE -f ./docker/production/nginx/latest.Dockerfile .
     - docker push $BACKEND_LATEST_IMAGE
   only:
     - tags
 
 push:latest:django:
-  << : *pusher
+  << : *builder
   stage: push
   script:
+    - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASS
+    - docker tag $DJANGO_MASTER_IMAGE $DJANGO_LATEST_IMAGE
     - docker push $DJANGO_LATEST_IMAGE
   only:
     - tags
