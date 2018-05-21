@@ -40,11 +40,13 @@ COPY ./requirements/*.txt /dependencies/
 RUN pip install -r /dependencies/production.txt
 
 COPY ./scripts/**/* /
+ENTRYPOINT ["/entrypoint.sh"]
 
 RUN groupadd -r django \
     && useradd -r -g django django \
     && chown django:django /*.sh
 
+WORKDIR /app
 COPY . /app
 
 # [FIXME] should not use .example file
@@ -53,9 +55,6 @@ RUN export $(cat /app/env.example | grep -v ^# | xargs) \
     && mkdir /app/local \
     && chown -R django:django /app
 
-WORKDIR /app
-
 USER django
 
-ENTRYPOINT ["/entrypoint.sh"]
 CMD ["/gunicorn.sh"]

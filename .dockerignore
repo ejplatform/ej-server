@@ -9,3 +9,6 @@ docker/
 .gitignore
 .gitlab-ci.yml
 .travis.yml
+
+# Gitlab CI cached file
+image.tar
