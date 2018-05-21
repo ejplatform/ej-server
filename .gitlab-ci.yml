@@ -42,7 +42,7 @@ cache build:
   tags:
     - docker
   cache:
-    key: "$CI_COMMIT_REF_SLUG"
+    key: "$CI_PIPELINE_ID"
     paths:
       - image.tar
 
@@ -58,7 +58,7 @@ cache build:
   tags:
     - docker
   cache:
-    key: "$CI_COMMIT_REF_SLUG"
+    key: "$CI_PIPELINE_ID"
     paths:
       - image.tar
     policy: pull
