@@ -50,7 +50,7 @@ cache build:
 # Pushing images to registry
 #
 
-pusher: &pusher
+.pusher: &pusher
   image: docker
   before_script:
     - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASS
@@ -102,7 +102,7 @@ push latest django:
 # Rancher service upgrade
 #
 
-deployer: &deployer
+.deployer: &deployer
   image: cdrx/rancher-gitlab-deploy
   script:
     - upgrade --environment $RANCHER_ENVIRONMENT --stack $RANCHER_STACK --service backend --no-finish-upgrade --sidekicks
