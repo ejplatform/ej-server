@@ -3,6 +3,7 @@
 {% from 'components/generic/elements.jinja2' import breadcrumbs %}
 
 {% block content %}
+    <a class="Button" href="/conversations/create/">Criar nova conversa</a>
     {% call conversation_list(conversations, categories) %}
 {#        {{ breadcrumbs([('conversations', _('Conversations'))]) }}#}
     {% endcall %}
