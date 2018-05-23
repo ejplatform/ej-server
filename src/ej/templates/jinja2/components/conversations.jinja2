@@ -52,7 +52,11 @@
             <textarea name="question" required placeholder="Ex: Como podemos melhorar o sistema escolar da nossa comunidade?">{{conversation.question}}</textarea>    
         </div>
         {{ form.question.errors }}
-
+        <div>
+            Título:
+            <input type="text" name="title" placeholder="Ex: Sistema Escolar" value={{conversation.title}}>
+        </div>
+        {{ form.title.errors }}
         <div>
             Assunto:
             <select name="category" required>

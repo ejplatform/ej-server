@@ -43,6 +43,7 @@ def create_conversation(request, id=None):
 
     return redirect('/login/')
 
+# @TODO move this method to a more generic module
 def save_or_update_conversation(request_form, request_author, id):
     form = ConversationForm(data=request_form, instance=Conversation(author=request_author))
     
@@ -50,13 +51,14 @@ def save_or_update_conversation(request_form, request_author, id):
         if id:
             Conversation.objects.filter(id=id).update(
                 question=form.cleaned_data['question'],
-                category=form.cleaned_data['category']
+                title=form.cleaned_data['title'],
+                category=form.cleaned_data['category'],
             )
-            conversation = form.instance
+            conversation = Conversation.objects.get(id=id)
         else:
             conversation = form.save()
             
-        return redirect(f'/conversations/{conversation.category.slug}/{conversation.title}')
+        return redirect(f'/conversations/{conversation.category.slug}/{conversation.slug}')
     else:
         error_msg = _('Invalid conversation question or category')
         form.add_error(None, error_msg)
