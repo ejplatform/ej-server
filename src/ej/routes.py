@@ -25,20 +25,33 @@ def home(request):
     }
     return render(request, 'pages/home.jinja2', ctx)
 
-@urlpatterns.route('conversations/create/')
-def create_conversation(request):
+@urlpatterns.route('conversation_create/')
+@urlpatterns.route('conversation_edit/<id>')
+def create_conversation(request, id=None):
     if request.user.id:
         if request.method == 'GET':
-            ctx = {'categories': Category.objects.all()}
+            ctx = {'categories': Category.objects.all(),
+                   'conversation':  Conversation.objects.get(id=id) if id else Conversation()
+            }
             return render(request, "pages/conversations-create.jinja2", ctx)
         elif request.method == 'POST':
-            form = ConversationForm(data=request.POST, instance=Conversation(author=request.user))
-            if form.is_valid():
-                conversation = form.save()
-                return redirect(f'/conversations/{conversation.category.slug}/{conversation.title}')
-            else:
-                return HttpResponse(f'<p> {form.errors} </p>')   
+            return save_conversation(request.POST, request.user, id)
+
     return redirect('/login/')
+
+def save_conversation(request_form, request_author, id):
+    form = ConversationForm(data=request_form, instance=Conversation(author=request_author))
+    if form.is_valid():
+        if id:
+            Conversation.objects.filter(id=id).update(question=form.cleaned_data['question'], category=form.cleaned_data['category'])
+            conversation = form.instance
+        else:
+            conversation = form.save()
+            
+        return redirect(f'/conversations/{conversation.category.slug}/{conversation.title}')
+    else:
+        return HttpResponse(f'<p> {form.errors} </p>')
+
 
 @urlpatterns.route('start/')
 def start(request):

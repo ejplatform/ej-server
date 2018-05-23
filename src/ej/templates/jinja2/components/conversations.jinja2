@@ -42,17 +42,17 @@
     CONVERSATION CREATE FORM
  #---------------------------------------------------------------------------#}
 
-{% macro conversation_create(categories, csrf_input) %}
+{% macro conversation_create(categories, conversation,csrf_input) %}
     <h1>Criar nova conversa</h1>
     <form method="post">
         {{ csrf_input }}
         <div>
             Conversa:
-            <textarea name="question" required placeholder="Ex: Como podemos melhorar o sistema escolar da nossa comunidade?"></textarea>    
+            <textarea name="question" required placeholder="Ex: Como podemos melhorar o sistema escolar da nossa comunidade?">{{conversation.question}}</textarea>    
         </div>
          <div>
             Descrição curta:
-            <input type="text" name="title" required placeholder="Ex: Sistema escolar">
+            <input type="text" name="title" required placeholder="Ex: Sistema escolar" value={{conversation.title}}>
         </div>
     
         {# {{ form.question.errors }} #}
@@ -91,6 +91,8 @@
                 <li>{{ gettext('%(count)s comments', count=conversation.comments.count()) }}</li>
                 <li>{{ gettext('%(count)s votes', count=conversation.votes.count()) }}</li>
             </ul>
+            {{ action_button("moderar", conversation.get_absolute_url()) }}
+        
             {{ action_button('Participar <i class="fa fa-comments"></i>', conversation.get_absolute_url()) }}
         </div>
     </div>
@@ -119,6 +121,11 @@
                 <li>{{ gettext('%(count)s votes', count=conversation.votes.count()) }}</li>
             </ul>
         </div>
+        
+        {% if conversation.author.id == user.id %}
+            {{ action_button( _("Edit conversation") , "/conversation_edit/" + conversation.id|string) }}
+        {% endif%}
+
         <div class="ConversationDetail-arrow"></div>
 
         <ul class="ConversationDetail-statisticsBottom">

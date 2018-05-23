@@ -2,5 +2,5 @@
 {% from 'components/conversations.jinja2' import conversation_create %}
 
 {% block content %}
-    {{conversation_create(categories, csrf_input)}}
+    {{conversation_create(categories, conversation, csrf_input)}}
 {% endblock %}
