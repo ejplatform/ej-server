@@ -38,13 +38,17 @@
     </div>
 {% endmacro %}
 
+{#---------------------------------------------------------------------------#
+    CONVERSATION CREATE FORM
+ #---------------------------------------------------------------------------#}
+
 {% macro conversation_create(categories, csrf_input) %}
     <h1>Criar nova conversa</h1>
     <form method="post">
         {{ csrf_input }}
         <div>
             Conversa:
-            <input type="textarea" name="question" required placeholder="Ex: Como podemos melhorar o sistema escolar da nossa comunidade?">
+            <textarea name="question" required placeholder="Ex: Como podemos melhorar o sistema escolar da nossa comunidade?"></textarea>    
         </div>
          <div>
             Descrição curta:
