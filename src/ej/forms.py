@@ -5,4 +5,4 @@ from ej_conversations.models import Conversation
 class ConversationForm(ModelForm):
     class Meta:
         model = Conversation
-        fields = ['question', 'title', 'category']
+        fields = ['question', 'category']
