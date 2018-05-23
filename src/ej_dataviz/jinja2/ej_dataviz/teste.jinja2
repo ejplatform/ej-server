@@ -1,9 +1,0 @@
-{% extends 'base.jinja2' %}
-
-
-{% block javascript %}
-    <script src="magical-table.js"></script>
-    <script src="{{ static('js/dataviz-plot.js') }}"></script>
-    <script src="{{ static('js/dataviz-table.js') }}"></script>
-    {{ super() }}
-{% endblock %}

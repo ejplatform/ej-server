@@ -5,9 +5,13 @@ def render_dataframe(df):
     """
     Convert a Pandas dataframe to a hyperpython structure.
     """
-    d = {'col1': [1,2,3,4], 'col2':[5,6,7,8], 'col3': [9,10,11,12]}
+    d = {'col1': [1,2,3,4], 'col2':[5,6,7,8], 'col3': [9,10,11,12],
+            'col4': ['a','b','c','d'], 'col5': [4,5,2,1]
+        }
     test = pd.DataFrame(data=d)
-    return(create_table_base(test).pretty())
+    
+    # change test to df after df implementation completes
+    return(create_table_base(test).pretty()) 
 
 
 def create_table_base(df):
@@ -18,7 +22,7 @@ def create_table_base(df):
 
     return(
         div()[
-            table(id="pandas-table")[
+            table(id="pandas-table", class_="display cell-border compact")[
                 create_table_head(columns),
                 create_table_body(df)
             ]
@@ -32,7 +36,7 @@ def create_table_head(columns):
     """
     column_list = []
     for i in range(0, len(columns)):
-        column_list.append(th(columns[i]))
+        column_list.append(th(columns[i], class_="dt-head-left"))
         
     return(
         thead()[
@@ -68,6 +72,3 @@ def create_table_line(line):
     return(
         tr()[line_list]
     )
-
-
-print(render_dataframe(None))

@@ -8,6 +8,7 @@ class InstalledAppsConf(Base, EjOptions):
         'ej_gamification.apps.GamificationConfig',
         'ej_configurations.apps.ConfigurationsConfig',
         'ej_profiles.apps.EjProfilesConfig',
+        'ej_dataviz.apps.EjDatavizConfig',
 
         # Independent EJ Apps
         'ej_conversations.apps.EjConversationsConfig',
