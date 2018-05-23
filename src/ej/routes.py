@@ -1,6 +1,7 @@
 import logging
 
 from django.shortcuts import render, redirect, HttpResponse
+from django.utils.translation import ugettext_lazy as _
 
 from boogie.router import Router
 from ej_configurations import fragment, social_icons
@@ -28,16 +29,21 @@ def home(request):
 @urlpatterns.route('conversations/create/')
 def create_conversation(request):
     if request.user.id:
+        form = ConversationForm()
+        ctx = {'categories': Category.objects.all(), 'form': form}
         if request.method == 'GET':
-            ctx = {'categories': Category.objects.all()}
-            return render(request, "pages/conversations-create.jinja2", ctx)
+            return render(request, 'pages/conversations-create.jinja2', ctx)
         elif request.method == 'POST':
             form = ConversationForm(data=request.POST, instance=Conversation(author=request.user))
             if form.is_valid():
                 conversation = form.save()
                 return redirect(f'/conversations/{conversation.category.slug}/{conversation.title}')
             else:
-                return HttpResponse(f'<p> {form.errors} </p>')   
+                print(form.errors)
+                error_msg = _('Invalid conversation question or category')
+                form.add_error(None, error_msg)
+                ctx['form'] = form
+                return render(request, 'pages/conversations-create.jinja2', ctx)
     return redirect('/login/')
 
 @urlpatterns.route('start/')

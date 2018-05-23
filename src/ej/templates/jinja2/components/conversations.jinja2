@@ -38,7 +38,11 @@
     </div>
 {% endmacro %}
 
-{% macro conversation_create(categories, csrf_input) %}
+
+{#---------------------------------------------------------------------------#
+    CONVERSATION CREATE
+ #---------------------------------------------------------------------------#}
+{% macro conversation_create(categories, form, csrf_input) %}
     <h1>Criar nova conversa</h1>
     <form method="post">
         {{ csrf_input }}
@@ -46,12 +50,7 @@
             Conversa:
             <input type="textarea" name="question" required placeholder="Ex: Como podemos melhorar o sistema escolar da nossa comunidade?">
         </div>
-         <div>
-            Descrição curta:
-            <input type="text" name="title" required placeholder="Ex: Sistema escolar">
-        </div>
-    
-        {# {{ form.question.errors }} #}
+        {{ form.question.errors }}
 
         <div>
             Assunto:
@@ -63,11 +62,11 @@
             </select>
         </div>
 
-        {# {{ form.password.errors }} #}
+        {{ form.category.errors }}
 
         <div>
         <input type="submit" class="Button" value="{{ _('Criar') }}" name="create"></div>
-        {# {{ form.non_field_errors() }} #}
+        {{ form.non_field_errors() }}
     </form>
 {% endmacro %}
 
