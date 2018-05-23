@@ -59,7 +59,7 @@ def db_reset(ctx, fake=False, no_assets=False):
     """
     Reset data in database and optionally fill with fake data
     """
-    ctx.run('rm db.sqlite3 -f')
+    ctx.run('rm local/db/db.sqlite3 -f')
     manage(ctx, 'migrate')
     if fake:
         db_fake(ctx)

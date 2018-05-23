@@ -26,6 +26,7 @@ class SocialMediaIcon(models.Model):
     )
     index = models.PositiveSmallIntegerField(
         _('Ordering'),
+        default=0,
         help_text=_(
             'You can manually define the ordering that each icon should '
             'appear in the interface. Otherwise, icons will be shown in '
