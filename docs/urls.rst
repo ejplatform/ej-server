@@ -122,7 +122,7 @@ All those URLS are only available for users with permission to edit
 conversations. This can be applied to staff members or to the owner of the
 conversation.
 
-conversations/add/ (conversations:create-conversation):
+conversations/create/ (conversations:create-conversation):
     Add a new conversation.
 conversations/<category>/<conversation>/edit/ (conversations:edit-conversation):
     Edit conversation.
