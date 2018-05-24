@@ -123,7 +123,7 @@
         </div>
         
         {% if conversation.author.id == user.id %}
-            {{ action_button( _("Edit conversation") , "/conversation_edit/" + conversation.id|string) }}
+            {{ action_button( _("Edit conversation") , "/conversations/edit/" + conversation.id|string) }}
         {% endif%}
 
         <div class="ConversationDetail-arrow"></div>

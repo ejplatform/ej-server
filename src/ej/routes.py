@@ -26,8 +26,8 @@ def home(request):
     }
     return render(request, 'pages/home.jinja2', ctx)
 
-@urlpatterns.route('conversation_create/')
-@urlpatterns.route('conversation_edit/<id>')
+@urlpatterns.route('conversations/create/')
+@urlpatterns.route('conversations/edit/<id>')
 def create_conversation(request, id=None):
     if request.user.id:
         form = ConversationForm()

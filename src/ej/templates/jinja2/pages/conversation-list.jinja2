@@ -3,7 +3,7 @@
 {% from 'components/generic/elements.jinja2' import breadcrumbs, action_button %}
 
 {% block content %}
-    {{ action_button("Criar nova Conversa", "/conversation_create")}}
+    {{ action_button("Criar nova Conversa", "/conversations/create/")}}
     {% call conversation_list(conversations, categories) %}
 {#        {{ breadcrumbs([('conversations', _('Conversations'))]) }}#}
     {% endcall %}
