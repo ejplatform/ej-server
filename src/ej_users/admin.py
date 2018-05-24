@@ -18,18 +18,17 @@ class UserCreationForm(AuthUserCreationForm):
         duplicate_username=_('This username has already been taken.')
     )
 
+    class Meta(AuthUserCreationForm.Meta):
+        model = User
 
-class Meta(AuthUserCreationForm.Meta):
-    model = User
 
-
-def clean_username(self):
-    username = self.cleaned_data["username"]
-    try:
-        User.objects.get(username=username)
-    except User.DoesNotExist:
-        return username
-    raise forms.ValidationError(self.error_messages['duplicate_username'])
+    def clean_username(self):
+        username = self.cleaned_data["username"]
+        try:
+            User.objects.get(username=username)
+        except User.DoesNotExist:
+            return username
+        raise forms.ValidationError(self.error_messages['duplicate_username'])
 
 
 @admin.register(User)
