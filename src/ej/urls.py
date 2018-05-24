@@ -19,9 +19,9 @@ urlpatterns = [
     path('conversations/', include(('ej_conversations.routes', 'ej_conversations'), namespace='conversations')),
     path('profile/', include(('ej_profiles.routes', 'ej_profiles'), namespace='profiles')),
     path('config/', include(('ej_configurations.routes', 'ej_configurations'), namespace='configurations')),
-    
+
     path('dataviz/', include(('ej_dataviz.routes', 'ej_dataviz'), namespace='dataviz')),
-    
+
     # Rocket
     path('talks/', include(('ej_rocketchat.routes', 'ej_rocketchat'), namespace='rocketchat')),
 

@@ -37,7 +37,7 @@ def create_conversation(request):
                 conversation = form.save()
                 return redirect(f'/conversations/{conversation.category.slug}/{conversation.title}')
             else:
-                return HttpResponse(f'<p> {form.errors} </p>')   
+                return HttpResponse(f'<p> {form.errors} </p>')
     return redirect('/login/')
 
 @urlpatterns.route('start/')
