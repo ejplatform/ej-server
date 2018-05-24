@@ -6,7 +6,7 @@ urlpatterns = Router()
 
 @urlpatterns.route('', login=False)
 def index(request):
-    table = render_dataframe(None)
+    table = test()
     ctx = dict(table=table)
     return render(request, 'ej_dataviz/index.jinja2', ctx)
 
