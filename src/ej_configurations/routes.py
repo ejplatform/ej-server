@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.utils.translation import ugettext as _
 
 from boogie.router import Router
-from ej_conversations.models import Category, Conversation, Comment, Vote
+from ej_conversations.models import Conversation, Comment, Vote
 
 urlpatterns = Router()
 
@@ -23,7 +23,6 @@ def info(request):
 
         # Conversations
         conversations_counts={
-            _('Categories'): count(Category),
             _('Conversations'): count(Conversation),
             _('Votes'): count(Vote),
             _('Comments'): count(Comment),

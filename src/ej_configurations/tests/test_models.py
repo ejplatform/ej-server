@@ -1,33 +1,28 @@
 import pytest
 from django.db import IntegrityError
-from markupsafe import Markup
+
 from ej_configurations.models import SocialMediaIcon, Color, Fragment
 
 
 class TestSocialMediaIcon:
-    @pytest.fixture
-    def social_media_icon(self):
-        return SocialMediaIcon(
-            social_network='social network'
-        )
+    def test_convert_simple_icon_to_strings(self):
+        icon = SocialMediaIcon(social_network='github')
+        assert icon.icon_name == 'fab fa-github'
+        assert str(icon) == 'github'
+        assert icon.__html__() == '<i class="fab fa-github"></i>'
 
-    def test_social_media_icon_string_representation(self, social_media_icon):
-        assert str(social_media_icon) == 'social network'
-
-    def test_social_media_icon_conversion_to_html(self, social_media_icon):
-        assert social_media_icon.__html__() == '<a href=""><i  class="""></i></a>'
-
-    def test_social_media_icon_html_tag(self, social_media_icon):
-        assert social_media_icon.icon_tag() == '<i  class="""></i>'
+    def test_convert_icon_with_url_to_strings(self):
+        icon = SocialMediaIcon(social_network='github',
+                               url='http://github.com/foo/bar/')
+        assert str(icon) == 'github'
+        assert str(icon.icon_tag()) == '<i class="fab fa-github"></i>'
+        assert icon.__html__() == '<a href="http://github.com/foo/bar/"><i class="fab fa-github"></i></a>'
 
 
 class TestColor:
     @pytest.fixture
     def color(self):
-        return Color(
-            name='red',
-            hex_value='#FF0000'
-        )
+        return Color(name='red', hex_value='#FF0000')
 
     def test_color_representation(self, color):
         assert str(color) == 'red: #FF0000'
@@ -48,10 +43,10 @@ class TestFragment:
         return fragment
 
     def test_fragment_conversion_to_html(self, fragment):
-        assert fragment.__html__() == Markup('<div>content</div>')
+        assert fragment.__html__() == '<div>content</div>'
 
         fragment.content = '<p>content</p>'
-        assert fragment.__html__() == Markup('<div><p>content</p></div>')
+        assert fragment.__html__() == '<div><p>content</p></div>'
 
     def test_fragment_string_representation(self, fragment):
         assert str(fragment) == 'name'

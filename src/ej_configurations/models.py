@@ -1,6 +1,11 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from markupsafe import Markup
+from markdown import markdown
+
+from boogie.rest import rest_api
+from boogie.fields import EnumField, Enum
+from hyperpython import a, div, Text
+from hyperpython.components import icon
 
 from ej_conversations.validators import validate_color
 from .icons import default_icon_name
@@ -8,6 +13,12 @@ from .sanitizer import sanitize_html
 from .validators import validate_icon_name
 
 
+class Format(Enum):
+    HTML = 'html', _('HTML')
+    MARKDOWN = 'md', _('Markdown')
+
+
+@rest_api(exclude=['index'])
 class SocialMediaIcon(models.Model):
     """
     Configurable reference to a social media icon.
@@ -47,9 +58,16 @@ class SocialMediaIcon(models.Model):
         return self.social_network
 
     def __html__(self):
-        return self.link_tag()
+        if self.url:
+            return str(self.link_tag())
+        else:
+            return str(self.icon_tag())
 
-    def clean(self):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._fill_social_icon()
+
+    def _fill_social_icon(self):
         if not self.icon_name:
             self.icon_name = default_icon_name(self.social_network.casefold())
 
@@ -57,23 +75,24 @@ class SocialMediaIcon(models.Model):
         """
         Render an icon tag for the given icon.
 
-        >>> icon.icon_tag(classes=['header-icon'])              # doctest: +SKIP
+        >>> print(icon.icon_tag(classes=['header-icon']))       # doctest: +SKIP
         <i class="fa fa-icon header-icon"></i>
         """
-        classes = [self.icon_name, *classes]
-        return f'<i {class_string(classes)}"></i>'
+        return icon(self.icon_name, class_=classes)
 
     def link_tag(self, classes=(), icon_classes=()):
         """
         Render an anchor tag with the link for the social network.
 
-        >>> icon.link_tag(classes=['header-icon'])              # doctest: +SKIP
+        >>> print(icon.link_tag(classes=['header-icon']))       # doctest: +SKIP
         <a href="url"><i class="fa fa-icon header-icon"></i></a>
         """
-        classes = class_string(classes)
-        return f'<a href="{self.url}"{classes}>{self.icon_tag(icon_classes)}</a>'
+        return a(href=self.url, class_=classes)[
+            self.icon_tag(icon_classes)
+        ]
 
 
+@rest_api()
 class Color(models.Model):
     """
     Generic color reference that can be configured in the admin interface.
@@ -98,17 +117,11 @@ class Color(models.Model):
         return self.hex_value
 
 
+@rest_api()
 class Fragment(models.Model):
     """
     Configurable HTML fragments that can be inserted in pages.
     """
-
-    FORMAT_MARKDOWN = 'md'
-    FORMAT_HTML = 'html'
-    FORMAT_CHOICES = [
-        (FORMAT_HTML, _('HTML')),
-        (FORMAT_MARKDOWN, _('Markdown')),
-    ]
 
     name = models.CharField(
         _('Name'),
@@ -117,10 +130,7 @@ class Fragment(models.Model):
         db_index=True,
         help_text=_('Unique identifier for fragment name'),
     )
-    format = models.CharField(
-        max_length=4,
-        choices=FORMAT_CHOICES,
-    )
+    format = EnumField(Format)
     content = models.TextField(
         _('content'),
         blank=True,
@@ -132,7 +142,7 @@ class Fragment(models.Model):
     )
 
     def __html__(self):
-        return self.html()
+        return self.html().__html__()
 
     def __str__(self):
         return self.name
@@ -150,9 +160,12 @@ class Fragment(models.Model):
         FragmentLock.objects.filter(fragment=self).delete()
 
     def html(self, classes=()):
-        data = sanitize_html(self.content)
-        class_attr = " ".join(classes)
-        return Markup(f'<div{class_attr}>{data}</div>')
+        if self.format == Format.HTML:
+            data = sanitize_html(self.content)
+        elif self.format == Format.MARKDOWN:
+            data = markdown(self.content)
+        text = Text(data, escape=False)
+        return div(text, class_=classes)
 
 
 class FragmentLock(models.Model):

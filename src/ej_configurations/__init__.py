@@ -1,3 +1,5 @@
+default_app_config = 'ej_configurations.apps.EjConfigurationsConfig'
+
 from .fragments import fragment  # noqa: F401
 
 
