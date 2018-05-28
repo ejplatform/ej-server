@@ -1,1 +1,1 @@
-default_app_config = 'rocketchat_auth.apps.RocketchatAuthConfig'
+default_app_config = 'ej_rocketchat.apps.EJRocketchatConfig'
