@@ -4,6 +4,8 @@ ENV PYTHONUNBUFFERED=1 \
     LANG=C.UTF-8 \
     PYTHONPATH="/app/src/:$PYTHONPATH"
 
+EXPOSE 5000
+
 # Install debian dependencies
 RUN apt-get update \
     && apt-get install -y \
