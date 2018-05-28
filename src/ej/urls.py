@@ -4,8 +4,8 @@ from django.contrib import admin
 from django.urls import include, path
 from django.views import defaults as default_views
 from rest_framework.documentation import include_docs_urls
-from boogie.rest import rest_api
 
+from boogie.rest import rest_api
 from ej.fixes import unregister_admin
 
 unregister_admin.unregister_apps()
@@ -31,7 +31,7 @@ urlpatterns = [
     # REST API
     path('api/', include(rest_api.urls)),
     path('api/v1/docs/', include_docs_urls(title='ej API Docs', public=False)),
-    #path('api/v1/', include('courier.urls', namespace='courier')),
+    # path('api/v1/', include('courier.urls', namespace='courier')),
     # path('api/v1/rocketchat/', include('ej.ej_rocketchat.urls')),
 
     # User management

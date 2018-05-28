@@ -47,5 +47,3 @@ def promote_set(user):
 
 def self_promote_set(user):
     pass
-
-

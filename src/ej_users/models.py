@@ -46,8 +46,7 @@ class User(AbstractUser):
 
 def random_name(fmt='{adjective} {noun}'):
     x = ['foo', 'bar', 'baz']
-    y = ['ham', 'spam']
-    for _ in range(100):
+    for _iter in range(100):
         name = fake.name()
         name = fmt.format(adjective=choice(x), noun=name)
         if not User.objects.filter(display_name=name):

@@ -1,24 +1,3 @@
-'''
-Test settings
-
-- Used to run tests fast on the continuous integration server and locally
-'''
-
-from ej.settings.old.base import *  # noqa
-
-
-# DEBUG
-# ------------------------------------------------------------------------------
-# Turn debug off so tests run faster
-DEBUG = False
-TEMPLATES[1]['OPTIONS']['debug'] = False
-
-# SECRET CONFIGURATION
-# ------------------------------------------------------------------------------
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
-# Note: This key only used for development and testing.
-SECRET_KEY = env('DJANGO_SECRET_KEY', default='CHANGEME!!!')
-
 # Mail settings
 # ------------------------------------------------------------------------------
 EMAIL_HOST = 'localhost'
@@ -38,7 +17,6 @@ CACHES = {
     }
 }
 
-
 # PASSWORD HASHING
 # ------------------------------------------------------------------------------
 # Use fast password hasher so tests run faster
@@ -46,16 +24,6 @@ PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.MD5PasswordHasher',
 ]
 
-# TEMPLATE LOADERS
-# ------------------------------------------------------------------------------
-# Keep templates in memory so tests run faster
-TEMPLATES[1]['OPTIONS']['loaders'] = [
-    ['django.template.loaders.cached.Loader', [
-        'django.template.loaders.filesystem.Loader',
-        'django.template.loaders.app_directories.Loader',
-    ], ],
-]
-
 # Celery should run locally
 CELERY_TASK_ALWAYS_EAGER = True
-CELERY_TASK_EAGER_PROPAGATES=True
+CELERY_TASK_EAGER_PROPAGATES = True

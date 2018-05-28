@@ -1,3 +1,4 @@
+from django.http import Http404
 from django.shortcuts import redirect
 
 from boogie.router import Router
@@ -38,15 +39,18 @@ def comments(request):
     user = request.user
     return {
         'user': user,
-        'comments': user.comments.approved(),
+        'comments': user.comments.all(),
         'stats': user.comments.stats(),
     }
 
 
-@urlpatterns.route('comments/rejected/')
-def comments(request):
+@urlpatterns.route('comments/<which>/')
+def comments_filter(request, which):
+    if which not in ('rejected', 'approved', 'pending'):
+        raise Http404
     user = request.user
     return {
         'user': user,
-        'comments': user.comments.rejected(),
+        'comments': getattr(user.comments, which)(),
+        'stats': user.comments.stats(),
     }

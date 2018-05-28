@@ -1,12 +1,10 @@
-from ej.settings.old.base import *  # noqa
+import os
+import socket
 
-# DEBUG
-# ------------------------------------------------------------------------------
-TEMPLATES[1]['OPTIONS']['debug'] = DEBUG
+from ej.settings.old.base import env  # noqa
 
-RUNSERVER_PLUS_PRINT_SQL_TRUNCATE = 10**3
-SHELL_PLUS_PRINT_SQL_TRUNCATE = 10**3
-
+RUNSERVER_PLUS_PRINT_SQL_TRUNCATE = 10 ** 3
+SHELL_PLUS_PRINT_SQL_TRUNCATE = 10 ** 3
 
 # Mail settings
 # ------------------------------------------------------------------------------
@@ -15,7 +13,6 @@ EMAIL_PORT = 1025
 EMAIL_HOST = 'localhost'
 EMAIL_BACKEND = env('DJANGO_EMAIL_BACKEND',
                     default='django.core.mail.backends.console.EmailBackend')
-
 
 # CACHING
 # ------------------------------------------------------------------------------
@@ -28,14 +25,10 @@ CACHES = {
 
 # django-debug-toolbar
 # ------------------------------------------------------------------------------
-MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware', ]
-
 INTERNAL_IPS = ['127.0.0.1', '10.0.2.2', ]
 
-ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=['localhost',])
+ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=['localhost', ])
 
-import socket
-import os
 # tricks to have debug toolbar when developing with docker
 if os.environ.get('USE_DOCKER') == 'yes':
     ip = socket.gethostbyname(socket.gethostname())
@@ -51,9 +44,9 @@ DEBUG_TOOLBAR_CONFIG = {
 # Django cors - allow requests from any origin in local environment
 # ------------------------------------------------------------------------------
 CORS_ORIGIN_ALLOW_ALL = True
-CORS_ORIGIN_REGEX_WHITELIST += (r'^(http://)?localhost:\d{4,5}$', )
+CORS_ORIGIN_REGEX_WHITELIST = (r'^(http://)?localhost:\d{4,5}$',)
 
-CSRF_TRUSTED_ORIGINS += [
+CSRF_TRUSTED_ORIGINS = [
     'localhost:8000',
     'localhost:3000'
 ]

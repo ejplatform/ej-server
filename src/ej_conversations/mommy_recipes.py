@@ -1,4 +1,3 @@
-import pytest
 from django.contrib.auth import get_user_model
 from model_mommy.recipe import Recipe
 
@@ -32,6 +31,8 @@ vote = Recipe(
 
 
 def make_fixture(recipe, name):
+    import pytest
+
     @pytest.fixture(name=name)
     def fixture_function():
         return recipe.prepare()
@@ -40,7 +41,7 @@ def make_fixture(recipe, name):
     def fixture_function_db(db):
         return recipe.make()
 
-    @pytest.fixture(name='rec_' + name)
+    @pytest.fixture(name=name + '_recipe')
     def fixture_function_rec():
         return recipe
 
@@ -51,8 +52,8 @@ def make_fixture(recipe, name):
     ns = {}
     ns['fixture_' + name] = fixture_function
     ns['fixture_' + name + '_db'] = fixture_function_db
-    ns['fixture_' + name + '_rec'] = fixture_function_rec
-    ns['fixture_' + name + '_mk'] = fixture_function_mk
+    ns['fixture_' + name + '_recipe'] = fixture_function_rec
+    ns['fixture_mk_' + name] = fixture_function_mk
     globals().update(ns)
     __all__.extend(ns)
 
@@ -60,5 +61,3 @@ def make_fixture(recipe, name):
 [make_fixture(v, k)
  for k, v in list(globals().items())
  if isinstance(v, Recipe)]
-
-del pytest

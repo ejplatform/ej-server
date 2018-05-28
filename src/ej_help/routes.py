@@ -1,6 +1,7 @@
 from django.contrib.flatpages.models import FlatPage
 from django.core.exceptions import ImproperlyConfigured
 from django.shortcuts import render
+from django.utils.translation import ugettext_lazy as _
 
 from boogie.router import Router
 from ej_configurations import social_icons
@@ -34,7 +35,7 @@ def rules():
 
 
 @urlpatterns.social('social/')
-def rules():
+def social():
     return {'icons': social_icons()}
 
 

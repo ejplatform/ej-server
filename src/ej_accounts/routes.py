@@ -91,7 +91,7 @@ def recover_password(request):
 
 
 @urlpatterns.route('profile/reset-password/', login=True)
-def recover_password(request):
+def reset_password(request):
     return {
         'user': request.user,
         'profile': request.user.profile,

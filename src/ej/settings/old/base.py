@@ -1,18 +1,13 @@
-"""
-Django settings for ej project.
+from pathlib import Path
 
-For more information on this file, see
-https://docs.djangoproject.com/en/dev/topics/settings/
-
-For the full list of settings and their values, see
-https://docs.djangoproject.com/en/dev/ref/settings/
-"""
+env = lambda x, default=None: default
+APPS_DIR = Path('/')
+DEBUG = True
 
 # EMAIL CONFIGURATION
 # ------------------------------------------------------------------------------
 EMAIL_BACKEND = env('DJANGO_EMAIL_BACKEND',
                     default='django.core.mail.backends.smtp.EmailBackend')
-
 
 # GENERAL CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -20,7 +15,6 @@ EMAIL_BACKEND = env('DJANGO_EMAIL_BACKEND',
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
 # In a Windows environment this must be set to your system time zone.
-
 
 
 # TEMPLATE CONFIGURATION
@@ -70,13 +64,11 @@ TEMPLATES = [
 # See: http://django-crispy-forms.readthedocs.io/en/latest/install.html#template-packs
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-
 # See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#staticfiles-finders
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 ]
-
 
 # PASSWORD VALIDATION
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-password-validators
@@ -103,8 +95,6 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
-
-
 
 # Some really nice defaults
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
@@ -195,4 +185,3 @@ EJ_CONVERSATIONS_URLMAP = {
     'conversation-detail': '/conversations/{conversation.category.slug}/{conversation.slug}/',
     'conversation-list': '/conversations/',
 }
-
