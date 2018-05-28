@@ -1,18 +1,23 @@
 from functools import lru_cache
 
-from django.db import models
+from django.db import models, transaction
 from django.utils.translation import ugettext_lazy as _
 from model_utils import Choices
 from model_utils.models import StatusModel
 
-from ej.ej_math.models import UserRef, CommentRef, ConversationRef
+from boogie.rest import rest_api
+from ej_clusters.models import Cluster
+from ej_conversations.fields import UserRef, CommentRef, ConversationRef
+from ej_conversations.models import Comment
+from .functions import promote_comment
 
 NO_PROMOTE_MSG = _('user does not have the right to promote this comment')
 
 
-class CommentPromotion(models.Model):
+@rest_api()
+class CommentEndorsement(models.Model):
     """
-    Keeps track of who promoted each comment.
+    Keeps track of who endorse each comment.
     """
 
     comment = CommentRef()
@@ -22,16 +27,18 @@ class CommentPromotion(models.Model):
         unique_together = [('comment', 'user')]
 
 
-class PromotionRight(StatusModel):
+@rest_api()
+class EndorsementRight(StatusModel):
     """
-    User can promote a comment in a conversation.
+    User can endorse a comment in a conversation.
     """
 
     STATUS = Choices(
+        ('any', _('Any comment in conversation')),
         ('self', _('Self promotion')),
-        ('other', _('Promote comment from other user')),
-        ('group', _('Promote comment from a user in the user\'s cluster')),
-        ('other_group', _('Promote comment from user from a different cluster')),
+        ('other', _('Endorse comment from other user')),
+        ('group', _('Endorse comment from a user in the user\'s cluster')),
+        ('other_group', _('Endorse comment from user from a different cluster')),
     )
     user = UserRef()
     conversation = ConversationRef()
@@ -39,18 +46,41 @@ class PromotionRight(StatusModel):
     @lru_cache(16)
     def allowed_comments(self):
         """
-        Return all comments that can be promoted by the current promotion right.
+        Return all comments that can be endorsed by the current right.
         """
-        raise NotImplementedError
+        comments = Comment.objects.filter(conversation_id=self.conversation_id)
+
+        if self.status == self.STATUS.any:
+            return comments
+        elif self.status == self.STATUS.self:
+            return comments.filter(author_id=self.user_id)
+        elif self.status == self.STATUS.other:
+            return comments.exclude(author_id=self.user_id)
+
+        try:
+            cluster = Cluster.objects.get(user_id=self.user_id,
+                                          conversation_id=self.conversation_id)
+        except Cluster.DoesNotExist:
+            return comments.empty()
+        group = cluster.users.all()
+
+        if self.status == self.STATUS.group:
+            return comments.exclude(author__in=group)
+        elif self.status == self.STATUS.other_group:
+            return comments.exclude(author__in=group)
+        else:
+            raise ValueError('invalid status: %s' % self.status)
 
     def promote(self, comment):
         """
-        Execute promotion right in the given comment.
+        Endorse the given comment. This removes the endorsement right from the
+        database.
         """
         if comment not in self.allowed_comments():
             raise PermissionError(NO_PROMOTE_MSG)
-        promote_comment(comment, self.user)
-        self.delete()
+        with transaction.atomic():
+            promote_comment(comment, self.user)
+            self.delete()
 
 
 class ConversationPowers(models.Model):
@@ -63,8 +93,8 @@ class ConversationPowers(models.Model):
 
     # Statistics
     extra_comments = models.PositiveSmallIntegerField()
-    promoted_comments = models.PositiveSmallIntegerField()
-    promote_actions = models.PositiveSmallIntegerField()
+    endorsed_comments = models.PositiveSmallIntegerField()
+    endorsement_actions = models.PositiveSmallIntegerField()
 
     # Powers
     can_be_clusterized = models.BooleanField(default=False)
@@ -92,56 +122,3 @@ class ConversationPowers(models.Model):
 
     class Meta:
         unique_together = [('user', 'conversation')]
-
-
-powers = ConversationPowers.objects
-
-
-class ConversationPowersQuerySet(models.QuerySet):
-    def incr_by(self, user, conversation, **kwargs):
-        """
-        Increment the given numeric powers/achievements by the given quantity.
-        """
-        self.get_powers(user, conversation)
-
-    # TODO
-    def incr_all_by(self, **kwargs):
-        """
-        Increment all values in the current queryset by the given amount.
-        """
-        raise NotImplementedError
-
-    def get_powers(self, user, conversation):
-        """
-        Return the ConversationPower instance for user in conversation
-        """
-        return self.get_or_create(user=user, conversation=conversation)[0]
-
-    def has_powers(self, user, conversation):
-        """
-        Return True if user has any powers in the given conversation.
-        """
-        try:
-            powers = self.get(user=user, conversation=conversation)
-        except ConversationPowers.DoesNotExist:
-            return False
-        else:
-            return powers.has_powers
-
-
-def promote_comment(comment, user=None):
-    """
-    Promotes comment.
-
-    If user is given, register that the given user contributed with the
-    comment promotion.
-    """
-    conversation = comment.conversation
-    if user:
-        powers.incr_by(user, conversation, promote_actions=1)
-    if comment.author != user:
-        powers.incr_by(comment.author, conversation, promoted_comments=1)
-    if not comment.is_promoted:
-        comment.is_promoted = True
-        comment.save(update_fields=['is_promoted'])
-    CommentPromotion.objects.get_or_create(user=user, comment=comment)
