@@ -1,4 +1,4 @@
-from .base import *  # noqa
+from ej.settings.old.base import *  # noqa
 
 # DEBUG
 # ------------------------------------------------------------------------------

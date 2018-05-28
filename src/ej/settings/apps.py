@@ -4,14 +4,18 @@ from .options import EjOptions
 
 class InstalledAppsConf(Base, EjOptions):
     PROJECT_APPS = [
-        # Inner EJ apps
-        'ej_gamification.apps.GamificationConfig',
-        'ej_configurations.apps.ConfigurationsConfig',
-        'ej_profiles.apps.EjProfilesConfig',
-        'ej_dataviz.apps.EjDatavizConfig',
-
-        # Independent EJ Apps
-        'ej_conversations.apps.EjConversationsConfig',
+        'ej_accounts',
+        'ej_clusters',
+        'ej_configurations',
+        'ej_conversations',
+        'ej_dataviz',
+        'ej_gamification',
+        'ej_help',
+        'ej_math',
+        'ej_notifications',
+        'ej_powers',
+        'ej_profiles',
+        'ej_reports',
         'ej_users',
     ]
 
@@ -22,6 +26,8 @@ class InstalledAppsConf(Base, EjOptions):
         'courier.pushnotifications.providers.onesignal',
 
         # Third party apps
+        'taggit',
+        'rules',
         'crispy_forms',
         'allauth',
         'allauth.account',
@@ -49,7 +55,7 @@ class InstalledAppsConf(Base, EjOptions):
     def get_project_apps(self):
         apps = super().get_project_apps()
         if self.EJ_ENABLE_ROCKETCHAT:
-            apps = ['ej_rocketchat.apps.EJRocketchatConfig', *apps]
+            apps = ['ej_rocketchat', *apps]
         return apps
 
     def get_third_party_apps(self):

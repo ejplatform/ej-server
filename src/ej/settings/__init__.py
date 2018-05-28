@@ -37,10 +37,6 @@ class Conf(locales.brazil(),
 
     AUTH_USER_MODEL = 'ej_users.User'
 
-    MIGRATION_MODULES = {
-        'sites': 'ej.contrib.sites.migrations'
-    }
-
     # MANAGER CONFIGURATION
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#admins
     MANAGERS = ADMINS = [
@@ -48,18 +44,47 @@ class Conf(locales.brazil(),
         ('Laury Bueno', 'laury@hacklab.com.br'),
     ]
 
-    EJ_CONVERSATIONS_URLMAP = {
-        'conversation-detail': '/conversations/{conversation.category.slug}/{conversation.slug}/',
-        'conversation-list': '/conversations/',
-    }
-
     def get_django_templates_dirs(self):
         return [self.SRC_DIR / 'ej/templates/django']
 
     def get_jinja_templates_dirs(self):
         return [self.SRC_DIR / 'ej/templates/jinja2']
 
+    #
+    # Third party modules
+    #
+    MIGRATION_MODULES = {
+        'sites': 'ej.contrib.sites.migrations'
+    }
+
+    AUTHENTICATION_BACKENDS = [
+        'rules.permissions.ObjectPermissionBackend',
+        'django.contrib.auth.backends.ModelBackend',
+        'allauth.account.auth_backends.AuthenticationBackend',
+    ]
+
+    EJ_CONVERSATIONS_URLMAP = {
+        'conversation-detail': '/conversations/{conversation.slug}/',
+        'conversation-list': '/conversations/',
+    }
+
+    REST_FRAMEWORK = {
+        'DEFAULT_AUTHENTICATION_CLASSES': (
+            'rest_framework.authentication.TokenAuthentication',
+            'rest_framework.authentication.SessionAuthentication',
+        ),
+        'DEFAULT_PERMISSION_CLASSES': (
+            'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+        ),
+        'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+        'PAGE_SIZE': 50,
+        'DEFAULT_VERSION': 'v1',
+    }
+
+    # REST_AUTH_REGISTER_SERIALIZERS = {
+    #     'REGISTER_SERIALIZER': 'ej_users.serializers.RegistrationSerializer'
+    # }
+
 
 Conf.save_settings(globals())
 fixes.apply_all()
-print(STATIC_ROOT)
