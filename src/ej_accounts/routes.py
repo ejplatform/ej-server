@@ -4,7 +4,7 @@ from django.contrib import auth
 from django.contrib.auth import get_user_model
 from django.db import IntegrityError
 from django.http import HttpResponseServerError
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 from django.utils.translation import ugettext_lazy as _
 
 from boogie.router import Router
@@ -20,26 +20,29 @@ log = logging.getLogger('ej')
 
 @urlpatterns.route('register/')
 def register(request):
-    form = forms.RegistrationForm(request.POST if request.method == 'POST' else None)
-    if request.method == 'POST' and form.is_valid():
-        data = form.cleaned_data
-        name, email, password = data['name'], data['email'], data['password']
-        try:
-            user = User.objects.create_simple_user(name, email, password)
-            log.info(f'user {user} ({email}) successfully created')
-        except IntegrityError as ex:
-            log.info(f'invalid login attempt: {email}')
-            form.add_error(None, str(ex))
-        else:
-            user = auth.authenticate(request,
-                                     username=user.username,
-                                     password=password)
-            auth.login(request, user)
-            log.info(f'user {user} ({email}) logged in')
-            return redirect(request.GET.get('next', '/'))
+    form = forms.RegistrationForm()
 
-    ctx = dict(user=request.user, form=form)
-    return render(request, 'pages/register.jinja2', ctx)
+    if request.method == 'POST':
+        form = forms.RegistrationForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            username = data['username']
+            name, email, password = data['name'], data['email'], data['password']
+            try:
+                user = User.objects.create_user(username, email, password, name=name)
+                log.info(f'user {user} ({email}) successfully created')
+            except IntegrityError as ex:
+                log.info(f'invalid login attempt: {email}')
+                form.add_error(None, str(ex))
+            else:
+                user = auth.authenticate(request,
+                                         username=user.username,
+                                         password=password)
+                auth.login(request, user)
+                log.info(f'user {user} ({email}) logged in')
+                return redirect(request.GET.get('next', '/'))
+
+    return {'user': request.user, 'form': form}
 
 
 @urlpatterns.route('login/')
@@ -68,8 +71,7 @@ def login(request):
     elif fast and request.user.is_authenticated and next:
         return redirect(next)
 
-    ctx = dict(user=request.user, form=form)
-    return render(request, 'pages/login.jinja2', ctx)
+    return {'user': request.user, 'form': form}
 
 
 @urlpatterns.route('logout/', login=True)

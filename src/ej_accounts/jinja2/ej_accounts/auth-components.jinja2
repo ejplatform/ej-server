@@ -1,0 +1,72 @@
+{% macro login(form, csrf_input, next=None) %}
+    <div class="Login">
+        <h1 class="Login-title">Contribua para discussões mais democráticas!</h1>
+        <div class="Login-icon">
+            <img src="/static/img/login/ej-cat.svg">
+        </div>
+
+        <form method="post">
+            {{ csrf_input }}
+
+            <div><input type="text" name="email" required placeholder="E-mail ou nome de usuário"></div>
+            {{ form.email.errors }}
+
+            <div><input type="password" name="password" required placeholder="Senha"></div>
+            {{ form.password.errors }}
+
+            <div><input type="submit" class="Login-button" value="{{ _('Login') }}" name="login"></div>
+            {{ form.non_field_errors() }}
+
+            {{ login_options('/register/' + ('?next=' + next if next else ''), _('Register now!'), 'Ainda não faz parte do EJ?') }}
+        </form>
+    </div>
+{% endmacro %}
+
+
+{% macro register(form, csrf_input) %}
+    <div class="Register">
+        <h1 class="Register-title">Cadastrar novo usuário</h1>
+
+        <form method="post">
+            {{ csrf_input }}
+            {% for field in form %}
+                {{ field }}
+                {{ field.errors }}
+            {% endfor %}
+
+            <div><input type="submit" value="{{ _('Register now!') }}" name="register"></div>
+            {{ form.non_field_errors() }}
+        </form>
+        {{ login_options('/login/', _('Login'), 'Faz parte do EJ?') }}
+    </div>
+{% endmacro %}
+
+
+{% macro login_options(button_href, button_msg, title) %}
+    <p class="Login-password"><a href="/profile/recover-password/">Esqueci minha senha</a></p>
+
+    <div class="Login-socialButtons">
+        <p>ou entre por outras redes</p>
+        <div>
+            <i class="fa fa-google-plus-g"></i>
+            <i class="fa fa-twitter"></i>
+            <i class="fa fa-facebook-f"></i>
+        </div>
+    </div>
+
+    <div class="Login-newUser">
+        {% set msg = _('Register') if is_login else _('Login') %}
+        <h1>{{ title }}</h1>
+        <p><a class="Button" href="{{ button_href }}" primary>{{ button_msg }}</a></p>
+    </div>
+{% endmacro %}
+
+
+{% macro passwordless_template() %}
+    <template id="Login-passwordless">
+        <h1>{{ _('What is passwordles login?') }}</h1>
+        <p>{% trans %}Passwords are inconvenient and often insecure. We suggest our users to choose either social
+            authentication (Facebook or Twitter) or the passwordless method. In this setup, we send a password to
+            your e-mail with a special link that automatically register your account in the platform.{% endtrans %}</p>
+    </template>
+{% endmacro %}

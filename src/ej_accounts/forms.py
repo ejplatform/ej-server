@@ -23,9 +23,7 @@ class RegistrationForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = [
-            'name', 'email',
-        ]
+        fields = ['name', 'email', 'username']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -36,7 +34,7 @@ class RegistrationForm(forms.ModelForm):
     def _post_clean(self):
         super()._post_clean()
         data = self.cleaned_data
-        if not (data.get('password') == data.get('password_confirm') != None):
+        if data.get('password') != data.get('password_confirm'):
             self.add_error('password_confirm', _('Passwords do not match'))
 
 
