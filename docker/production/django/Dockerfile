@@ -19,8 +19,8 @@ RUN apt-get update \
     ruby-sass \ 
     make \
     nodejs=8.11.2~dfsg-1 \
-    python3=3.6.4-1 \
-    python3-dev=3.6.4-1 \
+    python3.6 \
+    python3.6-dev \
     python3-pip \
     python3-setuptools \
     ruby-full=1:2.5.1 \
@@ -37,10 +37,15 @@ ENTRYPOINT ["/entrypoint.sh"]
 
 # ej-server Dependencies
 WORKDIR /dependencies
+
 COPY ./etc/npm_globals.txt /dependencies/npm_globals.txt
 RUN < npm_globals.txt xargs yarn global add
+
 COPY ./etc/requirements/*.txt /dependencies/
 RUN pip install -r /dependencies/production.txt
+
+ARG VOLATILE_DEPENDENCIES_STRATEGY=unknown
+RUN VOLATILE_DEPENDENCIES_STRATEGY=${VOLATILE_DEPENDENCIES_STRATEGY} pip install -r /dependencies/git-modules.txt
 
 COPY ./etc/scripts/**/* /
 

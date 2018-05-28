@@ -1,6 +1,6 @@
 # Test dependencies go here.
 -r production.txt
---extra-index-url https://test.pypi.org/simple
+-r git-modules.txt
 
 # Testing
 pytest >= 3.4.2
