@@ -21,7 +21,6 @@ class UserCreationForm(AuthUserCreationForm):
     class Meta(AuthUserCreationForm.Meta):
         model = User
 
-
     def clean_username(self):
         username = self.cleaned_data["username"]
         try:
@@ -36,11 +35,13 @@ class UserAdmin(AuthUserAdmin):
     form = UserChangeForm
     add_form = UserCreationForm
     fieldsets = (
-                    ('User Profile', {'fields': (
-                        'name', 'email', 'city', 'state', 'country', 'race',
-                        'gender', 'occupation', 'age', 'political_movement',
-                        'biography', 'image',
-                    )}),
-                ) + AuthUserAdmin.fieldsets
+        ('User Profile', {'fields': (
+            'name', 'email', 'city', 'state', 'country', 'race',
+            'gender', 'occupation', 'age', 'political_movement',
+            'biography', 'image',
+        )}),
+        *AuthUserAdmin.fieldsets,
+    )
+
     list_display = ('username', 'name', 'email', 'is_superuser')
     search_fields = ['name', 'email', 'username']

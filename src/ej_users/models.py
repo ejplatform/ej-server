@@ -1,9 +1,11 @@
 from random import choice
 
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from faker import Factory
 
+from boogie import rules
 from boogie.apps.users.models import AbstractUser
 from boogie.rest import rest_api
 from .manager import UserManager
@@ -11,7 +13,7 @@ from .manager import UserManager
 fake = Factory.create('pt-BR')
 
 
-@rest_api(['id', 'display_name'])
+@rest_api(['id', 'username', 'display_name'])
 class User(AbstractUser):
     """
     Default user model for EJ platform.
@@ -31,6 +33,12 @@ class User(AbstractUser):
         if not self.display_name:
             self.display_name = random_name()
         super().save(*args, **kwargs)
+
+    def clean(self):
+        super().clean()
+        if not rules.test_rule('ej_users.valid_username', self.username):
+            error = {'username': _('invalid username: %s') % self.username}
+            raise ValidationError(error)
 
     class Meta:
         swappable = 'AUTH_USER_MODEL'

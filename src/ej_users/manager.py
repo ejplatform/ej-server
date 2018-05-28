@@ -1,8 +1,8 @@
-import random
-import string
-
 from django.contrib.auth.models import UserManager as BaseUserManager
-from django.db import IntegrityError
+from django.core.exceptions import ValidationError
+from django.utils.translation import ugettext_lazy as _
+
+from boogie import rules
 
 
 class UserManager(BaseUserManager):
@@ -15,67 +15,20 @@ class UserManager(BaseUserManager):
         else:
             return self.get(username=value)
 
-    def create_simple_user(self, name, email, password):
-        """
-        Create standard user from name, email and password.
-        """
-        if self.filter(email=email):
-            raise IntegrityError(f'user with email {email} already exists')
+    def normalize_username(self, username):
+        if not username:
+            msg = _('username is empty')
+            raise ValidationError({'username': msg})
+        if '@' in username:
+            msg = _('username cannot have the "@: character')
+            raise ValidationError({'username': msg})
+        rule = rules.get_rule('ej_users.valid_username')
+        if not rule.test(username):
+            msg = _('invalid username: {username}').format(username=username)
+            raise ValidationError({'username': msg})
+        return username
 
-        first_name, _, last_name = name.partition(' ')
-        username = self.available_username(name, email)
-        user = self.create(
-            name=name,
-            email=email,
-            first_name=first_name,
-            last_name=last_name,
-            is_active=True,
-            username=username,
-        )
-        user.set_password(password)
-        user.save()
-        return user
-
-    def available_username(self, name, email):
-        """
-        Return an available username from name and e-mail information.
-        """
-        username, _, domain = email.partition('@')
-        domain = domain.replace('-', '_')
-        domain = domain.replace('.com', '')
-        first_name = name.lower().partition(' ')[0]
-        last_name = name.lower().partition(' ')[-1]
-        last_name = last_name.replace(' ', '_')
-
-        tests = [
-            username,
-            first_name,
-            last_name,
-            last_name + '_' + domain,
-            username + '_' + domain,
-        ]
-
-        existing = set(
-            self.filter(username__in=tests)
-                .values_list('username', flat=True)
-        )
-        available = [name for name in tests if name not in existing]
-        if available:
-            return available[0]
-
-        names = set(
-            self
-            .filter(username__startswith=username)
-            .values_list('username', flat=True)
-        )
-        for i in range(1000):
-            test = '%s_%s' % (username, i)
-            if test not in names:
-                return test
-        return random_username()
-
-
-def random_username():
-    "A random username value with very low collision probability"
-
-    return ''.join(random.choice(string.ascii_letters) for _ in range(20))
+    def _create_user(self, username, email, password, name='', **extra):
+        username = self.normalize_username(username)
+        extra['name'] = name or _('anonymous user')
+        return super()._create_user(username, email, password, **extra)
