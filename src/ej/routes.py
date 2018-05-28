@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect, HttpResponse
 
 from boogie.router import Router
 from ej_configurations import fragment, social_icons
-from ej_conversations.models import Conversation, Category
+from ej_conversations.models import Conversation
 from .forms import ConversationForm
 
 log = logging.getLogger('ej')
@@ -25,12 +25,13 @@ def home(request):
     }
     return render(request, 'pages/home.jinja2', ctx)
 
+
 @urlpatterns.route('conversations/create/')
 def create_conversation(request):
     if request.user.id:
         if request.method == 'GET':
-            ctx = {'categories': Category.objects.all()}
-            return render(request, "pages/conversations-create.jinja2", ctx)
+            ctx = {}
+            return render(request, "pages/../ej_conversations/jinja2/ej_conversations/conversations-create.jinja2", ctx)
         elif request.method == 'POST':
             form = ConversationForm(data=request.POST, instance=Conversation(author=request.user))
             if form.is_valid():
@@ -39,6 +40,7 @@ def create_conversation(request):
             else:
                 return HttpResponse(f'<p> {form.errors} </p>')
     return redirect('/login/')
+
 
 @urlpatterns.route('start/')
 def start(request):

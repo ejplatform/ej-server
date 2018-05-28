@@ -10,6 +10,7 @@ from markdown import markdown
 from markupsafe import Markup
 
 from ej_configurations import social_icons, fragment
+from . import tags
 
 SALT_CHARS = string.ascii_letters + string.digits + '-_'
 
@@ -28,6 +29,9 @@ def environment(**options):
         social_icons=social_icons,
         footer_data=lambda: fragment('global.footer', raises=False),
         service_worker=getattr(settings, 'SERVICE_WORKER', False),
+        link=tags.link,
+        action_button=tags.action_button,
+        rocket_button=tags.rocket_button,
     )
     env.filters.update(
         markdown=lambda x: Markup(markdown(x)),
