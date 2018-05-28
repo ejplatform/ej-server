@@ -14,8 +14,10 @@ def manage(ctx, cmd, env=None, **kwargs):
     kwargs = {k.replace('_', '-'): v for k, v in kwargs.items() if v is not False}
     opts = ' '.join(f'--{k} {"" if v is True else v}' for k, v in kwargs.items())
     cmd = f'{python} manage.py {cmd} {opts}'
+    env = dict(env or {})
+    env.setdefault('PYTHONPATH', f'src:{env.get("PYTHONPATH", "")}')
     print(f'Run: {cmd}')
-    ctx.run(cmd, pty=True, env=(env or {}))
+    ctx.run(cmd, pty=True, env=env)
 
 
 @task
@@ -38,7 +40,7 @@ def run(ctx, no_toolbar=False):
     env = {}
     if no_toolbar:
         env['DISABLE_DJANGO_DEBUG_TOOLBAR'] = 'true'
-    manage(ctx, 'runserver')
+    manage(ctx, 'runserver', env=env)
 
 
 #
@@ -61,10 +63,10 @@ def db_reset(ctx, fake=False, no_assets=False):
     """
     ctx.run('rm local/db/db.sqlite3 -f')
     manage(ctx, 'migrate')
-    if fake:
-        db_fake(ctx)
     if not no_assets:
         db_assets(ctx)
+    if fake:
+        db_fake(ctx)
 
 
 @task
@@ -84,7 +86,6 @@ def db_fake(ctx, users=True, conversations=True, admin=True, safe=False):
         manage(ctx, 'createfakeusers', admin=admin)
     if conversations:
         manage(ctx, 'createfakeconversations')
-        manage(ctx, 'loadpages', path='local-example/pages/')
 
 
 @task
@@ -93,12 +94,24 @@ def db_assets(ctx, path=None, force=False):
     Install assets from a local folder in the database.
     """
 
-    if path is None:
-        path = 'local' if os.path.exists('local') else 'local-example'
-    base = pathlib.Path(path)
-    manage(ctx, 'loadpages', path=base / 'pages', force=force)
-    manage(ctx, 'loadfragments', path=base / 'fragments', force=force)
-    manage(ctx, 'loadsocialmediaicons', path=base / 'social-icons.json', force=force)
+    resources = pathlib.Path('lib/resources')
+    pages = resources / 'pages'
+    fragments = resources / 'fragments'
+    data = resources / 'data'
+
+    if path is not None:
+        path = pathlib.Path(path)
+        if (path / 'pages').exists():
+            pages = path / 'pages'
+        if (path / 'fagments').exists():
+            pages = path / 'fragments'
+        if (path / 'data').exists():
+            pages = path / 'data'
+
+    icons = data / 'social-icons.json'
+    manage(ctx, 'loadpages', path=pages, force=force)
+    manage(ctx, 'loadfragments', path=fragments, force=force)
+    manage(ctx, 'loadsocialmediaicons', path=icons, force=force)
 
 
 #
