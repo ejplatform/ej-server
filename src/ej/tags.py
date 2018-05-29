@@ -1,6 +1,16 @@
 from hyperpython import a, i
+from hyperpython.components import html_table, html_list, html_dict
+from hyperpython import h
 
 _ = lambda x: x
+
+__all__ = [
+    # Hyperpython components
+    'h', 'html_table', 'html_list', 'html_dict',
+
+    # EJ components
+    'link', 'rocket_button', 'action_button',
+]
 
 
 def link(value, href='#', target='.Page-mainContainer', class_=(),

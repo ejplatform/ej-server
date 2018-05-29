@@ -1,4 +1,5 @@
 from boogie.configurations import DjangoConf, locales
+
 from .apps import InstalledAppsConf
 from .celery import CeleryConf
 from .constance import ConstanceConf
@@ -6,6 +7,9 @@ from .middleware import MiddlewareConf
 from .options import EjOptions
 from .paths import PathsConf
 from .. import fixes
+import logging
+
+log = logging.getLogger('ej')
 
 
 class Conf(locales.brazil(),
@@ -88,3 +92,9 @@ class Conf(locales.brazil(),
 
 Conf.save_settings(globals())
 fixes.apply_all()
+
+
+# TODO: Fix this later in boogie configuration stack
+# Required for making django debug toolbar work
+if ENVIRONMENT == 'local':
+    INTERNAL_IPS = [*globals().get('INTERNAL_IPS', ()), '127.0.0.1']
