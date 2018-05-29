@@ -1,5 +1,5 @@
 {% extends 'base.jinja2' %}
-{% from 'components/profile.jinja2' import profile_edit %}
+{% from 'ej_profiles/components/profile.jinja2' import profile_edit %}
 
 {% set content_title = gettext('Edit profile: <em>%(name)s</em>', name=request.user.name) %}
 
