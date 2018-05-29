@@ -6,6 +6,7 @@ EXPOSE 8000
 
 ENV FAKE_DB=true
 
+COPY ./etc/requirements/*.txt /dependencies/
 RUN pip install -r /dependencies/develop.txt
 
 CMD ["/runserver.sh"]
