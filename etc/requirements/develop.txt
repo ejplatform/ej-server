@@ -1,12 +1,13 @@
 # Test dependencies go here.
 -r production.txt
---extra-index-url https://test.pypi.org/simple
+-r git-modules.txt
 
 # Testing
 pytest >= 3.4.2
 pytest-cov >= 2.5.1
 pytest-html >= 1.17.0
 pytest-django ~= 3.1.2
+pytest-pythonpath >= 0.7.2
 splinter >= 0.8.0
 pytest-splinter >= 1.8.5
 django-test-plus ~= 1.0.18
@@ -14,6 +15,7 @@ django-coverage-plugin ~= 1.5.0
 coverage ~= 4.4.1
 factory-boy ~= 2.9.2
 model_mommy ~= 1.5.1
+mock ~= 2.0.0
 
 # Static analysis
 flake8 ~= 3.4.1

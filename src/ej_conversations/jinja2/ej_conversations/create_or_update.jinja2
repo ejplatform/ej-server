@@ -1,0 +1,6 @@
+{% extends 'base.jinja2' %}
+{% from 'components/conversations.jinja2' import conversation_create %}
+
+{% block content %}
+    {{conversation_create(categories, conversation, form, csrf_input)}}
+{% endblock %}

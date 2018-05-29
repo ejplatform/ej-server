@@ -1,18 +1,23 @@
-from django.shortcuts import render, redirect
+from django.http import Http404
+from django.shortcuts import redirect
 
 from boogie.router import Router
 from .forms import ProfileForm
 
-urlpatterns = Router()
+urlpatterns = Router(
+    template='ej_profiles/{name}.jinja2',
+    login=True,
+)
 
 
-@urlpatterns.route('', login=True)
+@urlpatterns.route('')
 def detail(request):
-    ctx = dict(info_tab=request.GET.get('info', 'profile'))
-    return render(request, 'ej_profiles/profile-detail.jinja2', ctx)
+    return {
+        'info_tab': request.GET.get('info', 'profile'),
+    }
 
 
-@urlpatterns.route('edit/', login=True)
+@urlpatterns.route('edit/')
 def edit(request):
     profile = request.user
     if request.method == 'POST':
@@ -23,5 +28,29 @@ def edit(request):
     else:
         form = ProfileForm(instance=request.user)
 
-    ctx = dict(form=form, profile=profile)
-    return render(request, 'ej_profiles/profile-edit.jinja2', ctx)
+    return {
+        'form': form,
+        'profile': profile,
+    }
+
+
+@urlpatterns.route('comments/')
+def comments(request):
+    user = request.user
+    return {
+        'user': user,
+        'comments': user.comments.all(),
+        'stats': user.comments.stats(),
+    }
+
+
+@urlpatterns.route('comments/<which>/')
+def comments_filter(request, which):
+    if which not in ('rejected', 'approved', 'pending'):
+        raise Http404
+    user = request.user
+    return {
+        'user': user,
+        'comments': getattr(user.comments, which)(),
+        'stats': user.comments.stats(),
+    }

@@ -1,6 +1,0 @@
-{% extends 'base.jinja2' %}
-{% from 'components/profile.jinja2' import profile_detail %}
-
-{% block content %}
-    {{ profile_detail(request.user, csrf_input, info_tab) }}
-{% endblock %}

@@ -1,14 +1,49 @@
-from captcha.fields import ReCaptchaField
 from django import forms
+from django.conf import settings
+from django.contrib.auth import get_user_model
+from django.utils.translation import ugettext as _
+
+User = get_user_model()
 
 
-class EJSignupForm(forms.Form):
-    full_name = forms.CharField(max_length=120, label='Nome')
-    captcha = ReCaptchaField(label='')
+class RegistrationForm(forms.ModelForm):
+    """
+    Register new user
+    """
+    password = forms.CharField(
+        label=_('Password'),
+        required=True,
+        widget=forms.PasswordInput,
+    )
+    password_confirm = forms.CharField(
+        label=_('Password confirmation'),
+        required=True,
+        widget=forms.PasswordInput,
+    )
 
-    field_order = ['full_name', 'email', 'password1', 'password2', 'capcha']
+    class Meta:
+        model = User
+        fields = ['name', 'email', 'username']
 
-    def signup(self, user):
-        full_name = self.cleaned_data['full_name']
-        user.first_name, _, user.last_name = full_name.partition(' ')
-        user.save()
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        for field in self:
+            field.field.widget.attrs.update(placeholder=field.label)
+
+    def _post_clean(self):
+        super()._post_clean()
+        data = self.cleaned_data
+        if data.get('password') != data.get('password_confirm'):
+            self.add_error('password_confirm', _('Passwords do not match'))
+
+
+class LoginForm(forms.Form):
+    """
+    User login
+    """
+    if getattr(settings, 'ALLOW_USERNAME_LOGIN', settings.DEBUG):
+        email = forms.CharField(label=_('E-mail'))
+    else:
+        email = forms.EmailField(label=_('E-mail'))
+    password = forms.CharField(label=_('Password'), widget=forms.PasswordInput)

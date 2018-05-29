@@ -5,7 +5,7 @@ from django.urls import include, path
 from django.views import defaults as default_views
 from rest_framework.documentation import include_docs_urls
 
-from ej.api import router_v1
+from boogie.rest import rest_api
 from ej.fixes import unregister_admin
 
 unregister_admin.unregister_apps()
@@ -13,12 +13,14 @@ unregister_admin.unregister_apps()
 urlpatterns = [
     # Basic authentication and authorization
     path('', include('ej.routes')),
-    path('', include(('ej_accounts.routes', 'ej_accounts'), 'auth')),
+    path('', include('ej_users.routes', namespace='auth')),
 
     # EJ Routes
-    path('conversations/', include(('ej_conversations.routes', 'ej_conversations'), namespace='conversations')),
+    path('conversations/', include('ej_conversations.routes', namespace='conversations')),
     path('profile/', include(('ej_profiles.routes', 'ej_profiles'), namespace='profiles')),
     path('config/', include(('ej_configurations.routes', 'ej_configurations'), namespace='configurations')),
+
+    path('dataviz/', include(('ej_dataviz.routes', 'ej_dataviz'), namespace='dataviz')),
 
     # Rocket
     path('talks/', include(('ej_rocketchat.routes', 'ej_rocketchat'), namespace='rocketchat')),
@@ -27,9 +29,9 @@ urlpatterns = [
     path(settings.ADMIN_URL.rstrip('^'), admin.site.urls),
 
     # REST API
-    path('api/v1/', include(router_v1.urls)),
+    path('api/', include(rest_api.urls)),
     path('api/v1/docs/', include_docs_urls(title='ej API Docs', public=False)),
-    path('api/v1/', include('courier.urls', namespace='courier')),
+    # path('api/v1/', include('courier.urls', namespace='courier')),
     # path('api/v1/rocketchat/', include('ej.ej_rocketchat.urls')),
 
     # User management

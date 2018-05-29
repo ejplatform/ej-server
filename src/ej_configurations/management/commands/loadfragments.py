@@ -5,7 +5,7 @@ from django.conf import settings
 from django.core.management.base import BaseCommand
 
 from ._load import make_fragment_name, is_html, is_markdown, validate_path
-from ...models import Fragment
+from ...models import Fragment, Format
 
 SITE_ID = getattr(settings, 'SITE_ID', 1)
 
@@ -59,11 +59,11 @@ def load_fragments(path, force):
 
 
 def handle_html(path, name):
-    save_fragment(path, name, Fragment.FORMAT_HTML)
+    save_fragment(path, name, Format.HTML)
 
 
 def handle_markdown(path, name):
-    save_fragment(path, name, Fragment.FORMAT_MARKDOWN)
+    save_fragment(path, name, Format.MARKDOWN)
 
 
 def save_fragment(path, name, fragment_format):

@@ -2,7 +2,10 @@ from boogie.configurations import Conf
 
 
 class ConstanceConf(Conf):
-    # Dynamic django settings, edit on admin page
+    """
+    Dynamic django settings, edit on admin page
+    """
+
     CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
     CONSTANCE_IGNORE_ADMIN_VERSION_CHECK = True
 

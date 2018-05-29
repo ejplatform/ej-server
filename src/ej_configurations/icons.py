@@ -1,6 +1,11 @@
-def default_icon_name(network, lib='fa'):
-    fa, material = SOCIAL_ICONS.get(network.lower(), (None, None))
-    return fa if lib == 'fa' else material
+def default_icon_name(social):
+    """
+    Return icon from the given social network
+    """
+    try:
+        return SOCIAL_ICONS[social.lower()]
+    except KeyError:
+        raise ValueError(f'unknown social network: {social}')
 
 
 SOCIAL_ICONS = {

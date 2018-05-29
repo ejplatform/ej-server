@@ -3,7 +3,6 @@ import pytest
 from ej_configurations import fragments
 from ej_configurations.models import Fragment
 
-
 pytestmark = pytest.mark.django_db
 
 MISSING_FRAGMENT_HTML = '''
@@ -23,19 +22,14 @@ def fragment_db(db):
     return fragment
 
 
-def test_get_non_existent_fragment_withouth_default_fragment():
-    # test method call raising error
-    try:
-        test_fragment = fragments.fragment('name')
-    except ValueError:
-        assert True
-
-    # test method call without raise error
+def test_get_non_existing_fragment_without_default_fragment():
+    with pytest.raises(ValueError):
+        fragments.fragment('name')
     test_fragment = fragments.fragment('name', False)
     assert test_fragment.content == MISSING_FRAGMENT_HTML
 
 
-def test_get_existent_fragment(fragment_db):
+def test_get_existing_fragment(fragment_db):
     test_fragment = fragments.fragment('name')
     assert test_fragment.name == 'name'
     assert test_fragment.format == 'html'

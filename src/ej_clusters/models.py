@@ -3,7 +3,8 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from model_utils.models import TimeStampedModel
 
-from ej_conversations.models import Vote
+from boogie.fields import EnumField
+from ej_conversations.models import Choice
 
 
 class Cluster(TimeStampedModel):
@@ -24,7 +25,7 @@ class Cluster(TimeStampedModel):
         get_user_model(),
     )
     stereotypes = models.ManyToManyField(
-        'ej_clusters.Stereotype',
+        'Stereotype',
     )
 
     __str__ = (lambda self: self.name)
@@ -53,20 +54,17 @@ class StereotypeVote(models.Model):
 
     It forms a m2m relationship between Stereotypes and comments.
     """
-    stereotype = models.ForeignKey(
+    author = models.ForeignKey(
         'Stereotype',
-        related_name='stereotype_votes',
+        related_name='votes',
         on_delete=models.CASCADE,
     )
     comment = models.ForeignKey(
-        'Comment',
+        'ej_conversations.Comment',
         related_name='stereotype_votes',
         on_delete=models.CASCADE,
     )
-    value = models.IntegerField(
-        _('Value'),
-        choices=Vote.VOTE_CHOICES,
-    )
+    choice = EnumField(Choice)
 
     def __str__(self):
-        return f'Vote({self.stereotype}, value={self.value})'
+        return f'StereotypeVote({self.stereotype}, value={self.value})'

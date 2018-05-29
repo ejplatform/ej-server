@@ -2,4 +2,4 @@ from django.contrib import admin
 
 from . import models
 
-admin.site.register(models.CommentPromotion)
+admin.site.register(models.CommentEndorsement)

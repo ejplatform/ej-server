@@ -4,8 +4,8 @@ from allauth.socialaccount.models import SocialAccount
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.urls import reverse
-from django.utils.translation import ugettext_lazy as _
-
+from django.utils.translation import ugettext_lazy as _, ugettext as __
+from sidekick import delegate_to
 from boogie.fields import EnumField
 from boogie.rest import rest_api
 from .choices import Race, Gender
@@ -13,13 +13,12 @@ from .choices import Race, Gender
 User = get_user_model()
 
 
-@rest_api()
+@rest_api(exclude=['user'])
 class Profile(models.Model):
     """
     User profile
     """
-
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='raw_profile')
     race = EnumField(Race, _('Race'), default=Race.UNDECLARED)
     gender = EnumField(Gender, _('Gender identity'), default=Gender.UNDECLARED)
     gender_other = models.CharField(_('User provided gender'), max_length=50, blank=True)
@@ -32,8 +31,15 @@ class Profile(models.Model):
     political_activity = models.TextField(_('Political activity'), blank=True)
     image = models.ImageField(_('Image'), blank=True, null=True, upload_to='profile_images')
 
+    name = delegate_to('user')
+    username = delegate_to('user')
+    email = delegate_to('user')
+    is_active = delegate_to('user')
+    is_staff = delegate_to('user')
+    is_superuser = delegate_to('user')
+
     def __str__(self):
-        return self.user.name
+        return __('{name}\'s profile').format(name=self.user.name)
 
     def __getattr__(self, attr):
         try:
@@ -43,9 +49,9 @@ class Profile(models.Model):
         return getattr(user, attr)
 
     @property
-    def gender_display(self):
-        if self.gender:
-            return self.get_gender_display()
+    def gender_description(self):
+        if self.gender != Gender.UNDECLARED:
+            return self.gender.description
         return self.gender_other
 
     @property
@@ -64,18 +70,19 @@ class Profile(models.Model):
         return self.image or SocialAccount.objects.filter(user_id=self.id)
 
     @property
-    def is_profile_filled(self):
+    def is_filled(self):
         fields = ('race', 'age', 'country', 'state', 'city', 'biography',
-                  'occupation', 'political_activity', 'has_image', 'gender_display')
+                  'occupation', 'political_activity', 'has_image', 'gender_description')
+        print([getattr(self, field) for field in fields])
         return bool(all(getattr(self, field) for field in fields))
 
     def get_absolute_url(self):
         return reverse('user-detail', kwargs={'pk': self.id})
 
-    def profile_fields(self):
+    def profile_fields(self, user_fields=False):
         """
-        Return a list of tuples of (field_description, field_value) for all registered profile
-        fields.
+        Return a list of tuples of (field_description, field_value) for all
+        registered profile fields.
         """
 
         fields = ['city', 'country', 'occupation', 'age', 'gender', 'race', 'political_activity']
@@ -85,10 +92,15 @@ class Profile(models.Model):
             description = field_map[field].verbose_name
             getter = getattr(self, f'get_{field}_display', lambda: getattr(self, field))
             result.append((description.capitalize(), getter()))
-        result.append((_('E-mail'), self.user.email))
+        if user_fields:
+            result = [
+                (_('Name'), self.user.name),
+                (_('E-mail'), self.user.email),
+                *result,
+            ]
         return result
 
-    def profile_statistics(self):
+    def statistics(self):
         """
         Return a dictionary with all profile statistics.
         """

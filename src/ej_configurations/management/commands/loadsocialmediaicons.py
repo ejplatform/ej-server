@@ -54,7 +54,7 @@ def real_handle(filename, force):
 
 
 def save_icon(social_network, data):
-    with transaction.atomic:
+    with transaction.atomic():
         social_icon, created = icon_db.update_or_create(
             social_network=social_network,
             defaults=data,

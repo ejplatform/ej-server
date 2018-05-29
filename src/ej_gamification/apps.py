@@ -1,8 +1,9 @@
 from django.apps import AppConfig
 
 
-class GamificationConfig(AppConfig):
+class EjGamificationConfig(AppConfig):
     name = 'ej_gamification'
+    verbose_name = 'Gamification'
 
     def ready(self):
         from . import badges

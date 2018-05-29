@@ -1,0 +1,45 @@
+{% from 'ej_conversations/components/comment-detail.jinja2' import comment_detail %}
+
+{% macro conversation_detail(conversation, user) %}
+    <div class="ConversationDetail">
+        <div class="ConversationDetail-banner">
+            <h1>{{ conversation.question }}</h1>
+            <ul class="ConversationDetail-statistics">
+                <li>{{ gettext('%(count)s comments', count=conversation.comments.count()) }}</li>
+                <li>{{ gettext('%(count)s votes', count=conversation.votes.count()) }}</li>
+            </ul>
+        </div>
+        <div class="ConversationDetail-arrow"></div>
+
+        {#        <ul class="ConversationDetail-statisticsBottom">#}
+        {#            <li>#}
+        {#                <div>{{ _('category:') }}</div>#}
+        {#                <div>{{ link(category.name, href=category.get_absolute_url()) }}</div>#}
+        {#            </li>#}
+        {#            <li>{{ link(_('see more<br>categories'), href='/conversations/') }}</li>#}
+        {#        </ul>#}
+
+        {# Current comment #}
+        <div class="ConversationDetail-header">
+            <h1>Opiniões da comunidade</h1>
+            <p>Interaja com as opiniões da comunidade selecionando um dos botões
+                de opção.</p>
+        </div>
+
+        {% if comment %}
+            {{ comment_detail(comment, user) }}
+        {% else %}
+            <p class="Comment">Conversa não contêm comentários</p>
+        {% endif %}
+
+        {# Post a new comment #}
+        {% if user.is_authenticated %}
+            {{ comment_form() }}
+        {% endif %}
+
+        {# Opinion #}
+        {% if conversation.opinion %}
+            {{ opinion(conversation) }}
+        {% endif %}
+    </div>
+{% endmacro %}
