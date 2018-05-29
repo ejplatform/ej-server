@@ -16,7 +16,7 @@ services:
       DJANGO_MAILGUN_API_KEY: key
       DJANGO_RECAPTCHA_PUBLIC_KEY: publickey
       DJANGO_RECAPTCHA_PRIVATE_KEY: privatekey
-      DJANGO_SETTINGS_MODULE: config.settings.production
+      DJANGO_SETTINGS_MODULE: ej.settings
       DJANGO_SECRET_KEY: key
       MAILGUN_SENDER_DOMAIN: ''
       POSTGRES_DB: dbname

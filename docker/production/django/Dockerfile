@@ -1,9 +1,14 @@
 FROM debian:buster-slim
 
 ENV PYTHONUNBUFFERED=1 \
-    LANG=C.UTF-8
+    LANG=C.UTF-8 \
+    PYTHONPATH="/app/src/:$PYTHONPATH"
 
-RUN apt-get update && apt-get install -y \
+EXPOSE 5000
+
+# Install debian dependencies
+RUN apt-get update \
+    && apt-get install -y \
     bundler \
     curl \
     gcc \
@@ -11,10 +16,11 @@ RUN apt-get update && apt-get install -y \
     gnupg2 \
     libc6-dev \
     libdpkg-perl \
+    ruby-sass \ 
     make \
     nodejs=8.11.2~dfsg-1 \
-    python3=3.6.4-1 \
-    python3-dev=3.6.4-1 \
+    python3.6 \
+    python3.6-dev \
     python3-pip \
     python3-setuptools \
     ruby-full=1:2.5.1 \
@@ -27,20 +33,21 @@ RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
     && apt-get install -y yarn --no-install-recommends \
     && apt-get clean
 
+ENTRYPOINT ["/entrypoint.sh"]
+
 # ej-server Dependencies
 WORKDIR /dependencies
 
-COPY ./Gemfile /dependencies/Gemfile
-RUN bundler install --verbose
-
-COPY ./npm_globals.txt /dependencies/npm_globals.txt
+COPY ./etc/npm_globals.txt /dependencies/npm_globals.txt
 RUN < npm_globals.txt xargs yarn global add
 
-COPY ./requirements/*.txt /dependencies/
+COPY ./etc/requirements/*.txt /dependencies/
 RUN pip install -r /dependencies/production.txt
 
-COPY ./scripts/**/* /
-ENTRYPOINT ["/entrypoint.sh"]
+ARG VOLATILE_DEPENDENCIES_STRATEGY=unknown
+RUN VOLATILE_DEPENDENCIES_STRATEGY=${VOLATILE_DEPENDENCIES_STRATEGY} pip install -r /dependencies/git-modules.txt
+
+COPY ./etc/scripts/**/* /
 
 RUN groupadd -r django \
     && useradd -r -g django django \
@@ -49,10 +56,8 @@ RUN groupadd -r django \
 WORKDIR /app
 COPY . /app
 
-# [FIXME] should not use .example file
-RUN export $(cat /app/env.example | grep -v ^# | xargs) \
-    && python3 /app/manage.py collectstatic --noinput \
-    && mkdir /app/local \
+RUN DJANGO_SETTINGS_MODULE="ej.settings" python3 /app/manage.py collectstatic --noinput \
+    && mkdir -p /app/local \
     && chown -R django:django /app
 
 USER django

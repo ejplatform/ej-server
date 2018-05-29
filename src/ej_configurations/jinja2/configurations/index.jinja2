@@ -1,0 +1,24 @@
+{% extends 'base.jinja2' %}
+{% set content_title = _('Site info') %}
+{% set app = request.current_app|default('configurations') %}
+
+{% block content %}
+    <section class="Container">
+        <h1>Configurations/Debug</h1>
+        <h2>Choose a configuration page.</h2>
+        <nav>
+            <dl>
+                <dt><a href="{{ url(app + ':styles') }}">Styles</a></dt>
+                <dd>Test and document EJ styles. Useful for designers to tweak the CSS
+                    variables for the theme.
+                </dd>
+
+                <dt><a href="{{ url(app + ':info') }}">Site info</a></dt>
+                <dd>Generic information about the current instance of the EJ platform.</dd>
+
+                <dt><a href="{{ url(app + ':fragment-list') }}">Fragments</a></dt>
+                <dd>Discover information about missing fragments and content.</dd>
+            </dl>
+        </nav>
+    </section>
+{% endblock %}

@@ -14,7 +14,6 @@ variables:
   BACKEND_MASTER_IMAGE: "ejplatform/ej-nginx:master"
   BACKEND_LATEST_IMAGE: "ejplatform/ej-nginx:latest"
   DJANGO_DEVELOP_IMAGE: "ejplatform/ej-nginx:develop" 
-  CACHED_IMAGE: "${CI_COMMIT_SHA}.image.tar"
   DJANGO_TEST_ENV: "./docker/develop/env/django.test.env"
   POSTGRES_TEST_ENV: "./docker/develop/env/postgres.test.env"
 
@@ -22,7 +21,7 @@ variables:
   image: docker
   before_script:
     - docker pull $DJANGO_MASTER_IMAGE || true
-    - docker build --cache-from $DJANGO_MASTER_IMAGE -t $DJANGO_MASTER_IMAGE -f ./docker/production/django/Dockerfile .
+    - docker build --cache-from $DJANGO_MASTER_IMAGE --build-arg VOLATILE_DEPENDENCIES_STRATEGY=$(date +%s) -t $DJANGO_MASTER_IMAGE -f ./docker/production/django/Dockerfile .
   tags:
     - docker
 

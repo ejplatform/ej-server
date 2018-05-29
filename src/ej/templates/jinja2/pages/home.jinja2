@@ -1,0 +1,11 @@
+{% extends 'base.jinja2' %}
+{% from 'components/home.jinja2' import home_banner, how_it_works, start_now %}
+{% from 'ej_conversations/components/conversation-list.jinja2' import conversation_list %}
+
+
+{% block main %}
+    {{ home_banner(home_banner_fragment, 'cpa') }}
+    {{ how_it_works(how_it_works_fragment) }}
+    {{ conversation_list(conversations) }}
+    {{ start_now(start_now_fragment) }}
+{% endblock %}
