@@ -5,7 +5,7 @@ from django.contrib.auth import get_user_model
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _, ugettext as __
-
+from sidekick import delegate_to
 from boogie.fields import EnumField
 from boogie.rest import rest_api
 from .choices import Race, Gender
@@ -18,7 +18,7 @@ class Profile(models.Model):
     """
     User profile
     """
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='raw_profile')
     race = EnumField(Race, _('Race'), default=Race.UNDECLARED)
     gender = EnumField(Gender, _('Gender identity'), default=Gender.UNDECLARED)
     gender_other = models.CharField(_('User provided gender'), max_length=50, blank=True)
@@ -30,6 +30,13 @@ class Profile(models.Model):
     occupation = models.CharField(_('Occupation'), blank=True, max_length=50)
     political_activity = models.TextField(_('Political activity'), blank=True)
     image = models.ImageField(_('Image'), blank=True, null=True, upload_to='profile_images')
+
+    name = delegate_to('user')
+    username = delegate_to('user')
+    email = delegate_to('user')
+    is_active = delegate_to('user')
+    is_staff = delegate_to('user')
+    is_superuser = delegate_to('user')
 
     def __str__(self):
         return __('{name}\'s profile').format(name=self.user.name)

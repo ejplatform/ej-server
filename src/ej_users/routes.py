@@ -3,18 +3,22 @@ import logging
 from django.contrib import auth
 from django.contrib.auth import get_user_model
 from django.db import IntegrityError
+from django.http import Http404, JsonResponse, HttpResponse
 from django.http import HttpResponseServerError
 from django.shortcuts import redirect
 from django.utils.translation import ugettext_lazy as _
+from rest_framework import status
+from rest_framework.authtoken.models import Token
 
 from boogie.router import Router
-from . import forms
+from ej_users import forms
 
 User = get_user_model()
-urlpatterns = Router(
-    template='ej_accounts/{name}.jinja2',
-)
 
+app_name = 'ej_users'
+urlpatterns = Router(
+    template='ej_users/{name}.jinja2',
+)
 log = logging.getLogger('ej')
 
 
@@ -74,12 +78,14 @@ def login(request):
     return {'user': request.user, 'form': form}
 
 
-@urlpatterns.route('logout/', login=True)
+@urlpatterns.route('logout/')
 def logout(request):
+    if not request.user.is_authenticated:
+        return redirect('home')
     if request.method == 'POST':
         auth.logout(request)
-        return redirect('/')
-    return HttpResponseServerError('must use POST to logout')
+        return redirect('home')
+    return HttpResponseServerError('cannot logout')
 
 
 @urlpatterns.route('profile/recover-password/', login=True)
@@ -104,3 +110,25 @@ def remove_account(request):
         'user': request.user,
         'profile': request.user.profile,
     }
+
+
+@urlpatterns.route('key/')
+def api_key(request):
+    if request.user.id is None:
+        raise Http404
+    token = Token.objects.get_or_create(user=request.user)
+    return JsonResponse({'key': token[0].key}, status=status.HTTP_200_OK)
+
+
+# FIXME: this view must be deleted when no more users have csrftoken cookies protected by HTTP_ONLY setting
+@urlpatterns.route('reset/')
+def clean_cookies():
+    # This view exists only to help reset sessionid and csrftoken cookies on
+    # the client browser. Javascript can't do it itself because csrftoken was
+    # previously HTTP_ONLY. This cookie needs to be js accessible to allow for
+    # CSRF protection on XHR requests
+
+    response = HttpResponse()
+    response.delete_cookie('sessionid')
+    response.delete_cookie('csrftoken')
+    return response

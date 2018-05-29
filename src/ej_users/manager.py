@@ -22,7 +22,7 @@ class UserManager(BaseUserManager):
         if '@' in username:
             msg = _('username cannot have the "@: character')
             raise ValidationError({'username': msg})
-        rule = rules.get_rule('ej_users.valid_username')
+        rule = rules.get_rule('auth.valid_username')
         if not rule.test(username):
             msg = _('invalid username: {username}').format(username=username)
             raise ValidationError({'username': msg})

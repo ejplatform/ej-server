@@ -4,7 +4,6 @@ from .options import EjOptions
 
 class InstalledAppsConf(Base, EjOptions):
     PROJECT_APPS = [
-        'ej_accounts',
         'ej_clusters',
         'ej_configurations',
         'ej_conversations',

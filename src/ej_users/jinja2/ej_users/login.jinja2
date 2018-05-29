@@ -1,5 +1,5 @@
 {% extends 'base.jinja2' %}
-{% from 'ej_accounts/auth-components.jinja2' import login %}
+{% from 'ej_users/auth-components.jinja2' import login %}
 
 {% block content %}
     {{ login(form, csrf_input, request.GET.get('next', None)) }}

@@ -1,5 +1,5 @@
 {% extends 'base.jinja2' %}
-{% from 'ej_accounts/auth-components.jinja2' import register %}
+{% from 'ej_users/auth-components.jinja2' import register %}
 
 {% block content %}
     {{ register(form, csrf_input) }}

@@ -13,7 +13,7 @@ unregister_admin.unregister_apps()
 urlpatterns = [
     # Basic authentication and authorization
     path('', include('ej.routes')),
-    path('', include(('ej_accounts.routes', 'ej_accounts'), 'auth')),
+    path('', include('ej_users.routes', namespace='auth')),
 
     # EJ Routes
     path('conversations/', include(('ej_conversations.routes', 'ej_conversations'), namespace='conversations')),

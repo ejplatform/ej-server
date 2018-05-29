@@ -32,7 +32,7 @@ class ExampleData:
     def _comment_factory(self, conversation):
         create = conversation.create_comment
         return (
-            lambda comment, status=Comment.STATUS.APPROVED: create(
+            lambda comment, status='approved': create(
                 self.get_user(),
                 comment,
                 check_limits=False,
@@ -68,7 +68,7 @@ class ExampleData:
         new('It must be really fast.')
         new('I want a statically typed language.')
         new('It must be dynamic, but accept type hints.',
-            status=Comment.STATUS.PENDING)
+            status='pending')
 
     def make_school_comments(self):
         new = self._comment_factory(self.school_system)
@@ -77,18 +77,18 @@ class ExampleData:
         new('Our curriculum should be open and focused on real problems.')
         new('Students should have a say on what they want to learn.')
         new('We don\'t need no education! We don\'t need no thought control!',
-            status=Comment.STATUS.PENDING)
+            status='pending')
 
     def make_democracy_comments(self, extra=50):
         new = self._comment_factory(self.participation)
         new('People should have direct power to decide community affairs.')
         new('We need to forbid corporations from financing elections.')
-        new('We need better voting systems.', status=Comment.STATUS.PENDING)
+        new('We need better voting systems.', status='pending')
         for _ in range(extra):
             new(fake.paragraph())
 
     def make_votes(self):
-        comments = list(Comment.APPROVED.all())
+        comments = list(Comment.approved.all())
         probs = [(x, (random(), random(), random() / 3)) for x in comments]
         for comment, probs in probs:
             for user in self.users:

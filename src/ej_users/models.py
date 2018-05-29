@@ -29,6 +29,11 @@ class User(AbstractUser):
     )
     objects = UserManager()
 
+    @property
+    def profile(self):
+        profile = rules.get_value('auth.profile')
+        return profile(self)
+
     def save(self, *args, **kwargs):
         if not self.display_name:
             self.display_name = random_name()
@@ -36,7 +41,7 @@ class User(AbstractUser):
 
     def clean(self):
         super().clean()
-        if not rules.test_rule('ej_users.valid_username', self.username):
+        if not rules.test_rule('auth.valid_username', self.username):
             error = {'username': _('invalid username: %s') % self.username}
             raise ValidationError(error)
 
