@@ -1,5 +1,5 @@
 {% extends 'base.jinja2' %}
-{% from 'components/profile.jinja2' import profile_detail %}
+{% from 'ej_profiles/components/profile.jinja2' import profile_detail %}
 
 {% block content %}
     {{ profile_detail(request.user.get_profile(), csrf_input, info_tab) }}
