@@ -122,6 +122,11 @@ def can_comment(user, conversation):
     return remaining > 0 and comment_cooldown(conversation, user) <= 0.0
 
 
+@rules.register_perm('ej_conversations.can_add_conversation')
+def can_add_conversation():
+    return True
+
+
 @rules.predicate
 def is_publisher(user):
     return False

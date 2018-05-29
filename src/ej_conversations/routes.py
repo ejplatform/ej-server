@@ -1,7 +1,7 @@
 from django.http import HttpResponseServerError
 
 from boogie.router import Router
-from . import models
+from . import models, forms
 
 app_name = 'ej_conversations'
 urlpatterns = Router(
@@ -17,12 +17,46 @@ urlpatterns = Router(
 conversation_url = '<model:conversation>/'
 
 
+#
+# Administrative views
+#
+@urlpatterns.route('add/',
+                   perms=['ej_conversations.can_add_conversation'])
+def create(request):
+    if request.method == 'GET':
+        return {
+            'form': forms.ConversationForm(),
+        }
+    elif request.method == 'POST':
+        form = forms.ConversationForm(
+            data=request.POST,
+            instance=models.Conversation(author=request.user),
+        )
+        if form.is_valid():
+            form.save()
+
+@urlpatterns.route(conversation_url + 'edit/',
+                   perms=['ej_conversations.can_edit_conversation'],
+                   template=True)
+def edit_conversation(conversation):
+    return {
+        'conversation': conversation,
+    }
+
+@urlpatterns.route(conversation_url + 'moderate/',
+                   perms=['ej_conversations.can_edit_conversation'],
+                   template=True)
+def moderate_comments(conversation):
+    return {
+        'conversation': conversation,
+        'comments': conversation.comments.pending(),
+    }
+
 @urlpatterns.route('')
 def list():
     return {
         'conversations': models.Conversation.objects.all(),
     }
-
 
 @urlpatterns.route(conversation_url)
 def detail(request, conversation):
@@ -40,24 +74,6 @@ def detail(request, conversation):
         comment = request.POST['comment'].strip()
         conversation.create_comment(request.user, comment)
     return ctx
-
-
-@urlpatterns.route('conversations/create/')
-@urlpatterns.route('conversations/edit/<id>')
-def create_or_update(request, id=None):
-    if request.user.id:
-        form = ConversationForm()
-        if request.method == 'GET':
-            ctx = {
-                'categories': Category.objects.all(),
-                'conversation': Conversation.objects.get(id=id) if id else Conversation(),
-                'form': form,
-            }
-            return render(request, "pages/conversations-create.jinja2", ctx)
-        elif request.method == 'POST':
-            return save_or_update_conversation(request.POST, request.user, id)
-
-    return redirect('/login/')
 
 
 @urlpatterns.route(conversation_url + 'comments/')
@@ -92,40 +108,8 @@ def leaderboard(conversation):
     }
 
 
-#
-# Administrative views
-#
-@urlpatterns.route('add/',
-                   template=True,
-                   perms=['ej_conversations.can_add_conversation'])
-def create_conversation():
-    return {
-        'form': None,
-    }
-
-
-@urlpatterns.route(conversation_url + 'edit/',
-                   perms=['ej_conversations.can_edit_conversation'],
-                   template=True)
-def edit_conversation(conversation):
-    return {
-        'conversation': conversation,
-    }
-
-
-@urlpatterns.route(conversation_url + 'moderate/',
-                   perms=['ej_conversations.can_edit_conversation'],
-                   template=True)
-def moderate_comments(conversation):
-    return {
-        'conversation': conversation,
-        'comments': conversation.comments.pending(),
-    }
-
-
-def save_or_update_conversation(request_form, request_author, id):
-    form = ConversationForm(data=request_form, instance=Conversation(author=request_author))
-    
+def create_or_update(data, author, id=None):
+    form = ConversationForm(data=data, instance=Conversation(author=author))
     if form.is_valid():
         if id:
             Conversation.objects.filter(id=id).update(
@@ -136,10 +120,7 @@ def save_or_update_conversation(request_form, request_author, id):
             conversation = Conversation.objects.get(id=id)
         else:
             conversation = form.save()
-            
-        return redirect(f'/conversations/{conversation.category.slug}/{conversation.slug}')
+
+        return redirect(conversation.get_absolute_url())
     else:
-        error_msg = _('Invalid conversation question or category')
-        form.add_error(None, error_msg)
-        ctx['form'] = form
-        return render(request, 'pages/conversations-create.jinja2', ctx)
+        return redirect('/conversations/create/')

@@ -6,7 +6,7 @@ from django.utils.translation import ugettext_lazy as _
 from boogie.router import Router
 from ej_configurations import fragment, social_icons
 from ej_conversations.models import Conversation
-from .forms import ConversationForm
+
 
 log = logging.getLogger('ej')
 urlpatterns = Router()

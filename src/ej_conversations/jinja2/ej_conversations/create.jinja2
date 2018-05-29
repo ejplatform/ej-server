@@ -1,0 +1,6 @@
+{% extends 'base.jinja2' %}
+{% from 'ej_conversations/components/conversation-create.jinja2' import conversation_create %}
+
+{% block content %}
+    {{conversation_create(form, csrf_input)}}
+{% endblock %}
