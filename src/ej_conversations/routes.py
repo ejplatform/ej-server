@@ -3,6 +3,7 @@ from django.http import HttpResponseServerError
 from boogie.router import Router
 from . import models
 
+app_name = 'ej_conversations'
 urlpatterns = Router(
     template='ej_conversations/{name}.jinja2',
     models={
@@ -49,7 +50,7 @@ def comment_list(conversation):
     }
 
 
-@urlpatterns.route(conversation_url + 'comments/<model:comment>', lookup_field={'comment': 'pk'})
+@urlpatterns.route(conversation_url + 'comments/<model:comment>/', lookup_field={'comment': 'pk'})
 def comment_detail(conversation, comment):
     return {
         'conversation': conversation,
@@ -100,5 +101,5 @@ def edit_conversation(conversation):
 def moderate_comments(conversation):
     return {
         'conversation': conversation,
-        'comments': conversation.comments.non_moderated(),
+        'comments': conversation.comments.pending(),
     }

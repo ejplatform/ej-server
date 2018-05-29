@@ -5,13 +5,14 @@ from django.conf import settings
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.urls import reverse
 from django.utils import translation
-from jinja2 import Environment
+from jinja2 import Environment, contextfunction
 from markdown import markdown
 from markupsafe import Markup
 
 from ej_configurations import social_icons, fragment
 from . import tags
 
+TAG_MAP = {k: getattr(tags, k) for k in tags.__all__}
 SALT_CHARS = string.ascii_letters + string.digits + '-_'
 
 
@@ -23,15 +24,20 @@ def environment(**options):
     env.globals.update(
         static=staticfiles_storage.url,
         url=reverse,
+
+        # Security
         salt_attr=salt_attr,
         salt_tag=salt_tag,
         salt=salt,
+
+        # Platform functions
         social_icons=social_icons,
         footer_data=lambda: fragment('global.footer', raises=False),
         service_worker=getattr(settings, 'SERVICE_WORKER', False),
-        link=tags.link,
-        action_button=tags.action_button,
-        rocket_button=tags.rocket_button,
+        context=context,
+
+        # Hyperpython tag functions
+        **TAG_MAP,
     )
     env.filters.update(
         markdown=lambda x: Markup(markdown(x)),
@@ -100,3 +106,25 @@ def salt_tag():
     A salt added as an invisible HTML tag.
     """
     return f'<div style="display: none" {salt_attr()}></div>'
+
+
+@contextfunction
+def context(ctx):
+    """
+    Renders the current context as a description list.
+    """
+    blacklist = {
+        # Jinja2
+        'range', 'dict', 'lipsum', 'cycler', 'joiner', 'namespace', '_',
+        'gettext', 'ngettext', 'request', 'csrf_input', 'csrf_token',
+
+        # Globals
+        'static', 'url', 'salt_attr', 'salt_tag', 'salt', 'social_icons',
+        'footer_data', 'service_worker', 'context', *TAG_MAP,
+
+        # Variables injected by the base template
+        'target', 'target_context',
+        'page_footer', 'sidebar', 'page_top_header', 'page_header',
+    }
+    ctx = {k: v for k, v in ctx.items() if k not in blacklist}
+    return tags.html_dict(ctx)

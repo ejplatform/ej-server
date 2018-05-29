@@ -16,7 +16,7 @@ urlpatterns = [
     path('', include('ej_users.routes', namespace='auth')),
 
     # EJ Routes
-    path('conversations/', include(('ej_conversations.routes', 'ej_conversations'), namespace='conversations')),
+    path('conversations/', include('ej_conversations.routes', namespace='conversations')),
     path('profile/', include(('ej_profiles.routes', 'ej_profiles'), namespace='profiles')),
     path('config/', include(('ej_configurations.routes', 'ej_configurations'), namespace='configurations')),
 
