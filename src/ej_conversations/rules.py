@@ -124,13 +124,13 @@ def can_comment(user, conversation):
 
 #@TODO create a logic to create conversation permission
 @rules.register_perm('ej_conversations.can_add_conversation')
-def can_add_conversation():
+def can_add_conversation(user):
     return True
 
 
 #@TODO create a logic to edit conversation permission
 @rules.register_perm('ej_conversations.can_edit_conversation')
-def can_add_conversation():
+def can_edit_conversation(user, conversation):
     return True
 
 

@@ -6,6 +6,7 @@ from django.utils.translation import ugettext_lazy as _
 from boogie.router import Router
 from ej_configurations import fragment, social_icons
 from ej_conversations.models import Conversation
+from ej_conversations import rules
 
 
 log = logging.getLogger('ej')
@@ -17,8 +18,13 @@ urlpatterns = Router()
 #
 @urlpatterns.route('')
 def home(request):
+    conversations = []
+    for conversation in Conversation.objects.all():
+        conversations.append(
+            (conversation, rules.can_edit_conversation(conversation, request.user))
+        )
     ctx = {
-        'conversations': Conversation.objects.all(),
+        'conversations': conversations,
         'home_banner_fragment': fragment('home.banner', raises=False),
         'how_it_works_fragment': fragment('home.how-it-works', raises=False),
         'start_now_fragment': fragment('home.start-now', raises=False),

@@ -2,6 +2,8 @@ from django.http import HttpResponseServerError
 
 from boogie.router import Router
 from . import models, forms
+from . import rules
+
 
 app_name = 'ej_conversations'
 urlpatterns = Router(
@@ -51,8 +53,7 @@ def edit(request, conversation):
         }
 
 @urlpatterns.route(conversation_url + 'moderate/',
-                   perms=['ej_conversations.can_edit_conversation'],
-                   template=True)
+                   perms=['ej_conversations.can_edit_conversation'])
 def moderate_comments(conversation):
     return {
         'conversation': conversation,
@@ -60,9 +61,14 @@ def moderate_comments(conversation):
     }
 
 @urlpatterns.route('')
-def list():
+def list(request):
+    conversations = []
+    for conversation in models.Conversation.objects.all():
+        conversations.append(
+            (conversation, rules.can_edit_conversation(conversation, request.user))
+        )
     return {
-        'conversations': models.Conversation.objects.all(),
+        'conversations': conversations,
     }
 
 @urlpatterns.route(conversation_url)
