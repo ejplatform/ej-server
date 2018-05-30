@@ -1,4 +1,5 @@
 from django.http import HttpResponseServerError
+from django.shortcuts import redirect
 
 from boogie.router import Router
 from . import models, forms
@@ -35,7 +36,8 @@ def create(request):
             instance=models.Conversation(author=request.user),
         )
         if form.is_valid():
-            form.save()
+            conversation = form.save()
+            return redirect(conversation.get_absolute_url())
 
 @urlpatterns.route(conversation_url + 'edit/',
                    perms=['ej_conversations.can_edit_conversation'])

@@ -102,6 +102,9 @@ def comment_cooldown(conversation, user):
     return max(comment_throttle() - interval.seconds, 0.0)
 
 
+#
+# Permissions
+#
 @rules.register_perm('ej_conversations.can_vote')
 def can_vote(user, conversation):
     """
