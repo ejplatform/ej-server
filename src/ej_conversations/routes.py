@@ -65,7 +65,7 @@ def list(request):
     conversations = []
     for conversation in models.Conversation.objects.all():
         conversations.append(
-            (conversation, rules.can_edit_conversation(conversation, request.user))
+            (conversation, rules.can_edit_conversation(request.user, conversation))
         )
     return {
         'conversations': conversations,
