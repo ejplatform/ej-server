@@ -1,0 +1,10 @@
+{% macro conversation_edit(form, csrf_input) %}
+    <h1>{{ _('Edit a conversation') }}</h1>
+    <form method="post">
+        {{ csrf_input }}
+        {{ form }}
+        <div>
+            <input type="submit" class="Button" value="{{ _('Editar') }}" name="create">
+        </div>
+    </form>
+{% endmacro %}

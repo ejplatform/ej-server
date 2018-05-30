@@ -36,12 +36,19 @@ def create(request):
             form.save()
 
 @urlpatterns.route(conversation_url + 'edit/',
-                   perms=['ej_conversations.can_edit_conversation'],
-                   template=True)
-def edit_conversation(conversation):
-    return {
-        'conversation': conversation,
-    }
+                   perms=['ej_conversations.can_edit_conversation'])
+def edit(request, conversation):
+    if request.method == 'GET':
+        return {
+            'form': forms.ConversationForm(instance=conversation)
+        }
+    elif request.method == 'POST':
+        return {
+            'form': forms.ConversationForm(
+                data=request.POST,
+                instance=models.Conversation(author=request.user),
+            ),
+        }
 
 @urlpatterns.route(conversation_url + 'moderate/',
                    perms=['ej_conversations.can_edit_conversation'],
@@ -106,21 +113,3 @@ def leaderboard(conversation):
         'conversation': conversation,
         'info': conversation.statistics(),
     }
-
-
-def create_or_update(data, author, id=None):
-    form = ConversationForm(data=data, instance=Conversation(author=author))
-    if form.is_valid():
-        if id:
-            Conversation.objects.filter(id=id).update(
-                question=form.cleaned_data['question'],
-                title=form.cleaned_data['title'],
-                category=form.cleaned_data['category'],
-            )
-            conversation = Conversation.objects.get(id=id)
-        else:
-            conversation = form.save()
-
-        return redirect(conversation.get_absolute_url())
-    else:
-        return redirect('/conversations/create/')

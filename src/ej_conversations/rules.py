@@ -122,7 +122,14 @@ def can_comment(user, conversation):
     return remaining > 0 and comment_cooldown(conversation, user) <= 0.0
 
 
+#@TODO create a logic to create conversation permission
 @rules.register_perm('ej_conversations.can_add_conversation')
+def can_add_conversation():
+    return True
+
+
+#@TODO create a logic to edit conversation permission
+@rules.register_perm('ej_conversations.can_edit_conversation')
 def can_add_conversation():
     return True
 
