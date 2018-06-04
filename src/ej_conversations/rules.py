@@ -132,8 +132,8 @@ def can_add_conversation(user):
 
 
 #@TODO create a logic to edit conversation permission
-@rules.register_perm('ej_conversations.can_edit_conversation')
-def can_edit_conversation(user, conversation):
+@rules.register_perm('ej_conversations.is_owner')
+def is_owner(user, conversation):
     return user == conversation.author
 
 

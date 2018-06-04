@@ -1,0 +1,7 @@
+{% from 'ej_conversations/components/comment-card.jinja2' import comment_card %}
+
+{% macro comment_list(comments, csrf_input) %}
+    {% for comment in comments %}
+        {{comment_card(comment, csrf_input)}}
+    {% endfor %}
+{% endmacro %}

@@ -1,0 +1,6 @@
+{% extends 'base.jinja2' %}
+{% from 'ej_conversations/components/comment-list.jinja2' import comment_list %}
+
+{% block content %}
+    {{ comment_list(comments, csrf_input) }}
+{% endblock %}

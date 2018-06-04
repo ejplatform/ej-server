@@ -1,0 +1,23 @@
+{% macro comment_card(comment, csrf_input) %}
+    <div class="Comment">
+        <p>{{ comment.content }}</p>
+        <form method="post">
+            {{ csrf_input }}
+            <input type="hidden" name="action" value="vote">
+            <ul class="ConversationComment-actions">
+                <li up-expand>
+                    <button type="submit" form="Comment-form" name="vote" value="approve">
+                        <i class="fa fa-check"></i>
+                    </button>
+                    <span>{{ _('Approve') }}</span>
+                </li>
+                <li up-expand>
+                    <button type="submit" form="Comment-form" name="vote" value="disapprove">
+                        <i class="fa fa-times"></i>
+                    </button>
+                    <span>{{ _('Disapprove') }}</span>
+                </li>
+            </ul>
+        </form>
+    </div>
+{% endmacro %}
