@@ -12,15 +12,22 @@ from rest_framework.authtoken.models import Token
 
 from boogie.router import Router
 from ej_users import forms
+from ej_conversations.models.conversation import Conversation
+from ej_conversations import rules
 
 User = get_user_model()
 
 app_name = 'ej_users'
 urlpatterns = Router(
     template='ej_users/{name}.jinja2',
+    models={
+        'user': User,
+    },
+    lookup_field='username',
 )
 log = logging.getLogger('ej')
 
+user_url = '<model:user>/'
 
 @urlpatterns.route('register/')
 def register(request):
@@ -109,6 +116,18 @@ def remove_account(request):
     return {
         'user': request.user,
         'profile': request.user.profile,
+    }
+
+
+@urlpatterns.route(user_url+"conversations/", template="ej_conversations/list.jinja2")
+def user_conversations(request, user):
+    conversations = []
+    for conversation in Conversation.objects.filter(author=user):
+        conversations.append(
+            (conversation, rules.can_edit_conversation(request.user, conversation))
+        )
+    return {
+        'conversations': conversations
     }
 
 
