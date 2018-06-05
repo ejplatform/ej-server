@@ -32,5 +32,3 @@ class VoteForm(forms.Form):
         if action:
             return VOTE_VALUES[action]
         return 0
-
-

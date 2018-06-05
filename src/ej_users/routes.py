@@ -29,6 +29,7 @@ log = logging.getLogger('ej')
 
 user_url = '<model:user>/'
 
+
 @urlpatterns.route('register/')
 def register(request):
     form = forms.RegistrationForm()

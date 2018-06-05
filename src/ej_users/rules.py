@@ -43,4 +43,3 @@ def profile_class():
     Return a profile instance for user.
     """
     return import_later('ej_profiles.models:Profile')
-
