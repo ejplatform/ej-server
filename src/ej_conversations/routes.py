@@ -86,6 +86,7 @@ def detail(request, conversation):
     comment = conversation.next_comment(request.user, None)
     ctx = {
         'conversation': conversation,
+        'edit_perm': rules.can_edit_conversation(request.user, conversation),
         'comment': comment,
     }
     if comment and request.POST.get('action') == 'vote':
