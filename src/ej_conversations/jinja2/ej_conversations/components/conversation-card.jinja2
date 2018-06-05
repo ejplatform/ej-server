@@ -15,7 +15,7 @@
             </ul>
             {{ action_button('Participar <i class="fa fa-comments"></i>', conversation.get_absolute_url()) }}
             {% if moderate_perm %}
-                {{ action_button('Moderar <i class="fa fa-comments"></i>', conversation.get_absolute_url()) }}
+                {{ action_button('Moderar <i class="fa fa-comments"></i>', conversation.get_absolute_url() + 'moderate/') }}
             {% endif %}
         </div>
     </div>
