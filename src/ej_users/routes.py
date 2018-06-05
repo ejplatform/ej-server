@@ -14,6 +14,7 @@ from boogie.router import Router
 from ej_users import forms
 from ej_conversations.models.conversation import Conversation
 from ej_conversations import rules
+from ej.utils.perms import conversations
 
 User = get_user_model()
 
@@ -143,10 +144,5 @@ def clean_cookies():
 
 
 def user_conversations(request, user):
-    conversations = []
-    for conversation in Conversation.objects.filter(author=user):
-        conversations.append(
-            (conversation, rules.can_moderate_conversation(user, conversation))
-        )
-    ctx = {'conversations': conversations}
+    ctx = {'conversations': conversations(request.user,[rules.can_moderate_conversation], Conversation.objects.filter(author=user))}
     return render(request,"ej_conversations/list.jinja2",ctx)

@@ -2,8 +2,8 @@
 {% from 'ej_conversations/components/comment-detail.jinja2' import comment_form %}
 
 {% macro conversation_detail(conversation, user) %}
-    {#{% if   %} #}
-    {{ action_button(_('Editar'), conversation.get_absolute_url() + 'edit/') }}
+    {# {% if   %} #}
+    {{ action_button( _('Edit Conversation'), conversation.get_absolute_url() + 'edit/') }}
     {# {% endif %} #}
     <div class="ConversationDetail">
         <div class="ConversationDetail-banner">
