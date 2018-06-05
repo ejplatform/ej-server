@@ -1,5 +1,5 @@
 import logging
-
+from django.shortcuts import render
 from django.contrib import auth
 from django.contrib.auth import get_user_model
 from django.db import IntegrityError
@@ -119,18 +119,6 @@ def remove_account(request):
     }
 
 
-@urlpatterns.route(user_url+"conversations/", template="ej_conversations/list.jinja2")
-def user_conversations(request, user):
-    conversations = []
-    for conversation in Conversation.objects.filter(author=user):
-        conversations.append(
-            (conversation, rules.can_edit_conversation(request.user, conversation))
-        )
-    return {
-        'conversations': conversations
-    }
-
-
 @urlpatterns.route('key/')
 def api_key(request):
     if request.user.id is None:
@@ -151,3 +139,13 @@ def clean_cookies():
     response.delete_cookie('sessionid')
     response.delete_cookie('csrftoken')
     return response
+
+
+def user_conversations(request, user):
+    conversations = []
+    for conversation in Conversation.objects.filter(author=user):
+        conversations.append(
+            (conversation, rules.can_moderate_conversation(user, conversation))
+        )
+    ctx = {'conversations': conversations}
+    return render(request,"ej_conversations/list.jinja2",ctx)
