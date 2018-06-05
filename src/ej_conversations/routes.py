@@ -47,12 +47,13 @@ def edit(request, conversation):
             'form': forms.ConversationForm(instance=conversation)
         }
     elif request.method == 'POST':
-        return {
-            'form': forms.ConversationForm(
+        form = forms.ConversationForm(
                 data=request.POST,
-                instance=models.Conversation(author=request.user),
-            ),
-        }
+                instance=conversation,
+        )
+        if form.is_valid():
+            form.instance.save()
+        return redirect(conversation.get_absolute_url())
 
 @urlpatterns.route(conversation_url + 'moderate/',
                    perms=['ej_conversations.can_moderate_conversation'])
