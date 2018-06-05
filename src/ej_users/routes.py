@@ -124,7 +124,7 @@ def user_conversations(request, user):
     conversations = []
     for conversation in Conversation.objects.filter(author=user):
         conversations.append(
-            (conversation, rules.is_owner(request.user, conversation))
+            (conversation, rules.can_edit_conversation(request.user, conversation))
         )
     return {
         'conversations': conversations
