@@ -5,6 +5,7 @@ from boogie.router import Router
 from . import models, forms
 from . import rules
 
+from ej.utils.perms import conversations
 
 app_name = 'ej_conversations'
 urlpatterns = Router(
@@ -39,6 +40,7 @@ def create(request):
             conversation = form.save()
             return redirect(conversation.get_absolute_url())
 
+
 @urlpatterns.route(conversation_url + 'edit/',
                    perms=['ej_conversations.can_edit_conversation'])
 def edit(request, conversation):
@@ -54,10 +56,11 @@ def edit(request, conversation):
             ),
         }
 
+
 @urlpatterns.route(conversation_url + 'moderate/',
                    perms=['ej_conversations.can_moderate_conversation'])
 def moderate(conversation):
-    comments =[]
+    comments = []
     for comment in models.Comment.objects.filter(conversation=conversation, status='pending'):
         if(comment.is_pending):
             comments.append(comment)
@@ -66,16 +69,16 @@ def moderate(conversation):
         'comments': comments,
     }
 
+
 @urlpatterns.route('')
 def list(request):
-    conversations = []
-    for conversation in models.Conversation.objects.all():
-        conversations.append(
-            (conversation, rules.can_edit_conversation(request.user, conversation))
-        )
     return {
-        'conversations': conversations,
+        'conversations': conversations(
+            request.user,
+            [rules.can_moderate_conversation]
+        ),
     }
+
 
 @urlpatterns.route(conversation_url)
 def detail(request, conversation):

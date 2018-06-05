@@ -1,13 +1,11 @@
 import logging
 
-from django.shortcuts import render, redirect, HttpResponse
-from django.utils.translation import ugettext_lazy as _
+from django.shortcuts import render, redirect
 
 from boogie.router import Router
 from ej_configurations import fragment, social_icons
-from ej_conversations.models import Conversation
 from ej_conversations import rules
-
+from ej.utils.perms import conversations
 
 log = logging.getLogger('ej')
 urlpatterns = Router()
@@ -18,20 +16,18 @@ urlpatterns = Router()
 #
 @urlpatterns.route('')
 def home(request):
-    conversations = []
-    for conversation in Conversation.objects.all():
-        conversations.append(
-            (conversation, rules.can_moderate_conversation(request.user, conversation))
-        )
     ctx = {
-        'conversations': conversations,
+        'conversations': conversations(
+            request.user,
+            [rules.can_moderate_conversation]
+        ),
         'home_banner_fragment': fragment('home.banner', raises=False),
         'how_it_works_fragment': fragment('home.how-it-works', raises=False),
         'start_now_fragment': fragment('home.start-now', raises=False),
         'social_media_icons': social_icons(),
     }
     return render(request, 'pages/home.jinja2', ctx)
-        
+
 
 @urlpatterns.route('start/')
 def start(request):

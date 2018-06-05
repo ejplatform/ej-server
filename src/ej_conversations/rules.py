@@ -125,20 +125,22 @@ def can_comment(user, conversation):
     return remaining > 0 and comment_cooldown(conversation, user) <= 0.0
 
 
-#@TODO create a logic to create conversation permission
+# @TODO create a logic to create conversation permission
 @rules.register_perm('ej_conversations.can_add_conversation')
 def can_add_conversation(user):
     return True
 
 
-#@TODO create a logic to edit conversation permission
+# @TODO create a logic to edit conversation permission
 @rules.register_perm('ej_conversations.can_edit_conversation')
 def can_edit_conversation(user, conversation):
     return user == conversation.author
 
+
 @rules.register_perm('ej_conversations.can_moderate_conversation')
-def can_moderate_conversation(user,conversation):
-    return can_edit_conversation(user,conversation)
+def can_moderate_conversation(user, conversation):
+    return can_edit_conversation(user, conversation)
+
 
 @rules.predicate
 def is_publisher(user):

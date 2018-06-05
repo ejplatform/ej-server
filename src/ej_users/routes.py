@@ -29,6 +29,7 @@ log = logging.getLogger('ej')
 
 user_url = '<model:user>/'
 
+
 @urlpatterns.route('register/')
 def register(request):
     form = forms.RegistrationForm()
@@ -119,7 +120,7 @@ def remove_account(request):
     }
 
 
-@urlpatterns.route(user_url+"conversations/", template="ej_conversations/list.jinja2")
+@urlpatterns.route(user_url + "conversations/", template="ej_conversations/list.jinja2")
 def user_conversations(request, user):
     conversations = []
     for conversation in Conversation.objects.filter(author=user):
