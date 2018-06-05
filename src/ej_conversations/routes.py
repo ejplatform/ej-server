@@ -40,7 +40,7 @@ def create(request):
             return redirect(conversation.get_absolute_url())
 
 @urlpatterns.route(conversation_url + 'edit/',
-                   perms=['ej_conversations.is_owner'])
+                   perms=['ej_conversations.can_edit_conversation'])
 def edit(request, conversation):
     if request.method == 'GET':
         return {
@@ -55,7 +55,7 @@ def edit(request, conversation):
         }
 
 @urlpatterns.route(conversation_url + 'moderate/',
-                   perms=['ej_conversations.is_owner'])
+                   perms=['ej_conversations.can_moderate_conversation'])
 def moderate(conversation):
     comments =[]
     for comment in models.Comment.objects.filter(conversation=conversation, status='pending'):
@@ -71,7 +71,7 @@ def list(request):
     conversations = []
     for conversation in models.Conversation.objects.all():
         conversations.append(
-            (conversation, rules.is_owner(request.user, conversation))
+            (conversation, rules.can_edit_conversation(request.user, conversation))
         )
     return {
         'conversations': conversations,

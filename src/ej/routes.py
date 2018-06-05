@@ -21,7 +21,7 @@ def home(request):
     conversations = []
     for conversation in Conversation.objects.all():
         conversations.append(
-            (conversation, rules.is_owner(request.user, conversation))
+            (conversation, rules.can_moderate_conversation(request.user, conversation))
         )
     ctx = {
         'conversations': conversations,
