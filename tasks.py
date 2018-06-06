@@ -166,3 +166,15 @@ def i18n(ctx, compile=False, edit=False, lang='pt_BR'):
 
         print('Cleaning up')
         ctx.run('rm locale/*.pot')
+
+
+#
+# Good practices and productivity
+#
+def install_hooks(ctx):
+    """
+    Install git hooks in repository.
+    """
+
+    print('Installing flake8 pre-commit hook')
+    ctx.run('flake8 --install-hook=git')

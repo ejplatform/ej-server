@@ -5,6 +5,7 @@ from model_utils.models import TimeStampedModel
 
 from boogie.fields import EnumField
 from ej_conversations.models import Choice
+from .manager import ClusterManager
 
 
 class Cluster(TimeStampedModel):
@@ -28,6 +29,7 @@ class Cluster(TimeStampedModel):
         'Stereotype',
     )
 
+    objects = ClusterManager()
     __str__ = (lambda self: self.name)
 
 

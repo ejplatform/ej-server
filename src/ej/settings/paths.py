@@ -5,7 +5,7 @@ from boogie.configurations import PathsConf as Base, env
 
 
 class PathsConf(Base):
-    REPO_DIR = pathlib.Path(__file__).parent.parent.parent.parent
+    BASE_DIR = REPO_DIR = pathlib.Path(__file__).parent.parent.parent.parent
     ROOT_DIR = SRC_DIR = APPS_DIR = REPO_DIR / 'src'
     PROJECT_DIR = ROOT_DIR / 'ej'
 
@@ -16,6 +16,9 @@ class PathsConf(Base):
     STATIC_ROOT = env(LOCAL_DIR / 'static')
     FRAGMENTS_DIR = LOCAL_DIR / 'fragments'
     PAGES_DIR = LOCAL_DIR / 'pages'
+    LOG_DIR = LOCAL_DIR / 'logs'
+    LOG_FILE_PATH = LOG_DIR / 'logfile.log'
+
 
     # Frontend paths
     LIB_DIR = REPO_DIR / 'lib'
@@ -28,7 +31,7 @@ class PathsConf(Base):
         Create missing paths.
         """
         for path in [self.LOCAL_DIR, self.DB_DIR, self.MEDIA_ROOT,
-                     self.STATIC_ROOT]:
+                     self.STATIC_ROOT, self.LOG_DIR]:
             if not os.path.exists(path):
                 mkdir_recursive(path)
 

@@ -1,12 +1,12 @@
 from hyperpython import a, i
-from hyperpython.components import html_table, html_list, html_dict
+from hyperpython.components import html_table, html_list, html_map
 from hyperpython import h
 
 _ = lambda x: x
 
 __all__ = [
     # Hyperpython components
-    'h', 'html_table', 'html_list', 'html_dict',
+    'h', 'html_table', 'html_list', 'html_map',
 
     # EJ components
     'link', 'rocket_button', 'action_button',
