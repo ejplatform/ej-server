@@ -31,7 +31,7 @@ def create_conversation(request):
     if request.user.id:
         if request.method == 'GET':
             ctx = {}
-            return render(request, "pages/../ej_conversations/jinja2/ej_conversations/conversations-create.jinja2", ctx)
+            return render(request, "ej_conversations/conversations-create.jinja2", ctx)
         elif request.method == 'POST':
             form = ConversationForm(data=request.POST, instance=Conversation(author=request.user))
             if form.is_valid():

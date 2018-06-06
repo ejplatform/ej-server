@@ -1,6 +1,8 @@
 from random import randrange
 
-from django.db.models import QuerySet, Manager
+from django.db.models import Manager
+
+from boogie.models import QuerySet
 
 
 class ConversationQuerySet(QuerySet):
@@ -19,8 +21,20 @@ class ConversationQuerySet(QuerySet):
 
     def _random(self):
         size = self.count()
-        print(size, self.all())
         return self.all()[randrange(size)]
 
 
+class CommentQuerySet(QuerySet):
+    def approved(self):
+        return self.filter(status=self.model.STATUS.approved)
+
+    def pending(self):
+        return self.filter(status=self.model.STATUS.pending)
+
+    def rejected(self):
+        return self.filter(status=self.model.STATUS.rejected)
+
+
 ConversationManager = Manager.from_queryset(ConversationQuerySet, 'ConversationManager')
+CommentManager = Manager.from_queryset(CommentQuerySet, 'CommentManager')
+BoogieManager = Manager.from_queryset(QuerySet)

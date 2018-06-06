@@ -46,6 +46,7 @@ class Conversation(TimeStampedModel, StatusModel):
     STATUS = Choices(
         ('personal', _('Personal')),
         ('promoted', _('Promoted')),
+        ('pending', _('Pending')),
     )
     question = models.TextField(
         _('Question'),

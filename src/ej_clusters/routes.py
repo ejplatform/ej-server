@@ -6,7 +6,6 @@ from .models import Stereotype, Cluster
 
 urlpatterns = Router(
     template='ej_clusters/{name}.jinja2',
-    base_url='<model:conversation>/',
     perms=['ej_converations.can_edit_conversation'],
     object='conversation',
     login=True,
@@ -17,19 +16,20 @@ urlpatterns = Router(
     lookup_field='slug',
     lookup_type='slug',
 )
+conversation_url = '<model:conversation>/'
 
 
 #
 # Cluster info
 #
-@urlpatterns.route('clusters/')
+@urlpatterns.route(conversation_url + 'clusters/')
 def index(conversation):
     return {
         'conversation': conversation,
     }
 
 
-@urlpatterns.route('clusters/<int:index>/')
+@urlpatterns.route(conversation_url + 'clusters/<int:index>/')
 def detail(conversation, index):
     cluster = get_object_or_404(Cluster, conversation=conversation, index=index)
     return {
@@ -41,7 +41,7 @@ def detail(conversation, index):
 #
 # Stereotypes
 #
-@urlpatterns.route('stereotypes/')
+@urlpatterns.route(conversation_url + 'stereotypes/')
 def stereotype_list(conversation):
     return {
         'conversation': conversation,

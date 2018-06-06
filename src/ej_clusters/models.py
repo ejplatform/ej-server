@@ -7,14 +7,15 @@ from model_utils.models import TimeStampedModel
 
 from boogie.fields import EnumField
 from boogie.rest import rest_api
-from ej_conversations.models import Choice, Vote
+from ej_conversations.managers import BoogieManager
+from ej_conversations.models import Choice
 from ej_conversations.models.vote import normalize_choice
 from .manager import ClusterManager
 
 log = logging.getLogger('ej')
 
 
-@rest_api()
+@rest_api(exclude=['users', 'stereotypes'])
 class Cluster(TimeStampedModel):
     """
     Represents an opinion group.
@@ -41,12 +42,14 @@ class Cluster(TimeStampedModel):
 
     objects = ClusterManager()
 
-    __str__ = (lambda self: self.name)
+    def __str__(self):
+        msg = _('{name} ("{conversation}" conversation)')
+        return msg.format(name=self.name, conversation=str(self.conversation))
 
 
 class Stereotype(models.Model):
     """
-    A "fake" user created to help classification.
+    A "fake" user created to help with classification.
     """
 
     name = models.CharField(
@@ -61,26 +64,26 @@ class Stereotype(models.Model):
 
     __str__ = (lambda self: self.name)
 
-    def vote(self, author, comment, choice, commit=True):
+    def vote(self, comment, choice, commit=True):
         """
         Cast a single vote for the stereotype.
         """
         choice = normalize_choice(choice)
-        log.debug(f'Vote: {author} - {choice}')
-        vote = Vote(author=author, comment=comment, choice=choice)
+        log.debug(f'Vote: {self.name} (stereotype) - {choice}')
+        vote = StereotypeVote(author=self, comment=comment, choice=choice)
         vote.full_clean()
         if commit:
             vote.save()
         return vote
 
-    def cast_votes(self, author, comments):
+    def cast_votes(self, choices):
         """
         Create votes from dictionary of comments to choices.
         """
         votes = []
-        for comment, choice in comments.items():
-            votes.append(self.vote(author, comment, choice, commit=True))
-        Vote.objects.bulk_update(votes)
+        for comment, choice in choices.items():
+            votes.append(self.vote(comment, choice, commit=True))
+        StereotypeVote.objects.bulk_update(votes)
         return votes
 
 
@@ -101,6 +104,7 @@ class StereotypeVote(models.Model):
         on_delete=models.CASCADE,
     )
     choice = EnumField(Choice)
+    objects = BoogieManager()
 
     def __str__(self):
         return f'StereotypeVote({self.stereotype}, value={self.value})'
@@ -130,44 +134,18 @@ class StereotypeClusterMap(models.Model):
     """
     stereotype = models.ForeignKey(Stereotype, on_delete=models.CASCADE)
     cluster = models.ForeignKey(Cluster, on_delete=models.CASCADE)
-    conversation = models.ForeignKey('ej_conversations.Conversation',
-                                     on_delete=models.CASCADE)
+    conversation = models.ForeignKey(
+        'ej_conversations.Conversation',
+        on_delete=models.CASCADE,
+        editable=False,
+    )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        if self.conversation_id is None:
+        if self.conversation_id is None and self.cluster_id is not None:
             self.conversation_id = self.cluster.conversation_id
 
     class Meta:
         unique_together = [('stereotype', 'conversation')]
 
 
-def update_clusters(conversation, user_map=None, stereotype_map=None,
-                    clean=False):
-    """
-    Update cluster
-    """
-    cluster_names = set()
-    cluster_names.update(user_map.values())
-    cluster_names.update(stereotype_map.values())
-
-    if clean:
-        UserClusterMap.objects.filter(conversation=conversation).delete()
-        StereotypeClusterMap.objects.filter(conversation=conversation).delete()
-
-    clusters = {
-        k: Cluster.objects.get_or_create(conversation=conversation, name=k)[0]
-        for k in cluster_names
-    }
-
-    factory = UserClusterMap.objects.create
-    for user, cluster_name in user_map.items():
-        cluster = clusters[cluster_name]
-        factory(user=user, conversation=conversation, cluster=cluster)
-
-    factory = StereotypeClusterMap.objects.create
-    for user, cluster_name in stereotype_map.items():
-        cluster = clusters[cluster_name]
-        factory(stereotype=user, conversation=conversation, cluster=cluster)
-
-    return list(clusters.values())

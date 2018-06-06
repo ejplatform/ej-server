@@ -1,4 +1,4 @@
-{% from 'ej_conversations/components/comment-detail.jinja2' import comment_detail %}
+{% from 'ej_conversations/components/comment-detail.jinja2' import comment_detail, comment_form with context %}
 
 {% macro conversation_detail(conversation, user) %}
     <div class="ConversationDetail">
@@ -34,7 +34,7 @@
 
         {# Post a new comment #}
         {% if user.is_authenticated %}
-            {{ comment_form() }}
+            {{ comment_form(csrf_input) }}
         {% endif %}
 
         {# Opinion #}

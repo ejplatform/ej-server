@@ -4,6 +4,8 @@ from django.shortcuts import redirect
 from boogie.router import Router
 from .forms import ProfileForm
 
+
+app_name = 'ej_profiles'
 urlpatterns = Router(
     template='ej_profiles/{name}.jinja2',
     login=True,

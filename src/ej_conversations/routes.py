@@ -78,7 +78,6 @@ def leaderboard(conversation):
 # Administrative views
 #
 @urlpatterns.route('add/',
-                   template=True,
                    perms=['ej_conversations.can_add_conversation'])
 def create_conversation():
     return {
@@ -87,8 +86,7 @@ def create_conversation():
 
 
 @urlpatterns.route(conversation_url + 'edit/',
-                   perms=['ej_conversations.can_edit_conversation'],
-                   template=True)
+                   perms=['ej_conversations.can_edit_conversation'])
 def edit_conversation(conversation):
     return {
         'conversation': conversation,
@@ -96,8 +94,7 @@ def edit_conversation(conversation):
 
 
 @urlpatterns.route(conversation_url + 'moderate/',
-                   perms=['ej_conversations.can_edit_conversation'],
-                   template=True)
+                   perms=['ej_conversations.can_edit_conversation'])
 def moderate_comments(conversation):
     return {
         'conversation': conversation,

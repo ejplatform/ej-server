@@ -40,7 +40,7 @@
             <tbody>
             {% for comment in conversation.comments.all() %}
                 <tr>
-                    {% set stats = comment.get_statistics(ratios=True) %}
+                    {% set stats = comment.statistics(ratios=True) %}
                     <td>{{ comment.content }}</td>
                     <td>{{ comment.author.name }}</td>
                     <td>{{ stats.total }}</td>

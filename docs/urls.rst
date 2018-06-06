@@ -42,7 +42,10 @@ profile/ (profile:index):
 profile/edit/ (profile:edit):
     Edit profile.
 profile/comments/ (profile:comments):
-    Show statistics about all approved comments created by a user.
+    Show statistics about all comments created by a user.
+profile/comments/<which>/ (profile:comments-filter):
+    Show statistics about all created by a user in the given category. <which>
+    can be "approved", "rejected" or "pending".
 
 Those URLs require login and are implemented in the ej_profiles app.
 
@@ -96,19 +99,17 @@ Public views for displaying information about conversations.
 
 conversations/ (conversations:list):
     List all available conversations
-conversations/<category>/ (conversations:category):
-    List all conversations in the given category
-conversations/<category>/<conversation>/ (conversations:conversation-detail):
+conversations/<conversation>/ (conversations:conversation-detail):
     Detail page for an specific conversation.
-conversations/<category>/<conversation>/comments/  (conversations:comment-list):
+conversations/<conversation>/comments/  (conversations:comment-list):
     Show all comments the user already voted in the given conversation.
-conversations/<category>/<conversation>/my-comments/  (conversations:user-comments):
+conversations/<conversation>/my-comments/  (conversations:user-comments):
     Show information about all comments a user posted in a conversation.
-conversations/<category>/<conversation>/comments/<id>/ (conversations:comment-detail):
+conversations/<conversation>/comments/<id>/ (conversations:comment-detail):
     Show a specific comment + associated statistics.
-conversations/<category>/<conversation>/info/ (conversations:info):
+conversations/<conversation>/info/ (conversations:info):
     Advanced information about conversation (statistics, graphs, etc)
-conversations/<category>/<conversation>/leaderboard/ (conversations:leaderboard):
+conversations/<conversation>/leaderboard/ (conversations:leaderboard):
     Leaderboard: show a list of users sorted by rank.
 
 Those URLs are implemented in the ej_conversations app. Notice that this app
@@ -124,9 +125,9 @@ conversation.
 
 conversations/create/ (conversations:create-conversation):
     Add a new conversation.
-conversations/<category>/<conversation>/edit/ (conversations:edit-conversation):
+conversations/<conversation>/edit/ (conversations:edit-conversation):
     Edit conversation.
-conversations/<category>/<conversation>/moderate/ (conversations:moderate-comments):
+conversations/<conversation>/moderate/ (conversations:moderate-comments):
     Can classify all non-moderated comments.
 
 Those tree urls are implemented in the ej_conversations app.
@@ -137,10 +138,10 @@ Stereotype management
 
 Only staff members and the conversation owner have access to those pages.
 
-conversations/<category>/<conversation>/stereotypes/ (clusters:stereotype-list):
+conversations/<conversation>/stereotypes/ (clusters:stereotype-list):
     List of all stereotypes showing information about the assigned cluster and
     statistics.
-conversations/<category>/<conversation>/stereotypes/<id>/ (clusters:stereotype-vote):
+conversations/<conversation>/stereotypes/<id>/ (clusters:stereotype-vote):
     Allow the given stereotype to vote in conversation.
 
 Stereotypes are implemented in ej_clusters.
@@ -151,14 +152,14 @@ Reports
 
 Only staff members and the conversation owner have access to those pages.
 
-conversations/<category>/<conversation>/reports/ (reports:index):
+conversations/<conversation>/reports/ (reports:index):
     Aggregate reports for the given conversation.
-conversations/<category>/<conversation>/reports/clusters/ (reports:clusters):
+conversations/<conversation>/reports/clusters/ (reports:clusters):
     Show information for each cluster.
-conversations/<category>/<conversation>/reports/radar/ (reports:radar):
+conversations/<conversation>/reports/radar/ (reports:radar):
     Display comments in a 2D layout to show the distribution of opinions and
     comments.
-conversations/<category>/<conversation>/reports/divergence/ (reports:divergence):
+conversations/<conversation>/reports/divergence/ (reports:divergence):
     Hierarchical view for the degree of divergence and concordance of each
     comment.
 
@@ -171,11 +172,11 @@ Clusters
 Display the clusters associated with a conversation. All those urls require
 authentication, but are visible to all users.
 
-conversations/<category>/<conversation>/clusters/ (clusters:index):
+conversations/<conversation>/clusters/ (clusters:index):
     See cluster information in conversation. Display in which cluster the user
     was classified. The user must have cast a minimum number of votes if it
     wants to be classified into clusters.
-conversations/<category>/<conversation>/clusters/<index>/ (clusters:detail):
+conversations/<conversation>/clusters/<index>/ (clusters:detail):
     Show information about a specific cluster.
 
 Urls are implemented into the ej_clusters app.

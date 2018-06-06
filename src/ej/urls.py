@@ -14,16 +14,21 @@ urlpatterns = [
     # Basic authentication and authorization
     path('', include('ej.routes')),
     path('', include('ej_users.routes', namespace='auth')),
+    path('profile/', include('ej_profiles.routes', namespace='profile')),
 
-    # EJ Routes
-    path('conversations/', include('ej_conversations.routes', namespace='conversations')),
-    path('profile/', include(('ej_profiles.routes', 'ej_profiles'), namespace='profiles')),
-    path('config/', include(('ej_configurations.routes', 'ej_configurations'), namespace='configurations')),
+    # Configuration
+    path('config/', include('ej_configurations.routes', namespace='conf')),
 
-    path('dataviz/', include(('ej_dataviz.routes', 'ej_dataviz'), namespace='dataviz')),
+    # Conversations and other EJ-specific routes
+    path('conversations/', include('ej_conversations.routes', namespace='conversation')),
+    path('', include('ej_reports.routes', namespace='report')),
 
     # Rocket
-    path('talks/', include(('ej_rocketchat.routes', 'ej_rocketchat'), namespace='rocketchat')),
+    *(
+        [path('talks/', include('ej_rocketchat.routes', namespace='rocketchat'))]
+        if settings.EJ_ENABLE_ROCKETCHAT
+        else ()
+    ),
 
     # Admin
     path(settings.ADMIN_URL.rstrip('^'), admin.site.urls),

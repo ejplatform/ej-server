@@ -72,10 +72,10 @@ class ExampleData:
 
     def make_school_comments(self):
         new = self._comment_factory(self.school_system)
+        new('Students should have a say on what they want to learn.')
         new('We need more arts and crafts lessons.')
         new('We have to encourage the use technology and teach programming.')
         new('Our curriculum should be open and focused on real problems.')
-        new('Students should have a say on what they want to learn.')
         new('We don\'t need no education! We don\'t need no thought control!',
             status='pending')
 
