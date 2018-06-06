@@ -184,7 +184,7 @@ def update_deps(ctx, all=False):
     """
     Update volatile dependencies
     """
-    ctx.run(f'{python} -m pip install -r etc/requirements/git-modules.txt')
+    ctx.run(f'{python} etc/scripts/dep-update.py')
     if all:
         ctx.run(f'{python} -m pip install -r etc/requirements/develop.txt')
     else:
