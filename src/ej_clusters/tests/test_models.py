@@ -3,12 +3,12 @@ import pytest
 from ej_conversations import mommy_recipes as conversations
 
 
-@pytest.fixture(scope='class')
+@pytest.fixture
 def conversation(db):
     """
     Conversation with votes, comments and clusters.
     """
-    conversation = conversations.conversation()
+    conversation = conversations.conversation.make()
     return conversation
 
 
