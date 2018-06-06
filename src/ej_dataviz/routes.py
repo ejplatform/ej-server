@@ -1,6 +1,6 @@
 from boogie.router import Router
-from ej_dataviz.tables import test
 from ej_dataviz.plots import test_hist
+from ej_dataviz.tables import test
 
 urlpatterns = Router(
     template='ej_dataviz/{name}.jinja2',
@@ -13,6 +13,7 @@ def index():
     return {
         'table': table,
     }
+
 
 @urlpatterns.route('histogram', login=False)
 def histogram():

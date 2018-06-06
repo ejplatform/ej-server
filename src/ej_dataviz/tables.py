@@ -39,8 +39,8 @@ def create_table_head(columns, align='left'):
 
 
 def create_table_body(df):
-    # Auxiliar method that creates table body
     main_list = []
+
     for i in range(0, len(df.index)):
         line_list = []
         for j in range(0, len(df.columns)):
@@ -53,9 +53,4 @@ def create_table_body(df):
 
 
 def create_table_line(lines):
-    # Auxiliar method that creates table line
-    line_list = [td(str(li)) for li in lines]
-
-    return (
-        tr()[line_list]
-    )
+    return tr([td(str(li)) for li in lines])

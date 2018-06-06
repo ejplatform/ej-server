@@ -187,3 +187,6 @@ def update_deps(ctx, all=False):
     ctx.run(f'{python} -m pip install -r etc/requirements/git-modules.txt')
     if all:
         ctx.run(f'{python} -m pip install -r etc/requirements/develop.txt')
+    else:
+        print('By default we only update the volatile dependencies. Run '
+              '"inv update-deps --all" in order to update everything.')
