@@ -57,7 +57,7 @@ def db(ctx, migrate_only=False):
 
 
 @task
-def db_reset(ctx, fake=False, no_assets=False):
+def db_reset(ctx, no_assets=False):
     """
     Reset data in database and optionally fill with fake data
     """
@@ -65,8 +65,6 @@ def db_reset(ctx, fake=False, no_assets=False):
     manage(ctx, 'migrate')
     if not no_assets:
         db_assets(ctx)
-    if fake:
-        db_fake(ctx)
 
 
 @task
@@ -171,6 +169,7 @@ def i18n(ctx, compile=False, edit=False, lang='pt_BR'):
 #
 # Good practices and productivity
 #
+@task
 def install_hooks(ctx):
     """
     Install git hooks in repository.
@@ -178,3 +177,13 @@ def install_hooks(ctx):
 
     print('Installing flake8 pre-commit hook')
     ctx.run('flake8 --install-hook=git')
+
+
+@task
+def update_deps(ctx, all=False):
+    """
+    Update volatile dependencies
+    """
+    ctx.run(f'{python} -m pip install -r etc/requirements/git-modules.txt')
+    if all:
+        ctx.run(f'{python} -m pip install -r etc/requirements/develop.txt')

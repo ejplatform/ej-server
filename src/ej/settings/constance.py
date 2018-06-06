@@ -1,4 +1,4 @@
-from boogie.configurations import Conf
+from boogie.configurations import Conf, env
 
 
 class ConstanceConf(Conf):
@@ -6,11 +6,10 @@ class ConstanceConf(Conf):
     Dynamic django settings, edit on admin page
     """
 
-    CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
+    CONSTANCE_BACKEND = env('constance.backends.database.DatabaseBackend')
     CONSTANCE_IGNORE_ADMIN_VERSION_CHECK = True
 
-    @property
-    def CONSTANCE_CONFIG(self):
+    def get_constance_config(self):
         return {
             # RocketChat integration
             'ROCKETCHAT_URL': (
