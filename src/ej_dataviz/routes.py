@@ -1,4 +1,5 @@
 from boogie.router import Router
+from ej_dataviz.plots import test_hist
 from ej_dataviz.tables import test
 
 urlpatterns = Router(
@@ -11,4 +12,12 @@ def index():
     table = test()
     return {
         'table': table,
+    }
+
+
+@urlpatterns.route('histogram', login=False)
+def histogram():
+    histogram = test_hist()
+    return {
+        'hist': histogram,
     }

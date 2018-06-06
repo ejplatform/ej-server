@@ -6,8 +6,7 @@ class LoggingConf(Base):
     Logging configuration
     """
 
-    @property
-    def LOGGING(self):
+    def get_logging(self):
         return {
             'version': 1,
             'disable_existing_loggers': False,

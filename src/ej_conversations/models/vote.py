@@ -57,7 +57,7 @@ class Vote(models.Model):
             raise ValidationError(msg)
 
 
-def normalize_vote(value):
+def normalize_choice(value):
     """
     Normalize numeric and string values to the correct vote value that
     should be stored in the database.

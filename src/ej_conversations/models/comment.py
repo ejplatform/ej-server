@@ -9,7 +9,7 @@ from model_utils.choices import Choices
 from model_utils.models import TimeStampedModel, StatusModel
 from boogie.rest import rest_api
 
-from .vote import Vote, normalize_vote, Choice
+from .vote import Vote, normalize_choice, Choice
 from ..validators import is_not_empty
 
 log = logging.getLogger('ej-conversations')
@@ -85,7 +85,7 @@ class Comment(StatusModel, TimeStampedModel):
 
         >>> comment.vote(request.user, 'agree')                 # doctest: +SKIP
         """
-        choice = normalize_vote(choice)
+        choice = normalize_choice(choice)
         log.debug(f'Vote: {author} - {choice}')
         vote = Vote(author=author, comment=self, choice=choice)
         vote.full_clean()
