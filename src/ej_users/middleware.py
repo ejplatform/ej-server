@@ -5,6 +5,7 @@ from ej_users.models import User
 
 from django.utils.deprecation import MiddlewareMixin
 
+
 class UserFallbackMiddleware(MiddlewareMixin):
     def process_response(self, request, response):
         if response.status_code != 404:

@@ -19,7 +19,6 @@ class PathsConf(Base):
     LOG_DIR = LOCAL_DIR / 'logs'
     LOG_FILE_PATH = LOG_DIR / 'logfile.log'
 
-
     # Frontend paths
     LIB_DIR = REPO_DIR / 'lib'
 

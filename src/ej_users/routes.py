@@ -144,5 +144,7 @@ def clean_cookies():
 
 
 def user_conversations(request, user):
-    ctx = {'conversations': conversations(request.user,[rules.can_moderate_conversation], Conversation.objects.filter(author=user))}
-    return render(request,"ej_conversations/list.jinja2",ctx)
+    ctx = {'conversations': conversations(request.user,
+                                          [rules.can_moderate_conversation],
+                                          Conversation.objects.filter(author=user))}
+    return render(request, "ej_conversations/list.jinja2", ctx)

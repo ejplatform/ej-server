@@ -7,6 +7,7 @@ from django.utils.timezone import now
 from boogie import rules
 from ej_users.models import User
 
+
 #
 # Global values and configurations
 #
@@ -139,6 +140,7 @@ def can_add_conversation(user):
     if User.objects.filter(username=user.username).exists():
         return True
     return False
+
 
 # @TODO create a logic to edit conversation permission
 @rules.register_perm('ej_conversations.can_edit_conversation')

@@ -51,8 +51,8 @@ def edit(request, conversation):
         }
     elif request.method == 'POST':
         form = forms.ConversationForm(
-                data=request.POST,
-                instance=conversation,
+            data=request.POST,
+            instance=conversation,
         )
         if form.is_valid():
             form.instance.save()
