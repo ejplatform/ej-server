@@ -2,7 +2,7 @@
 {% from 'ej_conversations/components/conversation-list.jinja2' import conversation_list %}
 
 
-{% macro profile_edit(profile, form, csrf_input) %}
+{% macro profile_edit(profile, conversations, form, csrf_input) %}
     <div class="ProfileEdit">
         <form method="post" enctype="multipart/form-data" action="" show-labels>
             {{ csrf_input }}
@@ -14,7 +14,7 @@
 {% endmacro %}
 
 
-{% macro profile_detail(profile, csrf_input, info='profile') %}
+{% macro profile_detail(profile, conversations, csrf_input, info='profile') %}
     <div class="Profile">
         <img class="Profile-image" src="{{ profile.image_url }}">
         <h1>{{ profile.name }}</h1>
@@ -49,7 +49,7 @@
     </div>
 
     <div class="Profile-conversations">
-        {{ profile_conversations(profile, categories) }}
+        {{ profile_conversations(conversations, categories) }}
     </div>
 
     <div class="Profile-rocket">
@@ -96,8 +96,8 @@
 {% endmacro %}
 
 
-{% macro profile_conversations(profile, conversations) %}
-    {{ conversation_list(profile.conversations.all(), [], _('Joined conversations')) }}
+{% macro profile_conversations(conversations, categories) %}
+    {{ conversation_list(conversations, [], _('Joined conversations')) }}
     <p><a href="/conversations" class="Button" primary>{{ _('More conversations') }}</a></p>
 {% endmacro %}
 
