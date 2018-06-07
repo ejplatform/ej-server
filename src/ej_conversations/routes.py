@@ -7,6 +7,7 @@ from . import rules
 from ej_users.models import User
 from ej.utils.perms import conversations
 
+
 app_name = 'ej_conversations'
 urlpatterns = Router(
     template='ej_conversations/{name}.jinja2',
@@ -56,8 +57,8 @@ def edit(request, conversation):
         }
     elif request.method == 'POST':
         form = forms.ConversationForm(
-                data=request.POST,
-                instance=conversation,
+            data=request.POST,
+            instance=conversation,
         )
         if form.is_valid():
             form.instance.save()
@@ -84,6 +85,8 @@ def list(request):
             request.user,
             [rules.can_moderate_conversation]
         ),
+        'add_conversation_perm': rules.can_add_conversation(request.user),
+
     }
 
 

@@ -5,6 +5,7 @@ from django.db.models import Q
 from django.utils.timezone import now
 
 from boogie import rules
+from ej_users.models import User
 
 
 #
@@ -32,6 +33,14 @@ def vote_throttle():
     Minimum interval between votes (in seconds)
     """
     return getattr(settings, 'EJ_CONVERSATIONS_VOTE_THROTTLE', 10)
+
+
+@rules.predicate
+def is_personal_conversations_enabled():
+    """
+    Check global config to see if personal conversations are allowed.
+    """
+    return getattr(settings, 'EJ_CONVERSATIONS_ALLOW_PERSONAL_CONVERSATIONS', True)
 
 
 #
@@ -128,7 +137,9 @@ def can_comment(user, conversation):
 # @TODO create a logic to create conversation permission
 @rules.register_perm('ej_conversations.can_add_conversation')
 def can_add_conversation(user):
-    return True
+    if User.objects.filter(username=user.username).exists():
+        return True
+    return False
 
 
 # @TODO create a logic to edit conversation permission
@@ -144,6 +155,9 @@ def can_moderate_conversation(user, conversation):
 
 @rules.predicate
 def is_publisher(user):
+    """
+    Publishers have explicit permissions to create promoted conversations.
+    """
     return False
 
 

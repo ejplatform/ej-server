@@ -79,12 +79,15 @@ class Conversation(TimeStampedModel, StatusModel):
     votes = property(lambda self: Vote.objects.filter(comment__conversation=self))
     is_promoted = property(lambda self: self.status == self.STATUS.promoted)
 
+    class Meta:
+        ordering = ['created']
+        permissions = (
+            ('can_add_promoted', _('Can publish promoted conversations')),
+        )
+
     @property
     def approved_comments(self):
         return self.comments.filter(status=Comment.STATUS.approved)
-
-    class Meta:
-        ordering = ('created',)
 
     def __str__(self):
         return self.title
