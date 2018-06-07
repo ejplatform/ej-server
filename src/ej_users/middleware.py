@@ -16,10 +16,10 @@ class UserFallbackMiddleware(MiddlewareMixin):
         try:
             username = request.path.split('/')[1]
             user = get_object_or_404(User, username=username)
-            conversation_slug = request.path.split('/')[2] 
+            conversation_slug = request.path.split('/')[2]
             if(conversation_slug is not ''):
                 conversation = get_object_or_404(Conversation, slug=conversation_slug)
-                return detail(request,conversation,user)
+                return detail(request, conversation, user)
             else:
                 return user_conversations(request, user)
         # Return the original response if any errors happened. Because this

@@ -3,18 +3,14 @@
         <p>{{ comment.content }}</p>
         <form method="post">
             {{ csrf_input }}
-            <input type="hidden" name="action" value="vote">
+            <input type="hidden" name="comment" value={{comment.id}}>
             <ul class="ConversationComment-actions">
                 <li up-expand>
-                    <button type="submit" form="Comment-form" name="vote" value="approve">
-                        <i class="fa fa-check"></i>
-                    </button>
+                    <input type="submit" class="Button" name="vote" value="approve">
                     <span>{{ _('Approve') }}</span>
                 </li>
                 <li up-expand>
-                    <button type="submit" form="Comment-form" name="vote" value="disapprove">
-                        <i class="fa fa-times"></i>
-                    </button>
+                    <input type="submit" class="Button" name="vote" value="disapprove">
                     <span>{{ _('Disapprove') }}</span>
                 </li>
             </ul>
