@@ -79,7 +79,7 @@ def moderate(conversation):
     }
 
 
-@urlpatterns.route('')
+@urlpatterns.route(base_url)
 def list(request):
     return {
         'conversations': conversations(
@@ -90,8 +90,6 @@ def list(request):
 
     }
 
-
-@urlpatterns.route(user_url + conversation_url)
 @urlpatterns.route(base_url + conversation_url)
 def detail(request, conversation, user=None):
     comment = conversation.next_comment(request.user, None)
@@ -108,7 +106,7 @@ def detail(request, conversation, user=None):
     elif request.POST.get('action') == 'comment':
         comment = request.POST['comment'].strip()
         conversation.create_comment(request.user, comment)
-    return ctx
+    return render(request, 'ej_conversations/detail.jinja2',ctx)
 
 
 @urlpatterns.route(base_url + conversation_url + 'comments/')
