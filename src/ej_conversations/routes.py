@@ -7,6 +7,7 @@ from . import rules
 
 from ej.utils.perms import conversations
 
+
 app_name = 'ej_conversations'
 urlpatterns = Router(
     template='ej_conversations/{name}.jinja2',
@@ -78,6 +79,8 @@ def list(request):
             request.user,
             [rules.can_moderate_conversation]
         ),
+        'add_conversation_perm': rules.can_add_conversation(request.user),
+
     }
 
 
