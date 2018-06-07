@@ -17,7 +17,7 @@ urlpatterns = Router(
         'user': User
     },
     lookup_field={
-        'conversation':'slug',
+        'conversation': 'slug',
         'comment': 'slug',
         'user': 'username',
     },
@@ -25,13 +25,14 @@ urlpatterns = Router(
     object='conversation',
 )
 conversation_url = '<model:conversation>/'
-base_url='conversations/'
+base_url = 'conversations/'
 user_url = '<model:user>/'
+
 
 #
 # Administrative views
 #
-@urlpatterns.route(base_url+'add/',
+@urlpatterns.route(base_url + 'add/',
                    perms=['ej_conversations.can_add_conversation'])
 def create(request):
     if request.method == 'GET':
@@ -48,7 +49,7 @@ def create(request):
             return redirect(conversation.get_absolute_url())
 
 
-@urlpatterns.route(base_url+conversation_url + 'edit/',
+@urlpatterns.route(base_url + conversation_url + 'edit/',
                    perms=['ej_conversations.can_edit_conversation'])
 def edit(request, conversation):
     if request.method == 'GET':
@@ -65,7 +66,7 @@ def edit(request, conversation):
         return redirect(conversation.get_absolute_url())
 
 
-@urlpatterns.route(base_url+conversation_url + 'moderate/',
+@urlpatterns.route(base_url + conversation_url + 'moderate/',
                    perms=['ej_conversations.can_moderate_conversation'])
 def moderate(conversation):
     comments = []
@@ -90,8 +91,8 @@ def list(request):
     }
 
 
-@urlpatterns.route(user_url+conversation_url)
-@urlpatterns.route(base_url+conversation_url)
+@urlpatterns.route(user_url + conversation_url)
+@urlpatterns.route(base_url + conversation_url)
 def detail(request, conversation, user=None):
     comment = conversation.next_comment(request.user, None)
     ctx = {
@@ -110,7 +111,7 @@ def detail(request, conversation, user=None):
     return ctx
 
 
-@urlpatterns.route(base_url+conversation_url + 'comments/')
+@urlpatterns.route(base_url + conversation_url + 'comments/')
 def comment_list(conversation):
     return {
         'conversation': conversation,
@@ -118,7 +119,7 @@ def comment_list(conversation):
     }
 
 
-@urlpatterns.route(base_url+conversation_url + 'comments/<model:comment>/', lookup_field={'comment': 'pk'})
+@urlpatterns.route(base_url + conversation_url + 'comments/<model:comment>/', lookup_field={'comment': 'pk'})
 def comment_detail(conversation, comment):
     return {
         'conversation': conversation,
@@ -126,7 +127,7 @@ def comment_detail(conversation, comment):
     }
 
 
-@urlpatterns.route(base_url+conversation_url + 'info/')
+@urlpatterns.route(base_url + conversation_url + 'info/')
 def info(conversation):
     return {
         'conversation': conversation,
@@ -134,7 +135,7 @@ def info(conversation):
     }
 
 
-@urlpatterns.route(base_url+conversation_url + 'leaderboard/')
+@urlpatterns.route(base_url + conversation_url + 'leaderboard/')
 def leaderboard(conversation):
     return {
         'conversation': conversation,

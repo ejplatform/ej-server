@@ -2,6 +2,7 @@ from django.conf import settings
 from ej_users.routes import user_conversations
 from django.http import Http404
 from ej_users.models import User
+from django.shortcuts import get_object_or_404
 
 from django.utils.deprecation import MiddlewareMixin
 
@@ -11,9 +12,8 @@ class UserFallbackMiddleware(MiddlewareMixin):
         if response.status_code != 404:
             return response  # No need to check for a flatpage for non-404 responses.
         try:
-            # request.path = /username/
             username = request.path.split('/')[1]
-            user = User.objects.get(username=username)
+            user = get_object_or_404(User, username=username)
             return user_conversations(request, user)
         # Return the original response if any errors happened. Because this
         # is a middleware, we can't assume the errors will be caught elsewhere.
