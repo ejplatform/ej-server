@@ -153,7 +153,7 @@ def i18n(ctx, compile=False, edit=False, lang='pt_BR'):
         manage(ctx, 'makemessages', all=True, keep_pot=True)
 
         print('Extract Jinja translations')
-        ctx.run('pybabel extract -F babel.cfg -o locale/jinja2.pot .')
+        ctx.run('pybabel extract -F etc/babel.cfg -o locale/jinja2.pot .')
 
         print('Join Django + Jinja translation files')
         ctx.run('msgcat locale/django.pot locale/jinja2.pot --use-first -o locale/join.pot', pty=True)
@@ -174,7 +174,6 @@ def install_hooks(ctx):
     """
     Install git hooks in repository.
     """
-
     print('Installing flake8 pre-commit hook')
     ctx.run('flake8 --install-hook=git')
 
