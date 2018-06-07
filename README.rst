@@ -27,6 +27,7 @@ Python 3.6+::
 
     $ git clone http://github.com/ejplatform/ej-server/
     $ mkvirtualenv ej -p /usr/bin/python3
+    (if the command don't run, reload bash or check your system path)
 
 Now, go into the repository and run the configure script::
 
