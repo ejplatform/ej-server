@@ -127,4 +127,4 @@ def context(ctx):
         'page_footer', 'sidebar', 'page_top_header', 'page_header',
     }
     ctx = {k: v for k, v in ctx.items() if k not in blacklist}
-    return tags.html_dict(ctx)
+    return tags.html_map(ctx)

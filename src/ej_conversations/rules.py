@@ -34,6 +34,14 @@ def vote_throttle():
     return getattr(settings, 'EJ_CONVERSATIONS_VOTE_THROTTLE', 10)
 
 
+@rules.predicate
+def is_personal_conversations_enabled():
+    """
+    Check global config to see if personal conversations are allowed.
+    """
+    return getattr(settings, 'EJ_CONVERSATIONS_ALLOW_PERSONAL_CONVERSATIONS', True)
+
+
 #
 # Comments
 #
@@ -145,6 +153,9 @@ def can_moderate_conversation(user, conversation):
 
 @rules.predicate
 def is_publisher(user):
+    """
+    Publishers have explicit permissions to create promoted conversations.
+    """
     return False
 
 

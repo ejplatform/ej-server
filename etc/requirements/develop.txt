@@ -1,6 +1,5 @@
 # Test dependencies go here.
 -r production.txt
--r git-modules.txt
 
 # Testing
 pytest >= 3.4.2
