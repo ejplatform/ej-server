@@ -28,17 +28,32 @@ Python 3.6+::
     $ git clone http://github.com/ejplatform/ej-server/
     $ mkvirtualenv ej -p /usr/bin/python3
 
-Now, go into the repository and install the dependencies::
+Now, go into the repository and run the configure script::
 
     $ cd ej-server
-    $ pip install -r etc/requirements/develop.txt
+    $ ./configure.sh
 
-Grab a cup of coffee while it downloads and install all dependencies.
+Grab a cup of coffee while it downloads and install all dependencies. If
+everything works, you should be able to run the server using the ``inv run``
+command.
 
-The next step is to initialize the database. EJ uses Invoke_ to manage tasks.
+The script installs the invoke task runner, fetches all dependencies from pip,
+and initializes the database. If you prefer, you can do all steps manually.
+The first step is to install the Invoke_ task runner to run each step of the
+installation (if you are not familiar to Invoke, think of it as Python's version
+of Make)::
+
+    $ pip install invoke
+
+You can install dependencies manually using the files in /etc/requirements/, or
+simply use the update-deps task. The later is preferable since it installs the
+volatile dependencies in a special local/vendor/ folder::
+
+    $ inv update-deps --all
+
 Invoke allow us to execute a sequence of tasks very easily. The command bellow
-will update a few volatile dependencies, run all migrations and populate the
-database with fake data for local development::
+will run migrations and populate the database with fake data for local
+development::
 
     $ inv update-deps db db-assets db-fake
 

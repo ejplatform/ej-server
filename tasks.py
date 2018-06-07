@@ -61,7 +61,7 @@ def db_reset(ctx, no_assets=False):
     """
     Reset data in database and optionally fill with fake data
     """
-    ctx.run('rm local/db/db.sqlite3 -f')
+    ctx.run('rm -f local/db/db.sqlite3')
     manage(ctx, 'migrate')
     if not no_assets:
         db_assets(ctx)
@@ -180,13 +180,40 @@ def install_hooks(ctx):
 
 
 @task
-def update_deps(ctx, all=False):
+def update_deps(ctx, all=False, reset=False):
     """
     Update volatile dependencies
     """
-    ctx.run(f'{python} etc/scripts/dep-update.py')
+    if reset:
+        ctx.run('rm -fr local/vendor/')
+    ctx.run(f'{python} etc/scripts/install-deps.py')
     if all:
         ctx.run(f'{python} -m pip install -r etc/requirements/develop.txt')
     else:
         print('By default we only update the volatile dependencies. Run '
               '"inv update-deps --all" in order to update everything.')
+
+
+@task
+def configure(ctx, silent=False):
+    """
+    Install dependencies and configure a test server.
+    """
+    if silent:
+        ask = lambda x: print(x + 'yes') or True
+    else:
+        ask = lambda x: input(x + ' (y/n) ').lower() == 'y'
+
+    print('\nLoading dependencies (inv update-deps)')
+    update_deps(ctx, all=True)
+
+    print('\nCreating database and running migrations (inv db)')
+    db(ctx)
+
+    if ask('\nLoad assets to database?'):
+        print('Running inv db-assets')
+        db_assets(ctx)
+
+    if ask('\nLoad fake data to database?'):
+        print('Running inv db-fake')
+        db_fake(ctx)
