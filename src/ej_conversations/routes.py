@@ -96,6 +96,25 @@ def list(request):
 
     }
 
+@urlpatterns.route(user_url + conversation_url)
+@urlpatterns.route(base_url + conversation_url)
+def detail(request, conversation, user=None):
+    comment = conversation.next_comment(request.user, None)
+    ctx = {
+        'conversation': conversation,
+        'edit_perm': rules.can_edit_conversation(request.user, conversation),
+        'comment': comment,
+    }
+    if comment and request.POST.get('action') == 'vote':
+        vote = request.POST['vote']
+        if vote not in {'agree', 'skip', 'disagree'}:
+            return HttpResponseServerError('invalid parameter')
+        comment.vote(request.user, vote)
+    elif request.POST.get('action') == 'comment':
+        comment = request.POST['comment'].strip()
+        conversation.create_comment(request.user, comment)
+    return ctx
+
 
 @urlpatterns.route(base_url + conversation_url + 'comments/')
 def comment_list(conversation):
@@ -127,22 +146,3 @@ def leaderboard(conversation):
         'conversation': conversation,
         'info': conversation.statistics(),
     }
-
-
-@urlpatterns.route(base_url + conversation_url)
-def detail(request, conversation, user=None):
-    comment = conversation.next_comment(request.user, None)
-    ctx = {
-        'conversation': conversation,
-        'edit_perm': rules.can_edit_conversation(request.user, conversation),
-        'comment': comment,
-    }
-    if comment and request.POST.get('action') == 'vote':
-        vote = request.POST['vote']
-        if vote not in {'agree', 'skip', 'disagree'}:
-            return HttpResponseServerError('invalid parameter')
-        comment.vote(request.user, vote)
-    elif request.POST.get('action') == 'comment':
-        comment = request.POST['comment'].strip()
-        conversation.create_comment(request.user, comment)
-    return render(request, 'ej_conversations/detail.jinja2', ctx)

@@ -15,11 +15,6 @@ urlpatterns = [
     path('', include('ej.routes')),
     path('', include('ej_users.routes', namespace='auth')),
 
-    # EJ Routes
-    path('', include('ej_conversations.routes', namespace='conversations')),
-    path('profile/', include(('ej_profiles.routes', 'ej_profiles'), namespace='profiles')),
-    path('config/', include(('ej_configurations.routes', 'ej_configurations'), namespace='configurations')),
-
     path('dataviz/', include(('ej_dataviz.routes', 'ej_dataviz'), namespace='dataviz')),
 
     # Rocket
@@ -33,6 +28,11 @@ urlpatterns = [
     path('api/v1/docs/', include_docs_urls(title='ej API Docs', public=False)),
     # path('api/v1/', include('courier.urls', namespace='courier')),
     # path('api/v1/rocketchat/', include('ej.ej_rocketchat.urls')),
+
+    # EJ Routes
+    path('', include('ej_conversations.routes', namespace='conversations')),
+    path('profile/', include(('ej_profiles.routes', 'ej_profiles'), namespace='profiles')),
+    path('config/', include(('ej_configurations.routes', 'ej_configurations'), namespace='configurations')),
 
     # User management
     path('rest-auth/', include('rest_auth.urls')),
