@@ -21,30 +21,27 @@ Getting started
 Local development (virtualenv)
 ------------------------------
 
+ej-server REQUIRES Python 3.6 and python-3.6-dev
+If you are using Ubuntu 14.04 or 16.04, you can use Felix Krull's deadsnakes PPA at https://launchpad.net/~deadsnakes/+archive/ubuntu/ppa::
 
-    ej-server REQUIRES Python 3.6. For ubuntu users:                    
-    If you are using Ubuntu 14.04 or 16.04, you can use Felix Krull's    
-    deadsnakes PPA at                                                    
-    https://launchpad.net/~deadsnakes/+archive/ubuntu/ppa:               
-    sudo add-apt-repository ppa:deadsnakes/ppa                          
-    sudo apt-get update                                                
-    sudo apt-get install python3.6                                  
+    sudo add-apt-repository ppa:deadsnakes/ppa
+    sudo apt-get update
+    sudo apt-get install python3.6-dev
 
-    Alternatively, you can use J Fernyhough's PPA at                 
-    https://launchpad.net/~jonathonf/+archive/ubuntu/python-3.6:     
-    sudo add-apt-repository ppa:jonathonf/python-3.6                 
-    sudo apt-get update                                              
-    sudo apt-get install python3.6                                   
+Alternatively, you can use J Fernyhough's PPA at https://launchpad.net/~jonathonf/+archive/ubuntu/python-3.6::
 
-    If you are using Ubuntu 16.10 or 17.04, then Python 3.6 is in the 
-    universe repository, so you can just run:                         
-    sudo apt-get update                                                    
-    sudo apt-get install python3.6                                    
+    sudo add-apt-repository ppa:jonathonf/python-3.6
+    sudo apt-get update
+    sudo apt-get install python3.6-dev
+
+    If you are using Ubuntu 16.10 or 17.04, then Python 3.6 is in the universe repository, so you can just run::
+                         
+    sudo apt-get update
+    sudo apt-get install python3.6-dev
 
 
-First install virtualenvwrapper in your machine (``sudo apt-get install virtualenvwrapper`` on
-Debian based distributions). Clone this repo and create a virtual environment using
-Python 3.6+::
+First install virtualenvwrapper in your machine (``sudo apt-get install virtualenvwrapper`` on Debian based distributions).
+Clone this repo and create a virtual environment using Python 3.6+::
 
     $ git clone http://github.com/ejplatform/ej-server/
     $ mkvirtualenv ej -p /usr/bin/python3.6
