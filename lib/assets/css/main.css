@@ -476,7 +476,7 @@ template {
   .Button .Login-button,
   .ActionButton .Login-button,
   .RocketButton .Login-button {
-    background-color: #ff3e72;
+    background-color: #FF3D72;
     color: rgba(255, 255, 255, 0.9); }
     .Button[primary]:hover, [primary].ActionButton:hover, [primary].RocketButton:hover, .Button[primary]:focus, [primary].ActionButton:focus, [primary].RocketButton:focus,
     .Button .Button--primary:hover,
@@ -509,7 +509,7 @@ template {
     .Button .Login-button:focus,
     .ActionButton .Login-button:focus,
     .RocketButton .Login-button:focus {
-      background-color: #ff0b4d;
+      background-color: #ff0a4d;
       color: #fff; }
   .Button[secondary], [secondary].ActionButton, [secondary].RocketButton,
   .Button .Button--secondary,
@@ -564,7 +564,7 @@ template {
     .Button .Button--ghost .Button--ghost-primary,
     .ActionButton .Button--ghost .Button--ghost-primary,
     .RocketButton .Button--ghost .Button--ghost-primary {
-      color: #ff3e72; }
+      color: #FF3D72; }
       .Button[ghost] [primary]:hover, [ghost].ActionButton [primary]:hover, [ghost].RocketButton [primary]:hover, .Button[ghost] [primary]:focus, [ghost].ActionButton [primary]:focus, [ghost].RocketButton [primary]:focus,
       .Button[ghost] .Button--ghost-primary:hover,
       [ghost].ActionButton .Button--ghost-primary:hover,
@@ -584,7 +584,7 @@ template {
       .Button .Button--ghost .Button--ghost-primary:focus,
       .ActionButton .Button--ghost .Button--ghost-primary:focus,
       .RocketButton .Button--ghost .Button--ghost-primary:focus {
-        color: #ff0b4d; }
+        color: #ff0a4d; }
     .Button[ghost] [secondary], [ghost].ActionButton [secondary], [ghost].RocketButton [secondary],
     .Button[ghost] .Button--ghost-secondary,
     [ghost].ActionButton .Button--ghost-secondary,
@@ -671,7 +671,7 @@ main {
   width: 100%; }
 
 a {
-  color: #ff3e72;
+  color: #FF3D72;
   line-height: 1.2;
   text-decoration: none;
   text-decoration-style: solid; }
@@ -747,7 +747,7 @@ input[type=submit] {
   from {
     background: #fff; }
   to {
-    background: #ff3e72; } }
+    background: #FF3D72; } }
 /*
  GENERIC PATTERNS FOR HTML ELEMENTS
  =========================================================================== */
@@ -1199,7 +1199,7 @@ ul.errorlist {
   text-align: center; }
   .Register h1,
   .Login h1 {
-    color: #ff3e72; }
+    color: #FF3D72; }
   .Register input, .Register textarea, .Register select, .Register .FormItem,
   .Login input,
   .Login textarea,
@@ -1236,7 +1236,7 @@ ul.errorlist {
     text-transform: lowercase; }
     .Register-password a,
     .Login-password a {
-      color: #ff3e72; }
+      color: #FF3D72; }
   .Register-newUser,
   .Login-newUser {
     border-top: 1px solid #333333;
@@ -1270,7 +1270,7 @@ ul.errorlist {
     color: #30c0d3;
     margin: 0 7px; }
   .ConversationList-categories a.color-accent {
-    color: #ff3e72;
+    color: #FF3D72;
     font-weight: bold; }
   .ConversationList-categories ul {
     display: flex;
@@ -1473,7 +1473,7 @@ ul.errorlist {
   .Comment-user {
     font-size: 15.75px; }
     .Comment-user i.fa {
-      color: #ff3e72;
+      color: #FF3D72;
       margin-right: 14px; }
 
 .CommentForm {
@@ -1595,11 +1595,69 @@ ul.errorlist {
     margin: 56px;
     padding: 0px;
     text-transform: uppercase;
-    color: #33333347;
+    color: #333333;
+    opacity: 0.8;
     text-align: center; }
     .Profile-actions a {
       margin: 56px 0;
-      color: #33333347; }
+      color: #333333;
+      opacity: 0.8; }
+  .Profile-comments {
+    padding: 14px; }
+    .Profile-comments h2 {
+      color: black;
+      text-align: justify;
+      font-weight: normal; }
+      .Profile-comments h2.expanded i {
+        transform: rotate(180deg); }
+      .Profile-comments h2 span {
+        color: #FF3D72;
+        font-weight: bold; }
+      .Profile-comments h2 i {
+        float: right;
+        font-weight: bold;
+        font-size: 24px;
+        color: #FF3D72; }
+    .Profile-comments ul {
+      padding: 0px;
+      margin: 0px;
+      display: none; }
+      .Profile-comments ul li {
+        padding: 0px;
+        margin: 0px;
+        border-bottom: 2px solid #A3D8DD;
+        list-style: none; }
+        .Profile-comments ul li .header {
+          color: #A3D8DD; }
+          .Profile-comments ul li .header::after {
+            content: "";
+            clear: both;
+            display: table; }
+          .Profile-comments ul li .header .label {
+            float: left; }
+          .Profile-comments ul li .header .date {
+            float: right; }
+        .Profile-comments ul li .content {
+          font-weight: 600;
+          margin-top: 7px;
+          margin-bottom: 7px; }
+        .Profile-comments ul li .actions {
+          display: flex;
+          justify-content: space-between; }
+          .Profile-comments ul li .actions li {
+            border: none;
+            font-weight: bold; }
+            .Profile-comments ul li .actions li.skip {
+              color: #30BFD3; }
+            .Profile-comments ul li .actions li.disagree {
+              color: #FF3D72; }
+            .Profile-comments ul li .actions li span {
+              margin-left: 0.5em; }
+        .Profile-comments ul li .footer {
+          margin-top: 14px;
+          margin-bottom: 14px;
+          color: #FF3D72;
+          font-weight: bold; }
   .Profile-arrow {
     width: 0;
     height: 0;
@@ -1696,7 +1754,7 @@ ul.errorlist {
   font-weight: bold;
   padding: 0 7px; }
   .Rocket-title h1 {
-    color: #ff3e72;
+    color: #FF3D72;
     font-weight: bold; }
   .Rocket-title h2 {
     color: #74b5b8;
@@ -1713,7 +1771,7 @@ ul.errorlist {
   .Rocket-items .item {
     padding: 7px; }
     .Rocket-items .item .item-position {
-      color: #ff3e72;
+      color: #FF3D72;
       font-size: 24px;
       width: auto;
       float: left; }
@@ -1757,7 +1815,7 @@ ul.errorlist {
     background: #30c0d3;
     color: rgba(255, 255, 255, 0.9); }
   .ColorStyles .action-primary {
-    background: #ff3e72;
+    background: #FF3D72;
     color: rgba(255, 255, 255, 0.9); }
   .ColorStyles .action-secondary {
     background: #30BFD3;
@@ -1791,7 +1849,7 @@ ul.errorlist {
     .ColorStyles .color-green span:last-child {
       background: #22b35c; }
   .ColorStyles .color-magenta {
-    background: #ff3e72;
+    background: #FF3D72;
     color: white; }
     .ColorStyles .color-magenta span:first-child {
       background: #ffacd1; }
@@ -1843,7 +1901,7 @@ ul.errorlist {
   color: #fff; }
 .ColorStyles .accent,
 .ColorPalette .accent {
-  background: #ff3e72;
+  background: #FF3D72;
   color: #fff; }
 .ColorStyles .alt,
 .ColorPalette .alt {
