@@ -16,14 +16,9 @@ urlpatterns = Router()
 #
 @urlpatterns.route('')
 def home(request):
-    ctx = {
-        'conversations': Conversation.objects.all(),
-        'home_banner_fragment': fragment('home.banner', raises=False),
-        'how_it_works_fragment': fragment('home.how-it-works', raises=False),
-        'start_now_fragment': fragment('home.start-now', raises=False),
-        'social_media_icons': social_icons(),
-    }
-    return render(request, 'pages/home.jinja2', ctx)
+    if request.user.id:
+        return redirect('/conversations/')
+    return redirect('/start/')
 
 
 @urlpatterns.route('conversations/create/')
@@ -44,9 +39,14 @@ def create_conversation(request):
 
 @urlpatterns.route('start/')
 def start(request):
-    if request.user.id:
-        return redirect('/conversations/')
-    return redirect('/login/')
+    ctx = {
+        'conversations': Conversation.objects.all(),
+        'home_banner_fragment': fragment('home.banner', raises=False),
+        'how_it_works_fragment': fragment('home.how-it-works', raises=False),
+        'start_now_fragment': fragment('home.start-now', raises=False),
+        'social_media_icons': social_icons(),
+    }
+    return render(request, 'pages/home.jinja2', ctx)
 
 
 @urlpatterns.route('clusters/')

@@ -14,7 +14,12 @@ urlpatterns = [
     # Basic authentication and authorization
     path('', include('ej.routes')),
     path('', include('ej_users.routes', namespace='auth')),
+    path('', include('ej_help.routes', namespace='help')),
+
+    # Profile pages
     path('profile/', include('ej_profiles.routes', namespace='profile')),
+    path('profile/', include('ej_gamification.routes', namespace='gamification')),
+    path('profile/notifications/', include('ej_notifications.routes', namespace='notifications')),
 
     # Configuration
     path('config/', include('ej_configurations.routes', namespace='conf')),

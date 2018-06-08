@@ -83,9 +83,9 @@ However, some users may not have support for this technology on their browsers
 and even the users who have, might want to keep a record of the later
 notifications in the system.
 
-notifications/ (notifications:index):
+profile/notifications/ (notifications:index):
     List all unread notifications.
-notifications/history/ (notifications:history):
+profile/notifications/history/ (notifications:history):
     List all notifications.
 
 All notifications are managed by the ej_notifications app.
@@ -202,6 +202,8 @@ either local/pages or lib/pages/.
     Usage terms for the platform.
 /social/ (help:social):
     Links to EJ social networks.
+/contacts/ (help:contacts):
+    External contacts.
 
 All urls are implemented in the ej_help app.
 

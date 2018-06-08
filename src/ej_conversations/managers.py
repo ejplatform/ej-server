@@ -34,6 +34,9 @@ class CommentQuerySet(QuerySet):
     def rejected(self):
         return self.filter(status=self.model.STATUS.rejected)
 
+    def statistics(self):
+        return [x.statistics() for x in self]
+
 
 ConversationManager = Manager.from_queryset(ConversationQuerySet, 'ConversationManager')
 CommentManager = Manager.from_queryset(CommentQuerySet, 'CommentManager')
