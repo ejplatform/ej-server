@@ -129,6 +129,39 @@ $profile-arrow-size: $spacing-unit !default;
             }
         }
         
+        .statistics{
+            &::after{
+                content: "";
+                clear: both;
+                display: table;
+            }
+            margin: 0px;
+            padding: 0px;
+            li{
+                span{
+                    color: $color-blue-light;
+                    font-weight: 600;
+                    &.amount{
+                        font-weight: 800;
+                        font-size: $font-size-huge;
+                    }
+                    &.description{
+                        font-size: $font-size-small;
+                    }
+                    
+                    display: block;
+                    
+                }
+                float: left;
+                list-style: none;
+                text-align: center;
+                width: 50%;
+                height: 60px;
+            }
+            float: none;
+            clear: both;
+
+        }
 
         > * {
             display: block;
@@ -147,9 +180,6 @@ $profile-arrow-size: $spacing-unit !default;
             }
         }
 
-        form {
-            text-align: center;
-        }
     }
 }
 

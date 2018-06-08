@@ -1652,6 +1652,30 @@ ul.errorlist {
       .Profile-info .edit-button .Button, .Profile-info .edit-button .ActionButton, .Profile-info .edit-button .RocketButton {
         text-transform: none;
         background-color: #30BFD3; }
+    .Profile-info .statistics {
+      margin: 0px;
+      padding: 0px;
+      float: none;
+      clear: both; }
+      .Profile-info .statistics::after {
+        content: "";
+        clear: both;
+        display: table; }
+      .Profile-info .statistics li {
+        float: left;
+        list-style: none;
+        text-align: center;
+        width: 50%;
+        height: 60px; }
+        .Profile-info .statistics li span {
+          color: #30BFD3;
+          font-weight: 600;
+          display: block; }
+          .Profile-info .statistics li span.amount {
+            font-weight: 800;
+            font-size: 24px; }
+          .Profile-info .statistics li span.description {
+            font-size: 13px; }
     .Profile-info > * {
       display: block; }
     .Profile-info dl dt {
@@ -1661,8 +1685,6 @@ ul.errorlist {
       font-size: 15.75px;
       margin: 0 0 14px 0;
       color: #052B47; }
-    .Profile-info form {
-      text-align: center; }
 
 .ProfileEdit input, .ProfileEdit textarea, .ProfileEdit select, .ProfileEdit .FormItem {
   display: block;
