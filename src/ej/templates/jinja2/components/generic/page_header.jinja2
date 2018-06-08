@@ -18,16 +18,29 @@
             <a title="{{ _('Back') }}" class="Header-topIcon" onclick="history.back()">
                 <i class="fa fa-chevron-left"></i>
             </a>
-        {% endif %}
 
-        {% call link(href='/', class="Header-ejLogo") %}
-            <img src="/static/img/logo/logo.svg" alt="EJ logo">
-        {% endcall %}
+            {% call link(href='/', class="Header-ejLogo") %}
+                <img src="/static/img/logo/logo.svg" alt="EJ logo">
+            {% endcall %}
+    
+            <a href="/menu/" title="{{ _("Navigation menu") }}" up-drawer=".NavMenu" up-history="false"
+                class="Header-topIcon">
+                <i class="fa fa-bars"></i>
+            </a>
 
-        <a href="/menu/" title="{{ _("Navigation menu") }}" up-drawer=".NavMenu" up-history="false"
-           class="Header-topIcon">
-            <i class="fa fa-bars"></i>
-        </a>
+        {% else %}
+
+            <a href="/menu/" title="{{ _("Navigation menu") }}" up-drawer=".NavMenu" up-history="false"
+                class="Header-topIcon">
+                <i class="fa fa-bars"></i>
+            </a>
+
+            {% call link(href='/', class="Header-ejLogo") %}
+                <img src="/static/img/logo/logo.svg" alt="EJ logo">
+            {% endcall %}
+
+        {%endif%}
+
     </nav>
 {% endmacro %}
 
