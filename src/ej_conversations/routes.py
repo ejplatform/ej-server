@@ -1,4 +1,4 @@
-from django.http import HttpResponseServerError
+from django.http import HttpResponseServerError, Http404
 from django.shortcuts import redirect
 
 from boogie.router import Router
@@ -50,9 +50,11 @@ def create(request):
             return redirect(conversation.get_absolute_url())
 
 
-@urlpatterns.route(base_url + conversation_url + 'edit/',
-                   perms=['ej_conversations.can_edit_conversation'])
+@urlpatterns.route(base_url + conversation_url + 'edit/')
 def edit(request, conversation):
+    if not request.user.has_perm('ej_conversations.can_edit_conversation', conversation):
+        raise Http404
+
     if request.method == 'GET':
         return {
             'form': forms.ConversationForm(instance=conversation)
@@ -67,15 +69,18 @@ def edit(request, conversation):
         return redirect(conversation.get_absolute_url())
 
 
-@urlpatterns.route(base_url + conversation_url + 'moderate/',
-                   perms=['ej_conversations.can_moderate_conversation'])
+@urlpatterns.route(base_url + conversation_url + 'moderate/')
 def moderate(request, conversation):
+    if not request.user.has_perm('ej_conversations.can_moderate_conversation', conversation):
+        raise Http404
+            
     comments = []
     if request.method == 'POST':
         comment = models.Comment.objects.get(id=request.POST['comment'])
         comment.status = comment.STATUS.approved if request.POST['vote'] == 'approve' else comment.STATUS.rejected
         comment.save()
 
+    # GET and Pos-Post
     for comment in models.Comment.objects.filter(conversation=conversation, status='pending'):
         if(comment.is_pending):
             comments.append(comment)
@@ -96,7 +101,7 @@ def list(request):
 
     }
 
-@urlpatterns.route(user_url + conversation_url)
+@urlpatterns.route(user_url +"conversations/"+ conversation_url)
 @urlpatterns.route(base_url + conversation_url)
 def detail(request, conversation, user=None):
     comment = conversation.next_comment(request.user, None)
