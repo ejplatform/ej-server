@@ -20,7 +20,7 @@ urlpatterns = [
 
     # Conversations and other EJ-specific routes
     path('conversations/', include('ej_conversations.routes', namespace='conversation')),
-    path('', include('ej_reports.routes', namespace='report')),
+    path('conversations/', include('ej_reports.routes', namespace='report')),
 
     # Rocket
     *(

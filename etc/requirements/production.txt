@@ -97,3 +97,8 @@ rules ~= 1.3
 
 # Sidekick
 sidekick >= 0.4.1
+
+# Scientific stack
+pandas ~= 0.23.0
+numpy ~= 1.14.4
+matplotlib ~= 2.2.2

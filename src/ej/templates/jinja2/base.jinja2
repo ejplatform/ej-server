@@ -73,12 +73,12 @@
         <meta name="twitter:title" content="Brasil que o Povo Quer!">
 
         <!-- Open Graph general (Facebook, Pinterest & Google+) -->
-        <meta property="og:title" content="{{ page_title }}">
+        <meta property="og:title" content="{{ title }}">
         <meta property="og:image" content="/static/img/logo/logo.svg">
         <meta property="og:image:width" content="1200">
         <meta property="og:image:height" content="630">
         <meta property="og:url" content="https://brasilqueopovoquer.org.br">
-        <meta property="og:site_name" content="{{ page_title }}">
+        <meta property="og:site_name" content="{{ title }}">
         <meta property="og:locale" content="pt_BR">
         <meta property="og:type" content="website">
         <meta property="fb:app_id" content="1757744567588794">
@@ -98,15 +98,19 @@
     {% block main %}
         <main class="Page-content" {{ salt_attr()|safe }}>
             {% if content_title %}<div class="Page-title"><h1>{{ content_title }}</h1></div>{% endif %}
-            {% block content %}
-                {% if content_html %}
-                    <div class="Container">
-                        {{ content_html|safe }}
-                    </div>
-                {% else %}
-                    <p>{{ _('Please override the "content" block of your template!') }}</p>
-                {% endif %}
-            {% endblock %}
+            {% if content %}
+                {{ content }}
+            {% else %}
+                {% block content %}
+                    {% if content_html %}
+                        <div class="Container">
+                            {{ content_html|safe }}
+                        </div>
+                    {% else %}
+                        <p>{{ _('Please override the "content" block of your template!') }}</p>
+                    {% endif %}
+                {% endblock %}
+            {% endif %}
         </main>
     {% endblock %}
 

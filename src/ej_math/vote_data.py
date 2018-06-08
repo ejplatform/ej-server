@@ -1,6 +1,5 @@
 import numpy as np
 import pandas as pd
-import surprise
 from lazyutils import lazy
 from sklearn.cluster import KMeans
 from sklearn.metrics import adjusted_mutual_info_score, adjusted_rand_score
@@ -19,13 +18,15 @@ class Math:
     about votes and comments in a conversation.
     """
 
-    num_users = lazy(lambda self: len(self.votes['user'].unique()))
+    n_users = lazy(lambda self: len(self.votes['user'].unique()))
+    n_comments = lazy(lambda self: len(self.votes['comment'].unique()))
     shape = property(lambda self: self.votes.shape)
 
     def __init__(self, votes, stereotypes=None):
         keys = votes.keys()
-        if not ('user' in keys and 'comment' in keys and 'vote' in keys):
-            msg = 'must be a dataframe with "user", "comment" and "votes" columns'
+        if not ('user' in keys and 'comment' in keys and 'choice' in keys):
+            msg = (f'must be a dataframe with "user", "comment" and "choice" '
+                   f'columns, got: {list(keys)}')
             raise ValueError(msg)
         self.votes = votes
         self.stereotypes = stereotypes
@@ -39,42 +40,35 @@ class Math:
         values.
         """
         votes = self.votes
-        return votes.pivot_table(index='user', columns='comment', values='vote')
+        return votes.pivot_table(index='user', columns='comment', values='choice')
 
     # Dataframes with user and comment statistics
+    def _datasets(self, which, n_max):
+        data = self.votes
+        return dict(
+            n_votes=num_votes(data, which),
+            n_skip=num_votes(data, which, choice=SKIP),
+            n_agree=num_votes(data, which, choice=AGREE),
+            n_disagree=num_votes(data, which, choice=DISAGREE),
+            n_max=n_max,
+            avg_all=average_vote(data, which),
+            avg_valid=average_vote(data, which, drop_skip=True),
+        )
+
     def comments(self, field=None, **kwargs):
         """
         Create new dataframe with information about comments.
         """
+        kwargs = dict(self._datasets('comment', self.n_users), **kwargs)
+        return base_stats(**kwargs)
 
-        votes = (lambda x, **kwargs: num_votes(x, 'comment', **kwargs))
-        average = (lambda x, **kwargs: average_vote(x, 'comment', **kwargs))
-
-        if field is None:
-            df = base_stats(self.num_users, votes, average, **kwargs)
-            if self.comment_labels is not None:
-                df['cluster'] = self.comment_labels
-        else:
-            raise NotImplementedError
-
-        return df
-
-    def users(self, field=None, **kwargs):
+    def users(self, **kwargs):
         """
         Return a dataframe with statistics about users.
         """
-        votes = (lambda x, **kwargs: num_votes(x, 'user', **kwargs))
-        average = (lambda x, **kwargs: average_vote(x, 'user', **kwargs))
-
-        if field is None:
-            df = base_stats(self.num_users, votes, average, **kwargs)
-
-        labels = self.user_labels
-        if labels is not None:
-            df['cluster'] = labels
-            df['op_bridge'] = opinion_bridge_index(self.votes, labels)
-
-        return df
+        data = self._datasets('user', self.n_comments)
+        kwargs = dict(data, **kwargs)
+        return base_stats(**kwargs)
 
     #
     # Clusterization
@@ -83,7 +77,6 @@ class Math:
         """
         Extract clusters from input data.
         """
-
         pipeline = Pipeline([
             ('fill', Imputer()),
             ('cluster', KMeans(k or 4, **kwargs))
@@ -117,6 +110,8 @@ class Math:
         """
         Return a list of inferred votes for missing data.
         """
+        import surprise
+
         algo_class = {
             'knn': surprise.KNNBasic,
             'knn-means': surprise.KNNWithMeans,
@@ -179,38 +174,65 @@ def read_data(votes, users=None, comments=None, pivot=False):
         data = votes
     else:
         votes = np.asarray(votes)
-        data = pd.DataFrame(votes, columns=['user', 'comment', 'vote'])
+        data = pd.DataFrame(votes, columns=['user', 'comment', 'choice'])
     return Math(data)
 
 
 #
 # Compute statistics
 #
-def base_stats(num_users, count_func, average_func, advanced=True, pc=False):
+def base_stats(n_votes, n_agree, n_disagree, n_skip, n_max,
+               advanced=True, pc=False,
+               avg_all=None, avg_valid=None,
+               **kwargs):
     """
-    Return a dataframe with all basic statistics about a user.
-    """
+    Return a dataframe with basic statistics.
 
+    Args:
+        n_votes (array):
+            Number of votes for each entry.
+        n_skip/n_agree/n_disagree (array):
+            Number of votes for each choice.
+        n_max(int):
+            Total number of elements in sample.
+        advanced (bool):
+            If true, show advanced statistics (average vote counts)
+        pc (bool):
+            If true, return all statistics as percentages (when applicable).
+        avg_all/avg_valid (array):
+            Average vote value for each entry. The first include all votes and
+            the second ignores the skipped votes.
+    """
+    e = 1e-50
     df = pd.DataFrame()
+    n = pd.DataFrame({
+        'total': n_votes,
+        'agree': n_agree, 'disagree': n_disagree, 'skip': n_skip,
+    }).fillna(0).astype(int)
 
-    n_votes = count_func()
-    n_voted = count_func(drop_skip=True)
+    df['votes'] = n.total
+    df['missing'] = (n_max - n.total) / n_max
+    df['skipped'] = n.skip / (n.total + e)
+    df['agree'] = n.agree / (n.total - n.skip + e)
+    df['disagree'] = n.disagree / (n.total - n.skip + e)
 
-    df['votes'] = n_votes
-    df['missing'] = 1 - n_votes / num_users
-    df['skipped'] = 1 - n_voted / n_votes
-    df['agree'] = count_func(drop_skip=True, value=AGREE) / n_voted
-
-    # Advanced statistics
+        # Advanced statistics
     if advanced:
-        df['average'] = average_func()
-        df['divergence'] = np.abs(average_func(drop_skip=True))
+        if avg_all is None or avg_valid is None:
+            msg = 'avg_all and avg_valid must be given for advanced statistics'
+            raise TypeError(msg)
+        df['average'] = avg_all
+        df['divergence'] = np.abs(avg_valid)
         df['entropy'] = binary_entropy(df.agree)
+
+    # Extra columns
+    if kwargs:
+        df.update(kwargs)
 
     # Display percentages?
     if pc:
         fraction_fields = {
-            'missing', 'skipped', 'agree', 'average', 'divergence'
+            'missing', 'skipped', 'agree', 'disagree', 'average', 'divergence'
         }
         for field in fraction_fields:
             if field in df:
@@ -221,27 +243,20 @@ def base_stats(num_users, count_func, average_func, advanced=True, pc=False):
 
 
 def average_vote(votes, which, drop_skip=False):
-    return pivoted_data(votes, which, drop_skip=drop_skip, aggfunc=np.mean).vote
+    return pivoted_data(votes, which, drop_skip=drop_skip, aggfunc=np.mean)
 
 
-def num_votes(votes, which, drop_skip=False, value=None):
-    if value is not None:
-        votes = votes[votes.vote == value]
-    return pivoted_data(votes, which, drop_skip=drop_skip, aggfunc='count').vote
+def num_votes(votes, which, drop_skip=False, choice=None):
+    if choice is not None:
+        votes = votes[votes['choice'] == choice]
+    return pivoted_data(votes, which, drop_skip=drop_skip, aggfunc='count')
 
 
-def pivoted_data(df, which, aggfunc=np.mean, drop_skip=False, **kwargs):
+def pivoted_data(votes, which, aggfunc=np.mean, drop_skip=False, **kwargs):
     if drop_skip:
-        df = df[df.vote != SKIP]
-    return df.pivot_table('vote', index=which, aggfunc=aggfunc, **kwargs)
-
-
-def pivot_comment(df, *args, **kwargs):
-    return pivoted_data(df, 'comment', *args, **kwargs)
-
-
-def pivot_user(df, *args, **kwargs):
-    return pivoted_data(df, 'user', *args, **kwargs)
+        votes = votes[votes['choice'] != SKIP]
+    pivot = votes.pivot_table('choice', index=which, aggfunc=aggfunc, **kwargs)
+    return pivot['choice']
 
 
 def binary_entropy(p, e=1e-50):
@@ -298,7 +313,6 @@ def opinion_bridge_index(df, labels):
     n_samples, _ = df.shape
 
     data = Imputer().fit_transform(df)
-    print(data[labels == k])
 
     centroids = np.array([np.mean(data[labels == label], 0) for label in label_set])
 
