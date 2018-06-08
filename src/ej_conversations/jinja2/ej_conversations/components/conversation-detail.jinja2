@@ -29,7 +29,10 @@
         {% if comment %}
             {{ comment_detail(comment, user) }}
         {% else %}
-            <p class="Comment">Conversa não contêm comentários</p>
+            <div class="Comment">
+                <h1>{{ _('Congratulations!') }}</h1>
+                <p>{{ _("There are no comments left to vote :)") }}</p>
+            </div>
         {% endif %}
 
         {# Post a new comment #}

@@ -1,14 +1,15 @@
 import logging
 
-from django.shortcuts import render, redirect, HttpResponse
+from django.shortcuts import render, redirect
 
 from boogie.router import Router
 from ej_configurations import fragment, social_icons
 from ej_conversations.models import Conversation
-from .forms import ConversationForm
 
 log = logging.getLogger('ej')
-urlpatterns = Router()
+urlpatterns = Router(
+    template='pages/{name}.jinja2',
+)
 
 
 #
@@ -21,32 +22,16 @@ def home(request):
     return redirect('/start/')
 
 
-@urlpatterns.route('conversations/create/')
-def create_conversation(request):
-    if request.user.id:
-        if request.method == 'GET':
-            ctx = {}
-            return render(request, "ej_conversations/conversations-create.jinja2", ctx)
-        elif request.method == 'POST':
-            form = ConversationForm(data=request.POST, instance=Conversation(author=request.user))
-            if form.is_valid():
-                conversation = form.save()
-                return redirect(f'/conversations/{conversation.category.slug}/{conversation.title}')
-            else:
-                return HttpResponse(f'<p> {form.errors} </p>')
-    return redirect('/login/')
-
-
 @urlpatterns.route('start/')
 def start(request):
-    ctx = {
+    return {
         'conversations': Conversation.objects.all(),
         'home_banner_fragment': fragment('home.banner', raises=False),
         'how_it_works_fragment': fragment('home.how-it-works', raises=False),
         'start_now_fragment': fragment('home.start-now', raises=False),
         'social_media_icons': social_icons(),
+        'user': request.user,
     }
-    return render(request, 'pages/home.jinja2', ctx)
 
 
 @urlpatterns.route('clusters/')
