@@ -8,7 +8,6 @@ from django.shortcuts import render
 from ej_users.models import User
 from ej.utils.perms import conversations
 
-
 app_name = 'ej_conversations'
 urlpatterns = Router(
     template='ej_conversations/{name}.jinja2',
