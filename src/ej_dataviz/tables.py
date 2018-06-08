@@ -3,8 +3,8 @@ import numpy as np
 from hyperpython.components import html_table
 
 
-def render_dataframe(df, index=True, *, datatable=False, class_=(), col_display=None,
-                     **kwargs):
+def render_dataframe(df, index=False, *, datatable=False, class_=(),
+                     col_display=None, **kwargs):
     """
     Convert a Pandas dataframe to a hyperpython structure.
 

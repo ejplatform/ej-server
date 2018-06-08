@@ -1,32 +1,11 @@
-import functools
-
 import pandas as pd
 
 from sidekick import lazy, placeholder as this
 
 
-def cached(func):
+class ItemStats:
     """
-    Cache result of method in the _cache attribute of instance.
-    """
-
-    attribute = func.__name__
-
-    @functools.wraps(func)
-    def decorated(self, **kwargs):
-        key = (attribute, *kwargs.items())
-        try:
-            return self._cache[key]
-        except KeyError:
-            self._cache[key] = result = func(self, **kwargs)
-            return result
-
-    return decorated
-
-
-class VoteStats:
-    """
-    A class that gathers basic statistics about a Series object.
+    A class that gathers basic statistics about a item.
     """
 
     @lazy
@@ -42,9 +21,9 @@ class VoteStats:
 
     missing = lazy(this.total - this.count)
     count = lazy(this._simple('count'))
-    count_filtered = lazy(this._simple('count', True))
+    count_valid = lazy(this._simple('count', True))
     average = lazy(this._simple('mean'))
-    average_filtered = lazy(this._simple('mean', True))
+    average_valid = lazy(this._simple('mean', True))
 
     def __init__(self, data, *, total, cols=('item', 'value'), skip_value=0):
         self._cache = {}

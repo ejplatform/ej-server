@@ -7,7 +7,7 @@ from hyperpython.components import html_table, hyperlink
 from ej_clusters.math import get_raw_votes
 from ej_conversations.models import Conversation
 from ej_dataviz import render_dataframe
-from ej_math.vote_data import Math
+from ej_math import VoteStats
 
 app_name = 'ej_reports'
 urlpatterns = Router(
@@ -28,7 +28,7 @@ conversation_url = '<model:conversation>/reports/'
 def index(conversation):
     statistics = conversation.statistics()
     votes = get_raw_votes(conversation)
-    math = Math(votes)
+    math = VoteStats(votes)
     return {
         'title': _('Report'),
         'content_title': hyperlink(conversation),
