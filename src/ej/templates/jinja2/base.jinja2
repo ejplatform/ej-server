@@ -104,7 +104,7 @@
                         {{ content_html|safe }}
                     </div>
                 {% else %}
-                    <p>Please override the "content" block of your template!</p>
+                    <p>{{ _('Please override the "content" block of your template!') }}</p>
                 {% endif %}
             {% endblock %}
         </main>

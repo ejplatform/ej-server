@@ -20,7 +20,7 @@
 
 {% macro render_comment_tab(comments) %}
     {% if not comments %}
-        <p>Nenhum comentário</p>
+        <p>{{ _('No comment') }}</p>
     {% else %}
         <ul class="Comments-list">
             {% for comment in comments %}
