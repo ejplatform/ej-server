@@ -2,7 +2,7 @@
 {% from 'ej_conversations/components/conversation-list.jinja2' import conversation_list %}
 
 
-{% macro profile_edit(profile, conversations, form, csrf_input) %}
+{% macro profile_edit(profile, form, csrf_input) %}
     <div class="ProfileEdit">
         <form method="post" enctype="multipart/form-data" action="" show-labels>
             {{ csrf_input }}
