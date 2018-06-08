@@ -16,13 +16,7 @@ urlpatterns = [
     path('', include('ej_users.routes', namespace='auth')),
     path('', include('ej_help.routes', namespace='help')),
 
-    # Profile pages
-    path('profile/', include('ej_profiles.routes', namespace='profile')),
-    path('profile/', include('ej_gamification.routes', namespace='gamification')),
-    path('profile/notifications/', include('ej_notifications.routes', namespace='notifications')),
-
-    # Configuration
-    path('config/', include('ej_configurations.routes', namespace='conf')),
+    path('dataviz/', include(('ej_dataviz.routes', 'ej_dataviz'), namespace='dataviz')),
 
     # Conversations and other EJ-specific routes
     path('conversations/', include('ej_conversations.routes', namespace='conversation')),
@@ -43,6 +37,13 @@ urlpatterns = [
     path('api/v1/docs/', include_docs_urls(title='ej API Docs', public=False)),
     # path('api/v1/', include('courier.urls', namespace='courier')),
     path('api/v1/rocketchat/', include('ej_rocketchat.routes')),
+
+    # EJ Routes
+    path('', include('ej_conversations.routes', namespace='conversations')),
+    path('profile/', include(('ej_profiles.routes', 'ej_profiles'), namespace='profiles')),
+    path('profile/', include('ej_gamification.routes', namespace='gamification')),
+    path('profile/notifications/', include('ej_notifications.routes', namespace='notifications')),
+    path('config/', include(('ej_configurations.routes', 'ej_configurations'), namespace='configurations')),
 
     # User management
     path('rest-auth/', include('rest_auth.urls')),

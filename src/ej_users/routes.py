@@ -1,5 +1,5 @@
 import logging
-
+from django.shortcuts import render
 from django.contrib import auth
 from django.contrib.auth import get_user_model
 from django.db import IntegrityError
@@ -12,14 +12,23 @@ from rest_framework.authtoken.models import Token
 
 from boogie.router import Router
 from ej_users import forms
+from ej_conversations.models.conversation import Conversation
+from ej_conversations import rules
+from ej.utils.perms import conversations
 
 User = get_user_model()
 
 app_name = 'ej_users'
 urlpatterns = Router(
     template='ej_users/{name}.jinja2',
+    models={
+        'user': User,
+    },
+    lookup_field='username',
 )
 log = logging.getLogger('ej')
+
+user_url = '<model:user>/'
 
 
 @urlpatterns.route('register/')
@@ -139,3 +148,10 @@ def clean_cookies():
     response.delete_cookie('sessionid')
     response.delete_cookie('csrftoken')
     return response
+
+
+def user_conversations(request, user):
+    ctx = {'conversations': conversations(request.user,
+                                          [rules.can_moderate_conversation],
+                                          Conversation.objects.filter(author=user))}
+    return render(request, "ej_conversations/list.jinja2", ctx)

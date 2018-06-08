@@ -1,6 +1,9 @@
 {% from 'ej_conversations/components/comment-detail.jinja2' import comment_detail, comment_form with context %}
 
-{% macro conversation_detail(conversation, user) %}
+{% macro conversation_detail(conversation, edit_perm, user) %}
+    {% if edit_perm %}
+        {{ action_button( _('Edit Conversation'), conversation.get_absolute_url() + 'edit/') }}
+    {% endif %}
     <div class="ConversationDetail">
         <div class="ConversationDetail-banner">
             <h1>{{ conversation.question }}</h1>
@@ -9,6 +12,7 @@
                 <li>{{ gettext('%(count)s votes', count=conversation.votes.count()) }}</li>
             </ul>
         </div>
+            
         <div class="ConversationDetail-arrow"></div>
 
         {#        <ul class="ConversationDetail-statisticsBottom">#}

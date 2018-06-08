@@ -5,6 +5,7 @@ from django.db.models import Q
 from django.utils.timezone import now
 
 from boogie import rules
+from ej_users.models import User
 
 
 #
@@ -110,6 +111,9 @@ def comment_cooldown(conversation, user):
     return max(comment_throttle() - interval.seconds, 0.0)
 
 
+#
+# Permissions
+#
 @rules.register_perm('ej_conversations.can_vote')
 def can_vote(user, conversation):
     """
@@ -128,6 +132,25 @@ def can_comment(user, conversation):
     """
     remaining = remaining_comments(conversation, user)
     return remaining > 0 and comment_cooldown(conversation, user) <= 0.0
+
+
+# @TODO create a logic to create conversation permission
+@rules.register_perm('ej_conversations.can_add_conversation')
+def can_add_conversation(user):
+    if User.objects.filter(username=user.username).exists():
+        return True
+    return False
+
+
+# @TODO create a logic to edit conversation permission
+@rules.register_perm('ej_conversations.can_edit_conversation')
+def can_edit_conversation(user, conversation):
+    return user == conversation.author
+
+
+@rules.register_perm('ej_conversations.can_moderate_conversation')
+def can_moderate_conversation(user, conversation):
+    return can_edit_conversation(user, conversation)
 
 
 @rules.predicate

@@ -4,6 +4,10 @@ from django.shortcuts import redirect
 from boogie.router import Router
 from .forms import ProfileForm
 
+from ej.utils.perms import conversations
+from ej_conversations.models.conversation import Conversation
+from ej_conversations.rules import can_moderate_conversation
+
 
 app_name = 'ej_profiles'
 urlpatterns = Router(
@@ -16,6 +20,11 @@ urlpatterns = Router(
 def detail(request):
     return {
         'info_tab': request.GET.get('info', 'profile'),
+        'conversations': conversations(
+            request.user,
+            [can_moderate_conversation],
+            Conversation.objects.filter(author=request.user)
+        )
     }
 
 

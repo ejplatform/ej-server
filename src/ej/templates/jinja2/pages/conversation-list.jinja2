@@ -1,0 +1,12 @@
+{% extends 'base.jinja2' %}
+{% from 'components/conversations.jinja2' import conversation_list %}
+{% from 'components/generic/elements.jinja2' import breadcrumbs, action_button %}
+
+{% block content %}
+    {{ action_button("Criar nova Conversa", "/conversations/create/")}}
+    {% call conversation_list(conversations, categories) %}
+{#        {{ breadcrumbs([('conversations', _('Conversations'))]) }}#}
+    {% endcall %}
+{% endblock %}
+
+

@@ -30,8 +30,8 @@
 
         {# Cards #}
         <div class="ConversationList-cardList">
-            {% for conversation in conversations %}
-                {{ conversation_card(conversation) }}
+            {% for conversation_tuple in conversations %}
+                {{ conversation_card(conversation_tuple[0], conversation_tuple[1]) }}
             {% endfor %}
         </div>
         {# {{ conversation_pagination() }} #}

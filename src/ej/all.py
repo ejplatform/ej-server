@@ -1,8 +1,7 @@
 from sidekick import deferred
 
-from boogie.rules import compute, test_rule
 from ej_users.models import User
-from ej_conversations.models import Conversation, Comment, Choice
+from ej_conversations.models import Conversation, Comment
 
 _first = lambda cls: deferred(lambda: cls.objects.first())
 

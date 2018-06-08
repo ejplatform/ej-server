@@ -90,9 +90,6 @@ class Conversation(TimeStampedModel, StatusModel):
     def approved_comments(self):
         return self.comments.filter(status=Comment.STATUS.approved)
 
-    class Meta:
-        ordering = ('created',)
-
     def __str__(self):
         return self.title
 

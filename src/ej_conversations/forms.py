@@ -1,7 +1,19 @@
 from django import forms
 from django.core.exceptions import ValidationError
 
-from .models import VOTE_VALUES
+from .models import VOTE_VALUES, Conversation, Comment
+
+
+class ConversationForm(forms.ModelForm):
+    class Meta:
+        model = Conversation
+        fields = ['question', 'title']
+
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['content']
 
 
 class VoteForm(forms.Form):
