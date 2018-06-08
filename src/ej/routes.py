@@ -6,6 +6,7 @@ from boogie.router import Router
 from ej_configurations import fragment, social_icons
 from ej_conversations.models import Conversation
 from ej.utils.perms import conversations
+from ej_conversations import rules
 
 log = logging.getLogger('ej')
 urlpatterns = Router(
