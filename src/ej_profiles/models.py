@@ -66,7 +66,7 @@ class Profile(models.Model):
                 picture = account.get_avatar_url()
                 if picture:
                     return picture
-            return gravatar_fallback(self.user.email)
+            return avatar_fallback()
 
     @property
     def has_image(self):
@@ -88,7 +88,7 @@ class Profile(models.Model):
         registered profile fields.
         """
 
-        fields = ['city', 'country', 'occupation', 'age', 'gender', 'race', 'political_activity']
+        fields = ['city', 'country', 'occupation', 'age', 'gender', 'race', 'political_activity', 'biography']
         field_map = {field.name: field for field in self._meta.fields}
         result = []
         for field in fields:
@@ -97,7 +97,6 @@ class Profile(models.Model):
             result.append((description.capitalize(), getter()))
         if user_fields:
             result = [
-                (_('Name'), self.user.name),
                 (_('E-mail'), self.user.email),
                 *result,
             ]
@@ -123,13 +122,18 @@ class Profile(models.Model):
             return _('Administrative user')
         return _('Regular user')
 
-
 def gravatar_fallback(id):
     """
     Computes gravatar fallback image URL from a unique string identifier
     """
     digest = hashlib.md5(id.encode('utf-8')).hexdigest()
     return "https://gravatar.com/avatar/{}?s=40&d=mm".format(digest)
+
+def avatar_fallback():
+    """
+    Return fallback image URL for profile
+    """
+    return "/static/img/logo/avatar_default.svg"
 
 
 def get_profile(user):

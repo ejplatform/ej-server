@@ -515,7 +515,7 @@ template {
   .Button .Button--secondary,
   .ActionButton .Button--secondary,
   .RocketButton .Button--secondary {
-    background-color: #d6f1f3;
+    background-color: #30BFD3;
     color: rgba(4, 32, 73, 0.9); }
     .Button[secondary]:hover, [secondary].ActionButton:hover, [secondary].RocketButton:hover, .Button[secondary]:focus, [secondary].ActionButton:focus, [secondary].RocketButton:focus,
     .Button .Button--secondary:hover,
@@ -524,7 +524,7 @@ template {
     .Button .Button--secondary:focus,
     .ActionButton .Button--secondary:focus,
     .RocketButton .Button--secondary:focus {
-      background-color: #afe4e7;
+      background-color: #249bac;
       color: #042049; }
   .Button[small], [small].ActionButton, [small].RocketButton,
   .Button .Button--small,
@@ -595,7 +595,7 @@ template {
     .Button .Button--ghost .Button--ghost-secondary,
     .ActionButton .Button--ghost .Button--ghost-secondary,
     .RocketButton .Button--ghost .Button--ghost-secondary {
-      color: #d6f1f3; }
+      color: #30BFD3; }
       .Button[ghost] [secondary]:hover, [ghost].ActionButton [secondary]:hover, [ghost].RocketButton [secondary]:hover, .Button[ghost] [secondary]:focus, [ghost].ActionButton [secondary]:focus, [ghost].RocketButton [secondary]:focus,
       .Button[ghost] .Button--ghost-secondary:hover,
       [ghost].ActionButton .Button--ghost-secondary:hover,
@@ -615,18 +615,11 @@ template {
       .Button .Button--ghost .Button--ghost-secondary:focus,
       .ActionButton .Button--ghost .Button--ghost-secondary:focus,
       .RocketButton .Button--ghost .Button--ghost-secondary:focus {
-        color: #afe4e7; }
+        color: #249bac; }
 
 /*
  HEADINGS
  =====================================================================*/
-h1, .h1 {
-  font-size: 21px;
-  font-family: "Raleway", sans-serif;
-  font-weight: normal;
-  text-transform: none;
-  text-transform: uppercase; }
-
 h2, .h2 {
   font-size: 19.5px;
   font-family: "Raleway", sans-serif;
@@ -685,7 +678,7 @@ a {
 
 code, pre, blockquote {
   color: #042049;
-  background-color: #d6f1f3; }
+  background-color: #30BFD3; }
 
 code, pre {
   font-family: "IBM Plex Mono", monospace monospace; }
@@ -729,7 +722,7 @@ select,
 .FormItem {
   border-radius: 17px;
   background: #fff;
-  border: 1px solid #999;
+  border: 1px solid #333333;
   color: #042049;
   margin: 7px auto;
   padding: 14px 14px 7px; }
@@ -1128,7 +1121,7 @@ ul.errorlist {
  PAGE FOOTER
  ============================================================================ */
 .Footer {
-  background-color: #a4d8dd;
+  background-color: #C4F2F4;
   color: #042049;
   text-align: center; }
   .Footer-social i {
@@ -1230,7 +1223,7 @@ ul.errorlist {
     width: 150px; }
     .Register-icon img > *,
     .Login-icon img > * {
-      color: #d6f1f3; }
+      color: #30BFD3; }
   .Register-socialButtons,
   .Login-socialButtons {
     display: none; }
@@ -1246,7 +1239,7 @@ ul.errorlist {
       color: #ff3e72; }
   .Register-newUser,
   .Login-newUser {
-    border-top: 1px solid #999;
+    border-top: 1px solid #333333;
     margin: 28px auto;
     width: 85%; }
     .Register-newUser h1,
@@ -1264,7 +1257,7 @@ ul.errorlist {
   .ConversationList-title h2 {
     font-size: 16.5px; }
 .ConversationList-categories {
-  background-color: #d6f1f3;
+  background-color: #30BFD3;
   color: #042049;
   align-items: center;
   display: flex;
@@ -1346,7 +1339,7 @@ ul.errorlist {
         display: inline;
         margin: 0; }
   .ConversationCard-actions {
-    background: #d6f1f3;
+    background: #30BFD3;
     border-radius: 56px;
     padding-top: 112px;
     margin-top: -112px; }
@@ -1386,7 +1379,7 @@ ul.errorlist {
   .ConversationDetail li {
     margin: 0; }
   .ConversationDetail-banner {
-    background: #d6f1f3;
+    background: #30BFD3;
     border-radius: 0 0 56px 56px;
     color: #042049;
     margin: 0;
@@ -1400,7 +1393,7 @@ ul.errorlist {
   .ConversationDetail-arrow {
     border-left: 28px solid transparent;
     border-right: 28px solid transparent;
-    border-top: 28px solid #d6f1f3;
+    border-top: 28px solid #30BFD3;
     height: 0;
     margin: 0 auto;
     padding: 0;
@@ -1532,7 +1525,7 @@ ul.errorlist {
       display: inherit; } }
 
 .HowItWorks {
-  background: #d6f1f3;
+  background: #30BFD3;
   padding-top: 56px; }
   .HowItWorks h2 {
     font-size: 16.5px; }
@@ -1576,7 +1569,7 @@ ul.errorlist {
         display: block; } }
 
 .StartNow {
-  background: #d6f1f3;
+  background: #30BFD3;
   padding: 28px;
   text-align: center; }
   .StartNow h2 {
@@ -1590,26 +1583,29 @@ ul.errorlist {
   padding-top: 28px; }
   .Profile h1 {
     margin-bottom: 0;
-    color: #123066;
-    font-size: 21px; }
+    color: #052B47;
+    font-size: 21px;
+    font-weight: bold; }
   .Profile h2 {
-    color: #d6f1f3;
+    color: #30BFD3;
     font-size: 16.5px;
+    font-weight: bold;
     margin-top: 0; }
-  .Profile-actions p, .Profile-actions form {
+  .Profile-actions {
+    margin: 56px;
+    padding: 0px;
+    text-transform: uppercase;
+    color: #33333347;
     text-align: center; }
-  .Profile-actions input[type=submit] {
-    background-color: #123066; }
-  .Profile-actions a {
-    margin: 56px 0;
-    color: #9c2715;
-    display: inline-block; }
+    .Profile-actions a {
+      margin: 56px 0;
+      color: #33333347; }
   .Profile-arrow {
     width: 0;
     height: 0;
     border-left: 28px solid transparent;
     border-right: 28px solid transparent;
-    border-bottom: 28px solid #d6f1f3; }
+    border-bottom: 28px solid #C4F2F4; }
   .Profile-breadcrumbs {
     text-align: left; }
   .Profile-conversations .ConversationList-title h1 {
@@ -1618,9 +1614,7 @@ ul.errorlist {
     text-align: center; }
   .Profile-image {
     width: 300px;
-    height: 300px;
-    border: 14px solid #74b5b8;
-    border-radius: 50ch; }
+    height: 300px; }
   .Profile-rocket {
     text-align: center;
     margin-top: 112px; }
@@ -1639,28 +1633,34 @@ ul.errorlist {
     .Profile-tabLinks > * {
       margin: 0 28px; }
     .Profile-tabLinks a {
-      color: #123066;
+      color: #052B47;
       margin: 0;
       display: inline-block;
       min-width: 56px; }
+  .Profile-tabActive {
+    font-weight: bold; }
   .Profile-tabContent {
-    background: #d6f1f3;
-    text-align: left; }
+    background: #C4F2F4;
+    text-align: left;
+    border-radius: 1.5em; }
   .Profile-info {
     font-size: 15px;
-    padding: 56px; }
-    .Profile-info .Button, .Profile-info .ActionButton, .Profile-info .RocketButton {
-      text-transform: none; }
+    padding: 28px; }
+    .Profile-info .edit-button {
+      margin-top: 28px;
+      text-align: center; }
+      .Profile-info .edit-button .Button, .Profile-info .edit-button .ActionButton, .Profile-info .edit-button .RocketButton {
+        text-transform: none;
+        background-color: #30BFD3; }
     .Profile-info > * {
       display: block; }
     .Profile-info dl dt {
-      color: #042049;
+      color: #30BFD3;
       text-transform: lowercase; }
     .Profile-info dl dd {
       font-size: 15.75px;
-      font-weight: bold;
       margin: 0 0 14px 0;
-      color: #123066; }
+      color: #052B47; }
     .Profile-info form {
       text-align: center; }
 
@@ -1670,7 +1670,7 @@ ul.errorlist {
   margin-right: auto; }
 
 .Rocket-title {
-  color: #d6f1f3;
+  color: #30BFD3;
   font-weight: bold;
   padding: 0 7px; }
   .Rocket-title h1 {
@@ -1682,7 +1682,7 @@ ul.errorlist {
 .Rocket-detail {
   padding: 7px; }
 .Rocket-items {
-  background-color: #d6f1f3;
+  background-color: #30BFD3;
   padding: 14px; }
   .Rocket-items .title {
     padding: 7px 0;
@@ -1738,17 +1738,17 @@ ul.errorlist {
     background: #ff3e72;
     color: rgba(255, 255, 255, 0.9); }
   .ColorStyles .action-secondary {
-    background: #d6f1f3;
+    background: #30BFD3;
     color: rgba(4, 32, 73, 0.9); }
   .ColorStyles .color-white {
-    background: #999;
+    background: #333333;
     color: white; }
     .ColorStyles .color-white span:first-child {
       background: #fff; }
     .ColorStyles .color-white span:last-child {
       background: #111; }
   .ColorStyles .color-gray {
-    background: #999;
+    background: #333333;
     color: white; }
     .ColorStyles .color-gray span:first-child {
       background: #eee; }
@@ -1758,7 +1758,7 @@ ul.errorlist {
     background: #30c0d3;
     color: white; }
     .ColorStyles .color-blue span:first-child {
-      background: #d6f1f3; }
+      background: #30BFD3; }
     .ColorStyles .color-blue span:last-child {
       background: #042049; }
   .ColorStyles .color-green {
@@ -1781,7 +1781,7 @@ ul.errorlist {
     .ColorStyles .color-purple span:first-child {
       background: #cda4ee; }
     .ColorStyles .color-purple span:last-child {
-      background: #123066; }
+      background: #052B47; }
   .ColorStyles .color-red {
     background: #f13c20;
     color: white; }
@@ -1825,11 +1825,11 @@ ul.errorlist {
   color: #fff; }
 .ColorStyles .alt,
 .ColorPalette .alt {
-  background: #a4d8dd;
+  background: #C4F2F4;
   color: #042049; }
 .ColorStyles .hint,
 .ColorPalette .hint {
-  background: #d6f1f3;
+  background: #30BFD3;
   color: #042049; }
 .ColorStyles .content,
 .ColorPalette .content {
