@@ -981,10 +981,10 @@ ul.errorlist {
   flex-flow: column;
   height: 100vh;
   overflow: hidden;
-  padding: 54px 0 73px 0; }
+  padding: 75px 0 73px 0; }
   @media only screen and (min-width: 550px) {
     .Page {
-      padding: 79px 0 0 0; } }
+      padding: 100px 0 0 0; } }
   .Page-mainContainer {
     box-sizing: border-box;
     height: 100vh;
@@ -1018,9 +1018,12 @@ ul.errorlist {
   z-index: 100; }
   .Header a, .Header a:hover, .Header a:active, .Header a:focus {
     color: #042049; }
+  .Header-ejLogo {
+    margin-left: auto;
+    margin-right: auto; }
   @media only screen and (min-width: 550px) {
     .Header {
-      height: 54px;
+      height: 75px;
       width: 100vw;
       position: fixed;
       top: 25px;
@@ -1047,7 +1050,7 @@ ul.errorlist {
         height: inherit;
         width: inherit; } }
   .Header-topNav {
-    height: 54px;
+    height: 75px;
     min-width: 96px;
     padding: 0 28px;
     top: 0; }
@@ -1064,7 +1067,7 @@ ul.errorlist {
         padding: 0 0 0 28px;
         text-align: left; }
         .Header-topNav img {
-          height: 40px; }
+          height: 61px; }
         .Header-topNav .Header-topIcon {
           display: none; } }
     @media only screen and (min-width: 912px) {

@@ -22,6 +22,11 @@ $header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.05) !default;
         @extend .unlist;
     }
 
+    &-ejLogo {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
     @media only screen and (min-width: $breakpoint-small) {
         @include size(100vw, $header-height-tablet);
         @include position(fixed,  $top-header-height null null null);
