@@ -19,7 +19,8 @@
         <img class="Profile-image" src="{{ profile.image_url }}">
         <h1>{{ profile.name }}</h1>
         <h2>{{ _('Participant Status') }}</h2>
-
+        {{ profile_comments(profile) }}
+        {{ profile_conversations(profile) }}
         <div class="Profile-tabs">
             <nav class="Profile-tabLinks">
                 {{ link(_('Info'), '/profile/',
@@ -53,14 +54,6 @@
             </div>
         </div>
     </div>
-{# FIXME see if this code is needed
-    <div class="Profile-conversations">
-        {{ profile_conversations(conversations, categories) }}
-    </div>
-
-    <div class="Profile-rocket">
-        {{ profile_rocket(profile) }}
-    </div> #}
 
     <div class="Profile-actions">
         <p>
@@ -111,15 +104,60 @@
     </div>
 {% endmacro %}
 
+{% macro profile_comments(profile) %}
+    <div class="Profile-comments">
+            
 
-{% macro profile_conversations(conversations, categories) %}
-    {{ conversation_list(conversations, [], _('Joined conversations')) }}
-    <p><a href="/conversations" class="Button" primary>{{ _('More conversations') }}</a></p>
+        <h2>{{_('My Comments')}} <span>({{profile.comments().count()}})</span>
+            <i class="fa fa-angle-down"></i>
+        </h2>
+        <ul class='comments'>
+            {% for comment in profile.comments() %}
+                <li>
+                    <div class='header'>
+                        <span class='label'>
+                            <i class="fas fa-location-arrow"></i>
+                            {{_('Opinion')}}
+                        </span>
+                        <span class='date'>{{ comment.created.strftime('%d-%m-%Y às %Hh %M') }}</span>
+                    </div>
+                    <div class='content'>
+                        {{ comment.content }}
+                    </div>
+                    <ul class='actions'>
+                        <li class='agree'>
+                            <i class="fas fa-check"></i>
+                            <span>{{comment.statistics().agree}}</span>
+                        </li>
+                        <li class='skip'>
+                            <i class="fas fa-arrow-right"></i>
+                            <span>{{comment.statistics().skip}}</span>
+                        </li>
+                        <li class='disagree'>
+                            <i class="fas fa-times"></i>
+                            <span>{{comment.statistics().disagree}}</span>
+                        </li>
+                    </ul>
+                    <div class='footer'>
+                        {{ link(_('See Conversation'), href=comment.conversation.get_absolute_url()) }}
+                    </div>
+                </li>                
+            {% endfor %}
+        </ul>
+    </div>
 {% endmacro %}
 
+{% macro profile_conversations(profile) %}
+    <div class="Profile-conversations">
+            
 
-{% macro profile_rocket(profile) %}
-    <h2>{{ _('CPA Space') }}</h2>
-    <h5>{{ _('See below the spaces you joined') }}</h5>
-    <p>{{ rocket_button() }}</p>
+        <h2>{{_('Favorite Conversations')}} <span>(1)</span>
+            <i class="fa fa-angle-down"></i>
+        </h2>
+        <ul class='conversations'>
+        {# FIXME list conversations  #}
+            {# {% for conversation in profile.favorite_conversations() %}
+            {% endfor %} #}
+        </ul>
+    </div>
 {% endmacro %}

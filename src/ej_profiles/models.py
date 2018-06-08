@@ -120,7 +120,15 @@ class Profile(models.Model):
         print("See all badges")
         print(self.user.badges_earned.all())
         return self.user.badges_earned.all()
-
+        
+    def comments(self):
+        """
+        Return all profile comments.
+        """
+        # FIXME remove this print
+        print("See all comments")
+        print(self.user.comments.all())
+        return self.user.comments.all()
 
     def role(self):
         """
