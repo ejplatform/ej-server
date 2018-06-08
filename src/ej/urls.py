@@ -14,11 +14,20 @@ urlpatterns = [
     # Basic authentication and authorization
     path('', include('ej.routes')),
     path('', include('ej_users.routes', namespace='auth')),
+    path('', include('ej_help.routes', namespace='help')),
 
     path('dataviz/', include(('ej_dataviz.routes', 'ej_dataviz'), namespace='dataviz')),
 
+    # Conversations and other EJ-specific routes
+    path('conversations/', include('ej_conversations.routes', namespace='conversation')),
+    path('', include('ej_reports.routes', namespace='report')),
+
     # Rocket
-    path('talks/', include(('ej_rocketchat.routes', 'ej_rocketchat'), namespace='rocketchat')),
+    *(
+        [path('talks/', include('ej_rocketchat.routes', namespace='rocketchat'))]
+        if settings.EJ_ENABLE_ROCKETCHAT
+        else ()
+    ),
 
     # Admin
     path(settings.ADMIN_URL.rstrip('^'), admin.site.urls),
@@ -27,11 +36,13 @@ urlpatterns = [
     path('api/', include(rest_api.urls)),
     path('api/v1/docs/', include_docs_urls(title='ej API Docs', public=False)),
     # path('api/v1/', include('courier.urls', namespace='courier')),
-    # path('api/v1/rocketchat/', include('ej.ej_rocketchat.urls')),
+    path('api/v1/rocketchat/', include('ej_rocketchat.routes')),
 
     # EJ Routes
     path('', include('ej_conversations.routes', namespace='conversations')),
     path('profile/', include(('ej_profiles.routes', 'ej_profiles'), namespace='profiles')),
+    path('profile/', include('ej_gamification.routes', namespace='gamification')),
+    path('profile/notifications/', include('ej_notifications.routes', namespace='notifications')),
     path('config/', include(('ej_configurations.routes', 'ej_configurations'), namespace='configurations')),
 
     # User management

@@ -98,3 +98,31 @@ fixes.apply_all()
 # Required for making django debug toolbar work
 if ENVIRONMENT == 'local':
     INTERNAL_IPS = [*globals().get('INTERNAL_IPS', ()), '127.0.0.1']
+
+    # Django CORS
+    CORS_ORIGIN_ALLOW_ALL = True
+    CORS_ALLOW_CREDENTIALS = True
+    CORS_ORIGIN_REGEX_WHITELIST = (r'^(http://)?localhost:\d{4,5}$',)
+
+    CSRF_TRUSTED_ORIGINS = [
+        'localhost:8000',
+        'localhost:3000'
+    ]
+
+    X_FRAME_OPTIONS = 'ALLOW-FROM http://localhost:3000'
+
+if ENVIRONMENT == 'production':
+
+    # Django CORS
+    CORS_ORIGIN_ALLOW_ALL = False
+    CORS_ALLOW_CREDENTIALS = True
+    CORS_ORIGIN_REGEX_WHITELIST = (r'^(https?://)?[\w.]*ejplatform\.org$',)
+
+    CSRF_TRUSTED_ORIGINS = [
+        'ejplatform.org',
+        'talks.ejplatform.org'
+        'dev.ejplatform.org',
+        'talks.dev.ejplatform.org',
+    ]
+
+    X_FRAME_OPTIONS = 'DENY'

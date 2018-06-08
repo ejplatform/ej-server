@@ -7,9 +7,10 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from model_utils.choices import Choices
 from model_utils.models import TimeStampedModel, StatusModel
-from boogie.rest import rest_api
 
+from boogie.rest import rest_api
 from .vote import Vote, normalize_choice, Choice
+from ..managers import CommentManager
 from ..validators import is_not_empty
 
 log = logging.getLogger('ej-conversations')
@@ -65,6 +66,8 @@ class Comment(StatusModel, TimeStampedModel):
     is_approved = property(lambda self: self.status == self.STATUS.approved)
     is_pending = property(lambda self: self.status == self.STATUS.pending)
     is_rejected = property(lambda self: self.status == self.STATUS.rejected)
+
+    objects = CommentManager()
 
     class Meta:
         unique_together = ('conversation', 'content')
@@ -133,9 +136,9 @@ class Comment(StatusModel, TimeStampedModel):
         return stats
 
 
-def votes_counter(comment, value=None):
-    if value is not None:
-        return comment.votes.filter(value=value).count()
+def votes_counter(comment, choice=None):
+    if choice is not None:
+        return comment.votes.filter(choice=choice).count()
     else:
         return comment.votes.count()
 

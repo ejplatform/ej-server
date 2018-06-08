@@ -97,11 +97,10 @@ def logout(request):
     return HttpResponseServerError('cannot logout')
 
 
-@urlpatterns.route('profile/recover-password/', login=True)
+@urlpatterns.route('profile/recover-password/')
 def recover_password(request):
     return {
         'user': request.user,
-        'profile': request.user.profile,
     }
 
 
@@ -115,6 +114,14 @@ def reset_password(request):
 
 @urlpatterns.route('profile/remove/', login=True)
 def remove_account(request):
+    if request.method == 'POST':
+        user = request.user
+        if request.POST.get('remove_account', False) == 'true':
+            user.is_active = False
+            user.delete()
+            return redirect('home')
+        else:
+            return HttpResponseServerError('invalid POST request')
     return {
         'user': request.user,
         'profile': request.user.profile,

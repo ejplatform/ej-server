@@ -9,10 +9,6 @@
     text-transform: $text-headings-transform;
 }
 
-h1, .h1 {
-    @include heading($font-size-h1);
-    text-transform: $text-headings-transform-h1;
-}
 h2, .h2 { @include heading($font-size-h2); }
 h3, .h3 { @include heading($font-size-h3); }
 h4, .h4 { @include heading($font-size-h4); }

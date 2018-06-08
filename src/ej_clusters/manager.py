@@ -6,13 +6,17 @@ pd = import_later('pandas')
 
 
 class ClusterQuerySet(QuerySet):
+    pass
+
+
+class ClusterManager(Manager.from_queryset(ClusterQuerySet)):
     def votes_data(self, conversation):
         """
         Return a query set of (cluster, comment, choice) items from the given
         conversation.
         """
         return conversation.votes.values_list(
-            'comment__conversation__dfsd',
+            'comment__conversation__',
             'comment_id',
             'choice',
         )
@@ -23,6 +27,3 @@ class ClusterQuerySet(QuerySet):
         """
         data = list(self.votes_data(conversation))
         return pd.DataFrame(data, columns=['cluster, comment', 'choice'])
-
-
-ClusterManager = Manager.from_queryset(ClusterQuerySet)

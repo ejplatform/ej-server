@@ -1,8 +1,10 @@
 from boogie.router import Router
 
+
+app_name = 'ej_notifications'
 urlpatterns = Router(
     login=True,
-    template='ej_notifications/{name}.jinja2',
+    template=['ej_notifications/{name}.jinja2', 'generic.jinja2']
 )
 
 
@@ -11,7 +13,7 @@ def index(request):
     user = request.user
     return {
         'user': user,
-        'notifications': user.notifications.unseen(),
+        # 'notifications': user.notifications.unseen(),
     }
 
 
@@ -20,5 +22,5 @@ def clusters(request):
     user = request.user
     return {
         'user': user,
-        'notifications': user.notifications.seen(),
+        # 'notifications': user.notifications.seen(),
     }

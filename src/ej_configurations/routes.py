@@ -6,6 +6,8 @@ from django.utils.translation import ugettext as _
 from boogie.router import Router
 from ej_conversations.models import Conversation, Comment, Vote
 
+
+app_name = 'ej_configurations'
 urlpatterns = Router()
 
 

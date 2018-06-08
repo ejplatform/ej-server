@@ -1,5 +1,5 @@
 # Django
-django ~= 2.0
+django ~= 2.0.0
 
 # Configuration
 django-environ ~= 0.4.4

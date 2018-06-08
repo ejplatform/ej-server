@@ -144,18 +144,6 @@ AUTOSLUG_SLUGIFY_FUNCTION = 'slugify.slugify'
 # Location of root django.contrib.admin URL, use {% url 'admin:index' %}
 ADMIN_URL = 'admin/'
 
-# Django cors
-# ------------------------------------------------------------------------------
-CORS_ORIGIN_ALLOW_ALL = False
-CORS_ALLOW_CREDENTIALS = True
-CORS_ORIGIN_REGEX_WHITELIST = (r'^(https?://)?[\w.]*ejplatform\.org$',)
-
-CSRF_TRUSTED_ORIGINS = [
-    'ejplatform.org',
-    'talks.ejplatform.org'
-    'dev.ejplatform.org',
-    'talks.dev.ejplatform.org',
-]
 
 # Above default keys will always pass, do not use then in production.
 RECAPTCHA_PUBLIC_KEY = env('DJANGO_RECAPTCHA_PUBLIC_KEY',

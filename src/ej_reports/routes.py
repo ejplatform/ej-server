@@ -1,42 +1,45 @@
 from boogie.router import Router
-from ej_conversations.models import Category, Conversation
+from ej_conversations.models import Conversation
 
+
+app_name = 'ej_reports'
 urlpatterns = Router(
     template='ej_reports/{name}.jinja2',
-    base_url='<slug@slug:category>/<slug@slug:conversation>/',
     perms=['ej_reports.can_view_report'],
     object='conversation',
+    models={
+        'conversation': Conversation,
+    },
+    lookup_field='slug',
+    lookup_type='slug',
     login=True,
 )
+conversation_url = '<model:conversation>/reports/'
 
 
-@urlpatterns.route(template=True)
-def index(category: Category, conversation: Conversation):
+@urlpatterns.route(conversation_url)
+def index(conversation):
     return {
-        'category': category,
         'conversation': conversation,
     }
 
 
-@urlpatterns.route('clusters/', template=True)
-def clusters(category: Category, conversation: Conversation):
+@urlpatterns.route(conversation_url + 'clusters/')
+def clusters(conversation):
     return {
-        'category': category,
         'conversation': conversation,
     }
 
 
-@urlpatterns.route('radar/', template=True)
-def radar(category: Category, conversation: Conversation):
+@urlpatterns.route(conversation_url + 'radar/')
+def radar(conversation):
     return {
-        'category': category,
         'conversation': conversation,
     }
 
 
-@urlpatterns.route('divergence/', template=True)
-def divergence(category: Category, conversation: Conversation):
+@urlpatterns.route(conversation_url + 'divergence/')
+def divergence(conversation):
     return {
-        'category': category,
         'conversation': conversation,
     }

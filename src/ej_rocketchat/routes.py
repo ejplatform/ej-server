@@ -6,6 +6,8 @@ from boogie.router import Router
 from . import helpers
 from .decorators import custom_headers
 
+
+app_name = 'ej_rocketchat'
 urlpatterns = Router()
 
 

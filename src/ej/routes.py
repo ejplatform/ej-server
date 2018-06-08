@@ -4,11 +4,13 @@ from django.shortcuts import render, redirect
 
 from boogie.router import Router
 from ej_configurations import fragment, social_icons
-from ej_conversations import rules
+from ej_conversations.models import Conversation
 from ej.utils.perms import conversations
 
 log = logging.getLogger('ej')
-urlpatterns = Router()
+urlpatterns = Router(
+    template='pages/{name}.jinja2',
+)
 
 
 #
@@ -16,24 +18,24 @@ urlpatterns = Router()
 #
 @urlpatterns.route('')
 def home(request):
-    ctx = {
+    if request.user.id:
+        return redirect('/conversations/')
+    return redirect('/start/')
+
+
+@urlpatterns.route('start/')
+def start(request):
+    return {
         'conversations': conversations(
             request.user,
-            [rules.can_moderate_conversation]
+            [rules.can_moderate_conversation],
         ),
         'home_banner_fragment': fragment('home.banner', raises=False),
         'how_it_works_fragment': fragment('home.how-it-works', raises=False),
         'start_now_fragment': fragment('home.start-now', raises=False),
         'social_media_icons': social_icons(),
+        'user': request.user,
     }
-    return render(request, 'pages/home.jinja2', ctx)
-
-
-@urlpatterns.route('start/')
-def start(request):
-    if request.user.id:
-        return redirect('/conversations/')
-    return redirect('/login/')
 
 
 @urlpatterns.route('clusters/')

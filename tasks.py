@@ -61,7 +61,7 @@ def db_reset(ctx, no_assets=False):
     """
     Reset data in database and optionally fill with fake data
     """
-    ctx.run('rm local/db/db.sqlite3 -f')
+    ctx.run('rm -f local/db/db.sqlite3')
     manage(ctx, 'migrate')
     if not no_assets:
         db_assets(ctx)
@@ -140,7 +140,7 @@ def docker_clean(ctx, no_sudo=False, all=False, volumes=False, networks=False, i
 # Translations
 #
 @task
-def i18n(ctx, compile=False, edit=False, lang='pt_BR'):
+def i18n(ctx, compile=False, edit=False, lang='pt_BR', keep_pot=False):
     """
     Extract messages for translation.
     """
@@ -153,7 +153,7 @@ def i18n(ctx, compile=False, edit=False, lang='pt_BR'):
         manage(ctx, 'makemessages', all=True, keep_pot=True)
 
         print('Extract Jinja translations')
-        ctx.run('pybabel extract -F babel.cfg -o locale/jinja2.pot .')
+        ctx.run('pybabel extract -F etc/babel.cfg -o locale/jinja2.pot .')
 
         print('Join Django + Jinja translation files')
         ctx.run('msgcat locale/django.pot locale/jinja2.pot --use-first -o locale/join.pot', pty=True)
@@ -162,8 +162,9 @@ def i18n(ctx, compile=False, edit=False, lang='pt_BR'):
         print(f'Update locale {lang} with Jinja2 messages')
         ctx.run(f'msgmerge locale/{lang}/LC_MESSAGES/django.po locale/join.pot -U')
 
-        print('Cleaning up')
-        ctx.run('rm locale/*.pot')
+        if not keep_pot:
+            print('Cleaning up')
+            ctx.run('rm locale/*.pot')
 
 
 #
@@ -174,19 +175,45 @@ def install_hooks(ctx):
     """
     Install git hooks in repository.
     """
-
     print('Installing flake8 pre-commit hook')
     ctx.run('flake8 --install-hook=git')
 
 
 @task
-def update_deps(ctx, all=False):
+def update_deps(ctx, all=False, reset=False):
     """
     Update volatile dependencies
     """
-    ctx.run(f'{python} -m pip install -r etc/requirements/git-modules.txt')
+    if reset:
+        ctx.run('rm -fr local/vendor/')
+    ctx.run(f'{python} etc/scripts/install-deps.py')
     if all:
         ctx.run(f'{python} -m pip install -r etc/requirements/develop.txt')
     else:
         print('By default we only update the volatile dependencies. Run '
               '"inv update-deps --all" in order to update everything.')
+
+
+@task
+def configure(ctx, silent=False):
+    """
+    Install dependencies and configure a test server.
+    """
+    if silent:
+        ask = lambda x: print(x + 'yes') or True
+    else:
+        ask = lambda x: input(x + ' (y/n) ').lower() == 'y'
+
+    print('\nLoading dependencies (inv update-deps)')
+    update_deps(ctx, all=True)
+
+    print('\nCreating database and running migrations (inv db)')
+    db(ctx)
+
+    if ask('\nLoad assets to database?'):
+        print('Running inv db-assets')
+        db_assets(ctx)
+
+    if ask('\nLoad fake data to database?'):
+        print('Running inv db-fake')
+        db_fake(ctx)

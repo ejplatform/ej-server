@@ -9,8 +9,9 @@ from ej_conversations.models.conversation import Conversation
 from ej_conversations.rules import can_moderate_conversation
 
 
+app_name = 'ej_profiles'
 urlpatterns = Router(
-    template='ej_profiles/{name}.jinja2',
+    template=['ej_profiles/{name}.jinja2', 'generic.jinja2'],
     login=True,
 )
 
@@ -50,7 +51,7 @@ def comments(request):
     return {
         'user': user,
         'comments': user.comments.all(),
-        'stats': user.comments.stats(),
+        'stats': user.comments.statistics(),
     }
 
 
@@ -62,5 +63,5 @@ def comments_filter(request, which):
     return {
         'user': user,
         'comments': getattr(user.comments, which)(),
-        'stats': user.comments.stats(),
+        'stats': user.comments.statistics(),
     }

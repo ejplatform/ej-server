@@ -1,5 +1,4 @@
-{% from 'ej_conversations/components/comment-detail.jinja2' import comment_detail %}
-{% from 'ej_conversations/components/comment-detail.jinja2' import comment_form %}
+{% from 'ej_conversations/components/comment-detail.jinja2' import comment_detail, comment_form with context %}
 
 {% macro conversation_detail(conversation, edit_perm, user) %}
     {% if edit_perm %}
@@ -34,7 +33,10 @@
         {% if comment %}
             {{ comment_detail(comment, user) }}
         {% else %}
-            <p class="Comment">Conversa não contêm comentários</p>
+            <div class="Comment">
+                <h1>{{ _('Congratulations!') }}</h1>
+                <p>{{ _("There are no comments left to vote :)") }}</p>
+            </div>
         {% endif %}
 
         {# Post a new comment #}

@@ -1,6 +1,5 @@
 from boogie.router import Router
 from ej_dataviz.plots import test_hist
-from ej_dataviz.tables import test
 
 urlpatterns = Router(
     template='ej_dataviz/{name}.jinja2',
@@ -9,7 +8,7 @@ urlpatterns = Router(
 
 @urlpatterns.route('', login=False)
 def index():
-    table = test()
+    # table = test()
     return {
         'table': table,
     }

@@ -67,9 +67,13 @@
 {% endmacro %}
 
 
-{% macro start_now(fragment) %}
+{% macro start_now(fragment, user) %}
     <div class="StartNow">
         {{ fragment.html() }}
-        <p>{{ action_button(_('Start now!'), '/start/') }}</p>
+        {% if user.id %}
+            <p>{{ action_button(_('Start now!'), '/conversations/') }}</p>
+        {% else %}
+            <p>{{ action_button(_('Start now!'), '/login/') }}</p>
+        {% endif %}
     </div>
 {% endmacro %}
