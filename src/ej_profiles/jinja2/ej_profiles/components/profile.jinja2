@@ -26,6 +26,10 @@
                         target='.Profile-tabs',
                         transition=None,
                         class='Profile-tabActive' if info=='profile' else None) }}
+                {{ link(_('Trophies'), '/profile/?info=trophies',
+                        target='.Profile-tabs',
+                        transition=None,
+                        class='Profile-tabActive' if info=='trophies' else None) }}
                 {{ link(_('Contributions'), '/profile/?info=contributions',
                         target='.Profile-tabs',
                         transition=None,
@@ -38,6 +42,8 @@
                 <div class="Profile-tabContent">
                     {% if info == 'profile' %}
                         {{ profile_info(profile, csrf_input) }}
+                    {% elif info == 'trophies' %}
+                        {{ profile_trophies(profile) }}
                     {% elif info == 'contributions' %}
                         {{ profile_contributions(profile) }}
                     {% else %}
@@ -87,6 +93,18 @@
                 <li>
                     <span class='amount'>{{ amount }}</span>
                     <span class='description'>{{ description or '-' }}</span>
+                </li>                
+            {% endfor %}
+        </ul>
+    </div>
+{% endmacro %}
+
+{% macro profile_trophies(profile) %}
+    <div class="Profile-info">
+        <ul class='trophies'>
+            {% for badge in profile.badges() %}
+                <li>
+                    <span class='amount'>{{ badge }}</span>
                 </li>                
             {% endfor %}
         </ul>

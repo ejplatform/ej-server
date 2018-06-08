@@ -112,6 +112,16 @@ class Profile(models.Model):
             conversations=self.user.conversations.count(),
         )
 
+    def badges(self):
+        """
+        Return all profile badges.
+        """
+        # FIXME remove this print
+        print("See all badges")
+        print(self.user.badges_earned.all())
+        return self.user.badges_earned.all()
+
+
     def role(self):
         """
         A human-friendly description of the user role in the platform.
