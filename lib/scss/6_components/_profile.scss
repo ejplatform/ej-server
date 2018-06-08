@@ -39,6 +39,30 @@ $profile-arrow-size: $spacing-unit !default;
             opacity: 0.8;
         }
     }
+    &-conversations {
+        padding: $spacing-unit-small;
+        h2 {
+            &.expanded {
+                i {
+                    transform: rotate(180deg);
+                }
+            }
+            color: black;
+            text-align: justify;
+            font-weight: normal;
+            span{
+                color: $color-magenta;
+                font-weight: bold;
+            }
+            i{
+                float: right;
+                font-weight: bold;
+                font-size: $font-size-huge;
+                color: $color-magenta;
+            }
+    
+        }
+    }
     &-comments {
         padding: $spacing-unit-small;
         h2 {

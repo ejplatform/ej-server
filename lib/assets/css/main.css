@@ -1602,6 +1602,22 @@ ul.errorlist {
       margin: 56px 0;
       color: #333333;
       opacity: 0.8; }
+  .Profile-conversations {
+    padding: 14px; }
+    .Profile-conversations h2 {
+      color: black;
+      text-align: justify;
+      font-weight: normal; }
+      .Profile-conversations h2.expanded i {
+        transform: rotate(180deg); }
+      .Profile-conversations h2 span {
+        color: #FF3D72;
+        font-weight: bold; }
+      .Profile-conversations h2 i {
+        float: right;
+        font-weight: bold;
+        font-size: 24px;
+        color: #FF3D72; }
   .Profile-comments {
     padding: 14px; }
     .Profile-comments h2 {

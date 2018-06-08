@@ -19,7 +19,8 @@
         <img class="Profile-image" src="{{ profile.image_url }}">
         <h1>{{ profile.name }}</h1>
         <h2>{{ _('Participant Status') }}</h2>
-            {{ profile_comments(profile) }}
+        {{ profile_comments(profile) }}
+        {{ profile_conversations(profile) }}
         <div class="Profile-tabs">
             <nav class="Profile-tabLinks">
                 {{ link(_('Info'), '/profile/',
@@ -53,14 +54,6 @@
             </div>
         </div>
     </div>
-{# FIXME see if this code is needed
-    <div class="Profile-conversations">
-        {{ profile_conversations(profile, categories) }}
-    </div>
-
-    <div class="Profile-rocket">
-        {{ profile_rocket(profile) }}
-    </div> #}
 
     <div class="Profile-actions">
         <p>
@@ -154,14 +147,17 @@
     </div>
 {% endmacro %}
 
-{% macro profile_conversations(profile, conversations) %}
-    {{ conversation_list(profile.conversations.all(), [], _('Joined conversations')) }}
-    <p><a href="/conversations" class="Button" primary>{{ _('More conversations') }}</a></p>
-{% endmacro %}
+{% macro profile_conversations(profile) %}
+    <div class="Profile-conversations">
+            
 
-
-{% macro profile_rocket(profile) %}
-    <h2>{{ _('CPA Space') }}</h2>
-    <h5>{{ _('See below the spaces you joined') }}</h5>
-    <p>{{ rocket_button() }}</p>
+        <h2>{{_('Favorite Conversations')}} <span>(1)</span>
+            <i class="fa fa-angle-down"></i>
+        </h2>
+        <ul class='conversations'>
+        {# FIXME list conversations  #}
+            {# {% for conversation in profile.favorite_conversations() %}
+            {% endfor %} #}
+        </ul>
+    </div>
 {% endmacro %}
