@@ -1140,14 +1140,18 @@ ul.errorlist {
 .NavMenu {
   background-color: #30c0d3;
   color: #fff;
-  height: 100vh;
+  height: 100%;
   width: 75vw;
+  min-height: 100vh;
   box-shadow: 2px 0 4px 0 rgba(18, 48, 102, 0.08);
   box-sizing: border-box;
   font-size: 15px;
   opacity: 1;
-  overflow: auto;
+  -ms-overflow-style: none;
+  overflow: -moz-scrollbars-none;
   padding: 28px; }
+  .NavMenu::-webkit-scrollbar {
+    display: none; }
   .NavMenu em {
     font-weight: bold;
     font-style: normal; }
@@ -1164,6 +1168,13 @@ ul.errorlist {
     border: none; }
   .NavMenu ul {
     padding: 0; }
+  .NavMenu-DropDown {
+    float: right;
+    cursor: pointer; }
+  .NavMenu-UserMenu {
+    display: none; }
+    .NavMenu-UserMenu > li {
+      margin-left: 56px; }
 
 /*
  PAGE TOP HEADER
