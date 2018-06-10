@@ -1169,8 +1169,9 @@ ul.errorlist {
   .NavMenu ul {
     padding: 0; }
   .NavMenu-DropDown {
-    float: right;
     cursor: pointer; }
+  .NavMenu-AngleDownIcon {
+    float: right; }
   .NavMenu-UserMenu {
     display: none; }
     .NavMenu-UserMenu > li {

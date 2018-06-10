@@ -57,9 +57,13 @@ $nav-menu-width: 75vw !default;
 
 
     &-DropDown {
-        float: right;
         cursor: pointer;
     }
+
+    &-AngleDownIcon {
+        float: right;
+    }
+
 
     &-UserMenu {
         display: none;

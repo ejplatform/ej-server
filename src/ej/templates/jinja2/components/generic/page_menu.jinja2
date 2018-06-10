@@ -19,16 +19,32 @@
                 </ul>
             </li>
         {% else %}
-            <li>{{ icon_link(_('Conversations'), '/conversations/', 'conversations', fa=False) }}
-                <i class="fas fa-angle-down fa-2x NavMenu-DropDown" onclick="openDropDown()"></i>
+            <li class="NavMenu-DropDown" onclick="openDropDown()">{{ icon_link(_('Conversations'), '/conversations/', 'conversations', fa=False) }}
+                <i class="fas fa-angle-down fa-2x NavMenu-AngleDownIcon"></i>
                 <ul class="NavMenu-UserMenu">
-                <li>{{_('Public conversations')}}</li>
-                <li>{{_('Your conversations')}}</li>
-                <li>{{_('Add conversation')}}</li>
-                <li>{{_('Favorite conversations')}}</li>
-                <li>{{_('Manage conversations')}}</li>
-                <li>{{_('Manage stereotypes')}}</li>
-                <li>{{_('Request reports')}}</li>
+                    <li> 
+                    {{icon_link(_('Public conversations'), '/conversations/', 'fas fa-comments', fa=True)}}
+                    </li>
+                    <li>
+                    {{icon_link(_('Your conversations'), ('/{}/'.format(user)), 'far fa-comment', fa=True)}}
+                    <li>
+                        <i class="fas fa-plus-circle"></i>
+                        {{_('Add conversation')}}
+                    </li>
+                    <li>
+                        <i class="far fa-star"></i>
+                        {{_('Favorite conversations')}}    
+                    </li>
+                    <li>
+                        <i class="fas fa-cog"></i>
+                        {{_('Manage conversations')}}
+                    </li>
+                    <li>
+                        {{icon_link(_('Manage stereotypes'), '/stereotypes/', 'fas fa-sliders-h', fa=True)}}
+                    </li>
+                    <li>
+                        {{icon_link(_('Request reports'), '/reports/', 'far fa-chart-bar', fa=True)}}
+                    </li>
                 </ul>
             </li>
         {% endif %}
