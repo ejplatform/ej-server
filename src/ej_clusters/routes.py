@@ -1,3 +1,4 @@
+from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
 from boogie.router import Router
@@ -92,13 +93,23 @@ def stereotype_vote(request, conversation, stereotype):
 # Auxiliary functions
 #
 def cluster_info(cluster):
+    stereotypes = cluster.stereotypes.all()
     user_data = [
         (user.username, user.name)
         for user in cluster.users.all()
     ]
     return {
         'size': cluster.users.count(),
-        'stereotypes': cluster.stereotypes.all(),
+        'stereotypes': stereotypes,
+        'stereotype_links': [
+            a(str(stereotype),
+              href=reverse(
+                  'cluster:stereotype-vote', kwargs={
+                      'conversation': cluster.conversation,
+                      'stereotype': stereotype,
+                  }))
+            for stereotype in stereotypes
+        ],
         'users': html_table(user_data, columns=[_('Username'), _('Name')])
     }
 

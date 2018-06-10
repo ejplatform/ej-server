@@ -139,6 +139,13 @@ class Cluster(TimeStampedModel):
         msg = _('{name} ("{conversation}" conversation)')
         return msg.format(name=self.name, conversation=str(self.conversation))
 
+    def get_absolute_url(self):
+        args = {
+            'conversation': self.conversation,
+            'cluster': self,
+        }
+        return reverse('cluster:detail', kwargs=args)
+
     def mean_stereotype(self):
         """
         Return the mean stereotype for cluster.
