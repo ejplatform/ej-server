@@ -69,11 +69,3 @@ def build_dataframe(df, fillna=None):
         pivot.fillna(fillna, inplace=True)
         pivot = pivot.astype('uint8')
     return pivot
-
-
-def mean_vote(stereotype_votes):
-    """
-    Receive a dataframe of (cluster, comment, choice) columns and return the
-    mean cluster votation for each stereotype
-    """
-    pass

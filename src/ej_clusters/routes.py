@@ -4,8 +4,9 @@ from boogie.router import Router
 from ej_conversations.models import Conversation
 from .models import Stereotype, Cluster
 
+app_name = 'ej_cluster'
 urlpatterns = Router(
-    template='ej_clusters/{name}.jinja2',
+    template=['ej_clusters/{name}.jinja2', 'generic.jinja2'],
     perms=['ej_converations.can_edit_conversation'],
     object='conversation',
     login=True,
@@ -50,16 +51,7 @@ def stereotype_list(conversation):
 
 
 @urlpatterns.route('stereotypes/<id>/')
-def stereotype_vote(conversation, stereotype):
-    return {
-        'conversation': conversation,
-        'stereotype': stereotype,
-        'comment': stereotype.next_comment(),
-    }
-
-
-@urlpatterns.post(...)
-def stereotype_vote_post(conversation, stereotype):
+def stereotype_vote(request, conversation, stereotype):
     return {
         'conversation': conversation,
         'stereotype': stereotype,
