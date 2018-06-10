@@ -169,6 +169,11 @@ class Stereotype(models.Model):
     description = models.TextField(
         _('Description'),
         blank=True,
+        help_text=_(
+            'A detailed description of your stereotype for future reference. '
+            'You can specify a background history, or give hints on the exact '
+            'profile the stereotype wants to capture.'
+        ),
     )
 
     __str__ = (lambda self: self.name)

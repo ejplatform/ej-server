@@ -1,9 +1,9 @@
-from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext_lazy as _
 
 from boogie.router import Router
+from boogie.rules import proxy_seq
 from ej_conversations.models import Conversation, Choice, Comment
-from hyperpython import a, input_, label, Block, p
+from hyperpython import a, input_, label, Block
 from hyperpython.components import html_list, html_table
 from .models import Stereotype, Cluster
 
@@ -16,6 +16,7 @@ urlpatterns = Router(
     models={
         'conversation': Conversation,
         'stereotype': Stereotype,
+        'cluster': Cluster,
     },
     lookup_field={'conversation': 'slug'},
     lookup_type={'conversation': 'slug'},
@@ -28,14 +29,19 @@ conversation_url = '<model:conversation>/'
 #
 @urlpatterns.route(conversation_url + 'clusters/')
 def index(conversation):
+    clusters = proxy_seq(
+        conversation.clusters.all(),
+        info=cluster_info,
+    )
     return {
+        'content_title': _('Clusters'),
         'conversation': conversation,
+        'clusters': clusters,
     }
 
 
-@urlpatterns.route(conversation_url + 'clusters/<int:index>/')
-def detail(conversation, index):
-    cluster = get_object_or_404(Cluster, conversation=conversation, index=index)
+@urlpatterns.route(conversation_url + 'clusters/<model:cluster>/')
+def detail(conversation, cluster):
     return {
         'conversation': conversation,
         'cluster': cluster,
@@ -79,6 +85,21 @@ def stereotype_vote(request, conversation, stereotype):
         'voted_table': votes_table(voted_comments[:5]),
         'non_voted_comments_count': non_voted_comments.count(),
         'voted_comments_count': non_voted_comments.count(),
+    }
+
+
+#
+# Auxiliary functions
+#
+def cluster_info(cluster):
+    user_data = [
+        (user.username, user.name)
+        for user in cluster.users.all()
+    ]
+    return {
+        'size': cluster.users.count(),
+        'stereotypes': cluster.stereotypes.all(),
+        'users': html_table(user_data, columns=[_('Username'), _('Name')])
     }
 
 
