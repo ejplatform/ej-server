@@ -1,22 +1,27 @@
 import logging
+from random import randrange
 
+import pandas as pd
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.db.models import Subquery, OuterRef
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from model_utils.models import TimeStampedModel
 
+import sidekick as sk
 from boogie import rules
 from boogie.fields import EnumField
 from boogie.rest import rest_api
 from ej_conversations.managers import BoogieManager
-from ej_conversations.models import Choice
+from ej_conversations.models import Choice, Conversation
 from ej_conversations.models.vote import normalize_choice
-from sidekick import delegate_to
+from sidekick import delegate_to, alias
 from .manager import ClusterManager
 from .types import ClusterStatus
 
 log = logging.getLogger('ej')
+math = sk.import_later('.math', package=__package__)
 
 
 @rest_api()
@@ -42,6 +47,16 @@ class Clusterization(TimeStampedModel):
         editable=False,
     )
 
+    @property
+    def stereotypes(self):
+        return (
+            Stereotype.objects
+                .filter(clusters__in=self.clusters.all())
+        )
+
+    class Meta:
+        ordering = ['conversation_id']
+
     def __str__(self):
         clusters = self.clusters.count()
         return f'{self.conversation} ({clusters} clusters)'
@@ -58,6 +73,7 @@ class Clusterization(TimeStampedModel):
         """
         log.info(f'[clusters] updating cluster: {self.conversation}')
 
+        math.update_clusters(self.conversation, self.clusters.all())
         self.unprocessed_comments = 0
         self.unprocessed_votes = 0
         if commit:
@@ -71,8 +87,8 @@ class Clusterization(TimeStampedModel):
             self.force_update(commit=False)
             if self.cluster_status == ClusterStatus.PENDING_DATA:
                 self.cluster_status = ClusterStatus.ACTIVE
-            if commit:
-                self.save()
+        if commit:
+            self.save()
 
     def requires_update(self):
         """
@@ -123,6 +139,22 @@ class Cluster(TimeStampedModel):
         msg = _('{name} ("{conversation}" conversation)')
         return msg.format(name=self.name, conversation=str(self.conversation))
 
+    def mean_stereotype(self):
+        """
+        Return the mean stereotype for cluster.
+        """
+        stereotypes = self.stereotypes.all()
+        votes = (
+            StereotypeVote.objects
+                .filter(author__in=Subquery(stereotypes.values('id')))
+                .values_list('comment', 'choice')
+        )
+        df = pd.DataFrame(list(votes), columns=['comment', 'choice'])
+        if len(df) == 0:
+            return pd.DataFrame([], columns=['choice'])
+        else:
+            return df.pivot_table('choice', index='comment', aggfunc='mean')
+
 
 class Stereotype(models.Model):
     """
@@ -163,6 +195,48 @@ class Stereotype(models.Model):
         StereotypeVote.objects.bulk_update(votes)
         return votes
 
+    def next_comment(self, conversation):
+        """
+        Get next available comment for the given conversation.
+        """
+        remaining = self.non_voted_comments(conversation)
+        size = remaining.count()
+        return remaining[randrange(size)]
+
+    def non_voted_comments(self, conversation):
+        """
+        Return a queryset with all comments that did not receive votes.
+        """
+        voted = StereotypeVote.objects.filter(
+            author=self,
+            comment__conversation=conversation,
+        )
+        comment_ids = voted.values_list('comment', flat=True)
+        return conversation.comments.exclude(id__in=comment_ids)
+
+    def voted_comments(self, conversation):
+        """
+        Return a queryset with all comments that the stereotype has cast votes.
+
+        The resulting queryset is annotated with the vote value using the choice
+        attribute.
+        """
+        voted = StereotypeVote.objects.filter(
+            author=self,
+            comment__conversation=conversation,
+        )
+        voted_subquery = (
+            voted
+                .filter(comment=OuterRef('id'))
+                .values('choice')
+        )
+        comment_ids = voted.values_list('comment', flat=True)
+        return (
+            conversation.comments
+                .filter(id__in=comment_ids)
+                .annotate(choice=Subquery(voted_subquery))
+        )
+
 
 class StereotypeVote(models.Model):
     """
@@ -181,10 +255,11 @@ class StereotypeVote(models.Model):
         on_delete=models.CASCADE,
     )
     choice = EnumField(Choice)
+    stereotype = alias('author')
     objects = BoogieManager()
 
     def __str__(self):
-        return f'StereotypeVote({self.stereotype}, value={self.value})'
+        return f'StereotypeVote({self.author}, value={self.choice})'
 
 
 #
@@ -196,3 +271,7 @@ def get_clusterization(conversation):
     except Clusterization.DoesNotExist:
         mgm, _ = Clusterization.objects.get_or_create(conversation=conversation)
         return mgm
+
+
+Conversation.clusters = delegate_to('clusterization')
+Conversation.stereotypes = delegate_to('clusterization')

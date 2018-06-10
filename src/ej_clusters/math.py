@@ -1,8 +1,13 @@
+import operator as op
+from collections import defaultdict
+from functools import reduce
+
 import pandas as pd
+from django.contrib.auth import get_user_model
+from django.db import transaction
 
 from ej_conversations.models import Vote
-
-StereotypeVote = Vote
+from .models import StereotypeVote
 
 
 def get_votes(conversation, comments=None, fillna=None):
@@ -36,7 +41,7 @@ def get_raw_votes(conversation, comments=None):
         comments = conversation.comments.all()
 
     # Fetch all votes in a single query
-    filter = dict(comment_id__in=comments.values_list('id', flat=True))
+    filter = {'comment__in': comments}
     values = ['author__username', 'comment_id', 'choice']
     items = Vote.objects.filter(**filter).values_list(*values)
     return pd.DataFrame(list(items), columns=['user', 'comment', 'choice'])
@@ -53,7 +58,7 @@ def get_votes_with_stereotypes(conversation, comments=None, fillna=None):
     user_votes = get_votes(conversation, comments)
 
     # Fetch all votes in a single query
-    filter = dict(comment_id__in=comments.values_list('id', flat=True))
+    filter = {'comment__in': comments}
     values = ['author__username', 'comment_id', 'choice']
     votes = StereotypeVote.objects.filter(**filter).values_list(*values)
     stereotype_votes = build_dataframe(votes, fillna=fillna)
@@ -71,7 +76,37 @@ def build_dataframe(df, fillna=None):
     return pivot
 
 
-def update_clusters(conversation, users=None):
+def update_clusters(conversation, clusters, users=None):
     """
     Assign users to their respective clusters in conversation.
     """
+
+    stereotypes = {cluster: cluster.mean_stereotype() for cluster in clusters}
+    comments = join_sets(set(x.index) for x in stereotypes.values())
+    votes = get_raw_votes(conversation, comments=comments)
+    cluster_map = defaultdict(list)
+    user_model = get_user_model()
+    username_list = votes['user'].unique()
+    if users is not None:
+        username_list = [user.username for user in users]
+
+    for user in username_list:
+        user_votes = votes[votes['user'] == user]
+        user_votes.index = user_votes.pop('comment')
+        user_votes.pop('user')
+
+        distances = [
+            (float((stereotype - user_votes).mean()), cluster)
+            for cluster, stereotype in stereotypes.items()
+        ]
+        _distance, cluster = min(distances, key=lambda x: x[0])
+        cluster_map[cluster].append(user)
+
+    with transaction.atomic():
+        for cluster, users in cluster_map.items():
+            users = user_model.objects.filter(username__in=users)
+            cluster.users.set(users)
+
+
+def join_sets(sets):
+    return reduce(op.or_, sets)

@@ -14,4 +14,6 @@ def conversation(db):
 
 class TestClusterization:
     def test_inject_clusters_related_manager_on_conversation(self, conversation):
-        conversation.clusterization.clusters
+        assert hasattr(conversation.clusterization, 'clusters')
+        assert hasattr(conversation, 'clusters')
+

@@ -122,11 +122,12 @@ def context(ctx):
 
         # Globals
         'static', 'url', 'salt_attr', 'salt_tag', 'salt', 'social_icons',
-        'footer_data', 'service_worker', 'context', *TAG_MAP,
+        'footer_data', 'service_worker', 'context', 'render', *TAG_MAP,
 
         # Variables injected by the base template
         'target', 'target_context',
         'page_footer', 'sidebar', 'page_top_header', 'page_header',
+        'page_title', 'title', 'content_title',
     }
     ctx = {k: v for k, v in ctx.items() if k not in blacklist}
     return tags.html_map(ctx)

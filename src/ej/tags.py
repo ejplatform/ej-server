@@ -1,10 +1,14 @@
+from html import escape
+
 from django.contrib.staticfiles.storage import staticfiles_storage
+from django.utils.translation import ugettext_lazy
 
 from hyperpython import a, i, meta
 from hyperpython import h
-from hyperpython.components import html_table, html_list, html_map, Head as BaseHead
+from hyperpython.components import html_table, html_list, html_map, Head as BaseHead, render
 
 static = staticfiles_storage.url
+lazy_string_class = type(ugettext_lazy('lazy'))
 _ = lambda x: x
 
 __all__ = [
@@ -93,3 +97,11 @@ class Head(BaseHead):
             *super().favicon_tags(),
             meta(name='image', content=static('img/logo/logo.svg')),
         ]
+
+
+@render.register(lazy_string_class)
+def _render_lazy_string(st, **kwargs):
+    return render(str(st))
+
+
+lazy_string_class.__html__ = escape
