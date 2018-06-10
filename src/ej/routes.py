@@ -47,6 +47,10 @@ def clusters(request):
     return render(request, 'base.jinja2', ctx)
 
 
+@urlpatterns.route('menu/')
+def menu(request):
+    return { 'user': request.user }
+
 #
 # Non-html data
 #
@@ -58,6 +62,5 @@ def service_worker(request):
 #
 # Static pages
 #
-urlpatterns.route('menu/', name='menu', template='pages/menu.jinja2')(lambda: {})
 urlpatterns.route('comments/', name='comments', template='pages/comments.jinja2')(lambda: {})
 urlpatterns.route('notifications/', name='notifications', template='pages/notifications.jinja2')(lambda: {})
