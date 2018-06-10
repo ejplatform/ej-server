@@ -3,29 +3,44 @@
 
 
 {# Generate the header element #}
-{% macro page_header() %}
+{% macro page_header(request) %}
     <header class="Header">
         <div class="Header-wrapper">
-            {{ header_top_nav() }}
+            {{ header_top_nav(request) }}
             {{ header_lower_nav() }}
         </div>
     </header>
 {% endmacro %}
 
-{% macro header_top_nav() %}
+{% macro header_top_nav(request) %}
     <nav class="Header-topNav">
-        <a href="/" title="{{ _('Back') }}" class="Header-topIcon" up-back>
-            <i class="fa fa-chevron-left"></i>
-        </a>
+        {% if request.path != '/start/' %}
+            <a title="{{ _('Back') }}" class="Header-topIcon" onclick="history.back()">
+                <i class="fa fa-chevron-left"></i>
+            </a>
 
-        {% call link('/') %}
-            <img src="/static/img/logo/logo.svg" alt="EJ logo">
-        {% endcall %}
+            {% call link(href='/', class="Header-ejLogo") %}
+                <img src="/static/img/logo/logo.svg" alt="EJ logo">
+            {% endcall %}
+    
+            <a href="/menu/" title="{{ _("Navigation menu") }}" up-drawer=".NavMenu" up-history="false"
+                class="Header-topIcon">
+                <i class="fa fa-bars"></i>
+            </a>
 
-        <a href="/menu/" title="{{ _("Navigation menu") }}" up-drawer=".NavMenu" up-history="false"
-           class="Header-topIcon">
-            <i class="fa fa-bars"></i>
-        </a>
+        {% else %}
+
+            <a href="/menu/" title="{{ _("Navigation menu") }}" up-drawer=".NavMenu" up-history="false"
+                class="Header-topIcon">
+                <i class="fa fa-bars"></i>
+            </a>
+
+            {% call link(href='/', class="Header-ejLogo") %}
+                <img src="/static/img/logo/logo.svg" alt="EJ logo">
+            {% endcall %}
+
+        {%endif%}
+
     </nav>
 {% endmacro %}
 

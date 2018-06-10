@@ -90,7 +90,7 @@
 {% block body %}
     {% if target == 'all' or target == 'page' %}
         {{page_top_header(social_icons())}}
-        {{ page_header() }}
+        {{ page_header(request) }}
         <div class="Page-mainContainer">
     {% endif %}
 
