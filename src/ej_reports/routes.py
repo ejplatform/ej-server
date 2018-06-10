@@ -29,6 +29,7 @@ def index(conversation):
     statistics = conversation.statistics()
     votes = get_raw_votes(conversation)
     math = VoteStats(votes)
+    print(votes)
     return {
         'title': _('Report'),
         'content_title': hyperlink(conversation),

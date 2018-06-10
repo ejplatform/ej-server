@@ -57,14 +57,12 @@ def db(ctx, migrate_only=False):
 
 
 @task
-def db_reset(ctx, no_assets=False):
+def db_reset(ctx):
     """
     Reset data in database and optionally fill with fake data
     """
     ctx.run('rm -f local/db/db.sqlite3')
     manage(ctx, 'migrate')
-    if not no_assets:
-        db_assets(ctx)
 
 
 @task
@@ -79,7 +77,6 @@ def db_fake(ctx, users=True, conversations=True, admin=True, safe=False):
             print('Creating fake data...')
         else:
             return print(msg_error)
-
     if users:
         manage(ctx, 'createfakeusers', admin=admin)
     if conversations:

@@ -69,3 +69,9 @@ def build_dataframe(df, fillna=None):
         pivot.fillna(fillna, inplace=True)
         pivot = pivot.astype('uint8')
     return pivot
+
+
+def update_clusters(conversation, users=None):
+    """
+    Assign users to their respective clusters in conversation.
+    """

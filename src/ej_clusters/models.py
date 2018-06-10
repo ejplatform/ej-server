@@ -2,17 +2,93 @@ import logging
 
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from model_utils.models import TimeStampedModel
 
+from boogie import rules
 from boogie.fields import EnumField
 from boogie.rest import rest_api
 from ej_conversations.managers import BoogieManager
 from ej_conversations.models import Choice
 from ej_conversations.models.vote import normalize_choice
+from sidekick import delegate_to
 from .manager import ClusterManager
+from .types import ClusterStatus
 
 log = logging.getLogger('ej')
+
+
+@rest_api()
+class Clusterization(TimeStampedModel):
+    """
+    Manages clusterization tasks for a given conversation.
+    """
+    conversation = models.OneToOneField(
+        'ej_conversations.Conversation',
+        on_delete=models.CASCADE,
+        related_name='clusterization',
+    )
+    cluster_status = EnumField(
+        ClusterStatus,
+        default=ClusterStatus.PENDING_DATA,
+    )
+    unprocessed_votes = models.PositiveSmallIntegerField(
+        default=0,
+        editable=False,
+    )
+    unprocessed_comments = models.PositiveSmallIntegerField(
+        default=0,
+        editable=False,
+    )
+
+    def __str__(self):
+        clusters = self.clusters.count()
+        return f'{self.conversation} ({clusters} clusters)'
+
+    def get_absolute_url(self):
+        args = {'conversation': self.conversation}
+        return reverse('cluster:index', kwargs=args)
+
+    def force_update(self, commit=True):
+        """
+        Force a cluster update.
+
+        Used internally by .update() when an update is necessary.
+        """
+        log.info(f'[clusters] updating cluster: {self.conversation}')
+
+        self.unprocessed_comments = 0
+        self.unprocessed_votes = 0
+        if commit:
+            self.save()
+
+    def update(self, commit=True):
+        """
+        Update clusters if necessary.
+        """
+        if self.requires_update():
+            self.force_update(commit=False)
+            if self.cluster_status == ClusterStatus.PENDING_DATA:
+                self.cluster_status = ClusterStatus.ACTIVE
+            if commit:
+                self.save()
+
+    def requires_update(self):
+        """
+        Check if update should be recomputed.
+        """
+        conversation = self.conversation
+        if self.cluster_status == ClusterStatus.PENDING_DATA:
+            rule = rules.get_rule('ej_clusters.conversation_has_sufficient_data')
+            if not rule.test(conversation):
+                log.info(f'[clusters] {conversation}: not enough data to start clusterization')
+                return False
+        elif self.cluster_status == ClusterStatus.DISABLED:
+            return False
+
+        rule = rules.get_rule('ej_clusters.must_update_clusters')
+        return rule.test(conversation)
 
 
 @rest_api(exclude=['users', 'stereotypes'])
@@ -21,25 +97,26 @@ class Cluster(TimeStampedModel):
     Represents an opinion group.
     """
 
-    conversation = models.ForeignKey(
-        'ej_conversations.Conversation',
+    clusterization = models.ForeignKey(
+        'Clusterization',
         on_delete=models.CASCADE,
         related_name='clusters',
     )
     name = models.CharField(
         _('Name'),
         max_length=64,
-        blank=True,
     )
     users = models.ManyToManyField(
         get_user_model(),
-        through='UserClusterMap',
+        related_name='clusters',
+        blank=True,
     )
     stereotypes = models.ManyToManyField(
         'Stereotype',
-        through='StereotypeClusterMap',
+        related_name='clusters',
     )
 
+    conversation = delegate_to('clusterization')
     objects = ClusterManager()
 
     def __str__(self):
@@ -110,42 +187,12 @@ class StereotypeVote(models.Model):
         return f'StereotypeVote({self.stereotype}, value={self.value})'
 
 
-class UserClusterMap(models.Model):
-    """
-    A user/cluster M2M that prevents repeated cluster attributions
-    """
-    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
-    cluster = models.ForeignKey(Cluster, on_delete=models.CASCADE)
-    conversation = models.ForeignKey('ej_conversations.Conversation',
-                                     on_delete=models.CASCADE)
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        if self.conversation_id is None:
-            self.conversation_id = self.cluster.conversation_id
-
-    class Meta:
-        unique_together = [('user', 'conversation')]
-
-
-class StereotypeClusterMap(models.Model):
-    """
-    A user/cluster M2M that prevents repeated cluster attributions
-    """
-    stereotype = models.ForeignKey(Stereotype, on_delete=models.CASCADE)
-    cluster = models.ForeignKey(Cluster, on_delete=models.CASCADE)
-    conversation = models.ForeignKey(
-        'ej_conversations.Conversation',
-        on_delete=models.CASCADE,
-        editable=False,
-    )
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        if self.conversation_id is None and self.cluster_id is not None:
-            self.conversation_id = self.cluster.conversation_id
-
-    class Meta:
-        unique_together = [('stereotype', 'conversation')]
-
-
+#
+# Auxiliary methods
+#
+def get_clusterization(conversation):
+    try:
+        return conversation.clusterization
+    except Clusterization.DoesNotExist:
+        mgm, _ = Clusterization.objects.get_or_create(conversation=conversation)
+        return mgm

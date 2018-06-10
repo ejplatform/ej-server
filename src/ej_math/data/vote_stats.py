@@ -146,6 +146,9 @@ def num_votes(votes, which, drop_skip=False, choice=None):
 def pivoted_data(votes, which, aggfunc=np.mean, drop_skip=False, **kwargs):
     if drop_skip:
         votes = votes[votes['choice'] != SKIP]
+
+    if len(votes) == 0:
+        return pd.Series([])
     pivot = votes.pivot_table('choice', index=which, aggfunc=aggfunc, **kwargs)
     return pivot['choice']
 
