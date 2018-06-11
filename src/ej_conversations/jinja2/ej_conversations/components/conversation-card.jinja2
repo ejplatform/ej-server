@@ -1,10 +1,10 @@
-{% macro conversation_card(conversation, moderate_perms) %}
+{% macro conversation_card(conversation) %}
     {% from 'components/generic/elements.jinja2' import action_button %}
 
     <div class="ConversationCard">
         <div class="ConversationCard-cover">
             <h1 up-expand>
-                <a href="{{ conversation.get_absolute_url() }}" alt="alt">{{ conversation.question }}</a>
+                <a href="{{ conversation.get_absolute_url() }}" alt="alt">{{ conversation.text }}</a>
             </h1>
             <div>tags</div>
         </div>
@@ -14,7 +14,7 @@
                 <li>{{ gettext('%(count)s votes', count=conversation.votes.count()) }}</li>
             </ul>
             {{ action_button('Participar <i class="fa fa-comments"></i>', conversation.get_absolute_url()) }}
-            {% if moderate_perms['can_moderate_conversation'] %}
+            {% if conversation.can_moderate %}
                 {{ action_button('Moderar <i class="fa fa-comments"></i>', conversation.get_absolute_url() + 'moderate/') }}
             {% endif %}
         </div>

@@ -107,7 +107,8 @@ def cluster_info(cluster):
                   'cluster:stereotype-vote', kwargs={
                       'conversation': cluster.conversation,
                       'stereotype': stereotype,
-                  }))
+                  }
+              ))
             for stereotype in stereotypes
         ],
         'users': html_table(user_data, columns=[_('Username'), _('Name')])
