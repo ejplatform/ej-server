@@ -4,7 +4,7 @@
 
 {% block content %}
     {{ action_button("Criar nova Conversa", "/conversations/create/")}}
-    {% call conversation_list(conversations, categories) %}
+    {% call conversation_list(conversations, categories, javascript_enabled=javascript_enabled) %}
 {#        {{ breadcrumbs([('conversations', _('Conversations'))]) }}#}
     {% endcall %}
 {% endblock %}

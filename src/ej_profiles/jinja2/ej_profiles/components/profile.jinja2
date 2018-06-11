@@ -14,13 +14,13 @@
 {% endmacro %}
 
 
-{% macro profile_detail(profile, conversations, csrf_input, info='profile') %}
+{% macro profile_detail(profile, conversations, csrf_input, info='profile', javascript_enabled='') %}
     <div class="Profile">
         <img class="Profile-image" src="{{ profile.image_url }}">
         <h1>{{ profile.name }}</h1>
         <h2>{{ _('Participant Status') }}</h2>
         {{ profile_comments(profile) }}
-        {{ profile_conversations(profile) }}
+        {{ profile_conversations(profile, javascript_enabled) }}
         <div class="Profile-tabs">
             <nav class="Profile-tabLinks">
                 {{ link(_('Info'), '/profile/',
@@ -147,7 +147,7 @@
     </div>
 {% endmacro %}
 
-{% macro profile_conversations(profile) %}
+{% macro profile_conversations(profile, javascript_enabled='') %}
     <div class="Profile-conversations">
             
 
@@ -156,7 +156,7 @@
         </h2>
         <ul class='conversations'>
         {# FIXME list conversations  #}
-            {# {% for conversation in profile.favorite_conversations() %}
+            {# {% for conversation in profile.favorite_conversations(javascript_enabled) %}
             {% endfor %} #}
         </ul>
     </div>

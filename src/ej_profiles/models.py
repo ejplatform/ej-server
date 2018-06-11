@@ -9,6 +9,7 @@ from sidekick import delegate_to
 from boogie.fields import EnumField
 from boogie.rest import rest_api
 from .choices import Race, Gender
+from rest_framework.authtoken.models import Token
 
 User = get_user_model()
 
@@ -56,6 +57,11 @@ class Profile(models.Model):
         if self.gender != Gender.UNDECLARED:
             return self.gender.description
         return self.gender_other
+
+    @property
+    def token(self):
+        token = Token.objects.get_or_create(user_id=self.id)
+        return token[0].key
 
     @property
     def image_url(self):
