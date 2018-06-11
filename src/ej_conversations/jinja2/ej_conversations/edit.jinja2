@@ -1,6 +1,13 @@
 {% extends 'base.jinja2' %}
-{% from 'ej_conversations/components/conversation-edit.jinja2' import conversation_edit %}
 
 {% block content %}
-    {{conversation_edit(form, csrf_input)}}
+    <div class="Container">
+        <form method="post" class="django-form-as-p">
+            {{ csrf_input }}
+            {{ form.as_p() }}
+            <div>
+                <input type="submit" class="Button" value="{{ _('Save') }}" name="create">
+            </div>
+        </form>
+    </div>
 {% endblock %}

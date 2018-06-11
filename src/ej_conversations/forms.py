@@ -7,7 +7,7 @@ from .models import VOTE_VALUES, Conversation, Comment
 class ConversationForm(forms.ModelForm):
     class Meta:
         model = Conversation
-        fields = ['question', 'title']
+        fields = ['title', 'text']
 
 
 class CommentForm(forms.ModelForm):

@@ -19,7 +19,6 @@ from .vote import Vote, Choice
 from ..managers import ConversationManager
 
 NOT_GIVEN = object()
-PROMOTED_PERM = 'ej_conversations.can_create_promoted_conversation'
 log = logging.getLogger('ej_conversations')
 
 
@@ -48,20 +47,20 @@ class Conversation(TimeStampedModel, StatusModel):
         ('promoted', _('Promoted')),
         ('pending', _('Pending')),
     )
-    question = models.TextField(
+    title = models.CharField(
+        _('Title'),
+        max_length=255,
+        help_text=_(
+            'A short description about this conversations. This is used internally '
+            'and to create URL slugs. (e.g. School system)'
+        )
+    )
+    text = models.TextField(
         _('Question'),
         help_text=_(
             'A question that is displayed to the users in a conversation card. (e.g.: How can we '
             'improve the school system in our community?)'
         ),
-    )
-    title = models.CharField(
-        _('Title'),
-        max_length=255,
-        help_text=_(
-            'A short description about this conversations. This is used for internal reference'
-            'and to create URL slugs. (e.g. School system)'
-        )
     )
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -83,7 +82,8 @@ class Conversation(TimeStampedModel, StatusModel):
     class Meta:
         ordering = ['created']
         permissions = (
-            ('can_add_promoted', _('Can publish promoted conversations')),
+            ('is_publisher', _('Can publish promoted conversations')),
+            ('is_moderator', _('Can moderate comments in any conversation')),
         )
 
     @property
@@ -99,18 +99,20 @@ class Conversation(TimeStampedModel, StatusModel):
         super().save(*args, **kwargs)
 
     def clean(self):
-        if self.is_promoted and not self.author.has_perm(PROMOTED_PERM, self):
-            raise ValidationError({'status': _(
+        can_edit = 'ej_conversations.can_edit_conversation'
+        if self.is_promoted and not self.author.has_perm(can_edit, self):
+            raise ValidationError(_(
                 'User does not have permission to create a promoted '
                 'conversation.')
-            })
+            )
 
-    def get_absolute_url(self):
-        map = getattr(settings, 'EJ_CONVERSATIONS_URLMAP', {})
-        fmt = map.get('conversation-detail', None)
-        if fmt is None:
-            return reverse('conversation-detail', kwargs={'slug': self.slug})
-        return fmt.format(conversation=self)
+    def get_absolute_url(self, user=None):
+        kwargs = {'conversation': self}
+        if user is None:
+            return reverse('conversation:detail', kwargs=kwargs)
+        else:
+            kwargs['user'] = user
+            return reverse('conversation:detail-for-user', kwargs=kwargs)
 
     def user_votes(self, user):
         """

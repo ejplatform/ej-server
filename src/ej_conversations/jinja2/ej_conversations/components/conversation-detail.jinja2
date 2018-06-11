@@ -2,26 +2,20 @@
 
 {% macro conversation_detail(conversation, edit_perm, user) %}
     {% if edit_perm %}
-        {{ action_button( _('Edit Conversation'), conversation.get_absolute_url() + 'edit/') }}
+        <div class="Container" style="margin: 0 auto; padding: 0">
+            {{ action_button( _('Edit Conversation'), conversation.get_absolute_url() + 'edit/') }}
+        </div>
     {% endif %}
     <div class="ConversationDetail">
         <div class="ConversationDetail-banner">
-            <h1>{{ conversation.question }}</h1>
+            <h1>{{ conversation.text }}</h1>
             <ul class="ConversationDetail-statistics">
                 <li>{{ gettext('%(count)s comments', count=conversation.comments.count()) }}</li>
                 <li>{{ gettext('%(count)s votes', count=conversation.votes.count()) }}</li>
             </ul>
         </div>
-            
-        <div class="ConversationDetail-arrow"></div>
 
-        {#        <ul class="ConversationDetail-statisticsBottom">#}
-        {#            <li>#}
-        {#                <div>{{ _('category:') }}</div>#}
-        {#                <div>{{ link(category.name, href=category.get_absolute_url()) }}</div>#}
-        {#            </li>#}
-        {#            <li>{{ link(_('see more<br>categories'), href='/conversations/') }}</li>#}
-        {#        </ul>#}
+        <div class="ConversationDetail-arrow"></div>
 
         {# Current comment #}
         <div class="ConversationDetail-header">

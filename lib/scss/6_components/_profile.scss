@@ -29,13 +29,13 @@ $profile-arrow-size: $spacing-unit !default;
         margin: $spacing-unit-large;
         padding: 0px;
         text-transform: uppercase;
-        color: $color-gray;
+        color: $color-gray-dark;
         opacity: 0.8;
-        text-align: center;      
+        text-align: center;
 
         a {
             margin: $spacing-unit * 2 0;
-            color: $color-gray;
+            color: $color-gray-dark;
             opacity: 0.8;
         }
     }
@@ -60,7 +60,7 @@ $profile-arrow-size: $spacing-unit !default;
                 font-size: $font-size-huge;
                 color: $color-magenta;
             }
-    
+
         }
     }
     &-comments {
@@ -84,7 +84,7 @@ $profile-arrow-size: $spacing-unit !default;
                 font-size: $font-size-huge;
                 color: $color-magenta;
             }
-    
+
         }
         ul{
             padding: 0px;
@@ -117,18 +117,18 @@ $profile-arrow-size: $spacing-unit !default;
                 .actions{
                     display: flex;
                     justify-content: space-between;
-                    
+
                     li{
                         &.agree{
 
                         }
                         &.skip{
                             color: $color-blue-light;
-                            
+
                         }
                         &.disagree{
                             color: $color-magenta;
-                            
+
                         }
                         span{
                             margin-left: 0.5em;
@@ -232,7 +232,7 @@ $profile-arrow-size: $spacing-unit !default;
 
     &-info {
         font-size: $font-size-h6;
-        padding: $spacing-unit;        
+        padding: $spacing-unit;
 
         .edit-button{
             margin-top: $spacing-unit;
@@ -242,7 +242,7 @@ $profile-arrow-size: $spacing-unit !default;
                 background-color: $color-blue-light;
             }
         }
-        
+
         .statistics{
             &::after{
                 content: "";
@@ -262,9 +262,9 @@ $profile-arrow-size: $spacing-unit !default;
                     &.description{
                         font-size: $font-size-small;
                     }
-                    
+
                     display: block;
-                    
+
                 }
                 float: left;
                 list-style: none;

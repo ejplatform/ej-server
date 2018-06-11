@@ -25,14 +25,14 @@ def comment_throttle():
     We avoid spam and bots by preventing users from posting too many comments
     or votes in a short time span.
     """
-    return getattr(settings, 'EJ_CONVERSATIONS_COMMENT_THROTTLE', 2 * 60)
+    return getattr(settings, 'EJ_CONVERSATIONS_COMMENT_THROTTLE', 0)
 
 
 def vote_throttle():
     """
     Minimum interval between votes (in seconds)
     """
-    return getattr(settings, 'EJ_CONVERSATIONS_VOTE_THROTTLE', 10)
+    return getattr(settings, 'EJ_CONVERSATIONS_VOTE_THROTTLE', 5)
 
 
 @rules.predicate
@@ -92,25 +92,6 @@ def vote_cooldown(conversation, user):
     return max(vote_throttle() - interval.seconds, 0.0)
 
 
-@rules.register_value('ej_conversations.comment_cooldown')
-def comment_cooldown(conversation, user):
-    """
-    Number of seconds before user can comment again.
-    """
-    time = (
-        user.comments
-            .filter(conversation=conversation)
-            .order_by('created')
-            .values_list('created', flat=True)
-            .last()
-    )
-    if time is None:
-        return 0.0
-    print('rules', now() - time, comment_throttle())
-    interval = now() - time
-    return max(comment_throttle() - interval.seconds, 0.0)
-
-
 #
 # Permissions
 #
@@ -119,19 +100,28 @@ def can_vote(user, conversation):
     """
     User can vote in a conversation if there are unvoted comments.
     """
-    return bool(conversation.approved_comments.filter(
-        ~Q(author_id=user.id),
-        ~Q(votes__author_id=user.id),
-    ))
+    if user.id is None:
+        return False
+    return bool(
+        conversation.approved_comments
+            .exclude(votes__author_id=user.id)
+    )
 
 
 @rules.register_perm('ej_conversations.can_comment')
 def can_comment(user, conversation):
     """
-    User can vote in a conversation if the limit of comments
+    Check if user can comment in conversation.
+
+    * User still has comments left
+    * OR User is owner or can edit conversation
     """
+    if user.id is None:
+        return False
+    if user.has_perm('ej_conversations.can_edit_conversation'):
+        return True
     remaining = remaining_comments(conversation, user)
-    return remaining > 0 and comment_cooldown(conversation, user) <= 0.0
+    return remaining > 0
 
 
 # @TODO create a logic to create conversation permission
@@ -142,24 +132,34 @@ def can_add_conversation(user):
     return False
 
 
-# @TODO create a logic to edit conversation permission
 @rules.register_perm('ej_conversations.can_edit_conversation')
 def can_edit_conversation(user, conversation):
-    return user == conversation.author
+    """
+    Can edit a given conversation.
+
+    * User is conversation author
+    * OR User has explict permission to change conversations
+    * OR Conversation is promoted and user can create/edit promoted conversations
+    """
+    if user == conversation.author:
+        return True
+    elif user.has_perm('ej_conversations.can_change_conversation'):
+        return True
+    elif (conversation.status == conversation.STATUS.promoted
+          and user.has_perm('ej_conversations.is_publisher')):
+        return True
+    return False
 
 
 @rules.register_perm('ej_conversations.can_moderate_conversation')
 def can_moderate_conversation(user, conversation):
-    return can_edit_conversation(user, conversation)
-
-
-@rules.predicate
-def is_publisher(user):
     """
-    Publishers have explicit permissions to create promoted conversations.
+    Can edit a given conversation.
+
+    * User can edit conversation
+    * OR user is an moderator (explicit admin permission)
     """
-    return False
-
-
-rules.add_perm('ej_conversations.can_create_promoted_conversation',
-               is_publisher | rules.is_staff | rules.is_superuser)
+    return (
+        can_edit_conversation(user, conversation)
+        or user.has_perm('ej_conversations.is_moderator')
+    )

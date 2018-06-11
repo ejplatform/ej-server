@@ -6,8 +6,8 @@
 // This defines a site-wide color palette.
 $color-black: #111 !default;
 $color-white: #fff !default;
-$color-gray: #333333 !default;
-$color-gray-dark: #666 !default;
+$color-gray: #666 !default;
+$color-gray-dark: #333 !default;
 $color-gray-light: #eee !default;
 
 $color-blue: rgba(48,192,211,1) !default;
@@ -43,7 +43,7 @@ $color-yellow-light: #fffeaf !default;
 // Background and text colors
 $color-content: $color-white !default;
 $color-content-text: $color-blue-dark !default;
-$color-content-text-faded: $color-blue !default;
+$color-content-text-faded: $color-gray !default;
 
 // Color schemes
 // Buttons and highlighted elements. Strong highlight, usually applied to

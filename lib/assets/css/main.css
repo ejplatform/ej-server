@@ -731,7 +731,7 @@ select,
 .FormItem {
   border-radius: 17px;
   background: #fff;
-  border: 1px solid #333333;
+  border: 1px solid #333;
   color: #042049;
   margin: 7px auto;
   padding: 14px 14px 7px; }
@@ -785,9 +785,26 @@ input[type=submit] {
  =========================================================================== */
 ul.errorlist {
   color: #f13c20;
+  font-size: 0.9em;
   padding: 0; }
   ul.errorlist li {
     list-style: none; }
+
+.helptext {
+  color: #666;
+  font-size: 0.9em;
+  display: block;
+  padding: 0; }
+  .helptext li {
+    list-style: none; }
+
+.django-form-as-p {
+  text-align: left; }
+  .django-form-as-p input, .django-form-as-p textarea {
+    width: 100%; }
+  .django-form-as-p label {
+    display: block;
+    margin: 0; }
 
 /*
  GENERIC LAYOUT PATTERNS
@@ -1277,7 +1294,7 @@ ul.errorlist {
       color: #FF3D72; }
   .Register-newUser,
   .Login-newUser {
-    border-top: 1px solid #333333;
+    border-top: 1px solid #333;
     margin: 28px auto;
     width: 85%; }
     .Register-newUser h1,
@@ -1590,7 +1607,7 @@ ul.errorlist {
   .HowItWorksCard-icon {
     align-self: start;
     box-sizing: border-box;
-    color: #666;
+    color: #333;
     display: block;
     flex-grow: 0;
     font-size: 31.5px;
@@ -1633,12 +1650,12 @@ ul.errorlist {
     margin: 56px;
     padding: 0px;
     text-transform: uppercase;
-    color: #333333;
+    color: #333;
     opacity: 0.8;
     text-align: center; }
     .Profile-actions a {
       margin: 56px 0;
-      color: #333333;
+      color: #333;
       opacity: 0.8; }
   .Profile-conversations {
     padding: 14px; }
@@ -1875,19 +1892,19 @@ ul.errorlist {
     background: #30BFD3;
     color: rgba(4, 32, 73, 0.9); }
   .ColorStyles .color-white {
-    background: #333333;
+    background: #666;
     color: white; }
     .ColorStyles .color-white span:first-child {
       background: #fff; }
     .ColorStyles .color-white span:last-child {
       background: #111; }
   .ColorStyles .color-gray {
-    background: #333333;
+    background: #666;
     color: white; }
     .ColorStyles .color-gray span:first-child {
       background: #eee; }
     .ColorStyles .color-gray span:last-child {
-      background: #666; }
+      background: #333; }
   .ColorStyles .color-blue {
     background: #30c0d3;
     color: white; }
