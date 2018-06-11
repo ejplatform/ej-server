@@ -10,7 +10,7 @@ from .models import Conversation, Comment, Vote
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = get_user_model()
-        fields = ('url', 'username', 'token')
+        fields = ('url', 'username')
         extra_kwargs = {'url': {'lookup_field': 'username'}}
 
 

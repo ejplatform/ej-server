@@ -7,7 +7,6 @@
 {% set target = target | default(target_context) %}
 {% if not page_title %}{% set page_title = content_title|default(_('Empurrando Juntos')) %}{% endif %}
 
-{% set javascript_enabled = request.COOKIES.get('javascriptEnabled', 'No Cookie') %}
 
 {% if target == 'all' %}
     <!DOCTYPE html>
@@ -151,36 +150,6 @@
             }
         </script>
         {% endif %}
-
-        <!-- Run AJAX-loaded scripts -->
-        <script>
-            function runRemoteScripts() {
-                var scripts = document.getElementsByClassName('remoteScript');
-                for (var i = 0; i < scripts.length; i++) {
-                    var id = 'script-' + scripts[i].getAttribute('id');
-                    if (document.getElementById(id)) {
-                        document.getElementById(id).outerHTML = '';
-                    }
-                    var script = document.createElement('script');
-                    script.id = id;
-                    script.type = 'text/javascript';
-                    var src = scripts[i].getAttribute('data-script-src');
-                    if (!!src) {
-                        script.src = src;
-                    }
-                    else {
-                        script.text = scripts[i].innerHTML;
-                    }
-                    document.getElementsByTagName('body')[0].appendChild(script);
-                }
-            }
-            window.onload = function() {
-                runRemoteScripts();
-                up.on('up:fragment:inserted', function(event, fragment) {
-                    runRemoteScripts();
-                });
-            }
-        </script>
     {% endblock %}
 
     </body>

@@ -6,5 +6,5 @@
     {% if can_add_conversation %}
         <div class="Container">{{ add_link }}</div>
     {% endif %}
-    {{ conversation_list(conversations, javascript_enabled=javascript_enabled) }}
+    {{ conversation_list(conversations) }}
 {% endblock %}
