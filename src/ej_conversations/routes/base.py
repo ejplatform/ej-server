@@ -22,12 +22,8 @@ def list(request, owner=None):
         create_url = reverse('conversations:create')
         conversations = Conversation.promoted.all()
 
-    perm = 'ej_conversations.can_moderate_conversation'
-    kwargs = {
-        'can_moderate': lambda x: request.user.has_perm(perm, x)
-    }
     return {
-        'conversations': proxy_seq(conversations, user=request.user, **kwargs),
+        'conversations': moderated_conversations(request.user, conversations),
         'can_add_conversation': rules.can_add_conversation(request.user),
         'owner': owner,
         'add_link': a(_('Add new conversation'), href=create_url),
@@ -72,3 +68,13 @@ def leaderboard(conversation):
         'conversation': conversation,
         'info': conversation.statistics(),
     }
+
+
+def moderated_conversations(user, qs=None):
+    perm = 'ej_conversations.can_moderate_conversation'
+    kwargs = {
+        'can_moderate': lambda x: user.has_perm(perm, x)
+    }
+    if qs is None:
+        qs = Conversation.promoted.all()
+    return proxy_seq(qs, user=user, **kwargs)

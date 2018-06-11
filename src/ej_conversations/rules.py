@@ -141,12 +141,13 @@ def can_edit_conversation(user, conversation):
     * OR User has explict permission to change conversations
     * OR Conversation is promoted and user can create/edit promoted conversations
     """
-    if user == conversation.author:
+    if conversation is not None and user == conversation.author:
         return True
     elif user.has_perm('ej_conversations.can_change_conversation'):
         return True
-    elif (conversation.status == conversation.STATUS.promoted
-          and user.has_perm('ej_conversations.is_publisher')):
+    elif (conversation is not None and
+          (conversation.status == conversation.STATUS.promoted
+          and user.has_perm('ej_conversations.is_publisher'))):
         return True
     return False
 

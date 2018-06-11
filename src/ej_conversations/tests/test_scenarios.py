@@ -46,12 +46,7 @@ class TestCommentLimitsAreEnforced:
             # User can post the first comment without problems.
             conversation.create_comment(user, 'cmt1')
 
-            # It will have problem in comment #2, because it is too fast.
-            with pytest.raises(PermissionError):
-                conversation.create_comment(user, 'cmt2-bad')
-
-            # We mock global time, now everything should be ok :)
-            time.sleep(rules.comment_throttle() + 1)
+            # Ditto
             conversation.create_comment(user, 'cmt2')
             assert user.comments.count() == 2
 

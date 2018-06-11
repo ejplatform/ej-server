@@ -63,9 +63,8 @@ def moderate(request, conversation):
         comment.status = comment.STATUS.approved if request.POST['vote'] == 'approve' else comment.STATUS.rejected
         comment.save()
 
-    # GET and Pos-Post
     for comment in models.Comment.objects.filter(conversation=conversation, status='pending'):
-        if (comment.is_pending):
+        if comment.is_pending:
             comments.append(comment)
     return {
         'conversation': conversation,
