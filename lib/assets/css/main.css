@@ -1552,6 +1552,254 @@ ul.errorlist {
   .CircleButton--rightConversationSlider {
     right: 7px; }
 
+.ReactComponent {
+  @import url("https://fonts.googleapis.com/css?family=Raleway");
+  @import url("https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css");
+  @import url("https://fonts.googleapis.com/css?family=Raleway"); }
+  .ReactComponent .App {
+    text-align: center; }
+  .ReactComponent .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+    height: 80px; }
+  .ReactComponent .App-header {
+    background-color: #222;
+    height: 150px;
+    padding: 20px;
+    color: white; }
+  .ReactComponent .App-title {
+    font-size: 1.5em; }
+  .ReactComponent .App-intro {
+    font-size: large; }
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg); }
+  to {
+    transform: rotate(360deg); } }
+  .ReactComponent .Conversation {
+    margin: 10px;
+    padding: 10px;
+    border-radius: 56px;
+    text-align: center;
+    width: 100%;
+    align-self: stretch;
+    box-sizing: border-box; }
+  .ReactComponent .Conversation-cover {
+    background-color: #30c0d3;
+    color: #fff;
+    border-radius: 56px;
+    display: flex;
+    flex-flow: column;
+    margin: 0;
+    min-height: 176px;
+    padding: 0 28px;
+    position: relative;
+    z-index: 2; }
+  .ReactComponent .Conversation-cover p {
+    font-family: "Raleway", sans-serif;
+    font-size: 12px; }
+  .ReactComponent h3 {
+    flex-grow: 1;
+    display: flex;
+    flex-flow: column;
+    justify-content: space-around;
+    margin: 28px 0 0 0;
+    vertical-align: middle;
+    font-size: 18px;
+    font-family: "Raleway", sans-serif;
+    font-weight: normal; }
+  .ReactComponent .Conversation-actions {
+    background: #d6f1f3;
+    border-radius: 56px;
+    padding: 14px;
+    padding-top: 112px;
+    margin-top: -112px;
+    min-height: 50px; }
+  .ReactComponent .Conversation-statistics {
+    font-family: "Raleway", sans-serif;
+    color: #042049;
+    display: flex;
+    font-size: 12px;
+    justify-content: space-between;
+    padding: 0 28px;
+    margin: 7px 0; }
+  .ReactComponent .Conversation-button {
+    background-color: #042049;
+    color: #fff;
+    font-size: 13px;
+    padding: 9px 28px;
+    padding-top: 11px;
+    padding-bottom: 11px;
+    border: none;
+    border-radius: 56px;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: inline-block;
+    font-family: "Raleway", sans-serif;
+    font-weight: bold;
+    margin: 7px;
+    text-align: center;
+    text-transform: uppercase;
+    vertical-align: middle;
+    text-decoration: none; }
+  .ReactComponent h1, .ReactComponent h2 {
+    font-family: "Raleway", sans-serif;
+    font-weight: normal;
+    color: #042049; }
+  .ReactComponent h1 {
+    font-size: 19.5px;
+    text-transform: uppercase; }
+  .ReactComponent h2 {
+    font-size: 16.5px; }
+  .ReactComponent .Conversations > ul {
+    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    padding: 0;
+    align-items: center;
+    justify-content: center; }
+  .ReactComponent .Conversations > ul li {
+    list-style: none;
+    display: inline-block;
+    max-width: 30%;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0; }
+  @media only screen and (max-width: 900px) {
+    .ReactComponent .Conversations > ul li {
+      max-width: 90%; } }
+  .ReactComponent .FullConversation {
+    padding: 0 20px;
+    font-family: "Raleway", sans-serif; }
+  .ReactComponent .FullConversation h1 {
+    font-size: 21px;
+    text-transform: uppercase;
+    padding: 56px 0; }
+  .ReactComponent .FullConversation-cover {
+    background: #d6f1f3;
+    border-radius: 0 0 56px 56px;
+    color: #042049;
+    margin: 0;
+    padding-top: 0; }
+  .ReactComponent .FullConversation > * {
+    padding: 28px; }
+  .ReactComponent .FullConversation .FullConversation-arrow {
+    border-left: 28px solid transparent;
+    border-right: 28px solid transparent;
+    border-top: 28px solid #d6f1f3;
+    height: 0;
+    margin: 0 auto;
+    padding: 0;
+    position: relative;
+    width: 0; }
+  .ReactComponent .FullConversation-statistics {
+    display: flex;
+    font-size: 13px;
+    font-weight: bold;
+    justify-content: space-between;
+    margin: 0 auto;
+    max-width: 576px;
+    padding: 0 14px; }
+  .ReactComponent .FullConversation-statistics li {
+    list-style: none; }
+  .ReactComponent .FullConversation-statisticsBottom {
+    bottom: 21px;
+    font-weight: normal;
+    padding: 0 42px;
+    position: relative; }
+  .ReactComponent .FullConversation-statistics, .ReactComponent .FullConversation-statisticsBottom {
+    display: flex;
+    font-size: 13px;
+    font-weight: bold;
+    justify-content: space-between;
+    margin: 0 auto;
+    max-width: 576px;
+    padding: 0 14px; }
+  .ReactComponent .FullConversation-statisticsBottom li {
+    list-style: none;
+    font-weight: normal; }
+  .ReactComponent .FullConversation-statisticsBottom div {
+    font-weight: normal; }
+  .ReactComponent .FullConversation-statisticsBottom div + div {
+    font-weight: bold;
+    text-align: right; }
+  .ReactComponent .FullConversation-header {
+    text-align: center; }
+  .ReactComponent .FullConversation-header h1 {
+    font-size: 18px;
+    text-transform: uppercase;
+    margin-bottom: 7px;
+    font-family: "Raleway", sans-serif;
+    font-weight: normal;
+    text-transform: none;
+    text-transform: uppercase;
+    padding: 0; }
+  .ReactComponent .FullConversation-header p {
+    color: #042049;
+    font-size: 15px;
+    font-family: "Raleway", sans-serif; }
+  .ReactComponent .FullConversation-comment {
+    background-color: #30c0d3;
+    color: #fff;
+    box-sizing: border-box;
+    border-radius: 56px;
+    font-size: 18px;
+    padding: 42px;
+    margin: 0 auto;
+    max-width: 700px;
+    text-align: left; }
+  .ReactComponent .FullConversation-comment-user {
+    font-size: 15.75px; }
+  .ReactComponent .FullConversation-comment-user .fa-user {
+    color: #ff3e72;
+    margin-right: 14px;
+    background: #fff;
+    border: 2px solid #fff;
+    border-radius: 56px;
+    padding: 7px; }
+  .ReactComponent .FullConversation-votes {
+    display: flex;
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+    text-transform: uppercase;
+    width: 100%; }
+  .ReactComponent .FullConversation-votes li {
+    list-style: none;
+    flex-grow: 1;
+    align-items: center;
+    align-content: stretch;
+    display: flex;
+    flex-flow: column; }
+  .ReactComponent .FullConversation-votes button {
+    border: none;
+    border-radius: 50%;
+    background: #fff;
+    padding: 0;
+    cursor: pointer;
+    outline: none; }
+  .ReactComponent .FullConversation-votes .fa {
+    background: #fff;
+    height: 21px;
+    width: 21px;
+    background: #fff;
+    border: 2px solid #fff;
+    border-radius: 56px;
+    padding: 7px;
+    font-weight: 900;
+    font-size: 20px; }
+  .ReactComponent .FullConversation-votes .fa-check {
+    color: #22b35c; }
+  .ReactComponent .FullConversation-votes .fa-arrow-right {
+    color: #30c0d3; }
+  .ReactComponent .FullConversation-votes .fa-times {
+    color: #f13c20; }
+  .ReactComponent .FullConversation-votes li button + span {
+    font-size: 13px;
+    font-weight: bold;
+    margin-top: 5px; }
+
 /*
  HOME PAGE
  ======================================================================== */

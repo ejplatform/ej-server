@@ -6,5 +6,5 @@
     {% if add_conversation_perm %}
         <a class="Button" href="/conversations/add/">Criar nova conversa</a>
     {% endif %}
-    {{ conversation_list(conversations) }}
+    {{ conversation_list(conversations, javascript_enabled=javascript_enabled) }}
 {% endblock %}

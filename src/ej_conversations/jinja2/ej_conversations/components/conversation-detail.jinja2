@@ -1,6 +1,15 @@
 {% from 'ej_conversations/components/comment-detail.jinja2' import comment_detail, comment_form with context %}
+{% from 'components/generic/react.jinja2' import react_component %}
 
-{% macro conversation_detail(conversation, edit_perm, user) %}
+{% macro conversation_detail(conversation, edit_perm, user, javascript_enabled='') %}
+
+    <div class="ConversationDetail">
+        {{ react_component('conversation', conversation_detail_static(conversation, edit_perm, user), javascript_enabled, '{"slug":"' + conversation.slug + '"}') }}
+    </div>
+
+{% endmacro %}
+
+{% macro conversation_detail_static(conversation, edit_perm, user) %}
     {% if edit_perm %}
         {{ action_button( _('Edit Conversation'), conversation.get_absolute_url() + 'edit/') }}
     {% endif %}
