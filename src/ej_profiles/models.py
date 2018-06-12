@@ -82,7 +82,6 @@ class Profile(models.Model):
     def is_filled(self):
         fields = ('race', 'age', 'country', 'state', 'city', 'biography',
                   'occupation', 'political_activity', 'has_image', 'gender_description')
-        print([getattr(self, field) for field in fields])
         return bool(all(getattr(self, field) for field in fields))
 
     def get_absolute_url(self):
@@ -122,18 +121,12 @@ class Profile(models.Model):
         """
         Return all profile badges.
         """
-        # FIXME remove this print
-        print("See all badges")
-        print(self.user.badges_earned.all())
         return self.user.badges_earned.all()
-        
+
     def comments(self):
         """
         Return all profile comments.
         """
-        # FIXME remove this print
-        print("See all comments")
-        print(self.user.comments.all())
         return self.user.comments.all()
 
     def role(self):
@@ -146,12 +139,14 @@ class Profile(models.Model):
             return _('Administrative user')
         return _('Regular user')
 
+
 def gravatar_fallback(id):
     """
     Computes gravatar fallback image URL from a unique string identifier
     """
     digest = hashlib.md5(id.encode('utf-8')).hexdigest()
     return "https://gravatar.com/avatar/{}?s=40&d=mm".format(digest)
+
 
 def avatar_fallback():
     """
