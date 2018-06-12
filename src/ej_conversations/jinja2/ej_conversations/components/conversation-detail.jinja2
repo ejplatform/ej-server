@@ -43,8 +43,13 @@
         {% endif %}
 
         {# Post a new comment #}
-        {% if user.is_authenticated %}
+        {% if can_comment %}
             {{ comment_form(csrf_input) }}
+            <p>{{ _('You still have {n} available comments').format(n=remaining_comments) }}</p>
+        {% elif user.id == None %}
+            <p>{{ _('Please {login} to comment on this conversation').format(login=login_link|safe)|safe }}</p>
+        {% else %}
+            <p>{% trans %}You have used all comments available in this conversation.{% endtrans %}</p>
         {% endif %}
 
         {# Opinion #}

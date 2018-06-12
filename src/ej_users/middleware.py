@@ -13,7 +13,7 @@ class UserFallbackMiddleware(MiddlewareMixin):
         try:
             username = request.path.strip('/')
             owner = get_object_or_404(User, username=username)
-            return redirect('conversations:list-for-user', owner=owner)
+            return redirect('user-conversation:list', owner=owner)
 
         # Return the original response if any errors happened. Because this
         # is a middleware, we can't assume the errors will be caught elsewhere.

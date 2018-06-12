@@ -2,55 +2,60 @@ from django.http import HttpResponseServerError
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
+from boogie import rules
 from boogie.rules import proxy_seq
 from hyperpython import a
-from . import urlpatterns, base_url, conversation_url, user_url
-from .. import rules
+from . import urlpatterns, conversation_url
 from ..models import Conversation
 
 
-@urlpatterns.route(base_url)
-@urlpatterns.route(user_url + 'conversations/',
-                   name='list-for-user',
-                   template='ej_conversations/list.jinja2')
-def list(request, owner=None):
+@urlpatterns.route('', name='list')
+def conversation_list(request, owner=None):
+    user = request.user
     if owner:
         kwargs = {'owner': owner}
-        create_url = reverse('conversations:create-for-user', kwargs=kwargs)
+        create_url = reverse('user-conversation:create', kwargs=kwargs)
         conversations = Conversation.objects.filter(author=owner)
     else:
-        create_url = reverse('conversations:create')
+        create_url = reverse('conversation:create')
         conversations = Conversation.promoted.all()
 
     return {
-        'conversations': moderated_conversations(request.user, conversations),
-        'can_add_conversation': rules.can_add_conversation(request.user),
+        'conversations': moderated_conversations(user, conversations),
+        'can_add_conversation': user.has_perm('ej_conversations.can_add_conversation'),
         'owner': owner,
         'add_link': a(_('Add new conversation'), href=create_url),
     }
 
 
-@urlpatterns.route(user_url + conversation_url, name='detail-for-user')
 @urlpatterns.route(conversation_url)
 def detail(request, conversation, owner=None):
-    comment = conversation.next_comment(request.user, None)
+    user = request.user
+    comment = conversation.next_comment(user, None)
+    n_comments = rules.compute('ej_conversations.remaining_comments', conversation, user)
     ctx = {
         'conversation': conversation,
-        'edit_perm': rules.can_edit_conversation(request.user, conversation),
         'comment': comment,
         'owner': owner,
+        'edit_perm': user.has_perm('ej_conversations.can_edit_conversation', conversation),
+        'can_comment': user.has_perm('ej_conversations.can_comment', conversation),
+        'remaining_comments': n_comments,
+        'login_link': a(_('login'), href=reverse('auth:login')),
     }
+
     if comment and request.POST.get('action') == 'vote':
         vote = request.POST['vote']
         if vote not in {'agree', 'skip', 'disagree'}:
             return HttpResponseServerError('invalid parameter')
-        comment.vote(request.user, vote)
+        comment.vote(user, vote)
+
     elif request.POST.get('action') == 'comment':
         comment = request.POST['comment'].strip()
         try:
-            ctx['comment'] = conversation.create_comment(request.user, comment)
+            ctx['comment'] = conversation.create_comment(user, comment)
         except PermissionError as ex:
             ctx['comment_error'] = str(ex)
+
     return ctx
 
 

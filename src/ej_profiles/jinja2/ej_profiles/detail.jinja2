@@ -1,6 +1,6 @@
 {% extends 'base.jinja2' %}
-{% from 'ej_profiles/components/profile.jinja2' import profile_detail %}
+{% from 'ej_profiles/components/profile.jinja2' import profile_detail with context %}
 
 {% block content %}
-    {{ profile_detail(request.user.get_profile(), conversations, csrf_input, info_tab) }}
+    {{ profile_detail(request.user.get_profile(), conversations, info_tab) }}
 {% endblock %}

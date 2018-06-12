@@ -18,6 +18,7 @@ SALT_CHARS = string.ascii_letters + string.digits + '-_'
 
 
 def environment(**options):
+    print('Creating jinja environment')
     options.pop('debug', None)
     options.setdefault('trim_blocks', True)
     options.setdefault('lstrip_blocks', True)

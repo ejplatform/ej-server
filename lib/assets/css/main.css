@@ -761,6 +761,45 @@ input[type=submit] {
   to {
     background: #FF3D72; } }
 /*
+ DATATABLES STYLING
+ =========================================================================== */
+.dataTables_length,
+.dataTables_filter {
+  width: 50%; }
+  .dataTables_length label,
+  .dataTables_filter label {
+    font-size: 13px; }
+  .dataTables_length select,
+  .dataTables_length input,
+  .dataTables_filter select,
+  .dataTables_filter input {
+    border-radius: 2px;
+    max-width: 180px;
+    padding: 7px;
+    width: inherit;
+    font-size: 13px; }
+  .dataTables_length select,
+  .dataTables_filter select {
+    max-width: 70px; }
+
+.dataTables_length {
+  float: left; }
+
+.dataTables_filter {
+  float: right;
+  text-align: right; }
+
+.dataTables_info,
+.dataTables_paginate {
+  text-align: right; }
+  .dataTables_info > *,
+  .dataTables_paginate > * {
+    margin: 0 7px; }
+  .dataTables_info .paginate_button,
+  .dataTables_paginate .paginate_button {
+    margin: 0 3.5px; }
+
+/*
  GENERIC PATTERNS FOR HTML ELEMENTS
  =========================================================================== */
 .unlist, .unlist-inline, .Footer-social, .TopHeader-links, .TopHeader-social, .Header ul, .ConversationList-categories ul {

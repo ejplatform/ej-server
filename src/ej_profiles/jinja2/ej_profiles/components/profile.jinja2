@@ -14,7 +14,7 @@
 {% endmacro %}
 
 
-{% macro profile_detail(profile, conversations, csrf_input, info='profile', javascript_enabled='') %}
+{% macro profile_detail(profile, conversations, info='profile', javascript_enabled='') %}
     <div class="Profile">
         <img class="Profile-image" src="{{ profile.image_url }}">
         <h1>{{ profile.name }}</h1>
@@ -57,7 +57,8 @@
 
     <div class="Profile-actions">
         <p>
-            <form method="post" action="/logout/"> 
+            <form method="post" action="/logout/">
+                {{ csrf_input }}
                 <button class="Button" type="submit">{{ _('Logout') }}</button>
             </form>
         </p>
@@ -91,7 +92,7 @@
                 <li>
                     <span class='amount'>{{ amount }}</span>
                     <span class='description'>{{ description or '-' }}</span>
-                </li>                
+                </li>
             {% endfor %}
         </ul>
     </div>
@@ -103,7 +104,7 @@
             {% for badge in profile.badges() %}
                 <li>
                     <span class='amount'>{{ badge }}</span>
-                </li>                
+                </li>
             {% endfor %}
         </ul>
     </div>
@@ -111,7 +112,7 @@
 
 {% macro profile_comments(profile) %}
     <div class="Profile-comments">
-            
+
 
         <h2>{{_('My Comments')}} <span>({{profile.comments().count()}})</span>
             <i class="fa fa-angle-down"></i>
@@ -146,7 +147,7 @@
                     <div class='footer'>
                         {{ link(_('See Conversation'), href=comment.conversation.get_absolute_url()) }}
                     </div>
-                </li>                
+                </li>
             {% endfor %}
         </ul>
     </div>
@@ -154,7 +155,7 @@
 
 {% macro profile_conversations(profile, javascript_enabled='') %}
     <div class="Profile-conversations">
-            
+
 
         <h2>{{_('Favorite Conversations')}} <span>(1)</span>
             <i class="fa fa-angle-down"></i>

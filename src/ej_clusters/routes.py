@@ -49,6 +49,17 @@ def detail(conversation, cluster):
     }
 
 
+@urlpatterns.route(conversation_url + 'clusterize/')
+def clusterize(conversation):
+    clusterization = conversation.clusterization
+    clusterization.force_update()
+    return {
+        'content_title': _('Force clusterization'),
+        'clusterization': clusterization,
+        'conversation': conversation,
+    }
+
+
 #
 # Stereotypes
 #

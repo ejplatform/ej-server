@@ -10,25 +10,38 @@ from ej.fixes import unregister_admin
 
 unregister_admin.unregister_apps()
 
+#
+# Optional urls
+#
+if settings.EJ_ENABLE_ROCKETCHAT:
+    rocket = [path('talks/', include('ej_rocketchat.routes', namespace='rocketchat'))]
+else:
+    rocket = []
+
 urlpatterns = [
     # Basic authentication and authorization
     path('', include('ej.routes')),
     path('', include('ej_users.routes', namespace='auth')),
     path('', include('ej_help.routes', namespace='help')),
 
-    path('dataviz/', include(('ej_dataviz.routes', 'ej_dataviz'), namespace='dataviz')),
+    # Profile URLS
+    path('profile/', include(('ej_profiles.routes', 'ej_profiles'), namespace='profiles')),
+    path('profile/', include('ej_gamification.routes', namespace='gamification')),
+    path('profile/notifications/', include('ej_notifications.routes', namespace='notifications')),
 
     # Conversations and other EJ-specific routes
     path('conversations/', include('ej_conversations.routes', namespace='conversation')),
     path('conversations/', include('ej_clusters.routes', namespace='cluster')),
     path('conversations/', include('ej_reports.routes', namespace='report')),
 
+    # User conversations
+    path('', include('ej_conversations.routes.for_user', namespace='user-conversation')),
+
+    # Configurations
+    path('config/', include(('ej_configurations.routes', 'ej_configurations'), namespace='configurations')),
+
     # Rocket
-    *(
-        [path('talks/', include('ej_rocketchat.routes', namespace='rocketchat'))]
-        if settings.EJ_ENABLE_ROCKETCHAT
-        else ()
-    ),
+    *rocket,
 
     # Admin
     path(settings.ADMIN_URL.rstrip('^'), admin.site.urls),
@@ -38,13 +51,6 @@ urlpatterns = [
     path('api/v1/docs/', include_docs_urls(title='ej API Docs', public=False)),
     # path('api/v1/', include('courier.urls', namespace='courier')),
     path('api/v1/rocketchat/', include('ej_rocketchat.routes')),
-
-    # EJ Routes
-    path('', include('ej_conversations.routes', namespace='conversations')),
-    path('profile/', include(('ej_profiles.routes', 'ej_profiles'), namespace='profiles')),
-    path('profile/', include('ej_gamification.routes', namespace='gamification')),
-    path('profile/notifications/', include('ej_notifications.routes', namespace='notifications')),
-    path('config/', include(('ej_configurations.routes', 'ej_configurations'), namespace='configurations')),
 
     # User management
     path('rest-auth/', include('rest_auth.urls')),

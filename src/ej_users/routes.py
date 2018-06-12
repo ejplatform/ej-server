@@ -84,12 +84,10 @@ def login(request):
 
 @urlpatterns.route('logout/')
 def logout(request):
-    if not request.user.is_authenticated:
-        return redirect('home')
     if request.method == 'POST':
         auth.logout(request)
         return redirect('home')
-    return HttpResponseServerError('cannot logout')
+    return HttpResponseServerError('cannot logout using a GET')
 
 
 @urlpatterns.route('profile/recover-password/')
@@ -123,6 +121,9 @@ def remove_account(request):
     }
 
 
+#
+# Registration via API + cookies
+#
 @urlpatterns.route('key/')
 def api_key(request):
     if request.user.id is None:
@@ -143,3 +144,4 @@ def clean_cookies():
     response.delete_cookie('sessionid')
     response.delete_cookie('csrftoken')
     return response
+
