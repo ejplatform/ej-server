@@ -1182,7 +1182,7 @@ ul.errorlist {
           margin-left: 28px; } }
     @media only screen and (min-width: 550px) {
       .Header-lowerNav a:last-child {
-        margin-left: 0;
+        margin-left: 15px;
         padding-left: 0; }
         .Header-lowerNav a:last-child span {
           display: none; }
