@@ -2,15 +2,11 @@ from django.http import Http404
 from django.shortcuts import redirect
 from django.utils.translation import ugettext_lazy as _
 
-from . import urlpatterns, base_url, user_url, conversation_url
+from . import urlpatterns, conversation_url
 from .. import forms, models
 
 
-@urlpatterns.route(base_url + 'add/',
-                   perms=['ej_conversations.can_add_conversation'])
-@urlpatterns.route(user_url + base_url + 'add/',
-                   name='create-for-user',
-                   template='ej_conversations/create.jinja2')
+@urlpatterns.route('add/', perms=['ej_conversations.can_add_conversation'])
 def create(request, owner=None):
     # Cannot create pages for other users
     if owner and owner != request.user:

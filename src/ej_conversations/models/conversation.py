@@ -137,6 +137,7 @@ class Conversation(TimeStampedModel, StatusModel):
 
         # Check limits
         if check_limits and not author.has_perm('ej_conversations.can_comment', self):
+            log.info('failed attempt to create comment by %s' % author)
             raise PermissionError('user cannot comment on conversation.')
 
         make_comment = Comment.objects.create if commit else Comment

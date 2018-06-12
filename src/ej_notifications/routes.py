@@ -1,5 +1,6 @@
-from boogie.router import Router
+from django.utils.translation import ugettext_lazy as _
 
+from boogie.router import Router
 
 app_name = 'ej_notifications'
 urlpatterns = Router(
@@ -12,7 +13,9 @@ urlpatterns = Router(
 def index(request):
     user = request.user
     return {
+        'content_title': _('List of notifications'),
         'user': user,
+        'notifications': ['hello', 'world'],
         # 'notifications': user.notifications.unseen(),
     }
 

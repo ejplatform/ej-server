@@ -123,6 +123,9 @@ def remove_account(request):
     }
 
 
+#
+# Registration via API + cookies
+#
 @urlpatterns.route('key/')
 def api_key(request):
     if request.user.id is None:
@@ -143,3 +146,4 @@ def clean_cookies():
     response.delete_cookie('sessionid')
     response.delete_cookie('csrftoken')
     return response
+

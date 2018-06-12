@@ -35,6 +35,6 @@ class CommentAdmin(AuthorIsUserMixin, admin.ModelAdmin):
 
 @register(Conversation)
 class ConversationAdmin(AuthorIsUserMixin, admin.ModelAdmin):
-    fields = ['title', 'question', 'status']
+    fields = ['title', 'text', 'status']
     list_display = ['title', 'slug', 'author', 'created']
     list_filter = ['status', 'created']

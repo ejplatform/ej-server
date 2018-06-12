@@ -29,7 +29,6 @@ def index(conversation):
     statistics = conversation.statistics()
     votes = get_raw_votes(conversation)
     math = VoteStats(votes)
-    print(votes)
     return {
         'title': _('Report'),
         'content_title': hyperlink(conversation),
@@ -87,7 +86,7 @@ PC_COLUMNS = [
 def map_to_table(data):
     array = np.array(list(data.items())).T
     cols, body = array
-    return html_table([body], columns=[__(col) for col in cols], class_='ReportTable')
+    return html_table([body], columns=[__(col) for col in cols], class_='ReportTable table')
 
 
 def df_to_table(df, pc=True):
@@ -95,7 +94,7 @@ def df_to_table(df, pc=True):
         for col in PC_COLUMNS:
             if col in df:
                 df[col] = to_pc(df[col])
-    return render_dataframe(df, col_display=COLUMN_NAMES)
+    return render_dataframe(df, col_display=COLUMN_NAMES, class_='table')
 
 
 def to_pc(data):
