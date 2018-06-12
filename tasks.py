@@ -42,13 +42,16 @@ def js(ctx):
 
 
 @task
-def run(ctx, no_toolbar=False, gunicorn=False):
+def run(ctx, no_toolbar=False, gunicorn=False, migrate=False):
     """
     Run development server
     """
     env = {}
     if no_toolbar:
         env['DISABLE_DJANGO_DEBUG_TOOLBAR'] = 'true'
+
+    if migrate:
+        manage(ctx, 'migrate', noinput=ask_input)
 
     if gunicorn:
         from gunicorn.app.wsgiapp import run as run_gunicorn
@@ -253,7 +256,6 @@ def prepare_deploy(ctx, ask_input=False):
     """
     Deploy checklist:
 
-    * Execute migrations
     * Build CSS assets
     * Build JS assets
     * Compile translations
@@ -262,17 +264,14 @@ def prepare_deploy(ctx, ask_input=False):
     """
     no_input = not ask_input
 
-    # Migrations
-    manage(ctx, 'migrate', noinput=ask_input)
-
     # CSS
-    sass(ctx, no_watch=True)
+    sass(ctx, no_watch=no_input)
 
     # Js
     js(ctx)
 
     # Translations
-    i18n(ctx, compile=True)
+    i18n(ctx, compile=no_input)
 
     # Static files
     manage(ctx, 'collectstatic', noinput=ask_input)
