@@ -518,7 +518,7 @@ template {
   .Button .Button--secondary,
   .ActionButton .Button--secondary,
   .RocketButton .Button--secondary {
-    background-color: #30BFD3;
+    background-color: #C4F2F4;
     color: rgba(4, 32, 73, 0.9); }
     .Button[secondary]:hover, [secondary].ActionButton:hover, [secondary].RocketButton:hover, .Button[secondary]:focus, [secondary].ActionButton:focus, [secondary].RocketButton:focus,
     .Button .Button--secondary:hover,
@@ -527,7 +527,7 @@ template {
     .Button .Button--secondary:focus,
     .ActionButton .Button--secondary:focus,
     .RocketButton .Button--secondary:focus {
-      background-color: #249bac;
+      background-color: #99e9ec;
       color: #042049; }
   .Button[small], [small].ActionButton, [small].RocketButton,
   .Button .Button--small,
@@ -598,7 +598,7 @@ template {
     .Button .Button--ghost .Button--ghost-secondary,
     .ActionButton .Button--ghost .Button--ghost-secondary,
     .RocketButton .Button--ghost .Button--ghost-secondary {
-      color: #30BFD3; }
+      color: #C4F2F4; }
       .Button[ghost] [secondary]:hover, [ghost].ActionButton [secondary]:hover, [ghost].RocketButton [secondary]:hover, .Button[ghost] [secondary]:focus, [ghost].ActionButton [secondary]:focus, [ghost].RocketButton [secondary]:focus,
       .Button[ghost] .Button--ghost-secondary:hover,
       [ghost].ActionButton .Button--ghost-secondary:hover,
@@ -618,7 +618,7 @@ template {
       .Button .Button--ghost .Button--ghost-secondary:focus,
       .ActionButton .Button--ghost .Button--ghost-secondary:focus,
       .RocketButton .Button--ghost .Button--ghost-secondary:focus {
-        color: #249bac; }
+        color: #99e9ec; }
 
 /*
  HEADINGS
@@ -681,7 +681,7 @@ a {
 
 code, pre, blockquote {
   color: #042049;
-  background-color: #30BFD3; }
+  background-color: #C4F2F4; }
 
 code, pre {
   font-family: "IBM Plex Mono", monospace monospace; }
@@ -1062,7 +1062,7 @@ ul.errorlist {
   flex-flow: column;
   height: 100vh;
   overflow: hidden;
-  padding: 75px 0 73px 0; }
+  padding: 75px 0 52px 0; }
   @media only screen and (min-width: 550px) {
     .Page {
       padding: 100px 0 0 0; } }
@@ -1162,7 +1162,7 @@ ul.errorlist {
     align-items: stretch;
     bottom: 0;
     box-shadow: 0 -2px 4px 0 rgba(0, 0, 0, 0.05);
-    height: 73px;
+    height: 52px;
     text-align: center;
     text-transform: uppercase;
     font-size: 12px; }
@@ -1202,6 +1202,10 @@ ul.errorlist {
   .Header-lowerIcon {
     height: 40px;
     margin-bottom: 7px; }
+    @media only screen and (min-width: 550px) {
+      .Header-lowerIcon {
+        color: #042049;
+        margin-left: 14px; } }
 
 /*
  PAGE FOOTER
@@ -1338,7 +1342,7 @@ ul.errorlist {
     width: 150px; }
     .Register-icon img > *,
     .Login-icon img > * {
-      color: #30BFD3; }
+      color: #C4F2F4; }
   .Register-socialButtons,
   .Login-socialButtons {
     display: none; }
@@ -1378,7 +1382,7 @@ ul.errorlist {
     letter-spacing: 1px;
     font-weight: 300 !important; }
 .ConversationList-categories {
-  background-color: #30BFD3;
+  background-color: #C4F2F4;
   color: #042049;
   align-items: center;
   display: flex;
@@ -1942,7 +1946,7 @@ ul.errorlist {
       display: inherit; } }
 
 .HowItWorks {
-  background: #30BFD3;
+  background: #C4F2F4;
   padding-top: 56px; }
   .HowItWorks h2 {
     font-size: 16.5px; }
@@ -1986,7 +1990,7 @@ ul.errorlist {
         display: block; } }
 
 .StartNow {
-  background: #30BFD3;
+  background: #C4F2F4;
   padding: 28px;
   text-align: center; }
   .StartNow h2 {
@@ -2204,7 +2208,7 @@ ul.errorlist {
   margin-right: auto; }
 
 .Rocket-title {
-  color: #30BFD3;
+  color: #C4F2F4;
   font-weight: bold;
   padding: 0 7px; }
   .Rocket-title h1 {
@@ -2216,7 +2220,7 @@ ul.errorlist {
 .Rocket-detail {
   padding: 7px; }
 .Rocket-items {
-  background-color: #30BFD3;
+  background-color: #C4F2F4;
   padding: 14px; }
   .Rocket-items .title {
     padding: 7px 0;
@@ -2272,7 +2276,7 @@ ul.errorlist {
     background: #FF3D72;
     color: rgba(255, 255, 255, 0.9); }
   .ColorStyles .action-secondary {
-    background: #30BFD3;
+    background: #C4F2F4;
     color: rgba(4, 32, 73, 0.9); }
   .ColorStyles .color-white {
     background: #666;
@@ -2363,7 +2367,7 @@ ul.errorlist {
   color: #042049; }
 .ColorStyles .hint,
 .ColorPalette .hint {
-  background: #30BFD3;
+  background: #C4F2F4;
   color: #042049; }
 .ColorStyles .content,
 .ColorPalette .content {

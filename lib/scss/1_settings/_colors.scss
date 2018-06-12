@@ -62,7 +62,7 @@ $color-accent-text: $color-white !default;
 
 // Discreetly highlighted content. We want some emphasis from the default content
 // background, but it should not be highlighted as strongly as primary content.
-$color-hint: $color-blue-light !default;
+$color-hint: $color-blue-nav!default;
 $color-hint-text: $color-content-text !default;
 
 // Stronger hint. Used in Footer component

@@ -161,5 +161,10 @@ $header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.05) !default;
     &-lowerIcon {
         height: $header-icon-size;
         margin-bottom: $spacing-unit-tiny;
+
+        @media only screen and (min-width: $breakpoint-small) {
+            color: $color-content-text;
+            margin-left: $spacing-unit-small;
+        }
     }
 }
