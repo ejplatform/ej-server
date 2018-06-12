@@ -5,6 +5,7 @@ import sys
 from invoke import task
 
 python = sys.executable
+sys.path.append('src')
 
 
 #
@@ -33,14 +34,34 @@ def sass(ctx, no_watch=False, trace=False):
 
 
 @task
-def run(ctx, no_toolbar=False):
+def run(ctx, no_toolbar=False, gunicorn=False):
     """
     Run development server
     """
     env = {}
     if no_toolbar:
         env['DISABLE_DJANGO_DEBUG_TOOLBAR'] = 'true'
-    manage(ctx, 'runserver', env=env)
+
+    if gunicorn:
+        from gunicorn.app.wsgiapp import run as run_gunicorn
+
+        env['PATH'] = os.environ['PATH']
+        env['PYTHONPATH'] = 'src'
+        args = [
+            # '-m', 'gunicorn.app.wsgiapp',
+            'ej.wsgi', '-w', '4', '-b', '0.0.0.0:5000',
+            '--error-logfile=-',
+            '--access-logfile=-',
+            '--log-level', 'info',
+        ]
+
+        # Fixme, use execle to replace the current process
+        # print('Running: gunicorn', ' '.join(args))
+        # os.execle(python, *args, env)
+        sys.argv = ['gunicorn', *args]
+        run_gunicorn()
+    else:
+        manage(ctx, 'runserver', env=env)
 
 
 #
@@ -214,3 +235,38 @@ def configure(ctx, silent=False):
     if ask('\nLoad fake data to database?'):
         print('Running inv db-fake')
         db_fake(ctx)
+
+
+#
+# Prepare deploy
+#
+def prepare_deploy(ctx, ask_input=False):
+    """
+    Deploy checklist:
+
+    * Execute migrations
+    * Build CSS assets
+    * Build JS assets
+    * Compile translations
+    * Collect static files
+    * Save assets to database
+    """
+    no_input = not ask_input
+
+    # Migrations
+    manage(ctx, 'migrate', noinput=ask_input)
+
+    # CSS
+    sass(ctx, no_watch=True)
+
+    # Js
+    build_js(ctx)
+
+    # Translations
+    i18n(ctx, compile=True)
+
+    # Static files
+    manage(ctx, 'collectstatic', noinput=ask_input)
+
+    # Populate db with assets
+    db_assets(ctx)
