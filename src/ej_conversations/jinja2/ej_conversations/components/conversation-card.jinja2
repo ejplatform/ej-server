@@ -2,18 +2,20 @@
     {% from 'components/generic/elements.jinja2' import action_button %}
 
     <div class="ConversationCard">
+        <div class="ConversationTags"><i class="fa fa-tags"></i> Tags</div>
+        <div class="ConversationCard-actions">
+            <ul class="ConversationCard-statistics">
+                <li><i class="fa fa-comment"></i> {{ conversation.comments.count() }}</li>
+                <li><i class="fa fa-sliders-h"></i> {{ conversation.votes.count() }}</li>
+            </ul>
+        </div>
         <div class="ConversationCard-cover">
             <h1 up-expand>
                 <a href="{{ conversation.get_absolute_url() }}" alt="alt">{{ conversation.text }}</a>
             </h1>
-            <div>tags</div>
         </div>
         <div class="ConversationCard-actions">
-            <ul class="ConversationCard-statistics">
-                <li>{{ gettext('%(count)s comments', count=conversation.comments.count()) }}</li>
-                <li>{{ gettext('%(count)s votes', count=conversation.votes.count()) }}</li>
-            </ul>
-            {{ action_button('Participar <i class="fa fa-comments"></i>', conversation.get_absolute_url()) }}
+            {{ action_button('Participe Agora', conversation.get_absolute_url()) }}
             {% if conversation.can_moderate %}
                 {{ action_button('Moderar <i class="fa fa-comments"></i>', conversation.get_absolute_url() + 'moderate/') }}
             {% endif %}

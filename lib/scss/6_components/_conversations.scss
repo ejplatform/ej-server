@@ -11,11 +11,16 @@ $conversation-card-color: $color-primary !default;
 $conversation-card-text-color: $color-white !default;
 $conversation-card-cover-height: 8 * $line-height !default;
 $conversation-card-secondary-color: $color-blue-light !default;
-$conversation-card-statistics-color: $color-blue-dark !default;
+$conversation-card-light: $color-blue-nav !default;
+$conversation-card-statistics-color: $color-blue-nav !default;
 $conversation-card-font-size-small: 12px !default;
 $conversation-card-button-color: $color-content-text !default;
 $conversation-card-button-color-text: $color-content !default;
 $conversation-card-border-arrow-size: $spacing-unit;
+
+@import url('https://fonts.googleapis.com/css?family=Raleway');
+@import url('https://fonts.googleapis.com/css?family=Patua+One');
+@import url('https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 
 .ConversationList {
     @extend .Container;
@@ -23,6 +28,13 @@ $conversation-card-border-arrow-size: $spacing-unit;
     &-title {
         @include headings($font-size-h2 $font-size-h4);
         text-align: center;
+        h1 {
+          font-family: 'Patua One', sans-serif !important;
+          color: $color-pink !important; 
+          font-size: 24px !important;
+          letter-spacing: 1px;
+          font-weight: 300 !important;
+        }
     }
 
     &-categories {
@@ -66,6 +78,7 @@ $conversation-card-border-arrow-size: $spacing-unit;
         display: flex;
         flex-wrap: wrap;
         width: 100%;
+        justify-content: center;
 
         > * {
             margin: $conversation-card-gutter;
@@ -86,15 +99,26 @@ $conversation-card-border-arrow-size: $spacing-unit;
     }
 }
 
+.ConversationTags {
+    @include color($conversation-card-light, $conversation-card-color, $force: true);
+    font-weight: bold;
+}
+
 .ConversationCard {
+    @include color($conversation-card-color, $conversation-card-text-color, $force: true);
     align-self: stretch;
     box-sizing: border-box;
     border: $conversation-card-border;
-    border-radius: $conversation-card-border-radius;
+    border-radius: 50%;
     flex-grow: 1;
     margin: 0;
+    margin-bottom: $spacing-unit; 
     text-align: center;
     width: 100%;
+    max-width: 320px;
+    height: 320px;
+    overflow: hidden;
+    position: relative;
 
     > * {
         padding: $conversation-card-padding;
@@ -106,22 +130,18 @@ $conversation-card-border-arrow-size: $spacing-unit;
     }
 
     &-cover {
-        @include color($conversation-card-color, $conversation-card-text-color, $force: true);
-        border-radius: $conversation-card-border-radius;
         display: flex;
         flex-flow: column;
+        flex-grow: 1;
         margin: 0;
-        min-height: $conversation-card-cover-height;
         padding: 0 $spacing-unit;
         position: relative;
         z-index: 2;
 
         h1 {
-            flex-grow: 1;
             display: flex;
             flex-flow: column;
-            justify-content: space-around;
-            margin: $spacing-unit 0 0 0;
+            margin: 0;
             vertical-align: middle;
         }
 
@@ -139,17 +159,21 @@ $conversation-card-border-arrow-size: $spacing-unit;
         }
     }
 
-    &-actions {
-        background: $conversation-card-secondary-color;
-        border-radius: $conversation-card-border-radius;
-        padding-top: $conversation-card-border-radius * 2;
-        margin-top: $conversation-card-border-radius * -2;
+    &-cover + .ConversationCard-actions {
+        background: url(/static/img/icons/bg.png);
+        margin-top: $spacing-unit;
+        bottom: 0;
+        position: absolute;
+        box-sizing: border-box;
+        width: 100%;
+    }
 
+    &-actions {
         .Button[primary] {
             @include color($conversation-card-button-color, $conversation-card-button-color-text);
             font-size: $font-size-small;
-            padding-top: $button-vpadding + ($font-size - $font-size-small);
-            padding-bottom: $button-vpadding + ($font-size - $font-size-small);
+            padding-top: $button-vpadding * 2;
+            padding-bottom: $button-vpadding * 2;
             i {
                 margin-left: $spacing-unit-tiny;
             }
@@ -159,23 +183,20 @@ $conversation-card-border-arrow-size: $spacing-unit;
     &-statistics {
         color: $conversation-card-statistics-color;
         display: flex;
-        font-size: $conversation-card-font-size-small;
-        justify-content: space-between;
+        justify-content: center;
         padding: 0 $spacing-unit;
-        margin: $spacing-unit-tiny 0;
+        margin: $spacing-unit-tiny $spacing-unit;
+        font-weight: bold;
 
         li {
             list-style: none;
+            display: inline-block;
+            margin: 0 $spacing-unit / 2;
         }
     }
 
     @media only screen and (min-width: $breakpoint-small) {
-        max-width: 47%;
         margin: $spacing-unit-tiny;
-    }
-
-    @media only screen and (min-width: $breakpoint-large) {
-        width: 32%;
     }
 }
 
@@ -427,9 +448,6 @@ $conversation-card-border-arrow-size: $spacing-unit;
     to { transform: rotate(360deg); }
   }
   
-  @import url('https://fonts.googleapis.com/css?family=Raleway');
-  @import url('https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
-  
   .Conversation {
     margin: 10px;
     padding: 10px;
@@ -520,7 +538,7 @@ $conversation-card-border-arrow-size: $spacing-unit;
   
   h1 {
     font-size: 19.5px;
-    text-transform: uppercase;
+    font-weight: 600;
   }
   
   h2 {

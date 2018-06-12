@@ -8,8 +8,8 @@
 
 {% macro conversation_list(conversations,
                            categories,
-                           title=_('Active conversations'),
-                           subtitle=_('See some active conversations and give your opinion'),
+                           title='Conversas públicas',
+                           subtitle='Participe das conversas e dê sua opinião com comentários e votos!',
                            javascript_enabled='') %}
 
     {% if caller %}{% set caller_output = caller() %}{% endif %}

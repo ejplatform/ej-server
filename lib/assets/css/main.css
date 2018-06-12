@@ -50,6 +50,9 @@
  * 2. Prevent adjustments of font size after orientation changes in
  *    IE on Windows Phone and in iOS.
  */
+@import url("https://fonts.googleapis.com/css?family=Raleway");
+@import url("https://fonts.googleapis.com/css?family=Patua+One");
+@import url("https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css");
 html {
   line-height: 1.15;
   /* 1 */
@@ -1311,6 +1314,12 @@ ul.errorlist {
     font-size: 19.5px; }
   .ConversationList-title h2 {
     font-size: 16.5px; }
+  .ConversationList-title h1 {
+    font-family: 'Patua One', sans-serif !important;
+    color: #FF3E72 !important;
+    font-size: 24px !important;
+    letter-spacing: 1px;
+    font-weight: 300 !important; }
 .ConversationList-categories {
   background-color: #30BFD3;
   color: #042049;
@@ -1340,7 +1349,8 @@ ul.errorlist {
 .ConversationList-cardList {
   display: flex;
   flex-wrap: wrap;
-  width: 100%; }
+  width: 100%;
+  justify-content: center; }
   .ConversationList-cardList > * {
     margin: 28px; }
   .ConversationList-cardList .slick-list {
@@ -1351,39 +1361,48 @@ ul.errorlist {
     position: relative;
     width: 100vw; }
 
+.ConversationTags {
+  background-color: #C4F2F4;
+  color: #30c0d3;
+  font-weight: bold; }
+  .ConversationTags a, .ConversationTags a:hover, .ConversationTags a:active, .ConversationTags a:focus {
+    color: #30c0d3; }
+
 .ConversationCard {
+  background-color: #30c0d3;
+  color: #fff;
   align-self: stretch;
   box-sizing: border-box;
   border: 0;
-  border-radius: 56px;
+  border-radius: 50%;
   flex-grow: 1;
   margin: 0;
+  margin-bottom: 28px;
   text-align: center;
-  width: 100%; }
+  width: 100%;
+  max-width: 320px;
+  height: 320px;
+  overflow: hidden;
+  position: relative; }
+  .ConversationCard a, .ConversationCard a:hover, .ConversationCard a:active, .ConversationCard a:focus {
+    color: #fff; }
   .ConversationCard > * {
     padding: 14px; }
   .ConversationCard h1 {
     font-size: 18px;
     text-transform: none; }
   .ConversationCard-cover {
-    background-color: #30c0d3;
-    color: #fff;
-    border-radius: 56px;
     display: flex;
     flex-flow: column;
+    flex-grow: 1;
     margin: 0;
-    min-height: 176px;
     padding: 0 28px;
     position: relative;
     z-index: 2; }
-    .ConversationCard-cover a, .ConversationCard-cover a:hover, .ConversationCard-cover a:active, .ConversationCard-cover a:focus {
-      color: #fff; }
     .ConversationCard-cover h1 {
-      flex-grow: 1;
       display: flex;
       flex-flow: column;
-      justify-content: space-around;
-      margin: 28px 0 0 0;
+      margin: 0;
       vertical-align: middle; }
     .ConversationCard-cover dl {
       font-size: 12px;
@@ -1393,35 +1412,35 @@ ul.errorlist {
       .ConversationCard-cover dl dd {
         display: inline;
         margin: 0; }
-  .ConversationCard-actions {
-    background: #30BFD3;
-    border-radius: 56px;
-    padding-top: 112px;
-    margin-top: -112px; }
-    .ConversationCard-actions .Button[primary], .ConversationCard-actions [primary].ActionButton, .ConversationCard-actions [primary].RocketButton {
-      background-color: #042049;
-      color: #fff;
-      font-size: 13px;
-      padding-top: 11px;
-      padding-bottom: 11px; }
-      .ConversationCard-actions .Button[primary] i, .ConversationCard-actions [primary].ActionButton i, .ConversationCard-actions [primary].RocketButton i {
-        margin-left: 7px; }
+  .ConversationCard-cover + .ConversationCard-actions {
+    background: url(/static/img/icons/bg.png);
+    margin-top: 28px;
+    bottom: 0;
+    position: absolute;
+    box-sizing: border-box;
+    width: 100%; }
+  .ConversationCard-actions .Button[primary], .ConversationCard-actions [primary].ActionButton, .ConversationCard-actions [primary].RocketButton {
+    background-color: #042049;
+    color: #fff;
+    font-size: 13px;
+    padding-top: 18px;
+    padding-bottom: 18px; }
+    .ConversationCard-actions .Button[primary] i, .ConversationCard-actions [primary].ActionButton i, .ConversationCard-actions [primary].RocketButton i {
+      margin-left: 7px; }
   .ConversationCard-statistics {
-    color: #042049;
+    color: #C4F2F4;
     display: flex;
-    font-size: 12px;
-    justify-content: space-between;
+    justify-content: center;
     padding: 0 28px;
-    margin: 7px 0; }
+    margin: 7px 28px;
+    font-weight: bold; }
     .ConversationCard-statistics li {
-      list-style: none; }
+      list-style: none;
+      display: inline-block;
+      margin: 0 14px; }
   @media only screen and (min-width: 550px) {
     .ConversationCard {
-      max-width: 47%;
       margin: 7px; } }
-  @media only screen and (min-width: 1200px) {
-    .ConversationCard {
-      width: 32%; } }
 
 .ConversationDetail {
   margin: 0 auto;
@@ -1570,8 +1589,6 @@ ul.errorlist {
     right: 7px; }
 
 .ReactComponent {
-  @import url("https://fonts.googleapis.com/css?family=Raleway");
-  @import url("https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css");
   @import url("https://fonts.googleapis.com/css?family=Raleway"); }
   .ReactComponent .App {
     text-align: center; }
@@ -1664,7 +1681,7 @@ ul.errorlist {
     color: #042049; }
   .ReactComponent h1 {
     font-size: 19.5px;
-    text-transform: uppercase; }
+    font-weight: 600; }
   .ReactComponent h2 {
     font-size: 16.5px; }
   .ReactComponent .Conversations > ul {
