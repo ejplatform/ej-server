@@ -1214,6 +1214,18 @@ ul.errorlist {
     color: #fff;
     font-size: 21px;
     margin: 7px; }
+  .Footer-login {
+    padding-bottom: 75px; }
+    .Footer-login .Button[primary], .Footer-login [primary].ActionButton, .Footer-login [primary].RocketButton {
+      background: #052B47;
+      width: 100%;
+      margin: 0;
+      border-radius: 0;
+      padding: 28px 0;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      z-index: 9999; }
 
 /*
  PAGE SIDEBAR

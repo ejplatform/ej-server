@@ -116,7 +116,7 @@
     {% endblock %}
 
     {% if (target == 'all' or target == 'page') and not hide_footer %}
-        {{ page_footer(social_icons(), footer_data()) }}
+        {{ page_footer(social_icons(), footer_data(), request) }}
         </div>
     {% endif %}
 
