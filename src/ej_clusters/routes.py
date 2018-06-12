@@ -93,8 +93,8 @@ def stereotype_vote(request, conversation, stereotype):
         'content_title': title,
         'conversation': conversation,
         'stereotype': stereotype,
-        'non_voted_table': votes_table(non_voted_comments[:5]),
-        'voted_table': votes_table(voted_comments[:5]),
+        'non_voted_table': votes_table(non_voted_comments),
+        'voted_table': votes_table(voted_comments),
         'non_voted_comments_count': non_voted_comments.count(),
         'voted_comments_count': non_voted_comments.count(),
     }
