@@ -274,7 +274,32 @@ $profile-arrow-size: $spacing-unit !default;
             }
             float: none;
             clear: both;
+        }
 
+        .trophies{
+            &::after{
+                content: "";
+                clear: both;
+                display: table;
+            }
+            margin: 0px;
+            padding: 0px;
+            li{
+                span{
+                    color: $color-blue-light;
+                    font-weight: 600;
+                    display: block;
+                    margin-top: $spacing-unit-small;
+                }
+                float: left;
+                list-style: none;
+                text-align: center;
+                width: 50%;
+                height: 160px;
+            }
+            float: none;
+            clear: both;
+            text-align: center;
         }
 
         > * {

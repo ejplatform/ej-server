@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-12 12:58+0000\n"
+"POT-Creation-Date: 2018-06-12 18:22+0000\n"
 "PO-Revision-Date: 2018-06-12 10:03-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: \n"
@@ -19,20 +19,150 @@ msgstr ""
 "Generated-By: Babel 2.5.3\n"
 "X-Generator: Poedit 2.0.6\n"
 
-#: htmlcov/src_ej_templates_jinja2_generic_jinja2.html:87
-msgid "Under construction!"
+#: local/vendor/django-boogie/src/boogie/apps/users/models.py:23
+#: local/vendor/django-boogie/src/boogie/models/abstract/user.py:64
+#: src/ej_clusters/models.py:122 src/ej_clusters/models.py:172
+#: src/ej_clusters/routes.py:125 src/ej_configurations/models.py:127
+#: src/ej_reports/routes.py:94
+msgid "Name"
+msgstr "Nome"
+
+#: local/vendor/django-boogie/src/boogie/apps/users/models.py:26
+#, fuzzy
+msgid "User's full name"
+msgstr "Nome completo do usuário"
+
+#: local/vendor/django-boogie/src/boogie/fields/default_fields.py:47
+msgid "slug"
 msgstr ""
 
-#: htmlcov/src_ej_users_jinja2_ej_users_recover-password_jinja2.html:83
-#, fuzzy
-msgid "Recover password"
-msgstr "mudar a senha"
+#: local/vendor/django-boogie/src/boogie/fields/default_fields.py:53
+msgid "name"
+msgstr "nome"
 
-#: htmlcov/src_ej_users_jinja2_ej_users_remove-account_jinja2.html:83
-#: htmlcov/src_ej_users_jinja2_ej_users_reset-password_jinja2.html:83
+#: local/vendor/django-boogie/src/boogie/fields/default_fields.py:59
+msgid "title"
+msgstr ""
+
+#: local/vendor/django-boogie/src/boogie/fields/default_fields.py:65
 #, fuzzy
-msgid "Reset password"
-msgstr "Recriar minha senha"
+msgid "description"
+msgstr "Conversas"
+
+#: local/vendor/django-boogie/src/boogie/fields/default_fields.py:69
+msgid "Conscise description used on listings."
+msgstr ""
+
+#: local/vendor/django-boogie/src/boogie/fields/default_fields.py:74
+#, fuzzy
+msgid "detailed description"
+msgstr "Conversas"
+
+#: local/vendor/django-boogie/src/boogie/fields/default_fields.py:77
+msgid "Detailed description of object."
+msgstr ""
+
+#: local/vendor/django-boogie/src/boogie/fields/enum_field.py:24
+msgid "An enumeration field"
+msgstr ""
+
+#: local/vendor/django-boogie/src/boogie/models/abstract/user.py:55
+#: src/ej_profiles/models.py:105 src/ej_users/forms.py:46
+#: src/ej_users/forms.py:48
+msgid "E-mail"
+msgstr "Email"
+
+#: local/vendor/django-boogie/src/boogie/models/abstract/user.py:59
+msgid ""
+"Users can register additional e-mail addresses. This is the main e-mail "
+"address which is used for login."
+msgstr ""
+"Usuários podem registrar e-mails adicionais. Este é o e-mail principal "
+"utilizado para login."
+
+#: local/vendor/django-boogie/src/boogie/models/abstract/user.py:67
+msgid "Full name of the user."
+msgstr ""
+
+#: local/vendor/django-boogie/src/boogie/models/abstract/user.py:71
+msgid "Alias"
+msgstr ""
+
+#: local/vendor/django-boogie/src/boogie/models/abstract/user.py:74
+msgid "Public alias used to identify the user."
+msgstr ""
+
+#: local/vendor/django-boogie/src/boogie/models/abstract/user.py:78
+msgid "staff status"
+msgstr ""
+
+#: local/vendor/django-boogie/src/boogie/models/abstract/user.py:81
+msgid "Designates whether the user can log into the admin site."
+msgstr ""
+
+#: local/vendor/django-boogie/src/boogie/models/abstract/user.py:85
+msgid "active"
+msgstr ""
+
+#: local/vendor/django-boogie/src/boogie/models/abstract/user.py:88
+msgid ""
+"Designates whether this user should be treated as active. Unselect this "
+"instead of deleting accounts."
+msgstr ""
+
+#: local/vendor/django-boogie/src/boogie/models/abstract/user.py:93
+msgid "date joined"
+msgstr ""
+
+#: local/vendor/django-boogie/src/boogie/models/abstract/user.py:162
+#, fuzzy
+msgid "user"
+msgstr "{n} usuários"
+
+#: local/vendor/django-boogie/src/boogie/views/views.py:122
+#, python-format
+msgid "No %(verbose_name)s found matching the query"
+msgstr ""
+
+#: local/vendor/django-messages-courier/courier/models.py:11
+#, fuzzy
+msgid "Sender"
+msgstr "Agênero"
+
+#: local/vendor/django-messages-courier/courier/models.py:12
+#: src/ej_conversations/models/conversation.py:51
+msgid "Title"
+msgstr ""
+
+#: local/vendor/django-messages-courier/courier/models.py:14
+#, fuzzy
+msgid "Short Description"
+msgstr "Conversas"
+
+#: local/vendor/django-messages-courier/courier/models.py:29
+msgid "Waiting"
+msgstr "Esperando"
+
+#: local/vendor/django-messages-courier/courier/models.py:30
+msgid "Read"
+msgstr ""
+
+#: local/vendor/django-messages-courier/courier/models.py:31
+msgid "Seen"
+msgstr ""
+
+#: local/vendor/django-messages-courier/courier/models.py:32
+msgid "Unseen"
+msgstr ""
+
+#: local/vendor/django-messages-courier/courier/models.py:46
+msgid "Status"
+msgstr "Status"
+
+#: local/vendor/django-messages-courier/courier/pushnotifications/providers/onesignal/models.py:15
+#, fuzzy
+msgid "OneSignal Id"
+msgstr "Login"
 
 #: src/ej/tags.py:12
 #, fuzzy
@@ -364,12 +494,6 @@ msgstr ""
 msgid "Clusters"
 msgstr ""
 
-#: src/ej_clusters/models.py:122 src/ej_clusters/models.py:172
-#: src/ej_clusters/routes.py:125 src/ej_configurations/models.py:127
-#: src/ej_reports/routes.py:94
-msgid "Name"
-msgstr "Nome"
-
 #: src/ej_clusters/models.py:139
 #, python-brace-format
 msgid "{name} (\"{conversation}\" conversation)"
@@ -609,10 +733,6 @@ msgstr ""
 msgid "Pending"
 msgstr ""
 
-#: src/ej_conversations/models/conversation.py:51
-msgid "Title"
-msgstr ""
-
 #: src/ej_conversations/models/conversation.py:54
 msgid ""
 "A short description about this conversations. This is used internally and to "
@@ -679,22 +799,22 @@ msgstr "Criado em"
 msgid "non-moderated comments cannot receive votes"
 msgstr ""
 
-#: src/ej_conversations/routes/admin.py:26
+#: src/ej_conversations/routes/admin.py:28
 #, fuzzy
 msgid "Create conversation"
 msgstr "Criar conversa"
 
-#: src/ej_conversations/routes/admin.py:46
+#: src/ej_conversations/routes/admin.py:48
 #, fuzzy, python-brace-format
 msgid "Edit conversation: {conversation}"
 msgstr "Conversas ativas"
 
-#: src/ej_conversations/routes/base.py:27
+#: src/ej_conversations/routes/base.py:30
 #, fuzzy
 msgid "Add new conversation"
 msgstr "Criar conversa"
 
-#: src/ej_conversations/routes/base.py:43
+#: src/ej_conversations/routes/base.py:49
 #, fuzzy
 msgid "login"
 msgstr "Entrar"
@@ -958,11 +1078,6 @@ msgstr "Atividade política"
 msgid "Image"
 msgstr "Imagem"
 
-#: src/ej_profiles/models.py:105 src/ej_users/forms.py:46
-#: src/ej_users/forms.py:48
-msgid "E-mail"
-msgstr "Email"
-
 #: src/ej_profiles/models.py:137
 msgid "Root"
 msgstr "Root"
@@ -1079,6 +1194,10 @@ msgstr "EJ - Uma plataforma para participação social."
 msgid "Please override the \"content\" block of your template!"
 msgstr ""
 
+#: src/ej/templates/jinja2/generic.jinja2:5
+msgid "Under construction!"
+msgstr ""
+
 #: src/ej/templates/jinja2/components/home.jinja2:11
 #: src/ej/templates/jinja2/components/home.jinja2:74
 #: src/ej/templates/jinja2/components/home.jinja2:76
@@ -1088,6 +1207,11 @@ msgstr "Começar agora!"
 #: src/ej/templates/jinja2/components/home.jinja2:13
 msgid "Access CPA panel!"
 msgstr "Acesse o painel do CPA!"
+
+#: src/ej/templates/jinja2/components/generic/page_footer.jinja2:17
+#, fuzzy
+msgid "Enter"
+msgstr "Intersex"
 
 #: src/ej/templates/jinja2/components/generic/page_header.jinja2:30
 msgid "Back"
@@ -1153,10 +1277,6 @@ msgstr "Estereótipos"
 #: src/ej/templates/jinja2/components/generic/page_menu.jinja2:50
 msgid "Request reports"
 msgstr ""
-
-#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:56
-msgid "Talks"
-msgstr "Canais"
 
 #: src/ej/templates/jinja2/components/generic/page_menu.jinja2:58
 msgid "Home"
@@ -1230,8 +1350,9 @@ msgid "Fragment list"
 msgstr ""
 
 #: src/ej_configurations/jinja2/configurations/index.jinja2:2
+#, fuzzy
 msgid "Site info"
-msgstr ""
+msgstr "Informações básicas"
 
 #: src/ej_configurations/jinja2/configurations/styles.jinja2:3
 msgid "Styles"
@@ -1253,8 +1374,9 @@ msgid "Conversation info"
 msgstr "Conversas"
 
 #: src/ej_conversations/jinja2/ej_conversations/components/comment-card.jinja2:10
+#, fuzzy
 msgid "Approve"
-msgstr ""
+msgstr "Discorda"
 
 #: src/ej_conversations/jinja2/ej_conversations/components/comment-card.jinja2:14
 #, fuzzy
@@ -1266,42 +1388,43 @@ msgstr "Discorda"
 msgid "Edit Conversation"
 msgstr "Conversas"
 
-#: src/ej_conversations/jinja2/ej_conversations/components/conversation-detail.jinja2:22
+#: src/ej_conversations/jinja2/ej_conversations/components/conversation-detail.jinja2:29
 #, python-format
 msgid "%(count)s comments"
 msgstr "%(count)s comentários"
 
-#: src/ej_conversations/jinja2/ej_conversations/components/conversation-detail.jinja2:23
+#: src/ej_conversations/jinja2/ej_conversations/components/conversation-detail.jinja2:30
 #, python-format
 msgid "%(count)s votes"
 msgstr "%(count)s votos"
 
-#: src/ej_conversations/jinja2/ej_conversations/components/conversation-detail.jinja2:40
+#: src/ej_conversations/jinja2/ej_conversations/components/conversation-detail.jinja2:46
 #, fuzzy
 msgid "Congratulations!"
 msgstr "Conversas"
 
-#: src/ej_conversations/jinja2/ej_conversations/components/conversation-detail.jinja2:41
+#: src/ej_conversations/jinja2/ej_conversations/components/conversation-detail.jinja2:47
 msgid "There are no comments left to vote :)"
 msgstr ""
 
-#: src/ej_conversations/jinja2/ej_conversations/components/conversation-detail.jinja2:48
+#: src/ej_conversations/jinja2/ej_conversations/components/conversation-detail.jinja2:54
 msgid "You still have {n} available comments"
 msgstr ""
 
-#: src/ej_conversations/jinja2/ej_conversations/components/conversation-detail.jinja2:50
+#: src/ej_conversations/jinja2/ej_conversations/components/conversation-detail.jinja2:56
 #, fuzzy
 msgid "Please {login} to comment on this conversation"
 msgstr "Conversas ativas"
 
-#: src/ej_conversations/jinja2/ej_conversations/components/conversation-detail.jinja2:52
+#: src/ej_conversations/jinja2/ej_conversations/components/conversation-detail.jinja2:58
 #, fuzzy
 msgid "You have used all comments available in this conversation."
 msgstr "Conversas ativas"
 
 #: src/ej_conversations/jinja2/ej_conversations/components/conversation-info.jinja2:37
+#, fuzzy
 msgid "Unvoted"
-msgstr ""
+msgstr "Comentário promovido?"
 
 #: src/ej_conversations/jinja2/ej_conversations/components/conversation-list.jinja2:35
 msgid "All"
@@ -1337,19 +1460,23 @@ msgstr "Apagar perfil"
 msgid "Edit profile"
 msgstr "Editar perfil"
 
-#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:117
+#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:133
+msgid "See All"
+msgstr "Ver Todos"
+
+#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:142
 msgid "My Comments"
 msgstr "Meus Comentários"
 
-#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:126
+#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:151
 msgid "Opinion"
 msgstr "Opinião"
 
-#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:148
+#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:173
 msgid "See Conversation"
 msgstr "Ver Conversa"
 
-#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:160
+#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:185
 #, fuzzy
 msgid "Favorite Conversations"
 msgstr "Criar conversa"
@@ -1368,8 +1495,9 @@ msgid "Votes ({total} participants)"
 msgstr ""
 
 #: src/ej_reports/jinja2/ej_reports/index.jinja2:13
+#, fuzzy
 msgid "Advanced info"
-msgstr ""
+msgstr "Informações básicas"
 
 #: src/ej_reports/jinja2/ej_reports/index.jinja2:17
 #, fuzzy
@@ -1377,10 +1505,12 @@ msgid "Participants"
 msgstr "Status de Participante"
 
 #: src/ej_reports/jinja2/ej_reports/index.jinja2:20
+#, fuzzy
 msgid "Cluster info"
-msgstr ""
+msgstr "Nome da cor"
 
 #: src/ej_reports/jinja2/ej_reports/index.jinja2:22
+#, fuzzy
 msgid "{n} users"
 msgstr "{n} usuários"
 
@@ -1414,33 +1544,19 @@ msgid ""
 "account in the platform."
 msgstr ""
 
-#~ msgid "name"
-#~ msgstr "nome"
-
+#: src/ej_users/jinja2/ej_users/recover-password.jinja2:2
 #, fuzzy
-#~ msgid "description"
-#~ msgstr "Conversas"
+msgid "Recover password"
+msgstr "mudar a senha"
 
-#~ msgid ""
-#~ "Users can register additional e-mail addresses. This is the main e-mail "
-#~ "address which is used for login."
-#~ msgstr ""
-#~ "Usuários podem registrar e-mails adicionais. Este é o e-mail principal "
-#~ "utilizado para login."
-
+#: src/ej_users/jinja2/ej_users/remove-account.jinja2:2
+#: src/ej_users/jinja2/ej_users/reset-password.jinja2:2
 #, fuzzy
-#~ msgid "Sender"
-#~ msgstr "Agênero"
+msgid "Reset password"
+msgstr "Recriar minha senha"
 
-#~ msgid "Waiting"
-#~ msgstr "Esperando"
-
-#~ msgid "Status"
-#~ msgstr "Status"
-
-#, fuzzy
-#~ msgid "OneSignal Id"
-#~ msgstr "Login"
+#~ msgid "Talks"
+#~ msgstr "Canais"
 
 #~ msgid "See some active conversations and give your opinion"
 #~ msgstr "Ver conversas ativas para dar sua opinião"

@@ -2167,6 +2167,27 @@ ul.errorlist {
             font-size: 24px; }
           .Profile-info .statistics li span.description {
             font-size: 13px; }
+    .Profile-info .trophies {
+      margin: 0px;
+      padding: 0px;
+      float: none;
+      clear: both;
+      text-align: center; }
+      .Profile-info .trophies::after {
+        content: "";
+        clear: both;
+        display: table; }
+      .Profile-info .trophies li {
+        float: left;
+        list-style: none;
+        text-align: center;
+        width: 50%;
+        height: 160px; }
+        .Profile-info .trophies li span {
+          color: #30BFD3;
+          font-weight: 600;
+          display: block;
+          margin-top: 14px; }
     .Profile-info > * {
       display: block; }
     .Profile-info dl dt {

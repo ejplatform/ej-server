@@ -101,11 +101,36 @@
 {% macro profile_trophies(profile) %}
     <div class="Profile-info">
         <ul class='trophies'>
-            {% for badge in profile.badges() %}
+            {# {% for badge in profile.badges() %}
                 <li>
                     <span class='amount'>{{ badge }}</span>
                 </li>
-            {% endfor %}
+            {% endfor %} #}
+            <li>
+            <img src="/static/img/icons/icon_trofeu.svg">
+                <span class='trophy'>
+                    nome do trofeu
+                </span>
+            </li>
+            <li>
+                <img src="/static/img/icons/icon_trofeu.svg">
+                <span class='trophy'>
+                    nome do trofeu
+                </span>
+            </li>
+            <li>
+                <img src="/static/img/icons/icon_trofeu.svg">
+                <span class='trophy'>
+                    nome do trofeu
+                </span>
+            </li>
+            <li>
+                <img src="/static/img/icons/icon_trofeu.svg">
+                <span class='trophy'>
+                    nome do trofeu
+                </span>
+            </li>
+            <button class="Button" type="submit">{{ _('See All') }}</button>
         </ul>
     </div>
 {% endmacro %}
