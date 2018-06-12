@@ -65,6 +65,17 @@ class Clusterization(TimeStampedModel):
         args = {'conversation': self.conversation}
         return reverse('cluster:index', kwargs=args)
 
+    def update(self, commit=True):
+        """
+        Update clusters if necessary.
+        """
+        if self.requires_update():
+            self.force_update(commit=False)
+            if self.cluster_status == ClusterStatus.PENDING_DATA:
+                self.cluster_status = ClusterStatus.ACTIVE
+        if commit:
+            self.save()
+
     def force_update(self, commit=True):
         """
         Force a cluster update.
@@ -76,17 +87,6 @@ class Clusterization(TimeStampedModel):
         math.update_clusters(self.conversation, self.clusters.all())
         self.unprocessed_comments = 0
         self.unprocessed_votes = 0
-        if commit:
-            self.save()
-
-    def update(self, commit=True):
-        """
-        Update clusters if necessary.
-        """
-        if self.requires_update():
-            self.force_update(commit=False)
-            if self.cluster_status == ClusterStatus.PENDING_DATA:
-                self.cluster_status = ClusterStatus.ACTIVE
         if commit:
             self.save()
 
@@ -121,6 +121,13 @@ class Cluster(TimeStampedModel):
     name = models.CharField(
         _('Name'),
         max_length=64,
+    )
+    description = models.TextField(
+        _('Description'),
+        blank=True,
+        help_text=_(
+            'How was this cluster conceived?'
+        ),
     )
     users = models.ManyToManyField(
         get_user_model(),

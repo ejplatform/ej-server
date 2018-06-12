@@ -7,4 +7,4 @@ class EjMathConfig(AppConfig):
     verbose_name = _('Math')
 
     def ready(self):
-        from .clusters_patch import fix;  fix()
+        from .clusters_patch import patch;  patch()

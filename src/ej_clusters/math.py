@@ -1,3 +1,4 @@
+import logging
 import operator as op
 from collections import defaultdict
 from functools import reduce
@@ -5,9 +6,12 @@ from functools import reduce
 import pandas as pd
 from django.contrib.auth import get_user_model
 from django.db import transaction
+from django.db.models import QuerySet
 
 from ej_conversations.models import Vote
 from .models import StereotypeVote
+
+log = logging.getLogger('ej')
 
 
 def get_votes(conversation, comments=None, fillna=None):
@@ -33,7 +37,7 @@ def get_raw_votes(conversation, comments=None):
     """
     Return a data frame with the raw list of votes.
 
-    The resulting data frame has 3 columns, user, comment and vote, that
+    The resulting data frame has 3 columns, user, comment and choice, that
     specifies the username, comment id and choice for each vote cast in the
     conversation.
     """
@@ -85,27 +89,46 @@ def update_clusters(conversation, clusters, users=None):
     comments = join_sets(set(x.index) for x in stereotypes.values())
     votes = get_raw_votes(conversation, comments=comments)
     cluster_map = defaultdict(list)
-    user_model = get_user_model()
     username_list = votes['user'].unique()
-    if users is not None:
-        username_list = [user.username for user in users]
 
-    for user in username_list:
-        user_votes = votes[votes['user'] == user]
+    if users is not None:
+        try:
+            username_list = list(users.values_list('username', flat=True))
+        except AttributeError:
+            username_list = [user.username for user in users]
+
+    for username in username_list:
+        user_votes = votes[votes['user'] == username]
         user_votes.index = user_votes.pop('comment')
         user_votes.pop('user')
 
         distances = [
-            (float((stereotype - user_votes).mean()), cluster)
+            (float(abs(stereotype - user_votes).mean()), cluster)
             for cluster, stereotype in stereotypes.items()
         ]
         _distance, cluster = min(distances, key=lambda x: x[0])
-        cluster_map[cluster].append(user)
+        cluster_map[cluster].append(username)
+
+    update_cluster_user_m2m(cluster_map, conversation)
+
+
+def update_cluster_user_m2m(cluster_map, conversation):
+    """
+    Receives a mapping from a cluster to a list of users (or to a list of
+    usernames) and update clusters in an atomic operation.
+    """
+    user_model = get_user_model()
 
     with transaction.atomic():
         for cluster, users in cluster_map.items():
-            users = user_model.objects.filter(username__in=users)
+            if not users:
+                continue
+            elif isinstance(users, QuerySet) or isinstance(users[0], user_model):
+                pass
+            else:
+                users = user_model.objects.filter(username__in=users)
             cluster.users.set(users)
+        log.info(f'[cluster] clusters created for conversation "{conversation}"')
 
 
 def join_sets(sets):
