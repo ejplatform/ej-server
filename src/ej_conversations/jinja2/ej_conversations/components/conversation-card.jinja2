@@ -2,7 +2,13 @@
     {% from 'components/generic/elements.jinja2' import action_button %}
 
     <div class="ConversationCard">
-        <div class="ConversationTags"><i class="fa fa-tags"></i> Tags</div>
+        <div class="ConversationTags"><i class="fa fa-tags"></i>
+        {% if conversation.tags.all()[0] %}
+            {{(conversation.tags.all()[0]|string).title()}}
+        {% else %}
+            Tags
+        {% endif %}
+        </div>
         <div class="ConversationCard-actions">
             <ul class="ConversationCard-statistics">
                 <li><i class="fa fa-comment"></i> {{ conversation.comments.count() }}</li>

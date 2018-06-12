@@ -17,7 +17,13 @@
     {% endif %}
     <div class="ConversationDetail">
         <div class="ConversationDetail-banner">
-            <div class="ConversationTags"><i class="fa fa-tags"></i> Tags</div>
+            <div class="ConversationTags"><i class="fa fa-tags"></i>
+                {% if conversation.tags.all()[0] %}
+                    {{(conversation.tags.all()[0]|string).title()}}
+                {% else %}
+                    Tags
+                {% endif %}
+            </div>
             <h1>{{ conversation.text }}</h1>
             <ul class="ConversationDetail-statistics">
                 <li><i class="fa fa-comment"></i> {{ gettext('%(count)s comments', count=conversation.comments.count()) }}</li>

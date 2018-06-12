@@ -18,6 +18,8 @@ def create(request, owner=None):
             conversation = form.save(commit=False)
             conversation.author = request.user
             conversation.save()
+            for tag in form.cleaned_data['tags']:
+                conversation.tags.add(tag)
             return redirect(conversation.get_absolute_url())
     else:
         form = forms.ConversationForm()
