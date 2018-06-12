@@ -928,7 +928,8 @@ ul.errorlist {
   left: 0;
   display: block;
   margin-left: auto;
-  margin-right: auto; }
+  margin-right: auto;
+  text-align: center; }
 
 .slick-track:before,
 .slick-track:after {
