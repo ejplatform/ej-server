@@ -20,12 +20,18 @@ def conversation_list(request, owner=None):
         create_url = reverse('conversation:create')
         conversations = Conversation.promoted.all()
 
-    return {
+    clist = {
         'conversations': moderated_conversations(user, conversations),
         'can_add_conversation': user.has_perm('ej_conversations.can_add_conversation'),
         'owner': owner,
-        'add_link': a(_('Add new conversation'), href=create_url),
     }
+
+    if request.path == '/' + user.username + '/conversations/':
+        clist['add_link'] = a(_('Add new conversation'), href=create_url)
+    else:
+        clist['add_link'] = ''
+
+    return clist
 
 
 @urlpatterns.route(conversation_url)
