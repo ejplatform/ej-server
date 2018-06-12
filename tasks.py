@@ -34,6 +34,14 @@ def sass(ctx, no_watch=False, trace=False):
 
 
 @task
+def js(ctx):
+    """
+    Build js assets
+    """
+    print('Nothing to do now ;)')
+
+
+@task
 def run(ctx, no_toolbar=False, gunicorn=False):
     """
     Run development server
@@ -240,6 +248,7 @@ def configure(ctx, silent=False):
 #
 # Prepare deploy
 #
+@task
 def prepare_deploy(ctx, ask_input=False):
     """
     Deploy checklist:
@@ -260,7 +269,7 @@ def prepare_deploy(ctx, ask_input=False):
     sass(ctx, no_watch=True)
 
     # Js
-    build_js(ctx)
+    js(ctx)
 
     # Translations
     i18n(ctx, compile=True)
