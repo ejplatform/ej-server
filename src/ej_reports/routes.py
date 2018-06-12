@@ -41,7 +41,7 @@ def index(conversation):
     )
 
     return {
-        'title': _('Report'),
+        'page_title': _('Report'),
         'content_title': hyperlink(conversation),
         'conversation': conversation,
         'statistics': statistics,
@@ -131,7 +131,10 @@ def cluster_comments_table(cluster):
     # Filter votes by users present in cluster
     df = cluster.all_votes
     votes = df[df['user'].isin(usernames)]
-    return df_to_table(comments_table(cluster.conversation, votes))
+
+    data = comments_table(cluster.conversation, votes)
+    data = data.sort_values('agree', ascending=False)
+    return df_to_table(data)
 
 
 def comments_table(conversation, votes):

@@ -9,6 +9,7 @@ from hyperpython import h
 from hyperpython.components import html_table, html_list, html_map, Head as BaseHead, render
 
 static = staticfiles_storage.url
+lazy_string_class = type(ugettext_lazy('hello'))
 log = logging.getLogger('ej')
 _ = lambda x: x
 

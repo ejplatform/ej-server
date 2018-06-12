@@ -3,9 +3,7 @@ import logging
 from django.shortcuts import render, redirect
 
 from boogie.router import Router
-from ej.utils.perms import conversations
 from ej_configurations import fragment, social_icons
-from ej_conversations import rules
 from ej_conversations.routes.base import moderated_conversations
 
 log = logging.getLogger('ej')
@@ -19,7 +17,8 @@ urlpatterns = Router(
 #
 @urlpatterns.route('')
 def home(request):
-    if request.user.id:
+    # FIXME: redirect to /start/ when user is not logged in
+    if True:  # request.user.id:
         return redirect('/conversations/')
     return redirect('/start/')
 
