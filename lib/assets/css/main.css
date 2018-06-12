@@ -1916,6 +1916,21 @@ ul.errorlist {
     font-weight: bold;
     margin-top: 5px; }
 
+.Link-new {
+  text-align: center;
+  display: block;
+  width: 100%;
+  text-transform: uppercase;
+  font-size: 14px;
+  font-weight: bold;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+  margin: 0;
+  padding: 14px 0; }
+  .Link-new a {
+    color: #111; }
+  .Link-new i {
+    color: #FF3E72; }
+
 /*
  HOME PAGE
  ======================================================================== */

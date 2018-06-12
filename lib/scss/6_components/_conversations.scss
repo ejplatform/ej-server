@@ -780,3 +780,23 @@ $conversation-card-border-arrow-size: $spacing-unit;
     margin-top: 5px;
   }
 }
+
+.Link-new {
+  text-align: center;
+  display: block;
+  width: 100%;
+  text-transform: uppercase;
+  font-size: 14px;
+  font-weight: bold;
+  box-shadow: $header-box-shadow-upper;
+  margin: 0;
+  padding: $spacing-unit-small 0;
+
+  a {
+    color: $color-black;
+  }
+
+  i {
+    color: $color-pink;
+  }
+}
