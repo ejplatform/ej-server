@@ -102,6 +102,8 @@ $conversation-card-border-arrow-size: $spacing-unit;
 .ConversationTags {
     @include color($conversation-card-light, $conversation-card-color, $force: true);
     font-weight: bold;
+    text-align: center;
+    padding: $spacing-unit 0;
 }
 
 .ConversationCard {
@@ -216,17 +218,19 @@ $conversation-card-border-arrow-size: $spacing-unit;
     }
 
     &-banner {
-        background: $color-hint;
+        background: $color-blue-nav;
         border-radius: 0 0 $block-elements-border-radius $block-elements-border-radius;
-        color: $color-hint-text;
+        color: $color-purple-dark;
         margin: 0;
         padding-top: 0;
 
         h1 {
             @extend .Container;
 
-            padding: $spacing-unit-large 0 $spacing-unit 0;
+            padding: 0;
             text-align: center;
+            font-weight: 200 !important;
+            font-size: 26px !important;
 
             @media only screen and (min-width: $breakpoint-large) {
                 padding: $spacing-unit-large 0;
@@ -237,7 +241,7 @@ $conversation-card-border-arrow-size: $spacing-unit;
     &-arrow {
         border-left: $conversation-card-border-arrow-size solid transparent;
         border-right: $conversation-card-border-arrow-size solid transparent;
-        border-top: $conversation-card-border-arrow-size solid $color-hint;
+        border-top: $conversation-card-border-arrow-size solid $color-blue-nav;
         height: 0;
         margin: 0 auto;
         padding: 0;
@@ -249,11 +253,12 @@ $conversation-card-border-arrow-size: $spacing-unit;
     &-statisticsBottom {
         display: flex;
         font-size: $font-size-small;
-        font-weight: bold;
+        font-weight: normal;
         justify-content: space-between;
         margin: 0 auto;
         max-width: $content-wrapper-max-width - 2 * $spacing-unit-huge;
         padding: 0 $spacing-unit-small;
+        color: $conversation-card-color;
 
         li {
             list-style: none;
@@ -285,9 +290,11 @@ $conversation-card-border-arrow-size: $spacing-unit;
         padding-top: 0;
 
         h1 {
-            font-size: $font-size-h3;
-            text-transform: uppercase;
-            margin-bottom: $spacing-unit-tiny;
+            font-family: 'Patua One', sans-serif !important;
+            color: $color-pink !important; 
+            font-size: 24px !important;
+            letter-spacing: 1px;
+            font-weight: 300 !important;
         }
         p {
             margin-top: $spacing-unit-tiny;
@@ -367,11 +374,13 @@ $conversation-card-border-arrow-size: $spacing-unit;
 
 .CommentForm {
     text-align: center;
+    background: $color-blue-nav;
+    margin-top: $spacing-unit-large;
 
     h1 {
         font-size: $font-size-h3;
-        text-transform: uppercase;
         margin: $spacing-unit-tiny 0;
+        color: $color-primary !important;
     }
     p {
         margin: $spacing-unit-tiny 0;
@@ -380,6 +389,23 @@ $conversation-card-border-arrow-size: $spacing-unit;
     textarea {
         display: block;
         min-height: 3 * $font-size;
+        outline: none;
+        border: 2px solid $color-primary;
+        background: transparent;
+        color: #333;
+        box-shadow: none;
+    }
+
+    input[type=submit] {
+      border-radius: $conversation-card-border-radius;
+      color: #fff;
+      background: $color-primary;
+      border: 0;
+      padding: $spacing-unit-small $spacing-unit;
+      font-size: 14px;
+      box-shadow: none;
+      text-transform: uppercase;
+      font-weight: bold;
     }
 }
 
@@ -419,6 +445,8 @@ $conversation-card-border-arrow-size: $spacing-unit;
 }
 
 .ReactComponent {
+  padding: 0;
+
   .App {
     text-align: center;
   }

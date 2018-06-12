@@ -17,10 +17,11 @@
     {% endif %}
     <div class="ConversationDetail">
         <div class="ConversationDetail-banner">
+            <div class="ConversationTags"><i class="fa fa-tags"></i> Tags</div>
             <h1>{{ conversation.text }}</h1>
             <ul class="ConversationDetail-statistics">
-                <li>{{ gettext('%(count)s comments', count=conversation.comments.count()) }}</li>
-                <li>{{ gettext('%(count)s votes', count=conversation.votes.count()) }}</li>
+                <li><i class="fa fa-comment"></i> {{ gettext('%(count)s comments', count=conversation.comments.count()) }}</li>
+                <li><i class="fa fa-sliders-h"></i> {{ gettext('%(count)s votes', count=conversation.votes.count()) }}</li>
             </ul>
         </div>
 
@@ -28,9 +29,8 @@
 
         {# Current comment #}
         <div class="ConversationDetail-header">
-            <h1>Opiniões da comunidade</h1>
-            <p>Interaja com as opiniões da comunidade selecionando um dos botões
-                de opção.</p>
+            <h1>Comentários da Comunidade</h1>
+            <p>Interaja com as opiniões selecionando uma das opções de botão e aproveite para incluir sua própria opinião nesta conversa</p>
         </div>
 
         {% if comment %}

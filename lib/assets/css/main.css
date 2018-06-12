@@ -1369,7 +1369,9 @@ ul.errorlist {
 .ConversationTags {
   background-color: #C4F2F4;
   color: #30c0d3;
-  font-weight: bold; }
+  font-weight: bold;
+  text-align: center;
+  padding: 28px 0; }
   .ConversationTags a, .ConversationTags a:hover, .ConversationTags a:active, .ConversationTags a:focus {
     color: #30c0d3; }
 
@@ -1458,21 +1460,23 @@ ul.errorlist {
   .ConversationDetail li {
     margin: 0; }
   .ConversationDetail-banner {
-    background: #30BFD3;
+    background: #C4F2F4;
     border-radius: 0 0 56px 56px;
-    color: #042049;
+    color: #052B47;
     margin: 0;
     padding-top: 0; }
     .ConversationDetail-banner h1 {
-      padding: 56px 0 28px 0;
-      text-align: center; }
+      padding: 0;
+      text-align: center;
+      font-weight: 200 !important;
+      font-size: 26px !important; }
       @media only screen and (min-width: 1200px) {
         .ConversationDetail-banner h1 {
           padding: 56px 0; } }
   .ConversationDetail-arrow {
     border-left: 28px solid transparent;
     border-right: 28px solid transparent;
-    border-top: 28px solid #30BFD3;
+    border-top: 28px solid #C4F2F4;
     height: 0;
     margin: 0 auto;
     padding: 0;
@@ -1481,11 +1485,12 @@ ul.errorlist {
   .ConversationDetail-statistics, .ConversationDetail-statisticsBottom {
     display: flex;
     font-size: 13px;
-    font-weight: bold;
+    font-weight: normal;
     justify-content: space-between;
     margin: 0 auto;
     max-width: 576px;
-    padding: 0 14px; }
+    padding: 0 14px;
+    color: #30c0d3; }
     .ConversationDetail-statistics li, .ConversationDetail-statisticsBottom li {
       list-style: none; }
   .ConversationDetail-statisticsBottom {
@@ -1503,9 +1508,11 @@ ul.errorlist {
     text-align: center;
     padding-top: 0; }
     .ConversationDetail-header h1 {
-      font-size: 18px;
-      text-transform: uppercase;
-      margin-bottom: 7px; }
+      font-family: 'Patua One', sans-serif !important;
+      color: #FF3E72 !important;
+      font-size: 24px !important;
+      letter-spacing: 1px;
+      font-weight: 300 !important; }
     .ConversationDetail-header p {
       margin-top: 7px; }
 
@@ -1556,16 +1563,33 @@ ul.errorlist {
       margin-right: 14px; }
 
 .CommentForm {
-  text-align: center; }
+  text-align: center;
+  background: #C4F2F4;
+  margin-top: 56px; }
   .CommentForm h1 {
     font-size: 18px;
-    text-transform: uppercase;
-    margin: 7px 0; }
+    margin: 7px 0;
+    color: #30c0d3 !important; }
   .CommentForm p {
     margin: 7px 0; }
   .CommentForm textarea {
     display: block;
-    min-height: 45px; }
+    min-height: 45px;
+    outline: none;
+    border: 2px solid #30c0d3;
+    background: transparent;
+    color: #333;
+    box-shadow: none; }
+  .CommentForm input[type=submit] {
+    border-radius: 56px;
+    color: #fff;
+    background: #30c0d3;
+    border: 0;
+    padding: 14px 28px;
+    font-size: 14px;
+    box-shadow: none;
+    text-transform: uppercase;
+    font-weight: bold; }
 
 .CircleButton {
   background-color: #fff;
@@ -1594,6 +1618,7 @@ ul.errorlist {
     right: 7px; }
 
 .ReactComponent {
+  padding: 0;
   @import url("https://fonts.googleapis.com/css?family=Raleway"); }
   .ReactComponent .App {
     text-align: center; }
