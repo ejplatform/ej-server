@@ -84,12 +84,10 @@ def login(request):
 
 @urlpatterns.route('logout/')
 def logout(request):
-    if not request.user.is_authenticated:
-        return redirect('home')
     if request.method == 'POST':
         auth.logout(request)
         return redirect('home')
-    return HttpResponseServerError('cannot logout')
+    return HttpResponseServerError('cannot logout using a GET')
 
 
 @urlpatterns.route('profile/recover-password/')

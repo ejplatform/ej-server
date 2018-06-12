@@ -1,5 +1,6 @@
 from random import randrange
 
+import pandas as pd
 from django.db.models import Manager
 
 from boogie.models import QuerySet
@@ -25,6 +26,12 @@ class ConversationQuerySet(QuerySet):
 
 
 class CommentQuerySet(QuerySet):
+    DEFAULT_COLUMNS = {
+        'content': 'text',
+        'author__name': 'author',
+        'conversation__title': 'conversation',
+    }
+
     def approved(self):
         return self.filter(status=self.model.STATUS.approved)
 
@@ -36,6 +43,12 @@ class CommentQuerySet(QuerySet):
 
     def statistics(self):
         return [x.statistics() for x in self]
+
+    def display_dataframe(self, columns=DEFAULT_COLUMNS):
+        qs = self.values_list('id', *columns.keys())
+        df = pd.DataFrame(list(qs), columns=['id', *columns.values()])
+        df.index = df.pop('id')
+        return df
 
 
 ConversationManager = Manager.from_queryset(ConversationQuerySet, 'ConversationManager')
