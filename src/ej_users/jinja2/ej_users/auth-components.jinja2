@@ -14,7 +14,7 @@
             <div><input type="password" name="password" required placeholder="Senha"></div>
             {{ form.password.errors }}
 
-            <div><input type="submit" class="Login-button" value="{{ _('Login') }}" name="login"></div>
+            <div><input type="submit" class="Button" value="{{ _('Login') }}" name="login"></div>
             {{ form.non_field_errors() }}
 
             {{ login_options('/register/' + ('?next=' + next if next else ''), _('Register now!'), 'Ainda não faz parte do EJ?') }}
@@ -34,7 +34,7 @@
                 {{ field.errors }}
             {% endfor %}
 
-            <div><input type="submit" value="{{ _('Register now!') }}" name="register"></div>
+            <div><input type="submit" value="{{ _('Register now!') }}" class="Button" name="register"></div>
             {{ form.non_field_errors() }}
         </form>
         {{ login_options('/login/', _('Login'), 'Faz parte do EJ?') }}

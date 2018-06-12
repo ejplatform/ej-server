@@ -58,6 +58,17 @@
     <div class="Profile-actions">
         <p>
             <i class="far fa-times-circle"></i>
+            <a href="/logout">{{ _('Logout') }}</a>
+            <form method="post" action="/logout/">
+  {# {% csrf_token %} #}
+  {# {% if redirect_field_value %} #}
+  {# <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/> #}
+  {# {% endif %} #}
+  <button class="btn btn-danger" type="submit">{{ _('Logout') }}</button>
+</form>
+        </p>
+        <p>
+            <i class="far fa-times-circle"></i>
             <a href="/profile/delete">{{ _('Delete profile') }}</a>
         </p>
     </div>
