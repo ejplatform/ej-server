@@ -70,6 +70,8 @@ def remaining_comments(conversation, user):
     """
     The number of comments user still have in a conversation.
     """
+    if user.id is None:
+        return 0
     comments = user.comments.filter(conversation=conversation).count()
     return max(max_comments_per_conversation() - comments, 0)
 
