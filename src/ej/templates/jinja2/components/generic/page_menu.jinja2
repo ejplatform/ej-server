@@ -56,6 +56,13 @@
             <li>{{ icon_link(_('Talks'), '/talks/', 'talks', fa=False) }}</li>
             <li>{{ icon_link(_('Profile'), '/profile/', 'profile', fa=False) }}</li>
             <li><em>{{ icon_link(_('Home'), '/', 'fa fa-home') }}</em></li>
+            <li>
+                
+                <form method="post" action="/logout/"> 
+                <i class="fa fa-sign-out-alt"></i>
+                    <button class="" type="submit">{{ _('Logout') }}</button>
+                </form><em>
+                {# {{ icon_link(_('Logout'), '/logout/', 'fa fa-sign-out-alt') }}</em></li> #}
         </ul>
     </nav>
 {% endmacro %}

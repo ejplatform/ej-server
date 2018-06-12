@@ -1193,8 +1193,13 @@ ul.errorlist {
   .NavMenu em {
     font-weight: bold;
     font-style: normal; }
-  .NavMenu a, .NavMenu a:hover, .NavMenu a:active {
+  .NavMenu a, .NavMenu a:hover, .NavMenu a:active, .NavMenu button {
     color: #fff; }
+  .NavMenu button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0px; }
   .NavMenu img, .NavMenu i {
     height: 1em;
     padding-right: 14px; }
