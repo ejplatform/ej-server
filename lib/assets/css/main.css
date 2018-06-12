@@ -1128,7 +1128,7 @@ ul.errorlist {
       display: flex;
       flex-flow: column;
       justify-content: center;
-      width: 33.3333%; }
+      width: 50%; }
       .Header-lowerNav a > * {
         display: block; }
       @media only screen and (min-width: 550px) {
