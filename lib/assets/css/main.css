@@ -1131,7 +1131,7 @@ ul.errorlist {
       display: flex;
       flex-flow: column;
       justify-content: center;
-      width: 33.3333%; }
+      width: 50%; }
       .Header-lowerNav a > * {
         display: block; }
       @media only screen and (min-width: 550px) {
@@ -1196,8 +1196,13 @@ ul.errorlist {
   .NavMenu em {
     font-weight: bold;
     font-style: normal; }
-  .NavMenu a, .NavMenu a:hover, .NavMenu a:active {
+  .NavMenu a, .NavMenu a:hover, .NavMenu a:active, .NavMenu button {
     color: #fff; }
+  .NavMenu button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0px; }
   .NavMenu img, .NavMenu i {
     height: 1em;
     padding-right: 14px; }

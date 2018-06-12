@@ -57,6 +57,11 @@
 
     <div class="Profile-actions">
         <p>
+            <form method="post" action="/logout/"> 
+                <button class="Button" type="submit">{{ _('Logout') }}</button>
+            </form>
+        </p>
+        <p>
             <i class="far fa-times-circle"></i>
             <a href="/profile/delete">{{ _('Delete profile') }}</a>
         </p>
