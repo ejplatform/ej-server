@@ -854,14 +854,14 @@ ul.errorlist {
 .Container, .CenteredContainer, .HomeBanner, .HowItWorks > *, .Page-title h1, .ConversationList, .ConversationDetail-banner h1, .StartNow > *, .Profile, .ProfileEdit {
   box-sizing: border-box;
   margin: 0 auto;
-  max-width: 800px;
+  max-width: 700px;
   padding: 0 0 14px 0; }
   @media only screen and (min-width: 550px) {
     .Container, .CenteredContainer, .HomeBanner, .HowItWorks > *, .Page-title h1, .ConversationList, .ConversationDetail-banner h1, .StartNow > *, .Profile, .ProfileEdit {
       padding: 0 28px 28px 28px; } }
   @media only screen and (min-width: 1200px) {
     .Container, .CenteredContainer, .HomeBanner, .HowItWorks > *, .Page-title h1, .ConversationList, .ConversationDetail-banner h1, .StartNow > *, .Profile, .ProfileEdit {
-      max-width: 800px;
+      max-width: 700px;
       padding: 0 0 56px 0; } }
 
 .CenteredContainer, .HomeBanner, .HowItWorks > * {
@@ -1116,7 +1116,7 @@ ul.errorlist {
         display: flex;
         justify-content: space-between;
         margin: 0 auto;
-        max-width: 912px; } }
+        max-width: 812px; } }
   .Header-topNav, .Header-lowerNav {
     align-items: center;
     box-sizing: border-box;
@@ -1153,7 +1153,7 @@ ul.errorlist {
           height: 61px; }
         .Header-topNav .Header-topIcon {
           display: none; } }
-    @media only screen and (min-width: 912px) {
+    @media only screen and (min-width: 812px) {
       .Header-topNav {
         padding: 0;
         height: inherit;
@@ -1294,7 +1294,7 @@ ul.errorlist {
     height: 100%;
     margin: 0 auto;
     padding: 0 14px;
-    max-width: 912px; }
+    max-width: 812px; }
   .TopHeader-links, .TopHeader-social {
     font-size: 13px; }
     .TopHeader-links li, .TopHeader-social li {
@@ -1503,7 +1503,7 @@ ul.errorlist {
 
 .ConversationDetail {
   margin: 0 auto;
-  max-width: 912px;
+  max-width: 812px;
   padding: 0; }
   .ConversationDetail > * {
     padding: 28px; }
@@ -1540,7 +1540,7 @@ ul.errorlist {
     font-weight: normal;
     justify-content: space-between;
     margin: 0 auto;
-    max-width: 576px;
+    max-width: 476px;
     padding: 0 14px;
     color: #30c0d3; }
     .ConversationDetail-statistics li, .ConversationDetail-statisticsBottom li {

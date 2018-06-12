@@ -17,7 +17,7 @@ $header-height-tablet: $header-top-nav-height !default;
 
 // Custom page layout
 $page-content-width-max: 700px !default;
-$content-wrapper-max-width: $breakpoint-medium !default;
+$content-wrapper-max-width: $page-content-width-max !default;
 $header-wrapper-max-width: $content-wrapper-max-width + 2 * $spacing-unit-large !default;
 
 // Spacing element
