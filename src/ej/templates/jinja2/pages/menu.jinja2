@@ -1,5 +1,5 @@
 {% extends 'base.jinja2' %}
-{% from 'components/generic/page_menu.jinja2' import menu %}
+{% from 'components/generic/page_menu.jinja2' import menu with context %}
 
 {% block main %}
     {{ menu(user) }}

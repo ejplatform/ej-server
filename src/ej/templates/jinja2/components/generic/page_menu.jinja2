@@ -1,6 +1,5 @@
 {% from 'components/generic/elements.jinja2' import link %}
 
-
 {% macro menu(user) %}
     <nav class="NavMenu">
         <ul>
@@ -57,9 +56,11 @@
             <li>{{ icon_link(_('Profile'), '/profile/', 'profile', fa=False) }}</li>
             <li><em>{{ icon_link(_('Home'), '/', 'fa fa-home') }}</em></li>
             <li>
+            
             {% if user.is_active %} 
                 <form method="post" action="/logout/"> 
-                <i class="fas fa-sign-out-alt"></i>
+                    <i class="fas fa-sign-out-alt"></i>
+                    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
                     <button class="" type="submit">{{ _('Logout') }}</button>
                 </form>
             {% endif %}
