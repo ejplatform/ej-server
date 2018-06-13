@@ -61,4 +61,4 @@ RUN inv prepare-deploy \
 
 USER django
 
-CMD ["inv", "run", "--gunicorn", "--migrate"]
+CMD ["inv", "run", "--gunicorn", "--migrate", "--assets"]

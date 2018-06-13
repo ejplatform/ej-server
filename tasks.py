@@ -42,7 +42,8 @@ def js(ctx):
 
 
 @task
-def run(ctx, no_toolbar=False, gunicorn=False, migrate=False, ask_input=False):
+def run(ctx, no_toolbar=False, gunicorn=False, migrate=False,
+        ask_input=False, assets=False):
     """
     Run development server
     """
@@ -53,6 +54,10 @@ def run(ctx, no_toolbar=False, gunicorn=False, migrate=False, ask_input=False):
     if migrate:
         no_input = not ask_input
         manage(ctx, 'migrate', noinput=no_input)
+
+    if assets:
+        # Populate db with assets
+        db_assets(ctx)
 
     if gunicorn:
         from gunicorn.app.wsgiapp import run as run_gunicorn
@@ -276,6 +281,3 @@ def prepare_deploy(ctx, ask_input=False):
 
     # Static files
     manage(ctx, 'collectstatic', noinput=ask_input)
-
-    # Populate db with assets
-    db_assets(ctx)
