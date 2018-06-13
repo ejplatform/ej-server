@@ -68,9 +68,9 @@ def login(request):
             user = User.objects.get_by_email_or_username(email)
             user = auth.authenticate(request, username=user.username, password=password)
             log.info(f'user {user} ({email}) successfully authenticated')
-            auth.login(request, user)
             if user is None:
                 raise User.DoesNotExist
+            auth.login(request, user, backend=user.backend)
         except User.DoesNotExist:
             log.info(f'invalid login attempt: {email}')
             form.add_error(None, error_msg)
