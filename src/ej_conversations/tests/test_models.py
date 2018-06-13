@@ -12,10 +12,10 @@ class TestConversation:
         other = mk_user(username='other')
         mk_comment = conversation.create_comment
         comments = [
-            mk_comment(other, 'a', status='approved', check_limits=False),
-            mk_comment(user, 'b', status='approved', check_limits=False),
-            mk_comment(other, 'c', status='pending', check_limits=False),
-            mk_comment(other, 'd', status='rejected', check_limits=False),
+            mk_comment(other, 'aa', status='approved', check_limits=False),
+            mk_comment(user, 'bb', status='approved', check_limits=False),
+            mk_comment(other, 'cc', status='pending', check_limits=False),
+            mk_comment(other, 'dd', status='rejected', check_limits=False),
         ]
 
         cmt = conversation.next_comment(user)

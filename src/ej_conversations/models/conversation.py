@@ -140,6 +140,11 @@ class Conversation(TimeStampedModel, StatusModel):
             log.info('failed attempt to create comment by %s' % author)
             raise PermissionError('user cannot comment on conversation.')
 
+        # Check if comment is created with rejected status
+        if status == Comment.STATUS.rejected:
+            msg = _('automatically rejected')
+            kwargs.setdefault('rejection_reason', msg)
+
         kwargs.update(author=author, content=content.strip())
         comment = make_clean(Comment, commit, conversation=self, **kwargs)
         log.info('new comment: %s' % comment)
