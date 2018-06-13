@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-12 18:22+0000\n"
+"POT-Creation-Date: 2018-06-13 11:43+0000\n"
 "PO-Revision-Date: 2018-06-12 10:03-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: \n"
@@ -21,7 +21,7 @@ msgstr ""
 
 #: local/vendor/django-boogie/src/boogie/apps/users/models.py:23
 #: local/vendor/django-boogie/src/boogie/models/abstract/user.py:64
-#: src/ej_clusters/models.py:122 src/ej_clusters/models.py:172
+#: src/ej_clusters/models.py:122 src/ej_clusters/models.py:179
 #: src/ej_clusters/routes.py:125 src/ej_configurations/models.py:127
 #: src/ej_reports/routes.py:94
 msgid "Name"
@@ -262,7 +262,7 @@ msgstr ""
 #, python-format
 msgid ""
 "Um obrigado do %(site_name)s!\n"
-"brasilqueopovoquer.org.br"
+"ejplatform.org"
 msgstr ""
 
 #: src/ej/templates/django/account/email/email_confirmation_subject.txt:3
@@ -494,16 +494,20 @@ msgstr ""
 msgid "Clusters"
 msgstr ""
 
-#: src/ej_clusters/models.py:139
+#: src/ej_clusters/models.py:126 src/ej_clusters/models.py:184
+msgid "Description"
+msgstr ""
+
+#: src/ej_clusters/models.py:129
+msgid "How was this cluster conceived?"
+msgstr ""
+
+#: src/ej_clusters/models.py:146
 #, python-brace-format
 msgid "{name} (\"{conversation}\" conversation)"
 msgstr "{name} (conversa \"{conversation}\")"
 
-#: src/ej_clusters/models.py:177
-msgid "Description"
-msgstr ""
-
-#: src/ej_clusters/models.py:180
+#: src/ej_clusters/models.py:187
 msgid ""
 "A detailed description of your stereotype for future reference. You can "
 "specify a background history, or give hints on the exact profile the "
@@ -1225,64 +1229,64 @@ msgstr "Menu de navegação"
 #: src/ej/templates/jinja2/components/generic/page_header.jinja2:71
 #: src/ej/templates/jinja2/components/generic/page_header.jinja2:72
 #: src/ej/templates/jinja2/components/generic/page_header.jinja2:73
-#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:57
+#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:56
 msgid "Profile"
 msgstr "Perfil"
 
-#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:7
+#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:6
 msgid "About"
 msgstr "Sobre"
 
-#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:8
+#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:7
 msgid "FAQ"
 msgstr "Perguntas frequentes"
 
-#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:9
+#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:8
 #: src/ej/templates/jinja2/components/generic/page_top-header.jinja2:11
 msgid "Usage terms"
 msgstr "Termos de uso"
 
-#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:17
-#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:29
+#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:16
+#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:28
 #, fuzzy
 msgid "Public conversations"
 msgstr "Mais conversas"
 
-#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:20
-#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:32
+#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:19
+#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:31
 #, fuzzy
 msgid "Your conversations"
 msgstr "Mais conversas"
 
-#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:36
+#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:35
 #, fuzzy
 msgid "Add conversation"
 msgstr "Criar conversa"
 
-#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:40
+#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:39
 #, fuzzy
 msgid "Favorite conversations"
 msgstr "Mais conversas"
 
-#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:44
+#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:43
 #, fuzzy
 msgid "Manage conversations"
 msgstr "Mais conversas"
 
-#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:47
+#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:46
 #, fuzzy
 msgid "Manage stereotypes"
 msgstr "Estereótipos"
 
-#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:50
+#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:49
 msgid "Request reports"
 msgstr ""
 
-#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:58
+#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:57
 msgid "Home"
 msgstr "Início"
 
-#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:63
+#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:64
 #: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:62
 msgid "Logout"
 msgstr "Sair"
@@ -1313,34 +1317,30 @@ msgid "Cluster: {name}"
 msgstr "Nome da cor"
 
 #: src/ej_clusters/jinja2/ej_clusters/stereotype-vote.jinja2:8
-msgid ""
-"\n"
-"            Please vote on the comments bellow to define your stereotype.\n"
-"            "
+msgid "Please vote on the comments bellow to define your stereotype."
 msgstr ""
 
-#: src/ej_clusters/jinja2/ej_clusters/stereotype-vote.jinja2:14
+#: src/ej_clusters/jinja2/ej_clusters/stereotype-vote.jinja2:12
 #, fuzzy
 msgid "Register votes"
 msgstr "Registre agora!"
 
-#: src/ej_clusters/jinja2/ej_clusters/stereotype-vote.jinja2:17
+#: src/ej_clusters/jinja2/ej_clusters/stereotype-vote.jinja2:15
 msgid ""
 "\n"
 "            This stereotype have voted on all comments.\n"
 "            "
 msgstr ""
 
-#: src/ej_clusters/jinja2/ej_clusters/stereotype-vote.jinja2:23
-#, fuzzy
-msgid "Unvoted comments"
-msgstr "Comentário promovido?"
+#: src/ej_clusters/jinja2/ej_clusters/stereotype-vote.jinja2:21
+msgid "Already voted"
+msgstr ""
 
-#: src/ej_clusters/jinja2/ej_clusters/stereotype-vote.jinja2:24
+#: src/ej_clusters/jinja2/ej_clusters/stereotype-vote.jinja2:22
 msgid "The stereotype has voted in the following comments."
 msgstr ""
 
-#: src/ej_clusters/jinja2/ej_clusters/stereotype-vote.jinja2:28
+#: src/ej_clusters/jinja2/ej_clusters/stereotype-vote.jinja2:26
 #, fuzzy
 msgid "Change votes"
 msgstr "Canais"
@@ -1554,6 +1554,10 @@ msgstr "mudar a senha"
 #, fuzzy
 msgid "Reset password"
 msgstr "Recriar minha senha"
+
+#, fuzzy
+#~ msgid "Unvoted comments"
+#~ msgstr "Comentário promovido?"
 
 #~ msgid "Talks"
 #~ msgstr "Canais"

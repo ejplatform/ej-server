@@ -5,4 +5,4 @@ Você está recebendo essa mensagem por que o usuário {{ user_display }} se cad
 Pra confirmar que está tudo certo, vá até {{ activate_url }}
 {% endblocktrans %}{% endautoescape %}
 {% blocktrans with site_name=current_site.name site_domain=current_site.domain %}Um obrigado do {{ site_name }}!
-brasilqueopovoquer.org.br{% endblocktrans %}
+ejplatform.org{% endblocktrans %}
