@@ -54,17 +54,16 @@ msgid "Conscise description used on listings."
 msgstr ""
 
 #: local/vendor/django-boogie/src/boogie/fields/default_fields.py:74
-#, fuzzy
 msgid "detailed description"
-msgstr "Conversas"
+msgstr "descrição detalhada"
 
 #: local/vendor/django-boogie/src/boogie/fields/default_fields.py:77
 msgid "Detailed description of object."
-msgstr ""
+msgstr "Descrição detalhada do objeto."
 
 #: local/vendor/django-boogie/src/boogie/fields/enum_field.py:24
 msgid "An enumeration field"
-msgstr ""
+msgstr "Um campo enumeração"
 
 #: local/vendor/django-boogie/src/boogie/models/abstract/user.py:55
 #: src/ej_profiles/models.py:105 src/ej_users/forms.py:46
@@ -82,7 +81,7 @@ msgstr ""
 
 #: local/vendor/django-boogie/src/boogie/models/abstract/user.py:67
 msgid "Full name of the user."
-msgstr ""
+msgstr "Nome completo do usuário"
 
 #: local/vendor/django-boogie/src/boogie/models/abstract/user.py:71
 msgid "Alias"
@@ -132,7 +131,7 @@ msgstr "Agênero"
 #: local/vendor/django-messages-courier/courier/models.py:12
 #: src/ej_conversations/models/conversation.py:51
 msgid "Title"
-msgstr ""
+msgstr "Título"
 
 #: local/vendor/django-messages-courier/courier/models.py:14
 #, fuzzy
@@ -145,15 +144,15 @@ msgstr "Esperando"
 
 #: local/vendor/django-messages-courier/courier/models.py:30
 msgid "Read"
-msgstr ""
+msgstr "Lido"
 
 #: local/vendor/django-messages-courier/courier/models.py:31
 msgid "Seen"
-msgstr ""
+msgstr "Visto"
 
 #: local/vendor/django-messages-courier/courier/models.py:32
 msgid "Unseen"
-msgstr ""
+msgstr "Não Visto"
 
 #: local/vendor/django-messages-courier/courier/models.py:46
 msgid "Status"
@@ -175,7 +174,7 @@ msgstr "Acesse o painel do CPA"
 
 #: src/ej/tags.py:57
 msgid "Go!"
-msgstr ""
+msgstr "Vamos!"
 
 #: src/ej/templates/django/account/account_inactive.html:5
 #: src/ej/templates/django/account/account_inactive.html:8
@@ -496,7 +495,7 @@ msgstr ""
 
 #: src/ej_clusters/models.py:126 src/ej_clusters/models.py:184
 msgid "Description"
-msgstr ""
+msgstr "Descrição"
 
 #: src/ej_clusters/models.py:129
 msgid "How was this cluster conceived?"
@@ -515,46 +514,40 @@ msgid ""
 msgstr ""
 
 #: src/ej_clusters/routes.py:57
-#, fuzzy
 msgid "Force clusterization"
-msgstr "Mais conversas"
+msgstr "Forçar clusterização"
 
 #: src/ej_clusters/routes.py:70
 msgid "Stereotypes"
 msgstr "Estereótipos"
 
 #: src/ej_clusters/routes.py:88
-#, fuzzy, python-brace-format
 msgid "Stereotype votes ({conversation})"
-msgstr "Criar conversa"
+msgstr "Votos de estereótipo ({conversation})"
 
 #: src/ej_clusters/routes.py:125
-#, fuzzy
 msgid "Username"
-msgstr "Nome completo do usuário"
+msgstr "Nome de usuário"
 
 #: src/ej_clusters/routes.py:135 src/ej_reports/routes.py:91
-#, fuzzy
 msgid "Comment"
-msgstr "Comentários"
+msgstr "Comentário"
 
 #: src/ej_clusters/routes.py:135
-#, fuzzy
 msgid "Options"
-msgstr "Ocupação"
+msgstr "Opções"
 
 #: src/ej_clusters/types.py:7
 msgid "Waiting for more data"
-msgstr ""
+msgstr "Esperando por mais dados"
 
 #: src/ej_clusters/types.py:8
 msgid "Active"
-msgstr ""
+msgstr "Ativo"
 
 #: src/ej_clusters/types.py:9
-#, fuzzy
 msgid "Disabled"
-msgstr "Discorda"
+msgstr "Desabilitado"
 
 #: src/ej_configurations/models.py:17
 msgid "HTML"
@@ -1200,7 +1193,7 @@ msgstr ""
 
 #: src/ej/templates/jinja2/generic.jinja2:5
 msgid "Under construction!"
-msgstr ""
+msgstr "Em construção!"
 
 #: src/ej/templates/jinja2/components/home.jinja2:11
 #: src/ej/templates/jinja2/components/home.jinja2:74
@@ -1213,9 +1206,8 @@ msgid "Access CPA panel!"
 msgstr "Acesse o painel do CPA!"
 
 #: src/ej/templates/jinja2/components/generic/page_footer.jinja2:17
-#, fuzzy
 msgid "Enter"
-msgstr "Intersex"
+msgstr "Entrar"
 
 #: src/ej/templates/jinja2/components/generic/page_header.jinja2:30
 msgid "Back"
