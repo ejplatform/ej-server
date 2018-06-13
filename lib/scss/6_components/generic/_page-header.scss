@@ -48,6 +48,8 @@ $header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.05) !default;
     // Elements
     &-topNav,
     &-lowerNav {
+        @include color($header-color, $header-color-text, $force: true);
+
         align-items: center;
         box-sizing: border-box;
         box-shadow: $header-box-shadow-upper;
