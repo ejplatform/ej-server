@@ -32,7 +32,7 @@ def create(request, owner=None):
 
 @urlpatterns.route(conversation_url + 'edit/',
                    perms=['ej_conversations.can_edit_conversation'])
-def edit(request, conversation):
+def edit(request, conversation, owner=None):
     if request.method == 'POST':
         form = forms.ConversationForm(
             data=request.POST,

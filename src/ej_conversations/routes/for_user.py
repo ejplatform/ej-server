@@ -29,11 +29,6 @@ def conversation_list(request, owner):
     return routes.conversation_list(request, owner)
 
 
-@urlpatterns.route(base_url + '<model:conversation>/')
-def detail(request, conversation, owner):
-    return routes.detail(request, conversation, owner)
-
-
 @urlpatterns.route(base_url + 'add/')
 def create(request, owner):
     if request.user != owner:
@@ -41,6 +36,13 @@ def create(request, owner):
     return routes.create(request, owner)
 
 
+@urlpatterns.route(base_url + '<model:conversation>/')
+def detail(request, conversation, owner):
+    return routes.detail(request, conversation, owner)
+
+
 @urlpatterns.route(base_url + '<model:conversation>/edit/')
 def edit(request, conversation, owner):
-    return routes.detail(request, conversation, owner)
+    if request.user != owner:
+        raise Http404
+    return routes.edit(request, conversation, owner)

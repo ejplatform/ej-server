@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-06-13 11:43+0000\n"
-"PO-Revision-Date: 2018-06-13 10:13-0300\n"
+"PO-Revision-Date: 2018-06-13 10:33-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: \n"
 "Language: pt_BR\n"
@@ -45,7 +45,6 @@ msgid "title"
 msgstr ""
 
 #: local/vendor/django-boogie/src/boogie/fields/default_fields.py:65
-#, fuzzy
 msgid "description"
 msgstr "descrição"
 
@@ -54,7 +53,6 @@ msgid "Conscise description used on listings."
 msgstr "Descrição concisa utilizada em listas."
 
 #: local/vendor/django-boogie/src/boogie/fields/default_fields.py:74
-#, fuzzy
 msgid "detailed description"
 msgstr "descrição detalhada"
 
@@ -125,9 +123,8 @@ msgid "No %(verbose_name)s found matching the query"
 msgstr "Nenhum nome %(verbose_name)s encontrado"
 
 #: local/vendor/django-messages-courier/courier/models.py:11
-#, fuzzy
 msgid "Sender"
-msgstr "Agênero"
+msgstr "Remetende"
 
 #: local/vendor/django-messages-courier/courier/models.py:12
 #: src/ej_conversations/models/conversation.py:51
@@ -135,9 +132,8 @@ msgid "Title"
 msgstr "Título"
 
 #: local/vendor/django-messages-courier/courier/models.py:14
-#, fuzzy
 msgid "Short Description"
-msgstr "Conversas"
+msgstr "Descrição curta"
 
 #: local/vendor/django-messages-courier/courier/models.py:29
 msgid "Waiting"
@@ -160,12 +156,10 @@ msgid "Status"
 msgstr "Status"
 
 #: local/vendor/django-messages-courier/courier/pushnotifications/providers/onesignal/models.py:15
-#, fuzzy
 msgid "OneSignal Id"
 msgstr "Id OneSignal"
 
 #: src/ej/tags.py:12
-#, fuzzy
 msgid "hello"
 msgstr "olá"
 
@@ -548,7 +542,6 @@ msgid "Active"
 msgstr "Ativo"
 
 #: src/ej_clusters/types.py:9
-#, fuzzy
 msgid "Disabled"
 msgstr "Desabilitado"
 
@@ -687,7 +680,7 @@ msgstr "aprovado"
 
 #: src/ej_conversations/models/comment.py:27
 msgid "rejected"
-msgstr ""
+msgstr "rejeitado"
 
 #: src/ej_conversations/models/comment.py:45
 msgid "Content"
@@ -699,7 +692,7 @@ msgstr "Corpo de texto do comentário"
 
 #: src/ej_conversations/models/comment.py:51
 msgid "Rejection reason"
-msgstr ""
+msgstr "Motivo para rejeição"
 
 #: src/ej_conversations/models/comment.py:54
 msgid ""
@@ -744,7 +737,7 @@ msgstr ""
 
 #: src/ej_conversations/models/conversation.py:59
 msgid "Question"
-msgstr ""
+msgstr "Questão"
 
 #: src/ej_conversations/models/conversation.py:61
 msgid ""
@@ -761,7 +754,6 @@ msgid "Can publish promoted conversations"
 msgstr "Pode publicar conversas promovidas"
 
 #: src/ej_conversations/models/conversation.py:86
-#, fuzzy
 msgid "Can moderate comments in any conversation"
 msgstr "Pode moderar comentários em qualquer conversa"
 
@@ -877,7 +869,7 @@ msgstr "Página {} não encontrada"
 
 #: src/ej_math/apps.py:7
 msgid "Math"
-msgstr ""
+msgstr "Matemática"
 
 #: src/ej_notifications/apps.py:7
 msgid "Notifications"
@@ -916,7 +908,6 @@ msgid "Basic information"
 msgstr "Informações básicas"
 
 #: src/ej_profiles/admin.py:12
-#, fuzzy
 msgid "Address"
 msgstr "Endereço"
 
@@ -1086,11 +1077,11 @@ msgstr "Usuário regular"
 
 #: src/ej_reports/apps.py:7
 msgid "Reports"
-msgstr ""
+msgstr "Relatórios"
 
 #: src/ej_reports/routes.py:44
 msgid "Report"
-msgstr ""
+msgstr "Relatório"
 
 #: src/ej_reports/routes.py:81
 msgid "Author"
@@ -1236,15 +1227,13 @@ msgstr "Termos de uso"
 
 #: src/ej/templates/jinja2/components/generic/page_menu.jinja2:16
 #: src/ej/templates/jinja2/components/generic/page_menu.jinja2:28
-#, fuzzy
 msgid "Public conversations"
-msgstr "Mais conversas"
+msgstr "Conversas públicas"
 
 #: src/ej/templates/jinja2/components/generic/page_menu.jinja2:19
 #: src/ej/templates/jinja2/components/generic/page_menu.jinja2:31
-#, fuzzy
 msgid "Your conversations"
-msgstr "Mais conversas"
+msgstr "Suas converas"
 
 #: src/ej/templates/jinja2/components/generic/page_menu.jinja2:35
 msgid "Add conversation"
@@ -1264,7 +1253,7 @@ msgstr "Gerenciar estereótipos"
 
 #: src/ej/templates/jinja2/components/generic/page_menu.jinja2:49
 msgid "Request reports"
-msgstr ""
+msgstr "Requisitar relatórios"
 
 #: src/ej/templates/jinja2/components/generic/page_menu.jinja2:57
 msgid "Home"
@@ -1304,9 +1293,8 @@ msgid "Please vote on the comments bellow to define your stereotype."
 msgstr ""
 
 #: src/ej_clusters/jinja2/ej_clusters/stereotype-vote.jinja2:12
-#, fuzzy
 msgid "Register votes"
-msgstr "Registre agora!"
+msgstr "Votos registrados"
 
 #: src/ej_clusters/jinja2/ej_clusters/stereotype-vote.jinja2:15
 msgid ""
@@ -1332,9 +1320,8 @@ msgid "Fragment list"
 msgstr "Lista de fragmentos"
 
 #: src/ej_configurations/jinja2/configurations/index.jinja2:2
-#, fuzzy
 msgid "Site info"
-msgstr "Informações básicas"
+msgstr "Informações do site"
 
 #: src/ej_configurations/jinja2/configurations/styles.jinja2:3
 msgid "Styles"
@@ -1347,7 +1334,7 @@ msgstr "Sem comentários"
 #: src/ej_conversations/jinja2/ej_conversations/create.jinja2:9
 #: src/ej_conversations/jinja2/ej_conversations/edit.jinja2:9
 msgid "Save"
-msgstr ""
+msgstr "Salvar"
 
 #: src/ej_conversations/jinja2/ej_conversations/info.jinja2:3
 msgid "Conversation info"
@@ -1392,9 +1379,8 @@ msgid "Please {login} to comment on this conversation"
 msgstr "Por favor faça {login} para comentar nesta conversa"
 
 #: src/ej_conversations/jinja2/ej_conversations/components/conversation-detail.jinja2:58
-#, fuzzy
 msgid "You have used all comments available in this conversation."
-msgstr "Conversas ativas"
+msgstr "Você utilizou todos comentários disponíveis nesta conversa."
 
 #: src/ej_conversations/jinja2/ej_conversations/components/conversation-info.jinja2:37
 #, fuzzy
@@ -1459,9 +1445,8 @@ msgid "Basic info"
 msgstr "Informações básicas"
 
 #: src/ej_reports/jinja2/ej_reports/index.jinja2:6
-#, fuzzy
 msgid "Report for conversation: \"{text}\""
-msgstr "Conversas ativas"
+msgstr "Relatório para conversa: \"{text}\""
 
 #: src/ej_reports/jinja2/ej_reports/index.jinja2:7
 msgid "Votes ({total} participants)"
@@ -1513,13 +1498,11 @@ msgid ""
 msgstr ""
 
 #: src/ej_users/jinja2/ej_users/recover-password.jinja2:2
-#, fuzzy
 msgid "Recover password"
-msgstr "mudar a senha"
+msgstr "Recuperar senha"
 
 #: src/ej_users/jinja2/ej_users/remove-account.jinja2:2
 #: src/ej_users/jinja2/ej_users/reset-password.jinja2:2
-#, fuzzy
 msgid "Reset password"
 msgstr "Recriar minha senha"
 
