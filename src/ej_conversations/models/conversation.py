@@ -140,9 +140,8 @@ class Conversation(TimeStampedModel, StatusModel):
             log.info('failed attempt to create comment by %s' % author)
             raise PermissionError('user cannot comment on conversation.')
 
-        make_comment = Comment.objects.create if commit else Comment
         kwargs.update(author=author, content=content.strip())
-        comment = make_comment(conversation=self, **kwargs)
+        comment = make_clean(Comment, commit, conversation=self, **kwargs)
         log.info('new comment: %s' % comment)
         return comment
 
@@ -232,3 +231,11 @@ def comment_count(conversation, type=None):
     """
     kwargs = {'status': type} if type is not None else {}
     return conversation.comments.filter(**kwargs).count()
+
+
+def make_clean(cls, commit=True, **kwargs):
+    obj = cls(**kwargs)
+    obj.full_clean()
+    if commit:
+        obj.save()
+    return obj

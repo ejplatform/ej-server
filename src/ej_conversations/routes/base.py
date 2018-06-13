@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.http import HttpResponseServerError
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
@@ -57,9 +58,12 @@ def detail(request, conversation, owner=None):
 
     elif request.POST.get('action') == 'comment':
         comment = request.POST['comment'].strip()
+
+        # FIXME: do not hardcode this and use a proper form!
+        comment = comment[:210]
         try:
             ctx['comment'] = conversation.create_comment(user, comment)
-        except PermissionError as ex:
+        except (PermissionError, ValidationError) as ex:
             ctx['comment_error'] = str(ex)
 
     return ctx

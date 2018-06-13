@@ -41,7 +41,7 @@
 {% macro comment_form(csrf_input) %}
     <div class="CommentForm">
         <h1>Deixe seu comentário</h1>
-        <p>Inclua algo novo, evite opiniões semelhantes. Você pode postar até 6 comentários.</p>
+        <p>Inclua algo novo, evite opiniões semelhantes. Você pode postar até 2 comentários.</p>
         <form method="post">
             {{ csrf_input }}
             <input type="hidden" name="action" value="comment">
