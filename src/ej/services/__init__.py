@@ -1,6 +1,3 @@
-import logging
-
-log = logging.getLogger('ej')
 SERVICES_STARTED = False
 
 
@@ -12,7 +9,10 @@ def start_services(settings):
 
     print('waiting for services to start')
 
-    if 'pgsql' in settings.DATABASES['default']['ENGINE']:
+    if 'django.db.backends.postgresql_psycopg2' == \
+        settings.DATABASES['default']['ENGINE']:
+
+        print('waiting for postgres to start')
         from . import postgres
         postgres.start_postgres()
 

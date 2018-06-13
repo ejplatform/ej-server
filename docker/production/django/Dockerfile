@@ -24,6 +24,7 @@ RUN apt-get update \
     python3-pip \
     python3-setuptools \
     ruby-full=1:2.5.1 \
+    gettext \
     --no-install-recommends \
     && pip3 install --upgrade pip
 
@@ -32,8 +33,6 @@ RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
     && apt-get update \
     && apt-get install -y yarn --no-install-recommends \
     && apt-get clean
-
-ENTRYPOINT ["/entrypoint.sh"]
 
 # ej-server Dependencies
 WORKDIR /dependencies
@@ -56,10 +55,10 @@ RUN groupadd -r django \
 WORKDIR /app
 COPY . /app
 
-RUN DJANGO_SETTINGS_MODULE="ej.settings" python3 /app/manage.py collectstatic --noinput \
-    && mkdir -p /app/local \
-    && chown -R django:django /app
+RUN inv prepare-deploy \
+    && chown -R django:django /app \
+    && ln -s /usr/bin/python3 /usr/bin/python
 
 USER django
 
-CMD ["/gunicorn.sh"]
+CMD ["inv", "run", "--gunicorn", "--migrate"]

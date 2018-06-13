@@ -42,7 +42,7 @@ def js(ctx):
 
 
 @task
-def run(ctx, no_toolbar=False, gunicorn=False, migrate=False):
+def run(ctx, no_toolbar=False, gunicorn=False, migrate=False, ask_input=False):
     """
     Run development server
     """
@@ -51,7 +51,8 @@ def run(ctx, no_toolbar=False, gunicorn=False, migrate=False):
         env['DISABLE_DJANGO_DEBUG_TOOLBAR'] = 'true'
 
     if migrate:
-        manage(ctx, 'migrate', noinput=ask_input)
+        no_input = not ask_input
+        manage(ctx, 'migrate', noinput=no_input)
 
     if gunicorn:
         from gunicorn.app.wsgiapp import run as run_gunicorn

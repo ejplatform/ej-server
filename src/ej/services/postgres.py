@@ -1,24 +1,22 @@
 import importlib
 import os
 import time
-import logging
-log = logging.getLogger('ej')
 
 def start_postgres():
     settings_path = os.environ['DJANGO_SETTINGS_MODULE']
     settings = importlib.import_module(settings_path)
 
-    db = settings.DATABASE['default']
-    dbname = db['DBNAME']
+    db = settings.DATABASES['default']
+    dbname = db['NAME']
     user = db['USER']
     password = db['PASSWORD']
     host = db['HOST']
 
     for _ in range(100):
         if can_connect(dbname, user, password, host):
-            log.info("Postgres is available. Continuing...")
+            print("Postgres is available. Continuing...")
             return
-        log.warn('Postgres is unavailable. Retrying in 0.5 seconds')
+        print('Postgres is unavailable. Retrying in 0.5 seconds')
         time.sleep(0.5)
     raise SystemExit('Maximum number of attempts connecting to postgres database')
 
