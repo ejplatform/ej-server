@@ -22,15 +22,33 @@ def manage(ctx, cmd, env=None, **kwargs):
 
 
 @task
-def sass(ctx, no_watch=False, trace=False):
+def sass(ctx, no_watch=False, trace=False, theme=None):
     """
     Run Sass compiler
     """
+    # Choose theme
+    base = pathlib.Path('lib/scss')
+    if theme is None and 'THEME' in os.environ and os.environ['THEME'] != 'none':
+        theme = os.environ['THEME']
+    if theme:
+        if '/' in theme:
+            base = pathlib.Path(theme)
+        else:
+            base = pathlib.Path('lib/themes/') / theme / 'scss'
+
     suffix = '' if no_watch else ' --watch'
     suffix += ' --trace' if trace else ''
+
+    main = base / 'main.scss'
+    rocket = base / 'rocket.scss'
     ctx.run('rm .sass-cache -rf')
-    ctx.run('sass lib/scss/main.scss:lib/assets/css/main.css lib/scss/rocket.scss:lib/assets/css/rocket.css' + suffix,
-            pty=True)
+    cmd = (
+        f'sass '
+        f'{main}:lib/assets/css/main.css '
+        f'{rocket}:lib/assets/css/rocket.css' + suffix
+    )
+    print('Running:', cmd)
+    ctx.run(cmd, pty=True)
 
 
 @task

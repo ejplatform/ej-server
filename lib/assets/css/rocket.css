@@ -1,3 +1,33 @@
+/*
+ CONFIG
+ =============================================================================*/
+/*
+ COLORS
+ =========================================================================== */
+/*
+ SPACING
+ =========================================================================== */
+/*
+ FONTS FAMILIES AND SIZES
+ ============================================================== */
+/*
+ Global
+ =========================================================================== */
+/*
+ COLORS
+ =========================================================================== */
+/*
+ Global
+ =========================================================================== */
+/*
+ SPACING
+ =========================================================================== */
+/*
+ FONTS FAMILIES AND SIZES
+ ============================================================== */
+/*
+ COMPONENTS
+ ============================================================== */
 /**
  * Conventions and architecture overview:
  *
@@ -442,7 +472,7 @@ template {
  BUTTONS
  =============================================================================*/
 .Button {
-  background-color: #30c0d3;
+  background-color: #23b81d;
   color: rgba(255, 255, 255, 0.9);
   border: none;
   border-radius: 56px;
@@ -461,22 +491,22 @@ template {
     text-decoration: none; }
   .Button[primary],
   .Button .Button--primary {
-    background-color: #FF3D72;
-    color: rgba(255, 255, 255, 0.9); }
+    background-color: #bdffce;
+    color: rgba(4, 32, 73, 0.9); }
     .Button[primary]:hover, .Button[primary]:focus,
     .Button .Button--primary:hover,
     .Button .Button--primary:focus {
-      background-color: #ff0a4d;
-      color: #fff; }
+      background-color: #8affa8;
+      color: #042049; }
   .Button[secondary],
   .Button .Button--secondary {
     background-color: #C4F2F4;
-    color: rgba(4, 32, 73, 0.9); }
+    color: rgba(17, 17, 17, 0.9); }
     .Button[secondary]:hover, .Button[secondary]:focus,
     .Button .Button--secondary:hover,
     .Button .Button--secondary:focus {
       background-color: #99e9ec;
-      color: #042049; }
+      color: #111; }
   .Button[small],
   .Button .Button--small {
     font-size: 13px;
@@ -488,8 +518,8 @@ template {
   .Button[ghost],
   .Button .Button--ghost {
     background-color: none;
-    color: #30c0d3;
-    border: 1px solid #30c0d3;
+    color: #23b81d;
+    border: 1px solid #23b81d;
     padding: 8px 27px; }
     .Button[ghost]:hover, .Button[ghost]:focus,
     .Button .Button--ghost:hover,
@@ -499,7 +529,7 @@ template {
     .Button[ghost] .Button--ghost-primary,
     .Button .Button--ghost [primary],
     .Button .Button--ghost .Button--ghost-primary {
-      color: #FF3D72; }
+      color: #bdffce; }
       .Button[ghost] [primary]:hover, .Button[ghost] [primary]:focus,
       .Button[ghost] .Button--ghost-primary:hover,
       .Button[ghost] .Button--ghost-primary:focus,
@@ -507,7 +537,7 @@ template {
       .Button .Button--ghost [primary]:focus,
       .Button .Button--ghost .Button--ghost-primary:hover,
       .Button .Button--ghost .Button--ghost-primary:focus {
-        color: #ff0a4d; }
+        color: #8affa8; }
     .Button[ghost] [secondary],
     .Button[ghost] .Button--ghost-secondary,
     .Button .Button--ghost [secondary],
@@ -527,10 +557,10 @@ template {
   font-weight: bold;
   padding: 0 7px; }
   .Rocket-title h1 {
-    color: #FF3D72;
+    color: #bdffce;
     font-weight: bold; }
   .Rocket-title h2 {
-    color: #74b5b8;
+    color: #23b81d;
     font-weight: bold; }
 .Rocket-detail {
   padding: 7px; }
@@ -539,12 +569,12 @@ template {
   padding: 14px; }
   .Rocket-items .title {
     padding: 7px 0;
-    color: #74b5b8;
+    color: #23b81d;
     font-weight: bold; }
   .Rocket-items .item {
     padding: 7px; }
     .Rocket-items .item .item-position {
-      color: #FF3D72;
+      color: #bdffce;
       font-size: 24px;
       width: auto;
       float: left; }

@@ -21,4 +21,4 @@ $content-wrapper-max-width: $page-content-width-max !default;
 $header-wrapper-max-width: $content-wrapper-max-width + 2 * $spacing-unit-large !default;
 
 // Spacing element
-$block-elements-border-radius: $spacing-unit-large;
+$block-elements-border-radius: $spacing-unit-large !default;

@@ -38,12 +38,12 @@ $text-headings-transform-h1: uppercase !default;
 
 // Base typographical sizes
 $font-size-tiny: 12px !default;
-$font-size-small: 13px !default;
-$font-size-default: 15px !default;
-$font-size-large: 17px !default;
-$font-size-larger: 20px !default;
-$font-size-huge: 24px !default;
-$font-size: $font-size-default;
+$font-size-small: ($font-size-tiny + 1px) !default;
+$font-size-default: ($font-size-small + 2px) !default;
+$font-size-large: ($font-size-default + 2px) !default;
+$font-size-larger: ($font-size-large + 3px) !default;
+$font-size-huge: ($font-size-larger + 4px) !default;
+$font-size: $font-size-default !default;
 $line-height: ($font-size + $spacing-unit-tiny) !default;
 
 // Heading sizes

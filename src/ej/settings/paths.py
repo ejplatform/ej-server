@@ -22,9 +22,6 @@ class PathsConf(Base):
     # Frontend paths
     LIB_DIR = REPO_DIR / 'lib'
 
-    # Static files
-    STATICFILES_DIRS = [REPO_DIR / 'lib/assets']
-
     def finalize(self, settings):
         """
         Create missing paths.
@@ -35,6 +32,17 @@ class PathsConf(Base):
                 mkdir_recursive(path)
 
         return super().finalize(settings)
+
+    def get_staticfiles_dirs(self):
+        paths = [self.REPO_DIR / 'lib/assets']
+        if 'THEME' in os.environ:
+            theme = os.environ['THEME']
+            if '/' in theme:
+                paths.insert(0, theme)
+            else:
+                theme_path = self.REPO_DIR / 'lib/themes/' / theme / 'assets'
+                paths.insert(0, theme_path)
+        return paths
 
 
 def mkdir_recursive(path):

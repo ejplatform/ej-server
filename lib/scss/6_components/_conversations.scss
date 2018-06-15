@@ -6,7 +6,7 @@ $conversation-button-size: $spacing-unit-small + $spacing-unit-tiny !default;
 $conversation-card-padding: $spacing-unit-small !default;
 $conversation-card-gutter: $spacing-unit !default;
 $conversation-card-border: 0 !default;
-$conversation-card-border-radius: $block-elements-border-radius !default;
+$conversation-card-border-radius: 50% !default;
 $conversation-card-color: $color-primary !default;
 $conversation-card-text-color: $color-white !default;
 $conversation-card-cover-height: 8 * $line-height !default;
@@ -17,6 +17,7 @@ $conversation-card-font-size-small: 12px !default;
 $conversation-card-button-color: $color-content-text !default;
 $conversation-card-button-color-text: $color-content !default;
 $conversation-card-border-arrow-size: $spacing-unit;
+$conversation-card-button-border-radius: 50% !default;
 
 @import url('https://fonts.googleapis.com/css?family=Raleway');
 @import url('https://fonts.googleapis.com/css?family=Patua+One');
@@ -30,7 +31,7 @@ $conversation-card-border-arrow-size: $spacing-unit;
         text-align: center;
         h1 {
           font-family: 'Patua One', sans-serif !important;
-          color: $color-pink !important; 
+          color: $color-pink !important;
           font-size: 24px !important;
           letter-spacing: 1px;
           font-weight: 300 !important;
@@ -111,10 +112,10 @@ $conversation-card-border-arrow-size: $spacing-unit;
     align-self: stretch;
     box-sizing: border-box;
     border: $conversation-card-border;
-    border-radius: 50%;
+    border-radius: $conversation-card-border-radius;
     flex-grow: 1;
     margin: 0;
-    margin-bottom: $spacing-unit; 
+    margin-bottom: $spacing-unit;
     text-align: center;
     width: 100%;
     max-width: 320px;
@@ -291,7 +292,7 @@ $conversation-card-border-arrow-size: $spacing-unit;
 
         h1 {
             font-family: 'Patua One', sans-serif !important;
-            color: $color-pink !important; 
+            color: $color-pink !important;
             font-size: 24px !important;
             letter-spacing: 1px;
             font-weight: 300 !important;
@@ -397,7 +398,7 @@ $conversation-card-border-arrow-size: $spacing-unit;
     }
 
     input[type=submit] {
-      border-radius: $conversation-card-border-radius;
+      border-radius: $conversation-card-button-border-radius;
       color: #fff;
       background: $color-primary;
       border: 0;
@@ -450,32 +451,32 @@ $conversation-card-border-arrow-size: $spacing-unit;
   .App {
     text-align: center;
   }
-  
+
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
     height: 80px;
   }
-  
+
   .App-header {
     background-color: #222;
     height: 150px;
     padding: 20px;
     color: white;
   }
-  
+
   .App-title {
     font-size: 1.5em;
   }
-  
+
   .App-intro {
     font-size: large;
   }
-  
+
   @keyframes App-logo-spin {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
   }
-  
+
   .Conversation {
     margin: 10px;
     padding: 10px;
@@ -485,7 +486,7 @@ $conversation-card-border-arrow-size: $spacing-unit;
     align-self: stretch;
     box-sizing: border-box;
   }
-  
+
   .Conversation-cover {
     background-color: #30c0d3;
     color: #fff;
@@ -498,12 +499,12 @@ $conversation-card-border-arrow-size: $spacing-unit;
     position: relative;
     z-index: 2;
   }
-  
+
   .Conversation-cover p {
     font-family: "Raleway", sans-serif;
     font-size: 12px;
   }
-  
+
   h3 {
     flex-grow: 1;
     display: flex;
@@ -515,7 +516,7 @@ $conversation-card-border-arrow-size: $spacing-unit;
     font-family: "Raleway", sans-serif;
     font-weight: normal;
   }
-  
+
   .Conversation-actions {
     background: #d6f1f3;
     border-radius: 56px;
@@ -524,7 +525,7 @@ $conversation-card-border-arrow-size: $spacing-unit;
     margin-top: -112px;
     min-height: 50px;
   }
-  
+
   .Conversation-statistics {
     font-family: "Raleway", sans-serif;
     color: #042049;
@@ -534,7 +535,7 @@ $conversation-card-border-arrow-size: $spacing-unit;
     padding: 0 28px;
     margin: 7px 0;
   }
-  
+
   .Conversation-button {
     background-color: #042049;
     color: #fff;
@@ -555,24 +556,24 @@ $conversation-card-border-arrow-size: $spacing-unit;
     vertical-align: middle;
     text-decoration: none;
   }
-  
+
   @import url('https://fonts.googleapis.com/css?family=Raleway');
-  
+
   h1, h2 {
     font-family: "Raleway", sans-serif;
     font-weight: normal;
     color: #042049;
   }
-  
+
   h1 {
     font-size: 19.5px;
     font-weight: 600;
   }
-  
+
   h2 {
     font-size: 16.5px;
   }
-  
+
   .Conversations > ul {
     text-align: center;
     display: flex;
@@ -582,7 +583,7 @@ $conversation-card-border-arrow-size: $spacing-unit;
     align-items: center;
     justify-content: center;
   }
-  
+
   .Conversations > ul li {
     list-style: none;
     display: inline-block;
@@ -592,7 +593,7 @@ $conversation-card-border-arrow-size: $spacing-unit;
     margin: 0;
     padding: 0;
   }
-  
+
   @media only screen and (max-width: 900px) {
     .Conversations > ul li {
       max-width: 90%;
@@ -602,13 +603,13 @@ $conversation-card-border-arrow-size: $spacing-unit;
     padding: 0 20px;
     font-family: "Raleway", sans-serif;
   }
-  
+
   .FullConversation h1 {
     font-size: 21px;
     text-transform: uppercase;
     padding: 56px 0;
   }
-  
+
   .FullConversation-cover {
     background: #d6f1f3;
     border-radius: 0 0 56px 56px;
@@ -616,11 +617,11 @@ $conversation-card-border-arrow-size: $spacing-unit;
     margin: 0;
     padding-top: 0;
   }
-  
+
   .FullConversation > * {
     padding: 28px;
   }
-  
+
   .FullConversation .FullConversation-arrow {
     border-left: 28px solid transparent;
     border-right: 28px solid transparent;
@@ -631,7 +632,7 @@ $conversation-card-border-arrow-size: $spacing-unit;
     position: relative;
     width: 0;
   }
-  
+
   .FullConversation-statistics {
     display: flex;
     font-size: 13px;
@@ -641,18 +642,18 @@ $conversation-card-border-arrow-size: $spacing-unit;
     max-width: 576px;
     padding: 0 14px;
   }
-  
+
   .FullConversation-statistics li {
     list-style: none;
   }
-  
+
   .FullConversation-statisticsBottom {
     bottom: 21px;
     font-weight: normal;
     padding: 0 42px;
     position: relative;
   }
-  
+
   .FullConversation-statistics, .FullConversation-statisticsBottom {
     display: flex;
     font-size: 13px;
@@ -662,25 +663,25 @@ $conversation-card-border-arrow-size: $spacing-unit;
     max-width: 576px;
     padding: 0 14px;
   }
-  
+
   .FullConversation-statisticsBottom li {
     list-style: none;
     font-weight: normal;
   }
-  
+
   .FullConversation-statisticsBottom div {
     font-weight: normal;
   }
-  
+
   .FullConversation-statisticsBottom div + div {
     font-weight: bold;
     text-align: right;
   }
-  
+
   .FullConversation-header {
     text-align: center;
   }
-  
+
   .FullConversation-header h1 {
     font-size: 18px;
     text-transform: uppercase;
@@ -691,13 +692,13 @@ $conversation-card-border-arrow-size: $spacing-unit;
     text-transform: uppercase;
     padding: 0;
   }
-  
+
   .FullConversation-header p {
     color: #042049;
     font-size: 15px;
     font-family: "Raleway", sans-serif;
   }
-  
+
   .FullConversation-comment {
     background-color: #30c0d3;
     color: #fff;
@@ -709,11 +710,11 @@ $conversation-card-border-arrow-size: $spacing-unit;
     max-width: 700px;
     text-align: left;
   }
-  
+
   .FullConversation-comment-user {
     font-size: 15.75px;
   }
-  
+
   .FullConversation-comment-user .fa-user {
     color: #ff3e72;
     margin-right: 14px;
@@ -722,7 +723,7 @@ $conversation-card-border-arrow-size: $spacing-unit;
     border-radius: 56px;
     padding: 7px;
   }
-  
+
   .FullConversation-votes {
     display: flex;
     font-weight: bold;
@@ -731,7 +732,7 @@ $conversation-card-border-arrow-size: $spacing-unit;
     text-transform: uppercase;
     width: 100%;
   }
-  
+
   .FullConversation-votes li {
     list-style: none;
     flex-grow: 1;
@@ -740,7 +741,7 @@ $conversation-card-border-arrow-size: $spacing-unit;
     display: flex;
     flex-flow: column;
   }
-  
+
   .FullConversation-votes button {
     border: none;
     border-radius: 50%;
@@ -749,7 +750,7 @@ $conversation-card-border-arrow-size: $spacing-unit;
     cursor: pointer;
     outline: none;
   }
-  
+
   .FullConversation-votes .fa {
     background: #fff;
     height: 21px;
@@ -761,19 +762,19 @@ $conversation-card-border-arrow-size: $spacing-unit;
     font-weight: 900;
     font-size: 20px;
   }
-  
+
   .FullConversation-votes .fa-check {
-    color: #22b35c; 
+    color: #22b35c;
   }
-  
+
   .FullConversation-votes .fa-arrow-right {
-    color: #30c0d3; 
+    color: #30c0d3;
   }
-  
+
   .FullConversation-votes .fa-times {
-    color: #f13c20; 
+    color: #f13c20;
   }
-  
+
   .FullConversation-votes li button + span {
     font-size: 13px;
     font-weight: bold;
