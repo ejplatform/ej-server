@@ -149,7 +149,7 @@ def can_edit_conversation(user, conversation):
         return True
     elif (conversation is not None and
           (conversation.status == conversation.STATUS.promoted
-          and user.has_perm('ej_conversations.is_publisher'))):
+           and user.has_perm('ej_conversations.is_publisher'))):
         return True
     return False
 

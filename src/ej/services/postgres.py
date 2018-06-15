@@ -2,6 +2,7 @@ import importlib
 import os
 import time
 
+
 def start_postgres():
     settings_path = os.environ['DJANGO_SETTINGS_MODULE']
     settings = importlib.import_module(settings_path)

@@ -1,4 +1,3 @@
-from html import escape
 import logging
 
 from django.contrib.staticfiles.storage import staticfiles_storage

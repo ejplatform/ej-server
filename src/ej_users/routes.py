@@ -144,4 +144,3 @@ def clean_cookies():
     response.delete_cookie('sessionid')
     response.delete_cookie('csrftoken')
     return response
-

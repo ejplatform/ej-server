@@ -5,6 +5,7 @@ from sklearn.metrics import adjusted_mutual_info_score, adjusted_rand_score
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import Imputer
 
+from .util import missing_votes
 from .vote_stats import VoteStats
 from ..data_analysis import cluster_error
 

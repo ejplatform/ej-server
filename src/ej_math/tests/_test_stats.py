@@ -1,9 +1,4 @@
-import numpy as np
-import pandas as pd
-import pytest
-
-from ej_math.data.vote_data import VoteStats
-
+from ej_math.data import VoteStats
 
 
 class TestStatsClass:
