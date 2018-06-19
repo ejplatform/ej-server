@@ -6,8 +6,11 @@ $login-icon-size: 150px !default;
 $login-icon-color: $color-gray-light !default;
 $login-icon-border-width: 10px !default;
 $login-icon-border-color: $color-green !default;
+$login-icon-padding: 25px;
+$login-icon-scale: 1.2;
 $login-social-icons-size: $font-size-h1 !default;
 $login-title-color: $color-accent;
+$login-border-color: $color-green;
 $login-new-user-border: 1px solid $color-gray-dark;
 
 .Register,
@@ -15,7 +18,7 @@ $login-new-user-border: 1px solid $color-gray-dark;
     padding: $spacing-unit;
     text-align: center;
 
-    h1 {
+    h3 {
         color: $login-title-color;
     }
 
@@ -23,6 +26,7 @@ $login-new-user-border: 1px solid $color-gray-dark;
         display: block;
         margin-left: auto;
         margin-right: auto;
+        border: 1px solid $login-border-color;
     }
 
     input[type=submit] {
@@ -39,8 +43,9 @@ $login-new-user-border: 1px solid $color-gray-dark;
         padding: $spacing-unit-large;
         width: $login-icon-size;
 
-        img > * {
-            color: $color-hint;
+        img {
+            padding-top: $login-icon-padding;
+            transform: scale($login-icon-scale)
         }
     }
 
@@ -49,7 +54,7 @@ $login-new-user-border: 1px solid $color-gray-dark;
     }
 
     &-socialButtons {
-        display: none;
+        display: inline;
 
         i.fa {
             font-size: $login-social-icons-size;

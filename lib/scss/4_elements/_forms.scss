@@ -6,6 +6,9 @@ $form-border-color: $color-gray-dark !default;
 $form-element-color: $color-white !default;
 $form-element-color-text: $color-hint-text !default;
 $form-input-border-box: inset 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+$form-border-radius: 8px;
+$form-item-height: $font-size-default * 3;
+$form-item-width: 90%;
 
 form[hide-labels] {
     label {
@@ -28,11 +31,12 @@ select,
     box-sizing: border-box;
     font-size: $font-size-h6;
     max-width: $breakpoint-small;
-    width: 85%;
+    width: $form-item-width;
+    height: $form-item-height;
 }
 
 input, textarea {
-    box-shadow: $form-input-border-box;
+    
 }
 
 
@@ -46,7 +50,7 @@ input:not([type]),
 textarea,
 select,
 .FormItem {
-    border-radius: $font-size-large;
+    border-radius: $form-border-radius;
     background: $form-element-color;
     border: 1px solid $form-border-color;
     color: $form-element-color-text;
