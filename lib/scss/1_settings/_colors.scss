@@ -25,7 +25,7 @@ $color-magenta-dark: rgb(182, 42, 82) !default;
 $color-magenta-light: rgb(255, 172, 209) !default;
 
 $color-purple: rgb(109, 46, 167) !default;
-$color-purple-dark: #052B47 !default;
+$color-purple-dark: #3F1B53 !default;
 $color-purple-light: rgb(205, 164, 238) !default;
 
 $color-red: #f13c20 !default;
@@ -44,13 +44,13 @@ $color-pink: #FF3E72 !default;
 
 // Background and text colors
 $color-content: $color-white !default;
-$color-content-text: $color-blue-dark !default;
+$color-content-text: $color-purple-dark !default;
 $color-content-text-faded: $color-gray !default;
 
 // Color schemes
 // Buttons and highlighted elements. Strong highlight, usually applied to
 // smaller navigational elements and action buttons.
-$color-primary: $color-green !default;
+$color-primary: $color-blue !default;
 $color-primary-text: $color-white !default;
 
 // Primary action buttons, fab, etc
@@ -78,7 +78,7 @@ $color-role-ok: $color-green-dark !default;
 $color-role-error: $color-red !default;
 $color-role-warning: $color-yellow !default;
 
-$color-action-default: $color-primary !default;
+$color-action-default: $color-green !default;
 $color-action-primary: $color-accent !default;
 $color-action-secondary: $color-hint !default;
 
