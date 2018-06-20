@@ -5,21 +5,17 @@
 $login-icon-size: 150px !default;
 $login-icon-color: $color-gray-light !default;
 $login-icon-border-width: 10px !default;
-$login-icon-border-color: $color-purple-dark !default;
-$login-icon-padding: 25px;
-$login-icon-scale: 1.2;
+$login-icon-border-color: $color-green !default;
 $login-social-icons-size: $font-size-h1 !default;
 $login-title-color: $color-accent;
-$login-border-color: $color-primary;
-$login-new-user-border: 1px solid $color-blue-light;
-$login-social-icons-border-color: #0C3570;
+$login-new-user-border: 1px solid $color-gray-dark;
 
 .Register,
 .Login {
     padding: $spacing-unit;
     text-align: center;
 
-    h3 {
+    h1 {
         color: $login-title-color;
     }
 
@@ -27,13 +23,11 @@ $login-social-icons-border-color: #0C3570;
         display: block;
         margin-left: auto;
         margin-right: auto;
-        border: 1px solid $login-border-color;
     }
 
     input[type=submit] {
         display: block;
         margin-top: $spacing-unit;
-        border: 1px solid $color-green;
     }
 
     &-icon {
@@ -45,11 +39,8 @@ $login-social-icons-border-color: #0C3570;
         padding: $spacing-unit-large;
         width: $login-icon-size;
 
-        img {
-            padding-top: $login-icon-padding;
-            transform: scale($login-icon-scale);
-            position: relative;
-            z-index: -1;
+        img > * {
+            color: $color-hint;
         }
     }
 
@@ -57,26 +48,11 @@ $login-social-icons-border-color: #0C3570;
         @extend .Button--primary;
     }
 
-    &-socialIcons {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-    }
-
     &-socialButtons {
-        display: inline;
+        display: none;
 
         i.fa {
             font-size: $login-social-icons-size;
-            margin: 0 $spacing-unit-small 0 $spacing-unit-small;
-            border: 1px solid $login-social-icons-border-color;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
     }
 
