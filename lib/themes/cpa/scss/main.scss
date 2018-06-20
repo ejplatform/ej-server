@@ -17,6 +17,10 @@ $white: #fff;
 $size-big: 46px;
 $size-medium: 30px;
 
+.Page {
+  padding-bottom: 0;
+}
+
 .Header-topNav img {
   height: 74px;
 }
@@ -121,14 +125,24 @@ $size-medium: 30px;
   .Footer-social {
     i {
       color: $blue-dark;
-      margin-top: $unit * 8;
+      margin: $unit * 4 $unit * 2;
       font-size: $size-big;
     }
   }
 }
 
-.Footer-login .Button[primary] {
-  background: $green;
-  color: $white;
-  font-size: $size-medium;
+.Footer-login {
+  padding-bottom: 0;
+  margin: 0;
+
+  .Button[primary] {
+    background: $green;
+    color: $white;
+    font-size: $size-medium;
+    position: static;
+  }
+}
+
+.Header-lowerNav {
+  display: none;
 }
