@@ -37,7 +37,10 @@ class TaggedConversation(TaggedItemBase):
     content_object = models.ForeignKey('Conversation', on_delete=models.CASCADE)
 
 
-@rest_api(exclude=['status_changed'])
+@rest_api(
+    ['title', 'text', 'status', 'author', 'slug', 'status', 'created'],
+    lookup_field='slug',
+)
 class Conversation(TimeStampedModel, StatusModel):
     """
     A topic of conversation.
