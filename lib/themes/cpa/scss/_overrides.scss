@@ -1,150 +1,28 @@
-/*
- COLORS
- =========================================================================== */
-
-// Map color names to their actual HEX codes.
-// This defines a site-wide color palette.
-$color-black: #111;
-$color-white: #fff;
-$color-gray: #666;
-$color-grey-dark: #052B47;
-$color-gray-light: #eee;
-
-
-$color-blue: rgba(48,192,211,1);
+// COLORS
 $color-blue-dark: #30BEC0;
 $color-blue-light: #D4F7F5;
-$color-blue-light-low: #A3D8DD;
-$color-blue-nav: #C4F2F4;
-
+$color-grey-dark: #052B47;
 $color-green: #8EC73F;
-$color-green-dark: rgb(22, 132, 2);
-$color-green-light: rgb(189, 255, 206);
-
+$color-pink: #C6027B;
 $color-magenta: #C6027B;
-$color-magenta-dark: rgb(182, 42, 82);
-$color-magenta-light: rgb(255, 172, 209);
-
 $color-purple: #3F1B53;
-$color-purple-dark: #052B47;
-$color-purple-light: rgb(205, 164, 238);
+$color-gray-dark: #333 !default;
+$color-white: #fff;
 
-$color-red: #f13c20;
-$color-red-dark: #9c2715;
-$color-red-light: #ffb1b9;
-
-$color-yellow: #ffd333;
-$color-yellow-dark: #decf36;
-$color-yellow-light: #fffeaf;
-
-$color-pink: #FF3E72;
-
-//
-// COLOR ROLES
-// -----------------------------------------------------------------------------
-
-// Background and text colors
-$color-content: $color-white;
-$color-content-text: $color-black;
-$color-content-text-faded: $color-gray;
-
-// Color schemes
-// Buttons and highlighted elements. Strong highlight, usually applied to
-// smaller navigational elements and action buttons.
-$color-primary: $color-green;
-$color-primary-text: $color-white;
-
-// Primary action buttons, fab, etc
-// Usually has a high contrast compared to primary. Usually applied to the
-// primary action in a UI to attract user attention from secondary actions
-// in the interface.
-$color-accent: $color-magenta;
+$color-primary: $color-blue-dark;
+$color-primary-text: $color-gray-dark;
+$color-accent: $color-pink;
 $color-accent-text: $color-white;
 
-// Discreetly highlighted content. We want some emphasis from the default content
-// background, but it should not be highlighted as strongly as primary content.
-$color-hint: $color-blue-nav;
-$color-hint-text: $color-content-text;
-
-// Stronger hint. Used in Footer component
-$color-emph: $color-blue-nav;
-$color-emph-text: $color-hint-text;
-
-// Modifiers
-$color-hint-degree-pc: 10;
-$color-text-alpha: 0.9;
-
-// Color roles and actions
-$color-role-ok: $color-green-dark;
-$color-role-error: $color-red;
-$color-role-warning: $color-yellow;
-
-$color-action-default: $color-primary;
-$color-action-primary: $color-accent;
-$color-action-secondary: $color-hint;
-
-$color-action-default-text: rgba($color-primary-text, $color-text-alpha);
-$color-action-primary-text: rgba($color-accent-text, $color-text-alpha);
-$color-action-secondary-text: rgba($color-hint-text, $color-text-alpha);
-
-$color-action-default-hover: darken($color-action-default, $color-hint-degree-pc);
-$color-action-primary-hover: darken($color-action-primary, $color-hint-degree-pc);
-$color-action-secondary-hover: darken($color-action-secondary, $color-hint-degree-pc);
-
-$color-action-default-text-hover: $color-primary-text;
-$color-action-primary-text-hover: $color-accent-text;
-$color-action-secondary-text-hover: $color-hint-text;
-
-// Box shadow
-$color-box-shadow: rgba(18, 48, 102, 0.08);
-$box-shadow: 2px 0 4px 0 $color-box-shadow;
-
-
-
-/*
- Global
- =========================================================================== */
-
-// Spacing element
-$block-elements-border-radius: 0;
-
-
-/*
- SPACING
- =========================================================================== */
-
-
-// Baseline grid lines height.
-// Every spacing metric should be based on this.
-$spacing-baseline: 7px;
-
-
-// Border radius
+// SPACING
+$unit: 10px;
 $border-radius-small: 4px;
 $border-radius: 0;
-$border-radius-large: 0;
-$block-elements-border-radius: 0;
+$border-radius-large: 4px;
+$block-elements-border-radius: 4px;
 
+// FONTS FAMILIES AND SIZES
+$font-size-tiny: 13px;
 
-/*
- FONTS FAMILIES AND SIZES
- ============================================================== */
-
-// Font roles and base styles
-$font-mono: $font-ibm-plex;
-$font-sans: $font-raleway;
-$font-sans-accent: $font-raleway;
-$font-serif: $font-georgia;
-$font-cursive: $font-comic-sans;
-$font-paragraph: $font-sans;
-$font-headings: $font-sans-accent;
-
-// Base typographical sizes
-$font-size-tiny: 14px;
-
-
-/*
- COMPONENTS
- ============================================================== */
-
-$conversation-card-border-radius: 0;
+// COMPONENTS
+$conversation-card-border-radius: $unit;

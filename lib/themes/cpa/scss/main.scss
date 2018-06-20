@@ -1,5 +1,5 @@
-@import '../../../scss/1_settings/index';
-@import 'settings';
+@import '../../../scss/0_constants/index';
+@import 'overrides';
 @import '../../../scss/main';
 
 $blue-dark: #30BEC0;
@@ -12,13 +12,11 @@ $purple: #3F1B53;
 $white: #fff;
 
 // Sizes
-
 $size-big: 46px;
 $size-medium: 30px;
 
 // Components
-
 @import 'auth';
 @import 'home';
-@import 'conversations';
 @import 'conversation';
+@import 'conversations';

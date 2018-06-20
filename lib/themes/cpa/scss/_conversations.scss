@@ -1,31 +1,15 @@
-.ConversationList-title h1 {
-  font-size: $size-big !important;
-  color: $pink !important;
-  font-weight: normal !important;
-}
-
-.ConversationList-title h2 {
-  font-size: $size-medium;
-  color: $grey-dark;
-}
-
-.ConversationCard {
-  background-color: $blue-dark;
-  border-radius: $unit;
-}
-
 .ConversationTags {
-  background-color: $blue-dark;
-  color: $blue-light;
-  padding-bottom: 0;
+    background-color: $color-primary;
+    color: $color-primary-text;
+    padding-bottom: 0;
 }
 
 .ConversationCard-cover + .ConversationCard-actions {
-  background: $blue-dark url('/static/img/bg.svg') bottom center no-repeat;
-  background-size: cover;
+    background: $color-blue-dark url('/static/img/bg.svg') bottom center no-repeat;
+    background-size: cover;
 }
 
 .ConversationCard-actions .Button[primary] {
-  border-radius: $unit;
-  background: $pink;
+    border-radius: $unit;
+    background: $color-pink;
 }

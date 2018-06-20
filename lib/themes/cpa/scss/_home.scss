@@ -1,118 +1,105 @@
 .Page {
-  padding-bottom: 0;
+    padding-bottom: 0;
 }
 
 .Header-topNav img {
-  height: 74px;
+    height: 74px;
 }
 
 .Header {
-  background: $blue-dark;
+    background: $color-blue-dark;
 }
 
 .Header-topNav {
-  background: $blue-dark;
+    background: $color-blue-dark;
 
-  a {
-    color: $white;
-  }
+    a {
+        color: $color-white;
+    }
 }
 
 .HomeBanner {
-  width: 80%;
+    width: 80%;
 
-  h1 {
-    color: $grey-dark;
-    font-family: Raleway;
-    font-size: $size-big;
-    line-height: 1.5em;
-    text-align: center;
-    font-weight: lighter;
-  }
+    h1 {
+        color: $color-grey-dark;
+        font-family: Raleway;
+        line-height: 1.5em;
+        text-align: center;
+    }
 
-  .Button[primary] {
-    background: $green;
-    border-radius: $unit;
-    font-size: $size-medium;
-    color: $white;
-    font-weight: lighter;
-    padding: $unit $unit*2;
-  }
+    .Button[primary] {
+        background: $color-green;
+        border-radius: $unit;
+        color: $color-white;
+        padding: $unit $unit*2;
+    }
 }
 
 .HowItWorks {
-  background: $blue-light;
+    background: $color-blue-light;
 
-  h1 {
-    color: $pink;
-    font-family: 'Patua One';
-    font-size: $size-big;
-    font-weight: normal;
-  }
+    h1 {
+        color: $color-pink;
+        font-weight: normal;
+    }
 
-  p {
-    color: $purple;
-    font-family: 'Raleway';
-    font-size: $size-medium;
-    line-height: $size-medium;
-    text-align: center;
-  }
+    p {
+        color: $color-purple;
+        line-height: $size-medium;
+        text-align: center;
+    }
 
-  .HowItWorksCard > .fa {
-    background: $white;
-    border-radius: 50%;
-    width: $unit * 7;
-    height: $unit * 7;
-    display: inline-block;
-    color: $blue-dark;
-    padding-top: $unit * 2;
-    font-size: $unit * 3;
-    margin: $unit * 2;
-  }
+    .HowItWorksCard > .fa {
+        background: $color-white;
+        border-radius: 50%;
+        width: $unit * 7;
+        height: $unit * 7;
+        display: inline-block;
+        color: $color-blue-dark;
+        padding-top: $unit * 2;
+        margin: $unit * 2;
+    }
 
-  .HowItWorksCard h1 {
-    color: $purple;
-    font-family: 'Patua One';
-    font-size: $size-medium;
-  }
+    .HowItWorksCard h1 {
+        color: $color-purple;
+    }
 
-  .fa-child:before {
-    content: "\f007";
-  }
+    .fa-child:before {
+        content: "\f007";
+    }
 
-  .fa-hands-helping:before {
-    content: "\f06a";
-  }
+    .fa-hands-helping:before {
+        content: "\f06a";
+    }
 }
 
 .StartNow, .Footer-info {
-  display: none;
+    display: none;
 }
 
 .Footer {
-  background: $blue-light;
+    background: $color-blue-light;
 
-  .Footer-social {
-    i {
-      color: $blue-dark;
-      margin: $unit * 4 $unit * 2;
-      font-size: $size-big;
+    .Footer-social {
+        i {
+            color: $color-blue-dark;
+            margin: $unit * 4 $unit * 2;
+        }
     }
-  }
 }
 
 .Footer-login {
-  padding-bottom: 0;
-  margin: 0;
+    padding-bottom: 0;
+    margin: 0;
 
-  .Button[primary] {
-    background: $green;
-    color: $white;
-    font-size: $size-medium;
-    position: static;
-  }
+    .Button[primary] {
+        background: $color-green;
+        color: $color-white;
+        position: static;
+    }
 }
 
 .Header-lowerNav {
-  display: none;
+    display: none;
 }

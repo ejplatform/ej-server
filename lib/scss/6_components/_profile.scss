@@ -27,7 +27,7 @@ $profile-arrow-size: $spacing-unit !default;
 
     &-actions {
         margin: $spacing-unit-large;
-        padding: 0px;
+        padding: 0;
         text-transform: uppercase;
         color: $color-gray-dark;
         opacity: 0.8;
@@ -50,11 +50,11 @@ $profile-arrow-size: $spacing-unit !default;
             color: black;
             text-align: justify;
             font-weight: normal;
-            span{
+            span {
                 color: $color-magenta;
                 font-weight: bold;
             }
-            i{
+            i {
                 float: right;
                 font-weight: bold;
                 font-size: $font-size-huge;
@@ -74,11 +74,11 @@ $profile-arrow-size: $spacing-unit !default;
             color: black;
             text-align: justify;
             font-weight: normal;
-            span{
+            span {
                 color: $color-magenta;
                 font-weight: bold;
             }
-            i{
+            i {
                 float: right;
                 font-weight: bold;
                 font-size: $font-size-huge;
@@ -86,14 +86,14 @@ $profile-arrow-size: $spacing-unit !default;
             }
 
         }
-        ul{
-            padding: 0px;
-            margin: 0px;
+        ul {
+            padding: 0;
+            margin: 0;
             display: none;
 
             li {
-                .header{
-                    &::after{
+                .header {
+                    &::after {
                         content: "";
                         clear: both;
                         display: table;
@@ -101,36 +101,36 @@ $profile-arrow-size: $spacing-unit !default;
 
                     color: $color-blue-light-low;
 
-                    .label{
+                    .label {
                         float: left;
                     }
-                    .date{
+                    .date {
                         float: right;
                     }
 
                 }
-                .content{
+                .content {
                     font-weight: 600;
                     margin-top: $spacing-unit-tiny;
                     margin-bottom: $spacing-unit-tiny;
                 }
-                .actions{
+                .actions {
                     display: flex;
                     justify-content: space-between;
 
-                    li{
-                        &.agree{
+                    li {
+                        &.agree {
 
                         }
-                        &.skip{
+                        &.skip {
                             color: $color-blue-light;
 
                         }
-                        &.disagree{
+                        &.disagree {
                             color: $color-magenta;
 
                         }
-                        span{
+                        span {
                             margin-left: 0.5em;
                         }
                         border: none;
@@ -138,14 +138,14 @@ $profile-arrow-size: $spacing-unit !default;
                     }
 
                 }
-                .footer{
+                .footer {
                     margin-top: $spacing-unit-small;
                     margin-bottom: $spacing-unit-small;
                     color: $color-magenta;
                     font-weight: bold;
                 }
-                padding: 0px;
-                margin: 0px;
+                padding: 0;
+                margin: 0;
                 border-bottom: 2px solid $color-blue-light-low;
                 list-style: none;
             }
@@ -217,7 +217,7 @@ $profile-arrow-size: $spacing-unit !default;
             min-width: $spacing-unit * 2;
         }
     }
-    &-tabActive{
+    &-tabActive {
         font-weight: bold;
     }
 
@@ -234,7 +234,7 @@ $profile-arrow-size: $spacing-unit !default;
         font-size: $font-size-h6;
         padding: $spacing-unit;
 
-        .edit-button{
+        .edit-button {
             margin-top: $spacing-unit;
             text-align: center;
             .Button {
@@ -243,23 +243,23 @@ $profile-arrow-size: $spacing-unit !default;
             }
         }
 
-        .statistics{
-            &::after{
+        .statistics {
+            &::after {
                 content: "";
                 clear: both;
                 display: table;
             }
-            margin: 0px;
-            padding: 0px;
-            li{
-                span{
+            margin: 0;
+            padding: 0;
+            li {
+                span {
                     color: $color-blue-light;
                     font-weight: 600;
-                    &.amount{
+                    &.amount {
                         font-weight: 800;
                         font-size: $font-size-huge;
                     }
-                    &.description{
+                    &.description {
                         font-size: $font-size-small;
                     }
 
@@ -276,16 +276,16 @@ $profile-arrow-size: $spacing-unit !default;
             clear: both;
         }
 
-        .trophies{
-            &::after{
+        .trophies {
+            &::after {
                 content: "";
                 clear: both;
                 display: table;
             }
-            margin: 0px;
-            padding: 0px;
-            li{
-                span{
+            margin: 0;
+            padding: 0;
+            li {
+                span {
                     color: $color-blue-light;
                     font-weight: 600;
                     display: block;
