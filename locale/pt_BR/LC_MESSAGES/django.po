@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-13 11:43+0000\n"
+"POT-Creation-Date: 2018-06-20 13:31+0000\n"
 "PO-Revision-Date: 2018-06-13 10:33-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: \n"
@@ -159,15 +159,15 @@ msgstr "Status"
 msgid "OneSignal Id"
 msgstr "Id OneSignal"
 
-#: src/ej/tags.py:12
+#: src/ej/tags.py:11
 msgid "hello"
 msgstr "olá"
 
-#: src/ej/tags.py:51
+#: src/ej/tags.py:50
 msgid "Access CPA panel"
 msgstr "Acesse o painel do CPA"
 
-#: src/ej/tags.py:57
+#: src/ej/tags.py:56
 msgid "Go!"
 msgstr "Ir!"
 
@@ -518,6 +518,7 @@ msgid "Stereotypes"
 msgstr "Estereótipos"
 
 #: src/ej_clusters/routes.py:88
+#, python-brace-format
 msgid "Stereotype votes ({conversation})"
 msgstr "Votos de estereótipo ({conversation})"
 
@@ -761,7 +762,11 @@ msgstr "Pode moderar comentários em qualquer conversa"
 msgid "User does not have permission to create a promoted conversation."
 msgstr ""
 
-#: src/ej_conversations/models/conversation.py:213
+#: src/ej_conversations/models/conversation.py:145
+msgid "automatically rejected"
+msgstr ""
+
+#: src/ej_conversations/models/conversation.py:217
 msgid "No comments available for this user"
 msgstr ""
 
@@ -802,11 +807,11 @@ msgstr "Criar conversa"
 msgid "Edit conversation: {conversation}"
 msgstr "Editar conversa: {conversation}"
 
-#: src/ej_conversations/routes/base.py:30
+#: src/ej_conversations/routes/base.py:31
 msgid "Add new conversation"
 msgstr "Criar nova conversa"
 
-#: src/ej_conversations/routes/base.py:49
+#: src/ej_conversations/routes/base.py:50
 msgid "login"
 msgstr "entrar"
 
@@ -1183,14 +1188,14 @@ msgid "Under construction!"
 msgstr ""
 
 #: src/ej/templates/jinja2/components/home.jinja2:11
+#: src/ej/templates/jinja2/components/home.jinja2:13
+msgid "Start now"
+msgstr "Começar agora!"
+
 #: src/ej/templates/jinja2/components/home.jinja2:74
 #: src/ej/templates/jinja2/components/home.jinja2:76
 msgid "Start now!"
 msgstr "Começar agora!"
-
-#: src/ej/templates/jinja2/components/home.jinja2:13
-msgid "Access CPA panel!"
-msgstr "Acesse o painel do CPA!"
 
 #: src/ej/templates/jinja2/components/generic/page_footer.jinja2:17
 msgid "Enter"
@@ -1254,6 +1259,10 @@ msgstr "Gerenciar estereótipos"
 #: src/ej/templates/jinja2/components/generic/page_menu.jinja2:49
 msgid "Request reports"
 msgstr "Requisitar relatórios"
+
+#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:55
+msgid "Panel"
+msgstr ""
 
 #: src/ej/templates/jinja2/components/generic/page_menu.jinja2:57
 msgid "Home"
@@ -1505,6 +1514,9 @@ msgstr "Recuperar senha"
 #: src/ej_users/jinja2/ej_users/reset-password.jinja2:2
 msgid "Reset password"
 msgstr "Recriar minha senha"
+
+#~ msgid "Access CPA panel!"
+#~ msgstr "Acesse o painel do CPA!"
 
 #, fuzzy
 #~ msgid "Unvoted comments"
