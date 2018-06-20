@@ -1,16 +1,15 @@
-.Container {
-  a {
-    color: $purple;
-    text-transform: uppercase;
-    margin: $unit;
-    font-weight: bold;
-    display: block;
-  }
+.Container > a {
+  color: $purple;
+  text-transform: uppercase;
+  margin: $unit;
+  font-weight: bold;
+  display: block;
 }
 
 .ConversationDetail {
   h1 {
     color: $purple;
+    font-size: $size-big !important;
   }
 
   p {
@@ -69,6 +68,8 @@
     h1 {
       color: $pink !important;
       font-size: $size-big;
+      font-family: 'Patua One' !important;
+      font-weight: 300;
     }
 
     p {
