@@ -40,6 +40,11 @@
 
     .Comment {
         background: $blue-dark;
+        color: $white;
+
+        i.fa {
+          background: $white;
+        }
     }
 
     .Comment-voteArea ul span {
@@ -49,6 +54,9 @@
     .Comment-voteArea ul li i.fa {
         width: 32px;
         height: 32px;
+        background: $white;
+        border: 0;
+        padding: 9px 6px 0 7px;
     }
 
     .CommentForm {
