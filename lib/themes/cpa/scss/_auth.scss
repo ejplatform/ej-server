@@ -1,0 +1,40 @@
+
+$login-icon-scale: 1.2;
+$login-icon-padding: 25px;
+$login-input-height: 50px;
+$login-input-border-radius: 8px;
+
+.Login-icon {
+    border: 10px solid $color-purple;
+}
+
+.Login {
+    h1 {
+        color: $color-magenta;
+        font-weight: 100;
+    }
+
+    input {
+        border: 1px solid $color-blue;
+        border-radius: $login-input-border-radius;
+        height: $login-input-height;
+    }
+
+    input[type=submit] {
+        border: 1px solid $color-green;
+        background-color: $color-green;
+        box-shadow: none;
+        width: 70%;
+    }
+
+    img {
+        padding-top: $login-icon-padding;
+        transform: scale($login-icon-scale);
+        position: relative;
+        z-index: -1;
+    }
+    
+    a{
+        color: $color-magenta;
+    }
+}
