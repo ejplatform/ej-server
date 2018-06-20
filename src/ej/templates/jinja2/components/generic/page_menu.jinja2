@@ -6,13 +6,13 @@
             <li><em>{{ icon_link(_('About'), '/about-us/', 'far fa-comment') }}</em></li>
             <li><em>{{ icon_link(_('FAQ'), '/faq/', 'far fa-question-circle') }}</em></li>
             <li><em>{{ icon_link(_('Usage terms'), '/usage/', 'far fa-file-alt') }}</em></li>
-        {% if not user.is_active %}    
+        {% if not user.is_active %}
             <li>{{ icon_link(_('Conversations'), '/conversations/', 'conversations', fa=False) }}</li>
         {% elif not user.is_staff %}
             <li class="NavMenu-DropDown" onclick="openDropDown()">{{ icon_link(_('Conversations'), '/conversations/', 'conversations', fa=False) }}
                 <i class="fas fa-angle-down fa-2x NavMenu-AngleDownIcon" onclick="openDropDown()"></i>
                 <ul class="NavMenu-UserMenu">
-                    <li> 
+                    <li>
                     {{icon_link(_('Public conversations'), '/conversations/', 'fas fa-comments', fa=True)}}
                     </li>
                     <li>
@@ -24,7 +24,7 @@
             <li class="NavMenu-DropDown" onclick="openDropDown()">{{ icon_link(_('Conversations'), '/conversations/', 'conversations', fa=False) }}
                 <i class="fas fa-angle-down fa-2x NavMenu-AngleDownIcon"></i>
                 <ul class="NavMenu-UserMenu">
-                    <li> 
+                    <li>
                     {{icon_link(_('Public conversations'), '/conversations/', 'fas fa-comments', fa=True)}}
                     </li>
                     <li>
@@ -36,7 +36,7 @@
                     </li>
                     <li>
                         <i class="far fa-star"></i>
-                        {{_('Favorite conversations')}}    
+                        {{_('Favorite conversations')}}
                     </li>
                     <li>
                         <i class="fas fa-cog"></i>
@@ -51,14 +51,14 @@
                 </ul>
             </li>
         {% endif %}
-    
-            {# <li>{{ icon_link(_('Talks'), '/talks/', 'talks', fa=False) }}</li>#}
+
+            <li>{{ icon_link(_('Panel'), '/talks/', 'talks', fa=False) }}</li>
             <li>{{ icon_link(_('Profile'), '/profile/', 'profile', fa=False) }}</li>
             <li><em>{{ icon_link(_('Home'), '/', 'fa fa-home') }}</em></li>
             <li>
-            
-            {% if user.is_active %} 
-                <form method="post" action="/logout/"> 
+
+            {% if user.is_active %}
+                <form method="post" action="/logout/">
                     <i class="fas fa-sign-out-alt"></i>
                     <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
                     <button class="" type="submit">{{ _('Logout') }}</button>
