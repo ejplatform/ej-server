@@ -1,19 +1,10 @@
 @import '../../../scss/1_settings/index';
 @import 'settings';
-
-
 @import '../../../scss/main';
-
-@import 'auth';
-
-// FIXME
-// - Split into smaller files
-// - Use variables
-// Colors
-
 
 $blue-dark: #30BEC0;
 $blue-light: #D4F7F5;
+$blue-medium: #30C0D3;
 $grey-dark: #052B47;
 $green: #8EC73F;
 $pink: #C6027B;
@@ -25,5 +16,9 @@ $white: #fff;
 $size-big: 46px;
 $size-medium: 30px;
 
+// Components
+
+@import 'auth';
 @import 'home';
 @import 'conversations';
+@import 'conversation';
