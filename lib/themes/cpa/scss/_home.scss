@@ -82,6 +82,8 @@
     background: $color-blue-light;
 
     .Footer-social {
+        padding-bottom: $unit * 7;
+
         i {
             color: $color-blue-dark;
             margin: $unit * 4 $unit * 2;
@@ -92,6 +94,10 @@
 .Footer-login {
     padding-bottom: 0;
     margin: 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 999;
 
     .Button[primary] {
         background: $color-green;
@@ -101,5 +107,21 @@
 }
 
 .Header-lowerNav {
+  img {
     display: none;
+  }
+
+  a {
+    color: $purple !important; 
+
+    &:before {
+        content: "\f086";
+        font-family: 'Font Awesome\ 5 Free';
+        font-size: 32px;
+    }
+  }
+
+  a + a:before {
+    content: "\f007";
+  }
 }
