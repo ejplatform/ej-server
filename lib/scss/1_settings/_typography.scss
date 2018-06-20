@@ -2,25 +2,7 @@
  FONTS FAMILIES AND SIZES
  ============================================================== */
 
-// Font names aliases
-$font-material-icons: 'Material Icons';
-
-// Sans-serif
-$font-roboto: 'Roboto', sans-serif;
-$font-open-sans: 'Open Sans', sans-serif;
-$font-open-sans-condensed: 'Open Sans Condensed', $font-open-sans;
-$font-raleway: 'Raleway', sans-serif;
-$font-lato: 'Lato', sans-serif;
-
-// Sans-serif
-$font-georgia: 'Georgia', serif;
-$font-times: 'Times New Roman', serif;
-
-// Cursive
-$font-comic-sans: 'Comic Sans', cursive;
-
-// Monospace
-$font-ibm-plex: 'IBM Plex Mono', monospace;
+@import '../0_constants/typography';
 
 // Font roles and base styles
 $font-mono: $font-ibm-plex !default;
