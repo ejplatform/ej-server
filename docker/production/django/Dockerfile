@@ -16,7 +16,7 @@ RUN apt-get update \
     gnupg2 \
     libc6-dev \
     libdpkg-perl \
-    ruby-sass \ 
+    ruby-sass \
     make \
     nodejs=8.11.2~dfsg-1 \
     python3.6 \
@@ -55,6 +55,8 @@ RUN groupadd -r django \
 WORKDIR /app
 COPY . /app
 
+# TODO: Remove this!
+ENV THEME=cpa
 RUN inv prepare-deploy \
     && chown -R django:django /app \
     && ln -s /usr/bin/python3 /usr/bin/python
