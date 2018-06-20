@@ -1,0 +1,134 @@
+@import '../../../scss/1_settings/index';
+@import 'settings';
+@import '../../../scss/main';
+
+// FIXME
+// - Split into smaller files
+// - Use variables
+
+$blue-dark: #30BEC0;
+$blue-light: #D4F7F5;
+$grey-dark: #052B47;
+$green: #8EC73F;
+$pink: #C6027B;
+$purple: #3F1B53;
+$white: #fff;
+
+$size-big: 46px;
+$size-medium: 30px;
+
+.Header-topNav img {
+  height: 74px;
+}
+
+.Header {
+  background: $blue-dark;
+}
+
+.Header-topNav {
+  background: $blue-dark;
+
+  a {
+    color: $white;
+  }
+}
+
+.HomeBanner {
+  width: 80%;
+
+  h1 {
+    color: $grey-dark;
+    font-family: Raleway;
+    font-size: $size-big;
+    line-height: 1.5em;
+    text-align: center;
+    font-weight: lighter;
+  }
+
+  .Button[primary] {
+    background: $green;
+    border-radius: $unit;
+    font-size: $size-medium;
+    color: $white;
+    font-weight: lighter;
+    padding: $unit $unit*2;
+  }
+}
+
+.HowItWorks {
+  background: $blue-light;
+
+  h1 {
+    color: $pink;
+    font-family: 'Patua One';
+    font-size: $size-big;
+    font-weight: normal;
+  }
+
+  p {
+    color: $purple;
+    font-family: 'Raleway';
+    font-size: $size-medium;
+    line-height: $size-medium;
+    text-align: center;
+  }
+
+  .HowItWorksCard > .fa {
+    background: $white;
+    border-radius: 50%;
+    width: $unit * 7;
+    height: $unit * 7;
+    display: inline-block;
+    color: $blue-dark;
+    padding-top: $unit * 2;
+    font-size: $unit * 3;
+    margin: $unit * 2;
+  }
+
+  .HowItWorksCard h1 {
+    color: $purple;
+    font-family: 'Patua One';
+    font-size: $size-medium;
+  }
+
+  .fa-child:before {
+    content: "\f007";
+  }
+
+  .fa-hands-helping:before {
+    content: "\f06a";
+  }
+}
+
+.ConversationList-title h1 {
+  font-size: $size-big !important;
+  color: $pink !important;
+  font-weight: normal !important;
+}
+
+.ConversationList-title h2 {
+  font-size: $size-medium;
+  color: $grey-dark;
+}
+
+.StartNow, .Footer-info {
+  display: none;
+}
+
+.Footer {
+  background: $blue-light;
+
+  .Footer-social {
+    i {
+      color: $blue-dark;
+      margin-top: $unit * 8;
+      font-size: $size-big;
+    }
+  }
+}
+
+.Footer-login .Button[primary] {
+  background: $green;
+  color: $white;
+  font-size: $size-medium;
+}

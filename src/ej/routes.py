@@ -17,8 +17,7 @@ urlpatterns = Router(
 #
 @urlpatterns.route('')
 def home(request):
-    # FIXME: redirect to /start/ when user is not logged in
-    if True:  # request.user.id:
+    if request.user.id:
         return redirect('/conversations/')
     return redirect('/start/')
 
