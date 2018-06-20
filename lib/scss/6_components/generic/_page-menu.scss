@@ -11,8 +11,9 @@ $nav-menu-border: 1px solid $nav-menu-border-color !default;
 // Layout
 $nav-menu-font-size: $font-size-default !default;
 $nav-menu-opacity: 1.0 !default;
-$nav-menu-shadow: $box-shadow;
+$nav-menu-shadow: $box-shadow !default;
 $nav-menu-width: 75vw !default;
+
 
 // Element
 .NavMenu {
@@ -76,7 +77,7 @@ $nav-menu-width: 75vw !default;
         display: none;
         >li {
             margin-left: $spacing-unit-large;
-            
+
         }
 
     }
