@@ -50,7 +50,7 @@ class InstalledAppsConf(Base, EjOptions):
 
     def get_django_contrib_apps(self):
         apps = super().get_django_contrib_apps()
-        return ['django.contrib.flatpages', *apps]
+        return ['django.contrib.staticfiles', 'django.contrib.flatpages', *apps]
 
     def get_project_apps(self):
         apps = super().get_project_apps()

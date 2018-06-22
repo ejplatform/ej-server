@@ -6,4 +6,4 @@ from rest_framework import serializers
 class MissionSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Mission
-        fields = ('id', 'title', 'description', 'users')
+        fields = ('id', 'title', 'description', 'users', 'fileUpload')

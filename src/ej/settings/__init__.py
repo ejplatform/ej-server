@@ -83,6 +83,9 @@ class Conf(locales.brazil(),
     }
 
     MEDIA_ROOT = "/home2/david/projects/ej-server/local/media"
+    STATIC_URL = "/local/media/uploads/"
+    DEBUG = True
+    STATICFILES_DIRS = ['/home2/david/projects/ej-server/local/media/uploads']
     # REST_AUTH_REGISTER_SERIALIZERS = {
     #     'REGISTER_SERIALIZER': 'ej_users.serializers.RegistrationSerializer'
     # }
