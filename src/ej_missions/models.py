@@ -8,6 +8,7 @@ from django.db import models
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from model_utils.models import TimeStampedModel, StatusModel
+from django.conf import settings
 
 from boogie import rules
 from boogie.rest import rest_api
@@ -15,7 +16,7 @@ from ej_users.models import User
 
 
 def mission_directory_path(instance, filename):
-    return 'mission_{0}/{1}'.format(instance.mission.id, filename)
+    return 'uploads/mission_{0}/{1}'.format(instance.mission.id, filename)
 
 class Mission(models.Model):
 
@@ -23,7 +24,8 @@ class Mission(models.Model):
     description = models.TextField(max_length=1000)
     users = models.ManyToManyField(User)
     youtubeVideo = models.CharField(max_length=60)
-    fileUpload = models.FileField(upload_to=mission_directory_path)
+    fileUpload = models.FileField(upload_to="uploads",
+                                  default=settings.MEDIA_ROOT + "/uploads/default.jpg")
 
     class Meta:
         ordering = ['title']

@@ -28,15 +28,15 @@ class MissionViewSet(viewsets.ViewSet):
         return Response(serializer.data)
 
     def create(self, request):
-        print("dhsjkadhsjsjkahdjskahk")
         print(request.POST)
         print(request.FILES)
-        print("HAAAAAAAAAAAAAAAAAAA")
-       # data = json.loads(request.body.decode("utf8"))
-       #mission = models.Mission(title=data["title"], description=data["description"])
-       #mission.save()
-       #serializer = serializers.MissionSerializer(mission)
-       #return Response(serializer.data)
+        data = request.POST
+        mission = models.Mission(title=data["title"], description=data["description"])
+        mission.save()
+        mission.fileUpload=request.FILES["coverFile"]
+        mission.save()
+        serializer = serializers.MissionSerializer(mission)
+        return Response(serializer.data)
 
     def accept(self, request):
         data = json.loads(request.body.decode("utf8"))
