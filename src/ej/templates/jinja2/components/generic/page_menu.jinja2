@@ -9,17 +9,8 @@
         {% if not user.is_active %}
             <li>{{ icon_link(_('Conversations'), '/conversations/', 'conversations', fa=False) }}</li>
         {% elif not user.is_staff %}
-            <li class="NavMenu-DropDown" onclick="openDropDown()">{{ icon_link(_('Conversations'), '/conversations/', 'conversations', fa=False) }}
-                <i class="fas fa-angle-down fa-2x NavMenu-AngleDownIcon" onclick="openDropDown()"></i>
-                <ul class="NavMenu-UserMenu">
-                    <li>
-                    {{icon_link(_('Public conversations'), '/conversations/', 'fas fa-comments', fa=True)}}
-                    </li>
-                    <li>
-                    {{icon_link(_('Your conversations'), ('/{}/'.format(user)), 'far fa-comment', fa=True)}}
-                    </li>
-                </ul>
-            </li>
+            <li>{{ icon_link(_('Conversations'), '/conversations/', 'conversations', fa=False) }}</li>
+            <li>{{ icon_link(_('Panel'), '/talks/', 'talks', fa=False) }}</li>
         {% else %}
             <li class="NavMenu-DropDown" onclick="openDropDown()">{{ icon_link(_('Conversations'), '/conversations/', 'conversations', fa=False) }}
                 <i class="fas fa-angle-down fa-2x NavMenu-AngleDownIcon"></i>
@@ -50,9 +41,8 @@
                     </li>
                 </ul>
             </li>
-        {% endif %}
-
             <li>{{ icon_link(_('Panel'), '/talks/', 'talks', fa=False) }}</li>
+        {% endif %}
             <li>{{ icon_link(_('Profile'), '/profile/', 'profile', fa=False) }}</li>
             <li><em>{{ icon_link(_('Home'), '/', 'fa fa-home') }}</em></li>
             <li>

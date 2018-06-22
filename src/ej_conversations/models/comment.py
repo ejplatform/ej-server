@@ -16,7 +16,7 @@ from ..validators import is_not_empty
 log = logging.getLogger('ej-conversations')
 
 
-@rest_api()
+@rest_api(['content', 'author', 'status', 'created', 'rejection_reason'])
 class Comment(StatusModel, TimeStampedModel):
     """
     A comment on a conversation.

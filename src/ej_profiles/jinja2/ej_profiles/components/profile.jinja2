@@ -17,6 +17,7 @@
 {% macro profile_detail(profile, conversations, info='profile', javascript_enabled='') %}
     <div class="Profile">
         <img class="Profile-image" src="{{ profile.image_url }}">
+
         <h1>{{ profile.name }}</h1>
         <h2>{{ _('Participant Status') }}</h2>
         {{ profile_comments(profile) }}

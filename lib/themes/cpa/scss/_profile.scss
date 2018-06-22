@@ -1,0 +1,46 @@
+$profile-edit-button-border-radius: 8px;
+$profile-icon-size: 150px;
+$profile-edit-button-padding: 15px 25px 15px 25px;
+.Profile {
+    &-tabContent {
+        background-color: $color-blue-light;
+    }
+    &-info {
+        dl {
+            dt {
+                color: $color-blue-dark;
+            }
+        }
+        .edit-button {
+            margin-top: $spacing-unit;
+            text-align: center;
+            .Button {
+                text-transform: uppercase;
+                background-color: $color-pink;
+                border-radius: $profile-edit-button-border-radius;
+                padding: $profile-edit-button-padding;
+            }
+        }
+        .statistics {
+            li {
+                span {
+                    color: $color-blue-dark;
+                }
+            }
+        }
+        .trophies {
+            li {
+                span {
+                    color: $color-blue-dark;
+                }
+            }
+            .Button {
+                text-transform: uppercase;
+                background-color: $color-pink;
+                border-radius: $profile-edit-button-border-radius;
+                padding: $profile-edit-button-padding;
+                color: $color-white;
+            }
+        }
+    }
+}
