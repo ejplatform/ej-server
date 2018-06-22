@@ -1,26 +1,9 @@
-$profile-icon-padding: $profile-image-size+60px;
 $profile-edit-button-border-radius: 8px;
 $profile-icon-size: 150px;
 $profile-edit-button-padding: 15px 25px 15px 25px;
 .Profile {
     &-tabContent {
         background-color: $color-blue-light;
-    }
-    &-icon {
-        border: 10px solid $color-purple;
-        border-radius: 50%;
-        height: $profile-icon-size;
-        width: $profile-icon-size;
-        border-radius: 50%;
-        color: $login-icon-color;
-        margin: $spacing-unit-large auto;
-        padding: $spacing-unit-large;
-    }
-    &-image {
-        padding-bottom: $profile-icon-padding;
-        transform: scale($login-icon-scale);
-        position: relative;
-        z-index: -1;
     }
     &-info {
         dl {
