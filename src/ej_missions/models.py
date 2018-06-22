@@ -14,11 +14,16 @@ from boogie.rest import rest_api
 from ej_users.models import User
 
 
+def mission_directory_path(instance, filename):
+    return 'mission_{0}/{1}'.format(instance.mission.id, filename)
+
 class Mission(models.Model):
 
     title = models.CharField(max_length=30)
     description = models.TextField(max_length=1000)
     users = models.ManyToManyField(User)
+    youtubeVideo = models.CharField(max_length=60)
+    fileUpload = models.FileField(upload_to=mission_directory_path)
 
     class Meta:
         ordering = ['title']
