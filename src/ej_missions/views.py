@@ -1,9 +1,13 @@
-from . import serializers
-from . import models
 from rest_framework import viewsets
 from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
 from rest_framework.decorators import action
+from rest_framework.request import Request
+import json
+
+from . import serializers
+from . import models
+from ej_users.models import User
 
 class MissionViewSet(viewsets.ViewSet):
 
@@ -18,4 +22,16 @@ class MissionViewSet(viewsets.ViewSet):
         return Response(serializer.data)
 
     def create(self, request):
-        print("ok")
+        data = json.loads(request.body.decode("utf8"))
+        mission = models.Mission(title=data["title"], description=data["description"])
+        mission.save()
+        serializer = serializers.MissionSerializer(mission)
+        return Response(serializer.data)
+
+    def accept(self, request):
+        data = json.loads(request.body.decode("utf8"))
+        user = User.objects.filter(id=data["user_id"])[0]
+        mission = models.Mission.objects.filter(id=data["id"])[0]
+        mission.users.add(user)
+        serializer = serializers.MissionSerializer(mission, context={'request': Request(request)})
+        return Response(serializer.data)
