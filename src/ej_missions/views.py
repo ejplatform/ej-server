@@ -58,6 +58,14 @@ class MissionViewSet(viewsets.ViewSet):
         serializer = serializers.MissionSerializer(mission)
         return Response(serializer.data)
 
+    def update_receipt(self, request, pk):
+        data = json.loads(request.body.decode("utf8"))
+        receipt = models.Receipt.objects.filter(id=pk)[0]
+        receipt.status = data["status"]
+        receipt.save()
+        serializer = serializers.MissionReceiptSerializer(receipt)
+        return Response(serializer.data)
+
     def receipts(self, request, pk):
         queryset = models.Mission.objects.filter(id=pk)[0].receipt_set.all()
         serializer = serializers.MissionReceiptSerializer(queryset, many=True)
@@ -91,3 +99,4 @@ class MissionViewSet(viewsets.ViewSet):
              statistics["pending"] += 1
 
         return Response(statistics)
+
