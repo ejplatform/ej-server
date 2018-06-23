@@ -75,3 +75,19 @@ class MissionViewSet(viewsets.ViewSet):
              status["status"] = receipt.status
 
         return Response(status)
+
+    def statistics(self, request, pk):
+
+        statistics = {}
+        statistics["realized"] = 0;
+        statistics["pending"] = 0;
+        mission = models.Mission.objects.filter(id=pk)[0];
+        statistics["accepted"] = len(mission.users.all());
+
+        for receipt in mission.receipt_set.all():
+            if (receipt.status == "realized"):
+             statistics["realized"] += 1
+            if (receipt.status == "pending"):
+             statistics["pending"] += 1
+
+        return Response(statistics)
