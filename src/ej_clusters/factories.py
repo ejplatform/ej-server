@@ -98,10 +98,3 @@ def set_clusters(conversation, stereotype_map=None, user_map=None, clean=False):
         factory(stereotype=user, conversation=conversation, cluster=cluster)
 
     return list(clusters.values())
-
-
-def update_clusters(conversation, users=None):
-    """
-    Assign users to their respective clusters in conversation.
-    """
-

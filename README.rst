@@ -21,21 +21,17 @@ Getting started
 Local development (virtualenv)
 ------------------------------
 
-ej-server REQUIRES Python 3.6 and python-3.6-dev
-If you are using Ubuntu 14.04 or 16.04, you can use Felix Krull's deadsnakes PPA at https://launchpad.net/~deadsnakes/+archive/ubuntu/ppa::
+EJ platform **requires** Python 3.6 + the development headers. Please install
+those packages using your distro package manager.
+
+If you are using Ubuntu 14.04 to 16.04, you can use Felix Krull's deadsnakes PPA at https://launchpad.net/~deadsnakes/+archive/ubuntu/ppa::
 
     sudo add-apt-repository ppa:deadsnakes/ppa
     sudo apt-get update
     sudo apt-get install python3.6-dev
 
-Alternatively, you can use J Fernyhough's PPA at https://launchpad.net/~jonathonf/+archive/ubuntu/python-3.6::
+For Ubuntu 16.10 and later, Python 3.6 install it from the universe repository::
 
-    sudo add-apt-repository ppa:jonathonf/python-3.6
-    sudo apt-get update
-    sudo apt-get install python3.6-dev
-
-    If you are using Ubuntu 16.10 or 17.04, then Python 3.6 is in the universe repository, so you can just run::
-                         
     sudo apt-get update
     sudo apt-get install python3.6-dev
 
@@ -56,10 +52,15 @@ Grab a cup of coffee while it downloads and install all dependencies. If
 everything works, you should be able to run the server using the ``inv run``
 command.
 
+
+(Semi-)manual installation
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 The script installs the invoke task runner, fetches all dependencies from pip,
-and initializes the database. If you prefer, you can do all steps manually.
-The first step is to install the Invoke_ task runner to run each step of the
-installation (if you are not familiar to Invoke, think of it as Python's version
+and initializes the database. If you prefer (or if something goes wrong with the
+previous instructions), you can do all steps manually. The first step is to
+install the Invoke_ task runner to run each step of the installation (if you are
+not familiar to Invoke, think of it as Python's version
 of Make)::
 
     $ pip install invoke
@@ -77,7 +78,13 @@ development::
     $ inv update-deps db db-assets db-fake
 
 This creates a few conversations with comments and votes + several users and
-a admin:admin <admin@admin.com> user. Use invoke to start the dev server::
+a admin:admin <admin@admin.com> user.
+
+Running it
+~~~~~~~~~~
+
+Unless you prefer to type long django management commands, use invoke to start
+the dev server::
 
     $ inv run
 

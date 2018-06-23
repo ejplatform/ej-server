@@ -2,18 +2,29 @@
     {% from 'components/generic/elements.jinja2' import action_button %}
 
     <div class="ConversationCard">
-        <div class="ConversationCard-cover">
-            <h1 up-expand>
-                <a href="{{ conversation.get_absolute_url() }}" alt="alt">{{ conversation.question }}</a>
-            </h1>
-            <div>tags</div>
+        <div class="ConversationTags"><i class="fa fa-tags"></i>
+        {% if conversation.tags.all()[0] %}
+            {{(conversation.tags.all()[0]|string).title()}}
+        {% else %}
+            Tags
+        {% endif %}
         </div>
         <div class="ConversationCard-actions">
             <ul class="ConversationCard-statistics">
-                <li>{{ gettext('%(count)s comments', count=conversation.comments.count()) }}</li>
-                <li>{{ gettext('%(count)s votes', count=conversation.votes.count()) }}</li>
+                <li><i class="fa fa-comment"></i> {{ conversation.comments.count() }}</li>
+                <li><i class="fa fa-sliders-h"></i> {{ conversation.votes.count() }}</li>
             </ul>
-            {{ action_button('Participar <i class="fa fa-comments"></i>', conversation.get_absolute_url()) }}
+        </div>
+        <div class="ConversationCard-cover">
+            <h1 up-expand>
+                <a href="{{ conversation.get_absolute_url() }}" alt="alt">{{ conversation.text }}</a>
+            </h1>
+        </div>
+        <div class="ConversationCard-actions">
+            {{ action_button('Participe Agora', conversation.get_absolute_url()) }}
+            {% if conversation.can_moderate %}
+                {{ action_button('Moderar <i class="fa fa-comments"></i>', conversation.get_absolute_url() + 'moderate/') }}
+            {% endif %}
         </div>
     </div>
 {% endmacro %}

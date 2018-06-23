@@ -16,7 +16,7 @@ from ..validators import is_not_empty
 log = logging.getLogger('ej-conversations')
 
 
-@rest_api()
+@rest_api(['content', 'author', 'status', 'created', 'rejection_reason'])
 class Comment(StatusModel, TimeStampedModel):
     """
     A comment on a conversation.
@@ -43,7 +43,7 @@ class Comment(StatusModel, TimeStampedModel):
     )
     content = models.TextField(
         _('Content'),
-        max_length=140,
+        max_length=210,
         validators=[MinLengthValidator(2), is_not_empty],
         help_text=_('Body of text for the comment'),
     )
@@ -77,7 +77,7 @@ class Comment(StatusModel, TimeStampedModel):
 
     def clean(self):
         super().clean()
-        if self.status == self.STATUS.REJECTED and not self.rejection_reason:
+        if self.status == self.STATUS.rejected and not self.rejection_reason:
             msg = _('Must give a reason to reject a comment')
             raise ValidationError({'rejection_reason': msg})
 

@@ -51,6 +51,10 @@ class Vote(models.Model):
     class Meta:
         unique_together = ('author', 'comment')
 
+    def __str__(self):
+        comment = truncate(self.comment.content, 40)
+        return f'{self.author} - {self.choice.name} ({comment})'
+
     def clean(self, *args, **kwargs):
         if self.comment.is_pending:
             msg = _('non-moderated comments cannot receive votes')
@@ -68,3 +72,9 @@ def normalize_choice(value):
         return VOTE_VALUES[value]
     except KeyError:
         raise VOTING_ERROR(value)
+
+
+def truncate(st, size):
+    if len(st) > size - 2:
+        return st[:size - 3] + '...'
+    return st

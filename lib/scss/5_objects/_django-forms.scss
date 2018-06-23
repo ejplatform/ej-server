@@ -4,9 +4,36 @@
 
 ul.errorlist {
     color: $color-role-error;
+    font-size: 0.9em;
     padding: 0;
 
     li {
         list-style: none;
+    }
+}
+
+
+.helptext {
+    color: $color-content-text-faded;
+    font-size: 0.9em;
+    display: block;
+    padding: 0;
+
+    li {
+        list-style: none;
+    }
+}
+
+
+.django-form-as-p {
+    text-align: left;
+
+    input, textarea {
+        width: 100%;
+    }
+
+    label {
+        display: block;
+        margin: 0;
     }
 }

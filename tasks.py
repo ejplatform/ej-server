@@ -5,6 +5,7 @@ import sys
 from invoke import task
 
 python = sys.executable
+sys.path.append('src')
 
 
 #
@@ -21,26 +22,81 @@ def manage(ctx, cmd, env=None, **kwargs):
 
 
 @task
-def sass(ctx, no_watch=False, trace=False):
+def sass(ctx, no_watch=False, trace=False, theme=None):
     """
     Run Sass compiler
     """
+    # Choose theme
+    base = pathlib.Path('lib/scss')
+    if theme is None and 'THEME' in os.environ and os.environ['THEME'] != 'none':
+        theme = os.environ['THEME']
+    if theme:
+        if '/' in theme:
+            base = pathlib.Path(theme)
+        else:
+            base = pathlib.Path('lib/themes/') / theme / 'scss'
+
     suffix = '' if no_watch else ' --watch'
     suffix += ' --trace' if trace else ''
+
+    main = base / 'main.scss'
+    rocket = base / 'rocket.scss'
     ctx.run('rm .sass-cache -rf')
-    ctx.run('sass lib/scss/main.scss:lib/assets/css/main.css lib/scss/rocket.scss:lib/assets/css/rocket.css' + suffix,
-            pty=True)
+    cmd = (
+        f'sass '
+        f'{main}:lib/assets/css/main.css '
+        f'{rocket}:lib/assets/css/rocket.css' + suffix
+    )
+    print('Running:', cmd)
+    ctx.run(cmd, pty=True)
 
 
 @task
-def run(ctx, no_toolbar=False):
+def js(ctx):
+    """
+    Build js assets
+    """
+    print('Nothing to do now ;)')
+
+
+@task
+def run(ctx, no_toolbar=False, gunicorn=False, migrate=False,
+        ask_input=False, assets=False):
     """
     Run development server
     """
     env = {}
     if no_toolbar:
         env['DISABLE_DJANGO_DEBUG_TOOLBAR'] = 'true'
-    manage(ctx, 'runserver', env=env)
+
+    if migrate:
+        no_input = not ask_input
+        manage(ctx, 'migrate', noinput=no_input)
+
+    if assets:
+        # Populate db with assets
+        db_assets(ctx)
+
+    if gunicorn:
+        from gunicorn.app.wsgiapp import run as run_gunicorn
+
+        env['PATH'] = os.environ['PATH']
+        env['PYTHONPATH'] = 'src'
+        args = [
+            # '-m', 'gunicorn.app.wsgiapp',
+            'ej.wsgi', '-w', '4', '-b', '0.0.0.0:5000',
+            '--error-logfile=-',
+            '--access-logfile=-',
+            '--log-level', 'info',
+        ]
+
+        # Fixme, use execle to replace the current process
+        # print('Running: gunicorn', ' '.join(args))
+        # os.execle(python, *args, env)
+        sys.argv = ['gunicorn', *args]
+        run_gunicorn()
+    else:
+        manage(ctx, 'runserver', env=env)
 
 
 #
@@ -57,14 +113,12 @@ def db(ctx, migrate_only=False):
 
 
 @task
-def db_reset(ctx, no_assets=False):
+def db_reset(ctx):
     """
     Reset data in database and optionally fill with fake data
     """
     ctx.run('rm -f local/db/db.sqlite3')
     manage(ctx, 'migrate')
-    if not no_assets:
-        db_assets(ctx)
 
 
 @task
@@ -79,7 +133,6 @@ def db_fake(ctx, users=True, conversations=True, admin=True, safe=False):
             print('Creating fake data...')
         else:
             return print(msg_error)
-
     if users:
         manage(ctx, 'createfakeusers', admin=admin)
     if conversations:
@@ -140,7 +193,7 @@ def docker_clean(ctx, no_sudo=False, all=False, volumes=False, networks=False, i
 # Translations
 #
 @task
-def i18n(ctx, compile=False, edit=False, lang='pt_BR'):
+def i18n(ctx, compile=False, edit=False, lang='pt_BR', keep_pot=False):
     """
     Extract messages for translation.
     """
@@ -162,8 +215,9 @@ def i18n(ctx, compile=False, edit=False, lang='pt_BR'):
         print(f'Update locale {lang} with Jinja2 messages')
         ctx.run(f'msgmerge locale/{lang}/LC_MESSAGES/django.po locale/join.pot -U')
 
-        print('Cleaning up')
-        ctx.run('rm locale/*.pot')
+        if not keep_pot:
+            print('Cleaning up')
+            ctx.run('rm locale/*.pot')
 
 
 #
@@ -216,3 +270,32 @@ def configure(ctx, silent=False):
     if ask('\nLoad fake data to database?'):
         print('Running inv db-fake')
         db_fake(ctx)
+
+
+#
+# Prepare deploy
+#
+@task
+def prepare_deploy(ctx, ask_input=False):
+    """
+    Deploy checklist:
+
+    * Build CSS assets
+    * Build JS assets
+    * Compile translations
+    * Collect static files
+    * Save assets to database
+    """
+    no_input = not ask_input
+
+    # CSS
+    sass(ctx, no_watch=no_input)
+
+    # Js
+    js(ctx)
+
+    # Translations
+    i18n(ctx, compile=no_input)
+
+    # Static files
+    manage(ctx, 'collectstatic', noinput=ask_input)

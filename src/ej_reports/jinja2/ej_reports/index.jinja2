@@ -1,5 +1,39 @@
 {% extends 'base.jinja2' %}
 
 {% block content %}
-    Under construction :P
+    <div class="Container">
+        <h1>{{ _('Basic info') }}</h1>
+        <p>{{ _('Report for conversation: "{text}"').format(text=conversation.text) }}</p>
+        <h2>{{ _('Votes ({total} participants)').format(total=statistics.participants) }}</h2>
+        {{ vote_data }}
+
+        <h2>{{ _('Comments') }}</h2>
+        {{ comment_data }}
+
+        <h1>{{ _('Advanced info') }}</h1>
+        <h2>{{ _('Comments') }}</h2>
+        {{ comments_table }}
+
+        <h2>{{ _('Participants') }}</h2>
+        {{ participants_table }}
+
+        <h1>{{ _('Cluster info') }}</h1>
+        {% for cluster in clusters %}
+            <h2>{{ cluster.name }} ({{ _('{n} users').format(n=cluster.size) }})</h2>
+            {{ cluster.comment_table }}
+        {% endfor %}
+    </div>
+{% endblock %}
+
+
+{% block javascript_body %}
+    {{ super() }}
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(function () {
+            $('.table.long').DataTable({
+                order: [],
+            });
+        })
+    </script>
 {% endblock %}

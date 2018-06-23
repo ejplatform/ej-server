@@ -2,5 +2,5 @@
 {% from 'ej_conversations/components/conversation-detail.jinja2' import conversation_detail with context %}
 
 {% block content %}
-    {{ conversation_detail(conversation, request.user) }}
+    {{ conversation_detail(conversation, edit_perm, request.user, javascript_enabled=javascript_enabled) }}
 {% endblock %}

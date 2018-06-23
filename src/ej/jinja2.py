@@ -10,6 +10,7 @@ from markdown import markdown
 from markupsafe import Markup
 
 from ej_configurations import social_icons, fragment
+from hyperpython.components import render
 from . import tags
 
 TAG_MAP = {k: getattr(tags, k) for k in tags.__all__}
@@ -37,6 +38,7 @@ def environment(**options):
         context=context,
 
         # Hyperpython tag functions
+        render=non_strict_render,
         **TAG_MAP,
     )
     env.filters.update(
@@ -120,11 +122,16 @@ def context(ctx):
 
         # Globals
         'static', 'url', 'salt_attr', 'salt_tag', 'salt', 'social_icons',
-        'footer_data', 'service_worker', 'context', *TAG_MAP,
+        'footer_data', 'service_worker', 'context', 'render', *TAG_MAP,
 
         # Variables injected by the base template
         'target', 'target_context',
         'page_footer', 'sidebar', 'page_top_header', 'page_header',
+        'page_title', 'title', 'content_title',
     }
     ctx = {k: v for k, v in ctx.items() if k not in blacklist}
     return tags.html_map(ctx)
+
+
+def non_strict_render(obj, role=None, ctx=None, strict=False):
+    return render(obj, role=role, ctx=ctx, strict=strict)

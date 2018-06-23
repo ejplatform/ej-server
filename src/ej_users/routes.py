@@ -18,6 +18,10 @@ User = get_user_model()
 app_name = 'ej_users'
 urlpatterns = Router(
     template='ej_users/{name}.jinja2',
+    models={
+        'user': User,
+    },
+    lookup_field='username',
 )
 log = logging.getLogger('ej')
 
@@ -64,9 +68,9 @@ def login(request):
             user = User.objects.get_by_email_or_username(email)
             user = auth.authenticate(request, username=user.username, password=password)
             log.info(f'user {user} ({email}) successfully authenticated')
-            auth.login(request, user)
             if user is None:
                 raise User.DoesNotExist
+            auth.login(request, user, backend=user.backend)
         except User.DoesNotExist:
             log.info(f'invalid login attempt: {email}')
             form.add_error(None, error_msg)
@@ -80,12 +84,10 @@ def login(request):
 
 @urlpatterns.route('logout/')
 def logout(request):
-    if not request.user.is_authenticated:
-        return redirect('home')
     if request.method == 'POST':
         auth.logout(request)
         return redirect('home')
-    return HttpResponseServerError('cannot logout')
+    return HttpResponseServerError('cannot logout using a GET')
 
 
 @urlpatterns.route('profile/recover-password/')
@@ -119,6 +121,9 @@ def remove_account(request):
     }
 
 
+#
+# Registration via API + cookies
+#
 @urlpatterns.route('key/')
 def api_key(request):
     if request.user.id is None:

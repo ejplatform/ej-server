@@ -1,7 +1,8 @@
 from boogie.router import Router
 
+app_name = 'ej_gamification'
 urlpatterns = Router(
-    template='ej_gamification/{name}.jinja2',
+    template=['ej_gamification/{name}.jinja2', 'generic.jinja2'],
     login=True,
 )
 
@@ -11,7 +12,7 @@ def badges(request):
     user = request.user
     return {
         'user': user,
-        'badges': user.badges.all(),
+        'badges': user.badges_earned.all(),
     }
 
 

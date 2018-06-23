@@ -3,12 +3,11 @@ A few functions for creating plausible synthetic data.
 """
 
 from django.contrib.auth import get_user_model
-from django.core.exceptions import ImproperlyConfigured
 from faker import Factory
 
+from ej_clusters.factories import set_clusters_from_comments
 from ej_conversations import create_conversation
 from ej_conversations.models import Conversation
-from ej_clusters.factories import set_clusters_from_comments
 
 fake = Factory.create()
 User = get_user_model()

@@ -1,5 +1,7 @@
-from boogie.configurations import DjangoConf, locales
+import logging
+import sys
 
+from boogie.configurations import DjangoConf, locales
 from .apps import InstalledAppsConf
 from .celery import CeleryConf
 from .constance import ConstanceConf
@@ -7,7 +9,7 @@ from .middleware import MiddlewareConf
 from .options import EjOptions
 from .paths import PathsConf
 from .. import fixes
-import logging
+from .. import services
 
 log = logging.getLogger('ej')
 
@@ -93,8 +95,6 @@ class Conf(locales.brazil(),
 
 
 Conf.save_settings(globals())
-fixes.apply_all()
-
 
 # TODO: Fix this later in boogie configuration stack
 # Required for making django debug toolbar work
@@ -118,7 +118,6 @@ if ENVIRONMENT == 'local':
     X_FRAME_OPTIONS = 'ALLOW-FROM http://localhost:3000'
 
 if ENVIRONMENT == 'production':
-
     # Django CORS
     CORS_ORIGIN_ALLOW_ALL = False
     CORS_ALLOW_CREDENTIALS = True
@@ -132,3 +131,9 @@ if ENVIRONMENT == 'production':
     ]
 
     X_FRAME_OPTIONS = 'DENY'
+
+#
+# Apply fixes and wait for services to start
+#
+fixes.apply_all()
+services.start_services(sys.modules[__name__])

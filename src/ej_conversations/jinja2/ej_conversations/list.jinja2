@@ -3,8 +3,8 @@
 {% from 'components/generic/elements.jinja2' import breadcrumbs %}
 
 {% block content %}
-    <a class="Button" href="/conversations/create/">Criar nova conversa</a>
-    {{ conversation_list(conversations, categories) }}
+    {% if can_add_conversation and add_link != '' %}
+        <p class="Link-new"><i class="fa fa-plus-circle"></i> {{ add_link }}</p>
+    {% endif %}
+    {{ conversation_list(conversations, javascript_enabled=javascript_enabled) }}
 {% endblock %}
-
-

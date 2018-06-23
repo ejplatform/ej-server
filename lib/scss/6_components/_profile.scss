@@ -14,28 +14,141 @@ $profile-arrow-size: $spacing-unit !default;
         margin-bottom: 0;
         color: $color-purple-dark;
         font-size: $font-size-h1;
+        font-weight: bold;
     }
 
     h2 {
         color: $color-blue-light;
         font-size: $font-size-h4;
+        font-weight: bold;
         margin-top: 0;
 
     }
 
     &-actions {
-        p, form {
-            text-align: center;
-        }
-
-        input[type=submit] {
-            background-color: $color-purple-dark;
-        }
+        margin: $spacing-unit-large;
+        padding: 0;
+        text-transform: uppercase;
+        color: $color-gray-dark;
+        opacity: 0.8;
+        text-align: center;
 
         a {
             margin: $spacing-unit * 2 0;
-            color: $color-red-dark;
-            display: inline-block;
+            color: $color-gray-dark;
+            opacity: 0.8;
+        }
+    }
+    &-conversations {
+        padding: $spacing-unit-small;
+        h2 {
+            &.expanded {
+                i {
+                    transform: rotate(180deg);
+                }
+            }
+            color: black;
+            text-align: justify;
+            font-weight: normal;
+            span {
+                color: $color-magenta;
+                font-weight: bold;
+            }
+            i {
+                float: right;
+                font-weight: bold;
+                font-size: $font-size-huge;
+                color: $color-magenta;
+            }
+
+        }
+    }
+    &-comments {
+        padding: $spacing-unit-small;
+        h2 {
+            &.expanded {
+                i {
+                    transform: rotate(180deg);
+                }
+            }
+            color: black;
+            text-align: justify;
+            font-weight: normal;
+            span {
+                color: $color-magenta;
+                font-weight: bold;
+            }
+            i {
+                float: right;
+                font-weight: bold;
+                font-size: $font-size-huge;
+                color: $color-magenta;
+            }
+
+        }
+        ul {
+            padding: 0;
+            margin: 0;
+            display: none;
+
+            li {
+                .header {
+                    &::after {
+                        content: "";
+                        clear: both;
+                        display: table;
+                    }
+
+                    color: $color-blue-light-low;
+
+                    .label {
+                        float: left;
+                    }
+                    .date {
+                        float: right;
+                    }
+
+                }
+                .content {
+                    font-weight: 600;
+                    margin-top: $spacing-unit-tiny;
+                    margin-bottom: $spacing-unit-tiny;
+                }
+                .actions {
+                    display: flex;
+                    justify-content: space-between;
+
+                    li {
+                        &.agree {
+
+                        }
+                        &.skip {
+                            color: $color-blue-light;
+
+                        }
+                        &.disagree {
+                            color: $color-magenta;
+
+                        }
+                        span {
+                            margin-left: 0.5em;
+                        }
+                        border: none;
+                        font-weight: bold;
+                    }
+
+                }
+                .footer {
+                    margin-top: $spacing-unit-small;
+                    margin-bottom: $spacing-unit-small;
+                    color: $color-magenta;
+                    font-weight: bold;
+                }
+                padding: 0;
+                margin: 0;
+                border-bottom: 2px solid $color-blue-light-low;
+                list-style: none;
+            }
         }
     }
 
@@ -44,7 +157,7 @@ $profile-arrow-size: $spacing-unit !default;
         height: 0;
         border-left: $profile-arrow-size solid transparent;
         border-right: $profile-arrow-size solid transparent;
-        border-bottom: $profile-arrow-size solid $color-blue-light;
+        border-bottom: $profile-arrow-size solid $color-blue-nav;
     }
 
     &-breadcrumbs {
@@ -64,8 +177,9 @@ $profile-arrow-size: $spacing-unit !default;
     &-image {
         width: $profile-image-size;
         height: $profile-image-size;
-        border: $spacing-unit-small solid $color-green;
-        border-radius: 50ch;
+        // FIXME See if it will necessary
+        // border: $spacing-unit-small solid $color-green;
+        // border-radius: 50ch;
     }
 
     &-rocket {
@@ -103,21 +217,89 @@ $profile-arrow-size: $spacing-unit !default;
             min-width: $spacing-unit * 2;
         }
     }
+    &-tabActive {
+        font-weight: bold;
+    }
 
     &-tabContainer {
     }
 
     &-tabContent {
-        background: $color-hint;
+        background: $color-blue-nav;
         text-align: left;
+        border-radius: 0.7em;
     }
 
     &-info {
         font-size: $font-size-h6;
-        padding: $spacing-unit-large;
+        padding: $spacing-unit;
 
-        .Button {
-          text-transform: none;
+        .edit-button {
+            margin-top: $spacing-unit;
+            text-align: center;
+            .Button {
+                text-transform: none;
+                background-color: $color-blue-light;
+            }
+        }
+
+        .statistics {
+            &::after {
+                content: "";
+                clear: both;
+                display: table;
+            }
+            margin: 0;
+            padding: 0;
+            li {
+                span {
+                    color: $color-blue-light;
+                    font-weight: 600;
+                    &.amount {
+                        font-weight: 800;
+                        font-size: $font-size-huge;
+                    }
+                    &.description {
+                        font-size: $font-size-small;
+                    }
+
+                    display: block;
+
+                }
+                float: left;
+                list-style: none;
+                text-align: center;
+                width: 50%;
+                height: 60px;
+            }
+            float: none;
+            clear: both;
+        }
+
+        .trophies {
+            &::after {
+                content: "";
+                clear: both;
+                display: table;
+            }
+            margin: 0;
+            padding: 0;
+            li {
+                span {
+                    color: $color-blue-light;
+                    font-weight: 600;
+                    display: block;
+                    margin-top: $spacing-unit-small;
+                }
+                float: left;
+                list-style: none;
+                text-align: center;
+                width: 50%;
+                height: 160px;
+            }
+            float: none;
+            clear: both;
+            text-align: center;
         }
 
         > * {
@@ -126,21 +308,17 @@ $profile-arrow-size: $spacing-unit !default;
 
         dl {
             dt {
-                color: $color-blue-dark;
+                color: $color-blue-light;
                 text-transform: lowercase;
             }
 
             dd {
                 font-size: $font-size-h5;
-                font-weight: bold;
                 margin: 0 0 $spacing-unit-small 0;
                 color: $color-purple-dark;
             }
         }
 
-        form {
-            text-align: center;
-        }
     }
 }
 

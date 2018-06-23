@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 import contextlib
 import os
+import sys
 import subprocess
 from pathlib import Path
 
+python = sys.executable
 BASE_PATH = Path(__file__).parent.parent.parent
 LOCAL = BASE_PATH / 'local'
 VENDOR = LOCAL / 'vendor'
@@ -60,7 +62,7 @@ def main():
             with chdir(VENDOR):
                 run(f'git clone {uri}')
             with chdir(path):
-                run(f'python setup.py develop')
+                run(f'{python} setup.py develop')
 
 
 if __name__ == '__main__':

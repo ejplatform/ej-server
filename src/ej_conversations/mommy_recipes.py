@@ -11,7 +11,7 @@ root = Recipe(User, is_superuser=True, username='root', is_staff=True)
 conversation = Recipe(
     Conversation,
     title='Conversation',
-    question='question?',
+    text='question?',
     slug='conversation',
     author=lambda: user.make(username='conversation_author'),
 )

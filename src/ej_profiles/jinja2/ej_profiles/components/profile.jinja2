@@ -14,18 +14,24 @@
 {% endmacro %}
 
 
-{% macro profile_detail(profile, csrf_input, info='profile') %}
+{% macro profile_detail(profile, conversations, info='profile', javascript_enabled='') %}
     <div class="Profile">
         <img class="Profile-image" src="{{ profile.image_url }}">
-        <h1>{{ profile.name }}</h1>
-        <h2>{{ profile.role() }}</h2>
 
+        <h1>{{ profile.name }}</h1>
+        <h2>{{ _('Participant Status') }}</h2>
+        {{ profile_comments(profile) }}
+        {{ profile_conversations(profile, javascript_enabled) }}
         <div class="Profile-tabs">
             <nav class="Profile-tabLinks">
                 {{ link(_('Info'), '/profile/',
                         target='.Profile-tabs',
                         transition=None,
                         class='Profile-tabActive' if info=='profile' else None) }}
+                {{ link(_('Trophies'), '/profile/?info=trophies',
+                        target='.Profile-tabs',
+                        transition=None,
+                        class='Profile-tabActive' if info=='trophies' else None) }}
                 {{ link(_('Contributions'), '/profile/?info=contributions',
                         target='.Profile-tabs',
                         transition=None,
@@ -38,6 +44,8 @@
                 <div class="Profile-tabContent">
                     {% if info == 'profile' %}
                         {{ profile_info(profile, csrf_input) }}
+                    {% elif info == 'trophies' %}
+                        {{ profile_trophies(profile) }}
                     {% elif info == 'contributions' %}
                         {{ profile_contributions(profile) }}
                     {% else %}
@@ -48,20 +56,17 @@
         </div>
     </div>
 
-    <div class="Profile-conversations">
-        {{ profile_conversations(profile, categories) }}
-    </div>
-
-    <div class="Profile-rocket">
-        {{ profile_rocket(profile) }}
-    </div>
-
     <div class="Profile-actions">
-        <form method="post" action="/logout/">
-            {{ csrf_input }}
-            <input type="submit" class="Button" primary value="{{ _('Logout') }}"/>
-        </form>
-        <p><a href="/profile/delete">{{ _('Delete profile') }}</a></p>
+        <p>
+            <form method="post" action="/logout/">
+                {{ csrf_input }}
+                <button class="Button" type="submit">{{ _('Logout') }}</button>
+            </form>
+        </p>
+        <p>
+            <i class="far fa-times-circle"></i>
+            <a href="/profile/delete">{{ _('Delete profile') }}</a>
+        </p>
     </div>
 {% endmacro %}
 
@@ -69,16 +74,13 @@
 {% macro profile_info(profile, csrf_input) %}
     <div class="Profile-info">
         <dl>
-            {% for title, info in profile.profile_fields() %}
+            {% for title, info in profile.profile_fields(true) %}
                 <dt>{{ title }}</dt>
                 <dd>{{ info or '-' }}</dd>
             {% endfor %}
         </dl>
-        <div>
-            <form method="post" action="/logout/">
-                {{ csrf_input }}
-                <a href="/profile/edit" class="Button" primary>{{ _('Edit profile') }}</a>
-            </form>
+        <div class='edit-button'>
+            <a href="/profile/edit" class="Button" primary>{{ _('Edit profile') }}</a>
         </div>
     </div>
 {% endmacro %}
@@ -86,24 +88,108 @@
 
 {% macro profile_contributions(profile) %}
     <div class="Profile-info">
-        <dl>
-            {% for title, info in profile.profile_statistics().items() %}
-                <dt>{{ title }}</dt>
-                <dd>{{ info or '-' }}</dd>
+        <ul class='statistics'>
+            {% for description, amount in profile.statistics().items() %}
+                <li>
+                    <span class='amount'>{{ amount }}</span>
+                    <span class='description'>{{ description or '-' }}</span>
+                </li>
             {% endfor %}
-        </dl>
+        </ul>
     </div>
 {% endmacro %}
 
-
-{% macro profile_conversations(profile, conversations) %}
-    {{ conversation_list(profile.conversations.all(), [], _('Joined conversations')) }}
-    <p><a href="/conversations" class="Button" primary>{{ _('More conversations') }}</a></p>
+{% macro profile_trophies(profile) %}
+    <div class="Profile-info">
+        <ul class='trophies'>
+            {# {% for badge in profile.badges() %}
+                <li>
+                    <span class='amount'>{{ badge }}</span>
+                </li>
+            {% endfor %} #}
+            <li>
+            <img src="/static/img/icons/icon_trofeu.svg">
+                <span class='trophy'>
+                    nome do trofeu
+                </span>
+            </li>
+            <li>
+                <img src="/static/img/icons/icon_trofeu.svg">
+                <span class='trophy'>
+                    nome do trofeu
+                </span>
+            </li>
+            <li>
+                <img src="/static/img/icons/icon_trofeu.svg">
+                <span class='trophy'>
+                    nome do trofeu
+                </span>
+            </li>
+            <li>
+                <img src="/static/img/icons/icon_trofeu.svg">
+                <span class='trophy'>
+                    nome do trofeu
+                </span>
+            </li>
+            <button class="Button" type="submit">{{ _('See All') }}</button>
+        </ul>
+    </div>
 {% endmacro %}
 
+{% macro profile_comments(profile) %}
+    <div class="Profile-comments">
 
-{% macro profile_rocket(profile) %}
-    <h2>{{ _('CPA Space') }}</h2>
-    <h5>{{ _('See below the spaces you joined') }}</h5>
-    <p>{{ rocket_button() }}</p>
+
+        <h2>{{_('My Comments')}} <span>({{profile.comments().count()}})</span>
+            <i class="fa fa-angle-down"></i>
+        </h2>
+        <ul class='comments'>
+            {% for comment in profile.comments() %}
+                <li>
+                    <div class='header'>
+                        <span class='label'>
+                            <i class="fas fa-location-arrow"></i>
+                            {{_('Opinion')}}
+                        </span>
+                        <span class='date'>{{ comment.created.strftime('%d-%m-%Y às %Hh %M') }}</span>
+                    </div>
+                    <div class='content'>
+                        {{ comment.content }}
+                    </div>
+                    <ul class='actions'>
+                        <li class='agree'>
+                            <i class="fas fa-check"></i>
+                            <span>{{comment.statistics().agree}}</span>
+                        </li>
+                        <li class='skip'>
+                            <i class="fas fa-arrow-right"></i>
+                            <span>{{comment.statistics().skip}}</span>
+                        </li>
+                        <li class='disagree'>
+                            <i class="fas fa-times"></i>
+                            <span>{{comment.statistics().disagree}}</span>
+                        </li>
+                    </ul>
+                    <div class='footer'>
+                        {{ link(_('See Conversation'), href=comment.conversation.get_absolute_url()) }}
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endmacro %}
+
+{% macro profile_conversations(profile, javascript_enabled='') %}
+    <div class="Profile-conversations">
+
+
+        <h2>{{_('Favorite Conversations')}} <span>(1)</span>
+            <i class="fa fa-angle-down"></i>
+        </h2>
+        <ul class='conversations'>
+        {# FIXME list conversations  #}
+            {# {% for conversation in profile.favorite_conversations(javascript_enabled) %}
+            {% endfor %} #}
+        </ul>
+    </div>
 {% endmacro %}

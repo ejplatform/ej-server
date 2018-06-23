@@ -1,16 +1,60 @@
 {% from 'components/generic/elements.jinja2' import link %}
 
-
-{% macro menu() %}
+{% macro menu(user) %}
     <nav class="NavMenu">
         <ul>
             <li><em>{{ icon_link(_('About'), '/about-us/', 'far fa-comment') }}</em></li>
             <li><em>{{ icon_link(_('FAQ'), '/faq/', 'far fa-question-circle') }}</em></li>
             <li><em>{{ icon_link(_('Usage terms'), '/usage/', 'far fa-file-alt') }}</em></li>
+        {% if not user.is_active %}
             <li>{{ icon_link(_('Conversations'), '/conversations/', 'conversations', fa=False) }}</li>
-            <li>{{ icon_link(_('Talks'), '/talks/', 'talks', fa=False) }}</li>
+        {% elif not user.is_staff %}
+            <li>{{ icon_link(_('Conversations'), '/conversations/', 'conversations', fa=False) }}</li>
+            <li>{{ icon_link(_('Panel'), '/talks/', 'talks', fa=False) }}</li>
+        {% else %}
+            <li class="NavMenu-DropDown" onclick="openDropDown()">{{ icon_link(_('Conversations'), '/conversations/', 'conversations', fa=False) }}
+                <i class="fas fa-angle-down fa-2x NavMenu-AngleDownIcon"></i>
+                <ul class="NavMenu-UserMenu">
+                    <li>
+                    {{icon_link(_('Public conversations'), '/conversations/', 'fas fa-comments', fa=True)}}
+                    </li>
+                    <li>
+                    {{icon_link(_('Your conversations'), ('/{}/'.format(user)), 'far fa-comment', fa=True)}}
+                    </li>
+                    <li>
+                        <i class="fas fa-plus-circle"></i>
+                        {{_('Add conversation')}}
+                    </li>
+                    <li>
+                        <i class="far fa-star"></i>
+                        {{_('Favorite conversations')}}
+                    </li>
+                    <li>
+                        <i class="fas fa-cog"></i>
+                        {{_('Manage conversations')}}
+                    </li>
+                    <li>
+                        {{icon_link(_('Manage stereotypes'), '/stereotypes/', 'fas fa-sliders-h', fa=True)}}
+                    </li>
+                    <li>
+                        {{icon_link(_('Request reports'), '/reports/', 'far fa-chart-bar', fa=True)}}
+                    </li>
+                </ul>
+            </li>
+            <li>{{ icon_link(_('Panel'), '/talks/', 'talks', fa=False) }}</li>
+        {% endif %}
             <li>{{ icon_link(_('Profile'), '/profile/', 'profile', fa=False) }}</li>
             <li><em>{{ icon_link(_('Home'), '/', 'fa fa-home') }}</em></li>
+            <li>
+
+            {% if user.is_active %}
+                <form method="post" action="/logout/">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                    <button class="" type="submit">{{ _('Logout') }}</button>
+                </form>
+            {% endif %}
+                {# {{ icon_link(_('Logout'), '/logout/', 'fa fa-sign-out-alt') }}</em></li> #}
         </ul>
     </nav>
 {% endmacro %}

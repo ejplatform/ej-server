@@ -1,14 +1,15 @@
 import logging
 
-from django.shortcuts import render, redirect, HttpResponse
+from django.shortcuts import render, redirect
 
 from boogie.router import Router
 from ej_configurations import fragment, social_icons
-from ej_conversations.models import Conversation
-from .forms import ConversationForm
+from ej_conversations.routes.base import moderated_conversations
 
 log = logging.getLogger('ej')
-urlpatterns = Router()
+urlpatterns = Router(
+    template='pages/{name}.jinja2',
+)
 
 
 #
@@ -16,37 +17,21 @@ urlpatterns = Router()
 #
 @urlpatterns.route('')
 def home(request):
-    ctx = {
-        'conversations': Conversation.objects.all(),
-        'home_banner_fragment': fragment('home.banner', raises=False),
-        'how_it_works_fragment': fragment('home.how-it-works', raises=False),
-        'start_now_fragment': fragment('home.start-now', raises=False),
-        'social_media_icons': social_icons(),
-    }
-    return render(request, 'pages/home.jinja2', ctx)
-
-
-@urlpatterns.route('conversations/create/')
-def create_conversation(request):
-    if request.user.id:
-        if request.method == 'GET':
-            ctx = {}
-            return render(request, "ej_conversations/conversations-create.jinja2", ctx)
-        elif request.method == 'POST':
-            form = ConversationForm(data=request.POST, instance=Conversation(author=request.user))
-            if form.is_valid():
-                conversation = form.save()
-                return redirect(f'/conversations/{conversation.category.slug}/{conversation.title}')
-            else:
-                return HttpResponse(f'<p> {form.errors} </p>')
-    return redirect('/login/')
+    # if request.user.id:
+    #    return redirect('/conversations/')
+    return redirect('/start/')
 
 
 @urlpatterns.route('start/')
 def start(request):
-    if request.user.id:
-        return redirect('/conversations/')
-    return redirect('/login/')
+    return {
+        'conversations': moderated_conversations(request.user),
+        'home_banner_fragment': fragment('home.banner', raises=False),
+        'how_it_works_fragment': fragment('home.how-it-works', raises=False),
+        'start_now_fragment': fragment('home.start-now', raises=False),
+        'social_media_icons': social_icons(),
+        'user': request.user,
+    }
 
 
 @urlpatterns.route('clusters/')
@@ -55,6 +40,11 @@ def clusters(request):
         content_html='<h1>Error</h1><p>Not implemented yet!</p>'
     )
     return render(request, 'base.jinja2', ctx)
+
+
+@urlpatterns.route('menu/')
+def menu(request):
+    return {'user': request.user}
 
 
 #
@@ -68,6 +58,5 @@ def service_worker(request):
 #
 # Static pages
 #
-urlpatterns.route('menu/', name='menu', template='pages/menu.jinja2')(lambda: {})
 urlpatterns.route('comments/', name='comments', template='pages/comments.jinja2')(lambda: {})
 urlpatterns.route('notifications/', name='notifications', template='pages/notifications.jinja2')(lambda: {})

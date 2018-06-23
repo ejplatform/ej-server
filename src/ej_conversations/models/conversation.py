@@ -19,7 +19,6 @@ from .vote import Vote, Choice
 from ..managers import ConversationManager
 
 NOT_GIVEN = object()
-PROMOTED_PERM = 'ej_conversations.can_create_promoted_conversation'
 log = logging.getLogger('ej_conversations')
 
 
@@ -38,7 +37,10 @@ class TaggedConversation(TaggedItemBase):
     content_object = models.ForeignKey('Conversation', on_delete=models.CASCADE)
 
 
-@rest_api(exclude=['status_changed'])
+@rest_api(
+    ['title', 'text', 'status', 'author', 'slug', 'status', 'created'],
+    lookup_field='slug',
+)
 class Conversation(TimeStampedModel, StatusModel):
     """
     A topic of conversation.
@@ -48,20 +50,20 @@ class Conversation(TimeStampedModel, StatusModel):
         ('promoted', _('Promoted')),
         ('pending', _('Pending')),
     )
-    question = models.TextField(
+    title = models.CharField(
+        _('Title'),
+        max_length=255,
+        help_text=_(
+            'A short description about this conversations. This is used internally '
+            'and to create URL slugs. (e.g. School system)'
+        )
+    )
+    text = models.TextField(
         _('Question'),
         help_text=_(
             'A question that is displayed to the users in a conversation card. (e.g.: How can we '
             'improve the school system in our community?)'
         ),
-    )
-    title = models.CharField(
-        _('Title'),
-        max_length=255,
-        help_text=_(
-            'A short description about this conversations. This is used for internal reference'
-            'and to create URL slugs. (e.g. School system)'
-        )
     )
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -83,15 +85,13 @@ class Conversation(TimeStampedModel, StatusModel):
     class Meta:
         ordering = ['created']
         permissions = (
-            ('can_add_promoted', _('Can publish promoted conversations')),
+            ('is_publisher', _('Can publish promoted conversations')),
+            ('is_moderator', _('Can moderate comments in any conversation')),
         )
 
     @property
     def approved_comments(self):
         return self.comments.filter(status=Comment.STATUS.approved)
-
-    class Meta:
-        ordering = ('created',)
 
     def __str__(self):
         return self.title
@@ -102,18 +102,20 @@ class Conversation(TimeStampedModel, StatusModel):
         super().save(*args, **kwargs)
 
     def clean(self):
-        if self.is_promoted and not self.author.has_perm(PROMOTED_PERM, self):
-            raise ValidationError({'status': _(
+        can_edit = 'ej_conversations.can_edit_conversation'
+        if self.is_promoted and not self.author.has_perm(can_edit, self):
+            raise ValidationError(_(
                 'User does not have permission to create a promoted '
                 'conversation.')
-            })
+            )
 
-    def get_absolute_url(self):
-        map = getattr(settings, 'EJ_CONVERSATIONS_URLMAP', {})
-        fmt = map.get('conversation-detail', None)
-        if fmt is None:
-            return reverse('conversation-detail', kwargs={'slug': self.slug})
-        return fmt.format(conversation=self)
+    def get_absolute_url(self, user=None):
+        kwargs = {'conversation': self}
+        if user is None:
+            return reverse('conversation:detail', kwargs=kwargs)
+        else:
+            kwargs['user'] = user
+            return reverse('conversation:detail-for-user', kwargs=kwargs)
 
     def user_votes(self, user):
         """
@@ -138,11 +140,16 @@ class Conversation(TimeStampedModel, StatusModel):
 
         # Check limits
         if check_limits and not author.has_perm('ej_conversations.can_comment', self):
+            log.info('failed attempt to create comment by %s' % author)
             raise PermissionError('user cannot comment on conversation.')
 
-        make_comment = Comment.objects.create if commit else Comment
+        # Check if comment is created with rejected status
+        if status == Comment.STATUS.rejected:
+            msg = _('automatically rejected')
+            kwargs.setdefault('rejection_reason', msg)
+
         kwargs.update(author=author, content=content.strip())
-        comment = make_comment(conversation=self, **kwargs)
+        comment = make_clean(Comment, commit, conversation=self, **kwargs)
         log.info('new comment: %s' % comment)
         return comment
 
@@ -232,3 +239,11 @@ def comment_count(conversation, type=None):
     """
     kwargs = {'status': type} if type is not None else {}
     return conversation.comments.filter(**kwargs).count()
+
+
+def make_clean(cls, commit=True, **kwargs):
+    obj = cls(**kwargs)
+    obj.full_clean()
+    if commit:
+        obj.save()
+    return obj

@@ -5,7 +5,7 @@
         </div>
         <p>{{ comment.content }}</p>
         {% if user.is_authenticated %}
-            <form method="post" class="Comment-voteArea" id="Comment-form">
+            <form method="post" class="Comment-voteArea" id="Comment-form" up-target=".Comment">
                 {{ csrf_input }}
                 <input type="hidden" name="action" value="vote">
                 <ul class="ConversationComment-actions">
@@ -40,10 +40,8 @@
 
 {% macro comment_form(csrf_input) %}
     <div class="CommentForm">
-        <h1>Deixe a sua opinião</h1>
-        <p>Inclua uma nova opinião. Evite postar opiniões semelhantes a outros
-            usuários.
-        </p>
+        <h1>Deixe seu comentário</h1>
+        <p>Inclua algo novo, evite opiniões semelhantes. Você pode postar até 2 comentários.</p>
         <form method="post">
             {{ csrf_input }}
             <input type="hidden" name="action" value="comment">

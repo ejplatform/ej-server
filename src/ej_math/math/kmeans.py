@@ -207,6 +207,17 @@ def euclidean_distance_non_zero(x, y):
     return np.sqrt(np.sum(diff) / non_zero)
 
 
+def euclidean_distance_finite(x, y):
+    """
+    Euclidean distance between two arrays ignoring NaN components.
+    """
+    x, y = np.asarray(x), np.asarray(y)
+    not_null = np.isfinite(x) & np.isfinite(y)
+    diff = np.where(not_null, x - y, 0)
+    diff *= diff
+    return np.sqrt(np.sum(diff) / len(not_null))
+
+
 def l1_distance(x, y):
     """
     L1 (Manhattan/cab-driver) distance between two arrays.

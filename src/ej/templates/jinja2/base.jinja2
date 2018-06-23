@@ -7,6 +7,7 @@
 {% set target = target | default(target_context) %}
 {% if not page_title %}{% set page_title = content_title|default(_('Empurrando Juntos')) %}{% endif %}
 
+{% set javascript_enabled = request.COOKIES.get('javascriptEnabled', 'No Cookie') %}
 
 {% if target == 'all' %}
     <!DOCTYPE html>
@@ -19,7 +20,7 @@
 
         {% block css %}
         <!-- CSS -->
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,700,900&subset=latin-ext">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Patua+One|Raleway:400,600,700&subset=latin-ext">
         <link rel="stylesheet" href="https://unpkg.com/unpoly@0.54.0/dist/unpoly.min.css" integrity="sha384-zsXMcPyhYSZEF/yA0Rprx9nn7gnz84QyiSrxSH5xuo0DalUAlfSmfsxILtkg5fJ/" crossorigin="anonymous">
         <link rel="stylesheet" href="/static/css/fontawesome-all.min.css">
 {#        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css">#}
@@ -70,15 +71,15 @@
 
         <!-- Twitter -->
         <meta name="twitter:card" content="summary">
-        <meta name="twitter:title" content="Brasil que o Povo Quer!">
+        <meta name="twitter:title" content="EJ Platform - Consultas de opinião">
 
         <!-- Open Graph general (Facebook, Pinterest & Google+) -->
-        <meta property="og:title" content="{{ page_title }}">
+        <meta property="og:title" content="{{ title }}">
         <meta property="og:image" content="/static/img/logo/logo.svg">
         <meta property="og:image:width" content="1200">
         <meta property="og:image:height" content="630">
-        <meta property="og:url" content="https://brasilqueopovoquer.org.br">
-        <meta property="og:site_name" content="{{ page_title }}">
+        <meta property="og:url" content="https://ejplatform.org/">
+        <meta property="og:site_name" content="{{ title }}">
         <meta property="og:locale" content="pt_BR">
         <meta property="og:type" content="website">
         <meta property="fb:app_id" content="1757744567588794">
@@ -90,7 +91,7 @@
 {% block body %}
     {% if target == 'all' or target == 'page' %}
         {{page_top_header(social_icons())}}
-        {{ page_header() }}
+        {{ page_header(request) }}
         <div class="Page-mainContainer">
     {% endif %}
 
@@ -98,20 +99,24 @@
     {% block main %}
         <main class="Page-content" {{ salt_attr()|safe }}>
             {% if content_title %}<div class="Page-title"><h1>{{ content_title }}</h1></div>{% endif %}
-            {% block content %}
-                {% if content_html %}
-                    <div class="Container">
-                        {{ content_html|safe }}
-                    </div>
-                {% else %}
-                    <p>Please override the "content" block of your template!</p>
-                {% endif %}
-            {% endblock %}
+            {% if content %}
+                {{ content }}
+            {% else %}
+                {% block content %}
+                    {% if content_html %}
+                        <div class="Container">
+                            {{ content_html|safe }}
+                        </div>
+                    {% else %}
+                        <p>{{ _('Please override the "content" block of your template!') }}</p>
+                    {% endif %}
+                {% endblock %}
+            {% endif %}
         </main>
     {% endblock %}
 
     {% if (target == 'all' or target == 'page') and not hide_footer %}
-        {{ page_footer(social_icons(), footer_data()) }}
+        {{ page_footer(social_icons(), footer_data(), request) }}
         </div>
     {% endif %}
 
@@ -146,6 +151,36 @@
             }
         </script>
         {% endif %}
+
+        <!-- Run AJAX-loaded scripts -->
+        <script>
+            function runRemoteScripts() {
+                var scripts = document.getElementsByClassName('remoteScript');
+                for (var i = 0; i < scripts.length; i++) {
+                    var id = 'script-' + scripts[i].getAttribute('id');
+                    if (document.getElementById(id)) {
+                        document.getElementById(id).outerHTML = '';
+                    }
+                    var script = document.createElement('script');
+                    script.id = id;
+                    script.type = 'text/javascript';
+                    var src = scripts[i].getAttribute('data-script-src');
+                    if (!!src) {
+                        script.src = src;
+                    }
+                    else {
+                        script.text = scripts[i].innerHTML;
+                    }
+                    document.getElementsByTagName('body')[0].appendChild(script);
+                }
+            }
+            window.onload = function() {
+                runRemoteScripts();
+                up.on('up:fragment:inserted', function(event, fragment) {
+                    runRemoteScripts();
+                });
+            }
+        </script>
     {% endblock %}
 
     </body>

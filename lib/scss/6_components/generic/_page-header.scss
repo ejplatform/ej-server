@@ -22,6 +22,15 @@ $header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.05) !default;
         @extend .unlist;
     }
 
+    &-ejLogo {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    &-topIcon {
+        cursor: pointer;
+    }
+
     @media only screen and (min-width: $breakpoint-small) {
         @include size(100vw, $header-height-tablet);
         @include position(fixed,  $top-header-height null null null);
@@ -39,6 +48,8 @@ $header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.05) !default;
     // Elements
     &-topNav,
     &-lowerNav {
+        @include color($header-color, $header-color-text, $force: true);
+
         align-items: center;
         box-sizing: border-box;
         box-shadow: $header-box-shadow-upper;
@@ -100,13 +111,14 @@ $header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.05) !default;
         text-align: center;
         text-transform: uppercase;
         font-size: $font-size-tiny;
+        background-color: white;
 
         a {
             align-items: center;
             display: flex;
             flex-flow: column;
             justify-content: center;
-            width: 33.3333%;
+            width: 50%;
 
             > * {
                 display: block;
@@ -122,7 +134,7 @@ $header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.05) !default;
 
         a:last-child {
             @media only screen and (min-width: $breakpoint-small) {
-                margin-left: 0;
+                margin-left: 15px;
                 padding-left: 0;
 
                 span {
@@ -152,5 +164,10 @@ $header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.05) !default;
     &-lowerIcon {
         height: $header-icon-size;
         margin-bottom: $spacing-unit-tiny;
+
+        @media only screen and (min-width: $breakpoint-small) {
+            color: $color-content-text;
+            margin-left: $spacing-unit-small;
+        }
     }
 }

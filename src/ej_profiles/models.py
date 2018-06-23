@@ -9,6 +9,7 @@ from sidekick import delegate_to
 from boogie.fields import EnumField
 from boogie.rest import rest_api
 from .choices import Race, Gender
+from rest_framework.authtoken.models import Token
 
 User = get_user_model()
 
@@ -58,6 +59,11 @@ class Profile(models.Model):
         return self.gender_other
 
     @property
+    def token(self):
+        token = Token.objects.get_or_create(user_id=self.id)
+        return token[0].key
+
+    @property
     def image_url(self):
         try:
             return self.image.url
@@ -66,7 +72,7 @@ class Profile(models.Model):
                 picture = account.get_avatar_url()
                 if picture:
                     return picture
-            return gravatar_fallback(self.user.email)
+            return avatar_fallback()
 
     @property
     def has_image(self):
@@ -76,7 +82,6 @@ class Profile(models.Model):
     def is_filled(self):
         fields = ('race', 'age', 'country', 'state', 'city', 'biography',
                   'occupation', 'political_activity', 'has_image', 'gender_description')
-        print([getattr(self, field) for field in fields])
         return bool(all(getattr(self, field) for field in fields))
 
     def get_absolute_url(self):
@@ -88,7 +93,7 @@ class Profile(models.Model):
         registered profile fields.
         """
 
-        fields = ['city', 'country', 'occupation', 'age', 'gender', 'race', 'political_activity']
+        fields = ['city', 'country', 'occupation', 'age', 'gender', 'race', 'political_activity', 'biography']
         field_map = {field.name: field for field in self._meta.fields}
         result = []
         for field in fields:
@@ -97,7 +102,6 @@ class Profile(models.Model):
             result.append((description.capitalize(), getter()))
         if user_fields:
             result = [
-                (_('Name'), self.user.name),
                 (_('E-mail'), self.user.email),
                 *result,
             ]
@@ -112,6 +116,18 @@ class Profile(models.Model):
             comments=self.user.comments.count(),
             conversations=self.user.conversations.count(),
         )
+
+    def badges(self):
+        """
+        Return all profile badges.
+        """
+        return self.user.badges_earned.all()
+
+    def comments(self):
+        """
+        Return all profile comments.
+        """
+        return self.user.comments.all()
 
     def role(self):
         """
@@ -130,6 +146,13 @@ def gravatar_fallback(id):
     """
     digest = hashlib.md5(id.encode('utf-8')).hexdigest()
     return "https://gravatar.com/avatar/{}?s=40&d=mm".format(digest)
+
+
+def avatar_fallback():
+    """
+    Return fallback image URL for profile
+    """
+    return "/static/img/logo/avatar_default.svg"
 
 
 def get_profile(user):

@@ -11,26 +11,39 @@ $nav-menu-border: 1px solid $nav-menu-border-color !default;
 // Layout
 $nav-menu-font-size: $font-size-default !default;
 $nav-menu-opacity: 1.0 !default;
-$nav-menu-shadow: $box-shadow;
+$nav-menu-shadow: $box-shadow !default;
 $nav-menu-width: 75vw !default;
+
 
 // Element
 .NavMenu {
     @include color($nav-menu-color, $nav-menu-color-text);
-    @include size($nav-menu-width, 100vh);
+    @include size($nav-menu-width, 100%);
+    min-height: 100vh;
     box-shadow: $nav-menu-shadow;
     box-sizing: border-box;
     font-size: $nav-menu-font-size;
     opacity: $nav-menu-opacity;
-    overflow: auto;
+    -ms-overflow-style: none;
+    overflow: -moz-scrollbars-none;
+    &::-webkit-scrollbar{
+        display: none;
+    }
     padding: $spacing-unit;
 
     em {
         font-weight: bold;
         font-style: normal;
     }
-    a, a:hover, a:active {
+    a, a:hover, a:active, button {
         color: $nav-menu-color-text;
+    }
+    button{
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0px;
+
     }
     img, i {
         height: 1em;
@@ -46,5 +59,26 @@ $nav-menu-width: 75vw !default;
     }
     ul {
         padding: 0;
+        // overflow: auto;
+    }
+
+
+
+    &-DropDown {
+        cursor: pointer;
+    }
+
+    &-AngleDownIcon {
+        float: right;
+    }
+
+
+    &-UserMenu {
+        display: none;
+        >li {
+            margin-left: $spacing-unit-large;
+
+        }
+
     }
 }

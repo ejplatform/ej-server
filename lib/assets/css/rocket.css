@@ -442,14 +442,14 @@ template {
  BUTTONS
  =============================================================================*/
 .Button {
-  background-color: #30c0d3;
-  color: rgba(255, 255, 255, 0.9);
+  background-color: #30BEC0;
+  color: rgba(51, 51, 51, 0.9);
   border: none;
   border-radius: 56px;
   box-sizing: border-box;
   cursor: pointer;
   display: inline-block;
-  font: 15px "Raleway", sans-serif;
+  font: 16px "Raleway", sans-serif;
   font-weight: bold;
   margin: 7px;
   padding: 9px 28px;
@@ -461,35 +461,35 @@ template {
     text-decoration: none; }
   .Button[primary],
   .Button .Button--primary {
-    background-color: #ff3e72;
+    background-color: #C6027B;
     color: rgba(255, 255, 255, 0.9); }
     .Button[primary]:hover, .Button[primary]:focus,
     .Button .Button--primary:hover,
     .Button .Button--primary:focus {
-      background-color: #ff0b4d;
+      background-color: #94015c;
       color: #fff; }
   .Button[secondary],
   .Button .Button--secondary {
-    background-color: #d6f1f3;
-    color: rgba(4, 32, 73, 0.9); }
+    background-color: #C4F2F4;
+    color: rgba(48, 190, 192, 0.9); }
     .Button[secondary]:hover, .Button[secondary]:focus,
     .Button .Button--secondary:hover,
     .Button .Button--secondary:focus {
-      background-color: #afe4e7;
-      color: #042049; }
+      background-color: #99e9ec;
+      color: #30BEC0; }
   .Button[small],
   .Button .Button--small {
-    font-size: 13px;
+    font-size: 14px;
     padding: 4.5px 14px; }
   .Button[large],
   .Button .Button--large {
-    font-size: 17px;
+    font-size: 18px;
     padding: 18px 56px; }
   .Button[ghost],
   .Button .Button--ghost {
     background-color: none;
-    color: #30c0d3;
-    border: 1px solid #30c0d3;
+    color: #30BEC0;
+    border: 1px solid #30BEC0;
     padding: 8px 27px; }
     .Button[ghost]:hover, .Button[ghost]:focus,
     .Button .Button--ghost:hover,
@@ -499,7 +499,7 @@ template {
     .Button[ghost] .Button--ghost-primary,
     .Button .Button--ghost [primary],
     .Button .Button--ghost .Button--ghost-primary {
-      color: #ff3e72; }
+      color: #C6027B; }
       .Button[ghost] [primary]:hover, .Button[ghost] [primary]:focus,
       .Button[ghost] .Button--ghost-primary:hover,
       .Button[ghost] .Button--ghost-primary:focus,
@@ -507,12 +507,12 @@ template {
       .Button .Button--ghost [primary]:focus,
       .Button .Button--ghost .Button--ghost-primary:hover,
       .Button .Button--ghost .Button--ghost-primary:focus {
-        color: #ff0b4d; }
+        color: #94015c; }
     .Button[ghost] [secondary],
     .Button[ghost] .Button--ghost-secondary,
     .Button .Button--ghost [secondary],
     .Button .Button--ghost .Button--ghost-secondary {
-      color: #d6f1f3; }
+      color: #C4F2F4; }
       .Button[ghost] [secondary]:hover, .Button[ghost] [secondary]:focus,
       .Button[ghost] .Button--ghost-secondary:hover,
       .Button[ghost] .Button--ghost-secondary:focus,
@@ -520,32 +520,32 @@ template {
       .Button .Button--ghost [secondary]:focus,
       .Button .Button--ghost .Button--ghost-secondary:hover,
       .Button .Button--ghost .Button--ghost-secondary:focus {
-        color: #afe4e7; }
+        color: #99e9ec; }
 
 .Rocket-title {
-  color: #d6f1f3;
+  color: #C4F2F4;
   font-weight: bold;
   padding: 0 7px; }
   .Rocket-title h1 {
-    color: #ff3e72;
+    color: #C6027B;
     font-weight: bold; }
   .Rocket-title h2 {
-    color: #74b5b8;
+    color: #8EC73F;
     font-weight: bold; }
 .Rocket-detail {
   padding: 7px; }
 .Rocket-items {
-  background-color: #d6f1f3;
+  background-color: #C4F2F4;
   padding: 14px; }
   .Rocket-items .title {
     padding: 7px 0;
-    color: #74b5b8;
+    color: #8EC73F;
     font-weight: bold; }
   .Rocket-items .item {
     padding: 7px; }
     .Rocket-items .item .item-position {
-      color: #ff3e72;
-      font-size: 24px;
+      color: #C6027B;
+      font-size: 25px;
       width: auto;
       float: left; }
     .Rocket-items .item .item-content {

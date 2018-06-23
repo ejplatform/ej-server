@@ -1,18 +1,31 @@
 {% from 'ej_conversations/components/conversation-card.jinja2' import conversation_card %}
 {% from 'components/generic/elements.jinja2' import link %}
+{% from 'components/generic/react.jinja2' import react_component %}
 
 {#---------------------------------------------------------------------------#
     CONVERSATION LIST
  #---------------------------------------------------------------------------#}
+
 {% macro conversation_list(conversations,
                            categories,
-                           title=_('Active conversations'),
-                           subtitle=_('See some active conversations and give your opinion')) %}
+                           title='Conversas públicas',
+                           subtitle='Participe das conversas e dê sua opinião com comentários e votos!',
+                           javascript_enabled='') %}
+
+    {% if caller %}{% set caller_output = caller() %}{% endif %}
+
     <div class="ConversationList">
+        {{ react_component('conversation_list', conversation_list_static(conversations, categories, title, subtitle, caller_output), javascript_enabled) }}
+    </div>
+
+{% endmacro %}
+
+{% macro conversation_list_static(conversations, categories, title, subtitle, caller_output=None) %}
+    <div class="ConversationListStatic">
         <div class="ConversationList-title">
-            {% if caller %}{{ caller() }}{% endif %}
-            <h1>{{ title }}</h1>
-            <h2>{{ subtitle }}</h2>
+            {% if caller_output %}{{ caller_output }}{% endif %}
+            <h1 class="h1">{{ title }}</h1>
+            <p>{{ subtitle }}</p>
         </div>
 
         {% if categories %}
@@ -37,7 +50,6 @@
         {# {{ conversation_pagination() }} #}
     </div>
 {% endmacro %}
-
 
 
 

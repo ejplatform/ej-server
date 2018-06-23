@@ -35,6 +35,7 @@ class TestProfile:
             ('Identidade de gênero', 'female'),
             ('Raça', 'indigenous'),
             ('Atividade política', 'political_activity'),
+            ('Biografia', 'biography'),
         ]
         assert profile.statistics() == {'votes': 0, 'comments': 0, 'conversations': 0}
         assert profile.role() == _('Regular user')

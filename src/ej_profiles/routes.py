@@ -4,10 +4,9 @@ from django.shortcuts import redirect
 from boogie.router import Router
 from .forms import ProfileForm
 
-
 app_name = 'ej_profiles'
 urlpatterns = Router(
-    template='ej_profiles/{name}.jinja2',
+    template=['ej_profiles/{name}.jinja2', 'generic.jinja2'],
     login=True,
 )
 
@@ -16,19 +15,20 @@ urlpatterns = Router(
 def detail(request):
     return {
         'info_tab': request.GET.get('info', 'profile'),
+        'profile': request.user.profile,
     }
 
 
 @urlpatterns.route('edit/')
 def edit(request):
-    profile = request.user
+    profile = request.user.profile
     if request.method == 'POST':
         form = ProfileForm(request.POST, instance=profile, files=request.FILES)
         if form.is_valid():
             form.save()
             return redirect('/profile/')
     else:
-        form = ProfileForm(instance=request.user)
+        form = ProfileForm(instance=profile)
 
     return {
         'form': form,
@@ -42,7 +42,7 @@ def comments(request):
     return {
         'user': user,
         'comments': user.comments.all(),
-        'stats': user.comments.stats(),
+        'stats': user.comments.statistics(),
     }
 
 
@@ -54,5 +54,5 @@ def comments_filter(request, which):
     return {
         'user': user,
         'comments': getattr(user.comments, which)(),
-        'stats': user.comments.stats(),
+        'stats': user.comments.statistics(),
     }

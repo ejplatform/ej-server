@@ -1,0 +1,83 @@
+.Container > a {
+    color: $purple;
+    text-transform: uppercase;
+    margin: $unit;
+    font-weight: bold;
+    display: block;
+}
+
+.ConversationDetail {
+    h1 {
+        color: $purple;
+    }
+
+    p {
+        text-align: center;
+    }
+
+    .ConversationTags {
+        background-color: $blue-light;
+        color: $blue-dark;
+    }
+
+    .ConversationDetail-banner {
+        background-color: $blue-light;
+    }
+
+    .ConversationDetail-arrow {
+        border-top-color: $blue-light;
+    }
+
+    .ConversationDetail-statistics, .ConversationDetail-statisticsBottom {
+        color: $blue-dark;
+    }
+
+    .ConversationDetail-header {
+        p {
+            color: $grey-dark;
+        }
+    }
+
+    .Comment {
+        background: $blue-dark;
+        color: $white;
+
+        i.fa {
+          background: $white;
+        }
+    }
+
+    .Comment-voteArea ul span {
+        font-size: 18px;
+    }
+
+    .Comment-voteArea ul li i.fa {
+        width: 32px;
+        height: 32px;
+        background: $white;
+        border: 0;
+        padding: 9px 6px 0 7px;
+    }
+
+    .CommentForm {
+        background: $white;
+
+        h1 {
+            color: $pink !important;
+            font-weight: 300;
+        }
+
+        p {
+            color: $grey-dark;
+        }
+
+        textarea {
+            border-color: $blue-medium;
+        }
+
+        input[type=submit] {
+            border-radius: $unit;
+            background: $pink;
+        }
+    }
+}
