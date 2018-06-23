@@ -30,3 +30,13 @@ class Mission(models.Model):
     class Meta:
         ordering = ['title']
 
+class Receipt(models.Model):
+    mission = models.ForeignKey(Mission, on_delete=models.CASCADE)
+    userName = models.CharField(max_length=30)
+    userEmail = models.CharField(max_length=60)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    status = models.CharField(max_length=60)
+    description = models.CharField(max_length=60)
+    receiptFile  = models.FileField(upload_to="uploads",
+                                  default=settings.MEDIA_ROOT + "/uploads/default.jpg")
+

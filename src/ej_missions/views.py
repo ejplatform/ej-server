@@ -12,9 +12,6 @@ from . import models
 from ej_users.models import User
 
 
-class MissionForm(forms.Form):
-    title = forms.CharField(max_length=50)
-
 class MissionViewSet(viewsets.ViewSet):
 
     def list(self, request):
@@ -28,8 +25,6 @@ class MissionViewSet(viewsets.ViewSet):
         return Response(serializer.data)
 
     def create(self, request):
-        print(request.POST)
-        print(request.FILES)
         data = request.POST
         mission = models.Mission(title=data["title"], description=data["description"])
         mission.save()
@@ -43,5 +38,27 @@ class MissionViewSet(viewsets.ViewSet):
         user = User.objects.filter(id=data["user_id"])[0]
         mission = models.Mission.objects.filter(id=data["id"])[0]
         mission.users.add(user)
-        serializer = serializers.MissionSerializer(mission, context={'request': Request(request)})
+        serializer = serializers.MissionSerializer(mission)
+        return Response(serializer.data)
+
+    def receipt(self, request, pk):
+        data = request.POST
+        mission = models.Mission.objects.filter(id=pk)[0]
+        user = User.objects.filter(id=data["uid"])[0]
+        receipt = models.Receipt(userName=data["userName"],
+                                 userEmail=data["userEmail"],
+                                 status=data["status"],
+                                 description=data["description"],
+                                 receiptFile=request.FILES["receiptFile"])
+        receipt.user = user
+        receipt.mission = mission
+        receipt.save()
+        # With a many to one relation, add receipt directly on mission.
+        mission.receipt_set.add(receipt)
+        serializer = serializers.MissionSerializer(mission)
+        return Response(serializer.data)
+
+    def receipts(self, request, pk):
+        queryset = models.Mission.objects.filter(id=pk)[0].receipt_set.all()
+        serializer = serializers.MissionReceiptSerializer(queryset, many=True)
         return Response(serializer.data)
