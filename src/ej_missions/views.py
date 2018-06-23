@@ -62,3 +62,16 @@ class MissionViewSet(viewsets.ViewSet):
         queryset = models.Mission.objects.filter(id=pk)[0].receipt_set.all()
         serializer = serializers.MissionReceiptSerializer(queryset, many=True)
         return Response(serializer.data)
+
+    def user_status(self, request, mid, uid):
+        mission = models.Mission.objects.filter(id=mid)[0]
+        user = models.User.objects.filter(id=uid)[0]
+        status = {"status": "new"}
+        if (len(mission.users.all()) > 0 and user in mission.users.all()):
+            status["status"] = "started";
+
+        for receipt in mission.receipt_set.all():
+            if (uid == str(receipt.user.id)):
+             status["status"] = receipt.status
+
+        return Response(status)
