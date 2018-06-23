@@ -19,8 +19,18 @@ class MissionViewSet(viewsets.ViewSet):
         serializer = serializers.MissionSerializer(queryset, many=True)
         return Response(serializer.data)
 
+    def inbox(self, request, pk):
+        queryset = models.Mission.objects.exclude(users=pk)
+        serializer = serializers.MissionSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def accepted_missions(self, request, pk):
+        queryset = models.Mission.objects.filter(users=pk)
+        serializer = serializers.MissionSerializer(queryset, many=True)
+        return Response(serializer.data)
+
     def retrieve(self, request, pk):
-        queryset = models.Mission.objects.filter(id=pk)[0]
+        queryset = models.Mission.objects.get(id=pk)
         serializer = serializers.MissionSerializer(queryset)
         return Response(serializer.data)
 
