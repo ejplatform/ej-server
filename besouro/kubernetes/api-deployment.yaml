@@ -1,0 +1,59 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: besouro-api
+  labels:
+    app: besouro
+spec:
+  ports:
+    - port: 80
+  selector:
+    app: besouro
+    tier: api
+  clusterIP: None
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: besouro-media-pvc
+  labels:
+    app: besouro
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+---
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: besouro-api
+  labels:
+    app: besouro
+spec:
+  selector:
+    matchLabels:
+      app: besouro
+      tier: api
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: besouro
+        tier: api
+    spec:
+      containers:
+      - image: ejplatform/api:staging
+        name: api
+        ports:
+        - containerPort: 80
+          name: api
+        volumeMounts:
+        - name: api-media-storage
+          mountPath: /usr/share/api/html/media
+      volumes:
+      - name: api-media-storage
+        persistentVolumeClaim:
+          claimName: besouro-media-pvc
