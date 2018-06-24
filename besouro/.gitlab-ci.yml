@@ -41,7 +41,7 @@ test:
 # Pushing images to registry
 #
 
-push:staging:nginx:
+push:staging:api:
   << : *builder
   stage: push
   script:
@@ -61,7 +61,7 @@ push:staging:django:
   only:
     - develop
 
-push:production:nginx:
+push:production:api:
   << : *builder
   stage: push
   script:

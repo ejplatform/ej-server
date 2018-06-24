@@ -5,14 +5,13 @@ metadata:
   labels:
     app: besouro
 spec:
-  ports:
-  - port: 80
-    targetPort: 5000
+  type: NodePort
   selector:
     app: besouro
     tier: ej-server
-  type: LoadBalancer
-  loadBalancerIP: 35.198.45.196
+  ports:
+  - port: 5000
+    targetPort: 5000
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -69,7 +68,7 @@ spec:
         - name: DJANGO_ADMIN_URL
           value: admin/
         - name: DJANGO_ALLOWED_HOSTS
-          value: dev.besouro.ejplatform.org,www.dev.besouro.ejplatform.org
+          value: dev.besouro.ejplatform.org,www.dev.besouro.ejplatform.org,besouro-api
         - name: DJANGO_DB_URL
           valueFrom:
             secretKeyRef:

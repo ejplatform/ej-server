@@ -21,8 +21,6 @@ services:
       - ./env/postgres.env
     links:
       - postgres
-      - rabbit
-      - redis
     networks:
       - ej
     ports:
@@ -30,46 +28,6 @@ services:
     volumes:
       - ../../../:/app
     working_dir: /app
-
-  redis:
-    image: redis:3.2
-    networks:
-      - ej
-
-  rabbit:
-    image: rabbitmq:3.6.14-management
-    env_file:
-      - ./env/rabbit.env
-    networks:
-      - ej
-    ports:
-      - 5672:5672  # Debugging
-      - 15672:15672  # RabbitMQ Manager
-
-  flower:
-    << : *django
-    command: /start_flower.sh
-    depends_on:
-      - django
-      - rabbit
-      - redis
-    links:
-      - rabbit
-      - redis
-    ports:
-      - 8001:8001
-
-  worker:
-    << : *django
-    command: /run_celery.sh
-    depends_on:
-      - django
-      - rabbit
-    links:
-      - postgres
-      - rabbit
-      - redis
-    ports: []
 
   postgres:
     image: postgres:9.6
