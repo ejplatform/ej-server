@@ -49,7 +49,7 @@ push:staging:nginx:
     - docker build -t $BACKEND_STAGING_IMAGE -f ./besouro/docker/production/nginx/staging.Dockerfile .
     - docker push $BACKEND_STAGING_IMAGE
   only:
-    - master
+    - develop
 
 push:staging:django:
   << : *builder
@@ -58,7 +58,7 @@ push:staging:django:
     - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASS
     - docker push $DJANGO_STAGING_IMAGE
   only:
-    - master
+    - develop
 
 push:production:nginx:
   << : *builder
