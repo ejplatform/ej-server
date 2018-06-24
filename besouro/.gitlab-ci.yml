@@ -56,6 +56,7 @@ push:staging:django:
   stage: push
   script:
     - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASS
+    - docker tag $DJANGO_PRODUCTION_IMAGE $DJANGO_STAGING_IMAGE
     - docker push $DJANGO_STAGING_IMAGE
   only:
     - develop
