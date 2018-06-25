@@ -34,7 +34,7 @@ variables:
   tags:
     - docker
 
-.builder:cpa: &builder:cpa
+.buildercpa: &buildercpa
   image: docker
   before_script:
     - docker pull $CPA_DJANGO_MASTER_IMAGE || true
@@ -102,7 +102,7 @@ push:latest:django:
 #
 
 push:master:django:cpa:
-  << : *builder:cpa
+  << : *builder_cpa
   stage: push
   script:
     - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASS
@@ -112,7 +112,7 @@ push:master:django:cpa:
     - master
 
 push:master:django:cpa:
-  << : *builder:cpa
+  << : *builder_cpa
   stage: push
   script:
     - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASS
@@ -121,7 +121,7 @@ push:master:django:cpa:
     - master
 
 push:latest:nginx:
-  << : *builder:cpa
+  << : *builder_cpa
   stage: push
   script:
     - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASS
@@ -131,7 +131,7 @@ push:latest:nginx:
     - tags
 
 push:latest:django:
-  << : *builder:cpa
+  << : *builder_cpa
   stage: push
   script:
     - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASS
