@@ -39,14 +39,54 @@ class User(AbstractUser):
             self.display_name = random_name()
         super().save(*args, **kwargs)
 
-    def clean(self):
-        super().clean()
-        if not rules.test_rule('auth.valid_username', self.username):
-            error = {'username': _('invalid username: %s') % self.username}
-            raise ValidationError(error)
+    # def clean(self):
+    #     super().clean()
+    #     if not rules.test_rule('auth.valid_username', self.username):
+    #         error = {'username': _('invalid username: %s') % self.username}
+    #         raise ValidationError(error)
 
     class Meta:
         swappable = 'AUTH_USER_MODEL'
+
+
+def username(full_name, email):
+    names = list(filter(None, full_name.split(' ')))
+    first_name = names[0].lower()
+    normalized_email = email.split('@')[0].replace('.', '_')
+
+    if not User.objects.filter(username=first_name):
+        return first_name
+    elif not User.objects.filter(username=normalized_email):
+        return normalized_email
+    else:
+        try:
+            return username_by_name_combination(names)
+        except RuntimeError:
+            return username_by_email(normalized_email)
+
+
+def username_by_name_combination(names):
+    for _iter in range(len(names)):
+        if _iter < len(names) - 1:
+            username = (names[_iter] + names[_iter + 1]).lower()
+            if not User.objects.filter(username=username):
+                return username
+    else:
+        raise RuntimeError(
+            'no valid unique names combination found'
+        )
+
+
+def username_by_email(email):
+    for _iter in range(100):
+        username = email + str(_iter)
+        if not User.objects.filter(username=username):
+            return username
+    else:
+        raise RuntimeError(
+            'maximum number of attempts reached when trying to generate a '
+            'unique username by user email'
+        )
 
 
 def random_name(fmt='{adjective} {noun}'):
