@@ -49,7 +49,7 @@ urlpatterns = [
     # REST API
     path('api/', include(rest_api.urls)),
     path('api/v1/docs/', include_docs_urls(title='ej API Docs', public=False)),
-    # path('api/v1/', include('courier.urls', namespace='courier')),
+    path('api/v1/missions', include('ej_missions.urls')),
     path('api/v1/rocketchat/', include('ej_rocketchat.routes')),
 
     # User management
