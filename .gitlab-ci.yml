@@ -120,7 +120,7 @@ push:master:django:cpa:
   only:
     - master
 
-push:latest:nginx:
+push:latest:nginx:cpa:
   << : *buildercpa
   stage: push
   script:
@@ -130,7 +130,7 @@ push:latest:nginx:
   only:
     - tags
 
-push:latest:django:
+push:latest:django:cpa:
   << : *buildercpa
   stage: push
   script:
