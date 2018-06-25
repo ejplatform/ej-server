@@ -91,7 +91,6 @@ class Conf(locales.brazil(),
     #     'REGISTER_SERIALIZER': 'ej_users.serializers.RegistrationSerializer'
     # }
 
-
 Conf.save_settings(globals())
 
 # TODO: Fix this later in boogie configuration stack
@@ -106,10 +105,13 @@ if ENVIRONMENT == 'local':
 
     CSRF_TRUSTED_ORIGINS = [
         'localhost:8000',
-        'localhost:3000'
+        'localhost:3000',
+        'localhost:8081',
     ]
 
     X_FRAME_OPTIONS = 'ALLOW-FROM http://localhost:3000'
+
+    ACCOUNT_EMAIL_VERIFICATION = 'none'
 
 if ENVIRONMENT == 'production':
     # Django CORS
