@@ -2,8 +2,8 @@
 version: '3.5'
 
 networks:
-  ej:
-    name: ej
+  besouro:
+    name: besouro
 
 volumes:
   db_data: {}
@@ -24,7 +24,7 @@ services:
     links:
       - postgres
     networks:
-      - ej
+      - besouro
     ports:
       - 8000:8000
     volumes:
@@ -35,6 +35,6 @@ services:
     env_file:
       - ./env/postgres.env
     networks:
-      - ej
+      - besouro
     volumes:
       - db_data:/var/lib/postgresql/data
