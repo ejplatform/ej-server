@@ -43,4 +43,13 @@ $profile-edit-button-padding: 15px 25px 15px 25px;
             }
         }
     }
+
+    .Profile-info dl dt {
+      color: $color-blue-dark;
+      font-weight: bold;
+    }
+
+    .Profile-info dl dd {
+      color: $color-purple;
+    }
 }
