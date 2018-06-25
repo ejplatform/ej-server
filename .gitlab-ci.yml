@@ -102,7 +102,7 @@ push:latest:django:
 #
 
 push:master:django:cpa:
-  << : *builder_cpa
+  << : *buildercpa
   stage: push
   script:
     - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASS
@@ -112,7 +112,7 @@ push:master:django:cpa:
     - master
 
 push:master:django:cpa:
-  << : *builder_cpa
+  << : *buildercpa
   stage: push
   script:
     - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASS
@@ -121,7 +121,7 @@ push:master:django:cpa:
     - master
 
 push:latest:nginx:
-  << : *builder_cpa
+  << : *buildercpa
   stage: push
   script:
     - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASS
@@ -131,7 +131,7 @@ push:latest:nginx:
     - tags
 
 push:latest:django:
-  << : *builder_cpa
+  << : *buildercpa
   stage: push
   script:
     - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASS
