@@ -101,7 +101,7 @@ push:latest:django:
 # Push CPA images
 #
 
-push:master:django:cpa:
+push:master:nginx:cpa:
   << : *buildercpa
   stage: push
   script:
