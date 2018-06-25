@@ -1,6 +1,5 @@
 from random import choice
 
-from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from faker import Factory
@@ -39,17 +38,15 @@ class User(AbstractUser):
             self.display_name = random_name()
         super().save(*args, **kwargs)
 
-    # def clean(self):
-    #     super().clean()
-    #     if not rules.test_rule('auth.valid_username', self.username):
-    #         error = {'username': _('invalid username: %s') % self.username}
-    #         raise ValidationError(error)
-
     class Meta:
         swappable = 'AUTH_USER_MODEL'
 
 
 def username(full_name, email):
+    """
+    Return a unique username using some logic that combines
+    names and email.
+    """
     names = list(filter(None, full_name.split(' ')))
     first_name = names[0].lower()
     normalized_email = email.split('@')[0].replace('.', '_')
@@ -66,6 +63,10 @@ def username(full_name, email):
 
 
 def username_by_name_combination(names):
+    """
+    Try to create a unique username combining the given names.
+    first_name - second_name, second_name - third_name and so on.
+    """
     for _iter in range(len(names)):
         if _iter < len(names) - 1:
             username = (names[_iter] + names[_iter + 1]).lower()
@@ -78,6 +79,10 @@ def username_by_name_combination(names):
 
 
 def username_by_email(email):
+    """
+    Try to create a unique username using the given email
+    plus a number between 0 and 99.
+    """
     for _iter in range(100):
         username = email + str(_iter)
         if not User.objects.filter(username=username):
