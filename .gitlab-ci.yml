@@ -9,19 +9,36 @@ stages:
 variables:
   DOCKER_DRIVER: overlay2
   GIT_SUBMODULE_STRATEGY: recursive
-  DJANGO_MASTER_IMAGE: "ejplatform/ej-server:master"
-  DJANGO_LATEST_IMAGE: "ejplatform/ej-server:latest"
-  BACKEND_MASTER_IMAGE: "ejplatform/ej-nginx:master"
-  BACKEND_LATEST_IMAGE: "ejplatform/ej-nginx:latest"
-  DJANGO_DEVELOP_IMAGE: "ejplatform/ej-nginx:develop" 
-  DJANGO_TEST_ENV: "./docker/develop/env/django.test.env"
-  POSTGRES_TEST_ENV: "./docker/develop/env/postgres.test.env"
+
+  DJANGO_MASTER_IMAGE:      "ejplatform/ej-server:master"
+  DJANGO_LATEST_IMAGE:      "ejplatform/ej-server:latest"
+
+  BACKEND_MASTER_IMAGE:     "ejplatform/ej-nginx:master"
+  BACKEND_LATEST_IMAGE:     "ejplatform/ej-nginx:latest"
+
+  DJANGO_DEVELOP_IMAGE:     "ejplatform/ej-nginx:develop" 
+  DJANGO_TEST_ENV:          "./docker/develop/env/django.test.env"
+  POSTGRES_TEST_ENV:        "./docker/develop/env/postgres.test.env"
+
+  CPA_DJANGO_MASTER_IMAGE:    "mdhcpa/ej-server:master"
+  CPA_BACKEND_MASTER_IMAGE:   "mdhcpa/ej-nginx:master"
+  CPA_DJANGO_LATEST_IMAGE:    "mdhcpa/ej-server:latest"
+  CPA_BACKEND_LATEST_IMAGE:   "mdhcpa/ej-nginx:latest"
+
 
 .builder: &builder
   image: docker
   before_script:
     - docker pull $DJANGO_MASTER_IMAGE || true
     - docker build --cache-from $DJANGO_MASTER_IMAGE --build-arg VOLATILE_DEPENDENCIES_STRATEGY=$(date +%s) -t $DJANGO_MASTER_IMAGE -f ./docker/production/django/Dockerfile .
+  tags:
+    - docker
+
+.builder:cpa: &builder:cpa
+  image: docker
+  before_script:
+    - docker pull $CPA_DJANGO_MASTER_IMAGE || true
+    - docker build --cache-from $CPA_DJANGO_MASTER_IMAGE --build-arg VOLATILE_DEPENDENCIES_STRATEGY=$(date +%s) -t $CPA_DJANGO_MASTER_IMAGE -f ./docker/production/django/Dockerfile .
   tags:
     - docker
 
@@ -81,6 +98,50 @@ push:latest:django:
     - tags
 
 #
+# Push CPA images
+#
+
+push:master:django:cpa:
+  << : *builder:cpa
+  stage: push
+  script:
+    - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASS
+    - docker build -t $CPA_BACKEND_MASTER_IMAGE -f ./docker/production/nginx/master.Dockerfile .
+    - docker push $CPA_BACKEND_MASTER_IMAGE
+  only:
+    - master
+
+push:master:django:cpa:
+  << : *builder:cpa
+  stage: push
+  script:
+    - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASS
+    - docker push $CPA_DJANGO_MASTER_IMAGE
+  only:
+    - master
+
+push:latest:nginx:
+  << : *builder:cpa
+  stage: push
+  script:
+    - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASS
+    - docker build -t $CPA_BACKEND_LATEST_IMAGE -f ./docker/production/nginx/latest.Dockerfile .
+    - docker push $CPA_BACKEND_LATEST_IMAGE
+  only:
+    - tags
+
+push:latest:django:
+  << : *builder:cpa
+  stage: push
+  script:
+    - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASS
+    - docker tag $CPA_DJANGO_MASTER_IMAGE $CPA_DJANGO_LATEST_IMAGE
+    - docker push $CPA_DJANGO_LATEST_IMAGE
+  only:
+    - tags
+
+
+#
 # Rancher service upgrade
 #
 
@@ -94,16 +155,34 @@ push:latest:django:
   tags:
     - docker
 
-deploy:master:
+deploy:master:generic:
   << : *deployer
   stage: deploy
   environment: develop
   only:
     - master
 
-deploy:latest:
+deploy:latest:generic:
   << : *deployer
   stage: deploy
   environment: production
+  only:
+    - tags
+
+#
+# Rancher server upgrade CPA environment
+#
+
+deploy:master:cpa:
+  << : *deployer
+  stage: deploy
+  environment: develop_cpa
+  only:
+    - master
+
+deploy:latest:cpa:
+  << : *deployer
+  stage: deploy
+  environment: production_cpa
   only:
     - tags
