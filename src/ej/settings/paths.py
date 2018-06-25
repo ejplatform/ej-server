@@ -22,6 +22,10 @@ class PathsConf(Base):
     # Frontend paths
     LIB_DIR = REPO_DIR / 'lib'
 
+    # Static files
+    STATICFILES_DIRS = [REPO_DIR / 'lib/assets']
+
+
     def finalize(self, settings):
         """
         Create missing paths.

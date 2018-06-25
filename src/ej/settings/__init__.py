@@ -76,18 +76,18 @@ class Conf(locales.brazil(),
 
     REST_FRAMEWORK = {
         'DEFAULT_AUTHENTICATION_CLASSES': (
+            'rest_framework.authentication.TokenAuthentication',
+            'rest_framework.authentication.SessionAuthentication',
         ),
         'DEFAULT_PERMISSION_CLASSES': (
+            'rest_framework.permissions.IsAuthenticatedOrReadOnly',
         ),
         'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
         'PAGE_SIZE': 50,
         'DEFAULT_VERSION': 'v1',
-    }
+    } 
 
-    MEDIA_ROOT = "/home2/david/projects/ej-server/local/media"
-    STATIC_URL = "/local/media/uploads/"
     DEBUG = True
-    STATICFILES_DIRS = ['/home2/david/projects/ej-server/local/media/uploads']
     # REST_AUTH_REGISTER_SERIALIZERS = {
     #     'REGISTER_SERIALIZER': 'ej_users.serializers.RegistrationSerializer'
     # }
@@ -99,20 +99,16 @@ Conf.save_settings(globals())
 # TODO: Fix this later in boogie configuration stack
 # Required for making django debug toolbar work
 if ENVIRONMENT == 'local':
-    INTERNAL_IPS = [*globals().get('INTERNAL_IPS', ()), '127.0.0.1', '192.168.15.7']
+    INTERNAL_IPS = [*globals().get('INTERNAL_IPS', ()), '127.0.0.1']
 
     # Django CORS
     CORS_ORIGIN_ALLOW_ALL = True
     CORS_ALLOW_CREDENTIALS = True
-    CORS_ORIGIN_WHITELIST = (
-    '192.168.15.7:8081'
-    )
     CORS_ORIGIN_REGEX_WHITELIST = (r'^(http://)?localhost:\d{4,5}$',)
 
     CSRF_TRUSTED_ORIGINS = [
         'localhost:8000',
         'localhost:3000',
-        'localhost:8081'
     ]
 
     X_FRAME_OPTIONS = 'ALLOW-FROM http://localhost:3000'

@@ -24,8 +24,8 @@ class Mission(models.Model):
     description = models.TextField(max_length=1000)
     users = models.ManyToManyField(User)
     youtubeVideo = models.CharField(max_length=60)
-    fileUpload = models.FileField(upload_to="uploads",
-                                  default=settings.MEDIA_ROOT + "/uploads/default.jpg")
+    fileUpload = models.FileField(upload_to="missions",
+                                  default="default.jpg")
 
     class Meta:
         ordering = ['title']
@@ -37,6 +37,6 @@ class Receipt(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     status = models.CharField(max_length=60)
     description = models.CharField(max_length=60)
-    receiptFile  = models.FileField(upload_to="uploads",
-                                  default=settings.MEDIA_ROOT + "/uploads/default.jpg")
+    receiptFile  = models.FileField(upload_to="media/missions",
+                                    default="media/default.jpg")
 
