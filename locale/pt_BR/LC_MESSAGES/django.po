@@ -1211,7 +1211,7 @@ msgstr "Menu de navegação"
 #: src/ej/templates/jinja2/components/generic/page_menu.jinja2:13
 #: src/ej/templates/jinja2/components/generic/page_menu.jinja2:44
 msgid "Panel"
-msgstr ""
+msgstr "Painel"
 
 #: src/ej/templates/jinja2/components/generic/page_header.jinja2:71
 #: src/ej/templates/jinja2/components/generic/page_header.jinja2:72
