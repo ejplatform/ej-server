@@ -19,6 +19,10 @@ spec:
           serviceName: besouro-ej-server
           servicePort: 5000
         path: /rest-auth
+      - backend:
+          serviceName: besouro-ej-server
+          servicePort: 5000
+        path: /static
   - host: dev.besouro.ejplatform.org
     http:
       paths:
@@ -33,3 +37,7 @@ spec:
           serviceName: besouro-ej-server
           servicePort: 5000
         path: /admin
+      - backend:
+          serviceName: besouro-ej-server
+          servicePort: 5000
+        path: /static
