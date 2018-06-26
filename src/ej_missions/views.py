@@ -36,7 +36,10 @@ class MissionViewSet(viewsets.ViewSet):
 
     def create(self, request):
         data = request.POST
-        mission = models.Mission(title=data["title"], description=data["description"])
+        owner = User.objects.get(id=data["owner"])
+        mission = models.Mission(owner=owner,
+                                 title=data["title"],
+                                 description=data["description"])
         mission.save()
         mission.fileUpload=request.FILES["coverFile"]
         mission.save()
