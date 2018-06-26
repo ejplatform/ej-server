@@ -81,7 +81,7 @@ push:production:admin:
     - docker build -t $ADMIN_PRODUCTION_IMAGE -f ./besouro/docker/production/admin/staging.Dockerfile .
     - docker push $ADMIN_PRODUCTION_IMAGE
   only:
-    - develop
+    - master
 
 push:production:api:
   << : *builder
