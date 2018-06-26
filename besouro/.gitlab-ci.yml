@@ -14,8 +14,6 @@ variables:
   EJ_SERVER_DEVELOP_IMAGE: "besouro/ej-server:develop"
   API_PRODUCTION_IMAGE: "besouro/api:production"
   API_STAGING_IMAGE: "besouro/api:staging"
-  ADMIN_PRODUCTION_IMAGE: "besouro/api:production"
-  ADMIN_STAGING_IMAGE: "besouro/api:staging"
   DJANGO_TEST_ENV: "./besouro/docker/develop/env/django.test.env"
   POSTGRES_TEST_ENV: "./besouro/docker/develop/env/postgres.test.env"
 
@@ -44,16 +42,6 @@ test:
 # Pushing images to registry
 #
 
-push:staging:admin:
-  << : *builder
-  stage: push
-  script:
-    - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASS
-    - docker build -t $ADMIN_STAGING_IMAGE -f ./besouro/docker/production/admin/staging.Dockerfile .
-    - docker push $ADMIN_STAGING_IMAGE
-  only:
-    - develop
-
 push:staging:api:
   << : *builder
   stage: push
@@ -72,16 +60,6 @@ push:staging:ej-server:
     - docker push $EJ_SERVER_STAGING_IMAGE
   only:
     - develop
-
-push:production:admin:
-  << : *builder
-  stage: push
-  script:
-    - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASS
-    - docker build -t $ADMIN_PRODUCTION_IMAGE -f ./besouro/docker/production/admin/staging.Dockerfile .
-    - docker push $ADMIN_PRODUCTION_IMAGE
-  only:
-    - master
 
 push:production:api:
   << : *builder

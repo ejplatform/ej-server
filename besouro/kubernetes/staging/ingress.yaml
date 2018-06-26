@@ -8,13 +8,6 @@ metadata:
     kubernetes.io/ingress.global-static-ip-name: besouro-ingress
 spec:
   rules:
-  - host: admin.besouro.ejplatform.org
-    http:
-      paths:
-      - backend:
-          serviceName: besouro-admin
-          servicePort: 80
-        path: /
   - host: api.dev.besouro.ejplatform.org
     http:
       paths:

@@ -19,11 +19,3 @@ services:
     build:
       context: ../../../
       dockerfile: ./besouro/docker/production/api/staging.Dockerfile
-
-  admin:
-    image: besouro/admin:staging
-    depends_on:
-      - ej-server
-    build:
-      context: ../../../
-      dockerfile: ./besouro/docker/production/admin/staging.Dockerfile
