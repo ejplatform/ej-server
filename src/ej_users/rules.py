@@ -13,10 +13,6 @@ USERNAMES_BLACKLIST = {
     *getattr(settings, 'FORBIDDEN_USERNAMES', ()),
 }
 
-# accepted characters in valid urls
-URL_VALID_CHARACTERS = list(
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~:/?#[]@!$&'()*+,;="
-)
 
 @rules.register_rule('auth.valid_username')
 def is_valid_username(username):
@@ -24,18 +20,6 @@ def is_valid_username(username):
         return False
     try:
         resolve(f'/{username}/')
-        return False
-    except Resolver404:
-        return True
-
-
-@rules.register_rule('auth.valid_board_name')
-def is_valid_board_name(board_name):
-    for c in list(board_name):
-        if c not in URL_VALID_CHARACTERS:
-            return False
-    try:
-        resolve(f'/{board_name}/')
         return False
     except Resolver404:
         return True
