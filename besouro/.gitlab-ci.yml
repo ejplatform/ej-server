@@ -9,19 +9,22 @@ stages:
 variables:
   DOCKER_DRIVER: overlay2
   GIT_SUBMODULE_STRATEGY: recursive
-  DJANGO_PRODUCTION_IMAGE: "besouro/ej-server:production"
-  DJANGO_STAGING_IMAGE: "besouro/ej-server:staging"
-  DJANGO_DEVELOP_IMAGE: "besouro/ej-server:develop"
-  BACKEND_PRODUCTION_IMAGE: "besouro/api:production"
-  BACKEND_STAGING_IMAGE: "besouro/api:staging"
+  EJ_SERVER_PRODUCTION_IMAGE: "besouro/ej-server:production"
+  EJ_SERVER_STAGING_IMAGE: "besouro/ej-server:staging"
+  EJ_SERVER_DEVELOP_IMAGE: "besouro/ej-server:develop"
+  API_PRODUCTION_IMAGE: "besouro/api:production"
+  API_STAGING_IMAGE: "besouro/api:staging"
+  ADMIN_PRODUCTION_IMAGE: "besouro/api:production"
+  ADMIN_STAGING_IMAGE: "besouro/api:staging"
   DJANGO_TEST_ENV: "./besouro/docker/develop/env/django.test.env"
   POSTGRES_TEST_ENV: "./besouro/docker/develop/env/postgres.test.env"
 
 .builder: &builder
   image: docker
   before_script:
-    - docker pull $DJANGO_PRODUCTION_IMAGE || true
-    - docker build --cache-from $DJANGO_PRODUCTION_IMAGE --build-arg VOLATILE_DEPENDENCIES_STRATEGY=$(date +%s) -t $DJANGO_PRODUCTION_IMAGE -f ./besouro/docker/production/django/Dockerfile .
+    - docker pull $EJ_SERVER_PRODUCTION_IMAGE || true
+    - docker build --cache-from $EJ_SERVER_PRODUCTION_IMAGE --build-arg VOLATILE_DEPENDENCIES_STRATEGY=$(date +%s) -t $EJ_SERVER_PRODUCTION_IMAGE -f ./besouro/docker/production/ej-server/Dockerfile .
+    - docker tag $EJ_SERVER_PRODUCTION_IMAGE $EJ_SERVER_STAGING_IMAGE
   tags:
     - docker
 
@@ -33,31 +36,50 @@ test:
   << : *builder
   stage: test
   script:
-    - docker build -t $DJANGO_DEVELOP_IMAGE -f ./besouro/docker/develop/django/Dockerfile .
+    - docker build -t $EJ_SERVER_DEVELOP_IMAGE -f ./besouro/docker/develop/django/Dockerfile .
     - docker run -d --env-file=$POSTGRES_TEST_ENV --name=postgres postgres:9.6
-    - docker run --env-file=$DJANGO_TEST_ENV --env-file=$POSTGRES_TEST_ENV --link=postgres:postgres $DJANGO_DEVELOP_IMAGE /test.sh
+    - docker run --env-file=$DJANGO_TEST_ENV --env-file=$POSTGRES_TEST_ENV --link=postgres:postgres $EJ_SERVER_DEVELOP_IMAGE /test.sh
 
 #
 # Pushing images to registry
 #
+
+push:staging:admin:
+  << : *builder
+  stage: push
+  script:
+    - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASS
+    - docker build -t $ADMIN_STAGING_IMAGE -f ./besouro/docker/production/admin/staging.Dockerfile .
+    - docker push $ADMIN_STAGING_IMAGE
+  only:
+    - develop
 
 push:staging:api:
   << : *builder
   stage: push
   script:
     - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASS
-    - docker build -t $BACKEND_STAGING_IMAGE -f ./besouro/docker/production/nginx/staging.Dockerfile .
-    - docker push $BACKEND_STAGING_IMAGE
+    - docker build -t $API_STAGING_IMAGE -f ./besouro/docker/production/api/staging.Dockerfile .
+    - docker push $API_STAGING_IMAGE
   only:
     - develop
 
-push:staging:django:
+push:staging:ej-server:
   << : *builder
   stage: push
   script:
     - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASS
-    - docker tag $DJANGO_PRODUCTION_IMAGE $DJANGO_STAGING_IMAGE
-    - docker push $DJANGO_STAGING_IMAGE
+    - docker push $EJ_SERVER_STAGING_IMAGE
+  only:
+    - develop
+
+push:production:admin:
+  << : *builder
+  stage: push
+  script:
+    - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASS
+    - docker build -t $ADMIN_PRODUCTION_IMAGE -f ./besouro/docker/production/admin/staging.Dockerfile .
+    - docker push $ADMIN_PRODUCTION_IMAGE
   only:
     - develop
 
@@ -66,17 +88,17 @@ push:production:api:
   stage: push
   script:
     - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASS
-    - docker build -t $BACKEND_PRODUCTION_IMAGE -f ./besouro/docker/production/nginx/staging.Dockerfile .
-    - docker push $BACKEND_PRODUCTION_IMAGE
+    - docker build -t $API_PRODUCTION_IMAGE -f ./besouro/docker/production/api/staging.Dockerfile .
+    - docker push $API_PRODUCTION_IMAGE
   only:
     - master
 
-push:production:django:
+push:production:ej-server:
   << : *builder
   stage: push
   script:
     - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASS
-    - docker push $DJANGO_PRODUCTION_IMAGE
+    - docker push $EJ_SERVER_PRODUCTION_IMAGE
   only:
     - master
 

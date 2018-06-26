@@ -63,4 +63,6 @@ RUN inv prepare-deploy \
 
 USER django
 
+ENTRYPOINT ["/entrypoint.sh"]
+
 CMD ["inv", "run", "--gunicorn", "--migrate", "--assets"]

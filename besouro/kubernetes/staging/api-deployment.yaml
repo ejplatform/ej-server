@@ -48,12 +48,13 @@ spec:
       containers:
       - image: besouro/api:staging
         name: api
+        imagePullPolicy: "Always"
         ports:
         - containerPort: 80
           name: api
         volumeMounts:
         - name: api-media-storage
-          mountPath: /usr/share/api/html/media
+          mountPath: /usr/share/nginx/html/media
       volumes:
       - name: api-media-storage
         persistentVolumeClaim:

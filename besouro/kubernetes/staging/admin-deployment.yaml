@@ -1,0 +1,61 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: besouro-admin
+  labels:
+    app: besouro
+spec:
+  type: NodePort
+  selector:
+    app: besouro
+    tier: admin
+  ports:
+  - port: 80
+    targetPort: 80
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: besouro-media-pvc
+  labels:
+    app: besouro
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+---
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: besouro-admin
+  labels:
+    app: besouro
+spec:
+  selector:
+    matchLabels:
+      app: besouro
+      tier: admin
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: besouro
+        tier: admin
+    spec:
+      containers:
+      - image: besouro/admin:staging
+        name: api
+        imagePullPolicy: "Always"
+        ports:
+        - containerPort: 80
+          name: admin
+        volumeMounts:
+        - name: admin-media-storage
+          mountPath: /usr/share/nginx/html/media
+      volumes:
+      - name: admin-media-storage
+        persistentVolumeClaim:
+          claimName: besouro-media-pvc

@@ -4,16 +4,26 @@
 version: '3.5'
 
 services:
-  django:
+  ej-server:
     image: besouro/ej-server:production
     build:
       context: ../../../
-      dockerfile: ./besouro/docker/production/django/Dockerfile
+      dockerfile: ./besouro/docker/production/ej-server/Dockerfile
+      cache_from:
+        - ejplatform/ej-server:production
 
-  backend:
+  api:
     image: besouro/api:production
     depends_on:
-      - django
+      - ej-server
     build:
       context: ../../../
-      dockerfile: ./besouro/docker/production/nginx/production.Dockerfile
+      dockerfile: ./besouro/docker/production/api/production.Dockerfile
+
+  admin:
+    image: besouro/admin:production
+    depends_on:
+      - ej-server
+    build:
+      context: ../../../
+      dockerfile: ./besouro/docker/production/admin/production.Dockerfile

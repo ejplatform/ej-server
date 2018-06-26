@@ -47,6 +47,7 @@ spec:
       containers:
       - image: postgres:9.6
         name: postgres
+        imagePullPolicy: "Always"
         env:
         - name: POSTGRES_DB
           valueFrom:

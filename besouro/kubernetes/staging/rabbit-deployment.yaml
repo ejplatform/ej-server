@@ -34,6 +34,7 @@ spec:
       containers:
       - image: rabbitmq:3.6.14-management
         name: rabbit
+        imagePullPolicy: "Always"
         env:
         - name: RABBITMQ_DEFAULT_PASS
           valueFrom:

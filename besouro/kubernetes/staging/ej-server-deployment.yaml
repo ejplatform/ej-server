@@ -48,6 +48,7 @@ spec:
       containers:
       - image: besouro/ej-server:staging
         name: ej-server
+        imagePullPolicy: "Always"
         env:
         - name: COURIER_DEFAULT_PROVIDER
           value: onesignal
@@ -68,7 +69,7 @@ spec:
         - name: DJANGO_ADMIN_URL
           value: admin/
         - name: DJANGO_ALLOWED_HOSTS
-          value: dev.besouro.ejplatform.org,www.dev.besouro.ejplatform.org,besouro-api
+          value: admin.dev.besouro.ejplatform.org,api.dev.besouro.ejplatform.org,besouro-admin,besouro-app
         - name: DJANGO_DB_URL
           valueFrom:
             secretKeyRef:
