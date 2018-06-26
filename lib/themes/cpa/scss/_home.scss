@@ -123,6 +123,10 @@
   }
 
   a + a:before {
+    content: "\f4ad";
+  }
+
+  a + a + a:before {
     content: "\f007";
   }
 }

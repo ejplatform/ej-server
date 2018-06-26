@@ -63,10 +63,9 @@
             <span>{{ _('Conversations') }}</span>
         {% endcall %}
 
-        {# {% call link('/notifications/', title=_('Notifications'), preload=True) %}
-            <img src="/static/img/icons/talks.svg" title="{{ _('Talks') }}" class="Header-lowerIcon">
-            <span>{{ _('Talks') }}</span>
-        {% endcall %} #}
+        {% call link('/talks/', title=_('Panel'), preload=True) %}
+            <span>{{ _('Panel') }}</span>
+        {% endcall %}
 
         {% call link('/profile/', title=_('Profile'), preload=True) %}
             <img src="/static/img/icons/profile.svg" title="{{ _('Profile') }}" class="Header-lowerIcon">

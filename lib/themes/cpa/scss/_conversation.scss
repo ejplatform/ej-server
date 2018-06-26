@@ -50,6 +50,10 @@
     .Comment-voteArea ul span {
         font-size: 18px;
     }
+    
+    .Comment-voteArea ul li {
+      margin: 0 $unit * 2;
+    }
 
     .Comment-voteArea ul li i.fa {
         width: 32px;
