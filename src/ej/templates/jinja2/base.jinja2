@@ -85,7 +85,7 @@
         <meta property="fb:app_id" content="1757744567588794">
     </head>
 
-    <body class="{{ body_class|default('Page') }}">
+    <body class="{{ body_class|default('Page') }} {{request.path.replace('/','')}}">
 {% endif %}
 
 {% block body %}

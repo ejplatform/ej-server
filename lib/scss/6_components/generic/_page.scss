@@ -17,7 +17,9 @@ $page-title-font-size: 1.1 * $font-size-h1;
     }
 
     @media only screen and (max-width: $breakpoint-small) {
-        padding: $header-top-nav-height 0 0 0;
+        &.talks{
+            padding: $header-top-nav-height 0 0 0;
+        }        
     }
     
     &-mainContainer {

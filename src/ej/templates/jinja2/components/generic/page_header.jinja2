@@ -58,7 +58,7 @@
 
 {% macro header_lower_nav(request) %}
     
-    <nav class="Header-lowerNav {{request.path.replace('/','')}}">
+    <nav class="Header-lowerNav">
         {% call link('/conversations/', title=_('Conversations'), preload=True) %}
             <img src="/static/img/icons/conversations.svg" alt="{{ _('Conversations') }}" class="Header-lowerIcon">
             <span>{{ _('Conversations') }}</span>
