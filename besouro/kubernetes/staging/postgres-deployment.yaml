@@ -10,7 +10,6 @@ spec:
   selector:
     app: besouro
     tier: postgres
-  clusterIP: None
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim

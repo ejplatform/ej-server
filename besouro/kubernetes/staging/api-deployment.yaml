@@ -16,7 +16,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: besouro-media-pvc
+  name: besouro-api-media-pvc
   labels:
     app: besouro
 spec:
@@ -58,4 +58,4 @@ spec:
       volumes:
       - name: api-media-storage
         persistentVolumeClaim:
-          claimName: besouro-media-pvc
+          claimName: besouro-api-media-pvc
