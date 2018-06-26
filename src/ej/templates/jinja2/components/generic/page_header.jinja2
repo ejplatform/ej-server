@@ -7,7 +7,7 @@
     <header class="Header">
         <div class="Header-wrapper">
             {{ header_top_nav(request) }}
-            {{ header_lower_nav() }}
+            {{ header_lower_nav(request) }}
         </div>
     </header>
 {% endmacro %}
@@ -56,8 +56,9 @@
     </nav>
 {% endmacro %}
 
-{% macro header_lower_nav() %}
-    <nav class="Header-lowerNav">
+{% macro header_lower_nav(request) %}
+    
+    <nav class="Header-lowerNav {{request.path.replace('/','')}}">
         {% call link('/conversations/', title=_('Conversations'), preload=True) %}
             <img src="/static/img/icons/conversations.svg" alt="{{ _('Conversations') }}" class="Header-lowerIcon">
             <span>{{ _('Conversations') }}</span>

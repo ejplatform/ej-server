@@ -113,10 +113,13 @@ $header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.05) !default;
         font-size: $font-size-tiny;
         background-color: white;
 
-        @media only screen and (max-width: $breakpoint-small) {
-            display: none;
+        &.talks{
+            @media only screen and (max-width: $breakpoint-small) {
+                display: none;
+            }
+            
         }
-    
+        
 
         a {
             align-items: center;
