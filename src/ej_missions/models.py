@@ -20,7 +20,7 @@ def mission_directory_path(instance, filename):
 
 class Mission(models.Model):
 
-    title = models.CharField(max_length=30)
+    title = models.CharField(max_length=100)
     description = models.TextField(max_length=1000)
     #who is doing the mission
     users = models.ManyToManyField(User)
