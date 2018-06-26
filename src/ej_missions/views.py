@@ -40,8 +40,21 @@ class MissionViewSet(viewsets.ViewSet):
         mission = models.Mission(owner=owner,
                                  title=data["title"],
                                  description=data["description"])
+
         mission.save()
-        mission.fileUpload=request.FILES["coverFile"]
+        try:
+            mission.image=request.FILES["coverFile"];
+        except KeyError:
+            print('no coverFile submitted')
+        try:
+            mission.audio=request.FILES["audioFile"];
+        except KeyError:
+            print('no audioFile submitted')
+        try:
+            mission.youtubeVideo=data["videoLink"];
+        except KeyError:
+            print('no videoLink submitted')
+
         mission.save()
         serializer = serializers.MissionSerializer(mission)
         return Response(serializer.data)

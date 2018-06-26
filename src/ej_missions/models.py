@@ -24,8 +24,10 @@ class Mission(models.Model):
     description = models.TextField(max_length=1000)
     #who is doing the mission
     users = models.ManyToManyField(User)
-    youtubeVideo = models.CharField(max_length=60)
-    fileUpload = models.FileField(upload_to="missions",
+    youtubeVideo = models.CharField(max_length=60, default="")
+    image = models.FileField(upload_to="missions",
+                                  default="default.jpg")
+    audio = models.FileField(upload_to="missions",
                                   default="default.jpg")
     owner = models.ForeignKey(User, on_delete=models.CASCADE, 
                              related_name="owner", null=True)
