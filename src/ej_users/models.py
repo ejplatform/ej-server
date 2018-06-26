@@ -1,5 +1,6 @@
 from random import choice
 
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from faker import Factory
@@ -12,7 +13,7 @@ from .manager import UserManager
 fake = Factory.create('pt-BR')
 
 
-@rest_api(['id', 'username', 'display_name'])
+@rest_api(['id', 'username', 'display_name', 'board_name'])
 class User(AbstractUser):
     """
     Default user model for EJ platform.
@@ -25,6 +26,16 @@ class User(AbstractUser):
         help_text=_(
             'A randomly generated name used to identify each user.'
         ),
+    )
+
+    board_name = models.CharField(
+        _('Board name'),
+        max_length=140,
+        unique=True,
+        null=True,
+        help_text=_(
+            'The name of the conversation board of an user.'
+        )
     )
     objects = UserManager()
 
