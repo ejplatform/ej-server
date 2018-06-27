@@ -23,13 +23,13 @@ class Mission(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField(max_length=1000)
     #who is doing the mission
-    users = models.ManyToManyField(User)
-    youtubeVideo = models.CharField(max_length=60, default="")
+    users = models.ManyToManyField(User, blank=True, null=True)
+    youtubeVideo = models.CharField(max_length=60, blank=True, null=True)
     image = models.FileField(upload_to="missions",
                                   default="default.jpg")
     audio = models.FileField(upload_to="missions",
                                   default="default.jpg")
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, 
+    owner = models.ForeignKey(User, on_delete=models.CASCADE,
                              related_name="owner", null=True)
 
     class Meta:

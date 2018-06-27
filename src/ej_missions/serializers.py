@@ -6,7 +6,7 @@ from rest_framework import serializers
 class OwnerSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('display_name', 'id', 'email')
+        fields = ('display_name', 'id', 'email', 'name')
 
 class MissionSerializer(serializers.ModelSerializer):
     owner = OwnerSerializer(read_only=True)
