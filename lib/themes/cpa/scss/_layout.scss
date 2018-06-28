@@ -7,22 +7,28 @@ $static-page-paragraph-line-height: 23px;
 
 .Container {
     margin: $static-page-container-margin;
-    h1 {
+    >h1 {
         color: $static-page-header-color;
         text-align: center;
         font-size: $static-page-header-font-size;
     }
 
-    h2 {
+    >h2 {
         color: $static-page-standard-color;
         text-transform: uppercase;
         font-family: Raleway-bold, Raleway, Patua One;
         font-weight: bold;
     }
 
-    p {
+    >p {
         font-size: $static-page-paragraph-font-size;
         color: $static-page-standard-color;
         line-height: $static-page-paragraph-line-height;
+    }
+}
+
+.Page-title {
+    >h1 {
+        margin: 0;
     }
 }
