@@ -8,12 +8,20 @@ class OwnerSerializer(serializers.ModelSerializer):
         model = User
         fields = ('display_name', 'id', 'email', 'name')
 
+class CommentSerializer(serializers.ModelSerializer):
+    user = OwnerSerializer(read_only=True)
+
+    class Meta:
+        model = models.Comment
+        fields = ('user', 'comment')
+
 class MissionSerializer(serializers.ModelSerializer):
     owner = OwnerSerializer(read_only=True)
+    comment_set = CommentSerializer(many=True)
 
     class Meta:
         model = models.Mission
-        fields = ('id', 'title', 'description', 'users', 'image', 'youtubeVideo', 'audio', 'owner', 'remainig_days', 'deadline' )
+        fields = ('id', 'title', 'description', 'users', 'image', 'youtubeVideo', 'audio', 'owner', 'remainig_days', 'deadline', 'comment_set' )
 
 class MissionReceiptSerializer(serializers.ModelSerializer):
     class Meta:

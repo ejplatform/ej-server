@@ -113,10 +113,10 @@ class MissionViewSet(viewsets.ViewSet):
     def statistics(self, request, pk):
 
         statistics = {}
-        statistics["realized"] = 0;
-        statistics["pending"] = 0;
-        mission = models.Mission.objects.filter(id=pk)[0];
-        statistics["accepted"] = len(mission.users.all());
+        statistics["realized"] = 0
+        statistics["pending"] = 0
+        mission = models.Mission.objects.filter(id=pk)[0]
+        statistics["accepted"] = len(mission.users.all())
 
         for receipt in mission.receipt_set.all():
             if (receipt.status == "realized"):
@@ -126,3 +126,21 @@ class MissionViewSet(viewsets.ViewSet):
 
         return Response(statistics)
 
+    def comments(self, request, pk):
+        mission = models.Mission.objects.get(id=pk)
+        queryset = mission.comment_set.all();
+        serializer = serializers.CommentSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+
+    def add_comment(self, request, pk):
+        mission = models.Mission.objects.get(id=pk)
+        data = json.loads(request.body.decode("utf8"))
+        user = User.objects.get(id=data["user_id"])
+        comment = models.Comment(mission=mission,
+                                 user=user,
+                                 comment=data["comment"])
+        comment.save()
+        mission.comment_set.add(comment)
+        serializer = serializers.CommentSerializer(comment)
+        return Response(serializer.data)

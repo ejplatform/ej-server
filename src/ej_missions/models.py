@@ -1,18 +1,7 @@
 import logging
 import datetime
 
-from autoslug import AutoSlugField
-from django.conf import settings
-from django.contrib.auth import get_user_model
-from django.core.exceptions import ValidationError
 from django.db import models
-from django.urls import reverse
-from django.utils.translation import ugettext_lazy as _
-from model_utils.models import TimeStampedModel, StatusModel
-from django.conf import settings
-
-from boogie import rules
-from boogie.rest import rest_api
 from ej_users.models import User
 
 
@@ -51,7 +40,6 @@ class Mission(models.Model):
         return "{} dias restantes".format(deadline_in_days);
 
 
-
 class Receipt(models.Model):
     mission = models.ForeignKey(Mission, on_delete=models.CASCADE)
     userName = models.CharField(max_length=30)
@@ -62,3 +50,7 @@ class Receipt(models.Model):
     receiptFile  = models.FileField(upload_to="media/missions",
                                     default="media/default.jpg")
 
+class Comment(models.Model):
+    mission = models.ForeignKey(Mission, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    comment = models.CharField(max_length=280)
