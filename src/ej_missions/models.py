@@ -1,4 +1,5 @@
 import logging
+import datetime
 
 from autoslug import AutoSlugField
 from django.conf import settings
@@ -31,9 +32,25 @@ class Mission(models.Model):
                                   default="default.jpg")
     owner = models.ForeignKey(User, on_delete=models.CASCADE,
                              related_name="owner", null=True)
+    deadline = models.DateField(null=True)
 
     class Meta:
         ordering = ['title']
+
+    @property
+    def remainig_days(self):
+        deadline_in_days = (self.deadline - datetime.date.today()).days
+
+        if(deadline_in_days < 0):
+            return "missão encerrada"
+        if(deadline_in_days == 0):
+            return "encerra hoje"
+        if(deadline_in_days == 1):
+            return "encerra amanhã"
+
+        return "{} dias restantes".format(deadline_in_days);
+
+
 
 class Receipt(models.Model):
     mission = models.ForeignKey(Mission, on_delete=models.CASCADE)

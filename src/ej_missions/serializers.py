@@ -13,7 +13,7 @@ class MissionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Mission
-        fields = ('id', 'title', 'description', 'users', 'image', 'youtubeVideo', 'audio', 'owner')
+        fields = ('id', 'title', 'description', 'users', 'image', 'youtubeVideo', 'audio', 'owner', 'remainig_days', 'deadline' )
 
 class MissionReceiptSerializer(serializers.ModelSerializer):
     class Meta:
