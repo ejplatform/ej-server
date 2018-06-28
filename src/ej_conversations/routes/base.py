@@ -27,7 +27,7 @@ def conversation_list(request, owner=None):
         'owner': owner,
     }
 
-    if request.path == '/' + user.username + '/conversations/':
+    if request.path == '/' + user.board_name + '/':
         clist['add_link'] = a(_('Add new conversation'), href=create_url)
     else:
         clist['add_link'] = ''

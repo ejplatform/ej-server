@@ -16,12 +16,12 @@ urlpatterns = Router(
     lookup_field={
         'conversation': 'slug',
         'comment': 'slug',
-        'owner': 'username',
+        'owner': 'board_name',
     },
     lookup_type='slug',
     object='conversation',
 )
-base_url = '<model:owner>/conversations/'
+base_url = '<model:owner>/'
 
 
 @urlpatterns.route(base_url, name='list')
