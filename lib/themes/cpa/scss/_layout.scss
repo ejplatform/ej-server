@@ -1,4 +1,4 @@
-$static-page-container-margin: 40px 20px 40px 20px; 
+$static-page-container-width: 85%;
 $static-page-header-color: #FF3E72;
 $static-page-header-font-size: 24px;
 $static-page-standard-color: #052B47;
@@ -6,7 +6,7 @@ $static-page-paragraph-font-size: 16px;
 $static-page-paragraph-line-height: 23px;
 
 .Container {
-    margin: $static-page-container-margin;
+    width: $static-page-container-width;
     >h1 {
         color: $static-page-header-color;
         text-align: center;
