@@ -73,7 +73,7 @@ push dev image:
 
 test:
   stage: test
-  image: docker
+  image: besouro/cicd:compose
   services:
     - docker:dind
   variables:
@@ -82,8 +82,7 @@ test:
     IMAGE: besouro/ej-server
     TAG: dev
   script:
-    - docker run -d --env-file=$POSTGRES_TEST_ENV --name=postgres postgres:9.6
-    - docker run --volume ./:/app --env-file=$EJ_SERVER_TEST_ENV --env-file=$POSTGRES_TEST_ENV --link=postgres:postgres $IMAGE:$TAG /test.sh
+    - docker-compose -f besouro/docker/develop/test.yml run --rm ej-server /test.sh
 
 # Stage: push image
 
