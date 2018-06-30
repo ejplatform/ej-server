@@ -1,5 +1,4 @@
-# Local docker-compose file with commands as sleep infinity
-version: '3.5'
+version: "3.6"
 
 networks:
   besouro:
@@ -9,17 +8,14 @@ volumes:
   db_data: {}
 
 services:
-  django: &django
-    image: besouro/ej-server:develop
-    build:
-      context: ../../../
-      dockerfile: ./besouro/docker/develop/django/Dockerfile
+  ej-server:
+    image: besouro/ej-server:dev
     command: sleep infinity
     entrypoint: ''
     depends_on:
       - postgres
     env_file:
-      - ./env/django.env
+      - ./env/ej-server.env
       - ./env/postgres.env
     links:
       - postgres

@@ -1,21 +1,15 @@
-# This docker-compose file is not designed to run
-# Usage: Build & Push
+# This docker-compose file is not designed to run services
+# Usage:
+#   sudo docker-compose -f build.yml build
+#   sudo docker-compose -f build.yml push
 
-version: '3.5'
+version: "3.6"
 
 services:
   ej-server:
     image: besouro/ej-server:production
     build:
       context: ../../../
-      dockerfile: ./besouro/docker/production/ej-server/Dockerfile
+      dockerfile: ./besouro/docker/production/Dockerfile
       cache_from:
-        - ejplatform/ej-server:production
-
-  api:
-    image: besouro/api:production
-    depends_on:
-      - ej-server
-    build:
-      context: ../../../
-      dockerfile: ./besouro/docker/production/api/production.Dockerfile
+        - besouro/ej-server:production

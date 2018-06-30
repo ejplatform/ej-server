@@ -1,6 +1,4 @@
-FROM besouro/ej-server:production
-
-USER root
+FROM besouro/ej-server:deps
 
 EXPOSE 8000
 
@@ -9,5 +7,9 @@ ENV FAKE_DB=true
 COPY ./etc/requirements/*.txt /dependencies/
 
 RUN pip install -r /dependencies/develop.txt -r /dependencies/git-modules.txt
+
+COPY ./etc/scripts/**/* /
+
+ENTRYPOINT ["/entrypoint.sh"]
 
 CMD ["/runserver.sh"]

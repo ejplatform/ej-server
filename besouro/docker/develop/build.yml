@@ -6,10 +6,10 @@
 version: "3.6"
 
 services:
-  ej-server:
-    image: besouro/ej-server:staging
+  dev:
+    image: besouro/ej-server:dev
     build:
       context: ../../../
-      dockerfile: ./besouro/docker/production/Dockerfile
+      dockerfile: ./besouro/docker/develop/Dockerfile
       cache_from:
-        - besouro/ej-server:staging
+        - besouro/ej-server:dev

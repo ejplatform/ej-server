@@ -1,19 +1,13 @@
-# Test docker-compose file
-# Used in CI/CD tools
-
-version: '3.5'
+version: "3.6"
 
 services:
-  django:
-    image: besouro/ej-server:develop
-    build:
-      context: ../../../
-      dockerfile: ./besouro/docker/develop/django/Dockerfile
+  ej-server:
+    image: besouro/ej-server:dev
     command: /test.sh
     depends_on:
       - postgres
     env_file:
-      - ./env/django.test.env
+      - ./env/ej-server.test.env
       - ./env/postgres.test.env
     volumes:
       - ../../../:/app
