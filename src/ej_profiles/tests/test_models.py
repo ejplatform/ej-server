@@ -28,14 +28,14 @@ class TestProfile:
         assert str(profile) == 'name\'s profile'
         assert profile.is_filled
         assert profile.profile_fields() == [
-            ('Cidade', 'city'),
-            ('País', 'country'),
-            ('Ocupação', 'occupation'),
-            ('Idade', 18),
-            ('Identidade de gênero', 'female'),
-            ('Raça', 'indigenous'),
-            ('Atividade política', 'political_activity'),
-            ('Biografia', 'biography'),
+            ('City', 'city'),
+            ('Country', 'country'),
+            ('Occupation', 'occupation'),
+            ('Age', 18),
+            ('Gender identity', 'female'),
+            ('Race', 'indigenous'),
+            ('Political activity', 'political_activity'),
+            ('Biography', 'biography'),
         ]
         assert profile.statistics() == {'votes': 0, 'comments': 0, 'conversations': 0}
         assert profile.role() == _('Regular user')
