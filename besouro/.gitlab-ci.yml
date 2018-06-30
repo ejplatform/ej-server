@@ -73,7 +73,9 @@ push dev image:
 
 test:
   stage: test
-  image: besouro/ej-server:dev
+  image: docker
+  services:
+    - docker:dind
   variables:
     POSTGRES_TEST_ENV: besouro/docker/develop/env/postgres.test.env
     EJ_SERVER_TEST_ENV: besouro/docker/develop/env/ej-server.test.env
