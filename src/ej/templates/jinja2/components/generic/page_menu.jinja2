@@ -3,9 +3,8 @@
 {% macro menu(user) %}
     <nav class="NavMenu">
         <ul>
-            <li><em>{{ icon_link(_('About'), '/about-us/', 'far fa-comment') }}</em></li>
-            <li><em>{{ icon_link(_('FAQ'), '/faq/', 'far fa-question-circle') }}</em></li>
-            <li><em>{{ icon_link(_('Usage terms'), '/usage/', 'far fa-file-alt') }}</em></li>
+            <li><em>{{ icon_link(_('Home'), '/', 'fa fa-home') }}</em></li>
+            <li>{{ icon_link(_('Profile'), '/profile/', 'profile', fa=False) }}</li>
         {% if not user.is_active %}
             <li>{{ icon_link(_('Conversations'), '/conversations/', 'conversations', fa=False) }}</li>
         {% elif not user.is_staff %}
@@ -43,16 +42,17 @@
             </li>
             <li>{{ icon_link(_('Panel'), '/talks/', 'talks', fa=False) }}</li>
         {% endif %}
-            <li>{{ icon_link(_('Profile'), '/profile/', 'profile', fa=False) }}</li>
-            <li><em>{{ icon_link(_('Home'), '/', 'fa fa-home') }}</em></li>
-            <li>
-
+            <li><em>{{ icon_link(_('About'), '/about-us/', 'far fa-comment') }}</em></li>
+            <li><em>{{ icon_link(_('FAQ'), '/faq/', 'far fa-question-circle') }}</em></li>
+            <li><em>{{ icon_link(_('Usage terms'), '/usage/', 'far fa-file-alt') }}</em></li>
             {% if user.is_active %}
+                <li>
                 <form method="post" action="/logout/">
                     <i class="fas fa-sign-out-alt"></i>
                     <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
                     <button class="" type="submit">{{ _('Logout') }}</button>
                 </form>
+                </li>
             {% endif %}
                 {# {{ icon_link(_('Logout'), '/logout/', 'fa fa-sign-out-alt') }}</em></li> #}
         </ul>

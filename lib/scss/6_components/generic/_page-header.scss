@@ -10,6 +10,16 @@ $header-box-shadow-upper: 0 2px 4px 0 rgba(0, 0, 0, 0.05) !default;
 $header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.05) !default;
 
 // Component
+.talks{
+    .Header {
+        &-lowerNav{
+            @media only screen and (max-width: $breakpoint-small) {
+                display: none;
+            }
+        }
+    }
+}
+
 .Header {
     @include color($header-color, $header-color-text, $force: true);
 
@@ -112,6 +122,8 @@ $header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.05) !default;
         text-transform: uppercase;
         font-size: $font-size-tiny;
         background-color: white;
+
+      
 
         a {
             align-items: center;

@@ -16,6 +16,12 @@ $page-title-font-size: 1.1 * $font-size-h1;
         padding: ($header-height-tablet + $top-header-height) 0 0 0;
     }
 
+    @media only screen and (max-width: $breakpoint-small) {
+        &.talks{
+            padding: $header-top-nav-height 0 0 0;
+        }        
+    }
+    
     &-mainContainer {
         box-sizing: border-box;
         height: 100vh;
