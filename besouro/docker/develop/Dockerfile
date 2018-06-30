@@ -10,6 +10,8 @@ RUN pip install -r /dependencies/develop.txt -r /dependencies/git-modules.txt
 
 COPY ./etc/scripts/**/* /
 
+WORKDIR /app
+
 ENTRYPOINT ["/entrypoint.sh"]
 
 CMD ["/runserver.sh"]

@@ -83,7 +83,7 @@ test:
     TAG: dev
   script:
     - docker run -d --env-file=$POSTGRES_TEST_ENV --name=postgres postgres:9.6
-    - docker run --volume .:/app --env-file=$EJ_SERVER_TEST_ENV --env-file=$POSTGRES_TEST_ENV --link=postgres:postgres $IMAGE:$TAG /test.sh
+    - docker run --volume ./:/app --env-file=$EJ_SERVER_TEST_ENV --env-file=$POSTGRES_TEST_ENV --link=postgres:postgres $IMAGE:$TAG /test.sh
 
 # Stage: push image
 
