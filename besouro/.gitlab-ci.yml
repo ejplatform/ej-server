@@ -97,7 +97,7 @@ push staging image:
   variables:
     IMAGE: besouro/app
     TAG: staging
-    DOCKERFILE_PATH: docker/production/Dockerfile
+    DOCKERFILE_PATH: besouro/docker/production/Dockerfile
   script:
     - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASS
     - docker build --cache-from $IMAGE:$TAG -t $IMAGE:$TAG -f $DOCKERFILE_PATH .
@@ -122,7 +122,7 @@ push staging tag image:
   variables:
     IMAGE: besouro/app
     TAG: staging
-    DOCKERFILE_PATH: docker/production/Dockerfile
+    DOCKERFILE_PATH: besouro/docker/production/Dockerfile
   script:
     - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASS
     - docker build --cache-from $IMAGE:$TAG -t $IMAGE:$TAG-$CI_COMMIT_TAG -f $DOCKERFILE_PATH .
