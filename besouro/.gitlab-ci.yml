@@ -95,7 +95,7 @@ push staging image:
     name: staging
     url: http://api.dev.besouro.ejplatform.org/
   variables:
-    IMAGE: besouro/app
+    IMAGE: besouro/ej-server
     TAG: staging
     DOCKERFILE_PATH: besouro/docker/production/Dockerfile
   script:
@@ -120,7 +120,7 @@ push staging tag image:
     name: staging
     url: http://api.dev.besouro.ejplatform.org/
   variables:
-    IMAGE: besouro/app
+    IMAGE: besouro/ej-server
     TAG: staging
     DOCKERFILE_PATH: besouro/docker/production/Dockerfile
   script:
