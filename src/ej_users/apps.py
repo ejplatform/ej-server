@@ -1,10 +1,12 @@
 from django.apps import AppConfig
-
+from django.utils.translation import ugettext_lazy as _
 
 class EjUsersConfig(AppConfig):
     name = 'ej_users'
-    verbose_name = "Users"
+    verbose_name = _('Users')
+    api = None
 
     def ready(self):
-        from .rules import rules
+        from . import rules, api
         self.rules = rules
+        self.api = api
