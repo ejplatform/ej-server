@@ -74,8 +74,12 @@ class MissionViewSet(viewsets.ViewSet):
         receipt = models.Receipt(userName=data["userName"],
                                  userEmail=data["userEmail"],
                                  status=data["status"],
-                                 description=data["description"],
-                                 receiptFile=request.FILES["receiptFile"])
+                                 description=data["description"])
+        try:
+            receipt.receiptFile=request.FILES["receiptFile"];
+        except KeyError:
+            print('no receiptFile submitted')
+
         receipt.user = user
         receipt.mission = mission
         receipt.save()
