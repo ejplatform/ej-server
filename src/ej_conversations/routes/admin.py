@@ -20,9 +20,15 @@ def create(request, owner=None):
         Form = forms.FirstConversationForm
 
     if request.method == 'POST':
+        print('lul')
         form = Form(request.POST)
+        if form.is_valid():
+            print('true')
+        else:
+            print('false')
 
         if form.is_valid():
+            print('lel')
             try:
                 request.user.board_name = form.cleaned_data['board_name']
                 request.user.save()
@@ -35,7 +41,6 @@ def create(request, owner=None):
 
             for tag in form.cleaned_data['tags']:
                 conversation.tags.add(tag)
-
             return redirect(conversation.get_absolute_url())
     else:
         form = Form()
