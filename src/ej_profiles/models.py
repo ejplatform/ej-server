@@ -23,7 +23,7 @@ class Profile(models.Model):
     race = EnumField(Race, _('Race'), default=Race.UNDECLARED)
     gender = EnumField(Gender, _('Gender identity'), default=Gender.UNDECLARED)
     gender_other = models.CharField(_('User provided gender'), max_length=50, blank=True)
-    age = models.IntegerField(_('Age'), null=True, blank=True)
+    age = models.IntegerField(_('Age'), blank=True, default=0)
     country = models.CharField(_('Country'), blank=True, max_length=50)
     state = models.CharField(_('State'), blank=True, max_length=140)
     city = models.CharField(_('City'), blank=True, max_length=140)
