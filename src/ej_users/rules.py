@@ -7,7 +7,7 @@ from .models import User
 
 USERNAMES_BLACKLIST = {
     # Common 'bad' usernames
-    'me', '', 'user',
+    'me', '', 'user', 'conversations',
 
     # Additional usernames from settings
     *getattr(settings, 'FORBIDDEN_USERNAMES', ()),
