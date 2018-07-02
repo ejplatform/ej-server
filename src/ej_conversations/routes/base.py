@@ -1,13 +1,14 @@
 from django.core.exceptions import ValidationError
+from django.utils.translation import ugettext_lazy as _
 from django.http import HttpResponseServerError
 from django.urls import reverse
-from django.utils.translation import ugettext_lazy as _
 
 from boogie import rules
 from boogie.rules import proxy_seq
 from hyperpython import a
 from . import urlpatterns, conversation_url
 from ..models import Conversation
+from ej_users.models import User
 
 
 @urlpatterns.route('', name='list')
@@ -27,7 +28,7 @@ def conversation_list(request, owner=None):
         'owner': owner,
     }
 
-    if request.path == '/' + user.board_name + '/':
+    if isinstance(user, User) and request.path == '/' + user.board_name + '/':
         clist['add_link'] = a(_('Add new conversation'), href=create_url)
     else:
         clist['add_link'] = ''
