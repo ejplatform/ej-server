@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-13 11:43+0000\n"
+"POT-Creation-Date: 2018-06-26 11:33+0000\n"
 "PO-Revision-Date: 2018-06-13 10:33-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: \n"
@@ -127,7 +127,7 @@ msgid "Sender"
 msgstr "Remetende"
 
 #: local/vendor/django-messages-courier/courier/models.py:12
-#: src/ej_conversations/models/conversation.py:51
+#: src/ej_conversations/models/conversation.py:54
 msgid "Title"
 msgstr "Título"
 
@@ -159,15 +159,15 @@ msgstr "Status"
 msgid "OneSignal Id"
 msgstr "Id OneSignal"
 
-#: src/ej/tags.py:12
+#: src/ej/tags.py:11
 msgid "hello"
 msgstr "olá"
 
-#: src/ej/tags.py:51
+#: src/ej/tags.py:50
 msgid "Access CPA panel"
 msgstr "Acesse o painel do CPA"
 
-#: src/ej/tags.py:57
+#: src/ej/tags.py:56
 msgid "Go!"
 msgstr "Ir!"
 
@@ -518,6 +518,7 @@ msgid "Stereotypes"
 msgstr "Estereótipos"
 
 #: src/ej_clusters/routes.py:88
+#, python-brace-format
 msgid "Stereotype votes ({conversation})"
 msgstr "Votos de estereótipo ({conversation})"
 
@@ -715,19 +716,19 @@ msgstr ""
 msgid "Must give a reason to reject a comment"
 msgstr "Deve fornecer uma razão para rejeitar o comentário"
 
-#: src/ej_conversations/models/conversation.py:46
+#: src/ej_conversations/models/conversation.py:49
 msgid "Personal"
 msgstr "Pessoal"
 
-#: src/ej_conversations/models/conversation.py:47
+#: src/ej_conversations/models/conversation.py:50
 msgid "Promoted"
 msgstr ""
 
-#: src/ej_conversations/models/conversation.py:48
+#: src/ej_conversations/models/conversation.py:51
 msgid "Pending"
 msgstr "Esperando"
 
-#: src/ej_conversations/models/conversation.py:54
+#: src/ej_conversations/models/conversation.py:57
 msgid ""
 "A short description about this conversations. This is used internally and to "
 "create URL slugs. (e.g. School system)"
@@ -735,33 +736,37 @@ msgstr ""
 "Uma descrição curta sobre a conversa. Utilizado internamente para criar URLs "
 "(ex.:  Escolar)."
 
-#: src/ej_conversations/models/conversation.py:59
+#: src/ej_conversations/models/conversation.py:62
 msgid "Question"
 msgstr "Questão"
 
-#: src/ej_conversations/models/conversation.py:61
+#: src/ej_conversations/models/conversation.py:64
 msgid ""
 "A question that is displayed to the users in a conversation card. (e.g.: How "
 "can we improve the school system in our community?)"
 msgstr ""
 
-#: src/ej_conversations/models/conversation.py:70
+#: src/ej_conversations/models/conversation.py:73
 msgid "Only the author and administrative staff can edit this conversation."
 msgstr "Apenas o autor e o administrador podem editar esta conversa."
 
-#: src/ej_conversations/models/conversation.py:85
+#: src/ej_conversations/models/conversation.py:88
 msgid "Can publish promoted conversations"
 msgstr "Pode publicar conversas promovidas"
 
-#: src/ej_conversations/models/conversation.py:86
+#: src/ej_conversations/models/conversation.py:89
 msgid "Can moderate comments in any conversation"
 msgstr "Pode moderar comentários em qualquer conversa"
 
-#: src/ej_conversations/models/conversation.py:105
+#: src/ej_conversations/models/conversation.py:108
 msgid "User does not have permission to create a promoted conversation."
 msgstr ""
 
-#: src/ej_conversations/models/conversation.py:213
+#: src/ej_conversations/models/conversation.py:148
+msgid "automatically rejected"
+msgstr ""
+
+#: src/ej_conversations/models/conversation.py:220
 msgid "No comments available for this user"
 msgstr ""
 
@@ -802,11 +807,11 @@ msgstr "Criar conversa"
 msgid "Edit conversation: {conversation}"
 msgstr "Editar conversa: {conversation}"
 
-#: src/ej_conversations/routes/base.py:30
+#: src/ej_conversations/routes/base.py:31
 msgid "Add new conversation"
 msgstr "Criar nova conversa"
 
-#: src/ej_conversations/routes/base.py:49
+#: src/ej_conversations/routes/base.py:50
 msgid "login"
 msgstr "entrar"
 
@@ -822,10 +827,6 @@ msgstr "'{color}' não é uma cor válida"
 #: src/ej_conversations/validators.py:23
 msgid "Field cannot be empty!"
 msgstr "Campo não pode estar vazio!"
-
-#: src/ej_conversations/viewsets.py:140
-msgid "cannot vote twice in the same comment"
-msgstr "não pode votar duas vezes no mesmo comentário"
 
 #: src/ej_gamification/signals.py:13
 msgid "Created Comment"
@@ -1183,14 +1184,14 @@ msgid "Under construction!"
 msgstr ""
 
 #: src/ej/templates/jinja2/components/home.jinja2:11
-#: src/ej/templates/jinja2/components/home.jinja2:74
-#: src/ej/templates/jinja2/components/home.jinja2:76
-msgid "Start now!"
+#: src/ej/templates/jinja2/components/home.jinja2:13
+msgid "Start now"
 msgstr "Começar agora!"
 
-#: src/ej/templates/jinja2/components/home.jinja2:13
-msgid "Access CPA panel!"
-msgstr "Acesse o painel do CPA!"
+#: src/ej/templates/jinja2/components/home.jinja2:68
+#: src/ej/templates/jinja2/components/home.jinja2:70
+msgid "Start now!"
+msgstr "Começar agora!"
 
 #: src/ej/templates/jinja2/components/generic/page_footer.jinja2:17
 msgid "Enter"
@@ -1205,10 +1206,17 @@ msgstr "Voltar"
 msgid "Navigation menu"
 msgstr "Menu de navegação"
 
+#: src/ej/templates/jinja2/components/generic/page_header.jinja2:67
+#: src/ej/templates/jinja2/components/generic/page_header.jinja2:68
+#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:13
+#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:44
+msgid "Panel"
+msgstr "Painel"
+
 #: src/ej/templates/jinja2/components/generic/page_header.jinja2:71
 #: src/ej/templates/jinja2/components/generic/page_header.jinja2:72
 #: src/ej/templates/jinja2/components/generic/page_header.jinja2:73
-#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:56
+#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:46
 msgid "Profile"
 msgstr "Perfil"
 
@@ -1225,42 +1233,40 @@ msgstr "Perguntas frequentes"
 msgid "Usage terms"
 msgstr "Termos de uso"
 
-#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:16
-#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:28
+#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:19
 msgid "Public conversations"
 msgstr "Conversas públicas"
 
-#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:19
-#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:31
+#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:22
 msgid "Your conversations"
 msgstr "Suas converas"
 
-#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:35
+#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:26
 msgid "Add conversation"
 msgstr "Criar conversa"
 
-#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:39
+#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:30
 msgid "Favorite conversations"
 msgstr "Conversas favoritas"
 
-#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:43
+#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:34
 msgid "Manage conversations"
 msgstr "Gerenciar conversas"
 
-#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:46
+#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:37
 msgid "Manage stereotypes"
 msgstr "Gerenciar estereótipos"
 
-#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:49
+#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:40
 msgid "Request reports"
 msgstr "Requisitar relatórios"
 
-#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:57
+#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:47
 msgid "Home"
 msgstr "Início"
 
-#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:64
-#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:62
+#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:54
+#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:63
 msgid "Logout"
 msgstr "Sair"
 
@@ -1368,11 +1374,11 @@ msgstr "Parabéns!"
 
 #: src/ej_conversations/jinja2/ej_conversations/components/conversation-detail.jinja2:47
 msgid "There are no comments left to vote :)"
-msgstr ""
+msgstr "Não há comentários para votar :)"
 
 #: src/ej_conversations/jinja2/ej_conversations/components/conversation-detail.jinja2:54
 msgid "You still have {n} available comments"
-msgstr ""
+msgstr "Você ainda tem {n} comentários disponíveis"
 
 #: src/ej_conversations/jinja2/ej_conversations/components/conversation-detail.jinja2:56
 msgid "Please {login} to comment on this conversation"
@@ -1396,47 +1402,47 @@ msgstr "Todos"
 msgid "Edit profile: <em>%(name)s</em>"
 msgstr "Editar perfil: <em>%(name)s</em>"
 
-#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:21
+#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:22
 msgid "Participant Status"
 msgstr "Status do Participante"
 
-#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:26
+#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:27
 msgid "Info"
 msgstr "Info"
 
-#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:30
+#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:31
 msgid "Trophies"
 msgstr "Troféus"
 
-#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:34
+#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:35
 msgid "Contributions"
 msgstr "Contribuições"
 
-#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:67
+#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:68
 msgid "Delete profile"
 msgstr "Apagar perfil"
 
-#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:82
+#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:83
 msgid "Edit profile"
 msgstr "Editar perfil"
 
-#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:133
+#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:134
 msgid "See All"
 msgstr "Ver Todos"
 
-#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:142
+#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:143
 msgid "My Comments"
 msgstr "Meus Comentários"
 
-#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:151
+#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:152
 msgid "Opinion"
 msgstr "Opinião"
 
-#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:173
+#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:174
 msgid "See Conversation"
 msgstr "Ver Conversa"
 
-#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:185
+#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:186
 msgid "Favorite Conversations"
 msgstr "Conversas Favoritas"
 
@@ -1505,6 +1511,12 @@ msgstr "Recuperar senha"
 #: src/ej_users/jinja2/ej_users/reset-password.jinja2:2
 msgid "Reset password"
 msgstr "Recriar minha senha"
+
+#~ msgid "cannot vote twice in the same comment"
+#~ msgstr "não pode votar duas vezes no mesmo comentário"
+
+#~ msgid "Access CPA panel!"
+#~ msgstr "Acesse o painel do CPA!"
 
 #, fuzzy
 #~ msgid "Unvoted comments"

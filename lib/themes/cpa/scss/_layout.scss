@@ -1,0 +1,34 @@
+$static-page-container-width: 85%;
+$static-page-header-color: #FF3E72;
+$static-page-header-font-size: 24px;
+$static-page-standard-color: #052B47;
+$static-page-paragraph-font-size: 16px;
+$static-page-paragraph-line-height: 23px;
+
+.Container {
+    width: $static-page-container-width;
+    >h1 {
+        color: $static-page-header-color;
+        text-align: center;
+        font-size: $static-page-header-font-size;
+    }
+
+    >h2 {
+        color: $static-page-standard-color;
+        text-transform: uppercase;
+        font-family: Raleway-bold, Raleway, Patua One;
+        font-weight: bold;
+    }
+
+    >p {
+        font-size: $static-page-paragraph-font-size;
+        color: $static-page-standard-color;
+        line-height: $static-page-paragraph-line-height;
+    }
+}
+
+.Page-title {
+    >h1 {
+        margin: 0;
+    }
+}

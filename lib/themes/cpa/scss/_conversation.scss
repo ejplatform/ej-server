@@ -41,10 +41,15 @@
     .Comment {
         background: $blue-dark;
         color: $white;
+        padding: $unit / 2;
 
         i.fa {
           background: $white;
         }
+    }
+    
+    .Comment-voteArea ul {
+      flex-wrap: wrap;
     }
 
     .Comment-voteArea ul span {
@@ -52,7 +57,7 @@
     }
     
     .Comment-voteArea ul li {
-      margin: 0 $unit * 2;
+      margin-right: $unit;
     }
 
     .Comment-voteArea ul li i.fa {
