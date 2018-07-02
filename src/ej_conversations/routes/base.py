@@ -27,8 +27,9 @@ def conversation_list(request, owner=None):
         'can_add_conversation': user.has_perm('ej_conversations.can_add_conversation'),
         'owner': owner,
     }
+    board_url = '/' + user.board_name + '/' if user.board_name else ''
 
-    if isinstance(user, User) and request.path == '/' + user.board_name + '/':
+    if user.is_anonymous and request.path == board_url:
         clist['add_link'] = a(_('Add new conversation'), href=create_url)
     else:
         clist['add_link'] = ''
