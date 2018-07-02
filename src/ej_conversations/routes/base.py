@@ -8,15 +8,13 @@ from boogie.rules import proxy_seq
 from hyperpython import a
 from . import urlpatterns, conversation_url
 from ..models import Conversation
-from ej_users.models import User
 
 
 @urlpatterns.route('', name='list')
 def conversation_list(request, owner=None):
     user = request.user
     if owner:
-        kwargs = {'owner': owner}
-        create_url = reverse('user-conversation:create', kwargs=kwargs)
+        create_url = reverse('user-conversation:create')
         conversations = Conversation.objects.filter(author=owner)
     else:
         create_url = reverse('conversation:create')
@@ -29,7 +27,7 @@ def conversation_list(request, owner=None):
     }
     board_url = '/' + user.board_name + '/' if user.board_name else ''
 
-    if user.is_anonymous and request.path == board_url:
+    if not user.is_anonymous and request.path == board_url:
         clist['add_link'] = a(_('Add new conversation'), href=create_url)
     else:
         clist['add_link'] = ''

@@ -24,6 +24,7 @@ urlpatterns = Router(
 base_url = 'conversations/'
 board_url = '<model:owner>/'
 
+
 @urlpatterns.route(board_url, name='list')
 def conversation_list(request, owner):
     return routes.conversation_list(request, owner)
@@ -31,8 +32,6 @@ def conversation_list(request, owner):
 
 @urlpatterns.route(base_url + 'add/')
 def create(request):
-    #if request.user != owner:
-        #raise Http404
     return routes.create(request)
 
 

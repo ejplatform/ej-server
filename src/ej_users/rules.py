@@ -1,5 +1,4 @@
 from django.conf import settings
-from django.urls import resolve, Resolver404
 
 from boogie import rules
 from sidekick import import_later
