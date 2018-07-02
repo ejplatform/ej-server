@@ -22,11 +22,7 @@ def create(request, owner=None):
     if request.method == 'POST':
         print('lul')
         form = Form(request.POST)
-        if form.is_valid():
-            print('true')
-        else:
-            print('false')
-
+        print(type(form))
         if form.is_valid():
             print('lel')
             try:

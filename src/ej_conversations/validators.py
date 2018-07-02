@@ -1,8 +1,8 @@
 import re
 
-from django.urls import resolve, Resolver404
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
+from ej_users.models import User
 
 try:
     from colortools import COLOR_NAMES
@@ -33,8 +33,5 @@ def validate_board_name(board_name):
     for c in list(board_name):
         if c not in URL_VALID_CHARACTERS:
             raise ValidationError(_("'{char}' is an invalid character!", char=c))
-    try:
-        resolve(f'/{board_name}/')
+    if User.objects.filter(board_name=board_name):
         raise ValidationError(_("'{board}' already in use!", board=board_name))
-    except Resolver404:
-        pass
