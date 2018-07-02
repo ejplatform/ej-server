@@ -1,7 +1,7 @@
 import logging
 import sys
 
-from boogie.configurations import DjangoConf, locales
+from boogie.configurations import DjangoConf, locales, env
 from .apps import InstalledAppsConf
 from .celery import CeleryConf
 from .constance import ConstanceConf
@@ -112,7 +112,8 @@ if ENVIRONMENT == 'local':
 
     X_FRAME_OPTIONS = 'ALLOW-FROM http://localhost:3000'
 
-    ACCOUNT_EMAIL_VERIFICATION = 'none'
+    ACCOUNT_EMAIL_VERIFICATION = 'optional'
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 if ENVIRONMENT == 'production':
     # Django CORS
@@ -128,6 +129,16 @@ if ENVIRONMENT == 'production':
     ]
 
     X_FRAME_OPTIONS = 'DENY'
+
+    # TODO: Create email settings module for production
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+    # EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend'
+    # MAILGUN_API_KEY = ''
+    # MAILGUN_SENDER_DOMAIN = ''
+    # DEFAULT_FROM_EMAIL = env('DJANGO_DEFAULT_FROM_EMAIL',
+    #                          default='EJ <noreply@ejplatform.org.br>')
+    # EMAIL_SUBJECT_PREFIX = env('DJANGO_EMAIL_SUBJECT_PREFIX', default='[EJ]')
+    # SERVER_EMAIL = env('DJANGO_SERVER_EMAIL', default=DEFAULT_FROM_EMAIL)
 
 #
 # Apply fixes and wait for services to start
