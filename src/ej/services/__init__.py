@@ -7,9 +7,11 @@ def start_services(settings):
     if SERVICES_STARTED:
         return
 
-    print('waiting for services to start')
+    print('Waiting for services to start')
+    print('Current database backend: '
+          f'{settings.DATABASES["default"]["ENGINE"]}')
 
-    if 'django.db.backends.postgresql_psycopg2' == \
+    if 'django.db.backends.postgresql' == \
         settings.DATABASES['default']['ENGINE']:
 
         print('waiting for postgres to start')
