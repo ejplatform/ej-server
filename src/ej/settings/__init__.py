@@ -132,6 +132,7 @@ if ENVIRONMENT == 'production':
 
     # TODO: Create email settings module for production
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+    ACCOUNT_EMAIL_VERIFICATION = 'optional'
     # EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend'
     # MAILGUN_API_KEY = ''
     # MAILGUN_SENDER_DOMAIN = ''
