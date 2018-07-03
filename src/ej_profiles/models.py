@@ -14,7 +14,7 @@ from rest_framework.authtoken.models import Token
 User = get_user_model()
 
 
-@rest_api()
+@rest_api(exclude=['user'])
 class Profile(models.Model):
     """
     User profile
