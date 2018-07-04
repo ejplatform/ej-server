@@ -65,6 +65,12 @@ class Trophy(models.Model):
         help_text=_('Explain all the steps to achieve this trophy and additional infos')
     )
 
+    reference_link = models.URLField(
+        _('reference link'),
+        blank=True,
+        help_text=_('A general reference link. Example: A link to the page which the trophy can be earned')
+    )
+
     completion_message = models.TextField(
         _('completion message'),
         blank=True,
@@ -105,6 +111,13 @@ class Trophy(models.Model):
         blank=True,
         default=False,
         help_text=_('If set as True and the trophy has required trophies associated with, the completeness will be established automatically after all requirementes satisfied')
+    )
+
+    is_active = models.BooleanField(
+        _('is active?'),
+        blank=True,
+        default=True,
+        help_text=_('If set as False, the trophy will not be synced with users')
     )
 
     def __str__(self):

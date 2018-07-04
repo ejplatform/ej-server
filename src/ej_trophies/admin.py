@@ -6,7 +6,7 @@ from . import models
 class TrophyAdmin(admin.ModelAdmin):
     fieldsets = (
         (_('Trophy definitions'), {'fields': [
-            'key', 'name', 'short_description', 'full_description'
+            'is_active', 'key', 'name', 'short_description', 'full_description', 'reference_link'
         ]}),
         (_('Icons'), {'fields': [
             'icon_not_started', 'icon_in_progress', 'icon_complete'

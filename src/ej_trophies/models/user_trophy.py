@@ -26,6 +26,8 @@ class UserTrophy(models.Model):
 
     percentage = models.PositiveIntegerField(
         _('percentage of progress'),
+        blank=True,
+        default=0,
         validators=[MaxValueValidator(100)]
     )
 
@@ -41,13 +43,36 @@ class UserTrophy(models.Model):
         """
         Return all user's trophies
         """
-        return UserTrophy.objects.filter(user=user)
+        return UserTrophy.objects.filter(
+            trophy__is_active=True,
+            user=user
+        )
 
     def get_user_trophy(user, trophy_key):
         """
         Return user's trophy specified by key
         """
-        return UserTrophy.objects.filter(user=user,trophy__key=trophy_key)
+        return UserTrophy.objects.filter(
+            trophy__is_active=True,
+            user=user,
+            trophy__key=trophy_key
+        )
+
+    def sync_available_trophies_with_user(user):
+        """
+        Create User association with available trophies
+        """
+        available_trophies = Trophy.objects.filter(
+            is_active=True
+        ).exclude(
+            users=user
+        )
+
+        for trophy in available_trophies:
+            UserTrophy.objects.create(
+                user=user,
+                trophy=trophy
+            )
 
     class Meta:
         verbose_name = _('user\'s trophy')

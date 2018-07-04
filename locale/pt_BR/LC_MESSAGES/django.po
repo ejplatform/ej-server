@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-04 17:24+0000\n"
+"POT-Creation-Date: 2018-07-04 19:54+0000\n"
 "PO-Revision-Date: 2018-06-13 10:33-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: \n"
@@ -1076,14 +1076,26 @@ msgstr ""
 "adicionais"
 
 #: src/ej_trophies/models/trophy.py:69
+msgid "reference link"
+msgstr "link de referência"
+
+#: src/ej_trophies/models/trophy.py:71
+msgid ""
+"A general reference link. Example: A link to the page which the trophy can "
+"be earned"
+msgstr ""
+"Um link de referência genérico. Exemplo de uso: Um link para a página onde "
+"este troféu poderá ser conquistado"
+
+#: src/ej_trophies/models/trophy.py:75
 msgid "completion message"
 msgstr "mensagem de conclusão"
 
-#: src/ej_trophies/models/trophy.py:72
+#: src/ej_trophies/models/trophy.py:78
 msgid "Congratulations for your achievement! You are awesome!"
 msgstr "Parabéns pela sua conquista! Você é demais!"
 
-#: src/ej_trophies/models/trophy.py:73
+#: src/ej_trophies/models/trophy.py:79
 msgid ""
 "Trophy completion message is used to congratulate the user after the "
 "achievement of the trophy"
@@ -1091,31 +1103,31 @@ msgstr ""
 "A mensagem de conclusão é utilizada para parabenizar o usuário após ter "
 "conquistado o troféu"
 
-#: src/ej_trophies/models/trophy.py:78
+#: src/ej_trophies/models/trophy.py:84
 msgid "icon when it is not started"
 msgstr "ícone quando não iniciado"
 
-#: src/ej_trophies/models/trophy.py:83
+#: src/ej_trophies/models/trophy.py:89
 msgid "icon when it is progress"
 msgstr "ícone quando em progresso"
 
-#: src/ej_trophies/models/trophy.py:88
+#: src/ej_trophies/models/trophy.py:94
 msgid "icon when it is complete"
 msgstr "ícone quando completo"
 
-#: src/ej_trophies/models/trophy.py:92
+#: src/ej_trophies/models/trophy.py:98
 msgid "score for each percent of completion"
 msgstr "pontuação para cada percentual de conclusão"
 
-#: src/ej_trophies/models/trophy.py:98
+#: src/ej_trophies/models/trophy.py:104
 msgid "score for completion"
 msgstr "pontuação por conclusão"
 
-#: src/ej_trophies/models/trophy.py:104
+#: src/ej_trophies/models/trophy.py:110
 msgid "complete on requirements satisfied?"
 msgstr "concluir quando requisitos forem satisfeitos?"
 
-#: src/ej_trophies/models/trophy.py:107
+#: src/ej_trophies/models/trophy.py:113
 msgid ""
 "If set as True and the trophy has required trophies associated with, the "
 "completeness will be established automatically after all requirementes "
@@ -1125,12 +1137,21 @@ msgstr ""
 "associados, a completude será estabelecida automaticamente após todos os "
 "requisitos satisfeitos"
 
-#: src/ej_trophies/models/trophy.py:114
+#: src/ej_trophies/models/trophy.py:117
+msgid "is active?"
+msgstr "é ativo?"
+
+#: src/ej_trophies/models/trophy.py:120
+msgid "If set as False, the trophy will not be synced with users"
+msgstr ""
+"Se configurado como falso, o troféu não será sincronizado com os usuários"
+
+#: src/ej_trophies/models/trophy.py:127
 #: src/ej_trophies/models/user_trophy.py:24
 msgid "trophy"
 msgstr "troféu"
 
-#: src/ej_trophies/models/trophy.py:115
+#: src/ej_trophies/models/trophy.py:128
 msgid "trophies"
 msgstr "troféus"
 
@@ -1142,19 +1163,19 @@ msgstr "usuário"
 msgid "percentage of progress"
 msgstr "percentual de progresso"
 
-#: src/ej_trophies/models/user_trophy.py:34
+#: src/ej_trophies/models/user_trophy.py:36
 msgid "notified?"
 msgstr "notificado?"
 
-#: src/ej_trophies/models/user_trophy.py:37
+#: src/ej_trophies/models/user_trophy.py:39
 msgid "temporary field to track if the user saw the notification or not"
 msgstr "campo temporário para monitorar se o usuário viu ou não a notificação"
 
-#: src/ej_trophies/models/user_trophy.py:53
+#: src/ej_trophies/models/user_trophy.py:71
 msgid "user's trophy"
 msgstr "troféus de usuários"
 
-#: src/ej_trophies/models/user_trophy.py:54
+#: src/ej_trophies/models/user_trophy.py:72
 msgid "user's trophies"
 msgstr "troféus de usuários"
 
@@ -1445,9 +1466,6 @@ msgstr "Usuário ou senha inválidos"
 
 #~ msgid "Alias"
 #~ msgstr "Apelido"
-
-#~ msgid "active"
-#~ msgstr "ativo"
 
 #~ msgid "date joined"
 #~ msgstr "data de ingresso"

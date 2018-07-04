@@ -8,6 +8,7 @@ from .models import UserTrophy
 
 @rest_api.action('ej_users.User')
 def trophies(request, user):
+    UserTrophy.sync_available_trophies_with_user(user)
     key = request.query_params.get('trophy')
     if key:
         return UserTrophy.get_user_trophy(user, key)
