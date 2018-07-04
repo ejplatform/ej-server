@@ -20,7 +20,7 @@ def icon_in_progress_path(instance, filename):
 def icon_complete_path(instance, filename):
     return icon_path('complete', instance, filename)
 
-@rest_api(exclude=['users'], base_name='trophies', base_url='trophies')
+@rest_api(exclude=['users'], base_name='trophies', base_url='trophies', lookup_field='key')
 class Trophy(models.Model):
     """
     Achievements available to users to complete and score points
@@ -55,12 +55,14 @@ class Trophy(models.Model):
     short_description = models.CharField(
         _('short description'),
         blank=True,
-        max_length=50
+        max_length=50,
+        help_text=_('Explain the general steps to achieve this trophy')
     )
 
     full_description = models.TextField(
         _('full description'),
-        blank=True
+        blank=True,
+        help_text=_('Explain all the steps to achieve this trophy and additional infos')
     )
 
     completion_message = models.TextField(
@@ -109,4 +111,5 @@ class Trophy(models.Model):
         return self.key
 
     class Meta:
+        verbose_name = _('trophy')
         verbose_name_plural = _('trophies')

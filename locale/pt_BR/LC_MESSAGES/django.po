@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-04 13:00+0000\n"
+"POT-Creation-Date: 2018-07-04 17:24+0000\n"
 "PO-Revision-Date: 2018-06-13 10:33-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: \n"
@@ -743,10 +743,8 @@ msgid "Math"
 msgstr "Matemática"
 
 #: src/ej_missions/apps.py:7
-#, fuzzy
-#| msgid "Missing"
 msgid "Missions"
-msgstr "Faltando"
+msgstr "Missões"
 
 #: src/ej_notifications/apps.py:7
 msgid "Notifications"
@@ -793,8 +791,6 @@ msgid "Advanced"
 msgstr "Avançado"
 
 #: src/ej_profiles/apps.py:6
-#, fuzzy
-#| msgid "Profile"
 msgid "Profiles"
 msgstr "Perfil"
 
@@ -984,9 +980,8 @@ msgid "Missing"
 msgstr "Faltando"
 
 #: src/ej_reports/routes.py:85
-#, fuzzy
 msgid "Skipped"
-msgstr "Pular"
+msgstr "Pulado"
 
 #: src/ej_reports/routes.py:88
 msgid "Average"
@@ -1033,23 +1028,18 @@ msgid "Score"
 msgstr "Pontuação"
 
 #: src/ej_trophies/admin.py:33
-#, fuzzy
-#| msgid "Notifications"
 msgid "Notification"
-msgstr "Notificações"
+msgstr "Notificação"
 
 #: src/ej_trophies/apps.py:6
 msgid "Trophies"
 msgstr "Troféus"
 
 #: src/ej_trophies/models/trophy.py:32
-#, fuzzy
 msgid "users"
-msgstr "{n} usuários"
+msgstr "usuários"
 
 #: src/ej_trophies/models/trophy.py:39
-#, fuzzy
-#| msgid "Trophies"
 msgid "required trophies"
 msgstr "troféus necessários"
 
@@ -1068,26 +1058,32 @@ msgid "name"
 msgstr "nome"
 
 #: src/ej_trophies/models/trophy.py:56
-#, fuzzy
-#| msgid "Short Description"
 msgid "short description"
 msgstr "descrição curta"
 
-#: src/ej_trophies/models/trophy.py:62
-#, fuzzy
-#| msgid "description"
+#: src/ej_trophies/models/trophy.py:59
+msgid "Explain the general steps to achieve this trophy"
+msgstr "Explique em linhas gerais os passos para conquistar este troféu"
+
+#: src/ej_trophies/models/trophy.py:63
 msgid "full description"
 msgstr "descrição completa"
 
-#: src/ej_trophies/models/trophy.py:67
+#: src/ej_trophies/models/trophy.py:65
+msgid "Explain all the steps to achieve this trophy and additional infos"
+msgstr ""
+"Explique todos os passos necessários para conquistar este troféu e detalhes "
+"adicionais"
+
+#: src/ej_trophies/models/trophy.py:69
 msgid "completion message"
 msgstr "mensagem de conclusão"
 
-#: src/ej_trophies/models/trophy.py:70
+#: src/ej_trophies/models/trophy.py:72
 msgid "Congratulations for your achievement! You are awesome!"
 msgstr "Parabéns pela sua conquista! Você é demais!"
 
-#: src/ej_trophies/models/trophy.py:71
+#: src/ej_trophies/models/trophy.py:73
 msgid ""
 "Trophy completion message is used to congratulate the user after the "
 "achievement of the trophy"
@@ -1095,31 +1091,31 @@ msgstr ""
 "A mensagem de conclusão é utilizada para parabenizar o usuário após ter "
 "conquistado o troféu"
 
-#: src/ej_trophies/models/trophy.py:76
+#: src/ej_trophies/models/trophy.py:78
 msgid "icon when it is not started"
 msgstr "ícone quando não iniciado"
 
-#: src/ej_trophies/models/trophy.py:81
+#: src/ej_trophies/models/trophy.py:83
 msgid "icon when it is progress"
 msgstr "ícone quando em progresso"
 
-#: src/ej_trophies/models/trophy.py:86
+#: src/ej_trophies/models/trophy.py:88
 msgid "icon when it is complete"
 msgstr "ícone quando completo"
 
-#: src/ej_trophies/models/trophy.py:90
+#: src/ej_trophies/models/trophy.py:92
 msgid "score for each percent of completion"
 msgstr "pontuação para cada percentual de conclusão"
 
-#: src/ej_trophies/models/trophy.py:96
+#: src/ej_trophies/models/trophy.py:98
 msgid "score for completion"
 msgstr "pontuação por conclusão"
 
-#: src/ej_trophies/models/trophy.py:102
+#: src/ej_trophies/models/trophy.py:104
 msgid "complete on requirements satisfied?"
 msgstr "concluir quando requisitos forem satisfeitos?"
 
-#: src/ej_trophies/models/trophy.py:105
+#: src/ej_trophies/models/trophy.py:107
 msgid ""
 "If set as True and the trophy has required trophies associated with, the "
 "completeness will be established automatically after all requirementes "
@@ -1129,35 +1125,40 @@ msgstr ""
 "associados, a completude será estabelecida automaticamente após todos os "
 "requisitos satisfeitos"
 
-#: src/ej_trophies/models/trophy.py:112
-#, fuzzy
-#| msgid "Trophies"
+#: src/ej_trophies/models/trophy.py:114
+#: src/ej_trophies/models/user_trophy.py:24
+msgid "trophy"
+msgstr "troféu"
+
+#: src/ej_trophies/models/trophy.py:115
 msgid "trophies"
 msgstr "troféus"
 
-#: src/ej_trophies/models/user_trophy.py:26
+#: src/ej_trophies/models/user_trophy.py:18
+msgid "user"
+msgstr "usuário"
+
+#: src/ej_trophies/models/user_trophy.py:28
 msgid "percentage of progress"
 msgstr "percentual de progresso"
 
-#: src/ej_trophies/models/user_trophy.py:32
-#, fuzzy
-#| msgid "Unverified"
+#: src/ej_trophies/models/user_trophy.py:34
 msgid "notified?"
 msgstr "notificado?"
 
-#: src/ej_trophies/models/user_trophy.py:35
+#: src/ej_trophies/models/user_trophy.py:37
 msgid "temporary field to track if the user saw the notification or not"
 msgstr "campo temporário para monitorar se o usuário viu ou não a notificação"
 
-#: src/ej_trophies/models/user_trophy.py:39
-#, fuzzy
-#| msgid "Trophies"
-msgid "user trophies"
+#: src/ej_trophies/models/user_trophy.py:53
+msgid "user's trophy"
+msgstr "troféus de usuários"
+
+#: src/ej_trophies/models/user_trophy.py:54
+msgid "user's trophies"
 msgstr "troféus de usuários"
 
 #: src/ej_users/apps.py:6
-#, fuzzy
-#| msgid "Username"
 msgid "Users"
 msgstr "Usuários"
 
@@ -1207,65 +1208,6 @@ msgstr "usuário inválido: %s"
 msgid "Invalid username or password"
 msgstr "Usuário ou senha inválidos"
 
-#, fuzzy
-#~ msgid "User's full name"
-#~ msgstr "Nome completo do usuário"
-
-#~ msgid "Conscise description used on listings."
-#~ msgstr "Descrição concisa utilizada em listas."
-
-#~ msgid "detailed description"
-#~ msgstr "descrição detalhada"
-
-#~ msgid "Detailed description of object."
-#~ msgstr "Descrição detalhada do objeto."
-
-#~ msgid "An enumeration field"
-#~ msgstr "Um campo de enumeração"
-
-#~ msgid ""
-#~ "Users can register additional e-mail addresses. This is the main e-mail "
-#~ "address which is used for login."
-#~ msgstr ""
-#~ "Usuários podem registrar e-mails adicionais. Este é o e-mail principal "
-#~ "utilizado para login."
-
-#~ msgid "Full name of the user."
-#~ msgstr "Nome completo do usuário."
-
-#~ msgid "Alias"
-#~ msgstr "Apelido"
-
-#~ msgid "active"
-#~ msgstr "ativo"
-
-#~ msgid "date joined"
-#~ msgstr "data de ingresso"
-
-#~ msgid "No %(verbose_name)s found matching the query"
-#~ msgstr "Nenhum nome %(verbose_name)s encontrado"
-
-#~ msgid "Sender"
-#~ msgstr "Remetende"
-
-#~ msgid "Waiting"
-#~ msgstr "Esperando"
-
-#~ msgid "Read"
-#~ msgstr "Lido"
-
-#~ msgid "Seen"
-#~ msgstr "Visto"
-
-#~ msgid "Unseen"
-#~ msgstr "Não Visto"
-
-#~ msgid "Status"
-#~ msgstr "Status"
-
-#~ msgid "OneSignal Id"
-#~ msgstr "Id OneSignal"
-
 #~ msgid "Empurrando Juntos"
 #~ msgstr "Empurrando Juntos"
 
@@ -1290,14 +1232,11 @@ msgstr "Usuário ou senha inválidos"
 #~ msgid "Panel"
 #~ msgstr "Painel"
 
-#~ msgid "About"
-#~ msgstr "Sobre"
+#~ msgid "Profile"
+#~ msgstr "Perfil"
 
-#~ msgid "FAQ"
-#~ msgstr "Perguntas frequentes"
-
-#~ msgid "Usage terms"
-#~ msgstr "Termos de uso"
+#~ msgid "Home"
+#~ msgstr "Início"
 
 #~ msgid "Public conversations"
 #~ msgstr "Conversas públicas"
@@ -1320,8 +1259,14 @@ msgstr "Usuário ou senha inválidos"
 #~ msgid "Request reports"
 #~ msgstr "Requisitar relatórios"
 
-#~ msgid "Home"
-#~ msgstr "Início"
+#~ msgid "About"
+#~ msgstr "Sobre"
+
+#~ msgid "FAQ"
+#~ msgstr "Perguntas frequentes"
+
+#~ msgid "Usage terms"
+#~ msgstr "Termos de uso"
 
 #~ msgid "Logout"
 #~ msgstr "Sair"
@@ -1398,9 +1343,8 @@ msgstr "Usuário ou senha inválidos"
 #~ msgid "You have used all comments available in this conversation."
 #~ msgstr "Você utilizou todos comentários disponíveis nesta conversa."
 
-#, fuzzy
 #~ msgid "Unvoted"
-#~ msgstr "Comentário promovido?"
+#~ msgstr "Não votado"
 
 #~ msgid "All"
 #~ msgstr "Todos"
@@ -1474,15 +1418,72 @@ msgstr "Usuário ou senha inválidos"
 #~ msgid "Reset password"
 #~ msgstr "Recriar minha senha"
 
+#~ msgid "User's full name"
+#~ msgstr "Nome completo do usuário"
+
+#~ msgid "Conscise description used on listings."
+#~ msgstr "Descrição concisa utilizada em listas."
+
+#~ msgid "detailed description"
+#~ msgstr "descrição detalhada"
+
+#~ msgid "Detailed description of object."
+#~ msgstr "Descrição detalhada do objeto."
+
+#~ msgid "An enumeration field"
+#~ msgstr "Um campo de enumeração"
+
+#~ msgid ""
+#~ "Users can register additional e-mail addresses. This is the main e-mail "
+#~ "address which is used for login."
+#~ msgstr ""
+#~ "Usuários podem registrar e-mails adicionais. Este é o e-mail principal "
+#~ "utilizado para login."
+
+#~ msgid "Full name of the user."
+#~ msgstr "Nome completo do usuário."
+
+#~ msgid "Alias"
+#~ msgstr "Apelido"
+
+#~ msgid "active"
+#~ msgstr "ativo"
+
+#~ msgid "date joined"
+#~ msgstr "data de ingresso"
+
+#~ msgid "No %(verbose_name)s found matching the query"
+#~ msgstr "Nenhum nome %(verbose_name)s encontrado"
+
+#~ msgid "Sender"
+#~ msgstr "Remetende"
+
+#~ msgid "Waiting"
+#~ msgstr "Esperando"
+
+#~ msgid "Read"
+#~ msgstr "Lido"
+
+#~ msgid "Seen"
+#~ msgstr "Visto"
+
+#~ msgid "Unseen"
+#~ msgstr "Não Visto"
+
+#~ msgid "Status"
+#~ msgstr "Status"
+
+#~ msgid "OneSignal Id"
+#~ msgstr "Id OneSignal"
+
 #~ msgid "cannot vote twice in the same comment"
 #~ msgstr "não pode votar duas vezes no mesmo comentário"
 
 #~ msgid "Access CPA panel!"
 #~ msgstr "Acesse o painel do CPA!"
 
-#, fuzzy
 #~ msgid "Unvoted comments"
-#~ msgstr "Comentário promovido?"
+#~ msgstr "Comentários não votados"
 
 #~ msgid "Talks"
 #~ msgstr "Canais"

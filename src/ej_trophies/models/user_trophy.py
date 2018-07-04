@@ -14,12 +14,14 @@ class UserTrophy(models.Model):
     """
     user = models.ForeignKey(
         User,
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        verbose_name=_('user')
     )
 
     trophy = models.ForeignKey(
         Trophy,
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        verbose_name=_('trophy')
     )
 
     percentage = models.PositiveIntegerField(
@@ -35,5 +37,18 @@ class UserTrophy(models.Model):
         help_text=_('temporary field to track if the user saw the notification or not')
     )
 
+    def get_user_trophies(user):
+        """
+        Return all user's trophies
+        """
+        return UserTrophy.objects.filter(user=user)
+
+    def get_user_trophy(user, trophy_key):
+        """
+        Return user's trophy specified by key
+        """
+        return UserTrophy.objects.filter(user=user,trophy__key=trophy_key)
+
     class Meta:
-        verbose_name_plural = _('user trophies')
+        verbose_name = _('user\'s trophy')
+        verbose_name_plural = _('user\'s trophies')
