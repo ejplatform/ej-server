@@ -1,5 +1,10 @@
-{% macro comment_detail(comment, user) %}
+{% macro comment_detail(comment, user, remaining=None, total=None) %}
     <div class="Comment">
+        {% if remaining and total %}
+        <div class="Comment-counter">
+          <p>{{ remaining }} / {{ total }}</p>
+        </div>
+        {% endif %}
         <div class="Comment-user">
             <i class="fa fa-user"></i><span>{{ comment.author.name }}</span>
         </div>

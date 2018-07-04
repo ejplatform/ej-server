@@ -40,7 +40,7 @@
         </div>
 
         {% if comment %}
-            {{ comment_detail(comment, user) }}
+            {{ comment_detail(comment, user, conversation.comments.count() - conversation.user_votes(user).count(), conversation.comments.count()) }}
         {% else %}
             <div class="Comment">
                 <h1>{{ _('Congratulations!') }}</h1>
