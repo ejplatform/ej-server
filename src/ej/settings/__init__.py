@@ -42,6 +42,7 @@ class Conf(locales.brazil(),
         return False
 
     AUTH_USER_MODEL = 'ej_users.User'
+    # ALLOWED_HOSTS = ['localhost', ]
 
     # MANAGER CONFIGURATION
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#admins
