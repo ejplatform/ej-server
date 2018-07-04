@@ -50,7 +50,7 @@
         <form method="post">
             {{ csrf_input }}
             <input type="hidden" name="action" value="comment">
-            <textarea name="comment"></textarea>
+            <textarea name="comment" onFocus="document.getElementsByClassName('Header-lowerNav')[0].style.display='none'" onBlur="document.getElementsByClassName('Header-lowerNav')[0].style.display='flex'"></textarea>
             <input type="submit" name="submit" value="Opinar" primary>
         </form>
     </div>
