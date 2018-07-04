@@ -15,7 +15,7 @@ from ej_users.models import User
 class MissionViewSet(viewsets.ViewSet):
 
     def list(self, request):
-        queryset = models.Mission.objects.all()
+        queryset = models.Mission.objects.all().order_by("-created_at")
         serializer = serializers.MissionSerializer(queryset, many=True)
         return Response(serializer.data)
 
@@ -25,7 +25,7 @@ class MissionViewSet(viewsets.ViewSet):
         return Response(serializer.data)
 
     def accepted_missions(self, request, pk):
-        queryset = models.Mission.objects.filter(users=pk)
+        queryset = models.Mission.objects.filter(users=pk).order_by("-created_at")
         serializer = serializers.MissionSerializer(queryset, many=True)
         return Response(serializer.data)
 
