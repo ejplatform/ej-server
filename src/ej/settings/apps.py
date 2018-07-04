@@ -16,7 +16,8 @@ class InstalledAppsConf(Base, EjOptions):
         'ej_profiles',
         'ej_reports',
         'ej_users',
-        'ej_missions'
+        'ej_missions',
+        'ej_trophies'
     ]
 
     THIRD_PARTY_APPS = [
