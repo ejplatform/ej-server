@@ -5,7 +5,7 @@
         </div>
         <p>{{ comment.content }}</p>
         {% if user.is_authenticated %}
-            <form method="post" class="Comment-voteArea" id="Comment-form" up-target=".Comment">
+            <form method="post" class="Comment-voteArea" id="Comment-form" up-target=".Comment" up-transition="move-left">
                 {{ csrf_input }}
                 <input type="hidden" name="action" value="vote">
                 <ul class="ConversationComment-actions">

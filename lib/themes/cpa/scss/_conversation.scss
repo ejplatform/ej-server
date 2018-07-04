@@ -58,6 +58,10 @@
     
     .Comment-voteArea ul li {
       margin-right: $unit;
+
+      &:active {
+        color: $purple;
+      }
     }
 
     .Comment-voteArea ul li i.fa {
@@ -66,6 +70,16 @@
         background: $white;
         border: 0;
         padding: 9px 6px 0 7px;
+        cursor: pointer;
+
+        &:hover {
+          background: $purple;
+          color: $white !important;
+        }
+    }
+
+    .Comment-voteArea ul li:first-child i.fa {
+      color: $purple;
     }
 
     .CommentForm {
