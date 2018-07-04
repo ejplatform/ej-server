@@ -12,8 +12,9 @@ class Mission(models.Model):
 
     title = models.CharField(max_length=100)
     description = models.TextField(max_length=1000)
+    reward = models.TextField(max_length=1000, null=True)
     #who is doing the mission
-    users = models.ManyToManyField(User, blank=True, null=True)
+    users = models.ManyToManyField(User, blank=True)
     youtubeVideo = models.CharField(max_length=60, blank=True, null=True)
     image = models.FileField(upload_to="missions",
                                   default="default.jpg")
@@ -22,6 +23,7 @@ class Mission(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE,
                              related_name="owner", null=True)
     deadline = models.DateField(null=True)
+    created_at = models.DateTimeField(null=True, auto_now_add=True)
 
     class Meta:
         ordering = ['title']
