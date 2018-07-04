@@ -58,9 +58,23 @@
     
     .Comment-voteArea ul li {
       margin-right: $unit;
+    }
 
+    .Comment-voteArea ul li:first-child {
       &:active {
         color: $purple;
+      }
+    }
+
+    .Comment-voteArea ul li:first-child + li {
+      &:active {
+        color: $blue-dark;
+      }
+    }
+
+    .Comment-voteArea ul li:first-child + li + li {
+      &:active {
+        color: $pink;
       }
     }
 
@@ -71,15 +85,30 @@
         border: 0;
         padding: 9px 6px 0 7px;
         cursor: pointer;
-
-        &:hover {
-          background: $purple;
-          color: $white !important;
-        }
     }
 
     .Comment-voteArea ul li:first-child i.fa {
       color: $purple;
+      &:hover {
+        background: $purple;
+        color: $white !important;
+      }
+    }
+
+    .Comment-voteArea ul li:first-child + li i.fa {
+      color: $blue-dark;
+      &:hover {
+        background: $blue-dark;
+        color: $white !important;
+      }
+    }
+
+    .Comment-voteArea ul li:first-child + li + li i.fa {
+      color: $pink;
+      &:hover {
+        background: $pink;
+        color: $white !important;
+      }
     }
 
     .CommentForm {
