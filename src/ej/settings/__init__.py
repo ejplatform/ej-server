@@ -130,16 +130,16 @@ if ENVIRONMENT == 'production':
 
     X_FRAME_OPTIONS = 'DENY'
 
-    # TODO: Create email settings module for production
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
     ACCOUNT_EMAIL_VERIFICATION = 'optional'
-    # EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend'
-    # MAILGUN_API_KEY = ''
-    # MAILGUN_SENDER_DOMAIN = ''
-    # DEFAULT_FROM_EMAIL = env('DJANGO_DEFAULT_FROM_EMAIL',
-    #                          default='EJ <noreply@ejplatform.org.br>')
-    # EMAIL_SUBJECT_PREFIX = env('DJANGO_EMAIL_SUBJECT_PREFIX', default='[EJ]')
-    # SERVER_EMAIL = env('DJANGO_SERVER_EMAIL', default=DEFAULT_FROM_EMAIL)
+    EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend'
+    MAILGUN_API_KEY = env('DJANGO_MAILGUN_API_KEY', default='')
+    MAILGUN_API_KEY = env('DJANGO_MAILGUN_API_KEY', default='')
+    MAILGUN_SENDER_DOMAIN = ''
+    DEFAULT_FROM_EMAIL = env('DJANGO_DEFAULT_FROM_EMAIL',
+                             default='EJ <noreply@ejplatform.org>')
+    EMAIL_SUBJECT_PREFIX = env('DJANGO_EMAIL_SUBJECT_PREFIX', default='[EJ]')
+    SERVER_EMAIL = env('DJANGO_SERVER_EMAIL', default=DEFAULT_FROM_EMAIL)
 
 #
 # Apply fixes and wait for services to start
