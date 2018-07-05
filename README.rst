@@ -104,10 +104,19 @@ Using docker
 If you want to use docker, just clone the repo and start docker compose::
 
     $ git clone http://github.com/ejplatform/ej-server/
+    $ sudo docker-compose -f ./docker/production/django/build.yml build
     $ sudo docker-compose -f ./docker/develop/start.yml up -d
 
 After the command, **ej-server** can be accessed at http://localhost:8000.
 
+If you want to run docker, but develop without running the django server,
+use the idle version and execute the conteiner bash manually::
+
+    $ sudo docker-compose -f ./docker/production/django/build.yml build
+    $ sudo docker-compose -f ./docker/develop/idle.yml up -d
+    $ sudo docker-compose -f ./docker/develop/idle.yml exec django bash
+
+Now, you can execute django commands, inv tasks and pytest normally.
 
 Tests
 -----
