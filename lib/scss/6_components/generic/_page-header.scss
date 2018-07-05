@@ -123,14 +123,16 @@ $header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.05) !default;
         font-size: $font-size-tiny;
         background-color: white;
 
-      
-
         a {
             align-items: center;
             display: flex;
             flex-flow: column;
             justify-content: center;
             width: 50%;
+
+            span {
+              font-weight: bold;
+            }
 
             > * {
                 display: block;
