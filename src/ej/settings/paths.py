@@ -35,7 +35,7 @@ class PathsConf(Base):
 
     def get_staticfiles_dirs(self):
         paths = [self.REPO_DIR / 'lib/assets']
-        if 'THEME' in os.environ:
+        if 'THEME' in os.environ and os.environ['THEME'] != 'default':
             theme = os.environ['THEME']
             if '/' in theme:
                 paths.insert(0, theme)
