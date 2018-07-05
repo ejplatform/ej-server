@@ -8,7 +8,21 @@
         {% if not user.is_active %}
             <li>{{ icon_link(_('Conversations'), '/conversations/', 'conversations', fa=False) }}</li>
         {% elif not user.is_staff %}
-            <li>{{ icon_link(_('Conversations'), '/conversations/', 'conversations', fa=False) }}</li>
+            <li class="NavMenu-DropDown" onclick="openDropDown()">{{ icon_link(_('Conversations'), '/conversations/', 'conversations', fa=False) }}
+                <i class="fas fa-angle-down fa-2x NavMenu-AngleDownIcon"></i>
+                <ul class="NavMenu-UserMenu">
+                    <li>
+                        {{icon_link(_('Your conversations'), ('/{}/'.format(user)), 'far fa-comment', fa=True)}}
+                    </li>
+                    <li>
+                        {{icon_link(_('Add conversation'), ('/{}/conversations/add/'.format(user)), 'fas fa-plus-circle', fa=True)}}
+                    </li>
+                    <li>
+                        <i class="far fa-star"></i>
+                        {{_('Favorite conversations')}}
+                    </li>
+                </ul>
+            </li>
             <li>{{ icon_link(_('Panel'), '/talks/', 'talks', fa=False) }}</li>
         {% else %}
             <li class="NavMenu-DropDown" onclick="openDropDown()">{{ icon_link(_('Conversations'), '/conversations/', 'conversations', fa=False) }}

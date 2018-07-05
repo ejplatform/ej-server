@@ -13,12 +13,13 @@ $nav-menu-font-size: $font-size-default !default;
 $nav-menu-opacity: 1.0 !default;
 $nav-menu-shadow: $box-shadow !default;
 $nav-menu-width: 75vw !default;
-
+$nav-menu-ul-padding: 0 !default;
 
 // Element
 .NavMenu {
     @include color($nav-menu-color, $nav-menu-color-text);
     @include size($nav-menu-width, 100%);
+
     min-height: 100vh;
     box-shadow: $nav-menu-shadow;
     box-sizing: border-box;
@@ -26,43 +27,50 @@ $nav-menu-width: 75vw !default;
     opacity: $nav-menu-opacity;
     -ms-overflow-style: none;
     overflow: -moz-scrollbars-none;
-    &::-webkit-scrollbar{
+
+    &::-webkit-scrollbar {
         display: none;
     }
-    padding: $spacing-unit;
 
+    padding: $spacing-unit;
     em {
         font-weight: bold;
         font-style: normal;
     }
-    a, a:hover, a:active, button {
+
+    a,
+    a:hover,
+    a:active,
+    button {
         color: $nav-menu-color-text;
     }
-    button{
+
+    button {
         background: none;
         border: none;
         cursor: pointer;
         padding: 0px;
-
     }
-    img, i {
+
+    img,
+    i {
         height: 1em;
         padding-right: $spacing-unit-small;
     }
+
     li {
         list-style: none;
         padding: $spacing-unit-small 0;
         border-bottom: $nav-menu-border;
     }
+
     li:last-child {
         border: none;
     }
+
     ul {
-        padding: 0;
-        // overflow: auto;
+        padding: $nav-menu-ul-padding; 
     }
-
-
 
     &-DropDown {
         cursor: pointer;
@@ -72,13 +80,11 @@ $nav-menu-width: 75vw !default;
         float: right;
     }
 
-
     &-UserMenu {
         display: none;
         >li {
-            margin-left: $spacing-unit-large;
-
+            margin-left: $spacing-unit;
         }
-
     }
+
 }
