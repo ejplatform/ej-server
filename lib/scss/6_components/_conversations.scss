@@ -127,6 +127,23 @@ $conversation-card-button-border-radius: 50% !default;
         text-transform: none;
     }
 
+    &-container {
+        align-self: stretch;
+        text-align: center;
+        width: 100%;
+        max-width: 320px;
+        box-sizing: border-box;
+    }
+
+    &-moderation {
+        text-transform: uppercase;
+        display: block;
+        font-weight: bold;
+        color: $color-gray;
+        font-size: $conversation-card-font-size-small;
+        margin: $spacing-unit / 2 0;
+    }
+
     &-cover {
         display: flex;
         flex-flow: column;
