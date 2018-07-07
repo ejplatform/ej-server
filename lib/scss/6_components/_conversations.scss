@@ -97,7 +97,7 @@ $conversation-card-button-border-radius: 50% !default;
     @include color($conversation-card-light, $conversation-card-color, $force: true);
     font-weight: bold;
     text-align: center;
-    padding: $spacing-unit 0;
+    padding: $spacing-unit / 2 0;
 }
 
 .ConversationCard {
@@ -240,7 +240,8 @@ $conversation-card-button-border-radius: 50% !default;
         h1 {
             @extend .Container;
 
-            padding: 0;
+            padding: $spacing-unit / 2 0;
+            padding-top: 0;
             text-align: center;
             font-weight: 200 !important;
             font-size: 26px !important;
