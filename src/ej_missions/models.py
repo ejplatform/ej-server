@@ -3,6 +3,10 @@ import datetime
 
 from django.db import models
 from ej_users.models import User
+from ej_trophies.models.trophy import Trophy
+from ej_trophies.models.user_trophy import UserTrophy
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
 def mission_directory_path(instance, filename):
@@ -22,6 +26,7 @@ class Mission(models.Model):
                                   default="default.jpg")
     owner = models.ForeignKey(User, on_delete=models.CASCADE,
                              related_name="owner", null=True)
+    trophy = models.ForeignKey(Trophy, on_delete=models.CASCADE, null=True)
     deadline = models.DateField(null=True)
     created_at = models.DateTimeField(null=True, auto_now_add=True)
 
@@ -56,3 +61,18 @@ class Comment(models.Model):
     mission = models.ForeignKey(Mission, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     comment = models.CharField(max_length=280)
+
+
+
+@receiver(post_save, sender=Receipt)
+def update_trophy(sender, **kwargs):
+    instance = kwargs.get('instance')
+    if (instance.status == "realized"):
+        print(instance.mission.trophy)
+        mission_trophy = instance.mission.trophy
+        user_trophy = UserTrophy.objects.get(trophy=mission_trophy)
+        mission_required_trophys = mission_trophy.required_trophies.all()
+        if (not mission_required_trophys):
+            user_trophy.percentage = 100
+            user_trophy.save()
+            return

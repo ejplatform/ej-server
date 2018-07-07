@@ -10,6 +10,7 @@ from django.http import QueryDict
 from . import serializers
 from . import models
 from ej_users.models import User
+from ej_trophies.models.user_trophy import UserTrophy
 
 
 class MissionViewSet(viewsets.ViewSet):
@@ -20,7 +21,7 @@ class MissionViewSet(viewsets.ViewSet):
         return Response(serializer.data)
 
     def inbox(self, request, pk):
-        queryset = models.Mission.objects.exclude(users=pk)
+        queryset = models.Mission.objects.all().order_by("-created_at")
         serializer = serializers.MissionSerializer(queryset, many=True)
         return Response(serializer.data)
 
@@ -64,6 +65,8 @@ class MissionViewSet(viewsets.ViewSet):
         user = User.objects.filter(id=data["user_id"])[0]
         mission = models.Mission.objects.filter(id=data["id"])[0]
         mission.users.add(user)
+        user_trophy = UserTrophy(user=user, trophy=mission.trophy)
+        user_trophy.save()
         serializer = serializers.MissionSerializer(mission)
         return Response(serializer.data)
 
