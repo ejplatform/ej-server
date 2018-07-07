@@ -6,6 +6,7 @@
 html {
     min-height: 100%;
     line-height: $line-height / $font-size;
+    max-width: 500px;
 }
 
 body {
