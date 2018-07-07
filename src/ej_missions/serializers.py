@@ -23,6 +23,12 @@ class MissionSerializer(serializers.ModelSerializer):
         model = models.Mission
         fields = ('id', 'title', 'description', 'users', 'image', 'youtubeVideo', 'audio', 'owner', 'remainig_days', 'deadline', 'comment_set', 'reward')
 
+class MissionInboxSerializer(MissionSerializer):
+    blocked = serializers.BooleanField()
+    class Meta:
+        model = models.Mission
+        fields='__all__'
+
 class MissionReceiptSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Receipt

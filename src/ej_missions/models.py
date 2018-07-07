@@ -46,6 +46,15 @@ class Mission(models.Model):
 
         return "{} dias restantes".format(deadline_in_days);
 
+    @property
+    def blocked(self):
+        required_trophies = self.trophy.required_trophies.all()
+        user_trophies = UserTrophy.objects.filter(percentage=100)
+        if (len(required_trophies) == 0):
+            return True
+        if (len(required_trophies) > len(user_trophies)):
+            return True
+
 
 class Receipt(models.Model):
     mission = models.ForeignKey(Mission, on_delete=models.CASCADE)
