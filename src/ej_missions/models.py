@@ -51,11 +51,7 @@ class Comment(models.Model):
 def update_trophy(sender, **kwargs):
     instance = kwargs.get('instance')
     if (instance.status == "realized"):
-        print(instance.mission.trophy)
         mission_trophy = instance.mission.trophy
         user_trophy = UserTrophy.objects.get(trophy=mission_trophy)
-        mission_required_trophys = mission_trophy.required_trophies.all()
-        if (not mission_required_trophys):
-            user_trophy.percentage = 100
-            user_trophy.save(force_update=True)
-            return
+        user_trophy.percentage = 100
+        user_trophy.save(force_update=True)
