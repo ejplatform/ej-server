@@ -1,5 +1,4 @@
 import logging
-import datetime
 
 from django.db import models
 from ej_users.models import User
@@ -33,29 +32,6 @@ class Mission(models.Model):
     class Meta:
         ordering = ['title']
 
-    @property
-    def remainig_days(self):
-        deadline_in_days = (self.deadline - datetime.date.today()).days
-
-        if(deadline_in_days < 0):
-            return "missão encerrada"
-        if(deadline_in_days == 0):
-            return "encerra hoje"
-        if(deadline_in_days == 1):
-            return "encerra amanhã"
-
-        return "{} dias restantes".format(deadline_in_days);
-
-    @property
-    def blocked(self):
-        required_trophies = self.trophy.required_trophies.all()
-        user_trophies = UserTrophy.objects.filter(percentage=100)
-        if (len(required_trophies) == 0):
-            return True
-        if (len(required_trophies) > len(user_trophies)):
-            return True
-
-
 class Receipt(models.Model):
     mission = models.ForeignKey(Mission, on_delete=models.CASCADE)
     userName = models.CharField(max_length=30)
@@ -71,8 +47,6 @@ class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     comment = models.CharField(max_length=280)
 
-
-
 @receiver(post_save, sender=Receipt)
 def update_trophy(sender, **kwargs):
     instance = kwargs.get('instance')
@@ -83,5 +57,5 @@ def update_trophy(sender, **kwargs):
         mission_required_trophys = mission_trophy.required_trophies.all()
         if (not mission_required_trophys):
             user_trophy.percentage = 100
-            user_trophy.save()
+            user_trophy.save(force_update=True)
             return

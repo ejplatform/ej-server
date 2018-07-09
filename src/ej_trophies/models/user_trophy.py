@@ -68,11 +68,11 @@ class UserTrophy(models.Model):
             users=user
         )
 
-        for trophy in available_trophies:
-            UserTrophy.objects.create(
-                user=user,
-                trophy=trophy
-            )
+      #for trophy in available_trophies:
+      #    UserTrophy.objects.create(
+      #        user=user,
+      #        trophy=trophy
+      #    )
 
     class Meta:
         verbose_name = _('user\'s trophy')

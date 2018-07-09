@@ -22,7 +22,9 @@ class MissionViewSet(viewsets.ViewSet):
 
     def inbox(self, request, pk):
         queryset = models.Mission.objects.all().order_by("-created_at")
-        serializer = serializers.MissionInboxSerializer(queryset, many=True)
+        serializer = serializers.MissionInboxSerializer(queryset,
+                                                        many=True,
+                                                        context={'uid': pk})
         return Response(serializer.data)
 
     def accepted_missions(self, request, pk):
