@@ -325,7 +325,7 @@ $profile-arrow-size: $spacing-unit !default;
 .ProfileEdit {
     @extend .Container;
 
-    input, textarea, select, .FormItem {
+    input, textarea, label, select, .FormItem {
         display: block;
         margin-left: auto;
         margin-right: auto;
