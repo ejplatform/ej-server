@@ -31,6 +31,7 @@ class Profile(models.Model):
     occupation = models.CharField(_('Occupation'), blank=True, max_length=50)
     political_activity = models.TextField(_('Political activity'), blank=True)
     image = models.ImageField(_('Image'), blank=True, null=True, upload_to='profile_images')
+    hicontrast_mode = models.BooleanField(_('High contrast mode'), default=False)
 
     name = delegate_to('user')
     username = delegate_to('user')
@@ -93,7 +94,7 @@ class Profile(models.Model):
         registered profile fields.
         """
 
-        fields = ['city', 'country', 'occupation', 'age', 'gender', 'race', 'political_activity', 'biography']
+        fields = ['city', 'country', 'occupation', 'age', 'gender', 'race', 'political_activity', 'biography', 'hicontrast_mode']
         field_map = {field.name: field for field in self._meta.fields}
         result = []
         for field in fields:
