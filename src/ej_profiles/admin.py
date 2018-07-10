@@ -7,7 +7,7 @@ from . import models
 class ProfileAdmin(admin.ModelAdmin):
     fieldsets = (
         (_('Basic information'), {'fields': [
-            'image', 'race', 'gender', 'age', 'occupation', 'phone',
+            'image', 'race', 'gender', 'age', 'occupation', 'phone', 'user',
         ]}),
         (_('Address'), {'fields': [
             'city', 'state', 'country',
