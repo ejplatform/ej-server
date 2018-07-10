@@ -6,8 +6,8 @@
 // Top and botton navigation bars. Styled as content, but can be overriden.
 $header-color: $color-content !default;
 $header-color-text: $color-content-text !default;
-$header-box-shadow-upper: 0 2px 4px 0 rgba(0, 0, 0, 0.05) !default;
-$header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.05) !default;
+$header-box-shadow-upper: 0 2px 4px 0 rgba(0, 0, 0, 0.2) !default;
+$header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.2) !default;
 
 // Component
 .talks{
