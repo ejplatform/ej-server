@@ -1,0 +1,39 @@
+.hicontrast {
+    .Page-content {
+        h1 {
+            color: #072A49;
+        }
+    }
+
+    .ConversationCard {
+        background-color: #072A49;
+        .ConversationTags {
+            color: #072A49;
+        }
+    }
+
+    .ConversationDetail {
+        h1 {
+            color: #072A49 !important; 
+        }
+        .ConversationTags {
+            color: #072A49;
+        }
+        &-statistics {
+            color: #072A49;
+        }
+    }
+
+    .Comment {
+        background-color: #072A49;
+    }
+
+    .CommentForm {
+        textarea {
+            border-color: #072A49;
+        }
+        input {
+            background-color: #072A49;
+        }
+    }
+}
