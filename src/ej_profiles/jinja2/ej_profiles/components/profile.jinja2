@@ -8,11 +8,21 @@
             {{ csrf_input }}
             {{ form.as_p() }}
             {{ form.non_field_errors() }}
+            {{ hicontrast_edit(profile) }}
             <input type="submit" name="submit" value="Enviar">
         </form>
     </div>
 {% endmacro %}
 
+{% macro hicontrast_edit(profile) %}
+    <div class="Profile-hicontrast">
+        <p>
+            <label> {{ _('High contrast mode') }}: </label>
+            <input type="checkbox">
+        </p>
+    </div>
+
+{% endmacro%}
 
 {% macro profile_detail(profile, conversations, info='profile', javascript_enabled='') %}
     <div class="Profile">
