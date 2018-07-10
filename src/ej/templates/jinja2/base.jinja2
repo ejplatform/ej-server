@@ -84,8 +84,11 @@
         <meta property="og:type" content="website">
         <meta property="fb:app_id" content="1757744567588794">
     </head>
-
-    <body class="{{ body_class|default('Page') }} {{request.path.replace('/','')}}">
+    {% if request.user.profile.hicontrast_mode %}
+        <body class="{{ body_class|default('Page') }} hicontrast {{request.path.replace('/','')}}">
+    {% else %}
+        <body class="{{ body_class|default('Page') }} {{request.path.replace('/','')}}">
+    {% endif %}
 {% endif %}
 
 {% block body %}
