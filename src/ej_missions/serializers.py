@@ -56,6 +56,17 @@ class MissionInboxSerializer(MissionSerializer):
         if (len(required_trophies) > len(user_trophies)):
             return True
 
+        filtered_trophies = []
+        for req in required_trophies:
+            filtered = list(filter(lambda trophy: trophy.trophy == req.key and\
+                                   trophy.percentage == 100, list(user_trophies)
+                                   )
+                            )
+            filtered_trophies.append(filtered)
+        if (len(filtered_trophies) == len(required_trophies)):
+            return False
+
+        return True
 
 class MissionReceiptSerializer(serializers.ModelSerializer):
     class Meta:
