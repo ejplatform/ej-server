@@ -81,7 +81,7 @@ class Profile(models.Model):
 
     @property
     def is_filled(self):
-        fields = ('race', 'age', 'country', 'state', 'city', 'biography',
+        fields = ('race', 'age', 'country', 'state', 'city', 'biography', 'phone',
                   'occupation', 'political_activity', 'has_image', 'gender_description')
         return bool(all(getattr(self, field) for field in fields))
 
@@ -94,7 +94,7 @@ class Profile(models.Model):
         registered profile fields.
         """
 
-        fields = ['city', 'country', 'occupation', 'age', 'gender', 'race', 'political_activity', 'biography']
+        fields = ['city', 'country', 'occupation', 'age', 'phone', 'gender', 'race', 'political_activity', 'biography']
         field_map = {field.name: field for field in self._meta.fields}
         result = []
         for field in fields:

@@ -33,7 +33,7 @@ class TestProfile:
             ('Country', 'country'),
             ('Occupation', 'occupation'),
             ('Age', 18),
-            ('Phone', "61999999999"),
+            ('Phone', 'phone'),
             ('Gender identity', 'female'),
             ('Race', 'indigenous'),
             ('Political activity', 'political_activity'),
