@@ -1,4 +1,5 @@
 $dark-blue-hicontrast-color: #072A49;
+$light-blue-hicontrast-color: #30BEC0;
 
 .hicontrast {
  
@@ -12,7 +13,9 @@ $dark-blue-hicontrast-color: #072A49;
     .ConversationCard {
         background-color: $dark-blue-hicontrast-color !important;
         &-actions {
+            background-color: $dark-blue-hicontrast-color !important;
             a {
+                border: 1px $light-blue-hicontrast-color solid !important;
                 background-color: $dark-blue-hicontrast-color !important;
             }
         }

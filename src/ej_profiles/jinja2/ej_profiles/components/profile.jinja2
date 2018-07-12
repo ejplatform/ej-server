@@ -98,7 +98,27 @@
     </div>
 {% endmacro %}
 
+
+{% macro profile_trophy(profile) %}
+    {% if profile.hicontrast_mode %}
+        <li>
+            <img src="/static/img/icons/icon_trofeu_dark.svg">
+            <span class='trophy'>
+                nome do trofeu
+            </span>
+        </li>
+    {% else %}
+        <li>
+            <img src="/static/img/icons/icon_trofeu.svg">
+            <span class='trophy'>
+                nome do trofeu
+            </span>
+        </li>
+    {% endif %}
+{% endmacro %}
+
 {% macro profile_trophies(profile) %}
+
     <div class="Profile-info">
         <ul class='trophies'>
             {# {% for badge in profile.badges() %}
@@ -106,30 +126,11 @@
                     <span class='amount'>{{ badge }}</span>
                 </li>
             {% endfor %} #}
-            <li>
-            <img src="/static/img/icons/icon_trofeu.svg">
-                <span class='trophy'>
-                    nome do trofeu
-                </span>
-            </li>
-            <li>
-                <img src="/static/img/icons/icon_trofeu.svg">
-                <span class='trophy'>
-                    nome do trofeu
-                </span>
-            </li>
-            <li>
-                <img src="/static/img/icons/icon_trofeu.svg">
-                <span class='trophy'>
-                    nome do trofeu
-                </span>
-            </li>
-            <li>
-                <img src="/static/img/icons/icon_trofeu.svg">
-                <span class='trophy'>
-                    nome do trofeu
-                </span>
-            </li>
+            {{profile_trophy(profile)}}
+            {{profile_trophy(profile)}}
+            {{profile_trophy(profile)}}
+            {{profile_trophy(profile)}}
+
             <button class="Button" type="submit">{{ _('See All') }}</button>
         </ul>
     </div>
