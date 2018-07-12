@@ -52,6 +52,8 @@ def update_trophy(sender, **kwargs):
     instance = kwargs.get('instance')
     if (instance.status == "realized"):
         mission_trophy = instance.mission.trophy
-        user_trophy = UserTrophy.objects.get(trophy=mission_trophy)
+        user = instance.user
+        user_trophy = UserTrophy.objects.get(trophy=mission_trophy,
+                                             user=user)
         user_trophy.percentage = 100
         user_trophy.save(force_update=True)
