@@ -100,27 +100,26 @@
 
 
 {% macro profile_trophy(profile) %}
-    {% if profile.hicontrast_mode %}
-        <li>
-            <img src="/static/img/icons/icon_trofeu_dark.svg">
-            <span class='trophy'>
-                nome do trofeu
-            </span>
-        </li>
-    {% else %}
-        <li>
-            <img src="/static/img/icons/icon_trofeu.svg">
-            <span class='trophy'>
-                nome do trofeu
-            </span>
-        </li>
-    {% endif %}
+        <script>
+            var liDiv = document.createElement('li');
+            var icon = 'icon_trofeu';
+            if(localStorage.hicontrast == 'true'){
+                icon = 'icon_trofeu_dark'
+            }
+            liDiv.innerHTML = 
+            `
+            <img class="blank-trophy" src="/static/img/icons/${icon}.svg">
+            <span class='trophy'>nome do trofeu</span>
+            `
+
+            document.getElementById('trophies').appendChild(liDiv); 
+        </script>
 {% endmacro %}
 
 {% macro profile_trophies(profile) %}
 
     <div class="Profile-info">
-        <ul class='trophies'>
+        <ul class='trophies' id='trophies'>
             {# {% for badge in profile.badges() %}
                 <li>
                     <span class='amount'>{{ badge }}</span>

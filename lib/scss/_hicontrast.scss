@@ -5,8 +5,13 @@ $light-blue-hicontrast-color: #30BEC0;
  
     // Comment list and comment page
     .Page-content {
-        h1 {
+        h1, label{
             color: $dark-blue-hicontrast-color !important;
+        }
+
+        .Button {
+            background-color: $dark-blue-hicontrast-color !important;
+            color: white;
         }
     }
 

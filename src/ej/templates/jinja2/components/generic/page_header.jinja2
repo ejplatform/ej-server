@@ -14,8 +14,9 @@
 
 {% macro header_top_nav(request) %}
     {% block javascript %}
+
+        {# this function controls the open/close button of "conversations dropdown on page_menu #}
         <script type="text/javascript">
-        // this function controls the open/close button of "conversations dropdown on page_menu
         function openDropDown(){
             let element = document.getElementsByClassName("NavMenu-UserMenu");
             if(element[0].style.display == "inline")
@@ -23,6 +24,22 @@
             else
                 element[0].style.display = "inline";
         }
+        </script>
+
+        {# handles high contrast toggle #}
+        <script type="text/javascript">
+            let toggleHicontrast = () => {
+                let bodyDiv = document.getElementsByTagName('body')[0];
+                if(localStorage.hicontrast == "true") {
+                    localStorage.hicontrast = false;
+                    bodyDiv.className = bodyDiv.className.slice(0, bodyDiv.className.length - " hicontrast".length);
+                    console.log(localStorage.hicontrast);
+                } else {
+                    localStorage.hicontrast = true;
+                    bodyDiv.className += " hicontrast";
+                    console.log(localStorage.hicontrast);
+                }
+            }
         </script>
     {% endblock %}
     <nav class="Header-topNav">
