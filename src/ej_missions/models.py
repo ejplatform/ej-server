@@ -47,6 +47,30 @@ class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     comment = models.CharField(max_length=280)
 
+def update_automatic_trophies(user):
+    def filter_trophies(user_trophy):
+        return (user_trophy.trophy.key == req.key)
+    automatic_trophies = Trophy.objects.filter(complete_on_required_satisfied=True)
+    user_trophies = UserTrophy.objects.filter(percentage=100).all()
+    for trophy in automatic_trophies:
+        filtered_trophies = []
+        required_trophies = trophy.required_trophies.all()
+        for req in required_trophies:
+            filtered = list(filter(filter_trophies, list(user_trophies)))
+            if len(filtered) > 0:
+                filtered_trophies.append(filtered)
+        if (len(filtered_trophies) == len(required_trophies)):
+            existent_user_trophy = UserTrophy.objects.filter(user=user,
+                                                             trophy=trophy,
+                                                             percentage=100)
+            if (len(existent_user_trophy) == 0):
+                user_trophy = UserTrophy(user=user,
+                                        trophy=trophy,
+                                        percentage=100,
+                                        notified=True)
+                user_trophy.save()
+
+
 @receiver(post_save, sender=Receipt)
 def update_trophy(sender, **kwargs):
     instance = kwargs.get('instance')
@@ -57,3 +81,4 @@ def update_trophy(sender, **kwargs):
                                              user=user)
         user_trophy.percentage = 100
         user_trophy.save(force_update=True)
+        update_automatic_trophies(user)
