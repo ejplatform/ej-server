@@ -1512,6 +1512,10 @@ msgstr "Recuperar senha"
 msgid "Reset password"
 msgstr "Recriar minha senha"
 
+#: src/ej_conversations/jinja2/ej_conversations/components/conversation-card.jinja2:30
+msgid "Moderate Conversation"
+msgstr "Moderar Conversa"
+
 #~ msgid "cannot vote twice in the same comment"
 #~ msgstr "não pode votar duas vezes no mesmo comentário"
 

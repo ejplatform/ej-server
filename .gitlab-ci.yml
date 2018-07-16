@@ -38,7 +38,7 @@ variables:
   image: docker
   before_script:
     - docker pull $CPA_DJANGO_MASTER_IMAGE || true
-    - docker build --cache-from $CPA_DJANGO_MASTER_IMAGE --build-arg VOLATILE_DEPENDENCIES_STRATEGY=$(date +%s) -t $CPA_DJANGO_MASTER_IMAGE -f ./docker/production/django/Dockerfile .
+    - docker build --cache-from $CPA_DJANGO_MASTER_IMAGE --build-arg THEME=cpa --build-arg VOLATILE_DEPENDENCIES_STRATEGY=$(date +%s) -t $CPA_DJANGO_MASTER_IMAGE -f ./docker/production/django/Dockerfile .
   tags:
     - docker
 

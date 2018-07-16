@@ -1,11 +1,16 @@
-{% macro comment_detail(comment, user) %}
+{% macro comment_detail(comment, user, remaining=None, total=None) %}
     <div class="Comment">
+        {% if remaining and total %}
+        <div class="Comment-counter">
+          <p>{{ remaining }} / {{ total }}</p>
+        </div>
+        {% endif %}
         <div class="Comment-user">
             <i class="fa fa-user"></i><span>{{ comment.author.name }}</span>
         </div>
         <p>{{ comment.content }}</p>
         {% if user.is_authenticated %}
-            <form method="post" class="Comment-voteArea" id="Comment-form" up-target=".Comment">
+            <form method="post" class="Comment-voteArea" id="Comment-form" up-target=".Comment" up-transition="move-left">
                 {{ csrf_input }}
                 <input type="hidden" name="action" value="vote">
                 <ul class="ConversationComment-actions">
@@ -45,7 +50,7 @@
         <form method="post">
             {{ csrf_input }}
             <input type="hidden" name="action" value="comment">
-            <textarea name="comment"></textarea>
+            <textarea name="comment" onFocus="document.getElementsByClassName('Header-lowerNav')[0].style.display='none'" onBlur="document.getElementsByClassName('Header-lowerNav')[0].style.display='flex'"></textarea>
             <input type="submit" name="submit" value="Opinar" primary>
         </form>
     </div>

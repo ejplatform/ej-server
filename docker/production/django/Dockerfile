@@ -55,8 +55,8 @@ RUN groupadd -r django \
 WORKDIR /app
 COPY . /app
 
-# TODO: Remove this!
-ENV THEME=cpa
+ARG THEME=default
+ENV THEME=${THEME}
 RUN inv prepare-deploy \
     && chown -R django:django /app \
     && ln -s /usr/bin/python3 /usr/bin/python

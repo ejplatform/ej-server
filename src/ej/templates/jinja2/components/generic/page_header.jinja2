@@ -60,16 +60,17 @@
     
     <nav class="Header-lowerNav">
         {% call link('/conversations/', title=_('Conversations'), preload=True) %}
-            <img src="/static/img/icons/conversations.svg" alt="{{ _('Conversations') }}" class="Header-lowerIcon">
+            <img src="/static/img/icons/navbar_icon1.svg" alt="{{ _('Conversations') }}" class="Header-lowerIcon">
             <span>{{ _('Conversations') }}</span>
         {% endcall %}
 
         {% call link('/talks/', title=_('Panel'), preload=True) %}
+            <img src="/static/img/icons/navbar_icon2.svg" alt="{{ _('Panel') }}" class="Header-lowerIcon">
             <span>{{ _('Panel') }}</span>
         {% endcall %}
 
         {% call link('/profile/', title=_('Profile'), preload=True) %}
-            <img src="/static/img/icons/profile.svg" title="{{ _('Profile') }}" class="Header-lowerIcon">
+            <img src="/static/img/icons/navbar_icon3.svg" title="{{ _('Profile') }}" class="Header-lowerIcon">
             <span>{{ _('Profile') }}</span>
         {% endcall %}
     </nav>

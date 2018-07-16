@@ -97,7 +97,7 @@ $conversation-card-button-border-radius: 50% !default;
     @include color($conversation-card-light, $conversation-card-color, $force: true);
     font-weight: bold;
     text-align: center;
-    padding: $spacing-unit 0;
+    padding: $spacing-unit / 2 0;
 }
 
 .ConversationCard {
@@ -125,6 +125,23 @@ $conversation-card-button-border-radius: 50% !default;
         font-family: $font-paragraph;
         font-weight: 600;
         text-transform: none;
+    }
+
+    &-container {
+        align-self: stretch;
+        text-align: center;
+        width: 100%;
+        max-width: 320px;
+        box-sizing: border-box;
+    }
+
+    &-moderation {
+        text-transform: uppercase;
+        display: block;
+        font-weight: bold;
+        color: $color-gray;
+        font-size: $conversation-card-font-size-small;
+        margin: $spacing-unit / 2 0;
     }
 
     &-cover {
@@ -203,6 +220,11 @@ $conversation-card-button-border-radius: 50% !default;
     max-width: $header-wrapper-max-width;
     padding: 0;
 
+    .up-bounds {
+      width: 100% !important;
+      height: auto !important;
+    }
+
     > * {
         padding: $spacing-unit;
     }
@@ -223,7 +245,8 @@ $conversation-card-button-border-radius: 50% !default;
         h1 {
             @extend .Container;
 
-            padding: 0;
+            padding: $spacing-unit / 2 0;
+            padding-top: 0;
             text-align: center;
             font-weight: 200 !important;
             font-size: 26px !important;
@@ -307,6 +330,8 @@ $conversation-card-button-border-radius: 50% !default;
     padding: $spacing-unit + $spacing-unit-small;
     margin: 0 auto;
     max-width: $page-content-width-max;
+    min-height: 410px !important;
+    width: 100% !important;
 
     i.fa {
         background: $color-primary-text;

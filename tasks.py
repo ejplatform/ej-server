@@ -28,7 +28,7 @@ def sass(ctx, no_watch=False, trace=False, theme=None):
     """
     # Choose theme
     base = pathlib.Path('lib/scss')
-    if theme is None and 'THEME' in os.environ and os.environ['THEME'] != 'none':
+    if theme is None and 'THEME' in os.environ and os.environ['THEME'] != 'default':
         theme = os.environ['THEME']
     if theme:
         if '/' in theme:
@@ -96,7 +96,7 @@ def run(ctx, no_toolbar=False, gunicorn=False, migrate=False,
         sys.argv = ['gunicorn', *args]
         run_gunicorn()
     else:
-        manage(ctx, 'runserver', env=env)
+        manage(ctx, 'runserver 0.0.0.0:8000', env=env)
 
 
 #
@@ -154,7 +154,7 @@ def db_assets(ctx, path=None, force=False):
         path = pathlib.Path(path)
         if (path / 'pages').exists():
             pages = path / 'pages'
-        if (path / 'fagments').exists():
+        if (path / 'fragments').exists():
             pages = path / 'fragments'
         if (path / 'data').exists():
             pages = path / 'data'
@@ -298,4 +298,4 @@ def prepare_deploy(ctx, ask_input=False):
     i18n(ctx, compile=no_input)
 
     # Static files
-    manage(ctx, 'collectstatic', noinput=ask_input)
+    manage(ctx, 'collectstatic', noinput=no_input)
