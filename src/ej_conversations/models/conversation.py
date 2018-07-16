@@ -136,7 +136,10 @@ class Conversation(TimeStampedModel, StatusModel):
         """
 
         # Convert status, if necessary
-        kwargs['status'] = normalize_status(status)
+        if author.id == self.author.id:
+            kwargs['status'] = Comment.STATUS.approved
+        else:
+            kwargs['status'] = normalize_status(status)
 
         # Check limits
         if check_limits and not author.has_perm('ej_conversations.can_comment', self):
