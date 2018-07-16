@@ -91,9 +91,9 @@ def username_by_name_combination(names):
 def username_by_email(email):
     """
     Try to create a unique username using the given email
-    plus a number between 0 and 99.
+    plus a number between 1 and 100.
     """
-    for _iter in range(100):
+    for _iter in range(1, 100):
         username = email + str(_iter)
         if not User.objects.filter(username=username):
             return username
