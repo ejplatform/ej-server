@@ -20,11 +20,8 @@ def create(request, owner=None):
         Form = forms.FirstConversationForm
 
     if request.method == 'POST':
-        print('lul')
         form = Form(request.POST)
-        print(type(form))
         if form.is_valid():
-            print('lel')
             try:
                 request.user.board_name = form.cleaned_data['board_name']
                 request.user.save()
