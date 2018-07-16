@@ -47,22 +47,22 @@ class MissionInboxSerializer(MissionSerializer):
         fields='__all__'
 
     def get_blocked(self, obj):
-        print(self.context)
+
+        def filter_trophies(user_trophy):
+            return (user_trophy.trophy.key == req.key and\
+                user_trophy.percentage == 100)
+
         required_trophies = obj.trophy.required_trophies.all()
         user_trophies = UserTrophy.objects.filter(percentage=100,
                                                   user_id= self.context['uid'])
         if (len(required_trophies) == 0):
             return False
-        if (len(required_trophies) > len(user_trophies)):
-            return True
 
         filtered_trophies = []
         for req in required_trophies:
-            filtered = list(filter(lambda trophy: trophy.trophy == req.key and\
-                                   trophy.percentage == 100, list(user_trophies)
-                                   )
-                            )
-            filtered_trophies.append(filtered)
+            filtered = list(filter(filter_trophies, list(user_trophies)))
+            if len(filtered) > 0:
+                filtered_trophies.append(filtered)
         if (len(filtered_trophies) == len(required_trophies)):
             return False
 
