@@ -66,19 +66,19 @@
                 <ul class="NavMenu-Accessibility">
                     <li onclick="increaseFontSize()">
                         <i class="fas fa-plus-circle"></i>
-                        Aumentar fontes
+                        {{_('Increase font size')}}
                     </li>
                     <li onclick="decreaseFontSize()">
                         <i class="fas fa-minus-circle"></i>
-                        Diminuir fontes
+                        {{_('Decrease font size')}}
                     </li>
                     <li onclick="setStandardFontSize()">
                         <i class="fas fa-font"></i>
-                        Fonte padrão
+                        {{_('Default font')}}
                     </li>
-                    <li>
-                        <i class="far fa-star"></i>
-                        Alto contraste
+                    <li onclick="toggleHicontrast()">
+                        <i class="fas fa-universal-access"></i>
+                            <button>{{_('High contrast mode')}}</button>
                     </li>
                 </ul>
             </li>
@@ -91,7 +91,6 @@
                 </form>
                 </li>
             {% endif %}
-                {# {{ icon_link(_('Logout'), '/logout/', 'fa fa-sign-out-alt') }}</em></li> #}
         </ul>
     </nav>
 {% endmacro %}

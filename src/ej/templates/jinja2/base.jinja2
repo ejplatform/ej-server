@@ -41,6 +41,8 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js" defer></script>
         <script src="/static/js/jquery-ui/jquery-ui.min.js" defer></script>
         <script src="/static/js/main.js" defer></script>
+        <script src="/static/js/hicontrast.js"></script>
+        <script src="/static/js/specific-pages.js"></script>
         <script src="/static/js/fontScale.js" defer></script>
         {% endblock javascript %}
 
@@ -176,15 +178,13 @@
                 }
             }
             window.onload = function() {
+                checkHicontrast();
                 runRemoteScripts();
-                checkFontSize();
+                checkFontSize();               
                 up.on('up:fragment:inserted', function(event, fragment) {
                     runRemoteScripts();
-                    if(fragment[0].className != "NavMenu"){
-                        checkFontSize();
-                    } else {
-                        checkClassMenuFontSize();
-                    }
+                    checkHicontrast();
+                    checkSpecificPages(fragment);
                 });
             }
         </script>
