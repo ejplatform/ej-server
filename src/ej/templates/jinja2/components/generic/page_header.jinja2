@@ -16,8 +16,8 @@
     {% block javascript %}
         <script type="text/javascript">
         // this function controls the open/close button of "conversations dropdown on page_menu
-        function openDropDown(){
-            let element = document.getElementsByClassName("NavMenu-UserMenu");
+        function openDropDown(openDiv){
+            let element = document.getElementsByClassName(openDiv);
             if(element[0].style.display == "inline")
                 element[0].style.display = "none";
             else
