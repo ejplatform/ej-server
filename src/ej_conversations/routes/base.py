@@ -66,7 +66,7 @@ def detail(request, conversation, owner=None):
         except (PermissionError, ValidationError) as ex:
             ctx['comment_error'] = str(ex)
     elif request.POST.get('action') == 'favorite':
-        user.favorite_conversations.add(conversation)
+        user.update_favorite_conversation_status(conversation)
     return ctx
 
 

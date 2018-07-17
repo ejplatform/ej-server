@@ -25,22 +25,24 @@
                 {% endif %}
             </div>
             <h1>{{ conversation.text }}</h1>
-            {% if user.is_authenticated %}
-                {# Favorite Conversation #}
-                <form method="post" class="Favorite-conversation" id="Favorite-form">
-                    {{ csrf_input }}
-                    <input type="hidden" name="action" value="favorite">
-                            <button type="submit" form="Favorite-form">
-                                <i class="fa fa-star"></i>
-                            </button>
-                            <span>{{ _('Favorite') }}</span>
-                </form>
-            {% else %}
-                <p class="Comment-loginWarn">É necessário <a
-                        href="/login/?next={{ comment.conversation.get_absolute_url() }}">registrar-se</a> antes de
-                    favoritar uma conversa!</p>
-            {% endif %}
+
             <ul class="ConversationDetail-statistics">
+              {% if user.is_authenticated %}
+                  <li>
+                    <form method="post" class="Favorite-conversation" id="Favorite-form">
+                      {{ csrf_input }}
+                      <input type="hidden" name="action" value="favorite">
+                      <button type="submit" form="Favorite-form">
+                        <i class="fa fa-start">
+                      </button>
+                      {% if conversation.is_user_favorite(user) %}
+                        </i> <span>{{ _('É favorita, clique p/ retirar') }}</span>
+                      {% else %}
+                        </i> <span>{{ _('Não é favorita, clique p/ acrescentar') }}</span>
+                      {% endif %}
+                    </form>
+                  </li>
+                {% endif %}
                 <li><i class="fa fa-comment"></i> {{ gettext('%(count)s comments', count=conversation.comments.count()) }}</li>
                 <li><i class="fa fa-sliders-h"></i> {{ gettext('%(count)s votes', count=conversation.votes.count()) }}</li>
             </ul>

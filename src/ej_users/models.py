@@ -47,6 +47,12 @@ class User(AbstractUser):
             error = {'username': _('invalid username: %s') % self.username}
             raise ValidationError(error)
 
+    def update_favorite_conversation_status(self, conversation):
+        if self.favorite_conversations.filter(id=conversation.id).exists():
+            self.favorite_conversations.remove(conversation)
+        else:
+            self.favorite_conversations.add(conversation)
+
     class Meta:
         swappable = 'AUTH_USER_MODEL'
 
