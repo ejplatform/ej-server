@@ -9,6 +9,7 @@ from boogie import rules
 from boogie.apps.users.models import AbstractUser
 from boogie.rest import rest_api
 from .manager import UserManager
+from ej_conversations.models import Conversation
 
 fake = Factory.create('pt-BR')
 
@@ -28,6 +29,7 @@ class User(AbstractUser):
         ),
     )
     objects = UserManager()
+    favorite_conversations = models.ManyToManyField(Conversation)
 
     @property
     def profile(self):

@@ -65,7 +65,8 @@ def detail(request, conversation, owner=None):
             ctx['comment'] = conversation.create_comment(user, comment)
         except (PermissionError, ValidationError) as ex:
             ctx['comment_error'] = str(ex)
-
+    elif request.POST.get('action') == 'favorite':
+        user.favorite_conversations.add(conversation)
     return ctx
 
 
