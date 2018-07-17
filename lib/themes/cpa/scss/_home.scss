@@ -113,6 +113,7 @@
 
   a {
     color: $purple !important; 
+    display: flex !important;
 
     &:before {
         content: "\f086";

@@ -6,8 +6,8 @@
 // Top and botton navigation bars. Styled as content, but can be overriden.
 $header-color: $color-content !default;
 $header-color-text: $color-content-text !default;
-$header-box-shadow-upper: 0 2px 4px 0 rgba(0, 0, 0, 0.05) !default;
-$header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.05) !default;
+$header-box-shadow-upper: 0 2px 4px 0 rgba(0, 0, 0, 0.2) !default;
+$header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.2) !default;
 
 // Component
 .talks{
@@ -41,20 +41,6 @@ $header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.05) !default;
         cursor: pointer;
     }
 
-    @media only screen and (min-width: $breakpoint-small) {
-        @include size(100vw, $header-height-tablet);
-        @include position(fixed,  $top-header-height null null null);
-        box-shadow: $header-box-shadow-upper;
-
-        &-wrapper {
-            align-items: center;
-            display: flex;
-            justify-content: space-between;
-            margin: 0 auto;
-            max-width: $header-wrapper-max-width;
-        }
-    }
-
     // Elements
     &-topNav,
     &-lowerNav {
@@ -67,20 +53,18 @@ $header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.05) !default;
         justify-content: space-between;
         position: fixed;
         width: 100vw;
-
-        @media only screen and (min-width: $breakpoint-small) {
-            box-shadow: none;
-            display: block;
-            position: inherit;
-            height: inherit;
-            width: inherit;
-        }
     }
 
     &-topNav {
         height: $header-top-nav-height;
         min-width: $spacing-unit-large + $header-icon-size;
         padding: 0 $spacing-unit;
+    
+        @include breakpoint(small) {
+          padding-top: 30px;
+          height: $header-top-nav-height + 30;
+        }
+
         top: 0;
 
         img {
@@ -91,25 +75,6 @@ $header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.05) !default;
         }
         i.fa {
             font-size: $font-size-h3;
-        }
-
-        @media only screen and (min-width: $breakpoint-small) {
-            box-shadow: none;
-            padding: 0 0 0 $spacing-unit;
-            text-align: left;
-
-            img {
-                height: $header-height-tablet - $spacing-unit-small;
-            }
-            .Header-topIcon {
-                display: none;
-            }
-        }
-
-        @media only screen and (min-width: $header-wrapper-max-width) {
-            padding: 0;
-            height: inherit;
-            margin-left: $spacing-unit;
         }
     }
 
@@ -138,39 +103,8 @@ $header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.05) !default;
                 display: block;
             }
 
-            @media only screen and (min-width: $breakpoint-small) {
-                color: $header-color-text;
-                display: flex;
-                flex-flow: row-reverse;
-                margin-left: $spacing-unit;
-            }
-        }
-
-        a:last-child {
-            @media only screen and (min-width: $breakpoint-small) {
-                margin-left: 15px;
-                padding-left: 0;
-
-                span {
-                    display: none;
-                }
-                img {
-                    display: inline;
-                }
-            }
-        }
-
-        @media only screen and (min-width: $breakpoint-small) {
-            background: transparent;
-            box-shadow: none;
-            display: flex;
-            font-size: $font-size-large;
-            justify-content: flex-end;
-            justify-self: center;
-            text-align: right;
-
-            a img {
-                display: none;
+            &:first-child + a {
+              display: none;
             }
         }
     }
@@ -178,10 +112,5 @@ $header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.05) !default;
     &-lowerIcon {
         height: $header-icon-size;
         margin-bottom: $spacing-unit-tiny;
-
-        @media only screen and (min-width: $breakpoint-small) {
-            color: $color-content-text;
-            margin-left: $spacing-unit-small;
-        }
     }
 }

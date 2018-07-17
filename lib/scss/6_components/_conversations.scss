@@ -222,6 +222,11 @@ $conversation-card-button-border-radius: 50% !default;
     max-width: $header-wrapper-max-width;
     padding: 0;
 
+    .up-bounds {
+      width: 100% !important;
+      height: auto !important;
+    }
+
     > * {
         padding: $spacing-unit;
     }
@@ -327,6 +332,8 @@ $conversation-card-button-border-radius: 50% !default;
     padding: $spacing-unit + $spacing-unit-small;
     margin: 0 auto;
     max-width: $page-content-width-max;
+    min-height: 410px !important;
+    width: 100% !important;
 
     i.fa {
         background: $color-primary-text;

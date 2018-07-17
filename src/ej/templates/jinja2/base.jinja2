@@ -43,6 +43,7 @@
         <script src="/static/js/main.js" defer></script>
         <script src="/static/js/hicontrast.js"></script>
         <script src="/static/js/specific-pages.js"></script>
+        <script src="/static/js/fontScale.js" defer></script>
         {% endblock javascript %}
 
         <!-- Favicons -->
@@ -76,12 +77,12 @@
         <meta name="twitter:title" content="EJ Platform - Consultas de opinião">
 
         <!-- Open Graph general (Facebook, Pinterest & Google+) -->
-        <meta property="og:title" content="{{ title }}">
+        <meta property="og:title" content="{{ title|default(_('EJ - A platform of social participacion.')) }}">
         <meta property="og:image" content="/static/img/logo/logo.svg">
         <meta property="og:image:width" content="1200">
         <meta property="og:image:height" content="630">
         <meta property="og:url" content="https://ejplatform.org/">
-        <meta property="og:site_name" content="{{ title }}">
+        <meta property="og:site_name" content="EJ - Empurrando Juntos!">
         <meta property="og:locale" content="pt_BR">
         <meta property="og:type" content="website">
         <meta property="fb:app_id" content="1757744567588794">
@@ -178,7 +179,8 @@
             }
             window.onload = function() {
                 checkHicontrast();
-                runRemoteScripts();               
+                runRemoteScripts();
+                checkFontSize();               
                 up.on('up:fragment:inserted', function(event, fragment) {
                     runRemoteScripts();
                     checkHicontrast();
