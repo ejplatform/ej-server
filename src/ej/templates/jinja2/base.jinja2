@@ -41,6 +41,8 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js" defer></script>
         <script src="/static/js/jquery-ui/jquery-ui.min.js" defer></script>
         <script src="/static/js/main.js" defer></script>
+        <script src="/static/js/hicontrast.js"></script>
+        <script src="/static/js/specific-pages.js"></script>
         {% endblock javascript %}
 
         <!-- Favicons -->
@@ -126,18 +128,6 @@
     {% block modal %}{% endblock modal %}
 
     {% block javascript_body %}
-
-        <!-- hicontrast mode -->
-        <script>
-            let checkHicontrast = function() {
-                let bodyDiv = document.getElementsByTagName('body')[0];
-                
-                if(localStorage.hicontrast == "true" && bodyDiv.className.indexOf("hicontrast") == -1){
-                    bodyDiv.className += " hicontrast";
-                }            
-            }
-        </script>
-
         <!-- Google Analytics -->
         <script defer>
             (function (i, s, o, g, r, a, m) {
@@ -188,10 +178,11 @@
             }
             window.onload = function() {
                 checkHicontrast();
-                runRemoteScripts();                
+                runRemoteScripts();               
                 up.on('up:fragment:inserted', function(event, fragment) {
                     runRemoteScripts();
                     checkHicontrast();
+                    checkSpecificPages(fragment);
                 });
             }
         </script>
