@@ -117,6 +117,9 @@ class MissionViewSet(viewsets.ViewSet):
             if (uid == str(receipt.user.id)):
              status["status"] = receipt.status
 
+        if (mission.get_blocked(mission, user)):
+            status["status"] = "blocked"
+
         return Response(status)
 
     def statistics(self, request, pk):
