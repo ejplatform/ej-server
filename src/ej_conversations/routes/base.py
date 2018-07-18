@@ -1,7 +1,7 @@
 from django.core.exceptions import ValidationError
+from django.utils.translation import ugettext_lazy as _
 from django.http import HttpResponseServerError
 from django.urls import reverse
-from django.utils.translation import ugettext_lazy as _
 
 from boogie import rules
 from boogie.rules import proxy_seq
@@ -14,8 +14,7 @@ from ..models import Conversation
 def conversation_list(request, owner=None):
     user = request.user
     if owner:
-        kwargs = {'owner': owner}
-        create_url = reverse('user-conversation:create', kwargs=kwargs)
+        create_url = reverse('user-conversation:create')
         conversations = Conversation.objects.filter(author=owner)
     else:
         create_url = reverse('conversation:create')
@@ -26,8 +25,11 @@ def conversation_list(request, owner=None):
         'can_add_conversation': user.has_perm('ej_conversations.can_add_conversation'),
         'owner': owner,
     }
+    board_url = ''
+    if not user.is_anonymous and user.board_name:
+        board_url = '/' + user.board_name + '/'
 
-    if request.path == '/' + user.username + '/conversations/':
+    if request.path == board_url:
         clist['add_link'] = a(_('Add new conversation'), href=create_url)
     else:
         clist['add_link'] = ''

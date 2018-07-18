@@ -1,7 +1,7 @@
 import pytest
 from django.core.exceptions import ValidationError
 
-from ej_users.models import User
+from ej_users.models import User, username
 
 
 class TestUserManager:
@@ -20,3 +20,20 @@ class TestUserManager:
         # Conflict with other urls
         with pytest.raises(ValidationError):
             print(User.objects.create_user('conversations', 'me@server.com', '1234', name='name'))
+
+    def test_can_generate_username_with_same_name(self, db):
+        username_firstname = username('Name Name', 'name@server.com')
+        user = User.objects.create_user(username_firstname, 'name@server.com', '123')
+        assert user.username == 'name'
+
+        username_email = username('Name Name', 'name2@server.com')
+        user = User.objects.create_user(username_email, 'name2@server.com', '123')
+        assert user.username == 'name2'
+
+        username_by_name_combination = username('Name Name', 'name@server.com')
+        user = User.objects._create_user(username_by_name_combination, 'name@server.com', '123')
+        assert user.username == 'namename'
+
+        username_by_email = username('Name Name', 'name@server.com')
+        user = User.objects.create_user(username_by_email, 'name@server.com', '123')
+        assert user.username == 'name1'

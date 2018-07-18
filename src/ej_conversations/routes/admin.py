@@ -2,6 +2,8 @@ from django.http import Http404
 from django.shortcuts import redirect
 from django.utils.translation import ugettext_lazy as _
 
+from boogie import rules
+
 from . import urlpatterns, conversation_url
 from .. import forms, models
 
@@ -12,17 +14,29 @@ def create(request, owner=None):
     if owner and owner != request.user:
         raise Http404
 
+    if rules.test_rule('ej_conversations.has_conversation', request.user):
+        Form = forms.ConversationForm
+    else:
+        Form = forms.FirstConversationForm
+
     if request.method == 'POST':
-        form = forms.ConversationForm(request.POST)
+        form = Form(request.POST)
         if form.is_valid():
+            try:
+                request.user.board_name = form.cleaned_data['board_name']
+                request.user.save()
+            except KeyError:
+                pass
+
             conversation = form.save(commit=False)
             conversation.author = request.user
             conversation.save()
+
             for tag in form.cleaned_data['tags']:
                 conversation.tags.add(tag)
             return redirect(conversation.get_absolute_url())
     else:
-        form = forms.ConversationForm()
+        form = Form()
 
     return {
         'content_title': _('Create conversation'),
