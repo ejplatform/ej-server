@@ -1,7 +1,10 @@
 import numpy as np
 import pandas as pd
+import csv
 from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _, ugettext as __
+from django.http import HttpResponse
+from django.shortcuts import redirect
 
 from boogie.router import Router
 from boogie.rules import proxy_seq
@@ -28,7 +31,7 @@ User = get_user_model()
 
 
 @urlpatterns.route(conversation_url)
-def index(conversation):
+def index(request, conversation):
     statistics = conversation.statistics()
     votes = get_raw_votes(conversation)
     comments = comments_table(conversation, votes)
@@ -39,19 +42,27 @@ def index(conversation):
         comment_table=cluster_comments_table,
         size=lambda x: x.users.count(),
     )
+    if request.GET.get('action') == 'generate_csv':
+        response = HttpResponse(content_type='text/csv')
+        filename = 'filename="' + conversation.title + '.csv"'
+        response['Content-Disposition'] = 'attachment;' + filename
 
-    return {
-        'page_title': _('Report'),
-        'content_title': hyperlink(conversation),
-        'conversation': conversation,
-        'statistics': statistics,
-        'vote_data': map_to_table(statistics['votes']),
-        'comment_data': map_to_table(statistics['comments']),
-        'comments_table': df_to_table(comments),
-        'participants_table': df_to_table(participants),
-        'clusters': clusters,
-    }
-
+        writer = csv.writer(response)
+        writer.writerows(map_to_table(statistics['votes'].append('votes')))
+        writer.writerows(map_to_table(statistics['comments'].append('comments')))
+    else:
+        response = {
+            'page_title': _('Report'),
+            'content_title': hyperlink(conversation),
+            'conversation': conversation,
+            'statistics': statistics,
+            'vote_data': map_to_html_table(statistics['votes']),
+            'comment_data': map_to_html_table(statistics['comments']),
+            'comments_table': df_to_table(comments),
+            'participants_table': df_to_table(participants),
+            'clusters': clusters,
+        }
+    return response
 
 @urlpatterns.route(conversation_url + 'clusters/')
 def clusters(conversation):
@@ -101,15 +112,19 @@ PC_COLUMNS = [
 
 def map_to_table(data):
     array = np.array(list(data.items())).T
+    return array
+
+def map_to_html_table(data):
+    array = map_to_table(data)
     cols, body = array
     return html_table([body], columns=[__(col) for col in cols], class_='ReportTable table')
-
 
 def df_to_table(df, pc=True):
     if pc:
         for col in PC_COLUMNS:
             if col in df:
                 df[col] = to_pc(df[col])
+    print(df)
     return render_dataframe(df, col_display=COLUMN_NAMES, class_='table long')
 
 
