@@ -8,12 +8,12 @@ from boogie import rules
 from boogie.apps.users.models import AbstractUser
 from boogie.rest import rest_api
 from .manager import UserManager
-from ej_conversations.models import Conversation
+
 
 fake = Factory.create('pt-BR')
 
 
-@rest_api(['id', 'username', 'display_name', 'board_name'])
+@rest_api(['id', 'username', 'display_name', 'board_name', 'favorite_conversations'])
 class User(AbstractUser):
     """
     Default user model for EJ platform.
@@ -38,7 +38,9 @@ class User(AbstractUser):
         )
     )
     objects = UserManager()
-    favorite_conversations = models.ManyToManyField(Conversation)
+    favorite_conversations = models.ManyToManyField(
+        'ej_conversations.Conversation'
+    )
 
     @property
     def profile(self):
