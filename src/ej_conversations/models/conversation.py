@@ -225,6 +225,9 @@ class Conversation(TimeStampedModel, StatusModel):
         else:
             return default
 
+    def is_user_favorite(self, user):
+        return self.user_set.filter(id=user.id).exists()
+
 
 
 def vote_count(conversation, which=None):

@@ -25,7 +25,24 @@
                 {% endif %}
             </div>
             <h1>{{ conversation.text }}</h1>
+
             <ul class="ConversationDetail-statistics">
+              {% if user.is_authenticated %}
+                  <li>
+                    <form method="post" class="Favorite-conversation" id="Favorite-form">
+                      {{ csrf_input }}
+                      <input type="hidden" name="action" value="favorite">
+                      <button type="submit" form="Favorite-form">
+                        <i class="fa fa-start">
+                      </button>
+                      {% if conversation.is_user_favorite(user) %}
+                        </i> <span>{{ _('É favorita, clique p/ retirar') }}</span>
+                      {% else %}
+                        </i> <span>{{ _('Não é favorita, clique p/ acrescentar') }}</span>
+                      {% endif %}
+                    </form>
+                  </li>
+                {% endif %}
                 <li><i class="fa fa-comment"></i> {{ gettext('%(count)s comments', count=conversation.comments.count()) }}</li>
                 <li><i class="fa fa-sliders-h"></i> {{ gettext('%(count)s votes', count=conversation.votes.count()) }}</li>
             </ul>

@@ -9,10 +9,11 @@ from boogie.apps.users.models import AbstractUser
 from boogie.rest import rest_api
 from .manager import UserManager
 
+
 fake = Factory.create('pt-BR')
 
 
-@rest_api(['id', 'username', 'display_name', 'board_name'])
+@rest_api(['id', 'username', 'display_name', 'board_name', 'favorite_conversations'])
 class User(AbstractUser):
     """
     Default user model for EJ platform.
@@ -37,6 +38,9 @@ class User(AbstractUser):
         )
     )
     objects = UserManager()
+    favorite_conversations = models.ManyToManyField(
+        'ej_conversations.Conversation'
+    )
 
     @property
     def profile(self):
@@ -47,6 +51,18 @@ class User(AbstractUser):
         if not self.display_name:
             self.display_name = random_name()
         super().save(*args, **kwargs)
+
+    def clean(self):
+        super().clean()
+        if not rules.test_rule('auth.valid_username', self.username):
+            error = {'username': _('invalid username: %s') % self.username}
+            raise ValidationError(error)
+
+    def update_favorite_conversation_status(self, conversation):
+        if self.favorite_conversations.filter(id=conversation.id).exists():
+            self.favorite_conversations.remove(conversation)
+        else:
+            self.favorite_conversations.add(conversation)
 
     class Meta:
         swappable = 'AUTH_USER_MODEL'
