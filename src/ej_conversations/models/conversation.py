@@ -85,8 +85,8 @@ class Conversation(TimeStampedModel, StatusModel):
     class Meta:
         ordering = ['created']
         permissions = (
-            ('is_publisher', _('Can publish promoted conversations')),
-            ('is_moderator', _('Can moderate comments in any conversation')),
+            ('can_publish', _('Can publish promoted conversations')),
+            ('can_moderate', _('Can moderate comments in any conversation')),
         )
 
     @property
@@ -224,6 +224,10 @@ class Conversation(TimeStampedModel, StatusModel):
             raise Comment.DoesNotExist(msg)
         else:
             return default
+
+    def is_user_favorite(self, user):
+        return self.user_set.filter(id=user.id).exists()
+
 
 
 def vote_count(conversation, which=None):

@@ -155,16 +155,14 @@ def can_edit_conversation(user, conversation):
     Can edit a given conversation.
 
     * User is conversation author
-    * OR User has explict permission to change conversations
     * OR Conversation is promoted and user can create/edit promoted conversations
     """
-    if conversation is not None and user == conversation.author:
+    if conversation is None:
+        return False
+    elif user == conversation.author:
         return True
-    elif user.has_perm('ej_conversations.can_change_conversation'):
-        return True
-    elif (conversation is not None and
-          (conversation.status == conversation.STATUS.promoted
-           and user.has_perm('ej_conversations.is_publisher'))):
+    elif (conversation.status == conversation.STATUS.promoted
+          and user.has_perm('ej_conversations.can_publish')):
         return True
     return False
 
@@ -172,12 +170,12 @@ def can_edit_conversation(user, conversation):
 @rules.register_perm('ej_conversations.can_moderate_conversation')
 def can_moderate_conversation(user, conversation):
     """
-    Can edit a given conversation.
+    Can moderate a given conversation.
 
     * User can edit conversation
     * OR user is an moderator (explicit admin permission)
     """
     return (
         can_edit_conversation(user, conversation)
-        or user.has_perm('ej_conversations.is_moderator')
+        or user.has_perm('ej_conversations.can_moderate')
     )
