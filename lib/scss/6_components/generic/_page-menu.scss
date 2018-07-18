@@ -87,4 +87,11 @@ $nav-menu-ul-padding: 0 !default;
         }
     }
 
+    &-Accessibility {
+        display: none;
+        >li {
+            margin-left: $spacing-unit;
+        }
+    }
+    
 }

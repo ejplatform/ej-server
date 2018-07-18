@@ -24,20 +24,120 @@ Local development (virtualenv)
 EJ platform **requires** Python 3.6 + the development headers. Please install
 those packages using your distro package manager.
 
+Install Python 3.6.5
+====================
+
+Ubuntu 14.04 to 16.04
+---------------------
+
 If you are using Ubuntu 14.04 to 16.04, you can use Felix Krull's deadsnakes PPA at https://launchpad.net/~deadsnakes/+archive/ubuntu/ppa::
 
     sudo add-apt-repository ppa:deadsnakes/ppa
     sudo apt-get update
     sudo apt-get install python3.6-dev
 
-For Ubuntu 16.10 and later, Python 3.6 install it from the universe repository::
+Ubuntu 16.10 and 17.04
+----------------------
+For Ubuntu 16.10 and 17.04 do not come with Python 3.6 by default, but it is in the Universe repository, You should be able to install it with the following commands::
 
     sudo apt-get update
     sudo apt-get install python3.6-dev
+    
+Linux Mint
+----------
+Mint and Ubuntu use the same package management system, which frequently makes life easier. You can follow the instructions above for Ubuntu 14.04. The “deadsnakes” PPA works with Mint.
 
+Debian
+------
+We found sources that indicated that the Ubuntu 16.10 method would work for Debian, but we never found a path to get it to work on Debian 9. Instead, we ended up making Python from source as listed below.
+
+Debian 9
+--------
+
+Step 1: Download the Source Code::
+
+$ wget https://www.python.org/ftp/python/3.6.5/Python-3.6.5.tgz
+
+Step 2: Prepare Your System::
+
+1. The first step you should take when doing an operation like this is to update the system packages on your machine before you start. On Debian, this is what that looks like::
+
+    $ sudo apt-get update
+    $ sudo apt-get upgrade
+
+2. Next, we want to make sure the system has the tools needed to build Python. There are a bunch of them and you might already have some, but that’s fine. I’ve listed them all in one command line, but you can break the list into shorter commands by just repeating the sudo apt-get install -y portion:
+
+
+- For apt-based systems (like Debian, Ubuntu, and Mint)::
+
+    $ sudo apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev  libncursesw5-dev xz-utils tk-dev
+    
+- For yum-based systems (like CentOS)::
+
+    $ sudo yum -y groupinstall development
+    $ sudo yum -y install zlib-devel
+    
+Step 3: Build Python
+
+1. Once you have the prerequisites and the tar file, you can unpack the source into a directory. Note that the following command will create a new directory called Python-3.6.5 under the one you are in::
+
+    $ tar xvf Python-3.6.5.tgz
+    $ cd Python-3.6.5
+
+2. Now you need to run the ./configure tool to prepare the build::
+
+    $ ./configure --enable-optimizations --with-ensurepip=install
+
+3. Next, you build the Python programs using make. The -j option simply tells make to split the building into parallel steps to speed up the compilation. Even with the parallel builds, this step can take a several minutes::
+
+    $ make -j 8
+    
+4. Then, you’ll want to install your new version of Python. You’ll use the altinstall target here in order to not overwrite the system’s version of Python. Since you’re installing Python into /usr/bin, you’ll need to run as root::
+
+    $ sudo make altinstall
+    
+CentOS
+------
+The IUS Community does a nice job of providing newer versions of software for “Enterprise Linux” distros (i.e. Red Hat Enterprise and CentOS). You can use their work to help you install Python 3.
+
+To install, you should first update your system with the yum package manager::
+
+    $ sudo yum update
+    $ sudo yum install yum-utils
+    
+You can then install the CentOS IUS package which will get you up to date with their site::
+
+    $ sudo yum install https://centos7.iuscommunity.org/ius-release.rpm
+    
+Finally you can then install Python and Pip::
+
+    $ sudo yum install python36u
+    $ sudo yum install python36u-pip
+   
+Fedora
+------
+If the python3 installed on your version is not 3.6, you can use the following command to install it::
+
+    $ sudo dnf install python36
+
+Arch Linux
+----------
+Arch Linux is fairly aggressive about keeping up with Python releases. It is likely you already have the latest version. If not, you can use this command::
+
+    $ packman -S python
+   
+Verify Your Python Install
+--------------------------
+
+Finally, you can test out your new Python version::
+
+    $ python3.6 -V
+
+Manual Installation Environment
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 First install virtualenvwrapper in your machine (``sudo apt-get install virtualenvwrapper`` on Debian based distributions).
-Clone this repo and create a virtual environment using Python 3.6+::
+Clone this repo and create a virtual environment using Python 3.6.5::
 
     $ git clone http://github.com/ejplatform/ej-server/
     $ mkvirtualenv ej -p /usr/bin/python3.6

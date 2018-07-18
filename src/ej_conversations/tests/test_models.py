@@ -3,6 +3,7 @@ from django.core.exceptions import ValidationError
 
 from ej_conversations import create_conversation
 from ej_conversations.models import Vote, Choice
+from ej_users.models import User
 
 
 class TestConversation:
@@ -27,6 +28,13 @@ class TestConversation:
     def test_create_conversation(self, user):
         conversation = create_conversation('what?', 'test', user, commit=False)
         assert conversation.author == user
+
+    def test_can_get_conversations_by_board_url(self, api, db):
+        user = User.objects.create_user('name', 'name@server.com', '123')
+        user.board_name = 'name'
+        user.save()
+        board_url = '/' + user.board_name + '/'
+        api.get(board_url, raw=True).status_code == 200
 
 
 class TestVote:

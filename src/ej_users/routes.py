@@ -12,6 +12,7 @@ from rest_framework.authtoken.models import Token
 
 from boogie.router import Router
 from ej_users import forms
+from ej_users import models
 
 User = get_user_model()
 
@@ -34,9 +35,9 @@ def register(request):
         form = forms.RegistrationForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
-            username = data['username']
             name, email, password = data['name'], data['email'], data['password']
             try:
+                username = models.username(name, email)
                 user = User.objects.create_user(username, email, password, name=name)
                 log.info(f'user {user} ({email}) successfully created')
             except IntegrityError as ex:

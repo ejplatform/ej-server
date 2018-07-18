@@ -6,6 +6,7 @@ from django.utils.timezone import now
 
 from boogie import rules
 from ej_users.models import User
+from ej_conversations.models import Conversation
 
 
 #
@@ -41,6 +42,20 @@ def is_personal_conversations_enabled():
     Check global config to see if personal conversations are allowed.
     """
     return getattr(settings, 'EJ_CONVERSATIONS_ALLOW_PERSONAL_CONVERSATIONS', True)
+
+
+#
+# Conversations
+#
+@rules.register_rule('ej_conversations.has_conversation')
+def has_conversation(user):
+    """
+    Verify if a user has any conversation.
+    """
+    if Conversation.objects.filter(author=user).count() > 0:
+        return True
+    else:
+        return False
 
 
 #

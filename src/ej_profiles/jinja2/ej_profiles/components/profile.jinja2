@@ -13,7 +13,6 @@
     </div>
 {% endmacro %}
 
-
 {% macro profile_detail(profile, conversations, info='profile', javascript_enabled='') %}
     <div class="Profile">
         <img class="Profile-image" src="{{ profile.image_url }}">
@@ -100,37 +99,35 @@
 {% endmacro %}
 
 {% macro profile_trophies(profile) %}
+
     <div class="Profile-info">
-        <ul class='trophies'>
+        <ul class='trophies' id='trophies'>
             {# {% for badge in profile.badges() %}
                 <li>
                     <span class='amount'>{{ badge }}</span>
                 </li>
             {% endfor %} #}
             <li>
-            <img src="/static/img/icons/icon_trofeu.svg">
-                <span class='trophy'>
-                    nome do trofeu
-                </span>
+                <img class="blank-trophy">
+                <span class='trophy'>nome do trofeu</span>
             </li>
             <li>
-                <img src="/static/img/icons/icon_trofeu.svg">
-                <span class='trophy'>
-                    nome do trofeu
-                </span>
+                <img class="blank-trophy">
+                <span class='trophy'>nome do trofeu</span>
             </li>
             <li>
-                <img src="/static/img/icons/icon_trofeu.svg">
-                <span class='trophy'>
-                    nome do trofeu
-                </span>
+                <img class="blank-trophy">
+                <span class='trophy'>nome do trofeu</span>
             </li>
             <li>
-                <img src="/static/img/icons/icon_trofeu.svg">
-                <span class='trophy'>
-                    nome do trofeu
-                </span>
+                <img class="blank-trophy">
+                <span class='trophy'>nome do trofeu</span>
             </li>
+
+            <script>
+                fillTrophies();
+            </script>
+
             <button class="Button" type="submit">{{ _('See All') }}</button>
         </ul>
     </div>

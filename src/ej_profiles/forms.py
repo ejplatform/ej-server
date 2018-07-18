@@ -15,7 +15,7 @@ class ProfileForm(ModelForm):
             'gender', 'race',
             'political_activity', 'biography',
             'age', 'occupation',
-            'image',
+            'image'
         ]
 
 
