@@ -1,17 +1,17 @@
 import logging
-
 from django.db import models
-from ej_users.models import User
-from ej_trophies.models.trophy import Trophy
-from ej_trophies.models.user_trophy import UserTrophy
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+from ej_users.models import User
+from ej_trophies.models.trophy import Trophy
+from ej_trophies.models.user_trophy import UserTrophy
+from .mixins import MissionMixin
 
 def mission_directory_path(instance, filename):
     return 'uploads/mission_{0}/{1}'.format(instance.mission.id, filename)
 
-class Mission(models.Model):
+class Mission(MissionMixin, models.Model):
 
     title = models.CharField(max_length=100)
     description = models.TextField(max_length=1000)
