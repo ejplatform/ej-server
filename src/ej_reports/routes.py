@@ -4,7 +4,6 @@ import csv
 from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _, ugettext as __
 from django.http import HttpResponse
-from django.shortcuts import redirect
 
 from boogie.router import Router
 from boogie.rules import proxy_seq
@@ -64,6 +63,7 @@ def index(request, conversation):
         }
     return response
 
+
 @urlpatterns.route(conversation_url + 'clusters/')
 def clusters(conversation):
     return {
@@ -114,10 +114,12 @@ def map_to_table(data):
     array = np.array(list(data.items())).T
     return array
 
+
 def map_to_html_table(data):
     array = map_to_table(data)
     cols, body = array
     return html_table([body], columns=[__(col) for col in cols], class_='ReportTable table')
+
 
 def df_to_table(df, pc=True):
     if pc:
