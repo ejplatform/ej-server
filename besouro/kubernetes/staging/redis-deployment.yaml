@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: besouro-redis
+  labels:
+    app: besouro
+spec:
+  ports:
+    - port: 6379
+  selector:
+    app: besouro
+    tier: redis
+  clusterIP: None
+---
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: besouro-redis
+  labels:
+    app: besouro
+spec:
+  selector:
+    matchLabels:
+      app: besouro
+      tier: redis
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: besouro
+        tier: redis
+    spec:
+      containers:
+      - image: redis:3
+        name: redis
+        imagePullPolicy: "Always"
+        ports:
+        - containerPort: 6379
+          name: redis

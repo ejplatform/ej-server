@@ -23,7 +23,8 @@ class Profile(models.Model):
     race = EnumField(Race, _('Race'), default=Race.UNDECLARED)
     gender = EnumField(Gender, _('Gender identity'), default=Gender.UNDECLARED)
     gender_other = models.CharField(_('User provided gender'), max_length=50, blank=True)
-    age = models.IntegerField(_('Age'), null=True, blank=True)
+    age = models.IntegerField(_('Age'), blank=True, default=0)
+    phone = models.CharField(_('Phone'), blank=True, max_length=50)
     country = models.CharField(_('Country'), blank=True, max_length=50)
     state = models.CharField(_('State'), blank=True, max_length=140)
     city = models.CharField(_('City'), blank=True, max_length=140)
@@ -80,7 +81,7 @@ class Profile(models.Model):
 
     @property
     def is_filled(self):
-        fields = ('race', 'age', 'country', 'state', 'city', 'biography',
+        fields = ('race', 'age', 'country', 'state', 'city', 'biography', 'phone',
                   'occupation', 'political_activity', 'has_image', 'gender_description')
         return bool(all(getattr(self, field) for field in fields))
 
@@ -93,7 +94,7 @@ class Profile(models.Model):
         registered profile fields.
         """
 
-        fields = ['city', 'country', 'occupation', 'age', 'gender', 'race', 'political_activity', 'biography']
+        fields = ['city', 'country', 'occupation', 'age', 'phone', 'gender', 'race', 'political_activity', 'biography']
         field_map = {field.name: field for field in self._meta.fields}
         result = []
         for field in fields:

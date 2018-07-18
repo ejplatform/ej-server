@@ -1,0 +1,15 @@
+# This docker-compose file is not designed to run services
+# Usage:
+#   sudo docker-compose build
+#   sudo docker-compose push
+
+version: "3.6"
+
+services:
+  base:
+    image: besouro/ej-server:base
+    build:
+      context: ../../../
+      dockerfile: ./besouro/docker/base/Dockerfile
+      cache_from:
+        - besouro/ej-server:base

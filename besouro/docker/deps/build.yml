@@ -1,0 +1,15 @@
+# This docker-compose file is not designed to run services
+# Usage:
+#   sudo docker-compose -f build.yml build
+#   sudo docker-compose -f build.yml push
+
+version: "3.6"
+
+services:
+  deps:
+    image: besouro/ej-server:deps
+    build:
+      context: ../../../
+      dockerfile: ./besouro/docker/deps/Dockerfile
+      cache_from:
+        - besouro/ej-server:deps

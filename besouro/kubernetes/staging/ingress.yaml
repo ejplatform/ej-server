@@ -1,0 +1,50 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: besouro-ingress
+  labels:
+    app: besouro
+  annotations:
+    kubernetes.io/ingress.global-static-ip-name: besouro-ingress
+spec:
+  rules:
+  - host: api.dev.besouro.ejplatform.org
+    http:
+      paths:
+      - backend:
+          serviceName: besouro-ej-server
+          servicePort: 5000
+        path: /api/v1
+      - backend:
+          serviceName: besouro-ej-server
+          servicePort: 5000
+        path: /rest-auth
+      - backend:
+          serviceName: besouro-ej-server
+          servicePort: 5000
+        path: /static
+      - backend:
+          serviceName: besouro-ej-server
+          servicePort: 5000
+        path: /media
+  - host: dev.besouro.ejplatform.org
+    http:
+      paths:
+      - backend:
+          serviceName: besouro-app
+          servicePort: 80
+  - host: admin.dev.besouro.ejplatform.org
+    http:
+      paths:
+      - backend:
+          serviceName: besouro-ej-server
+          servicePort: 5000
+        path: /admin
+      - backend:
+          serviceName: besouro-ej-server
+          servicePort: 5000
+        path: /static
+      - backend:
+          serviceName: besouro-ej-server
+          servicePort: 5000
+        path: /media

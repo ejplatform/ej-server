@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-26 11:33+0000\n"
+"POT-Creation-Date: 2018-07-04 19:54+0000\n"
 "PO-Revision-Date: 2018-06-13 10:33-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: \n"
@@ -18,146 +18,6 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "Generated-By: Babel 2.5.3\n"
 "X-Generator: Poedit 2.0.6\n"
-
-#: local/vendor/django-boogie/src/boogie/apps/users/models.py:23
-#: local/vendor/django-boogie/src/boogie/models/abstract/user.py:64
-#: src/ej_clusters/models.py:122 src/ej_clusters/models.py:179
-#: src/ej_clusters/routes.py:125 src/ej_configurations/models.py:127
-#: src/ej_reports/routes.py:94
-msgid "Name"
-msgstr "Nome"
-
-#: local/vendor/django-boogie/src/boogie/apps/users/models.py:26
-#, fuzzy
-msgid "User's full name"
-msgstr "Nome completo do usuário"
-
-#: local/vendor/django-boogie/src/boogie/fields/default_fields.py:47
-msgid "slug"
-msgstr ""
-
-#: local/vendor/django-boogie/src/boogie/fields/default_fields.py:53
-msgid "name"
-msgstr "nome"
-
-#: local/vendor/django-boogie/src/boogie/fields/default_fields.py:59
-msgid "title"
-msgstr ""
-
-#: local/vendor/django-boogie/src/boogie/fields/default_fields.py:65
-msgid "description"
-msgstr "descrição"
-
-#: local/vendor/django-boogie/src/boogie/fields/default_fields.py:69
-msgid "Conscise description used on listings."
-msgstr "Descrição concisa utilizada em listas."
-
-#: local/vendor/django-boogie/src/boogie/fields/default_fields.py:74
-msgid "detailed description"
-msgstr "descrição detalhada"
-
-#: local/vendor/django-boogie/src/boogie/fields/default_fields.py:77
-msgid "Detailed description of object."
-msgstr "Descrição detalhada do objeto."
-
-#: local/vendor/django-boogie/src/boogie/fields/enum_field.py:24
-msgid "An enumeration field"
-msgstr "Um campo de enumeração"
-
-#: local/vendor/django-boogie/src/boogie/models/abstract/user.py:55
-#: src/ej_profiles/models.py:105 src/ej_users/forms.py:46
-#: src/ej_users/forms.py:48
-msgid "E-mail"
-msgstr "Email"
-
-#: local/vendor/django-boogie/src/boogie/models/abstract/user.py:59
-msgid ""
-"Users can register additional e-mail addresses. This is the main e-mail "
-"address which is used for login."
-msgstr ""
-"Usuários podem registrar e-mails adicionais. Este é o e-mail principal "
-"utilizado para login."
-
-#: local/vendor/django-boogie/src/boogie/models/abstract/user.py:67
-msgid "Full name of the user."
-msgstr "Nome completo do usuário."
-
-#: local/vendor/django-boogie/src/boogie/models/abstract/user.py:71
-msgid "Alias"
-msgstr "Apelido"
-
-#: local/vendor/django-boogie/src/boogie/models/abstract/user.py:74
-msgid "Public alias used to identify the user."
-msgstr ""
-
-#: local/vendor/django-boogie/src/boogie/models/abstract/user.py:78
-msgid "staff status"
-msgstr ""
-
-#: local/vendor/django-boogie/src/boogie/models/abstract/user.py:81
-msgid "Designates whether the user can log into the admin site."
-msgstr ""
-
-#: local/vendor/django-boogie/src/boogie/models/abstract/user.py:85
-msgid "active"
-msgstr "ativo"
-
-#: local/vendor/django-boogie/src/boogie/models/abstract/user.py:88
-msgid ""
-"Designates whether this user should be treated as active. Unselect this "
-"instead of deleting accounts."
-msgstr ""
-
-#: local/vendor/django-boogie/src/boogie/models/abstract/user.py:93
-msgid "date joined"
-msgstr "data de ingresso"
-
-#: local/vendor/django-boogie/src/boogie/models/abstract/user.py:162
-#, fuzzy
-msgid "user"
-msgstr "{n} usuários"
-
-#: local/vendor/django-boogie/src/boogie/views/views.py:122
-#, python-format
-msgid "No %(verbose_name)s found matching the query"
-msgstr "Nenhum nome %(verbose_name)s encontrado"
-
-#: local/vendor/django-messages-courier/courier/models.py:11
-msgid "Sender"
-msgstr "Remetende"
-
-#: local/vendor/django-messages-courier/courier/models.py:12
-#: src/ej_conversations/models/conversation.py:54
-msgid "Title"
-msgstr "Título"
-
-#: local/vendor/django-messages-courier/courier/models.py:14
-msgid "Short Description"
-msgstr "Descrição curta"
-
-#: local/vendor/django-messages-courier/courier/models.py:29
-msgid "Waiting"
-msgstr "Esperando"
-
-#: local/vendor/django-messages-courier/courier/models.py:30
-msgid "Read"
-msgstr "Lido"
-
-#: local/vendor/django-messages-courier/courier/models.py:31
-msgid "Seen"
-msgstr "Visto"
-
-#: local/vendor/django-messages-courier/courier/models.py:32
-msgid "Unseen"
-msgstr "Não Visto"
-
-#: local/vendor/django-messages-courier/courier/models.py:46
-msgid "Status"
-msgstr "Status"
-
-#: local/vendor/django-messages-courier/courier/pushnotifications/providers/onesignal/models.py:15
-msgid "OneSignal Id"
-msgstr "Id OneSignal"
 
 #: src/ej/tags.py:11
 msgid "hello"
@@ -489,6 +349,12 @@ msgstr ""
 msgid "Clusters"
 msgstr "Grupos"
 
+#: src/ej_clusters/models.py:122 src/ej_clusters/models.py:179
+#: src/ej_clusters/routes.py:125 src/ej_configurations/models.py:127
+#: src/ej_reports/routes.py:94
+msgid "Name"
+msgstr "Nome"
+
 #: src/ej_clusters/models.py:126 src/ej_clusters/models.py:184
 msgid "Description"
 msgstr "Descrição"
@@ -728,6 +594,10 @@ msgstr ""
 msgid "Pending"
 msgstr "Esperando"
 
+#: src/ej_conversations/models/conversation.py:54
+msgid "Title"
+msgstr "Título"
+
 #: src/ej_conversations/models/conversation.py:57
 msgid ""
 "A short description about this conversations. This is used internally and to "
@@ -872,6 +742,10 @@ msgstr "Página {} não encontrada"
 msgid "Math"
 msgstr "Matemática"
 
+#: src/ej_missions/apps.py:7
+msgid "Missions"
+msgstr "Missões"
+
 #: src/ej_notifications/apps.py:7
 msgid "Notifications"
 msgstr "Notificações"
@@ -915,6 +789,10 @@ msgstr "Endereço"
 #: src/ej_profiles/admin.py:15
 msgid "Advanced"
 msgstr "Avançado"
+
+#: src/ej_profiles/apps.py:6
+msgid "Profiles"
+msgstr "Perfil"
 
 #: src/ej_profiles/choices.py:7 src/ej_profiles/choices.py:17
 msgid "Undeclared"
@@ -1064,6 +942,11 @@ msgstr "Atividade política"
 msgid "Image"
 msgstr "Imagem"
 
+#: src/ej_profiles/models.py:105 src/ej_users/forms.py:46
+#: src/ej_users/forms.py:48
+msgid "E-mail"
+msgstr "Email"
+
 #: src/ej_profiles/models.py:137
 msgid "Root"
 msgstr "Root"
@@ -1097,9 +980,8 @@ msgid "Missing"
 msgstr "Faltando"
 
 #: src/ej_reports/routes.py:85
-#, fuzzy
 msgid "Skipped"
-msgstr "Pular"
+msgstr "Pulado"
 
 #: src/ej_reports/routes.py:88
 msgid "Average"
@@ -1120,6 +1002,186 @@ msgstr ""
 #: src/ej_reports/routes.py:93
 msgid "Participation ratio"
 msgstr "Índice de participação"
+
+#: src/ej_trophies/admin.py:8
+msgid "Trophy definitions"
+msgstr "Definições do Troféu"
+
+#: src/ej_trophies/admin.py:11
+msgid "Icons"
+msgstr "Ícones"
+
+#: src/ej_trophies/admin.py:14
+msgid "Gamification"
+msgstr "Gamificação"
+
+#: src/ej_trophies/admin.py:17
+msgid "Requirements"
+msgstr "Requisitos"
+
+#: src/ej_trophies/admin.py:27
+msgid "Relationship"
+msgstr "Relacionamento"
+
+#: src/ej_trophies/admin.py:30
+msgid "Score"
+msgstr "Pontuação"
+
+#: src/ej_trophies/admin.py:33
+msgid "Notification"
+msgstr "Notificação"
+
+#: src/ej_trophies/apps.py:6
+msgid "Trophies"
+msgstr "Troféus"
+
+#: src/ej_trophies/models/trophy.py:32
+msgid "users"
+msgstr "usuários"
+
+#: src/ej_trophies/models/trophy.py:39
+msgid "required trophies"
+msgstr "troféus necessários"
+
+#: src/ej_trophies/models/trophy.py:43
+msgid "reference key"
+msgstr "chave de referência"
+
+#: src/ej_trophies/models/trophy.py:46
+msgid "Trophy unique key defined by human in order to manage static references"
+msgstr ""
+"Identificador único do troféu definido por um humano de forma a gerir "
+"referências estáticas"
+
+#: src/ej_trophies/models/trophy.py:50
+msgid "name"
+msgstr "nome"
+
+#: src/ej_trophies/models/trophy.py:56
+msgid "short description"
+msgstr "descrição curta"
+
+#: src/ej_trophies/models/trophy.py:59
+msgid "Explain the general steps to achieve this trophy"
+msgstr "Explique em linhas gerais os passos para conquistar este troféu"
+
+#: src/ej_trophies/models/trophy.py:63
+msgid "full description"
+msgstr "descrição completa"
+
+#: src/ej_trophies/models/trophy.py:65
+msgid "Explain all the steps to achieve this trophy and additional infos"
+msgstr ""
+"Explique todos os passos necessários para conquistar este troféu e detalhes "
+"adicionais"
+
+#: src/ej_trophies/models/trophy.py:69
+msgid "reference link"
+msgstr "link de referência"
+
+#: src/ej_trophies/models/trophy.py:71
+msgid ""
+"A general reference link. Example: A link to the page which the trophy can "
+"be earned"
+msgstr ""
+"Um link de referência genérico. Exemplo de uso: Um link para a página onde "
+"este troféu poderá ser conquistado"
+
+#: src/ej_trophies/models/trophy.py:75
+msgid "completion message"
+msgstr "mensagem de conclusão"
+
+#: src/ej_trophies/models/trophy.py:78
+msgid "Congratulations for your achievement! You are awesome!"
+msgstr "Parabéns pela sua conquista! Você é demais!"
+
+#: src/ej_trophies/models/trophy.py:79
+msgid ""
+"Trophy completion message is used to congratulate the user after the "
+"achievement of the trophy"
+msgstr ""
+"A mensagem de conclusão é utilizada para parabenizar o usuário após ter "
+"conquistado o troféu"
+
+#: src/ej_trophies/models/trophy.py:84
+msgid "icon when it is not started"
+msgstr "ícone quando não iniciado"
+
+#: src/ej_trophies/models/trophy.py:89
+msgid "icon when it is progress"
+msgstr "ícone quando em progresso"
+
+#: src/ej_trophies/models/trophy.py:94
+msgid "icon when it is complete"
+msgstr "ícone quando completo"
+
+#: src/ej_trophies/models/trophy.py:98
+msgid "score for each percent of completion"
+msgstr "pontuação para cada percentual de conclusão"
+
+#: src/ej_trophies/models/trophy.py:104
+msgid "score for completion"
+msgstr "pontuação por conclusão"
+
+#: src/ej_trophies/models/trophy.py:110
+msgid "complete on requirements satisfied?"
+msgstr "concluir quando requisitos forem satisfeitos?"
+
+#: src/ej_trophies/models/trophy.py:113
+msgid ""
+"If set as True and the trophy has required trophies associated with, the "
+"completeness will be established automatically after all requirementes "
+"satisfied"
+msgstr ""
+"Se configurado como verdadeiro e o troféu possuir 'troféus necessários' "
+"associados, a completude será estabelecida automaticamente após todos os "
+"requisitos satisfeitos"
+
+#: src/ej_trophies/models/trophy.py:117
+msgid "is active?"
+msgstr "é ativo?"
+
+#: src/ej_trophies/models/trophy.py:120
+msgid "If set as False, the trophy will not be synced with users"
+msgstr ""
+"Se configurado como falso, o troféu não será sincronizado com os usuários"
+
+#: src/ej_trophies/models/trophy.py:127
+#: src/ej_trophies/models/user_trophy.py:24
+msgid "trophy"
+msgstr "troféu"
+
+#: src/ej_trophies/models/trophy.py:128
+msgid "trophies"
+msgstr "troféus"
+
+#: src/ej_trophies/models/user_trophy.py:18
+msgid "user"
+msgstr "usuário"
+
+#: src/ej_trophies/models/user_trophy.py:28
+msgid "percentage of progress"
+msgstr "percentual de progresso"
+
+#: src/ej_trophies/models/user_trophy.py:36
+msgid "notified?"
+msgstr "notificado?"
+
+#: src/ej_trophies/models/user_trophy.py:39
+msgid "temporary field to track if the user saw the notification or not"
+msgstr "campo temporário para monitorar se o usuário viu ou não a notificação"
+
+#: src/ej_trophies/models/user_trophy.py:71
+msgid "user's trophy"
+msgstr "troféus de usuários"
+
+#: src/ej_trophies/models/user_trophy.py:72
+msgid "user's trophies"
+msgstr "troféus de usuários"
+
+#: src/ej_users/apps.py:6
+msgid "Users"
+msgstr "Usuários"
 
 #: src/ej_users/forms.py:14 src/ej_users/forms.py:49
 msgid "Password"
@@ -1167,350 +1229,270 @@ msgstr "usuário inválido: %s"
 msgid "Invalid username or password"
 msgstr "Usuário ou senha inválidos"
 
-#: src/ej/templates/jinja2/base.jinja2:8
-msgid "Empurrando Juntos"
-msgstr "Empurrando Juntos"
-
-#: src/ej/templates/jinja2/base.jinja2:68
-msgid "EJ - A platform of social participation."
-msgstr "EJ - Uma plataforma para participação social."
-
-#: src/ej/templates/jinja2/base.jinja2:111
-msgid "Please override the \"content\" block of your template!"
-msgstr ""
-
-#: src/ej/templates/jinja2/generic.jinja2:5
-msgid "Under construction!"
-msgstr ""
-
-#: src/ej/templates/jinja2/components/home.jinja2:11
-#: src/ej/templates/jinja2/components/home.jinja2:13
-msgid "Start now"
-msgstr "Começar agora!"
-
-#: src/ej/templates/jinja2/components/home.jinja2:68
-#: src/ej/templates/jinja2/components/home.jinja2:70
-msgid "Start now!"
-msgstr "Começar agora!"
-
-#: src/ej/templates/jinja2/components/generic/page_footer.jinja2:17
-msgid "Enter"
-msgstr "Entrar"
-
-#: src/ej/templates/jinja2/components/generic/page_header.jinja2:30
-msgid "Back"
-msgstr "Voltar"
-
-#: src/ej/templates/jinja2/components/generic/page_header.jinja2:38
-#: src/ej/templates/jinja2/components/generic/page_header.jinja2:45
-msgid "Navigation menu"
-msgstr "Menu de navegação"
-
-#: src/ej/templates/jinja2/components/generic/page_header.jinja2:67
-#: src/ej/templates/jinja2/components/generic/page_header.jinja2:68
-#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:13
-#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:44
-msgid "Panel"
-msgstr "Painel"
-
-#: src/ej/templates/jinja2/components/generic/page_header.jinja2:71
-#: src/ej/templates/jinja2/components/generic/page_header.jinja2:72
-#: src/ej/templates/jinja2/components/generic/page_header.jinja2:73
-#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:46
-msgid "Profile"
-msgstr "Perfil"
-
-#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:6
-msgid "About"
-msgstr "Sobre"
-
-#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:7
-msgid "FAQ"
-msgstr "Perguntas frequentes"
-
-#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:8
-#: src/ej/templates/jinja2/components/generic/page_top-header.jinja2:11
-msgid "Usage terms"
-msgstr "Termos de uso"
-
-#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:19
-msgid "Public conversations"
-msgstr "Conversas públicas"
-
-#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:22
-msgid "Your conversations"
-msgstr "Suas converas"
-
-#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:26
-msgid "Add conversation"
-msgstr "Criar conversa"
-
-#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:30
-msgid "Favorite conversations"
-msgstr "Conversas favoritas"
-
-#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:34
-msgid "Manage conversations"
-msgstr "Gerenciar conversas"
-
-#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:37
-msgid "Manage stereotypes"
-msgstr "Gerenciar estereótipos"
-
-#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:40
-msgid "Request reports"
-msgstr "Requisitar relatórios"
-
-#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:47
-msgid "Home"
-msgstr "Início"
-
-#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:54
-#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:63
-msgid "Logout"
-msgstr "Sair"
-
-#: src/ej/templates/jinja2/components/generic/page_top-header.jinja2:9
-msgid "about"
-msgstr "sobre"
-
-#: src/ej/templates/jinja2/components/generic/page_top-header.jinja2:9
-msgid "About us"
-msgstr "Sobre nós"
-
-#: src/ej/templates/jinja2/components/generic/page_top-header.jinja2:10
-msgid "frequent questions"
-msgstr "perguntas frequentes"
-
-#: src/ej/templates/jinja2/components/generic/page_top-header.jinja2:10
-msgid "Frequently asked questions"
-msgstr "Perguntas frequentes"
-
-#: src/ej/templates/jinja2/components/generic/page_top-header.jinja2:11
-msgid "usage"
-msgstr "termos de uso"
-
-#: src/ej_clusters/jinja2/ej_clusters/index.jinja2:6
-msgid "Cluster: {name}"
-msgstr "Grupo: {name}"
-
-#: src/ej_clusters/jinja2/ej_clusters/stereotype-vote.jinja2:8
-msgid "Please vote on the comments bellow to define your stereotype."
-msgstr ""
-
-#: src/ej_clusters/jinja2/ej_clusters/stereotype-vote.jinja2:12
-msgid "Register votes"
-msgstr "Votos registrados"
-
-#: src/ej_clusters/jinja2/ej_clusters/stereotype-vote.jinja2:15
-msgid ""
-"\n"
-"            This stereotype have voted on all comments.\n"
-"            "
-msgstr ""
-
-#: src/ej_clusters/jinja2/ej_clusters/stereotype-vote.jinja2:21
-msgid "Already voted"
-msgstr "Já votou"
-
-#: src/ej_clusters/jinja2/ej_clusters/stereotype-vote.jinja2:22
-msgid "The stereotype has voted in the following comments."
-msgstr ""
-
-#: src/ej_clusters/jinja2/ej_clusters/stereotype-vote.jinja2:26
-msgid "Change votes"
-msgstr "Mudar votos"
-
-#: src/ej_configurations/jinja2/configurations/fragment-list.jinja2:2
-msgid "Fragment list"
-msgstr "Lista de fragmentos"
-
-#: src/ej_configurations/jinja2/configurations/index.jinja2:2
-msgid "Site info"
-msgstr "Informações do site"
-
-#: src/ej_configurations/jinja2/configurations/styles.jinja2:3
-msgid "Styles"
-msgstr ""
-
-#: src/ej_conversations/jinja2/ej_conversations/_comment-list.jinja2:23
-msgid "No comment"
-msgstr "Sem comentários"
-
-#: src/ej_conversations/jinja2/ej_conversations/create.jinja2:9
-#: src/ej_conversations/jinja2/ej_conversations/edit.jinja2:9
-msgid "Save"
-msgstr "Salvar"
-
-#: src/ej_conversations/jinja2/ej_conversations/info.jinja2:3
-msgid "Conversation info"
-msgstr "Informações sobre a conversa"
-
-#: src/ej_conversations/jinja2/ej_conversations/components/comment-card.jinja2:10
-msgid "Approve"
-msgstr "Aprovar"
-
-#: src/ej_conversations/jinja2/ej_conversations/components/comment-card.jinja2:14
-msgid "Disapprove"
-msgstr "Discorda"
-
-#: src/ej_conversations/jinja2/ej_conversations/components/conversation-detail.jinja2:15
-msgid "Edit Conversation"
-msgstr "Editar Conversa"
-
-#: src/ej_conversations/jinja2/ej_conversations/components/conversation-detail.jinja2:29
-#, python-format
-msgid "%(count)s comments"
-msgstr "%(count)s comentários"
-
-#: src/ej_conversations/jinja2/ej_conversations/components/conversation-detail.jinja2:30
-#, python-format
-msgid "%(count)s votes"
-msgstr "%(count)s votos"
-
-#: src/ej_conversations/jinja2/ej_conversations/components/conversation-detail.jinja2:46
-msgid "Congratulations!"
-msgstr "Parabéns!"
-
-#: src/ej_conversations/jinja2/ej_conversations/components/conversation-detail.jinja2:47
-msgid "There are no comments left to vote :)"
-msgstr "Não há comentários para votar :)"
-
-#: src/ej_conversations/jinja2/ej_conversations/components/conversation-detail.jinja2:54
-msgid "You still have {n} available comments"
-msgstr "Você ainda tem {n} comentários disponíveis"
-
-#: src/ej_conversations/jinja2/ej_conversations/components/conversation-detail.jinja2:56
-msgid "Please {login} to comment on this conversation"
-msgstr "Por favor faça {login} para comentar nesta conversa"
-
-#: src/ej_conversations/jinja2/ej_conversations/components/conversation-detail.jinja2:58
-msgid "You have used all comments available in this conversation."
-msgstr "Você utilizou todos comentários disponíveis nesta conversa."
-
-#: src/ej_conversations/jinja2/ej_conversations/components/conversation-info.jinja2:37
-#, fuzzy
-msgid "Unvoted"
-msgstr "Comentário promovido?"
-
-#: src/ej_conversations/jinja2/ej_conversations/components/conversation-list.jinja2:35
-msgid "All"
-msgstr "Todos"
-
-#: src/ej_profiles/jinja2/ej_profiles/edit.jinja2:4
-#, python-format
-msgid "Edit profile: <em>%(name)s</em>"
-msgstr "Editar perfil: <em>%(name)s</em>"
-
-#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:22
-msgid "Participant Status"
-msgstr "Status do Participante"
-
-#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:27
-msgid "Info"
-msgstr "Info"
-
-#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:31
-msgid "Trophies"
-msgstr "Troféus"
-
-#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:35
-msgid "Contributions"
-msgstr "Contribuições"
-
-#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:68
-msgid "Delete profile"
-msgstr "Apagar perfil"
-
-#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:83
-msgid "Edit profile"
-msgstr "Editar perfil"
-
-#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:134
-msgid "See All"
-msgstr "Ver Todos"
-
-#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:143
-msgid "My Comments"
-msgstr "Meus Comentários"
-
-#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:152
-msgid "Opinion"
-msgstr "Opinião"
-
-#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:174
-msgid "See Conversation"
-msgstr "Ver Conversa"
-
-#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:186
-msgid "Favorite Conversations"
-msgstr "Conversas Favoritas"
-
-#: src/ej_reports/jinja2/ej_reports/index.jinja2:5
-msgid "Basic info"
-msgstr "Informações básicas"
-
-#: src/ej_reports/jinja2/ej_reports/index.jinja2:6
-msgid "Report for conversation: \"{text}\""
-msgstr "Relatório para conversa: \"{text}\""
-
-#: src/ej_reports/jinja2/ej_reports/index.jinja2:7
-msgid "Votes ({total} participants)"
-msgstr ""
-
-#: src/ej_reports/jinja2/ej_reports/index.jinja2:13
-msgid "Advanced info"
-msgstr "Informações avançadas"
-
-#: src/ej_reports/jinja2/ej_reports/index.jinja2:17
-msgid "Participants"
-msgstr "Participantes"
-
-#: src/ej_reports/jinja2/ej_reports/index.jinja2:20
-msgid "Cluster info"
-msgstr "Informação do grupo"
-
-#: src/ej_reports/jinja2/ej_reports/index.jinja2:22
-msgid "{n} users"
-msgstr "{n} usuários"
-
-#: src/ej_users/jinja2/ej_users/auth-components.jinja2:17
-#: src/ej_users/jinja2/ej_users/auth-components.jinja2:40
-#: src/ej_users/jinja2/ej_users/auth-components.jinja2:58
-msgid "Login"
-msgstr "Entrar"
-
-#: src/ej_users/jinja2/ej_users/auth-components.jinja2:20
-#: src/ej_users/jinja2/ej_users/auth-components.jinja2:37
-msgid "Register now!"
-msgstr "Registre agora!"
-
-#: src/ej_users/jinja2/ej_users/auth-components.jinja2:58
-msgid "Register"
-msgstr "Registre-se"
-
-#: src/ej_users/jinja2/ej_users/auth-components.jinja2:67
-msgid "What is passwordles login?"
-msgstr "O que é login sem senha?"
-
-#: src/ej_users/jinja2/ej_users/auth-components.jinja2:68
-msgid ""
-"Passwords are inconvenient and often insecure. We suggest our users to "
-"choose either social\n"
-"            authentication (Facebook or Twitter) or the passwordless method. "
-"In this setup, we send a password to\n"
-"            your e-mail with a special link that automatically register your "
-"account in the platform."
-msgstr ""
-
-#: src/ej_users/jinja2/ej_users/recover-password.jinja2:2
-msgid "Recover password"
-msgstr "Recuperar senha"
-
-#: src/ej_users/jinja2/ej_users/remove-account.jinja2:2
-#: src/ej_users/jinja2/ej_users/reset-password.jinja2:2
-msgid "Reset password"
-msgstr "Recriar minha senha"
+#~ msgid "Empurrando Juntos"
+#~ msgstr "Empurrando Juntos"
+
+#~ msgid "EJ - A platform of social participation."
+#~ msgstr "EJ - Uma plataforma para participação social."
+
+#~ msgid "Start now"
+#~ msgstr "Começar agora!"
+
+#~ msgid "Start now!"
+#~ msgstr "Começar agora!"
+
+#~ msgid "Enter"
+#~ msgstr "Entrar"
+
+#~ msgid "Back"
+#~ msgstr "Voltar"
+
+#~ msgid "Navigation menu"
+#~ msgstr "Menu de navegação"
+
+#~ msgid "Panel"
+#~ msgstr "Painel"
+
+#~ msgid "Profile"
+#~ msgstr "Perfil"
+
+#~ msgid "Home"
+#~ msgstr "Início"
+
+#~ msgid "Public conversations"
+#~ msgstr "Conversas públicas"
+
+#~ msgid "Your conversations"
+#~ msgstr "Suas converas"
+
+#~ msgid "Add conversation"
+#~ msgstr "Criar conversa"
+
+#~ msgid "Favorite conversations"
+#~ msgstr "Conversas favoritas"
+
+#~ msgid "Manage conversations"
+#~ msgstr "Gerenciar conversas"
+
+#~ msgid "Manage stereotypes"
+#~ msgstr "Gerenciar estereótipos"
+
+#~ msgid "Request reports"
+#~ msgstr "Requisitar relatórios"
+
+#~ msgid "About"
+#~ msgstr "Sobre"
+
+#~ msgid "FAQ"
+#~ msgstr "Perguntas frequentes"
+
+#~ msgid "Usage terms"
+#~ msgstr "Termos de uso"
+
+#~ msgid "Logout"
+#~ msgstr "Sair"
+
+#~ msgid "about"
+#~ msgstr "sobre"
+
+#~ msgid "About us"
+#~ msgstr "Sobre nós"
+
+#~ msgid "frequent questions"
+#~ msgstr "perguntas frequentes"
+
+#~ msgid "Frequently asked questions"
+#~ msgstr "Perguntas frequentes"
+
+#~ msgid "usage"
+#~ msgstr "termos de uso"
+
+#~ msgid "Cluster: {name}"
+#~ msgstr "Grupo: {name}"
+
+#~ msgid "Register votes"
+#~ msgstr "Votos registrados"
+
+#~ msgid "Already voted"
+#~ msgstr "Já votou"
+
+#~ msgid "Change votes"
+#~ msgstr "Mudar votos"
+
+#~ msgid "Fragment list"
+#~ msgstr "Lista de fragmentos"
+
+#~ msgid "Site info"
+#~ msgstr "Informações do site"
+
+#~ msgid "No comment"
+#~ msgstr "Sem comentários"
+
+#~ msgid "Save"
+#~ msgstr "Salvar"
+
+#~ msgid "Conversation info"
+#~ msgstr "Informações sobre a conversa"
+
+#~ msgid "Approve"
+#~ msgstr "Aprovar"
+
+#~ msgid "Disapprove"
+#~ msgstr "Discorda"
+
+#~ msgid "Edit Conversation"
+#~ msgstr "Editar Conversa"
+
+#~ msgid "%(count)s comments"
+#~ msgstr "%(count)s comentários"
+
+#~ msgid "%(count)s votes"
+#~ msgstr "%(count)s votos"
+
+#~ msgid "Congratulations!"
+#~ msgstr "Parabéns!"
+
+#~ msgid "There are no comments left to vote :)"
+#~ msgstr "Não há comentários para votar :)"
+
+#~ msgid "You still have {n} available comments"
+#~ msgstr "Você ainda tem {n} comentários disponíveis"
+
+#~ msgid "Please {login} to comment on this conversation"
+#~ msgstr "Por favor faça {login} para comentar nesta conversa"
+
+#~ msgid "You have used all comments available in this conversation."
+#~ msgstr "Você utilizou todos comentários disponíveis nesta conversa."
+
+#~ msgid "Unvoted"
+#~ msgstr "Não votado"
+
+#~ msgid "All"
+#~ msgstr "Todos"
+
+#~ msgid "Edit profile: <em>%(name)s</em>"
+#~ msgstr "Editar perfil: <em>%(name)s</em>"
+
+#~ msgid "Participant Status"
+#~ msgstr "Status do Participante"
+
+#~ msgid "Info"
+#~ msgstr "Info"
+
+#~ msgid "Contributions"
+#~ msgstr "Contribuições"
+
+#~ msgid "Delete profile"
+#~ msgstr "Apagar perfil"
+
+#~ msgid "Edit profile"
+#~ msgstr "Editar perfil"
+
+#~ msgid "See All"
+#~ msgstr "Ver Todos"
+
+#~ msgid "My Comments"
+#~ msgstr "Meus Comentários"
+
+#~ msgid "Opinion"
+#~ msgstr "Opinião"
+
+#~ msgid "See Conversation"
+#~ msgstr "Ver Conversa"
+
+#~ msgid "Favorite Conversations"
+#~ msgstr "Conversas Favoritas"
+
+#~ msgid "Basic info"
+#~ msgstr "Informações básicas"
+
+#~ msgid "Report for conversation: \"{text}\""
+#~ msgstr "Relatório para conversa: \"{text}\""
+
+#~ msgid "Advanced info"
+#~ msgstr "Informações avançadas"
+
+#~ msgid "Participants"
+#~ msgstr "Participantes"
+
+#~ msgid "Cluster info"
+#~ msgstr "Informação do grupo"
+
+#~ msgid "{n} users"
+#~ msgstr "{n} usuários"
+
+#~ msgid "Login"
+#~ msgstr "Entrar"
+
+#~ msgid "Register now!"
+#~ msgstr "Registre agora!"
+
+#~ msgid "Register"
+#~ msgstr "Registre-se"
+
+#~ msgid "What is passwordles login?"
+#~ msgstr "O que é login sem senha?"
+
+#~ msgid "Recover password"
+#~ msgstr "Recuperar senha"
+
+#~ msgid "Reset password"
+#~ msgstr "Recriar minha senha"
+
+#~ msgid "User's full name"
+#~ msgstr "Nome completo do usuário"
+
+#~ msgid "Conscise description used on listings."
+#~ msgstr "Descrição concisa utilizada em listas."
+
+#~ msgid "detailed description"
+#~ msgstr "descrição detalhada"
+
+#~ msgid "Detailed description of object."
+#~ msgstr "Descrição detalhada do objeto."
+
+#~ msgid "An enumeration field"
+#~ msgstr "Um campo de enumeração"
+
+#~ msgid ""
+#~ "Users can register additional e-mail addresses. This is the main e-mail "
+#~ "address which is used for login."
+#~ msgstr ""
+#~ "Usuários podem registrar e-mails adicionais. Este é o e-mail principal "
+#~ "utilizado para login."
+
+#~ msgid "Full name of the user."
+#~ msgstr "Nome completo do usuário."
+
+#~ msgid "Alias"
+#~ msgstr "Apelido"
+
+#~ msgid "date joined"
+#~ msgstr "data de ingresso"
+
+#~ msgid "No %(verbose_name)s found matching the query"
+#~ msgstr "Nenhum nome %(verbose_name)s encontrado"
+
+#~ msgid "Sender"
+#~ msgstr "Remetende"
+
+#~ msgid "Waiting"
+#~ msgstr "Esperando"
+
+#~ msgid "Read"
+#~ msgstr "Lido"
+
+#~ msgid "Seen"
+#~ msgstr "Visto"
+
+#~ msgid "Unseen"
+#~ msgstr "Não Visto"
+
+#~ msgid "Status"
+#~ msgstr "Status"
+
+#~ msgid "OneSignal Id"
+#~ msgstr "Id OneSignal"
 
 #: src/ej_conversations/jinja2/ej_conversations/components/conversation-card.jinja2:30
 msgid "Moderate Conversation"
@@ -1522,9 +1504,8 @@ msgstr "Moderar Conversa"
 #~ msgid "Access CPA panel!"
 #~ msgstr "Acesse o painel do CPA!"
 
-#, fuzzy
 #~ msgid "Unvoted comments"
-#~ msgstr "Comentário promovido?"
+#~ msgstr "Comentários não votados"
 
 #~ msgid "Talks"
 #~ msgstr "Canais"

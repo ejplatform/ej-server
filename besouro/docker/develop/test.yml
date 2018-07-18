@@ -1,0 +1,19 @@
+version: "3.6"
+
+services:
+  ej-server:
+    image: besouro/ej-server:dev
+    command: /test.sh
+    depends_on:
+      - postgres
+    env_file:
+      - ./env/ej-server.test.env
+      - ./env/postgres.test.env
+    volumes:
+      - ../../../:/app
+    working_dir: /app
+
+  postgres:
+    image: postgres:9.6
+    env_file:
+      - ./env/postgres.test.env

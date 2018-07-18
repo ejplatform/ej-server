@@ -1,0 +1,145 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: besouro-ej-server
+  labels:
+    app: besouro
+spec:
+  type: NodePort
+  selector:
+    app: besouro
+    tier: ej-server
+  ports:
+  - port: 5000
+    targetPort: 5000
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: besouro-media-pvc
+  labels:
+    app: besouro
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+---
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: besouro-ej-server
+  labels:
+    app: besouro
+spec:
+  selector:
+    matchLabels:
+      app: besouro
+      tier: ej-server
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: besouro
+        tier: ej-server
+    spec:
+      containers:
+      - image: besouro/ej-server:staging
+        name: ej-server
+        imagePullPolicy: "Always"
+        env:
+        - name: COURIER_DEFAULT_PROVIDER
+          value: onesignal
+        - name: COURIER_ONESIGNAL_APP_ID
+          valueFrom:
+            secretKeyRef:
+              name: besouro-onesignal
+              key: app_id
+        - name: COURIER_ONESIGNAL_USER_ID
+          valueFrom:
+            secretKeyRef:
+              name: besouro-onesignal
+              key: user_id
+        - name: DEBUG
+          value: 'true'
+        - name: DJANGO_ACCOUNT_ALLOW_REGISTRATION
+          value: 'True'
+        - name: DJANGO_ADMIN_URL
+          value: admin/
+        - name: DJANGO_ALLOWED_HOSTS
+          value: api.dev.besouro.ejplatform.org,admin.dev.besouro.ejplatform.org
+        - name: DJANGO_DB_URL
+          valueFrom:
+            secretKeyRef:
+              name: besouro-postgres
+              key: url
+        - name: DJANGO_DEFAULT_FROM_EMAIL
+          value: ej <noreply@ejplatform.org>
+        - name: DJANGO_MAILGUN_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: besouro-mailgun
+              key: api_key
+        - name: DJANGO_RECAPTCHA_PRIVATE_KEY
+          valueFrom:
+            secretKeyRef:
+              name: besouro-recaptcha
+              key: private_key
+        - name: DJANGO_RECAPTCHA_PUBLIC_KEY
+          valueFrom:
+            secretKeyRef:
+              name: besouro-recaptcha
+              key: public_key
+        - name: DJANGO_SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: besouro-ej-server
+              key: secret_key
+        - name: DJANGO_SETTINGS_MODULE
+          value: ej.settings
+        - name: MAILGUN_SENDER_DOMAIN
+          value: ''
+        - name: POSTGRES_DB
+          valueFrom:
+            secretKeyRef:
+              name: besouro-postgres
+              key: db
+        - name: POSTGRES_HOST
+          valueFrom:
+            secretKeyRef:
+              name: besouro-postgres
+              key: host
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: besouro-postgres
+              key: password
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: besouro-postgres
+              key: user
+        - name: RABBIT_ENV_RABBITMQ_PASS
+          valueFrom:
+            secretKeyRef:
+              name: besouro-rabbit
+              key: password
+        - name: RABBIT_ENV_USER
+          valueFrom:
+            secretKeyRef:
+              name: besouro-rabbit
+              key: user
+        - name: REDIS_URL
+          value: redis://besouro-redis:6379
+        ports:
+        - containerPort: 5000
+          name: ej-server
+        volumeMounts:
+        - name: ej-server-media-storage
+          mountPath: /app/staticfiles/media
+      volumes:
+      - name: ej-server-media-storage
+        persistentVolumeClaim:
+          claimName: besouro-media-pvc

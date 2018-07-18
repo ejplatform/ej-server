@@ -1,0 +1,35 @@
+version: "3.6"
+
+networks:
+  besouro:
+    name: besouro
+
+volumes:
+  db_data: {}
+
+services:
+  ej-server:
+    image: besouro/ej-server:dev
+    depends_on:
+      - postgres
+    env_file:
+      - ./env/ej-server.env
+      - ./env/postgres.env
+    links:
+      - postgres
+    networks:
+      - besouro
+    ports:
+      - 8000:8000
+    volumes:
+      - ../../../:/app
+    working_dir: /app
+
+  postgres:
+    image: postgres:9.6
+    env_file:
+      - ./env/postgres.env
+    networks:
+      - besouro
+    volumes:
+      - db_data:/var/lib/postgresql/data
