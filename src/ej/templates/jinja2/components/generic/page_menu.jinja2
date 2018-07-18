@@ -10,12 +10,16 @@
         {% elif not user.is_staff %}
             <li class="NavMenu-DropDown" onclick="openDropDown('NavMenu-UserMenu')">{{ icon_link(_('Conversations'), '/conversations/', 'conversations', fa=False) }}
                 <i class="fas fa-angle-down fa-2x NavMenu-AngleDownIcon"></i>
-                <ul class="NavMenu-UserMenu">
+                <ul class="NavMenu-UserMenu">                    
                     <li>
-                        {{icon_link(_('Your conversations'), ('/{}/'.format(user)), 'far fa-comment', fa=True)}}
+                        {% if user.board_name %}
+                            {{icon_link(_('Your conversations'), ('/{}/'.format(user.board_name)), 'far fa-comment', fa=True)}}
+                        {% else %}
+                            {{icon_link(_('Your conversations'), ('/conversations/add/'), 'far fa-comment', fa=True)}}                            
+                        {% endif %}
                     </li>
                     <li>
-                        {{icon_link(_('Add conversation'), ('/{}/conversations/add/'.format(user)), 'fas fa-plus-circle', fa=True)}}
+                        {{icon_link(_('Add conversation'), ('/conversations/add/'), 'fas fa-plus-circle', fa=True)}}
                     </li>
                     <li>
                         <i class="far fa-star"></i>
@@ -32,7 +36,11 @@
                     {{icon_link(_('Public conversations'), '/conversations/', 'fas fa-comments', fa=True)}}
                     </li>
                     <li>
-                    {{icon_link(_('Your conversations'), ('/{}/'.format(user)), 'far fa-comment', fa=True)}}
+                        {% if user.board_name %}
+                            {{icon_link(_('Your conversations'), ('/{}/'.format(user.board_name)), 'far fa-comment', fa=True)}}
+                        {% else %}
+                            {{icon_link(_('Your conversations'), ('/conversations/add/'), 'far fa-comment', fa=True)}}                            
+                        {% endif %}
                     </li>
                     <li>
                         <i class="fas fa-plus-circle"></i>
