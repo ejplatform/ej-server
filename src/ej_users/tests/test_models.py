@@ -2,8 +2,8 @@ import pytest
 from django.core.exceptions import ValidationError
 
 from ej_users.models import User, username
-from ej_conversations.models import Conversation
 from ej_conversations import create_conversation
+
 
 class TestUserManager:
     def test_can_create_and_fetch_simple_user(self, db):

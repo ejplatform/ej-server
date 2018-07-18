@@ -1,6 +1,6 @@
 from boogie.rest import rest_api
 from ej_clusters.math import get_raw_votes
-from ej_conversations.models import Comment, Conversation
+from ej_conversations.models import Conversation
 
 
 #

@@ -228,6 +228,7 @@ class Conversation(TimeStampedModel, StatusModel):
     def is_user_favorite(self, user):
         return self.user_set.filter(id=user.id).exists()
 
+
 def vote_count(conversation, which=None):
     """
     Return the number of votes of a given type.
