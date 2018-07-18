@@ -44,3 +44,8 @@ class FirstConversationForm(ConversationForm):
         help_text=_('The name of your conversation board.'),
         validators=[validate_board_name]
     )
+
+    def clean_board_name(self):
+        board_name = self.cleaned_data['board_name'].lower()
+        aux = ' '.join(board_name.split())
+        return aux.replace(' ', '_')

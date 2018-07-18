@@ -31,7 +31,7 @@ def is_not_empty(text):
 
 def validate_board_name(board_name):
     for c in list(board_name):
-        if c not in URL_VALID_CHARACTERS:
-            raise ValidationError(_("'{char}' is an invalid character!", char=c))
+        if c not in URL_VALID_CHARACTERS and c is not ' ':
+            raise ValidationError(_(f"'{c}' is an invalid character!"))
     if User.objects.filter(board_name=board_name):
-        raise ValidationError(_("'{board}' already in use!", board=board_name))
+        raise ValidationError(_(f"'{board_name}' already in use!"))
