@@ -41,14 +41,34 @@ def index(request, conversation):
         comment_table=cluster_comments_table,
         size=lambda x: x.users.count(),
     )
+
     if request.GET.get('action') == 'generate_csv':
         response = HttpResponse(content_type='text/csv')
         filename = 'filename="' + conversation.title + '.csv"'
         response['Content-Disposition'] = 'attachment;' + filename
 
         writer = csv.writer(response)
-        writer.writerows(map_to_table(statistics['votes'].append('votes')))
-        writer.writerows(map_to_table(statistics['comments'].append('comments')))
+        writer.writerow({'votes'})
+        writer.writerows(map_to_table(statistics['votes']))
+        writer.writerow({''})
+        writer.writerow({'comments'})
+        writer.writerows(map_to_table(statistics['comments']))
+        writer.writerow({''})
+        writer.writerow({'AdvancedInfo'})
+        writer.writerow({'Comments'})
+        writer.writerow(list(comments))
+        writer.writerows(comments.values)
+        writer.writerow({''})
+        writer.writerow({'Participants'})
+        writer.writerow(list(participants))
+        writer.writerows(participants.values)
+        writer.writerow({''})
+        writer.writerow({'Clusters'})
+        for cluster in clusters:
+            writer.writerow(cluster.name)
+            writer.writerows(cluster.comment_table)
+            writer.writerow({''})
+
     else:
         response = {
             'page_title': _('Report'),
@@ -126,7 +146,6 @@ def df_to_table(df, pc=True):
         for col in PC_COLUMNS:
             if col in df:
                 df[col] = to_pc(df[col])
-    print(df)
     return render_dataframe(df, col_display=COLUMN_NAMES, class_='table long')
 
 
