@@ -10,9 +10,10 @@ from boogie.fields import EnumField
 from boogie.rest import rest_api
 from .choices import Race, Gender
 from rest_framework.authtoken.models import Token
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 User = get_user_model()
-
 
 @rest_api(exclude=['user'])
 class Profile(models.Model):
@@ -141,6 +142,19 @@ class Profile(models.Model):
         return _('Regular user')
 
 
+@rest_api(exclude=['profile'])
+class Setting(models.Model):
+    profile = models.OneToOneField(Profile, on_delete=models.CASCADE)
+    owner_id = models.IntegerField(null=True)
+    mission_notifications = models.BooleanField(default=True)
+    conversation_notifications = models.BooleanField(default=True)
+    admin_notifications = models.BooleanField(default=True)
+    trophy_notifications = models.BooleanField(default=True)
+    campaign_email = models.BooleanField(default=True)
+    campaign_app_notifications = models.BooleanField(default=True)
+    share_data = models.BooleanField(default=True)
+    
+
 def gravatar_fallback(id):
     """
     Computes gravatar fallback image URL from a unique string identifier
@@ -165,5 +179,11 @@ def get_profile(user):
     except Profile.DoesNotExist:
         return Profile.objects.create(user=user)
 
-
 User.get_profile = get_profile
+
+@receiver(post_save, sender=Profile)
+def ensure_settings_created(sender, **kwargs):
+    instance = kwargs.get('instance')
+    profile = instance.id
+    return Setting.objects.create(profile=instance, owner_id=profile)
+
