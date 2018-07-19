@@ -7,6 +7,7 @@ from rest_framework.documentation import include_docs_urls
 
 from boogie.rest import rest_api
 from ej.fixes import unregister_admin
+from ej_social_login.models import FacebookLogin
 
 unregister_admin.unregister_apps()
 
@@ -55,6 +56,7 @@ urlpatterns = [
     # User management
     path('rest-auth/', include('rest_auth.urls')),
     path('rest-auth/registration/', include('rest_auth.registration.urls')),
+    path('rest-auth/facebook/', FacebookLogin.as_view(), name='fb_login'),
 
     # TODO: Set a custom view and template for password reset in ej-user
     path('password/', include('django.contrib.auth.urls')),
