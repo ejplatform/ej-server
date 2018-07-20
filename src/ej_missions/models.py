@@ -6,6 +6,7 @@ from django.dispatch import receiver
 from ej_users.models import User
 from ej_trophies.models.trophy import Trophy
 from ej_trophies.models.user_trophy import UserTrophy
+from ckeditor.fields import RichTextField
 from .mixins import MissionMixin
 
 def mission_directory_path(instance, filename):
@@ -14,8 +15,8 @@ def mission_directory_path(instance, filename):
 class Mission(MissionMixin, models.Model):
 
     title = models.CharField(max_length=100)
-    description = models.TextField(max_length=1000)
-    reward = models.TextField(max_length=1000, null=True)
+    description = RichTextField(max_length=1000)
+    reward = RichTextField(max_length=1000, null=True)
     #who is doing the mission
     users = models.ManyToManyField(User, blank=True)
     youtubeVideo = models.CharField(max_length=60, blank=True, null=True)
