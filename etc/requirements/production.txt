@@ -100,5 +100,6 @@ sidekick >= 0.4.2
 
 # Scientific stack
 pandas ~= 0.23.0
+beautifulsoup4 ~= 4.6.0
 numpy ~= 1.14.4
 matplotlib ~= 2.2.2

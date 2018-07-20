@@ -43,32 +43,8 @@ def index(request, conversation):
     )
 
     if request.GET.get('action') == 'generate_csv':
-        response = HttpResponse(content_type='text/csv')
-        filename = 'filename="' + conversation.title + '.csv"'
-        response['Content-Disposition'] = 'attachment;' + filename
-
-        writer = csv.writer(response)
-        writer.writerow({'votes'})
-        writer.writerows(map_to_table(statistics['votes']))
-        writer.writerow({''})
-        writer.writerow({'comments'})
-        writer.writerows(map_to_table(statistics['comments']))
-        writer.writerow({''})
-        writer.writerow({'AdvancedInfo'})
-        writer.writerow({'Comments'})
-        writer.writerow(list(comments))
-        writer.writerows(comments.values)
-        writer.writerow({''})
-        writer.writerow({'Participants'})
-        writer.writerow(list(participants))
-        writer.writerows(participants.values)
-        writer.writerow({''})
-        writer.writerow({'Clusters'})
-        for cluster in clusters:
-            writer.writerow(cluster.name)
-            writer.writerows(cluster.comment_table)
-            writer.writerow({''})
-
+        response = generate_csv(conversation, statistics, votes, comments,
+                                participants, clusters)
     else:
         response = {
             'page_title': _('Report'),
@@ -205,3 +181,35 @@ def participants_table(conversation, votes):
         participants[col] = df[col]
 
     return participants
+
+
+def generate_csv(conversation, statistics, votes, comments, participants, clusters):
+    response = HttpResponse(content_type='text/csv')
+    filename = 'filename="' + conversation.title + '.csv"'
+    response['Content-Disposition'] = 'attachment;' + filename
+
+    writer = csv.writer(response)
+    writer.writerow({'votes'})
+    writer.writerows(map_to_table(statistics['votes']))
+    writer.writerow({''})
+    writer.writerow({'comments'})
+    writer.writerows(map_to_table(statistics['comments']))
+    writer.writerow({''})
+    writer.writerow({'AdvancedInfo'})
+    writer.writerow({'Comments'})
+    writer.writerow(list(comments))
+    writer.writerows(comments.values)
+    writer.writerow({''})
+    writer.writerow({'Participants'})
+    writer.writerow(list(participants))
+    writer.writerows(participants.values)
+    writer.writerow({''})
+    writer.writerow({'Clusters'})
+    writer.writerow({''})
+    for cluster in clusters:
+        writer.writerow({cluster.name + ' size: ' + str(cluster.size)})
+        writer.writerow({''})
+        table = pd.read_html(str(cluster.comment_table))[0]
+        writer.writerow(list(participants))
+        writer.writerows(table.values)
+    return response
