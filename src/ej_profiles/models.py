@@ -150,6 +150,8 @@ class Setting(models.Model):
     conversation_notifications = models.BooleanField(default=True)
     admin_notifications = models.BooleanField(default=True)
     trophy_notifications = models.BooleanField(default=True)
+    approved_notifications = models.BooleanField(default=True)
+    disapproved_notifications = models.BooleanField(default=True)
     campaign_email = models.BooleanField(default=True)
     campaign_app_notifications = models.BooleanField(default=True)
     share_data = models.BooleanField(default=True)
