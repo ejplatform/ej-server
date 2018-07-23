@@ -35,6 +35,8 @@ If you are using Ubuntu 14.04 to 16.04, you can use Felix Krull's deadsnakes PPA
     sudo add-apt-repository ppa:deadsnakes/ppa
     sudo apt-get update
     sudo apt-get install python3.6-dev
+    sudo apt-get install npm
+    sudo npm install sass
 
 Ubuntu 16.10 and 17.04
 ----------------------
@@ -42,6 +44,8 @@ For Ubuntu 16.10 and 17.04 do not come with Python 3.6 by default, but it is in 
 
     sudo apt-get update
     sudo apt-get install python3.6-dev
+    sudo apt-get install npm
+    sudo npm install sass
     
 Linux Mint
 ----------
@@ -96,6 +100,14 @@ Step 3: Build Python
 
     $ sudo make altinstall
     
+Step 4: Setup Sass
+
+1. For last, install node package manager and sass::
+
+    $ sudo apt-get install npm
+    $ sudo npm install sass
+
+
 CentOS
 ------
 The IUS Community does a nice job of providing newer versions of software for “Enterprise Linux” distros (i.e. Red Hat Enterprise and CentOS). You can use their work to help you install Python 3.
@@ -113,18 +125,32 @@ Finally you can then install Python and Pip::
 
     $ sudo yum install python36u
     $ sudo yum install python36u-pip
-   
+ 
+For last, install node package manager and sass::
+
+    $ curl --silent --location https://rpm.nodesource.com/setup_8.x | sudo bash -
+    $ sudo yum install nodejs
+    $ sudo npm install sass
+    
 Fedora
 ------
 If the python3 installed on your version is not 3.6, you can use the following command to install it::
 
     $ sudo dnf install python36
+ 
+Then install node package manager::
+
+    $ sudo dnf install nodejs
+    $ sudo dnf install npm
+    $ sudo npm install sass
 
 Arch Linux
 ----------
 Arch Linux is fairly aggressive about keeping up with Python releases. It is likely you already have the latest version. If not, you can use this command::
 
     $ packman -S python
+    $ packman -S nodejs
+    $ npm install sass
    
 Verify Your Python Install
 --------------------------
