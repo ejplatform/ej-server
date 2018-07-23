@@ -7,7 +7,6 @@ from faker import Factory
 from boogie import rules
 from boogie.apps.users.models import AbstractUser
 from boogie.rest import rest_api
-from sidekick import alias
 from .manager import UserManager
 
 fake = Factory.create('pt-BR')
@@ -44,7 +43,9 @@ class User(AbstractUser):
         'ej_conversations.Conversation'
     )
 
-    username = alias('email')
+    @property
+    def username(self):
+        return self.email.replace('@', '__')
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['name']
