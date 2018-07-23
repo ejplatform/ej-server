@@ -36,7 +36,9 @@ class User(AbstractUser):
         max_length=140,
         help_text=_(
             'The name of the conversation board of an user.'
-        )
+        ),
+        blank=True,
+        default="defaultboard"
     )
     objects = UserManager()
     favorite_conversations = models.ManyToManyField(
