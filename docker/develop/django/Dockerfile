@@ -6,7 +6,9 @@ EXPOSE 8000
 
 ENV FAKE_DB=true
 
+COPY ./etc/scripts/develop/* /
+
 COPY ./etc/requirements/*.txt /dependencies/
-RUN pip install -r /dependencies/develop.txt -r /dependencies/git-modules.txt
+RUN pip install -r /dependencies/develop.txt
 
 CMD ["/runserver.sh"]
