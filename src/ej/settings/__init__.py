@@ -47,6 +47,13 @@ class Conf(locales.brazil(),
     ACCOUNT_UNIQUE_EMAIL = True
     ACCOUNT_USERNAME_REQUIRED = False
     ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+    LOGIN_REDIRECT_URL = '/'
+    SOCIALACCOUNT_PROVIDERS = {
+        'facebook': {
+            'SCOPE': ['email', 'publish_stream'],
+            'METHOD': 'js_sdk'  # instead of 'oauth2'
+        }
+    }
 
     # MANAGER CONFIGURATION
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#admins

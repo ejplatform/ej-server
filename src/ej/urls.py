@@ -14,9 +14,9 @@ unregister_admin.unregister_apps()
 # Optional urls
 #
 if settings.EJ_ENABLE_ROCKETCHAT:
-    rocket = [path('talks/', include('ej_rocketchat.routes', namespace='rocketchat'))]
+    rocket_urls = [path('talks/', include('ej_rocketchat.routes', namespace='rocketchat'))]
 else:
-    rocket = []
+    rocket_urls = []
 
 urlpatterns = [
     # Basic authentication and authorization
@@ -39,7 +39,7 @@ urlpatterns = [
     path('config/', include(('ej_configurations.routes', 'ej_configurations'), namespace='configurations')),
 
     # Rocket
-    *rocket,
+    *rocket_urls,
 
     # Admin
     path(settings.ADMIN_URL.rstrip('^'), admin.site.urls),
@@ -53,6 +53,9 @@ urlpatterns = [
     # User management
     path('rest-auth/', include('rest_auth.urls')),
     path('rest-auth/registration/', include('rest_auth.registration.urls')),
+
+    # Allauth
+    path('accounts/', include('allauth.urls')),
 
     # User conversations
     path('', include('ej_conversations.routes.for_user', namespace='user-conversation')),
