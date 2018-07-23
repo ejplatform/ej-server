@@ -33,6 +33,8 @@ class InstalledAppsConf(Base, EjOptions):
         'allauth.socialaccount',
         'allauth.socialaccount.providers.facebook',
         'allauth.socialaccount.providers.twitter',
+        'allauth.socialaccount.providers.github',
+        'allauth.socialaccount.providers.google',
         'django_filters',
         'rest_framework',
         'rest_framework.authtoken',

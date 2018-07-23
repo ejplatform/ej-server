@@ -1,34 +1,35 @@
 from django.contrib.auth.models import UserManager as BaseUserManager
-from django.core.exceptions import ValidationError
-from django.utils.translation import ugettext_lazy as _
-
-from boogie import rules
 
 
 class UserManager(BaseUserManager):
-    def get_by_email_or_username(self, value):
+    def get_by_email(self, value):
         """
-        Return a user with the given e-mail or username.
+        Return a user with the given e-mail.
         """
-        if '@' in value:
-            return self.get(email=value)
-        else:
-            return self.get(username=value)
+        return self.get(email=value)
 
-    def normalize_username(self, username):
-        if not username:
-            msg = _('username is empty')
-            raise ValidationError({'username': msg})
-        if '@' in username:
-            msg = _('username cannot have the "@: character')
-            raise ValidationError({'username': msg})
-        rule = rules.get_rule('auth.valid_username')
-        if not rule.test(username):
-            msg = _('invalid username: {username}').format(username=username)
-            raise ValidationError({'username': msg})
-        return username
+    def _create_user(self, email, password, **extra_fields):
+        """
+        Create and save a user with the given email and password.
+        """
+        email = self.normalize_email(email)
+        user = self.model(email=email, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
 
-    def _create_user(self, username, email, password, name='', **extra):
-        username = self.normalize_username(username)
-        extra['name'] = name or _('anonymous user')
-        return super()._create_user(username, email, password, **extra)
+    def create_user(self, email=None, password=None, **extra_fields):
+        extra_fields.setdefault('is_staff', False)
+        extra_fields.setdefault('is_superuser', False)
+        return self._create_user(email, password, **extra_fields)
+
+    def create_superuser(self, email, password, **extra_fields):
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+
+        if extra_fields.get('is_staff') is not True:
+            raise ValueError('Superuser must have is_staff=True.')
+        if extra_fields.get('is_superuser') is not True:
+            raise ValueError('Superuser must have is_superuser=True.')
+
+        return self.create_user(email, password, **extra_fields)

@@ -28,13 +28,7 @@ def intro(request):
 def check_login(request):
     if not request.user.is_authenticated:
         return HttpResponse(status=401)
-
-    name = request.user.name.strip()
-    login_token = helpers.create_rc_user_token(
-        request.user.email,
-        name or request.user.username,
-        request.user.username
-    )
+    login_token = helpers.create_rc_user_token(request.user)
     return JsonResponse({'loginToken': login_token})
 
 

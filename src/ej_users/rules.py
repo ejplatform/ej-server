@@ -1,28 +1,5 @@
-from django.conf import settings
-
 from boogie import rules
 from sidekick import import_later
-from .models import User
-
-
-USERNAMES_BLACKLIST = {
-    # Common 'bad' usernames
-    'me', '', 'user', 'conversations',
-
-    # Additional usernames from settings
-    *getattr(settings, 'FORBIDDEN_USERNAMES', ()),
-}
-
-
-@rules.register_rule('auth.valid_username')
-def is_valid_username(username):
-    if username in USERNAMES_BLACKLIST:
-        return False
-
-    if User.objects.filter(username=username):
-        return False
-
-    return True
 
 
 @rules.register_value('auth.profile')

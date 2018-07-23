@@ -7,6 +7,8 @@
 {% set target = target | default(target_context) %}
 {% if not page_title %}{% set page_title = content_title|default(_('Empurrando Juntos')) %}{% endif %}
 
+{% set theme = request.GET.get('theme','') or current_theme %}
+
 {% set javascript_enabled = request.COOKIES.get('javascriptEnabled', 'No Cookie') %}
 
 {% if target == 'all' %}
@@ -27,7 +29,7 @@
 {#        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css">#}
         <link rel="stylesheet" href="/static/js/jquery-ui/jquery-ui.min.css">
         <link rel="stylesheet" href="/static/js/jquery-ui/jquery-ui.structure.min.css">
-        <link rel="stylesheet" href="/static/css/main.css">
+        <link rel="stylesheet" href="/static/css/main{{theme}}.css">
         {% endblock %}
 
         {% block javascript %}
@@ -100,6 +102,7 @@
 
     {# MAIN BLOCK #}
     {% block main %}
+
         <main class="Page-content" {{ salt_attr()|safe }}>
             {% if content_title %}<div class="Page-title"><h1>{{ content_title }}</h1></div>{% endif %}
             {% if content %}

@@ -18,6 +18,7 @@ class PathsConf(Base):
     PAGES_DIR = LOCAL_DIR / 'pages'
     LOG_DIR = LOCAL_DIR / 'logs'
     LOG_FILE_PATH = LOG_DIR / 'logfile.log'
+    DJANGO_TEMPLATES_DIRS = [PROJECT_DIR / 'templates' / 'django']
 
     # Frontend paths
     LIB_DIR = REPO_DIR / 'lib'

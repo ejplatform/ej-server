@@ -3,7 +3,7 @@ from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect
 from django.utils.deprecation import MiddlewareMixin
 
-from ej_users.models import User
+from .models import User
 
 
 class UserFallbackMiddleware(MiddlewareMixin):
@@ -11,8 +11,8 @@ class UserFallbackMiddleware(MiddlewareMixin):
         if response.status_code != 404:
             return response  # No need to check for a flatpage for non-404 responses.
         try:
-            username = request.path.strip('/')
-            owner = get_object_or_404(User, username=username)
+            board_name = request.path.strip('/')
+            owner = get_object_or_404(User, board_name=board_name)
             return redirect('user-conversation:list', owner=owner)
 
         # Return the original response if any errors happened. Because this

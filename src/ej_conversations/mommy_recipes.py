@@ -6,18 +6,18 @@ from .models import Comment, Conversation, Vote, Choice
 __all__ = ['user', 'root', 'conversation', 'comment', 'vote']
 
 User = get_user_model()
-user = Recipe(User, is_superuser=False, username='user')
-root = Recipe(User, is_superuser=True, username='root', is_staff=True)
+user = Recipe(User, is_superuser=False, email='user@domain.com')
+root = Recipe(User, is_superuser=True, email='root@domain.com', is_staff=True)
 conversation = Recipe(
     Conversation,
     title='Conversation',
     text='question?',
     slug='conversation',
-    author=lambda: user.make(username='conversation_author'),
+    author=lambda: user.make(email='conversation_author@domain.com'),
 )
 comment = Recipe(
     Comment,
-    author=lambda: user.make(username='comment_author'),
+    author=lambda: user.make(email='comment_author@domain.com'),
     content='comment',
     conversation=conversation.make,
     status=Comment.STATUS.approved,
@@ -25,7 +25,7 @@ comment = Recipe(
 vote = Recipe(
     Vote,
     comment=comment.make,
-    author=lambda: user.make(username='voter'),
+    author=lambda: user.make(email='voter@domain.com'),
     choice=Choice.AGREE,
 )
 

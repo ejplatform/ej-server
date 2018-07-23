@@ -9,11 +9,10 @@ from boogie.apps.users.models import AbstractUser
 from boogie.rest import rest_api
 from .manager import UserManager
 
-
 fake = Factory.create('pt-BR')
 
 
-@rest_api(['id', 'username', 'display_name', 'board_name', 'favorite_conversations'])
+@rest_api(['id', 'display_name', 'board_name', 'favorite_conversations'])
 class User(AbstractUser):
     """
     Default user model for EJ platform.
@@ -27,12 +26,14 @@ class User(AbstractUser):
             'A randomly generated name used to identify each user.'
         ),
     )
-
+    email = models.EmailField(
+        _('email address'),
+        blank=True,
+        unique=True,
+    )
     board_name = models.CharField(
         _('Board name'),
         max_length=140,
-        unique=True,
-        null=True,
         help_text=_(
             'The name of the conversation board of an user.'
         )
@@ -41,6 +42,13 @@ class User(AbstractUser):
     favorite_conversations = models.ManyToManyField(
         'ej_conversations.Conversation'
     )
+
+    @property
+    def username(self):
+        return self.email.replace('@', '__')
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['name']
 
     @property
     def profile(self):
@@ -52,12 +60,6 @@ class User(AbstractUser):
             self.display_name = random_name()
         super().save(*args, **kwargs)
 
-    def clean(self):
-        super().clean()
-        if not rules.test_rule('auth.valid_username', self.username):
-            error = {'username': _('invalid username: %s') % self.username}
-            raise ValidationError(error)
-
     def update_favorite_conversation_status(self, conversation):
         if self.favorite_conversations.filter(id=conversation.id).exists():
             self.favorite_conversations.remove(conversation)
@@ -66,58 +68,6 @@ class User(AbstractUser):
 
     class Meta:
         swappable = 'AUTH_USER_MODEL'
-
-
-def username(full_name, email):
-    """
-    Return a unique username using some logic that combines
-    names and email.
-    """
-    names = list(filter(None, full_name.split(' ')))
-    first_name = names[0].lower()
-    normalized_email = email.split('@')[0].replace('.', '_')
-
-    if not User.objects.filter(username=first_name):
-        return first_name
-    elif not User.objects.filter(username=normalized_email):
-        return normalized_email
-    else:
-        try:
-            return username_by_name_combination(names)
-        except RuntimeError:
-            return username_by_email(normalized_email)
-
-
-def username_by_name_combination(names):
-    """
-    Try to create a unique username combining the given names.
-    first_name - second_name, second_name - third_name and so on.
-    """
-    for _iter in range(len(names)):
-        if _iter < len(names) - 1:
-            username = (names[_iter] + names[_iter + 1]).lower()
-            if not User.objects.filter(username=username):
-                return username
-    else:
-        raise RuntimeError(
-            'no valid unique names combination found'
-        )
-
-
-def username_by_email(email):
-    """
-    Try to create a unique username using the given email
-    plus a number between 1 and 100.
-    """
-    for _iter in range(1, 100):
-        username = email + str(_iter)
-        if not User.objects.filter(username=username):
-            return username
-    else:
-        raise RuntimeError(
-            'maximum number of attempts reached when trying to generate a '
-            'unique username by user email'
-        )
 
 
 def random_name(fmt='{adjective} {noun}'):
