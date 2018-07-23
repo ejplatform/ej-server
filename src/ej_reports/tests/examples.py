@@ -16,3 +16,5 @@ CSV_OUT = {
     'advanced_comments_header': 'author,text,agree,disagree,skipped,divergence,participation',
     'advanced_participants_header': 'name,agree,disagree,skipped,divergence',
 }
+
+MAP_TO_TABLE =  [['agree', 'disagree' ,'skip', 'total'],['0', '0', '0', '0']]

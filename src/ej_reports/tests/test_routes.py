@@ -1,13 +1,15 @@
 import pytest
 import csv
 import io
+import numpy as np
 from django.test import RequestFactory
 from django.http import QueryDict
 
-from ej_reports.routes import index
+from ej_clusters.math import get_raw_votes
+from ej_reports.routes import index, clusters, radar, divergence, map_to_table
 from ej_conversations.mommy_recipes import *  # noqa: F401,F403
 from ej_users.models import User
-from .examples import REPORT_RESPONSE, CSV_OUT
+from .examples import REPORT_RESPONSE, CSV_OUT, MAP_TO_TABLE
 BASE_URL = '/api/v1'
 
 
@@ -35,7 +37,6 @@ class TestReportRoutes:
     def test_report_route(self, request_as_admin, mk_conversation):
         conversation = mk_conversation()
         path = BASE_URL + f'/conversations/{conversation.slug}/reports/'
-        print(path)
         request = request_as_admin
         request.GET = QueryDict('')
         request.get(path)
@@ -46,7 +47,6 @@ class TestReportRoutes:
     def test_report_csv_route(self, request_as_admin, mk_conversation):
         conversation = mk_conversation()
         path = BASE_URL + f'/conversations/{conversation.slug}/reports/'
-        print(path)
         request = request_as_admin
         request.GET = QueryDict('action=generate_csv')
         request.get(path)
@@ -63,5 +63,36 @@ class TestReportRoutes:
         assert CSV_OUT['advanced_comments_header'] in content
         assert CSV_OUT['advanced_participants_header'] in content
 
-    def test_df_to_table_func(self):
-        pass
+    def test_clusters_route(self, mk_conversation):
+        conversation = mk_conversation
+        response = clusters(conversation)
+        expected = {
+            'conversation': conversation,
+        }
+
+        assert response == expected
+
+
+    def test_radar_route(self, mk_conversation):
+        conversation = mk_conversation
+        response = radar(conversation)
+        expected = {
+            'conversation': conversation,
+        }
+
+        assert response == expected
+
+    def test_divergence_route(self, mk_conversation):
+        conversation = mk_conversation
+        response = divergence(conversation)
+        expected = {
+            'conversation': conversation,
+        }
+
+        assert response == expected
+
+    def test_map_to_table(self, mk_conversation):
+        statistics = mk_conversation().statistics()
+        mapped_votes = map_to_table(statistics['votes'])
+
+        assert np.array_equal(MAP_TO_TABLE, mapped_votes)
