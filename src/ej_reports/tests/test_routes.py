@@ -18,7 +18,7 @@ def request_factory():
 
 @pytest.fixture
 def admin_user(db):
-    admin_user = User.objects.create_superuser('usr', 'admin@test.com', 'pass')
+    admin_user = User.objects.create_superuser('admin@test.com', 'pass')
     admin_user.save()
     yield admin_user
     admin_user.delete()

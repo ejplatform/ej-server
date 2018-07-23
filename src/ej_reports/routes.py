@@ -138,7 +138,7 @@ def to_pc(data):
 
 
 def cluster_comments_table(cluster):
-    usernames = list(cluster.users.all().values_list('username', flat=True))
+    usernames = list(cluster.users.all().values_list('email', flat=True))
 
     # Filter votes by users present in cluster
     df = cluster.all_votes
@@ -173,9 +173,9 @@ def participants_table(conversation, votes):
     stats = VoteStats(votes)
     df = stats.users(pc=True)
 
-    data = list(User.objects.values_list('username', 'name'))
-    participants = pd.DataFrame(list(data), columns=['username', 'name'])
-    participants.index = participants.pop('username')
+    data = list(User.objects.values_list('email', 'name'))
+    participants = pd.DataFrame(list(data), columns=['email', 'name'])
+    participants.index = participants.pop('email')
 
     for col in ['agree', 'disagree', 'skipped', 'divergence']:
         participants[col] = df[col]
