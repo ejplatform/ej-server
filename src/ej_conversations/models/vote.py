@@ -30,7 +30,7 @@ VOTING_ERROR = (lambda value: ValueError(
 #
 # Model class
 #
-@rest_api(exclude=['author', 'created'])
+@rest_api(exclude=['created'])
 class Vote(models.Model):
     """
     A single vote cast for a comment.
