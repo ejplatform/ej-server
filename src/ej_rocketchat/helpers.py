@@ -1,17 +1,17 @@
+import json
 import random
 import string
-import json
+
 import requests
-
-from django.core.cache import cache
 from constance import config
+from django.core.cache import cache
 
 
-def rc_token_cache_key(username):
+def rc_token_cache_key(user):
     """
     Gives an unique cache key to an user
     """
-    return f'rc_token_{username}'
+    return f'rc_token_{user.username}'
 
 
 def rocketchat_url(uri, api_version='v1'):
@@ -33,45 +33,34 @@ def rocketchat_url(uri, api_version='v1'):
             f'/api/{api_version}/{uri}')
 
 
-def create_rc_user_token(email, name, username):
+def create_rc_user_token(user):
     """
     Creates a new rocketchat user if it's username is not registered on the
     service and returns a valid login token.
 
     Args:
-        email (str):
-            Django user email.
-        name (str):
-            Django user fullname.
-        username (str):
-            Django user username.
+        user : Django user instance.
     """
-    if not is_rc_user_registered(username):
-        create_rc_user(email, name, username)
+    if not is_rc_user_registered(user):
+        create_rc_user(user)
+    return get_rc_user_token(user)
 
-    return get_rc_user_token(username)
 
-
-def create_rc_user(email, name, username):
+def create_rc_user(user):
     """
     Calls Rocketchat API to create a new user with the same information of
     the django user.
 
     Args:
-        email (str):
-            Django user email.
-        name (str):
-            Django user fullname.
-        username (str):
-            Django user username.
+        user : Django user instance.
 
     See also:
         https://rocket.chat/docs/developer-guides/rest-api/users/create/
     """
     json_data = {
-        'email': email,
-        'name': name,
-        'username': username,
+        'email': user.email,
+        'name': user.name,
+        'username': user.username,
         'password': _make_pass(30),
     }
     res = requests.post(
@@ -83,7 +72,7 @@ def create_rc_user(email, name, username):
         raise Exception(f'Error: {res.content}')
 
 
-def get_rc_user_token(username):
+def get_rc_user_token(user):
     """
     Get a cached user's rocketchat login token or require a new one and
     update the cache.
@@ -97,12 +86,12 @@ def get_rc_user_token(username):
         'rc_token_example'
     """
     return cache.get_or_set(
-        rc_token_cache_key(username),
-        generate_rc_user_token(username),
+        rc_token_cache_key(user),
+        generate_rc_user_token(user),
     )
 
 
-def generate_rc_user_token(username):
+def generate_rc_user_token(user):
     """
     Request a new user's login token to the Rocketchat API
 
@@ -114,7 +103,7 @@ def generate_rc_user_token(username):
         https://rocket.chat/docs/developer-guides/rest-api/users/createtoken/
     """
     json_data = {
-        'username': username,
+        'username': user.username,
     }
     res = requests.post(
         rocketchat_url('users.createToken'),
@@ -126,26 +115,25 @@ def generate_rc_user_token(username):
     return json.loads(res.content)['data']['authToken']
 
 
-def invalidade_rc_user_token(username):
+def invalidate_rc_user_token(user):
     """
     Invalidates the user cached token using Rocketchat API
 
     Args:
-        username (str):
-            Django user username.
+        user: Django user.
 
     See also:
         https://rocket.chat/docs/developer-guides/rest-api/authentication/logout/
     """
     try:
-        user_info = json.loads(request_rc_user_info(username).content)['user']
-        token = cache.get(rc_token_cache_key(username))
+        user_info = json.loads(request_rc_user_info(user).content)['user']
+        token = cache.get(rc_token_cache_key(user))
         if token:
             res = requests.post(
                 rocketchat_url('logout'),
                 headers=get_headers(user_info['_id'], token),
             )
-            cache.delete(rc_token_cache_key(username))
+            cache.delete(rc_token_cache_key(user))
             if res.status_code != 200:
                 raise Exception(f'Error: {res.content}')
     except KeyError:
@@ -154,13 +142,12 @@ def invalidade_rc_user_token(username):
     return True
 
 
-def request_rc_user_info(username):
+def request_rc_user_info(user):
     """
     Request Rocketchat user information.
 
     Args:
-        username (str):
-            Django user username.
+        user: Django user.
 
     See also:
         https://rocket.chat/docs/developer-guides/rest-api/miscellaneous/info/
@@ -168,11 +155,11 @@ def request_rc_user_info(username):
     return requests.get(
         rocketchat_url('users.info'),
         headers=get_headers(),
-        params=dict(username=username)
+        params=dict(username=user.username)
     )
 
 
-def is_rc_user_registered(username):
+def is_rc_user_registered(user):
     """
     Check username is registered on Rocketchat service
 
@@ -180,7 +167,7 @@ def is_rc_user_registered(username):
         username (str):
             Django user username.
     """
-    res = request_rc_user_info(username)
+    res = request_rc_user_info(user)
     return res.status_code == 200
 
 

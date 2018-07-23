@@ -11,4 +11,4 @@ def logout(sender, user, request, **kwargs):
     Logout Rocketchat user when receives a Django logout signal.
     """
     if user and config.ROCKETCHAT_URL:
-        helpers.invalidade_rc_user_token(user.username)
+        helpers.invalidate_rc_user_token(user)
