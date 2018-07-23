@@ -2,8 +2,7 @@ import re
 
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
-from ej_users.models import User
-
+from . import models
 try:
     from colortools import COLOR_NAMES
 
@@ -33,5 +32,5 @@ def validate_board_name(board_name):
     for c in list(board_name):
         if c not in URL_VALID_CHARACTERS and c is not ' ':
             raise ValidationError(_(f"'{c}' is an invalid character!"))
-    if User.objects.filter(board_name=board_name):
+    if models.ConversationBoard.objects.filter(name=board_name):
         raise ValidationError(_(f"'{board_name}' already in use!"))

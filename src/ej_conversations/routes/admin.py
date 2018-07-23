@@ -23,8 +23,10 @@ def create(request, owner=None):
         form = Form(request.POST)
         if form.is_valid():
             try:
-                request.user.board_name = form.cleaned_data['board_name']
-                request.user.save()
+                models.ConversationBoard.objects.create(
+                    name=form.cleaned_data['board_name'],
+                    owner=request.user
+                )
             except KeyError:
                 pass
 

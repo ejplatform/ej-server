@@ -19,7 +19,7 @@ urlpatterns = Router(
     object='conversation',
 )
 conversation_url = f'<model:conversation>/'
-user_url = '<model:owner>/'
+board_url = '<model:board>/'
 
 from .admin import create, edit, moderate
 from .base import conversation_list, detail, info, leaderboard

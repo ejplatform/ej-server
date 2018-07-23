@@ -12,7 +12,7 @@ from .manager import UserManager
 fake = Factory.create('pt-BR')
 
 
-@rest_api(['id', 'display_name', 'board_name', 'favorite_conversations'])
+@rest_api(['id', 'display_name', 'favorite_conversations'])
 class User(AbstractUser):
     """
     Default user model for EJ platform.
@@ -30,15 +30,6 @@ class User(AbstractUser):
         _('email address'),
         blank=True,
         unique=True,
-    )
-    board_name = models.CharField(
-        _('Board name'),
-        max_length=140,
-        help_text=_(
-            'The name of the conversation board of an user.'
-        ),
-        blank=True,
-        default="defaultboard"
     )
     objects = UserManager()
     favorite_conversations = models.ManyToManyField(

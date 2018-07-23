@@ -4,7 +4,7 @@ from django.http import Http404, HttpResponseServerError
 from django.test import RequestFactory
 
 from ej_conversations import create_conversation
-from ej_conversations.models import Conversation, Comment
+from ej_conversations.models import ConversationBoard, Conversation, Comment
 from ej_conversations.models.comment import votes_counter
 from ej_conversations.routes import base, admin, for_user, comments
 from ej_conversations.forms import FirstConversationForm, ConversationForm
@@ -55,9 +55,14 @@ def comment(db, conversation, user):
     return conversation.create_comment(user, 'content', 'approved')
 
 
+@pytest.fixture
+def board(db, user):
+    return ConversationBoard.objects.create(name='boardname', owner=user)
+
+
 class TestConversationBase:
-    def test_get_all_conversations_of_another_user(self, get_request, user, conversation, db):
-        response = base.conversation_list(get_request, user)
+    def test_get_all_conversations_of_another_user(self, get_request, user, board, conversation, db):
+        response = base.conversation_list(get_request, board)
         assert response.get('conversations')._obj.model is Conversation
         assert response.get('can_add_conversation') is False
         assert response.get('owner') is user
@@ -83,7 +88,7 @@ class TestConversationBase:
         assert response.get('owner') is None
         assert response.get('edit_perm') is False
         assert response.get('can_comment') is False
-        assert response.get('remainig_comments') is None
+        assert response.get('remaining_comments') == 0
         assert str(response.get('login_link')) is not None
 
     def test_conversation_detail_being_author(self, get_request_with_user, user, conversation, db):
@@ -93,7 +98,7 @@ class TestConversationBase:
         assert response.get('owner') is user
         assert response.get('edit_perm') is True
         assert response.get('can_comment') is True
-        assert response.get('remainig_comments') is None
+        assert response.get('remaining_comments') == 2
         assert str(response.get('login_link')) is not None
 
     def test_vote_in_comment(self, request_factory, conversation, comment, db):

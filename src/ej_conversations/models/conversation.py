@@ -30,6 +30,25 @@ def slug_base(conversation):
     return title.lower()
 
 
+class ConversationBoard(models.Model):
+    """
+    A board that contains some conversations.
+    """
+    name = models.CharField(
+        _('Board name'),
+        max_length=140,
+        help_text=_(
+            'The name of an user conversation board.'
+        ),
+        unique=True
+    )
+    owner = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='boards'
+    )
+
+
 class TaggedConversation(TaggedItemBase):
     """
     Add tags to Conversations with real Foreign Keys
@@ -227,7 +246,6 @@ class Conversation(TimeStampedModel, StatusModel):
 
     def is_user_favorite(self, user):
         return self.user_set.filter(id=user.id).exists()
-
 
 
 def vote_count(conversation, which=None):
