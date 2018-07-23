@@ -101,7 +101,9 @@ Step 3: Build Python
     $ sudo make altinstall
     
 Step 4: Setup Sass
+
 1. For last, install node package manager and sass::
+
     $ sudo apt-get install npm
     $ sudo npm install sass
 
@@ -125,6 +127,7 @@ Finally you can then install Python and Pip::
     $ sudo yum install python36u-pip
  
 For last, install node package manager and sass::
+
     $ curl --silent --location https://rpm.nodesource.com/setup_8.x | sudo bash -
     $ sudo yum install nodejs
     $ sudo npm install sass
@@ -136,6 +139,7 @@ If the python3 installed on your version is not 3.6, you can use the following c
     $ sudo dnf install python36
  
 Then install node package manager::
+
     $ sudo dnf install nodejs
     $ sudo dnf install npm
     $ sudo npm install sass
