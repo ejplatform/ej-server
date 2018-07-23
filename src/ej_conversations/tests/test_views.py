@@ -1,14 +1,13 @@
 import pytest
-from django.test import RequestFactory
-from django.http import Http404
 from django.contrib.auth.models import AnonymousUser
-from django.utils.translation import ugettext_lazy as _
+from django.http import Http404
+from django.test import RequestFactory
 
-from ej_users.models import User
-from ej_conversations.routes import base, admin
+from ej_conversations import create_conversation
 from ej_conversations.models import Conversation
 from ej_conversations.models.comment import votes_counter
-from ej_conversations import create_conversation
+from ej_conversations.routes import base, admin
+from ej_users.models import User
 
 
 @pytest.fixture
@@ -39,7 +38,7 @@ def get_request_with_user(request_factory, user):
 
 @pytest.fixture
 def user(db):
-    user = User.objects.create_user('testuser', 'email@server.com', 'password')
+    user = User.objects.create_user('email@server.com', 'password')
     user.board_name = 'testboard'
     user.save()
     return user
@@ -66,7 +65,6 @@ class TestConversationBase:
     def test_get_all_conversations_of_user_board(self, get_request_with_user, user, conversation, db):
         response = base.conversation_list(get_request_with_user)
         assert response.get('conversations')._obj.model is Conversation
-        assert response.get('can_add_conversation') is True
         assert response.get('owner') is None
         assert str(response.get('add_link')) is not None
 
@@ -99,7 +97,7 @@ class TestConversationBase:
 
     def test_vote_in_comment(self, request_factory, conversation, comment, db):
         request = request_factory.post('', {'action': 'vote', 'vote': 'agree'})
-        user = User.objects.create_user('testuser2', 'email@server.com', 'password')
+        user = User.objects.create_user('user@server.com', 'password')
         request.user = user
         conversation.comment = comment
         conversation.save()

@@ -42,7 +42,11 @@ class Conf(locales.brazil(),
         return False
 
     AUTH_USER_MODEL = 'ej_users.User'
-    # ALLOWED_HOSTS = ['localhost', ]
+    ACCOUNT_AUTHENTICATION_METHOD = 'email'
+    ACCOUNT_EMAIL_REQUIRED = True
+    ACCOUNT_UNIQUE_EMAIL = True
+    ACCOUNT_USERNAME_REQUIRED = False
+    ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 
     # MANAGER CONFIGURATION
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#admins

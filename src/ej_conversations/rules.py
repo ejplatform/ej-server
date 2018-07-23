@@ -5,7 +5,6 @@ from django.db.models import Q
 from django.utils.timezone import now
 
 from boogie import rules
-from ej_users.models import User
 from ej_conversations.models import Conversation
 
 
@@ -141,12 +140,9 @@ def can_comment(user, conversation):
     return remaining > 0
 
 
-# @TODO create a logic to create conversation permission
 @rules.register_perm('ej_conversations.can_add_conversation')
 def can_add_conversation(user):
-    if User.objects.filter(username=user.username).exists():
-        return True
-    return False
+    return user.is_staff
 
 
 @rules.register_perm('ej_conversations.can_edit_conversation')

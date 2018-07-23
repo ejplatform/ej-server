@@ -54,7 +54,7 @@ def create_rc_user_token(email, name, username):
 
 def create_rc_user(email, name, username):
     """
-    Calls Rocketchat API to create a new user with the same informations of
+    Calls Rocketchat API to create a new user with the same information of
     the django user.
 
     Args:
