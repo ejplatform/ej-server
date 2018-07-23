@@ -1,9 +1,11 @@
-from . import models
-from ej_users.models import User
 from rest_framework import serializers
-from ej_trophies.models.user_trophy import UserTrophy
-from .mixins import MissionMixin
 import datetime
+
+from . import models
+from ej_conversations.models import Comment as ConversationComment
+from .mixins import MissionMixin
+from ej_trophies.models.user_trophy import UserTrophy
+from ej_users.models import User
 
 
 class OwnerSerializer(serializers.ModelSerializer):
@@ -17,6 +19,11 @@ class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Comment
         fields = ('user', 'comment')
+
+class ConversationCommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ConversationComment
+        fields = '__all__'
 
 class MissionSerializer(serializers.ModelSerializer):
     owner = OwnerSerializer(read_only=True)
@@ -39,7 +46,7 @@ class MissionSerializer(serializers.ModelSerializer):
         model = models.Mission
         fields = ('id', 'title', 'description', 'users', 'image',
                   'youtubeVideo', 'audio', 'owner', 'remainig_days',
-                  'deadline', 'comment_set', 'reward')
+                  'deadline', 'comment_set', 'reward', 'conversations')
 
 class MissionInboxSerializer(MissionMixin, MissionSerializer):
 

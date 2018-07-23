@@ -140,7 +140,7 @@ class MissionViewSet(viewsets.ViewSet):
 
     def comments(self, request, pk):
         mission = models.Mission.objects.get(id=pk)
-        queryset = mission.comment_set.all();
+        queryset = mission.comment_set.all()
         serializer = serializers.CommentSerializer(queryset, many=True)
         return Response(serializer.data)
 
@@ -155,4 +155,11 @@ class MissionViewSet(viewsets.ViewSet):
         comment.save()
         mission.comment_set.add(comment)
         serializer = serializers.CommentSerializer(comment)
+        return Response(serializer.data)
+
+    def conversation_comments(self, request, mid, cid):
+        mission = models.Mission.objects.get(pk=mid)
+        conversation = mission.conversations.get(pk=cid)
+        comments = conversation.comments.all()
+        serializer = serializers.ConversationCommentSerializer(comments, many=True)
         return Response(serializer.data)

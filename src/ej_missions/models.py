@@ -4,6 +4,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 from ej_users.models import User
+from ej_conversations.models.conversation import Conversation
 from ej_trophies.models.trophy import Trophy
 from ej_trophies.models.user_trophy import UserTrophy
 from ckeditor.fields import RichTextField
@@ -29,6 +30,7 @@ class Mission(MissionMixin, models.Model):
     trophy = models.ForeignKey(Trophy, on_delete=models.CASCADE, null=True)
     deadline = models.DateField(null=True)
     created_at = models.DateTimeField(null=True, auto_now_add=True)
+    conversations = models.ManyToManyField(Conversation, blank=True)
 
     class Meta:
         ordering = ['title']
