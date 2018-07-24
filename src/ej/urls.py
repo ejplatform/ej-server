@@ -28,7 +28,6 @@ urlpatterns = [
     # Profile URLS
     path('profile/', include(('ej_profiles.routes', 'ej_profiles'), namespace='profiles')),
     path('profile/', include('ej_gamification.routes', namespace='gamification')),
-    path('profile/notifications/', include('ej_notifications.routes', namespace='notifications')),
 
     # Conversations and other EJ-specific routes
     path('conversations/', include('ej_conversations.routes', namespace='conversation')),
@@ -51,6 +50,7 @@ urlpatterns = [
     path('api/', include(rest_api.urls)),
     path('api/v1/docs/', include_docs_urls(title='ej API Docs', public=False)),
     path('api/v1/missions', include('ej_missions.urls')),
+    path('api/v1/messages', include('ej_messages.urls')),
     path('api/v1/rocketchat/', include('ej_rocketchat.routes')),
 
     # User management

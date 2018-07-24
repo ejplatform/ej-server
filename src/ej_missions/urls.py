@@ -9,7 +9,7 @@ urlpatterns = [
     url(r'(?P<pk>[0-9]+)/receipts', views.MissionViewSet.as_view({'get': 'receipts'})),
     url(r'(?P<mid>[0-9]+)/user-status/(?P<uid>[0-9]+)', views.MissionViewSet.as_view({'get': 'user_status'})),
     url(r'(?P<pk>[0-9]+)/statistics', views.MissionViewSet.as_view({'get': 'statistics'})),
-    url(r'(?P<pk>[0-9]+)/receipt', views.MissionViewSet.as_view({'post': 'receipt'})),
+    # url(r'(?P<pk>[0-9]+)/receipt', views.MissionViewSet.as_view({'post': 'receipt'})),
     url(r'receipt/(?P<pk>[0-9]+)', views.MissionViewSet.as_view({'post': 'update_receipt'})),
     url(r'(?P<mid>[0-9]+)/conversations/(?P<cid>[0-9]+)/comments', views.MissionViewSet.as_view({'get': 'conversation_comments'})),
     url(r'(?P<mid>[0-9]+)/conversations/(?P<cid>[0-9]+)/vote', views.MissionViewSet.as_view({'get': 'conversation_comments'})),
