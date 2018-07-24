@@ -48,3 +48,15 @@ def save_vote(request, vote):
     elif vote.author != request.user:
         raise PermissionError('cannot update vote of a different user')
     return vote
+
+
+@rest_api.delete_hook('ej_conversations.Vote')
+def delete_vote(request, vote):
+    user = request.user
+
+    if user.is_superuser:
+        vote.delete()
+    elif vote.author_id != user.id:
+        raise PermissionError('cannot delete vote from another user')
+    else:
+        raise PermissionError('user is not allowed to delete votes')

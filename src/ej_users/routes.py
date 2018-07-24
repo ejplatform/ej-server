@@ -6,13 +6,14 @@ from django.db import IntegrityError
 from django.http import Http404, JsonResponse, HttpResponse
 from django.http import HttpResponseServerError
 from django.shortcuts import redirect
+from django.template.loader import get_template
 from django.utils.translation import ugettext_lazy as _
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 
 from boogie.router import Router
 from ej_users import forms
-from ej_conversations.models import FavoriteConversation
+from .socialbuttons import social_buttons
 
 User = get_user_model()
 
@@ -75,7 +76,12 @@ def login(request):
     elif fast and request.user.is_authenticated and next:
         return redirect(next)
 
-    return {'user': request.user, 'form': form}
+    return {
+        'user': request.user,
+        'form': form,
+        'login_extra': login_extra_template.render(request=request),
+        'social_buttons': social_buttons(request),
+    }
 
 
 @urlpatterns.route('logout/')

@@ -5,9 +5,16 @@
             <img src="/static/img/login/ej-cat.svg">
         </div>
 
+        {% if social_buttons %}
+            {{ login_extra }}
+            <ul class="Login-socialLogin">
+                {% for button in social_buttons %}
+                    <li>{{ button }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
         <form method="post">
             {{ csrf_input }}
-
             <div><input type="text" name="email" required placeholder="E-mail ou nome de usuário"></div>
             {{ form.email.errors }}
 
