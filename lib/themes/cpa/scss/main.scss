@@ -27,6 +27,7 @@ $size-medium: 30px;
 :root {
     --button-background-primary: #C6027B;
     --button-background-secondary: #C6027B;
+    --button-background-tertiary: #8EC73F;
     --button-border-radius:  8px;
 
     --font-color-primary: #3F1B53;
@@ -44,7 +45,14 @@ $size-medium: 30px;
     --header-logo-size: 74px;
     --header-font-color: white;
 
-    
+    // Home Banner
+    --home-banner-font-family: Raleway;
+    --home-banner-font-color: #052B47;
+    --home-how-it-works-title-font-color: #FF3E72;
+    --home-how-it-works-content-font-color: #052B47;
+    --home-how-it-works-card-title-font-color: #3F1B53;
+    --home-how-it-works-card-content-font-color: #3F1B53;
+
     // Card Conversation
     --card-conversation-bottom-background: #30BEC0;
     --card-conversation-top-background: #30BEC0;

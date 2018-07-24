@@ -33,6 +33,7 @@
 :root {
   --button-background-primary: rgba(4,32,73,1);
   --button-background-secondary: rgba(48,192,211,1);
+  --button-background-tertiary: #FF3D72;
   --button-border-radius: 56px;
   --font-color-primary: #042049;
   --font-color-secondary: #30c0d3;
@@ -43,6 +44,12 @@
   --header-logo-size: 40px;
   --header-background-color: white;
   --header-font-color: #042049;
+  --home-banner-font-family: "Patua One", sans-serif;
+  --home-banner-font-color: #042049;
+  --home-how-it-works-title-font-color: rgb(4, 32, 73);
+  --home-how-it-works-content-font-color: rgb(4, 32, 73);
+  --home-how-it-works-card-title-font-color: #042049;
+  --home-how-it-works-card-content-font-color: #1d365b;
   --card-conversation-top-background: #C4F2F4;
   --card-conversation-bottom-background: url(/static/img/icons/bg.png);
   --conversation-top-background: #C4F2F4;

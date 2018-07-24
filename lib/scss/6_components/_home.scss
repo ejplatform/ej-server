@@ -7,7 +7,8 @@ $how-it-work-icon-color: $color-gray-dark !default;
 
 .HomeBanner {
     @extend .CenteredContainer;
-
+    width: 80%;
+    
     h2 {
         display: none;
         font-size: $font-size-h3;
@@ -29,6 +30,15 @@ $how-it-work-icon-color: $color-gray-dark !default;
     h2 {
         font-size: $font-size-h4;
     }
+    h1 {
+        color: var(--home-how-it-works-title-font-color);
+    }
+    p {
+        line-height: 30px;
+        color: var(--home-how-it-works-content-font-color);
+    }
+            
+        
 }
 
 .HowItWorksCard {
@@ -39,6 +49,7 @@ $how-it-work-icon-color: $color-gray-dark !default;
 
     h1 {
         font-size: $font-size-h3;
+        color: var(--home-how-it-works-card-title-font-color);
 
         i {
             padding: $spacing-unit-small;
@@ -56,7 +67,7 @@ $how-it-work-icon-color: $color-gray-dark !default;
     }
 
     p {
-        color: tint($color-hint-text, 10%);
+        color: var(--home-how-it-works-card-content-font-color);
     }
 
     &-content {
