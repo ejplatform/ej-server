@@ -21,9 +21,8 @@ class MessageViewSet(viewsets.ViewSet):
 
     def create(self, request):
         data = request.data
-        channel = Channel.objects.get(id=data["channel"])
+        channel = Channel.objects.get(id=data["channel_id"])
         message = models.Message(channel=channel, title=data["title"], body=data["body"])
-
         message.save()
         serializer = serializers.MessageSerializer(message)
         return Response(serializer.data)

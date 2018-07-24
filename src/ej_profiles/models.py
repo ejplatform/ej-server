@@ -12,6 +12,7 @@ from .choices import Race, Gender
 from rest_framework.authtoken.models import Token
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from ej_channels.models import Channel
 
 User = get_user_model()
 
@@ -187,5 +188,15 @@ User.get_profile = get_profile
 def ensure_settings_created(sender, **kwargs):
     instance = kwargs.get('instance')
     profile = instance.id
-    return Setting.objects.create(profile=instance, owner_id=profile)
+    return Setting.objects.get_or_create(profile=instance, owner_id=profile)
 
+@receiver(post_save, sender=Profile)
+def insert_user_on_channel(sender, **kwargs):
+    instance = kwargs.get('instance')
+    profile_id = instance.id
+    user = User.objects.get(id=profile_id)
+    channels = Channel.objects.all()
+    # TODO VERIFY USER SETTINGS BEFORE INSERT
+    for channel in channels:
+        channel.users.add(user)
+        channel.save()

@@ -12,6 +12,9 @@ from rest_framework.authtoken.models import Token
 
 from boogie.router import Router
 from ej_users import forms
+from ej_users.models import User
+from ej_channels.models import Channel
+from ej_notifications.models import Notification
 
 User = get_user_model()
 
@@ -144,3 +147,10 @@ def clean_cookies():
     response.delete_cookie('sessionid')
     response.delete_cookie('csrftoken')
     return response
+
+# user notifications route
+@urlpatterns.route('notifications/')
+def user_notifications(request):
+    notifications = Notification.objects.all()
+    print(notifications)
+    print("iuoeuioeuoieuioeouieouieiou")

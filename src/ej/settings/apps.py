@@ -13,6 +13,7 @@ class InstalledAppsConf(Base, EjOptions):
         'ej_math',
         'ej_messages',
         'ej_channels',
+        'ej_notifications',
         'ej_powers',
         'ej_profiles',
         'ej_reports',

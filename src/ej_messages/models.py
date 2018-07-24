@@ -16,8 +16,3 @@ class Message(models.Model):
 
 	class Meta:
 		ordering = ['title']
-
-class Notification(models.Model):
-	receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name="receiver")
-	read = models.BooleanField(default=False)
-	created_at = models.DateTimeField(null=True, auto_now_add=True)

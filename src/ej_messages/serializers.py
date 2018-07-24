@@ -7,7 +7,7 @@ import datetime
 class ChannelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Channel
-        fields = ('name' ,'id')
+        fields = ('name' ,'id', 'sort')
 
 class MessageSerializer(serializers.ModelSerializer):
     channel = ChannelSerializer(read_only=True)
