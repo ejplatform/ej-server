@@ -35,3 +35,16 @@ def random(request):
 @rest_api.property('ej_conversations.Conversation')
 def statistics(conversation):
     return conversation.statistics()
+
+
+#
+# Votes
+#
+@rest_api.save_hook('ej_conversations.Vote')
+def save_vote(request, vote):
+    if vote.author_id is None:
+        vote.author_id = request.user.id
+        vote.save()
+    elif vote.author != request.user:
+        raise PermissionError('cannot update vote of a different user')
+    return vote
