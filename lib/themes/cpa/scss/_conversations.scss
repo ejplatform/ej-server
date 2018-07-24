@@ -4,6 +4,16 @@
     padding-bottom: 0;
 }
 
+.ConversationCard {
+  height: auto;
+  padding-bottom: 100px;
+}
+
+.ConversationCard-cover {
+  height: auto;
+  max-height: none;
+}
+
 .ConversationCard-cover + .ConversationCard-actions {
     background: $color-blue-dark url('/static/img/bg.svg') bottom center no-repeat;
     background-size: cover;
