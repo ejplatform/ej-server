@@ -18,10 +18,6 @@ User = get_user_model()
 app_name = 'ej_users'
 urlpatterns = Router(
     template='ej_users/{name}.jinja2',
-    models={
-        'user': User,
-    },
-    lookup_field='username',
 )
 log = logging.getLogger('ej')
 
@@ -34,17 +30,16 @@ def register(request):
         form = forms.RegistrationForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
-            username = data['username']
             name, email, password = data['name'], data['email'], data['password']
             try:
-                user = User.objects.create_user(username, email, password, name=name)
+                user = User.objects.create_user(email, password, name=name)
                 log.info(f'user {user} ({email}) successfully created')
             except IntegrityError as ex:
                 log.info(f'invalid login attempt: {email}')
                 form.add_error(None, str(ex))
             else:
                 user = auth.authenticate(request,
-                                         username=user.username,
+                                         email=user.email,
                                          password=password)
                 auth.login(request, user)
                 log.info(f'user {user} ({email}) logged in')
@@ -56,7 +51,7 @@ def register(request):
 @urlpatterns.route('login/')
 def login(request):
     form = forms.LoginForm(request.POST if request.method == 'POST' else None)
-    error_msg = _('Invalid username or password')
+    error_msg = _('Invalid email or password')
     next = request.GET.get('next', '/')
     fast = request.GET.get('fast', 'false') == 'true'
 
@@ -65,8 +60,8 @@ def login(request):
         email, password = data['email'], data['password']
 
         try:
-            user = User.objects.get_by_email_or_username(email)
-            user = auth.authenticate(request, username=user.username, password=password)
+            user = User.objects.get_by_email(email)
+            user = auth.authenticate(request, email=user.email, password=password)
             log.info(f'user {user} ({email}) successfully authenticated')
             if user is None:
                 raise User.DoesNotExist

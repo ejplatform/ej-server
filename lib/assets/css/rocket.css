@@ -26,6 +26,37 @@
  Global
  =========================================================================== */
 /*
+ =========================================================================== 
+ Semantic Variables
+ =========================================================================== 
+*/
+:root {
+  --button-background-primary: rgba(4,32,73,1);
+  --button-background-secondary: rgba(48,192,211,1);
+  --button-border-radius: 56px;
+  --font-color-primary: #042049;
+  --font-color-secondary: #30c0d3;
+  --font-color-terciary: #30c0d3;
+  --font-color-quaternary: #042049;
+  --font-size-x-large: 13px;
+  --profile-font-color-primary: #30BFD3;
+  --header-logo-size: 40px;
+  --header-background-color: white;
+  --header-font-color: #042049;
+  --card-conversation-top-background: #C4F2F4;
+  --card-conversation-bottom-background: url(/static/img/icons/bg.png);
+  --conversation-top-background: #C4F2F4;
+  --conversation-middle-background: #C4F2F4;
+  --conversation-bottom-border: 28px solid #C4F2F4;
+  --conversation-vote-agree-color: #22b35c;
+  --conversation-vote-skip-color: #30c0d3;
+  --conversation-vote-disagree-color: #f13c20;
+  --conversation-comment-background-color: #C4F2F4;
+  --conversation-comment-title-color: #30c0d3;
+  --conversation-comment-textarea-border: 2px solid #30c0d3;
+  --conversation-comment-button-border-radius: 50%; }
+
+/*
  ALIASES
  =============================================================================*/
 /*
@@ -445,7 +476,7 @@ template {
   background-color: #30c0d3;
   color: rgba(255, 255, 255, 0.9);
   border: none;
-  border-radius: 56px;
+  border-radius: var(--button-border-radius);
   box-sizing: border-box;
   cursor: pointer;
   display: inline-block;

@@ -23,7 +23,7 @@ class RegistrationForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['name', 'email', 'username']
+        fields = ['name', 'email']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

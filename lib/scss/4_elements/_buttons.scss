@@ -18,7 +18,7 @@ $button-text-tranform: uppercase;
 .Button {
     @include color($color-action-default, $color-action-default-text);
     border: none;
-    border-radius: $button-border-radius;
+    border-radius: var(--button-border-radius);
     box-sizing: border-box;
     cursor: pointer;
     display: inline-block;

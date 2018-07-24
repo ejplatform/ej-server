@@ -1,6 +1,6 @@
 @import '../../../scss/0_constants/index';
 @import 'overrides';
-@import '../../../scss/main';
+@import '../../../scss/maindefault';
 
 $blue-dark: #30BEC0;
 $blue-light: #D4F7F5;
@@ -22,3 +22,46 @@ $size-medium: 30px;
 @import 'conversations';
 @import 'profile';
 @import 'layout';
+
+
+:root {
+    --button-background-primary: #C6027B;
+    --button-background-secondary: #C6027B;
+    --button-border-radius:  8px;
+
+    --font-color-primary: #3F1B53;
+    --font-color-secondary: #D4F7F5;
+    --font-color-terciary: #30BEC0;
+    --font-color-quaternary: #052B47;
+
+    --font-size-x-large: 18px;
+
+    //Profile
+    --profile-font-color-primary: #30BEC0;
+
+    //Header
+    --header-background-color: #30BEC0;
+    --header-logo-size: 74px;
+    --header-font-color: white;
+
+    
+    // Card Conversation
+    --card-conversation-bottom-background: #30BEC0;
+    --card-conversation-top-background: #30BEC0;
+
+    // Conversation
+    --conversation-top-background: #D4F7F5;
+    --conversation-middle-background: #D4F7F5;
+    --conversation-bottom-border: 28px solid #D4F7F5;
+
+    // Conversation: vote
+    --conversation-vote-agree-color: #3F1B53;
+    --conversation-vote-skip-color: #30BEC0;
+    --conversation-vote-disagree-color: #C6027B;
+
+    // Conversation: comment form
+    --conversation-comment-background-color: white;
+    --conversation-comment-title-color: #C6027B;
+    --conversation-comment-textarea-border:  2px solid #30C0D3;
+    --conversation-comment-button-border-radius: 10px;
+}

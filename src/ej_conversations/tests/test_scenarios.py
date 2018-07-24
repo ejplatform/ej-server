@@ -42,7 +42,7 @@ class TestCommentLimitsAreEnforced:
         with self.time_control():
             # We create a basic conversation and a user.
             conversation = mk_conversation()
-            user = mk_user(username='test')
+            user = mk_user(email='test@domain.com')
 
             # User can post the first comment without problems.
             conversation.create_comment(user, 'cmt1')
@@ -71,9 +71,9 @@ class TestStatistics:
         user = mk_user()
 
         # Three groups of people with different preferences
-        g1 = [mk_user(username=f'user_a{i}') for i in range(3)]
-        g2 = [mk_user(username=f'user_b{i}') for i in range(3)]
-        g3 = [mk_user(username=f'user_c{i}') for i in range(2)]
+        g1 = [mk_user(email=f'user_a{i}@domain.com') for i in range(3)]
+        g2 = [mk_user(email=f'user_b{i}@domain.com') for i in range(3)]
+        g3 = [mk_user(email=f'user_c{i}@domain.com') for i in range(2)]
 
         # User makes some comments
         comments = [

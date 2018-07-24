@@ -5,7 +5,7 @@ from django.db.models import Q
 from django.utils.timezone import now
 
 from boogie import rules
-from ej_users.models import User
+from ej_conversations.models import Conversation
 
 
 #
@@ -41,6 +41,20 @@ def is_personal_conversations_enabled():
     Check global config to see if personal conversations are allowed.
     """
     return getattr(settings, 'EJ_CONVERSATIONS_ALLOW_PERSONAL_CONVERSATIONS', True)
+
+
+#
+# Conversations
+#
+@rules.register_rule('ej_conversations.has_conversation')
+def has_conversation(user):
+    """
+    Verify if a user has any conversation.
+    """
+    if Conversation.objects.filter(author=user).count() > 0:
+        return True
+    else:
+        return False
 
 
 #
@@ -126,12 +140,9 @@ def can_comment(user, conversation):
     return remaining > 0
 
 
-# @TODO create a logic to create conversation permission
 @rules.register_perm('ej_conversations.can_add_conversation')
 def can_add_conversation(user):
-    if User.objects.filter(username=user.username).exists():
-        return True
-    return False
+    return user.is_staff
 
 
 @rules.register_perm('ej_conversations.can_edit_conversation')
@@ -140,16 +151,14 @@ def can_edit_conversation(user, conversation):
     Can edit a given conversation.
 
     * User is conversation author
-    * OR User has explict permission to change conversations
     * OR Conversation is promoted and user can create/edit promoted conversations
     """
-    if conversation is not None and user == conversation.author:
+    if conversation is None:
+        return False
+    elif user == conversation.author:
         return True
-    elif user.has_perm('ej_conversations.can_change_conversation'):
-        return True
-    elif (conversation is not None and
-          (conversation.status == conversation.STATUS.promoted
-           and user.has_perm('ej_conversations.is_publisher'))):
+    elif (conversation.status == conversation.STATUS.promoted
+          and user.has_perm('ej_conversations.can_publish')):
         return True
     return False
 
@@ -157,12 +166,12 @@ def can_edit_conversation(user, conversation):
 @rules.register_perm('ej_conversations.can_moderate_conversation')
 def can_moderate_conversation(user, conversation):
     """
-    Can edit a given conversation.
+    Can moderate a given conversation.
 
     * User can edit conversation
     * OR user is an moderator (explicit admin permission)
     """
     return (
         can_edit_conversation(user, conversation)
-        or user.has_perm('ej_conversations.is_moderator')
+        or user.has_perm('ej_conversations.can_moderate')
     )

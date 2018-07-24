@@ -13,6 +13,7 @@ $nav-menu-font-size: $font-size-default !default;
 $nav-menu-opacity: 1.0 !default;
 $nav-menu-shadow: $box-shadow !default;
 $nav-menu-width: 75vw !default;
+$nav-menu-max-width: 400px !default;
 $nav-menu-ul-padding: 0 !default;
 
 // Element
@@ -21,6 +22,7 @@ $nav-menu-ul-padding: 0 !default;
     @include size($nav-menu-width, 100%);
 
     min-height: 100vh;
+    max-width: $nav-menu-max-width;
     box-shadow: $nav-menu-shadow;
     box-sizing: border-box;
     font-size: $nav-menu-font-size;
@@ -87,4 +89,11 @@ $nav-menu-ul-padding: 0 !default;
         }
     }
 
+    &-Accessibility {
+        display: none;
+        >li {
+            margin-left: $spacing-unit;
+        }
+    }
+    
 }

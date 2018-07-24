@@ -4,8 +4,8 @@ from model_mommy.recipe import Recipe
 __all__ = ['user', 'root']
 
 User = get_user_model()
-user = Recipe(User, is_superuser=False, username='user')
-root = Recipe(User, is_superuser=True, username='root', is_staff=True)
+user = Recipe(User, is_superuser=False, email='user@domain.com')
+root = Recipe(User, is_superuser=True, email='root@domain.com', is_staff=True)
 
 
 def make_fixture(recipe, name):

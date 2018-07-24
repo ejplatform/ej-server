@@ -26,27 +26,21 @@ def sass(ctx, no_watch=False, trace=False, theme=None):
     """
     Run Sass compiler
     """
-    # Choose theme
-    base = pathlib.Path('lib/scss')
-    if theme is None and 'THEME' in os.environ and os.environ['THEME'] != 'default':
-        theme = os.environ['THEME']
-    if theme:
-        if '/' in theme:
-            base = pathlib.Path(theme)
-        else:
-            base = pathlib.Path('lib/themes/') / theme / 'scss'
+
+    cmd_main = 'lib/scss/maindefault.scss:lib/assets/css/maindefault.css'
+    cmd_rocket = 'lib/scss/rocket.scss:lib/assets/css/rocket.css'
+
+    themes_path = 'lib/themes'
+    cmd_themes = ''
+    for theme in os.listdir(themes_path):
+        cmd_themes += themes_path  + '/' + theme + f"/scss/main.scss:lib/assets/css/main{theme}.css "
 
     suffix = '' if no_watch else ' --watch'
     suffix += ' --trace' if trace else ''
 
-    main = base / 'main.scss'
-    rocket = base / 'rocket.scss'
     ctx.run('rm .sass-cache -rf')
-    cmd = (
-        f'sass '
-        f'{main}:lib/assets/css/main.css '
-        f'{rocket}:lib/assets/css/rocket.css' + suffix
-    )
+    cmd = (f'sass {cmd_main} {cmd_rocket} {cmd_themes} {suffix}')
+
     print('Running:', cmd)
     ctx.run(cmd, pty=True)
 

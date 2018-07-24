@@ -11,29 +11,28 @@ urlpatterns = Router(
     models={
         'conversation': models.Conversation,
         'comment': models.Comment,
-        'owner': get_user_model(),
+        'board': models.ConversationBoard,
     },
     lookup_field={
         'conversation': 'slug',
         'comment': 'slug',
-        'owner': 'username',
+        'board': 'name',
     },
     lookup_type='slug',
     object='conversation',
 )
-base_url = '<model:owner>/conversations/'
+base_url = 'conversations/'
+board_url = '<model:board>/'
 
 
-@urlpatterns.route(base_url, name='list')
-def conversation_list(request, owner):
-    return routes.conversation_list(request, owner)
+@urlpatterns.route(board_url, name='list')
+def conversation_list(request, board):
+    return routes.conversation_list(request, board)
 
 
 @urlpatterns.route(base_url + 'add/')
-def create(request, owner):
-    if request.user != owner:
-        raise Http404
-    return routes.create(request, owner)
+def create(request):
+    return routes.create(request)
 
 
 @urlpatterns.route(base_url + '<model:conversation>/')

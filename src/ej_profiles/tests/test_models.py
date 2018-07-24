@@ -11,7 +11,7 @@ class TestProfile:
     @pytest.fixture
     def profile(self):
         return Profile(
-            user=User(username='user', name='name'),
+            user=User(email='user@domain.com', name='name'),
             image='image',
             age=18,
             country='country',

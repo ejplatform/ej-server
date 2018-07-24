@@ -1,21 +1,21 @@
 from django.core.exceptions import ValidationError
+from django.utils.translation import ugettext_lazy as _
 from django.http import HttpResponseServerError
 from django.urls import reverse
-from django.utils.translation import ugettext_lazy as _
 
 from boogie import rules
 from boogie.rules import proxy_seq
 from hyperpython import a
 from . import urlpatterns, conversation_url
-from ..models import Conversation
+from ..models import Conversation, ConversationBoard
 
 
 @urlpatterns.route('', name='list')
-def conversation_list(request, owner=None):
+def conversation_list(request, board=None):
     user = request.user
+    owner = board.owner if board else None
     if owner:
-        kwargs = {'owner': owner}
-        create_url = reverse('user-conversation:create', kwargs=kwargs)
+        create_url = reverse('user-conversation:create')
         conversations = Conversation.objects.filter(author=owner)
     else:
         create_url = reverse('conversation:create')
@@ -26,8 +26,13 @@ def conversation_list(request, owner=None):
         'can_add_conversation': user.has_perm('ej_conversations.can_add_conversation'),
         'owner': owner,
     }
+    board_url = ''
+    if not user.is_anonymous:
+        board = ConversationBoard.objects.filter(owner=user)
+        if board:
+            board_url = '/' + board.first().name + '/'
 
-    if request.path == '/' + user.username + '/conversations/':
+    if request.path == board_url:
         clist['add_link'] = a(_('Add new conversation'), href=create_url)
     else:
         clist['add_link'] = ''
@@ -65,7 +70,8 @@ def detail(request, conversation, owner=None):
             ctx['comment'] = conversation.create_comment(user, comment)
         except (PermissionError, ValidationError) as ex:
             ctx['comment_error'] = str(ex)
-
+    elif request.POST.get('action') == 'favorite':
+        user.update_favorite_conversation_status(conversation)
     return ctx
 
 

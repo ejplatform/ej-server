@@ -56,4 +56,4 @@ $RECYCLE.BIN/
 dump.rdb
 .ipynb_checkpoints/
 *.mo
-lib/assets/css/main.css
+lib/assets/css/main*.css

@@ -12,6 +12,7 @@ from markupsafe import Markup
 from ej_configurations import social_icons, fragment
 from hyperpython.components import render
 from . import tags
+import os
 
 TAG_MAP = {k: getattr(tags, k) for k in tags.__all__}
 SALT_CHARS = string.ascii_letters + string.digits + '-_'
@@ -22,6 +23,10 @@ def environment(**options):
     options.setdefault('trim_blocks', True)
     options.setdefault('lstrip_blocks', True)
     env = Environment(**options)
+    theme = 'default'
+    if 'THEME' in os.environ:
+        theme = os.environ['THEME']
+
     env.globals.update(
         static=staticfiles_storage.url,
         url=reverse,
@@ -35,6 +40,7 @@ def environment(**options):
         social_icons=social_icons,
         footer_data=lambda: fragment('global.footer', raises=False),
         service_worker=getattr(settings, 'SERVICE_WORKER', False),
+        current_theme=theme,
         context=context,
 
         # Hyperpython tag functions

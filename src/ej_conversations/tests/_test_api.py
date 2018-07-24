@@ -46,7 +46,7 @@ class TestPostRoutes:
     EXCLUDES = dict(skip=['created', 'modified'])
 
     def test_post_conversation(self, api, mk_user, category_db):
-        user = mk_user(username='conversation_author', is_staff=True)
+        user = mk_user(email='conversation_author@domain.com', is_staff=True)
         post_data = dict(
             title=CONVERSATION['title'],
             question=CONVERSATION['question'],
@@ -67,7 +67,7 @@ class TestPostRoutes:
         assert data == CONVERSATION
 
     def test_post_comment(self, api, conversation_db, mk_user):
-        user = mk_user(username='comment_author', is_staff=True)
+        user = mk_user(email='comment_author@domain.com', is_staff=True)
         comment_data = dict(COMMENT, status='PENDING')
         post_data = dict(
             content=comment_data['content'],
