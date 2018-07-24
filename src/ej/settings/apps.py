@@ -7,6 +7,7 @@ class InstalledAppsConf(Base, EjOptions):
         'ej_clusters',
         'ej_configurations',
         'ej_conversations',
+        'ej_clusterviz',
         'ej_dataviz',
         'ej_gamification',
         'ej_help',

@@ -4,6 +4,16 @@
     padding-bottom: 0;
 }
 
+.ConversationCard {
+  height: auto;
+  padding-bottom: 100px;
+}
+
+.ConversationCard-cover {
+  height: auto;
+  max-height: none;
+}
+
 .ConversationCard-cover + .ConversationCard-actions {
     background: $color-blue-dark url('/static/img/bg.svg') bottom center no-repeat;
     background-size: cover;
@@ -12,4 +22,66 @@
 .ConversationCard-actions .Button[primary] {
     border-radius: $unit;
     background: $color-pink;
+}
+
+.Moderate-comments {
+  .Comment-metadata {
+    color: $color-purple;
+  }
+
+  .Comment {
+    border-color: $color-pink;
+
+    p {
+      color: $color-purple;
+    }
+  }
+
+  .ConversationComment-actions {
+    li {
+      &:before {
+        background: $color-blue-dark;
+        border: 0;
+        color: #fff;
+      }
+
+      .Button {
+        color: $color-blue-dark;
+      }
+    }
+
+    li + li {
+      &:before {
+        background: $color-pink;
+        border: 0;
+        color: #fff;
+      }
+
+      .Button {
+        color: $color-pink;
+      }
+    }
+  }
+
+  .Comment-rejection {
+    background: transparent;
+
+    h3 {
+      color: $color-pink;
+    }
+
+    p {
+      color: $color-purple;
+    }
+
+    textarea {
+      color: $color-purple;
+      border-color: $color-blue-dark;
+    }
+
+    .Button {
+      color: #fff;
+      width: auto;
+    }
+  }
 }

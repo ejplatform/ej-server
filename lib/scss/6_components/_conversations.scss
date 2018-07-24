@@ -152,6 +152,8 @@ $conversation-card-button-border-radius: 50% !default;
         padding: 0 $spacing-unit;
         position: relative;
         z-index: 2;
+        overflow: hidden;
+        max-height: 86px;
 
         h1 {
             display: flex;
