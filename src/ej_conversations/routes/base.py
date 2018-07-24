@@ -7,7 +7,7 @@ from boogie import rules
 from boogie.rules import proxy_seq
 from hyperpython import a
 from . import urlpatterns, conversation_url
-from ..models import Conversation, ConversationBoard
+from ..models import Conversation, ConversationBoard, FavoriteConversation
 
 
 @urlpatterns.route('', name='list')
@@ -45,6 +45,7 @@ def detail(request, conversation, owner=None):
     user = request.user
     comment = conversation.next_comment(user, None)
     n_comments = rules.compute('ej_conversations.remaining_comments', conversation, user)
+    favorites = FavoriteConversation.objects.filter(conversation=conversation)
     ctx = {
         'conversation': conversation,
         'comment': comment,
@@ -53,6 +54,7 @@ def detail(request, conversation, owner=None):
         'can_comment': user.has_perm('ej_conversations.can_comment', conversation),
         'remaining_comments': n_comments,
         'login_link': a(_('login'), href=reverse('auth:login')),
+        'favorites': favorites,
     }
 
     if comment and request.POST.get('action') == 'vote':
@@ -71,7 +73,7 @@ def detail(request, conversation, owner=None):
         except (PermissionError, ValidationError) as ex:
             ctx['comment_error'] = str(ex)
     elif request.POST.get('action') == 'favorite':
-        user.update_favorite_conversation_status(conversation)
+        conversation.update_favorite_status(user)
     return ctx
 
 

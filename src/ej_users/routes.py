@@ -12,6 +12,7 @@ from rest_framework.authtoken.models import Token
 
 from boogie.router import Router
 from ej_users import forms
+from ej_conversations.models import FavoriteConversation
 
 User = get_user_model()
 
@@ -115,6 +116,17 @@ def remove_account(request):
         'profile': request.user.profile,
     }
 
+
+@urlpatterns.route('profile/favorites/', login=True)
+def favorite_conversation(request):
+    if request.method == 'GET':
+        user = request.user
+        conversations = []
+        for fav in FavoriteConversation.objects.filter(user=user):
+            conversations.append(fav.conversation)
+    return {
+        'conversations': conversations,
+    }
 
 #
 # Registration via API + cookies
