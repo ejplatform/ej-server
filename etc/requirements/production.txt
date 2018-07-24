@@ -87,7 +87,7 @@ Collectfast ~= 0.5.2
 django-bricks ~= 0.2.3
 
 # Email backends for Mailgun, Postmark, SendGrid and more
-django-anymail ~= 0.11.1
+django-anymail ~= 3.0
 
 # Raven (Sentry client)
 raven ~= 6.5.0
