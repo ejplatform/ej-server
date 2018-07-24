@@ -5,25 +5,29 @@ var clusters = {
             pos: [70, 120],
             rotation: 0,
             intersections: [1.0, 0.0, 0.0, 0.0],
-            personCount: 25
+            personCount: 25,
+            svg: new Raster('./img/person.svg').scale(0.03)
         },
         {
             pos: [200, 220],
             rotation: 0,
             intersections: [0.0, 1.0, 0.0, 0.0],
             personCount: 50,
+            svg: new Raster('./img/person.svg').scale(0.03)
         },
         {
             pos: [300, 100],
             rotation: 0,
             intersections: [0.0, 0.0, 1.0, 0.1],
             personCount: 40,
+            svg: new Raster('./img/person.svg').scale(0.03)
         },
         {
             pos: [100, 200],
             rotation: 0,
             intersections: [0.0, 0.0, 0.1, 1.0],
             personCount: 25,
+            svg: new Raster('./img/person.svg').scale(0.03)
         }
     ],
 }
@@ -55,7 +59,22 @@ ForceLayout.prototype = {
         var layout = this;
 
         return data.map(function (item) {
-            var element = layout.newElement(item.pos, item.personCount * 2);
+            var personCountText = new PointText();
+            personCountText.justification = 'center';
+            personCountText.content = item.personCount.toString();
+            item.svg.position = new Point(0, 0);
+            personCountText.position = new Point(30, 10);
+            var element = layout.newElement(
+                item.pos,
+                item.personCount * 2);
+
+            element.internalGroup = new Group({
+                children: [
+                    personCountText,
+                    item.svg
+                ]
+            })
+
             element.vel = randomPoint(layout.velocityScale);
             element.acc = new Point(0, 0);
             element.impulse = new Point(0, 0);
@@ -67,7 +86,6 @@ ForceLayout.prototype = {
             element.omega = 0;
             element.angle = 0;
             element.position = pt(item.pos);
-            element.position = new Point(0, 0);
             return element;
         });
     },
@@ -211,6 +229,17 @@ ForceLayout.prototype = {
             var angle = layout.getBestRotation(obj);
             obj.rotation = scale * (angle - obj.angle);
             obj.angle = angle;
+
+            //internal elements
+            // obj.svg.rotation = -(scale * (angle - obj.angle))
+            // obj.personCountText.rotation = -(scale * (angle - obj.angle))
+            obj.internalGroup.rotation = -(scale * (angle - obj.angle));
+        })
+    },
+
+    positionLabels: function () {
+        this.shapes.map(function (shape) {
+            shape.internalGroup.position = shape.position;
         })
     },
 
@@ -241,6 +270,8 @@ ForceLayout.prototype = {
 
         // Recompute orientation
         this.computeRotations();
+
+        this.positionLabels();
     }
 };
 
@@ -260,6 +291,7 @@ function randomPoint(scale) {
  */
 function startLayout(data) {
     var layout = new ForceLayout(data);
+    console.log(layout.shapes);
     return layout;
 }
 
@@ -280,3 +312,4 @@ function onFrame(event) {
 }
 
 var layout = startLayout(clusters);
+
