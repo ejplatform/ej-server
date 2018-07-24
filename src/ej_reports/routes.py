@@ -1,7 +1,9 @@
 import numpy as np
 import pandas as pd
+import csv
 from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _, ugettext as __
+from django.http import HttpResponse
 
 from boogie.router import Router
 from boogie.rules import proxy_seq
@@ -28,7 +30,7 @@ User = get_user_model()
 
 
 @urlpatterns.route(conversation_url)
-def index(conversation):
+def index(request, conversation):
     statistics = conversation.statistics()
     votes = get_raw_votes(conversation)
     comments = comments_table(conversation, votes)
@@ -40,17 +42,22 @@ def index(conversation):
         size=lambda x: x.users.count(),
     )
 
-    return {
-        'page_title': _('Report'),
-        'content_title': hyperlink(conversation),
-        'conversation': conversation,
-        'statistics': statistics,
-        'vote_data': map_to_table(statistics['votes']),
-        'comment_data': map_to_table(statistics['comments']),
-        'comments_table': df_to_table(comments),
-        'participants_table': df_to_table(participants),
-        'clusters': clusters,
-    }
+    if request.GET.get('action') == 'generate_csv':
+        response = generate_csv(conversation, statistics, votes, comments,
+                                participants, clusters)
+    else:
+        response = {
+            'page_title': _('Report'),
+            'content_title': hyperlink(conversation),
+            'conversation': conversation,
+            'statistics': statistics,
+            'vote_data': map_to_html_table(statistics['votes']),
+            'comment_data': map_to_html_table(statistics['comments']),
+            'comments_table': df_to_table(comments),
+            'participants_table': df_to_table(participants),
+            'clusters': clusters,
+        }
+    return response
 
 
 @urlpatterns.route(conversation_url + 'clusters/')
@@ -101,6 +108,11 @@ PC_COLUMNS = [
 
 def map_to_table(data):
     array = np.array(list(data.items())).T
+    return array
+
+
+def map_to_html_table(data):
+    array = map_to_table(data)
     cols, body = array
     return html_table([body], columns=[__(col) for col in cols], class_='ReportTable table')
 
@@ -126,7 +138,7 @@ def to_pc(data):
 
 
 def cluster_comments_table(cluster):
-    usernames = list(cluster.users.all().values_list('username', flat=True))
+    usernames = list(cluster.users.all().values_list('email', flat=True))
 
     # Filter votes by users present in cluster
     df = cluster.all_votes
@@ -161,11 +173,43 @@ def participants_table(conversation, votes):
     stats = VoteStats(votes)
     df = stats.users(pc=True)
 
-    data = list(User.objects.values_list('username', 'name'))
-    participants = pd.DataFrame(list(data), columns=['username', 'name'])
-    participants.index = participants.pop('username')
+    data = list(User.objects.values_list('email', 'name'))
+    participants = pd.DataFrame(list(data), columns=['email', 'name'])
+    participants.index = participants.pop('email')
 
     for col in ['agree', 'disagree', 'skipped', 'divergence']:
         participants[col] = df[col]
 
     return participants
+
+
+def generate_csv(conversation, statistics, votes, comments, participants, clusters):
+    response = HttpResponse(content_type='text/csv')
+    filename = 'filename="' + conversation.title + '.csv"'
+    response['Content-Disposition'] = 'attachment;' + filename
+
+    writer = csv.writer(response)
+    writer.writerow({'votes'})
+    writer.writerows(map_to_table(statistics['votes']))
+    writer.writerow({''})
+    writer.writerow({'comments'})
+    writer.writerows(map_to_table(statistics['comments']))
+    writer.writerow({''})
+    writer.writerow({'AdvancedInfo'})
+    writer.writerow({'Comments'})
+    writer.writerow(list(comments))
+    writer.writerows(comments.values)
+    writer.writerow({''})
+    writer.writerow({'Participants'})
+    writer.writerow(list(participants))
+    writer.writerows(participants.values)
+    writer.writerow({''})
+    writer.writerow({'Clusters'})
+    writer.writerow({''})
+    for cluster in clusters:
+        writer.writerow({cluster.name + ' size: ' + str(cluster.size)})
+        writer.writerow({''})
+        table = pd.read_html(str(cluster.comment_table))[0]
+        writer.writerow(list(participants))
+        writer.writerows(table.values)
+    return response

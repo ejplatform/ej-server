@@ -1,9 +1,17 @@
 {% extends 'base.jinja2' %}
-
+{% from 'components/generic/elements.jinja2' import action_button %}
 {% block content %}
     <div class="Container">
         <h1>{{ _('Basic info') }}</h1>
         <p>{{ _('Report for conversation: "{text}"').format(text=conversation.text) }}</p>
+        <div class="Csv-report">
+            <form method="get" class="Comment-voteArea" id="Csv-form">
+                <input type="hidden" name="action" value="generate_csv">
+                    <button type="submit" form="Csv-form">
+                      <span>{{ _('Export report to csv') }}</span>
+                    </button>
+            </form>
+        </div>
         <h2>{{ _('Votes ({total} participants)').format(total=statistics.participants) }}</h2>
         {{ vote_data }}
 
