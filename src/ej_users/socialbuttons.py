@@ -1,8 +1,13 @@
+import logging
+
 from allauth.socialaccount import providers
 from allauth.socialaccount.models import SocialApp
+from allauth.socialaccount.providers.facebook.provider import FacebookProvider
+from django.core.exceptions import ImproperlyConfigured
 
 from hyperpython.components import fab_link
 
+log = logging.getLogger('ej')
 SOCIAL_BUTTON_REGISTRY = {}
 
 
@@ -59,3 +64,20 @@ def github_button(request):
 @register_button('google')
 def google_button(request):
     return facebook_button(request)
+
+
+#
+# Monkey patch facebook provider to avoid
+#
+facebook_media_js = FacebookProvider.media_js
+
+
+def media_js(self, request):
+    try:
+        return facebook_media_js(self, request)
+    except ImproperlyConfigured as exc:
+        log.info(f'ImproperlyConfigured: {exc}')
+        return ''
+
+
+FacebookProvider.media_js = media_js
