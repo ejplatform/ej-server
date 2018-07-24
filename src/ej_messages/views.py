@@ -21,7 +21,6 @@ class MessageViewSet(viewsets.ViewSet):
 
     def create(self, request):
         data = request.data
-        print(data)
         channel = Channel.objects.get(id=data["channel"])
         message = models.Message(channel=channel, title=data["title"], body=data["body"])
 

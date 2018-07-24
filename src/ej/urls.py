@@ -51,6 +51,7 @@ urlpatterns = [
     path('api/v1/docs/', include_docs_urls(title='ej API Docs', public=False)),
     path('api/v1/missions', include('ej_missions.urls')),
     path('api/v1/messages', include('ej_messages.urls')),
+    path('api/v1/channels', include('ej_channels.urls')),
     path('api/v1/rocketchat/', include('ej_rocketchat.routes')),
 
     # User management

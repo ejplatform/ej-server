@@ -9,4 +9,8 @@ from ej_users.models import User
 class Channel(models.Model):
 	name = models.CharField(max_length=100)
 	users = models.ManyToManyField(User, blank=True)
+	sort =  models.CharField(max_length=100, default="admin")
 	created_at = models.DateTimeField(null=True, auto_now_add=True)
+
+	class Meta:
+		ordering = ['name']
