@@ -11,11 +11,6 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AddField(
-            model_name='user',
-            name='favorite_conversations',
-            field=models.ManyToManyField(to='ej_conversations.Conversation'),
-        ),
         migrations.AlterField(
             model_name='user',
             name='email',

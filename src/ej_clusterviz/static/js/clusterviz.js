@@ -171,7 +171,6 @@ ForceLayout.prototype = {
             // Implicit Euler
             shape.vel = shape.vel + acc * dt;
             shape.position = shape.position + shape.vel * dt;
-
             // Newton
             // shape.position = shape.position + shape.vel * dt + acc * (dt*dt / 2);
             // shape.vel = shape.vel + acc * dt;
@@ -276,7 +275,7 @@ function pt(data) {
  * Executed on every frame.
  */
 function onFrame(event) {
-    layout.update(event.delta);
+    layout.update(Math.min(event.delta, 0.032));
 }
 
 var layout = startLayout(clusters);
