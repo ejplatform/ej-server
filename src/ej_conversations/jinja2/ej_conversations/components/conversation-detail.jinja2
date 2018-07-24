@@ -55,16 +55,16 @@
             <h1>Comentários da Comunidade</h1>
             <p>Interaja com as opiniões selecionando uma das opções de botão e aproveite para incluir sua própria opinião nesta conversa</p>
         </div>
-
-        {% if comment %}
-            {{ comment_detail(comment, user, conversation.comments.count() - conversation.user_votes(user).count(), conversation.comments.count()) }}
-        {% else %}
-            <div class="Comment">
-                <h1>{{ _('Congratulations!') }}</h1>
-                <p>{{ _("There are no comments left to vote :)") }}</p>
-            </div>
+        {% if user.is_authenticated %}
+          {% if comment %}
+              {{ comment_detail(comment, user, conversation.comments.count() - conversation.user_votes(user).count(), conversation.comments.count()) }}
+          {% else %}
+              <div class="Comment">
+                  <h1>{{ _('Congratulations!') }}</h1>
+                  <p>{{ _("There are no comments left to vote :)") }}</p>
+              </div>
+          {% endif %}
         {% endif %}
-
         {# Post a new comment #}
         {% if can_comment %}
             {{ comment_form(csrf_input) }}
