@@ -1,6 +1,3 @@
-import pytest
-
-from ej_conversations import create_conversation
 from ej_users.models import User
 
 

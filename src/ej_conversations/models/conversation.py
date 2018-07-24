@@ -270,6 +270,7 @@ class Conversation(TimeStampedModel, StatusModel):
     def favorite_statistic(self):
         return FavoriteConversation.objects.filter(conversation=self).count()
 
+
 def vote_count(conversation, which=None):
     """
     Return the number of votes of a given type.
