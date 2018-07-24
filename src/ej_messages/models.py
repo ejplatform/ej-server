@@ -12,6 +12,12 @@ class Message(models.Model):
 	body = models.CharField(max_length=250)
 	channel = models.ForeignKey(Channel, on_delete=models.CASCADE, null=True)
 	created_at = models.DateTimeField(null=True, auto_now_add=True)
+	status = models.CharField(max_length=100, default="pending")
 
 	class Meta:
 		ordering = ['title']
+
+class Notification(models.Model):
+	receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name="receiver")
+	read = models.BooleanField(default=False)
+	created_at = models.DateTimeField(null=True, auto_now_add=True)

@@ -29,7 +29,15 @@ class ChannelViewSet(viewsets.ViewSet):
     def add_to_channel(self, request):
         data = request.data
         user = User.objects.filter(id=data["user_id"])[0]
-        channel = models.Channel.filter(id=data["id"])[0]
+        channel = models.Channel.objects.filter(id=data["id"])[0]
         channel.users.add(user)
+        serializer = serializers.ChannelSerializer(channel)
+        return Response(serializer.data)
+
+    def remove_from_channel(self, request):
+        data = request.data
+        user = User.objects.filter(id=data["user_id"])[0]
+        channel = models.Channel.objects.filter(id=data["id"])[0]
+        channel.users.remove(user)
         serializer = serializers.ChannelSerializer(channel)
         return Response(serializer.data)
