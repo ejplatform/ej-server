@@ -2,7 +2,7 @@ import pytest
 from django.core.exceptions import ValidationError
 
 from ej_conversations import create_conversation
-from ej_conversations.models import Vote, Choice
+from ej_conversations.models import Vote, Choice, FavoriteConversation
 from ej_users.models import User
 
 
@@ -35,6 +35,30 @@ class TestConversation:
         user.save()
         board_url = '/' + user.board_name + '/'
         api.get(board_url, raw=True).status_code == 200
+
+
+class TestFavoriteConversation:
+    def test_user_favorite_conversation(self, mk_conversation, mk_user):
+        user = mk_user
+        conversation = mk_conversation
+        FavoriteConversation.objects.create(user=mk_user, conversation=conversation)
+        favorite_conversations = user.favorite_conversations
+        assert favorite_conversations.filter(id=conversation.id).exists()
+
+    def test_user_update_favorite_conversation_status_add(self, mk_conversation, mk_user):
+        user = mk_user
+        conversation = mk_conversation
+        user.update_favorite_conversation_status(conversation)
+        favorite_conversations = user.favorite_conversations
+        assert favorite_conversations.filter(id=conversation.id).exists()
+
+    def test_user_update_favorite_conversation_status_remove(self,  mk_conversation, mk_user):
+        user = mk_user
+        conversation = mk_conversation
+        user.favorite_conversations.add(conversation)
+        user.update_favorite_conversation_status(conversation)
+        favorite_conversations = user.favorite_conversations
+        assert not favorite_conversations.filter(id=conversation.id).exists()
 
 
 class TestVote:

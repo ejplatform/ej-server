@@ -30,6 +30,19 @@ def slug_base(conversation):
     return title.lower()
 
 
+class FavoriteConversation(models.Model):
+    conversation = models.ForeignKey(
+        'ej_conversations.Conversation', on_delete=models.CASCADE,
+    )
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+    )
+
+    class Meta:
+        unique_together = ('conversation', 'user')
+
+
 class ConversationBoard(models.Model):
     """
     A board that contains some conversations.
@@ -245,8 +258,17 @@ class Conversation(TimeStampedModel, StatusModel):
             return default
 
     def is_user_favorite(self, user):
-        return self.user_set.filter(id=user.id).exists()
+        return FavoriteConversation.objects.filter(user=user, conversation=self).exists()
 
+    def update_favorite_status(self, user):
+        if self.is_user_favorite(user):
+            instance = FavoriteConversation.objects.get(user=user, conversation=self)
+            instance.delete()
+        else:
+            FavoriteConversation.objects.create(user=user, conversation=self)
+
+    def favorite_statistic(self):
+        return FavoriteConversation.objects.filter(conversation=self).count()
 
 def vote_count(conversation, which=None):
     """
