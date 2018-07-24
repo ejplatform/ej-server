@@ -96,12 +96,12 @@ ForceLayout.prototype = {
                 new Path.Line({ from: down, to: to }),
                 new Path.Line({ from: from, to: down }),
             ],
-            strokeColor: 'black',
+            strokeColor: '#00C2D4',
             strokeWidth: 5,
             strokeCap: 'round',
-            fillColor: 'yellow',
+            fillColor: '#F0FBFC',
         });
-        group.fillColor.alpha = 0.25;
+        group.fillColor.alpha = 0.5;
 
         return group;
     },
