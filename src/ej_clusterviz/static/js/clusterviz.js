@@ -3,27 +3,27 @@ var clusters = {
     shapes: [
         {
             pos: [70, 120],
-            radius: 50,
             rotation: 0,
             intersections: [1.0, 0.0, 0.0, 0.0],
+            personCount: 25
         },
         {
             pos: [200, 220],
-            radius: 100,
             rotation: 0,
             intersections: [0.0, 1.0, 0.0, 0.0],
+            personCount: 50,
         },
         {
             pos: [300, 100],
             rotation: 0,
-            radius: 80,
             intersections: [0.0, 0.0, 1.0, 0.1],
+            personCount: 40,
         },
         {
             pos: [100, 200],
             rotation: 0,
-            radius: 50,
-            intersections: [0.0, 0.0, 0.1, 1.0]
+            intersections: [0.0, 0.0, 0.1, 1.0],
+            personCount: 25,
         }
     ],
 }
@@ -54,14 +54,14 @@ ForceLayout.prototype = {
     makeShapes: function (data) {
         var layout = this;
 
-        return data.map(function(item) {
-            var element = layout.newElement(item.pos, item.radius);
+        return data.map(function (item) {
+            var element = layout.newElement(item.pos, item.personCount * 2);
             element.vel = randomPoint(layout.velocityScale);
             element.acc = new Point(0, 0);
             element.impulse = new Point(0, 0);
-            element.radius = item.radius;
+            element.radius = item.personCount * 2 //item.radius;
             element.equilibrium = pt(item.pos);
-            element.mass = item.radius * item.radius / 1000;
+            element.mass = element.radius * element.radius / 1000;
             element.invmass = 1 / element.mass;
             element.shadows = item.intersections;
             element.omega = 0;
@@ -167,10 +167,11 @@ ForceLayout.prototype = {
     applyForces: function (dt) {
         this.shapes.map(function (shape) {
             var acc = shape.acc + shape.impulse * shape.invmass;
-            
+
             // Implicit Euler
             shape.vel = shape.vel + acc * dt;
             shape.position = shape.position + shape.vel * dt;
+
             // Newton
             // shape.position = shape.position + shape.vel * dt + acc * (dt*dt / 2);
             // shape.vel = shape.vel + acc * dt;
@@ -206,7 +207,7 @@ ForceLayout.prototype = {
     computeRotations: function () {
         var layout = this;
         var scale = 180 / Math.PI;
-        this.shapes.map(function(obj) {
+        this.shapes.map(function (obj) {
             var angle = layout.getBestRotation(obj);
             obj.rotation = scale * (angle - obj.angle);
             obj.angle = angle;
