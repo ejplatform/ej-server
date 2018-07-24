@@ -86,6 +86,7 @@ ForceLayout.prototype = {
             element.omega = 0;
             element.angle = 0;
             element.position = pt(item.pos);
+            element.position = new Point(0, 0);
             return element;
         });
     },
