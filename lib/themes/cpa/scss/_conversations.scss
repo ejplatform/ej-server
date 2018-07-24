@@ -13,3 +13,65 @@
     border-radius: $unit;
     background: $color-pink;
 }
+
+.Moderate-comments {
+  .Comment-metadata {
+    color: $color-purple;
+  }
+
+  .Comment {
+    border-color: $color-pink;
+
+    p {
+      color: $color-purple;
+    }
+  }
+
+  .ConversationComment-actions {
+    li {
+      &:before {
+        background: $color-blue-dark;
+        border: 0;
+        color: #fff;
+      }
+
+      .Button {
+        color: $color-blue-dark;
+      }
+    }
+
+    li + li {
+      &:before {
+        background: $color-pink;
+        border: 0;
+        color: #fff;
+      }
+
+      .Button {
+        color: $color-pink;
+      }
+    }
+  }
+
+  .Comment-rejection {
+    background: transparent;
+
+    h3 {
+      color: $color-pink;
+    }
+
+    p {
+      color: $color-purple;
+    }
+
+    textarea {
+      color: $color-purple;
+      border-color: $color-blue-dark;
+    }
+
+    .Button {
+      color: #fff;
+      width: auto;
+    }
+  }
+}
