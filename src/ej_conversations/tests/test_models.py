@@ -39,26 +39,26 @@ class TestConversation:
 
 class TestFavoriteConversation:
     def test_user_favorite_conversation(self, mk_conversation, mk_user):
-        user = mk_user
-        conversation = mk_conversation
-        FavoriteConversation.objects.create(user=mk_user, conversation=conversation)
-        favorite_conversations = user.favorite_conversations
-        assert favorite_conversations.filter(id=conversation.id).exists()
+        user = mk_user()
+        conversation = mk_conversation()
+        favorite_conversation = FavoriteConversation.objects.create(user=user, conversation=conversation)
+
+        assert favorite_conversation.user == user
+        assert favorite_conversation.conversation == conversation
 
     def test_user_update_favorite_conversation_status_add(self, mk_conversation, mk_user):
-        user = mk_user
-        conversation = mk_conversation
-        user.update_favorite_conversation_status(conversation)
-        favorite_conversations = user.favorite_conversations
-        assert favorite_conversations.filter(id=conversation.id).exists()
+        user = mk_user()
+        conversation = mk_conversation()
+        conversation.update_favorite_status(user)
+        assert FavoriteConversation.objects.filter(user=user,conversation=conversation).exists()
 
     def test_user_update_favorite_conversation_status_remove(self,  mk_conversation, mk_user):
-        user = mk_user
-        conversation = mk_conversation
-        user.favorite_conversations.add(conversation)
-        user.update_favorite_conversation_status(conversation)
-        favorite_conversations = user.favorite_conversations
-        assert not favorite_conversations.filter(id=conversation.id).exists()
+        user = mk_user()
+        conversation = mk_conversation()
+        favorite_conversation = FavoriteConversation.objects.create(user=user, conversation=conversation)
+        conversation.update_favorite_status(user)
+
+        assert not FavoriteConversation.objects.filter(id=favorite_conversation.id).exists()
 
 
 class TestVote:
