@@ -23,8 +23,10 @@ def create(request, owner=None):
         form = Form(request.POST)
         if form.is_valid():
             try:
-                request.user.board_name = form.cleaned_data['board_name']
-                request.user.save()
+                models.ConversationBoard.objects.create(
+                    name=form.cleaned_data['board_name'],
+                    owner=request.user
+                )
             except KeyError:
                 pass
 
@@ -73,6 +75,7 @@ def moderate(request, conversation):
     if request.method == 'POST':
         comment = models.Comment.objects.get(id=request.POST['comment'])
         comment.status = comment.STATUS.approved if request.POST['vote'] == 'approve' else comment.STATUS.rejected
+        comment.rejection_reason = request.POST['rejection_reason']
         comment.save()
 
     for comment in models.Comment.objects.filter(conversation=conversation, status='pending'):

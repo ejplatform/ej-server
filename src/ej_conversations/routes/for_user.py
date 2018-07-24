@@ -11,23 +11,23 @@ urlpatterns = Router(
     models={
         'conversation': models.Conversation,
         'comment': models.Comment,
-        'owner': get_user_model(),
+        'board': models.ConversationBoard,
     },
     lookup_field={
         'conversation': 'slug',
         'comment': 'slug',
-        'owner': 'board_name',
+        'board': 'name',
     },
     lookup_type='slug',
     object='conversation',
 )
 base_url = 'conversations/'
-board_url = '<model:owner>/'
+board_url = '<model:board>/'
 
 
 @urlpatterns.route(board_url, name='list')
-def conversation_list(request, owner):
-    return routes.conversation_list(request, owner)
+def conversation_list(request, board):
+    return routes.conversation_list(request, board)
 
 
 @urlpatterns.route(base_url + 'add/')

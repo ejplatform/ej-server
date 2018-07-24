@@ -7,12 +7,13 @@ from boogie import rules
 from boogie.rules import proxy_seq
 from hyperpython import a
 from . import urlpatterns, conversation_url
-from ..models import Conversation
+from ..models import Conversation, ConversationBoard
 
 
 @urlpatterns.route('', name='list')
-def conversation_list(request, owner=None):
+def conversation_list(request, board=None):
     user = request.user
+    owner = board.owner if board else None
     if owner:
         create_url = reverse('user-conversation:create')
         conversations = Conversation.objects.filter(author=owner)
@@ -26,8 +27,10 @@ def conversation_list(request, owner=None):
         'owner': owner,
     }
     board_url = ''
-    if not user.is_anonymous and user.board_name:
-        board_url = '/' + user.board_name + '/'
+    if not user.is_anonymous:
+        board = ConversationBoard.objects.filter(owner=user)
+        if board:
+            board_url = '/' + board.first().name + '/'
 
     if request.path == board_url:
         clist['add_link'] = a(_('Add new conversation'), href=create_url)

@@ -239,7 +239,8 @@ $profile-arrow-size: $spacing-unit !default;
             text-align: center;
             .Button {
                 text-transform: none;
-                background-color: $color-blue-light;
+                background-color: var(--button-background-secondary);
+                padding:  15px 25px 15px 25px;
             }
         }
 
@@ -253,7 +254,7 @@ $profile-arrow-size: $spacing-unit !default;
             padding: 0;
             li {
                 span {
-                    color: $color-blue-light;
+                    color: var(--profile-font-color-primary);
                     font-weight: 600;
                     &.amount {
                         font-weight: 800;
@@ -286,7 +287,7 @@ $profile-arrow-size: $spacing-unit !default;
             padding: 0;
             li {
                 span {
-                    color: $color-blue-light;
+                    color: var(--profile-font-color-primary);
                     font-weight: 600;
                     display: block;
                     margin-top: $spacing-unit-small;
@@ -308,14 +309,15 @@ $profile-arrow-size: $spacing-unit !default;
 
         dl {
             dt {
-                color: $color-blue-light;
+                color: var(--profile-font-color-primary);
                 text-transform: lowercase;
+                font-weight: bold;
             }
 
             dd {
                 font-size: $font-size-h5;
                 margin: 0 0 $spacing-unit-small 0;
-                color: $color-purple-dark;
+                color: var(--font-color-primary);
             }
         }
 

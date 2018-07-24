@@ -19,13 +19,13 @@
 }
 
 .HomeBanner {
-    width: 80%;
+    // width: 80%;
 
     h1 {
         color: $color-grey-dark;
         font-family: Raleway;
-        line-height: 1.5em;
-        text-align: center;
+        // line-height: 1.5em;
+        // text-align: center;
     }
 
     .Button[primary] {
@@ -39,16 +39,16 @@
 .HowItWorks {
     background: $color-blue-light;
 
-    h1 {
-        color: $color-pink;
-        font-weight: normal;
-    }
+    // h1 {
+    //     color: $color-pink;
+    //     font-weight: normal;
+    // }
 
-    p {
-        color: $color-purple;
-        line-height: $size-medium;
-        text-align: center;
-    }
+    // p {
+    //     color: $color-purple;
+    //     line-height: $size-medium;
+    //     text-align: center;
+    // }
 
     .HowItWorksCard > .fa {
         background: $color-white;
@@ -62,16 +62,16 @@
     }
 
     .HowItWorksCard h1 {
-        color: $color-purple;
+        // color: $color-purple;
     }
 
     .fa-child:before {
         content: "\f007";
     }
 
-    .fa-hands-helping:before {
-        content: "\f06a";
-    }
+    // .fa-hands-helping:before {
+    //     content: "\f06a";
+    // }
 }
 
 .StartNow, .Footer-info {
