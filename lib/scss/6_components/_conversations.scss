@@ -825,3 +825,113 @@ $conversation-card-button-border-radius: 50% !default;
         color: $color-magenta;
     }
 }
+
+.Moderate {
+  .ConversationDetail-banner h1 {
+    font-family: "Raleway", sans-serif;
+    color: $color-purple-dark;
+  }
+
+  &-comments {
+    h1 {
+      text-align: center;
+      color: $color-magenta;
+    }
+
+    .Comment {
+      background: #fff;
+      color: $color-purple-dark;
+      font-family: "Raleway", sans-serif;
+      font-size: 16px;
+      border: 0;
+      border-radius: 0;
+      border-bottom: 1px solid $color-blue-light-low;
+      min-height: 0 !important;
+      padding: $unit;
+
+      p {
+        text-align: center;
+        font-size: 16px;
+        font-weight: 600;
+      }
+    
+      &-metadata {
+        color: $color-blue-light-low;
+        font-size: 12px;
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+  }
+
+  .ConversationComment-actions {
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+
+    li {
+      list-style: none;
+
+      &:before {
+        content: "\f00c";
+        font-family: 'Font Awesome\ 5 Free';
+        font-weight: 900;
+        display: inline-block;
+        color: $color-green-dark;
+        padding: 2px 4px;
+        font-size: 11px;
+        border: 2px solid $color-green-dark;
+        border-radius: 50%;
+      }
+    }
+
+    li + li:before {
+      content: "\f00d";
+      color: #9c2715;
+      border-color: #9c2715;
+      padding: 2px 6px;
+    }
+
+    li span {
+      display: none;
+    }
+
+    .Button {
+      border: 0;
+      border-radius: 0;
+      background: #fff;
+      font-weight: bold;
+      font-size: 12px;
+      color: $color-purple-dark;
+      box-shadow: none;
+      padding-left: 0;
+      outline: 0;
+    }
+  }
+
+  .Comment-rejection {
+    background: $color-blue-nav;
+    border-top: 1px solid $color-blue-light-low;
+    border-bottom: 1px solid $color-blue-light-low;
+    text-align: center;
+
+    p {
+      font-weight: lighter;
+      font-size: 14px;
+    }
+
+    textarea {
+      outline: 0;
+      border-style: solid;
+      box-shadow: inset 0px 0px 0px 0px black;
+      border-color: $color-blue-light;
+    }
+
+    .Button {
+      box-shadow: none;
+      box-sizing: border-box;
+      width: 90%;
+      background: $color-pink; 
+    }
+  }
+}
