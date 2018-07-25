@@ -29,6 +29,7 @@ class MissionSerializer(serializers.ModelSerializer):
     owner = OwnerSerializer(read_only=True)
     comment_set = CommentSerializer(many=True)
     remainig_days = serializers.SerializerMethodField()
+    pending_conversations = serializers.SerializerMethodField()
 
     def get_remainig_days(self, obj):
         deadline_in_days = (obj.deadline - datetime.date.today()).days
@@ -42,11 +43,16 @@ class MissionSerializer(serializers.ModelSerializer):
 
         return "{} dias restantes".format(deadline_in_days);
 
+    def get_pending_conversations(self, obj):
+        pending_conversations = obj.conversations.filter(comments__votes=None)
+        return list(set(map(lambda x: x.id, pending_conversations)))
+
     class Meta:
         model = models.Mission
         fields = ('id', 'title', 'description', 'users', 'image',
                   'youtubeVideo', 'audio', 'owner', 'remainig_days',
-                  'deadline', 'comment_set', 'reward', 'conversations')
+                  'deadline', 'comment_set',
+                  'reward', 'pending_conversations', 'conversations')
 
 class MissionInboxSerializer(MissionMixin, MissionSerializer):
 
