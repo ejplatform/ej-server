@@ -42,7 +42,7 @@ class Command(BaseCommand):
     def handle(self, *files, admin=False, admin_password=None, staff=2, users=50, **options):
         users_created = 0
         fake = Factory.create('en-US')
-        blocked_usernames = {'admin', *User.objects.values_list('username', flat=True)}
+        blocked_usernames = {'admin', *User.objects.values_list('email', flat=True)}
         usernames = set()
         while len(usernames) < staff + users:
             username = fake.user_name()
