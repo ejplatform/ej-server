@@ -143,7 +143,8 @@ class Profile(models.Model):
         return _('Regular user')
 
 
-@rest_api(exclude=['profile'])
+@rest_api(['id','owner_id', 'mission_notifications', 'conversation_notifications', 'admin_notifications', 'trophy_notifications', 
+'approved_notifications', 'disapproved_notifications', 'campaign_email', 'campaign_app_notifications', 'share_data'])
 class Setting(models.Model):
     profile = models.OneToOneField(Profile, on_delete=models.CASCADE)
     owner_id = models.IntegerField(null=True)
@@ -188,7 +189,7 @@ User.get_profile = get_profile
 def ensure_settings_created(sender, **kwargs):
     instance = kwargs.get('instance')
     profile = instance.id
-    return Setting.objects.get_or_create(profile=instance, owner_id=profile)
+    return Setting.objects.get_or_create(profile=instance, owner_id=profile, id=profile)
 
 @receiver(post_save, sender=Profile)
 def insert_user_on_channel(sender, **kwargs):
