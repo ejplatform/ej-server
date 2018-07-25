@@ -5,7 +5,7 @@ from django.db.models import Q
 from django.utils.timezone import now
 
 from boogie import rules
-from ej_conversations.models import Conversation
+from ej_conversations.models import Conversation, ConversationBoard
 
 
 #
@@ -49,9 +49,20 @@ def is_personal_conversations_enabled():
 @rules.register_rule('ej_conversations.has_conversation')
 def has_conversation(user):
     """
-    Verify if a user has any conversation.
+    Verify if an user has any conversation.
     """
     if Conversation.objects.filter(author=user).count() > 0:
+        return True
+    else:
+        return False
+
+
+@rules.register_rule('ej_conversations.has_board')
+def has_board(user):
+    """
+    Verify if an user has a conversation board.
+    """
+    if ConversationBoard.objects.filter(owner=user):
         return True
     else:
         return False
@@ -141,8 +152,15 @@ def can_comment(user, conversation):
 
 
 @rules.register_perm('ej_conversations.can_add_conversation')
-def can_add_conversation(user):
-    return user.is_staff
+def can_add_conversation(user, board):
+    if user.is_staff and not board:
+        return True
+    elif board:
+        if board.owner == user:
+            return True
+        elif user in board.members.all():
+            return True
+    return False
 
 
 @rules.register_perm('ej_conversations.can_edit_conversation')

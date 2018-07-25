@@ -60,6 +60,13 @@ class ConversationBoard(models.Model):
         on_delete=models.CASCADE,
         related_name='boards'
     )
+    members = models.ManyToManyField(
+        settings.AUTH_USER_MODEL,
+        null=True
+    )
+
+    def get_members(self):
+        return "\n".join([m for m in self.members.all()])
 
 
 class TaggedConversation(TaggedItemBase):

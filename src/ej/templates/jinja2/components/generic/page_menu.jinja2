@@ -1,6 +1,6 @@
 {% from 'components/generic/elements.jinja2' import link %}
 
-{% macro menu(user) %}
+{% macro menu(user, board) %}
     <nav class="NavMenu">
         <ul>
             <li><em>{{ icon_link(_('Home'), '/', 'fa fa-home') }}</em></li>
@@ -12,8 +12,8 @@
                 <i class="fas fa-angle-down fa-2x NavMenu-AngleDownIcon"></i>
                 <ul class="NavMenu-UserMenu">                    
                     <li>
-                        {% if user.board_name %}
-                            {{icon_link(_('Your conversations'), ('/{}/'.format(user.board_name)), 'far fa-comment', fa=True)}}
+                        {% if board %}
+                            {{icon_link(_('Your conversations'), ('/{}/'.format(board.name)), 'far fa-comment', fa=True)}}
                         {% else %}
                             {{icon_link(_('Your conversations'), ('/conversations/add/'), 'far fa-comment', fa=True)}}                            
                         {% endif %}
