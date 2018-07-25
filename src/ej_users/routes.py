@@ -6,14 +6,15 @@ from django.db import IntegrityError
 from django.http import Http404, JsonResponse, HttpResponse
 from django.http import HttpResponseServerError
 from django.shortcuts import redirect
+from django.template.loader import get_template
 from django.utils.translation import ugettext_lazy as _
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 
 from boogie.router import Router
 from ej_users import forms
+from .socialbuttons import social_buttons
 from ej_conversations.models import FavoriteConversation
-
 User = get_user_model()
 
 app_name = 'ej_users'
@@ -75,7 +76,12 @@ def login(request):
     elif fast and request.user.is_authenticated and next:
         return redirect(next)
 
-    return {'user': request.user, 'form': form}
+    return {
+        'user': request.user,
+        'form': form,
+        'login_extra': login_extra_template.render(request=request),
+        'social_buttons': social_buttons(request),
+    }
 
 
 @urlpatterns.route('logout/')
@@ -151,3 +157,9 @@ def clean_cookies():
     response.delete_cookie('sessionid')
     response.delete_cookie('csrftoken')
     return response
+
+
+#
+# Auxiliary functions and templates
+#
+login_extra_template = get_template('socialaccount/snippets/login_extra.html')

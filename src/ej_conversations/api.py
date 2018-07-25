@@ -35,3 +35,28 @@ def random(request):
 @rest_api.property('ej_conversations.Conversation')
 def statistics(conversation):
     return conversation.statistics()
+
+
+#
+# Votes
+#
+@rest_api.save_hook('ej_conversations.Vote')
+def save_vote(request, vote):
+    if vote.author_id is None:
+        vote.author_id = request.user.id
+        vote.save()
+    elif vote.author != request.user:
+        raise PermissionError('cannot update vote of a different user')
+    return vote
+
+
+@rest_api.delete_hook('ej_conversations.Vote')
+def delete_vote(request, vote):
+    user = request.user
+
+    if user.is_superuser:
+        vote.delete()
+    elif vote.author_id != user.id:
+        raise PermissionError('cannot delete vote from another user')
+    else:
+        raise PermissionError('user is not allowed to delete votes')
