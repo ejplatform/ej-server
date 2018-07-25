@@ -1239,7 +1239,7 @@ msgstr "Conversas públicas"
 
 #: src/ej/templates/jinja2/components/generic/page_menu.jinja2:22
 msgid "Your conversations"
-msgstr "Suas converas"
+msgstr "Suas conversas"
 
 #: src/ej/templates/jinja2/components/generic/page_menu.jinja2:26
 msgid "Add conversation"
