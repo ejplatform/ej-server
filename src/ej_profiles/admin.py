@@ -18,4 +18,4 @@ class ProfileAdmin(admin.ModelAdmin):
         ]}),
     )
     list_display = ('username', 'name', 'email', 'is_superuser')
-    search_fields = ['user__name', 'user__email', 'user__username']
+    search_fields = ['user__name', 'user__email']
