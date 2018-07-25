@@ -5,6 +5,8 @@ from django.dispatch import receiver
 
 from ej_users.models import User
 from ej_conversations.models.conversation import Conversation
+from ej_messages.models import Message
+from ej_channels.models import Channel
 from ej_trophies.models.trophy import Trophy
 from ej_trophies.models.user_trophy import UserTrophy
 from ckeditor.fields import RichTextField
@@ -85,3 +87,10 @@ def update_trophy(sender, **kwargs):
         user_trophy.percentage = 100
         user_trophy.save(force_update=True)
         update_automatic_trophies(user)
+
+@receiver(post_save, sender=Mission)
+def send_message(sender, instance, **kwargs):
+    channel = Channel.objects.get(sort="mission")
+    mission_title = instance.title
+    title = "Missão nova no ar! Confira a " + mission_title
+    Message.objects.create(channel=channel, title=title, body="")
