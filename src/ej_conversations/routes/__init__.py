@@ -8,12 +8,12 @@ urlpatterns = Router(
     models={
         'conversation': models.Conversation,
         'comment': models.Comment,
-        'owner': User
+        'board': models.ConversationBoard
     },
     lookup_field={
         'conversation': 'slug',
         'comment': 'slug',
-        'owner': 'username',
+        'board': 'name',
     },
     lookup_type='slug',
     object='conversation',

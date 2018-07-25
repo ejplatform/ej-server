@@ -13,26 +13,20 @@ from ..models import Conversation, ConversationBoard, FavoriteConversation
 @urlpatterns.route('', name='list')
 def conversation_list(request, board=None):
     user = request.user
-    owner = board.owner if board else None
-    if owner:
+
+    if board:
         create_url = reverse('user-conversation:create')
-        conversations = Conversation.objects.filter(author=owner)
+        conversations = Conversation.objects.filter(author=board.owner)
     else:
         create_url = reverse('conversation:create')
         conversations = Conversation.promoted.all()
 
     clist = {
         'conversations': moderated_conversations(user, conversations),
-        'can_add_conversation': user.has_perm('ej_conversations.can_add_conversation'),
-        'owner': owner,
+        'can_add_conversation': user.has_perm('ej_conversations.can_add_conversation', board),
     }
-    board_url = ''
-    if not user.is_anonymous:
-        board = ConversationBoard.objects.filter(owner=user)
-        if board:
-            board_url = '/' + board.first().name + '/'
 
-    if request.path == board_url:
+    if board and board.owner == user:
         clist['add_link'] = a(_('Add new conversation'), href=create_url)
     else:
         clist['add_link'] = ''

@@ -9,9 +9,9 @@ from .. import forms, models
 
 
 @urlpatterns.route('add/', perms=['ej_conversations.can_add_conversation'])
-def create(request, owner=None):
+def create(request, board=None):
     # Cannot create pages for other users
-    if owner and owner != request.user:
+    if not rules.test_rule('ej_conversations.can_add_conversation', request.user, board):
         raise Http404
 
     if rules.test_rule('ej_conversations.has_conversation', request.user):
