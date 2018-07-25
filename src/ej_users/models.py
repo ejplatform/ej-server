@@ -12,7 +12,7 @@ from .manager import UserManager
 fake = Factory.create('pt-BR')
 
 
-@rest_api(['id', 'display_name', 'favorite_conversations'])
+@rest_api(['id', 'display_name'])
 class User(AbstractUser):
     """
     Default user model for EJ platform.
@@ -32,9 +32,6 @@ class User(AbstractUser):
         unique=True,
     )
     objects = UserManager()
-    favorite_conversations = models.ManyToManyField(
-        'ej_conversations.Conversation'
-    )
 
     @property
     def username(self):
@@ -52,12 +49,6 @@ class User(AbstractUser):
         if not self.display_name:
             self.display_name = random_name()
         super().save(*args, **kwargs)
-
-    def update_favorite_conversation_status(self, conversation):
-        if self.favorite_conversations.filter(id=conversation.id).exists():
-            self.favorite_conversations.remove(conversation)
-        else:
-            self.favorite_conversations.add(conversation)
 
     class Meta:
         swappable = 'AUTH_USER_MODEL'

@@ -4,7 +4,7 @@ from django.http import Http404, HttpResponseServerError
 from django.test import RequestFactory
 
 from ej_conversations import create_conversation
-from ej_conversations.models import ConversationBoard, Conversation, Comment
+from ej_conversations.models import ConversationBoard, Conversation, Comment, FavoriteConversation
 from ej_conversations.models.comment import votes_counter
 from ej_conversations.routes import base, admin, for_user, comments
 from ej_conversations.forms import FirstConversationForm, ConversationForm
@@ -135,7 +135,7 @@ class TestConversationBase:
         request = request_factory.post('', {'action': 'favorite'})
         request.user = user
         base.detail(request, conversation)
-        assert user.favorite_conversations.all()[0] == conversation
+        assert FavoriteConversation.objects.filter(user=user, conversation=conversation).exists()
 
     def test_get_conversation_info(self, get_request_with_user, conversation):
         response = base.info(conversation)

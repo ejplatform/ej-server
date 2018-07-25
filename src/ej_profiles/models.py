@@ -40,7 +40,7 @@ class Profile(models.Model):
     is_superuser = delegate_to('user')
 
     class Meta:
-        ordering = ['user__username']
+        ordering = ['user__email']
 
     def __str__(self):
         return __('{name}\'s profile').format(name=self.user.name)
