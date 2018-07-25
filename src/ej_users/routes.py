@@ -14,7 +14,7 @@ from rest_framework.authtoken.models import Token
 from boogie.router import Router
 from ej_users import forms
 from .socialbuttons import social_buttons
-
+from ej_conversations.models import FavoriteConversation
 User = get_user_model()
 
 app_name = 'ej_users'
@@ -157,3 +157,9 @@ def clean_cookies():
     response.delete_cookie('sessionid')
     response.delete_cookie('csrftoken')
     return response
+
+
+#
+# Auxiliary functions and templates
+#
+login_extra_template = get_template('socialaccount/snippets/login_extra.html')
