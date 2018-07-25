@@ -194,8 +194,8 @@ def ensure_settings_created(sender, **kwargs):
 @receiver(post_save, sender=Profile)
 def insert_user_on_channel(sender, **kwargs):
     instance = kwargs.get('instance')
-    profile_id = instance.id
-    user = User.objects.get(id=profile_id)
+    user_id = instance.user.id
+    user = User.objects.get(id=user_id)
     channels = Channel.objects.all()
     # TODO VERIFY USER SETTINGS BEFORE INSERT
     for channel in channels:
