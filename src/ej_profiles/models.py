@@ -33,7 +33,7 @@ class Profile(models.Model):
     image = models.ImageField(_('Image'), blank=True, null=True, upload_to='profile_images')
 
     name = delegate_to('user')
-    username = delegate_to('user')
+    #username = delegate_to('user')
     email = delegate_to('user')
     is_active = delegate_to('user')
     is_staff = delegate_to('user')
