@@ -28,7 +28,6 @@ class User(AbstractUser):
     )
     email = models.EmailField(
         _('email address'),
-        blank=True,
         unique=True,
     )
     objects = UserManager()

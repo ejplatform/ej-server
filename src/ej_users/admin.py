@@ -14,5 +14,11 @@ class UserAdmin(AuthUserAdmin):
                                        'groups', 'user_permissions')}),
         (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
     )
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('email', 'name', 'password1', 'password2'),
+        }),
+    )
     search_fields = ['name', 'email']
     ordering = ['email']
