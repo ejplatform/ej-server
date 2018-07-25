@@ -16,3 +16,14 @@ class Message(models.Model):
 
 	class Meta:
 		ordering = ['title']
+
+
+@receiver(post_save, sender=Message)
+def generate_notifications(sender, instance, **kwargs):
+	#avoid circular import
+	from ej_notifications.models import Notification
+	channel_id = instance.channel.id
+	channel = Channel.objects.get(id=channel_id)
+	for user in channel.users.all():
+		Notification.objects.create(receiver=user, channel=channel, message=instance)
+		
