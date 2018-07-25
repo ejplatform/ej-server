@@ -37,7 +37,7 @@
 }
 
 .HowItWorks {
-    background: $color-blue-light;
+    // background: $color-blue-light;
 
     // h1 {
     //     color: $color-pink;
@@ -51,25 +51,25 @@
     // }
 
     .HowItWorksCard > .fa {
-        background: $color-white;
-        border-radius: 50%;
-        width: $unit * 7;
-        height: $unit * 7;
-        display: inline-block;
-        color: $color-blue-dark;
-        padding-top: $unit * 2;
-        margin: $unit * 2;
+        // background: $color-white;
+        // border-radius: 50%;
+        // width: $unit * 7;
+        // height: $unit * 7;
+        // display: inline-block;
+        // color: $color-blue-dark;
+        // padding-top: $unit * 2;
+        // margin: $unit * 2;
     }
 
     .HowItWorksCard h1 {
         // color: $color-purple;
     }
 
-    .fa-child:before {
-        content: "\f007";
-    }
+    // .fa-child:before {
+    //     content: "\f007";
+    // }
 
-    // .fa-hands-helping:before {
+    // .fa-comments:before {
     //     content: "\f06a";
     // }
 }
