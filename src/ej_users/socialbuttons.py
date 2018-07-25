@@ -5,7 +5,7 @@ from allauth.socialaccount.models import SocialApp
 from allauth.socialaccount.providers.facebook.provider import FacebookProvider
 from django.core.exceptions import ImproperlyConfigured
 
-from hyperpython.components import fab_link
+from hyperpython.components import fab_link, fa_link
 
 log = logging.getLogger('ej')
 SOCIAL_BUTTON_REGISTRY = {}
@@ -49,21 +49,41 @@ def social_buttons(request):
 def facebook_button(request):
     provider = providers.registry.by_id('facebook', request)
     query = {
-        'next': '/start/',
+        'next': '/conversations/',
         'method': 'js_sdk',
     }
     url = provider.get_login_url(request, **query)
     return fab_link(url, 'facebook', id='facebook-button')
 
 
+@register_button('twitter')
+def twitter_button(request):
+    provider = providers.registry.by_id('twitter', request)
+    query = {
+        'next': '/conversations/',
+    }
+    url = provider.get_login_url(request, **query)
+    return fa_link(url, 'twitter', id='twitter-button')
+
+
 @register_button('github')
 def github_button(request):
-    return facebook_button(request)
+    provider = providers.registry.by_id('github', request)
+    query = {
+        'next': '/conversations/',
+    }
+    url = provider.get_login_url(request, **query)
+    return fab_link(url, 'github', id='github-button')
 
 
 @register_button('google')
 def google_button(request):
-    return facebook_button(request)
+    provider = providers.registry.by_id('google', request)
+    query = {
+        'next': '/conversations/',
+    }
+    url = provider.get_login_url(request, **query)
+    return fab_link(url, 'google', id='google-button')
 
 
 #
