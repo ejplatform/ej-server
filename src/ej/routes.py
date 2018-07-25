@@ -19,7 +19,7 @@ urlpatterns = Router(
 def home(request):
     # if request.user.id:
     #    return redirect('/conversations/')
-    return redirect('/start/')
+    return redirect('/conversations/')
 
 
 @urlpatterns.route('start/')
