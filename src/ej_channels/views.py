@@ -25,7 +25,7 @@ class ChannelViewSet(viewsets.ViewSet):
 
     def create(self, request):
         data = request.data
-        channel = models.Channel(name=data["name"])
+        channel = models.Channel(name=data["name"], owner=data["owner"], sort=data["sort"])
         channel.save()
         serializer = serializers.ChannelSerializer(channel)
         return Response(serializer.data)
