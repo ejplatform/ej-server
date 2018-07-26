@@ -5,7 +5,6 @@ import numpy as np
 from django.test import RequestFactory
 from django.http import QueryDict
 
-from ej_clusters.math import get_raw_votes
 from ej_reports.routes import index, clusters, radar, divergence, map_to_table
 from ej_conversations.mommy_recipes import *  # noqa: F401,F403
 from ej_users.models import User
@@ -71,7 +70,6 @@ class TestReportRoutes:
         }
 
         assert response == expected
-
 
     def test_radar_route(self, mk_conversation):
         conversation = mk_conversation

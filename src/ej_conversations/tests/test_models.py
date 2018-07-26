@@ -52,7 +52,7 @@ class TestFavoriteConversation:
         conversation.update_favorite_status(user)
         assert FavoriteConversation.objects.filter(user=user, conversation=conversation).exists()
 
-    def test_user_update_favorite_conversation_status_remove(self,  mk_conversation, mk_user):
+    def test_user_update_favorite_conversation_status_remove(self, mk_conversation, mk_user):
         user = mk_user()
         conversation = mk_conversation()
         favorite_conversation = FavoriteConversation.objects.create(user=user, conversation=conversation)

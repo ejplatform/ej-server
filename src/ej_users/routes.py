@@ -134,6 +134,7 @@ def favorite_conversation(request):
         'conversations': conversations,
     }
 
+
 #
 # Registration via API + cookies
 #
