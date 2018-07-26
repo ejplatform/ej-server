@@ -14,14 +14,17 @@ $footer-content-social-width: 35%;
 .Footer {
     @include color($footer-color, $footer-color-text);
     text-align: center;
+    background-color: var(--footer-background-color);
 
     &-social {
-
+        padding-bottom: $unit * 7;
         @extend .unlist-inline;
         i {
-            color: $color-white;
+            color: var(--footer-font-color);;
             font-size: $footer-icon-size;
-            margin: $spacing-unit-tiny;
+            // FIXME verificar se pode utilizar este espaçamento
+            // margin: $spacing-unit-tiny;
+            margin: $unit * 4 $unit * 2;
         }
     }
 
