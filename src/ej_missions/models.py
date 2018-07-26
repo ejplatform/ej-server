@@ -92,5 +92,6 @@ def update_trophy(sender, **kwargs):
 def send_message(sender, instance, **kwargs):
     channel = Channel.objects.get(sort="mission")
     mission_title = instance.title
+    mission_id = instance.id
     title = "Missão nova no ar! Confira a " + mission_title
-    Message.objects.create(channel=channel, title=title, body="")
+    Message.objects.create(channel=channel, title=title, body="", target=mission_id)

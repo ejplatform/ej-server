@@ -13,6 +13,7 @@ class Message(models.Model):
 	channel = models.ForeignKey(Channel, on_delete=models.CASCADE, null=True)
 	created_at = models.DateTimeField(null=True, auto_now_add=True)
 	status = models.CharField(max_length=100, default="pending")
+	target = models.IntegerField(blank=True, default=0)
 
 	class Meta:
 		ordering = ['title']
