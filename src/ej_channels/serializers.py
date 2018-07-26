@@ -10,8 +10,8 @@ class UsersSerializer(serializers.ModelSerializer):
 
 class OwnerSerializer(serializers.ModelSerializer):
     class Meta:
-        model: User
-        fiels = ('id', 'name')
+        model = User
+        fields = ('id', 'name')
         
 class ChannelSerializer(serializers.ModelSerializer):
     users = UsersSerializer(read_only=True, many=True)

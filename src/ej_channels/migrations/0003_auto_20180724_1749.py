@@ -4,11 +4,11 @@ from django.db import migrations
 
 def create_channels(apps, schema_editor):
     Channel = apps.get_model("ej_channels", "Channel")
-    channel_1 = Channel(id=1, name="Mission Channel", sort="mission")
+    channel_1 = Channel(id=1, name="admin channel", sort="admin")
     channel_1.save()
-
-    channel_2 = Channel(id=2, name="Admin Channel", sort="admin")
+    channel_2 = Channel(id=2, name="mission channel", sort="mission")
     channel_2.save()
+
 
 
 class Migration(migrations.Migration):

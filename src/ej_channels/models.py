@@ -14,4 +14,4 @@ class Channel(models.Model):
 	owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name="channel_owner")
 
 	class Meta:
-		ordering = ['name']
+		ordering = ['id']

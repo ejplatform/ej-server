@@ -14,7 +14,7 @@ from ej_users.models import User
 class ChannelViewSet(viewsets.ViewSet):
 
     def index(self, request):
-        queryset = models.Channel.objects.all().order_by("-created_at")
+        queryset = models.Channel.objects.all().order_by("id")
         serializer = serializers.ChannelSerializer(queryset, many=True)
         return Response(serializer.data)
 
