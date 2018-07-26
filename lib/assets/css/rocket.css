@@ -44,8 +44,9 @@
   --header-logo-size: 40px;
   --header-background-color: white;
   --header-font-color: #042049;
-  --home-banner-font-family: "Patua One", sans-serif;
-  --home-banner-font-color: #042049;
+  --home-banner-title-font-family: "Patua One", sans-serif;
+  --home-banner-title-font-color: #042049;
+  --home-banner-button-background: #FF3D72;
   --home-how-it-works-title-font-color: rgb(4, 32, 73);
   --home-how-it-works-content-font-color: rgb(4, 32, 73);
   --home-how-it-works-background: #C4F2F4;
@@ -54,6 +55,8 @@
   --home-how-it-works-card-icon-conversation: "\f086";
   --home-how-it-works-card-title-font-color: #042049;
   --home-how-it-works-card-content-font-color: #1d365b;
+  --home-start-now-display: block;
+  --footer-info-display: block;
   --card-conversation-top-background: #C4F2F4;
   --card-conversation-bottom-background: url(/static/img/icons/bg.png);
   --conversation-top-background: #C4F2F4;

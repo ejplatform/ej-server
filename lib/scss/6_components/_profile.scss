@@ -233,6 +233,7 @@ $profile-arrow-size: $spacing-unit !default;
     &-info {
         font-size: $font-size-h6;
         padding: $spacing-unit;
+        display: var(--footer-info-display);
 
         .edit-button {
             margin-top: $spacing-unit;

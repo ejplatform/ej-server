@@ -46,8 +46,9 @@ $size-medium: 30px;
     --header-font-color: white;
 
     // Home Banner
-    --home-banner-font-family: Raleway;
-    --home-banner-font-color: #052B47;
+    --home-banner-title-font-family: Raleway;
+    --home-banner-title-font-color: #052B47;
+    --home-banner-button-background: #8EC73F;
 
     // Home How It Works
     --home-how-it-works-title-font-color: #FF3E72;
@@ -58,6 +59,12 @@ $size-medium: 30px;
     --home-how-it-works-card-icon-conversation: "\f086";
     --home-how-it-works-card-title-font-color: #3F1B53;
     --home-how-it-works-card-content-font-color: #3F1B53;
+
+    // Home StartNow
+    --home-start-now-display: none;
+    
+    // Footer info
+    --footer-info-display: none;
 
     // Card Conversation
     --card-conversation-bottom-background: #30BEC0;

@@ -17,6 +17,16 @@ $how-it-work-icon-color: $color-gray-dark !default;
             display: inherit;
         }
     }
+    h1 {
+        font-family: var( --home-banner-title-font-family);
+        color: var(--home-banner-title-font-color);
+    }
+
+    .Button[primary] {
+        background: var(--home-banner-button-background);
+        color: $color-white;
+        padding: $unit $unit*2;
+    }
 }
 
 .HowItWorks {
@@ -120,6 +130,8 @@ $how-it-work-icon-color: $color-gray-dark !default;
     background: $color-hint;
     padding: $spacing-unit;
     text-align: center;
+    display: var(--home-start-now-display);
+
 
     > * {
         @extend .Container;
