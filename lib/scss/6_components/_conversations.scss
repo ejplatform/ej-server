@@ -177,7 +177,7 @@ $conversation-card-button-border-radius: 50% !default;
     }
 
     &-cover + .ConversationCard-actions {
-        background: url(/static/img/icons/bg-transparent.svg);
+        background: url(/static/default/img/icons/bg-transparent.svg);
         background-size: 30px;
         background-repeat: space;
         margin-top: $spacing-unit;

@@ -61,7 +61,7 @@
   --navigation-bottom-icon-panel: "";
   --navigation-bottom-icon-profile: "";
   --card-conversation-top-background: #C4F2F4;
-  --card-conversation-bottom-background: url(/static/img/icons/bg.png);
+  --card-conversation-bottom-background: url(/static/default/img/icons/bg.png);
   --conversation-top-background: #C4F2F4;
   --conversation-middle-background: #C4F2F4;
   --conversation-bottom-border: 28px solid #C4F2F4;

@@ -13,6 +13,7 @@
 {% endmacro %}
 
 {% macro header_top_nav(request) %}
+    {% set theme = request.GET.get('theme','') or current_theme %}
     {% block javascript %}
 
         {# this function controls the open/close button of "conversations dropdown on page_menu #}
@@ -50,7 +51,7 @@
             </a>
 
             {% call link(href='/', class="Header-ejLogo") %}
-                <img src="/static/img/logo/logo.svg" alt="EJ logo">
+                <img src="/static/{{theme}}/img/logo/logo.svg" alt="EJ logo">
             {% endcall %}
     
             <a href="/menu/" title="{{ _("Navigation menu") }}" up-drawer=".NavMenu" up-history="false"
@@ -66,7 +67,7 @@
             </a>
 
             {% call link(href='/', class="Header-ejLogo") %}
-                <img src="/static/img/logo/logo.svg" alt="EJ logo">
+                <img src="/static/{{theme}}/img/logo/logo.svg" alt="EJ logo">
             {% endcall %}
 
         {%endif%}
@@ -75,20 +76,20 @@
 {% endmacro %}
 
 {% macro header_lower_nav(request) %}
-    
+    {% set theme = request.GET.get('theme','') or current_theme %}
     <nav class="Header-lowerNav">
         {% call link('/conversations/', title=_('Conversations'), class='conversations-link', preload=True) %}
-            <img src="/static/img/icons/navbar_icon1.svg" alt="{{ _('Conversations') }}" class="Header-lowerIcon">
+            <img src="/static/{{theme}}/img/icons/navbar_conversations.svg" alt="{{ _('Conversations') }}" class="Header-lowerIcon">
             <span>{{ _('Conversations') }}</span>
         {% endcall %}
 
         {% call link('/talks/', title=_('Panel'), class='panel-link', preload=True) %}
-            <img src="/static/img/icons/navbar_icon2.svg" alt="{{ _('Panel') }}" class="Header-lowerIcon">
+            <img src="/static/{{theme}}/img/icons/navbar_panel.svg" alt="{{ _('Panel') }}" class="Header-lowerIcon">
             <span>{{ _('Panel') }}</span>
         {% endcall %}
 
         {% call link('/profile/', title=_('Profile'), class='profile-link', preload=True) %}
-            <img src="/static/img/icons/navbar_icon3.svg" title="{{ _('Profile') }}" class="Header-lowerIcon">
+            <img src="/static/{{theme}}/img/icons/navbar_profile.svg" title="{{ _('Profile') }}" class="Header-lowerIcon">
             <span>{{ _('Profile') }}</span>
         {% endcall %}
     </nav>
