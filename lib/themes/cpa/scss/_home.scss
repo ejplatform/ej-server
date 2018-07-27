@@ -111,23 +111,24 @@
     display: none;
   }
 
-  a {
-    color: $purple !important; 
-    display: flex !important;
+//   a {
+//     color: $purple !important; 
+//     display: flex !important;
 
-    &:before {
-        content: "\f086";
-        font-family: 'Font Awesome\ 5 Free';
-        font-size: 32px;
-        font-weight: 900;
-    }
-  }
+//     &:before {
+//         content: "\f086";
+//         font-family: 'Font Awesome\ 5 Free';
+//         font-size: 32px;
+//         font-weight: 900;
+//     }
 
-  a + a:before {
-    content: "\f4ad";
-  }
+//   }
 
-  a + a + a:before {
-    content: "\f007";
-  }
+//   a + a:before {
+//     content: "\f4ad";
+//   }
+
+//   a + a + a:before {
+//     content: "\f007";
+//   }
 }

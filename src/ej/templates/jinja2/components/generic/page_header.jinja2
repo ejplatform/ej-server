@@ -77,17 +77,17 @@
 {% macro header_lower_nav(request) %}
     
     <nav class="Header-lowerNav">
-        {% call link('/conversations/', title=_('Conversations'), preload=True) %}
+        {% call link('/conversations/', title=_('Conversations'), class='conversations-link', preload=True) %}
             <img src="/static/img/icons/navbar_icon1.svg" alt="{{ _('Conversations') }}" class="Header-lowerIcon">
             <span>{{ _('Conversations') }}</span>
         {% endcall %}
 
-        {% call link('/talks/', title=_('Panel'), preload=True) %}
+        {% call link('/talks/', title=_('Panel'), class='panel-link', preload=True) %}
             <img src="/static/img/icons/navbar_icon2.svg" alt="{{ _('Panel') }}" class="Header-lowerIcon">
             <span>{{ _('Panel') }}</span>
         {% endcall %}
 
-        {% call link('/profile/', title=_('Profile'), preload=True) %}
+        {% call link('/profile/', title=_('Profile'), class='profile-link', preload=True) %}
             <img src="/static/img/icons/navbar_icon3.svg" title="{{ _('Profile') }}" class="Header-lowerIcon">
             <span>{{ _('Profile') }}</span>
         {% endcall %}

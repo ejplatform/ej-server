@@ -31,11 +31,11 @@ $size-medium: 30px;
     --button-border-radius:  8px;
 
     --font-color-primary: #3F1B53;
-    --font-color-secondary: #D4F7F5;
-    --font-color-terciary: #30BEC0;
-    --font-color-quaternary: #052B47;
+    // --font-color-secondary: #D4F7F5;
+    // --font-color-terciary: #30BEC0;
+    // --font-color-quaternary: #052B47;
 
-    --font-size-x-large: 18px;
+    // --font-size-x-large: 18px;
 
     //Profile
     --profile-font-color-primary: #30BEC0;
@@ -70,6 +70,15 @@ $size-medium: 30px;
     --footer-background-color: #D4F7F5;
     --footer-font-color: #30BEC0;
     
+
+     // navigation bottom
+     --navigation-bottom-font-color: #3F1B53;
+     --navigation-bottom-panel-display: block;
+     --navigation-bottom-icon-conversations: "\f086";
+     --navigation-bottom-icon-panel:  "\f4ad";
+     --navigation-bottom-icon-profile: "\f007";
+
+     
 
     // Card Conversation
     --card-conversation-bottom-background: #30BEC0;
