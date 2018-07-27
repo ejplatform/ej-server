@@ -13,7 +13,7 @@
     </div>
 {% endmacro %}
 
-{% macro profile_detail(profile, conversations, info='profile', javascript_enabled='') %}
+{% macro profile_detail(profile, conversations, info='profile', favorite_conversations='', favorite_count=0,javascript_enabled='') %}
     <div class="Profile">
         <img class="Profile-image" src="{{ profile.image_url }}">
 
@@ -179,14 +179,11 @@
 {% macro profile_conversations(profile, javascript_enabled='') %}
     <div class="Profile-conversations">
 
-
-        <h2>{{_('Favorite Conversations')}} <span>(1)</span>
-            <i class="fa fa-angle-down"></i>
-        </h2>
-        <ul class='conversations'>
-        {# FIXME list conversations  #}
-            {# {% for conversation in profile.favorite_conversations(javascript_enabled) %}
-            {% endfor %} #}
-        </ul>
+            <h2>{{_('Favorite Conversations')}} <span>({{favorite_count}})</span>
+              <i class="fa fa-angle-down"></i>
+            </h2>
+            <ul class='conversations'>
+              {{ conversation_list(favorite_conversations, title='') }}
+            </ul>
     </div>
 {% endmacro %}

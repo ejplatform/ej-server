@@ -2,5 +2,5 @@
 {% from 'ej_profiles/components/profile.jinja2' import profile_detail with context %}
 
 {% block content %}
-    {{ profile_detail(request.user.get_profile(), conversations, info_tab) }}
+    {{ profile_detail(request.user.get_profile(), conversations, info_tab, favorite_conversations, favorite_count) }}
 {% endblock %}

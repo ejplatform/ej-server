@@ -85,12 +85,13 @@ class TestBasicUrls:
         check_urls(client, self.login_redirect_urls, 302)
         assert client.get('/').status_code == 302
 
-    def test_url_redirects_to_profile(self,db, caplog, client, user_db):
+    def test_url_redirects_to_profile(self, db, caplog, client, user_db):
         caplog.set_level(logging.CRITICAL, logger='django')
         client.force_login(user_db, backend=None)
         check_urls(client, self.profile_redirect_urls, 302)
 
         assert client.get('/').status_code == 302
+
     def test_login_required_urls(self, db, caplog, client, user_db):
         caplog.set_level(logging.CRITICAL, logger='django')
         client.force_login(user_db, backend=None)

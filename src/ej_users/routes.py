@@ -52,6 +52,7 @@ def register(request):
     else:
         return redirect(request.GET.get('next', '/profile/'))
 
+
 @urlpatterns.route('login/')
 def login(request):
     if not request.user.is_authenticated:
@@ -87,6 +88,7 @@ def login(request):
         }
     else:
         return redirect(request.GET.get('next', '/profile/'))
+
 
 @urlpatterns.route('logout/')
 def logout(request):

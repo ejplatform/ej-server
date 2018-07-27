@@ -2,10 +2,9 @@ import pytest
 from django.test import Client
 from django.http import HttpResponseRedirect, HttpResponseServerError
 from django.test import TestCase
-from django import forms
 
 from ej_users.models import User
-from ej_users.forms import RegistrationForm
+
 
 @pytest.fixture
 def logged_client(db):
@@ -58,14 +57,13 @@ class TestLogoutRoute:
 
         assert isinstance(response, HttpResponseServerError)
         assert response.status_code == 500
-        assert response.content.decode("utf-8")  == 'cannot logout using a GET'
+        assert response.content.decode("utf-8") == 'cannot logout using a GET'
 
     def test_logout_logged_user(self, logged_client):
         client = logged_client
         assert '_auth_user_id' in client.session
-        response = client.post('/logout/')
-        assert not '_auth_user_id' in client.session
-
+        client.post('/logout/')
+        assert '_auth_user_id' not in client.session
 
 
 class TestRegisterRoute(TestCase):
@@ -95,7 +93,7 @@ class TestRegisterRoute(TestCase):
         }, follow=True)
         user_pk = User.objects.get(email="leela@example.com").pk
         self.assertEqual(int(client.session['_auth_user_id']), user_pk)
-        self.assertRedirects(response,'/conversations/',302,200)
+        self.assertRedirects(response, '/conversations/', 302, 200)
 
 
 class TestRecoverPasswordRoute:
