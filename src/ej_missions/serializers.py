@@ -7,9 +7,14 @@ import datetime
 
 
 class OwnerSerializer(serializers.ModelSerializer):
+    profile_id = serializers.SerializerMethodField()
+
     class Meta:
         model = User
-        fields = ('display_name', 'id', 'email', 'name')
+        fields = ('display_name', 'id', 'email', 'name', 'profile_id')
+
+    def get_profile_id(self, obj):
+        return obj.profile.id
 
 class CommentSerializer(serializers.ModelSerializer):
     user = OwnerSerializer(read_only=True)
