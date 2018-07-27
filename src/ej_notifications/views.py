@@ -34,10 +34,18 @@ class NotificationViewSet(viewsets.ViewSet):
         notification.save()
         serializer = serializers.NotificationSerializer(notification)
         return Response(serializer.data)
+    
+    def update_read(self, request):
+        data = request.data
+        notification = models.Notification.objects.get(id=data["notification_id"])
+        notification.read = data["read"]
+        notification.save()
+        serializer = serializers.NotificationSerializer(notification)
+        return Response(serializer.data)
 
     def user_notifications(self, request, pk):
         user = User.objects.get(id=pk)
-        notifications = models.Notification.objects.all()
+        notifications = models.Notification.objects.all().order_by("-created_at")
         user_notifications = []
         for notification in notifications:
             if (notification.receiver.id == user.id):
