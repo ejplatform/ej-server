@@ -244,6 +244,15 @@ $conversation-card-button-border-radius: 50% !default;
     li {
         margin: 0;
     }
+    .Container{
+        a{
+            text-transform: uppercase;
+            margin: $unit;
+            font-weight: bold;
+            display: block;
+        }
+    }
+
 
     &-banner {
         background: var(--conversation-middle-background);

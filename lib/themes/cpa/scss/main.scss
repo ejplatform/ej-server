@@ -3,25 +3,25 @@
 @import '../../../scss/maindefault';
 
 $blue-dark: #30BEC0;
-$blue-light: #D4F7F5;
+// $blue-light: #D4F7F5;
 $blue-medium: #30C0D3;
 $grey-dark: #052B47;
-$green: #8EC73F;
+// $green: #8EC73F;
 $pink: #C6027B;
 $purple: #3F1B53;
 $white: #fff;
 
-// Sizes
-$size-big: 46px;
-$size-medium: 30px;
+// // Sizes
+// $size-big: 46px;
+// $size-medium: 30px;
 
 // Components
 @import 'auth';
 @import 'home';
 @import 'conversation';
 @import 'conversations';
-@import 'profile';
-@import 'layout';
+// @import 'profile';
+// @import 'layout';
 
 
 :root {
