@@ -64,8 +64,11 @@
   --card-conversation-top-background: #C4F2F4;
   --card-conversation-bottom-background: url(/static/default/img/icons/bg.png);
   --conversation-top-background: #C4F2F4;
+  --conversation-tag-color: #042049;
   --conversation-middle-background: #C4F2F4;
   --conversation-bottom-border: 28px solid #C4F2F4;
+  --conversation-info-title: #FF3D72;
+  --conversation-info-content: #042049;
   --conversation-vote-agree-color: #22b35c;
   --conversation-vote-skip-color: #30c0d3;
   --conversation-vote-disagree-color: #f13c20;

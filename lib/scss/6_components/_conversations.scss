@@ -253,7 +253,7 @@ $conversation-card-button-border-radius: 50% !default;
         padding-top: 0;
         .ConversationTags {
             background-color: var(--conversation-top-background);
-            color: var(--font-color-terciary);
+            color: var(--conversation-tag-color);
         }
 
         h1 {
@@ -325,13 +325,15 @@ $conversation-card-button-border-radius: 50% !default;
 
         h1 {
             font-family: 'Patua One', sans-serif !important;
-            color: $color-magenta !important;
+            // color: $color-magenta !important;
             font-size: 24px !important;
             letter-spacing: 1px;
             font-weight: 300 !important;
+            color: var(--conversation-info-title);
         }
         p {
             margin-top: $spacing-unit-tiny;
+            color: var(--conversation-info-content);
         }
     }
 }

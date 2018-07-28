@@ -13,7 +13,6 @@
  
      --font-color-primary: #042049;
      --font-color-secondary: #30c0d3;
-    //  --font-color-terciary: #30c0d3;
     //  --font-color-quaternary: #042049;
  
     //  --font-size-x-large: 13px;
@@ -65,8 +64,13 @@
  
      // Conversation
      --conversation-top-background: #C4F2F4;
+     --conversation-tag-color: #042049;
      --conversation-middle-background: #C4F2F4;
      --conversation-bottom-border: 28px solid #C4F2F4;
+
+     // Conversation: info
+     --conversation-info-title: #FF3D72;
+     --conversation-info-content: #042049;
 
       // Conversation: vote
      --conversation-vote-agree-color: #22b35c;
