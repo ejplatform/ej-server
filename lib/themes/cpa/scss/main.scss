@@ -31,7 +31,7 @@ $size-medium: 30px;
     --button-border-radius:  8px;
 
     --font-color-primary: #3F1B53;
-    // --font-color-secondary: #D4F7F5;
+    --font-color-secondary: #D4F7F5;
     // --font-color-terciary: #30BEC0;
     // --font-color-quaternary: #052B47;
 
@@ -69,20 +69,18 @@ $size-medium: 30px;
     // Footer
     --footer-background-color: #D4F7F5;
     --footer-font-color: #30BEC0;
-    
 
      // navigation bottom
      --navigation-bottom-font-color: #3F1B53;
      --navigation-bottom-panel-display: flex;
      --navigation-bottom-icon-conversations: "\f086";
      --navigation-bottom-icon-panel:  "\f4ad";
-     --navigation-bottom-icon-profile: "\f007";
-
-     
+     --navigation-bottom-icon-profile: "\f007"     
 
     // Card Conversation
-    --card-conversation-bottom-background: #30BEC0;
+    --card-conversation-bottom-background:  url(/static/cpa/img/bg.svg) bottom center no-repeat;
     --card-conversation-top-background: #30BEC0;
+     //FIXME add middle
 
     // Conversation
     --conversation-top-background: #D4F7F5;

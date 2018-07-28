@@ -12,7 +12,7 @@
      --button-border-radius:  56px;
  
      --font-color-primary: #042049;
-    //  --font-color-secondary: #30c0d3;
+     --font-color-secondary: #30c0d3;
     //  --font-color-terciary: #30c0d3;
     //  --font-color-quaternary: #042049;
  
@@ -58,7 +58,6 @@
      --navigation-bottom-icon-panel:  "";
      --navigation-bottom-icon-profile: "";
       
-
      // Card Conversation
      --card-conversation-top-background: #C4F2F4;
      --card-conversation-bottom-background: url(/static/default/img/icons/bg.png);
@@ -68,15 +67,16 @@
      --conversation-top-background: #C4F2F4;
      --conversation-middle-background: #C4F2F4;
      --conversation-bottom-border: 28px solid #C4F2F4;
+
+      // Conversation: vote
      --conversation-vote-agree-color: #22b35c;
      --conversation-vote-skip-color: #30c0d3;
      --conversation-vote-disagree-color: #f13c20;
      //FIXME add font-size
  
-     // Comment Form of Conversation
-     --conversation-comment-background-color: #C4F2F4;
+    // Conversation: comment form
+    --conversation-comment-background-color: #C4F2F4;
      --conversation-comment-title-color: #30c0d3;
-     // --conversation-comment-font-color: #C4F2F4;
      --conversation-comment-textarea-border: 2px solid #30c0d3;
      --conversation-comment-button-border-radius: 50%;
      

@@ -98,6 +98,8 @@ $conversation-card-button-border-radius: 50% !default;
     font-weight: bold;
     text-align: center;
     padding: $spacing-unit / 2 0;
+    background-color: var(--conversation-top-background);
+    color: var(--font-color-secondary); 
 }
 
 .ConversationCard {
@@ -115,6 +117,10 @@ $conversation-card-button-border-radius: 50% !default;
     height: 320px;
     overflow: hidden;
     position: relative;
+    .ConversationTags {
+        background-color: var(--card-conversation-top-background);
+        color: var(--font-color-secondary);
+    }
 
     > * {
         padding: $conversation-card-padding;
@@ -177,7 +183,6 @@ $conversation-card-button-border-radius: 50% !default;
     }
 
     &-cover + .ConversationCard-actions {
-        background: url(/static/default/img/icons/bg-transparent.svg);
         background-size: 30px;
         background-repeat: space;
         margin-top: $spacing-unit;
@@ -185,11 +190,12 @@ $conversation-card-button-border-radius: 50% !default;
         position: absolute;
         box-sizing: border-box;
         width: 100%;
+        background: var(--card-conversation-bottom-background);
     }
 
     &-actions {
         .Button[primary] {
-            @include color($conversation-card-button-color, $conversation-card-button-color-text);
+            @include color(var(--button-background-primary), $conversation-card-button-color-text);
             font-size: $font-size-small;
             padding-top: $button-vpadding * 2;
             padding-bottom: $button-vpadding * 2;
@@ -240,11 +246,15 @@ $conversation-card-button-border-radius: 50% !default;
     }
 
     &-banner {
-        background: $color-blue-nav;
+        background: var(--conversation-middle-background);
         border-radius: 0 0 $block-elements-border-radius $block-elements-border-radius;
         color: $color-purple-dark;
         margin: 0;
         padding-top: 0;
+        .ConversationTags {
+            background-color: var(--conversation-top-background);
+            color: var(--font-color-terciary);
+        }
 
         h1 {
             @extend .Container;
@@ -258,13 +268,14 @@ $conversation-card-button-border-radius: 50% !default;
             @media only screen and (min-width: $breakpoint-large) {
                 padding: $spacing-unit-large 0;
             }
+            color: var(--font-color-primary);
         }
     }
 
     &-arrow {
         border-left: $conversation-card-border-arrow-size solid transparent;
         border-right: $conversation-card-border-arrow-size solid transparent;
-        border-top: $conversation-card-border-arrow-size solid $color-blue-nav;
+        border-top: var(--conversation-bottom-border);
         height: 0;
         margin: 0 auto;
         padding: 0;

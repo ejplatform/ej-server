@@ -7,13 +7,12 @@
 }
 
 .ConversationDetail {
-    h1 {
-        color: $purple;
-    }
-
-    p {
-        text-align: center;
-    }
+    // h1 {
+    //     color: $purple;
+    // }
+    // p {
+    //     text-align: center;
+    // }
 
     .ConversationTags {
         background-color: $blue-light;
@@ -21,15 +20,15 @@
     }
 
     .ConversationDetail-banner {
-        background-color: $blue-light;
+        // background-color: $blue-light;
     }
 
     .ConversationDetail-arrow {
-        border-top-color: $blue-light;
+        // border-top-color: $blue-light;
     }
 
     .ConversationDetail-statistics, .ConversationDetail-statisticsBottom {
-        color: $blue-dark;
+        // color: $blue-dark;
     }
 
     .ConversationDetail-header {
