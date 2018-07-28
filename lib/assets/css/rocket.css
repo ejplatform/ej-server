@@ -72,8 +72,8 @@
   --conversation-vote-agree-color: #22b35c;
   --conversation-vote-skip-color: #30c0d3;
   --conversation-vote-disagree-color: #f13c20;
-  --conversation-comment-background-color: #C4F2F4;
-  --conversation-comment-title-color: #30c0d3;
+  --conversation-comment-background-color: #30c0d3;
+  --conversation-comment-title-color: white;
   --conversation-comment-textarea-border: 2px solid #30c0d3;
   --conversation-comment-button-border-radius: 50%; }
 

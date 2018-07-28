@@ -96,9 +96,17 @@ $white: #fff;
     --conversation-vote-skip-color: #30BEC0;
     --conversation-vote-disagree-color: #C6027B;
 
+    // Conversation: comment
+    --conversation-comment-background-color: #30BEC0;
+    --conversation-comment-title-color: white;
+
+    --conversation-comment-textarea-border: 2px solid #30c0d3;
+    --conversation-comment-button-border-radius: 50%;
+     
+
     // Conversation: comment form
-    --conversation-comment-background-color: white;
-    --conversation-comment-title-color: #C6027B;
-    --conversation-comment-textarea-border:  2px solid #30C0D3;
-    --conversation-comment-button-border-radius: 10px;
+    // --conversation-comment-background-color: white;
+    // --conversation-comment-title-color: #C6027B;
+    // --conversation-comment-textarea-border:  2px solid #30C0D3;
+    // --conversation-comment-button-border-radius: 10px;
 }

@@ -348,7 +348,9 @@ $conversation-card-button-border-radius: 50% !default;
 }
 
 .Comment {
-    @include color('primary');
+    // @include color('primary');
+    background-color: var(--conversation-comment-background-color);
+    color: var(--conversation-comment-title-color);
 
     box-sizing: border-box;
     border-radius: $block-elements-border-radius;
