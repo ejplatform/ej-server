@@ -1,4 +1,3 @@
-{% from 'components/generic/elements.jinja2' import action_button, rocket_button, link %}
 {% from 'ej_conversations/components/conversation-list.jinja2' import conversation_list %}
 
 
@@ -13,7 +12,7 @@
     </div>
 {% endmacro %}
 
-{% macro profile_detail(profile, conversations, info='profile', favorite_conversations='', favorite_count=0,javascript_enabled='') %}
+{% macro profile_detail(profile, conversations, info='profile', javascript_enabled='') %}
     <div class="Profile">
         <img class="Profile-image" src="{{ profile.image_url }}">
 
@@ -26,15 +25,15 @@
                 {{ link(_('Info'), '/profile/',
                         target='.Profile-tabs',
                         transition=None,
-                        class='Profile-tabActive' if info=='profile' else None) }}
+                        class_='Profile-tabActive' if info=='profile' else []) }}
                 {{ link(_('Trophies'), '/profile/?info=trophies',
                         target='.Profile-tabs',
                         transition=None,
-                        class='Profile-tabActive' if info=='trophies' else None) }}
+                        class_='Profile-tabActive' if info=='trophies' else []) }}
                 {{ link(_('Contributions'), '/profile/?info=contributions',
                         target='.Profile-tabs',
                         transition=None,
-                        class='Profile-tabActive' if info=='contributions' else None) }}
+                        class_='Profile-tabActive' if info=='contributions' else []) }}
             </nav>
 
             <div class="Profile-tabContainer">
@@ -64,7 +63,7 @@
         </p>
         <p>
             <i class="far fa-times-circle"></i>
-            <a href="/profile/remove">{{ _('Delete profile') }}</a>
+            <a href="/profile/delete">{{ _('Delete profile') }}</a>
         </p>
     </div>
 {% endmacro %}
@@ -179,11 +178,14 @@
 {% macro profile_conversations(profile, javascript_enabled='') %}
     <div class="Profile-conversations">
 
-            <h2>{{_('Favorite Conversations')}} <span>({{favorite_count}})</span>
-              <i class="fa fa-angle-down"></i>
-            </h2>
-            <ul class='conversations'>
-              {{ conversation_list(favorite_conversations, title='') }}
-            </ul>
+
+        <h2>{{_('Favorite Conversations')}} <span>(1)</span>
+            <i class="fa fa-angle-down"></i>
+        </h2>
+        <ul class='conversations'>
+        {# FIXME list conversations  #}
+            {# {% for conversation in profile.favorite_conversations(javascript_enabled) %}
+            {% endfor %} #}
+        </ul>
     </div>
 {% endmacro %}

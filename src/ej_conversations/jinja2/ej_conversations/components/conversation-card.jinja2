@@ -1,6 +1,4 @@
 {% macro conversation_card(conversation) %}
-    {% from 'components/generic/elements.jinja2' import action_button %}
-
     <div class="ConversationCard-container">
         <div class="ConversationCard">
             <div class="ConversationTags"><i class="fa fa-tags"></i>
@@ -14,7 +12,7 @@
                 <ul class="ConversationCard-statistics">
                     <li><i class="fa fa-comment"></i> {{ conversation.comments.count() }}</li>
                     <li><i class="fa fa-sliders-h"></i> {{ conversation.votes.count() }}</li>
-                    <li><i class="fa fa-star"></i> {{ conversation.favorite_statistic() }}</li>
+                    <li><i class="fa fa-star"></i> {{ conversation.followers.count() }}</li>
                 </ul>
             </div>
             <div class="ConversationCard-cover">

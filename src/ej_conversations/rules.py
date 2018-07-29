@@ -157,8 +157,7 @@ def can_edit_conversation(user, conversation):
         return False
     elif user == conversation.author:
         return True
-    elif (conversation.status == conversation.STATUS.promoted
-          and user.has_perm('ej_conversations.can_publish')):
+    elif conversation.is_promoted and user.has_perm('ej_conversations.can_publish'):
         return True
     return False
 

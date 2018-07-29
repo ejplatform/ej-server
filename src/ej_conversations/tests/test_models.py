@@ -2,7 +2,7 @@ import pytest
 from django.core.exceptions import ValidationError
 
 from ej_conversations import create_conversation
-from ej_conversations.models import Vote, Choice, FavoriteConversation
+from ej_conversations.models import Vote, Choice
 from ej_users.models import User
 
 
@@ -38,27 +38,17 @@ class TestConversation:
 
 
 class TestFavoriteConversation:
-    def test_user_favorite_conversation(self, mk_conversation, mk_user):
+    def test_conversation_favorites(self, mk_conversation, mk_user):
         user = mk_user()
         conversation = mk_conversation()
-        favorite_conversation = FavoriteConversation.objects.create(user=user, conversation=conversation)
+        conversation.make_favorite(user)
+        assert conversation.is_favorite(user)
 
-        assert favorite_conversation.user == user
-        assert favorite_conversation.conversation == conversation
+        conversation.toggle_favorite(user)
+        assert not conversation.is_favorite(user)
 
-    def test_user_update_favorite_conversation_status_add(self, mk_conversation, mk_user):
-        user = mk_user()
-        conversation = mk_conversation()
-        conversation.update_favorite_status(user)
-        assert FavoriteConversation.objects.filter(user=user, conversation=conversation).exists()
-
-    def test_user_update_favorite_conversation_status_remove(self, mk_conversation, mk_user):
-        user = mk_user()
-        conversation = mk_conversation()
-        favorite_conversation = FavoriteConversation.objects.create(user=user, conversation=conversation)
-        conversation.update_favorite_status(user)
-
-        assert not FavoriteConversation.objects.filter(id=favorite_conversation.id).exists()
+        conversation.toggle_favorite(user)
+        assert conversation.is_favorite(user)
 
 
 class TestVote:

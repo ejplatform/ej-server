@@ -35,6 +35,7 @@ class CommentAdmin(AuthorIsUserMixin, admin.ModelAdmin):
 
 @register(Conversation)
 class ConversationAdmin(AuthorIsUserMixin, admin.ModelAdmin):
-    fields = ['title', 'text', 'status']
-    list_display = ['title', 'slug', 'author', 'created']
-    list_filter = ['status', 'created']
+    fields = ['title', 'text', 'is_promoted']
+    list_display = ['title', 'slug', 'author', 'created', 'is_promoted']
+    list_filter = ['created', 'is_promoted']
+    list_editable = ['is_promoted']

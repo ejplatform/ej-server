@@ -1,5 +1,7 @@
+from django.contrib.auth import get_user_model
 from django.http import Http404
 
+import ej_conversations.models.conversation_extra
 from boogie.router import Router
 from .. import models
 from .. import routes
@@ -10,7 +12,7 @@ urlpatterns = Router(
     models={
         'conversation': models.Conversation,
         'comment': models.Comment,
-        'board': models.ConversationBoard,
+        'board': ej_conversations.models.conversation_extra.ConversationBoard,
     },
     lookup_field={
         'conversation': 'slug',
