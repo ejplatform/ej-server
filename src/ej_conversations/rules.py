@@ -5,7 +5,7 @@ from django.db.models import Q
 from django.utils.timezone import now
 
 from boogie import rules
-from ej_conversations.models import Conversation, ConversationBoard
+from ej_conversations.models import Conversation
 
 
 #
@@ -52,17 +52,6 @@ def has_conversation(user):
     Verify if an user has any conversation.
     """
     if Conversation.objects.filter(author=user).count() > 0:
-        return True
-    else:
-        return False
-
-
-@rules.register_rule('ej_conversations.has_board')
-def has_board(user):
-    """
-    Verify if an user has a conversation board.
-    """
-    if ConversationBoard.objects.filter(owner=user):
         return True
     else:
         return False

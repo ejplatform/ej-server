@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect
 from boogie.router import Router
 from ej_configurations import fragment, social_icons
 from ej_conversations.proxy import conversations_with_moderation
-from ej_conversations.models import ConversationBoard
+from ej_boards.models import Board
 
 log = logging.getLogger('ej')
 urlpatterns = Router(
@@ -48,7 +48,7 @@ def menu(request):
 
     return {
         'user': request.user,
-        'board': ConversationBoard.objects.filter(owner=request.user).first(),
+        'board': Board.objects.filter(owner=request.user).first(),
     }
 
 
