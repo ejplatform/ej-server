@@ -3,6 +3,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from model_utils.models import TimeStampedModel
 
+from ej_conversations.models import Conversation
 from .validators import validate_board_url
 
 
@@ -34,11 +35,7 @@ class Board(TimeStampedModel):
 
     @property
     def conversations(self):
-        return (
-            self.board_subscriptions
-                .select_related('conversation')
-                .values_list('conversation', flat=True)
-        )
+        return Conversation.objects.filter(board_subscriptions__board=self)
 
     class Meta:
         verbose_name = _('Board')
@@ -47,11 +44,14 @@ class Board(TimeStampedModel):
     def __str__(self):
         return self.title
 
+    def get_absolute_url(self):
+        return f'/{self.slug}/'
+
     def add_conversation(self, conversation):
         """
         Add conversation to board.
         """
-        self.board_subscriptions.add(conversation)
+        self.board_subscriptions.get_or_create(conversation=conversation)
 
 
 class BoardSubscription(models.Model):

@@ -1,13 +1,12 @@
 import pytest
 from django.contrib.auth.models import AnonymousUser
-from django.http import Http404, HttpResponseServerError
+from django.http import HttpResponseServerError
 from django.test import RequestFactory
 
 from ej_conversations import create_conversation
-from ej_conversations.models import ConversationBoard, Conversation, Comment, FavoriteConversation
+from ej_conversations.models import Conversation, Comment, FavoriteConversation
 from ej_conversations.models.comment import votes_counter
-from ej_conversations.routes import conversations, admin, boards, comments
-from ej_conversations.forms import FirstConversationForm, ConversationForm
+from ej_conversations.routes import conversations, comments
 from ej_users.models import User
 
 
@@ -55,31 +54,13 @@ def comment(db, conversation, user):
     return conversation.create_comment(user, 'content', 'approved')
 
 
-@pytest.fixture
-def board(db, user):
-    return ConversationBoard.objects.create(name='boardname', owner=user)
-
-
 class TestConversationBase:
-    def test_get_all_conversations_of_another_user(self, get_request, user, board, conversation, db):
-        response = conversations.conversation_list(get_request, board)
-        assert response.get('conversations')._obj.model is Conversation
-        assert response.get('can_add_conversation') is False
-        assert response.get('owner') is user
-        assert response.get('add_link') is ''
-
-    def test_get_all_conversations_of_user_board(self, get_request_with_user, user, conversation, db):
-        response = conversations.conversation_list(get_request_with_user)
-        assert response.get('conversations')._obj.model is Conversation
-        assert response.get('owner') is None
-        assert str(response.get('add_link')) is not None
-
     def test_get_all_promoted_conversations(self, get_request, user, conversation, db):
         response = conversations.conversation_list(get_request)
         assert response.get('conversations')._obj.model is Conversation
         assert response.get('can_add_conversation') is False
         assert response.get('owner') is None
-        assert response.get('add_link') is ''
+        assert response.get('create_link') is None
 
     def test_conversation_detail_without_being_author(self, get_request, user, conversation, db):
         response = conversations.detail(get_request, conversation)
@@ -144,34 +125,6 @@ class TestConversationBase:
     def test_get_conversation_leaderboard(self, get_request_with_user, conversation):
         response = conversations.leaderboard(conversation)
         assert response.get('info') is not None
-
-
-class TestConversationForUser:
-    def test_user_create_first_conversation(self, get_request_with_user):
-        response = boards.create(get_request_with_user)
-        assert isinstance(response.get('form'), FirstConversationForm)
-
-    def test_user_get_conversation_detail(self, get_request_with_user, conversation, user):
-        response = boards.detail(get_request_with_user, conversation, user)
-        assert response.get('owner') is user
-        assert response.get('conversation').title == 'title'
-        assert response.get('edit_perm') is True
-        assert response.get('can_comment') is True
-
-    def test_user_can_edit_his_own_conversation(self, get_request_with_user, conversation, user):
-        response = boards.edit(get_request_with_user, conversation, user)
-        assert isinstance(response.get('form'), ConversationForm)
-
-    def test_user_cannot_edit_conversation_of_another_user(self, get_request_with_user, conversation):
-        user = User.objects.create_user('user@server.com', 'password')
-        with pytest.raises(Http404):
-            boards.edit(get_request_with_user, conversation, user)
-
-
-class TestConversationAdmin:
-    def test_cannot_create_conversation_for_another_user(self, post_request, user):
-        with pytest.raises(Http404):
-            admin.create(post_request, user)
 
 
 class TestConversationComments:
