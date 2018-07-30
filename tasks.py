@@ -77,7 +77,6 @@ def run(ctx, no_toolbar=False, gunicorn=False, migrate=False,
         env['PATH'] = os.environ['PATH']
         env['PYTHONPATH'] = 'src'
         args = [
-            # '-m', 'gunicorn.app.wsgiapp',
             'ej.wsgi', '-w', '4', '-b', '0.0.0.0:5000',
             '--error-logfile=-',
             '--access-logfile=-',
