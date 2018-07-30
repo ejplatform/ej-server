@@ -54,6 +54,37 @@ def js(ctx):
 
 
 @task
+def clean_migrations(ctx):
+    """
+    Remove all automatically created migrations.
+    """
+    import re
+    auto_migration = re.compile(r'\d{4}_auto_\w+.py')
+
+    remove_files = []
+    for app in os.listdir('src'):
+        migrations_path = f'src/{app}/migrations/'
+        if os.path.exists(migrations_path):
+            migrations = os.listdir(migrations_path)
+            if '__pycache__' in migrations:
+                migrations.remove('__pycache__')
+            if sorted(migrations) == ['__init__.py', '0001_initial.py']:
+                remove_files.append(f'{migrations_path}/0001_initial.py')
+            else:
+                remove_files.extend([
+                    f'{migrations_path}/{f}' for f in migrations
+                    if auto_migration.fullmatch(f)
+                ])
+
+    print('Listing auto migrations')
+    for file in remove_files:
+        print(f'* {file}')
+    if input('Remove those files? (y/N)').lower() == 'n':
+        for file in remove_files:
+            os.remove(file)
+
+
+@task
 def run(ctx, no_toolbar=False, gunicorn=False, migrate=False,
         ask_input=False, assets=False):
     """
