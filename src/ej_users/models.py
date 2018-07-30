@@ -9,6 +9,7 @@ from django.dispatch import receiver
 
 from boogie import rules
 from boogie.apps.users.models import AbstractUser
+from ej_conversations.models import Conversation
 from boogie.rest import rest_api
 from .manager import UserManager
 
@@ -64,3 +65,10 @@ def random_name(fmt='{adjective} {noun}'):
             'unique random name'
         )
 
+class UserConversations(models.Model):
+
+    """A model to store wich conversations was accessed by some user """
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    conversations = models.ManyToManyField(Conversation, blank=True)
+    last_viewed_conversation = models.IntegerField()

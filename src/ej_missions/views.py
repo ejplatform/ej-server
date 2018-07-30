@@ -9,7 +9,7 @@ from django.http import QueryDict
 
 from . import serializers
 from . import models
-from ej_users.models import User
+from ej_users.models import User, UserConversations
 from ej_trophies.models.user_trophy import UserTrophy
 
 
@@ -160,6 +160,39 @@ class MissionViewSet(viewsets.ViewSet):
     def conversation_comments(self, request, mid, cid):
         mission = models.Mission.objects.get(pk=mid)
         conversation = mission.conversations.get(pk=cid)
-        comments = conversation.comments.all()
+        comments = conversation.comments.all()[:3]
         serializer = serializers.ConversationCommentSerializer(comments, many=True)
         return Response(serializer.data)
+
+    def next_conversation(self, request, mid, uid):
+        mission = models.Mission.objects.get(pk=mid)
+        user_conversations = UserConversations.objects.filter(user=uid)
+        if (len(user_conversations) == 0):
+            mission_conversation = mission.conversations.all().first()
+            user_conversation = UserConversations(user=User.objects.get(pk=uid),
+                                                  last_viewed_conversation=0)
+            user_conversation.save()
+            user_conversation.conversations.add(mission_conversation)
+            user_conversation.save()
+            return Response({"cid": mission_conversation.id})
+        else:
+            user_conversations = user_conversations[0]
+            last_conversation_idx = user_conversations.last_viewed_conversation
+            last_conversation = user_conversations.conversations.all()[last_conversation_idx]
+            first_conversation = user_conversations.conversations.all().first()
+            mission_conversations = mission.conversations.all()
+
+            if(last_conversation_idx == len(mission.conversations.all()) - 1):
+                user_conversations.last_viewed_conversation = 0
+                user_conversations.save()
+                return Response({"cid": first_conversation.id})
+
+            for m in mission_conversations:
+                if m.id > last_conversation.id:
+                    next_conversation = m
+                    break
+
+            user_conversations.conversations.add(next_conversation)
+            user_conversations.last_viewed_conversation += 1;
+            user_conversations.save()
+            return Response({"cid": next_conversation.id})
