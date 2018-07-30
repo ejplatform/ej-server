@@ -8,12 +8,10 @@ urlpatterns = Router(
     models={
         'conversation': models.Conversation,
         'comment': models.Comment,
-        'owner': User
     },
     lookup_field={
         'conversation': 'slug',
         'comment': 'slug',
-        'owner': 'username',
     },
     lookup_type='slug',
     object='conversation',
@@ -22,6 +20,6 @@ conversation_url = f'<model:conversation>/'
 board_url = '<model:board>/'
 
 from .admin import create, edit, moderate
-from .base import conversation_list, detail, info, leaderboard
+from .conversations import conversation_list, detail, info, leaderboard
 from .comments import comment_list, comment_detail
 

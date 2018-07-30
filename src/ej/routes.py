@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 
 from boogie.router import Router
 from ej_configurations import fragment, social_icons
-from ej_conversations.routes.base import moderated_conversations
+from ej_conversations.proxy import conversations_with_moderation
 
 log = logging.getLogger('ej')
 urlpatterns = Router(
@@ -25,7 +25,7 @@ def home(request):
 @urlpatterns.route('start/')
 def start(request):
     return {
-        'conversations': moderated_conversations(request.user),
+        'conversations': conversations_with_moderation(request.user),
         'home_banner_fragment': fragment('home.banner', raises=False),
         'how_it_works_fragment': fragment('home.how-it-works', raises=False),
         'start_now_fragment': fragment('home.start-now', raises=False),

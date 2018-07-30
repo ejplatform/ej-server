@@ -58,7 +58,7 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
 
     # User conversations
-    path('', include('ej_conversations.routes.for_user', namespace='user-conversation')),
+    path('', include('ej_boards.routes', namespace='boards')),
 
     # Static files for the dev server
     *static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),

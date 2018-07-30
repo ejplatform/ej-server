@@ -1,44 +1,23 @@
 from django.core.exceptions import ValidationError
-from django.utils.translation import ugettext_lazy as _
 from django.http import HttpResponseServerError
 from django.urls import reverse
+from django.utils.translation import ugettext_lazy as _
 
 from boogie import rules
-from boogie.rules import proxy_seq
 from hyperpython import a
 from . import urlpatterns, conversation_url
-from ..models import Conversation
-from ej_conversations.models import FavoriteConversation, ConversationBoard
+from ..models import FavoriteConversation
+from ..proxy import conversations_with_moderation
 
 
 @urlpatterns.route('', name='list')
-def conversation_list(request, board=None):
+def conversation_list(request):
     user = request.user
-    owner = board.owner if board else None
-    if owner:
-        create_url = reverse('user-conversation:create')
-        conversations = Conversation.objects.filter(author=owner)
-    else:
-        create_url = reverse('conversation:create')
-        conversations = Conversation.objects.filter(is_promoted=True)
-
-    clist = {
-        'conversations': moderated_conversations(user, conversations),
+    return {
+        'conversations': conversations_with_moderation(user),
         'can_add_conversation': user.has_perm('ej_conversations.can_add_conversation'),
-        'owner': owner,
+        'create_url': reverse('conversation:create')
     }
-    board_url = ''
-    if not user.is_anonymous:
-        board = ConversationBoard.objects.filter(owner=user)
-        if board:
-            board_url = '/' + board.first().name + '/'
-
-    if request.path == board_url:
-        clist['add_link'] = a(_('Add new conversation'), href=create_url)
-    else:
-        clist['add_link'] = ''
-
-    return clist
 
 
 @urlpatterns.route(conversation_url)
@@ -92,13 +71,3 @@ def leaderboard(conversation):
         'conversation': conversation,
         'info': conversation.statistics(),
     }
-
-
-def moderated_conversations(user, qs=None):
-    perm = 'ej_conversations.can_moderate_conversation'
-    kwargs = {
-        'can_moderate': lambda x: user.has_perm(perm, x)
-    }
-    if qs is None:
-        qs = Conversation.objects.filter(is_promoted=True)
-    return proxy_seq(qs, user=user, **kwargs)
