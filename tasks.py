@@ -17,8 +17,7 @@ def manage(ctx, cmd, env=None, **kwargs):
     cmd = f'{python} manage.py {cmd} {opts}'
     env = dict(env or {})
     env.setdefault('PYTHONPATH', f'src:{env.get("PYTHONPATH", "")}')
-    print(f'Run: {cmd}')
-    ctx.run(cmd, pty=True, env=env)
+    run(ctx, cmd, pty=True, env=env)
 
 
 @task
@@ -33,18 +32,17 @@ def sass(ctx, no_watch=False, trace=False, theme=None):
     themes_path = 'lib/themes'
     cmd_themes = ''
     for theme in os.listdir(themes_path):
-        cmd_themes += themes_path  + '/' + theme + f"/scss/main.scss:lib/assets/css/main{theme}.css "
-        os.remove('lib/assets/' + theme)
-        os.symlink('../themes/' + theme + '/assets' , 'lib/assets/' + theme) 
+        cmd_themes += themes_path + '/' + theme + f"/scss/main.scss:lib/assets/css/main{theme}.css "
+        if os.path.exists('lib/assets/' + theme):
+            os.remove('lib/assets/' + theme)
+        os.symlink('../themes/' + theme + '/assets', 'lib/assets/' + theme)
 
     suffix = '' if no_watch else ' --watch'
     suffix += ' --trace' if trace else ''
 
     ctx.run('rm .sass-cache -rf')
     cmd = (f'sass {cmd_main} {cmd_rocket} {cmd_themes} {suffix}')
-
-    print('Running:', cmd)
-    ctx.run(cmd, pty=True)
+    run(ctx, cmd, pty=True)
 
 
 @task
@@ -295,3 +293,11 @@ def prepare_deploy(ctx, ask_input=False):
 
     # Static files
     manage(ctx, 'collectstatic', noinput=no_input)
+
+
+#
+# Utilities
+#
+def run(ctx, cmd, **kwargs):
+    print(f'Running: {cmd}')
+    ctx.run(cmd, **kwargs)
