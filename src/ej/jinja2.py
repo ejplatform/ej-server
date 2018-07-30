@@ -12,6 +12,7 @@ from markupsafe import Markup
 from ej_configurations import social_icons, fragment
 from hyperpython.components import render
 from . import tags
+from . import components
 import os
 
 TAG_MAP = {k: getattr(tags, k) for k in tags.__all__}
@@ -45,6 +46,9 @@ def environment(**options):
 
         # Hyperpython tag functions
         render=non_strict_render,
+
+        # Available tags and components
+        tag=components,
         **TAG_MAP,
     )
     env.filters.update(

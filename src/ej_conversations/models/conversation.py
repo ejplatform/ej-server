@@ -9,6 +9,7 @@ from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from model_utils.models import TimeStampedModel
 from taggit.managers import TaggableManager
+from taggit.models import TaggedItemBase
 
 from boogie import rules
 from boogie.rest import rest_api
@@ -83,13 +84,6 @@ class Conversation(TimeStampedModel):
     """
     A topic of conversation.
     """
-    board = models.ForeignKey(
-        'ConversationBoard',
-        related_name='conversations',
-        on_delete=models.CASCADE,
-        null=True,
-        blank=True,
-    )
     title = models.CharField(
         _('Title'),
         max_length=255,
@@ -302,6 +296,32 @@ class Conversation(TimeStampedModel):
             self.make_favorite(user)
 
 
+class FavoriteConversation(models.Model):
+    """
+    M2M relation from users to conversations.
+    """
+    conversation = models.ForeignKey(
+        'ej_conversations.Conversation',
+        on_delete=models.CASCADE,
+        related_name='followers',
+    )
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='favorite_conversations',
+    )
+
+
+class ConversationTag(TaggedItemBase):
+    """
+    Add tags to Conversations with real Foreign Keys
+    """
+    content_object = models.ForeignKey('Conversation', on_delete=models.CASCADE)
+
+
+#
+# Utility functions
+#
 def vote_count(conversation, which=None):
     """
     Return the number of votes of a given type.

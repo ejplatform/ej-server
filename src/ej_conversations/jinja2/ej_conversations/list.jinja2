@@ -2,8 +2,8 @@
 {% from 'ej_conversations/components/conversation-list.jinja2' import conversation_list %}
 
 {% block content %}
-    {% if can_add_conversation and add_link != '' %}
-        <p class="Link-new"><i class="fa fa-plus-circle"></i> {{ add_link }}</p>
+    {% if can_add_conversation and create_url %}
+        <a class="Link-new" href="{{ create_url }}"><i class="fa fa-plus-circle"></i> {{ _('New conversation') }}</a>
     {% endif %}
     {{ conversation_list(conversations, javascript_enabled=javascript_enabled) }}
 {% endblock %}

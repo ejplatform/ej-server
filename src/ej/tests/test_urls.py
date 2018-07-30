@@ -1,5 +1,7 @@
 import logging
 
+from ej.testing import check_urls
+
 
 class TestBasicUrls:
     #
@@ -96,13 +98,3 @@ class TestBasicUrls:
         caplog.set_level(logging.CRITICAL, logger='django')
         client.force_login(user_db, backend=None)
         check_urls(client, [*self.public_urls, *self.login_redirect_urls])
-
-
-def check_urls(client, urls, code=200):
-    for url in urls:
-        try:
-            response = client.get(url)
-        except Exception as ex:
-            print('Error loading url: %s' % url)
-            raise RuntimeError(f'{ex.__class__.__name__}: {ex}')
-        assert response.status_code == code, f'url: {url}'
