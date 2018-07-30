@@ -46,32 +46,6 @@ class FavoriteConversation(models.Model):
     )
 
 
-class ConversationBoard(models.Model):
-    """
-    A board that contains some conversations.
-    """
-    name = models.CharField(
-        _('Board name'),
-        max_length=140,
-        help_text=_(
-            'The name of an user conversation board.'
-        ),
-        unique=True
-    )
-    owner = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name='boards'
-    )
-    members = models.ManyToManyField(
-        settings.AUTH_USER_MODEL,
-        null=True
-    )
-
-    def get_members(self):
-        return "\n".join([m for m in self.members.all()])
-
-
 class TaggedConversation(TaggedItemBase):
     """
     Add tags to Conversations with real Foreign Keys
