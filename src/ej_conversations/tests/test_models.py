@@ -3,10 +3,13 @@ from django.core.exceptions import ValidationError
 
 from ej_conversations import create_conversation
 from ej_conversations.models import Vote, Choice
+from ej_conversations.mommy_recipes import ConversationRecipes
 from ej_users.models import User
 
+ConversationRecipes.update_globals(globals())
 
-class TestConversation:
+
+class TestConversation(ConversationRecipes):
     def test_random_comment_invariants(self, db, mk_conversation, mk_user):
         conversation = mk_conversation()
         user = mk_user(email='user@domain.com')
@@ -36,9 +39,7 @@ class TestConversation:
         board_url = '/' + user.board_name + '/'
         api.get(board_url, raw=True).status_code == 200
 
-
-class TestFavoriteConversation:
-    def test_conversation_favorites(self, mk_conversation, mk_user):
+    def test_mark_conversation_favorite(self, mk_conversation, mk_user):
         user = mk_user()
         conversation = mk_conversation()
         conversation.make_favorite(user)
