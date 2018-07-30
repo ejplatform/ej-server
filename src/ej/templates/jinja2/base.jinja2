@@ -5,7 +5,7 @@
 
 {% set target_context = request.GET.target | default('all') %}
 {% set target = target | default(target_context) %}
-{% if not page_title %}{% set page_title = content_title|default(_('Empurrando Juntos')) %}{% endif %}
+{% if not page_title %}{% set page_title = content_title|default(settings.EJ_PAGE_TITLE) %}{% endif %}
 
 {% set theme = request.GET.get('theme','') or current_theme %}
 
@@ -183,7 +183,7 @@
             window.onload = function() {
                 checkHicontrast();
                 runRemoteScripts();
-                checkFontSize();               
+                checkFontSize();
                 up.on('up:fragment:inserted', function(event, fragment) {
                     runRemoteScripts();
                     checkHicontrast();
