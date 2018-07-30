@@ -51,11 +51,3 @@ services:
       RABBITMQ_DEFAULT_PASS: password
       RABBITMQ_DEFAULT_USER: user
       RABBITMQ_ERLANG_COOKIE: ''
-
-  worker:
-    << : *django
-    command: /run_celery.sh
-
-  flower:
-    << : *django
-    command: /start_flower.sh

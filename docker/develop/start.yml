@@ -46,31 +46,6 @@ services:
       - 5672:5672  # Debugging
       - 15672:15672  # RabbitMQ Manager
 
-  flower:
-    << : *django
-    command: /start_flower.sh
-    depends_on:
-      - django
-      - rabbit
-      - redis
-    links:
-      - rabbit
-      - redis
-    ports:
-      - 8001:8001
-
-  worker:
-    << : *django
-    command: /run_celery.sh
-    depends_on:
-      - django
-      - rabbit
-    links:
-      - postgres
-      - rabbit
-      - redis
-    ports: []
-
   postgres:
     image: postgres:9.6
     env_file:
