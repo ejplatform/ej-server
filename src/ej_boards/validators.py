@@ -1,7 +1,9 @@
 from django.core.exceptions import ValidationError
 from django.http import Http404
 from django.urls import resolve
-from django.utils.translation import ugettext as _, ugettext_lazy as _
+from django.utils.translation import ugettext_lazy as _
+
+URL_BLACKLIST = {'', 'me', 'conversations'}
 
 
 def validate_board_url(url):
@@ -15,6 +17,3 @@ def validate_board_url(url):
         pass
     else:
         raise ValidationError(_('URL already exists.'))
-
-
-URL_BLACKLIST = {'', 'me'}

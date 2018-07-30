@@ -98,4 +98,3 @@ class TestBasicUrls:
         caplog.set_level(logging.CRITICAL, logger='django')
         client.force_login(user_db, backend=None)
         check_urls(client, [*self.public_urls, *self.login_redirect_urls])
-

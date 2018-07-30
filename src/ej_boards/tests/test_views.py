@@ -1,10 +1,10 @@
 import pytest
+
 from ej.testing import UrlTester
-from ej_boards.mommy_recipes import *
-from ej_conversations.mommy_recipes import *
+from ej_conversations.mommy_recipes import ConversationRecipes
 
 
-class TestBoards(UrlTester):
+class TestBoards(UrlTester, ConversationRecipes):
     public_urls = [
         # /board-slug/ will not be tested because it is handled by the
         # middleware and thus disabled in the test client,
