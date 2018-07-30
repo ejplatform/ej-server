@@ -17,7 +17,7 @@ def manage(ctx, cmd, env=None, **kwargs):
     cmd = f'{python} manage.py {cmd} {opts}'
     env = dict(env or {})
     env.setdefault('PYTHONPATH', f'src:{env.get("PYTHONPATH", "")}')
-    run(ctx, cmd, pty=True, env=env)
+    exec(ctx, cmd, pty=True, env=env)
 
 
 @task
@@ -200,11 +200,11 @@ def i18n(ctx, compile=False, edit=False, lang='pt_BR', keep_pot=False):
         manage(ctx, 'makemessages', all=True, keep_pot=True)
 
         print('Extract Jinja translations')
-        ctx.run('pybabel extract -F etc/babel.cfg -o locale/jinja2.pot .')
+        exec(ctx, 'pybabel extract -F etc/babel.cfg -o locale/jinja2.pot .')
 
         print('Join Django + Jinja translation files')
-        ctx.run('msgcat locale/django.pot locale/jinja2.pot --use-first -o locale/join.pot', pty=True)
-        ctx.run(r'''sed -i '/"Language: \\n"/d' locale/join.pot''', pty=True)
+        exec(ctx, 'msgcat locale/django.pot locale/jinja2.pot --use-first -o locale/join.pot', pty=True)
+        exec(ctx, r'''sed -i '/"Language: \\n"/d' locale/join.pot''', pty=True)
 
         print(f'Update locale {lang} with Jinja2 messages')
         ctx.run(f'msgmerge locale/{lang}/LC_MESSAGES/django.po locale/join.pot -U')
@@ -298,6 +298,6 @@ def prepare_deploy(ctx, ask_input=False):
 #
 # Utilities
 #
-def run(ctx, cmd, **kwargs):
+def exec(ctx, cmd, **kwargs):
     print(f'Running: {cmd}')
     ctx.run(cmd, **kwargs)
