@@ -166,6 +166,8 @@ class MissionViewSet(viewsets.ViewSet):
 
     def next_conversation(self, request, mid, uid):
         mission = models.Mission.objects.get(pk=mid)
+        if (len(mission.conversations.all()) == 0):
+            return Response({"comments_count": 0})
         user_conversations = UserConversations.objects.filter(user=uid)
         if (len(user_conversations) == 0):
             mission_conversation = mission.conversations.all().first()
