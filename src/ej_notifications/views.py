@@ -53,3 +53,9 @@ class NotificationViewSet(viewsets.ViewSet):
 
         serializer = serializers.NotificationSerializer(user_notifications, many=True)
         return Response(serializer.data)
+    
+    def unread(self, request, pk):
+        user = User.objects.get(id=pk)
+        notifications = models.Notification.objects.filter(receiver=user, read=False)
+        serializer = serializers.NotificationSerializer(notifications, many=True)
+        return Response(serializer.data)
