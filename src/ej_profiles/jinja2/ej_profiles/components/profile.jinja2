@@ -1,4 +1,3 @@
-{% from 'components/generic/elements.jinja2' import action_button, rocket_button, link %}
 {% from 'ej_conversations/components/conversation-list.jinja2' import conversation_list %}
 
 
@@ -26,15 +25,15 @@
                 {{ link(_('Info'), '/profile/',
                         target='.Profile-tabs',
                         transition=None,
-                        class='Profile-tabActive' if info=='profile' else None) }}
+                        class_='Profile-tabActive' if info=='profile' else []) }}
                 {{ link(_('Trophies'), '/profile/?info=trophies',
                         target='.Profile-tabs',
                         transition=None,
-                        class='Profile-tabActive' if info=='trophies' else None) }}
+                        class_='Profile-tabActive' if info=='trophies' else []) }}
                 {{ link(_('Contributions'), '/profile/?info=contributions',
                         target='.Profile-tabs',
                         transition=None,
-                        class='Profile-tabActive' if info=='contributions' else None) }}
+                        class_='Profile-tabActive' if info=='contributions' else []) }}
             </nav>
 
             <div class="Profile-tabContainer">

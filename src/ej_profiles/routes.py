@@ -3,6 +3,8 @@ from django.shortcuts import redirect
 
 from boogie.router import Router
 from .forms import ProfileForm
+from ej_conversations.models import FavoriteConversation
+
 
 app_name = 'ej_profiles'
 urlpatterns = Router(
@@ -13,9 +15,14 @@ urlpatterns = Router(
 
 @urlpatterns.route('')
 def detail(request):
+    favorite_conversations = []
+    for fav in FavoriteConversation.objects.filter(user=request.user):
+        favorite_conversations.append(fav.conversation)
     return {
         'info_tab': request.GET.get('info', 'profile'),
         'profile': request.user.profile,
+        'favorite_conversations': favorite_conversations,
+        'favorite_count': len(favorite_conversations),
     }
 
 

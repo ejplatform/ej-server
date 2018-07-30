@@ -1,5 +1,4 @@
 {% set up_transition = 'cross-fade' %}
-{% from 'components/generic/elements.jinja2' import action_button %}
 
 
 {# Page footer with links and other information #}
@@ -13,7 +12,7 @@
         <article class="Footer-info">
             {{ footer_data }}
         </article>
-        {% if (not request.user.is_authenticated) and request.path != '/login/' %} 
+        {% if (not request.user.is_authenticated) and request.path != '/login/' %}
           <p class="Footer-login">{{ action_button(_('Enter'), '/login/') }}</p>
         {% endif %}
     </footer>

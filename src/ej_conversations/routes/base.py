@@ -7,7 +7,8 @@ from boogie import rules
 from boogie.rules import proxy_seq
 from hyperpython import a
 from . import urlpatterns, conversation_url
-from ..models import Conversation, ConversationBoard, FavoriteConversation
+from ..models import Conversation
+from ej_conversations.models import FavoriteConversation, ConversationBoard
 
 
 @urlpatterns.route('', name='list')
@@ -19,7 +20,7 @@ def conversation_list(request, board=None):
         conversations = Conversation.objects.filter(author=board.owner)
     else:
         create_url = reverse('conversation:create')
-        conversations = Conversation.promoted.all()
+        conversations = Conversation.objects.filter(is_promoted=True)
 
     clist = {
         'conversations': moderated_conversations(user, conversations),
@@ -67,7 +68,7 @@ def detail(request, conversation, owner=None):
         except (PermissionError, ValidationError) as ex:
             ctx['comment_error'] = str(ex)
     elif request.POST.get('action') == 'favorite':
-        conversation.update_favorite_status(user)
+        conversation.toggle_favorite(user)
     return ctx
 
 
@@ -93,5 +94,5 @@ def moderated_conversations(user, qs=None):
         'can_moderate': lambda x: user.has_perm(perm, x)
     }
     if qs is None:
-        qs = Conversation.promoted.all()
+        qs = Conversation.objects.filter(is_promoted=True)
     return proxy_seq(qs, user=user, **kwargs)

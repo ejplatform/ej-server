@@ -1,95 +1,95 @@
-.Page {
-    padding-bottom: 0;
-}
+// .Page {
+//     padding-bottom: 0;
+// }
 
-.Header-topNav img {
-    height: 74px;
-}
+// .Header-topNav img {
+//     height: 74px;
+// }
 
-.Header {
-    background: $color-blue-dark;
-}
+// .Header {
+//     background: $color-blue-dark;
+// }
 
-.Header-topNav {
-    background: $color-blue-dark;
+// .Header-topNav {
+//     background: $color-blue-dark;
 
-    a {
-        color: $color-white;
-    }
-}
+//     a {
+//         color: $color-white;
+//     }
+// }
 
-.HomeBanner {
-    // width: 80%;
+// .HomeBanner {
+//     width: 80%;
 
-    h1 {
-        color: $color-grey-dark;
-        font-family: Raleway;
-        // line-height: 1.5em;
-        // text-align: center;
-    }
+//     h1 {
+//         color: $color-grey-dark;
+//         font-family: Raleway;
+//         line-height: 1.5em;
+//         text-align: center;
+//     }
 
-    .Button[primary] {
-        background: $color-green;
-        border-radius: $unit;
-        color: $color-white;
-        padding: $unit $unit*2;
-    }
-}
+//     .Button[primary] {
+//         background: $color-green;
+//         border-radius: $unit;
+//         color: $color-white;
+//         padding: $unit $unit*2;
+//     }
+// }
 
-.HowItWorks {
-    background: $color-blue-light;
+// .HowItWorks {
+//     background: $color-blue-light;
 
-    // h1 {
-    //     color: $color-pink;
-    //     font-weight: normal;
-    // }
+//     h1 {
+//         color: $color-pink;
+//         font-weight: normal;
+//     }
 
-    // p {
-    //     color: $color-purple;
-    //     line-height: $size-medium;
-    //     text-align: center;
-    // }
+//     p {
+//         color: $color-purple;
+//         line-height: $size-medium;
+//         text-align: center;
+//     }
 
-    .HowItWorksCard > .fa {
-        background: $color-white;
-        border-radius: 50%;
-        width: $unit * 7;
-        height: $unit * 7;
-        display: inline-block;
-        color: $color-blue-dark;
-        padding-top: $unit * 2;
-        margin: $unit * 2;
-    }
+//     .HowItWorksCard > .fa {
+//         background: $color-white;
+//         border-radius: 50%;
+//         width: $unit * 7;
+//         height: $unit * 7;
+//         display: inline-block;
+//         color: $color-blue-dark;
+//         padding-top: $unit * 2;
+//         margin: $unit * 2;
+//     }
 
-    .HowItWorksCard h1 {
-        // color: $color-purple;
-    }
+//     .HowItWorksCard h1 {
+//         color: $color-purple;
+//     }
 
-    .fa-child:before {
-        content: "\f007";
-    }
+//     .fa-child:before {
+//         content: "\f007";
+//     }
 
-    // .fa-hands-helping:before {
-    //     content: "\f06a";
-    // }
-}
+//     .fa-comments:before {
+//         content: "\f06a";
+//     }
+// }
 
-.StartNow, .Footer-info {
-    display: none;
-}
+// .StartNow, .Footer-info {
+//     display: none;
+// }
 
-.Footer {
-    background: $color-blue-light;
+// .Footer {
+//     background: $color-blue-light;
 
-    .Footer-social {
-        padding-bottom: $unit * 7;
+//     .Footer-social {
+//         padding-bottom: $unit * 7;
 
-        i {
-            color: $color-blue-dark;
-            margin: $unit * 4 $unit * 2;
-        }
-    }
-}
+//         i {
+//             color: $color-blue-dark;
+//             margin: $unit * 4 $unit * 2;
+//         }
+//     }
+// }
 
 .Footer-login {
     padding-bottom: 0;
@@ -106,28 +106,29 @@
     }
 }
 
-.Header-lowerNav {
-  img {
-    display: none;
-  }
+// .Header-lowerNav {
+//   img {
+//     display: none;
+//   }
 
-  a {
-    color: $purple !important; 
-    display: flex !important;
+//   a {
+//     color: $purple !important; 
+//     display: flex !important;
 
-    &:before {
-        content: "\f086";
-        font-family: 'Font Awesome\ 5 Free';
-        font-size: 32px;
-        font-weight: 900;
-    }
-  }
+//     &:before {
+//         content: "\f086";
+//         font-family: 'Font Awesome\ 5 Free';
+//         font-size: 32px;
+//         font-weight: 900;
+//     }
 
-  a + a:before {
-    content: "\f4ad";
-  }
+//   }
 
-  a + a + a:before {
-    content: "\f007";
-  }
-}
+//   a + a:before {
+//     content: "\f4ad";
+//   }
+
+//   a + a + a:before {
+//     content: "\f007";
+//   }
+// }

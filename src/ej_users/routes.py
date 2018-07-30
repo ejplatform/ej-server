@@ -26,62 +26,68 @@ log = logging.getLogger('ej')
 
 @urlpatterns.route('register/')
 def register(request):
-    form = forms.RegistrationForm()
+    if not request.user.is_authenticated:
+        form = forms.RegistrationForm()
 
-    if request.method == 'POST':
-        form = forms.RegistrationForm(request.POST)
-        if form.is_valid():
-            data = form.cleaned_data
-            name, email, password = data['name'], data['email'], data['password']
-            try:
-                user = User.objects.create_user(email, password, name=name)
-                log.info(f'user {user} ({email}) successfully created')
-            except IntegrityError as ex:
-                log.info(f'invalid login attempt: {email}')
-                form.add_error(None, str(ex))
-            else:
-                user = auth.authenticate(request,
-                                         email=user.email,
-                                         password=password)
-                auth.login(request, user)
-                log.info(f'user {user} ({email}) logged in')
-                return redirect(request.GET.get('next', '/'))
+        if request.method == 'POST':
+            form = forms.RegistrationForm(request.POST)
+            if form.is_valid():
+                data = form.cleaned_data
+                name, email, password = data['name'], data['email'], data['password']
+                try:
+                    user = User.objects.create_user(email, password, name=name)
+                    log.info(f'user {user} ({email}) successfully created')
+                except IntegrityError as ex:
+                    log.info(f'invalid login attempt: {email}')
+                    form.add_error(None, str(ex))
+                else:
+                    user = auth.authenticate(request,
+                                             email=user.email,
+                                             password=password)
+                    auth.login(request, user)
+                    log.info(f'user {user} ({email}) logged in')
+                    return redirect(request.GET.get('next', '/'))
 
-    return {'user': request.user, 'form': form}
+        return {'user': request.user, 'form': form}
+    else:
+        return redirect(request.GET.get('next', '/profile/'))
 
 
 @urlpatterns.route('login/')
 def login(request):
-    form = forms.LoginForm(request.POST if request.method == 'POST' else None)
-    error_msg = _('Invalid email or password')
-    next = request.GET.get('next', '/')
-    fast = request.GET.get('fast', 'false') == 'true'
+    if not request.user.is_authenticated:
+        form = forms.LoginForm(request.POST if request.method == 'POST' else None)
+        error_msg = _('Invalid email or password')
+        next = request.GET.get('next', '/')
+        fast = request.GET.get('fast', 'false') == 'true'
 
-    if request.method == 'POST' and form.is_valid():
-        data = form.cleaned_data
-        email, password = data['email'], data['password']
+        if request.method == 'POST' and form.is_valid():
+            data = form.cleaned_data
+            email, password = data['email'], data['password']
 
-        try:
-            user = User.objects.get_by_email(email)
-            user = auth.authenticate(request, email=user.email, password=password)
-            log.info(f'user {user} ({email}) successfully authenticated')
-            if user is None:
-                raise User.DoesNotExist
-            auth.login(request, user, backend=user.backend)
-        except User.DoesNotExist:
-            log.info(f'invalid login attempt: {email}')
-            form.add_error(None, error_msg)
-        else:
+            try:
+                user = User.objects.get_by_email(email)
+                user = auth.authenticate(request, email=user.email, password=password)
+                log.info(f'user {user} ({email}) successfully authenticated')
+                if user is None:
+                    raise User.DoesNotExist
+                auth.login(request, user, backend=user.backend)
+            except User.DoesNotExist:
+                log.info(f'invalid login attempt: {email}')
+                form.add_error(None, error_msg)
+            else:
+                return redirect(next)
+        elif fast and request.user.is_authenticated and next:
             return redirect(next)
-    elif fast and request.user.is_authenticated and next:
-        return redirect(next)
 
-    return {
-        'user': request.user,
-        'form': form,
-        'login_extra': login_extra_template.render(request=request),
-        'social_buttons': social_buttons(request),
-    }
+        return {
+            'user': request.user,
+            'form': form,
+            'login_extra': login_extra_template.render(request=request),
+            'social_buttons': social_buttons(request),
+        }
+    else:
+        return redirect(request.GET.get('next', '/profile/'))
 
 
 @urlpatterns.route('logout/')
@@ -94,6 +100,7 @@ def logout(request):
 
 @urlpatterns.route('profile/recover-password/')
 def recover_password(request):
+    print(request.user)
     return {
         'user': request.user,
     }
@@ -133,6 +140,7 @@ def favorite_conversation(request):
     return {
         'conversations': conversations,
     }
+
 
 #
 # Registration via API + cookies

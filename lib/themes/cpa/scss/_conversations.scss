@@ -1,87 +1,90 @@
-.ConversationTags {
-    background-color: $color-primary;
-    color: $blue-light;
-    padding-bottom: 0;
-}
+// .ConversationTags {
+//     background-color: $color-primary;
+//     color: $blue-light;
+//     padding-bottom: 0;
+// }
 
-.ConversationCard {
-  height: auto;
-  padding-bottom: 100px;
-}
+// .ConversationCard {
+//   height: auto;
+//   padding-bottom: 100px;
+// }
 
-.ConversationCard-cover {
-  height: auto;
-  max-height: none;
-}
+// .ConversationCard-cover {
+//   height: auto;
+//   max-height: none;
+// }
 
-.ConversationCard-cover + .ConversationCard-actions {
-    background: $color-blue-dark url('/static/img/bg.svg') bottom center no-repeat;
-    background-size: cover;
-}
+// .ConversationCard-cover + .ConversationCard-actions {
+//     background: $color-blue-dark url('/static/cpa/img/bg.svg') bottom center no-repeat;
+//     background-size: cover;
+// }
 
-.ConversationCard-actions .Button[primary] {
-    border-radius: $unit;
-    background: $color-pink;
-}
+// .ConversationCard-actions .Button[primary] {
+//     border-radius: $unit;
+//     background: $color-pink;
+// }
 
-.Moderate-comments {
-  .Comment-metadata {
-    color: $color-purple;
-  }
+// FIXME see where this style make effects
+// .Moderate-comments {
+//   .Comment-metadata {
+//     color: $color-purple;
+//   }
 
-  .Comment {
-    border-color: $color-pink;
+//   .Comment {
+//     border-color: $color-pink;
 
-    p {
-      color: $color-purple;
-    }
-  }
+//     p {
+//       color: $color-purple;
+//     }
+//   }
 
-  .ConversationComment-actions {
-    li {
-      &:before {
-        background: $color-blue-dark;
-        border: 0;
-        color: #fff;
-      }
 
-      .Button {
-        color: $color-blue-dark;
-      }
-    }
 
-    li + li {
-      &:before {
-        background: $color-pink;
-        border: 0;
-        color: #fff;
-      }
+//   .ConversationComment-actions {
+//     li {
+//       &:before {
+//         background: $color-blue-dark;
+//         border: 0;
+//         color: #fff;
+//       }
 
-      .Button {
-        color: $color-pink;
-      }
-    }
-  }
+//       .Button {
+//         color: $color-blue-dark;
+//       }
+//     }
 
-  .Comment-rejection {
-    background: transparent;
+//     li + li {
+//       &:before {
+//         background: $color-pink;
+//         border: 0;
+//         color: #fff;
+//       }
 
-    h3 {
-      color: $color-pink;
-    }
+//       .Button {
+//         color: $color-pink;
+//       }
+//     }
+//   }
 
-    p {
-      color: $color-purple;
-    }
+//   .Comment-rejection {
+//     background: transparent;
 
-    textarea {
-      color: $color-purple;
-      border-color: $color-blue-dark;
-    }
+//     h3 {
+//       color: $color-pink;
+//     }
 
-    .Button {
-      color: #fff;
-      width: auto;
-    }
-  }
-}
+//     p {
+//       color: $color-purple;
+//     }
+
+//     textarea {
+//       color: $color-purple;
+//       border-color: $color-blue-dark;
+//     }
+
+//     .Button {
+//       color: #fff;
+//       width: auto;
+//     }
+//   }
+// }

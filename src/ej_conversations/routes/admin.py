@@ -2,6 +2,7 @@ from django.http import Http404
 from django.shortcuts import redirect
 from django.utils.translation import ugettext_lazy as _
 
+import ej_conversations.models.conversation_extra
 from boogie import rules
 
 from . import urlpatterns, conversation_url
@@ -23,7 +24,7 @@ def create(request, board=None):
         form = Form(request.POST)
         if form.is_valid():
             try:
-                models.ConversationBoard.objects.create(
+                ej_conversations.models.conversation_extra.ConversationBoard.objects.create(
                     name=form.cleaned_data['board_name'],
                     owner=request.user
                 )
