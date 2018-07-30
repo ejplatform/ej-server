@@ -2,7 +2,7 @@
     <div class="Comment">
         {% if remaining and total %}
         <div class="Comment-counter">
-          <p>{{ remaining }} / {{ total }}</p>
+          <p>{{ total - remaining + 1 }} / {{ total }}</p>
         </div>
         {% endif %}
         <div class="Comment-user">
