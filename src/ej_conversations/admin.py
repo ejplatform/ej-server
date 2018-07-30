@@ -21,7 +21,7 @@ class AuthorIsUserMixin(admin.ModelAdmin):
         return super().save_model(request, obj, *args, **kwargs)
 
 
-@register(ConversationBoard)
+@admin.register(ConversationBoard)
 class ConversationBoardAdmin(admin.ModelAdmin):
     fields = ['name', 'members']
     list_display = ['name', 'owner', 'get_members']

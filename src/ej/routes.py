@@ -5,7 +5,6 @@ from django.shortcuts import render, redirect
 from boogie.router import Router
 from ej_configurations import fragment, social_icons
 from ej_conversations.proxy import conversations_with_moderation
-from ej_conversations.routes.base import moderated_conversations
 from ej_conversations.models import ConversationBoard
 
 log = logging.getLogger('ej')

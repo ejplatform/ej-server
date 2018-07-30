@@ -31,16 +31,19 @@ def slug_base(conversation):
 
 
 class FavoriteConversation(models.Model):
+    """
+    M2M relation from users to conversations.
+    """
     conversation = models.ForeignKey(
-        'ej_conversations.Conversation', on_delete=models.CASCADE,
+        'ej_conversations.Conversation',
+        on_delete=models.CASCADE,
+        related_name='followers',
     )
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
+        related_name='favorite_conversations',
     )
-
-    class Meta:
-        unique_together = ('conversation', 'user')
 
 
 class ConversationBoard(models.Model):
@@ -295,21 +298,6 @@ class Conversation(TimeStampedModel):
         except ObjectDoesNotExist:
             self.make_favorite(user)
 
-
-class FavoriteConversation(models.Model):
-    """
-    M2M relation from users to conversations.
-    """
-    conversation = models.ForeignKey(
-        'ej_conversations.Conversation',
-        on_delete=models.CASCADE,
-        related_name='followers',
-    )
-    user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name='favorite_conversations',
-    )
 
 
 class ConversationTag(TaggedItemBase):

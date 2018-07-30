@@ -34,7 +34,6 @@ def sass(ctx, no_watch=False, trace=False, theme=None):
     cmd_themes = ''
     for theme in os.listdir(themes_path):
         cmd_themes += themes_path  + '/' + theme + f"/scss/main.scss:lib/assets/css/main{theme}.css "
-        os.remove('lib/assets/' + theme)
         os.symlink('../themes/' + theme + '/assets' , 'lib/assets/' + theme) 
 
     suffix = '' if no_watch else ' --watch'
