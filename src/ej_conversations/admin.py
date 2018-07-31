@@ -18,6 +18,7 @@ class AuthorIsUserMixin(admin.ModelAdmin):
         setattr(obj, self.author_field, request.user)
         return super().save_model(request, obj, *args, **kwargs)
 
+
 @admin.register(models.Comment)
 class CommentAdmin(AuthorIsUserMixin, admin.ModelAdmin):
     fieldsets = [

@@ -1,5 +1,5 @@
 from ej.testing import EjRecipes as base
-from model_mommy.recipe import foreign_key, related, Recipe
+from model_mommy.recipe import Recipe
 
 
 class ProfileRecipes(base):

@@ -273,7 +273,6 @@ class Conversation(TimeStampedModel):
             self.make_favorite(user)
 
 
-
 class ConversationTag(TaggedItemBase):
     """
     Add tags to Conversations with real Foreign Keys

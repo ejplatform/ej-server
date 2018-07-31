@@ -21,7 +21,8 @@ def comment_moderation(request, comment):
                 ],
                 li(up_expand=True)[
                     input_(type='submit', class_='Button', name='vote', value='disapprove',
-                           onclick="var $r = $('#Comment-{{comment.id}}-rejection_reason'); return $r.is(':visible') ? true : $r.show() && false'"),
+                           onclick="var $r = $('#Comment-{{comment.id}}-rejection_reason');"
+                                   + "return $r.is(':visible') ? true : $r.show() && false'"),
                     span(_('Disapprove')),
                 ]
             ],

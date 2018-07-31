@@ -35,7 +35,7 @@ urlpatterns = [
     path('conversations/', include('ej_reports.routes', namespace='report')),
 
     # User conversations
-    #path('', include('ej_boards.routes', namespace='boards')),
+    # path('', include('ej_boards.routes', namespace='boards')),
 
     # Configurations
     path('config/', include(('ej_configurations.routes', 'ej_configurations'), namespace='configurations')),
@@ -59,7 +59,6 @@ urlpatterns = [
     # Allauth
     path('accounts/', include('allauth.urls')),
 
-    
     # Static files for the dev server
     *static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),
     *static(settings.STATIC_URL, document_root=settings.STATIC_ROOT),
