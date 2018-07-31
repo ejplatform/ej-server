@@ -12,6 +12,12 @@ $error-content-height: 70vh;
     width: 100vw;
     height: 100vh;
 
+    &-back {
+      i{
+        margin: $spacing-unit 0 0 $spacing-unit;
+      }
+    }
+
     &-content {
       display: flex;
       align-items: center;
