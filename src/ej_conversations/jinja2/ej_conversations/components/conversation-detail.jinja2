@@ -10,11 +10,6 @@
 {% endmacro %}
 
 {% macro conversation_detail_static(conversation, edit_perm, user) %}
-    {% if edit_perm %}
-        <div class="Container" style="margin: 0 auto; padding: 0">
-            {{ action_button( _('Edit Conversation'), conversation.get_absolute_url() + 'edit/') }}
-        </div>
-    {% endif %}
     <div class="ConversationDetail">
         <div class="ConversationDetail-banner">
             <div class="ConversationTags"><i class="fa fa-tags"></i>

@@ -49,6 +49,8 @@ def create(request, owner=None):
 @urlpatterns.route(conversation_url + 'edit/',
                    perms=['ej_conversations.can_edit_conversation'])
 def edit(request, conversation, owner=None):
+    comments = []
+    
     if request.method == 'POST':
         form = forms.ConversationForm(
             data=request.POST,
@@ -56,12 +58,16 @@ def edit(request, conversation, owner=None):
         )
         if form.is_valid():
             form.instance.save()
-            return redirect(conversation.get_absolute_url())
+            return redirect(conversation.get_absolute_url() + 'moderate/')
     else:
         form = forms.ConversationForm(instance=conversation)
+        for comment in models.Comment.objects.filter(conversation=conversation, status='pending'):
+            if comment.is_pending:
+                comments.append(comment)
 
     return {
-        'content_title': _('Edit conversation: {conversation}').format(conversation=conversation),
+        'conversation': conversation,
+        'comments': comments,
         'form': form,
     }
 
