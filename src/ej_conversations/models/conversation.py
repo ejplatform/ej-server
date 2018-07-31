@@ -22,6 +22,37 @@ log = logging.getLogger('ej_conversations')
 slug_base = (lambda: '')
 
 
+def slug_base(conversation):
+    title = conversation.title
+    if conversation.status != conversation.STATUS.promoted:
+        username = conversation.author.username
+        title = f'{username}--{title}'
+    return title.lower()
+
+
+class FavoriteConversation(models.Model):
+    """
+    M2M relation from users to conversations.
+    """
+    conversation = models.ForeignKey(
+        'ej_conversations.Conversation',
+        on_delete=models.CASCADE,
+        related_name='followers',
+    )
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='favorite_conversations',
+    )
+
+
+class TaggedConversation(TaggedItemBase):
+    """
+    Add tags to Conversations with real Foreign Keys
+    """
+    content_object = models.ForeignKey('Conversation', on_delete=models.CASCADE)
+
+
 @rest_api(
     ['title', 'text', 'author', 'slug', 'created'],
     lookup_field='slug',
@@ -241,21 +272,6 @@ class Conversation(TimeStampedModel):
         except ObjectDoesNotExist:
             self.make_favorite(user)
 
-
-class FavoriteConversation(models.Model):
-    """
-    M2M relation from users to conversations.
-    """
-    conversation = models.ForeignKey(
-        'ej_conversations.Conversation',
-        on_delete=models.CASCADE,
-        related_name='followers',
-    )
-    user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name='favorite_conversations',
-    )
 
 
 class ConversationTag(TaggedItemBase):

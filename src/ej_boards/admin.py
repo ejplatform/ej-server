@@ -10,8 +10,8 @@ class SubscriptionInline(admin.TabularInline):
 
 @admin.register(models.Board)
 class BoardAdmin(admin.ModelAdmin):
-    fields = ['title', 'description', 'slug']
-    list_display = ['title', 'description', 'slug']
+    fields = ['title', 'description', 'slug', 'members']
+    list_display = ['title', 'owner', 'description', 'slug', 'members']
     list_filter = ['created']
     inlines = [SubscriptionInline]
 

@@ -1,7 +1,6 @@
 from django.conf import settings
 from django.contrib import admin
 from django.utils.translation import ugettext as _
-
 from . import models
 
 SHOW_VOTES = getattr(settings, 'EJ_CONVERSATIONS_SHOW_VOTES', False)
@@ -18,7 +17,6 @@ class AuthorIsUserMixin(admin.ModelAdmin):
     def save_model(self, request, obj, *args, **kwargs):
         setattr(obj, self.author_field, request.user)
         return super().save_model(request, obj, *args, **kwargs)
-
 
 @admin.register(models.Comment)
 class CommentAdmin(AuthorIsUserMixin, admin.ModelAdmin):
