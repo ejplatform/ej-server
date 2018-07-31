@@ -157,10 +157,10 @@ class MissionViewSet(viewsets.ViewSet):
         serializer = serializers.CommentSerializer(comment)
         return Response(serializer.data)
 
-    def conversation_comments(self, request, mid, cid):
+    def conversation_comments(self, request, mid, cid, uid):
         mission = models.Mission.objects.get(pk=mid)
         conversation = mission.conversations.get(pk=cid)
-        comments = conversation.comments.filter(votes=None)[:3]
+        comments = conversation.comments.exclude(votes__author=uid)[:3]
         serializer = serializers.ConversationCommentSerializer(comments, many=True)
         return Response(serializer.data)
 
