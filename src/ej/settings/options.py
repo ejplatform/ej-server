@@ -1,5 +1,7 @@
 from boogie.configurations import Conf, env
 
+_ = (lambda x: x)
+
 
 class EjOptions(Conf):
     """
@@ -12,3 +14,6 @@ class EjOptions(Conf):
     # Conversations
     EJ_CONVERSATIONS_ALLOW_PERSONAL_CONVERSATIONS = env(True, name='{attr}')
     EJ_CONVERSATIONS_MAX_COMMENTS = env(2, name='{attr}')
+
+    # Personalization
+    EJ_PAGE_TITLE = _('Empurrando Juntos')

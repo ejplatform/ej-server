@@ -22,6 +22,7 @@ class PathsConf(Base):
 
     # Frontend paths
     LIB_DIR = REPO_DIR / 'lib'
+    THEMES_DIR = LIB_DIR / 'themes'
 
     def finalize(self, settings):
         """
@@ -35,15 +36,7 @@ class PathsConf(Base):
         return super().finalize(settings)
 
     def get_staticfiles_dirs(self):
-        paths = [self.REPO_DIR / 'lib/assets']
-        if 'THEME' in os.environ and os.environ['THEME'] != 'default':
-            theme = os.environ['THEME']
-            if '/' in theme:
-                paths.insert(0, theme)
-            else:
-                theme_path = self.REPO_DIR / 'lib/themes/' / theme / 'assets'
-                paths.insert(0, theme_path)
-        return paths
+        return [self.REPO_DIR / 'lib/assets']
 
 
 def mkdir_recursive(path):

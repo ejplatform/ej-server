@@ -17,8 +17,7 @@ def manage(ctx, cmd, env=None, **kwargs):
     cmd = f'{python} manage.py {cmd} {opts}'
     env = dict(env or {})
     env.setdefault('PYTHONPATH', f'src:{env.get("PYTHONPATH", "")}')
-    print(f'Run: {cmd}')
-    ctx.run(cmd, pty=True, env=env)
+    exec(ctx, cmd, pty=True, env=env)
 
 
 @task
@@ -33,17 +32,17 @@ def sass(ctx, no_watch=False, trace=False, theme=None):
     themes_path = 'lib/themes'
     cmd_themes = ''
     for theme in os.listdir(themes_path):
-        cmd_themes += themes_path  + '/' + theme + f"/scss/main.scss:lib/assets/css/main{theme}.css "
-        os.symlink('../themes/' + theme + '/assets' , 'lib/assets/' + theme) 
+        cmd_themes += themes_path + '/' + theme + f"/scss/main.scss:lib/assets/css/main{theme}.css "
+        if os.path.exists('lib/assets/' + theme):
+            os.remove('lib/assets/' + theme)
+        os.symlink('../themes/' + theme + '/assets', 'lib/assets/' + theme)
 
     suffix = '' if no_watch else ' --watch'
     suffix += ' --trace' if trace else ''
 
     ctx.run('rm .sass-cache -rf')
     cmd = (f'sass {cmd_main} {cmd_rocket} {cmd_themes} {suffix}')
-
-    print('Running:', cmd)
-    ctx.run(cmd, pty=True)
+    exec(ctx, cmd, pty=True)
 
 
 @task
@@ -52,6 +51,37 @@ def js(ctx):
     Build js assets
     """
     print('Nothing to do now ;)')
+
+
+@task
+def clean_migrations(ctx):
+    """
+    Remove all automatically created migrations.
+    """
+    import re
+    auto_migration = re.compile(r'\d{4}_auto_\w+.py')
+
+    remove_files = []
+    for app in os.listdir('src'):
+        migrations_path = f'src/{app}/migrations/'
+        if os.path.exists(migrations_path):
+            migrations = os.listdir(migrations_path)
+            if '__pycache__' in migrations:
+                migrations.remove('__pycache__')
+            if sorted(migrations) == ['__init__.py', '0001_initial.py']:
+                remove_files.append(f'{migrations_path}/0001_initial.py')
+            else:
+                remove_files.extend([
+                    f'{migrations_path}/{f}' for f in migrations
+                    if auto_migration.fullmatch(f)
+                ])
+
+    print('Listing auto migrations')
+    for file in remove_files:
+        print(f'* {file}')
+    if input('Remove those files? (y/N)').lower() == 'n':
+        for file in remove_files:
+            os.remove(file)
 
 
 @task
@@ -78,7 +108,6 @@ def run(ctx, no_toolbar=False, gunicorn=False, migrate=False,
         env['PATH'] = os.environ['PATH']
         env['PYTHONPATH'] = 'src'
         args = [
-            # '-m', 'gunicorn.app.wsgiapp',
             'ej.wsgi', '-w', '4', '-b', '0.0.0.0:5000',
             '--error-logfile=-',
             '--access-logfile=-',
@@ -201,11 +230,11 @@ def i18n(ctx, compile=False, edit=False, lang='pt_BR', keep_pot=False):
         manage(ctx, 'makemessages', all=True, keep_pot=True)
 
         print('Extract Jinja translations')
-        ctx.run('pybabel extract -F etc/babel.cfg -o locale/jinja2.pot .')
+        exec(ctx, 'pybabel extract -F etc/babel.cfg -o locale/jinja2.pot .')
 
         print('Join Django + Jinja translation files')
-        ctx.run('msgcat locale/django.pot locale/jinja2.pot --use-first -o locale/join.pot', pty=True)
-        ctx.run(r'''sed -i '/"Language: \\n"/d' locale/join.pot''', pty=True)
+        exec(ctx, 'msgcat locale/django.pot locale/jinja2.pot --use-first -o locale/join.pot', pty=True)
+        exec(ctx, r'''sed -i '/"Language: \\n"/d' locale/join.pot''', pty=True)
 
         print(f'Update locale {lang} with Jinja2 messages')
         ctx.run(f'msgmerge locale/{lang}/LC_MESSAGES/django.po locale/join.pot -U')
@@ -294,3 +323,11 @@ def prepare_deploy(ctx, ask_input=False):
 
     # Static files
     manage(ctx, 'collectstatic', noinput=no_input)
+
+
+#
+# Utilities
+#
+def exec(ctx, cmd, **kwargs):
+    print(f'Running: {cmd}')
+    ctx.run(cmd, **kwargs)
