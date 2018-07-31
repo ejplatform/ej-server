@@ -74,7 +74,11 @@
         <dl>
             {% for title, info in profile.profile_fields(true) %}
                 <dt>{{ title }}</dt>
-                <dd>{{ _((info or '-').title()) }}</dd>
+                {%if info == 'undeclared'%}
+                    <dd>{{ _((info).title())}}</dd>
+                {%else%}
+                <dd>{{ (info or '-') }}</dd>
+                {%endif%}
             {% endfor %}
         </dl>
         <div class='edit-button'>
@@ -90,7 +94,7 @@
             {% for description, amount in profile.statistics().items() %}
                 <li>
                     <span class='amount'>{{ amount }}</span>
-                    <span class='description'>{{ description or '-' }}</span>
+                    <span class='description'>{{ _((description).title()) or '-' }}</span>
                 </li>
             {% endfor %}
         </ul>
