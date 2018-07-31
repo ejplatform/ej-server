@@ -4,9 +4,8 @@ set -o errexit
 set -o pipefail
 set -o nounset
 
-printf "\n## Performing Migrations\n\n"
-
-python3 /app/manage.py migrate
+#printf "\n## Performing Migrations\n\n"
+#python3 /app/manage.py migrate
 # inv db-assets
 # inv db-fake --safe
 # echo 'production' > /app/local/build.info
