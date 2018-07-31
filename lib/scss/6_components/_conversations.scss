@@ -17,7 +17,7 @@ $conversation-card-font-size-small: 12px !default;
 $conversation-card-button-color: $color-content-text !default;
 $conversation-card-button-color-text: $color-content !default;
 $conversation-card-border-arrow-size: $spacing-unit;
-$conversation-card-button-border-radius: 50% !default;
+$conversation-card-button-border-radius: 30px !default;
 
 .ConversationList {
     @extend .Container;
@@ -355,12 +355,19 @@ $conversation-card-button-border-radius: 50% !default;
     box-sizing: border-box;
     border-radius: $block-elements-border-radius;
     font-size: $font-size-h3;
-    padding: $spacing-unit + $spacing-unit-small;
+    padding: $spacing-unit;
     margin: 0 auto;
     max-width: $page-content-width-max;
-    min-height: 410px !important;
+    min-height: 250px !important;
     width: 100% !important;
 
+    &-counter {
+        text-align: center;
+        p {
+            margin: 0;
+        }
+    }
+    
     i.fa {
         background: $color-primary-text;
         border: 2px solid $color-primary-text;
