@@ -1,0 +1,40 @@
+/*
+ 403/404/500 COMPONENTS
+ ======================================================================== */
+
+$error-title-color: $color-white;
+$error-title-font-size: 86px;
+$error-background-color: $color-blue;
+$error-content-height: 70vh;
+
+.Error {
+    background-color: $error-background-color;
+    width: 100vw;
+    height: 100vh;
+
+    &-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      flex-direction: column;
+      padding-top: $spacing-unit-large;
+      height: $error-content-height;
+    }
+
+    h1 {
+        margin: 0;
+        color: $error-title-color;
+        font-family: $font-raleway;
+        font-size: $error-title-font-size;
+    }
+
+    p {
+      font-size: $font-size-large;
+      font-weight: bold;
+      line-height: $line-height;
+      font-family: $font-raleway;
+      text-transform: uppercase;
+      color: $color-purple-dark;
+    }
+
+}
