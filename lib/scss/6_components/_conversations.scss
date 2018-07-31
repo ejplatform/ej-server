@@ -285,9 +285,15 @@ $conversation-card-button-border-radius: 30px !default;
 
           a {
             color: $color-purple-dark;
+            background: transparent;
             font-weight: bold;
             text-transform: uppercase;
             font-size: 12px;
+
+            &:hover {
+              background: transparent;
+              color: $color-purple-dark;
+            }
 
             &:before {
               content: "\f044 ";
