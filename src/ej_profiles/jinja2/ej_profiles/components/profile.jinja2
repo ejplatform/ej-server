@@ -74,7 +74,7 @@
         <dl>
             {% for title, info in profile.profile_fields(true) %}
                 <dt>{{ title }}</dt>
-                <dd>{{ info or '-' }}</dd>
+                <dd>{{ _((info or '-').title()) }}</dd>
             {% endfor %}
         </dl>
         <div class='edit-button'>
