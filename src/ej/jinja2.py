@@ -1,19 +1,19 @@
+import os
 import random
 import string
 
+from django.conf import settings
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.urls import reverse
 from django.utils import translation
-from django.conf import settings
 from jinja2 import Environment, contextfunction
 from markdown import markdown
 from markupsafe import Markup
 
 from ej_configurations import social_icons, fragment
 from hyperpython.components import render
-from . import tags
 from . import components
-import os
+from .components import tags
 
 TAG_MAP = {k: getattr(tags, k) for k in tags.__all__}
 SALT_CHARS = string.ascii_letters + string.digits + '-_'

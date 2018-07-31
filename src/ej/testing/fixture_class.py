@@ -1,8 +1,16 @@
 import pytest
 from django.contrib.auth import get_user_model
-from model_mommy.recipe import Recipe
+from model_mommy.recipe import Recipe as BaseRecipe
 
 User = get_user_model()
+
+
+class Recipe(BaseRecipe):
+    def dependencies(self):
+        return {}
+
+    def get_fixture(self):
+        print(self.dependencies())
 
 
 class FixtureMeta(type):
@@ -33,7 +41,7 @@ def make_recipe(name, recipe):
     def fixture_function_db(db):
         return recipe.make()
 
-    @pytest.fixture(name=name + '_recipe')
+    @pytest.fixture(name=name + '_rec')
     def fixture_function_rec():
         return recipe
 
@@ -45,13 +53,15 @@ def make_recipe(name, recipe):
     def fixture_function_prep():
         return recipe.prepare
 
-    return {
+    fixture_map = {
         'fixture_' + name: fixture_function,
         'fixture_' + name + '_db': fixture_function_db,
         'fixture_' + name + '_recipe': fixture_function_rec,
         'fixture_mk_' + name: fixture_function_mk,
         'fixture_prep_' + name: fixture_function_prep,
     }
+    recipe.fixture_map = fixture_map
+    return fixture_map
 
 
 def fixture_method(func):
@@ -69,6 +79,7 @@ class WithRecipes(metaclass=FixtureMeta):
     """
     Base class for all test classes with fixtures.
     """
+    base = object()
 
 
 class EjRecipes(metaclass=FixtureMeta):

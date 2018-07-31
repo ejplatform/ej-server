@@ -73,14 +73,14 @@ class TestConversationBase:
         assert str(response.get('login_link')) is not None
 
     def test_conversation_detail_being_author(self, get_request_with_user, user, conversation, db):
-        response = conversations.detail(get_request_with_user, conversation, user)
-        assert isinstance(response.get('conversation'), Conversation)
-        assert response.get('comment') is None
-        assert response.get('owner') is user
-        assert response.get('edit_perm') is True
-        assert response.get('can_comment') is True
-        assert response.get('remaining_comments') == 2
-        assert str(response.get('login_link')) is not None
+        ctx = conversations.detail(get_request_with_user, conversation, user)
+        assert isinstance(ctx.get('conversation'), Conversation)
+        assert ctx['comment'] is None
+        assert ctx['owner'] is user
+        assert ctx['edit_perm'] is True
+        assert ctx['can_comment'] is True
+        assert ctx['remaining_comments'] == 2
+        assert str(ctx.get('login_link')) is not None
 
     def test_vote_in_comment(self, request_factory, conversation, comment, db):
         request = request_factory.post('', {'action': 'vote', 'vote': 'agree'})

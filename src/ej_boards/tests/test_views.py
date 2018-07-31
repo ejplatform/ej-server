@@ -11,6 +11,7 @@ class TestBoards(UrlTester, BoardRecipes):
         '/board-slug/conversations/',
         # '/board-slug/conversations/conversation-slug/',
     ]
+    user_urls = []
     owner_urls = [
         # '/board-slug/conversations/add/',
         # '/board-slug/conversations/conversation-slug/edit/',

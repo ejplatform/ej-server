@@ -1,6 +1,5 @@
 from boogie.router import Router
 from ej_conversations import models
-from ej_users.models import User
 
 app_name = 'ej_conversations'
 urlpatterns = Router(
