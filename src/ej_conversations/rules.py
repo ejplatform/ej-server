@@ -49,7 +49,7 @@ def is_personal_conversations_enabled():
 @rules.register_rule('ej_conversations.has_conversation')
 def has_conversation(user):
     """
-    Verify if a user has any conversation.
+    Verify if an user has any conversation.
     """
     if Conversation.objects.filter(author=user).count() > 0:
         return True
@@ -141,8 +141,15 @@ def can_comment(user, conversation):
 
 
 @rules.register_perm('ej_conversations.can_add_conversation')
-def can_add_conversation(user):
-    return user.is_staff
+def can_add_conversation(user, board):
+    if user.is_staff and not board:
+        return True
+    elif board:
+        if board.owner == user:
+            return True
+        elif user in board.members.all():
+            return True
+    return False
 
 
 @rules.register_perm('ej_conversations.can_edit_conversation')
@@ -157,8 +164,7 @@ def can_edit_conversation(user, conversation):
         return False
     elif user == conversation.author:
         return True
-    elif (conversation.status == conversation.STATUS.promoted
-          and user.has_perm('ej_conversations.can_publish')):
+    elif conversation.is_promoted and user.has_perm('ej_conversations.can_publish'):
         return True
     return False
 

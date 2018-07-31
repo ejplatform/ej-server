@@ -74,7 +74,7 @@ Faker ~= 0.8.13
 
 # Tools
 django-debug-toolbar ~= 1.8
-django-extensions ~= 1.9.0
+django-extensions >= 1.9.0
 invoke ~= 0.22
 
 # WSGI Handler

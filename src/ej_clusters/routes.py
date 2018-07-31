@@ -11,7 +11,7 @@ from .models import Stereotype, Cluster
 app_name = 'ej_cluster'
 urlpatterns = Router(
     template=['ej_clusters/{name}.jinja2', 'generic.jinja2'],
-    perms=['ej_converations.can_edit_conversation'],
+    perms=['ej_conversations.can_edit_conversation'],
     object='conversation',
     login=True,
     models={

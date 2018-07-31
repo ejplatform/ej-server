@@ -3,12 +3,11 @@ import logging
 from autoslug import AutoSlugField
 from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.core.exceptions import ValidationError
+from django.core.exceptions import ValidationError, ObjectDoesNotExist
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
-from model_utils import Choices
-from model_utils.models import TimeStampedModel, StatusModel
+from model_utils.models import TimeStampedModel
 from taggit.managers import TaggableManager
 from taggit.models import TaggedItemBase
 
@@ -20,6 +19,7 @@ from ..managers import ConversationManager
 
 NOT_GIVEN = object()
 log = logging.getLogger('ej_conversations')
+slug_base = (lambda: '')
 
 
 def slug_base(conversation):
@@ -31,34 +31,18 @@ def slug_base(conversation):
 
 
 class FavoriteConversation(models.Model):
+    """
+    M2M relation from users to conversations.
+    """
     conversation = models.ForeignKey(
-        'ej_conversations.Conversation', on_delete=models.CASCADE,
+        'ej_conversations.Conversation',
+        on_delete=models.CASCADE,
+        related_name='followers',
     )
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
-    )
-
-    class Meta:
-        unique_together = ('conversation', 'user')
-
-
-class ConversationBoard(models.Model):
-    """
-    A board that contains some conversations.
-    """
-    name = models.CharField(
-        _('Board name'),
-        max_length=140,
-        help_text=_(
-            'The name of an user conversation board.'
-        ),
-        unique=True
-    )
-    owner = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name='boards'
+        related_name='favorite_conversations',
     )
 
 
@@ -70,18 +54,13 @@ class TaggedConversation(TaggedItemBase):
 
 
 @rest_api(
-    ['title', 'text', 'status', 'author', 'slug', 'status', 'created'],
+    ['title', 'text', 'author', 'slug', 'created'],
     lookup_field='slug',
 )
-class Conversation(TimeStampedModel, StatusModel):
+class Conversation(TimeStampedModel):
     """
     A topic of conversation.
     """
-    STATUS = Choices(
-        ('personal', _('Personal')),
-        ('promoted', _('Promoted')),
-        ('pending', _('Pending')),
-    )
     title = models.CharField(
         _('Title'),
         max_length=255,
@@ -107,12 +86,20 @@ class Conversation(TimeStampedModel, StatusModel):
     )
     slug = AutoSlugField(
         unique=True,
-        populate_from=slug_base,
+        populate_from='title',
     )
+    is_promoted = models.BooleanField(
+        _('promoted?'),
+        default=False,
+        help_text=_(
+            'Promoted conversations appears in the main /conversations/ '
+            'endpoint.'
+        ),
+    )
+
     objects = ConversationManager()
-    tags = TaggableManager(through=TaggedConversation)
+    tags = TaggableManager(through='ConversationTag')
     votes = property(lambda self: Vote.objects.filter(comment__conversation=self))
-    is_promoted = property(lambda self: self.status == self.STATUS.promoted)
 
     class Meta:
         ordering = ['created']
@@ -193,7 +180,7 @@ class Conversation(TimeStampedModel, StatusModel):
         Return a dictionary with basic statistics about conversation.
         """
 
-        # Fixme: this takes several SQL queries. Maybe we can optimize later
+        # Fixme: this takes several SQL queries. Maybe we can optimize further
         return dict(
             # Vote counts
             votes=dict(
@@ -257,20 +244,45 @@ class Conversation(TimeStampedModel, StatusModel):
         else:
             return default
 
-    def is_user_favorite(self, user):
-        return FavoriteConversation.objects.filter(user=user, conversation=self).exists()
+    def is_favorite(self, user):
+        """
+        Checks if conversation is favorite for the given user.
+        """
+        return bool(self.followers.filter(user=user).exists())
 
-    def update_favorite_status(self, user):
-        if self.is_user_favorite(user):
-            instance = FavoriteConversation.objects.get(user=user, conversation=self)
-            instance.delete()
-        else:
-            FavoriteConversation.objects.create(user=user, conversation=self)
+    def make_favorite(self, user):
+        """
+        Make conversation favorite for user.
+        """
+        self.followers.update_or_create(user=user)
 
-    def favorite_statistic(self):
-        return FavoriteConversation.objects.filter(conversation=self).count()
+    def remove_favorite(self, user):
+        """
+        Remove favorite status for conversation
+        """
+        if self.is_favorite(user):
+            self.followers.filter(user=user).delete()
+
+    def toggle_favorite(self, user):
+        """
+        Toggles favorite status of conversation.
+        """
+        try:
+            self.followers.get(user=user).delete()
+        except ObjectDoesNotExist:
+            self.make_favorite(user)
 
 
+class ConversationTag(TaggedItemBase):
+    """
+    Add tags to Conversations with real Foreign Keys
+    """
+    content_object = models.ForeignKey('Conversation', on_delete=models.CASCADE)
+
+
+#
+# Utility functions
+#
 def vote_count(conversation, which=None):
     """
     Return the number of votes of a given type.

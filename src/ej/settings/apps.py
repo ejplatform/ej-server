@@ -4,6 +4,7 @@ from .options import EjOptions
 
 class InstalledAppsConf(Base, EjOptions):
     PROJECT_APPS = [
+        'ej_boards',
         'ej_clusters',
         'ej_configurations',
         'ej_conversations',
@@ -24,7 +25,6 @@ class InstalledAppsConf(Base, EjOptions):
         'courier',
         'courier.pushnotifications',
         'courier.pushnotifications.providers.onesignal',
-
         # Third party apps
         'taggit',
         'rules',
@@ -48,6 +48,7 @@ class InstalledAppsConf(Base, EjOptions):
         'pinax.badges',
         'constance',
         'constance.backends.database',
+        'django_extensions',
     ]
 
     def get_django_contrib_apps(self):

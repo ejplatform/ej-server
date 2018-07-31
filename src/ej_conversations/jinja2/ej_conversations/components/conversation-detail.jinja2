@@ -29,7 +29,7 @@
                       <form method="post" class="Favorite-conversation" id="Favorite-form">
                         {{ csrf_input }}
                         <input type="hidden" name="action" value="favorite">
-                        {% if conversation.is_user_favorite(user) %}
+                        {% if conversation.is_favorite(user) %}
                           <button type="submit" form="Favorite-form">
                             <i class="fa fa-star"></i>
                             </button>

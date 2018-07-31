@@ -1,39 +1,37 @@
-import pytest
 import csv
 import io
-import numpy as np
-from django.test import RequestFactory
-from django.http import QueryDict
 
-from ej_clusters.math import get_raw_votes
+import numpy as np
+import pytest
+from django.http import QueryDict
+from django.test import RequestFactory
+
+from ej_conversations.mommy_recipes import ConversationRecipes
 from ej_reports.routes import index, clusters, radar, divergence, map_to_table
-from ej_conversations.mommy_recipes import *  # noqa: F401,F403
 from ej_users.models import User
 from .examples import REPORT_RESPONSE, CSV_OUT, MAP_TO_TABLE
+
 BASE_URL = '/api/v1'
 
 
-@pytest.fixture
-def request_factory():
-    return RequestFactory()
+class TestReportRoutes(ConversationRecipes):
+    @pytest.fixture
+    def request_factory(self):
+        return RequestFactory()
 
+    @pytest.fixture
+    def admin_user(self, db):
+        admin_user = User.objects.create_superuser('admin@test.com', 'pass')
+        admin_user.save()
+        yield admin_user
+        admin_user.delete()
 
-@pytest.fixture
-def admin_user(db):
-    admin_user = User.objects.create_superuser('admin@test.com', 'pass')
-    admin_user.save()
-    yield admin_user
-    admin_user.delete()
+    @pytest.fixture
+    def request_as_admin(self, request_factory, admin_user):
+        request = request_factory
+        request.user = admin_user
+        return request
 
-
-@pytest.fixture
-def request_as_admin(request_factory, admin_user):
-    request = request_factory
-    request.user = admin_user
-    return request
-
-
-class TestReportRoutes:
     def test_report_route(self, request_as_admin, mk_conversation):
         conversation = mk_conversation()
         path = BASE_URL + f'/conversations/{conversation.slug}/reports/'
@@ -71,7 +69,6 @@ class TestReportRoutes:
         }
 
         assert response == expected
-
 
     def test_radar_route(self, mk_conversation):
         conversation = mk_conversation

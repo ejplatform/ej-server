@@ -1,46 +1,45 @@
-.Container > a {
-    color: $purple;
-    text-transform: uppercase;
-    margin: $unit;
-    font-weight: bold;
-    display: block;
-}
+// .Container > a {
+//     color: $purple;
+//     text-transform: uppercase;
+//     margin: $unit;
+//     font-weight: bold;
+//     display: block;
+// }
 
 .ConversationDetail {
-    h1 {
-        color: $purple;
-    }
-
-    p {
-        text-align: center;
-    }
+    // h1 {
+    //     color: $purple;
+    // }
+    // p {
+    //     text-align: center;
+    // }
 
     .ConversationTags {
-        background-color: $blue-light;
-        color: $blue-dark;
+        // background-color: $blue-light;
+        // color: $blue-dark;
     }
 
     .ConversationDetail-banner {
-        background-color: $blue-light;
+        // background-color: $blue-light;
     }
 
     .ConversationDetail-arrow {
-        border-top-color: $blue-light;
+        // border-top-color: $blue-light;
     }
 
     .ConversationDetail-statistics, .ConversationDetail-statisticsBottom {
-        color: $blue-dark;
+        // color: $blue-dark;
     }
 
     .ConversationDetail-header {
         p {
-            color: $grey-dark;
+            // color: $grey-dark;
         }
     }
 
     .Comment {
-        background: $blue-dark;
-        color: $white;
+        // background: $blue-dark;
+        // color: $white;
         padding: $unit / 2;
 
         i.fa {

@@ -17,4 +17,4 @@ CSV_OUT = {
     'advanced_participants_header': 'name,agree,disagree,skipped,divergence',
 }
 
-MAP_TO_TABLE =  [['agree', 'disagree' ,'skip', 'total'],['0', '0', '0', '0']]
+MAP_TO_TABLE = [['agree', 'disagree', 'skip', 'total'], ['0', '0', '0', '0']]

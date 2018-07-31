@@ -21,21 +21,18 @@ __all__ = [
 ]
 
 
-def link(value, href='#', target='.Page-mainContainer', class_=(),
+def link(value, href='#', target='.Page-mainContainer .Header-topIcon',
          action='target', instant=True, button=False, transition='cross-fade',
-         preload=False, scroll=False, prefetch=False, primary=False, args=None):
-    classes = [*class_]
-    if button:
-        classes.append('Button')
-
+         preload=False, scroll=False, prefetch=False, primary=False, args=None,
+         **kwargs):
     kwargs = {
         'href': href,
-        'class': classes,
         'primary': primary,
         'up-instant': instant,
         'up-restore-scroll': scroll,
         'up-preload': preload,
         'up-prefetch': prefetch,
+        **kwargs,
     }
     if action:
         kwargs[f'up-{action}'] = target
@@ -44,17 +41,17 @@ def link(value, href='#', target='.Page-mainContainer', class_=(),
     if args:
         for arg in args.split():
             kwargs[arg] = True
-    return a(kwargs, value)
+    elem = a(kwargs, value)
+    return elem.add_class('Button') if button else elem
 
 
 def rocket_button(value=_('Access CPA panel'), href='/talks/', **kwargs):
-    return link(href=href, class_="RocketButton", **kwargs)[
-        i(value, class_='fa fa-comment')
-    ]
+    children = [i(class_='fa fa-comment'), value]
+    return link(children, href=href, class_="RocketButton", **kwargs)
 
 
 def action_button(value=_('Go!'), href='#', primary=True, **kwargs):
-    return link(value, href, primary=primary, **kwargs)
+    return link(value, href, primary=primary, **kwargs).add_class('Button')
 
 
 class Head(BaseHead):
@@ -83,20 +80,20 @@ class Head(BaseHead):
         ]
         self.favicons = dict(self.favicons)
         self.favicons.update({
-            None: static('img/logo/logo.svg'),
-            16: static('img/logo/icon-16.png'),
-            32: static('img/logo/icon-32.png'),
-            57: static('img/logo/icon-57.png'),
-            72: static('img/logo/icon-72.png'),
-            96: static('img/logo/icon-96.png'),
-            114: static('img/logo/icon-114.png'),
-            192: static('img/logo/icon-192.png'),
+            None: static('default/img/logo/logo.svg'),
+            16: static('default/img/logo/icon-16.png'),
+            32: static('default/img/logo/icon-32.png'),
+            57: static('default/img/logo/icon-57.png'),
+            72: static('default/img/logo/icon-72.png'),
+            96: static('default/img/logo/icon-96.png'),
+            114: static('default/img/logo/icon-114.png'),
+            192: static('default/img/logo/icon-192.png'),
         })
 
     def favicon_tags(self):
         return [
             *super().favicon_tags(),
-            meta(name='image', content=static('img/logo/logo.svg')),
+            meta(name='image', content=static('default/img/logo/logo.svg')),
         ]
 
 

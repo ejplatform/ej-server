@@ -1,3 +1,4 @@
+import os
 import random
 import string
 
@@ -5,14 +6,14 @@ from django.conf import settings
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.urls import reverse
 from django.utils import translation
-from jinja2 import Environment, contextfunction
+from jinja2 import Environment, StrictUndefined, contextfunction
 from markdown import markdown
 from markupsafe import Markup
 
 from ej_configurations import social_icons, fragment
 from hyperpython.components import render
-from . import tags
-import os
+from . import components
+from .components import tags
 
 TAG_MAP = {k: getattr(tags, k) for k in tags.__all__}
 SALT_CHARS = string.ascii_letters + string.digits + '-_'
@@ -22,6 +23,7 @@ def environment(**options):
     options.pop('debug', None)
     options.setdefault('trim_blocks', True)
     options.setdefault('lstrip_blocks', True)
+    options.setdefault('undefined', StrictUndefined)
     env = Environment(**options)
     theme = 'default'
     if 'THEME' in os.environ:
@@ -30,6 +32,7 @@ def environment(**options):
     env.globals.update(
         static=staticfiles_storage.url,
         url=reverse,
+        settings=settings,
 
         # Security
         salt_attr=salt_attr,
@@ -45,6 +48,9 @@ def environment(**options):
 
         # Hyperpython tag functions
         render=non_strict_render,
+
+        # Available tags and components
+        tag=components,
         **TAG_MAP,
     )
     env.filters.update(

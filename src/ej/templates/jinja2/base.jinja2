@@ -5,7 +5,7 @@
 
 {% set target_context = request.GET.target | default('all') %}
 {% set target = target | default(target_context) %}
-{% if not page_title %}{% set page_title = content_title|default(_('Empurrando Juntos')) %}{% endif %}
+{% if not page_title %}{% set page_title = content_title|default(settings.EJ_PAGE_TITLE) %}{% endif %}
 
 {% set theme = request.GET.get('theme','') or current_theme %}
 
@@ -38,28 +38,33 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
         <![endif]-->
 
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" crossorigin="anonymous"></script>
+        {# <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" crossorigin="anonymous"></script> #}
+        <script
+            src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
         <script src="https://unpkg.com/unpoly@0.54.0/dist/unpoly.min.js" integrity="sha384-6QMkTrFSjoO7UIWKZ1oYV4FCzxclb0Q4gP+TJzTZB93bAUeffVvNLblrRevbIkIw" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js" defer></script>
         <script src="/static/js/jquery-ui/jquery-ui.min.js" defer></script>
         <script src="/static/js/main.js" defer></script>
         <script src="/static/js/hicontrast.js"></script>
         <script src="/static/js/specific-pages.js"></script>
+        <script src="/static/js/utils.js"></script>
         <script src="/static/js/fontScale.js" defer></script>
         {% endblock javascript %}
 
         <!-- Favicons -->
-        <link rel="icon" href="/static/img/logo/logo.svg"/>
-        <link rel="apple-touch-icon" sizes="57x57" href="/static/img/logo/icon-57.png">
-        <link rel="apple-touch-icon" sizes="72x72" href="/static/img/logo/icon-72.png">
-        <link rel="apple-touch-icon" sizes="114x114" href="/static/img/logo/icon-114.png">
-        <link rel="icon" type="image/png" sizes="192x192"  href="/static/img/logo/icon-192.png">
-        <link rel="icon" type="image/png" sizes="32x32" href="/static/img/logo/icon-32.png">
-        <link rel="icon" type="image/png" sizes="96x96" href="/static/img/logo/icon-96.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/static/img/logo/icon-16.png">
-        <meta name="msapplication-TileImage" content="/static/img/logo/icon-144.png">
+        <link rel="icon" href="/static/{{theme}}/img/logo/logo.svg"/>
+        <link rel="apple-touch-icon" sizes="57x57" href="/static/{{theme}}/img/logo/icon-57.png">
+        <link rel="apple-touch-icon" sizes="72x72" href="/static/{{theme}}/img/logo/icon-72.png">
+        <link rel="apple-touch-icon" sizes="114x114" href="/static/{{theme}}/img/logo/icon-114.png">
+        <link rel="icon" type="image/png" sizes="192x192"  href="/static/{{theme}}/img/logo/icon-192.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/static/{{theme}}/img/logo/icon-32.png">
+        <link rel="icon" type="image/png" sizes="96x96" href="/static/{{theme}}/img/logo/icon-96.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/static/{{theme}}/img/logo/icon-16.png">
+        <meta name="msapplication-TileImage" content="/static/{{theme}}/img/logo/icon-144.png">
         <meta name="msapplication-TileColor" content="#ffffff">
-        <meta name="image" content="/static/img/logo/logo.svg">
+        <meta name="image" content="/static/{{theme}}/img/logo/logo.svg">
 
         <!-- PWA -->
         <link rel="manifest" href="/static/manifest.json">
@@ -72,7 +77,7 @@
         <!-- SEO -->
         <meta name="description" content="{{ page_description|default(_('EJ - A platform of social participation.')) }}">
         <meta itemprop="name" content="EJ - Empurrando Juntos!">
-        <meta itemprop="image" content="/static/img/logo/logo.svg">
+        <meta itemprop="image" content="/static/{{theme}}/img/logo/logo.svg">
 
         <!-- Twitter -->
         <meta name="twitter:card" content="summary">
@@ -80,7 +85,7 @@
 
         <!-- Open Graph general (Facebook, Pinterest & Google+) -->
         <meta property="og:title" content="{{ title|default(_('EJ - A platform of social participacion.')) }}">
-        <meta property="og:image" content="/static/img/logo/logo.svg">
+        <meta property="og:image" content="/static/{{theme}}/img/logo/logo.svg">
         <meta property="og:image:width" content="1200">
         <meta property="og:image:height" content="630">
         <meta property="og:url" content="https://ejplatform.org/">
@@ -183,11 +188,12 @@
             window.onload = function() {
                 checkHicontrast();
                 runRemoteScripts();
-                checkFontSize();               
+                checkFontSize();
                 up.on('up:fragment:inserted', function(event, fragment) {
                     runRemoteScripts();
                     checkHicontrast();
                     checkSpecificPages(fragment);
+                    enableFadeBottomDiv();
                 });
             }
         </script>

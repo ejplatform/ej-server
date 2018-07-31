@@ -1,4 +1,3 @@
-{% from 'components/generic/elements.jinja2' import action_button, rocket_button, link %}
 {% from 'ej_conversations/components/conversation-list.jinja2' import conversation_list %}
 
 
@@ -26,15 +25,15 @@
                 {{ link(_('Info'), '/profile/',
                         target='.Profile-tabs',
                         transition=None,
-                        class='Profile-tabActive' if info=='profile' else None) }}
+                        class_='Profile-tabActive' if info=='profile' else []) }}
                 {{ link(_('Trophies'), '/profile/?info=trophies',
                         target='.Profile-tabs',
                         transition=None,
-                        class='Profile-tabActive' if info=='trophies' else None) }}
+                        class_='Profile-tabActive' if info=='trophies' else []) }}
                 {{ link(_('Contributions'), '/profile/?info=contributions',
                         target='.Profile-tabs',
                         transition=None,
-                        class='Profile-tabActive' if info=='contributions' else None) }}
+                        class_='Profile-tabActive' if info=='contributions' else []) }}
             </nav>
 
             <div class="Profile-tabContainer">
@@ -75,7 +74,11 @@
         <dl>
             {% for title, info in profile.profile_fields(true) %}
                 <dt>{{ title }}</dt>
-                <dd>{{ info or '-' }}</dd>
+                {%if info == 'undeclared'%}
+                    <dd>{{ _((info).title())}}</dd>
+                {%else%}
+                    <dd>{{ (info or '-') }}</dd>
+                {%endif%}
             {% endfor %}
         </dl>
         <div class='edit-button'>
@@ -91,7 +94,7 @@
             {% for description, amount in profile.statistics().items() %}
                 <li>
                     <span class='amount'>{{ amount }}</span>
-                    <span class='description'>{{ description or '-' }}</span>
+                    <span class='description'>{{ _((description).title()) or '-' }}</span>
                 </li>
             {% endfor %}
         </ul>

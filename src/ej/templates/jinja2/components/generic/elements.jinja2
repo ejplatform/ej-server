@@ -15,31 +15,3 @@
         {%- if preload -%} up-preload{% endif %}
         {%- if args %} {{ args }}{% endif %}>{{ value }}</a>
 {% endmacro %}
-
-
-{% macro rocket_button(title=_('Access CPA panel'), href='/talks/') %}
-    {% call link(href, class="RocketButton") %}
-        <i class="fa fa-comment"></i>{{ title }}
-    {% endcall %}
-{% endmacro %}
-
-
-{% macro action_button(title='Go!', href='#', alt='', target='main') %}
-    {{ link(title|safe, href, args='primary', class="Button") }}
-{% endmacro %}
-
-
-{% macro breadcrumbs(links, has_home=True) %}
-    <div class="Breadcrumbs">
-        <ul>
-            {% if has_home %}
-                <li><a href="/"><i class="fa fa-home"></i></a></li>
-            {% endif %}
-            {% set subpaths = [] %}
-            {% for href, link in links %}
-                {{ subpaths.append((subpaths or [''])[-1] + '/' + href) or '' }}
-                <li><a href="{{ subpaths[-1] }}">{{ link }}</a></li>
-            {% endfor %}
-        </ul>
-    </div>
-{% endmacro %}

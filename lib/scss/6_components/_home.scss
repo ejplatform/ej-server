@@ -17,10 +17,20 @@ $how-it-work-icon-color: $color-gray-dark !default;
             display: inherit;
         }
     }
+    h1 {
+        font-family: var( --home-banner-title-font-family);
+        color: var(--home-banner-title-font-color);
+    }
+
+    .Button[primary] {
+        background: var(--home-banner-button-background);
+        color: $color-white;
+        padding: $unit $unit*2;
+    }
 }
 
 .HowItWorks {
-    background: $color-hint;
+    background: var(--home-how-it-works-background);
     padding-top: $spacing-unit-large;
 
     > * {
@@ -37,11 +47,29 @@ $how-it-work-icon-color: $color-gray-dark !default;
         line-height: 30px;
         color: var(--home-how-it-works-content-font-color);
     }
-            
+  
+    .fa-child:before {
+        content: var(--home-how-it-works-card-icon-person);
+    }
+
+    .fa-comments:before {
+        content: var(--home-how-it-works-card-icon-conversation);
+    }
         
 }
 
 .HowItWorksCard {
+    > .fa {
+
+        background: var(--home-how-it-works-card-icon-background);
+        border-radius: 50%;
+        width: $unit * 7;
+        height: $unit * 7;
+        display: inline-block;
+        color: $color-blue-dark;
+        padding-top: $unit * 2;
+        margin: $unit * 2;
+    }
     text-align: left;
     align-items: center;
     display: flex;
@@ -102,6 +130,8 @@ $how-it-work-icon-color: $color-gray-dark !default;
     background: $color-hint;
     padding: $spacing-unit;
     text-align: center;
+    display: var(--home-start-now-display);
+
 
     > * {
         @extend .Container;

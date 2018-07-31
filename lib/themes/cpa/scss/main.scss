@@ -3,25 +3,25 @@
 @import '../../../scss/maindefault';
 
 $blue-dark: #30BEC0;
-$blue-light: #D4F7F5;
+// $blue-light: #D4F7F5;
 $blue-medium: #30C0D3;
 $grey-dark: #052B47;
-$green: #8EC73F;
+// $green: #8EC73F;
 $pink: #C6027B;
 $purple: #3F1B53;
 $white: #fff;
 
-// Sizes
-$size-big: 46px;
-$size-medium: 30px;
+// // Sizes
+// $size-big: 46px;
+// $size-medium: 30px;
 
 // Components
 @import 'auth';
 @import 'home';
 @import 'conversation';
 @import 'conversations';
-@import 'profile';
-@import 'layout';
+// @import 'profile';
+// @import 'layout';
 
 
 :root {
@@ -32,10 +32,9 @@ $size-medium: 30px;
 
     --font-color-primary: #3F1B53;
     --font-color-secondary: #D4F7F5;
-    --font-color-terciary: #30BEC0;
-    --font-color-quaternary: #052B47;
+    // --font-color-quaternary: #052B47;
 
-    --font-size-x-large: 18px;
+    // --font-size-x-large: 18px;
 
     //Profile
     --profile-font-color-primary: #30BEC0;
@@ -46,30 +45,68 @@ $size-medium: 30px;
     --header-font-color: white;
 
     // Home Banner
-    --home-banner-font-family: Raleway;
-    --home-banner-font-color: #052B47;
+    --home-banner-title-font-family: Raleway;
+    --home-banner-title-font-color: #052B47;
+    --home-banner-button-background: #8EC73F;
+
+    // Home How It Works
     --home-how-it-works-title-font-color: #FF3E72;
     --home-how-it-works-content-font-color: #052B47;
+    --home-how-it-works-background: #D4F7F5;
+    --home-how-it-works-card-icon-background: #fff;
+    --home-how-it-works-card-icon-person:  "\f007";
+    --home-how-it-works-card-icon-conversation: "\f086";
     --home-how-it-works-card-title-font-color: #3F1B53;
     --home-how-it-works-card-content-font-color: #3F1B53;
 
+    // Home StartNow
+    --home-start-now-display: none;
+    
+    // Footer info
+    --footer-info-display: none;
+
+    // Footer
+    --footer-background-color: #D4F7F5;
+    --footer-font-color: #30BEC0;
+
+     // navigation bottom
+     --navigation-bottom-font-color: #3F1B53;
+     --navigation-bottom-panel-display: flex;
+     --navigation-bottom-icon-conversations: "\f086";
+     --navigation-bottom-icon-panel:  "\f4ad";
+     --navigation-bottom-icon-profile: "\f007"     
+
     // Card Conversation
-    --card-conversation-bottom-background: #30BEC0;
+    --card-conversation-bottom-background:  url(/static/cpa/img/bg.svg) bottom center no-repeat;
     --card-conversation-top-background: #30BEC0;
+     //FIXME add middle
 
     // Conversation
     --conversation-top-background: #D4F7F5;
+    --conversation-tag-color: #30BEC0;
     --conversation-middle-background: #D4F7F5;
     --conversation-bottom-border: 28px solid #D4F7F5;
+    
+    // Conversation: info
+    --conversation-info-title: #C6027B;
+    --conversation-info-content: #052B47;
 
     // Conversation: vote
     --conversation-vote-agree-color: #3F1B53;
     --conversation-vote-skip-color: #30BEC0;
     --conversation-vote-disagree-color: #C6027B;
 
+    // Conversation: comment
+    --conversation-comment-background-color: #30BEC0;
+    --conversation-comment-title-color: white;
+
+    --conversation-comment-textarea-border: 2px solid #30c0d3;
+    --conversation-comment-button-border-radius: 50%;
+     
+
     // Conversation: comment form
-    --conversation-comment-background-color: white;
-    --conversation-comment-title-color: #C6027B;
-    --conversation-comment-textarea-border:  2px solid #30C0D3;
-    --conversation-comment-button-border-radius: 10px;
+    // --conversation-comment-background-color: white;
+    // --conversation-comment-title-color: #C6027B;
+    // --conversation-comment-textarea-border:  2px solid #30C0D3;
+    // --conversation-comment-button-border-radius: 10px;
 }

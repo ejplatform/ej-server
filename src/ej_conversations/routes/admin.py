@@ -3,33 +3,20 @@ from django.shortcuts import redirect
 from django.utils.translation import ugettext_lazy as _
 
 from boogie import rules
-
 from . import urlpatterns, conversation_url
 from .. import forms, models
 
 
 @urlpatterns.route('add/', perms=['ej_conversations.can_add_conversation'])
-def create(request, owner=None):
-    # Cannot create pages for other users
-    if owner and owner != request.user:
-        raise Http404
-
+def create(request):
     if rules.test_rule('ej_conversations.has_conversation', request.user):
-        Form = forms.ConversationForm
+        form_class = forms.ConversationForm
     else:
-        Form = forms.FirstConversationForm
+        form_class = forms.FirstConversationForm
 
     if request.method == 'POST':
-        form = Form(request.POST)
+        form = form_class(request.POST)
         if form.is_valid():
-            try:
-                models.ConversationBoard.objects.create(
-                    name=form.cleaned_data['board_name'],
-                    owner=request.user
-                )
-            except KeyError:
-                pass
-
             conversation = form.save(commit=False)
             conversation.author = request.user
             conversation.save()
@@ -38,7 +25,7 @@ def create(request, owner=None):
                 conversation.tags.add(tag)
             return redirect(conversation.get_absolute_url())
     else:
-        form = Form()
+        form = form_class()
 
     return {
         'content_title': _('Create conversation'),
@@ -48,9 +35,8 @@ def create(request, owner=None):
 
 @urlpatterns.route(conversation_url + 'edit/',
                    perms=['ej_conversations.can_edit_conversation'])
-def edit(request, conversation, owner=None):
+def edit(request, conversation):
     comments = []
-    
     if request.method == 'POST':
         form = forms.ConversationForm(
             data=request.POST,

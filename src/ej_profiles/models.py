@@ -33,7 +33,6 @@ class Profile(models.Model):
     image = models.ImageField(_('Image'), blank=True, null=True, upload_to='profile_images')
 
     name = delegate_to('user')
-    #username = delegate_to('user')
     email = delegate_to('user')
     is_active = delegate_to('user')
     is_staff = delegate_to('user')
@@ -152,7 +151,7 @@ def avatar_fallback():
     """
     Return fallback image URL for profile
     """
-    return "/static/img/logo/avatar_default.svg"
+    return "/static/default/img/logo/avatar_default.svg"
 
 
 def get_profile(user):

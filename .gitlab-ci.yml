@@ -151,8 +151,9 @@ push:latest:django:cpa:
 .deployer: &deployer
   image: cdrx/rancher-gitlab-deploy
   script:
-    - upgrade --environment $RANCHER_ENVIRONMENT --stack $RANCHER_STACK --service backend --no-finish-upgrade --sidekicks
-# [FIXME] Cancel celery upgrades for just now
+    - upgrade --environment $RANCHER_ENVIRONMENT --stack $RANCHER_STACK --service nginx --no-finish-upgrade
+    - upgrade --environment $RANCHER_ENVIRONMENT --stack $RANCHER_STACK --service django --no-finish-upgrade
+    # [FIXME] Cancel celery upgrades for just now
 #    - upgrade --environment $RANCHER_ENVIRONMENT --stack $RANCHER_STACK --service flower --no-finish-upgrade
 #    - upgrade --environment $RANCHER_ENVIRONMENT --stack $RANCHER_STACK --service worker --no-finish-upgrade
   tags:
