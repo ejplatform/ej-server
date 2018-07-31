@@ -1,16 +1,17 @@
 import pytest
 from django.contrib.auth import get_user_model
-from model_mommy.recipe import Recipe as BaseRecipe
+from model_mommy.recipe import Recipe
 
 User = get_user_model()
 
 
-class Recipe(BaseRecipe):
-    def dependencies(self):
-        return {}
+def named_fixture(name):
+    def decorator(func):
+        fixture = pytest.fixture(name=name)(func)
+        fixture.__name__ = fixture.__qualname__ = name
+        return fixture
 
-    def get_fixture(self):
-        print(self.dependencies())
+    return decorator
 
 
 class FixtureMeta(type):
@@ -33,23 +34,23 @@ class FixtureMeta(type):
 
 
 def make_recipe(name, recipe):
-    @pytest.fixture(name=name)
+    @named_fixture(name=name)
     def fixture_function():
         return recipe.prepare()
 
-    @pytest.fixture(name=name + '_db')
+    @named_fixture(name=name + '_db')
     def fixture_function_db(db):
         return recipe.make()
 
-    @pytest.fixture(name=name + '_rec')
+    @named_fixture(name=name + '_rec')
     def fixture_function_rec():
         return recipe
 
-    @pytest.fixture(name='mk_' + name)
+    @named_fixture(name='mk_' + name)
     def fixture_function_mk(db):
         return recipe.make
 
-    @pytest.fixture(name='prep_' + name)
+    @named_fixture(name='prep_' + name)
     def fixture_function_prep():
         return recipe.prepare
 
@@ -65,14 +66,16 @@ def make_recipe(name, recipe):
 
 
 def fixture_method(func):
-    meta = func._pytestfixturefunction
-    name = meta.name
+    name = func.__name__
     if name.endswith('_db') or name.startswith('mk_'):
-        new = lambda self, db: func(db)
+        @named_fixture(name)
+        def method(self, db):
+            return func(db)
     else:
-        new = lambda self: func()
-    new._pytestfixturefunction = meta
-    return new
+        @named_fixture(name)
+        def method(self):
+            return func()
+    return method
 
 
 class WithRecipes(metaclass=FixtureMeta):

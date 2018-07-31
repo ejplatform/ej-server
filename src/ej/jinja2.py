@@ -6,7 +6,7 @@ from django.conf import settings
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.urls import reverse
 from django.utils import translation
-from jinja2 import Environment, contextfunction
+from jinja2 import Environment, StrictUndefined, contextfunction
 from markdown import markdown
 from markupsafe import Markup
 
@@ -23,6 +23,7 @@ def environment(**options):
     options.pop('debug', None)
     options.setdefault('trim_blocks', True)
     options.setdefault('lstrip_blocks', True)
+    options.setdefault('undefined', StrictUndefined)
     env = Environment(**options)
     theme = 'default'
     if 'THEME' in os.environ:

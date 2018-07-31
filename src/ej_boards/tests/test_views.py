@@ -4,11 +4,11 @@ from ej.testing import UrlTester
 from ej_boards.mommy_recipes import BoardRecipes
 
 
-class TestBoards(UrlTester, BoardRecipes):
+class TestBoards(BoardRecipes, UrlTester):
     public_urls = [
         # /board-slug/ will not be tested because it is handled by the
         # middleware and thus disabled in the test client,
-        '/board-slug/conversations/',
+        # '/board-slug/conversations/',
         # '/board-slug/conversations/conversation-slug/',
     ]
     user_urls = []
