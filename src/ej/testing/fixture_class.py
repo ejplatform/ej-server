@@ -5,6 +5,15 @@ from model_mommy.recipe import Recipe
 User = get_user_model()
 
 
+def named_fixture(name):
+    def decorator(func):
+        fixture = pytest.fixture(name=name)(func)
+        fixture.__name__ = fixture.__qualname__ = name
+        return fixture
+
+    return decorator
+
+
 class FixtureMeta(type):
     def __init__(cls, clsname, bases, ns):
         super().__init__(clsname, bases, ns)
@@ -25,50 +34,55 @@ class FixtureMeta(type):
 
 
 def make_recipe(name, recipe):
-    @pytest.fixture(name=name)
+    @named_fixture(name=name)
     def fixture_function():
         return recipe.prepare()
 
-    @pytest.fixture(name=name + '_db')
+    @named_fixture(name=name + '_db')
     def fixture_function_db(db):
         return recipe.make()
 
-    @pytest.fixture(name=name + '_recipe')
+    @named_fixture(name=name + '_rec')
     def fixture_function_rec():
         return recipe
 
-    @pytest.fixture(name='mk_' + name)
+    @named_fixture(name='mk_' + name)
     def fixture_function_mk(db):
         return recipe.make
 
-    @pytest.fixture(name='prep_' + name)
+    @named_fixture(name='prep_' + name)
     def fixture_function_prep():
         return recipe.prepare
 
-    return {
+    fixture_map = {
         'fixture_' + name: fixture_function,
         'fixture_' + name + '_db': fixture_function_db,
         'fixture_' + name + '_recipe': fixture_function_rec,
         'fixture_mk_' + name: fixture_function_mk,
         'fixture_prep_' + name: fixture_function_prep,
     }
+    recipe.fixture_map = fixture_map
+    return fixture_map
 
 
 def fixture_method(func):
-    meta = func._pytestfixturefunction
-    name = meta.name
+    name = func.__name__
     if name.endswith('_db') or name.startswith('mk_'):
-        new = lambda self, db: func(db)
+        @named_fixture(name)
+        def method(self, db):
+            return func(db)
     else:
-        new = lambda self: func()
-    new._pytestfixturefunction = meta
-    return new
+        @named_fixture(name)
+        def method(self):
+            return func()
+    return method
 
 
 class WithRecipes(metaclass=FixtureMeta):
     """
     Base class for all test classes with fixtures.
     """
+    base = object()
 
 
 class EjRecipes(metaclass=FixtureMeta):
