@@ -77,7 +77,7 @@
                 {%if info == 'undeclared'%}
                     <dd>{{ _((info).title())}}</dd>
                 {%else%}
-                <dd>{{ (info or '-') }}</dd>
+                    <dd>{{ (info or '-') }}</dd>
                 {%endif%}
             {% endfor %}
         </dl>
