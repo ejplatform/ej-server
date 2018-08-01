@@ -31,10 +31,10 @@ class ChannelViewSet(viewsets.ViewSet):
         serializer = serializers.ChannelSerializer(channel)
         return Response(serializer.data)
 
-    def add_to_general_channel(self, request, pk):
+    def add_to_general_channel(self, request):
         data = request.data
         user = User.objects.filter(id=data["user_id"])[0]
-        channel = models.Channel.objects.get(id=pk)
+        channel = models.Channel.objects.get(sort=data["sort"])
         channel.users.add(user)
         serializer = serializers.ChannelSerializer(channel)
         return Response(serializer.data)
@@ -64,10 +64,10 @@ class ChannelViewSet(viewsets.ViewSet):
         serializer = serializers.ChannelSerializer(channel)
         return Response(serializer.data)
 
-    def remove_from_general_channel(self, request, pk):
+    def remove_from_general_channel(self, request):
         data = request.data
         user = User.objects.filter(id=data["user_id"])[0]
-        channel = models.Channel.objects.get(id=pk)
+        channel = models.Channel.objects.get(sort=data["sort"])
         channel.users.remove(user)
         serializer = serializers.ChannelSerializer(channel)
         return Response(serializer.data)
