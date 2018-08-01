@@ -5,7 +5,6 @@ from django.db.models import Q
 from django.utils.timezone import now
 
 from boogie import rules
-from ej_conversations.models import Conversation
 
 
 #

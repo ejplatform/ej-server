@@ -11,3 +11,11 @@ def has_board(user):
         return True
     else:
         return False
+
+
+@rules.register_perm('ej_boards.can_add_conversation')
+def can_add_conversation(user, board):
+    if board.owner == user:
+        return True
+    
+    return False
