@@ -99,7 +99,7 @@ $conversation-card-button-border-radius: 30px !default;
     text-align: center;
     padding: $spacing-unit / 2 0;
     background-color: var(--conversation-top-background);
-    color: var(--font-color-secondary); 
+    color: var(--font-color-secondary);
 }
 
 .ConversationCard {
@@ -252,8 +252,31 @@ $conversation-card-button-border-radius: 30px !default;
             display: block;
         }
     }
+    &-social form{
+        button{
+            i {
+                color: $color-magenta;
+            }
+            background-color: Transparent;
+            background-repeat:no-repeat;
+            border: none;
+            cursor:pointer;
+            overflow: hidden;
+            outline:none;
+            font-weight: bold;
+            margin-left: 0;
+        }
 
-
+    }
+    &-social {
+        &-share{
+            margin-right: 0;
+            font-weight: bold;
+            i {
+                color: $color-magenta;
+            }
+        }
+    }
     &-banner {
         background: var(--conversation-middle-background);
         border-radius: 0 0 $block-elements-border-radius $block-elements-border-radius;
@@ -279,7 +302,7 @@ $conversation-card-button-border-radius: 30px !default;
             }
             color: var(--font-color-primary);
         }
-        
+
         .Conversation-edit {
           text-align: center;
 
@@ -393,7 +416,7 @@ $conversation-card-button-border-radius: 30px !default;
             margin: 0;
         }
     }
-    
+
     i.fa {
         background: $color-primary-text;
         border: 2px solid $color-primary-text;
@@ -913,7 +936,7 @@ $conversation-card-button-border-radius: 30px !default;
         font-size: 16px;
         font-weight: 600;
       }
-    
+
       &-metadata {
         color: $color-blue-light-low;
         font-size: 12px;
@@ -990,13 +1013,13 @@ $conversation-card-button-border-radius: 30px !default;
       box-shadow: none;
       box-sizing: border-box;
       width: 90%;
-      background: $color-pink; 
+      background: $color-pink;
     }
   }
 
   .Conversation-edit-field {
     @extend .Container;
-    
+
     outline: 0;
     background: transparent;
     border: 0;
