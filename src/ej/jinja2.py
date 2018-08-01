@@ -1,10 +1,10 @@
 import random
 import string
 
-from django.conf import settings
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.urls import reverse
 from django.utils import translation
+from django.conf import settings
 from jinja2 import Environment, contextfunction
 from markdown import markdown
 from markupsafe import Markup
@@ -31,6 +31,7 @@ def environment(**options):
     env.globals.update(
         static=staticfiles_storage.url,
         url=reverse,
+        settings=settings,
 
         # Security
         salt_attr=salt_attr,

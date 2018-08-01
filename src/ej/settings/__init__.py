@@ -8,13 +8,15 @@ from .constance import ConstanceConf
 from .middleware import MiddlewareConf
 from .options import EjOptions
 from .paths import PathsConf
+from .themes import ThemesConf
 from .. import fixes
 from .. import services
 
 log = logging.getLogger('ej')
 
 
-class Conf(locales.brazil(),
+class Conf(ThemesConf,
+           locales.brazil(),
            ConstanceConf,
            MiddlewareConf,
            CeleryConf,
