@@ -10,6 +10,11 @@ body {
 #header {
     background-color: #C4F2F4;
     max-width: 100vw;
+    padding: 15px;
+}
+
+#site-name {
+    margin: 0;
 }
 
 #site-name >a {
@@ -69,6 +74,10 @@ body {
     border-bottom: 1px solid #C4F2F4;
 }
 
+#content-main >div >table >tbody >tr >th {
+    padding: 10px !important;
+}
+
 #content-main >div >table >tbody >tr >th >a {
     text-decoration: none;
     color: #052B47;
@@ -96,7 +105,18 @@ body {
     font-weight: bold;
     text-transform: uppercase;
     color: #052B47;
-    /* position: relative;
-    top: 20px; */
+    /* position: relative; */
+    /* top: 12px; */
 
+}
+
+#content-main >div >table >tbody >tr >td:first-of-type {
+    position: relative;
+    left: 67px;
+    top: -7px;
+}
+
+#content-main >div >table >tbody >tr >td:last-of-type {
+    position: relative;
+    top: 10px;
 }
