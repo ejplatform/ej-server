@@ -2,18 +2,13 @@ from django.http import Http404
 from django.shortcuts import redirect
 from django.utils.translation import ugettext_lazy as _
 
-from boogie import rules
 from . import urlpatterns, conversation_url
 from .. import forms, models
 
 
 @urlpatterns.route('add/', perms=['ej_conversations.can_add_conversation'])
 def create(request):
-    if rules.test_rule('ej_conversations.has_conversation', request.user):
-        form_class = forms.ConversationForm
-    else:
-        form_class = forms.FirstConversationForm
-
+    form_class = forms.ConversationForm
     if request.method == 'POST':
         form = form_class(request.POST)
         if form.is_valid():

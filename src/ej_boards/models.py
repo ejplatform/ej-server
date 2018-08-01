@@ -32,18 +32,10 @@ class Board(TimeStampedModel):
         _('Description'),
         blank=True,
     )
-    members = models.ManyToManyField(
-        settings.AUTH_USER_MODEL,
-        null=True
-    )
 
     @property
     def conversations(self):
         return Conversation.objects.filter(board_subscriptions__board=self)
-
-    @property
-    def members(self):
-        return self.members.all()
 
     class Meta:
         verbose_name = _('Board')

@@ -27,15 +27,14 @@ urlpatterns = [
     # Profile URLS
     path('profile/', include(('ej_profiles.routes', 'ej_profiles'), namespace='profiles')),
     path('profile/', include('ej_gamification.routes', namespace='gamification')),
+    path('profile/boards/', include('ej_boards.routes.board', namespace='boards')),
     path('profile/notifications/', include('ej_notifications.routes', namespace='notifications')),
 
     # Conversations and other EJ-specific routes
+    path('', include('ej_boards.routes.conversation', namespace='board_conversation')),
     path('conversations/', include('ej_conversations.routes', namespace='conversation')),
     path('conversations/', include('ej_clusters.routes', namespace='cluster')),
     path('conversations/', include('ej_reports.routes', namespace='report')),
-
-    # User conversations
-    #path('', include('ej_boards.routes', namespace='boards')),
 
     # Configurations
     path('config/', include(('ej_configurations.routes', 'ej_configurations'), namespace='configurations')),
