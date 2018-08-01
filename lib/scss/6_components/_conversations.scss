@@ -450,7 +450,7 @@ $conversation-card-button-border-radius: 30px !default;
             width: 100%;
 
             span {
-                font-size: $font-size-small;
+                font-size: var(--conversation-vote-font-size);
             }
 
             li {
@@ -468,7 +468,11 @@ $conversation-card-button-border-radius: 30px !default;
             }
 
             li:first-child i.fa {
-                color: $color-role-ok;
+                color: var(--conversation-vote-agree-color);
+                &:hover {
+                    background: var(--conversation-vote-agree-color);
+                    color: #fff;
+                }
             }
 
             li:last-child i.fa {

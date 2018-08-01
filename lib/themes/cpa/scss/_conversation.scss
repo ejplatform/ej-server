@@ -48,15 +48,15 @@
     }
     
     .Comment-voteArea ul {
-      flex-wrap: wrap;
+    //   flex-wrap: wrap;
     }
 
     .Comment-voteArea ul span {
-        font-size: 18px;
+        // font-size: 18px;
     }
     
     .Comment-voteArea ul li {
-      margin-right: $unit;
+    //   margin-right: $unit;
     }
 
     .Comment-voteArea ul li:first-child {
@@ -87,11 +87,11 @@
     }
 
     .Comment-voteArea ul li:first-child i.fa {
-      color: $purple;
-      &:hover {
-        background: $purple;
-        color: $white !important;
-      }
+    //   color: $purple;
+    //   &:hover {
+    //     background: $purple;
+    //     color: $white !important;
+    //   }
     }
 
     .Comment-voteArea ul li:first-child + li i.fa {

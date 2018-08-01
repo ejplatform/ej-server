@@ -73,6 +73,7 @@
     --conversation-info-content: #042049;
 
     // Conversation: vote
+    --conversation-vote-font-size: 13px;
     --conversation-vote-agree-color: #22b35c;
     --conversation-vote-skip-color: #30c0d3;
     --conversation-vote-disagree-color: #f13c20;
@@ -81,7 +82,7 @@
     // Conversation: comment
     --conversation-comment-background-color: #30c0d3;
     --conversation-comment-title-color: white;
-    
+
     --conversation-comment-textarea-border: 2px solid #30c0d3;
     --conversation-comment-button-border-radius: 50%;
      

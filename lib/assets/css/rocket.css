@@ -69,6 +69,7 @@
   --conversation-bottom-border: 28px solid #C4F2F4;
   --conversation-info-title: #FF3D72;
   --conversation-info-content: #042049;
+  --conversation-vote-font-size: 13px;
   --conversation-vote-agree-color: #22b35c;
   --conversation-vote-skip-color: #30c0d3;
   --conversation-vote-disagree-color: #f13c20;
