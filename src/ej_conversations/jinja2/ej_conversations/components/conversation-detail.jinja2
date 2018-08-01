@@ -36,14 +36,17 @@
                   <input type="hidden" name="action" value="favorite">
                   {% if conversation.is_favorite(user) %}
                     <button type="submit" form="Favorite-form">
-                      <i class="fa fa-star"></i> Desfavoritar
+                      <i class="fa fa-star"></i>{{_("Unfavorite")}} 
                       </button>
                   {% else %}
                     <button type="submit" form="Favorite-form">
-                      <i class="far fa-star"></i> Favoritar
+                      <i class="far fa-star"></i> {{_("Favorite")}} 
                     </button>
                   {% endif %}
                 </form>
+                <button class="share-button">
+                    <i class="fas fa-share-alt"></i> {{_("Share")}} 
+                </button>
             {% endif %}
 
         </div>

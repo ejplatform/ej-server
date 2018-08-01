@@ -252,11 +252,24 @@ $conversation-card-button-border-radius: 30px !default;
             display: block;
         }
     }
-    &-social form{
-        button{
-            i {
-                color: $color-magenta;
+    &-social {
+        form{
+            display: inline-block;
+            button{
+                i {
+                    color: $color-magenta;
+                }
+                background-color: Transparent;
+                background-repeat:no-repeat;
+                border: none;
+                cursor:pointer;
+                overflow: hidden;
+                outline:none;
+                font-weight: bold;
+                margin-left: 0;
             }
+        }
+        .share-button{
             background-color: Transparent;
             background-repeat:no-repeat;
             border: none;
@@ -264,18 +277,12 @@ $conversation-card-button-border-radius: 30px !default;
             overflow: hidden;
             outline:none;
             font-weight: bold;
-            margin-left: 0;
-        }
-
-    }
-    &-social {
-        &-share{
-            margin-right: 0;
-            font-weight: bold;
             i {
                 color: $color-magenta;
             }
+            float: right;
         }
+    
     }
     &-banner {
         background: var(--conversation-middle-background);
