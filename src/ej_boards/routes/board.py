@@ -1,4 +1,4 @@
-from django.shortcuts import redirect
+from django.shortcuts import redirect, Http404
 from django.utils.translation import ugettext_lazy as _
 from boogie.router import Router
 from ..models import Board
@@ -14,7 +14,7 @@ urlpatterns = Router(
     lookup_field='slug',
     lookup_type='slug',
 )
-board_url = '<model:board>/conversations/'
+board_url = '<model:board>'
 
 
 @urlpatterns.route('add/')
@@ -45,9 +45,22 @@ def create(request):
 #     }
 
 
-# @urlpatterns.route(board_url + '<model:conversation>/edit/')
-# def edit(request, board, conversation):
-#     return {
-#         'board': board,
-#         'conversation': conversation,
-#     }
+@urlpatterns.route(board_url + '/edit/', template='ej_boards/create.jinja2')
+def edit(request, board):
+    user = request.user
+    if user != board.owner:
+        raise Http404
+    form_class = BoardForm
+    if request.method == 'POST':
+        form = form_class(
+            instance=board,
+            data=request.POST
+        )
+        if form.is_valid():
+            form.instance.save()
+            return redirect(board.get_absolute_url())
+    else:
+        form = form_class(instance=board)
+    return {
+        'form': form,
+    }
