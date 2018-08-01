@@ -45,10 +45,8 @@ def clusters(request):
 
 @urlpatterns.route('menu/')
 def menu(request):
-
     return {
         'user': request.user,
-        'board': Board.objects.filter(owner=request.user).first(),
     }
 
 
