@@ -44,20 +44,6 @@ def is_personal_conversations_enabled():
 
 
 #
-# Conversations
-#
-@rules.register_rule('ej_conversations.has_conversation')
-def has_conversation(user):
-    """
-    Verify if an user has any conversation.
-    """
-    if Conversation.objects.filter(author=user).count() > 0:
-        return True
-    else:
-        return False
-
-
-#
 # Comments
 #
 @rules.register_value('ej_conversations.next_comment')
@@ -141,14 +127,9 @@ def can_comment(user, conversation):
 
 
 @rules.register_perm('ej_conversations.can_add_conversation')
-def can_add_conversation(user, board):
-    if user.is_staff and not board:
+def can_add_conversation(user):
+    if user.is_staff:
         return True
-    elif board:
-        if board.owner == user:
-            return True
-        elif user in board.members.all():
-            return True
     return False
 
 

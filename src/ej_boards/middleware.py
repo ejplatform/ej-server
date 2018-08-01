@@ -7,7 +7,7 @@ def BoardFallbackMiddleware(get_response):
     """
     Look for board urls after 404 errors.
     """
-    from .routes import conversation_list
+    from .routes.conversation import conversation_list
     view_function = conversation_list.as_view()
 
     def middleware(request):
