@@ -236,7 +236,7 @@ $conversation-card-button-border-radius: 30px !default;
     }
 
     > * {
-        padding: 0px 28px 28px 28px;
+        padding: $spacing-unit-tiny;
     }
     u {
         margin: 0;
@@ -386,6 +386,8 @@ $conversation-card-button-border-radius: 30px !default;
     max-width: $page-content-width-max;
     min-height: 250px !important;
     width: 100% !important;
+    z-index: 3;
+    position: relative;
 
     &-counter {
         text-align: center;
@@ -457,12 +459,18 @@ $conversation-card-button-border-radius: 30px !default;
 .CommentForm {
     text-align: center;
     background: $color-blue-nav;
-    margin-top: $spacing-unit-large;
+    margin-top: -60px;
+    border-radius: 0 0 56px 56px;
+    z-index: 2;
+    max-width: 682px;
+    margin-left: auto;
+    margin-right: auto;
 
     h1 {
         font-size: $font-size-h3;
         margin: $spacing-unit-tiny 0;
         color: $color-primary !important;
+        padding-top: 100px;
     }
     p {
         margin: $spacing-unit-tiny 0;
