@@ -77,21 +77,21 @@ class ChannelViewSet(viewsets.ViewSet):
         user = User.objects.get(id=pk)
         profile = user.profile
         settings = Setting.objects.get(profile=profile)
-        channel_admin = models.Channel.objects.get(id=1)
-        channel_mission = models.Channel.objects.get(id=2)
+        channel_admin = models.Channel.objects.get(sort="admin")
+        channel_mission = models.Channel.objects.get(sort="mission")
         channel_trophy = models.Channel.objects.filter(owner=user, sort="trophy").count()
 
         if(settings.mission_notifications == True):
             channel_mission.users.add(user)
-        
+
         if(settings.admin_notifications == True):
             channel_admin.users.add(user)
-        
+
         if(channel_trophy <=0):
             new_channel = models.Channel.objects.create(name="trophy channel", sort="trophy", owner=user)
             new_channel.users.add(user)
             new_channel.save()
             serializer = serializers.ChannelSerializer(new_channel)
             return Response(serializer.data)
-        else: 
+        else:
             return Response({"Usuário já adicionado nos canais!"})
