@@ -17,5 +17,5 @@ def has_board(user):
 def can_add_conversation(user, board):
     if board.owner == user:
         return True
-    
+
     return False
