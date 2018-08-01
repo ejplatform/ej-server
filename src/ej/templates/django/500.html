@@ -3,11 +3,17 @@
 {% block title %}Server Error{% endblock %}
 
 {% block content %}
-<h1>Ooops!!! 500</h1>
-
-<h3>Looks like something went wrong!</h3>
-
-<p>We track these errors automatically, but if the problem persists feel free to contact us. In the meantime, try refreshing.</p>
+    <div class="Error">
+        <a class="Error-back" onclick="history.back()">
+            <i class="fa fa-chevron-left"></i>
+        </a>
+        <div class="Error-content">
+            <img src="/static/default/img/error/404_icon.svg">
+            <h1>500</h1>
+            <p>Server Error</p>
+            <p>X|</p>
+        </div>
+    </div>
 {% endblock content %}
 
 
