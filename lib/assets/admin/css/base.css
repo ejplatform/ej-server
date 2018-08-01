@@ -104,8 +104,7 @@ body {
     font-weight: bold;
     text-transform: uppercase;
     color: #052B47;
-    /* position: relative; */
-    /* top: 0px; */
+
 }
 
 .changelink {
@@ -114,16 +113,7 @@ body {
     font-weight: bold;
     text-transform: uppercase;
     color: #052B47;
-    /* position: relative; */
-    /* top: 12px; */
 
-}
-
-#content-main >div >table >tbody >tr >td:first-of-type {
-    position: relative;
-    left: 96px;
-    top: -10px;
-    padding: 0;
 
 }
 
@@ -133,11 +123,6 @@ body {
     width: 90px;
     text-align: right;
     background-position: 20%;
-}
-
-#content-main >div >table >tbody >tr >td:last-of-type {
-    position: relative;
-    top: 10px;
 }
 
 #content-main >div >table >tbody >tr >td:last-of-type > a {
