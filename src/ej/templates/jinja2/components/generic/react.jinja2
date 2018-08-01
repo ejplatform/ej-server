@@ -3,10 +3,9 @@
  #---------------------------------------------------------------------------#}
 
 {% macro react_component(react_component_name, fallback='', javascript_enabled='', json_params='{}') %}
-
     <div class="ReactComponent">
         {{ fallback }}
-    
+
         {# Commenting until API works
         {% if javascript_enabled != 'true' %}
             <noscript>
@@ -31,7 +30,6 @@
             }
         </span>
         #}
-
     </div>
 
 {% endmacro %}

@@ -10,6 +10,7 @@ from jinja2 import Environment, StrictUndefined, contextfunction
 from markdown import markdown
 from markupsafe import Markup
 
+import hyperpython.integrations.jinja2
 from ej_configurations import social_icons, fragment
 from hyperpython.components import render
 from . import components
@@ -23,7 +24,7 @@ def environment(**options):
     options.pop('debug', None)
     options.setdefault('trim_blocks', True)
     options.setdefault('lstrip_blocks', True)
-    options.setdefault('undefined', StrictUndefined)
+    options['undefined'] = StrictUndefined
     env = Environment(**options)
     theme = 'default'
     if 'THEME' in os.environ:
@@ -57,6 +58,7 @@ def environment(**options):
         markdown=lambda x: Markup(markdown(x)),
         pc=format_percent,
         salt=salt,
+        **hyperpython.integrations.jinja2.filters,
     )
     env.install_gettext_translations(translation, newstyle=True)
     return env
