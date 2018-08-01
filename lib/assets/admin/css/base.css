@@ -53,6 +53,8 @@ body {
     border-radius: 14px;
     padding: 10px;
     text-decoration: none;
+    width: 85vw;
+    margin: 0 auto;
 }
 
 #content-main >div >table >caption >a {
@@ -74,8 +76,13 @@ body {
     border-bottom: 1px solid #C4F2F4;
 }
 
+#content-main >div >table >tbody >tr:last-of-type {
+    border-bottom: none;
+} 
+
 #content-main >div >table >tbody >tr >th {
-    padding: 10px !important;
+    padding: 15px !important;
+    text-align: left;
 }
 
 #content-main >div >table >tbody >tr >th >a {
@@ -87,6 +94,8 @@ body {
 
 #content-main >div >table {
     padding: 0 0 30px 0;
+    margin: 0 auto;
+    width: 85vw;
 }
 
 .addlink {
@@ -112,11 +121,29 @@ body {
 
 #content-main >div >table >tbody >tr >td:first-of-type {
     position: relative;
-    left: 67px;
-    top: -7px;
+    left: 96px;
+    top: -10px;
+    padding: 0;
+
+}
+
+#content-main >div >table >tbody >tr >td:first-of-type > a { 
+    background-image: url(/static/default/img/icons/icon_add.svg);
+    background-repeat: no-repeat;
+    width: 90px;
+    text-align: right;
+    background-position: 20%;
 }
 
 #content-main >div >table >tbody >tr >td:last-of-type {
     position: relative;
     top: 10px;
+}
+
+#content-main >div >table >tbody >tr >td:last-of-type > a {
+    background-image: url(/static/default/img/icons/icon_fill.svg);
+    background-repeat: no-repeat;
+    width: 90px;
+    text-align: right;
+    background-position: 20%;
 }
