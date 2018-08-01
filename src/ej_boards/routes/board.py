@@ -37,6 +37,14 @@ def create(request):
     }
 
 
+@urlpatterns.route('', template='ej_boards/list.jinja2')
+def board_list(request):
+    user = request.user
+    return {
+        'boards': user.boards.all()
+    }
+
+
 # @urlpatterns.route(board_url)
 # def detail(request, board, conversation):
 #     return {
