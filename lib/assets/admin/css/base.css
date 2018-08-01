@@ -1,0 +1,102 @@
+body {
+    font-family: 'Raleway', 'Patua One';
+    margin: 0;
+}
+
+#container {
+    max-width: 100vw;
+}
+
+#header {
+    background-color: #C4F2F4;
+    max-width: 100vw;
+}
+
+#site-name >a {
+    font-size: 18px;
+    font-family: 'Patua One';
+    color: #30BFD3;
+    text-decoration: none;
+}
+
+#user-tools {
+    color: #052B47;
+    font-size: 12px;
+}
+
+#user-tools >a {
+    color: #052B47;
+    font-size: 12px;
+    text-decoration: none;
+}
+
+#content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#content >h1{
+    color: #052B47;
+    font-size: 24px;
+    font-family: 'Patua One';
+}
+
+#content-main >div >table >caption {
+    background-color: #30BFD3;
+    border-radius: 14px;
+    padding: 10px;
+    text-decoration: none;
+}
+
+#content-main >div >table >caption >a {
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: #30BFD3;
+    border-radius: 14px;
+    text-decoration: none;
+    display: flex;
+    margin-left: 3px;
+}
+
+#content-main >div >table {
+    border-collapse: collapse;
+}
+
+#content-main >div >table >tbody >tr {
+    border-bottom: 1px solid #C4F2F4;
+}
+
+#content-main >div >table >tbody >tr >th >a {
+    text-decoration: none;
+    color: #052B47;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+#content-main >div >table {
+    padding: 0 0 30px 0;
+}
+
+.addlink {
+    text-decoration: none;
+    font-size: 10px !important;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #052B47;
+    /* position: relative; */
+    /* top: 0px; */
+}
+
+.changelink {
+    text-decoration: none;
+    font-size: 10px !important;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #052B47;
+    /* position: relative;
+    top: 20px; */
+
+}
