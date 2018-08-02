@@ -76,7 +76,7 @@ class ChannelViewSet(viewsets.ViewSet):
         data = request.data
         user = User.objects.get(id=pk)
         profile = user.profile
-        settings = Setting.objects.get(profile=profile)
+        settings, created = Setting.objects.get_or_create(profile=instance, owner_id=profile.id)
         channel_admin = models.Channel.objects.get(sort="admin")
         channel_mission = models.Channel.objects.get(sort="mission")
         channel_trophy = models.Channel.objects.filter(owner=user, sort="trophy").count()
