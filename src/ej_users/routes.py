@@ -148,9 +148,10 @@ def clean_cookies():
     response.delete_cookie('csrftoken')
     return response
 
-# user notifications route
-@urlpatterns.route('notifications/')
-def user_notifications(request):
-    notifications = Notification.objects.all()
-    print(notifications)
-    print("iuoeuioeuoieuioeouieouieiou")
+@urlpatterns.get('check-token', csrf=False)
+def check_token(request):
+    token_to_validate = request.META['HTTP_AUTHORIZATION'].split(' ')[1]
+    token = Token.objects.filter(key=token_to_validate)
+    if (len(token) > 0):
+        return JsonResponse({"expired": False})
+    return JsonResponse({"expired": True})
