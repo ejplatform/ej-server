@@ -93,6 +93,8 @@ class Conf(locales.brazil(),
     #     'REGISTER_SERIALIZER': 'ej_users.serializers.RegistrationSerializer'
     # }
 
+      
+
 Conf.save_settings(globals())
 
 # TODO: Fix this later in boogie configuration stack
@@ -114,7 +116,13 @@ if ENVIRONMENT == 'local':
     X_FRAME_OPTIONS = 'ALLOW-FROM http://localhost:3000'
 
     ACCOUNT_EMAIL_VERIFICATION = 'optional'
-    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+    
+    EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend'
+
+    ANYMAIL = {
+        "MAILGUN_API_KEY": ""
+    }
+    DEFAULT_FROM_EMAIL = "noreply@unidoscontraacorrupcao.org.br"
 
 if ENVIRONMENT == 'production':
     # Django CORS
@@ -135,10 +143,7 @@ if ENVIRONMENT == 'production':
     ACCOUNT_EMAIL_VERIFICATION = 'optional'
     EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend'
     MAILGUN_API_KEY = env('DJANGO_MAILGUN_API_KEY', default='')
-    MAILGUN_API_KEY = env('DJANGO_MAILGUN_API_KEY', default='')
     MAILGUN_SENDER_DOMAIN = ''
-    DEFAULT_FROM_EMAIL = env('DJANGO_DEFAULT_FROM_EMAIL',
-                             default='EJ <noreply@ejplatform.org>')
     EMAIL_SUBJECT_PREFIX = env('DJANGO_EMAIL_SUBJECT_PREFIX', default='[EJ]')
     SERVER_EMAIL = env('DJANGO_SERVER_EMAIL', default=DEFAULT_FROM_EMAIL)
 

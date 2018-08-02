@@ -4,6 +4,7 @@ from django.contrib import admin
 from django.urls import include, path
 from django.views import defaults as default_views
 from rest_framework.documentation import include_docs_urls
+from django.contrib.auth import views as auth_views
 
 from boogie.rest import rest_api
 from ej.fixes import unregister_admin
@@ -62,6 +63,7 @@ urlpatterns = [
 
     # TODO: Set a custom view and template for password reset in ej-user
     path('password/', include('django.contrib.auth.urls')),
+    path('reset-password/', include('django.contrib.auth.urls'), name='reset-password'),
 
     # Static files for the dev server
     *static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),
