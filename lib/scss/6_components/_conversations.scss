@@ -104,6 +104,7 @@ $conversation-card-button-border-radius: 30px !default;
 
 .ConversationCard {
     @include color($conversation-card-color, $conversation-card-text-color, $force: true);
+    background: var(--card-conversation-middle-background);
     align-self: stretch;
     box-sizing: border-box;
     border: $conversation-card-border;

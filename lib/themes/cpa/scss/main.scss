@@ -17,9 +17,9 @@ $white: #fff;
 
 // Components
 @import 'auth';
-@import 'home';
+// @import 'home';
 @import 'conversation';
-@import 'conversations';
+// @import 'conversations';
 // @import 'profile';
 // @import 'layout';
 
@@ -78,9 +78,9 @@ $white: #fff;
 
     // Card Conversation
     --card-conversation-bottom-background:  url(/static/cpa/img/bg.svg) bottom center no-repeat;
-    --card-conversation-top-background: #30BEC0;
-     //FIXME add middle
-     --card-conversation-border-radius: 10px;
+    --card-conversation-middle-background: #30c0d3;
+    --card-conversation-top-background: #30c0d3;
+    --card-conversation-border-radius: 10px;
 
     // Conversation
     --conversation-top-background: #D4F7F5;
@@ -104,7 +104,7 @@ $white: #fff;
     --conversation-comment-background-color: #30BEC0;
     --conversation-comment-title-color: white;
     --conversation-comment-border-radius: 4px;
-    
+
     // Conversation: comment form
     --conversation-comment-form-background-color: white;
     --conversation-comment-form-title-color: #C6027B;
