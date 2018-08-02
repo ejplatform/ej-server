@@ -390,7 +390,6 @@ $conversation-card-button-border-radius: 30px !default;
 
         h1 {
             font-family: 'Patua One', sans-serif !important;
-            // color: $color-magenta !important;
             font-size: 24px !important;
             letter-spacing: 1px;
             font-weight: 300 !important;
@@ -408,7 +407,7 @@ $conversation-card-button-border-radius: 30px !default;
     color: var(--conversation-comment-title-color);
 
     box-sizing: border-box;
-    border-radius: $block-elements-border-radius;
+    border-radius: var(--conversation-comment-border-radius);
     font-size: $font-size-h3;
     margin: 0 auto;
     max-width: $page-content-width-max;

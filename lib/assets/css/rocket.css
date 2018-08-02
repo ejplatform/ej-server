@@ -78,6 +78,7 @@
   --conversation-vote-disagree-color: #f13c20;
   --conversation-comment-background-color: #30c0d3;
   --conversation-comment-title-color: white;
+  --conversation-comment-border-radius: 56px;
   --conversation-comment-form-background-color: #C4F2F4;
   --conversation-comment-form-title-color: #30c0d3;
   --conversation-comment-form-text-color: #042049;
