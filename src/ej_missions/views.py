@@ -193,14 +193,17 @@ class MissionViewSet(viewsets.ViewSet):
                 return Response({"cid": first_conversation.id,
                                  "comments_count": comments_count })
 
+            next_conversation = None
             for m in mission_conversations:
                 if m.id > last_conversation.id:
                     next_conversation = m
                     break
 
-            user_conversations.conversations.add(next_conversation)
-            user_conversations.last_viewed_conversation += 1
-            user_conversations.save()
-            comments_count = len(next_conversation.comments.exclude(votes__author=uid))
-            return Response({"cid": next_conversation.id,
-                             "comments_count": comments_count})
+            if (next_conversation):
+                user_conversations.conversations.add(next_conversation)
+                user_conversations.last_viewed_conversation += 1
+                user_conversations.save()
+                comments_count = len(next_conversation.comments.exclude(votes__author=uid))
+                return Response({"cid": next_conversation.id,
+                                "comments_count": comments_count})
+            return Response({})
