@@ -18,7 +18,6 @@ $nav-menu-ul-padding: 0 !default;
 
 // Element
 .NavMenu {
-    @include color($nav-menu-color, $nav-menu-color-text);
     @include size($nav-menu-width, 100%);
 
     min-height: 100vh;
@@ -38,13 +37,6 @@ $nav-menu-ul-padding: 0 !default;
     em {
         font-weight: bold;
         font-style: normal;
-    }
-
-    a,
-    a:hover,
-    a:active,
-    button {
-        color: $nav-menu-color-text;
     }
 
     button {

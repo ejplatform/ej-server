@@ -63,6 +63,7 @@
   --navigation-bottom-icon-profile: "";
   --card-conversation-top-background: #C4F2F4;
   --card-conversation-bottom-background: url(/static/default/img/icons/bg.png);
+  --card-conversation-border-radius: 50%;
   --conversation-top-background: #C4F2F4;
   --conversation-tag-color: #042049;
   --conversation-middle-background: #C4F2F4;
@@ -70,13 +71,18 @@
   --conversation-info-title: #FF3D72;
   --conversation-info-content: #042049;
   --conversation-vote-font-size: 13px;
+  --conversation-vote-circle-size: 21px;
+  --conversation-vote-circle-spacing: 7px;
   --conversation-vote-agree-color: #22b35c;
   --conversation-vote-skip-color: #30c0d3;
   --conversation-vote-disagree-color: #f13c20;
   --conversation-comment-background-color: #30c0d3;
   --conversation-comment-title-color: white;
-  --conversation-comment-textarea-border: 2px solid #30c0d3;
-  --conversation-comment-button-border-radius: 50%; }
+  --conversation-comment-form-background-color: #C4F2F4;
+  --conversation-comment-form-title-color: #30c0d3;
+  --conversation-comment-form-text-color: #042049;
+  --conversation-comment-button-border-radius: 30px;
+  --conversation-comment-button-background: #30c0d3; }
 
 /*
  ALIASES

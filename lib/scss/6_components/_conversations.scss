@@ -107,7 +107,7 @@ $conversation-card-button-border-radius: 30px !default;
     align-self: stretch;
     box-sizing: border-box;
     border: $conversation-card-border;
-    border-radius: $conversation-card-border-radius;
+    border-radius: var(--card-conversation-border-radius);
     flex-grow: 1;
     margin: 0;
     margin-bottom: $spacing-unit;
@@ -404,20 +404,19 @@ $conversation-card-button-border-radius: 30px !default;
 }
 
 .Comment {
-    // @include color('primary');
     background-color: var(--conversation-comment-background-color);
     color: var(--conversation-comment-title-color);
 
     box-sizing: border-box;
     border-radius: $block-elements-border-radius;
     font-size: $font-size-h3;
-    padding: $spacing-unit;
     margin: 0 auto;
     max-width: $page-content-width-max;
     min-height: 250px !important;
     width: 100% !important;
     z-index: 3;
     position: relative;
+    
 
     &-counter {
         text-align: center;
@@ -428,7 +427,7 @@ $conversation-card-button-border-radius: 30px !default;
 
     i.fa {
         background: $color-primary-text;
-        border: 2px solid $color-primary-text;
+        border: 2px solid #fff;
         border-radius: $spacing-unit-large;
         padding: $spacing-unit-tiny;
     }
@@ -459,25 +458,65 @@ $conversation-card-button-border-radius: 30px !default;
                 flex-grow: 1;
 
                 i.fa {
-                    color: $color-primary;
-                    background: $color-primary-text;
-                    height: $conversation-button-size;
-                    width: $conversation-button-size;
+                    background: #fff;
+                    height: var(--conversation-vote-circle-size);
+                    width: var(--conversation-vote-circle-size);
+                    padding: var(--conversation-vote-circle-spacing);
+                    cursor: pointer;
+                }
+                &.voteAgree{
+                    &:active {
+                        color: var(--conversation-vote-agree-color);;
+                    }
+                    i.fa {
+                        color: var(--conversation-vote-agree-color);
+                        &:hover {
+                            background: var(--conversation-vote-agree-color);
+                            color: #fff;
+                        }
+                    }
+                    
+                }
+                &.voteSkip{
+                    &:active {
+                        color: var(--conversation-vote-skip-color);;
+                    }
+                    i.fa {
+                        color: var(--conversation-vote-skip-color);
+                        &:hover {
+                            background: var(--conversation-vote-skip-color);
+                            color: #fff;
+                        }
+                    }
+                    
+                }
+                &.voteDisagree{
+                    &:active {
+                        color: var(--conversation-vote-disagree-color);;
+                    }
+                    i.fa {
+                        color: var(--conversation-vote-disagree-color);
+                        &:hover {
+                            background: var(--conversation-vote-disagree-color);
+                            color: #fff;
+                        }
+                    }
+                    
                 }
 
             }
 
-            li:first-child i.fa {
-                color: var(--conversation-vote-agree-color);
-                &:hover {
-                    background: var(--conversation-vote-agree-color);
-                    color: #fff;
-                }
-            }
+            // li:first-child i.fa {
+            //     color: var(--conversation-vote-agree-color);
+            //     &:hover {
+            //         background: var(--conversation-vote-agree-color);
+            //         color: #fff;
+            //     }
+            // }
 
-            li:last-child i.fa {
-                color: $color-role-error;
-            }
+            // li:last-child i.fa {
+            //     color: $color-role-error;
+            // }
         }
     }
 
@@ -486,13 +525,15 @@ $conversation-card-button-border-radius: 30px !default;
         i.fa {
             color: $color-accent;
             margin-right: $spacing-unit-small;
+            background: #fff;
         }
     }
 }
 
 .CommentForm {
     text-align: center;
-    background: $color-blue-nav;
+    // background: $color-blue-nav;
+    background: var(--conversation-comment-form-background-color);
     margin-top: -60px;
     border-radius: 0 0 56px 56px;
     z-index: 2;
@@ -503,11 +544,13 @@ $conversation-card-button-border-radius: 30px !default;
     h1 {
         font-size: $font-size-h3;
         margin: $spacing-unit-tiny 0;
-        color: $color-primary !important;
+        // color: $color-primary !important;
         padding-top: 100px;
+        color: var(--conversation-comment-form-title-color);
     }
     p {
         margin: $spacing-unit-tiny 0;
+        color: var(--conversation-comment-form-text-color);
     }
 
     textarea {
@@ -521,9 +564,9 @@ $conversation-card-button-border-radius: 30px !default;
     }
 
     input[type=submit] {
-        border-radius: $conversation-card-button-border-radius;
+        border-radius: var(--conversation-comment-button-border-radius);
         color: #fff;
-        background: $color-primary;
+        background: var(--conversation-comment-button-background);
         border: 0;
         padding: $spacing-unit-small $spacing-unit;
         font-size: 14px;

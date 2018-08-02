@@ -80,6 +80,7 @@ $white: #fff;
     --card-conversation-bottom-background:  url(/static/cpa/img/bg.svg) bottom center no-repeat;
     --card-conversation-top-background: #30BEC0;
      //FIXME add middle
+     --card-conversation-border-radius: 10px;
 
     // Conversation
     --conversation-top-background: #D4F7F5;
@@ -93,6 +94,8 @@ $white: #fff;
 
     // Conversation: vote
     --conversation-vote-font-size: 18px;
+    --conversation-vote-circle-size: 32px;
+    --conversation-vote-circle-spacing: 9px 6px 0 7px;
     --conversation-vote-agree-color: #3F1B53;
     --conversation-vote-skip-color: #30BEC0;
     --conversation-vote-disagree-color: #C6027B;
@@ -101,13 +104,10 @@ $white: #fff;
     --conversation-comment-background-color: #30BEC0;
     --conversation-comment-title-color: white;
 
-    --conversation-comment-textarea-border: 2px solid #30c0d3;
-    --conversation-comment-button-border-radius: 50%;
-     
-
     // Conversation: comment form
-    // --conversation-comment-background-color: white;
-    // --conversation-comment-title-color: #C6027B;
-    // --conversation-comment-textarea-border:  2px solid #30C0D3;
-    // --conversation-comment-button-border-radius: 10px;
+    --conversation-comment-form-background-color: white;
+    --conversation-comment-form-title-color: #C6027B;
+    --conversation-comment-form-text-color: #052B47;
+    --conversation-comment-button-border-radius: 10px;
+    --conversation-comment-button-background: #C6027B;
 }
