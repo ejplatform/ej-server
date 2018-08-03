@@ -89,6 +89,14 @@ class Conf(locales.brazil(),
     }
 
     DEBUG = True
+    AUTH_PASSWORD_VALIDATORS = [
+        {
+            'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+            'OPTIONS': {
+                'min_length': 4,
+            }
+        },
+    ]
     # REST_AUTH_REGISTER_SERIALIZERS = {
     #     'REGISTER_SERIALIZER': 'ej_users.serializers.RegistrationSerializer'
     # }
