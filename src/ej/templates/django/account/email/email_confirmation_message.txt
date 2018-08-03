@@ -1,8 +1,10 @@
-{% load account %}{% user_display user as user_display %}{% load i18n %}{% autoescape off %}{% blocktrans with site_name=current_site.name site_domain=current_site.domain %}Boas vindas do {{ site_name }}!
+{% load i18n %}
 
-Você está recebendo essa mensagem por que o usuário {{ user_display }} se cadastrou com esse endereço de email.
+Saudações da unidos contra a corrupção!
 
-Pra confirmar que está tudo certo, vá até {{ activate_url }}
-{% endblocktrans %}{% endautoescape %}
-{% blocktrans with site_name=current_site.name site_domain=current_site.domain %}Um obrigado do {{ site_name }}!
-ejplatform.org{% endblocktrans %}
+Você está recebendo essa mensagem porque se cadastrou no aplicativo de mobilização da campanha.
+
+https://app.unidoscontraacorrupcao.org.br
+
+Obrigado por participar da mobilização em prol do maior pacote anticorrupção já feito no mundo!
+
