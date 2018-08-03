@@ -25,7 +25,6 @@ class User(AbstractUser):
     display_name = models.CharField(
         _('Display name'),
         max_length=140,
-        unique=True,
         help_text=_(
             'A randomly generated name used to identify each user.'
         ),
