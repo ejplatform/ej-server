@@ -56,7 +56,7 @@ def update_automatic_trophies(user):
     def filter_trophies(user_trophy):
         return (user_trophy.trophy.key == req.key)
     automatic_trophies = Trophy.objects.filter(complete_on_required_satisfied=True)
-    user_trophies = UserTrophy.objects.filter(percentage=100).all()
+    user_trophies = UserTrophy.objects.filter(percentage=100, user=user).all()
     for trophy in automatic_trophies:
         filtered_trophies = []
         required_trophies = trophy.required_trophies.all()
