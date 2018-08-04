@@ -1,4 +1,4 @@
 {% load i18n %}
 {% autoescape off %}
-{% blocktrans %}Bem vindo ao besouro{% endblocktrans %}
+{% blocktrans %}Bem vindo ao unidos contra a corrupção{% endblocktrans %}
 {% endautoescape %}
