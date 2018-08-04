@@ -42,6 +42,7 @@ def environment(**options):
 
         # Platform functions
         social_icons=social_icons,
+        fragment=fragment,
         service_worker=getattr(settings, 'SERVICE_WORKER', False),
         current_theme=theme,
         context=context,

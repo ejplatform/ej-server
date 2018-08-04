@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 import contextlib
 import os
-import sys
 import subprocess
+import sys
+from importlib.util import find_spec
 from pathlib import Path
 
 python = sys.executable
@@ -44,7 +45,7 @@ def run(cmd):
 
 
 def main():
-    print('Updating volatile dependencies'.upper())
+    print('Updating volatile dependencies')
     print('Dependencies are stored in the local/vendor/* folder. Remove this\n'
           'folder if you need reset your volatile dependencies\n')
     ensure_dirs(LOCAL, VENDOR)
@@ -61,6 +62,8 @@ def main():
             print('\nCloning repository')
             with chdir(VENDOR):
                 run(f'git clone {uri}')
+
+        if not find_spec(mod):
             with chdir(path):
                 run(f'{python} setup.py develop')
 

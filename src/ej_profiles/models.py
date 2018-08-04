@@ -5,11 +5,12 @@ from django.contrib.auth import get_user_model
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _, ugettext as __
-from sidekick import delegate_to
+from rest_framework.authtoken.models import Token
+
 from boogie.fields import EnumField
 from boogie.rest import rest_api
+from sidekick import delegate_to
 from .choices import Race, Gender
-from rest_framework.authtoken.models import Token
 
 User = get_user_model()
 
@@ -91,7 +92,8 @@ class Profile(models.Model):
         registered profile fields.
         """
 
-        fields = ['city', 'country', 'occupation', 'age', 'gender', 'race', 'political_activity', 'biography']
+        fields = ['city', 'country', 'occupation', 'age', 'gender', 'race',
+                  'political_activity', 'biography']
         field_map = {field.name: field for field in self._meta.fields}
         result = []
         for field in fields:
@@ -151,7 +153,7 @@ def avatar_fallback(theme):
     Return fallback image URL for profile
     """
     if theme is None:
-        theme='default'
+        theme = 'default'
 
     return "/static/{0}/img/logo/avatar_default.svg".format(theme)
 
