@@ -1,4 +1,5 @@
 Deploy
 ========
 
-This is where you describe how the project is deployed in production.
+EJ relies on Docker and some kind of Docker orchestration technology for its
+deployment process.
