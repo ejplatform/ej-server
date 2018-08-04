@@ -34,14 +34,6 @@ def start(request):
     }
 
 
-@urlpatterns.route('clusters/')
-def clusters(request):
-    ctx = dict(
-        content_html='<h1>Error</h1><p>Not implemented yet!</p>'
-    )
-    return render(request, 'base.jinja2', ctx)
-
-
 @urlpatterns.route('menu/')
 def menu(request):
     return {
@@ -55,10 +47,3 @@ def menu(request):
 @urlpatterns.route('sw.js')
 def service_worker(request):
     return render(request, 'js/sw.js', {}, content_type='application/javascript')
-
-
-#
-# Static pages
-#
-urlpatterns.route('comments/', name='comments', template='pages/comments.jinja2')(lambda: {})
-urlpatterns.route('notifications/', name='notifications', template='pages/notifications.jinja2')(lambda: {})
