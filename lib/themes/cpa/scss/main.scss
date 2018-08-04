@@ -1,22 +1,22 @@
-@import '../../../scss/0_constants/index';
-@import 'overrides';
+// @import '../../../scss/0_constants/index';
 @import '../../../scss/maindefault';
+// @import 'overrides';
 
-$blue-dark: #30BEC0;
+// $blue-dark: #30BEC0;
 // $blue-light: #D4F7F5;
-$blue-medium: #30C0D3;
-$grey-dark: #052B47;
-$green: #8EC73F;
-$pink: #C6027B;
-$purple: #3F1B53;
-$white: #fff;
+// $blue-medium: #30C0D3;
+// $grey-dark: #052B47;
+// $green: #8EC73F;
+// $pink: #C6027B;
+// $purple: #3F1B53;
+// $white: #fff;
 
 // // Sizes
 // $size-big: 46px;
 // $size-medium: 30px;
 
 // Components
-@import 'auth';
+// @import 'auth';
 // @import 'home';
 // @import 'conversation';
 // @import 'conversations';
@@ -25,22 +25,34 @@ $white: #fff;
 
 
 :root {
-    --button-background-primary: #C6027B;
-    --button-background-secondary: #C6027B;
-    --button-background-tertiary: #8EC73F;
-    --button-border-radius:  8px;
+    // Default buttons
+    --button-border-radius-default:  8px;
 
     --font-color-primary: #3F1B53;
     --font-color-secondary: #D4F7F5;
 
     //Profile
-    --profile-font-color-primary: #30BEC0;
+    --profile-font-color-primary: #042049;
+    --profile-font-color-secondary: #6d2ea7;
+    --profile-button-background-color: #FF3E72;
+    --profile-background-color: #30BFD3;
 
     // Login
     --login-icon-border: 10px solid #3F1B53;
-    // --login-title-color: #FF3D72;
+    --login-icon-scale: scale(1.2);
+    --login-icon-padding: 25px 0px 0px 0px;
     --login-fields-border: 1px solid #30c0d3;
     --login-fields-border-radius: 28px;
+    --login-button-login-size: 65%;
+    --login-button-login-background: #8EC73F;
+    --login-button-register-size: 60%;
+
+    // Social
+    --social-buttons-display: inline;
+    --social-buttons-size: 15px;
+    --social-buttons-border: 1px solid #30c0d3;
+    --social-buttons-color: #111;
+    --social-buttons-background-color: #fff;;
 
     //Header
     --header-background-color: #30BEC0;
@@ -66,7 +78,7 @@ $white: #fff;
     --home-start-now-display: none;
     
     // Footer info
-    --footer-info-display: none;
+    // --footer-info-display: none;
 
     // Footer
     --footer-background-color: #D4F7F5;
@@ -83,6 +95,7 @@ $white: #fff;
     --card-conversation-bottom-background:  url(/static/cpa/img/bg.svg) bottom center no-repeat;
     --card-conversation-middle-background: #30c0d3;
     --card-conversation-top-background: #30c0d3;
+    --card-conversation-button-background: #C6027B;
     --card-conversation-border-radius: 10px;
 
     // Conversation

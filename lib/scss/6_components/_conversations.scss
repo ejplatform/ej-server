@@ -196,7 +196,7 @@ $conversation-card-button-border-radius: 30px !default;
 
     &-actions {
         .Button[primary] {
-            @include color(var(--button-background-primary), $conversation-card-button-color-text);
+            background: var(--card-conversation-button-background);
             font-size: $font-size-small;
             padding-top: $button-vpadding * 2;
             padding-bottom: $button-vpadding * 2;

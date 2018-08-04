@@ -1,1 +1,65 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 106.46 120.92"><defs><style>.cls-1{fill:#8ec73f;}</style></defs><title>Asset 3</title><g id="Layer_2" data-name="Layer 2"><g id="Layer_1-2" data-name="Layer 1"><path class="cls-1" d="M81.05,53.1H71a29.65,29.65,0,1,0-36.17,0H25.37c-14,0-25.37,8-25.37,38.05V101a81.66,81.66,0,0,0,106.46.29c0-4.09-.07-7.84,0-10.18C106.79,63.14,95.06,53.1,81.05,53.1Z"/></g></g></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   viewBox="0 0 106.46 120.92"
+   version="1.1"
+   id="svg12"
+   sodipodi:docname="ej-cat.svg"
+   inkscape:version="0.92.2 (5c3e80d, 2017-08-06)">
+  <metadata
+     id="metadata16">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1853"
+     inkscape:window-height="1025"
+     id="namedview14"
+     showgrid="false"
+     inkscape:zoom="1.9517036"
+     inkscape:cx="53.23"
+     inkscape:cy="71.178473"
+     inkscape:window-x="67"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg12" />
+  <defs
+     id="defs4">
+    <style
+       id="style2">.cls-1{fill:#8ec73f;}</style>
+  </defs>
+  <title
+     id="title6">Asset 3</title>
+  <g
+     id="Layer_2"
+     data-name="Layer 2">
+    <g
+       id="Layer_1-2"
+       data-name="Layer 1">
+      <path
+         class="cls-1"
+         d="M81.05,53.1H71a29.65,29.65,0,1,0-36.17,0H25.37c-14,0-25.37,8-25.37,38.05V101a81.66,81.66,0,0,0,106.46.29c0-4.09-.07-7.84,0-10.18C106.79,63.14,95.06,53.1,81.05,53.1Z"
+         id="path8" />
+    </g>
+  </g>
+</svg>

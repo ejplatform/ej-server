@@ -6,27 +6,38 @@
  
 :root {
     // Default buttons
-     --button-background-primary: rgba(4,32,73,1);
-     --button-background-secondary: rgba(48,192,211,1);
-     --button-background-tertiary: #FF3D72;
-     --button-border-radius:  56px;
+    --button-border-radius-default:  56px;
  
      --font-color-primary: #042049;
      --font-color-secondary: #30c0d3;
  
-     // Profile
-     --profile-font-color-primary: #30BFD3;
+    // Profile
+    --profile-font-color-primary: #30BFD3;
+    --profile-font-color-secondary: #042049;
+    --profile-button-background-color: #FF3E72;
+    --profile-background-color: #C4F2F4;
    
     // Login
     --login-icon-border: 10px solid #74b5b8;
-    //  --login-title-color: #C6027B;
+    --login-icon-scale: scale(1);
+    --login-icon-padding: 0px 0px 0px 0px;
     --login-fields-border: 1px solid #333;
     --login-fields-border-radius: 17px;
+    --login-button-login-size: inherit;
+    --login-button-login-background: #30c0d3;
+    --login-button-register-size: 10%;
+    
+    // Social
+    --social-buttons-display: none;
+    --social-buttons-border: 1px solid #30c0d3;
+    --social-buttons-size: 21px;
+    --social-buttons-color: #111;
+    --social-buttons-background-color: #fff;
 
-     // Header
-     --header-logo-size: 40px;
-     --header-background-color: white;
-     --header-font-color: #042049;
+    // Header
+    --header-logo-size: 40px;
+    --header-background-color: white;
+    --header-font-color: #042049;
  
      // Home: Banner
     --home-banner-title-font-family: "Patua One", sans-serif;
@@ -34,8 +45,8 @@
     --home-banner-button-background: #FF3D72;
 
     // Home: How It Works
-    --home-how-it-works-title-font-color: rgb(4, 32, 73);
-    --home-how-it-works-content-font-color: rgb(4, 32, 73);
+    --home-how-it-works-title-font-color: #042049;
+    --home-how-it-works-content-font-color: #042049;
     --home-how-it-works-background: #C4F2F4;
     --home-how-it-works-card-icon-background: #C4F2F4;
     --home-how-it-works-card-icon-person:  "\f1ae";
@@ -47,7 +58,7 @@
     --home-start-now-display: block;
 
     // Footer info
-    --footer-info-display: block;
+    // --footer-info-display: block;
 
     // Footer
     --footer-background-color: #C4F2F4;
@@ -64,7 +75,7 @@
     --card-conversation-top-background: #C4F2F4;
     --card-conversation-middle-background: #30c0d3;
     --card-conversation-bottom-background: url(/static/default/img/icons/bg.png);
-    
+    --card-conversation-button-background: #042049;
     --card-conversation-border-radius: 50%;
  
     // Conversation
