@@ -59,9 +59,9 @@ $header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.2) !default;
         height: $header-top-nav-height;
         min-width: $spacing-unit-large + $header-icon-size;
         padding: 0 $spacing-unit;
-        background-color: var(--header-background-color);
+        background-color: $header-background-color;
         a {
-            color: var(--header-font-color);
+            color: $header-font-color;
         }
         
     
@@ -74,7 +74,7 @@ $header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.2) !default;
 
         img {
             box-sizing: border-box;
-            height: var(--header-logo-size);
+            height: $header-logo-size;
             margin: 0;
             z-index: 100;
         }
@@ -99,7 +99,7 @@ $header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.2) !default;
             flex-flow: column;
             justify-content: center;
             width: 50%;
-            color: var(--navigation-bottom-font-color) !important;
+            color: $navigation-bottom-font-color !important;
 
             &:before {
                 font-family: 'Font Awesome\ 5 Free';
@@ -107,15 +107,15 @@ $header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.2) !default;
                 font-weight: 900;
             }
             &.conversations-link:before {
-                content: var(--navigation-bottom-icon-conversations);
+                content: $navigation-bottom-icon-conversations;
             }
         
             &.panel-link:before {
-               content: var(--navigation-bottom-icon-panel);
+               content: $navigation-bottom-icon-panel;
             }
         
             &.profile-link:before {
-                content: var(--navigation-bottom-icon-profile);
+                content: $navigation-bottom-icon-profile;
             }
         
             span {
@@ -127,7 +127,7 @@ $header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.2) !default;
             }
 
             &.panel-link {
-              display: var(--navigation-bottom-panel-display);
+              display: $navigation-bottom-panel-display;
             }
         }
     }

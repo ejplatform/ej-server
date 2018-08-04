@@ -225,7 +225,7 @@ $profile-arrow-size: $spacing-unit !default;
     }
 
     &-tabContent {
-        background: var(--profile-background-color);
+        background: $profile-background-color;
         text-align: left;
         border-radius: 0.7em;
     }
@@ -233,14 +233,14 @@ $profile-arrow-size: $spacing-unit !default;
     &-info {
         font-size: $font-size-h6;
         padding: $spacing-unit;
-        // display: var(--footer-info-display);
+        // display: $footer-info-display);
 
         .edit-button {
             margin-top: $spacing-unit;
             text-align: center;
             .Button {
                 text-transform: uppercase;
-                background-color: var(--profile-button-background-color);
+                background-color: $profile-button-background-color;
                 padding:  15px 25px 15px 25px;
             }
         }
@@ -255,7 +255,7 @@ $profile-arrow-size: $spacing-unit !default;
             padding: 0;
             li {
                 span {
-                    color: var(--profile-font-color-primary);
+                    color: $profile-font-color-primary;
                     font-weight: 600;
                     &.amount {
                         font-weight: 800;
@@ -288,11 +288,11 @@ $profile-arrow-size: $spacing-unit !default;
             padding: 0;
             .Button {
                 padding:  15px 25px 15px 25px;
-                background: var(--profile-button-background-color);
+                background: $profile-button-background-color;
             }
             li {
                 span {
-                    color: var(--profile-font-color-primary);
+                    color: $profile-font-color-primary;
                     font-weight: 600;
                     display: block;
                     margin-top: $spacing-unit-small;
@@ -314,7 +314,7 @@ $profile-arrow-size: $spacing-unit !default;
 
         dl {
             dt {
-                color: var(--profile-font-color-primary);
+                color: $profile-font-color-primary;
                 text-transform: lowercase;
                 font-weight: bold;
             }
@@ -322,7 +322,7 @@ $profile-arrow-size: $spacing-unit !default;
             dd {
                 font-size: $font-size-h5;
                 margin: 0 0 $spacing-unit-small 0;
-                color: var(--profile-font-color-secondary);
+                color: $profile-font-color-secondary;
             }
         }
 

@@ -26,27 +26,27 @@ $login-new-user-border: 1px solid $color-gray-dark;
         height: 40px;
     }
     input{
-        border: var(--login-fields-border);
-        border-radius: var(--login-fields-border-radius);
+        border: $login-fields-border;
+        border-radius: $login-fields-border-radius;
     }
 
     input[type=submit] {
         display: block;
         margin-top: $spacing-unit;
         border: none;
-        width: var(--login-button-login-size); 
-        background: var(--login-button-login-background);
+        width: $login-button-login-size; 
+        background: $login-button-login-background;
     }
 
     a[class=Button] {
         border-radius: 28px;
-        width: var(--login-button-register-size);
+        width: $login-button-register-size;
         min-width: 200px;
         padding: 12px;
     }
 
     &-icon {
-        border: var(--login-icon-border);
+        border: $login-icon-border;
         border-radius: 50%;
         color: $login-icon-color;
         height: $login-icon-size;
@@ -61,8 +61,8 @@ $login-new-user-border: 1px solid $color-gray-dark;
         img{
             position: relative;
             z-index: -1;
-            padding: var(--login-icon-padding);
-            transform: var(--login-icon-scale);
+            padding: $login-icon-padding;
+            transform: $login-icon-scale;
         }
 
     }
@@ -72,7 +72,7 @@ $login-new-user-border: 1px solid $color-gray-dark;
     }
 
     &-socialButtons {
-        display: var(--social-buttons-display);
+        display: $social-buttons-display;
         div {
             display: flex;
             flex-direction: row;
@@ -81,11 +81,11 @@ $login-new-user-border: 1px solid $color-gray-dark;
 
         i {
 
-            font-size: var(--social-buttons-size);
-            color: var(--social-buttons-color);
+            font-size: $social-buttons-size;
+            color: $social-buttons-color;
             margin: 10px;
-            border: var(--social-buttons-border);
-            background: var(--social-buttons-background-color);
+            border: $social-buttons-border;
+            background: $social-buttons-background-color;
             border-radius: 50%;
             width: 40px;
             height: 40px;

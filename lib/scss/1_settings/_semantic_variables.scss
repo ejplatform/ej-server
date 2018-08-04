@@ -3,117 +3,113 @@
  Semantic Variables
  =========================================================================== 
 */
- $home-how-it-works-background: blue !default;
+//  $home-how-it-works-background: blue !default  !default;
 
-:root {
-    // Default buttons
-    --button-border-radius-default:  56px;
+  $button-border-radius-default:  56px  !default;
  
-    // Profile
-    --profile-font-color-primary: #30BFD3;
-    --profile-font-color-secondary: #042049;
-    --profile-button-background-color: #FF3E72;
-    --profile-background-color: #C4F2F4;
+ // Profile
+  $profile-font-color-primary: #30BFD3  !default;
+  $profile-font-color-secondary: #042049  !default;
+  $profile-button-background-color: #FF3E72  !default;
+  $profile-background-color: #C4F2F4  !default;
+
+ // Login
+  $login-icon-border: 10px solid #74b5b8  !default;
+  $login-icon-scale: scale(1)  !default;
+  $login-icon-padding: 0px 0px 0px 0px  !default;
+  $login-fields-border: 1px solid #333  !default;
+  $login-fields-border-radius: 17px  !default;
+  $login-button-login-size: inherit  !default;
+  $login-button-login-background: #30c0d3  !default;
+  $login-button-register-size: 10%  !default;
+ 
+ // Social
+  $social-buttons-display: none  !default;
+  $social-buttons-border: 1px solid #30c0d3  !default;
+  $social-buttons-size: 21px  !default;
+  $social-buttons-color: #111  !default;
+  $social-buttons-background-color: #fff  !default;
+
+ // Header
+  $header-logo-size: 40px  !default;
+  $header-background-color: white  !default;
+  $header-font-color: #042049  !default;
+
+  // Home: Banner
+  $home-banner-title-font-family: "Patua One", sans-serif  !default;
+  $home-banner-title-font-color: #042049  !default;
+  $home-banner-button-background: #FF3D72  !default;
+
+ // Home: How It Works
+  $home-how-it-works-title-font-color: #042049  !default;
+  $home-how-it-works-content-font-color: #042049  !default;
+  $home-how-it-works-background: #C4F2F4  !default;
+  $home-how-it-works-card-icon-background: #C4F2F4  !default;
+  $home-how-it-works-card-icon-person:  "\f1ae"  !default;
+  $home-how-it-works-card-icon-conversation: "\f086"  !default;
+  $home-how-it-works-card-title-font-color: #042049  !default;
+  $home-how-it-works-card-content-font-color: #1d365b  !default;
+
+ // Home: StartNow
+  $home-start-now-display: block  !default;
+
+ // Footer info
+ //  $footer-info-display: block  !default;
+
+ // Footer
+  $footer-background-color: #C4F2F4  !default;
+  $footer-font-color: #fff  !default;
+
+ // Navigation bottom
+  $navigation-bottom-font-color: #30BEC0  !default;
+  $navigation-bottom-panel-display: none  !default;
+  $navigation-bottom-icon-conversations: ""  !default;
+  $navigation-bottom-icon-panel:  ""  !default;
+  $navigation-bottom-icon-profile: ""  !default;
    
-    // Login
-    --login-icon-border: 10px solid #74b5b8;
-    --login-icon-scale: scale(1);
-    --login-icon-padding: 0px 0px 0px 0px;
-    --login-fields-border: 1px solid #333;
-    --login-fields-border-radius: 17px;
-    --login-button-login-size: inherit;
-    --login-button-login-background: #30c0d3;
-    --login-button-register-size: 10%;
-    
-    // Social
-    --social-buttons-display: none;
-    --social-buttons-border: 1px solid #30c0d3;
-    --social-buttons-size: 21px;
-    --social-buttons-color: #111;
-    --social-buttons-background-color: #fff;
+ // Card Conversation
+  $card-conversation-top-background: #C4F2F4  !default;
+  $card-conversation-top-font-color: #30c0d3  !default;
+  $card-conversation-middle-background: #30c0d3  !default;
+  $card-conversation-bottom-background: url(/static/default/img/icons/bg.png)  !default;
+  $card-conversation-button-background: #042049  !default;
+  $card-conversation-border-radius: 50%  !default;
 
-    // Header
-    --header-logo-size: 40px;
-    --header-background-color: white;
-    --header-font-color: #042049;
- 
-     // Home: Banner
-    --home-banner-title-font-family: "Patua One", sans-serif;
-    --home-banner-title-font-color: #042049;
-    --home-banner-button-background: #FF3D72;
+ // Conversation
+  $conversation-top-background: #C4F2F4  !default;
+  $conversation-tag-color: #042049  !default;
+  $conversation-font-color: #042049  !default;
+  $conversation-middle-background: #C4F2F4  !default;
+  $conversation-bottom-border: 28px solid #C4F2F4  !default;
 
-    // Home: How It Works
-    --home-how-it-works-title-font-color: #042049;
-    --home-how-it-works-content-font-color: #042049;
-    --home-how-it-works-background: #C4F2F4;
-    --home-how-it-works-card-icon-background: #C4F2F4;
-    --home-how-it-works-card-icon-person:  "\f1ae";
-    --home-how-it-works-card-icon-conversation: "\f086";
-    --home-how-it-works-card-title-font-color: #042049;
-    --home-how-it-works-card-content-font-color: #1d365b;
+ // Conversation: edit
+  $conversation-edit-action-cancel-border: 2px solid #052B47  !default;
+  $conversation-edit-action-cancel-background: #fff  !default;
+  $conversation-edit-action-cancel-font-color: #052B47  !default;
+  $conversation-edit-action-save-border: #052B47  !default;
+  $conversation-edit-action-save-background: #fff  !default;
+  $conversation-edit-action-save-font-color: #052B47  !default;
 
-    // Home: StartNow
-    --home-start-now-display: block;
+ // Conversation: info
+  $conversation-info-title: #FF3D72  !default;
+  $conversation-info-content: #042049  !default;
 
-    // Footer info
-    // --footer-info-display: block;
+ // Conversation: vote
+  $conversation-vote-font-size: 13px  !default;
+  $conversation-vote-circle-size: 21px  !default;
+  $conversation-vote-circle-spacing: 7px  !default;
+  $conversation-vote-agree-color: #22b35c  !default;
+  $conversation-vote-skip-color: #30c0d3  !default;
+  $conversation-vote-disagree-color: #f13c20  !default;
 
-    // Footer
-    --footer-background-color: #C4F2F4;
-    --footer-font-color: #fff;
+ // Conversation: comment
+  $conversation-comment-background-color: #30c0d3  !default;
+  $conversation-comment-title-color: white  !default;
+  $conversation-comment-border-radius: 56px  !default;
 
-    // Navigation bottom
-    --navigation-bottom-font-color: #30BEC0;
-    --navigation-bottom-panel-display: none;
-    --navigation-bottom-icon-conversations: "";
-    --navigation-bottom-icon-panel:  "";
-    --navigation-bottom-icon-profile: "";
-      
-    // Card Conversation
-    --card-conversation-top-background: #C4F2F4;
-    --card-conversation-top-font-color: #30c0d3;
-    --card-conversation-middle-background: #30c0d3;
-    --card-conversation-bottom-background: url(/static/default/img/icons/bg.png);
-    --card-conversation-button-background: #042049;
-    --card-conversation-border-radius: 50%;
- 
-    // Conversation
-    --conversation-top-background: #C4F2F4;
-    --conversation-tag-color: #042049;
-    --conversation-font-color: #042049;
-    --conversation-middle-background: #C4F2F4;
-    --conversation-bottom-border: 28px solid #C4F2F4;
-
-    // Conversation: edit
-    --conversation-edit-action-cancel-border: 2px solid #052B47;
-    --conversation-edit-action-cancel-background: #fff;
-    --conversation-edit-action-cancel-font-color: #052B47;
-    --conversation-edit-action-save-border: #052B47;
-    --conversation-edit-action-save-background: #fff;
-    --conversation-edit-action-save-font-color: #052B47;
-
-    // Conversation: info
-    --conversation-info-title: #FF3D72;
-    --conversation-info-content: #042049;
-
-    // Conversation: vote
-    --conversation-vote-font-size: 13px;
-    --conversation-vote-circle-size: 21px;
-    --conversation-vote-circle-spacing: 7px;
-    --conversation-vote-agree-color: #22b35c;
-    --conversation-vote-skip-color: #30c0d3;
-    --conversation-vote-disagree-color: #f13c20;
- 
-    // Conversation: comment
-    --conversation-comment-background-color: #30c0d3;
-    --conversation-comment-title-color: white;
-    --conversation-comment-border-radius: 56px;
-
-    // Conversation: comment form
-    --conversation-comment-form-background-color: #C4F2F4;
-    --conversation-comment-form-title-color: #30c0d3;
-    --conversation-comment-form-text-color: #042049;
-    --conversation-comment-button-border-radius: 30px;
-    --conversation-comment-button-background: #30c0d3;
-     
-   }
+ // Conversation: comment form
+  $conversation-comment-form-background-color: #C4F2F4  !default;
+  $conversation-comment-form-title-color: #30c0d3  !default;
+  $conversation-comment-form-text-color: #042049  !default;
+  $conversation-comment-button-border-radius: 30px  !default;
+  $conversation-comment-button-background: #30c0d3  !default;
