@@ -23,15 +23,21 @@ $login-new-user-border: 1px solid $color-gray-dark;
         display: block;
         margin-left: auto;
         margin-right: auto;
+        height: 50px;
+    }
+    input{
+        border: var(--login-fields-border);
+        border-radius: var(--login-fields-border-radius);
     }
 
     input[type=submit] {
         display: block;
         margin-top: $spacing-unit;
+        border: none;
     }
 
     &-icon {
-        border: $login-icon-border-width solid $login-icon-border-color;
+        border: var(--login-icon-border);
         border-radius: 50%;
         color: $login-icon-color;
         height: $login-icon-size;

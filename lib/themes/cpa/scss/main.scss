@@ -32,12 +32,15 @@ $white: #fff;
 
     --font-color-primary: #3F1B53;
     --font-color-secondary: #D4F7F5;
-    // --font-color-quaternary: #052B47;
-
-    // --font-size-x-large: 18px;
 
     //Profile
     --profile-font-color-primary: #30BEC0;
+
+    // Login
+    --login-icon-border: 10px solid #3F1B53;
+    // --login-title-color: #FF3D72;
+    --login-fields-border: 1px solid #30c0d3;
+    --login-fields-border-radius: 28px;
 
     //Header
     --header-background-color: #30BEC0;

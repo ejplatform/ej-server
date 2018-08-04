@@ -38,6 +38,9 @@
   --font-color-primary: #042049;
   --font-color-secondary: #30c0d3;
   --profile-font-color-primary: #30BFD3;
+  --login-icon-border: 10px solid #74b5b8;
+  --login-fields-border: 1px solid #333;
+  --login-fields-border-radius: 17px;
   --header-logo-size: 40px;
   --header-background-color: white;
   --header-font-color: #042049;

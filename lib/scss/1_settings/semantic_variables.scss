@@ -13,24 +13,27 @@
  
      --font-color-primary: #042049;
      --font-color-secondary: #30c0d3;
-    //  --font-color-quaternary: #042049;
  
-    //  --font-size-x-large: 13px;
- 
-     //Profile
+     // Profile
      --profile-font-color-primary: #30BFD3;
+   
+    // Login
+    --login-icon-border: 10px solid #74b5b8;
+    //  --login-title-color: #C6027B;
+    --login-fields-border: 1px solid #333;
+    --login-fields-border-radius: 17px;
 
      // Header
      --header-logo-size: 40px;
      --header-background-color: white;
      --header-font-color: #042049;
  
-     // Home Banner
+     // Home: Banner
     --home-banner-title-font-family: "Patua One", sans-serif;
     --home-banner-title-font-color: #042049;
     --home-banner-button-background: #FF3D72;
 
-    // Home How It Works
+    // Home: How It Works
     --home-how-it-works-title-font-color: rgb(4, 32, 73);
     --home-how-it-works-content-font-color: rgb(4, 32, 73);
     --home-how-it-works-background: #C4F2F4;
@@ -40,7 +43,7 @@
     --home-how-it-works-card-title-font-color: #042049;
     --home-how-it-works-card-content-font-color: #1d365b;
 
-    // Home StartNow
+    // Home: StartNow
     --home-start-now-display: block;
 
     // Footer info
@@ -50,7 +53,7 @@
     --footer-background-color: #C4F2F4;
     --footer-font-color: #fff;
 
-    // navigation bottom
+    // Navigation bottom
     --navigation-bottom-font-color: #30BEC0;
     --navigation-bottom-panel-display: none;
     --navigation-bottom-icon-conversations: "";

@@ -1,6 +1,7 @@
-{% set theme = request.GET.get('theme','') or current_theme %}
 
 {% macro login(form, csrf_input, next=None) %}
+    {% set theme = request.GET.get('theme','') or current_theme %}
+
     <div class="Login">
         <h1 class="Login-title">Contribua para discussões mais democráticas!</h1>
         <div class="Login-icon">

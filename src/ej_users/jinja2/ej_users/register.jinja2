@@ -2,6 +2,7 @@
 {% from 'ej_users/auth-components.jinja2' import register %}
 {% set hide_footer = True %}
 
+
 {% block content %}
     {{ register(form, csrf_input) }}
 {% endblock %}

@@ -1,31 +1,31 @@
 $login-icon-scale: 1.2;
 $login-icon-padding: 25px;
-$login-input-height: 50px;
+// $login-input-height: 50px;
 $login-input-border-radius: $border-radius-small * 2;
 $login-register-padding-button: 15px;
 $login-social-icons-size: 40px;
 $login-social-icons-margin: 10px;
 
-.Login-icon {
-    border: 10px solid $color-purple;
-}
+// .Login-icon {
+//     border: var(--login-icon-border);
+// }
 
 .Login {
     h1 {
-        color: $color-magenta;
-        font-weight: 100;
+        // color: $color-magenta;
+        // font-weight: 100;
     }
 
     input {
-        border: 1px solid $color-blue;
-        border-radius: $login-input-border-radius;
-        height: $login-input-height;
+        // border: 1px solid $color-blue;
+        // border-radius: $login-input-border-radius;
+        // height: $login-input-height;
     }
 
     input[type=submit] {
-        border: 1px solid $color-green;
+        // border: 1px solid $color-green;
         background-color: $color-green;
-        box-shadow: none;
+        // box-shadow: none;
         width: 60%;
         min-width: 200px;
     }
