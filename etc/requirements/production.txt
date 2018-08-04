@@ -23,3 +23,6 @@ django-ckeditor
 
 # Database
 psycopg2-binary ~= 2.7
+
+# Push notifications
+django-push-notifications

@@ -53,7 +53,8 @@ class InstalledAppsConf(Base, EjOptions):
         'pinax.badges',
         'constance',
         'constance.backends.database',
-        'ckeditor'
+        'ckeditor',
+        'push_notifications'
     ]
 
     def get_django_contrib_apps(self):
