@@ -4,6 +4,7 @@ from django.contrib import admin
 from django.urls import include, path
 from django.views import defaults as default_views
 from rest_framework.documentation import include_docs_urls
+from django.contrib.auth import views as auth_views
 
 from boogie.rest import rest_api
 from ej.fixes import unregister_admin
@@ -28,7 +29,6 @@ urlpatterns = [
     # Profile URLS
     path('profile/', include(('ej_profiles.routes', 'ej_profiles'), namespace='profiles')),
     path('profile/', include('ej_gamification.routes', namespace='gamification')),
-    path('profile/notifications/', include('ej_notifications.routes', namespace='notifications')),
 
     # Conversations and other EJ-specific routes
     path('conversations/', include('ej_conversations.routes', namespace='conversation')),
@@ -51,6 +51,9 @@ urlpatterns = [
     path('api/', include(rest_api.urls)),
     path('api/v1/docs/', include_docs_urls(title='ej API Docs', public=False)),
     path('api/v1/missions', include('ej_missions.urls')),
+    path('api/v1/messages', include('ej_messages.urls')),
+    path('api/v1/channels', include('ej_channels.urls')),
+    path('api/v1/notifications', include('ej_notifications.urls')),
     path('api/v1/rocketchat/', include('ej_rocketchat.routes')),
 
     # User management
@@ -60,6 +63,7 @@ urlpatterns = [
 
     # TODO: Set a custom view and template for password reset in ej-user
     path('password/', include('django.contrib.auth.urls')),
+    path('reset-password/', include('django.contrib.auth.urls'), name='reset-password'),
 
     # Static files for the dev server
     *static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),

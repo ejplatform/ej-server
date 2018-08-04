@@ -1,0 +1,9 @@
+{% load i18n %}{% blocktrans with site_name=current_site.name site_domain=current_site.domain %}
+Saudações da unidos contra a corrupção!
+
+Você está recebendo essa mensagem porque se cadastrou no aplicativo de mobilização da campanha.{% endblocktrans %}
+
+{{ protocol }}://app.unidoscontraacorrupcao.org.br
+
+{% endif %}{% blocktrans with site_name=current_site.name site_domain=current_site.domain %}Obrigado por participar da mobilização em prol do maior pacote anticorrupção já feito no mundo!
+{{ site_domain }}{% endblocktrans %}

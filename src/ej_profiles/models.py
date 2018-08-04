@@ -10,9 +10,11 @@ from boogie.fields import EnumField
 from boogie.rest import rest_api
 from .choices import Race, Gender
 from rest_framework.authtoken.models import Token
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from ej_channels.models import Channel
 
 User = get_user_model()
-
 
 @rest_api(exclude=['user'])
 class Profile(models.Model):
@@ -141,6 +143,22 @@ class Profile(models.Model):
         return _('Regular user')
 
 
+@rest_api(['id','owner_id', 'mission_notifications', 'conversation_notifications', 'admin_notifications', 'trophy_notifications',
+'approved_notifications', 'disapproved_notifications', 'campaign_email', 'campaign_app_notifications', 'share_data'])
+class Setting(models.Model):
+    profile = models.OneToOneField(Profile, on_delete=models.CASCADE)
+    owner_id = models.IntegerField(null=True)
+    mission_notifications = models.BooleanField(default=True)
+    conversation_notifications = models.BooleanField(default=True)
+    admin_notifications = models.BooleanField(default=True)
+    trophy_notifications = models.BooleanField(default=True)
+    approved_notifications = models.BooleanField(default=True)
+    disapproved_notifications = models.BooleanField(default=True)
+    campaign_email = models.BooleanField(default=True)
+    campaign_app_notifications = models.BooleanField(default=True)
+    share_data = models.BooleanField(default=True)
+
+
 def gravatar_fallback(id):
     """
     Computes gravatar fallback image URL from a unique string identifier
@@ -165,5 +183,30 @@ def get_profile(user):
     except Profile.DoesNotExist:
         return Profile.objects.create(user=user)
 
-
 User.get_profile = get_profile
+
+@receiver(post_save, sender=Profile)
+def ensure_settings_created(sender, **kwargs):
+    instance = kwargs.get('instance')
+    profile = instance.id
+    Setting.objects.get_or_create(profile=instance, owner_id=profile)
+
+@receiver(post_save, sender=Profile)
+def insert_user_on_channel(sender, created, **kwargs):
+    if created:
+        instance = kwargs.get('instance')
+        user_id = instance.user.id
+        user = User.objects.get(id=user_id)
+        channels = Channel.objects.all()[:2]
+        # TODO VERIFY USER SETTINGS BEFORE INSERT
+        for channel in channels:
+            channel.users.add(user)
+            channel.save()
+
+@receiver(post_save, sender=Profile)
+def create_user_trophy_channel(sender, instance, created, **kwargs):
+    if created:
+        user = instance.user
+        channel = Channel.objects.create(name="trophy channel", sort="trophy", owner=user)
+        channel.users.add(user)
+        channel.save()

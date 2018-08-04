@@ -12,6 +12,9 @@ from rest_framework.authtoken.models import Token
 
 from boogie.router import Router
 from ej_users import forms
+from ej_users.models import User
+from ej_channels.models import Channel
+from ej_notifications.models import Notification
 
 User = get_user_model()
 
@@ -144,3 +147,11 @@ def clean_cookies():
     response.delete_cookie('sessionid')
     response.delete_cookie('csrftoken')
     return response
+
+@urlpatterns.get('check-token', csrf=False)
+def check_token(request):
+    token_to_validate = request.META['HTTP_AUTHORIZATION'].split(' ')[1]
+    token = Token.objects.filter(key=token_to_validate)
+    if (len(token) > 0):
+        return JsonResponse({"expired": False})
+    return JsonResponse({"expired": True})

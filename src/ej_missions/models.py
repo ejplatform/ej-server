@@ -4,6 +4,9 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 from ej_users.models import User
+from ej_conversations.models.conversation import Conversation
+from ej_messages.models import Message
+from ej_channels.models import Channel
 from ej_trophies.models.trophy import Trophy
 from ej_trophies.models.user_trophy import UserTrophy
 from ckeditor.fields import RichTextField
@@ -29,6 +32,7 @@ class Mission(MissionMixin, models.Model):
     trophy = models.ForeignKey(Trophy, on_delete=models.CASCADE, null=True)
     deadline = models.DateField(null=True)
     created_at = models.DateTimeField(null=True, auto_now_add=True)
+    conversations = models.ManyToManyField(Conversation, blank=True)
 
     class Meta:
         ordering = ['title']
@@ -52,7 +56,7 @@ def update_automatic_trophies(user):
     def filter_trophies(user_trophy):
         return (user_trophy.trophy.key == req.key)
     automatic_trophies = Trophy.objects.filter(complete_on_required_satisfied=True)
-    user_trophies = UserTrophy.objects.filter(percentage=100).all()
+    user_trophies = UserTrophy.objects.filter(percentage=100, user=user).all()
     for trophy in automatic_trophies:
         filtered_trophies = []
         required_trophies = trophy.required_trophies.all()
@@ -70,6 +74,15 @@ def update_automatic_trophies(user):
                                         percentage=100,
                                         notified=True)
                 user_trophy.save()
+                send_trophy_message(user, user_trophy)
+    
+
+
+def send_trophy_message(user, user_trophy):
+    channel = Channel.objects.filter(owner=user, sort="trophy")[0]
+    trophy_name = user_trophy.trophy.name
+    trophy_id = user_trophy.trophy.id
+    Message.objects.create(channel=channel, title=trophy_name, body="", target=trophy_id)
 
 
 @receiver(post_save, sender=Receipt)
@@ -83,3 +96,12 @@ def update_trophy(sender, **kwargs):
         user_trophy.percentage = 100
         user_trophy.save(force_update=True)
         update_automatic_trophies(user)
+        send_trophy_message(user, user_trophy)
+
+@receiver(post_save, sender=Mission)
+def send_message(sender, instance, created, **kwargs):
+    if created:
+        channel = Channel.objects.get(sort="mission")
+        mission_title = instance.title
+        mission_id = instance.id
+        Message.objects.create(channel=channel, title=mission_title, body="", target=mission_id)
