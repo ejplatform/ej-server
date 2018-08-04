@@ -32,8 +32,6 @@
 */
 :root {
   --button-border-radius-default: 56px;
-  --font-color-primary: #042049;
-  --font-color-secondary: #30c0d3;
   --profile-font-color-primary: #30BFD3;
   --profile-font-color-secondary: #042049;
   --profile-button-background-color: #FF3E72;
@@ -74,12 +72,14 @@
   --navigation-bottom-icon-panel: "";
   --navigation-bottom-icon-profile: "";
   --card-conversation-top-background: #C4F2F4;
+  --card-conversation-top-font-color: #30c0d3;
   --card-conversation-middle-background: #30c0d3;
   --card-conversation-bottom-background: url(/static/default/img/icons/bg.png);
   --card-conversation-button-background: #042049;
   --card-conversation-border-radius: 50%;
   --conversation-top-background: #C4F2F4;
   --conversation-tag-color: #042049;
+  --conversation-font-color: #042049;
   --conversation-middle-background: #C4F2F4;
   --conversation-bottom-border: 28px solid #C4F2F4;
   --conversation-edit-action-cancel-border: 2px solid #052B47;

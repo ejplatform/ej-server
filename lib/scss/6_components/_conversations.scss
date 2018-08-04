@@ -99,7 +99,6 @@ $conversation-card-button-border-radius: 30px !default;
     text-align: center;
     padding: $spacing-unit / 2 0;
     background-color: var(--conversation-top-background);
-    color: var(--font-color-secondary);
 }
 
 .ConversationCard {
@@ -120,7 +119,7 @@ $conversation-card-button-border-radius: 30px !default;
     position: relative;
     .ConversationTags {
         background-color: var(--card-conversation-top-background);
-        color: var(--font-color-secondary);
+        color: var(--card-conversation-top-font-color);
     }
 
     > * {
@@ -308,7 +307,7 @@ $conversation-card-button-border-radius: 30px !default;
             @media only screen and (min-width: $breakpoint-large) {
                 padding: $spacing-unit-large 0;
             }
-            color: var(--font-color-primary);
+            color: var(--conversation-font-color);
         }
 
         .Conversation-edit {
