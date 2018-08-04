@@ -179,31 +179,36 @@ class MissionViewSet(viewsets.ViewSet):
             comments_count = len(mission_conversation.comments.exclude(votes__author=uid))
             return Response({"cid": mission_conversation.id,
                              "comments_count": comments_count})
-        else:
-            user_conversations = user_conversations[0]
-            last_conversation_idx = user_conversations.last_viewed_conversation
-            last_conversation = user_conversations.conversations.all()[last_conversation_idx]
-            first_conversation = user_conversations.conversations.all().first()
-            mission_conversations = mission.conversations.all()
 
-            if(last_conversation_idx == len(mission.conversations.all()) - 1):
-                user_conversations.last_viewed_conversation = 0
-                user_conversations.save()
-                comments_count = len(first_conversation.comments.exclude(votes__author=uid))
-                return Response({"cid": first_conversation.id,
-                                 "comments_count": comments_count })
+        user_conversations = user_conversations[0]
+        last_viewed_conversation = user_conversations.last_viewed_conversation
+        conversations = mission.conversations.all()
+        next_conversations = [val for idx, val in enumerate(conversations) if idx > last_viewed_conversation]
+        previous_conversations = [val for idx, val in enumerate(conversations) if idx <= last_viewed_conversation]
 
-            next_conversation = None
-            for m in mission_conversations:
-                if m.id > last_conversation.id:
-                    next_conversation = m
+        conversation_with_available_comments = False
+        data = {}
+        for idx, conversation in enumerate(next_conversations):
+            available_comments = conversation.comments.exclude(votes__author=uid)
+            comments_count = len(available_comments)
+            if(comments_count > 0):
+                conversation_with_available_comments = True
+                user_conversations.last_viewed_conversation += (idx + 1)
+                data = {"cid": conversation.id, "comments_count": comments_count}
+                break
+
+        if ( not conversation_with_available_comments):
+            for idx, conversation in enumerate(previous_conversations):
+                available_comments = conversation.comments.exclude(votes__author=uid)
+                comments_count = len(available_comments)
+                if(comments_count > 0):
+                    conversation_with_available_comments = True
+                    user_conversations.last_viewed_conversation += (idx + 1)
+                    data = {"cid": conversation.id, "comments_count": comments_count}
                     break
 
-            if (next_conversation):
-                user_conversations.conversations.add(next_conversation)
-                user_conversations.last_viewed_conversation += 1
-                user_conversations.save()
-                comments_count = len(next_conversation.comments.exclude(votes__author=uid))
-                return Response({"cid": next_conversation.id,
-                                "comments_count": comments_count})
-            return Response({})
+        if ( not conversation_with_available_comments):
+            return Response({"comments_count": 0})
+
+        return Response(data)
+
