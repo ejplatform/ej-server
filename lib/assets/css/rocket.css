@@ -69,6 +69,12 @@
   --conversation-tag-color: #042049;
   --conversation-middle-background: #C4F2F4;
   --conversation-bottom-border: 28px solid #C4F2F4;
+  --conversation-edit-action-cancel-border: 2px solid #052B47;
+  --conversation-edit-action-cancel-background: #fff;
+  --conversation-edit-action-cancel-font-color: #052B47;
+  --conversation-edit-action-save-border: #052B47;
+  --conversation-edit-action-save-background: #fff;
+  --conversation-edit-action-save-font-color: #052B47;
   --conversation-info-title: #FF3D72;
   --conversation-info-content: #042049;
   --conversation-vote-font-size: 13px;

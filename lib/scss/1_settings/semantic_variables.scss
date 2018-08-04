@@ -70,6 +70,14 @@
     --conversation-middle-background: #C4F2F4;
     --conversation-bottom-border: 28px solid #C4F2F4;
 
+    // Conversation: edit
+    --conversation-edit-action-cancel-border: 2px solid #052B47;
+    --conversation-edit-action-cancel-background: #fff;
+    --conversation-edit-action-cancel-font-color: #052B47;
+    --conversation-edit-action-save-border: #052B47;
+    --conversation-edit-action-save-background: #fff;
+    --conversation-edit-action-save-font-color: #052B47;
+
     // Conversation: info
     --conversation-info-title: #FF3D72;
     --conversation-info-content: #042049;
@@ -81,7 +89,6 @@
     --conversation-vote-agree-color: #22b35c;
     --conversation-vote-skip-color: #30c0d3;
     --conversation-vote-disagree-color: #f13c20;
-    //FIXME add font-size
  
     // Conversation: comment
     --conversation-comment-background-color: #30c0d3;

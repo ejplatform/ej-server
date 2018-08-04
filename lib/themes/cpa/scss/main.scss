@@ -18,7 +18,7 @@ $white: #fff;
 // Components
 @import 'auth';
 // @import 'home';
-@import 'conversation';
+// @import 'conversation';
 // @import 'conversations';
 // @import 'profile';
 // @import 'layout';
@@ -88,6 +88,14 @@ $white: #fff;
     --conversation-middle-background: #D4F7F5;
     --conversation-bottom-border: 28px solid #D4F7F5;
     
+    // Conversation: edit
+    --conversation-edit-action-cancel-border: transparent;
+    --conversation-edit-action-cancel-background: #C6027B;
+    --conversation-edit-action-cancel-font-color: #fff;
+    --conversation-edit-action-save-border: transparent;
+    --conversation-edit-action-save-background: #8EC73F;
+    --conversation-edit-action-save-font-color: #fff;
+
     // Conversation: info
     --conversation-info-title: #C6027B;
     --conversation-info-content: #052B47;

@@ -1119,12 +1119,14 @@ $conversation-card-button-border-radius: 30px !default;
 
       i {
         border-radius: 50%;
-        border: 2px solid $color-purple-dark;
+        border: var(--conversation-edit-action-cancel-border);
         display: inline-block;
         width: 16px;
         height: 16px;
         padding: 4px 2px 0 2px;
         font-size: 11px;
+        color: var(--conversation-edit-action-cancel-font-color);
+        background: var(--conversation-edit-action-cancel-background);
       }
     }
 
@@ -1147,8 +1149,9 @@ $conversation-card-button-border-radius: 30px !default;
     }
 
     span + span i {
-      color: $color-pink;
-      border-color: $color-pink;
+      color: var(--conversation-edit-action-save-font-color);
+      border-color: var(--conversation-edit-action-save-border);
+      background: var(--conversation-edit-action-save-background);
     }
   }
 }
