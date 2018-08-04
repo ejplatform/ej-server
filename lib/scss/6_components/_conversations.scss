@@ -73,6 +73,7 @@ $conversation-card-button-border-radius: 30px !default;
         flex-wrap: wrap;
         width: 100%;
         justify-content: center;
+        padding-bottom: 20px;
 
         > * {
             margin: $conversation-card-gutter;

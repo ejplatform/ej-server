@@ -41,7 +41,6 @@ def environment(**options):
 
         # Platform functions
         social_icons=social_icons,
-        footer_data=lambda: fragment('global.footer', raises=False),
         service_worker=getattr(settings, 'SERVICE_WORKER', False),
         current_theme=theme,
         context=context,
@@ -134,11 +133,11 @@ def context(ctx):
 
         # Globals
         'static', 'url', 'salt_attr', 'salt_tag', 'salt', 'social_icons',
-        'footer_data', 'service_worker', 'context', 'render', *TAG_MAP,
+        'service_worker', 'context', 'render', *TAG_MAP,
 
         # Variables injected by the base template
         'target', 'target_context',
-        'page_footer', 'sidebar', 'page_top_header', 'page_header',
+        'sidebar', 'page_top_header', 'page_header',
         'page_title', 'title', 'content_title',
     }
     ctx = {k: v for k, v in ctx.items() if k not in blacklist}

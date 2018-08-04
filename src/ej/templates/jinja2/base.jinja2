@@ -1,7 +1,6 @@
 {% from 'components/generic/page_header.jinja2' import page_header %}
 {% from 'components/generic/page_top-header.jinja2' import page_top_header %}
 {% from 'components/generic/page_menu.jinja2' import sidebar %}
-{% from 'components/generic/page_footer.jinja2' import page_footer %}
 
 {% set target_context = request.GET.target | default('all') %}
 {% set target = target | default(target_context) %}
@@ -125,11 +124,6 @@
             {% endif %}
         </main>
     {% endblock %}
-
-    {% if (target == 'all' or target == 'page') and not hide_footer %}
-        {{ page_footer(social_icons(), footer_data(), request) }}
-        </div>
-    {% endif %}
 
 {% endblock %}
 
