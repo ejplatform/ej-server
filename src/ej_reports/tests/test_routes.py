@@ -6,12 +6,27 @@ import pytest
 from django.http import QueryDict
 from django.test import RequestFactory
 
+from ej.testing import UrlTester
 from ej_conversations.mommy_recipes import ConversationRecipes
 from ej_reports.routes import index, clusters, radar, divergence, map_to_table
 from ej_users.models import User
 from .examples import REPORT_RESPONSE, CSV_OUT, MAP_TO_TABLE
 
 BASE_URL = '/api/v1'
+
+
+class TestRoutes(ConversationRecipes, UrlTester):
+    owner_urls = [
+        '/conversations/conversation/reports/',
+        '/conversations/conversation/reports/clusters/',
+        '/conversations/conversation/reports/radar/',
+        '/conversations/conversation/reports/divergence/',
+    ]
+
+    @pytest.fixture
+    def data(self, conversation, author_db):
+        conversation.author = author_db
+        conversation.save()
 
 
 class TestReportRoutes(ConversationRecipes):

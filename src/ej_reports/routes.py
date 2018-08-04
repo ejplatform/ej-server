@@ -1,9 +1,10 @@
+import csv
+
 import numpy as np
 import pandas as pd
-import csv
 from django.contrib.auth import get_user_model
-from django.utils.translation import ugettext_lazy as _, ugettext as __
 from django.http import HttpResponse
+from django.utils.translation import ugettext_lazy as _, ugettext as __
 
 from boogie.router import Router
 from boogie.rules import proxy_seq
@@ -107,14 +108,14 @@ PC_COLUMNS = [
 
 
 def map_to_table(data):
-    array = np.array(list(data.items())).T
-    return array
+    return np.array(list(data.items())).T
 
 
-def map_to_html_table(data):
-    array = map_to_table(data)
+def map_to_html_table(cols):
+    array = map_to_table(cols)
     cols, body = array
-    return html_table([body], columns=[__(col) for col in cols], class_='ReportTable table')
+    cols = [__(col) for col in cols]
+    return html_table([body], columns=cols, class_='ReportTable table')
 
 
 def df_to_table(df, pc=True):
@@ -126,6 +127,10 @@ def df_to_table(df, pc=True):
 
 
 def to_pc(data):
+    """
+    Map floats to percentages.
+    """
+
     def transform(x):
         if isinstance(x, int):
             return str(x)

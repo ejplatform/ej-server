@@ -85,22 +85,13 @@ def clean_migrations(ctx):
 
 
 @task
-def run(ctx, no_toolbar=False, gunicorn=False, migrate=False,
-        ask_input=False, assets=False):
+def run(ctx, no_toolbar=False, gunicorn=False):
     """
     Run development server
     """
     env = {}
     if no_toolbar:
         env['DISABLE_DJANGO_DEBUG_TOOLBAR'] = 'true'
-
-    if migrate:
-        no_input = not ask_input
-        manage(ctx, 'migrate', noinput=no_input)
-
-    if assets:
-        # Populate db with assets
-        db_assets(ctx)
 
     if gunicorn:
         from gunicorn.app.wsgiapp import run as run_gunicorn
@@ -265,7 +256,8 @@ def update_deps(ctx, all=False, reset=False):
         ctx.run('rm -fr local/vendor/')
     ctx.run(f'{python} etc/scripts/install-deps.py')
     if all:
-        ctx.run(f'{python} -m pip install -r etc/requirements/develop.txt')
+        exec(ctx, f'{python} -m pip install -r etc/requirements/production.txt')
+        exec(ctx, f'{python} -m pip install -r etc/requirements/develop.txt')
     else:
         print('By default we only update the volatile dependencies. Run '
               '"inv update-deps --all" in order to update everything.')

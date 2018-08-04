@@ -3,7 +3,7 @@ from hyperpython import div, h1, p
 from hyperpython.components import a_or_span, wrap
 
 
-def paragraph(title, description, **kwargs):
+def paragraph(title, description=None, **kwargs):
     """
     Display a centered title with a small description paragraph.
 

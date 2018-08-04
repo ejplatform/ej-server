@@ -65,7 +65,7 @@
     </div>
 
     <div class="Login-newUser">
-        {% set msg = _('Register') if is_login else _('Login') %}
+        {% set msg = _('Register') if is_login|default(False) else _('Login') %}
         <h1>{{ title }}</h1>
         <p><a class="Button" href="{{ button_href }}" primary>{{ button_msg }}</a></p>
     </div>
