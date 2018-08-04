@@ -1,8 +1,10 @@
+{% set theme = request.GET.get('theme','') or current_theme %}
+
 {% macro login(form, csrf_input, next=None) %}
     <div class="Login">
         <h1 class="Login-title">Contribua para discussões mais democráticas!</h1>
         <div class="Login-icon">
-            <img src="/static/default/img/login/ej-cat.svg">
+            <img src="/static/{{theme}}/img/login/ej-cat.svg">
         </div>
 
         {% if social_buttons %}
