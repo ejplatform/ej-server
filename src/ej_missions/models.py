@@ -75,15 +75,12 @@ def update_automatic_trophies(user):
                                         notified=True)
                 user_trophy.save()
                 send_trophy_message(user, user_trophy)
-    
-
 
 def send_trophy_message(user, user_trophy):
     channel = Channel.objects.filter(owner=user, sort="trophy")[0]
     trophy_name = user_trophy.trophy.name
     trophy_id = user_trophy.trophy.id
     Message.objects.create(channel=channel, title=trophy_name, body="", target=trophy_id)
-
 
 @receiver(post_save, sender=Receipt)
 def update_trophy(sender, **kwargs):
@@ -94,7 +91,7 @@ def update_trophy(sender, **kwargs):
         user_trophy = UserTrophy.objects.get(trophy=mission_trophy,
                                              user=user)
         user_trophy.percentage = 100
-        user_trophy.save(force_update=True)
+        user_trophy.save()
         update_automatic_trophies(user)
         send_trophy_message(user, user_trophy)
 
