@@ -23,7 +23,7 @@ variables:
   << : *container
   before_script:
     - *install
-    - &pull inv -e docker-pull -t $CI_COMMIT_REF_SLUG --theme=$THEMES
+    - inv -e docker-pull -t $CI_COMMIT_REF_SLUG --theme=$THEMES
 
 .publisher: &publisher
   << : *container
@@ -71,7 +71,7 @@ test:lint:
 # PUSH: commits on master
 release:master:
   << : *publisher
-  stage: push
+  stage: release
   script:
     - inv docker-push --from $CI_COMMIT_REF_SLUG
     - inv rancher-push
@@ -80,7 +80,7 @@ release:master:
 
 release:tag:
   << : *publisher
-  stage: push
+  stage: release
   script:
     - inv docker-push --from $CI_COMMIT_REF_SLUG -t $CI_COMMIT_TAG
     - inv rancher-push -t $CI_COMMIT_TAG
