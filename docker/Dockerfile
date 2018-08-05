@@ -47,13 +47,18 @@ RUN pip install -r /etc/requirements/git-modules.txt
 
 
 # Set theme
-ARG theme=default
-ENV theme=${theme}
+ARG THEME=default
+ENV EJ_THEME=${theme}
+ENV THEME=${theme}
 
 
 # Prepare deploy
 COPY ./tasks.py /app/tasks.py
-RUN inv prepare-deploy
+RUN mkdir local/ \
+ && mkdir local/logs/ \
+ && mkdir local/static/ \
+ && mkdir local/media/ \
+ && inv prepare-deploy
 
 
 # Create django user

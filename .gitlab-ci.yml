@@ -2,190 +2,129 @@ services:
   - docker:dind
 
 stages:
+  - build
   - test
-  - push
-  - deploy
+  - release
 
 variables:
   DOCKER_DRIVER: overlay2
-  GIT_SUBMODULE_STRATEGY: recursive
-
-  DJANGO_MASTER_IMAGE:      "ejplatform/ej-server:master"
-  DJANGO_LATEST_IMAGE:      "ejplatform/ej-server:latest"
-
-  BACKEND_MASTER_IMAGE:     "ejplatform/ej-nginx:master"
-  BACKEND_LATEST_IMAGE:     "ejplatform/ej-nginx:latest"
-
-  DJANGO_DEVELOP_IMAGE:     "ejplatform/ej-nginx:develop" 
-  DJANGO_TEST_ENV:          "./docker/develop/env/django.test.env"
-  POSTGRES_TEST_ENV:        "./docker/develop/env/postgres.test.env"
-
-  CPA_DJANGO_MASTER_IMAGE:    "mdhcpa/ej-server:master"
-  CPA_BACKEND_MASTER_IMAGE:   "mdhcpa/ej-nginx:master"
-  CPA_DJANGO_LATEST_IMAGE:    "mdhcpa/ej-server:latest"
-  CPA_BACKEND_LATEST_IMAGE:   "mdhcpa/ej-nginx:latest"
 
 
-.builder: &builder
+# Reusable configurations
+.container: &container
   image: docker
   before_script:
-    - docker pull $DJANGO_MASTER_IMAGE || true
-    - docker build --cache-from $DJANGO_MASTER_IMAGE --build-arg VOLATILE_DEPENDENCIES_STRATEGY=$(date +%s) -t $DJANGO_MASTER_IMAGE -f ./docker/production/django/Dockerfile .
+    - &install apk add python3 && python3 -m pip install invoke~=0.23
+    - &login docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASS
   tags:
     - docker
 
-.buildercpa: &buildercpa
-  image: docker
+.runner: &runner
+  << : *container
   before_script:
-    - docker pull $CPA_DJANGO_MASTER_IMAGE || true
-    - docker build --cache-from $CPA_DJANGO_MASTER_IMAGE --build-arg THEME=cpa --build-arg VOLATILE_DEPENDENCIES_STRATEGY=$(date +%s) -t $CPA_DJANGO_MASTER_IMAGE -f ./docker/production/django/Dockerfile .
-  tags:
-    - docker
+    - *install
+    - &pull inv -e docker-pull -t $CI_COMMIT_REF_SLUG --theme=$THEMES
 
-#
-# Testing
-#
-
-test:
-  << : *builder
-  stage: test
-  script:
-    - docker build -t $DJANGO_DEVELOP_IMAGE -f ./docker/develop/django/Dockerfile .
-    - docker run -d --env-file=$POSTGRES_TEST_ENV --name=postgres postgres:9.6
-    - docker run --env-file=$DJANGO_TEST_ENV --env-file=$POSTGRES_TEST_ENV --link=postgres:postgres $DJANGO_DEVELOP_IMAGE /test.sh
-
-#
-# Pushing images to registry
-#
-
-push:master:nginx:
-  << : *builder
-  stage: push
-  script:
-    - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASS
-    - docker build -t $BACKEND_MASTER_IMAGE -f ./docker/production/nginx/master.Dockerfile .
-    - docker push $BACKEND_MASTER_IMAGE
-  only:
-    - master
-
-push:master:django:
-  << : *builder
-  stage: push
-  script:
-    - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASS
-    - docker push $DJANGO_MASTER_IMAGE
-  only:
-    - master
-
-push:latest:nginx:
-  << : *builder
-  stage: push
-  script:
-    - docker tag $DJANGO_MASTER_IMAGE $DJANGO_LATEST_IMAGE || true
-    - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASS
-    - docker build -t $BACKEND_LATEST_IMAGE -f ./docker/production/nginx/latest.Dockerfile .
-    - docker push $BACKEND_LATEST_IMAGE
-  only:
-    - tags
-
-push:latest:django:
-  << : *builder
-  stage: push
-  script:
-    - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASS
-    - docker tag $DJANGO_MASTER_IMAGE $DJANGO_LATEST_IMAGE
-    - docker push $DJANGO_LATEST_IMAGE
-  only:
-    - tags
-
-#
-# Push CPA images
-#
-
-push:master:nginx:cpa:
-  << : *buildercpa
-  stage: push
-  script:
-    - docker tag $CPA_DJANGO_MASTER_IMAGE $DJANGO_MASTER_IMAGE || true
-    - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASS
-    - docker build -t $CPA_BACKEND_MASTER_IMAGE -f ./docker/production/nginx/master.Dockerfile .
-    - docker push $CPA_BACKEND_MASTER_IMAGE
-  only:
-    - master
-
-push:master:django:cpa:
-  << : *buildercpa
-  stage: push
-  script:
-    - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASS
-    - docker push $CPA_DJANGO_MASTER_IMAGE
-  only:
-    - master
-
-push:latest:nginx:cpa:
-  << : *buildercpa
-  stage: push
-  script:
-    - docker tag $CPA_DJANGO_MASTER_IMAGE $DJANGO_LATEST_IMAGE || true
-    - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASS
-    - docker build -t $CPA_BACKEND_LATEST_IMAGE -f ./docker/production/nginx/latest.Dockerfile .
-    - docker push $CPA_BACKEND_LATEST_IMAGE
-  only:
-    - tags
-
-push:latest:django:cpa:
-  << : *buildercpa
-  stage: push
-  script:
-    - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASS
-    - docker tag $CPA_DJANGO_MASTER_IMAGE $CPA_DJANGO_LATEST_IMAGE
-    - docker push $CPA_DJANGO_LATEST_IMAGE
-  only:
-    - tags
-
-
-#
-# Rancher service upgrade
-#
-
-.deployer: &deployer
-  image: cdrx/rancher-gitlab-deploy
+.publisher: &publisher
+  << : *container
+  before_script:
+    - *install
+    - *login
+    - docker pull cdrx/rancher-gitlab-deploy
   script:
     - upgrade --environment $RANCHER_ENVIRONMENT --stack $RANCHER_STACK --service backend --sidekicks --no-finish-upgrade
-    # [FIXME] Cancel celery upgrades for just now
-#    - upgrade --environment $RANCHER_ENVIRONMENT --stack $RANCHER_STACK --service flower --no-finish-upgrade
-#    - upgrade --environment $RANCHER_ENVIRONMENT --stack $RANCHER_STACK --service worker --no-finish-upgrade
-  tags:
-    - docker
 
-deploy:master:generic:
-  << : *deployer
-  stage: deploy
-  environment: develop
+
+# BUILD: build and publish images using the CI_COMMIT_REF_SLUG.
+# Those images will not be published under :latest and :tag automatically.
+# Only master commits publish images under the :latest tags on dockerhub
+# and commits with tags create tagged images.
+build:
+  << : *container
+  script:
+    - *login
+    - inv -e docker-build -t $CI_COMMIT_REF_SLUG --theme=$THEMES
+    - inv -e docker-push  -t $CI_COMMIT_REF_SLUG --theme=$THEMES
+
+
+# TEST: test in different environments by changing the database or running a
+# linter
+test:sqlite3:
+  << : *runner
+  stage: test
+  script:
+    - inv -e docker-run --cmd test
+
+test:postgres:
+  << : *runner
+  stage: test
+  script:
+    - inv docker-run -e dev --cmd test
+
+test:lint:
+  << : *runner
+  stage: test
+  script:
+    - inv docker-run --cmd lint
+
+
+# PUSH: commits on master
+release:master:
+  << : *publisher
+  stage: push
+  script:
+    - inv docker-push --from $CI_COMMIT_REF_SLUG
+    - inv rancher-push
   only:
     - master
 
-deploy:latest:generic:
-  << : *deployer
-  stage: deploy
-  environment: production
+release:tag:
+  << : *publisher
+  stage: push
+  script:
+    - inv docker-push --from $CI_COMMIT_REF_SLUG -t $CI_COMMIT_TAG
+    - inv rancher-push -t $CI_COMMIT_TAG
   only:
     - tags
 
-#
-# Rancher server upgrade CPA environment
-#
 
-deploy:master:cpa:
-  << : *deployer
-  stage: deploy
-  environment: develop_cpa
-  only:
-    - master
-
-deploy:latest:cpa:
-  << : *deployer
-  stage: deploy
-  environment: production_cpa
-  only:
-    - tags
+#push:latest:django:cpa:
+#  << : *buildercpa
+#  stage: push
+#  script:
+#    - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASS
+#    - docker tag $CPA_DJANGO_MASTER_IMAGE $CPA_DJANGO_LATEST_IMAGE
+#    - docker push $CPA_DJANGO_LATEST_IMAGE
+#  only:
+#    - tags
+#
+#
+##
+#
+#deploy:master:generic:
+#  << : *deployer
+#  stage: deploy
+#  environment: develop
+#  only:
+#    - master
+#
+#deploy:latest:generic:
+#  << : *deployer
+#  stage: deploy
+#  environment: production
+#  only:
+#    - tags
+#
+#deploy:master:cpa:
+#  << : *deployer
+#  stage: deploy
+#  environment: develop_cpa
+#  only:
+#    - master
+#
+#deploy:latest:cpa:
+#  << : *deployer
+#  stage: deploy
+#  environment: production_cpa
+#  only:
+#    - tags

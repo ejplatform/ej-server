@@ -8,10 +8,10 @@ volumes:
 services:
   web: &django
     restart: always
-    image: ejplatform/ej-server:latest
+    image: ejplatform/web:latest
     build:
       context: ../../
-      dockerfile: ./docker/Dockerfile.django-dev
+      dockerfile: ./docker/Dockerfile
     ports:
       - "5000:8000"
     links:

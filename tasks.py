@@ -20,6 +20,9 @@ def manage(ctx, cmd, env=None, **kwargs):
     exec(ctx, cmd, pty=True, env=env)
 
 
+#
+# Build assets
+#
 @task
 def sass(ctx, no_watch=False, trace=False, theme=None):
     """
@@ -41,7 +44,7 @@ def sass(ctx, no_watch=False, trace=False, theme=None):
     suffix += ' --trace' if trace else ''
 
     ctx.run('rm -rf .sass-cache -rf')
-    cmd = (f'sass {cmd_main} {cmd_rocket} {cmd_themes} {suffix}')
+    cmd = f'sass {cmd_main} {cmd_rocket} {cmd_themes} {suffix}'
     exec(ctx, cmd, pty=True)
 
 
@@ -51,6 +54,50 @@ def js(ctx):
     Build js assets
     """
     print('Nothing to do now ;)')
+
+
+#
+# Django tasks
+#
+@task
+def run(ctx, no_toolbar=False):
+    """
+    Run development server
+    """
+    env = {}
+    if no_toolbar:
+        env['DISABLE_DJANGO_DEBUG_TOOLBAR'] = 'true'
+    else:
+        manage(ctx, 'runserver 0.0.0.0:8000', env=env)
+
+
+@task
+def run_deploy(ctx, debug=False, environment='production', port=5000, workers=4):
+    """
+    Run application using gunicorn for production deploys.
+
+    It assumes that static media is served by a reverse proxy such as nginx.
+    """
+
+    from gunicorn.app.wsgiapp import run as run_gunicorn
+
+    env = {
+        'DISABLE_DJANGO_DEBUG_TOOLBAR': str(not debug),
+        'PYTHONPATH': 'src',
+        # 'DJANGO_ENVIRONMENT': environment,
+        # 'DJANGO_DEBUG': str(debug),
+    }
+    os.environ.update(env)
+
+    args = [
+        'ej.wsgi', '-w', str(workers), '-b', f'0.0.0.0:{port}',
+        '--error-logfile=-',
+        '--access-logfile=-',
+        '--log-level', 'info',
+    ]
+
+    sys.argv = ['gunicorn', *args]
+    run_gunicorn()
 
 
 @task
@@ -84,49 +131,8 @@ def clean_migrations(ctx):
             os.remove(file)
 
 
-@task
-def run(ctx, no_toolbar=False):
-    """
-    Run development server
-    """
-    env = {}
-    if no_toolbar:
-        env['DISABLE_DJANGO_DEBUG_TOOLBAR'] = 'true'
-    else:
-        manage(ctx, 'runserver 0.0.0.0:8000', env=env)
-
-
-@task
-def run_deploy(ctx, debug=False, environment='production', port=5000, workers=4):
-    """
-    Run application using gunicorn for production deploys.
-
-    It assumes that static media is served by a reverse proxy such as nginx.
-    """
-
-    from gunicorn.app.wsgiapp import run as run_gunicorn
-
-    env = {
-        'DISABLE_DJANGO_DEBUG_TOOLBAR': str(not debug),
-        'PYTHONPATH': 'src',
-        #'DJANGO_ENVIRONMENT': environment,
-        #'DJANGO_DEBUG': str(debug),
-    }
-    os.environ.update(env)
-
-    args = [
-        'ej.wsgi', '-w', str(workers), '-b', f'0.0.0.0:{port}',
-        '--error-logfile=-',
-        '--access-logfile=-',
-        '--log-level', 'info',
-    ]
-
-    sys.argv = ['gunicorn', *args]
-    run_gunicorn()
-
-
 #
-# Db tasks
+# DB management
 #
 @task
 def db(ctx, migrate_only=False):
@@ -194,6 +200,101 @@ def db_assets(ctx, path=None, force=False):
 #
 # Docker
 #
+def dockerfiles_cmd(ctx, cmd, tag='latest', dry_run=False, org='ejplatform',
+                    args_web='', args_nginx='', args_dev=''):
+    cmd = sudo(f'docker {cmd} -f docker/Dockerfile')
+    do = (lambda cmd: print(cmd) if dry_run else ctx.run(cmd, pty=True))
+    do(f'{cmd}       -t {org}/web:{tag}   {args_web}')
+    do(f'{cmd}.nginx -t {org}/nginx:{tag} {args_nginx}')
+    do(f'{cmd}.dev   -t {org}/dev:{tag}   {args_dev}')
+
+
+@task
+def docker_build(ctx, tag='latest', theme='default:ejplatform', extra_args='', dry_run=False):
+    """
+    Rebuild all docker images for the project.
+    """
+    for item in theme.split(','):
+        theme, org = item.split(':') if ':' in item else (item, item)
+        base_image = f'{org}/web:{tag}'
+        args = f'{extra_args} --build-arg THEME={theme}'
+        child_args = f'{args} --build-arg BASE_IMAGE={base_image}'
+        kwargs = {
+            'args_web': args,
+            'args_nginx': child_args,
+            'args_dev': child_args,
+        }
+        dockerfiles_cmd(ctx, 'build .', tag=tag, dry_run=dry_run, org=org, **kwargs)
+
+
+@task
+def docker_push(ctx, tag='latest', theme='default:ejplatform', extra_args='',
+                from_=None, dry_run=False):
+    """
+    Rebuild all docker images for the project.
+    """
+    cmd = sudo(f'docker push')
+    do = (lambda cmd: print(cmd) if dry_run else ctx.run(cmd, pty=True))
+
+    for item in theme.split(','):
+        theme, org = item.split(':') if ':' in item else (item, item)
+        do(f'{cmd} {org}/web:{tag}   {extra_args}')
+        do(f'{cmd} {org}/nginx:{tag} {extra_args}')
+        do(f'{cmd} {org}/dev:{tag}   {extra_args}')
+
+
+@task
+def docker_pull(ctx, tag='latest', theme='default:ejplatform', extra_args='',
+                dry_run=False):
+    """
+    Rebuild all docker images for the project.
+    """
+    cmd = sudo(f'docker push')
+    do = (lambda cmd: print(cmd) if dry_run else ctx.run(cmd, pty=True))
+
+    for item in theme.split(','):
+        theme, org = item.split(':') if ':' in item else (item, item)
+        do(f'{cmd} {org}/web:{tag}   {extra_args}')
+        do(f'{cmd} {org}/nginx:{tag} {extra_args}')
+        do(f'{cmd} {org}/dev:{tag}   {extra_args}')
+
+
+@task
+def docker_run(ctx, env='run', cmd=None, port=80, clean_perms=False,
+               compose_file=None, dry_run=False):
+    """
+    Runs EJ platform using a docker container.
+    """
+    docker = sudo('docker')
+    do = (lambda cmd: print(cmd) if dry_run else ctx.run(cmd, pty=True))
+    if compose_file is None and env == 'deploy':
+        compose_file = 'docker/deploy/docker-compose.yml'
+    elif compose_file is None:
+        compose_file = 'docker/docker-compose.yml'
+    compose = f'{docker}-compose -f {compose_file}'
+
+    if env == 'run':
+        do(f'{docker} run '
+           f'-v `pwd`:/app '
+           f'-p {port}:8000 '
+           f'-it ejplatform/dev:latest {cmd or "run"}')
+    elif env == 'dev':
+        do(f'{compose} up -d')
+        do(f'{compose} run -p 8000:8000 django {cmd or "bash"}')
+        do(f'{compose} stop')
+    elif env == 'up':
+        do(f'{compose} up')
+    elif env == 'exec':
+        do(f'{compose} run -p 8000:8000 django {cmd or "bash"}')
+    elif env == 'deploy':
+        do(f'{compose} up')
+    else:
+        raise SystemExit(f'invalid choice for env: {env}\n'
+                         f'valid options: run, dev, up, bash, deploy')
+    if clean_perms:
+        do(f'sudo chown `whoami`:`whoami` * -R')
+
+
 @task
 def docker_clean(ctx, no_sudo=False, all=False, volumes=False, networks=False, images=False, containers=False,
                  force=False):
@@ -215,49 +316,6 @@ def docker_clean(ctx, no_sudo=False, all=False, volumes=False, networks=False, i
 
     if not any([all, volumes, networks, images, containers]):
         print('You must select one kind of docker resource to clean.', file=sys.stderr)
-
-
-@task
-def docker_build(ctx, no_sudo=False):
-    """
-    Rebuild all docker images for the project.
-    """
-    docker = 'docker' if no_sudo else 'sudo docker'
-    run = (lambda cmd: ctx.run(cmd, pty=True))
-    run(f'{docker} build . -f docker/Dockerfile.django -t ejplatform/ej-server:latest')
-    run(f'{docker} build . -f docker/Dockerfile.django-dev -t ejplatform/ej-server:django-dev')
-    run(f'{docker} build . -f docker/Dockerfile.nginx -t ejplatform/ej-nginx:latest')
-
-
-@task
-def docker_run(ctx, env='run', no_sudo=False, cmd=None, port=80, chmod=True):
-    """
-    Runs EJ platform using a docker container.
-    """
-    docker = 'docker' if no_sudo else 'sudo docker'
-    run = (lambda cmd: print(f'$ {cmd}') or ctx.run(cmd, pty=True))
-
-    if env == 'run':
-        run(f'{docker} run '
-            f'-v `pwd`:/app '
-            f'-v `pwd`/local/docker:/app/local '
-            f'-p {port}:8000 '
-            f'-it ejplatform/ej-server:django-dev {cmd or "run"}')
-    elif env == 'dev':
-        run(f'{docker}-compose -f docker/docker-compose.yml up -d')
-        run(f'{docker}-compose -f docker/docker-compose.yml run -p 8000:8000 django bash')
-        run(f'{docker}-compose -f docker/docker-compose.yml stop')
-    elif env == 'up':
-        run(f'{docker}-compose -f docker/docker-compose.yml up')
-    elif env == 'bash':
-        run(f'{docker}-compose -f docker/docker-compose.yml run -p 8000:8000 django bash')
-    elif env == 'deploy':
-        run(f'{docker}-compose -f docker/deploy/docker-compose.yml up')
-    else:
-        raise SystemExit(f'invalid choice for env: {env}')
-
-    if chmod:
-        run(f'sudo chown `whoami`:`whoami` * -R')
 
 
 #
@@ -295,6 +353,14 @@ def i18n(ctx, compile=False, edit=False, lang='pt_BR', keep_pot=False):
 # Good practices and productivity
 #
 @task
+def lint(ctx):
+    """
+    Execute linters
+    """
+    ctx.run('flake8', pty=True)
+
+
+@task
 def install_hooks(ctx):
     """
     Install git hooks in repository.
@@ -323,9 +389,9 @@ def configure(ctx, silent=False):
     Install dependencies and configure a test server.
     """
     if silent:
-        ask = lambda x: print(x + 'yes') or True
+        ask = (lambda x: print(x + 'yes') or True)
     else:
-        ask = lambda x: input(x + ' (y/n) ').lower() == 'y'
+        ask = (lambda x: input(x + ' (y/n) ').lower() == 'y')
 
     print('\nLoading dependencies (inv update-deps)')
     update_deps(ctx, all=True)
@@ -343,7 +409,7 @@ def configure(ctx, silent=False):
 
 
 #
-# Generic tasks (frequently used with docker entry points)
+# Useful docker entry points
 #
 @task
 def bash(ctx):
@@ -363,7 +429,7 @@ def shell(ctx):
 
 
 #
-# Prepare deploy
+# Deploy tasks
 #
 @task
 def prepare_deploy(ctx):
@@ -376,17 +442,17 @@ def prepare_deploy(ctx):
     * Collect static files
     * Save assets to database
     """
-    # CSS
     sass(ctx, no_watch=True)
-
-    # Js
     js(ctx)
-
-    # Translations
     i18n(ctx, compile=True)
-
-    # Static files
     manage(ctx, 'collectstatic', noinput=True)
+
+
+@task
+def rancher_push(ctx):
+    """
+    Push containers to a Rancher server.
+    """
 
 
 #
@@ -395,3 +461,10 @@ def prepare_deploy(ctx):
 def exec(ctx, cmd, **kwargs):
     print(f'Running: {cmd}')
     ctx.run(cmd, **kwargs)
+
+
+def sudo(cmd):
+    if os.getuid() == 0:
+        return cmd
+    else:
+        return f'sudo {cmd}'
