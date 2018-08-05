@@ -4,7 +4,7 @@ Auxiliary Docker images.
 ejplatform/docker-invoke:
     A derivative of the standard docker image with Python 3.6 and invoke.
 
-ejplatform/invoke:
+ejplatform/python:
     A derivative of debian:buster-slim with Python 3.6 and invoke.
 
 ejplatform/builder:

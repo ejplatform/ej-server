@@ -1,15 +1,19 @@
 services:
   - docker:dind
 
+
+# The pre-build part of the pipeline should be disabled most of the time!
 stages:
   - pre-build
   - build
   - test
   - release
 
+
+# Environment variables
 variables:
   DOCKER_DRIVER: overlay2
-  DOCKER_INVOKE: ejplatform/docker-invoke:latest
+  PREBUILD_VERSION: v1
 
 
 # Reusable configurations
@@ -34,13 +38,15 @@ variables:
     - upgrade --environment $RANCHER_ENVIRONMENT --stack $RANCHER_STACK --service backend --sidekicks --no-finish-upgrade
 
 
+# PRE-BUILD: the pre-build stage simply adds some utility images to DockerHub
+# those images are used by other containers either in multi-stage builds or
+# as the parent container of a build.
 pre-build:
   image: docker
   script:
     - *login
-    - cd docker/images/docker-invoke/
-    - sudo docker build . -t $DOCKER_INVOKE --cache-from $DOCKER_INVOKE
-    - sudo docker push $DOCKER_INVOKE
+    - sh etc/scripts/docker-images.sh $PREBUILD_VERSION
+
 
 
 # BUILD: build and publish images using the CI_COMMIT_REF_SLUG.
