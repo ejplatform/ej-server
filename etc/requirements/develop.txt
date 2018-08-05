@@ -14,7 +14,7 @@ model_mommy ~= 1.5.1
 mock ~= 2.0.0
 
 # Static analysis
-flake8 ~= 3.4.1
+flake8 ~= 3.5.0
 
 # Improved REPL
 ipdb
