@@ -1,14 +1,13 @@
 .circleci/
 .git/
 .pytest_cache/
-docker/
-!docker/cicd/script
-!docker/production/nginx/default.conf
+docker/Dockerfile.django-base
 
 .gitattributes
 .gitignore
 .gitlab-ci.yml
 .travis.yml
+local/
 
 # Gitlab CI cached file
 image.tar

@@ -190,7 +190,7 @@ def docker_clean(ctx, no_sudo=False, all=False, volumes=False, networks=False, i
     """
 
     docker = 'docker' if no_sudo else 'sudo docker'
-    run = lambda cmd: ctx.run(cmd, pty=True)
+    run = (lambda cmd: ctx.run(cmd, pty=True))
     if volumes or all:
         run(f'{docker} volume rm $({docker} volume ls -qf dangling=true)')
     if networks or all:
@@ -202,6 +202,36 @@ def docker_clean(ctx, no_sudo=False, all=False, volumes=False, networks=False, i
 
     if not any([all, volumes, networks, images, containers]):
         print('You must select one kind of docker resource to clean.', file=sys.stderr)
+
+
+@task
+def docker_build(ctx, no_sudo=False):
+    """
+    Rebuild all docker images for the project.
+    """
+    docker = 'docker' if no_sudo else 'sudo docker'
+    run = (lambda cmd: ctx.run(cmd, pty=True))
+    run(f'{docker} build . -f docker/Dockerfile.django-base -t ejplatform/ej-server:django-base')
+
+
+@task
+def docker_run(ctx, env=None, no_sudo=False, cmd=None, port=80, chmod=True):
+    """
+    Runs EJ platform using a docker container.
+    """
+    docker = 'docker' if no_sudo else 'sudo docker'
+    run = (lambda cmd: ctx.run(cmd, pty=True))
+
+    if env is None:
+        run(f'{docker} run '
+            f'-v `pwd`:/app '
+            f'-v `pwd`/local/docker:/app/local '
+            f'-p {port}:8000 '
+            f'-u root '
+            f'-it ejplatform/ej-server:django-base {cmd or "run"}')
+
+    if chmod:
+        run(f'sudo chown `whoami`:`whoami` * -R')
 
 
 #
@@ -248,12 +278,10 @@ def install_hooks(ctx):
 
 
 @task
-def update_deps(ctx, all=False, reset=False):
+def update_deps(ctx, all=False):
     """
     Update volatile dependencies
     """
-    if reset:
-        ctx.run('rm -fr local/vendor/')
     ctx.run(f'{python} etc/scripts/install-deps.py')
     if all:
         exec(ctx, f'{python} -m pip install -r etc/requirements/develop.txt')
@@ -285,6 +313,25 @@ def configure(ctx, silent=False):
     if ask('\nLoad fake data to database?'):
         print('Running inv db-fake')
         db_fake(ctx)
+
+
+#
+# Generic tasks (frequently used with docker entry points)
+#
+@task
+def bash(ctx):
+    """
+    Starts a bash shell.
+    """
+    os.execve('/bin/bash', ['bash'], os.environ)
+
+
+@task
+def shell(ctx):
+    """
+    Starts a Django shell
+    """
+    manage(ctx, 'shell')
 
 
 #

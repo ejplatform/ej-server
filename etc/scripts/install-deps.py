@@ -7,11 +7,10 @@ from importlib.util import find_spec
 from pathlib import Path
 
 python = sys.executable
-BASE_PATH = Path(__file__).parent.parent.parent
+BASE_PATH = Path(os.path.abspath(Path(__file__).parent.parent.parent))
 LOCAL = BASE_PATH / 'local'
 VENDOR = LOCAL / 'vendor'
 mod_map = {
-    # 'ej_conversations': 'https://github.com/ejplatform/ej-conversations.git/',
     'courier': 'https://github.com/ejplatform/django-messages-courier.git/',
     'boogie': 'https://github.com/fabiommendes/django-boogie.git/',
     'hyperpython': 'https://github.com/fabiommendes/hyperpython.git/',
@@ -40,8 +39,10 @@ def ensure_dirs(*paths):
 
 def run(cmd):
     print(f'$ {cmd}', flush=True)
-    subprocess.run(cmd.split(), stdout=subprocess.PIPE, check=True)
-    print(end='', flush=True)
+    status, out = subprocess.getstatusoutput(cmd)
+    print(out, flush=True)
+    if status != 0:
+        raise RuntimeError(f'exited with non-zero status: {status}')
 
 
 def main():
@@ -51,17 +52,19 @@ def main():
     ensure_dirs(LOCAL, VENDOR)
 
     for mod, uri in mod_map.items():
-        print(f'Verifying {mod}...')
-        path = Path(os.path.abspath(VENDOR / repo_dir(uri)))
-        if path.exists():
+        path = Path(VENDOR / repo_dir(uri))
+        mark = '[created]' if path.exists() else ''
+        print(f'Git module: {mod} (at {path} {mark})')
+
+        try:
+            print('\nTrying to clone repository')
+            with chdir(VENDOR):
+                run(f'git clone {uri} {path} --depth=1')
+        except RuntimeError:
             print('\nUpdating repository')
             with chdir(path):
                 run('git checkout master')
                 run('git pull --rebase origin master')
-        else:
-            print('\nCloning repository')
-            with chdir(VENDOR):
-                run(f'git clone {uri}')
 
         if not find_spec(mod):
             with chdir(path):
