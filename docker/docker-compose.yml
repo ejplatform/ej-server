@@ -1,57 +1,43 @@
 version: '3.5'
 
-networks:
-  ej:
-    name: ej
 
 volumes:
-  db_data: {}
+  db_data:
+
 
 services:
-  django: &django
-    image: ejplatform/ej-server:django-dev
+  web: &django
+    restart: always
+    image: ejplatform/dev:latest
     build:
-      context: ../
-      dockerfile: ./docker/Dockerfile.django-dev
-    depends_on:
-      - postgres
-      - redis
+      context: ../../
+      dockerfile: ./docker/Dockerfile.dev
+    ports:
+      - "8000:8000"
+    links:
+      - postgres:postgres
+      - redis:redis
     env_file:
       - ./env/django.env
       - ./env/postgres.env
-    links:
-      - postgres
-      - redis
- #     - rabbit
-    networks:
-      - ej
-    ports:
-      - 80:8000
+    environment:
+      - DJANGO_ENVIRONMENT=local
+      - EJ_TITLE=1
     volumes:
-      - ../:/app
+      - ../../:/app/
     working_dir: /app
+    command: run
+
 
   postgres:
+    restart: always
     image: postgres:9.6
     env_file:
       - ./env/postgres.env
-    networks:
-      - ej
     volumes:
-      - ../local/docker/db/pg:/var/lib/postgresql/data
+      - db_data:/var/lib/postgresql/data
+
 
   redis:
-    image: redis:3.2
-    networks:
-      - ej
-
-#  rabbit:
-#    image: rabbitmq:3.6.14-management
-#    env_file:
-#      - ./env/rabbit.env
-#    networks:
-#      - ej
-#    ports:
-#      - 5672:5672  # Debugging
-#      - 15672:15672  # RabbitMQ Manager
-
+    restart: always
+    image: redis:3

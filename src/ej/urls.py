@@ -6,6 +6,7 @@ from django.views import defaults as default_views
 from rest_framework.documentation import include_docs_urls
 
 from boogie.rest import rest_api
+from ej import services
 from ej.fixes import unregister_admin
 
 unregister_admin.unregister_apps()
@@ -13,7 +14,7 @@ unregister_admin.unregister_apps()
 #
 # Optional urls
 #
-if settings.EJ_ENABLE_ROCKETCHAT:
+if settings.EJ_ROCKETCHAT_INTEGRATION:
     rocket_urls = [path('talks/', include('ej_rocketchat.routes', namespace='rocketchat'))]
 else:
     rocket_urls = []
@@ -78,3 +79,5 @@ if settings.DEBUG:
         urlpatterns.append(
             path('__debug__/', include(debug_toolbar.urls))
         )
+
+services.start_services(settings)

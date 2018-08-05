@@ -56,7 +56,7 @@ class InstalledAppsConf(Base, EjOptions):
 
     def get_project_apps(self):
         apps = super().get_project_apps()
-        if self.EJ_ENABLE_ROCKETCHAT:
+        if self.EJ_ROCKETCHAT_INTEGRATION:
             apps = ['ej_rocketchat', *apps]
         return apps
 
