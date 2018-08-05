@@ -1,0 +1,11 @@
+FROM ejplatform/ej-server:latest
+
+
+# Install dev tools
+USER root
+RUN pip install -r /etc/requirements/develop.txt
+
+
+# In dev, we use root user and expose port 8000
+EXPOSE 8000
+CMD ["run"]

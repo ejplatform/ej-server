@@ -85,33 +85,44 @@ def clean_migrations(ctx):
 
 
 @task
-def run(ctx, no_toolbar=False, gunicorn=False):
+def run(ctx, no_toolbar=False):
     """
     Run development server
     """
     env = {}
     if no_toolbar:
         env['DISABLE_DJANGO_DEBUG_TOOLBAR'] = 'true'
-
-    if gunicorn:
-        from gunicorn.app.wsgiapp import run as run_gunicorn
-
-        env['PATH'] = os.environ['PATH']
-        env['PYTHONPATH'] = 'src'
-        args = [
-            'ej.wsgi', '-w', '4', '-b', '0.0.0.0:5000',
-            '--error-logfile=-',
-            '--access-logfile=-',
-            '--log-level', 'info',
-        ]
-
-        # Fixme, use execle to replace the current process
-        # print('Running: gunicorn', ' '.join(args))
-        # os.execle(python, *args, env)
-        sys.argv = ['gunicorn', *args]
-        run_gunicorn()
     else:
         manage(ctx, 'runserver 0.0.0.0:8000', env=env)
+
+
+@task
+def run_deploy(ctx, debug=False, environment='production', port=5000, workers=4):
+    """
+    Run application using gunicorn for production deploys.
+
+    It assumes that static media is served by a reverse proxy such as nginx.
+    """
+
+    from gunicorn.app.wsgiapp import run as run_gunicorn
+
+    env = {
+        'DISABLE_DJANGO_DEBUG_TOOLBAR': str(not debug),
+        'PYTHONPATH': 'src',
+        #'DJANGO_ENVIRONMENT': environment,
+        #'DJANGO_DEBUG': str(debug),
+    }
+    os.environ.update(env)
+
+    args = [
+        'ej.wsgi', '-w', str(workers), '-b', f'0.0.0.0:{port}',
+        '--error-logfile=-',
+        '--access-logfile=-',
+        '--log-level', 'info',
+    ]
+
+    sys.argv = ['gunicorn', *args]
+    run_gunicorn()
 
 
 #
@@ -184,21 +195,23 @@ def db_assets(ctx, path=None, force=False):
 # Docker
 #
 @task
-def docker_clean(ctx, no_sudo=False, all=False, volumes=False, networks=False, images=False, containers=False):
+def docker_clean(ctx, no_sudo=False, all=False, volumes=False, networks=False, images=False, containers=False,
+                 force=False):
     """
     Clean unused docker resources.
     """
 
     docker = 'docker' if no_sudo else 'sudo docker'
+    force = ' --force ' if force else ''
     run = (lambda cmd: ctx.run(cmd, pty=True))
     if volumes or all:
-        run(f'{docker} volume rm $({docker} volume ls -qf dangling=true)')
+        run(f'{docker} volume rm {force} $({docker} volume ls -q dangling=true)')
     if networks or all:
-        run(f'{docker} network rm $({docker} network ls | grep "bridge" | awk \'/ / {" print $1 "}\')')
+        run(f'{docker} network rm {force} $({docker} network ls | grep "bridge" | awk \'/ / {" print $1 "}\')')
     if images or all:
-        run(f'{docker} rmi $({docker} images --filter "dangling=true" -q --no-trunc)')
+        run(f'{docker} rmi {force} $({docker} images --filter "dangling=true" -q --no-trunc)')
     if containers or all:
-        run(f'{docker} rm $({docker} ps -qa --no-trunc --filter "status=exited")')
+        run(f'{docker} rm {force} $({docker} ps -qa --no-trunc --filter "status=exited")')
 
     if not any([all, volumes, networks, images, containers]):
         print('You must select one kind of docker resource to clean.', file=sys.stderr)
@@ -211,24 +224,37 @@ def docker_build(ctx, no_sudo=False):
     """
     docker = 'docker' if no_sudo else 'sudo docker'
     run = (lambda cmd: ctx.run(cmd, pty=True))
-    run(f'{docker} build . -f docker/Dockerfile.django-base -t ejplatform/ej-server:django-base')
+    run(f'{docker} build . -f docker/Dockerfile.django -t ejplatform/ej-server:latest')
+    run(f'{docker} build . -f docker/Dockerfile.django-dev -t ejplatform/ej-server:django-dev')
+    run(f'{docker} build . -f docker/Dockerfile.nginx -t ejplatform/ej-nginx:latest')
 
 
 @task
-def docker_run(ctx, env=None, no_sudo=False, cmd=None, port=80, chmod=True):
+def docker_run(ctx, env='run', no_sudo=False, cmd=None, port=80, chmod=True):
     """
     Runs EJ platform using a docker container.
     """
     docker = 'docker' if no_sudo else 'sudo docker'
-    run = (lambda cmd: ctx.run(cmd, pty=True))
+    run = (lambda cmd: print(f'$ {cmd}') or ctx.run(cmd, pty=True))
 
-    if env is None:
+    if env == 'run':
         run(f'{docker} run '
             f'-v `pwd`:/app '
             f'-v `pwd`/local/docker:/app/local '
             f'-p {port}:8000 '
-            f'-u root '
-            f'-it ejplatform/ej-server:django-base {cmd or "run"}')
+            f'-it ejplatform/ej-server:django-dev {cmd or "run"}')
+    elif env == 'dev':
+        run(f'{docker}-compose -f docker/docker-compose.yml up -d')
+        run(f'{docker}-compose -f docker/docker-compose.yml run -p 8000:8000 django bash')
+        run(f'{docker}-compose -f docker/docker-compose.yml stop')
+    elif env == 'up':
+        run(f'{docker}-compose -f docker/docker-compose.yml up')
+    elif env == 'bash':
+        run(f'{docker}-compose -f docker/docker-compose.yml run -p 8000:8000 django bash')
+    elif env == 'deploy':
+        run(f'{docker}-compose -f docker/deploy/docker-compose.yml up')
+    else:
+        raise SystemExit(f'invalid choice for env: {env}')
 
     if chmod:
         run(f'sudo chown `whoami`:`whoami` * -R')
@@ -284,6 +310,7 @@ def update_deps(ctx, all=False):
     """
     ctx.run(f'{python} etc/scripts/install-deps.py')
     if all:
+        exec(ctx, f'{python} -m pip install -r etc/requirements/base.txt')
         exec(ctx, f'{python} -m pip install -r etc/requirements/develop.txt')
     else:
         print('By default we only update the volatile dependencies. Run '
@@ -323,6 +350,7 @@ def bash(ctx):
     """
     Starts a bash shell.
     """
+    print('\nStarting bash console')
     os.execve('/bin/bash', ['bash'], os.environ)
 
 
@@ -338,7 +366,7 @@ def shell(ctx):
 # Prepare deploy
 #
 @task
-def prepare_deploy(ctx, ask_input=False):
+def prepare_deploy(ctx):
     """
     Deploy checklist:
 
@@ -348,19 +376,17 @@ def prepare_deploy(ctx, ask_input=False):
     * Collect static files
     * Save assets to database
     """
-    no_input = not ask_input
-
     # CSS
-    sass(ctx, no_watch=no_input)
+    sass(ctx, no_watch=True)
 
     # Js
     js(ctx)
 
     # Translations
-    i18n(ctx, compile=no_input)
+    i18n(ctx, compile=True)
 
     # Static files
-    manage(ctx, 'collectstatic', noinput=no_input)
+    manage(ctx, 'collectstatic', noinput=True)
 
 
 #

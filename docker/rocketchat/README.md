@@ -1,4 +1,4 @@
-# Extensions Dockers
+# Rocketchat docker
 
 This directory contains all compose files from extensions, such as: `rocketchat`.
 
