@@ -10,6 +10,10 @@
 |                       |                       | .org>`__              |
 +-----------------------+-----------------------+-----------------------+
 
+.. image:: https://api.codeclimate.com/v1/badges/fd8f8c7d5d2bc74c38df/maintainability
+   :target: https://codeclimate.com/github/ejplatform/ej-server/maintainability
+   :alt: Maintainability
+
 
 ===========
 EJ Platform
@@ -151,14 +155,6 @@ Arch Linux is fairly aggressive about keeping up with Python releases. It is lik
     $ packman -S python
     $ packman -S nodejs
     $ npm install sass
-
-Mac
----
-We'll start by installing homebrew to make things easier and then Python 3, followed by Sass.
-
-    $ /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-    $ brew install python
-    $ brew install sass/sass/sass
 
 Verify Your Python Install
 --------------------------

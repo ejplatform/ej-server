@@ -1,66 +1,62 @@
 FROM debian:buster-slim
 
-ENV PYTHONUNBUFFERED=1 \
-    LANG=C.UTF-8 \
-    PYTHONPATH="/app/src/:$PYTHONPATH"
+# Set environment variables
+ENV PYTHONUNBUFFERED = 1
+ENV LANG = C.UTF-8
+ENV PYTHONPATH = "/app/src/:$PYTHONPATH"
 
-EXPOSE 5000
 
-# Install fixed Debian dependencies
-RUN apt-get update && apt-get install -y \
+# Install stable Debian dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
         bundler \
         curl \
-        gcc \
         git \
         gnupg2 \
-        libc6-dev \
-        libdpkg-perl \
-        ruby-sass \
-        make \
+        gettext \
+        nodejs=8.11.2~dfsg-1 \
         python3.6 \
-        python3.6-dev \
         python3-pip \
         python3-setuptools \
-        ruby-full=1:2.5.1 \
-        gettext \
-        --no-install-recommends \
+        ruby-sass \
  && curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
  && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
+ && apt-get update && apt-get install -y --no-install-recommends yarn \
  && rm -rf /var/lib/apt/lists/* \
- && pip3 install --upgrade pip \
- && gem install sass
-
-RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - \
-    && apt-get install -y nodejs
+ && pip3 install --upgrade pip setuptools invoke ~= 0.23
 
 
-# ej-server Dependencies
-WORKDIR /dependencies
+# Install stable EJ dependencies
+COPY ./etc/requirements/ /etc/requirements/
+RUN < /etc/requirements/npm_globals.txt xargs yarn global add \
+ && pip install -r /etc/requirements/base.txt
+RUN pip install -r /etc/requirements/production.txt
 
-COPY ./etc/npm_globals.txt /dependencies/npm_globals.txt
 
-RUN npm install -g yarn
-RUN < npm_globals.txt xargs yarn global add
+# Clone volatile dependencies and install them
+COPY ./etc/scripts/install-deps.py /app/etc/scripts/install-deps.py
+RUN python3 /app/etc/scripts/install-deps.py
 
-COPY ./etc/requirements/*.txt /dependencies/
-RUN pip install -r /dependencies/production.txt
+
+# Copy files
+EXPOSE 5000
+WORKDIR /app
+COPY . /app
+
+# Create django user
+RUN groupadd -r django \
+ && useradd -r -g django django \
+ && chown django:django /app/etc/scripts/ -r
+
+
+ARG THEME=default
+ENV THEME=${THEME}
 
 ARG VOLATILE_DEPENDENCIES_STRATEGY=unknown
 RUN VOLATILE_DEPENDENCIES_STRATEGY=${VOLATILE_DEPENDENCIES_STRATEGY} pip install -r /dependencies/git-modules.txt
 
-COPY ./etc/scripts/**/* /
-
-RUN groupadd -r django \
-    && useradd -r -g django django \
-    && chown django:django /*.sh
-
-WORKDIR /app
-COPY . /app
-
-ARG THEME=default
-ENV THEME=${THEME}
 RUN inv prepare-deploy \
-    && chown -R django:django /app
+    && chown -R django:django /app \
+    && ln -s /usr/bin/python3 /usr/bin/python
 
 USER django
 
