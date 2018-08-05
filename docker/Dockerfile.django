@@ -38,7 +38,11 @@ RUN pip install -r /etc/requirements/production.txt \
 
 # Copy files
 WORKDIR /app
-COPY . /app
+COPY ./lib/ /app/lib/
+COPY ./src/ /app/src/
+COPY ./locale/ /app/locale/
+COPY ./manage.py /app/manage.py
+COPY ./.coveragerc /app/.coveragerc
 RUN pip install -r /etc/requirements/git-modules.txt
 
 
@@ -48,7 +52,8 @@ ENV theme=${theme}
 
 
 # Prepare deploy
-RUN inv update-deps prepare-deploy
+COPY ./tasks.py /app/tasks.py
+RUN inv prepare-deploy
 
 
 # Create django user
@@ -59,6 +64,6 @@ USER django
 
 
 # Entry point defaults to inv run
-EXPOSE 8000
+EXPOSE 5000
 ENTRYPOINT ["inv"]
-CMD ["run"]
+CMD ["db", "-m", "run-deploy"]
