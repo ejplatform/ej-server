@@ -18,6 +18,7 @@ from ej_users.models import User
 from ej_channels.models import Channel
 from ej_notifications.models import Notification
 from .socialbuttons import social_buttons
+from push_notifications.models import APNSDevice, GCMDevice
 
 User = get_user_model()
 
@@ -182,3 +183,13 @@ def check_token(request):
 # Auxiliary functions and templates
 #
 login_extra_template = get_template('socialaccount/snippets/login_extra.html')
+
+@urlpatterns.route('create-user-device/', csrf=False)
+def create_user_device(request):
+    user_id = request.POST.get('user')
+    if user_id is None:
+        raise Http404
+    user = User.objects.get(id=user_id)
+    registration_id = request.POST.get('registration_id')
+    fcm_device = GCMDevice.objects.create(registration_id=registration_id, cloud_message_type="FCM", user=user)
+    return JsonResponse({'token': fcm_device.registration_id}, status=status.HTTP_200_OK)
