@@ -4,6 +4,7 @@ services:
 
 # The pre-build part of the pipeline should be disabled most of the time!
 stages:
+  - pre-build
   - build
   - test
   - deploy
@@ -42,9 +43,9 @@ variables:
 # PRE-BUILD: the pre-build stage simply adds some utility images to DockerHub
 # those images are used by other containers either in multi-stage builds or
 # as the parent container of a build.
-.pre-build:
+pre-build:
   image: docker
-  stage: build
+  stage: pre-build
   script:
     - *login
     - sh etc/scripts/docker-images.sh $PREBUILD_VERSION
