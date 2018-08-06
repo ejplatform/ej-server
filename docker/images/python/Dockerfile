@@ -10,8 +10,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         python3-pip \
         python3-setuptools \
  && pip3 install --upgrade pip setuptools invoke~=0.23 \
- && ln -s /usr/bin/python3 /usr/bin/python
- && ln -s /usr/bin/pip3 /usr/bin/pip
+ && ln -s /usr/bin/python3 /usr/bin/python \
+ && ln -s /usr/bin/pip3 /usr/bin/pip \
  && rm -rf /var/lib/apt/lists/* \
  && rm -rf /root/.cache/* \
  && echo "INSTALLATION IS DONE!"

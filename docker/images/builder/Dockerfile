@@ -1,4 +1,5 @@
-FROM ejplatform/invoke:latest
+ARG VERSION=latest
+FROM ejplatform/python:${VERSION}
 
 # Install stable Debian dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -14,10 +15,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
  && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
  && apt-get update && apt-get install -y --no-install-recommends \
         yarn \
- # Python tools
+ # Python tools \
  && pip install \
         flake8~=3.5.0 \
- # Clean the mess
+ # Clean the mess \
  && rm -rf /var/lib/apt/lists/* \
  && rm -rf /root/.cache/* \
  && echo "INSTALLATION IS DONE!"

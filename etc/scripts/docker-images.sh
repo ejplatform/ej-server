@@ -25,7 +25,7 @@ cd ../../..
 # Build builder
 cd docker/images/builder/
 echo "BUILDING $BUILDER"
-docker build . -t $BUILDER --cache-from $BUILDER
+docker build . -t $BUILDER --cache-from $BUILDER --build-arg VERSION=$1
 docker push $BUILDER
 cd ../../..
 
