@@ -24,11 +24,12 @@ def manage(ctx, cmd, env=None, **kwargs):
 # Build assets
 #
 @task
-def sass(ctx, no_watch=False, trace=False, theme=None):
+def sass(ctx, no_watch=False, trace=False, theme=None, dry_run=False):
     """
     Run Sass compiler
     """
 
+    go = (lambda x: print(x) if dry_run else exec(ctx, x, pty=True))
     cmd_main = (
         'lib/scss/maindefault.scss:lib/assets/css/maindefault.css '
         'lib/scss/maindefault.scss:lib/assets/css/main.css'
@@ -48,10 +49,9 @@ def sass(ctx, no_watch=False, trace=False, theme=None):
     suffix = '' if no_watch else ' --watch'
     suffix += ' --trace' if trace else ''
 
-    ctx.run('rm -rf .sass-cache')
     cmd_themes = ' '.join(cmd_themes)
-    cmd = f'sass {cmd_main} {cmd_rocket} {cmd_themes} {suffix}'
-    exec(ctx, cmd, pty=True)
+    go('rm -rf .sass-cache')
+    go(f'sass {cmd_main} {cmd_rocket} {cmd_themes} {suffix}')
 
 
 @task
@@ -273,7 +273,7 @@ def docker_pull(ctx, tag='latest', theme='default:ejplatform', extra_args='',
 
 @task
 def docker_run(ctx, env, cmd=None, port=8000, clean_perms=False, deploy=False,
-               compose_file=None, dry_run=False):
+               compose_file=None, dry_run=False, tag='latest'):
     """
     Runs EJ platform using a docker container.
 
@@ -292,7 +292,7 @@ def docker_run(ctx, env, cmd=None, port=8000, clean_perms=False, deploy=False,
         do(f'{docker} run '
            f'-v `pwd`:/app '
            f'-p {port}:8000 '
-           f'-it ejplatform/dev:latest {cmd or "run"}')
+           f'-it ejplatform/dev:{tag} {cmd or "run"}')
     elif env == 'start':
         do(f'{compose} up -d')
         do(f'{compose} run -p {port}:8000 web {cmd or "bash"}')

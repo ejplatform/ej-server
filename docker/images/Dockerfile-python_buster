@@ -3,7 +3,6 @@ FROM debian:buster-slim
 # Set environment variables
 ENV LANG=C.UTF-8
 
-
 # Install stable Debian dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
         python3.6 \

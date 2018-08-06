@@ -1,38 +1,15 @@
-FROM debian:buster-slim
+FROM ejplatform/base-deps:latest
 
 # Set environment variables
 ENV PYTHONUNBUFFERED=1
-ENV LANG=C.UTF-8
 ENV PYTHONPATH="/app/src/:$PYTHONPATH"
-
-
-# Install stable Debian dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends \
-        bundler \
-        curl \
-        git \
-        gnupg2 \
-        gettext \
-        nodejs=8.11.2~dfsg-1 \
-        python3.6 \
-        python3-pip \
-        python3-setuptools \
-        ruby-sass \
- && curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
- && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
- && apt-get update && apt-get install -y --no-install-recommends yarn \
- && rm -rf /var/lib/apt/lists/* \
- && pip3 install --upgrade pip setuptools invoke~=0.23 \
- && ln -s /usr/bin/python3 /usr/bin/python
 
 
 # Install stable EJ dependencies
 COPY ./etc/requirements/ /etc/requirements/
 RUN < /etc/requirements/npm_globals.txt xargs yarn global add \
  && pip install -r /etc/requirements/base.txt \
- && rm -rf ~/.cache/pip/
-RUN pip install -r /etc/requirements/production.txt \
- && pip install -r /etc/requirements/git-modules.txt \
+ && pip install -r /etc/requirements/production.txt \
  && rm -rf ~/.cache/pip/
 
 
@@ -48,8 +25,10 @@ RUN pip install -r /etc/requirements/git-modules.txt
 
 # Set theme
 ARG THEME=default
-ENV EJ_THEME=${theme}
-ENV THEME=${theme}
+ENV EJ_THEME=${THEME}
+ENV DJANGO_SETTINGS_MODULE=ej.settings
+ENV DJANGO_ENVIRONMENT=production
+ENV DJANGO_DEBUG=true
 
 
 # Prepare deploy
@@ -71,4 +50,4 @@ USER django
 # Entry point defaults to inv run
 EXPOSE 5000
 ENTRYPOINT ["inv"]
-CMD ["db", "-m", "run-deploy"]
+CMD ["bash"]

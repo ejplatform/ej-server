@@ -1,0 +1,5 @@
+FROM node:alpine
+
+# Set environment variables
+ENV LANG=C.UTF-8
+RUN npm install webpack@4.6.0

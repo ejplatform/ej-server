@@ -23,6 +23,7 @@ IPython
 # Tools
 Sphinx ~= 1.6
 Werkzeug  ~= 0.12
+invoke ~= 1.0
 
 # Tranlations
 Babel ~= 2.6.0

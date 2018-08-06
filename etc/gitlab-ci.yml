@@ -1,41 +1,29 @@
-services:
-  - docker:dind
-
-
-# The pre-build part of the pipeline should be disabled most of the time!
 stages:
-  - pre-build
-  - build
   - test
+  - publish
   - deploy
 
 
-# Environment variables
 variables:
   DOCKER_DRIVER: overlay2
   PREBUILD_VERSION: v0-pre1
 
-
 # Reusable configurations
 .container: &container
   image: ejplatform/docker-invoke:$PREBUILD_VERSION
+  services:
+    - docker:dind
   before_script:
     - &login docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASS
   tags:
     - docker
 
-.runner: &runner
-  << : *container
-  stage: test
-  before_script:
-    - echo "Starting runner"
-
 .publisher: &publisher
-  << : *container
+  image: cdrx/rancher-gitlab-deploy
   stage: deploy
   before_script:
     - *login
-    - docker pull cdrx/rancher-gitlab-deploy
+    - docker pull
   script:
     - upgrade --environment $RANCHER_ENVIRONMENT --stack $RANCHER_STACK --service backend --sidekicks --no-finish-upgrade
 
@@ -43,7 +31,7 @@ variables:
 # PRE-BUILD: the pre-build stage simply adds some utility images to DockerHub
 # those images are used by other containers either in multi-stage builds or
 # as the parent container of a build.
-pre-build:
+.pre-build:
   image: docker
   stage: pre-build
   script:
@@ -62,27 +50,34 @@ build:
   << : *container
   stage: build
   script:
-    - *login
-    - inv -e docker-build -t $CI_COMMIT_REF_SLUG --theme=$THEMES
+    - inv -e docker-build -t $CI_COMMIT_REF_SLUG --theme=$THEMES --cache
     - inv -e docker-push  -t $CI_COMMIT_REF_SLUG --theme=$THEMES
 
 
 # TEST: test in different environments by changing the database or running a
 # linter
 test:sqlite3:
-  << : *runner
+  image : ejplatform/python:dev
+  stage: test
   script:
-    - inv -e docker-run --cmd test
+    - pytest
 
-test:postgres:
-  << : *runner
+test:postgresql:
+  image : ejplatform/python:dev
+  stage: test
+  variables:
+    - DJANGO_DB_URL: postgres:postgres@postgres:5550
+  services:
+    - postgres
   script:
-    - inv -e docker-run -e dev --cmd test
+    - pytest
 
-test:lint:
-  << : *runner
+test:flake8:
+  image: ejplatform/python:alpine
+  stage: test
   script:
-    - inv -e docker-run --cmd lint
+    - pip install flake8
+    - flake8 src/
 
 
 # PUSH: commits on master

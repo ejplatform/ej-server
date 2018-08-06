@@ -1,0 +1,10 @@
+ARG BASE=base
+
+FROM ejplatform/python:${BASE}
+ARG INSTALL=base
+
+# Install Python dependencies
+COPY "./requirements-${INSTALL}.txt" requirements.txt
+COPY "./requirements-base.txt" base.txt
+RUN pip install -r requirements.txt \
+ && rm -rf /root/.cache/*
