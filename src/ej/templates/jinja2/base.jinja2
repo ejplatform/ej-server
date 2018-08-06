@@ -7,7 +7,7 @@
 {% set target = target|default(target_context) %}
 {% set theme = theme|default(request.GET.get('theme','') or current_theme) %}
 {% set content_title = content_title|default('') %}
-{% set page_title = page_title|default(content_title|default(settings.EJ_PAGE_TITLE)) %}
+{% set page_title = page_title|default(content_title or settings.EJ_PAGE_TITLE) %}
 {% set hide_footer = hide_footer|default(False) %}
 
 {% if target == 'all' %}
