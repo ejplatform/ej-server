@@ -249,7 +249,7 @@ def docker_pull(ctx, tag='latest', theme='default:ejplatform', extra_args='',
     """
     Rebuild all docker images for the project.
     """
-    cmd = sudo(f'docker push')
+    cmd = sudo(f'docker pull')
     do = (lambda cmd: print(cmd) if dry_run else ctx.run(cmd, pty=True))
 
     for item in theme.split(','):
