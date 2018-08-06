@@ -17,7 +17,7 @@ variables:
 
 # Reusable configurations
 .container: &container
-  image: $DOCKER_INVOKE
+  image: ejplatform/docker-invoke:$PREBUILD_VERSION
   before_script:
     - &login docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASS
   tags:
