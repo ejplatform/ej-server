@@ -4,10 +4,9 @@ services:
 
 # The pre-build part of the pipeline should be disabled most of the time!
 stages:
-  - pre-build
   - build
   - test
-  - release
+  - deploy
 
 
 # Environment variables
@@ -26,11 +25,13 @@ variables:
 
 .runner: &runner
   << : *container
+  stage: test
   before_script:
     - inv -e docker-pull -t $CI_COMMIT_REF_SLUG --theme=$THEMES
 
 .publisher: &publisher
   << : *container
+  stage: deploy
   before_script:
     - *login
     - docker pull cdrx/rancher-gitlab-deploy
@@ -41,11 +42,14 @@ variables:
 # PRE-BUILD: the pre-build stage simply adds some utility images to DockerHub
 # those images are used by other containers either in multi-stage builds or
 # as the parent container of a build.
-pre-build:
+.pre-build:
   image: docker
+  stage: build
   script:
     - *login
     - sh etc/scripts/docker-images.sh $PREBUILD_VERSION
+  tags:
+    - docker
 
 
 
@@ -55,6 +59,7 @@ pre-build:
 # and commits with tags create tagged images.
 build:
   << : *container
+  stage: build
   script:
     - *login
     - inv -e docker-build -t $CI_COMMIT_REF_SLUG --theme=$THEMES
@@ -65,36 +70,31 @@ build:
 # linter
 test:sqlite3:
   << : *runner
-  stage: test
   script:
     - inv -e docker-run --cmd test
 
 test:postgres:
   << : *runner
-  stage: test
   script:
     - inv -e docker-run -e dev --cmd test
 
 test:lint:
   << : *runner
-  stage: test
   script:
     - inv -e docker-run --cmd lint
 
 
 # PUSH: commits on master
-release:master:
+deploy:staging:
   << : *publisher
-  stage: release
   script:
     - inv -e docker-push --from $CI_COMMIT_REF_SLUG
     - inv -e rancher-push
   only:
     - master
 
-release:tag:
+deploy:release:
   << : *publisher
-  stage: release
   script:
     - inv -e docker-push --from $CI_COMMIT_REF_SLUG -t $CI_COMMIT_TAG
     - inv -e rancher-push -t $CI_COMMIT_TAG
