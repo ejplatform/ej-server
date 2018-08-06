@@ -28,7 +28,7 @@ variables:
   << : *container
   stage: test
   before_script:
-    - inv -e docker-pull -t $CI_COMMIT_REF_SLUG --theme=$THEMES
+    - echo "Starting runner"
 
 .publisher: &publisher
   << : *container
@@ -89,7 +89,7 @@ test:lint:
 deploy:staging:
   << : *publisher
   script:
-    - inv -e docker-push --from $CI_COMMIT_REF_SLUG
+    - inv -e docker-push --from $CI_COMMIT_REF_SLUG -t latest
     - inv -e rancher-push
   only:
     - master
