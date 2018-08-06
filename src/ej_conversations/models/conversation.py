@@ -122,7 +122,7 @@ class Conversation(TimeStampedModel):
 
     def clean(self):
         can_edit = 'ej_conversations.can_edit_conversation'
-        if self.is_promoted and not self.author.has_perm(can_edit, self):
+        if self.is_promoted and self.author_id is not None and not self.author.has_perm(can_edit, self):
             raise ValidationError(_(
                 'User does not have permission to create a promoted '
                 'conversation.')
