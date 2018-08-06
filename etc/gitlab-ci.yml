@@ -13,7 +13,7 @@ stages:
 # Environment variables
 variables:
   DOCKER_DRIVER: overlay2
-  PREBUILD_VERSION: v1-pre1
+  PREBUILD_VERSION: v0-pre1
 
 
 # Reusable configurations
