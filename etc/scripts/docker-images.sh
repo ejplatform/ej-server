@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+
+# Force exit on errors
+set -o errexit
+set -o pipefail
+set -o nounset
+
+
 # Variables and versions
 DOCKER_INVOKE=ejplatform/docker-invoke:$1
 PYTHON=ejplatform/python:$1
