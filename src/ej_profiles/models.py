@@ -46,8 +46,8 @@ class Profile(models.Model):
         if (self.birth_date is None):
             age = None
         else:
-            delta = datetime.datetime.now() - self.birth_date
-            age = int(delta.days // 365.25)
+            delta = datetime.datetime.now().date() - self.birth_date
+            age = abs(int(delta.days // 365.25))
         return age
 
     class Meta:
@@ -103,7 +103,7 @@ class Profile(models.Model):
         registered profile fields.
         """
 
-        fields = ['city', 'country', 'occupation', 'birth_date', 'gender', 'race',
+        fields = ['city', 'country', 'occupation', 'gender', 'race',
                   'political_activity', 'biography']
         field_map = {field.name: field for field in self._meta.fields}
         result = []
@@ -111,6 +111,9 @@ class Profile(models.Model):
             description = field_map[field].verbose_name
             getter = getattr(self, f'get_{field}_display', lambda: getattr(self, field))
             result.append((description.capitalize(), getter()))
+        
+        age = (_('Age') , self.age)
+        result.insert(3, age)
         if user_fields:
             result = [
                 (_('E-mail'), self.user.email),
