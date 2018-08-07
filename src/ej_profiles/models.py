@@ -92,8 +92,8 @@ class Profile(models.Model):
 
     @property
     def is_filled(self):
-        fields = ('race', 'age', 'birth_date', 'education', 'ethnicity', 'country', 'state', 'city', 
-                    'biography', 'occupation', 'political_activity', 'has_image', 'gender_description')
+        fields = ('race', 'age', 'birth_date', 'education', 'ethnicity', 'country', 'state', 'city',
+                  'biography', 'occupation', 'political_activity', 'has_image', 'gender_description')
         return bool(all(getattr(self, field) for field in fields))
 
     def get_absolute_url(self):
@@ -113,8 +113,8 @@ class Profile(models.Model):
             description = field_map[field].verbose_name
             getter = getattr(self, f'get_{field}_display', lambda: getattr(self, field))
             result.append((description.capitalize(), getter()))
-        
-        age = (_('Age') , self.age)
+
+        age = (_('Age'), self.age)
         result.insert(3, age)
         if user_fields:
             result = [

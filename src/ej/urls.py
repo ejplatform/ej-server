@@ -33,7 +33,7 @@ urlpatterns = [
     # Conversations and other EJ-specific routes
     path('', include('ej_boards.routes.conversation', namespace='board_conversation')),
     path('conversations/', include('ej_conversations.routes', namespace='conversation')),
-    path('conversations/', include('ej_clusters.routes', namespace='cluster')),
+    path('', include('ej_clusters.routes', namespace='cluster')),
     path('conversations/', include('ej_reports.routes', namespace='report')),
 
     # Configurations
