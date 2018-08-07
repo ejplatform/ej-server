@@ -2,7 +2,7 @@ ARG BASE_IMAGE=ejplatform/web:latest
 FROM $BASE_IMAGE
 
 
-# Install dev tools
+# Install dev tools. In dev we don't need to run as the django user.
 USER root
 RUN pip install -r /etc/requirements/develop.txt
 

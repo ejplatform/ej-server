@@ -22,9 +22,9 @@ class InstalledAppsConf(Base, EjOptions):
 
     THIRD_PARTY_APPS = [
         # External apps created by the EJ team
-        'courier',
-        'courier.pushnotifications',
-        'courier.pushnotifications.providers.onesignal',
+        # 'courier',
+        # 'courier.pushnotifications',
+        # 'courier.pushnotifications.providers.onesignal',
 
         # Third party apps
         'taggit',

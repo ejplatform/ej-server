@@ -1,8 +1,5 @@
 # Import base
--r base.txt
-
-# Database
-psycopg2-binary ~= 2.7
+-r local.txt
 
 # WSGI Handler
 gunicorn ~= 19.7.1
@@ -21,6 +18,5 @@ raven ~= 6.5.0
 django-redis ~= 4.8.0
 redis>=2.10.5
 
-# Celery tools
-flower ~= 0.9.2
-
+# Database
+psycopg2-binary ~= 2.7

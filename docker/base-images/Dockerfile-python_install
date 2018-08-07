@@ -1,10 +1,10 @@
-ARG BASE=base
+ARG BASE=buster
 
 FROM ejplatform/python:${BASE}
-ARG INSTALL=base
+ARG INSTALL=local
 
 # Install Python dependencies
 COPY "./requirements-${INSTALL}.txt" requirements.txt
-COPY "./requirements-base.txt" base.txt
+COPY "./requirements-local.txt" local.txt
 RUN pip install -r requirements.txt \
  && rm -rf /root/.cache/*

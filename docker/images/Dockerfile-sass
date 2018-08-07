@@ -1,5 +1,0 @@
-FROM ruby:latest
-
-# Set environment variables
-ENV LANG=C.UTF-8
-RUN gem install sass

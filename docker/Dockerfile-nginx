@@ -1,6 +1,5 @@
 ARG BASE_IMAGE=ejplatform/nginx:latest
 FROM $BASE_IMAGE as django
-
 FROM nginx:1.13
 
 COPY ./docker/nginx.conf /etc/nginx/conf.d/default.conf

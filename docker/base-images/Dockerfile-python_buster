@@ -8,6 +8,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         python3.6 \
         python3-pip \
         python3-setuptools \
+        unzip \
  && pip3 install --upgrade pip setuptools invoke~=0.23 \
  && ln -s /usr/bin/python3 /usr/bin/python \
  && ln -s /usr/bin/pip3 /usr/bin/pip \

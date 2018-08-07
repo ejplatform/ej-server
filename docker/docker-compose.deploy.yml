@@ -10,7 +10,7 @@ services:
     restart: always
     image: ejplatform/web:latest
     build:
-      context: ../../
+      context: ../
       dockerfile: ./docker/Dockerfile
     ports:
       - "5000:8000"
@@ -18,14 +18,13 @@ services:
       - postgres:postgres
       - redis:redis
     env_file:
-      - ../env/django.env
-      - ../env/postgres.env
-      - ./deploy.env
+      - ./env/django.env
+      - ./env/postgres.env
+      - ./env/deploy.env
     environment:
-      #- DJANGO_ENVIRONMENT=production
-      - EJ_TITLE=1
+      - DJANGO_ENVIRONMENT=production
     volumes:
-      - ../../local/docker/static/media/:/app/local/media/
+      - ../local/docker/static/media/:/app/local/media/
     working_dir: /app
     command: db -m run-deploy
 
@@ -33,8 +32,11 @@ services:
   nginx:
     restart: always
     image: ejplatform/ej-nginx:latest
+    build:
+      context: ../
+      dockerfile: ./docker/Dockerfile-nginx
     volumes:
-      - ../../local/docker/media/:/usr/share/nginx/html/media
+      - ../local/docker/media/:/usr/share/nginx/html/media
     ports:
       - 80:80
     links:
@@ -45,7 +47,7 @@ services:
     restart: always
     image: postgres:9.6
     env_file:
-      - ./deploy.env
+      - ./env/deploy.env
     volumes:
       - db_data:/var/lib/postgresql/data
 

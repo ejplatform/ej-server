@@ -24,34 +24,30 @@ def manage(ctx, cmd, env=None, **kwargs):
 # Build assets
 #
 @task
-def sass(ctx, no_watch=False, trace=False, theme=None, dry_run=False):
+def sass(ctx, watch=True, theme=None, trace=False, dry_run=False):
     """
     Run Sass compiler
     """
 
     go = (lambda x: print(x) if dry_run else exec(ctx, x, pty=True))
-    cmd_main = (
-        'lib/scss/maindefault.scss:lib/assets/css/maindefault.css '
-        'lib/scss/maindefault.scss:lib/assets/css/main.css'
-    )
-    cmd_rocket = 'lib/scss/rocket.scss:lib/assets/css/rocket.css'
+    cmd = 'sass'
+    cmd += ' lib/scss/maindefault.scss:lib/assets/css/maindefault.css'
+    cmd += ' lib/scss/maindefault.scss:lib/assets/css/main.css'
+    cmd += ' lib/scss/rocket.scss:lib/assets/css/rocket.css'
 
+    # Handle themes
     themes_path = 'lib/themes'
-    cmd_themes = []
-
     for theme in os.listdir(themes_path):
-        cmd_themes.append(f'lib/themes/{theme}/scss/main.scss:lib/assets/css/main{theme}.css')
+        cmd += f' lib/themes/{theme}/scss/main.scss:lib/assets/css/main{theme}.css'
         asset_dir = f'lib/assets/{theme}'
         if os.path.exists(asset_dir):
             os.remove(asset_dir)
         os.symlink(f'../themes/{theme}/assets/', asset_dir)
 
-    suffix = '' if no_watch else ' --watch'
-    suffix += ' --trace' if trace else ''
-
-    cmd_themes = ' '.join(cmd_themes)
+    cmd += ' --watch' if watch else ''
+    cmd += ' --trace' if trace else ''
     go('rm -rf .sass-cache')
-    go(f'sass {cmd_main} {cmd_rocket} {cmd_themes} {suffix}')
+    go(cmd)
 
 
 @task
@@ -211,8 +207,8 @@ def dockerfiles_cmd(ctx, cmd, tag='latest', dry_run=False, org='ejplatform',
     cmd = sudo(f'docker {cmd} -f docker/Dockerfile')
     do = (lambda cmd: print(cmd) if dry_run else ctx.run(cmd, pty=True))
     do(f'{cmd}       -t {org}/web:{tag}   {args_web}')
-    do(f'{cmd}.dev   -t {org}/dev:{tag}   {args_dev}')
-    do(f'{cmd}.nginx -t {org}/nginx:{tag} {args_nginx}')
+    do(f'{cmd}-dev   -t {org}/dev:{tag}   {args_dev}')
+    do(f'{cmd}-nginx -t {org}/nginx:{tag} {args_nginx}')
 
 
 @task
@@ -283,7 +279,7 @@ def docker_run(ctx, env, cmd=None, port=8000, clean_perms=False, deploy=False,
     docker = sudo('docker')
     do = (lambda cmd: print(cmd) if dry_run else ctx.run(cmd, pty=True))
     if compose_file is None and deploy or env == 'deploy':
-        compose_file = 'docker/deploy/docker-compose.yml'
+        compose_file = 'docker/docker-compose.deploy.yml'
     elif compose_file is None:
         compose_file = 'docker/docker-compose.yml'
     compose = f'{docker}-compose -f {compose_file}'
@@ -391,7 +387,7 @@ def update_deps(ctx, all=False):
     """
     ctx.run(f'{python} etc/scripts/install-deps.py')
     if all:
-        exec(ctx, f'{python} -m pip install -r etc/requirements/base.txt')
+        exec(ctx, f'{python} -m pip install -r etc/requirements/local.txt')
         exec(ctx, f'{python} -m pip install -r etc/requirements/develop.txt')
     else:
         print('By default we only update the volatile dependencies. Run '
@@ -455,26 +451,16 @@ def test(ctx):
 # Deploy tasks
 #
 @task
-def prepare_deploy(ctx):
-    """
-    Deploy checklist:
-
-    * Build CSS assets
-    * Build JS assets
-    * Compile translations
-    * Collect static files
-    * Save assets to database
-    """
-    sass(ctx, no_watch=True)
-    js(ctx)
-    i18n(ctx, compile=True)
-    manage(ctx, 'collectstatic', noinput=True)
-
-
-@task
 def rancher_push(ctx):
     """
     Push containers to a Rancher server.
+    """
+
+
+@task
+def wait_db(ctx):
+    """
+    Wait for connection with the database.
     """
 
 
