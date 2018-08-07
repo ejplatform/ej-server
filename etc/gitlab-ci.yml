@@ -4,6 +4,11 @@ stages:
   - publish
   - deploy
 
+cache:
+  paths:
+    - locale/
+    - lib/
+
 
 variables:
   DOCKER_DRIVER: overlay2
@@ -12,7 +17,7 @@ variables:
 
 # BUILD: the build stage recreates the base docker images used by the other
 # stages of the pipeline. This is executed only sporadically
-build:
+.build base images:
   image: docker
   stage: build
   services:
@@ -24,6 +29,15 @@ build:
     - docker
 #  only:
 #    - tags
+
+build translations:
+  image: ejplatform/tools:latest
+  stage: build
+  script:
+    - inv i18n -c
+    - inv sass --no-watch
+  tags:
+    - docker
 
 
 # TEST: test in different environments by changing the database or running a
@@ -52,8 +66,20 @@ test-flake8:
   script:
     - flake8 src/
 
+test-flake8-alpine:
+  image: ejplatform/python:alpine
+  stage: test
+  script:
+    - pip install flake8
+    - flake8 src/
 
-
+test-flake8-alpine-scratch:
+  image: alpine:latest
+  stage: test
+  script:
+    - apk add python3
+    - python3 -m pip install flake8
+    - flake8 src/
 
 
 
