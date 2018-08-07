@@ -1,3 +1,5 @@
+/* main page */
+
 body {
     font-family: 'Raleway', 'Patua One';
     margin: 0;
@@ -169,3 +171,66 @@ body {
 }
 
 
+/* add page */
+
+.breadcrumbs {
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.breadcrumbs a {
+    background-color: #30BFD3;
+    color: white;
+    border-radius: 14px;
+    text-decoration: none;
+    padding: 7px;
+    font-size: 12px;
+}
+
+#user_form {
+    width: 85vw;
+    margin: 0 auto;
+    color: #052b47;
+}
+
+
+#user_form p {
+    text-align: center;
+    font-family: 'Source Sans';
+}
+
+.required label, label.required {
+    color: #052b47 !important;
+}
+
+#user_form fieldset, #user_form div {
+    width: 80vw;
+}
+
+#user_form fieldset {
+    border: 2px solid #a3d8dd;
+    border-radius: 12px;
+}
+
+#user_form fieldset input {
+    border: 1px solid #a3d8dd;
+    border-radius: 12px;
+    outline: none;
+    padding: 5px;
+}
+
+.submit-row input {
+    border-radius: 25px;
+    background-color: #ff5783;
+    color: white;
+    border: none;
+    font-family: 'Raleway';
+    font-size: 14px;
+    font-weight: bold;
+    padding: 10px;
+}
+
+.submit-row {
+    border: none !important;
+    background: none !important;
+}
