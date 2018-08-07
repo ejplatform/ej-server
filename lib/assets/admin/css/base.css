@@ -187,7 +187,7 @@ body {
     font-size: 12px;
 }
 
-#user_form {
+#user_form, #group_form {
     width: 85vw;
     margin: 0 auto;
     color: #052b47;
@@ -203,20 +203,28 @@ body {
     color: #052b47 !important;
 }
 
-#user_form fieldset, #user_form div {
+#user_form fieldset, #user_form div, #group_form fieldset, #group_form div {
     width: 80vw;
+    
 }
+
+form .aligned p.help, form .aligned div.help {
+    padding-left: 0px !important;
+    margin-left: 0px !important;
+}
+
 
 #user_form fieldset {
     border: 2px solid #a3d8dd;
     border-radius: 12px;
 }
 
-#user_form fieldset input {
+#user_form fieldset input, .form-row input {
     border: 1px solid #a3d8dd;
     border-radius: 12px;
     outline: none;
-    padding: 5px;
+    width: 90% !important;
+    padding: 7px;
 }
 
 .submit-row input {
@@ -234,3 +242,42 @@ body {
     border: none !important;
     background: none !important;
 }
+
+.selector .selector-available h2, .selector-chosen h2 {
+    color: white !important;
+    background-color: #30BFD3 !important;
+    border-radius: 12px;
+}
+
+.selector select {
+    margin-top: 30px !important;
+    padding: 5px !important;
+    border-radius: 5px !important;
+    border: 1px solid #30bfd3 !important;
+    width: 90% !important;
+}
+
+.selector select::-webkit-scrollbar {
+    width: 8px;
+}
+
+.selector select::-webkit-scrollbar-thumb {
+    background-color: #666666;
+    height: 50px;
+    border-radius: 5px;
+
+}
+
+.selector select::-webkit-scrollbar-track {
+    background-color: #DDDDDD; 
+    border-radius: 10px;
+}
+
+.selector-filter {
+    margin: 0 auto !important;
+    width: 87%;
+}
+
+.selector-chooser {
+    margin: 0 !important;
+}   
