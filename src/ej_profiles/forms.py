@@ -12,9 +12,9 @@ class ProfileForm(ModelForm):
         model = models.Profile
         fields = [
             'city', 'state', 'country',
-            'gender', 'race',
+            'gender', 'race', 
             'political_activity', 'biography',
-            'age', 'occupation',
+            'birth_date','occupation',
             'image'
         ]
 
