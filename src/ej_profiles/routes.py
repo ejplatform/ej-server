@@ -5,7 +5,7 @@ from boogie.router import Router
 from .forms import ProfileForm
 from ej_clusters.models import Stereotype
 from ej_clusters.forms import StereotypeForm, StereotypeVoteFormSet
-from ej_conversations.models import FavoriteConversation
+from ej_conversations.models import FavoriteConversation, Comment
 
 
 app_name = 'ej_profiles'
@@ -70,7 +70,7 @@ def comments_filter(request, which):
 #
 # Profile stereotypes
 #
-@urlpatterns.route('stereotypes/add/', template='ej_profiles/create_stereotype.jinja2')
+@urlpatterns.route('stereotypes/add/')
 def create_stereotype(request):
     stereotype_form = StereotypeForm
     votes_form = StereotypeVoteFormSet
@@ -90,6 +90,9 @@ def create_stereotype(request):
     else:
         rendered_stereotype_form = stereotype_form()
         rendered_votes_form = votes_form()
+        filtered_comments = Comment.objects.filter(conversation__author=request.user)
+        for form in rendered_votes_form:
+            form.fields['comment'].queryset = filtered_comments
     return {
         'stereotype_form': rendered_stereotype_form,
         'votes_form': rendered_votes_form,
@@ -99,4 +102,5 @@ def create_stereotype(request):
 @urlpatterns.route('stereotypes/')
 def stereotypes(request):
     user_stereotypes = Stereotype.objects.filter(owner=request.user)
-    return user_stereotypes
+
+    return {"stereotypes": user_stereotypes, }

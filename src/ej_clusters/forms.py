@@ -1,4 +1,4 @@
-from django.forms import inlineformset_factory, ModelForm
+from django.forms import modelformset_factory, ModelForm
 from .models import Stereotype, StereotypeVote
 
 
@@ -14,5 +14,8 @@ class StereotypeVoteForm(ModelForm):
         fields = ['comment', 'choice']
 
 
-StereotypeVoteFormSet = inlineformset_factory(Stereotype, StereotypeVote,
-                                              form=StereotypeVoteForm, extra=1)
+StereotypeVoteFormSet = modelformset_factory(
+    StereotypeVote,
+    form=StereotypeVoteForm,
+    extra=3,
+)

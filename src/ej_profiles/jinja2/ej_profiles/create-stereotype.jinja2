@@ -1,0 +1,31 @@
+{% extends 'base.jinja2' %}
+
+{% block content %}
+    <div class="Container">
+        <form method="post" class="django-form-as-p">
+            {{ csrf_input }}
+            {{ stereotype_form.as_p() }}
+            {% for form in votes_form %}
+              {{ form.as_p() }}
+              <div class="input-group-append">
+                <button class="btn btn-success add-form-row">+</button>
+              </div>
+            {% endfor %}
+            <div>
+                <input type="submit" class="Button" value="{{ _('Save') }}" name="create">
+            </div>
+        </form>
+    </div>
+{% endblock %}
+
+{% block javascript_body %}
+    {{ super() }}
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(function () {
+            $('.table').DataTable({
+                order: [],
+            });
+        })
+    </script>
+{% endblock %}
