@@ -15,6 +15,8 @@ variables:
 build:
   image: docker
   stage: build
+  services:
+    - docker:dind
   script:
     - &login docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASS
     - cd docker/base-images/ && sh build.sh publish
@@ -23,7 +25,32 @@ build:
 #  only:
 #    - tags
 
+# TEST: test in different environments by changing the database or running a
+# linter
+test:sqlite3:
+  image : ejplatform/python:dev
+  stage: test
+  script:
+    - pip install -r etc/requirements/develop.txt -r etc/requirements/git-modules.txt
+    - pytest
 
+test:pgsql:
+  image : ejplatform/python:dev
+  stage: test
+  variables:
+    - DJANGO_DB_URL: postgres:postgres@postgres:5432
+  services:
+    - postgres
+  script:
+    - pip install -r etc/requirements/develop.txt -r etc/requirements/git-modules.txt
+    - pytest
+
+test:flake8:
+  image: ejplatform/python:dev
+  stage: test
+  script:
+    - pip install flake8
+    - flake8 src/
 
 ## Reusable configurations
 #.container: &container
@@ -44,11 +71,7 @@ build:
 #  script:
 #    - upgrade --environment $RANCHER_ENVIRONMENT --stack $RANCHER_STACK --service backend --sidekicks --no-finish-upgrade
 #
-#
 
-#
-#
-#
 ## BUILD: build and publish images using the CI_COMMIT_REF_SLUG.
 ## Those images will not be published under :latest and :tag automatically.
 ## Only master commits publish images under the :latest tags on dockerhub
@@ -61,31 +84,7 @@ build:
 #    - inv -e docker-push  -t $CI_COMMIT_REF_SLUG --theme=$THEMES
 #
 #
-## TEST: test in different environments by changing the database or running a
-## linter
-#test:sqlite3:
-#  image : ejplatform/python:dev
-#  stage: test
-#  script:
-#    - pytest
-#
-#test:postgresql:
-#  image : ejplatform/python:dev
-#  stage: test
-#  variables:
-#    - DJANGO_DB_URL: postgres:postgres@postgres:5550
-#  services:
-#    - postgres
-#  script:
-#    - pytest
-#
-#test:flake8:
-#  image: ejplatform/python:alpine
-#  stage: test
-#  script:
-#    - pip install flake8
-#    - flake8 src/
-#
+
 #
 ## PUSH: commits on master
 #deploy:staging:

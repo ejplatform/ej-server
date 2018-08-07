@@ -22,8 +22,8 @@ cp ../../etc/requirements/develop.txt requirements-develop.txt
 cp ../../etc/requirements/production.txt requirements-production.txt
 
 echo; echo; echo "BUILD PYTHON IMAGES"
-docker build . -f Dockerfile-python_install -t ejplatform/python:deploy --build-arg BASE=buster --build-arg INSTALL=production
-docker build . -f Dockerfile-python_install -t ejplatform/python:dev --build-arg BASE=deploy --build-arg INSTALL=develop
+docker build . -f Dockerfile-python_dev -t ejplatform/python:dev
+docker build . -f Dockerfile-python_deploy -t ejplatform/python:deploy
 
 # Check if user wants to publish
 if [ $# -eq 1 ]; then

@@ -6,7 +6,7 @@ volumes:
 
 
 services:
-  web: &django
+  web:
     restart: always
     image: ejplatform/web:latest
     build:
