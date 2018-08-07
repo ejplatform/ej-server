@@ -12,9 +12,10 @@ class ProfileForm(ModelForm):
         model = models.Profile
         fields = [
             'city', 'state', 'country',
-            'gender', 'race',
+            'gender', 'race', 'ethnicity' ,
             'political_activity', 'biography',
             'birth_date', 'occupation',
+            'education',
             'image'
         ]
         widgets = {

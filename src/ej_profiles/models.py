@@ -23,6 +23,8 @@ class Profile(models.Model):
     """
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='raw_profile')
     race = EnumField(Race, _('Race'), default=Race.UNDECLARED)
+    ethnicity = models.CharField(_('Ethnicity'), blank=True, max_length=50)
+    education = models.CharField(('Education'), blank=True, max_length=140)
     gender = EnumField(Gender, _('Gender identity'), default=Gender.UNDECLARED)
     gender_other = models.CharField(_('User provided gender'), max_length=50, blank=True)
     age = models.IntegerField(_('Age'), null=True, blank=True)
@@ -90,8 +92,8 @@ class Profile(models.Model):
 
     @property
     def is_filled(self):
-        fields = ('race', 'age', 'birth_date', 'country', 'state', 'city', 'biography',
-                  'occupation', 'political_activity', 'has_image', 'gender_description')
+        fields = ('race', 'age', 'birth_date', 'education', 'ethnicity', 'country', 'state', 'city', 
+                    'biography', 'occupation', 'political_activity', 'has_image', 'gender_description')
         return bool(all(getattr(self, field) for field in fields))
 
     def get_absolute_url(self):
