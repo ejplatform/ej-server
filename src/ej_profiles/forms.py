@@ -2,6 +2,7 @@ from django.forms import ModelForm, DateInput
 
 from . import models
 
+
 class ProfileForm(ModelForm):
     """
     User profile form
@@ -11,9 +12,9 @@ class ProfileForm(ModelForm):
         model = models.Profile
         fields = [
             'city', 'state', 'country',
-            'gender', 'race', 
+            'gender', 'race',
             'political_activity', 'biography',
-            'birth_date','occupation',
+            'birth_date', 'occupation',
             'image'
         ]
         widgets = {

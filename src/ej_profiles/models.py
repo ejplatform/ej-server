@@ -90,7 +90,7 @@ class Profile(models.Model):
 
     @property
     def is_filled(self):
-        fields = ('race', 'age', 'birth_date','country', 'state', 'city', 'biography',
+        fields = ('race', 'age', 'birth_date', 'country', 'state', 'city', 'biography',
                   'occupation', 'political_activity', 'has_image', 'gender_description')
         return bool(all(getattr(self, field) for field in fields))
 
