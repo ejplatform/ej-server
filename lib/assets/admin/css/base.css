@@ -106,7 +106,6 @@ body {
     font-weight: bold;
     text-transform: uppercase;
     color: #052B47;
-
 }
 
 .changelink {
@@ -115,8 +114,6 @@ body {
     font-weight: bold;
     text-transform: uppercase;
     color: #052B47;
-
-
 }
 
 #content-main >div >table >tbody >tr >td:first-of-type > a { 
@@ -225,6 +222,59 @@ form .aligned p.help, form .aligned div.help {
     outline: none;
     width: 90% !important;
     padding: 7px;
+}
+
+#changelist-search label {
+    vertical-align: baseline !important;
+}
+
+#changelist-search #searchbar {
+    border: 1px solid #a3d8dd !important;
+    border-radius: 12px !important;
+    outline: none;
+    padding: 7px !important;
+    width: 45vw;
+}
+
+#changelist-search input[type=submit] {
+    border-radius: 25px !important;
+    background-color: #ff5783 !important;
+    color: white !important;
+    border: none !important;
+    font-family: 'Raleway';
+    font-size: 14px !important;
+    font-weight: bold !important;
+    padding: 10px !important;
+}
+
+.module #toolbar {
+    background: white !important;
+}
+
+.actions button {
+    border-radius: 25px !important;
+    background-color: #ff5783 !important;
+    color: white !important;
+    border: none !important;
+    font-family: 'Raleway';
+    font-size: 14px !important;
+    font-weight: bold !important;
+    padding: 10px !important;
+    height: 100% !important;
+}
+
+.actions select {
+    height: 100% !important;
+    width: 50vw !important;
+    border: 1px solid #a3d8dd !important;
+    border-radius: 12px !important;
+    outline: none;
+    padding: 7px !important;
+    width: 45vw;
+}
+
+.actions span {
+    display: flex !important;
 }
 
 .submit-row input {
