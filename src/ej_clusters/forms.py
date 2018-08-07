@@ -17,5 +17,5 @@ class StereotypeVoteForm(ModelForm):
 StereotypeVoteFormSet = modelformset_factory(
     StereotypeVote,
     form=StereotypeVoteForm,
-    extra=3,
+    extra=1,
 )
