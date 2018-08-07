@@ -34,7 +34,7 @@ build translations:
   image: ejplatform/tools:latest
   stage: build
   script:
-    - inv i18n -c
+    - python etc/scripts/compilemessages.py
     - inv sass --no-watch
   tags:
     - docker
