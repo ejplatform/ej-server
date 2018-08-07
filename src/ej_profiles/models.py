@@ -5,11 +5,13 @@ from django.contrib.auth import get_user_model
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _, ugettext as __
-from sidekick import delegate_to
+from rest_framework.authtoken.models import Token
+import datetime
+
 from boogie.fields import EnumField
 from boogie.rest import rest_api
+from sidekick import delegate_to
 from .choices import Race, Gender
-from rest_framework.authtoken.models import Token
 
 User = get_user_model()
 
@@ -24,6 +26,7 @@ class Profile(models.Model):
     gender = EnumField(Gender, _('Gender identity'), default=Gender.UNDECLARED)
     gender_other = models.CharField(_('User provided gender'), max_length=50, blank=True)
     age = models.IntegerField(_('Age'), null=True, blank=True)
+    birth_date = models.DateField(_('Birth Date'), null=True, blank=True)
     country = models.CharField(_('Country'), blank=True, max_length=50)
     state = models.CharField(_('State'), blank=True, max_length=140)
     city = models.CharField(_('City'), blank=True, max_length=140)
@@ -37,6 +40,15 @@ class Profile(models.Model):
     is_active = delegate_to('user')
     is_staff = delegate_to('user')
     is_superuser = delegate_to('user')
+
+    @property
+    def age(self):
+        if (self.birth_date is None):
+            age = None
+        else:
+            delta = datetime.datetime.now() - self.birth_date
+            age = int(delta.days // 365.25)
+        return age
 
     class Meta:
         ordering = ['user__email']
@@ -62,8 +74,7 @@ class Profile(models.Model):
         token = Token.objects.get_or_create(user_id=self.id)
         return token[0].key
 
-    @property
-    def image_url(self):
+    def image_url(self, theme=None):
         try:
             return self.image.url
         except ValueError:
@@ -71,7 +82,7 @@ class Profile(models.Model):
                 picture = account.get_avatar_url()
                 if picture:
                     return picture
-            return avatar_fallback()
+            return avatar_fallback(theme)
 
     @property
     def has_image(self):
@@ -79,7 +90,7 @@ class Profile(models.Model):
 
     @property
     def is_filled(self):
-        fields = ('race', 'age', 'country', 'state', 'city', 'biography',
+        fields = ('race', 'age', 'birth_date','country', 'state', 'city', 'biography',
                   'occupation', 'political_activity', 'has_image', 'gender_description')
         return bool(all(getattr(self, field) for field in fields))
 
@@ -92,7 +103,8 @@ class Profile(models.Model):
         registered profile fields.
         """
 
-        fields = ['city', 'country', 'occupation', 'age', 'gender', 'race', 'political_activity', 'biography']
+        fields = ['city', 'country', 'occupation', 'birth_date', 'gender', 'race',
+                  'political_activity', 'biography']
         field_map = {field.name: field for field in self._meta.fields}
         result = []
         for field in fields:
@@ -147,11 +159,14 @@ def gravatar_fallback(id):
     return "https://gravatar.com/avatar/{}?s=40&d=mm".format(digest)
 
 
-def avatar_fallback():
+def avatar_fallback(theme):
     """
     Return fallback image URL for profile
     """
-    return "/static/default/img/logo/avatar_default.svg"
+    if theme is None:
+        theme = 'default'
+
+    return "/static/{0}/img/logo/avatar_default.svg".format(theme)
 
 
 def get_profile(user):

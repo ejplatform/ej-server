@@ -25,6 +25,7 @@ class InstalledAppsConf(Base, EjOptions):
         'courier',
         'courier.pushnotifications',
         'courier.pushnotifications.providers.onesignal',
+
         # Third party apps
         'taggit',
         'rules',
@@ -42,13 +43,11 @@ class InstalledAppsConf(Base, EjOptions):
         'rest_auth',
         'rest_auth.registration',
         'corsheaders',
-        'captcha',
         'actstream',
         'pinax.points',
         'pinax.badges',
         'constance',
         'constance.backends.database',
-        'django_extensions',
     ]
 
     def get_django_contrib_apps(self):

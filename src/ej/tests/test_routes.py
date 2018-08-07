@@ -1,11 +1,21 @@
 import logging
 
-from ej.testing import check_urls
+from ej.testing import check_urls, UrlTester
+
+
+class TestRoutes(UrlTester):
+    public_urls = [
+        '/',
+        '/start/',
+        '/menu/',
+        '/sw.js',
+    ]
+    success_codes = {200, 302}
 
 
 class TestBasicUrls:
     #
-    # Generic URLs
+    # TODO: refactor those urls to be tested on each specific app
     #
 
     # Urls visible to every one (even without login)
@@ -80,7 +90,8 @@ class TestBasicUrls:
 
     def test_visible_urls_for_anonymous_user(self, db, caplog, client):
         caplog.set_level(logging.CRITICAL, logger='django')
-        check_urls(client, [*self.public_urls, *self.profile_redirect_urls])
+        urls = [*self.public_urls, *self.profile_redirect_urls]
+        check_urls(client, urls, 200)
 
     def test_url_redirects_to_login(self, db, caplog, client):
         caplog.set_level(logging.CRITICAL, logger='django')
@@ -91,10 +102,10 @@ class TestBasicUrls:
         caplog.set_level(logging.CRITICAL, logger='django')
         client.force_login(user_db, backend=None)
         check_urls(client, self.profile_redirect_urls, 302)
-
         assert client.get('/').status_code == 302
 
     def test_login_required_urls(self, db, caplog, client, user_db):
         caplog.set_level(logging.CRITICAL, logger='django')
         client.force_login(user_db, backend=None)
-        check_urls(client, [*self.public_urls, *self.login_redirect_urls])
+        urls = [*self.public_urls, *self.login_redirect_urls]
+        check_urls(client, urls, 200)

@@ -2,6 +2,7 @@ import logging
 from random import randrange
 
 import pandas as pd
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.db.models import Subquery, OuterRef
@@ -179,6 +180,14 @@ class Stereotype(models.Model):
         _('Name'),
         max_length=64,
         unique=True,
+    )
+    owner = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='stereotypes',
+        help_text=_(
+            'Only the owner and administrative staff can edit this stereotype.'
+        )
     )
     description = models.TextField(
         _('Description'),

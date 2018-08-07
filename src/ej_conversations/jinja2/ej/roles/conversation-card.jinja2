@@ -1,7 +1,7 @@
 <div class="ConversationCard-container">
     <div class="ConversationCard">
         <div class="ConversationTags">
-            {% if tags %}<i class="fa fa-tags"></i>{{ tags }}{% endif %}
+            <i class="fa fa-tags"></i> {% if tags %}{{ tags }}{% else %}{{ _('Conversation') }}{% endif %}
         </div>
         <div class="ConversationCard-actions">
             <ul class="ConversationCard-statistics">
@@ -13,12 +13,11 @@
         <div class="ConversationCard-cover">
             <h1 up-expand><a href="{{ url }}">{{ conversation.text }}</a></h1>
         </div>
-        <div class="ConversationCard-actions">
-            {{ action_button(_('Participate now!'), url) }}
-        </div>
+        <div class="ConversationCard-actions">{{ action_button(_('Participate now!'), url) }}</div>
     </div>
-    {% if can_moderate|default(False) %}
-        <a class="ConversationCard-moderation" href="{{ moderate_url }}"><i
-                class="fas fa-cog"></i> {{ _('Moderate Conversation') }}</a>
+    {% if moderate_url %}
+        <a class="ConversationCard-moderation" href="{{ moderate_url }}">
+            <i class="fas fa-cog"></i> {{ _('Moderate Conversation') }}
+        </a>
     {% endif %}
 </div>

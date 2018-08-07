@@ -8,12 +8,14 @@ class EjConversationsConfig(AppConfig):
     verbose_name = _('Conversations')
     rules = None
     api = None
+    components = None
 
     def ready(self):
-        from . import rules, api
+        from . import rules, api, components
 
         self.rules = rules
         self.api = api
+        self.components = components
 
         if getattr(settings, 'EJ_CONVERSATIONS_ACTSTREAM', False):
             from actstream import registry

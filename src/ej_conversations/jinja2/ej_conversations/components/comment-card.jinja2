@@ -1,28 +1,30 @@
 {% macro comment_card(comment, csrf_input = None) %}
     <div class="Comment">
         <div class="Comment-metadata">
-          <span>{{ _('by') }}: <b>{{ comment.author.name }}</b></span>
-          <span class="date">{{ comment.created.strftime('%d-%m-%Y %Hh%M') }}</span>
+            <span>{{ _('by') }}: <b>{{ comment.author.name }}</b></span>
+            <span class="date">{{ comment.created.strftime('%d-%m-%Y %Hh%M') }}</span>
         </div>
         <p>{{ comment.content }}</p>
         <form method="post">
             {{ csrf_input }}
-            <input type="hidden" name="comment" value={{comment.id}}>
+            <input type="hidden" name="comment" value="{{ comment.id }}">
             <ul class="ConversationComment-actions">
                 <li up-expand>
-                    <input type="submit" class="Button" name="vote" value="approve" />
+                    <input type="submit" class="Button" name="vote" value="approve"/>
                     <span>{{ _('Approve') }}</span>
                 </li>
                 <li up-expand>
-                    <input type="submit" class="Button" name="vote" value="disapprove" onClick="var $r = $('#Comment-{{comment.id}}-rejection_reason'); return $r.is(':visible') ? true : $r.show() && false" />
+                    <input type="submit" class="Button" name="vote" value="disapprove"
+                           onClick="var $r = $('#Comment-{{ comment.id }}-rejection_reason'); return $r.is(':visible') ? true : $r.show() && false"/>
                     <span>{{ _('Disapprove') }}</span>
                 </li>
             </ul>
-            <div id="Comment-{{comment.id}}-rejection_reason" class="Comment-rejection" style="display: none;">
-              <h3>{{ _('Reason') }}</h3>
-              <p>{{ _('The comment will receive your rejection reason') }}</p>
-              <textarea name="rejection_reason" id="Comment-{{comment.id}}-rejection_reason" placeholder="{{ _('Example: Dear user, your comment was rejected because it contains discriminatory content.') }}"></textarea>
-              <input type="submit" class="Button" name="vote" value="disapprove" />
+            <div id="Comment-{{ comment.id }}-rejection_reason" class="Comment-rejection" style="display: none;">
+                <h3>{{ _('Reason') }}</h3>
+                <p>{{ _('The comment will receive your rejection reason') }}</p>
+                <textarea name="rejection_reason" id="Comment-{{ comment.id }}-rejection_reason"
+                          placeholder="{{ _('Example: Dear user, your comment was rejected because it contains discriminatory content.') }}"></textarea>
+                <input type="submit" class="Button" name="vote" value="disapprove"/>
             </div>
         </form>
     </div>

@@ -1,8 +1,11 @@
+
 {% macro login(form, csrf_input, next=None) %}
+    {% set theme = request.GET.get('theme','') or current_theme %}
+
     <div class="Login">
         <h1 class="Login-title">Contribua para discussões mais democráticas!</h1>
         <div class="Login-icon">
-            <img src="/static/default/img/login/ej-cat.svg">
+            <img src="/static/{{theme}}/img/login/ej-cat.svg">
         </div>
 
         {% if social_buttons %}
@@ -24,7 +27,7 @@
             <div><input type="submit" class="Button" value="{{ _('Login') }}" name="login"></div>
             {{ form.non_field_errors() }}
 
-            {{ login_options('/register/' + ('?next=' + next if next else ''), _('Register now!'), 'Ainda não faz parte do EJ?') }}
+            {{ login_options('/register/' + ('?next=' + next if next else ''), _('Register now!'), settings.EJ_REGISTER_TEXT) }}
         </form>
     </div>
 {% endmacro %}
@@ -62,7 +65,7 @@
     </div>
 
     <div class="Login-newUser">
-        {% set msg = _('Register') if is_login else _('Login') %}
+        {% set msg = _('Register') if is_login|default(False) else _('Login') %}
         <h1>{{ title }}</h1>
         <p><a class="Button" href="{{ button_href }}" primary>{{ button_msg }}</a></p>
     </div>

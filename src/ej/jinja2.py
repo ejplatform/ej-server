@@ -10,6 +10,7 @@ from jinja2 import Environment, StrictUndefined, contextfunction
 from markdown import markdown
 from markupsafe import Markup
 
+import hyperpython.integrations.jinja2
 from ej_configurations import social_icons, fragment
 from hyperpython.components import render
 from . import components
@@ -23,7 +24,7 @@ def environment(**options):
     options.pop('debug', None)
     options.setdefault('trim_blocks', True)
     options.setdefault('lstrip_blocks', True)
-    options.setdefault('undefined', StrictUndefined)
+    options['undefined'] = StrictUndefined
     env = Environment(**options)
     theme = 'default'
     if 'THEME' in os.environ:
@@ -41,7 +42,7 @@ def environment(**options):
 
         # Platform functions
         social_icons=social_icons,
-        footer_data=lambda: fragment('global.footer', raises=False),
+        fragment=fragment,
         service_worker=getattr(settings, 'SERVICE_WORKER', False),
         current_theme=theme,
         context=context,
@@ -57,6 +58,7 @@ def environment(**options):
         markdown=lambda x: Markup(markdown(x)),
         pc=format_percent,
         salt=salt,
+        **hyperpython.integrations.jinja2.filters,
     )
     env.install_gettext_translations(translation, newstyle=True)
     return env
@@ -134,11 +136,11 @@ def context(ctx):
 
         # Globals
         'static', 'url', 'salt_attr', 'salt_tag', 'salt', 'social_icons',
-        'footer_data', 'service_worker', 'context', 'render', *TAG_MAP,
+        'service_worker', 'context', 'render', *TAG_MAP,
 
         # Variables injected by the base template
         'target', 'target_context',
-        'page_footer', 'sidebar', 'page_top_header', 'page_header',
+        'sidebar', 'page_top_header', 'page_header',
         'page_title', 'title', 'content_title',
     }
     ctx = {k: v for k, v in ctx.items() if k not in blacklist}

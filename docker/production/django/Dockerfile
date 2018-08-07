@@ -6,35 +6,32 @@ ENV PYTHONUNBUFFERED=1 \
 
 EXPOSE 5000
 
-# Install debian dependencies
-RUN apt-get update \
-    && apt-get install -y \
-    bundler \
-    curl \
-    gcc \
-    git \
-    gnupg2 \
-    libc6-dev \
-    libdpkg-perl \
-    ruby-sass \
-    make \
-    nodejs=8.11.2~dfsg-1 \
-    python3.6 \
-    python3.6-dev \
-    python3-pip \
-    python3-setuptools \
-    ruby-full=1:2.5.1 \
-    gettext \
-    --no-install-recommends \
-    && pip3 install --upgrade pip
+# Install fixed Debian dependencies
+RUN apt-get update && apt-get install -y \
+        bundler \
+        curl \
+        gcc \
+        git \
+        gnupg2 \
+        libc6-dev \
+        libdpkg-perl \
+        ruby-sass \
+        make \
+        nodejs=8.11.2~dfsg-1 \
+        python3.6 \
+        python3.6-dev \
+        python3-pip \
+        python3-setuptools \
+        ruby-full=1:2.5.1 \
+        gettext \
+        --no-install-recommends \
+ && curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
+ && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
+ && apt-get install -y yarn --no-install-recommends \
+ && rm -rf /var/lib/apt/lists/*
+ && pip3 install --upgrade pip
+ && gem install sass
 
-RUN gem install sass
-
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
-    && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
-    && apt-get update \
-    && apt-get install -y yarn --no-install-recommends \
-    && apt-get clean
 
 # ej-server Dependencies
 WORKDIR /dependencies

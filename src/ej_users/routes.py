@@ -3,7 +3,7 @@ import logging
 from django.contrib import auth
 from django.contrib.auth import get_user_model
 from django.db import IntegrityError
-from django.http import Http404, JsonResponse, HttpResponse
+from django.http import Http404, JsonResponse
 from django.http import HttpResponseServerError
 from django.shortcuts import redirect
 from django.template.loader import get_template
@@ -12,9 +12,10 @@ from rest_framework import status
 from rest_framework.authtoken.models import Token
 
 from boogie.router import Router
+from ej_conversations.models import FavoriteConversation
 from ej_users import forms
 from .socialbuttons import social_buttons
-from ej_conversations.models import FavoriteConversation
+
 User = get_user_model()
 
 app_name = 'ej_users'
@@ -92,15 +93,14 @@ def login(request):
 
 @urlpatterns.route('logout/')
 def logout(request):
-    if request.method == 'POST':
+    if request.method == 'POST' and request.user.id:
         auth.logout(request)
         return redirect('home')
-    return HttpResponseServerError('cannot logout using a GET')
+    return HttpResponseServerError()
 
 
 @urlpatterns.route('profile/recover-password/')
 def recover_password(request):
-    print(request.user)
     return {
         'user': request.user,
     }
@@ -145,26 +145,12 @@ def favorite_conversation(request):
 #
 # Registration via API + cookies
 #
-@urlpatterns.route('key/')
+@urlpatterns.route('profile/api-key/')
 def api_key(request):
     if request.user.id is None:
         raise Http404
     token = Token.objects.get_or_create(user=request.user)
     return JsonResponse({'key': token[0].key}, status=status.HTTP_200_OK)
-
-
-# FIXME: this view must be deleted when no more users have csrftoken cookies protected by HTTP_ONLY setting
-@urlpatterns.route('reset/')
-def clean_cookies():
-    # This view exists only to help reset sessionid and csrftoken cookies on
-    # the client browser. Javascript can't do it itself because csrftoken was
-    # previously HTTP_ONLY. This cookie needs to be js accessible to allow for
-    # CSRF protection on XHR requests
-
-    response = HttpResponse()
-    response.delete_cookie('sessionid')
-    response.delete_cookie('csrftoken')
-    return response
 
 
 #

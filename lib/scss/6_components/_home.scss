@@ -19,18 +19,18 @@ $how-it-work-icon-color: $color-gray-dark !default;
     }
     h1 {
         font-family: var( --home-banner-title-font-family);
-        color: var(--home-banner-title-font-color);
+        color: $home-banner-title-font-color;
     }
 
     .Button[primary] {
-        background: var(--home-banner-button-background);
+        background: $home-banner-button-background;
         color: $color-white;
         padding: $unit $unit*2;
     }
 }
 
 .HowItWorks {
-    background: var(--home-how-it-works-background);
+    background: $home-how-it-works-background;
     padding-top: $spacing-unit-large;
 
     > * {
@@ -41,19 +41,19 @@ $how-it-work-icon-color: $color-gray-dark !default;
         font-size: $font-size-h4;
     }
     h1 {
-        color: var(--home-how-it-works-title-font-color);
+        color: $home-how-it-works-title-font-color;
     }
     p {
         line-height: 30px;
-        color: var(--home-how-it-works-content-font-color);
+        color: $home-how-it-works-content-font-color;
     }
   
     .fa-child:before {
-        content: var(--home-how-it-works-card-icon-person);
+        content: $home-how-it-works-card-icon-person;
     }
 
     .fa-comments:before {
-        content: var(--home-how-it-works-card-icon-conversation);
+        content: $home-how-it-works-card-icon-conversation;
     }
         
 }
@@ -61,7 +61,7 @@ $how-it-work-icon-color: $color-gray-dark !default;
 .HowItWorksCard {
     > .fa {
 
-        background: var(--home-how-it-works-card-icon-background);
+        background: $home-how-it-works-card-icon-background;
         border-radius: 50%;
         width: $unit * 7;
         height: $unit * 7;
@@ -77,7 +77,7 @@ $how-it-work-icon-color: $color-gray-dark !default;
 
     h1 {
         font-size: $font-size-h3;
-        color: var(--home-how-it-works-card-title-font-color);
+        color: $home-how-it-works-card-title-font-color;
 
         i {
             padding: $spacing-unit-small;
@@ -95,7 +95,7 @@ $how-it-work-icon-color: $color-gray-dark !default;
     }
 
     p {
-        color: var(--home-how-it-works-card-content-font-color);
+        color: $home-how-it-works-card-content-font-color;
     }
 
     &-content {
@@ -130,7 +130,7 @@ $how-it-work-icon-color: $color-gray-dark !default;
     background: $color-hint;
     padding: $spacing-unit;
     text-align: center;
-    display: var(--home-start-now-display);
+    display: $home-start-now-display;
 
 
     > * {
