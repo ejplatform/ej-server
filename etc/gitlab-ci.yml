@@ -1,4 +1,5 @@
 stages:
+  - build
   - test
   - publish
   - deploy
@@ -8,91 +9,97 @@ variables:
   DOCKER_DRIVER: overlay2
   PREBUILD_VERSION: v0-pre1
 
-# Reusable configurations
-.container: &container
-  image: ejplatform/docker-invoke:$PREBUILD_VERSION
-  services:
-    - docker:dind
-  before_script:
-    - &login docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASS
-  tags:
-    - docker
 
-.publisher: &publisher
-  image: cdrx/rancher-gitlab-deploy
-  stage: deploy
-  before_script:
-    - *login
-    - docker pull
-  script:
-    - upgrade --environment $RANCHER_ENVIRONMENT --stack $RANCHER_STACK --service backend --sidekicks --no-finish-upgrade
-
-
-# PRE-BUILD: the pre-build stage simply adds some utility images to DockerHub
-# those images are used by other containers either in multi-stage builds or
-# as the parent container of a build.
-.pre-build:
-  image: docker
-  stage: pre-build
-  script:
-    - *login
-    - sh etc/scripts/docker-images.sh $PREBUILD_VERSION
-  tags:
-    - docker
-
-
-
-# BUILD: build and publish images using the CI_COMMIT_REF_SLUG.
-# Those images will not be published under :latest and :tag automatically.
-# Only master commits publish images under the :latest tags on dockerhub
-# and commits with tags create tagged images.
+# BUILD: the build stage recreates the base docker images used by the other
+# stages of the pipeline. This is executed only sporadically
 build:
-  << : *container
+  image: docker
   stage: build
   script:
-    - inv -e docker-build -t $CI_COMMIT_REF_SLUG --theme=$THEMES --cache
-    - inv -e docker-push  -t $CI_COMMIT_REF_SLUG --theme=$THEMES
+    - &login docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASS
+    - cd docker/base-images/ && sh build.sh publish
+  tags:
+    - docker
+#  only:
+#    - tags
 
 
-# TEST: test in different environments by changing the database or running a
-# linter
-test:sqlite3:
-  image : ejplatform/python:dev
-  stage: test
-  script:
-    - pytest
 
-test:postgresql:
-  image : ejplatform/python:dev
-  stage: test
-  variables:
-    - DJANGO_DB_URL: postgres:postgres@postgres:5550
-  services:
-    - postgres
-  script:
-    - pytest
+## Reusable configurations
+#.container: &container
+#  image: ejplatform/docker-invoke:$PREBUILD_VERSION
+#  services:
+#    - docker:dind
+#  before_script:
+#    - &login docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASS
+#  tags:
+#    - docker
+#
+#.publisher: &publisher
+#  image: cdrx/rancher-gitlab-deploy
+#  stage: deploy
+#  before_script:
+#    - *login
+#    - docker pull
+#  script:
+#    - upgrade --environment $RANCHER_ENVIRONMENT --stack $RANCHER_STACK --service backend --sidekicks --no-finish-upgrade
+#
+#
 
-test:flake8:
-  image: ejplatform/python:alpine
-  stage: test
-  script:
-    - pip install flake8
-    - flake8 src/
-
-
-# PUSH: commits on master
-deploy:staging:
-  << : *publisher
-  script:
-    - inv -e docker-push --from $CI_COMMIT_REF_SLUG -t latest
-    - inv -e rancher-push
-  only:
-    - master
-
-deploy:release:
-  << : *publisher
-  script:
-    - inv -e docker-push --from $CI_COMMIT_REF_SLUG -t $CI_COMMIT_TAG
-    - inv -e rancher-push -t $CI_COMMIT_TAG
-  only:
-    - tags
+#
+#
+#
+## BUILD: build and publish images using the CI_COMMIT_REF_SLUG.
+## Those images will not be published under :latest and :tag automatically.
+## Only master commits publish images under the :latest tags on dockerhub
+## and commits with tags create tagged images.
+#build:
+#  << : *container
+#  stage: build
+#  script:
+#    - inv -e docker-build -t $CI_COMMIT_REF_SLUG --theme=$THEMES --cache
+#    - inv -e docker-push  -t $CI_COMMIT_REF_SLUG --theme=$THEMES
+#
+#
+## TEST: test in different environments by changing the database or running a
+## linter
+#test:sqlite3:
+#  image : ejplatform/python:dev
+#  stage: test
+#  script:
+#    - pytest
+#
+#test:postgresql:
+#  image : ejplatform/python:dev
+#  stage: test
+#  variables:
+#    - DJANGO_DB_URL: postgres:postgres@postgres:5550
+#  services:
+#    - postgres
+#  script:
+#    - pytest
+#
+#test:flake8:
+#  image: ejplatform/python:alpine
+#  stage: test
+#  script:
+#    - pip install flake8
+#    - flake8 src/
+#
+#
+## PUSH: commits on master
+#deploy:staging:
+#  << : *publisher
+#  script:
+#    - inv -e docker-push --from $CI_COMMIT_REF_SLUG -t latest
+#    - inv -e rancher-push
+#  only:
+#    - master
+#
+#deploy:release:
+#  << : *publisher
+#  script:
+#    - inv -e docker-push --from $CI_COMMIT_REF_SLUG -t $CI_COMMIT_TAG
+#    - inv -e rancher-push -t $CI_COMMIT_TAG
+#  only:
+#    - tags

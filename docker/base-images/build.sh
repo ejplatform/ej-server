@@ -26,13 +26,15 @@ sudo docker build . -f Dockerfile-python_install -t ejplatform/python:deploy --b
 sudo docker build . -f Dockerfile-python_install -t ejplatform/python:dev --build-arg BASE=deploy --build-arg INSTALL=develop
 
 # Check if user wants to publish
-if [ "$1" = "publish" ]; then
-    echo; echo; echo "PUBLISHING IMAGES"
-    sudo docker push ejplatform/python:alpine;
-    sudo docker push ejplatform/python:deploy;
-    sudo docker push ejplatform/python:dev;
-    sudo docker push ejplatform/python:deploy;
-    sudo docker push ejplatform/tools:latest;
+if [ $# -eq 1 ]; then
+    if [ "$1" = "publish" ]; then
+        echo; echo; echo "PUBLISHING IMAGES"
+        sudo docker push ejplatform/python:alpine;
+        sudo docker push ejplatform/python:deploy;
+        sudo docker push ejplatform/python:dev;
+        sudo docker push ejplatform/python:deploy;
+        sudo docker push ejplatform/tools:latest;
+    fi
 else
     echo "Execute 'sh build.sh publish' to publish images"
 fi
