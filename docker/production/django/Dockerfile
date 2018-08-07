@@ -17,7 +17,6 @@ RUN apt-get update && apt-get install -y \
         libdpkg-perl \
         ruby-sass \
         make \
-        nodejs=8.11.2~dfsg-1 \
         python3.6 \
         python3.6-dev \
         python3-pip \
@@ -27,16 +26,20 @@ RUN apt-get update && apt-get install -y \
         --no-install-recommends \
  && curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
  && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
- && apt-get install -y yarn --no-install-recommends \
- && rm -rf /var/lib/apt/lists/*
- && pip3 install --upgrade pip
+ && rm -rf /var/lib/apt/lists/* \
+ && pip3 install --upgrade pip \
  && gem install sass
+
+RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - \
+    && apt-get install -y nodejs
 
 
 # ej-server Dependencies
 WORKDIR /dependencies
 
 COPY ./etc/npm_globals.txt /dependencies/npm_globals.txt
+
+RUN npm install -g yarn
 RUN < npm_globals.txt xargs yarn global add
 
 COPY ./etc/requirements/*.txt /dependencies/
@@ -57,8 +60,7 @@ COPY . /app
 ARG THEME=default
 ENV THEME=${THEME}
 RUN inv prepare-deploy \
-    && chown -R django:django /app \
-    && ln -s /usr/bin/python3 /usr/bin/python
+    && chown -R django:django /app
 
 USER django
 

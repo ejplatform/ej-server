@@ -1,5 +1,4 @@
-from django.forms import ModelForm
-from django import forms
+from django.forms import ModelForm, DateInput
 
 from . import models
 
@@ -15,13 +14,13 @@ class ProfileForm(ModelForm):
         model = models.Profile
         fields = [
             'city', 'state', 'country',
-            'gender', 'race', 
+            'gender', 'race',
             'political_activity', 'biography',
-            'birth_date','occupation',
+            'birth_date', 'occupation',
             'image'
         ]
         widgets = {
-            'birth_date': DateInput()
+            'birth_date': DateInput(attrs={'type': 'date'})
         }
 
 
