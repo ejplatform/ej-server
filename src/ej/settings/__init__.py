@@ -101,7 +101,7 @@ class Conf(locales.brazil(),
     #     'REGISTER_SERIALIZER': 'ej_users.serializers.RegistrationSerializer'
     # }
 
-      
+
 
 Conf.save_settings(globals())
 
@@ -124,13 +124,14 @@ if ENVIRONMENT == 'local':
     X_FRAME_OPTIONS = 'ALLOW-FROM http://localhost:3000'
 
     ACCOUNT_EMAIL_VERIFICATION = 'optional'
-    
-    EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend'
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-    ANYMAIL = {
-        "MAILGUN_API_KEY": ""
-    }
-    DEFAULT_FROM_EMAIL = "noreply@unidoscontraacorrupcao.org.br"
+    #EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend'
+
+    #ANYMAIL = {
+    #    "MAILGUN_API_KEY": ""
+    #}
+    #DEFAULT_FROM_EMAIL = "noreply@unidoscontraacorrupcao.org.br"
 
 if ENVIRONMENT == 'production':
     # Django CORS
