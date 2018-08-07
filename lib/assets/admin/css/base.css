@@ -122,7 +122,7 @@ body {
     background-repeat: no-repeat;
     width: 90px;
     text-align: right;
-    background-position: 20%;
+    background-position: 17%;
 }
 
 #content-main >div >table >tbody >tr >td:last-of-type > a {
@@ -130,5 +130,42 @@ body {
     background-repeat: no-repeat;
     width: 90px;
     text-align: right;
-    background-position: 20%;
+    background-position: 17%;
 }
+
+#content-related {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#content-related h2, h3 {
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: #30BFD3;
+    border-radius: 14px;
+    width: 85vw;
+    padding: 10px 15px;
+}
+
+.actionlist {
+    padding: 0;
+    width: 80vw;
+    margin: 0 auto;
+    margin-left: auto !important;
+}
+
+.actionlist  li {
+    display: flex;
+    justify-content: space-between;
+}
+
+.actionlist a, span{
+    text-decoration: none;
+    color: #052B47;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+
