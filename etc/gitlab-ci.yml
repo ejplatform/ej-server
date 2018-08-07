@@ -25,20 +25,21 @@ build:
 #  only:
 #    - tags
 
+
 # TEST: test in different environments by changing the database or running a
 # linter
 test:sqlite3:
-  image : ejplatform/python:dev
+  image: ejplatform/python:dev
   stage: test
   script:
     - pip install -r etc/requirements/develop.txt -r etc/requirements/git-modules.txt
     - pytest
 
 test:pgsql:
-  image : ejplatform/python:dev
+  image: ejplatform/python:dev
   stage: test
   variables:
-    - DJANGO_DB_URL: postgres:postgres@postgres:5432
+    DJANGO_DB_URL: postgres:postgres@postgres:5432
   services:
     - postgres
   script:
