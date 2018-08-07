@@ -40,7 +40,7 @@ def sass(ctx, no_watch=False, trace=False, theme=None):
     suffix = '' if no_watch else ' --watch'
     suffix += ' --trace' if trace else ''
 
-    ctx.run('rm .sass-cache -rf')
+    ctx.run('rm -rf .sass-cache')
     cmd = (f'sass {cmd_main} {cmd_rocket} {cmd_themes} {suffix}')
     exec(ctx, cmd, pty=True)
 
