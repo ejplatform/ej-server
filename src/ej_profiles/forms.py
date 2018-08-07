@@ -2,8 +2,6 @@ from django.forms import ModelForm, DateInput
 
 from . import models
 
-class DateInput(forms.DateInput):
-    input_type = 'date'
 
 class ProfileForm(ModelForm):
     """
