@@ -341,7 +341,7 @@ def i18n(ctx, compile=False, edit=False, lang='pt_BR', keep_pot=False):
         ctx.run(f'poedit locale/{lang}/LC_MESSAGES/django.po')
     elif compile:
         ctx.run(f'{python} etc/scripts/compilemessages.py')
-    else:g
+    else:
         print('Collecting messages')
         manage(ctx, 'makemessages', all=True, keep_pot=True)
 
