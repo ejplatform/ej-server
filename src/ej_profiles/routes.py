@@ -1,9 +1,8 @@
-from django.http import Http404
 from django.shortcuts import redirect
 
 from boogie.router import Router
 from .forms import ProfileForm
-from ej_conversations.models import FavoriteConversation
+from ej_conversations.models import FavoriteConversation, Comment
 
 
 app_name = 'ej_profiles'
@@ -53,13 +52,31 @@ def comments(request):
     }
 
 
-@urlpatterns.route('comments/<which>/')
-def comments_filter(request, which):
-    if which not in ('rejected', 'approved', 'pending'):
-        raise Http404
+@urlpatterns.route('comments/rejected/', template='ej_conversations/components/comment-list.jinja2')
+def rejected_comments(request):
     user = request.user
     return {
         'user': user,
-        'comments': getattr(user.comments, which)(),
+        'comments': user.comments.filter(status=Comment.STATUS.rejected),
+        'stats': user.comments.statistics(),
+    }
+
+
+@urlpatterns.route('comments/approved/', template='ej_conversations/components/comment-list.jinja2')
+def approved_comments(request):
+    user = request.user
+    return {
+        'user': user,
+        'comments': user.comments.filter(status=Comment.STATUS.approved),
+        'stats': user.comments.statistics(),
+    }
+
+
+@urlpatterns.route('comments/pending/', template='ej_conversations/components/comment-list.jinja2')
+def pending_comments(request):
+    user = request.user
+    return {
+        'user': user,
+        'comments': user.comments.filter(status=Comment.STATUS.pending),
         'stats': user.comments.statistics(),
     }
