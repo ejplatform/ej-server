@@ -17,3 +17,4 @@ class EjOptions(Conf):
 
     # Personalization
     EJ_PAGE_TITLE = env(_('Empurrando Juntos'), name='{attr}')
+    EJ_REGISTER_TEXT = 'Ainda não faz parte do EJ?'

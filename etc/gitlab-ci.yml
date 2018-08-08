@@ -1,0 +1,111 @@
+stages:
+  - build
+  - test
+  - publish
+  - deploy
+
+cache:
+  paths:
+    - locale/
+    - lib/
+
+
+variables:
+  DOCKER_DRIVER: overlay2
+
+
+# BUILD: the build stage recreates the base docker images used by the other
+# stages of the pipeline. This is executed only sporadically
+rebuild base images:
+  image: docker
+  stage: build
+  services:
+    - docker:dind
+  script:
+    - &login docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASS
+    - cd docker/base-images/ && sh build.sh publish
+  tags:
+    - docker
+  only:
+    - rebuild-images
+
+build translations:
+  image: ejplatform/tools:latest
+  stage: build
+  script:
+    - python etc/scripts/compilemessages.py
+    - inv sass --no-watch
+  tags:
+    - docker
+
+
+# TEST: test in different environments by changing the database or running
+# different linters.
+test with sqlite3:
+  image: ejplatform/python:dev
+  stage: test
+  script:
+    - pip install -r etc/requirements/develop.txt -r etc/requirements/git-modules.txt
+    - pytest
+
+.test-pgsql:
+  image: ejplatform/python:dev
+  stage: test
+  variables:
+    DJANGO_DB_URL: postgres:postgres@postgres:5432
+  services:
+    - postgres
+  script:
+    - pip install -r etc/requirements/develop.txt -r etc/requirements/git-modules.txt
+    - pytest
+
+flake8:
+  image: ejplatform/python:dev
+  stage: test
+  script:
+    - flake8 src/
+
+flake8 alpine:
+  image: ejplatform/python:alpine
+  stage: test
+  script:
+    - pip install flake8
+    - flake8 src/
+
+
+# PUBLISH: build and publish images with :latest (master commits) and
+# :tag (tagged commits).
+publish staging images: &publish
+  image : docker
+  stage: publish
+  services:
+    - docker:dind
+  before_script:
+    - *login
+  script:
+    - sh etc/scripts/build-docker-images.sh latest
+  only:
+    - master
+  tags:
+    - docker
+
+publish tagged images:
+  << : *publish
+  script:
+    - sh etc/scripts/build-docker-images.sh $CI_COMMIT_TAG
+  only:
+    - tags
+
+
+# DEPLOY: tell rancher to update its images.
+deploy to master:
+  image: cdrx/rancher-gitlab-deploy
+  stage: deploy
+  script:
+    - *login
+    - upgrade --environment $RANCHER_ENVIRONMENT --stack $RANCHER_STACK --service backend --sidekicks --no-finish-upgrade
+  only:
+    - master
+    - tags
+  tags:
+    - docker

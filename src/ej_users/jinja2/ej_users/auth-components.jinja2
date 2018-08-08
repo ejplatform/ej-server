@@ -27,7 +27,7 @@
             <div><input type="submit" class="Button" value="{{ _('Login') }}" name="login"></div>
             {{ form.non_field_errors() }}
 
-            {{ login_options('/register/' + ('?next=' + next if next else ''), _('Register now!'), 'Ainda não faz parte do EJ?') }}
+            {{ login_options('/register/' + ('?next=' + next if next else ''), _('Register now!'), settings.EJ_REGISTER_TEXT) }}
         </form>
     </div>
 {% endmacro %}

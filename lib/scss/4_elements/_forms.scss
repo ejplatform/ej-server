@@ -6,13 +6,11 @@ $form-border-color: $color-gray-dark !default;
 $form-element-color: $color-white !default;
 $form-element-color-text: $color-hint-text !default;
 $form-input-border-box: inset 0 1px 3px 0 rgba(0, 0, 0, 0.3);
-
 form[hide-labels] {
     label {
         display: none;
     }
 }
-
 
 input[type=email],
 input[type=number],
@@ -20,6 +18,7 @@ input[type=password],
 input[type=search],
 input[type=text],
 input[type=url],
+input[type=date],
 input:not([type]),
 textarea,
 label,
@@ -31,10 +30,10 @@ select,
     width: 85%;
 }
 
-input, textarea {
+input,
+textarea {
     box-shadow: $form-input-border-box;
 }
-
 
 input[type=email],
 input[type=number],
@@ -42,6 +41,7 @@ input[type=password],
 input[type=search],
 input[type=text],
 input[type=url],
+input[type=date],
 input:not([type]),
 textarea,
 select,

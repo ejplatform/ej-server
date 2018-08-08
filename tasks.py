@@ -24,28 +24,30 @@ def manage(ctx, cmd, env=None, **kwargs):
 # Build assets
 #
 @task
-def sass(ctx, no_watch=False, trace=False, theme=None):
+def sass(ctx, watch=True, theme=None, trace=False, dry_run=False):
     """
     Run Sass compiler
     """
 
-    cmd_main = 'lib/scss/maindefault.scss:lib/assets/css/maindefault.css'
-    cmd_rocket = 'lib/scss/rocket.scss:lib/assets/css/rocket.css'
+    go = (lambda x: print(x) if dry_run else exec(ctx, x, pty=True))
+    cmd = 'sass'
+    cmd += ' lib/scss/maindefault.scss:lib/assets/css/maindefault.css'
+    cmd += ' lib/scss/maindefault.scss:lib/assets/css/main.css'
+    cmd += ' lib/scss/rocket.scss:lib/assets/css/rocket.css'
 
+    # Handle themes
     themes_path = 'lib/themes'
-    cmd_themes = ''
     for theme in os.listdir(themes_path):
-        cmd_themes += themes_path + '/' + theme + f"/scss/main.scss:lib/assets/css/main{theme}.css "
-        if os.path.exists('lib/assets/' + theme):
-            os.remove('lib/assets/' + theme)
-        os.symlink('../themes/' + theme + '/assets', 'lib/assets/' + theme)
+        cmd += f' lib/themes/{theme}/scss/main.scss:lib/assets/css/main{theme}.css'
+        asset_dir = f'lib/assets/{theme}'
+        if os.path.exists(asset_dir):
+            os.remove(asset_dir)
+        os.symlink(f'../themes/{theme}/assets/', asset_dir)
 
-    suffix = '' if no_watch else ' --watch'
-    suffix += ' --trace' if trace else ''
-
-    ctx.run('rm -rf .sass-cache -rf')
-    cmd = f'sass {cmd_main} {cmd_rocket} {cmd_themes} {suffix}'
-    exec(ctx, cmd, pty=True)
+    cmd += ' --watch' if watch else ''
+    cmd += ' --trace' if trace else ''
+    go('rm -rf .sass-cache')
+    go(cmd)
 
 
 @task
@@ -205,12 +207,13 @@ def dockerfiles_cmd(ctx, cmd, tag='latest', dry_run=False, org='ejplatform',
     cmd = sudo(f'docker {cmd} -f docker/Dockerfile')
     do = (lambda cmd: print(cmd) if dry_run else ctx.run(cmd, pty=True))
     do(f'{cmd}       -t {org}/web:{tag}   {args_web}')
-    do(f'{cmd}.nginx -t {org}/nginx:{tag} {args_nginx}')
-    do(f'{cmd}.dev   -t {org}/dev:{tag}   {args_dev}')
+    do(f'{cmd}-dev   -t {org}/dev:{tag}   {args_dev}')
+    do(f'{cmd}-nginx -t {org}/nginx:{tag} {args_nginx}')
 
 
 @task
-def docker_build(ctx, tag='latest', theme='default:ejplatform', extra_args='', dry_run=False):
+def docker_build(ctx, tag='latest', theme='default:ejplatform', extra_args='',
+                 dry_run=False, cache=False):
     """
     Rebuild all docker images for the project.
     """
@@ -219,17 +222,22 @@ def docker_build(ctx, tag='latest', theme='default:ejplatform', extra_args='', d
         base_image = f'{org}/web:{tag}'
         args = f'{extra_args} --build-arg THEME={theme}'
         child_args = f'{args} --build-arg BASE_IMAGE={base_image}'
+        cache_web = cache_nginx = cache_dev = ''
+        if cache:
+            cache_web = f'--cache-from {org}/web:{tag} '
+            cache_dev = f'--cache-from {org}/dev:{tag} '
+            cache_nginx = f'--cache-from {org}/nginx:{tag} '
         kwargs = {
-            'args_web': args,
-            'args_nginx': child_args,
-            'args_dev': child_args,
+            'args_web': cache_web + args,
+            'args_dev': cache_dev + child_args,
+            'args_nginx': cache_nginx + child_args,
         }
         dockerfiles_cmd(ctx, 'build .', tag=tag, dry_run=dry_run, org=org, **kwargs)
 
 
 @task
 def docker_push(ctx, tag='latest', theme='default:ejplatform', extra_args='',
-                from_=None, dry_run=False):
+                dry_run=False):
     """
     Rebuild all docker images for the project.
     """
@@ -249,7 +257,7 @@ def docker_pull(ctx, tag='latest', theme='default:ejplatform', extra_args='',
     """
     Rebuild all docker images for the project.
     """
-    cmd = sudo(f'docker push')
+    cmd = sudo(f'docker pull')
     do = (lambda cmd: print(cmd) if dry_run else ctx.run(cmd, pty=True))
 
     for item in theme.split(','):
@@ -260,37 +268,40 @@ def docker_pull(ctx, tag='latest', theme='default:ejplatform', extra_args='',
 
 
 @task
-def docker_run(ctx, env='run', cmd=None, port=80, clean_perms=False,
-               compose_file=None, dry_run=False):
+def docker_run(ctx, env, cmd=None, port=8000, clean_perms=False, deploy=False,
+               compose_file=None, dry_run=False, tag='latest'):
     """
     Runs EJ platform using a docker container.
+
+    Use inv docker-run <cmd>, where cmd is one of single, start, up, run,
+    deploy.
     """
     docker = sudo('docker')
     do = (lambda cmd: print(cmd) if dry_run else ctx.run(cmd, pty=True))
-    if compose_file is None and env == 'deploy':
-        compose_file = 'docker/deploy/docker-compose.yml'
+    if compose_file is None and deploy or env == 'deploy':
+        compose_file = 'docker/docker-compose.deploy.yml'
     elif compose_file is None:
         compose_file = 'docker/docker-compose.yml'
     compose = f'{docker}-compose -f {compose_file}'
 
-    if env == 'run':
+    if env == 'single':
         do(f'{docker} run '
            f'-v `pwd`:/app '
            f'-p {port}:8000 '
-           f'-it ejplatform/dev:latest {cmd or "run"}')
-    elif env == 'dev':
+           f'-it ejplatform/dev:{tag} {cmd or "run"}')
+    elif env == 'start':
         do(f'{compose} up -d')
-        do(f'{compose} run -p 8000:8000 django {cmd or "bash"}')
+        do(f'{compose} run -p {port}:8000 web {cmd or "bash"}')
         do(f'{compose} stop')
     elif env == 'up':
         do(f'{compose} up')
-    elif env == 'exec':
-        do(f'{compose} run -p 8000:8000 django {cmd or "bash"}')
+    elif env == 'run':
+        do(f'{compose} run -p {port}:8000 web {cmd or "bash"}')
     elif env == 'deploy':
         do(f'{compose} up')
     else:
         raise SystemExit(f'invalid choice for env: {env}\n'
-                         f'valid options: run, dev, up, bash, deploy')
+                         f'valid options: single, start, up, run, deploy')
     if clean_perms:
         do(f'sudo chown `whoami`:`whoami` * -R')
 
@@ -357,7 +368,7 @@ def lint(ctx):
     """
     Execute linters
     """
-    ctx.run('flake8', pty=True)
+    ctx.run('flake8 src/', pty=True)
 
 
 @task
@@ -376,7 +387,7 @@ def update_deps(ctx, all=False):
     """
     ctx.run(f'{python} etc/scripts/install-deps.py')
     if all:
-        exec(ctx, f'{python} -m pip install -r etc/requirements/base.txt')
+        exec(ctx, f'{python} -m pip install -r etc/requirements/local.txt')
         exec(ctx, f'{python} -m pip install -r etc/requirements/develop.txt')
     else:
         print('By default we only update the volatile dependencies. Run '
@@ -428,30 +439,28 @@ def shell(ctx):
     manage(ctx, 'shell')
 
 
+@task
+def test(ctx):
+    """
+    Run all unittests.
+    """
+    ctx.run('pytest')
+
+
 #
 # Deploy tasks
 #
 @task
-def prepare_deploy(ctx):
-    """
-    Deploy checklist:
-
-    * Build CSS assets
-    * Build JS assets
-    * Compile translations
-    * Collect static files
-    * Save assets to database
-    """
-    sass(ctx, no_watch=True)
-    js(ctx)
-    i18n(ctx, compile=True)
-    manage(ctx, 'collectstatic', noinput=True)
-
-
-@task
 def rancher_push(ctx):
     """
     Push containers to a Rancher server.
+    """
+
+
+@task
+def wait_db(ctx):
+    """
+    Wait for connection with the database.
     """
 
 
