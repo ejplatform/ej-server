@@ -223,7 +223,6 @@ body {
 #board_form fieldset {
     width: 80vw;
     min-width: 275px;
-    border-radius: 12px;
     border-color: #30BFD3;
 }
 
