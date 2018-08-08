@@ -80,17 +80,23 @@
     <nav class="Header-lowerNav">
         {% call link('/conversations/', title=_('Conversations'), class='conversations-link', preload=True) %}
             <img src="/static/{{theme}}/img/icons/navbar_conversations.svg" alt="{{ _('Conversations') }}" class="Header-lowerIcon">
+            {% if theme == 'default' %}
             <span>{{ _('Conversations') }}</span>
+            {% endif %}
         {% endcall %}
 
         {% call link('/talks/', title=_('Panel'), class='panel-link', preload=True) %}
             <img src="/static/{{theme}}/img/icons/navbar_panel.svg" alt="{{ _('Panel') }}" class="Header-lowerIcon">
-            <span>{{ _('Panel') }}</span>
+            {% if theme == 'default' %}
+                <span>{{ _('Panel') }}</span>
+            {% endif %}
         {% endcall %}
 
         {% call link('/profile/', title=_('Profile'), class='profile-link', preload=True) %}
             <img src="/static/{{theme}}/img/icons/navbar_profile.svg" title="{{ _('Profile') }}" class="Header-lowerIcon">
+            {% if theme == 'default' %}
             <span>{{ _('Profile') }}</span>
+            {% endif %}
         {% endcall %}
     </nav>
 {% endmacro %}
