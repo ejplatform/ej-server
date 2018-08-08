@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=ejplatform/nginx:latest
+ARG BASE_IMAGE=ejplatform/web:latest
 FROM $BASE_IMAGE as django
 FROM nginx:1.13
 
