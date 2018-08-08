@@ -200,8 +200,27 @@ body {
     color: #052b47 !important;
 }
 
-#user_form fieldset, #user_form div, #group_form fieldset, #group_form div {
+#user_form fieldset,
+#user_form>div,
+#group_form fieldset,
+#group_form div,
+#clusterization_form fieldset,
+#clusterization_form>div,
+#stereotype_form fieldset,
+#stereotype_form>div,
+#color_form fieldset,
+#fragment_form fieldset,
+#socialapp_form fieldset,
+#socialapp_form div,
+#socialaccount_form fieldset,
+#socialtoken_form fieldset, 
+#comment_form fieldset,
+#conversation_form fieldset,
+#commentendorsement_form fieldset,
+#flatpage_form fieldset,
+#tag_form fieldset{
     width: 80vw;
+    min-width: 300px;
     
 }
 
@@ -211,7 +230,9 @@ form .aligned p.help, form .aligned div.help {
 }
 
 
-#user_form fieldset {
+#user_form fieldset,
+#group_form fieldset,
+ {
     border: 2px solid #a3d8dd;
     border-radius: 12px;
 }
@@ -331,3 +352,15 @@ form .aligned p.help, form .aligned div.help {
 .selector-chooser {
     margin: 0 !important;
 }   
+
+.inline-related.dynamic-clusters>h3 {
+    width: 90%;
+}
+ 
+.inline-related.dynamic-clusters>fieldset{
+    width: 98% !important;
+}  
+
+.related-widget-wrapper>select {
+    width: 100%;
+}
