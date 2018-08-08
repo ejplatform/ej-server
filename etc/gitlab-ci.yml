@@ -96,7 +96,6 @@ deploy to master:
   image: cdrx/rancher-gitlab-deploy
   stage: deploy
   script:
-    - *login
     - upgrade --environment $RANCHER_ENVIRONMENT --stack $RANCHER_STACK --service backend --sidekicks --no-finish-upgrade
   only:
     - master
