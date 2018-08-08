@@ -65,7 +65,6 @@ flake8:
   image: ejplatform/python:alpine
   stage: test
   script:
-    - pip install flake8
     - flake8 src/
     - cat flag.txt
   tags:

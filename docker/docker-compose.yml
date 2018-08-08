@@ -23,7 +23,7 @@ services:
     working_dir: /app
     command: db run
 
-
+  
   postgres:
     restart: always
     image: postgres:9.6
@@ -36,3 +36,14 @@ services:
   redis:
     restart: always
     image: redis:3
+
+
+  tools:
+    image: ejplatform/tools:latest
+    build:
+      context: ./base-images
+      dockerfile: ./Dockerfile-tools
+    command: sleep infinity
+    volumes:
+      - ../:/app/
+    working_dir: /app
