@@ -5,12 +5,16 @@ from model_utils.fields import StatusField
 from boogie import rules
 from boogie.rest import rest_api
 
-@rest_api()
+@rest_api(['id', 'name', 'candidacy', 'urn', 'party', 'image'])
 class Candidate(models.Model):
 
     """A political candidate. """
 
-    CANDIDACY_OPTIONS = Choices('senadora')
+    def __str__(self):
+        return "%s" % self.name
+    CANDIDACY_OPTIONS = Choices('senadora', 'senador',
+                                'deputado federal', 'deputada federal',
+                                'deputado estadual', 'deputada estadual')
     PARTY_OPTIONS = Choices('pt', 'psdb')
 
     name = models.CharField(max_length=100,

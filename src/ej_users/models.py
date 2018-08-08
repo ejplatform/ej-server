@@ -15,7 +15,6 @@ from .manager import UserManager
 
 fake = Factory.create('pt-BR')
 
-
 @rest_api(['id', 'display_name', 'email', 'is_staff', 'is_superuser', 'username'])
 class User(AbstractUser):
     """
