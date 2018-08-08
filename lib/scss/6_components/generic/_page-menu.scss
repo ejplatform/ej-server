@@ -18,7 +18,6 @@ $nav-menu-ul-padding: 0 !default;
 
 // Element
 .NavMenu {
-    @include color($nav-menu-color, $nav-menu-color-text);
     @include size($nav-menu-width, 100%);
 
     min-height: 100vh;
@@ -29,6 +28,12 @@ $nav-menu-ul-padding: 0 !default;
     opacity: $nav-menu-opacity;
     -ms-overflow-style: none;
     overflow: -moz-scrollbars-none;
+    background: $nav-menu-color;
+    color: $nav-menu-color-text;
+
+    a, button{
+        color: $nav-menu-color-text;
+    }
 
     &::-webkit-scrollbar {
         display: none;
@@ -38,13 +43,6 @@ $nav-menu-ul-padding: 0 !default;
     em {
         font-weight: bold;
         font-style: normal;
-    }
-
-    a,
-    a:hover,
-    a:active,
-    button {
-        color: $nav-menu-color-text;
     }
 
     button {

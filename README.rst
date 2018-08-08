@@ -10,6 +10,10 @@
 |                       |                       | .org>`__              |
 +-----------------------+-----------------------+-----------------------+
 
+.. image:: https://api.codeclimate.com/v1/badges/fd8f8c7d5d2bc74c38df/maintainability
+   :target: https://codeclimate.com/github/ejplatform/ej-server/maintainability
+   :alt: Maintainability
+
 
 ===========
 EJ Platform
@@ -46,7 +50,7 @@ For Ubuntu 16.10 and 17.04 do not come with Python 3.6 by default, but it is in 
     sudo apt-get install python3.6-dev
     sudo apt-get install npm
     sudo npm install sass
-    
+
 Linux Mint
 ----------
 Mint and Ubuntu use the same package management system, which frequently makes life easier. You can follow the instructions above for Ubuntu 14.04. The “deadsnakes” PPA works with Mint.
@@ -75,12 +79,12 @@ Step 2: Prepare Your System::
 - For apt-based systems (like Debian, Ubuntu, and Mint)::
 
     $ sudo apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev  libncursesw5-dev xz-utils tk-dev
-    
+
 - For yum-based systems (like CentOS)::
 
     $ sudo yum -y groupinstall development
     $ sudo yum -y install zlib-devel
-    
+
 Step 3: Build Python
 
 1. Once you have the prerequisites and the tar file, you can unpack the source into a directory. Note that the following command will create a new directory called Python-3.6.5 under the one you are in::
@@ -95,11 +99,11 @@ Step 3: Build Python
 3. Next, you build the Python programs using make. The -j option simply tells make to split the building into parallel steps to speed up the compilation. Even with the parallel builds, this step can take a several minutes::
 
     $ make -j 8
-    
+
 4. Then, you’ll want to install your new version of Python. You’ll use the altinstall target here in order to not overwrite the system’s version of Python. Since you’re installing Python into /usr/bin, you’ll need to run as root::
 
     $ sudo make altinstall
-    
+
 Step 4: Setup Sass
 
 1. For last, install node package manager and sass::
@@ -116,28 +120,28 @@ To install, you should first update your system with the yum package manager::
 
     $ sudo yum update
     $ sudo yum install yum-utils
-    
+
 You can then install the CentOS IUS package which will get you up to date with their site::
 
     $ sudo yum install https://centos7.iuscommunity.org/ius-release.rpm
-    
+
 Finally you can then install Python and Pip::
 
     $ sudo yum install python36u
     $ sudo yum install python36u-pip
- 
+
 For last, install node package manager and sass::
 
     $ curl --silent --location https://rpm.nodesource.com/setup_8.x | sudo bash -
     $ sudo yum install nodejs
     $ sudo npm install sass
-    
+
 Fedora
 ------
 If the python3 installed on your version is not 3.6, you can use the following command to install it::
 
     $ sudo dnf install python36
- 
+
 Then install node package manager::
 
     $ sudo dnf install nodejs
@@ -151,7 +155,7 @@ Arch Linux is fairly aggressive about keeping up with Python releases. It is lik
     $ packman -S python
     $ packman -S nodejs
     $ npm install sass
-   
+
 Verify Your Python Install
 --------------------------
 

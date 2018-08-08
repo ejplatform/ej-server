@@ -22,9 +22,10 @@ class InstalledAppsConf(Base, EjOptions):
 
     THIRD_PARTY_APPS = [
         # External apps created by the EJ team
-        'courier',
-        'courier.pushnotifications',
-        'courier.pushnotifications.providers.onesignal',
+        # 'courier',
+        # 'courier.pushnotifications',
+        # 'courier.pushnotifications.providers.onesignal',
+
         # Third party apps
         'taggit',
         'rules',
@@ -42,13 +43,11 @@ class InstalledAppsConf(Base, EjOptions):
         'rest_auth',
         'rest_auth.registration',
         'corsheaders',
-        'captcha',
         'actstream',
         'pinax.points',
         'pinax.badges',
         'constance',
         'constance.backends.database',
-        'django_extensions',
     ]
 
     def get_django_contrib_apps(self):
@@ -57,7 +56,7 @@ class InstalledAppsConf(Base, EjOptions):
 
     def get_project_apps(self):
         apps = super().get_project_apps()
-        if self.EJ_ENABLE_ROCKETCHAT:
+        if self.EJ_ROCKETCHAT_INTEGRATION:
             apps = ['ej_rocketchat', *apps]
         return apps
 

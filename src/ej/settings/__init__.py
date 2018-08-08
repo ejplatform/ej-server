@@ -1,7 +1,7 @@
 import logging
 import sys
 
-from boogie.configurations import DjangoConf, locales
+from boogie.configurations import DjangoConf, locales, env
 from .apps import InstalledAppsConf
 from .celery import CeleryConf
 from .constance import ConstanceConf
@@ -9,6 +9,7 @@ from .middleware import MiddlewareConf
 from .options import EjOptions
 from .paths import PathsConf
 from .themes import ThemesConf
+from .security import SecurityConf
 from .. import fixes
 from .. import services
 
@@ -20,9 +21,10 @@ class Conf(ThemesConf,
            ConstanceConf,
            MiddlewareConf,
            CeleryConf,
+           SecurityConf,
            PathsConf,
-           DjangoConf,
            InstalledAppsConf,
+           DjangoConf,
            EjOptions):
     """
     Configuration class for the EJ platform.
@@ -39,10 +41,11 @@ class Conf(ThemesConf,
     def USING_POSTGRES(self):
         return 'postgresql' in self.DATABASE_DEFAULT['ENGINE']
 
-    @property
-    def USING_DOCKER(self):
-        return False
+    USING_DOCKER = env(False, name='USING_DOCKER')
 
+    #
+    # Accounts
+    #
     AUTH_USER_MODEL = 'ej_users.User'
     ACCOUNT_AUTHENTICATION_METHOD = 'email'
     ACCOUNT_EMAIL_REQUIRED = True
@@ -63,12 +66,6 @@ class Conf(ThemesConf,
         ('Bruno Martin, Luan Guimarães, Ricardo Poppi, Henrique Parra', 'bruno@hacklab.com.br'),
         ('Laury Bueno', 'laury@hacklab.com.br'),
     ]
-
-    def get_django_templates_dirs(self):
-        return [self.SRC_DIR / 'ej/templates/django']
-
-    def get_jinja_templates_dirs(self):
-        return [self.SRC_DIR / 'ej/templates/jinja2']
 
     #
     # Third party modules
@@ -108,40 +105,7 @@ class Conf(ThemesConf,
 
 Conf.save_settings(globals())
 
-# TODO: Fix this later in boogie configuration stack
-# Required for making django debug toolbar work
-if ENVIRONMENT == 'local':
-    INTERNAL_IPS = [*globals().get('INTERNAL_IPS', ()), '127.0.0.1']
-
-    # Django CORS
-    CORS_ORIGIN_ALLOW_ALL = True
-    CORS_ALLOW_CREDENTIALS = True
-    CORS_ORIGIN_REGEX_WHITELIST = (r'^(http://)?localhost:\d{4,5}$',)
-
-    CSRF_TRUSTED_ORIGINS = [
-        'localhost:8000',
-        'localhost:3000'
-    ]
-
-    X_FRAME_OPTIONS = 'ALLOW-FROM http://localhost:3000'
-
-if ENVIRONMENT == 'production':
-    # Django CORS
-    CORS_ORIGIN_ALLOW_ALL = False
-    CORS_ALLOW_CREDENTIALS = True
-    CORS_ORIGIN_REGEX_WHITELIST = (r'^(https?://)?[\w.]*ejplatform\.org$',)
-
-    CSRF_TRUSTED_ORIGINS = [
-        'ejplatform.org',
-        'talks.ejplatform.org'
-        'dev.ejplatform.org',
-        'talks.dev.ejplatform.org',
-    ]
-
-    X_FRAME_OPTIONS = 'DENY'
-
 #
 # Apply fixes and wait for services to start
 #
 fixes.apply_all()
-services.start_services(sys.modules[__name__])

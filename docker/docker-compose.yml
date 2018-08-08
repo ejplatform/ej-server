@@ -1,0 +1,38 @@
+version: '3.5'
+
+
+services:
+  web:
+    restart: always
+    image: ejplatform/dev:latest
+    build:
+      context: ../
+      dockerfile: ./docker/Dockerfile-dev
+    ports:
+      - "8000:8000"
+    links:
+      - postgres:postgres
+      - redis:redis
+    env_file:
+      - ./env/django.env
+      - ./env/postgres.env
+    environment:
+      - DJANGO_ENVIRONMENT=production
+    volumes:
+      - ../:/app/
+    working_dir: /app
+    command: db run
+
+
+  postgres:
+    restart: always
+    image: postgres:9.6
+    env_file:
+      - ./env/postgres.env
+    volumes:
+      - ./local/db/:/var/lib/postgresql/data/
+
+
+  redis:
+    restart: always
+    image: redis:3

@@ -1,0 +1,74 @@
+# Core deps
+setuptools == 40.0
+
+# Generic dependencies
+sidekick ~= 0.4.2
+toolz ~= 0.9.0
+
+# Scientific stack
+matplotlib ~= 2.2.2
+numpy ~= 1.14.4
+pandas ~= 0.23.0
+django-pandas ~= 0.5.1
+
+# Images
+Pillow ~= 4.2.1
+
+# Django
+django ~= 2.0.0
+rules ~= 1.4.0
+
+# Configuration
+django-environ ~= 0.4.4
+
+# Forms
+django-crispy-forms ~= 1.6.1
+
+# Admin
+django-constance[database] ~= 2.2.0
+django-configurations ~= 2.0
+
+# Models
+django-model-utils ~= 3.0.0
+django-taggit ~= 0.22.2
+django-manager-utils ~= 1.1.1
+django-bulk-update ~= 2.2.0
+
+# Password storage
+argon2-cffi ~= 16.3.0
+
+# User registration, either via email or social
+django-allauth ~= 0.33.0
+
+# Rest framework
+djangorestframework ~= 3.8.2
+django-rest-auth[with_social] ~= 0.9.1
+django-filter >= 1.1.0
+coreapi ~= 2.3.3
+coreapi-cli ~= 1.0.6
+markdown ~= 2.6.9
+
+# Messages
+django-activity-stream ~= 0.6.4
+
+# Gamification
+pinax-badges ~= 1.0.2
+pinax-points ~= 1.0
+
+# Security
+bleach ~= 2.1.3
+django-cors-headers ~= 1.2.0
+
+# Fields
+django-autoslug ~= 1.9.3
+django-jsonfield ~= 1.0.1
+
+# Background tasks
+celery ~= 4.1.0
+
+# Fake data
+Faker ~= 0.8.13
+
+# Tools
+django-debug-toolbar ~= 1.8
+django-extensions >= 1.9.0

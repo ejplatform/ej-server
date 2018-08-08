@@ -20,29 +20,34 @@ def manage(ctx, cmd, env=None, **kwargs):
     exec(ctx, cmd, pty=True, env=env)
 
 
+#
+# Build assets
+#
 @task
-def sass(ctx, no_watch=False, trace=False, theme=None):
+def sass(ctx, watch=True, theme=None, trace=False, dry_run=False):
     """
     Run Sass compiler
     """
 
-    cmd_main = 'lib/scss/maindefault.scss:lib/assets/css/maindefault.css'
-    cmd_rocket = 'lib/scss/rocket.scss:lib/assets/css/rocket.css'
+    go = (lambda x: print(x) if dry_run else exec(ctx, x, pty=True))
+    cmd = 'sass'
+    cmd += ' lib/scss/maindefault.scss:lib/assets/css/maindefault.css'
+    cmd += ' lib/scss/maindefault.scss:lib/assets/css/main.css'
+    cmd += ' lib/scss/rocket.scss:lib/assets/css/rocket.css'
 
+    # Handle themes
     themes_path = 'lib/themes'
-    cmd_themes = ''
     for theme in os.listdir(themes_path):
-        cmd_themes += themes_path + '/' + theme + f"/scss/main.scss:lib/assets/css/main{theme}.css "
-        if os.path.exists('lib/assets/' + theme):
-            os.remove('lib/assets/' + theme)
-        os.symlink('../themes/' + theme + '/assets', 'lib/assets/' + theme)
+        cmd += f' lib/themes/{theme}/scss/main.scss:lib/assets/css/main{theme}.css'
+        asset_dir = f'lib/assets/{theme}'
+        if os.path.exists(asset_dir):
+            os.remove(asset_dir)
+        os.symlink(f'../themes/{theme}/assets/', asset_dir)
 
-    suffix = '' if no_watch else ' --watch'
-    suffix += ' --trace' if trace else ''
-
-    ctx.run('rm .sass-cache -rf')
-    cmd = (f'sass {cmd_main} {cmd_rocket} {cmd_themes} {suffix}')
-    exec(ctx, cmd, pty=True)
+    cmd += ' --watch' if watch else ''
+    cmd += ' --trace' if trace else ''
+    go('rm -rf .sass-cache')
+    go(cmd)
 
 
 @task
@@ -51,6 +56,50 @@ def js(ctx):
     Build js assets
     """
     print('Nothing to do now ;)')
+
+
+#
+# Django tasks
+#
+@task
+def run(ctx, no_toolbar=False):
+    """
+    Run development server
+    """
+    env = {}
+    if no_toolbar:
+        env['DISABLE_DJANGO_DEBUG_TOOLBAR'] = 'true'
+    else:
+        manage(ctx, 'runserver 0.0.0.0:8000', env=env)
+
+
+@task
+def run_deploy(ctx, debug=False, environment='production', port=5000, workers=4):
+    """
+    Run application using gunicorn for production deploys.
+
+    It assumes that static media is served by a reverse proxy such as nginx.
+    """
+
+    from gunicorn.app.wsgiapp import run as run_gunicorn
+
+    env = {
+        'DISABLE_DJANGO_DEBUG_TOOLBAR': str(not debug),
+        'PYTHONPATH': 'src',
+        # 'DJANGO_ENVIRONMENT': environment,
+        # 'DJANGO_DEBUG': str(debug),
+    }
+    os.environ.update(env)
+
+    args = [
+        'ej.wsgi', '-w', str(workers), '-b', f'0.0.0.0:{port}',
+        '--error-logfile=-',
+        '--access-logfile=-',
+        '--log-level', 'info',
+    ]
+
+    sys.argv = ['gunicorn', *args]
+    run_gunicorn()
 
 
 @task
@@ -84,47 +133,8 @@ def clean_migrations(ctx):
             os.remove(file)
 
 
-@task
-def run(ctx, no_toolbar=False, gunicorn=False, migrate=False,
-        ask_input=False, assets=False):
-    """
-    Run development server
-    """
-    env = {}
-    if no_toolbar:
-        env['DISABLE_DJANGO_DEBUG_TOOLBAR'] = 'true'
-
-    if migrate:
-        no_input = not ask_input
-        manage(ctx, 'migrate', noinput=no_input)
-
-    if assets:
-        # Populate db with assets
-        db_assets(ctx)
-
-    if gunicorn:
-        from gunicorn.app.wsgiapp import run as run_gunicorn
-
-        env['PATH'] = os.environ['PATH']
-        env['PYTHONPATH'] = 'src'
-        args = [
-            'ej.wsgi', '-w', '4', '-b', '0.0.0.0:5000',
-            '--error-logfile=-',
-            '--access-logfile=-',
-            '--log-level', 'info',
-        ]
-
-        # Fixme, use execle to replace the current process
-        # print('Running: gunicorn', ' '.join(args))
-        # os.execle(python, *args, env)
-        sys.argv = ['gunicorn', *args]
-        run_gunicorn()
-    else:
-        manage(ctx, 'runserver 0.0.0.0:8000', env=env)
-
-
 #
-# Db tasks
+# DB management
 #
 @task
 def db(ctx, migrate_only=False):
@@ -192,22 +202,128 @@ def db_assets(ctx, path=None, force=False):
 #
 # Docker
 #
+def dockerfiles_cmd(ctx, cmd, tag='latest', dry_run=False, org='ejplatform',
+                    args_web='', args_nginx='', args_dev=''):
+    cmd = sudo(f'docker {cmd} -f docker/Dockerfile')
+    do = (lambda cmd: print(cmd) if dry_run else ctx.run(cmd, pty=True))
+    do(f'{cmd}       -t {org}/web:{tag}   {args_web}')
+    do(f'{cmd}-dev   -t {org}/dev:{tag}   {args_dev}')
+    do(f'{cmd}-nginx -t {org}/nginx:{tag} {args_nginx}')
+
+
 @task
-def docker_clean(ctx, no_sudo=False, all=False, volumes=False, networks=False, images=False, containers=False):
+def docker_build(ctx, tag='latest', theme='default:ejplatform', extra_args='',
+                 dry_run=False, cache=False):
+    """
+    Rebuild all docker images for the project.
+    """
+    for item in theme.split(','):
+        theme, org = item.split(':') if ':' in item else (item, item)
+        base_image = f'{org}/web:{tag}'
+        args = f'{extra_args} --build-arg THEME={theme}'
+        child_args = f'{args} --build-arg BASE_IMAGE={base_image}'
+        cache_web = cache_nginx = cache_dev = ''
+        if cache:
+            cache_web = f'--cache-from {org}/web:{tag} '
+            cache_dev = f'--cache-from {org}/dev:{tag} '
+            cache_nginx = f'--cache-from {org}/nginx:{tag} '
+        kwargs = {
+            'args_web': cache_web + args,
+            'args_dev': cache_dev + child_args,
+            'args_nginx': cache_nginx + child_args,
+        }
+        dockerfiles_cmd(ctx, 'build .', tag=tag, dry_run=dry_run, org=org, **kwargs)
+
+
+@task
+def docker_push(ctx, tag='latest', theme='default:ejplatform', extra_args='',
+                dry_run=False):
+    """
+    Rebuild all docker images for the project.
+    """
+    cmd = sudo(f'docker push')
+    do = (lambda cmd: print(cmd) if dry_run else ctx.run(cmd, pty=True))
+
+    for item in theme.split(','):
+        theme, org = item.split(':') if ':' in item else (item, item)
+        do(f'{cmd} {org}/web:{tag}   {extra_args}')
+        do(f'{cmd} {org}/nginx:{tag} {extra_args}')
+        do(f'{cmd} {org}/dev:{tag}   {extra_args}')
+
+
+@task
+def docker_pull(ctx, tag='latest', theme='default:ejplatform', extra_args='',
+                dry_run=False):
+    """
+    Rebuild all docker images for the project.
+    """
+    cmd = sudo(f'docker pull')
+    do = (lambda cmd: print(cmd) if dry_run else ctx.run(cmd, pty=True))
+
+    for item in theme.split(','):
+        theme, org = item.split(':') if ':' in item else (item, item)
+        do(f'{cmd} {org}/web:{tag}   {extra_args}')
+        do(f'{cmd} {org}/nginx:{tag} {extra_args}')
+        do(f'{cmd} {org}/dev:{tag}   {extra_args}')
+
+
+@task
+def docker_run(ctx, env, cmd=None, port=8000, clean_perms=False, deploy=False,
+               compose_file=None, dry_run=False, tag='latest'):
+    """
+    Runs EJ platform using a docker container.
+
+    Use inv docker-run <cmd>, where cmd is one of single, start, up, run,
+    deploy.
+    """
+    docker = sudo('docker')
+    do = (lambda cmd: print(cmd) if dry_run else ctx.run(cmd, pty=True))
+    if compose_file is None and deploy or env == 'deploy':
+        compose_file = 'docker/docker-compose.deploy.yml'
+    elif compose_file is None:
+        compose_file = 'docker/docker-compose.yml'
+    compose = f'{docker}-compose -f {compose_file}'
+
+    if env == 'single':
+        do(f'{docker} run '
+           f'-v `pwd`:/app '
+           f'-p {port}:8000 '
+           f'-it ejplatform/dev:{tag} {cmd or "run"}')
+    elif env == 'start':
+        do(f'{compose} up -d')
+        do(f'{compose} run -p {port}:8000 web {cmd or "bash"}')
+        do(f'{compose} stop')
+    elif env == 'up':
+        do(f'{compose} up')
+    elif env == 'run':
+        do(f'{compose} run -p {port}:8000 web {cmd or "bash"}')
+    elif env == 'deploy':
+        do(f'{compose} up')
+    else:
+        raise SystemExit(f'invalid choice for env: {env}\n'
+                         f'valid options: single, start, up, run, deploy')
+    if clean_perms:
+        do(f'sudo chown `whoami`:`whoami` * -R')
+
+
+@task
+def docker_clean(ctx, no_sudo=False, all=False, volumes=False, networks=False, images=False, containers=False,
+                 force=False):
     """
     Clean unused docker resources.
     """
 
     docker = 'docker' if no_sudo else 'sudo docker'
-    run = lambda cmd: ctx.run(cmd, pty=True)
+    force = ' --force ' if force else ''
+    run = (lambda cmd: ctx.run(cmd, pty=True))
     if volumes or all:
-        run(f'{docker} volume rm $({docker} volume ls -qf dangling=true)')
+        run(f'{docker} volume rm {force} $({docker} volume ls -q dangling=true)')
     if networks or all:
-        run(f'{docker} network rm $({docker} network ls | grep "bridge" | awk \'/ / {" print $1 "}\')')
+        run(f'{docker} network rm {force} $({docker} network ls | grep "bridge" | awk \'/ / {" print $1 "}\')')
     if images or all:
-        run(f'{docker} rmi $({docker} images --filter "dangling=true" -q --no-trunc)')
+        run(f'{docker} rmi {force} $({docker} images --filter "dangling=true" -q --no-trunc)')
     if containers or all:
-        run(f'{docker} rm $({docker} ps -qa --no-trunc --filter "status=exited")')
+        run(f'{docker} rm {force} $({docker} ps -qa --no-trunc --filter "status=exited")')
 
     if not any([all, volumes, networks, images, containers]):
         print('You must select one kind of docker resource to clean.', file=sys.stderr)
@@ -224,7 +340,7 @@ def i18n(ctx, compile=False, edit=False, lang='pt_BR', keep_pot=False):
     if edit:
         ctx.run(f'poedit locale/{lang}/LC_MESSAGES/django.po')
     elif compile:
-        manage(ctx, 'compilemessages')
+        ctx.run(f'{python} etc/scripts/compilemessages.py')
     else:
         print('Collecting messages')
         manage(ctx, 'makemessages', all=True, keep_pot=True)
@@ -248,6 +364,14 @@ def i18n(ctx, compile=False, edit=False, lang='pt_BR', keep_pot=False):
 # Good practices and productivity
 #
 @task
+def lint(ctx):
+    """
+    Execute linters
+    """
+    ctx.run('flake8 src/', pty=True)
+
+
+@task
 def install_hooks(ctx):
     """
     Install git hooks in repository.
@@ -257,15 +381,14 @@ def install_hooks(ctx):
 
 
 @task
-def update_deps(ctx, all=False, reset=False):
+def update_deps(ctx, all=False):
     """
     Update volatile dependencies
     """
-    if reset:
-        ctx.run('rm -fr local/vendor/')
     ctx.run(f'{python} etc/scripts/install-deps.py')
     if all:
-        ctx.run(f'{python} -m pip install -r etc/requirements/develop.txt')
+        exec(ctx, f'{python} -m pip install -r etc/requirements/local.txt')
+        exec(ctx, f'{python} -m pip install -r etc/requirements/develop.txt')
     else:
         print('By default we only update the volatile dependencies. Run '
               '"inv update-deps --all" in order to update everything.')
@@ -277,9 +400,9 @@ def configure(ctx, silent=False):
     Install dependencies and configure a test server.
     """
     if silent:
-        ask = lambda x: print(x + 'yes') or True
+        ask = (lambda x: print(x + 'yes') or True)
     else:
-        ask = lambda x: input(x + ' (y/n) ').lower() == 'y'
+        ask = (lambda x: input(x + ' (y/n) ').lower() == 'y')
 
     print('\nLoading dependencies (inv update-deps)')
     update_deps(ctx, all=True)
@@ -297,32 +420,48 @@ def configure(ctx, silent=False):
 
 
 #
-# Prepare deploy
+# Useful docker entry points
 #
 @task
-def prepare_deploy(ctx, ask_input=False):
+def bash(ctx):
     """
-    Deploy checklist:
-
-    * Build CSS assets
-    * Build JS assets
-    * Compile translations
-    * Collect static files
-    * Save assets to database
+    Starts a bash shell.
     """
-    no_input = not ask_input
+    print('\nStarting bash console')
+    os.execve('/bin/bash', ['bash'], os.environ)
 
-    # CSS
-    sass(ctx, no_watch=no_input)
 
-    # Js
-    js(ctx)
+@task
+def shell(ctx):
+    """
+    Starts a Django shell
+    """
+    manage(ctx, 'shell')
 
-    # Translations
-    i18n(ctx, compile=no_input)
 
-    # Static files
-    manage(ctx, 'collectstatic', noinput=no_input)
+@task
+def test(ctx):
+    """
+    Run all unittests.
+    """
+    ctx.run('pytest')
+
+
+#
+# Deploy tasks
+#
+@task
+def rancher_push(ctx):
+    """
+    Push containers to a Rancher server.
+    """
+
+
+@task
+def wait_db(ctx):
+    """
+    Wait for connection with the database.
+    """
 
 
 #
@@ -331,3 +470,10 @@ def prepare_deploy(ctx, ask_input=False):
 def exec(ctx, cmd, **kwargs):
     print(f'Running: {cmd}')
     ctx.run(cmd, **kwargs)
+
+
+def sudo(cmd):
+    if os.getuid() == 0:
+        return cmd
+    else:
+        return f'sudo {cmd}'

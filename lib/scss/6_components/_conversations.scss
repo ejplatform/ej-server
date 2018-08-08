@@ -73,6 +73,7 @@ $conversation-card-button-border-radius: 30px !default;
         flex-wrap: wrap;
         width: 100%;
         justify-content: center;
+        padding-bottom: 20px;
 
         > * {
             margin: $conversation-card-gutter;
@@ -98,16 +99,15 @@ $conversation-card-button-border-radius: 30px !default;
     font-weight: bold;
     text-align: center;
     padding: $spacing-unit / 2 0;
-    background-color: var(--conversation-top-background);
-    color: var(--font-color-secondary); 
+    background-color: $conversation-top-background;
 }
 
 .ConversationCard {
-    @include color($conversation-card-color, $conversation-card-text-color, $force: true);
+    @include color($card-conversation-middle-background, $conversation-card-text-color, $force: true);
     align-self: stretch;
     box-sizing: border-box;
     border: $conversation-card-border;
-    border-radius: $conversation-card-border-radius;
+    border-radius: $card-conversation-border-radius;
     flex-grow: 1;
     margin: 0;
     margin-bottom: $spacing-unit;
@@ -118,8 +118,8 @@ $conversation-card-button-border-radius: 30px !default;
     overflow: hidden;
     position: relative;
     .ConversationTags {
-        background-color: var(--card-conversation-top-background);
-        color: var(--font-color-secondary);
+        background-color: $card-conversation-top-background;
+        color: $card-conversation-top-font-color;
     }
 
     > * {
@@ -190,12 +190,12 @@ $conversation-card-button-border-radius: 30px !default;
         position: absolute;
         box-sizing: border-box;
         width: 100%;
-        background: var(--card-conversation-bottom-background);
+        background: $card-conversation-bottom-background;
     }
 
     &-actions {
         .Button[primary] {
-            @include color(var(--button-background-primary), $conversation-card-button-color-text);
+            background: $card-conversation-button-background;
             font-size: $font-size-small;
             padding-top: $button-vpadding * 2;
             padding-bottom: $button-vpadding * 2;
@@ -236,7 +236,7 @@ $conversation-card-button-border-radius: 30px !default;
     }
 
     > * {
-        padding: $spacing-unit;
+        padding: $spacing-unit-tiny;
     }
     u {
         margin: 0;
@@ -252,17 +252,47 @@ $conversation-card-button-border-radius: 30px !default;
             display: block;
         }
     }
-
-
+    &-social {
+        form{
+            display: inline-block;
+            button{
+                i {
+                    color: $color-magenta;
+                }
+                background-color: Transparent;
+                background-repeat:no-repeat;
+                border: none;
+                cursor:pointer;
+                overflow: hidden;
+                outline:none;
+                font-weight: bold;
+                margin-left: 0;
+            }
+        }
+        .share-button{
+            background-color: Transparent;
+            background-repeat:no-repeat;
+            border: none;
+            cursor:pointer;
+            overflow: hidden;
+            outline:none;
+            font-weight: bold;
+            i {
+                color: $color-magenta;
+            }
+            float: right;
+        }
+    
+    }
     &-banner {
-        background: var(--conversation-middle-background);
+        background: $conversation-middle-background;
         border-radius: 0 0 $block-elements-border-radius $block-elements-border-radius;
         color: $color-purple-dark;
         margin: 0;
         padding-top: 0;
         .ConversationTags {
-            background-color: var(--conversation-top-background);
-            color: var(--conversation-tag-color);
+            background-color: $conversation-top-background;
+            color: $conversation-tag-color;
         }
 
         h1 {
@@ -277,9 +307,9 @@ $conversation-card-button-border-radius: 30px !default;
             @media only screen and (min-width: $breakpoint-large) {
                 padding: $spacing-unit-large 0;
             }
-            color: var(--font-color-primary);
+            color: $conversation-font-color;
         }
-        
+
         .Conversation-edit {
           text-align: center;
 
@@ -310,7 +340,7 @@ $conversation-card-button-border-radius: 30px !default;
     &-arrow {
         border-left: $conversation-card-border-arrow-size solid transparent;
         border-right: $conversation-card-border-arrow-size solid transparent;
-        border-top: var(--conversation-bottom-border);
+        border-top: $conversation-bottom-border;
         height: 0;
         margin: 0 auto;
         padding: 0;
@@ -360,32 +390,32 @@ $conversation-card-button-border-radius: 30px !default;
 
         h1 {
             font-family: 'Patua One', sans-serif !important;
-            // color: $color-magenta !important;
             font-size: 24px !important;
             letter-spacing: 1px;
             font-weight: 300 !important;
-            color: var(--conversation-info-title);
+            color: $conversation-info-title;
         }
         p {
             margin-top: $spacing-unit-tiny;
-            color: var(--conversation-info-content);
+            color: $conversation-info-content;
         }
     }
 }
 
 .Comment {
-    // @include color('primary');
-    background-color: var(--conversation-comment-background-color);
-    color: var(--conversation-comment-title-color);
+    background-color: $conversation-comment-background-color;
+    color: $conversation-comment-title-color;
 
     box-sizing: border-box;
-    border-radius: $block-elements-border-radius;
+    border-radius: $conversation-comment-border-radius;
     font-size: $font-size-h3;
-    padding: $spacing-unit;
     margin: 0 auto;
     max-width: $page-content-width-max;
     min-height: 250px !important;
     width: 100% !important;
+    z-index: 3;
+    position: relative;
+    
 
     &-counter {
         text-align: center;
@@ -393,10 +423,10 @@ $conversation-card-button-border-radius: 30px !default;
             margin: 0;
         }
     }
-    
+
     i.fa {
         background: $color-primary-text;
-        border: 2px solid $color-primary-text;
+        border: 2px solid #fff;
         border-radius: $spacing-unit-large;
         padding: $spacing-unit-tiny;
     }
@@ -418,7 +448,7 @@ $conversation-card-button-border-radius: 30px !default;
             width: 100%;
 
             span {
-                font-size: $font-size-small;
+                font-size: $conversation-vote-font-size;
             }
 
             li {
@@ -427,21 +457,65 @@ $conversation-card-button-border-radius: 30px !default;
                 flex-grow: 1;
 
                 i.fa {
-                    color: $color-primary;
-                    background: $color-primary-text;
-                    height: $conversation-button-size;
-                    width: $conversation-button-size;
+                    background: #fff;
+                    height: $conversation-vote-circle-size;
+                    width: $conversation-vote-circle-size;
+                    padding: $conversation-vote-circle-spacing;
+                    cursor: pointer;
+                }
+                &.voteAgree{
+                    &:active {
+                        color: $conversation-vote-agree-color;;
+                    }
+                    i.fa {
+                        color: $conversation-vote-agree-color;
+                        &:hover {
+                            background: $conversation-vote-agree-color;
+                            color: #fff;
+                        }
+                    }
+                    
+                }
+                &.voteSkip{
+                    &:active {
+                        color: $conversation-vote-skip-color;;
+                    }
+                    i.fa {
+                        color: $conversation-vote-skip-color;
+                        &:hover {
+                            background: $conversation-vote-skip-color;
+                            color: #fff;
+                        }
+                    }
+                    
+                }
+                &.voteDisagree{
+                    &:active {
+                        color: $conversation-vote-disagree-color;;
+                    }
+                    i.fa {
+                        color: $conversation-vote-disagree-color;
+                        &:hover {
+                            background: $conversation-vote-disagree-color;
+                            color: #fff;
+                        }
+                    }
+                    
                 }
 
             }
 
-            li:first-child i.fa {
-                color: $color-role-ok;
-            }
+            // li:first-child i.fa {
+            //     color: $conversation-vote-agree-color);
+            //     &:hover {
+            //         background: $conversation-vote-agree-color);
+            //         color: #fff;
+            //     }
+            // }
 
-            li:last-child i.fa {
-                color: $color-role-error;
-            }
+            // li:last-child i.fa {
+            //     color: $color-role-error;
+            // }
         }
     }
 
@@ -450,22 +524,32 @@ $conversation-card-button-border-radius: 30px !default;
         i.fa {
             color: $color-accent;
             margin-right: $spacing-unit-small;
+            background: #fff;
         }
     }
 }
 
 .CommentForm {
     text-align: center;
-    background: $color-blue-nav;
-    margin-top: $spacing-unit-large;
+    // background: $color-blue-nav;
+    background: $conversation-comment-form-background-color;
+    margin-top: -60px;
+    border-radius: 0 0 56px 56px;
+    z-index: 2;
+    max-width: 682px;
+    margin-left: auto;
+    margin-right: auto;
 
     h1 {
         font-size: $font-size-h3;
         margin: $spacing-unit-tiny 0;
-        color: $color-primary !important;
+        // color: $color-primary !important;
+        padding-top: 100px;
+        color: $conversation-comment-form-title-color;
     }
     p {
         margin: $spacing-unit-tiny 0;
+        color: $conversation-comment-form-text-color;
     }
 
     textarea {
@@ -479,9 +563,9 @@ $conversation-card-button-border-radius: 30px !default;
     }
 
     input[type=submit] {
-        border-radius: $conversation-card-button-border-radius;
+        border-radius: $conversation-comment-button-border-radius;
         color: #fff;
-        background: $color-primary;
+        background: $conversation-comment-button-background;
         border: 0;
         padding: $spacing-unit-small $spacing-unit;
         font-size: 14px;
@@ -913,7 +997,7 @@ $conversation-card-button-border-radius: 30px !default;
         font-size: 16px;
         font-weight: 600;
       }
-    
+
       &-metadata {
         color: $color-blue-light-low;
         font-size: 12px;
@@ -990,13 +1074,13 @@ $conversation-card-button-border-radius: 30px !default;
       box-shadow: none;
       box-sizing: border-box;
       width: 90%;
-      background: $color-pink; 
+      background: $color-pink;
     }
   }
 
   .Conversation-edit-field {
     @extend .Container;
-    
+
     outline: 0;
     background: transparent;
     border: 0;
@@ -1034,12 +1118,14 @@ $conversation-card-button-border-radius: 30px !default;
 
       i {
         border-radius: 50%;
-        border: 2px solid $color-purple-dark;
+        border: $conversation-edit-action-cancel-border;
         display: inline-block;
         width: 16px;
         height: 16px;
         padding: 4px 2px 0 2px;
         font-size: 11px;
+        color: $conversation-edit-action-cancel-font-color;
+        background: $conversation-edit-action-cancel-background;
       }
     }
 
@@ -1062,8 +1148,9 @@ $conversation-card-button-border-radius: 30px !default;
     }
 
     span + span i {
-      color: $color-pink;
-      border-color: $color-pink;
+      color: $conversation-edit-action-save-font-color;
+      border-color: $conversation-edit-action-save-border;
+      background: $conversation-edit-action-save-background;
     }
   }
 }

@@ -14,19 +14,19 @@
                 {{ csrf_input }}
                 <input type="hidden" name="action" value="vote">
                 <ul class="ConversationComment-actions">
-                    <li up-expand>
+                    <li class="voteAgree" up-expand>
                         <button type="submit" form="Comment-form" name="vote" value="agree">
                             <i class="fa fa-check"></i>
                         </button>
                         <span>{{ _('Agree') }}</span>
                     </li>
-                    <li up-expand>
+                    <li class="voteSkip" up-expand>
                         <button type="submit" form="Comment-form" name="vote" value="skip">
                             <i class="fa fa-arrow-right"></i>
                         </button>
                         <span>{{ _('Skip') }}</span>
                     </li>
-                    <li up-expand>
+                    <li class="voteDisagree" up-expand>
                         <button type="submit" form="Comment-form" name="vote" value="disagree">
                             <i class="fa fa-times"></i>
                         </button>

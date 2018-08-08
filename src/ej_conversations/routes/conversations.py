@@ -6,48 +6,17 @@ from django.utils.translation import ugettext_lazy as _
 from boogie import rules
 from hyperpython import a
 from . import urlpatterns, conversation_url
-from ..models import FavoriteConversation
-from ..proxy import conversations_with_moderation
+from ..models import FavoriteConversation, Conversation
 
 
 @urlpatterns.route('', name='list')
 def conversation_list(request):
     user = request.user
     return {
-        'conversations': conversations_with_moderation(user),
+        'conversations': Conversation.objects.filter(is_promoted=True),
         'can_add_conversation': user.has_perm('ej_conversations.can_add_conversation'),
         'create_url': reverse('conversation:create')
     }
-
-# def conversation_list2(request, board=None):
-#     user = request.user
-
-#     if board:
-#         create_url = reverse('user-conversation:create')
-#         conversations = Conversation.objects.filter(author=board.owner)
-#     else:
-#         create_url = reverse('conversation:create')
-#         conversations = Conversation.objects.filter(is_promoted=True)
-
-#     clist = {
-#         'conversations': moderated_conversations(user, conversations),
-#         'can_add_conversation': user.has_perm('ej_conversations.can_add_conversation', board),
-#     }
-
-#     if board and board.owner == user:
-#         clist['add_link'] = a(_('Add new conversation'), href=create_url)
-#     else:
-#         clist['add_link'] = ''
-
-#     return clist
-# def moderated_conversations(user, qs=None):
-#     perm = 'ej_conversations.can_moderate_conversation'
-#     kwargs = {
-#         'can_moderate': lambda x: user.has_perm(perm, x)
-#     }
-#     if qs is None:
-#         qs = Conversation.objects.filter(is_promoted=True)
-#     return proxy_seq(qs, user=user, **kwargs)
 
 
 @urlpatterns.route(conversation_url)

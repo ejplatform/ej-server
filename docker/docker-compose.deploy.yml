@@ -1,0 +1,68 @@
+version: '3.5'
+
+
+volumes:
+  db_data:
+  media:
+
+
+services:
+  web:
+    restart: always
+    image: ejplatform/web:latest
+    build:
+      context: ../
+      dockerfile: ./docker/Dockerfile
+    ports:
+      - "5000:8000"
+    links:
+      - postgres:postgres
+      - redis:redis
+    env_file:
+      - ./env/django.env
+      - ./env/postgres.env
+      - ./env/deploy.env
+    environment:
+      - DJANGO_ENVIRONMENT=production
+    volumes:
+      - media:/app/local/media/
+    working_dir: /app
+    command: db -m run-deploy
+
+
+  nginx:
+    restart: always
+    image: ejplatform/nginx:latest
+    build:
+      context: ../
+      dockerfile: ./docker/Dockerfile-nginx
+    volumes:
+      - ../local/docker/media/:/usr/share/nginx/html/media
+    ports:
+      - 80:80
+    links:
+      - web:django
+
+
+  postgres:
+    restart: always
+    image: postgres:9.6
+    env_file:
+      - ./env/deploy.env
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+
+  redis:
+    restart: always
+    image: redis:3
+
+
+#  rabbit:
+#    image: rabbitmq:3.6.14-management
+#    env_file:
+#      - ./env/rabbit.env
+#    ports:
+#      - 5672:5672  # Debugging
+#      - 15672:15672  # RabbitMQ Manager
+

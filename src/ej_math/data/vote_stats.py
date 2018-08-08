@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-from lazyutils import lazy
+from sidekick import lazy
 
 DISAGREE, SKIP, AGREE = -1, 0, 1
 

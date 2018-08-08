@@ -6,6 +6,7 @@ from django.views import defaults as default_views
 from rest_framework.documentation import include_docs_urls
 
 from boogie.rest import rest_api
+from ej import services
 from ej.fixes import unregister_admin
 
 unregister_admin.unregister_apps()
@@ -13,7 +14,7 @@ unregister_admin.unregister_apps()
 #
 # Optional urls
 #
-if settings.EJ_ENABLE_ROCKETCHAT:
+if settings.EJ_ROCKETCHAT_INTEGRATION:
     rocket_urls = [path('talks/', include('ej_rocketchat.routes', namespace='rocketchat'))]
 else:
     rocket_urls = []
@@ -27,15 +28,14 @@ urlpatterns = [
     # Profile URLS
     path('profile/', include(('ej_profiles.routes', 'ej_profiles'), namespace='profiles')),
     path('profile/', include('ej_gamification.routes', namespace='gamification')),
+    path('profile/boards/', include('ej_boards.routes.board', namespace='boards')),
     path('profile/notifications/', include('ej_notifications.routes', namespace='notifications')),
 
     # Conversations and other EJ-specific routes
+    path('', include('ej_boards.routes.conversation', namespace='board_conversation')),
     path('conversations/', include('ej_conversations.routes', namespace='conversation')),
-    path('conversations/', include('ej_clusters.routes', namespace='cluster')),
+    path('', include('ej_clusters.routes', namespace='cluster')),
     path('conversations/', include('ej_reports.routes', namespace='report')),
-
-    # User conversations
-    # path('', include('ej_boards.routes', namespace='boards')),
 
     # Configurations
     path('config/', include(('ej_configurations.routes', 'ej_configurations'), namespace='configurations')),
@@ -79,3 +79,5 @@ if settings.DEBUG:
         urlpatterns.append(
             path('__debug__/', include(debug_toolbar.urls))
         )
+
+services.start_services(settings)

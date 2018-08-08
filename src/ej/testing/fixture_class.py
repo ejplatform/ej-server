@@ -15,7 +15,7 @@ def named_fixture(name):
 
 
 class FixtureMeta(type):
-    def __init__(cls, clsname, bases, ns):
+    def __init__(cls, clsname, bases, ns):  # noqa: N805
         super().__init__(clsname, bases, ns)
         cls._fixtures = dict(getattr(cls, '_fixtures', {}))
         cls._recipes = dict(getattr(cls, '_recipes', {}))
@@ -28,7 +28,7 @@ class FixtureMeta(type):
                 cls._fixtures.update(ns)
                 cls._recipes[name] = recipe
 
-    def update_globals(cls, globals):
+    def update_globals(cls, globals):  # noqa: N805
         globals.update(cls._fixtures)
         globals.update(cls._recipes)
 
@@ -76,13 +76,6 @@ def fixture_method(func):
         def method(self):
             return func()
     return method
-
-
-class WithRecipes(metaclass=FixtureMeta):
-    """
-    Base class for all test classes with fixtures.
-    """
-    base = object()
 
 
 class EjRecipes(metaclass=FixtureMeta):

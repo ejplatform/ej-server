@@ -122,7 +122,7 @@ class Conversation(TimeStampedModel):
 
     def clean(self):
         can_edit = 'ej_conversations.can_edit_conversation'
-        if self.is_promoted and not self.author.has_perm(can_edit, self):
+        if self.is_promoted and self.author_id is not None and not self.author.has_perm(can_edit, self):
             raise ValidationError(_(
                 'User does not have permission to create a promoted '
                 'conversation.')
@@ -175,6 +175,15 @@ class Conversation(TimeStampedModel):
         log.info('new comment: %s' % comment)
         return comment
 
+    def vote_count(self, which=None):
+        """
+        Return the number of votes of a given type.
+        """
+        kwargs = dict(comment__conversation_id=self.id)
+        if which is not None:
+            kwargs['choice'] = which
+        return Vote.objects.filter(**kwargs).count()
+
     def statistics(self):
         """
         Return a dictionary with basic statistics about conversation.
@@ -184,10 +193,10 @@ class Conversation(TimeStampedModel):
         return dict(
             # Vote counts
             votes=dict(
-                agree=vote_count(self, Choice.AGREE),
-                disagree=vote_count(self, Choice.DISAGREE),
-                skip=vote_count(self, Choice.SKIP),
-                total=vote_count(self),
+                agree=self.vote_count(Choice.AGREE),
+                disagree=self.vote_count(Choice.DISAGREE),
+                skip=self.vote_count(Choice.SKIP),
+                total=self.vote_count(),
             ),
 
             # Comment counts
@@ -283,16 +292,6 @@ class ConversationTag(TaggedItemBase):
 #
 # Utility functions
 #
-def vote_count(conversation, which=None):
-    """
-    Return the number of votes of a given type.
-    """
-    kwargs = dict(comment__conversation_id=conversation.id)
-    if which is not None:
-        kwargs['choice'] = which
-    return Vote.objects.filter(**kwargs).count()
-
-
 def comment_count(conversation, type=None):
     """
     Return the number of comments of a given type.

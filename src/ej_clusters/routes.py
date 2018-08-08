@@ -1,12 +1,14 @@
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
-
+from django.shortcuts import redirect
 from boogie.router import Router
 from boogie.rules import proxy_seq
 from ej_conversations.models import Conversation, Choice, Comment
 from hyperpython import a, input_, label, Block
 from hyperpython.components import html_list, html_table
 from .models import Stereotype, Cluster
+from ej_clusters.forms import StereotypeForm, StereotypeVoteFormSet
+
 
 app_name = 'ej_cluster'
 urlpatterns = Router(
@@ -22,7 +24,7 @@ urlpatterns = Router(
     lookup_field={'conversation': 'slug'},
     lookup_type={'conversation': 'slug'},
 )
-conversation_url = '<model:conversation>/'
+conversation_url = 'conversations/<model:conversation>/'
 
 
 #
@@ -98,6 +100,46 @@ def stereotype_vote(request, conversation, stereotype):
         'non_voted_comments_count': non_voted_comments.count(),
         'voted_comments_count': non_voted_comments.count(),
     }
+
+
+#
+# Profile stereotypes
+#
+@urlpatterns.route('profile/stereotypes/add/')
+def create_stereotype(request):
+    stereotype_form = StereotypeForm
+    votes_form = StereotypeVoteFormSet
+    if request.method == 'POST':
+        rendered_stereotype_form = stereotype_form(request.POST)
+        rendered_votes_form = votes_form(request.POST)
+
+        if rendered_stereotype_form.is_valid() and rendered_votes_form.is_valid():
+            stereotype = rendered_stereotype_form.save(commit=False)
+            stereotype.owner = request.user
+            stereotype.save()
+            votes = rendered_votes_form.save(commit=False)
+            for vote in votes:
+                vote.stereotype = stereotype
+                vote.save()
+
+            return redirect('/profile/stereotypes/')
+    else:
+        rendered_stereotype_form = stereotype_form()
+        rendered_votes_form = votes_form()
+        filtered_comments = Comment.objects.filter(conversation__author=request.user)
+        for form in rendered_votes_form:
+            form.fields['comment'].queryset = filtered_comments
+    return {
+        'stereotype_form': rendered_stereotype_form,
+        'votes_form': rendered_votes_form,
+    }
+
+
+@urlpatterns.route('stereotypes/')
+def stereotypes(request):
+    user_stereotypes = Stereotype.objects.filter(owner=request.user)
+
+    return {"stereotypes": user_stereotypes, }
 
 
 #
