@@ -95,6 +95,7 @@ publish tagged images:
 deploy to master:
   image: cdrx/rancher-gitlab-deploy
   stage: deploy
+  environment: develop
   script:
     - upgrade --environment $RANCHER_ENVIRONMENT --stack $RANCHER_STACK --service backend --rancher-key $RANCHER_ACCESS_KEY --rancher-secret $RANCHER_SECRET_KEY
   only:
