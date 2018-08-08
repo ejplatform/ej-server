@@ -24,7 +24,10 @@ $social-buttons-background-color: #fff;
 //Header
 $header-background-color: #30BEC0;
 $header-logo-size: 74px;
+$header-icon-size: 40px;
 $header-font-color: white;
+$header-top-nav-height: $header-logo-size + 7px; //$spacing-unit-tiny;
+$header-bottom-nav-height: $header-icon-size + 20px;
 // Home Banner
 $home-banner-title-font-family: Raleway;
 $home-banner-title-font-color: #052B47;
