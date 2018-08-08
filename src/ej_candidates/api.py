@@ -8,7 +8,8 @@ from .models.selected_candidates import SelectedCandidate
 
 @rest_api.action('ej_users.User')
 def candidates(request, user):
-    return Candidate.objects.exclude(selectedcandidate__user_id=user.id)
+    return Candidate.objects.exclude(selectedcandidate__user_id=user.id)\
+        .exclude(pressedcandidate__user_id=user.id)
 
 # boogie has a bug. The underscore from the decorated method
 # is not being replaced by a an hifen.Fabio will fix it.
