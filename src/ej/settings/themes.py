@@ -3,7 +3,7 @@ from .paths import PathsConf
 
 
 class ThemesConf(PathsConf):
-    EJ_THEME = env('default', name='EJ_THEME')
+    EJ_THEME = env('default', name='THEME')
 
     def finalize(self, settings):
         theme = self.EJ_THEME

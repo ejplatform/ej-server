@@ -17,3 +17,4 @@ class EjOptions(Conf):
 
     # Personalization
     EJ_PAGE_TITLE = _('Empurrando Juntos')
+    EJ_HOME_PATH = '/home/'
