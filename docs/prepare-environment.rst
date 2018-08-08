@@ -68,8 +68,9 @@ For last, install node package manager and sass::
     $ sudo yum install nodejs
     $ sudo npm install sass
 
-Mac
----
+Mac OSX
+-------
+
 We'll start by installing homebrew to make things easier and then Python 3, followed by Sass.
 
     $ /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"

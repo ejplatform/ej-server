@@ -1,0 +1,85 @@
+{% extends 'base.jinja2' %}
+
+{% block main %}
+<div id="HomeCommercial">
+  <div id="HomeCommercial-cover">
+    <div>
+      <p>{{ _('Create opinion surveys.') }}</p>
+      {{ action_button(_('Try'), '/conversations')}}
+    </div>
+  </div>
+
+  <div id="HomeCommercial-how">
+    <h2>{{ _('How it works') }}</h2>
+    
+    <ul>
+      <li>
+        <i class="fa fa-microphone"></i>
+        <div>
+          <h3>{{ _('Create a conversation') }}</h3>
+          <p>{{ _('create conversations on EJ to receive ideas and opinions about politics, services or public equipments.') }}</p>
+        </div>
+      </li>
+
+      <li>
+        <i class="fas fa-clipboard"></i>
+        <div>
+          <h3>{{ _('Listen to the people') }}</h3>
+          <p>{{ _('identify the priorities and the different opinion groups in the society.') }}</p>
+        </div>
+      </li>
+
+      <li>
+        <i class="far fa-flag"></i>
+        <div>
+          <h3>{{ _('Take decisions') }}</h3>
+          <p>{{ _('make participants know, communicating directly and amplifying the responses.') }}</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div id="HomeCommercial-conversations">
+    <h2>{{ _('Participative conversations') }}</h2>
+
+    <div>
+      <ul>
+        <li><i class="fa fa-globe"></i><br />{{ _('Many people') }}</li>
+        <li><i class="fa fa-fire"></i><br />{{ _('No attacks or fakes') }}</li>
+        <li><i class="fa fa-align-right"></i><br />{{ _('Nuances instead of bubbles') }}</li>
+        <li><i class="far fa-heart"></i><br />{{ _('Free') }}</li>
+      </ul>
+      <div><img src="/static/default/img/home/cellphone.png" alt="" /></div>
+    </div>
+      
+    <p>{{ action_button(_('Create a conversation'), '/conversations/add')}}</p>
+  </div>
+
+  <div id="HomeCommercial-documentation">
+    <h2>{{ _('Documentation') }}</h2>
+
+    <p>{{ _('Explore the EJ resources with our documented guides') }}</p>
+
+    <ul>
+      <li><i class="fa fa-user-circle"></i> <span>{{ _('User Guides') }}</span></li>
+      <li><i class="fa fa-download"></i> <span>{{ _('Installation Guides') }}</span></li>
+      <li><i class="fa fa-cog"></i> <span>{{ _('Administration Guides') }}</span></li>
+      <li><i class="fa fa-code"></i> <span>{{ _('Development Guides') }}</span></li>
+      <li><i class="fas fa-microchip"></i> <span>{{ _('Our Artificial Intelligence') }}</span></li>
+      <li><i class="fab fa-github"></i> <span>{{ _('Contributing') }}</span></li>
+      <li><i class="far fa-life-ring"></i> <span>{{ _('Getting Help') }}</span></li>
+    </ul>
+  </div>
+
+  <div id="HomeCommercial-who">
+    <h2>{{ _('Who is using EJ') }}</h2>
+
+    <ul>
+      <li><img src="/static/default/img/home/hacklab.png" alt="" /></li>
+      <li><img src="/static/default/img/home/pcdob.png" alt="" /></li>
+      <li><img src="/static/default/img/home/cidade.png" alt="" /></li>
+      <li><img src="/static/default/img/home/pencil.png" alt="" /></li>
+    </ul>
+  </div>
+</div>
+{% endblock %}

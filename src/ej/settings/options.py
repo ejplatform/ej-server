@@ -18,5 +18,6 @@ class EjOptions(Conf):
     # TODO: remove those in the future? Maybe all personalization strings
     # should be options in Django constance with a cache fallback
     # Personalization
+    EJ_HOME_PATH = '/home/'
     EJ_PAGE_TITLE = env(_('Empurrando Juntos'), name='{attr}')
     EJ_REGISTER_TEXT = 'Ainda não faz parte do EJ?'
