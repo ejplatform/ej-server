@@ -1,5 +1,5 @@
-import pytest
 from ej.testing import UrlTester
+
 
 class TestRoutes(UrlTester):
     user_urls = [
