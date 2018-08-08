@@ -6,6 +6,7 @@ stages:
 
 cache:
   paths:
+    - flag.txt
     - locale/
     - lib/
 
@@ -29,12 +30,13 @@ rebuild base images:
   only:
     - rebuild-images
 
-build translations:
+build assets:
   image: ejplatform/tools:latest
   stage: build
   script:
     - python etc/scripts/compilemessages.py
     - inv sass --no-watch
+    - echo "hello world" >> flag.txt
   tags:
     - docker
 
@@ -48,6 +50,7 @@ test with sqlite3: &test
     - mkdir -p local/logs
     - pip install -r etc/requirements/develop.txt -r etc/requirements/git-modules.txt
     - pytest
+    - cat flag.txt
   tags:
     - docker
 
@@ -59,19 +62,12 @@ test with sqlite3: &test
     - postgres
 
 flake8:
-  image: ejplatform/python:dev
-  stage: test
-  script:
-    - flake8 src/
-  tags:
-    - docker
-
-flake8 alpine:
   image: ejplatform/python:alpine
   stage: test
   script:
     - pip install flake8
     - flake8 src/
+    - cat flag.txt
   tags:
     - docker
 

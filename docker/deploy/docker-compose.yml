@@ -32,7 +32,7 @@ services:
 
   nginx:
     restart: always
-    image: ejplatform/ej-nginx:latest
+    image: ejplatform/nginx:latest
     volumes:
       - ../../local/docker/media/:/usr/share/nginx/html/media
     ports:

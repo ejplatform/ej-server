@@ -3,6 +3,7 @@ version: '3.5'
 
 volumes:
   db_data:
+  media:
 
 
 services:
@@ -24,14 +25,14 @@ services:
     environment:
       - DJANGO_ENVIRONMENT=production
     volumes:
-      - ../local/docker/static/media/:/app/local/media/
+      - media:/app/local/media/
     working_dir: /app
     command: db -m run-deploy
 
 
   nginx:
     restart: always
-    image: ejplatform/ej-nginx:latest
+    image: ejplatform/nginx:latest
     build:
       context: ../
       dockerfile: ./docker/Dockerfile-nginx

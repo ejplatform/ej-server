@@ -11,7 +11,6 @@ BASE_PATH = Path(os.path.abspath(Path(__file__).parent.parent.parent))
 LOCAL = BASE_PATH / 'local'
 VENDOR = LOCAL / 'vendor'
 mod_map = {
-    'courier': 'https://github.com/ejplatform/django-messages-courier.git/',
     'boogie': 'https://github.com/fabiommendes/django-boogie.git/',
     'hyperpython': 'https://github.com/fabiommendes/hyperpython.git/',
 }
