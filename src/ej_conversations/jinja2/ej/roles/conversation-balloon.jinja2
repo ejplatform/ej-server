@@ -2,13 +2,13 @@
     <div class="ConversationDetail-banner">
         <div class="ConversationTags"><i class="fa fa-tags"></i>
             {% if tags %}
-                {{(tags|string).title()}}
+                {{ (tags|string).title() }}
             {% else %}
-                {{_("Tags")}}
+                {{ _("Tags") }}
             {% endif %}
         </div>
         <h1>{{ conversation.text }}</h1>
-         <ul class="ConversationDetail-statistics">
+        <ul class="ConversationDetail-statistics">
             <li><i class="fa fa-comment"></i> {{ gettext('%(count)s comments', count=comments_count) }}</li>
             <li><i class="fa fa-sliders-h"></i> {{ gettext('%(count)s votes', count=votes_count) }}</li>
             <li><i class="fa fa-star"></i> {{ gettext('%(count)s favorites', count=favorites_count) }} </li>
@@ -17,22 +17,22 @@
 
     <div class="ConversationDetail-arrow"></div>
     <div class="ConversationDetail-social">
-        {% if user.is_authenticated %}
+        {% if show_user_actions %}
             <form method="post" class="Favorite-conversation" id="Favorite-form">
-                {{ csrf_input|safe }}
+                {{ csrf_input }}
                 <input type="hidden" name="action" value="favorite">
-                {% if conversation.is_favorite(user) %}
-                <button type="submit" form="Favorite-form">
-                    <i class="fa fa-star"></i>{{_("Unfavorite")}} 
+                {% if is_favorite %}
+                    <button type="submit" form="Favorite-form">
+                        <i class="fa fa-star"></i>{{ _("Unfavorite") }}
                     </button>
                 {% else %}
-                <button type="submit" form="Favorite-form">
-                    <i class="far fa-star"></i> {{_("Favorite")}} 
-                </button>
+                    <button type="submit" form="Favorite-form">
+                        <i class="far fa-star"></i> {{ _("Favorite") }}
+                    </button>
                 {% endif %}
             </form>
             <button class="share-button">
-                <i class="fas fa-share-alt"></i> {{_("Share")}} 
+                <i class="fas fa-share-alt"></i> {{ _("Share") }}
             </button>
         {% endif %}
     </div>

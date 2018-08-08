@@ -18,6 +18,8 @@ class SecurityConf(Base):
     ]
 
     def finalize(self, settings):
+        settings = super().finalize(settings)
+
         if self.ENVIRONMENT == 'local':
             del settings['X_FRAME_OPTIONS']
             settings['INTERNAL_IPS'].append('127.0.0.1')
@@ -28,3 +30,8 @@ class SecurityConf(Base):
                 'localhost:5000',
             ])
         return settings
+
+    def get_allowed_hosts(self, environment):
+        if environment == 'production':
+            return self.env.list('DJANGO_ALLOWED_HOSTS', default=[])
+        return ['localhost']

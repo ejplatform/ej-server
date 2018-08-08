@@ -41,29 +41,30 @@ build translations:
 
 # TEST: test in different environments by changing the database or running
 # different linters.
-test with sqlite3:
+test with sqlite3: &test
   image: ejplatform/python:dev
   stage: test
   script:
+    - mkdir -p local/logs
     - pip install -r etc/requirements/develop.txt -r etc/requirements/git-modules.txt
     - pytest
+  tags:
+    - docker
 
 .test-pgsql:
-  image: ejplatform/python:dev
-  stage: test
+  << : *test
   variables:
     DJANGO_DB_URL: postgres:postgres@postgres:5432
   services:
     - postgres
-  script:
-    - pip install -r etc/requirements/develop.txt -r etc/requirements/git-modules.txt
-    - pytest
 
 flake8:
   image: ejplatform/python:dev
   stage: test
   script:
     - flake8 src/
+  tags:
+    - docker
 
 flake8 alpine:
   image: ejplatform/python:alpine
@@ -71,6 +72,8 @@ flake8 alpine:
   script:
     - pip install flake8
     - flake8 src/
+  tags:
+    - docker
 
 
 # PUBLISH: build and publish images with :latest (master commits) and

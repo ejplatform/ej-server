@@ -1,5 +1,4 @@
 from django.apps import AppConfig
-from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 
 
@@ -16,10 +15,3 @@ class EjConversationsConfig(AppConfig):
         self.rules = rules
         self.api = api
         self.components = components
-
-        if getattr(settings, 'EJ_CONVERSATIONS_ACTSTREAM', False):
-            from actstream import registry
-
-            registry.register(self.get_model('Conversation'))
-            registry.register(self.get_model('Comment'))
-            registry.register(self.get_model('Vote'))
