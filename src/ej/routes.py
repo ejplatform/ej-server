@@ -49,6 +49,7 @@ def menu(request):
 def service_worker(request):
     return render(request, 'js/sw.js', {}, content_type='application/javascript')
 
+
 #
 # Static pages
 #
