@@ -8,7 +8,9 @@ from boogie.rest import rest_api
 @rest_api()
 class PressedCandidate(models.Model):
 
-    """Candidates selected by a user"""
+    """Candidates pressed by a user"""
+    def __str__(self):
+        return "%s - %s" % (self.candidate.name, self.candidate.party)
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE, null=True)
