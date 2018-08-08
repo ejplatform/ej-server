@@ -6,9 +6,9 @@ from boogie import rules
 from boogie.rest import rest_api
 
 @rest_api()
-class SelectedCandidate(models.Model):
+class IgnoredCandidate(models.Model):
 
-    """Candidates selected by a user"""
+    """Candidates ignored by a user"""
     def __str__(self):
         return "%s - %s" % (self.candidate.name, self.candidate.party)
 
