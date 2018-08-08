@@ -45,7 +45,7 @@ services:
     restart: always
     image: postgres:9.6
     env_file:
-      - ./deploy.env
+      - ../env/deploy.env
     volumes:
       - db_data:/var/lib/postgresql/data
 
