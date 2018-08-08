@@ -45,7 +45,7 @@ class Profile(models.Model):
 
     @property
     def age(self):
-        if (self.birth_date is None):
+        if not self.birth_date:
             age = None
         else:
             delta = datetime.datetime.now().date() - self.birth_date

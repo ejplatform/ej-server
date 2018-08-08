@@ -5,6 +5,7 @@ from django.utils.translation import ugettext as _
 from ej_profiles.choices import Gender, Race
 from ej_profiles.models import Profile
 from ej_users.models import User
+from datetime import date
 
 
 class TestProfile:
@@ -13,7 +14,7 @@ class TestProfile:
         return Profile(
             user=User(email='user@domain.com', name='name'),
             image='image',
-            age=18,
+            birth_date=date(1996, 1, 17),
             country='country',
             city='city',
             state='state',
@@ -22,21 +23,26 @@ class TestProfile:
             gender=Gender.FEMALE,
             political_activity='political_activity',
             race=Race.INDIGENOUS,
+            ethnicity="ethnicity",
+            education="undergraduate",
         )
 
     def test_profile_invariants(self, profile):
         assert str(profile) == 'name\'s profile'
-        assert profile.is_filled
+        print(profile.profile_fields())
         assert profile.profile_fields() == [
             ('Cidade', 'city'),
             ('País', 'country'),
             ('Ocupação', 'occupation'),
-            ('Idade', 18),
+            ('Idade', profile.age),
+            ("Escolaridade", 'undergraduate'),
+            ("Etnia", 'ethnicity'),
             ('Identidade de gênero', 'female'),
             ('Raça', 'indigenous'),
             ('Atividade política', 'political_activity'),
             ('Biografia', 'biography'),
         ]
+        assert profile.is_filled
         assert profile.statistics() == {'votes': 0, 'comments': 0, 'conversations': 0}
         assert profile.role() == _('Regular user')
 
