@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-08 12:33+0000\n"
+"POT-Creation-Date: 2018-08-08 14:30+0000\n"
 "PO-Revision-Date: 2018-08-08 09:34-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: \n"
@@ -1123,7 +1123,7 @@ msgstr "Root"
 msgid "Administrative user"
 msgstr "Usuário administrativo"
 
-#: src/ej_profiles/models.py:156 src/ej_profiles/tests/test_models.py:41
+#: src/ej_profiles/models.py:156 src/ej_profiles/tests/test_models.py:47
 msgid "Regular user"
 msgstr "Usuário regular"
 

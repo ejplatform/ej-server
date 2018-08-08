@@ -29,14 +29,13 @@ class TestProfile:
 
     def test_profile_invariants(self, profile):
         assert str(profile) == 'name\'s profile'
-        print(profile.profile_fields())
         assert profile.profile_fields() == [
             ('Cidade', 'city'),
             ('País', 'country'),
             ('Ocupação', 'occupation'),
             ('Idade', profile.age),
-            ("Escolaridade", 'undergraduate'),
-            ("Etnia", 'ethnicity'),
+            ('Escolaridade', 'undergraduate'),
+            ('Etnia', 'ethnicity'),
             ('Identidade de gênero', 'female'),
             ('Raça', 'indigenous'),
             ('Atividade política', 'political_activity'),
