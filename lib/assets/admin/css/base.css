@@ -218,10 +218,21 @@ body {
 #conversation_form fieldset,
 #commentendorsement_form fieldset,
 #flatpage_form fieldset,
-#tag_form fieldset{
+#tag_form fieldset,
+#changelist-form fieldset,
+#board_form fieldset {
     width: 80vw;
-    min-width: 300px;
-    
+    min-width: 275px;
+    border-radius: 12px;
+    border-color: #30BFD3;
+}
+
+#changelist-form fieldset {
+    overflow-x: auto;
+}
+
+#changelist-form>fieldset>table td>textarea {
+    width: 100px;
 }
 
 form .aligned p.help, form .aligned div.help {
