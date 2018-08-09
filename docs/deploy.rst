@@ -43,7 +43,7 @@ versioning and you can maintain it as a private repository independent of
 setting the values of the `Environment Variables`_ you need to modify. In the
 long run, it is probably best to use a private repository to save those files
 with version control. Bear in mind that many of the configuration variables are
-secrets that cannot be seen in a public location.
+secrets that cannot be seen e3in a public location.
 
 Now rebuild the deployment images using the command::
 
@@ -55,53 +55,88 @@ and
 
 to execute the stack.
 
-Deployment configuration
-------------------------
 
-The standard structure of docker-compose-deploy has a few options that the
-``inv docker-deploy`` sub-tasks understand.
+Configuration
+-------------
+
+The standard structure of the docker-compose-deploy_ repository implement a few
+options that the ``inv docker-deploy`` sub-tasks understand. We list those tasks
+bellow:
+
+.. _docker-compose-deploy: https://github.com/ejplatform/docker-compose-deploy/
+
+``inv docker-deploy build``:
+    Builds all images necessary for the Docker Compose file to run.
+
+``inv docker-deploy up``:
+    Executes the full stack using Docker Compose.
+
+``inv docker-deploy run -c bash``:
+    Executes the full stack and runs the given command in the Django container.
+    It can be any task registered in tasks.py. The command bellow uses the
+    "bash" task to open a bash shell in the container.
+
+``inv docker-deploy publish``:
+    Publish all images in Docker Hub.
+
+``inv docker-deploy notify``:
+    Notify your stack that all images were updated. We implement a script that
+    integrates with Rancher, but you can override this script and use any
+    integration you like.
+
+All those commands accept a ``-e ENVIRONMENT`` option that allows us to specify
+different environments other than "production". A common pattern is to use two
+separate deploys: the "production" "staging" environments. All environments
+share the same docker images, but uses different Docker Compose files.
+
 
 config.json
 ~~~~~~~~~~~
 
-The config.json tweaks how the images are built.
+All that the docker-deploy sub-tasks do is to call the docker-compose command
+prepared with different environment variables. Those variables are defined
+on the config.json file and are listed bellow:
 
 "organization" (ejplatform):
     Name of organization or user in Docker Hub used to store images. It defaults
-    to  ejplatform, but you should probably change to some organization that you
-    control.
+    to  ejplatform, but you need to change to some organization that you can
+    publish images to.
 "tag" (latest):
-    Release number for the built images. Can leave at "latest" if desired.
+    Release number for the built images. Leave as "latest" if desired.
 "theme" (default):
-    Theme used to construct images.
+    Theme used to construct images. This sets the EJ_THEME variable in the
+    docker container.
 
 
 Environment Variables
 ~~~~~~~~~~~~~~~~~~~~~
 
-The list of environment variables with their default values.
+All the environment variables bellow can be set directly within the docker-compose
+files or (preferably) at the config.env file so they can be shared between
+different environments. This section describes the main configuration variables
+with their standard values.
 
-Basic
-.....
+Basic and security
+..................
 
-DJANGO_HOSTNAME (localhost):
+Those are the minimum set of required configurations.
+
+HOSTNAME (localhost):
     Host name for the EJ application. Can be something like "ejplatform.org".
     This is the address in which your instance is deployed.
 
-Security
-........
+COUNTRY (USA):
+    Country used for localization and internationalization. This configuration
+    controls simultaneously the DJANGO_LOCALE_NAME, DJANGO_LOCALE_CODE,
+    DJANGO_TIME_ZONE variables using the default configurations for your
+    country. Countries are specified by name (e.g., Brazil, Argentina, Canada, etc)
 
 DJANGO_SECRET_KEY (random value):
     A random string of text that should be out of public sight. This string is
-    used to negotiate sessions and for encryption in some parts of Django.
-
-
-Options
-.......
-
-EJ_ROCKETCHAT_INTEGRATION (false):
-    If true, enables the Rocket chat integration in the Django application.
-    You still need to configure the docker-compose.yml file accordingly.
+    used to negotiate sessions and for encryption in some parts of Django. This can
+    be any random string, but it must be treated as a secret since in theory
+    an attacker that knows the secret key could use this value to forge
+    sessions and impersonate other users.
 
 Personalization
 ...............
@@ -120,11 +155,81 @@ EJ_CONVERSATIONS_MAX_COMMENTS (2):
     Default number of comments that each user has in each conversation.
 
 
-Continuous Deployment
----------------------
+Rocketchat integration
+----------------------
 
-The default EJ instance at http://ejplatform.org uses a system of continuous
-integration/continuous deploy that you might want to replicate in your
-organization.
+Integrating Rocketchat to the stack requires a few additional steps. The first
+step is to uncomment all services in the Rocketchat section in the
+docker-compose.yml to enable the necessary containers.
 
-# TODO.
+You also need to set the following environment variable either in config.env or
+in the docker-compose.yml file:
+
+EJ_ROCKETCHAT_INTEGRATION (false):
+    If true, enables the Rocket chat integration in the Django application.
+    You still need to configure the docker-compose.yml file accordingly.
+
+Now build the containers and execute compose:
+
+    $ inv docker-deploy build
+    $ inv docker-deploy up
+
+To integrate the main EJ application with this instance of Rocketchat, first you
+need to get the Rocketchat admin user **token** and **id** values. First, visit the
+Rocketchat URL (usually at ``talks.your-hostname`` or ``localhost:3000``) and
+create the admin user. Let us suppose the username is called *rcadmin*. You can
+get the login token from the Rocketchat API::
+
+   $ curl http://talks.localhost:3000/api/v1/login \
+        -d "username=rcadmin&password=rcadminpassword"
+
+There are other ways to retrieve this data from the API. Visit
+`Rocketchat API docs`_ to learn more.
+
+Now, go to the Rocketchat administration page and setup the
+`IFrame login integration`_. Find ``Administration > Accounts > IFrame`` page.
+It will be something like ``http://your-hostname/admin/Accounts``.
+
+.. _Rocketchat API docs: https://rocket.chat/docs/developer-guides/rest-api/authentication/login/
+.. _IFrame login integration: https://rocket.chat/docs/developer-guides/iframe-integration/authentication/
+
+In this page, follow the instructions bellow:
+
+1. Set ``Enabled`` option to ``True``.
+2. In order to enable redirection after successful *login*, set ``Iframe URL``
+   to ``http://django:8000/login/?next=/api/v1/rocketchat/redirect/``.
+3. Rocketchat needs to check if an user is already authenticated. Set
+   ``API URL`` to ``http://django:8000/api/v1/rocketchat/check-login/``.
+4. Set ``API Method`` to ``POST``.
+5. Save the changes.
+
+The final step is to setup Django in the admin page. Go to ``http://your-hostname/admin/
+and select ``Django Admin > Constance (Config) > RocketChat Options``. You must set the
+following variables:
+
+ROCKETCHAT_URL:
+    Set to the external accessible Rocketchat URL, e.g.: http://talk.your-hostname.
+ROCKETCHAT_PRIVATE_URL:
+    Set to the Rocketchat Docker internal network address http://rocketchat:3000,
+    or leave blank if there is no rocketchat private URL.
+ROCKETCHAT_AUTH_TOKEN:
+    The admin token obtained using the Rocketchat API.
+ROCKETCHAT_USER_ID:
+    The admin id obtained using the Rocketchat API.
+
+Now each time you try to access Rocketchat without django
+authentication, the user will be redirected to the EJ login page.
+
+
+Rocketchat style
+----------------
+
+It is possible to override the default style and some contents.
+Go to ``Administration > Layout > Content`` and save the content of the
+home page there. We recommend to keep this data versioned in the configuration
+repository. Similarly, it is possible to set a custom CSS at save it using
+Rocketchat admin page at at ``Administration > Layout > Custom CSS``.
+
+Follow the tutorial_ if in doubt.
+
+.. _tutorial: https://drive.google.com/file/d/1LoEMIU4XwaypUJe1D2na8R1Qf4Fwxgy4/view
