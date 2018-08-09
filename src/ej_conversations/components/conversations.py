@@ -1,35 +1,10 @@
-from django.middleware.csrf import get_token
-
-from hyperpython import input_
-from hyperpython.components import render
+from ej.components import with_template
+from hyperpython.django import csrf_input
 from .. import models
 
 
-def with_template(model, role=None, template=None):
-    """
-    Register element rendered from a template.
-    """
-
-    def decorator(func):
-        nonlocal role, template
-
-        if template is None:
-            template = f"ej/roles/{func.__name__.replace('_', '-')}.jinja2"
-        if role is None:
-            role = func.__name__.rpartition('_')[-1]
-
-        return render.register_template(model, template, role=role)(func)
-
-    return decorator
-
-
-def csrf_input(request):
-    value = '' if request is None else get_token(request)
-    return input_(type='hidden', name='csrfmiddlewaretoken', value=value)
-
-
-@with_template(models.Conversation, role='card', template='ej/roles/conversation-card.jinja2')
-def conversation_card(conversation, url=None, request=None, **kwargs):
+@with_template(models.Conversation, role='card')
+def conversation_card(conversation, url=None, **kwargs):
     """
     Render a round card representing a conversation in a list.
     """
@@ -47,7 +22,7 @@ def conversation_card(conversation, url=None, request=None, **kwargs):
     }
 
 
-@with_template(models.Conversation, role='balloon', template='ej/roles/conversation-balloon.jinja2')
+@with_template(models.Conversation, role='balloon')
 def conversation_balloon(conversation, request=None, **kwargs):
     """
     Render details of a conversation inside a conversation balloon.

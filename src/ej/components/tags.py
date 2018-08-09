@@ -4,8 +4,8 @@ from django.contrib.staticfiles.storage import staticfiles_storage
 from django.utils.translation import ugettext_lazy
 
 from hyperpython import a, i, meta
-from hyperpython import h
-from hyperpython.components import html_table, html_list, html_map, Head as BaseHead, render
+from hyperpython import h, render
+from hyperpython.components import html_table, html_list, html_map, Head as BaseHead
 
 static = staticfiles_storage.url
 lazy_string_class = type(ugettext_lazy('hello'))
