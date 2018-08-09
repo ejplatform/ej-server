@@ -6,7 +6,7 @@ from boogie.rules import proxy_seq
 from ej_conversations.models import Conversation, Choice, Comment
 from hyperpython import a, input_, label, Block
 from hyperpython.components import html_list, html_table
-from .models import Stereotype, Cluster
+from .models import Stereotype, Cluster, StereotypeVote
 from ej_clusters.forms import StereotypeForm, StereotypeVoteFormSet
 
 
@@ -123,23 +123,25 @@ def create_stereotype(request):
                 vote.save()
 
             return redirect('/profile/stereotypes/')
-    else:
-        rendered_stereotype_form = stereotype_form()
-        rendered_votes_form = votes_form()
-        filtered_comments = Comment.objects.filter(conversation__author=request.user)
-        for form in rendered_votes_form:
-            form.fields['comment'].queryset = filtered_comments
+
+    rendered_stereotype_form = stereotype_form()
+    rendered_votes_form = votes_form(queryset=StereotypeVote.objects.none())
+    filtered_comments = Comment.objects.filter(conversation__author=request.user)
+    for form in rendered_votes_form:
+        form.fields['comment'].queryset = filtered_comments
     return {
         'stereotype_form': rendered_stereotype_form,
         'votes_form': rendered_votes_form,
     }
 
 
-@urlpatterns.route('stereotypes/')
+@urlpatterns.route('profile/stereotypes/', name='list')
 def stereotypes(request):
     user_stereotypes = Stereotype.objects.filter(owner=request.user)
-
-    return {"stereotypes": user_stereotypes, }
+    return {
+        'stereotypes': user_stereotypes,
+        'create_url': '/profile/stereotypes/add/',
+    }
 
 
 #
