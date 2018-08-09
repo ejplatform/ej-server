@@ -30,12 +30,10 @@ class Conf(ThemesConf,
     the global namespace.
     """
 
-    @property
-    def USING_SQLITE(self):
+    def get_using_sqlite(self):
         return 'sqlite3' in self.DATABASE_DEFAULT['ENGINE']
 
-    @property
-    def USING_POSTGRES(self):
+    def get_using_postgres(self):
         return 'postgresql' in self.DATABASE_DEFAULT['ENGINE']
 
     USING_DOCKER = env(False, name='USING_DOCKER')

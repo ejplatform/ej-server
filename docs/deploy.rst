@@ -2,10 +2,11 @@ Deploy
 ======
 
 EJ relies on Docker and a Docker orchestration technology for its deployment
-process. We assume, by simplicity, that your deployment is going to use Docker
-Compose. It will work with other technologies (we use Rancher, for instance),
-but of course we cannot anticipate the details of your infrastructure and
-Docker Compose is a useful reference for many other orchestration technologies.
+process. We assume, for simplicity, that your deployment is going to use Docker
+Compose. It works with other technologies (we use Rancher, for instance),
+but of course we cannot anticipate the details of your infrastructure to provide
+a detailed guide. Docker Compose is a useful reference and common ground for many
+other orchestration technologies.
 
 The easiest way to proceed is to use the pre-build images available on `Docker Hub`_
 and personalize your installation using environment variables. You must
@@ -15,8 +16,8 @@ databases.
 
 .. _Docker Hub:: https://hub.docker.com/u/ejplatform/
 
-You can run a useful "deployable" stack by simply calling the command from the
-ej-server repository::
+You can run a useful "deployable" stack by simply calling the command bellow from
+the ej-server repository::
 
     $ inv docker-run deploy
 
@@ -27,23 +28,23 @@ that builds and run the stack::
     $ sudo docker-compose -f docker/docker-compose.deploy.yml up
 
 This is all fine for testing, but it is very likely to fail in a real life
-situation. You probably need to provide many specific configurations such
-as the domain name, credentials to different services, the location and passwords
-to your database server, etc.
+situation. You need to provide specific configurations such as the domain name,
+credentials to different services, the location and passwords of your database
+server, etc.
 
 In order to make things simple, we created an example repository with a bare
-bones Docker Compose configuration that you can adapt to your own project.
-Start by cloning it with the command::
+bones Docker Compose configuration that you can adapt to your own use case.
+Start by cloning it to the local/deploy folder with the command::
 
     $ git clone https://github.com/ejplatform/docker-compose-deploy.git local/deploy/
 
 This will copy the example files to local/deploy. This folder is ignored by git
 versioning and you can maintain it as a private repository independent of
 ``ejplatform/ej-server``. Now, adapt the files on this folder to your needs by
-setting the values of the `Environment Variables`_ you need to modify. In the
+setting the values of all necessary `Environment Variables`_. In the
 long run, it is probably best to use a private repository to save those files
 with version control. Bear in mind that many of the configuration variables are
-secrets that cannot be seen e3in a public location.
+secrets that cannot be seen in a public location.
 
 Now rebuild the deployment images using the command::
 
@@ -90,53 +91,61 @@ separate deploys: the "production" "staging" environments. All environments
 share the same docker images, but uses different Docker Compose files.
 
 
-config.json
-~~~~~~~~~~~
+config.py
+~~~~~~~~~
 
-All that the docker-deploy sub-tasks do is to call the docker-compose command
-prepared with different environment variables. Those variables are defined
-on the config.json file and are listed bellow:
+This script is executed and it must define a JSON-like structure that is used
+to fill the environment variables passed to docker-compose when starting the
+containers. The main variables defined on config.py are listed bellow:
 
-"organization" (ejplatform):
+ORGANIZATION (ejplatform):
     Name of organization or user in Docker Hub used to store images. It defaults
     to  ejplatform, but you need to change to some organization that you can
     publish images to.
-"tag" (latest):
+TAG (latest):
     Release number for the built images. Leave as "latest" if desired.
-"theme" (default):
+THEME (default):
     Theme used to construct images. This sets the EJ_THEME variable in the
     docker container.
+LISTENERS:
+    A list of listeners that implement the notify command. Each listener must
+    have a corresponding notify.<listener>.sh script. We provide an example
+    using Rancher.
 
 
 Environment Variables
 ~~~~~~~~~~~~~~~~~~~~~
 
 All the environment variables bellow can be set directly within the docker-compose
-files or (preferably) at the config.env file so they can be shared between
-different environments. This section describes the main configuration variables
-with their standard values.
+files or at config.env so they can be shared between different environments.
+This section describes the main configuration variables with their standard
+values.
 
 Basic and security
 ..................
 
 Those are the minimum set of required configurations.
 
+**DJANGO_SECRET_KEY** (random value):
+    A random string of text that should be out of public sight. This string is
+    used to negotiate sessions and for encryption in some parts of Django. This
+    can be any random that is treated as a secret since in theory an attacker
+    that knows the secret key could use this value to forge sessions and
+    impersonate other users.
+
 HOSTNAME (localhost):
     Host name for the EJ application. Can be something like "ejplatform.org".
     This is the address in which your instance is deployed.
 
-COUNTRY (USA):
+COUNTRY (Brazil):
     Country used for localization and internationalization. This configuration
-    controls simultaneously the DJANGO_LOCALE_NAME, DJANGO_LOCALE_CODE,
+    controls simultaneously the DJANGO_LOCALE_NAME, DJANGO_LANGUAGE_CODE,
     DJANGO_TIME_ZONE variables using the default configurations for your
-    country. Countries are specified by name (e.g., Brazil, Argentina, Canada, etc)
+    country. Countries are specified by name (e.g., USA, Brazil, Argentina,
+    Canada, etc). You can use a COUNTRY as base and personalize any variable
+    of those variables independently (e.g., COUNTRY="Canada",
+    LANGUAGE_CODE="fr-ca")
 
-DJANGO_SECRET_KEY (random value):
-    A random string of text that should be out of public sight. This string is
-    used to negotiate sessions and for encryption in some parts of Django. This can
-    be any random string, but it must be treated as a secret since in theory
-    an attacker that knows the secret key could use this value to forge
-    sessions and impersonate other users.
 
 Personalization
 ...............
@@ -159,23 +168,23 @@ Rocketchat integration
 ----------------------
 
 Integrating Rocketchat to the stack requires a few additional steps. The first
-step is to uncomment all services in the Rocketchat section in the
-docker-compose.yml to enable the necessary containers.
+step is to uncomment all services in the Rocketchat section of the example
+docker-compose.yml file to enable the necessary containers.
 
 You also need to set the following environment variable either in config.env or
 in the docker-compose.yml file:
 
-EJ_ROCKETCHAT_INTEGRATION (false):
+EJ_ROCKETCHAT_INTEGRATION=true:
     If true, enables the Rocket chat integration in the Django application.
-    You still need to configure the docker-compose.yml file accordingly.
+    Remember to configure the docker-compose.yml file accordingly.
 
 Now build the containers and execute compose:
 
     $ inv docker-deploy build
     $ inv docker-deploy up
 
-To integrate the main EJ application with this instance of Rocketchat, first you
-need to get the Rocketchat admin user **token** and **id** values. First, visit the
+In order to integrate the main EJ application with this instance of Rocketchat,
+first you need to get the Rocketchat admin user **token** and **id** values. Visit the
 Rocketchat URL (usually at ``talks.your-hostname`` or ``localhost:3000``) and
 create the admin user. Let us suppose the username is called *rcadmin*. You can
 get the login token from the Rocketchat API::
@@ -224,12 +233,12 @@ authentication, the user will be redirected to the EJ login page.
 Rocketchat style
 ----------------
 
-It is possible to override the default style and some contents.
-Go to ``Administration > Layout > Content`` and save the content of the
+It is possible to override the default style and some static content in the
+website. Go to ``Administration > Layout > Content`` and save the content of the
 home page there. We recommend to keep this data versioned in the configuration
-repository. Similarly, it is possible to set a custom CSS at save it using
+repository. Similarly, it is possible to set a custom CSS and save it using
 Rocketchat admin page at at ``Administration > Layout > Custom CSS``.
 
-Follow the tutorial_ if in doubt.
+Follow the tutorial_ for further explanations (in Portuguese).
 
 .. _tutorial: https://drive.google.com/file/d/1LoEMIU4XwaypUJe1D2na8R1Qf4Fwxgy4/view
