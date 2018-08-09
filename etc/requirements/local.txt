@@ -2,17 +2,17 @@
 setuptools == 40.0
 
 # Generic dependencies
-sidekick ~= 0.4.2
-toolz ~= 0.9.0
+sidekick ~= 0.4
+toolz ~= 0.9
 
 # Scientific stack
-matplotlib ~= 2.2.2
-numpy ~= 1.14.4
-pandas ~= 0.23.0
-django-pandas ~= 0.5.1
+matplotlib ~= 2.2
+numpy ~= 1.14
+pandas ~= 0.23
+django-pandas ~= 0.5
 
 # Images
-Pillow ~= 4.2.1
+Pillow ~= 4.2
 
 # Django
 django ~= 2.0.0

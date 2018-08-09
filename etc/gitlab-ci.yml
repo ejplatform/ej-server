@@ -22,7 +22,7 @@ rebuild base docker images:
     - docker
   only:
     variables:
-      - $CI_COMMIT_MESSAGE =~ /rebuild base docker images/
+      - $CI_COMMIT_MESSAGE =~ /rebuild base docker images.*/
 
 build assets:
   image: ejplatform/tools:latest

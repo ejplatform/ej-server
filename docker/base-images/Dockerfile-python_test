@@ -1,12 +1,8 @@
 FROM ejplatform/python:deploy
 
 # Install Python dependencies.
-# We use a different prefix in order to reuse this layer in the dev container
 COPY "./requirements-develop.txt" requirements.txt
 
-# Set environment variables in order for this to work :)
-ENV PATH=$PATH:/pypackages/bin
-ENV PYTHON=$PYTHONPATH:/pypackages/lib/python3.6/site-packages
 RUN pip install -r requirements.txt --prefix /pypackages \
  && rm -rf /var/lib/apt/lists/* \
  && rm -rf /root/.cache/* \

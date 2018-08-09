@@ -15,8 +15,9 @@ def manage(ctx, cmd, env=None, **kwargs):
     kwargs = {k.replace('_', '-'): v for k, v in kwargs.items() if v is not False}
     opts = ' '.join(f'--{k} {"" if v is True else v}' for k, v in kwargs.items())
     cmd = f'{python} manage.py {cmd} {opts}'
-    env = dict(env or {})
-    env.setdefault('PYTHONPATH', f'src:{env.get("PYTHONPATH", "")}')
+    env = {**os.environ, **(env or {})}
+    path = env.get("PYTHONPATH", ":".join(sys.path))
+    env.setdefault('PYTHONPATH', f'src:{path}')
     ctx.run(cmd, pty=True, env=env)
 
 
@@ -74,11 +75,11 @@ def run(ctx, no_toolbar=False):
 
 
 @task
-def run_deploy(ctx, debug=False, environment='production', port=5000, workers=4):
+def gunicorn(ctx, debug=None, environment='production', port=5000, workers=4):
     """
     Run application using gunicorn for production deploys.
 
-    It assumes that static media is served by a reverse proxy such as nginx.
+    It assumes that static media is served by a reverse proxy.
     """
 
     from gunicorn.app.wsgiapp import run as run_gunicorn
@@ -86,9 +87,10 @@ def run_deploy(ctx, debug=False, environment='production', port=5000, workers=4)
     env = {
         'DISABLE_DJANGO_DEBUG_TOOLBAR': str(not debug),
         'PYTHONPATH': 'src',
-        # 'DJANGO_ENVIRONMENT': environment,
-        # 'DJANGO_DEBUG': str(debug),
+        'DJANGO_ENVIRONMENT': environment,
     }
+    if debug is not None:
+        env['DJANGO_DEBUG'] = str(debug).lower()
     os.environ.update(env)
 
     args = [
@@ -97,7 +99,6 @@ def run_deploy(ctx, debug=False, environment='production', port=5000, workers=4)
         '--access-logfile=-',
         '--log-level', 'info',
     ]
-
     sys.argv = ['gunicorn', *args]
     run_gunicorn()
 
@@ -202,74 +203,9 @@ def db_assets(ctx, path=None, force=False):
 #
 # Docker
 #
-def dockerfiles_cmd(ctx, cmd, tag='latest', dry_run=False, org='ejplatform',
-                    args_web='', args_nginx='', args_dev=''):
-    cmd = su_docker(f'docker {cmd} -f docker/Dockerfile')
-    do = runner(ctx, dry_run, pty=True)
-    do(f'{cmd}       -t {org}/web:{tag}   {args_web}')
-    do(f'{cmd}-dev   -t {org}/dev:{tag}   {args_dev}')
-    do(f'{cmd}-nginx -t {org}/nginx:{tag} {args_nginx}')
-
-
 @task
-def docker_build(ctx, tag='latest', theme='default:ejplatform', extra_args='',
-                 dry_run=False, cache=False):
-    """
-    Rebuild all docker images for the project.
-    """
-    for item in theme.split(','):
-        theme, org = item.split(':') if ':' in item else (item, item)
-        base_image = f'{org}/web:{tag}'
-        args = f'{extra_args} --build-arg THEME={theme}'
-        child_args = f'{args} --build-arg BASE_IMAGE={base_image}'
-        cache_web = cache_nginx = cache_dev = ''
-        if cache:
-            cache_web = f'--cache-from {org}/web:{tag} '
-            cache_dev = f'--cache-from {org}/dev:{tag} '
-            cache_nginx = f'--cache-from {org}/nginx:{tag} '
-        kwargs = {
-            'args_web': cache_web + args,
-            'args_dev': cache_dev + child_args,
-            'args_nginx': cache_nginx + child_args,
-        }
-        dockerfiles_cmd(ctx, 'build .', tag=tag, dry_run=dry_run, org=org, **kwargs)
-
-
-@task
-def docker_push(ctx, tag='latest', theme='default:ejplatform', extra_args='',
-                dry_run=False):
-    """
-    Rebuild all docker images for the project.
-    """
-    cmd = su_docker(f'docker push')
-    do = runner(ctx, dry_run, pty=True)
-
-    for item in theme.split(','):
-        theme, org = item.split(':') if ':' in item else (item, item)
-        do(f'{cmd} {org}/web:{tag}   {extra_args}')
-        do(f'{cmd} {org}/nginx:{tag} {extra_args}')
-        do(f'{cmd} {org}/dev:{tag}   {extra_args}')
-
-
-@task
-def docker_pull(ctx, tag='latest', theme='default:ejplatform', extra_args='',
-                dry_run=False):
-    """
-    Rebuild all docker images for the project.
-    """
-    cmd = su_docker(f'docker pull')
-    do = runner(ctx, dry_run, pty=True)
-
-    for item in theme.split(','):
-        theme, org = item.split(':') if ':' in item else (item, item)
-        do(f'{cmd} {org}/web:{tag}   {extra_args}')
-        do(f'{cmd} {org}/nginx:{tag} {extra_args}')
-        do(f'{cmd} {org}/dev:{tag}   {extra_args}')
-
-
-@task
-def docker_run(ctx, env, cmd=None, port=8000, clean_perms=False, deploy=False,
-               compose_file=None, dry_run=False, tag='latest'):
+def docker(ctx, task, cmd=None, port=8000, clean_perms=False, prod=False,
+           compose_file=None, dry_run=False, tag='latest', namespace='ej'):
     """
     Runs EJ platform using a docker container.
 
@@ -278,56 +214,68 @@ def docker_run(ctx, env, cmd=None, port=8000, clean_perms=False, deploy=False,
     """
     docker = su_docker('docker')
     do = runner(ctx, dry_run, pty=True)
-    if compose_file is None and deploy or env == 'deploy':
+    if compose_file is None and prod or task == 'production':
         compose_file = 'docker/docker-compose.production.yml'
     elif compose_file is None:
         compose_file = 'docker/docker-compose.yml'
     compose = f'{docker}-compose -f {compose_file}'
 
-    if env == 'single':
-        do(f'{docker} run '
-           f'-v `pwd`:/app '
-           f'-p {port}:8000 '
-           f'-it ejplatform/dev:{tag} {cmd or "run"}')
-    elif env == 'start':
+    if task == 'single':
+        do(f'{docker} run'
+           f'  -v `pwd`:/app'
+           f'  -p {port}:8000'
+           f'  -u django'
+           f'  -it ej-dev:{tag} {cmd or "bash"}')
+    elif task == 'start':
         do(f'{compose} up -d')
         do(f'{compose} run -p {port}:8000 web {cmd or "bash"}')
         do(f'{compose} stop')
-    elif env == 'up':
+    elif task == 'up':
         do(f'{compose} up')
-    elif env == 'run':
+    elif task == 'run':
         do(f'{compose} run -p {port}:8000 web {cmd or "bash"}')
-    elif env == 'deploy':
+    elif task == 'production':
         do(f'{compose} up')
     else:
-        raise SystemExit(f'invalid choice for env: {env}\n'
+        raise SystemExit(f'invalid choice for env: {task}\n'
                          f'valid options: single, start, up, run, deploy')
     if clean_perms:
         do(f'sudo chown `whoami`:`whoami` * -R')
 
 
 @task
-def docker_clean(ctx, no_sudo=False, all=False,
-                 volumes=False, networks=False, images=False, containers=False,
-                 force=False, dry_run=False):
+def docker_build(ctx, tag='latest', theme='default:ejplatform', dry_run=False,
+                 web=False, dev=False):
     """
-    Clean unused docker resources.
+    Rebuild all docker images for the project.
     """
-
-    docker = 'docker' if no_sudo else 'sudo docker'
-    force = ' --force ' if force else ''
     do = runner(ctx, dry_run, pty=True)
-    if volumes or all:
-        do(f'{docker} volume rm {force} $({docker} volume ls -q dangling=true)')
-    if networks or all:
-        do(f'{docker} network rm {force} $({docker} network ls | grep "bridge" | awk \'/ / {" print $1 "}\')')
-    if images or all:
-        do(f'{docker} rmi {force} $({docker} images --filter "dangling=true" -q --no-trunc)')
-    if containers or all:
-        do(f'{docker} rm {force} $({docker} ps -qa --no-trunc --filter "status=exited")')
+    cmd = su_docker(f'docker build . -f docker/Dockerfile')
+    if dev is False and web is False:
+        web = dev = True
+    if dev:
+        do(f'{cmd}-dev -t ej-dev:{tag} '
+           f'  --build-arg UID={os.getuid()}'
+           f'  --build-arg GID={os.getgid()}')
+    if web:
+        for item in theme.split(','):
+            theme, org = item.split(':') if ':' in item else (item, item)
+            do(f'{cmd} -t {org}/web:{tag}'
+               f'  --cache-from {org}/web:{tag}'
+               f'  --build-arg THEME={theme}')
 
-    if not any([all, volumes, networks, images, containers]):
-        print('You must select one kind of docker resource to clean.', file=sys.stderr)
+
+@task
+def docker_push(ctx, tag='latest', theme='default:ejplatform', dry_run=False):
+    """
+    Push docker images for the web container.
+    """
+    cmd = su_docker(f'docker push')
+    do = runner(ctx, dry_run, pty=True)
+
+    for item in theme.split(','):
+        theme, org = item.split(':') if ':' in item else (item, item)
+        do(f'{cmd} {org}/web:{tag}')
 
 
 #
@@ -373,6 +321,27 @@ def lint(ctx):
 
 
 @task
+def clean(ctx):
+    """
+    Clean pyc files and build assets.
+    """
+    join = os.path.join
+    rm_files = []
+    rm_dirs = []
+    for base, subdirs, files in os.walk('.'):
+        if '__pycache__' in subdirs:
+            rm_dirs.append(join(base, '__pycache__'))
+        elif os.path.basename(base) == '__pycache__':
+            rm_files.extend(join(base, f) for f in files)
+
+    print('Removing compiled bytecode files')
+    for path in rm_files:
+        os.unlink(path)
+    for path in rm_dirs:
+        os.rmdir(path)
+
+
+@task
 def install_hooks(ctx):
     """
     Install git hooks in repository.
@@ -382,11 +351,12 @@ def install_hooks(ctx):
 
 
 @task
-def update_deps(ctx, all=False):
+def update_deps(ctx, all=False, vendor=None):
     """
     Update volatile dependencies
     """
-    ctx.run(f'{python} etc/scripts/install-deps.py')
+    suffix = f' --vendor {vendor}' if vendor else ''
+    ctx.run(f'{python} etc/scripts/install-deps.py' + suffix)
     if all:
         ctx.run(f'{python} -m pip install -r etc/requirements/local.txt')
         ctx.run(f'{python} -m pip install -r etc/requirements/develop.txt')
@@ -473,7 +443,6 @@ def docker_deploy(ctx, task, environment='production', command=None, dry_run=Fal
     elif task == 'publish':
         docker = su_docker('docker')
         do(f'{docker} pull {org}/web:{tag}')
-        do(f'{docker} pull {org}/nginx:{tag}')
     elif task == 'notify':
         listeners = env.get('LISTENERS')
         if listeners is None:

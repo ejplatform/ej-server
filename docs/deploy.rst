@@ -19,7 +19,7 @@ databases.
 You can run a useful "deployable" stack by simply calling the command bellow from
 the ej-server repository::
 
-    $ inv docker-run deploy
+    $ inv docker-run production
 
 This is actually a shortcut for the longer list of Docker Compose commands
 that builds and run the stack::

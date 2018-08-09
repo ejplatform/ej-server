@@ -47,7 +47,6 @@ RUN unzip hyperpython.zip \
  && python setup.py sdist \
  && cd dist \
  && mv hyperpython* /app/hyperpython.tar.gz \
- && ls /app \
  && echo "INSTALLED HYPERPYTHON"
 
 
@@ -57,11 +56,14 @@ RUN unzip hyperpython.zip \
 FROM ejplatform/python:deploy
 
 # Set theme and environment variables
+ARG COUNTRY=usa
+ARG HOSTNAME=localhost
 ARG THEME=default
+ENV COUNTRY=${HOSTNAME}
 ENV EJ_THEME=${THEME}
+ENV HOSTNAME=${HOSTNAME}
 ENV DJANGO_SETTINGS_MODULE=ej.settings
 ENV DJANGO_ENVIRONMENT=production
-ENV PYTHONUNBUFFERED=1
 ENV PYTHONPATH="/app/src/:$PYTHONPATH"
 WORKDIR /app
 

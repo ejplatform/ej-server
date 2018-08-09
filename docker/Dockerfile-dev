@@ -1,10 +1,7 @@
 FROM ejplatform/local:latest
 
 # Configure environment
-ARG THEME=default
-ENV EJ_THEME=${THEME}
 ENV DJANGO_SETTINGS_MODULE=ej.settings
-ENV DJANGO_ENVIRONMENT=production
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONPATH="/app/src/:$PYTHONPATH"
 WORKDIR /app
@@ -15,13 +12,21 @@ COPY ./etc/scripts/ /app/etc/scripts/
 COPY ./tasks.py /app/tasks.py
 
 # Install dependencies
-RUN inv update-deps --all
+RUN inv update-deps --all --vendor /vendor
+
+# Move vendorized apps away from /app
+RUN mv /app/local/vendor/ /vendor/ \
+ && echo "RELOCATED PYTHON MODULES"
+
+ARG UID=1000
+ARG GID=1000
 
 # Create django user
-RUN groupadd -r django \
- && useradd -r -g django django \
- && chown -R django:django /app
-USER django
+RUN groupadd -r django -g ${GID} \
+ && useradd -r -g django django -u ${UID} \
+ && chown -R django:django /app \
+ && chown -R django:django /vendor \
+ && echo "DJANGO USER CREATED"
 
 # Entry point defaults to inv run
 EXPOSE 8000

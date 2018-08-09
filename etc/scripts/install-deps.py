@@ -6,10 +6,13 @@ import sys
 from importlib.util import find_spec
 from pathlib import Path
 
-python = sys.executable
-BASE_PATH = Path(os.path.abspath(Path(__file__).parent.parent.parent))
-LOCAL = BASE_PATH / 'local'
-VENDOR = LOCAL / 'vendor'
+if len(sys.argv) >= 2 and sys.argv[-2] == '--path':
+    VENDOR = Path(sys.argv[-1])
+else:
+    python = sys.executable
+    BASE_PATH = Path(os.path.abspath(Path(__file__).parent.parent.parent))
+    LOCAL = BASE_PATH / 'local'
+    VENDOR = LOCAL / 'vendor'
 mod_map = {
     'boogie': 'https://github.com/fabiommendes/django-boogie.git/',
     'hyperpython': 'https://github.com/fabiommendes/hyperpython.git/',
@@ -30,10 +33,10 @@ def chdir(new):
         os.chdir(old_dir)
 
 
-def ensure_dirs(*paths):
-    for path in paths:
-        if not path.exists():
-            os.mkdir(path)
+def ensure_dir(path):
+    for sub in reversed([path, *map(Path, path.parts)]):
+        if not sub.exists():
+            os.mkdir(sub)
 
 
 def run(cmd):
@@ -48,7 +51,7 @@ def main():
     print('Updating volatile dependencies')
     print('Dependencies are stored in the local/vendor/* folder. Remove this\n'
           'folder if you need reset your volatile dependencies\n')
-    ensure_dirs(LOCAL, VENDOR)
+    ensure_dir(VENDOR)
 
     for mod, uri in mod_map.items():
         path = Path(VENDOR / repo_dir(uri))
