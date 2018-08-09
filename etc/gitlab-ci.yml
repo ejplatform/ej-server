@@ -46,7 +46,7 @@ test with sqlite3: &test
     - pip install -r etc/requirements/develop.txt
     - pytest
   tags:
-    - docker
+    - lappis
 
 .test-pgsql:
   << : *test
@@ -61,7 +61,7 @@ flake8:
   script:
     - flake8 src/
   tags:
-    - docker
+    - lappis
 
 
 # PUBLISH: build and publish images with :latest (master commits) and
@@ -101,4 +101,4 @@ deploy to master:
     - master
     - tags
   tags:
-    - docker
+    - lappis
