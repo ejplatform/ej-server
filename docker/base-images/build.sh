@@ -34,6 +34,7 @@ if [ $# -eq 1 ]; then
         docker push ejplatform/python:buster;
         docker push ejplatform/tools:latest;
         docker push ejplatform/python:deploy;
+        docker push ejplatform/python:test;
         docker push ejplatform/local:latest;
     fi
 else
