@@ -116,19 +116,22 @@ def create_stereotype(request):
         if rendered_stereotype_form.is_valid() and rendered_votes_form.is_valid():
             stereotype = rendered_stereotype_form.save(commit=False)
             stereotype.owner = request.user
-            stereotype.save()
-            votes = rendered_votes_form.save(commit=False)
-            for vote in votes:
-                vote.stereotype = stereotype
-                vote.save()
+            if not Stereotype.objects.filter(owner=stereotype.owner, name=stereotype.name).exists():
+                stereotype.save()
+                votes = rendered_votes_form.save(commit=False)
+                for vote in votes:
+                    vote.stereotype = stereotype
+                    vote.save()
 
-            return redirect('/profile/stereotypes/')
-
-    rendered_stereotype_form = stereotype_form()
-    rendered_votes_form = votes_form(queryset=StereotypeVote.objects.none())
-    filtered_comments = Comment.objects.filter(conversation__author=request.user)
-    for form in rendered_votes_form:
-        form.fields['comment'].queryset = filtered_comments
+                return redirect('/profile/stereotypes/')
+            else:
+                rendered_stereotype_form.add_error(None, _("Stereotype with this name and owner already exists."))
+    else:
+        rendered_stereotype_form = stereotype_form()
+        rendered_votes_form = votes_form(queryset=StereotypeVote.objects.none())
+        filtered_comments = Comment.objects.filter(conversation__author=request.user)
+        for form in rendered_votes_form:
+            form.fields['comment'].queryset = filtered_comments
     return {
         'stereotype_form': rendered_stereotype_form,
         'votes_form': rendered_votes_form,

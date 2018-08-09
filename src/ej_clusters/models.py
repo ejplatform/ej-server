@@ -179,7 +179,6 @@ class Stereotype(models.Model):
     name = models.CharField(
         _('Name'),
         max_length=64,
-        unique=True,
     )
     owner = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -198,6 +197,9 @@ class Stereotype(models.Model):
             'profile the stereotype wants to capture.'
         ),
     )
+
+    class Meta:
+        unique_together = [('name', 'owner')]
 
     __str__ = (lambda self: self.name)
 

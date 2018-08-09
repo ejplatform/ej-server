@@ -7,14 +7,13 @@
                            subtitle='Crie, delete e edite aqui seus clusters e esteriótipos',
                            javascript_enabled='') %}
 
-    <div class="ConversationList">
+    <div class="StereotypeList">
         {{ stereotype_list_static(stereotypes, title, subtitle) }}
     </div>
 
 {% endmacro %}
 
 {% macro stereotype_list_static(stereotypes, title, subtitle) %}
-    <div class="StereotypeListStatic">
         <div class="StereotypeList-title">
             <h1 class="h1">{{ title }}</h1>
             <p>{{ subtitle }}</p>
@@ -23,8 +22,10 @@
         {# Cards #}
         <div class="StereotypeList-cardList">
             {% for stereotype in stereotypes %}
-                {{ stereotype.name }}
+              <h2>{{ stereotype.name }} 
+                  <i class="far fa-edit"></i>
+                  <i class="far fa-times-circle"></i>
+              </h2>
             {% endfor %}
         </div>
-    </div>
 {% endmacro %}
