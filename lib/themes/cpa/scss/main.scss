@@ -1,5 +1,5 @@
 // Default buttons
-$button-border-radius-default : 8px;
+$button-border-radius-default: 8px;
 //Profile
 $profile-font-color-primary: #042049;
 $profile-font-color-secondary: #6d2ea7;
@@ -26,8 +26,8 @@ $header-background-color: #30BEC0;
 $header-logo-size: 74px;
 $header-icon-size: 40px;
 $header-font-color: white;
-$header-top-nav-height: $header-logo-size + 7px; //$spacing-unit-tiny;
-$header-bottom-nav-height: $header-icon-size + 20px;
+$header-top-nav-height: $header-logo-size+7px; //$spacing-unit-tiny;
+$header-bottom-nav-height: $header-icon-size+20px;
 // Home Banner
 $home-banner-title-font-family: Raleway;
 $home-banner-title-font-color: #052B47;
@@ -37,7 +37,7 @@ $home-how-it-works-title-font-color: #FF3E72;
 $home-how-it-works-content-font-color: #052B47;
 $home-how-it-works-background: #D4F7F5;
 $home-how-it-works-card-icon-background: #fff;
-$home-how-it-works-card-icon-person : "\f007";
+$home-how-it-works-card-icon-person: "\f007";
 $home-how-it-works-card-icon-conversation: "\f086";
 $home-how-it-works-card-title-font-color: #3F1B53;
 $home-how-it-works-card-content-font-color: #3F1B53;
@@ -46,13 +46,13 @@ $home-start-now-display: none;
 // navigation bottom
 $navigation-bottom-font-color: #3F1B53;
 $navigation-bottom-panel-display: flex;
-$navigation-bottom-icon-conversations: "\f086";
-$navigation-bottom-icon-panel : "\f4ad";
+$navigation-bottom-icon-conversations: url(/static/cpa/img/icons/navbar_conversations.svg);
+$navigation-bottom-icon-panel: url(/static/cpa/img/icons/navbar_panel.svg);
 $navigation-bottom-icon-profile: url(/static/cpa/img/icons/navbar_profile.png);
 // Card Conversation
 $card-conversation-top-background: #30c0d3;
 $card-conversation-top-font-color: #D4F7F5;
-$card-conversation-bottom-background : url(/static/cpa/img/bg.svg) bottom center no-repeat;
+$card-conversation-bottom-background: url(/static/cpa/img/bg.svg) bottom center no-repeat;
 $card-conversation-middle-background: #30c0d3;
 $card-conversation-button-background: #C6027B;
 $card-conversation-border-radius: 10px;
