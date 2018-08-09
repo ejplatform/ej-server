@@ -6,7 +6,7 @@ from boogie.rules import proxy_seq
 from ej_conversations.models import Conversation, Choice, Comment
 from hyperpython import a, input_, label, Block
 from hyperpython.components import html_list, html_table
-from .models import Stereotype, Cluster
+from .models import Stereotype, Cluster, StereotypeVote
 from ej_clusters.forms import StereotypeForm, StereotypeVoteFormSet
 
 
@@ -116,16 +116,19 @@ def create_stereotype(request):
         if rendered_stereotype_form.is_valid() and rendered_votes_form.is_valid():
             stereotype = rendered_stereotype_form.save(commit=False)
             stereotype.owner = request.user
-            stereotype.save()
-            votes = rendered_votes_form.save(commit=False)
-            for vote in votes:
-                vote.stereotype = stereotype
-                vote.save()
+            if not Stereotype.objects.filter(owner=stereotype.owner, name=stereotype.name).exists():
+                stereotype.save()
+                votes = rendered_votes_form.save(commit=False)
+                for vote in votes:
+                    vote.stereotype = stereotype
+                    vote.save()
 
-            return redirect('/profile/stereotypes/')
+                return redirect('/profile/stereotypes/')
+            else:
+                rendered_stereotype_form.add_error(None, _("Stereotype with this name and owner already exists."))
     else:
         rendered_stereotype_form = stereotype_form()
-        rendered_votes_form = votes_form()
+        rendered_votes_form = votes_form(queryset=StereotypeVote.objects.none())
         filtered_comments = Comment.objects.filter(conversation__author=request.user)
         for form in rendered_votes_form:
             form.fields['comment'].queryset = filtered_comments
@@ -135,11 +138,13 @@ def create_stereotype(request):
     }
 
 
-@urlpatterns.route('stereotypes/')
+@urlpatterns.route('profile/stereotypes/', name='list')
 def stereotypes(request):
     user_stereotypes = Stereotype.objects.filter(owner=request.user)
-
-    return {"stereotypes": user_stereotypes, }
+    return {
+        'stereotypes': user_stereotypes,
+        'create_url': '/profile/stereotypes/add/',
+    }
 
 
 #

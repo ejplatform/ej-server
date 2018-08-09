@@ -67,3 +67,4 @@ src/*/migrations/*_merge_*.py
 lib/assets/cpa
 lib/assets/brasil-que-o-povo-quer
 builds/
+docker/base-images/requirements*.txt

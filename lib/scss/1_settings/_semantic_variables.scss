@@ -70,10 +70,12 @@
 
  // Conversation
   $conversation-top-background: #C4F2F4  !default;
-  $conversation-tag-color: #042049  !default;
+  $conversation-background: #C4F2F4  !default;
+  $conversation-bottom-border-radius: 0 0 56px 56px !default;
   $conversation-font-color: #042049  !default;
-  $conversation-middle-background: #C4F2F4  !default;
-  $conversation-bottom-border: 28px solid #C4F2F4  !default;
+  $conversation-tag-color: #30c0d3  !default;
+  $conversation-statistics-color: #30c0d3  !default;   
+  $conversation-arrow-border: 28px solid #C4F2F4  !default;
 
  // Conversation: edit
   $conversation-edit-action-cancel-border: 2px solid #052B47  !default;
