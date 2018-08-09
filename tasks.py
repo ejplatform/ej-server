@@ -1,6 +1,8 @@
+import json
 import os
 import pathlib
 import sys
+from test.test_bdb import dry_run
 
 from invoke import task
 
@@ -29,7 +31,7 @@ def sass(ctx, watch=True, theme=None, trace=False, dry_run=False):
     Run Sass compiler
     """
 
-    go = (lambda x: print(x) if dry_run else exec(ctx, x, pty=True))
+    go = runner(ctx, dry_run, pty=True)
     cmd = 'sass'
     cmd += ' lib/scss/maindefault.scss:lib/assets/css/maindefault.css'
     cmd += ' lib/scss/maindefault.scss:lib/assets/css/main.css'
@@ -204,8 +206,8 @@ def db_assets(ctx, path=None, force=False):
 #
 def dockerfiles_cmd(ctx, cmd, tag='latest', dry_run=False, org='ejplatform',
                     args_web='', args_nginx='', args_dev=''):
-    cmd = sudo(f'docker {cmd} -f docker/Dockerfile')
-    do = (lambda cmd: print(cmd) if dry_run else ctx.run(cmd, pty=True))
+    cmd = su_docker(f'docker {cmd} -f docker/Dockerfile')
+    do = runner(ctx, dry_run, pty=True)
     do(f'{cmd}       -t {org}/web:{tag}   {args_web}')
     do(f'{cmd}-dev   -t {org}/dev:{tag}   {args_dev}')
     do(f'{cmd}-nginx -t {org}/nginx:{tag} {args_nginx}')
@@ -241,8 +243,8 @@ def docker_push(ctx, tag='latest', theme='default:ejplatform', extra_args='',
     """
     Rebuild all docker images for the project.
     """
-    cmd = sudo(f'docker push')
-    do = (lambda cmd: print(cmd) if dry_run else ctx.run(cmd, pty=True))
+    cmd = su_docker(f'docker push')
+    do = runner(ctx, dry_run, pty=True)
 
     for item in theme.split(','):
         theme, org = item.split(':') if ':' in item else (item, item)
@@ -257,8 +259,8 @@ def docker_pull(ctx, tag='latest', theme='default:ejplatform', extra_args='',
     """
     Rebuild all docker images for the project.
     """
-    cmd = sudo(f'docker pull')
-    do = (lambda cmd: print(cmd) if dry_run else ctx.run(cmd, pty=True))
+    cmd = su_docker(f'docker pull')
+    do = runner(ctx, dry_run, pty=True)
 
     for item in theme.split(','):
         theme, org = item.split(':') if ':' in item else (item, item)
@@ -276,8 +278,8 @@ def docker_run(ctx, env, cmd=None, port=8000, clean_perms=False, deploy=False,
     Use inv docker-run <cmd>, where cmd is one of single, start, up, run,
     deploy.
     """
-    docker = sudo('docker')
-    do = (lambda cmd: print(cmd) if dry_run else ctx.run(cmd, pty=True))
+    docker = su_docker('docker')
+    do = runner(ctx, dry_run, pty=True)
     if compose_file is None and deploy or env == 'deploy':
         compose_file = 'docker/docker-compose.deploy.yml'
     elif compose_file is None:
@@ -315,15 +317,15 @@ def docker_clean(ctx, no_sudo=False, all=False, volumes=False, networks=False, i
 
     docker = 'docker' if no_sudo else 'sudo docker'
     force = ' --force ' if force else ''
-    run = (lambda cmd: ctx.run(cmd, pty=True))
+    do = runner(ctx, dry_run, pty=True)
     if volumes or all:
-        run(f'{docker} volume rm {force} $({docker} volume ls -q dangling=true)')
+        do(f'{docker} volume rm {force} $({docker} volume ls -q dangling=true)')
     if networks or all:
-        run(f'{docker} network rm {force} $({docker} network ls | grep "bridge" | awk \'/ / {" print $1 "}\')')
+        do(f'{docker} network rm {force} $({docker} network ls | grep "bridge" | awk \'/ / {" print $1 "}\')')
     if images or all:
-        run(f'{docker} rmi {force} $({docker} images --filter "dangling=true" -q --no-trunc)')
+        do(f'{docker} rmi {force} $({docker} images --filter "dangling=true" -q --no-trunc)')
     if containers or all:
-        run(f'{docker} rm {force} $({docker} ps -qa --no-trunc --filter "status=exited")')
+        do(f'{docker} rm {force} $({docker} ps -qa --no-trunc --filter "status=exited")')
 
     if not any([all, volumes, networks, images, containers]):
         print('You must select one kind of docker resource to clean.', file=sys.stderr)
@@ -451,17 +453,30 @@ def test(ctx):
 # Deploy tasks
 #
 @task
-def rancher_push(ctx):
+def docker_deploy(ctx, cmd, environment='production', dry_run=False):
     """
-    Push containers to a Rancher server.
+    Start a deploy build for the platform.
     """
+    json_file = 'local/deploy/config.json'
+    env = deploy_variables(json.loads(json_file))
+    compose = su_docker('docker-compose -f local/deploy/docker-compose.yml')
+    do = runner(ctx, dry_run, pty=True, env=env)
 
+    if cmd == 'build':
+        do(f'{compose} build')
 
-@task
-def wait_db(ctx):
-    """
-    Wait for connection with the database.
-    """
+    elif cmd == 'run':
+        pass
+
+    elif cmd == 'publish':
+        do(f'{compose} build')
+
+    elif cmd == 'notify':
+        do(f'{compose} build')
+
+    else:
+        raise SystemExit(f'invalid command: {cmd}\n'
+                         f'Possible commands: build, run, publish, notify')
 
 
 #
@@ -472,8 +487,23 @@ def exec(ctx, cmd, **kwargs):
     ctx.run(cmd, **kwargs)
 
 
-def sudo(cmd):
+def su_docker(cmd):
     if os.getuid() == 0:
         return cmd
     else:
         return f'sudo {cmd}'
+
+
+def runner(ctx, dry_run, **extra):
+    def do(cmd, **kwargs):
+        if dry_run:
+            print(cmd)
+        else:
+            kwargs = dict(extra, **kwargs)
+            return exec(ctx, cmd, **kwargs)
+
+    return do
+
+
+def deploy_variables(data):
+    return {k.upper(): v for k, v in data.items()}
