@@ -11,7 +11,7 @@ services:
     volumes:
       - media_files:/usr/share/nginx/html/media
       - static_files:/usr/share/nginx/html/static
-      - nginx_conf:/etc/nginx/conf.d/
+      - nginx_conf:/etc/nginx/conf.d/:nocopy
     ports:
       - 80:80
     links:

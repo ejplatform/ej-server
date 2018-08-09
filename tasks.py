@@ -75,7 +75,7 @@ def run(ctx, no_toolbar=False):
 
 
 @task
-def gunicorn(ctx, debug=None, environment='production', port=5000, workers=4):
+def gunicorn(ctx, debug=None, environment='production', port=8000, workers=4):
     """
     Run application using gunicorn for production deploys.
 
