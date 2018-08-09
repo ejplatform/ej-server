@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+#
+# Build and publish docker base images. This script is useful on CI configurations
+#
 
 # Force exit on errors
 set -o errexit

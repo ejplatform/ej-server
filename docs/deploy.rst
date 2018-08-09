@@ -24,8 +24,8 @@ the ej-server repository::
 This is actually a shortcut for the longer list of Docker Compose commands
 that builds and run the stack::
 
-    $ sudo docker-compose -f docker/docker-compose.deploy.yml build
-    $ sudo docker-compose -f docker/docker-compose.deploy.yml up
+    $ sudo docker-compose -f docker/docker-compose.production.yml build
+    $ sudo docker-compose -f docker/docker-compose.production.yml up
 
 This is all fine for testing, but it is very likely to fail in a real life
 situation. You need to provide specific configurations such as the domain name,

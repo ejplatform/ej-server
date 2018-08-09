@@ -279,7 +279,7 @@ def docker_run(ctx, env, cmd=None, port=8000, clean_perms=False, deploy=False,
     docker = su_docker('docker')
     do = runner(ctx, dry_run, pty=True)
     if compose_file is None and deploy or env == 'deploy':
-        compose_file = 'docker/docker-compose.deploy.yml'
+        compose_file = 'docker/docker-compose.production.yml'
     elif compose_file is None:
         compose_file = 'docker/docker-compose.yml'
     compose = f'{docker}-compose -f {compose_file}'

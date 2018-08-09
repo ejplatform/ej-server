@@ -1,12 +1,29 @@
-ARG BASE_IMAGE=ejplatform/web:latest
-FROM $BASE_IMAGE
+FROM ejplatform/local:latest
 
+# Configure environment
+ARG THEME=default
+ENV EJ_THEME=${THEME}
+ENV DJANGO_SETTINGS_MODULE=ej.settings
+ENV DJANGO_ENVIRONMENT=production
+ENV PYTHONUNBUFFERED=1
+ENV PYTHONPATH="/app/src/:$PYTHONPATH"
+WORKDIR /app
 
-# Install dev tools. In dev we don't need to run as the django user.
-USER root
-RUN pip install -r /etc/requirements/develop.txt
+# Copy necessary files
+COPY ./etc/requirements/ /app/etc/requirements/
+COPY ./etc/scripts/ /app/etc/scripts/
+COPY ./tasks.py /app/tasks.py
 
+# Install dependencies
+RUN inv update-deps --all
 
-# In dev, we use root user and expose port 8000
+# Create django user
+RUN groupadd -r django \
+ && useradd -r -g django django \
+ && chown -R django:django /app
+USER django
+
+# Entry point defaults to inv run
 EXPOSE 8000
-CMD ["run"]
+ENTRYPOINT ["inv"]
+CMD ["bash"]
