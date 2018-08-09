@@ -73,11 +73,12 @@ COPY ./etc/requirements/ /etc/requirements/
 RUN pip install -r /etc/requirements/production.txt
 
 # Copy files
+COPY ./.coveragerc /app/.coveragerc
+COPY ./docker/nginx-conf.d/ /etc/nginx/conf.d/
 COPY ./lib/ /app/lib/
-COPY ./src/ /app/src/
 COPY ./locale/ /app/locale/
 COPY ./manage.py /app/manage.py
-COPY ./.coveragerc /app/.coveragerc
+COPY ./src/ /app/src/
 
 # Copy django boogie
 COPY --from=py-modules /app/*.tar.gz /app/

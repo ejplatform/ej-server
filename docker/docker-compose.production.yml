@@ -11,10 +11,11 @@ services:
     volumes:
       - media_files:/usr/share/nginx/html/media
       - static_files:/usr/share/nginx/html/static
+      - nginx_conf:/etc/nginx/conf.d/
     ports:
       - 80:80
     links:
-      - web:django
+      - web
 
   web:
     image: ejplatform/web:latest
@@ -22,11 +23,9 @@ services:
     build:
       context: ../
       dockerfile: ./docker/Dockerfile
-    ports:
-      - "5000:8000"
     links:
-      - postgres:postgres
-      - redis:redis
+      - postgres
+      - redis
     env_file:
       - ./env/django.env
       - ./env/postgres.env
@@ -38,6 +37,7 @@ services:
     volumes:
       - media_files:/app/local/media/
       - static_files:/app/local/static/
+      - nginx_conf:/etc/nginx/conf.d/
     working_dir: /app
     command: db -m gunicorn
 
@@ -58,3 +58,4 @@ volumes:
   db_data:
   media_files:
   static_files:
+  nginx_conf:
