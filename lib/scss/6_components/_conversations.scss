@@ -539,6 +539,7 @@ $conversation-card-button-border-radius: 30px !default;
     max-width: 682px;
     margin-left: auto;
     margin-right: auto;
+    padding-bottom: $spacing-unit;
 
     h1 {
         font-size: $font-size-h3;
@@ -572,6 +573,7 @@ $conversation-card-button-border-radius: 30px !default;
         box-shadow: none;
         text-transform: uppercase;
         font-weight: bold;
+        margin-top: $spacing-unit-small;
     }
 }
 
