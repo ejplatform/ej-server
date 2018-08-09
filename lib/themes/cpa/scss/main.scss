@@ -58,10 +58,12 @@ $card-conversation-button-background: #C6027B;
 $card-conversation-border-radius: 10px;
 // Conversation
 $conversation-top-background: #D4F7F5;
-$conversation-tag-color: #30BEC0;
+$conversation-background: #D4F7F5;
+$conversation-bottom-border-radius: 0 0 0 0 !default;
 $conversation-font-color: #3F1B53;
-$conversation-middle-background: #D4F7F5;
-$conversation-bottom-border: 28px solid #D4F7F5;
+$conversation-tag-color: #30BEC0;
+$conversation-statistics-color: #30c0d3;
+$conversation-arrow-border: 28px solid #D4F7F5;
 // Conversation: edit
 $conversation-edit-action-cancel-border: transparent;
 $conversation-edit-action-cancel-background: #C6027B;

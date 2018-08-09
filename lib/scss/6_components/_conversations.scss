@@ -235,9 +235,9 @@ $conversation-card-button-border-radius: 30px !default;
       height: auto !important;
     }
 
-    > * {
-        padding: $spacing-unit-tiny;
-    }
+    // > * {
+    //     padding: $spacing-unit-tiny;
+    // }
     u {
         margin: 0;
     }
@@ -253,6 +253,8 @@ $conversation-card-button-border-radius: 30px !default;
         }
     }
     &-social {
+        padding: 0px $spacing-unit 0px  $spacing-unit;
+        margin-top: $spacing-unit-small * -1;
         form{
             display: inline-block;
             button{
@@ -285,11 +287,11 @@ $conversation-card-button-border-radius: 30px !default;
     
     }
     &-banner {
-        background: $conversation-middle-background;
-        border-radius: 0 0 $block-elements-border-radius $block-elements-border-radius;
+        background: $conversation-background;
+        border-radius: $conversation-bottom-border-radius;
         color: $color-purple-dark;
         margin: 0;
-        padding-top: 0;
+        padding: $spacing-unit-tiny $spacing-unit-tiny $spacing-unit $spacing-unit-tiny;
         .ConversationTags {
             background-color: $conversation-top-background;
             color: $conversation-tag-color;
@@ -298,8 +300,10 @@ $conversation-card-button-border-radius: 30px !default;
         h1 {
             @extend .Container;
 
-            padding: $spacing-unit / 2 0;
-            padding-top: 0;
+            // padding: $spacing-unit / 2 0;
+            // padding-top: 0;
+            padding-top: $spacing-unit-tiny;
+            padding-bottom: $spacing-unit;
             text-align: center;
             font-weight: 200 !important;
             font-size: 26px !important;
@@ -340,7 +344,7 @@ $conversation-card-button-border-radius: 30px !default;
     &-arrow {
         border-left: $conversation-card-border-arrow-size solid transparent;
         border-right: $conversation-card-border-arrow-size solid transparent;
-        border-top: $conversation-bottom-border;
+        border-top: $conversation-arrow-border;
         height: 0;
         margin: 0 auto;
         padding: 0;
@@ -357,7 +361,7 @@ $conversation-card-button-border-radius: 30px !default;
         margin: 0 auto;
         max-width: $content-wrapper-max-width - 2 * $spacing-unit-huge;
         padding: 0 $spacing-unit-small;
-        color: $conversation-card-color;
+        color: $conversation-statistics-color;        
 
         li {
             list-style: none;
@@ -386,7 +390,8 @@ $conversation-card-button-border-radius: 30px !default;
 
     &-header {
         text-align: center;
-        padding-top: 0;
+        padding: $spacing-unit-small;
+                
 
         h1 {
             font-family: 'Patua One', sans-serif !important;
