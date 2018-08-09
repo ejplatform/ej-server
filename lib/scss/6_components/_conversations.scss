@@ -415,7 +415,7 @@ $conversation-card-button-border-radius: 30px !default;
     width: 100% !important;
     z-index: 3;
     position: relative;
-    
+    padding: $spacing-unit-small;
 
     &-counter {
         text-align: center;
