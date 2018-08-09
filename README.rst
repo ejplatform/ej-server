@@ -1,18 +1,10 @@
-+-----------------------+-----------------------+-----------------------+
-| Environment           | CI Status             | Website               |
-+=======================+=======================+=======================+
-| Production            | |pipeline status|     | `ejplatform.org <http |
-|                       |                       | s://ejplatform.org>`_ |
-|                       |                       | _                     |
-+-----------------------+-----------------------+-----------------------+
-| Development           | |pipeline status|     | `dev.ejplatform.org < |
-|                       |                       | http://dev.ejplatform |
-|                       |                       | .org>`__              |
-+-----------------------+-----------------------+-----------------------+
-
 .. image:: https://api.codeclimate.com/v1/badges/fd8f8c7d5d2bc74c38df/maintainability
    :target: https://codeclimate.com/github/ejplatform/ej-server/maintainability
    :alt: Maintainability
+.. image:: https://gitlab.com/ejplatform/ej-server/badges/master/pipeline.svg
+   :target: https://gitlab.com/ejplatform/ej-server/commits/master
+.. image:: https://gitlab.com/ejplatform/ej-server/badges/develop/pipeline.svg
+   :target: https://gitlab.com/ejplatform/ej-server/commits/develop
 
 
 ===========
@@ -234,10 +226,15 @@ Using docker
 If you want to use docker, just clone the repo and start docker compose::
 
     $ git clone http://github.com/ejplatform/ej-server/
-    $ sudo docker-compose -f ./docker/production/django/build.yml build
-    $ sudo docker-compose -f ./docker/develop/start.yml up -d
+    $ sudo docker-compose -f ./docker/docker-compose.yml build
+    $ sudo docker-compose -f ./docker/docker-compose.yml up
 
 After the command, **ej-server** can be accessed at http://localhost:8000.
+
+You can open a terminal to run management commands like creating migrations,
+updating the database, etc using::
+
+$ sudo docker-compose -f ./docker/docker-compose.yml run web bash
 
 If you want to run docker, but develop without running the django server,
 use the idle version and execute the conteiner bash manually::
@@ -311,11 +308,3 @@ Rocketchat Integration
 See the guidelines at
 `docker/extensions <https://github.com/ejplatform/ej-server/blob/master/docker/extensions#using-rocketchat>`__.
 
-.. |pipeline status| image:: https://gitlab.com/ejplatform/ej-server/badges/master/pipeline.svg
-   :target: https://gitlab.com/ejplatform/ej-server/commits/master
-.. |pipeline status| image:: https://gitlab.com/ejplatform/ej-server/badges/develop/pipeline.svg
-   :target: https://gitlab.com/ejplatform/ej-server/commits/develop
-.. |pipeline status| image:: https://gitlab.com/ejplatform/ej-server/badges/master/pipeline.svg
-   :target: https://gitlab.com/ejplatform/ej-server/commits/master
-.. |pipeline status| image:: https://gitlab.com/ejplatform/ej-server/badges/develop/pipeline.svg
-   :target: https://gitlab.com/ejplatform/ej-server/commits/develop

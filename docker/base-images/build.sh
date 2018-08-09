@@ -23,7 +23,8 @@ cp ../../etc/requirements/production.txt requirements-production.txt
 
 echo; echo; echo "BUILD PYTHON IMAGES"
 docker build . -f Dockerfile-python_deploy -t ejplatform/python:deploy
-docker build . -f Dockerfile-python_dev -t ejplatform/python:dev
+docker build . -f Dockerfile-python_test -t ejplatform/python:test
+docker build . -f Dockerfile-local -t ejplatform/local:latest
 
 # Check if user wants to publish
 if [ $# -eq 1 ]; then
@@ -33,7 +34,7 @@ if [ $# -eq 1 ]; then
         docker push ejplatform/python:buster;
         docker push ejplatform/tools:latest;
         docker push ejplatform/python:deploy;
-        docker push ejplatform/python:dev;
+        docker push ejplatform/local:latest;
     fi
 else
     echo "Execute 'sh build.sh publish' to publish images"
