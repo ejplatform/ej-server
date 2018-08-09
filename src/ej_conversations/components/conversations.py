@@ -30,7 +30,8 @@ def conversation_balloon(conversation, request=None, **kwargs):
 
     user = getattr(request, 'user', None)
     favorites = models.FavoriteConversation.objects
-    is_favorite = False if user is None else conversation.is_favorite(user)
+    is_authenticated = getattr(user, 'is_authenticated', False)
+    is_favorite = is_authenticated and conversation.is_favorite(user)
     return {
         'conversation': conversation,
         'tags': conversation.tags.all(),
@@ -39,7 +40,7 @@ def conversation_balloon(conversation, request=None, **kwargs):
         'favorites_count': favorites.filter(conversation=conversation).count(),
         'user': user,
         'csrf_input': csrf_input(request),
-        'show_user_actions': getattr(user, 'is_authenticated', False),
+        'show_user_actions': is_authenticated,
         'is_favorite': is_favorite,
         **kwargs,
     }
