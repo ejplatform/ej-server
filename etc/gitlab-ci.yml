@@ -10,7 +10,7 @@ variables:
 
 # BUILD: the build stage recreates the base docker images used by the other
 # stages of the pipeline. This is executed only sporadically
-rebuild base images:
+rebuild base docker images:
   image: docker
   stage: build
   services:
@@ -21,7 +21,8 @@ rebuild base images:
   tags:
     - docker
   only:
-    - rebuild-images
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /rebuild base docker images/
 
 build assets:
   image: ejplatform/tools:latest
@@ -36,11 +37,13 @@ build assets:
 # TEST: test in different environments by changing the database or running
 # different linters.
 test with sqlite3: &test
-  image: ejplatform/python:dev
+  image: ejplatform/python:test
   stage: test
   script:
     - mkdir -p local/logs
-    - pip install -r etc/requirements/develop.txt -r etc/requirements/git-modules.txt
+    - pip install https://github.com/fabiommendes/hyperpython/archive/master.zip
+    - pip install https://github.com/fabiommendes/django-boogie/archive/master.zip
+    - pip install -r etc/requirements/develop.txt
     - pytest
   tags:
     - docker
