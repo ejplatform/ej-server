@@ -1,8 +1,6 @@
-import json
 import os
 import pathlib
 import sys
-from test.test_bdb import dry_run
 
 from invoke import task
 
@@ -309,8 +307,9 @@ def docker_run(ctx, env, cmd=None, port=8000, clean_perms=False, deploy=False,
 
 
 @task
-def docker_clean(ctx, no_sudo=False, all=False, volumes=False, networks=False, images=False, containers=False,
-                 force=False):
+def docker_clean(ctx, no_sudo=False, all=False,
+                 volumes=False, networks=False, images=False, containers=False,
+                 force=False, dry_run=False):
     """
     Clean unused docker resources.
     """
