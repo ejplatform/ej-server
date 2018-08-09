@@ -1,52 +1,5 @@
-/**
- * Conventions and architecture overview:
- *
- *   - We adopt a ITCSS architecture
- *   - Naming conventions and classes are based on SUIT CSS
- *   - It uses Bourbon as a Sass mixin library
- *   - Multi-line comments are acceptable since we'll strip them away during
- *     minification
- *
- *   ITCSS: https://speakerdeck.com/dafed/managing-css-projects-with-itcss
- *   SUITE CSS: https://suitcss.github.io/
- */
-
-
-// SETTINGS
-// Global variables, site-wide settings, config switches, etc.
 @import '1_settings/index';
-// @import '1_settings/colors';
-
-
-// TOOLS
-// Site-wide mixins and functions.
-// We use Bourbon (https://www.bourbon.io/docs/) as a library of Sass functions
 @import '2_tools/index';
-
-
-// GENERIC
-// Low-specificity, far-reaching rulesets (e.g. resets).
 @import '3_generic/index';
-
-
-// ELEMENTS
-// Unclassed HTML elements (e.g. a {}, blockquote {}, address {}).
-// @import '4_elements/index';
 @import '4_elements/buttons';
-
-
-// OBJECTS
-// Objects, abstractions, and design patterns (e.g. .layout {}).
-// @import '5_objects/index';
-
-
-// COMPONENTS
-// Discrete, complete chunks of UI (e.g. .c-carousel {}). This layer is where
-// most application-specific code resides.
 @import '6_components/rocket-intro';
-
-
-// UTILITIES
-// High-specificity, very explicit selectors. Overrides and helper classes
-// (e.g. .hidden {}).
-// @import '7_utilities/index';

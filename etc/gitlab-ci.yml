@@ -4,12 +4,6 @@ stages:
   - publish
   - deploy
 
-cache:
-  paths:
-    - locale/
-    - lib/
-
-
 variables:
   DOCKER_DRIVER: overlay2
 

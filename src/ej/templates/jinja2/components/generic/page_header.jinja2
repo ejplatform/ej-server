@@ -79,24 +79,24 @@
     {% set theme = request.GET.get('theme','') or current_theme %}
     <nav class="Header-lowerNav">
         {% call link('/conversations/', title=_('Conversations'), class='conversations-link', preload=True) %}
-            <img src="/static/{{theme}}/img/icons/navbar_conversations.svg" alt="{{ _('Conversations') }}" class="Header-lowerIcon">
             {% if theme == 'default' %}
-            <span>{{ _('Conversations') }}</span>
+                <img src="/static/{{theme}}/img/icons/navbar_conversations.svg" alt="{{ _('Conversations') }}" class="Header-lowerIcon">
             {% endif %}
+            <span>{{ _('Conversations') }}</span>
         {% endcall %}
 
         {% call link('/talks/', title=_('Panel'), class='panel-link', preload=True) %}
-            <img src="/static/{{theme}}/img/icons/navbar_panel.svg" alt="{{ _('Panel') }}" class="Header-lowerIcon">
             {% if theme == 'default' %}
-                <span>{{ _('Panel') }}</span>
+                <img src="/static/{{theme}}/img/icons/navbar_panel.svg" alt="{{ _('Panel') }}" class="Header-lowerIcon">
             {% endif %}
+            <span>{{ _('Panel') }}</span>
         {% endcall %}
 
         {% call link('/profile/', title=_('Profile'), class='profile-link', preload=True) %}
-            <img src="/static/{{theme}}/img/icons/navbar_profile.svg" title="{{ _('Profile') }}" class="Header-lowerIcon">
             {% if theme == 'default' %}
-            <span>{{ _('Profile') }}</span>
+                <img src="/static/{{theme}}/img/icons/navbar_profile.svg" title="{{ _('Profile') }}" class="Header-lowerIcon">
             {% endif %}
+            <span>{{ _('Profile') }}</span>
         {% endcall %}
     </nav>
 {% endmacro %}

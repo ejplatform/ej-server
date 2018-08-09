@@ -1,23 +1,20 @@
 import logging
-import sys
 
-from boogie.configurations import DjangoConf, locales, env
+from boogie.configurations import DjangoConf, env
 from .apps import InstalledAppsConf
 from .celery import CeleryConf
 from .constance import ConstanceConf
 from .middleware import MiddlewareConf
 from .options import EjOptions
 from .paths import PathsConf
-from .themes import ThemesConf
 from .security import SecurityConf
+from .themes import ThemesConf
 from .. import fixes
-from .. import services
 
 log = logging.getLogger('ej')
 
 
 class Conf(ThemesConf,
-           locales.brazil(),
            ConstanceConf,
            MiddlewareConf,
            CeleryConf,
@@ -33,12 +30,10 @@ class Conf(ThemesConf,
     the global namespace.
     """
 
-    @property
-    def USING_SQLITE(self):
+    def get_using_sqlite(self):
         return 'sqlite3' in self.DATABASE_DEFAULT['ENGINE']
 
-    @property
-    def USING_POSTGRES(self):
+    def get_using_postgres(self):
         return 'postgresql' in self.DATABASE_DEFAULT['ENGINE']
 
     USING_DOCKER = env(False, name='USING_DOCKER')

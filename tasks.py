@@ -17,7 +17,7 @@ def manage(ctx, cmd, env=None, **kwargs):
     cmd = f'{python} manage.py {cmd} {opts}'
     env = dict(env or {})
     env.setdefault('PYTHONPATH', f'src:{env.get("PYTHONPATH", "")}')
-    exec(ctx, cmd, pty=True, env=env)
+    ctx.run(cmd, pty=True, env=env)
 
 
 #
@@ -29,7 +29,7 @@ def sass(ctx, watch=True, theme=None, trace=False, dry_run=False):
     Run Sass compiler
     """
 
-    go = (lambda x: print(x) if dry_run else exec(ctx, x, pty=True))
+    go = runner(ctx, dry_run, pty=True)
     cmd = 'sass'
     cmd += ' lib/scss/maindefault.scss:lib/assets/css/maindefault.css'
     cmd += ' lib/scss/maindefault.scss:lib/assets/css/main.css'
@@ -204,8 +204,8 @@ def db_assets(ctx, path=None, force=False):
 #
 def dockerfiles_cmd(ctx, cmd, tag='latest', dry_run=False, org='ejplatform',
                     args_web='', args_nginx='', args_dev=''):
-    cmd = sudo(f'docker {cmd} -f docker/Dockerfile')
-    do = (lambda cmd: print(cmd) if dry_run else ctx.run(cmd, pty=True))
+    cmd = su_docker(f'docker {cmd} -f docker/Dockerfile')
+    do = runner(ctx, dry_run, pty=True)
     do(f'{cmd}       -t {org}/web:{tag}   {args_web}')
     do(f'{cmd}-dev   -t {org}/dev:{tag}   {args_dev}')
     do(f'{cmd}-nginx -t {org}/nginx:{tag} {args_nginx}')
@@ -241,8 +241,8 @@ def docker_push(ctx, tag='latest', theme='default:ejplatform', extra_args='',
     """
     Rebuild all docker images for the project.
     """
-    cmd = sudo(f'docker push')
-    do = (lambda cmd: print(cmd) if dry_run else ctx.run(cmd, pty=True))
+    cmd = su_docker(f'docker push')
+    do = runner(ctx, dry_run, pty=True)
 
     for item in theme.split(','):
         theme, org = item.split(':') if ':' in item else (item, item)
@@ -257,8 +257,8 @@ def docker_pull(ctx, tag='latest', theme='default:ejplatform', extra_args='',
     """
     Rebuild all docker images for the project.
     """
-    cmd = sudo(f'docker pull')
-    do = (lambda cmd: print(cmd) if dry_run else ctx.run(cmd, pty=True))
+    cmd = su_docker(f'docker pull')
+    do = runner(ctx, dry_run, pty=True)
 
     for item in theme.split(','):
         theme, org = item.split(':') if ':' in item else (item, item)
@@ -276,8 +276,8 @@ def docker_run(ctx, env, cmd=None, port=8000, clean_perms=False, deploy=False,
     Use inv docker-run <cmd>, where cmd is one of single, start, up, run,
     deploy.
     """
-    docker = sudo('docker')
-    do = (lambda cmd: print(cmd) if dry_run else ctx.run(cmd, pty=True))
+    docker = su_docker('docker')
+    do = runner(ctx, dry_run, pty=True)
     if compose_file is None and deploy or env == 'deploy':
         compose_file = 'docker/docker-compose.deploy.yml'
     elif compose_file is None:
@@ -307,23 +307,24 @@ def docker_run(ctx, env, cmd=None, port=8000, clean_perms=False, deploy=False,
 
 
 @task
-def docker_clean(ctx, no_sudo=False, all=False, volumes=False, networks=False, images=False, containers=False,
-                 force=False):
+def docker_clean(ctx, no_sudo=False, all=False,
+                 volumes=False, networks=False, images=False, containers=False,
+                 force=False, dry_run=False):
     """
     Clean unused docker resources.
     """
 
     docker = 'docker' if no_sudo else 'sudo docker'
     force = ' --force ' if force else ''
-    run = (lambda cmd: ctx.run(cmd, pty=True))
+    do = runner(ctx, dry_run, pty=True)
     if volumes or all:
-        run(f'{docker} volume rm {force} $({docker} volume ls -q dangling=true)')
+        do(f'{docker} volume rm {force} $({docker} volume ls -q dangling=true)')
     if networks or all:
-        run(f'{docker} network rm {force} $({docker} network ls | grep "bridge" | awk \'/ / {" print $1 "}\')')
+        do(f'{docker} network rm {force} $({docker} network ls | grep "bridge" | awk \'/ / {" print $1 "}\')')
     if images or all:
-        run(f'{docker} rmi {force} $({docker} images --filter "dangling=true" -q --no-trunc)')
+        do(f'{docker} rmi {force} $({docker} images --filter "dangling=true" -q --no-trunc)')
     if containers or all:
-        run(f'{docker} rm {force} $({docker} ps -qa --no-trunc --filter "status=exited")')
+        do(f'{docker} rm {force} $({docker} ps -qa --no-trunc --filter "status=exited")')
 
     if not any([all, volumes, networks, images, containers]):
         print('You must select one kind of docker resource to clean.', file=sys.stderr)
@@ -346,11 +347,11 @@ def i18n(ctx, compile=False, edit=False, lang='pt_BR', keep_pot=False):
         manage(ctx, 'makemessages', all=True, keep_pot=True)
 
         print('Extract Jinja translations')
-        exec(ctx, 'pybabel extract -F etc/babel.cfg -o locale/jinja2.pot .')
+        ctx.run('pybabel extract -F etc/babel.cfg -o locale/jinja2.pot .')
 
         print('Join Django + Jinja translation files')
-        exec(ctx, 'msgcat locale/django.pot locale/jinja2.pot --use-first -o locale/join.pot', pty=True)
-        exec(ctx, r'''sed -i '/"Language: \\n"/d' locale/join.pot''', pty=True)
+        ctx.run('msgcat locale/django.pot locale/jinja2.pot --use-first -o locale/join.pot', pty=True)
+        ctx.run(r'''sed -i '/"Language: \\n"/d' locale/join.pot''', pty=True)
 
         print(f'Update locale {lang} with Jinja2 messages')
         ctx.run(f'msgmerge locale/{lang}/LC_MESSAGES/django.po locale/join.pot -U')
@@ -387,8 +388,8 @@ def update_deps(ctx, all=False):
     """
     ctx.run(f'{python} etc/scripts/install-deps.py')
     if all:
-        exec(ctx, f'{python} -m pip install -r etc/requirements/local.txt')
-        exec(ctx, f'{python} -m pip install -r etc/requirements/develop.txt')
+        ctx.run(f'{python} -m pip install -r etc/requirements/local.txt')
+        ctx.run(f'{python} -m pip install -r etc/requirements/develop.txt')
     else:
         print('By default we only update the volatile dependencies. Run '
               '"inv update-deps --all" in order to update everything.')
@@ -451,29 +452,66 @@ def test(ctx):
 # Deploy tasks
 #
 @task
-def rancher_push(ctx):
+def docker_deploy(ctx, task, environment='production', command=None, dry_run=False):
     """
-    Push containers to a Rancher server.
+    Start a deploy build for the platform.
     """
+    os.environ.update(environment=environment, task=task)
+    compose_file = 'local/deploy/docker-compose.yml'
+    env = docker_deploy_variables('local/deploy/config.py')
+    compose = su_docker(f'docker-compose -f {compose_file}')
+    do = runner(ctx, dry_run, pty=True, env=env)
+    tag = env.get('TAG', 'latest')
+    org = env.get('ORGANIZATION', 'ejplatform')
 
-
-@task
-def wait_db(ctx):
-    """
-    Wait for connection with the database.
-    """
+    if task == 'build':
+        do(f'{compose} build')
+    elif task == 'up':
+        do(f'{compose} up')
+    elif task == 'run':
+        do(f'{compose} run web {command or "bash"}')
+    elif task == 'publish':
+        docker = su_docker('docker')
+        do(f'{docker} pull {org}/web:{tag}')
+        do(f'{docker} pull {org}/nginx:{tag}')
+    elif task == 'notify':
+        listeners = env.get('LISTENERS')
+        if listeners is None:
+            print("Don't know hot to notify the infrastructure!")
+            print('(hmm, mail the sysadmin?)')
+        for listener in listeners.split(','):
+            do(f'sh local/deploy/notify.{listener}.sh')
+    else:
+        raise SystemExit(f'invalid command: {task}\n'
+                         f'Possible commands: build, up, run, publish, notify')
 
 
 #
 # Utilities
 #
-def exec(ctx, cmd, **kwargs):
-    print(f'Running: {cmd}')
-    ctx.run(cmd, **kwargs)
-
-
-def sudo(cmd):
+def su_docker(cmd):
     if os.getuid() == 0:
         return cmd
     else:
         return f'sudo {cmd}'
+
+
+def runner(ctx, dry_run, **extra):
+    def do(cmd, **kwargs):
+        if dry_run:
+            print(cmd)
+        else:
+            kwargs = dict(extra, **kwargs)
+            return ctx.run(cmd, **kwargs)
+
+    return do
+
+
+def docker_deploy_variables(path):
+    ns = {}
+    seq = (list, tuple)
+    to_str = (lambda x: ','.join(map(str, x)) if isinstance(x, seq) else str(x))
+    with open(path) as fd:
+        src = fd.read()
+        exec(src, ns)
+    return {k: to_str(v) for k, v in ns.items() if k.isupper()}
