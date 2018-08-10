@@ -13,6 +13,7 @@ from rest_framework.authtoken.models import Token
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from ej_channels.models import Channel
+from django.db.models import Q
 
 User = get_user_model()
 
@@ -197,8 +198,7 @@ def insert_user_on_channel(sender, created, **kwargs):
         instance = kwargs.get('instance')
         user_id = instance.user.id
         user = User.objects.get(id=user_id)
-        channels = Channel.objects.all()[:2]
-        # TODO VERIFY USER SETTINGS BEFORE INSERT
+        channels = Channel.objects.filter(Q(sort="mission") | Q(sort="admin"))
         for channel in channels:
             channel.users.add(user)
             channel.save()
