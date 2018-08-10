@@ -157,5 +157,5 @@ def binary_entropy(p, e=1e-50):
     """
     Entropy for binary probability.
     """
-    P = 1 - p
-    return -(p * np.log(p + e) + P * np.log(P + e))
+    p_ = 1 - p
+    return -(p * np.log(p + e) + p_ * np.log(p_ + e))

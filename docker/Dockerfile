@@ -8,19 +8,23 @@ COPY ./tasks.py /app/tasks.py
 # Compile translations
 COPY ./etc/scripts/compilemessages.py /usr/bin/compilemessages
 COPY ./locale/ /app/locale/
-RUN chmod +x /usr/bin/compilemessages
-RUN compilemessages
+WORKDIR /app
+RUN chmod +x /usr/bin/compilemessages \
+ && compilemessages \
+ && du /app/locale
 
 # Build Sass
-WORKDIR /app
 ARG THEME=default
 COPY ./lib/scss /app/lib/scss
 COPY ./lib/themes /app/lib/themes
-RUN mkdir -p /app/lib/assets/css/ /app/lib/build/css/
-RUN inv sass --theme=${THEME}
+RUN mkdir -p /app/lib/assets/css/ \
+ && mkdir -p /app/lib/build/css/ \
+ && inv -e sass --theme=${THEME} \
+ && du -h lib
 
 # Build javascript assets (TODO)
-RUN inv js
+RUN inv -e js \
+ && du -h lib
 
 
 #

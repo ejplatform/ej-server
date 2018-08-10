@@ -255,9 +255,7 @@ def docker_build(ctx, tag='latest', theme='default:ejplatform', dry_run=False,
     if web:
         for item in theme.split(','):
             theme, org = item.split(':') if ':' in item else (item, item)
-            do(f'{cmd} -t {org}/web:{tag}'
-               f'  --cache-from {org}/web:{tag}'
-               f'  --build-arg THEME={theme}')
+            do(f'{cmd} -t {org}/web:{tag} --build-arg THEME={theme}')
 
 
 @task
