@@ -8,6 +8,7 @@ from hyperpython import a
 from . import urlpatterns, conversation_url
 from ..models import FavoriteConversation, Conversation
 
+
 @urlpatterns.route('', name='list')
 def conversation_list(request):
     user = request.user

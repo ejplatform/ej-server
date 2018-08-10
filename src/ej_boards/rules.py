@@ -20,6 +20,7 @@ def is_my_timeline(user, board):
 
     return False
 
+
 @rules.register_perm('ej_boards.can_add_conversation')
 def can_add_conversation(user, board):
     if board.owner == user:
