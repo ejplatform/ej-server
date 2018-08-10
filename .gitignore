@@ -65,3 +65,7 @@ src/*/migrations/*_merge_*.py
 # Themes
 lib/assets/cpa
 lib/assets/brasil-que-o-povo-quer
+
+# virtualenv
+venv
+env

@@ -78,7 +78,6 @@ django-extensions >= 1.9.0
 invoke ~= 0.22
 
 # WSGI Handler
-gevent ~= 1.2.2
 gunicorn ~= 19.7.1
 
 # Static and Media Storage
