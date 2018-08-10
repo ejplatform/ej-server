@@ -24,6 +24,6 @@ def send_message(sender, instance, created, **kwargs):
     if created:
         user = instance.user
         title = instance.candidate.name
-        url = instance.candidate.external_page
+        url = instance.candidate.site_url
         channel = Channel.objects.filter(owner=user, sort="selected")[0]
         Message.objects.create(channel=channel, title=title, body=url)
