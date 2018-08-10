@@ -16,7 +16,7 @@ class TestRegistrationForm:
 
     def test_blank_data(self):
         form = RegistrationForm({})
-        required = ['Este campo é obrigatório.']
+        required = ['This field is required.']
         assert not form.is_valid()
         assert form.errors == {
             'name': required,
@@ -33,7 +33,7 @@ class TestRegistrationForm:
             'password_confirm': 'wrong123'
         })
         assert form.errors == {
-            'password_confirm': ['Senhas não são iguais'],
+            'password_confirm': ['Passwords do not match'],
         }
         assert not form.is_valid()
 
@@ -48,7 +48,7 @@ class TestLoginForm:
 
     def test_blank_data(self):
         form = LoginForm({})
-        required = ['Este campo é obrigatório.']
+        required = ['This field is required.']
         assert not form.is_valid()
         assert form.errors == {
             'email': required,

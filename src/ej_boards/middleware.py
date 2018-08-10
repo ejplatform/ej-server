@@ -3,7 +3,7 @@ from django.conf import settings
 from .models import Board
 
 
-def BoardFallbackMiddleware(get_response):
+def BoardFallbackMiddleware(get_response):  # noqa: N802
     """
     Look for board urls after 404 errors.
     """

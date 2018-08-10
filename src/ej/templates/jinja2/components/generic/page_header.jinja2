@@ -13,26 +13,25 @@
 {% endmacro %}
 
 {% macro header_top_nav(request) %}
-    {% set theme = request.GET.get('theme','') or current_theme %}
     {% block javascript %}
 
         {# this function controls the open/close button of "conversations dropdown on page_menu #}
         <script type="text/javascript">
-        // this function controls the open/close button of "conversations dropdown on page_menu
-        function openDropDown(openDiv){
-            let element = document.getElementsByClassName(openDiv);
-            if(element[0].style.display == "inline")
-                element[0].style.display = "none";
-            else
-                element[0].style.display = "inline";
-        }
+            // this function controls the open/close button of "conversations dropdown on page_menu
+            function openDropDown(openDiv) {
+                let element = document.getElementsByClassName(openDiv);
+                if (element[0].style.display == "inline")
+                    element[0].style.display = "none";
+                else
+                    element[0].style.display = "inline";
+            }
         </script>
 
         {# handles high contrast toggle #}
         <script type="text/javascript">
             let toggleHicontrast = () => {
                 let bodyDiv = document.getElementsByTagName('body')[0];
-                if(localStorage.hicontrast == "true") {
+                if (localStorage.hicontrast == "true") {
                     localStorage.hicontrast = false;
                     bodyDiv.className = bodyDiv.className.slice(0, bodyDiv.className.length - " hicontrast".length);
                     console.log(localStorage.hicontrast);
@@ -51,45 +50,50 @@
             </a>
 
             {% call link(href='/', class="Header-ejLogo") %}
-                <img src="/static/{{theme}}/img/logo/logo.svg" alt="EJ logo">
+                <img src="/static/img/logo/logo.svg" alt="EJ logo">
             {% endcall %}
-    
+
             <a href="/menu/" title="{{ _("Navigation menu") }}" up-drawer=".NavMenu" up-history="false"
-                class="Header-topIcon">
+               class="Header-topIcon">
                 <i class="fa fa-bars"></i>
             </a>
 
         {% else %}
 
             <a href="/menu/" title="{{ _("Navigation menu") }}" up-drawer=".NavMenu" up-history="false"
-                class="Header-topIcon">
+               class="Header-topIcon">
                 <i class="fa fa-bars"></i>
             </a>
 
             {% call link(href='/', class="Header-ejLogo") %}
-                <img src="/static/{{theme}}/img/logo/logo.svg" alt="EJ logo">
+                <img src="/static/img/logo/logo.svg" alt="EJ logo">
             {% endcall %}
 
-        {%endif%}
+        {% endif %}
 
     </nav>
 {% endmacro %}
 
 {% macro header_lower_nav(request) %}
-    {% set theme = request.GET.get('theme','') or current_theme %}
     <nav class="Header-lowerNav">
         {% call link('/conversations/', title=_('Conversations'), class='conversations-link', preload=True) %}
-            <img src="/static/{{theme}}/img/icons/navbar_conversations.svg" alt="{{ _('Conversations') }}" class="Header-lowerIcon">
+            {% if settings.EJ_THEME == 'default' %}
+                <img src="/static/img/icons/navbar_conversations.svg" alt="{{ _('Conversations') }}" class="Header-lowerIcon">
+            {% endif %}
             <span>{{ _('Conversations') }}</span>
         {% endcall %}
 
         {% call link('/talks/', title=_('Panel'), class='panel-link', preload=True) %}
-            <img src="/static/{{theme}}/img/icons/navbar_panel.svg" alt="{{ _('Panel') }}" class="Header-lowerIcon">
+            {% if settings.EJ_THEME == 'default' %}
+                <img src="/static/img/icons/navbar_panel.svg" alt="{{ _('Panel') }}" class="Header-lowerIcon">
+            {% endif %}
             <span>{{ _('Panel') }}</span>
         {% endcall %}
 
         {% call link('/profile/', title=_('Profile'), class='profile-link', preload=True) %}
-            <img src="/static/{{theme}}/img/icons/navbar_profile.svg" title="{{ _('Profile') }}" class="Header-lowerIcon">
+            {% if settings.EJ_THEME == 'default' %}
+                <img src="/static/img/icons/navbar_profile.svg" title="{{ _('Profile') }}" class="Header-lowerIcon">
+            {% endif %}
             <span>{{ _('Profile') }}</span>
         {% endcall %}
     </nav>

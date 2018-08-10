@@ -6,17 +6,18 @@ from django.utils.translation import ugettext_lazy as _
 from boogie import rules
 from hyperpython import a
 from . import urlpatterns, conversation_url
-from ..models import FavoriteConversation
-from ..proxy import conversations_with_moderation
+from ..models import FavoriteConversation, Conversation
 
 
 @urlpatterns.route('', name='list')
 def conversation_list(request):
     user = request.user
     return {
-        'conversations': conversations_with_moderation(user),
+        'conversations': Conversation.objects.filter(is_promoted=True),
         'can_add_conversation': user.has_perm('ej_conversations.can_add_conversation'),
-        'create_url': reverse('conversation:create')
+        'create_url': reverse('conversation:create'),
+        'title': _("Public conversations"),
+        'subtitle': _("Participate of the conversations and give your opinion with comments and votes!"),
     }
 
 

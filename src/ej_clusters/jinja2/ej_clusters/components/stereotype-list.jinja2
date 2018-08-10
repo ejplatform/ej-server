@@ -1,0 +1,34 @@
+{#---------------------------------------------------------------------------#
+    STEREOTYPE AND CLUSTER LIST (NOW ONLY STEREOTYPE IMPLEMENTED)
+ #---------------------------------------------------------------------------#}
+
+{% macro stereotype_list(stereotypes,
+                           title='Gerenciamento de clusters e esteriótipos',
+                           subtitle='Crie, delete e edite aqui seus clusters e esteriótipos',
+                           javascript_enabled='') %}
+
+    <div class="StereotypeList">
+        {{ stereotype_list_static(stereotypes, title, subtitle) }}
+    </div>
+
+{% endmacro %}
+
+{% macro stereotype_list_static(stereotypes, title, subtitle) %}
+        <div class="StereotypeList-title">
+            <h1 class="h1">{{ title }}</h1>
+            <p>{{ subtitle }}</p>
+        </div>
+
+        {# Cards #}
+        <div class="StereotypeList-cardList">
+            {% for stereotype in stereotypes %}
+              <h2>{{ stereotype.name }}
+              <a href="/profile/stereotypes/edit/{{stereotype.id}}">
+                <i class="far fa-edit"></i>
+              </a>
+
+                  <i class="far fa-times-circle"></i>
+              </h2>
+            {% endfor %}
+        </div>
+{% endmacro %}

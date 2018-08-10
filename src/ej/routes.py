@@ -1,5 +1,6 @@
 import logging
 
+from django.conf import settings
 from django.shortcuts import render, redirect
 
 from boogie.router import Router
@@ -19,7 +20,7 @@ urlpatterns = Router(
 def home(request):
     # if request.user.id:
     #    return redirect('/conversations/')
-    return redirect('/conversations/')
+    return redirect(settings.EJ_HOME_PATH)
 
 
 @urlpatterns.route('start/')
@@ -32,14 +33,6 @@ def start(request):
         'social_media_icons': social_icons(),
         'user': request.user,
     }
-
-
-@urlpatterns.route('clusters/')
-def clusters(request):
-    ctx = dict(
-        content_html='<h1>Error</h1><p>Not implemented yet!</p>'
-    )
-    return render(request, 'base.jinja2', ctx)
 
 
 @urlpatterns.route('menu/')
@@ -62,3 +55,4 @@ def service_worker(request):
 #
 urlpatterns.route('comments/', name='comments', template='pages/comments.jinja2')(lambda: {})
 urlpatterns.route('notifications/', name='notifications', template='pages/notifications.jinja2')(lambda: {})
+urlpatterns.route('home/', name='home', template='pages/home.jinja2')(lambda: {})

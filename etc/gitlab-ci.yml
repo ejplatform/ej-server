@@ -1,0 +1,116 @@
+stages:
+  - build
+  - test
+  - publish
+  - deploy
+
+variables:
+  DOCKER_DRIVER: overlay2
+
+
+# BUILD: the build stage recreates the base docker images used by the other
+# stages of the pipeline. This is executed only sporadically
+rebuild base docker images:
+  image: docker
+  stage: build
+  services:
+    - docker:dind
+  script:
+    - &login docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASS
+    - cd docker/base-images/ && sh build.sh publish
+  tags:
+    - docker
+  only:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /rebuild base docker images.*/
+
+.build assets:
+  image: ejplatform/tools:latest
+  stage: build
+  script:
+    - python etc/scripts/compilemessages.py
+    - inv sass --no-watch
+  tags:
+    - docker
+
+
+# TEST: test in different environments by changing the database or running
+# different linters.
+test with sqlite3: &test
+  image: ejplatform/python:test
+  stage: test
+  script:
+    - mkdir -p local/logs
+    - pip install https://github.com/fabiommendes/hyperpython/archive/master.zip
+    - pip install https://github.com/fabiommendes/django-boogie/archive/master.zip
+    - pip install -r etc/requirements/develop.txt
+    - pytest
+  tags:
+    - lappis
+
+.test-pgsql:
+  << : *test
+  variables:
+    DJANGO_DB_URL: postgres:postgres@postgres:5432
+  services:
+    - postgres
+
+flake8:
+  image: ejplatform/python:alpine
+  stage: test
+  script:
+    - flake8 src/
+  tags:
+    - lappis
+
+
+# PUBLISH: build and publish images with :latest (master commits) and
+# :tag (tagged commits).
+publish staging images: &publish
+  image : docker
+  stage: publish
+  services:
+    - docker:dind
+  before_script:
+    - *login
+  script:
+    - echo "$CI_COMMIT_SHA; $CI_COMMIT_TITLE"
+    - "docker build . -f docker/Dockerfile -t ejplatform/web:latest
+            --cache-from ejplatform/web:latest
+            --build-arg COMMIT_TITLE=\"$CI_COMMIT_TITLE\"
+            --build-arg COMMIT_HASH=\"$CI_COMMIT_SHA\""
+    - docker push ejplatform/web:latest
+  only:
+    - master
+  tags:
+    - docker
+
+publish tagged images:
+  << : *publish
+  script:
+    - "docker build . -f docker/Dockerfile -t ejplatform/web:$CI_COMMIT_TAG
+            --cache-from ejplatform/web:$CI_COMMIT_TAG
+            --build-arg COMMIT_TITLE=\"$CI_COMMIT_TITLE\"
+            --build-arg COMMIT_HASH=\"$CI_COMMIT_SHA\""
+    - docker push ejplatform/web:$CI_COMMIT_TAG
+  only:
+    - tags
+
+
+# DEPLOY: tell rancher to update its images.
+deploy to master:
+  image: cdrx/rancher-gitlab-deploy
+  stage: deploy
+  environment: develop
+  script:
+    - "upgrade
+            --service web
+            --environment $RANCHER_ENVIRONMENT
+            --stack $RANCHER_STACK
+            --rancher-key $RANCHER_ACCESS_KEY
+            --rancher-secret $RANCHER_SECRET_KEY"
+  only:
+    - master
+    - tags
+  tags:
+    - lappis

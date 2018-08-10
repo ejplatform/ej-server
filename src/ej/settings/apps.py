@@ -3,7 +3,7 @@ from .options import EjOptions
 
 
 class InstalledAppsConf(Base, EjOptions):
-    PROJECT_APPS = [
+    project_apps = [
         'ej_boards',
         'ej_clusters',
         'ej_configurations',
@@ -20,11 +20,12 @@ class InstalledAppsConf(Base, EjOptions):
         'ej_users',
     ]
 
-    THIRD_PARTY_APPS = [
+    third_party_apps = [
         # External apps created by the EJ team
-        'courier',
-        'courier.pushnotifications',
-        'courier.pushnotifications.providers.onesignal',
+        # 'courier',
+        # 'courier.pushnotifications',
+        # 'courier.pushnotifications.providers.onesignal',
+
         # Third party apps
         'taggit',
         'rules',
@@ -42,13 +43,11 @@ class InstalledAppsConf(Base, EjOptions):
         'rest_auth',
         'rest_auth.registration',
         'corsheaders',
-        'captcha',
         'actstream',
         'pinax.points',
         'pinax.badges',
         'constance',
         'constance.backends.database',
-        'django_extensions',
     ]
 
     def get_django_contrib_apps(self):
@@ -56,13 +55,13 @@ class InstalledAppsConf(Base, EjOptions):
         return ['django.contrib.flatpages', *apps]
 
     def get_project_apps(self):
-        apps = super().get_project_apps()
-        if self.EJ_ENABLE_ROCKETCHAT:
+        apps = [*super().get_project_apps(), *self.project_apps]
+        if self.EJ_ROCKETCHAT_INTEGRATION:
             apps = ['ej_rocketchat', *apps]
         return apps
 
     def get_third_party_apps(self):
-        apps = super().get_third_party_apps()
+        apps = [*super().get_third_party_apps(), *self.third_party_apps]
         if self.ENVIRONMENT == 'local':
             apps = ['debug_toolbar', *apps, 'django_extensions']
         elif self.ENVIRONMENT == 'production':

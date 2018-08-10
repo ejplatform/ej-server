@@ -1,8 +1,9 @@
 import pytest
+from django.http import HttpResponseRedirect
 from django.test import Client
-from django.http import HttpResponseRedirect, HttpResponseServerError
 from django.test import TestCase
 
+from ej.testing import UrlTester
 from ej_users.models import User
 
 
@@ -11,15 +12,40 @@ def logged_client(db):
     user = User.objects.create_user('name@server.com', '1234', name='name')
     client = Client()
     client.force_login(user)
-    yield client
-    user.delete()
+    return client
 
 
 @pytest.fixture
 def mk_user():
-    user = User.objects.create_user('user@user.com', '1234')
-    yield user
-    user.delete()
+    return User.objects.create_user('user@user.com', '1234')
+
+
+class TestRoutes(UrlTester):
+    public_urls = [
+        '/register/',
+        '/login/',
+        '/profile/recover-password/',
+    ]
+    user_urls = [
+        # '/logout/', -- returns error 500, so we use specific tests
+        '/profile/reset-password/',
+        '/profile/remove/',
+        '/profile/favorites/',
+    ]
+
+    def test_logout(self, logged_client):
+        client = logged_client
+        assert '_auth_user_id' in client.session
+        client.post('/logout/')
+        assert '_auth_user_id' not in client.session
+
+    def test_logout_fails_with_anonymous_user(self, client):
+        response = client.post('/logout/')
+        assert response.status_code == 500
+
+    def test_logout_fails_with_get(self, client):
+        response = client.get('/logout/')
+        assert response.status_code == 500
 
 
 class TestLoginRoute:
@@ -45,27 +71,6 @@ class TestLoginRoute:
         assert int(client.session['_auth_user_id']) == user.pk
 
 
-class TestLogoutRoute:
-    def test_logout_anonymous_user_route(self):
-        client = Client()
-        response = client.post('/logout/')
-        assert response.status_code == 302
-
-    def test_logout_with_get(self):
-        client = Client()
-        response = client.get('/logout/')
-
-        assert isinstance(response, HttpResponseServerError)
-        assert response.status_code == 500
-        assert response.content.decode("utf-8") == 'cannot logout using a GET'
-
-    def test_logout_logged_user(self, logged_client):
-        client = logged_client
-        assert '_auth_user_id' in client.session
-        client.post('/logout/')
-        assert '_auth_user_id' not in client.session
-
-
 class TestRegisterRoute(TestCase):
     def setUp(self):
         self.user = User.objects.create_user('name@server.com', '1234', name='name')
@@ -73,13 +78,9 @@ class TestRegisterRoute(TestCase):
         client.force_login(self.user)
         self.logged_client = client
 
-    def tearDown(self):
-        self.user.delete()
-
     def test_register_route(self):
         client = Client()
         response = client.post('/register/', data={'name': 'something'})
-
         self.assertEqual(response.status_code, 200)
 
     def test_register_valid_fields(self):
@@ -93,25 +94,4 @@ class TestRegisterRoute(TestCase):
         }, follow=True)
         user_pk = User.objects.get(email="leela@example.com").pk
         self.assertEqual(int(client.session['_auth_user_id']), user_pk)
-        self.assertRedirects(response, '/conversations/', 302, 200)
-
-
-class TestRecoverPasswordRoute:
-    def test_anonymous_user_recover_password(self, db):
-        client = Client()
-        response = client.post('/profile/recover-password/')
-        assert response.status_code == 200
-
-
-class TestResetPasswordRoute:
-    def test_anonymous_user_reset_password(self, db):
-        client = Client()
-        response = client.post('/profile/reset-password/')
-        assert response.status_code == 302
-
-
-class TestFavoriteConversationRoute:
-    def test_anonymous_user_favorite_conversations(self, db):
-        client = Client()
-        response = client.post('/profile/favorites/')
-        assert response.status_code == 302
+        self.assertRedirects(response, '/home/', 302, 200)

@@ -1,4 +1,8 @@
+import logging
+
 SERVICES_STARTED = False
+
+log = logging.getLogger('ej')
 
 
 def start_services(settings):
@@ -7,14 +11,10 @@ def start_services(settings):
     if SERVICES_STARTED:
         return
 
-    print('Waiting for services to start')
-    print('Current database backend: '
-          f'{settings.DATABASES["default"]["ENGINE"]}')
+    engine = settings.DATABASES['default']['ENGINE']
+    log.debug(f'database engine: {engine}')
 
-    if 'django.db.backends.postgresql' == \
-        settings.DATABASES['default']['ENGINE']:
-
-        print('waiting for postgres to start')
+    if engine == 'django.db.backends.postgresql':
         from . import postgres
         postgres.start_postgres()
 

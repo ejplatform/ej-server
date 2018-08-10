@@ -4,8 +4,8 @@ from django.contrib.staticfiles.storage import staticfiles_storage
 from django.utils.translation import ugettext_lazy
 
 from hyperpython import a, i, meta
-from hyperpython import h
-from hyperpython.components import html_table, html_list, html_map, Head as BaseHead, render
+from hyperpython import h, render
+from hyperpython.components import html_table, html_list, html_map, Head as BaseHead
 
 static = staticfiles_storage.url
 lazy_string_class = type(ugettext_lazy('hello'))
@@ -80,20 +80,20 @@ class Head(BaseHead):
         ]
         self.favicons = dict(self.favicons)
         self.favicons.update({
-            None: static('default/img/logo/logo.svg'),
-            16: static('default/img/logo/icon-16.png'),
-            32: static('default/img/logo/icon-32.png'),
-            57: static('default/img/logo/icon-57.png'),
-            72: static('default/img/logo/icon-72.png'),
-            96: static('default/img/logo/icon-96.png'),
-            114: static('default/img/logo/icon-114.png'),
-            192: static('default/img/logo/icon-192.png'),
+            None: static('img/logo/logo.svg'),
+            16: static('img/logo/icon-16.png'),
+            32: static('img/logo/icon-32.png'),
+            57: static('img/logo/icon-57.png'),
+            72: static('img/logo/icon-72.png'),
+            96: static('img/logo/icon-96.png'),
+            114: static('img/logo/icon-114.png'),
+            192: static('img/logo/icon-192.png'),
         })
 
     def favicon_tags(self):
         return [
             *super().favicon_tags(),
-            meta(name='image', content=static('default/img/logo/logo.svg')),
+            meta(name='image', content=static('img/logo/logo.svg')),
         ]
 
 

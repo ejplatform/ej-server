@@ -23,10 +23,16 @@ board_url = '<model:board>/conversations/'
 def conversation_list(request, board):
     user = request.user
     conversations = board.conversations.all()
+    tags = board.tags.all()
     return {
         'conversations': conversations_with_moderation(user, conversations),
+        'categories': tags,
         'can_add_conversation': user.has_perm('ej_boards.can_add_conversation', board),
+        'is_a_timeline': True,
+        'is_my_timeline': user.has_perm('ej_boards.is_my_timeline', board),
         'create_url': reverse('board_conversation:create', kwargs={'board': board}),
+        'title': _("%s' conversations") % board.title,
+        'subtitle': _("These are %s's conversations. Contribute to them too") % board.title,
     }
 
 

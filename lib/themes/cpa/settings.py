@@ -1,4 +1,4 @@
 print('Starting CPA theme')
-
-
-EJ_PAGE_TITLE = 'Conselho de participação adolescente'
+EJ_HOME_PATH = '/conversations/'
+EJ_PAGE_TITLE = 'Plataforma CPA'
+EJ_REGISTER_TEXT = 'Não faz parte da Plataforma CPA?'
