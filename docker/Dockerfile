@@ -87,16 +87,16 @@ ENV COUNTRY=${HOSTNAME}
 ENV EJ_THEME=${THEME}
 ENV HOSTNAME=${HOSTNAME}
 
+# Copy build-time assets: CSS, JS, i18n
+COPY --from=assets /app/lib/assets/css/ /app/lib/assets/css/
+COPY --from=assets /app/lib/build/ /app/lib/build/
+COPY --from=assets /app/locale/ /app/locale/
+
 # Prepare deploy assets
 COPY ./tasks.py /app/tasks.py
 RUN mkdir -p local/logs local/static/ local/media/ local/db/ \
  && python manage.py collectstatic --noinput \
  && echo "COLLECTED STATIC ASSETS"
-
- # Copy build-time assets: CSS, JS, i18n
-COPY --from=assets /app/lib/assets/css/ /app/lib/assets/css/
-COPY --from=assets /app/lib/build/ /app/lib/build/
-COPY --from=assets /app/locale/ /app/locale/
 
 # Create django user
 RUN groupadd -r django \
