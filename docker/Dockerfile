@@ -16,7 +16,7 @@ WORKDIR /app
 ARG THEME=default
 COPY ./lib/scss /app/lib/scss
 COPY ./lib/themes /app/lib/themes
-RUN mkdir -p /app/lib/assets/css/
+RUN mkdir -p /app/lib/assets/css/ /app/lib/build/css/
 RUN inv sass --theme=${THEME}
 
 # Build javascript assets (TODO)
