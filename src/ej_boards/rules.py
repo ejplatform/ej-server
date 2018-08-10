@@ -12,6 +12,7 @@ def has_board(user):
     else:
         return False
 
+
 @rules.register_perm('ej_boards.can_add_conversation')
 def can_add_conversation(user, board):
     if board.owner == user:
