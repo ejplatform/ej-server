@@ -1,7 +1,17 @@
 {% extends 'base.jinja2' %}
 
+
 {% block content %}
+  {{ stereotype_create(stereotype_form, votes_form) }}
+{% endblock %}
+
+{% macro stereotype_create(stereotype_form,
+                           votes_form,
+                           title=_('New Stereotype'),
+                           button_text=_('Create'),
+                           javascript_enabled='') %}
     <div class="Container">
+        <h1 class="h1">{{ title }}</h1>
         <form method="post" class="django-form-as-p">
             {{ csrf_input }}
             <div class="row spacer">
@@ -18,12 +28,12 @@
             {% endfor %}
             <div class="row spacer">
               <div class="col-4 offset-2">
-                <input type="submit" class="Button" value="{{ _('Save') }}" name="create">
+                <input type="submit" class="Button" value="{{ button_text }}" name="create">
               </div>
             </div>
         </form>
   </div>
-{% endblock %}
+  {% endmacro %}
 
 
 {% block javascript_body %}

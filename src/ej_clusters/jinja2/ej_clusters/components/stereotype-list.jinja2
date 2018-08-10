@@ -22,8 +22,11 @@
         {# Cards #}
         <div class="StereotypeList-cardList">
             {% for stereotype in stereotypes %}
-              <h2>{{ stereotype.name }} 
-                  <i class="far fa-edit"></i>
+              <h2>{{ stereotype.name }}
+              <a href="/profile/stereotypes/edit/{{stereotype.id}}">
+                <i class="far fa-edit"></i>
+              </a>
+
                   <i class="far fa-times-circle"></i>
               </h2>
             {% endfor %}

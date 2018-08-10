@@ -138,6 +138,18 @@ def create_stereotype(request):
     }
 
 
+@urlpatterns.route('profile/stereotypes/edit/<model:stereotype>/')
+def edit_stereotype(request, stereotype):
+    stereotype_form = StereotypeForm
+    votes_form = StereotypeVoteFormSet
+    rendered_stereotype_form = stereotype_form(instance=stereotype)
+    rendered_votes_form = votes_form(queryset=StereotypeVote.objects.filter(author=stereotype))
+    return {
+        'stereotype_form': rendered_stereotype_form,
+        'votes_form': rendered_votes_form,
+    }
+
+
 @urlpatterns.route('profile/stereotypes/', name='list')
 def stereotypes(request):
     user_stereotypes = Stereotype.objects.filter(owner=request.user)
