@@ -53,6 +53,4 @@ def service_worker(request):
 #
 # Static pages
 #
-urlpatterns.route('comments/', name='comments', template='pages/comments.jinja2')(lambda: {})
-urlpatterns.route('notifications/', name='notifications', template='pages/notifications.jinja2')(lambda: {})
 urlpatterns.route('home/', name='home', template='pages/home.jinja2')(lambda: {})
