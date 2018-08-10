@@ -74,10 +74,7 @@ publish staging images: &publish
   before_script:
     - *login
   script:
-    - "docker build . -f docker/Dockerfile -t ejplatform/web:latest \
-          --cache-from ejplatform/web:latest \
-          --build-arg COMMIT_TITLE=$CI_COMMIT_TITLE \
-          --build-arg COMMIT_HASH=$CI_COMMIT_SHA"
+    - docker build . -f docker/Dockerfile -t ejplatform/web:latest --cache-from ejplatform/web:latest --build-arg COMMIT_TITLE=$CI_COMMIT_TITLE --build-arg COMMIT_HASH=$CI_COMMIT_SHA
     - docker push ejplatform/web:latest
   only:
     - master
@@ -87,10 +84,7 @@ publish staging images: &publish
 publish tagged images:
   << : *publish
   script:
-    - "docker build . -f docker/Dockerfile -t ejplatform/web:$CI_COMMIT_TAG \
-          --cache-from ejplatform/web:$CI_COMMIT_TAG \
-          --build-arg COMMIT_TITLE=$CI_COMMIT_TITLE \
-          --build-arg COMMIT_HASH=$CI_COMMIT_SHA"
+    - docker build . -f docker/Dockerfile -t ejplatform/web:$CI_COMMIT_TAG --cache-from ejplatform/web:$CI_COMMIT_TAG --build-arg COMMIT_TITLE=$CI_COMMIT_TITLE --build-arg COMMIT_HASH=$CI_COMMIT_SHA
     - docker push ejplatform/web:$CI_COMMIT_TAG
   only:
     - tags
@@ -102,12 +96,7 @@ deploy to master:
   stage: deploy
   environment: develop
   script:
-    - "upgrade \
-          --service web \
-          --environment $RANCHER_ENVIRONMENT \
-          --stack $RANCHER_STACK \
-          --rancher-key $RANCHER_ACCESS_KEY \
-          --rancher-secret $RANCHER_SECRET_KEY"
+    - upgrade --service web --environment $RANCHER_ENVIRONMENT --stack $RANCHER_STACK --rancher-key $RANCHER_ACCESS_KEY --rancher-secret $RANCHER_SECRET_KEY
   only:
     - master
     - tags
