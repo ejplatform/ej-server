@@ -25,7 +25,7 @@ def manage(ctx, cmd, env=None, **kwargs):
 # Build assets
 #
 @task
-def sass(ctx, watch=True, theme=None, trace=False, dry_run=False):
+def sass(ctx, watch=False, theme=None, trace=False, dry_run=False):
     """
     Run Sass compiler
     """
