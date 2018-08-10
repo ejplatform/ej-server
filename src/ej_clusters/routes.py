@@ -3,7 +3,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.shortcuts import redirect
 from boogie.router import Router
 from boogie.rules import proxy_seq
-from ej_conversations.models import Conversation, Choice, Comment, VOTE_NAMES
+from ej_conversations.models import Conversation, Choice, Comment
 from hyperpython import a, input_, label, Block
 from hyperpython.components import html_list, html_table
 from .models import Stereotype, Cluster, StereotypeVote
