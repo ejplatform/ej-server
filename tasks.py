@@ -411,6 +411,17 @@ def test(ctx):
     ctx.run('pytest')
 
 
+@task
+def manage(ctx, command, noinput=None, args=''):
+    """
+    Run a Django manage.py command
+    """
+    kwargs = {}
+    if noinput:
+        kwargs['noinput'] = noinput
+    manage(ctx, f'{command} {args}', **kwargs)
+
+
 #
 # Deploy tasks
 #
