@@ -3,7 +3,6 @@
 #
 FROM ejplatform/tools:latest as assets
 
-COPY ./tasks.py /app/tasks.py
 
 # Compile translations
 COPY ./etc/scripts/compilemessages.py /usr/bin/compilemessages
@@ -17,8 +16,8 @@ RUN chmod +x /usr/bin/compilemessages \
 ARG THEME=default
 COPY ./lib/scss /app/lib/scss
 COPY ./lib/themes /app/lib/themes
-RUN mkdir -p /app/lib/assets/css/ \
- && mkdir -p /app/lib/build/css/ \
+COPY ./tasks.py /app/tasks.py
+RUN mkdir -p /app/lib/build/css/ \
  && inv -e sass --theme=${THEME} \
  && du -h lib
 
@@ -30,7 +29,7 @@ RUN inv -e js \
 #
 # Create python packages
 #
-FROM ejplatform/python:buster as py-modules
+FROM ejplatform/python:buster as pymodules
 
 # Create django-boogie package
 WORKDIR /app
@@ -40,11 +39,9 @@ RUN unzip boogie.zip \
  && python setup.py sdist \
  && cd dist \
  && mv django-boogie* /app/boogie.tar.gz \
- && ls /app \
  && echo "INSTALLED DJANGO-BOOGIE"
 
 # Create hyperpython package
-WORKDIR /app
 ADD https://github.com/fabiommendes/hyperpython/archive/master.zip /app/hyperpython.zip
 RUN unzip hyperpython.zip \
  && cd hyperpython-master \
@@ -79,7 +76,7 @@ COPY ./manage.py /app/manage.py
 COPY ./src/ /app/src/
 
 # Copy django boogie
-COPY --from=py-modules /app/*.tar.gz /app/
+COPY --from=pymodules /app/*.tar.gz /app/
 RUN pip install /app/*.tar.gz \
  && rm /app/*.tar.gz
 
@@ -92,7 +89,6 @@ ENV EJ_THEME=${THEME}
 ENV HOSTNAME=${HOSTNAME}
 
 # Copy build-time assets: CSS, JS, i18n
-COPY --from=assets /app/lib/assets/css/ /app/lib/assets/css/
 COPY --from=assets /app/lib/build/ /app/lib/build/
 COPY --from=assets /app/locale/ /app/locale/
 
