@@ -56,12 +56,6 @@ RUN unzip hyperpython.zip \
 FROM ejplatform/python:deploy
 
 # Set theme and environment variables
-ARG COUNTRY=usa
-ARG HOSTNAME=localhost
-ARG THEME=default
-ENV COUNTRY=${HOSTNAME}
-ENV EJ_THEME=${THEME}
-ENV HOSTNAME=${HOSTNAME}
 ENV DJANGO_SETTINGS_MODULE=ej.settings
 ENV DJANGO_ENVIRONMENT=production
 ENV PYTHONPATH="/app/src/:$PYTHONPATH"
@@ -85,6 +79,14 @@ COPY --from=py-modules /app/*.tar.gz /app/
 RUN pip install /app/*.tar.gz \
  && rm /app/*.tar.gz
 
+# Set enviroment variables
+ARG COUNTRY=usa
+ARG HOSTNAME=localhost
+ARG THEME=default
+ENV COUNTRY=${HOSTNAME}
+ENV EJ_THEME=${THEME}
+ENV HOSTNAME=${HOSTNAME}
+
 # Prepare deploy assets
 COPY ./tasks.py /app/tasks.py
 RUN mkdir -p local/logs local/static/ local/media/ local/db/ \
@@ -100,6 +102,12 @@ RUN groupadd -r django \
  && useradd -r -g django django \
  && chown -R django:django /app
 USER django
+
+# Save commit info
+ARG COMMIT_TITLE=none
+ARG COMMIT_HASH=none
+RUN echo "${COMMIT_HASH}: ${COMMIT_TITLE}" > commit.txt
+
 
 # Entry point defaults to inv run
 EXPOSE 5000
