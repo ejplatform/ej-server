@@ -131,8 +131,17 @@ class MissionViewSet(viewsets.ViewSet):
         return Response(statistics)
 
     def comments(self, request, pk):
+        comment_pagination = request.GET.get('pagination')
         mission = models.Mission.objects.get(id=pk)
-        queryset = mission.comment_set.all()
+        count = mission.comment_set.all().count()
+        if (not comment_pagination):
+            queryset = list(reversed(mission.comment_set.all()))[:-(count - 4)]
+        else:
+            comment_pagination = int(comment_pagination)
+            if (count - comment_pagination <= 0):
+                queryset = list(reversed(mission.comment_set.all()))[::-1]
+            else:
+                queryset = list(reversed(mission.comment_set.all()))[:-(count - comment_pagination)][::-1]
         serializer = serializers.CommentSerializer(queryset, many=True)
         return Response(serializer.data)
 
