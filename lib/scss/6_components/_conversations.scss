@@ -31,6 +31,27 @@ $conversation-card-button-border-radius: 30px !default;
         }
     }
 
+    &-urls {
+        font-size: $conversation-card-font-size-small;
+        a, i{
+            color: $card-conversation-navigation-font-color;
+        }
+
+        i{
+            font-size: $conversation-card-font-size-small * 0.8;
+        }
+        .public{
+            float: left;
+            margin-left:  $spacing-unit-tiny;
+        }
+
+        .my-conversations {
+            float: right;
+            margin-right:  $spacing-unit-tiny;
+        }
+        margin-bottom: $spacing-unit-large;
+    }
+
     &-categories {
         @include color(hint);
         align-items: center;

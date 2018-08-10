@@ -13,6 +13,13 @@ def has_board(user):
         return False
 
 
+@rules.register_perm('ej_boards.is_my_timeline')
+def is_my_timeline(user, board):
+    if board.owner == user:
+        return True
+
+    return False
+
 @rules.register_perm('ej_boards.can_add_conversation')
 def can_add_conversation(user, board):
     if board.owner == user:

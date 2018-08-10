@@ -3,7 +3,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from model_utils.models import TimeStampedModel
 
-from ej_conversations.models import Conversation
+from ej_conversations.models import Conversation, ConversationTag
 from .validators import validate_board_url
 
 
@@ -36,6 +36,10 @@ class Board(TimeStampedModel):
     @property
     def conversations(self):
         return Conversation.objects.filter(board_subscriptions__board=self)
+
+    @property
+    def tags(self):
+        return ConversationTag.objects.all()
 
     class Meta:
         verbose_name = _('Board')

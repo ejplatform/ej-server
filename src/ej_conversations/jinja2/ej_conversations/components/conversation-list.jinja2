@@ -26,7 +26,22 @@
             <p>{{ subtitle }}</p>
         </div>
 
-        {% if categories is defined %}
+        {% if is_a_timeline is defined %}
+            <div class="ConversationList-urls">
+                <span class="public">
+                    <i class="fa fa-chevron-left"></i>
+                    {{ link(_('public conversations'), href='/conversations/') }}
+                </span>
+                {% if is_my_timeline is not defined %}
+                <span class="my-conversations">
+                    {{ link(_('go to my conversations'), href='/profile/boards/') }}
+                    <i class="fa fa-chevron-right"></i>
+                </span>
+                {% endif %}
+            </div>
+        {% endif %}
+
+        {% if categories is defined and categories %}
             <div class="ConversationList-categories">
                 <i class="fa fa-chevron-left"></i>
                 <ul>

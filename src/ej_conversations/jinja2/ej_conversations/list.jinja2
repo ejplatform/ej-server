@@ -5,5 +5,5 @@
     {% if can_add_conversation and create_url %}
         <a class="Link-new" href="{{ create_url }}"><i class="fa fa-plus-circle"></i> {{ _('New conversation') }}</a>
     {% endif %}
-    {{ conversation_list(conversations, javascript_enabled=javascript_enabled) }}
+    {{ conversation_list(conversations, categories=categories, title=title, subtitle=subtitle, javascript_enabled=javascript_enabled) }}
 {% endblock %}
