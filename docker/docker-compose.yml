@@ -9,7 +9,7 @@ services:
       context: ../
       dockerfile: ./docker/Dockerfile-dev
       args:
-        - UID: ${UID:-1000}
+        - UID=${UID:-1000}
     ports:
       - 8000:8000
     links:
