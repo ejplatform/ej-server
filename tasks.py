@@ -411,8 +411,8 @@ def test(ctx):
     ctx.run('pytest')
 
 
-@task
-def manage(ctx, command, noinput=None, args=''):
+@task(name='manage')
+def manage_task(ctx, command, noinput=False, args=''):
     """
     Run a Django manage.py command
     """
