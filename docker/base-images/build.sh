@@ -4,6 +4,12 @@ set -o errexit
 set -o pipefail
 set -o nounset
 
+# Copy assets
+cp ../../etc/requirements/local.txt requirements-local.txt
+cp ../../etc/requirements/develop.txt requirements-develop.txt
+cp ../../etc/requirements/production.txt requirements-production.txt
+cp ../nginx.conf nginx.conf
+
 # Build python alpine
 echo "BUILD PYTHON ALPINE IMAGE"
 docker build . -f Dockerfile-python_alpine -t ejplatform/python:alpine
@@ -18,11 +24,6 @@ docker build . -f Dockerfile-tools -t ejplatform/tools:latest
 docker build . -f Dockerfile-nginx -t ejplatform/nginx:latest
 
 # Build python images
-cp ../../etc/requirements/local.txt requirements-local.txt
-cp ../../etc/requirements/develop.txt requirements-develop.txt
-cp ../../etc/requirements/production.txt requirements-production.txt
-cp ../nginx.conf nginx.conf
-
 echo; echo; echo "BUILD PYTHON IMAGES"
 docker build . -f Dockerfile-python_deploy -t ejplatform/python:deploy
 docker build . -f Dockerfile-python_test -t ejplatform/python:test

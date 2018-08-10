@@ -95,6 +95,7 @@ RUN mkdir -p local/logs local/static/ local/media/ local/db/ \
 
  # Copy build-time assets: CSS, JS, i18n
 COPY --from=assets /app/lib/assets/css/ /app/lib/assets/css/
+COPY --from=assets /app/lib/build/ /app/lib/build/
 COPY --from=assets /app/locale/ /app/locale/
 
 # Create django user
