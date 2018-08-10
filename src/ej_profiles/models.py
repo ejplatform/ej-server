@@ -76,7 +76,8 @@ class Profile(models.Model):
         token = Token.objects.get_or_create(user_id=self.id)
         return token[0].key
 
-    def image_url(self, theme=None):
+    @property
+    def image_url(self):
         try:
             return self.image.url
         except ValueError:
@@ -84,7 +85,7 @@ class Profile(models.Model):
                 picture = account.get_avatar_url()
                 if picture:
                     return picture
-            return avatar_fallback(theme)
+            return '/static/img/logo/avatar_default.svg'
 
     @property
     def has_image(self):
@@ -162,16 +163,6 @@ def gravatar_fallback(id):
     """
     digest = hashlib.md5(id.encode('utf-8')).hexdigest()
     return "https://gravatar.com/avatar/{}?s=40&d=mm".format(digest)
-
-
-def avatar_fallback(theme):
-    """
-    Return fallback image URL for profile
-    """
-    if theme is None:
-        theme = 'default'
-
-    return "/static/{0}/img/logo/avatar_default.svg".format(theme)
 
 
 def get_profile(user):

@@ -1,5 +1,4 @@
 {% from 'ej_conversations/components/conversation-list.jinja2' import conversation_list %}
-{% set theme = request.GET.get('theme','') or current_theme %}
 
 
 {% macro profile_edit(profile, form, csrf_input) %}
@@ -15,7 +14,7 @@
 
 {% macro profile_detail(profile, conversations, info='profile', javascript_enabled='') %}
     <div class="Profile">
-        <img class="Profile-image" src="{{ profile.image_url(theme) }}">
+        <img class="Profile-image" src="{{ profile.image_url }}">
 
         <h1>{{ profile.name }}</h1>
         <h2>{{ _('Participant Status') }}</h2>

@@ -26,9 +26,6 @@ def environment(**options):
     options.setdefault('lstrip_blocks', True)
     options['undefined'] = StrictUndefined
     env = Environment(**options)
-    theme = 'default'
-    if 'THEME' in os.environ:
-        theme = os.environ['THEME']
 
     env.globals.update(
         static=staticfiles_storage.url,
@@ -44,7 +41,6 @@ def environment(**options):
         social_icons=social_icons,
         fragment=fragment,
         service_worker=getattr(settings, 'SERVICE_WORKER', False),
-        current_theme=theme,
         context=context,
 
         # Hyperpython tag functions

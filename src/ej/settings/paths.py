@@ -35,8 +35,8 @@ class PathsConf(Base):
 
         return super().finalize(settings)
 
-    def get_staticfiles_dirs(self):
-        return [self.REPO_DIR / 'lib/assets']
+    def get_staticfiles_dirs(self, repo_dir):
+        return [repo_dir / 'lib/build', repo_dir / 'lib/assets']
 
     def get_django_templates_dirs(self):
         return [self.ROOT_TEMPLATE_DIR / 'django']

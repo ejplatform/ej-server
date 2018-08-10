@@ -13,13 +13,15 @@ echo; echo; echo "BUILD PYTHON ALPINE IMAGE"
 docker build . -f Dockerfile-python_buster -t ejplatform/python:buster
 
 # Build tools
-echo "BUILD TOOLS IMAGE"
+echo "BUILD TOOLS IMAGES"
 docker build . -f Dockerfile-tools -t ejplatform/tools:latest
+docker build . -f Dockerfile-nginx -t ejplatform/nginx:latest
 
 # Build python images
 cp ../../etc/requirements/local.txt requirements-local.txt
 cp ../../etc/requirements/develop.txt requirements-develop.txt
 cp ../../etc/requirements/production.txt requirements-production.txt
+cp ../nginx.conf nginx.conf
 
 echo; echo; echo "BUILD PYTHON IMAGES"
 docker build . -f Dockerfile-python_deploy -t ejplatform/python:deploy
@@ -33,6 +35,7 @@ if [ $# -eq 1 ]; then
         docker push ejplatform/python:alpine;
         docker push ejplatform/python:buster;
         docker push ejplatform/tools:latest;
+        docker push ejplatform/nginx:latest;
         docker push ejplatform/python:deploy;
         docker push ejplatform/python:test;
         docker push ejplatform/local:latest;

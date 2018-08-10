@@ -25,29 +25,24 @@ def manage(ctx, cmd, env=None, **kwargs):
 # Build assets
 #
 @task
-def sass(ctx, watch=False, theme=None, trace=False, dry_run=False):
+def sass(ctx, watch=False, theme='default', trace=False, dry_run=False, rocket=True):
     """
     Run Sass compiler
     """
+    if theme and '/' in theme:
+        theme = theme.rstrip('/')
+        root = f'{theme}/scss/'
+        theme = os.path.basename(theme)
+    else:
+        root = 'lib/scss/' if theme == 'default' else f'lib/themes/{theme}/scss/'
 
+    os.environ['EJ_THEME'] = theme or 'default'
     go = runner(ctx, dry_run, pty=True)
-    cmd = 'sass'
-    cmd += ' lib/scss/maindefault.scss:lib/assets/css/maindefault.css'
-    cmd += ' lib/scss/maindefault.scss:lib/assets/css/main.css'
-    cmd += ' lib/scss/rocket.scss:lib/assets/css/rocket.css'
-
-    # Handle themes
-    themes_path = 'lib/themes'
-    for theme in os.listdir(themes_path):
-        cmd += f' lib/themes/{theme}/scss/main.scss:lib/assets/css/main{theme}.css'
-        asset_dir = f'lib/assets/{theme}'
-        if os.path.exists(asset_dir):
-            os.remove(asset_dir)
-        os.symlink(f'../themes/{theme}/assets/', asset_dir)
-
+    cmd = f'sass {root}/main.scss:lib/build/css/main.css'
+    cmd += f' {root}/rocket.scss:lib/build/css/rocket.css' if rocket else ''
     cmd += ' --watch' if watch else ''
     cmd += ' --trace' if trace else ''
-    go('rm -rf .sass-cache')
+    go('rm -rf .sass-cache lib/build/css/main.css lib/build/css/rocket.css')
     go(cmd)
 
 
