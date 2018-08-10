@@ -1,12 +1,12 @@
 /*
- =========================================================================== 
+ ===========================================================================
  Semantic Variables
- =========================================================================== 
+ ===========================================================================
 */
 //  $home-how-it-works-background: blue !default  !default;
 
   $button-border-radius-default:  56px  !default;
- 
+
  // Profile
   $profile-font-color-primary: #30BFD3  !default;
   $profile-font-color-secondary: #042049  !default;
@@ -22,7 +22,7 @@
   $login-button-login-size: inherit  !default;
   $login-button-login-background: #30c0d3  !default;
   $login-button-register-size: 10%  !default;
- 
+
  // Social
   $social-buttons-display: none  !default;
   $social-buttons-border: 1px solid #30c0d3  !default;
@@ -59,13 +59,13 @@
   $navigation-bottom-icon-conversations: ""  !default;
   $navigation-bottom-icon-panel:  ""  !default;
   $navigation-bottom-icon-profile: ""  !default;
-   
+
  // Card Conversation
   $card-conversation-navigation-font-color: #30c0d3  !default;
   $card-conversation-top-background: #C4F2F4  !default;
   $card-conversation-top-font-color: #30c0d3  !default;
   $card-conversation-middle-background: #30c0d3  !default;
-  $card-conversation-bottom-background: url(/static/default/img/icons/bg.png)  !default;
+  $card-conversation-bottom-background: url(/static/img/icons/bg.png)  !default;
   $card-conversation-button-background: #042049  !default;
   $card-conversation-border-radius: 50%  !default;
 
@@ -75,7 +75,7 @@
   $conversation-bottom-border-radius: 0 0 56px 56px !default;
   $conversation-font-color: #042049  !default;
   $conversation-tag-color: #30c0d3  !default;
-  $conversation-statistics-color: #30c0d3  !default;   
+  $conversation-statistics-color: #30c0d3  !default;
   $conversation-arrow-border: 28px solid #C4F2F4  !default;
 
  // Conversation: edit

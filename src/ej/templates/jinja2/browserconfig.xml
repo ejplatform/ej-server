@@ -2,10 +2,10 @@
 <browserconfig>
   <msapplication>
     <tile>
-      <square70x70logo src="static/default/img/icon/icon-70.png"/>
-      <square150x150logo src="static/default/img/icon/icon-150.png"/>
-      <wide310x150logo src="static/default/img/icon/icon-310x150.png"/>
-      <square310x310logo src="static/default/img/icon/icon-310.png"/>
+      <square70x70logo src="static/img/icon/icon-70.png"/>
+      <square150x150logo src="static/img/icon/icon-150.png"/>
+      <wide310x150logo src="static/img/icon/icon-310x150.png"/>
+      <square310x310logo src="static/img/icon/icon-310.png"/>
       <TileColor>{{ tilecolor|default('#009900') }}</TileColor>
     </tile>
   </msapplication>

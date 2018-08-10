@@ -30,7 +30,7 @@
   }
 
   &-cover {
-    background: transparent url(/static/default/img/home/rect.png) center center no-repeat;
+    background: transparent url(/static/img/home/rect.png) center center no-repeat;
     background-size: cover;
     width: 100%;
     padding-bottom: 142.1875%;
@@ -83,7 +83,7 @@
   }
 
   &-conversations {
-    background: $color-purple-dark url(/static/default/img/home/bg.png);
+    background: $color-purple-dark url(/static/img/home/bg.png);
     padding-top: $unit;
 
     & > div {

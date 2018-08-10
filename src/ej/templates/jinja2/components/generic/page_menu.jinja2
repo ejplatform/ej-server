@@ -99,7 +99,7 @@
 {% macro icon_link(text, href, icon, fa=True) %}
     {%- call link(href) %}
         {%- if fa %}<i class="{{ icon }}"></i>
-        {%- else %}<img src="/static/default/img/menu/{{ icon }}.svg">
+        {%- else %}<img src="/static/img/menu/{{ icon }}.svg">
         {%- endif %}{{ text }}
     {% endcall %}
 {% endmacro %}
