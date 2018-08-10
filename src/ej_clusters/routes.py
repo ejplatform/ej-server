@@ -3,7 +3,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.shortcuts import redirect
 from boogie.router import Router
 from boogie.rules import proxy_seq
-from ej_conversations.models import Conversation, Choice, Comment
+from ej_conversations.models import Conversation, Choice, Comment, VOTE_NAMES
 from hyperpython import a, input_, label, Block
 from hyperpython.components import html_list, html_table
 from .models import Stereotype, Cluster, StereotypeVote
@@ -120,9 +120,8 @@ def create_stereotype(request):
                 stereotype.save()
                 votes = rendered_votes_form.save(commit=False)
                 for vote in votes:
-                    vote.stereotype = stereotype
+                    vote.author = stereotype
                     vote.save()
-
                 return redirect('/profile/stereotypes/')
             else:
                 rendered_stereotype_form.add_error(None, _("Stereotype with this name and owner already exists."))
@@ -140,14 +139,19 @@ def create_stereotype(request):
 
 @urlpatterns.route('profile/stereotypes/edit/<model:stereotype>/')
 def edit_stereotype(request, stereotype):
-    stereotype_form = StereotypeForm
-    votes_form = StereotypeVoteFormSet
-    rendered_stereotype_form = stereotype_form(instance=stereotype)
-    rendered_votes_form = votes_form(queryset=StereotypeVote.objects.filter(author=stereotype))
-    return {
-        'stereotype_form': rendered_stereotype_form,
-        'votes_form': rendered_votes_form,
-    }
+    if request.user == stereotype.owner:
+        stereotype_form = StereotypeForm
+        votes_form = StereotypeVoteFormSet
+        rendered_stereotype_form = stereotype_form(instance=stereotype)
+
+        stereotype_votes = StereotypeVote.objects.filter(author=stereotype)
+        rendered_votes_form = votes_form(queryset=stereotype_votes)
+        return {
+            'stereotype_form': rendered_stereotype_form,
+            'votes_form': rendered_votes_form,
+        }
+    else:
+        return redirect('/profile/stereotypes/')
 
 
 @urlpatterns.route('profile/stereotypes/', name='list')

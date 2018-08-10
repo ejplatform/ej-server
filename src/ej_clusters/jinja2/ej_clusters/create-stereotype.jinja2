@@ -48,10 +48,11 @@
     function cloneMore(selector, prefix) {
         var newElement = $(selector).clone(true);
         var total = $('#id_' + prefix + '-TOTAL_FORMS').val();
-
         newElement.find('select').each(function() {
-            var name = $(this).attr('name').replace('-' + (total-1) + '-', '-' + total + '-');
+            var name = $(this).attr('name').replace('-' + (total-1) + '-', '-' + (total) + '-');
             var id = 'id_' + name;
+            this.setAttribute("name", name);
+            this.setAttribute("id", id);
         });
         total++;
         $('#id_' + prefix + '-TOTAL_FORMS').val(total);
