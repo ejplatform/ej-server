@@ -193,7 +193,7 @@ def ensure_settings_created(sender, **kwargs):
     Setting.objects.get_or_create(profile=instance, owner_id=profile)
 
 @receiver(post_save, sender=Profile)
-def insert_user_on_channel(sender, created, **kwargs):
+def insert_user_on_general_channels(sender, created, **kwargs):
     if created:
         instance = kwargs.get('instance')
         user_id = instance.user.id
