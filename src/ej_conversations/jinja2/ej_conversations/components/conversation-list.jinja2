@@ -32,7 +32,7 @@
                     <i class="fa fa-chevron-left"></i>
                     {{ link(_('public conversations'), href='/conversations/') }}
                 </span>
-                {% if is_my_timeline is not defined %}
+                {% if not is_my_timeline %}
                 <span class="my-conversations">
                     {{ link(_('go to my conversations'), href='/profile/boards/') }}
                     <i class="fa fa-chevron-right"></i>

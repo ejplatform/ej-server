@@ -997,6 +997,28 @@ $conversation-card-button-border-radius: 30px !default;
     }
 }
 
+
+.view-timeline {
+    text-align: center;
+    display: block;
+    width: 100%;
+    font-size: $font-size-tiny;
+    box-shadow: $header-box-shadow-upper;
+    margin: 0;
+    padding: $spacing-unit-small 0;
+
+    select{
+        width: 50%;
+        border: none;
+        font-weight: bold;
+        -webkit-appearance: none;
+        background: url(/static/img/icons/arrow-down.svg) no-repeat right;
+        background-size: 16px 16px;
+        padding: 0px;
+        margin: 0px 10px;
+    }
+}
+
 .Moderate {
   .ConversationDetail-banner h1 {
     font-family: "Raleway", sans-serif;
