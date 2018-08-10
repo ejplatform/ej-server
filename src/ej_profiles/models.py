@@ -210,3 +210,19 @@ def create_user_trophy_channel(sender, instance, created, **kwargs):
         channel = Channel.objects.create(name="trophy channel", sort="trophy", owner=user)
         channel.users.add(user)
         channel.save()
+
+@receiver(post_save, sender=Profile)
+def create_user_selected_channel(sender, instance, created, **kwargs):
+    if created:
+        user = instance.user
+        channel = Channel.objects.create(name="selected channel", sort="selected", owner=user)
+        channel.users.add(user)
+        channel.save()
+
+@receiver(post_save, sender=Profile)
+def create_user_press_channel(sender, instance, created, **kwargs):
+    if created:
+        user = instance.user
+        channel = Channel.objects.create(name="press channel", sort="press", owner=user)
+        channel.users.add(user)
+        channel.save()

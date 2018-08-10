@@ -34,6 +34,8 @@ class Candidate(models.Model):
     has_clean_pass = StatusField(choices_name='POLITICAL_OPTIONS')
     committed_to_democracy = StatusField(choices_name='POLITICAL_OPTIONS')
     adhered_to_the_measures  = StatusField(choices_name='POLITICAL_OPTIONS')
+    external_page = models.CharField(max_length=100,
+                            help_text="The site of the candidate", default="")
 
 # boogie decorator to add a property on model serializer
 @rest_api.property(Candidate)
