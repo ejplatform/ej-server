@@ -151,6 +151,10 @@ $header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.2) !default;
         font-size: $font-size-tiny;
         background-color: $color-purple-dark;
 
+        &:hover {
+            cursor: pointer;
+        }
+        
         p {
             color: $color-white;
             font-weight: bold;

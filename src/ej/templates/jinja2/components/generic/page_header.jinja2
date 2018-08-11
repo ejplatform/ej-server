@@ -10,9 +10,11 @@
             {% if request.user.is_active %}
                 {{ header_lower_nav(request) }}
             {% else %}
+            {%- call link('/login/') %}
                 <div class="Header-lowerNotLogged">
                     <p>{{_('ENTRAR')}}</p>
                 </div>
+                {% endcall %}
             {% endif %}
         </div>
     </header>
