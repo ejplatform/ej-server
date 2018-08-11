@@ -1,12 +1,43 @@
 .StereotypeList {
     @extend .Container;
-
     &-title {
         text-align: center;
-
+        width: 80vw;
+        margin: 0 auto;
         h1 {
-            font-size: $font-size-h2;
+            font-size: $font-size-huge;
             color: $color-magenta;
+            font-weight: 300;
+        }
+
+        p {
+            font-size: $font-size-large;
         }
     }
-  }
+    &-cardList {
+        display: flex;
+        flex-direction: column;
+        width: 80vw;
+        margin: 0 auto;
+    }
+
+    &-singleStereotype {
+        // background-color: red; 
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        width: 80vw;
+        margin: 0 auto;
+
+        h2 {
+            font-weight: normal;
+        }
+    }
+    &-icons {
+        i {
+            color: $color-blue-light;
+            font-size: $font-size-larger;
+        }
+    }
+}
