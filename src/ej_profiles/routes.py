@@ -45,7 +45,7 @@ def edit(request):
 
 
 @urlpatterns.route('conversations/', template='ej_conversations/list.jinja2')
-def comments(request):
+def conversations(request):
     user = request.user
     return {
         'user': user,
