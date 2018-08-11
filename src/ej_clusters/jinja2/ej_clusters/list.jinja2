@@ -2,8 +2,5 @@
 {% from 'ej_clusters/components/stereotype-list.jinja2' import stereotype_list with context %}
 
 {% block content %}
-    {% if create_url %}
-        <a class="Link-new" href="{{ create_url }}"><i class="fa fa-plus-circle"></i> {{ _('New stereotype') }}</a>
-    {% endif %}
     {{ stereotype_list(stereotypes, javascript_enabled=javascript_enabled) }}
 {% endblock %}
