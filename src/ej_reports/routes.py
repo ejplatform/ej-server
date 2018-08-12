@@ -1,5 +1,3 @@
-import csv
-
 import numpy as np
 import pandas as pd
 from django.contrib.auth import get_user_model
@@ -13,6 +11,7 @@ from ej_conversations.models import Conversation
 from ej_dataviz import render_dataframe
 from ej_math import VoteStats
 from hyperpython.components import html_table, hyperlink
+
 
 app_name = 'ej_reports'
 urlpatterns = Router(
@@ -42,10 +41,26 @@ def index(request, conversation):
         comment_table=cluster_comments_table,
         size=lambda x: x.users.count(),
     )
+    # Change agree and disagree comments to add up to 100% with skipped
+    remaining = 100 - comments["skipped"]
+    comments["agree"] = 0.01 * comments["agree"] * remaining
+    comments["disagree"] = 0.01 * comments["disagree"] * remaining
 
+    # Change agree and disagree participants to add up to 100% with skipped
+    remaining = 100 - participants["skipped"]
+    participants["agree"] = 0.01 * participants["agree"] * remaining
+    participants["disagree"] = 0.01 * participants["disagree"] * remaining
+
+    statistics_df = pd.DataFrame().from_dict(statistics)
     if request.GET.get('action') == 'generate_csv':
-        response = generate_csv(conversation, statistics, votes, comments,
+        response = generate_csv(conversation, statistics_df, votes, comments,
                                 participants, clusters)
+    elif request.GET.get('action') == 'generate_json':
+        response = generate_json(conversation, statistics_df, votes, comments,
+                                 participants, clusters)
+    elif request.GET.get('action') == 'generate_msgpack':
+        response = generate_msgpack(conversation, statistics_df, votes, comments,
+                                    participants, clusters)
     else:
         response = {
             'page_title': _('Report'),
@@ -190,31 +205,41 @@ def participants_table(conversation, votes):
 
 def generate_csv(conversation, statistics, votes, comments, participants, clusters):
     response = HttpResponse(content_type='text/csv')
-    filename = 'filename="' + conversation.title + '.csv"'
-    response['Content-Disposition'] = 'attachment;' + filename
+    filename = 'filename={}.csv'.format(conversation.title)
+    response['Content-Disposition'] = 'attachment; {}'.format(filename)
 
-    writer = csv.writer(response)
-    writer.writerow({'votes'})
-    writer.writerows(map_to_table(statistics['votes']))
-    writer.writerow({''})
-    writer.writerow({'comments'})
-    writer.writerows(map_to_table(statistics['comments']))
-    writer.writerow({''})
-    writer.writerow({'AdvancedInfo'})
-    writer.writerow({'Comments'})
-    writer.writerow(list(comments))
-    writer.writerows(comments.values)
-    writer.writerow({''})
-    writer.writerow({'Participants'})
-    writer.writerow(list(participants))
-    writer.writerows(participants.values)
-    writer.writerow({''})
-    writer.writerow({'Clusters'})
-    writer.writerow({''})
-    for cluster in clusters:
-        writer.writerow({cluster.name + ' size: ' + str(cluster.size)})
-        writer.writerow({''})
-        table = pd.read_html(str(cluster.comment_table))[0]
-        writer.writerow(list(participants))
-        writer.writerows(table.values)
+    statistics.to_csv(path_or_buf=response, sep=";", index=False, mode='a')
+    comments.to_csv(path_or_buf=response, sep=";", index=False, mode='a')
+    participants.to_csv(path_or_buf=response, sep=";", index=False, mode='a')
+
+    # writer = csv.writer(response)
+    # for cluster in clusters:
+    #     writer.writerow({cluster.name + ' size: ' + str(cluster.size)})
+    #     writer.writerow({''})
+    #     table = pd.read_html(str(cluster.comment_table))[0]
+    #     writer.writerow(list(participants))
+    #     writer.writerows(table.values)
+
+    return response
+
+
+def generate_json(conversation, statistics, votes, comments, participants, clusters):
+    response = HttpResponse(content_type='text/json')
+    filename = 'filename={}.json'.format(conversation.title)
+    response['Content-Disposition'] = 'attachment; {}'.format(filename)
+
+    statistics.to_json(path_or_buf=response, force_ascii=False)
+    comments.to_json(path_or_buf=response, force_ascii=False)
+    participants.to_json(path_or_buf=response, force_ascii=False)
+    return response
+
+
+def generate_msgpack(conversation, statistics, votes, comments, participants, clusters):
+    response = HttpResponse(content_type='text/msgpack')
+    filename = 'filename={}.msgpack'.format(conversation.title)
+    response['Content-Disposition'] = 'attachment; {}'.format(filename)
+
+    statistics.to_msgpack(path_or_buf=response, encoding='utf-8')
+    comments.to_msgpack(path_or_buf=response, encoding='utf-8')
+    participants.to_msgpack(path_or_buf=response)
     return response
