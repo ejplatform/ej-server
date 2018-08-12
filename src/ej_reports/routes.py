@@ -51,15 +51,14 @@ def index(request, conversation):
     participants["agree"] = 0.01 * participants["agree"] * remaining
     participants["disagree"] = 0.01 * participants["disagree"] * remaining
 
-    statistics_df = pd.DataFrame().from_dict(statistics)
     if request.GET.get('action') == 'generate_csv':
-        response = generate_csv(conversation, statistics_df, votes, comments,
+        response = generate_csv(conversation, statistics, votes, comments,
                                 participants, clusters)
     elif request.GET.get('action') == 'generate_json':
-        response = generate_json(conversation, statistics_df, votes, comments,
+        response = generate_json(conversation, statistics, votes, comments,
                                  participants, clusters)
     elif request.GET.get('action') == 'generate_msgpack':
-        response = generate_msgpack(conversation, statistics_df, votes, comments,
+        response = generate_msgpack(conversation, statistics, votes, comments,
                                     participants, clusters)
     else:
         response = {
@@ -208,9 +207,18 @@ def generate_csv(conversation, statistics, votes, comments, participants, cluste
     filename = 'filename={}.csv'.format(conversation.title)
     response['Content-Disposition'] = 'attachment; {}'.format(filename)
 
-    statistics.to_csv(path_or_buf=response, sep=";", index=False, mode='a')
-    comments.to_csv(path_or_buf=response, sep=";", index=False, mode='a')
-    participants.to_csv(path_or_buf=response, sep=";", index=False, mode='a')
+    # Change participants property for ease of use
+    statistics["participants"] = {"total": statistics["participants"]}
+
+    for item in statistics:
+        title = [item]
+        title = pd.DataFrame(title)
+        title.to_csv(path_or_buf=response, header=False, index=False, mode='a')
+        statistics_df = pd.DataFrame.from_records([statistics[item]])
+        statistics_df.to_csv(path_or_buf=response, index=False, mode='a')
+
+    comments.to_csv(path_or_buf=response, index=False, mode='a')
+    participants.to_csv(path_or_buf=response, index=False, mode='a')
 
     # writer = csv.writer(response)
     # for cluster in clusters:
@@ -228,7 +236,12 @@ def generate_json(conversation, statistics, votes, comments, participants, clust
     filename = 'filename={}.json'.format(conversation.title)
     response['Content-Disposition'] = 'attachment; {}'.format(filename)
 
-    statistics.to_json(path_or_buf=response, force_ascii=False)
+    # Change participants property for ease of use
+    statistics["participants"] = {"total": statistics["participants"]}
+
+    for item in statistics:
+        statistics_df = pd.DataFrame.from_records([statistics[item]])
+        statistics_df.to_json(path_or_buf=response, force_ascii=False)
     comments.to_json(path_or_buf=response, force_ascii=False)
     participants.to_json(path_or_buf=response, force_ascii=False)
     return response
@@ -239,7 +252,9 @@ def generate_msgpack(conversation, statistics, votes, comments, participants, cl
     filename = 'filename={}.msgpack'.format(conversation.title)
     response['Content-Disposition'] = 'attachment; {}'.format(filename)
 
-    statistics.to_msgpack(path_or_buf=response, encoding='utf-8')
+    for item in statistics:
+        statistics_df = pd.DataFrame.from_records([statistics[item]])
+        statistics_df.to_msgpack(path_or_buf=response, encoding='utf-8')
     comments.to_msgpack(path_or_buf=response, encoding='utf-8')
     participants.to_msgpack(path_or_buf=response)
     return response
