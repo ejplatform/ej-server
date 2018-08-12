@@ -3,7 +3,7 @@
     &-title {
         text-align: center;
         width: 80vw;
-        margin: 0 auto;
+        margin: 30px auto 0 auto;
         h1 {
             font-size: $font-size-huge;
             color: $color-magenta;
@@ -33,12 +33,12 @@
         font-weight: bold;
         box-shadow: 0 2px 4px 0;
         padding: 14px 0;
-        color: $color-blue-dark;
+        color: $stereotype-new-text;
         line-height: 1.2;
         text-decoration: none;
 
         i {
-            color: $color-magenta;
+            color: $stereotype-new-icon;
         }
     }
 
@@ -73,7 +73,6 @@
         margin: 0 auto;
     }
     &-singleStereotype {
-        // background-color: red; 
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -82,6 +81,7 @@
         margin: 0 auto;
         h2 {
             font-weight: normal;
+            color: $stereotype-title;
         }
     }
     &-icons {
