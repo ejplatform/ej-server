@@ -79,6 +79,7 @@
         width: 80vw;
         margin: 0 auto;
     }
+
     &-singleStereotype {
         display: flex;
         flex-direction: row;
@@ -91,6 +92,7 @@
             color: $stereotype-title;
         }
     }
+
     &-icons {
         i {
             color: $color-blue-light;
@@ -108,8 +110,16 @@
         text-align: center;
         margin-top: 0;
     }
-   
+
     &-title {
+        select {
+            border: 1px solid $color-blue;
+            width: 100%;
+            border-radius: $stereotype-add-input-border-radius;
+            margin: 0;
+            max-width: 100%;
+            margin: 7px auto;
+        }
         .content {
             display: flex;
         }
@@ -125,7 +135,14 @@
             img {
                 max-width: 35px;
                 height: 25px;
-                width: 50px;
+                width: 22px;
+                padding: 5px;
+            }
+        }
+        .talk-stereotype{
+            img {
+                height: 16px;
+                width: 20px;
                 padding: 5px;
             }
         }
@@ -140,9 +157,11 @@
             font-family: Raleway;	
             font-size: $font-size-tiny;	
             font-weight: bold;
+            margin: 7px auto;   
             text-transform: uppercase;	
         }
     }
+
     &-append {
         font-size: $font-size-tiny;
         button {
@@ -160,6 +179,7 @@
             text-transform: uppercase;
         }
     }
+
     .form-row {
         select {
             border: 1px solid $color-blue;
@@ -167,6 +187,7 @@
             border-radius: $stereotype-add-input-border-radius;
         }
     }
+
     &-submit {
         input {
             border-radius: 25px;	

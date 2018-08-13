@@ -19,11 +19,16 @@
                     <img src="/static/img/icons/stereotype_name.png">
                     <input type="text" name="name" maxlength="64" required="" id="id_name" placeholder="Name">
                 </div>
+                <div class="content talk-stereotype">
+                    <img src="/static/img/icons/stereotype_conversation.png">
+                    <select name="" id="">
+                        <option value="asdasd" selected="">Stereotype talk</option>
+                    </select>
+                </div>
                 <div class="content comment-stereotype">
                     <img src="/static/img/icons/stereotype_icon_coment.svg">
                     <span class="helptext">A detailed description of your stereotype for future reference. You can specify a background history, or give hints on the exact profile the stereotype wants to capture.</span>
                 </div>
-
                 <!--textarea name="description" cols="40" rows="10" id="id_description" placeholder="Description"></textarea-->
             </div>
             {{ votes_form.management_form }}
