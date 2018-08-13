@@ -65,9 +65,10 @@ def clusterize(conversation):
 # Profile Cluster
 #
 
-# @urlpatterns.route( 'profile/clusters/')
-# def cluster_list(request):
-#     base_href = ''
+
+# @urlpatterns.route('profile/clusters/')
+# def cluster_list(conversation):
+#     base_href = f'{conversation.get_absolute_url()}cluster/'
 #     return {
 #         'content_title': _('Cluster'),
 #         'clusters': html_list(
@@ -108,13 +109,13 @@ def create_clusters(request):
     }
 
 
-# @urlpatterns.route('profile/clusters/', name='list')
-# def cluster(request):
-#     user_clusters = Cluster.objects.filter(owner=request.user)
-#     return {
-#         'clusters': user_clusters,
-#         'create': '/profile/clusters/add/',
-#     }
+@urlpatterns.route('profile/clusters/')
+def list_cluster(request):
+    user_clusters = Cluster.objects.filter(clusterization__conversation__author=request.user)
+    return {
+        'clusters': user_clusters,
+        'create_url': '/profile/clusters/add/',
+    }
 
 
 #

@@ -108,12 +108,32 @@
         text-align: center;
         margin-top: 0;
     }
+   
     &-title {
+        .content {
+            display: flex;
+        }
+        .input-name {
+            img {
+                height: 20px;
+                width: 20px;
+                padding: 5px;
+                margin: auto; 
+            }
+        }
+        .comment-stereotype {
+            img {
+                max-width: 35px;
+                height: 25px;
+                width: 50px;
+                padding: 5px;
+            }
+        }
         input, textarea {
             border: 1px solid $color-blue;
             border-radius: $stereotype-add-input-border-radius;
-            width: 100%;
             max-width: 100%;
+            width: 100%;
         }
         .helptext {
             color: #052B47;	
