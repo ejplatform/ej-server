@@ -10,23 +10,26 @@
                            title=_('New Stereotype'),
                            button_text=_('Create'),
                            javascript_enabled='') %}
-    <div class="Container">
+    <div class="StereotypeAdd">
         <h1 class="h1">{{ title }}</h1>
-        <form method="post" class="django-form-as-p">
+        <form method="post" class="stereotype">
             {{ csrf_input }}
-            <div class="row spacer">
-              {{ stereotype_form.as_p() }}
+            <div class="StereotypeAdd-title">
+                <input type="text" name="name" maxlength="64" required="" id="id_name" placeholder="Name">
+                <textarea name="description" cols="40" rows="10" id="id_description" placeholder="Description"></textarea>
+                <span class="helptext">A detailed description of your stereotype for future reference. You can specify a background history, or give hints on the exact profile the stereotype wants to capture.</span>
             </div>
             {{ votes_form.management_form }}
             {% for form in votes_form %}
-              <div class="row form-row spacer">
-                  {{ form.as_p() }}
-                    <div class="input-group-append">
-                      <button class="btn btn-success add-form-row"><i class="fas fa-plus"></i></button>
+                <div class="row form-row spacer">
+                    {{ form.as_p() }}
+                    <div class="StereotypeAdd-append">
+                        <button class="btn btn-success add-form-row"><i class="fas fa-plus"></i></button>
+                        <span class="">Add comment</span>
                     </div>
                 </div>
             {% endfor %}
-            <div class="row spacer">
+            <div class="StereotypeAdd-submit">
               <div class="col-4 offset-2">
                 <input type="submit" class="Button" value="{{ button_text }}" name="create">
               </div>

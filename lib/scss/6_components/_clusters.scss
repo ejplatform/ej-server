@@ -98,3 +98,56 @@
         }
     }
 }
+
+.StereotypeAdd { 
+    padding: 5vw;
+    
+    h1 {
+        font-size: $font-size-huge;
+        color: $color-magenta;
+        font-weight: 300;
+    }
+    &-title {
+            
+        input, textarea {
+            border: 1px solid $color-blue;
+            width: 100%;
+        }
+    
+        .helptext {
+            color: #052B47;	
+            font-family: Raleway;	
+            font-size: $font-size-tiny;	
+            font-weight: bold;
+            text-transform: uppercase;	
+        }
+    }
+    &-append {
+        font-size: $font-size-tiny;
+
+        button {
+            border-radius: 50%;
+            border-style: solid;
+            color: $color-blue;
+            border-color: $color-blue;
+            background-color: $color-white;
+        }
+        span {
+            color: $color-purple-dark;	
+            font-family: Raleway;		
+            font-weight: bold;	
+            line-height: 14px;
+            text-transform: uppercase;
+        }
+
+    }
+    &-submit {
+        input {
+            border-radius: 25px;	
+            background-color: #FF5783;
+            width: 100%;
+            height: 50px;
+            color: $color-white;
+        }
+    }
+}
