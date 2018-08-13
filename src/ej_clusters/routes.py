@@ -7,7 +7,7 @@ from ej_conversations.models import Conversation, Choice, Comment
 from hyperpython import a, input_, label, Block
 from hyperpython.components import html_list, html_table
 from .models import Stereotype, Cluster, StereotypeVote
-from ej_clusters.forms import StereotypeForm, StereotypeVoteFormSet
+from ej_clusters.forms import StereotypeForm, StereotypeVoteFormSet, ClusterForm
 
 
 app_name = 'ej_cluster'
@@ -60,6 +60,49 @@ def clusterize(conversation):
         'clusterization': clusterization,
         'conversation': conversation,
     }
+
+#
+# Profile Cluster
+# 
+
+# @urlpatterns.route( 'profile/clusters/')
+# def cluster_list(request):
+#     base_href = ''
+#     return {
+#         'content_title': _('Cluster'),
+#         'clusters': html_list(
+#             a(str(cluster), href=f'{base_href}{cluster.id}/')
+#              for cluster in Cluster.objects.all()
+#         ),
+#     }
+
+@urlpatterns.route('profile/clusters/add/')
+def create_clusters(request):
+    cluster_form = ClusterForm
+    if request.method == 'POST':
+        rendered_cluster_form = cluster_form(request.POST)
+
+        if rendered_cluster_form.is_valid():
+            cluster = rendered_cluster_form.save(commit=False)
+            cluster.save()
+            return redirect('/clusters/')
+    else:
+        rendered_cluster_form = cluster_form()
+     
+    return {
+        'cluster_form': rendered_cluster_form,
+    }
+
+
+
+# @urlpatterns.route('profile/clusters/', name='list')
+# def cluster(request):
+#     user_clusters = Cluster.objects.filter(owner=request.user)
+#     return {
+#         'clusters': user_clusters,
+#         'create': '/profile/clusters/add/',
+#     }
+    
 
 
 #
@@ -160,6 +203,7 @@ def stereotypes(request):
     return {
         'stereotypes': user_stereotypes,
         'create_url': '/profile/stereotypes/add/',
+        'cluster_create_url': '/profile/clusters/add'
     }
 
 

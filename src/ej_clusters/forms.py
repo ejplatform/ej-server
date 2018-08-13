@@ -1,5 +1,5 @@
 from django.forms import modelformset_factory, ModelForm
-from .models import Stereotype, StereotypeVote
+from .models import Stereotype, StereotypeVote, Cluster
 
 
 class StereotypeForm(ModelForm):
@@ -18,3 +18,8 @@ StereotypeVoteFormSet = modelformset_factory(
     StereotypeVote,
     form=StereotypeVoteForm,
 )
+
+class ClusterForm(ModelForm):
+    class Meta:
+        model = Cluster
+        fields = ['name' ,'stereotypes']
