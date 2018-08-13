@@ -2,7 +2,6 @@
 {% from 'components/generic/react.jinja2' import react_component %}
 
 {% macro conversation_detail(conversation, edit_perm, user, javascript_enabled='') %}
-
     <div class="ConversationDetail">
         {{ react_component('conversation', conversation_detail_static(conversation, edit_perm, user), javascript_enabled, '{"slug":"' + conversation.slug + '"}') }}
     </div>
@@ -10,35 +9,15 @@
 {% endmacro %}
 
 {% macro conversation_detail_static(conversation, edit_perm, user) %}
-    {% if edit_perm %}
-        <div class="Container" style="margin: 0 auto; padding: 0">
-            {{ action_button( _('Edit Conversation'), conversation.get_absolute_url() + 'edit/') }}
-        </div>
-    {% endif %}
-    <div class="ConversationDetail">
-        <div class="ConversationDetail-banner">
-            <div class="ConversationTags"><i class="fa fa-tags"></i>
-                {% if conversation.tags.all()[0] %}
-                    {{(conversation.tags.all()[0]|string).title()}}
-                {% else %}
-                    Tags
-                {% endif %}
-            </div>
-            <h1>{{ conversation.text }}</h1>
-            <ul class="ConversationDetail-statistics">
-                <li><i class="fa fa-comment"></i> {{ gettext('%(count)s comments', count=conversation.comments.count()) }}</li>
-                <li><i class="fa fa-sliders-h"></i> {{ gettext('%(count)s votes', count=conversation.votes.count()) }}</li>
-            </ul>
-        </div>
+    {{ conversation|role('balloon') }}
 
-        <div class="ConversationDetail-arrow"></div>
-
-        {# Current comment #}
-        <div class="ConversationDetail-header">
-            <h1>Comentários da Comunidade</h1>
-            <p>Interaja com as opiniões selecionando uma das opções de botão e aproveite para incluir sua própria opinião nesta conversa</p>
-        </div>
-
+    {# Current comment #}
+    <div class="ConversationDetail-header">
+        <h1>Comentários da Comunidade</h1>
+        <p>Interaja com as opiniões selecionando uma das opções de botão e aproveite para incluir sua própria opinião
+            nesta conversa</p>
+    </div>
+    {% if user.is_authenticated %}
         {% if comment %}
             {{ comment_detail(comment, user, conversation.comments.count() - conversation.user_votes(user).count(), conversation.comments.count()) }}
         {% else %}
@@ -47,20 +26,16 @@
                 <p>{{ _("There are no comments left to vote :)") }}</p>
             </div>
         {% endif %}
+    {% endif %}
 
-        {# Post a new comment #}
-        {% if can_comment %}
-            {{ comment_form(csrf_input) }}
-            <p>{{ _('You still have {n} available comments').format(n=remaining_comments) }}</p>
-        {% elif user.id == None %}
-            <p>{{ _('Please {login} to comment on this conversation').format(login=login_link|safe)|safe }}</p>
-        {% else %}
-            <p>{% trans %}You have used all comments available in this conversation.{% endtrans %}</p>
-        {% endif %}
-
-        {# Opinion #}
-        {% if conversation.opinion %}
-            {{ opinion(conversation) }}
-        {% endif %}
+    {# Post a new comment #}
+    {% if can_comment %}
+        {{ comment_form(csrf_input) }}
+        <p>{{ _('You still have {n} available comments').format(n=remaining_comments) }}</p>
+    {% elif user.id == None %}
+        <p>{{ _('Please {login} to comment on this conversation').format(login=login_link|safe)|safe }}</p>
+    {% else %}
+        <p>{% trans %}You have used all comments available in this conversation.{% endtrans %}</p>
+    {% endif %}
     </div>
 {% endmacro %}

@@ -42,7 +42,7 @@ class Command(BaseCommand):
     def handle(self, *files, admin=False, admin_password=None, staff=2, users=50, **options):
         users_created = 0
         fake = Factory.create('en-US')
-        blocked_usernames = {'admin', *User.objects.values_list('username', flat=True)}
+        blocked_usernames = {'admin', *User.objects.values_list('email', flat=True)}
         usernames = set()
         while len(usernames) < staff + users:
             username = fake.user_name()
@@ -51,10 +51,9 @@ class Command(BaseCommand):
 
         # Create admin user
         if admin:
-            if not User.objects.filter(username='admin'):
+            if not User.objects.filter(email='admin@admin.com'):
                 user = User.objects.create(
                     name='Maurice Moss',
-                    username='admin',
                     email='admin@admin.com',
                     is_active=True,
                     is_staff=True,
@@ -71,7 +70,6 @@ class Command(BaseCommand):
             username = usernames.pop()
             User.objects.create(
                 name=fake.name(),
-                username=username,
                 email=username + '@' + fake.domain_name(),
                 is_active=True,
                 is_staff=True,
@@ -84,7 +82,6 @@ class Command(BaseCommand):
             username = usernames.pop()
             User.objects.create(
                 name=fake.name(),
-                username=username,
                 email=username + '@' + fake.domain_name(),
                 is_active=True,
                 is_staff=False,

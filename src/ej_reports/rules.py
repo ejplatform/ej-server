@@ -1,3 +1,18 @@
-from rules import add_perm, is_staff
+from boogie import rules
 
-add_perm('ej_reports.can_view_report', is_staff)
+
+@rules.register_perm('ej_reports.can_view_report')
+def can_edit_conversation(user, conversation):
+    """
+    Can edit a given conversation.
+
+    * User can edit conversation
+    * OR user has explict permission to see reports (not implemented)
+    """
+    print(user, conversation)
+
+    if user.has_perm('ej_conversations.can_edit_conversation', conversation):
+        return True
+    else:
+        # Not implemented yet!
+        return False

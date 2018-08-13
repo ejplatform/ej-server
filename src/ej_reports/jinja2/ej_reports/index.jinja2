@@ -1,9 +1,28 @@
 {% extends 'base.jinja2' %}
-
 {% block content %}
     <div class="Container">
         <h1>{{ _('Basic info') }}</h1>
         <p>{{ _('Report for conversation: "{text}"').format(text=conversation.text) }}</p>
+        <div class="Csv-report">
+            <form method="get" class="Comment-voteArea" id="Csv-form">
+                <input type="hidden" name="action" value="generate_csv">
+                    <button type="submit" form="Csv-form">
+                      <span>{{ _('Export report to CSV') }}</span>
+                    </button>
+            </form>
+            <form method="get" class="Comment-voteArea" id="Json-form">
+                <input type="hidden" name="action" value="generate_json">
+                    <button type="submit" form="Json-form">
+                      <span>{{ _('Export report to JSON') }}</span>
+                    </button>
+            </form>
+            <form method="get" class="Comment-voteArea" id="MsgPack-form">
+                <input type="hidden" name="action" value="generate_msgpack">
+                    <button type="submit" form="MsgPack-form">
+                      <span>{{ _('Export report to MessagePack') }}</span>
+                    </button>
+            </form>
+        </div>
         <h2>{{ _('Votes ({total} participants)').format(total=statistics.participants) }}</h2>
         {{ vote_data }}
 

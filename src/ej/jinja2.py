@@ -5,13 +5,15 @@ from django.conf import settings
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.urls import reverse
 from django.utils import translation
-from jinja2 import Environment, contextfunction
+from jinja2 import Environment, StrictUndefined, contextfunction
 from markdown import markdown
 from markupsafe import Markup
 
+import hyperpython.jinja2
 from ej_configurations import social_icons, fragment
-from hyperpython.components import render
-from . import tags
+from hyperpython import render
+from . import components
+from .components import tags
 
 TAG_MAP = {k: getattr(tags, k) for k in tags.__all__}
 SALT_CHARS = string.ascii_letters + string.digits + '-_'
@@ -21,10 +23,13 @@ def environment(**options):
     options.pop('debug', None)
     options.setdefault('trim_blocks', True)
     options.setdefault('lstrip_blocks', True)
+    options['undefined'] = StrictUndefined
     env = Environment(**options)
+
     env.globals.update(
         static=staticfiles_storage.url,
         url=reverse,
+        settings=settings,
 
         # Security
         salt_attr=salt_attr,
@@ -33,18 +38,22 @@ def environment(**options):
 
         # Platform functions
         social_icons=social_icons,
-        footer_data=lambda: fragment('global.footer', raises=False),
+        fragment=fragment,
         service_worker=getattr(settings, 'SERVICE_WORKER', False),
         context=context,
 
         # Hyperpython tag functions
         render=non_strict_render,
+
+        # Available tags and components
+        tag=components,
         **TAG_MAP,
     )
     env.filters.update(
         markdown=lambda x: Markup(markdown(x)),
         pc=format_percent,
         salt=salt,
+        **hyperpython.jinja2.filters,
     )
     env.install_gettext_translations(translation, newstyle=True)
     return env
@@ -122,11 +131,11 @@ def context(ctx):
 
         # Globals
         'static', 'url', 'salt_attr', 'salt_tag', 'salt', 'social_icons',
-        'footer_data', 'service_worker', 'context', 'render', *TAG_MAP,
+        'service_worker', 'context', 'render', *TAG_MAP,
 
         # Variables injected by the base template
         'target', 'target_context',
-        'page_footer', 'sidebar', 'page_top_header', 'page_header',
+        'sidebar', 'page_top_header', 'page_header',
         'page_title', 'title', 'content_title',
     }
     ctx = {k: v for k, v in ctx.items() if k not in blacklist}

@@ -1,0 +1,18 @@
+{% extends 'base.jinja2' %}
+
+{% block content %}
+    <div class="BoardList">
+        <div class="BoardList-title">
+            <h1 class="h1">{{ _('Boards') }}</h1>
+            <p>{{ _('Create boards to group similar conversations!') }}</p>
+        </div>
+
+        {# Links #}
+        <div class="BoardList-linkList">
+            {% for board in boards %}
+                <p>{{ link(_(board.title), href=board.get_absolute_url()) }}</p>
+            {% endfor %}
+        </div>
+        {{ action_button(_('Create a new board!'), 'add/') }}
+    </div>
+{% endblock %}

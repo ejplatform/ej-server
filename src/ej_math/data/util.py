@@ -16,7 +16,7 @@ def missing_votes(data):
     return np.array(list(zip(i, j)))
 
 
-def cacVhed(func):
+def cached(func):
     """
     Cache result of method in the _cache attribute of instance.
     """

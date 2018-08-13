@@ -7,7 +7,7 @@ class MiddlewareConf(Base):
         middleware = [
             'corsheaders.middleware.CorsMiddleware',
             'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
-            'ej_users.middleware.UserFallbackMiddleware',
+            'ej_boards.middleware.BoardFallbackMiddleware',
             *middleware,
         ]
         if self.ENVIRONMENT == 'local':

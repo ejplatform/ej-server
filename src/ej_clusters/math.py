@@ -46,7 +46,7 @@ def get_raw_votes(conversation, comments=None):
 
     # Fetch all votes in a single query
     filter = {'comment__in': comments}
-    values = ['author__username', 'comment_id', 'choice']
+    values = ['author__email', 'comment_id', 'choice']
     items = Vote.objects.filter(**filter).values_list(*values)
     return pd.DataFrame(list(items), columns=['user', 'comment', 'choice'])
 
@@ -63,7 +63,7 @@ def get_votes_with_stereotypes(conversation, comments=None, fillna=None):
 
     # Fetch all votes in a single query
     filter = {'comment__in': comments}
-    values = ['author__username', 'comment_id', 'choice']
+    values = ['author__email', 'comment_id', 'choice']
     votes = StereotypeVote.objects.filter(**filter).values_list(*values)
     stereotype_votes = build_dataframe(votes, fillna=fillna)
     return user_votes, stereotype_votes

@@ -1,0 +1,159 @@
+.StereotypeList {
+    @extend .Container;
+    &-title {
+        text-align: center;
+        width: 80vw;
+        margin: 30px auto 0 auto;
+        h1 {
+            font-size: $font-size-huge;
+            color: $color-magenta;
+            font-weight: 300;
+        }
+        p {
+            font-size: $font-size-large;
+        }
+    }
+
+    &-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        height: $spacing-unit-small * 3;
+        background-color: $color-blue-nav;
+        a {
+            color: $color-blue-light;
+            &.up-current {
+                color: $selected-stereotype-cluster-menu-color;
+                font-weight: bold;
+                border-bottom: $selected-stereotype-cluster-menu-border;
+                padding: $selected-stereotype-cluster-menu-padding;
+
+            }
+        }
+    }
+
+    &-new {
+        text-align: center;
+        display: block;
+        text-transform: uppercase;
+        font-size: 14px;
+        font-weight: bold;
+        box-shadow: 0 2px 4px 0;
+        padding: 14px 0;
+        color: $stereotype-new-text;
+        line-height: 1.2;
+        text-decoration: none;
+
+        i {
+            color: $stereotype-new-icon;
+        }
+    }
+
+    &-search {
+        width: 80vw;
+        margin: 0 auto;
+        >p {
+            margin: $spacing-unit 0 0 0;
+        }
+        >input {
+            box-shadow: none;
+            border: none;
+            border-radius: 0;
+            border-bottom: 1px solid $color-blue-light;
+            margin: 0;
+            width: 100%;
+            &:focus {
+                outline: none;
+            }
+        }
+        >i {
+            position: relative;
+            left: 94%;
+            bottom: 23px;
+        }
+    }
+
+    &-cardList {
+        display: flex;
+        flex-direction: column;
+        width: 80vw;
+        margin: 0 auto;
+    }
+    &-singleStereotype {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        width: 80vw;
+        margin: 0 auto;
+        h2 {
+            font-weight: normal;
+            color: $stereotype-title;
+        }
+    }
+    &-icons {
+        i {
+            color: $color-blue-light;
+            font-size: $font-size-larger;
+        }
+    }
+}
+
+.StereotypeAdd { 
+    padding: 5vw;
+    h1 {
+        font-size: $font-size-huge;
+        color: $color-magenta;
+        font-weight: 300;
+        text-align: center;
+        margin-top: 0;
+    }
+    &-title {
+        input, textarea {
+            border: 1px solid $color-blue;
+            width: 100%;
+            max-width: 100%;
+        }
+        .helptext {
+            color: #052B47;	
+            font-family: Raleway;	
+            font-size: $font-size-tiny;	
+            font-weight: bold;
+            text-transform: uppercase;	
+        }
+    }
+    &-append {
+        font-size: $font-size-tiny;
+        button {
+            border-radius: 50%;
+            border-style: solid;
+            color: $color-blue;
+            border-color: $color-blue;
+            background-color: $color-white;
+        }
+        span {
+            color: $color-purple-dark;	
+            font-family: Raleway;		
+            font-weight: bold;	
+            line-height: 14px;
+            text-transform: uppercase;
+        }
+    }
+    .form-row {
+        select {
+            border: 1px solid $color-blue;
+            width: 100%;
+        }
+    }
+    &-submit {
+        input {
+            border-radius: 25px;	
+            background-color: #FF5783;
+            width: 100%;
+            height: 50px;
+            color: $color-white;
+            margin-bottom: 50px;
+            margin-top: 10px;
+        }
+    }
+}

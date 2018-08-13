@@ -7,6 +7,7 @@ from rest_framework.documentation import include_docs_urls
 from django.contrib.auth import views as auth_views
 
 from boogie.rest import rest_api
+from ej import services
 from ej.fixes import unregister_admin
 from ej_social_login.models import FacebookLogin
 
@@ -15,10 +16,10 @@ unregister_admin.unregister_apps()
 #
 # Optional urls
 #
-if settings.EJ_ENABLE_ROCKETCHAT:
-    rocket = [path('talks/', include('ej_rocketchat.routes', namespace='rocketchat'))]
+if settings.EJ_ROCKETCHAT_INTEGRATION:
+    rocket_urls = [path('talks/', include('ej_rocketchat.routes', namespace='rocketchat'))]
 else:
-    rocket = []
+    rocket_urls = []
 
 urlpatterns = [
     # Basic authentication and authorization
@@ -29,20 +30,20 @@ urlpatterns = [
     # Profile URLS
     path('profile/', include(('ej_profiles.routes', 'ej_profiles'), namespace='profiles')),
     path('profile/', include('ej_gamification.routes', namespace='gamification')),
+    path('profile/boards/', include('ej_boards.routes.board', namespace='boards')),
+    #path('profile/notifications/', include('ej_notifications.routes', namespace='notifications')),
 
     # Conversations and other EJ-specific routes
+    path('', include('ej_boards.routes.conversation', namespace='board_conversation')),
     path('conversations/', include('ej_conversations.routes', namespace='conversation')),
-    path('conversations/', include('ej_clusters.routes', namespace='cluster')),
+    path('', include('ej_clusters.routes', namespace='cluster')),
     path('conversations/', include('ej_reports.routes', namespace='report')),
-
-    # User conversations
-    path('', include('ej_conversations.routes.for_user', namespace='user-conversation')),
 
     # Configurations
     path('config/', include(('ej_configurations.routes', 'ej_configurations'), namespace='configurations')),
 
     # Rocket
-    *rocket,
+    *rocket_urls,
 
     # Admin
     path(settings.ADMIN_URL.rstrip('^'), admin.site.urls),
@@ -65,6 +66,9 @@ urlpatterns = [
     path('password/', include('django.contrib.auth.urls')),
     path('reset-password/', include('django.contrib.auth.urls'), name='reset-password'),
 
+    # Allauth
+    path('accounts/', include('allauth.urls')),
+
     # Static files for the dev server
     *static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),
     *static(settings.STATIC_URL, document_root=settings.STATIC_ROOT),
@@ -85,3 +89,5 @@ if settings.DEBUG:
         urlpatterns.append(
             path('__debug__/', include(debug_toolbar.urls))
         )
+
+services.start_services(settings)

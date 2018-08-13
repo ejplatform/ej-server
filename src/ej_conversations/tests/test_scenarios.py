@@ -4,18 +4,19 @@ Those scenarios are difficult to test using unit tests.
 We describe simple scenarios with lots of asserts in the middle. This documents
 user stories and can protect us from bad refactorings.
 """
-from contextlib import contextmanager
-
 import datetime
+from contextlib import contextmanager
+from types import SimpleNamespace
+
 import mock
 import pytest
 from django.utils import timezone
-from types import SimpleNamespace
 
 from ej_conversations import rules
+from ej_conversations.mommy_recipes import ConversationRecipes
 
 
-class TestCommentLimitsAreEnforced:
+class TestCommentLimitsAreEnforced(ConversationRecipes):
     """
     Application prevents user from posting too many comments in too little
     time.
@@ -42,7 +43,7 @@ class TestCommentLimitsAreEnforced:
         with self.time_control():
             # We create a basic conversation and a user.
             conversation = mk_conversation()
-            user = mk_user(username='test')
+            user = mk_user(email='test@domain.com')
 
             # User can post the first comment without problems.
             conversation.create_comment(user, 'cmt1')
@@ -60,7 +61,7 @@ class TestCommentLimitsAreEnforced:
                 conversation.create_comment(user, 'cmt3-bad-again')
 
 
-class TestStatistics:
+class TestStatistics(ConversationRecipes):
     """
     We create a small, but plausible scenario of comments in a conversation
     and check if statistics are correct.
@@ -71,9 +72,9 @@ class TestStatistics:
         user = mk_user()
 
         # Three groups of people with different preferences
-        g1 = [mk_user(username=f'user_a{i}') for i in range(3)]
-        g2 = [mk_user(username=f'user_b{i}') for i in range(3)]
-        g3 = [mk_user(username=f'user_c{i}') for i in range(2)]
+        g1 = [mk_user(email=f'user_a{i}@domain.com') for i in range(3)]
+        g2 = [mk_user(email=f'user_b{i}@domain.com') for i in range(3)]
+        g3 = [mk_user(email=f'user_c{i}@domain.com') for i in range(2)]
 
         # User makes some comments
         comments = [

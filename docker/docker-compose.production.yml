@@ -1,0 +1,61 @@
+version: '3.5'
+
+
+services:
+  nginx:
+    image: nginx:alpine
+    restart: always
+    build:
+      context: ../
+      dockerfile: ./docker/Dockerfile-nginx
+    volumes:
+      - media_files:/usr/share/nginx/html/media
+      - static_files:/usr/share/nginx/html/static
+      - nginx_conf:/etc/nginx/conf.d/:nocopy
+    ports:
+      - 80:80
+    links:
+      - web
+
+  web:
+    image: ejplatform/web:latest
+    restart: always
+    build:
+      context: ../
+      dockerfile: ./docker/Dockerfile
+    links:
+      - postgres
+      - redis
+    env_file:
+      - ./env/django.env
+      - ./env/postgres.env
+      - ./env/deploy.env
+    environment:
+      - DJANGO_ENVIRONMENT=production
+      - DJANGO_DEBUG
+      - DJANGO_ALLOWED_HOSTS=localhost
+    volumes:
+      - media_files:/app/local/media/
+      - static_files:/app/local/static/
+      - nginx_conf:/etc/nginx/conf.d/
+    working_dir: /app
+    command: db -m gunicorn
+
+  postgres:
+    image: postgres:alpine
+    restart: always
+    env_file:
+      - ./env/deploy.env
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:alpine
+    restart: always
+
+
+volumes:
+  db_data:
+  media_files:
+  static_files:
+  nginx_conf:

@@ -5,15 +5,21 @@ from django.contrib.auth import get_user_model
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _, ugettext as __
-from sidekick import delegate_to
+from rest_framework.authtoken.models import Token
+import datetime
+
 from boogie.fields import EnumField
 from boogie.rest import rest_api
+from sidekick import delegate_to
 from .choices import Race, Gender
+<<<<<<< HEAD
 from rest_framework.authtoken.models import Token
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from ej_channels.models import Channel
 from django.db.models import Q
+=======
+>>>>>>> ec239484393927d39435a47d086a59c22b17c1ce
 
 User = get_user_model()
 
@@ -24,6 +30,8 @@ class Profile(models.Model):
     """
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='raw_profile')
     race = EnumField(Race, _('Race'), default=Race.UNDECLARED)
+    ethnicity = models.CharField(_('Ethnicity'), blank=True, max_length=50)
+    education = models.CharField(_('Education'), blank=True, max_length=140)
     gender = EnumField(Gender, _('Gender identity'), default=Gender.UNDECLARED)
     gender_other = models.CharField(_('User provided gender'), max_length=50, blank=True)
     age = models.IntegerField(_('Age'), blank=True, default=0)
@@ -37,14 +45,22 @@ class Profile(models.Model):
     image = models.ImageField(_('Image'), blank=True, null=True, upload_to='profile_images')
 
     name = delegate_to('user')
-    username = delegate_to('user')
     email = delegate_to('user')
     is_active = delegate_to('user')
     is_staff = delegate_to('user')
     is_superuser = delegate_to('user')
 
+   #@property
+   #def age(self):
+   #    if not self.birth_date:
+   #        age = None
+   #    else:
+   #        delta = datetime.datetime.now().date() - self.birth_date
+   #        age = abs(int(delta.days // 365.25))
+   #    return age
+
     class Meta:
-        ordering = ['user__username']
+        ordering = ['user__email']
 
     def __str__(self):
         return __('{name}\'s profile').format(name=self.user.name)
@@ -76,7 +92,7 @@ class Profile(models.Model):
                 picture = account.get_avatar_url()
                 if picture:
                     return picture
-            return avatar_fallback()
+            return '/static/img/logo/avatar_default.svg'
 
     @property
     def has_image(self):
@@ -84,8 +100,13 @@ class Profile(models.Model):
 
     @property
     def is_filled(self):
+<<<<<<< HEAD
         fields = ('race', 'age', 'country', 'state', 'city', 'biography', 'phone',
                   'occupation', 'political_activity', 'has_image', 'gender_description')
+=======
+        fields = ('race', 'age', 'birth_date', 'education', 'ethnicity', 'country', 'state', 'city',
+                  'biography', 'occupation', 'political_activity', 'has_image', 'gender_description')
+>>>>>>> ec239484393927d39435a47d086a59c22b17c1ce
         return bool(all(getattr(self, field) for field in fields))
 
     def get_absolute_url(self):
@@ -97,13 +118,21 @@ class Profile(models.Model):
         registered profile fields.
         """
 
+<<<<<<< HEAD
         fields = ['city', 'country', 'occupation', 'age', 'phone', 'gender', 'race', 'political_activity', 'biography']
+=======
+        fields = ['city', 'country', 'occupation', 'education', 'ethnicity', 'gender', 'race',
+                  'political_activity', 'biography']
+>>>>>>> ec239484393927d39435a47d086a59c22b17c1ce
         field_map = {field.name: field for field in self._meta.fields}
         result = []
         for field in fields:
             description = field_map[field].verbose_name
             getter = getattr(self, f'get_{field}_display', lambda: getattr(self, field))
             result.append((description.capitalize(), getter()))
+
+        age = (_('Age'), self.age)
+        result.insert(3, age)
         if user_fields:
             result = [
                 (_('E-mail'), self.user.email),
@@ -166,13 +195,6 @@ def gravatar_fallback(id):
     """
     digest = hashlib.md5(id.encode('utf-8')).hexdigest()
     return "https://gravatar.com/avatar/{}?s=40&d=mm".format(digest)
-
-
-def avatar_fallback():
-    """
-    Return fallback image URL for profile
-    """
-    return "/static/img/logo/avatar_default.svg"
 
 
 def get_profile(user):

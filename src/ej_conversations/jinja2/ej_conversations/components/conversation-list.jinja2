@@ -1,5 +1,3 @@
-{% from 'ej_conversations/components/conversation-card.jinja2' import conversation_card %}
-{% from 'components/generic/elements.jinja2' import link %}
 {% from 'components/generic/react.jinja2' import react_component %}
 
 {#---------------------------------------------------------------------------#
@@ -12,10 +10,10 @@
                            subtitle='Participe das conversas e dê sua opinião com comentários e votos!',
                            javascript_enabled='') %}
 
-    {% if caller %}{% set caller_output = caller() %}{% endif %}
+    {% if caller is defined %}{% set caller_output = caller() %}{% endif %}
 
     <div class="ConversationList">
-        {{ react_component('conversation_list', conversation_list_static(conversations, categories, title, subtitle, caller_output), javascript_enabled) }}
+        {{ react_component('conversation_list', conversation_list_static(conversations, categories, title, subtitle, caller_output|default('')), javascript_enabled) }}
     </div>
 
 {% endmacro %}
@@ -28,11 +26,26 @@
             <p>{{ subtitle }}</p>
         </div>
 
-        {% if categories %}
+        {% if is_a_timeline is defined %}
+            <div class="ConversationList-urls">
+                <span class="public">
+                    <i class="fa fa-chevron-left"></i>
+                    {{ link(_('public conversations'), href='/conversations/') }}
+                </span>
+                {% if not is_my_timeline %}
+                <span class="my-conversations">
+                    {{ link(_('go to my conversations'), href='/profile/conversations/') }}
+                    <i class="fa fa-chevron-right"></i>
+                </span>
+                {% endif %}
+            </div>
+        {% endif %}
+
+        {% if categories is defined and categories %}
             <div class="ConversationList-categories">
                 <i class="fa fa-chevron-left"></i>
                 <ul>
-                    <li>{{ link(_('All'), href='/conversations/', class='color-accent') }}</li>
+                    <li>{{ link(_('All'), href='/conversations/', class_='color-accent') }}</li>
                     {% for category in categories %}
                         <li>{{ link(category, href=category.get_absolute_url()) }}</li>
                     {% endfor %}
@@ -44,7 +57,7 @@
         {# Cards #}
         <div class="ConversationList-cardList">
             {% for conversation in conversations %}
-                {{ conversation_card(conversation) }}
+                {{ conversation|role('card') }}
             {% endfor %}
         </div>
         {# {{ conversation_pagination() }} #}

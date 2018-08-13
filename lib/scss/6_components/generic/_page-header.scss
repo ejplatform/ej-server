@@ -59,6 +59,11 @@ $header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.2) !default;
         height: $header-top-nav-height;
         min-width: $spacing-unit-large + $header-icon-size;
         padding: 0 $spacing-unit;
+        background-color: $header-background-color;
+        a {
+            color: $header-font-color;
+        }
+        
     
         @include breakpoint(small) {
           padding-top: 30px;
@@ -94,7 +99,25 @@ $header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.2) !default;
             flex-flow: column;
             justify-content: center;
             width: 50%;
+            color: $navigation-bottom-font-color !important;
 
+            &:before {
+                font-family: 'Font Awesome\ 5 Free';
+                font-size: 32px;
+                font-weight: 900;
+            }
+            &.conversations-link:before {
+                content: $navigation-bottom-icon-conversations;
+            }
+        
+            &.panel-link:before {
+               content: $navigation-bottom-icon-panel;
+            }
+        
+            &.profile-link:before {
+                content: $navigation-bottom-icon-profile;
+            }
+        
             span {
               font-weight: bold;
             }
@@ -103,8 +126,8 @@ $header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.2) !default;
                 display: block;
             }
 
-            &:first-child + a {
-              display: none;
+            &.panel-link {
+              display: $navigation-bottom-panel-display;
             }
         }
     }
@@ -112,5 +135,31 @@ $header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.2) !default;
     &-lowerIcon {
         height: $header-icon-size;
         margin-bottom: $spacing-unit-tiny;
+    }
+
+    &-lowerNotLogged {
+        box-sizing: border-box;
+        display: flex;
+        justify-content: center;
+        position: fixed;
+        width: 100vw;
+        align-items: center;
+        bottom: 0;
+        box-shadow: $header-box-shadow-lower;
+        height: $header-bottom-nav-height;
+        text-transform: uppercase;
+        font-size: $font-size-tiny;
+        background-color: $color-purple-dark;
+
+        &:hover {
+            cursor: pointer;
+        }
+        
+        p {
+            color: $color-white;
+            font-weight: bold;
+            font-size: $font-size-large;
+            
+        }
     }
 }
