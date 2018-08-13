@@ -8,7 +8,8 @@ from boogie.rest import rest_api
 @rest_api(
     ['id', 'name', 'candidacy', 'urn', 'party', 'image',
      'has_clean_pass', 'committed_to_democracy',
-     'adhered_to_the_measures']
+     'adhered_to_the_measures', 'youtube_url', 'facebook_url',
+     'crowdfunding_url', 'twitter_url', 'instagram_url']
 )
 class Candidate(models.Model):
 
@@ -21,7 +22,7 @@ class Candidate(models.Model):
                                 'deputado federal', 'deputada federal',
                                 'deputado estadual', 'deputada estadual')
     PARTY_OPTIONS = Choices('pt', 'psdb')
-    POLITICAL_OPTIONS = Choices('sim', 'não')
+    POLITICAL_OPTIONS = Choices('sim', 'não', 'sem resposta')
 
     name = models.CharField(max_length=100,
                             help_text="The name of the candidate")
@@ -36,6 +37,17 @@ class Candidate(models.Model):
     adhered_to_the_measures  = StatusField(choices_name='POLITICAL_OPTIONS')
     site_url = models.CharField(max_length=100,
                             help_text="The site of the candidate", default="")
+    uf = models.CharField(max_length=2, help_text="The candidate uf")
+    crowdfunding_url = models.CharField(max_length=30,
+                                        help_text="The candidate crowdfunding")
+    facebook_url = models.CharField(max_length=30,
+                                        help_text="The candidate facebook page")
+    twitter_url = models.CharField(max_length=30,
+                                        help_text="The candidate facebook page")
+    instagram_url = models.CharField(max_length=30,
+                                        help_text="The candidate instagram page")
+    youtube_url = models.CharField(max_length=30,
+                                        help_text="The candidate instagram page")
 
 # boogie decorator to add a property on model serializer
 @rest_api.property(Candidate)
