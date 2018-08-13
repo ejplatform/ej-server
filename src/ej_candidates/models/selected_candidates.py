@@ -25,5 +25,10 @@ def send_message(sender, instance, created, **kwargs):
         user = instance.user
         title = instance.candidate.name
         url = instance.candidate.site_url
-        channel = Channel.objects.filter(owner=user, sort="selected")[0]
+        try:
+            channel = Channel.objects.filter(owner=user, sort="selected")[0]
+        except IndexError:
+            channel = Channel.objects.create(name="selected channel", sort="selected", owner=user)
+            channel.users.add(user)
+            channel.save()
         Message.objects.create(channel=channel, title=title, body=url)
