@@ -101,19 +101,17 @@
 
 .StereotypeAdd { 
     padding: 5vw;
-    
     h1 {
         font-size: $font-size-huge;
         color: $color-magenta;
         font-weight: 300;
     }
     &-title {
-            
         input, textarea {
             border: 1px solid $color-blue;
             width: 100%;
+            max-width: 100%;
         }
-    
         .helptext {
             color: #052B47;	
             font-family: Raleway;	
@@ -124,7 +122,6 @@
     }
     &-append {
         font-size: $font-size-tiny;
-
         button {
             border-radius: 50%;
             border-style: solid;
@@ -139,7 +136,12 @@
             line-height: 14px;
             text-transform: uppercase;
         }
-
+    }
+    .form-row {
+        select {
+            border: 1px solid $color-blue;
+            width: 100%;
+        }
     }
     &-submit {
         input {
