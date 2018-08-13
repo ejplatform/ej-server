@@ -14,13 +14,10 @@ from rest_framework.authtoken.models import Token
 from boogie.router import Router
 from ej_conversations.models import FavoriteConversation
 from ej_users import forms
-<<<<<<< HEAD
 from ej_users.models import User
 from ej_channels.models import Channel
 from ej_notifications.models import Notification
-=======
 from .socialbuttons import social_buttons
->>>>>>> ec239484393927d39435a47d086a59c22b17c1ce
 
 User = get_user_model()
 

@@ -1,10 +1,6 @@
 import logging
 
-<<<<<<< HEAD
-from boogie.configurations import DjangoConf, locales, env
-=======
 from boogie.configurations import DjangoConf, env
->>>>>>> ec239484393927d39435a47d086a59c22b17c1ce
 from .apps import InstalledAppsConf
 from .celery import CeleryConf
 from .constance import ConstanceConf

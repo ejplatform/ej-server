@@ -12,14 +12,11 @@ from boogie.fields import EnumField
 from boogie.rest import rest_api
 from sidekick import delegate_to
 from .choices import Race, Gender
-<<<<<<< HEAD
 from rest_framework.authtoken.models import Token
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from ej_channels.models import Channel
 from django.db.models import Q
-=======
->>>>>>> ec239484393927d39435a47d086a59c22b17c1ce
 
 User = get_user_model()
 
@@ -100,13 +97,8 @@ class Profile(models.Model):
 
     @property
     def is_filled(self):
-<<<<<<< HEAD
-        fields = ('race', 'age', 'country', 'state', 'city', 'biography', 'phone',
-                  'occupation', 'political_activity', 'has_image', 'gender_description')
-=======
-        fields = ('race', 'age', 'birth_date', 'education', 'ethnicity', 'country', 'state', 'city',
+        fields = ('race', 'age', 'education', 'ethnicity', 'country', 'state', 'city',
                   'biography', 'occupation', 'political_activity', 'has_image', 'gender_description')
->>>>>>> ec239484393927d39435a47d086a59c22b17c1ce
         return bool(all(getattr(self, field) for field in fields))
 
     def get_absolute_url(self):
@@ -118,12 +110,8 @@ class Profile(models.Model):
         registered profile fields.
         """
 
-<<<<<<< HEAD
-        fields = ['city', 'country', 'occupation', 'age', 'phone', 'gender', 'race', 'political_activity', 'biography']
-=======
         fields = ['city', 'country', 'occupation', 'education', 'ethnicity', 'gender', 'race',
                   'political_activity', 'biography']
->>>>>>> ec239484393927d39435a47d086a59c22b17c1ce
         field_map = {field.name: field for field in self._meta.fields}
         result = []
         for field in fields:

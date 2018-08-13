@@ -14,12 +14,7 @@ from .manager import UserManager
 
 fake = Factory.create('pt-BR')
 
-<<<<<<< HEAD
-@rest_api(['id', 'display_name', 'email', 'is_staff', 'is_superuser', 'username'])
-=======
-
-@rest_api(['id', 'display_name'])
->>>>>>> ec239484393927d39435a47d086a59c22b17c1ce
+@rest_api(['id', 'display_name', 'email'])
 class User(AbstractUser):
     """
     Default user model for EJ platform.
