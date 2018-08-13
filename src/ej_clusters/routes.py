@@ -63,7 +63,7 @@ def clusterize(conversation):
 
 #
 # Profile Cluster
-# 
+#
 
 # @urlpatterns.route( 'profile/clusters/')
 # def cluster_list(request):
@@ -75,6 +75,7 @@ def clusterize(conversation):
 #              for cluster in Cluster.objects.all()
 #         ),
 #     }
+
 
 @urlpatterns.route('profile/clusters/add/')
 def create_clusters(request):
@@ -88,11 +89,10 @@ def create_clusters(request):
             return redirect('/clusters/')
     else:
         rendered_cluster_form = cluster_form()
-     
+
     return {
         'cluster_form': rendered_cluster_form,
     }
-
 
 
 # @urlpatterns.route('profile/clusters/', name='list')
@@ -102,7 +102,6 @@ def create_clusters(request):
 #         'clusters': user_clusters,
 #         'create': '/profile/clusters/add/',
 #     }
-    
 
 
 #
