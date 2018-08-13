@@ -6,8 +6,8 @@ from boogie.rules import proxy_seq
 from ej_conversations.models import Conversation, Choice, Comment
 from hyperpython import a, input_, label, Block
 from hyperpython.components import html_list, html_table
-from .models import Stereotype, Cluster, StereotypeVote
-from ej_clusters.forms import StereotypeForm, StereotypeVoteFormSet, ClusterForm
+from .models import Stereotype, Cluster, StereotypeVote, Clusterization
+from ej_clusters.forms import StereotypeForm, StereotypeVoteFormSet, ClusterForm, ClusterizationForm
 
 
 app_name = 'ej_cluster'
@@ -80,18 +80,31 @@ def clusterize(conversation):
 @urlpatterns.route('profile/clusters/add/')
 def create_clusters(request):
     cluster_form = ClusterForm
+    clusterization_form = ClusterizationForm
+
     if request.method == 'POST':
         rendered_cluster_form = cluster_form(request.POST)
+        rendered_clusterization_form = clusterization_form(request.POST)
+        print(request.POST['conversation'])
+        print()
 
         if rendered_cluster_form.is_valid():
+            print('oi')
             cluster = rendered_cluster_form.save(commit=False)
+            clusterization = Clusterization.objects.get(conversation=request.POST['conversation'])
+            cluster.clusterization = clusterization
             cluster.save()
-            return redirect('/clusters/')
+            print(clusterization)
+            return redirect('/profile/')
+        else:
+            print('erro')
     else:
         rendered_cluster_form = cluster_form()
+        rendered_clusterization_form = clusterization_form()
 
     return {
         'cluster_form': rendered_cluster_form,
+        'clusterization_form': rendered_clusterization_form,
     }
 
 

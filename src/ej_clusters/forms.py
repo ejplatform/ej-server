@@ -1,5 +1,5 @@
 from django.forms import modelformset_factory, ModelForm
-from .models import Stereotype, StereotypeVote, Cluster
+from .models import Stereotype, StereotypeVote, Cluster, Clusterization
 
 
 class StereotypeForm(ModelForm):
@@ -24,3 +24,9 @@ class ClusterForm(ModelForm):
     class Meta:
         model = Cluster
         fields = ['name', 'stereotypes']
+
+
+class ClusterizationForm(ModelForm):
+    class Meta:
+        model = Clusterization
+        fields = ['conversation']
