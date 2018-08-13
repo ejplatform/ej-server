@@ -7,7 +7,7 @@ from boogie.rest import rest_api
 
 @rest_api(
     ['id', 'name', 'candidacy', 'urn', 'party', 'image',
-     'has_clean_pass', 'committed_to_democracy',
+     'has_clean_pass', 'committed_to_democracy', 'uf',
      'adhered_to_the_measures', 'youtube_url', 'facebook_url',
      'crowdfunding_url', 'twitter_url', 'instagram_url']
 )
@@ -31,7 +31,7 @@ class Candidate(models.Model):
     urn = models.IntegerField(help_text="The candidate urn number")
     party = StatusField(choices_name='PARTY_OPTIONS',
                         help_text="The candidate party initials")
-    image = models.FileField(upload_to="candidates", default="default.jpg")
+    image = models.FileField(upload_to="candidates", default="card_avatar-default.png")
     has_clean_pass = StatusField(choices_name='POLITICAL_OPTIONS')
     committed_to_democracy = StatusField(choices_name='POLITICAL_OPTIONS')
     adhered_to_the_measures  = StatusField(choices_name='POLITICAL_OPTIONS')
@@ -56,5 +56,8 @@ def score(object):
             and object.committed_to_democracy == "sim" \
             and object.adhered_to_the_measures == "sim"):
         return 'good'
-    else:
+    if (object.has_clean_pass == "não" \
+            and object.committed_to_democracy == "não" \
+            and object.adhered_to_the_measures == "não"):
         return 'bad'
+    return 'partial'

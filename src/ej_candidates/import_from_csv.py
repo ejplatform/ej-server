@@ -45,7 +45,7 @@ class CandidatesImporter(object):
                                   instagram_url=instagram_url,
                                   youtube_url=youtube_url)
             candidate.save()
-            print("imported candidate: %s", name)
+            print("imported candidate: ", name)
         except Exception as e:
             print(e)
             print("could not import candidate")
