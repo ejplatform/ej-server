@@ -13,9 +13,13 @@
         <h1 class="h1">{{ title }}</h1>
         <form method="post" class="cluster">
             {{ csrf_input }}
-            {{ cluster_form.as_p() }}
-            {{ clusterization_form.as_p() }}
-            
+            {{ cluster_form.name.label }}
+            {{ cluster_form.name }}
+            {{ clusterization_form.conversation.label }}</p>
+            {{clusterization_form.conversation}}
+            {{cluster_form.stereotypes.label}}
+            {{cluster_form.stereotypes}}
+          
 
             <div class="StereotypeAdd-submit">
               <div class="col-4 offset-2">

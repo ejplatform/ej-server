@@ -1,0 +1,6 @@
+{% extends 'base.jinja2' %}
+{% from 'ej_clusters/components/cluster-list.jinja2' import cluster_list with context %}
+
+{% block content %}
+    {{ cluster_list(clusters, javascript_enabled=javascript_enabled) }}
+{% endblock %}
