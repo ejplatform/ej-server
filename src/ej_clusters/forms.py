@@ -19,7 +19,8 @@ StereotypeVoteFormSet = modelformset_factory(
     form=StereotypeVoteForm,
 )
 
+
 class ClusterForm(ModelForm):
     class Meta:
         model = Cluster
-        fields = ['name' ,'stereotypes']
+        fields = ['name', 'stereotypes']
