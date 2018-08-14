@@ -1241,3 +1241,40 @@ $conversation-card-button-border-radius: 30px !default;
     font-weight: lighter;
   }
 }
+
+.ConversationEdit-attributes {
+  padding: $unit;
+
+  i {
+    color: $conversation-tag-color;
+    margin-right: $unit;
+  }
+
+  span {
+    color: $color-purple-dark;
+    opacity: 0.5;
+    font-size: 12px;
+  }
+
+  p {
+    text-align: left;
+  }
+}
+
+.ConversationEdit-promote {
+  padding: $unit;
+  
+  input {
+    width: auto;
+    box-shadow: none;
+    border: 1px solid $color-purple-dark;
+    background: white;
+  }
+
+  label {
+    color: $color-purple-dark;
+    font-size: 14px;
+    font-weight: bold;
+    display: inline;
+  }
+}

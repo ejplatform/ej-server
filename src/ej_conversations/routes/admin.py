@@ -46,6 +46,7 @@ def create(request):
                    perms=['ej_conversations.can_edit_conversation'])
 def edit(request, conversation):
     comments = []
+    board = None
     if request.method == 'POST':
         form = forms.ConversationForm(
             data=request.POST,
@@ -55,6 +56,9 @@ def edit(request, conversation):
             form.instance.save()
             return redirect(conversation.get_absolute_url() + 'moderate/')
     else:
+        boards = BoardSubscription.objects.filter(conversation=conversation)
+        if boards.count() > 0:
+            board = boards[0].board
         form = forms.ConversationForm(instance=conversation)
         for comment in models.Comment.objects.filter(conversation=conversation, status='pending'):
             if comment.is_pending:
@@ -63,6 +67,7 @@ def edit(request, conversation):
     return {
         'conversation': conversation,
         'comments': comments,
+        'board': board,
         'form': form,
     }
 

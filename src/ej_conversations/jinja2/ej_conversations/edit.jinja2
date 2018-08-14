@@ -14,7 +14,7 @@
               <input type="reset" value="{{ _('Cancel') }}" name="cancel" onClick="history.back(-1)">
             </span>
             <span>
-              <i class="fa fa-check"></i>
+              <i class="fa fa-check create-conversation-icon"></i>
               <input type="submit" value="{{ _('Save') }}" name="create">
             </span>
           </div>
@@ -34,11 +34,31 @@
                   </div>
                   
                   <p><textarea onfocus="this.style.height = (this.scrollHeight) + 'px'" onkeyup="this.style.height = (this.scrollHeight) + 'px'" class="Conversation-edit-field" name="text" required id="id_text">{{ conversation.text }}</textarea></p>
+
+                  <div class="Conversation-edit">
+                    <b>{{_('Edit Conversation') }}</b>
+                  </div>
               </div>
 
               <div class="ConversationDetail-arrow"></div>
           </div>
+
+          <div class="ConversationEdit-attributes">
+            <p><i class="fa fa-link"></i> <span>{{ conversation.slug }}</span></p>
+            {% if board %}
+                <p><i class="fa fa-list-ul"></i> <span>{{ board.title }}</span></p>
+            {% endif %}
+          </div>
+          <p class="ConversationEdit-promote">
+            {% if conversation.is_promoted %}
+              <input type="checkbox" name="is_promoted" id="is_promoted" checked value="1" />
+            {% else %}
+              <input type="checkbox" name="is_promoted" id="is_promoted" value="1" />
+            {% endif %}
+            <label for="is_promoted">{{ _('Promote conversation on public list') }}</label>
+          </p>
         </form>
+
         <div class="Moderate-comments">
             <h1>{{ _('Comments in this conversation') }}</h1>
             {{ comment_list(comments, csrf_input) }}
