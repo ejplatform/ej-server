@@ -1,6 +1,7 @@
 from django.shortcuts import redirect, Http404
 from django.utils.translation import ugettext_lazy as _
 from boogie.router import Router
+from constance import config
 from ..models import Board
 from ..forms import BoardForm
 
@@ -19,12 +20,16 @@ board_url = '<model:board>'
 
 @urlpatterns.route('add/')
 def create(request):
+    user = request.user
+    if Board.objects.filter(owner=user).count() >= config.MAX_BOARD_NUMBER:
+        raise Http404
+
     form_class = BoardForm
     if request.method == 'POST':
         form = form_class(request.POST)
         if form.is_valid():
             board = form.save(commit=False)
-            board.owner = request.user
+            board.owner = user
             board.save()
 
             return redirect(board.get_absolute_url())

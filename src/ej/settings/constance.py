@@ -28,6 +28,11 @@ class ConstanceConf(Conf):
                 self.env('ROCKETCHAT_USER_ID', default=''),
                 'RocketChat admin user ID', str
             ),
+            # Board
+            'MAX_BOARD_NUMBER': (
+                1,
+                'Maximum number of boards of a common user', int
+            ),
         }
 
     CONSTANCE_CONFIG_FIELDSETS = {
