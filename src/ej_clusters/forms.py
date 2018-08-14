@@ -1,9 +1,9 @@
 from django.forms import (
-    modelformset_factory, 
-    ModelForm, 
-    CharField, 
-    TextInput, 
-    MultipleChoiceField, 
+    modelformset_factory,
+    ModelForm,
+    CharField,
+    TextInput,
+    MultipleChoiceField,
     CheckboxSelectMultiple
 )
 from .models import Stereotype, StereotypeVote, Cluster, Clusterization
@@ -36,7 +36,7 @@ class ClusterForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(ClusterForm, self).__init__(*args, **kwargs)
         self.fields['stereotypes'].choices = self.get_choices()
-   
+
     def get_choices(self):
         return Stereotype.objects.all().values_list('id', 'name')
 
@@ -51,7 +51,7 @@ class ClusterForm(ModelForm):
         fields = ['name', 'stereotypes']
 
 
-class ClusterizationForm(ModelForm): 
+class ClusterizationForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(ClusterizationForm, self).__init__(*args, **kwargs)
         self.fields['conversation'].empty_label = 'Conversation Cluster'
