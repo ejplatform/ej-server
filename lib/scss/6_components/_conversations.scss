@@ -1142,7 +1142,7 @@ $conversation-card-button-border-radius: 30px !default;
     font-size: 26px !important;
     box-shadow: none;
     border: 1px solid $color-blue-light-low;
-    border-radius: 12px;
+    border-radius: $conversation-edit-radius;
     resize: none;
     overflow: hidden;
     min-height: 50px;
@@ -1203,7 +1203,7 @@ $conversation-card-button-border-radius: 30px !default;
       background: $conversation-edit-action-save-background;
 
       &.create-conversation-icon {
-        color: $color-pink;
+        color: $conversation-edit-save-color;
         border-color: $color-pink;
       }
     }
@@ -1222,7 +1222,7 @@ $conversation-card-button-border-radius: 30px !default;
 
   input, select {
     border: 1px solid $color-blue-light-low;
-    border-radius: 12px;
+    border-radius: $conversation-edit-radius;
     background-color: rgba(255, 255, 255, 0.5);
     box-shadow: none;
     outline: 0;
