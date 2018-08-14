@@ -23,10 +23,6 @@ class Migration(migrations.Migration):
             name='name',
             field=models.CharField(max_length=64, verbose_name='Name'),
         ),
-        migrations.RemoveField(
-            model_name='stereotype',
-            name='owner',
-        ),
         migrations.AlterUniqueTogether(
             name='stereotype',
             unique_together={('name', 'conversation')},
