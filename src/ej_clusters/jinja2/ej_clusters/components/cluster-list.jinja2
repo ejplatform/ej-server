@@ -36,15 +36,17 @@
 
 
         {# Cards #}
-
         <div class="StereotypeList-cardList">
-            {% for cluster in clusters %}
-            <div class="StereotypeList-singleStereotype">
-              <h2>{{ cluster.name }} </h2>
+        {% for cluster in clusters %}
     
-                {# <i class="far fa-times-circle"></i> #}
-              </div>
-            </div>
-            {% endfor %}
-        </div>
+            <h2>{{ cluster.name }} </h2>
+            <h4>{{ cluster.conversation }} </h4>
+            <ul>
+            {%for stereotype in cluster.stereotypes.all()%}
+                <li>{{ stereotype.name }}</li>
+            {%endfor%}
+            </ul>
+        {% endfor %}
+    </div>
+    
 {% endmacro %}
