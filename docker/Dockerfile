@@ -9,8 +9,7 @@ COPY ./etc/scripts/compilemessages.py /usr/bin/compilemessages
 COPY ./locale/ /app/locale/
 WORKDIR /app
 RUN chmod +x /usr/bin/compilemessages \
- && compilemessages \
- && du /app/locale
+ && compilemessages 
 
 # Build Sass
 ARG THEME=default
@@ -18,12 +17,10 @@ COPY ./lib/scss /app/lib/scss
 COPY ./lib/themes /app/lib/themes
 COPY ./tasks.py /app/tasks.py
 RUN mkdir -p /app/lib/build/css/ \
- && inv -e sass --theme=${THEME} \
- && du -h lib
+ && inv -e sass --theme=${THEME}
 
 # Build javascript assets (TODO)
-RUN inv -e js \
- && du -h lib
+RUN inv -e js
 
 
 #
