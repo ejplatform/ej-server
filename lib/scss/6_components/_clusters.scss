@@ -79,6 +79,7 @@
         width: 80vw;
         margin: 0 auto;
     }
+
     &-singleStereotype {
         display: flex;
         flex-direction: row;
@@ -91,10 +92,111 @@
             color: $stereotype-title;
         }
     }
+
     &-icons {
         i {
             color: $color-blue-light;
             font-size: $font-size-larger;
+        }
+    }
+}
+
+.StereotypeAdd { 
+    padding: 5vw;
+    h1 {
+        font-size: $font-size-huge;
+        color: $stereotype-add-title-color; 
+        font-weight: 300;
+        text-align: center;
+        margin-top: 0;
+    }
+
+    &-title {
+        select {
+            border: 1px solid $color-blue;
+            width: 100%;
+            border-radius: $stereotype-add-input-border-radius;
+            margin: 0;
+            max-width: 100%;
+            margin: 7px auto;
+        }
+        .content {
+            display: flex;
+        }
+        .input-name {
+            img {
+                height: 20px;
+                width: 20px;
+                padding: 5px;
+                margin: auto; 
+            }
+        }
+        .comment-stereotype {
+            img {
+                max-width: 35px;
+                height: 25px;
+                width: 22px;
+                padding: 5px;
+            }
+        }
+        .talk-stereotype{
+            img {
+                height: 16px;
+                width: 20px;
+                padding: 5px;
+            }
+        }
+        input, textarea {
+            border: 1px solid $color-blue;
+            border-radius: $stereotype-add-input-border-radius;
+            max-width: 100%;
+            width: 100%;
+        }
+        .helptext {
+            color: #052B47;	
+            font-family: Raleway;	
+            font-size: $font-size-tiny;	
+            font-weight: bold;
+            margin: 7px auto;   
+            text-transform: uppercase;	
+        }
+    }
+
+    &-append {
+        font-size: $font-size-tiny;
+        button {
+            border-radius: 50%;
+            border-style: solid;
+            color: $color-blue;
+            border-color: $color-blue;
+            background-color: $color-white;
+        }
+        span {
+            color: $stereotype-add-comment-color;	
+            font-family: Raleway;		
+            font-weight: bold;	
+            line-height: 14px;
+            text-transform: uppercase;
+        }
+    }
+
+    .form-row {
+        select {
+            border: 1px solid $color-blue;
+            width: 100%;
+            border-radius: $stereotype-add-input-border-radius;
+        }
+    }
+
+    &-submit {
+        input {
+            border-radius: 25px;	
+            background-color: $stereotype-add-submit-color;
+            width: 100%;
+            height: 50px;
+            color: $color-white;
+            margin-bottom: 50px;
+            margin-top: 10px;
         }
     }
 }

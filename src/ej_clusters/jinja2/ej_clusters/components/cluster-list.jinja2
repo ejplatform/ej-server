@@ -1,19 +1,17 @@
-{#---------------------------------------------------------------------------#
-    STEREOTYPE AND CLUSTER LIST (NOW ONLY STEREOTYPE IMPLEMENTED)
- #---------------------------------------------------------------------------#}
 
-{% macro stereotype_list(stereotypes,
+{% macro cluster_list(clusters,
                            title='Gerenciamento de clusters e esteriótipos',
                            subtitle='Crie, delete e edite aqui seus clusters e esteriótipos',
                            javascript_enabled='') %}
 
     <div class="StereotypeList">
-        {{ stereotype_list_static(stereotypes, title, subtitle) }}
+        {{ cluster_list_static(clusters, title, subtitle) }}
     </div>
 
 {% endmacro %}
 
-{% macro stereotype_list_static(stereotypes, title, subtitle) %}
+
+{% macro cluster_list_static(clusters, title, subtitle) %}
         <div class="StereotypeList-title">
             <h1 class="h1">{{ title }}</h1>
             <p>{{ subtitle }}</p>
@@ -25,13 +23,13 @@
         </div>
 
         {% if create_url %}
-            <a class="StereotypeList-new" href="{{ create_url }}"><i class="fa fa-plus-circle"></i> {{ _('New stereotype') }}</a>
+            <a class="StereotypeList-new" href="{{ create_url }}"><i class="fa fa-plus-circle"></i> {{ _('New cluster') }}</a>
         {% endif %}
         
 
         {# Search - not implemented #}
         <div class="StereotypeList-search">
-            <p>{{_('Search Stereotype:')}}</p>
+            <p>{{_('Search Cluster:')}}</p>
             <input type="text"></input>
             <i class="fas fa-search"></i>
         </div>
@@ -40,13 +38,10 @@
         {# Cards #}
 
         <div class="StereotypeList-cardList">
-            {% for stereotype in stereotypes %}
+            {% for cluster in clusters %}
             <div class="StereotypeList-singleStereotype">
-              <h2>{{ stereotype.name }} </h2>
-              <div class="StereotypeList-icons">
-                <a href="/profile/stereotypes/edit/{{stereotype.id}}">
-                    <i class="far fa-edit"></i>
-                </a>
+              <h2>{{ cluster.name }} </h2>
+    
                 {# <i class="far fa-times-circle"></i> #}
               </div>
             </div>
