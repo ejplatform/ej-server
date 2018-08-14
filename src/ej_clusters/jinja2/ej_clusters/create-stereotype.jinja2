@@ -33,6 +33,7 @@
                 </div>
                 <!--textarea name="description" cols="40" rows="10" id="id_description" placeholder="Description"></textarea-->
             </div>
+            {{ votes_form.management_form }}
             {% for form in votes_form %}
                 <div class="row form-row spacer">
                     {{ form.as_p() }}

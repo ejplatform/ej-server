@@ -6,7 +6,7 @@ from boogie.rules import proxy_seq
 from ej_conversations.models import Conversation, Choice, Comment
 from hyperpython import a, input_, label, Block
 from hyperpython.components import html_list, html_table
-from .models import Stereotype, Cluster, StereotypeVote
+from .models import Stereotype, Cluster, StereotypeVote, Clusterization
 from ej_clusters.forms import StereotypeForm, StereotypeVoteFormSet
 
 app_name = 'ej_cluster'
@@ -83,7 +83,7 @@ def stereotype_list(request, conversation):
             'content_title': _('Stereotypes'),
             'conversation_title': conversation.title,
             'stereotypes': conversation.stereotypes.all(),
-            'create_url': conversation.get_absolute_url() + 'stereotypes/add/',
+            'stereotype_url': conversation.get_absolute_url() + 'stereotypes/',
         }
     else:
         return redirect('/conversations/')
@@ -131,13 +131,18 @@ def create_stereotype(request, conversation):
             for vote in votes:
                 vote.author = stereotype
                 vote.save()
-            return redirect('/profile/stereotypes/')
+            clusterization = Clusterization.objects.get(conversation=conversation)
+            cluster = Cluster(clusterization=clusterization)
+            cluster.save()
+            cluster.stereotypes.add(stereotype)
+            return redirect(conversation.get_absolute_url() + 'stereotypes/')
     else:
         rendered_stereotype_form = stereotype_form()
         rendered_votes_form = votes_form(queryset=StereotypeVote.objects.none())
-        filtered_comments = Comment.objects.filter(conversation=conversation)
-        for form in rendered_votes_form:
-            form.fields['comment'].queryset = filtered_comments
+
+    filtered_comments = Comment.objects.filter(conversation=conversation)
+    for form in rendered_votes_form:
+        form.fields['comment'].queryset = filtered_comments
     return {
         'stereotype_form': rendered_stereotype_form,
         'votes_form': rendered_votes_form,
@@ -145,9 +150,9 @@ def create_stereotype(request, conversation):
     }
 
 
-@urlpatterns.route('profile/stereotypes/edit/<model:stereotype>/')
-def edit_stereotype(request, stereotype):
-    if request.user == stereotype.conversation.author:
+@urlpatterns.route(conversation_url + 'stereotypes/<model:stereotype>/edit/')
+def edit_stereotype(request, conversation, stereotype):
+    if request.user == conversation.author:
         stereotype_form = StereotypeForm
         votes_form = StereotypeVoteFormSet
         rendered_stereotype_form = stereotype_form(instance=stereotype)
@@ -157,9 +162,10 @@ def edit_stereotype(request, stereotype):
         return {
             'stereotype_form': rendered_stereotype_form,
             'votes_form': rendered_votes_form,
+            'conversation_title': conversation.title,
         }
     else:
-        return redirect('/profile/stereotypes/')
+        return redirect(conversation.get_absolute_url() + 'stereotypes/')
 
 
 #

@@ -7,7 +7,6 @@ from django.forms import (
     CheckboxSelectMultiple
 )
 from .models import Stereotype, StereotypeVote, Cluster, Clusterization
-from ej_conversations.models import Comment
 
 
 class StereotypeForm(ModelForm):
@@ -20,11 +19,6 @@ class StereotypeVoteForm(ModelForm):
     class Meta:
         model = StereotypeVote
         fields = ['comment', 'choice']
-
-    def __init__(self, *args, **kwargs):
-        conversation = kwargs.pop('conversation', None)
-        super().__init__(*args, **kwargs)
-        self.fields['comment'].queryset = Comment.objects.filter(conversation=conversation)
 
 
 StereotypeVoteFormSet = modelformset_factory(
