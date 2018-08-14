@@ -13,7 +13,7 @@ from ej_conversations.models import Comment
 class StereotypeForm(ModelForm):
     class Meta:
         model = Stereotype
-        fields = ['name', 'conversation', 'description']
+        fields = ['name', 'description']
 
 
 class StereotypeVoteForm(ModelForm):
@@ -22,8 +22,9 @@ class StereotypeVoteForm(ModelForm):
         fields = ['comment', 'choice']
 
     def __init__(self, *args, **kwargs):
+        conversation = kwargs.pop('conversation', None)
         super().__init__(*args, **kwargs)
-        self.fields['comment'].queryset = Comment.objects.none()
+        self.fields['comment'].queryset = Comment.objects.filter(conversation=conversation)
 
 
 StereotypeVoteFormSet = modelformset_factory(

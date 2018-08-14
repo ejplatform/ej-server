@@ -76,17 +76,17 @@ def list_cluster(request):
 #
 # Stereotypes
 #
-@urlpatterns.route(conversation_url + 'stereotypes/')
-def stereotype_list(conversation):
-    base_href = f'{conversation.get_absolute_url()}stereotypes/'
-    return {
-        'content_title': _('Stereotypes'),
-        'conversation': conversation,
-        'stereotypes': html_list(
-            a(str(stereotype), href=f'{base_href}{stereotype.id}/')
-            for stereotype in conversation.stereotypes.all()
-        ),
-    }
+@urlpatterns.route(conversation_url + 'stereotypes/', name='list')
+def stereotype_list(request, conversation):
+    if conversation.author == request.user:
+        return {
+            'content_title': _('Stereotypes'),
+            'conversation_title': conversation.title,
+            'stereotypes': conversation.stereotypes.all(),
+            'create_url': conversation.get_absolute_url() + 'stereotypes/add/',
+        }
+    else:
+        return redirect('/conversations/')
 
 
 @urlpatterns.route(conversation_url + 'stereotypes/<model:stereotype>/')
@@ -116,8 +116,8 @@ def stereotype_vote(request, conversation, stereotype):
 #
 # Profile stereotypes
 #
-@urlpatterns.route('profile/stereotypes/add/')
-def create_stereotype(request):
+@urlpatterns.route(conversation_url + 'stereotypes/add/')
+def create_stereotype(request, conversation):
     stereotype_form = StereotypeForm
     votes_form = StereotypeVoteFormSet
     if request.method == 'POST':
@@ -135,9 +135,13 @@ def create_stereotype(request):
     else:
         rendered_stereotype_form = stereotype_form()
         rendered_votes_form = votes_form(queryset=StereotypeVote.objects.none())
+        filtered_comments = Comment.objects.filter(conversation=conversation)
+        for form in rendered_votes_form:
+            form.fields['comment'].queryset = filtered_comments
     return {
         'stereotype_form': rendered_stereotype_form,
         'votes_form': rendered_votes_form,
+        'conversation_title': conversation.title,
     }
 
 
@@ -156,23 +160,6 @@ def edit_stereotype(request, stereotype):
         }
     else:
         return redirect('/profile/stereotypes/')
-
-
-@urlpatterns.route('profile/stereotypes/', name='list')
-def stereotypes(request):
-    user_stereotypes = Stereotype.objects.filter(conversation__author=request.user)
-    return {
-        'stereotypes': user_stereotypes,
-        'create_url': '/profile/stereotypes/add/',
-        'cluster_create_url': '/profile/clusters/add'
-    }
-
-
-@urlpatterns.route('ajax/load-comments')
-def load_comments(request):
-    conversation = request.GET.get('conversation')
-    comments = Comment.objects.filter(conversation=conversation).order_by('content')
-    return {'comments': comments}
 
 
 #
