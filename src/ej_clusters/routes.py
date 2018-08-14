@@ -63,8 +63,6 @@ def clusterize(conversation):
 #
 # Profile Cluster
 #
-
-
 @urlpatterns.route('profile/clusters/')
 def list_cluster(request):
     user_clusters = Cluster.objects.filter(clusterization__conversation__author=request.user)
