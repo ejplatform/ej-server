@@ -7,22 +7,20 @@ from .. import forms, models
 
 
 @urlpatterns.route('add/', perms=['ej_conversations.can_add_conversation'])
-def create(request, owner=None):
-    # Cannot create pages for other users
-    if owner and owner != request.user:
-        raise Http404
-
+def create(request):
+    form_class = forms.ConversationForm
     if request.method == 'POST':
-        form = forms.ConversationForm(request.POST)
+        form = form_class(request.POST)
         if form.is_valid():
             conversation = form.save(commit=False)
             conversation.author = request.user
             conversation.save()
+
             for tag in form.cleaned_data['tags']:
                 conversation.tags.add(tag)
             return redirect(conversation.get_absolute_url())
     else:
-        form = forms.ConversationForm()
+        form = form_class()
 
     return {
         'content_title': _('Create conversation'),
@@ -32,7 +30,8 @@ def create(request, owner=None):
 
 @urlpatterns.route(conversation_url + 'edit/',
                    perms=['ej_conversations.can_edit_conversation'])
-def edit(request, conversation, owner=None):
+def edit(request, conversation):
+    comments = []
     if request.method == 'POST':
         form = forms.ConversationForm(
             data=request.POST,
@@ -40,12 +39,16 @@ def edit(request, conversation, owner=None):
         )
         if form.is_valid():
             form.instance.save()
-            return redirect(conversation.get_absolute_url())
+            return redirect(conversation.get_absolute_url() + 'moderate/')
     else:
         form = forms.ConversationForm(instance=conversation)
+        for comment in models.Comment.objects.filter(conversation=conversation, status='pending'):
+            if comment.is_pending:
+                comments.append(comment)
 
     return {
-        'content_title': _('Edit conversation: {conversation}').format(conversation=conversation),
+        'conversation': conversation,
+        'comments': comments,
         'form': form,
     }
 
@@ -59,6 +62,7 @@ def moderate(request, conversation):
     if request.method == 'POST':
         comment = models.Comment.objects.get(id=request.POST['comment'])
         comment.status = comment.STATUS.approved if request.POST['vote'] == 'approve' else comment.STATUS.rejected
+        comment.rejection_reason = request.POST['rejection_reason']
         comment.save()
 
     for comment in models.Comment.objects.filter(conversation=conversation, status='pending'):

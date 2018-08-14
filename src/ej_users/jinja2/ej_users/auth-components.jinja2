@@ -1,3 +1,4 @@
+
 {% macro login(form, csrf_input, next=None) %}
     <div class="Login">
         <h1 class="Login-title">Contribua para discussões mais democráticas!</h1>
@@ -5,9 +6,16 @@
             <img src="/static/img/login/ej-cat.svg">
         </div>
 
+        {% if social_buttons %}
+            {{ login_extra }}
+            <ul class="Login-socialLogin">
+                {% for button in social_buttons %}
+                    <li>{{ button }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
         <form method="post">
             {{ csrf_input }}
-
             <div><input type="text" name="email" required placeholder="E-mail ou nome de usuário"></div>
             {{ form.email.errors }}
 
@@ -17,7 +25,7 @@
             <div><input type="submit" class="Button" value="{{ _('Login') }}" name="login"></div>
             {{ form.non_field_errors() }}
 
-            {{ login_options('/register/' + ('?next=' + next if next else ''), _('Register now!'), 'Ainda não faz parte do EJ?') }}
+            {{ login_options('/register/' + ('?next=' + next if next else ''), _('Register now!'), settings.EJ_REGISTER_TEXT) }}
         </form>
     </div>
 {% endmacro %}
@@ -55,7 +63,7 @@
     </div>
 
     <div class="Login-newUser">
-        {% set msg = _('Register') if is_login else _('Login') %}
+        {% set msg = _('Register') if is_login|default(False) else _('Login') %}
         <h1>{{ title }}</h1>
         <p><a class="Button" href="{{ button_href }}" primary>{{ button_msg }}</a></p>
     </div>

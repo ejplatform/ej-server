@@ -18,9 +18,11 @@ class PathsConf(Base):
     PAGES_DIR = LOCAL_DIR / 'pages'
     LOG_DIR = LOCAL_DIR / 'logs'
     LOG_FILE_PATH = LOG_DIR / 'logfile.log'
+    ROOT_TEMPLATE_DIR = PROJECT_DIR / 'templates'
 
     # Frontend paths
     LIB_DIR = REPO_DIR / 'lib'
+    THEMES_DIR = LIB_DIR / 'themes'
 
     # Static files
     STATICFILES_DIRS = [REPO_DIR / 'lib/assets']
@@ -37,16 +39,14 @@ class PathsConf(Base):
 
         return super().finalize(settings)
 
-    def get_staticfiles_dirs(self):
-        paths = [self.REPO_DIR / 'lib/assets']
-        if 'THEME' in os.environ and os.environ['THEME'] != 'default':
-            theme = os.environ['THEME']
-            if '/' in theme:
-                paths.insert(0, theme)
-            else:
-                theme_path = self.REPO_DIR / 'lib/themes/' / theme / 'assets'
-                paths.insert(0, theme_path)
-        return paths
+    def get_staticfiles_dirs(self, repo_dir):
+        return [repo_dir / 'lib/build', repo_dir / 'lib/assets']
+
+    def get_django_templates_dirs(self):
+        return [self.ROOT_TEMPLATE_DIR / 'django']
+
+    def get_jinja_templates_dirs(self):
+        return [self.ROOT_TEMPLATE_DIR / 'jinja2']
 
 
 def mkdir_recursive(path):

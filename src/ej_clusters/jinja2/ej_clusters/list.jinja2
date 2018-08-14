@@ -1,0 +1,6 @@
+{% extends 'base.jinja2' %}
+{% from 'ej_clusters/components/stereotype-list.jinja2' import stereotype_list with context %}
+
+{% block content %}
+    {{ stereotype_list(stereotypes, javascript_enabled=javascript_enabled) }}
+{% endblock %}

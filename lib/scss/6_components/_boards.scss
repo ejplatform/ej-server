@@ -1,0 +1,21 @@
+$ul-margin: 40px;
+$link-margin: 15px;
+
+.BoardList {
+    text-align: center;
+    &-title {
+        h1 {
+            font-size: $font-size-h2;
+            color: $color-magenta;
+        }
+    }
+
+    &-linkList {
+        margin: $ul-margin;
+    }
+
+    &-linkList li {
+        list-style-type: none;
+        margin: $link-margin;
+    }
+}

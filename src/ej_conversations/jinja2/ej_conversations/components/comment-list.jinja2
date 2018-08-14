@@ -1,11 +1,11 @@
-{% from 'ej_conversations/components/comment-card.jinja2' import comment_card %}
+{% from 'ej_conversations/components/comment-card.jinja2' import comment_card with context %}
 
-{% macro comment_list(comments, csrf_input) %}
+{% macro comment_list(comments, csrf_input = None) %}
     {% if comments | length >= 1 %}
         {% for comment in comments %}
-            {{comment_card(comment, csrf_input)}}
+            {{ comment_card(comment, csrf_input) }}
         {% endfor %}
     {% else %}
-        <p>Não há comentários para moderar</p>
+        <p>{{ _('No comments left') }}</p>
     {% endif %}
 {% endmacro %}

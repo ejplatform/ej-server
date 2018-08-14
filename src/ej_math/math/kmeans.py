@@ -118,17 +118,17 @@ def init_kmeanspp(data, k):
     Uses Kmeans++ strategy for initializing centroids: just pick k random
     different points.
     """
-    N = len(data)
+    n = len(data)
 
     # Pick indexes
-    if k == N:
-        selected = range(N)
-    elif k > N:
-        raise ValueError(f'we need at least {N} samples in the dataset')
+    if k == n:
+        selected = range(n)
+    elif k > n:
+        raise ValueError(f'we need at least {n} samples in the dataset')
     else:
         selected = set()
-        while len(selected) < N:
-            selected.add(random.randrange(0, N))
+        while len(selected) < n:
+            selected.add(random.randrange(0, n))
 
     return np.array([data[i] for i in selected])
 

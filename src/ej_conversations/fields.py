@@ -17,16 +17,16 @@ AutoSlugField = autoslug.AutoSlugField
 NumpyArrayField = picklefield.PickledObjectField
 
 
-def UserRef(**kwargs):
+def UserRef(**kwargs):  # noqa: N802
     kwargs.setdefault('on_delete', models.CASCADE)
     return models.ForeignKey(get_user_model(), **kwargs)
 
 
-def ConversationRef(**kwargs):
+def ConversationRef(**kwargs):  # noqa: N802
     kwargs.setdefault('on_delete', models.CASCADE)
     return models.ForeignKey('ej_conversations.Conversation', **kwargs)
 
 
-def CommentRef(**kwargs):
+def CommentRef(**kwargs):  # noqa: N802
     kwargs.setdefault('on_delete', models.CASCADE)
     return models.ForeignKey('ej_conversations.Comment', **kwargs)

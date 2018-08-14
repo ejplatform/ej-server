@@ -1,28 +1,5 @@
-from django.conf import settings
-from django.urls import resolve, Resolver404
-
 from boogie import rules
 from sidekick import import_later
-
-
-USERNAMES_BLACKLIST = {
-    # Common 'bad' usernames
-    'me', '', 'user',
-
-    # Additional usernames from settings
-    *getattr(settings, 'FORBIDDEN_USERNAMES', ()),
-}
-
-
-@rules.register_rule('auth.valid_username')
-def is_valid_username(username):
-    if username in USERNAMES_BLACKLIST:
-        return False
-    try:
-        resolve(f'/{username}/')
-        return False
-    except Resolver404:
-        return True
 
 
 @rules.register_value('auth.profile')

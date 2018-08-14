@@ -1,0 +1,129 @@
+/*
+ ===========================================================================
+ Semantic Variables
+ ===========================================================================
+*/
+//  $home-how-it-works-background: blue !default  !default;
+
+  $button-border-radius-default:  56px  !default;
+
+ // Profile
+  $profile-font-color-primary: #30BFD3  !default;
+  $profile-font-color-secondary: #042049  !default;
+  $profile-button-background-color: #FF3E72  !default;
+  $profile-background-color: #C4F2F4  !default;
+
+ // Login
+  $login-icon-border: 10px solid #74b5b8  !default;
+  $login-icon-scale: scale(1)  !default;
+  $login-icon-padding: 0px 0px 0px 0px  !default;
+  $login-fields-border: 1px solid #333  !default;
+  $login-fields-border-radius: 17px  !default;
+  $login-button-login-size: inherit  !default;
+  $login-button-login-background: #30c0d3  !default;
+  $login-button-register-size: 10%  !default;
+
+ // Social
+  $social-buttons-display: none  !default;
+  $social-buttons-border: 1px solid #30c0d3  !default;
+  $social-buttons-size: 21px  !default;
+  $social-buttons-color: #111  !default;
+  $social-buttons-background-color: #fff  !default;
+
+ // Header
+  $header-logo-size: 40px  !default;
+  $header-background-color: white  !default;
+  $header-font-color: #042049  !default;
+
+  // Home: Banner
+  $home-banner-title-font-family: "Patua One", sans-serif  !default;
+  $home-banner-title-font-color: #042049  !default;
+  $home-banner-button-background: #FF3D72  !default;
+
+ // Home: How It Works
+  $home-how-it-works-title-font-color: #042049  !default;
+  $home-how-it-works-content-font-color: #042049  !default;
+  $home-how-it-works-background: #C4F2F4  !default;
+  $home-how-it-works-card-icon-background: #C4F2F4  !default;
+  $home-how-it-works-card-icon-person:  "\f1ae"  !default;
+  $home-how-it-works-card-icon-conversation: "\f086"  !default;
+  $home-how-it-works-card-title-font-color: #042049  !default;
+  $home-how-it-works-card-content-font-color: #1d365b  !default;
+
+ // Home: StartNow
+  $home-start-now-display: block  !default;
+
+ // Navigation bottom
+  $navigation-bottom-font-color: #30BEC0  !default;
+  $navigation-bottom-panel-display: none  !default;
+  $navigation-bottom-icon-conversations: ""  !default;
+  $navigation-bottom-icon-panel:  ""  !default;
+  $navigation-bottom-icon-profile: ""  !default;
+
+ // Card Conversation
+  $card-conversation-navigation-font-color: #30c0d3  !default;
+  $card-conversation-top-background: #C4F2F4  !default;
+  $card-conversation-top-font-color: #30c0d3  !default;
+  $card-conversation-middle-background: #30c0d3  !default;
+  $card-conversation-bottom-background: url(/static/img/icons/bg.png)  !default;
+  $card-conversation-button-background: #042049  !default;
+  $card-conversation-border-radius: 50%  !default;
+
+ // Conversation
+  $conversation-top-background: #C4F2F4  !default;
+  $conversation-background: #C4F2F4  !default;
+  $conversation-bottom-border-radius: 0 0 56px 56px !default;
+  $conversation-font-color: #042049  !default;
+  $conversation-tag-color: #30c0d3  !default;
+  $conversation-statistics-color: #30c0d3  !default;
+  $conversation-arrow-border: 28px solid #C4F2F4  !default;
+
+ // Conversation: edit
+  $conversation-edit-action-cancel-border: 2px solid #052B47  !default;
+  $conversation-edit-action-cancel-background: #fff  !default;
+  $conversation-edit-action-cancel-font-color: #052B47  !default;
+  $conversation-edit-action-save-border: #052B47  !default;
+  $conversation-edit-action-save-background: #fff  !default;
+  $conversation-edit-action-save-font-color: #052B47  !default;
+
+ // Conversation: info
+  $conversation-info-title: #FF3D72  !default;
+  $conversation-info-content: #042049  !default;
+
+ // Conversation: vote
+  $conversation-vote-font-size: 13px  !default;
+  $conversation-vote-circle-size: 21px  !default;
+  $conversation-vote-circle-spacing: 7px  !default;
+  $conversation-vote-agree-color: #22b35c  !default;
+  $conversation-vote-skip-color: #30c0d3  !default;
+  $conversation-vote-disagree-color: #f13c20  !default;
+
+ // Conversation: comment
+  $conversation-comment-background-color: #30c0d3  !default;
+  $conversation-comment-title-color: white  !default;
+  $conversation-comment-border-radius: 56px  !default;
+
+ // Conversation: comment form
+  $conversation-comment-form-background-color: #C4F2F4  !default;
+  $conversation-comment-form-title-color: #30c0d3  !default;
+  $conversation-comment-form-text-color: #042049  !default;
+  $conversation-comment-button-border-radius: 30px  !default;
+  $conversation-comment-button-background: #30c0d3  !default;
+
+// Clusters and Stereotypes
+$selected-stereotype-cluster-menu-color: #30BFD3 !default;
+$selected-stereotype-cluster-menu-border: 4px solid #30bfd3 !default;
+$selected-stereotype-cluster-menu-padding: 10px 0 6px 0px !default;
+
+// Stereotypes
+  $stereotype-title: #042049 !default;
+  $stereotype-new-text: $color-blue-dark !default;
+  $stereotype-new-icon: $color-magenta !default;
+
+  $stereotype-add-title-color: $color-magenta !default;
+  $stereotype-add-submit-color: $color-magenta !default;
+  $stereotype-add-input-border-radius: 17px !default;
+  $stereotype-add-comment-color: $color-purple-dark !default;
+
+
+

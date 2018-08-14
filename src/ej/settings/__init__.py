@@ -1,26 +1,27 @@
 import logging
-import sys
 
-from boogie.configurations import DjangoConf, locales, env
+from boogie.configurations import DjangoConf, env
 from .apps import InstalledAppsConf
 from .celery import CeleryConf
 from .constance import ConstanceConf
 from .middleware import MiddlewareConf
 from .options import EjOptions
 from .paths import PathsConf
+from .security import SecurityConf
+from .themes import ThemesConf
 from .. import fixes
-from .. import services
 
 log = logging.getLogger('ej')
 
 
-class Conf(locales.brazil(),
+class Conf(ThemesConf,
            ConstanceConf,
            MiddlewareConf,
            CeleryConf,
+           SecurityConf,
            PathsConf,
-           DjangoConf,
            InstalledAppsConf,
+           DjangoConf,
            EjOptions):
     """
     Configuration class for the EJ platform.
@@ -29,20 +30,30 @@ class Conf(locales.brazil(),
     the global namespace.
     """
 
-    @property
-    def USING_SQLITE(self):
+    def get_using_sqlite(self):
         return 'sqlite3' in self.DATABASE_DEFAULT['ENGINE']
 
-    @property
-    def USING_POSTGRES(self):
+    def get_using_postgres(self):
         return 'postgresql' in self.DATABASE_DEFAULT['ENGINE']
 
-    @property
-    def USING_DOCKER(self):
-        return False
+    USING_DOCKER = env(False, name='USING_DOCKER')
 
+    #
+    # Accounts
+    #
     AUTH_USER_MODEL = 'ej_users.User'
-    # ALLOWED_HOSTS = ['localhost', ]
+    ACCOUNT_AUTHENTICATION_METHOD = 'email'
+    ACCOUNT_EMAIL_REQUIRED = True
+    ACCOUNT_UNIQUE_EMAIL = True
+    ACCOUNT_USERNAME_REQUIRED = False
+    ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+    LOGIN_REDIRECT_URL = '/'
+    SOCIALACCOUNT_PROVIDERS = {
+        'facebook': {
+            'SCOPE': ['email'],
+            'METHOD': 'js_sdk'  # instead of 'oauth2'
+        }
+    }
 
     # MANAGER CONFIGURATION
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#admins
@@ -50,12 +61,6 @@ class Conf(locales.brazil(),
         ('Bruno Martin, Luan Guimarães, Ricardo Poppi, Henrique Parra', 'bruno@hacklab.com.br'),
         ('Laury Bueno', 'laury@hacklab.com.br'),
     ]
-
-    def get_django_templates_dirs(self):
-        return [self.SRC_DIR / 'ej/templates/django']
-
-    def get_jinja_templates_dirs(self):
-        return [self.SRC_DIR / 'ej/templates/jinja2']
 
     #
     # Third party modules
@@ -101,62 +106,62 @@ class Conf(locales.brazil(),
     #     'REGISTER_SERIALIZER': 'ej_users.serializers.RegistrationSerializer'
     # }
 
-      
+    # TODO: Fix this later in boogie configuration stack
+    # Required for making django debug toolbar work
+    if ENVIRONMENT == 'local':
+        INTERNAL_IPS = [*globals().get('INTERNAL_IPS', ()), '127.0.0.1']
+
+        # Django CORS
+        CORS_ORIGIN_ALLOW_ALL = True
+        CORS_ALLOW_CREDENTIALS = True
+        CORS_ORIGIN_REGEX_WHITELIST = (r'^(http://)?localhost:\d{4,5}$',)
+
+        CSRF_TRUSTED_ORIGINS = [
+            'localhost:8000',
+            'localhost:3000',
+            'localhost:8081',
+        ]
+
+        X_FRAME_OPTIONS = 'ALLOW-FROM http://localhost:3000'
+
+        ACCOUNT_EMAIL_VERIFICATION = 'optional'
+
+        EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend'
+
+        ANYMAIL = {
+            "MAILGUN_API_KEY": ""
+        }
+        DEFAULT_FROM_EMAIL = "noreply@unidoscontraacorrupcao.org.br"
+
+    if ENVIRONMENT == 'production':
+        # Django CORS
+        CORS_ORIGIN_ALLOW_ALL = False
+        CORS_ALLOW_CREDENTIALS = True
+        CORS_ORIGIN_REGEX_WHITELIST = (r'^(https?://)?[\w.]*ejplatform\.org$',)
+
+        CSRF_TRUSTED_ORIGINS = [
+            'ejplatform.org',
+            'talks.ejplatform.org'
+            'dev.ejplatform.org',
+            'talks.dev.ejplatform.org',
+        ]
+
+        X_FRAME_OPTIONS = 'DENY'
+
+        EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+        ACCOUNT_EMAIL_VERIFICATION = 'optional'
+        EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend'
+        MAILGUN_API_KEY = env('DJANGO_MAILGUN_API_KEY', default='')
+        MAILGUN_SENDER_DOMAIN = ''
+        EMAIL_SUBJECT_PREFIX = env('DJANGO_EMAIL_SUBJECT_PREFIX', default='[EJ]')
+        SERVER_EMAIL = env('DJANGO_SERVER_EMAIL', default=DEFAULT_FROM_EMAIL)
+
+
 
 Conf.save_settings(globals())
 
-# TODO: Fix this later in boogie configuration stack
-# Required for making django debug toolbar work
-if ENVIRONMENT == 'local':
-    INTERNAL_IPS = [*globals().get('INTERNAL_IPS', ()), '127.0.0.1']
-
-    # Django CORS
-    CORS_ORIGIN_ALLOW_ALL = True
-    CORS_ALLOW_CREDENTIALS = True
-    CORS_ORIGIN_REGEX_WHITELIST = (r'^(http://)?localhost:\d{4,5}$',)
-
-    CSRF_TRUSTED_ORIGINS = [
-        'localhost:8000',
-        'localhost:3000',
-        'localhost:8081',
-    ]
-
-    X_FRAME_OPTIONS = 'ALLOW-FROM http://localhost:3000'
-
-    ACCOUNT_EMAIL_VERIFICATION = 'optional'
-    
-    EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend'
-
-    ANYMAIL = {
-        "MAILGUN_API_KEY": ""
-    }
-    DEFAULT_FROM_EMAIL = "noreply@unidoscontraacorrupcao.org.br"
-
-if ENVIRONMENT == 'production':
-    # Django CORS
-    CORS_ORIGIN_ALLOW_ALL = False
-    CORS_ALLOW_CREDENTIALS = True
-    CORS_ORIGIN_REGEX_WHITELIST = (r'^(https?://)?[\w.]*ejplatform\.org$',)
-
-    CSRF_TRUSTED_ORIGINS = [
-        'ejplatform.org',
-        'talks.ejplatform.org'
-        'dev.ejplatform.org',
-        'talks.dev.ejplatform.org',
-    ]
-
-    X_FRAME_OPTIONS = 'DENY'
-
-    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-    ACCOUNT_EMAIL_VERIFICATION = 'optional'
-    EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend'
-    MAILGUN_API_KEY = env('DJANGO_MAILGUN_API_KEY', default='')
-    MAILGUN_SENDER_DOMAIN = ''
-    EMAIL_SUBJECT_PREFIX = env('DJANGO_EMAIL_SUBJECT_PREFIX', default='[EJ]')
-    SERVER_EMAIL = env('DJANGO_SERVER_EMAIL', default=DEFAULT_FROM_EMAIL)
 
 #
 # Apply fixes and wait for services to start
 #
 fixes.apply_all()
-services.start_services(sys.modules[__name__])

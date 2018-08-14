@@ -23,15 +23,30 @@ $login-new-user-border: 1px solid $color-gray-dark;
         display: block;
         margin-left: auto;
         margin-right: auto;
+        height: 40px;
+    }
+    input{
+        border: $login-fields-border;
+        border-radius: $login-fields-border-radius;
     }
 
     input[type=submit] {
         display: block;
         margin-top: $spacing-unit;
+        border: none;
+        width: $login-button-login-size; 
+        background: $login-button-login-background;
+    }
+
+    a[class=Button] {
+        border-radius: 28px;
+        width: $login-button-register-size;
+        min-width: 200px;
+        padding: 12px;
     }
 
     &-icon {
-        border: $login-icon-border-width solid $login-icon-border-color;
+        border: $login-icon-border;
         border-radius: 50%;
         color: $login-icon-color;
         height: $login-icon-size;
@@ -42,6 +57,14 @@ $login-new-user-border: 1px solid $color-gray-dark;
         img > * {
             color: $color-hint;
         }
+
+        img{
+            position: relative;
+            z-index: -1;
+            padding: $login-icon-padding;
+            transform: $login-icon-scale;
+        }
+
     }
 
     &-button {
@@ -49,10 +72,26 @@ $login-new-user-border: 1px solid $color-gray-dark;
     }
 
     &-socialButtons {
-        display: none;
+        display: $social-buttons-display;
+        div {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+        }
 
-        i.fa {
-            font-size: $login-social-icons-size;
+        i {
+
+            font-size: $social-buttons-size;
+            color: $social-buttons-color;
+            margin: 10px;
+            border: $social-buttons-border;
+            background: $social-buttons-background-color;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
     }
 
