@@ -14,13 +14,11 @@ class ProfileForm(ModelForm):
             'city', 'state', 'country',
             'gender', 'race', 'ethnicity',
             'political_activity', 'biography',
-            'birth_date', 'occupation',
-            'education',
-            'image'
+            'occupation', 'education', 'image'
         ]
-        widgets = {
-            'birth_date': DateInput(attrs={'type': 'date'})
-        }
+       #widgets = {
+       #    'birth_date': DateInput(attrs={'type': 'date'})
+       #}
 
 
 class ProfileImageForm(ModelForm):

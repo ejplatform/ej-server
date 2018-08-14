@@ -96,13 +96,8 @@ class Profile(models.Model):
 
     @property
     def is_filled(self):
-<<<<<<< HEAD
         fields = ('race', 'age', 'country', 'state', 'city', 'biography', 'phone',
                   'occupation', 'political_activity', 'has_image', 'gender_description')
-=======
-        fields = ('race', 'age', 'birth_date', 'education', 'ethnicity', 'country', 'state', 'city',
-                  'biography', 'occupation', 'political_activity', 'has_image', 'gender_description')
->>>>>>> f21b98953047e3d758210a83b8cadfa8e188442b
         return bool(all(getattr(self, field) for field in fields))
 
     def get_absolute_url(self):
@@ -114,12 +109,7 @@ class Profile(models.Model):
         registered profile fields.
         """
 
-<<<<<<< HEAD
         fields = ['city', 'country', 'occupation', 'age', 'phone', 'gender', 'race', 'political_activity', 'biography']
-=======
-        fields = ['city', 'country', 'occupation', 'education', 'ethnicity', 'gender', 'race',
-                  'political_activity', 'biography']
->>>>>>> f21b98953047e3d758210a83b8cadfa8e188442b
         field_map = {field.name: field for field in self._meta.fields}
         result = []
         for field in fields:

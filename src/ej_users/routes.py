@@ -164,6 +164,7 @@ def clean_cookies():
     # previously HTTP_ONLY. This cookie needs to be js accessible to allow for
     # CSRF protection on XHR requests
 
+    from django.http import HttpResponse
     response = HttpResponse()
     response.delete_cookie('sessionid')
     response.delete_cookie('csrftoken')

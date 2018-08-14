@@ -108,6 +108,7 @@ class Conf(ThemesConf,
 
     # TODO: Fix this later in boogie configuration stack
     # Required for making django debug toolbar work
+    ENVIRONMENT = 'local'
     if ENVIRONMENT == 'local':
         INTERNAL_IPS = [*globals().get('INTERNAL_IPS', ()), '127.0.0.1']
 
@@ -125,13 +126,14 @@ class Conf(ThemesConf,
         X_FRAME_OPTIONS = 'ALLOW-FROM http://localhost:3000'
 
         ACCOUNT_EMAIL_VERIFICATION = 'optional'
+        EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-        EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend'
+        #EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend'
 
-        ANYMAIL = {
-            "MAILGUN_API_KEY": ""
-        }
-        DEFAULT_FROM_EMAIL = "noreply@unidoscontraacorrupcao.org.br"
+        #ANYMAIL = {
+        #    "MAILGUN_API_KEY": ""
+        #}
+        #DEFAULT_FROM_EMAIL = "noreply@unidoscontraacorrupcao.org.br"
 
     if ENVIRONMENT == 'production':
         # Django CORS
