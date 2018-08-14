@@ -8,18 +8,60 @@ from .models.selected_candidates import SelectedCandidate
 #
 
 def filter_by_name(querySet, filter):
-    return querySet.filter(name=filter.upper())
+    filteredCandidates = querySet.filter(name__contains=filter.upper())
+    if(filteredCandidates):
+        return filteredCandidates
+    return querySet
 
-def filter_candidates(querySet, filter):
-        return filter_by_name(querySet, filter)
+def filter_by_party(querySet, filter):
+    filteredCandidates = querySet.filter(party=filter.upper())
+    if(filteredCandidates):
+        return filteredCandidates
+    return querySet
+
+def filter_by_candidacy(querySet, filter):
+    filteredCandidates = querySet.filter(candidacy=filter.upper())
+    if(filteredCandidates):
+        return filteredCandidates
+    return querySet
+
+def filter_by_uf(querySet, filter):
+    filteredCandidates = querySet.filter(uf=filter.upper())
+    if(filteredCandidates):
+        return filteredCandidates
+    return querySet
+
+
+def filter_candidates(querySet, filters):
+    if(filters["filter_by_uf"]):
+        querySet = filter_by_uf(querySet, filters["filter_by_uf"])
+    if(filters["filter_by_name"]):
+        querySet = filter_by_name(querySet, filters["filter_by_name"])
+    if(filters["filter_by_party"]):
+        querySet = filter_by_party(querySet, filters["filter_by_party"])
+    if(filters["filter_by_candidacy"]):
+        querySet = filter_by_party(querySet, filters["filter_by_candidacy"])
+    return querySet
+
+def get_filters(request):
+    filters = {}
+    filters["filter_by_name"] = request.get('filter_by_name')
+    filters["filter_by_uf"] = request.get('filter_by_uf')
+    filters["filter_by_party"] = request.get('filter_by_party')
+    filters["filter_by_candidacy"] = request.get('filter_by_candidacy')
+    return filters
+
+def valid_filters(filters):
+    return filters["filter_by_name"] or filters["filter_by_uf"] or\
+        filters["filter_by_party"] or filters["filter_by_candidacy"]
 
 @rest_api.action('ej_users.User')
 def candidates(request, user):
     querySet = Candidate.objects.exclude(selectedcandidate__user_id=user.id)\
         .exclude(pressedcandidate__user_id=user.id)
-    filter = request.GET.get('filter_by_name')
-    if (filter):
-        return filter_candidates(querySet, filter)
+    filters = get_filters(request.GET)
+    if (valid_filters(filters)):
+        return filter_candidates(querySet, filters)
     else:
         return querySet.order_by("-id")[:10]
 
