@@ -66,18 +66,6 @@ def clusterize(conversation):
 #
 
 
-# @urlpatterns.route('profile/clusters/')
-# def cluster_list(conversation):
-#     base_href = f'{conversation.get_absolute_url()}cluster/'
-#     return {
-#         'content_title': _('Cluster'),
-#         'clusters': html_list(
-#             a(str(cluster), href=f'{base_href}{cluster.id}/')
-#              for cluster in Cluster.objects.all()
-#         ),
-#     }
-
-
 @urlpatterns.route('profile/clusters/add/')
 def create_clusters(request):
     cluster_form = ClusterForm
@@ -86,19 +74,20 @@ def create_clusters(request):
     if request.method == 'POST':
         rendered_cluster_form = cluster_form(request.POST)
         rendered_clusterization_form = clusterization_form(request.POST)
-        print(request.POST['conversation'])
-        print()
 
         if rendered_cluster_form.is_valid():
-            print('oi')
             cluster = rendered_cluster_form.save(commit=False)
             clusterization = Clusterization.objects.get(conversation=request.POST['conversation'])
             cluster.clusterization = clusterization
             cluster.save()
-            print(clusterization)
-            return redirect('/profile/')
+            
+            for stereotype_id in request.POST.getlist('stereotypes'):
+                stereotype = Stereotype.objects.get(id=stereotype_id)
+                cluster.stereotypes.add(stereotype)
+              
+            return redirect('/profile/clusters')
         else:
-            print('erro')
+            rendered_cluster_form.add_error(None, _("Something is wrong!"))
     else:
         rendered_cluster_form = cluster_form()
         rendered_clusterization_form = clusterization_form()
