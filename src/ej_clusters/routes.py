@@ -6,9 +6,8 @@ from boogie.rules import proxy_seq
 from ej_conversations.models import Conversation, Choice, Comment
 from hyperpython import a, input_, label, Block
 from hyperpython.components import html_list, html_table
-from .models import Stereotype, Cluster, StereotypeVote, Clusterization
-from ej_clusters.forms import StereotypeForm, StereotypeVoteFormSet, ClusterForm, ClusterizationForm
-
+from .models import Stereotype, Cluster, StereotypeVote
+from ej_clusters.forms import StereotypeForm, StereotypeVoteFormSet
 
 app_name = 'ej_cluster'
 urlpatterns = Router(
@@ -64,38 +63,6 @@ def clusterize(conversation):
 #
 # Profile Cluster
 #
-
-
-@urlpatterns.route('profile/clusters/add/')
-def create_clusters(request):
-    cluster_form = ClusterForm
-    clusterization_form = ClusterizationForm
-
-    if request.method == 'POST':
-        rendered_cluster_form = cluster_form(request.POST)
-        rendered_clusterization_form = clusterization_form(request.POST)
-
-        if rendered_cluster_form.is_valid():
-            cluster = rendered_cluster_form.save(commit=False)
-            clusterization = Clusterization.objects.get(conversation=request.POST['conversation'])
-            cluster.clusterization = clusterization
-            cluster.save()
-            
-            for stereotype_id in request.POST.getlist('stereotypes'):
-                stereotype = Stereotype.objects.get(id=stereotype_id)
-                cluster.stereotypes.add(stereotype)
-              
-            return redirect('/profile/clusters')
-        else:
-            rendered_cluster_form.add_error(None, _("Something is wrong!"))
-    else:
-        rendered_cluster_form = cluster_form()
-        rendered_clusterization_form = clusterization_form()
-
-    return {
-        'cluster_form': rendered_cluster_form,
-        'clusterization_form': rendered_clusterization_form,
-    }
 
 
 @urlpatterns.route('profile/clusters/')
