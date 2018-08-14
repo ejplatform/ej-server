@@ -23,7 +23,6 @@ def create(request):
         form = form_class()
 
     return {
-        'content_title': _('Create conversation'),
         'form': form,
     }
 
