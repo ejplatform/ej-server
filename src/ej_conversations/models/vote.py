@@ -50,6 +50,7 @@ class Vote(models.Model):
 
     class Meta:
         unique_together = ('author', 'comment')
+        ordering = ['id']
 
     def __str__(self):
         comment = truncate(self.comment.content, 40)
