@@ -1,11 +1,16 @@
 from django.forms import modelformset_factory, ModelForm
 from .models import Stereotype, StereotypeVote, Cluster, Clusterization
+from ej_conversations.models import Conversation
 
 
 class StereotypeForm(ModelForm):
     class Meta:
         model = Stereotype
-        fields = ['name', 'description']
+        fields = ['name', 'conversation', 'description']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['conversation'].queryset = Conversation.objects.none()
 
 
 class StereotypeVoteForm(ModelForm):

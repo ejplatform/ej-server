@@ -170,17 +170,13 @@ def create_stereotype(request):
         rendered_votes_form = votes_form(request.POST)
 
         if rendered_stereotype_form.is_valid() and rendered_votes_form.is_valid():
-            stereotype = rendered_stereotype_form.save(commit=False)
-            stereotype.owner = request.user
-            if not Stereotype.objects.filter(owner=stereotype.owner, name=stereotype.name).exists():
-                stereotype.save()
-                votes = rendered_votes_form.save(commit=False)
-                for vote in votes:
-                    vote.author = stereotype
-                    vote.save()
-                return redirect('/profile/stereotypes/')
-            else:
-                rendered_stereotype_form.add_error(None, _("Stereotype with this name and owner already exists."))
+            stereotype = rendered_stereotype_form.save()
+            stereotype.save()
+            votes = rendered_votes_form.save(commit=False)
+            for vote in votes:
+                vote.author = stereotype
+                vote.save()
+            return redirect('/profile/stereotypes/')
     else:
         rendered_stereotype_form = stereotype_form()
         rendered_votes_form = votes_form(queryset=StereotypeVote.objects.none())
@@ -195,7 +191,7 @@ def create_stereotype(request):
 
 @urlpatterns.route('profile/stereotypes/edit/<model:stereotype>/')
 def edit_stereotype(request, stereotype):
-    if request.user == stereotype.owner:
+    if request.user == stereotype.conversation.author:
         stereotype_form = StereotypeForm
         votes_form = StereotypeVoteFormSet
         rendered_stereotype_form = stereotype_form(instance=stereotype)
@@ -212,12 +208,19 @@ def edit_stereotype(request, stereotype):
 
 @urlpatterns.route('profile/stereotypes/', name='list')
 def stereotypes(request):
-    user_stereotypes = Stereotype.objects.filter(owner=request.user)
+    user_stereotypes = Stereotype.objects.filter(conversation__author=request.user)
     return {
         'stereotypes': user_stereotypes,
         'create_url': '/profile/stereotypes/add/',
         'cluster_create_url': '/profile/clusters/add'
     }
+
+
+@urlpatterns.route('ajax/load-comments')
+def load_comments(request):
+    conversation = request.GET.get('conversation')
+    comments = Comment.objects.filter(conversation=conversation).order_by('name')
+    return {'comments': comments}
 
 
 #
