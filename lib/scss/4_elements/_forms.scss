@@ -73,3 +73,10 @@ input[type=submit] {
 input:focus, textarea:focus, select:focus, button:focus {
     outline: none;
 }
+
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background: url(/static/img/icons/arrow-down-blue.svg) white no-repeat calc(100% - 10px) !important;
+    background-size: 15px !important;
+}
