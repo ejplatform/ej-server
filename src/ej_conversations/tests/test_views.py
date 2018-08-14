@@ -3,7 +3,7 @@ from django.contrib.auth.models import AnonymousUser
 from django.http import HttpResponseServerError
 
 from ej_conversations import create_conversation
-from ej_conversations.models import Conversation, Comment, FavoriteConversation
+from ej_conversations.models import Comment, FavoriteConversation
 from ej_conversations.models.comment import votes_counter
 from ej_conversations.routes import conversations, comments
 from ej_users.models import User
@@ -49,31 +49,6 @@ def comment(db, conversation, user):
 
 
 class TestConversationBase:
-    def test_get_all_promoted_conversations(self, request_):
-        ctx = conversations.conversation_list(request_)
-        assert ctx['conversations'].model is Conversation
-        assert ctx['can_add_conversation'] is False
-
-    def test_conversation_detail_without_being_author(self, request_, conversation, db):
-        ctx = conversations.detail(request_, conversation)
-        assert isinstance(ctx.get('conversation'), Conversation)
-        assert ctx.get('comment') is None
-        assert ctx.get('owner') is None
-        assert ctx.get('edit_perm') is False
-        assert ctx.get('can_comment') is False
-        assert ctx.get('remaining_comments') == 0
-        assert str(ctx.get('login_link')) is not None
-
-    def test_conversation_detail_being_author(self, request_with_user, user, conversation, db):
-        ctx = conversations.detail(request_with_user, conversation, user)
-        assert isinstance(ctx.get('conversation'), Conversation)
-        assert ctx['comment'] is None
-        assert ctx['owner'] is user
-        assert ctx['edit_perm'] is True
-        assert ctx['can_comment'] is True
-        assert ctx['remaining_comments'] == 2
-        assert str(ctx.get('login_link')) is not None
-
     def test_vote_in_comment(self, rf, conversation, comment, db):
         request = rf.post('', {'action': 'vote', 'vote': 'agree'})
         user = User.objects.create_user('user@server.com', 'password')
