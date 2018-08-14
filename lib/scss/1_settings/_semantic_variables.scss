@@ -85,6 +85,8 @@
   $conversation-edit-action-save-border: #052B47  !default;
   $conversation-edit-action-save-background: #fff  !default;
   $conversation-edit-action-save-font-color: #052B47  !default;
+  $conversation-edit-radius: 12px !default;
+  $conversation-edit-save-color: $color-pink !default;
 
  // Conversation: info
   $conversation-info-title: #FF3D72  !default;
@@ -119,3 +121,11 @@ $selected-stereotype-cluster-menu-padding: 10px 0 6px 0px !default;
   $stereotype-title: #042049 !default;
   $stereotype-new-text: $color-blue-dark !default;
   $stereotype-new-icon: $color-magenta !default;
+
+  $stereotype-add-title-color: $color-magenta !default;
+  $stereotype-add-submit-color: $color-magenta !default;
+  $stereotype-add-input-border-radius: 17px !default;
+  $stereotype-add-comment-color: $color-purple-dark !default;
+
+
+

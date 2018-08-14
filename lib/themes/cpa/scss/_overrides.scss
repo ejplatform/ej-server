@@ -82,6 +82,8 @@ $conversation-edit-action-cancel-font-color: #fff;
 $conversation-edit-action-save-border: transparent;
 $conversation-edit-action-save-background: #8EC73F;
 $conversation-edit-action-save-font-color: #fff;
+$conversation-edit-radius: 0px;
+$conversation-edit-save-color: white;
 
 // Conversation: info
 $conversation-info-title: #C6027B;
@@ -116,3 +118,8 @@ $selected-stereotype-cluster-menu-padding: none;
 $stereotype-title: #3F1B53;
 $stereotype-new-text: #30bec0;
 $stereotype-new-icon: #30bec0;
+
+$stereotype-add-title-color: #C6027B;
+$stereotype-add-submit-color: #C6027B;
+$stereotype-add-input-border-radius: 0px;
+$stereotype-add-comment-color: #30BEC0;

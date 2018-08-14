@@ -1,6 +1,8 @@
 from django.shortcuts import redirect, Http404
 from django.utils.translation import ugettext_lazy as _
 from boogie.router import Router
+from boogie import rules
+from constance import config
 from ..models import Board
 from ..forms import BoardForm
 
@@ -19,12 +21,17 @@ board_url = '<model:board>'
 
 @urlpatterns.route('add/')
 def create(request):
+    user = request.user
+    rule = rules.get_rule('ej_boards.can_create_board')
+    if rule.test(user):
+        raise Http404
+
     form_class = BoardForm
     if request.method == 'POST':
         form = form_class(request.POST)
         if form.is_valid():
             board = form.save(commit=False)
-            board.owner = request.user
+            board.owner = user
             board.save()
 
             return redirect(board.get_absolute_url())
@@ -40,8 +47,10 @@ def create(request):
 @urlpatterns.route('', template='ej_boards/list.jinja2')
 def board_list(request):
     user = request.user
+    rule = rules.get_rule('ej_boards.can_create_board')
     return {
-        'boards': user.boards.all()
+        'boards': user.boards.all(),
+        'can_create_board': rule.test(user),
     }
 
 

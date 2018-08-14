@@ -10,14 +10,20 @@
             {% if not user.is_active %}
                 <li>{{ icon_link(_('Conversations'), '/conversations/', 'conversations', fa=False) }}</li>
             {% elif not user.is_staff %}
-                <li class="NavMenu-DropDown" onclick="openDropDown('NavMenu-UserMenu')">{{ icon_link(_('Conversations'), '/conversations/', 'conversations', fa=False) }}
+                <li class="NavMenu-DropDown" onclick="openDropDown('NavMenu-UserMenu')">
+                    <img src="/static/img/menu/conversations.svg">
+                    Conversations
                     <i class="fas fa-angle-down fa-2x NavMenu-AngleDownIcon"></i>
+                </li>
                     <ul class="NavMenu-UserMenu">
+                        <li>
+                            {{icon_link(_('Public conversations'), '/conversations/', '', fa=True)}}
+                        </li>
                         <li>
                             {# {% if board %} #}
                                 {# {{icon_link(_('Your conversations'), ('/{}/'.format(board.name)), 'far fa-comment', fa=True)}} #}
                             {# {% else %} #}
-                                {{icon_link(_('Your conversations'), ('/conversations/add/'), 'far fa-comment', fa=True)}}
+                                {{icon_link(_('Your conversations'), ('/profile/conversations/'), 'far fa-comment', fa=True)}}
                             {# {% endif %} #}
                         </li>
                         <li>
@@ -30,8 +36,11 @@
                 </li>
                 {# <li>{{ icon_link(_('Panel'), '/talks/', 'talks', fa=False) }}</li> #}
             {% else %}
-                <li class="NavMenu-DropDown" onclick="openDropDown('NavMenu-UserMenu')">{{ icon_link(_('Conversations'), '/conversations/', 'conversations', fa=False) }}
+                <li class="NavMenu-DropDown" onclick="openDropDown('NavMenu-UserMenu')">
+                    <img src="/static/img/menu/conversations.svg">
+                    Conversations
                     <i class="fas fa-angle-down fa-2x NavMenu-AngleDownIcon"></i>
+                    </li>
                     <ul class="NavMenu-UserMenu">
                         <li>
                             {{icon_link(_('Public conversations'), '/conversations/', '', fa=True)}}
@@ -44,8 +53,7 @@
                             {{_('Add conversation')}}
                         </li>
                         <li>
-                            <i class="far fa-star"></i>
-                            {{_('Favorite conversations')}}
+                            {{icon_link(_('Favorite conversations'), ('/profile/favorites/'), 'far fa-star', fa=True)}}
                         </li>
                         {# <li>
                             <i class="fas fa-cog"></i>

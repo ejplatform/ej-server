@@ -42,11 +42,15 @@ def statistics(conversation):
 #
 @rest_api.save_hook('ej_conversations.Vote')
 def save_vote(request, vote):
-    if vote.author_id is None:
-        vote.author_id = request.user.id
+    user = request.user
+
+    if vote.id is None:
+        vote.author = user
         vote.save()
-    elif vote.author != request.user:
+    elif vote.author != user:
         raise PermissionError('cannot update vote of a different user')
+    else:
+        vote.save(update_fields=['choice'])
     return vote
 
 
@@ -60,3 +64,11 @@ def delete_vote(request, vote):
         raise PermissionError('cannot delete vote from another user')
     else:
         raise PermissionError('user is not allowed to delete votes')
+
+
+@rest_api.query_hook('ej_conversations.Vote')
+def query_vote(request, qs):
+    user = request.user
+    if user.id:
+        return qs.filter(author_id=user.id)
+    return qs.none()
