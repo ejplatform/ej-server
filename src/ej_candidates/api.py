@@ -11,7 +11,7 @@ from .models.selected_candidates import SelectedCandidate
 def candidates(request, user):
     querySet = Candidate.objects.exclude(selectedcandidate__user_id=user.id)\
         .exclude(pressedcandidate__user_id=user.id)
-    return querySet.exclude(ignoredcandidate__user_id=user.id).order_by("-id")
+    return querySet.exclude(ignoredcandidate__user_id=user.id).order_by("-id")[:10]
 
 @rest_api.action('ej_users.User')
 def selected_candidates(request, user):
