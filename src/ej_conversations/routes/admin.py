@@ -4,11 +4,13 @@ from django.utils.translation import ugettext_lazy as _
 
 from . import urlpatterns, conversation_url
 from .. import forms, models
+from ej_boards.models import Board, BoardSubscription
 
 
 @urlpatterns.route('add/', perms=['ej_conversations.can_add_conversation'])
 def create(request):
     form_class = forms.ConversationForm
+    boards = []
     if request.method == 'POST':
         form = form_class(request.POST)
         if form.is_valid():
@@ -18,12 +20,25 @@ def create(request):
 
             for tag in form.cleaned_data['tags']:
                 conversation.tags.add(tag)
-            return redirect(conversation.get_absolute_url())
+            
+            if 'board' in form.data:
+                board = Board.objects.get(pk=int(form.data['board']))
+                BoardSubscription.objects.create(conversation=conversation, board=board)
+        
+        
+            for i in range(1, 6):
+                name = 'comment-' + str(i)
+                if name in form.data and form.data[name]:
+                    models.Comment.objects.create(content=form.data[name], conversation=conversation, author=request.user)
+            
+            return redirect('/profile/stereotypes')
     else:
         form = form_class()
+        boards = request.user.boards.all()
 
     return {
         'form': form,
+        'boards': boards,
     }
 
 

@@ -34,20 +34,23 @@
               <div class="ConversationDetail-arrow"></div>
           </div>
           
-          <div class="ConversationField"><i class="fa fa-link"></i> <input type="text" name="title" placeholder="{{ _('Permanent link') }}" /> <i class="fa fa-edit"></i></div>
+          <div class="ConversationField"><i class="fa fa-link"></i> <input type="text" name="title" placeholder="{{ _('Slug') }}" /> <i class="fa fa-edit"></i></div>
           <div class="ConversationField">
             <i class="fa fa-list-ul"></i> 
-            <select name="timeline">
-              <option disabled selected value>{{ _('Conversation list aka timeline') }}</option>
+            <select name="board">
+              <option disabled selected value>{{ _('Conversation list aka board') }}</option>
+              {% for board in boards %}
+              <option value="{{ board.id }}">{{ board.title }}</option>
+              {% endfor %}
             </select> 
             <i class="fa fa-edit"></i>
           </div>
-          <div class="ConversationField">
-            <i class="fas fa-th-large"></i> 
-            <select name="clusters">
-              <option disabled selected value>{{ _('Clusters') }}</option>
-            </select> 
-            <i class="fa fa-edit"></i>
+
+          <div class="Moderate-comments">
+            <h1>{{ _('Comments') }}</h1>
+            {% for i in range(1, 6) %}
+              <div class="ConversationField"><i class="far fa-comment"></i> <input type="text" name="comment-{{ i }}" placeholder="{{ _('Type here the comment') }} #{{ i }}" /> <i class="fa fa-edit"></i></div>
+            {% endfor %}
           </div>
         </form>
     </div>
