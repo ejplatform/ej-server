@@ -69,3 +69,7 @@ input[type=submit] {
     background: $color-action-default;
     width: inherit;
 }
+
+input:focus, textarea:focus, select:focus, button:focus {
+    outline: none;
+}
