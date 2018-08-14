@@ -180,9 +180,6 @@ def create_stereotype(request):
     else:
         rendered_stereotype_form = stereotype_form()
         rendered_votes_form = votes_form(queryset=StereotypeVote.objects.none())
-        filtered_comments = Comment.objects.filter(conversation__author=request.user)
-        for form in rendered_votes_form:
-            form.fields['comment'].queryset = filtered_comments
     return {
         'stereotype_form': rendered_stereotype_form,
         'votes_form': rendered_votes_form,
@@ -219,7 +216,7 @@ def stereotypes(request):
 @urlpatterns.route('ajax/load-comments')
 def load_comments(request):
     conversation = request.GET.get('conversation')
-    comments = Comment.objects.filter(conversation=conversation).order_by('name')
+    comments = Comment.objects.filter(conversation=conversation).order_by('content')
     return {'comments': comments}
 
 
