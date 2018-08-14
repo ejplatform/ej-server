@@ -1,0 +1,64 @@
+version: '2'
+
+volumes:
+  database:
+  media:
+  conf:
+
+services:
+  lb:
+    image: rancher/lb-service-haproxy:v0.7.6
+    expose:
+    - 80:80/tcp
+    labels:
+      rap.le_email: help@ejplatform.org
+      rap.le_test: 'false'
+      rap.le_host: ejplatform.org
+      rap.host: ejplatform.org
+      rap.client_max_body_size: 200m
+      io.rancher.container.create_agent: 'true'
+      io.rancher.container.agent.role: environmentAdmin
+
+  nginx:
+    image: ejplatform/nginx:latest
+    volumes:
+    - media:/usr/share/nginx/html/
+    links:
+    - web:web
+    labels:
+      io.rancher.container.pull_image: always
+      io.rancher.scheduler.affinity: ****
+
+  web: &web
+    image: ejplatform/web:latest
+    environment:
+      DJANGO_DB_URL: psql://ej:****@postgres:5432/ej
+      DJANGO_ALLOWED_HOSTS: dev.ejplatform.org
+      DJANGO_DEBUG: 'true'
+    volumes:
+    - media:/app/local/:nocopy
+    links:
+    - postgres:postgres
+    - redis:redis
+    command: db -m collect gunicorn
+    labels:
+      io.rancher.scheduler.affinity: ****
+      io.rancher.container.hostname_override: container_name
+      io.rancher.container.pull_image: always
+
+  rescue:
+    << : *web
+    restart: no
+    command: bash
+
+  redis:
+    image: redis:3
+
+  postgres:
+    image: postgres:alpine
+    environment:
+      POSTGRES_DB: ej
+      POSTGRES_USER: ej
+      POSTGRES_PASSWORD: ****
+    volumes:
+    - database:/var/lib/postgresql/data
