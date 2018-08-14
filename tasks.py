@@ -43,6 +43,7 @@ def sass(ctx, watch=False, theme='default', trace=False, dry_run=False, rocket=T
     cmd += ' --watch' if watch else ''
     cmd += ' --trace' if trace else ''
     go('rm -rf .sass-cache lib/build/css/main.css lib/build/css/rocket.css')
+    go('mkdir -p lib/build/css')
     go(cmd)
 
 

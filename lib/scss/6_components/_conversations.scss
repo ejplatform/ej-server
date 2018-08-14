@@ -338,7 +338,7 @@ $conversation-card-button-border-radius: 30px !default;
         .Conversation-edit {
           text-align: center;
 
-          a {
+          a, b {
             color: $color-purple-dark;
             background: transparent;
             font-weight: bold;
@@ -1132,29 +1132,29 @@ $conversation-card-button-border-radius: 30px !default;
     @extend .Container;
 
     outline: 0;
-    background: transparent;
+    background-color: rgba(255,255,255,0.5);
     border: 0;
     font-family: "Raleway", sans-serif;
     color: $color-purple-dark;
-    padding: $spacing-unit / 2 0;
-    padding-top: 0;
+    padding: $unit;
     text-align: center;
     font-weight: 200 !important;
     font-size: 26px !important;
     box-shadow: none;
-    border: 1px solid $color-purple-dark;
-    border-radius: 0;
+    border: 1px solid $color-blue-light-low;
+    border-radius: $conversation-edit-radius;
     resize: none;
     overflow: hidden;
     min-height: 50px;
     max-height: 300px;
 
-    &:focus {
-      border: 0;
+    &::placeholder {
+      color: $color-purple-dark;
+      opacity: 1;
     }
 
     @media only screen and (min-width: $breakpoint-large) {
-        padding: $spacing-unit-large 0;
+      padding: $spacing-unit-large 0;
     }
   }
 
@@ -1201,6 +1201,80 @@ $conversation-card-button-border-radius: 30px !default;
       color: $conversation-edit-action-save-font-color;
       border-color: $conversation-edit-action-save-border;
       background: $conversation-edit-action-save-background;
+
+      &.create-conversation-icon {
+        color: $conversation-edit-save-color;
+        border-color: $color-pink;
+      }
     }
+  }
+}
+
+.ConversationField {
+  display: flex;
+  justify-content: center;
+
+  i {
+    padding: 0 $unit * 2;
+    align-self: center;
+    color: $conversation-tag-color;
+  }
+
+  input, select {
+    border: 1px solid $color-blue-light-low;
+    border-radius: $conversation-edit-radius;
+    background-color: rgba(255, 255, 255, 0.5);
+    box-shadow: none;
+    outline: 0;
+    padding-top: 8px;
+    font-size: 12px;
+    color: $color-purple-dark;
+
+    &::placeholder {
+      color: $color-purple-dark;
+      opacity: 1;
+    }
+  }
+
+  input + i, select + i {
+    color: $color-purple-dark;
+    font-weight: lighter;
+  }
+}
+
+.ConversationEdit-attributes {
+  padding: $unit;
+
+  i {
+    color: $conversation-tag-color;
+    margin-right: $unit;
+  }
+
+  span {
+    color: $color-purple-dark;
+    opacity: 0.5;
+    font-size: 12px;
+  }
+
+  p {
+    text-align: left;
+  }
+}
+
+.ConversationEdit-promote {
+  padding: $unit;
+  
+  input {
+    width: auto;
+    box-shadow: none;
+    border: 1px solid $color-purple-dark;
+    background: white;
+  }
+
+  label {
+    color: $color-purple-dark;
+    font-size: 14px;
+    font-weight: bold;
+    display: inline;
   }
 }

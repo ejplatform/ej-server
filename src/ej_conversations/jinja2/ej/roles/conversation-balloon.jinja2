@@ -2,7 +2,7 @@
     <div class="ConversationDetail-banner">
         <div class="ConversationTags"><i class="fa fa-tags"></i>
             {% if tags %}
-                {{ (tags|string).title() }}
+              {{ (conversation.tags.all()[0]|string).title() }}
             {% else %}
                 {{ _("Tags") }}
             {% endif %}

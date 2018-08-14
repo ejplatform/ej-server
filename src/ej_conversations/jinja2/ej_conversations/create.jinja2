@@ -1,13 +1,57 @@
 {% extends 'base.jinja2' %}
 
 {% block content %}
-    <div class="Container">
+    <div class="Moderate Create">
         <form method="post" class="django-form-as-p">
-            {{ csrf_input }}
-            {{ form.as_p() }}
-            <div>
-                <input type="submit" class="Button" value="{{ _('Save') }}" name="create">
-            </div>
+          {{ csrf_input }}
+
+          <input type="hidden" name="title" value="" />
+
+          <div class="ConversationEdit-actions">
+            <span>
+              <i class="fa fa-times"></i>
+              <input type="reset" value="{{ _('Cancel') }}" name="cancel" onClick="history.back(-1)">
+            </span>
+            <span>
+              <i class="fa fa-check create-conversation-icon"></i>
+              <input type="submit" value="{{ _('Create conversation') }}" name="create">
+            </span>
+          </div>
+
+          <div class="ConversationDetail">
+              <div class="ConversationDetail-banner">
+                  <div class="ConversationTags">
+                    <div class="ConversationField"><i class="fa fa-tags"></i> <input type="text" name="tags" placeholder="{{ _('Type tags separating by commas') }}" /> <i class="fa fa-edit"></i></div>
+                  </div>
+                  
+                  <p><textarea onfocus="this.style.height = (this.scrollHeight) + 'px'" onkeyup="this.style.height = (this.scrollHeight) + 'px'" class="Conversation-edit-field" name="text" required id="id_text" placeholder="{{ _('Type here the question for your research') }}"></textarea></p>
+
+                  <div class="Conversation-edit">
+                    <b>{{_('Edit Conversation') }}</b>
+                  </div>
+              </div>
+
+              <div class="ConversationDetail-arrow"></div>
+          </div>
+          
+          <div class="ConversationField"><i class="fa fa-link"></i> <input type="text" name="title" placeholder="{{ _('Slug') }}" /> <i class="fa fa-edit"></i></div>
+          <div class="ConversationField">
+            <i class="fa fa-list-ul"></i> 
+            <select name="board">
+              <option disabled selected value>{{ _('Conversation list aka board') }}</option>
+              {% for board in boards %}
+              <option value="{{ board.id }}">{{ board.title }}</option>
+              {% endfor %}
+            </select> 
+            <i class="fa fa-edit"></i>
+          </div>
+
+          <div class="Moderate-comments">
+            <h1>{{ _('Comments') }}</h1>
+            {% for i in range(1, 6) %}
+              <div class="ConversationField"><i class="far fa-comment"></i> <input type="text" name="comment-{{ i }}" placeholder="{{ _('Type here the comment') }} #{{ i }}" /> <i class="fa fa-edit"></i></div>
+            {% endfor %}
+          </div>
         </form>
     </div>
 {% endblock %}
