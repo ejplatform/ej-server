@@ -2,21 +2,21 @@
     STEREOTYPE AND CLUSTER LIST (NOW ONLY STEREOTYPE IMPLEMENTED)
  #---------------------------------------------------------------------------#}
 
-{% macro stereotype_list(stereotypes,
-                           title='Gerenciamento de clusters e esteriótipos',
-                           subtitle='Crie, delete e edite aqui seus clusters e esteriótipos',
+{% macro stereotype_list(stereotypes, conversation_title,
+                           title='Gerenciamento de esteriótipos',
+                           subtitle='Crie, delete e edite aqui os esteriótipos da conversa ',
                            javascript_enabled='') %}
 
     <div class="StereotypeList">
-        {{ stereotype_list_static(stereotypes, title, subtitle) }}
+        {{ stereotype_list_static(stereotypes, conversation_title,title, subtitle) }}
     </div>
 
 {% endmacro %}
 
-{% macro stereotype_list_static(stereotypes, title, subtitle) %}
+{% macro stereotype_list_static(stereotypes, conversation_title, title, subtitle) %}
         <div class="StereotypeList-title">
             <h1 class="h1">{{ title }}</h1>
-            <p>{{ subtitle }}</p>
+            <p>{{ subtitle }} {{ conversation_title}}</p>
         </div>
 
         <div class="StereotypeList-header up-nav">
@@ -26,7 +26,7 @@
         {% if create_url %}
             <a class="StereotypeList-new" href="{{ create_url }}"><i class="fa fa-plus-circle"></i> {{ _('New stereotype') }}</a>
         {% endif %}
-        
+
 
         {# Search - not implemented #}
         <div class="StereotypeList-search">

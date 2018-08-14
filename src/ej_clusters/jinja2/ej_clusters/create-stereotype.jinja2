@@ -2,26 +2,23 @@
 
 
 {% block content %}
-  {{ stereotype_create(stereotype_form, votes_form) }}
+  {{ stereotype_create(stereotype_form, votes_form, conversation_title) }}
 {% endblock %}
 
 {% macro stereotype_create(stereotype_form,
                            votes_form,
-                           title=_('New Stereotype'),
+                           conversation_title,
+                           title=_('New Stereotype for conversation: '),
                            button_text=_('Create'),
                            javascript_enabled='') %}
     <div class="StereotypeAdd">
-        <h1 class="h1">{{ title }}</h1>
+        <h1 class="h1">{{ title }} {{ conversation_title }}</h1>
         <form method="post" class="stereotype">
             {{ csrf_input }}
             <div class="StereotypeAdd-title">
                 <div class="content input-name">
                     <img src="/static/img/icons/stereotype_name.png">
                     {{ stereotype_form.name }}
-                </div>
-                <div class="content talk-stereotype">
-                    <img src="/static/img/icons/stereotype_conversation.png">
-                      {{ stereotype_form.conversation }}
                 </div>
                 <div class="content comment-stereotype">
                     <div>
@@ -36,7 +33,6 @@
                 </div>
                 <!--textarea name="description" cols="40" rows="10" id="id_description" placeholder="Description"></textarea-->
             </div>
-            {{ votes_form.management_form }}
             {% for form in votes_form %}
                 <div class="row form-row spacer">
                     {{ form.as_p() }}

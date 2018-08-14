@@ -2,7 +2,6 @@ from django.shortcuts import redirect, Http404
 from django.utils.translation import ugettext_lazy as _
 from boogie.router import Router
 from boogie import rules
-from constance import config
 from ..models import Board
 from ..forms import BoardForm
 

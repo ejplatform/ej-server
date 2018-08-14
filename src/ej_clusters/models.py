@@ -179,11 +179,6 @@ class Stereotype(models.Model):
         _('Name'),
         max_length=64,
     )
-    conversation = models.ForeignKey(
-        'ej_conversations.Conversation',
-        on_delete=models.CASCADE,
-        related_name='stereotypes',
-    )
     description = models.TextField(
         _('Description'),
         blank=True,
@@ -193,9 +188,6 @@ class Stereotype(models.Model):
             'profile the stereotype wants to capture.'
         ),
     )
-
-    class Meta:
-        unique_together = [('name', 'conversation')]
 
     __str__ = (lambda self: self.name)
 
