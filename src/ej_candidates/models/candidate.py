@@ -21,7 +21,7 @@ class Candidate(models.Model):
     CANDIDACY_OPTIONS = Choices('senadora', 'senador',
                                 'deputado federal', 'deputada federal',
                                 'deputado estadual', 'deputada estadual')
-    PARTY_OPTIONS = Choices('pt', 'psdb')
+    PARTY_OPTIONS = Choices('PT', 'PSDB')
     POLITICAL_OPTIONS = Choices('sim', 'não', 'sem resposta')
 
     name = models.CharField(max_length=100,
