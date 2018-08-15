@@ -21,8 +21,8 @@ board_url = '<model:board>'
 @urlpatterns.route('add/')
 def create(request):
     user = request.user
-    rule = rules.get_rule('ej_boards.can_create_board')
-    if rule.test(user):
+
+    if not user.has_perm('ej_boards.can_add_board'):
         raise Http404
 
     form_class = BoardForm
@@ -46,10 +46,9 @@ def create(request):
 @urlpatterns.route('', template='ej_boards/list.jinja2')
 def board_list(request):
     user = request.user
-    rule = rules.get_rule('ej_boards.can_create_board')
     return {
         'boards': user.boards.all(),
-        'can_create_board': rule.test(user),
+        'can_add_board': user.has_perm('ej_boards.can_add_board'),
     }
 
 
