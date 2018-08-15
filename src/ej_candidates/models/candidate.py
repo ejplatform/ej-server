@@ -18,11 +18,9 @@ class Candidate(models.Model):
     def __str__(self):
         return "%s - %s" % (self.name, self.party)
 
-    CANDIDACY_OPTIONS = Choices('senadora', 'senador',
-                                'deputado federal', 'deputada federal',
-                                'deputado estadual', 'deputada estadual')
+    CANDIDACY_OPTIONS = Choices('SENADOR(A)', 'DEPUTADO(A)')
     PARTY_OPTIONS = Choices('PT', 'PSDB')
-    POLITICAL_OPTIONS = Choices('sim', 'não', 'sem resposta')
+    POLITICAL_OPTIONS = Choices('SIM', 'NÃO', 'SEM RESPOSTA')
 
     name = models.CharField(max_length=100,
                             help_text="The name of the candidate")

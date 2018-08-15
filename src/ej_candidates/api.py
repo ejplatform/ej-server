@@ -63,7 +63,8 @@ def candidates(request, user):
     if (valid_filters(filters)):
         return filter_candidates(querySet, filters)
     else:
-        return querySet.order_by("-id")[:10]
+        limit = int(request.GET.get("limit"))
+        return querySet.order_by("-id")[:limit]
 
 @rest_api.action('ej_users.User')
 def selected_candidates(request, user):
@@ -72,7 +73,8 @@ def selected_candidates(request, user):
     if (valid_filters(filters)):
         return filter_candidates(querySet, filters)
     else:
-        return querySet.order_by("-id")
+        limit = int(request.GET.get("limit"))
+        return querySet.order_by("-id")[:limit]
 
 @rest_api.action('ej_users.User', methods=['post'])
 def unselect_candidate(request, user):
