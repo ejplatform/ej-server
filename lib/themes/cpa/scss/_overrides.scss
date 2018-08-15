@@ -1,20 +1,27 @@
+// Color roles
+$color-primary: #30BFD3;
+$color-secondary: #6d2ea7;
+$color-accent: #FF3E72;
+$color-content-text: #042049;
+$color-action-secondary: #8EC73F;
+
 // Default buttons
 $button-border-radius-default: 8px;
 
 //Profile
-$profile-font-color-primary: #042049;
-$profile-font-color-secondary: #6d2ea7;
-$profile-button-background-color: #FF3E72;
-$profile-background-color: #30BFD3;
+$profile-font-color-primary: $color-content-text;
+$profile-font-color-secondary: $color-secondary;
+$profile-button-background-color: $color-accent;
+$profile-background-color: $color-primary;
 
 // Login
 $login-icon-border: 10px solid #3F1B53;
 $login-icon-scale: scale(1.2);
 $login-icon-padding: 25px 0px 0px 0px;
-$login-fields-border: 1px solid #30c0d3;
+$login-fields-border: 1px solid $color-primary;
 $login-fields-border-radius: 28px;
 $login-button-login-size: 65%;
-$login-button-login-background: #8EC73F;
+$login-button-login-background: $color-action-secondary;
 $login-button-register-size: 60%;
 
 // Social
@@ -35,10 +42,10 @@ $header-bottom-nav-height: $header-icon-size+20px;
 // Home Banner
 $home-banner-title-font-family: Raleway;
 $home-banner-title-font-color: #052B47;
-$home-banner-button-background: #8EC73F;
+$home-banner-button-background: $color-action-secondary;
 
 // Home How It Works
-$home-how-it-works-title-font-color: #FF3E72;
+$home-how-it-works-title-font-color: $color-accent;
 $home-how-it-works-content-font-color: #052B47;
 $home-how-it-works-background: #D4F7F5;
 $home-how-it-works-card-icon-background: #fff;
@@ -80,7 +87,7 @@ $conversation-edit-action-cancel-border: transparent;
 $conversation-edit-action-cancel-background: #C6027B;
 $conversation-edit-action-cancel-font-color: #fff;
 $conversation-edit-action-save-border: transparent;
-$conversation-edit-action-save-background: #8EC73F;
+$conversation-edit-action-save-background: $color-action-secondary;
 $conversation-edit-action-save-font-color: #fff;
 $conversation-edit-radius: 0px;
 $conversation-edit-save-color: white;
@@ -118,8 +125,3 @@ $selected-stereotype-cluster-menu-padding: none;
 $stereotype-title: #3F1B53;
 $stereotype-new-text: #30bec0;
 $stereotype-new-icon: #30bec0;
-
-$stereotype-add-title-color: #C6027B;
-$stereotype-add-submit-color: #C6027B;
-$stereotype-add-input-border-radius: 0px;
-$stereotype-add-comment-color: #30BEC0;

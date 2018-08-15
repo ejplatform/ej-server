@@ -183,10 +183,13 @@ class Stereotype(models.Model):
         'ej_conversations.Conversation',
         on_delete=models.CASCADE,
         related_name='stereotypes',
+<<<<<<< Updated upstream
+=======
         help_text=_(
             'Conversation associated with the stereotype.'
         ),
         null=True, blank=True,
+>>>>>>> Stashed changes
     )
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     description = models.TextField(
@@ -198,6 +201,9 @@ class Stereotype(models.Model):
             'profile the stereotype wants to capture.'
         ),
     )
+
+    # owner = property(lambda self: self.conversation.author)
+    # owner_id = property(lambda self: self.conversation.author_id)
 
     class Meta:
         unique_together = [('name', 'conversation')]
