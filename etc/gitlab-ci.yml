@@ -120,7 +120,7 @@ publish cpa tagged images:
     - tags
 
 # DEPLOY: tell rancher to update its images.
-deploy: &deploy
+.deploy: &deploy
   image: cdrx/rancher-gitlab-deploy
   script:
     - "upgrade
