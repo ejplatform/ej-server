@@ -12,7 +12,7 @@ class ProfileForm(ModelForm):
     """
     User profile form
     """
-    
+
     class Meta:
         model = models.Profile
         fields = [field for field in EDITABLE_FIELDS if field not in EXCLUDE_EDITABLE_FIELDS]
