@@ -6,8 +6,8 @@ services:
     image: nginx:alpine
     restart: always
     build:
-      context: ../
-      dockerfile: ./docker/Dockerfile-nginx
+      context: ./
+      dockerfile: ./base-images/Dockerfile-nginx
     volumes:
       - media_files:/usr/share/nginx/html/media
       - static_files:/usr/share/nginx/html/static

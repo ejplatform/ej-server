@@ -66,7 +66,6 @@ RUN pip install -r /etc/requirements/production.txt
 
 # Copy files
 COPY ./.coveragerc /app/.coveragerc
-COPY ./docker/nginx.conf /etc/nginx/conf.d/web.conf
 COPY ./lib/ /app/lib/
 COPY ./locale/ /app/locale/
 COPY ./manage.py /app/manage.py
