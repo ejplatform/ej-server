@@ -37,21 +37,41 @@
           <div class="ConversationField"><i class="fa fa-link"></i> <input type="text" name="title" placeholder="{{ _('Slug') }}" /> <i class="fa fa-edit"></i></div>
           <div class="ConversationField">
             <i class="fa fa-list-ul"></i> 
-            <select name="board">
+            <select name="board" onchange="createNewBoard()">
               <option disabled selected value>{{ _('Conversation list aka board') }}</option>
               {% for board in boards %}
               <option value="{{ board.id }}">{{ board.title }}</option>
               {% endfor %}
+              <option value="new">{{ _('Create new board...') }}</option>
             </select> 
             <i class="fa fa-edit"></i>
           </div>
 
+          <input type="hidden" name="commentscount" value="5" />
           <div class="Moderate-comments">
             <h1>{{ _('Comments') }}</h1>
             {% for i in range(1, 6) %}
               <div class="ConversationField"><i class="far fa-comment"></i> <input type="text" name="comment-{{ i }}" placeholder="{{ _('Type here the comment') }} #{{ i }}" /> <i class="fa fa-edit"></i></div>
             {% endfor %}
           </div>
+          <p class="Conversation-AddComment" onclick="addCommentField()"><i class="fa fa-plus"></i> {{ _('Add more comments') }}</p>
         </form>
+
+        <script>
+        function createNewBoard() {
+          var select = $('select[name="board"]');
+          if (select.val() === 'new') {
+            var field = '<input type="text" name="newboard" placeholder="{{ _('Type here the title of the new board') }}" />';
+            select.replaceWith(field);
+          }
+        }
+
+        function addCommentField() {
+          var index = parseInt($('input[name="commentscount"]').val(), 10) + 1;
+          $('input[name="commentscount"]').val(index);
+          var template = '<div class="ConversationField"><i class="far fa-comment"></i> <input type="text" name="comment-%INDEX%" placeholder="{{ _('Type here the comment') }} #%INDEX%" /> <i class="fa fa-edit"></i></div>';
+          $('.Moderate-comments').append(template.replace(/%INDEX%/g, index));
+        }
+        </script>
     </div>
 {% endblock %}
