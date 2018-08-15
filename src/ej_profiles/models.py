@@ -131,7 +131,7 @@ class Profile(models.Model):
             blacklist = settings.EJ_EXCLUDE_PROFILE_FIELDS
 
         # Remove the attribute name from the list
-        return [(b, c) for a, b, c in triple_list if not a in blacklist]
+        return [(b, c) for a, b, c in triple_list if a not in blacklist]
 
     def statistics(self):
         """
