@@ -8,6 +8,7 @@ from django.db.models import Subquery, OuterRef
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from model_utils.models import TimeStampedModel
+from django.conf import settings
 
 import sidekick as sk
 from boogie import rules
@@ -184,6 +185,7 @@ class Stereotype(models.Model):
         on_delete=models.CASCADE,
         related_name='stereotypes',
     )
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     description = models.TextField(
         _('Description'),
         blank=True,
