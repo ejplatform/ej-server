@@ -1,11 +1,12 @@
 
 {% macro login(form, csrf_input, next=None) %}
     <div class="Login">
-        <h1 class="Login-title">Contribua para discussões mais democráticas!</h1>
-{#        <div class="Login-icon">#}
-{#            <img src="/static/img/login/ej-cat.svg">#}
-{#        </div>#}
+        <div class="Login-icon">
+            <img src="/static/img/login/ej-cat.svg">
+        </div>
 
+        <h1 class="Login-title">Participe dos debates, contribua para promover e defender seus direitos</h1>
+        
         {% if social_buttons %}
             {{ login_extra }}
             <ul class="Login-socialLogin">
@@ -54,7 +55,7 @@
     <p class="Login-password"><a href="/profile/recover-password/">Esqueci minha senha</a></p>
 
     <div class="Login-socialButtons">
-        <p>ou entre por outras redes</p>
+        <p>ou logue-se por outras redes</p>
         <div>
             <i class="fab fa-google"></i>
             <i class="fab fa-twitter"></i>
