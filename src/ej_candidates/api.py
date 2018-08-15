@@ -67,7 +67,12 @@ def candidates(request, user):
 
 @rest_api.action('ej_users.User')
 def selected_candidates(request, user):
-    return Candidate.objects.filter(selectedcandidate__user_id=user.id)
+    querySet = Candidate.objects.filter(selectedcandidate__user_id=user.id)
+    filters = get_filters(request.GET)
+    if (valid_filters(filters)):
+        return filter_candidates(querySet, filters)
+    else:
+        return querySet.order_by("-id")
 
 @rest_api.action('ej_users.User', methods=['post'])
 def unselect_candidate(request, user):
