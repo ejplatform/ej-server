@@ -14,6 +14,7 @@ class TestRoutes(UrlTester, ConversationRecipes):
     ]
     owner_urls = [
         '/conversations/conversation/edit/',
+        '/conversations/conversation/moderate/',
     ]
 
     @pytest.fixture

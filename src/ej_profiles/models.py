@@ -1,6 +1,7 @@
 import hashlib
 
 from allauth.socialaccount.models import SocialAccount
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.urls import reverse
@@ -100,7 +101,7 @@ class Profile(models.Model):
     def get_absolute_url(self):
         return reverse('user-detail', kwargs={'pk': self.id})
 
-    def profile_fields(self, user_fields=False):
+    def profile_fields(self, user_fields=False, blacklist=None):
         """
         Return a list of tuples of (field_description, field_value) for all
         registered profile fields.
@@ -109,20 +110,28 @@ class Profile(models.Model):
         fields = ['city', 'country', 'occupation', 'education', 'ethnicity', 'gender', 'race',
                   'political_activity', 'biography']
         field_map = {field.name: field for field in self._meta.fields}
-        result = []
+
+        # Create a tuples of (attribute, human-readable name, value)
+        triple_list = []
         for field in fields:
             description = field_map[field].verbose_name
             getter = getattr(self, f'get_{field}_display', lambda: getattr(self, field))
-            result.append((description.capitalize(), getter()))
+            triple = (field, description.capitalize(), getter())
+            triple_list.append(triple)
 
-        age = (_('Age'), self.age)
-        result.insert(3, age)
+        # Age is not a real field, but a property. We insert it after occupation
+        triple_list.insert(3, ('age', _('Age'), self.age))
+
+        # Add fields in the user profile (e.g., e-mail)
         if user_fields:
-            result = [
-                (_('E-mail'), self.user.email),
-                *result,
-            ]
-        return result
+            triple_list.insert(0, ('email', _('E-mail'), self.user.email))
+
+        # Prepare blacklist of fields
+        if blacklist is None:
+            blacklist = settings.EJ_EXCLUDE_PROFILE_FIELDS
+
+        # Remove the attribute name from the list
+        return [(b, c) for a, b, c in triple_list if not a in blacklist]
 
     def statistics(self):
         """
