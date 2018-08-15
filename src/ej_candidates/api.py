@@ -8,28 +8,32 @@ from .models.selected_candidates import SelectedCandidate
 #
 
 def filter_by_name(querySet, filter):
-    filteredCandidates = querySet.filter(name__contains=filter.upper())
-    if(filteredCandidates):
-        return filteredCandidates
-    return querySet
+    if(querySet):
+        filteredCandidates = querySet.filter(name__contains=filter.upper())
+        if(filteredCandidates):
+            return filteredCandidates
+        return []
 
 def filter_by_party(querySet, filter):
-    filteredCandidates = querySet.filter(party=filter.upper())
-    if(filteredCandidates):
-        return filteredCandidates
-    return querySet
+    if(querySet):
+        filteredCandidates = querySet.filter(party=filter.upper())
+        if(filteredCandidates):
+            return filteredCandidates
+        return []
 
 def filter_by_candidacy(querySet, filter):
-    filteredCandidates = querySet.filter(candidacy=filter.upper())
-    if(filteredCandidates):
-        return filteredCandidates
-    return querySet
+    if(querySet):
+        filteredCandidates = querySet.filter(candidacy=filter.upper())
+        if(filteredCandidates):
+            return filteredCandidates
+        return []
 
 def filter_by_uf(querySet, filter):
-    filteredCandidates = querySet.filter(uf=filter.upper())
-    if(filteredCandidates):
-        return filteredCandidates
-    return querySet
+    if(querySet):
+        filteredCandidates = querySet.filter(uf=filter.upper())
+        if(filteredCandidates):
+            return filteredCandidates
+        return []
 
 
 def filter_candidates(querySet, filters):
