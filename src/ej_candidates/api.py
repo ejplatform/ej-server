@@ -40,7 +40,7 @@ def filter_candidates(querySet, filters):
     if(filters["filter_by_party"]):
         querySet = filter_by_party(querySet, filters["filter_by_party"])
     if(filters["filter_by_candidacy"]):
-        querySet = filter_by_party(querySet, filters["filter_by_candidacy"])
+        querySet = filter_by_candidacy(querySet, filters["filter_by_candidacy"])
     return querySet
 
 def get_filters(request):
