@@ -125,14 +125,15 @@ def create_stereotype(request, conversation):
         rendered_votes_form = votes_form(request.POST)
 
         if rendered_stereotype_form.is_valid() and rendered_votes_form.is_valid():
-            stereotype = rendered_stereotype_form.save()
+            stereotype = rendered_stereotype_form.save(commit=False)
+            stereotype.owner = request.user
             stereotype.save()
             votes = rendered_votes_form.save(commit=False)
             for vote in votes:
                 vote.author = stereotype
                 vote.save()
             clusterization = Clusterization.objects.get(conversation=conversation)
-            cluster = Cluster(clusterization=clusterization)
+            cluster = Cluster(clusterization=clusterization, name=stereotype.name)
             cluster.save()
             cluster.stereotypes.add(stereotype)
             return redirect(conversation.get_absolute_url() + 'stereotypes/')
