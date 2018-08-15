@@ -22,7 +22,19 @@ Para denúncias <b>Disque</b> 100 e <b>#HUMANIZAREDES.</b>
         console.log($("#subject").val());
         console.log($("#message").val());
 
-        
+        const sucessMessage = 
+        `
+            <div style="padding: 10px;
+            border: 1px solid #30BFD3;
+            border-radius: 12px; 
+            text-align: center;">
+            Obrigada. Sua mensagem foi enviada com sucesso! 
+            Responderemos o mais rápido o possível
+            </div>
+        `
+
+        $('#emailsending-form').replaceWith(sucessMessage);
+
 
         return false;
     }
