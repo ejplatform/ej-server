@@ -17,7 +17,7 @@
         {% endif %}
         <form method="post">
             {{ csrf_input }}
-            <div><input type="text" name="email" required placeholder="E-mail ou nome de usuário"></div>
+            <div><input type="text" name="email" required placeholder="login ou email"></div>
             {{ form.email.errors }}
 
             <div><input type="password" name="password" required placeholder="Senha"></div>
