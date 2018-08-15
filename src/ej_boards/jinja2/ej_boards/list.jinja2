@@ -13,6 +13,8 @@
                 <p>{{ link(_(board.title), href=board.get_absolute_url()) }}</p>
             {% endfor %}
         </div>
-        {{ action_button(_('Create a new board!'), 'add/') }}
+        {% if can_create_board %}
+            {{ action_button(_('Create a new board!'), 'add/') }}
+        {% endif %}
     </div>
 {% endblock %}

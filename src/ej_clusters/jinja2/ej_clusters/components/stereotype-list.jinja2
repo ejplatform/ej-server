@@ -2,31 +2,31 @@
     STEREOTYPE AND CLUSTER LIST (NOW ONLY STEREOTYPE IMPLEMENTED)
  #---------------------------------------------------------------------------#}
 
-{% macro stereotype_list(stereotypes,
-                           title='Gerenciamento de clusters e esteriótipos',
-                           subtitle='Crie, delete e edite aqui seus clusters e esteriótipos',
+{% macro stereotype_list(stereotypes, conversation_title,
+                           title='Gerenciamento de esteriótipos da conversa',
+                           subtitle='Crie, delete e edite aqui os esteriótipos da conversa ',
                            javascript_enabled='') %}
 
     <div class="StereotypeList">
-        {{ stereotype_list_static(stereotypes, title, subtitle) }}
+        {{ stereotype_list_static(stereotypes, conversation_title,title, subtitle) }}
     </div>
 
 {% endmacro %}
 
-{% macro stereotype_list_static(stereotypes, title, subtitle) %}
+{% macro stereotype_list_static(stereotypes, conversation_title, title, subtitle) %}
         <div class="StereotypeList-title">
-            <h1 class="h1">{{ title }}</h1>
-            <p>{{ subtitle }}</p>
+            <h1 class="h1">{{ title }} {{ conversation_title}}</h1>
+            <p>{{ subtitle }} {{ conversation_title}}</p>
         </div>
 
         <div class="StereotypeList-header up-nav">
             <a href="/profile/stereotypes/">Stereotypes</a>
         </div>
 
-        {% if create_url %}
-            <a class="StereotypeList-new" href="{{ create_url }}"><i class="fa fa-plus-circle"></i> {{ _('New stereotype') }}</a>
+        {% if stereotype_url %}
+            <a class="StereotypeList-new" href="{{ stereotype_url }}add/"><i class="fa fa-plus-circle"></i> {{ _('New stereotype') }}</a>
         {% endif %}
-        
+
 
         {# Search - not implemented #}
         <div class="StereotypeList-search">
@@ -43,7 +43,7 @@
             <div class="StereotypeList-singleStereotype">
               <h2>{{ stereotype.name }} </h2>
               <div class="StereotypeList-icons">
-                <a href="/profile/stereotypes/edit/{{stereotype.id}}">
+                <a href="{{ stereotype_url }}{{stereotype.id}}/edit/">
                     <i class="far fa-edit"></i>
                 </a>
                 {# <i class="far fa-times-circle"></i> #}

@@ -30,7 +30,7 @@ def create(request):
                         conversation=conversation,
                         author=request.user
                     )
-            return redirect('/profile/stereotypes')
+            return redirect(conversation.get_absolute_url() + 'stereotypes/')
     else:
         form = form_class()
         boards = request.user.boards.all()

@@ -132,11 +132,18 @@
             }
         }
         .comment-stereotype {
+            flex-direction: column;
+            text-align: justify;
+
             img {
                 max-width: 35px;
                 height: 25px;
                 width: 22px;
                 padding: 5px;
+            }
+
+            div {
+                display: flex;
             }
         }
         .talk-stereotype{

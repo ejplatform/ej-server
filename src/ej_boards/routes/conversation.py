@@ -61,4 +61,5 @@ def create(request, board):
     return {
         'content_title': _('Create conversation'),
         'form': form,
+        'boards': Board.objects.filter(owner=user)
     }
