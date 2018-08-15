@@ -84,19 +84,26 @@ $login-new-user-background-color: #052B47 !default;
             justify-content: center;
         }
 
-        i {
-
-            font-size: $social-buttons-size;
-            color: $social-buttons-color;
-            margin: 10px;
-            border: $social-buttons-border;
-            background: $social-buttons-background-color;
+        .round-icon-container {
             border-radius: 50%;
             width: 40px;
             height: 40px;
+            margin: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
+        }
+
+        .icon-google {
+            border: 1px solid #0C3570;	
+        }
+
+        .icon-facebook {
+            background-color: #4460A0;
+        }
+
+        .icon-twitter {
+            background-color: #00AAEC;
         }
     }
 
