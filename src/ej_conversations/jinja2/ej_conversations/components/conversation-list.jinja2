@@ -6,6 +6,7 @@
 
 {% macro conversation_list(conversations,
                            categories,
+                           footer_content,
                            title='Conversas públicas',
                            subtitle='Participe das conversas e dê sua opinião com comentários e votos!',
                            javascript_enabled='') %}
@@ -17,13 +18,18 @@
     </div>
 
     <div class="ConversationFooter">
-
-        <img src="/static/img/icons/facebook-blue.svg" alt="FB logo">
-        <p>Plataforma desenvolvida pelo <b>Conanda/MDH/UnB</b></p>
-        <p>Para denunciar: <b>Disque 100</b> e <b>#HUMANIZAREDES</b></p>
+        {{conversation_list_footer(footer_content)}}
     </div>
 
 {% endmacro %}
+
+{% macro conversation_list_footer(footer_content) %}
+        <img src='{{footer_content.image}}' alt="FB logo">
+        <p>{{footer_content.first.normal}} <b>{{footer_content.first.bold}}</b> </p>
+        <p>{{footer_content.last.normal}} <b>{{footer_content.last.bold}}</b></p>
+
+{% endmacro %}
+
 
 {% macro conversation_list_static(conversations, categories, title, subtitle, caller_output=None) %}
     <div class="ConversationListStatic">
