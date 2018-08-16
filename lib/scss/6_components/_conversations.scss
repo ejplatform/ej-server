@@ -115,6 +115,16 @@ $conversation-card-button-border-radius: 30px !default;
     }
 }
 
+.ConversationFooter {
+    background-color: #D4F7F5;
+    height: 180px;
+    width: 100vw;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+}
+
 .ConversationTags {
     @include color($conversation-card-light, $conversation-card-color, $force: true);
     font-weight: bold;
