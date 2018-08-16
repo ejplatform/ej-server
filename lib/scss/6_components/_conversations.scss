@@ -123,6 +123,10 @@ $conversation-card-button-border-radius: 30px !default;
     justify-content: center;
     display: flex;
     flex-direction: column;
+
+    p {
+        text-align: center;
+    }
 }
 
 .ConversationTags {
