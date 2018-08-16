@@ -45,6 +45,7 @@ def create(request):
 @urlpatterns.route('', template='ej_boards/list.jinja2')
 def board_list(request):
     user = request.user
+    print(user.get_all_permissions())
     return {
         'boards': user.boards.all(),
         'can_add_board': user.has_perm('ej_boards.can_add_board'),

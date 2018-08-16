@@ -161,3 +161,15 @@ def can_moderate_conversation(user, conversation):
         can_edit_conversation(user, conversation)
         or user.has_perm('ej_conversations.can_moderate')
     )
+
+
+@rules.register_perm('ej_conversations.can_promote_conversation')
+def can_promote_conversation(user):
+    """
+    Can promote a conversation of a board
+    to the promoted conversations.
+    """
+    return (
+        user.is_superuser or
+        user.has_perm('ej_conversations.can_publish')
+    )
