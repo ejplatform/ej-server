@@ -105,8 +105,8 @@ class Conf(ThemesConf,
 
     # TODO: Fix this later in boogie configuration stack
     # Required for making django debug toolbar work
-    ENVIRONMENT = 'local'
-    if ENVIRONMENT == 'local':
+    ENVIRONMENT = 'dev'
+    if ENVIRONMENT == 'dev':
         INTERNAL_IPS = [*globals().get('INTERNAL_IPS', ()), '127.0.0.1']
 
         # Django CORS
@@ -135,6 +135,9 @@ class Conf(ThemesConf,
                 'PORT': '5432'
             }
         }
+
+        ALLOWED_HOSTS = ['dev.besouro.ejplatform.org',
+                         'admin.dev.besouro.ejplatform.org']
 
         #EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend'
 
