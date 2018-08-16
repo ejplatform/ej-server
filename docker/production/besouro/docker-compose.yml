@@ -1,10 +1,15 @@
 version: '3'
 services:
   db:
-    image: postgres
-    restart: always
+    build:
+      context: ./db
+      args:
+        - API_TAG=${API_TAG}
   api:
-    build: api
+    build:
+      context: ./api
+      args:
+        - API_TAG=${API_TAG}
     ports:
     - "5000:8000"
     links:

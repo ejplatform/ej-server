@@ -28,22 +28,19 @@ RUN apt-get update \
 
 
 RUN git clone --single-branch -b "${API_TAG}" \
-https://github.com/unidoscontraacorrupcao/ej-server.git
+https://github.com/unidoscontraacorrupcao/ej-server.git #rebuild
 
 WORKDIR ej-server
 
-ENV PYTHONUNBUFFERED=1 \
-    LANG=C.UTF-8 \
-    PYTHONPATH="/ej-server/src/:$PYTHONPATH"
+ENV PYTHONUNBUFFERED=1
+ENV LANG=C.UTF-8
 
 RUN pip install -r etc/requirements/production.txt
+RUN pip install invoke
 ARG VOLATILE_DEPENDENCIES_STRATEGY=unknown
 RUN VOLATILE_DEPENDENCIES_STRATEGY=${VOLATILE_DEPENDENCIES_STRATEGY} pip install -r etc/requirements/git-modules.txt
 
 RUN groupadd -r django && useradd -r -g django django
-
 RUN chown -R django:django . && ln -s /usr/bin/python3 /usr/bin/python
-
 USER django
-
-ENTRYPOINT ["inv", "run", "--gunicorn", "--migrate"]
+ENTRYPOINT ./manage.py migrate
