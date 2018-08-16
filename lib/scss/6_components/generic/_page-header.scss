@@ -149,7 +149,7 @@ $header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.2) !default;
         height: $header-bottom-nav-height;
         text-transform: uppercase;
         font-size: $font-size-tiny;
-        background-color: $color-purple-dark;
+        background-color: $login-button-color;
 
         &:hover {
             cursor: pointer;
