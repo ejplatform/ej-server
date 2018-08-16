@@ -21,9 +21,9 @@ def conversation_list(request):
         'subtitle': _("Participate of the conversations and give your opinion with comments and votes!"),
         'conversation_link': _("View all conversations"),
         'footer_content': {'image': '/static/img/icons/facebook-blue.svg',
-                            'first': {'normal': 'Plataforma desenvolvida pelo', 'bold': 'Conanda/MDH/UnB'}, 
-                            'last': {'normal': 'Para denunciar:', 'bold': 'Disque 100 e #HUMANIZAREDES'} 
-                        }
+                           'first': {'normal': 'Plataforma desenvolvida pelo', 'bold': 'Conanda/MDH/UnB'},
+                           'last': {'normal': 'Para denunciar:', 'bold': 'Disque 100 e #HUMANIZAREDES'}
+                           }
     }
 
 
