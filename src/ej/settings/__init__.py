@@ -131,7 +131,7 @@ class Conf(ThemesConf,
                 'NAME': 'besouro-local',
                 'USER': 'besouro',
                 'PASSWORD': '',
-                'HOST': 'db',
+                'HOST': 'besouro_db',
                 'PORT': '5432'
             }
         }
