@@ -1,8 +1,6 @@
 FROM debian:buster-slim
 
-ENV PYTHONUNBUFFERED=1 \
-    LANG=C.UTF-8 \
-    PYTHONPATH="/app/src/:$PYTHONPATH"
+ARG API_TAG
 
 EXPOSE 5000
 
@@ -29,21 +27,23 @@ RUN apt-get update \
     && pip3 install --upgrade pip
 
 
-ADD . /app
-WORKDIR /app
-RUN pip install -r etc/requirements/production.txt
+RUN git clone --single-branch -b "${API_TAG}" \
+https://github.com/unidoscontraacorrupcao/ej-server.git
 
+WORKDIR ej-server
+
+ENV PYTHONUNBUFFERED=1 \
+    LANG=C.UTF-8 \
+    PYTHONPATH="/ej-server/src/:$PYTHONPATH"
+
+RUN pip install -r etc/requirements/production.txt
 ARG VOLATILE_DEPENDENCIES_STRATEGY=unknown
 RUN VOLATILE_DEPENDENCIES_STRATEGY=${VOLATILE_DEPENDENCIES_STRATEGY} pip install -r etc/requirements/git-modules.txt
 
-COPY etc/scripts/**/* /
+RUN groupadd -r django && useradd -r -g django django
 
-RUN groupadd -r django \
-    && useradd -r -g django django \
-    && chown django:django /*.sh
-
-RUN chown -R django:django /app && ln -s /usr/bin/python3 /usr/bin/python
+RUN chown -R django:django . && ln -s /usr/bin/python3 /usr/bin/python
 
 USER django
 
-CMD ["inv", "run", "--gunicorn", "--migrate"]
+ENTRYPOINT ["inv", "run", "--gunicorn", "--migrate"]

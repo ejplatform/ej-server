@@ -125,6 +125,17 @@ class Conf(ThemesConf,
         ACCOUNT_EMAIL_VERIFICATION = 'optional'
         EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
+        DATABASES = {
+            'default': {
+                'ENGINE': 'django.db.backends.postgresql',
+                'NAME': 'besouro-local',
+                'USER': 'besouro',
+                'PASSWORD': '',
+                'HOST': 'db',
+                'PORT': '5432'
+            }
+        }
+
         #EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend'
 
         #ANYMAIL = {

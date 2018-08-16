@@ -1,0 +1,11 @@
+version: '3'
+services:
+  db:
+    image: postgres
+    restart: always
+  api:
+    build: api
+    ports:
+    - "5000:8000"
+    links:
+      - db
