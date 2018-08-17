@@ -12,7 +12,6 @@ from rest_framework import status
 from rest_framework.authtoken.models import Token
 
 from boogie.router import Router
-from ej_conversations.models import FavoriteConversation
 from ej_users import forms
 from .socialbuttons import social_buttons
 
@@ -127,18 +126,6 @@ def remove_account(request):
     return {
         'user': request.user,
         'profile': request.user.profile,
-    }
-
-
-@urlpatterns.route('profile/favorites/', login=True)
-def favorite_conversation(request):
-    if request.method == 'GET':
-        user = request.user
-        conversations = []
-        for fav in FavoriteConversation.objects.filter(user=user):
-            conversations.append(fav.conversation)
-    return {
-        'conversations': conversations,
     }
 
 

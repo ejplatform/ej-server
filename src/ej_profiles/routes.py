@@ -67,6 +67,23 @@ def comments(request):
     }
 
 
+@urlpatterns.route('favorites/', login=True)
+def favorite_conversation(request):
+    if request.method == 'GET':
+        user = request.user
+        conversations = []
+        for fav in FavoriteConversation.objects.filter(user=user):
+            conversations.append(fav.conversation)
+    return {
+        'conversations': conversations,
+        'category': None,
+        'footer_content': {'image': '/static/img/icons/facebook-blue.svg',
+                           'first': {'normal': 'Plataforma desenvolvida pelo', 'bold': 'Conanda/MDH/UnB'},
+                           'last': {'normal': 'Para denunciar:', 'bold': 'Disque 100 e #HUMANIZAREDES'}
+                           },
+    }
+
+
 @urlpatterns.route('comments/rejected/', template='ej_conversations/components/comment-list.jinja2')
 def rejected_comments(request):
     user = request.user
