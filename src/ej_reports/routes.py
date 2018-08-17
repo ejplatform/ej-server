@@ -13,7 +13,6 @@ from ej_math import VoteStats
 from hyperpython.components import html_table, hyperlink
 
 
-app_name = 'ej_reports'
 urlpatterns = Router(
     template=['ej_reports/{name}.jinja2', 'generic.jinja2'],
     perms=['ej_reports.can_view_report'],
@@ -25,6 +24,7 @@ urlpatterns = Router(
     lookup_type='slug',
     login=True,
 )
+app_name = 'ej_reports'
 conversation_url = '<model:conversation>/reports/'
 User = get_user_model()
 
