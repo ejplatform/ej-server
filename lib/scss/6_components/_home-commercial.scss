@@ -1,6 +1,6 @@
 #HomeCommercial {
   width: 100%;
-  max-width: 600px;
+  max-width: 800px;
   margin: 0 auto;
   border-right: 1px solid #ccc;
   border-left: 1px solid #ccc;
@@ -164,8 +164,7 @@
     }
   }
 
-  &-who {
-    background: $color-gray-light;
+  &-who, &-community {
     padding-bottom: $unit * 3;
 
     h2 {
@@ -182,6 +181,31 @@
         width: 128px;
         height: 128px;
         margin: $unit;
+      }
+    }
+  }
+
+  &-community {
+    background: $color-gray-lighter;
+
+    ul {
+      li {
+        width: auto;
+        height: auto;
+        text-align: center;
+
+        img {
+          border-radius: 50%;
+          width: 50px;
+          height: 50px;
+        }
+
+        span {
+          display: block;
+          font-family: Raleway;
+          color: $color-purple-dark;
+          font-size: 12px;
+        }
       }
     }
   }

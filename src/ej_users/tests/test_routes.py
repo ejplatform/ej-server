@@ -96,4 +96,4 @@ class TestRegisterRoute(TestCase):
         }, follow=True)
         user_pk = User.objects.get(email="leela@example.com").pk
         self.assertEqual(int(client.session['_auth_user_id']), user_pk)
-        self.assertRedirects(response, '/home/', 302, 200)
+        self.assertRedirects(response, '/conversations/', 302, 200)

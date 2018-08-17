@@ -1,11 +1,12 @@
 
 {% macro login(form, csrf_input, next=None) %}
     <div class="Login">
-        <h1 class="Login-title">Contribua para discussões mais democráticas!</h1>
         <div class="Login-icon">
             <img src="/static/img/login/ej-cat.svg">
         </div>
 
+        <h1 class="Login-title">Participe dos debates, contribua para promover e defender seus direitos</h1>
+        
         {% if social_buttons %}
             {{ login_extra }}
             <ul class="Login-socialLogin">
@@ -16,10 +17,10 @@
         {% endif %}
         <form method="post">
             {{ csrf_input }}
-            <div><input type="text" name="email" required placeholder="E-mail ou nome de usuário"></div>
+            <div><input type="text" name="email" required placeholder="login ou email"></div>
             {{ form.email.errors }}
 
-            <div><input type="password" name="password" required placeholder="Senha"></div>
+            <div><input type="password" name="password" required placeholder="senha"></div>
             {{ form.password.errors }}
 
             <div><input type="submit" class="Button" value="{{ _('Login') }}" name="login"></div>
@@ -54,11 +55,17 @@
     <p class="Login-password"><a href="/profile/recover-password/">Esqueci minha senha</a></p>
 
     <div class="Login-socialButtons">
-        <p>ou entre por outras redes</p>
+        <p>ou logue-se por outras redes</p>
         <div>
-            <i class="fab fa-google"></i>
-            <i class="fab fa-twitter"></i>
-            <i class="fab fa-facebook-f"></i>
+            <div class="round-icon-container icon-google">
+                <img src="/static/img/login/google-color.svg">
+            </div>
+            <div class="round-icon-container icon-facebook">
+                <img class="icon-facebook" src="/static/img/login/facebook-color.svg">
+            </div>
+            <div class="round-icon-container icon-twitter">
+                <img class="icon-twitter" src="/static/img/login/twitter-color.svg">
+            </div>
         </div>
     </div>
 

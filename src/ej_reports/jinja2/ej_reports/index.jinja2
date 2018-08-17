@@ -7,7 +7,19 @@
             <form method="get" class="Comment-voteArea" id="Csv-form">
                 <input type="hidden" name="action" value="generate_csv">
                     <button type="submit" form="Csv-form">
-                      <span>{{ _('Export report to csv') }}</span>
+                      <span>{{ _('Export report to CSV') }}</span>
+                    </button>
+            </form>
+            <form method="get" class="Comment-voteArea" id="Json-form">
+                <input type="hidden" name="action" value="generate_json">
+                    <button type="submit" form="Json-form">
+                      <span>{{ _('Export report to JSON') }}</span>
+                    </button>
+            </form>
+            <form method="get" class="Comment-voteArea" id="MsgPack-form">
+                <input type="hidden" name="action" value="generate_msgpack">
+                    <button type="submit" form="MsgPack-form">
+                      <span>{{ _('Export report to MessagePack') }}</span>
                     </button>
             </form>
         </div>

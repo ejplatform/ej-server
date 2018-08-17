@@ -43,6 +43,7 @@ def sass(ctx, watch=False, theme='default', trace=False, dry_run=False, rocket=T
     cmd += ' --watch' if watch else ''
     cmd += ' --trace' if trace else ''
     go('rm -rf .sass-cache lib/build/css/main.css lib/build/css/rocket.css')
+    go('mkdir -p lib/build/css')
     go(cmd)
 
 
@@ -185,9 +186,9 @@ def db_assets(ctx, path=None, force=False):
         if (path / 'pages').exists():
             pages = path / 'pages'
         if (path / 'fragments').exists():
-            pages = path / 'fragments'
+            fragments = path / 'fragments'
         if (path / 'data').exists():
-            pages = path / 'data'
+            data = path / 'data'
 
     icons = data / 'social-icons.json'
     manage(ctx, 'loadpages', path=pages, force=force)

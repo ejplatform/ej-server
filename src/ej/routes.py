@@ -18,9 +18,10 @@ urlpatterns = Router(
 #
 @urlpatterns.route('')
 def home(request):
-    # if request.user.id:
-    #    return redirect('/conversations/')
-    return redirect(settings.EJ_HOME_PATH)
+    if request.user.id:
+        return redirect(settings.EJ_HOME_PATH)
+    else:
+        return redirect('/home/')
 
 
 @urlpatterns.route('start/')

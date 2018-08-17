@@ -6,6 +6,7 @@
 
 {% macro conversation_list(conversations,
                            categories,
+                           footer_content,
                            title='Conversas públicas',
                            subtitle='Participe das conversas e dê sua opinião com comentários e votos!',
                            javascript_enabled='') %}
@@ -13,15 +14,27 @@
     {% if caller is defined %}{% set caller_output = caller() %}{% endif %}
 
     <div class="ConversationList">
-        {{ react_component('conversation_list', conversation_list_static(conversations, categories, title, subtitle, caller_output|default('')), javascript_enabled) }}
+        {{ react_component('conversation_list', conversation_list_static(conversations, categories, title, subtitle, caller_output|default(topic)), javascript_enabled) }}
+    </div>
+
+    <div class="ConversationFooter">
+        {{conversation_list_footer(footer_content)}}
     </div>
 
 {% endmacro %}
 
+{% macro conversation_list_footer(footer_content) %}
+        <img src='{{footer_content.image}}' alt="FB logo">
+        <p>{{footer_content.first.normal}} <b>{{footer_content.first.bold}}</b> </p>
+        <p>{{footer_content.last.normal}} <b>{{footer_content.last.bold}}</b></p>
+
+{% endmacro %}
+
+
 {% macro conversation_list_static(conversations, categories, title, subtitle, caller_output=None) %}
     <div class="ConversationListStatic">
         <div class="ConversationList-title">
-            {% if caller_output %}{{ caller_output }}{% endif %}
+            {% if caller_output %}<p>{{ caller_output }}</p>{% endif %}
             <h1 class="h1">{{ title }}</h1>
             <p>{{ subtitle }}</p>
         </div>
@@ -32,9 +45,9 @@
                     <i class="fa fa-chevron-left"></i>
                     {{ link(_('public conversations'), href='/conversations/') }}
                 </span>
-                {% if is_my_timeline is not defined %}
+                {% if not is_my_timeline %}
                 <span class="my-conversations">
-                    {{ link(_('go to my conversations'), href='/profile/boards/') }}
+                    {{ link(_('go to my conversations'), href='/profile/conversations/') }}
                     <i class="fa fa-chevron-right"></i>
                 </span>
                 {% endif %}
@@ -47,7 +60,7 @@
                 <ul>
                     <li>{{ link(_('All'), href='/conversations/', class_='color-accent') }}</li>
                     {% for category in categories %}
-                        <li>{{ link(category, href=category.get_absolute_url()) }}</li>
+                        <li>{{ link(category.tag|safe(), href=category.get_absolute_url()) }}</li>
                     {% endfor %}
                 </ul>
                 <i class="fa fa-chevron-right"></i>
@@ -61,6 +74,10 @@
             {% endfor %}
         </div>
         {# {{ conversation_pagination() }} #}
+
+        <div class="ConversationList-link">
+            <h1>{{ conversation_link }}</p>
+        </div>
     </div>
 {% endmacro %}
 

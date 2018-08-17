@@ -180,14 +180,16 @@ class Stereotype(models.Model):
         _('Name'),
         max_length=64,
     )
-    owner = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
+    conversation = models.ForeignKey(
+        'ej_conversations.Conversation',
         on_delete=models.CASCADE,
         related_name='stereotypes',
         help_text=_(
-            'Only the owner and administrative staff can edit this stereotype.'
-        )
+            'Conversation associated with the stereotype.'
+        ),
+        null=True, blank=True,
     )
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     description = models.TextField(
         _('Description'),
         blank=True,
@@ -199,7 +201,7 @@ class Stereotype(models.Model):
     )
 
     class Meta:
-        unique_together = [('name', 'owner')]
+        unique_together = [('name', 'conversation')]
 
     __str__ = (lambda self: self.name)
 

@@ -4,6 +4,9 @@ from boogie.router import Router
 from .forms import ProfileForm
 from ej_conversations.models import FavoriteConversation, Comment
 
+from django.utils.translation import ugettext_lazy as _
+from django.urls import reverse
+
 app_name = 'ej_profiles'
 urlpatterns = Router(
     template=['ej_profiles/{name}.jinja2', 'generic.jinja2'],
@@ -38,6 +41,19 @@ def edit(request):
     return {
         'form': form,
         'profile': profile,
+    }
+
+
+@urlpatterns.route('conversations/', template='ej_conversations/list.jinja2')
+def conversations(request):
+    user = request.user
+    return {
+        'user': user,
+        'conversations': user.conversations.all(),
+        'create_url': reverse('conversation:create'),
+        'can_add_conversation': user.has_perm('ej_conversations.can_add_conversation'),
+        'title': _("My conversations"),
+        'subtitle': _("See all conversations created by you"),
     }
 
 

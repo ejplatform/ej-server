@@ -1,5 +1,6 @@
 from boogie import rules
 from .models import Board
+from constance import config
 
 
 @rules.register_rule('ej_boards.has_board')
@@ -13,17 +14,18 @@ def has_board(user):
         return False
 
 
-@rules.register_perm('ej_boards.is_my_timeline')
-def is_my_timeline(user, board):
-    if board.owner == user:
-        return True
-
-    return False
+@rules.register_perm('ej_boards.can_add_board')
+def can_add_board(user):
+    """
+    Verify if a user can create a board following the
+    django admin permission and the max board number.
+    """
+    return (
+        user.has_perm('ej_boards.add_board') or
+        Board.objects.filter(owner=user).count() < config.MAX_BOARD_NUMBER
+    )
 
 
 @rules.register_perm('ej_boards.can_add_conversation')
 def can_add_conversation(user, board):
-    if board.owner == user:
-        return True
-
-    return False
+    return board.owner == user

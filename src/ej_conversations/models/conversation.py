@@ -288,6 +288,10 @@ class ConversationTag(TaggedItemBase):
     """
     content_object = models.ForeignKey('Conversation', on_delete=models.CASCADE)
 
+    # FIXME: return a url with associated conversations
+    def get_absolute_url(self):
+        return ''
+
 
 #
 # Utility functions

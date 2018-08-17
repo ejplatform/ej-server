@@ -1,7 +1,14 @@
 <div class="ConversationCard-container">
     <div class="ConversationCard">
         <div class="ConversationTags">
-            <i class="fa fa-tags"></i> {% if tags %}{{ tags }}{% else %}{{ _('Conversation') }}{% endif %}
+            <i class="fa fa-tags"></i>
+              {% if tags %}
+                {% for tag in tags %}
+                  {{ tag }}
+                {% endfor %}
+              {% else %}
+                {{ _('Conversation') }}
+              {% endif %}
         </div>
         <div class="ConversationCard-actions">
             <ul class="ConversationCard-statistics">

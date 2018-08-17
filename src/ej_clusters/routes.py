@@ -6,9 +6,8 @@ from boogie.rules import proxy_seq
 from ej_conversations.models import Conversation, Choice, Comment
 from hyperpython import a, input_, label, Block
 from hyperpython.components import html_list, html_table
-from .models import Stereotype, Cluster, StereotypeVote
+from .models import Stereotype, Cluster, StereotypeVote, Clusterization
 from ej_clusters.forms import StereotypeForm, StereotypeVoteFormSet
-
 
 app_name = 'ej_cluster'
 urlpatterns = Router(
@@ -63,19 +62,31 @@ def clusterize(conversation):
 
 
 #
+# Profile Cluster
+#
+@urlpatterns.route('profile/clusters/')
+def list_cluster(request):
+    user_clusters = Cluster.objects.filter(clusterization__conversation__author=request.user)
+    return {
+        'clusters': user_clusters,
+        'create_url': '/profile/clusters/add/',
+    }
+
+
+#
 # Stereotypes
 #
-@urlpatterns.route(conversation_url + 'stereotypes/')
-def stereotype_list(conversation):
-    base_href = f'{conversation.get_absolute_url()}stereotypes/'
-    return {
-        'content_title': _('Stereotypes'),
-        'conversation': conversation,
-        'stereotypes': html_list(
-            a(str(stereotype), href=f'{base_href}{stereotype.id}/')
-            for stereotype in conversation.stereotypes.all()
-        ),
-    }
+@urlpatterns.route(conversation_url + 'stereotypes/', name='list')
+def stereotype_list(request, conversation):
+    if conversation.author == request.user:
+        return {
+            'content_title': _('Stereotypes'),
+            'conversation_title': conversation.title,
+            'stereotypes': conversation.stereotypes.all(),
+            'stereotype_url': conversation.get_absolute_url() + 'stereotypes/',
+        }
+    else:
+        return redirect('/conversations/')
 
 
 @urlpatterns.route(conversation_url + 'stereotypes/<model:stereotype>/')
@@ -105,8 +116,8 @@ def stereotype_vote(request, conversation, stereotype):
 #
 # Profile stereotypes
 #
-@urlpatterns.route('profile/stereotypes/add/')
-def create_stereotype(request):
+@urlpatterns.route(conversation_url + 'stereotypes/add/')
+def create_stereotype(request, conversation):
     stereotype_form = StereotypeForm
     votes_form = StereotypeVoteFormSet
     if request.method == 'POST':
@@ -116,47 +127,55 @@ def create_stereotype(request):
         if rendered_stereotype_form.is_valid() and rendered_votes_form.is_valid():
             stereotype = rendered_stereotype_form.save(commit=False)
             stereotype.owner = request.user
-            if not Stereotype.objects.filter(owner=stereotype.owner, name=stereotype.name).exists():
-                stereotype.save()
-                votes = rendered_votes_form.save(commit=False)
-                for vote in votes:
-                    vote.stereotype = stereotype
-                    vote.save()
-
-                return redirect('/profile/stereotypes/')
-            else:
-                rendered_stereotype_form.add_error(None, _("Stereotype with this name and owner already exists."))
+            stereotype.save()
+            votes = rendered_votes_form.save(commit=False)
+            for vote in votes:
+                vote.author = stereotype
+                vote.save()
+            clusterization = Clusterization.objects.get(conversation=conversation)
+            cluster = Cluster(clusterization=clusterization, name=stereotype.name)
+            cluster.save()
+            cluster.stereotypes.add(stereotype)
+            return redirect(conversation.get_absolute_url() + 'stereotypes/')
     else:
         rendered_stereotype_form = stereotype_form()
         rendered_votes_form = votes_form(queryset=StereotypeVote.objects.none())
-        filtered_comments = Comment.objects.filter(conversation__author=request.user)
-        for form in rendered_votes_form:
-            form.fields['comment'].queryset = filtered_comments
+
+    filtered_comments = Comment.objects.filter(conversation=conversation)
+    for form in rendered_votes_form:
+        form.fields['comment'].queryset = filtered_comments
+        print(form.fields['choice'])
     return {
         'stereotype_form': rendered_stereotype_form,
         'votes_form': rendered_votes_form,
+        'conversation_title': conversation.title,
     }
 
 
-@urlpatterns.route('profile/stereotypes/edit/<model:stereotype>/')
-def edit_stereotype(request, stereotype):
-    stereotype_form = StereotypeForm
-    votes_form = StereotypeVoteFormSet
-    rendered_stereotype_form = stereotype_form(instance=stereotype)
-    rendered_votes_form = votes_form(queryset=StereotypeVote.objects.filter(author=stereotype))
-    return {
-        'stereotype_form': rendered_stereotype_form,
-        'votes_form': rendered_votes_form,
-    }
-
-
-@urlpatterns.route('profile/stereotypes/', name='list')
-def stereotypes(request):
-    user_stereotypes = Stereotype.objects.filter(owner=request.user)
-    return {
-        'stereotypes': user_stereotypes,
-        'create_url': '/profile/stereotypes/add/',
-    }
+@urlpatterns.route(conversation_url + 'stereotypes/<model:stereotype>/edit/')
+def edit_stereotype(request, conversation, stereotype):
+    if request.user == conversation.author:
+        rendered_stereotype_form = StereotypeForm(request.POST or None, instance=stereotype)
+        stereotype_votes = StereotypeVote.objects.filter(author=stereotype)
+        rendered_votes_form = StereotypeVoteFormSet(request.POST or None, queryset=stereotype_votes)
+        if request.method == 'POST':
+            if rendered_stereotype_form.is_valid() and rendered_votes_form.is_valid():
+                stereotype = rendered_stereotype_form.save(commit=False)
+                stereotype.conversation = conversation
+                stereotype.owner = request.user
+                stereotype.save()
+                votes = rendered_votes_form.save(commit=False)
+                for vote in votes:
+                    vote.author = stereotype
+                    vote.save()
+                return redirect(conversation.get_absolute_url() + 'stereotypes/')
+        return {
+            'stereotype_form': rendered_stereotype_form,
+            'votes_form': rendered_votes_form,
+            'conversation_title': conversation.title,
+        }
+    else:
+        return redirect(conversation.get_absolute_url())
 
 
 #

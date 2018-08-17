@@ -1,84 +1,102 @@
 {% from 'components/generic/elements.jinja2' import link %}
 
-{% macro menu(user, board) %}
+{% macro menu(user) %}
     <nav class="NavMenu">
-        <ul>
-            <li><em>{{ icon_link(_('Home'), '/', 'fa fa-home') }}</em></li>
+        <ul>            
+            <li>{{ icon_link(_('About'), '/about-us/', 'far fa-comment') }}</li>
+            <li>{{ icon_link(_('Frequently Asked Questions'), '/faq/', 'far fa-question-circle') }}</li>
+            <li>{{ icon_link(_('Talk to us'), '/talk-to-us/', 'fas fa-question-circle') }}</li>
+            <li>{{ icon_link(_('Usage terms'), '/usage/', 'far fa-file-alt') }}</li>
+
+            {% if not user.is_active %}
+                <li>{{ icon_link(_('Conversations'), '/conversations/', 'conversations', fa=False) }}</li>
+            {% elif not user.is_staff %}
+                <li class="NavMenu-DropDown" onclick="openDropDown('NavMenu-UserMenu')">
+                    <img src="/static/img/menu/conversations.svg">
+                    Conversations
+                    <i class="fas fa-angle-down fa-2x NavMenu-AngleDownIcon"></i>
+                </li>
+                    <ul class="NavMenu-UserMenu">
+                        <li>
+                            {{icon_link(_('Public conversations'), '/conversations/', '', fa=True)}}
+                        </li>
+                        <li>
+                            {# {% if board %} #}
+                                {# {{icon_link(_('Your conversations'), ('/{}/'.format(board.name)), 'far fa-comment', fa=True)}} #}
+                            {# {% else %} #}
+                                {{icon_link(_('Your conversations'), ('/profile/conversations/'), 'far fa-comment', fa=True)}}
+                            {# {% endif %} #}
+                        </li>
+                        <li>
+                            {{icon_link(_('Add conversation'), ('/conversations/add/'), 'fas fa-plus-circle', fa=True)}}
+                        </li>
+                        <li>
+                            {{icon_link(_('Favorite conversations'), ('/profile/favorites/'), 'far fa-star', fa=True)}}
+                        </li>
+                         <li>
+                            {{icon_link(_('Manage boards'), ('/profile/boards/'), 'fa fa-cog', fa=True)}}
+                        </li>
+                    </ul>
+                </li>
+                {# <li>{{ icon_link(_('Panel'), '/talks/', 'talks', fa=False) }}</li> #}
+            {% else %}
+                <li class="NavMenu-DropDown" onclick="openDropDown('NavMenu-UserMenu')">
+                    <img src="/static/img/menu/conversations.svg">
+                    Conversations
+                    <i class="fas fa-angle-down fa-2x NavMenu-AngleDownIcon"></i>
+                    </li>
+                    <ul class="NavMenu-UserMenu">
+                        <li>
+                            {{icon_link(_('Public conversations'), '/conversations/', '', fa=True)}}
+                        </li>
+                        <li>
+                            {{icon_link(_('Your conversations'), '/profile/conversations/', '', fa=True)}}
+                        </li>
+                        <li>
+                            <i class="fas fa-plus-circle"></i>
+                            {{_('Add conversation')}}
+                        </li>
+                        <li>
+                            {{icon_link(_('Favorite conversations'), ('/profile/favorites/'), 'far fa-star', fa=True)}}
+                        </li>
+                        {# <li>
+                            <i class="fas fa-cog"></i>
+                            {{_('Manage timelines')}}
+                        </li> #}
+                        <li>
+                            {{icon_link(_('Manage stereotypes'), '/profile/stereotypes/', 'fas fa-sliders-h', fa=True)}}
+                        </li>
+                        {# <li>
+                            {{icon_link(_('Request reports'), '/reports/', 'far fa-chart-bar', fa=True)}}
+                        </li> #}
+                    </ul>
+                </li>
+                {# <li>{{ icon_link(_('Panel'), '/talks/', 'talks', fa=False) }}</li> #}
+            {% endif %}
             <li>{{ icon_link(_('Profile'), '/profile/', 'profile', fa=False) }}</li>
-        {% if not user.is_active %}
-            <li>{{ icon_link(_('Conversations'), '/conversations/', 'conversations', fa=False) }}</li>
-        {% elif not user.is_staff %}
-            <li class="NavMenu-DropDown" onclick="openDropDown('NavMenu-UserMenu')">{{ icon_link(_('Conversations'), '/conversations/', 'conversations', fa=False) }}
-                <i class="fas fa-angle-down fa-2x NavMenu-AngleDownIcon"></i>
-                <ul class="NavMenu-UserMenu">
-                    <li>
-                        {% if board %}
-                            {{icon_link(_('Your conversations'), ('/{}/'.format(board.name)), 'far fa-comment', fa=True)}}
-                        {% else %}
-                            {{icon_link(_('Your conversations'), ('/conversations/add/'), 'far fa-comment', fa=True)}}
-                        {% endif %}
-                    </li>
-                    <li>
-                        {{icon_link(_('Add conversation'), ('/conversations/add/'), 'fas fa-plus-circle', fa=True)}}
-                    </li>
-                    <li>
-                        {{icon_link(_('Favorite conversations'), ('/profile/favorites/'), 'far fa-star', fa=True)}}
-                    </li>
-                </ul>
-            </li>
-            <li>{{ icon_link(_('Panel'), '/talks/', 'talks', fa=False) }}</li>
-        {% else %}
-            <li class="NavMenu-DropDown" onclick="openDropDown('NavMenu-UserMenu')">{{ icon_link(_('Conversations'), '/conversations/', 'conversations', fa=False) }}
-                <i class="fas fa-angle-down fa-2x NavMenu-AngleDownIcon"></i>
-                <ul class="NavMenu-UserMenu">
-                    <li>
-                    {{icon_link(_('Public conversations'), '/conversations/', 'fas fa-comments', fa=True)}}
-                    </li>
-                    <li>
-                        <i class="fas fa-plus-circle"></i>
-                        {{_('Add conversation')}}
-                    </li>
-                    <li>
-                        <i class="far fa-star"></i>
-                        {{_('Favorite conversations')}}
-                    </li>
-                    <li>
-                        <i class="fas fa-cog"></i>
-                        {{_('Manage conversations')}}
-                    </li>
-                    <li>
-                        {{icon_link(_('Manage stereotypes'), '/profile/stereotypes/', 'fas fa-sliders-h', fa=True)}}
-                    </li>
-                    <li>
-                        {{icon_link(_('Request reports'), '/reports/', 'far fa-chart-bar', fa=True)}}
-                    </li>
-                </ul>
-            </li>
-            <li>{{ icon_link(_('Panel'), '/talks/', 'talks', fa=False) }}</li>
-        {% endif %}
-            <li><em>{{ icon_link(_('About'), '/about-us/', 'far fa-comment') }}</em></li>
-            <li><em>{{ icon_link(_('FAQ'), '/faq/', 'far fa-question-circle') }}</em></li>
-            <li><em>{{ icon_link(_('Usage terms'), '/usage/', 'far fa-file-alt') }}</em></li>
+            <li>{{ icon_link(_('Home'), '/', 'fa fa-home') }}</li>
             <li class="NavMenu-DropDown" onclick="openDropDown('NavMenu-Accessibility')">
             <i class="fas fa-universal-access"></i>
-            Acessibilidade
+                Acessibilidade
                 <i class="fas fa-angle-down fa-2x NavMenu-AngleDownIcon"></i>
                 <ul class="NavMenu-Accessibility">
                     <li onclick="increaseFontSize()">
-                        <i class="fas fa-plus-circle"></i>
+                        <span class="icon-stack">
+                            <i class="fas fa-plus"></i>
+                            <i class="fas fa-font"></i>
+                        </span>
                         {{_('Increase font size')}}
                     </li>
                     <li onclick="decreaseFontSize()">
-                        <i class="fas fa-minus-circle"></i>
+                        <span class="icon-stack">
+                            <i class="fas fa-minus"></i>
+                            <i class="fas fa-font"></i>
+                        </span>
                         {{_('Decrease font size')}}
                     </li>
-                    <li onclick="setStandardFontSize()">
-                        <i class="fas fa-font"></i>
-                        {{_('Default font')}}
-                    </li>
                     <li onclick="toggleHicontrast()">
-                        <i class="fas fa-universal-access"></i>
-                            <button>{{_('High contrast mode')}}</button>
+                        <i class="fas fa-adjust"></i>
+                        {{_('High contrast mode')}}
                     </li>
                 </ul>
             </li>

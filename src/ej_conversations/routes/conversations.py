@@ -16,8 +16,14 @@ def conversation_list(request):
         'conversations': Conversation.objects.filter(is_promoted=True),
         'can_add_conversation': user.has_perm('ej_conversations.can_add_conversation'),
         'create_url': reverse('conversation:create'),
+        'topic': _("A space for adolescents to discuss actions that promote, guarantee and defend their rights"),
         'title': _("Public conversations"),
         'subtitle': _("Participate of the conversations and give your opinion with comments and votes!"),
+        'conversation_link': _("View all conversations"),
+        'footer_content': {'image': '/static/img/icons/facebook-blue.svg',
+                           'first': {'normal': 'Plataforma desenvolvida pelo', 'bold': 'Conanda/MDH/UnB'},
+                           'last': {'normal': 'Para denunciar:', 'bold': 'Disque 100 e #HUMANIZAREDES'}
+                           }
     }
 
 

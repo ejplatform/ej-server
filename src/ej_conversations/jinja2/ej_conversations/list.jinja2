@@ -5,5 +5,20 @@
     {% if can_add_conversation and create_url %}
         <a class="Link-new" href="{{ create_url }}"><i class="fa fa-plus-circle"></i> {{ _('New conversation') }}</a>
     {% endif %}
-    {{ conversation_list(conversations, categories=categories, title=title, subtitle=subtitle, javascript_enabled=javascript_enabled) }}
+
+    {% if timelines is defined %}
+    <div class="view-timeline">
+        <span>{{_('Viewing timeline:')}}</span>
+        <select name="select-timeline" class="select-timeline" id="select-timeline">
+        {% for timeline in timelines %}
+            <option value="{{timeline.get_absolute_url()}}" {% if timeline.id==current_timeline.id %} selected="selected"{% endif %} >
+                {{timeline.title}}
+            </option>
+        {% endfor %}
+        </select>
+    </div>
+    {% endif %}
+
+    {{ conversation_list(conversations, categories=categories, footer_content=footer_content, title=title, subtitle=subtitle, javascript_enabled=javascript_enabled) }}
+
 {% endblock %}

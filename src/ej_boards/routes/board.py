@@ -19,12 +19,17 @@ board_url = '<model:board>'
 
 @urlpatterns.route('add/')
 def create(request):
+    user = request.user
+
+    if not user.has_perm('ej_boards.can_add_board'):
+        raise Http404
+
     form_class = BoardForm
     if request.method == 'POST':
         form = form_class(request.POST)
         if form.is_valid():
             board = form.save(commit=False)
-            board.owner = request.user
+            board.owner = user
             board.save()
 
             return redirect(board.get_absolute_url())
@@ -41,7 +46,8 @@ def create(request):
 def board_list(request):
     user = request.user
     return {
-        'boards': user.boards.all()
+        'boards': user.boards.all(),
+        'can_add_board': user.has_perm('ej_boards.can_add_board'),
     }
 
 
