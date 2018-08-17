@@ -48,7 +48,8 @@ class Candidate(models.Model):
                                     help_text="The candidate facebook page",
                                     default="")
     twitter_url = models.CharField(max_length=30,
-                                        help_text="The candidate facebook page")
+                                   help_text="The candidate facebook page",
+                                   default="")
     instagram_url = models.CharField(max_length=30,
                                      help_text="The candidate instagram page",
                                      default="")
