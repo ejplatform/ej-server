@@ -1,7 +1,7 @@
 import os
+import pathlib
 import sys
 
-import pathlib
 from invoke import task
 
 python = sys.executable
@@ -417,6 +417,14 @@ def manage_task(ctx, command, noinput=False, args=''):
     if noinput:
         kwargs['noinput'] = noinput
     manage(ctx, f'{command} {args}', **kwargs)
+
+
+@task
+def collect(ctx):
+    """
+    Runs Django's collectstatic command
+    """
+    manage(ctx, 'collectstatic --noinput')
 
 
 #
