@@ -33,6 +33,8 @@ class TestRoutes(UrlTester):
         '/profile/favorites/',
     ]
 
+    # TODO test profile/api-key/
+
     def test_logout(self, logged_client):
         client = logged_client
         assert '_auth_user_id' in client.session
