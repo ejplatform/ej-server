@@ -115,6 +115,20 @@ $conversation-card-button-border-radius: 30px !default;
     }
 }
 
+.ConversationFooter {
+    background-color: #D4F7F5;
+    height: 180px;
+    width: 100vw;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+
+    p {
+        text-align: center;
+    }
+}
+
 .ConversationTags {
     @include color($conversation-card-light, $conversation-card-color, $force: true);
     font-weight: bold;
@@ -1147,6 +1161,7 @@ $conversation-card-button-border-radius: 30px !default;
     overflow: hidden;
     min-height: 50px;
     max-height: 300px;
+    max-width: none;
 
     &::placeholder {
       color: $color-purple-dark;
@@ -1229,6 +1244,9 @@ $conversation-card-button-border-radius: 30px !default;
     padding-top: 8px;
     font-size: 12px;
     color: $color-purple-dark;
+    flex-grow: 1;
+    margin-right: $unit;
+    max-width: none;
 
     &::placeholder {
       color: $color-purple-dark;
@@ -1239,6 +1257,7 @@ $conversation-card-button-border-radius: 30px !default;
   input + i, select + i {
     color: $color-purple-dark;
     font-weight: lighter;
+    display: none;
   }
 }
 
@@ -1277,4 +1296,12 @@ $conversation-card-button-border-radius: 30px !default;
     font-weight: bold;
     display: inline;
   }
+}
+
+.Conversation-AddComment {
+ text-align: center;
+ cursor: pointer;
+ text-transform: uppercase;
+ font-weight: bold;
+ font-size: 12px;
 }

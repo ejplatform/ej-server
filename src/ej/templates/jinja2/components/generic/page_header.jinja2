@@ -91,19 +91,20 @@
             <span>{{ _('Conversations') }}</span>
         {% endcall %}
 
-        {% call link('/talks/', title=_('Panel'), class='panel-link', preload=True) %}
-            {% if settings.EJ_THEME == 'default' %}
-                <img src="/static/img/icons/navbar_panel.svg" alt="{{ _('Panel') }}" class="Header-lowerIcon">
-            {% endif %}
-            <span>{{ _('Panel') }}</span>
-        {% endcall %}
-
         {% call link('/profile/', title=_('Profile'), class='profile-link', preload=True) %}
             {% if settings.EJ_THEME == 'default' %}
                 <img src="/static/img/icons/navbar_profile.svg" title="{{ _('Profile') }}" class="Header-lowerIcon">
             {% endif %}
             <span>{{ _('Profile') }}</span>
         {% endcall %}
+
+        {% call link('/talks/', title=_('Panel'), class='panel-link', preload=True) %}
+            {% if settings.EJ_THEME == 'default' %}
+                <img src="/static/img/icons/navbar_panel.svg" alt="{{ _('Panel') }}" class="Header-lowerIcon">
+            {% endif %}
+            <span>{{ _('Alerts') }}</span>
+        {% endcall %}
+
     </nav>
 {% endmacro %}
 

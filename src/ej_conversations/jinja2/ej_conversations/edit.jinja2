@@ -49,6 +49,9 @@
                 <p><i class="fa fa-list-ul"></i> <span>{{ board.title }}</span></p>
             {% endif %}
           </div>
+
+          <p style="text-align: center;">{{ action_button(_('Manage stereotypes'), '/conversations/' + conversation.slug + '/stereotypes/', False) }}</p>
+
           <p class="ConversationEdit-promote">
             {% if conversation.is_promoted %}
               <input type="checkbox" name="is_promoted" id="is_promoted" checked value="1" />

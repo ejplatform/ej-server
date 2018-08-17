@@ -1,5 +1,6 @@
 from django.http import Http404
 from django.shortcuts import redirect
+from autoslug.settings import slugify
 from . import urlpatterns, conversation_url
 from .. import forms, models
 from ej_boards.models import Board, BoardSubscription
@@ -22,7 +23,15 @@ def create(request):
             if 'board' in form.data:
                 board = Board.objects.get(pk=int(form.data['board']))
                 BoardSubscription.objects.create(conversation=conversation, board=board)
-            for i in range(1, 6):
+
+            if 'newboard' in form.data:
+                title = form.data['newboard']
+                slug = slugify(title)
+                board = Board.objects.create(title=title, owner=request.user, slug=slug)
+                BoardSubscription.objects.create(conversation=conversation, board=board)
+
+            n = int(form.data['commentscount']) + 1
+            for i in range(1, n):
                 name = 'comment-' + str(i)
                 if name in form.data and form.data[name]:
                     models.Comment.objects.create(

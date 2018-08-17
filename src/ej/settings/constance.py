@@ -13,31 +13,42 @@ class ConstanceConf(Conf):
         return {
             # RocketChat integration
             'ROCKETCHAT_URL': (
-                self.env('ROCKETCHAT_URL', default=''),
+                self.ROCKETCHAT_URL,
                 'External RocketChat URL, used for RC IFrame Integration', str
             ),
             'ROCKETCHAT_PRIVATE_URL': (
-                self.env('ROCKETCHAT_PRIVATE_URL', default=''),
+                self.ROCKETCHAT_PRIVATE_URL,
                 'Internal RocketChat URL, used for internal API calls', str
             ),
             'ROCKETCHAT_AUTH_TOKEN': (
-                self.env('ROCKETCHAT_AUTH_TOKEN', default=''),
+                self.ROCKETCHAT_AUTH_TOKEN,
                 'RocketChat admin user Token', str
             ),
             'ROCKETCHAT_USER_ID': (
-                self.env('ROCKETCHAT_USER_ID', default=''),
+                self.ROCKETCHAT_USER_ID,
                 'RocketChat admin user ID', str
             ),
-            # Board
-            'MAX_BOARD_NUMBER': (
-                1,
-                'Maximum number of boards of a common user', int
+            # EJ Options
+            'EJ_MAX_BOARD_NUMBER': (
+                self.EJ_MAX_BOARD_NUMBER,
+                'Maximum number of boards that a common user can create', int
             ),
         }
 
     CONSTANCE_CONFIG_FIELDSETS = {
         'RocketChat Options': (
             'ROCKETCHAT_URL', 'ROCKETCHAT_PRIVATE_URL',
-            'ROCKETCHAT_AUTH_TOKEN', 'ROCKETCHAT_USER_ID'
+            'ROCKETCHAT_AUTH_TOKEN', 'ROCKETCHAT_USER_ID',
         ),
+        'EJ Options': (
+            'EJ_MAX_BOARD_NUMBER',
+        )
     }
+
+    # Auxiliary options
+    EJ_MAX_BOARD_NUMBER = env(1, name='{attr}')
+
+    ROCKETCHAT_URL = env('', name='{attr}')
+    ROCKETCHAT_PRIVATE_URL = env('', name='{attr}')
+    ROCKETCHAT_AUTH_TOKEN = env('', name='{attr}')
+    ROCKETCHAT_USER_ID = env('', name='{attr}')

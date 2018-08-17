@@ -12,10 +12,13 @@ $login-icon-border: 10px solid #3F1B53;
 $login-icon-scale: scale(1.2);
 $login-icon-padding: 25px 0px 0px 0px;
 $login-fields-border: 1px solid #30c0d3;
-$login-fields-border-radius: 28px;
+$login-fields-border-radius: 8px;
+$login-link-color: #C6027B;
+$login-new-user-background-color: #C6027B;
 $login-button-login-size: 65%;
-$login-button-login-background: #8EC73F;
+$login-button-login-background: $color-green-atlantis;
 $login-button-register-size: 60%;
+$login-button-color: $color-green-atlantis;
 
 // Social
 $social-buttons-display: inline;
@@ -35,7 +38,7 @@ $header-bottom-nav-height: $header-icon-size+20px;
 // Home Banner
 $home-banner-title-font-family: Raleway;
 $home-banner-title-font-color: #052B47;
-$home-banner-button-background: #8EC73F;
+$home-banner-button-background: $color-green-atlantis;
 
 // Home How It Works
 $home-how-it-works-title-font-color: #FF3E72;
@@ -80,7 +83,7 @@ $conversation-edit-action-cancel-border: transparent;
 $conversation-edit-action-cancel-background: #C6027B;
 $conversation-edit-action-cancel-font-color: #fff;
 $conversation-edit-action-save-border: transparent;
-$conversation-edit-action-save-background: #8EC73F;
+$conversation-edit-action-save-background: $color-green-atlantis;
 $conversation-edit-action-save-font-color: #fff;
 $conversation-edit-radius: 0px;
 $conversation-edit-save-color: white;

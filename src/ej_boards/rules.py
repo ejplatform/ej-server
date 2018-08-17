@@ -14,18 +14,18 @@ def has_board(user):
         return False
 
 
-@rules.register_rule('ej_boards.can_create_board')
-def can_create_board(user):
+@rules.register_perm('ej_boards.can_add_board')
+def can_add_board(user):
     """
     Verify if a user can create a board following the
-    max board number.
+    django admin permission and the max board number.
     """
-    return Board.objects.filter(owner=user).count() < config.MAX_BOARD_NUMBER
+    return (
+        user.has_perm('ej_boards.add_board') or
+        Board.objects.filter(owner=user).count() < config.MAX_BOARD_NUMBER
+    )
 
 
 @rules.register_perm('ej_boards.can_add_conversation')
 def can_add_conversation(user, board):
-    if board.owner == user:
-        return True
-
-    return False
+    return board.owner == user

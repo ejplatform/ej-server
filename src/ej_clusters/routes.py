@@ -125,14 +125,15 @@ def create_stereotype(request, conversation):
         rendered_votes_form = votes_form(request.POST)
 
         if rendered_stereotype_form.is_valid() and rendered_votes_form.is_valid():
-            stereotype = rendered_stereotype_form.save()
+            stereotype = rendered_stereotype_form.save(commit=False)
+            stereotype.owner = request.user
             stereotype.save()
             votes = rendered_votes_form.save(commit=False)
             for vote in votes:
                 vote.author = stereotype
                 vote.save()
             clusterization = Clusterization.objects.get(conversation=conversation)
-            cluster = Cluster(clusterization=clusterization)
+            cluster = Cluster(clusterization=clusterization, name=stereotype.name)
             cluster.save()
             cluster.stereotypes.add(stereotype)
             return redirect(conversation.get_absolute_url() + 'stereotypes/')
@@ -143,6 +144,7 @@ def create_stereotype(request, conversation):
     filtered_comments = Comment.objects.filter(conversation=conversation)
     for form in rendered_votes_form:
         form.fields['comment'].queryset = filtered_comments
+        print(form.fields['choice'])
     return {
         'stereotype_form': rendered_stereotype_form,
         'votes_form': rendered_votes_form,
@@ -153,19 +155,27 @@ def create_stereotype(request, conversation):
 @urlpatterns.route(conversation_url + 'stereotypes/<model:stereotype>/edit/')
 def edit_stereotype(request, conversation, stereotype):
     if request.user == conversation.author:
-        stereotype_form = StereotypeForm
-        votes_form = StereotypeVoteFormSet
-        rendered_stereotype_form = stereotype_form(instance=stereotype)
-
+        rendered_stereotype_form = StereotypeForm(request.POST or None, instance=stereotype)
         stereotype_votes = StereotypeVote.objects.filter(author=stereotype)
-        rendered_votes_form = votes_form(queryset=stereotype_votes)
+        rendered_votes_form = StereotypeVoteFormSet(request.POST or None, queryset=stereotype_votes)
+        if request.method == 'POST':
+            if rendered_stereotype_form.is_valid() and rendered_votes_form.is_valid():
+                stereotype = rendered_stereotype_form.save(commit=False)
+                stereotype.conversation = conversation
+                stereotype.owner = request.user
+                stereotype.save()
+                votes = rendered_votes_form.save(commit=False)
+                for vote in votes:
+                    vote.author = stereotype
+                    vote.save()
+                return redirect(conversation.get_absolute_url() + 'stereotypes/')
         return {
             'stereotype_form': rendered_stereotype_form,
             'votes_form': rendered_votes_form,
             'conversation_title': conversation.title,
         }
     else:
-        return redirect(conversation.get_absolute_url() + 'stereotypes/')
+        return redirect(conversation.get_absolute_url())
 
 
 #
