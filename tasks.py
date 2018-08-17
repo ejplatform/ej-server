@@ -1,7 +1,7 @@
 import os
-import pathlib
 import sys
 
+import pathlib
 from invoke import task
 
 python = sys.executable
@@ -29,17 +29,12 @@ def sass(ctx, watch=False, theme='default', trace=False, dry_run=False, rocket=T
     """
     Run Sass compiler
     """
-    if theme and '/' in theme:
-        theme = theme.rstrip('/')
-        root = f'{theme}/scss/'
-        theme = os.path.basename(theme)
-    else:
-        root = 'lib/scss/' if theme == 'default' else f'lib/themes/{theme}/scss/'
-
+    theme, root = set_theme(theme)
+    root = f'{root}/scss/'
     os.environ['EJ_THEME'] = theme or 'default'
     go = runner(ctx, dry_run, pty=True)
-    cmd = f'sass {root}/main.scss:lib/build/css/main.css'
-    cmd += f' {root}/rocket.scss:lib/build/css/rocket.css' if rocket else ''
+    cmd = f'sass {root}main.scss:lib/build/css/main.css'
+    cmd += f' {root}rocket.scss:lib/build/css/rocket.css' if rocket else ''
     cmd += ' --watch' if watch else ''
     cmd += ' --trace' if trace else ''
     go('rm -rf .sass-cache lib/build/css/main.css lib/build/css/rocket.css')
@@ -59,10 +54,11 @@ def js(ctx):
 # Django tasks
 #
 @task
-def run(ctx, no_toolbar=False):
+def run(ctx, no_toolbar=False, theme=None):
     """
     Run development server
     """
+    set_theme(theme)
     env = {}
     if no_toolbar:
         env['DISABLE_DJANGO_DEBUG_TOOLBAR'] = 'true'
@@ -489,3 +485,15 @@ def docker_deploy_variables(path):
         src = fd.read()
         exec(src, ns)
     return {k: to_str(v) for k, v in ns.items() if k.isupper()}
+
+
+def set_theme(theme):
+    if theme and '/' in theme:
+        theme = theme.rstrip('/')
+        root = f'{theme}/'
+        theme = os.path.basename(theme)
+    else:
+        root = 'lib/' if theme == 'default' else f'lib/themes/{theme}/'
+
+    os.environ['EJ_THEME'] = theme or 'default'
+    return theme, root
