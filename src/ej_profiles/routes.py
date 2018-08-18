@@ -23,7 +23,6 @@ def detail(request):
         'info_tab': request.GET.get('info', 'profile'),
         'profile': request.user.profile,
         'favorite_conversations': favorite_conversations,
-        'favorite_count': len(favorite_conversations),
     }
 
 
