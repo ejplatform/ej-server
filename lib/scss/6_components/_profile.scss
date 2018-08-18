@@ -55,6 +55,9 @@ $profile-arrow-size: $spacing-unit !default;
                 color: $color-magenta;
             }
         }
+        .conversations{
+            display: none;
+        }
     }
     &-comments {
         padding: $spacing-unit-small;
