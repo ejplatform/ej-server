@@ -37,6 +37,7 @@ class Conf(ThemesConf,
         return 'postgresql' in self.DATABASE_DEFAULT['ENGINE']
 
     USING_DOCKER = env(False, name='USING_DOCKER')
+    HOSTNAME = env('localhost', name='{attr}')
 
     #
     # Accounts

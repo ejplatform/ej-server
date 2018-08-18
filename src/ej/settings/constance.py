@@ -14,19 +14,19 @@ class ConstanceConf(Conf):
             # RocketChat integration
             'ROCKETCHAT_URL': (
                 self.ROCKETCHAT_URL,
-                'External RocketChat URL, used for RC IFrame Integration', str
+                'External RocketChat URL, used for RC IFrame Integration', 'charfield'
             ),
             'ROCKETCHAT_PRIVATE_URL': (
                 self.ROCKETCHAT_PRIVATE_URL,
-                'Internal RocketChat URL, used for internal API calls', str
+                'Internal RocketChat URL, used for internal API calls', 'charfield'
             ),
             'ROCKETCHAT_AUTH_TOKEN': (
                 self.ROCKETCHAT_AUTH_TOKEN,
-                'RocketChat admin user Token', str
+                'RocketChat admin user Token', 'charfield'
             ),
             'ROCKETCHAT_USER_ID': (
                 self.ROCKETCHAT_USER_ID,
-                'RocketChat admin user ID', str
+                'RocketChat admin user ID', 'charfield'
             ),
             # EJ Options
             'EJ_MAX_BOARD_NUMBER': (
@@ -44,11 +44,21 @@ class ConstanceConf(Conf):
             'EJ_MAX_BOARD_NUMBER',
         )
     }
+    CONSTANCE_ADDITIONAL_FIELDS = {
+        'charfield': ['django.forms.fields.CharField', {
+            'widget': 'django.forms.TextInput'
+        }]
+    }
 
     # Auxiliary options
     EJ_MAX_BOARD_NUMBER = env(1, name='{attr}')
 
-    ROCKETCHAT_URL = env('', name='{attr}')
-    ROCKETCHAT_PRIVATE_URL = env('', name='{attr}')
+    def get_rocketchat_url(self, hostname):
+        default = f'talks.{hostname}'
+        return self.env('ROCKETCHAT_URL', default=default)
+
+    def get_rocketchat_private_url(self, rocketchat_url):
+        return self.env('ROCKETCHAT_PRIVATE_URL', default=rocketchat_url)
+
+    ROCKETCHAT_USER_ID = env('admin', name='{attr}')
     ROCKETCHAT_AUTH_TOKEN = env('', name='{attr}')
-    ROCKETCHAT_USER_ID = env('', name='{attr}')
