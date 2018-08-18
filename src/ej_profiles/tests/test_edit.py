@@ -2,7 +2,6 @@ import pytest
 from PIL import Image
 from django.test import Client
 from django.utils.six import BytesIO
-from django.core.files.base import ContentFile
 from django.core.files.uploadedfile import SimpleUploadedFile
 
 from ej_users.models import User
@@ -39,7 +38,7 @@ class TestEditProfile:
     def test_user_logged_edit_profile_picture(self, logged_client):
         avatar = create_image('avatar.png')
         avatar_file = SimpleUploadedFile('front.png', avatar.getvalue())
-        form_data = {'image': avatar, 'gender': 0, 'race': 0}
+        form_data = {'image': avatar_file, 'gender': 0, 'race': 0}
 
         response = logged_client.post('/profile/edit/', form_data)
         assert response.status_code == 302 and response.url == '/profile/'
