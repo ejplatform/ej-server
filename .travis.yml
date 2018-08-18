@@ -10,7 +10,7 @@ python:
 install:
   - pip install invoke
   - inv update-deps --all
-  - inv update-deps db db-assets
+  - inv update-deps db
 script:
   - pytest
 before_script:
