@@ -18,6 +18,7 @@ services:
     env_file:
       - ./env/django.env
       - ./env/postgres.env
+      - ${ENVFILE:-./env/override.env}
     environment:
       - DJANGO_ENVIRONMENT=local
     volumes:

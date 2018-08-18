@@ -127,7 +127,7 @@ def invalidate_rc_user_token(user):
     """
     try:
         user_info = json.loads(request_rc_user_info(user).content)['user']
-        token = cache.get(rc_token_cache_key(user))
+        token = cache.get(f'rc_token_{user.username}')
         if token:
             res = requests.post(
                 rocketchat_url('logout'),
