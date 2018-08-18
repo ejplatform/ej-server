@@ -54,6 +54,9 @@ class Candidate(models.Model):
     youtube_url = models.CharField(max_length=60,
                                    help_text="The candidate instagram page",
                                    default="")
+    public_email = models.CharField(max_length=60,
+                                   help_text="The candidate public email",
+                                   default="")
 
 # boogie decorator to add a property on model serializer
 @rest_api.property(Candidate)
