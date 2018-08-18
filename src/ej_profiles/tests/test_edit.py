@@ -49,16 +49,17 @@ class TestEditProfile:
         assert user.profile.image.name
 
     def test_user_logged_edit_profile_basic_info(self, logged_client):
-        def rand_str(size): return ''.join(rd.choices(s.ascii_lowercase,
-                                                      k=size))
+        def rand_str(size):
+            return ''.join(rd.choices(s.ascii_lowercase, k=size))
 
-        def gen_birth_date(): return f'{rd.randint(1900, 2020)}-' \
-                                     f'{rd.randint(1, 12)}-{rd.randint(1, 28)}'
+        def gen_birth_date():
+            return f'{rd.randint(1900, 2020)}-{rd.randint(1, 12)}-' \
+                   f'{rd.randint(1, 28)}'
 
         inf_fields = ['city', 'state', 'country', 'ethnicity', 'education',
                       'political_activity', 'biography', 'occupation',
                       'gender', 'race', 'birth_date']
-        inf_values = [*[rand_str(15)]*8, rd.randint(0, 20), rd.randint(0, 6),
+        inf_values = [*[rand_str(15)] * 8, rd.randint(0, 20), rd.randint(0, 6),
                       gen_birth_date()]
         form_data = {k: v for k, v in zip(inf_fields, inf_values)}
 
