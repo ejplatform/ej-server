@@ -346,13 +346,13 @@ def update_deps(ctx, all=False, vendor=None):
     Update volatile dependencies
     """
     suffix = f' --vendor {vendor}' if vendor else ''
-    ctx.run(f'{python} etc/scripts/install-deps.py' + suffix)
     if all:
         ctx.run(f'{python} -m pip install -r etc/requirements/local.txt')
         ctx.run(f'{python} -m pip install -r etc/requirements/develop.txt')
     else:
         print('By default we only update the volatile dependencies. Run '
               '"inv update-deps --all" in order to update everything.')
+    ctx.run(f'{python} etc/scripts/install-deps.py' + suffix)
 
 
 @task
