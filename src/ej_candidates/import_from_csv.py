@@ -7,7 +7,7 @@ class CandidatesImporter(object):
     """A class responsible to import candidates from csv file"""
 
     def __init__(self):
-        self.csv = '/home2/david/projects/exemplo_dados_candidatos.csv'
+        self.csv = '/tmp/candidatos.csv'
 
     def import_candidates(self):
         with open(self.csv, newline='') as csvfile:

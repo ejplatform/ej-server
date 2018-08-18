@@ -34,20 +34,26 @@ class Candidate(models.Model):
     committed_to_democracy = StatusField(choices_name='POLITICAL_OPTIONS')
     adhered_to_the_measures  = StatusField(choices_name='POLITICAL_OPTIONS')
     site_url = models.CharField(max_length=100,
-                            help_text="The site of the candidate", default="")
-    uf = models.CharField(max_length=2, help_text="The candidate uf")
-    crowdfunding_url = models.CharField(max_length=30,
-                                        help_text="The candidate crowdfunding", blank=True)
-    facebook_url = models.CharField(max_length=30,
-                                        help_text="The candidate facebook page", blank=True)
-    twitter_url = models.CharField(max_length=30,
-                                        help_text="The candidate twitter page", blank=True)
-    instagram_url = models.CharField(max_length=30,
-                                        help_text="The candidate instagram page", blank=True)
-    youtube_url = models.CharField(max_length=30,
-                                        help_text="The candidate instagram page", blank=True)
-    public_email = models.CharField(max_length=100,
-                                        help_text="The public email of the candidate")
+                                help_text="The site of the candidate",
+                                default="")
+    uf = models.CharField(max_length=2,
+                          help_text="The candidate uf",
+                          default="")
+    crowdfunding_url = models.CharField(max_length=60,
+                                        help_text="The candidate crowdfunding",
+                                        default="")
+    facebook_url = models.CharField(max_length=60,
+                                    help_text="The candidate facebook page",
+                                    default="")
+    twitter_url = models.CharField(max_length=60,
+                                   help_text="The candidate facebook page",
+                                   default="")
+    instagram_url = models.CharField(max_length=60,
+                                     help_text="The candidate instagram page",
+                                     default="")
+    youtube_url = models.CharField(max_length=60,
+                                   help_text="The candidate instagram page",
+                                   default="")
 
 # boogie decorator to add a property on model serializer
 @rest_api.property(Candidate)

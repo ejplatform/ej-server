@@ -107,6 +107,7 @@ class Conf(ThemesConf,
     # Required for making django debug toolbar work
     ENVIRONMENT = 'local'
     if ENVIRONMENT == 'local':
+
         INTERNAL_IPS = [*globals().get('INTERNAL_IPS', ()), '127.0.0.1']
 
         # Django CORS
@@ -125,12 +126,44 @@ class Conf(ThemesConf,
         ACCOUNT_EMAIL_VERIFICATION = 'optional'
         EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-        #EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend'
+    if ENVIRONMENT == 'dev':
+        INTERNAL_IPS = [*globals().get('INTERNAL_IPS', ()), '127.0.0.1']
 
-        #ANYMAIL = {
-        #    "MAILGUN_API_KEY": ""
-        #}
-        #DEFAULT_FROM_EMAIL = "noreply@unidoscontraacorrupcao.org.br"
+        # Django CORS
+        CORS_ORIGIN_ALLOW_ALL = False
+        CORS_ALLOW_CREDENTIALS = True
+        CORS_ORIGIN_WHITELIST = (
+            'dev.besouro.ejplatform.org',
+            'admin.dev.besouro.ejplatform.org'
+        )
+
+        CSRF_TRUSTED_ORIGINS = [
+            'dev.besouro.ejplatform.org',
+            'admin.dev.besouro.ejplatform.org',
+        ]
+
+        X_FRAME_OPTIONS = 'DENY'
+
+        ACCOUNT_EMAIL_VERIFICATION = 'optional'
+        EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+        DATABASES = {
+            'default': {
+                'ENGINE': 'django.db.backends.postgresql',
+                'NAME': 'besouro-local',
+                'USER': 'besouro',
+                'PASSWORD': '',
+                'HOST': 'besouro_db',
+                'PORT': '5432'
+            }
+        }
+
+        ALLOWED_HOSTS = ['dev.besouro.ejplatform.org',
+                         'admin.dev.besouro.ejplatform.org']
+
+        EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend'
+        ANYMAIL = { "MAILGUN_API_KEY": "" }
+        DEFAULT_FROM_EMAIL = "noreply@unidoscontraacorrupcao.org.br"
 
     if ENVIRONMENT == 'production':
         # Django CORS
@@ -157,7 +190,6 @@ class Conf(ThemesConf,
         # REST_AUTH_REGISTER_SERIALIZERS = {
         #     'REGISTER_SERIALIZER': 'ej_users.serializers.RegistrationSerializer'
         # }
-
 
 
 Conf.save_settings(globals())
