@@ -62,7 +62,8 @@ def valid_filters(filters):
 @rest_api.action('ej_users.User')
 def candidates(request, user):
     querySet = Candidate.objects.exclude(selectedcandidate__user_id=user.id)\
-        .exclude(pressedcandidate__user_id=user.id)
+        .exclude(pressedcandidate__user_id=user.id)\
+        .exclude(ignoredcandidate__user_id=user.id)
     filters = get_filters(request.GET)
     if (valid_filters(filters)):
         return filter_candidates(querySet, filters)
