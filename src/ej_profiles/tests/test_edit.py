@@ -1,5 +1,8 @@
 import pytest
+import string as s
+import random as rd
 from PIL import Image
+from datetime import datetime
 from django.test import Client
 from django.utils.six import BytesIO
 from django.core.files.uploadedfile import SimpleUploadedFile
@@ -44,6 +47,33 @@ class TestEditProfile:
         assert response.status_code == 302 and response.url == '/profile/'
         user = User.objects.get(email='email@server.com')
         assert user.profile.image.name
+
+    def test_user_logged_edit_profile_basic_info(self, logged_client):
+        def rand_str(size): return ''.join(rd.choices(s.ascii_lowercase,
+                                                      k=size))
+
+        def gen_birth_date(): return f'{rd.randint(1900, 2020)}-' \
+                                     f'{rd.randint(1, 12)}-{rd.randint(1, 28)}'
+
+        inf_fields = ['city', 'state', 'country', 'ethnicity', 'education',
+                      'political_activity', 'biography', 'occupation',
+                      'gender', 'race', 'birth_date']
+        inf_values = [*[rand_str(15)]*8, rd.randint(0, 20), rd.randint(0, 6),
+                      gen_birth_date()]
+        form_data = {k: v for k, v in zip(inf_fields, inf_values)}
+
+        response = logged_client.post('/profile/edit/', form_data)
+        assert response.status_code == 302 and response.url == '/profile/'
+        user = User.objects.get(email='email@server.com')
+
+        for attr in ['gender', 'race']:
+            assert getattr(user.profile, attr).value == form_data[attr]
+            inf_fields.remove(attr)
+        assert user.profile.birth_date == datetime.strptime(
+            form_data['birth_date'], '%Y-%m-%d').date()
+        inf_fields.remove('birth_date')
+        assert all(map(lambda attr: getattr(
+            user.profile, attr) == form_data[attr], inf_fields))
 
     def test_user_not_logged_dont_access_edit_profile(self):
         client = Client()
