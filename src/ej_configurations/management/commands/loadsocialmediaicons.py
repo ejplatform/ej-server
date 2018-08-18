@@ -47,13 +47,13 @@ def real_handle(filename, force):
     icons = []
     for network in icon_data:
         if network not in installed or force:
-            icons.append(save_icon(network, icon_data[network]))
+            icons.append(save_icon(network, icon_data[network], filename))
         else:
             print('Social media Icon exists: %s' % network)
     return icons
 
 
-def save_icon(social_network, data):
+def save_icon(social_network, data, filename):
     with transaction.atomic():
         social_icon, created = icon_db.update_or_create(
             social_network=social_network,
@@ -61,5 +61,6 @@ def save_icon(social_network, data):
         )
         social_icon.full_clean()
         social_icon.save()
-    print('Saved:' if created else 'Updated:', social_icon)
+    suffix = f'   ({filename})'
+    print('Saved' if created else 'Updated', 'icon:', social_icon, suffix)
     return social_icon

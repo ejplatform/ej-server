@@ -16,25 +16,24 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument(
-            '--path',
+            '--path', '-p',
             type=str,
             help='Path to look for pages',
         )
         parser.add_argument(
-            '--force',
+            '--force', '-f',
             action='store_true',
             help='Override existing pages with file data.',
         )
 
-    def handle(self, *args, path=False, force=False, **options):
+    def handle(self, *args, path=None, force=False, **options):
+        if not path:
+            path = Path('lib/resources/pages/')
         real_handle(path, force)
 
 
 def real_handle(path=False, force=False):
-    if not path:
-        path = 'local'
     validate_path(path)
-
     base = Path(path)
     files = ((base / path, make_url(path)) for path in os.listdir(path))
 
@@ -46,7 +45,7 @@ def real_handle(path=False, force=False):
         if force or name not in saved_pages:
             new_pages[name] = path
         else:
-            print('Page exists: <base>%s (%s)' % (name, path))
+            print('Page exists: %s    (%s)' % (name, path))
 
     # Flatpages args
     kwargs = {}
@@ -83,9 +82,9 @@ def save_file(path, file_name, title_re, template, **kwargs):
         **kwargs)
     page.sites.add(Site.objects.get(id=SITE_ID))
 
-    if (created):
-        print('Saved page: %s' % page)
+    if created:
+        print(f'Saved page: {page}    ({path})')
     else:
-        print('Updated page: %s' % page)
+        print(f'Updated page: {page}    ({path})')
 
     return page

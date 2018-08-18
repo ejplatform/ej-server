@@ -149,10 +149,11 @@ def db_reset(ctx):
 
 
 @task
-def db_fake(ctx, users=True, conversations=True, admin=True, safe=False):
+def db_fake(ctx, users=True, conversations=True, admin=True, safe=False, theme=None):
     """
     Adds fake data to the database
     """
+    set_theme(theme)
     msg_error = 'Release build. No fake data will be created!'
 
     if safe:
@@ -167,29 +168,40 @@ def db_fake(ctx, users=True, conversations=True, admin=True, safe=False):
 
 
 @task
-def db_assets(ctx, path=None, force=False):
+def db_assets(ctx, force=False, theme=None):
     """
     Install assets from a local folder in the database.
     """
-
+    theme, root = set_theme(theme)
     resources = pathlib.Path('lib/resources')
-    pages = resources / 'pages'
-    fragments = resources / 'fragments'
-    data = resources / 'data'
+    pages = [resources / 'pages']
+    fragments = [resources / 'fragments']
+    icons = [resources / 'data/social-icons.json']
 
-    if path is not None:
-        path = pathlib.Path(path)
+    if theme != 'default':
+        print(f'Building assets for the {theme} theme...')
+
+        path = pathlib.Path(root) / 'resources'
         if (path / 'pages').exists():
-            pages = path / 'pages'
+            pages.insert(0, path / 'pages')
         if (path / 'fragments').exists():
-            fragments = path / 'fragments'
+            fragments.insert(0, path / 'fragments')
         if (path / 'data').exists():
-            data = path / 'data'
+            icons.insert(0, path / 'data/social-icons.json')
 
-    icons = data / 'social-icons.json'
-    manage(ctx, 'loadpages', path=pages, force=force)
-    manage(ctx, 'loadfragments', path=fragments, force=force)
-    manage(ctx, 'loadsocialmediaicons', path=icons, force=force)
+    # In forced mode, process the generic assets first, then insert the specific
+    # ones.
+    if force:
+        for lst in [pages, fragments, icons]:
+            lst.reverse()
+
+    # Load assets from Django commands
+    for path in pages:
+        manage(ctx, 'loadpages', path=path, force=force)
+    for path in fragments:
+        manage(ctx, 'loadfragments', path=path, force=force)
+    for path in icons:
+        manage(ctx, 'loadsocialmediaicons', path=path, force=force)
 
 
 #
@@ -500,6 +512,9 @@ def set_theme(theme):
         theme = theme.rstrip('/')
         root = f'{theme}/'
         theme = os.path.basename(theme)
+    elif 'EJ_THEME' in os.environ:
+        theme = os.environ['EJ_THEME']
+        root = f'lib/themes/{theme}'
     else:
         root = 'lib/' if theme == 'default' else f'lib/themes/{theme}/'
 

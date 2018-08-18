@@ -6,6 +6,9 @@ stages:
 
 variables:
   DOCKER_DRIVER: overlay2
+  POSTGRES_DB: ej
+  POSTGRES_USER: ej
+  POSTGRES_PASSWORD: ej
 
 
 # BUILD: the build stage recreates the base docker images used by the other
@@ -24,15 +27,6 @@ rebuild base docker images:
     variables:
       - $CI_COMMIT_MESSAGE =~ /rebuild base docker images.*/
 
-.build assets:
-  image: ejplatform/tools:latest
-  stage: build
-  script:
-    - python etc/scripts/compilemessages.py
-    - inv sass --no-watch
-  tags:
-    - docker
-
 
 # TEST: test in different environments by changing the database or running
 # different linters.
@@ -48,12 +42,12 @@ test with sqlite3: &test
   tags:
     - lappis
 
-.test-pgsql:
+test with postgres:
   << : *test
   variables:
-    DJANGO_DB_URL: postgres:postgres@postgres:5432
+    DJANGO_DB_URL: psql://ej:ej@postgres:5432/ej
   services:
-    - postgres
+    - postgres:latest
 
 flake8:
   image: ejplatform/python:alpine
