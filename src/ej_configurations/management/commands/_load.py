@@ -21,7 +21,7 @@ def make_fragment_name(path):
 
 
 def has_page(name):
-    FlatPage.objects.filter()
+    return FlatPage.objects.filter(name=name).exists()
 
 
 def is_valid_extension(path, exts):

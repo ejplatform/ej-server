@@ -77,5 +77,6 @@ def save_fragment(path, name, fragment_format):
         }
     )
     fragment.lock()
-    print('Saved fragment:' if created else 'Updated fragment:', fragment)
+    suffix = f'    ({path})'
+    print('Saved' if created else 'Updated', 'fragment:', fragment, suffix)
     return fragment
