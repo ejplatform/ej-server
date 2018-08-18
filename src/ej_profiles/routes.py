@@ -38,7 +38,6 @@ def edit(request):
     else:
         form = ProfileForm(instance=profile)
 
-    print('uer')
     return {
         'form': form,
         'profile': profile,
