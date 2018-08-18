@@ -512,6 +512,9 @@ def set_theme(theme):
         theme = theme.rstrip('/')
         root = f'{theme}/'
         theme = os.path.basename(theme)
+    elif 'EJ_THEME' in os.environ:
+        theme = os.environ['EJ_THEME']
+        root = f'lib/themes/{theme}'
     else:
         root = 'lib/' if theme == 'default' else f'lib/themes/{theme}/'
 

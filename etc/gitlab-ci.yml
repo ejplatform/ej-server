@@ -45,7 +45,7 @@ test with sqlite3: &test
 test with postgres:
   << : *test
   variables:
-    DJANGO_DB_URL: ej:ej@postgres:5432/ej
+    DJANGO_DB_URL: psql://ej:ej@postgres:5432/ej
   services:
     - postgres:latest
 
