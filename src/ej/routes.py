@@ -17,11 +17,11 @@ urlpatterns = Router(
 # Views
 #
 @urlpatterns.route('')
-def home(request):
+def index(request):
     if request.user.id:
-        return redirect(settings.EJ_HOME_PATH)
+        return redirect(settings.EJ_USER_HOME_PATH)
     else:
-        return redirect('/home/')
+        return redirect(settings.EJ_ANONYMOUS_HOME_PATH)
 
 
 @urlpatterns.route('start/')
