@@ -96,7 +96,7 @@ def gunicorn(ctx, debug=None, environment='production', port=8000, workers=4):
 
 
 @task
-def clean_migrations(ctx, all=False, y=False):
+def clean_migrations(ctx, all=False, yes=False):
     """
     Remove all automatically created migrations.
     """
@@ -130,7 +130,7 @@ def clean_migrations(ctx, all=False, y=False):
     if all:
         print('REMOVING ALL MIGRATIONS IS DANGEROUS AND SHOULD ONLY BE '
               'USED IN TESTING')
-    if y or input('Remove those files? (y/N)').lower() == 'y':
+    if yes or input('Remove those files? (y/N)').lower() == 'y':
         for file in remove_files:
             os.remove(file)
 
