@@ -70,3 +70,6 @@ lib/assets/brasil-que-o-povo-quer
 builds/
 docker/base-images/requirements*.txt
 docker/base-images/nginx.conf
+
+# virtualenv
+venv

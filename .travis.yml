@@ -8,10 +8,10 @@ language: python
 python:
   - '3.6'
 install:
-  - ./configure.sh
   - pip install invoke
-  - pip install -r etc/requirements/production.txt
-  - inv update-deps db db-assets db-fake
+  - inv update-deps --all
+  - inv clean-migrations --all
+  - inv update-deps db
 script:
   - pytest
 before_script:
