@@ -127,6 +127,9 @@ def clean_migrations(ctx, all=False, y=False):
     print('Listing auto migrations')
     for file in remove_files:
         print(f'* {file}')
+    if all:
+        print('REMOVING ALL MIGRATIONS IS DANGEROUS AND SHOULD ONLY BE '
+              'USED IN TESTING')
     if y or input('Remove those files? (y/N)').lower() == 'y':
         for file in remove_files:
             os.remove(file)
