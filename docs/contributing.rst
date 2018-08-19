@@ -20,6 +20,6 @@ we need some discipline to make it work:
     * Writing new tests for integrated features.
     * Refactor small parts of the code to increase code quality or performance.
     * Implementation of simple isolated features that do not affect other parts
-      of the system (i.e., creates a new view or api entry point)
+      of the system (i.e., tweak a view or api entry point)
 * We configured a commit hook for flake8 to ensure that no style bugs are
   introduced in a commit. CI tests for code style regressions.

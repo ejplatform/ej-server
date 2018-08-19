@@ -77,7 +77,7 @@ RUN pip install /app/*.tar.gz \
  && rm /app/*.tar.gz
 
 # Set enviroment variables
-ARG COUNTRY=usa
+ARG COUNTRY=brasil
 ARG HOSTNAME=localhost
 ARG THEME=default
 ENV COUNTRY=${COUNTRY}
