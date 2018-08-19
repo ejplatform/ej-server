@@ -10,7 +10,7 @@ from django.http import QueryDict
 from . import serializers
 from . import models
 from ej_users.models import User
-from ej_profiles.models import Setting
+
 
 class ChannelViewSet(viewsets.ViewSet):
 

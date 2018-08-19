@@ -4,4 +4,4 @@ from ej_profiles.models import Setting
 
 @rest_api.action('ej_profiles.Profile')
 def profile_settings(request, profile):
-    return Setting.objects.get(owner_id=profile.id)
+    return Setting.objects.get(profile=profile)

@@ -11,6 +11,8 @@ from ej_trophies.models.trophy import Trophy
 from ej_trophies.models.user_trophy import UserTrophy
 from ckeditor.fields import RichTextField
 from .mixins import MissionMixin
+from push_notifications.models import APNSDevice, GCMDevice
+from ej_profiles.models import Setting
 
 def mission_directory_path(instance, filename):
     return 'uploads/mission_{0}/{1}'.format(instance.mission.id, filename)
@@ -107,3 +109,15 @@ def send_message(sender, instance, created, **kwargs):
         mission_title = instance.title
         mission_id = instance.id
         Message.objects.create(channel=channel, title=mission_title, body="", target=mission_id)
+
+@receiver(post_save, sender=Mission)
+def send_fcm_message(sender, instance, created, **kwargs):
+    channel = Channel.objects.get(sort="mission")
+    users_to_send = []
+    for user in channel.users.all():
+        setting = Setting.objects.get(owner_id=user.id)
+        if (setting.mission_notifications == True):
+           users_to_send.append(user)
+    fcm_devices = GCMDevice.objects.filter(cloud_message_type="FCM", user__in=users_to_send)
+    fcm_devices.send_message("This is a enriched message", title="Notification title", badge=6)
+

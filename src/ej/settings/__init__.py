@@ -214,10 +214,6 @@ class Conf(ThemesConf,
         DEFAULT_FROM_EMAIL = "Unidos Contra a Corrupção <noreply@unidoscontraacorrupcao.org.br>"
 
 Conf.save_settings(globals())
-
-    PUSH_NOTIFICATIONS_SETTINGS = {
-        "FCM_API_KEY": "AIzaSyAi9uS0rxpp7nWpNO4TZ8H7F7aCtRTbuyk"
-    }
 #
 # Apply fixes and wait for services to start
 #
