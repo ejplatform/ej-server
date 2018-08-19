@@ -10,7 +10,7 @@ python:
 install:
   - pip install invoke
   - inv update-deps --all
-  - inv clean-migrations --all
+  - inv clean-migrations --all -y
   - inv update-deps db
 script:
   - pytest

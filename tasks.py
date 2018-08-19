@@ -96,7 +96,7 @@ def gunicorn(ctx, debug=None, environment='production', port=8000, workers=4):
 
 
 @task
-def clean_migrations(ctx, all=False):
+def clean_migrations(ctx, all=False, y=False):
     """
     Remove all automatically created migrations.
     """
@@ -127,7 +127,7 @@ def clean_migrations(ctx, all=False):
     print('Listing auto migrations')
     for file in remove_files:
         print(f'* {file}')
-    if all or input('Remove those files? (y/N)').lower() == 'y':
+    if y or input('Remove those files? (y/N)').lower() == 'y':
         for file in remove_files:
             os.remove(file)
 
