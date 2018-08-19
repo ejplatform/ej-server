@@ -14,7 +14,7 @@ class TestRegistrationForm:
         assert registered_user.name == "Turanga Leela"
         assert registered_user.email == "leela@example.com"
 
-    def test_blank_data(self):
+    def test_blank_data(self, db):
         form = RegistrationForm({})
         required = ['This field is required.']
         assert not form.is_valid()

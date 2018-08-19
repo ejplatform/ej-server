@@ -18,7 +18,7 @@ class TestBoards(BoardRecipes, UrlTester):
     ]
 
     @pytest.fixture
-    def data(self, board, conversation, author_db):
+    def data(self, board, conversation, author_db, db):
         board.owner = conversation.author = author_db
         board.save()
         conversation.save()

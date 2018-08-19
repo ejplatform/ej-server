@@ -28,9 +28,10 @@ class TestConversation(ConversationRecipes):
         assert cmt.author != user
         assert not Vote.objects.filter(author=user, comment=cmt)
 
-    def test_create_conversation(self, user):
-        conversation = create_conversation('what?', 'test', user, commit=False)
-        assert conversation.author == user
+    def test_create_conversation_saves_model_in_db(self, user_db):
+        conversation = create_conversation('what?', 'test', user_db)
+        assert conversation.id is not None
+        assert conversation.author == user_db
 
     def test_can_get_conversations_by_board_url(self, api, db):
         user = User.objects.create_user('name@server.com', '123')

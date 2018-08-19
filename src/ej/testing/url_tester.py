@@ -26,7 +26,8 @@ class UrlTester(EjRecipes):
     def data(self):
         return None
 
-    def test_anonymous_user_can_access_urls(self, client, caplog, data, db):
+    @pytest.mark.django_db
+    def test_anonymous_user_can_access_urls(self, client, caplog, data):
         caplog.set_level(logging.CRITICAL, logger='django')
         check_urls(client, self.public_urls, self.success_codes)
         pprint(data)

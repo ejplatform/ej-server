@@ -2,7 +2,6 @@ import json
 import pytest
 
 from django.test.client import Client
-from ej_conversations.mommy_recipes import *  # noqa: F401,F403
 
 
 @pytest.fixture

@@ -9,7 +9,7 @@ COPY ./etc/scripts/compilemessages.py /usr/bin/compilemessages
 COPY ./locale/ /app/locale/
 WORKDIR /app
 RUN chmod +x /usr/bin/compilemessages \
- && compilemessages 
+ && compilemessages
 
 # Build Sass
 ARG THEME=default
@@ -80,7 +80,7 @@ RUN pip install /app/*.tar.gz \
 ARG COUNTRY=usa
 ARG HOSTNAME=localhost
 ARG THEME=default
-ENV COUNTRY=${HOSTNAME}
+ENV COUNTRY=${COUNTRY}
 ENV EJ_THEME=${THEME}
 ENV HOSTNAME=${HOSTNAME}
 
