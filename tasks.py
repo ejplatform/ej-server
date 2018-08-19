@@ -127,7 +127,7 @@ def clean_migrations(ctx, all=False):
     print('Listing auto migrations')
     for file in remove_files:
         print(f'* {file}')
-    if input('Remove those files? (y/N)').lower() == 'y':
+    if all or input('Remove those files? (y/N)').lower() == 'y':
         for file in remove_files:
             os.remove(file)
 
