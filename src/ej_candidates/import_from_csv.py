@@ -32,6 +32,7 @@ class CandidatesImporter(object):
         twitter_url = row[16]
         instagram_url = row[17]
         youtube_url = row[18]
+        public_email = row[19]
         try:
             candidate = Candidate(uf=uf, candidacy=candidacy, name=name,
                                   urn=urn, party=party,
@@ -43,7 +44,8 @@ class CandidatesImporter(object):
                                   facebook_url=facebook_url,
                                   twitter_url=twitter_url,
                                   instagram_url=instagram_url,
-                                  youtube_url=youtube_url)
+                                  youtube_url=youtube_url,
+                                  public_email=public_email)
             candidate.save()
             print("imported candidate: ", name)
         except Exception as e:

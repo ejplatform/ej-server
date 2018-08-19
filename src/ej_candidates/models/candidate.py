@@ -56,17 +56,17 @@ class Candidate(models.Model):
                                    default="")
     public_email = models.CharField(max_length=60,
                                    help_text="The candidate public email",
-                                   default="")
+                                   default="ricardo@cidadedemocratica.org.br")
 
 # boogie decorator to add a property on model serializer
 @rest_api.property(Candidate)
 def score(object):
-    if (object.has_clean_pass == "sim" \
-            and object.committed_to_democracy == "sim" \
-            and object.adhered_to_the_measures == "sim"):
+    if (object.has_clean_pass == "SIM" \
+            and object.committed_to_democracy == "SIM" \
+            and object.adhered_to_the_measures == "SIM"):
         return 'good'
-    if (object.has_clean_pass == "não" \
-            and object.committed_to_democracy == "não" \
-            and object.adhered_to_the_measures == "não"):
+    if (object.has_clean_pass == "NÃO" \
+            and object.committed_to_democracy == "NÃO" \
+            and object.adhered_to_the_measures == "NÃO"):
         return 'bad'
     return 'partial'

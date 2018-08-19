@@ -37,7 +37,7 @@ def send_message(sender, instance, created, **kwargs):
 @receiver(post_save, sender=SelectedCandidate)
 def send_selected_email(sender, instance, created, **kwargs):
     candidate_email = [instance.candidate.public_email]
-   
+
     html_message = '<html><body><div><p>Boas notícias! Você acaba \
     de ser selecionada por um usuário no aplicativo da campanha Unidos \
     Contra a Corrupção, o que significa que essa pessoa se interessou \
