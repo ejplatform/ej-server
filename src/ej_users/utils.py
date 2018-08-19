@@ -1,7 +1,7 @@
 from random import choice
 
 from faker import Factory
-from django.db.utils import OperationalError
+from django.db.utils import DatabaseError
 
 fake = Factory.create('pt-BR')
 
@@ -35,5 +35,5 @@ def name_exists(name):
 
     try:
         return User.objects.filter(display_name=name).exists()
-    except OperationalError:
+    except DatabaseError:
         return False
