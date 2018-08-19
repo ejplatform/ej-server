@@ -20,7 +20,7 @@ class EjOptions(Conf):
     # Personalization
     EJ_ANONYMOUS_HOME_PATH = env('/home/', name='{attr}')
     EJ_USER_HOME_PATH = env('/conversations/', name='{attr}')
-    EJ_PAGE_TITLE = env(_('Empurrando Juntos'), name='{attr}')
+    EJ_PAGE_TITLE = env(_('EJ Platform'), name='{attr}')
     EJ_REGISTER_TEXT = 'Ainda não faz parte do EJ?'
 
     # Allow instances to exclude some profile fields from visualization

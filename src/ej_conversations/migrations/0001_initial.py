@@ -29,7 +29,7 @@ class Migration(migrations.Migration):
                 ('status_changed', model_utils.fields.MonitorField(default=django.utils.timezone.now, monitor='status', verbose_name='status changed')),
                 ('content', models.TextField(help_text='Body of text for the comment', max_length=140, validators=[django.core.validators.MinLengthValidator(2), ej_conversations.validators.is_not_empty], verbose_name='Content')),
                 ('rejection_reason', models.TextField(blank=True, help_text='You must provide a reason to reject a comment. Users will receive this feedback.', verbose_name='Rejection reason')),
-                ('is_promoted', models.BooleanField(default=False, help_text='Promoted comments are prioritized when selecting random commentsto users.', verbose_name='Promoted comment?')),
+                ('is_promoted', models.BooleanField(default=False, help_text='Promoted comments are prioritized when selecting random comments to users.', verbose_name='Promoted comment?')),
             ],
         ),
         migrations.CreateModel(
