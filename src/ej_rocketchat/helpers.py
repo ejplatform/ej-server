@@ -7,7 +7,7 @@ from constance import config
 from django.core.cache import cache
 
 
-def rc_token_cache_key(user):
+def cache_key(user):
     """
     Gives an unique cache key to an user
     """
@@ -86,7 +86,7 @@ def get_rc_user_token(user):
         'rc_token_example'
     """
     return cache.get_or_set(
-        rc_token_cache_key(user),
+        cache_key(user),
         generate_rc_user_token(user),
     )
 
@@ -127,13 +127,13 @@ def invalidate_rc_user_token(user):
     """
     try:
         user_info = json.loads(request_rc_user_info(user).content)['user']
-        token = cache.get(f'rc_token_{user.username}')
+        token = cache.get(cache_key(user))
         if token:
             res = requests.post(
                 rocketchat_url('logout'),
                 headers=get_headers(user_info['_id'], token),
             )
-            cache.delete(rc_token_cache_key(user))
+            cache.delete(cache_key(user))
             if res.status_code != 200:
                 raise Exception(f'Error: {res.content}')
     except KeyError:

@@ -1,15 +1,11 @@
-from random import choice
-
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from faker import Factory
 
 from boogie import rules
 from boogie.apps.users.models import AbstractUser
 from boogie.rest import rest_api
 from .manager import UserManager
-
-fake = Factory.create('pt-BR')
+from .utils import random_name
 
 
 @rest_api(['id', 'display_name'])
@@ -22,6 +18,7 @@ class User(AbstractUser):
         _('Display name'),
         max_length=140,
         unique=True,
+        default=random_name,
         help_text=_(
             'A randomly generated name used to identify each user.'
         ),
@@ -44,24 +41,5 @@ class User(AbstractUser):
         profile = rules.get_value('auth.profile')
         return profile(self)
 
-    def save(self, *args, **kwargs):
-        if not self.display_name:
-            self.display_name = random_name()
-        super().save(*args, **kwargs)
-
     class Meta:
         swappable = 'AUTH_USER_MODEL'
-
-
-def random_name(fmt='{adjective} {noun}'):
-    x = ['foo', 'bar', 'baz']
-    for _iter in range(100):
-        name = fake.name()
-        name = fmt.format(adjective=choice(x), noun=name)
-        if not User.objects.filter(display_name=name):
-            return name
-    else:
-        raise RuntimeError(
-            'maximum number of attempts reached when trying to generate a '
-            'unique random name'
-        )

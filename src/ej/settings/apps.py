@@ -4,19 +4,19 @@ from .options import EjOptions
 
 class InstalledAppsConf(Base, EjOptions):
     project_apps = [
-        'ej_boards',
-        'ej_clusters',
-        'ej_configurations',
-        'ej_conversations',
-        'ej_clusterviz',
-        'ej_dataviz',
-        'ej_gamification',
-        'ej_help',
+        # Math
         'ej_math',
-        'ej_notifications',
-        'ej_powers',
-        'ej_profiles',
         'ej_reports',
+        'ej_clusters',
+
+        # Conversations
+        'ej_boards',
+        'ej_conversations',
+
+        # Core apps
+        'ej_help',
+        'ej_configurations',
+        'ej_profiles',
         'ej_users',
     ]
 
