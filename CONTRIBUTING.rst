@@ -11,8 +11,7 @@ For each issue to be solved, follow the procedure below:
 
    $ git checkout dev
 
--  Always run the tests before a commit you do otherwise your pull request
-will not be merged! E.g.::
+-  Always run the tests before a commit you do otherwise your pull request will not be merged! E.g.::
 
    $ inv test
 
