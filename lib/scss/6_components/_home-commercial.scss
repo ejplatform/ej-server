@@ -189,6 +189,21 @@
     }
   }
 
+  &-who {
+    li {
+      width: 250px;
+      text-align: center;
+    }
+
+    img {
+      margin: 0 auto;
+    }
+
+    .slick-arrow {
+      margin-top: -56px;
+    }
+  }
+
   &-community {
     background: $color-gray-lighter;
 
