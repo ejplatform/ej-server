@@ -25,7 +25,7 @@ label,
 select,
 .FormItem {
     box-sizing: border-box;
-    font-size: $font-size-h6;
+    font-size: 16px;
     max-width: $breakpoint-small;
     width: 85%;
 }
@@ -70,7 +70,10 @@ input[type=submit] {
     width: inherit;
 }
 
-input:focus, textarea:focus, select:focus, button:focus {
+input:focus,
+textarea:focus,
+select:focus,
+button:focus {
     outline: none;
 }
 

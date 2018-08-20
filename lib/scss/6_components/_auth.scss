@@ -12,44 +12,43 @@ $login-title-size: 14px;
 $login-link-color: $color-accent !default;
 $login-new-user-border: 1px solid $color-gray-dark;
 $login-new-user-background-color: #052B47 !default;
-
 .Register,
 .Login {
     padding: $spacing-unit;
     text-align: center;
     font-family: Raleway;
-
     h1 {
         color: $login-title-color;
         font-size: $login-title-size;
     }
-
-    input, textarea, select, .FormItem {
+    input,
+    textarea,
+    select,
+    .FormItem {
         display: block;
         margin-left: auto;
         margin-right: auto;
         height: 50px;
     }
-    input{
-        border: $login-fields-border;
-        border-radius: $login-fields-border-radius;
+    input {
+        border: none;
+        height: 40px;
+        width: 261px;
+        border-radius: 20px;
     }
-
     input[type=submit] {
         display: block;
         margin-top: $spacing-unit;
         border: none;
-        width: $login-button-login-size; 
+        width: $login-button-login-size;
         background: $login-button-login-background;
     }
-
     a[class=Button] {
         border-radius: 28px;
         width: $login-button-register-size;
         min-width: 200px;
         padding: 12px;
     }
-
     &-icon {
         border: $login-icon-border;
         border-radius: 50%;
@@ -58,24 +57,19 @@ $login-new-user-background-color: #052B47 !default;
         margin: $spacing-unit-large auto;
         padding: $spacing-unit-large;
         width: $login-icon-size;
-
-        img > * {
+        img>* {
             color: $color-hint;
         }
-
-        img{
+        img {
             position: relative;
             z-index: -1;
             padding: $login-icon-padding;
             transform: $login-icon-scale;
         }
-
     }
-
     &-button {
         @extend .Button--primary;
     }
-
     &-socialButtons {
         display: $social-buttons-display;
         div {
@@ -83,7 +77,6 @@ $login-new-user-background-color: #052B47 !default;
             flex-direction: row;
             justify-content: center;
         }
-
         .round-icon-container {
             border-radius: 50%;
             width: 40px;
@@ -93,42 +86,33 @@ $login-new-user-background-color: #052B47 !default;
             align-items: center;
             justify-content: center;
         }
-
         .icon-google {
-            border: 1px solid #0C3570;	
+            border: 1px solid #0C3570;
         }
-
         .icon-facebook {
             background-color: #4460A0;
         }
-
         .icon-twitter {
             background-color: #00AAEC;
         }
     }
-
     &-password {
         font-weight: bold;
         text-transform: lowercase;
-
         a {
             color: $login-link-color;
         }
     }
-
     &-newUser {
         border-top: $login-new-user-border;
         margin: $spacing-unit auto;
         width: 85%;
-
         h1 {
             color: $color-content-text;
             font-size: $font-size-h3;
         }
-
         .Button {
             background-color: $login-new-user-background-color;
         }
     }
-
 }
