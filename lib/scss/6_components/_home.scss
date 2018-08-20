@@ -8,6 +8,7 @@ $how-it-work-icon-color: $color-gray-dark !default;
 .HomeBanner {
     @extend .CenteredContainer;
     width: 80%;
+    margin-top: 40px;
     
     h2 {
         display: none;
@@ -44,6 +45,7 @@ $how-it-work-icon-color: $color-gray-dark !default;
         color: $home-how-it-works-title-font-color;
     }
     p {
+        padding: 0 10px;
         line-height: 30px;
         color: $home-how-it-works-content-font-color;
     }

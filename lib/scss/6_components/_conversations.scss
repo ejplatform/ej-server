@@ -22,6 +22,10 @@ $conversation-card-button-border-radius: 30px !default;
 .ConversationList {
     @extend .Container;
 
+    p {
+        padding: 0 10px;
+    }
+
     &-title {
         text-align: center;
 
@@ -112,6 +116,10 @@ $conversation-card-button-border-radius: 30px !default;
                 width: 100vw;
             }
         }
+    }
+
+    &-link {
+        text-align: center;
     }
 }
 

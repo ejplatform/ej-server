@@ -7,7 +7,7 @@
             {% elif action == 'start-now' %}
                 {{ action_button(_('Start now'), '/start/' ) }}
             {% elif action == 'cpa' %}
-                {{ action_button(_('Start now'), '/talks/' ) }}
+                {# Do not render button #}
             {% else %}
                 Invalid action: {{ action }}
             {% endif %}
