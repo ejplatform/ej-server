@@ -1,7 +1,26 @@
 {% extends 'base.jinja2' %}
 
 {% block content %}
-    <div class="Moderate Create">
+      <div class="Moderate Create">
+        <script>
+        function createNewBoard() {
+          var select = $('select[name="board"]');
+          if (select.val() === 'new') {
+            var field = '<input type="text" name="newboard" placeholder="{{ _('Type here the title of the new board') }}" />';
+            select.replaceWith(field);
+          }
+        }
+        $(document).ready(function() {
+          $('#ConversationField-board').show();
+        });
+
+        function addCommentField() {
+          var index = parseInt($('input[name="commentscount"]').val(), 10) + 1;
+          $('input[name="commentscount"]').val(index);
+          var template = '<div class="ConversationField"><i class="far fa-comment"></i> <input type="text" name="comment-%INDEX%" placeholder="{{ _('Type here the comment') }} #%INDEX%" /> <i class="fa fa-edit"></i></div>';
+          $('.Moderate-comments').append(template.replace(/%INDEX%/g, index));
+        }
+        </script>
         <form method="post" class="django-form-as-p">
           {{ csrf_input }}
 
@@ -35,7 +54,7 @@
           </div>
           
           <div class="ConversationField"><i class="fa fa-link"></i> <input type="text" name="title" placeholder="{{ _('Slug') }}" /> <i class="fa fa-edit"></i></div>
-          <div class="ConversationField">
+          <div class="ConversationField" id="ConversationField-board" style="display: none;">
             <i class="fa fa-list-ul"></i> 
             <select name="board" onchange="createNewBoard()">
               <option disabled selected value>{{ _('Conversation list aka board') }}</option>
@@ -56,22 +75,5 @@
           </div>
           <p class="Conversation-AddComment" onclick="addCommentField()"><i class="fa fa-plus"></i> {{ _('Add more comments') }}</p>
         </form>
-
-        <script>
-        function createNewBoard() {
-          var select = $('select[name="board"]');
-          if (select.val() === 'new') {
-            var field = '<input type="text" name="newboard" placeholder="{{ _('Type here the title of the new board') }}" />';
-            select.replaceWith(field);
-          }
-        }
-
-        function addCommentField() {
-          var index = parseInt($('input[name="commentscount"]').val(), 10) + 1;
-          $('input[name="commentscount"]').val(index);
-          var template = '<div class="ConversationField"><i class="far fa-comment"></i> <input type="text" name="comment-%INDEX%" placeholder="{{ _('Type here the comment') }} #%INDEX%" /> <i class="fa fa-edit"></i></div>';
-          $('.Moderate-comments').append(template.replace(/%INDEX%/g, index));
-        }
-        </script>
     </div>
 {% endblock %}
