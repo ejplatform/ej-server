@@ -43,6 +43,7 @@ def sass(ctx, watch=False, theme='default', trace=False, dry_run=False, rocket=T
     if background:
         from threading import Thread
         thread = Thread(target=go, args=(cmd,))
+        thread.setDaemon(True)
         thread.start()
     else:
         go(cmd)
