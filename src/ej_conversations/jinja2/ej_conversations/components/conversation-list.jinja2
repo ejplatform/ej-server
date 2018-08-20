@@ -5,6 +5,7 @@
  #---------------------------------------------------------------------------#}
 
 {% macro conversation_list(conversations,
+                           categories,
                            footer_content,
                            topic='',
                            title='Conversas públicas',
@@ -14,7 +15,7 @@
     {% if caller is defined %}{% set caller_output = caller() %}{% endif %}
 
     <div class="ConversationList">
-        {{ react_component('conversation_list', conversation_list_static(conversations, title, subtitle, caller_output|default(topic)), javascript_enabled) }}
+        {{ react_component('conversation_list', conversation_list_static(conversations, categories, title, subtitle, caller_output|default(topic)), javascript_enabled) }}
     </div>
 
     
@@ -34,7 +35,7 @@
 {% endmacro %}
 
 
-{% macro conversation_list_static(conversations, title, subtitle, caller_output=None) %}
+{% macro conversation_list_static(conversations, categories, title, subtitle, caller_output=None) %}
     <div class="ConversationListStatic">
         <div class="ConversationList-title">
             {% if caller_output %}<p>{{ caller_output }}</p>{% endif %}
@@ -56,6 +57,19 @@
                 {% endif %}
             </div>
         {% endif %}
+
+        {# {% if categories is defined and categories %}
+            <div class="ConversationList-categories">
+                <i class="fa fa-chevron-left"></i>
+                <ul>
+                    <li>{{ link(_('All'), href='/conversations/', class_='color-accent') }}</li>
+                    {% for category in categories %}
+                        <li>{{ link(category.tag|safe(), href=category.get_absolute_url()) }}</li>
+                    {% endfor %}
+                </ul>
+                <i class="fa fa-chevron-right"></i>
+            </div>
+        {% endif %} #}
 
         {# Cards #}
         <div class="ConversationList-cardList">
