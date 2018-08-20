@@ -165,31 +165,44 @@ class Conf(ThemesConf,
         ANYMAIL = { "MAILGUN_API_KEY": "" }
         DEFAULT_FROM_EMAIL = "noreply@unidoscontraacorrupcao.org.br"
 
-    if ENVIRONMENT == 'production':
+    if ENVIRONMENT == 'prod':
+        INTERNAL_IPS = [*globals().get('INTERNAL_IPS', ()), '127.0.0.1']
+
         # Django CORS
         CORS_ORIGIN_ALLOW_ALL = False
         CORS_ALLOW_CREDENTIALS = True
-        CORS_ORIGIN_REGEX_WHITELIST = (r'^(https?://)?[\w.]*ejplatform\.org$',)
+        CORS_ORIGIN_WHITELIST = (
+            'app.unidoscontraacorrupcao.org.br',
+            'admin.besouro.ejplatform.org',
+        )
 
         CSRF_TRUSTED_ORIGINS = [
-            'ejplatform.org',
-            'talks.ejplatform.org'
-            'dev.ejplatform.org',
-            'talks.dev.ejplatform.org',
+            'app.unidoscontraacorrupcao.org.br',
+            'admin.besouro.ejplatform.org',
         ]
 
         X_FRAME_OPTIONS = 'DENY'
 
-        EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
         ACCOUNT_EMAIL_VERIFICATION = 'optional'
+        EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+        DATABASES = {
+            'default': {
+                'ENGINE': 'django.db.backends.postgresql',
+                'NAME': 'besouro-local',
+                'USER': 'besouro',
+                'PASSWORD': '',
+                'HOST': 'besouro_db_prod',
+                'PORT': '5432'
+            }
+        }
+
+        ALLOWED_HOSTS = ['app.unidoscontraacorrupcao.org.br',
+                         'admin.besouro.ejplatform.org']
+
         EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend'
-        MAILGUN_API_KEY = env('DJANGO_MAILGUN_API_KEY', default='')
-        MAILGUN_SENDER_DOMAIN = ''
-        EMAIL_SUBJECT_PREFIX = env('DJANGO_EMAIL_SUBJECT_PREFIX', default='[EJ]')
-        SERVER_EMAIL = env('DJANGO_SERVER_EMAIL', default=DEFAULT_FROM_EMAIL)
-        # REST_AUTH_REGISTER_SERIALIZERS = {
-        #     'REGISTER_SERIALIZER': 'ej_users.serializers.RegistrationSerializer'
-        # }
+        ANYMAIL = { "MAILGUN_API_KEY": "" }
+        DEFAULT_FROM_EMAIL = "noreply@unidoscontraacorrupcao.org.br"
 
 
 Conf.save_settings(globals())
