@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-08-20 19:39+0000\n"
-"PO-Revision-Date: 2018-08-20 16:41-0300\n"
+"PO-Revision-Date: 2018-08-20 16:58-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: \n"
 "Language: pt_BR\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "Generated-By: Babel 2.5.3\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 1.8.7.1\n"
 
 #: local/vendor/django-boogie/src/boogie/apps/users/models.py:23
 #: local/vendor/django-boogie/src/boogie/models/abstract/user.py:64
@@ -1613,9 +1613,8 @@ msgid "Conversation"
 msgstr "Conversa"
 
 #: src/ej_conversations/jinja2/ej/roles/conversation-card.jinja2:23
-#, fuzzy
 msgid "Participate now!"
-msgstr "Participantes"
+msgstr "Participar agora!"
 
 #: src/ej_conversations/jinja2/ej/roles/conversation-card.jinja2:27
 msgid "Moderate Conversation"
