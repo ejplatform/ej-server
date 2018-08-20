@@ -4,8 +4,10 @@
 
 
 {% block main %}
-    {{ home_banner(home_banner_fragment, 'cpa') }}
-    {{ conversation_list(conversations, javascript_enabled=javascript_enabled) }}
-    {{ how_it_works(how_it_works_fragment) }}
-    {{ start_now(start_now_fragment, user) }}
+    <div class="StartPage">
+        {{ home_banner(home_banner_fragment, 'cpa') }}
+        {{ conversation_list(conversations, javascript_enabled=javascript_enabled) }}
+        {{ how_it_works(how_it_works_fragment) }}
+        {{ start_now(start_now_fragment, user) }}
+    </div>
 {% endblock %}
