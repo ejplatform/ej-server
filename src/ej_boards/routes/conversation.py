@@ -25,7 +25,9 @@ def conversation_list(request, board):
     conversations = board.conversations.all()
     tags = board.tags.all()
     board_user = board.owner
-    boards = board_user.boards.all()
+    boards = []
+    if user == board_user:
+        boards = board_user.boards.all()
 
     return {
         'conversations': conversations_with_moderation(user, conversations),
