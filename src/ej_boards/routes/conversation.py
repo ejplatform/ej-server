@@ -16,7 +16,7 @@ urlpatterns = Router(
     lookup_field='slug',
     lookup_type='slug',
 )
-board_url = '<model:board>/conversations/'
+board_url = '<model:board>'
 
 
 @urlpatterns.route(board_url, template='ej_conversations/list.jinja2')
