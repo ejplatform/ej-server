@@ -2,7 +2,7 @@
 
 {% macro menu(user) %}
     <nav class="NavMenu">
-        <ul>            
+        <ul>
             <li>{{ icon_link(_('About'), '/about-us/', 'far fa-comment') }}</li>
             <li>{{ icon_link(_('Frequently Asked Questions'), '/faq/', 'far fa-question-circle') }}</li>
             <li>{{ icon_link(_('Talk to us'), '/talk-to-us/', 'fas fa-question-circle') }}</li>
@@ -63,9 +63,6 @@
                             <i class="fas fa-cog"></i>
                             {{_('Manage timelines')}}
                         </li> #}
-                        <li>
-                            {{icon_link(_('Manage stereotypes'), '/profile/stereotypes/', 'fas fa-sliders-h', fa=True)}}
-                        </li>
                         {# <li>
                             {{icon_link(_('Request reports'), '/reports/', 'far fa-chart-bar', fa=True)}}
                         </li> #}
