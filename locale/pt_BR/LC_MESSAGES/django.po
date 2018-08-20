@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-20 13:33+0000\n"
-"PO-Revision-Date: 2018-08-20 10:39-0300\n"
+"POT-Creation-Date: 2018-08-20 19:39+0000\n"
+"PO-Revision-Date: 2018-08-20 16:41-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: \n"
 "Language: pt_BR\n"
@@ -17,7 +17,112 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "Generated-By: Babel 2.5.3\n"
-"X-Generator: Poedit 2.1.1\n"
+"X-Generator: Poedit 2.0.6\n"
+
+#: local/vendor/django-boogie/src/boogie/apps/users/models.py:23
+#: local/vendor/django-boogie/src/boogie/models/abstract/user.py:64
+#: src/ej_clusters/models.py:123 src/ej_clusters/models.py:180
+#: src/ej_clusters/routes.py:202 src/ej_configurations/models.py:127
+#: src/ej_reports/routes.py:116
+msgid "Name"
+msgstr "Nome"
+
+#: local/vendor/django-boogie/src/boogie/apps/users/models.py:26
+#, fuzzy
+msgid "User's full name"
+msgstr "Nome completo do usuário"
+
+#: local/vendor/django-boogie/src/boogie/fields/default_fields.py:47
+msgid "slug"
+msgstr ""
+
+#: local/vendor/django-boogie/src/boogie/fields/default_fields.py:53
+msgid "name"
+msgstr "nome"
+
+#: local/vendor/django-boogie/src/boogie/fields/default_fields.py:59
+#, fuzzy
+msgid "title"
+msgstr "Título"
+
+#: local/vendor/django-boogie/src/boogie/fields/default_fields.py:65
+msgid "description"
+msgstr "descrição"
+
+#: local/vendor/django-boogie/src/boogie/fields/default_fields.py:69
+msgid "Conscise description used on listings."
+msgstr "Descrição concisa utilizada em listas."
+
+#: local/vendor/django-boogie/src/boogie/fields/default_fields.py:74
+msgid "detailed description"
+msgstr "descrição detalhada"
+
+#: local/vendor/django-boogie/src/boogie/fields/default_fields.py:77
+msgid "Detailed description of object."
+msgstr "Descrição detalhada do objeto."
+
+#: local/vendor/django-boogie/src/boogie/fields/enum_field.py:24
+msgid "An enumeration field"
+msgstr "Um campo de enumeração"
+
+#: local/vendor/django-boogie/src/boogie/models/abstract/user.py:55
+#: src/ej_profiles/models.py:127 src/ej_users/forms.py:46
+#: src/ej_users/forms.py:48
+msgid "E-mail"
+msgstr "Email"
+
+#: local/vendor/django-boogie/src/boogie/models/abstract/user.py:59
+msgid ""
+"Users can register additional e-mail addresses. This is the main e-mail "
+"address which is used for login."
+msgstr ""
+"Usuários podem registrar e-mails adicionais. Este é o e-mail principal "
+"utilizado para login."
+
+#: local/vendor/django-boogie/src/boogie/models/abstract/user.py:67
+msgid "Full name of the user."
+msgstr "Nome completo do usuário."
+
+#: local/vendor/django-boogie/src/boogie/models/abstract/user.py:71
+msgid "Alias"
+msgstr "Apelido"
+
+#: local/vendor/django-boogie/src/boogie/models/abstract/user.py:74
+#, fuzzy
+msgid "Public alias used to identify the user."
+msgstr "Um nome gerado aleatoriamente para identificar cada usuário."
+
+#: local/vendor/django-boogie/src/boogie/models/abstract/user.py:78
+msgid "staff status"
+msgstr ""
+
+#: local/vendor/django-boogie/src/boogie/models/abstract/user.py:81
+msgid "Designates whether the user can log into the admin site."
+msgstr ""
+
+#: local/vendor/django-boogie/src/boogie/models/abstract/user.py:85
+msgid "active"
+msgstr "ativo"
+
+#: local/vendor/django-boogie/src/boogie/models/abstract/user.py:88
+msgid ""
+"Designates whether this user should be treated as active. Unselect this "
+"instead of deleting accounts."
+msgstr ""
+
+#: local/vendor/django-boogie/src/boogie/models/abstract/user.py:93
+msgid "date joined"
+msgstr "data de ingresso"
+
+#: local/vendor/django-boogie/src/boogie/models/abstract/user.py:162
+#, fuzzy
+msgid "user"
+msgstr "{n} usuários"
+
+#: local/vendor/django-boogie/src/boogie/views/views.py:122
+#, python-format
+msgid "No %(verbose_name)s found matching the query"
+msgstr "Nenhum nome %(verbose_name)s encontrado"
 
 #: src/ej/components/tags.py:11
 msgid "hello"
@@ -403,12 +508,6 @@ msgstr "Essa URL já existe."
 msgid "Clusters"
 msgstr "Grupos"
 
-#: src/ej_clusters/models.py:123 src/ej_clusters/models.py:180
-#: src/ej_clusters/routes.py:203 src/ej_configurations/models.py:127
-#: src/ej_reports/routes.py:116
-msgid "Name"
-msgstr "Nome"
-
 #: src/ej_clusters/models.py:130
 msgid "How was this cluster conceived?"
 msgstr "Como este grupo foi concebido?"
@@ -445,15 +544,15 @@ msgstr "Estereótipos"
 msgid "Stereotype votes ({conversation})"
 msgstr "Votos de estereótipo ({conversation})"
 
-#: src/ej_clusters/routes.py:203
+#: src/ej_clusters/routes.py:202
 msgid "Username"
 msgstr "Nome completo do usuário"
 
-#: src/ej_clusters/routes.py:213 src/ej_reports/routes.py:113
+#: src/ej_clusters/routes.py:212 src/ej_reports/routes.py:113
 msgid "Comment"
 msgstr "Comentário"
 
-#: src/ej_clusters/routes.py:213
+#: src/ej_clusters/routes.py:212
 msgid "Options"
 msgstr "Opções"
 
@@ -1017,11 +1116,6 @@ msgstr "Atividade política"
 msgid "Image"
 msgstr "Imagem"
 
-#: src/ej_profiles/models.py:127 src/ej_users/forms.py:46
-#: src/ej_users/forms.py:48
-msgid "E-mail"
-msgstr "Email"
-
 #: src/ej_profiles/models.py:163
 msgid "Root"
 msgstr "Root"
@@ -1162,7 +1256,6 @@ msgid "Under construction!"
 msgstr "Em construção!"
 
 #: src/ej/templates/jinja2/components/home.jinja2:8
-#: src/ej/templates/jinja2/components/home.jinja2:10
 msgid "Start now"
 msgstr "Começar agora!"
 
@@ -1410,11 +1503,16 @@ msgid "Create a new board!"
 msgstr "Criar um novo quadro!"
 
 #: src/ej_clusters/jinja2/ej_clusters/create-stereotype.jinja2:11
-#, fuzzy
 msgid "New Stereotype for conversation: "
-msgstr "Votos de estereótipo ({conversation})"
+msgstr "Novo Estereótipo da conversa:"
 
 #: src/ej_clusters/jinja2/ej_clusters/create-stereotype.jinja2:12
+msgid "List below comments about this stereotype and define votes."
+msgstr ""
+"Liste abaixo os comentários referentes a esse estereótipo e defina os votos."
+
+#: src/ej_clusters/jinja2/ej_clusters/create-stereotype.jinja2:13
+#: src/ej_conversations/jinja2/ej_conversations/create.jinja2:36
 msgid "Create"
 msgstr "Criar"
 
@@ -1527,47 +1625,47 @@ msgstr "Moderar Conversa"
 msgid "No comment"
 msgstr "Sem comentários"
 
-#: src/ej_conversations/jinja2/ej_conversations/create.jinja2:13
+#: src/ej_conversations/jinja2/ej_conversations/create.jinja2:9
+msgid "Type here the title of the new board"
+msgstr ""
+
+#: src/ej_conversations/jinja2/ej_conversations/create.jinja2:20
+#: src/ej_conversations/jinja2/ej_conversations/create.jinja2:73
+#, fuzzy
+msgid "Type here the comment"
+msgstr "Corpo de texto do comentário"
+
+#: src/ej_conversations/jinja2/ej_conversations/create.jinja2:32
 #: src/ej_conversations/jinja2/ej_conversations/edit.jinja2:14
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: src/ej_conversations/jinja2/ej_conversations/create.jinja2:24
+#: src/ej_conversations/jinja2/ej_conversations/create.jinja2:43
 msgid "Type tags separating by commas"
 msgstr ""
 
-#: src/ej_conversations/jinja2/ej_conversations/create.jinja2:27
+#: src/ej_conversations/jinja2/ej_conversations/create.jinja2:46
 msgid "Type here the question for your research"
 msgstr ""
 
-#: src/ej_conversations/jinja2/ej_conversations/create.jinja2:30
+#: src/ej_conversations/jinja2/ej_conversations/create.jinja2:49
 #: src/ej_conversations/jinja2/ej_conversations/edit.jinja2:39
 #: src/ej_conversations/jinja2/ej_conversations/moderate.jinja2:17
 msgid "Edit Conversation"
 msgstr "Editar Conversa"
 
-#: src/ej_conversations/jinja2/ej_conversations/create.jinja2:41
+#: src/ej_conversations/jinja2/ej_conversations/create.jinja2:60
 msgid "Conversation list aka board"
 msgstr "Lista de conversas"
 
-#: src/ej_conversations/jinja2/ej_conversations/create.jinja2:45
+#: src/ej_conversations/jinja2/ej_conversations/create.jinja2:64
 #, fuzzy
 msgid "Create new board..."
 msgstr "Criar um novo quadro!"
 
-#: src/ej_conversations/jinja2/ej_conversations/create.jinja2:54
-#: src/ej_conversations/jinja2/ej_conversations/create.jinja2:72
-#, fuzzy
-msgid "Type here the comment"
-msgstr "Corpo de texto do comentário"
-
-#: src/ej_conversations/jinja2/ej_conversations/create.jinja2:57
+#: src/ej_conversations/jinja2/ej_conversations/create.jinja2:76
 msgid "Add more comments"
 msgstr "Adicionar mais comentários"
-
-#: src/ej_conversations/jinja2/ej_conversations/create.jinja2:64
-msgid "Type here the title of the new board"
-msgstr ""
 
 #: src/ej_conversations/jinja2/ej_conversations/edit.jinja2:61
 msgid "Promote conversation on public list"
@@ -1876,54 +1974,6 @@ msgstr "Recriar minha senha"
 
 #~ msgid "OneSignal Id"
 #~ msgstr "Id OneSignal"
-
-#, fuzzy
-#~ msgid "User's full name"
-#~ msgstr "Nome completo do usuário"
-
-#~ msgid "name"
-#~ msgstr "nome"
-
-#~ msgid "description"
-#~ msgstr "descrição"
-
-#~ msgid "Conscise description used on listings."
-#~ msgstr "Descrição concisa utilizada em listas."
-
-#~ msgid "detailed description"
-#~ msgstr "descrição detalhada"
-
-#~ msgid "Detailed description of object."
-#~ msgstr "Descrição detalhada do objeto."
-
-#~ msgid "An enumeration field"
-#~ msgstr "Um campo de enumeração"
-
-#~ msgid ""
-#~ "Users can register additional e-mail addresses. This is the main e-mail "
-#~ "address which is used for login."
-#~ msgstr ""
-#~ "Usuários podem registrar e-mails adicionais. Este é o e-mail principal "
-#~ "utilizado para login."
-
-#~ msgid "Full name of the user."
-#~ msgstr "Nome completo do usuário."
-
-#~ msgid "Alias"
-#~ msgstr "Apelido"
-
-#~ msgid "active"
-#~ msgstr "ativo"
-
-#~ msgid "date joined"
-#~ msgstr "data de ingresso"
-
-#, fuzzy
-#~ msgid "user"
-#~ msgstr "{n} usuários"
-
-#~ msgid "No %(verbose_name)s found matching the query"
-#~ msgstr "Nenhum nome %(verbose_name)s encontrado"
 
 #, fuzzy
 #~ msgid "User updated at"
