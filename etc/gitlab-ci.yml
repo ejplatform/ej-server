@@ -60,7 +60,7 @@ flake8:
 
 # PUBLISH: build and publish images with :latest (master commits) and
 # :tag (tagged commits).
-publish generic staging images: &publish
+publish ejplatform/web latest: &publish
   image : docker
   stage: publish
   services:
@@ -79,9 +79,10 @@ publish generic staging images: &publish
   tags:
     - docker
 
-publish generic tagged images:
+publish ejplatform/web tagged:
   << : *publish
   script:
+    - echo "$CI_COMMIT_SHA; $CI_COMMIT_TITLE"
     - "docker build . -f docker/Dockerfile -t ejplatform/web:$CI_COMMIT_TAG
             --cache-from ejplatform/web:$CI_COMMIT_TAG
             --build-arg COMMIT_TITLE=\"$CI_COMMIT_TITLE\"
@@ -91,9 +92,10 @@ publish generic tagged images:
     - tags
 
 
-publish cpa staging images:
+publish mdhcpa/web latest:
   << : *publish
   script:
+    - echo "$CI_COMMIT_SHA; $CI_COMMIT_TITLE"
     - "docker build . -f docker/Dockerfile -t mdhcpa/web:latest
             --cache-from mdhcpa/web:latest
             --build-arg THEME=cpa
@@ -101,9 +103,10 @@ publish cpa staging images:
             --build-arg COMMIT_HASH=\"$CI_COMMIT_SHA\""
     - docker push mdhcpa/web:latest
 
-publish cpa tagged images:
+publish mdhcpa/web tagged:
   << : *publish
   script:
+    - echo "$CI_COMMIT_SHA; $CI_COMMIT_TITLE"
     - "docker build . -f docker/Dockerfile -t mdhcpa/web:$CI_COMMIT_TAG
             --cache-from mdhcpa/web:$CI_COMMIT_TAG
             --build-arg THEME=cpa
@@ -114,8 +117,9 @@ publish cpa tagged images:
     - tags
 
 # DEPLOY: tell rancher to update its images.
-.deploy: &deploy
+deploy generic: &deploy
   image: cdrx/rancher-gitlab-deploy
+  stage: deploy
   script:
     - "upgrade
             --service web
@@ -129,6 +133,7 @@ publish cpa tagged images:
             --stack $RANCHER_STACK
             --rancher-key $RANCHER_ACCESS_KEY
             --rancher-secret $RANCHER_SECRET_KEY"
+  environment: develop
   only:
     - master
     - tags
@@ -137,10 +142,4 @@ publish cpa tagged images:
 
 deploy cpa:
   << : *deploy
-  stage: deploy
   environment: develop_cpa
-
-deploy generic:
-  << : *deploy
-  stage: deploy
-  environment: develop
