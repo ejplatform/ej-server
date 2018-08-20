@@ -6,7 +6,7 @@
     box-sizing: border-box;
     margin: 0 auto;
     max-width: $content-wrapper-max-width;
-    padding: 0 $spacing-unit-small $spacing-unit $spacing-unit;
+    padding: 0 0 $spacing-unit-small 0;
 
     @media only screen and (min-width: $breakpoint-small) {
         padding: 0 $spacing-unit $spacing-unit $spacing-unit;
