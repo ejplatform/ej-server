@@ -25,7 +25,7 @@ def manage(ctx, cmd, env=None, **kwargs):
 # Build assets
 #
 @task
-def sass(ctx, watch=False, theme='default', trace=False, dry_run=False, rocket=True):
+def sass(ctx, watch=False, theme='default', trace=False, dry_run=False, rocket=True, background=False):
     """
     Run Sass compiler
     """
@@ -39,7 +39,13 @@ def sass(ctx, watch=False, theme='default', trace=False, dry_run=False, rocket=T
     cmd += ' --trace' if trace else ''
     go('rm -rf .sass-cache lib/build/css/main.css lib/build/css/rocket.css')
     go('mkdir -p lib/build/css')
-    go(cmd)
+
+    if background:
+        from threading import Thread
+        thread = Thread(target=go, args=(cmd,))
+        thread.start()
+    else:
+        go(cmd)
 
 
 @task
