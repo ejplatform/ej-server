@@ -3,7 +3,7 @@
 
 {% block content %}
     {{ action_button("Criar nova Conversa", "/conversations/create/")}}
-    {% call conversation_list(conversations, categories, footer_content, javascript_enabled=javascript_enabled) %}
+    {% call conversation_list(conversations, footer_content, javascript_enabled=javascript_enabled) %}
     {% endcall %}
 {% endblock %}
 
