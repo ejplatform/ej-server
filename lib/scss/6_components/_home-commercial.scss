@@ -147,10 +147,10 @@
         list-style: none;
         border: 2px solid $color-blue-light-low;
         border-radius: $unit;
-        width: 38%;
+        width: 140px;
         margin: $unit;
         text-align: center;
-        max-width: 100px;
+        overflow: visible;
 
         i {
           margin: $unit;
