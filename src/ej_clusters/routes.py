@@ -144,7 +144,6 @@ def create_stereotype(request, conversation):
     filtered_comments = Comment.objects.filter(conversation=conversation)
     for form in rendered_votes_form:
         form.fields['comment'].queryset = filtered_comments
-        print(form.fields['choice'])
     return {
         'stereotype_form': rendered_stereotype_form,
         'votes_form': rendered_votes_form,

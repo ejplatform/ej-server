@@ -37,7 +37,8 @@ def create(request):
                     models.Comment.objects.create(
                         content=form.data[name],
                         conversation=conversation,
-                        author=request.user
+                        author=request.user,
+                        status=models.Comment.STATUS.approved,
                     )
             return redirect(conversation.get_absolute_url() + 'stereotypes/')
     else:
