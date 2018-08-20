@@ -40,8 +40,10 @@ $login-new-user-background-color: #052B47 !default;
         display: block;
         margin-top: $spacing-unit;
         border: none;
-        width: $login-button-login-size;
+        width: 151px;
+        height: 38px;
         background: $login-button-login-background;
+        box-shadow: none
     }
     a[class=Button] {
         border-radius: 28px;
