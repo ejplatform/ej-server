@@ -8,7 +8,6 @@
                            categories,
                            footer_content,
                            topic='',
-                           conversation_link='View all conversations',
                            title='Conversas públicas',
                            subtitle='Participe das conversas e dê sua opinião com comentários e votos!',
                            javascript_enabled='') %}
@@ -16,7 +15,7 @@
     {% if caller is defined %}{% set caller_output = caller() %}{% endif %}
 
     <div class="ConversationList">
-        {{ react_component('conversation_list', conversation_list_static(conversation_link, conversations, categories, title, subtitle, caller_output|default(topic)), javascript_enabled) }}
+        {{ react_component('conversation_list', conversation_list_static(conversations, categories, title, subtitle, caller_output|default(topic)), javascript_enabled) }}
     </div>
 
     
@@ -36,7 +35,7 @@
 {% endmacro %}
 
 
-{% macro conversation_list_static(conversation_link, conversations, categories, title, subtitle, caller_output=None) %}
+{% macro conversation_list_static(conversations, categories, title, subtitle, caller_output=None) %}
     <div class="ConversationListStatic">
         <div class="ConversationList-title">
             {% if caller_output %}<p>{{ caller_output }}</p>{% endif %}
@@ -79,10 +78,6 @@
             {% endfor %}
         </div>
         {# {{ conversation_pagination() }} #}
-
-        <div class="ConversationList-link">
-            <h1>{{ conversation_link }}</p>
-        </div>
     </div>
 {% endmacro %}
 
