@@ -22,7 +22,7 @@ def can_add_board(user):
     """
     return (
         user.has_perm('ej_boards.add_board') or
-        Board.objects.filter(owner=user).count() < config.MAX_BOARD_NUMBER
+        Board.objects.filter(owner=user).count() < config.EJ_MAX_BOARD_NUMBER
     )
 
 
