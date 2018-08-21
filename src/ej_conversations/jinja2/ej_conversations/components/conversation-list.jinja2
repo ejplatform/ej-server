@@ -7,7 +7,7 @@
 {% macro conversation_list(conversations,
                            categories,
                            footer_content,
-                           topic='',
+                           topic='Um espaço para adolescentes debaterem ações que promovam, garantam e defendam seus direitos',
                            conversation_link='View all conversations',
                            title='Conversas públicas',
                            subtitle='Participe das conversas e dê sua opinião com comentários e votos!',
@@ -39,7 +39,7 @@
 {% macro conversation_list_static(conversation_link, conversations, categories, title, subtitle, caller_output=None) %}
     <div class="ConversationListStatic">
         <div class="ConversationList-title">
-            {% if caller_output %}<p>{{ caller_output }}</p>{% endif %}
+            {% if caller_output %}<p class="topic">{{ caller_output }}</p>{% endif %}
             <h1 class="h1">{{ title }}</h1>
             <p>{{ subtitle }}</p>
         </div>
