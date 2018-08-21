@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-08-20 19:39+0000\n"
-"PO-Revision-Date: 2018-08-20 23:39-0300\n"
+"PO-Revision-Date: 2018-08-21 00:02-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: \n"
 "Language: pt_BR\n"
@@ -1757,9 +1757,8 @@ msgid "public conversations"
 msgstr "Conversas públicas"
 
 #: src/ej_conversations/jinja2/ej_conversations/components/conversation-list.jinja2:55
-#, fuzzy
 msgid "go to my conversations"
-msgstr "Gerenciar conversas"
+msgstr "Suas conversas"
 
 #: src/ej_conversations/jinja2/ej_conversations/components/conversation-list.jinja2:66
 msgid "All"
