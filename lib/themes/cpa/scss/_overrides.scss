@@ -35,11 +35,13 @@ $login-reticle-display: inline;
 
 
 // Social
-$social-buttons-display: inline;
+$social-buttons-display: flex;
 $social-buttons-size: 15px;
 $social-buttons-border: 1px solid #30c0d3;
 $social-buttons-color: #111;
 $social-buttons-background-color: #fff;
+$social-buttons-border-size: 40px;
+$social-buttons-icon-size: 15px;
 
 //Header
 $header-background-color: #30BEC0;

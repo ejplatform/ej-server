@@ -72,15 +72,17 @@ $login-new-user-background-color: #052B47 !default;
     }
     &-socialButtons {
         display: $social-buttons-display;
-        div {
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
+        flex-direction: row;
+        justify-content: center;
+        
+        >i {
+            font-size: $social-buttons-icon-size;
         }
-        .round-icon-container {
+        
+        .rounded-icon {
             border-radius: 50%;
-            width: 40px;
-            height: 40px;
+            width: $social-buttons-border-size;
+            height: $social-buttons-border-size;
             margin: 10px;
             display: flex;
             align-items: center;
@@ -91,9 +93,11 @@ $login-new-user-background-color: #052B47 !default;
         }
         .icon-facebook {
             background-color: #4460A0;
+            color: white;
         }
         .icon-twitter {
             background-color: #00AAEC;
+            color: white;
         }
     }
     &-password {

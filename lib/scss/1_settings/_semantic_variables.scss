@@ -39,11 +39,13 @@
   $login-reticle-display: none !default;
 
  // Social
-  $social-buttons-display: none  !default;
+  $social-buttons-display: flex  !default;
   $social-buttons-border: 1px solid #30c0d3  !default;
   $social-buttons-size: 21px  !default;
   $social-buttons-color: #111  !default;
   $social-buttons-background-color: #fff  !default;
+  $social-buttons-border-size: 60px;
+  $social-buttons-icon-size: 30px;
 
  // Header
   $header-logo-size: 40px  !default;
