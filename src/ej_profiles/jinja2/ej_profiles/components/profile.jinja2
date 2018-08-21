@@ -138,11 +138,17 @@
 {% macro profile_comments(profile) %}
     <div class="Profile-comments">
 
-
-        <h2>{{_('My Comments')}} <span>({{profile.comments().count()}})</span>
-            <i class="fa fa-angle-down"></i>
-        </h2>
-        <ul class='comments'>
+        <div onclick="(function() {
+            if($('#comments').css('display') == 'none')
+                $('#comments').css('display', 'inline');
+            else
+                $('#comments').css('display', 'none');
+        })()">
+            <h2>{{_('My Comments')}} <span>({{profile.comments().count()}})</span>
+                <i class="fa fa-angle-down"></i>
+            </h2>
+        </div>
+        <ul class='comments' id="comments">
             {% for comment in profile.comments() %}
                 <li>
                     <div class='header'>
@@ -180,10 +186,18 @@
 
 {% macro profile_conversations(profile, conversations, javascript_enabled='') %}
     <div class="Profile-conversations">
-        <h2>{{_('Favorite Conversations')}} <span>({{conversations|length}})</span>
-            <i class="fa fa-angle-down"></i>
-        </h2>
-        <div class='conversations'>
+
+        <div onclick="(function() {
+            if($('#conversations').css('display') == 'none')
+                $('#conversations').css('display', 'inline');
+            else
+                $('#conversations').css('display', 'none');
+        })()">
+            <h2>{{_('Favorite Conversations')}} <span>({{conversations|length}})</span>
+                <i class="fa fa-angle-down"></i>
+            </h2>
+        </div>
+        <div class='conversations' id='conversations'>
             {{ conversation_list(conversations, footer_content=footer_content,title='', subtitle='', javascript_enabled=javascript_enabled) }}
         </div>
     </div>
