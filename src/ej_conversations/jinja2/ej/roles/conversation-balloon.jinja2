@@ -9,9 +9,9 @@
         </div>
         <h1>{{ conversation.text }}</h1>
         <ul class="ConversationDetail-statistics">
-            <li><i class="fa fa-comment"></i> {{ gettext('%(comment_count)s comments', comment_count=comments_count) }}</li>
-            <li><i class="fa fa-sliders-h"></i> {{ gettext('%(votes_count)s votes', votes_count=votes_count) }}</li>
-            <li><i class="fa fa-star"></i> {{ gettext('%(favorite_count)s favorites', favorite_count=favorites_count) }} </li>
+            <li><i class="fa fa-comment"></i> {{comments_count}}{{ _('s comments') }}</li>
+            <li><i class="fa fa-sliders-h"></i> {{votes_count}}{{ _('s votes') }}</li>
+            <li><i class="fa fa-star"></i> {{favorites_count}}{{ _('s favorites') }}</li>
         </ul>
     </div>
 
