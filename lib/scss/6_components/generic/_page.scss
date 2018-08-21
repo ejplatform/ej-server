@@ -23,6 +23,8 @@ $page-title-font-size: 1.1 * $font-size-h1;
     }
     
     &-mainContainer {
+        background: url(/static/img/bg-2.svg) top center no-repeat;
+        background-size: contain;
         box-sizing: border-box;
         height: 100vh;
         display: flex;
