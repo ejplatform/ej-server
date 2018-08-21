@@ -1326,11 +1326,6 @@ msgstr "Criar conversa"
 msgid "Favorite conversations"
 msgstr "Conversas Favoritas"
 
-#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:37
-#, fuzzy
-msgid "Manage boards"
-msgstr "Criar quadro"
-
 #: src/ej/templates/jinja2/components/generic/page_menu.jinja2:67
 #: src/ej_conversations/jinja2/ej_conversations/edit.jinja2:53
 msgid "Manage stereotypes"
