@@ -164,7 +164,7 @@ class Conf(ThemesConf,
 
         EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend'
         ANYMAIL = { "MAILGUN_API_KEY": "" }
-        DEFAULT_FROM_EMAIL = "noreply@unidoscontraacorrupcao.org.br"
+        DEFAULT_FROM_EMAIL = "Unidos contra a corrupção <noreply@unidoscontraacorrupcao.org.br>"
 
     if ENVIRONMENT == 'prod':
         INTERNAL_IPS = [*globals().get('INTERNAL_IPS', ()), '127.0.0.1']
