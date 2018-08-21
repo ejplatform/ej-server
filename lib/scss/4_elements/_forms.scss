@@ -46,7 +46,7 @@ input:not([type]),
 textarea,
 select,
 .FormItem {
-    border-radius: $font-size-large;
+    border-radius: $form-item-border-radius;
     background: $form-element-color;
     border: 1px solid $form-border-color;
     color: $form-element-color-text;

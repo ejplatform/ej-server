@@ -6,9 +6,11 @@
 //  $home-how-it-works-background: blue !default  !default;
 
   $button-border-radius-default:  56px  !default;
+
  // Forms
-  $check-box-color: $color-magenta;
- 
+  $check-box-color: $color-magenta !default;
+  $form-item-border-radius: $spacing-unit !default;
+
   // Profile
   $profile-font-color-primary: #30BFD3  !default;
   $profile-font-color-secondary: #042049  !default;
