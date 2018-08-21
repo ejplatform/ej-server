@@ -1740,8 +1740,8 @@ msgid "You still have {n} available comments"
 msgstr "Você ainda tem {n} comentários disponíveis"
 
 #: src/ej_conversations/jinja2/ej_conversations/components/conversation-detail.jinja2:36
-msgid "Please {login} to comment on this conversation"
-msgstr "Por favor faça {login} para comentar nesta conversa"
+msgid "Go to {login} to vote on this conversation"
+msgstr "Vá até {login} para votar nesta conversa"
 
 #: src/ej_conversations/jinja2/ej_conversations/components/conversation-detail.jinja2:38
 msgid "You have used all comments available in this conversation."
