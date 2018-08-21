@@ -47,7 +47,7 @@ def send_selected_email(sender, instance, created, **kwargs):
     send_mail(
         'Você foi selecionado por uma pessoa da campanha Unidos Contra a Corrupção',
         '',
-        'Unidos contra a corrupção <noreply@unidoscontraacorrupcao.org.br>',
+        'Unidos Contra a Corrupção <noreply@unidoscontraacorrupcao.org.br>',
         candidate_email,
         fail_silently=False,
         html_message=html_message
