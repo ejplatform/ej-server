@@ -104,6 +104,19 @@ $how-it-work-icon-color: $color-gray-dark !default;
         flex-grow: 1;
     }
 
+    &-iconWrapper {
+        background-color: white;
+        border-radius: 50%;
+        margin: $spacing-unit;
+    }
+    .conversas {
+        padding: $spacing-unit-tiny;
+    }
+
+    .cpa_circulo {
+        min-width: 48px;
+    }
+
     &-icon {
         align-self: start;
         box-sizing: border-box;
@@ -111,9 +124,8 @@ $how-it-work-icon-color: $color-gray-dark !default;
         display: block;
         flex-grow: 0;
         font-size: $how-it-work-icon-size;
-        margin: $spacing-unit 0;
         text-align: center;
-        min-width: 70px;
+        min-width: 40px;
     }
 
     &-extra {

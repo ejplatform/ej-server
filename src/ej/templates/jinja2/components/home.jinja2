@@ -6,7 +6,7 @@
 
         <div class="HowItWorks-cards">
             {% call how_it_works_card(
-                    'child',
+                    'cpa_circulo',
                     'Painel CPA',
                     'Aqui, quem faz parte do Comitê de Participação de Adolescente (CPA),
                         no Conanda, troca ideias, compartilha informações e ajuda nas decisões
@@ -15,7 +15,7 @@
             {% endcall %}
 
             {% call how_it_works_card(
-                    'comments',
+                    'conversas',
                     'Conversas Públicas',
                     'Não fique fora dessa! Participe das conversas! Vote, dê sua opinião') %}
                 {# {{ rocket_button() }} #}
@@ -27,7 +27,10 @@
 
 {% macro how_it_works_card(icon, title, comment, action=None, link='#') %}
     <article class="HowItWorksCard">
-        <i class="fa fa-{{ icon }} HowItWorksCard-icon"></i>
+        <div class="HowItWorksCard-iconWrapper {{icon}}">
+            <img src="/static/img/icons/{{icon}}.svg" class="HowItWorksCard-icon"></img>
+        </div>
+        {# <i class="fa fa-{{ icon }} HowItWorksCard-icon"></i> #}
         <div class="HowItWorksCard-content">
             <h1>{{ title }} <i class="fa fa-angle-right"></i></h1>
             <aside class="HowItWorksCard-extra">
