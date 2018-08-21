@@ -159,7 +159,8 @@ class Conf(ThemesConf,
         }
 
         ALLOWED_HOSTS = ['dev.besouro.ejplatform.org',
-                         'admin.dev.besouro.ejplatform.org']
+                         'admin.dev.besouro.ejplatform.org',
+                         '127.0.0.1']
 
         EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend'
         ANYMAIL = { "MAILGUN_API_KEY": "" }
