@@ -54,22 +54,6 @@
 
 {% macro login_options(button_href, button_msg, title) %}
     <p class="Login-password"><a href="/profile/recover-password/">Esqueci minha senha</a></p>
-
-    <div class="Login-socialButtons">
-        <p>ou logue-se por outras redes</p>
-        <div>
-            <div class="round-icon-container icon-google">
-                <img src="/static/img/login/google-color.svg">
-            </div>
-            <div class="round-icon-container icon-facebook">
-                <img class="icon-facebook" src="/static/img/login/facebook-color.svg">
-            </div>
-            <div class="round-icon-container icon-twitter">
-                <img class="icon-twitter" src="/static/img/login/twitter-color.svg">
-            </div>
-        </div>
-    </div>
-
     <div class="Login-newUser">
         {% set msg = _('Register') if is_login|default(False) else _('Login') %}
         <h1>{{ title }}</h1>
