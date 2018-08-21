@@ -148,4 +148,8 @@ $how-it-work-icon-color: $color-gray-dark !default;
 .StartPage {
     background: url(/static/img/bg-2.svg) top center no-repeat;
     background-size: contain;
+
+    .ConversationFooter {
+        margin-top: 70px;
+    }
 }
