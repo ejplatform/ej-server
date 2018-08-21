@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-08-20 19:39+0000\n"
-"PO-Revision-Date: 2018-08-20 16:58-0300\n"
+"PO-Revision-Date: 2018-08-20 23:39-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: \n"
 "Language: pt_BR\n"
@@ -34,7 +34,7 @@ msgstr "Nome completo do usuário"
 
 #: local/vendor/django-boogie/src/boogie/fields/default_fields.py:47
 msgid "slug"
-msgstr ""
+msgstr "identificador"
 
 #: local/vendor/django-boogie/src/boogie/fields/default_fields.py:53
 msgid "name"
@@ -94,11 +94,11 @@ msgstr "Um nome gerado aleatoriamente para identificar cada usuário."
 
 #: local/vendor/django-boogie/src/boogie/models/abstract/user.py:78
 msgid "staff status"
-msgstr ""
+msgstr "status de equipe"
 
 #: local/vendor/django-boogie/src/boogie/models/abstract/user.py:81
 msgid "Designates whether the user can log into the admin site."
-msgstr ""
+msgstr "Indica se o usuário pode logar no admin do site"
 
 #: local/vendor/django-boogie/src/boogie/models/abstract/user.py:85
 msgid "active"
@@ -109,6 +109,8 @@ msgid ""
 "Designates whether this user should be treated as active. Unselect this "
 "instead of deleting accounts."
 msgstr ""
+"Indica se este usuário é considerado ativo. Desmarque aqui em vez de apagar "
+"contas."
 
 #: local/vendor/django-boogie/src/boogie/models/abstract/user.py:93
 msgid "date joined"
@@ -220,6 +222,12 @@ msgid ""
 "\n"
 "To confirm that it's ok, go to %(activate_url)s\n"
 msgstr ""
+"Saudações de %(site_name)s!\n"
+"\n"
+"Você está recebendo essa mensagem porque o usuário %(user_display)s se "
+"registrou com esse endereço de email.\n"
+"\n"
+"Para confirmar se está tudo certo, vá até %(activate_url)s\n"
 
 #: src/ej/templates/django/account/email/email_confirmation_message.txt:7
 #, fuzzy, python-format
@@ -245,11 +253,17 @@ msgid ""
 "If it weren't you, ignore this message. Access the link below to recreate "
 "you password."
 msgstr ""
+"Saudações do %(site_name)s!\n"
+"\n"
+"Você está recebendo essa mensagem porque você ou alguém pediu uma nova senha "
+"para a sua conta de usúario.\n"
+"Se não foi você, ignore essa mensagem. Acesse o link abaixo para recriar sua "
+"senha."
 
 #: src/ej/templates/django/account/email/password_reset_key_message.txt:8
 #, python-format
 msgid "If you forgot, your username is %(username)s."
-msgstr ""
+msgstr "Se você esqueceu, seu nome de usuário é %(username)s."
 
 #: src/ej/templates/django/account/email/password_reset_key_message.txt:10
 #, fuzzy, python-format
@@ -260,7 +274,7 @@ msgstr "Obrigado por participar do %(site_name)s! %(site_domain)s"
 
 #: src/ej/templates/django/account/email/password_reset_key_subject.txt:3
 msgid "Request to generate a new password"
-msgstr ""
+msgstr "Pedido para gerar uma nova senha"
 
 #: src/ej/templates/django/account/email_confirm.html:6
 #: src/ej/templates/django/account/email_confirm.html:10
@@ -481,12 +495,12 @@ msgstr "Criar quadro"
 #: src/ej_boards/routes/conversation.py:39
 #, python-format
 msgid "%s' conversations"
-msgstr "%s' conversas"
+msgstr "Conversas do quadro %s"
 
 #: src/ej_boards/routes/conversation.py:40
 #, python-format
 msgid "These are %s's conversations. Contribute to them too"
-msgstr ""
+msgstr "Essas são as conversas do quadro %s. Contribua com elas também"
 
 #: src/ej_boards/routes/conversation.py:62
 msgid "Create conversation"
@@ -1129,9 +1143,8 @@ msgid "Regular user"
 msgstr "Usuário regular"
 
 #: src/ej_profiles/routes.py:54
-#, fuzzy
 msgid "My conversations"
-msgstr "Gerenciar conversas"
+msgstr "Suas conversas"
 
 #: src/ej_profiles/routes.py:55
 #, fuzzy
@@ -1621,7 +1634,7 @@ msgstr "Sem comentários"
 
 #: src/ej_conversations/jinja2/ej_conversations/create.jinja2:9
 msgid "Type here the title of the new board"
-msgstr ""
+msgstr "Escreva aqui o título do novo quadro"
 
 #: src/ej_conversations/jinja2/ej_conversations/create.jinja2:20
 #: src/ej_conversations/jinja2/ej_conversations/create.jinja2:73
@@ -1636,11 +1649,11 @@ msgstr "Cancelar"
 
 #: src/ej_conversations/jinja2/ej_conversations/create.jinja2:43
 msgid "Type tags separating by commas"
-msgstr ""
+msgstr "Escreva as tags separando por vírgulas"
 
 #: src/ej_conversations/jinja2/ej_conversations/create.jinja2:46
 msgid "Type here the question for your research"
-msgstr ""
+msgstr "Escreva aqui a pergunta da sua consulta"
 
 #: src/ej_conversations/jinja2/ej_conversations/create.jinja2:49
 #: src/ej_conversations/jinja2/ej_conversations/edit.jinja2:39
@@ -1653,9 +1666,8 @@ msgid "Conversation list aka board"
 msgstr "Lista de conversas"
 
 #: src/ej_conversations/jinja2/ej_conversations/create.jinja2:64
-#, fuzzy
 msgid "Create new board..."
-msgstr "Criar um novo quadro!"
+msgstr "Criar um novo quadro..."
 
 #: src/ej_conversations/jinja2/ej_conversations/create.jinja2:76
 msgid "Add more comments"
@@ -1663,7 +1675,7 @@ msgstr "Adicionar mais comentários"
 
 #: src/ej_conversations/jinja2/ej_conversations/edit.jinja2:61
 msgid "Promote conversation on public list"
-msgstr ""
+msgstr "Promover conversa para o board público"
 
 #: src/ej_conversations/jinja2/ej_conversations/edit.jinja2:66
 #: src/ej_conversations/jinja2/ej_conversations/moderate.jinja2:24
@@ -1675,13 +1687,12 @@ msgid "Conversation info"
 msgstr "Informações sobre a conversa"
 
 #: src/ej_conversations/jinja2/ej_conversations/list.jinja2:6
-#, fuzzy
 msgid "New conversation"
-msgstr "Gerenciar conversas"
+msgstr "Nova conversa"
 
 #: src/ej_conversations/jinja2/ej_conversations/list.jinja2:11
 msgid "Viewing timeline:"
-msgstr ""
+msgstr "Visualizando quadro"
 
 #: src/ej_conversations/jinja2/ej_conversations/components/comment-card.jinja2:4
 msgid "by"
