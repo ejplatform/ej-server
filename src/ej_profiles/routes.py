@@ -46,9 +46,17 @@ def edit(request):
 @urlpatterns.route('conversations/', template='ej_conversations/list.jinja2')
 def conversations(request):
     user = request.user
+    boards = user.boards.all()
+    conversations = []
+    board = None
+    if len(boards) > 0:
+        board = boards[0]
+        conversations = board.conversations
     return {
         'user': user,
-        'conversations': user.conversations.all(),
+        'conversations': conversations,
+        'current_timeline': board,
+        'timelines': boards,
         'create_url': reverse('conversation:create'),
         'can_add_conversation': user.has_perm('ej_conversations.can_add_conversation'),
         'title': _("My conversations"),

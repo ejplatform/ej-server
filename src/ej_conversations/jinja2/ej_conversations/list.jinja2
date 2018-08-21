@@ -6,7 +6,7 @@
         <a class="Link-new" href="{{ create_url }}"><i class="fa fa-plus-circle"></i> {{ _('New conversation') }}</a>
     {% endif %}
 
-    {% if((timelines is defined) and timelines): %}
+    {% if((timelines is defined) and (timelines|length > 1)): %}
     <div class="view-timeline">
         <span>{{_('Viewing timeline:')}}</span>
         <select name="select-timeline" class="select-timeline" id="select-timeline">
