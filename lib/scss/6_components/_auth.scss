@@ -38,7 +38,7 @@ $login-new-user-background-color: #052B47 !default;
         display: block;
         margin-top: $spacing-unit;
         border: none;
-        width: 151px;
+        width: 180px;
         height: 38px;
         background: $login-button-login-background;
         box-shadow: none
@@ -90,6 +90,9 @@ $login-new-user-background-color: #052B47 !default;
         }
         .icon-google {
             border: 1px solid #0C3570;
+            width: 30px;
+            height: 30px;
+            padding: 15px;
         }
         .icon-facebook {
             background-color: #4460A0;
