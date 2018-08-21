@@ -32,7 +32,7 @@ $how-it-work-icon-color: $color-gray-dark !default;
 
 .HowItWorks {
     background: $home-how-it-works-background;
-    padding-top: $spacing-unit-large;
+    padding-top: $spacing-unit;
 
     > * {
         @extend .CenteredContainer;

@@ -7,18 +7,19 @@
         <div class="HowItWorks-cards">
             {% call how_it_works_card(
                     'child',
-                    'Comitê de Participação de Adolescentes',
-                    'O CPA é formado por adolescentes que participam da tomada de decisões dentro do CONANDA') %}
-                {{ rocket_button() }}
+                    'Painel CPA',
+                    'Aqui, quem faz parte do Comitê de Participação de Adolescente (CPA),
+                        no Conanda, troca ideias, compartilha informações e ajuda nas decisões
+                        do Conselho') %}
+                {# {{ rocket_button() }} #}
             {% endcall %}
 
-            {{ how_it_works_card(
+            {% call how_it_works_card(
                     'comments',
-                    'Conversas Participativas',
-                    'Explica o que são as conversas apenas com texto e já ajuda a explicar o que vem na sequência',
-                    action='Acesse as Conversas',
-                    link='/conversations/') }}
-
+                    'Conversas Públicas',
+                    'Não fique fora dessa! Participe das conversas! Vote, dê sua opinião') %}
+                {# {{ rocket_button() }} #}
+            {% endcall %}
         </div>
     </div>
 {% endmacro %}
