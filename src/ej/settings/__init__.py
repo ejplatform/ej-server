@@ -168,7 +168,8 @@ class Conf(ThemesConf,
         }
 
         ALLOWED_HOSTS = ['app.unidoscontraacorrupcao.org.br',
-                         'admin.besouro.ejplatform.org']
+                         'admin.besouro.ejplatform.org',
+                         '127.0.0.1']
 
         EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend'
         ANYMAIL = { "MAILGUN_API_KEY": "" }
