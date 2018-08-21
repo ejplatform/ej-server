@@ -14,15 +14,25 @@
   $profile-background-color: #C4F2F4  !default;
 
  // Login
-  $login-icon-border: 10px solid #74b5b8  !default;
+  $login-icon-border: 6px solid #74b5b8  !default;
   $login-icon-scale: scale(1)  !default;
   $login-icon-padding: 0px 0px 0px 0px  !default;
+  $login-icon-padding-align: $spacing-unit-large !default;
   $login-fields-border: 1px solid #333  !default;
   $login-fields-border-radius: 17px  !default;
+  $login-fields-height: 40px !default;
   $login-button-login-size: inherit  !default;
   $login-button-login-background: #30c0d3  !default;
   $login-button-register-size: 10%  !default;
+  $login-button-register-button-radius: 28px !default;
   $login-button-color: $color-purple-dark !default;
+  $login-new-user-h1-display: inline !default;
+  $login-new-user-border: 1px solid $color-gray-dark !default;
+  $login-reticle-position: relative !default;
+  $login-reticle-bottom: 63px !default;
+  $login-reticle-margin-bottom: -63px !default;
+  $login-reticle-z-index: -1 !default;
+  $login-reticle-display: none !default;
 
  // Social
   $social-buttons-display: none  !default;
