@@ -74,7 +74,7 @@ $navigation-bottom-font-color: #3F1B53;
 $navigation-bottom-panel-display: flex;
 $navigation-bottom-icon-conversations: url(/static/img/icons/navbar_conversations.svg);
 $navigation-bottom-icon-panel: url(/static/img/icons/navbar_panel.svg);
-$navigation-bottom-icon-profile: url(/static/img/icons/navbar_profile.png);
+$navigation-bottom-icon-profile: url(/static/img/icons/navbar_profile.svg);
 
 // Card Conversation
 $card-conversation-navigation-font-color: #30c0d3;
@@ -93,6 +93,7 @@ $conversation-font-color: #3F1B53;
 $conversation-tag-color: #30BEC0;
 $conversation-statistics-color: #30c0d3;
 $conversation-arrow-border: 28px solid #D4F7F5;
+$conversation-topic-diplay: block;
 
 // Conversation: edit
 $conversation-edit-action-cancel-border: transparent;

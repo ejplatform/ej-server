@@ -1,24 +1,8 @@
-{% macro home_banner(data, action='start-now') %}
-    <div class="HomeBanner">
-        {{ data.html() }}
-        <p>
-            {% if action == 'rocket-chat' %}
-                {{ rocket_button() }}
-            {% elif action == 'start-now' %}
-                {{ action_button(_('Start now'), '/start/' ) }}
-            {% elif action == 'cpa' %}
-                {# Do not render button #}
-            {% else %}
-                Invalid action: {{ action }}
-            {% endif %}
-        </p>
-    </div>
-{% endmacro %}
+
 
 
 {% macro how_it_works(data) %}
     <div class="HowItWorks">
-        {{ data.html() }}
 
         <div class="HowItWorks-cards">
             {% call how_it_works_card(
