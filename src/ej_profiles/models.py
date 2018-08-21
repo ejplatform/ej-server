@@ -82,10 +82,11 @@ class Profile(models.Model):
         try:
             return self.image.url
         except ValueError:
-            for account in SocialAccount.objects.filter(user_id=self.id):
-                picture = account.get_avatar_url()
-                if picture:
-                    return picture
+            #for account in SocialAccount.objects.filter(user_id=self.id):
+            account = SocialAccount.objects.get(user_id=self.id)
+            picture = account.get_avatar_url()
+            if picture:
+                return picture
             return '/static/img/logo/avatar_default.svg'
 
     @property
