@@ -50,7 +50,7 @@ def facebook_button(request):
     provider = providers.registry.by_id('facebook', request)
     query = {
         'next': '/conversations/',
-        'method': 'js_sdk',
+        'method': 'oauth2',
     }
     url = provider.get_login_url(request, **query)
     return fab_icon('facebook', href=url, id='facebook-button')
