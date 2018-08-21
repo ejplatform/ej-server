@@ -5,12 +5,10 @@
 $login-icon-size: 150px !default;
 $login-icon-color: $color-gray-light !default;
 $login-icon-border-width: 10px !default;
-$login-icon-border-color: $color-green !default;
 $login-social-icons-size: $font-size-h1 !default;
 $login-title-color: $color-purple-dark;
 $login-title-size: 14px;
 $login-link-color: $color-accent !default;
-$login-new-user-border: 1px solid $color-gray-dark;
 $login-new-user-background-color: #052B47 !default;
 .Register,
 .Login {
@@ -31,10 +29,10 @@ $login-new-user-background-color: #052B47 !default;
         height: 50px;
     }
     input {
-        border: none;
-        height: 40px;
+        border: $login-fields-border;
+        height: $login-fields-height;
         width: 261px;
-        border-radius: 20px;
+        border-radius: $login-fields-border-radius;
     }
     input[type=submit] {
         display: block;
@@ -46,18 +44,18 @@ $login-new-user-background-color: #052B47 !default;
         box-shadow: none
     }
     a[class=Button] {
-        border-radius: 28px;
+        border-radius: $login-button-register-button-radius;
         width: $login-button-register-size;
         min-width: 200px;
         padding: 12px;
     }
     &-icon {
-        border: 6px solid #A3D8DD;
+        border: $login-icon-border;
         border-radius: 50%;
         color: $login-icon-color;
         height: $login-icon-size;
         margin: $spacing-unit-large auto;
-        padding: $spacing-unit-large;
+        padding: $login-icon-padding-align;
         width: $login-icon-size;
         img>* {
             color: $color-hint;
@@ -74,15 +72,17 @@ $login-new-user-background-color: #052B47 !default;
     }
     &-socialButtons {
         display: $social-buttons-display;
-        div {
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
+        flex-direction: row;
+        justify-content: center;
+        
+        >i {
+            font-size: $social-buttons-icon-size;
         }
-        .round-icon-container {
+        
+        .rounded-icon {
             border-radius: 50%;
-            width: 40px;
-            height: 40px;
+            width: $social-buttons-border-size;
+            height: $social-buttons-border-size;
             margin: 10px;
             display: flex;
             align-items: center;
@@ -93,9 +93,11 @@ $login-new-user-background-color: #052B47 !default;
         }
         .icon-facebook {
             background-color: #4460A0;
+            color: white;
         }
         .icon-twitter {
             background-color: #00AAEC;
+            color: white;
         }
     }
     &-password {
@@ -112,9 +114,19 @@ $login-new-user-background-color: #052B47 !default;
         h1 {
             color: $color-content-text;
             font-size: $font-size-h3;
+            display: $login-new-user-h1-display;
         }
         .Button {
             background-color: $login-new-user-background-color;
         }
+    }
+
+    &-reticle {
+        position: $login-reticle-position; 
+        bottom: $login-reticle-bottom;
+        margin-bottom: $login-reticle-margin-bottom;
+        z-index: $login-reticle-z-index;
+        display: $login-reticle-display;
+        width: 100vw;
     }
 }

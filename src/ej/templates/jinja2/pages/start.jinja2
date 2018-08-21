@@ -1,10 +1,14 @@
 {% extends 'base.jinja2' %}
+
 {% from 'components/home.jinja2' import how_it_works, start_now %}
-{% from 'ej_conversations/components/conversation-list.jinja2' import conversation_list with context %}
+{% from 'ej_conversations/components/conversation-list.jinja2' import conversation_list, conversation_list_footer with context %}
 
 
 {% block main %}
-    {{ conversation_list(conversations, javascript_enabled=javascript_enabled) }}
-    {{ how_it_works(how_it_works_fragment) }}
-    {{ start_now(start_now_fragment, user) }}
+    <div class="StartPage">
+        {{ conversation_list(conversations, javascript_enabled=javascript_enabled) }}
+        {{ how_it_works(how_it_works_fragment) }}
+        {{ start_now(start_now_fragment, user) }}
+        {{ conversation_list_footer(footer_content) }}
+    </div>
 {% endblock %}

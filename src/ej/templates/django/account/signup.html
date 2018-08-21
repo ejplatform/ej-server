@@ -26,7 +26,7 @@
 
 {% block inner %}
 
-<a id="facebook-button" class="btn btn-primary btn-block btn-social btn-facebook" href="{% provider_login_url "facebook" method="js_sdk" next="/api/profile/close" %}"
+<a id="facebook-button" class="btn btn-primary btn-block btn-social btn-facebook" href="{% provider_login_url "facebook" method="oauth2" next="/api/profile/close" %}"
     style="color: #fff"><i class="fa fa-facebook"></i>Conectar com Facebook</a>
 <a id="twitter-login-link"
     class="btn btn-primary btn-block btn-social btn-twitter"

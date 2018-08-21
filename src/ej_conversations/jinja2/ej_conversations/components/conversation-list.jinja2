@@ -7,6 +7,7 @@
 {% macro conversation_list(conversations,
                            categories,
                            footer_content,
+
                            topic= _('A space for adolescents to discuss actions that promote, guarantee and defend their rights'),
                            conversation_link= _('View all conversations'),
                            title= _('Public conversations'),
@@ -16,7 +17,7 @@
     {% if caller is defined %}{% set caller_output = caller() %}{% endif %}
 
     <div class="ConversationList">
-        {{ react_component('conversation_list', conversation_list_static(conversation_link, conversations, categories, title, subtitle, caller_output|default(topic)), javascript_enabled) }}
+        {{ react_component('conversation_list', conversation_list_static(conversations, categories, title, subtitle, caller_output|default(topic)), javascript_enabled) }}
     </div>
 
     
@@ -36,7 +37,7 @@
 {% endmacro %}
 
 
-{% macro conversation_list_static(conversation_link, conversations, categories, title, subtitle, caller_output=None) %}
+{% macro conversation_list_static(conversations, categories, title, subtitle, caller_output=None) %}
     <div class="ConversationListStatic">
         <div class="ConversationList-title">
             {% if caller_output %}<p class="topic">{{ caller_output }}</p>{% endif %}
@@ -59,7 +60,7 @@
             </div>
         {% endif %}
 
-        {% if categories is defined and categories %}
+        {# {% if categories is defined and categories %}
             <div class="ConversationList-categories">
                 <i class="fa fa-chevron-left"></i>
                 <ul>
@@ -70,7 +71,7 @@
                 </ul>
                 <i class="fa fa-chevron-right"></i>
             </div>
-        {% endif %}
+        {% endif %} #}
 
         {# Cards #}
         <div class="ConversationList-cardList">
@@ -79,10 +80,6 @@
             {% endfor %}
         </div>
         {# {{ conversation_pagination() }} #}
-
-        <div class="ConversationList-link">
-            <h1>{{ conversation_link }}</p>
-        </div>
     </div>
 {% endmacro %}
 

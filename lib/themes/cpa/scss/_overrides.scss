@@ -1,6 +1,9 @@
 // Default buttons
 $button-border-radius-default: 8px;
 
+// Forms
+$form-item-border-radius: 7px;
+
 //Profile
 $profile-font-color-primary: #042049;
 $profile-font-color-secondary: #6d2ea7;
@@ -11,21 +14,34 @@ $profile-background-color: #30BFD3;
 $login-icon-border: 10px solid #3F1B53;
 $login-icon-scale: scale(1.2);
 $login-icon-padding: 25px 0px 0px 0px;
+$login-icon-padding-align: 22px;
 $login-fields-border: 1px solid #30c0d3;
 $login-fields-border-radius: 8px;
+$login-fields-height: 50px;
 $login-link-color: #C6027B;
 $login-new-user-background-color: #C6027B;
 $login-button-login-size: 65%;
 $login-button-login-background: $color-green-atlantis;
 $login-button-register-size: 60%;
+$login-button-register-button-radius: 8px;
 $login-button-color: $color-green-atlantis;
+$login-new-user-h1-display: none;
+$login-new-user-border: none;
+$login-reticle-position: relative;
+$login-reticle-bottom: 100px;
+$login-reticle-margin-bottom: -100px ;
+$login-reticle-z-index: -1;
+$login-reticle-display: inline;
+
 
 // Social
-$social-buttons-display: inline;
+$social-buttons-display: flex;
 $social-buttons-size: 15px;
 $social-buttons-border: 1px solid #30c0d3;
 $social-buttons-color: #111;
 $social-buttons-background-color: #fff;
+$social-buttons-border-size: 40px;
+$social-buttons-icon-size: 15px;
 
 //Header
 $header-background-color: #30BEC0;
