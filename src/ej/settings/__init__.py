@@ -53,7 +53,7 @@ class Conf(ThemesConf,
     SOCIALACCOUNT_PROVIDERS = {
         'facebook': {
             'SCOPE': ['email'],
-            'METHOD': 'oauth2'  # instead of 'oauth2'
+            'METHOD': 'js_sdk'  # instead of 'oauth2'
         }
     }
 
