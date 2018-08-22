@@ -59,12 +59,13 @@ class TestEditProfile:
         inf_fields = ['city', 'state', 'country', 'ethnicity', 'education',
                       'political_activity', 'biography', 'occupation',
                       'gender', 'race', 'birth_date']
-        inf_values = [*[rand_str(15)] * 8, rd.randint(0, 20), rd.randint(0, 6),
-                      gen_birth_date()]
+        inf_values = [*[rand_str(15)] * 8, rd.choice(list(range(0, 3))+[20]),
+                      rd.randint(0, 6), gen_birth_date()]
         form_data = {k: v for k, v in zip(inf_fields, inf_values)}
 
         response = logged_client.post('/profile/edit/', form_data)
-        assert response.status_code == 302 and response.url == '/profile/'
+        assert response.status_code == 302 and response.url == '/profile/', \
+            f'Error found using post message {form_data}'
         user = User.objects.get(email='email@server.com')
 
         for attr in ['gender', 'race']:
