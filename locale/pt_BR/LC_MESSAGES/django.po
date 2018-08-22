@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-08-20 19:39+0000\n"
-"PO-Revision-Date: 2018-08-22 09:59-0300\n"
+"PO-Revision-Date: 2018-08-22 10:38-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: \n"
 "Language: pt_BR\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "Generated-By: Babel 2.5.3\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 1.8.7.1\n"
 
 #: local/vendor/django-boogie/src/boogie/apps/users/models.py:23
 #: local/vendor/django-boogie/src/boogie/models/abstract/user.py:64
@@ -28,7 +28,6 @@ msgid "Name"
 msgstr "Nome"
 
 #: local/vendor/django-boogie/src/boogie/apps/users/models.py:26
-#, fuzzy
 msgid "User's full name"
 msgstr "Nome completo do usuário"
 
@@ -41,9 +40,8 @@ msgid "name"
 msgstr "nome"
 
 #: local/vendor/django-boogie/src/boogie/fields/default_fields.py:59
-#, fuzzy
 msgid "title"
-msgstr "Título"
+msgstr "título"
 
 #: local/vendor/django-boogie/src/boogie/fields/default_fields.py:65
 msgid "description"
@@ -88,9 +86,8 @@ msgid "Alias"
 msgstr "Apelido"
 
 #: local/vendor/django-boogie/src/boogie/models/abstract/user.py:74
-#, fuzzy
 msgid "Public alias used to identify the user."
-msgstr "Um nome gerado aleatoriamente para identificar cada usuário."
+msgstr "Apelido público usado para identificar o usuário."
 
 #: local/vendor/django-boogie/src/boogie/models/abstract/user.py:78
 msgid "staff status"
@@ -117,9 +114,8 @@ msgid "date joined"
 msgstr "data de ingresso"
 
 #: local/vendor/django-boogie/src/boogie/models/abstract/user.py:162
-#, fuzzy
 msgid "user"
-msgstr "{n} usuários"
+msgstr "usuário"
 
 #: local/vendor/django-boogie/src/boogie/views/views.py:122
 #, python-format
@@ -230,7 +226,7 @@ msgstr ""
 "Para confirmar se está tudo certo, vá até %(activate_url)s\n"
 
 #: src/ej/templates/django/account/email/email_confirmation_message.txt:7
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Tks from %(site_name)s!\n"
 "ejplatform.org"
@@ -239,9 +235,8 @@ msgstr ""
 "ejplatform.org"
 
 #: src/ej/templates/django/account/email/email_confirmation_subject.txt:3
-#, fuzzy
 msgid "Please confirm your email address"
-msgstr "Confirme o endereço de email"
+msgstr "Favor confirmar seu endereço de email"
 
 #: src/ej/templates/django/account/email/password_reset_key_message.txt:1
 #, python-format
@@ -266,11 +261,13 @@ msgid "If you forgot, your username is %(username)s."
 msgstr "Se você esqueceu, seu nome de usuário é %(username)s."
 
 #: src/ej/templates/django/account/email/password_reset_key_message.txt:10
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Tks for participating on %(site_name)s!\n"
 "%(site_domain)s"
-msgstr "Obrigado por participar do %(site_name)s! %(site_domain)s"
+msgstr ""
+"Obrigado por participar do %(site_name)s!\n"
+"%(site_domain)s"
 
 #: src/ej/templates/django/account/email/password_reset_key_subject.txt:3
 msgid "Request to generate a new password"
@@ -783,9 +780,8 @@ msgid "Only the author and administrative staff can edit this conversation."
 msgstr "Apenas o autor e o administrador podem editar esta conversa."
 
 #: src/ej_conversations/models/conversation.py:92
-#, fuzzy
 msgid "promoted?"
-msgstr "Comentário promovido?"
+msgstr "promovido?"
 
 #: src/ej_conversations/models/conversation.py:95
 msgid "Promoted conversations appears in the main /conversations/ endpoint."
@@ -858,16 +854,14 @@ msgid "Public conversations"
 msgstr "Conversas públicas"
 
 #: src/ej_conversations/routes/conversations.py:21
-#, fuzzy
 msgid ""
 "Participate of the conversations and give your opinion with comments and "
 "votes!"
-msgstr "Ver conversas ativas para dar sua opinião"
+msgstr "Participe das conversas e dê sua opinião com comentários e votos!"
 
 #: src/ej_conversations/routes/conversations.py:22
-#, fuzzy
 msgid "View all conversations"
-msgstr "Criar nova conversa"
+msgstr "Ver todas as conversas"
 
 #: src/ej_conversations/routes/conversations.py:43
 msgid "login"
@@ -1147,9 +1141,8 @@ msgid "My conversations"
 msgstr "Suas conversas"
 
 #: src/ej_profiles/routes.py:55
-#, fuzzy
 msgid "See all conversations created by you"
-msgstr "Ver conversas ativas para dar sua opinião"
+msgstr "Ver todas as conversas criadas por você"
 
 #: src/ej_reports/apps.py:7
 msgid "Reports"
@@ -1172,9 +1165,8 @@ msgid "Missing"
 msgstr "Faltando"
 
 #: src/ej_reports/routes.py:107
-#, fuzzy
 msgid "Skipped"
-msgstr "Pular"
+msgstr "Pulados"
 
 #: src/ej_reports/routes.py:110
 msgid "Average"
@@ -1205,14 +1197,12 @@ msgid "Active?"
 msgstr "Ativo?"
 
 #: src/ej_rocketchat/models.py:22
-#, fuzzy
 msgid "Rocketchat subscription"
-msgstr "Integração com o rocketchat"
+msgstr "Inscrição no Rocketchat"
 
 #: src/ej_rocketchat/models.py:23
-#, fuzzy
 msgid "Rocketchat subscriptions"
-msgstr "Integração com o rocketchat"
+msgstr "Inscrições no Rocketchat"
 
 #: src/ej_users/admin.py:13
 msgid "Permissions"
@@ -1243,14 +1233,12 @@ msgid "A randomly generated name used to identify each user."
 msgstr "Um nome gerado aleatoriamente para identificar cada usuário."
 
 #: src/ej_users/models.py:27
-#, fuzzy
 msgid "email address"
-msgstr "Endereço de email"
+msgstr "endereço de email"
 
 #: src/ej_users/routes.py:60
-#, fuzzy
 msgid "Invalid email or password"
-msgstr "Usuário ou senha inválidos"
+msgstr "Email ou senha inválidos"
 
 #: src/ej/templates/jinja2/base.jinja2:82
 msgid "EJ - A platform of social participation."
@@ -1315,9 +1303,8 @@ msgid "Frequently Asked Questions"
 msgstr "Perguntas frequentes"
 
 #: src/ej/templates/jinja2/components/generic/page_menu.jinja2:8
-#, fuzzy
 msgid "Talk to us"
-msgstr "Canais"
+msgstr "Fale conosco"
 
 #: src/ej/templates/jinja2/components/generic/page_menu.jinja2:9
 #: src/ej/templates/jinja2/components/generic/page_top-header.jinja2:8
@@ -1567,9 +1554,8 @@ msgid "New stereotype"
 msgstr "Adicionar novo estereótipo"
 
 #: src/ej_clusters/jinja2/ej_clusters/components/stereotype-list.jinja2:29
-#, fuzzy
 msgid "Search Stereotype:"
-msgstr "Estereótipos"
+msgstr "Pesquisar Estereótipo:"
 
 #: src/ej_configurations/jinja2/configurations/fragment-list.jinja2:2
 msgid "Fragment list"
@@ -1603,9 +1589,8 @@ msgid "%(count)s favorites"
 msgstr "%(count)s votos"
 
 #: src/ej_conversations/jinja2/ej/roles/conversation-balloon.jinja2:26
-#, fuzzy
 msgid "Unfavorite"
-msgstr "%(count)s votos"
+msgstr "Desfavoritar"
 
 #: src/ej_conversations/jinja2/ej/roles/conversation-balloon.jinja2:30
 msgid "Favorite"
@@ -1637,9 +1622,8 @@ msgstr "Escreva aqui o título do novo quadro"
 
 #: src/ej_conversations/jinja2/ej_conversations/create.jinja2:20
 #: src/ej_conversations/jinja2/ej_conversations/create.jinja2:73
-#, fuzzy
 msgid "Type here the comment"
-msgstr "Corpo de texto do comentário"
+msgstr "Escreva aqui o comentário"
 
 #: src/ej_conversations/jinja2/ej_conversations/create.jinja2:32
 #: src/ej_conversations/jinja2/ej_conversations/edit.jinja2:14
@@ -1722,9 +1706,8 @@ msgstr ""
 "conteúdo discriminatório."
 
 #: src/ej_conversations/jinja2/ej_conversations/components/comment-list.jinja2:9
-#, fuzzy
 msgid "No comments left"
-msgstr "Sem comentários"
+msgstr "Não há mais comentários"
 
 #: src/ej_conversations/jinja2/ej_conversations/components/conversation-detail.jinja2:25
 msgid "Congratulations!"
@@ -1751,9 +1734,8 @@ msgid "Unvoted"
 msgstr "Voto cancelado"
 
 #: src/ej_conversations/jinja2/ej_conversations/components/conversation-list.jinja2:51
-#, fuzzy
 msgid "public conversations"
-msgstr "Conversas públicas"
+msgstr "conversas públicas"
 
 #: src/ej_conversations/jinja2/ej_conversations/components/conversation-list.jinja2:55
 msgid "go to my conversations"
