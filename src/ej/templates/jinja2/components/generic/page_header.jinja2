@@ -92,7 +92,7 @@
             <span>{{ _('Conversations') }}</span>
         {% endcall %}
 
-        {% if request.user.has_perm('ej_rocketchat.can_create_account') %}
+        {% if request.user.has_perm('ej_rocketchat.can_create_account') and settings.EJ_ROCKETCHAT_INTEGRATION %}
             {% call link('/talks/', title=_('Panel'), class='panel-link', preload=True) %}
                 {% if settings.EJ_THEME_SHOW_NAVBAR_ICONS %}
                     <img src="/static/img/icons/navbar_panel.svg" alt="{{ _('Panel') }}" class="Header-lowerIcon">

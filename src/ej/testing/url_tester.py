@@ -13,8 +13,9 @@ class UrlTester(EjRecipes):
     public_urls = []
     user_urls = []
     owner_urls = []
+    admin_urls = []
     success_codes = {200}
-    failure_codes = {404}
+    failure_codes = {404, 403}
     redirect_codes = {302}
 
     @property
@@ -58,6 +59,23 @@ class UrlTester(EjRecipes):
 
         # User is author and therefore can see the page
         client.force_login(author_db)
+        check_urls(client, urls, self.success_codes)
+
+    def test_urls_accessible_only_by_admin(self, client, user_db, root_db, data, caplog):
+        urls = self.admin_urls
+        caplog.set_level(logging.CRITICAL, logger='django')
+        pprint(data)
+
+        # Require login or present a failure code if user is anonymous
+        check_urls(client, urls, {*as_code_set(self.redirect_codes),
+                                  *as_code_set(self.failure_codes)})
+
+        # User has no permission
+        client.force_login(user_db)
+        check_urls(client, urls, self.failure_codes)
+
+        # User is author and therefore can see the page
+        client.force_login(root_db)
         check_urls(client, urls, self.success_codes)
 
 

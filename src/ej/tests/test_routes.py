@@ -7,6 +7,5 @@ class TestBasicUrls(UrlTester):
         # Basic login/profile related urls
         '/start/',
         '/menu/',
-        # '/' redirect to home
         '/home/',
     ]
