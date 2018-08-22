@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-08-20 19:39+0000\n"
-"PO-Revision-Date: 2018-08-22 10:38-0300\n"
+"PO-Revision-Date: 2018-08-22 13:19-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: \n"
 "Language: pt_BR\n"
@@ -557,7 +557,7 @@ msgstr "Votos de estereótipo ({conversation})"
 
 #: src/ej_clusters/routes.py:202
 msgid "Username"
-msgstr "Nome completo do usuário"
+msgstr "Nome de usuário"
 
 #: src/ej_clusters/routes.py:212 src/ej_reports/routes.py:113
 msgid "Comment"
