@@ -1,5 +1,6 @@
 import logging
 
+from django.conf import settings
 from django.contrib import auth
 from django.contrib.auth import get_user_model
 from django.db import IntegrityError
@@ -98,7 +99,7 @@ def login(request):
 def logout(request):
     if request.method == 'POST' and request.user.id:
         auth.logout(request)
-        return redirect('home')
+        return redirect(settings.EJ_ANONYMOUS_HOME_PATH)
     return HttpResponseServerError()
 
 
@@ -124,7 +125,7 @@ def remove_account(request):
         if request.POST.get('remove_account', False) == 'true':
             user.is_active = False
             user.delete()
-            return redirect('home')
+            return redirect(settings.EJ_ANONYMOUS_HOME_PATH)
         else:
             return HttpResponseServerError('invalid POST request')
     return {
