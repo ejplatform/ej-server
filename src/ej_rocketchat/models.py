@@ -103,6 +103,8 @@ class RCConfig(models.Model):
     api_url = models.URLField(
         _('Rocket.Chat private URL'),
         unique=True,
+        blank=True,
+        null=True,
         help_text=_(
             'A private URL used only for API calls. Can be used to override '
             'the public URL if Rocket.Chat is available in an internal '

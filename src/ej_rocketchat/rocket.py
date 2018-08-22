@@ -48,8 +48,8 @@ class RCConfigWrapper:
             },
         )
 
-        if not result['success']:
-            error = result['error']
+        if not result.get('success'):
+            error = result.get('error', result)
             log.warning(f'Could not create Rocket.Chat user: {error}')
             raise ApiError(result)
 
@@ -75,7 +75,7 @@ class RCConfigWrapper:
             return account
 
         payload = {'username': account.username, 'password': account.password}
-        response = self.api_call('login', payload=payload, auth=None)
+        response = self.api_call('login', payload=payload, auth='admin')
         log.info(f'{user} successfully logged in at Rocket.Chat')
         account.auth_token = response['data']['authToken']
         account.save()
