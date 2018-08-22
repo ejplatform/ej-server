@@ -3,6 +3,7 @@ import string
 from logging import getLogger
 
 from sidekick import lazy
+from .exceptions import ApiError
 
 log = getLogger('ej')
 
@@ -49,12 +50,13 @@ class RCConfigWrapper:
 
         if not result['success']:
             error = result['error']
-            log.warning(f'could not create user: {error}')
-            raise ValueError(error)
+            log.warning(f'Could not create Rocket.Chat user: {error}')
+            raise ApiError(result)
 
         # Account created successfully in Rocket.Chat, create a replica in
         # Django
         return self.accounts.create(
+            config=self.config,
             user=user,
             username=username,
             password=password,

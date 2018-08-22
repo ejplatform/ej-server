@@ -5,7 +5,7 @@ from django.conf import settings
 from django.contrib.auth.signals import user_logged_out
 from django.dispatch import receiver
 
-from ej_rocketchat.rocket import rocket
+from .rocket import rocket
 
 log = getLogger('ej')
 executor = ThreadPoolExecutor(max_workers=2)

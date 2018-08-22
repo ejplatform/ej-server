@@ -3,6 +3,7 @@ import json
 import requests
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from django.core.validators import RegexValidator
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
@@ -17,6 +18,10 @@ class RCAccount(models.Model):
     Register subscription of a EJ user into rocket
     """
 
+    config = models.ForeignKey(
+        'RCConfig',
+        on_delete=models.CASCADE,
+    )
     user = models.OneToOneField(
         get_user_model(),
         on_delete=models.CASCADE,
@@ -29,10 +34,19 @@ class RCAccount(models.Model):
             'Username that identifies you in the Rocket.Chat platform.\n'
             'Use small names with letters and dashes such as @my-user-name.'
         ),
+        validators=[
+            RegexValidator(
+                r'^\@?(\w+-)*\w+$',
+                message=_(
+                    'Username must consist of letters, numbers and dashes.'
+                )
+            )
+        ],
     )
     password = models.CharField(
         _('Password'),
         max_length=50,
+        blank=True,
     )
 
     user_rc_id = models.CharField(
