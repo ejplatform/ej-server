@@ -1,25 +1,21 @@
-# Who we are?
+# Quem somos?
 
-## Cidades Democráticas
+## Cidade Democrática
 
-[Cidades Democráticas]<http://cidadesdemocraticas.com> is an NGO that promotes 
-the use of technology in favor of democracy.
+[Cidade Democrática]<http://cidadedemocratica.org.br> é uma organização de sociedade civil que promove o uso de tecnologia em favor da democracia.
 
 
 ## LAPPIS
 
-[LAPPIS]<http://lappis.rocks/> is laboratory at University of Brasília for 
-innovation and research with Free Software solutions.
+[LAPPIS]<http://lappis.rocks/> é um laboratório da Universidade de Brasília para inovação e pesquisa em soluções de Software Livre.
 
 
 ## HACKLAB
 
-[Hacklb]<http://hacklab.com/> is laboratory specialized in developing solutions 
-with Free Software.
+[Hacklb]<http://hacklab.com/> é uma empresa de software especializada no desenvolvimento de soluções em software livre.
 
 
-# Find us and collaborate
+# Onde estamos?
 
 Github:
-    Development happens in our organization at [Github]<http://github.com/ejplatform/>.
-   
+    O desenvolvimento do software acontece na nossa organização no [Github]<http://github.com/ejplatform/>.
