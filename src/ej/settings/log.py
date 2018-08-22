@@ -11,11 +11,11 @@ class LoggingConf(Base):
             'version': 1,
             'disable_existing_loggers': False,
             'handlers': {
-                # 'file': {
-                #     'level': 'DEBUG',
-                #     'class': 'logging.FileHandler',
-                #     'filename': ROOT_DIR / 'local/debug.log',
-                # },
+                'file': {
+                    'level': 'DEBUG',
+                    'class': 'logging.FileHandler',
+                    'filename': self.LOG_DIR / 'debug.log',
+                },
                 'console': {
                     'level': 'DEBUG',
                     'class': 'logging.StreamHandler',

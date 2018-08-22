@@ -42,7 +42,6 @@ def requires_rc_perm(func):
             raise Http404
 
         # Try to build the initial context
-        assert not rocket.has_config
         if not rocket.has_config:
             if user.is_superuser:
                 return redirect('rocket:config')

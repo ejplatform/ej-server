@@ -18,13 +18,25 @@ class Command(BaseCommand):
             '--admin',
             action='store_true',
             dest='admin',
-            help='Create an admin user',
+            help='Create an admin@admin.com user',
         )
         parser.add_argument(
             '--admin-password',
             action='store_true',
             dest='admin_password',
             help='Sets the admin password',
+        )
+        parser.add_argument(
+            '--user',
+            action='store_true',
+            dest='user',
+            help='Create an user@user.com user',
+        )
+        parser.add_argument(
+            '--user-password',
+            action='store_true',
+            dest='user_password',
+            help='Sets the user password',
         )
         parser.add_argument(
             '--staff',
@@ -39,7 +51,10 @@ class Command(BaseCommand):
             help='Number of regular users',
         )
 
-    def handle(self, *files, admin=False, admin_password=None, staff=2, users=50, **options):
+    def handle(self, *files,
+               admin=False, admin_password=None,
+               user=True, user_password=None,
+               staff=2, users=50, **options):
         users_created = 0
         fake = Factory.create('en-US')
         blocked_usernames = {'admin', *User.objects.values_list('email', flat=True)}
@@ -64,6 +79,22 @@ class Command(BaseCommand):
                 users_created += 1
             else:
                 print('Admin user was already created!')
+
+        # Create user@user.com user
+        if admin:
+            if not User.objects.filter(email='user@user.com'):
+                user = User.objects.create(
+                    name='Joe User',
+                    email='user@user.com',
+                    is_active=True,
+                    is_staff=False,
+                    is_superuser=False,
+                )
+                user.set_password(user_password or os.environ.get('USER_PASSWORD', 'user'))
+                user.save()
+                users_created += 1
+            else:
+                print('Default user was already created!')
 
         # Create staff users
         for _ in range(staff):

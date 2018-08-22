@@ -8,10 +8,13 @@ class EjOptions(Conf):
     Options for EJ installation.
     """
 
-    # Integrations with third party services
+    # Integrations with Rocket.Chat
     EJ_ROCKETCHAT_INTEGRATION = env(False, name='{attr}')
+    EJ_ROCKETCHAT_URL = env('http://localhost:3000', name='{attr}')
+    EJ_ROCKETCHAT_AUTH_TOKEN = env('', name='{attr}')
+    EJ_ROCKETCHAT_USER_ID = env('', name='{attr}')
 
-    # Conversations
+    # Conversations Configurations
     EJ_CONVERSATIONS_ALLOW_PERSONAL_CONVERSATIONS = env(True, name='{attr}')
     EJ_CONVERSATIONS_MAX_COMMENTS = env(2, name='{attr}')
 
@@ -21,7 +24,10 @@ class EjOptions(Conf):
     EJ_ANONYMOUS_HOME_PATH = env('/home/', name='{attr}')
     EJ_USER_HOME_PATH = env('/conversations/', name='{attr}')
     EJ_PAGE_TITLE = env(_('EJ Platform'), name='{attr}')
-    EJ_REGISTER_TEXT = 'Ainda não faz parte do EJ?'
+    EJ_REGISTER_TEXT = _('Ainda não faz parte do EJ?')
 
     # Allow instances to exclude some profile fields from visualization
     EJ_EXCLUDE_PROFILE_FIELDS = env([], name='{attr}')
+
+    # Theme tweaks
+    EJ_THEME_SHOW_NAVBAR_ICONS = env(True, name='{attr}')

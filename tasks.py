@@ -493,6 +493,17 @@ def docker_deploy(ctx, task, environment='production', command=None, dry_run=Fal
 
 
 #
+# Services
+#
+@task
+def rocket(ctx, dry_run=False, command='up', background=False):
+    go = runner(ctx, dry_run, pty=True)
+    compose = su_docker('docker-compose')
+    suffix = '-d ' if background else ''
+    go(f'{compose} -f docker/docker-compose.rocket.yml {suffix}{command}')
+
+
+#
 # Utilities
 #
 def su_docker(cmd):

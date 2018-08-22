@@ -1,9 +1,9 @@
 import logging
-
 from boogie.configurations import DjangoConf, env
 from .apps import InstalledAppsConf
 from .celery import CeleryConf
 from .constance import ConstanceConf
+from .log import LoggingConf
 from .middleware import MiddlewareConf
 from .options import EjOptions
 from .paths import PathsConf
@@ -19,6 +19,7 @@ class Conf(ThemesConf,
            MiddlewareConf,
            CeleryConf,
            SecurityConf,
+           LoggingConf,
            PathsConf,
            InstalledAppsConf,
            DjangoConf,

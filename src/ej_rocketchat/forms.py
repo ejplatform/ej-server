@@ -42,7 +42,6 @@ class RocketIntegrationForm(forms.Form):
             },
             raises=False,
         )
-        print(response)
         user_id = response['data']['userId']
         auth_token = response['data']['authToken']
 
