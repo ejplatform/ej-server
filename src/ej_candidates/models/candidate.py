@@ -66,7 +66,7 @@ def score(object):
             and object.adhered_to_the_measures == "SIM"):
         return 'good'
     if (object.has_clean_pass == "NÃO" \
-            and object.committed_to_democracy == "NÃO" \
-            and object.adhered_to_the_measures == "NÃO"):
+            or object.committed_to_democracy == "NÃO" \
+            or object.adhered_to_the_measures == "NÃO"):
         return 'bad'
     return 'partial'
