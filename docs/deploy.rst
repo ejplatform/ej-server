@@ -184,13 +184,10 @@ Now build the containers and execute compose:
     $ inv docker-deploy up
 
 In order to integrate the main EJ application with this instance of Rocketchat,
-first you need to get the Rocketchat admin user **token** and **id** values. Visit the
-Rocketchat URL (usually at ``talks.your-hostname`` or ``localhost:3000``) and
-create the admin user. Let us suppose the username is called *rcadmin*. You can
-get the login token from the Rocketchat API::
-
-   $ curl http://talks.localhost:3000/api/v1/login \
-        -d "username=rcadmin&password=rcadminpassword"
+first configure your instance and create the admin user. The next step is to
+login as an the superuser in EJ and go to <EJ URL>/talks/config/. This URL
+presents a form that you can use to configure the basic parameters of
+Rocket.Chat integration.
 
 There are other ways to retrieve this data from the API. Visit
 `Rocketchat API docs`_ to learn more.
@@ -199,16 +196,16 @@ Now, go to the Rocketchat administration page and setup the
 `IFrame login integration`_. Find ``Administration > Accounts > IFrame`` page.
 It will be something like ``http://your-hostname/admin/Accounts``.
 
-.. _Rocketchat API docs: https://rocket.chat/docs/developer-guides/rest-api/authentication/login/
+.. _Rocketchat API docs: https://rocket.chat/docs/developer-guides/rest-api/
 .. _IFrame login integration: https://rocket.chat/docs/developer-guides/iframe-integration/authentication/
 
 In this page, follow the instructions bellow:
 
 1. Set ``Enabled`` option to ``True``.
 2. In order to enable redirection after successful *login*, set ``Iframe URL``
-   to ``http://django:8000/login/?next=/api/v1/rocketchat/redirect/``.
+   to ``http://django:8000/login/?next=/talks/``.
 3. Rocketchat needs to check if an user is already authenticated. Set
-   ``API URL`` to ``http://django:8000/api/v1/rocketchat/check-login/``.
+   ``API URL`` to ``http://django:8000/talks/check-login/``.
 4. Set ``API Method`` to ``POST``.
 5. Save the changes.
 

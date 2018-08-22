@@ -1,0 +1,20 @@
+{% extends 'base.jinja2' %}
+{% set page_title = _('Panel') %}
+{% set hide_lower_navbar = True %}
+
+{% block main %}
+    <iframe class="RocketIFrame" src="{{ rocketchat_url }}"></iframe>
+    <script>
+        // Hides lower nav bar. Restores it when another page loads.
+        (function () {
+            var $nav = $('.Header-lowerNav');
+            $nav.hide();
+
+            var unbind = up.on('up:history:push', function () {
+                unbind();
+                $nav.show();
+            });
+        })();
+    </script>
+{% endblock %}
+

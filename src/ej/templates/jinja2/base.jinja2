@@ -109,27 +109,27 @@
         <div class="Page-mainContainer">
     {% endif %}
 
-{# MAIN BLOCK #}
-{% block main %}
+    {# MAIN BLOCK #}
+    {% block main %}
 
-    <main class="Page-content" {{ salt_attr()|safe }}>
-        {% if content_title %}
-            <div class="Page-title"><h1>{{ content_title }}</h1></div>{% endif %}
-        {% if content is defined %}
-            {{ content }}
-        {% else %}
-            {% block content %}
-                {% if content_html %}
-                    <div class="Container">
-                        {{ content_html|safe }}
-                    </div>
-                {% else %}
-                    <p>{{ _('Please override the "content" block of your template!') }}</p>
-                {% endif %}
-            {% endblock %}
-        {% endif %}
-    </main>
-{% endblock %}
+        <main class="Page-content" {{ salt_attr()|safe }}>
+            {% if content_title %}
+                <div class="Page-title"><h1>{{ content_title }}</h1></div>{% endif %}
+            {% if content is defined %}
+                {{ content }}
+            {% else %}
+                {% block content %}
+                    {% if content_html %}
+                        <div class="Container">
+                            {{ content_html|safe }}
+                        </div>
+                    {% else %}
+                        <p>{{ _('Please override the "content" block of your template!') }}</p>
+                    {% endif %}
+                {% endblock %}
+            {% endif %}
+        </main>
+    {% endblock %}
 
 
 {% endblock %}

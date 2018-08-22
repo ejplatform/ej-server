@@ -10,10 +10,10 @@
             {% if request.user.is_active %}
                 {{ header_lower_nav(request) }}
             {% else %}
-            {%- call link('/login/') %}
-                <div class="Header-lowerNotLogged">
-                    <p>{{_('ENTRAR')}}</p>
-                </div>
+                {%- call link('/login/') %}
+                    <div class="Header-lowerNotLogged">
+                        <p>{{ _('ENTRAR') }}</p>
+                    </div>
                 {% endcall %}
             {% endif %}
         </div>
@@ -85,26 +85,35 @@
 {% macro header_lower_nav(request) %}
     <nav class="Header-lowerNav">
         {% call link('/conversations/', title=_('Conversations'), class='conversations-link', preload=True) %}
-            {% if settings.EJ_THEME == 'default' %}
-                <img src="/static/img/icons/navbar_conversations.svg" alt="{{ _('Conversations') }}" class="Header-lowerIcon">
+            {% if settings.EJ_THEME_SHOW_NAVBAR_ICONS %}
+                <img src="/static/img/icons/navbar_conversations.svg" alt="{{ _('Conversations') }}"
+                     class="Header-lowerIcon">
             {% endif %}
             <span>{{ _('Conversations') }}</span>
         {% endcall %}
 
+        {% if request.user.has_perm('ej_rocketchat.can_create_account') %}
+            {% call link('/talks/', title=_('Panel'), class='panel-link', preload=True) %}
+                {% if settings.EJ_THEME_SHOW_NAVBAR_ICONS %}
+                    <img src="/static/img/icons/navbar_panel.svg" alt="{{ _('Panel') }}" class="Header-lowerIcon">
+                {% endif %}
+                <span>{{ _('Panel') }}</span>
+            {% endcall %}
+        {% endif %}
+
         {% call link('/profile/', title=_('Profile'), class='profile-link', preload=True) %}
-            {% if settings.EJ_THEME == 'default' %}
+            {% if settings.EJ_THEME_SHOW_NAVBAR_ICONS %}
                 <img src="/static/img/icons/navbar_profile.svg" title="{{ _('Profile') }}" class="Header-lowerIcon">
             {% endif %}
             <span>{{ _('Profile') }}</span>
         {% endcall %}
 
-        {% call link('/talks/', title=_('Panel'), class='panel-link', preload=True) %}
-            {% if settings.EJ_THEME == 'default' %}
-                <img src="/static/img/icons/navbar_panel.svg" alt="{{ _('Panel') }}" class="Header-lowerIcon">
-            {% endif %}
-            <span>{{ _('Alerts') }}</span>
-        {% endcall %}
-
+        {#        {% call link('/alerts/', title=_('Alerts'), class='alerts-link', preload=True) %}#}
+        {#            {% if settings.EJ_THEME_SHOW_NAVBAR_ICONS %}#}
+        {#                <img src="/static/img/icons/navbar_alerts.svg" alt="{{ _('Alerts') }}" class="Header-lowerIcon">#}
+        {#            {% endif %}#}
+        {#            <span>{{ _('Alerts') }}</span>#}
+        {#        {% endcall %}#}
     </nav>
 {% endmacro %}
 

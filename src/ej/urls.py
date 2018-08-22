@@ -15,7 +15,7 @@ unregister_admin.unregister_apps()
 # Optional urls
 #
 if settings.EJ_ROCKETCHAT_INTEGRATION:
-    rocket_urls = [path('talks/', include('ej_rocketchat.routes', namespace='rocketchat'))]
+    rocket_urls = [path('talks/', include('ej_rocketchat.routes', namespace='rocket'))]
 else:
     rocket_urls = []
 

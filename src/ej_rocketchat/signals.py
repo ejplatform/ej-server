@@ -1,23 +1,27 @@
+from concurrent.futures import ThreadPoolExecutor
+from logging import getLogger
+
 from django.conf import settings
-from django.contrib.auth.signals import user_logged_out, user_logged_in
+from django.contrib.auth.signals import user_logged_out
 from django.dispatch import receiver
 
-from . import helpers
+from ej_rocketchat.rocket import rocket
+
+log = getLogger('ej')
+executor = ThreadPoolExecutor(max_workers=2)
+submit = (lambda f, *args: f(*args))
+ROCKETCHAT_PERM = 'ej_rocketchat.can_login_rocketchat'
 
 
-@receiver(user_logged_out)
-def logout(sender, user, request, **kwargs):
+#
+# Register event handlers if rocketchat integration is enabled
+#
+def logout_handler(sender, user, request, **kwargs):
     """
     Logout Rocketchat user when receives a Django logout signal.
     """
-    if user.id and settings.EJ_ROCKETCHAT_INTEGRATION:
-        helpers.invalidate_rc_user_token(user)
+    submit(rocket.logout, user)
 
 
-@receiver(user_logged_in)
-def login(sender, user, request, **kwargs):
-    """
-    Login Rocketchat user when receives a Django login signal.
-    """
-    if user.id and settings.EJ_ROCKETCHAT_INTEGRATION:
-        pass
+if settings.EJ_ROCKETCHAT_INTEGRATION:
+    receiver(user_logged_out)(logout_handler)

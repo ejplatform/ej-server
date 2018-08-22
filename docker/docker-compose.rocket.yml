@@ -4,19 +4,22 @@ version: '3.5'
 services:
   rocketchat:
     image: rocketchat/rocket.chat:${ROCKETCHAT_VERSION:-latest}
+    restart: always
     environment:
       MONGO_URL: mongodb://mongo:27017/rocketchat
       PORT: '3000'
-      ROOT_URL: http://${HOSTNAME:-localhost}:3000
+      ROOT_URL: http://${HOSTNAME:-rocketchat}:3000
     links:
       - mongo:mongo
     ports:
-      - 3000:3000
+      - 3000:3000/tcp
 
   mongo:
     image: mongo
     volumes:
       - db_rocketchat:/data/db
+    ports:
+      - 27017:27017/tcp
     command:
       - mongod
       - --smallfiles

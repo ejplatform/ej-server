@@ -10,9 +10,9 @@ $header-box-shadow-upper: 0 2px 4px 0 rgba(0, 0, 0, 0.2) !default;
 $header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.2) !default;
 
 // Component
-.talks{
+.talks {
     .Header {
-        &-lowerNav{
+        &-lowerNav {
             @media only screen and (max-width: $breakpoint-small) {
                 display: none;
             }
@@ -63,11 +63,10 @@ $header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.2) !default;
         a {
             color: $header-font-color;
         }
-        
-    
+
         @include breakpoint(small) {
-          padding-top: 30px;
-          height: $header-top-nav-height + 30;
+            padding-top: 30px;
+            height: $header-top-nav-height + 30;
         }
 
         top: 0;
@@ -109,25 +108,21 @@ $header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.2) !default;
             &.conversations-link:before {
                 content: $navigation-bottom-icon-conversations;
             }
-        
+
             &.panel-link:before {
-               content: $navigation-bottom-icon-panel;
+                content: $navigation-bottom-icon-panel;
             }
-        
+
             &.profile-link:before {
                 content: $navigation-bottom-icon-profile;
             }
-        
+
             span {
-              font-weight: bold;
+                font-weight: bold;
             }
 
             > * {
                 display: block;
-            }
-
-            &.panel-link {
-              display: $navigation-bottom-panel-display;
             }
         }
     }
@@ -154,12 +149,12 @@ $header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.2) !default;
         &:hover {
             cursor: pointer;
         }
-        
+
         p {
             color: $color-white;
             font-weight: bold;
             font-size: $font-size-large;
-            
+
         }
     }
 }
