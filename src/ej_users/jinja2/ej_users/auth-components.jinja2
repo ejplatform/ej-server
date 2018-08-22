@@ -7,14 +7,6 @@
 
         <h1 class="Login-title">Participe dos debates, contribua para promover e defender seus direitos</h1>
         
-        {% if social_buttons %}
-            {{ login_extra }}
-            <ul class="Login-socialLogin">
-                {% for button in social_buttons %}
-                    <li>{{ button }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
         <form method="post">
             {{ csrf_input }}
             <div><input type="text" name="email" required placeholder="login ou email"></div>
@@ -25,15 +17,23 @@
 
             <div><input type="submit" class="Button" value="{{ _('Login') }}" name="login"></div>
             {{ form.non_field_errors() }}
-
-            {{ login_options('/register/' + ('?next=' + next if next else ''), _('Register now!'), settings.EJ_REGISTER_TEXT) }}
+            {% if social_buttons %}
+                {{ login_extra }}
+                {{ social_options(social_buttons) }}
+            {% endif %}
+            <div class="Login-newUser">
+                {% set msg = _('Register') if is_login|default(False) else _('Login') %}
+                <h1>{{ settings.EJ_REGISTER_TEXT }}</h1>
+                <p><a class="Button" href="{{ '/register/' + ('?next=' + next if next else '') }}" primary>{{ _('Register now!') }}</a></p>
+            </div>   
+            {# {{ login_options('/register/' + ('?next=' + next if next else ''), _('Register now!'), settings.EJ_REGISTER_TEXT) }} #}
         </form>
     </div>
         <img src="/static/img/login/reticula.png" class="Login-reticle"></img>
 {% endmacro %}
 
 
-{% macro register(form, csrf_input) %}
+{% macro register(form, social_buttons, csrf_input) %}
     <div class="Register">
         <h1 class="Register-title">Cadastrar novo usuário</h1>
 
@@ -47,7 +47,8 @@
             <div><input type="submit" value="{{ _('Register now!') }}" class="Button" name="register"></div>
             {{ form.non_field_errors() }}
         </form>
-        {{ login_options('/login/', _('Login'), 'Faz parte do EJ?') }}
+        {{ social_options(social_buttons) }}
+        {# {{ login_options('/login/', _('Login'), 'Faz parte do EJ?') }} #}
     </div>
 {% endmacro %}
 
@@ -75,4 +76,14 @@
             authentication (Facebook or Twitter) or the passwordless method. In this setup, we send a password to
             your e-mail with a special link that automatically register your account in the platform.{% endtrans %}</p>
     </template>
+{% endmacro %}
+
+
+{% macro social_options(social_buttons) %}
+    <p>Ou logue-se por outras redes</p>
+    <div class="Login-socialButtons">
+        {% for button in social_buttons %}
+            {{ button }}
+        {% endfor %}
+    </div>
 {% endmacro %}

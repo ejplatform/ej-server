@@ -48,7 +48,11 @@ def register(request):
                     log.info(f'user {user} ({email}) logged in')
                     return redirect(request.GET.get('next', '/'))
 
-        return {'user': request.user, 'form': form}
+        return {
+            'user': request.user,
+            'form': form,
+            'social_buttons': social_buttons(request),
+        }
     else:
         return redirect(request.GET.get('next', '/profile/'))
 
