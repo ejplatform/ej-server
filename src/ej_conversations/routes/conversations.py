@@ -30,7 +30,6 @@ def conversation_list(request):
 def detail(request, conversation, owner=None):
     user = request.user
     comment = conversation.next_comment(user, None)
-    n_comments = rules.compute('ej_conversations.remaining_comments', conversation, user)
     favorites = FavoriteConversation.objects.filter(conversation=conversation)
     ctx = {
         'conversation': conversation,
@@ -38,7 +37,6 @@ def detail(request, conversation, owner=None):
         'owner': owner,
         'edit_perm': user.has_perm('ej_conversations.can_edit_conversation', conversation),
         'can_comment': user.has_perm('ej_conversations.can_comment', conversation),
-        'remaining_comments': n_comments,
         'login_link': a(_('login'), href=reverse('auth:login')),
         'favorites': favorites,
     }
@@ -58,8 +56,11 @@ def detail(request, conversation, owner=None):
             ctx['comment'] = conversation.create_comment(user, comment)
         except (PermissionError, ValidationError) as ex:
             ctx['comment_error'] = str(ex)
+            print(str(ex))
     elif request.POST.get('action') == 'favorite':
         conversation.toggle_favorite(user)
+
+    ctx['remaining_comments'] = rules.compute('ej_conversations.remaining_comments', conversation, user)
     return ctx
 
 
