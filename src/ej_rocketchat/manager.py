@@ -44,5 +44,5 @@ def has_settings(settings):
     Return True if all settings are defined.
     """
     return settings.EJ_ROCKETCHAT_URL \
-           and settings.EJ_ROCKETCHAT_AUTH_TOKEN \
-           and settings.EJ_ROCKETCHAT_USER_IR
+        and settings.EJ_ROCKETCHAT_AUTH_TOKEN \
+        and settings.EJ_ROCKETCHAT_USER_IR

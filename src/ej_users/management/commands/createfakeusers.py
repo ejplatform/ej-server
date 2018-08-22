@@ -66,20 +66,7 @@ class Command(BaseCommand):
 
         # Create admin user
         if admin:
-            if not User.objects.filter(email='admin@admin.com'):
-                user = User.objects.create(
-                    name='Maurice Moss',
-                    email='admin@admin.com',
-                    is_active=True,
-                    is_staff=True,
-                    is_superuser=True,
-                )
-                user.set_password(admin_password or os.environ.get('ADMIN_PASSWORD', 'admin'))
-                user.save()
-                users_created += 1
-            else:
-                print('Admin user was already created!')
-
+            users_created = create_admin(admin_password, users_created)
         # Create user@user.com user
         if admin:
             if not User.objects.filter(email='user@user.com'):
@@ -122,3 +109,20 @@ class Command(BaseCommand):
 
         # Feedback
         print(f'Created {users_created} fake users')
+
+
+def create_admin(admin_password, users_created):
+    if not User.objects.filter(email='admin@admin.com'):
+        user = User.objects.create(
+            name='Maurice Moss',
+            email='admin@admin.com',
+            is_active=True,
+            is_staff=True,
+            is_superuser=True,
+        )
+        user.set_password(admin_password or os.environ.get('ADMIN_PASSWORD', 'admin'))
+        user.save()
+        users_created += 1
+    else:
+        print('Admin user was already created!')
+    return users_created

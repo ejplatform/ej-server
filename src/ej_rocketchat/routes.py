@@ -4,7 +4,7 @@ from django.shortcuts import redirect
 from boogie.router import Router
 from . import forms
 from .decorators import security_policy, requires_rc_perm
-from .models import RCConfig, RCAccount
+from .models import RCConfig
 from .rocket import rocket
 
 app_name = 'ej_rocketchat'

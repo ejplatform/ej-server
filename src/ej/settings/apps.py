@@ -18,6 +18,7 @@ class InstalledAppsConf(Base, EjOptions):
         'ej_configurations',
         'ej_profiles',
         'ej_users',
+        'ej_rocketchat',
     ]
 
     third_party_apps = [

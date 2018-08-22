@@ -194,7 +194,6 @@ class RCConfig(models.Model):
         See also:
             https://rocket.chat/docs/developer-guides/rest-api/miscellaneous/info/
         """
-        account = RCAccount.objects.get(user=user)
         payload = {'username': self.username}
         result = self.api_call('users.info', auth='admin', payload=payload)
 
