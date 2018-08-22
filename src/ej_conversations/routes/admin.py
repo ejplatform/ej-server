@@ -6,7 +6,7 @@ from .. import forms, models
 from ej_boards.models import Board, BoardSubscription
 
 
-@urlpatterns.route('add/', perms=['ej_conversations.can_add_conversation'])
+@urlpatterns.route('add/', login=True, perms=['ej_conversations.can_add_conversation'])
 def create(request):
     form_class = forms.ConversationForm
     boards = []
