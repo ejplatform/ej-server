@@ -36,7 +36,6 @@ def detail(request, conversation, owner=None):
         'comment': comment,
         'owner': owner,
         'edit_perm': user.has_perm('ej_conversations.can_edit_conversation', conversation),
-        'can_comment': user.has_perm('ej_conversations.can_comment', conversation),
         'login_link': a(_('login'), href=reverse('auth:login')),
         'favorites': favorites,
     }
@@ -60,6 +59,7 @@ def detail(request, conversation, owner=None):
     elif request.POST.get('action') == 'favorite':
         conversation.toggle_favorite(user)
 
+    ctx['can_comment'] = user.has_perm('ej_conversations.can_comment', conversation)
     ctx['remaining_comments'] = rules.compute('ej_conversations.remaining_comments', conversation, user)
     return ctx
 
