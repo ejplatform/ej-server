@@ -15,7 +15,7 @@ def start():
     call("VOLATILE_DEPENDENCIES_STRATEGY=unknown pip install -r /ej-server/etc/requirements/git-modules.txt", shell=True)
     call("./manage.py makemigrations --merge --noinput", shell=True)
     call("./manage.py makemigrations", shell=True)
-    call("./manage.py migrate", shell=True)
+    call("./manage.py migrate --noinput", shell=True)
     call("./manage.py collectstatic", shell=True)
     call("inv gunicorn", shell=True)
 
