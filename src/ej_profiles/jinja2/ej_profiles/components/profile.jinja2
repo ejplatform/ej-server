@@ -6,6 +6,16 @@
             {{ csrf_input }}
             {{ form.as_p() }}
             {{ form.non_field_errors() }}
+            <label for="id_image">
+                <div class="FormItem CustomFileInput">
+                    <div>
+                        {{ _('Choose a file') }}
+                    </div>
+                    <div>
+                        {{ _('No file chosen') }}
+                    </div>
+                </div>
+            </label>
             <input class="Button" type="submit" name="submit" value="{{ _('Save') }}">
         </form>
     </div>
