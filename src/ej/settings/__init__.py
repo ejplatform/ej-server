@@ -108,7 +108,7 @@ class Conf(ThemesConf,
     #     'REGISTER_SERIALIZER': 'ej_users.serializers.RegistrationSerializer'
     # }
     PUSH_NOTIFICATIONS_SETTINGS = {
-        "FCM_API_KEY": ""
+        "FCM_API_KEY": "",
     }
 
     # TODO: Fix this later in boogie configuration stack
