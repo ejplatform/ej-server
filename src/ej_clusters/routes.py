@@ -84,6 +84,7 @@ def stereotype_list(request, conversation):
             'conversation_title': conversation.title,
             'stereotypes': conversation.stereotypes.all(),
             'stereotype_url': conversation.get_absolute_url() + 'stereotypes/',
+            'conversation_url': conversation.get_absolute_url(),
         }
     else:
         return redirect('/conversations/')
