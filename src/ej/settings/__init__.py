@@ -134,7 +134,7 @@ class Conf(ThemesConf,
         CORS_ALLOW_CREDENTIALS = True
         CORS_ORIGIN_WHITELIST = (
             'dev.besouro.ejplatform.org',
-            'admin.dev.besouro.ejplatform.org'
+            'admin.dev.besouro.ejplatform.org',
         )
 
         CSRF_TRUSTED_ORIGINS = [
@@ -143,9 +143,6 @@ class Conf(ThemesConf,
         ]
 
         X_FRAME_OPTIONS = 'DENY'
-
-        ACCOUNT_EMAIL_VERIFICATION = 'optional'
-        EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
         DATABASES = {
             'default': {
@@ -160,10 +157,11 @@ class Conf(ThemesConf,
 
         ALLOWED_HOSTS = ['dev.besouro.ejplatform.org',
                          'admin.dev.besouro.ejplatform.org',
-                         '127.0.0.1']
+                         '18.222.20.172']
 
+        ACCOUNT_EMAIL_VERIFICATION = 'optional'
         EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend'
-        ANYMAIL = { "MAILGUN_API_KEY": "" }
+        ANYMAIL = {'MAILGUN_API_KEY': ''}
         DEFAULT_FROM_EMAIL = "Unidos Contra a Corrupção <noreply@unidoscontraacorrupcao.org.br>"
 
     if ENVIRONMENT == 'prod':
@@ -184,9 +182,6 @@ class Conf(ThemesConf,
 
         X_FRAME_OPTIONS = 'DENY'
 
-        ACCOUNT_EMAIL_VERIFICATION = 'optional'
-        EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
         DATABASES = {
             'default': {
                 'ENGINE': 'django.db.backends.postgresql',
@@ -201,10 +196,10 @@ class Conf(ThemesConf,
         ALLOWED_HOSTS = ['app.unidoscontraacorrupcao.org.br',
                          'admin.besouro.ejplatform.org']
 
+        ACCOUNT_EMAIL_VERIFICATION = 'optional'
         EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend'
-        ANYMAIL = { "MAILGUN_API_KEY": "" }
+        ANYMAIL = {'MAILGUN_API_KEY': ''}
         DEFAULT_FROM_EMAIL = "Unidos Contra a Corrupção <noreply@unidoscontraacorrupcao.org.br>"
-
 
 Conf.save_settings(globals())
 
