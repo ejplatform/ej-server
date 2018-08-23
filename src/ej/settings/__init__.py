@@ -128,12 +128,43 @@ class Conf(ThemesConf,
         ACCOUNT_EMAIL_VERIFICATION = 'optional'
         EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-        #EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend'
+    if ENVIRONMENT == 'dev':
+        INTERNAL_IPS = [*globals().get('INTERNAL_IPS', ()), '127.0.0.1']
 
-        #ANYMAIL = {
-        #    "MAILGUN_API_KEY": ""
-        #}
-        #DEFAULT_FROM_EMAIL = "noreply@unidoscontraacorrupcao.org.br"
+        # Django CORS
+        CORS_ORIGIN_ALLOW_ALL = False
+        CORS_ALLOW_CREDENTIALS = True
+        CORS_ORIGIN_WHITELIST = (
+            'dev.besouro.ejplatform.org',
+            'admin.dev.besouro.ejplatform.org',
+        )
+
+        CSRF_TRUSTED_ORIGINS = [
+            'dev.besouro.ejplatform.org',
+            'admin.dev.besouro.ejplatform.org',
+        ]
+
+        X_FRAME_OPTIONS = 'DENY'
+
+        DATABASES = {
+            'default': {
+                'ENGINE': 'django.db.backends.postgresql',
+                'NAME': 'besouro-local',
+                'USER': 'besouro',
+                'PASSWORD': '',
+                'HOST': 'besouro_db_dev',
+                'PORT': '5432'
+            }
+        }
+
+        ALLOWED_HOSTS = ['dev.besouro.ejplatform.org',
+                         'admin.dev.besouro.ejplatform.org',
+                         '18.222.20.172']
+
+        ACCOUNT_EMAIL_VERIFICATION = 'optional'
+        EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend'
+        ANYMAIL = {'MAILGUN_API_KEY': ''}
+        DEFAULT_FROM_EMAIL = "Unidos Contra a Corrupção <noreply@unidoscontraacorrupcao.org.br>"
 
     if ENVIRONMENT == 'prod':
         INTERNAL_IPS = [*globals().get('INTERNAL_IPS', ()), '127.0.0.1']
@@ -153,9 +184,6 @@ class Conf(ThemesConf,
 
         X_FRAME_OPTIONS = 'DENY'
 
-        ACCOUNT_EMAIL_VERIFICATION = 'optional'
-        EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
         DATABASES = {
             'default': {
                 'ENGINE': 'django.db.backends.postgresql',
@@ -171,9 +199,11 @@ class Conf(ThemesConf,
                          'admin.besouro.ejplatform.org',
                          '18.222.20.172']
 
+        ACCOUNT_EMAIL_VERIFICATION = 'optional'
         EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend'
-        ANYMAIL = { "MAILGUN_API_KEY": "" }
-        DEFAULT_FROM_EMAIL = "noreply@unidoscontraacorrupcao.org.br"
+        ANYMAIL = {'MAILGUN_API_KEY': ''}
+        DEFAULT_FROM_EMAIL = "Unidos Contra a Corrupção <noreply@unidoscontraacorrupcao.org.br>"
+
 
 Conf.save_settings(globals())
 
