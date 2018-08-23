@@ -23,7 +23,14 @@ class Candidate(models.Model):
     POLITICAL_OPTIONS = Choices('SIM', 'NÃO', 'SEM RESPOSTA')
 
     name = models.CharField(max_length=100,
-                            help_text="The name of the candidate")
+                            help_text="The urn name of the candidate")
+    full_name = models.CharField(max_length=100,
+                            help_text="The full name of the candidate",
+                            default="")
+    occupation  = models.CharField(max_length=100,
+                                   help_text="The occupation of the candidate",
+                                   default="")
+
     candidacy = StatusField(choices_name='CANDIDACY_OPTIONS',
                             help_text="the candadite candidacy")
     urn = models.IntegerField(help_text="The candidate urn number")
@@ -32,7 +39,16 @@ class Candidate(models.Model):
     image = models.FileField(upload_to="candidates", default="card_avatar-default.png")
     has_clean_pass = StatusField(choices_name='POLITICAL_OPTIONS')
     committed_to_democracy = StatusField(choices_name='POLITICAL_OPTIONS')
-    adhered_to_the_measures  = StatusField(choices_name='POLITICAL_OPTIONS')
+    adhered_to_the_measures = StatusField(choices_name='POLITICAL_OPTIONS')
+    justify_adhered_to_the_measures = models.CharField(max_length=500,
+                                                       help_text="Justification from the candidate",
+                                                       default="")
+    riches = models.CharField(max_length=500,
+                              help_text="Candidate riches",
+                              default="")
+    lawsuits = models.CharField(max_length=500,
+                                help_text="Candidate lawsuits",
+                                default="")
     site_url = models.CharField(max_length=100,
                                 help_text="The site of the candidate",
                                 default="")
