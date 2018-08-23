@@ -83,7 +83,7 @@ def candidates(request, user):
             limit = int(request.GET.get("limit"))
             return querySet.order_by("-id")[:limit]
         except:
-            pass
+            return querySet.order_by("-id")
 
 @rest_api.action('ej_users.User')
 def selected_candidates(request, user):
@@ -96,7 +96,7 @@ def selected_candidates(request, user):
             limit = int(request.GET.get("limit"))
             return querySet.order_by("-id")[:limit]
         except:
-            pass
+            return querySet.order_by("-id")
 
 @rest_api.action('ej_users.User', methods=['post'])
 def unselect_candidate(request, user):
