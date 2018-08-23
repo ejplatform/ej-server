@@ -314,16 +314,15 @@ $profile-arrow-size: $spacing-unit !default;
         margin-bottom: $spacing-unit;
         font-family: inherit;
         font-weight: normal;
-    
-        
+            
         div {
             padding: $spacing-unit-small $spacing-unit-small $spacing-unit-tiny;
             text-align: center;
 
             &:first-child {
                 min-width: fit-content;
-                border-radius: 30px 0 0 30px;
-                background-color: $color-blue-light-low;
+                border-radius: $spacing-unit 0 0 $spacing-unit;
+                background-color: $profile-file-input-color;
             }
             &:nth-child(2) {
                 width: -webkit-fill-available;
