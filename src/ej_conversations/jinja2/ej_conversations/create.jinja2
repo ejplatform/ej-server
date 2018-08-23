@@ -21,9 +21,22 @@
           $('.Moderate-comments').append(template.replace(/%INDEX%/g, index));
         }
         </script>
+        <div class="CenteredContainer">
         <form method="post" class="django-form-as-p">
           {{ csrf_input }}
-
+          {% if form.errors %}
+          	<!-- Error messaging -->
+          	<div id="errors">
+          		<div class="inner">
+          			<p>{{ _('There were some errors in the information you entered. Please correct the following:') }}</p>
+          			<ul>
+          				{% for field in form %}
+          					{% if field.errors %}<li>{{ field.label }}: {{ field.errors|striptags }}</li>{% endif %}
+          				{% endfor %}
+          			</ul>
+          		</div>
+          	</div>
+          {% endif %}
           <input type="hidden" name="title" value="" />
 
           <div class="ConversationEdit-actions">
@@ -42,7 +55,7 @@
                   <div class="ConversationTags">
                     <div class="ConversationField"><i class="fa fa-tags"></i> <input type="text" name="tags" placeholder="{{ _('Type tags separating by commas') }}" /> <i class="fa fa-edit"></i></div>
                   </div>
-                  
+
                   <p><textarea onfocus="this.style.height = (this.scrollHeight) + 'px'" onkeyup="this.style.height = (this.scrollHeight) + 'px'" class="Conversation-edit-field" name="text" required id="id_text" placeholder="{{ _('Type here the question for your research') }}"></textarea></p>
 
                   <div class="Conversation-edit">
@@ -52,17 +65,17 @@
 
               <div class="ConversationDetail-arrow"></div>
           </div>
-          
+
           <div class="ConversationField"><i class="fa fa-link"></i> <input type="text" name="title" placeholder="{{ _('Slug') }}" /> <i class="fa fa-edit"></i></div>
           <div class="ConversationField" id="ConversationField-board" style="display: none;">
-            <i class="fa fa-list-ul"></i> 
+            <i class="fa fa-list-ul"></i>
             <select name="board" onchange="createNewBoard()">
               <option disabled selected value>{{ _('Conversation list aka board') }}</option>
               {% for board in boards %}
               <option value="{{ board.id }}">{{ board.title }}</option>
               {% endfor %}
               <option value="new">{{ _('Create new board...') }}</option>
-            </select> 
+            </select>
             <i class="fa fa-edit"></i>
           </div>
 
@@ -75,5 +88,6 @@
           </div>
           <p class="Conversation-AddComment" onclick="addCommentField()"><i class="fa fa-plus"></i> {{ _('Add more comments') }}</p>
         </form>
+      </div>
     </div>
 {% endblock %}

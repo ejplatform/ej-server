@@ -13,9 +13,9 @@
 
     {# Current comment #}
     <div class="ConversationDetail-header">
-        <h1>Comentários da Comunidade</h1>
-        <p>Interaja com as opiniões selecionando uma das opções de botão e aproveite para incluir sua própria opinião
-            nesta conversa</p>
+        <h1>{{ _('Comments') }}</h1>
+        <p>{{ _('Interact with opinions by selecting one of the options and enjoy to include your own opinion
+            in this conversation') }}</p>
     </div>
     {% if user.is_authenticated %}
         {% if comment %}

@@ -13,9 +13,9 @@
         </div>
         <h1>{{ conversation.text }}</h1>
         <ul class="ConversationDetail-statistics">
-            <li><i class="fa fa-comment"></i> {{comments_count}}{{ _('s comments') }}</li>
-            <li><i class="fa fa-sliders-h"></i> {{votes_count}}{{ _('s votes') }}</li>
-            <li><i class="fa fa-star"></i> {{favorites_count}}{{ _('s favorites') }}</li>
+            <li><i class="fa fa-comment"></i>{{ _('{count} comments').format(count=comments_count) }}</li>
+            <li><i class="fa fa-sliders-h"></i> {{ _('{count} votes').format(count=votes_count) }}</li>
+            <li><i class="fa fa-star"></i>{{ _('{count} favorites').format(count=favorites_count) }}</li>
         </ul>
     </div>
 

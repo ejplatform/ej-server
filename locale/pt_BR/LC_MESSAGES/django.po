@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-23 15:33+0000\n"
-"PO-Revision-Date: 2018-08-23 12:32-0300\n"
+"POT-Creation-Date: 2018-08-23 17:50+0000\n"
+"PO-Revision-Date: 2018-08-23 14:51-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: \n"
 "Language: pt_BR\n"
@@ -907,7 +907,7 @@ msgid ""
 "votes!"
 msgstr "Participe das conversas e dê sua opinião com comentários e votos!"
 
-#: src/ej_conversations/routes/conversations.py:40
+#: src/ej_conversations/routes/conversations.py:39
 msgid "login"
 msgstr "entrar"
 
@@ -1588,7 +1588,7 @@ msgstr ""
 "Liste abaixo os comentários referentes a esse estereótipo e defina os votos."
 
 #: src/ej_clusters/jinja2/ej_clusters/create-stereotype.jinja2:13
-#: src/ej_conversations/jinja2/ej_conversations/create.jinja2:36
+#: src/ej_conversations/jinja2/ej_conversations/create.jinja2:49
 msgid "Create"
 msgstr "Criar"
 
@@ -1654,31 +1654,31 @@ msgstr "Informações do site"
 msgid "Styles"
 msgstr "Estilos"
 
-#: src/ej_conversations/jinja2/ej/roles/conversation-balloon.jinja2:7
+#: src/ej_conversations/jinja2/ej/roles/conversation-balloon.jinja2:11
 msgid "Tags"
 msgstr "Tags"
 
-#: src/ej_conversations/jinja2/ej/roles/conversation-balloon.jinja2:12
-msgid "s comments"
-msgstr " comentários"
+#: src/ej_conversations/jinja2/ej/roles/conversation-balloon.jinja2:16
+msgid "{count} comments"
+msgstr "{count} comentários"
 
-#: src/ej_conversations/jinja2/ej/roles/conversation-balloon.jinja2:13
-msgid "s votes"
-msgstr " votos"
+#: src/ej_conversations/jinja2/ej/roles/conversation-balloon.jinja2:17
+msgid "{count} votes"
+msgstr "{count} votos"
 
-#: src/ej_conversations/jinja2/ej/roles/conversation-balloon.jinja2:14
-msgid "s favorites"
-msgstr " favoritos"
+#: src/ej_conversations/jinja2/ej/roles/conversation-balloon.jinja2:18
+msgid "{count} favorites"
+msgstr "{count} favoritos"
 
-#: src/ej_conversations/jinja2/ej/roles/conversation-balloon.jinja2:26
+#: src/ej_conversations/jinja2/ej/roles/conversation-balloon.jinja2:30
 msgid "Unfavorite"
 msgstr "Desfavoritar"
 
-#: src/ej_conversations/jinja2/ej/roles/conversation-balloon.jinja2:30
+#: src/ej_conversations/jinja2/ej/roles/conversation-balloon.jinja2:34
 msgid "Favorite"
 msgstr "Favorito"
 
-#: src/ej_conversations/jinja2/ej/roles/conversation-balloon.jinja2:35
+#: src/ej_conversations/jinja2/ej/roles/conversation-balloon.jinja2:39
 msgid "Share"
 msgstr "Compartilhar"
 
@@ -1703,38 +1703,44 @@ msgid "Type here the title of the new board"
 msgstr "Escreva aqui o título do novo quadro"
 
 #: src/ej_conversations/jinja2/ej_conversations/create.jinja2:20
-#: src/ej_conversations/jinja2/ej_conversations/create.jinja2:73
+#: src/ej_conversations/jinja2/ej_conversations/create.jinja2:86
 msgid "Type here the comment"
 msgstr "Escreva aqui o comentário"
 
-#: src/ej_conversations/jinja2/ej_conversations/create.jinja2:32
+#: src/ej_conversations/jinja2/ej_conversations/create.jinja2:31
+msgid ""
+"There were some errors in the information you entered. Please correct the "
+"following:"
+msgstr "Houveram alguns erros no formulário. Por favor corrija:"
+
+#: src/ej_conversations/jinja2/ej_conversations/create.jinja2:45
 #: src/ej_conversations/jinja2/ej_conversations/edit.jinja2:14
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: src/ej_conversations/jinja2/ej_conversations/create.jinja2:43
+#: src/ej_conversations/jinja2/ej_conversations/create.jinja2:56
 msgid "Type tags separating by commas"
 msgstr "Escreva as tags separando por vírgulas"
 
-#: src/ej_conversations/jinja2/ej_conversations/create.jinja2:46
+#: src/ej_conversations/jinja2/ej_conversations/create.jinja2:59
 msgid "Type here the question for your research"
 msgstr "Escreva aqui a pergunta da sua consulta"
 
-#: src/ej_conversations/jinja2/ej_conversations/create.jinja2:49
+#: src/ej_conversations/jinja2/ej_conversations/create.jinja2:62
 #: src/ej_conversations/jinja2/ej_conversations/edit.jinja2:39
 #: src/ej_conversations/jinja2/ej_conversations/moderate.jinja2:17
 msgid "Edit Conversation"
 msgstr "Editar Conversa"
 
-#: src/ej_conversations/jinja2/ej_conversations/create.jinja2:60
+#: src/ej_conversations/jinja2/ej_conversations/create.jinja2:73
 msgid "Conversation list aka board"
 msgstr "Lista de conversas"
 
-#: src/ej_conversations/jinja2/ej_conversations/create.jinja2:64
+#: src/ej_conversations/jinja2/ej_conversations/create.jinja2:77
 msgid "Create new board..."
 msgstr "Criar um novo quadro..."
 
-#: src/ej_conversations/jinja2/ej_conversations/create.jinja2:76
+#: src/ej_conversations/jinja2/ej_conversations/create.jinja2:89
 msgid "Add more comments"
 msgstr "Adicionar mais comentários"
 
@@ -1794,6 +1800,16 @@ msgstr ""
 #: src/ej_conversations/jinja2/ej_conversations/components/comment-list.jinja2:9
 msgid "No comments left"
 msgstr "Não há mais comentários"
+
+#: src/ej_conversations/jinja2/ej_conversations/components/conversation-detail.jinja2:17
+msgid ""
+"Interact with opinions by selecting one of the options and enjoy to include "
+"your own opinion\n"
+"            in this conversation"
+msgstr ""
+"Interaja com as opiniões selecionando uma das opções de botão e aproveite "
+"para incluir sua própria opinião\n"
+"            nesta conversa"
 
 #: src/ej_conversations/jinja2/ej_conversations/components/conversation-detail.jinja2:25
 msgid "Congratulations!"
@@ -1994,6 +2010,15 @@ msgstr "Recuperar senha"
 msgid "Reset password"
 msgstr "Recriar minha senha"
 
+#~ msgid "s comments"
+#~ msgstr " comentários"
+
+#~ msgid "s votes"
+#~ msgstr " votos"
+
+#~ msgid "s favorites"
+#~ msgstr " favoritos"
+
 #~ msgid "Cis Female"
 #~ msgstr "Feminino Cis"
 
@@ -2050,15 +2075,6 @@ msgstr "Recriar minha senha"
 
 #~ msgid "Alerts"
 #~ msgstr "Alertas"
-
-#~ msgid "%(count)s comments"
-#~ msgstr "%(count)s comentários"
-
-#~ msgid "%(count)s votes"
-#~ msgstr "%(count)s votos"
-
-#~ msgid "%(count)s favorites"
-#~ msgstr "%(count)s votos"
 
 #~ msgid "All"
 #~ msgstr "Todos"
