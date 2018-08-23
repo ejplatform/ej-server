@@ -6,3 +6,9 @@ class BoardForm(forms.ModelForm):
     class Meta:
         model = models.Board
         fields = ['slug', 'title', 'description']
+
+
+class BoardSlugForm(forms.ModelForm):
+    class Meta:
+        model = models.Board
+        fields = ['slug']

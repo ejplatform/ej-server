@@ -1,9 +1,11 @@
 from django.http import Http404
 from django.shortcuts import redirect
+from django.utils.translation import ugettext_lazy as _
 from autoslug.settings import slugify
 from . import urlpatterns, conversation_url
 from .. import forms, models
 from ej_boards.models import Board, BoardSubscription
+from ej_boards.forms import BoardForm
 
 
 @urlpatterns.route('add/', login=True, perms=['ej_conversations.can_add_conversation'])
@@ -12,23 +14,34 @@ def create(request):
     boards = []
     if request.method == 'POST':
         form = form_class(request.POST)
+
+        title = form.data['newboard']
+        data = {'title': title, 'description': '', 'slug': slugify(title)}
+        board_form = BoardForm(data)
+
         if form.is_valid():
+
             conversation = form.save(commit=False)
             conversation.author = request.user
-            conversation.save()
-
-            for tag in form.cleaned_data['tags']:
-                conversation.tags.add(tag)
-
             if 'board' in form.data:
                 board = Board.objects.get(pk=int(form.data['board']))
                 BoardSubscription.objects.create(conversation=conversation, board=board)
 
-            if 'newboard' in form.data:
-                title = form.data['newboard']
-                slug = slugify(title)
-                board = Board.objects.create(title=title, owner=request.user, slug=slug)
+            if board_form.is_valid():
+                board = board_form.save(commit=False)
+                board.owner = request.user
+                board.save()
+                conversation.save()
                 BoardSubscription.objects.create(conversation=conversation, board=board)
+            else:
+                form.add_error('title', _('Board with this slug already exists!'))
+                return {
+                    'form': form,
+                    'boards': request.user.boards.all(),
+                }
+
+            for tag in form.cleaned_data['tags']:
+                conversation.tags.add(tag)
 
             n = int(form.data['commentscount']) + 1
             for i in range(1, n):
@@ -40,6 +53,7 @@ def create(request):
                         author=request.user,
                         status=models.Comment.STATUS.approved,
                     )
+
             return redirect(conversation.get_absolute_url() + 'stereotypes/')
     else:
         form = form_class()
