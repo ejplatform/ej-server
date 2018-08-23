@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-23 12:06+0000\n"
-"PO-Revision-Date: 2018-08-23 09:07-0300\n"
+"POT-Creation-Date: 2018-08-23 15:33+0000\n"
+"PO-Revision-Date: 2018-08-23 12:32-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: \n"
 "Language: pt_BR\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "Generated-By: Babel 2.5.3\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 1.8.7.1\n"
 
 #: local/vendor/django-boogie/src/boogie/apps/users/models.py:23
 #: local/vendor/django-boogie/src/boogie/models/abstract/user.py:64
@@ -64,7 +64,7 @@ msgid "An enumeration field"
 msgstr "Um campo de enumeração"
 
 #: local/vendor/django-boogie/src/boogie/models/abstract/user.py:55
-#: src/ej_profiles/models.py:126 src/ej_users/forms.py:46
+#: src/ej_profiles/models.py:131 src/ej_users/forms.py:46
 #: src/ej_users/forms.py:48
 msgid "E-mail"
 msgstr "Email"
@@ -121,6 +121,53 @@ msgstr "usuário"
 #, python-format
 msgid "No %(verbose_name)s found matching the query"
 msgstr "Nenhum nome %(verbose_name)s encontrado"
+
+#: local/vendor/django-messages-courier/courier/emails/providers/onesignal/models.py:15
+msgid "Player ID"
+msgstr ""
+
+#: local/vendor/django-messages-courier/courier/emails/providers/onesignal/models.py:18
+#, fuzzy
+msgid "User updated at"
+msgstr "Atualizado em"
+
+#: local/vendor/django-messages-courier/courier/models.py:11
+#, fuzzy
+msgid "Sender"
+msgstr "Remetende"
+
+#: local/vendor/django-messages-courier/courier/models.py:12
+#: src/ej_boards/models.py:28 src/ej_conversations/models/conversation.py:65
+msgid "Title"
+msgstr "Título"
+
+#: local/vendor/django-messages-courier/courier/models.py:14
+msgid "Short Description"
+msgstr "Descrição curta"
+
+#: local/vendor/django-messages-courier/courier/models.py:29
+msgid "Waiting"
+msgstr "Esperando"
+
+#: local/vendor/django-messages-courier/courier/models.py:30
+msgid "Read"
+msgstr "Lido"
+
+#: local/vendor/django-messages-courier/courier/models.py:31
+msgid "Seen"
+msgstr "Visto"
+
+#: local/vendor/django-messages-courier/courier/models.py:32
+msgid "Unseen"
+msgstr "Não Visto"
+
+#: local/vendor/django-messages-courier/courier/models.py:46
+msgid "Status"
+msgstr "Status"
+
+#: local/vendor/django-messages-courier/courier/pushnotifications/providers/onesignal/models.py:15
+msgid "OneSignal Id"
+msgstr "Id OneSignal"
 
 #: src/ej/components/tags.py:11
 msgid "hello"
@@ -475,10 +522,6 @@ msgstr "Quadros"
 #: src/ej_boards/models.py:15
 msgid "Slug"
 msgstr "Identificador"
-
-#: src/ej_boards/models.py:28 src/ej_conversations/models/conversation.py:65
-msgid "Title"
-msgstr "Título"
 
 #: src/ej_boards/models.py:32 src/ej_clusters/models.py:127
 #: src/ej_clusters/models.py:194
@@ -1026,7 +1069,7 @@ msgstr "Identidade de gênero"
 msgid "User provided gender"
 msgstr "Gênero fornecido pelo usuário"
 
-#: src/ej_profiles/models.py:31 src/ej_profiles/models.py:122
+#: src/ej_profiles/models.py:31 src/ej_profiles/models.py:127
 msgid "Age"
 msgstr "Idade"
 
@@ -1038,39 +1081,39 @@ msgstr "Data de Nascimento"
 msgid "Country"
 msgstr "País"
 
-#: src/ej_profiles/models.py:34
+#: src/ej_profiles/models.py:35
 msgid "State"
 msgstr "Estado"
 
-#: src/ej_profiles/models.py:35
+#: src/ej_profiles/models.py:40
 msgid "City"
 msgstr "Cidade"
 
-#: src/ej_profiles/models.py:36
+#: src/ej_profiles/models.py:41
 msgid "Biography"
 msgstr "Biografia"
 
-#: src/ej_profiles/models.py:37
+#: src/ej_profiles/models.py:42
 msgid "Occupation"
 msgstr "Ocupação"
 
-#: src/ej_profiles/models.py:38
+#: src/ej_profiles/models.py:43
 msgid "Political activity"
 msgstr "Atividade política"
 
-#: src/ej_profiles/models.py:39
+#: src/ej_profiles/models.py:44
 msgid "Image"
 msgstr "Imagem"
 
-#: src/ej_profiles/models.py:162
+#: src/ej_profiles/models.py:167
 msgid "Root"
 msgstr "Root"
 
-#: src/ej_profiles/models.py:164
+#: src/ej_profiles/models.py:169
 msgid "Administrative user"
 msgstr "Usuário administrativo"
 
-#: src/ej_profiles/models.py:165 src/ej_profiles/tests/test_models.py:47
+#: src/ej_profiles/models.py:170 src/ej_profiles/tests/test_models.py:47
 msgid "Regular user"
 msgstr "Usuário regular"
 
@@ -1385,7 +1428,7 @@ msgid "High contrast mode"
 msgstr "Modo de alto contraste"
 
 #: src/ej/templates/jinja2/components/generic/page_menu.jinja2:87
-#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:61
+#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:71
 msgid "Logout"
 msgstr "Sair"
 
@@ -1523,7 +1566,7 @@ msgstr "Quem já adotou o EJ"
 #: src/ej_boards/jinja2/ej_boards/create.jinja2:9
 #: src/ej_clusters/jinja2/ej_clusters/edit-stereotype.jinja2:5
 #: src/ej_conversations/jinja2/ej_conversations/edit.jinja2:18
-#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:9
+#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:19
 msgid "Save"
 msgstr "Salvar"
 
@@ -1616,19 +1659,16 @@ msgid "Tags"
 msgstr "Tags"
 
 #: src/ej_conversations/jinja2/ej/roles/conversation-balloon.jinja2:12
-#, fuzzy
 msgid "s comments"
-msgstr "Sem comentários"
+msgstr " comentários"
 
 #: src/ej_conversations/jinja2/ej/roles/conversation-balloon.jinja2:13
-#, fuzzy
 msgid "s votes"
-msgstr "Registre votos"
+msgstr " votos"
 
 #: src/ej_conversations/jinja2/ej/roles/conversation-balloon.jinja2:14
-#, fuzzy
 msgid "s favorites"
-msgstr "Desfavoritar"
+msgstr " favoritos"
 
 #: src/ej_conversations/jinja2/ej/roles/conversation-balloon.jinja2:26
 msgid "Unfavorite"
@@ -1801,43 +1841,51 @@ msgstr "Suas conversas"
 msgid "Edit profile: <em>%(name)s</em>"
 msgstr "Editar perfil: <em>%(name)s</em>"
 
-#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:19
+#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:12
+msgid "Choose a file"
+msgstr "Escolha um arquivo"
+
+#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:15
+msgid "No file chosen"
+msgstr "Nenhum arquivo foi escolhido"
+
+#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:29
 msgid "Participant Status"
 msgstr "Status do Participante"
 
-#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:24
+#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:34
 msgid "Info"
 msgstr "Info"
 
-#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:33
+#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:43
 msgid "Contributions"
 msgstr "Contribuições"
 
-#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:66
+#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:76
 msgid "Delete profile"
 msgstr "Apagar perfil"
 
-#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:85
+#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:95
 msgid "Edit profile"
 msgstr "Editar perfil"
 
-#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:134
+#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:144
 msgid "See All"
 msgstr "Ver Todos"
 
-#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:148
+#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:158
 msgid "My Comments"
 msgstr "Meus Comentários"
 
-#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:158
+#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:168
 msgid "Opinion"
 msgstr "Opinião"
 
-#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:180
+#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:190
 msgid "See Conversation"
 msgstr "Ver Conversa"
 
-#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:197
+#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:207
 msgid "Favorite Conversations"
 msgstr "Conversas Favoritas"
 
@@ -1894,11 +1942,11 @@ msgstr "Remetende"
 
 #: src/ej_rocketchat/jinja2/ej_rocketchat/register.jinja2:2
 msgid "Panel: Register username"
-msgstr ""
+msgstr "Painel: Registrar nome do usuário"
 
 #: src/ej_rocketchat/jinja2/ej_rocketchat/register.jinja2:3
 msgid "Panel settings"
-msgstr ""
+msgstr "Configurações do Painel"
 
 #: src/ej_users/jinja2/ej_users/auth-components.jinja2:18
 #: src/ej_users/jinja2/ej_users/auth-components.jinja2:25
@@ -2075,31 +2123,6 @@ msgstr "Recriar minha senha"
 
 #~ msgid "Default font"
 #~ msgstr "Fonte padrão"
-
-#~ msgid "Short Description"
-#~ msgstr "Descrição curta"
-
-#~ msgid "Waiting"
-#~ msgstr "Esperando"
-
-#~ msgid "Read"
-#~ msgstr "Lido"
-
-#~ msgid "Seen"
-#~ msgstr "Visto"
-
-#~ msgid "Unseen"
-#~ msgstr "Não Visto"
-
-#~ msgid "Status"
-#~ msgstr "Status"
-
-#~ msgid "OneSignal Id"
-#~ msgstr "Id OneSignal"
-
-#, fuzzy
-#~ msgid "User updated at"
-#~ msgstr "Atualizado em"
 
 #~ msgid "Edit conversation: {conversation}"
 #~ msgstr "Editar conversa: {conversation}"
