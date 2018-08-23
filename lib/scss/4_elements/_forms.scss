@@ -30,11 +30,6 @@ select,
     width: 85%;
 }
 
-input,
-textarea {
-    box-shadow: $form-input-border-box;
-}
-
 input[type=email],
 input[type=number],
 input[type=password],
