@@ -21,28 +21,32 @@ class ConstanceConf(Conf):
             ),
             'EJ_STATE_CHOICES': (
                 self.EJ_STATE_CHOICES,
-                'State choices for state field in profile', tuple
+                'State choices for state field in profile', 'choicesfield'
             ),
         }
 
-    CONSTANCE_CONFIG_FIELDSETS = {
-        'EJ Options': (
-            'EJ_MAX_BOARD_NUMBER',
-            'EJ_STATE_MAX_LENGTH'
-            'EJ_STATE_CHOICES',
-        )
-    }
     CONSTANCE_ADDITIONAL_FIELDS = {
         'charfield': ['django.forms.fields.CharField', {
             'widget': 'django.forms.TextInput',
             'required': False,
+        }],
+        'choicesfield': ['django.forms.ChoiceField', {
+            'required': False,
         }]
+    }
+
+    CONSTANCE_CONFIG_FIELDSETS = {
+        'EJ Options': (
+            'EJ_MAX_BOARD_NUMBER',
+            'EJ_STATE_MAX_LENGTH',
+            'EJ_STATE_CHOICES',
+        )
     }
 
     # Auxiliary options
     EJ_MAX_BOARD_NUMBER = env(1, name='{attr}')
     EJ_STATE_MAX_LENGTH = env(2, name='{attr}')
     EJ_STATE_CHOICES = env(
-        (('ST', 'State'),('PV', 'Province'),),
+        (('ST', 'State'), ('PV', 'Province'),),
         name='{attr}'
     )
