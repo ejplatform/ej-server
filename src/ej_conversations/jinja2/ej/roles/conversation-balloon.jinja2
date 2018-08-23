@@ -1,3 +1,7 @@
+{% block javascript_body %}
+  <script src="/static/js/web-share.js" defer></script>
+{% endblock %}
+
 <div class="ConversationDetail">
     <div class="ConversationDetail-banner">
         <div class="ConversationTags"><i class="fa fa-tags"></i>
@@ -31,7 +35,7 @@
                     </button>
                 {% endif %}
             </form>
-            <button class="share-button">
+            <button onclick="webShare()" class="share-button">
                 <i class="fas fa-share-alt"></i> {{ _("Share") }}
             </button>
         {% endif %}
