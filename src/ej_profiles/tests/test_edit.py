@@ -56,10 +56,10 @@ class TestEditProfile:
             return f'{rd.randint(1900, 2020)}-{rd.randint(1, 12)}-' \
                    f'{rd.randint(1, 28)}'
 
-        inf_fields = ['city', 'state', 'country', 'ethnicity', 'education',
-                      'political_activity', 'biography', 'occupation',
+        inf_fields = ['city', 'occupation', 'country', 'ethnicity', 'education',
+                      'political_activity', 'biography', 'state',
                       'gender', 'race', 'birth_date']
-        inf_values = [*[rand_str(15)] * 8, rd.choice(list(range(0, 3)) + [20]),
+        inf_values = [*[rand_str(15)] * 7, 'ST', rd.choice(list(range(0, 3)) + [20]),
                       rd.randint(0, 6), gen_birth_date()]
         form_data = {k: v for k, v in zip(inf_fields, inf_values)}
 
