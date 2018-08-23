@@ -15,11 +15,21 @@ class ConstanceConf(Conf):
                 self.EJ_MAX_BOARD_NUMBER,
                 'Maximum number of boards that a common user can create', int
             ),
+            'EJ_STATE_MAX_LENGTH': (
+                self.EJ_STATE_MAX_LENGTH,
+                'Max length for state field in profile', int
+            ),
+            'EJ_STATE_CHOICES': (
+                self.EJ_STATE_CHOICES,
+                'State choices for state field in profile', tuple
+            ),
         }
 
     CONSTANCE_CONFIG_FIELDSETS = {
         'EJ Options': (
             'EJ_MAX_BOARD_NUMBER',
+            'EJ_STATE_MAX_LENGTH'
+            'EJ_STATE_CHOICES',
         )
     }
     CONSTANCE_ADDITIONAL_FIELDS = {
@@ -31,3 +41,8 @@ class ConstanceConf(Conf):
 
     # Auxiliary options
     EJ_MAX_BOARD_NUMBER = env(1, name='{attr}')
+    EJ_STATE_MAX_LENGTH = env(2, name='{attr}')
+    EJ_STATE_CHOICES = env(
+        (('ST', 'State'),('PV', 'Province'),),
+        name='{attr}'
+    )

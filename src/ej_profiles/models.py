@@ -31,7 +31,12 @@ class Profile(models.Model):
     age = models.IntegerField(_('Age'), null=True, blank=True)
     birth_date = models.DateField(_('Birth Date'), null=True, blank=True)
     country = models.CharField(_('Country'), blank=True, max_length=50)
-    state = models.CharField(_('State'), blank=True, max_length=140)
+    state = models.CharField(
+        _('State'),
+        blank=True,
+        max_length=settings.EJ_STATE_MAX_LENGTH,
+        choices=settings.EJ_STATE_CHOICES,
+    )
     city = models.CharField(_('City'), blank=True, max_length=140)
     biography = models.TextField(_('Biography'), blank=True)
     occupation = models.CharField(_('Occupation'), blank=True, max_length=50)
