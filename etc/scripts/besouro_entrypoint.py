@@ -3,8 +3,8 @@
 from subprocess import call
 import sys
 
-API_TAG = sys.argv[0]
-ENVIRONMENT = sys.argv[1]
+API_TAG = sys.argv[1]
+ENVIRONMENT = sys.argv[2]
 
 def start():
     call("git fetch origin %s" % API_TAG, shell=True)
