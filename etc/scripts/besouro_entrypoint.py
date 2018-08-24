@@ -17,7 +17,7 @@ def start():
     call("./manage.py makemigrations --merge --noinput", shell=True)
     call("./manage.py makemigrations", shell=True)
     call("./manage.py migrate --noinput", shell=True)
-    call("./manage.py collectstatic", shell=True)
+    call("./manage.py collectstatic --noinput", shell=True)
     call("inv gunicorn", shell=True)
 
 if __name__ == '__main__':
