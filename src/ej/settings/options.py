@@ -12,6 +12,7 @@ class EjOptions(Conf):
     EJ_ROCKETCHAT_INTEGRATION = env(False, name='{attr}')
     EJ_ROCKETCHAT_URL = env('http://localhost:3000', name='{attr}')
     EJ_ROCKETCHAT_AUTH_TOKEN = env('', name='{attr}')
+    EJ_ROCKETCHAT_USERNAME = env('ej-admin', name='{attr}')
     EJ_ROCKETCHAT_USER_ID = env('', name='{attr}')
 
     # Conversations Configurations
@@ -24,7 +25,7 @@ class EjOptions(Conf):
     EJ_ANONYMOUS_HOME_PATH = env('/home/', name='{attr}')
     EJ_USER_HOME_PATH = env('/conversations/', name='{attr}')
     EJ_PAGE_TITLE = env(_('EJ Platform'), name='{attr}')
-    EJ_REGISTER_TEXT = _('Ainda não faz parte do EJ?')
+    EJ_REGISTER_TEXT = _('Not part of EJ yet?')
 
     # Allow instances to exclude some profile fields from visualization
     EJ_EXCLUDE_PROFILE_FIELDS = env([], name='{attr}')

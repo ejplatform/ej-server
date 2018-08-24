@@ -144,3 +144,23 @@ class CreateUsernameForm(forms.ModelForm):
                 self.add_error('username', msg)
             else:
                 raise
+
+
+class AskAdminPasswordForm(forms.Form):
+    """
+    Asks EJ superusers for the Rocket.Chat admin user password.
+    """
+    password = forms.CharField(
+        label=_('Password'),
+        help_text=_('Password for the Rocket.Chat admin account'),
+        widget=forms.PasswordInput,
+    )
+
+    def full_clean(self):
+        super().full_clean()
+        if self.is_valid():
+            password = self.cleaned_data['password']
+            try:
+                rocket.password_login(rocket.admin_username, password)
+            except PermissionError:
+                self.add_error('password', _('Invalid password'))

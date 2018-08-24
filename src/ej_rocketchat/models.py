@@ -111,6 +111,14 @@ class RCConfig(models.Model):
             'address in your network.'
         )
     )
+    admin_username = models.CharField(
+        _('Admin username'),
+        max_length=50,
+        default='ej-admin',
+        help_text=_(
+            'Username for Rocket.Chat admin user'
+        ),
+    )
     admin_id = models.CharField(
         _('Admin user id'),
         max_length=50,

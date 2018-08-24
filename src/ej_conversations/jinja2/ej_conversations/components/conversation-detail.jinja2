@@ -12,11 +12,7 @@
     {{ conversation|role('balloon') }}
 
     {# Current comment #}
-    <div class="ConversationDetail-header">
-        <h1>{{ _('Comments') }}</h1>
-        <p>{{ _('Interact with opinions by selecting one of the options and enjoy to include your own opinion
-            in this conversation') }}</p>
-    </div>
+    <div class="ConversationDetail-header"><h1>{{ _('Comments') }}</h1></div>
     {% if user.is_authenticated %}
         {% if comment %}
             {{ comment_detail(comment, user, conversation.comments.count() - conversation.user_votes(user).count(), conversation.comments.count()) }}

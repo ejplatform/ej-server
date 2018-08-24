@@ -8,6 +8,7 @@
 {% set content_title = content_title|default('') %}
 {% set page_title = page_title|default(content_title or settings.EJ_PAGE_TITLE) %}
 {% set hide_footer = hide_footer|default(False) %}
+{% set enable_navbar = enable_navbar|default(True) %}
 
 {% if target == 'all' %}
     <!DOCTYPE html>
@@ -104,8 +105,10 @@
 
 {% block body %}
     {% if target == 'all' or target == 'page' %}
-        {{ page_top_header(social_icons()) }}
-        {{ page_header(request) }}
+        {% if enable_navbar %}
+            {{ page_top_header(social_icons()) }}
+            {{ page_header(request) }}
+        {% endif %}
         <div class="Page-mainContainer">
     {% endif %}
 

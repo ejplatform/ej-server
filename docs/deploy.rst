@@ -209,19 +209,8 @@ In this page, follow the instructions bellow:
 4. Set ``API Method`` to ``POST``.
 5. Save the changes.
 
-The final step is to setup Django in the admin page. Go to ``http://your-hostname/admin/
-and select ``Django Admin > Constance (Config) > RocketChat Options``. You must set the
-following variables:
-
-ROCKETCHAT_URL:
-    Set to the external accessible Rocketchat URL, e.g.: http://talk.your-hostname.
-ROCKETCHAT_PRIVATE_URL:
-    Set to the Rocketchat Docker internal network address http://rocketchat:3000,
-    or leave blank if there is no rocketchat private URL.
-ROCKETCHAT_AUTH_TOKEN:
-    The admin token obtained using the Rocketchat API.
-ROCKETCHAT_USER_ID:
-    The admin id obtained using the Rocketchat API.
+The final step is to setup EJ using a superuser account. Go to http://<hostname>/talks/
+and it will request additional information before continuing.
 
 Now each time you try to access Rocketchat without django
 authentication, the user will be redirected to the EJ login page.

@@ -256,9 +256,11 @@ def docker(ctx, task, cmd=None, port=8000, clean_perms=False, prod=False,
         do(f'{compose} run -p {port}:8000 web {cmd or "bash"}')
     elif task == 'production':
         do(f'{compose} up')
+    elif task == 'rocket':
+        compose = su_docker('docker-compose')
+        do(f'{compose} -f docker/docker-compose.rocket.yml up')
     else:
-        raise SystemExit(f'invalid choice for env: {task}\n'
-                         f'valid options: single, start, up, run, deploy')
+        raise SystemExit(f'invalid task: {task}')
     if clean_perms:
         do(f'sudo chown `whoami`:`whoami` * -R')
 

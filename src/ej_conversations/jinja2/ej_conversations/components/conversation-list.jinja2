@@ -7,7 +7,6 @@
 {% macro conversation_list(conversations,
                            categories,
                            footer_content,
-
                            topic= _('A space for adolescents to discuss actions that promote, guarantee and defend their rights'),
                            conversation_link= _('View all conversations'),
                            title= _('Public conversations'),
@@ -20,19 +19,19 @@
         {{ react_component('conversation_list', conversation_list_static(conversations, categories, title, subtitle, caller_output|default(topic)), javascript_enabled) }}
     </div>
 
-    
+
     {% if footer_content is defined %}
-        {{conversation_list_footer(footer_content)}}
+        {{ conversation_list_footer(footer_content) }}
     {% endif %}
-    
+
 
 {% endmacro %}
 
 {% macro conversation_list_footer(footer_content) %}
     <div class="ConversationFooter">
-        <img src='{{footer_content.image}}' alt="FB logo">
-        <p>{{footer_content.first.normal}} <b>{{footer_content.first.bold}}</b> </p>
-        <p>{{footer_content.last.normal}} <b>{{footer_content.last.bold}}</b></p>
+        <img src='{{ footer_content.image }}' alt="FB logo">
+        <p>{{ footer_content.first.normal }} <b>{{ footer_content.first.bold }}</b></p>
+        <p>{{ footer_content.last.normal }} <b>{{ footer_content.last.bold }}</b></p>
     </div>
 {% endmacro %}
 
@@ -52,7 +51,7 @@
                     {{ link(_('public conversations'), href='/conversations/') }}
                 </span>
                 {% if not is_my_timeline %}
-                <span class="my-conversations">
+                    <span class="my-conversations">
                     {{ link(_('go to my conversations'), href='/profile/conversations/') }}
                     <i class="fa fa-chevron-right"></i>
                 </span>
