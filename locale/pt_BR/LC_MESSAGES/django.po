@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-24 17:58+0000\n"
+"POT-Creation-Date: 2018-08-24 18:15+0000\n"
 "PO-Revision-Date: 2018-08-23 14:51-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: \n"
@@ -546,7 +546,12 @@ msgstr ""
 "especificar uma história de referência, ou dar dicas do perfil exato que "
 "esse estereótipo quer capturar"
 
-#: src/ej_clusters/models.py:289 src/ej_conversations/models/vote.py:48
+#: src/ej_clusters/models.py:286 src/ej_clusters/routes.py:213
+#: src/ej_reports/routes.py:113
+msgid "Comment"
+msgstr "Comentário"
+
+#: src/ej_clusters/models.py:290 src/ej_conversations/models/vote.py:48
 msgid "Choice"
 msgstr "Escolha"
 
@@ -567,10 +572,6 @@ msgstr "Votos de estereótipo ({conversation})"
 #: src/ej_rocketchat/models.py:31
 msgid "Username"
 msgstr "Nome de usuário"
-
-#: src/ej_clusters/routes.py:213 src/ej_reports/routes.py:113
-msgid "Comment"
-msgstr "Comentário"
 
 #: src/ej_clusters/routes.py:213
 msgid "Options"

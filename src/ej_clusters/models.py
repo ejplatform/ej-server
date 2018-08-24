@@ -283,6 +283,7 @@ class StereotypeVote(models.Model):
     )
     comment = models.ForeignKey(
         'ej_conversations.Comment',
+        verbose_name=_('Comment'),
         related_name='stereotype_votes',
         on_delete=models.CASCADE,
     )
