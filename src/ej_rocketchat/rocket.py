@@ -2,7 +2,8 @@ import random
 import string
 from logging import getLogger
 
-from sidekick import lazy
+from sidekick import lazy, delegate_to
+
 from .exceptions import ApiError
 
 log = getLogger('ej')
@@ -30,6 +31,10 @@ class RCConfigWrapper:
     @property
     def has_config(self):
         return self.configs.default_config(raises=False) is not None
+
+    admin_username = delegate_to('config')
+    admin_id = delegate_to('config')
+    admin_token = delegate_to('config')
 
     def register(self, user, username):
         """
@@ -74,12 +79,24 @@ class RCConfigWrapper:
         if not account.is_active:
             return account
 
-        payload = {'username': account.username, 'password': account.password}
-        response = self.api_call('login', payload=payload, auth='admin')
-        log.info(f'{user} successfully logged in at Rocket.Chat')
+        response = self.password_login(account.username, account.password)
         account.auth_token = response['data']['authToken']
         account.save()
         return account
+
+    def password_login(self, username, password):
+        """
+        Login with explicit credentials.
+        """
+        payload = {'username': username, 'password': password}
+        try:
+            response = self.api_call('login', payload=payload, auth='admin')
+        except ApiError as exc:
+            if exc.response['error'].lower() == 'unauthorized':
+                raise PermissionError('invalid credentials')
+            raise
+        log.info(f'{username} successfully logged in at Rocket.Chat')
+        return response
 
     def logout(self, user):
         """

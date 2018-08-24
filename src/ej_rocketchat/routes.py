@@ -1,5 +1,6 @@
 from django.http import HttpResponse, JsonResponse, Http404
 from django.shortcuts import redirect
+from django.urls import reverse
 
 from boogie.router import Router
 from . import forms
@@ -18,7 +19,11 @@ def iframe(request):
     account = rocket.find_or_create_account(request.user)
     if account is None:
         return redirect('rocket:register')
-    rocket.login(request.user)
+    if request.user.is_superuser:
+        if request.GET.get('admin-login') != 'true':
+            return redirect('rocket:ask-admin-password')
+    else:
+        rocket.login(request.user)
     return {'rocketchat_url': rocket.url}
 
 
@@ -30,6 +35,20 @@ def register(request):
             return redirect('rocket:iframe')
     else:
         form = forms.CreateUsernameForm(user=request.user)
+    return {'form': form}
+
+
+@urlpatterns.route('ask-password/', decorators=[requires_rc_perm])
+def ask_admin_password(request):
+    if not request.user.is_superuser:
+        raise Http404
+    if request.method == 'POST':
+        form = forms.AskAdminPasswordForm(request.POST)
+        if form.is_valid():
+            url = reverse('rocket:iframe')
+            return redirect(f'{url}?admin-login=true')
+    else:
+        form = forms.AskAdminPasswordForm()
     return {'form': form}
 
 
@@ -68,5 +87,8 @@ def intro():
 def check_login(request):
     if not request.user.is_authenticated:
         return HttpResponse(status=401)
-    auth_token = rocket.login_token(request.user)
+    if request.user.is_superuser:
+        auth_token = rocket.admin_token
+    else:
+        auth_token = rocket.login_token(request.user)
     return JsonResponse({'loginToken': auth_token})
