@@ -12,35 +12,35 @@ def filter_by_name(querySet, filter):
         filteredCandidates = querySet.filter(name__contains=filter.upper())
         if(filteredCandidates):
             return filteredCandidates
-        return Candidate.objects.none()
+        return []
 
 def filter_by_party(querySet, filter):
     if(querySet):
         filteredCandidates = querySet.filter(party=filter.upper())
         if(filteredCandidates):
             return filteredCandidates
-        return Candidate.objects.none()
+        return []
 
 def filter_by_candidacy(querySet, filter):
     if(querySet):
         filteredCandidates = querySet.filter(candidacy=filter.upper())
         if(filteredCandidates):
             return filteredCandidates
-        return Candidate.objects.none()
+        return []
 
 def filter_by_uf(querySet, filter):
     if(querySet):
         filteredCandidates = querySet.filter(uf=filter.upper())
         if(filteredCandidates):
             return filteredCandidates
-        return Candidate.objects.none()
+        return []
 
 def filter_by_adhered(querySet, filter):
     if(querySet):
         filteredCandidates = querySet.filter(adhered_to_the_measures=filter.upper())
         if(filteredCandidates):
             return filteredCandidates
-        return Candidate.objects.none()
+        return []
 
 
 def filter_candidates(querySet, filters):
@@ -72,13 +72,20 @@ def valid_filters(filters):
 
 @rest_api.action('ej_users.User')
 def candidates(request, user):
-    limit = int(request.GET.get("limit"))
+    try:
+        limit = int(request.GET.get("limit"))
+    except:
+        limit = 10
     querySet = Candidate.objects.exclude(selectedcandidate__user_id=user.id)\
         .exclude(pressedcandidate__user_id=user.id)\
         .exclude(ignoredcandidate__user_id=user.id)
     filters = get_filters(request.GET)
     if (valid_filters(filters)):
-        return filter_candidates(querySet, filters).order_by("-id")[:limit]
+        result = filter_candidates(querySet, filters);
+        if (result):
+            return result.order_by("-id")[:limit]
+        else:
+            return []
     else:
         return querySet.order_by("-id")[:limit]
 
