@@ -8,7 +8,7 @@ ENVIRONMENT = sys.argv[2]
 
 def start():
     call("git fetch origin %s" % API_TAG, shell=True)
-    call("git reset --hard FETCH_HEAD", shell=True)
+    call("git checkout FETCH_HEAD", shell=True)
     call(["sed", "-i", "s#ENVIRONMENT = 'local'#ENVIRONMENT = '%s'#" % ENVIRONMENT,  "/ej-server/src/ej/settings/__init__.py"])
     call(["sed", "-i", "s#'MAILGUN_API_KEY': ''#'MAILGUN_API_KEY': 'd707cd161665327e0378975e37972307-770f03c4-814b27bd'#", "/ej-server/src/ej/settings/__init__.py"])
     call("pip install -r /ej-server/etc/requirements/production.txt", shell=True)
