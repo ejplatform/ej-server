@@ -144,6 +144,8 @@ class CreateUsernameForm(forms.ModelForm):
                 self.add_error('username', msg)
             else:
                 raise
+        else:
+            rocket.login(self.user)
 
 
 class AskAdminPasswordForm(forms.Form):
