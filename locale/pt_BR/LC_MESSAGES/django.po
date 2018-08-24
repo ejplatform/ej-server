@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-24 16:00+0000\n"
+"POT-Creation-Date: 2018-08-24 17:58+0000\n"
 "PO-Revision-Date: 2018-08-23 14:51-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: \n"
@@ -134,12 +134,12 @@ msgstr "Acesse o Painel CPA!"
 msgid "Go!"
 msgstr "Quero ir!\t\t"
 
-#: src/ej/settings/options.py:26
+#: src/ej/settings/options.py:27
 msgid "EJ Platform"
 msgstr "Plataforma EJ"
 
-#: src/ej/settings/options.py:27
-msgid "Ainda não faz parte do EJ?"
+#: src/ej/settings/options.py:28
+msgid "Not part of EJ yet?"
 msgstr ""
 
 #: src/ej/templates/django/account/account_inactive.html:5
@@ -546,6 +546,10 @@ msgstr ""
 "especificar uma história de referência, ou dar dicas do perfil exato que "
 "esse estereótipo quer capturar"
 
+#: src/ej_clusters/models.py:289 src/ej_conversations/models/vote.py:48
+msgid "Choice"
+msgstr "Escolha"
+
 #: src/ej_clusters/routes.py:58
 msgid "Force clusterization"
 msgstr "Forçar agrupamento"
@@ -827,10 +831,6 @@ msgid "Disagree"
 msgstr "Discorda"
 
 #: src/ej_conversations/models/vote.py:48
-msgid "Choice"
-msgstr "Escolha"
-
-#: src/ej_conversations/models/vote.py:48
 msgid "Agree, disagree or skip"
 msgstr "Concorda, discorda ou pula"
 
@@ -842,7 +842,7 @@ msgstr "Criado em"
 msgid "non-moderated comments cannot receive votes"
 msgstr "comentários não-moderados não podem receber votos"
 
-#: src/ej_conversations/routes/admin.py:37
+#: src/ej_conversations/routes/admin.py:112
 msgid "Board with this slug already exists!"
 msgstr ""
 
@@ -969,7 +969,7 @@ msgstr "Endereço"
 msgid "Advanced"
 msgstr "Avançado"
 
-#: src/ej_profiles/choices.py:7 src/ej_profiles/choices.py:17
+#: src/ej_profiles/choices.py:7 src/ej_profiles/choices.py:18
 #, fuzzy
 msgid "Not filled"
 msgstr "Não preenchido"
@@ -998,20 +998,20 @@ msgstr "Indígena"
 msgid "Do not know"
 msgstr "Não sei"
 
-#: src/ej_profiles/choices.py:14 src/ej_profiles/choices.py:21
+#: src/ej_profiles/choices.py:14 src/ej_profiles/choices.py:22
 #, fuzzy
 msgid "Not declared"
 msgstr "Não declarado"
 
-#: src/ej_profiles/choices.py:18
+#: src/ej_profiles/choices.py:19
 msgid "Female"
 msgstr "Feminino"
 
-#: src/ej_profiles/choices.py:19
+#: src/ej_profiles/choices.py:20
 msgid "Male"
 msgstr "Masculino"
 
-#: src/ej_profiles/choices.py:20
+#: src/ej_profiles/choices.py:21
 msgid "Other"
 msgstr "Outro"
 
@@ -1152,8 +1152,9 @@ msgstr ""
 msgid "Username for Rocket.Chat admin user."
 msgstr ""
 
-#: src/ej_rocketchat/forms.py:34 src/ej_rocketchat/models.py:47
-#: src/ej_users/forms.py:14 src/ej_users/forms.py:49
+#: src/ej_rocketchat/forms.py:34 src/ej_rocketchat/forms.py:154
+#: src/ej_rocketchat/models.py:47 src/ej_users/forms.py:14
+#: src/ej_users/forms.py:49
 msgid "Password"
 msgstr "Senha"
 
@@ -1170,6 +1171,15 @@ msgstr "Essa URL já existe."
 #, python-brace-format
 msgid "User with {email} e-mail already exists."
 msgstr ""
+
+#: src/ej_rocketchat/forms.py:155
+msgid "Password for the Rocket.Chat admin account"
+msgstr ""
+
+#: src/ej_rocketchat/forms.py:166
+#, fuzzy
+msgid "Invalid password"
+msgstr "Email ou senha inválidos"
 
 #: src/ej_rocketchat/models.py:34
 msgid ""
@@ -1229,37 +1239,47 @@ msgstr ""
 
 #: src/ej_rocketchat/models.py:115
 #, fuzzy
+msgid "Admin username"
+msgstr "Usuário administrativo"
+
+#: src/ej_rocketchat/models.py:119
+#, fuzzy
+msgid "Username for Rocket.Chat admin user"
+msgstr "Essa URL já existe."
+
+#: src/ej_rocketchat/models.py:123
+#, fuzzy
 msgid "Admin user id"
 msgstr "Usuário administrativo"
 
-#: src/ej_rocketchat/models.py:118
+#: src/ej_rocketchat/models.py:126
 msgid "Id string for the Rocket.Chat admin user."
 msgstr ""
 
-#: src/ej_rocketchat/models.py:122
+#: src/ej_rocketchat/models.py:130
 #, fuzzy
 msgid "Login token"
 msgstr "Entrar"
 
-#: src/ej_rocketchat/models.py:125
+#: src/ej_rocketchat/models.py:133
 msgid "Login token for the Rocket.Chat admin user."
 msgstr ""
 
-#: src/ej_rocketchat/models.py:129
+#: src/ej_rocketchat/models.py:137
 #, fuzzy
 msgid "Is active"
 msgstr "ativo"
 
-#: src/ej_rocketchat/models.py:132
+#: src/ej_rocketchat/models.py:140
 msgid "Set to false to temporarily disable RocketChat integration."
 msgstr ""
 
-#: src/ej_rocketchat/models.py:139
+#: src/ej_rocketchat/models.py:147
 #, fuzzy
 msgid "Rocket.Chat Configuration"
 msgstr "Integração com o rocketchat"
 
-#: src/ej_rocketchat/models.py:140
+#: src/ej_rocketchat/models.py:148
 #, fuzzy
 msgid "Rocket.Chat Configurations"
 msgstr "Integração com o rocketchat"
@@ -1296,15 +1316,15 @@ msgstr "endereço de email"
 msgid "Invalid email or password"
 msgstr "Email ou senha inválidos"
 
-#: src/ej/templates/jinja2/base.jinja2:82
+#: src/ej/templates/jinja2/base.jinja2:83
 msgid "EJ - A platform of social participation."
 msgstr "EJ - Uma plataforma para participação social."
 
-#: src/ej/templates/jinja2/base.jinja2:91
+#: src/ej/templates/jinja2/base.jinja2:92
 msgid "EJ - A platform of social participacion."
 msgstr "EJ - Uma plataforma para participação social."
 
-#: src/ej/templates/jinja2/base.jinja2:127
+#: src/ej/templates/jinja2/base.jinja2:130
 msgid "Please override the \"content\" block of your template!"
 msgstr "Por favor substitua o bloco \"content\" do seu template!"
 
@@ -1558,6 +1578,11 @@ msgstr ""
 msgid "Create"
 msgstr "Criar"
 
+#: src/ej_clusters/jinja2/ej_clusters/create-stereotype.jinja2:41
+#, fuzzy
+msgid "Add comment"
+msgstr "Adicionar mais comentários"
+
 #: src/ej_clusters/jinja2/ej_clusters/edit-stereotype.jinja2:5
 msgid "Edit Stereotype"
 msgstr "Editar estereótipo"
@@ -1767,33 +1792,23 @@ msgstr ""
 msgid "No comments left"
 msgstr "Não há mais comentários"
 
-#: src/ej_conversations/jinja2/ej_conversations/components/conversation-detail.jinja2:17
-msgid ""
-"Interact with opinions by selecting one of the options and enjoy to include "
-"your own opinion\n"
-"            in this conversation"
-msgstr ""
-"Interaja com as opiniões selecionando uma das opções de botão e aproveite "
-"para incluir sua própria opinião\n"
-"            nesta conversa"
-
-#: src/ej_conversations/jinja2/ej_conversations/components/conversation-detail.jinja2:25
+#: src/ej_conversations/jinja2/ej_conversations/components/conversation-detail.jinja2:21
 msgid "Congratulations!"
 msgstr "Parabéns!"
 
-#: src/ej_conversations/jinja2/ej_conversations/components/conversation-detail.jinja2:26
+#: src/ej_conversations/jinja2/ej_conversations/components/conversation-detail.jinja2:22
 msgid "There are no comments left to vote :)"
 msgstr "Não há comentários para votar :)"
 
-#: src/ej_conversations/jinja2/ej_conversations/components/conversation-detail.jinja2:34
+#: src/ej_conversations/jinja2/ej_conversations/components/conversation-detail.jinja2:30
 msgid "You still have {n} available comments"
 msgstr "Você ainda tem {n} comentários disponíveis"
 
-#: src/ej_conversations/jinja2/ej_conversations/components/conversation-detail.jinja2:36
+#: src/ej_conversations/jinja2/ej_conversations/components/conversation-detail.jinja2:32
 msgid "Go to {login} to vote on this conversation"
 msgstr "Vá até {login} para votar nesta conversa"
 
-#: src/ej_conversations/jinja2/ej_conversations/components/conversation-detail.jinja2:38
+#: src/ej_conversations/jinja2/ej_conversations/components/conversation-detail.jinja2:34
 msgid "You have used all comments available in this conversation."
 msgstr "Você utilizou todos comentários disponíveis nesta conversa."
 
@@ -1801,20 +1816,20 @@ msgstr "Você utilizou todos comentários disponíveis nesta conversa."
 msgid "Unvoted"
 msgstr "Voto cancelado"
 
-#: src/ej_conversations/jinja2/ej_conversations/components/conversation-list.jinja2:12
+#: src/ej_conversations/jinja2/ej_conversations/components/conversation-list.jinja2:11
 msgid "View all conversations"
 msgstr "Ver todas as conversas"
 
-#: src/ej_conversations/jinja2/ej_conversations/components/conversation-list.jinja2:14
+#: src/ej_conversations/jinja2/ej_conversations/components/conversation-list.jinja2:13
 #, fuzzy
 msgid "Participe das conversas e dê sua opinião com comentários e votos!"
 msgstr "Participe das conversas e dê sua opinião com comentários e votos!"
 
-#: src/ej_conversations/jinja2/ej_conversations/components/conversation-list.jinja2:52
+#: src/ej_conversations/jinja2/ej_conversations/components/conversation-list.jinja2:51
 msgid "public conversations"
 msgstr "conversas públicas"
 
-#: src/ej_conversations/jinja2/ej_conversations/components/conversation-list.jinja2:56
+#: src/ej_conversations/jinja2/ej_conversations/components/conversation-list.jinja2:55
 msgid "go to my conversations"
 msgstr "Suas conversas"
 
@@ -1911,16 +1926,27 @@ msgstr "Informação do grupo"
 msgid "{n} users"
 msgstr "{n} usuários"
 
-#: src/ej_rocketchat/jinja2/ej_rocketchat/config.jinja2:2
+#: src/ej_rocketchat/jinja2/ej_rocketchat/ask-admin-password.jinja2:2
 #, fuzzy
-msgid "Configure Rocket.Chat Integration"
-msgstr "Integração com o rocketchat"
+msgid "Panel: Admin password"
+msgstr "mudar a senha"
 
+#: src/ej_rocketchat/jinja2/ej_rocketchat/ask-admin-password.jinja2:3
+#, fuzzy
+msgid "Authentication"
+msgstr "Documentação"
+
+#: src/ej_rocketchat/jinja2/ej_rocketchat/ask-admin-password.jinja2:10
 #: src/ej_rocketchat/jinja2/ej_rocketchat/config.jinja2:9
 #: src/ej_rocketchat/jinja2/ej_rocketchat/register.jinja2:10
 #, fuzzy
 msgid "Send"
 msgstr "Remetende"
+
+#: src/ej_rocketchat/jinja2/ej_rocketchat/config.jinja2:2
+#, fuzzy
+msgid "Configure Rocket.Chat Integration"
+msgstr "Integração com o rocketchat"
 
 #: src/ej_rocketchat/jinja2/ej_rocketchat/register.jinja2:2
 msgid "Panel: Register username"
@@ -1975,6 +2001,15 @@ msgstr "Recuperar senha"
 #: src/ej_users/jinja2/ej_users/reset-password.jinja2:2
 msgid "Reset password"
 msgstr "Recriar minha senha"
+
+#~ msgid ""
+#~ "Interact with opinions by selecting one of the options and enjoy to "
+#~ "include your own opinion\n"
+#~ "            in this conversation"
+#~ msgstr ""
+#~ "Interaja com as opiniões selecionando uma das opções de botão e aproveite "
+#~ "para incluir sua própria opinião\n"
+#~ "            nesta conversa"
 
 #, fuzzy
 #~ msgid "User updated at"

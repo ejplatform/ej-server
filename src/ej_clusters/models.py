@@ -286,7 +286,7 @@ class StereotypeVote(models.Model):
         related_name='stereotype_votes',
         on_delete=models.CASCADE,
     )
-    choice = EnumField(Choice)
+    choice = EnumField(Choice, _('Choice'))
     stereotype = alias('author')
     objects = BoogieManager()
 
