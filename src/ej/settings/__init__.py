@@ -196,6 +196,7 @@ class Conf(ThemesConf,
         ALLOWED_HOSTS = ['app.unidoscontraacorrupcao.org.br',
                          'admin.besouro.ejplatform.org']
 
+        DATA_UPLOAD_MAX_NUMBER_FIELDS = 10000
         ACCOUNT_EMAIL_VERIFICATION = 'optional'
         EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend'
         ANYMAIL = {'MAILGUN_API_KEY': ''}
