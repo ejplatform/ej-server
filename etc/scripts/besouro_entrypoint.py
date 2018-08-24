@@ -14,8 +14,6 @@ def start():
     call("pip install -r /ej-server/etc/requirements/production.txt", shell=True)
     call("pip install invoke", shell=True)
     call("VOLATILE_DEPENDENCIES_STRATEGY=unknown pip install -r /ej-server/etc/requirements/git-modules.txt", shell=True)
-    call("./manage.py makemigrations --merge --noinput", shell=True)
-    call("./manage.py makemigrations", shell=True)
     call("./manage.py migrate --noinput", shell=True)
     call("./manage.py collectstatic --noinput", shell=True)
     call("inv gunicorn", shell=True)
