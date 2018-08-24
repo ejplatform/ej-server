@@ -67,6 +67,7 @@ class RCConfigWrapper:
             password=password,
             user_rc_id=result['user']['_id'],
             is_active=True,
+            account_data=result,
         )
 
     def login(self, user):

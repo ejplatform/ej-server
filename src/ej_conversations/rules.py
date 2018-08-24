@@ -170,6 +170,6 @@ def can_promote_conversation(user):
     to the promoted conversations.
     """
     return (
-        user.is_superuser or
-        user.has_perm('ej_conversations.can_publish')
+        user.is_superuser
+        or user.has_perm('ej_conversations.can_publish')
     )

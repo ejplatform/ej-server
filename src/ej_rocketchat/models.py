@@ -7,6 +7,7 @@ from django.core.validators import RegexValidator
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
+from ej.utils import JSONField
 from .exceptions import ApiError
 from .manager import RCConfigManager
 
@@ -57,6 +58,11 @@ class RCAccount(models.Model):
         _('Rocketchat user token'),
         max_length=50,
         blank=True,
+    )
+    account_data = JSONField(
+        _('Account data'),
+        null=True, blank=True,
+        help_text=_('JSON-encoded data for user account.')
     )
     is_active = models.BooleanField(
         _('Is user active?'),

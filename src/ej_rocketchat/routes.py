@@ -5,7 +5,7 @@ from django.urls import reverse
 from boogie.router import Router
 from . import forms
 from .decorators import security_policy, requires_rc_perm
-from .models import RCConfig
+from .models import RCConfig, RCAccount
 from .rocket import rocket
 
 app_name = 'ej_rocketchat'
@@ -29,6 +29,8 @@ def iframe(request):
 
 @urlpatterns.route('register/', decorators=[requires_rc_perm])
 def register(request):
+    if RCAccount.objects.filter(user=request.user).exists():
+        return redirect('rocket:iframe')
     if request.method == 'POST':
         form = forms.CreateUsernameForm(request.POST, user=request.user)
         if form.is_valid():

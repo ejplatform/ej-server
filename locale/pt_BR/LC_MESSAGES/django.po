@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-08-24 18:15+0000\n"
-"PO-Revision-Date: 2018-08-23 14:51-0300\n"
+"PO-Revision-Date: 2018-08-24 18:16-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: \n"
 "Language: pt_BR\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "Generated-By: Babel 2.5.3\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 2.1.1\n"
 
 #: local/vendor/django-boogie/src/boogie/apps/users/models.py:23
 #: local/vendor/django-boogie/src/boogie/models/abstract/user.py:64
@@ -1151,7 +1151,7 @@ msgstr ""
 
 #: src/ej_rocketchat/forms.py:29
 msgid "Username for Rocket.Chat admin user."
-msgstr ""
+msgstr "Nome de usuário do administrador do Rocket.Chat."
 
 #: src/ej_rocketchat/forms.py:34 src/ej_rocketchat/forms.py:154
 #: src/ej_rocketchat/models.py:47 src/ej_users/forms.py:14
@@ -1164,9 +1164,8 @@ msgid "Password for Rocket.Chat admin user."
 msgstr ""
 
 #: src/ej_rocketchat/forms.py:140
-#, fuzzy
 msgid "Username already in use."
-msgstr "Essa URL já existe."
+msgstr "Nome de usuário já existe."
 
 #: src/ej_rocketchat/forms.py:143
 #, python-brace-format
@@ -1239,19 +1238,16 @@ msgid ""
 msgstr ""
 
 #: src/ej_rocketchat/models.py:115
-#, fuzzy
 msgid "Admin username"
-msgstr "Usuário administrativo"
+msgstr "Nome de usuário administrativo"
 
 #: src/ej_rocketchat/models.py:119
-#, fuzzy
 msgid "Username for Rocket.Chat admin user"
-msgstr "Essa URL já existe."
+msgstr "Nome de usuário do administrador do Rocket.Chat"
 
 #: src/ej_rocketchat/models.py:123
-#, fuzzy
 msgid "Admin user id"
-msgstr "Usuário administrativo"
+msgstr "Id do usuário administrativo"
 
 #: src/ej_rocketchat/models.py:126
 msgid "Id string for the Rocket.Chat admin user."
@@ -1933,16 +1929,14 @@ msgid "Panel: Admin password"
 msgstr "mudar a senha"
 
 #: src/ej_rocketchat/jinja2/ej_rocketchat/ask-admin-password.jinja2:3
-#, fuzzy
 msgid "Authentication"
-msgstr "Documentação"
+msgstr "Autenticação"
 
 #: src/ej_rocketchat/jinja2/ej_rocketchat/ask-admin-password.jinja2:10
 #: src/ej_rocketchat/jinja2/ej_rocketchat/config.jinja2:9
 #: src/ej_rocketchat/jinja2/ej_rocketchat/register.jinja2:10
-#, fuzzy
 msgid "Send"
-msgstr "Remetende"
+msgstr "Enviar"
 
 #: src/ej_rocketchat/jinja2/ej_rocketchat/config.jinja2:2
 #, fuzzy

@@ -72,7 +72,6 @@ class RocketIntegrationForm(forms.Form):
             self._save_admin_account(self.config)
             return config
         else:
-            print(response)
             raise ValueError(response)
 
     def _save_config(self, data):
