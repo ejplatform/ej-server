@@ -8,7 +8,7 @@ class CandidatesImporter():
     @staticmethod
     def import_candidates():
         with open(CSV_PATH, newline='') as csvfile:
-            spamreader = csv.reader(csvfile, delimiter='|', quotechar='&')
+            spamreader = csv.reader(csvfile, delimiter='|', quotechar='"')
             for row in spamreader:
                 CandidatesImporter.create_candidate_from_row(row)
 
