@@ -8,7 +8,8 @@ from boogie.rest import rest_api
 @rest_api(
     ['id', 'name', 'candidacy', 'urn', 'party', 'image',
      'has_clean_pass', 'committed_to_democracy', 'uf',
-     'adhered_to_the_measures', 'site_url', 'youtube_url', 'facebook_url',
+     'full_name', 'occupation', 'justify_adhered_to_the_measures', 'lawsuits',
+     'riches', 'adhered_to_the_measures', 'site_url', 'youtube_url', 'facebook_url',
      'crowdfunding_url', 'twitter_url', 'instagram_url']
 )
 class Candidate(models.Model):

@@ -37,6 +37,7 @@ class CandidatesImporter():
                                   has_clean_pass=has_clean_pass,
                                   riches=riches,
                                   lawsuits=lawsuits,
+                                  occupation=occupation,
                                   committed_to_democracy=committed_to_democracy,
                                   adhered_to_the_measures=adhered_to_the_measures,
                                   public_email=public_email)
