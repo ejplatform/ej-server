@@ -15,30 +15,13 @@ def create(request):
     if request.method == 'POST':
         form = form_class(request.POST)
 
-        title = form.data['newboard']
-        data = {'title': title, 'description': '', 'slug': slugify(title)}
-        board_form = BoardForm(data)
-
         if form.is_valid():
-
             conversation = form.save(commit=False)
             conversation.author = request.user
-            if 'board' in form.data:
-                board = Board.objects.get(pk=int(form.data['board']))
+            board = get_board_in_form(form, request)
+            conversation.save()
+            if board:
                 BoardSubscription.objects.create(conversation=conversation, board=board)
-
-            if board_form.is_valid():
-                board = board_form.save(commit=False)
-                board.owner = request.user
-                board.save()
-                conversation.save()
-                BoardSubscription.objects.create(conversation=conversation, board=board)
-            else:
-                form.add_error('title', _('Board with this slug already exists!'))
-                return {
-                    'form': form,
-                    'boards': request.user.boards.all(),
-                }
 
             for tag in form.cleaned_data['tags']:
                 conversation.tags.add(tag)
@@ -114,3 +97,30 @@ def moderate(request, conversation):
         'conversation': conversation,
         'comments': comments,
     }
+
+
+def get_board_in_form(form, request):
+    if 'board' in form.data:
+        board = Board.objects.get(pk=int(form.data['board']))
+    elif 'newboard' in form.data:
+        board_form = create_board_form(form)
+        if board_form.is_valid():
+            board = board_form.save(commit=False)
+            board.owner = request.user
+            board.save()
+        else:
+            form.add_error('title', _('Board with this slug already exists!'))
+            return {
+                'form': form,
+                'boards': request.user.boards.all(),
+            }
+    else:
+        board = None
+    return board
+
+
+def create_board_form(form):
+    title = form.data['newboard']
+    data = {'title': title, 'description': '', 'slug': slugify(title)}
+    board_form = BoardForm(data)
+    return board_form
