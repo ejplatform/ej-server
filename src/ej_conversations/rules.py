@@ -105,7 +105,7 @@ def can_vote(user, conversation):
         return False
     return bool(
         conversation.approved_comments
-            .exclude(votes__author_id=user.id)
+        .exclude(votes__author_id=user.id)
     )
 
 

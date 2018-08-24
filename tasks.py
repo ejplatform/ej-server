@@ -433,6 +433,8 @@ def test(ctx):
     """
     Run all unittests.
     """
+    if not os.environ.get('EJ_BASE_URL'):
+        os.environ['EJ_BASE_URL'] = 'localhost'
     ctx.run('pytest')
 
 
