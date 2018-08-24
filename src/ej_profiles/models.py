@@ -23,10 +23,10 @@ class Profile(models.Model):
     User profile
     """
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='raw_profile')
-    race = EnumField(Race, _('Race'), default=Race.UNDECLARED)
+    race = EnumField(Race, _('Race'), default=Race.UNFILLED)
     ethnicity = models.CharField(_('Ethnicity'), blank=True, max_length=50)
     education = models.CharField(_('Education'), blank=True, max_length=140)
-    gender = EnumField(Gender, _('Gender identity'), default=Gender.UNDECLARED)
+    gender = EnumField(Gender, _('Gender identity'), default=Gender.UNFILLED)
     gender_other = models.CharField(_('User provided gender'), max_length=50, blank=True)
     age = models.IntegerField(_('Age'), null=True, blank=True)
     birth_date = models.DateField(_('Birth Date'), null=True, blank=True)

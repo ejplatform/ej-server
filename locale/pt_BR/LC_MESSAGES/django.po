@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-23 17:50+0000\n"
+"POT-Creation-Date: 2018-08-24 16:00+0000\n"
 "PO-Revision-Date: 2018-08-23 14:51-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: \n"
@@ -121,53 +121,6 @@ msgstr "usuário"
 #, python-format
 msgid "No %(verbose_name)s found matching the query"
 msgstr "Nenhum nome %(verbose_name)s encontrado"
-
-#: local/vendor/django-messages-courier/courier/emails/providers/onesignal/models.py:15
-msgid "Player ID"
-msgstr ""
-
-#: local/vendor/django-messages-courier/courier/emails/providers/onesignal/models.py:18
-#, fuzzy
-msgid "User updated at"
-msgstr "Atualizado em"
-
-#: local/vendor/django-messages-courier/courier/models.py:11
-#, fuzzy
-msgid "Sender"
-msgstr "Remetende"
-
-#: local/vendor/django-messages-courier/courier/models.py:12
-#: src/ej_boards/models.py:28 src/ej_conversations/models/conversation.py:65
-msgid "Title"
-msgstr "Título"
-
-#: local/vendor/django-messages-courier/courier/models.py:14
-msgid "Short Description"
-msgstr "Descrição curta"
-
-#: local/vendor/django-messages-courier/courier/models.py:29
-msgid "Waiting"
-msgstr "Esperando"
-
-#: local/vendor/django-messages-courier/courier/models.py:30
-msgid "Read"
-msgstr "Lido"
-
-#: local/vendor/django-messages-courier/courier/models.py:31
-msgid "Seen"
-msgstr "Visto"
-
-#: local/vendor/django-messages-courier/courier/models.py:32
-msgid "Unseen"
-msgstr "Não Visto"
-
-#: local/vendor/django-messages-courier/courier/models.py:46
-msgid "Status"
-msgstr "Status"
-
-#: local/vendor/django-messages-courier/courier/pushnotifications/providers/onesignal/models.py:15
-msgid "OneSignal Id"
-msgstr "Id OneSignal"
 
 #: src/ej/components/tags.py:11
 msgid "hello"
@@ -522,6 +475,10 @@ msgstr "Quadros"
 #: src/ej_boards/models.py:15
 msgid "Slug"
 msgstr "Identificador"
+
+#: src/ej_boards/models.py:28 src/ej_conversations/models/conversation.py:65
+msgid "Title"
+msgstr "Título"
 
 #: src/ej_boards/models.py:32 src/ej_clusters/models.py:127
 #: src/ej_clusters/models.py:194
@@ -885,6 +842,10 @@ msgstr "Criado em"
 msgid "non-moderated comments cannot receive votes"
 msgstr "comentários não-moderados não podem receber votos"
 
+#: src/ej_conversations/routes/admin.py:37
+msgid "Board with this slug already exists!"
+msgstr ""
+
 #: src/ej_conversations/routes/comments.py:13
 msgid "List conversations"
 msgstr "Listar conversas"
@@ -1010,8 +971,8 @@ msgstr "Avançado"
 
 #: src/ej_profiles/choices.py:7 src/ej_profiles/choices.py:17
 #, fuzzy
-msgid "Not declared"
-msgstr "Não declarado"
+msgid "Not filled"
+msgstr "Não preenchido"
 
 #: src/ej_profiles/choices.py:8
 msgid "Black"
@@ -1036,6 +997,11 @@ msgstr "Indígena"
 #: src/ej_profiles/choices.py:13
 msgid "Do not know"
 msgstr "Não sei"
+
+#: src/ej_profiles/choices.py:14 src/ej_profiles/choices.py:21
+#, fuzzy
+msgid "Not declared"
+msgstr "Não declarado"
 
 #: src/ej_profiles/choices.py:18
 msgid "Female"
@@ -2009,6 +1975,35 @@ msgstr "Recuperar senha"
 #: src/ej_users/jinja2/ej_users/reset-password.jinja2:2
 msgid "Reset password"
 msgstr "Recriar minha senha"
+
+#, fuzzy
+#~ msgid "User updated at"
+#~ msgstr "Atualizado em"
+
+#, fuzzy
+#~ msgid "Sender"
+#~ msgstr "Remetende"
+
+#~ msgid "Short Description"
+#~ msgstr "Descrição curta"
+
+#~ msgid "Waiting"
+#~ msgstr "Esperando"
+
+#~ msgid "Read"
+#~ msgstr "Lido"
+
+#~ msgid "Seen"
+#~ msgstr "Visto"
+
+#~ msgid "Unseen"
+#~ msgstr "Não Visto"
+
+#~ msgid "Status"
+#~ msgstr "Status"
+
+#~ msgid "OneSignal Id"
+#~ msgstr "Id OneSignal"
 
 #~ msgid "s comments"
 #~ msgstr " comentários"

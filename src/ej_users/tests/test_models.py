@@ -16,8 +16,8 @@ class TestUserManager:
 
     def test_user_profile_default_values(self, db):
         user = User.objects.create_user('email@at.com', 'pass')
-        assert user.profile.gender == Gender.UNDECLARED
-        assert user.profile.race == Race.UNDECLARED
+        assert user.profile.gender == Gender.UNFILLED
+        assert user.profile.race == Race.UNFILLED
         assert user.profile.age is None
         assert user.profile.gender_other == ''
         assert user.profile.country == ''
