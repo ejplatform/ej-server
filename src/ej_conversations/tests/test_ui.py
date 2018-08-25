@@ -1,6 +1,5 @@
-from selenium.common.exceptions import WebDriverException
 from selenium.webdriver.common.keys import Keys
-from selenium import webdriver
+from splinter import Browser
 import pytest
 import os
 
@@ -8,7 +7,7 @@ from ej_conversations import create_conversation
 from ej_users.models import User
 
 
-@pytest.fixture()
+@pytest.fixture
 def user(db):
     user = User.objects.create_user('email@server.com', 'password')
     create_conversation(text='test', title='title', author=user,
@@ -16,19 +15,12 @@ def user(db):
     return user
 
 
-@pytest.fixture(scope='module')
-def driver(request):
-    # create the fake browser
-    chrome_options = webdriver.ChromeOptions()
-    chrome_options.add_argument('--headless')
-    try:
-        wd = webdriver.Chrome(options=chrome_options)
-    except WebDriverException:
-        raise AssertionError('Binário do Chrome não encontrado no PATH.')
-    # wait up to 10 seconds for the elements to become available
-    wd.implicitly_wait(10)
-    yield wd
-    wd.quit()
+@pytest.fixture
+def driver():
+    # create fake browser
+    window = Browser('chrome', headless=True)
+    yield window
+    window.quit()
 
 
 class TestUIVote:
@@ -39,20 +31,14 @@ class TestUIVote:
                         reason="selenium tests only run in localhost yet")
     def test_user_vote_after_login(self, live_server, driver, user):
         # list conversations and click on the first
-        driver.get(f'{live_server.url}/conversations/')
-        xpath_conv = '//a[contains(text(), "test")]'
-        driver.find_element_by_xpath(xpath_conv).click()
-        xpath_login = '//a[contains(text(), "login")]'
-        driver.find_element_by_xpath(xpath_login).click()
-        assert driver.current_url == f'{live_server.url}/login/'
+        driver.visit(f'{live_server.url}/conversations/')
+        driver.find_by_text('test').click()
+        driver.find_by_text('login').click()
+        assert driver.url == f'{live_server.url}/login/'
 
         # login with user created
-        email = driver.find_element_by_css_selector('input[name=email]')
-        pw = driver.find_element_by_css_selector('input[name=password]')
-        login = driver.find_element_by_css_selector('input[name=login]')
+        driver.find_by_name('email').fill('email@server.com')
+        driver.find_by_name('password').fill('password')
+        driver.find_by_name('login')._element.send_keys(Keys.SPACE)
 
-        email.send_keys('email@server.com')
-        pw.send_keys('password')
-        login.send_keys(Keys.ENTER)
-
-        assert driver.current_url == f'{live_server.url}/conversations/'
+        assert driver.url == f'{live_server.url}/conversations/'

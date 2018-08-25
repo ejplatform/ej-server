@@ -12,7 +12,7 @@ coverage ~= 4.4.1
 factory-boy ~= 2.9.2
 model_mommy ~= 1.5.1
 mock ~= 2.0.0
-selenium ~= 3.14.0
+splinter ~= 0.8.0
 
 # Static analysis
 flake8 ~= 3.5.0
