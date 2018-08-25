@@ -93,6 +93,7 @@ class RCConfigWrapper:
         try:
             response = self.api_call('login', payload=payload, auth='admin')
         except ApiError as exc:
+            print(exc, payload)
             if exc.response['error'].lower() == 'unauthorized':
                 raise PermissionError('invalid credentials')
             raise
