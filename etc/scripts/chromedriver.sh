@@ -13,5 +13,5 @@ elif [ "$(expr substr $(uname -s) 1 10)" == "MINGW32_NT" ]; then
 fi
 VERSION=$(curl http://chromedriver.storage.googleapis.com/LATEST_RELEASE)
 curl http://chromedriver.storage.googleapis.com/$VERSION/chromedriver_$PLATFORM.zip \
-| bsdtar -xvf - -C ${VIRTUAL_ENV}/bin/
-chmod +x $VENV/bin/chromedriver
+    | bsdtar -xvf - -C ${VIRTUAL_ENV}/bin/
+chmod +x ${VIRTUAL_ENV}/bin/chromedriver
