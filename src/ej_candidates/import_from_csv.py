@@ -66,4 +66,4 @@ class CandidatesImporter():
         except Exception as e:
             print(e)
             print('could not import candidate photo')
-            return ''
+            return 'card_avatar-default.png'
