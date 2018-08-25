@@ -20,7 +20,9 @@ def create(request):
             conversation.author = request.user
             board = get_board_in_form(form, request)
             conversation.save()
-            if board:
+            if 'form' in board:
+                return board
+            elif board:
                 BoardSubscription.objects.create(conversation=conversation, board=board)
 
             for tag in form.cleaned_data['tags']:
