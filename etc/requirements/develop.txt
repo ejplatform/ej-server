@@ -26,4 +26,3 @@ Werkzeug  ~= 0.12
 
 # Tranlations
 Babel ~= 2.6.0
-
