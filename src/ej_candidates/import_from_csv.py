@@ -1,13 +1,17 @@
 import csv
+from django.core.files.base import ContentFile
+
 from .models import Candidate
 
 
-CSV_PATH = '/tmp/candidatos.csv'
+CSV_FILE_PATH = '/tmp/candidatos.csv'
+PHOTOS_PATH = '/tmp/fotos_candidatos/'
+
 class CandidatesImporter():
 
     @staticmethod
     def import_candidates():
-        with open(CSV_PATH, newline='') as csvfile:
+        with open(CSV_FILE_PATH, newline='') as csvfile:
             spamreader = csv.reader(csvfile, delimiter='|', quotechar='"')
             for row in spamreader:
                 CandidatesImporter.create_candidate_from_row(row)
@@ -41,9 +45,25 @@ class CandidatesImporter():
                                   committed_to_democracy=committed_to_democracy,
                                   adhered_to_the_measures=adhered_to_the_measures,
                                   public_email=public_email)
+            cpf = row[5]
+            candidate.image.name = CandidatesImporter\
+                .set_candidate_photo(candidate, cpf)
             candidate.save()
             print("imported candidate: ", name)
         except Exception as e:
             print(e)
             print("could not import candidate")
 
+    @staticmethod
+    def set_candidate_photo(candidate, cpf):
+        photo_name = cpf + '.jpg'
+        _storage = candidate.image.storage
+        try:
+            with open(PHOTOS_PATH + photo_name, 'rb') as f:
+                photo = f.read()
+                _storage.save(photo_name, ContentFile(photo))
+                return photo_name
+        except Exception as e:
+            print(e)
+            print('could not import candidate photo')
+            return ''
