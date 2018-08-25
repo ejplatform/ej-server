@@ -24,11 +24,11 @@ class RocketIntegrationForm(forms.Form):
         help_text=_('Required URL for Rocket.Chat admin instance.'),
         initial=settings.EJ_ROCKETCHAT_URL,
     )
-    admin_username = forms.CharField(
+    username = forms.CharField(
         label=_('Username'),
         help_text=_('Username for Rocket.Chat admin user.')
     )
-    admin_password = forms.CharField(
+    password = forms.CharField(
         widget=forms.PasswordInput,
         required=False,
         label=_('Password'),
@@ -62,18 +62,16 @@ class RocketIntegrationForm(forms.Form):
         response = config.api_call(
             'login',
             payload={
-                'username': data['admin_username'],
-                'password': data['admin_password'],
+                'username': data['username'],
+                'password': data['password'],
             },
             raises=False,
         )
         if response.get('status') == 'success':
             self.config = self._save_config(response['data'])
-            self._save_admin_account(self.config)
             return config
         else:
-            print(response)
-            raise ValueError(response)
+            self.add_error("username", _('Invalid username or password'))
 
     def _save_config(self, data):
         url = self.cleaned_data['rocketchat_url']
@@ -84,32 +82,10 @@ class RocketIntegrationForm(forms.Form):
         config, _ = models.RCConfig.objects.get_or_create(url=url)
         config.admin_id = user_id
         config.admin_token = auth_token
+        config.admin_username = self.cleaned_data['username']
         config.is_active = True
         config.save()
         return config
-
-    def _save_admin_account(self, config):
-        response = config.api_call(
-            'users.info',
-            args={'userId': config.admin_id},
-            auth='admin',
-            method='get',
-        )
-        emails = [mail['address'] for mail in response['emails']]
-        for email in emails:
-            try:
-                user = User.objects.get(email=email)
-            except User.DoesNotExist:
-                continue
-
-            return models.RCAccount.objects.create(
-                config=config,
-                user=user,
-                user_rc_id=config.admin_id,
-                auth_token=config.admin_token,
-                username=self.cleaned_data['admin_username'],
-                password='',
-            )
 
 
 class CreateUsernameForm(forms.ModelForm):
@@ -144,6 +120,8 @@ class CreateUsernameForm(forms.ModelForm):
                 self.add_error('username', msg)
             else:
                 raise
+        else:
+            rocket.login(self.user)
 
 
 class AskAdminPasswordForm(forms.Form):
@@ -162,5 +140,5 @@ class AskAdminPasswordForm(forms.Form):
             password = self.cleaned_data['password']
             try:
                 rocket.password_login(rocket.admin_username, password)
-            except PermissionError:
+            except PermissionError as exc:
                 self.add_error('password', _('Invalid password'))

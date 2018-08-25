@@ -1,6 +1,7 @@
+from constance import config
+
 from boogie import rules
 from .models import Board
-from constance import config
 
 
 @rules.register_rule('ej_boards.has_board')
@@ -21,8 +22,8 @@ def can_add_board(user):
     django admin permission and the max board number.
     """
     return (
-        user.has_perm('ej_boards.add_board') or
-        Board.objects.filter(owner=user).count() < config.EJ_MAX_BOARD_NUMBER
+        user.has_perm('ej_boards.add_board')
+        or Board.objects.filter(owner=user).count() < config.EJ_MAX_BOARD_NUMBER
     )
 
 

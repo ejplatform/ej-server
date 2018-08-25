@@ -45,10 +45,10 @@ $social-buttons-icon-size: 15px;
 
 //Header
 $header-background-color: #30BEC0;
-$header-logo-size: 74px;
+$header-logo-size: 60px;
 $header-icon-size: 40px;
 $header-font-color: white;
-$header-top-nav-height: $header-logo-size+7px; //$spacing-unit-tiny;
+$header-top-nav-height: $header-logo-size + 21px; //$spacing-unit-tiny * 3;
 $header-bottom-nav-height: $header-icon-size+20px;
 
 // Home Banner

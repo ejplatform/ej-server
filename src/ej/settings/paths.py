@@ -22,6 +22,7 @@ class PathsConf(Base):
 
     # Frontend paths
     LIB_DIR = REPO_DIR / 'lib'
+    LIB_BUILD = LIB_DIR / 'build'
     THEMES_DIR = LIB_DIR / 'themes'
 
     def finalize(self, settings):
@@ -29,7 +30,8 @@ class PathsConf(Base):
         Create missing paths.
         """
         for path in [self.LOCAL_DIR, self.DB_DIR, self.MEDIA_ROOT,
-                     self.STATIC_ROOT, self.LOG_DIR]:
+                     self.STATIC_ROOT, self.LOG_DIR, self.LIB_DIR,
+                     self.LIB_BUILD]:
             if not os.path.exists(path):
                 mkdir_recursive(path)
 

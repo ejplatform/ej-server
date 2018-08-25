@@ -5,7 +5,7 @@ from django.urls import reverse
 from boogie.router import Router
 from . import forms
 from .decorators import security_policy, requires_rc_perm
-from .models import RCConfig
+from .models import RCConfig, RCAccount
 from .rocket import rocket
 
 app_name = 'ej_rocketchat'
@@ -16,19 +16,20 @@ urlpatterns = Router(
 
 @urlpatterns.route('', decorators=[requires_rc_perm])
 def iframe(request):
-    account = rocket.find_or_create_account(request.user)
-    if account is None:
-        return redirect('rocket:register')
     if request.user.is_superuser:
         if request.GET.get('admin-login') != 'true':
             return redirect('rocket:ask-admin-password')
     else:
-        rocket.login(request.user)
+        account = rocket.find_or_create_account(request.user)
+        if account is None:
+            return redirect('rocket:register')
     return {'rocketchat_url': rocket.url}
 
 
 @urlpatterns.route('register/', decorators=[requires_rc_perm])
 def register(request):
+    if RCAccount.objects.filter(user=request.user).exists():
+        return redirect('rocket:iframe')
     if request.method == 'POST':
         form = forms.CreateUsernameForm(request.POST, user=request.user)
         if form.is_valid():
@@ -57,21 +58,21 @@ def config(request):
     if not request.user.is_superuser:
         raise Http404
 
-    config_data = RCConfig.objects.default_config(raises=False)
-    if config_data:
-        config_data = {
-            'rocketchat_url': config_data.url,
-            'admin_username': 'admin',
-            'admin_password': '',
-        }
+    config = RCConfig.objects.default_config(raises=False)
+    form_kwargs = {}
+    if config:
+        form_kwargs['data'] = {'rocketchat_url': config.url}
 
     if request.method == 'POST':
         form = forms.RocketIntegrationForm(request.POST)
         if form.is_valid():
-            form.get_config()
-            return redirect('/')
+            password = form.cleaned_data['password']
+            username = form.cleaned_data['username']
+            rocket.password_login(username, password)
+            url = reverse('rocket:iframe')
+            return redirect(f'{url}??admin-login=true')
     else:
-        form = forms.RocketIntegrationForm(config_data)
+        form = forms.RocketIntegrationForm(**form_kwargs)
     return {'form': form}
 
 

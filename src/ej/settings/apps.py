@@ -21,11 +21,6 @@ class InstalledAppsConf(Base, EjOptions):
     ]
 
     third_party_apps = [
-        # External apps created by the EJ team
-        # 'courier',
-        # 'courier.pushnotifications',
-        # 'courier.pushnotifications.providers.onesignal',
-
         # Third party apps
         'taggit',
         'rules',
@@ -43,9 +38,6 @@ class InstalledAppsConf(Base, EjOptions):
         'rest_auth',
         'rest_auth.registration',
         'corsheaders',
-        'actstream',
-        'pinax.points',
-        'pinax.badges',
         'constance',
         'constance.backends.database',
     ]

@@ -67,6 +67,7 @@ class RCConfigWrapper:
             password=password,
             user_rc_id=result['user']['_id'],
             is_active=True,
+            account_data=result,
         )
 
     def login(self, user):
@@ -92,6 +93,7 @@ class RCConfigWrapper:
         try:
             response = self.api_call('login', payload=payload, auth='admin')
         except ApiError as exc:
+            print(exc, payload)
             if exc.response['error'].lower() == 'unauthorized':
                 raise PermissionError('invalid credentials')
             raise
