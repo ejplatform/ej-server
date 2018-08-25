@@ -70,7 +70,7 @@
           <div class="ConversationField" id="ConversationField-board" style="display: none;">
             <i class="fa fa-list-ul"></i>
             <select name="board" onchange="createNewBoard()">
-              <option disabled selected value>{{ _('Conversation list aka board') }}</option>
+              <option disabled selected value>{{ _('Conversation board') }}</option>
               {% for board in boards %}
               <option value="{{ board.id }}">{{ board.title }}</option>
               {% endfor %}
