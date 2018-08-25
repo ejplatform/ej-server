@@ -31,8 +31,8 @@ class HasLinksSerializer(serializers.HyperlinkedModelSerializer):
         url_name = self.get_detail_url_name()
         lookup_field = (
             getattr(self.Meta, 'extra_kwargs', {})
-                .get('url', {})
-                .get('lookup_field', 'pk')
+            .get('url', {})
+            .get('lookup_field', 'pk')
         )
         lookup_value = getattr(obj, lookup_field)
         return reverse(url_name, kwargs={lookup_field: lookup_value})
