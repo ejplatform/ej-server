@@ -325,7 +325,8 @@ $profile-arrow-size: $spacing-unit !default;
 
             &:first-child {
                 min-width: fit-content;
-                border-radius: $spacing-unit 0 0 $spacing-unit;
+                border-bottom-left-radius: inherit;
+                border-top-left-radius: inherit;
                 background-color: $profile-file-input-color;
             }
             &:nth-child(2) {
