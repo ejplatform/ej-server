@@ -1,4 +1,5 @@
 import json
+from json import JSONDecodeError
 
 import requests
 from django.conf import settings
@@ -208,29 +209,20 @@ class RCConfig(models.Model):
 
         # Makes API request
         response = method(url, headers=headers, **kwargs)
-        result = json.loads(response.content, encoding='utf-8')
+        try:
+            result = json.loads(response.content, encoding='utf-8')
+        except (ConnectionError, JSONDecodeError) as exc:
+            msg = {
+                'status': 'error',
+                'message': str(exc),
+                'error': type(exc).__name__,
+            }
+            if raises:
+                raise ApiError(msg)
+            return msg
         if response.status_code != 200 and raises:
             error = {'code': response.status_code, 'response': result}
             raise ApiError(error)
-        return result
-
-    def user_info(self, user):
-        """
-        Fetches Rocketchat user information.
-
-        Args:
-            user: Django user.
-
-        See also:
-            https://rocket.chat/docs/developer-guides/rest-api/miscellaneous/info/
-        """
-        payload = {'username': self.username}
-        result = self.api_call('users.info', auth='admin', payload=payload)
-
-        if result.get('status') == 'error':
-            raise PermissionError(result)
-        elif result.get('errorType') == 'error-invalid-user':
-            raise ValueError('invalid username')
         return result
 
 

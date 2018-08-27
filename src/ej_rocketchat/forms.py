@@ -70,8 +70,10 @@ class RocketIntegrationForm(forms.Form):
         if response.get('status') == 'success':
             self.config = self._save_config(response['data'])
             return config
+        elif response.get('error') in ('JSONDecodeError', 'ConnectionError'):
+            self.add_error('rocketchat_url', _('Error connecting to server'))
         else:
-            self.add_error("username", _('Invalid username or password'))
+            self.add_error('username', _('Invalid username or password'))
 
     def _save_config(self, data):
         url = self.cleaned_data['rocketchat_url']
