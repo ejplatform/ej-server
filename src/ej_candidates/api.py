@@ -20,7 +20,10 @@ def candidates(request, user):
         else:
             return []
     else:
-        return querySet.order_by("-id")[:limit]
+        # order_by('?') randomize the querySet result.
+        # This is not the best aproach, but
+        # 9000 candidates are few data to retrieve.
+        return querySet.order_by('?')[:limit]
 
 @rest_api.action('ej_users.User')
 def selected_candidates(request, user):
