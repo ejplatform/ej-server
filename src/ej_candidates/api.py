@@ -39,6 +39,11 @@ def selected_candidates(request, user):
     else:
         return querySet.order_by("-id")[:limit]
 
+@rest_api.action('ej_users.User')
+def total_selected_candidates(request, user):
+    querySet = Candidate.objects.filter(selectedcandidate__user_id=user.id).count()
+    return {'total': querySet}
+
 @rest_api.action('ej_users.User', methods=['post'])
 def unselect_candidate(request, user):
     candidate = json.loads(request.body.decode("utf8"))["candidate"]
