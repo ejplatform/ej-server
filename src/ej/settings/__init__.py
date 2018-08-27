@@ -104,6 +104,7 @@ class Conf(ThemesConf,
     ]
     BOOGIE_REST_API_SCHEMA = 'https'
 
+
     # TODO: Fix this later in boogie configuration stack
     # Required for making django debug toolbar work
     ENVIRONMENT = 'local'
@@ -128,6 +129,9 @@ class Conf(ThemesConf,
         EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
     if ENVIRONMENT == 'dev':
+        # TODO: check if this header fix the http issue.
+        SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
         INTERNAL_IPS = [*globals().get('INTERNAL_IPS', ()), '127.0.0.1']
 
         # Django CORS
