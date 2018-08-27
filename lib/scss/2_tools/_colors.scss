@@ -2,6 +2,8 @@
  MIXINS FOR APPLYING COLORS AND STYLES THAT ARE USUALLY APPLIED TOGETHER
  =============================================================================*/
 
+@import '../1_settings/index';
+
 @mixin __color-aux($color, $text, $force) {
     background-color: $color;
     @if ($force) {

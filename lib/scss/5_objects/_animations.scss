@@ -2,6 +2,9 @@
  ANIMATIONS
  =========================================================================== */
 
+@import '../2_tools/index';
+
+
 @keyframes highlight-content {
     from {
         background: $color-content;

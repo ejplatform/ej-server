@@ -2,7 +2,7 @@
  GENERIC PAGE ELEMENTS
  ======================================================================== */
 
-$page-title-font-size: 1.1 * $font-size-h1;
+$page-title-font-size: 1.1 * $font-size-h1 !default;
 
 .Page {
     box-sizing: border-box;
@@ -19,11 +19,11 @@ $page-title-font-size: 1.1 * $font-size-h1;
     @media only screen and (max-width: $breakpoint-small) {
         &.talks{
             padding: $header-top-nav-height 0 0 0;
-        }        
+        }
     }
-    
+
     &-mainContainer {
-        background: url(/static/img/bg-2.svg) top center no-repeat;
+        background: $page-background-image;
         background-size: contain;
         box-sizing: border-box;
         height: 100vh;

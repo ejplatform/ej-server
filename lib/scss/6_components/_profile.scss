@@ -2,8 +2,12 @@
  USER PROFILE VIEWS
  ======================================================================== */
 
+@import '../2_tools/index';
+@import 'auth';
+
 $profile-image-size: 2 * $login-icon-size !default;
 $profile-arrow-size: $spacing-unit !default;
+
 .Profile {
     @extend .Container;
     text-align: center;
@@ -92,7 +96,7 @@ $profile-arrow-size: $spacing-unit !default;
                         clear: both;
                         display: table;
                     }
-                    color: $color-blue-light-low;
+                    color: $color-blue-light;
                     .label {
                         float: left;
                     }
@@ -131,7 +135,7 @@ $profile-arrow-size: $spacing-unit !default;
                 }
                 padding: 0;
                 margin: 0;
-                border-bottom: 2px solid $color-blue-light-low;
+                border-bottom: 2px solid $color-blue-light;
                 list-style: none;
             }
         }
@@ -303,7 +307,7 @@ $profile-arrow-size: $spacing-unit !default;
     p input[type=file] {
         display: none;
     }
-    
+
     .CustomFileInput {
         @extend .FormItem;
         padding: 0;
@@ -314,7 +318,7 @@ $profile-arrow-size: $spacing-unit !default;
         margin-bottom: $spacing-unit;
         font-family: inherit;
         font-weight: normal;
-            
+
         div {
             padding: $spacing-unit-small $spacing-unit-small $spacing-unit-tiny;
             text-align: center;

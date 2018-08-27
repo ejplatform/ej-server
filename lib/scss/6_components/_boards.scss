@@ -1,5 +1,11 @@
-$ul-margin: 40px;
-$link-margin: 15px;
+/*
+ BOARDS
+ ======================================================================== */
+
+@import '../2_tools/index';
+
+$board-ul-margin: 40px;
+$board-link-margin: 15px;
 
 .BoardList {
     text-align: center;
@@ -11,11 +17,11 @@ $link-margin: 15px;
     }
 
     &-linkList {
-        margin: $ul-margin;
+        margin: $board-ul-margin;
     }
 
     &-linkList li {
         list-style-type: none;
-        margin: $link-margin;
+        margin: $board-link-margin;
     }
 }

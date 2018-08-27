@@ -2,6 +2,8 @@
  HEADINGS
  =====================================================================*/
 
+@import '../2_tools/index';
+
 @mixin h($size) {
     font-size: $size;
     font-family: $font-headings;

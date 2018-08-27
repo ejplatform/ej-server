@@ -1,6 +1,3 @@
-
-
-
 {% macro how_it_works(data) %}
     <div class="HowItWorks">
 
@@ -27,8 +24,8 @@
 
 {% macro how_it_works_card(icon, title, comment, action=None, link='#') %}
     <article class="HowItWorksCard">
-        <div class="HowItWorksCard-iconWrapper {{icon}}">
-            <img src="/static/img/icons/{{icon}}.svg" class="HowItWorksCard-icon"></img>
+        <div class="HowItWorksCard-iconWrapper {{ icon }}">
+            <img src="/static/img/icons/{{ icon }}.svg" class="HowItWorksCard-icon"></img>
         </div>
         {# <i class="fa fa-{{ icon }} HowItWorksCard-icon"></i> #}
         <div class="HowItWorksCard-content">

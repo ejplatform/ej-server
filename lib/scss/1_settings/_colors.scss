@@ -1,10 +1,8 @@
 /*
- COLORS
+ COLORS ROLES
  =========================================================================== */
 
-//
-// COLOR ROLES
-// -----------------------------------------------------------------------------
+@import '../0_constants/index';
 
 // Background and text colors
 $color-content: $color-white !default;
@@ -12,8 +10,9 @@ $color-content-text: $color-blue-dark !default;
 $color-content-text-faded: $color-gray !default;
 
 // Color schemes
-// Buttons and highlighted elements. Strong highlight, usually applied to
-// smaller navigational elements and action buttons.
+// Color of the main elements in a page. Used, for instance, as the background
+// color of conversation cards and comment cards. May be applied to buttons and
+// highlighted elements.
 $color-primary: $color-blue !default;
 $color-primary-text: $color-white !default;
 

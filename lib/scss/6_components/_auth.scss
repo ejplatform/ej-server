@@ -1,6 +1,7 @@
 /*
  LOGIN/REGISTER COMPONENTS
  ======================================================================== */
+@import '../2_tools/index';
 
 $login-icon-size: 150px !default;
 $login-icon-color: $color-gray-light !default;
@@ -10,11 +11,13 @@ $login-title-color: $color-purple-dark;
 $login-title-size: 14px;
 $login-link-color: $color-accent !default;
 $login-new-user-background-color: #052B47 !default;
+
 .Register,
 .Login {
     padding: $spacing-unit;
     text-align: center;
-    font-family: Raleway;
+    font-family: $font-paragraph;
+
     h1 {
         color: $login-title-color;
         font-size: $login-title-size;
@@ -57,7 +60,7 @@ $login-new-user-background-color: #052B47 !default;
         margin: $spacing-unit-large auto;
         padding: $login-icon-padding-align;
         width: $login-icon-size;
-        img>* {
+        img > * {
             color: $color-hint;
         }
         img {
@@ -74,11 +77,11 @@ $login-new-user-background-color: #052B47 !default;
         display: $social-buttons-display;
         flex-direction: row;
         justify-content: center;
-        
-        >i {
+
+        > i {
             font-size: $social-buttons-icon-size;
         }
-        
+
         .rounded-icon {
             border-radius: 50%;
             width: $social-buttons-border-size;
@@ -124,12 +127,12 @@ $login-new-user-background-color: #052B47 !default;
         }
     }
 
-    &-reticle {
-        position: $login-reticle-position; 
-        bottom: $login-reticle-bottom;
-        margin-bottom: $login-reticle-margin-bottom;
-        z-index: $login-reticle-z-index;
-        display: $login-reticle-display;
+    &-reticule {
+        position: $login-reticule-position;
+        bottom: $login-reticule-bottom;
+        margin-bottom: $login-reticule-margin-bottom;
+        z-index: $login-reticule-z-index;
+        display: $login-reticule-display;
         width: 100vw;
     }
 }

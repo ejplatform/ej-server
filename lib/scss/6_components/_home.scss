@@ -2,6 +2,9 @@
  HOME PAGE
  ======================================================================== */
 
+@import '../2_tools/index';
+
+
 $how-it-work-icon-size: 1.5 * $font-size-h1 !default;
 $how-it-work-icon-color: $color-gray-dark !default;
 
@@ -9,7 +12,7 @@ $how-it-work-icon-color: $color-gray-dark !default;
     @extend .CenteredContainer;
     width: 80%;
     margin-top: 10px;
-    
+
     h2 {
         display: none;
         font-size: $font-size-h3;
@@ -47,9 +50,9 @@ $how-it-work-icon-color: $color-gray-dark !default;
     p {
         padding: 0 10px;
         line-height: 30px;
-        color: $home-how-it-works-content-font-color;
+        color: $color-content-text;
     }
-  
+
     .fa-child:before {
         content: $home-how-it-works-card-icon-person;
     }
@@ -57,7 +60,7 @@ $how-it-work-icon-color: $color-gray-dark !default;
     .fa-comments:before {
         content: $home-how-it-works-card-icon-conversation;
     }
-        
+
 }
 
 .HowItWorksCard {
@@ -158,7 +161,7 @@ $how-it-work-icon-color: $color-gray-dark !default;
 }
 
 .StartPage {
-    background: url(/static/img/bg-2.svg) top center no-repeat;
+    background: $page-background-image;
     background-size: contain;
 
     .ConversationFooter {

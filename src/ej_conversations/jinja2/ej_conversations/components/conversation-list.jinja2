@@ -14,27 +14,10 @@
                            javascript_enabled='') %}
 
     {% if caller is defined %}{% set caller_output = caller() %}{% endif %}
-
     <div class="ConversationList">
         {{ react_component('conversation_list', conversation_list_static(conversations, categories, title, subtitle, caller_output|default(topic)), javascript_enabled) }}
     </div>
-
-
-    {% if footer_content is defined %}
-        {{ conversation_list_footer(footer_content) }}
-    {% endif %}
-
-
 {% endmacro %}
-
-{% macro conversation_list_footer(footer_content) %}
-    <div class="ConversationFooter">
-        <img src='{{ footer_content.image }}' alt="FB logo">
-        <p>{{ footer_content.first.normal }} <b>{{ footer_content.first.bold }}</b></p>
-        <p>{{ footer_content.last.normal }} <b>{{ footer_content.last.bold }}</b></p>
-    </div>
-{% endmacro %}
-
 
 {% macro conversation_list_static(conversations, categories, title, subtitle, caller_output=None) %}
     <div class="ConversationListStatic">
@@ -59,35 +42,12 @@
             </div>
         {% endif %}
 
-        {# {% if categories is defined and categories %}
-            <div class="ConversationList-categories">
-                <i class="fa fa-chevron-left"></i>
-                <ul>
-                    <li>{{ link(_('All'), href='/conversations/', class_='color-accent') }}</li>
-                    {% for category in categories %}
-                        <li>{{ link(category.tag|safe(), href=category.get_absolute_url()) }}</li>
-                    {% endfor %}
-                </ul>
-                <i class="fa fa-chevron-right"></i>
-            </div>
-        {% endif %} #}
-
         {# Cards #}
         <div class="ConversationList-cardList">
             {% for conversation in conversations %}
                 {{ conversation|role('card') }}
             {% endfor %}
         </div>
-        {# {{ conversation_pagination() }} #}
     </div>
 {% endmacro %}
-
-
-
-{% macro conversation_pagination() %}
-    <div class="ConversationPagination">
-        <div class="ConversationPagination-pager">
-            <a href="prev">&lt;</a> ... <a href="prev">&gt;</a>
-        </div>
-    </div>
-{% endmacro %}
+s

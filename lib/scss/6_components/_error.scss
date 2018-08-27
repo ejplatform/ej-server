@@ -2,10 +2,12 @@
  403/404/500 COMPONENTS
  ======================================================================== */
 
-$error-title-color: $color-white;
-$error-title-font-size: 86px;
-$error-background-color: $color-blue;
-$error-content-height: 70vh;
+@import '../2_tools/index';
+
+$error-title-color: $color-white !default;
+$error-title-font-size: 86px  !default;
+$error-background-color: $color-primary !default;
+$error-content-height: 70vh !default;
 
 .Error {
     background-color: $error-background-color;

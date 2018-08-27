@@ -1,3 +1,9 @@
+/*
+ SLICK SLIDER
+ =========================================================================== */
+
+@import '../2_tools/index';
+
 .slick-slider {
     position: relative;
     display: block;
@@ -21,7 +27,6 @@
 }
 
 .slick-list.dragging {
-    cursor: pointer;
     cursor: hand;
 }
 
