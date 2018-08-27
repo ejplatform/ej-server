@@ -15,7 +15,7 @@
     <div class="ConversationDetail-header"><h1>{{ _('Comments') }}</h1></div>
     {% if user.is_authenticated %}
         {% if comment %}
-            {{ comment_detail(comment, user, conversation.comments.count() - conversation.user_votes(user).count(), conversation.comments.count()) }}
+            {{ comment|role('card') }}
         {% else %}
             <div class="Comment">
                 <h1>{{ _('Congratulations!') }}</h1>

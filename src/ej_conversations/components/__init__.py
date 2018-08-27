@@ -1,1 +1,1 @@
-from . import conversations
+from . import conversations, comments
