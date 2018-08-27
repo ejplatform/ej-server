@@ -16,7 +16,7 @@ def candidates(request, user):
     if (valid_filters(filters)):
         result = filter_candidates(querySet, filters);
         if (result):
-            result.order_by("-id")[:limit]
+            return result.order_by("-id")[:limit]
         else:
             return []
     else:
