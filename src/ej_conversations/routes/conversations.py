@@ -11,19 +11,19 @@ from ..models import FavoriteConversation, Conversation
 
 @urlpatterns.route('', name='list')
 def conversation_list(request):
-    user = request.user
     return {
         'conversations': Conversation.objects.filter(is_promoted=True),
         # FIXME: disable until form can register new conversation
-        'can_add_conversation': False,  # user.has_perm('ej.can_add_promoted_conversation'),
+        'can_add_conversation': False,  # request.user.has_perm('ej.can_add_promoted_conversation'),
         'create_url': reverse('conversation:create'),
         'topic': _("A space for adolescents to discuss actions that promote, guarantee and defend their rights"),
         'title': _("Public conversations"),
         'subtitle': _("Participate of the conversations and give your opinion with comments and votes!"),
-        'footer_content': {'image': '/static/img/icons/facebook-blue.svg',
-                           'first': {'normal': 'Plataforma desenvolvida pelo', 'bold': 'Conanda/MDH/UnB'},
-                           'last': {'normal': 'Para denunciar:', 'bold': 'Disque 100 e #HUMANIZAREDES'}
-                           }
+        'footer_content': {
+            'image': '/static/img/icons/facebook-blue.svg',
+            'first': {'normal': 'Plataforma desenvolvida pelo', 'bold': 'Conanda/MDH/UnB'},
+            'last': {'normal': 'Para denunciar:', 'bold': 'Disque 100 e #HUMANIZAREDES'}
+        }
     }
 
 
@@ -36,7 +36,7 @@ def detail(request, conversation, owner=None):
         'conversation': conversation,
         'comment': comment,
         'owner': owner,
-        'edit_perm': user.has_perm('ej.can_edit_conversation', conversation),
+        'edit_perm': user.has_perm('ej_conversations.can_edit_conversation', conversation),
         'login_link': a(_('login'), href=reverse('auth:login')),
         'favorites': favorites,
     }
@@ -60,7 +60,7 @@ def detail(request, conversation, owner=None):
     elif request.POST.get('action') == 'favorite':
         conversation.toggle_favorite(user)
 
-    ctx['can_comment'] = user.has_perm('ej.can_comment', conversation)
+    ctx['can_comment'] = user.has_perm('ej_conversations.can_comment', conversation)
     ctx['remaining_comments'] = rules.compute('ej_conversations.remaining_comments', conversation, user)
     return ctx
 
