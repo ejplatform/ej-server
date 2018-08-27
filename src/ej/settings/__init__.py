@@ -102,6 +102,7 @@ class Conf(ThemesConf,
             }
         },
     ]
+    BOOGIE_REST_API_SCHEMA = 'https'
 
     # TODO: Fix this later in boogie configuration stack
     # Required for making django debug toolbar work
