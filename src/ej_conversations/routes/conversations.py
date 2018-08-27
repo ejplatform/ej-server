@@ -37,7 +37,7 @@ def detail(request, conversation, owner=None):
         'comment': comment,
         'owner': owner,
         'edit_perm': user.has_perm('ej_conversations.can_edit_conversation', conversation),
-        'login_link': a(_('login'), href=reverse('auth:login')),
+        'login_link': a(_('login'), href=reverse('auth:login') + '?next=' + conversation.get_absolute_url()),
         'favorites': favorites,
     }
 
