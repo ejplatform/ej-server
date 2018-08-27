@@ -96,7 +96,7 @@ def vote_cooldown(conversation, user):
 #
 # Permissions
 #
-@rules.register_perm('ej_conversations.can_vote')
+@rules.register_perm('ej.can_vote')
 def can_vote(user, conversation):
     """
     User can vote in a conversation if there are unvoted comments.
@@ -105,11 +105,11 @@ def can_vote(user, conversation):
         return False
     return bool(
         conversation.approved_comments
-        .exclude(votes__author_id=user.id)
+            .exclude(votes__author_id=user.id)
     )
 
 
-@rules.register_perm('ej_conversations.can_comment')
+@rules.register_perm('ej.can_comment')
 def can_comment(user, conversation):
     """
     Check if user can comment in conversation.
@@ -119,20 +119,24 @@ def can_comment(user, conversation):
     """
     if user.id is None:
         return False
-    if user.has_perm('ej_conversations.can_edit_conversation'):
+    if user.has_perm('ej.can_edit_conversation'):
         return True
     remaining = remaining_comments(conversation, user)
     return remaining > 0
 
 
-@rules.register_perm('ej_conversations.can_add_conversation')
-def can_add_conversation(user):
-    if user.is_staff:
-        return True
-    return False
+@rules.register_perm('ej.can_add_promoted_conversation')
+def can_add_promoted_conversation(user, conversation):
+    """
+    Check if user can comment in conversation.
+
+    * Has explicit 'ej_conversations.can_publish_promoted' permission
+      stored in the db.
+    """
+    return user.has_perm('ej_conversations.can_publish_promoted', conversation)
 
 
-@rules.register_perm('ej_conversations.can_edit_conversation')
+@rules.register_perm('ej.can_edit_conversation')
 def can_edit_conversation(user, conversation):
     """
     Can edit a given conversation.
@@ -144,12 +148,12 @@ def can_edit_conversation(user, conversation):
         return False
     elif user == conversation.author:
         return True
-    elif conversation.is_promoted and user.has_perm('ej_conversations.can_publish'):
+    elif conversation.is_promoted and user.has_perm('ej_conversations.can_publish_promoted'):
         return True
     return False
 
 
-@rules.register_perm('ej_conversations.can_moderate_conversation')
+@rules.register_perm('ej.can_moderate_conversation')
 def can_moderate_conversation(user, conversation):
     """
     Can moderate a given conversation.
@@ -159,17 +163,16 @@ def can_moderate_conversation(user, conversation):
     """
     return (
         can_edit_conversation(user, conversation)
-        or user.has_perm('ej_conversations.can_moderate')
+        or user.has_perm('ej_conversations.is_moderator')
     )
 
 
-@rules.register_perm('ej_conversations.can_promote_conversation')
+@rules.register_perm('ej.can_promote_conversation')
 def can_promote_conversation(user):
     """
-    Can promote a conversation of a board
-    to the promoted conversations.
+    Can promote a conversation of a board to the list of promoted conversations.
     """
     return (
         user.is_superuser
-        or user.has_perm('ej_conversations.can_publish')
+        or user.has_perm('ej_conversations.can_publish_promoted')
     )

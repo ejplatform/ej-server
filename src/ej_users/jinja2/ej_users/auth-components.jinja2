@@ -1,9 +1,6 @@
 {% macro login(form, csrf_input, next=None) %}
     <div class="Login">
-        <div class="Login-icon">
-            <img src="/static/img/login/ej-cat.svg">
-        </div>
-
+        {# <div class="Login-icon"><img src="/static/img/login/ej-cat.svg"></div> #}
         <h1 class="Login-title">Participe dos debates, contribua para promover e defender seus direitos</h1>
 
         <form method="post">
@@ -26,10 +23,8 @@
                 <p><a class="Button" href="{{ '/register/' + ('?next=' + next if next else '') }}"
                       primary>{{ _('Register now!') }}</a></p>
             </div>
-            {# {{ login_options('/register/' + ('?next=' + next if next else ''), _('Register now!'), settings.EJ_REGISTER_TEXT) }} #}
         </form>
     </div>
-    <img src="/static/img/login/reticule.png" class="Login-reticule"></img>
 {% endmacro %}
 
 

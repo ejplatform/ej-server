@@ -1,11 +1,10 @@
 from django.shortcuts import redirect
+from django.urls import reverse
+from django.utils.translation import ugettext_lazy as _
 
 from boogie.router import Router
-from .forms import ProfileForm
 from ej_conversations.models import FavoriteConversation, Comment
-
-from django.utils.translation import ugettext_lazy as _
-from django.urls import reverse
+from .forms import ProfileForm
 
 app_name = 'ej_profiles'
 urlpatterns = Router(
@@ -58,7 +57,7 @@ def conversations(request):
         'current_timeline': board,
         'timelines': boards,
         'create_url': reverse('conversation:create'),
-        'can_add_conversation': user.has_perm('ej_conversations.can_add_conversation'),
+        'can_add_conversation': user.has_perm('ej.can_add_promoted_conversation'),
         'title': _("My conversations"),
         'subtitle': _("See all conversations created by you"),
     }

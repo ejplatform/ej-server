@@ -16,8 +16,8 @@ def comment_list(request, conversation):
         'rejected': comments.rejected(),
         'pending': comments.pending(),
         'remaining_comments': n_comments,
-        'can_comment': user.has_perm('ej_conversations.can_comment', conversation),
-        'can_edit': user.has_perm('ej_conversations.can_edit_conversation', conversation),
+        'can_comment': user.has_perm('ej.can_comment', conversation),
+        'can_edit': user.has_perm('ej.can_edit_conversation', conversation),
     }
 
 

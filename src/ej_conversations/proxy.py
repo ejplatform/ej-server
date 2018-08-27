@@ -3,7 +3,7 @@ from ej_conversations.models import Conversation
 
 
 def conversations_with_moderation(user, qs=None):
-    perm = 'ej_conversations.can_moderate_conversation'
+    perm = 'ej.can_moderate_conversation'
     kwargs = {
         'can_moderate': lambda x: user.has_perm(perm, x)
     }

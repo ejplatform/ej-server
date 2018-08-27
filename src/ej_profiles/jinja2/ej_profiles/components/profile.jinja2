@@ -27,8 +27,10 @@
 
         <h1>{{ profile.name }}</h1>
         <h2>{{ _('Participant Status') }}</h2>
-        {{ profile_comments(profile) }}
-        {{ profile_conversations(profile,favorite_conversations, javascript_enabled) }}
+        {# TODO: Implement it properly
+            {{ profile_comments(profile) }}
+            {{ profile_conversations(profile,favorite_conversations, javascript_enabled) }}
+        #}
         <div class="Profile-tabs">
             <nav class="Profile-tabLinks">
                 {{ link(_('Info'), '/profile/',
@@ -66,10 +68,10 @@
 
     <div class="Profile-actions">
         <p>
-            <form method="post" action="/logout/">
-                {{ csrf_input }}
-                <button class="Button" type="submit">{{ _('Logout') }}</button>
-            </form>
+        <form method="post" action="/logout/">
+            {{ csrf_input }}
+            <button class="Button" type="submit">{{ _('Logout') }}</button>
+        </form>
         </p>
         <p>
             <i class="far fa-times-circle"></i>
@@ -84,11 +86,11 @@
         <dl>
             {% for title, info in profile.profile_fields(true) %}
                 <dt>{{ title }}</dt>
-                {%if info == 'undeclared'%}
-                    <dd>{{ _((info).title())}}</dd>
-                {%else%}
+                {% if info == 'undeclared' %}
+                    <dd>{{ _((info).title()) }}</dd>
+                {% else %}
                     <dd>{{ (info or '-') }}</dd>
-                {%endif%}
+                {% endif %}
             {% endfor %}
         </dl>
         <div class='edit-button'>
@@ -155,7 +157,7 @@
             else
                 $('#comments').css('display', 'none');
         })()">
-            <h2>{{_('My Comments')}} <span>({{profile.comments().count()}})</span>
+            <h2>{{ _('My Comments') }} <span>({{ profile.comments().count() }})</span>
                 <i class="fa fa-angle-down"></i>
             </h2>
         </div>
@@ -165,7 +167,7 @@
                     <div class='header'>
                         <span class='label'>
                             <i class="fas fa-location-arrow"></i>
-                            {{_('Opinion')}}
+                            {{ _('Opinion') }}
                         </span>
                         <span class='date'>{{ comment.created.strftime('%d-%m-%Y às %Hh %M') }}</span>
                     </div>
@@ -175,15 +177,15 @@
                     <ul class='actions'>
                         <li class='agree'>
                             <i class="fas fa-check"></i>
-                            <span>{{comment.statistics().agree}}</span>
+                            <span>{{ comment.statistics().agree }}</span>
                         </li>
                         <li class='skip'>
                             <i class="fas fa-arrow-right"></i>
-                            <span>{{comment.statistics().skip}}</span>
+                            <span>{{ comment.statistics().skip }}</span>
                         </li>
                         <li class='disagree'>
                             <i class="fas fa-times"></i>
-                            <span>{{comment.statistics().disagree}}</span>
+                            <span>{{ comment.statistics().disagree }}</span>
                         </li>
                     </ul>
                     <div class='footer'>
@@ -204,12 +206,12 @@
             else
                 $('#conversations').css('display', 'none');
         })()">
-            <h2>{{_('Favorite Conversations')}} <span>({{conversations|length}})</span>
+            <h2>{{ _('Favorite Conversations') }} <span>({{ conversations|length }})</span>
                 <i class="fa fa-angle-down"></i>
             </h2>
         </div>
         <div class='conversations' id='conversations'>
-            {{ conversation_list(conversations, footer_content=footer_content,title='', subtitle='', javascript_enabled=javascript_enabled) }}
+            {{ conversation_list(conversations, footer_content=footer_content,title='', javascript_enabled=javascript_enabled) }}
         </div>
     </div>
 {% endmacro %}

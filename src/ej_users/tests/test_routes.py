@@ -56,11 +56,6 @@ class TestLoginRoute:
         response = client.post('/login/', data={'email': 'email'})
         assert response.status_code == 200
 
-    def test_login_logged_user_route(self, logged_client):
-        client = logged_client
-        response = client.post('/login/', data={'name': 'something'})
-        assert response.url == '/profile/'
-
     def test_login_user_route(self, db, mk_user):
         user = mk_user
         client = Client()

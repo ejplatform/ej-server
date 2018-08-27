@@ -104,8 +104,8 @@ class Conversation(TimeStampedModel):
     class Meta:
         ordering = ['created']
         permissions = (
-            ('can_publish', _('Can publish promoted conversations')),
-            ('can_moderate', _('Can moderate comments in any conversation')),
+            ('can_publish_promoted', _('Can publish promoted conversations')),
+            ('is_moderator', _('Can moderate comments in any conversation')),
         )
 
     @property
@@ -121,7 +121,7 @@ class Conversation(TimeStampedModel):
         super().save(*args, **kwargs)
 
     def clean(self):
-        can_edit = 'ej_conversations.can_edit_conversation'
+        can_edit = 'ej.can_edit_conversation'
         if self.is_promoted and self.author_id is not None and not self.author.has_perm(can_edit, self):
             raise ValidationError(_(
                 'User does not have permission to create a promoted '
@@ -161,7 +161,7 @@ class Conversation(TimeStampedModel):
             kwargs['status'] = normalize_status(status)
 
         # Check limits
-        if check_limits and not author.has_perm('ej_conversations.can_comment', self):
+        if check_limits and not author.has_perm('ej.can_comment', self):
             log.info('failed attempt to create comment by %s' % author)
             raise PermissionError('user cannot comment on conversation.')
 

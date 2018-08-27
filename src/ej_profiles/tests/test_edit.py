@@ -1,11 +1,12 @@
-import pytest
-import string as s
 import random as rd
-from PIL import Image
+import string as s
 from datetime import datetime
+
+import pytest
+from PIL import Image
+from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import Client
 from django.utils.six import BytesIO
-from django.core.files.uploadedfile import SimpleUploadedFile
 
 from ej_users.models import User
 
@@ -28,12 +29,6 @@ def logged_client(db):
 
 
 class TestEditProfile:
-    def test_user_logged_access_profile_url(self, logged_client):
-        # post without body with forced login works
-        resp = logged_client.post('/login/')
-        # redirect to profile page
-        assert resp.url == '/profile/' and resp.status_code == 302
-
     def test_user_logged_access_edit_profile(self, logged_client):
         resp = logged_client.get('/profile/edit/')
         assert resp.status_code == 200
@@ -76,8 +71,3 @@ class TestEditProfile:
         inf_fields.remove('birth_date')
         assert all(map(lambda attr: getattr(
             user.profile, attr) == form_data[attr], inf_fields))
-
-    def test_user_not_logged_dont_access_edit_profile(self):
-        client = Client()
-        resp = client.get('/profile/edit/')
-        assert 'login' in resp.url

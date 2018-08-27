@@ -11,7 +11,7 @@ def can_edit_conversation(user, conversation):
     """
     print(user, conversation)
 
-    if user.has_perm('ej_conversations.can_edit_conversation', conversation):
+    if user.has_perm('ej.can_edit_conversation', conversation):
         return True
     else:
         # Not implemented yet!

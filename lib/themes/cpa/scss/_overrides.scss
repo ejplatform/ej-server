@@ -8,10 +8,10 @@ $button-border-radius-default: 8px;
 $form-item-border-radius: 7px;
 
 //Profile
-$profile-font-color-primary: #042049;
-$profile-font-color-secondary: #6d2ea7;
-$profile-button-background-color: #FF3E72;
-$profile-background-color: #30BFD3;
+//$profile-font-color-primary: white;
+//$profile-font-color-secondary: white;
+//$profile-button-background-color: #FF3E72;
+//$profile-background-color: #30BFD3;
 
 // Login
 $login-icon-border: 10px solid #3F1B53;
@@ -47,10 +47,10 @@ $social-buttons-border-size: 40px;
 $social-buttons-icon-size: 15px;
 
 //Header
-$header-background-color: #30BEC0;
+// $header-background-color: #30BEC0;
+// $header-font-color: white;
 $header-logo-size: 60px;
 $header-icon-size: 40px;
-$header-font-color: white;
 $header-top-nav-height: $header-logo-size + 21px; //$spacing-unit-tiny * 3;
 $header-bottom-nav-height: $header-icon-size+20px;
 
