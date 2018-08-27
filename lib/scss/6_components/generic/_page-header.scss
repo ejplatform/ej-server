@@ -2,8 +2,10 @@
  PAGE HEADER
  ============================================================================ */
 
+@import '../../2_tools/index';
+
 // Constants
-// Top and botton navigation bars. Styled as content, but can be overriden.
+// Top and bottom navigation bars. Styled as content, but can be overridden.
 $header-color: $color-content !default;
 $header-color-text: $color-content-text !default;
 $header-box-shadow-upper: 0 2px 4px 0 rgba(0, 0, 0, 0.2) !default;
@@ -101,20 +103,9 @@ $header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.2) !default;
             color: $navigation-bottom-font-color !important;
 
             &:before {
-                font-family: 'Font Awesome\ 5 Free';
+                font-family: 'Font Awesome 5 Free', sans-serif;
                 font-size: 32px;
                 font-weight: 900;
-            }
-            &.conversations-link:before {
-                content: $navigation-bottom-icon-conversations;
-            }
-
-            &.panel-link:before {
-                content: $navigation-bottom-icon-panel;
-            }
-
-            &.profile-link:before {
-                content: $navigation-bottom-icon-profile;
             }
 
             span {

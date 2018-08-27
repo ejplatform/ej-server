@@ -641,8 +641,8 @@ $conversation-topic-diplay: none !default;
     vertical-align: middle;
     width: $conversation-button-size;
 
-    &--leftConversationSlider,
-    &--rightConversationSlider {
+    &-leftConversationSlider,
+    &-rightConversationSlider {
         margin: 0;
         position: absolute;
         top: ($conversation-card-cover-height + $conversation-button-size) / 2;
@@ -654,11 +654,11 @@ $conversation-topic-diplay: none !default;
         }
     }
 
-    &--leftConversationSlider {
+    &-leftConversationSlider {
         left: $spacing-unit-tiny;
     }
 
-    &--rightConversationSlider {
+    &-rightConversationSlider {
         right: $spacing-unit-tiny;
     }
 }
