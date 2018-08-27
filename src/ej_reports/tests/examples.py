@@ -9,12 +9,11 @@ REPORT_RESPONSE = {
 
 
 CSV_OUT = {
-    'votes_header': 'agree,disagree,skip,total',
-    'votes_content': '0,0,0,0',
-    'comments_header': 'approved,pending,rejected,total',
-    'comments_content': '0,0,0,0',
-    'advanced_comments_header': 'author,text,agree,disagree,skipped,divergence,participation',
-    'advanced_participants_header': 'name,agree,disagree,skipped,divergence',
+    'votes_header': 'user,comment,choice',
+    'votes_content': '0,0,0',
+    'comments_header': 'author,text,agree,disagree,skipped,divergence,participation',
+    'comments_content': '0,0,0,0,0,0,0',
+    'user_header': 'name,agree,disagree,skipped,divergence',
 }
 
 MAP_TO_TABLE = [['agree', 'disagree', 'skip', 'total'], ['0', '0', '0', '0']]
