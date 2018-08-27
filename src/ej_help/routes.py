@@ -38,7 +38,7 @@ def fallback_page(slug):
         data = open(md).read()
         return FlatPage(content=data, title=slug, template_name='flatpages/markdown.html')
     else:
-        data = _('Page {}  not found').format(slug=slug)
+        data = _('Page {slug} not found').format(slug=slug)
         return FlatPage(content=data, title=slug, template_name='flatpages/html.html')
 
 

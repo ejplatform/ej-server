@@ -140,5 +140,5 @@ class AskAdminPasswordForm(forms.Form):
             password = self.cleaned_data['password']
             try:
                 rocket.password_login(rocket.admin_username, password)
-            except PermissionError as exc:
+            except PermissionError:
                 self.add_error('password', _('Invalid password'))
