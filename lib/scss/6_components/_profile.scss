@@ -331,6 +331,9 @@ $profile-arrow-size: $spacing-unit !default;
             }
             &:nth-child(2) {
                 width: -webkit-fill-available;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
         }
     }
