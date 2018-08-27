@@ -21,6 +21,7 @@ class CandidatesConfig(AppConfig):
                 limit = 10
             querySet = Candidate.objects.all()
             filters = get_filters(self.request.GET)
+            print(filters)
             if (valid_filters(filters)):
                 result = filter_candidates(querySet, filters);
                 if (result):

@@ -1,21 +1,21 @@
 
 def filter_by_name(querySet, filter):
     if(querySet):
-        filteredCandidates = querySet.filter(name__contains=filter.upper())
+        filteredCandidates = querySet.filter(name__contains=filter)
         if(filteredCandidates):
             return filteredCandidates
         return []
 
 def filter_by_party(querySet, filter):
     if(querySet):
-        filteredCandidates = querySet.filter(party=filter.upper())
+        filteredCandidates = querySet.filter(party__contains=filter)
         if(filteredCandidates):
             return filteredCandidates
         return []
 
 def filter_by_candidacy(querySet, filter):
     if(querySet):
-        filteredCandidates = querySet.filter(candidacy=filter.upper())
+        filteredCandidates = querySet.filter(candidacy__contains=filter)
         if(filteredCandidates):
             return filteredCandidates
         return []
@@ -29,7 +29,7 @@ def filter_by_uf(querySet, filter):
 
 def filter_by_adhered(querySet, filter):
     if(querySet):
-        filteredCandidates = querySet.filter(adhered_to_the_measures=filter.upper())
+        filteredCandidates = querySet.filter(adhered_to_the_measures__contains=filter)
         if(filteredCandidates):
             return filteredCandidates
         return []
