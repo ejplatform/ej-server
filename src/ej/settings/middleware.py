@@ -17,4 +17,6 @@ class MiddlewareConf(Base):
             ]
         if self.ENVIRONMENT == 'testing':
             middleware.remove('django.middleware.locale.LocaleMiddleware')
+        if self.EJ_ROCKETCHAT_INTEGRATION:
+            middleware.append('ej_rocketchat.middleware.ContentSecurityPolicyMiddleware')
         return middleware
