@@ -20,9 +20,3 @@ redis>=2.10.5
 
 # Database
 psycopg2-binary ~= 2.7
-
-# Matplotlib
-matplotlib ~=2.2.2
-
-# Scikit learn
-scipy ~=1.1.0
