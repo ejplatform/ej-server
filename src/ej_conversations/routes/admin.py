@@ -1,53 +1,25 @@
+from django.db import transaction
 from django.http import Http404
 from django.shortcuts import redirect
-from django.utils.translation import ugettext_lazy as _
-from autoslug.settings import slugify
+
+from ej_boards.models import BoardSubscription
 from . import urlpatterns, conversation_url
 from .. import forms, models
-from ej_boards.models import Board, BoardSubscription
-from ej_boards.forms import BoardForm
 
 
 @urlpatterns.route('add/', login=True, perms=['ej.can_add_promoted_conversation'])
 def create(request):
-    form_class = forms.ConversationForm
-    boards = []
-    if request.method == 'POST':
-        form = form_class(request.POST)
+    form = forms.ConversationForm(request.POST or None)
 
-        if form.is_valid():
-            conversation = form.save(commit=False)
-            conversation.author = request.user
-            board = get_board_in_form(form, request)
-            conversation.save()
-            if 'form' in board:
-                return board
-            elif board:
-                BoardSubscription.objects.create(conversation=conversation, board=board)
+    if request.method == 'POST' and form.is_valid():
+        with transaction.atomic():
+            conversation = form.save_all(
+                author=request.user,
+                is_promoted=True,
+            )
+        return redirect(conversation.get_absolute_url())
 
-            for tag in form.cleaned_data['tags']:
-                conversation.tags.add(tag)
-
-            n = int(form.data['commentscount']) + 1
-            for i in range(1, n):
-                name = 'comment-' + str(i)
-                if name in form.data and form.data[name]:
-                    models.Comment.objects.create(
-                        content=form.data[name],
-                        conversation=conversation,
-                        author=request.user,
-                        status=models.Comment.STATUS.approved,
-                    )
-
-            return redirect(conversation.get_absolute_url() + 'stereotypes/')
-    else:
-        form = form_class()
-        boards = request.user.boards.all()
-
-    return {
-        'form': form,
-        'boards': boards,
-    }
+    return {'form': form}
 
 
 @urlpatterns.route(conversation_url + 'edit/',
@@ -99,30 +71,3 @@ def moderate(request, conversation):
         'conversation': conversation,
         'comments': comments,
     }
-
-
-def get_board_in_form(form, request):
-    if 'board' in form.data:
-        board = Board.objects.get(pk=int(form.data['board']))
-    elif 'newboard' in form.data:
-        board_form = create_board_form(form)
-        if board_form.is_valid():
-            board = board_form.save(commit=False)
-            board.owner = request.user
-            board.save()
-        else:
-            form.add_error('title', _('Board with this slug already exists!'))
-            return {
-                'form': form,
-                'boards': request.user.boards.all(),
-            }
-    else:
-        board = None
-    return board
-
-
-def create_board_form(form):
-    title = form.data['newboard']
-    data = {'title': title, 'description': '', 'slug': slugify(title)}
-    board_form = BoardForm(data)
-    return board_form

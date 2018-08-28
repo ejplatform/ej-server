@@ -1,5 +1,3 @@
-import re
-
 from boogie.configurations import SecurityConf as Base, env
 
 
