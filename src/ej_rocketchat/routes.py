@@ -20,22 +20,43 @@ urlpatterns = Router(
 
 @urlpatterns.route('', decorators=[requires_rc_perm, security_policy])
 def iframe(request):
+    ask_password_form = None
+    ask_password = False
+
+    # Superuser must type the password since it is not stored in the database
     if request.user.is_superuser:
-        if request.GET.get('admin-login') != 'true':
-            return redirect('rocket:ask-admin-password')
+        ask_password = True
+        password, ask_password_form = ask_admin_password(request)
         token = rocket.admin_token
+        username = rocket.admin_username
+        if password:
+            rocket.password_login(rocket.admin_username, password)
+            ask_password = False
+
     else:
         account = rocket.find_or_create_account(request.user)
         if account is None:
             return redirect('rocket:register')
         token = account.auth_token
+        username = account.username
         rocket.login(request.user)
 
     return {
         'rocketchat_url': rocket.url,
+        'username': username,
         'auth_token': token,
         'auth_token_repr': repr(token),
+        'ask_password_form': ask_password_form,
+        'ask_password': ask_password,
     }
+
+
+def ask_admin_password(request):
+    password = None
+    form = forms.AskAdminPasswordForm(request.POST or None)
+    if request.method == 'POST' and form.is_valid():
+        password = form.cleaned_data['password']
+    return password, form
 
 
 @urlpatterns.route('register/', decorators=[requires_rc_perm, security_policy])
@@ -48,20 +69,6 @@ def register(request):
             return redirect('rocket:iframe')
     else:
         form = forms.CreateUsernameForm(user=request.user)
-    return {'form': form}
-
-
-@urlpatterns.route('ask-password/', decorators=[requires_rc_perm, security_policy])
-def ask_admin_password(request):
-    if not request.user.is_superuser:
-        raise Http404
-    if request.method == 'POST':
-        form = forms.AskAdminPasswordForm(request.POST)
-        if form.is_valid():
-            url = reverse('rocket:iframe')
-            return redirect(f'{url}?admin-login=true')
-    else:
-        form = forms.AskAdminPasswordForm()
     return {'form': form}
 
 
@@ -81,8 +88,7 @@ def config(request):
             password = form.cleaned_data['password']
             username = form.cleaned_data['username']
             rocket.password_login(username, password)
-            url = reverse('rocket:iframe')
-            return redirect(f'{url}??admin-login=true')
+            return redirect('rocket:iframe')
     else:
         form = forms.RocketIntegrationForm(**form_kwargs)
     return {'form': form}
