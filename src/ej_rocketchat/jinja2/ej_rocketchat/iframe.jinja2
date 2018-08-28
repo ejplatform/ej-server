@@ -13,6 +13,7 @@
     <script>
         // Login in Rocket.Chat using js.
         (function () {
+            console.log("rocket.chat token: " + "{{ auth_token.replace('\"', '\\\\\"') }}");
             document.querySelector('iframe.RocketIFrame').contentWindow.postMessage({
                 externalCommand: 'login-with-token',
                 token: "{{ auth_token.replace('"', '\\"') }}",

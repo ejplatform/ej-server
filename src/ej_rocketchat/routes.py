@@ -29,6 +29,7 @@ def iframe(request):
         if account is None:
             return redirect('rocket:register')
         token = account.auth_token
+        rocket.login(request.user)
 
     return {
         'rocketchat_url': rocket.url,
@@ -99,7 +100,7 @@ def login(request):
     log.info(f'login attempt via /talks/login: {request.user}')
     if request.user.is_authenticated:
         return redirect(request.GET.get('next', ['/talks/'])[0])
-    return ej_login(request)
+    return ej_login(request, redirect_to='/talks/')
 
 
 @urlpatterns.route('check-login/',
@@ -110,5 +111,5 @@ def check_login(request):
     if request.user.is_superuser:
         auth_token = rocket.admin_token
     else:
-        auth_token = rocket.login_token(request.user)
+        auth_token = rocket.get_auth_token(request.user)
     return JsonResponse({'loginToken': auth_token})
