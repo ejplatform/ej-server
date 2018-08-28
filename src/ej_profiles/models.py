@@ -16,6 +16,7 @@ from rest_framework.authtoken.models import Token
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from ej_channels.models import Channel
+from django.db.models import Q
 
 User = get_user_model()
 
