@@ -626,6 +626,63 @@ $conversation-topic-display: none !default;
         font-weight: bold;
         margin-top: $spacing-unit-small;
     }
+
+    .fake-button {
+        border-radius: $conversation-comment-button-border-radius;
+        color: #fff;
+        background: $conversation-comment-button-background;
+        border: 0;
+        padding: $spacing-unit-small $spacing-unit;
+        font-size: 14px;
+        box-shadow: none;
+        text-transform: uppercase;
+        font-weight: bold;
+        margin-top: $spacing-unit-small;
+    }
+
+    #toast {
+        visibility: hidden;
+        background-color: $color-blue-light;
+        color: $color-purple-dark;
+        font-weight: bold;
+        text-align: center;
+        border-radius: 2px;
+        position: fixed;
+        z-index: 101;
+        width: 100vw;
+        left: 0;
+        bottom: 70px;
+        font-size: 17px;
+        >div {
+            padding: 40px;
+        }
+    }
+    
+    #toast.show {
+        visibility: visible;
+        -webkit-animation: fadein 1s, fadeout 0.5s 3s;
+        animation: fadein 1s, fadeout 0.5s 3s;
+    }
+    
+    @-webkit-keyframes fadein {
+        from {bottom: 0; opacity: 0;} 
+        to {bottom: 70px; opacity: 1;}
+    }
+    
+    @keyframes fadein {
+        from { opacity: 0;}
+        to { opacity: 1;}
+    }
+    
+    @-webkit-keyframes fadeout {
+        from { opacity: 1;} 
+        to { opacity: 0;}
+    }
+    
+    @keyframes fadeout {
+        from { opacity: 1;}
+        to { opacity: 0;}
+    }
 }
 
 .CircleButton {

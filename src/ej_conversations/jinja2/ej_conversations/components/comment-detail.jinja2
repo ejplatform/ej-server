@@ -1,3 +1,5 @@
+{% from 'components/generic/toast.jinja2' import toast %}
+
 {% macro comment_detail(comment, user, remaining=None, total=None) %}
     <div class="Comment">
         {% if remaining and total %}
@@ -51,7 +53,12 @@
             {{ csrf_input }}
             <input type="hidden" name="action" value="comment">
             <textarea name="comment" onFocus="document.getElementsByClassName('Header-lowerNav')[0].style.display='none'" onBlur="document.getElementsByClassName('Header-lowerNav')[0].style.display='flex'"></textarea>
-            <input type="submit" name="submit" value="Opinar" primary>
+            {% if remaining_comments == 0 %} {# replace with can_comment when it works#}
+                {{toast("OPS!", "Você já atingiu o limite de comentários desta conversa. Agradecemos a sua contribuição!")}}
+                <button class="fake-button" type="button" onclick="showToaster()" >Opinar</button>
+            {% else %}
+                <input type="submit" name="submit" value="Opinar" primary>
+            {% endif %}
         </form>
     </div>
 {% endmacro %}
