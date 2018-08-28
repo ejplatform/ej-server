@@ -18,7 +18,7 @@ class ChannelSerializer(serializers.ModelSerializer):
 class MessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Message
-        fields = ('title', 'body', 'target')
+        fields = ('title', 'body', 'link', 'target')
 
 class NotificationSerializer(serializers.ModelSerializer):
     receiver = UserSerializer(read_only=True)

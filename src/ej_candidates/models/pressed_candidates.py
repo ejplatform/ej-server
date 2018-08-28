@@ -32,7 +32,7 @@ def send_message(sender, instance, created, **kwargs):
             channel = Channel.objects.create(name="press channel", sort="press", owner=user)
             channel.users.add(user)
             channel.save()
-        Message.objects.create(channel=channel, title=title, body="")
+        Message.objects.create(channel=channel, title="", body=title)
 
 @receiver(post_save, sender=PressedCandidate)
 def send_press_email(sender, instance, created, **kwargs):

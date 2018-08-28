@@ -31,7 +31,6 @@ class CandidatesConfig(AppConfig):
                 # order_by('?') randomize the querySet result.
                 # This is not the best aproach, but
                 # 9000 candidates are few data to retrieve.
-                print(limit)
                 return querySet.order_by('?')[:limit]
         self.api = api
         rest_api_v1 = rest_api.get_api_info('v1')

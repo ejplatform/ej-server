@@ -24,7 +24,7 @@ class SelectedCandidate(models.Model):
 def send_message(sender, instance, created, **kwargs):
     if created:
         user = instance.user
-        title = instance.candidate.name
+        body = instance.candidate.name
         url = instance.candidate.site_url
         try:
             channel = Channel.objects.filter(owner=user, sort="selected")[0]
@@ -32,7 +32,7 @@ def send_message(sender, instance, created, **kwargs):
             channel = Channel.objects.create(name="selected channel", sort="selected", owner=user)
             channel.users.add(user)
             channel.save()
-        Message.objects.create(channel=channel, title=title, body=url)
+        Message.objects.create(channel=channel, title="", body=body, link=url)
 
 @receiver(post_save, sender=SelectedCandidate)
 def send_selected_email(sender, instance, created, **kwargs):
