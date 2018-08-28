@@ -66,5 +66,3 @@ def django_settings(request):
 #
 def count(model):
     return model.objects.count()
-
-
