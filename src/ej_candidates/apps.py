@@ -16,14 +16,13 @@ class CandidatesConfig(AppConfig):
         # This is necessary to filter candidates for unlogged users.
         def get_queryset(self):
             try:
-                limit = int(request.GET.get("limit"))
+                limit = int(self.request.GET.get("limit"))
             except:
                 limit = 10
             querySet = Candidate.objects.all()
             filters = get_filters(self.request.GET)
-            print(filters)
             if (valid_filters(filters)):
-                result = filter_candidates(querySet, filters);
+                result = filter_candidates(querySet, filters)
                 if (result):
                     return result.order_by("-id")[:limit]
                 else:
@@ -32,6 +31,7 @@ class CandidatesConfig(AppConfig):
                 # order_by('?') randomize the querySet result.
                 # This is not the best aproach, but
                 # 9000 candidates are few data to retrieve.
+                print(limit)
                 return querySet.order_by('?')[:limit]
         self.api = api
         rest_api_v1 = rest_api.get_api_info('v1')
