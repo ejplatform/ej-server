@@ -1,14 +1,14 @@
 
 def filter_by_name(querySet, filter):
     if(querySet):
-        filteredCandidates = querySet.filter(name__contains=filter)
+        filteredCandidates = querySet.filter(name__contains=filter.upper())
         if(filteredCandidates):
             return filteredCandidates
         return []
 
 def filter_by_party(querySet, filter):
     if(querySet):
-        filteredCandidates = querySet.filter(party__contains=filter)
+        filteredCandidates = querySet.filter(party=filter)
         if(filteredCandidates):
             return filteredCandidates
         return []
