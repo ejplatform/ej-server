@@ -1,13 +1,17 @@
-from django.http import HttpResponse, JsonResponse, Http404
+from logging import getLogger
+
+from django.http import HttpResponse, JsonResponse, Http404, QueryDict
 from django.shortcuts import redirect
 from django.urls import reverse
 
 from boogie.router import Router
+from ej_users.routes import login as ej_login
 from . import forms
 from .decorators import security_policy, requires_rc_perm
 from .models import RCConfig, RCAccount
 from .rocket import rocket
 
+log = getLogger('ej')
 app_name = 'ej_rocketchat'
 urlpatterns = Router(
     template=['ej_rocketchat/{name}.jinja2'],
@@ -83,9 +87,22 @@ def config(request):
     return {'form': form}
 
 
-@urlpatterns.route('intro/', login=True)
+@urlpatterns.route('intro/', login=True, decorators=[security_policy])
 def intro():
     return {}
+
+
+@urlpatterns.route('login/',
+                   decorators=[security_policy],
+                   template='ej_users/login.jinja2')
+def login(request):
+    query_dict = dict(request.GET)
+    query_dict['fast'] = 'true'
+    query_dict.setdefault('next', '/talks/')
+    request.GET = QueryDict(mutable=True)
+    request.GET.update(query_dict)
+    log.info(f'login attempt via /talks/login: {request.user}')
+    return ej_login(request)
 
 
 @urlpatterns.route('check-login/',
