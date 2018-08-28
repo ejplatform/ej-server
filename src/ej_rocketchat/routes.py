@@ -19,11 +19,17 @@ def iframe(request):
     if request.user.is_superuser:
         if request.GET.get('admin-login') != 'true':
             return redirect('rocket:ask-admin-password')
+        token = rocket.admin_token
     else:
         account = rocket.find_or_create_account(request.user)
+        token = account.auth_token
         if account is None:
             return redirect('rocket:register')
-    return {'rocketchat_url': rocket.url}
+    return {
+        'rocketchat_url': rocket.url,
+        'auth_token': token,
+        'auth_token_repr': repr(token),
+    }
 
 
 @urlpatterns.route('register/', decorators=[requires_rc_perm])

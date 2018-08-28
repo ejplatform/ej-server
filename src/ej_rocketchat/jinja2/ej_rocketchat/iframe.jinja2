@@ -15,6 +15,20 @@
                 $nav.show();
             });
         })();
+
+
+        // Login in Rocket.Chat using js.
+        (function () {
+            document.querySelector('iframe.RocketIFrame').contentWindow.postMessage({
+                externalCommand: 'login-with-token',
+                token: {{ auth_token_repr }},
+            }, '*')
+        })();
     </script>
+    <style>
+        .Header-lowerNav {
+            display: none;
+        }
+    </style>
 {% endblock %}
 

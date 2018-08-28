@@ -20,11 +20,15 @@ def security_policy(func):
 
     @wraps(func)
     def wrapped(*args, **kwargs):
-        res = func(*args, **kwargs)
+        response = func(*args, **kwargs)
         policy = ' '.join(['frame-ancestors', *settings.CSRF_TRUSTED_ORIGINS])
-        res['Access-Control-Allow-Credentials'] = 'true'
-        res['Content-Security-Policy'] = policy
-        return res
+        response['Access-Control-Allow-Credentials'] = 'true'
+        response["Access-Control-Allow-Origin"] = "*"
+        response["Access-Control-Allow-Methods"] = "GET, OPTIONS"
+        response["Access-Control-Max-Age"] = "1000"
+        response["Access-Control-Allow-Headers"] = "X-Requested-With, Content-Type"
+        response['Content-Security-Policy'] = policy
+        return response
 
     return wrapped
 
