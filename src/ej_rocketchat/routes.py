@@ -18,7 +18,7 @@ urlpatterns = Router(
 )
 
 
-@urlpatterns.route('', decorators=[requires_rc_perm])
+@urlpatterns.route('', decorators=[requires_rc_perm, security_policy])
 def iframe(request):
     if request.user.is_superuser:
         if request.GET.get('admin-login') != 'true':
