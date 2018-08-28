@@ -1,56 +1,64 @@
+from pprint import pformat
+
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.flatpages.models import FlatPage
-from django.shortcuts import render
 from django.utils.translation import ugettext as _
 
 from boogie.router import Router
 from ej_conversations.models import Conversation, Comment, Vote
 
-
 app_name = 'ej_configurations'
-urlpatterns = Router()
+urlpatterns = Router(
+    template='configurations/{name}.jinja2',
+)
 
 
 @urlpatterns.route('', staff=True)
 def index(request):
-    return render(request, 'configurations/index.jinja2', {})
+    return {}
 
 
 @urlpatterns.route('info/', staff=True)
-def info(request):
-    ctx = dict(
+def info():
+    return {
         # Generic info
-        user_count=count(get_user_model()),
-        flatpages=FlatPage.objects.values_list('url'),
+        'user_count': count(get_user_model()),
+        'flatpages': FlatPage.objects.values_list('url'),
 
         # Conversations
-        conversations_counts={
+        'conversations_counts': {
             _('Conversations'): count(Conversation),
             _('Votes'): count(Vote),
             _('Comments'): count(Comment),
         }
-    )
-    return render(request, 'configurations/info.jinja2', ctx)
+    }
 
 
 @urlpatterns.route('fragment/', staff=True)
-def fragment_list(request):
-    ctx = {}
-    return render(request, 'configurations/fragment-list.jinja2', ctx)
+def fragment_list():
+    return {}
 
 
 @urlpatterns.route('fragment/<name>/')
 def fragment_error(request, name):
-    ctx = {
+    return {
         'name': name,
     }
-    return render(request, 'configurations/fragment-error.jinja2', ctx)
 
 
 @urlpatterns.route('styles/')
-def styles(request):
-    ctx = {}
-    return render(request, 'configurations/styles.jinja2', ctx)
+def styles():
+    return {}
+
+
+@urlpatterns.route('django-settings/')
+def django_settings(request):
+    if not request.user.is_superuser:
+        raise PermissionError
+    data = [(name, pformat(getattr(settings, name)))
+            for name in dir(settings) if name.isupper()]
+    return {'settings': sorted(data)}
 
 
 #
@@ -58,3 +66,5 @@ def styles(request):
 #
 def count(model):
     return model.objects.count()
+
+

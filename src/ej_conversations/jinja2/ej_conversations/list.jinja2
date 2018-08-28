@@ -6,7 +6,7 @@
         <a class="Link-new" href="{{ create_url }}"><i class="fa fa-plus-circle"></i> {{ _('New conversation') }}</a>
     {% endif %}
 
-    {% if owns_board and boards|length > 1 %}
+    {% if owns_board|default(False) and boards|length > 1 %}
         <div class="view-board">
             <span>{{ _('Viewing board:') }}</span>
             <select name="select-board" class="select-board" id="select-board">
