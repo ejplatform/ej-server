@@ -37,7 +37,7 @@ def iframe(request):
     }
 
 
-@urlpatterns.route('register/', decorators=[requires_rc_perm])
+@urlpatterns.route('register/', decorators=[requires_rc_perm, security_policy])
 def register(request):
     if RCAccount.objects.filter(user=request.user).exists():
         return redirect('rocket:iframe')
@@ -50,7 +50,7 @@ def register(request):
     return {'form': form}
 
 
-@urlpatterns.route('ask-password/', decorators=[requires_rc_perm])
+@urlpatterns.route('ask-password/', decorators=[requires_rc_perm, security_policy])
 def ask_admin_password(request):
     if not request.user.is_superuser:
         raise Http404
@@ -64,7 +64,7 @@ def ask_admin_password(request):
     return {'form': form}
 
 
-@urlpatterns.route('config/')
+@urlpatterns.route('config/', decorators=[security_policy])
 def config(request):
     if not request.user.is_superuser:
         raise Http404

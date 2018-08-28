@@ -19,7 +19,8 @@ class RocketIntegrationForm(forms.Form):
     Form that asks basic configuration about a Rocket.Chat instance.
     """
 
-    rocketchat_url = forms.URLField(
+    # URLFields explicitly disallow local domains (except for localhost)
+    rocketchat_url = forms.CharField(
         label=_('Rocket.Chat URL'),
         help_text=_('Required URL for Rocket.Chat admin instance.'),
         initial=settings.EJ_ROCKETCHAT_URL,
