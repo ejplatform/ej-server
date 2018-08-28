@@ -77,7 +77,12 @@ def update_automatic_trophies(user):
                 send_trophy_message(user, user_trophy)
 
 def send_trophy_message(user, user_trophy):
-    channel = Channel.objects.filter(owner=user, sort="trophy")[0]
+    try:
+        channel = Channel.objects.filter(owner=user, sort="trophy")[0]
+    except IndexError:
+        channel = Channel.objects.create(name="trophy channel", sort="trophy", owner=user)
+        channel.users.add(user)
+        channel.save()
     trophy_name = user_trophy.trophy.name
     trophy_id = user_trophy.trophy.id
     Message.objects.create(channel=channel, title=trophy_name, body="", target=trophy_id)

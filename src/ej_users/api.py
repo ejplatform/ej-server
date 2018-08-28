@@ -1,6 +1,8 @@
 from boogie.rest import rest_api
 from ej_users.models import User
 from ej_trophies.models import Trophy
+from ej_candidates.models.candidate import Candidate
+from ej_candidates.models.selected_candidates import SelectedCandidate
 
 #
 # User extra actions and attributes

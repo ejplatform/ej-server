@@ -102,14 +102,13 @@ class Conf(ThemesConf,
             }
         },
     ]
-    # REST_AUTH_REGISTER_SERIALIZERS = {
-    #     'REGISTER_SERIALIZER': 'ej_users.serializers.RegistrationSerializer'
-    # }
+    BOOGIE_REST_API_SCHEMA = 'https'
 
     # TODO: Fix this later in boogie configuration stack
     # Required for making django debug toolbar work
     ENVIRONMENT = 'local'
     if ENVIRONMENT == 'local':
+
         INTERNAL_IPS = [*globals().get('INTERNAL_IPS', ()), '127.0.0.1']
 
         # Django CORS
@@ -129,6 +128,9 @@ class Conf(ThemesConf,
         EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
     if ENVIRONMENT == 'dev':
+        # TODO: check if this header fix the http issue.
+        SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
         INTERNAL_IPS = [*globals().get('INTERNAL_IPS', ()), '127.0.0.1']
 
         # Django CORS
@@ -196,17 +198,15 @@ class Conf(ThemesConf,
         }
 
         ALLOWED_HOSTS = ['app.unidoscontraacorrupcao.org.br',
-                         'admin.besouro.ejplatform.org',
-                         '18.222.20.172']
+                         'admin.besouro.ejplatform.org']
 
+        DATA_UPLOAD_MAX_NUMBER_FIELDS = 10000
         ACCOUNT_EMAIL_VERIFICATION = 'optional'
         EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend'
         ANYMAIL = {'MAILGUN_API_KEY': ''}
         DEFAULT_FROM_EMAIL = "Unidos Contra a Corrupção <noreply@unidoscontraacorrupcao.org.br>"
 
-
 Conf.save_settings(globals())
-
 
 #
 # Apply fixes and wait for services to start

@@ -201,13 +201,12 @@ def ensure_settings_created(sender, **kwargs):
     Setting.objects.get_or_create(profile=instance, owner_id=profile)
 
 @receiver(post_save, sender=Profile)
-def insert_user_on_channel(sender, created, **kwargs):
+def insert_user_on_general_channels(sender, created, **kwargs):
     if created:
         instance = kwargs.get('instance')
         user_id = instance.user.id
         user = User.objects.get(id=user_id)
-        channels = Channel.objects.all()[:2]
-        # TODO VERIFY USER SETTINGS BEFORE INSERT
+        channels = Channel.objects.filter(Q(sort="mission") | Q(sort="admin"))
         for channel in channels:
             channel.users.add(user)
             channel.save()
@@ -217,5 +216,21 @@ def create_user_trophy_channel(sender, instance, created, **kwargs):
     if created:
         user = instance.user
         channel = Channel.objects.create(name="trophy channel", sort="trophy", owner=user)
+        channel.users.add(user)
+        channel.save()
+
+@receiver(post_save, sender=Profile)
+def create_user_selected_channel(sender, instance, created, **kwargs):
+    if created:
+        user = instance.user
+        channel = Channel.objects.create(name="selected channel", sort="selected", owner=user)
+        channel.users.add(user)
+        channel.save()
+
+@receiver(post_save, sender=Profile)
+def create_user_press_channel(sender, instance, created, **kwargs):
+    if created:
+        user = instance.user
+        channel = Channel.objects.create(name="press channel", sort="press", owner=user)
         channel.users.add(user)
         channel.save()

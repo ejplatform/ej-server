@@ -16,9 +16,6 @@ class ProfileForm(ModelForm):
             'political_activity', 'biography',
             'occupation', 'education', 'image'
         ]
-       #widgets = {
-       #    'birth_date': DateInput(attrs={'type': 'date'})
-       #}
 
 
 class ProfileImageForm(ModelForm):
