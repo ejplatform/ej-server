@@ -120,6 +120,6 @@ def send_fcm_message(sender, instance, created, **kwargs):
            users_to_send.append(user)
     url = "http://localhost:8081/show-mission/" + str(instance.id)
     fcm_devices = GCMDevice.objects.filter(cloud_message_type="FCM", user__in=users_to_send)
-    fcm_devices.send_message("Confira a nova missão lançada!", extra={"title":"Nova missão",
+    fcm_devices.send_message("", extra={"title":"Nova missão", "body": "Nova missão no ar! Vem conferir",
         "icon":"https://i.imgur.com/D1wzP69.png", "click_action": url})
 
