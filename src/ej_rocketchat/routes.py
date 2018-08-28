@@ -2,7 +2,6 @@ from logging import getLogger
 
 from django.http import HttpResponse, JsonResponse, Http404
 from django.shortcuts import redirect
-from django.urls import reverse
 
 from boogie.router import Router
 from ej_users.routes import login as ej_login
