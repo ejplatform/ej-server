@@ -88,6 +88,19 @@ def send_trophy_message(user, user_trophy):
     trophy_name = user_trophy.trophy.name
     trophy_id = user_trophy.trophy.id
     Message.objects.create(channel=channel, title=trophy_name, body="", target=trophy_id)
+    send_trophy_fcm_message(channel, user_trophy)
+
+def send_trophy_fcm_message(channel, user_trophy):
+    users_to_send = []
+    for user in channel.users.all():
+        setting = Setting.objects.get(owner_id=user.id)
+        if (setting.mission_notifications == True):
+            users_to_send.append(user)
+    url = "http://localhost:8081/profile/"
+    trophy_text = "Parabéns! O troféu " + user_trophy.trophy.name + " é seu!"
+    fcm_devices = GCMDevice.objects.filter(cloud_message_type="FCM", user__in=users_to_send)
+    fcm_devices.send_message("", extra={"title":"Novo troféu", "body": trophy_text,
+            "icon":"https://i.imgur.com/D1wzP69.png", "click_action": url})
 
 @receiver(post_save, sender=Receipt)
 def update_trophy(sender, **kwargs):
@@ -111,15 +124,16 @@ def send_message(sender, instance, created, **kwargs):
         Message.objects.create(channel=channel, title=mission_title, body="", target=mission_id)
 
 @receiver(post_save, sender=Mission)
-def send_fcm_message(sender, instance, created, **kwargs):
-    channel = Channel.objects.get(sort="mission")
-    users_to_send = []
-    for user in channel.users.all():
-        setting = Setting.objects.get(owner_id=user.id)
-        if (setting.mission_notifications == True):
-           users_to_send.append(user)
-    url = "http://localhost:8081/show-mission/" + str(instance.id)
-    fcm_devices = GCMDevice.objects.filter(cloud_message_type="FCM", user__in=users_to_send)
-    fcm_devices.send_message("", extra={"title":"Nova missão", "body": "Nova missão no ar! Vem conferir",
-        "icon":"https://i.imgur.com/D1wzP69.png", "click_action": url})
+def send_mission_fcm_message(sender, instance, created, **kwargs):
+    if created:
+        channel = Channel.objects.get(sort="mission")
+        users_to_send = []
+        for user in channel.users.all():
+            setting = Setting.objects.get(owner_id=user.id)
+            if (setting.mission_notifications == True):
+                users_to_send.append(user)
+        url = "http://localhost:8081/show-mission/" + str(instance.id)
+        fcm_devices = GCMDevice.objects.filter(cloud_message_type="FCM", user__in=users_to_send)
+        fcm_devices.send_message("", extra={"title":"Nova missão", "body": "Nova missão no ar! Vem conferir",
+            "icon":"https://i.imgur.com/D1wzP69.png", "click_action": url})
 
