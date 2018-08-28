@@ -56,7 +56,7 @@ class CandidatesImporter():
 
     @staticmethod
     def set_candidate_photo(candidate, cpf):
-        photo_name = cpf + '.jpg'
+        photo_name = 'img_' + cpf + '.jpg'
         _storage = candidate.image.storage
         try:
             with open(PHOTOS_PATH + photo_name, 'rb') as f:
