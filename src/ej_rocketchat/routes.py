@@ -1,6 +1,6 @@
 from logging import getLogger
 
-from django.http import HttpResponse, JsonResponse, Http404, QueryDict
+from django.http import HttpResponse, JsonResponse, Http404
 from django.shortcuts import redirect
 from django.urls import reverse
 
@@ -96,12 +96,9 @@ def intro():
                    decorators=[security_policy],
                    template='ej_users/login.jinja2')
 def login(request):
-    query_dict = dict(request.GET)
-    query_dict['fast'] = 'true'
-    query_dict.setdefault('next', '/talks/')
-    request.GET = QueryDict(mutable=True)
-    request.GET.update(query_dict)
     log.info(f'login attempt via /talks/login: {request.user}')
+    if request.user.is_authenticated:
+        return redirect(request.GET.get('next', ['/talks/'])[0])
     return ej_login(request)
 
 
