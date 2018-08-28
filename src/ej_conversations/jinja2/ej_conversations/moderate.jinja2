@@ -24,13 +24,11 @@
             <h1>{{ _('Comments in this conversation') }}</h1>
             {% if comments | length >= 1 %}
                 {% for comment in comments %}
-                {# {{ comment_card(comment, csrf_input) }} #}
                     {{ comment|role('moderate') }}
                 {% endfor %}
             {% else %}
                 <p>{{ _('No comments left') }}</p>
             {% endif %}
-            {# {{ comment_list(comments, csrf_input) }} #}
         </div>
     </div>
 {% endblock %}
