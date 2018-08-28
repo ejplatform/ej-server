@@ -11,8 +11,8 @@ def comment_card(comment, request=None, **kwargs):
 
     user = getattr(request, 'user', None)
     is_authenticated = getattr(user, 'is_authenticated', False)
-    total = comment.conversation.comments.count()
-    remaining = comment.conversation.comments.count() - comment.conversation.user_votes(user).count()
+    total = comment.conversation.approved_comments.count()
+    remaining = total - comment.conversation.user_votes(user).count()
     voted = total - remaining + 1
     return {
         'comment': comment,

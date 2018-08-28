@@ -236,7 +236,7 @@ class Conversation(TimeStampedModel):
         if no comments are available for user.
         """
         comment = rules.compute('ej_conversations.next_comment', self, user)
-        if comment is not None:
+        if comment:
             return comment
         elif default is NOT_GIVEN:
             msg = _('No comments available for this user')

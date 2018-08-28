@@ -16,7 +16,7 @@ def conversation_card(conversation, request=None, url=None, **kwargs):
         'conversation': conversation,
         'url': url or conversation.get_absolute_url(),
         'tags': conversation.tags.all(),
-        'n_comments': conversation.comments.count(),
+        'n_comments': conversation.approved_comments.count(),
         'n_votes': conversation.vote_count(),
         'n_followers': conversation.followers.count(),
         'moderate_url': moderate_url,
@@ -38,7 +38,7 @@ def conversation_balloon(conversation, request=None, **kwargs):
     return {
         'conversation': conversation,
         'tags': conversation.tags.all(),
-        'comments_count': conversation.comments.count(),
+        'comments_count': conversation.approved_comments.count(),
         'votes_count': conversation.votes.count(),
         'favorites_count': favorites.filter(conversation=conversation).count(),
         'user': user,
