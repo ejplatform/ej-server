@@ -1,0 +1,161 @@
+
+
+.Rocket{
+  font-family: "Patua One", sans-serif;
+}
+.Rocket-title {
+  color: #C4F2F4;
+  font-weight: bold;
+  padding: 10px 20px 0px 20px;
+  text-align: center;
+  
+}
+
+.Rocket .title {
+  padding: 10px 20px;
+  color: #30BEC0;
+  font-family: Raleway;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 19px;
+}
+
+.Rocket-title h1 {
+    color: #C6027B;
+    font-weight: bold !important;
+    text-transform: none !important;
+    margin-bottom: 5px !important;
+    font-size: 34px;
+}
+
+
+.Rocket-detail {
+  color: #042049;
+  padding: 0px 20px 0px 20px;
+  font-size: 16px;
+  text-align: center;
+}
+
+.Rocket-items {
+    background-color: #C4F2F4;
+    padding: 14px;
+}
+
+.Rocket-items .item {
+    padding: 13px;
+}
+
+.Rocket-items .item .item-position {
+  color: #C6027B;
+  font-size: 32px;
+  width: 34px;
+  text-align: center;
+  float: left;
+  margin-top: 20px;
+}
+
+@media only screen and (min-width: 600px) {
+    .Rocket-items .item .item-position  {
+        margin-top: -8px;
+    }
+}
+
+
+.Rocket-items .item .item-content {
+    color: #042049;
+    padding-left: 38px;
+    font-size: 16px;
+    width: auto;
+}
+
+.Rocket-action {
+  text-align: center;
+  padding: 20px;
+}
+
+.Rocket-action .Button {
+  border-radius: 8px;
+  background-color: #8EC73F;
+  color: white;
+  padding: 15px 40px;
+  font-weight: bold ;
+  text-transform: uppercase;
+}
+.Rocket-action .Button svg {
+  font-size: 23px;
+}
+
+
+.rc-old .page-container .content {
+    padding: 0px;
+}
+
+.sidebar {
+    background-color: #3F1B53;
+}
+
+.sidebar-wrap {
+    background-color: #3F1B53 !important;
+    opacity: 0.78 !important;
+}
+
+.rc-directory-content .rc-directory-channel-info, .rc-table-td {     
+  color: #3F1B53;
+}
+
+.rc-directory-content .rc-table-tr {
+  box-shadow: 1px 1px 0 #30BEC0;
+}
+
+.rc-header {
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.1);
+}
+.rc-header .rc-button.rc-directory-plus {
+  background-color: #C6027B;
+}
+.rc-header .rc-button .rc-icon {
+  color: white;
+  font-size: 24px;
+}
+    
+
+
+.rc-header__wrap {
+    box-shadow: none;
+}
+
+.message .user-card-message {
+  color: #C6027B;
+}
+.message .body {
+  color: #3F1B53;
+}
+.message .body.color-info-font-color {
+  color: #a0a0a0;
+}
+
+.contextual-bar h1 {
+  color: #C6027B;
+}
+.contextual-bar .attachments .attachments__content {
+  color: #3F1B53;
+}
+.contextual-bar .attachments .attachments__content .attachments__name {
+  color: #3F1B53;
+}
+
+.sidebar__footer {
+  display: block;
+  text-align:center;
+  height: 70px !important;
+}
+
+.create-channel .rc-button--primary, .rc-modal-wrapper .rc-button--primary, .contextual-bar .rc-button--primary {
+    border-radius: 8px;
+    background-color: #8EC73F;
+}
+
+.emoji-picker.rc-popover__content.show {
+    left: 0px !important;
+    bottom: 40px !important
+}
