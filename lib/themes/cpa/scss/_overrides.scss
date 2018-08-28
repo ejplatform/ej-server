@@ -30,11 +30,12 @@ $login-button-register-button-radius: 8px;
 $login-button-color: $color-green-atlantis;
 $login-new-user-h1-display: none;
 $login-new-user-border: none;
-$login-reticule-position: relative;
-$login-reticule-bottom: 100px;
-$login-reticule-margin-bottom: -100px ;
-$login-reticule-z-index: -1;
-$login-reticule-display: inline;
+$login-reticle-position: relative;
+$login-reticle-bottom: 0px;
+$login-reticle-margin-bottom: 0px ;
+$login-reticle-z-index: -1;
+$login-reticle-display: inline;
+
 
 
 // Social
