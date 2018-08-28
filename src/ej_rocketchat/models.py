@@ -208,10 +208,10 @@ class RCConfig(models.Model):
             url = f'{url}?{query_param}'
 
         # Makes API request
-        response = method(url, headers=headers, **kwargs)
         try:
+            response = method(url, headers=headers, **kwargs)
             result = json.loads(response.content, encoding='utf-8')
-        except (ConnectionError, JSONDecodeError) as exc:
+        except (requests.ConnectionError, JSONDecodeError) as exc:
             msg = {
                 'status': 'error',
                 'message': str(exc),
