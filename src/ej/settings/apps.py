@@ -57,6 +57,8 @@ class InstalledAppsConf(Base, EjOptions):
         apps = [*super().get_third_party_apps(), *self.third_party_apps]
         if self.ENVIRONMENT == 'local':
             apps = ['debug_toolbar', *apps, 'django_extensions']
-        elif self.ENVIRONMENT == 'production':
+        elif self.DEBUG:
+            apps = ['debug_toolbar', *apps]
+        if self.ENVIRONMENT == 'production':
             apps = ['raven.contrib.django.raven_compat', 'gunicorn', 'anymail', *apps]
         return apps

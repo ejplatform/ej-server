@@ -10,11 +10,11 @@ class MiddlewareConf(Base):
             'ej_boards.middleware.BoardFallbackMiddleware',
             *middleware,
         ]
-        if self.ENVIRONMENT == 'local':
+        if self.DEBUG:
             middleware = [
                 'debug_toolbar.middleware.DebugToolbarMiddleware',
                 *middleware
             ]
-        elif self.ENVIRONMENT == 'testing':
+        if self.ENVIRONMENT == 'testing':
             middleware.remove('django.middleware.locale.LocaleMiddleware')
         return middleware
