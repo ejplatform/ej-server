@@ -643,7 +643,6 @@ $conversation-topic-display: none !default;
     #toast {
         visibility: hidden;
         background-color: $color-blue-light;
-        color: $color-purple-dark;
         font-weight: bold;
         text-align: center;
         border-radius: 2px;
@@ -651,17 +650,20 @@ $conversation-topic-display: none !default;
         z-index: 101;
         width: 100vw;
         left: 0;
-        bottom: 70px;
+        bottom: $header-bottom-nav-height;
         font-size: 17px;
         >div {
             padding: 40px;
+            h3, p {
+                color: $toast-font-color;
+            }
         }
     }
     
     #toast.show {
         visibility: visible;
-        -webkit-animation: fadein 1s, fadeout 0.5s 3s;
-        animation: fadein 1s, fadeout 0.5s 3s;
+        -webkit-animation: fadein 1s, fadeout 1s 3s;
+        animation: fadein 1s, fadeout 1s 3s;
     }
     
     @-webkit-keyframes fadein {
