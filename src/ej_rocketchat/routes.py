@@ -22,9 +22,10 @@ def iframe(request):
         token = rocket.admin_token
     else:
         account = rocket.find_or_create_account(request.user)
-        token = account.auth_token
         if account is None:
             return redirect('rocket:register')
+        token = account.auth_token
+
     return {
         'rocketchat_url': rocket.url,
         'auth_token': token,
@@ -88,8 +89,6 @@ def intro():
 
 
 @urlpatterns.route('check-login/',
-                   csrf=False,
-                   xframe=False,
                    decorators=[security_policy])
 def check_login(request):
     if not request.user.is_authenticated:

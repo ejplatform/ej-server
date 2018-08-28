@@ -1,3 +1,5 @@
+from sidekick import unique as _unique
+
 from boogie.configurations import SecurityConf as Base, env
 
 
@@ -22,11 +24,11 @@ class SecurityConf(Base):
         ]
         if self.EJ_ROCKETCHAT_INTEGRATION:
             trusted.append(remove_schema(self.EJ_ROCKETCHAT_URL))
-        return trusted
+        return unique(trusted)
 
     def get_allowed_hosts(self, hostname):
         allowed = self.env.list('DJANGO_ALLOWED_HOSTS', default=[]) or []
-        return [hostname, *allowed]
+        return unique([hostname, *allowed])
 
     def finalize(self, settings):
         settings = super().finalize(settings)
@@ -43,3 +45,7 @@ class SecurityConf(Base):
 def remove_schema(url):
     _, _, hostname = url.partition('://')
     return hostname
+
+
+def unique(data):
+    return list(_unique(data))

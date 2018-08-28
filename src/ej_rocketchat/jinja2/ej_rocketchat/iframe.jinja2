@@ -4,19 +4,13 @@
 
 {% block main %}
     <iframe class="RocketIFrame" src="{{ rocketchat_url }}"></iframe>
+    <style>
+        /* Disable lower navigation bar */
+        .Header-lowerNav {
+            display: none;
+        }
+    </style>
     <script>
-        // Hides lower nav bar. Restores it when another page loads.
-        (function () {
-            var $nav = $('.Header-lowerNav');
-            $nav.hide();
-
-            var unbind = up.on('up:history:push', function () {
-                unbind();
-                $nav.show();
-            });
-        })();
-
-
         // Login in Rocket.Chat using js.
         (function () {
             document.querySelector('iframe.RocketIFrame').contentWindow.postMessage({
@@ -25,10 +19,5 @@
             }, '*')
         })();
     </script>
-    <style>
-        .Header-lowerNav {
-            display: none;
-        }
-    </style>
 {% endblock %}
 
