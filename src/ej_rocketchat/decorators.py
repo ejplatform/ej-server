@@ -3,7 +3,6 @@ from functools import wraps
 from django.conf import settings
 from django.http import Http404, HttpResponseServerError
 from django.shortcuts import redirect
-from django.views.decorators.clickjacking import xframe_options_exempt
 from django.views.decorators.csrf import csrf_exempt
 
 from .models import CAN_LOGIN_PERM
@@ -21,16 +20,11 @@ def security_policy(func):
     """
 
     @wraps(func)
-    @xframe_options_exempt
     @csrf_exempt
     def wrapped(*args, **kwargs):
         response = func(*args, **kwargs)
         policy = ' '.join(['frame-ancestors', *settings.CSRF_TRUSTED_ORIGINS])
         response['Access-Control-Allow-Credentials'] = 'true'
-        # response["Access-Control-Allow-Origin"] = "*"
-        # response["Access-Control-Allow-Methods"] = "GET, OPTIONS"
-        # response["Access-Control-Max-Age"] = "1000"
-        # response["Access-Control-Allow-Headers"] = "X-Requested-With, Content-Type"
         response['Content-Security-Policy'] = policy
         response['X-Frame-Options'] = f'allow-from {rocket.url}'
         return response
