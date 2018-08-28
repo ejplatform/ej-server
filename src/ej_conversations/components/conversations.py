@@ -4,11 +4,13 @@ from .. import models
 
 
 @with_template(models.Conversation, role='card')
-def conversation_card(conversation, url=None, **kwargs):
+def conversation_card(conversation, request=None, url=None, **kwargs):
     """
     Render a round card representing a conversation in a list.
     """
 
+    user = getattr(request, 'user', None)
+    is_author = conversation.author == user
     moderate_url = None
     return {
         'conversation': conversation,
@@ -18,6 +20,7 @@ def conversation_card(conversation, url=None, **kwargs):
         'n_votes': conversation.vote_count(),
         'n_followers': conversation.followers.count(),
         'moderate_url': moderate_url,
+        'is_author': is_author,
         **kwargs,
     }
 

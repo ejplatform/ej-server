@@ -22,7 +22,7 @@
         </div>
         <div class="ConversationCard-actions">{{ action_button(_('Participate now!'), url) }}</div>
     </div>
-    {% if conversation.author == request.user %}
+    {% if is_author %}
         <a class="ConversationCard-moderation" href="{{ conversation.get_absolute_url() }}moderate/">
             <i class="fas fa-cog"></i> {{ _('Moderate Conversation') }}
         </a>

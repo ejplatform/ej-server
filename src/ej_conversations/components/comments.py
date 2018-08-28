@@ -22,3 +22,15 @@ def comment_card(comment, request=None, **kwargs):
         'csrf_input': csrf_input(request),
         **kwargs,
     }
+
+
+@with_template(models.Comment, role='moderate')
+def comment_moderate(comment, request=None, **kwargs):
+    """
+    Render a comment inside a moderation card.
+    """
+
+    return {
+        'comment': comment,
+        'csrf_input': csrf_input(request)
+    }
