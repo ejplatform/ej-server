@@ -6,7 +6,7 @@ from django.utils.translation import ugettext_lazy as _
 from boogie import rules
 from hyperpython import a
 from . import urlpatterns, conversation_url
-from ..models import FavoriteConversation, Conversation
+from ..models import FavoriteConversation, Conversation, Comment
 
 
 @urlpatterns.route('', name='list')
@@ -29,22 +29,21 @@ def conversation_list(request):
 @urlpatterns.route(conversation_url)
 def detail(request, conversation, owner=None):
     user = request.user
-    comment = conversation.next_comment(user, None)
     favorites = FavoriteConversation.objects.filter(conversation=conversation)
     ctx = {
         'conversation': conversation,
-        'comment': comment,
         'owner': owner,
         'edit_perm': user.has_perm('ej_conversations.can_edit_conversation', conversation),
         'login_link': a(_('login'), href=reverse('auth:login') + '?next=' + conversation.get_absolute_url()),
         'favorites': favorites,
     }
 
-    if comment and request.POST.get('action') == 'vote':
+    if request.POST.get('action') == 'vote':
         vote = request.POST['vote']
+        voted_comment = Comment.objects.get(id=request.POST['comment_id'])
         if vote not in {'agree', 'skip', 'disagree'}:
             return HttpResponseServerError('invalid parameter')
-        comment.vote(user, vote)
+        voted_comment.vote(user, vote)
 
     elif request.POST.get('action') == 'comment':
         comment = request.POST['comment'].strip()
@@ -59,6 +58,7 @@ def detail(request, conversation, owner=None):
     elif request.POST.get('action') == 'favorite':
         conversation.toggle_favorite(user)
 
+    ctx['comment'] = conversation.next_comment(user, None)
     ctx['can_comment'] = user.has_perm('ej_conversations.can_comment', conversation)
     ctx['remaining_comments'] = rules.compute('ej_conversations.remaining_comments', conversation, user)
     return ctx
