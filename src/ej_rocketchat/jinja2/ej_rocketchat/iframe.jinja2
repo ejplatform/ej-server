@@ -21,7 +21,7 @@
         (function () {
             document.querySelector('iframe.RocketIFrame').contentWindow.postMessage({
                 externalCommand: 'login-with-token',
-                token: {{ auth_token_repr }},
+                token: "{{ auth_token.replace('"', '\\"') }}",
             }, '*')
         })();
     </script>

@@ -23,10 +23,10 @@ def security_policy(func):
         response = func(*args, **kwargs)
         policy = ' '.join(['frame-ancestors', *settings.CSRF_TRUSTED_ORIGINS])
         response['Access-Control-Allow-Credentials'] = 'true'
-        response["Access-Control-Allow-Origin"] = "*"
-        response["Access-Control-Allow-Methods"] = "GET, OPTIONS"
-        response["Access-Control-Max-Age"] = "1000"
-        response["Access-Control-Allow-Headers"] = "X-Requested-With, Content-Type"
+        # response["Access-Control-Allow-Origin"] = "*"
+        # response["Access-Control-Allow-Methods"] = "GET, OPTIONS"
+        # response["Access-Control-Max-Age"] = "1000"
+        # response["Access-Control-Allow-Headers"] = "X-Requested-With, Content-Type"
         response['Content-Security-Policy'] = policy
         return response
 

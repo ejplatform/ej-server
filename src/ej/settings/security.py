@@ -21,14 +21,12 @@ class SecurityConf(Base):
             *(self.env('DJANGO_CSRF_TRUSTED_ORIGINS', type=list) or ()),
         ]
         if self.EJ_ROCKETCHAT_INTEGRATION:
-            trusted.append(self.EJ_ROCKETCHAT_URL)
+            trusted.append(remove_schema(self.EJ_ROCKETCHAT_URL))
         return trusted
 
-    def get_allowed_hosts(self, environment):
+    def get_allowed_hosts(self, hostname):
         allowed = self.env.list('DJANGO_ALLOWED_HOSTS', default=[]) or []
-        if environment != 'production':
-            return ['localhost', *allowed]
-        return allowed
+        return [hostname, *allowed]
 
     def finalize(self, settings):
         settings = super().finalize(settings)
@@ -40,3 +38,8 @@ class SecurityConf(Base):
                 'localhost' + x for x in ['', ':8000', ':3000', ':5000']
             )
         return settings
+
+
+def remove_schema(url):
+    _, _, hostname = url.partition('://')
+    return hostname
