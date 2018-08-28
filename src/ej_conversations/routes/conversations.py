@@ -59,7 +59,7 @@ def detail(request, conversation, owner=None):
         conversation.toggle_favorite(user)
 
     ctx['comment'] = conversation.next_comment(user, None)
-    ctx['can_comment'] = user.has_perm('ej_conversations.can_comment', conversation)
+    ctx['can_comment'] = user.has_perm('ej.can_comment', conversation)
     ctx['remaining_comments'] = rules.compute('ej_conversations.remaining_comments', conversation, user)
     return ctx
 
