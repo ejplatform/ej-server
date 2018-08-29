@@ -107,9 +107,7 @@ class Conf(ThemesConf,
     # REST_AUTH_REGISTER_SERIALIZERS = {
     #     'REGISTER_SERIALIZER': 'ej_users.serializers.RegistrationSerializer'
     # }
-    PUSH_NOTIFICATIONS_SETTINGS = {
-        "FCM_API_KEY": "",
-    }
+    PUSH_NOTIFICATIONS_SETTINGS = {'FCM_API_KEY': ''}
 
     # TODO: Fix this later in boogie configuration stack
     # Required for making django debug toolbar work
