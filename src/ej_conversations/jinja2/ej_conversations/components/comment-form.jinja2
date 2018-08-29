@@ -1,0 +1,19 @@
+{% from 'components/generic/toast.jinja2' import toast %}
+
+{% macro comment_form(csrf_input) %}
+    <div class="CommentForm">
+        <h1>Deixe seu comentário</h1>
+        <p>Inclua algo novo, evite opiniões semelhantes. Você pode postar até 2 comentários.</p>
+        <form method="post">
+            {{ csrf_input }}
+            <input type="hidden" name="action" value="comment">
+            <textarea name="comment" onFocus="document.getElementsByClassName('Header-lowerNav')[0].style.display='none'" onBlur="document.getElementsByClassName('Header-lowerNav')[0].style.display='flex'"></textarea>
+            {% if remaining_comments == 0 %} {# replace with can_comment when it works#}
+                {{toast("OPS!", "Você já atingiu o limite de comentários desta conversa. Agradecemos a sua contribuição!")}}
+                <button class="fake-button" type="button" onclick="showToaster()" >Opinar</button>
+            {% else %}
+                <input type="submit" name="submit" value="Opinar" primary>
+            {% endif %}
+        </form>
+    </div>
+{% endmacro %}

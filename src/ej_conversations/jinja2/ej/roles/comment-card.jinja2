@@ -10,6 +10,7 @@
         <form method="post" class="Comment-voteArea" id="Comment-form" up-target=".Comment" up-transition="move-left">
             {{ csrf_input }}
             <input type="hidden" name="action" value="vote">
+            <input type="hidden" name="comment_id" value="{{ comment.id }}">
             <ul class="ConversationComment-actions">
                 <li class="voteAgree" up-expand>
                     <button type="submit" form="Comment-form" name="vote" value="agree">

@@ -29,6 +29,3 @@ class EjOptions(Conf):
 
     # Allow instances to exclude some profile fields from visualization
     EJ_EXCLUDE_PROFILE_FIELDS = env([], name='{attr}')
-
-    # Theme tweaks
-    EJ_THEME_SHOW_NAVBAR_ICONS = env(True, name='{attr}')

@@ -59,11 +59,11 @@ def register(request):
 
 
 @urlpatterns.route('login/')
-def login(request):
+def login(request, redirect_to='/'):
     form = forms.LoginForm(request.POST if request.method == 'POST' else None)
     error_msg = _('Invalid email or password')
-    next = request.GET.get('next', '/')
-    fast = request.GET.get('fast', 'false') == 'true'
+    next = request.GET.get('next', redirect_to)
+    fast = request.GET.get('fast', 'false') == 'true' or 'fast' in request.GET
 
     if request.method == 'POST' and form.is_valid():
         data = form.cleaned_data
@@ -81,6 +81,7 @@ def login(request):
             form.add_error(None, error_msg)
         else:
             return redirect(next)
+
     elif fast and request.user.is_authenticated and next:
         return redirect(next)
 

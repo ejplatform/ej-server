@@ -22,7 +22,22 @@ def logout_handler(sender, user, request, **kwargs):
     """
     # Superuser cannot logout because that would invalidate the Auth token
     if not user.is_superuser:
-        submit(rocket.logout, user)
+        submit(silence_exceptions(rocket.logout), user)
+
+
+def silence_exceptions(func):
+    """
+    Log errors instead of proagating exceptions.
+    """
+
+    def wrapped(*args, **kwargs):
+        try:
+            return func(*args, **kwargs)
+        except Exception as exc:
+            msg = f'Error encountered executing {func.__name__}: {exc}'
+            log.error(msg)
+
+    return wrapped
 
 
 if settings.EJ_ROCKETCHAT_INTEGRATION:

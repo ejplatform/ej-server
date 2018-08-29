@@ -1,93 +1,80 @@
 {% extends 'base.jinja2' %}
 
-{% block content %}
-      <div class="Moderate Create">
-        <script>
-        function createNewBoard() {
-          var select = $('select[name="board"]');
-          if (select.val() === 'new') {
-            var field = '<input type="text" name="newboard" placeholder="{{ _('Type here the title of the new board') }}" />';
-            select.replaceWith(field);
-          }
-        }
-        $(document).ready(function() {
-          $('#ConversationField-board').show();
-        });
-
+{% block javascript_body %}
+    {{ super() }}
+    <script>
         function addCommentField() {
-          var index = parseInt($('input[name="commentscount"]').val(), 10) + 1;
-          $('input[name="commentscount"]').val(index);
-          var template = '<div class="ConversationField"><i class="far fa-comment"></i> <input type="text" name="comment-%INDEX%" placeholder="{{ _('Type here the comment') }} #%INDEX%" /> <i class="fa fa-edit"></i></div>';
-          $('.Moderate-comments').append(template.replace(/%INDEX%/g, index));
+            var index = parseInt($('input[name="comments_count"]').val(), 10) + 1;
+            $('input[name="comments_count"]').val(index);
+            var template = '<div class="ConversationField"><i class="far fa-comment"></i> <input type="text" name="comment-%INDEX%" placeholder="{{ _('Type here the comment') }} #%INDEX%" /> </div>';
+            $('.Moderate-comments').append(template.replace(/%INDEX%/g, index));
         }
-        </script>
-        <div class="CenteredContainer">
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="Moderate Create CenteredContainer">
         <form method="post" class="django-form-as-p">
-          {{ csrf_input }}
-          {% if form.errors %}
-          	<!-- Error messaging -->
-          	<div id="errors">
-          		<div class="inner">
-          			<p>{{ _('There were some errors in the information you entered. Please correct the following:') }}</p>
-          			<ul>
-          				{% for field in form %}
-          					{% if field.errors %}<li>{{ field.label }}: {{ field.errors|striptags }}</li>{% endif %}
-          				{% endfor %}
-          			</ul>
-          		</div>
-          	</div>
-          {% endif %}
-          <input type="hidden" name="title" value="" />
+            {{ csrf_input }}
+            {% if form.errors %}
+                <!-- Error messaging -->
+                <div id="errors">
+                    <div class="inner">
+                        <p>{% trans %}
+                            There were some errors in the information you entered.
+                            Please correct the problems bellow.{% endtrans %}</p>
+                        {{ form.non_field_errors() }}
+                    </div>
+                </div>
+            {% endif %}
+            <input type="hidden" name="title" value=""/>
 
-          <div class="ConversationEdit-actions">
-            <span>
-              <i class="fa fa-times"></i>
-              <input type="reset" value="{{ _('Cancel') }}" name="cancel" onClick="history.back(-1)">
-            </span>
-            <span>
-              <i class="fa fa-check create-conversation-icon"></i>
-              <input type="submit" value="{{ _('Create') }}" name="create">
-            </span>
-          </div>
+            <div class="ConversationEdit-actions">
+                <span>
+                    <i class="fa fa-times"></i>
+                    <input type="reset" value="{{ _('Cancel') }}" name="cancel" onClick="history.back(-1)">
+                </span>
+                <span>
+                    <i class="fa fa-check create-conversation-icon"></i>
+                    <input type="submit" value="{{ _('Create') }}" name="create">
+                </span>
+            </div>
 
-          <div class="ConversationDetail">
-              <div class="ConversationDetail-banner">
-                  <div class="ConversationTags">
-                    <div class="ConversationField"><i class="fa fa-tags"></i> <input type="text" name="tags" placeholder="{{ _('Type tags separating by commas') }}" /> <i class="fa fa-edit"></i></div>
-                  </div>
+            <div class="ConversationDetail">
+                <div class="ConversationDetail-banner">
+                    <div class="ConversationTags">
+                        <div class="ConversationField"><i class="fa fa-tags"></i>
+                            {{ form.tags }}
+                        </div>
+                    </div>
 
-                  <p><textarea onfocus="this.style.height = (this.scrollHeight) + 'px'" onkeyup="this.style.height = (this.scrollHeight) + 'px'" class="Conversation-edit-field" name="text" required id="id_text" placeholder="{{ _('Type here the question for your research') }}"></textarea></p>
+                    <p>{{ form.text }}</p>
 
-                  <div class="Conversation-edit">
-                    <b>{{_('Edit Conversation') }}</b>
-                  </div>
-              </div>
+                    <div class="Conversation-edit">
+                        <b>{{ _('Edit Conversation') }}</b>
+                    </div>
+                </div>
+                <div class="ConversationDetail-arrow"></div>
+            </div>
 
-              <div class="ConversationDetail-arrow"></div>
-          </div>
+            <div class="ConversationField"><i class="fa fa-heading"></i>{{ form.title }}</div>
+            <div class="ConversationField"><i class="fa fa-link"></i>{{ form.slug }}</div>
+            <input type="hidden" name="comments_count" value="5">
 
-          <div class="ConversationField"><i class="fa fa-link"></i> <input type="text" name="title" placeholder="{{ _('Slug') }}" /> <i class="fa fa-edit"></i></div>
-          <div class="ConversationField" id="ConversationField-board" style="display: none;">
-            <i class="fa fa-list-ul"></i>
-            <select name="board" onchange="createNewBoard()">
-              <option disabled selected value>{{ _('Conversation board') }}</option>
-              {% for board in boards %}
-              <option value="{{ board.id }}">{{ board.title }}</option>
-              {% endfor %}
-              <option value="new">{{ _('Create new board...') }}</option>
-            </select>
-            <i class="fa fa-edit"></i>
-          </div>
+            <div class="Moderate-comments">
+                <h1>{{ _('Comments') }}</h1>
+                {% for i in range(1, 6) %}
+                    <div class="ConversationField"><i class="far fa-comment"></i>
+                        <input type="text" name="comment-{{ i }}"
+                               placeholder="{{ _('Type your comment here') }} #{{ i }}"/>
+                    </div>
+                {% endfor %}
+            </div>
+            <p class="Conversation-AddComment" onclick="addCommentField()">
+                <i class="fa fa-plus"></i> {{ _('Add more comments') }}
+            </p>
 
-          <input type="hidden" name="commentscount" value="5" />
-          <div class="Moderate-comments">
-            <h1>{{ _('Comments') }}</h1>
-            {% for i in range(1, 6) %}
-              <div class="ConversationField"><i class="far fa-comment"></i> <input type="text" name="comment-{{ i }}" placeholder="{{ _('Type here the comment') }} #{{ i }}" /> <i class="fa fa-edit"></i></div>
-            {% endfor %}
-          </div>
-          <p class="Conversation-AddComment" onclick="addCommentField()"><i class="fa fa-plus"></i> {{ _('Add more comments') }}</p>
+            <input class="Button" type="submit" value="{{ _('Send') }}">
         </form>
-      </div>
     </div>
 {% endblock %}

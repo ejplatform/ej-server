@@ -10,11 +10,13 @@ class MiddlewareConf(Base):
             'ej_boards.middleware.BoardFallbackMiddleware',
             *middleware,
         ]
-        if self.ENVIRONMENT == 'local':
+        if self.DEBUG:
             middleware = [
                 'debug_toolbar.middleware.DebugToolbarMiddleware',
                 *middleware
             ]
-        elif self.ENVIRONMENT == 'testing':
+        if self.ENVIRONMENT == 'testing':
             middleware.remove('django.middleware.locale.LocaleMiddleware')
+        if self.EJ_ROCKETCHAT_INTEGRATION:
+            middleware.append('ej_rocketchat.middleware.ContentSecurityPolicyMiddleware')
         return middleware

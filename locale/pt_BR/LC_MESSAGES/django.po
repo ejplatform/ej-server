@@ -1736,7 +1736,7 @@ msgid "New conversation"
 msgstr "Nova conversa"
 
 #: src/ej_conversations/jinja2/ej_conversations/list.jinja2:11
-msgid "Viewing timeline:"
+msgid "Viewing board:"
 msgstr "Visualizando quadro"
 
 #: src/ej_conversations/jinja2/ej_conversations/components/comment-card.jinja2:4

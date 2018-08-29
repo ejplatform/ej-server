@@ -1,11 +1,12 @@
+from django.db import transaction
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
-from boogie.router import Router
-from ej_conversations.proxy import conversations_with_moderation
-from ej_conversations import forms
-from ..models import Board, BoardSubscription
 
+from boogie.router import Router
+from ej_conversations import forms
+from ej_conversations.proxy import conversations_with_moderation
+from ..models import Board
 
 app_name = 'ej_boards'
 urlpatterns = Router(
@@ -30,11 +31,11 @@ def conversation_list(request, board):
 
     return {
         'conversations': conversations_with_moderation(user, conversations),
-        'timelines': boards,
-        'current_timeline': board,
+        'boards': boards,
+        'current_board': board,
         'can_add_conversation': board_user == user,
-        'is_a_timeline': True,
-        'is_my_timeline': (user == board.owner),
+        'is_a_board': True,
+        'owns_board': user == board.owner,
         'create_url': reverse('board_conversation:create', kwargs={'board': board}),
         'title': _("%s' conversations") % board.title,
         'subtitle': _("These are %s's conversations. Contribute to them too") % board.title,
@@ -44,22 +45,17 @@ def conversation_list(request, board):
 @urlpatterns.route(board_url + 'add/', template='ej_conversations/create.jinja2')
 def create(request, board):
     user = request.user
-    form_class = forms.ConversationForm
-    if request.method == 'POST':
-        form = form_class(request.POST)
-        if form.is_valid():
-            conversation = form.save(commit=False)
-            conversation.author = user
-            conversation.save()
+    if not user.has_perm('ej_boards.can_add_conversation', board):
+        raise PermissionError
 
-            BoardSubscription.objects.create(conversation=conversation, board=board)
+    form = forms.ConversationForm(request.POST or None)
 
-            return redirect(conversation.get_absolute_url())
-    else:
-        form = form_class()
+    if request.method == 'POST' and form.is_valid():
+        with transaction.atomic():
+            conversation = form.save_all(
+                author=user,
+                board=board,
+            )
+        return redirect(f'/{board.slug}/conversations/{conversation.slug}')
 
-    return {
-        'content_title': _('Create conversation'),
-        'form': form,
-        'boards': Board.objects.filter(owner=user)
-    }
+    return {'form': form}

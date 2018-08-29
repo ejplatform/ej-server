@@ -19,7 +19,8 @@ class RocketIntegrationForm(forms.Form):
     Form that asks basic configuration about a Rocket.Chat instance.
     """
 
-    rocketchat_url = forms.URLField(
+    # URLFields explicitly disallow local domains (except for localhost)
+    rocketchat_url = forms.CharField(
         label=_('Rocket.Chat URL'),
         help_text=_('Required URL for Rocket.Chat admin instance.'),
         initial=settings.EJ_ROCKETCHAT_URL,
@@ -70,8 +71,13 @@ class RocketIntegrationForm(forms.Form):
         if response.get('status') == 'success':
             self.config = self._save_config(response['data'])
             return config
+        elif response.get('error') in ('JSONDecodeError', 'ConnectionError'):
+            self.add_error('rocketchat_url', _('Error connecting to server'))
+        elif response.get('error', 'Unauthorized'):
+            self.add_error('username', _('Invalid username or password'))
         else:
-            self.add_error("username", _('Invalid username or password'))
+            log.error(f'Invalid response: {response}')
+            self.add_error(None, _('Error registering on Rocket.Chat server'))
 
     def _save_config(self, data):
         url = self.cleaned_data['rocketchat_url']
@@ -140,5 +146,5 @@ class AskAdminPasswordForm(forms.Form):
             password = self.cleaned_data['password']
             try:
                 rocket.password_login(rocket.admin_username, password)
-            except PermissionError as exc:
+            except PermissionError:
                 self.add_error('password', _('Invalid password'))

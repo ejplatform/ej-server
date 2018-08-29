@@ -6,16 +6,17 @@
         <a class="Link-new" href="{{ create_url }}"><i class="fa fa-plus-circle"></i> {{ _('New conversation') }}</a>
     {% endif %}
 
-    {% if timelines is defined and timelines|length > 1 %}
-        <div class="view-timeline">
-            <span>{{ _('Viewing timeline:') }}</span>
-            <select name="select-timeline" class="select-timeline" id="select-timeline">
-                {% for timeline in timelines %}
-                    <option value="{{ timeline.get_absolute_url() }}" {% if timeline.id==current_timeline.id %}
+    {% if owns_board|default(False) and boards|length > 1 %}
+        <div class="view-board">
+            <span>{{ _('Viewing board:') }}</span>
+            <select name="select-board" class="select-board" id="select-board">
+                {% for board in boards %}
+                    <option value="{{ board.get_absolute_url() }}" {% if board.id==current_board.id %}
                             selected="selected"{% endif %} >
-                        {{ timeline.title }}
+                        {{ board.title }}
                     </option>
                 {% endfor %}
+                <option value="/profile/boards/add/">{% trans %}Create a new board{% endtrans %}</option>
             </select>
         </div>
     {% endif %}

@@ -54,8 +54,8 @@ def conversations(request):
     return {
         'user': user,
         'conversations': conversations,
-        'current_timeline': board,
-        'timelines': boards,
+        'current_board': board,
+        'boards': boards,
         'create_url': reverse('conversation:create'),
         'can_add_conversation': user.has_perm('ej.can_add_promoted_conversation'),
         'title': _("My conversations"),

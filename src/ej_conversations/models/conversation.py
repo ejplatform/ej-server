@@ -19,15 +19,6 @@ from ..managers import ConversationManager
 
 NOT_GIVEN = object()
 log = logging.getLogger('ej_conversations')
-slug_base = (lambda: '')
-
-
-def slug_base(conversation):
-    title = conversation.title
-    if conversation.status != conversation.STATUS.promoted:
-        username = conversation.author.username
-        title = f'{username}--{title}'
-    return title.lower()
 
 
 class FavoriteConversation(models.Model):
@@ -65,7 +56,7 @@ class Conversation(TimeStampedModel):
         _('Title'),
         max_length=255,
         help_text=_(
-            'A short description about this conversations. This is used internally '
+            'A short description about this conversation. This is used internally '
             'and to create URL slugs. (e.g. School system)'
         )
     )
@@ -245,7 +236,7 @@ class Conversation(TimeStampedModel):
         if no comments are available for user.
         """
         comment = rules.compute('ej_conversations.next_comment', self, user)
-        if comment is not None:
+        if comment:
             return comment
         elif default is NOT_GIVEN:
             msg = _('No comments available for this user')

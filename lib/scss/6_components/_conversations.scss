@@ -1,9 +1,9 @@
 /*
  CONVERSATIONS
  ======================================================================== */
+@import '../2_tools/index';
 
 $conversation-button-size: $spacing-unit-small + $spacing-unit-tiny !default;
-$conversation-card-padding: $spacing-unit-small !default;
 $conversation-card-gutter: $spacing-unit !default;
 $conversation-card-border: 0 !default;
 $conversation-card-border-radius: 50% !default;
@@ -17,7 +17,7 @@ $conversation-card-button-color: $color-content-text !default;
 $conversation-card-button-color-text: $color-content !default;
 $conversation-card-border-arrow-size: $spacing-unit;
 $conversation-card-button-border-radius: 30px !default;
-$conversation-topic-diplay: none !default;
+$conversation-topic-display: none !default;
 
 .ConversationList {
     @extend .Container;
@@ -36,7 +36,7 @@ $conversation-topic-diplay: none !default;
         }
 
         .topic {
-            display: $conversation-topic-diplay;
+            display: $conversation-topic-display;
         }
     }
 
@@ -171,7 +171,7 @@ $conversation-topic-diplay: none !default;
     }
 
     > * {
-        padding: $conversation-card-padding;
+        padding: $spacing-unit-small;
     }
 
     h1 {
@@ -626,6 +626,65 @@ $conversation-topic-diplay: none !default;
         font-weight: bold;
         margin-top: $spacing-unit-small;
     }
+
+    .fake-button {
+        border-radius: $conversation-comment-button-border-radius;
+        color: #fff;
+        background: $conversation-comment-button-background;
+        border: 0;
+        padding: $spacing-unit-small $spacing-unit;
+        font-size: 14px;
+        box-shadow: none;
+        text-transform: uppercase;
+        font-weight: bold;
+        margin-top: $spacing-unit-small;
+    }
+
+    #toast {
+        visibility: hidden;
+        background-color: $color-blue-light;
+        font-weight: bold;
+        text-align: center;
+        border-radius: 2px;
+        position: fixed;
+        z-index: 101;
+        width: 100vw;
+        left: 0;
+        bottom: $header-bottom-nav-height;
+        font-size: 17px;
+        >div {
+            padding: 40px;
+            h3, p {
+                color: $toast-font-color;
+            }
+        }
+    }
+    
+    #toast.show {
+        visibility: visible;
+        -webkit-animation: fadein 1s, fadeout 1s 3s;
+        animation: fadein 1s, fadeout 1s 3s;
+    }
+    
+    @-webkit-keyframes fadein {
+        from {bottom: 0; opacity: 0;} 
+        to {bottom: 70px; opacity: 1;}
+    }
+    
+    @keyframes fadein {
+        from { opacity: 0;}
+        to { opacity: 1;}
+    }
+    
+    @-webkit-keyframes fadeout {
+        from { opacity: 1;} 
+        to { opacity: 0;}
+    }
+    
+    @keyframes fadeout {
+        from { opacity: 1;}
+        to { opacity: 0;}
+    }
 }
 
 .CircleButton {
@@ -641,8 +700,8 @@ $conversation-topic-diplay: none !default;
     vertical-align: middle;
     width: $conversation-button-size;
 
-    &--leftConversationSlider,
-    &--rightConversationSlider {
+    &-leftConversationSlider,
+    &-rightConversationSlider {
         margin: 0;
         position: absolute;
         top: ($conversation-card-cover-height + $conversation-button-size) / 2;
@@ -654,15 +713,14 @@ $conversation-topic-diplay: none !default;
         }
     }
 
-    &--leftConversationSlider {
+    &-leftConversationSlider {
         left: $spacing-unit-tiny;
     }
 
-    &--rightConversationSlider {
+    &-rightConversationSlider {
         right: $spacing-unit-tiny;
     }
 }
-
 
 .Link-new {
     text-align: center;
@@ -684,7 +742,7 @@ $conversation-topic-diplay: none !default;
     }
 }
 
-.view-timeline {
+.view-board {
     text-align: center;
     display: block;
     width: 100%;
@@ -700,8 +758,8 @@ $conversation-topic-diplay: none !default;
         -webkit-appearance: none;
         background: url($icon-arrow-down) no-repeat right;
         background-size: 16px 16px;
-        padding: 0px;
-        margin: 0px 10px;
+        padding: 0;
+        margin: 0 10px;
     }
 }
 
@@ -802,7 +860,7 @@ $conversation-topic-diplay: none !default;
         textarea {
             outline: 0;
             border-style: solid;
-            box-shadow: inset 0px 0px 0px 0px black;
+            box-shadow: inset 0 0 0 0 black;
             border-color: $color-blue-light;
         }
 

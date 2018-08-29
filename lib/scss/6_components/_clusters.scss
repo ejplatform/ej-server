@@ -21,7 +21,7 @@
         height: $spacing-unit-small * 3;
         background-color: $color-blue-nav;
         a {
-            color: $color-blue;
+            color: $color-primary;
             &.up-current {
                 color: $selected-stereotype-cluster-menu-color;
                 font-weight: bold;
@@ -113,7 +113,7 @@
 
     &-title {
         select {
-            border: 1px solid $color-blue;
+            border: 1px solid $color-primary;
             width: 100%;
             border-radius: $stereotype-add-input-border-radius;
             margin: 0;
@@ -154,7 +154,7 @@
             }
         }
         input, textarea {
-            border: 1px solid $color-blue;
+            border: 1px solid $color-primary;
             border-radius: $stereotype-add-input-border-radius;
             max-width: 100%;
             width: 100%;
@@ -175,8 +175,8 @@
             padding: 1.5px 3px;
             border-radius: 50%;
             border-style: solid;
-            color: $color-blue;
-            border-color: $color-blue;
+            color: $color-primary;
+            border-color: $color-primary;
             background-color: $color-white;
         }
         span {
@@ -190,7 +190,7 @@
 
     .form-row {
         select {
-            border: 1px solid $color-blue;
+            border: 1px solid $color-primary;
             width: 100%;
             border-radius: $stereotype-add-input-border-radius;
         }

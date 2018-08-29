@@ -38,7 +38,7 @@ class Conf(ThemesConf,
         return 'postgresql' in self.DATABASE_DEFAULT['ENGINE']
 
     USING_DOCKER = env(False, name='USING_DOCKER')
-    HOSTNAME = env('localhost', name='{attr}')
+    HOSTNAME = env('localhost')
 
     #
     # Accounts
@@ -70,12 +70,6 @@ class Conf(ThemesConf,
     MIGRATION_MODULES = {
         'sites': 'ej.contrib.sites.migrations'
     }
-
-    AUTHENTICATION_BACKENDS = [
-        'rules.permissions.ObjectPermissionBackend',
-        'django.contrib.auth.backends.ModelBackend',
-        'allauth.account.auth_backends.AuthenticationBackend',
-    ]
 
     EJ_CONVERSATIONS_URLMAP = {
         'conversation-detail': '/conversations/{conversation.slug}/',

@@ -93,7 +93,6 @@ class RCConfigWrapper:
         try:
             response = self.api_call('login', payload=payload, auth='admin')
         except ApiError as exc:
-            print(exc, payload)
             if exc.response['error'].lower() == 'unauthorized':
                 raise PermissionError('invalid credentials')
             raise
@@ -117,7 +116,7 @@ class RCConfigWrapper:
             account.save()
             log.info(f'{user} successfully logged out from Rocket.Chat')
 
-    def login_token(self, user):
+    def get_auth_token(self, user):
         """
         Return the login auth token for the given user.
         """

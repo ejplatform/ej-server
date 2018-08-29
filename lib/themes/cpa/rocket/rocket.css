@@ -6,9 +6,9 @@
 .Rocket-title {
   color: #C4F2F4;
   font-weight: bold;
-  padding: 10px 20px 0px 20px;
+  padding: 15px 20px 0px 20px;
   text-align: center;
-  
+  margin-bottom: 20px;
 }
 
 .Rocket .title {
@@ -34,7 +34,9 @@
   padding: 0px 20px 0px 20px;
   font-size: 16px;
   text-align: center;
+  margin-bottom: 50px !important;
 }
+
 
 .Rocket-items {
     background-color: #C4F2F4;
@@ -70,7 +72,7 @@
 
 .Rocket-action {
   text-align: center;
-  padding: 20px;
+  padding: 30px 20px;
 }
 
 .Rocket-action .Button {

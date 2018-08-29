@@ -1,8 +1,10 @@
-from django.conf import settings
 from functools import wraps
 
+from django.conf import settings
+from django.core.exceptions import ImproperlyConfigured
 from django.http import Http404, HttpResponseServerError
 from django.shortcuts import redirect
+from django.views.decorators.csrf import csrf_exempt
 
 from .models import CAN_LOGIN_PERM
 from .rocket import rocket
@@ -19,12 +21,10 @@ def security_policy(func):
     """
 
     @wraps(func)
+    @csrf_exempt
     def wrapped(*args, **kwargs):
-        res = func(*args, **kwargs)
-        policy = ' '.join(['frame-ancestors', *settings.CSRF_TRUSTED_ORIGINS])
-        res['Access-Control-Allow-Credentials'] = 'true'
-        res['Content-Security-Policy'] = policy
-        return res
+        response = func(*args, **kwargs)
+        return with_headers(response)
 
     return wrapped
 
@@ -50,3 +50,18 @@ def requires_rc_perm(func):
         return func(request, *args, **kwargs)
 
     return decorated
+
+
+def get_rocket_url():
+    try:
+        return rocket.url
+    except ImproperlyConfigured:
+        return settings.EJ_ROCKETCHAT_URL or 'http://localhost:3000'
+
+
+def with_headers(response):
+    policy = ' '.join(['frame-ancestors', *settings.CSRF_TRUSTED_ORIGINS])
+    response['Access-Control-Allow-Credentials'] = 'true'
+    response['Content-Security-Policy'] = policy
+    response['X-Frame-Options'] = f'allow-from {get_rocket_url()}'
+    return response

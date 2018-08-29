@@ -1,4 +1,5 @@
 import json
+from json import JSONDecodeError
 
 import requests
 from django.conf import settings
@@ -162,38 +163,25 @@ class RCConfig(models.Model):
 
         Args:
             uri, version:
-                Used to contruct rocketchat url as <rocketchat>/api/<version>/<uri>
-            user:
-                User making the request.
-            admin (bool):
-                If set to True, makes the request as the admin user.
+                Used to construct Rocket.Chat url as <rocketchat>/api/<version>/<uri>
             payload (JSON):
-                If given, makes a POST request with the given payload.
-
-        Examples:
-            >>> rocketchat_url('users.create', admin=True)
-            http://rocketchat:3000/api/v2/users.create
-
+                JSON payload for the request
+            args (dict):
+                Query dictionary appended to the url.
+            headers (dict):
+                An optional dictionary of HTTP headers.
+            raises (bool):
+                If True (default) raises an ApiError for bad responses from the
+                API, otherwise, return the response dictionary.
+            method ('post', 'get'):
+                HTTP method used on the request.
+            auth:
+                Either None, a user with a registered Rocket.Chat account or
+                the string 'admin' for admin access to the API.
         """
-        # Construct base url
-        url_base = self.api_url or self.url
-        if '://' not in url_base:
-            url_base = 'http://' + url_base
-        url = f'{url_base}/api/{version}/{uri}'
-
-        # Extra parameters
+        url = normalize_api_url(self.api_url or self.url, version, uri, args)
+        headers = normalize_headers(headers, auth, self)
         kwargs = {}
-
-        # Headers
-        headers = dict(headers or {})
-        if auth:
-            if auth == 'admin':
-                id, token = self.admin_id, self.admin_token
-            elif isinstance(auth, dict):
-                id, token = auth['user_id'], auth['auth_token']
-            else:
-                id, token = self.user_info(auth)
-            headers.update({'X-Auth-Token': token, 'X-User-Id': id})
 
         # Payload
         if payload is not None and method == 'post':
@@ -201,38 +189,45 @@ class RCConfig(models.Model):
             headers['Content-Type'] = 'application/json'
         method = getattr(requests, method)
 
-        # Query args
-        if args:
-            query_param = '&'.join(f'{k}={v}' for k, v in args.items())
-            url = f'{url}?{query_param}'
-
         # Makes API request
-        response = method(url, headers=headers, **kwargs)
-        result = json.loads(response.content, encoding='utf-8')
+        try:
+            response = method(url, headers=headers, **kwargs)
+            result = json.loads(response.content, encoding='utf-8')
+        except (requests.ConnectionError, JSONDecodeError) as exc:
+            msg = {
+                'status': 'error',
+                'message': str(exc),
+                'error': type(exc).__name__,
+            }
+            if raises:
+                raise ApiError(msg)
+            return msg
         if response.status_code != 200 and raises:
             error = {'code': response.status_code, 'response': result}
             raise ApiError(error)
         return result
 
-    def user_info(self, user):
-        """
-        Fetches Rocketchat user information.
 
-        Args:
-            user: Django user.
+def normalize_api_url(base, version, uri, args=None):
+    if '://' not in base:
+        base = 'http://' + base
 
-        See also:
-            https://rocket.chat/docs/developer-guides/rest-api/miscellaneous/info/
-        """
-        payload = {'username': self.username}
-        result = self.api_call('users.info', auth='admin', payload=payload)
+    query = ''
+    if args:
+        query_param = '&'.join(f'{k}={v}' for k, v in args.items())
+        query = f'?{query_param}'
 
-        if result.get('status') == 'error':
-            raise PermissionError(result)
-        elif result.get('errorType') == 'error-invalid-user':
-            raise ValueError('invalid username')
-        return result
+    return f'{base}/api/{version}/{uri}{query}'
 
 
-def api_call(*args, **kwargs):
-    return RCConfig.objects.default_config().api_call(*args, **kwargs)
+def normalize_headers(headers, auth, config):
+    headers = dict(headers or {})
+    if auth:
+        if auth == 'admin':
+            id, token = config.admin_id, config.admin_token
+        elif isinstance(auth, dict):
+            id, token = auth['user_id'], auth['auth_token']
+        else:
+            id, token = config.user_info(auth)
+        headers.update({'X-Auth-Token': token, 'X-User-Id': id})
+    return headers
