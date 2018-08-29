@@ -103,6 +103,14 @@ def update_trophy(sender, **kwargs):
         send_trophy_message(user, user_trophy)
 
 @receiver(post_save, sender=Mission)
+def create_conversation_channel(sender, instance, created, **kwargs):
+    sort = "conversation-" + str(instance.id)
+    try:
+        Channel.objects.filter(name="converstion channel", sort=sort)[0]
+    except IndexError:
+        Channel.objects.create(name="converstion channel", sort=sort)
+
+@receiver(post_save, sender=Mission)
 def send_message(sender, instance, created, **kwargs):
     if created:
         channel = Channel.objects.get(sort="mission")
