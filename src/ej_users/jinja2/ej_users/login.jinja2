@@ -2,5 +2,6 @@
 {% from 'ej_users/auth-components.jinja2' import login with context %}
 
 {% block content %}
+    <style>.Header-lowerNotLogged { display: none; }</style>
     {{ login(form, csrf_input, request.GET.get('next', None)) }}
 {% endblock %}
