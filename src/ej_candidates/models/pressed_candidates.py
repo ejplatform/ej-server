@@ -45,7 +45,7 @@ def send_press_email(sender, instance, created, **kwargs):
     <p>Quando registrar o compromisso, todos os usuários que fizeram \
     essa solicitação receberão avisos diretamente, podendo avaliar \
     positivamente seu perfil! Não perca tempo e registre seu \
-    compromisso agora mesmo:</p><p><a href="http://www.unidoscontraacorrupcao.org.br/compromisso">\
+    compromisso agora mesmo:</p><p><a href="http://unidoscontraacorrupcao.org.br/candidatura/">\
     Unidos Contra a Corrupção</a></p><p>Atenciosamente.\
     <br>Unidos Contra a Corrupção</p></div></body></html>'
     send_mail(
