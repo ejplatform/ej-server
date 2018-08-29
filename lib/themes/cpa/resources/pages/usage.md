@@ -4,19 +4,19 @@ O USUÁRIO deverá ler, certificar-se de haver entendido e aceitar todas as cond
 
 Todas as contribuições são bem-vindas, desde que respeitadas as condições aqui expressas.
 
-1. Condições Gerais
+1) Condições Gerais
 
 1.1. A PLATAFORMA é um espaço digital voltado à participação livre e consciente de cidadãos e cidadãs, que podem expressar suas ideias e opiniões, com o objetivo de subsidiar de cidadãs e cidadãos  a atuação do Comitê de Participação de Adolescentes (CPA), do Conanda e da Secretaria Nacional dos Direitos da Criança e do Adolescente do Ministério dos Direitos Humanos (SNDCA/MDH).
 
 1.2. Para realizar estes objetivos, o Conanda, por meio da PLATAFORMA, oferecerá uma variedade de recursos online, que podem envolver notícias, publicações, imagens, áudios e vídeos que retratem conteúdos relacionados a discussões de relevância pública e de interesse da sociedade.
 
-2. Das Opiniões na Plataforma
+2) Das Opiniões na Plataforma
 
 2.1. Os USUÁRIOS cadastrados poderão enviar opiniões que serão publicadas após moderação realizada, conforme disposto nestes Termos de Uso. As opiniões publicadas podem ser compartilhadas via Facebook, Telegram, Twitter, Whatsapp e outras mídias sociais.
 
 2.2. As opiniões publicadas não poderão ser deletadas da PLATAFORMA pelo USUÁRIO.
 
-3. Cadastro e Segurança
+3) Cadastro e Segurança
 
 3.1. Para participar, o USUÁRIO deverá registrar-se inserindo seus dados de contato nos campos correspondentes da PLATAFORMA (nome e e-mail) ou utilizando os dados de sua conta pessoal no Facebook, Google, Twitter ou Instagram. Apenas será confirmado o cadastramento do USUÁRIO que preencher os campos indicados e receber mensagem de confirmação na própria interface.
 
@@ -34,7 +34,7 @@ Todas as contribuições são bem-vindas, desde que respeitadas as condições a
 
 3.8. A PLATAFORMA adotará medidas e realizará esforços para identificar robôs, perfis falsos e quaisquer outros tipos de estratégias orientadas a gerar cadastros ou interferir artificialmente na experiência de participação proposta. Perfis identificados como falsos serão excluídos e bloqueados.
 
-4. Conteúdo das Opiniões e Política de Moderação
+4) Conteúdo das Opiniões e Política de Moderação
 
 4.1. O USUÁRIO entende e concorda que não há presunção de anonimato e que o conteúdo postado é de sua inteira responsabilidade, não podendo os autores e mantenedores da PLATAFORMA serem responsabilizados por quaisquer fatos decorrentes da postagem desse conteúdo, de acordo com os art. 18 e 19 da Lei nº 12.965, de 2014.
 
@@ -72,7 +72,7 @@ Todas as contribuições são bem-vindas, desde que respeitadas as condições a
 
 4.13. Tentativas de reinclusão de material que já tenha sido previamente moderado serão prevenidas ou corrigidas por intermédio dos recursos técnicos que estiverem disponíveis.
 
-5. Autorização de Uso do Conteúdo
+5) Autorização de Uso do Conteúdo
 
 5.1. O USUÁRIO entende e concorda que a natureza da PLATAFORMA pressupõe que as informações publicadas possam ser copiadas, distribuídas, compiladas ou publicadas posteriormente por qualquer pessoa.
 
@@ -82,7 +82,7 @@ Todas as contribuições são bem-vindas, desde que respeitadas as condições a
 
 5.4 O conteúdo compartilhado via Twitter, Facebook, Whatsapp e Telegram estão sujeitos às regras de uso daquelas plataformas.
 
-6. Política de Privacidade e Confidencialidade
+6) Política de Privacidade e Confidencialidade
 
 6.1. A PLATAFORMA compromete-se a dedicar esforços na segurança e sigilo dos dados dos USUÁRIOS, bem como empregar os procedimentos de segurança necessários para a manutenção de seu sigilo.
 
@@ -100,7 +100,7 @@ Todas as contribuições são bem-vindas, desde que respeitadas as condições a
 
 6.8. Ao enviar material para o site, o USUÁRIO aceita a responsabilidade plena e não compartilhada com o CPA, Conanda e SNDCA quanto ao conteúdo enviado e às implicações legais e morais de sua publicação.
 
-7. Práticas de Uso e Armazenamento
+7) Práticas de Uso e Armazenamento
 
 7.1. Cabe à equipe de manutenção da PLATAFORMA estabelecer, a seu exclusivo critério, o período pelo qual as opiniões e outros conteúdos disponibilizados por USUÁRIOS ficarão publicados na PLATAFORMA e o período pelo qual serão armazenados.
 
@@ -108,7 +108,7 @@ Todas as contribuições são bem-vindas, desde que respeitadas as condições a
 
 7.3. Todos os dados em poder do Ministério dos Direitos Humanos são armazenados em servidores seguros e criptografados, cujo acesso só é permitido a funcionários da SNDCA capacitados a gerenciá-los com segurança ou fornecedores com contratos de confidencialidade. Em todas as páginas em que informações financeiras possam ser transmitidas, um certificado de criptografia de alto nível estará instalado e homologado por uma empresa reconhecida para este fim (Thawte EV SSL CA- G3).
 
-8. Utilização da Plataforma e Violação ao Sistema ou Base de Dados
+8) Utilização da Plataforma e Violação ao Sistema ou Base de Dados
 
 8.1. Não é permitida a utilização de nenhum dispositivo, software, ou outros recursos que venham a interferir nas atividades e operações da PLATAFORMA, sendo vedado ao USUÁRIO:
 
@@ -119,13 +119,13 @@ Todas as contribuições são bem-vindas, desde que respeitadas as condições a
 
 8.2. Qualquer intromissão, tentativa de, ou atividade que viole ou contrarie as disposições legais aplicáveis ou as proibições estipuladas nestes Termos de Uso tornarão o responsável passível das ações legais pertinentes, bem como das sanções aqui previstas, sendo ainda responsável pelas indenizações por eventuais danos causados
 
-9. Sanções
+9) Sanções
 
 9.1. Sem prejuízo de outras medidas, a PLATAFORMA poderá, a qualquer tempo, suspender, cancelar, desativar, descartar ou remover cadastro, conta, conteúdo ou privilégio de utilização e acesso aos serviços e conteúdos da PLATAFORMA, se entender que o USUÁRIO violou ou agiu de forma contrária a estes Termos de Uso.
 
 9.2. Caso a conduta do USUÁRIO na plataforma infrinja alguma lei brasileira, o USUÁRIO poderá responder civil e criminalmente por suas ações. Para isto, a SNDCA reserva o direito de divulgar as informações cadastrais do USUÁRIO às autoridades responsáveis, respeitado o disposto no item 6.3 destes Termos de Uso, conforme autorizado pelo USUÁRIO no ato do cadastramento.
 
-10. Canais para reportar violações, bugs e pleitos contra moderação de opinião e aplicação de sanção
+10) Canais para reportar violações, bugs e pleitos contra moderação de opinião e aplicação de sanção
 
 10.1. Os pleitos contra eventual moderação de opinião e aplicação de sanção podem ser encaminhados aos administradores da PLATAFORMA pelos canais disponíveis no “ Fale Conosco”10.2. Os pleitos de que trata o item anterior serão avaliados e respondidos no prazo máximo de 10 dias úteis.
 
@@ -146,7 +146,7 @@ Todas as contribuições são bem-vindas, desde que respeitadas as condições a
 
 10.7. Se houver algum problema ou mau funcionamento da PLATAFORMA, pedimos que isso seja reportado para o canal Fale Conosco disponível plataforma  
 
-11. Inexistência de Vínculo e Limitação de Responsabilidade
+11) Inexistência de Vínculo e Limitação de Responsabilidade
 
 11.1. Em nenhuma situação o CPA, Conanda a SNDCA, a PLATAFORMA, seus autores, moderadores, editores ou mantenedores serão responsáveis por quaisquer danos, prejuízos ou outro efeito, direto ou indireto, relacionados ao uso, por parte de seus USUÁRIOS, leitores ou de qualquer outra pessoa desta PLATAFORMA, de seu conteúdo ou de qualquer outro website ou plataforma aqui mencionados.
 
@@ -160,13 +160,13 @@ Todas as contribuições são bem-vindas, desde que respeitadas as condições a
 
 11.6. Os USUÁRIOS não poderão atribuir à PLATAFORMA nenhuma responsabilidade por dificuldades técnicas ou falhas nos sistemas. Eventualmente, o sistema poderá não estar disponível por motivos técnicos ou falhas da internet, ou por qualquer outro evento fortuito ou de força maior alheio ao controle da equipe de manutenção da PLATAFORMA.
 
-12. Modificações nos Termos de Uso
+12) Modificações nos Termos de Uso
 
 12.1. Tendo em vista os fins elencados no item 1.1, a PLATAFORMA poderá alterar, a qualquer tempo, estes Termos de Uso, visando ao seu aprimoramento e a melhoria dos serviços prestados. Os novos Termos de Uso entrarão em vigor a partir de sua publicação na PLATAFORMA, devendo a PLATAFORMA dedicar esforços para comunicar essa alteração.
 
 12.2. Caso haja discordância das alterações, o USUÁRIO poderá deixar de usar a PLATAFORMA dentro do período designado, respeitado o disposto nos itens 1.4, 5.1, 5.2 e 5.3 destes Termos de Uso, no que se refere ao conteúdo previamente postado. Ao continuar utilizando-a, estará sujeito aos novos Termos de Uso.
 
-13. Foro e Legislação Aplicável
+13) Foro e Legislação Aplicável
 
 Todos os itens deste Termo de Uso estão regidos pelas leis vigentes na República Federativa do Brasil. Para todos os assuntos referentes à sua interpretação e cumprimento, as partes se submeterão ao Foro da Justiça Federal, Seção Judiciária do Distrito Federal.
 
