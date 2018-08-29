@@ -3,7 +3,6 @@ from django.core.files.base import ContentFile
 
 from .models import Candidate
 
-
 CSV_FILE_PATH = '/tmp/candidatos.csv'
 PHOTOS_PATH = '/tmp/fotos_candidatos/'
 
@@ -25,31 +24,81 @@ class CandidatesImporter():
         urn = int(row[2])
         full_name = row[3]
         name = row[4]
-        public_email = row[6]
+        email_tse = row[6]
+        email_survey = row[16]
+        if (email_tse and email_survey):
+            public_email = email_survey
+        else:
+            public_email = email_tse
         party = row[7]
-        occupation = row[9]
-        adhered_to_the_measures = row[10]
-        justify_adhered_to_the_measures = row[11]
-        riches = row[12]
-        lawsuits = row[13]
-        has_clean_pass = row[19]
-        committed_to_democracy = row[20]
+
+        occupation_tse = row[9]
+        occupation_survey = row[17]
+        if (occupation_tse and occupation_survey):
+            occupation = occupation_survey
+        else:
+            occupation = occupation_tse
+
+        riches = row[10]
+        lawsuits = row[14]
+        site_url = row[18]
+        facebook_url = row[19]
+        twitter_url = row[20]
+        instagram_url = row[21]
+        youtube_url = row[22]
+        crowdfunding_url = row[23]
+        has_clean_pass = row[24]
+        adhered_to_the_measures = row[27]
+        justify_adhered_to_the_measures = row[28]
+        committed_to_democracy = row[29]
         try:
-            candidate = Candidate(uf=uf, candidacy=candidacy, name=name,
-                                  urn=urn, party=party, full_name=full_name,
-                                  justify_adhered_to_the_measures=justify_adhered_to_the_measures,
-                                  has_clean_pass=has_clean_pass,
-                                  riches=riches,
-                                  lawsuits=lawsuits,
-                                  occupation=occupation,
-                                  committed_to_democracy=committed_to_democracy,
-                                  adhered_to_the_measures=adhered_to_the_measures,
-                                  public_email=public_email)
-            cpf = row[5]
-            candidate.image.name = CandidatesImporter\
-                .set_candidate_photo(candidate, cpf)
-            candidate.save()
-            print("imported candidate: ", name)
+            try:
+                # Django not trigger an pre_save or post_save event for the
+                # update method, so we need to call save() to do that.
+                candidate = Candidate.objects.get(urn=urn, uf=uf)
+                print("updating candidate %s" % candidate.name)
+                candidate.uf=uf
+                candidate.candidacy=candidacy
+                candidate.name=name
+                candidate.urn=urn
+                candidate.party=party
+                candidate.full_name=full_name
+                candidate.justify_adhered_to_the_measures=justify_adhered_to_the_measures
+                candidate.has_clean_pass=has_clean_pass
+                candidate.riches=riches
+                candidate.lawsuits=lawsuits
+                candidate.occupation=occupation
+                candidate.committed_to_democracy=committed_to_democracy
+                candidate.adhered_to_the_measures=adhered_to_the_measures
+                candidate.public_email=public_email
+                candidate.site_url=site_url
+                candidate.twitter_url=twitter_url
+                candidate.instagram_url=instagram_url
+                candidate.youtube_url=youtube_url
+                candidate.crowdfunding_url=crowdfunding_url
+                candidate.save()
+            except Exception as e:
+                candidate = Candidate(uf=uf, candidacy=candidacy, name=name,
+                                    urn=urn, party=party, full_name=full_name,
+                                    justify_adhered_to_the_measures=justify_adhered_to_the_measures,
+                                    has_clean_pass=has_clean_pass,
+                                    riches=riches,
+                                    lawsuits=lawsuits,
+                                    occupation=occupation,
+                                    committed_to_democracy=committed_to_democracy,
+                                    adhered_to_the_measures=adhered_to_the_measures,
+                                    public_email=public_email,
+                                    site_url=site_url,
+                                    twitter_url=twitter_url,
+                                    instagram_url=instagram_url,
+                                    youtube_url=youtube_url,
+                                    facebook_url=facebook_url,
+                                    crowdfunding_url=crowdfunding_url)
+                cpf = row[5]
+                candidate.image.name = CandidatesImporter\
+                    .set_candidate_photo(candidate, cpf)
+                candidate.save()
+                print("imported candidate: ", name)
         except Exception as e:
             print(e)
             print("could not import candidate")
