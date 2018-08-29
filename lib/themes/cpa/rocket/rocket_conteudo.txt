@@ -1,6 +1,6 @@
 <div class="Rocket">
     <div class="Rocket-title">
-
+        <img src="https://cpa.dev.lappis.rocks/static/img/logo/intro-logo.svg">
         <h1>Painel CPA</h1>
 
     </div>
