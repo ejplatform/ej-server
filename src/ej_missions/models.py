@@ -127,7 +127,7 @@ def send_mission_fcm_message(sender, instance, created, **kwargs):
             setting = Setting.objects.get(owner_id=user.id)
             if (setting.mission_notifications == True):
                 users_to_send.append(user)
-        url = "http://localhost:8081/show-mission/" + str(instance.id)
+        url = "https://dev.besouro.ejplatform.org/show-mission/" + str(instance.id)
         fcm_devices = GCMDevice.objects.filter(cloud_message_type="FCM", user__in=users_to_send)
         fcm_devices.send_message("", extra={"title":"Nova missão", "body": "Nova missão no ar! Vem conferir",
             "icon":"https://i.imgur.com/D1wzP69.png", "click_action": url})
