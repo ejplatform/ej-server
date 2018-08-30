@@ -3,6 +3,8 @@ import pandas as pd
 from django.contrib.auth import get_user_model
 from django.http import HttpResponse
 from django.utils.translation import ugettext_lazy as _, ugettext as __
+from django.shortcuts import render_to_response
+import json
 
 from boogie.router import Router
 from boogie.rules import proxy_seq
@@ -68,18 +70,25 @@ def index(request, conversation):
     return response
 
 
-# @urlpatterns.route(conversation_url + 'scatter/')
-# def generate_scatterplot(conversation):
-#     votes = get_votes(conversation)
-#     votes = votes.where((pd.notnull(votes)), 0.0)
-#
-#     pca = PCA(n_components=2)
-#     pca.fit(votes)
-#     votes_pca = pca.transform(votes)
-#     plt.scatter(votes_pca[:, 0], votes_pca[:, 1],
-#                 c = ['red', 'green', 'blue'],
-#                 edgecolor='none', alpha=0.5,)
-#     plt.savefig('foo.png')
+@urlpatterns.route(conversation_url + 'scatter/')
+def scatter(request, conversation):
+    votes = get_votes(conversation)
+    votes = votes.where((pd.notnull(votes)), 0.0)
+
+    pca = PCA(n_components=2)
+    pca.fit(votes)
+    votes_pca = pca.transform(votes)
+
+    # plt.scatter(votes_pca[:, 0], votes_pca[:, 1],
+    #             c = ['red', 'green', 'blue'],
+    #             edgecolor='none', alpha=0.5,)
+    # plt.savefig('foo.png')
+
+    votes_array = votes_pca.tolist()
+    js_data = json.dumps(votes_array)
+
+    response = {'plot_data': js_data}
+    return response
 
 
 def generate_file_response(conversation, data_cat, format):
