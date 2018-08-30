@@ -15,7 +15,7 @@ def filter_by_party(querySet, filter):
 
 def filter_by_candidacy(querySet, filter):
     if(querySet):
-        filteredCandidates = querySet.filter(candidacy__contains=filter)
+        filteredCandidates = querySet.filter(candidacy=filter.upper())
         if(filteredCandidates):
             return filteredCandidates
         return []
