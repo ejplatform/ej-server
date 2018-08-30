@@ -3,7 +3,6 @@ import pandas as pd
 from django.contrib.auth import get_user_model
 from django.http import HttpResponse
 from django.utils.translation import ugettext_lazy as _, ugettext as __
-from django.shortcuts import render_to_response
 import json
 
 from boogie.router import Router
@@ -15,7 +14,6 @@ from ej_math import VoteStats
 from hyperpython.components import html_table, hyperlink
 
 from sklearn.decomposition import PCA
-from matplotlib import pyplot as plt
 
 urlpatterns = Router(
     template=['ej_reports/{name}.jinja2', 'generic.jinja2'],

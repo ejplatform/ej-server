@@ -1,6 +1,3 @@
-import csv
-import io
-
 import numpy as np
 import pytest
 from django.http import QueryDict
@@ -10,7 +7,7 @@ from ej.testing import UrlTester
 from ej_conversations.mommy_recipes import ConversationRecipes
 from ej_reports.routes import index, clusters, radar, divergence, map_to_table
 from ej_users.models import User
-from .examples import REPORT_RESPONSE, CSV_OUT, MAP_TO_TABLE
+from .examples import REPORT_RESPONSE, MAP_TO_TABLE
 
 BASE_URL = '/api/v1'
 
