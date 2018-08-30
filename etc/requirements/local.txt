@@ -10,6 +10,7 @@ matplotlib ~= 2.2
 numpy ~= 1.14
 pandas ~= 0.23
 django-pandas ~= 0.5
+scipy ~=1.1.0
 
 # Images
 Pillow ~= 4.2
@@ -72,9 +73,3 @@ Faker ~= 0.8.13
 # Tools
 django-debug-toolbar ~= 1.8
 django-extensions >= 1.9.0
-
-# Matplotlib
-matplotlib ~=2.2.2
-
-# Scikit learn
-scipy ~=1.1.0
