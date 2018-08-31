@@ -24,8 +24,11 @@ class EjOptions(Conf):
     # Personalization
     EJ_ANONYMOUS_HOME_PATH = env('/home/', name='{attr}')
     EJ_USER_HOME_PATH = env('/conversations/', name='{attr}')
-    EJ_PAGE_TITLE = env(_('EJ Platform'), name='{attr}')
-    EJ_REGISTER_TEXT = _('Not part of EJ yet?')
 
     # Allow instances to exclude some profile fields from visualization
     EJ_EXCLUDE_PROFILE_FIELDS = env([], name='{attr}')
+
+    # Messages
+    EJ_PAGE_TITLE = env(_('EJ Platform'), name='{attr}')
+    EJ_REGISTER_TEXT = _('Not part of EJ yet?')
+    EJ_LOGIN_TITLE_TEXT = _('Login in EJ')

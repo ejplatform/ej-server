@@ -42,9 +42,11 @@ def sass(ctx, watch=False, theme='default', trace=False, dry_run=False, rocket=T
 
     if background:
         from threading import Thread
-        thread = Thread(target=go, args=(cmd,))
-        thread.setDaemon(True)
-        thread.start()
+        thread = Thread(target=go, args=(cmd,), daemon=True)
+        try:
+            thread.start()
+        except KeyboardInterrupt:
+            thread.join(0)
     else:
         go(cmd)
 

@@ -1,7 +1,6 @@
 /*
  UNSTYLED FORM ELEMENTS
  ======================================================================== */
-
 @import '../2_tools/index';
 
 $form-border-color: $color-gray-dark !default;
@@ -9,8 +8,9 @@ $form-element-color: $color-white !default;
 $form-element-color-text: $color-hint-text !default;
 $form-input-border-box: inset 0 1px 3px 0 rgba(0, 0, 0, 0.3);
 
-
 form[hide-labels] {
+    .helptext,
+    > br,
     label {
         display: none;
     }
@@ -55,16 +55,16 @@ select,
 
 input[type=checkbox] {
     -webkit-appearance: none;
-	background-color: #fafafa;
-	border: 1px solid $form-border-color;
+    background-color: #fafafa;
+    border: 1px solid $form-border-color;
     box-shadow: $form-input-border-box;
-	padding: $spacing-unit-tiny + 1;
-	border-radius: 3px;
-	display: inline-block;
+    padding: $spacing-unit-tiny + 1;
+    border-radius: 3px;
+    display: inline-block;
     position: relative;
 
     &:active, &:checked:active {
-        box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px 1px 3px rgba(0,0,0,0.1);
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px 1px 3px rgba(0, 0, 0, 0.1);
     }
 
     &:checked:after {
@@ -78,7 +78,6 @@ input[type=checkbox] {
         left: calc(50% - 4px);
     }
 }
-
 
 textarea {
     height: 6 * $font-size-default;

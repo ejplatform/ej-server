@@ -1,7 +1,37 @@
 {% extends 'base.jinja2' %}
-{% from 'ej_users/auth-components.jinja2' import login with context %}
 
 {% block content %}
-    <style>.Header-lowerNotLogged { display: none; }</style>
-    {{ login(form, csrf_input, request.GET.get('next', None)) }}
+    <style>.Header-lowerNotLogged {
+        display: none;
+    }</style>
+
+    <div class="Login">
+        {# <div class="Login-icon"><img src="/static/img/login/ej-cat.svg"></div> #}
+        <h1 class="Login-title">{{ settings.EJ_LOGIN_TITLE_TEXT }}</h1>
+
+        <form method="post" class="Form" hide-labels>
+            {{ csrf_input }}
+            {{ form.as_p() }}
+            <input type="submit" class="Button" value="{{ _('Login') }}" name="login">
+        </form>
+
+        {{ social_login(social_buttons, social_js) }}
+
+        <div class="Login-newUser">
+            <h1>{{ settings.EJ_REGISTER_TEXT }}</h1>
+            <p><a class="Button" href="{{ '/register/' + ('?next=' + next if next else '') }}"
+                  primary>{{ _('Register now!') }}</a></p>
+        </div>
+    </div>
 {% endblock %}
+
+
+{% macro social_login(buttons, js) %}
+    {% if buttons %}
+        {{ js }}
+        <p>{% trans %}Social login{% endtrans %}</p>
+        <div class="Login-socialButtons">
+            {% for button in social_buttons %}{{ button }}{% endfor %}
+        </div>
+    {% endif %}
+{% endmacro %}

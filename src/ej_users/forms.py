@@ -37,6 +37,8 @@ class RegistrationForm(forms.ModelForm):
         if data.get('password') != data.get('password_confirm'):
             self.add_error('password_confirm', _('Passwords do not match'))
 
+    def as_p(self):
+        pass
 
 class LoginForm(forms.Form):
     """

@@ -1,42 +1,42 @@
 /*
- DJANGO FORMS STYLING
+ DJANGO FORMS STYLING AND HELPERS
  =========================================================================== */
-
 @import '../2_tools/index';
 
+.Form {
+    ul.errorlist {
+        color: $color-role-error;
+        font-size: 0.9em;
+        padding: 0;
 
-ul.errorlist {
-    color: $color-role-error;
-    font-size: 0.9em;
-    padding: 0;
-
-    li {
-        list-style: none;
-    }
-}
-
-
-.helptext {
-    color: $color-content-text-faded;
-    font-size: 0.9em;
-    display: block;
-    padding: 0;
-
-    li {
-        list-style: none;
-    }
-}
-
-
-.django-form-as-p {
-    text-align: left;
-
-    input, textarea {
-        width: 100%;
+        li {
+            list-style: none;
+        }
     }
 
-    label {
+    .helptext {
+        color: $color-content-text-faded;
+        font-size: 0.9em;
         display: block;
-        margin: 0;
+        padding: 0;
+
+        li {
+            list-style: none;
+        }
+    }
+
+    .django-form-as-p {
+        text-align: left;
+
+        input, textarea {
+            width: 100%;
+        }
+
+        label {
+            display: block;
+            margin: 0;
+        }
     }
 }
+
+

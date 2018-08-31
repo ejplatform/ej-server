@@ -52,6 +52,7 @@ def register(request):
         return {
             'user': request.user,
             'form': form,
+            'social_js': login_extra_template.render(request=request),
             'social_buttons': social_buttons(request),
         }
     else:
@@ -88,7 +89,8 @@ def login(request, redirect_to='/'):
     return {
         'user': request.user,
         'form': form,
-        'login_extra': login_extra_template.render(request=request),
+        'next': next,
+        'social_js': login_extra_template.render(request=request),
         'social_buttons': social_buttons(request),
     }
 

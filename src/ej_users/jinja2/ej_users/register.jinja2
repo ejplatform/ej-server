@@ -1,8 +1,19 @@
-{% extends 'base.jinja2' %}
-{% from 'ej_users/auth-components.jinja2' import register %}
+{% extends 'ej_users/login.jinja2' %}
 
 
 {% block content %}
-    <style>.Header-lowerNotLogged { display: none; }</style>
-    {{ register(form, social_buttons, csrf_input) }}
+    <style>.Header-lowerNotLogged {
+        display: none;
+    }</style>
+
+    <div class="Register">
+        <h1 class="Register-title">{% trans %}Register new user{% endtrans %}</h1>
+
+        <form method="post" hide-labels>
+            {{ csrf_input }}
+            {{ form }}
+            <input type="submit" value="{{ _('Register now!') }}" class="Button" name="register">
+        </form>
+        {{ social_login(social_buttons, social_js) }}
+    </div>
 {% endblock %}

@@ -32,10 +32,11 @@ def start(request):
         'start_now_fragment': fragment('home.start-now', raises=False),
         'social_media_icons': social_icons(),
         'user': request.user,
-        'footer_content': {'image': '/static/img/icons/facebook-blue.svg',
-                           'first': {'normal': 'Plataforma desenvolvida pelo', 'bold': 'Conanda/MDH/UnB'},
-                           'last': {'normal': 'Para denunciar:', 'bold': 'Disque 100 e #HUMANIZAREDES'}
-                           },
+        'footer_content': {
+            'image': '/static/img/icons/facebook-blue.svg',
+            'first': {'normal': 'Plataforma desenvolvida pelo', 'bold': 'Conanda/MDH/UnB'},
+            'last': {'normal': 'Para denunciar:', 'bold': 'Disque 100 e #HUMANIZAREDES'}
+        },
     }
 
 
