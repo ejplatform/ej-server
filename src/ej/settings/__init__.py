@@ -159,7 +159,7 @@ class Conf(ThemesConf,
                 'NAME': 'besouro-local',
                 'USER': 'besouro',
                 'PASSWORD': '',
-                'HOST': 'besouro_db_dev',
+                'HOST': 'besouro_dev_db',
                 'PORT': '5432'
             }
         }
@@ -197,7 +197,7 @@ class Conf(ThemesConf,
                 'NAME': 'besouro-local',
                 'USER': 'besouro',
                 'PASSWORD': '',
-                'HOST': 'besouro_db_prod',
+                'HOST': 'besouro_prod_db',
                 'PORT': '5432'
             }
         }
