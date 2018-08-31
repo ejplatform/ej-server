@@ -53,7 +53,7 @@ def send_conversation_fcm_message(sender, instance, created, **kwargs):
 		channel_id = instance.channel.id
 		channel = Channel.objects.get(id=channel_id)
 		users_to_send = []
-		url = "https://dev.besouro.ejplatform.org/show-mission/" + str(instance.target) + "?notification=true"
+		url = "https://app.unidoscontraacorrupcao.org.br/show-mission/" + str(instance.target) + "?notification=true"
 		if "conversation" in channel.sort:
 			for user in channel.users.all():
 				setting = Setting.objects.get(owner_id=user.id)
