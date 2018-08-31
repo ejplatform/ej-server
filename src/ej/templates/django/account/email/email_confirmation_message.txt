@@ -1,10 +1,18 @@
-{% load i18n %}
+Olá,
 
-Saudações da unidos contra a corrupção!
+Seu cadastro na plataforma online da campanha Unidos Contra a Corrupção foi efetivado com sucesso.
 
-Você está recebendo essa mensagem porque se cadastrou no aplicativo de mobilização da campanha.
+Agora, basta acessar https://app.unidoscontraacorrupcao.org.br para filtrar e conhecer as candidaturas que atendem aos três critérios da campanha:
 
-https://app.unidoscontraacorrupcao.org.br
+1. Passado limpo;
+2. Compromisso com a democracia; e
+3. Apoio às Novas Medidas Contra a Corrupção.
 
-Obrigado por participar da mobilização em prol do maior pacote anticorrupção já feito no mundo!
+Além de visualizar todas as candidatas e candidatos ao Congresso Nacional nestas eleições, você pode pressionar que ainda não aderiu à campanha e conhecer detalhes importantes sobre as pessoas que querem nos representar pelos próximos quatro anos.
+
+Se a candidata ou candidato que você pretende votar ainda não se comprometeu com a campanha, este é o momento para mostrar sua voz e cobrar essa participação.
+
+Vamos eleger parlamentares que se comprometam vão trabalhar, desde o início de seu mandato, para discutir e aprovar as Novas Medidas Contra a Corrupção!
+
+Unidos Contra a Corrupção.
 

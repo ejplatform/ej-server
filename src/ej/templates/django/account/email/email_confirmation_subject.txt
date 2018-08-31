@@ -1,4 +1,1 @@
-{% load i18n %}
-{% autoescape off %}
-{% blocktrans %}Bem vindo ao unidos contra a corrupção{% endblocktrans %}
-{% endautoescape %}
+Sua participação é decisiva nesta luta
