@@ -203,7 +203,8 @@ class Conf(ThemesConf,
         }
 
         ALLOWED_HOSTS = ['app.unidoscontraacorrupcao.org.br',
-                         'admin.besouro.ejplatform.org']
+                         'admin.besouro.ejplatform.org',
+                         '18.222.20.172']
 
         DATA_UPLOAD_MAX_NUMBER_FIELDS = 10000
         ACCOUNT_EMAIL_VERIFICATION = 'optional'
