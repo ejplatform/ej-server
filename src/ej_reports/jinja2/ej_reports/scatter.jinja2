@@ -1,7 +1,7 @@
 {% extends 'base.jinja2' %}
 {% block content %}
     <div class="Container">
-        <div id="container" style="height: 300%; width: auto;"></div>
+        <div id="container" style="width 100%; min-height: 400px"></div>
         <div>
             <a href="..">Go back</a>
         </div>
@@ -41,5 +41,10 @@ option = {
 if (option && typeof option === "object") {
  myChart.setOption(option, true);
 }
+$(window).on('resize', function(){
+    if(myChart != null && myChart != undefined){
+        myChart.resize();
+    }
+});
     </script>
 {% endblock %}
