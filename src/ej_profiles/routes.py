@@ -15,13 +15,14 @@ urlpatterns = Router(
 
 @urlpatterns.route('')
 def detail(request):
-    favorite_conversations = []
-    for fav in FavoriteConversation.objects.filter(user=request.user):
-        favorite_conversations.append(fav.conversation)
+    user = request.user
+    favorites = FavoriteConversation.objects.filter(user=user)
+    conversations = [fav.conversation for fav in favorites]
     return {
-        'info_tab': request.GET.get('info', 'profile'),
-        'profile': request.user.profile,
-        'favorite_conversations': favorite_conversations,
+        'which_tab': request.GET.get('info', 'profile'),
+        'profile': user.profile,
+        'conversations': conversations,
+        'comments': user.comments.all(),
     }
 
 
@@ -74,19 +75,13 @@ def comments(request):
 
 
 @urlpatterns.route('favorites/', login=True)
-def favorite_conversation(request):
-    if request.method == 'GET':
-        user = request.user
-        conversations = []
-        for fav in FavoriteConversation.objects.filter(user=user):
-            conversations.append(fav.conversation)
+def favorite_conversations(request):
+    user = request.user
+    favorites = FavoriteConversation.objects.filter(user=user)
+    conversations = [fav.conversation for fav in favorites]
     return {
         'conversations': conversations,
         'category': None,
-        'footer_content': {'image': '/static/img/icons/facebook-blue.svg',
-                           'first': {'normal': 'Plataforma desenvolvida pelo', 'bold': 'Conanda/MDH/UnB'},
-                           'last': {'normal': 'Para denunciar:', 'bold': 'Disque 100 e #HUMANIZAREDES'}
-                           },
     }
 
 

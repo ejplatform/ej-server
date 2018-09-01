@@ -1,6 +1,162 @@
 {% extends 'base.jinja2' %}
-{% from 'ej_profiles/components/profile.jinja2' import profile_detail with context %}
+{% from 'ej_conversations/components/conversation-list.jinja2' import conversation_list with context %}
 
+
+{#
+    Main content of EJ user profile
+#}
 {% block content %}
-    {{ profile_detail(request.user.get_profile(), favorite_conversations, info_tab) }}
+    <div class="Profile">
+        <img class="Profile-image" src="{{ profile.image_url }}">
+
+        <h1>{{ profile.name }}</h1>
+        {{ comments_menu(comments) }}
+        {{ conversations_menu(conversations) }}
+
+        {# TODO: display arrow correctly #}
+        <div class="Profile-tabs">
+            <nav class="Profile-tabLinks">
+                {{ link(_('Info'), '/profile/',
+                        target='.Profile-tabs',
+                        transition=None,
+                        class_='Profile-tabActive' if which_tab=='profile' else []) }}
+                {{ link(_('Contributions'), '/profile/?info=contributions',
+                        target='.Profile-tabs',
+                        transition=None,
+                        class_='Profile-tabActive' if which_tab=='contributions' else []) }}
+            </nav>
+
+            <div class="Profile-tabContainer">
+                <div class="Profile-arrow" style="visibility: hidden"></div>
+                <div class="Profile-tabContent">
+                    {% if which_tab == 'profile' %}
+                        {{ info_tab(profile) }}
+                    {% elif which_tab == 'contributions' %}
+                        {{ contributions_tab(profile) }}
+                    {% else %}
+                        <p>Invalid which_tab parameter: {{ which_tab }}</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="Profile-actions">
+        <form method="post" action="{{ url('auth:logout') }}">
+            {{ csrf_input }}
+            <button class="Button" type="submit">{{ _('Logout') }}</button>
+        </form>
+    </div>
 {% endblock %}
+
+
+{#
+    Display comments user created on profile.
+
+    TODO: refactor to be a role.
+#}
+{% macro comments_menu(comments) %}
+    <div class="Profile-comments">
+
+        <div onclick="$('#comments').toggle()">
+            <h2>{{ _('Comments') }} <span>({{ comments.count() }})</span>
+                <i class="fa fa-angle-down"></i>
+            </h2>
+        </div>
+        <ul class='comments' id="comments">
+            {% for comment in comments %}
+                <li>
+                    <div class='header'>
+                        <span class='label'>
+                            <i class="fas fa-location-arrow"></i>
+                            {{ _('Opinion') }}
+                        </span>
+                        <span class='date'>{{ comment.created.strftime('%d-%m-%Y às %Hh %M') }}</span>
+                    </div>
+                    <div class='content'>
+                        {{ comment.content }}
+                    </div>
+                    <ul class='actions'>
+                        <li class='agree'>
+                            <i class="fas fa-check"></i>
+                            <span>{{ comment.statistics().agree }}</span>
+                        </li>
+                        <li class='skip'>
+                            <i class="fas fa-arrow-right"></i>
+                            <span>{{ comment.statistics().skip }}</span>
+                        </li>
+                        <li class='disagree'>
+                            <i class="fas fa-times"></i>
+                            <span>{{ comment.statistics().disagree }}</span>
+                        </li>
+                    </ul>
+                    <div class='footer'>
+                        {{ link(_('See Conversation'), href=comment.conversation.get_absolute_url()) }}
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endmacro %}
+
+
+{#
+    Display conversations user created on profile
+
+    TODO: refactor to be a role.
+#}
+{% macro conversations_menu(conversations) %}
+    <div class="Profile-conversations">
+        <div onclick="$('#conversations').toggle()">
+            <h2>{{ _('Favorite Conversations') }} <span>({{ conversations|length }})</span>
+                <i class="fa fa-angle-down"></i>
+            </h2>
+        </div>
+        <div class='conversations' id='conversations'>
+            {{ conversation_list(conversations, title='') }}
+        </div>
+    </div>
+{% endmacro %}
+
+
+{#
+    Profile info tab
+
+    TODO: refactor to be a role.
+#}
+{% macro info_tab(profile) %}
+    <div class="Profile-info">
+        <dl>
+            {% for title, info in profile.profile_fields(true) %}
+                <dt>{{ title }}</dt>
+                {% if info == 'undeclared' %}
+                    <dd>{{ _((info).title()) }}</dd>
+                {% else %}
+                    <dd>{{ (info or '-') }}</dd>
+                {% endif %}
+            {% endfor %}
+        </dl>
+        <div class='edit-button'>
+            <a href="{{ url('profiles:edit') }}" class="Button" primary>{{ _('Edit profile') }}</a>
+        </div>
+    </div>
+{% endmacro %}
+
+
+{#
+    Contributions tab
+
+    TODO: refactor to be a role.
+#}
+{% macro contributions_tab(profile) %}
+    <div class="Profile-info">
+        <ul class='statistics'>
+            {% for description, amount in profile.statistics().items() %}
+                <li>
+                    <span class='amount'>{{ amount }}</span>
+                    <span class='description'>{{ _(description).title() or '-' }}</span>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endmacro %}

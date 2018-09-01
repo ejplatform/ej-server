@@ -1,8 +1,22 @@
 {% extends 'base.jinja2' %}
-{% from 'ej_profiles/components/profile.jinja2' import profile_edit with context %}
 
 {% set content_title = gettext('Edit profile: <em>%(name)s</em>', name=request.user.name) %}
 
 {% block content %}
-    {{ profile_edit(profile, form, csrf_input) }}
+    <div class="ProfileEdit">
+        <form method="post" enctype="multipart/form-data" action="">
+            {{ csrf_input }}
+            {{ form.as_p() }}
+            {{ form.non_field_errors() }}
+{#            <div class="FormItem CustomFileInput">#}
+{#                <div>#}
+{#                    {{ _('Choose a file') }}#}
+{#                </div>#}
+{#                <div id="image-filename">#}
+{#                    {{ _('No file chosen') }}#}
+{#                </div>#}
+{#            </div>#}
+            <input class="Button" type="submit" name="submit" value="{{ _('Save') }}">
+        </form>
+    </div>
 {% endblock %}

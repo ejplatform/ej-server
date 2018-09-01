@@ -6,7 +6,7 @@
 
 {% macro conversation_list(conversations,
                            categories,
-                           footer_content,
+                           footer_content='',
                            topic= _('A space for adolescents to discuss actions that promote, guarantee and defend their rights'),
                            conversation_link= _('View all conversations'),
                            title= _('Conversations'),
@@ -15,7 +15,7 @@
 
     {% if caller is defined %}{% set caller_output = caller() %}{% endif %}
     <div class="ConversationList">
-        {{ react_component('conversation_list', conversation_list_static(conversations, categories, title, subtitle, caller_output|default(topic)), javascript_enabled) }}
+        {{ conversation_list_static(conversations, categories, title, subtitle, caller_output|default(topic)) }}
     </div>
 {% endmacro %}
 

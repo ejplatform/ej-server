@@ -1,6 +1,7 @@
 /*
  GENERIC PAGE ELEMENTS
  ======================================================================== */
+@import '../../2_tools/index';
 
 $page-title-font-size: 1.1 * $font-size-h1 !default;
 
@@ -17,7 +18,7 @@ $page-title-font-size: 1.1 * $font-size-h1 !default;
     }
 
     @media only screen and (max-width: $breakpoint-small) {
-        &.talks{
+        &.talks {
             padding: $header-top-nav-height 0 0 0;
         }
     }
@@ -53,7 +54,7 @@ $page-title-font-size: 1.1 * $font-size-h1 !default;
 
     &-content {
         flex-grow: 1;
-        margin: 0 auto;
+        margin: 0 auto $header-bottom-nav-height auto;
         padding: 0;
     }
 }

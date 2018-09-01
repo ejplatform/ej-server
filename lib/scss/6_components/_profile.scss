@@ -1,7 +1,6 @@
 /*
  USER PROFILE VIEWS
  ======================================================================== */
-
 @import '../2_tools/index';
 @import 'auth';
 
@@ -59,7 +58,7 @@ $profile-arrow-size: $spacing-unit !default;
                 color: $color-magenta;
             }
         }
-        .conversations{
+        .conversations {
             display: none;
         }
     }
@@ -113,7 +112,8 @@ $profile-arrow-size: $spacing-unit !default;
                     display: flex;
                     justify-content: space-between;
                     li {
-                        &.agree {}
+                        &.agree {
+                        }
                         &.skip {
                             color: $color-blue-light;
                         }
@@ -184,7 +184,7 @@ $profile-arrow-size: $spacing-unit !default;
         font-size: $font-size-h5;
         font-weight: $font-headings-weight;
         text-transform: uppercase;
-        >* {
+        > * {
             margin: 0 $spacing-unit;
         }
         a {
@@ -197,7 +197,8 @@ $profile-arrow-size: $spacing-unit !default;
     &-tabActive {
         font-weight: bold;
     }
-    &-tabContainer {}
+    &-tabContainer {
+    }
     &-tabContent {
         background: $profile-background-color;
         text-align: left;
@@ -274,7 +275,7 @@ $profile-arrow-size: $spacing-unit !default;
             clear: both;
             text-align: center;
         }
-        >* {
+        > * {
             display: block;
         }
         dl {
@@ -302,10 +303,6 @@ $profile-arrow-size: $spacing-unit !default;
         display: block;
         margin-left: auto;
         margin-right: auto;
-    }
-
-    p input[type=file] {
-        display: none;
     }
 
     .CustomFileInput {
