@@ -89,7 +89,7 @@ def scatter(request, conversation):
     return response
 
 
-def generate_file_response(conversation, data_cat, format):
+def file_response(conversation, data_cat, format):
     response = HttpResponse(content_type=f'text/{format}')
     filename = f'filename={conversation.title}_{data_cat}.{format}'
     response['Content-Disposition'] = f'attachment; {filename}'
@@ -98,16 +98,18 @@ def generate_file_response(conversation, data_cat, format):
 
 def generate_data_file(data, format, response):
     if format == 'json':
-        data.to_json(path_or_buf=response, force_ascii=False)
+        return data.to_json(path_or_buf=response, force_ascii=False)
     elif format == 'csv':
-        data.to_csv(path_or_buf=response, index=False, mode='a')
+        return data.to_csv(path_or_buf=response, index=False, mode='a')
     elif format == 'msgpack':
-        data.to_msgpack(path_or_buf=response, encoding='utf-8')
+        return data.to_msgpack(path_or_buf=response, encoding='utf-8')
+    else:
+        return
 
 
 @urlpatterns.route(conversation_url + 'votes.<format>')
 def generate_votes(conversation, format):
-    response = generate_file_response(conversation, 'votes', format)
+    response = file_response(conversation, 'votes', format)
     votes = get_raw_votes(conversation)
     generate_data_file(votes, format, response)
     return response
@@ -115,7 +117,7 @@ def generate_votes(conversation, format):
 
 @urlpatterns.route(conversation_url + 'users.<format>')
 def generate_users(conversation, format):
-    response = generate_file_response(conversation, 'users', format)
+    response = file_response(conversation, 'users', format)
     votes = get_raw_votes(conversation)
     participants = participants_table(conversation, votes)
     generate_data_file(participants, format, response)
@@ -124,7 +126,7 @@ def generate_users(conversation, format):
 
 @urlpatterns.route(conversation_url + 'comments.<format>')
 def generate_comments(conversation, format):
-    response = generate_file_response(conversation, 'comments', format)
+    response = file_response(conversation, 'comments', format)
     votes = get_raw_votes(conversation)
     comments = comments_table(conversation, votes)
     generate_data_file(comments, format, response)
