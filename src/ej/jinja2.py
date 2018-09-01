@@ -12,8 +12,8 @@ from markupsafe import Markup
 import hyperpython.jinja2
 from ej_configurations import social_icons, fragment
 from hyperpython import render
-from . import components
-from .components import tags
+from . import roles
+from .roles import tags
 
 TAG_MAP = {k: getattr(tags, k) for k in tags.__all__}
 SALT_CHARS = string.ascii_letters + string.digits + '-_'
@@ -40,13 +40,13 @@ def environment(**options):
         social_icons=social_icons,
         fragment=fragment,
         service_worker=getattr(settings, 'SERVICE_WORKER', False),
-        context=context,
+        generic_context=generic_context,
 
         # Hyperpython tag functions
         render=non_strict_render,
 
         # Available tags and components
-        tag=components,
+        tag=roles,
         **TAG_MAP,
     )
     env.filters.update(
@@ -120,10 +120,13 @@ def salt_tag():
 
 
 @contextfunction
-def context(ctx):
+def generic_context(ctx):
     """
     Renders the current context as a description list.
     """
+    from django.http import Http404
+    from django.utils.translation import ugettext as _
+
     blacklist = {
         # Jinja2
         'range', 'dict', 'lipsum', 'cycler', 'joiner', 'namespace', '_',
@@ -131,15 +134,23 @@ def context(ctx):
 
         # Globals
         'static', 'url', 'salt_attr', 'salt_tag', 'salt', 'social_icons',
-        'service_worker', 'context', 'render', *TAG_MAP,
+        'service_worker', 'generic_context', 'render', 'fragment', 'tag',
+        'settings', *TAG_MAP,
 
         # Variables injected by the base template
         'target', 'target_context',
         'sidebar', 'page_top_header', 'page_header',
-        'page_title', 'title', 'content_title',
+        'page_title', 'title', 'content_title', 'enable_navbar', 'hide_footer',
+        'javascript_enabled',
     }
     ctx = {k: v for k, v in ctx.items() if k not in blacklist}
-    return tags.html_map(ctx)
+    if settings.DEBUG:
+        if ctx:
+            return tags.html_map(ctx)
+        else:
+            return tags.h('p', _('This template defines no extra variables'))
+    else:
+        raise Http404
 
 
 def non_strict_render(obj, role=None, ctx=None, strict=False):

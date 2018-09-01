@@ -69,6 +69,7 @@ if settings.DEBUG:
         path('error/403/', default_views.permission_denied, kwargs={'exception': Exception('Permission Denied')}),
         path('error/404/', default_views.page_not_found, kwargs={'exception': Exception('Page not Found')}),
         path('error/500/', default_views.server_error),
+        path('roles/', include('ej.roles.routes')),
     ])
 
     if 'debug_toolbar' in settings.INSTALLED_APPS:
