@@ -9,7 +9,7 @@
         {# <div class="Login-icon"><img src="/static/img/login/ej-cat.svg"></div> #}
         <h1 class="Login-title">{{ settings.EJ_LOGIN_TITLE_TEXT }}</h1>
 
-        <form method="post" class="Form" hide-labels>
+        <form method="post" class="Form" is-placeholder-form>
             {{ csrf_input }}
             {{ form.as_p() }}
             <input type="submit" class="Button" value="{{ _('Login') }}" name="login">

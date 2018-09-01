@@ -9,7 +9,7 @@
     <div class="Register">
         <h1 class="Register-title">{% trans %}Register new user{% endtrans %}</h1>
 
-        <form method="post" hide-labels>
+        <form method="post" class="Form" is-placeholder-form>
             {{ csrf_input }}
             {{ form }}
             <input type="submit" value="{{ _('Register now!') }}" class="Button" name="register">

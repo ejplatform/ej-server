@@ -2,11 +2,12 @@ from django import forms
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext as _
+from ej.forms import PlaceholderForm
 
 User = get_user_model()
 
 
-class RegistrationForm(forms.ModelForm):
+class RegistrationForm(PlaceholderForm, forms.ModelForm):
     """
     Register new user
     """
@@ -25,12 +26,6 @@ class RegistrationForm(forms.ModelForm):
         model = User
         fields = ['name', 'email']
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-        for field in self:
-            field.field.widget.attrs.update(placeholder=field.label)
-
     def _post_clean(self):
         super()._post_clean()
         data = self.cleaned_data
@@ -40,10 +35,12 @@ class RegistrationForm(forms.ModelForm):
     def as_p(self):
         pass
 
-class LoginForm(forms.Form):
+
+class LoginForm(PlaceholderForm, forms.Form):
     """
     User login
     """
+
     if getattr(settings, 'ALLOW_USERNAME_LOGIN', settings.DEBUG):
         email = forms.CharField(label=_('E-mail'))
     else:

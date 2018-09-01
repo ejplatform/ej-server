@@ -34,7 +34,7 @@ $login-new-user-background-color: #052B47 !default;
     input {
         border: $login-fields-border;
         height: $login-fields-height;
-        width: 261px;
+        width: $layout-compact-container-width / 2;
         border-radius: $login-fields-border-radius;
     }
     input[type=submit] {

@@ -25,6 +25,10 @@
     text-align: center;
 }
 
+.CenteredContainer[compact] {
+    max-width: $layout-compact-container-width;
+}
+
 // Flex box based layouts
 .Col--center {
     align-items: center;
