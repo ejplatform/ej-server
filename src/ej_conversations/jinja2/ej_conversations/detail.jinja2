@@ -1,6 +1,72 @@
 {% extends 'base.jinja2' %}
-{% from 'ej_conversations/components/conversation-detail.jinja2' import conversation_detail with context %}
+
 
 {% block content %}
-    {{ conversation_detail(conversation, edit_perm, request.user, javascript_enabled=javascript_enabled) }}
+    <div class="ConversationDetail">
+        {# Ballon with title #}
+        {{ conversation|role('balloon') }}
+
+        {# Current comment #}
+        <div class="ConversationDetail-header"><h1>{{ _('Comments') }}</h1></div>
+        {% if comment %}
+            {{ comment|role('card') }}
+        {% else %}
+            <div class="Comment">
+                <h1>{{ _('Congratulations!') }}</h1>
+                <p>{{ _("There are no comments left to vote :)") }}</p>
+            </div>
+        {% endif %}
+
+        {# Post a new comment #}
+        {% if can_comment %}
+            {{ comment_form(csrf_input) }}
+            <p>{{ _('You still have {n} available comments').format(n=comments_left) }}</p>
+        {% elif comments_left == 0 %}
+            <p>{% trans %}You have used all comments available in this conversation.{% endtrans %}</p>
+        {% else %}
+            <p>{% trans %}Please {{ login_anchor }} to vote on this conversation.{% endtrans %}</p>
+        {% endif %}
+    </div>
 {% endblock %}
+
+
+{% macro comment_form(csrf_input) %}
+    <div class="CommentForm">
+        <h1>{% trans %}Leave your comment{% endtrans %}</h1>
+        <p>{% trans %}Include something new and avoid similar opinions. You can post at most {{ comments_left }}
+            comments.{% endtrans %}</p>
+
+        <form method="post">
+            {{ csrf_input }}
+            <input type="hidden" name="action" value="comment">
+            <textarea name="comment"
+                      title="comment"
+                      onFocus="$('.Header-lowerNav').hide()"
+                      onBlur="$('.Header-lowerNav').show()"></textarea>
+
+            {% if comments_left == 0 %}
+                {{ toast("Ooops!", "You reached the limit of comments in this conversation.") }}
+                <button class="CommentForm-fakeButton" type="button"
+                        onclick="toast()">{{ _('Send your opinion') }}</button>
+            {% else %}
+                <input type="submit" name="submit" value="{{ _('Send your opinion') }}" primary>
+            {% endif %}
+        </form>
+    </div>
+{% endmacro %}
+
+
+{% macro toast(title, content) %}
+    <div class="CommentForm-toast">
+        <h3>{{ title }}</h3>
+        <p>{{ content }}</p>
+    </div>
+
+    <script>
+        function toast() {
+            let $toast = $("CommentForm-toast");
+            $toast.addClass('show');
+            setTimeout(() => $toast.removeClass('show'), 2500);
+        }
+    </script>
+{% endmacro %}

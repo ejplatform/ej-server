@@ -1,12 +1,11 @@
-from django.core.exceptions import ValidationError
+from boogie import rules
 from django.http import HttpResponseServerError
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
-
-from boogie import rules
 from hyperpython import a
+
 from . import urlpatterns, conversation_url
-from ..models import FavoriteConversation, Conversation, Comment
+from ..models import Conversation, Comment
 
 
 @urlpatterns.route('', name='list')
@@ -15,66 +14,59 @@ def conversation_list(request):
         'conversations': Conversation.objects.filter(is_promoted=True),
         'can_add_conversation': request.user.has_perm('ej.can_add_promoted_conversation'),
         'create_url': reverse('conversation:create'),
-        'topic': _("A space for adolescents to discuss actions that promote, guarantee and defend their rights"),
-        'title': _("Public conversations"),
-        'subtitle': _("Participate of the conversations and give your opinion with comments and votes!"),
-        'footer_content': {
-            'image': '/static/img/icons/facebook-blue.svg',
-            'first': {'normal': 'Plataforma desenvolvida pelo', 'bold': 'Conanda/MDH/UnB'},
-            'last': {'normal': 'Para denunciar:', 'bold': 'Disque 100 e #HUMANIZAREDES'}
-        }
+        'topic': _('A space for adolescents to discuss actions that promote, guarantee and defend their rights'),
+        'title': _('Public conversations'),
+        'subtitle': _('Participate of conversations and give your opinion with comments and votes!'),
     }
 
 
 @urlpatterns.route(conversation_url)
 def detail(request, conversation, owner=None):
     user = request.user
-    favorites = FavoriteConversation.objects.filter(conversation=conversation)
-    ctx = {
-        'conversation': conversation,
-        'owner': owner,
-        'edit_perm': user.has_perm('ej_conversations.can_edit_conversation', conversation),
-        'login_link': a(_('login'), href=reverse('auth:login') + '?next=' + conversation.get_absolute_url()),
-        'favorites': favorites,
-    }
+    is_favorite = user.is_authenticated and conversation.followers.filter(user=user).exists()
+    n_comments = rules.compute('ej.remaining_comments', conversation, user)
+    comment = None
 
+    # User is voting in the current comment. We still need to choose a random
+    # comment to display next.
     if request.POST.get('action') == 'vote':
         vote = request.POST['vote']
-        voted_comment = Comment.objects.get(id=request.POST['comment_id'])
-        if vote not in {'agree', 'skip', 'disagree'}:
-            return HttpResponseServerError('invalid parameter')
-        voted_comment.vote(user, vote)
+        comment_id = request.POST['comment_id']
+        Comment.objects.get(id=comment_id).vote(user, vote)
 
+    # User is posting a new comment. We need to validate the form and try to
+    # keep the same comment that was displayed before.
     elif request.POST.get('action') == 'comment':
-        comment = request.POST['comment'].strip()
-
         # FIXME: do not hardcode this and use a proper form!
+        comment = request.POST['comment'].strip()
         comment = comment[:210]
-        try:
-            ctx['comment'] = conversation.create_comment(user, comment)
-        except (PermissionError, ValidationError) as ex:
-            ctx['comment_error'] = str(ex)
-            print(str(ex))
+        comment = conversation.create_comment(user, comment)
+
+    # User toggled the favorite status of conversation.
     elif request.POST.get('action') == 'favorite':
         conversation.toggle_favorite(user)
 
-    ctx['comment'] = conversation.next_comment(user, None)
-    ctx['can_comment'] = user.has_perm('ej.can_comment', conversation)
-    ctx['remaining_comments'] = rules.compute('ej_conversations.remaining_comments', conversation, user)
-    return ctx
+    # User is probably trying to something nasty ;)
+    elif request.method == 'POST':
+        return HttpResponseServerError('invalid action')
 
-
-@urlpatterns.route(conversation_url + 'info/')
-def info(conversation):
     return {
+        # Objects
         'conversation': conversation,
-        'info': conversation.statistics(),
+        'owner': owner,
+        'comment': comment or conversation.next_comment(user, None),
+        'comments_left': n_comments,
+        'login_link': login_link(_('login'), conversation),
+
+        # Permissions and predicates
+        'is_favorite': is_favorite,
+        'can_view_comment': user.is_authenticated,
+        'can_comment': user.has_perm('ej.can_comment', comment),
+        'can_edit': user.has_perm('ej.can_edit_conversation', conversation),
+        'cannot_comment_reason': '',
     }
 
 
-@urlpatterns.route(conversation_url + 'leaderboard/')
-def leaderboard(conversation):
-    return {
-        'conversation': conversation,
-        'info': conversation.statistics(),
-    }
+def login_link(content, obj):
+    path = obj.get_absolute_url()
+    return a(content, href=reverse('auth:login') + f'?next={path}')

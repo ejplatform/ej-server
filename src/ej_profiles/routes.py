@@ -1,9 +1,10 @@
+from boogie.router import Router
+from django.db.models import Count, Q
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
-from boogie.router import Router
-from ej_conversations.models import FavoriteConversation, Comment
+from ej_conversations.models import FavoriteConversation, Comment, Choice
 from .forms import ProfileForm
 
 app_name = 'ej_profiles'
@@ -16,13 +17,33 @@ urlpatterns = Router(
 @urlpatterns.route('')
 def detail(request):
     user = request.user
-    favorites = FavoriteConversation.objects.filter(user=user)
+
+    # Select conversations and comments in an optimized query
+    favorites = (
+        FavoriteConversation.objects
+            .filter(user=user)
+            .select_related('conversation')
+            .prefetch_related('conversation__followers')
+            .prefetch_related('conversation__tags')
+    )
     conversations = [fav.conversation for fav in favorites]
+
+    # Comments
+    comments = (
+        user.comments
+            .all()
+            .select_related('conversation')
+            .select_related('author')
+            .annotate(agree_count=Count(Q(votes__choice=Choice.AGREE)))
+            .annotate(disagree_count=Count(Q(votes__choice=Choice.DISAGREE)))
+            .annotate(skip_count=Count(Q(votes__choice=Choice.SKIP)))
+    )
+
     return {
         'which_tab': request.GET.get('info', 'profile'),
         'profile': user.profile,
         'conversations': conversations,
-        'comments': user.comments.all(),
+        'comments': comments,
     }
 
 
@@ -43,8 +64,8 @@ def edit(request):
     }
 
 
-@urlpatterns.route('conversations/', template='ej_conversations/list.jinja2')
-def conversations(request):
+@urlpatterns.route('conversations/', template='ej_conversations/conversations-list.jinja2')
+def conversations_list(request):
     user = request.user
     boards = user.boards.all()
     conversations = []
@@ -59,13 +80,13 @@ def conversations(request):
         'boards': boards,
         'create_url': reverse('conversation:create'),
         'can_add_conversation': user.has_perm('ej.can_add_promoted_conversation'),
-        'title': _("My conversations"),
-        'subtitle': _("See all conversations created by you"),
+        'title': _('My conversations'),
+        'subtitle': _('See all conversations created by you'),
     }
 
 
 @urlpatterns.route('comments/')
-def comments(request):
+def comments_list(request):
     user = request.user
     return {
         'user': user,

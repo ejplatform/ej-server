@@ -1,5 +1,6 @@
 import logging
 
+from boogie.rest import rest_api
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.core.validators import MinLengthValidator
@@ -7,8 +8,9 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from model_utils.choices import Choices
 from model_utils.models import TimeStampedModel, StatusModel
+from sidekick import lazy
 
-from boogie.rest import rest_api
+from .utils import votes_counter
 from .vote import Vote, normalize_choice, Choice
 from ..managers import CommentManager
 from ..validators import is_not_empty
@@ -67,6 +69,19 @@ class Comment(StatusModel, TimeStampedModel):
     is_pending = property(lambda self: self.status == self.STATUS.pending)
     is_rejected = property(lambda self: self.status == self.STATUS.rejected)
 
+    # Statistics
+    agree_count = lazy(votes_counter(Choice.AGREE), name='agree_count')
+    disagree_count = lazy(votes_counter(Choice.DISAGREE), name='disagree_count')
+    skip_count = lazy(votes_counter(Choice.SKIP), name='skip_count')
+
+    @lazy
+    def total_votes(self):
+        return self.agree_count + self.disagree_count + self.skip_count
+
+    @lazy
+    def missing_votes(self):
+        return Vote.objects.distinct().count() - self.total_votes
+
     objects = CommentManager()
 
     class Meta:
@@ -116,40 +131,20 @@ class Comment(StatusModel, TimeStampedModel):
         }
         """
 
-        agree = votes_counter(self, Choice.AGREE)
-        disagree = votes_counter(self, Choice.DISAGREE)
-        skip = votes_counter(self, Choice.SKIP)
-        total = agree + disagree + skip
-        missing = Vote.objects.values_list('author_id').distinct().count() - total
-
-        stats = dict(agree=agree, disagree=disagree, skip=skip,
-                     total=total, missing=missing)
+        stats = {
+            'agree': self.agree_count,
+            'disagree': self.disagree_count,
+            'skip': self.skip_count,
+            'total': self.total_votes,
+            'missing': self.missing_votes
+        }
 
         if ratios:
             e = 1e-50  # prevents ZeroDivisionErrors
             stats.update(
-                agree_ratio=agree / (total + e),
-                disagree_ratio=disagree / (total + e),
-                skip_ratio=skip / (total + e),
-                missing_ratio=missing / (missing + total + e),
+                agree_ratio=self.agree_count / (self.total_votes + e),
+                disagree_ratio=self.disagree_count / (self.total_votes + e),
+                skip_ratio=self.skip_count / (self.total_votes + e),
+                missing_ratio=self.missing_votes / (self.missing_votes + self.total_votes + e),
             )
         return stats
-
-
-def votes_counter(comment, choice=None):
-    if choice is not None:
-        return comment.votes.filter(choice=choice).count()
-    else:
-        return comment.votes.count()
-
-
-def normalize_status(value):
-    """
-    Convert status string values to safe db representations.
-    """
-    if value is None:
-        return Comment.STATUS.pending
-    try:
-        return Comment.STATUS_MAP[value.lower()]
-    except KeyError:
-        raise ValueError(f'invalid status value: {value}')

@@ -4,9 +4,13 @@
     {{ super() }}
     <script>
         function addCommentField() {
-            var index = parseInt($('input[name="comments_count"]').val(), 10) + 1;
-            $('input[name="comments_count"]').val(index);
-            var template = '<div class="ConversationField"><i class="far fa-comment"></i> <input type="text" name="comment-%INDEX%" placeholder="{{ _('Type here the comment') }} #%INDEX%" /> </div>';
+            let $input = $('input[name="comments_count"]');
+            let index = parseInt($input.val(), 10) + 1;
+            $input.val(index);
+            let template = (
+                '<div class="ConversationField"><i class="far fa-comment"></i> ' +
+                '<input type="text" name="comment-%INDEX%" ' +
+                'placeholder="{{ _('Type here the comment') }} #%INDEX%" /> </div>');
             $('.Moderate-comments').append(template.replace(/%INDEX%/g, index));
         }
     </script>

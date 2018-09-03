@@ -4,7 +4,7 @@ from django.http import HttpResponseServerError
 
 from ej_conversations import create_conversation
 from ej_conversations.models import Comment, FavoriteConversation
-from ej_conversations.models.comment import votes_counter
+from ej_conversations.models.utils import votes_counter
 from ej_conversations.routes import conversations, comments
 from ej_users.models import User
 
@@ -56,7 +56,7 @@ class TestConversationBase:
         request = rf.post('', {'action': 'vote', 'vote': 'agree', 'comment_id': comment.id})
         request.user = user
         conversations.detail(request, conversation)
-        assert votes_counter(comment) == 1
+        assert votes_counter(None)(comment) == 1
 
     def test_invalid_vote_in_comment(self, rf, conversation, comment, db):
         request = rf.post('', {'action': 'vote', 'vote': 'not agree', 'comment_id': comment.id})

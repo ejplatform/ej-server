@@ -13,7 +13,8 @@ from taggit.models import TaggedItemBase
 
 from boogie import rules
 from boogie.rest import rest_api
-from .comment import Comment, normalize_status
+from .comment import Comment
+from ej_conversations.models.utils import normalize_status
 from .vote import Vote, Choice
 from ..managers import ConversationManager
 
@@ -131,6 +132,8 @@ class Conversation(TimeStampedModel):
         """
         Get all votes in conversation for the given user.
         """
+        if user.id is None:
+            return Vote.objects.none()
         return Vote.objects.filter(comment__conversation=self, author=user)
 
     def create_comment(self, author, content, commit=True, *, status=None,

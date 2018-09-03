@@ -1,5 +1,4 @@
 {% extends 'base.jinja2' %}
-{% from 'ej_conversations/components/conversation-list.jinja2' import conversation_list with context %}
 
 
 {#
@@ -10,8 +9,8 @@
         <img class="Profile-image" src="{{ profile.image_url }}">
 
         <h1>{{ profile.name }}</h1>
-        {{ comments_menu(comments) }}
-        {{ conversations_menu(conversations) }}
+        {{ comments|role('collapsible-list', title=_('Comments'), item_role='list-item') }}
+        {{ conversations|role('collapsible-list', title=_('Favorite Conversations'), item_role='card') }}
 
         {# TODO: display arrow correctly #}
         <div class="Profile-tabs">
@@ -49,74 +48,6 @@
     </div>
 {% endblock %}
 
-
-{#
-    Display comments user created on profile.
-
-    TODO: refactor to be a role.
-#}
-{% macro comments_menu(comments) %}
-    <div class="Profile-comments">
-
-        <div onclick="$('#comments').toggle()">
-            <h2>{{ _('Comments') }} <span>({{ comments.count() }})</span>
-                <i class="fa fa-angle-down"></i>
-            </h2>
-        </div>
-        <ul class='comments' id="comments">
-            {% for comment in comments %}
-                <li>
-                    <div class='header'>
-                        <span class='label'>
-                            <i class="fas fa-location-arrow"></i>
-                            {{ _('Opinion') }}
-                        </span>
-                        <span class='date'>{{ comment.created.strftime('%d-%m-%Y às %Hh %M') }}</span>
-                    </div>
-                    <div class='content'>
-                        {{ comment.content }}
-                    </div>
-                    <ul class='actions'>
-                        <li class='agree'>
-                            <i class="fas fa-check"></i>
-                            <span>{{ comment.statistics().agree }}</span>
-                        </li>
-                        <li class='skip'>
-                            <i class="fas fa-arrow-right"></i>
-                            <span>{{ comment.statistics().skip }}</span>
-                        </li>
-                        <li class='disagree'>
-                            <i class="fas fa-times"></i>
-                            <span>{{ comment.statistics().disagree }}</span>
-                        </li>
-                    </ul>
-                    <div class='footer'>
-                        {{ link(_('See Conversation'), href=comment.conversation.get_absolute_url()) }}
-                    </div>
-                </li>
-            {% endfor %}
-        </ul>
-    </div>
-{% endmacro %}
-
-
-{#
-    Display conversations user created on profile
-
-    TODO: refactor to be a role.
-#}
-{% macro conversations_menu(conversations) %}
-    <div class="Profile-conversations">
-        <div onclick="$('#conversations').toggle()">
-            <h2>{{ _('Favorite Conversations') }} <span>({{ conversations|length }})</span>
-                <i class="fa fa-angle-down"></i>
-            </h2>
-        </div>
-        <div class='conversations' id='conversations'>
-            {{ conversation_list(conversations, title='') }}
-        </div>
-    </div>
-{% endmacro %}
 
 
 {#

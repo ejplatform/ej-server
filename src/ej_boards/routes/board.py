@@ -4,7 +4,6 @@ from boogie.router import Router
 from ..models import Board
 from ..forms import BoardForm
 
-
 app_name = 'ej_boards'
 urlpatterns = Router(
     template=['ej_boards/{name}.jinja2', 'generic.jinja2'],
@@ -49,14 +48,6 @@ def board_list(request):
         'boards': user.boards.all(),
         'can_add_board': user.has_perm('ej_boards.can_add_board'),
     }
-
-
-# @urlpatterns.route(board_url)
-# def detail(request, board, conversation):
-#     return {
-#         'board': board,
-#         'conversation': conversation,
-#     }
 
 
 @urlpatterns.route(board_url + '/edit/', template='ej_boards/create.jinja2')

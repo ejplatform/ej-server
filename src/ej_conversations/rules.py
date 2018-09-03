@@ -146,7 +146,7 @@ def can_edit_conversation(user, conversation):
     """
     if conversation is None:
         return False
-    elif user == conversation.author:
+    elif user.id == conversation.author_id:
         return True
     elif conversation.is_promoted and user.has_perm('ej_conversations.can_publish_promoted'):
         return True

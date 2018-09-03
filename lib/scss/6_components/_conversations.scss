@@ -232,13 +232,12 @@ $conversation-topic-display: none !default;
 
     &-cover + .ConversationCard-actions {
         background-size: 30px;
-        background-repeat: space;
+        background: $card-conversation-bottom-background;
         margin-top: $spacing-unit;
         bottom: 0;
         position: absolute;
         box-sizing: border-box;
         width: 100%;
-        background: $card-conversation-bottom-background;
     }
 
     &-actions {
@@ -282,10 +281,6 @@ $conversation-topic-display: none !default;
         width: 100% !important;
         height: auto !important;
     }
-
-    // > * {
-    //     padding: $spacing-unit-tiny;
-    // }
     u {
         margin: 0;
     }
@@ -320,8 +315,7 @@ $conversation-topic-display: none !default;
             }
         }
         .share-button {
-            background-color: transparent;
-            background-repeat: no-repeat;
+            background: transparent no-repeat;
             border: none;
             cursor: pointer;
             overflow: hidden;
@@ -348,13 +342,12 @@ $conversation-topic-display: none !default;
         h1 {
             @extend .Container;
 
-            // padding: $spacing-unit / 2 0;
-            // padding-top: 0;
             padding-top: $spacing-unit-tiny;
             padding-bottom: $spacing-unit;
             text-align: center;
             font-weight: 200 !important;
             font-size: 26px !important;
+            font-family: $font-paragraph;
 
             @media only screen and (min-width: $breakpoint-large) {
                 padding: $spacing-unit-large 0;
@@ -552,22 +545,8 @@ $conversation-topic-display: none !default;
                             color: #fff;
                         }
                     }
-
                 }
-
             }
-
-            // li:first-child i.fa {
-            //     color: $conversation-vote-agree-color);
-            //     &:hover {
-            //         background: $conversation-vote-agree-color);
-            //         color: #fff;
-            //     }
-            // }
-
-            // li:last-child i.fa {
-            //     color: $color-role-error;
-            // }
         }
     }
 
@@ -614,6 +593,7 @@ $conversation-topic-display: none !default;
         box-shadow: none;
     }
 
+    &-fakeButton,
     input[type=submit] {
         border-radius: $conversation-comment-button-border-radius;
         color: #fff;
@@ -627,20 +607,7 @@ $conversation-topic-display: none !default;
         margin-top: $spacing-unit-small;
     }
 
-    .fake-button {
-        border-radius: $conversation-comment-button-border-radius;
-        color: #fff;
-        background: $conversation-comment-button-background;
-        border: 0;
-        padding: $spacing-unit-small $spacing-unit;
-        font-size: 14px;
-        box-shadow: none;
-        text-transform: uppercase;
-        font-weight: bold;
-        margin-top: $spacing-unit-small;
-    }
-
-    #toast {
+    .toast {
         visibility: hidden;
         background-color: $color-blue-light;
         font-weight: bold;
@@ -652,38 +619,38 @@ $conversation-topic-display: none !default;
         left: 0;
         bottom: $header-bottom-nav-height;
         font-size: 17px;
-        >div {
+        > div {
             padding: 40px;
             h3, p {
                 color: $toast-font-color;
             }
         }
     }
-    
-    #toast.show {
+
+    .toast.show {
         visibility: visible;
         -webkit-animation: fadein 1s, fadeout 1s 3s;
         animation: fadein 1s, fadeout 1s 3s;
     }
-    
-    @-webkit-keyframes fadein {
-        from {bottom: 0; opacity: 0;} 
-        to {bottom: 70px; opacity: 1;}
-    }
-    
+
     @keyframes fadein {
-        from { opacity: 0;}
-        to { opacity: 1;}
+        from {
+            bottom: 0;
+            opacity: 0;
+        }
+        to {
+            bottom: 70px;
+            opacity: 1;
+        }
     }
-    
-    @-webkit-keyframes fadeout {
-        from { opacity: 1;} 
-        to { opacity: 0;}
-    }
-    
+
     @keyframes fadeout {
-        from { opacity: 1;}
-        to { opacity: 0;}
+        from {
+            opacity: 1;
+        }
+        to {
+            opacity: 0;
+        }
     }
 }
 

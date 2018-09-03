@@ -14,16 +14,12 @@
                            javascript_enabled='') %}
 
     {% if caller is defined %}{% set caller_output = caller() %}{% endif %}
-    <div class="ConversationList">
-        {{ conversation_list_static(conversations, categories, title, subtitle, caller_output|default(topic)) }}
-    </div>
 {% endmacro %}
 
 {% macro conversation_list_static(conversations, categories, title, subtitle, caller_output=None) %}
-    <div class="ConversationListStatic">
+    <div class="ConversationList">
         <div class="ConversationList-title">
-            {% if caller_output %}<p class="topic">{{ caller_output }}</p>{% endif %}
-            <h1 class="h1">{{ title }}</h1>
+            <h1>{{ title }}</h1>
             <p>{{ subtitle }}</p>
         </div>
 

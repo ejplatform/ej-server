@@ -6,12 +6,12 @@
     <div class="ConversationDetail-banner">
         <div class="ConversationTags"><i class="fa fa-tags"></i>
             {% if tags %}
-              {{ (conversation.tags.all()[0]|string).title() }}
+              {{ ', '.join(tags) }}
             {% else %}
                 {{ _("Tags") }}
             {% endif %}
         </div>
-        <h1 style="font-family: Raleway">{{ conversation.text }}</h1>
+        <h1>{{ conversation.text }}</h1>
         <ul class="ConversationDetail-statistics">
             <li><i class="fa fa-comment"></i>{{ _('{count} comments').format(count=comments_count) }}</li>
             <li><i class="fa fa-sliders-h"></i> {{ _('{count} votes').format(count=votes_count) }}</li>

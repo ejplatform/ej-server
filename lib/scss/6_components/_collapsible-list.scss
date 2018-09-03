@@ -1,0 +1,35 @@
+/*
+ COLLAPSIBLE LIST
+ ======================================================================== */
+@import '../2_tools/index';
+
+.CollapsibleList {
+    padding: $spacing-unit-small;
+
+    h2 {
+        color: $color-content-text;
+        font-weight: normal;
+        text-align: left;
+
+        i, span {
+            color: $color-accent;
+            font-weight: bold;
+            padding-left: $spacing-unit-small;
+        }
+        i {
+            float: right;
+            color: $color-accent;
+        }
+    }
+    > ul, > li {
+        padding: 0;
+        margin: 0;
+    }
+    > ul > li {
+        border-bottom: 2px solid $color-blue-light;
+        list-style: none;
+        > * {
+            margin: 0 auto;
+        }
+    }
+}

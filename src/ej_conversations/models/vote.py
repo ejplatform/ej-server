@@ -22,9 +22,8 @@ VOTE_NAMES = {
     Choice.SKIP: 'skip',
 }
 VOTE_VALUES = {v: k for k, v in VOTE_NAMES.items()}
-VOTING_ERROR = (lambda value: ValueError(
-    f"vote should be one of 'agree', 'disagree' or 'skip', got {value}")
-)
+VOTE_ERROR_MESSAGE = _("vote should be one of 'agree', 'disagree' or 'skip', got {value}")
+VOTING_ERROR = (lambda value: ValueError(VOTE_ERROR_MESSAGE.format(value=value)))
 
 
 #

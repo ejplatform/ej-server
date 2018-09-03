@@ -7,11 +7,11 @@ class EjConversationsConfig(AppConfig):
     verbose_name = _('Conversations')
     rules = None
     api = None
-    components = None
+    roles = None
 
     def ready(self):
-        from . import rules, api, components
+        from . import rules, api, roles
 
         self.rules = rules
         self.api = api
-        self.components = components
+        self.roles = roles

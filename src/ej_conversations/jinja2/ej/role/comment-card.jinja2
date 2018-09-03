@@ -33,8 +33,8 @@
             </ul>
         </form>
     {% else %}
-        <p class="Comment-loginWarn">É necessário <a
-                href="/login/?next={{ comment.conversation.get_absolute_url() }}">registrar-se</a> antes de
-            votar ou enviar um comentário!</p>
+        <p class="Comment-loginWarn">
+            {% trans %}It is necessary to {{ login_anchor }} before voting or
+                sending a comment!{% endtrans %}</p>
     {% endif %}
 </div>
