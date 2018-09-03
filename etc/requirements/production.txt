@@ -20,6 +20,3 @@ redis>=2.10.5
 
 # Database
 psycopg2-binary ~= 2.7
-
-# Codecov
-codecov ~= 2.0.15
