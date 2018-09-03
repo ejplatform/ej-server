@@ -1,14 +1,11 @@
 .. image:: https://api.codeclimate.com/v1/badges/fd8f8c7d5d2bc74c38df/maintainability
-    :target: https://codeclimate.com/github/ejplatform/ej-server/maintainability
+   :target: https://codeclimate.com/github/ejplatform/ej-server/maintainability
    :alt: Maintainability
+.. image:: https://api.codeclimate.com/v1/badges/fd8f8c7d5d2bc74c38df/test_coverage
+   :target: https://codeclimate.com/github/ejplatform/ej-server/test_coverage
+   :alt: Test Coverage
 .. image:: https://gitlab.com/ejplatform/ej-server/badges/master/pipeline.svg
     :target: https://gitlab.com/ejplatform/ej-server/commits/master
-.. image:: https://gitlab.com/ejplatform/ej-server/badges/develop/pipeline.svg
-    :target: https://gitlab.com/ejplatform/ej-server/commits/develop
-.. image:: https://gitlab.com/ejplatform/ej-server/badges/master/pipeline.svg
-    :target: https://gitlab.com/ejplatform/ej-server/commits/master
-.. image:: https://gitlab.com/ejplatform/ej-server/badges/develop/pipeline.svg
-    :target: https://gitlab.com/ejplatform/ej-server/commits/develop
 
 
 ===========
