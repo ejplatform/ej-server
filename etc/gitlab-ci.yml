@@ -39,6 +39,7 @@ test with sqlite3: &test
     - pip install https://github.com/fabiommendes/django-boogie/archive/master.zip
     - pip install -r etc/requirements/develop.txt
     - pytest
+    - codecov -t $CODECOV_TOKEN
   tags:
     - lappis
 
