@@ -1,12 +1,12 @@
 /*
  USER PROFILE VIEWS
  ======================================================================== */
+
 @import '../2_tools/index';
 @import 'auth';
-
 $profile-image-size: 2 * $login-icon-size !default;
 $profile-arrow-size: $spacing-unit !default;
-
+$profile-label-clear-color: #30BFD3 !default;
 .Profile {
     @extend .Container;
     text-align: center;
@@ -36,7 +36,109 @@ $profile-arrow-size: $spacing-unit !default;
             opacity: 0.8;
         }
     }
-
+    &-conversations {
+        padding: $spacing-unit-small;
+        h2 {
+            &.expanded {
+                i {
+                    transform: rotate(180deg);
+                }
+            }
+            color: black;
+            text-align: justify;
+            font-weight: normal;
+            span {
+                color: $color-magenta;
+                font-weight: bold;
+            }
+            i {
+                float: right;
+                font-weight: bold;
+                font-size: $font-size-huge;
+                color: $color-magenta;
+            }
+        }
+        .conversations {
+            display: none;
+        }
+    }
+    &-comments {
+        padding: $spacing-unit-small;
+        h2 {
+            &.expanded {
+                i {
+                    transform: rotate(180deg);
+                }
+            }
+            color: black;
+            text-align: justify;
+            font-weight: normal;
+            span {
+                color: $color-magenta;
+                font-weight: bold;
+            }
+            i {
+                float: right;
+                font-weight: bold;
+                font-size: $font-size-huge;
+                color: $color-magenta;
+            }
+        }
+        ul {
+            padding: 0;
+            margin: 0;
+            display: none;
+            li {
+                .header {
+                    &::after {
+                        content: "";
+                        clear: both;
+                        display: table;
+                    }
+                    color: $color-blue-light;
+                    .label {
+                        float: left;
+                    }
+                    .date {
+                        float: right;
+                    }
+                }
+                .content {
+                    font-weight: 600;
+                    margin-top: $spacing-unit-tiny;
+                    margin-bottom: $spacing-unit-tiny;
+                }
+                .actions {
+                    display: flex;
+                    justify-content: space-between;
+                    li {
+                        &.agree {}
+                        &.skip {
+                            color: $color-blue-light;
+                        }
+                        &.disagree {
+                            color: $color-magenta;
+                        }
+                        span {
+                            margin-left: 0.5em;
+                        }
+                        border: none;
+                        font-weight: bold;
+                    }
+                }
+                .footer {
+                    margin-top: $spacing-unit-small;
+                    margin-bottom: $spacing-unit-small;
+                    color: $color-magenta;
+                    font-weight: bold;
+                }
+                padding: 0;
+                margin: 0;
+                border-bottom: 2px solid $color-blue-light;
+                list-style: none;
+            }
+        }
+    }
     &-arrow {
         width: 0;
         height: 0;
@@ -81,7 +183,7 @@ $profile-arrow-size: $spacing-unit !default;
         font-size: $font-size-h5;
         font-weight: $font-headings-weight;
         text-transform: uppercase;
-        > * {
+        >* {
             margin: 0 $spacing-unit;
         }
         a {
@@ -94,8 +196,7 @@ $profile-arrow-size: $spacing-unit !default;
     &-tabActive {
         font-weight: bold;
     }
-    &-tabContainer {
-    }
+    &-tabContainer {}
     &-tabContent {
         background: $profile-background-color;
         text-align: left;
@@ -172,7 +273,7 @@ $profile-arrow-size: $spacing-unit !default;
             clear: both;
             text-align: center;
         }
-        > * {
+        >* {
             display: block;
         }
         dl {
@@ -201,7 +302,16 @@ $profile-arrow-size: $spacing-unit !default;
         margin-left: auto;
         margin-right: auto;
     }
-
+    p input[type=file] {
+        display: none;
+    }
+    label[for=image-clear_id] {
+        color: $profile-label-clear-color;
+        display: inline-block;
+    }
+    p input[type=checkbox][name=image-clear] {
+        display: inline-block;
+    }
     .CustomFileInput {
         @extend .FormItem;
         padding: 0;
@@ -212,11 +322,9 @@ $profile-arrow-size: $spacing-unit !default;
         margin-bottom: $spacing-unit;
         font-family: inherit;
         font-weight: normal;
-
         div {
             padding: $spacing-unit-small $spacing-unit-small $spacing-unit-tiny;
             text-align: center;
-
             &:first-child {
                 min-width: fit-content;
                 border-bottom-left-radius: inherit;
