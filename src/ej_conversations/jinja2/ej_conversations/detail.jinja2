@@ -32,9 +32,16 @@
 
 {% macro comment_form(csrf_input) %}
     <div class="CommentForm">
+        {% if can_comment == 0 %}
+            <div class="CommentForm-toast">
+                <h3>{% trans %}Ooops!{% endtrans %}</h3>
+                <p>{% trans %}You reached the limit of comments in this conversation.{% endtrans %}</p>
+            </div>
+        {% else %}
+
         <h1>{% trans %}Leave your comment{% endtrans %}</h1>
-        <p>{% trans %}Include something new and avoid similar opinions. You can post at most {{ comments_left }}
-            comments.{% endtrans %}</p>
+        <p>{% trans %}Include something new and avoid similar opinions.
+            You can post at most {{ comments_left }} comments.{% endtrans %}</p>
 
         <form method="post">
             {{ csrf_input }}
@@ -43,30 +50,8 @@
                       title="comment"
                       onFocus="$('.Header-lowerNav').hide()"
                       onBlur="$('.Header-lowerNav').show()"></textarea>
-
-            {% if comments_left == 0 %}
-                {{ toast("Ooops!", "You reached the limit of comments in this conversation.") }}
-                <button class="CommentForm-fakeButton" type="button"
-                        onclick="toast()">{{ _('Send your opinion') }}</button>
-            {% else %}
-                <input type="submit" name="submit" value="{{ _('Send your opinion') }}" primary>
-            {% endif %}
+            <input type="submit" name="submit" value="{{ _('Send your opinion') }}" primary>
         </form>
+        {% endif %}
     </div>
-{% endmacro %}
-
-
-{% macro toast(title, content) %}
-    <div class="CommentForm-toast">
-        <h3>{{ title }}</h3>
-        <p>{{ content }}</p>
-    </div>
-
-    <script>
-        function toast() {
-            let $toast = $("CommentForm-toast");
-            $toast.addClass('show');
-            setTimeout(() => $toast.removeClass('show'), 2500);
-        }
-    </script>
 {% endmacro %}

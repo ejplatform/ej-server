@@ -10,7 +10,6 @@ class TestRoutes(UrlTester, ConversationRecipes):
     ]
     login_urls = [
         '/conversations/add/',
-        '/conversations/conversation/info',
     ]
     owner_urls = [
         '/conversations/conversation/edit/',

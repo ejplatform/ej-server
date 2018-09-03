@@ -1,5 +1,6 @@
 from boogie.router import Router
 from django.db.models import Count, Q
+from django.http import Http404
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
@@ -106,31 +107,20 @@ def favorite_conversations(request):
     }
 
 
-@urlpatterns.route('comments/rejected/', template='ej_conversations/components/comment-list.jinja2')
-def rejected_comments(request):
+@urlpatterns.route('comments/<which>/', login=False)
+def comments_tab(request, which):
+    if which not in {'approved', 'pending', 'rejected'}:
+        raise Http404
+    if not request.user.is_authenticaded:
+        url = reverse('auth:login')
+        this_url = reverse('profile:comments-tab', kwargs={'which': which})
+        redirect(f'{url}?next={this_url}')
+
+    st = Comment.STATUS
+    status_map = {'approved': st.approved, 'pending': st.pending, 'rejected': st.rejected}
     user = request.user
     return {
         'user': user,
-        'comments': user.comments.filter(status=Comment.STATUS.rejected),
-        'stats': user.comments.statistics(),
-    }
-
-
-@urlpatterns.route('comments/approved/', template='ej_conversations/components/comment-list.jinja2')
-def approved_comments(request):
-    user = request.user
-    return {
-        'user': user,
-        'comments': user.comments.filter(status=Comment.STATUS.approved),
-        'stats': user.comments.statistics(),
-    }
-
-
-@urlpatterns.route('comments/pending/', template='ej_conversations/components/comment-list.jinja2')
-def pending_comments(request):
-    user = request.user
-    return {
-        'user': user,
-        'comments': user.comments.filter(status=Comment.STATUS.pending),
+        'comments': user.comments.filter(status=status_map[which]),
         'stats': user.comments.statistics(),
     }

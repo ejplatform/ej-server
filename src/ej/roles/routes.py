@@ -19,7 +19,7 @@ def role_index():
     classes = set()
 
     # Collect all models and roles in the default render registry
-    for (cls, _) in render.registry:
+    for (cls, __) in render.registry:
         if not issubclass(cls, Model) or cls in classes:
             continue
         classes.add(cls)
@@ -29,7 +29,7 @@ def role_index():
 
     # Now we collect the queryset renderers
     classes = set()
-    for (cls, _) in register_queryset.registry:
+    for (cls, __) in register_queryset.registry:
         classes.add(cls)
         name = cls.__name__
         href = reverse('role-model-queryset', kwargs={'model': name.lower()})
@@ -113,7 +113,7 @@ def get_class(model):
     """
     Return class for string reference of model.
     """
-    for (cls, _) in render.registry:
+    for (cls, __) in render.registry:
         if cls.__name__.lower() == model:
             return cls
     raise Http404

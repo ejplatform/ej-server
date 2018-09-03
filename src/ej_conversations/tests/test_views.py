@@ -1,6 +1,6 @@
 import pytest
 from django.contrib.auth.models import AnonymousUser
-from django.http import HttpResponseServerError
+from pytest import raises
 
 from ej_conversations import create_conversation
 from ej_conversations.models import Comment, FavoriteConversation
@@ -58,13 +58,14 @@ class TestConversationBase:
         conversations.detail(request, conversation)
         assert votes_counter(None)(comment) == 1
 
-    def test_invalid_vote_in_comment(self, rf, conversation, comment, db):
-        request = rf.post('', {'action': 'vote', 'vote': 'not agree', 'comment_id': comment.id})
+    def test_invalid_vote_in_comment(self, rf, conversation, comment):
+        request = rf.post('', {'action': 'vote', 'vote': 'INVALID', 'comment_id': comment.id})
         user = User.objects.create_user('user@server.com', 'password')
-        request.user = user
-        conversation.comment = comment
+        conversation = comment
         conversation.save()
-        assert isinstance(conversations.detail(request, conversation), HttpResponseServerError)
+        request.user = user
+        with raises(Exception):
+            conversations.detail(request, conversation)
 
     def test_user_can_comment(self, rf, conversation):
         request = rf.post('', {'action': 'comment', 'comment': 'test comment'})
@@ -73,25 +74,17 @@ class TestConversationBase:
         conversations.detail(request, conversation)
         assert Comment.objects.filter(author=user)[0].content == 'test comment'
 
-    def test_annonymous_user_cannot_comment(self, rf, conversation):
+    def test_anonymous_user_cannot_comment(self, rf, conversation):
         request = rf.post('', {'action': 'comment', 'comment': 'test comment'})
         request.user = AnonymousUser()
-        response = conversations.detail(request, conversation)
-        assert response.get('comment_error') is not None
+        with raises(PermissionError):
+            conversations.detail(request, conversation)
 
     def test_user_can_add_conversation_as_favorite(self, rf, user, conversation):
         request = rf.post('', {'action': 'favorite'})
         request.user = user
         conversations.detail(request, conversation)
         assert FavoriteConversation.objects.filter(user=user, conversation=conversation).exists()
-
-    def test_get_conversation_info(self, conversation):
-        ctx = conversations.info(conversation)
-        assert ctx.get('info') is not None
-
-    def test_get_conversation_leaderboard(self, conversation):
-        response = conversations.leaderboard(conversation)
-        assert response.get('info') is not None
 
 
 class TestConversationComments:
