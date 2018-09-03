@@ -168,11 +168,10 @@ class Conf(ThemesConf,
                          'admin.dev.besouro.ejplatform.org',
                          '18.222.20.172']
 
-        ACCOUNT_EMAIL_VERIFICATION = 'optional'
-        EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-        #EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend'
-        #ANYMAIL = {'MAILGUN_API_KEY': ''}
-        #DEFAULT_FROM_EMAIL = "Unidos Contra a Corrupção <noreply@unidoscontraacorrupcao.org.br>"
+        ACCOUNT_EMAIL_VERIFICATION = 'none'
+        EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend'
+        ANYMAIL = {'MAILGUN_API_KEY': ''}
+        DEFAULT_FROM_EMAIL = "Unidos Contra a Corrupção <noreply@unidoscontraacorrupcao.org.br>"
 
     if ENVIRONMENT == 'prod':
         INTERNAL_IPS = [*globals().get('INTERNAL_IPS', ()), '127.0.0.1']
@@ -208,11 +207,10 @@ class Conf(ThemesConf,
                          '18.222.20.172']
 
         DATA_UPLOAD_MAX_NUMBER_FIELDS = 10000
-        ACCOUNT_EMAIL_VERIFICATION = 'optional'
-        EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-       #EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend'
-       #ANYMAIL = {'MAILGUN_API_KEY': ''}
-       #DEFAULT_FROM_EMAIL = "Unidos Contra a Corrupção <noreply@unidoscontraacorrupcao.org.br>"
+        ACCOUNT_EMAIL_VERIFICATION = 'none'
+        EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend'
+        ANYMAIL = {'MAILGUN_API_KEY': ''}
+        DEFAULT_FROM_EMAIL = "Unidos Contra a Corrupção <noreply@unidoscontraacorrupcao.org.br>"
 
 Conf.save_settings(globals())
 #

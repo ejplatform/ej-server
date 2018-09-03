@@ -34,25 +34,28 @@ def send_message(sender, instance, created, **kwargs):
             channel.save()
         Message.objects.create(channel=channel, title="", body=title)
 
-@receiver(post_save, sender=PressedCandidate)
-def send_press_email(sender, instance, created, **kwargs):
-    candidate_email = [instance.candidate.public_email]
-   
-    html_message = '<html><body><div><p>Um usuário acaba \
-    de solicitar que você se comprometa com os compromissos da \
-    campanha Unidos Contra a Corrupção. Essa pessoa conheceu \
-    seu perfil e gostaria de pedir que registre seu compromisso.</p>\
-    <p>Quando registrar o compromisso, todos os usuários que fizeram \
-    essa solicitação receberão avisos diretamente, podendo avaliar \
-    positivamente seu perfil! Não perca tempo e registre seu \
-    compromisso agora mesmo:</p><p><a href="http://unidoscontraacorrupcao.org.br/candidatura/">\
-    Unidos Contra a Corrupção</a></p><p>Atenciosamente.\
-    <br>Unidos Contra a Corrupção</p></div></body></html>'
-    send_mail(
-        'Você recebeu um pedido de uma pessoa da campanha Unidos Contra a Corrupção',
-        '',
-        'Unidos Contra a Corrupção <noreply@unidoscontraacorrupcao.org.br>',
-        candidate_email,
-        fail_silently=False,
-        html_message=html_message
-    )
+# @receiver(post_save, sender=PressedCandidate)
+# def send_press_email(sender, instance, created, **kwargs):
+#     if created:
+#         candidate_email = [instance.candidate.public_email]
+#         html_message = '<html><body><div><p>Um usuário acaba \
+#         de solicitar que você se comprometa com os compromissos da \
+#         campanha Unidos Contra a Corrupção. Essa pessoa conheceu \
+#         seu perfil e gostaria de pedir que registre seu compromisso.</p>\
+#         <p>Quando registrar o compromisso, todos os usuários que fizeram \
+#         essa solicitação receberão avisos diretamente, podendo avaliar \
+#         positivamente seu perfil! Não perca tempo e registre seu \
+#         compromisso agora mesmo:</p><p><a href="http://unidoscontraacorrupcao.org.br/candidatura/">\
+#         Unidos Contra a Corrupção</a></p><p>Atenciosamente.\
+#         <br>Unidos Contra a Corrupção</p></div></body></html>'
+#         try:
+#             send_mail(
+#                 'Você recebeu um pedido de uma pessoa da campanha Unidos Contra a Corrupção',
+#                 '',
+#                 'Unidos Contra a Corrupção <noreply@unidoscontraacorrupcao.org.br>',
+#                 candidate_email,
+#                 fail_silently=False,
+#                 html_message=html_message
+#             )
+#         except:
+#             pass

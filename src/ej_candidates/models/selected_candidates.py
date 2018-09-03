@@ -34,21 +34,24 @@ def send_message(sender, instance, created, **kwargs):
             channel.save()
         Message.objects.create(channel=channel, title="", body=body, link=url)
 
-@receiver(post_save, sender=SelectedCandidate)
-def send_selected_email(sender, instance, created, **kwargs):
-    candidate_email = [instance.candidate.public_email]
-
-    html_message = '<html><body><div><p>Boas notícias! Você acaba \
-    de ser selecionada por um usuário no aplicativo da campanha Unidos \
-    Contra a Corrupção, o que significa que essa pessoa se interessou \
-    pelo seu perfil e pelos seus compromissos e agora vai poder ver \
-    mais detalhes e informações sobre você.</p><p>Atenciosamente.\
-    <br>Unidos Contra a Corrupção</p></div></body></html>'
-    send_mail(
-        'Você foi selecionado por uma pessoa da campanha Unidos Contra a Corrupção',
-        '',
-        'Unidos Contra a Corrupção <noreply@unidoscontraacorrupcao.org.br>',
-        candidate_email,
-        fail_silently=False,
-        html_message=html_message
-    )
+# @receiver(post_save, sender=SelectedCandidate)
+# def send_selected_email(sender, instance, created, **kwargs):
+#     if created:
+#         candidate_email = [instance.candidate.public_email]
+#         html_message = '<html><body><div><p>Boas notícias! Você acaba \
+#         de ser selecionada por um usuário no aplicativo da campanha Unidos \
+#         Contra a Corrupção, o que significa que essa pessoa se interessou \
+#         pelo seu perfil e pelos seus compromissos e agora vai poder ver \
+#         mais detalhes e informações sobre você.</p><p>Atenciosamente.\
+#         <br>Unidos Contra a Corrupção</p></div></body></html>'
+#         try:
+#             send_mail(
+#                 'Você foi selecionado por uma pessoa da campanha Unidos Contra a Corrupção',
+#                 '',
+#                 'Unidos Contra a Corrupção <noreply@unidoscontraacorrupcao.org.br>',
+#                 candidate_email,
+#                 fail_silently=False,
+#                 html_message=html_message
+#             )
+#         except:
+#             pass
