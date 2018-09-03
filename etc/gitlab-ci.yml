@@ -38,7 +38,7 @@ test with sqlite3: &test
     - pip install https://github.com/fabiommendes/hyperpython/archive/master.zip
     - pip install https://github.com/fabiommendes/django-boogie/archive/master.zip
     - pip install -r etc/requirements/develop.txt
-    - pytest
+    - pytest --cov=./
     - codecov -t $CODECOV_TOKEN
   tags:
     - lappis
