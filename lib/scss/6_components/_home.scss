@@ -2,11 +2,16 @@
  HOME PAGE
  ======================================================================== */
 
+@import '../2_tools/index';
+
+
 $how-it-work-icon-size: 1.5 * $font-size-h1 !default;
 $how-it-work-icon-color: $color-gray-dark !default;
 
 .HomeBanner {
     @extend .CenteredContainer;
+    width: 80%;
+    margin-top: 10px;
 
     h2 {
         display: none;
@@ -16,11 +21,21 @@ $how-it-work-icon-color: $color-gray-dark !default;
             display: inherit;
         }
     }
+    h1 {
+        font-family: var( --home-banner-title-font-family);
+        color: $home-banner-title-font-color;
+    }
+
+    .Button[primary] {
+        background: $home-banner-button-background;
+        color: $color-white;
+        padding: $unit $unit*2;
+    }
 }
 
 .HowItWorks {
-    background: $color-hint;
-    padding-top: $spacing-unit-large;
+    background: $home-how-it-works-background;
+    padding-top: $spacing-unit;
 
     > * {
         @extend .CenteredContainer;
@@ -29,9 +44,37 @@ $how-it-work-icon-color: $color-gray-dark !default;
     h2 {
         font-size: $font-size-h4;
     }
+    h1 {
+        color: $home-how-it-works-title-font-color;
+    }
+    p {
+        padding: 0 10px;
+        line-height: 30px;
+        color: $color-content-text;
+    }
+
+    .fa-child:before {
+        content: $home-how-it-works-card-icon-person;
+    }
+
+    .fa-comments:before {
+        content: $home-how-it-works-card-icon-conversation;
+    }
+
 }
 
 .HowItWorksCard {
+    > .fa {
+
+        background: $home-how-it-works-card-icon-background;
+        border-radius: 50%;
+        width: $unit * 7;
+        height: $unit * 7;
+        display: inline-block;
+        color: $color-blue-dark;
+        padding-top: $unit * 2;
+        margin: $unit * 2;
+    }
     text-align: left;
     align-items: center;
     display: flex;
@@ -39,6 +82,7 @@ $how-it-work-icon-color: $color-gray-dark !default;
 
     h1 {
         font-size: $font-size-h3;
+        color: $home-how-it-works-card-title-font-color;
 
         i {
             padding: $spacing-unit-small;
@@ -56,11 +100,24 @@ $how-it-work-icon-color: $color-gray-dark !default;
     }
 
     p {
-        color: tint($color-hint-text, 10%);
+        color: $home-how-it-works-card-content-font-color;
     }
 
     &-content {
         flex-grow: 1;
+    }
+
+    &-iconWrapper {
+        background-color: white;
+        border-radius: 50%;
+        margin: $spacing-unit;
+    }
+    .conversas {
+        padding: $spacing-unit-tiny;
+    }
+
+    .cpa_circulo {
+        min-width: 48px;
     }
 
     &-icon {
@@ -70,9 +127,8 @@ $how-it-work-icon-color: $color-gray-dark !default;
         display: block;
         flex-grow: 0;
         font-size: $how-it-work-icon-size;
-        margin: $spacing-unit 0;
         text-align: center;
-        min-width: 70px;
+        min-width: 40px;
     }
 
     &-extra {
@@ -91,6 +147,8 @@ $how-it-work-icon-color: $color-gray-dark !default;
     background: $color-hint;
     padding: $spacing-unit;
     text-align: center;
+    display: $home-start-now-display;
+
 
     > * {
         @extend .Container;
@@ -100,4 +158,13 @@ $how-it-work-icon-color: $color-gray-dark !default;
         font-size: $font-size-h4;
     }
 
+}
+
+.StartPage {
+    background: $page-background-image;
+    background-size: contain;
+
+    .ConversationFooter {
+        margin-top: 70px;
+    }
 }

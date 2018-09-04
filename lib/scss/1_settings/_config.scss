@@ -2,6 +2,7 @@
  CONFIG
  =============================================================================*/
 
+$config: ( env: dev, debug: true, );
 
 // Project-level configuration, feature switches, etc.
 //
@@ -10,4 +11,3 @@
     @return map-get($config, $key);
 }
 
-$config: ( env: dev, debug: true, );

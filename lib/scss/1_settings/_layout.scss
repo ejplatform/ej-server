@@ -1,6 +1,8 @@
 /*
- Global
+ PAGE LAYOUT AND BREAKPOINTS
  =========================================================================== */
+
+@import 'spacing';
 
 // Media query break points
 $breakpoint-small: 550px;
@@ -10,15 +12,16 @@ $breakpoint-large: 1200px;
 // Page header layout
 $header-icon-size: 40px !default;
 $header-logo-size: $header-icon-size !default;
-$header-top-nav-height: $header-logo-size + 2 * $spacing-unit-tiny !default;
+$header-top-nav-height: $header-logo-size + 5 * $spacing-unit-tiny !default;
 $top-header-height: 25px !default;
-$header-bottom-nav-height: $header-icon-size + 3 * $spacing-unit-tiny + $font-size-tiny !default;
+$header-bottom-nav-height: $header-icon-size + $font-size-tiny + 18 !default;
 $header-height-tablet: $header-top-nav-height !default;
 
 // Custom page layout
 $page-content-width-max: 700px !default;
-$content-wrapper-max-width: $breakpoint-medium !default;
+$content-wrapper-max-width: $page-content-width-max !default;
 $header-wrapper-max-width: $content-wrapper-max-width + 2 * $spacing-unit-large !default;
+$layout-compact-container-width: $breakpoint-small !default;
 
 // Spacing element
-$block-elements-border-radius: $spacing-unit-large;
+$block-elements-border-radius: $spacing-unit-large !default;

@@ -1,0 +1,27 @@
+/*
+ BOARDS
+ ======================================================================== */
+
+@import '../2_tools/index';
+
+$board-ul-margin: 40px;
+$board-link-margin: 15px;
+
+.BoardList {
+    text-align: center;
+    &-title {
+        h1 {
+            font-size: $font-size-h2;
+            color: $color-magenta;
+        }
+    }
+
+    &-linkList {
+        margin: $board-ul-margin;
+    }
+
+    &-linkList li {
+        list-style-type: none;
+        margin: $board-link-margin;
+    }
+}

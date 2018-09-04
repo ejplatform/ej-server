@@ -2,25 +2,8 @@
  FONTS FAMILIES AND SIZES
  ============================================================== */
 
-// Font names aliases
-$font-material-icons: 'Material Icons';
-
-// Sans-serif
-$font-roboto: 'Roboto', sans-serif;
-$font-open-sans: 'Open Sans', sans-serif;
-$font-open-sans-condensed: 'Open Sans Condensed', $font-open-sans;
-$font-raleway: 'Raleway', sans-serif;
-$font-lato: 'Lato', sans-serif;
-
-// Sans-serif
-$font-georgia: 'Georgia', serif;
-$font-times: 'Times New Roman', serif;
-
-// Cursive
-$font-comic-sans: 'Comic Sans', cursive;
-
-// Monospace
-$font-ibm-plex: 'IBM Plex Mono', monospace;
+@import '../0_constants/typography';
+@import 'spacing';
 
 // Font roles and base styles
 $font-mono: $font-ibm-plex !default;
@@ -29,21 +12,21 @@ $font-sans-accent: $font-raleway !default;
 $font-serif: $font-georgia !default;
 $font-cursive: $font-comic-sans !default;
 $font-paragraph: $font-sans !default;
-$font-headings: $font-sans-accent !default;
+$font-headings: $font-patua-one !default;
 
 // Transformations and weigh
-$font-headings-weight: normal !default;
+$font-headings-weight: 400 !default;
 $text-headings-transform: none !default;
 $text-headings-transform-h1: uppercase !default;
 
 // Base typographical sizes
 $font-size-tiny: 12px !default;
-$font-size-small: 13px !default;
-$font-size-default: 15px !default;
-$font-size-large: 17px !default;
-$font-size-larger: 20px !default;
-$font-size-huge: 24px !default;
-$font-size: $font-size-default;
+$font-size-small: ($font-size-tiny + 1px) !default; // 13px
+$font-size-default: ($font-size-small + 2px) !default; // 15px
+$font-size-large: ($font-size-default + 2px) !default; // 17px
+$font-size-larger: ($font-size-large + 3px) !default; // 20px
+$font-size-huge: ($font-size-larger + 4px) !default; // 24px
+$font-size: $font-size-default !default;
 $line-height: ($font-size + $spacing-unit-tiny) !default;
 
 // Heading sizes

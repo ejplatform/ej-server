@@ -1,16 +1,20 @@
+/*
+ ROCKET INTRO PAGE AND IFRAME
+ ======================================================================== */
+@import '../2_tools/index';
+
 .Rocket {
     &-title {
         color: $color-hint;
-
         font-weight: bold;
         padding: 0 $spacing-unit-tiny;
 
-        h1{
+        h1 {
             color: $color-accent;
             font-weight: bold;
 
         }
-        h2{
+        h2 {
             color: $color-green;
             font-weight: bold;
         }
@@ -22,32 +26,34 @@
         background-color: $color-hint;
         padding: $spacing-unit-small;
 
-        .title{
+        .title {
             padding: $spacing-unit-tiny 0;
             color: $color-green;
             font-weight: bold;
         }
-        .item{
+        .item {
             padding: $spacing-unit-tiny;
 
-
-            .item-position{
+            .item-position {
                 color: $color-accent;
                 font-size: $font-size-huge;
                 width: auto;
                 float: left;
             }
-            .item-content{
+            .item-content {
                 padding-left: $spacing-unit;
                 width: auto;
             }
         }
-        
     }
 
     &-action {
         text-align: center;
         padding: $spacing-unit-tiny;
     }
+}
 
+.RocketIFrame {
+    width: 100vw;
+    height: 100%;
 }

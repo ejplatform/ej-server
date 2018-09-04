@@ -2,6 +2,8 @@
  BUTTONS
  =============================================================================*/
 
+@import '../2_tools/index';
+
 $button-border-radius: $spacing-unit-large;
 $button-ghost-border-width: 1px !default;
 $button-ghost-color: $color-primary !default;
@@ -12,13 +14,13 @@ $button-font-size: $font-size-default !default;
 $button-font-size-small: $font-size-small !default;
 $button-font-size-large: $font-size-large !default;
 $button-font-weight: bold !default;
-$button-font-family: $font-headings !default;
+$button-font-family: $font-sans-accent !default;
 $button-text-tranform: uppercase;
 
 .Button {
     @include color($color-action-default, $color-action-default-text);
     border: none;
-    border-radius: $button-border-radius;
+    border-radius: $button-border-radius-default;
     box-sizing: border-box;
     cursor: pointer;
     display: inline-block;

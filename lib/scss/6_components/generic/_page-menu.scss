@@ -11,40 +11,104 @@ $nav-menu-border: 1px solid $nav-menu-border-color !default;
 // Layout
 $nav-menu-font-size: $font-size-default !default;
 $nav-menu-opacity: 1.0 !default;
-$nav-menu-shadow: $box-shadow;
+$nav-menu-shadow: $box-shadow !default;
 $nav-menu-width: 75vw !default;
+$nav-menu-max-width: 400px !default;
+$nav-menu-ul-padding: 0 !default;
 
 // Element
 .NavMenu {
-    @include color($nav-menu-color, $nav-menu-color-text);
-    @include size($nav-menu-width, 100vh);
+    @include size($nav-menu-width, 100%);
+
+    min-height: 100vh;
+    max-width: $nav-menu-max-width;
     box-shadow: $nav-menu-shadow;
     box-sizing: border-box;
     font-size: $nav-menu-font-size;
     opacity: $nav-menu-opacity;
-    overflow: auto;
-    padding: $spacing-unit;
+    -ms-overflow-style: none;
+    overflow: -moz-scrollbars-none;
+    background: $nav-menu-color;
+    color: $nav-menu-color-text;
 
+    a, button{
+        color: $nav-menu-color-text;
+    }
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    padding: $spacing-unit;
     em {
         font-weight: bold;
         font-style: normal;
     }
-    a, a:hover, a:active {
-        color: $nav-menu-color-text;
+
+    button {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0px;
+        font-weight: bold;
+        font-size: $font-size-small;
     }
-    img, i {
+
+    img,
+    i {
         height: 1em;
-        padding-right: $spacing-unit-small;
+        padding-right: $spacing-unit-tiny;
     }
+    .icon-stack{
+        :first-child{
+            font-size: $font-size-tiny * 0.6;
+            padding-right: 0px;
+            vertical-align: middle;
+            margin-right: -3px;
+            margin-bottom: 3px;
+        }
+        
+        i + i{
+            font-size: $font-size-tiny;
+        }
+    }
+
     li {
         list-style: none;
         padding: $spacing-unit-small 0;
         border-bottom: $nav-menu-border;
+        font-weight: bold;
+        font-size: $font-size-small;
     }
+
     li:last-child {
         border: none;
     }
+
     ul {
-        padding: 0;
+        padding: $nav-menu-ul-padding; 
     }
+
+    &-DropDown {
+        cursor: pointer;
+    }
+
+    &-AngleDownIcon {
+        float: right;
+    }
+
+    &-UserMenu {
+        display: none;
+        >li {
+            margin-left: $spacing-unit;
+        }
+    }
+
+    &-Accessibility {
+        display: none;
+        >li {
+            margin-left: $spacing-unit;
+        }
+    }
+    
 }

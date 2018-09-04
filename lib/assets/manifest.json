@@ -1,33 +1,33 @@
 {
   "short_name": "EJ",
-  "name": "EJ - plataforma de participação social",
-  "background_color": "#FFF",
+  "name": "EJ - Plataforma de participação social",
+  "background_color": "#C4F2F4",
   "display": "standalone",
   "orientation": "portrait",
-  "theme_color": "#00CBD2",
+  "theme_color": "#C4F2F4",
   "icons": [
     {
-      "src": "/static/img/logo/icon-48.png",
+      "src": "img/logo/crop-icon-48.png",
       "type": "image/png",
       "sizes": "48x48"
     },
     {
-      "src": "/static/img/logo/icon-96.png",
+      "src": "img/logo/crop-icon-96.png",
       "type": "image/png",
       "sizes": "96x96"
     },
     {
-      "src": "/static/img/logo/icon-192.png",
+      "src": "img/logo/crop-icon-192.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "/static/img/logo/icon-256.png",
+      "src": "img/logo/crop-icon-256.png",
       "type": "image/png",
       "sizes": "256x256"
     },
     {
-      "src": "/static/img/logo/icon-512.png",
+      "src": "img/logo/crop-icon-512.png",
       "type": "image/png",
       "sizes": "512x512"
     }

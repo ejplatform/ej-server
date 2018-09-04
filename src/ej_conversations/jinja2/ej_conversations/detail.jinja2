@@ -1,0 +1,57 @@
+{% extends 'base.jinja2' %}
+
+
+{% block content %}
+    <div class="ConversationDetail">
+        {# Ballon with title #}
+        {{ conversation|role('balloon') }}
+
+        {# Current comment #}
+        <div class="ConversationDetail-header"><h1>{{ _('Comments') }}</h1></div>
+        {% if comment %}
+            {{ comment|role('card') }}
+        {% else %}
+            <div class="Comment">
+                <h1>{{ _('Congratulations!') }}</h1>
+                <p>{{ _("There are no comments left to vote :)") }}</p>
+            </div>
+        {% endif %}
+
+        {# Post a new comment #}
+        {% if can_comment %}
+            {{ comment_form(csrf_input) }}
+            <p>{{ _('You still have {n} available comments').format(n=comments_left) }}</p>
+        {% elif comments_left == 0 %}
+            <p>{% trans %}You have used all comments available in this conversation.{% endtrans %}</p>
+        {% else %}
+            <p>{% trans %}Please {{ login_anchor }} to vote on this conversation.{% endtrans %}</p>
+        {% endif %}
+    </div>
+{% endblock %}
+
+
+{% macro comment_form(csrf_input) %}
+    <div class="CommentForm">
+        {% if can_comment == 0 %}
+            <div class="CommentForm-toast">
+                <h3>{% trans %}Ooops!{% endtrans %}</h3>
+                <p>{% trans %}You reached the limit of comments in this conversation.{% endtrans %}</p>
+            </div>
+        {% else %}
+
+        <h1>{% trans %}Leave your comment{% endtrans %}</h1>
+        <p>{% trans %}Include something new and avoid similar opinions.
+            You can post at most {{ comments_left }} comments.{% endtrans %}</p>
+
+        <form method="post">
+            {{ csrf_input }}
+            <input type="hidden" name="action" value="comment">
+            <textarea name="comment"
+                      title="comment"
+                      onFocus="$('.Header-lowerNav').hide()"
+                      onBlur="$('.Header-lowerNav').show()"></textarea>
+            <input type="submit" name="submit" value="{{ _('Send your opinion') }}" primary>
+        </form>
+        {% endif %}
+    </div>
+{% endmacro %}

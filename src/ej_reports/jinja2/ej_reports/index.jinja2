@@ -1,0 +1,118 @@
+<style>
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding: 12px 16px;
+    z-index: 1;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropbtn {
+    border: none;
+    color: white;
+    padding: 10% 80%;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+
+    background-color: #043273;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+</style>
+
+{% extends 'base.jinja2' %}
+{% block content %}
+    <div class="Container">
+        <h1>{{ _('Basic info') }}</h1>
+        <p>{{ _('Report for conversation: "{text}"').format(text=conversation.text) }}</p>
+        <h2>{{ _('Votes ({total} participants)').format(total=statistics.participants) }}</h2>
+        {{ vote_data }}
+
+        <h2>{{ _('Comments') }}</h2>
+        {{ comment_data }}
+        </br>
+
+        <div class="dropdown">
+            <button class="dropbtn">Download raw votes data</button>
+            <div class="dropdown-content">
+                <p><a href="votes.csv">CSV</a></p>
+                <p><a href="votes.msgpack">MessagePack</a></p>
+                <p><a href="votes.json">JSON</a></p>
+            </div>
+        </div>
+        <hr>
+
+        <h1>{{ _('Advanced info') }}</h1>
+        <h2>{{ _('Comments') }}</h2>
+        {{ comments_table }}
+
+        <div class="dropdown">
+            <button class="dropbtn">Download comments data</button>
+            <div class="dropdown-content">
+                <p><a href="comments.csv">CSV</a></p>
+                <p><a href="comments.msgpack">MessagePack</a></p>
+                <p><a href="comments.json">JSON</a></p>
+            </div>
+        </div>
+        <hr>
+        </br>
+
+        <h2>{{ _('Participants') }}</h2>
+        {{ participants_table }}
+
+        <div class="dropdown">
+            <button class="dropbtn">Download users data</button>
+            <div class="dropdown-content">
+                <p><a href="users.csv">CSV</a></p>
+                <p><a href="users.msgpack">MessagePack</a></p>
+                <p><a href="users.json">JSON</a></p>
+            </div>
+        </div>
+        <hr>
+        </br>
+        <div>
+            <a href="scatter/">Scatterplot</a>
+        </div>
+
+        <h1>{{ _('Cluster info') }}</h1>
+        {% for cluster in clusters %}
+            <h2>{{ cluster.name }} ({{ _('{n} users').format(n=cluster.size) }})</h2>
+            {{ cluster.comment_table }}
+        {% endfor %}
+    </div>
+{% endblock %}
+
+
+{% block javascript_body %}
+    {{ super() }}
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(function () {
+            $('.table.long').DataTable({
+                order: [],
+            });
+        })
+    </script>
+{% endblock %}

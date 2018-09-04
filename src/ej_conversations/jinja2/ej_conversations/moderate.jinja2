@@ -1,0 +1,34 @@
+{% extends 'base.jinja2' %}
+{% from 'ej_conversations/components/comment-list.jinja2' import comment_list %}
+
+{% block content %}
+    <div class="Moderate">
+        <div class="ConversationDetail">
+            <div class="ConversationDetail-banner">
+                <div class="ConversationTags"><i class="fa fa-tags"></i>
+                  {% if conversation.tags.count() > 0 %}
+                        {{ (conversation.tags.all()[0]|string).title() }}
+                    {% else %}
+                        Tags
+                    {% endif %}
+                </div>
+                <h1>{{ conversation.text }}</h1>
+                <div class="Conversation-edit">
+                  {{ action_button( _('Edit Conversation'), conversation.get_absolute_url() + 'edit/') }}
+                </div>
+            </div>
+
+            <div class="ConversationDetail-arrow"></div>
+        </div>
+        <div class="Moderate-comments">
+            <h1>{{ _('Comments in this conversation') }}</h1>
+            {% if comments | length >= 1 %}
+                {% for comment in comments %}
+                    {{ comment|role('moderate') }}
+                {% endfor %}
+            {% else %}
+                <p>{{ _('No comments left') }}</p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

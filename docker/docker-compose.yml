@@ -1,0 +1,47 @@
+version: '3.5'
+
+
+services:
+  web:
+    image: ej-dev:latest
+    restart: always
+    build:
+      context: ../
+      dockerfile: ./docker/Dockerfile-dev
+      args:
+        - UID=${UID:-1000}
+    ports:
+      - 8000:8000
+    links:
+      - postgres:postgres
+      - redis:redis
+    env_file:
+      - ./env/django.env
+      - ./env/postgres.env
+      - ${ENVFILE:-./env/override.env}
+    environment:
+      - DJANGO_ENVIRONMENT=local
+    volumes:
+      - ../:/app/
+    working_dir: /app
+    command: sass db -m run
+
+  postgres:
+    image: postgres:alpine
+    restart: always
+    ports:
+      - 5432:5432
+    env_file:
+      - ./env/postgres.env
+    volumes:
+      - dev_db_data:/var/lib/postgresql/data/
+
+  redis:
+    image: redis:alpine
+    restart: always
+    ports:
+      - 6379:6379
+
+
+volumes:
+  dev_db_data:

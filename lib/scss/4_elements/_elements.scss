@@ -2,10 +2,14 @@
  GENERIC ELEMENTS
  =====================================================================*/
 
+@import '../2_tools/index';
+
+
 // Structural page elements
 html {
     min-height: 100%;
     line-height: $line-height / $font-size;
+    max-width: 500px;
 }
 
 body {

@@ -1,8 +1,9 @@
 /*
  GENERIC PAGE ELEMENTS
  ======================================================================== */
+@import '../../2_tools/index';
 
-$page-title-font-size: 1.1 * $font-size-h1;
+$page-title-font-size: 1.1 * $font-size-h1 !default;
 
 .Page {
     box-sizing: border-box;
@@ -16,7 +17,15 @@ $page-title-font-size: 1.1 * $font-size-h1;
         padding: ($header-height-tablet + $top-header-height) 0 0 0;
     }
 
+    @media only screen and (max-width: $breakpoint-small) {
+        &.talks {
+            padding: $header-top-nav-height 0 0 0;
+        }
+    }
+
     &-mainContainer {
+        background: $page-background-image;
+        background-size: contain;
         box-sizing: border-box;
         height: 100vh;
         display: flex;
@@ -45,7 +54,7 @@ $page-title-font-size: 1.1 * $font-size-h1;
 
     &-content {
         flex-grow: 1;
-        margin: 0 auto;
+        margin: 0 auto $header-bottom-nav-height auto;
         padding: 0;
     }
 }

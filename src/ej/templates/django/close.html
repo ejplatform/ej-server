@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block header %}{% endblock header %}
+
+{% block content %}
+<script>
+  (function() {
+    document.addEventListener("DOMContentLoaded", function() {
+      var login_data = {
+        {% if user.is_authenticated %}
+        xid: '{{ user.id }}',
+        x_name: '{{ user.first_name|escapejs }}' + ' {{ user.last_name }}',
+        x_profile_image_url: '{{ user.image_url }}',
+        {% else %}
+        xid: null,
+        x_name: null,
+        x_profile_image_url: '',
+        {% endif %}
+      };
+
+      window.parent.postMessage(login_data, '*');
+      window.close();
+    });
+  }());
+</script>
+<p> Feche esta janela para continuar...</p>
+{% endblock content %}

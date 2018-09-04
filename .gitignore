@@ -15,7 +15,9 @@ __pycache__/
 .pytest_cache/
 .sass-cache/
 .tox/
+venv/
 build/
+!lib/build/.gitkeep
 docs/_build/
 dist/
 htmlcov/
@@ -55,3 +57,19 @@ $RECYCLE.BIN/
 .cache/
 dump.rdb
 .ipynb_checkpoints/
+*.mo
+lib/assets/css/main*.css
+
+# Ignore automatic migrations
+src/*/migrations/*_auto_*.py
+src/*/migrations/*_merge_*.py
+
+# Themes
+lib/assets/cpa
+lib/assets/brasil-que-o-povo-quer
+builds/
+docker/base-images/requirements*.txt
+docker/base-images/nginx.conf
+
+# virtualenv
+venv

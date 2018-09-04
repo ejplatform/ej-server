@@ -2,6 +2,8 @@
  GENERIC LAYOUT PATTERNS
  =========================================================================== */
 
+@import '../2_tools/index';
+
 .Container {
     box-sizing: border-box;
     margin: 0 auto;
@@ -21,6 +23,10 @@
 .CenteredContainer {
     @extend .Container;
     text-align: center;
+}
+
+.CenteredContainer[compact] {
+    max-width: $layout-compact-container-width;
 }
 
 // Flex box based layouts

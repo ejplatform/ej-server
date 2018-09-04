@@ -11,6 +11,10 @@
  *   SUITE CSS: https://suitcss.github.io/
  */
 
+// CONSTANTS
+// Userful constants used by settings and theme overrides.
+@import '0_constants/index';
+
 
 // SETTINGS
 // Global variables, site-wide settings, config switches, etc.
@@ -48,3 +52,7 @@
 // High-specificity, very explicit selectors. Overrides and helper classes
 // (e.g. .hidden {}).
 @import '7_utilities/index';
+
+
+// High contrast theme
+@import 'hicontrast';

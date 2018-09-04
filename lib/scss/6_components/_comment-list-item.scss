@@ -1,0 +1,43 @@
+/*
+ COMMENT LIST ITEM -- shown comments in listings
+ ======================================================================== */
+@import '../2_tools/index';
+
+.CommentListItem {
+    &-header {
+        color: $color-primary;
+        &::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+        .label {
+            float: left;
+        }
+        .date {
+            float: right;
+        }
+    }
+    &-content {
+        font-weight: 600;
+        margin: $spacing-unit-tiny auto;
+    }
+    &-actions {
+        display: flex;
+        justify-content: space-between;
+        li {
+            border: none;
+            font-weight: bold;
+            list-style: none;
+            span {
+                margin-left: 0.5em;
+            }
+        }
+    }
+    &-footer {
+        margin-top: $spacing-unit-small;
+        margin-bottom: $spacing-unit-small;
+        color: $color-accent;
+        font-weight: bold;
+    }
+}

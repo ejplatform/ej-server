@@ -1,0 +1,13 @@
+{% extends 'base.jinja2' %}
+
+{% block content %}
+    <div class="CenteredContainer" compact>
+        <form method="post" class="Form" hide-labels>
+            {{ csrf_input }}
+            {{ form.as_p() }}
+            <div>
+                <input type="submit" class="Button" value="{{ _('Save') }}" name="create">
+            </div>
+        </form>
+    </div>
+{% endblock %}

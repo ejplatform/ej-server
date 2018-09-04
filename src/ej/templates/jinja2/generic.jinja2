@@ -1,0 +1,13 @@
+{% extends 'base.jinja2' %}
+
+{% block content %}
+    <div class="Container">
+        <h1>{{ _('Under construction!') }}</h1>
+        {% if data is defined %}
+            {{ data }}
+        {% else %}
+            <h2>{{ _('Context variables') }}</h2>
+            {{ generic_context() }}
+        {% endif %}
+    </div>
+{% endblock %}

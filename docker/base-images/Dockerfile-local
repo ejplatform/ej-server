@@ -1,0 +1,23 @@
+FROM ejplatform/python:test as testpackages
+FROM ejplatform/tools:latest
+
+# Install Python dependencies
+COPY --from=testpackages /pypackages /pypackages
+
+# Set environment variables in order for this to work :)
+ENV PATH=$PATH:/pypackages/bin
+ENV PYTHONPATH=$PYTHONPATH:/pypackages/lib/python3.6/site-packages
+
+# We clone hyperpython and django boogie in /app/local/vendor/ in order to make
+# the updates to the dev image faster
+WORKDIR /app
+RUN mkdir -p /vendor/ \
+ && git clone --depth=1 \
+        https://github.com/fabiommendes/hyperpython.git \
+        /vendor/hyperpython \
+ && git clone --depth=1 \
+        https://github.com/fabiommendes/django-boogie.git \
+        /vendor/django-boogie \
+ && cd /vendor/django-boogie/ && python setup.py develop \
+ && cd /vendor/hyperpython/ && python setup.py develop \
+ && echo "ENDING CLONING REPOSITORIES"

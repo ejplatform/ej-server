@@ -1,8 +1,0 @@
-{% load account %}{% user_display user as user_display %}{% load i18n %}{% autoescape off %}{% blocktrans with site_name=current_site.name site_domain=current_site.domain %}Boas vindas do {{ site_name }}!
-
-Você está recebendo essa mensagem por que o usuário {{ user_display }} se cadastrou com esse endereço de email.
-
-Pra confirmar que está tudo certo, vá até {{ activate_url }}
-{% endblocktrans %}{% endautoescape %}
-{% blocktrans with site_name=current_site.name site_domain=current_site.domain %}Um obrigado do {{ site_name }}!
-brasilqueopovoquer.org.br{% endblocktrans %}

@@ -1,0 +1,22 @@
+{% extends 'base.jinja2' %}
+
+{% set content_title = gettext('Edit profile: <em>%(name)s</em>', name=request.user.name) %}
+
+{% block content %}
+    <div class="ProfileEdit">
+        <form method="post" enctype="multipart/form-data" action="">
+            {{ csrf_input }}
+            {{ form.as_p() }}
+            {{ form.non_field_errors() }}
+{#            <div class="FormItem CustomFileInput">#}
+{#                <div>#}
+{#                    {{ _('Choose a file') }}#}
+{#                </div>#}
+{#                <div id="image-filename">#}
+{#                    {{ _('No file chosen') }}#}
+{#                </div>#}
+{#            </div>#}
+            <input class="Button" type="submit" name="submit" value="{{ _('Save') }}">
+        </form>
+    </div>
+{% endblock %}

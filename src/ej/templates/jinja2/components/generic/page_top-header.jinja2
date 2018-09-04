@@ -1,0 +1,17 @@
+{# Page top_header with links and other information #}
+{% macro page_top_header(social_icons) %}
+    <header class="TopHeader">
+        <div class="TopHeader-wrapper">
+            <ul class="TopHeader-links">
+                <li>{{ link(_('about'), '/about/', title=_('About us'), preload=True) }}</li>
+                <li>{{ link(_('frequent questions'), '/faq/', title=_('Frequently asked questions'), preload=True) }}</li>
+                <li>{{ link(_('usage'), '/usage/', title=_('Usage terms'), preload=True) }}</li>
+            </ul>
+            <ul class="TopHeader-social">
+                {% for icon in social_icons %}
+                    <li>{{ icon }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </header>
+{% endmacro %}

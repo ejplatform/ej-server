@@ -2,14 +2,26 @@
  PAGE HEADER
  ============================================================================ */
 
+@import '../../2_tools/index';
+
 // Constants
-// Top and botton navigation bars. Styled as content, but can be overriden.
+// Top and bottom navigation bars. Styled as content, but can be overridden.
 $header-color: $color-content !default;
 $header-color-text: $color-content-text !default;
-$header-box-shadow-upper: 0 2px 4px 0 rgba(0, 0, 0, 0.05) !default;
-$header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.05) !default;
+$header-box-shadow-upper: 0 2px 4px 0 rgba(0, 0, 0, 0.2) !default;
+$header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.2) !default;
 
 // Component
+.talks {
+    .Header {
+        &-lowerNav {
+            @media only screen and (max-width: $breakpoint-small) {
+                display: none;
+            }
+        }
+    }
+}
+
 .Header {
     @include color($header-color, $header-color-text, $force: true);
 
@@ -22,23 +34,20 @@ $header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.05) !default;
         @extend .unlist;
     }
 
-    @media only screen and (min-width: $breakpoint-small) {
-        @include size(100vw, $header-height-tablet);
-        @include position(fixed,  $top-header-height null null null);
-        box-shadow: $header-box-shadow-upper;
+    &-ejLogo {
+        margin-left: auto;
+        margin-right: auto;
+    }
 
-        &-wrapper {
-            align-items: center;
-            display: flex;
-            justify-content: space-between;
-            margin: 0 auto;
-            max-width: $header-wrapper-max-width;
-        }
+    &-topIcon {
+        cursor: pointer;
     }
 
     // Elements
     &-topNav,
     &-lowerNav {
+        @include color($header-color, $header-color-text, $force: true);
+
         align-items: center;
         box-sizing: border-box;
         box-shadow: $header-box-shadow-upper;
@@ -46,20 +55,22 @@ $header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.05) !default;
         justify-content: space-between;
         position: fixed;
         width: 100vw;
-
-        @media only screen and (min-width: $breakpoint-small) {
-            box-shadow: none;
-            display: block;
-            position: inherit;
-            height: inherit;
-            width: inherit;
-        }
     }
 
     &-topNav {
         height: $header-top-nav-height;
         min-width: $spacing-unit-large + $header-icon-size;
         padding: 0 $spacing-unit;
+        background-color: $header-background-color;
+        a {
+            color: $header-font-color;
+        }
+
+        @include breakpoint(small) {
+            padding-top: 30px;
+            height: $header-top-nav-height + 30;
+        }
+
         top: 0;
 
         img {
@@ -71,25 +82,6 @@ $header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.05) !default;
         i.fa {
             font-size: $font-size-h3;
         }
-
-        @media only screen and (min-width: $breakpoint-small) {
-            box-shadow: none;
-            padding: 0 0 0 $spacing-unit;
-            text-align: left;
-
-            img {
-                height: $header-height-tablet - $spacing-unit-small;
-            }
-            .Header-topIcon {
-                display: none;
-            }
-        }
-
-        @media only screen and (min-width: $header-wrapper-max-width) {
-            padding: 0;
-            height: inherit;
-            margin-left: $spacing-unit;
-        }
     }
 
     &-lowerNav {
@@ -100,51 +92,28 @@ $header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.05) !default;
         text-align: center;
         text-transform: uppercase;
         font-size: $font-size-tiny;
+        background-color: white;
 
         a {
             align-items: center;
             display: flex;
             flex-flow: column;
             justify-content: center;
-            width: 33.3333%;
+            width: 50%;
+            color: $navigation-bottom-font-color !important;
+
+            &:before {
+                font-family: 'Font Awesome 5 Free', sans-serif;
+                font-size: 32px;
+                font-weight: 900;
+            }
+
+            span {
+                font-weight: bold;
+            }
 
             > * {
                 display: block;
-            }
-
-            @media only screen and (min-width: $breakpoint-small) {
-                color: $header-color-text;
-                display: flex;
-                flex-flow: row-reverse;
-                margin-left: $spacing-unit;
-            }
-        }
-
-        a:last-child {
-            @media only screen and (min-width: $breakpoint-small) {
-                margin-left: 0;
-                padding-left: 0;
-
-                span {
-                    display: none;
-                }
-                img {
-                    display: inline;
-                }
-            }
-        }
-
-        @media only screen and (min-width: $breakpoint-small) {
-            background: transparent;
-            box-shadow: none;
-            display: flex;
-            font-size: $font-size-large;
-            justify-content: flex-end;
-            justify-self: center;
-            text-align: right;
-
-            a img {
-                display: none;
             }
         }
     }
@@ -152,5 +121,31 @@ $header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.05) !default;
     &-lowerIcon {
         height: $header-icon-size;
         margin-bottom: $spacing-unit-tiny;
+    }
+
+    &-lowerNotLogged {
+        box-sizing: border-box;
+        display: flex;
+        justify-content: center;
+        position: fixed;
+        width: 100vw;
+        align-items: center;
+        bottom: 0;
+        box-shadow: $header-box-shadow-lower;
+        height: $header-bottom-nav-height;
+        text-transform: uppercase;
+        font-size: $font-size-tiny;
+        background-color: $login-button-color;
+
+        &:hover {
+            cursor: pointer;
+        }
+
+        p {
+            color: $color-white;
+            font-weight: bold;
+            font-size: $font-size-large;
+
+        }
     }
 }

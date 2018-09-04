@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-30 09:51-0300\n"
-"PO-Revision-Date: 2018-04-30 10:21-0300\n"
+"POT-Creation-Date: 2018-08-24 18:15+0000\n"
+"PO-Revision-Date: 2018-08-24 23:42-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: \n"
 "Language: pt_BR\n"
@@ -17,373 +17,283 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "Generated-By: Babel 2.5.3\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 1.8.7.1\n"
 
-#: config/forms.py:32 config/forms.py:69
-msgid "Password"
-msgstr "Senha"
-
-#: config/forms.py:37
-msgid "Password confirmation"
-msgstr "Confirmação de senha"
-
-#: config/forms.py:58
-msgid "Passwords do not match"
-msgstr "Senhas não são iguais"
-
-#: config/forms.py:66 config/forms.py:68
-msgid "E-mail"
-msgstr "Email"
-
-#: config/views.py:47
-msgid "Invalid username or password"
-msgstr "Usuário ou senha inválidos"
-
-#: ej/configurations/models.py:16
-msgid "Social network"
-msgstr "Rede social"
-
-#: ej/configurations/models.py:19
-msgid "Name of the social network (e.g., Facebook)"
-msgstr "Nome da rede social (ex. Facebook)"
-
-#: ej/configurations/models.py:22
-msgid "Icon name"
-msgstr "Nome do ícone"
-
-#: ej/configurations/models.py:24
-msgid "Icon name in font-awesome"
-msgstr "Nome do ícone para a fonte"
-
-#: ej/configurations/models.py:28
-msgid "Ordering"
-msgstr "Prioridade"
-
-#: ej/configurations/models.py:30
-msgid ""
-"You can manually define the ordering that each icon should appear in the "
-"interface. Otherwise, icons will be shown in insertion order."
-msgstr ""
-"Você pode definir a prioridade com que cada ícone vai aparecer na interface. "
-"Caso contrário, aparecerão na ordem de inserção."
-
-#: ej/configurations/models.py:36
-msgid "URL"
-msgstr "link"
-
-#: ej/configurations/models.py:37
-msgid "Link to your social account page."
-msgstr "Link para o seu perfil de rede social."
-
-#: ej/configurations/models.py:42
-msgid "Social media icon"
-msgstr "Ícone de mídia social"
-
-#: ej/configurations/models.py:43
-msgid "Social media icons"
-msgstr "Ícones de mídias sociais"
-
-#: ej/configurations/models.py:81
-msgid "Color name"
-msgstr "Nome da cor"
-
-#: ej/configurations/models.py:85
-msgid "Color"
-msgstr "Cor"
-
-#: ej/configurations/models.py:88
-msgid "Color code in hex (e.g., #RRGGBBAA) format."
-msgstr "Código da cor em hexa (ex., #RRGGBBAA)"
-
-#: ej/configurations/models.py:105
-msgid "HTML"
-msgstr "HTML"
-
-#: ej/configurations/models.py:106
-msgid "Markdown"
-msgstr "Markdown"
-
-#: ej/configurations/models.py:110 ej/users/models.py:124
+#: local/vendor/django-boogie/src/boogie/apps/users/models.py:23
+#: local/vendor/django-boogie/src/boogie/models/abstract/user.py:64
+#: src/ej_clusters/models.py:123 src/ej_clusters/models.py:180
+#: src/ej_clusters/routes.py:203 src/ej_configurations/models.py:127
+#: src/ej_reports/routes.py:116
 msgid "Name"
 msgstr "Nome"
 
-#: ej/configurations/models.py:114
-msgid "Unique identifier for fragment name"
-msgstr "Identificador único para nome do fragmento"
+#: local/vendor/django-boogie/src/boogie/apps/users/models.py:26
+msgid "User's full name"
+msgstr "Nome completo do usuário"
 
-#: ej/configurations/models.py:121
-msgid "content"
-msgstr "conteúdo"
+#: local/vendor/django-boogie/src/boogie/fields/default_fields.py:47
+msgid "slug"
+msgstr "identificador"
 
-#: ej/configurations/models.py:123
-msgid "Raw fragment content in HTML or Markdown"
-msgstr "Formato cru do conteúdo do fragmento"
+#: local/vendor/django-boogie/src/boogie/fields/default_fields.py:53
+msgid "name"
+msgstr "nome"
 
-#: ej/configurations/validators.py:10
-msgid "Font-awesome icons"
-msgstr "Icones Font-awesome"
+#: local/vendor/django-boogie/src/boogie/fields/default_fields.py:59
+msgid "title"
+msgstr "título"
 
-#: ej/configurations/validators.py:11
-msgid "Font-awesome brands"
-msgstr "Marcas Font-awesome"
+#: local/vendor/django-boogie/src/boogie/fields/default_fields.py:65
+msgid "description"
+msgstr "descrição"
 
-#: ej/configurations/validators.py:12
-msgid "Font-awesome solid"
-msgstr "Font-awesome solid"
+#: local/vendor/django-boogie/src/boogie/fields/default_fields.py:69
+msgid "Conscise description used on listings."
+msgstr "Descrição concisa utilizada em listas."
 
-#: ej/configurations/validators.py:13
-msgid "Font-awesome regular"
-msgstr "Font-awesome regular"
+#: local/vendor/django-boogie/src/boogie/fields/default_fields.py:74
+msgid "detailed description"
+msgstr "descrição detalhada"
 
-#: ej/configurations/validators.py:14
-msgid "Font-awesome light"
-msgstr "Font-awesome light"
+#: local/vendor/django-boogie/src/boogie/fields/default_fields.py:77
+msgid "Detailed description of object."
+msgstr "Descrição detalhada do objeto."
 
-#: ej/configurations/validators.py:21
+#: local/vendor/django-boogie/src/boogie/fields/enum_field.py:24
+msgid "An enumeration field"
+msgstr "Um campo de enumeração"
+
+#: local/vendor/django-boogie/src/boogie/models/abstract/user.py:55
+#: src/ej_profiles/models.py:131 src/ej_users/forms.py:46 src/ej_users/forms.py:48
+msgid "E-mail"
+msgstr "Email"
+
+#: local/vendor/django-boogie/src/boogie/models/abstract/user.py:59
 msgid ""
-"Invalid font awesome icon name. Please use the full format like in \"fab fa-"
-"facebook-f\""
+"Users can register additional e-mail addresses. This is the main e-mail address "
+"which is used for login."
 msgstr ""
+"Usuários podem registrar e-mails adicionais. Este é o e-mail principal utilizado "
+"para login."
 
-#: ej/configurations/validators.py:29
-#, python-brace-format
-msgid "{icon_name} is an invalid {LIB_NAMES[lib]} icon!"
-msgstr "{icon_name} é um icone invalido de {LIB_NAMES[lib]}!"
+#: local/vendor/django-boogie/src/boogie/models/abstract/user.py:67
+msgid "Full name of the user."
+msgstr "Nome completo do usuário."
 
-#: ej/configurations/views.py:40
-msgid "Categories"
-msgstr "Categorias"
+#: local/vendor/django-boogie/src/boogie/models/abstract/user.py:71
+msgid "Alias"
+msgstr "Apelido"
 
-#: ej/configurations/views.py:41
-msgid "Conversations"
-msgstr "Conversas"
+#: local/vendor/django-boogie/src/boogie/models/abstract/user.py:74
+msgid "Public alias used to identify the user."
+msgstr "Apelido público usado para identificar o usuário."
 
-#: ej/configurations/views.py:42
-msgid "Votes"
-msgstr "Votos"
+#: local/vendor/django-boogie/src/boogie/models/abstract/user.py:78
+msgid "staff status"
+msgstr "status de equipe"
 
-#: ej/configurations/views.py:43
-msgid "Comments"
-msgstr "Comentários"
+#: local/vendor/django-boogie/src/boogie/models/abstract/user.py:81
+msgid "Designates whether the user can log into the admin site."
+msgstr "Indica se o usuário pode logar no admin do site"
 
-#: ej/configurations/views.py:44
-msgid "Stereotypes"
-msgstr "Estereótipos"
+#: local/vendor/django-boogie/src/boogie/models/abstract/user.py:85
+msgid "active"
+msgstr "ativo"
 
-#: ej/configurations/views.py:45
-msgid "Stereotypes votes"
-msgstr "Votos do estereótipo"
+#: local/vendor/django-boogie/src/boogie/models/abstract/user.py:88
+msgid ""
+"Designates whether this user should be treated as active. Unselect this instead "
+"of deleting accounts."
+msgstr ""
+"Indica se este usuário é considerado ativo. Desmarque aqui em vez de apagar "
+"contas."
 
-#: ej/gamification/signals.py:16
-msgid "Created Comment"
-msgstr "Comentário criado"
+#: local/vendor/django-boogie/src/boogie/models/abstract/user.py:93
+msgid "date joined"
+msgstr "data de ingresso"
 
-#: ej/gamification/signals.py:25
-msgid "Had Comment Approved"
-msgstr "Teve comentário aprovado"
+#: local/vendor/django-boogie/src/boogie/models/abstract/user.py:162
+msgid "user"
+msgstr "usuário"
 
-#: ej/gamification/signals.py:37
-msgid "Agreed With"
-msgstr "Concordou com"
+#: local/vendor/django-boogie/src/boogie/views/views.py:122
+#, python-format
+msgid "No %(verbose_name)s found matching the query"
+msgstr "Nenhum nome %(verbose_name)s encontrado"
 
-#: ej/gamification/signals.py:45
-msgid "Passed On"
-msgstr "Passou"
+#: src/ej/components/tags.py:11
+msgid "hello"
+msgstr "olá"
 
-#: ej/gamification/signals.py:53
-msgid "Disagreed With"
-msgstr "Discordou com"
+#: src/ej/components/tags.py:48
+msgid "Access CPA panel"
+msgstr "Acesse o Painel CPA!"
 
-#: ej/gamification/signals.py:85
-msgid "Created Conversation"
-msgstr "Criar conversa"
+#: src/ej/components/tags.py:53
+msgid "Go!"
+msgstr "Quero ir!\t\t"
 
-#: ej/gamification/signals.py:93
-msgid "Was Created"
-msgstr "Foi criada"
+#: src/ej/settings/options.py:27
+msgid "EJ Platform"
+msgstr "Plataforma EJ"
 
-#: ej/gamification/signals.py:104
-msgid "Filled Profile"
-msgstr "Perfil preenchido"
+#: src/ej/settings/options.py:28
+msgid "Not part of EJ yet?"
+msgstr "Não faz parte do EJ ainda?"
 
-#: ej/math/models.py:15
-msgid "CLUSTERS"
-msgstr "CLUSTERS"
-
-#: ej/math/models.py:25
-msgid "PENDING"
-msgstr "PENDENTES"
-
-#: ej/math/models.py:26
-msgid "STARTED"
-msgstr "INICIADOS"
-
-#: ej/math/models.py:27
-msgid "FINISHED"
-msgstr "TERMINADOS"
-
-#: ej/math/models.py:28
-msgid "FAILED"
-msgstr "COM FALHA"
-
-#: ej/math/models.py:29
-msgid "STUCK"
-msgstr "AGARRADOS"
-
-#: ej/math/models.py:38
-msgid "Type"
-msgstr "Tipo"
-
-#: ej/math/models.py:43
-msgid "Status"
-msgstr "Status"
-
-#: ej/math/models.py:49
-msgid "Created at"
-msgstr "Criado em"
-
-#: ej/math/models.py:53
-msgid "Updated at"
-msgstr "Atualizado em"
-
-#: ej/templates/django/account/account_inactive.html:5
-#: ej/templates/django/account/account_inactive.html:8
+#: src/ej/templates/django/account/account_inactive.html:5
+#: src/ej/templates/django/account/account_inactive.html:8
 msgid "Account Inactive"
-msgstr "Conta inativa"
+msgstr "Conta inativa."
 
-#: ej/templates/django/account/account_inactive.html:10
+#: src/ej/templates/django/account/account_inactive.html:10
 msgid "This account is inactive."
-msgstr "Essa conta é inativa."
+msgstr "Essa conta está inativa."
 
-#: ej/templates/django/account/email.html:7
+#: src/ej/templates/django/account/email.html:7
 msgid "Account"
 msgstr "Conta"
 
-#: ej/templates/django/account/email.html:10
+#: src/ej/templates/django/account/email.html:10
 msgid "E-mail Addresses"
 msgstr "Endereço de email"
 
-#: ej/templates/django/account/email.html:13
+#: src/ej/templates/django/account/email.html:13
 msgid "The following e-mail addresses are associated with your account:"
 msgstr "Esse endereço de email está associado com a sua conta:"
 
-#: ej/templates/django/account/email.html:27
+#: src/ej/templates/django/account/email.html:27
 msgid "Verified"
 msgstr "Verificado"
 
-#: ej/templates/django/account/email.html:29
+#: src/ej/templates/django/account/email.html:29
 msgid "Unverified"
 msgstr "Não verificado"
 
-#: ej/templates/django/account/email.html:31
+#: src/ej/templates/django/account/email.html:31
 msgid "Primary"
 msgstr "Principal"
 
-#: ej/templates/django/account/email.html:37
+#: src/ej/templates/django/account/email.html:37
 msgid "Make Primary"
 msgstr "Tornar principal"
 
-#: ej/templates/django/account/email.html:38
+#: src/ej/templates/django/account/email.html:38
 msgid "Re-send Verification"
 msgstr "Reenviar a verificação"
 
-#: ej/templates/django/account/email.html:39
+#: src/ej/templates/django/account/email.html:39
 msgid "Remove"
 msgstr "Remover"
 
-#: ej/templates/django/account/email.html:46
+#: src/ej/templates/django/account/email.html:46
 msgid "Warning:"
 msgstr "Aviso:"
 
-#: ej/templates/django/account/email.html:46
+#: src/ej/templates/django/account/email.html:46
 msgid ""
-"You currently do not have any e-mail address set up. You should really add "
-"an e-mail address so you can receive notifications, reset your password, etc."
+"You currently do not have any e-mail address set up. You should really add an e-"
+"mail address so you can receive notifications, reset your password, etc."
 msgstr ""
 "Atualmente você não tem nenhum endereço de email configurado. Você deveria "
-"acrescentar um endereço para receber notificações, reconfigurar sua senha, "
-"etc."
+"acrescentar um endereço para receber notificações, reconfigurar sua senha, etc."
 
-#: ej/templates/django/account/email.html:51
+#: src/ej/templates/django/account/email.html:51
 msgid "Add E-mail Address"
 msgstr "Adicionar endereço de email"
 
-#: ej/templates/django/account/email.html:56
+#: src/ej/templates/django/account/email.html:56
 msgid "Add E-mail"
 msgstr "Adicionar E-mail"
 
-#: ej/templates/django/account/email.html:66
+#: src/ej/templates/django/account/email.html:66
 msgid "Do you really want to remove the selected e-mail address?"
 msgstr "Você realmente quer remover os endrereços de email selecionados?"
 
-#: ej/templates/django/account/email/email_confirmation_message.txt:1
+#: src/ej/templates/django/account/email/email_confirmation_message.txt:1
 #, python-format
 msgid ""
-"Boas vindas do %(site_name)s!\n"
+"Welcome from %(site_name)s!\n"
 "\n"
-"Você está recebendo essa mensagem por que o usuário %(user_display)s se "
-"cadastrou com esse endereço de email.\n"
+"You are receiving this message because the user %(user_display)s signed-up with "
+"this mail address.\n"
 "\n"
-"Pra confirmar que está tudo certo, vá até %(activate_url)s\n"
+"To confirm that it's ok, go to %(activate_url)s\n"
 msgstr ""
+"Saudações de %(site_name)s!\n"
+"\n"
+"Você está recebendo essa mensagem porque o usuário %(user_display)s se registrou "
+"com esse endereço de email.\n"
+"\n"
+"Para confirmar se está tudo certo, vá até %(activate_url)s\n"
 
-#: ej/templates/django/account/email/email_confirmation_message.txt:7
+#: src/ej/templates/django/account/email/email_confirmation_message.txt:7
 #, python-format
 msgid ""
+"Tks from %(site_name)s!\n"
+"ejplatform.org"
+msgstr ""
 "Um obrigado do %(site_name)s!\n"
-"brasilqueopovoquer.org.br"
-msgstr ""
+"ejplatform.org"
 
-#: ej/templates/django/account/email/email_confirmation_subject.txt:3
-msgid "Por favor confirme seu endereço de email"
-msgstr ""
+#: src/ej/templates/django/account/email/email_confirmation_subject.txt:3
+msgid "Please confirm your email address"
+msgstr "Favor confirmar seu endereço de email"
 
-#: ej/templates/django/account/email/password_reset_key_message.txt:1
+#: src/ej/templates/django/account/email/password_reset_key_message.txt:1
 #, python-format
 msgid ""
 "Hello from %(site_name)s!\n"
 "\n"
-"Você está recebendo essa mensagem porque você ou alguém solicitou uma nova "
-"senha para a sua conta de usuário.\n"
-"Se não foi você, pode ignorar essa mensagem. Clique no link abaixo para "
-"refazer sua senha."
+"You are receiving this message because you or someone has asked a new password "
+"for your user account.\n"
+"If it weren't you, ignore this message. Access the link below to recreate you "
+"password."
 msgstr ""
+"Saudações do %(site_name)s!\n"
+"\n"
+"Você está recebendo essa mensagem porque você ou alguém pediu uma nova senha para "
+"a sua conta de usúario.\n"
+"Se não foi você, ignore essa mensagem. Acesse o link abaixo para recriar sua "
+"senha."
 
-#: ej/templates/django/account/email/password_reset_key_message.txt:8
+#: src/ej/templates/django/account/email/password_reset_key_message.txt:8
 #, python-format
-msgid "Se você esqueceu, seu usuário é %(username)s."
-msgstr ""
+msgid "If you forgot, your username is %(username)s."
+msgstr "Se você esqueceu, seu nome de usuário é %(username)s."
 
-#: ej/templates/django/account/email/password_reset_key_message.txt:10
+#: src/ej/templates/django/account/email/password_reset_key_message.txt:10
 #, python-format
 msgid ""
-"Obrigado por participar da construção do %(site_name)s!\n"
+"Tks for participating on %(site_name)s!\n"
 "%(site_domain)s"
 msgstr ""
+"Obrigado por participar do %(site_name)s!\n"
+"%(site_domain)s"
 
-#: ej/templates/django/account/email/password_reset_key_subject.txt:3
-msgid "Pedido para gerar nova senha"
-msgstr ""
+#: src/ej/templates/django/account/email/password_reset_key_subject.txt:3
+msgid "Request to generate a new password"
+msgstr "Pedido para gerar uma nova senha"
 
-#: ej/templates/django/account/email_confirm.html:6
-#: ej/templates/django/account/email_confirm.html:10
+#: src/ej/templates/django/account/email_confirm.html:6
+#: src/ej/templates/django/account/email_confirm.html:10
 msgid "Confirm E-mail Address"
 msgstr "Confirme o endereço de email"
 
-#: ej/templates/django/account/email_confirm.html:16
+#: src/ej/templates/django/account/email_confirm.html:16
 #, python-format
 msgid ""
 "Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is an e-mail "
 "address for user %(user_display)s."
 msgstr ""
-"Por favor confirme que o <a href=\"mailto:%(email)s\">%(email)s</a> é um "
-"endereço de email do usuário %(user_display)s."
+"Por favor confirme que o <a href=\"mailto:%(email)s\">%(email)s</a> é um endereço "
+"de email do usuário %(user_display)s."
 
-#: ej/templates/django/account/email_confirm.html:20
+#: src/ej/templates/django/account/email_confirm.html:20
 msgid "Confirm"
 msgstr "Confirmar"
 
-#: ej/templates/django/account/email_confirm.html:27
+#: src/ej/templates/django/account/email_confirm.html:27
 #, python-format
 msgid ""
 "This e-mail confirmation link expired or is invalid. Please <a href="
@@ -392,142 +302,140 @@ msgstr ""
 "Este link de confirmação de email expirou ou é inválido. Por favor <a href="
 "\"%(email_url)s\">peça uma nova confirmação</a>."
 
-#: ej/templates/django/account/login-signup.html:7
-#: ej/templates/django/account/signup.html:7
+#: src/ej/templates/django/account/login-signup.html:7
+#: src/ej/templates/django/account/signup.html:7
 msgid "Signup"
 msgstr "Registrar"
 
-#: ej/templates/django/account/login-signup.html:44
-#: ej/templates/django/account/login.html:45
+#: src/ej/templates/django/account/login-signup.html:44
+#: src/ej/templates/django/account/login.html:57
 msgid "Forgot Password?"
 msgstr "Esqueceu a senha?"
 
-#: ej/templates/django/account/login-signup.html:45
-#: ej/templates/django/account/login.html:7
-#: ej/templates/django/account/login.html:46 ej/templates/django/base.html:54
+#: src/ej/templates/django/account/login-signup.html:45
+#: src/ej/templates/django/account/login.html:7
+#: src/ej/templates/django/account/login.html:58
 msgid "Sign In"
 msgstr "Login"
 
-#: ej/templates/django/account/login-signup.html:59
-#: ej/templates/django/account/signup.html:43 ej/templates/django/base.html:50
+#: src/ej/templates/django/account/login-signup.html:59
+#: src/ej/templates/django/account/signup.html:43
 msgid "Sign Up"
 msgstr "Registrar"
 
-#: ej/templates/django/account/logout.html:5
-#: ej/templates/django/account/logout.html:8
-#: ej/templates/django/account/logout.html:17 ej/templates/django/base.html:45
+#: src/ej/templates/django/account/logout.html:5
+#: src/ej/templates/django/account/logout.html:8
+#: src/ej/templates/django/account/logout.html:17
 msgid "Sign Out"
 msgstr "Sair"
 
-#: ej/templates/django/account/logout.html:10
+#: src/ej/templates/django/account/logout.html:10
 msgid "Are you sure you want to sign out?"
 msgstr "Você tem certeza que quer sair?"
 
-#: ej/templates/django/account/password_change.html:6
-#: ej/templates/django/account/password_change.html:9
-#: ej/templates/django/account/password_change.html:14
-#: ej/templates/django/account/password_reset_from_key.html:5
-#: ej/templates/django/account/password_reset_from_key.html:8
-#: ej/templates/django/account/password_reset_from_key_done.html:4
-#: ej/templates/django/account/password_reset_from_key_done.html:7
+#: src/ej/templates/django/account/password_change.html:6
+#: src/ej/templates/django/account/password_change.html:9
+#: src/ej/templates/django/account/password_change.html:14
+#: src/ej/templates/django/account/password_reset_from_key.html:5
+#: src/ej/templates/django/account/password_reset_from_key.html:8
+#: src/ej/templates/django/account/password_reset_from_key_done.html:4
+#: src/ej/templates/django/account/password_reset_from_key_done.html:7
 msgid "Change Password"
 msgstr "Mudar a senha"
 
-#: ej/templates/django/account/password_reset.html:7
-#: ej/templates/django/account/password_reset.html:11
-#: ej/templates/django/account/password_reset_done.html:6
-#: ej/templates/django/account/password_reset_done.html:9
+#: src/ej/templates/django/account/password_reset.html:7
+#: src/ej/templates/django/account/password_reset.html:11
+#: src/ej/templates/django/account/password_reset_done.html:6
+#: src/ej/templates/django/account/password_reset_done.html:9
 msgid "Password Reset"
 msgstr "Recriar a senha"
 
-#: ej/templates/django/account/password_reset.html:16
+#: src/ej/templates/django/account/password_reset.html:16
 msgid ""
-"Forgotten your password? Enter your e-mail address below, and we'll send you "
-"an e-mail allowing you to reset it."
+"Forgotten your password? Enter your e-mail address below, and we'll send you an e-"
+"mail allowing you to reset it."
 msgstr ""
-"Esqueceu sua senha? Insira seu endereço de email abaixo, e nós vamos lhe "
-"enviar uma mensagem com instruções para recriar sua senha."
+"Esqueceu sua senha? Insira seu endereço de email abaixo, e nós vamos lhe enviar "
+"uma mensagem com instruções para recriar sua senha."
 
-#: ej/templates/django/account/password_reset.html:21
+#: src/ej/templates/django/account/password_reset.html:21
 msgid "Reset My Password"
 msgstr "Recriar minha senha"
 
-#: ej/templates/django/account/password_reset.html:24
+#: src/ej/templates/django/account/password_reset.html:24
 msgid "Please contact us if you have any trouble resetting your password."
 msgstr "Por favor nos contate se tiver algum problema recriando sua senha."
 
-#: ej/templates/django/account/password_reset_done.html:15
+#: src/ej/templates/django/account/password_reset_done.html:15
 msgid ""
-"We have sent you an e-mail. Please contact us if you do not receive it "
-"within a few minutes."
+"We have sent you an e-mail. Please contact us if you do not receive it within a "
+"few minutes."
 msgstr ""
-"Nós te enviamos um email. Por favor nos contato se não receber dentro de "
-"alguns minutos."
+"Nós te enviamos um email. Por favor nos contato se não receber dentro de alguns "
+"minutos."
 
-#: ej/templates/django/account/password_reset_from_key.html:8
+#: src/ej/templates/django/account/password_reset_from_key.html:8
 msgid "Bad Token"
 msgstr "Token inválido"
 
-#: ej/templates/django/account/password_reset_from_key.html:12
+#: src/ej/templates/django/account/password_reset_from_key.html:12
 #, python-format
 msgid ""
-"The password reset link was invalid, possibly because it has already been "
-"used.  Please request a <a href=\"%(passwd_reset_url)s\">new password reset</"
-"a>."
+"The password reset link was invalid, possibly because it has already been used.  "
+"Please request a <a href=\"%(passwd_reset_url)s\">new password reset</a>."
 msgstr ""
-"O link de reconfiguração da senha é inválido, possivelmente porque já foi "
-"usado. Por favor faça  <a href=\"%(passwd_reset_url)s\">um novo pedido de "
-"recriação da senha</a>."
+"O link de reconfiguração da senha é inválido, possivelmente porque já foi usado. "
+"Por favor faça  <a href=\"%(passwd_reset_url)s\">um novo pedido de recriação da "
+"senha</a>."
 
-#: ej/templates/django/account/password_reset_from_key.html:18
+#: src/ej/templates/django/account/password_reset_from_key.html:18
 msgid "change password"
 msgstr "mudar a senha"
 
-#: ej/templates/django/account/password_reset_from_key.html:21
-#: ej/templates/django/account/password_reset_from_key_done.html:8
+#: src/ej/templates/django/account/password_reset_from_key.html:21
+#: src/ej/templates/django/account/password_reset_from_key_done.html:8
 msgid "Your password is now changed."
 msgstr "Sua senha foi alterada."
 
-#: ej/templates/django/account/password_set.html:6
-#: ej/templates/django/account/password_set.html:9
-#: ej/templates/django/account/password_set.html:14
+#: src/ej/templates/django/account/password_set.html:6
+#: src/ej/templates/django/account/password_set.html:9
+#: src/ej/templates/django/account/password_set.html:14
 msgid "Set Password"
 msgstr "Configurar senha"
 
-#: ej/templates/django/account/signup.html:45
+#: src/ej/templates/django/account/signup.html:45
 #, python-format
-msgid ""
-"Already have an account? Then please <a href=\"%(login_url)s\">sign in</a>."
+msgid "Already have an account? Then please <a href=\"%(login_url)s\">sign in</a>."
 msgstr ""
 "Já tem uma conta? Então por favor  <a href=\"%(login_url)s\">faça login</a>."
 
-#: ej/templates/django/account/signup_closed.html:5
-#: ej/templates/django/account/signup_closed.html:8
+#: src/ej/templates/django/account/signup_closed.html:5
+#: src/ej/templates/django/account/signup_closed.html:8
 msgid "Sign Up Closed"
 msgstr "Registro encerrado"
 
-#: ej/templates/django/account/signup_closed.html:10
+#: src/ej/templates/django/account/signup_closed.html:10
 msgid "We are sorry, but the sign up is currently closed."
 msgstr "Sinto muito, mas o registro está fechado no momento."
 
-#: ej/templates/django/account/verification_sent.html:5
-#: ej/templates/django/account/verification_sent.html:8
-#: ej/templates/django/account/verified_email_required.html:5
-#: ej/templates/django/account/verified_email_required.html:8
+#: src/ej/templates/django/account/verification_sent.html:5
+#: src/ej/templates/django/account/verification_sent.html:8
+#: src/ej/templates/django/account/verified_email_required.html:5
+#: src/ej/templates/django/account/verified_email_required.html:8
 msgid "Verify Your E-mail Address"
 msgstr "Verifique seu endereço de email"
 
-#: ej/templates/django/account/verification_sent.html:10
+#: src/ej/templates/django/account/verification_sent.html:10
 msgid ""
 "We have sent an e-mail to you for verification. Follow the link provided to "
-"finalize the signup process. Please contact us if you do not receive it "
-"within a few minutes."
+"finalize the signup process. Please contact us if you do not receive it within a "
+"few minutes."
 msgstr ""
-"Nós te enviamos um email para verificação. Siga o link fornecido para "
-"finalizar o processo de registro. Por favor nos contate se você não receber "
-"dentro de alguns minutos."
+"Nós te enviamos um email para verificação. Siga o link fornecido para finalizar o "
+"processo de registro. Por favor nos contate se você não receber dentro de alguns "
+"minutos."
 
-#: ej/templates/django/account/verified_email_required.html:12
+#: src/ej/templates/django/account/verified_email_required.html:12
 msgid ""
 "This part of the site requires us to verify that\n"
 "you are who you claim to be. For this purpose, we require that you\n"
@@ -537,7 +445,7 @@ msgstr ""
 "você é quem diz ser. Por esse motivo, requeremos que você\n"
 "verifique o seu endereço de email. "
 
-#: ej/templates/django/account/verified_email_required.html:16
+#: src/ej/templates/django/account/verified_email_required.html:16
 msgid ""
 "We have sent an e-mail to you for\n"
 "verification. Please click on the link inside this e-mail. Please\n"
@@ -547,391 +455,1777 @@ msgstr ""
 "verificação. Por favor clique no link do email. Por favor\n"
 "nos contate se você não receber dentro de alguns minutos."
 
-#: ej/templates/django/account/verified_email_required.html:20
+#: src/ej/templates/django/account/verified_email_required.html:20
 #, python-format
 msgid ""
-"<strong>Note:</strong> you can still <a href=\"%(email_url)s\">change your e-"
-"mail address</a>."
+"<strong>Note:</strong> you can still <a href=\"%(email_url)s\">change your e-mail "
+"address</a>."
 msgstr ""
 "<strong>Nota:</strong> você ainda poe <a href=\"%(email_url)s\">mudar seu "
 "endereço de email</a>."
 
-#: ej/users/models.py:85
-msgid "Black"
-msgstr "Preto"
+#: src/ej_boards/apps.py:7 src/ej_boards/models.py:46
+msgid "Boards"
+msgstr "Quadros"
 
-#: ej/users/models.py:86
-msgid "Brown"
-msgstr "Marron"
+#: src/ej_boards/models.py:15
+msgid "Slug"
+msgstr "Identificador"
 
-#: ej/users/models.py:87
-msgid "White"
-msgstr "Branco"
+#: src/ej_boards/models.py:28 src/ej_conversations/models/conversation.py:65
+msgid "Title"
+msgstr "Título"
 
-#: ej/users/models.py:88
-msgid "Yellow"
-msgstr "Amarelo"
+#: src/ej_boards/models.py:32 src/ej_clusters/models.py:127
+#: src/ej_clusters/models.py:194
+msgid "Description"
+msgstr "Descrição"
 
-#: ej/users/models.py:89
-msgid "Indigenous"
-msgstr "Indígena"
+#: src/ej_boards/models.py:45
+msgid "Board"
+msgstr "Quadro"
 
-#: ej/users/models.py:90 ej/users/models.py:112
-msgid "Do not know"
-msgstr "Não sei"
+#: src/ej_boards/routes/board.py:40
+msgid "Create board"
+msgstr "Criar quadro"
 
-#: ej/users/models.py:91
-msgid "Undeclared"
-msgstr "Não declarado"
+#: src/ej_boards/routes/conversation.py:39
+#, python-format
+msgid "%s' conversations"
+msgstr "Conversas do quadro %s"
 
-#: ej/users/models.py:95
-msgid "Female"
-msgstr "Feminino"
+#: src/ej_boards/routes/conversation.py:40
+#, python-format
+msgid "These are %s's conversations. Contribute to them too"
+msgstr "Essas são as conversas do quadro %s. Contribua com elas também"
 
-#: ej/users/models.py:96
-msgid "Male"
-msgstr "Masculino"
+#: src/ej_boards/routes/conversation.py:62
+msgid "Create conversation"
+msgstr "Criar conversa"
 
-#: ej/users/models.py:97
-msgid "Cis Female"
-msgstr "Feminino Cis"
+#: src/ej_boards/validators.py:11
+msgid "Invalid URL."
+msgstr "URL inválida."
 
-#: ej/users/models.py:98
-msgid "Cis Male"
-msgstr "Masculino Cis"
+#: src/ej_boards/validators.py:13
+msgid "Slug cannot contain a backslash character."
+msgstr "O identificador não pode conter uma barra."
 
-#: ej/users/models.py:99
-msgid "Agender"
-msgstr "Agênero"
+#: src/ej_boards/validators.py:19
+msgid "URL already exists."
+msgstr "Essa URL já existe."
 
-#: ej/users/models.py:100
-msgid "Genderqueer"
-msgstr "Queer"
+#: src/ej_clusters/apps.py:7 src/ej_clusters/routes.py:39
+msgid "Clusters"
+msgstr "Grupos"
 
-#: ej/users/models.py:101
-msgid "Genderfluid"
-msgstr "Gênero fluído"
+#: src/ej_clusters/models.py:130
+msgid "How was this cluster conceived?"
+msgstr "Como este grupo foi concebido?"
 
-#: ej/users/models.py:102
-msgid "Non conformist gender"
-msgstr "Gênero não conformista"
+#: src/ej_clusters/models.py:147
+#, python-brace-format
+msgid "{name} (\"{conversation}\" conversation)"
+msgstr "{name} (conversa \"{conversation}\")"
 
-#: ej/users/models.py:103
-msgid "Variant gender"
-msgstr "Gênero variante"
+#: src/ej_clusters/models.py:188
+msgid "Conversation associated with the stereotype."
+msgstr "Conversa associada a um esteriótipo."
 
-#: ej/users/models.py:104
-msgid "Intersex"
-msgstr "Intersex"
-
-#: ej/users/models.py:105
-msgid "Non binary"
-msgstr "Não binário"
-
-#: ej/users/models.py:106
-msgid "Transgendered"
-msgstr "Transgênero"
-
-#: ej/users/models.py:107
-msgid "Pangender"
-msgstr "Pangênero"
-
-#: ej/users/models.py:108
-msgid "Transsexual woman"
-msgstr "Mulher transexual"
-
-#: ej/users/models.py:109
-msgid "Transsexual man"
-msgstr "Homem transexual"
-
-#: ej/users/models.py:110
-msgid "Transfeminal"
-msgstr "Transfeminino"
-
-#: ej/users/models.py:111
-msgid "Transmasculine"
-msgstr "Transmaculino"
-
-#: ej/users/models.py:113
-msgid "None"
-msgstr "Nenhum"
-
-#: ej/users/models.py:114
-msgid "Other"
-msgstr "Outro"
-
-#: ej/users/models.py:117
-msgid "Age"
-msgstr "Idade"
-
-#: ej/users/models.py:118
-msgid "City"
-msgstr "Cidade"
-
-#: ej/users/models.py:119
-msgid "State"
-msgstr "Estado"
-
-#: ej/users/models.py:120
-msgid "Biography"
-msgstr "Biografia"
-
-#: ej/users/models.py:130
-msgid "Country"
-msgstr "País"
-
-#: ej/users/models.py:136
-msgid "Occupation"
-msgstr "Ocupação"
-
-#: ej/users/models.py:142
-msgid "Image"
-msgstr "Imagem"
-
-#: ej/users/models.py:148
-msgid "Gender identity"
-msgstr "Identidade de gênero"
-
-#: ej/users/models.py:155
-msgid "User provided gender"
-msgstr "Gênero fornecido pelo usuário"
-
-#: ej/users/models.py:161
-msgid "Political activity"
-msgstr "Atividade política"
-
-#: ej/users/models.py:167
-msgid "Race"
-msgstr "Raça"
-
-#: ej/users/models.py:229
-msgid "Root"
-msgstr "Root"
-
-#: ej/users/models.py:231
-msgid "Administrative user"
-msgstr "Usuário administrativo"
-
-#: ej/users/models.py:232
-msgid "Regular user"
-msgstr "Usuário regular"
-
-#: ej/users/serializers.py:67
-msgid "Incorrect value"
-msgstr "Valor incorreto"
-
-#: ej/users/serializers.py:86
-msgid "A user is already registered with this e-mail address."
-msgstr "Um usuário já registrou com esse endereço de email."
-
-#: ej/users/serializers.py:110
-msgid "Incorrect input. access_token or code is required."
-msgstr "Entrada incorreta. Requer token de acesso ou código."
-
-#: ej/users/serializers.py:137
-msgid "View is not defined, pass it as a context variable"
-msgstr "Visualização não definida, passe como uma variável de contexto"
-
-#: ej/users/serializers.py:148
-msgid "Define "
-msgstr "Definir "
-
-#: ej/templates/jinja2/base.jinja2:8
-msgid "Empurrando Juntos"
-msgstr "Empurrando Juntos"
-
-#: ej/templates/jinja2/base.jinja2:67
-msgid "EJ - A platform of social participation."
-msgstr "EJ - Uma plataforma para participação social."
-
-#: ej/templates/jinja2/components/auth.jinja2:17
-#: ej/templates/jinja2/components/auth.jinja2:40
-#: ej/templates/jinja2/components/auth.jinja2:58
-msgid "Login"
-msgstr "Entrar"
-
-#: ej/templates/jinja2/components/auth.jinja2:20
-#: ej/templates/jinja2/components/auth.jinja2:37
-msgid "Register now!"
-msgstr "Registre agora!"
-
-#: ej/templates/jinja2/components/auth.jinja2:58
-msgid "Register"
-msgstr "Registre-se"
-
-#: ej/templates/jinja2/components/auth.jinja2:67
-msgid "What is passwordles login?"
-msgstr "O que é login sem senha?"
-
-#: ej/templates/jinja2/components/auth.jinja2:68
+#: src/ej_clusters/models.py:197
 msgid ""
-"Passwords are inconvenient and often insecure. We suggest our users to "
-"choose either social\n"
-"            authentication (Facebook or Twitter) or the passwordless method. "
-"In this setup, we send a password to\n"
-"            your e-mail with a special link that automatically register your "
-"account in the platform."
+"A detailed description of your stereotype for future reference. You can specify a "
+"background history, or give hints on the exact profile the stereotype wants to "
+"capture."
 msgstr ""
+"Descrição detalhada do seu estereótipo para referencia futura. Você pode "
+"especificar uma história de referência, ou dar dicas do perfil exato que esse "
+"estereótipo quer capturar"
 
-#: ej/templates/jinja2/components/conversations.jinja2:9
-msgid "Active conversations"
-msgstr "Conversas ativas"
+#: src/ej_clusters/models.py:286 src/ej_clusters/routes.py:213
+#: src/ej_reports/routes.py:113
+msgid "Comment"
+msgstr "Comentário"
 
-#: ej/templates/jinja2/components/conversations.jinja2:10
-msgid "See some active conversations and give your opinion"
-msgstr "Ver conversas ativas para dar sua opinião"
+#: src/ej_clusters/models.py:290 src/ej_conversations/models/vote.py:48
+msgid "Choice"
+msgstr "Escolha"
 
-#: ej/templates/jinja2/components/conversations.jinja2:22
-msgid "All"
-msgstr "Todos"
+#: src/ej_clusters/routes.py:58
+msgid "Force clusterization"
+msgstr "Forçar agrupamento"
 
-#: ej/templates/jinja2/components/conversations.jinja2:55
-#: ej/templates/jinja2/components/conversations.jinja2:82
-#, python-format
-msgid "%(count)s comments"
-msgstr "%(count)s comentários"
+#: src/ej_clusters/routes.py:83
+msgid "Stereotypes"
+msgstr "Estereótipos"
 
-#: ej/templates/jinja2/components/conversations.jinja2:56
-#: ej/templates/jinja2/components/conversations.jinja2:83
-#, python-format
-msgid "%(count)s votes"
-msgstr "%(count)s votos"
+#: src/ej_clusters/routes.py:102
+#, python-brace-format
+msgid "Stereotype votes ({conversation})"
+msgstr "Votos de estereótipo ({conversation})"
 
-#: ej/templates/jinja2/components/conversations.jinja2:90
-msgid "category:"
-msgstr "categoria:"
+#: src/ej_clusters/routes.py:203 src/ej_rocketchat/forms.py:28
+#: src/ej_rocketchat/models.py:31
+msgid "Username"
+msgstr "Nome de usuário"
 
-#: ej/templates/jinja2/components/conversations.jinja2:93
-msgid "see more<br>categories"
-msgstr "veja mais<br>categorias"
+#: src/ej_clusters/routes.py:213
+msgid "Options"
+msgstr "Opções"
 
-#: ej/templates/jinja2/components/conversations.jinja2:137
-msgid "Agree"
-msgstr "Concorda"
+#: src/ej_clusters/types.py:7
+msgid "Waiting for more data"
+msgstr "Esperando por mais dados"
 
-#: ej/templates/jinja2/components/conversations.jinja2:143
+#: src/ej_clusters/types.py:8
+msgid "Active"
+msgstr "Ativo"
+
+#: src/ej_clusters/types.py:9
+msgid "Disabled"
+msgstr "Desabilitado"
+
+#: src/ej_configurations/apps.py:7
+msgid "Configurations"
+msgstr "Configurações"
+
+#: src/ej_configurations/models.py:17
+msgid "HTML"
+msgstr "HTML"
+
+#: src/ej_configurations/models.py:18
+msgid "Markdown"
+msgstr "Markdown"
+
+#: src/ej_configurations/models.py:27
+msgid "Social network"
+msgstr "Rede social"
+
+#: src/ej_configurations/models.py:30
+msgid "Name of the social network (e.g., Facebook)"
+msgstr "Nome da rede social (ex. Facebook)"
+
+#: src/ej_configurations/models.py:33
+msgid "Icon name"
+msgstr "Nome do ícone"
+
+#: src/ej_configurations/models.py:35
+msgid "Icon name in font-awesome"
+msgstr "Nome do ícone para a fonte"
+
+#: src/ej_configurations/models.py:39
+msgid "Ordering"
+msgstr "Prioridade"
+
+#: src/ej_configurations/models.py:42
+msgid ""
+"You can manually define the ordering that each icon should appear in the "
+"interface. Otherwise, icons will be shown in insertion order."
+msgstr ""
+"Você pode definir a prioridade com que cada ícone vai aparecer na interface. Caso "
+"contrário, aparecerão na ordem de inserção."
+
+#: src/ej_configurations/models.py:48
+msgid "URL"
+msgstr "URL"
+
+#: src/ej_configurations/models.py:49
+msgid "Link to your social account page."
+msgstr "Link para o seu perfil de rede social."
+
+#: src/ej_configurations/models.py:54
+msgid "Social media icon"
+msgstr "Ícone de mídia social"
+
+#: src/ej_configurations/models.py:55
+msgid "Social media icons"
+msgstr "Ícones de mídias sociais"
+
+#: src/ej_configurations/models.py:101
+msgid "Color name"
+msgstr "Nome da cor"
+
+#: src/ej_configurations/models.py:105
+msgid "Color"
+msgstr "Cor"
+
+#: src/ej_configurations/models.py:108
+msgid "Color code in hex (e.g., #RRGGBBAA) format."
+msgstr "Código da cor em hexa (ex., #RRGGBBAA)"
+
+#: src/ej_configurations/models.py:131
+msgid "Unique identifier for fragment name"
+msgstr "Identificador único para nome do fragmento"
+
+#: src/ej_configurations/models.py:135
+msgid "content"
+msgstr "conteúdo"
+
+#: src/ej_configurations/models.py:137
+msgid "Raw fragment content in HTML or Markdown"
+msgstr "Formato cru do conteúdo do fragmento"
+
+#: src/ej_configurations/routes.py:28 src/ej_conversations/apps.py:7
+msgid "Conversations"
+msgstr "Conversas"
+
+#: src/ej_configurations/routes.py:29 src/ej_reports/routes.py:105
+msgid "Votes"
+msgstr "Votos"
+
+#: src/ej_configurations/routes.py:30
+msgid "Comments"
+msgstr "Comentários"
+
+#: src/ej_configurations/validators.py:10
+msgid "Font-awesome icons"
+msgstr "Icones Font-awesome"
+
+#: src/ej_configurations/validators.py:11
+msgid "Font-awesome brands"
+msgstr "Marcas Font-awesome"
+
+#: src/ej_configurations/validators.py:12
+msgid "Font-awesome solid"
+msgstr "Font-awesome solid"
+
+#: src/ej_configurations/validators.py:13
+msgid "Font-awesome regular"
+msgstr "Font-awesome regular"
+
+#: src/ej_configurations/validators.py:14
+msgid "Font-awesome light"
+msgstr "Font-awesome light"
+
+#: src/ej_configurations/validators.py:21
+msgid ""
+"Invalid font awesome icon name. Please use the full format like in \"fab fa-"
+"facebook-f\""
+msgstr ""
+"Ícone \"font awesome\" inválido. Use o formato completo como em \"fab fa-facebook-"
+"f\""
+
+#: src/ej_configurations/validators.py:29
+#, python-brace-format
+msgid "{icon_name} is an invalid {LIB_NAMES[lib]} icon!"
+msgstr "{icon_name} é um icone invalido de {LIB_NAMES[lib]}!"
+
+#: src/ej_conversations/admin.py:26
+msgid "Moderation"
+msgstr "Moderação"
+
+#: src/ej_conversations/models/comment.py:25
+msgid "awaiting moderation"
+msgstr "aguardando moderação"
+
+#: src/ej_conversations/models/comment.py:26
+msgid "approved"
+msgstr "aprovado"
+
+#: src/ej_conversations/models/comment.py:27
+msgid "rejected"
+msgstr "rejeitado"
+
+#: src/ej_conversations/models/comment.py:45
+msgid "Content"
+msgstr "Conteúdo"
+
+#: src/ej_conversations/models/comment.py:48
+msgid "Body of text for the comment"
+msgstr "Corpo de texto do comentário"
+
+#: src/ej_conversations/models/comment.py:51
+msgid "Rejection reason"
+msgstr "Motivo para rejeição"
+
+#: src/ej_conversations/models/comment.py:54
+msgid ""
+"You must provide a reason to reject a comment. Users will receive this feedback."
+msgstr ""
+"Você deve fornecer uma razão para rejeitar um comentário. O autor do comentário "
+"verá este feedback."
+
+#: src/ej_conversations/models/comment.py:59
+msgid "Promoted comment?"
+msgstr "Comentário promovido?"
+
+#: src/ej_conversations/models/comment.py:62
+msgid "Promoted comments are prioritized when selecting random commentsto users."
+msgstr ""
+"Comentários promovidos são priorizados no momento da exibição aleatória de "
+"comentários aos usuários."
+
+#: src/ej_conversations/models/comment.py:81
+msgid "Must give a reason to reject a comment"
+msgstr "Deve fornecer uma razão para rejeitar o comentário"
+
+#: src/ej_conversations/models/conversation.py:68
+msgid ""
+"A short description about this conversations. This is used internally and to "
+"create URL slugs. (e.g. School system)"
+msgstr ""
+"Uma descrição curta sobre a conversa. Utilizado internamente para criar URLs "
+"(ex.:  Escolar)."
+
+#: src/ej_conversations/models/conversation.py:73
+msgid "Question"
+msgstr "Questão"
+
+#: src/ej_conversations/models/conversation.py:75
+msgid ""
+"A question that is displayed to the users in a conversation card. (e.g.: How can "
+"we improve the school system in our community?)"
+msgstr ""
+"Uma questão que é exibida aos usuários numa conversa. (ex: Como podemos melhorar "
+"o sistema educacional na nossa comunidade?)"
+
+#: src/ej_conversations/models/conversation.py:84
+msgid "Only the author and administrative staff can edit this conversation."
+msgstr "Apenas o autor e o administrador podem editar esta conversa."
+
+#: src/ej_conversations/models/conversation.py:92
+msgid "promoted?"
+msgstr "promovido?"
+
+#: src/ej_conversations/models/conversation.py:95
+msgid "Promoted conversations appears in the main /conversations/ endpoint."
+msgstr ""
+"Conversas promovidas aparecem no quadro principal de conversas /conversations."
+
+#: src/ej_conversations/models/conversation.py:107
+msgid "Can publish promoted conversations"
+msgstr "Pode publicar conversas promovidas"
+
+#: src/ej_conversations/models/conversation.py:108
+msgid "Can moderate comments in any conversation"
+msgstr "Pode moderar comentários em qualquer conversa"
+
+#: src/ej_conversations/models/conversation.py:127
+msgid "User does not have permission to create a promoted conversation."
+msgstr "Usuário não tem permissão para criar uma conversa promovida."
+
+#: src/ej_conversations/models/conversation.py:170
+msgid "automatically rejected"
+msgstr "rejeitado automaticamente"
+
+#: src/ej_conversations/models/conversation.py:251
+msgid "No comments available for this user"
+msgstr "Não há comentários disponíveis para esse usuário"
+
+#: src/ej_conversations/models/vote.py:14
 msgid "Skip"
 msgstr "Pular"
 
-#: ej/templates/jinja2/components/conversations.jinja2:149
+#: src/ej_conversations/models/vote.py:15 src/ej_reports/routes.py:108
+msgid "Agree"
+msgstr "Concorda"
+
+#: src/ej_conversations/models/vote.py:16 src/ej_reports/routes.py:109
 msgid "Disagree"
 msgstr "Discorda"
 
-#: ej/templates/jinja2/components/home.jinja2:11
-#: ej/templates/jinja2/components/home.jinja2:73
+#: src/ej_conversations/models/vote.py:48
+msgid "Agree, disagree or skip"
+msgstr "Concorda, discorda ou pula"
+
+#: src/ej_conversations/models/vote.py:49
+msgid "Created at"
+msgstr "Criado em"
+
+#: src/ej_conversations/models/vote.py:61
+msgid "non-moderated comments cannot receive votes"
+msgstr "comentários não-moderados não podem receber votos"
+
+#: src/ej_conversations/routes/admin.py:112
+msgid "Board with this slug already exists!"
+msgstr "Já existe um quadro com esse identificador!"
+
+#: src/ej_conversations/routes/comments.py:13
+msgid "List conversations"
+msgstr "Listar conversas"
+
+#: src/ej_conversations/routes/conversations.py:19
+msgid ""
+"A space for adolescents to discuss actions that promote, guarantee and defend "
+"their rights"
+msgstr ""
+"Um espaço para adolescentes debaterem ações que promovam, garantam e defendam "
+"seus direitos"
+
+#: src/ej_conversations/routes/conversations.py:20
+msgid "Public conversations"
+msgstr "Conversas públicas"
+
+#: src/ej_conversations/routes/conversations.py:21
+msgid ""
+"Participate of the conversations and give your opinion with comments and votes!"
+msgstr "Participe das conversas e dê sua opinião com comentários e votos!"
+
+#: src/ej_conversations/routes/conversations.py:39
+msgid "login"
+msgstr "entrar"
+
+#: src/ej_conversations/validators.py:18
+#, python-brace-format
+msgid "'{color}' is a bad color value"
+msgstr "'{color}' não é uma cor válida"
+
+#: src/ej_conversations/validators.py:23
+msgid "Field cannot be empty!"
+msgstr "Campo não pode estar vazio!"
+
+#: src/ej_gamification/signals.py:13
+msgid "Created Comment"
+msgstr "Comentário criado"
+
+#: src/ej_gamification/signals.py:22
+msgid "Had Comment Approved"
+msgstr "Teve comentário aprovado"
+
+#: src/ej_gamification/signals.py:34
+msgid "Agreed With"
+msgstr "Concordou com"
+
+#: src/ej_gamification/signals.py:42
+msgid "Passed On"
+msgstr "Passou"
+
+#: src/ej_gamification/signals.py:50
+msgid "Disagreed With"
+msgstr "Discordou com"
+
+#: src/ej_gamification/signals.py:82
+msgid "Created Conversation"
+msgstr "Criar conversa"
+
+#: src/ej_gamification/signals.py:90
+msgid "Was Created"
+msgstr "Foi criada"
+
+#: src/ej_gamification/signals.py:101
+msgid "Filled Profile"
+msgstr "Perfil preenchido"
+
+#: src/ej_help/apps.py:7
+msgid "Help"
+msgstr "Ajuda"
+
+#: src/ej_help/routes.py:41
+msgid "Page {}  not found"
+msgstr "Página {} não encontrada"
+
+#: src/ej_math/apps.py:7
+msgid "Math"
+msgstr "Módulo matemático"
+
+#: src/ej_notifications/apps.py:7
+msgid "Notifications"
+msgstr "Notificações"
+
+#: src/ej_notifications/routes.py:16
+msgid "List of notifications"
+msgstr "Lista de notificações"
+
+#: src/ej_powers/models.py:14
+msgid "user does not have the right to promote this comment"
+msgstr "usuário não tem permissão para promover esse comentário"
+
+#: src/ej_powers/models.py:37
+msgid "Any comment in conversation"
+msgstr "Qualquer comentário na conversa"
+
+#: src/ej_powers/models.py:38
+msgid "Self promotion"
+msgstr "Auto promoção"
+
+#: src/ej_powers/models.py:39
+msgid "Endorse comment from other user"
+msgstr "Endorsar comentário de outro usuário"
+
+#: src/ej_powers/models.py:40
+msgid "Endorse comment from a user in the user's cluster"
+msgstr "Endorsar comentário de usuário de outro grupo"
+
+#: src/ej_powers/models.py:41
+msgid "Endorse comment from user from a different cluster"
+msgstr "Endorsar comentário de usuário de um grupo diferente do seu"
+
+#: src/ej_profiles/admin.py:9
+msgid "Basic information"
+msgstr "Informações básicas"
+
+#: src/ej_profiles/admin.py:12
+msgid "Address"
+msgstr "Endereço"
+
+#: src/ej_profiles/admin.py:15
+msgid "Advanced"
+msgstr "Avançado"
+
+#: src/ej_profiles/choices.py:7 src/ej_profiles/choices.py:18
+msgid "Not filled"
+msgstr "Não preenchido"
+
+#: src/ej_profiles/choices.py:8
+msgid "Black"
+msgstr "Preto"
+
+#: src/ej_profiles/choices.py:9
+msgid "Brown"
+msgstr "Pardo"
+
+#: src/ej_profiles/choices.py:10
+msgid "White"
+msgstr "Branco"
+
+#: src/ej_profiles/choices.py:11
+msgid "Yellow"
+msgstr "Amarelo"
+
+#: src/ej_profiles/choices.py:12
+msgid "Indigenous"
+msgstr "Indígena"
+
+#: src/ej_profiles/choices.py:13
+msgid "Do not know"
+msgstr "Não sei"
+
+#: src/ej_profiles/choices.py:14 src/ej_profiles/choices.py:22
+msgid "Not declared"
+msgstr "Não declarado"
+
+#: src/ej_profiles/choices.py:19
+msgid "Female"
+msgstr "Feminino"
+
+#: src/ej_profiles/choices.py:20
+msgid "Male"
+msgstr "Masculino"
+
+#: src/ej_profiles/choices.py:21
+msgid "Other"
+msgstr "Outro"
+
+#: src/ej_profiles/models.py:26
+msgid "Race"
+msgstr "Raça"
+
+#: src/ej_profiles/models.py:27
+msgid "Ethnicity"
+msgstr "Etnia"
+
+#: src/ej_profiles/models.py:28
+msgid "Education"
+msgstr "Escolaridade"
+
+#: src/ej_profiles/models.py:29
+msgid "Gender identity"
+msgstr "Identidade de gênero"
+
+#: src/ej_profiles/models.py:30
+msgid "User provided gender"
+msgstr "Gênero fornecido pelo usuário"
+
+#: src/ej_profiles/models.py:31 src/ej_profiles/models.py:127
+msgid "Age"
+msgstr "Idade"
+
+#: src/ej_profiles/models.py:32
+msgid "Birth Date"
+msgstr "Data de Nascimento"
+
+#: src/ej_profiles/models.py:33
+msgid "Country"
+msgstr "País"
+
+#: src/ej_profiles/models.py:35
+msgid "State"
+msgstr "Estado"
+
+#: src/ej_profiles/models.py:40
+msgid "City"
+msgstr "Cidade"
+
+#: src/ej_profiles/models.py:41
+msgid "Biography"
+msgstr "Biografia"
+
+#: src/ej_profiles/models.py:42
+msgid "Occupation"
+msgstr "Ocupação"
+
+#: src/ej_profiles/models.py:43
+msgid "Political activity"
+msgstr "Atividade política"
+
+#: src/ej_profiles/models.py:44
+msgid "Image"
+msgstr "Imagem"
+
+#: src/ej_profiles/models.py:167
+msgid "Root"
+msgstr "Root"
+
+#: src/ej_profiles/models.py:169
+msgid "Administrative user"
+msgstr "Usuário administrativo"
+
+#: src/ej_profiles/models.py:170 src/ej_profiles/tests/test_models.py:47
+msgid "Regular user"
+msgstr "Usuário regular"
+
+#: src/ej_profiles/routes.py:62
+msgid "My conversations"
+msgstr "Suas conversas"
+
+#: src/ej_profiles/routes.py:63
+msgid "See all conversations created by you"
+msgstr "Ver todas as conversas criadas por você"
+
+#: src/ej_reports/apps.py:7
+msgid "Reports"
+msgstr "Relatórios"
+
+#: src/ej_reports/routes.py:65
+msgid "Report"
+msgstr "Relatório"
+
+#: src/ej_reports/routes.py:103
+msgid "Author"
+msgstr "Autor"
+
+#: src/ej_reports/routes.py:104
+msgid "Text"
+msgstr "Texto"
+
+#: src/ej_reports/routes.py:106
+msgid "Missing"
+msgstr "Faltando"
+
+#: src/ej_reports/routes.py:107
+msgid "Skipped"
+msgstr "Pulados"
+
+#: src/ej_reports/routes.py:110
+msgid "Average"
+msgstr "Média"
+
+#: src/ej_reports/routes.py:111
+msgid "Divergence"
+msgstr "Divergência"
+
+#: src/ej_reports/routes.py:112
+msgid "Entropy"
+msgstr "Entropia"
+
+#: src/ej_reports/routes.py:114
+msgid "User"
+msgstr "Usuário"
+
+#: src/ej_reports/routes.py:115
+msgid "Participation ratio"
+msgstr "Índice de participação"
+
+#: src/ej_rocketchat/apps.py:7
+msgid "Rocket.Chat integration"
+msgstr "Integração com o Rocket.Chat"
+
+#: src/ej_rocketchat/forms.py:23 src/ej_rocketchat/models.py:96
+msgid "Rocket.Chat URL"
+msgstr "URL do Rocket.Chat"
+
+#: src/ej_rocketchat/forms.py:24
+msgid "Required URL for Rocket.Chat admin instance."
+msgstr "URL da instância admin do Rocket.Chat."
+
+#: src/ej_rocketchat/forms.py:29
+msgid "Username for Rocket.Chat admin user."
+msgstr "Nome de usuário do administrador do Rocket.Chat."
+
+#: src/ej_rocketchat/forms.py:34 src/ej_rocketchat/forms.py:154
+#: src/ej_rocketchat/models.py:47 src/ej_users/forms.py:14 src/ej_users/forms.py:49
+msgid "Password"
+msgstr "Senha"
+
+#: src/ej_rocketchat/forms.py:35
+msgid "Password for Rocket.Chat admin user."
+msgstr "Senha para o usuário admin do Rocket.Chat"
+
+#: src/ej_rocketchat/forms.py:140
+msgid "Username already in use."
+msgstr "Nome de usuário já existe."
+
+#: src/ej_rocketchat/forms.py:143
+#, python-brace-format
+msgid "User with {email} e-mail already exists."
+msgstr "Já existe um usuário com o email {email}"
+
+#: src/ej_rocketchat/forms.py:155
+msgid "Password for the Rocket.Chat admin account"
+msgstr "Senha para o admin do Rocket.Chat"
+
+#: src/ej_rocketchat/forms.py:166
+msgid "Invalid password"
+msgstr "Senha inválida"
+
+#: src/ej_rocketchat/models.py:34
+msgid ""
+"Username that identifies you in the Rocket.Chat platform.\n"
+"Use small names with letters and dashes such as @my-user-name."
+msgstr ""
+"Usuário que te identifica na plataforma Rocket.Chat.\n"
+"Use nomes curtos com letras e barras em vez de espaços. Ex: @meu-nome."
+
+#: src/ej_rocketchat/models.py:41
+msgid "Username must consist of letters, numbers and dashes."
+msgstr "Nomes de usuário devem conter letras, números e hífens."
+
+#: src/ej_rocketchat/models.py:53
+msgid "Rocketchat user id"
+msgstr "Usuário no Rocketchat"
+
+#: src/ej_rocketchat/models.py:57
+msgid "Rocketchat user token"
+msgstr "Token de usuário no Rocketchat"
+
+#: src/ej_rocketchat/models.py:62
+msgid "Is user active?"
+msgstr "O usúario está ativo?"
+
+#: src/ej_rocketchat/models.py:65
+msgid "True for active Rocket.Chat accounts."
+msgstr "Verdadeiro para contas ativas de Rocket.Chat."
+
+#: src/ej_rocketchat/models.py:72
+msgid "Rocket.Chat Account"
+msgstr "Conta do Rocketchat"
+
+#: src/ej_rocketchat/models.py:73
+msgid "Rocket.Chat Accounts"
+msgstr "Contas do Rocketchat"
+
+#: src/ej_rocketchat/models.py:75
+msgid "Can login in the Rocket.Chat instance."
+msgstr "Pode logar na instancia Rocket.Chat."
+
+#: src/ej_rocketchat/models.py:100
+msgid "Public URL in which the Rocket.Chat instance is installed."
+msgstr "URL Pública na qual a instância Rocket.Chat é instalada."
+
+#: src/ej_rocketchat/models.py:104
+msgid "Rocket.Chat private URL"
+msgstr "URL privada do Rocket.Chat"
+
+#: src/ej_rocketchat/models.py:109
+msgid ""
+"A private URL used only for API calls. Can be used to override the public URL if "
+"Rocket.Chat is available in an internal address in your network."
+msgstr ""
+"Uma URL privada usada apenas para as chamadas de API. Pode ser usada para "
+"sobrescrever a URL publica se o Rocket.Chat está disponível num endereço interno "
+"da sua rede."
+
+#: src/ej_rocketchat/models.py:115
+msgid "Admin username"
+msgstr "Nome de usuário administrativo"
+
+#: src/ej_rocketchat/models.py:119
+msgid "Username for Rocket.Chat admin user"
+msgstr "Nome de usuário do administrador do Rocket.Chat"
+
+#: src/ej_rocketchat/models.py:123
+msgid "Admin user id"
+msgstr "Id do usuário administrativo"
+
+#: src/ej_rocketchat/models.py:126
+msgid "Id string for the Rocket.Chat admin user."
+msgstr "Identificador para o admin do Rocket.Chat."
+
+#: src/ej_rocketchat/models.py:130
+msgid "Login token"
+msgstr "Token de login"
+
+#: src/ej_rocketchat/models.py:133
+msgid "Login token for the Rocket.Chat admin user."
+msgstr "Token de login para o usúario admin do Rocket.Chat."
+
+#: src/ej_rocketchat/models.py:137
+msgid "Is active"
+msgstr "É ativo"
+
+#: src/ej_rocketchat/models.py:140
+msgid "Set to false to temporarily disable RocketChat integration."
+msgstr ""
+"Marque como falso para desabilitar temporariamente a integração com o RocketChat."
+
+#: src/ej_rocketchat/models.py:147
+msgid "Rocket.Chat Configuration"
+msgstr "Configuração do rocketchat"
+
+#: src/ej_rocketchat/models.py:148
+msgid "Rocket.Chat Configurations"
+msgstr "Configurações do rocketchat"
+
+#: src/ej_users/admin.py:13
+msgid "Permissions"
+msgstr "Permissões"
+
+#: src/ej_users/admin.py:15
+msgid "Important dates"
+msgstr "Datas importantes"
+
+#: src/ej_users/forms.py:19
+msgid "Password confirmation"
+msgstr "Confirmação de senha"
+
+#: src/ej_users/forms.py:38
+msgid "Passwords do not match"
+msgstr "Senhas não são iguais"
+
+#: src/ej_users/models.py:18
+msgid "Display name"
+msgstr "Nome público"
+
+#: src/ej_users/models.py:23
+msgid "A randomly generated name used to identify each user."
+msgstr "Um nome gerado aleatoriamente para identificar cada usuário."
+
+#: src/ej_users/models.py:27
+msgid "email address"
+msgstr "endereço de email"
+
+#: src/ej_users/routes.py:65
+msgid "Invalid email or password"
+msgstr "Email ou senha inválidos"
+
+#: src/ej/templates/jinja2/base.jinja2:83
+msgid "EJ - A platform of social participation."
+msgstr "EJ - Uma plataforma para participação social."
+
+#: src/ej/templates/jinja2/base.jinja2:92
+msgid "EJ - A platform of social participacion."
+msgstr "EJ - Uma plataforma para participação social."
+
+#: src/ej/templates/jinja2/base.jinja2:130
+msgid "Please override the \"content\" block of your template!"
+msgstr "Por favor substitua o bloco \"content\" do seu template!"
+
+#: src/ej/templates/jinja2/generic.jinja2:5
+msgid "Under construction!"
+msgstr "Em construção!"
+
+#: src/ej/templates/jinja2/components/home.jinja2:53
+#: src/ej/templates/jinja2/components/home.jinja2:55
 msgid "Start now!"
 msgstr "Começar agora!"
 
-#: ej/templates/jinja2/components/home.jinja2:13
-msgid "Access CPA panel!"
-msgstr "Acesse o painel do CPA!"
+#: src/ej/templates/jinja2/components/generic/page_header.jinja2:15
+msgid "ENTRAR"
+msgstr "ENTRAR"
 
-#: ej/templates/jinja2/components/profile.jinja2:25
-msgid "Info"
-msgstr "Informações"
-
-#: ej/templates/jinja2/components/profile.jinja2:29
-msgid "Contributions"
-msgstr "Contribuições"
-
-#: ej/templates/jinja2/components/profile.jinja2:62
-msgid "Logout"
-msgstr "Sair"
-
-#: ej/templates/jinja2/components/profile.jinja2:64
-msgid "Delete profile"
-msgstr "Apagar perfil"
-
-#: ej/templates/jinja2/components/profile.jinja2:80
-msgid "Edit profile"
-msgstr "Editar perfil"
-
-#: ej/templates/jinja2/components/profile.jinja2:100
-msgid "Joined conversations"
-msgstr "Conversas em que participou"
-
-#: ej/templates/jinja2/components/profile.jinja2:101
-msgid "More conversations"
-msgstr "Mais conversas"
-
-#: ej/templates/jinja2/components/profile.jinja2:106
-msgid "CPA Space"
-msgstr "Espaço CPA"
-
-#: ej/templates/jinja2/components/profile.jinja2:107
-msgid "See below the spaces you joined"
-msgstr "Veja abaixo os espaços onde você se cadastrou"
-
-#: ej/templates/jinja2/components/generic/elements.jinja2:20
-msgid "Access CPA panel"
-msgstr "Acesse o painel do CPA"
-
-#: ej/templates/jinja2/components/generic/page_header.jinja2:17
+#: src/ej/templates/jinja2/components/generic/page_header.jinja2:56
 msgid "Back"
 msgstr "Voltar"
 
-#: ej/templates/jinja2/components/generic/page_header.jinja2:25
+#: src/ej/templates/jinja2/components/generic/page_header.jinja2:64
+#: src/ej/templates/jinja2/components/generic/page_header.jinja2:71
 msgid "Navigation menu"
 msgstr "Menu de navegação"
 
-#: ej/templates/jinja2/components/generic/page_header.jinja2:39
-#: ej/templates/jinja2/components/generic/page_header.jinja2:40
-#: ej/templates/jinja2/components/generic/page_header.jinja2:41
-#: ej/templates/jinja2/components/generic/page_menu.jinja2:11
-msgid "Talks"
-msgstr "Canais"
+#: src/ej/templates/jinja2/components/generic/page_header.jinja2:96
+#: src/ej/templates/jinja2/components/generic/page_header.jinja2:98
+#: src/ej/templates/jinja2/components/generic/page_header.jinja2:100
+#: src/ej_rocketchat/jinja2/ej_rocketchat/iframe.jinja2:2
+#: src/ej_rocketchat/jinja2/ej_rocketchat/intro.jinja2:3
+msgid "Panel"
+msgstr "Painel"
 
-#: ej/templates/jinja2/components/generic/page_header.jinja2:44
-#: ej/templates/jinja2/components/generic/page_header.jinja2:45
-#: ej/templates/jinja2/components/generic/page_header.jinja2:46
-#: ej/templates/jinja2/components/generic/page_menu.jinja2:12
+#: src/ej/templates/jinja2/components/generic/page_header.jinja2:104
+#: src/ej/templates/jinja2/components/generic/page_header.jinja2:106
+#: src/ej/templates/jinja2/components/generic/page_header.jinja2:108
+#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:55
 msgid "Profile"
 msgstr "Perfil"
 
-#: ej/templates/jinja2/components/generic/page_menu.jinja2:7
+#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:6
 msgid "About"
 msgstr "Sobre"
 
-#: ej/templates/jinja2/components/generic/page_menu.jinja2:8
-msgid "FAQ"
+#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:7
+msgid "Frequently Asked Questions"
 msgstr "Perguntas frequentes"
 
-#: ej/templates/jinja2/components/generic/page_menu.jinja2:9
-#: ej/templates/jinja2/components/generic/page_top-header.jinja2:11
+#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:8
+msgid "Talk to us"
+msgstr "Fale conosco"
+
+#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:9
+#: src/ej/templates/jinja2/components/generic/page_top-header.jinja2:8
 msgid "Usage terms"
 msgstr "Termos de uso"
 
-#: ej/templates/jinja2/components/generic/page_menu.jinja2:13
+#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:22
+#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:42
+msgid "Your conversations"
+msgstr "Suas conversas"
+
+#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:25
+#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:46
+msgid "Add conversation"
+msgstr "Criar conversa"
+
+#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:28
+#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:49
+msgid "Favorite conversations"
+msgstr "Conversas Favoritas"
+
+#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:56
 msgid "Home"
 msgstr "Início"
 
-#: ej/templates/jinja2/components/generic/page_top-header.jinja2:9
+#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:67
+msgid "Increase font size"
+msgstr "Aumentar o tamanho da fonte"
+
+#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:74
+msgid "Decrease font size"
+msgstr "Diminuir o tamanho da fonte"
+
+#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:78
+msgid "High contrast mode"
+msgstr "Modo de alto contraste"
+
+#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:87
+#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:71
+msgid "Logout"
+msgstr "Sair"
+
+#: src/ej/templates/jinja2/components/generic/page_top-header.jinja2:6
 msgid "about"
 msgstr "sobre"
 
-#: ej/templates/jinja2/components/generic/page_top-header.jinja2:9
+#: src/ej/templates/jinja2/components/generic/page_top-header.jinja2:6
 msgid "About us"
 msgstr "Sobre nós"
 
-#: ej/templates/jinja2/components/generic/page_top-header.jinja2:10
+#: src/ej/templates/jinja2/components/generic/page_top-header.jinja2:7
 msgid "frequent questions"
 msgstr "perguntas frequentes"
 
-#: ej/templates/jinja2/components/generic/page_top-header.jinja2:10
+#: src/ej/templates/jinja2/components/generic/page_top-header.jinja2:7
 msgid "Frequently asked questions"
-msgstr "perguntas frequentes"
+msgstr "Perguntas frequentes"
 
-#: ej/templates/jinja2/components/generic/page_top-header.jinja2:11
+#: src/ej/templates/jinja2/components/generic/page_top-header.jinja2:8
 msgid "usage"
 msgstr "termos de uso"
 
-#: ej/templates/jinja2/pages/profile-edit.jinja2:4
+#: src/ej/templates/jinja2/pages/home.jinja2:8
+msgid "Create opinion surveys."
+msgstr "Crie consultas de opinião."
+
+#: src/ej/templates/jinja2/pages/home.jinja2:9
+msgid "Try"
+msgstr "Experimente"
+
+#: src/ej/templates/jinja2/pages/home.jinja2:14
+msgid "How it works"
+msgstr "Como funciona"
+
+#: src/ej/templates/jinja2/pages/home.jinja2:20
+#: src/ej/templates/jinja2/pages/home.jinja2:56
+msgid "Create a conversation"
+msgstr "Crie uma conversa"
+
+#: src/ej/templates/jinja2/pages/home.jinja2:21
+msgid ""
+"create conversations on EJ to receive ideas and opinions about politics, services "
+"or public equipments."
+msgstr ""
+"crie conversas no EJ para receber ideias e opiniões sobre políticas, serviços ou "
+"equipamentos públicos."
+
+#: src/ej/templates/jinja2/pages/home.jinja2:28
+msgid "Listen to the people"
+msgstr "Escute a população"
+
+#: src/ej/templates/jinja2/pages/home.jinja2:29
+msgid "identify the priorities and the different opinion groups in the society."
+msgstr ""
+"identifique suas prioridades e os diferentes grupos de opinião existentes na "
+"sociedade."
+
+#: src/ej/templates/jinja2/pages/home.jinja2:36
+msgid "Take decisions"
+msgstr "Tome decisões"
+
+#: src/ej/templates/jinja2/pages/home.jinja2:37
+msgid "make participants know, communicating directly and amplifying the responses."
+msgstr ""
+"faça os participantes saberem, comunicando diretamente e amplificando as "
+"respostas."
+
+#: src/ej/templates/jinja2/pages/home.jinja2:44
+msgid "Participative conversations"
+msgstr "Conversas participativas"
+
+#: src/ej/templates/jinja2/pages/home.jinja2:48
+msgid "Many people"
+msgstr "Muitas pessoas"
+
+#: src/ej/templates/jinja2/pages/home.jinja2:49
+msgid "No attacks or fakes"
+msgstr "Sem ataques ou fakes"
+
+#: src/ej/templates/jinja2/pages/home.jinja2:50
+msgid "Nuances instead of bubbles"
+msgstr "Nuances invés de bolhas"
+
+#: src/ej/templates/jinja2/pages/home.jinja2:51
+msgid "Free"
+msgstr "Gratuito"
+
+#: src/ej/templates/jinja2/pages/home.jinja2:60
+msgid "Documentation"
+msgstr "Documentação"
+
+#: src/ej/templates/jinja2/pages/home.jinja2:62
+msgid "Explore the EJ resources with our documented guides"
+msgstr "Explore o máximo dos recursos do EJ com nossos guias documentados"
+
+#: src/ej/templates/jinja2/pages/home.jinja2:65
+msgid "User Guides"
+msgstr "Guias de Usuário"
+
+#: src/ej/templates/jinja2/pages/home.jinja2:66
+msgid "Installation Guides"
+msgstr "Guias de Instalação"
+
+#: src/ej/templates/jinja2/pages/home.jinja2:67
+msgid "Administration Guides"
+msgstr "Guias de Administração"
+
+#: src/ej/templates/jinja2/pages/home.jinja2:68
+msgid "Development Guides"
+msgstr "Guias de Desenvolvimento"
+
+#: src/ej/templates/jinja2/pages/home.jinja2:69
+msgid "Our Artificial Intelligence"
+msgstr "Nossa Inteligência Artificial"
+
+#: src/ej/templates/jinja2/pages/home.jinja2:70
+msgid "Contributing"
+msgstr "Contribuindo"
+
+#: src/ej/templates/jinja2/pages/home.jinja2:71
+msgid "Getting Help"
+msgstr "Obtendo Ajuda"
+
+#: src/ej/templates/jinja2/pages/home.jinja2:76
+msgid "EJ Community"
+msgstr "Comunidade EJ"
+
+#: src/ej/templates/jinja2/pages/home.jinja2:118
+msgid "Who is using EJ"
+msgstr "Quem já adotou o EJ"
+
+#: src/ej_boards/jinja2/ej_boards/create.jinja2:9
+#: src/ej_clusters/jinja2/ej_clusters/edit-stereotype.jinja2:5
+#: src/ej_conversations/jinja2/ej_conversations/edit.jinja2:18
+#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:19
+msgid "Save"
+msgstr "Salvar"
+
+#: src/ej_boards/jinja2/ej_boards/list.jinja2:7
+msgid "Create boards to group similar conversations!"
+msgstr "Crie quadros para agrupar conversas similares!"
+
+#: src/ej_boards/jinja2/ej_boards/list.jinja2:17
+msgid "Create a new board!"
+msgstr "Criar um novo quadro!"
+
+#: src/ej_clusters/jinja2/ej_clusters/create-stereotype.jinja2:11
+msgid "New Stereotype for conversation: "
+msgstr "Novo Estereótipo da conversa:"
+
+#: src/ej_clusters/jinja2/ej_clusters/create-stereotype.jinja2:12
+msgid "List below comments about this stereotype and define votes."
+msgstr ""
+"Liste abaixo os comentários referentes a esse estereótipo e defina os votos."
+
+#: src/ej_clusters/jinja2/ej_clusters/create-stereotype.jinja2:13
+#: src/ej_conversations/jinja2/ej_conversations/create.jinja2:49
+msgid "Create"
+msgstr "Criar"
+
+#: src/ej_clusters/jinja2/ej_clusters/create-stereotype.jinja2:41
+msgid "Add comment"
+msgstr "Adicionar comentário"
+
+#: src/ej_clusters/jinja2/ej_clusters/edit-stereotype.jinja2:5
+msgid "Edit Stereotype"
+msgstr "Editar estereótipo"
+
+#: src/ej_clusters/jinja2/ej_clusters/index.jinja2:6
+msgid "Cluster: {name}"
+msgstr "Grupo: {name}"
+
+#: src/ej_clusters/jinja2/ej_clusters/stereotype-vote.jinja2:8
+msgid "Please vote on the comments bellow to define your stereotype."
+msgstr "Por favor vote nos comentários abaixo para definir seu estereótipo."
+
+#: src/ej_clusters/jinja2/ej_clusters/stereotype-vote.jinja2:12
+msgid "Register votes"
+msgstr "Registre votos"
+
+#: src/ej_clusters/jinja2/ej_clusters/stereotype-vote.jinja2:15
+msgid ""
+"\n"
+"            This stereotype have voted on all comments.\n"
+"            "
+msgstr ""
+"\n"
+"            Esse estereótipo já votou em todos os comentários.\n"
+"            "
+
+#: src/ej_clusters/jinja2/ej_clusters/stereotype-vote.jinja2:21
+msgid "Already voted"
+msgstr "Já votou"
+
+#: src/ej_clusters/jinja2/ej_clusters/stereotype-vote.jinja2:22
+msgid "The stereotype has voted in the following comments."
+msgstr "O estereótipo já votou nos seguintes comentários."
+
+#: src/ej_clusters/jinja2/ej_clusters/stereotype-vote.jinja2:26
+msgid "Change votes"
+msgstr "Mudar votos"
+
+#: src/ej_clusters/jinja2/ej_clusters/components/stereotype-list.jinja2:23
+msgid "New stereotype"
+msgstr "Adicionar novo estereótipo"
+
+#: src/ej_clusters/jinja2/ej_clusters/components/stereotype-list.jinja2:29
+msgid "Search Stereotype:"
+msgstr "Pesquisar Estereótipo:"
+
+#: src/ej_clusters/jinja2/ej_clusters/components/stereotype-list.jinja2:51
+msgid "Done"
+msgstr "Concluir"
+
+#: src/ej_configurations/jinja2/configurations/fragment-list.jinja2:2
+msgid "Fragment list"
+msgstr "Lista de fragmentos"
+
+#: src/ej_configurations/jinja2/configurations/index.jinja2:2
+msgid "Site info"
+msgstr "Informações do site"
+
+#: src/ej_configurations/jinja2/configurations/styles.jinja2:2
+msgid "Styles"
+msgstr "Estilos"
+
+#: src/ej_conversations/jinja2/ej/roles/conversation-balloon.jinja2:11
+msgid "Tags"
+msgstr "Tags"
+
+#: src/ej_conversations/jinja2/ej/roles/conversation-balloon.jinja2:16
+msgid "{count} comments"
+msgstr "{count} comentários"
+
+#: src/ej_conversations/jinja2/ej/roles/conversation-balloon.jinja2:17
+msgid "{count} votes"
+msgstr "{count} votos"
+
+#: src/ej_conversations/jinja2/ej/roles/conversation-balloon.jinja2:18
+msgid "{count} favorites"
+msgstr "{count} favoritos"
+
+#: src/ej_conversations/jinja2/ej/roles/conversation-balloon.jinja2:30
+msgid "Unfavorite"
+msgstr "Desfavoritar"
+
+#: src/ej_conversations/jinja2/ej/roles/conversation-balloon.jinja2:34
+msgid "Favorite"
+msgstr "Favorito"
+
+#: src/ej_conversations/jinja2/ej/roles/conversation-balloon.jinja2:39
+msgid "Share"
+msgstr "Compartilhar"
+
+#: src/ej_conversations/jinja2/ej/roles/conversation-card.jinja2:10
+msgid "Conversation"
+msgstr "Conversa"
+
+#: src/ej_conversations/jinja2/ej/roles/conversation-card.jinja2:23
+msgid "Participate now!"
+msgstr "Participar agora!"
+
+#: src/ej_conversations/jinja2/ej/roles/conversation-card.jinja2:27
+msgid "Moderate Conversation"
+msgstr "Moderar Conversa"
+
+#: src/ej_conversations/jinja2/ej_conversations/_comment-list.jinja2:23
+msgid "No comment"
+msgstr "Sem comentários"
+
+#: src/ej_conversations/jinja2/ej_conversations/create.jinja2:9
+msgid "Type here the title of the new board"
+msgstr "Escreva aqui o título do novo quadro"
+
+#: src/ej_conversations/jinja2/ej_conversations/create.jinja2:20
+#: src/ej_conversations/jinja2/ej_conversations/create.jinja2:86
+msgid "Type here the comment"
+msgstr "Escreva aqui o comentário"
+
+#: src/ej_conversations/jinja2/ej_conversations/create.jinja2:31
+msgid ""
+"There were some errors in the information you entered. Please correct the "
+"following:"
+msgstr "Houveram alguns erros no formulário. Por favor corrija:"
+
+#: src/ej_conversations/jinja2/ej_conversations/create.jinja2:45
+#: src/ej_conversations/jinja2/ej_conversations/edit.jinja2:14
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: src/ej_conversations/jinja2/ej_conversations/create.jinja2:56
+msgid "Type tags separating by commas"
+msgstr "Escreva as tags separando por vírgulas"
+
+#: src/ej_conversations/jinja2/ej_conversations/create.jinja2:59
+msgid "Type here the question for your research"
+msgstr "Escreva aqui a pergunta da sua consulta"
+
+#: src/ej_conversations/jinja2/ej_conversations/create.jinja2:62
+#: src/ej_conversations/jinja2/ej_conversations/edit.jinja2:39
+#: src/ej_conversations/jinja2/ej_conversations/moderate.jinja2:17
+msgid "Edit Conversation"
+msgstr "Editar Conversa"
+
+#: src/ej_conversations/jinja2/ej_conversations/create.jinja2:73
+msgid "Conversation board"
+msgstr "Quadro de conversas"
+
+#: src/ej_conversations/jinja2/ej_conversations/create.jinja2:77
+msgid "Create new board..."
+msgstr "Criar um novo quadro..."
+
+#: src/ej_conversations/jinja2/ej_conversations/create.jinja2:89
+msgid "Add more comments"
+msgstr "Adicionar mais comentários"
+
+#: src/ej_conversations/jinja2/ej_conversations/edit.jinja2:53
+msgid "Manage stereotypes"
+msgstr "Gerenciar estereótipos"
+
+#: src/ej_conversations/jinja2/ej_conversations/edit.jinja2:61
+msgid "Promote conversation on public list"
+msgstr "Promover conversa para o board público"
+
+#: src/ej_conversations/jinja2/ej_conversations/edit.jinja2:66
+#: src/ej_conversations/jinja2/ej_conversations/moderate.jinja2:24
+msgid "Comments in this conversation"
+msgstr "Comentários nessa conversa"
+
+#: src/ej_conversations/jinja2/ej_conversations/info.jinja2:3
+msgid "Conversation info"
+msgstr "Informações sobre a conversa"
+
+#: src/ej_conversations/jinja2/ej_conversations/list.jinja2:6
+msgid "New conversation"
+msgstr "Nova conversa"
+
+#: src/ej_conversations/jinja2/ej_conversations/list.jinja2:11
+msgid "Viewing board:"
+msgstr "Visualizando quadro"
+
+#: src/ej_conversations/jinja2/ej_conversations/components/comment-card.jinja2:4
+msgid "by"
+msgstr "por"
+
+#: src/ej_conversations/jinja2/ej_conversations/components/comment-card.jinja2:14
+msgid "Approve"
+msgstr "Aprovar"
+
+#: src/ej_conversations/jinja2/ej_conversations/components/comment-card.jinja2:19
+msgid "Disapprove"
+msgstr "Discorda"
+
+#: src/ej_conversations/jinja2/ej_conversations/components/comment-card.jinja2:23
+msgid "Reason"
+msgstr "Justificativa"
+
+#: src/ej_conversations/jinja2/ej_conversations/components/comment-card.jinja2:24
+msgid "The comment will receive your rejection reason"
+msgstr "O comentário vai receber sua justificativa de rejeição"
+
+#: src/ej_conversations/jinja2/ej_conversations/components/comment-card.jinja2:26
+msgid ""
+"Example: Dear user, your comment was rejected because it contains discriminatory "
+"content."
+msgstr ""
+"Exemplo: Prezado usuário, seu comentário foi rejeitado porque contém conteúdo "
+"discriminatório."
+
+#: src/ej_conversations/jinja2/ej_conversations/components/comment-list.jinja2:9
+msgid "No comments left"
+msgstr "Não há mais comentários"
+
+#: src/ej_conversations/jinja2/ej_conversations/components/conversation-detail.jinja2:21
+msgid "Congratulations!"
+msgstr "Parabéns!"
+
+#: src/ej_conversations/jinja2/ej_conversations/components/conversation-detail.jinja2:22
+msgid "There are no comments left to vote :)"
+msgstr "Não há comentários para votar :)"
+
+#: src/ej_conversations/jinja2/ej_conversations/components/conversation-detail.jinja2:30
+msgid "You still have {n} available comments"
+msgstr "Você ainda tem {n} comentários disponíveis"
+
+#: src/ej_conversations/jinja2/ej_conversations/components/conversation-detail.jinja2:32
+msgid "Go to {login} to vote on this conversation"
+msgstr "Vá até {login} para votar nesta conversa"
+
+#: src/ej_conversations/jinja2/ej_conversations/components/conversation-detail.jinja2:34
+msgid "You have used all comments available in this conversation."
+msgstr "Você utilizou todos comentários disponíveis nesta conversa."
+
+#: src/ej_conversations/jinja2/ej_conversations/components/conversation-info.jinja2:37
+msgid "Unvoted"
+msgstr "Voto cancelado"
+
+#: src/ej_conversations/jinja2/ej_conversations/components/conversation-list.jinja2:11
+msgid "View all conversations"
+msgstr "Ver todas as conversas"
+
+#: src/ej_conversations/jinja2/ej_conversations/components/conversation-list.jinja2:13
+msgid "Participate on conversations and give your opinions with comments and votes!"
+msgstr "Participe das conversas e dê sua opinião com comentários e votos!"
+
+#: src/ej_conversations/jinja2/ej_conversations/components/conversation-list.jinja2:51
+msgid "public conversations"
+msgstr "conversas públicas"
+
+#: src/ej_conversations/jinja2/ej_conversations/components/conversation-list.jinja2:55
+msgid "go to my conversations"
+msgstr "Suas conversas"
+
+#: src/ej_profiles/jinja2/ej_profiles/edit.jinja2:4
 #, python-format
 msgid "Edit profile: <em>%(name)s</em>"
-msgstr ""
+msgstr "Editar perfil: <em>%(name)s</em>"
 
-#~ msgid "Channels"
-#~ msgstr "Canais"
+#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:12
+msgid "Choose a file"
+msgstr "Escolha um arquivo"
+
+#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:15
+msgid "No file chosen"
+msgstr "Nenhum arquivo foi escolhido"
+
+#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:29
+msgid "Participant Status"
+msgstr "Status do Participante"
+
+#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:34
+msgid "Info"
+msgstr "Info"
+
+#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:43
+msgid "Contributions"
+msgstr "Contribuições"
+
+#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:76
+msgid "Delete profile"
+msgstr "Apagar perfil"
+
+#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:95
+msgid "Edit profile"
+msgstr "Editar perfil"
+
+#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:144
+msgid "See All"
+msgstr "Ver Todos"
+
+#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:158
+msgid "My Comments"
+msgstr "Meus Comentários"
+
+#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:168
+msgid "Opinion"
+msgstr "Opinião"
+
+#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:190
+msgid "See Conversation"
+msgstr "Ver Conversa"
+
+#: src/ej_profiles/jinja2/ej_profiles/components/profile.jinja2:207
+msgid "Favorite Conversations"
+msgstr "Conversas Favoritas"
+
+#: src/ej_reports/jinja2/ej_reports/index.jinja2:4
+msgid "Basic info"
+msgstr "Informações básicas"
+
+#: src/ej_reports/jinja2/ej_reports/index.jinja2:5
+msgid "Report for conversation: \"{text}\""
+msgstr "Relatório para conversa: \"{text}\""
+
+#: src/ej_reports/jinja2/ej_reports/index.jinja2:10
+msgid "Export report to CSV"
+msgstr "Exportar relatório para CSV"
+
+#: src/ej_reports/jinja2/ej_reports/index.jinja2:16
+msgid "Export report to JSON"
+msgstr "Exportar relatório para JSON"
+
+#: src/ej_reports/jinja2/ej_reports/index.jinja2:22
+msgid "Export report to MessagePack"
+msgstr "Exportar relatório para MessagePack"
+
+#: src/ej_reports/jinja2/ej_reports/index.jinja2:26
+msgid "Votes ({total} participants)"
+msgstr "Votos ({total} participantes)"
+
+#: src/ej_reports/jinja2/ej_reports/index.jinja2:32
+msgid "Advanced info"
+msgstr "Informações avançadas"
+
+#: src/ej_reports/jinja2/ej_reports/index.jinja2:36
+msgid "Participants"
+msgstr "Participantes"
+
+#: src/ej_reports/jinja2/ej_reports/index.jinja2:39
+msgid "Cluster info"
+msgstr "Informação do grupo"
+
+#: src/ej_reports/jinja2/ej_reports/index.jinja2:41
+msgid "{n} users"
+msgstr "{n} usuários"
+
+#: src/ej_rocketchat/jinja2/ej_rocketchat/ask-admin-password.jinja2:2
+msgid "Panel: Admin password"
+msgstr "Painel: Senha do admin"
+
+#: src/ej_rocketchat/jinja2/ej_rocketchat/ask-admin-password.jinja2:3
+msgid "Authentication"
+msgstr "Autenticação"
+
+#: src/ej_rocketchat/jinja2/ej_rocketchat/ask-admin-password.jinja2:10
+#: src/ej_rocketchat/jinja2/ej_rocketchat/config.jinja2:9
+#: src/ej_rocketchat/jinja2/ej_rocketchat/register.jinja2:10
+msgid "Send"
+msgstr "Enviar"
+
+#: src/ej_rocketchat/jinja2/ej_rocketchat/config.jinja2:2
+msgid "Configure Rocket.Chat Integration"
+msgstr "Configurar a integração com o Rocket.Chat"
+
+#: src/ej_rocketchat/jinja2/ej_rocketchat/register.jinja2:2
+msgid "Panel: Register username"
+msgstr "Painel: Registrar nome do usuário"
+
+#: src/ej_rocketchat/jinja2/ej_rocketchat/register.jinja2:3
+msgid "Panel settings"
+msgstr "Configurações do Painel"
+
+#: src/ej_users/jinja2/ej_users/auth-components.jinja2:18
+#: src/ej_users/jinja2/ej_users/auth-components.jinja2:25
+#: src/ej_users/jinja2/ej_users/auth-components.jinja2:65
+msgid "Login"
+msgstr "Entrar"
+
+#: src/ej_users/jinja2/ej_users/auth-components.jinja2:25
+#: src/ej_users/jinja2/ej_users/auth-components.jinja2:65
+msgid "Register"
+msgstr "Registre-se"
+
+#: src/ej_users/jinja2/ej_users/auth-components.jinja2:27
+#: src/ej_users/jinja2/ej_users/auth-components.jinja2:47
+msgid "Register now!"
+msgstr "Registre agora!"
+
+#: src/ej_users/jinja2/ej_users/auth-components.jinja2:74
+msgid "What is passwordles login?"
+msgstr "O que é login sem senha?"
+
+#: src/ej_users/jinja2/ej_users/auth-components.jinja2:75
+msgid ""
+"Passwords are inconvenient and often insecure. We suggest our users to choose "
+"either social\n"
+"            authentication (Facebook or Twitter) or the passwordless method. In "
+"this setup, we send a password to\n"
+"            your e-mail with a special link that automatically register your "
+"account in the platform."
+msgstr ""
+"Senhas são inconvenientes e frequentemente inseguras. Nós sugerimos aos nossos "
+"usuários que escolham tanto autenticação\n"
+"            social (Facebook ou Twitter) ou o método de login sem senha. Nessa "
+"configuração, nós mandamos uma senha para\n"
+"            o seu email com um link especial que automaticamente registra sua "
+"conta na plataforma."
+
+#: src/ej_users/jinja2/ej_users/recover-password.jinja2:2
+msgid "Recover password"
+msgstr "Recuperar senha"
+
+#: src/ej_users/jinja2/ej_users/remove-account.jinja2:2
+#: src/ej_users/jinja2/ej_users/reset-password.jinja2:2
+msgid "Reset password"
+msgstr "Recriar minha senha"
+
+#~ msgid ""
+#~ "Interact with opinions by selecting one of the options and enjoy to include "
+#~ "your own opinion\n"
+#~ "            in this conversation"
+#~ msgstr ""
+#~ "Interaja com as opiniões selecionando uma das opções de botão e aproveite para "
+#~ "incluir sua própria opinião\n"
+#~ "            nesta conversa"
+
+#, fuzzy
+#~ msgid "User updated at"
+#~ msgstr "Atualizado em"
+
+#, fuzzy
+#~ msgid "Sender"
+#~ msgstr "Remetende"
+
+#~ msgid "Short Description"
+#~ msgstr "Descrição curta"
+
+#~ msgid "Waiting"
+#~ msgstr "Esperando"
+
+#~ msgid "Read"
+#~ msgstr "Lido"
+
+#~ msgid "Seen"
+#~ msgstr "Visto"
+
+#~ msgid "Unseen"
+#~ msgstr "Não Visto"
+
+#~ msgid "Status"
+#~ msgstr "Status"
+
+#~ msgid "OneSignal Id"
+#~ msgstr "Id OneSignal"
+
+#~ msgid "s comments"
+#~ msgstr " comentários"
+
+#~ msgid "s votes"
+#~ msgstr " votos"
+
+#~ msgid "s favorites"
+#~ msgstr " favoritos"
+
+#~ msgid "Cis Female"
+#~ msgstr "Feminino Cis"
+
+#~ msgid "Cis Male"
+#~ msgstr "Masculino Cis"
+
+#~ msgid "Agender"
+#~ msgstr "Agênero"
+
+#~ msgid "Genderqueer"
+#~ msgstr "Queer"
+
+#~ msgid "Genderfluid"
+#~ msgstr "Gênero fluído"
+
+#~ msgid "Non conformist gender"
+#~ msgstr "Gênero não conformista"
+
+#~ msgid "Variant gender"
+#~ msgstr "Gênero variante"
+
+#~ msgid "Intersex"
+#~ msgstr "Intersex"
+
+#~ msgid "Non binary"
+#~ msgstr "Não binário"
+
+#~ msgid "Transgendered"
+#~ msgstr "Transgênero"
+
+#~ msgid "Pangender"
+#~ msgstr "Pangênero"
+
+#~ msgid "Transsexual woman"
+#~ msgstr "Mulher transexual"
+
+#~ msgid "Transsexual man"
+#~ msgstr "Homem transexual"
+
+#~ msgid "Transfeminal"
+#~ msgstr "Transfeminino"
+
+#~ msgid "Transmasculine"
+#~ msgstr "Transmaculino"
+
+#~ msgid "None"
+#~ msgstr "Nenhum"
+
+#~ msgid "Active?"
+#~ msgstr "Ativo?"
+
+#~ msgid "Start now"
+#~ msgstr "Começar agora!"
+
+#~ msgid "Alerts"
+#~ msgstr "Alertas"
+
+#~ msgid "All"
+#~ msgstr "Todos"
+
+#~ msgid "Trophies"
+#~ msgstr "Troféus"
+
+#~ msgid "Empurrando Juntos"
+#~ msgstr "Empurrando Juntos"
+
+#~ msgid ""
+#~ "Boas vindas do %(site_name)s!\n"
+#~ "\n"
+#~ "Você está recebendo essa mensagem por que o usuário %(user_display)s se "
+#~ "cadastrou com esse endereço de email.\n"
+#~ "\n"
+#~ "Pra confirmar que está tudo certo, vá até %(activate_url)s\n"
+#~ msgstr ""
+#~ "Boas vindas do %(site_name)s!\n"
+#~ "\n"
+#~ "Você está recebendo essa mensagem por que o usuário %(user_display)s se "
+#~ "cadastrou com esse endereço de email.\n"
+#~ "\n"
+#~ "Pra confirmar que está tudo certo, vá até %(activate_url)s\n"
+
+#~ msgid "Por favor confirme seu endereço de email"
+#~ msgstr "Por favor confirme seu endereço de email"
+
+#~ msgid ""
+#~ "Hello from %(site_name)s!\n"
+#~ "\n"
+#~ "Você está recebendo essa mensagem porque você ou alguém solicitou uma nova "
+#~ "senha para a sua conta de usuário.\n"
+#~ "Se não foi você, pode ignorar essa mensagem. Clique no link abaixo para "
+#~ "refazer sua senha."
+#~ msgstr ""
+#~ "Saudações do %(site_name)s!\n"
+#~ "\n"
+#~ "Você está recebendo essa mensagem porque você ou alguém solicitou uma nova "
+#~ "senha para a sua conta de usuário.\n"
+#~ "Se não foi você, pode ignorar essa mensagem. Clique no link abaixo para "
+#~ "refazer sua senha."
+
+#~ msgid "Se você esqueceu, seu usuário é %(username)s."
+#~ msgstr "Se você esqueceu, seu usuário é %(username)s."
+
+#~ msgid "Pedido para gerar nova senha"
+#~ msgstr "Pedido para gerar nova senha"
+
+#, fuzzy
+#~ msgid "Only the owner and administrative staff can edit this stereotype."
+#~ msgstr "Apenas o autor e o administrador podem editar esta conversa."
+
+#~ msgid "Subscribe to rocket chat."
+#~ msgstr "Subscrever no rocketchat."
+
+#~ msgid "Request reports"
+#~ msgstr "Requisitar relatórios"
+
+#~ msgid "FAQ"
+#~ msgstr "Perguntas frequentes"
+
+#~ msgid "Default font"
+#~ msgstr "Fonte padrão"
+
+#~ msgid "Edit conversation: {conversation}"
+#~ msgstr "Editar conversa: {conversation}"
+
+#~ msgid "Enter"
+#~ msgstr "Entrar"
+
+#~ msgid "Personal"
+#~ msgstr "Pessoal"
+
+#~ msgid "Pending"
+#~ msgstr "Esperando"
+
+#~ msgid "username is empty"
+#~ msgstr "usuário está vazio"
+
+#~ msgid "username cannot have the \"@: character"
+#~ msgstr "usuário não pode conter o símbolo de @"
+
+#~ msgid "invalid username: {username}"
+#~ msgstr "usuário inválido: {username}"
+
+#~ msgid "anonymous user"
+#~ msgstr "usuário anônimo"
+
+#~ msgid "invalid username: %s"
+#~ msgstr "usuário inválido: %s"
+
+#~ msgid "cannot vote twice in the same comment"
+#~ msgstr "não pode votar duas vezes no mesmo comentário"
+
+#~ msgid "CPA Space"
+#~ msgstr "Espaço CPA"
+
+#~ msgid "See below the spaces you joined"
+#~ msgstr "Veja abaixo os espaços onde você se cadastrou"
+
+#~ msgid "Categories"
+#~ msgstr "Categorias"
+
+#~ msgid "Stereotypes votes"
+#~ msgstr "Votos do estereótipo"
+
+#~ msgid "CLUSTERS"
+#~ msgstr "CLUSTERS"
+
+#~ msgid "PENDING"
+#~ msgstr "PENDENTES"
+
+#~ msgid "STARTED"
+#~ msgstr "INICIADOS"
+
+#~ msgid "FINISHED"
+#~ msgstr "TERMINADOS"
+
+#~ msgid "FAILED"
+#~ msgstr "COM FALHA"
+
+#~ msgid "STUCK"
+#~ msgstr "AGARRADOS"
+
+#~ msgid "Type"
+#~ msgstr "Tipo"
+
+#~ msgid "Incorrect value"
+#~ msgstr "Valor incorreto"
+
+#~ msgid "A user is already registered with this e-mail address."
+#~ msgstr "Um usuário já registrou com esse endereço de email."
+
+#~ msgid "Incorrect input. access_token or code is required."
+#~ msgstr "Entrada incorreta. Requer token de acesso ou código."
+
+#~ msgid "View is not defined, pass it as a context variable"
+#~ msgstr "Visualização não definida, passe como uma variável de contexto"
+
+#~ msgid "Define "
+#~ msgstr "Definir "
+
+#~ msgid "category:"
+#~ msgstr "categoria:"
+
+#~ msgid "see more<br>categories"
+#~ msgstr "veja mais<br>categorias"
 
 #~ msgid "terms"
 #~ msgstr "termos de uso"

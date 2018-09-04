@@ -1,49 +1,75 @@
 /*
  UNSTYLED FORM ELEMENTS
  ======================================================================== */
+@import '../2_tools/index';
 
-$form-border-color: $color-gray !default;
+$form-border-color: $color-gray-dark !default;
 $form-element-color: $color-white !default;
 $form-element-color-text: $color-hint-text !default;
 $form-input-border-box: inset 0 1px 3px 0 rgba(0, 0, 0, 0.3);
 
-form {
-    label {
-        display: none;
-    }
-}
 
-form[show-labels] {
-    label {
-        display: block;
-    }
-}
-
-input,
+input[type=email],
+input[type=number],
+input[type=password],
+input[type=search],
+input[type=text],
+input[type=url],
+input[type=date],
+input:not([type]),
 textarea,
 label,
 select,
 .FormItem {
     box-sizing: border-box;
-    font-size: $font-size-h6;
+    font-size: 16px;
     max-width: $breakpoint-small;
     width: 85%;
 }
 
-input, textarea {
-    box-shadow: $form-input-border-box;
-}
-
-input,
+input[type=email],
+input[type=number],
+input[type=password],
+input[type=search],
+input[type=text],
+input[type=url],
+input[type=date],
+input:not([type]),
 textarea,
 select,
 .FormItem {
-    border-radius: $font-size-large;
+    border-radius: $form-item-border-radius;
     background: $form-element-color;
     border: 1px solid $form-border-color;
     color: $form-element-color-text;
     margin: $spacing-unit-tiny auto;
     padding: $spacing-unit-small ($spacing-unit-small $spacing-unit-tiny);
+}
+
+input[type=checkbox] {
+    -webkit-appearance: none;
+    background-color: #fafafa;
+    border: 1px solid $form-border-color;
+    box-shadow: $form-input-border-box;
+    padding: $spacing-unit-tiny + 1;
+    border-radius: 3px;
+    display: inline-block;
+    position: relative;
+
+    &:active, &:checked:active {
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    &:checked:after {
+        content: '\f111';
+        font-family: 'Font Awesome\ 5 Free';
+        font-size: $spacing-unit-tiny + 1;
+        font-weight: 900;
+        color: $check-box-color;
+        position: absolute;
+        top: calc(50% - 4px);
+        left: calc(50% - 4px);
+    }
 }
 
 textarea {
@@ -60,4 +86,18 @@ label {
 input[type=submit] {
     background: $color-action-default;
     width: inherit;
+}
+
+input:focus,
+textarea:focus,
+select:focus,
+button:focus {
+    outline: none;
+}
+
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background: $icon-arrow-down-blue white no-repeat calc(100% - 10px) !important;
+    background-size: 15px !important;
 }

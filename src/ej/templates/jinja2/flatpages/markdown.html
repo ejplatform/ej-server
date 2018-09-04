@@ -1,0 +1,10 @@
+{% extends 'base.jinja2' %}
+
+
+{% set content_title=flatpage.title %}
+
+{% block content %}
+  <div class="Container markdown">
+    {{ flatpage.content|markdown }}
+  </div>
+{% endblock %}

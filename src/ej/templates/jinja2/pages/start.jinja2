@@ -1,0 +1,13 @@
+{% extends 'base.jinja2' %}
+
+{% from 'components/home.jinja2' import how_it_works, start_now %}
+{% from 'ej_conversations/components/conversation-list.jinja2' import conversation_list with context %}
+
+
+{% block main %}
+    <div class="StartPage">
+        {{ conversation_list(conversations, javascript_enabled=javascript_enabled) }}
+        {{ how_it_works(how_it_works_fragment) }}
+        {{ start_now(start_now_fragment, user) }}
+    </div>
+{% endblock %}

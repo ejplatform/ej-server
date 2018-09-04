@@ -1,52 +1,18 @@
 /*
- COLORS
+ COLORS ROLES
  =========================================================================== */
 
-// Map color names to their actual HEX codes.
-// This defines a site-wide color palette.
-$color-black: #111 !default;
-$color-white: #fff !default;
-$color-gray: #999 !default;
-$color-gray-dark: #666 !default;
-$color-gray-light: #eee !default;
-
-$color-blue: rgba(48,192,211,1) !default;
-$color-blue-dark: rgba(4,32,73,1) !default;
-$color-blue-light: rgba(214,241,243,1) !default;
-$color-blue-nav: rgba(164,216,221,1) !default;
-
-$color-green: rgba(116,181,184,1) !default;
-$color-green-dark: rgb(34, 179, 92) !default;
-$color-green-light: rgb(189, 255, 206) !default;
-
-$color-magenta: rgba(255,62,114,1) !default;
-$color-magenta-dark: rgb(182, 42, 82) !default;
-$color-magenta-light: rgb(255, 172, 209) !default;
-
-$color-purple: rgb(109, 46, 167) !default;
-$color-purple-dark: rgba(18,48,102,1) !default;
-$color-purple-light: rgb(205, 164, 238) !default;
-
-$color-red: #f13c20 !default;
-$color-red-dark: #9c2715 !default;
-$color-red-light: #ffb1b9 !default;
-
-$color-yellow: #ffd333 !default;
-$color-yellow-dark: #decf36 !default;
-$color-yellow-light: #fffeaf !default;
-
-//
-// COLOR ROLES
-// -----------------------------------------------------------------------------
+@import '../0_constants/index';
 
 // Background and text colors
 $color-content: $color-white !default;
 $color-content-text: $color-blue-dark !default;
-$color-content-text-faded: $color-blue !default;
+$color-content-text-faded: $color-gray !default;
 
 // Color schemes
-// Buttons and highlighted elements. Strong highlight, usually applied to
-// smaller navigational elements and action buttons.
+// Color of the main elements in a page. Used, for instance, as the background
+// color of conversation cards and comment cards. May be applied to buttons and
+// highlighted elements.
 $color-primary: $color-blue !default;
 $color-primary-text: $color-white !default;
 
@@ -59,7 +25,7 @@ $color-accent-text: $color-white !default;
 
 // Discreetly highlighted content. We want some emphasis from the default content
 // background, but it should not be highlighted as strongly as primary content.
-$color-hint: $color-blue-light !default;
+$color-hint: $color-blue-nav!default;
 $color-hint-text: $color-content-text !default;
 
 // Stronger hint. Used in Footer component

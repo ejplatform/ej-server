@@ -1,28 +1,64 @@
 /*
  CONVERSATIONS
  ======================================================================== */
+@import '../2_tools/index';
 
 $conversation-button-size: $spacing-unit-small + $spacing-unit-tiny !default;
-$conversation-card-padding: $spacing-unit-small !default;
 $conversation-card-gutter: $spacing-unit !default;
 $conversation-card-border: 0 !default;
-$conversation-card-border-radius: $block-elements-border-radius !default;
+$conversation-card-border-radius: 50% !default;
 $conversation-card-color: $color-primary !default;
 $conversation-card-text-color: $color-white !default;
 $conversation-card-cover-height: 8 * $line-height !default;
-$conversation-card-secondary-color: $color-blue-light !default;
-$conversation-card-statistics-color: $color-blue-dark !default;
+$conversation-card-light: $color-blue-nav !default;
+$conversation-card-statistics-color: $color-blue-nav !default;
 $conversation-card-font-size-small: 12px !default;
 $conversation-card-button-color: $color-content-text !default;
 $conversation-card-button-color-text: $color-content !default;
 $conversation-card-border-arrow-size: $spacing-unit;
+$conversation-card-button-border-radius: 30px !default;
+$conversation-topic-display: none !default;
 
 .ConversationList {
     @extend .Container;
 
+    p {
+        padding: 0 10px;
+    }
+
     &-title {
-        @include headings($font-size-h2 $font-size-h4);
         text-align: center;
+        margin-top: 40px;
+
+        h1 {
+            font-size: $font-size-h2;
+            color: $color-magenta;
+        }
+
+        .topic {
+            display: $conversation-topic-display;
+        }
+    }
+
+    &-urls {
+        font-size: $conversation-card-font-size-small;
+        a, i {
+            color: $card-conversation-navigation-font-color;
+        }
+
+        i {
+            font-size: $conversation-card-font-size-small * 0.8;
+        }
+        .public {
+            float: left;
+            margin-left: $spacing-unit-tiny;
+        }
+
+        .my-conversations {
+            float: right;
+            margin-right: $spacing-unit-tiny;
+        }
+        margin-bottom: $spacing-unit-large;
     }
 
     &-categories {
@@ -66,6 +102,8 @@ $conversation-card-border-arrow-size: $spacing-unit;
         display: flex;
         flex-wrap: wrap;
         width: 100%;
+        justify-content: center;
+        padding-bottom: 20px;
 
         > * {
             margin: $conversation-card-gutter;
@@ -84,44 +122,97 @@ $conversation-card-border-arrow-size: $spacing-unit;
             }
         }
     }
+
+    &-link {
+        text-align: center;
+    }
+}
+
+.ConversationFooter {
+    background-color: #D4F7F5;
+    height: 180px;
+    width: 100vw;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+
+    p {
+        text-align: center;
+    }
+}
+
+.ConversationTags {
+    @include color($conversation-card-light, $conversation-card-color, $force: true);
+    font-weight: bold;
+    text-align: center;
+    padding: $spacing-unit / 2 0;
+    background-color: $conversation-top-background;
 }
 
 .ConversationCard {
+    @include color($card-conversation-middle-background, $conversation-card-text-color, $force: true);
     align-self: stretch;
     box-sizing: border-box;
     border: $conversation-card-border;
-    border-radius: $conversation-card-border-radius;
+    border-radius: $card-conversation-border-radius;
     flex-grow: 1;
     margin: 0;
+    margin-bottom: $spacing-unit;
     text-align: center;
     width: 100%;
+    max-width: 320px;
+    height: 320px;
+    overflow: hidden;
+    position: relative;
+    .ConversationTags {
+        background-color: $card-conversation-top-background;
+        color: $card-conversation-top-font-color;
+    }
 
     > * {
-        padding: $conversation-card-padding;
+        padding: $spacing-unit-small;
     }
 
     h1 {
         font-size: $font-size-h3;
+        font-family: $font-paragraph;
+        font-weight: 600;
         text-transform: none;
     }
 
+    &-container {
+        align-self: stretch;
+        text-align: center;
+        width: 100%;
+        max-width: 320px;
+        box-sizing: border-box;
+    }
+
+    &-moderation {
+        text-transform: uppercase;
+        display: block;
+        font-weight: bold;
+        color: $color-gray;
+        font-size: $conversation-card-font-size-small;
+        margin: $spacing-unit / 2 0;
+    }
+
     &-cover {
-        @include color($conversation-card-color, $conversation-card-text-color, $force: true);
-        border-radius: $conversation-card-border-radius;
         display: flex;
         flex-flow: column;
+        flex-grow: 1;
         margin: 0;
-        min-height: $conversation-card-cover-height;
         padding: 0 $spacing-unit;
         position: relative;
         z-index: 2;
+        overflow: hidden;
+        max-height: 86px;
 
         h1 {
-            flex-grow: 1;
             display: flex;
             flex-flow: column;
-            justify-content: space-around;
-            margin: $spacing-unit 0 0 0;
+            margin: 0;
             vertical-align: middle;
         }
 
@@ -139,17 +230,22 @@ $conversation-card-border-arrow-size: $spacing-unit;
         }
     }
 
-    &-actions {
-        background: $conversation-card-secondary-color;
-        border-radius: $conversation-card-border-radius;
-        padding-top: $conversation-card-border-radius * 2;
-        margin-top: $conversation-card-border-radius * -2;
+    &-cover + .ConversationCard-actions {
+        background-size: 30px;
+        background: $card-conversation-bottom-background;
+        margin-top: $spacing-unit;
+        bottom: 0;
+        position: absolute;
+        box-sizing: border-box;
+        width: 100%;
+    }
 
+    &-actions {
         .Button[primary] {
-            @include color($conversation-card-button-color, $conversation-card-button-color-text);
+            background: $card-conversation-button-background;
             font-size: $font-size-small;
-            padding-top: $button-vpadding + ($font-size - $font-size-small);
-            padding-bottom: $button-vpadding + ($font-size - $font-size-small);
+            padding-top: $button-vpadding * 2;
+            padding-bottom: $button-vpadding * 2;
             i {
                 margin-left: $spacing-unit-tiny;
             }
@@ -159,23 +255,20 @@ $conversation-card-border-arrow-size: $spacing-unit;
     &-statistics {
         color: $conversation-card-statistics-color;
         display: flex;
-        font-size: $conversation-card-font-size-small;
-        justify-content: space-between;
+        justify-content: center;
         padding: 0 $spacing-unit;
-        margin: $spacing-unit-tiny 0;
+        margin: $spacing-unit-tiny $spacing-unit;
+        font-weight: bold;
 
         li {
             list-style: none;
+            display: inline-block;
+            margin: 0 $spacing-unit / 2;
         }
     }
 
     @media only screen and (min-width: $breakpoint-small) {
-        max-width: 47%;
         margin: $spacing-unit-tiny;
-    }
-
-    @media only screen and (min-width: $breakpoint-large) {
-        width: 32%;
     }
 }
 
@@ -184,8 +277,9 @@ $conversation-card-border-arrow-size: $spacing-unit;
     max-width: $header-wrapper-max-width;
     padding: 0;
 
-    > * {
-        padding: $spacing-unit;
+    .up-bounds {
+        width: 100% !important;
+        height: auto !important;
     }
     u {
         margin: 0;
@@ -193,22 +287,97 @@ $conversation-card-border-arrow-size: $spacing-unit;
     li {
         margin: 0;
     }
+    .Container {
+        a {
+            text-transform: uppercase;
+            margin: $unit;
+            font-weight: bold;
+            display: block;
+        }
+    }
+    &-social {
+        padding: 0 $spacing-unit 0 $spacing-unit;
+        margin-top: $spacing-unit-small * -1;
+        form {
+            display: inline-block;
+            button {
+                i {
+                    color: $color-magenta;
+                }
+                background-color: transparent;
+                background-repeat: no-repeat;
+                border: none;
+                cursor: pointer;
+                overflow: hidden;
+                outline: none;
+                font-weight: bold;
+                margin-left: 0;
+            }
+        }
+        .share-button {
+            background: transparent no-repeat;
+            border: none;
+            cursor: pointer;
+            overflow: hidden;
+            outline: none;
+            font-weight: bold;
+            i {
+                color: $color-magenta;
+            }
+            float: right;
+        }
 
+    }
     &-banner {
-        background: $color-hint;
-        border-radius: 0 0 $block-elements-border-radius $block-elements-border-radius;
-        color: $color-hint-text;
+        background: $conversation-background;
+        border-radius: $conversation-bottom-border-radius;
+        color: $color-purple-dark;
         margin: 0;
-        padding-top: 0;
+        padding: $spacing-unit-tiny $spacing-unit-tiny $spacing-unit $spacing-unit-tiny;
+        .ConversationTags {
+            background-color: $conversation-top-background;
+            color: $conversation-tag-color;
+        }
 
         h1 {
             @extend .Container;
 
-            padding: $spacing-unit-large 0 $spacing-unit 0;
+            padding-top: $spacing-unit-tiny;
+            padding-bottom: $spacing-unit;
             text-align: center;
+            font-weight: 200 !important;
+            font-size: 26px !important;
+            font-family: $font-paragraph;
 
             @media only screen and (min-width: $breakpoint-large) {
                 padding: $spacing-unit-large 0;
+            }
+            color: $conversation-font-color;
+        }
+
+        .Conversation-edit {
+            text-align: center;
+
+            a, b {
+                color: $color-purple-dark;
+                background: transparent;
+                font-weight: bold;
+                text-transform: uppercase;
+                font-size: 12px;
+
+                &:hover {
+                    background: transparent;
+                    color: $color-purple-dark;
+                }
+
+                &:before {
+                    content: "\f044 ";
+                    font-family: 'Font Awesome\ 5 Free';
+                    display: inline-block;
+                    font-size: 16px;
+                    margin-right: 3px;
+                    font-weight: lighter;
+                }
             }
         }
     }
@@ -216,7 +385,7 @@ $conversation-card-border-arrow-size: $spacing-unit;
     &-arrow {
         border-left: $conversation-card-border-arrow-size solid transparent;
         border-right: $conversation-card-border-arrow-size solid transparent;
-        border-top: $conversation-card-border-arrow-size solid $color-hint;
+        border-top: $conversation-arrow-border;
         height: 0;
         margin: 0 auto;
         padding: 0;
@@ -228,11 +397,12 @@ $conversation-card-border-arrow-size: $spacing-unit;
     &-statisticsBottom {
         display: flex;
         font-size: $font-size-small;
-        font-weight: bold;
+        font-weight: normal;
         justify-content: space-between;
         margin: 0 auto;
         max-width: $content-wrapper-max-width - 2 * $spacing-unit-huge;
         padding: 0 $spacing-unit-small;
+        color: $conversation-statistics-color;
 
         li {
             list-style: none;
@@ -261,32 +431,47 @@ $conversation-card-border-arrow-size: $spacing-unit;
 
     &-header {
         text-align: center;
-        padding-top: 0;
+        padding: $spacing-unit-small;
 
         h1 {
-            font-size: $font-size-h3;
-            text-transform: uppercase;
-            margin-bottom: $spacing-unit-tiny;
+            font-family: 'Patua One', sans-serif !important;
+            font-size: 24px !important;
+            letter-spacing: 1px;
+            font-weight: 300 !important;
+            color: $conversation-info-title;
         }
         p {
             margin-top: $spacing-unit-tiny;
+            color: $conversation-info-content;
         }
     }
 }
 
 .Comment {
-    @include color('primary');
+    background-color: $conversation-comment-background-color;
+    color: $conversation-comment-title-color;
 
     box-sizing: border-box;
-    border-radius: $block-elements-border-radius;
+    border-radius: $conversation-comment-border-radius;
     font-size: $font-size-h3;
-    padding: $spacing-unit + $spacing-unit-small;
     margin: 0 auto;
     max-width: $page-content-width-max;
+    min-height: 250px !important;
+    width: 100% !important;
+    z-index: 3;
+    position: relative;
+    padding: $spacing-unit-small;
+
+    &-counter {
+        text-align: center;
+        p {
+            margin: 0;
+        }
+    }
 
     i.fa {
         background: $color-primary-text;
-        border: 2px solid $color-primary-text;
+        border: 2px solid #fff;
         border-radius: $spacing-unit-large;
         padding: $spacing-unit-tiny;
     }
@@ -308,7 +493,7 @@ $conversation-card-border-arrow-size: $spacing-unit;
             width: 100%;
 
             span {
-                font-size: $font-size-small;
+                font-size: $conversation-vote-font-size;
             }
 
             li {
@@ -317,20 +502,50 @@ $conversation-card-border-arrow-size: $spacing-unit;
                 flex-grow: 1;
 
                 i.fa {
-                    color: $color-primary;
-                    background: $color-primary-text;
-                    height: $conversation-button-size;
-                    width: $conversation-button-size;
+                    background: #fff;
+                    height: $conversation-vote-circle-size;
+                    width: $conversation-vote-circle-size;
+                    padding: $conversation-vote-circle-spacing;
+                    cursor: pointer;
                 }
+                &.voteAgree {
+                    &:active {
+                        color: $conversation-vote-agree-color;;
+                    }
+                    i.fa {
+                        color: $conversation-vote-agree-color;
+                        &:hover {
+                            background: $conversation-vote-agree-color;
+                            color: #fff;
+                        }
+                    }
 
-            }
+                }
+                &.voteSkip {
+                    &:active {
+                        color: $conversation-vote-skip-color;;
+                    }
+                    i.fa {
+                        color: $conversation-vote-skip-color;
+                        &:hover {
+                            background: $conversation-vote-skip-color;
+                            color: #fff;
+                        }
+                    }
 
-            li:first-child i.fa {
-                color: $color-role-ok;
-            }
-
-            li:last-child i.fa {
-                color: $color-role-error;
+                }
+                &.voteDisagree {
+                    &:active {
+                        color: $conversation-vote-disagree-color;;
+                    }
+                    i.fa {
+                        color: $conversation-vote-disagree-color;
+                        &:hover {
+                            background: $conversation-vote-disagree-color;
+                            color: #fff;
+                        }
+                    }
+                }
             }
         }
     }
@@ -340,25 +555,102 @@ $conversation-card-border-arrow-size: $spacing-unit;
         i.fa {
             color: $color-accent;
             margin-right: $spacing-unit-small;
+            background: #fff;
         }
     }
 }
 
 .CommentForm {
     text-align: center;
+    background: $conversation-comment-form-background-color;
+    margin-top: -60px;
+    border-radius: 0 0 56px 56px;
+    z-index: 2;
+    max-width: 682px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: $spacing-unit;
 
     h1 {
         font-size: $font-size-h3;
-        text-transform: uppercase;
         margin: $spacing-unit-tiny 0;
+        // color: $color-primary !important;
+        padding-top: 100px;
+        color: $conversation-comment-form-title-color;
     }
     p {
         margin: $spacing-unit-tiny 0;
+        color: $color-content-text;
     }
 
     textarea {
         display: block;
         min-height: 3 * $font-size;
+        outline: none;
+        border: 2px solid $color-primary;
+        background: transparent;
+        color: #333;
+        box-shadow: none;
+    }
+
+    &-fakeButton,
+    input[type=submit] {
+        border-radius: $conversation-comment-button-border-radius;
+        color: #fff;
+        background: $conversation-comment-button-background;
+        border: 0;
+        padding: $spacing-unit-small $spacing-unit;
+        font-size: 14px;
+        box-shadow: none;
+        text-transform: uppercase;
+        font-weight: bold;
+        margin-top: $spacing-unit-small;
+    }
+
+    .toast {
+        visibility: hidden;
+        background-color: $color-blue-light;
+        font-weight: bold;
+        text-align: center;
+        border-radius: 2px;
+        position: fixed;
+        z-index: 101;
+        width: 100vw;
+        left: 0;
+        bottom: $header-bottom-nav-height;
+        font-size: 17px;
+        > div {
+            padding: 40px;
+            h3, p {
+                color: $toast-font-color;
+            }
+        }
+    }
+
+    .toast.show {
+        visibility: visible;
+        -webkit-animation: fadein 1s, fadeout 1s 3s;
+        animation: fadein 1s, fadeout 1s 3s;
+    }
+
+    @keyframes fadein {
+        from {
+            bottom: 0;
+            opacity: 0;
+        }
+        to {
+            bottom: 70px;
+            opacity: 1;
+        }
+    }
+
+    @keyframes fadeout {
+        from {
+            opacity: 1;
+        }
+        to {
+            opacity: 0;
+        }
     }
 }
 
@@ -375,8 +667,8 @@ $conversation-card-border-arrow-size: $spacing-unit;
     vertical-align: middle;
     width: $conversation-button-size;
 
-    &--leftConversationSlider,
-    &--rightConversationSlider {
+    &-leftConversationSlider,
+    &-rightConversationSlider {
         margin: 0;
         position: absolute;
         top: ($conversation-card-cover-height + $conversation-button-size) / 2;
@@ -388,13 +680,325 @@ $conversation-card-border-arrow-size: $spacing-unit;
         }
     }
 
-    &--leftConversationSlider {
+    &-leftConversationSlider {
         left: $spacing-unit-tiny;
     }
 
-    &--rightConversationSlider {
+    &-rightConversationSlider {
         right: $spacing-unit-tiny;
     }
 }
 
+.Link-new {
+    text-align: center;
+    display: block;
+    width: 100%;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: bold;
+    box-shadow: $header-box-shadow-upper;
+    margin: 0;
+    padding: $spacing-unit-small 0;
 
+    a {
+        color: $color-black;
+    }
+
+    i {
+        color: $color-magenta;
+    }
+}
+
+.view-board {
+    text-align: center;
+    display: block;
+    width: 100%;
+    font-size: $font-size-tiny;
+    box-shadow: $header-box-shadow-upper;
+    margin: 0;
+    padding: $spacing-unit-small 0;
+
+    select {
+        width: 50%;
+        border: none;
+        font-weight: bold;
+        -webkit-appearance: none;
+        background: url($icon-arrow-down) no-repeat right;
+        background-size: 16px 16px;
+        padding: 0;
+        margin: 0 10px;
+    }
+}
+
+.Moderate {
+    .ConversationDetail-banner h1 {
+        font-family: "Raleway", sans-serif;
+        color: $color-purple-dark;
+    }
+
+    &-comments {
+        h1 {
+            text-align: center;
+            color: $color-magenta;
+        }
+
+        .Comment {
+            background: #fff;
+            color: $color-purple-dark;
+            font-family: "Raleway", sans-serif;
+            font-size: 16px;
+            border: 0;
+            border-radius: 0;
+            border-bottom: 1px solid $color-blue-light;
+            min-height: 0 !important;
+            padding: $unit;
+
+            p {
+                text-align: center;
+                font-size: 16px;
+                font-weight: 600;
+            }
+
+            &-metadata {
+                color: $color-blue-light;
+                font-size: 12px;
+                display: flex;
+                justify-content: space-between;
+            }
+        }
+    }
+
+    .ConversationComment-actions {
+        padding: 0;
+        display: flex;
+        justify-content: space-between;
+
+        li {
+            list-style: none;
+
+            &:before {
+                content: "\f00c";
+                font-family: 'Font Awesome\ 5 Free';
+                font-weight: 900;
+                display: inline-block;
+                color: $color-green-dark;
+                padding: 2px 4px;
+                font-size: 11px;
+                border: 2px solid $color-green-dark;
+                border-radius: 50%;
+            }
+        }
+
+        li + li:before {
+            content: "\f00d";
+            color: #9c2715;
+            border-color: #9c2715;
+            padding: 2px 6px;
+        }
+
+        li span {
+            display: none;
+        }
+
+        .Button {
+            border: 0;
+            border-radius: 0;
+            background: #fff;
+            font-weight: bold;
+            font-size: 12px;
+            color: $color-purple-dark;
+            box-shadow: none;
+            padding-left: 0;
+            outline: 0;
+        }
+    }
+
+    .Comment-rejection {
+        background: $color-blue-nav;
+        border-top: 1px solid $color-blue-light;
+        border-bottom: 1px solid $color-blue-light;
+        text-align: center;
+
+        p {
+            font-weight: lighter;
+            font-size: 14px;
+        }
+
+        textarea {
+            outline: 0;
+            border-style: solid;
+            box-shadow: inset 0 0 0 0 black;
+            border-color: $color-blue-light;
+        }
+
+        .Button {
+            box-shadow: none;
+            box-sizing: border-box;
+            width: 90%;
+            background: $color-pink;
+        }
+    }
+
+    .Conversation-edit-field {
+        @extend .Container;
+
+        outline: 0;
+        background-color: rgba(255, 255, 255, 0.5);
+        border: 0;
+        font-family: "Raleway", sans-serif;
+        color: $color-purple-dark;
+        padding: $unit;
+        text-align: center;
+        font-weight: 200 !important;
+        font-size: 26px !important;
+        box-shadow: none;
+        border: 1px solid $color-blue-light;
+        border-radius: $conversation-edit-radius;
+        resize: none;
+        overflow: hidden;
+        min-height: 50px;
+        max-height: 300px;
+        max-width: none;
+
+        &::placeholder {
+            color: $color-purple-dark;
+            opacity: 1;
+        }
+
+        @media only screen and (min-width: $breakpoint-large) {
+            padding: $spacing-unit-large 0;
+        }
+    }
+
+    .ConversationEdit-actions {
+        display: flex;
+        padding: $unit / 2 0;
+
+        span {
+            flex: 1;
+            text-align: center;
+
+            i {
+                border-radius: 50%;
+                border: $conversation-edit-action-cancel-border;
+                display: inline-block;
+                width: 16px;
+                height: 16px;
+                padding: 4px 2px 0 2px;
+                font-size: 11px;
+                color: $conversation-edit-action-cancel-font-color;
+                background: $conversation-edit-action-cancel-background;
+            }
+        }
+
+        input {
+            border: 0;
+            background: #fff;
+            padding: $unit 0;
+            box-shadow: none;
+            font-family: "Raleway", sans-serif;
+            font-size: 12px;
+            color: $color-purple-dark;
+            text-transform: uppercase;
+            font-weight: bold;
+            cursor: pointer;
+            width: auto;
+
+            &:before {
+                font-weight: lighter;
+            }
+        }
+
+        span + span i {
+            color: $conversation-edit-action-save-font-color;
+            border-color: $conversation-edit-action-save-border;
+            background: $conversation-edit-action-save-background;
+
+            &.create-conversation-icon {
+                color: $conversation-edit-save-color;
+                border-color: $color-pink;
+            }
+        }
+    }
+}
+
+.ConversationField {
+    display: flex;
+    justify-content: center;
+
+    i {
+        padding: 0 $unit * 2;
+        align-self: center;
+        color: $conversation-tag-color;
+    }
+
+    input, select {
+        border: 1px solid $color-blue-light;
+        border-radius: $conversation-edit-radius;
+        background-color: rgba(255, 255, 255, 0.5);
+        box-shadow: none;
+        outline: 0;
+        padding-top: 8px;
+        font-size: 12px;
+        color: $color-purple-dark;
+        flex-grow: 1;
+        margin-right: $unit;
+        max-width: none;
+
+        &::placeholder {
+            color: $color-purple-dark;
+            opacity: 1;
+        }
+    }
+
+    input + i, select + i {
+        color: $color-purple-dark;
+        font-weight: lighter;
+        display: none;
+    }
+}
+
+.ConversationEdit-attributes {
+    padding: $unit;
+
+    i {
+        color: $conversation-tag-color;
+        margin-right: $unit;
+    }
+
+    span {
+        color: $color-purple-dark;
+        opacity: 0.5;
+        font-size: 12px;
+    }
+
+    p {
+        text-align: left;
+    }
+}
+
+.ConversationEdit-promote {
+    padding: $unit;
+
+    input {
+        width: auto;
+        box-shadow: none;
+        border: 1px solid $color-purple-dark;
+        background: white;
+    }
+
+    label {
+        color: $color-purple-dark;
+        font-size: 14px;
+        font-weight: bold;
+        display: inline;
+    }
+}
+
+.Conversation-AddComment {
+    text-align: center;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 12px;
+}

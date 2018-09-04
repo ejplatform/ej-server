@@ -2,8 +2,10 @@
  UNPOLY EXTRA STYLING
  =========================================================================== */
 
+@import '../2_tools/index';
+
 .up-modal-dialog {
-    max-width: $breakpoint-large;
+    max-width: $breakpoint-large !important;
 }
 
 .up-modal-close {
