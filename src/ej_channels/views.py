@@ -1,11 +1,5 @@
 from rest_framework import viewsets
-from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
-from rest_framework.decorators import action
-from rest_framework.request import Request
-import json
-from django import forms
-from django.http import QueryDict
 
 from . import serializers
 from . import models
@@ -73,7 +67,6 @@ class ChannelViewSet(viewsets.ViewSet):
 
     def check_user_channels(self, request, pk):
         user = User.objects.get(id=pk)
-        profile = user.profile
         # Get all channels that user can be added
         channel_admin = models.Channel.objects.get(sort="admin")
         channel_mission = models.Channel.objects.get(sort="mission")
@@ -88,15 +81,15 @@ class ChannelViewSet(viewsets.ViewSet):
             new_trophy_channel = models.Channel.objects.create(name="trophy channel", sort="trophy", owner=user)
             new_trophy_channel.users.add(user)
             new_trophy_channel.save()
-        
+
         if(channel_selected <= 0):
             new_selected_channel = models.Channel.objects.create(name="selected channel", sort="selected", owner=user)
             new_selected_channel.users.add(user)
             new_selected_channel.save()
-        
+
         if(channel_press <= 0):
             new_press_channel = models.Channel.objects.create(name="press channel", sort="press", owner=user)
             new_press_channel.users.add(user)
             new_press_channel.save()
-            
+
         return Response({"Canais do usuário atualizados"})

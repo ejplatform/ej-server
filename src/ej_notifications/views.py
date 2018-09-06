@@ -1,17 +1,12 @@
 from rest_framework import viewsets
-from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
-from rest_framework.decorators import action
-from rest_framework.request import Request
-import json
-from django import forms
-from django.http import QueryDict
 
 from . import serializers
 from . import models
 from ej_users.models import User
 from ej_channels.models import Channel
 from ej_messages.models import Message
+
 
 class NotificationViewSet(viewsets.ViewSet):
 
@@ -34,7 +29,7 @@ class NotificationViewSet(viewsets.ViewSet):
         notification.save()
         serializer = serializers.NotificationSerializer(notification)
         return Response(serializer.data)
-    
+
     def update_read(self, request):
         data = request.data
         notification = models.Notification.objects.get(id=data["notification_id"])
@@ -53,7 +48,7 @@ class NotificationViewSet(viewsets.ViewSet):
 
         serializer = serializers.NotificationSerializer(user_notifications, many=True)
         return Response(serializer.data)
-    
+
     def unread(self, request, pk):
         user = User.objects.get(id=pk)
         notifications = models.Notification.objects.filter(receiver=user, read=False)

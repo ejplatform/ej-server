@@ -1,16 +1,10 @@
 from rest_framework import viewsets
-from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
-from rest_framework.decorators import action
-from rest_framework.request import Request
-import json
-from django import forms
-from django.http import QueryDict
 
 from . import serializers
 from . import models
-from ej_users.models import User
 from ej_channels.models import Channel
+
 
 class MessageViewSet(viewsets.ViewSet):
 
