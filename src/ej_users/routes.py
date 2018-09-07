@@ -30,7 +30,7 @@ def register(request):
     form = forms.RegistrationForm.bind(request)
     next = request.GET.get('next', '/')
 
-    if request.is_valid_post():
+    if form.is_valid_post():
         data = form.cleaned_data
         name, email, password = data['name'], data['email'], data['password']
 

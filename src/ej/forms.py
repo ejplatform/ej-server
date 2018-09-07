@@ -7,6 +7,8 @@ class RequestForm(Form):
     Form with additional functionality.
     """
 
+    http_method = None
+
     @classmethod
     def bind(cls, request, *args, **kwargs):
         """
@@ -14,9 +16,11 @@ class RequestForm(Form):
         positional and keyword argument is passed to the function as-is.
         """
         if request.method == 'POST':
-            return cls(request.POST, *args, **kwargs)
+            form = cls(request.POST, *args, **kwargs)
         else:
-            return cls(*args, **kwargs)
+            form = cls(*args, **kwargs)
+        form.http_method = request.method
+        return form
 
     def __init__(self, *args, **kwargs):
         if args and isinstance(args[0], HttpRequest):
@@ -29,10 +33,10 @@ class RequestForm(Form):
         """
         Checks if data was submitted via POST and is valid.
         """
-        if not hasattr(self, 'request'):
+        if self.http_method is None:
             msg = 'must be initialized with a request to use this function'
             raise RuntimeError(msg)
-        if self.request.method == 'POST':
+        if self.http_method == 'POST':
             return self.is_valid()
         else:
             return False
