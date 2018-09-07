@@ -15,6 +15,7 @@ def BoardFallbackMiddleware(get_response):  # noqa: N802
         if response.status_code != 404:
             return response
 
+        # noinspection PyBroadException
         try:
             slug = request.path.strip('/')
             if '/' in slug:

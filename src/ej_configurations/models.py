@@ -1,11 +1,11 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from hyperpython.components import fa_icon
 from markdown import markdown
 
 from boogie.rest import rest_api
 from boogie.fields import EnumField, Enum
 from hyperpython import a, div, Text
-from hyperpython.components import icon
 
 from ej_conversations.validators import validate_color
 from .icons import default_icon_name
@@ -78,7 +78,7 @@ class SocialMediaIcon(models.Model):
         >>> print(icon.icon_tag(classes=['header-icon']))       # doctest: +SKIP
         <i class="fa fa-icon header-icon"></i>
         """
-        return icon(self.icon_name, class_=classes)
+        return fa_icon(self.icon_name, class_=classes)
 
     def link_tag(self, classes=(), icon_classes=()):
         """

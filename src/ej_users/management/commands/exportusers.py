@@ -11,5 +11,5 @@ class Command(BaseCommand):
         with open('users.csv', 'w') as csv:
             csv.write('id, name, email, last_login,\n')
             for user in User.objects.all():
-                d = '{}, {}, {}, {}, {},\n'.format(user.id, user.name, user.email, user.last_login)
-                csv.write(d)
+                line = ', '.join([user.id, user.name, user.email, user.last_login])
+                csv.write(line + '\n')

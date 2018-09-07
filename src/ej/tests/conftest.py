@@ -27,11 +27,12 @@ def make_fixture(recipe, name):
     def fixture_function_mk(db):
         return recipe.make
 
-    ns = {}
-    ns['fixture_' + name] = fixture_function
-    ns['fixture_' + name + '_db'] = fixture_function_db
-    ns['fixture_' + name + '_recipe'] = fixture_function_rec
-    ns['fixture_mk_' + name] = fixture_function_mk
+    ns = {
+        'fixture_' + name: fixture_function,
+        'fixture_' + name + '_db': fixture_function_db,
+        'fixture_' + name + '_recipe': fixture_function_rec,
+        'fixture_mk_' + name: fixture_function_mk
+    }
     globals().update(ns)
     __all__.extend(ns)
 
