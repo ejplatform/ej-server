@@ -1,6 +1,8 @@
 import logging
+import warnings
 
 from django.contrib.staticfiles.storage import staticfiles_storage
+from django.urls import reverse
 from django.utils.translation import ugettext_lazy
 
 from hyperpython import a, i, meta
@@ -25,6 +27,14 @@ def link(value, href='#', target='.Page-mainContainer .Header-topIcon',
          action='target', instant=True, button=False, transition='cross-fade',
          preload=False, scroll=False, prefetch=False, primary=False, args=None,
          **kwargs):
+    if href.startswith('/'):
+        warnings.warn(
+            'Do not use absolute urls in the link function (%s).'
+            'Prefer using view function names such as auth:login instead of '
+            '/login/' % href)
+    else:
+        href = reverse(href)
+
     kwargs = {
         'href': href,
         'primary': primary,
