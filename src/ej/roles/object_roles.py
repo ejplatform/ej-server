@@ -1,12 +1,12 @@
 import uuid
 
 from django.db.models import QuerySet
-from hyperpython import render, div, h2, span
+from hyperpython import html, div, h2, span
 from hyperpython.components import fa_icon, html_list
 
 
-@render.register(QuerySet, role='collapsible-list')
-@render.register(list, role='collapsible-list')
+@html.register(QuerySet, role='collapsible-list')
+@html.register(list, role='collapsible-list')
 def render_collapsible(lst, item_role='collapsible-item', title=None, expanded=False, **kwargs):
     """
     Renders a queryset or list of objects
@@ -28,7 +28,7 @@ def render_collapsible(lst, item_role='collapsible-item', title=None, expanded=F
         else:
             raise TypeError('must provide an explicit title!')
 
-    data = [render(x, item_role, **kwargs) for x in lst]
+    data = [html(x, item_role, **kwargs) for x in lst]
     random_id = str(uuid.uuid4())
     display = 'block' if expanded else 'none'
 

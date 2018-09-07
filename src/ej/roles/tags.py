@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.utils.translation import ugettext_lazy
 
 from hyperpython import a, i, meta
-from hyperpython import h, render
+from hyperpython import h, html
 from hyperpython.components import html_table, html_list, html_map, Head as BaseHead
 
 static = staticfiles_storage.url
@@ -107,6 +107,6 @@ class Head(BaseHead):
         ]
 
 
-@render.register(lazy_string_class)
+@html.register(lazy_string_class)
 def _render_lazy_string(st, **kwargs):
-    return render(str(st))
+    return html(str(st))
