@@ -1,7 +1,7 @@
 import uuid
 
-from django.db.models import QuerySet
-from hyperpython import html, div, h2, span
+from django.db.models import QuerySet, Model
+from hyperpython import html, div, h2, span, Text
 from hyperpython.components import fa_icon, html_list
 
 
@@ -39,3 +39,8 @@ def render_collapsible(lst, item_role='collapsible-item', title=None, expanded=F
         ),
         html_list(data, style=f'display: {display}', id=random_id),
     ]
+
+
+@html.register(Model)
+def render_model(obj, role=None):
+    return Text(str(obj))

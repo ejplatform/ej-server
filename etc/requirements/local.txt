@@ -77,4 +77,4 @@ django-debug-toolbar ~= 1.8
 django-extensions >= 1.9.0
 
 # Html
-hyperpython ~= 1.0.0
+hyperpython ~= 1.0.1

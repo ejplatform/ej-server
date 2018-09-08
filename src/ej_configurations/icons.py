@@ -9,15 +9,15 @@ def default_icon_name(social):
 
 
 SOCIAL_ICONS = {
-    **{net: f'fab fa-{net}' for net in (
+    **{net: net for net in (
         'bitbucket facebook github instagram medium pinterest telegram '
         'tumblr twitter whatsapp'.split()
     )},
     **{
-        'google plus': 'fab fa-google-plus-g',
-        'google+': 'fab fa-google-plus-g',
-        'reddit': 'fab fa-redit-alien',
-        'stack overflow': 'fab fa-stackoverflow'
+        'google plus': 'google-plus-g',
+        'google+': 'google-plus-g',
+        'reddit': 'redit-alien',
+        'stack overflow': 'stackoverflow'
     }
 }
 LIB_ICONS = {
