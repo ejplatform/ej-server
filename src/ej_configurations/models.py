@@ -32,7 +32,8 @@ class SocialMediaIcon(models.Model):
     icon_name = models.CharField(
         _('Icon name'),
         max_length=50,
-        help_text=_('Icon name in font-awesome'),
+        help_text=_('Icon name in font-awesome. Use short version like '
+                    '"google", "facebook-f", etc.'),
         validators=[validate_icon_name],
     )
     index = models.PositiveSmallIntegerField(
