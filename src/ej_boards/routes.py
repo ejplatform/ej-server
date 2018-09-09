@@ -22,6 +22,7 @@ urlpatterns = Router(
         'board': Board,
         'conversation': Conversation,
     },
+    object='conversation',
     lookup_field='slug',
     lookup_type='slug',
 )
@@ -39,7 +40,6 @@ def list(request):
 @urlpatterns.route('profile/boards/add/')
 def create(request):
     user = request.user
-
     if not user.has_perm('ej_boards.can_add_board'):
         raise Http404
 
@@ -61,30 +61,25 @@ def create(request):
     }
 
 
-@urlpatterns.route('profile/boards/<model:board>/edit/')
+#
+# Conversation and boards management
+#
+@urlpatterns.route('<model:board>/edit/')
 def edit(request, board):
-    user = request.user
-    if user != board.owner:
+    if request.user != board.owner:
         raise Http404
-    form_class = BoardForm
     if request.method == 'POST':
-        form = form_class(
-            instance=board,
-            data=request.POST
-        )
+        form = BoardForm(request.POST, instance=board)
         if form.is_valid():
             form.instance.save()
             return redirect(board.get_absolute_url())
     else:
-        form = form_class(instance=board)
+        form = BoardForm(instance=board)
     return {
         'form': form,
     }
 
 
-#
-# Conversation management
-#
 @urlpatterns.route('<model:board>/conversations/')
 def conversation_list(request, board):
     user = request.user

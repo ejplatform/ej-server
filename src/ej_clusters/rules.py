@@ -74,7 +74,9 @@ def can_manage_stereotypes(user, conversation):
 
     * User can edit conversation
     """
-    return user.has_perm('ej.can_edit_conversation', conversation)
+    can_edit = user.has_perm('ej.can_edit_conversation', conversation)
+    print(user, conversation, conversation.author, can_edit)
+    return can_edit
 
 
 #

@@ -13,7 +13,6 @@ from .models import Stereotype, Cluster, StereotypeVote, Clusterization
 app_name = 'ej_cluster'
 urlpatterns = Router(
     template=['ej_clusters/{name}.jinja2', 'generic.jinja2'],
-    perms=['ej.can_edit_conversation'],
     object='conversation',
     login=True,
     models={
@@ -29,7 +28,8 @@ urlpatterns = Router(
 #
 # Cluster info
 #
-@urlpatterns.route('conversations/<model:conversation>/clusters/')
+@urlpatterns.route('conversations/<model:conversation>/clusters/',
+                   perms=['ej.can_edit_conversation'])
 def index(conversation):
     clusters = proxy_seq(
         conversation.clusters.all(),
@@ -42,7 +42,8 @@ def index(conversation):
     }
 
 
-@urlpatterns.route('conversations/<model:conversation>/clusters/<model:cluster>/')
+@urlpatterns.route('conversations/<model:conversation>/clusters/<model:cluster>/',
+                   perms=['ej.can_edit_conversation'])
 def detail(conversation, cluster):
     return {
         'conversation': conversation,
@@ -50,7 +51,8 @@ def detail(conversation, cluster):
     }
 
 
-@urlpatterns.route('conversations/<model:conversation>/clusterize/')
+@urlpatterns.route('conversations/<model:conversation>/clusterize/',
+                   perms=['ej.can_edit_conversation'])
 def clusterize(conversation):
     clusterization = conversation.clusterization
     clusterization.force_update()
