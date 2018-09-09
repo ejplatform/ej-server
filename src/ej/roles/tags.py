@@ -26,14 +26,19 @@ __all__ = [
 def link(value, href='#', target='.Page-mainContainer .Header-topIcon',
          action='target', instant=True, button=False, transition='cross-fade',
          preload=False, scroll=False, prefetch=False, primary=False, args=None,
+         query=None, url_args=None,
          **kwargs):
     if href.startswith('/'):
+        # raise ValueError(href)
         warnings.warn(
             'Do not use absolute urls in the link function (%s).'
             'Prefer using view function names such as auth:login instead of '
             '/login/' % href)
     else:
-        href = reverse(href)
+        href = reverse(href, kwargs=url_args)
+    if query is not None:
+        query = '&'.join(f'{k}={v}' for k, v in query.items())
+        href = f'{href}?{query}'
 
     kwargs = {
         'href': href,

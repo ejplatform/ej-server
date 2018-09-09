@@ -47,9 +47,9 @@
     <div class="StartNow">
         {{ fragment.html() }}
         {% if user.id %}
-            <p>{{ action_button(_('Start now!'), '/conversations/') }}</p>
+            <p>{{ action_button(_('Start now!'), 'conversation:list') }}</p>
         {% else %}
-            <p>{{ action_button(_('Start now!'), '/login/') }}</p>
+            <p>{{ action_button(_('Start now!'), 'auth:login') }}</p>
         {% endif %}
     </div>
 {% endmacro %}

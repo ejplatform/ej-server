@@ -19,7 +19,7 @@
                         target='.Profile-tabs',
                         transition=None,
                         class_='Profile-tabActive' if which_tab=='profile' else []) }}
-                {{ link(_('Contributions'), '/profile/?info=contributions',
+                {{ link(_('Contributions'), 'profile:detail', query={'info': 'contributions'},
                         target='.Profile-tabs',
                         transition=None,
                         class_='Profile-tabActive' if which_tab=='contributions' else []) }}
