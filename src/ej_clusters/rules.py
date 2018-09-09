@@ -8,13 +8,16 @@ from . import models
 log = logging.getLogger('ej')
 
 
-@rules.register_rule('ej_clusters.conversation_has_sufficient_data')
-def conversation_has_sufficient_data(conversation):
+#
+# Conversation permissions
+#
+@rules.register_rule('ej.conversation_can_start_clusterization')
+def conversation_can_start_clusterization(conversation):
     """
     Check if conversation has sufficient data to start clusterization.
 
     * Has at least 5 comments with at least 5 votes.
-    * Has at least 2 clusters with at least 1 registered stereotype.
+    * Has at least 2 clusters with at least 2 registered stereotypes.
     """
     filled_comments = (
         conversation.comments
@@ -25,14 +28,14 @@ def conversation_has_sufficient_data(conversation):
     filled_clusters = (
         models.get_clusterization(conversation).clusters
             .annotate(count=Count('stereotypes'))
-            .filter(count__gte=1)
+            .filter(count__gte=2)
             .count()
     )
     return filled_comments >= 5 and filled_clusters >= 2
 
 
-@rules.register_rule('ej_clusters.must_update_clusters')
-def must_update_clusters(conversation):
+@rules.register_rule('ej.conversation_must_update_clusters')
+def conversation_must_update_clusters(conversation):
     """
     Check if it requires a full re-clusterization.
 
@@ -46,7 +49,7 @@ def must_update_clusters(conversation):
     )
 
 
-@rules.register_perm('ej_clusters.can_be_clusterized')
+@rules.register_perm('ej.can_be_clusterized')
 def can_be_clusterized(user, conversation):
     """
     Check if user can be clusterized in conversation.
@@ -59,6 +62,19 @@ def can_be_clusterized(user, conversation):
     else:
         log.info(f'{user} only has {num_votes} and won\'t be clusterized')
         return False
+
+
+#
+# Stereotypes
+#
+@rules.register_perm('ej.can_manage_stereotypes')
+def can_manage_stereotypes(user, conversation):
+    """
+    Check if user can manage stereotypes in conversation.
+
+    * User can edit conversation
+    """
+    return user.has_perm('ej.can_edit_conversation', conversation)
 
 
 #
