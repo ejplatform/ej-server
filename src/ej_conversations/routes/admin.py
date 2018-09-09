@@ -25,6 +25,9 @@ def create(request):
 @urlpatterns.route(conversation_url + 'edit/',
                    perms=['ej.can_edit_conversation'])
 def edit(request, conversation):
+    if not conversation.is_promoted:
+        raise Http404
+
     comments = []
     board = None
     if request.method == 'POST':
@@ -52,9 +55,9 @@ def edit(request, conversation):
     }
 
 
-@urlpatterns.route(conversation_url + 'moderate/')
+@urlpatterns.route(conversation_url + 'moderate/', perms=['ej.can_moderate_conversation'])
 def moderate(request, conversation):
-    if not request.user.has_perm('ej.can_moderate_conversation', conversation):
+    if not conversation.is_promoted:
         raise Http404
 
     comments = []
