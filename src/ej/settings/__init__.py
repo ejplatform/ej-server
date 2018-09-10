@@ -5,6 +5,7 @@ from .celery import CeleryConf
 from .constance import ConstanceConf
 from .log import LoggingConf
 from .middleware import MiddlewareConf
+from .notifications import NotificationsConf
 from .options import EjOptions
 from .paths import PathsConf
 from .security import SecurityConf
@@ -17,6 +18,7 @@ log = logging.getLogger('ej')
 class Conf(ThemesConf,
            ConstanceConf,
            MiddlewareConf,
+           NotificationsConf,
            CeleryConf,
            SecurityConf,
            LoggingConf,

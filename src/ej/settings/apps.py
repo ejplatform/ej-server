@@ -9,6 +9,9 @@ class InstalledAppsConf(Base, EjOptions):
         'ej_reports',
         'ej_clusters',
 
+        # Notifications
+        'ej_notifications',
+
         # Conversations
         'ej_boards',
         'ej_conversations',
@@ -40,6 +43,7 @@ class InstalledAppsConf(Base, EjOptions):
         'corsheaders',
         'constance',
         'constance.backends.database',
+        'push_notifications',
     ]
 
     def get_django_contrib_apps(self):

@@ -6,6 +6,9 @@ from django.contrib.auth import get_user_model
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _, ugettext as __
+from django.db.models.signals import post_save
+from django.db.models import Q
+from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
 import datetime
 
@@ -13,6 +16,7 @@ from boogie.fields import EnumField
 from boogie.rest import rest_api
 from sidekick import delegate_to
 from .choices import Race, Gender
+from ej_notifications.models import Channel, Purpose
 
 User = get_user_model()
 
@@ -188,4 +192,41 @@ def get_profile(user):
         return Profile.objects.create(user=user)
 
 
-User.get_profile = get_profile
+@rest_api(['id', 'conversation_notifications', 'admin_notifications', 'trophy_notifications',
+          'approved_notifications', 'disapproved_notifications', 'share_data'])
+class Setting(models.Model):
+    profile = models.OneToOneField(Profile, on_delete=models.CASCADE)
+    conversation_notifications = models.BooleanField(default=True)
+    admin_notifications = models.BooleanField(default=True)
+    trophy_notifications = models.BooleanField(default=True)
+    approved_notifications = models.BooleanField(default=True)
+    disapproved_notifications = models.BooleanField(default=True)
+    share_data = models.BooleanField(default=True)
+
+
+@receiver(post_save, sender=Profile)
+def ensure_settings_created(sender, **kwargs):
+    instance = kwargs.get('instance')
+    user_id = instance.user.id
+    Setting.objects.get_or_create(profile=instance, owner_id=user_id)
+
+
+@receiver(post_save, sender=Profile)
+def insert_user_on_general_channels(sender, created, **kwargs):
+    if created:
+        instance = kwargs.get('instance')
+        user_id = instance.user.id
+        user = User.objects.get(id=user_id)
+        channels = Channel.objects.filter(Q(purpose=Purpose.GENERAL) | Q(purpose=Purpose.ADMIN))
+        for channel in channels:
+            channel.users.add(user)
+            channel.save()
+
+
+@receiver(post_save, sender=Profile)
+def create_user_trophy_channel(sender, instance, created, **kwargs):
+    if created:
+        user = instance.user
+        channel = Channel.objects.create(name=Purpose.TROPHIES, purpose=Purpose.TROPHIES, owner=user)
+        channel.users.add(user)
+        channel.save()
