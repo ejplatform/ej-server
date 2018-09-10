@@ -412,6 +412,24 @@ def configure(ctx, silent=False):
         db_fake(ctx)
 
 
+@task
+def branch(ctx, name, issue=None, base='develop'):
+    """
+    Creates a branch, push it and opens a pull request.
+    """
+    branch_name = format_branch_name(name, issue)
+    pull_request_name = f'WIP: {branch_name}'
+    pull_request_template = 'docs/PULL_REQUEST_TEMPLATE.md'
+
+    create_branch = f'git checkout -b {branch_name}'
+    push_branch = f'git push origin {branch_name}'
+    create_pull_resquest = f'hub pull-request -m {pull_request_name} -F {pull_request_template} -b {base}'
+
+    ctx.run(create_branch)
+    ctx.run(push_branch)
+    ctx.run(create_pull_resquest)
+
+
 #
 # Useful docker entry points
 #
@@ -553,3 +571,10 @@ def set_theme(theme):
 
     os.environ['EJ_THEME'] = theme or 'default'
     return theme, root
+
+def format_branch_name(name, issue=None):
+    branch_name = name.lower().replace(' ','-')
+    if (issue):
+        branch_name = f'#{issue}-' + branch_name
+    
+    return branch_name
