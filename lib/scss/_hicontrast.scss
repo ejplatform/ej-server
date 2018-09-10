@@ -1,20 +1,17 @@
 $dark-blue-hicontrast-color: #072A49;
 $light-blue-hicontrast-color: #30BEC0;
-
 .hicontrast {
- 
     // Comment list and comment page
     .Page-content {
-        h1, label{
+        h1,
+        label {
             color: $dark-blue-hicontrast-color !important;
         }
-
         .Button {
             background-color: $dark-blue-hicontrast-color !important;
             color: white;
         }
     }
-
     .ConversationCard {
         background-color: $dark-blue-hicontrast-color !important;
         &-actions {
@@ -28,18 +25,16 @@ $light-blue-hicontrast-color: #30BEC0;
             color: $dark-blue-hicontrast-color !important;
         }
     }
-
     .ConversationDetail {
         h1 {
-            color: $dark-blue-hicontrast-color !important; 
+            color: $dark-blue-hicontrast-color !important;
         }
         p {
-            color: $dark-blue-hicontrast-color !important; 
+            color: $dark-blue-hicontrast-color !important;
         }
-
         .CommentForm {
             h1 {
-                color: $dark-blue-hicontrast-color !important; 
+                color: $dark-blue-hicontrast-color !important;
             }
         }
         .ConversationTags {
@@ -49,14 +44,12 @@ $light-blue-hicontrast-color: #30BEC0;
             color: $dark-blue-hicontrast-color !important;
         }
     }
-
     .Comment {
         background-color: $dark-blue-hicontrast-color !important;
         p {
             color: white !important;
         }
     }
-
     .CommentForm {
         textarea {
             border-color: $dark-blue-hicontrast-color !important;
@@ -65,26 +58,22 @@ $light-blue-hicontrast-color: #30BEC0;
             background-color: $dark-blue-hicontrast-color !important;
         }
     }
-
     // Profile page
     .Profile {
         span {
             color: $dark-blue-hicontrast-color !important;
         }
-    
-
         &-info {
             dt {
                 color: $dark-blue-hicontrast-color !important;
                 font-weight: bold !important;
             }
-
             dd {
                 color: black !important;
             }
-            li{
+            li {
                 span {
-                    color: $dark-blue-hicontrast-color !important; 
+                    color: $dark-blue-hicontrast-color !important;
                 }
             }
             button {
@@ -94,8 +83,6 @@ $light-blue-hicontrast-color: #30BEC0;
                 background-color: $dark-blue-hicontrast-color !important;
             }
         }
-    
-
         &-actions {
             button {
                 background-color: $dark-blue-hicontrast-color !important;
@@ -103,7 +90,6 @@ $light-blue-hicontrast-color: #30BEC0;
             }
         }
     }
-
     //login page
     .Login {
         h1 {
@@ -112,11 +98,11 @@ $light-blue-hicontrast-color: #30BEC0;
         input {
             background-color: $dark-blue-hicontrast-color !important;
             color: white;
+            font-weight: bolder;
         }
         a {
             background-color: $dark-blue-hicontrast-color !important;
         }
-
         &-password {
             a {
                 background-color: transparent !important;
@@ -124,32 +110,26 @@ $light-blue-hicontrast-color: #30BEC0;
             }
         }
     }
-
-
     //navigation sidebar
     .NavMenu {
         background-color: $dark-blue-hicontrast-color !important;
     }
-
     //common sections
     .HomeBanner {
         a {
             background-color: $dark-blue-hicontrast-color !important;
         }
     }
-    
     .StartNow {
         a {
             background-color: $dark-blue-hicontrast-color !important;
         }
     }
-
     .HowItWorks {
         h1 {
             color: $dark-blue-hicontrast-color !important;
         }
     }
-
     .ReactComponent {
         h1 {
             color: $dark-blue-hicontrast-color !important;
