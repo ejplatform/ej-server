@@ -2,10 +2,10 @@ from django.db.models import Model
 from django.http import Http404
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
-
-from boogie.router import Router
 from hyperpython import html, a, span, div, h1
 from hyperpython.components import html_list, html_map
+
+from boogie.router import Router
 from .utils import register_queryset
 
 urlpatterns = Router(
@@ -25,7 +25,7 @@ def role_index():
         classes.add(cls)
         name = cls.__name__
         href = reverse('role-model', kwargs={'model': name.lower()})
-        data.append((name, span([a(name, href=href), ': ' + cls.__doc__])))
+        data.append((name, span([a(name, href=href), ': ' + get_doc(cls)])))
 
     # Now we collect the queryset renderers
     classes = set()
@@ -35,7 +35,7 @@ def role_index():
         href = reverse('role-model-queryset', kwargs={'model': name.lower()})
         data.append([
             name + ' (queryset)',
-            span([a(name, href=href), ': ' + cls.__doc__]),
+            span([a(name, href=href), ': ' + get_doc(cls)]),
         ])
 
     return {'data': html_map(data)}
@@ -131,3 +131,13 @@ def get_roles(cls):
         return roles
     else:
         raise Http404
+
+
+def get_doc(x):
+    """
+    Return the docstring for the given object.
+    """
+    try:
+        return x.__doc__ or ''
+    except AttributeError:
+        return type(x).__doc__ or ''
