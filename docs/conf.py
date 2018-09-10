@@ -122,7 +122,9 @@ html_theme = 'alabaster'
 html_static_path = ['_static']
 
 html_context = {
-    'css_files': ['http://localhost:8000/static/css/main.css'],
+    'css_files': ['http://localhost:8000/static/css/main.css',
+                  'http://localhost:8000/static/css/fontawesome-all.min.css',
+                  'http://localhost:8000/static/js/jquery-ui/jquery-ui.min.css'],
 }
 
 # If not '', a 'Last updated on:' timestamp is inserted at every page bottom,
