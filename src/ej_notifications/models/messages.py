@@ -54,8 +54,8 @@ def send_conversation_fcm_message(sender, instance, created, **kwargs):
         channel_id = instance.channel.id
         channel = Channel.objects.get(id=channel_id)
         users_to_send = []
-        url = "https://localhost:9000/" + str(instance.target) + "?notification=true"
-        if "conversation" in channel.purpose:
+        url = "https://localhost:8000/profile/" + str(instance.target) + "?notification=true"
+        if channel.purpose:
             for user in channel.users.all():
 
                 setting = Setting.objects.get(owner_id=user.id)

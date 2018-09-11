@@ -30,7 +30,7 @@ class Channel(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name="channel_owner")
     slug = AutoSlugField(
         unique=True,
-        populate_from='title',
+        populate_from='name',
     )
 
     class Meta:
