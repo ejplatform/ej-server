@@ -30,6 +30,7 @@ def silence_exceptions(func):
     Log errors instead of proagating exceptions.
     """
 
+    # noinspection PyBroadException
     def wrapped(*args, **kwargs):
         try:
             return func(*args, **kwargs)

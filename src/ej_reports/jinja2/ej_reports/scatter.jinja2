@@ -42,7 +42,7 @@ if (option && typeof option === "object") {
  myChart.setOption(option, true);
 }
 $(window).on('resize', function(){
-    if(myChart != null && myChart != undefined){
+    if(myChart !== null && myChart !== undefined){
         myChart.resize();
     }
 });

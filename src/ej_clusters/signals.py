@@ -22,7 +22,7 @@ def on_user_vote(sender, instance, created, **kwargs):
 
         if comment.votes.count() == 5:
             clusterization.unprocessed_comments += 1
-        if vote.author.has_perm('ej_clusters.can_be_clusterized', conversation):
+        if vote.author.has_perm('ej.can_be_clusterized', conversation):
             clusterization.unprocessed_votes += 1
         clusterization.update()
 

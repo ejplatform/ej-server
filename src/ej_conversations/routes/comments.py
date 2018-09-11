@@ -1,3 +1,4 @@
+from django.http import Http404
 from django.utils.translation import ugettext_lazy as _
 
 from boogie import rules
@@ -6,6 +7,9 @@ from . import urlpatterns, conversation_url
 
 @urlpatterns.route(conversation_url + 'comments/')
 def comment_list(request, conversation):
+    if not conversation.is_promoted:
+        raise Http404
+
     user = request.user
     comments = conversation.comments.filter(author=user)
     n_comments = rules.compute('ej_conversations.remaining_comments', conversation, user)
@@ -23,6 +27,9 @@ def comment_list(request, conversation):
 
 @urlpatterns.route(conversation_url + 'comments/<model:comment>/', lookup_field={'comment': 'pk'})
 def comment_detail(conversation, comment):
+    if not conversation.is_promoted:
+        raise Http404
+
     return {
         'conversation': conversation,
         'comment': comment,

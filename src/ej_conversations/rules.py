@@ -119,7 +119,7 @@ def can_comment(user, conversation):
     """
     if user.id is None:
         return False
-    if user.has_perm('ej.can_edit_conversation'):
+    if user.has_perm('ej.can_edit_conversation', conversation):
         return True
     remaining = remaining_comments(conversation, user)
     return remaining > 0
@@ -144,9 +144,7 @@ def can_edit_conversation(user, conversation):
     * User is conversation author
     * OR Conversation is promoted and user can create/edit promoted conversations
     """
-    if conversation is None:
-        return False
-    elif user.id == conversation.author_id:
+    if user.id == conversation.author_id:
         return True
     elif conversation.is_promoted and user.has_perm('ej_conversations.can_publish_promoted'):
         return True

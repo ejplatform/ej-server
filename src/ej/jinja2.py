@@ -11,7 +11,7 @@ from markupsafe import Markup
 
 import hyperpython.jinja2
 from ej_configurations import social_icons, fragment
-from hyperpython import render
+from hyperpython import html
 from . import roles
 from .roles import tags
 
@@ -154,4 +154,4 @@ def generic_context(ctx):
 
 
 def non_strict_render(obj, role=None, ctx=None, strict=False):
-    return render(obj, role=role, ctx=ctx, strict=strict)
+    return html(obj, role=role, ctx=ctx, strict=strict)

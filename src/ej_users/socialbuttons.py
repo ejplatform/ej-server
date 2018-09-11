@@ -5,7 +5,7 @@ from allauth.socialaccount.models import SocialApp
 from allauth.socialaccount.providers.facebook.provider import FacebookProvider
 from django.core.exceptions import ImproperlyConfigured
 
-from hyperpython.components import fab_icon, fa_icon
+from hyperpython.components import fa_icon
 
 log = logging.getLogger('ej')
 SOCIAL_BUTTON_REGISTRY = {}
@@ -53,7 +53,7 @@ def facebook_button(request):
         'method': 'js_sdk',
     }
     url = provider.get_login_url(request, **query)
-    return fab_icon('facebook', href=url, id='facebook-button', class_='fab fa-facebook icon-facebook rounded-icon')
+    return fa_icon('facebook', href=url, id='facebook-button', class_='fab fa-facebook icon-facebook rounded-icon')
 
 
 @register_button('twitter')
@@ -73,7 +73,7 @@ def github_button(request):
         'next': '/conversations/',
     }
     url = provider.get_login_url(request, **query)
-    return fab_icon('github', href=url, id='github-button')
+    return fa_icon('github', href=url, id='github-button')
 
 
 @register_button('google')
@@ -83,7 +83,7 @@ def google_button(request):
         'next': '/conversations/',
     }
     url = provider.get_login_url(request, **query)
-    return fab_icon('google', href=url, id='google-button', class_="fab fa-google icon-google rounded-icon")
+    return fa_icon('google', href=url, id='google-button', class_="fab fa-google icon-google rounded-icon")
 
 
 #

@@ -27,7 +27,6 @@ class InstalledAppsConf(Base, EjOptions):
         # Third party apps
         'taggit',
         'rules',
-        'crispy_forms',
         'allauth',
         'allauth.account',
         'allauth.socialaccount',
@@ -40,7 +39,7 @@ class InstalledAppsConf(Base, EjOptions):
         'rest_framework.authtoken',
         'rest_auth',
         'rest_auth.registration',
-        'corsheaders',
+        # 'corsheaders',
         'constance',
         'constance.backends.database',
         'push_notifications',

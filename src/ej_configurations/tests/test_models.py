@@ -7,7 +7,6 @@ from ej_configurations.models import SocialMediaIcon, Color, Fragment
 class TestSocialMediaIcon:
     def test_convert_simple_icon_to_strings(self):
         icon = SocialMediaIcon(social_network='github')
-        assert icon.icon_name == 'fab fa-github'
         assert str(icon) == 'github'
         assert icon.__html__() == '<i class="fab fa-github"></i>'
 

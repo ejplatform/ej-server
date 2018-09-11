@@ -75,7 +75,7 @@ class Conf(ThemesConf,
 
     EJ_CONVERSATIONS_URLMAP = {
         'conversation-detail': '/conversations/{conversation.slug}/',
-        'conversation-list': '/conversations/',
+        'conversation-list': 'conversation:list',
     }
 
     REST_FRAMEWORK = {
