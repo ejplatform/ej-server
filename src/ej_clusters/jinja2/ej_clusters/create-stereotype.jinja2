@@ -30,7 +30,6 @@
                     </div>
                     {{ stereotype_form.description }}
                 </div>
-                <!--textarea name="description" cols="40" rows="10" id="id_description" placeholder="Description"></textarea-->
             </div>
             {{ votes_form.management_form }}
             {% for form in votes_form %}
@@ -43,7 +42,7 @@
                 </div>
             {% endfor %}
             <div class="StereotypeAdd-submit">
-              <div class="col-4 offset-2">
+              <div>
                 <input type="submit" class="Button" value="{{ button_text }}" name="create">
               </div>
             </div>

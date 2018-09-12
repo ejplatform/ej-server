@@ -19,4 +19,5 @@ class TestRoutes(UrlTester, ConversationRecipes):
     @pytest.fixture
     def data(self, conversation, author_db):
         conversation.author = author_db
+        conversation.is_promoted = True
         conversation.save()
