@@ -83,7 +83,7 @@ rebuild base docker images:
             --cache-from ejplatform/web:$DOCKER_TAG
             --build-arg COMMIT_TITLE=\"$CI_COMMIT_TITLE\"
             --build-arg COMMIT_HASH=\"$CI_COMMIT_SHA\""
-  after-script:
+  after_script:
     - docker push ejplatform/web:$DOCKER_TAG
   tags:
     - docker
@@ -96,7 +96,7 @@ rebuild base docker images:
             --build-arg THEME=cpa
             --build-arg COMMIT_TITLE=\"$CI_COMMIT_TITLE\"
             --build-arg COMMIT_HASH=\"$CI_COMMIT_SHA\""
-  after-script:
+  after_script:
     - docker push mdhcpa/web:$DOCKER_TAG
 
 publish web develop:
@@ -132,7 +132,7 @@ publish ejplatform/web tagged:
             --cache-from ejplatform/web:$CI_COMMIT_TAG
             --build-arg COMMIT_TITLE=\"$CI_COMMIT_TITLE\"
             --build-arg COMMIT_HASH=\"$CI_COMMIT_SHA\""
-  after-script:
+  after_script:
     - docker push ejplatform/web:$CI_COMMIT_TAG
     - docker push ejplatform/web:$DOCKER_TAG
   only:
@@ -149,7 +149,7 @@ publish mdhcpa/web tagged:
             --build-arg THEME=cpa
             --build-arg COMMIT_TITLE=\"$CI_COMMIT_TITLE\"
             --build-arg COMMIT_HASH=\"$CI_COMMIT_SHA\""
-  after-script:
+  after_script:
     - docker push mdhcpa/web:$CI_COMMIT_TAG
     - docker push mdhcpa/web:$DOCKER_TAG
   only:
@@ -171,7 +171,7 @@ publish mdhcpa/web tagged:
             --stack $RANCHER_STACK
             --rancher-key $RANCHER_ACCESS_KEY
             --rancher-secret $RANCHER_SECRET_KEY"
-  after-script:
+  after_script:
     - "upgrade
             --service nginx
             --environment $RANCHER_ENVIRONMENT
@@ -189,7 +189,7 @@ publish mdhcpa/web tagged:
             --stack $RANCHER_STACK_CPA
             --rancher-key $RANCHER_ACCESS_KEY
             --rancher-secret $RANCHER_SECRET_KEY"
-  after-script:
+  after_script:
     - "upgrade
             --service nginx
             --environment $RANCHER_ENVIRONMENT
