@@ -53,7 +53,7 @@ def facebook_button(request):
         'method': 'js_sdk',
     }
     url = provider.get_login_url(request, **query)
-    return fa_icon('facebook', href=url, id='facebook-button', class_='fab fa-facebook icon-facebook rounded-icon')
+    return fa_icon('facebook', href=url, id='facebook-button', aria_label="Ícone Facebook", class_='fab fa-facebook icon-facebook rounded-icon')
 
 
 @register_button('twitter')
@@ -63,7 +63,7 @@ def twitter_button(request):
         'next': '/conversations/',
     }
     url = provider.get_login_url(request, **query)
-    return fa_icon('twitter', href=url, id='twitter-button', class_="fab fa-twitter icon-twitter rounded-icon")
+    return fa_icon('twitter', href=url, id='twitter-button', aria_label="Ícone Twitter", class_="fab fa-twitter icon-twitter rounded-icon")
 
 
 @register_button('github')
@@ -83,7 +83,7 @@ def google_button(request):
         'next': '/conversations/',
     }
     url = provider.get_login_url(request, **query)
-    return fa_icon('google', href=url, id='google-button', class_="fab fa-google icon-google rounded-icon")
+    return fa_icon('google', href=url, id='google-button', aria_label="Ícone Google", class_="fab fa-google icon-google rounded-icon")
 
 
 #

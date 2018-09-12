@@ -11,16 +11,47 @@
 
         <form method="post" class="Form" is-placeholder-form>
             {{ csrf_input }}
-            {{ form.as_p() }}
-            <input type="submit" class="Button" value="{{ _('Login') }}" name="login">
+            {{ form.non_field_errors() }}
+            <p>
+                <input for="{{form.email.id_for_label}}"
+                        name="email" 
+                        placeholder="E-mail"
+                        aria-label="Insira o seu e-mail ou nome de usuário"
+                        ></input>
+            </p>
+            <p>
+                <input for="{{form.password.id_for_label}}" 
+                        name="password" 
+                        placeholder="Password" 
+                        type="password"
+                        aria-label="Insira a sua senha"></input>
+            </p>
+            {# {% for field in form %}
+            <p>
+                {{ field }}
+                {% if field.help_text %}
+                    <p class="help">{{ field.help_text|safe }}</p>
+                {% endif %}
+            </p>
+            {% endfor %} #}
+            <input type="submit" 
+                    class="Button" 
+                    value="{{ _('Login') }}" 
+                    name="login"
+                    aria-label="Botão de login"
+                    >
         </form>
+
+
 
         {{ social_login(social_buttons, social_js) }}
 
         <div class="Login-newUser">
             <h1>{{ settings.EJ_REGISTER_TEXT }}</h1>
-            <p><a class="Button" href="{{ '/register/' + ('?next=' + next if next else '') }}"
-                  primary>{{ _('Register now!') }}</a></p>
+            <p><a class="Button" 
+                    href="{{ '/register/' + ('?next=' + next if next else '') }}"
+                    aria-label="Botão para cadastro de conta"
+                    primary>{{ _('Register now!') }}</a></p>
         </div>
     </div>
 {% endblock %}
