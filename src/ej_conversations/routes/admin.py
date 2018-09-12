@@ -67,9 +67,12 @@ def moderate(request, conversation):
         comment.rejection_reason = request.POST['rejection_reason']
         comment.save()
 
-    for comment in models.Comment.objects.filter(conversation=conversation):
+    status = request.GET.get('status')
+    status = 'pending' if not status in ['pending', 'approved', 'rejected'] else status
+    for comment in models.Comment.objects.filter(conversation=conversation, status=status):
         comments.append(comment)
     return {
         'conversation': conversation,
+        'comment_status': status,
         'comments': comments,
     }
