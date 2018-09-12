@@ -18,6 +18,7 @@ $conversation-card-button-color-text: $color-content !default;
 $conversation-card-border-arrow-size: $spacing-unit;
 $conversation-card-button-border-radius: 30px !default;
 $conversation-topic-display: none !default;
+$profile-label-clear-color: #30BFD3 !default;
 
 .ConversationList {
     @extend .Container;
@@ -736,6 +737,35 @@ $conversation-topic-display: none !default;
         color: $color-purple-dark;
     }
 
+    &-comments-tabs {
+      padding: 0;
+      background: $color-blue-nav;
+      display: flex;
+      flex-wrap: wrap;
+
+      li {
+        list-style: none;
+        flex-grow: 1;
+        flex-basis: 0;
+        font-size: 12px;
+        font-weight: bold;
+        text-align: center;
+        
+        a {
+          color: $profile-label-clear-color;
+          opacity: 0.5;
+          border-bottom: 2px solid transparent;
+          padding: 5px 0;
+          display: inline-block;
+
+          &.active {
+            opacity: 1;
+            border-bottom: 2px solid $profile-label-clear-color;
+          }
+        }
+      }
+    }
+
     &-comments {
         h1 {
             text-align: center;
@@ -811,6 +841,27 @@ $conversation-topic-display: none !default;
             padding-left: 0;
             outline: 0;
         }
+    }
+
+    .Comment-status-approved .ConversationComment-actions li {
+      opacity: 1;
+    }
+    
+    .Comment-status-approved .ConversationComment-actions li + li {
+      opacity: 0.3;
+    }
+    
+    .Comment-status-rejected .ConversationComment-actions li {
+      opacity: 0.3;
+    }
+    
+    .Comment-status-rejected .ConversationComment-actions li + li {
+      opacity: 1;
+    }
+    
+    .Comment-status-approved .ConversationComment-actions li:hover,
+    .Comment-status-rejected .ConversationComment-actions li:hover {
+      opacity: 1;
     }
 
     .Comment-rejection {

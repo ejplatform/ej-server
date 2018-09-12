@@ -1,6 +1,9 @@
 {% extends 'base.jinja2' %}
 {% from 'ej_conversations/components/comment-list.jinja2' import comment_list %}
 
+{% set status = request.GET.get('status') %}
+{% set status = 'pending' if not status in ['pending', 'approved', 'rejected'] else status %}
+
 {% block content %}
     <div class="Moderate">
         <div class="ConversationDetail">
@@ -22,9 +25,16 @@
         </div>
         <div class="Moderate-comments">
             <h1>{{ _('Comments in this conversation') }}</h1>
+            <ul class="Moderate-comments-tabs">
+              <li><a class="{{ 'active' if status == 'pending' else '' }}" href="{{ conversation.get_absolute_url() + 'moderate?status=pending' }}">{{ _('Pending') }}</a></li>
+              <li><a class="{{ 'active' if status == 'approved' else '' }}" href="{{ conversation.get_absolute_url() + 'moderate?status=approved' }}">{{ _('Approved') }}</a></li>
+              <li><a class="{{ 'active' if status == 'rejected' else '' }}" href="{{ conversation.get_absolute_url() + 'moderate?status=rejected' }}">{{ _('Rejected') }}</a></li>
+            </ul>
             {% if comments | length >= 1 %}
                 {% for comment in comments %}
-                    {{ comment|role('moderate') }}
+                    {% if comment.status == status %}
+                        {{ comment|role('moderate') }}
+                    {% endif %}
                 {% endfor %}
             {% else %}
                 <p>{{ _('No comments left') }}</p>

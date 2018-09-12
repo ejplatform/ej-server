@@ -1,4 +1,4 @@
-<div class="Comment">
+<div class="Comment Comment-status-{{ comment.status }}">
     <div class="Comment-metadata">
         <span>{{ _('by') }}: <b>{{ comment.author.name }}</b></span>
         <span class="date">{{ comment.created.strftime('%d-%m-%Y %Hh%M') }}</span>
