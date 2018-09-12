@@ -52,8 +52,8 @@ def iframe(request):
 
 def ask_admin_password(request):
     password = None
-    form = forms.AskAdminPasswordForm(request.POST or None)
-    if request.method == 'POST' and form.is_valid():
+    form = forms.AskAdminPasswordForm.bind(request)
+    if form.is_valid_post():
         password = form.cleaned_data['password']
     return password, form
 
@@ -62,12 +62,10 @@ def ask_admin_password(request):
 def register(request):
     if RCAccount.objects.filter(user=request.user).exists():
         return redirect('rocket:iframe')
-    if request.method == 'POST':
-        form = forms.CreateUsernameForm(request.POST, user=request.user)
-        if form.is_valid():
-            return redirect('rocket:iframe')
-    else:
-        form = forms.CreateUsernameForm(user=request.user)
+
+    form = forms.CreateUsernameForm.bind(request, user=request.user)
+    if form.is_valid_post():
+        return redirect('rocket:iframe')
     return {'form': form}
 
 
@@ -80,16 +78,14 @@ def config(request):
     form_kwargs = {}
     if config:
         form_kwargs['data'] = {'rocketchat_url': config.url}
+    form = forms.RocketIntegrationForm.bind(request, **form_kwargs)
 
-    if request.method == 'POST':
-        form = forms.RocketIntegrationForm(request.POST)
-        if form.is_valid():
-            password = form.cleaned_data['password']
-            username = form.cleaned_data['username']
-            rocket.password_login(username, password)
-            return redirect('rocket:iframe')
-    else:
-        form = forms.RocketIntegrationForm(**form_kwargs)
+    if form.is_valid_post():
+        password = form.cleaned_data['password']
+        username = form.cleaned_data['username']
+        rocket.password_login(username, password)
+        return redirect('rocket:iframe')
+
     return {'form': form}
 
 

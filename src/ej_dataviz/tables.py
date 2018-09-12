@@ -31,7 +31,7 @@ def render_dataframe(df, index=False, *, datatable=False, class_=(),
         columns = [df.index.name or '', *columns]
 
     columns = as_display_values(columns, col_display)
-    return html_table(data, columns, class_=class_, **kwargs)
+    return html_table(data, columns=columns, class_=class_, **kwargs)
 
 
 def as_display_values(seq, translations=None):

@@ -15,7 +15,8 @@ class AuthorIsUserMixin(admin.ModelAdmin):
     author_field = 'author'
 
     def save_model(self, request, obj, *args, **kwargs):
-        setattr(obj, self.author_field, request.user)
+        if getattr(obj, self.author_field) is None:
+            setattr(obj, self.author_field, request.user)
         return super().save_model(request, obj, *args, **kwargs)
 
 
