@@ -15,11 +15,13 @@ class RegistrationForm(PlaceholderForm, forms.ModelForm):
         label=_('Password'),
         required=True,
         widget=forms.PasswordInput,
+        help_text=_('Your password')
     )
     password_confirm = forms.CharField(
         label=_('Password confirmation'),
         required=True,
         widget=forms.PasswordInput,
+        help_text=_('Confirm your password')
     )
 
     class Meta:
@@ -42,7 +44,9 @@ class LoginForm(PlaceholderForm, forms.Form):
     """
 
     if getattr(settings, 'ALLOW_USERNAME_LOGIN', settings.DEBUG):
-        email = forms.CharField(label=_('E-mail'))
+        email = forms.CharField(label=_('E-mail'), help_text=_('Your e-mail'))
     else:
         email = forms.EmailField(label=_('E-mail'))
-    password = forms.CharField(label=_('Password'), widget=forms.PasswordInput)
+    password = forms.CharField(label=_('Password'), 
+                            widget=forms.PasswordInput, 
+                            help_text=_('Your password'))

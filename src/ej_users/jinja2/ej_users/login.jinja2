@@ -12,28 +12,20 @@
         <form method="post" class="Form" is-placeholder-form>
             {{ csrf_input }}
             {{ form.non_field_errors() }}
-            <p>
-                <input for="{{form.email.id_for_label}}"
-                        name="email" 
-                        placeholder="E-mail"
-                        aria-label="Insira o seu e-mail ou nome de usuário"
+            {% for field in form %}
+                <div class="fieldWrapper">
+                    {{ field.errors }}
+                    <p>
+                        <input for="{{field.id_for_label}}"
+                            name="{{field.name}}" 
+                            placeholder="{{field.label}}"
+                            aria-label="{{field.help_text}}"
+                            type="{{field.field.widget.input_type}}"
                         ></input>
-            </p>
-            <p>
-                <input for="{{form.password.id_for_label}}" 
-                        name="password" 
-                        placeholder="Password" 
-                        type="password"
-                        aria-label="Insira a sua senha"></input>
-            </p>
-            {# {% for field in form %}
-            <p>
-                {{ field }}
-                {% if field.help_text %}
-                    <p class="help">{{ field.help_text|safe }}</p>
-                {% endif %}
-            </p>
-            {% endfor %} #}
+                    </p>
+
+                </div>
+            {% endfor %}
             <input type="submit" 
                     class="Button" 
                     value="{{ _('Login') }}" 
