@@ -15,4 +15,6 @@ class NotificationsConf(Conf):
         else:
             raise ValueError(f'invalid value for EJ_PUSH_NOTIFICATIONS = {ej_push_notifications}')
 
-    FCM_API_KEY = env("AAAA8tCCQJQ:APA91bHDVVtaPzYFjyDzQTWiTAqrzPcswYV8NuQLhhvkn6s4H0Z69dYvWeyHUSPXFxV-8Ns6zvrffqRZ-_URuPxgvWXCfqOJi-BBlFzkHcvK97O9d8Ju1pgHBWQml9DQY9QWSoroc5Sl")
+    FCM_API_KEY = env(("AAAA8tCCQJQ:APA91bHDVVtaPzYFjyDzQTWiTAqrzPcswYV8NuQLhh"
+                       "vkn6s4H0Z69dYvWeyHUSPXFxV-8Ns6zvrffqRZ-_URuPxgvWXCfqOJi"
+                       "-BBlFzkHcvK97O9d8Ju1pgHBWQml9DQY9QWSoroc5Sl"))

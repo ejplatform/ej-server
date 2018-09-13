@@ -30,12 +30,6 @@ def index(request):
     }
 
 
-# criação de notificação: Receiver (Usuário),  Canal, Mensagem, Salva uma notificação(Usar um forms!)
-@urlpatterns.route('create/')
-def create(request):
-    return {}
-
-
 @urlpatterns.route('history/')
 def clusters(request):
     user = request.user
