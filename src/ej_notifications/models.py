@@ -21,6 +21,12 @@ class Purpose(IntEnum):
     DISAPPROVED_NOTIFICATIONS = 6, _('Disapproved Notifications')
 
 
+class NotificationOptions(IntEnum):
+    ENABLED = 0, _('Enabled')
+    DISABLED = 1, _('Disabled')
+    PUSH_NOTIFICATIONS = 3, _('Push notifications')
+
+
 @rest_api(
     ['name', 'users', 'owner', 'purpose', 'created_at'],
     lookup_field='slug',
@@ -61,13 +67,7 @@ class Notification(models.Model):
     channel = models.ForeignKey(Channel, on_delete=models.CASCADE)
 
 
-@rest_api(['id', 'conversation_notifications', 'admin_notifications', 'trophy_notifications',
-          'approved_notifications', 'disapproved_notifications', 'share_data'])
+@rest_api(['id', 'notification_option'])
 class NotificationConfig(models.Model):
     profile = models.OneToOneField(Profile, on_delete=models.CASCADE)
-    conversation_notifications = models.BooleanField(default=True)
-    admin_notifications = models.BooleanField(default=True)
-    trophy_notifications = models.BooleanField(default=True)
-    approved_notifications = models.BooleanField(default=True)
-    disapproved_notifications = models.BooleanField(default=True)
-    share_data = models.BooleanField(default=True)
+    notification_option = EnumField(NotificationOptions, _('Notification options'), default=NotificationOptions.ENABLED)
