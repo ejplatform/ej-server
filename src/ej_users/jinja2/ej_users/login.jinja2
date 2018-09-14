@@ -30,7 +30,7 @@
                     class="Button" 
                     value="{{ _('Login') }}" 
                     name="login"
-                    aria-label="Botão de login"
+                    aria-label="{{_('Login button')}}"
                     >
         </form>
 
@@ -42,7 +42,7 @@
             <h1>{{ settings.EJ_REGISTER_TEXT }}</h1>
             <p><a class="Button" 
                     href="{{ '/register/' + ('?next=' + next if next else '') }}"
-                    aria-label="Botão para cadastro de conta"
+                    aria-label="{{_('Register button')}}"
                     primary>{{ _('Register now!') }}</a></p>
         </div>
     </div>
