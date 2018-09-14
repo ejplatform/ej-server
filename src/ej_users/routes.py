@@ -11,6 +11,7 @@ from django.template.loader import get_template
 from django.utils.translation import ugettext_lazy as _
 from rest_framework import status
 from rest_framework.authtoken.models import Token
+from django.core.mail import send_mail
 
 from boogie.router import Router
 from ej_users import forms
@@ -110,7 +111,10 @@ def recover_password(request):
 @urlpatterns.route('profile/reset-password/', login=True)
 def reset_password(request):
     form = forms.ResetPasswordForm.bind(request)
-
+    
+    if request.method == "POST":
+        send_mail("Assuto2", "Mensagem2", settings.EMAIL_HOST_USER, [request.POST['email']], fail_silently=True,)
+    
     return {
         'user': request.user,
         'profile': request.user.profile,
