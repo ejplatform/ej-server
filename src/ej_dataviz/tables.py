@@ -1,5 +1,4 @@
 import numpy as np
-
 from hyperpython.components import html_table
 
 
