@@ -46,3 +46,12 @@ class LoginForm(PlaceholderForm, forms.Form):
     else:
         email = forms.EmailField(label=_('E-mail'))
     password = forms.CharField(label=_('Password'), widget=forms.PasswordInput)
+
+
+class ResetPasswordForm(PlaceholderForm, forms.Form):
+
+    """
+    Reset User Password
+    """
+
+    email = forms.CharField(label=_('E-mail'))

@@ -109,9 +109,12 @@ def recover_password(request):
 
 @urlpatterns.route('profile/reset-password/', login=True)
 def reset_password(request):
+    form = forms.ResetPasswordForm.bind(request)
+
     return {
         'user': request.user,
         'profile': request.user.profile,
+        'form': form,
     }
 
 
