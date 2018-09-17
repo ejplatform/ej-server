@@ -15,6 +15,9 @@
             <input type="submit" class="Button" value="{{ _('Login') }}" name="login">
         </form>
 
+        <p><a href="{{ '/reset-password/' + ('?next=' + next if next else '') }}"
+                  primary>{{ _('Forgot your password?') }}</a></p>
+
         {{ social_login(social_buttons, social_js) }}
 
         <div class="Login-newUser">

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-17 18:59+0000\n"
+"POT-Creation-Date: 2018-09-17 16:52-0300\n"
 "PO-Revision-Date: 2018-09-17 12:02-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: \n"
@@ -1571,7 +1571,7 @@ msgstr "Obtendo Ajuda"
 msgid "EJ Community"
 msgstr "Comunidade EJ"
 
-#: src/ej/templates/jinja2/pages/home.jinja2:145
+#: src/ej/templates/jinja2/pages/home.jinja2:118
 msgid "Who is using EJ"
 msgstr "Quem já adotou o EJ"
 
@@ -1732,7 +1732,7 @@ msgstr "Configurações do Painel"
 msgid "Display all Django Settings for this website."
 msgstr ""
 
-#: src/ej_conversations/jinja2/ej/role/comment-card.jinja2:37
+#: src/ej_conversations/jinja2/ej/role/comment-card.jinja2:38
 #, python-format
 msgid ""
 "It is necessary to %(login_anchor)s before voting or\n"
@@ -2038,6 +2038,15 @@ msgstr "Registre agora!"
 #: src/ej_users/jinja2/ej_users/reset-password.jinja2:2
 msgid "Reset password"
 msgstr "Recriar minha senha"
+
+#: src/ej_users/jinja2/ej_users/reset-password-message.jinja2:1
+#, fuzzy
+msgid ""
+"Hello ! \n"
+" You can use the following link to reset your password:"
+msgstr ""
+"Esqueceu sua senha? Insira seu endereço de e-mail abaixo, e nós vamos lhe "
+"enviar uma mensagem com instruções para recriar sua senha."
 
 #: src/ej_users/jinja2/ej_users/reset-password.jinja2:3
 #, fuzzy

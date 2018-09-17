@@ -112,7 +112,7 @@ def recover_password(request):
     }
 
 
-@urlpatterns.route('profile/reset-password/', login=True)
+@urlpatterns.route('reset-password/')
 def reset_password(request):
     form = forms.ResetPasswordForm.bind(request)
 
@@ -126,11 +126,14 @@ def reset_password(request):
     template_message = template.render()
 
     if request.method == "POST":
-        send_mail(_("Please reset your password"), template_message, settings.EMAIL_HOST_USER,[request.POST['email']], fail_silently=True,)
+        send_mail(_("Please reset your password"),
+                  template_message,
+                  settings.EMAIL_HOST_USER,
+                  [request.POST['email']],
+                  fail_silently=True,)
 
     return {
         'user': request.user,
-        'profile': request.user.profile,
         'form': form,
     }
 
