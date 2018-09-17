@@ -191,7 +191,7 @@ latex_documents = [
     ('index',
      'ej.tex',
      'Push Together Documentation',
-     """Bruno""", 'manual'),
+     """EJ Team""", 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -221,7 +221,7 @@ latex_documents = [
 # (source start file, name, description, authors, manual section).
 man_pages = [
     ('index', 'ej', 'Push Together Documentation',
-     ["""Bruno"""], 1)
+     ["""EJ Team"""], 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -235,7 +235,7 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
     ('index', 'ej', 'EJ Documentation',
-     'Bruno', 'EJ',
+     'EJ Team', 'EJ',
      'Social participation platform', 'Miscellaneous'),
 ]
 
