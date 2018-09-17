@@ -24,7 +24,7 @@
           {% else %}
               {% set tags = 'Tags' %}
           {% endif %}
-          
+
           <input type="hidden" name="tags" value="{{ tags }}" />
 
           <div class="ConversationDetail">
@@ -32,7 +32,7 @@
                   <div class="ConversationTags"><i class="fa fa-tags"></i>
                     {{ tags }}
                   </div>
-                  
+
                   <p><textarea onfocus="this.style.height = (this.scrollHeight) + 'px'" onkeyup="this.style.height = (this.scrollHeight) + 'px'" class="Conversation-edit-field" name="text" required id="id_text">{{ conversation.text }}</textarea></p>
 
                   <div class="Conversation-edit">
@@ -50,7 +50,7 @@
             {% endif %}
           </div>
 
-          <p style="text-align: center;">{{ action_button(_('Manage stereotypes'), '/conversations/' + conversation.slug + '/stereotypes/', False) }}</p>
+          <p style="text-align: center;">{{ action_button(_('Manage stereotypes'), 'cluster:stereotype-list', primary=False, url_args={'conversation': conversation}) }}</p>
 
           <p class="ConversationEdit-promote">
             {% if conversation.is_promoted %}

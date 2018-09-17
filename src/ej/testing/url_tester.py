@@ -1,6 +1,7 @@
 import logging
 import typing
 from pprint import pprint
+
 import pytest
 
 from .fixture_class import EjRecipes
@@ -30,7 +31,7 @@ class UrlTester(EjRecipes):
     @pytest.mark.django_db
     def test_anonymous_user_can_access_urls(self, client, caplog, data):
         caplog.set_level(logging.CRITICAL, logger='django')
-        check_urls(client, self.public_urls, self.success_codes)
+        check_urls(client, self.public_urls, self.success_codes, 'anonymous')
         pprint(data)
 
     def test_urls_that_requires_user_login(self, client, user_db, caplog, data):
@@ -38,10 +39,10 @@ class UrlTester(EjRecipes):
         caplog.set_level(logging.CRITICAL, logger='django')
         pprint(data)
 
-        check_urls(client, urls, self.require_login_codes)
+        check_urls(client, urls, self.require_login_codes, 'anonymous')
 
         client.force_login(user_db)
-        check_urls(client, urls, self.success_codes)
+        check_urls(client, urls, self.success_codes, 'regular user')
 
     def test_urls_accessible_only_by_author_or_admin(self, client, user_db,
                                                      author_db, data, caplog):
@@ -50,16 +51,16 @@ class UrlTester(EjRecipes):
         pprint(data)
 
         # Require login or present a failure code if user is anonymous
-        check_urls(client, urls, {*as_code_set(self.redirect_codes),
-                                  *as_code_set(self.failure_codes)})
+        codes = {*as_code_set(self.redirect_codes), *as_code_set(self.failure_codes)}
+        check_urls(client, urls, codes, 'anonymous')
 
         # User has no permission
         client.force_login(user_db)
-        check_urls(client, urls, self.failure_codes)
+        check_urls(client, urls, self.failure_codes, 'regular user')
 
         # User is author and therefore can see the page
         client.force_login(author_db)
-        check_urls(client, urls, self.success_codes)
+        check_urls(client, urls, self.success_codes, 'author')
 
     def test_urls_accessible_only_by_admin(self, client, user_db, root_db, data, caplog):
         urls = self.admin_urls
@@ -67,39 +68,42 @@ class UrlTester(EjRecipes):
         pprint(data)
 
         # Require login or present a failure code if user is anonymous
-        check_urls(client, urls, {*as_code_set(self.redirect_codes),
-                                  *as_code_set(self.failure_codes)})
+        codes = {*as_code_set(self.redirect_codes), *as_code_set(self.failure_codes)}
+        check_urls(client, urls, codes, 'anonymous')
 
         # User has no permission
         client.force_login(user_db)
-        check_urls(client, urls, self.failure_codes)
+        check_urls(client, urls, self.failure_codes, 'regular user')
 
-        # User is author and therefore can see the page
+        # User is admin and therefore can see the page
         client.force_login(root_db)
-        check_urls(client, urls, self.success_codes)
+        check_urls(client, urls, self.success_codes, 'admin')
 
 
-def check_urls(client, urls, code: typing.Union[int, set]):
+Urls = typing.Union[int, set]
+
+
+def check_urls(client, urls, code: Urls, user):
     """
     Check all urls on the url list.
     """
     code = as_code_set(code)
     for url in urls:
-        check_url(client, url, code)
+        check_url(client, url, code, user)
 
 
-def check_url(client, url, code):
+def check_url(client, url, code, user):
     """
     Check if client responds to given url with the provided status code.
     """
     try:
         response = client.get(url)
     except Exception:
-        print('Error loading url: %s' % url)
+        print(f'Error loading url as {user}: {url}')
         raise
     if response.status_code not in code:
         msg = (f'bad response code for "{url}":\n'
-               f'    got {response.status_code}, expected {code}')
+               f'    accessing as {user}, got {response.status_code}, expected {code}')
         raise AssertionError(msg)
 
 

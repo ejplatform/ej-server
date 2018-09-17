@@ -97,14 +97,14 @@ class Clusterization(TimeStampedModel):
         """
         conversation = self.conversation
         if self.cluster_status == ClusterStatus.PENDING_DATA:
-            rule = rules.get_rule('ej_clusters.conversation_has_sufficient_data')
+            rule = rules.get_rule('ej.conversation_can_start_clusterization')
             if not rule.test(conversation):
                 log.info(f'[clusters] {conversation}: not enough data to start clusterization')
                 return False
         elif self.cluster_status == ClusterStatus.DISABLED:
             return False
 
-        rule = rules.get_rule('ej_clusters.must_update_clusters')
+        rule = rules.get_rule('ej.conversation_must_update_clusters')
         return rule.test(conversation)
 
 

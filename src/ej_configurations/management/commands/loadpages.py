@@ -32,7 +32,7 @@ class Command(BaseCommand):
         real_handle(path, force)
 
 
-def real_handle(path=False, force=False):
+def real_handle(path, force=False):
     validate_path(path)
     base = Path(path)
     files = ((base / path, make_url(path)) for path in os.listdir(path))

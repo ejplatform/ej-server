@@ -14,7 +14,7 @@
             {% endfor %}
         </div>
         {% if can_add_board %}
-            {{ action_button(_('Create a new board!'), 'add/') }}
+            {{ action_button(_('Create a new board!'), 'boards:create') }}
         {% endif %}
     </div>
 {% endblock %}
