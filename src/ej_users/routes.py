@@ -1,4 +1,5 @@
 import logging
+import os
 
 from django.conf import settings
 from django.contrib import auth
@@ -11,7 +12,10 @@ from django.template.loader import get_template
 from django.utils.translation import ugettext_lazy as _
 from rest_framework import status
 from rest_framework.authtoken.models import Token
+
+
 from django.core.mail import send_mail
+from jinja2 import FileSystemLoader, Environment
 
 from boogie.router import Router
 from ej_users import forms
@@ -111,10 +115,19 @@ def recover_password(request):
 @urlpatterns.route('profile/reset-password/', login=True)
 def reset_password(request):
     form = forms.ResetPasswordForm.bind(request)
-    
+
+    dirname = os.path.dirname(__file__)
+    template_dir = os.path.join(dirname, 'jinja2/ej_users')
+
+    loader = FileSystemLoader(searchpath=template_dir)
+    environment = Environment(loader=loader)
+    TEMPLATE_FILE = "reset-password-message.jinja2"
+    template = environment.get_template(TEMPLATE_FILE)
+    template_message = template.render()
+
     if request.method == "POST":
-        send_mail("Assuto2", "Mensagem2", settings.EMAIL_HOST_USER, [request.POST['email']], fail_silently=True,)
-    
+        send_mail(_("Please reset your password"), template_message, settings.EMAIL_HOST_USER,[request.POST['email']], fail_silently=True,)
+
     return {
         'user': request.user,
         'profile': request.user.profile,
