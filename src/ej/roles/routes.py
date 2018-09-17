@@ -2,10 +2,10 @@ from django.db.models import Model
 from django.http import Http404
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
+from hyperpython import html, a, span, div, h1
+from hyperpython.components import html_list, html_map
 
 from boogie.router import Router
-from hyperpython import render, a, span, div, h1
-from hyperpython.components import html_list, html_map
 from .utils import register_queryset
 
 urlpatterns = Router(
@@ -19,13 +19,13 @@ def role_index():
     classes = set()
 
     # Collect all models and roles in the default render registry
-    for (cls, __) in render.registry:
+    for (cls, __) in html.registry:
         if not issubclass(cls, Model) or cls in classes:
             continue
         classes.add(cls)
         name = cls.__name__
         href = reverse('role-model', kwargs={'model': name.lower()})
-        data.append((name, span([a(name, href=href), ': ' + cls.__doc__])))
+        data.append((name, span([a(name, href=href), ': ' + get_doc(cls)])))
 
     # Now we collect the queryset renderers
     classes = set()
@@ -35,7 +35,7 @@ def role_index():
         href = reverse('role-model-queryset', kwargs={'model': name.lower()})
         data.append([
             name + ' (queryset)',
-            span([a(name, href=href), ': ' + cls.__doc__]),
+            span([a(name, href=href), ': ' + get_doc(cls)]),
         ])
 
     return {'data': html_map(data)}
@@ -66,7 +66,7 @@ def role_model_list(request, model, role):
         link = reverse('role-model-instance',
                        kwargs={'model': model, 'role': role, 'id': obj.id})
         key = span([f'{idx}) ', a(str(obj), href=link)])
-        data.append((key, render(obj, role, **kwargs)))
+        data.append((key, html(obj, role, **kwargs)))
 
     return {'data': html_map(data)}
 
@@ -76,7 +76,7 @@ def role_model_instance(request, model, role, id):
     cls = get_class(model)
     obj = cls.objects.get(id=id)
     kwargs = query_to_kwargs(request)
-    return {'data': render(obj, role, **kwargs)}
+    return {'data': html(obj, role, **kwargs)}
 
 
 @urlpatterns.route('qs/<model>/<role>/')
@@ -85,7 +85,7 @@ def role_queryset(request, model, role):
     qs = cls.objects.all()
     kwargs = query_to_kwargs(request)
     size = kwargs.pop('size', 10)
-    return {'data': render(qs[:size], role, **kwargs)}
+    return {'data': html(qs[:size], role, **kwargs)}
 
 
 #
@@ -113,7 +113,7 @@ def get_class(model):
     """
     Return class for string reference of model.
     """
-    for (cls, __) in render.registry:
+    for (cls, __) in html.registry:
         if cls.__name__.lower() == model:
             return cls
     raise Http404
@@ -124,10 +124,20 @@ def get_roles(cls):
     Return a list of roles assigned to the given class.
     """
     roles = []
-    for (cls_, role) in render.registry:
+    for (cls_, role) in html.registry:
         if cls_ is cls and role is not None:
             roles.append(role)
     if roles:
         return roles
     else:
         raise Http404
+
+
+def get_doc(x):
+    """
+    Return the docstring for the given object.
+    """
+    try:
+        return x.__doc__ or ''
+    except AttributeError:
+        return type(x).__doc__ or ''

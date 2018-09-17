@@ -3,26 +3,26 @@
 {% macro menu(user) %}
     <nav class="NavMenu">
         <ul>
-            <li>{{ icon_link(_('About'), '/about-us/', 'far fa-comment') }}</li>
-            <li>{{ icon_link(_('Frequently Asked Questions'), '/faq/', 'far fa-question-circle') }}</li>
-            <li>{{ icon_link(_('Talk to us'), '/talk-to-us/', 'fas fa-question-circle') }}</li>
-            <li>{{ icon_link(_('Usage terms'), '/usage/', 'far fa-file-alt') }}</li>
+            <li>{{ icon_link(_('About'), 'help:about', 'far fa-comment') }}</li>
+            <li>{{ icon_link(_('Frequently Asked Questions'), 'help:faq', 'far fa-question-circle') }}</li>
+{#            <li>{{ icon_link(_('Talk to us'), 'help:talk-to-us', 'fas fa-question-circle') }}</li>#}
+            <li>{{ icon_link(_('Usage terms'), 'help:usage', 'far fa-file-alt') }}</li>
 
             {% if not user.is_authenticated %}
-                <li>{{ icon_link(_('Conversations'), '/conversations/', 'conversations', fa=False) }}</li>
+                <li>{{ icon_link(_('Conversations'), 'conversation:list', 'conversations', fa=False) }}</li>
             {% else %}
                 <li class="NavMenu-DropDown" onclick="openDropDown('NavMenu-UserMenu')">
                     <img src="/static/img/menu/conversations.svg">{{ _('Conversations') }}<i
                     class="fas fa-angle-down NavMenu-AngleDownIcon"></i>
                     <ul class="NavMenu-UserMenu">
                         <li>
-                            {{ icon_link(_('Public conversations'), '/conversations/', '', fa=True) }}
+                            {{ icon_link(_('Public conversations'), 'conversation:list', '', fa=True) }}
                         </li>
                         <li>
-                            {{ icon_link(_('Your conversations'), '/profile/conversations/', '', fa=True) }}
+                            {{ icon_link(_('Your conversations'), 'boards:list', '', fa=True) }}
                         </li>
                         <li>
-                            {{ icon_link(_('Favorite conversations'), ('/profile/favorites/'), 'far fa-star', fa=True) }}
+                            {{ icon_link(_('Favorite conversations'), 'profile:favorite-conversations', 'far fa-star', fa=True) }}
                         </li>
                     </ul>
                 </li>

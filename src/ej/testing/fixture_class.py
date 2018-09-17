@@ -9,6 +9,7 @@ def named_fixture(name):
     def decorator(func):
         fixture = pytest.fixture(name=name)(func)
         fixture.__name__ = fixture.__qualname__ = name
+        fixture.implementation_function = func
         return fixture
 
     return decorator
@@ -65,8 +66,10 @@ def make_recipe(name, recipe):
     return fixture_map
 
 
-def fixture_method(func):
-    name = func.__name__
+def fixture_method(fixture):
+    name = fixture.__name__
+    func = fixture.implementation_function
+
     if name.endswith('_db') or name.startswith('mk_'):
         @named_fixture(name)
         def method(self, db):

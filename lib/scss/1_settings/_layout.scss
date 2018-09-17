@@ -11,10 +11,10 @@ $breakpoint-large: 1200px;
 
 // Page header layout
 $header-icon-size: 40px !default;
-$header-logo-size: $header-icon-size !default;
-$header-top-nav-height: $header-logo-size + 5 * $spacing-unit-tiny !default;
+$header-logo-size: $header-icon-size - 15 !default;
+$header-top-nav-height: $header-icon-size + 5 !default;
 $top-header-height: 25px !default;
-$header-bottom-nav-height: $header-icon-size + $font-size-tiny + 18 !default;
+$header-bottom-nav-height: $header-icon-size !default;
 $header-height-tablet: $header-top-nav-height !default;
 
 // Custom page layout

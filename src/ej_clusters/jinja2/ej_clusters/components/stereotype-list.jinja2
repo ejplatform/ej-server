@@ -14,39 +14,39 @@
 {% endmacro %}
 
 {% macro stereotype_list_static(stereotypes, conversation_title, title, subtitle) %}
-        <div class="StereotypeList-title">
-            <h1 class="h1">{{ title }} {{ conversation_title }}</h1>
-            <p>{{ subtitle }} {{ conversation_title}}</p>
-        </div>
+    <div class="StereotypeList-title">
+        <h1 class="h1">{{ title }} {{ conversation_title }}</h1>
+        <p>{{ subtitle }} {{ conversation_title }}</p>
+    </div>
 
-        {% if stereotype_url %}
-            <a class="StereotypeList-new" href="{{ stereotype_url }}add/"><i class="fa fa-plus-circle"></i> {{ _('New stereotype') }}</a>
-        {% endif %}
-
-
-        {# Search - not implemented #}
-        <div class="StereotypeList-search">
-            <p>{{_('Search Stereotype:')}}</p>
-            <input type="text"></input>
-            <i class="fas fa-search"></i>
-        </div>
+    {% if stereotype_url %}
+        <a class="StereotypeList-new" href="{{ stereotype_url }}add/"><i
+            class="fa fa-plus-circle"></i> {{ _('New stereotype') }}</a>
+    {% endif %}
 
 
-        {# Cards #}
+    {# Search - not implemented #}
+    <div class="StereotypeList-search">
+        <p>{{ _('Search Stereotype:') }}</p>
+        <input type="text"></input>
+        <i class="fas fa-search"></i>
+    </div>
 
-        <div class="StereotypeList-cardList">
-            {% for stereotype in stereotypes %}
+
+    {# Cards #}
+    <div class="StereotypeList-cardList">
+        {% for stereotype in stereotypes %}
             <div class="StereotypeList-singleStereotype">
-              <h2>{{ stereotype.name }} </h2>
-              <div class="StereotypeList-icons">
-                <a href="{{ stereotype_url }}{{stereotype.id}}/edit/">
-                    <i class="far fa-edit"></i>
-                </a>
-                {# <i class="far fa-times-circle"></i> #}
-              </div>
+                <h2>{{ stereotype.name }} </h2>
+                <div class="StereotypeList-icons">
+                    <a href="{{ stereotype_url }}{{ stereotype.id }}/edit/">
+                        <i class="far fa-edit"></i>
+                    </a>
+                    {# <i class="far fa-times-circle"></i> #}
+                </div>
             </div>
-            {% endfor %}
-        </div>
+        {% endfor %}
+    </div>
 
-        <p style="text-align: center;">{{ action_button(_('Done'), conversation_url) }}</p>
+    <p style="text-align: center;">{{ action_button(_('Done'), conversation_url) }}</p>
 {% endmacro %}

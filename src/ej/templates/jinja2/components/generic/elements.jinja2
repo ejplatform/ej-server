@@ -3,7 +3,7 @@
         {%- if href == '#' %}{% set href=value %}{% endif -%}
         {%- set value = caller() -%}
     {%- endif -%}
-    <a href="{{ href }}"
+    <a href="{{ href if href.startswith('/') else url(href) }}"
         {%- if title %} title="{{ title }}"{% endif %}
         {%- if class %} class="{{ class }}"{% endif %}
         {%- if button %} class="Button"{% endif %}
