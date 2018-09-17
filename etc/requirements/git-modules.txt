@@ -1,3 +1,0 @@
-# External dependencies in git repos
-git+https://github.com/fabiommendes/django-boogie.git/
-git+https://github.com/fabiommendes/hyperpython.git/

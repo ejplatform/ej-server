@@ -1,6 +1,6 @@
 stages:
-  - build
   - test
+  - build
   - publish
   - deploy
 
@@ -11,8 +11,41 @@ variables:
   POSTGRES_PASSWORD: ej
 
 
-# BUILD: the build stage recreates the base docker images used by the other
+# -----------------------------------------------------------------------------
+# Test: test in different environments by changing the database or running
+# different linters.
+# -----------------------------------------------------------------------------
+
+test with sqlite3:
+  image: ejplatform/python:test
+  stage: test
+  script:
+    - mkdir -p local/logs
+    - pip install https://github.com/fabiommendes/hyperpython/archive/master.zip
+    - pip install https://github.com/fabiommendes/django-boogie/archive/master.zip
+    - pip install -r etc/requirements/develop.txt
+    - pytest --cov=./
+    - codecov -t $CODECOV_TOKEN
+
+test with postgres:
+  extends: test with sqlite3
+  variables:
+    DJANGO_DB_URL: psql://ej:ej@postgres:5432/ej
+  services:
+    - postgres:latest
+
+flake8:
+  image: ejplatform/python:alpine
+  stage: test
+  script:
+    - flake8 src/
+
+
+# -----------------------------------------------------------------------------
+# Build: the build stage recreates the base docker images used by the other
 # stages of the pipeline. This is executed only sporadically
+# -----------------------------------------------------------------------------
+
 rebuild base docker images:
   image: docker
   stage: build
@@ -28,95 +61,102 @@ rebuild base docker images:
       - $CI_COMMIT_MESSAGE =~ /rebuild base docker images.*/
 
 
-# TEST: test in different environments by changing the database or running
-# different linters.
-test with sqlite3: &test
-  image: ejplatform/python:test
-  stage: test
-  script:
-    - mkdir -p local/logs
-    - pip install https://github.com/fabiommendes/hyperpython/archive/master.zip
-    - pip install https://github.com/fabiommendes/django-boogie/archive/master.zip
-    - pip install -r etc/requirements/develop.txt
-    - pytest --cov=./
-    - codecov -t $CODECOV_TOKEN
+# -----------------------------------------------------------------------------
+# Publish: build and publish images.
+# -----------------------------------------------------------------------------
 
-test with postgres:
-  << : *test
-  variables:
-    DJANGO_DB_URL: psql://ej:ej@postgres:5432/ej
-  services:
-    - postgres:latest
-
-flake8:
-  image: ejplatform/python:alpine
-  stage: test
-  script:
-    - flake8 src/
-
-
-# PUBLISH: build and publish images with :latest (master commits) and
-# :tag (tagged commits).
-publish ejplatform/web latest: &publish
+.publish web generic:
   image : docker
   stage: publish
   services:
     - docker:dind
   before_script:
     - *login
-  script:
     - echo "$CI_COMMIT_SHA; $CI_COMMIT_TITLE"
-    - "docker build . -f docker/Dockerfile -t ejplatform/web:latest
-            --cache-from ejplatform/web:latest
+  script:
+    - "docker build . -f docker/Dockerfile -t ejplatform/web:$DOCKER_TAG
+            --cache-from ejplatform/web:$DOCKER_TAG
             --build-arg COMMIT_TITLE=\"$CI_COMMIT_TITLE\"
             --build-arg COMMIT_HASH=\"$CI_COMMIT_SHA\""
-    - docker push ejplatform/web:latest
-  only:
-    - master
+  after_script:
+    - docker push ejplatform/web:$DOCKER_TAG
   tags:
     - docker
 
-publish ejplatform/web tagged:
-  << : *publish
+.publish web cpa:
+  extends: .publish web generic
   script:
-    - echo "$CI_COMMIT_SHA; $CI_COMMIT_TITLE"
-    - "docker build . -f docker/Dockerfile -t ejplatform/web:$CI_COMMIT_TAG
+    - "docker build . -f docker/Dockerfile -t mdhcpa/web:$DOCKER_TAG
+            --cache-from mdhcpa/web:$DOCKER_TAG
+            --build-arg THEME=cpa
+            --build-arg COMMIT_TITLE=\"$CI_COMMIT_TITLE\"
+            --build-arg COMMIT_HASH=\"$CI_COMMIT_SHA\""
+  after_script:
+    - docker push mdhcpa/web:$DOCKER_TAG
+
+publish web develop:
+  extends: .publish web generic
+  environment: develop
+  only:
+    - develop
+
+publish web staging:
+  extends: .publish web generic
+  environment: staging
+  only:
+    - master
+
+publish web cpa develop:
+  extends: .publish web cpa
+  environment: develop
+  only:
+    - develop
+
+publish web cpa staging:
+  extends: .publish web cpa
+  environment: staging
+  only:
+    - master
+
+publish ejplatform/web tagged:
+  extends: .publish web generic
+  script:
+    - "docker build . -f docker/Dockerfile 
+            -t ejplatform/web:$CI_COMMIT_TAG
+            -t ejplatform/web:$DOCKER_TAG
             --cache-from ejplatform/web:$CI_COMMIT_TAG
             --build-arg COMMIT_TITLE=\"$CI_COMMIT_TITLE\"
             --build-arg COMMIT_HASH=\"$CI_COMMIT_SHA\""
+  after_script:
     - docker push ejplatform/web:$CI_COMMIT_TAG
+    - docker push ejplatform/web:$DOCKER_TAG
   only:
     - master
     - tags
 
 
-publish mdhcpa/web latest:
-  << : *publish
-  script:
-    - echo "$CI_COMMIT_SHA; $CI_COMMIT_TITLE"
-    - "docker build . -f docker/Dockerfile -t mdhcpa/web:latest
-            --cache-from mdhcpa/web:latest
-            --build-arg THEME=cpa
-            --build-arg COMMIT_TITLE=\"$CI_COMMIT_TITLE\"
-            --build-arg COMMIT_HASH=\"$CI_COMMIT_SHA\""
-    - docker push mdhcpa/web:latest
-
 publish mdhcpa/web tagged:
-  << : *publish
+  extends: publish ejplatform/web tagged
   script:
-    - echo "$CI_COMMIT_SHA; $CI_COMMIT_TITLE"
-    - "docker build . -f docker/Dockerfile -t mdhcpa/web:$CI_COMMIT_TAG
+    - "docker build . -f docker/Dockerfile 
+            -t mdhcpa/web:$CI_COMMIT_TAG
+            -t mdhcpa/web:$DOCKER_TAG
             --cache-from mdhcpa/web:$CI_COMMIT_TAG
             --build-arg THEME=cpa
             --build-arg COMMIT_TITLE=\"$CI_COMMIT_TITLE\"
             --build-arg COMMIT_HASH=\"$CI_COMMIT_SHA\""
+  after_script:
     - docker push mdhcpa/web:$CI_COMMIT_TAG
+    - docker push mdhcpa/web:$DOCKER_TAG
   only:
     - master
     - tags
 
-# DEPLOY: tell rancher to update its images.
-deploy generic: &deploy
+# -----------------------------------------------------------------------------
+# Deploy Stages: tell Rancher to update its images.
+# -----------------------------------------------------------------------------
+
+.deploy:
   image: cdrx/rancher-gitlab-deploy
   stage: deploy
   script:
@@ -126,19 +166,66 @@ deploy generic: &deploy
             --stack $RANCHER_STACK
             --rancher-key $RANCHER_ACCESS_KEY
             --rancher-secret $RANCHER_SECRET_KEY"
+  after_script:
     - "upgrade
             --service nginx
             --environment $RANCHER_ENVIRONMENT
             --stack $RANCHER_STACK
             --rancher-key $RANCHER_ACCESS_KEY
             --rancher-secret $RANCHER_SECRET_KEY"
+
+# CPA Version of deploy using other rancher stack
+.deploy-cpa:
+  extends : .deploy
+  script:
+    - "upgrade
+            --service nginx
+            --environment $RANCHER_ENVIRONMENT
+            --stack $RANCHER_STACK_CPA
+            --rancher-key $RANCHER_ACCESS_KEY
+            --rancher-secret $RANCHER_SECRET_KEY"
+  after_script:
+    - "upgrade
+            --service nginx
+            --environment $RANCHER_ENVIRONMENT
+            --stack $RANCHER_STACK_CPA
+            --rancher-key $RANCHER_ACCESS_KEY
+            --rancher-secret $RANCHER_SECRET_KEY"
+
+# Generic Ej phases of deploy
+deploy generic dev:
+  extends: .deploy
   environment: develop
   only:
-    - master
-    - tags
-  tags:
-    - lappis
+    - develop
 
-deploy cpa:
-  << : *deploy
-  environment: develop_cpa
+deploy generic staging:
+  extends: .deploy
+  environment: staging
+  only:
+    - master
+
+deploy generic production:
+  extends: .deploy
+  environment: production
+  only:
+    - tags
+
+# CPA Ej phases of deploy
+deploy cpa dev:
+  extends: .deploy-cpa
+  environment: develop
+  only:
+    - develop
+
+deploy cpa staging:
+  extends: .deploy-cpa
+  environment: staging
+  only:
+    - master
+
+deploy cpa production:
+  extends: .deploy-cpa
+  environment: production
+  only:
+    - tags

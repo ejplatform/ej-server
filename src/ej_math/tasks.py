@@ -25,7 +25,7 @@ def update_job(fn):
             job.result = result
             job.status = Job.FINISHED if result else Job.STUCK
             job.save()
-        except:
+        except Exception as exc:
             job.result = None
             job.status = Job.FAILED
         job.save()

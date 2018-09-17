@@ -15,11 +15,11 @@
         {# TODO: display arrow correctly #}
         <div class="Profile-tabs">
             <nav class="Profile-tabLinks">
-                {{ link(_('Info'), '/profile/',
+                {{ link(_('Info'), 'profile:detail',
                         target='.Profile-tabs',
                         transition=None,
                         class_='Profile-tabActive' if which_tab=='profile' else []) }}
-                {{ link(_('Contributions'), '/profile/?info=contributions',
+                {{ link(_('Contributions'), 'profile:detail', query={'info': 'contributions'},
                         target='.Profile-tabs',
                         transition=None,
                         class_='Profile-tabActive' if which_tab=='contributions' else []) }}
@@ -68,7 +68,7 @@
             {% endfor %}
         </dl>
         <div class='edit-button'>
-            <a href="{{ url('profiles:edit') }}" class="Button" primary>{{ _('Edit profile') }}</a>
+            <a href="{{ url('profile:edit') }}" class="Button" primary>{{ _('Edit profile') }}</a>
         </div>
     </div>
 {% endmacro %}

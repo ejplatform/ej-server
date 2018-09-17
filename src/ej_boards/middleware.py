@@ -7,7 +7,7 @@ def BoardFallbackMiddleware(get_response):  # noqa: N802
     """
     Look for board urls after 404 errors.
     """
-    from .routes.conversation import conversation_list
+    from .routes import conversation_list
     view_function = conversation_list.as_view()
 
     def middleware(request):
@@ -15,6 +15,7 @@ def BoardFallbackMiddleware(get_response):  # noqa: N802
         if response.status_code != 404:
             return response
 
+        # noinspection PyBroadException
         try:
             slug = request.path.strip('/')
             if '/' in slug:

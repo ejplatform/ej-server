@@ -6,6 +6,7 @@ from django.contrib.auth import get_user_model
 from django.core.exceptions import ImproperlyConfigured
 from django.utils.translation import ugettext_lazy as _
 
+from ej.forms import PlaceholderForm
 from . import models
 from .exceptions import ApiError
 from .rocket import rocket
@@ -14,7 +15,7 @@ log = getLogger('ej')
 User = get_user_model()
 
 
-class RocketIntegrationForm(forms.Form):
+class RocketIntegrationForm(PlaceholderForm, forms.Form):
     """
     Form that asks basic configuration about a Rocket.Chat instance.
     """
@@ -94,7 +95,7 @@ class RocketIntegrationForm(forms.Form):
         return config
 
 
-class CreateUsernameForm(forms.ModelForm):
+class CreateUsernameForm(PlaceholderForm, forms.ModelForm):
     """
     Asks user for a new username for its Rocket.Chat account.
     """
@@ -130,7 +131,7 @@ class CreateUsernameForm(forms.ModelForm):
             rocket.login(self.user)
 
 
-class AskAdminPasswordForm(forms.Form):
+class AskAdminPasswordForm(PlaceholderForm):
     """
     Asks EJ superusers for the Rocket.Chat admin user password.
     """
