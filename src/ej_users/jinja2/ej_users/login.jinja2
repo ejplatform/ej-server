@@ -7,7 +7,7 @@
 
     <div class="Login">
         {# <div class="Login-icon"><img src="/static/img/login/ej-cat.svg"></div> #}
-        <h1 class="Login-title">{{ settings.EJ_LOGIN_TITLE_TEXT }}</h1>
+        <h1 class="Login-title">{{ _(settings.EJ_LOGIN_TITLE_TEXT) }}</h1>
 
         <form method="post" class="Form" is-placeholder-form>
             {{ csrf_input }}
@@ -16,7 +16,7 @@
         </form>
 
         <p><a href="{{ '/reset-password/' + ('?next=' + next if next else '') }}"
-                  primary>{{ _('Forgot your password?') }}</a></p>
+                  primary>{{ _('Forgot your password ?') }}</a></p>
 
         {{ social_login(social_buttons, social_js) }}
 
