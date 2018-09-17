@@ -111,7 +111,7 @@ an admin:admin <admin@admin.com> user.
 Documentation
 ~~~~~~~~~~~~~
 
-Documentation can be updated with `$ sphinx-autobuild docs build/docs` and will be available at http://localhost:8000/docs.
+Documentation can be updated with `$ sphinx-build docs build/docs` and will be available at http://localhost:8000/docs.
 
 Using docker
 ------------
