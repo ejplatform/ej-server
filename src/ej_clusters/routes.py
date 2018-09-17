@@ -121,7 +121,7 @@ def create_stereotype(request, conversation):
             cluster = Cluster(clusterization=clusterization, name=stereotype.name)
             cluster.save()
             cluster.stereotypes.add(stereotype)
-            return redirect('cluster:stereotype-list')
+            return redirect(cluster.get_absolute_url())
     else:
         stereotype_form = StereotypeForm()
         votes_formset = StereotypeVoteFormSet(queryset=StereotypeVote.objects.none())
