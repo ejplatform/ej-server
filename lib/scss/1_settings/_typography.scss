@@ -20,7 +20,8 @@ $text-headings-transform: none !default;
 $text-headings-transform-h1: uppercase !default;
 
 // Base typographical sizes
-$font-size-tiny: 12px !default;
+$font-size-tiny-tiny: 9px !default;
+$font-size-tiny: ($font-size-tiny-tiny + 3px) !default; // 12px
 $font-size-small: ($font-size-tiny + 1px) !default; // 13px
 $font-size-default: ($font-size-small + 2px) !default; // 15px
 $font-size-large: ($font-size-default + 2px) !default; // 17px

@@ -460,7 +460,7 @@ $conversation-topic-display: none !default;
     width: 100% !important;
     z-index: 3;
     position: relative;
-    padding: $spacing-unit-small;
+    padding: ($spacing-unit-large - $spacing-unit-tiny) ($spacing-unit-large - $spacing-unit-small);
 
     &-counter {
         text-align: center;
@@ -509,6 +509,7 @@ $conversation-topic-display: none !default;
                     cursor: pointer;
                 }
                 &.voteAgree {
+                    width: ($spacing-unit + $spacing-unit-tiny);
                     &:active {
                         color: $conversation-vote-agree-color;;
                     }
@@ -522,6 +523,7 @@ $conversation-topic-display: none !default;
 
                 }
                 &.voteSkip {
+                    width: ($spacing-unit + $spacing-unit-tiny);
                     &:active {
                         color: $conversation-vote-skip-color;;
                     }
@@ -535,6 +537,7 @@ $conversation-topic-display: none !default;
 
                 }
                 &.voteDisagree {
+                    width: ($spacing-unit + $spacing-unit-tiny);
                     &:active {
                         color: $conversation-vote-disagree-color;;
                     }
@@ -617,7 +620,7 @@ $conversation-topic-display: none !default;
         z-index: 101;
         width: 100vw;
         left: 0;
-        bottom: $header-bottom-nav-height;
+        bottom: $header-bottom-nav-height + $top-header-height;
         font-size: 17px;
         > div {
             padding: 40px;
@@ -671,7 +674,7 @@ $conversation-topic-display: none !default;
     &-rightConversationSlider {
         margin: 0;
         position: absolute;
-        top: ($conversation-card-cover-height + $conversation-button-size) / 2;
+        top: ($conversation-card-cover-height + $conversation-button-size) - ($spacing-unit-large - $spacing-unit-small);
         z-index: 10;
 
         @media only screen and (width: $breakpoint-small) {
@@ -847,7 +850,7 @@ $conversation-topic-display: none !default;
         border: 0;
         font-family: "Raleway", sans-serif;
         color: $color-purple-dark;
-        padding: $unit;
+        padding: $unit + 5;
         text-align: center;
         font-weight: 200 !important;
         font-size: 26px !important;
@@ -866,7 +869,7 @@ $conversation-topic-display: none !default;
         }
 
         @media only screen and (min-width: $breakpoint-large) {
-            padding: $spacing-unit-large 0;
+            padding: $spacing-unit;
         }
     }
 

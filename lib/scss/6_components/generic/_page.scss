@@ -11,10 +11,10 @@ $page-title-font-size: 1.1 * $font-size-h1 !default;
     flex-flow: column;
     height: 100vh;
     overflow: hidden;
-    padding: $header-top-nav-height 0 $header-bottom-nav-height 0;
+    padding: $header-top-nav-height 0 $header-top-nav-height 0;
 
     @media only screen and (min-width: $breakpoint-small) {
-        padding: ($header-height-tablet + $top-header-height) 0 0 0;
+        padding: ($header-height-tablet + $top-header-height) 0 $header-top-nav-height 0;
     }
 
     @media only screen and (max-width: $breakpoint-small) {
@@ -38,12 +38,13 @@ $page-title-font-size: 1.1 * $font-size-h1 !default;
         background: $color-primary;
         color: $color-primary-text;
         margin: 0 0 $spacing-unit 0;
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
 
         h1 {
             @extend .Container;
 
             font-size: $page-title-font-size;
-            padding: $spacing-unit-small;
+            padding: $spacing-unit-tiny ($spacing-unit - $spacing-unit-tiny);
         }
 
         em {
@@ -54,7 +55,7 @@ $page-title-font-size: 1.1 * $font-size-h1 !default;
 
     &-content {
         flex-grow: 1;
-        margin: 0 auto $header-bottom-nav-height auto;
+        margin: 0 auto $header-bottom-nav-height + $top-header-height auto;
         padding: 0;
     }
 }
