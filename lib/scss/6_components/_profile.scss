@@ -312,6 +312,12 @@ $profile-label-clear-color: #30BFD3 !default;
     p input[type=checkbox][name=image-clear] {
         display: inline-block;
     }
+    form p:last-of-type {
+        padding: 0 $spacing-unit;
+        label[for=id_image] {
+            margin: 0;
+        }
+    }
     .CustomFileInput {
         @extend .FormItem;
         padding: 0;
