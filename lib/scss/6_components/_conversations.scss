@@ -469,6 +469,13 @@ $conversation-topic-display: none !default;
         }
     }
 
+    img {
+        background: $color-primary-text;
+        border: 1px solid #fff;
+        border-radius: $spacing-unit-large;
+        padding: 4px $spacing-unit-tiny;
+    }
+
     i.fa {
         background: $color-primary-text;
         border: 2px solid #fff;
@@ -555,6 +562,19 @@ $conversation-topic-display: none !default;
 
     &-user {
         font-size: $font-size-h5;
+        img {
+
+            @media only screen and (min-width: $breakpoint-medium - $breakpoint-small) {
+                max-width: 6%;
+            }
+            @media only screen and (min-width: $breakpoint-small) {
+                max-width: 3%;
+            }
+        
+            color: $color-accent;
+            margin-right: $spacing-unit-small;
+            background: #fff;
+        }
         i.fa {
             color: $color-accent;
             margin-right: $spacing-unit-small;
