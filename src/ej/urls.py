@@ -2,6 +2,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
+from django.views.static import serve
+from django.conf.urls import url
 from django.views import defaults as default_views
 from rest_framework.documentation import include_docs_urls
 
@@ -26,12 +28,11 @@ urlpatterns = [
     path('', include('ej_help.routes', namespace='help')),
 
     # Profile URLS
-    path('profile/', include(('ej_profiles.routes', 'ej_profiles'), namespace='profile')),
+    path('profile/', include(('ej_profiles.routes', 'ej_profiles'), namespace='profiles')),
     path('profile/', include('ej_gamification.routes', namespace='gamification')),
     path('profile/notifications/', include('ej_notifications.routes', namespace='notifications')),
 
     # Conversations and other EJ-specific routes
-    path('', include('ej_boards.routes', namespace='boards')),
     path('conversations/', include('ej_conversations.routes', namespace='conversation')),
     path('', include('ej_clusters.routes', namespace='cluster')),
     path('conversations/', include('ej_reports.routes', namespace='report')),
@@ -59,6 +60,10 @@ urlpatterns = [
     # Static files for the dev server
     *static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),
     *static(settings.STATIC_URL, document_root=settings.STATIC_ROOT),
+
+    # Documentation in development mode
+    url(r'^docs/$', serve, { 'document_root': 'build/docs', 'path': 'index.html' }),
+    url(r'^docs/(?P<path>.*)$', serve, { 'document_root': 'build/docs/' }),
 ]
 
 if settings.DEBUG:
