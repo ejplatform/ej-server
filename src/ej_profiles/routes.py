@@ -65,7 +65,7 @@ def edit(request):
     }
 
 
-@urlpatterns.route('conversations/', template='ej_conversations/conversations-list.jinja2')
+@urlpatterns.route('conversations/', template='ej_conversations/list.jinja2')
 def conversations_list(request):
     user = request.user
     boards = user.boards.all()

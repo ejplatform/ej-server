@@ -10,7 +10,6 @@ from .. import forms, models
 @urlpatterns.route('add/', login=True, perms=['ej.can_add_promoted_conversation'])
 def create(request):
     form = forms.ConversationForm(request.POST or None)
-
     if request.method == 'POST' and form.is_valid():
         with transaction.atomic():
             conversation = form.save_all(
