@@ -16,6 +16,17 @@
         <h1 class="h1">{{ title }} {{ conversation_title }}</h1>
         <form method="post" class="stereotype">
             {{ csrf_input }}
+            {% if stereotype_form.errors %}
+                <!-- Error messaging -->
+                <div id="errors">
+                    <div class="inner">
+                        <p>{% trans %}
+                            There were some errors in the information you entered.
+                            Please correct the problems bellow.{% endtrans %}</p>
+                        {{ stereotype_form.non_field_errors() }}
+                    </div>
+                </div>
+            {% endif %}
             <div class="StereotypeAdd-title">
                 <div class="content input-name">
                     <img src="/static/img/icons/stereotype_name.png">
