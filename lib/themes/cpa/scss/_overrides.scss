@@ -48,10 +48,8 @@ $social-buttons-border-size: 40px;
 $social-buttons-icon-size: 15px;
 
 //Header
-$header-logo-size: 60px;
+$header-logo-size: 30px;
 $header-icon-size: 40px;
-$header-top-nav-height: $header-logo-size + 21px; //$spacing-unit-tiny * 3;
-$header-bottom-nav-height: $header-icon-size+20px;
 
 // Home Banner
 $home-banner-title-font-family: Raleway;
@@ -108,9 +106,8 @@ $conversation-edit-save-color: white;
 $conversation-info-title: #C6027B;
 
 // Conversation: vote
-$conversation-vote-font-size: 18px;
-$conversation-vote-circle-size: 32px;
-$conversation-vote-circle-spacing: 9px 6px 0 7px;
+$conversation-vote-font-size: 13px;
+$conversation-vote-circle-spacing: 7px;
 $conversation-vote-agree-color: #3F1B53;
 $conversation-vote-skip-color: #30BEC0;
 $conversation-vote-disagree-color: #C6027B;
@@ -131,6 +128,10 @@ $toast-font-color: #3F1B53;
 $selected-stereotype-cluster-menu-color: #b62a52;
 $selected-stereotype-cluster-menu-border: none;
 $selected-stereotype-cluster-menu-padding: none;
+
+// Color
+$color-accent: #C6027B;
+$color-magenta: #C6027B;
 
 // Stereotypes
 $stereotype-title: #3F1B53;

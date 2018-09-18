@@ -3,7 +3,8 @@
         <p>{{ voted }} / {{ total }}</p>
     </div>
     <div class="Comment-user">
-        <i class="fa fa-user"></i><span>{{ comment.author.name }}</span>
+{#        <i class="fa fa-user"></i><span>{{ comment.author.name }}</span>#}
+        <img src="/static/img/icons/catlogo.svg" ><span>{{ comment.author.name }}</span>
     </div>
     <p>{{ comment.content }}</p>
     {% if show_user_actions %}

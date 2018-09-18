@@ -159,8 +159,6 @@ publish mdhcpa/web tagged:
 .deploy:
   image: cdrx/rancher-gitlab-deploy
   stage: deploy
-  tags:
-    - lappis
   script:
     - "upgrade
             --service web
