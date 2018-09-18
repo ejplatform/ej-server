@@ -8,10 +8,9 @@ class StereotypeForm(ModelForm):
         model = Stereotype
         fields = ['name', 'description']
 
-    def __init__(self,*args,**kwargs):
-        #use self to store id
+    def __init__(self, *args, **kwargs):
         self.conversation = kwargs.pop("conversation")
-        super(StereotypeForm, self).__init__(*args,**kwargs)
+        super(StereotypeForm, self).__init__(*args, **kwargs)
 
     def clean(self):
         super(StereotypeForm, self).clean()
@@ -28,6 +27,10 @@ class StereotypeVoteForm(ModelForm):
     class Meta:
         model = StereotypeVote
         fields = ['comment', 'choice']
+
+    def __init__(self, *args, **kwargs):
+        super(StereotypeVoteForm, self).__init__(*args, **kwargs)
+        self.fields['comment'].widget.attrs = {'class': 'comment_select'}
 
 
 StereotypeVoteFormSet = modelformset_factory(

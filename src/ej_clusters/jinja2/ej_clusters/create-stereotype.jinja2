@@ -43,6 +43,7 @@
                 </div>
             </div>
             {{ votes_form.management_form }}
+            <div class="votes_form_class">
             {% for form in votes_form %}
                 <div class="row form-row spacer">
                     {{ form.as_p() }}
@@ -52,6 +53,7 @@
                     </div>
                 </div>
             {% endfor %}
+            </div>
             <div class="StereotypeAdd-submit">
               <div>
                 <input type="submit" class="Button" value="{{ button_text }}" name="create">

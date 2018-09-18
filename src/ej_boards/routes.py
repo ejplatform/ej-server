@@ -99,7 +99,7 @@ def conversation_list(request, board):
         'create_url': reverse('boards:create-conversation', kwargs={'board': board}),
         'title': _("%s' conversations") % board.title,
         'subtitle': _("These are %s's conversations. Contribute to them too") % board.title,
-}
+    }
 
 
 @urlpatterns.route('<model:board>/conversations/<model:conversation>')
