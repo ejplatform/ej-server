@@ -23,21 +23,6 @@
             <p>{{ subtitle }}</p>
         </div>
 
-        {% if is_a_board is defined %}
-            <div class="ConversationList-urls">
-                <span class="public">
-                    <i class="fa fa-chevron-left"></i>
-                    {{ link(_('public conversations'), href='/conversations/') }}
-                </span>
-                {% if not owns_board %}
-                    <span class="my-conversations">
-                    {{ link(_('go to my conversations'), href='/profile/conversations/') }}
-                    <i class="fa fa-chevron-right"></i>
-                </span>
-                {% endif %}
-            </div>
-        {% endif %}
-
         {# Cards #}
         <div class="ConversationList-cardList">
             {% for conversation in conversations %}

@@ -80,7 +80,8 @@ def conversations_list(request):
         'current_board': board,
         'boards': boards,
         'create_url': reverse('conversation:create'),
-        'can_add_conversation': user.has_perm('ej.can_add_promoted_conversation'),
+        # you can't add conversations because there can be more than one board being displayed
+        'can_add_conversation': False,
         'title': _('My conversations'),
         'subtitle': _('See all conversations created by you'),
     }

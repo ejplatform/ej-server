@@ -95,10 +95,9 @@ def conversation_list(request, board):
         'can_add_conversation': user_is_owner,
         'create_url': reverse('boards:create-conversation', kwargs={'board': board}),
         'conversations': conversations,
-        'boards': boards,
+        'boards_count': boards.count(),
         'board': board,
         'is_a_board': True,
-        'owns_board': user_is_owner,
         'title': _("%s' conversations") % board.title,
         'subtitle': _("These are %s's conversations. Contribute to them too") % board.title,
     }

@@ -5,7 +5,7 @@
         <a class="Link-new" href="{{ create_url }}"><i class="fa fa-plus-circle"></i> {{ _('New conversation') }}</a>
     {% endif %}
 
-    {% if owns_board|default(False) and boards|length > 1 %}
+    {% if can_add_conversation|default(False) and boards_count|default(0) > 1 %}
         <div class="view-board">
             <span>{{ _('Viewing board:') }}</span>
             <select name="select-board" class="select-board" id="select-board">
@@ -33,7 +33,7 @@
                     <i class="fa fa-chevron-left"></i>
                     {{ link(_('public conversations'), href='/conversations/') }}
                 </span>
-                {% if not owns_board %}
+                {% if not can_add_conversation %}
                     <span class="my-conversations">
                     {{ link(_('go to my conversations'), href='/profile/conversations/') }}
                     <i class="fa fa-chevron-right"></i>
