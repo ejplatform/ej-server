@@ -138,6 +138,8 @@ def reset_password(request):
     environment = Environment(loader=loader)
     TEMPLATE_FILE = "reset-password-message.jinja2"
     template = environment.get_template(TEMPLATE_FILE)
+    error = False
+    success = False
 
     if request.method == "POST":
 
@@ -148,22 +150,30 @@ def reset_password(request):
             host = 'https://' + settings.HOSTNAME
 
         template_message = template.render({'link': host + '/recover-password/' + url_token})
-        user = User.objects.get_by_email(request.POST['email'])
-        token = TokenUser()
-        token.url_token = url_token
-        token.user = user
-        token.save()
 
-        send_mail(_("Please reset your password"),
-                  template_message,
-                  settings.EMAIL_HOST_USER,
-                  [request.POST['email']],
-                  fail_silently=True,
-                  )
+        try:
+            user = User.objects.get_by_email(request.POST['email'])
+            token = TokenUser()
+            token.url_token = url_token
+            token.user = user
+            token.save()
+
+            send_mail(_("Please reset your password"),
+                      template_message,
+                      settings.EMAIL_HOST_USER,
+                      [request.POST['email']],
+                      fail_silently=True,
+                      )
+            success = True
+        except User.DoesNotExist:
+            error = True
 
     return {
 
         'form': form,
+        'error': error,
+        'success': success,
+
     }
 
 
