@@ -26,8 +26,6 @@ test with sqlite3:
     - pip install -r etc/requirements/develop.txt
     - pytest --cov=./
     - codecov -t $CODECOV_TOKEN
-  tags:
-    - lappis
 
 test with postgres:
   extends: test with sqlite3
@@ -41,9 +39,6 @@ flake8:
   stage: test
   script:
     - flake8 src/
-# Tag to use the Runner inside lappis servers
-  tags:
-    - lappis
 
 
 # -----------------------------------------------------------------------------
@@ -136,6 +131,7 @@ publish ejplatform/web tagged:
     - docker push ejplatform/web:$CI_COMMIT_TAG
     - docker push ejplatform/web:$DOCKER_TAG
   only:
+    - master
     - tags
 
 
@@ -153,6 +149,7 @@ publish mdhcpa/web tagged:
     - docker push mdhcpa/web:$CI_COMMIT_TAG
     - docker push mdhcpa/web:$DOCKER_TAG
   only:
+    - master
     - tags
 
 # -----------------------------------------------------------------------------
@@ -162,8 +159,6 @@ publish mdhcpa/web tagged:
 .deploy:
   image: cdrx/rancher-gitlab-deploy
   stage: deploy
-  tags:
-    - lappis
   script:
     - "upgrade
             --service web
