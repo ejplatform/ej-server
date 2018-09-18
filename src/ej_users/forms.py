@@ -55,3 +55,21 @@ class ResetPasswordForm(PlaceholderForm, forms.Form):
     """
 
     email = forms.CharField(label=_('E-mail'))
+
+
+class RecoverPasswordForm(PlaceholderForm, forms.Form):
+
+    """
+    Recover User Password
+    """
+
+    new_password = forms.CharField(
+        label=_('Password'),
+        required=True,
+        widget=forms.PasswordInput,
+    )
+    new_password_confirm = forms.CharField(
+        label=_('Password confirmation'),
+        required=True,
+        widget=forms.PasswordInput,
+    )

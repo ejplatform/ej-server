@@ -27,6 +27,7 @@ class User(AbstractUser):
         _('email address'),
         unique=True,
     )
+
     objects = UserManager()
 
     @property
@@ -43,3 +44,22 @@ class User(AbstractUser):
 
     class Meta:
         swappable = 'AUTH_USER_MODEL'
+
+
+class Token (models.Model):
+
+    url_token = models.CharField(
+        ('user token'),
+        unique=True,
+        max_length=50,
+        null=True,
+    )
+
+    user = models.ForeignKey(
+        'User',
+        on_delete=models.CASCADE,
+    )
+
+    date_time = models.DateField(
+        auto_now=True,
+    )

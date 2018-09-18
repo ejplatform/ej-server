@@ -16,6 +16,7 @@ from rest_framework.authtoken.models import Token
 from secrets import token_urlsafe
 from django.core.mail import send_mail
 from jinja2 import FileSystemLoader, Environment
+from .models import Token as TokenUser
 
 from boogie.router import Router
 from ej_users import forms
@@ -105,10 +106,22 @@ def logout(request):
     return HttpResponseServerError()
 
 
-@urlpatterns.route('profile/recover-password/')
-def recover_password(request):
+@urlpatterns.route('recover-password/<str:url_token>')
+def recover_password(request, url_token):
+
+    form = forms.RecoverPasswordForm.bind(request)
+
+    user_token = TokenUser.objects.get(url_token=url_token)
+    user = user_token.user
+
+    if request.method == 'POST':
+        new_password = request.POST['new_password']
+        user.set_password(new_password)
+        user.save()
+
     return {
-        'user': request.user,
+        'user': user,
+        'form': form,
     }
 
 
@@ -134,7 +147,12 @@ def reset_password(request):
         else:
             host = 'https://' + settings.HOSTNAME
 
-        template_message = template.render({'link': host + '/reset-password/' + url_token})
+        template_message = template.render({'link': host + '/recover-password/' + url_token})
+        user = User.objects.get_by_email(request.POST['email'])
+        token = TokenUser()
+        token.url_token = url_token
+        token.user = user
+        token.save()
 
         send_mail(_("Please reset your password"),
                   template_message,
@@ -144,7 +162,7 @@ def reset_password(request):
                   )
 
     return {
-        'user': request.user,
+
         'form': form,
     }
 
