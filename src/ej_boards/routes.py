@@ -31,9 +31,15 @@ urlpatterns = Router(
 @urlpatterns.route('profile/boards/', template='ej_boards/list.jinja2')
 def list(request):
     user = request.user
+    boards = user.boards.all()
+    can_add_board = user.has_perm('ej_boards.can_add_board')
+
+    if not can_add_board and user.boards.count() == 1:
+        return redirect(f'{boards[0].get_absolute_url()}conversations/')
+
     return {
-        'boards': user.boards.all(),
-        'can_add_board': user.has_perm('ej_boards.can_add_board'),
+        'boards': boards,
+        'can_add_board': can_add_board,
     }
 
 
@@ -80,7 +86,7 @@ def edit(request, board):
     }
 
 
-@urlpatterns.route('<model:board>/conversations/')
+@urlpatterns.route('<model:board>/conversations/', template='ej_conversations/list.jinja2')
 def conversation_list(request, board):
     user = request.user
     conversations = board.conversations.all()
@@ -88,15 +94,17 @@ def conversation_list(request, board):
     boards = []
     if user == board_user:
         boards = board_user.boards.all()
-
+        user_is_owner = True
+    else:
+        user_is_owner = False
     return {
-        'conversations': conversations,
-        'boards': boards,
-        'board': board,
-        'can_add_conversation': board_user == user,
-        'is_a_board': True,
-        'owns_board': user == board.owner,
+        'can_add_conversation': user_is_owner,
         'create_url': reverse('boards:create-conversation', kwargs={'board': board}),
+        'conversations': conversations,
+        'boards_count': boards.count(),
+        'boards': boards,
+        'current_board': board,
+        'is_a_board': True,
         'title': _("%s' conversations") % board.title,
         'subtitle': _("These are %s's conversations. Contribute to them too") % board.title,
     }
