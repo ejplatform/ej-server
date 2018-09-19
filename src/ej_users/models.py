@@ -26,6 +26,7 @@ class User(AbstractUser):
     email = models.EmailField(
         _('email address'),
         unique=True,
+        help_text=('Your e-mail address')
     )
     objects = UserManager()
 

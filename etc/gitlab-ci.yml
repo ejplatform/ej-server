@@ -131,6 +131,7 @@ publish ejplatform/web tagged:
     - docker push ejplatform/web:$CI_COMMIT_TAG
     - docker push ejplatform/web:$DOCKER_TAG
   only:
+    - master
     - tags
 
 
@@ -148,6 +149,7 @@ publish mdhcpa/web tagged:
     - docker push mdhcpa/web:$CI_COMMIT_TAG
     - docker push mdhcpa/web:$DOCKER_TAG
   only:
+    - master
     - tags
 
 # -----------------------------------------------------------------------------
