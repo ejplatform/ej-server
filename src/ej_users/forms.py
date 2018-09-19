@@ -47,6 +47,6 @@ class LoginForm(PlaceholderForm, forms.Form):
         email = forms.CharField(label=_('E-mail'), help_text=_('Your e-mail'))
     else:
         email = forms.EmailField(label=_('E-mail'))
-    password = forms.CharField(label=_('Password'), 
-                            widget=forms.PasswordInput, 
-                            help_text=_('Your password'))
+    password = forms.CharField(label=_('Password'),
+                               widget=forms.PasswordInput,
+                               help_text=_('Your password'))
