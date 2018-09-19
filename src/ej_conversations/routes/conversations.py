@@ -1,5 +1,4 @@
 from logging import getLogger
-
 from django.http import HttpResponseServerError, Http404
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
@@ -56,10 +55,10 @@ def conversation_detail_context(request, conversation):
     # keep the same comment that was displayed before.
     elif request.POST.get('action') == 'comment':
         # FIXME: do not hardcode this and use a proper form!
-        comment = request.POST['comment'].strip()
-        comment = comment[:210]
-        comment = conversation.create_comment(user, comment)
-        log.info(f'user {user.id} posted comment {comment.id} on {conversation.id}')
+        new_comment = request.POST['comment'].strip()
+        new_comment = new_comment[:210]
+        new_comment = conversation.create_comment(user, new_comment)
+        log.info(f'user {user.id} posted comment {new_comment.id} on {conversation.id}')
 
     # User toggled the favorite status of conversation.
     elif request.POST.get('action') == 'favorite':
@@ -70,7 +69,6 @@ def conversation_detail_context(request, conversation):
     elif request.method == 'POST':
         log.warning(f'user {user.id} sent invalid POST request: {request.POST}')
         return HttpResponseServerError('invalid action')
-
     return {
         # Objects
         'conversation': conversation,
