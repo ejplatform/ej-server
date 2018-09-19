@@ -41,7 +41,6 @@ def conversation_detail_context(request, conversation):
     """
     user = request.user
     is_favorite = user.is_authenticated and conversation.followers.filter(user=user).exists()
-    n_comments = rules.compute('ej.remaining_comments', conversation, user)
     comment = None
 
     # User is voting in the current comment. We still need to choose a random
@@ -71,6 +70,7 @@ def conversation_detail_context(request, conversation):
         log.warning(f'user {user.id} sent invalid POST request: {request.POST}')
         return HttpResponseServerError('invalid action')
 
+    n_comments = rules.compute('ej_conversations.remaining_comments', conversation, user)
     return {
         # Objects
         'conversation': conversation,
@@ -82,6 +82,7 @@ def conversation_detail_context(request, conversation):
         'is_favorite': is_favorite,
         'can_view_comment': user.is_authenticated,
         'can_comment': user.has_perm('ej.can_comment', conversation),
+        'user_is_owner': conversation.author == user,
         'can_edit': user.has_perm('ej.can_edit_conversation', conversation),
         'cannot_comment_reason': '',
     }
