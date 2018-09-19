@@ -1,9 +1,9 @@
 {% extends 'base.jinja2' %}
-{% from 'ej_conversations/components/conversation-list.jinja2' import conversation_list with context %}
+{% from 'ej_conversations/components/conversation-list.jinja2' import conversation_list_static %}
 
 {% block content %}
     {% if conversations %}
-        {{ conversation_list(conversations, category, footer_content,title=_('Favorite conversations'), javascript_enabled=javascript_enabled) }}
+        {{ conversation_list_static(conversations, _('Favorite conversations'), _('Participate of conversations and give your opinion with comments and votes!')) }}
     {% else %}
         <div class="CenteredContainer">
             <h1>{% trans %}Favorite conversations{% endtrans %}</h1>

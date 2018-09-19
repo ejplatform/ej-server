@@ -104,7 +104,6 @@ def favorite_conversations(request):
     conversations = [fav.conversation for fav in favorites]
     return {
         'conversations': conversations,
-        'category': None,
     }
 
 

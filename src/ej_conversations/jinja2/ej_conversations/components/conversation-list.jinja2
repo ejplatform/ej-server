@@ -16,7 +16,7 @@
     {% if caller is defined %}{% set caller_output = caller() %}{% endif %}
 {% endmacro %}
 
-{% macro conversation_list_static(conversations, categories, title, subtitle, caller_output=None) %}
+{% macro conversation_list_static(conversations, title, subtitle, caller_output=None) %}
     <div class="ConversationList">
         <div class="ConversationList-title">
             <h1>{{ title }}</h1>
@@ -31,4 +31,3 @@
         </div>
     </div>
 {% endmacro %}
-s
