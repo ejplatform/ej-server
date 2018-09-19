@@ -58,7 +58,7 @@
             </a>
 
             {% call link(href='/', class="Header-ejLogo") %}
-                <img src="/static/img/logo/logo.svg" alt="EJ logo">
+                <img src="/static/img/logo/logo.svg" alt="{{_('Site logo')}}">
             {% endcall %}
 
             <a href="/menu/" title="{{ _("Navigation menu") }}" up-drawer=".NavMenu" up-history="false"
@@ -74,7 +74,7 @@
             </a>
 
             {% call link(href='/', class="Header-ejLogo") %}
-                <img src="/static/img/logo/logo.svg" alt="EJ logo">
+                <img src="/static/img/logo/logo.svg" alt="{{_('Site logo')}}">
             {% endcall %}
 
         {% endif %}
@@ -98,7 +98,7 @@
         {% endif %}
 
         {% call link('profile:detail', title=_('Profile'), class='profile-link', preload=True) %}
-            <img src="/static/img/icons/navbar_profile.svg" title="{{ _('Profile') }}" class="Header-lowerIcon">
+            <img src="/static/img/icons/navbar_profile.svg" title="{{ _('Profile') }}" alt="{{_('Profile')}}" class="Header-lowerIcon">
             <span>{{ _('Profile') }}</span>
         {% endcall %}
 
