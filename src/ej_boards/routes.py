@@ -31,9 +31,15 @@ urlpatterns = Router(
 @urlpatterns.route('profile/boards/', template='ej_boards/list.jinja2')
 def list(request):
     user = request.user
+    boards = user.boards.all()
+    can_add_board = user.has_perm('ej_boards.can_add_board')
+
+    if not can_add_board and user.boards.count() == 1:
+        return redirect(f'{boards[0].get_absolute_url()}conversations/')
+
     return {
-        'boards': user.boards.all(),
-        'can_add_board': user.has_perm('ej_boards.can_add_board'),
+        'boards': boards,
+        'can_add_board': can_add_board,
     }
 
 
