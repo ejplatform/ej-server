@@ -184,10 +184,12 @@ Now build the containers and execute compose:
     $ inv docker-deploy up
 
 In order to integrate the main EJ application with an instance of Rocket.Chat,
-first configure the server and set up an admin user. The next step is to
-login as an the superuser in EJ and point to <EJ URL>/talks/config/. This URL
-presents a form that you can be used to configure the basic parameters of
-Rocket.Chat integration.
+open your Rocket.Chat url and you will be redirected to /setup-wizard, create
+an admin user and configure the server. After you finish the setup-wizard, the
+next step is to login as an the superuser in EJ and point to <EJ URL>/talks/config/.
+This URL presents a form that you can be used to configure the basic parameters of
+Rocket.Chat integration, here you have to put the admin credentials you created
+on Rocket.Chat setup-wizard.
 
 There are other ways to retrieve this data from the API. Visit
 `Rocketchat API docs`_ to learn more.
