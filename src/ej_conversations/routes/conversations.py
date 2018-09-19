@@ -5,7 +5,6 @@ from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from hyperpython import a
 
-from boogie import rules
 from . import urlpatterns, conversation_url
 from ..models import Conversation, Comment
 
@@ -70,19 +69,15 @@ def conversation_detail_context(request, conversation):
         log.warning(f'user {user.id} sent invalid POST request: {request.POST}')
         return HttpResponseServerError('invalid action')
 
-    n_comments = rules.compute('ej_conversations.remaining_comments', conversation, user)
     return {
         # Objects
         'conversation': conversation,
         'comment': comment or conversation.next_comment(user, None),
-        'comments_left': n_comments,
         'login_link': login_link(_('login'), conversation),
 
         # Permissions and predicates
         'is_favorite': is_favorite,
         'can_view_comment': user.is_authenticated,
-        'can_comment': user.has_perm('ej.can_comment', conversation),
-        'user_is_owner': conversation.author == user,
         'can_edit': user.has_perm('ej.can_edit_conversation', conversation),
         'cannot_comment_reason': '',
     }
