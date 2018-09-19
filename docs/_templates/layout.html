@@ -1,77 +1,15 @@
-{% extends "!layout.html" %}
+{% extends 'base.jinja2' %}
 
-{%- block header %}
-<style> div.document { margin-top: 120px; } </style>
-<!-- FIXME: precisa aproveitar o código existente -->
-	<header class="TopHeader">
-        <div class="TopHeader-wrapper">
-            <ul class="TopHeader-links">
-                <li><a href="/about/" up-instant="" up-preload="" title="About us" up-target=".Page-mainContainer .Header-topIcon" up-transition="cross-fade">about</a></li>
-                <li><a href="/faq/" up-instant="" up-preload="" title="Frequently asked questions" up-target=".Page-mainContainer .Header-topIcon" up-transition="cross-fade">frequent questions</a></li>
-                <li><a href="/usage/" up-instant="" up-preload="" title="Usage terms" up-target=".Page-mainContainer .Header-topIcon" up-transition="cross-fade">usage</a></li>
-            </ul>
-            <ul class="TopHeader-social">
-                    <li><a href="https://facebook.com/page-link/"><i class="fab fa-facebook"></i></a></li>
-                    <li><a href="https://twitter.com/page-link/"><i class="fab fa-twitter"></i></a></li>
-            </ul>
-        </div>
-    </header>
-   <header class="Header">
-        <div class="Header-wrapper">
-            
-        <script type="text/javascript">
-            // this function controls the open/close button of "conversations dropdown on page_menu
-            function openDropDown(openDiv) {
-                let element = document.getElementsByClassName(openDiv);
-                if (element[0].style.display == "inline")
-                    element[0].style.display = "none";
-                else
-                    element[0].style.display = "inline";
-            }
-        </script>
+{% set content_title = _('Documentation') %}
+{% set enable_navbar = False %}
+{% set target = 'all' %}
+{% set request = None %}
+{% set body_class = 'Docs' %}
 
-        <script type="text/javascript">
-            let toggleHicontrast = () => {
-                let bodyDiv = document.getElementsByTagName('body')[0];
-                if (localStorage.hicontrast == "true") {
-                    localStorage.hicontrast = false;
-                    bodyDiv.className = bodyDiv.className.slice(0, bodyDiv.className.length - " hicontrast".length);
-                    console.log(localStorage.hicontrast);
-                } else {
-                    localStorage.hicontrast = true;
-                    bodyDiv.className += " hicontrast";
-                    console.log(localStorage.hicontrast);
-                }
-            }
-        </script>
-    <nav class="Header-topNav">
-            <a title="Back" class="Header-topIcon" onclick="history.back()">
-                <i class="fa fa-chevron-left"></i>
-            </a>
-
-<a href="/" class="Header-ejLogo" up-target=".Page-mainContainer .Header-topIcon" up-instant="" up-transition="cross-fade">                <img src="//localhost:8000/static/img/logo/logo.svg" alt="EJ logo">
-</a>
-
-            <a href="/menu/" title="Navigation menu" up-drawer=".NavMenu" up-history="false" class="Header-topIcon" up-modal=".NavMenu" up-flavor="drawer">
-                <i class="fa fa-bars"></i>
-            </a>
-
-
-    </nav>
-
-<a href="/login/" up-target=".Page-mainContainer .Header-topIcon" up-instant="" up-transition="cross-fade">                    <div class="Header-lowerNotLogged">
-                        <p>ENTRAR</p>
-                    </div>
-</a>
-        </div>
-    </header>
-{%- endblock %}
-
-{%- block footer %}
+{% block content %}
   {% if static_page %}
     {{super()}}
   {% else %}
-    <footer class="footer">
-    </footer>
+    <p></p>
   {% endif %}
-{%- endblock %}
+{% endblock %}

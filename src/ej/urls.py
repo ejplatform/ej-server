@@ -28,7 +28,7 @@ urlpatterns = [
     path('', include('ej_help.routes', namespace='help')),
 
     # Profile URLS
-    path('profile/', include(('ej_profiles.routes', 'ej_profiles'), namespace='profiles')),
+    path('profile/', include(('ej_profiles.routes', 'ej_profiles'), namespace='profile')),
     path('profile/', include('ej_gamification.routes', namespace='gamification')),
     path('profile/notifications/', include('ej_notifications.routes', namespace='notifications')),
 
@@ -62,8 +62,8 @@ urlpatterns = [
     *static(settings.STATIC_URL, document_root=settings.STATIC_ROOT),
 
     # Documentation in development mode
-    url(r'^docs/$', serve, { 'document_root': 'build/docs', 'path': 'index.html' }),
-    url(r'^docs/(?P<path>.*)$', serve, { 'document_root': 'build/docs/' }),
+    url(r'^static_docs/$', serve, { 'document_root': 'build/docs', 'path': 'index.html' }),
+    url(r'^static_docs/(?P<path>.*)$', serve, { 'document_root': 'build/docs/' }),
 ]
 
 if settings.DEBUG:
