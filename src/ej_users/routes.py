@@ -12,6 +12,7 @@ from django.template.loader import get_template
 from django.utils.translation import ugettext_lazy as _
 from rest_framework import status
 from rest_framework.authtoken.models import Token
+from django.utils import timezone
 
 from secrets import token_urlsafe
 from django.core.mail import send_mail
@@ -21,7 +22,7 @@ from .models import Token as TokenUser
 from boogie.router import Router
 from ej_users import forms
 from .socialbuttons import social_buttons
-from datetime import datetime, timezone
+from datetime import datetime
 
 User = get_user_model()
 
@@ -113,28 +114,31 @@ def recover_password(request, url_token):
     form = forms.RecoverPasswordForm.bind(request)
     next = request.GET.get('next', '/login/')
     isExpired = False
+    invalid_link = False
     try:
         user_token = TokenUser.objects.get(url_token=url_token)
         user = user_token.user
         time_now = datetime.now(timezone.utc)
         token_time = user_token.date_time
-        if (time_now - token_time).total_seconds() > 10:
+        if (time_now - token_time).total_seconds() > 600:
             isExpired = True
 
         if request.method == 'POST':
+
             new_password = request.POST['new_password']
             user.set_password(new_password)
             user.save()
+            user_token.delete()
             return redirect(next)
     except TokenUser.DoesNotExist:
-        # if request.method == 'POST':
-        #     form.add_error(None, 'It looks like you clicked on an invalid password reset link. Please try again.')
-        return redirect('/reset-password/', invalid=True)
+        user = None
+        invalid_link = True
 
     return {
         'user': user,
         'form': form,
-        'isExpired': isExpired
+        'isExpired': isExpired,
+        'invalid_link': invalid_link,
     }
 
 

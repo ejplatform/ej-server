@@ -60,6 +60,6 @@ class Token (models.Model):
         on_delete=models.CASCADE,
     )
 
-    date_time = models.DateField(
+    date_time = models.DateTimeField(
         auto_now=True,
     )
