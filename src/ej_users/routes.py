@@ -111,13 +111,18 @@ def recover_password(request, url_token):
 
     form = forms.RecoverPasswordForm.bind(request)
 
-    user_token = TokenUser.objects.get(url_token=url_token)
-    user = user_token.user
+    try:
+        user_token = TokenUser.objects.get(url_token=url_token)
+        user = user_token.user
 
-    if request.method == 'POST':
-        new_password = request.POST['new_password']
-        user.set_password(new_password)
-        user.save()
+        if request.method == 'POST':
+            new_password = request.POST['new_password']
+            user.set_password(new_password)
+            user.save()
+    except TokenUser.DoesNotExist:
+        # if request.method == 'POST':
+        #     form.add_error(None, 'It looks like you clicked on an invalid password reset link. Please try again.')
+        return redirect('/reset-password/', invalid=True)
 
     return {
         'user': user,
@@ -138,8 +143,8 @@ def reset_password(request):
     environment = Environment(loader=loader)
     TEMPLATE_FILE = "reset-password-message.jinja2"
     template = environment.get_template(TEMPLATE_FILE)
-    error = False
     success = False
+    user = None
 
     if request.method == "POST":
 
@@ -157,6 +162,7 @@ def reset_password(request):
             token.url_token = url_token
             token.user = user
             token.save()
+            success = True
 
             send_mail(_("Please reset your password"),
                       template_message,
@@ -164,14 +170,13 @@ def reset_password(request):
                       [request.POST['email']],
                       fail_silently=True,
                       )
-            success = True
         except User.DoesNotExist:
-            error = True
+            success = False
+            form.add_error(None, 'The specified email address is not listed on your account.')
 
     return {
-
+        'user': user,
         'form': form,
-        'error': error,
         'success': success,
 
     }
