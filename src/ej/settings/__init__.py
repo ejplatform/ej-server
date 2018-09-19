@@ -41,6 +41,15 @@ class Conf(ThemesConf,
     HOSTNAME = env('localhost')
 
     #
+    # E-mail
+    #
+    EMAIL_HOST =
+    EMAIL_PORT =
+    EMAIL_HOST_USER =
+    EMAIL_HOST_PASSWORD =
+    EMAIL_USE_SSL =
+
+    #
     # Accounts
     #
     AUTH_USER_MODEL = 'ej_users.User'
