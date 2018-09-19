@@ -65,7 +65,7 @@ def edit(request):
     }
 
 
-@urlpatterns.route('conversations/', template='ej_conversations/conversations-list.jinja2')
+@urlpatterns.route('conversations/', template='ej_conversations/list.jinja2')
 def conversations_list(request):
     user = request.user
     boards = user.boards.all()
@@ -80,7 +80,8 @@ def conversations_list(request):
         'current_board': board,
         'boards': boards,
         'create_url': reverse('conversation:create'),
-        'can_add_conversation': user.has_perm('ej.can_add_promoted_conversation'),
+        # you can't add conversations because there can be more than one board being displayed
+        'can_add_conversation': False,
         'title': _('My conversations'),
         'subtitle': _('See all conversations created by you'),
     }
