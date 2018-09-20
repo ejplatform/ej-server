@@ -46,7 +46,7 @@
         {# Cards #}
         <div class="ConversationList-cardList">
             {% for conversation in conversations %}
-                {{ conversation|role('card') }}
+                {{ conversation|role('card', board=current_board|default(None)) }}
             {% endfor %}
         </div>
     </div>
