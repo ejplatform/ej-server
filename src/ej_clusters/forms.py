@@ -15,9 +15,10 @@ class StereotypeForm(ModelForm):
     def clean(self):
         super(StereotypeForm, self).clean()
         name = self.cleaned_data.get('name')
-
         stereotype_exists = Stereotype.objects.filter(name=name, conversation=self.conversation).exists()
-        if stereotype_exists:
+        if self.instance and name == self.instance.name:
+            return self.cleaned_data
+        elif stereotype_exists:
             msg = _('Stereotype for this conversation with this name already exists.')
             raise ValidationError(msg)
         return self.cleaned_data

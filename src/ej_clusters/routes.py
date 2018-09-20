@@ -151,7 +151,7 @@ def edit_stereotype(request, conversation, stereotype):
             for vote in votes_formset.save(commit=False):
                 vote.author = stereotype
                 vote.save()
-            return redirect('cluster:stereotype-list')
+            return redirect(conversation.get_absolute_url() + 'stereotypes/')
     else:
         stereotype_form = StereotypeForm(conversation=conversation, instance=stereotype)
         votes = StereotypeVote.objects.filter(author=stereotype)
