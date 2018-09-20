@@ -142,7 +142,7 @@ def create_stereotype(request, conversation):
                    perms=['ej.can_manage_stereotypes'])
 def edit_stereotype(request, conversation, stereotype):
     if request.method == 'POST':
-        stereotype_form = StereotypeForm(request.POST, instance=stereotype)
+        stereotype_form = StereotypeForm(request.POST, conversation=conversation, instance=stereotype)
         votes = StereotypeVote.objects.filter(author=stereotype)
         votes_formset = StereotypeVoteFormSet(request.POST, queryset=votes)
 
@@ -153,7 +153,7 @@ def edit_stereotype(request, conversation, stereotype):
                 vote.save()
             return redirect('cluster:stereotype-list')
     else:
-        stereotype_form = StereotypeForm(instance=stereotype)
+        stereotype_form = StereotypeForm(conversation=conversation, instance=stereotype)
         votes = StereotypeVote.objects.filter(author=stereotype)
         votes_formset = StereotypeVoteFormSet(queryset=votes)
 
