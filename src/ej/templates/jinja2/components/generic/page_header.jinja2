@@ -10,9 +10,9 @@
             {% if request.user.is_active %}
                 {{ header_lower_nav(request) }}
             {% else %}
-                {%- call link('auth:login') %}
+                {%- call link(href='auth:login', link_next=request.path) %}
                     <div class="Header-lowerNotLogged">
-                        <p>{{ _('ENTRAR') }}</p>
+                        <p>{{ _('LOGIN') }}</p>
                     </div>
                 {% endcall %}
             {% endif %}
@@ -108,5 +108,3 @@
         {% endcall %} #}
     </nav>
 {% endmacro %}
-
-
