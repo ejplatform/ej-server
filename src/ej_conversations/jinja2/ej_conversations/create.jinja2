@@ -28,6 +28,7 @@
                             There were some errors in the information you entered.
                             Please correct the problems bellow.{% endtrans %}</p>
                         {{ form.non_field_errors() }}
+                        {{ form.errors }}
                     </div>
                 </div>
             {% endif %}
@@ -62,7 +63,6 @@
             </div>
 
             <div class="ConversationField"><i class="fa fa-heading"></i>{{ form.title }}</div>
-            <div class="ConversationField"><i class="fa fa-link"></i>{{ form.slug }}</div>
             <input type="hidden" name="comments_count" value="5">
 
             <div class="Moderate-comments">
