@@ -33,6 +33,7 @@ django-configurations ~= 2.0
 
 # Models
 django-model-utils ~= 3.0.0
+django-polymorphic ~= 2.0.3
 django-taggit ~= 0.22.2
 django-manager-utils ~= 1.1.1
 django-bulk-update ~= 2.2.0
