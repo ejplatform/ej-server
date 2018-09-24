@@ -35,12 +35,12 @@ class TestStereotypeRoutes(TestCase):
     def setUp(self):
         self.user = User.objects.create_user('name@server.com', '1234', name='name')
         self.conversation = Conversation.objects.create(title='Title', author=self.user)
-        comment = self.conversation.create_comment(self.user, 'comment', 'approved')
+        self.comment = self.conversation.create_comment(self.user, 'comment', 'approved')
         client = Client()
         client.force_login(self.user)
         self.logged_client = client
         self.stereotype = Stereotype.objects.create(name='stereo', conversation=self.conversation, owner=self.user)
-        StereotypeVote.objects.create(author=self.stereotype, choice=Choice.SKIP, comment=comment)
+        StereotypeVote.objects.create(author=self.stereotype, choice=Choice.SKIP, comment=self.comment)
 
     def test_create_stereotype(self):
         client = self.logged_client
@@ -50,7 +50,7 @@ class TestStereotypeRoutes(TestCase):
                                      'form-INITIAL_FORMS': 0,
                                      'form-MIN_NUM_FORMS': 0,
                                      'form-MAX_NUM_FORMS': 1000,
-                                     'form-0-comment': '1',
+                                     'form-0-comment': self.comment.id,
                                      'form-0-choice': '0',
                                      'form-0-id': ''})
         print(response.content)
@@ -78,10 +78,9 @@ class TestStereotypeRoutes(TestCase):
                                      'form-INITIAL_FORMS': 0,
                                      'form-MIN_NUM_FORMS': 0,
                                      'form-MAX_NUM_FORMS': 1000,
-                                     'form-0-comment': '1',
+                                     'form-0-comment': self.comment.id,
                                      'form-0-choice': '1',
                                      'form-0-id': ''})
-        print(response.content)
         self.assertRedirects(response, self.conversation.get_absolute_url() + 'stereotypes/', 302, 200)
 
     def test_edit_invalid_stereotype(self):
