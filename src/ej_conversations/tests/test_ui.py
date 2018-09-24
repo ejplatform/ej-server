@@ -41,6 +41,7 @@ def env(live_server, driver, user):
     assert driver.url == f'{live_server.url}/conversations/title/'
 
 
+@pytest.mark.browser
 class TestUIVote:
     """
     Test UI when a user try to vote after register and after the login.

@@ -28,6 +28,7 @@ exclude_lines =
     while 0:
     while False:
 ignore_errors = True
+show_missing = True
 
 
 [paths]
