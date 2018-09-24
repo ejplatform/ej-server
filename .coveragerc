@@ -1,6 +1,6 @@
 [run]
 include = src/*
-omit = *migrations*, *tests*
+omit = *migrations*, *tests*, *.html*
 branch = True
 plugins =
     django_coverage_plugin
@@ -28,6 +28,7 @@ exclude_lines =
     while 0:
     while False:
 ignore_errors = True
+show_missing = True
 
 
 [paths]
