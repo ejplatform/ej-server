@@ -1,6 +1,6 @@
 [run]
 include = src/*
-omit = *migrations*, *tests*
+omit = *migrations*, *tests*, *.html*
 branch = True
 plugins =
     django_coverage_plugin
