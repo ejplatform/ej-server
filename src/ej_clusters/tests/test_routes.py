@@ -1,6 +1,5 @@
 import pytest
-from django.test import Client
-from django.test import TestCase
+from django.test import Client, TestCase
 
 from ej.testing import UrlTester
 from ej_conversations.mommy_recipes import ConversationRecipes
@@ -53,7 +52,6 @@ class TestStereotypeRoutes(TestCase):
                                      'form-0-comment': self.comment.id,
                                      'form-0-choice': '0',
                                      'form-0-id': ''})
-        print(response.content)
         self.assertRedirects(response, self.conversation.get_absolute_url() + 'stereotypes/', 302, 200)
 
     def test_create_invalid_stereotype(self):

@@ -28,7 +28,7 @@ urlpatterns = Router(
 )
 
 
-@urlpatterns.route('profile/boards/', template='ej_boards/list.jinja2')
+@urlpatterns.route('profile/boards/', template='ej_boards/list.jinja2', login=True)
 def list(request):
     user = request.user
     boards = user.boards.all()
@@ -43,7 +43,7 @@ def list(request):
     }
 
 
-@urlpatterns.route('profile/boards/add/')
+@urlpatterns.route('profile/boards/add/', login=True)
 def create(request):
     user = request.user
     if not user.has_perm('ej_boards.can_add_board'):
