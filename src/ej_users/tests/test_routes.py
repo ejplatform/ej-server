@@ -24,7 +24,7 @@ class TestRoutes(UrlTester):
     public_urls = [
         '/register/',
         '/login/',
-        '/reset-password/',
+        '/recover-password/',
 
     ]
     user_urls = [

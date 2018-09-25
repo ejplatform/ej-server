@@ -8,6 +8,7 @@ from .manager import UserManager
 from .utils import random_name
 from django.utils import timezone
 from datetime import datetime
+from secrets import token_urlsafe
 
 
 @rest_api(['id', 'display_name'])
@@ -71,3 +72,6 @@ class Token (models.Model):
     def is_expired(self):
         time_now = datetime.now(timezone.utc)
         return (time_now - self.date_time).total_seconds() > 600
+
+    def generate_token(self):
+        self.url_token = token_urlsafe(50)

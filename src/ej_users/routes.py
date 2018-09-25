@@ -13,8 +13,6 @@ from django.utils.translation import ugettext_lazy as _
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 
-
-from secrets import token_urlsafe
 from django.core.mail import send_mail
 from jinja2 import FileSystemLoader, Environment
 from .models import Token as TokenUser
@@ -144,8 +142,6 @@ def recover_password(request):
     dirname = os.path.dirname(__file__)
     template_dir = os.path.join(dirname, 'jinja2/ej_users')
 
-    url_token = token_urlsafe(50)
-
     loader = FileSystemLoader(searchpath=template_dir)
     environment = Environment(loader=loader)
     TEMPLATE_FILE = "recover-password-message.jinja2"
@@ -162,13 +158,12 @@ def recover_password(request):
             else:
                 host = 'https://' + settings.HOSTNAME
 
-            template_message = template.render({'link': host + '/reset-password/' + url_token})
-
             user = User.objects.get_by_email(request.POST['email'])
-            token = TokenUser()
-            token.url_token = url_token
-            token.user = user
+            token = TokenUser(user=user)
+            token.generate_token()
             token.save()
+
+            template_message = template.render({'link': host + '/reset-password/' + token.url_token})
 
             send_mail(_("Please reset your password"),
                       template_message,
