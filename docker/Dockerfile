@@ -28,26 +28,6 @@ RUN inv -e js
 #
 FROM ejplatform/python:buster as pymodules
 
-# Create django-boogie package
-WORKDIR /app
-ADD https://github.com/fabiommendes/django-boogie/archive/master.zip /app/boogie.zip
-RUN unzip boogie.zip \
- && cd django-boogie-master \
- && python setup.py sdist \
- && cd dist \
- && mv django-boogie* /app/boogie.tar.gz \
- && echo "INSTALLED DJANGO-BOOGIE"
-
-# Create hyperpython package
-ADD https://github.com/fabiommendes/hyperpython/archive/master.zip /app/hyperpython.zip
-RUN unzip hyperpython.zip \
- && cd hyperpython-master \
- && python setup.py sdist \
- && cd dist \
- && mv hyperpython* /app/hyperpython.tar.gz \
- && echo "INSTALLED HYPERPYTHON"
-
-
 #
 # Final image
 #
@@ -70,11 +50,6 @@ COPY ./lib/ /app/lib/
 COPY ./locale/ /app/locale/
 COPY ./manage.py /app/manage.py
 COPY ./src/ /app/src/
-
-# Copy django boogie
-COPY --from=pymodules /app/*.tar.gz /app/
-RUN pip install /app/*.tar.gz \
- && rm /app/*.tar.gz
 
 # Set enviroment variables
 ARG COUNTRY=brasil
