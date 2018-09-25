@@ -1,4 +1,5 @@
 {% extends 'base.jinja2' %}
+{% from 'components/generic/toast.jinja2' import toast with context %}
 
 
 {% block content %}
@@ -46,11 +47,11 @@
         <form method="post">
             {{ csrf_input }}
             <input type="hidden" name="action" value="comment">
-            <textarea name="comment"
-                      title="comment"
-                      onFocus="$('.Header-lowerNav').hide()"
-                      onBlur="$('.Header-lowerNav').show()"></textarea>
+                {{comment_content.content}}
             <input type="submit" name="submit" value="{{ _('Send your opinion') }}" primary>
+            {% if comment_content.errors %}
+                {{toast("OPS!", "Você já atingiu o limite de comentários desta conversa. Agradecemos a sua contribuição!")}}
+            {% endif %}
         </form>
         {% endif %}
     </div>

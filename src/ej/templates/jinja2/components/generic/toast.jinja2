@@ -1,0 +1,17 @@
+{% macro toast(title, content) %}
+    <div class="toast">
+        <div>
+            <h3>{{title}}</h3>
+            <p>{{content}}</p>
+        </div>
+    </div>
+     <script>
+        function showToaster() {
+            var x = document.getElementById("toast");
+            x.className = "show";
+            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+            console.log("Socorro")
+        }
+    </script>
+{% endmacro %}
+
