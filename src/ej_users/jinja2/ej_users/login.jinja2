@@ -34,7 +34,7 @@
                     >
         </form>
 
-        <p><a href="{{ '/reset-password/' + ('?next=' + next if next else '') }}"
+        <p><a href="{{ '/recover-password/' + ('?next=' + next if next else '') }}"
                   primary>{{ _('Forgot your password?') }}</a></p>
 
         {{ social_login(social_buttons, social_js) }}

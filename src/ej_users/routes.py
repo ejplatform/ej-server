@@ -108,10 +108,10 @@ def logout(request):
     return HttpResponseServerError()
 
 
-@urlpatterns.route('recover-password/<str:url_token>')
-def recover_password(request, url_token):
+@urlpatterns.route('reset-password/<str:url_token>')
+def reset_password(request, url_token):
 
-    form = forms.RecoverPasswordForm.bind(request)
+    form = forms.ResetPasswordForm.bind(request)
     next = request.GET.get('next', '/login/')
     isExpired = False
     invalid_link = False
@@ -142,9 +142,9 @@ def recover_password(request, url_token):
     }
 
 
-@urlpatterns.route('reset-password/')
-def reset_password(request):
-    form = forms.ResetPasswordForm.bind(request)
+@urlpatterns.route('recover-password/')
+def recover_password(request):
+    form = forms.RecoverPasswordForm.bind(request)
 
     dirname = os.path.dirname(__file__)
     template_dir = os.path.join(dirname, 'jinja2/ej_users')
@@ -153,7 +153,7 @@ def reset_password(request):
 
     loader = FileSystemLoader(searchpath=template_dir)
     environment = Environment(loader=loader)
-    TEMPLATE_FILE = "reset-password-message.jinja2"
+    TEMPLATE_FILE = "recover-password-message.jinja2"
     template = environment.get_template(TEMPLATE_FILE)
     success = False
     user = None
@@ -166,7 +166,7 @@ def reset_password(request):
         else:
             host = 'https://' + settings.HOSTNAME
 
-        template_message = template.render({'link': host + '/recover-password/' + url_token})
+        template_message = template.render({'link': host + '/reset-password/' + url_token})
 
         try:
             user = User.objects.get_by_email(request.POST['email'])
