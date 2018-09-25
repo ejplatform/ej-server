@@ -178,7 +178,7 @@ def reset_password(request):
 
             send_mail(_("Please reset your password"),
                       template_message,
-                      settings.EMAIL_HOST_USER,
+                      'noreply@ejplatform.org.br',
                       [request.POST['email']],
                       fail_silently=False,
                       )
