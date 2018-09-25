@@ -124,6 +124,7 @@ publish ejplatform/web tagged:
     - "docker build . -f docker/Dockerfile 
             -t ejplatform/web:$CI_COMMIT_TAG
             -t ejplatform/web:$DOCKER_TAG
+            -t ejplatform/web:latest
             --cache-from ejplatform/web:$CI_COMMIT_TAG
             --build-arg COMMIT_TITLE=\"$CI_COMMIT_TITLE\"
             --build-arg COMMIT_HASH=\"$CI_COMMIT_SHA\""
@@ -141,6 +142,7 @@ publish mdhcpa/web tagged:
     - "docker build . -f docker/Dockerfile 
             -t mdhcpa/web:$CI_COMMIT_TAG
             -t mdhcpa/web:$DOCKER_TAG
+            -t mdhcpa/web:latest
             --cache-from mdhcpa/web:$CI_COMMIT_TAG
             --build-arg THEME=cpa
             --build-arg COMMIT_TITLE=\"$CI_COMMIT_TITLE\"
