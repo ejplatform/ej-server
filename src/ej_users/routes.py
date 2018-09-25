@@ -123,8 +123,8 @@ def reset_password(request, token):
 
     if not token.is_expired:
         form = forms.ResetPasswordForm.bind(request)
-        if request.method == 'POST':
-            new_password = request.POST['new_password']
+        if request.method == 'POST' and form.is_valid():
+            new_password = form.cleaned_data['new_password']
             user.set_password(new_password)
             user.save()
             token.delete()
@@ -139,7 +139,7 @@ def reset_password(request, token):
 
 @urlpatterns.route('recover-password/')
 def recover_password(request):
-    form = forms.RecoverPasswordForm.bind(request)
+    form = forms.RecoverPasswordForm(request.POST or None)
 
     dirname = os.path.dirname(__file__)
     template_dir = os.path.join(dirname, 'jinja2/ej_users')
@@ -150,26 +150,25 @@ def recover_password(request):
     environment = Environment(loader=loader)
     TEMPLATE_FILE = "recover-password-message.jinja2"
     template = environment.get_template(TEMPLATE_FILE)
-    success = False
     user = None
+    success = False
 
-    if request.method == "POST":
+    if request.method == "POST" and form.is_valid():
+        success = True
+        if User.objects.filter(email=form.cleaned_data['email']).exists():
+            if settings.HOSTNAME == 'localhost':
+                host = 'http://localhost:8000'
 
-        if settings.HOSTNAME == 'localhost':
-            host = 'http://localhost:8000'
+            else:
+                host = 'https://' + settings.HOSTNAME
 
-        else:
-            host = 'https://' + settings.HOSTNAME
+            template_message = template.render({'link': host + '/reset-password/' + url_token})
 
-        template_message = template.render({'link': host + '/reset-password/' + url_token})
-
-        try:
             user = User.objects.get_by_email(request.POST['email'])
             token = TokenUser()
             token.url_token = url_token
             token.user = user
             token.save()
-            success = True
 
             send_mail(_("Please reset your password"),
                       template_message,
@@ -177,9 +176,6 @@ def recover_password(request):
                       [request.POST['email']],
                       fail_silently=False,
                       )
-        except User.DoesNotExist:
-            success = False
-            form.add_error(None, 'The specified email address is not listed on your account.')
 
     return {
         'user': user,

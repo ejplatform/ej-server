@@ -56,7 +56,7 @@ class RecoverPasswordForm(PlaceholderForm, forms.Form):
     Reset User Password
     """
 
-    email = forms.CharField(label=_('E-mail'))
+    email = forms.EmailField(label=_('E-mail'))
 
 
 class ResetPasswordForm(PlaceholderForm, forms.Form):
@@ -79,5 +79,5 @@ class ResetPasswordForm(PlaceholderForm, forms.Form):
     def _post_clean(self):
         super()._post_clean()
         data = self.cleaned_data
-        if data.get('password') != data.get('password_confirm'):
-            self.add_error('password_confirm', _('Passwords do not match'))
+        if data.get('new_password') != data.get('new_password_confirm'):
+            self.add_error('new_password_confirm', _('Passwords do not match'))

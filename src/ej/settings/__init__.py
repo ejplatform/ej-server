@@ -41,7 +41,6 @@ class Conf(ThemesConf,
 
     USING_DOCKER = env(False, name='USING_DOCKER')
     HOSTNAME = env('localhost')
-    print(HOSTNAME)
 
 
     #
