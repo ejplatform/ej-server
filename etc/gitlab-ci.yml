@@ -179,7 +179,7 @@ publish mdhcpa/web tagged:
   extends : .deploy
   script:
     - "upgrade
-            --service nginx
+            --service web
             --environment $RANCHER_ENVIRONMENT
             --stack $RANCHER_STACK_CPA
             --rancher-key $RANCHER_ACCESS_KEY
