@@ -24,11 +24,11 @@ class TestRoutes(UrlTester):
     public_urls = [
         '/register/',
         '/login/',
-        '/profile/recover-password/',
+        '/reset-password/',
+
     ]
     user_urls = [
         # '/logout/', -- returns error 500, so we use specific tests
-        '/profile/reset-password/',
         '/profile/remove/',
         '/profile/favorites/',
     ]

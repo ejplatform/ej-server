@@ -12,7 +12,7 @@ from django.template.loader import get_template
 from django.utils.translation import ugettext_lazy as _
 from rest_framework import status
 from rest_framework.authtoken.models import Token
-from django.utils import timezone
+
 
 from secrets import token_urlsafe
 from django.core.mail import send_mail
@@ -22,13 +22,19 @@ from .models import Token as TokenUser
 from boogie.router import Router
 from ej_users import forms
 from .socialbuttons import social_buttons
-from datetime import datetime
+
 
 User = get_user_model()
 
 app_name = 'ej_users'
 urlpatterns = Router(
     template='ej_users/{name}.jinja2',
+
+    models={
+        'token': TokenUser,
+    },
+    lookup_field={'token': 'url_token'}
+
 )
 log = logging.getLogger('ej')
 
@@ -108,37 +114,26 @@ def logout(request):
     return HttpResponseServerError()
 
 
-@urlpatterns.route('reset-password/<str:url_token>')
-def reset_password(request, url_token):
+@urlpatterns.route('reset-password/<model:token>/')
+def reset_password(request, token):
 
-    form = forms.ResetPasswordForm.bind(request)
+    form = None
     next = request.GET.get('next', '/login/')
-    isExpired = False
-    invalid_link = False
-    try:
-        user_token = TokenUser.objects.get(url_token=url_token)
-        user = user_token.user
-        time_now = datetime.now(timezone.utc)
-        token_time = user_token.date_time
-        if (time_now - token_time).total_seconds() > 600:
-            isExpired = True
+    user = token.user
 
+    if not token.is_expired:
+        form = forms.ResetPasswordForm.bind(request)
         if request.method == 'POST':
-
             new_password = request.POST['new_password']
             user.set_password(new_password)
             user.save()
-            user_token.delete()
+            token.delete()
             return redirect(next)
-    except TokenUser.DoesNotExist:
-        user = None
-        invalid_link = True
 
     return {
         'user': user,
         'form': form,
-        'isExpired': isExpired,
-        'invalid_link': invalid_link,
+        'isExpired': token.is_expired,
     }
 
 

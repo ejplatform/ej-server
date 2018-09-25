@@ -6,6 +6,8 @@ from boogie.apps.users.models import AbstractUser
 from boogie.rest import rest_api
 from .manager import UserManager
 from .utils import random_name
+from django.utils import timezone
+from datetime import datetime
 
 
 @rest_api(['id', 'display_name'])
@@ -64,3 +66,8 @@ class Token (models.Model):
     date_time = models.DateTimeField(
         auto_now=True,
     )
+
+    @property
+    def is_expired(self):
+        time_now = datetime.now(timezone.utc)
+        return (time_now - self.date_time).total_seconds() > 600

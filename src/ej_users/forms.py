@@ -75,3 +75,9 @@ class ResetPasswordForm(PlaceholderForm, forms.Form):
         required=True,
         widget=forms.PasswordInput,
     )
+
+    def _post_clean(self):
+        super()._post_clean()
+        data = self.cleaned_data
+        if data.get('password') != data.get('password_confirm'):
+            self.add_error('password_confirm', _('Passwords do not match'))
