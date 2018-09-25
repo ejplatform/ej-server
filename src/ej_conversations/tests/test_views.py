@@ -68,14 +68,14 @@ class TestConversationBase:
             conversations.detail(request, conversation)
 
     def test_user_can_comment(self, rf, conversation):
-        request = rf.post('', {'action': 'comment', 'comment': 'test comment'})
+        request = rf.post('', {'action': 'comment', 'content': 'test comment'})
         user = User.objects.create_user('user@server.com', 'password')
         request.user = user
         conversations.detail(request, conversation)
         assert Comment.objects.filter(author=user)[0].content == 'test comment'
 
     def test_anonymous_user_cannot_comment(self, rf, conversation):
-        request = rf.post('', {'action': 'comment', 'comment': 'test comment'})
+        request = rf.post('', {'action': 'comment', 'content': 'test comment'})
         request.user = AnonymousUser()
         with raises(PermissionError):
             conversations.detail(request, conversation)

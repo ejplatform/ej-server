@@ -45,7 +45,6 @@ def conversation_detail_context(request, conversation):
     comment = None
 
     comment_content = CommentForm(request.POST or None, conversation=conversation)
-    print(comment_content)
 
     # User is voting in the current comment. We still need to choose a random
     # comment to display next.
@@ -59,7 +58,7 @@ def conversation_detail_context(request, conversation):
     # keep the same comment that was displayed before.
     elif request.POST.get('action') == 'comment':
         if comment_content.is_valid():
-            new_comment = comment_content.content
+            new_comment = comment_content.cleaned_data['content']
             new_comment = conversation.create_comment(user, new_comment)
             log.info(f'user {user.id} posted comment {new_comment.id} on {conversation.id}')
 
