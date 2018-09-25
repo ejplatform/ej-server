@@ -7,7 +7,7 @@ from django.utils.translation import ugettext_lazy as _
 from boogie.router import Router
 from ej_conversations import forms
 from ej_conversations.models import Conversation
-from ej_conversations.routes.conversations import conversation_detail_context
+from ej_conversations.routes import conversation_detail_context, moderate_context, edit_context
 from .forms import BoardForm
 from .models import Board
 
@@ -115,6 +115,20 @@ def conversation_detail(request, board, conversation):
     if conversation not in board.conversations.all():
         raise Http404
     return conversation_detail_context(request, conversation)
+
+
+@urlpatterns.route('<model:board>/conversations/<model:conversation>/edit/')
+def edit_conversation(request, board, conversation):
+    if conversation not in board.conversations.all():
+        raise Http404
+    return edit_context(request, conversation)
+
+
+@urlpatterns.route('<model:board>/conversations/<model:conversation>/moderate/')
+def moderate_conversation(request, board, conversation):
+    if conversation not in board.conversations.all():
+        raise Http404
+    return moderate_context(request, conversation)
 
 
 @urlpatterns.route('<model:board>/conversations/add/', perms=['ej_boards.can_add_conversation'])

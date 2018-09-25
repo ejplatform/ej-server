@@ -1,0 +1,6 @@
+{% from 'ej_clusters/create-stereotype.jinja2' import stereotype_create with context %}
+{% extends 'base.jinja2' %}
+
+{% block content %}
+    {{ stereotype_create(stereotype_form, votes_form, conversation_title, title=_('Edit Stereotype'), button_text=_('Save')) }}
+{% endblock %}

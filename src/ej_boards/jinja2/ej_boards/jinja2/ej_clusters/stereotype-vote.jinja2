@@ -1,0 +1,43 @@
+{% extends 'base.jinja2' %}
+
+{% block content %}
+    <div class="Container">
+        <h1>{{ _('Votes') }}</h1>
+        <h2>{{ _('Comments') }}</h2>
+        {% if non_voted_table %}
+            <p>{% trans %}Please vote on the comments bellow to define your stereotype.{% endtrans %}</p>
+            <form method="post">
+                {{ csrf_input }}
+                {{ non_voted_table }}
+                <input type="submit" value="{{ _('Register votes') }}">
+            </form>
+        {% else %}
+            <p>{% trans %}
+            This stereotype have voted on all comments.
+            {% endtrans %}</p>
+        {% endif %}
+
+        {% if voted_table %}
+            <h2>{{ _('Already voted') }}</h2>
+            <p>{{ _('The stereotype has voted in the following comments.') }}</p>
+            <form method="post">
+                {{ csrf_input }}
+                {{ voted_table }}
+                <input type="submit" value="{{ _('Change votes') }}">
+            </form>
+        {% endif %}
+    </div>
+{% endblock %}
+
+
+{% block javascript_body %}
+    {{ super() }}
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(function () {
+            $('.table').DataTable({
+                order: [],
+            });
+        })
+    </script>
+{% endblock %}
