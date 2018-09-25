@@ -11,8 +11,27 @@
 
         <form method="post" class="Form" is-placeholder-form>
             {{ csrf_input }}
-            {{ form.as_p() }}
-            <input type="submit" class="Button" value="{{ _('Login') }}" name="login">
+            {{ form.non_field_errors() }}
+            {% for field in form %}
+                <div class="fieldWrapper">
+                    {{ field.errors }}
+                    <p>
+                        <input for="{{field.id_for_label}}"
+                            name="{{field.name}}"
+                            placeholder="{{field.label}}"
+                            aria-label="{{field.help_text}}"
+                            type="{{field.field.widget.input_type}}"
+                        ></input>
+                    </p>
+
+                </div>
+            {% endfor %}
+            <input type="submit"
+                    class="Button"
+                    value="{{ _('Login') }}"
+                    name="login"
+                    aria-label="{{_('Login button')}}"
+                    >
         </form>
 
         <p><a href="{{ '/reset-password/' + ('?next=' + next if next else '') }}"
@@ -22,8 +41,10 @@
 
         <div class="Login-newUser">
             <h1>{{ settings.EJ_REGISTER_TEXT }}</h1>
-            <p><a class="Button" href="{{ '/register/' + ('?next=' + next if next else '') }}"
-                  primary>{{ _('Register now!') }}</a></p>
+            <p><a class="Button"
+                    href="{{ '/register/' + ('?next=' + next if next else '') }}"
+                    aria-label="{{_('Register button')}}"
+                    primary>{{ _('Register now!') }}</a></p>
         </div>
     </div>
 {% endblock %}
