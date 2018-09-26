@@ -52,7 +52,7 @@
         </script>
     {% endblock %}
     <nav class="Header-topNav">
-        {% if request.path != '/start/' %}
+        {% if request.path != '/start/' and request.path != '/conversations/' and request.path != '/home/'%}
             <a title="{{ _('Back') }}" class="Header-topIcon" onclick="history.back()">
                 <i class="fa fa-chevron-left"></i>
             </a>
