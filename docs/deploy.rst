@@ -1,3 +1,4 @@
+======
 Deploy
 ======
 
@@ -52,13 +53,15 @@ Now rebuild the deployment images using the command::
 
 and
 
+::
+
     $ inv docker-deploy up
 
 to execute the stack.
 
 
 Configuration
--------------
+=============
 
 The standard structure of the docker-compose-deploy_ repository implement a few
 options that the ``inv docker-deploy`` sub-tasks understand. We list those tasks
@@ -92,7 +95,7 @@ share the same docker images, but uses different Docker Compose files.
 
 
 config.py
-~~~~~~~~~
+---------
 
 This script is executed and it must define a JSON-like structure that is used
 to fill the environment variables passed to docker-compose when starting the
@@ -112,60 +115,11 @@ LISTENERS:
     have a corresponding notify.<listener>.sh script. We provide an example
     using Rancher.
 
-
-Environment Variables
-~~~~~~~~~~~~~~~~~~~~~
-
-All the environment variables bellow can be set directly within the docker-compose
-files or at config.env so they can be shared between different environments.
-This section describes the main configuration variables with their standard
-values.
-
-Basic and security
-..................
-
-Those are the minimum set of required configurations.
-
-**DJANGO_SECRET_KEY** (random value):
-    A random string of text that should be out of public sight. This string is
-    used to negotiate sessions and for encryption in some parts of Django. This
-    can be any random that is treated as a secret since in theory an attacker
-    that knows the secret key could use this value to forge sessions and
-    impersonate other users.
-
-HOSTNAME (localhost):
-    Host name for the EJ application. Can be something like "ejplatform.org".
-    This is the address in which your instance is deployed.
-
-COUNTRY (Brazil):
-    Country used for localization and internationalization. This configuration
-    controls simultaneously the DJANGO_LOCALE_NAME, DJANGO_LANGUAGE_CODE,
-    DJANGO_TIME_ZONE variables using the default configurations for your
-    country. Countries are specified by name (e.g., USA, Brazil, Argentina,
-    Canada, etc). You can use a COUNTRY as base and personalize any variable
-    of those variables independently (e.g., COUNTRY="Canada",
-    LANGUAGE_CODE="fr-ca")
-
-
-Personalization
-...............
-
-EJ_PAGE_TITLE (Empurrando Juntos):
-    Default title of the home page.
-
-Rules and limits
-................
-
-EJ_CONVERSATIONS_ALLOW_PERSONAL_CONVERSATIONS (true):
-    The default behavior is that each user can own a single board of
-    conversations independent of the main board under /conversations/.
-    Set to "false" in order to disable those personal boards.
-EJ_CONVERSATIONS_MAX_COMMENTS (2):
-    Default number of comments that each user has in each conversation.
+The `config.py` file can also be used to set configuration environment variables.
 
 
 Rocketchat integration
-----------------------
+======================
 
 Integrating Rocketchat to the stack requires a few additional steps. The first
 step is to uncomment all services in the Rocketchat section of the example
@@ -205,10 +159,10 @@ In this page, follow the instructions bellow:
 
 1. Set ``Enabled`` option to ``True``.
 2. In order to enable redirection after successful *login*, set ``Iframe URL``
-   to ``http://django:8000/login/?next=/talks/`` (replacing Django with the
+   to ``http://<django>/talks/login/?next=/talks/`` (replacing Django with the
    address of your actual Django instance).
 3. Rocketchat needs to check if an user is already authenticated. Set
-   ``API URL`` to ``http://django-hostname/talks/check-login/``.
+   ``API URL`` to ``http://<django>/talks/check-login/``.
 4. Set ``API Method`` to ``POST``.
 5. Save the changes.
 
