@@ -153,8 +153,7 @@ class RCConfigWrapper:
         try:
             return self.accounts.get(user=user)
         except self.accounts.model.DoesNotExist:
-            pass
-        return None
+            return self.register(user, user.username)
 
 
 rocket = RCConfigWrapper()
