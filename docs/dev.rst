@@ -1,17 +1,23 @@
+===========
 Devel Guide
 ===========
 
 .. toctree::
    :maxdepth: 2
 
-   ../README.rst
+   overview
+   prepare-environment
    install
    deploy
    deploy-ec2
+   environment-variables
+   pycharm/configuration
+   stack
    contributing
    urls
    themes
-   api
+   api/index
    ci
+   dev-style
    dev-community
 

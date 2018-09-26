@@ -11,11 +11,11 @@ other orchestration technologies.
 
 The easiest way to proceed is to use the pre-build images available on `Docker Hub`_
 and personalize your installation using environment variables. You must
-understand that a basic EJ stack uses 4 containers described in `EJ Stack`_
+understand that a basic EJ stack uses 4 containers described in _`EJ Stack`
 session: the Nginx reverse proxy, the Django application and Redis and Postgres
 databases.
 
-.. _Docker Hub:: https://hub.docker.com/u/ejplatform/
+.. _Docker Hub: https://hub.docker.com/u/ejplatform/
 
 You can run a useful "deployable" stack by simply calling the command bellow from
 the ej-server repository::
@@ -42,7 +42,7 @@ Start by cloning it to the local/deploy folder with the command::
 This will copy the example files to local/deploy. This folder is ignored by git
 versioning and you can maintain it as a private repository independent of
 ``ejplatform/ej-server``. Now, adapt the files on this folder to your needs by
-setting the values of all necessary `Environment Variables`_. In the
+setting the values of all necessary _`Environment Variables`. In the
 long run, it is probably best to use a private repository to save those files
 with version control. Bear in mind that many of the configuration variables are
 secrets that cannot be seen in a public location.
