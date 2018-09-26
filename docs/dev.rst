@@ -8,7 +8,6 @@ Devel Guide
    install
    deploy
    docker_ec2
-   docker-images
    contributing
    urls
    themes
