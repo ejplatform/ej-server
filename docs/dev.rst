@@ -7,7 +7,7 @@ Devel Guide
    ../README.rst
    install
    deploy
-   docker_ec2
+   deploy-ec2
    contributing
    urls
    themes
