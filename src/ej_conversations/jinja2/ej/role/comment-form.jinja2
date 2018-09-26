@@ -1,4 +1,4 @@
-{% from 'components/generic/toast.jinja2' import toast with context %}
+{% from 'ej_conversations/toast.jinja2' import toast with context %}
 
 {% macro comment_form(csrf_input, comment_content) %}
     <form method="post">
@@ -8,6 +8,9 @@
         <input type="submit" name="submit" value="{{ _('Send your opinion') }}" primary>
         {% if comment_content.errors %}
             {{toast("OPS!", "Você já atingiu o limite de comentários desta conversa. Agradecemos a sua contribuição!")}}
+            <script>
+                showToaster()
+            </script>
         {% endif %}
     </form>
 {% endmacro %}
