@@ -618,6 +618,7 @@ $conversation-topic-display: none !default;
 
     &-fakeButton,
     input[type=submit] {
+        font-family: $font-raleway;
         border-radius: $conversation-comment-button-border-radius;
         color: #fff;
         background: $conversation-comment-button-background;
@@ -630,51 +631,74 @@ $conversation-topic-display: none !default;
         margin-top: $spacing-unit-small;
     }
 
-    .toast {
+    #toast {
         visibility: hidden;
-        background-color: $color-blue-light;
-        font-weight: bold;
-        text-align: center;
-        border-radius: 2px;
+        background-color: $color-blue-nav;
+        text-align: left;
+        border-radius: 1px;
         position: fixed;
-        z-index: 101;
+        z-index: 3;
         width: 100vw;
         left: 0;
-        bottom: $header-bottom-nav-height + $top-header-height;
-        font-size: 17px;
+        bottom: $header-top-nav-height;
         > div {
-            padding: 40px;
-            h3, p {
+            padding: 15px;
+            p {
+                margin: 0;
+                font-size: 13px;
                 color: $toast-font-color;
             }
+            h3{
+                margin: 0;
+                font-weight: bold;
+                font-size: 15px;
+                color: $color-blue;
+            }
         }
+        
+        img {
+
+            @media only screen and (min-width: $breakpoint-medium - $breakpoint-small) {
+                max-width: 12%;
+                margin: 10px 15px 10px 15px;
+            }
+            @media only screen and (min-width: $breakpoint-small) {
+                max-width: 1.8%;
+                margin: 0 15px 10px 320px;                
+            }
+
+            background-color: #fff;
+            border: 3px solid $color-blue;
+            border-radius: 50px;
+            padding: 8px;
+            margin-right: $spacing-unit-small;
+        }
+
     }
 
-    .toast.show {
+    #toast.show {
         visibility: visible;
-        -webkit-animation: fadein 1s, fadeout 1s 3s;
-        animation: fadein 1s, fadeout 1s 3s;
+        -webkit-animation: fade 6s;
+        animation: fade 6s;
     }
 
-    @keyframes fadein {
-        from {
+
+    @keyframes fade {
+        0%   {
+            opacity: 0;
             bottom: 0;
-            opacity: 0;
         }
-        to {
-            bottom: 70px;
+        25%  {
             opacity: 1;
+            bottom: 45px;
         }
+        60%  {opacity: 1;}
+        90% {opacity: 0;}
+        100% {opacity: 0;}
+
     }
 
-    @keyframes fadeout {
-        from {
-            opacity: 1;
-        }
-        to {
-            opacity: 0;
-        }
-    }
+
 }
 
 .CircleButton {
