@@ -101,3 +101,10 @@ select {
     background: $icon-arrow-down-blue white no-repeat calc(100% - 10px) !important;
     background-size: 15px !important;
 }
+
+select:active {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background: $icon-arrow-up-blue white no-repeat calc(100% - 10px) !important;
+    background-size: 15px !important;
+}

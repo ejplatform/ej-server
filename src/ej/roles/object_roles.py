@@ -37,7 +37,7 @@ def render_collapsible(lst, item_role='collapsible-item', title=None, expanded=F
     return div(class_='CollapsibleList')[
         h2(
             onclick=f"$('#{random_id}').toggle(); {toggle_icon_function}",
-            children=[title, span(f'({len(data)})'), fa_icon('angle-down', id=random_id+"icon")]
+            children=[title, span(f'({len(data)})'), fa_icon('angle-down', id=random_id + "icon")]
         ),
         html_list(data, style=f'display: {display}', id=random_id),
     ]
