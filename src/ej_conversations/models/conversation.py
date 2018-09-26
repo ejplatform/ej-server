@@ -59,7 +59,8 @@ class Conversation(TimeStampedModel):
         help_text=_(
             'A short description about this conversation. This is used internally '
             'and to create URL slugs. (e.g. School system)'
-        )
+        ),
+        unique=True,
     )
     text = models.TextField(
         _('Question'),

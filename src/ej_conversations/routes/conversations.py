@@ -4,7 +4,6 @@ from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from hyperpython import a
 
-from boogie import rules
 from . import urlpatterns, conversation_url
 from ..models import Conversation, Comment
 
@@ -40,7 +39,6 @@ def conversation_detail_context(request, conversation):
     """
     user = request.user
     is_favorite = user.is_authenticated and conversation.followers.filter(user=user).exists()
-    n_comments = rules.compute('ej.remaining_comments', conversation, user)
     comment = None
 
     # User is voting in the current comment. We still need to choose a random
@@ -73,13 +71,11 @@ def conversation_detail_context(request, conversation):
         # Objects
         'conversation': conversation,
         'comment': comment or conversation.next_comment(user, None),
-        'comments_left': n_comments,
         'login_link': login_link(_('login'), conversation),
 
         # Permissions and predicates
         'is_favorite': is_favorite,
         'can_view_comment': user.is_authenticated,
-        'can_comment': user.has_perm('ej.can_comment', conversation),
         'can_edit': user.has_perm('ej.can_edit_conversation', conversation),
         'cannot_comment_reason': '',
     }
