@@ -24,7 +24,7 @@ def comment(db, conversation, user):
     return conversation.create_comment(user, 'content', 'approved')
 
 
-class TestStereotypeForm:
+class TestCommentForm:
     def test_init(self, conversation):
         CommentForm(conversation=conversation)
 
@@ -38,23 +38,24 @@ class TestStereotypeForm:
         }, conversation=conversation)
         assert form.is_valid()
         comment = form.cleaned_data['content']
-        conversation.create_comment(user, comment.content)
+        conversation.create_comment(user, comment)
         assert comment == "comment content"
-        assert comment in conversation.comments
 
     def test_blank_data(self, conversation):
         form = CommentForm({}, conversation=conversation)
         assert not form.is_valid()
         assert form.errors == {
-            'name': ['This field is required.'],
+            'content': ['This field is required.'],
         }
 
-    def test_repetead_stereotype_data(self, conversation, db, user):
-        Comment.objects.create(content="Comment", conversation=conversation, owner=user)
+
+    def test_repetead_comment_data(self, conversation, db, user):
+        Comment.objects.create(content="Comment", conversation=conversation, author=user)
         form = CommentForm({
             'content': "Comment",
         }, conversation=conversation)
         assert not form.is_valid()
         assert form.errors == {
-            '__all__': ['Stereotype for this conversation with this name already exists.'],
+            '__all__':
+                ['It seems that you created repeated comments. Please verify if there aren\'t any equal comments']
         }
