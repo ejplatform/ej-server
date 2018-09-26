@@ -120,11 +120,11 @@ def comment_list_item(comment, **kwargs):
 
 
 @with_template(models.Conversation, role='comment-form')
-def comment_form(conversation, request=None, **kwargs):
+def comment_form(conversation, request=None, comment_content=None, **kwargs):
     """
     Render comment form for one conversation.
     """
-
+    print(comment_content)
     user = getattr(request, 'user', None)
     n_comments = rules.compute('ej_conversations.remaining_comments', conversation, user)
     return {
@@ -132,4 +132,5 @@ def comment_form(conversation, request=None, **kwargs):
         'comments_left': n_comments,
         'user_is_owner': conversation.author == user,
         'csrf_input': csrf_input(request),
+        'comment_content': comment_content,
     }

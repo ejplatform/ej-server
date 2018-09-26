@@ -1,6 +1,5 @@
 {% extends 'base.jinja2' %}
 
-
 {% block content %}
     <div class="ConversationDetail">
         {# Ballon with title #}
@@ -18,7 +17,5 @@
         {% endif %}
 
         {# Post a new comment #}
-        {{ conversation|role('comment-form') }}
-
-    </div>
+        {{ conversation|role('comment-form', comment_content=comment_form) }}
 {% endblock %}
