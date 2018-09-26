@@ -661,15 +661,17 @@ $conversation-topic-display: none !default;
             @media only screen and (min-width: $breakpoint-medium - $breakpoint-small) {
                 max-width: 12%;
                 margin: 10px 15px 10px 15px;
+                vertical-align: center;
             }
             @media only screen and (min-width: $breakpoint-small) {
-                max-width: 1.8%;
-                margin: 0 15px 10px 320px;                
+                max-width: 1.6%;
+                margin: 0 15px 10px 320px;
+                vertical-align: center;                
             }
 
             background-color: #fff;
-            border: 3px solid $color-blue;
-            border-radius: 50px;
+            border: 2.5px solid $color-blue;
+            border-radius: 60px;
             padding: 8px;
             margin-right: $spacing-unit-small;
         }
