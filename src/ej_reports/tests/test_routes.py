@@ -5,8 +5,10 @@ from django.test import RequestFactory
 
 from ej.testing import UrlTester
 from ej_conversations.mommy_recipes import ConversationRecipes
-from ej_reports.routes import index, clusters, radar, divergence, map_to_table
+from ej_reports.routes import index, clusters, radar, divergence, \
+    generate_action, file_response
 from ej_users.models import User
+from ej_dataviz.routes import map_to_table
 from .examples import REPORT_RESPONSE, MAP_TO_TABLE
 
 BASE_URL = '/api/v1'
@@ -54,26 +56,17 @@ class TestReportRoutes(ConversationRecipes):
 
         assert REPORT_RESPONSE['statistics'] in response.values()
 
-    def test_report_csv_route(self, request_as_admin, mk_conversation):
-        # conversation = mk_conversation()
-        # path = BASE_URL + f'/conversations/{conversation.slug}/reports/'
-        # request = request_as_admin
-        # request.GET = QueryDict('action=generate_csv')
-        # request.get(path)
-        # response = index(request, conversation)
+    def test_file_response(self, request_as_admin, mk_conversation):
+        conversation = mk_conversation()
+        expected = '<HttpResponse status_code=200, "text/json">'
+        response = str(file_response(conversation, 'users', 'json'))
+        assert response == expected
 
-        # assert response.status_code == 200
-
-        # content = response.content.decode('utf-8')
-        # csv.reader(io.StringIO(content))
-        # assert CSV_OUT['votes_header'] in content
-        # assert CSV_OUT['votes_content'] in content
-        # assert CSV_OUT['comments_header'] in content
-        # assert CSV_OUT['comments_content'] in content
-        # assert CSV_OUT['advanced_comments_header'] in content
-        # assert CSV_OUT['advanced_participants_header'] in content
-
-        pass
+    def test_generate_action(self, request_as_admin, mk_conversation):
+        conversation = mk_conversation()
+        expected = '<HttpResponse status_code=200, "text/json">'
+        response = str(generate_action(conversation, 'users', 'json'))
+        assert response == expected
 
     def test_clusters_route(self, mk_conversation):
         conversation = mk_conversation
