@@ -1,5 +1,8 @@
 {% extends 'base.jinja2' %}
 
+{% set lang = get_language() %}
+{% set path = '/static_docs' if lang == 'en-us' else '/static_docs/i18n/{0}/index.html'.format(lang) %}
+
 {% block main %}
     <script>
         function resizeIframe(obj) {
@@ -8,6 +11,6 @@
     </script>
 
     <div id="docs">
-        <iframe src="/static_docs" style="width: 100%; margin: 10px; margin-top: 40px;" frameborder="0" scrolling="no" onload="resizeIframe(this)"></iframe>
+        <iframe src="{{ path }}" style="width: 100%; margin: 10px; margin-top: 40px;" frameborder="0" scrolling="no" onload="resizeIframe(this)"></iframe>
     </div>
 {% endblock %}
