@@ -2,8 +2,8 @@
 {% from 'components/generic/page_top-header.jinja2' import page_top_header %}
 {% from 'components/generic/page_menu.jinja2' import sidebar %}
 
-{% set javascript_enabled = request.COOKIES.get('javascriptEnabled', 'No Cookie') %}
-{% set target_context = request.GET.target|default('all') %}
+{% set javascript_enabled = request.COOKIES.get('javascriptEnabled', 'No Cookie') if request else True %}
+{% set target_context = request.GET.target|default('all') if request else 'all' %}
 {% set target = target|default(target_context) %}
 {% set content_title = content_title|default('') %}
 {% set page_title = page_title|default(content_title or settings.EJ_PAGE_TITLE) %}
@@ -101,7 +101,7 @@
         <meta property="fb:app_id" content="1757744567588794">
     </head>
 
-    <body class="{{ body_class|default('Page') }} {{ request.path.replace('/','') }}">
+    <body class="{{ body_class|default('Page') }} {{ request.path.replace('/','') if request else '' }}">
 {% endif %}
 
 {% block body %}
