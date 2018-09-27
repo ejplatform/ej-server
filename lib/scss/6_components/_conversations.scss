@@ -461,13 +461,20 @@ $profile-label-clear-color: #30BFD3 !default;
     width: 100% !important;
     z-index: 3;
     position: relative;
-    padding: $spacing-unit-small;
+    padding: ($spacing-unit-large - $spacing-unit-tiny) ($spacing-unit-large - $spacing-unit-small);
 
     &-counter {
         text-align: center;
         p {
             margin: 0;
         }
+    }
+
+    img {
+        background: $color-primary-text;
+        border: 1px solid #fff;
+        border-radius: $spacing-unit-large;
+        padding: 4px $spacing-unit-tiny;
     }
 
     i.fa {
@@ -510,6 +517,7 @@ $profile-label-clear-color: #30BFD3 !default;
                     cursor: pointer;
                 }
                 &.voteAgree {
+                    width: ($spacing-unit + $spacing-unit-tiny);
                     &:active {
                         color: $conversation-vote-agree-color;;
                     }
@@ -523,6 +531,7 @@ $profile-label-clear-color: #30BFD3 !default;
 
                 }
                 &.voteSkip {
+                    width: ($spacing-unit + $spacing-unit-tiny);
                     &:active {
                         color: $conversation-vote-skip-color;;
                     }
@@ -536,6 +545,7 @@ $profile-label-clear-color: #30BFD3 !default;
 
                 }
                 &.voteDisagree {
+                    width: ($spacing-unit + $spacing-unit-tiny);
                     &:active {
                         color: $conversation-vote-disagree-color;;
                     }
@@ -553,6 +563,19 @@ $profile-label-clear-color: #30BFD3 !default;
 
     &-user {
         font-size: $font-size-h5;
+        img {
+
+            @media only screen and (min-width: $breakpoint-medium - $breakpoint-small) {
+                max-width: 6%;
+            }
+            @media only screen and (min-width: $breakpoint-small) {
+                max-width: 3%;
+            }
+        
+            color: $color-accent;
+            margin-right: $spacing-unit-small;
+            background: #fff;
+        }
         i.fa {
             color: $color-accent;
             margin-right: $spacing-unit-small;
@@ -618,7 +641,7 @@ $profile-label-clear-color: #30BFD3 !default;
         z-index: 101;
         width: 100vw;
         left: 0;
-        bottom: $header-bottom-nav-height;
+        bottom: $header-bottom-nav-height + $top-header-height;
         font-size: 17px;
         > div {
             padding: 40px;
@@ -672,7 +695,7 @@ $profile-label-clear-color: #30BFD3 !default;
     &-rightConversationSlider {
         margin: 0;
         position: absolute;
-        top: ($conversation-card-cover-height + $conversation-button-size) / 2;
+        top: ($conversation-card-cover-height + $conversation-button-size) - ($spacing-unit-large - $spacing-unit-small);
         z-index: 10;
 
         @media only screen and (width: $breakpoint-small) {
@@ -898,7 +921,7 @@ $profile-label-clear-color: #30BFD3 !default;
         border: 0;
         font-family: "Raleway", sans-serif;
         color: $color-purple-dark;
-        padding: $unit;
+        padding: $unit + 5;
         text-align: center;
         font-weight: 200 !important;
         font-size: 26px !important;
@@ -917,7 +940,7 @@ $profile-label-clear-color: #30BFD3 !default;
         }
 
         @media only screen and (min-width: $breakpoint-large) {
-            padding: $spacing-unit-large 0;
+            padding: $spacing-unit;
         }
     }
 

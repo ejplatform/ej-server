@@ -1,9 +1,10 @@
-{% macro link(value='Click me', href='#', title='', target='.Page-mainContainer .Header-topIcon', action='target', instant=True, args='', button=False, class=None, transition='cross-fade', preload=False, scroll=False, primary=False) %}
+{% macro link(value='Click me', href='#', title='', target='.Page-mainContainer .Header-topIcon', action='target', instant=True, args='', button=False, class=None, transition='cross-fade', preload=False, scroll=False, primary=False, link_next=False) %}
     {%- if caller -%}
         {%- if href == '#' %}{% set href=value %}{% endif -%}
         {%- set value = caller() -%}
     {%- endif -%}
-    <a href="{{ href if href.startswith('/') else url(href) }}"
+    <a href="{{ href if href.startswith('/') else url(href) }}
+        {%- if link_next %}?next={{ link_next }}{% endif %}"
         {%- if title %} title="{{ title }}"{% endif %}
         {%- if class %} class="{{ class }}"{% endif %}
         {%- if button %} class="Button"{% endif %}
