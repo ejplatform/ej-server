@@ -110,7 +110,23 @@ def conversation_list(request, board):
     }
 
 
-@urlpatterns.route('<model:board>/conversations/<model:conversation>')
+@urlpatterns.route('<model:board>/conversations/add/', perms=['ej_boards.can_add_conversation'])
+def create_conversation(request, board):
+    user = request.user
+    form = forms.ConversationForm(request.POST or None)
+
+    if request.method == 'POST' and form.is_valid():
+        with transaction.atomic():
+            conversation = form.save_all(
+                author=user,
+                board=board,
+            )
+        return redirect(f'/{board.slug}/conversations/{conversation.slug}')
+
+    return {'form': form}
+
+
+@urlpatterns.route('<model:board>/conversations/<model:conversation>/')
 def conversation_detail(request, board, conversation):
     if conversation not in board.conversations.all():
         raise Http404
@@ -128,20 +144,4 @@ def edit_conversation(request, board, conversation):
 def moderate_conversation(request, board, conversation):
     if conversation not in board.conversations.all():
         raise Http404
-    return moderate_context(request, conversation)
-
-
-@urlpatterns.route('<model:board>/conversations/add/', perms=['ej_boards.can_add_conversation'])
-def create_conversation(request, board):
-    user = request.user
-    form = forms.ConversationForm(request.POST or None)
-
-    if request.method == 'POST' and form.is_valid():
-        with transaction.atomic():
-            conversation = form.save_all(
-                author=user,
-                board=board,
-            )
-        return redirect(f'/{board.slug}/conversations/{conversation.slug}')
-
-    return {'form': form}
+    return moderate_context(request, conversation, board)
