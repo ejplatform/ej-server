@@ -618,7 +618,6 @@ $conversation-topic-display: none !default;
 
     &-fakeButton,
     input[type=submit] {
-        font-family: $font-raleway;
         border-radius: $conversation-comment-button-border-radius;
         color: #fff;
         background: $conversation-comment-button-background;
@@ -632,6 +631,7 @@ $conversation-topic-display: none !default;
     }
 
     #toast {
+        line-height: 1.2;
         visibility: hidden;
         background-color: $color-blue-nav;
         text-align: left;
@@ -649,6 +649,7 @@ $conversation-topic-display: none !default;
                 color: $toast-font-color;
             }
             h3{
+                font-family: $font-raleway;
                 margin: 0;
                 font-weight: bold;
                 font-size: 15px;
@@ -659,13 +660,13 @@ $conversation-topic-display: none !default;
         img {
 
             @media only screen and (min-width: $breakpoint-medium - $breakpoint-small) {
-                max-width: 12%;
-                margin: 10px 15px 10px 15px;
+                max-width: 10%;
+                margin: 5px 20px 10px 5px;
                 vertical-align: center;
             }
             @media only screen and (min-width: $breakpoint-small) {
-                max-width: 1.6%;
-                margin: 0 15px 10px 320px;
+                max-width: 1.8%;
+                margin: 0 15px 8px 320px;
                 vertical-align: center;                
             }
 

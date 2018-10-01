@@ -7,7 +7,7 @@
             {{comment_content.content}}
         <input type="submit" name="submit" value="{{ _('Send your opinion') }}" primary>
         {% if comment_content.errors %}
-            {{toast("OPS!", "Você já atingiu o limite de comentários desta conversa. Agradecemos a sua contribuição!")}}
+            {{toast("OPS!", comment_content.content.errors|striptags)}}
             <script>
                 showToaster()
             </script>

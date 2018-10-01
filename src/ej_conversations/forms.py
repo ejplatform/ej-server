@@ -20,6 +20,8 @@ class CommentForm(forms.ModelForm):
         comment_exists = Comment.objects.filter(content=content, conversation=self.conversation).exists()
         if comment_exists:
             msg = _("It seems that you created repeated comments. Please verify if there aren't any equal comments")
+            self._errors['content'] = self.error_class([msg])
+            del self.cleaned_data['content']
             raise ValidationError(msg)
         return self.cleaned_data
 
