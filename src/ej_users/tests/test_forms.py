@@ -1,4 +1,4 @@
-from ej_users.forms import RegistrationForm, LoginForm
+from ej_users.forms import RegistrationForm, LoginForm, ResetPasswordForm
 
 
 class TestRegistrationForm:
@@ -54,3 +54,23 @@ class TestLoginForm:
             'email': required,
             'password': required,
         }
+
+
+class TestResetPasswordForm:
+
+    def test_create_new_password(self):
+        form = ResetPasswordForm({
+            'new_password': '123',
+            'new_password_confirm': '123',
+        })
+        assert form.is_valid()
+
+    def test_not_matching_passwords(self, db):
+        form = ResetPasswordForm({
+            'new_password': "pass123",
+            'new_password_confirm': 'wrong123',
+        })
+        assert form.errors == {
+            'new_password_confirm': ['Passwords do not match'],
+        }
+        assert not form.is_valid()

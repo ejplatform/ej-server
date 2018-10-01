@@ -7,7 +7,7 @@
 
     <div class="Login">
         {# <div class="Login-icon"><img src="/static/img/login/ej-cat.svg"></div> #}
-        <h1 class="Login-title">{{ settings.EJ_LOGIN_TITLE_TEXT }}</h1>
+        <h1 class="Login-title">{{ _(settings.EJ_LOGIN_TITLE_TEXT) }}</h1>
 
         <form method="post" class="Form" is-placeholder-form>
             {{ csrf_input }}
@@ -17,7 +17,7 @@
                     {{ field.errors }}
                     <p>
                         <input for="{{field.id_for_label}}"
-                            name="{{field.name}}" 
+                            name="{{field.name}}"
                             placeholder="{{field.label}}"
                             aria-label="{{field.help_text}}"
                             type="{{field.field.widget.input_type}}"
@@ -26,21 +26,22 @@
 
                 </div>
             {% endfor %}
-            <input type="submit" 
-                    class="Button" 
-                    value="{{ _('Login') }}" 
+            <input type="submit"
+                    class="Button"
+                    value="{{ _('Login') }}"
                     name="login"
                     aria-label="{{_('Login button')}}"
                     >
         </form>
 
-
+        <p><a href="{{ '/recover-password/' + ('?next=' + next if next else '') }}"
+                  primary>{{ _('Forgot your password?') }}</a></p>
 
         {{ social_login(social_buttons, social_js) }}
 
         <div class="Login-newUser">
             <h1>{{ settings.EJ_REGISTER_TEXT }}</h1>
-            <p><a class="Button" 
+            <p><a class="Button"
                     href="{{ '/register/' + ('?next=' + next if next else '') }}"
                     aria-label="{{_('Register button')}}"
                     primary>{{ _('Register now!') }}</a></p>
