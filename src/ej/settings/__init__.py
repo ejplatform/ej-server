@@ -33,12 +33,6 @@ class Conf(ThemesConf,
     the global namespace.
     """
 
-    def get_using_sqlite(self):
-        return 'sqlite3' in self.DATABASE_DEFAULT['ENGINE']
-
-    def get_using_postgres(self):
-        return 'postgresql' in self.DATABASE_DEFAULT['ENGINE']
-
     USING_DOCKER = env(False, name='USING_DOCKER')
     HOSTNAME = env('localhost')
 
