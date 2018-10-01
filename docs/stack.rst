@@ -48,7 +48,7 @@ Django_:
     by one of its developers. Django Boogie cuts boilerplate in API and views
     creation and offers alternatives to some of Django's pain points such as
     settings management (which uses reusable classes in Boogie) and the query
-    language (which now has an API inspired on Pandas).
+    language (which has an API inspired on Pandas).
 `Hyperpython`_:
     Another sister project, it implements an HTML DSL inside Python and is
     useful to organize HTML snippets to be consumed by templates or used to
@@ -60,7 +60,22 @@ Numpy_ / Pandas_ / `Scikit-learn`_:
 .. _Django: https://docs.djangoproject.com/en/2.1/
 .. _Django REST Framework: http://www.django-rest-framework.org/
 .. _Django Boogie: https://github.com/fabiommendes/django-boogie/
-.. _Hyperpython:: https://github.com/fabiommendes/hyperpython/
+.. _Hyperpython: https://github.com/fabiommendes/hyperpython/
 .. _Numpy: http://www.numpy.org/
 .. _Pandas: https://pandas.pydata.org/
 .. _Scikit-learn: http://scikit-learn.org/
+
+
+Auxiliary Docker images
+=======================
+
+EJ uses some generic images pre-build with useful assets such as webdev tools,
+Python etc. Those images
+
+ejplatform/python:alpine:
+    A derivative of debian:buster-slim with Python 3.6 and invoke.
+ejplatform/docker-invoke:
+    A derivative of the standard docker image with Python 3.6 and invoke.
+ejplatform/builder:
+    A derivative of debian:buster-slim with Python 3.6 and tools to build
+    static assets such as Sass and Node.js

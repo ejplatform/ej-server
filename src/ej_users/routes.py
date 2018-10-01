@@ -1,4 +1,5 @@
 import logging
+import os
 
 from django.conf import settings
 from django.contrib import auth
@@ -12,15 +13,26 @@ from django.utils.translation import ugettext_lazy as _
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 
+from django.core.mail import send_mail
+from jinja2 import FileSystemLoader, Environment
+from .models import Token as TokenUser
+
 from boogie.router import Router
 from ej_users import forms
 from .socialbuttons import social_buttons
+
 
 User = get_user_model()
 
 app_name = 'ej_users'
 urlpatterns = Router(
     template='ej_users/{name}.jinja2',
+
+    models={
+        'token': TokenUser,
+    },
+    lookup_field={'token': 'url_token'}
+
 )
 log = logging.getLogger('ej')
 
@@ -100,18 +112,71 @@ def logout(request):
     return HttpResponseServerError()
 
 
-@urlpatterns.route('profile/recover-password/')
-def recover_password(request):
+@urlpatterns.route('reset-password/<model:token>/')
+def reset_password(request, token):
+
+    form = None
+    next = request.GET.get('next', '/login/')
+    user = token.user
+
+    if not token.is_expired:
+        form = forms.ResetPasswordForm.bind(request)
+        if request.method == 'POST' and form.is_valid():
+            new_password = form.cleaned_data['new_password']
+            user.set_password(new_password)
+            user.save()
+            token.delete()
+            return redirect(next)
+
     return {
-        'user': request.user,
+        'user': user,
+        'form': form,
+        'isExpired': token.is_expired,
     }
 
 
-@urlpatterns.route('profile/reset-password/', login=True)
-def reset_password(request):
+@urlpatterns.route('recover-password/')
+def recover_password(request):
+    form = forms.RecoverPasswordForm(request.POST or None)
+
+    dirname = os.path.dirname(__file__)
+    template_dir = os.path.join(dirname, 'jinja2/ej_users')
+
+    loader = FileSystemLoader(searchpath=template_dir)
+    environment = Environment(loader=loader)
+    TEMPLATE_FILE = "recover-password-message.jinja2"
+    template = environment.get_template(TEMPLATE_FILE)
+    user = None
+    success = False
+
+    if request.method == "POST" and form.is_valid():
+        success = True
+        if User.objects.filter(email=form.cleaned_data['email']).exists():
+            if settings.HOSTNAME == 'localhost':
+                host = 'http://localhost:8000'
+
+            else:
+                host = 'https://' + settings.HOSTNAME
+
+            user = User.objects.get_by_email(request.POST['email'])
+            token = TokenUser(user=user)
+            token.generate_token()
+            token.save()
+
+            template_message = template.render({'link': host + '/reset-password/' + token.url_token})
+
+            send_mail(_("Please reset your password"),
+                      template_message,
+                      'noreply@ejplatform.org.br',
+                      [request.POST['email']],
+                      fail_silently=False,
+                      )
+
     return {
-        'user': request.user,
-        'profile': request.user.profile,
+        'user': user,
+        'form': form,
+        'success': success,
+
     }
 
 
