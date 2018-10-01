@@ -6,7 +6,7 @@
     <div class="ProfileEdit">
         <form method="post" enctype="multipart/form-data" action="">
             {{ csrf_input }}
-        {#Add form new field #}
+            {{ name_form.as_p() }}
             {{ form.as_p() }}
             {{ form.non_field_errors() }}
 {#            <div class="FormItem CustomFileInput">#}
