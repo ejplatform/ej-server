@@ -91,6 +91,11 @@ $conversation-tag-color: #30BEC0;
 $conversation-statistics-color: #30c0d3;
 $conversation-arrow-border: 28px solid #D4F7F5;
 $conversation-topic-diplay: block;
+$conversation-link-new-color: $navigation-bottom-font-color !default;
+$conversation-link-new-icon-color: $color-blue !default;
+$conversation-link-edit-color: $navigation-bottom-font-color !default;
+$conversation-link-edit-icon-color: $color-blue !default;
+
 
 // Conversation: edit
 $conversation-edit-action-cancel-border: transparent;
