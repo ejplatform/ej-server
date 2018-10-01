@@ -92,8 +92,10 @@ def conversation_list(request, board):
     conversations = board.conversations.all()
     board_user = board.owner
     boards = []
+    boards_count = 0
     if user == board_user:
         boards = board_user.boards.all()
+        boards_count = boards.count()
         user_is_owner = True
     else:
         user_is_owner = False
@@ -101,7 +103,7 @@ def conversation_list(request, board):
         'can_add_conversation': user_is_owner,
         'create_url': reverse('boards:create-conversation', kwargs={'board': board}),
         'conversations': conversations,
-        'boards_count': boards.count(),
+        'boards_count': boards_count,
         'boards': boards,
         'current_board': board,
         'is_a_board': True,
@@ -133,14 +135,14 @@ def conversation_detail(request, board, conversation):
     return conversation_detail_context(request, conversation)
 
 
-@urlpatterns.route('<model:board>/conversations/<model:conversation>/edit/')
+@urlpatterns.route('<model:board>/conversations/<model:conversation>/edit/', perms=['ej.can_edit_conversation'])
 def edit_conversation(request, board, conversation):
     if conversation not in board.conversations.all():
         raise Http404
     return edit_context(request, conversation)
 
 
-@urlpatterns.route('<model:board>/conversations/<model:conversation>/moderate/')
+@urlpatterns.route('<model:board>/conversations/<model:conversation>/moderate/', perms=['ej.can_edit_conversation'])
 def moderate_conversation(request, board, conversation):
     if conversation not in board.conversations.all():
         raise Http404
