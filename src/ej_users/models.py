@@ -6,6 +6,9 @@ from boogie.apps.users.models import AbstractUser
 from boogie.rest import rest_api
 from .manager import UserManager
 from .utils import random_name
+from django.utils import timezone
+from datetime import datetime
+from secrets import token_urlsafe
 
 
 @rest_api(['id', 'display_name'])
@@ -28,6 +31,7 @@ class User(AbstractUser):
         unique=True,
         help_text=('Your e-mail address')
     )
+
     objects = UserManager()
 
     @property
@@ -44,3 +48,30 @@ class User(AbstractUser):
 
     class Meta:
         swappable = 'AUTH_USER_MODEL'
+
+
+class Token (models.Model):
+
+    url_token = models.CharField(
+        ('user token'),
+        unique=True,
+        max_length=50,
+        null=True,
+    )
+
+    user = models.ForeignKey(
+        'User',
+        on_delete=models.CASCADE,
+    )
+
+    date_time = models.DateTimeField(
+        auto_now=True,
+    )
+
+    @property
+    def is_expired(self):
+        time_now = datetime.now(timezone.utc)
+        return (time_now - self.date_time).total_seconds() > 600
+
+    def generate_token(self):
+        self.url_token = token_urlsafe(50)
