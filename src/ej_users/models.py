@@ -74,4 +74,4 @@ class Token (models.Model):
         return (time_now - self.date_time).total_seconds() > 600
 
     def generate_token(self):
-        self.url_token = token_urlsafe(50)
+        self.url_token = token_urlsafe(30)
