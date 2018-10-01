@@ -50,7 +50,7 @@ def next_comment(conversation, user):
     """
     Return a randomly selected comment for the user to vote.
     """
-    unvoted_own_comments = conversation.comments.filter(
+    unvoted_own_comments = conversation.approved_comments.filter(
         ~Q(votes__author_id=user.id),
         author_id=user.id,
     )
