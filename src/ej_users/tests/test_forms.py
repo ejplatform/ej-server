@@ -64,3 +64,14 @@ class TestResetPasswordForm:
             'new_password_confirm': '123',
         })
         assert form.is_valid()
+
+    def test_not_matching_passwords(self, db):
+        form = ResetPasswordForm({
+            'new_password': "pass123",
+            'new_password_confirm': 'wrong123',
+        })
+        assert form.errors == {
+            'new_password_confirm': ['Passwords do not match'],
+        }
+        assert not form.is_valid()
+
