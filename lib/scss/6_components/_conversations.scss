@@ -171,11 +171,11 @@ $conversation-topic-display: none !default;
     }
 
     > * {
-        padding: $spacing-unit-small;
+        padding: $spacing-unit-small + 4 $spacing-unit-small $spacing-unit-small - 2 $spacing-unit-small;
     }
 
     h1 {
-        font-size: $font-size-h3;
+        font-size: $font-size-h3 - 2;
         font-family: $font-paragraph;
         font-weight: 600;
         text-transform: none;
@@ -244,8 +244,8 @@ $conversation-topic-display: none !default;
         .Button[primary] {
             background: $card-conversation-button-background;
             font-size: $font-size-small;
-            padding-top: $button-vpadding * 2;
-            padding-bottom: $button-vpadding * 2;
+            padding-top: $font-size-small;
+            padding-bottom: $font-size-small;
             i {
                 margin-left: $spacing-unit-tiny;
             }
@@ -257,7 +257,7 @@ $conversation-topic-display: none !default;
         display: flex;
         justify-content: center;
         padding: 0 $spacing-unit;
-        margin: $spacing-unit-tiny $spacing-unit;
+        margin: $spacing-unit-tiny - 3 $spacing-unit;
         font-weight: bold;
 
         li {
