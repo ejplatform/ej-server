@@ -48,4 +48,3 @@ class TestTokenUser:
         token = Token(user=user)
         token.save()
         assert not token.is_expired
-
