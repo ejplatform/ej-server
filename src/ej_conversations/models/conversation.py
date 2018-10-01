@@ -13,8 +13,8 @@ from taggit.models import TaggedItemBase
 
 from boogie import rules
 from boogie.rest import rest_api
-from .comment import Comment
 from ej_conversations.models.utils import normalize_status
+from .comment import Comment
 from .vote import Vote, Choice
 from ..managers import ConversationManager
 
@@ -59,7 +59,8 @@ class Conversation(TimeStampedModel):
         help_text=_(
             'A short description about this conversation. This is used internally '
             'and to create URL slugs. (e.g. School system)'
-        )
+        ),
+        unique=True,
     )
     text = models.TextField(
         _('Question'),
@@ -120,13 +121,13 @@ class Conversation(TimeStampedModel):
                 'conversation.')
             )
 
-    def get_absolute_url(self, user=None):
+    def get_absolute_url(self, board=None):
         kwargs = {'conversation': self}
-        if user is None:
+        if board is None:
             return reverse('conversation:detail', kwargs=kwargs)
         else:
-            kwargs['user'] = user
-            return reverse('conversation:detail-for-user', kwargs=kwargs)
+            kwargs['board'] = board
+            return reverse('boards:conversation-detail', kwargs=kwargs)
 
     def user_votes(self, user):
         """

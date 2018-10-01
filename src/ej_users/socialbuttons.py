@@ -5,7 +5,7 @@ from allauth.socialaccount.models import SocialApp
 from allauth.socialaccount.providers.facebook.provider import FacebookProvider
 from django.core.exceptions import ImproperlyConfigured
 
-from hyperpython.components import fab_icon, fa_icon
+from hyperpython.components import fa_icon
 
 log = logging.getLogger('ej')
 SOCIAL_BUTTON_REGISTRY = {}
@@ -53,7 +53,8 @@ def facebook_button(request):
         'method': 'js_sdk',
     }
     url = provider.get_login_url(request, **query)
-    return fab_icon('facebook', href=url, id='facebook-button', class_='fab fa-facebook icon-facebook rounded-icon')
+    return fa_icon('facebook', href=url, id='facebook-button', aria_label="Facebook Icon",
+                                            class_='fab fa-facebook icon-facebook rounded-icon')
 
 
 @register_button('twitter')
@@ -63,7 +64,8 @@ def twitter_button(request):
         'next': '/conversations/',
     }
     url = provider.get_login_url(request, **query)
-    return fa_icon('twitter', href=url, id='twitter-button', class_="fab fa-twitter icon-twitter rounded-icon")
+    return fa_icon('twitter', href=url, id='twitter-button', aria_label="Twitter Icon",
+                   class_="fab fa-twitter icon-twitter rounded-icon")
 
 
 @register_button('github')
@@ -73,7 +75,7 @@ def github_button(request):
         'next': '/conversations/',
     }
     url = provider.get_login_url(request, **query)
-    return fab_icon('github', href=url, id='github-button')
+    return fa_icon('github', href=url, id='github-button')
 
 
 @register_button('google')
@@ -83,7 +85,8 @@ def google_button(request):
         'next': '/conversations/',
     }
     url = provider.get_login_url(request, **query)
-    return fab_icon('google', href=url, id='google-button', class_="fab fa-google icon-google rounded-icon")
+    return fa_icon('google', href=url, id='google-button', aria_label="Google Icon",
+                   class_="fab fa-google icon-google rounded-icon")
 
 
 #

@@ -11,7 +11,22 @@
 
         <form method="post" class="Form" is-placeholder-form>
             {{ csrf_input }}
-            {{ form }}
+            {{ form.non_field_errors() }}
+            {% for field in form %}
+                <div class="fieldWrapper">
+                    {{ field.errors }}
+                    <p>
+                        <input for="{{field.id_for_label}}"
+                            name="{{field.name}}" 
+                            placeholder="{{field.label}}"
+                            aria-label="{{field.help_text}}"
+                            type="{{field.field.widget.input_type}}"
+                        ></input>
+                    </p>
+
+                </div>
+            {% endfor %}
+            {# {{ form }} #}
             <input type="submit" value="{{ _('Register now!') }}" class="Button" name="register">
         </form>
         {{ social_login(social_buttons, social_js) }}

@@ -1,4 +1,5 @@
 import logging
+import os
 
 from django.conf import settings
 from django.contrib import auth
@@ -12,61 +13,69 @@ from django.utils.translation import ugettext_lazy as _
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 
+from django.core.mail import send_mail
+from jinja2 import FileSystemLoader, Environment
+from .models import Token as TokenUser
+
 from boogie.router import Router
 from ej_users import forms
 from .socialbuttons import social_buttons
+
 
 User = get_user_model()
 
 app_name = 'ej_users'
 urlpatterns = Router(
     template='ej_users/{name}.jinja2',
+
+    models={
+        'token': TokenUser,
+    },
+    lookup_field={'token': 'url_token'}
+
 )
 log = logging.getLogger('ej')
 
 
 @urlpatterns.route('register/')
 def register(request):
-    if not request.user.is_authenticated:
-        form = forms.RegistrationForm()
+    form = forms.RegistrationForm.bind(request)
+    next = request.GET.get('next', '/')
 
-        if request.method == 'POST':
-            form = forms.RegistrationForm(request.POST)
-            if form.is_valid():
-                data = form.cleaned_data
-                name, email, password = data['name'], data['email'], data['password']
-                try:
-                    user = User.objects.create_user(email, password, name=name)
-                    log.info(f'user {user} ({email}) successfully created')
-                except IntegrityError as ex:
-                    log.info(f'invalid login attempt: {email}')
-                    form.add_error(None, str(ex))
-                else:
-                    user = auth.authenticate(request,
-                                             email=user.email,
-                                             password=password)
-                    auth.login(request, user)
-                    log.info(f'user {user} ({email}) logged in')
-                    return redirect(request.GET.get('next', '/'))
+    if form.is_valid_post():
+        data = form.cleaned_data
+        name, email, password = data['name'], data['email'], data['password']
 
-        return {
-            'user': request.user,
-            'form': form,
-            'social_js': login_extra_template.render(request=request),
-            'social_buttons': social_buttons(request),
-        }
-    else:
-        return redirect(request.GET.get('next', '/profile/'))
+        try:
+            user = User.objects.create_user(email, password, name=name)
+            log.info(f'user {user} ({email}) successfully created')
+        except IntegrityError as ex:
+            log.info(f'invalid login attempt: {email}')
+            form.add_error(None, str(ex))
+        else:
+            user = auth.authenticate(request,
+                                     email=user.email,
+                                     password=password)
+            auth.login(request, user)
+            log.info(f'user {user} ({email}) logged in')
+            return redirect(next)
+
+    return {
+        'user': request.user,
+        'form': form,
+        'social_js': login_extra_template.render(request=request),
+        'social_buttons': social_buttons(request),
+    }
 
 
 @urlpatterns.route('login/')
 def login(request, redirect_to='/'):
-    form = forms.LoginForm(request.POST if request.method == 'POST' else None)
+    form = forms.LoginForm.bind(request)
     error_msg = _('Invalid email or password')
     next = request.GET.get('next', redirect_to)
     fast = request.GET.get('fast', 'false') == 'true' or 'fast' in request.GET
 
-    if request.method == 'POST' and form.is_valid():
+    if form.is_valid_post():
         data = form.cleaned_data
         email, password = data['email'], data['password']
 
@@ -103,18 +112,71 @@ def logout(request):
     return HttpResponseServerError()
 
 
-@urlpatterns.route('profile/recover-password/')
-def recover_password(request):
+@urlpatterns.route('reset-password/<model:token>/')
+def reset_password(request, token):
+
+    form = None
+    next = request.GET.get('next', '/login/')
+    user = token.user
+
+    if not token.is_expired:
+        form = forms.ResetPasswordForm.bind(request)
+        if request.method == 'POST' and form.is_valid():
+            new_password = form.cleaned_data['new_password']
+            user.set_password(new_password)
+            user.save()
+            token.delete()
+            return redirect(next)
+
     return {
-        'user': request.user,
+        'user': user,
+        'form': form,
+        'isExpired': token.is_expired,
     }
 
 
-@urlpatterns.route('profile/reset-password/', login=True)
-def reset_password(request):
+@urlpatterns.route('recover-password/')
+def recover_password(request):
+    form = forms.RecoverPasswordForm(request.POST or None)
+
+    dirname = os.path.dirname(__file__)
+    template_dir = os.path.join(dirname, 'jinja2/ej_users')
+
+    loader = FileSystemLoader(searchpath=template_dir)
+    environment = Environment(loader=loader)
+    TEMPLATE_FILE = "recover-password-message.jinja2"
+    template = environment.get_template(TEMPLATE_FILE)
+    user = None
+    success = False
+
+    if request.method == "POST" and form.is_valid():
+        success = True
+        if User.objects.filter(email=form.cleaned_data['email']).exists():
+            if settings.HOSTNAME == 'localhost':
+                host = 'http://localhost:8000'
+
+            else:
+                host = 'https://' + settings.HOSTNAME
+
+            user = User.objects.get_by_email(request.POST['email'])
+            token = TokenUser(user=user)
+            token.generate_token()
+            token.save()
+
+            template_message = template.render({'link': host + '/reset-password/' + token.url_token})
+
+            send_mail(_("Please reset your password"),
+                      template_message,
+                      'noreply@ejplatform.org.br',
+                      [request.POST['email']],
+                      fail_silently=False,
+                      )
+
     return {
-        'user': request.user,
-        'profile': request.user.profile,
+        'user': user,
+        'form': form,
+        'success': success,
+
     }
 
 

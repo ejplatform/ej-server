@@ -5,13 +5,14 @@ from django.conf import settings
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.urls import reverse
 from django.utils import translation
+from django.utils.translation import get_language
 from jinja2 import Environment, StrictUndefined, contextfunction
 from markdown import markdown
 from markupsafe import Markup
 
 import hyperpython.jinja2
 from ej_configurations import social_icons, fragment
-from hyperpython import render
+from hyperpython import html
 from . import roles
 from .roles import tags
 
@@ -30,6 +31,9 @@ def environment(**options):
         static=staticfiles_storage.url,
         url=reverse,
         settings=settings,
+
+        # Localization
+        get_language=get_language,
 
         # Security
         salt_attr=salt_attr,
@@ -154,4 +158,4 @@ def generic_context(ctx):
 
 
 def non_strict_render(obj, role=None, ctx=None, strict=False):
-    return render(obj, role=role, ctx=ctx, strict=strict)
+    return html(obj, role=role, ctx=ctx, strict=strict)

@@ -3,9 +3,9 @@ from types import MappingProxyType
 from django.db import models
 from django.db.models import QuerySet
 
-from hyperpython import render, Text
+from hyperpython import html, Text
 from hyperpython.components import html_list
-from hyperpython.render import django_loader
+from hyperpython.html import django_loader
 
 
 def with_template(model, role, template=None, queryset=False):
@@ -32,9 +32,9 @@ def with_template(model, role, template=None, queryset=False):
 
         if queryset:
             renderer = render_with_template(func, template)
-            render.register_queryset(model, role)(renderer)
+            html.register_queryset(model, role)(renderer)
         else:
-            return render.register_template(model, template, role=role)(func)
+            return html.register_template(model, template, role=role)(func)
 
     return decorator
 
@@ -57,7 +57,7 @@ def queryset_closure():
         try:
             renderer = registry[key]
         except KeyError:
-            return html_list(render(x, **kwargs) for x in qs)
+            return html_list(html(x, **kwargs) for x in qs)
         else:
             return renderer(qs, **kwargs)
 
@@ -103,6 +103,6 @@ def render_with_template(func, template):
 
 
 register_queryset = queryset_closure()
-render.register(QuerySet)(register_queryset)
-render.with_template = with_template
-render.register_queryset = register_queryset.register
+html.register(QuerySet)(register_queryset)
+html.with_template = with_template
+html.register_queryset = register_queryset.register

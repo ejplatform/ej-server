@@ -10,9 +10,9 @@
             {% if request.user.is_active %}
                 {{ header_lower_nav(request) }}
             {% else %}
-                {%- call link('/login/') %}
+                {%- call link(href='auth:login', link_next=request.path) %}
                     <div class="Header-lowerNotLogged">
-                        <p>{{ _('ENTRAR') }}</p>
+                        <p>{{ _('LOGIN') }}</p>
                     </div>
                 {% endcall %}
             {% endif %}
@@ -28,7 +28,7 @@
             // this function controls the open/close button of "conversations dropdown on page_menu
             function openDropDown(openDiv) {
                 let element = document.getElementsByClassName(openDiv);
-                if (element[0].style.display == "inline")
+                if (element[0].style.display === "inline")
                     element[0].style.display = "none";
                 else
                     element[0].style.display = "inline";
@@ -58,7 +58,7 @@
             </a>
 
             {% call link(href='/', class="Header-ejLogo") %}
-                <img src="/static/img/logo/logo.svg" alt="EJ logo">
+                <img src="/static/img/logo/logo.svg" alt="{{_('Site logo')}}">
             {% endcall %}
 
             <a href="/menu/" title="{{ _("Navigation menu") }}" up-drawer=".NavMenu" up-history="false"
@@ -74,7 +74,7 @@
             </a>
 
             {% call link(href='/', class="Header-ejLogo") %}
-                <img src="/static/img/logo/logo.svg" alt="EJ logo">
+                <img src="/static/img/logo/logo.svg" alt="{{_('Site logo')}}">
             {% endcall %}
 
         {% endif %}
@@ -84,21 +84,21 @@
 
 {% macro header_lower_nav(request) %}
     <nav class="Header-lowerNav">
-        {% call link('/conversations/', title=_('Conversations'), class='conversations-link', preload=True) %}
+        {% call link('conversation:list', title=_('Conversations'), class='conversations-link', preload=True) %}
             <img src="/static/img/icons/navbar_conversations.svg" alt="{{ _('Conversations') }}"
                  class="Header-lowerIcon">
             <span>{{ _('Conversations') }}</span>
         {% endcall %}
 
         {% if request.user.has_perm('ej_rocketchat.can_create_account') and settings.EJ_ROCKETCHAT_INTEGRATION %}
-            {% call link('/talks/', title=_('Panel'), class='panel-link', preload=True) %}
+            {% call link('rocket:iframe', title=_('Panel'), class='panel-link', preload=True) %}
                 <img src="/static/img/icons/navbar_panel.svg" alt="{{ _('Panel') }}" class="Header-lowerIcon">
                 <span>{{ _('Panel') }}</span>
             {% endcall %}
         {% endif %}
 
-        {% call link('/profile/', title=_('Profile'), class='profile-link', preload=True) %}
-            <img src="/static/img/icons/navbar_profile.svg" title="{{ _('Profile') }}" class="Header-lowerIcon">
+        {% call link('profile:detail', title=_('Profile'), class='profile-link', preload=True) %}
+            <img src="/static/img/icons/navbar_profile.svg" title="{{ _('Profile') }}" alt="{{_('Profile')}}" class="Header-lowerIcon">
             <span>{{ _('Profile') }}</span>
         {% endcall %}
 
@@ -108,5 +108,3 @@
         {% endcall %} #}
     </nav>
 {% endmacro %}
-
-

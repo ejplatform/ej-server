@@ -32,7 +32,7 @@ class Command(BaseCommand):
         real_handle(path, force)
 
 
-def real_handle(path=False, force=False):
+def real_handle(path, force=False):
     validate_path(path)
     base = Path(path)
     files = ((base / path, make_url(path)) for path in os.listdir(path))
@@ -73,6 +73,7 @@ def save_file(path, file_name, title_re, template, **kwargs):
     data = path.read_text()
     title_m = title_re.match(data)
     title = title_m.groupdict()['title'] if title_m else path.name
+    data = data.replace(title, '', 1)  # remove title from content page
     page, created = FlatPage.objects.update_or_create(
         url=file_name,
         defaults={'title': title,

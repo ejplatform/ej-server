@@ -10,7 +10,6 @@ from .. import forms, models
 @urlpatterns.route('add/', login=True, perms=['ej.can_add_promoted_conversation'])
 def create(request):
     form = forms.ConversationForm(request.POST or None)
-
     if request.method == 'POST' and form.is_valid():
         with transaction.atomic():
             conversation = form.save_all(
@@ -25,6 +24,20 @@ def create(request):
 @urlpatterns.route(conversation_url + 'edit/',
                    perms=['ej.can_edit_conversation'])
 def edit(request, conversation):
+    if not conversation.is_promoted:
+        raise Http404
+    return edit_context(request, conversation)
+
+
+@urlpatterns.route(conversation_url + 'moderate/', perms=['ej.can_moderate_conversation'])
+def moderate(request, conversation):
+    if not conversation.is_promoted:
+        raise Http404
+
+    return moderate_context(request, conversation)
+
+
+def edit_context(request, conversation):
     comments = []
     board = None
     if request.method == 'POST':
@@ -52,11 +65,7 @@ def edit(request, conversation):
     }
 
 
-@urlpatterns.route(conversation_url + 'moderate/')
-def moderate(request, conversation):
-    if not request.user.has_perm('ej.can_moderate_conversation', conversation):
-        raise Http404
-
+def moderate_context(request, conversation):
     comments = []
     if request.method == 'POST':
         comment = models.Comment.objects.get(id=request.POST['comment'])
