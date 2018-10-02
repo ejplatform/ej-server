@@ -644,13 +644,15 @@ $conversation-topic-display: none !default;
         > div {
             padding: 15px;
             p {
+                padding: 0 0 6px 0;
                 margin: 0;
                 font-size: 13px;
                 color: $toast-font-color;
             }
             h3{
-                font-family: $font-raleway;
+                padding: 6px 0 0 0;
                 margin: 0;
+                font-family: $font-raleway;
                 font-weight: bold;
                 font-size: 15px;
                 color: $color-blue;
@@ -658,23 +660,24 @@ $conversation-topic-display: none !default;
         }
         
         img {
-
             @media only screen and (min-width: $breakpoint-medium - $breakpoint-small) {
                 max-width: 10%;
-                margin: 5px 20px 10px 5px;
-                vertical-align: center;
+                margin: 7.4px 20px 5px 5px;
+                background-color: #fff;vertical-align: middle;
+                border: 2.5px solid $color-blue;
+                border-radius: 60px;
+                padding: 8px;
             }
             @media only screen and (min-width: $breakpoint-small) {
-                max-width: 1.8%;
-                margin: 0 15px 8px 320px;
-                vertical-align: center;                
+                max-width: 1.6%;
+                margin: 0 15px 0px 460px; 
+                background-color: #fff;
+                border: 2.5px solid $color-blue;
+                border-radius: 60px;
+                padding: 8px;              
             }
 
-            background-color: #fff;
-            border: 2.5px solid $color-blue;
-            border-radius: 60px;
-            padding: 8px;
-            margin-right: $spacing-unit-small;
+
         }
 
     }

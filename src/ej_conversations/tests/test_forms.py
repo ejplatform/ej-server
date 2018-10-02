@@ -48,7 +48,6 @@ class TestCommentForm:
             'content': ['This field is required.'],
         }
 
-
     def test_repetead_comment_data(self, conversation, db, user):
         Comment.objects.create(content="Comment", conversation=conversation, author=user)
         form = CommentForm({
