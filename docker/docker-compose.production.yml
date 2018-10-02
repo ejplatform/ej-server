@@ -3,17 +3,14 @@ version: '3.5'
 
 services:
   nginx:
-    image: nginx:alpine
-    restart: always
-    build:
-      context: ./
-      dockerfile: ./base-images/Dockerfile-nginx
+    image: ejplatform/nginx:latest
     volumes:
       - media_files:/usr/share/nginx/html/media
       - static_files:/usr/share/nginx/html/static
-      - nginx_conf:/etc/nginx/conf.d/:nocopy
     ports:
       - 80:80
+    depends_on:
+      - web
     links:
       - web
 
@@ -38,7 +35,6 @@ services:
       - media_files:/app/local/media/
       - static_files:/app/local/static/
       - nginx_conf:/etc/nginx/conf.d/
-    working_dir: /app
     command: db -m gunicorn
 
   postgres:
