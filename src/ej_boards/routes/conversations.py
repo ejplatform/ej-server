@@ -6,6 +6,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from ej_conversations import forms
 from ej_conversations.routes import conversation_detail_context, moderate_context, edit_context
+from ej_clusters.routes import create_stereotype_context, edit_stereotype_context
 from . import urlpatterns
 
 
@@ -70,3 +71,27 @@ def moderate_conversation(request, board, conversation):
     if conversation not in board.conversations.all():
         raise Http404
     return moderate_context(request, conversation, board)
+
+
+@urlpatterns.route('<model:board>/conversations/<model:conversation>/stereotypes/',
+                   perms=['ej.can_manage_stereotypes'])
+def conversation_stereotype_list(request, board, conversation):
+    return {
+        'content_title': _('Stereotypes'),
+        'conversation_title': conversation.title,
+        'stereotypes': conversation.stereotypes.all(),
+        'stereotype_url': conversation.get_absolute_url(board=board) + 'stereotypes/',
+        'conversation_url': conversation.get_absolute_url(board=board),
+    }
+
+
+@urlpatterns.route('<model:board>/conversations/<model:conversation>/stereotypes/add/',
+                   perms=['ej.can_manage_stereotypes'])
+def create_conversation_stereotype(request, board, conversation):
+    return create_stereotype_context(request, conversation, board)
+
+
+@urlpatterns.route('<model:board>/conversations/<model:conversation>/stereotypes/<model:stereotype>/edit/',
+                   perms=['ej.can_manage_stereotypes'])
+def edit_conversation_stereotype(request, board, conversation, stereotype):
+    return edit_stereotype_context(request, conversation, stereotype, board)

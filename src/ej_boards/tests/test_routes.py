@@ -22,6 +22,7 @@ class TestRoutes(UrlTester, BoardRecipes, ConversationRecipes):
     owner_urls = [
         '/board-slug/conversations/conversation/edit/',
         '/board-slug/conversations/conversation/moderate/',
+        '/board-slug/conversations/conversation/stereotypes/'
     ]
 
     @pytest.fixture

@@ -106,6 +106,31 @@ def stereotype_vote(request, conversation, stereotype):
 @urlpatterns.route('conversations/<model:conversation>/stereotypes/add/',
                    perms=['ej.can_manage_stereotypes'])
 def create_stereotype(request, conversation):
+    return create_stereotype_context(request, conversation)
+
+
+@urlpatterns.route('conversations/<model:conversation>/stereotypes/<model:stereotype>/edit/',
+                   perms=['ej.can_manage_stereotypes'])
+def edit_stereotype(request, conversation, stereotype):
+    return edit_stereotype_context(request, conversation, stereotype)
+
+
+#
+# User profile
+#
+@urlpatterns.route('profile/clusters/')
+def list_cluster(request):
+    user_clusters = Cluster.objects.filter(clusterization__conversation__author=request.user)
+    return {
+        'clusters': user_clusters,
+        'create_url': '/profile/clusters/add/',
+    }
+
+
+#
+# Auxiliary functions
+#
+def create_stereotype_context(request, conversation, board=None):
     if request.method == 'POST':
         stereotype_form = StereotypeForm(request.POST, conversation=conversation)
         votes_formset = StereotypeVoteFormSet(request.POST)
@@ -138,9 +163,7 @@ def create_stereotype(request, conversation):
     }
 
 
-@urlpatterns.route('conversations/<model:conversation>/stereotypes/<model:stereotype>/edit/',
-                   perms=['ej.can_manage_stereotypes'])
-def edit_stereotype(request, conversation, stereotype):
+def edit_stereotype_context(request, conversation, stereotype, board=None):
     if request.method == 'POST':
         stereotype_form = StereotypeForm(request.POST, conversation=conversation, instance=stereotype)
         votes = StereotypeVote.objects.filter(author=stereotype)
@@ -164,21 +187,6 @@ def edit_stereotype(request, conversation, stereotype):
     }
 
 
-#
-# User profile
-#
-@urlpatterns.route('profile/clusters/')
-def list_cluster(request):
-    user_clusters = Cluster.objects.filter(clusterization__conversation__author=request.user)
-    return {
-        'clusters': user_clusters,
-        'create_url': '/profile/clusters/add/',
-    }
-
-
-#
-# Auxiliary functions
-#
 def cluster_info(cluster):
     stereotypes = cluster.stereotypes.all()
     user_data = [
