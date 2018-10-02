@@ -57,8 +57,10 @@ def edit_context(request, conversation):
             if comment.is_pending:
                 comments.append(comment)
 
+    user = request.user
     return {
         'conversation': conversation,
+        'can_promote_conversation': user.has_perm('can_publish_promoted'),
         'comments': comments,
         'board': board,
         'form': form,
