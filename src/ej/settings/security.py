@@ -11,7 +11,7 @@ class SecurityConf(Base):
         'allauth.account.auth_backends.AuthenticationBackend',
     ]
     X_FRAME_OPTIONS = env('SAMEORIGIN')
-    CORS_ORIGIN_ALLOW_ALL = env(False)
+    CORS_ORIGIN_ALLOW_ALL = True
     CORS_ALLOW_CREDENTIALS = env(True)
 
     def get_cors_origin_whitelist(self, hostname):

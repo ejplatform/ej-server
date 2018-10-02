@@ -1,3 +1,5 @@
+# FAQ
+
 ## Como participar?
 
 Cadastre-se na plataforma (pelo login do Facebook, Twitter, Google, Instagran ou cadastro simples na própria plataforma) e participe das CONVERSAS públicas. Participar é bem simples: seja pelo celular ou pelo computador, você pode incluir suas ideias e concordar ou discordar de opiniões que forem aparecendo..

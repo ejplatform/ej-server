@@ -18,40 +18,7 @@
         {% endif %}
 
         {# Post a new comment #}
-        {% if can_comment %}
-            {{ comment_form(csrf_input) }}
-            <p>{{ _('You still have {n} available comments').format(n=comments_left) }}</p>
-        {% elif comments_left == 0 %}
-            <p>{% trans %}You have used all comments available in this conversation.{% endtrans %}</p>
-        {% else %}
-            <p>{% trans %}Please {{ login_anchor }} to vote on this conversation.{% endtrans %}</p>
-        {% endif %}
+        {{ conversation|role('comment-form') }}
+
     </div>
 {% endblock %}
-
-
-{% macro comment_form(csrf_input) %}
-    <div class="CommentForm">
-        {% if can_comment == 0 %}
-            <div class="CommentForm-toast">
-                <h3>{% trans %}Ooops!{% endtrans %}</h3>
-                <p>{% trans %}You reached the limit of comments in this conversation.{% endtrans %}</p>
-            </div>
-        {% else %}
-
-        <h1>{% trans %}Leave your comment{% endtrans %}</h1>
-        <p>{% trans %}Include something new and avoid similar opinions.
-            You can post at most {{ comments_left }} comments.{% endtrans %}</p>
-
-        <form method="post">
-            {{ csrf_input }}
-            <input type="hidden" name="action" value="comment">
-            <textarea name="comment"
-                      title="comment"
-                      onFocus="$('.Header-lowerNav').hide()"
-                      onBlur="$('.Header-lowerNav').show()"></textarea>
-            <input type="submit" name="submit" value="{{ _('Send your opinion') }}" primary>
-        </form>
-        {% endif %}
-    </div>
-{% endmacro %}

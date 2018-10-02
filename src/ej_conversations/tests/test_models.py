@@ -23,10 +23,12 @@ class TestConversation(ConversationRecipes):
         ]
 
         cmt = conversation.next_comment(user)
-        assert cmt == comments[0]
+        assert cmt == comments[1]
         assert cmt.status == cmt.STATUS.approved
-        assert cmt.author != user
         assert not Vote.objects.filter(author=user, comment=cmt)
+        cmt.vote(user, Choice.AGREE)
+        other_cmt = conversation.next_comment(user)
+        assert other_cmt.author != user
 
     def test_create_conversation_saves_model_in_db(self, user_db):
         conversation = create_conversation('what?', 'test', user_db)

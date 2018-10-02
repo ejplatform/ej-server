@@ -54,5 +54,5 @@ def social():
 
 urlpatterns.register(flat_pages_route('rules'), 'rules/')
 urlpatterns.register(flat_pages_route('faq'), 'faq/')
-urlpatterns.register(flat_pages_route('about'), 'about/')
+urlpatterns.register(flat_pages_route('about-us'), 'about-us/')
 urlpatterns.register(flat_pages_route('usage'), 'usage/')

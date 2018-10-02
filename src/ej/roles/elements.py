@@ -29,7 +29,7 @@ def icon(name, href=None, **kwargs):
     if '.' in name:
         raise NotImplementedError
     else:
-        return components.fa_icon(icon, href=href, **kwargs)
+        return components.fa_icon(name, href=href, **kwargs)
 
 
 def decorated_text(text, icon, style=None, href=None, **kwargs):

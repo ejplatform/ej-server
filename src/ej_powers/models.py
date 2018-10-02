@@ -1,5 +1,8 @@
+import logging
+from datetime import datetime
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from django.contrib.auth import get_user_model
 from model_utils.models import TimeFramedModel
 from polymorphic.models import PolymorphicModel
 
@@ -8,6 +11,7 @@ from ej_conversations.fields import UserRef, CommentRef
 from .functions import promote_comment
 
 NO_PROMOTE_MSG = _('user does not have the right to promote this comment')
+log = logging.getLogger('ej')
 
 
 class CommentPromotion(TimeFramedModel):
@@ -31,7 +35,7 @@ class CommentPromotion(TimeFramedModel):
         """
         if self.is_expired:
             self.delete()
-            log.info(f'Removed expired promotion for {comment} comment.')
+            log.info(f'Removed expired promotion for {self.comment} comment.')
 
 
 class GivenPower(TimeFramedModel, PolymorphicModel):

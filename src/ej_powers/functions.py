@@ -1,5 +1,5 @@
 import datetime
-
+import logging
 import sidekick as sk
 
 timezone = sk.import_later('django.utils.timezone')
@@ -7,6 +7,7 @@ models = sk.import_later('.models', package=__package__)
 promotions = sk.deferred(lambda: models.CommentPromotion.objects)
 valid_promotions = sk.deferred(lambda: models.CommentPromotion.timeframed)
 DEFAULT_EXPIRATION_TIME_DELTA = datetime.timedelta(hours=24)
+log = logging.getLogger('ej')
 
 
 def promote_comment(comment, *, author, users, expires=None):
