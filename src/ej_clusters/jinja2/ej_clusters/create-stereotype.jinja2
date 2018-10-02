@@ -74,7 +74,8 @@
     });
     $(document).on('click', '.remove-form-row', function(e){
         e.preventDefault();
-        deleteForm('form');
+        var form = $(".remove-form-row").parent().parent();
+        deleteForm(form);
         return false;
     });
   </script>
