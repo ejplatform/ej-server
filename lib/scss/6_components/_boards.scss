@@ -7,6 +7,8 @@
 $board-ul-margin: 40px;
 $board-link-margin: 15px;
 $board-label-color: #30BFD3;
+$board-menu-font-color: #042049;
+$board-top-menu-border: 1px #DDDDDD solid;
 
 .BoardForm {
     label {
@@ -18,6 +20,24 @@ $board-label-color: #30BFD3;
 }
 
 .Board{
+
+    &-TopMenu {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        border-bottom: $board-top-menu-border;     
+        button {
+            margin: $spacing-unit-small $spacing-unit-small $spacing-unit-tiny $spacing-unit-small;
+            text-transform: uppercase;
+            background-color: transparent;
+            border: none;
+            color: $board-menu-font-color;
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+
     &-Title {
         color: $color-pink;
     }

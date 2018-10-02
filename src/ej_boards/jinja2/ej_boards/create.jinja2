@@ -1,14 +1,20 @@
 {% extends 'base.jinja2' %}
 
 {% block content %}
-    <div>
-        <p>{{_('Cancel')}}</p>
-        <p>{{_('Save board')}}</p>
+    <div class="Board-TopMenu">
+        <button onclick="history.back()">
+            <img src="/static/img/icons/icon_cancel.svg" />
+            {{_('Cancel')}}
+        </button>
+        <button form="create-board-form" type=submit>
+            <img src="/static/img/icons/icon_save.svg" />
+            {{_('Save board')}}
+        </button>
     </div>
     <div class="CenteredContainer" compact>
         <h1 class="Board-Title">{{_('Create board')}}</h1>
         <p>{{_('Fill up the form to create or edit this conversation board')}}</p>
-        <form method="post" class="Form BoardForm">
+        <form id="create-board-form" method="post" class="Form BoardForm">
             {{ csrf_input }}
             {{ form.as_p() }}
             <div>
