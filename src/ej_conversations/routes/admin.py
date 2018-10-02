@@ -16,7 +16,7 @@ def create(request):
                 author=request.user,
                 is_promoted=True,
             )
-        return redirect(conversation.get_absolute_url())
+        return redirect(conversation.get_absolute_url() + 'stereotypes/')
 
     return {'form': form}
 
