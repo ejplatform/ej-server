@@ -47,12 +47,18 @@
                 {% for form in votes_form %}
                     <div class="row form-row spacer">
                         {{ form.as_p() }}
-                        <div class="StereotypeAdd-append">
-                            <button class="btn btn-success add-form-row"><i class="fas fa-plus"></i></button>
-                            <span class="">{{ _('Add comment') }}</span>
-                        </div>
                     </div>
+                    {% if votes_form|length > 1 %}
+                        <div class="StereotypeAdd-append">
+                            <button class="btn btn-danger remove-form-row"><i class="fas fa-minus"></i></button>
+                            <span class="">{{ _('Remove Comment') }}</span>
+                        </div>
+                    {% endif %}
                 {% endfor %}
+                <div class="StereotypeAdd-append">
+                    <button class="btn btn-success add-form-row"><i class="fas fa-plus"></i></button>
+                    <span class="">{{ _('Add comment') }}</span>
+                </div>
             </div>
             <div class="StereotypeAdd-submit">
               <div>
