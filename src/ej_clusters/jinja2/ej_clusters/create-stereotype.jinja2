@@ -65,5 +65,17 @@
 
 
 {% block javascript_body %}
-  <script src="/static/js/createDynamicForm.js" defer></script>
+  <script src="/static/js/dynamic-form.js" defer></script>
+  <script>
+    $(document).on('click', '.add-form-row', function(e){
+        e.preventDefault();
+        cloneForm('.form-row:last');
+        return false;
+    });
+    $(document).on('click', '.remove-form-row', function(e){
+        e.preventDefault();
+        deleteForm('form');
+        return false;
+    });
+  </script>
 {% endblock %}
