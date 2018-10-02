@@ -6,6 +6,22 @@
 
 $board-ul-margin: 40px;
 $board-link-margin: 15px;
+$board-label-color: #30BFD3;
+
+.BoardForm {
+    label {
+        font-size: $font-size-small;
+        color: $board-label-color;
+        margin-left: $spacing-unit-small;
+    }
+
+}
+
+.Board{
+    &-Title {
+        color: $color-pink;
+    }
+}
 
 .BoardList {
     text-align: center;

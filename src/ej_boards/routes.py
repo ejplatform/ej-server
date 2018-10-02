@@ -62,7 +62,6 @@ def create(request):
         form = form_class()
 
     return {
-        'content_title': _('Create board'),
         'form': form,
     }
 
