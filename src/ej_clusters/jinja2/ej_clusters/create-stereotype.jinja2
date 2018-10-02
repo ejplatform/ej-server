@@ -44,15 +44,15 @@
             </div>
             {{ votes_form.management_form }}
             <div class="votes_form_class">
-            {% for form in votes_form %}
-                <div class="row form-row spacer">
-                    {{ form.as_p() }}
-                    <div class="StereotypeAdd-append">
-                        <button class="btn btn-success add-form-row"><i class="fas fa-plus"></i></button>
-                        <span class="">{{ _('Add comment') }}</span>
+                {% for form in votes_form %}
+                    <div class="row form-row spacer">
+                        {{ form.as_p() }}
+                        <div class="StereotypeAdd-append">
+                            <button class="btn btn-success add-form-row"><i class="fas fa-plus"></i></button>
+                            <span class="">{{ _('Add comment') }}</span>
+                        </div>
                     </div>
-                </div>
-            {% endfor %}
+                {% endfor %}
             </div>
             <div class="StereotypeAdd-submit">
               <div>
