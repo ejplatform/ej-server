@@ -6,8 +6,6 @@
 
 $board-ul-margin: 40px;
 $board-link-margin: 15px;
-$board-label-color: #30BFD3;
-$board-menu-font-color: #042049;
 $board-top-menu-border: 1px #DDDDDD solid;
 
 .BoardForm {
@@ -25,7 +23,10 @@ $board-top-menu-border: 1px #DDDDDD solid;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-        border-bottom: $board-top-menu-border;     
+        border-bottom: $board-top-menu-border;    
+        img {
+            width: 20px;
+        } 
         button {
             margin: $spacing-unit-small $spacing-unit-small $spacing-unit-tiny $spacing-unit-small;
             text-transform: uppercase;
@@ -39,7 +40,7 @@ $board-top-menu-border: 1px #DDDDDD solid;
     }
 
     &-Title {
-        color: $color-pink;
+        color: $board-title-color;
     }
 }
 

@@ -19,6 +19,8 @@ $button-border-radius-default: 56px !default;
 // Forms
 $check-box-color: $color-magenta !default;
 $form-item-border-radius: $spacing-unit !default;
+$form-border-color: $color-blue-light !default;
+$form-input-color: $color-action-default !default;
 
 // Profile
 $profile-font-color-primary: #30BFD3 !default;
@@ -151,5 +153,8 @@ $stereotype-add-submit-color: $color-magenta !default;
 $stereotype-add-input-border-radius: 17px !default;
 $stereotype-add-comment-color: $color-purple-dark !default;
 
-
+// Boards
+$board-menu-font-color: #042049 !default;
+$board-title-color: $color-pink !default;
+$board-label-color: #30BFD3 !default;
 
