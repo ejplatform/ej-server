@@ -633,7 +633,7 @@ $conversation-topic-display: none !default;
     #toast {
         line-height: 1.2;
         visibility: hidden;
-        background-color: $color-blue-nav;
+        background-color: $color-hint;
         text-align: left;
         border-radius: 1px;
         position: fixed;
@@ -642,19 +642,19 @@ $conversation-topic-display: none !default;
         left: 0;
         bottom: $header-top-nav-height;
         > div {
-            padding: 15px;
+            padding: $spacing-padding;
             p {
-                padding: 0 0 6px 0;
+                padding: 0 0 $spacing-unit-tiny 0;
                 margin: 0;
-                font-size: 13px;
+                font-size: $font-size-small;
                 color: $toast-font-color;
             }
             h3{
-                padding: 6px 0 0 0;
+                padding: $spacing-unit-tiny 0 0 0;
                 margin: 0;
                 font-family: $font-raleway;
                 font-weight: bold;
-                font-size: 15px;
+                font-size: $font-size-default;
                 color: $color-blue;
             }
         }

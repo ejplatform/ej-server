@@ -10,12 +10,12 @@ class CommentForm(forms.ModelForm):
         model = Comment
         fields = ['content']
 
-    def __init__(self, *args, **kwargs):
-        self.conversation = kwargs.pop("conversation")
+    def __init__(self, *args, conversation, **kwargs):
+        self.conversation = conversation
         super(CommentForm, self).__init__(*args, **kwargs)
 
     def clean(self):
-        super(CommentForm, self).clean()
+        super().clean()
         content = self.cleaned_data.get('content')
         comment_exists = Comment.objects.filter(content=content, conversation=self.conversation).exists()
         if comment_exists:
