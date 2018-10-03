@@ -136,7 +136,6 @@ $conversation-topic-display: none !default;
     justify-content: center;
     display: flex;
     flex-direction: column;
-
     p {
         text-align: center;
     }
@@ -146,7 +145,7 @@ $conversation-topic-display: none !default;
     @include color($conversation-card-light, $conversation-card-color, $force: true);
     font-weight: bold;
     text-align: center;
-    padding: $spacing-unit / 2 0;
+    padding: $spacing-unit-small + $spacing-unit-tiny $spacing-unit-small $spacing-unit-small $spacing-unit-small;
     background-color: $conversation-top-background;
 }
 
@@ -165,15 +164,11 @@ $conversation-topic-display: none !default;
     height: 320px;
     overflow: hidden;
     position: relative;
+    padding: 0;
     .ConversationTags {
         background-color: $card-conversation-top-background;
         color: $card-conversation-top-font-color;
     }
-
-    > * {
-        padding: $spacing-unit-small + 4 $spacing-unit-small $spacing-unit-small - 2 $spacing-unit-small;
-    }
-
     h1 {
         font-size: $font-size-h3 - 2;
         font-family: $font-paragraph;
@@ -231,6 +226,7 @@ $conversation-topic-display: none !default;
     }
 
     &-cover + .ConversationCard-actions {
+        padding: 0 $spacing-unit-small $spacing-unit-small $spacing-unit-small;
         background-size: 30px;
         background: $card-conversation-bottom-background;
         margin-top: $spacing-unit;
@@ -242,6 +238,7 @@ $conversation-topic-display: none !default;
 
     &-actions {
         .Button[primary] {
+            padding: $spacing-unit-small + $spacing-unit-tiny;
             background: $card-conversation-button-background;
             font-size: $font-size-small;
             padding-top: $font-size-small;
@@ -256,7 +253,7 @@ $conversation-topic-display: none !default;
         color: $conversation-card-statistics-color;
         display: flex;
         justify-content: center;
-        padding: 0 $spacing-unit;
+        padding: $spacing-unit-small;
         margin: $spacing-unit-tiny - 3 $spacing-unit;
         font-weight: bold;
 
