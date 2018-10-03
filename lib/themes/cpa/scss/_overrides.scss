@@ -1,3 +1,7 @@
+// Color
+$color-accent: #C6027B;
+$color-magenta: #C6027B;
+
 // Page
 $page-background-image: url(/static/img/page-bg.svg) top center no-repeat;
 
@@ -6,8 +10,8 @@ $button-border-radius-default: 8px;
 
 // Forms
 $form-item-border-radius: 7px;
-$form-border-color: #052B47;
-$form-input-color: #C6027B;
+$form-border-color: $color-purple-dark;
+$form-input-color: $color-magenta;
 
 //Profile
 //$profile-font-color-primary: white;
@@ -131,9 +135,6 @@ $selected-stereotype-cluster-menu-color: #b62a52;
 $selected-stereotype-cluster-menu-border: none;
 $selected-stereotype-cluster-menu-padding: none;
 
-// Color
-$color-accent: #C6027B;
-$color-magenta: #C6027B;
 
 // Stereotypes
 $stereotype-title: #3F1B53;

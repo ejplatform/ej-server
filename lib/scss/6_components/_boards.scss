@@ -25,7 +25,7 @@ $board-top-menu-border: 1px #DDDDDD solid;
         justify-content: space-between;
         border-bottom: $board-top-menu-border;    
         img {
-            width: 20px;
+            width: $spacing-unit-small;
         } 
         button {
             margin: $spacing-unit-small $spacing-unit-small $spacing-unit-tiny $spacing-unit-small;
@@ -33,6 +33,7 @@ $board-top-menu-border: 1px #DDDDDD solid;
             background-color: transparent;
             border: none;
             color: $board-menu-font-color;
+            font-size: $font-size-small;
             &:hover {
                 cursor: pointer;
             }
