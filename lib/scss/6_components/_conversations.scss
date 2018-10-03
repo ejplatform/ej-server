@@ -3,6 +3,7 @@
  ======================================================================== */
 @import '../2_tools/index';
 
+$conversation-toast-image-border: $spacing-unit-tiny / 3;
 $conversation-button-size: $spacing-unit-small + $spacing-unit-tiny !default;
 $conversation-card-gutter: $spacing-unit !default;
 $conversation-card-border: 0 !default;
@@ -583,7 +584,7 @@ $conversation-topic-display: none !default;
     }
 }
 
-.CommentForm {
+.CommentForm {margin-top: $spacing-unit-tiny;
     text-align: center;
     background: $conversation-comment-form-background-color;
     margin-top: -60px;
@@ -643,6 +644,8 @@ $conversation-topic-display: none !default;
         bottom: $header-top-nav-height;
         > div {
             padding: $spacing-padding;
+            max-width: 660px;
+            margin: 0 auto;
             p {
                 padding: 0 0 $spacing-unit-tiny 0;
                 margin: 0;
@@ -655,42 +658,41 @@ $conversation-topic-display: none !default;
                 font-family: $font-raleway;
                 font-weight: bold;
                 font-size: $font-size-default;
-                color: $color-blue;
+                color: $color-primary;
+            }
+            img {
+                @media only screen and (min-width: $breakpoint-medium - $breakpoint-small) {
+                    max-width: 9%;
+                    margin-right: $spacing-unit-small;
+                    margin-top: $spacing-unit-tiny;
+                    background-color: #fff;
+                    border: $conversation-toast-image-border solid $color-primary;
+                    border-radius: $spacing-unit-large;
+                    padding: $spacing-unit-tiny;
+                }
+                @media only screen and (min-width: $breakpoint-small) {
+                    max-width: 4.5%;
+                    margin-right: $spacing-unit-tiny;
+                    margin-top: 0;
+                    background-color: #fff;
+                    border: $conversation-toast-image-border solid $color-primary;
+                    border-radius: $spacing-unit-large;
+                    padding: $spacing-unit-tiny;              
             }
         }
-        
-        img {
-            @media only screen and (min-width: $breakpoint-medium - $breakpoint-small) {
-                max-width: 10%;
-                margin: 7.4px 20px 5px 5px;
-                background-color: #fff;vertical-align: middle;
-                border: 2.5px solid $color-blue;
-                border-radius: 60px;
-                padding: 8px;
-            }
-            @media only screen and (min-width: $breakpoint-small) {
-                max-width: 1.6%;
-                margin: 0 15px 0px 460px; 
-                background-color: #fff;
-                border: 2.5px solid $color-blue;
-                border-radius: 60px;
-                padding: 8px;              
-            }
-
-
         }
 
     }
 
     #toast.show {
         visibility: visible;
-        -webkit-animation: fade 6s;
-        animation: fade 6s;
+        //-webkit-animation: fade 7s;
+        //animation: fade 7s;
     }
 
 
-    @keyframes fade {
-        0%   {
+    //@keyframes fade {
+    /*    0%   {
             opacity: 0;
             bottom: 0;
         }
@@ -702,7 +704,7 @@ $conversation-topic-display: none !default;
         90% {opacity: 0;}
         100% {opacity: 0;}
 
-    }
+    }*/
 
 
 }
