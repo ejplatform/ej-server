@@ -74,4 +74,3 @@ class TestResetPasswordForm:
             'new_password_confirm': ['Passwords do not match'],
         }
         assert not form.is_valid()
-
