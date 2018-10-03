@@ -3,7 +3,7 @@ version: '3.5'
 
 services:
   web:
-    image: ej-dev:latest
+    image: ejplatform/web:dev
     restart: always
     build:
       context: ../
@@ -24,7 +24,6 @@ services:
       - DJANGO_ENVIRONMENT=local
     volumes:
       - ../:/app/
-    working_dir: /app
     command: sass db -m run
 
   postgres:
