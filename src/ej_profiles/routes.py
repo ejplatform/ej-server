@@ -3,9 +3,11 @@ from django.http import Http404
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
+from urllib.parse import parse_qs
 
 from ej_conversations.models import FavoriteConversation, Comment
 from .forms import ProfileForm, UsernameForm
+from .utils import get_geoloc
 
 app_name = 'ej_profiles'
 urlpatterns = Router(
@@ -47,6 +49,7 @@ def detail(request):
 @urlpatterns.route('edit/')
 def edit(request):
     profile = request.user.profile
+
     if request.method == 'POST':
         form = ProfileForm(request.POST, instance=profile, files=request.FILES)
         name_form = UsernameForm(request.POST, instance=request.user)
@@ -55,6 +58,22 @@ def edit(request):
             name_form.save()
             return redirect('/profile/')
     else:
+        try:
+            url_query_dict = parse_qs(request.GET.urlencode())
+            latitude = url_query_dict['latitude'][0]
+            longitude = url_query_dict['longitude'][0]
+            location = get_geoloc('{},{}'.format(latitude, longitude))
+            addr = location.raw['address']
+            if not profile.country:
+                profile.country = addr['country']
+            if not profile.state:
+                profile.state = addr['state']
+            if not profile.city:
+                profile.city = addr['city']
+        except:
+            # Pass to ignore any error since this feature
+            # depends on optional data.
+            pass
         form = ProfileForm(instance=profile)
         name_form = UsernameForm(instance=request.user)
 
