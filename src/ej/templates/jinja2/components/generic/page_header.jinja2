@@ -10,11 +10,19 @@
             {% if request.user.is_active %}
                 {{ header_lower_nav(request) }}
             {% else %}
-                {%- call link(href='auth:login', link_next=request.path) %}
-                    <div class="Header-lowerNotLogged">
-                        <p>{{ _('LOGIN') }}</p>
-                    </div>
-                {% endcall %}
+                {% if request.path != '/home/' %}
+                    {%- call link(href='auth:login', link_next=request.path) %}
+                        <div class="Header-lowerNotLogged">
+                            <p>{{ _('LOGIN') }}</p>
+                        </div>
+                    {% endcall %}
+                {% else %}
+                    {%- call link(href='auth:login', link_next='/conversations/') %}
+                        <div class="Header-lowerNotLogged">
+                            <p>{{ _('LOGIN') }}</p>
+                        </div>
+                    {% endcall %}
+                {% endif %}
             {% endif %}
         </div>
     </header>
@@ -52,7 +60,7 @@
         </script>
     {% endblock %}
     <nav class="Header-topNav">
-        {% if request.path != '/start/' %}
+        {% if request.path not in ['/start/', '/conversations/', '/home/'] %}
             <a title="{{ _('Back') }}" class="Header-topIcon" onclick="history.back()">
                 <i class="fa fa-chevron-left"></i>
             </a>

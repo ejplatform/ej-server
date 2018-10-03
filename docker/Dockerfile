@@ -82,6 +82,6 @@ RUN echo "${COMMIT_HASH}: ${COMMIT_TITLE}" > commit.txt
 
 
 # Entry point defaults to inv run
-EXPOSE 5000
+EXPOSE 8000
 ENTRYPOINT ["inv"]
 CMD ["bash"]

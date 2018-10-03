@@ -5,7 +5,7 @@
 @import '../2_tools/index';
 @import 'auth';
 $profile-image-size: 2 * $login-icon-size !default;
-$profile-arrow-size: $spacing-unit !default;
+$profile-arrow-size: $spacing-unit-small !default;
 $profile-label-clear-color: #30BFD3 !default;
 .Profile {
     @extend .Container;
@@ -191,6 +191,12 @@ $profile-label-clear-color: #30BFD3 !default;
             margin: 0;
             display: inline-block;
             min-width: $spacing-unit * 2;
+        }
+        div {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            justify-content: space-between;
         }
     }
     &-tabActive {
