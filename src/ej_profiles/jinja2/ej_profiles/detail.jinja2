@@ -76,9 +76,12 @@
             {% endfor %}
         </dl>
         <div class='edit-button'>
-            <a href="{{ url('profile:edit') }}" class="Button" primary  aria-label="{{_('Profile edit button')}}">{{ _('Edit profile')}}</a>
+            <a id="edit-profile-link" href="{{ url('profile:edit') }}" class="Button" primary  aria-label="{{_('Profile edit button')}}">{{ _('Edit profile')}}</a>
         </div>
     </div>
+    <script type="text/javascript">
+        onLoadProfileDetails()
+    </script>
 {% endmacro %}
 
 
