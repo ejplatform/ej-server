@@ -47,13 +47,11 @@
                 {% for form in votes_form %}
                     <div class="row form-row spacer">
                         {{ form.as_p() }}
-                    </div>
-                    {% if votes_form|length > 1 %}
-                        <div class="StereotypeAdd-append">
+                        <div class="StereotypeAdd-append" style="display: none;">
                             <button class="btn btn-danger remove-form-row"><i class="fas fa-minus"></i></button>
                             <span class="">{{ _('Remove Comment') }}</span>
                         </div>
-                    {% endif %}
+                    </div>
                 {% endfor %}
             </div>
             <div class="StereotypeAdd-append">
@@ -80,9 +78,10 @@
     });
     $(document).on('click', '.remove-form-row', function(e){
         e.preventDefault();
-        var form = $(".remove-form-row").parent().parent();
+        var form = $(this).closest('.form-row');
         deleteForm(form);
         return false;
     });
+    
   </script>
 {% endblock %}
