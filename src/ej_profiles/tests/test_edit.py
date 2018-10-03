@@ -39,7 +39,7 @@ class TestEditProfile:
         form_data = {'image': avatar_file, 'gender': 0, 'race': 0}
 
         response = logged_client.post('/profile/edit/', form_data)
-        assert response.status_code == 302 and response.url == '/profile/'
+        assert response.status_code == 200 and response.url == '/profile/'
         user = User.objects.get(email='email@server.com')
         assert user.profile.image.name
 
@@ -59,7 +59,7 @@ class TestEditProfile:
         form_data = {k: v for k, v in zip(inf_fields, inf_values)}
 
         response = logged_client.post('/profile/edit/', form_data)
-        assert response.status_code == 302 and response.url == '/profile/', \
+        assert response.status_code == 200 and response.url == '/profile/', \
             f'Error found using post message {form_data}'
         user = User.objects.get(email='email@server.com')
 
