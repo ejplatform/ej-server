@@ -1,0 +1,15 @@
+{% extends 'base.jinja2' %}
+
+{% set content_title = _('Documentation') %}
+{% set enable_navbar = False %}
+{% set target = 'all' %}
+{% set request = None %}
+{% set body_class = 'Docs' %}
+
+{% block content %}
+  {% if static_page %}
+    {{super()}}
+  {% else %}
+    <p></p>
+  {% endif %}
+{% endblock %}

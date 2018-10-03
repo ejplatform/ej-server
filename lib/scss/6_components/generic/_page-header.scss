@@ -67,8 +67,8 @@ $header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.2) !default;
         }
 
         @include breakpoint(small) {
-            padding-top: 30px;
-            height: $header-top-nav-height + 30;
+            padding-top: $top-header-height;
+            height: $header-top-nav-height + $top-header-height;
         }
 
         top: 0;
@@ -88,10 +88,10 @@ $header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.2) !default;
         align-items: stretch;
         bottom: 0;
         box-shadow: $header-box-shadow-lower;
-        height: $header-bottom-nav-height;
+        height: $header-top-nav-height;
         text-align: center;
         text-transform: uppercase;
-        font-size: $font-size-tiny;
+        font-size: $font-size-tiny-tiny;
         background-color: white;
 
         a {
@@ -119,8 +119,8 @@ $header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.2) !default;
     }
 
     &-lowerIcon {
-        height: $header-icon-size;
-        margin-bottom: $spacing-unit-tiny;
+        height: $header-icon-size - $spacing-unit-factor-huge;
+        margin-bottom: $spacing-unit-tiny - 5;
     }
 
     &-lowerNotLogged {
@@ -132,9 +132,9 @@ $header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.2) !default;
         align-items: center;
         bottom: 0;
         box-shadow: $header-box-shadow-lower;
-        height: $header-bottom-nav-height;
+        height: $header-top-nav-height;
         text-transform: uppercase;
-        font-size: $font-size-tiny;
+        font-size: $font-size-tiny-tiny;
         background-color: $login-button-color;
 
         &:hover {

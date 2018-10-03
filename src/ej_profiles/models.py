@@ -112,7 +112,7 @@ class Profile(models.Model):
         registered profile fields.
         """
 
-        fields = ['city', 'country', 'occupation', 'education', 'ethnicity', 'gender', 'race',
+        fields = ['city', 'state', 'country', 'occupation', 'education', 'ethnicity', 'gender', 'race',
                   'political_activity', 'biography']
         field_map = {field.name: field for field in self._meta.fields}
 

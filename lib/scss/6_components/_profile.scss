@@ -5,7 +5,7 @@
 @import '../2_tools/index';
 @import 'auth';
 $profile-image-size: 2 * $login-icon-size !default;
-$profile-arrow-size: $spacing-unit !default;
+$profile-arrow-size: $spacing-unit-small !default;
 $profile-label-clear-color: #30BFD3 !default;
 .Profile {
     @extend .Container;
@@ -192,6 +192,12 @@ $profile-label-clear-color: #30BFD3 !default;
             display: inline-block;
             min-width: $spacing-unit * 2;
         }
+        div {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            justify-content: space-between;
+        }
     }
     &-tabActive {
         font-weight: bold;
@@ -311,6 +317,12 @@ $profile-label-clear-color: #30BFD3 !default;
     }
     p input[type=checkbox][name=image-clear] {
         display: inline-block;
+    }
+    form p:last-of-type {
+        padding: 0 $spacing-unit;
+        label[for=id_image] {
+            margin: 0;
+        }
     }
     .CustomFileInput {
         @extend .FormItem;

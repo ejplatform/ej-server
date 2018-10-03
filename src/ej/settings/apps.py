@@ -43,7 +43,6 @@ class InstalledAppsConf(Base, EjOptions):
         'constance',
         'constance.backends.database',
         'push_notifications',
-        "sslserver",
     ]
 
     def get_django_contrib_apps(self):

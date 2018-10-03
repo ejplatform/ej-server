@@ -11,10 +11,6 @@ class ConversationForm(forms.ModelForm):
         fields = ['title', 'text', 'tags']
 
     comments_count = forms.IntegerField(initial=5)
-    slug = forms.SlugField(
-        required=False,
-        widget=forms.TextInput(attrs={'placeholder': _('Slug')}),
-    )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

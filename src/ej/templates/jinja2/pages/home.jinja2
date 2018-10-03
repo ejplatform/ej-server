@@ -1,159 +1,130 @@
 {% extends 'base.jinja2' %}
 
 {% block main %}
-    <div id="HomeCommercial">
-        <div id="HomeCommercial-inner">
-            <div id="HomeCommercial-cover">
-                <div>
-                    <p>{{ _('Create opinion surveys.') }}</p>
-                    {{ action_button(_('Try'), 'conversation:list') }}
-                </div>
-            </div>
-
-            <div id="HomeCommercial-how">
-                <h2>{{ _('How it works') }}</h2>
-
-                <ul>
-                    <li>
-                        <i class="fa fa-microphone"></i>
-                        <div>
-                            <h3>{{ _('Create a conversation') }}</h3>
-                            <p>{{ _('create conversations on EJ to receive ideas and opinions about politics, services or public equipments.') }}</p>
-                        </div>
-                    </li>
-
-                    <li>
-                        <i class="fas fa-clipboard"></i>
-                        <div>
-                            <h3>{{ _('Listen to the people') }}</h3>
-                            <p>{{ _('identify the priorities and the different opinion groups in the society.') }}</p>
-                        </div>
-                    </li>
-
-                    <li>
-                        <i class="far fa-flag"></i>
-                        <div>
-                            <h3>{{ _('Take decisions') }}</h3>
-                            <p>{{ _('make participants know, communicating directly and amplifying the responses.') }}</p>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-
-            <div id="HomeCommercial-conversations">
-                <h2>{{ _('Participative conversations') }}</h2>
-
-                <div>
-                    <ul>
-                        <li><i class="fa fa-globe"></i><br/>{{ _('Many people') }}</li>
-                        <li><i class="fa fa-fire"></i><br/>{{ _('No attacks or fakes') }}</li>
-                        <li><i class="fa fa-align-right"></i><br/>{{ _('Nuances instead of bubbles') }}</li>
-                        <li><i class="far fa-heart"></i><br/>{{ _('Free') }}</li>
-                    </ul>
-                    <div><img src="/static/img/home/cellphone.png" alt=""/></div>
-                </div>
-
-                <p>{{ action_button(_('Create a conversation'), 'conversation:create') }}</p>
-            </div>
-
-            <div id="HomeCommercial-documentation">
-                <h2>{{ _('Documentation') }}</h2>
-
-                <p>{{ _('Explore the EJ resources with our documented guides') }}</p>
-
-                <ul>
-                    <li><i class="fa fa-user-circle"></i> <span>{{ _('User Guides') }}</span></li>
-                    <li><i class="fa fa-download"></i> <span>{{ _('Installation Guides') }}</span></li>
-                    <li><i class="fa fa-cog"></i> <span>{{ _('Administration Guides') }}</span></li>
-                    <li><i class="fa fa-code"></i> <span>{{ _('Development Guides') }}</span></li>
-                    <li><i class="fas fa-microchip"></i> <span>{{ _('Our Artificial Intelligence') }}</span></li>
-                    <li><i class="fab fa-github"></i> <span>{{ _('Contributing') }}</span></li>
-                    <li><i class="far fa-life-ring"></i> <span>{{ _('Getting Help') }}</span></li>
-                </ul>
-            </div>
-
-            <div id="HomeCommercial-community">
-                <h2>{{ _('EJ Community') }}</h2>
-
-                <ul>
-                    <li><img src="/static/img/home/team/Alexandre.jpg" alt="Alexandre Augusto"/><span>Alexandre<br/>Augusto</span>
-                    </li>
-                    <li><img src="/static/img/home/team/Arthur.jpg" alt="Arthur Diniz"/><span>Arthur<br/>Diniz</span>
-                    </li>
-                    <li><img src="/static/img/home/team/Bruna.jpg" alt="Bruna Nayara"/><span>Bruna<br/>Nayara</span>
-                    </li>
-                    <li><img src="/static/img/home/team/Bruno.jpg" alt="Bruno Martin"/><span>Bruno<br/>Martin</span>
-                    </li>
-                    <li><img src="/static/img/home/team/Caio.jpg" alt="Caio Almeida"/><span>Caio<br/>Almeida</span></li>
-                    <li><img src="/static/img/home/team/Carla.jpg" alt="Carla Rocha"/><span>Carla<br/>Rocha</span></li>
-                    <li><img src="/static/img/home/team/Dani.jpg" alt="Dani Sampaio "/><span>Dani<br/>Sampaio </span>
-                    </li>
-                    <li><img src="/static/img/home/team/Dayanne.jpg" alt="Dayanne Fernandes "/><span>Dayanne<br/>Fernandes </span>
-                    </li>
-                    <li><img src="/static/img/home/team/Fabiola.jpg"
-                             alt="Fabíola Fleury"/><span>Fabíola<br/>Fleury</span></li>
-                    <li><img src="/static/img/home/team/Fabio.jpg" alt="Fabio Macedo"/><span>Fabio<br/>Macedo</span>
-                    </li>
-                    <li><img src="/static/img/home/team/Fabricio.jpg" alt="Fabricio Solagna"/><span>Fabricio<br/>Solagna</span>
-                    </li>
-                    <li><img src="/static/img/home/team/Gabriela.jpg"
-                             alt="Gabriela Alves"/><span>Gabriela<br/>Alves</span></li>
-                    <li><img src="/static/img/home/team/Gardenia.jpg" alt="Gardenia Nogueira"/><span>Gardenia<br/>Nogueira</span>
-                    </li>
-                    <li><img src="/static/img/home/team/Guilherme.jpg" alt="Guilherme Lacerda"/><span>Guilherme<br/>Lacerda</span>
-                    </li>
-                    <li><img src="/static/img/home/team/Heloise.jpg"
-                             alt="Heloise Cullen"/><span>Heloise<br/>Cullen</span></li>
-                    <li><img src="/static/img/home/team/Henrique.jpg"
-                             alt="Henrique Parra"/><span>Henrique<br/>Parra</span></li>
-                    <li><img src="/static/img/home/team/Jonathan.jpg"
-                             alt="Jonathan Moares"/><span>Jonathan<br/>Moares</span></li>
-                    <li><img src="/static/img/home/team/Laury.jpg" alt="Laury Bueno"/><span>Laury<br/>Bueno</span></li>
-                    <li><img src="/static/img/home/team/Leandro.jpg" alt="Leandro Nunes"/><span>Leandro<br/>Nunes</span>
-                    </li>
-                    <li><img src="/static/img/home/team/Leonardo.jpg"
-                             alt="Leonardo Gomes "/><span>Leonardo<br/>Gomes </span></li>
-                    <li><img src="/static/img/home/team/Luan.jpg" alt="Luan Guimarães"/><span>Luan<br/>Guimarães</span>
-                    </li>
-                    <li><img src="/static/img/home/team/Lucas.jpg" alt="Lucas Malta"/><span>Lucas<br/>Malta</span></li>
-                    <li><img src="/static/img/home/team/Luiza.jpg" alt="Luiza Peixe"/><span>Luiza<br/>Peixe</span></li>
-                    <li><img src="/static/img/home/team/Marcela.jpg" alt="Marcela Rocha"/><span>Marcela<br/>Rocha</span>
-                    </li>
-                    <li><img src="/static/img/home/team/Marco.jpg" alt="Marco William"/><span>Marco<br/>William</span>
-                    </li>
-                    <li><img src="/static/img/home/team/Matheus.jpg"
-                             alt="Matheus Richard"/><span>Matheus<br/>Richard</span></li>
-                    <li><img src="/static/img/home/team/Maurilio.jpg"
-                             alt="Maurilio Atila"/><span>Maurilio<br/>Atila</span></li>
-                    <li><img src="/static/img/home/team/Pablo.jpg" alt="Pablo Silva"/><span>Pablo<br/>Silva</span></li>
-                    <li><img src="/static/img/home/team/Rafa.jpg" alt="Rafa Ayala"/><span>Rafa<br/>Ayala</span></li>
-                    <li><img src="/static/img/home/team/Rafael.jpg" alt="Rafael Makaha"/><span>Rafael<br/>Makaha</span>
-                    </li>
-                    <li><img src="/static/img/home/team/Ricardo.jpg" alt="Ricardo Poppi"/><span>Ricardo<br/>Poppi</span>
-                    </li>
-                    <li><img src="/static/img/home/team/Rodrigo.jpg" alt="Rodrigo Oliveira"/><span>Rodrigo<br/>Oliveira</span>
-                    </li>
-                    <li><img src="/static/img/home/team/Tallys.jpg"
-                             alt="Tallys Martins"/><span>Tallys<br/>Martins</span></li>
-                    <li><img src="/static/img/home/team/Ulf.jpg" alt="Ulf Treger"/><span>Ulf<br/>Treger</span></li>
-                    <li><img src="/static/img/home/team/Vanessa.jpg"
-                             alt="Vanessa Tonini"/><span>Vanessa<br/>Tonini</span></li>
-                </ul>
-            </div>
-
-            <div id="HomeCommercial-who">
-                <h2>{{ _('Who is using EJ') }}</h2>
-
-                <ul id="HomeCommercial-logos">
-                    <li class="HomeCommercial-logo"><img src="/static/img/home/cidade.png" alt=""/></li>
-                    <li class="HomeCommercial-logo"><img src="/static/img/home/lapis.png" alt=""/></li>
-                    <li class="HomeCommercial-logo"><img src="/static/img/home/hacklab.png" alt=""/></li>
-                    <li class="HomeCommercial-logo"><img src="/static/img/home/pencil.png" alt=""/></li>
-                    <li class="HomeCommercial-logo"><img src="/static/img/home/ti.png" alt=""/></li>
-                    <li class="HomeCommercial-logo"><img src="/static/img/home/fpa.png" alt=""/></li>
-                    <li class="HomeCommercial-logo"><img src="/static/img/home/pcdob.png" alt=""/></li>
-                </ul>
-            </div>
-        </div>
+<div id="HomeCommercial">
+  <div id="HomeCommercial-inner">
+    <div id="HomeCommercial-cover">
+      <div>
+        <p>{{ _('Create opinion surveys.') }}</p>
+        {{ action_button(_('Try'), '/conversations')}}
+      </div>
+    </div>
+  
+    <div id="HomeCommercial-how">
+      <h2>{{ _('How it works') }}</h2>
+  
+      <ul>
+        <li>
+          <i class="fa fa-microphone"></i>
+          <div>
+            <h3>{{ _('Create a conversation') }}</h3>
+            <p>{{ _('create conversations on EJ to receive ideas and opinions about politics, services or public equipments.') }}</p>
+          </div>
+        </li>
+  
+        <li>
+          <i class="fas fa-clipboard"></i>
+          <div>
+            <h3>{{ _('Listen to the people') }}</h3>
+            <p>{{ _('identify the priorities and the different opinion groups in the society.') }}</p>
+          </div>
+        </li>
+  
+        <li>
+          <i class="far fa-flag"></i>
+          <div>
+            <h3>{{ _('Take decisions') }}</h3>
+            <p>{{ _('make participants know, communicating directly and amplifying the responses.') }}</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  
+    <div id="HomeCommercial-conversations">
+      <h2>{{ _('Participative conversations') }}</h2>
+  
+      <div>
+        <ul>
+          <li><i class="fa fa-globe"></i><br />{{ _('Many people') }}</li>
+          <li><i class="fa fa-fire"></i><br />{{ _('No attacks or fakes') }}</li>
+          <li><i class="fa fa-align-right"></i><br />{{ _('Nuances instead of bubbles') }}</li>
+          <li><i class="far fa-heart"></i><br />{{ _('Free') }}</li>
+        </ul>
+        <div><img src="/static/img/home/cellphone.png" alt="" /></div>
+      </div>
+  
+      <p>{{ action_button(_('Create a conversation'), '/conversations/add')}}</p>
+    </div>
+  
+    <div id="HomeCommercial-documentation">
+      <h2>{{ _('Documentation') }}</h2>
+  
+      <p>{{ _('Explore the EJ resources with our documented guides') }}</p>
+  
+      <ul>
+        <li><i class="fa fa-user-circle"></i> <span>{{ _('User Guides') }}</span></li>
+        <li><i class="fa fa-download"></i> <span>{{ _('Installation Guides') }}</span></li>
+        <li><i class="fa fa-cog"></i> <span>{{ _('Administration Guides') }}</span></li>
+        <li><i class="fa fa-code"></i> <span>{{ _('Development Guides') }}</span></li>
+        <li><i class="fas fa-microchip"></i> <span>{{ _('Our Artificial Intelligence') }}</span></li>
+        <li><i class="fab fa-github"></i> <span>{{ _('Contributing') }}</span></li>
+        <li><i class="far fa-life-ring"></i> <span>{{ _('Getting Help') }}</span></li>
+      </ul>
+    </div>
+  
+    <div id="HomeCommercial-community">
+      <h2>{{ _('EJ Community') }}</h2>
+  
+      <ul>
+        <li><img src="/static/img/home/team/Alexandre.jpg" alt="Alexandre Augusto" /><span>Alexandre<br />Augusto</span></li>
+        <li><img src="/static/img/home/team/Arthur.jpg" alt="Arthur Diniz" /><span>Arthur<br />Diniz</span></li>
+        <li><img src="/static/img/home/team/Bruna.jpg" alt="Bruna Nayara" /><span>Bruna<br />Nayara</span></li>
+        <li><img src="/static/img/home/team/Bruno.jpg" alt="Bruno Martin" /><span>Bruno<br />Martin</span></li>
+        <li><img src="/static/img/home/team/Caio.jpg" alt="Caio Almeida" /><span>Caio<br />Almeida</span></li>
+        <li><img src="/static/img/home/team/Carla.jpg" alt="Carla Rocha" /><span>Carla<br />Rocha</span></li>
+        <li><img src="/static/img/home/team/Dani.jpg" alt="Dani Sampaio " /><span>Dani<br />Sampaio </span></li>
+        <li><img src="/static/img/home/team/Dayanne.jpg" alt="Dayanne Fernandes " /><span>Dayanne<br />Fernandes </span></li>
+        <li><img src="/static/img/home/team/Fabiola.jpg" alt="Fabíola Fleury" /><span>Fabíola<br />Fleury</span></li>
+        <li><img src="/static/img/home/team/Fabio.jpg" alt="Fabio Macedo" /><span>Fabio<br />Macedo</span></li>
+        <li><img src="/static/img/home/team/Fabricio.jpg" alt="Fabricio Solagna" /><span>Fabricio<br />Solagna</span></li>
+        <li><img src="/static/img/home/team/Gabriela.jpg" alt="Gabriela Alves" /><span>Gabriela<br />Alves</span></li>
+        <li><img src="/static/img/home/team/Gardenia.jpg" alt="Gardenia Nogueira" /><span>Gardenia<br />Nogueira</span></li>
+        <li><img src="/static/img/home/team/Guilherme.jpg" alt="Guilherme Lacerda" /><span>Guilherme<br />Lacerda</span></li>
+        <li><img src="/static/img/home/team/Heloise.jpg" alt="Heloise Cullen" /><span>Heloise<br />Cullen</span></li>
+        <li><img src="/static/img/home/team/Henrique.jpg" alt="Henrique Parra" /><span>Henrique<br />Parra</span></li>
+        <li><img src="/static/img/home/team/Jonathan.jpg" alt="Jonathan Moares" /><span>Jonathan<br />Moares</span></li>
+        <li><img src="/static/img/home/team/Laury.jpg" alt="Laury Bueno" /><span>Laury<br />Bueno</span></li>
+        <li><img src="/static/img/home/team/Leandro.jpg" alt="Leandro Nunes" /><span>Leandro<br />Nunes</span></li>
+        <li><img src="/static/img/home/team/Leonardo.jpg" alt="Leonardo Gomes" /><span>Leonardo<br />Gomes </span></li>
+        <li><img src="/static/img/home/team/Luan.jpg" alt="Luan Guimarães" /><span>Luan<br />Guimarães</span></li>
+        <li><img src="/static/img/home/team/Lucas.jpg" alt="Lucas Malta" /><span>Lucas<br />Malta</span></li>
+        <li><img src="/static/img/home/team/Luiza.jpg" alt="Luiza Peixe" /><span>Luiza<br />Peixe</span></li>
+        <li><img src="/static/img/home/team/Marcela.jpg" alt="Marcela Rocha" /><span>Marcela<br />Rocha</span></li>
+        <li><img src="/static/img/home/team/Marco.jpg" alt="Marco William" /><span>Marco<br />William</span></li>
+        <li><img src="/static/img/home/team/Matheus.jpg" alt="Matheus Richard" /><span>Matheus<br />Richard</span></li>
+        <li><img src="/static/img/home/team/Maurilio.jpg" alt="Maurilio Atila" /><span>Maurilio<br />Atila</span></li>
+        <li><img src="/static/img/home/team/Pablo.jpg" alt="Pablo Silva" /><span>Pablo<br />Silva</span></li>
+        <li><img src="/static/img/home/team/Rafa.jpg" alt="Rafa Ayala" /><span>Rafa<br />Ayala</span></li>
+        <li><img src="/static/img/home/team/Rafael.jpg" alt="Rafael Makaha" /><span>Rafael<br />Makaha</span></li>
+        <li><img src="/static/img/home/team/Ricardo.jpg" alt="Ricardo Poppi" /><span>Ricardo<br />Poppi</span></li>
+        <li><img src="/static/img/home/team/Rodrigo.jpg" alt="Rodrigo Oliveira" /><span>Rodrigo<br />Oliveira</span></li>
+        <li><img src="/static/img/home/team/Tallys.jpg" alt="Tallys Martins" /><span>Tallys<br />Martins</span></li>
+        <li><img src="/static/img/home/team/Ulf.jpg" alt="Ulf Treger" /><span>Ulf<br />Treger</span></li>
+        <li><img src="/static/img/home/team/Vanessa.jpg" alt="Vanessa Tonini" /><span>Vanessa<br />Tonini</span></li>
+      </ul>
+    </div>
+  
+    <div id="HomeCommercial-who">
+      <h2>{{ _('Who is using EJ') }}</h2>
+  
+      <ul id="HomeCommercial-logos">
+        <li class="HomeCommercial-logo"><img src="/static/img/home/cidade.png" alt="" /></li>
+        <li class="HomeCommercial-logo"><img src="/static/img/home/lapis.png" alt="" /></li>
+        <li class="HomeCommercial-logo"><img src="/static/img/home/hacklab.png" alt="" /></li>
+        <li class="HomeCommercial-logo"><img src="/static/img/home/pencil.png" alt="" /></li>
+        <li class="HomeCommercial-logo"><img src="/static/img/home/ti.png" alt="" /></li>
+        <li class="HomeCommercial-logo"><img src="/static/img/home/fpa.png" alt="" /></li>
+        <li class="HomeCommercial-logo"><img src="/static/img/home/pcdob.png" alt="" /></li>
+      </ul>
     </div>
 {% endblock %}

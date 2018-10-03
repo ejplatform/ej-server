@@ -14,8 +14,7 @@
                 </div>
                 <h1>{{ conversation.text }}</h1>
                 <div class="Conversation-edit">
-                    {{ action_button( _('Edit Conversation'), 'conversation:edit',
-                                     url_args={'conversation': conversation}) }}
+                    {{ action_button( _('Edit Conversation'), edit_url) }}
                 </div>
             </div>
 

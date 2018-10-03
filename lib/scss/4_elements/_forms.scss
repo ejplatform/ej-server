@@ -43,7 +43,7 @@ select,
     border: 1px solid $form-border-color;
     color: $form-element-color-text;
     margin: $spacing-unit-tiny auto;
-    padding: $spacing-unit-small ($spacing-unit-small $spacing-unit-tiny);
+    padding: $spacing-unit-small ($spacing-unit-small $spacing-unit-small);
 }
 
 input[type=checkbox] {

@@ -10,6 +10,7 @@ from .options import EjOptions
 from .paths import PathsConf
 from .security import SecurityConf
 from .themes import ThemesConf
+from .email import EmailConf
 from .. import fixes
 
 log = logging.getLogger('ej')
@@ -25,7 +26,8 @@ class Conf(ThemesConf,
            PathsConf,
            InstalledAppsConf,
            DjangoConf,
-           EjOptions):
+           EjOptions,
+           EmailConf):
     """
     Configuration class for the EJ platform.
 
@@ -33,14 +35,9 @@ class Conf(ThemesConf,
     the global namespace.
     """
 
-    def get_using_sqlite(self):
-        return 'sqlite3' in self.DATABASE_DEFAULT['ENGINE']
-
-    def get_using_postgres(self):
-        return 'postgresql' in self.DATABASE_DEFAULT['ENGINE']
-
     USING_DOCKER = env(False, name='USING_DOCKER')
     HOSTNAME = env('localhost')
+
 
     #
     # Accounts

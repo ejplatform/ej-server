@@ -7,7 +7,7 @@ from django.utils.translation import ugettext_lazy as _
 from boogie.router import Router
 from ej_conversations import forms
 from ej_conversations.models import Conversation
-from ej_conversations.routes.conversations import conversation_detail_context
+from ej_conversations.routes import conversation_detail_context, moderate_context, edit_context
 from .forms import BoardForm
 from .models import Board
 
@@ -28,16 +28,22 @@ urlpatterns = Router(
 )
 
 
-@urlpatterns.route('profile/boards/', template='ej_boards/list.jinja2')
+@urlpatterns.route('profile/boards/', template='ej_boards/list.jinja2', login=True)
 def list(request):
     user = request.user
+    boards = user.boards.all()
+    can_add_board = user.has_perm('ej_boards.can_add_board')
+
+    if not can_add_board and user.boards.count() == 1:
+        return redirect(f'{boards[0].get_absolute_url()}conversations/')
+
     return {
-        'boards': user.boards.all(),
-        'can_add_board': user.has_perm('ej_boards.can_add_board'),
+        'boards': boards,
+        'can_add_board': can_add_board,
     }
 
 
-@urlpatterns.route('profile/boards/add/')
+@urlpatterns.route('profile/boards/add/', login=True)
 def create(request):
     user = request.user
     if not user.has_perm('ej_boards.can_add_board'):
@@ -80,33 +86,30 @@ def edit(request, board):
     }
 
 
-@urlpatterns.route('<model:board>/conversations/')
+@urlpatterns.route('<model:board>/conversations/', template='ej_conversations/list.jinja2')
 def conversation_list(request, board):
     user = request.user
     conversations = board.conversations.all()
     board_user = board.owner
     boards = []
+    boards_count = 0
     if user == board_user:
         boards = board_user.boards.all()
-
+        boards_count = boards.count()
+        user_is_owner = True
+    else:
+        user_is_owner = False
     return {
-        'conversations': conversations,
-        'boards': boards,
-        'board': board,
-        'can_add_conversation': board_user == user,
-        'is_a_board': True,
-        'owns_board': user == board.owner,
+        'can_add_conversation': user_is_owner,
         'create_url': reverse('boards:create-conversation', kwargs={'board': board}),
+        'conversations': conversations,
+        'boards_count': boards_count,
+        'boards': boards,
+        'current_board': board,
+        'is_a_board': True,
         'title': _("%s' conversations") % board.title,
         'subtitle': _("These are %s's conversations. Contribute to them too") % board.title,
     }
-
-
-@urlpatterns.route('<model:board>/conversations/<model:conversation>')
-def conversation_detail(request, board, conversation):
-    if conversation not in board.conversations.all():
-        raise Http404
-    return conversation_detail_context(request, conversation)
 
 
 @urlpatterns.route('<model:board>/conversations/add/', perms=['ej_boards.can_add_conversation'])
@@ -123,3 +126,24 @@ def create_conversation(request, board):
         return redirect(f'/{board.slug}/conversations/{conversation.slug}')
 
     return {'form': form}
+
+
+@urlpatterns.route('<model:board>/conversations/<model:conversation>/')
+def conversation_detail(request, board, conversation):
+    if conversation not in board.conversations.all():
+        raise Http404
+    return conversation_detail_context(request, conversation)
+
+
+@urlpatterns.route('<model:board>/conversations/<model:conversation>/edit/', perms=['ej.can_edit_conversation'])
+def edit_conversation(request, board, conversation):
+    if conversation not in board.conversations.all():
+        raise Http404
+    return edit_context(request, conversation)
+
+
+@urlpatterns.route('<model:board>/conversations/<model:conversation>/moderate/', perms=['ej.can_edit_conversation'])
+def moderate_conversation(request, board, conversation):
+    if conversation not in board.conversations.all():
+        raise Http404
+    return moderate_context(request, conversation, board)
