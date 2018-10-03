@@ -54,7 +54,7 @@ class TestEditProfile:
         inf_fields = ['city', 'occupation', 'country', 'ethnicity', 'education',
                       'political_activity', 'biography', 'state',
                       'gender', 'race', 'birth_date']
-        inf_values = [*[rand_str(15)] * 7, 'ST', rd.choice(list(range(0, 3)) + [20]),
+        inf_values = [*[rand_str(15)] * 7, 'DF', rd.choice(list(range(0, 3)) + [20]),
                       rd.randint(0, 6), gen_birth_date()]
         form_data = {k: v for k, v in zip(inf_fields, inf_values)}
 
