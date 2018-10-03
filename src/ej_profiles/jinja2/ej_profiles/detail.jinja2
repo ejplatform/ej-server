@@ -12,21 +12,29 @@
         {{ comments|role('collapsible-list', title=_('Comments'), item_role='list-item') }}
         {{ conversations|role('collapsible-list', title=_('Favorite Conversations'), item_role='card') }}
 
-        {# TODO: display arrow correctly #}
         <div class="Profile-tabs">
             <nav class="Profile-tabLinks">
-                {{ link(_('Info'), 'profile:detail',
+                <div>
+                    {{ link(_('Info'), 'profile:detail',
                         target='.Profile-tabs',
                         transition=None,
-                        class_='Profile-tabActive' if which_tab=='profile' else []) }}
-                {{ link(_('Contributions'), 'profile:detail', query={'info': 'contributions'},
+                        class_='Profile-tabActive' if which_tab == 'profile' else []) }}
+                        {% if which_tab == 'profile' %}
+                            <div class="Profile-arrow"></div>
+                        {% endif %}
+                </div>          
+                <div>
+                    {{ link(_('Contributions'), 'profile:detail', query={'info': 'contributions'},
                         target='.Profile-tabs',
                         transition=None,
-                        class_='Profile-tabActive' if which_tab=='contributions' else []) }}
+                        class_='Profile-tabActive' if which_tab == 'contributions' else []) }}
+                        {% if which_tab == 'contributions' %}
+                            <div class="Profile-arrow"></div>
+                        {% endif %}
+                </div>
             </nav>
 
             <div class="Profile-tabContainer">
-                <div class="Profile-arrow" style="visibility: hidden"></div>
                 <div class="Profile-tabContent">
                     {% if which_tab == 'profile' %}
                         {{ info_tab(profile) }}
