@@ -70,7 +70,7 @@ def edit_conversation(request, board, conversation):
 def moderate_conversation(request, board, conversation):
     if conversation not in board.conversations.all():
         raise Http404
-    return moderate_context(request, conversation, board)
+    return moderate_context(request, conversation)
 
 
 @urlpatterns.route('<model:board>/conversations/<model:conversation>/stereotypes/',
@@ -80,18 +80,18 @@ def conversation_stereotype_list(request, board, conversation):
         'content_title': _('Stereotypes'),
         'conversation_title': conversation.title,
         'stereotypes': conversation.stereotypes.all(),
-        'stereotype_url': conversation.get_absolute_url(board=board) + 'stereotypes/',
-        'conversation_url': conversation.get_absolute_url(board=board),
+        'stereotype_url': conversation.get_absolute_url() + 'stereotypes/',
+        'conversation_url': conversation.get_absolute_url(),
     }
 
 
 @urlpatterns.route('<model:board>/conversations/<model:conversation>/stereotypes/add/',
                    perms=['ej.can_manage_stereotypes'])
 def create_conversation_stereotype(request, board, conversation):
-    return create_stereotype_context(request, conversation, board)
+    return create_stereotype_context(request, conversation)
 
 
 @urlpatterns.route('<model:board>/conversations/<model:conversation>/stereotypes/<model:stereotype>/edit/',
                    perms=['ej.can_manage_stereotypes'])
 def edit_conversation_stereotype(request, board, conversation, stereotype):
-    return edit_stereotype_context(request, conversation, stereotype, board)
+    return edit_stereotype_context(request, conversation, stereotype)

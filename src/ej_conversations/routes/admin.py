@@ -64,10 +64,11 @@ def edit_context(request, conversation):
         'comments': comments,
         'board': board,
         'form': form,
+        'manage_stereotypes_url': conversation.get_absolute_url() + 'stereotypes/',
     }
 
 
-def moderate_context(request, conversation, board=None):
+def moderate_context(request, conversation):
     comments = []
     if request.method == 'POST':
         comment = models.Comment.objects.get(id=request.POST['comment'])
@@ -80,6 +81,6 @@ def moderate_context(request, conversation, board=None):
             comments.append(comment)
     return {
         'conversation': conversation,
-        'edit_url': conversation.get_absolute_url(board=board) + 'edit/',
+        'edit_url': conversation.get_absolute_url() + 'edit/',
         'comments': comments,
     }

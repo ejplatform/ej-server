@@ -1,4 +1,5 @@
 from django.shortcuts import redirect
+from django.http import Http404
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from hyperpython import a, input_, label, Block
@@ -164,6 +165,8 @@ def create_stereotype_context(request, conversation, board=None):
 
 
 def edit_stereotype_context(request, conversation, stereotype, board=None):
+    if conversation != stereotype.conversation:
+        raise Http404
     if request.method == 'POST':
         stereotype_form = StereotypeForm(request.POST, conversation=conversation, instance=stereotype)
         votes = StereotypeVote.objects.filter(author=stereotype)
