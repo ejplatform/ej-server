@@ -15,7 +15,6 @@ def conversation_list(request):
     return {
         'conversations': Conversation.objects.filter(is_promoted=True),
         'can_add_conversation': request.user.has_perm('ej.can_add_promoted_conversation'),
-        'can_edit_board': False,
         'create_url': reverse('conversation:create'),
         'topic': _('A space for adolescents to discuss actions that promote, guarantee and defend their rights'),
         'title': _('Public conversations'),

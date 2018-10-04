@@ -724,13 +724,10 @@ $conversation-topic-display: none !default;
     text-transform: uppercase;
     font-size: 14px;
     font-weight: bold;
-    // box-shadow: $header-box-shadow-upper;
     border-bottom: 1px solid $color-gray-lighter;
     margin: 0;
     padding: $spacing-unit-small 0;
     color: $conversation-link-new-color;
-
-
     i {
         color: $conversation-link-new-icon-color;
     }
@@ -743,13 +740,10 @@ $conversation-topic-display: none !default;
     text-transform: uppercase;
     font-size: 14px;
     font-weight: bold;
-    // box-shadow: $header-box-shadow-upper;
     border-bottom: 1px solid $color-gray-lighter;
     margin: 0;
     padding: $spacing-unit-small 0;
     color: $conversation-link-edit-color;
-
-
     i {
         color: $conversation-link-edit-icon-color;
     }   

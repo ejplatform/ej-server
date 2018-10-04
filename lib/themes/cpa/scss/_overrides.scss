@@ -1,3 +1,8 @@
+// Color
+$color-accent: #3F1B53;
+$color-magenta: #C6027B;
+$color-primary: $color-blue;
+
 // Page
 $page-background-image: url(/static/img/page-bg.svg) top center no-repeat;
 
@@ -91,10 +96,10 @@ $conversation-tag-color: #30BEC0;
 $conversation-statistics-color: #30c0d3;
 $conversation-arrow-border: 28px solid #D4F7F5;
 $conversation-topic-diplay: block;
-$conversation-link-new-color: $navigation-bottom-font-color !default;
-$conversation-link-new-icon-color: $color-blue !default;
-$conversation-link-edit-color: $navigation-bottom-font-color !default;
-$conversation-link-edit-icon-color: $color-blue !default;
+$conversation-link-new-color: $color-accent !default;
+$conversation-link-new-icon-color: $color-primary !default;
+$conversation-link-edit-color: $color-accent !default;
+$conversation-link-edit-icon-color: $color-primary !default;
 
 
 // Conversation: edit
@@ -133,10 +138,6 @@ $toast-font-color: #3F1B53;
 $selected-stereotype-cluster-menu-color: #b62a52;
 $selected-stereotype-cluster-menu-border: none;
 $selected-stereotype-cluster-menu-padding: none;
-
-// Color
-$color-accent: #C6027B;
-$color-magenta: #C6027B;
 
 // Stereotypes
 $stereotype-title: #3F1B53;
