@@ -17,9 +17,6 @@ services:
   web:
     image: ejplatform/web:latest
     restart: always
-    build:
-      context: ../
-      dockerfile: ./docker/Dockerfile.deploy
     links:
       - postgres
       - redis
