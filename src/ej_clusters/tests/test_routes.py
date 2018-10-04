@@ -2,11 +2,11 @@ import pytest
 from django.test import Client, TestCase
 
 from ej.testing import UrlTester
-from ej_conversations.mommy_recipes import ConversationRecipes
-from ej_users.models import User
-from ej_conversations.models import Conversation, Choice
 from ej_clusters.models import Stereotype, StereotypeVote
 from ej_clusters.mommy_recipes import ClustersRecipes
+from ej_conversations.models import Conversation, Choice
+from ej_conversations.mommy_recipes import ConversationRecipes
+from ej_users.models import User
 
 
 class TestRoutes(UrlTester, ConversationRecipes, ClustersRecipes):
@@ -69,8 +69,9 @@ class TestStereotypeRoutes(TestCase):
 
     def test_edit_stereotype(self):
         client = self.logged_client
-        response = client.post(self.conversation.get_absolute_url() +
-                               'stereotypes/' + str(self.stereotype.id) + '/edit/',
+        response = client.post(self.conversation.get_absolute_url()
+                               + 'stereotypes/' + str(self.stereotype.id)
+                               + '/edit/',
                                data={'name': 'stereo',
                                      'form-TOTAL_FORMS': 1,
                                      'form-INITIAL_FORMS': 0,
@@ -83,8 +84,8 @@ class TestStereotypeRoutes(TestCase):
 
     def test_edit_invalid_stereotype(self):
         client = self.logged_client
-        response = client.post(self.conversation.get_absolute_url() +
-                               'stereotypes/' + str(self.stereotype.id) + '/edit/',
+        response = client.post(self.conversation.get_absolute_url()
+                               + 'stereotypes/' + str(self.stereotype.id) + '/edit/',
                                data={'name': '',
                                      'form-TOTAL_FORMS': 1,
                                      'form-INITIAL_FORMS': 0,

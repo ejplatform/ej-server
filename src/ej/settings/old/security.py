@@ -62,6 +62,7 @@ ANYMAIL = {
 }
 EMAIL_BACKEND = 'anymail.backends.mailgun.MailgunBackend'
 
+
 # CACHING
 # ------------------------------------------------------------------------------
 # Cache settings can be tricky. So, this can be easily deactivated for debugging

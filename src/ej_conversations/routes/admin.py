@@ -65,7 +65,7 @@ def edit_context(request, conversation):
     }
 
 
-def moderate_context(request, conversation):
+def moderate_context(request, conversation, board=None):
     comments = []
     if request.method == 'POST':
         comment = models.Comment.objects.get(id=request.POST['comment'])
@@ -80,5 +80,6 @@ def moderate_context(request, conversation):
     return {
         'conversation': conversation,
         'comment_status': status,
+        'edit_url': conversation.get_absolute_url(board=board) + 'edit/',
         'comments': comments,
     }

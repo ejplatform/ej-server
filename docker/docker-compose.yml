@@ -3,7 +3,7 @@ version: '3.5'
 
 services:
   web:
-    image: ej-dev:latest
+    image: ejplatform/web:dev
     restart: always
     build:
       context: ../
@@ -18,12 +18,12 @@ services:
     env_file:
       - ./env/django.env
       - ./env/postgres.env
+      - ./env/email.env
       - ${ENVFILE:-./env/override.env}
     environment:
       - DJANGO_ENVIRONMENT=local
     volumes:
       - ../:/app/
-    working_dir: /app
     command: sass db -m run
 
   postgres:

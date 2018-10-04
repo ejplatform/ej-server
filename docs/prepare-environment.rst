@@ -1,3 +1,4 @@
+===================
 Prepare environment
 ===================
 
@@ -5,7 +6,7 @@ Prepare environment
    :depth: 2
 
 Ubuntu 14.04 to 16.04
----------------------
+=====================
 
 If you are using Ubuntu 14.04 to 16.04, you can use Felix Krull's deadsnakes
 PPA at https://launchpad.net/~deadsnakes/+archive/ubuntu/ppa::
@@ -16,7 +17,7 @@ PPA at https://launchpad.net/~deadsnakes/+archive/ubuntu/ppa::
 
 
 Ubuntu 16.10+ and Debian 9+
----------------------------
+===========================
 
 For Ubuntu 16.10 and 17.04 do not come with Python 3.6 by default, but it is in
 the Universe repository, You should be able to install it with the following commands::
@@ -26,7 +27,8 @@ the Universe repository, You should be able to install it with the following com
 
 
 Fedora
-------
+======
+
 If the python3 installed on your system is not 3.6, you can use the following
 command to install it::
 
@@ -34,7 +36,8 @@ command to install it::
 
 
 Arch Linux
-----------
+==========
+
 Arch Linux is fairly aggressive about keeping up with Python releases. It is
 likely you already have the latest version. If not, you can use this command::
 
@@ -42,7 +45,8 @@ likely you already have the latest version. If not, you can use this command::
 
 
 CentOS
-------
+======
+
 The IUS Community does a nice job of providing newer versions of software for
 “Enterprise Linux” distros (i.e. Red Hat Enterprise and CentOS). You can use
 their work to help you install Python 3.
@@ -69,7 +73,7 @@ For last, install node package manager and sass::
     $ sudo npm install sass
 
 Mac OSX
--------
+=======
 
 We'll start by installing homebrew to make things easier and then Python 3, followed by Sass.
 
@@ -79,13 +83,13 @@ We'll start by installing homebrew to make things easier and then Python 3, foll
 
 
 Building from sources
----------------------
+=====================
 
 Step 1: Download the Source Code::
 
     $ wget https://www.python.org/ftp/python/3.6.5/Python-3.6.5.tgz
 
-Step 2: Prepare Your System::
+Step 2: Prepare Your System:
 
 1. The first step you should take when doing an operation like this is to update
 the system packages on your machine before you start. On Debian, this is what

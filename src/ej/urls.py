@@ -1,13 +1,14 @@
+from boogie.rest import rest_api
 from django.conf import settings
+from django.conf.urls import url
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 from django.views import defaults as default_views
-from rest_framework.documentation import include_docs_urls
-
-from boogie.rest import rest_api
+from django.views.static import serve
 from ej import services
 from ej.fixes import unregister_admin
+from rest_framework.documentation import include_docs_urls
 
 unregister_admin.unregister_apps()
 
@@ -59,6 +60,10 @@ urlpatterns = [
     # Static files for the dev server
     *static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),
     *static(settings.STATIC_URL, document_root=settings.STATIC_ROOT),
+
+    # Documentation in development mode
+    url(r'^static_docs/$', serve, {'document_root': 'build/docs', 'path': 'index.html'}),
+    url(r'^static_docs/(?P<path>.*)$', serve, {'document_root': 'build/docs/'}),
 ]
 
 if settings.DEBUG:

@@ -489,7 +489,7 @@ def docker_deploy(ctx, task, environment='production', command=None, dry_run=Fal
     elif task == 'notify':
         listeners = env.get('LISTENERS')
         if listeners is None:
-            print("Don't know hot to notify the infrastructure!")
+            print("Don't know how to notify the infrastructure!")
             print('(hmm, mail the sysadmin?)')
         for listener in listeners.split(','):
             do(f'sh local/deploy/notify.{listener}.sh')
@@ -503,6 +503,9 @@ def docker_deploy(ctx, task, environment='production', command=None, dry_run=Fal
 #
 @task
 def rocket(ctx, dry_run=False, command='up', background=False):
+    """
+    Run a Rocket.Chat instance using docker.
+    """
     go = runner(ctx, dry_run, pty=True)
     compose = su_docker('docker-compose')
     suffix = '-d ' if background else ''
