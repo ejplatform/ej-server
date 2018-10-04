@@ -16,7 +16,7 @@ def create(request):
                 author=request.user,
                 is_promoted=True,
             )
-        return redirect(conversation.get_absolute_url())
+        return redirect(conversation.get_absolute_url() + 'stereotypes/')
 
     return {'form': form}
 
@@ -57,15 +57,18 @@ def edit_context(request, conversation):
             if comment.is_pending:
                 comments.append(comment)
 
+    user = request.user
     return {
         'conversation': conversation,
+        'can_promote_conversation': user.has_perm('can_publish_promoted'),
         'comments': comments,
         'board': board,
         'form': form,
+        'manage_stereotypes_url': conversation.get_absolute_url() + 'stereotypes/',
     }
 
 
-def moderate_context(request, conversation, board=None):
+def moderate_context(request, conversation):
     comments = []
     if request.method == 'POST':
         comment = models.Comment.objects.get(id=request.POST['comment'])
@@ -78,6 +81,6 @@ def moderate_context(request, conversation, board=None):
             comments.append(comment)
     return {
         'conversation': conversation,
-        'edit_url': conversation.get_absolute_url(board=board) + 'edit/',
+        'edit_url': conversation.get_absolute_url() + 'edit/',
         'comments': comments,
     }
