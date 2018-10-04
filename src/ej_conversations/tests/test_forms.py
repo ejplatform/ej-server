@@ -29,7 +29,7 @@ class TestCommentForm:
         CommentForm(conversation=conversation)
 
     def test_init_without_conversation(self):
-        with pytest.raises(KeyError):
+        with pytest.raises(TypeError):
             CommentForm()
 
     def test_valid_data(self, conversation, db, user):
@@ -54,7 +54,6 @@ class TestCommentForm:
             'content': "Comment",
         }, conversation=conversation)
         assert not form.is_valid()
-        assert form.errors == {
-            '__all__':
-                ['It seems that you created repeated comments. Please verify if there aren\'t any equal comments']
-        }
+        print(form.errors['content'])
+        assert form.errors['content'] == [
+            'It seems that you created repeated comments. Please verify if there aren\'t any equal comments']
