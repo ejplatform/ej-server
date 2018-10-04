@@ -159,7 +159,6 @@ publish mdhcpa/web tagged:
 # -----------------------------------------------------------------------------
 
 .deploy:
-  image: cdrx/rancher-gitlab-deploy
   stage: deploy
   before_script:
     - apt-get update -y && apt-get install sshpass -y
