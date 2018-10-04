@@ -161,8 +161,10 @@ publish mdhcpa/web tagged:
 .deploy:
   image: cdrx/rancher-gitlab-deploy
   stage: deploy
+  before_script:
+    - apt-get update -y && apt-get install sshpass -y
   script:
-     - "sshpass  -p $DIGITAL_OCEAN_PASSWORD ssh -o StrictHostKeyChecking=no root@$DIGITAL_OCEAN_IP <<-'ENDSSH'   
+    - "sshpass  -p $DIGITAL_OCEAN_PASSWORD ssh -o StrictHostKeyChecking=no root@$DIGITAL_OCEAN_IP <<-'ENDSSH'   
           cd ej-server/docker/
           docker-compose -f docker-compose.deploy.yml down
           docker rmi $(docker images -q) -f
