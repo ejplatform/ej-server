@@ -50,18 +50,19 @@
             {% endif %}
           </div>
 
-          <p style="text-align: center;">{{ action_button(_('Manage stereotypes'), 'cluster:stereotype-list', primary=False, url_args={'conversation': conversation}) }}</p>
+          <p style="text-align: center;">{{ action_button(_('Manage stereotypes'), manage_stereotypes_url, primary=False) }}</p>
 
-          <p class="ConversationEdit-promote">
-            {% if conversation.is_promoted %}
-              <input type="checkbox" name="is_promoted" id="is_promoted" checked value="1" />
-            {% else %}
-              <input type="checkbox" name="is_promoted" id="is_promoted" value="1" />
-            {% endif %}
-            <label for="is_promoted">{{ _('Promote conversation on public list') }}</label>
-          </p>
-        </form>
-
+          {% if can_promote_conversation %}
+              <p class="ConversationEdit-promote">
+                {% if conversation.is_promoted %}
+                  <input type="checkbox" name="is_promoted" id="is_promoted" checked value="1" />
+                {% else %}
+                  <input type="checkbox" name="is_promoted" id="is_promoted" value="1" />
+                {% endif %}
+                <label for="is_promoted">{{ _('Promote conversation on public list') }}</label>
+              </p>
+            </form>
+          {% endif %}
         <div class="Moderate-comments">
             <h1>{{ _('Comments in this conversation') }}</h1>
             {{ comment_list(comments, csrf_input) }}
