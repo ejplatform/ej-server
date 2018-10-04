@@ -148,6 +148,7 @@ def create_stereotype_context(request, conversation, board=None):
             cluster = Cluster(clusterization=clusterization, name=stereotype.name)
             cluster.save()
             cluster.stereotypes.add(stereotype)
+            print(stereotype.votes)
             return redirect(conversation.get_absolute_url() + 'stereotypes/')
 
     else:
@@ -182,6 +183,10 @@ def edit_stereotype_context(request, conversation, stereotype, board=None):
         stereotype_form = StereotypeForm(conversation=conversation, instance=stereotype)
         votes = StereotypeVote.objects.filter(author=stereotype)
         votes_formset = StereotypeVoteFormSet(queryset=votes)
+
+        filtered_comments = Comment.objects.filter(conversation=conversation)
+        for form in votes_formset:
+            form.fields['comment'].queryset = filtered_comments
 
     return {
         'stereotype_form': stereotype_form,
