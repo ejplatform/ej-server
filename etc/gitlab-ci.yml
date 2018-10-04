@@ -164,13 +164,7 @@ publish mdhcpa/web tagged:
   before_script:
     - apt-get update -y && apt-get install sshpass -y
   script:
-    - "sshpass  -p $DIGITAL_OCEAN_PASSWORD ssh -o StrictHostKeyChecking=no root@$DIGITAL_OCEAN_IP <<-'ENDSSH'   
-          cd ej-server/docker/
-          docker-compose -f docker-compose.deploy.yml down
-          docker rmi $(docker images -q) -f
-          docker network prune -f
-          docker-compose -f docker-compose.deploy.yml up -d
-        ENDSSH"
+    - ./digitaloceanssh.sh $DIGITAL_OCEAN_PASSWORD $DIGITAL_OCEAN_IP
 
 
 
