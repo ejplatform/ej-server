@@ -19,7 +19,7 @@ services:
     restart: always
     build:
       context: ../
-      dockerfile: ./docker/Dockerfile
+      dockerfile: ./docker/Dockerfile.deploy
     links:
       - postgres
       - redis
