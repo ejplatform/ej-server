@@ -7,6 +7,7 @@ ENV LANG=C.UTF-8
 RUN apt-get update && apt-get install -y --no-install-recommends \
         python3.6 \
         python3-pip \
+        ruby-sass \
         python3-setuptools \
         unzip \
  && pip3 install --upgrade pip setuptools invoke~=0.23 \

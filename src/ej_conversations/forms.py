@@ -37,7 +37,7 @@ class ConversationForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.set_placeholder('tags', _('Tags, separated by commas'))
         self.set_placeholder('text', _('Type here the question for your research'))
-        self.set_placeholder('title', _('A short description about this conversation.'))
+        self.set_placeholder('title', _('Permanent link.'))
         self.fields['text'].widget.attrs.update({
             'onfocus': "this.style.height = (this.scrollHeight) + 'px'",
             'onkeyup': "this.style.height = (this.scrollHeight) + 'px'",

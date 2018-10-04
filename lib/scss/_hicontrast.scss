@@ -98,10 +98,14 @@ $light-blue-hicontrast-color: #30BEC0;
         input {
             background-color: $dark-blue-hicontrast-color !important;
             color: white;
-            font-weight: bolder;
+            font-weight: 700;
+        }
+         ::placeholder {
+            color: white;
+            opacity: 0.5;
         }
         a {
-            background-color: $dark-blue-hicontrast-color !important;
+            background-color: white;
         }
         &-password {
             a {
