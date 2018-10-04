@@ -65,11 +65,7 @@
             </div>
         </form>
   </div>
-  {% endmacro %}
-
-
-{% block javascript_body %}
-  <script src="/static/js/dynamic-form.js" defer></script>
+  <script src="/static/js/dynamic-form.js"></script>
   <script>
     $(document).on('click', '.add-form-row', function(e){
         e.preventDefault();
@@ -82,6 +78,5 @@
         deleteForm(form);
         return false;
     });
-    
   </script>
-{% endblock %}
+{% endmacro %}
