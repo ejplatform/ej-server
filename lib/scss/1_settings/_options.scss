@@ -36,7 +36,7 @@ $login-fields-border: 1px solid #333 !default;
 $login-fields-border-radius: 17px !default;
 $login-fields-height: 40px !default;
 $login-button-login-size: inherit !default;
-$login-button-login-background: #30c0d3 !default;
+$login-button-login-background: $color-secundary !default;
 $login-button-register-size: 10% !default;
 $login-button-register-button-radius: 28px !default;
 $login-button-color: $color-purple-dark !default;
@@ -50,7 +50,7 @@ $login-reticule-display: none !default;
 
 // Social
 $social-buttons-display: flex !default;
-$social-buttons-border: 1px solid #30c0d3 !default;
+$social-buttons-border: 1px solid $color-secundary !default;
 $social-buttons-size: 21px !default;
 $social-buttons-color: #111 !default;
 $social-buttons-background-color: #fff !default;
@@ -86,10 +86,10 @@ $navigation-bottom-icon-panel: "" !default;
 $navigation-bottom-icon-profile: "" !default;
 
 // Card Conversation
-$card-conversation-navigation-font-color: #30c0d3 !default;
+$card-conversation-navigation-font-color: $color-secundary !default;
 $card-conversation-top-background: #C4F2F4 !default;
-$card-conversation-top-font-color: #30c0d3 !default;
-$card-conversation-middle-background: #30c0d3 !default;
+$card-conversation-top-font-color: $color-secundary !default;
+$card-conversation-middle-background: $color-secundary !default;
 $card-conversation-bottom-background: $background-card space !default;
 $card-conversation-button-background: $color-content-text !default;
 $card-conversation-border-radius: 50% !default;
@@ -99,8 +99,8 @@ $conversation-top-background: #C4F2F4 !default;
 $conversation-background: #C4F2F4 !default;
 $conversation-bottom-border-radius: 0 0 56px 56px !default;
 $conversation-font-color: $color-content-text !default;
-$conversation-tag-color: #30c0d3 !default;
-$conversation-statistics-color: #30c0d3 !default;
+$conversation-tag-color: $color-secundary !default;
+$conversation-statistics-color: $color-secundary !default;
 $conversation-arrow-border: 28px solid #C4F2F4 !default;
 
 // Conversation: edit
@@ -122,19 +122,19 @@ $conversation-vote-font-size: 13px !default;
 $conversation-vote-circle-size: 18px !default;
 $conversation-vote-circle-spacing: 7px !default;
 $conversation-vote-agree-color: #22b35c !default;
-$conversation-vote-skip-color: #30c0d3 !default;
+$conversation-vote-skip-color: $color-secundary !default;
 $conversation-vote-disagree-color: #f13c20 !default;
 
 // Conversation: comment
-$conversation-comment-background-color: #30c0d3 !default;
+$conversation-comment-background-color: $color-secundary !default;
 $conversation-comment-title-color: white !default;
 $conversation-comment-border-radius: 56px !default;
 
 // Conversation: comment form
 $conversation-comment-form-background-color: #C4F2F4 !default;
-$conversation-comment-form-title-color: #30c0d3 !default;
+$conversation-comment-form-title-color: $color-secundary !default;
 $conversation-comment-button-border-radius: 30px !default;
-$conversation-comment-button-background: #30c0d3 !default;
+$conversation-comment-button-background: $color-secundary !default;
 $toast-font-color: $color-purple-dark !default;
 
 // Clusters and Stereotypes
