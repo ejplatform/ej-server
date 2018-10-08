@@ -6,6 +6,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from ej_conversations import forms
 from ej_conversations.routes import conversation_detail_context, moderate_context, edit_context
+
 from ej_clusters.routes import create_stereotype_context, edit_stereotype_context
 from . import urlpatterns
 

@@ -3,6 +3,7 @@ $color-accent: #3F1B53;
 $color-magenta: #C6027B;
 $color-primary: $color-blue;
 
+
 // Page
 $page-background-image: url(/static/img/page-bg.svg) top center no-repeat;
 
@@ -11,6 +12,8 @@ $button-border-radius-default: 8px;
 
 // Forms
 $form-item-border-radius: 7px;
+$form-border-color: $color-purple-dark;
+$form-input-color: $color-magenta;
 
 //Profile
 //$profile-font-color-primary: white;
@@ -151,3 +154,9 @@ $stereotype-add-title-color: $color-secundary;
 $stereotype-add-submit-color: $color-secundary;
 $stereotype-add-input-border-radius: 0px;
 $stereotype-add-comment-color: #30BEC0;
+
+
+// Boards
+$board-menu-font-color: #3F1B53;
+$board-title-color: #C6027B;
+$board-label-color: #3F1B53;
