@@ -13,9 +13,6 @@ class Board(TimeStampedModel):
     """
     slug = models.SlugField(
         _('Slug'),
-        # help_text=(
-            # 'Short text used to identify the board URL (e.g.: "johns-board")'
-        # ),
         unique=True,
         validators=[validate_board_url],
     )
