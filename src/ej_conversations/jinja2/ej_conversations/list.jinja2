@@ -2,10 +2,15 @@
 
 
 {% block content %}
-    {% if can_add_conversation and create_url %}
-        <a class="Link-new" href="{{ create_url }}"><i class="fa fa-plus-circle"></i> {{ _('New conversation') }}</a>
-    {% endif %}
-
+    <div class="Link">
+        {% if can_add_conversation and create_url %}
+            <a class="Link-new" href="{{ create_url }}"><i class="fa fa-plus-circle"></i> {{ _('New conversation') }}</a>
+        {% endif %}
+        
+        {% if can_edit_board is defined and can_edit_board and edit_url %}
+            <a class="Link-edit" href="{{ edit_url }}"><i class="far fa-edit"></i> {{ _('Edit Board') }}</a>
+        {% endif %}
+    </div>
     {% if can_add_conversation|default(False) and boards_count|default(0) > 1 %}
         <div class="view-board">
             <span>{{ _('Viewing board:') }}</span>
@@ -25,7 +30,7 @@
     <div class="ConversationList">
         <div class="ConversationList-title">
             <h1>{{ title }}</h1>
-            <p>{{ subtitle }}</p>
+            <p>{{ description }}</p>
         </div>
 
         {% if is_a_board is defined %}

@@ -729,6 +729,11 @@ $profile-label-clear-color: #30BFD3 !default;
     }
 }
 
+.Link {
+    display: flex;
+    flex-direction: row;
+}
+
 .Link-new {
     text-align: center;
     display: block;
@@ -736,17 +741,29 @@ $profile-label-clear-color: #30BFD3 !default;
     text-transform: uppercase;
     font-size: $spacing-unit / 2;
     font-weight: bold;
-    box-shadow: $header-box-shadow-upper;
+    border-bottom: 1px solid $color-gray-lighter;
     margin: 0;
     padding: $spacing-unit-small 0;
-
-    a {
-        color: $color-black;
-    }
-
+    color: $conversation-link-new-color;
     i {
-        color: $color-magenta;
+        color: $conversation-link-new-icon-color;
     }
+}
+
+.Link-edit {
+    text-align: center;
+    display: block;
+    width: 100%;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: bold;
+    border-bottom: 1px solid $color-gray-lighter;
+    margin: 0;
+    padding: $spacing-unit-small 0;
+    color: $conversation-link-edit-color;
+    i {
+        color: $conversation-link-edit-icon-color;
+    }   
 }
 
 .view-board {
