@@ -5,6 +5,27 @@ from django.utils.translation import ugettext_lazy as _
 from .models import VOTE_VALUES, Conversation, Comment
 
 
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['content']
+
+    def __init__(self, *args, conversation, **kwargs):
+        self.conversation = conversation
+        super(CommentForm, self).__init__(*args, **kwargs)
+
+    def clean(self):
+        super().clean()
+        content = self.cleaned_data.get('content')
+        comment_exists = Comment.objects.filter(content=content, conversation=self.conversation).exists()
+        if comment_exists:
+            msg = _("It seems that you created repeated comments. Please verify if there aren't any equal comments")
+            self._errors['content'] = self.error_class([msg])
+            del self.cleaned_data['content']
+            raise ValidationError(msg)
+        return self.cleaned_data
+
+
 class ConversationForm(forms.ModelForm):
     class Meta:
         model = Conversation
@@ -57,12 +78,6 @@ class ConversationForm(forms.ModelForm):
                 conversation.create_comment(author, value, **kwargs)
 
         return conversation
-
-
-class CommentForm(forms.ModelForm):
-    class Meta:
-        model = Comment
-        fields = ['content']
 
 
 class VoteForm(forms.Form):
