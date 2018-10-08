@@ -25,7 +25,9 @@ def conversation_list(request, board):
         user_is_owner = False
     return {
         'can_add_conversation': user_is_owner,
+        'can_edit_board': user_is_owner,
         'create_url': reverse('boards:create-conversation', kwargs={'board': board}),
+        'edit_url': reverse('boards:edit', kwargs={'board': board}),
         'conversations': conversations,
         'boards_count': boards_count,
         'boards': boards,
@@ -33,6 +35,7 @@ def conversation_list(request, board):
         'is_a_board': True,
         'title': _("%s' conversations") % board.title,
         'subtitle': _("These are %s's conversations. Contribute to them too") % board.title,
+        'description': board.description
     }
 
 

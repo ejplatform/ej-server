@@ -20,6 +20,7 @@ def conversation_list(request):
         'topic': _('A space for adolescents to discuss actions that promote, guarantee and defend their rights'),
         'title': _('Public conversations'),
         'subtitle': _('Participate of conversations and give your opinion with comments and votes!'),
+        'description': _('Participate of conversations and give your opinion with comments and votes!'),
     }
 
 
