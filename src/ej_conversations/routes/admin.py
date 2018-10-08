@@ -76,11 +76,13 @@ def moderate_context(request, conversation):
         comment.rejection_reason = request.POST['rejection_reason']
         comment.save()
 
-    for comment in models.Comment.objects.filter(conversation=conversation, status='pending'):
-        if comment.is_pending:
-            comments.append(comment)
+    status = request.GET.get('status')
+    status = 'pending' if status not in ['pending', 'approved', 'rejected'] else status
+    for comment in models.Comment.objects.filter(conversation=conversation, status=status):
+        comments.append(comment)
     return {
         'conversation': conversation,
+        'comment_status': status,
         'edit_url': conversation.get_absolute_url() + 'edit/',
         'comments': comments,
     }
