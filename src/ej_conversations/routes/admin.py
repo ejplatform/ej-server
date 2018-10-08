@@ -16,7 +16,7 @@ def create(request):
                 author=request.user,
                 is_promoted=True,
             )
-        return redirect(conversation.get_absolute_url())
+        return redirect(conversation.get_absolute_url() + 'stereotypes/')
 
     return {'form': form}
 
@@ -57,11 +57,14 @@ def edit_context(request, conversation):
             if comment.is_pending:
                 comments.append(comment)
 
+    user = request.user
     return {
         'conversation': conversation,
+        'can_promote_conversation': user.has_perm('can_publish_promoted'),
         'comments': comments,
         'board': board,
         'form': form,
+        'manage_stereotypes_url': conversation.get_absolute_url() + 'stereotypes/',
     }
 
 
@@ -73,10 +76,13 @@ def moderate_context(request, conversation):
         comment.rejection_reason = request.POST['rejection_reason']
         comment.save()
 
-    for comment in models.Comment.objects.filter(conversation=conversation, status='pending'):
-        if comment.is_pending:
-            comments.append(comment)
+    status = request.GET.get('status')
+    status = 'pending' if status not in ['pending', 'approved', 'rejected'] else status
+    for comment in models.Comment.objects.filter(conversation=conversation, status=status):
+        comments.append(comment)
     return {
         'conversation': conversation,
+        'comment_status': status,
+        'edit_url': conversation.get_absolute_url() + 'edit/',
         'comments': comments,
     }

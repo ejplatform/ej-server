@@ -47,6 +47,37 @@ class LoginForm(PlaceholderForm, forms.Form):
         email = forms.CharField(label=_('E-mail'), help_text=_('Your e-mail'))
     else:
         email = forms.EmailField(label=_('E-mail'))
-    password = forms.CharField(label=_('Password'),
-                               widget=forms.PasswordInput,
-                               help_text=_('Your password'))
+    password = forms.CharField(label=_('Password'), widget=forms.PasswordInput)
+
+
+class RecoverPasswordForm(PlaceholderForm, forms.Form):
+
+    """
+    Reset User Password
+    """
+
+    email = forms.EmailField(label=_('E-mail'))
+
+
+class ResetPasswordForm(PlaceholderForm, forms.Form):
+
+    """
+    Recover User Password
+    """
+
+    new_password = forms.CharField(
+        label=_('Password'),
+        required=True,
+        widget=forms.PasswordInput,
+    )
+    new_password_confirm = forms.CharField(
+        label=_('Password confirmation'),
+        required=True,
+        widget=forms.PasswordInput,
+    )
+
+    def _post_clean(self):
+        super()._post_clean()
+        data = self.cleaned_data
+        if data.get('new_password') != data.get('new_password_confirm'):
+            self.add_error('new_password_confirm', _('Passwords do not match'))

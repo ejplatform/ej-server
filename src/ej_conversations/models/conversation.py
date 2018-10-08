@@ -121,11 +121,14 @@ class Conversation(TimeStampedModel):
                 'conversation.')
             )
 
-    def get_absolute_url(self, board=None):
+    def get_absolute_url(self):
         kwargs = {'conversation': self}
-        if board is None:
+        from ej_boards.models import BoardSubscription
+        is_conversation_in_board = BoardSubscription.objects.filter(conversation=self).exists()
+        if not is_conversation_in_board:
             return reverse('conversation:detail', kwargs=kwargs)
         else:
+            board = BoardSubscription.objects.get(conversation=self).board
             kwargs['board'] = board
             return reverse('boards:conversation-detail', kwargs=kwargs)
 

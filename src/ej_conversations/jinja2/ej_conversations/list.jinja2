@@ -1,5 +1,5 @@
 {% extends 'base.jinja2' %}
-{% from 'ej_conversations/components/conversation-list.jinja2' import conversation_list with context %}
+
 
 {% block content %}
     <div class="Link">
@@ -51,7 +51,7 @@
         {# Cards #}
         <div class="ConversationList-cardList">
             {% for conversation in conversations %}
-                {{ conversation|role('card', board=current_board|default(None)) }}
+                {{ conversation|role('card') }}
             {% endfor %}
         </div>
     </div>
