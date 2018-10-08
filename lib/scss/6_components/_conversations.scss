@@ -3,6 +3,7 @@ CONVERSATIONS
 ======================================================================== */
 @import '../2_tools/index';
 
+$conversation-toast-image-border: $spacing-unit-tiny / 3;
 $conversation-button-size: $spacing-unit-small + $spacing-unit-tiny !default;
 $conversation-card-font-size-small: 12px !default;
 $conversation-card-border-arrow-size: $spacing-unit;
@@ -573,6 +574,7 @@ $profile-label-clear-color: #30BFD3 !default;
 }
 
 .CommentForm {
+    margin-top: $spacing-unit-tiny;
     text-align: center;
     background: $conversation-comment-form-background-color;
     margin-top: -60px;
@@ -619,51 +621,80 @@ $profile-label-clear-color: #30BFD3 !default;
         margin-top: $spacing-unit-small;
     }
 
-    .toast {
+    #toast {
+        line-height: 1.2;
         visibility: hidden;
-        background-color: $color-blue-light;
-        font-weight: bold;
-        text-align: center;
-        border-radius: 2px;
+        background-color: $color-hint;
+        text-align: left;
+        border-radius: $spacing-unit-tiny;
         position: fixed;
-        z-index: 101;
+        z-index: 3;
         width: 100vw;
         left: 0;
-        bottom: $header-bottom-nav-height + $top-header-height;
-        font-size: $spacing-unit / 2;
+        bottom: $header-top-nav-height;
         > div {
-            padding: 40px;
-            h3, p {
+            padding: $spacing-padding;
+            max-width: 660px;
+            margin: 0 auto;
+            p {
+                padding: 0 0 $spacing-unit-tiny 0;
+                margin: 0;
+                font-size: $font-size-small;
                 color: $toast-font-color;
             }
+            h3{
+                padding: $spacing-unit-tiny 0 0 0;
+                margin: 0;
+                font-family: $font-raleway;
+                font-weight: bold;
+                font-size: $font-size-default;
+                color: $color-primary;
+            }
+            img {
+                @media only screen and (min-width: $breakpoint-medium - $breakpoint-small) {
+                    max-width: $spacing-unit;
+                    margin: $spacing-padding $spacing-unit-small auto 0;
+                    background-color: #fff;
+                    border: ($conversation-toast-image-border * 4) / 3 solid $color-primary;
+                    border-radius: $spacing-unit-large;
+                    padding: $spacing-unit-tiny;
+                }
+                @media only screen and (min-width: $breakpoint-small) {
+                    max-width: $spacing-unit;
+                    //margin-right: $spacing-unit-small;
+                    margin: auto $spacing-unit-small auto 0;
+                    background-color: #fff;
+                    border: $conversation-toast-image-border solid $color-primary;
+                    border-radius: $spacing-unit-large;
+                    padding: $spacing-unit-tiny;
+            }
+        }
         }
     }
 
-    .toast.show {
+    #toast.show {
         visibility: visible;
-        -webkit-animation: fadein 1s, fadeout 1s 3s;
-        animation: fadein 1s, fadeout 1s 3s;
+        -webkit-animation: fade 8s;
+        animation: fade 8s;
     }
 
-    @keyframes fadein {
-        from {
+
+    @keyframes fade {
+        0%   {
+            opacity: 0;
             bottom: 0;
-            opacity: 0;
         }
-        to {
-            bottom: 70px;
+        20%  {
             opacity: 1;
+            bottom: 45px;
         }
+        70%  {opacity: 1;}
+        90% {opacity: 0;}
+        100% {opacity: 0;}
+
     }
 
-    @keyframes fadeout {
-        from {
-            opacity: 1;
-        }
-        to {
-            opacity: 0;
-        }
-    }
+
 }
 
 .CircleButton {
