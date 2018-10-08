@@ -14,6 +14,7 @@
                            javascript_enabled='') %}
 
     {% if caller is defined %}{% set caller_output = caller() %}{% endif %}
+    {{ conversation_list_static(conversations, title=title, subtitle=subtitle, caller_output=caller_output) }}
 {% endmacro %}
 
 {% macro conversation_list_static(conversations, title, subtitle, caller_output=None) %}

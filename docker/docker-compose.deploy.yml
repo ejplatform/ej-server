@@ -17,9 +17,6 @@ services:
   web:
     image: ejplatform/web:latest
     restart: always
-    build:
-      context: ../
-      dockerfile: ./docker/Dockerfile
     links:
       - postgres
       - redis
@@ -27,10 +24,6 @@ services:
       - ./env/django.env
       - ./env/postgres.env
       - ./env/deploy.env
-    environment:
-      - DJANGO_ENVIRONMENT=production
-      - DJANGO_DEBUG
-      - DJANGO_ALLOWED_HOSTS=localhost
     volumes:
       - media_files:/app/local/media/
       - static_files:/app/local/static/

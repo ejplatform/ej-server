@@ -6,6 +6,7 @@ from django.contrib.staticfiles.storage import staticfiles_storage
 from django.urls import reverse
 from django.utils import translation
 from django.utils.translation import get_language
+from django.utils.formats import date_format
 from jinja2 import Environment, StrictUndefined, contextfunction
 from markdown import markdown
 from markupsafe import Markup
@@ -34,6 +35,7 @@ def environment(**options):
 
         # Localization
         get_language=get_language,
+        date_format=date_format,
 
         # Security
         salt_attr=salt_attr,

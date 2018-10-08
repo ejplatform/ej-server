@@ -2,14 +2,14 @@
 User Guide
 ==========
 
-ToDo - User guide EJ
+.. toctree::
+   :maxdepth: 2
 
-* Register
-* Discussion
-* About AI
-* Admin tools
-* FAQ
-* Accessibility
-* Privacy
-* Community support
-
+   user-start
+   user-conversation
+   user-vote
+   user-popular
+   user-admin
+   user-report
+   user-privacy
+   user-accessibility
