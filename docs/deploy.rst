@@ -2,8 +2,8 @@
 Deploy
 ======
 
-EJ relies on Docker and a Docker orchestration technology for its deployment
-process. We assume, for simplicity, that your deployment is going to use Docker
+EJ relies on Docker and a Docker orchestration technology in its deployment
+process. We assume for the sake of simplicity that your deployment is going to use Docker
 Compose. It works with other technologies (we use Rancher, for instance),
 but of course we cannot anticipate the details of your infrastructure to provide
 a detailed guide. Docker Compose is a useful reference and common ground for many
@@ -11,11 +11,12 @@ other orchestration technologies.
 
 The easiest way to proceed is to use the pre-build images available on `Docker Hub`_
 and personalize your installation using environment variables. You must
-understand that a basic EJ stack uses 4 containers described in _`EJ Stack`
+understand that a basic EJ stack uses 4 containers described in `EJ Stack`_
 session: the Nginx reverse proxy, the Django application and Redis and Postgres
 databases.
 
 .. _Docker Hub: https://hub.docker.com/u/ejplatform/
+.. _EJ Stack: stack.html
 
 You can run a useful "deployable" stack by simply calling the command bellow from
 the ej-server repository::
@@ -41,11 +42,15 @@ Start by cloning it to the local/deploy folder with the command::
 
 This will copy the example files to local/deploy. This folder is ignored by git
 versioning and you can maintain it as a private repository independent of
-``ejplatform/ej-server``. Now, adapt the files on this folder to your needs by
-setting the values of all necessary _`Environment Variables`. In the
-long run, it is probably best to use a private repository to save those files
-with version control. Bear in mind that many of the configuration variables are
-secrets that cannot be seen in a public location.
+``ejplatform/ej-server``.
+
+Adapt the files on this folder to your needs by setting the values of all
+necessary `Environment Variables`_. In the long run, it is probably best to use
+a private repository to keep those files with version control. Bear in mind that
+many of the configuration variables are secrets that cannot be shared in a
+public location.
+
+.. _Environment Variables: environment-variables.html
 
 Now rebuild the deployment images using the command::
 
@@ -64,8 +69,8 @@ Configuration
 =============
 
 The standard structure of the docker-compose-deploy_ repository implement a few
-options that the ``inv docker-deploy`` sub-tasks understand. We list those tasks
-bellow:
+options that the ``inv docker-deploy`` task understand. We list a few useful
+commands bellow:
 
 .. _docker-compose-deploy: https://github.com/ejplatform/docker-compose-deploy/
 
@@ -90,7 +95,7 @@ bellow:
 
 All those commands accept a ``-e ENVIRONMENT`` option that allows us to specify
 different environments other than "production". A common pattern is to use two
-separate deploys: the "production" "staging" environments. All environments
+separate deploys: the "production" and "staging" environments. All environments
 share the same docker images, but uses different Docker Compose files.
 
 
@@ -105,30 +110,34 @@ ORGANIZATION (ejplatform):
     Name of organization or user in Docker Hub used to store images. It defaults
     to  ejplatform, but you need to change to some organization that you can
     publish images to.
+
 TAG (latest):
     Release number for the built images. Leave as "latest" if desired.
+
 THEME (default):
     Theme used to construct images. This sets the EJ_THEME variable in the
     docker container.
+
 LISTENERS:
     A list of listeners that implement the notify command. Each listener must
     have a corresponding notify.<listener>.sh script. We provide an example
     using Rancher.
 
-The `config.py` file can also be used to set configuration environment variables.
+The `config.py` file can also be used to set arbitrary configuration variables
+that are injected in the environment.
 
 
-Rocketchat integration
-======================
+Rocket.Chat integration
+=======================
 
-Integrating Rocketchat to the stack requires a few additional steps. The first
-step is to uncomment all services in the Rocketchat section of the example
+Integrating Rocket.Chat to the stack requires a few additional steps. The first
+step is to uncomment all services in the Rocket.Chat section of the example
 docker-compose.yml file to enable the necessary containers.
 
 You also need to set the following environment variable either in config.env or
 in the docker-compose.yml file:
 
-EJ_ROCKETCHAT_INTEGRATION=true:
+``EJ_ROCKETCHAT_INTEGRATION=true``:
     If true, enables the Rocket chat integration in the Django application.
     Remember to configure the docker-compose.yml file accordingly.
 
@@ -146,23 +155,25 @@ Rocket.Chat integration, here you have to put the admin credentials you created
 on Rocket.Chat setup-wizard.
 
 There are other ways to retrieve this data from the API. Visit
-`Rocketchat API docs`_ to learn more.
+`Rocket.Chat API docs`_ to learn more.
+
+
 
 Now, go to the Rocket.Chat administration page. It will be something like
-``http://your-rocket.chat-hostname/admin/Accounts``. Setup the
+``http://<rocket-host>/admin/Accounts``. Setup the
 `IFrame login integration`_ at ``Administration > Accounts > IFrame``.
 
-.. _Rocketchat API docs: https://rocket.chat/docs/developer-guides/rest-api/
+.. _Rocket.Chat API docs: https://rocket.chat/docs/developer-guides/rest-api/
 .. _IFrame login integration: https://rocket.chat/docs/developer-guides/iframe-integration/authentication/
 
 In this page, follow the instructions bellow:
 
-1. Set ``Enabled`` option to ``True``.
+1. Set the ``Enabled`` option to ``True``.
 2. In order to enable redirection after successful *login*, set ``Iframe URL``
-   to ``http://<django>/talks/login/?next=/talks/`` (replacing Django with the
+   to ``http://<django-host>/talks/login/?next=/talks/`` (replacing Django with the
    address of your actual Django instance).
-3. Rocketchat needs to check if an user is already authenticated. Set
-   ``API URL`` to ``http://<django>/talks/check-login/``.
+3. Rocket.Chat needs to check if an user is already authenticated. Set
+   ``API URL`` to ``http://<django-host>/talks/check-login/``.
 4. Set ``API Method`` to ``POST``.
 5. Save the changes.
 
@@ -171,21 +182,21 @@ Now, go to ``Administration > Accounts`` and disable the following features:
 * Allow changes to user profile
 * Allow
 
-The final step is to setup EJ using a superuser account. Go to http://<hostname>/talks/
+The final step is to setup EJ using a superuser account. Go to http://<django-host>/talks/
 and it will request additional information before continuing.
 
-Now each time you try to access Rocketchat without django
-authentication, the user will be redirected to the EJ login page.
+Now each time you try to access Rocket.Chat without Django authentication, the
+user will be redirected to the EJ login page.
 
 
-Rocketchat style
-----------------
+Rocket.Chat style
+-----------------
 
 It is possible to override the default style and some static content in the
 website. Go to ``Administration > Layout > Content`` and save the content of the
 home page there. We recommend to keep this data versioned in the configuration
 repository. Similarly, it is possible to set a custom CSS and save it using
-Rocketchat admin page at at ``Administration > Layout > Custom CSS``.
+Rocket.Chat admin page at at ``Administration > Layout > Custom CSS``.
 
 Follow the tutorial_ for further explanations (in Portuguese).
 

@@ -1,6 +1,6 @@
 
 {% macro comment_form(csrf_input) %}
-    <form method="post">
+    <form method="post" up-target=".CommentForm">
         {{ csrf_input }}
         <input type="hidden" name="action" value="comment">
         <textarea name="comment"

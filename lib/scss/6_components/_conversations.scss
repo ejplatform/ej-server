@@ -1,34 +1,23 @@
 /*
- CONVERSATIONS
- ======================================================================== */
+CONVERSATIONS
+======================================================================== */
 @import '../2_tools/index';
 
 $conversation-button-size: $spacing-unit-small + $spacing-unit-tiny !default;
-$conversation-card-gutter: $spacing-unit !default;
-$conversation-card-border: 0 !default;
-$conversation-card-border-radius: 50% !default;
-$conversation-card-color: $color-primary !default;
-$conversation-card-text-color: $color-white !default;
-$conversation-card-cover-height: 8 * $line-height !default;
-$conversation-card-light: $color-blue-nav !default;
-$conversation-card-statistics-color: $color-blue-nav !default;
 $conversation-card-font-size-small: 12px !default;
-$conversation-card-button-color: $color-content-text !default;
-$conversation-card-button-color-text: $color-content !default;
 $conversation-card-border-arrow-size: $spacing-unit;
-$conversation-card-button-border-radius: 30px !default;
-$conversation-topic-display: none !default;
+$profile-label-clear-color: #30BFD3 !default;
 
 .ConversationList {
     @extend .Container;
 
     p {
-        padding: 0 10px;
+        padding: 0 $spacing-unit / 3;
     }
 
     &-title {
         text-align: center;
-        margin-top: 40px;
+        margin-top: $spacing-unit;
 
         h1 {
             font-size: $font-size-h2;
@@ -36,7 +25,7 @@ $conversation-topic-display: none !default;
         }
 
         .topic {
-            display: $conversation-topic-display;
+            display: none;
         }
     }
 
@@ -103,10 +92,10 @@ $conversation-topic-display: none !default;
         flex-wrap: wrap;
         width: 100%;
         justify-content: center;
-        padding-bottom: 20px;
+        padding-bottom: $spacing-unit;
 
         > * {
-            margin: $conversation-card-gutter;
+            margin: $spacing-unit;
         }
 
         .slick-list {
@@ -143,7 +132,7 @@ $conversation-topic-display: none !default;
 }
 
 .ConversationTags {
-    @include color($conversation-card-light, $conversation-card-color, $force: true);
+    @include color($color-blue-nav, $color-primary, $force: true);
     font-weight: bold;
     text-align: center;
     padding: $spacing-unit / 2 0;
@@ -151,10 +140,10 @@ $conversation-topic-display: none !default;
 }
 
 .ConversationCard {
-    @include color($card-conversation-middle-background, $conversation-card-text-color, $force: true);
+    @include color($card-conversation-middle-background, $color-white, $force: true);
     align-self: stretch;
     box-sizing: border-box;
-    border: $conversation-card-border;
+    border: 0;
     border-radius: $card-conversation-border-radius;
     flex-grow: 1;
     margin: 0;
@@ -253,7 +242,7 @@ $conversation-topic-display: none !default;
     }
 
     &-statistics {
-        color: $conversation-card-statistics-color;
+        color: $color-blue-nav;
         display: flex;
         justify-content: center;
         padding: 0 $spacing-unit;
@@ -346,7 +335,7 @@ $conversation-topic-display: none !default;
             padding-bottom: $spacing-unit;
             text-align: center;
             font-weight: 200 !important;
-            font-size: 26px !important;
+            font-size: $spacing-unit !important;
             font-family: $font-paragraph;
 
             @media only screen and (min-width: $breakpoint-large) {
@@ -363,7 +352,7 @@ $conversation-topic-display: none !default;
                 background: transparent;
                 font-weight: bold;
                 text-transform: uppercase;
-                font-size: 12px;
+                font-size: $spacing-unit / 2;
 
                 &:hover {
                     background: transparent;
@@ -374,7 +363,7 @@ $conversation-topic-display: none !default;
                     content: "\f044 ";
                     font-family: 'Font Awesome\ 5 Free';
                     display: inline-block;
-                    font-size: 16px;
+                    font-size: $spacing-unit / 2;
                     margin-right: 3px;
                     font-weight: lighter;
                 }
@@ -435,7 +424,7 @@ $conversation-topic-display: none !default;
 
         h1 {
             font-family: 'Patua One', sans-serif !important;
-            font-size: 24px !important;
+            font-size: $spacing-unit !important;
             letter-spacing: 1px;
             font-weight: 300 !important;
             color: $conversation-info-title;
@@ -570,7 +559,7 @@ $conversation-topic-display: none !default;
             @media only screen and (min-width: $breakpoint-small) {
                 max-width: 3%;
             }
-        
+
             color: $color-accent;
             margin-right: $spacing-unit-small;
             background: #fff;
@@ -587,7 +576,7 @@ $conversation-topic-display: none !default;
     text-align: center;
     background: $conversation-comment-form-background-color;
     margin-top: -60px;
-    border-radius: 0 0 56px 56px;
+    border-radius: 0 0 $spacing-unit * 2 $spacing-unit * 2;
     z-index: 2;
     max-width: 682px;
     margin-left: auto;
@@ -623,7 +612,7 @@ $conversation-topic-display: none !default;
         background: $conversation-comment-button-background;
         border: 0;
         padding: $spacing-unit-small $spacing-unit;
-        font-size: 14px;
+        font-size: $spacing-unit / 2;
         box-shadow: none;
         text-transform: uppercase;
         font-weight: bold;
@@ -641,7 +630,7 @@ $conversation-topic-display: none !default;
         width: 100vw;
         left: 0;
         bottom: $header-bottom-nav-height + $top-header-height;
-        font-size: 17px;
+        font-size: $spacing-unit / 2;
         > div {
             padding: 40px;
             h3, p {
@@ -694,7 +683,7 @@ $conversation-topic-display: none !default;
     &-rightConversationSlider {
         margin: 0;
         position: absolute;
-        top: ($conversation-card-cover-height + $conversation-button-size) - ($spacing-unit-large - $spacing-unit-small);
+        top: (8 * $line-height + $conversation-button-size) - ($spacing-unit-large - $spacing-unit-small);
         z-index: 10;
 
         @media only screen and (width: $breakpoint-small) {
@@ -717,7 +706,7 @@ $conversation-topic-display: none !default;
     display: block;
     width: 100%;
     text-transform: uppercase;
-    font-size: 14px;
+    font-size: $spacing-unit / 2;
     font-weight: bold;
     box-shadow: $header-box-shadow-upper;
     margin: 0;
@@ -759,6 +748,35 @@ $conversation-topic-display: none !default;
         color: $color-purple-dark;
     }
 
+    &-comments-tabs {
+        padding: 0;
+        background: $color-blue-nav;
+        display: flex;
+        flex-wrap: wrap;
+
+        li {
+            list-style: none;
+            flex-grow: 1;
+            flex-basis: 0;
+            font-size: $spacing-unit / 2;
+            font-weight: bold;
+            text-align: center;
+
+            a {
+                color: $profile-label-clear-color;
+                opacity: 0.5;
+                border-bottom: 2px solid transparent;
+                padding: 5px 0;
+                display: inline-block;
+
+                &.active {
+                    opacity: 1;
+                    border-bottom: 2px solid $profile-label-clear-color;
+                }
+            }
+        }
+    }
+
     &-comments {
         h1 {
             text-align: center;
@@ -769,7 +787,7 @@ $conversation-topic-display: none !default;
             background: #fff;
             color: $color-purple-dark;
             font-family: "Raleway", sans-serif;
-            font-size: 16px;
+            font-size: $spacing-unit / 2;
             border: 0;
             border-radius: 0;
             border-bottom: 1px solid $color-blue-light;
@@ -778,13 +796,13 @@ $conversation-topic-display: none !default;
 
             p {
                 text-align: center;
-                font-size: 16px;
+                font-size: $spacing-unit / 2;
                 font-weight: 600;
             }
 
             &-metadata {
                 color: $color-blue-light;
-                font-size: 12px;
+                font-size: $spacing-unit / 2;
                 display: flex;
                 justify-content: space-between;
             }
@@ -828,12 +846,33 @@ $conversation-topic-display: none !default;
             border-radius: 0;
             background: #fff;
             font-weight: bold;
-            font-size: 12px;
+            font-size: $spacing-unit / 2;
             color: $color-purple-dark;
             box-shadow: none;
             padding-left: 0;
             outline: 0;
         }
+    }
+
+    .Comment-status-approved .ConversationComment-actions li {
+        opacity: 1;
+    }
+
+    .Comment-status-approved .ConversationComment-actions li + li {
+        opacity: 0.3;
+    }
+
+    .Comment-status-rejected .ConversationComment-actions li {
+        opacity: 0.3;
+    }
+
+    .Comment-status-rejected .ConversationComment-actions li + li {
+        opacity: 1;
+    }
+
+    .Comment-status-approved .ConversationComment-actions li:hover,
+    .Comment-status-rejected .ConversationComment-actions li:hover {
+        opacity: 1;
     }
 
     .Comment-rejection {
@@ -844,7 +883,7 @@ $conversation-topic-display: none !default;
 
         p {
             font-weight: lighter;
-            font-size: 14px;
+            font-size: $spacing-unit / 2;
         }
 
         textarea {
@@ -873,7 +912,7 @@ $conversation-topic-display: none !default;
         padding: $unit + 5;
         text-align: center;
         font-weight: 200 !important;
-        font-size: 26px !important;
+        font-size: $spacing-unit !important;
         box-shadow: none;
         border: 1px solid $color-blue-light;
         border-radius: $conversation-edit-radius;
@@ -882,6 +921,7 @@ $conversation-topic-display: none !default;
         min-height: 50px;
         max-height: 300px;
         max-width: none;
+        width: 100%;
 
         &::placeholder {
             color: $color-purple-dark;
@@ -920,7 +960,7 @@ $conversation-topic-display: none !default;
             padding: $unit 0;
             box-shadow: none;
             font-family: "Raleway", sans-serif;
-            font-size: 12px;
+            font-size: $spacing-unit / 2;
             color: $color-purple-dark;
             text-transform: uppercase;
             font-weight: bold;
@@ -962,7 +1002,7 @@ $conversation-topic-display: none !default;
         box-shadow: none;
         outline: 0;
         padding-top: 8px;
-        font-size: 12px;
+        font-size: $spacing-unit / 2;
         color: $color-purple-dark;
         flex-grow: 1;
         margin-right: $unit;
@@ -992,7 +1032,7 @@ $conversation-topic-display: none !default;
     span {
         color: $color-purple-dark;
         opacity: 0.5;
-        font-size: 12px;
+        font-size: $spacing-unit / 2;
     }
 
     p {
@@ -1012,7 +1052,7 @@ $conversation-topic-display: none !default;
 
     label {
         color: $color-purple-dark;
-        font-size: 14px;
+        font-size: $spacing-unit / 2;
         font-weight: bold;
         display: inline;
     }
@@ -1023,5 +1063,5 @@ $conversation-topic-display: none !default;
     cursor: pointer;
     text-transform: uppercase;
     font-weight: bold;
-    font-size: 12px;
+    font-size: $spacing-unit / 2;
 }
