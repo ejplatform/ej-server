@@ -124,7 +124,6 @@ def comment_form(conversation, request=None, comment_content=None, **kwargs):
     """
     Render comment form for one conversation.
     """
-    print(comment_content)
     user = getattr(request, 'user', None)
     n_comments = rules.compute('ej_conversations.remaining_comments', conversation, user)
     return {

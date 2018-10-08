@@ -584,7 +584,8 @@ $conversation-topic-display: none !default;
     }
 }
 
-.CommentForm {margin-top: $spacing-unit-tiny;
+.CommentForm {
+    margin-top: $spacing-unit-tiny;
     text-align: center;
     background: $conversation-comment-form-background-color;
     margin-top: -60px;
@@ -636,7 +637,7 @@ $conversation-topic-display: none !default;
         visibility: hidden;
         background-color: $color-hint;
         text-align: left;
-        border-radius: 1px;
+        border-radius: $spacing-unit-tiny;
         position: fixed;
         z-index: 3;
         width: 100vw;
@@ -663,7 +664,6 @@ $conversation-topic-display: none !default;
             img {
                 @media only screen and (min-width: $breakpoint-medium - $breakpoint-small) {
                     max-width: $spacing-unit;
-                    //margin-right: $spacing-unit-small;
                     margin: $spacing-padding $spacing-unit-small auto 0;
                     background-color: #fff;
                     border: ($conversation-toast-image-border * 4) / 3 solid $color-primary;
@@ -677,11 +677,10 @@ $conversation-topic-display: none !default;
                     background-color: #fff;
                     border: $conversation-toast-image-border solid $color-primary;
                     border-radius: $spacing-unit-large;
-                    padding: $spacing-unit-tiny;              
+                    padding: $spacing-unit-tiny;
             }
         }
         }
-
     }
 
     #toast.show {
