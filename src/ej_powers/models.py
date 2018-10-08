@@ -5,8 +5,8 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth import get_user_model
 from model_utils.models import TimeFramedModel
 from polymorphic.models import PolymorphicModel
+from django.core.validators import validate_comma_separated_integer_list
 
-from ej.utils import JSONField
 from ej_conversations.fields import UserRef, CommentRef
 from .functions import promote_comment
 
@@ -48,7 +48,7 @@ class GivenPower(TimeFramedModel, PolymorphicModel):
     to make DB usage more efficient.
     """
     user = UserRef()
-    data = JSONField(blank=True)
+    data = models.CharField(validators=[validate_comma_separated_integer_list], max_length=10000)
     is_exhausted = models.BooleanField(default=False)
     is_expired = property(lambda self: self.end < datetime.now())
 
@@ -68,7 +68,7 @@ class GivenBridgePower(GivenPower):
         """
         Return queryset with all affected users.
         """
-        user_ids = self.data['affected_users']
+        user_ids = self.data
         return get_user_model().objects.filter(id__in=user_ids)
 
     def use_power(self, comment):

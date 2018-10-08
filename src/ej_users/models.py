@@ -49,6 +49,11 @@ class User(AbstractUser):
     class Meta:
         swappable = 'AUTH_USER_MODEL'
 
+    def as_dict(self):
+        return {
+            "id": self.id,
+        }
+
 
 class Token (models.Model):
 
