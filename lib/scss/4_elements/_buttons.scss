@@ -8,7 +8,7 @@ $button-border-radius: $spacing-unit-large;
 $button-ghost-border-width: 1px !default;
 $button-ghost-color: $color-primary !default;
 $button-ghost-color-hover: rgba(0, 0, 0, 0.05);
-$button-hpadding: $spacing-unit - 4px !default;
+$button-hpadding: $spacing-unit-small + $spacing-unit-tiny !default;
 $button-vpadding: $spacing-unit-tiny + 2px !default;
 $button-font-size: $font-size-default !default;
 $button-font-size-small: $font-size-small !default;

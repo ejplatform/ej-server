@@ -170,7 +170,7 @@ $conversation-topic-display: none !default;
         color: $card-conversation-top-font-color;
     }
     h1 {
-        font-size: $font-size-h3 - 2;
+        font-size: $font-size-h4;
         font-family: $font-paragraph;
         font-weight: 600;
         text-transform: none;
@@ -254,7 +254,7 @@ $conversation-topic-display: none !default;
         display: flex;
         justify-content: center;
         padding: $spacing-unit-small;
-        margin: $spacing-unit-tiny - 3 $spacing-unit;
+        margin: $spacing-unit-tiny $spacing-unit;
         font-weight: bold;
 
         li {
