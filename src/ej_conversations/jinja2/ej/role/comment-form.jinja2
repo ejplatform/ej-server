@@ -1,7 +1,7 @@
 {% from 'ej_conversations/toast.jinja2' import toast with context %}
 
-{% macro comment_form(csrf_input) %}
-    <form method="post" up-target=".CommentForm">
+{% macro comment_form(csrf_input, comment_content) %}
+    <form method="post">
         {{ csrf_input }}
         <input type="hidden" name="action" value="comment">
             {{comment_content.content}}
