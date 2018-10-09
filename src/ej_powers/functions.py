@@ -5,6 +5,7 @@ import sidekick as sk
 timezone = sk.import_later('django.utils.timezone')
 models = sk.import_later('.models', package=__package__)
 promotions = sk.deferred(lambda: models.CommentPromotion.objects)
+powers = sk.deferred(lambda: models.GivenPower.objects)
 valid_promotions = sk.deferred(lambda: models.CommentPromotion.timeframed)
 DEFAULT_EXPIRATION_TIME_DELTA = datetime.timedelta(hours=24)
 log = logging.getLogger('ej')
@@ -28,8 +29,8 @@ def promote_comment(comment, *, author, users, expires=None):
         A CommentPromotion object
     """
     expires = expires or timezone.now() + DEFAULT_EXPIRATION_TIME_DELTA
-    promotion = promotions.create(comment=comment, author=author, expires=expires)
-    promotion.users.bulk_add(users)
+    promotion = promotions.create(comment=comment, promoter=author, end=expires)
+    promotion.users.set(users)
     return promotion
 
 
@@ -49,3 +50,43 @@ def clean_expired_promotions():
     if size > 0:
         qs.delete()
         log.info(f'excluded {size} expired promotions')
+
+
+def give_promotion_power(power_class, user, conversation, users, expires=None):
+    """
+    description
+    Args:
+    Returns:
+    """
+    expires = expires or timezone.now() + DEFAULT_EXPIRATION_TIME_DELTA
+    power = power_class(user=user, conversation=conversation, end=expires)
+
+    power.set_affected_users(users)
+    power.save()
+    return power
+
+
+def give_minority_power(user, conversation, users, expires=None):
+    """
+    description
+    Args:
+    Returns:
+    """
+    return give_promotion_power(models.GivenMinorityPower, user, conversation, users, expires)
+
+
+def give_bridge_power(user, conversation, users, expires=None):
+    """
+    description
+    Args:
+    Returns:
+    """
+    return give_promotion_power(models.GivenBridgePower, user, conversation, users, expires)
+
+
+def clean_expired_promotion_powers():
+    expired_qs = powers.filter(end__lte=timezone.now()).get_real_instances()
+    size = expired_qs.count()
+    if size > 0:
+        expired_qs.delete()
+        log.info(f'excluded {size} expired promotion powers')

@@ -4,11 +4,12 @@ from django.utils import timezone
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth import get_user_model
+from django.core.exceptions import ValidationError
 from model_utils.models import TimeFramedModel
 from polymorphic.models import PolymorphicModel
 from picklefield.fields import PickledObjectField
 
-from ej_conversations.fields import UserRef, CommentRef
+from ej_conversations.fields import UserRef, CommentRef, ConversationRef
 from .functions import promote_comment
 
 NO_PROMOTE_MSG = _('user does not have the right to promote this comment')
@@ -49,15 +50,13 @@ class GivenPower(TimeFramedModel, PolymorphicModel):
     to make DB usage more efficient.
     """
     user = UserRef()
+    conversation = ConversationRef()
     data = PickledObjectField()
     is_exhausted = models.BooleanField(default=False)
-    is_expired = property(lambda self: self.end < datetime.now())
+    is_expired = property(lambda self: self.end < datetime.now(timezone.utc))
 
     def use_power(self, **kwargs):
         raise NotImplementedError('implement in subclass')
-
-    def data_unpacked(self):
-        return u'{data}'.format(data=self.data)
 
 
 class GivenBridgePower(GivenPower):
@@ -82,10 +81,13 @@ class GivenBridgePower(GivenPower):
         self.data = {'affected_users': set(user.id for user in users)}
 
     def use_power(self, comment):
-        return promote_comment(comment,
-                               author=self.user,
-                               users=self.get_affected_users(),
-                               expires=self.end)
+        if comment.conversation == self.conversation and not self.is_expired:
+            return promote_comment(comment,
+                                   author=self.user,
+                                   users=self.get_affected_users(),
+                                   expires=self.end)
+        else:
+            raise ValidationError(_('Comment is not in conversation that user can promote or is expired.'))
 
 
 class GivenMinorityPower(GivenPower):
