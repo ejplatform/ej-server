@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-09-17 23:34+0000\n"
-"PO-Revision-Date: 2018-09-17 20:36-0300\n"
+"PO-Revision-Date: 2018-10-09 08:05-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: \n"
 "Language: pt_BR\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "Generated-By: Babel 2.5.3\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 1.8.7.1\n"
 
 #: local/vendor/django-boogie/src/boogie/apps/users/models.py:23
 #: local/vendor/django-boogie/src/boogie/models/abstract/user.py:64
@@ -124,12 +124,11 @@ msgstr "Nenhum nome %(verbose_name)s encontrado"
 
 #: src/ej/jinja2.py:151
 msgid "This template defines no extra variables"
-msgstr ""
+msgstr "Este template não define variáveis extras"
 
 #: src/ej/roles/routes.py:56
-#, fuzzy
 msgid "List of roles"
-msgstr "Escute a população"
+msgstr "Lista de papéis"
 
 #: src/ej/roles/tags.py:13
 msgid "hello"
@@ -627,6 +626,8 @@ msgid ""
 "Icon name in font-awesome. Use short version like \"google\", \"facebook-f"
 "\", etc."
 msgstr ""
+"Nome do ícone na Font-awesome. Use a versão curta como \"google\", "
+"\"facebook-f\", etc."
 
 #: src/ej_configurations/models.py:40
 msgid "Ordering"
@@ -693,31 +694,28 @@ msgid "Comments"
 msgstr "Comentários"
 
 #: src/ej_configurations/validators.py:10
-#, fuzzy
 msgid ""
 "Invalid font awesome icon name. Please use the short format (i.e., "
 "\"facebook-f\" instead of \"fab fa-facebook-f\""
 msgstr ""
-"Ícone \"font awesome\" inválido. Use o formato completo como em \"fab fa-"
-"facebook-f\""
+"Ícone font awesome inválido. Use o formato curto (ex: \"facebook-f\" em vez "
+"de \"fab fa-facebook-f\")"
 
 #: src/ej_conversations/admin.py:27
 msgid "Moderation"
 msgstr "Moderação"
 
 #: src/ej_conversations/forms.py:21
-#, fuzzy
 msgid "Tags, separated by commas"
-msgstr "Escreva as tags separando por vírgulas"
+msgstr "Tags, separadas por vírgula"
 
 #: src/ej_conversations/forms.py:22
 msgid "Type here the question for your research"
 msgstr "Escreva aqui a pergunta da sua consulta"
 
 #: src/ej_conversations/forms.py:23
-#, fuzzy
 msgid "A short description about this conversation."
-msgstr "Comentários nessa conversa"
+msgstr "Uma breve descrição sobre essa conversa"
 
 #: src/ej_conversations/models/comment.py:27
 msgid "awaiting moderation"
@@ -767,13 +765,12 @@ msgid "Must give a reason to reject a comment"
 msgstr "Deve fornecer uma razão para rejeitar o comentário"
 
 #: src/ej_conversations/models/conversation.py:60
-#, fuzzy
 msgid ""
 "A short description about this conversation. This is used internally and to "
 "create URL slugs. (e.g. School system)"
 msgstr ""
-"Uma descrição curta sobre a conversa. Utilizado internamente para criar URLs "
-"(ex.:  Escolar)."
+"Uma breve descrição sobre essa conversa. Isso é usado internamente para "
+"criar identificadores de URL (slugs. Ex: sistema de ensino)"
 
 #: src/ej_conversations/models/conversation.py:65
 msgid "Question"
@@ -837,6 +834,8 @@ msgstr "Discorda"
 #, python-brace-format
 msgid "vote should be one of 'agree', 'disagree' or 'skip', got {value}"
 msgstr ""
+"voto que deve ser uma das opções de 'concorda', 'discorda' ou 'pula', foi "
+"{value}"
 
 #: src/ej_conversations/models/vote.py:47
 msgid "Agree, disagree or skip"
@@ -872,7 +871,6 @@ msgid "Public conversations"
 msgstr "Conversas públicas"
 
 #: src/ej_conversations/routes/conversations.py:23
-#, fuzzy
 msgid ""
 "Participate of conversations and give your opinion with comments and votes!"
 msgstr "Participe das conversas e dê sua opinião com comentários e votos!"
@@ -923,7 +921,7 @@ msgid "Help"
 msgstr "Ajuda"
 
 #: src/ej_help/routes.py:41
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Page {slug} not found"
 msgstr "Página {slug} não encontrada"
 
@@ -1167,17 +1165,15 @@ msgstr "Senha para o usuário admin do Rocket.Chat"
 
 #: src/ej_rocketchat/forms.py:76
 msgid "Error connecting to server"
-msgstr ""
+msgstr "Erro ao conectar ao server"
 
 #: src/ej_rocketchat/forms.py:78
-#, fuzzy
 msgid "Invalid username or password"
 msgstr "Email ou senha inválidos"
 
 #: src/ej_rocketchat/forms.py:81
-#, fuzzy
 msgid "Error registering on Rocket.Chat server"
-msgstr "Identificador para o admin do Rocket.Chat."
+msgstr "Erro ao registrar no servidor do Rocket.Chat"
 
 #: src/ej_rocketchat/forms.py:123
 msgid "Username already in use."
@@ -1217,13 +1213,12 @@ msgid "Rocketchat user token"
 msgstr "Token de usuário no Rocketchat"
 
 #: src/ej_rocketchat/models.py:64
-#, fuzzy
 msgid "Account data"
-msgstr "Conta"
+msgstr "Dados da conta"
 
 #: src/ej_rocketchat/models.py:66
 msgid "JSON-encoded data for user account."
-msgstr ""
+msgstr "Dados em formato JSON para conta do usúario"
 
 #: src/ej_rocketchat/models.py:69
 msgid "Is user active?"
@@ -1337,9 +1332,8 @@ msgid "Invalid email or password"
 msgstr "Email ou senha inválidos"
 
 #: src/ej_users/routes.py:129
-#, fuzzy
 msgid "Please reset your password"
-msgstr "Recriar minha senha"
+msgstr "Por favor reset sua senha"
 
 #: src/ej/templates/jinja2/base.jinja2:84
 msgid "EJ - A platform of social participation."
@@ -1359,7 +1353,7 @@ msgstr "Em construção!"
 
 #: src/ej/templates/jinja2/generic.jinja2:9
 msgid "Context variables"
-msgstr ""
+msgstr "Varíaveis de contexto"
 
 #: src/ej/templates/jinja2/components/home.jinja2:50
 #: src/ej/templates/jinja2/components/home.jinja2:52
@@ -1423,7 +1417,7 @@ msgstr "Início"
 
 #: src/ej/templates/jinja2/components/generic/page_menu.jinja2:33
 msgid "Accessibility"
-msgstr ""
+msgstr "Acessibilidade"
 
 #: src/ej/templates/jinja2/components/generic/page_menu.jinja2:41
 msgid "Increase font size"
@@ -1488,7 +1482,6 @@ msgstr ""
 "serviços ou equipamentos públicos."
 
 #: src/ej/templates/jinja2/pages/home.jinja2:28
-#, fuzzy
 msgid "Listen to the people"
 msgstr "Escute a população"
 
@@ -1675,23 +1668,20 @@ msgid "Fragment list"
 msgstr "Lista de fragmentos"
 
 #: src/ej_configurations/jinja2/configurations/django-settings.jinja2:7
-#, fuzzy
 msgid "Django Settings"
-msgstr "Configurações do Painel"
+msgstr "Configurações do Django"
 
 #: src/ej_configurations/jinja2/configurations/index.jinja2:2
 msgid "Site info"
 msgstr "Informações do site"
 
 #: src/ej_configurations/jinja2/configurations/index.jinja2:7
-#, fuzzy
 msgid "Configurations/Debug"
-msgstr "Configurações"
+msgstr "Configurações/Debug"
 
 #: src/ej_configurations/jinja2/configurations/index.jinja2:8
-#, fuzzy
 msgid "Choose a configuration page"
-msgstr "Configurações"
+msgstr "Escolha uma página de configuração"
 
 #: src/ej_configurations/jinja2/configurations/index.jinja2:11
 #: src/ej_configurations/jinja2/configurations/styles.jinja2:2
@@ -1703,33 +1693,32 @@ msgid ""
 "Test and document EJ styles. Useful for designers to tweak the CSS\n"
 "                    variables for the theme."
 msgstr ""
+"Teste e documento os estilos EJ. Útil para designers ajustarem as variáveis\n"
+"\t\t    de CSS para o tema."
 
 #: src/ej_configurations/jinja2/configurations/index.jinja2:16
-#, fuzzy
 msgid "Statistics"
-msgstr "Status"
+msgstr "Estatísticas"
 
 #: src/ej_configurations/jinja2/configurations/index.jinja2:17
 msgid "Generic information about the current instance of the EJ platform."
-msgstr ""
+msgstr "Informação genérica sobre a instância atual do EJ Platform."
 
 #: src/ej_configurations/jinja2/configurations/index.jinja2:19
-#, fuzzy
 msgid "Fragments"
 msgstr "Lista de fragmentos"
 
 #: src/ej_configurations/jinja2/configurations/index.jinja2:20
 msgid "Discover information about missing fragments and content."
-msgstr ""
+msgstr "Descubra informações sobre fragmentos e conteúdos ausentes."
 
 #: src/ej_configurations/jinja2/configurations/index.jinja2:23
-#, fuzzy
 msgid "Django settings"
-msgstr "Configurações do Painel"
+msgstr "Configurações do Django"
 
 #: src/ej_configurations/jinja2/configurations/index.jinja2:24
 msgid "Display all Django Settings for this website."
-msgstr ""
+msgstr "Exibir todas as configurações Django para esse website."
 
 #: src/ej_conversations/jinja2/ej/role/comment-card.jinja2:38
 #, python-format
@@ -1737,6 +1726,8 @@ msgid ""
 "It is necessary to %(login_anchor)s before voting or\n"
 "                sending a comment!"
 msgstr ""
+"É necessário %(login_anchor)s antes de votar ou\n"
+"              enviar um comentário!"
 
 #: src/ej_conversations/jinja2/ej/role/comment-list-item.jinja2:3
 msgid "Opinion"
@@ -1819,11 +1810,11 @@ msgid "Type here the comment"
 msgstr "Escreva aqui o comentário"
 
 #: src/ej_conversations/jinja2/ej_conversations/create.jinja2:28
-#, fuzzy
 msgid ""
 " There were some errors in the information you entered. Please correct the "
 "problems bellow."
-msgstr "Houveram alguns erros no formulário. Por favor corrija:"
+msgstr ""
+"Houveram alguns erros no formulário. Por favor corrija os problemas apontados"
 
 #: src/ej_conversations/jinja2/ej_conversations/create.jinja2:38
 #: src/ej_conversations/jinja2/ej_conversations/edit.jinja2:14
@@ -1837,9 +1828,8 @@ msgid "Edit Conversation"
 msgstr "Editar Conversa"
 
 #: src/ej_conversations/jinja2/ej_conversations/create.jinja2:72
-#, fuzzy
 msgid "Type your comment here"
-msgstr "Escreva aqui o comentário"
+msgstr "Escreva aqui o seu comentário"
 
 #: src/ej_conversations/jinja2/ej_conversations/create.jinja2:77
 msgid "Add more comments"
@@ -1870,23 +1860,21 @@ msgid "You have used all comments available in this conversation."
 msgstr "Você utilizou todos comentários disponíveis nesta conversa."
 
 #: src/ej_conversations/jinja2/ej_conversations/detail.jinja2:27
-#, fuzzy, python-format
+#, python-format
 msgid "Please %(login_anchor)s to vote on this conversation."
-msgstr "Vá até %(login_anchor)s para votar nesta conversa"
+msgstr "Favor %(login_anchor)s para votar nesta conversa."
 
 #: src/ej_conversations/jinja2/ej_conversations/detail.jinja2:37
 msgid "Ooops!"
-msgstr ""
+msgstr "Oooopa!"
 
 #: src/ej_conversations/jinja2/ej_conversations/detail.jinja2:38
-#, fuzzy
 msgid "You reached the limit of comments in this conversation."
-msgstr "Você utilizou todos comentários disponíveis nesta conversa."
+msgstr "Você atingiu o limite de comentários nesta conversa."
 
 #: src/ej_conversations/jinja2/ej_conversations/detail.jinja2:42
-#, fuzzy
 msgid "Leave your comment"
-msgstr "Sem comentários"
+msgstr "Deixe o seu comentário"
 
 #: src/ej_conversations/jinja2/ej_conversations/detail.jinja2:43
 #, python-format
@@ -1894,10 +1882,12 @@ msgid ""
 "Include something new and avoid similar opinions.\n"
 "            You can post at most %(comments_left)s comments."
 msgstr ""
+"Escreva algo novo e evite opiniões similares.\n"
+"            Você pode incluir no máximo %(comments_left)s comentários."
 
 #: src/ej_conversations/jinja2/ej_conversations/detail.jinja2:53
 msgid "Send your opinion"
-msgstr ""
+msgstr "Envie sua opinião"
 
 #: src/ej_conversations/jinja2/ej_conversations/edit.jinja2:53
 msgid "Manage stereotypes"
@@ -1909,9 +1899,8 @@ msgstr "Promover conversa para o board público"
 
 #: src/ej_conversations/jinja2/ej_conversations/edit.jinja2:66
 #: src/ej_conversations/jinja2/ej_conversations/moderate.jinja2:25
-#, fuzzy
 msgid "Comments in this conversation"
-msgstr "Qualquer comentário na conversa"
+msgstr "Comentários da conversa"
 
 #: src/ej_conversations/jinja2/ej_conversations/list.jinja2:6
 msgid "New conversation"
@@ -1922,9 +1911,8 @@ msgid "Viewing board:"
 msgstr "Visualizando quadro"
 
 #: src/ej_conversations/jinja2/ej_conversations/list.jinja2:19
-#, fuzzy
 msgid "Create a new board"
-msgstr "Criar um novo quadro!"
+msgstr "Criar um novo mural"
 
 #: src/ej_conversations/jinja2/ej_conversations/components/comment-list.jinja2:7
 #: src/ej_conversations/jinja2/ej_conversations/moderate.jinja2:31
@@ -1957,9 +1945,8 @@ msgid "Edit profile: <em>%(name)s</em>"
 msgstr "Editar perfil: <em>%(name)s</em>"
 
 #: src/ej_profiles/jinja2/ej_profiles/favorite-conversations.jinja2:10
-#, fuzzy
 msgid "You have not have any favorite conversations!"
-msgstr "Conversas Favoritas"
+msgstr "Você não tem nenhuma conversa favorita ainda!"
 
 #: src/ej_reports/jinja2/ej_reports/index.jinja2:48
 msgid "Basic info"
@@ -1994,13 +1981,12 @@ msgid "Configure Rocket.Chat Integration"
 msgstr "Configurar a integração com o Rocket.Chat"
 
 #: src/ej_rocketchat/jinja2/ej_rocketchat/iframe.jinja2:9
-#, fuzzy
 msgid "Admin user"
-msgstr "Id do usuário administrativo"
+msgstr "Usuário administrativo"
 
 #: src/ej_rocketchat/jinja2/ej_rocketchat/iframe.jinja2:11
 msgid "Access token"
-msgstr ""
+msgstr "Token de acesso"
 
 #: src/ej_rocketchat/jinja2/ej_rocketchat/register.jinja2:2
 msgid "Panel: Register username"
@@ -2015,7 +2001,6 @@ msgid "Login"
 msgstr "Entrar"
 
 #: src/ej_users/jinja2/ej_users/login.jinja2:19
-#, fuzzy
 msgid "Forgot your password ?"
 msgstr "Esqueceu a senha?"
 
@@ -2025,16 +2010,14 @@ msgid "Register now!"
 msgstr "Registre agora!"
 
 #: src/ej_users/jinja2/ej_users/login.jinja2:35
-#, fuzzy
 msgid "Social login"
-msgstr "Ícone de mídia social"
+msgstr "Login social"
 
 #: src/ej_users/jinja2/ej_users/recover-password.jinja2:2
 msgid "Recover password"
 msgstr "Recuperar senha"
 
 #: src/ej_users/jinja2/ej_users/register.jinja2:10
-#, fuzzy
 msgid "Register new user"
 msgstr "Registre agora!"
 
@@ -2044,7 +2027,6 @@ msgid "Reset password"
 msgstr "Recriar minha senha"
 
 #: src/ej_users/jinja2/ej_users/reset-password.jinja2:3
-#, fuzzy
 msgid "Forgot your password"
 msgstr "Esqueceu a senha?"
 
