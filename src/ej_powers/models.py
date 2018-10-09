@@ -1,11 +1,12 @@
 import logging
 from datetime import datetime
+from django.utils import timezone
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth import get_user_model
 from model_utils.models import TimeFramedModel
 from polymorphic.models import PolymorphicModel
-from django.core.validators import validate_comma_separated_integer_list
+from picklefield.fields import PickledObjectField
 
 from ej_conversations.fields import UserRef, CommentRef
 from .functions import promote_comment
@@ -27,7 +28,7 @@ class CommentPromotion(TimeFramedModel):
         get_user_model(),
         related_name='see_promotions',
     )
-    is_expired = property(lambda self: self.end < datetime.now())
+    is_expired = property(lambda self: self.end < datetime.now(timezone.utc))
 
     def recycle(self):
         """
@@ -48,12 +49,15 @@ class GivenPower(TimeFramedModel, PolymorphicModel):
     to make DB usage more efficient.
     """
     user = UserRef()
-    data = models.CharField(validators=[validate_comma_separated_integer_list], max_length=10000)
+    data = PickledObjectField()
     is_exhausted = models.BooleanField(default=False)
     is_expired = property(lambda self: self.end < datetime.now())
 
     def use_power(self, **kwargs):
         raise NotImplementedError('implement in subclass')
+
+    def data_unpacked(self):
+        return u'{data}'.format(data=self.data)
 
 
 class GivenBridgePower(GivenPower):
@@ -68,13 +72,19 @@ class GivenBridgePower(GivenPower):
         """
         Return queryset with all affected users.
         """
-        user_ids = self.data
+        user_ids = self.data['affected_users']
         return get_user_model().objects.filter(id__in=user_ids)
+
+    def set_affected_users(self, users):
+        """
+        Convert users queryset to a list and save it to affected_users
+        """
+        self.data = {'affected_users': set(user.id for user in users)}
 
     def use_power(self, comment):
         return promote_comment(comment,
                                author=self.user,
-                               users=self.affected_users(),
+                               users=self.get_affected_users(),
                                expires=self.end)
 
 
@@ -87,4 +97,5 @@ class GivenMinorityPower(GivenPower):
         proxy = True
 
     get_affected_users = GivenBridgePower.get_affected_users
+    set_affected_users = GivenBridgePower.set_affected_users
     use_power = GivenBridgePower.use_power
