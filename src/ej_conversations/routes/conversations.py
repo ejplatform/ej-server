@@ -3,9 +3,10 @@ from django.http import HttpResponseServerError, Http404
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from hyperpython import a
+from django.contrib.auth.models import AnonymousUser
 
 from . import urlpatterns, conversation_url
-from ..models import Conversation, Comment
+from ..models import Conversation, Comment, Vote
 from ej_conversations.forms import CommentForm
 
 log = getLogger('ej')
@@ -70,6 +71,11 @@ def conversation_detail_context(request, conversation):
     elif request.method == 'POST':
         log.warning(f'user {user.id} sent invalid POST request: {request.POST}')
         return HttpResponseServerError('invalid action')
+
+    if user != AnonymousUser:
+        voted = Vote.objects.filter(author=user).exists()
+
+
     return {
         # Objects
         'conversation': conversation,
@@ -82,6 +88,7 @@ def conversation_detail_context(request, conversation):
         'can_view_comment': user.is_authenticated,
         'can_edit': user.has_perm('ej.can_edit_conversation', conversation),
         'cannot_comment_reason': '',
+        'voted': voted or None,
     }
 
 
