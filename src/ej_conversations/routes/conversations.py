@@ -4,6 +4,7 @@ from django.http import HttpResponseServerError, Http404
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from hyperpython import a
+from django.contrib.auth.models import AnonymousUser
 
 from boogie import rules
 from . import urlpatterns, conversation_url
@@ -73,11 +74,15 @@ def get_conversation_detail_context(request, conversation):
     elif request.method == 'POST':
         log.warning(f'user {user.id} se nt invalid POST request: {request.POST}')
         return HttpResponseServerError('invalid action')
+
     n_comments_under_moderation = rules.compute('ej_conversations.comments_under_moderation', conversation, user)
     if user.is_authenticated:
         comments_made = user.comments.filter(conversation=conversation).count()
     else:
         comments_made = 0
+
+    if isinstance(user, AnonymousUser):
+        voted = Vote.objects.filter(author=user).exists()
     return {
         # Objects
         'conversation': conversation,
@@ -93,6 +98,7 @@ def get_conversation_detail_context(request, conversation):
         'comments_under_moderation': n_comments_under_moderation,
         'comments_made': comments_made,
         'max_comments': max_comments_per_conversation(),
+        'voted': voted or None,
     }
 
 
