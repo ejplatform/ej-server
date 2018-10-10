@@ -198,7 +198,8 @@ All you now need to do to run your app in production is:
 
 .. _Elastic IP address: https://aws.amazon.com/articles/1346
 
-**Be careful with Elastic IPs** because, on the AWS free tier, if you assign one and then stop the machine you will incur charges while the machine is down (presumably because you're preventing them allocating the IP to someone else).
+**Be careful with Elastic IPs** because, on the AWS free tier, if you assign one and then stop the machine you will
+incur charges while the machine is down (presumably because you're preventing them allocating the IP to someone else).
 
 
 Security advisory
