@@ -4,21 +4,23 @@
 
 @import '../2_tools/index';
 @import 'auth';
+
 $profile-image-size: 2 * $login-icon-size !default;
 $profile-arrow-size: $spacing-unit-small !default;
 $profile-label-clear-color: #30BFD3 !default;
+
 .Profile {
     @extend .Container;
     text-align: center;
     padding-top: $spacing-unit;
     h1 {
         margin-bottom: 0;
-        color: $color-purple-dark;
+        color: $color-content;
         font-size: $font-size-h1;
         font-weight: bold;
     }
     h2 {
-        color: $color-blue-light;
+        color: $color-hint;
         font-size: $font-size-h4;
         font-weight: bold;
         margin-top: 0;
@@ -48,14 +50,14 @@ $profile-label-clear-color: #30BFD3 !default;
             text-align: justify;
             font-weight: normal;
             span {
-                color: $color-magenta;
+                color: $color-accent;;
                 font-weight: bold;
             }
             i {
                 float: right;
                 font-weight: bold;
                 font-size: $font-size-huge;
-                color: $color-magenta;
+                color: $color-accent;;
             }
         }
         .conversations {
@@ -74,14 +76,14 @@ $profile-label-clear-color: #30BFD3 !default;
             text-align: justify;
             font-weight: normal;
             span {
-                color: $color-magenta;
+                color: $color-accent;;
                 font-weight: bold;
             }
             i {
                 float: right;
                 font-weight: bold;
                 font-size: $font-size-huge;
-                color: $color-magenta;
+                color: $color-accent;;
             }
         }
         ul {
@@ -95,7 +97,7 @@ $profile-label-clear-color: #30BFD3 !default;
                         clear: both;
                         display: table;
                     }
-                    color: $color-blue-light;
+                    color: $color-hint;
                     .label {
                         float: left;
                     }
@@ -114,10 +116,10 @@ $profile-label-clear-color: #30BFD3 !default;
                     li {
                         &.agree {}
                         &.skip {
-                            color: $color-blue-light;
+                            color: $color-hint;
                         }
                         &.disagree {
-                            color: $color-magenta;
+                            color: $color-accent;;
                         }
                         span {
                             margin-left: 0.5em;
@@ -129,12 +131,12 @@ $profile-label-clear-color: #30BFD3 !default;
                 .footer {
                     margin-top: $spacing-unit-small;
                     margin-bottom: $spacing-unit-small;
-                    color: $color-magenta;
+                    color: $color-accent;;
                     font-weight: bold;
                 }
                 padding: 0;
                 margin: 0;
-                border-bottom: 2px solid $color-blue-light;
+                border-bottom: 2px solid $color-hint;
                 list-style: none;
             }
         }
@@ -144,7 +146,7 @@ $profile-label-clear-color: #30BFD3 !default;
         height: 0;
         border-left: $profile-arrow-size solid transparent;
         border-right: $profile-arrow-size solid transparent;
-        border-bottom: $profile-arrow-size solid $color-blue-nav;
+        border-bottom: $profile-arrow-size solid $color-hint;
     }
     &-breadcrumbs {
         text-align: left;
@@ -187,7 +189,7 @@ $profile-label-clear-color: #30BFD3 !default;
             margin: 0 $spacing-unit;
         }
         a {
-            color: $color-purple-dark;
+            color: $color-content;
             margin: 0;
             display: inline-block;
             min-width: $spacing-unit * 2;
@@ -204,7 +206,7 @@ $profile-label-clear-color: #30BFD3 !default;
     }
     &-tabContainer {}
     &-tabContent {
-        background: $profile-background-color;
+        background: $color-hint;
         text-align: left;
         border-radius: 0.7em;
     }
@@ -216,7 +218,7 @@ $profile-label-clear-color: #30BFD3 !default;
             text-align: center;
             .Button {
                 text-transform: uppercase;
-                background-color: $profile-button-background-color;
+                background-color: $color-accent;
                 padding: 15px 25px 15px 25px;
             }
         }
@@ -230,7 +232,7 @@ $profile-label-clear-color: #30BFD3 !default;
             padding: 0;
             li {
                 span {
-                    color: $profile-font-color-primary;
+                    color: $color-primary;
                     font-weight: 600;
                     &.amount {
                         font-weight: 800;
@@ -260,11 +262,11 @@ $profile-label-clear-color: #30BFD3 !default;
             padding: 0;
             .Button {
                 padding: 15px 25px 15px 25px;
-                background: $profile-button-background-color;
+                background: $color-accent;
             }
             li {
                 span {
-                    color: $profile-font-color-primary;
+                    color: $color-primary;
                     font-weight: 600;
                     display: block;
                     margin-top: $spacing-unit-small;
@@ -284,14 +286,14 @@ $profile-label-clear-color: #30BFD3 !default;
         }
         dl {
             dt {
-                color: $profile-font-color-primary;
+                color: $color-primary;
                 text-transform: lowercase;
                 font-weight: bold;
             }
             dd {
                 font-size: $font-size-h5;
                 margin: 0 0 $spacing-unit-small 0;
-                color: $profile-font-color-secondary;
+                color: $color-content;
             }
         }
     }
@@ -343,7 +345,7 @@ $profile-label-clear-color: #30BFD3 !default;
                 min-width: fit-content;
                 border-bottom-left-radius: inherit;
                 border-top-left-radius: inherit;
-                background-color: $profile-file-input-color;
+                background-color: $color-hint;
             }
             &:nth-child(2) {
                 width: -webkit-fill-available;

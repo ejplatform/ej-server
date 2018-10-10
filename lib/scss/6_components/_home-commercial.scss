@@ -16,7 +16,7 @@
     h2 {
         text-align: center;
         font-size: 16px;
-        color: $color-magenta;
+        color: $color-accent;;
     }
 
     ul {
@@ -31,7 +31,7 @@
         font-size: 32px;
 
         &:before {
-            background: -webkit-linear-gradient($color-magenta, $color-green);
+            background: -webkit-linear-gradient($color-accent, $color-green);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -60,7 +60,7 @@
 
             a {
                 font-weight: bold;
-                background: $color-magenta;
+                background: $color-accent;
             }
         }
     }
@@ -78,20 +78,20 @@
         h3 {
             margin: 0;
             font-family: $font-paragraph;
-            color: $color-purple-dark;
+            color: $color-content;
             text-transform: uppercase;
             font-weight: bold;
         }
 
         p {
-            color: $color-purple-dark;
+            color: $color-content;
             font-size: 14px;
             margin: 0;
         }
     }
 
     &-conversations {
-        background: $color-purple-dark url(/static/img/home/bg.png);
+        background: $color-content url(/static/img/home/bg.png);
         padding-top: $unit;
 
         & > div {
@@ -110,7 +110,6 @@
                 img {
                     width: 100%;
                     max-width: 250px;
-                    max-height: auto;
                 }
             }
         }
@@ -129,14 +128,14 @@
 
             a {
                 font-weight: bold;
-                background: $color-magenta;
+                background: $color-accent;
             }
         }
     }
 
     &-documentation {
         p {
-            color: $color-purple-dark;
+            color: $color-content;
             text-align: center;
         }
 
@@ -150,7 +149,7 @@
             li {
                 display: block;
                 list-style: none;
-                border: 2px solid $color-blue-light;
+                border: 2px solid $color-hint;
                 border-radius: $unit;
                 width: 140px;
                 margin: $unit;
@@ -165,7 +164,7 @@
                     display: block;
                     text-transform: uppercase;
                     font-size: 12px;
-                    color: $color-purple-dark;
+                    color: $color-content;
                     font-weight: bold;
                     margin-bottom: $unit;
                 }
@@ -227,7 +226,7 @@
                 span {
                     display: block;
                     font-family: $font-paragraph;
-                    color: $color-purple-dark;
+                    color: $color-content;
                     font-size: 12px;
                 }
             }

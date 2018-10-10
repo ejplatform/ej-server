@@ -1,9 +1,7 @@
 /*
  HOME PAGE
  ======================================================================== */
-
 @import '../2_tools/index';
-
 
 $how-it-work-icon-size: 1.5 * $font-size-h1 !default;
 $how-it-work-icon-color: $color-gray-dark !default;
@@ -22,19 +20,18 @@ $how-it-work-icon-color: $color-gray-dark !default;
         }
     }
     h1 {
-        font-family: var( --home-banner-title-font-family);
-        color: $home-banner-title-font-color;
+        font-family: $font-headings;
+        color: $color-content;
     }
 
     .Button[primary] {
-        background: $home-banner-button-background;
-        color: $color-white;
-        padding: $unit $unit*2;
+        @include color($color-accent, $color-accent-text);
+        padding: $unit $unit * 2;
     }
 }
 
 .HowItWorks {
-    background: $home-how-it-works-background;
+    background: $color-hint;
     padding-top: $spacing-unit;
 
     > * {
@@ -45,12 +42,12 @@ $how-it-work-icon-color: $color-gray-dark !default;
         font-size: $font-size-h4;
     }
     h1 {
-        color: $home-how-it-works-title-font-color;
+        color: $color-content;
     }
     p {
         padding: 0 10px;
         line-height: 30px;
-        color: $color-content-text;
+        color: $color-content;
     }
 
     .fa-child:before {
@@ -66,12 +63,12 @@ $how-it-work-icon-color: $color-gray-dark !default;
 .HowItWorksCard {
     > .fa {
 
-        background: $home-how-it-works-card-icon-background;
+        background: $color-hint;
         border-radius: 50%;
         width: $unit * 7;
         height: $unit * 7;
         display: inline-block;
-        color: $color-blue-dark;
+        color: $color-content;
         padding-top: $unit * 2;
         margin: $unit * 2;
     }
@@ -82,7 +79,7 @@ $how-it-work-icon-color: $color-gray-dark !default;
 
     h1 {
         font-size: $font-size-h3;
-        color: $home-how-it-works-card-title-font-color;
+        color: $color-content;
 
         i {
             padding: $spacing-unit-small;
@@ -100,7 +97,7 @@ $how-it-work-icon-color: $color-gray-dark !default;
     }
 
     p {
-        color: $home-how-it-works-card-content-font-color;
+        color: $color-content;
     }
 
     &-content {
@@ -147,8 +144,7 @@ $how-it-work-icon-color: $color-gray-dark !default;
     background: $color-hint;
     padding: $spacing-unit;
     text-align: center;
-    display: $home-start-now-display;
-
+    display: block;
 
     > * {
         @extend .Container;

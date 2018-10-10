@@ -2,8 +2,13 @@
  LOCATION OF ASSETS SUCH AS FONTS AND IMAGES
  =========================================================================== */
 
-
+// Icons
 $icon-arrow-down-blue: url(/static/img/icons/arrow-down-blue.svg) !default;
 $icon-arrow-up-blue: url(/static/img/icons/arrow-up-blue.svg) !default;
 $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
-$background-card: url(/static/img/icons/bg.png) !default;
+
+
+// Background images
+$card-background-image-url: url(/static/img/icons/bg.png) !default;
+$page-background-image-url: url(/static/img/page-bg.svg) !default;
+$page-background-image: $page-background-image-url center no-repeat !default;
