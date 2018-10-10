@@ -28,7 +28,7 @@ services:
       - media_files:/app/local/media/
       - static_files:/app/local/static/
       - nginx_conf:/etc/nginx/conf.d/
-    command: db -m gunicorn
+    command: sass db -m gunicorn
 
   postgres:
     image: postgres:alpine

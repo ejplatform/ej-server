@@ -30,7 +30,7 @@ def sass(ctx, watch=False, theme='default', trace=False, dry_run=False, rocket=T
     Run Sass compiler
     """
     theme, root = set_theme(theme)
-    root = f'{root}/scss/'
+    root = f'{root}scss/'
     os.environ['EJ_THEME'] = theme or 'default'
     go = runner(ctx, dry_run, pty=True)
     cmd = f'sass {root}main.scss:lib/build/css/main.css'
@@ -550,9 +550,9 @@ def set_theme(theme):
         theme = os.path.basename(theme)
     elif 'EJ_THEME' in os.environ:
         theme = os.environ['EJ_THEME']
-        root = f'lib/themes/{theme}'
-    else:
         root = 'lib/' if theme == 'default' else f'lib/themes/{theme}/'
+    else:
+        root = 'lib/'
 
     os.environ['EJ_THEME'] = theme or 'default'
     return theme, root
