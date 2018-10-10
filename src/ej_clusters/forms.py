@@ -34,7 +34,13 @@ class StereotypeVoteForm(ModelForm):
         self.fields['comment'].widget.attrs = {'class': 'comment_select'}
 
 
-StereotypeVoteFormSet = modelformset_factory(
+StereotypeVoteCreateFormSet = modelformset_factory(
     StereotypeVote,
     form=StereotypeVoteForm,
+)
+
+StereotypeVoteEditFormSet = modelformset_factory(
+    StereotypeVote,
+    form=StereotypeVoteForm,
+    extra=0,
 )
