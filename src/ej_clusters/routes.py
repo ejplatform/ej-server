@@ -7,7 +7,7 @@ from hyperpython.components import html_list, html_table
 
 from boogie.router import Router
 from boogie.rules import proxy_seq
-from ej_clusters.forms import StereotypeForm, StereotypeVoteFormSet
+from ej_clusters.forms import StereotypeForm, StereotypeVoteCreateFormSet, StereotypeVoteEditFormSet
 from ej_conversations.models import Conversation, Choice, Comment
 from .models import Stereotype, Cluster, StereotypeVote, Clusterization
 
@@ -134,7 +134,7 @@ def list_cluster(request):
 def create_stereotype_context(request, conversation, board=None):
     if request.method == 'POST':
         stereotype_form = StereotypeForm(request.POST, conversation=conversation)
-        votes_formset = StereotypeVoteFormSet(request.POST)
+        votes_formset = StereotypeVoteCreateFormSet(request.POST)
 
         if stereotype_form.is_valid() and votes_formset.is_valid():
             stereotype = stereotype_form.save(commit=False)
@@ -153,7 +153,7 @@ def create_stereotype_context(request, conversation, board=None):
 
     else:
         stereotype_form = StereotypeForm(conversation=conversation)
-        votes_formset = StereotypeVoteFormSet(queryset=StereotypeVote.objects.none())
+        votes_formset = StereotypeVoteCreateFormSet(queryset=StereotypeVote.objects.none())
 
     filtered_comments = Comment.objects.filter(conversation=conversation)
     for form in votes_formset:
@@ -171,7 +171,7 @@ def edit_stereotype_context(request, conversation, stereotype):
     if request.method == 'POST':
         stereotype_form = StereotypeForm(request.POST, conversation=conversation, instance=stereotype)
         votes = StereotypeVote.objects.filter(author=stereotype)
-        votes_formset = StereotypeVoteFormSet(request.POST, queryset=votes)
+        votes_formset = StereotypeVoteEditFormSet(request.POST, queryset=votes)
 
         if stereotype_form.is_valid() and votes_formset.is_valid():
             stereotype = stereotype_form.save()
@@ -182,7 +182,7 @@ def edit_stereotype_context(request, conversation, stereotype):
     else:
         stereotype_form = StereotypeForm(conversation=conversation, instance=stereotype)
         votes = StereotypeVote.objects.filter(author=stereotype)
-        votes_formset = StereotypeVoteFormSet(queryset=votes)
+        votes_formset = StereotypeVoteEditFormSet(queryset=votes)
 
         filtered_comments = Comment.objects.filter(conversation=conversation)
         for form in votes_formset:
