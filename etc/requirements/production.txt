@@ -20,6 +20,3 @@ redis>=2.10.5
 
 # Database
 psycopg2-binary ~= 2.7
-
-# Notifications
-django-push-notifications ~= 1.6.0

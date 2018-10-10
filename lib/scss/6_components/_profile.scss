@@ -323,11 +323,13 @@ $profile-label-clear-color: #30BFD3 !default;
         label[for=id_image] {
             margin: 0;
         }
+        a {
+            display: block;
+        }
     }
     .CustomFileInput {
         @extend .FormItem;
         padding: 0;
-        width: 100%;
         line-height: 1.15;
         display: flex;
         cursor: pointer;

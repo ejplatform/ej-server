@@ -237,7 +237,7 @@ def docker(ctx, task, cmd=None, port=8000, clean_perms=False, prod=False,
     docker = su_docker('docker')
     do = runner(ctx, dry_run, pty=True)
     if compose_file is None and prod or task == 'production':
-        compose_file = 'docker/docker-compose.production.yml'
+        compose_file = 'docker/docker-compose.deploy.yml'
     elif compose_file is None:
         compose_file = 'docker/docker-compose.yml'
     compose = f'{docker}-compose -f {compose_file}'
@@ -470,7 +470,7 @@ def docker_deploy(ctx, task, environment='production', command=None, dry_run=Fal
     Start a deploy build for the platform.
     """
     os.environ.update(environment=environment, task=task)
-    compose_file = 'local/deploy/docker-compose.yml'
+    compose_file = 'local/deploy/docker-compose.deploy.yml'
     env = docker_deploy_variables('local/deploy/config.py')
     compose = su_docker(f'docker-compose -f {compose_file}')
     do = runner(ctx, dry_run, pty=True, env=env)
