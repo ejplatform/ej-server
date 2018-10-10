@@ -42,7 +42,7 @@ def conversation_detail_context(request, conversation):
     user = request.user
     is_favorite = user.is_authenticated and conversation.followers.filter(user=user).exists()
     comment = None
-    comment_form = CommentForm(request.POST or None, conversation=conversation)
+    comment_form = CommentForm(None, conversation=conversation)
 
     # User is voting in the current comment. We still need to choose a random
     # comment to display next.
@@ -55,6 +55,7 @@ def conversation_detail_context(request, conversation):
     # User is posting a new comment. We need to validate the form and try to
     # keep the same comment that was displayed before.
     elif request.POST.get('action') == 'comment':
+        comment_form = CommentForm(request.POST, conversation=conversation)
         if comment_form.is_valid():
             new_comment = comment_form.cleaned_data['content']
             new_comment = conversation.create_comment(user, new_comment)
