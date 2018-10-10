@@ -165,7 +165,7 @@ def create_stereotype_context(request, conversation, board=None):
     }
 
 
-def edit_stereotype_context(request, conversation, stereotype, board=None):
+def edit_stereotype_context(request, conversation, stereotype):
     if conversation != stereotype.conversation:
         raise Http404
     if request.method == 'POST':
