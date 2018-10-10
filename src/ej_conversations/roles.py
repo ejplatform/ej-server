@@ -12,7 +12,7 @@ from . import models
 # Conversation roles
 #
 @with_template(models.Conversation, role='card')
-def conversation_card(conversation, request=None, url=None, board=None, **kwargs):
+def conversation_card(conversation, request=None, url=None, **kwargs):
     """
     Render a round card representing a conversation in a list.
     """
@@ -22,7 +22,7 @@ def conversation_card(conversation, request=None, url=None, board=None, **kwargs
     moderate_url = None
     return {
         'conversation': conversation,
-        'url': url or conversation.get_absolute_url(board=board),
+        'url': url or conversation.get_absolute_url(),
         'tags': conversation.tags.all(),
         'n_comments': conversation.approved_comments.count(),
         'n_votes': conversation.vote_count(),
@@ -120,11 +120,10 @@ def comment_list_item(comment, **kwargs):
 
 
 @with_template(models.Conversation, role='comment-form')
-def comment_form(conversation, request=None, **kwargs):
+def comment_form(conversation, request=None, comment_content=None, **kwargs):
     """
     Render comment form for one conversation.
     """
-
     user = getattr(request, 'user', None)
     n_comments = rules.compute('ej_conversations.remaining_comments', conversation, user)
     return {
@@ -132,4 +131,5 @@ def comment_form(conversation, request=None, **kwargs):
         'comments_left': n_comments,
         'user_is_owner': conversation.author == user,
         'csrf_input': csrf_input(request),
+        'comment_content': comment_content,
     }

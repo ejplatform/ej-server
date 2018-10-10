@@ -23,6 +23,7 @@
 .CenteredContainer {
     @extend .Container;
     text-align: center;
+    width: 80vw;
 }
 
 .CenteredContainer[compact] {
