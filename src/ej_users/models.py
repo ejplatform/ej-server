@@ -77,7 +77,7 @@ class PasswordResetToken(TimeStampedModel):
 
 
 def generate_token(user):
-    token = PasswordResetToken(user)
+    token = PasswordResetToken(user=user)
     token.generate_token()
     token.save()
     return token
