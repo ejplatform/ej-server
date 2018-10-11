@@ -1,7 +1,7 @@
 {% macro comment_list(comments, csrf_input = None, request = None) %}
     {% if comments | length >= 1 %}
         {% for comment in comments %}
-            {{ comment|role('moderate', request=request) }}
+            {{ comment|role('moderate') }}
         {% endfor %}
     {% else %}
         <p>{{ _('No comments left') }}</p>
