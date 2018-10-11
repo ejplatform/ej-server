@@ -1,7 +1,8 @@
 {% extends 'base.jinja2' %}
 
 {% set lang = get_language() %}
-{% set path = '/static_docs' if lang == 'en-us' else '/static_docs/i18n/{0}/index.html'.format(lang) %}
+{% set page = request.GET.page|default('index.html') %}
+{% set path = '/static_docs/{0}'.format(page) if lang == 'en-us' else '/static_docs/i18n/{0}/{1}'.format(lang, page) %}
 
 {% block main %}
     <script>
