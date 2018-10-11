@@ -115,7 +115,7 @@ def reset_password(request, token):
     next_url = request.GET.get('next', '/login/')
     user = token.user
 
-    if not token.is_expired:
+    if not (token.is_expired or token.is_used):
         form = forms.ResetPasswordForm.bind(request)
         if request.method == 'POST' and form.is_valid():
             new_password = form.cleaned_data['new_password']

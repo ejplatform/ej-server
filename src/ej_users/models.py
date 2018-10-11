@@ -1,14 +1,14 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from secrets import token_urlsafe
 
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
+from model_utils.models import TimeStampedModel
 
 from boogie import rules
 from boogie.apps.users.models import AbstractUser
 from boogie.rest import rest_api
-from model_utils.models import TimeStampedModel
 from .manager import UserManager
 from .utils import random_name
 
@@ -59,7 +59,9 @@ class PasswordResetToken(TimeStampedModel):
     url = models.CharField(
         _('User token'),
         max_length=50,
+        unique=True,
     )
+    is_used = models.BooleanField(default=False)
     user = models.ForeignKey(
         'User',
         on_delete=models.CASCADE,
@@ -79,3 +81,13 @@ def generate_token(user):
     token.generate_token()
     token.save()
     return token
+
+
+def clean_expired_tokens():
+    """
+    Clean up used and expired tokens.
+    """
+    threshold = datetime.now(timezone.utc) - timedelta(seconds=600)
+    expired = PasswordResetToken.objects.filter(created__lte=threshold)
+    used = PasswordResetToken.objects.filter(is_used=True)
+    (used | expired).delete()
