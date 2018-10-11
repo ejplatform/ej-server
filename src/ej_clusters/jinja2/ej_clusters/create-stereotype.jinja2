@@ -20,9 +20,8 @@
                 <!-- Error messaging -->
                 <div id="errors">
                     <div class="inner">
-                        <p>{% trans %}
-                            There were some errors in the information you entered.
-                            Please correct the problems bellow.{% endtrans %}</p>
+                        <p>{% trans -%}
+                            There were some errors in the information you entered. Please correct the problems bellow.{% endtrans %}</p>
                         {{ stereotype_form.non_field_errors() }}
                     </div>
                 </div>
