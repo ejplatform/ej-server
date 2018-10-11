@@ -2,22 +2,23 @@ import logging
 from random import randrange
 
 import pandas as pd
+import sidekick as sk
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.db.models import Subquery, OuterRef
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
+from lazyutils import lazy
 from model_utils.models import TimeStampedModel
+from sidekick import delegate_to, alias
 
-import sidekick as sk
 from boogie import rules
 from boogie.fields import EnumField
 from boogie.rest import rest_api
 from ej_conversations.managers import BoogieManager
 from ej_conversations.models import Choice, Conversation
 from ej_conversations.models.vote import normalize_choice
-from sidekick import delegate_to, alias
 from .manager import ClusterManager
 from .types import ClusterStatus
 
@@ -306,5 +307,6 @@ def get_clusterization(conversation):
         return mgm
 
 
-Conversation.clusters = delegate_to('clusterization')
-Conversation.stereotypes = delegate_to('clusterization')
+Conversation._clusterization = lazy(get_clusterization)
+Conversation.clusters = delegate_to('_clusterization')
+Conversation.stereotypes = delegate_to('_clusterization')
