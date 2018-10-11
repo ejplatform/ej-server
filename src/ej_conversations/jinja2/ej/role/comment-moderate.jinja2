@@ -22,11 +22,9 @@
             <h3>{{ _('Reason') }}</h3>
             <p>{{ _('The comment will receive your rejection reason') }}</p>
             <select name="rejection_reason" id="Comment-{{ comment.id }}-rejection_reason">
-              <option value="incomplete_text">{{ _('Incomplete or incomprehensible text') }}</option>
-              <option value="off_topic">{{ _('Off-topic') }}</option>
-              <option value="offensive_language">{{ _('Offensive content or language') }}</option>
-              <option value="duplicated_comment">{{ _('Duplicated content') }}</option>
-              <option value="against_terms_of_service">{{ _('Violates terms of service of the platform') }}</option>
+              {% for k, v in rejection_reasons.items(): %}
+                  <option value={{ k }}>{{ v }}</option>
+              {% endfor %}
             </select>
             <input type="submit" class="Button" name="vote" value="disapprove"/>
         </div>

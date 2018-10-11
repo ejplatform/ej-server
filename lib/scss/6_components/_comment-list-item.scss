@@ -40,4 +40,16 @@
         color: $color-accent;
         font-weight: bold;
     }
+    &-status {
+        font-weight: normal;
+    }
+    &-status-approved {
+        color: $color-green-dark;
+    }
+    &-status-rejected {
+        color: $color-red-dark;
+    }
+    &-status-pending {
+        color: $color-primary;
+    }
 }
