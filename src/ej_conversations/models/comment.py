@@ -33,6 +33,13 @@ class Comment(StatusModel, TimeStampedModel):
         'approved': STATUS.approved,
         'rejected': STATUS.rejected,
     }
+    REJECTION_REASON = Choices(
+        ('incomplete_text', _('Incomplete or incomprehensible text')),
+        ('off_topic', _('Off-topic')),
+        ('offensive_language', _('Offensive content or language')),
+        ('duplicated_comment', _('Duplicated content')),
+        ('against_terms_of_service', _('Violates terms of service of the platform')),
+    )
     conversation = models.ForeignKey(
         'Conversation',
         related_name='comments',
