@@ -5,6 +5,7 @@ from django.db.models import Q
 from django.utils.timezone import now
 
 from boogie import rules
+from ej_powers.rules import promoted_comments_in_conversation
 
 
 #
@@ -50,6 +51,12 @@ def next_comment(conversation, user):
     """
     Return a randomly selected comment for the user to vote.
     """
+    unvoted_promoted_comments = promoted_comments_in_conversation(user,
+                                                                  conversation).filter(~Q(votes__author_id=user.id),)
+    promoted_size = unvoted_promoted_comments.count()
+    if promoted_size:
+        return unvoted_promoted_comments[randrange(0, promoted_size)]
+
     unvoted_own_comments = conversation.approved_comments.filter(
         ~Q(votes__author_id=user.id),
         author_id=user.id,
@@ -58,6 +65,7 @@ def next_comment(conversation, user):
     if own_size:
         return unvoted_own_comments[randrange(0, own_size)]
 
+    # TODO if there are any promoted comments, they should be shown before others
     unvoted_comments = conversation.approved_comments.filter(
         ~Q(author_id=user.id),
         ~Q(votes__author_id=user.id),

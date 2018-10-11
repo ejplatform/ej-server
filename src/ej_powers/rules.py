@@ -1,5 +1,6 @@
-from ej_powers.models import GivenPower
-from ej_conversations.models import Conversation
+from django.contrib.auth.models import AnonymousUser
+from ej_powers.models import GivenPower, CommentPromotion
+from ej_conversations.models import Conversation, Comment
 from rules import predicate
 
 
@@ -51,6 +52,18 @@ def promote_set(user):
     else:
         conversations = None
     return conversations
+
+
+def promoted_comments_in_conversation(user, conversation):
+    """
+    Return all comments promoted in a conversation for a user
+    """
+    if not isinstance(user, AnonymousUser):
+        comment_promotions = CommentPromotion.objects.filter(comment__conversation=conversation, users=user)
+        comments = Comment.objects.filter(commentpromotion__in=comment_promotions)
+        return comments
+    else:
+        return Comment.objects.none()
 
 
 def self_promote_set(user):

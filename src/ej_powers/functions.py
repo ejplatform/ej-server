@@ -54,7 +54,7 @@ def clean_expired_promotions():
 
 def give_promotion_power(power_class, user, conversation, users, expires=None):
     """
-    description
+    Give user power to promote comments
     Args:
     Returns:
     """
@@ -68,18 +68,17 @@ def give_promotion_power(power_class, user, conversation, users, expires=None):
 
 def give_minority_power(user, conversation, users, expires=None):
     """
-    description
-    Args:
-    Returns:
+    Create Minority power for user to promote comments
+    Returns: Created GivenMinorityPower object
     """
     return give_promotion_power(models.GivenMinorityPower, user, conversation, users, expires)
 
 
 def give_bridge_power(user, conversation, users, expires=None):
     """
-    description
+    Create Bridge power for user to promote comments
     Args:
-    Returns:
+    Returns:  Created GivenBridgePower object
     """
     return give_promotion_power(models.GivenBridgePower, user, conversation, users, expires)
 
