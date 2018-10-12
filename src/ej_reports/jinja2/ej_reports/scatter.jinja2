@@ -2,8 +2,8 @@
 {% block content %}
     <div class="Container">
         <div id="container" style="width 100%; min-height: 400px"></div>
-        <div>
-            <a href="..">Go back</a>
+        <div class="dropdown">
+            <button class="dropbtn"><a href="..">Go back</a></button>
         </div>
     </div>
 {% endblock %}
@@ -29,12 +29,101 @@ var data_from_django = {{ plot_data }};
 console.log(data_from_django)
 option = null;
 option = {
+    title: {
+        text: 'Scatterplot'
+    },
+    legend: {
+        data: ['1990', '2014', '2018']
+    },
     xAxis: {},
     yAxis: {},
     series: [{
-        symbolSize: 20,
-        data: data_from_django,
-        type: 'scatter'
+        name: '1990',
+        data: data_from_django[0],
+        type: 'scatter',
+        symbolSize: function (data) {
+            return 10;
+        },
+        label: {
+            emphasis: {
+                show: true,
+                formatter: function (param) {
+                    return param.data[3];
+                },
+                position: 'top'
+            }
+        },
+        itemStyle: {
+            normal: {
+                shadowBlur: 10,
+                shadowColor: 'rgba(120, 36, 50, 0.5)',
+                shadowOffsetY: 5,
+                color: new echarts.graphic.RadialGradient(0.4, 0.3, 1, [{
+                    offset: 0,
+                    color: 'rgb(251, 118, 123)'
+                }, {
+                    offset: 1,
+                    color: 'rgb(204, 46, 72)'
+                }])
+            }
+        }
+    }, {
+        name: '2014',
+        data: data_from_django[1],
+        type: 'scatter',
+        symbolSize: function (data) {
+            return 10;
+        },
+        label: {
+            emphasis: {
+                show: true,
+                formatter: function (param) {
+                    return param.data[3];
+                },
+                position: 'top'
+            }
+        },
+        itemStyle: {
+            normal: {
+                shadowBlur: 10,
+                shadowColor: 'rgba(25, 100, 150, 0.5)',
+                shadowOffsetY: 5,
+                color: new echarts.graphic.RadialGradient(0.4, 0.3, 1, [{
+                    offset: 0,
+                    color: 'rgb(129, 227, 238)'
+                }, {
+                    offset: 1,
+                    color: 'rgb(25, 183, 207)'
+                }])
+            }
+        }
+    }, {
+        name: '2018',
+        data: data_from_django[2],
+        type: 'scatter',
+        symbolSize: function (data) {
+            return 10;
+        },
+        label: {
+            emphasis: {
+                show: true,
+                formatter: function (param) {
+                    return param.data[3];
+                },
+                position: 'top'
+            }
+        },
+        itemStyle: {
+            normal: {
+                shadowBlur: 10,
+                shadowColor: 'rgba(25, 100, 150, 0.5)',
+                shadowOffsetY: 5,
+                color: new echarts.graphic.RadialGradient(0.4, 0.3, 1, [{
+                    offset: 0,
+                    color: 'rgb(999, 999, 000)'
+                }])
+            }
+        }
     }]
 };
 ;

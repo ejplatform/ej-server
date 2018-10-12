@@ -29,6 +29,8 @@ User = get_user_model()
 
 
 def generate_scatter(request, conversation):
+    gender = list(User.objects.values_list('raw_profile__gender'))
+
     votes = get_votes(conversation)
     votes = votes.where((pd.notnull(votes)), 0.0)
 
@@ -37,7 +39,18 @@ def generate_scatter(request, conversation):
     votes_pca = pca.transform(votes)
 
     votes_array = votes_pca.tolist()
-    js_data = json.dumps(votes_array)
+    data = []
+    dict_data = {}
+    print(len(gender), len(votes_array))
+    for item in range(len(gender)):
+        if gender[item][0] not in dict_data.keys():
+            dict_data[gender[item][0]] = []
+            votes_array[item].append(gender[item][0])
+        dict_data[gender[item][0]].append(votes_array[item])
+    for item in dict_data:
+        data.append(dict_data[item])
+    js_data = json.dumps(data)
+    print(js_data)
 
     response = {'plot_data': js_data}
     return response
@@ -139,8 +152,10 @@ def participants_table(conversation, votes):
     stats = VoteStats(votes)
     df = stats.users(pc=True)
 
-    data = list(User.objects.values_list('email', 'name'))
-    participants = pd.DataFrame(list(data), columns=['email', 'name'])
+    data = list(User.objects.values_list('id', 'email', 'name'))
+    moredata = list(User.objects.values_list('id', 'raw_profile__gender'))
+    print(moredata)
+    participants = pd.DataFrame(list(data), columns=['id', 'email', 'name'])
     participants.index = participants.pop('email')
 
     for col in ['agree', 'disagree', 'skipped', 'divergence']:

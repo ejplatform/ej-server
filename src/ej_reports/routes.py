@@ -10,6 +10,8 @@ from ej_dataviz.routes import comments_table, participants_table, \
     generate_scatter, df_to_table, map_to_html_table, cluster_comments_table
 from hyperpython.components import hyperlink
 
+# from ej_profiles import get_profile
+
 
 urlpatterns = Router(
     template=['ej_reports/{name}.jinja2', 'generic.jinja2'],

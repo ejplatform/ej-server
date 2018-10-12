@@ -3,12 +3,12 @@ from . import models
 
 
 #
-# Conversation roles
+# Scatterplot role
 #
-@with_template(models.Conversation, role='card')
-def conversation_card(conversation, request=None, url=None, board=None, **kwargs):
+@with_template(models.Conversation, role='scatter')
+def scatter_card(conversation, request=None, url=None, board=None, **kwargs):
     """
-    Render a round card representing a conversation in a list.
+    Render a scatterplot representing a conversation.
     """
 
     user = getattr(request, 'user', None)
