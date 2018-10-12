@@ -9,9 +9,8 @@ from django.db import models
 from django.db.models import Subquery, OuterRef
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
-from lazyutils import lazy
 from model_utils.models import TimeStampedModel
-from sidekick import delegate_to, alias
+from sidekick import delegate_to, alias, lazy
 
 from boogie import rules
 from boogie.fields import EnumField
@@ -307,6 +306,7 @@ def get_clusterization(conversation):
         return mgm
 
 
+Conversation.get_clusterization = get_clusterization
 Conversation._clusterization = lazy(get_clusterization)
 Conversation.clusters = delegate_to('_clusterization')
 Conversation.stereotypes = delegate_to('_clusterization')
