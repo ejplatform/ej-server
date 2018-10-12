@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
 from ej_conversations.models import FavoriteConversation, Comment, Choice
-from .forms import ProfileForm
+from .forms import ProfileForm, UsernameForm
 
 app_name = 'ej_profiles'
 urlpatterns = Router(
@@ -53,19 +53,23 @@ def edit(request):
     profile = request.user.profile
     if request.method == 'POST':
         form = ProfileForm(request.POST, instance=profile, files=request.FILES)
-        if form.is_valid():
+        name_form = UsernameForm(request.POST, instance=request.user)
+        if form.is_valid() and name_form.is_valid():
             form.save()
+            name_form.save()
             return redirect('/profile/')
     else:
         form = ProfileForm(instance=profile)
+        name_form = UsernameForm(instance=request.user)
 
     return {
         'form': form,
+        'name_form': name_form,
         'profile': profile,
     }
 
 
-@urlpatterns.route('conversations/', template='ej_conversations/conversations-list.jinja2')
+@urlpatterns.route('conversations/', template='ej_conversations/list.jinja2')
 def conversations_list(request):
     user = request.user
     boards = user.boards.all()
@@ -80,7 +84,8 @@ def conversations_list(request):
         'current_board': board,
         'boards': boards,
         'create_url': reverse('conversation:create'),
-        'can_add_conversation': user.has_perm('ej.can_add_promoted_conversation'),
+        # you can't add conversations because there can be more than one board being displayed
+        'can_add_conversation': False,
         'title': _('My conversations'),
         'subtitle': _('See all conversations created by you'),
     }
@@ -103,7 +108,6 @@ def favorite_conversations(request):
     conversations = [fav.conversation for fav in favorites]
     return {
         'conversations': conversations,
-        'category': None,
     }
 
 

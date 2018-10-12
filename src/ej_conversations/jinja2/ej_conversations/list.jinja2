@@ -1,12 +1,17 @@
 {% extends 'base.jinja2' %}
-{% from 'ej_conversations/components/conversation-list.jinja2' import conversation_list with context %}
+
 
 {% block content %}
-    {% if can_add_conversation and create_url %}
-        <a class="Link-new" href="{{ create_url }}"><i class="fa fa-plus-circle"></i> {{ _('New conversation') }}</a>
-    {% endif %}
-
-    {% if owns_board|default(False) and boards|length > 1 %}
+    <div class="Link">
+        {% if can_add_conversation and create_url %}
+            <a class="Link-new" href="{{ create_url }}"><i class="fa fa-plus-circle"></i> {{ _('New conversation') }}</a>
+        {% endif %}
+        
+        {% if can_edit_board is defined and can_edit_board and edit_url %}
+            <a class="Link-edit" href="{{ edit_url }}"><i class="far fa-edit"></i> {{ _('Edit Board') }}</a>
+        {% endif %}
+    </div>
+    {% if can_add_conversation|default(False) and boards_count|default(0) > 1 %}
         <div class="view-board">
             <span>{{ _('Viewing board:') }}</span>
             <select name="select-board" class="select-board" id="select-board">
@@ -25,7 +30,7 @@
     <div class="ConversationList">
         <div class="ConversationList-title">
             <h1>{{ title }}</h1>
-            <p>{{ subtitle }}</p>
+            <p>{{ description }}</p>
         </div>
 
         {% if is_a_board is defined %}
@@ -34,7 +39,7 @@
                     <i class="fa fa-chevron-left"></i>
                     {{ link(_('public conversations'), href='/conversations/') }}
                 </span>
-                {% if not owns_board %}
+                {% if not can_add_conversation %}
                     <span class="my-conversations">
                     {{ link(_('go to my conversations'), href='/profile/conversations/') }}
                     <i class="fa fa-chevron-right"></i>

@@ -1,5 +1,13 @@
-from ej_users.models import User
+import pytest
+from ej_users.models import User, PasswordResetToken
 from ej_profiles.choices import Race, Gender
+
+
+@pytest.fixture
+def user(db):
+    user = User.objects.create_user('name@server.com', '1234', name='name')
+    user.save()
+    return user
 
 
 class TestUserManager:
@@ -26,3 +34,17 @@ class TestUserManager:
         assert user.profile.biography == ''
         assert user.profile.occupation == ''
         assert user.profile.political_activity == ''
+
+
+class TestTokenUser:
+    def test_token_exists(self, db, user):
+        token = PasswordResetToken(user=user)
+        assert not token.url
+        token.generate_token()
+        token.save()
+        assert token.url
+
+    def test_token_is_not_expired(self, db, user):
+        token = PasswordResetToken(user=user)
+        token.save()
+        assert not token.is_expired

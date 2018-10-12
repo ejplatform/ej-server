@@ -1,112 +1,34 @@
-#
-# Build static assets
-#
-FROM ejplatform/tools:latest as assets
+FROM ejplatform/local:latest
 
-
-# Compile translations
-COPY ./etc/scripts/compilemessages.py /usr/bin/compilemessages
-COPY ./locale/ /app/locale/
-WORKDIR /app
-RUN chmod +x /usr/bin/compilemessages \
- && compilemessages
-
-# Build Sass
-ARG THEME=default
-COPY ./lib/scss /app/lib/scss
-COPY ./lib/themes /app/lib/themes
-COPY ./tasks.py /app/tasks.py
-RUN mkdir -p /app/lib/build/css/ \
- && inv -e sass --theme=${THEME}
-
-# Build javascript assets (TODO)
-RUN inv -e js
-
-
-#
-# Create python packages
-#
-FROM ejplatform/python:buster as pymodules
-
-# Create django-boogie package
-WORKDIR /app
-ADD https://github.com/fabiommendes/django-boogie/archive/master.zip /app/boogie.zip
-RUN unzip boogie.zip \
- && cd django-boogie-master \
- && python setup.py sdist \
- && cd dist \
- && mv django-boogie* /app/boogie.tar.gz \
- && echo "INSTALLED DJANGO-BOOGIE"
-
-# Create hyperpython package
-ADD https://github.com/fabiommendes/hyperpython/archive/master.zip /app/hyperpython.zip
-RUN unzip hyperpython.zip \
- && cd hyperpython-master \
- && python setup.py sdist \
- && cd dist \
- && mv hyperpython* /app/hyperpython.tar.gz \
- && echo "INSTALLED HYPERPYTHON"
-
-
-#
-# Final image
-#
-FROM ejplatform/python:deploy
-
-# Set theme and environment variables
+# Configure environment
 ENV DJANGO_SETTINGS_MODULE=ej.settings
-ENV DJANGO_ENVIRONMENT=production
+ENV PYTHONUNBUFFERED=1
 ENV PYTHONPATH="/app/src/:$PYTHONPATH"
 WORKDIR /app
 
-# Copy requirements and update packages
-# Most of the time, this will not install anything new.
-COPY ./etc/requirements/ /etc/requirements/
-RUN pip install -r /etc/requirements/production.txt
-
-# Copy files
-COPY ./.coveragerc /app/.coveragerc
-COPY ./lib/ /app/lib/
-COPY ./locale/ /app/locale/
-COPY ./manage.py /app/manage.py
-COPY ./src/ /app/src/
-
-# Copy django boogie
-COPY --from=pymodules /app/*.tar.gz /app/
-RUN pip install /app/*.tar.gz \
- && rm /app/*.tar.gz
-
-# Set enviroment variables
-ARG COUNTRY=brasil
-ARG HOSTNAME=localhost
-ARG THEME=default
-ENV COUNTRY=${COUNTRY}
-ENV EJ_THEME=${THEME}
-ENV HOSTNAME=${HOSTNAME}
-
-# Copy build-time assets: CSS, JS, i18n
-COPY --from=assets /app/lib/build/ /app/lib/build/
-COPY --from=assets /app/locale/ /app/locale/
-
-# Prepare deploy assets
+# Copy necessary files
+COPY ./etc/requirements/ /app/etc/requirements/
+COPY ./etc/scripts/ /app/etc/scripts/
 COPY ./tasks.py /app/tasks.py
-RUN mkdir -p local/logs local/static/ local/media/ local/db/ \
- && python manage.py collectstatic --noinput \
- && echo "COLLECTED STATIC ASSETS"
+
+# Install dependencies
+RUN inv update-deps --all --vendor /vendor
+
+# Move vendorized apps away from /app
+RUN mv /app/local/vendor/ /vendor/ \
+ && echo "RELOCATED PYTHON MODULES"
+
+ARG UID=1000
+ARG GID=1000
 
 # Create django user
-RUN groupadd -r django \
- && useradd -r -g django django \
- && chown -R django:django /app
-USER django
-
-# Save commit info
-ARG COMMIT_TITLE=none
-ARG COMMIT_HASH=none
-RUN echo "${COMMIT_HASH}: ${COMMIT_TITLE}" > commit.txt
-
+RUN groupadd -r django -g ${GID} \
+ && useradd -r -g django django -u ${UID} \
+ && chown -R django:django /app \
+ && chown -R django:django /vendor \
+ && echo "DJANGO USER CREATED"
 
 # Entry point defaults to inv run
-EXPOSE 5000
+EXPOSE 8000
 ENTRYPOINT ["inv"]
 CMD ["bash"]

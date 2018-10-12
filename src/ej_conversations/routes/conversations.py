@@ -1,13 +1,12 @@
 from logging import getLogger
-
 from django.http import HttpResponseServerError, Http404
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from hyperpython import a
 
-from boogie import rules
 from . import urlpatterns, conversation_url
 from ..models import Conversation, Comment
+from ej_conversations.forms import CommentForm
 
 log = getLogger('ej')
 
@@ -21,6 +20,7 @@ def conversation_list(request):
         'topic': _('A space for adolescents to discuss actions that promote, guarantee and defend their rights'),
         'title': _('Public conversations'),
         'subtitle': _('Participate of conversations and give your opinion with comments and votes!'),
+        'description': _('Participate of conversations and give your opinion with comments and votes!'),
     }
 
 
@@ -41,8 +41,8 @@ def conversation_detail_context(request, conversation):
     """
     user = request.user
     is_favorite = user.is_authenticated and conversation.followers.filter(user=user).exists()
-    n_comments = rules.compute('ej.remaining_comments', conversation, user)
     comment = None
+    comment_form = CommentForm(request.POST or None, conversation=conversation)
 
     # User is voting in the current comment. We still need to choose a random
     # comment to display next.
@@ -55,11 +55,11 @@ def conversation_detail_context(request, conversation):
     # User is posting a new comment. We need to validate the form and try to
     # keep the same comment that was displayed before.
     elif request.POST.get('action') == 'comment':
-        # FIXME: do not hardcode this and use a proper form!
-        comment = request.POST['comment'].strip()
-        comment = comment[:210]
-        comment = conversation.create_comment(user, comment)
-        log.info(f'user {user.id} posted comment {comment.id} on {conversation.id}')
+        if comment_form.is_valid():
+            new_comment = comment_form.cleaned_data['content']
+            new_comment = conversation.create_comment(user, new_comment)
+            comment_form = CommentForm(conversation=conversation)
+            log.info(f'user {user.id} posted comment {new_comment.id} on {conversation.id}')
 
     # User toggled the favorite status of conversation.
     elif request.POST.get('action') == 'favorite':
@@ -70,18 +70,16 @@ def conversation_detail_context(request, conversation):
     elif request.method == 'POST':
         log.warning(f'user {user.id} sent invalid POST request: {request.POST}')
         return HttpResponseServerError('invalid action')
-
     return {
         # Objects
         'conversation': conversation,
         'comment': comment or conversation.next_comment(user, None),
-        'comments_left': n_comments,
         'login_link': login_link(_('login'), conversation),
+        'comment_form': comment_form,
 
         # Permissions and predicates
         'is_favorite': is_favorite,
         'can_view_comment': user.is_authenticated,
-        'can_comment': user.has_perm('ej.can_comment', conversation),
         'can_edit': user.has_perm('ej.can_edit_conversation', conversation),
         'cannot_comment_reason': '',
     }
