@@ -1,6 +1,7 @@
 import pytest
 
 from ej_users.models import User
+from ej_profiles.models import Profile
 from ej_notifications.models import Channel, Message, Notification, NotificationConfig
 
 
@@ -9,15 +10,13 @@ class TestChannelManager:
     def mk_user(db):
         user = User.objects.create_user('email@server.com', 'password')
         user.save()
-        yield user
-        user.delete()
+        return user
 
     @pytest.fixture
     def mk_user2(db):
         user = User.objects.create_user('email@email.com', 'password')
         user.save()
-        yield user
-        user.delete()
+        return user
 
     @pytest.fixture
     def mk_channel(self, mk_user):
@@ -28,8 +27,7 @@ class TestChannelManager:
             owner=new_user
         )
         channel.save()
-        yield channel
-        channel.delete()
+        return channel
 
     def test_can_create_and_fetch_channel(self, db, mk_channel):
         channel = mk_channel
@@ -56,4 +54,6 @@ class TestChannelManager:
 
     def test_ensure_settings_created(self, db, mk_user):
         user = mk_user
+        user.raw_profile, created = Profile.objects.get_or_create(user=user)
+        assert created
         assert NotificationConfig.objects.filter(profile=user.profile).exists()
