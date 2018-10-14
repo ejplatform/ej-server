@@ -8,8 +8,12 @@ gunicorn ~= 19.7.1
 django-storages ~= 1.6.5
 Collectfast ~= 0.5.2
 
+
 # Email backends for Mailgun, Postmark, SendGrid and more
 django-anymail ~= 3.0
+
+# Docs
+sphinx>=1.8.1
 
 # Raven (Sentry client)
 raven ~= 6.5.0

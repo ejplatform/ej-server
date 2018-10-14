@@ -1,14 +1,16 @@
+from datetime import datetime, timedelta
+from secrets import token_urlsafe
+
 from django.db import models
+from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
+from model_utils.models import TimeStampedModel
 
 from boogie import rules
 from boogie.apps.users.models import AbstractUser
 from boogie.rest import rest_api
 from .manager import UserManager
 from .utils import random_name
-from django.utils import timezone
-from datetime import datetime
-from secrets import token_urlsafe
 
 
 @rest_api(['id', 'display_name'])
@@ -50,28 +52,42 @@ class User(AbstractUser):
         swappable = 'AUTH_USER_MODEL'
 
 
-class Token (models.Model):
-
-    url_token = models.CharField(
-        ('user token'),
-        unique=True,
+class PasswordResetToken(TimeStampedModel):
+    """
+    Expiring token for password recovery.
+    """
+    url = models.CharField(
+        _('User token'),
         max_length=50,
-        null=True,
+        unique=True,
     )
-
+    is_used = models.BooleanField(default=False)
     user = models.ForeignKey(
         'User',
         on_delete=models.CASCADE,
     )
 
-    date_time = models.DateTimeField(
-        auto_now=True,
-    )
-
     @property
     def is_expired(self):
         time_now = datetime.now(timezone.utc)
-        return (time_now - self.date_time).total_seconds() > 600
+        return (time_now - self.created).total_seconds() > 600
 
     def generate_token(self):
-        self.url_token = token_urlsafe(30)
+        self.url = token_urlsafe(30)
+
+
+def generate_token(user):
+    token = PasswordResetToken(user=user)
+    token.generate_token()
+    token.save()
+    return token
+
+
+def clean_expired_tokens():
+    """
+    Clean up used and expired tokens.
+    """
+    threshold = datetime.now(timezone.utc) - timedelta(seconds=600)
+    expired = PasswordResetToken.objects.filter(created__lte=threshold)
+    used = PasswordResetToken.objects.filter(is_used=True)
+    (used | expired).delete()

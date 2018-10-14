@@ -10,7 +10,7 @@ def profile(user):
     profile_class = rules.compute('auth.profile_class')
     try:
         return user.raw_profile
-    except profile_class.DoesNotExist:
+    except (profile_class.DoesNotExist, user._meta.model.raw_profile.RelatedObjectDoesNotExist):
         return profile_class.objects.create(user=user)
 
 

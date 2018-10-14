@@ -34,13 +34,13 @@
                     >
         </form>
 
-        <p><a href="{{ '/recover-password/' + ('?next=' + next if next else '') }}"
-                  primary>{{ _('Forgot your password?') }}</a></p>
+        <h1><a href="{{ '/recover-password/' + ('?next=' + next if next else '') }}"
+                  primary>{{ _('Forgot your password?') }}</a></h1>
 
         {{ social_login(social_buttons, social_js) }}
 
         <div class="Login-newUser">
-            <h1>{{ settings.EJ_REGISTER_TEXT }}</h1>
+            <h1>{{ _(settings.EJ_REGISTER_TEXT) }}</h1>
             <p><a class="Button"
                     href="{{ '/register/' + ('?next=' + next if next else '') }}"
                     aria-label="{{_('Register button')}}"

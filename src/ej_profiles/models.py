@@ -187,3 +187,6 @@ def get_profile(user):
         return user.profile
     except Profile.DoesNotExist:
         return Profile.objects.create(user=user)
+
+
+User.get_profile = get_profile
