@@ -1,7 +1,6 @@
 import pytest
 
 from ej_users.models import User
-from ej_profiles.models import Profile
 from ej_notifications.models import Channel, Message, Notification, NotificationConfig
 
 
@@ -54,6 +53,7 @@ class TestChannelManager:
 
     def test_ensure_settings_created(self, db, mk_user):
         user = mk_user
-        user.raw_profile, created = Profile.objects.get_or_create(user=user)
-        assert created
-        assert NotificationConfig.objects.filter(profile=user.profile).exists()
+        configurations = user.profile.notifications_config
+        db_fetched_config = NotificationConfig.objects.filter(profile=user.profile)
+        assert db_fetched_config.exists()
+        assert db_fetched_config[0] == configurations

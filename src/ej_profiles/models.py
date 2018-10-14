@@ -10,6 +10,7 @@ from django.utils.translation import ugettext_lazy as _, ugettext as __
 from rest_framework.authtoken.models import Token
 import datetime
 
+from boogie import rules
 from boogie.fields import EnumField
 from boogie.rest import rest_api
 from sidekick import delegate_to
@@ -102,6 +103,11 @@ class Profile(models.Model):
         fields = ('race', 'age', 'birth_date', 'education', 'ethnicity', 'country', 'state', 'city',
                   'biography', 'occupation', 'political_activity', 'has_image', 'gender_description')
         return bool(all(getattr(self, field) for field in fields))
+
+    @property
+    def notifications_config(self):
+        notifications_config = rules.get_value('profile.notificationsconfig')
+        return notifications_config(self)
 
     def get_absolute_url(self):
         return reverse('user-detail', kwargs={'pk': self.id})

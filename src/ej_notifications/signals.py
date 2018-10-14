@@ -68,7 +68,7 @@ def insert_user_on_general_channels(sender, created, **kwargs):
         instance = kwargs.get('instance')
         user_id = instance.user.id
         user = User.objects.get(id=user_id)
-        channels = Channel.objects.filter(Q(purpose=str(Purpose.GENERAL)) | Q(purpose=Purpose.ADMIN))
+        channels = Channel.objects.filter(Q(purpose=Purpose.GENERAL) | Q(purpose=Purpose.ADMIN))
         for channel in channels:
             channel.users.add(user)
             channel.save()
