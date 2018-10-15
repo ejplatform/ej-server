@@ -1,5 +1,9 @@
 .StereotypeList {
     @extend .Container;
+    &-title, &-search, &-cardList, &-singleStereotype {
+        max-width: $content-wrapper-max-width;
+    }
+
     &-title {
         text-align: center;
         width: 80vw;
