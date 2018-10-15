@@ -82,6 +82,14 @@ def remaining_comments(conversation, user):
     comments = user.comments.filter(conversation=conversation).count()
     return max(max_comments_per_conversation() - comments, 0)
 
+@rules.register_value('ej_conversations.comments_under_moderation')
+def comments_under_moderation(conversation, user):
+    """
+    The number of comments under moderation of a user in a conversation.
+    """
+    if user.id is None:
+        return 0
+    return user.comments.filter(conversation=conversation, status=Comment.STATUS.pending).count()
 
 @rules.register_value('ej_conversations.vote_cooldown')
 def vote_cooldown(conversation, user):
