@@ -72,8 +72,12 @@ def moderate_context(request, conversation):
     comments = []
     if request.method == 'POST':
         comment = models.Comment.objects.get(id=request.POST['comment'])
-        comment.status = comment.STATUS.approved if request.POST['vote'] == 'approve' else comment.STATUS.rejected
-        comment.rejection_reason = request.POST['rejection_reason']
+        if request.POST['vote'] == 'approve':
+            comment.status = comment.STATUS.approved
+            comment.rejection_reason = ''
+        else:
+            comment.status = comment.STATUS.rejected
+            comment.rejection_reason = request.POST['rejection_reason']
         comment.save()
 
     status = request.GET.get('status')
