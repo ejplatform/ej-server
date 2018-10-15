@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-10 23:23-0300\n"
-"PO-Revision-Date: 2018-10-10 23:49-0300\n"
+"POT-Creation-Date: 2018-10-15 15:05+0000\n"
+"PO-Revision-Date: 2018-10-15 12:10-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: \n"
 "Language: pt_BR\n"
@@ -745,19 +745,39 @@ msgstr "aprovado"
 msgid "rejected"
 msgstr "rejeitado"
 
-#: src/ej_conversations/models/comment.py:47
+#: src/ej_conversations/models/comment.py:37
+msgid "Incomplete or incomprehensible text"
+msgstr "Texto incompleto ou incompreensível"
+
+#: src/ej_conversations/models/comment.py:38
+msgid "Off-topic"
+msgstr "Fora do tópico da conversa"
+
+#: src/ej_conversations/models/comment.py:39
+msgid "Offensive content or language"
+msgstr "Linguagem ou conteúdo ofensivo"
+
+#: src/ej_conversations/models/comment.py:40
+msgid "Duplicated content"
+msgstr "Conteúdo duplicado"
+
+#: src/ej_conversations/models/comment.py:41
+msgid "Violates terms of service of the platform"
+msgstr "Viola os termos de uso da plataforma"
+
+#: src/ej_conversations/models/comment.py:54
 msgid "Content"
 msgstr "Conteúdo"
 
-#: src/ej_conversations/models/comment.py:50
+#: src/ej_conversations/models/comment.py:57
 msgid "Body of text for the comment"
 msgstr "Corpo de texto do comentário"
 
-#: src/ej_conversations/models/comment.py:53
+#: src/ej_conversations/models/comment.py:60
 msgid "Rejection reason"
 msgstr "Motivo para rejeição"
 
-#: src/ej_conversations/models/comment.py:56
+#: src/ej_conversations/models/comment.py:63
 msgid ""
 "You must provide a reason to reject a comment. Users will receive this "
 "feedback."
@@ -765,18 +785,18 @@ msgstr ""
 "Você deve fornecer uma razão para rejeitar um comentário. O autor do "
 "comentário verá este feedback."
 
-#: src/ej_conversations/models/comment.py:61
+#: src/ej_conversations/models/comment.py:68
 msgid "Promoted comment?"
 msgstr "Comentário promovido?"
 
-#: src/ej_conversations/models/comment.py:64
+#: src/ej_conversations/models/comment.py:71
 msgid ""
 "Promoted comments are prioritized when selecting random commentsto users."
 msgstr ""
 "Comentários promovidos são priorizados no momento da exibição aleatória de "
 "comentários aos usuários."
 
-#: src/ej_conversations/models/comment.py:96
+#: src/ej_conversations/models/comment.py:103
 msgid "Must give a reason to reject a comment"
 msgstr "Deve fornecer uma razão para rejeitar o comentário"
 
@@ -1342,23 +1362,27 @@ msgstr "Senhas não são iguais"
 msgid "Your e-mail"
 msgstr "Seu email"
 
-#: src/ej_users/models.py:21
+#: src/ej_users/models.py:23
 msgid "Display name"
 msgstr "Nome público"
 
-#: src/ej_users/models.py:26
+#: src/ej_users/models.py:28
 msgid "A randomly generated name used to identify each user."
 msgstr "Um nome gerado aleatoriamente para identificar cada usuário."
 
-#: src/ej_users/models.py:30
+#: src/ej_users/models.py:32
 msgid "email address"
 msgstr "endereço de email"
 
-#: src/ej_users/routes.py:74
+#: src/ej_users/models.py:60
+msgid "User token"
+msgstr "Token do usuário"
+
+#: src/ej_users/routes.py:71
 msgid "Invalid email or password"
 msgstr "Email ou senha inválidos"
 
-#: src/ej_users/routes.py:168
+#: src/ej_users/routes.py:160
 msgid "Please reset your password"
 msgstr "Por favor reset sua senha"
 
@@ -1464,7 +1488,7 @@ msgstr "Diminuir o tamanho da fonte"
 msgid "High contrast mode"
 msgstr "Modo de alto contraste"
 
-#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:61
+#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:62
 #: src/ej_profiles/jinja2/ej_profiles/detail.jinja2:54
 msgid "Logout"
 msgstr "Sair"
@@ -1592,7 +1616,7 @@ msgstr "Obtendo Ajuda"
 msgid "EJ Community"
 msgstr "Comunidade EJ"
 
-#: src/ej/templates/jinja2/pages/home.jinja2:118
+#: src/ej/templates/jinja2/pages/home.jinja2:122
 msgid "Who is using EJ"
 msgstr "Quem já adotou o EJ"
 
@@ -1805,7 +1829,7 @@ msgid "Send your opinion"
 msgstr "Envie sua opinião"
 
 #: src/ej_conversations/jinja2/ej/role/comment-form.jinja2:22
-#: src/ej_conversations/jinja2/ej/role/comment-form.jinja2:28
+#: src/ej_conversations/jinja2/ej/role/comment-form.jinja2:27
 msgid "Leave your comment"
 msgstr "Deixe o seu comentário"
 
@@ -1814,24 +1838,22 @@ msgid "You have created this conversation."
 msgstr "Você criou essa conversa"
 
 #: src/ej_conversations/jinja2/ej/role/comment-form.jinja2:24
-msgid ""
-"Include something new and avoid similar opinions.\n"
-"        "
+msgid "Include something new and avoid similar opinions."
 msgstr "Escreva algo novo e evite opiniões similares."
 
-#: src/ej_conversations/jinja2/ej/role/comment-form.jinja2:29
+#: src/ej_conversations/jinja2/ej/role/comment-form.jinja2:28
 msgid "You still have {n} available comments"
 msgstr "Você ainda tem {n} comentários disponíveis"
 
-#: src/ej_conversations/jinja2/ej/role/comment-form.jinja2:33
+#: src/ej_conversations/jinja2/ej/role/comment-form.jinja2:32
 msgid "Ooops!"
 msgstr "Oooopa!"
 
-#: src/ej_conversations/jinja2/ej/role/comment-form.jinja2:34
+#: src/ej_conversations/jinja2/ej/role/comment-form.jinja2:33
 msgid "You reached the limit of comments in this conversation."
 msgstr "Você atingiu o limite de comentários nesta conversa."
 
-#: src/ej_conversations/jinja2/ej/role/comment-form.jinja2:37
+#: src/ej_conversations/jinja2/ej/role/comment-form.jinja2:36
 #, python-format
 msgid "Please %(login_anchor)s to vote on this conversation."
 msgstr "Favor %(login_anchor)s para votar nesta conversa."
@@ -1840,7 +1862,7 @@ msgstr "Favor %(login_anchor)s para votar nesta conversa."
 msgid "Opinion"
 msgstr "Opinião"
 
-#: src/ej_conversations/jinja2/ej/role/comment-list-item.jinja2:19
+#: src/ej_conversations/jinja2/ej/role/comment-list-item.jinja2:26
 msgid "See Conversation"
 msgstr "Ver Conversa"
 
@@ -1854,7 +1876,7 @@ msgstr "Aprovar"
 
 #: src/ej_conversations/jinja2/ej/role/comment-moderate.jinja2:18
 msgid "Disapprove"
-msgstr "Discorda"
+msgstr "Rejeitar"
 
 #: src/ej_conversations/jinja2/ej/role/comment-moderate.jinja2:22
 msgid "Reason"
@@ -1864,51 +1886,31 @@ msgstr "Justificativa"
 msgid "The comment will receive your rejection reason"
 msgstr "O comentário vai receber sua justificativa de rejeição"
 
-#: src/ej_conversations/jinja2/ej/role/comment-moderate.jinja2:25
-msgid "Incomplete or incomprehensible text"
-msgstr "Texto incompleto ou incompreensível"
-
-#: src/ej_conversations/jinja2/ej/role/comment-moderate.jinja2:26
-msgid "Off-topic"
-msgstr "Fora do tópico da conversa"
-
-#: src/ej_conversations/jinja2/ej/role/comment-moderate.jinja2:27
-msgid "Offensive content or language"
-msgstr "Linguagem ou conteúdo ofensivo"
-
-#: src/ej_conversations/jinja2/ej/role/comment-moderate.jinja2:28
-msgid "Duplicated content"
-msgstr "Conteúdo duplicado"
-
-#: src/ej_conversations/jinja2/ej/role/comment-moderate.jinja2:29
-msgid "Violates terms of service of the platform"
-msgstr "Viola os termos de uso da plataforma"
-
-#: src/ej_conversations/jinja2/ej/role/conversation-balloon.jinja2:11
+#: src/ej_conversations/jinja2/ej/role/conversation-balloon.jinja2:8
 msgid "Tags"
 msgstr "Tags"
 
-#: src/ej_conversations/jinja2/ej/role/conversation-balloon.jinja2:16
+#: src/ej_conversations/jinja2/ej/role/conversation-balloon.jinja2:13
 msgid "{count} comments"
 msgstr "{count} comentários"
 
-#: src/ej_conversations/jinja2/ej/role/conversation-balloon.jinja2:17
+#: src/ej_conversations/jinja2/ej/role/conversation-balloon.jinja2:14
 msgid "{count} votes"
 msgstr "{count} votos"
 
-#: src/ej_conversations/jinja2/ej/role/conversation-balloon.jinja2:18
+#: src/ej_conversations/jinja2/ej/role/conversation-balloon.jinja2:15
 msgid "{count} favorites"
 msgstr "{count} favoritos"
 
-#: src/ej_conversations/jinja2/ej/role/conversation-balloon.jinja2:30
+#: src/ej_conversations/jinja2/ej/role/conversation-balloon.jinja2:27
 msgid "Unfavorite"
 msgstr "Desfavoritar"
 
-#: src/ej_conversations/jinja2/ej/role/conversation-balloon.jinja2:34
+#: src/ej_conversations/jinja2/ej/role/conversation-balloon.jinja2:31
 msgid "Favorite"
 msgstr "Favorito"
 
-#: src/ej_conversations/jinja2/ej/role/conversation-balloon.jinja2:39
+#: src/ej_conversations/jinja2/ej/role/conversation-balloon.jinja2:36
 msgid "Share"
 msgstr "Compartilhar"
 
@@ -1999,7 +2001,7 @@ msgstr "Aprovado"
 msgid "Rejected"
 msgstr "Rejeitado"
 
-#: src/ej_conversations/jinja2/ej_conversations/components/comment-list.jinja2:7
+#: src/ej_conversations/jinja2/ej_conversations/components/comment-list.jinja2:11
 msgid "No comments left"
 msgstr "Não há mais comentários"
 
