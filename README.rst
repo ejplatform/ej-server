@@ -69,6 +69,16 @@ the dev server::
 
     $ inv run
 
+Before runing, make sure you regenerate the PO files and compile. It's necessary to compile sass either:
+
+    $ inv i18n
+    $ inv i18n -c
+    $ inv sass run
+
+To run on brazilian portuguese:
+
+    $ export COUNTRY=brasil
+
 Tests are executed with Pytest_::
 
     $ pytest
