@@ -1,15 +1,15 @@
 {% from 'ej_conversations/toast.jinja2' import toast with context %}
+{% from 'components/generic/modalities.jinja2' import modalities with context %}
 
 {% macro comment_form(csrf_input, comment_content) %}
     <form method="post">
-        {{ csrf_input }}
         <input type="hidden" name="action" value="comment">
             {{comment_content.content}}
         <input type="submit" name="submit" value="{{ _('Send your opinion') }}" primary>
         {% if comment_content.errors %}
             {{toast("OPS!", comment_content.content.errors|striptags)}}
             <script>
-                showToaster()
+                showToaster()csrf_input
             </script>
         {% endif %}
     </form>
@@ -35,5 +35,13 @@
         </div>
     {% else %}
         <p>{% trans %}Please {{ login_anchor }} to vote on this conversation.{% endtrans %}</p>
+    {% endif %}
+    {% if voted == None %}
+        {{modalities("Bem Vinda(o)", "Você está com cede e  não sai para beber água por que?")}}
+        <script>
+            showModalities()
+        </script>
+    {% else %}
+        {{voted}}
     {% endif %}
 </div>
