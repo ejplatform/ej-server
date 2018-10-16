@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.utils.text import slugify
 
 from .models import Board
 
@@ -17,7 +18,7 @@ def BoardFallbackMiddleware(get_response):  # noqa: N802
 
         # noinspection PyBroadException
         try:
-            slug = request.path.strip('/')
+            slug = slugify(request.path.strip('/'))
             if '/' in slug:
                 return response
             board = Board.objects.get(slug=slug)

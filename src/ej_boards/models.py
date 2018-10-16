@@ -1,10 +1,11 @@
 from django.conf import settings
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from django.utils.text import slugify
 from model_utils.models import TimeStampedModel
 
 from ej_conversations.models import Conversation, ConversationTag
-from .validators import validate_board_url
+from .validators import validate_board_slug
 
 
 class Board(TimeStampedModel):
@@ -14,7 +15,7 @@ class Board(TimeStampedModel):
     slug = models.SlugField(
         _('Slug'),
         unique=True,
-        validators=[validate_board_url],
+        validators=[validate_board_slug],
     )
     owner = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -29,6 +30,11 @@ class Board(TimeStampedModel):
         _('Description'),
         blank=True,
     )
+
+    def save(self, *args, **kwargs):
+        if self.pk is None:
+            self.slug = slugify(self.slug)
+        super().save(*args, **kwargs)
 
     @property
     def conversations(self):

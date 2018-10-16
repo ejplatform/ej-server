@@ -24,7 +24,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('created', model_utils.fields.AutoCreatedField(default=django.utils.timezone.now, editable=False, verbose_name='created')),
                 ('modified', model_utils.fields.AutoLastModifiedField(default=django.utils.timezone.now, editable=False, verbose_name='modified')),
-                ('slug', models.SlugField(help_text='Short text used to identify the board URL (e.g.: "johns-board")', unique=True, validators=[ej_boards.validators.validate_board_url], verbose_name='Slug')),
+                ('slug', models.SlugField(help_text='Short text used to identify the board URL (e.g.: "johns-board")', unique=True, validators=[ej_boards.validators.validate_board_slug], verbose_name='Slug')),
                 ('title', models.CharField(max_length=50, verbose_name='Title')),
                 ('description', models.TextField(blank=True, verbose_name='Description')),
                 ('owner', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='boards', to=settings.AUTH_USER_MODEL)),
