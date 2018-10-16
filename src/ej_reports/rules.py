@@ -13,6 +13,8 @@ def can_edit_conversation(user, conversation):
 
     if user.has_perm('ej.can_edit_conversation', conversation):
         return True
+    elif user.has_perm('ej.can_comment', conversation):
+        return True
     else:
         # Not implemented yet!
         return False
