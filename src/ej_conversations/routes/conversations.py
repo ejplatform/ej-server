@@ -4,7 +4,6 @@ from django.http import HttpResponseServerError, Http404
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from hyperpython import a
-from django.contrib.auth.models import AnonymousUser
 
 from boogie import rules
 from . import urlpatterns, conversation_url

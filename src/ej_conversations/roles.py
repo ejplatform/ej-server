@@ -3,7 +3,9 @@ from django.utils.translation import ugettext_lazy as _
 from hyperpython import a
 from hyperpython.django import csrf_input
 from boogie import rules
+from django.contrib.auth.models import AnonymousUser
 
+from ej_conversations.models import Vote
 from ej.roles import with_template
 from . import models
 
@@ -134,6 +136,8 @@ def comment_form(conversation, request=None, comment_content=None, **kwargs):
     Render comment form for one conversation.
     """
     user = getattr(request, 'user', None)
+    if isinstance(user, AnonymousUser):
+        voted = Vote.objects.filter(author=user).exists()
     n_comments = rules.compute('ej_conversations.remaining_comments', conversation, user)
     conversation_url = conversation.get_absolute_url()
     login = reverse('auth:login')
@@ -144,5 +148,6 @@ def comment_form(conversation, request=None, comment_content=None, **kwargs):
         'user_is_owner': conversation.author == user,
         'csrf_input': csrf_input(request),
         'comment_content': comment_content,
+        'voted': voted or None,
         'login_anchor': login_anchor,
     }
