@@ -152,13 +152,13 @@ def recover_password(request):
                 host = 'http://localhost:8000'
 
             else:
-                host = 'https://' + settings.HOSTNAME
+                host = 'http://' + settings.HOSTNAME
 
             user = User.objects.get_by_email(request.POST['email'])
             token = generate_token(user)
             template_message = template.render({'link': host + '/reset-password/' + token.url})
             send_mail(_("Please reset your password"), template_message,
-                      'noreply@ejplatform.org.br', [request.POST['email']],
+                      'empurrandojuntos@gmail.com', [request.POST['email']],
                       fail_silently=False)
 
     return {

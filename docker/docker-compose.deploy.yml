@@ -25,6 +25,7 @@ services:
       - ./env/django.env
       - ./env/postgres.env
       - ./env/deploy.env
+      - ./env/email.env
     volumes:
       - media_files:/app/local/media/
       - static_files:/app/local/static/
