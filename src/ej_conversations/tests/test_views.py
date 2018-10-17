@@ -56,7 +56,7 @@ class TestConversationBase:
         request = rf.post('', {'action': 'vote', 'vote': 'agree', 'comment_id': comment.id})
         request.user = user
         conversations.detail(request, conversation)
-        assert votes_counter(None)(comment) == 1
+        assert votes_counter(comment) == 1
 
     def test_invalid_vote_in_comment(self, rf, conversation, comment):
         request = rf.post('', {'action': 'vote', 'vote': 'INVALID', 'comment_id': comment.id})
