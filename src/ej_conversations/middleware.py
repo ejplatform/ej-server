@@ -1,4 +1,6 @@
 from django.conf import settings
+from django.http import Http404
+from django.urls import resolve
 from django.utils.text import slugify
 
 from ej_conversations.models import Conversation
@@ -8,8 +10,6 @@ def ConversationFallbackMiddleware(get_response):  # noqa: N802
     """
     Look for conversations urls after 404 errors.
     """
-    from .routes import detail
-    view_function = detail.as_view()
 
     def middleware(request):
         response = get_response(request)
@@ -19,11 +19,15 @@ def ConversationFallbackMiddleware(get_response):  # noqa: N802
         # noinspection PyBroadException
         try:
             slugfied_terms = [slugify(x) for x in request.path.split('/')]
-            slug = slugfied_terms[2]
+            new_path = '/'.join(slugfied_terms)
 
-            conversation = Conversation.objects.get(slug=slug)
-            return view_function(request, conversation=conversation)
+            view, args, kwargs = resolve(new_path)
+            new_response = view(request, **kwargs)
 
+            return new_response
+
+        except Http404:
+            return response
         except Conversation.DoesNotExist:
             return response
         except Exception:
