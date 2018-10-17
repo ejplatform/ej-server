@@ -103,7 +103,9 @@ publish web staging:
   environment: staging
   only:
     - master
-
+  except:
+    - tags
+  
 publish web cpa develop:
   extends: .publish web cpa
   environment: develop
@@ -115,7 +117,9 @@ publish web cpa staging:
   environment: staging
   only:
     - master
-
+  except:
+    - tags
+  
 publish ejplatform/web tagged:
   extends: .publish web generic
   script:
@@ -123,7 +127,6 @@ publish ejplatform/web tagged:
             -t ejplatform/web:$CI_COMMIT_TAG
             -t ejplatform/web:$DOCKER_TAG
             -t ejplatform/web:latest
-            --cache-from ejplatform/web:$CI_COMMIT_TAG
             --build-arg COMMIT_TITLE=\"$CI_COMMIT_TITLE\"
             --build-arg COMMIT_HASH=\"$CI_COMMIT_SHA\""
     - docker push ejplatform/web:$CI_COMMIT_TAG
@@ -141,7 +144,6 @@ publish mdhcpa/web tagged:
             -t mdhcpa/web:$CI_COMMIT_TAG
             -t mdhcpa/web:$DOCKER_TAG
             -t mdhcpa/web:latest
-            --cache-from mdhcpa/web:$CI_COMMIT_TAG
             --build-arg THEME=cpa
             --build-arg COMMIT_TITLE=\"$CI_COMMIT_TITLE\"
             --build-arg COMMIT_HASH=\"$CI_COMMIT_SHA\""
@@ -193,6 +195,8 @@ deploy generic dev:
 # deploy generic staging:
 #   extends: .deploy
 #   environment: staging
+#   except:
+#     - tags
 #   only:
 #     - master
 
@@ -212,6 +216,8 @@ deploy generic dev:
 # deploy cpa staging:
 #   extends: .deploy-cpa
 #   environment: staging
+#   except:
+#     - tags
 #   only:
 #     - master
 
