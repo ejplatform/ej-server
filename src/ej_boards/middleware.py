@@ -20,7 +20,8 @@ def BoardFallbackMiddleware(get_response):  # noqa: N802, C901
 
         # noinspection PyBroadException
         try:
-            slug = slugify(request.path.split('/')[1])
+            slugfied_terms = [slugify(x) for x in request.path.split('/')]
+            slug = slugfied_terms[1]
 
             if '/' in slug:
                 return response
@@ -28,7 +29,7 @@ def BoardFallbackMiddleware(get_response):  # noqa: N802, C901
             board = Board.objects.get(slug=slug)
 
             # make a url with the real board slug e.g.: /Slug/edit/ becomes /slug/edit/
-            new_path = board.get_absolute_url() + '/'.join(request.path.split('/')[2:])
+            new_path = '/'.join(slugfied_terms)
 
             try:
                 view, args, kwargs = resolve(new_path)
