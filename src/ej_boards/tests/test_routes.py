@@ -63,6 +63,17 @@ class TestBoardRoutes(TestCase):
         response = client.post('/profile/boards/add/', data=data)
         self.assertRedirects(response, '/slug/', 302, 200)
 
+    def test_create_invalid_board(self):
+        client = self.logged_client
+        data = {'slug': 's', 'title': 'title', 'description': ''}
+        response = client.post('/profile/boards/add/', data=data)
+        self.assertTrue(response.status_code, 200)
+
+    def test_get_create_board(self):
+        client = self.logged_client
+        response = client.get('/profile/boards/add')
+        self.assertTrue(response.status_code, 200)
+
     def test_create_board_anonymous_user(self):
         client = Client()
         response = client.get('/profile/boards/add/')
