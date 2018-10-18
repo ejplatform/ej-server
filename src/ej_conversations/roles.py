@@ -109,9 +109,10 @@ def comment_list_item(comment, **kwargs):
     """
 
     rejection_reason = comment.rejection_reason
-    if rejection_reason in dict(models.Comment.REJECTION_REASON):
+    if rejection_reason in dict(models.Comment.REJECTION_REASON) and comment.status == comment.STATUS.rejected:
         rejection_reason = dict(models.Comment.REJECTION_REASON)[comment.rejection_reason]
-
+    else:
+        rejection_reason = None
     return {
         'rejection_reasons': dict(models.Comment.REJECTION_REASON),
         'comment': comment,

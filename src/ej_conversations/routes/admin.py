@@ -1,10 +1,13 @@
 from django.db import transaction
-from django.http import Http404
+from django.http import Http404, HttpResponseServerError
 from django.shortcuts import redirect
+from logging import getLogger
 
 from ej_boards.models import BoardSubscription
 from . import urlpatterns, conversation_url
 from .. import forms, models
+
+log = getLogger('ej')
 
 
 @urlpatterns.route('add/', login=True, perms=['ej.can_add_promoted_conversation'])
@@ -72,10 +75,17 @@ def moderate_context(request, conversation):
     comments = []
     if request.method == 'POST':
         comment = models.Comment.objects.get(id=request.POST['comment'])
-        comment.status = comment.STATUS.approved if request.POST['vote'] == 'approve' else comment.STATUS.rejected
-        comment.rejection_reason = request.POST['rejection_reason']
+        if request.POST['vote'] == 'approve':
+            comment.status = comment.STATUS.approved
+            comment.rejection_reason = ''
+        elif request.POST['vote'] == 'disapprove':
+            comment.status = comment.STATUS.rejected
+            comment.rejection_reason = request.POST['rejection_reason']
+        else:
+            # User is probably trying to something nasty ;)
+            log.warning(f'user {request.user.id} sent invalid POST request: {request.POST}')
+            return HttpResponseServerError('invalid action')
         comment.save()
-
     status = request.GET.get('status')
     status = 'pending' if status not in ['pending', 'approved', 'rejected'] else status
     for comment in models.Comment.objects.filter(conversation=conversation, status=status):

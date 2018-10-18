@@ -71,9 +71,11 @@ the dev server::
 
 Before runing, make sure you regenerate the PO files and compile. It's necessary to compile sass either:
 
-    $ inv i18n
-    $ inv i18n -c
-    $ inv sass run
+    $ inv i18n  
+    
+    $ inv i18n -c  
+    
+    $ inv sass run  
 
 To run on brazilian portuguese:
 
