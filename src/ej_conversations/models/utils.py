@@ -1,8 +1,8 @@
-def votes_counter(choice):
+def votes_counter(comment, choice=None):
     if choice is not None:
-        return lambda comment: comment.votes.filter(choice=choice).count()
+        return comment.votes.filter(choice=choice).count()
     else:
-        return lambda comment: comment.votes.count()
+        return comment.votes.count()
 
 
 def normalize_status(value):

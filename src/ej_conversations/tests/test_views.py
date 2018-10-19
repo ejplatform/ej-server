@@ -1,11 +1,12 @@
 import pytest
 from django.contrib.auth.models import AnonymousUser
 from pytest import raises
+from django.http import HttpResponseServerError, Http404
 
 from ej_conversations import create_conversation
 from ej_conversations.models import Comment, FavoriteConversation
 from ej_conversations.models.utils import votes_counter
-from ej_conversations.routes import conversations, comments
+from ej_conversations.routes import conversations, comments, admin
 from ej_users.models import User
 
 
@@ -56,7 +57,7 @@ class TestConversationBase:
         request = rf.post('', {'action': 'vote', 'vote': 'agree', 'comment_id': comment.id})
         request.user = user
         conversations.detail(request, conversation)
-        assert votes_counter(None)(comment) == 1
+        assert votes_counter(comment) == 1
 
     def test_invalid_vote_in_comment(self, rf, conversation, comment):
         request = rf.post('', {'action': 'vote', 'vote': 'INVALID', 'comment_id': comment.id})
@@ -99,3 +100,41 @@ class TestConversationComments:
     def test_user_can_get_detail_of_a_comment(self, conversation, comment):
         ctx = comments.comment_detail(conversation, comment)
         assert ctx['comment'] is comment
+
+
+class TestAdminViews:
+    def test_author_can_moderate_conversation_approving_comment(self, rf, conversation):
+        other = User.objects.create_user('email@email.br', 'pass')
+        comment = conversation.create_comment(other, 'aa', check_limits=False)
+        assert comment.status == comment.STATUS.pending
+        request = rf.post('', {'comment': comment.id, 'vote': 'approve'})
+        request.user = User.objects.get(email='email@server.com')
+        admin.moderate(request, conversation)
+        comment.refresh_from_db()
+        assert comment.status == comment.STATUS.approved
+
+    def test_author_can_moderate_conversation_rejecting_comment(self, rf, conversation):
+        other = User.objects.create_user('email@email.br', 'pass')
+        comment = conversation.create_comment(other, 'aa', check_limits=False)
+        assert comment.status == comment.STATUS.pending
+        request = rf.post('', {'comment': comment.id, 'vote': 'disapprove', 'rejection_reason': 'offensive_language'})
+        request.user = User.objects.get(email='email@server.com')
+        admin.moderate(request, conversation)
+        comment.refresh_from_db()
+        assert comment.status == comment.STATUS.rejected
+
+    def test_author_try_moderate_invalid_vote(self, rf, conversation):
+        other = User.objects.create_user('email@email.br', 'pass')
+        comment = conversation.create_comment(other, 'aa', check_limits=False)
+        request = rf.post('', {'comment': comment.id, 'vote': 'other', 'rejection_reason': 'offensive_language'})
+        request.user = User.objects.get(email='email@server.com')
+        response = admin.moderate(request, conversation)
+        assert isinstance(response, HttpResponseServerError)
+
+    def test_author_try_moderate_unpromoted_conversation(self, rf, conversation):
+        request = rf.get('')
+        request.user = User.objects.get(email='email@server.com')
+        conversation.is_promoted = False
+        conversation.save()
+        with raises(Http404):
+            admin.moderate(request, conversation)
