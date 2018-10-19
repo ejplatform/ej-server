@@ -29,7 +29,7 @@ urlpatterns = Router(
 #
 # Cluster info
 #
-@urlpatterns.route('conversations/<model:conversation>/clusters/',
+@urlpatterns.route('conversations/<model:conversation>/clusters/', template='ej_clusters/list-cluster.jinja2',
                    perms=['ej.can_edit_conversation'])
 def index(conversation):
     clusters = proxy_seq(
@@ -96,9 +96,6 @@ def edit_stereotype(request, conversation, stereotype):
 def stereotype_vote(request, conversation, stereotype):
     if request.method == 'POST':
         for k, v in request.POST.items():
-            print(k)
-            print(v)
-            print(request.POST)
             if k.startswith('choice-'):
                 pk = int(k[7:])
                 comment = Comment.objects.get(pk=pk, conversation=conversation)

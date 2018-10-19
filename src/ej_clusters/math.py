@@ -126,7 +126,7 @@ def update_cluster_user_m2m(cluster_map, conversation):
             elif isinstance(users, QuerySet) or isinstance(users[0], user_model):
                 pass
             else:
-                users = user_model.objects.filter(username__in=users)
+                users = user_model.objects.filter(email__in=users)
             cluster.users.set(users)
         log.info(f'[cluster] clusters created for conversation "{conversation}"')
 
