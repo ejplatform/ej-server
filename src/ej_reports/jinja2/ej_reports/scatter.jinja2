@@ -26,19 +26,19 @@ var dom = document.getElementById("container");
 var myChart = echarts.init(dom);
 var app = {};
 var data_from_django = {{ plot_data }};
-console.log(data_from_django)
+console.log(data_from_django);
 option = null;
 option = {
     title: {
         text: 'Scatterplot'
     },
     legend: {
-        data: ['1990', '2014', '2018']
+        data: ['Null', 'Not filled', 'Male']
     },
     xAxis: {},
     yAxis: {},
     series: [{
-        name: '1990',
+        name: 'Male',
         data: data_from_django[0],
         type: 'scatter',
         symbolSize: function (data) {
@@ -48,7 +48,7 @@ option = {
             emphasis: {
                 show: true,
                 formatter: function (param) {
-                    return param.data[3];
+                    return 'Male';
                 },
                 position: 'top'
             }
@@ -68,7 +68,7 @@ option = {
             }
         }
     }, {
-        name: '2014',
+        name: 'Null',
         data: data_from_django[1],
         type: 'scatter',
         symbolSize: function (data) {
@@ -78,7 +78,7 @@ option = {
             emphasis: {
                 show: true,
                 formatter: function (param) {
-                    return param.data[3];
+                    return 'Not informed';
                 },
                 position: 'top'
             }
@@ -98,7 +98,7 @@ option = {
             }
         }
     }, {
-        name: '2018',
+        name: 'Not filled',
         data: data_from_django[2],
         type: 'scatter',
         symbolSize: function (data) {
@@ -108,7 +108,7 @@ option = {
             emphasis: {
                 show: true,
                 formatter: function (param) {
-                    return param.data[3];
+                    return 'Not filled';
                 },
                 position: 'top'
             }

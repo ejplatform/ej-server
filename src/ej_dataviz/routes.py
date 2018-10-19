@@ -42,11 +42,11 @@ def generate_scatter(request, conversation):
     data = []
     dict_data = {}
     print(len(gender), len(votes_array))
-    for item in range(len(gender)):
-        if gender[item][0] not in dict_data.keys():
-            dict_data[gender[item][0]] = []
-            votes_array[item].append(gender[item][0])
-        dict_data[gender[item][0]].append(votes_array[item])
+    for person in range(len(gender)):
+        if gender[person][0] not in dict_data.keys():
+            dict_data[gender[person][0]] = []
+        votes_array[person].append(gender[person][0])
+        dict_data[gender[person][0]].append(votes_array[person])
     for item in dict_data:
         data.append(dict_data[item])
     js_data = json.dumps(data)

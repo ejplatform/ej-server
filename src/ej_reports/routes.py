@@ -9,6 +9,7 @@ from ej_conversations.models import Conversation
 from ej_dataviz.routes import comments_table, participants_table, \
     generate_scatter, df_to_table, map_to_html_table, cluster_comments_table
 from hyperpython.components import hyperlink
+from .roles import file_button
 
 # from ej_profiles import get_profile
 
@@ -61,6 +62,7 @@ def index(request, conversation):
         'comments_table': df_to_table(comments),
         'participants_table': df_to_table(participants),
         'clusters': clusters,
+        'file_button': file_button,
     }
 
 
