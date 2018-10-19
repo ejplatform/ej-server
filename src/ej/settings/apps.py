@@ -16,6 +16,7 @@ class InstalledAppsConf(Base, EjOptions):
         # Core apps
         'ej_help',
         'ej_configurations',
+        'ej_notifications',
         'ej_profiles',
         'ej_users',
     ]
