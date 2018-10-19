@@ -79,11 +79,26 @@ def stereotype_list(conversation):
     }
 
 
+@urlpatterns.route('conversations/<model:conversation>/stereotypes/add/',
+                   perms=['ej.can_manage_stereotypes'])
+def create_stereotype(request, conversation):
+    return create_stereotype_context(request, conversation)
+
+
+@urlpatterns.route('conversations/<model:conversation>/stereotypes/<model:stereotype>/edit/',
+                   perms=['ej.can_manage_stereotypes'])
+def edit_stereotype(request, conversation, stereotype):
+    return edit_stereotype_context(request, conversation, stereotype)
+
+
 @urlpatterns.route('conversations/<model:conversation>/stereotypes/<model:stereotype>/',
                    perms=['ej.can_manage_stereotypes'])
 def stereotype_vote(request, conversation, stereotype):
     if request.method == 'POST':
         for k, v in request.POST.items():
+            print(k)
+            print(v)
+            print(request.POST)
             if k.startswith('choice-'):
                 pk = int(k[7:])
                 comment = Comment.objects.get(pk=pk, conversation=conversation)
@@ -102,18 +117,6 @@ def stereotype_vote(request, conversation, stereotype):
         'non_voted_comments_count': non_voted_comments.count(),
         'voted_comments_count': non_voted_comments.count(),
     }
-
-
-@urlpatterns.route('conversations/<model:conversation>/stereotypes/add/',
-                   perms=['ej.can_manage_stereotypes'])
-def create_stereotype(request, conversation):
-    return create_stereotype_context(request, conversation)
-
-
-@urlpatterns.route('conversations/<model:conversation>/stereotypes/<model:stereotype>/edit/',
-                   perms=['ej.can_manage_stereotypes'])
-def edit_stereotype(request, conversation, stereotype):
-    return edit_stereotype_context(request, conversation, stereotype)
 
 
 #
