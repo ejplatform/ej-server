@@ -27,3 +27,11 @@ def clusters(request):
         'user': user,
         # 'notifications': user.notifications.seen(),
     }
+
+@urlpatterns.route('inbox/')
+def inbox(request):
+    user = request.user
+    return {
+        'user': user,
+        'notifications':[]
+    }
