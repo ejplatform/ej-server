@@ -13,10 +13,12 @@ def file_button(information):
     Render a button on reports page.
     """
     content = []
-    for type, filename in information.items():
-        content.append(p(a(type, href_=filename)))
+    for item in information:
+        key_name = item
+        for name, type in information[item].items():
+            content.append(p(a(name, href_=f'{item}.{type}')))
 
     return div(class_='dropdown') [
-        button('Download users data', class_='dropbtn'),
+        button(f'Download {key_name} data', class_='dropbtn'),
         div(class_='dropdown-content')[content]
     ]

@@ -1,13 +1,13 @@
-# -*- coding: utf-8 -*-
-from __future__ import print_function
-
 import os
 
+import random
 from django.contrib.auth import get_user_model
 from django.core.management.base import BaseCommand
 from faker import Factory
+from ej_profiles.choices import Gender
 
 User = get_user_model()
+GENDER_CHOICES = list(Gender)
 
 
 class Command(BaseCommand):
@@ -68,7 +68,7 @@ class Command(BaseCommand):
         if admin:
             users_created = create_admin(admin_password, users_created)
         # Create user@user.com user
-        if admin:
+        if user:
             if not User.objects.filter(email='user@user.com'):
                 user = User.objects.create(
                     name='Joe User',
@@ -86,13 +86,18 @@ class Command(BaseCommand):
         # Create staff users
         for _ in range(staff):
             username = usernames.pop()
-            User.objects.create(
+            user = User.objects.create(
                 name=fake.name(),
                 email=username + '@' + fake.domain_name(),
                 is_active=True,
                 is_staff=True,
                 is_superuser=False,
             )
+            user.get_profile()
+            if random.random() < 0.5:
+                profile = user.get_profile()
+                profile.gender = random.choice([GENDER_CHOICES])
+
             users_created += 1
 
         # Create regular users

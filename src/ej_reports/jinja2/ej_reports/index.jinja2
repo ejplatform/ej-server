@@ -54,43 +54,23 @@
         {{ comment_data }}
         </br>
 
-        {{file_button({"CSV":"teste.csv"})}}
-        <div class="dropdown">
-            <button class="dropbtn">Download raw votes data</button>
-            <div class="dropdown-content">
-                <p><a href="votes.csv">CSV</a></p>
-                <p><a href="votes.msgpack">MessagePack</a></p>
-                <p><a href="votes.json">JSON</a></p>
-            </div>
-        </div>
-        <hr>
+        {{file_button({
+            "votes":{"CSV":"csv", "MessagePack":"msgpack", "JSON":"json"}})}}
 
         <h1>{{ _('Advanced info') }}</h1>
         <h2>{{ _('Comments') }}</h2>
         {{ comments_table }}
 
-        <div class="dropdown">
-            <button class="dropbtn">Download comments data</button>
-            <div class="dropdown-content">
-                <p><a href="comments.csv">CSV</a></p>
-                <p><a href="comments.msgpack">MessagePack</a></p>
-                <p><a href="comments.json">JSON</a></p>
-            </div>
-        </div>
+        {{file_button({
+            "comments":{"CSV":"csv", "MessagePack":"msgpack", "JSON":"json"}})}}
         <hr>
         </br>
 
         <h2>{{ _('Participants') }}</h2>
         {{ participants_table }}
 
-        <div class="dropdown">
-            <button class="dropbtn">Download users data</button>
-            <div class="dropdown-content">
-                <p><a href="users.csv">CSV</a></p>
-                <p><a href="users.msgpack">MessagePack</a></p>
-                <p><a href="users.json">JSON</a></p>
-            </div>
-        </div>
+        {{file_button({
+            "users":{"CSV":"csv", "MessagePack":"msgpack", "JSON":"json"}})}}
         <hr>
         </br>
         <div>
