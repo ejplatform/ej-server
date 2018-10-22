@@ -23,10 +23,12 @@ class TestConversation(ConversationRecipes):
         ]
 
         cmt = conversation.next_comment(user)
-        assert cmt == comments[0]
+        assert cmt == comments[1]
         assert cmt.status == cmt.STATUS.approved
-        assert cmt.author != user
         assert not Vote.objects.filter(author=user, comment=cmt)
+        cmt.vote(user, Choice.AGREE)
+        other_cmt = conversation.next_comment(user)
+        assert other_cmt.author != user
 
     def test_create_conversation_saves_model_in_db(self, user_db):
         conversation = create_conversation('what?', 'test', user_db)
@@ -66,11 +68,33 @@ class TestVote:
         with pytest.raises(ValidationError):
             comment_db.vote(user_db, 'agree')
 
-    def test_create_vote_happy_paths(self, comment_db, mk_user):
+    def test_create_agree_vote_happy_paths(self, comment_db, mk_user):
         vote1 = comment_db.vote(mk_user(email='user1@domain.com'), 'agree')
+        assert comment_db.agree_count == 1
+        assert comment_db.total_votes == 1
         vote2 = comment_db.vote(mk_user(email='user2@domain.com'), Choice.AGREE)
+        assert comment_db.agree_count == 2
+        assert comment_db.total_votes == 2
         assert vote1.choice == vote2.choice
 
     def test_create_vote_unhappy_paths(self, comment_db, user_db):
         with pytest.raises(ValueError):
             comment_db.vote(user_db, 42)
+
+    def test_create_disagree_vote_happy_paths(self, comment_db, mk_user):
+        vote1 = comment_db.vote(mk_user(email='user1@domain.com'), 'disagree')
+        assert comment_db.disagree_count == 1
+        assert comment_db.total_votes == 1
+        vote2 = comment_db.vote(mk_user(email='user2@domain.com'), Choice.DISAGREE)
+        assert comment_db.disagree_count == 2
+        assert comment_db.total_votes == 2
+        assert vote1.choice == vote2.choice
+
+    def test_create_skip_vote_happy_paths(self, comment_db, mk_user):
+        vote1 = comment_db.vote(mk_user(email='user1@domain.com'), 'skip')
+        assert comment_db.skip_count == 1
+        assert comment_db.total_votes == 1
+        vote2 = comment_db.vote(mk_user(email='user2@domain.com'), Choice.SKIP)
+        assert comment_db.skip_count == 2
+        assert comment_db.total_votes == 2
+        assert vote1.choice == vote2.choice

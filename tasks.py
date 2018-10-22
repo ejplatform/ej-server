@@ -30,7 +30,7 @@ def sass(ctx, watch=False, theme='default', trace=False, dry_run=False, rocket=T
     Run Sass compiler
     """
     theme, root = set_theme(theme)
-    root = f'{root}/scss/'
+    root = f'{root}scss/'
     os.environ['EJ_THEME'] = theme or 'default'
     go = runner(ctx, dry_run, pty=True)
     cmd = f'sass {root}main.scss:lib/build/css/main.css'
@@ -237,7 +237,7 @@ def docker(ctx, task, cmd=None, port=8000, clean_perms=False, prod=False,
     docker = su_docker('docker')
     do = runner(ctx, dry_run, pty=True)
     if compose_file is None and prod or task == 'production':
-        compose_file = 'docker/docker-compose.production.yml'
+        compose_file = 'docker/docker-compose.deploy.yml'
     elif compose_file is None:
         compose_file = 'docker/docker-compose.yml'
     compose = f'{docker}-compose -f {compose_file}'
@@ -470,7 +470,7 @@ def docker_deploy(ctx, task, environment='production', command=None, dry_run=Fal
     Start a deploy build for the platform.
     """
     os.environ.update(environment=environment, task=task)
-    compose_file = 'local/deploy/docker-compose.yml'
+    compose_file = 'local/deploy/docker-compose.deploy.yml'
     env = docker_deploy_variables('local/deploy/config.py')
     compose = su_docker(f'docker-compose -f {compose_file}')
     do = runner(ctx, dry_run, pty=True, env=env)
@@ -489,7 +489,7 @@ def docker_deploy(ctx, task, environment='production', command=None, dry_run=Fal
     elif task == 'notify':
         listeners = env.get('LISTENERS')
         if listeners is None:
-            print("Don't know hot to notify the infrastructure!")
+            print("Don't know how to notify the infrastructure!")
             print('(hmm, mail the sysadmin?)')
         for listener in listeners.split(','):
             do(f'sh local/deploy/notify.{listener}.sh')
@@ -503,6 +503,9 @@ def docker_deploy(ctx, task, environment='production', command=None, dry_run=Fal
 #
 @task
 def rocket(ctx, dry_run=False, command='up', background=False):
+    """
+    Run a Rocket.Chat instance using docker.
+    """
     go = runner(ctx, dry_run, pty=True)
     compose = su_docker('docker-compose')
     suffix = '-d ' if background else ''
@@ -547,9 +550,9 @@ def set_theme(theme):
         theme = os.path.basename(theme)
     elif 'EJ_THEME' in os.environ:
         theme = os.environ['EJ_THEME']
-        root = f'lib/themes/{theme}'
-    else:
         root = 'lib/' if theme == 'default' else f'lib/themes/{theme}/'
+    else:
+        root = 'lib/'
 
     os.environ['EJ_THEME'] = theme or 'default'
     return theme, root

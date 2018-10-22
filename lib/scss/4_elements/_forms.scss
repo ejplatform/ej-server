@@ -3,11 +3,10 @@
  ======================================================================== */
 @import '../2_tools/index';
 
-$form-border-color: $color-gray-dark !default;
 $form-element-color: $color-white !default;
 $form-element-color-text: $color-hint-text !default;
 $form-input-border-box: inset 0 1px 3px 0 rgba(0, 0, 0, 0.3);
-
+$form-border-color: $color-primary !default;
 
 input[type=email],
 input[type=number],
@@ -84,7 +83,7 @@ label {
 }
 
 input[type=submit] {
-    background: $color-action-default;
+    background: $color-accent;
     width: inherit;
 }
 

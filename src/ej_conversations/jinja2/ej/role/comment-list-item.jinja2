@@ -16,6 +16,14 @@
         </li>
     </ul>
     <div class="CommentListItem-footer">
-        {{ link(_('See Conversation'), href=conversation_url) }}
+        <div class="CommentListItem-footeritem CommentListItem-status CommentListItem-status-{{ status }}">
+            {{ status_name }}
+            {% if rejection_reason %}
+                &nbsp;({{ rejection_reason }})
+            {% endif %}
+        </div>
+        <div class="CommentListItem-footeritem">
+            {{ link(_('See Conversation'), href=conversation_url) }}
+        </div>
     </div>
 </div>

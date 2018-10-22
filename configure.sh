@@ -6,6 +6,6 @@ if [ -z $VIRTUAL_ENV ]; then
     exit
 fi
 echo "Installing chromedriver..."
-sh etc/scripts/chromedriver.sh
+# sh etc/scripts/chromedriver.sh
 pip install invoke
 inv configure --silent

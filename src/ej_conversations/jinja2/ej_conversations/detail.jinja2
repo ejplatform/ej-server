@@ -1,6 +1,5 @@
 {% extends 'base.jinja2' %}
 
-
 {% block content %}
     <div class="ConversationDetail">
         {# Ballon with title #}
@@ -14,11 +13,18 @@
             <div class="Comment">
                 <h1>{{ _('Congratulations!') }}</h1>
                 <p>{{ _("There are no comments left to vote :)") }}</p>
+                 <p>
+                    {# FIXME Add a less hardcoded pluralization  #}
+                    {{ _("You have {} comment{} under moderation.").format(comments_under_moderation, "" if comments_under_moderation == 1 else "s")}}
+                    {% if comments_under_moderation > 0 %}
+                        {{ link(_('Click here'), href='/profile/') }}
+                        {{ _("to see {}.").format("it" if comments_under_moderation == 1 else "them") }}
+                    {% endif %}
+                </p>
             </div>
         {% endif %}
 
         {# Post a new comment #}
-        {{ conversation|role('comment-form') }}
-
+        {{ conversation|role('comment-form', comment_content=comment_form) }}
     </div>
 {% endblock %}

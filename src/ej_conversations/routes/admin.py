@@ -1,10 +1,13 @@
 from django.db import transaction
-from django.http import Http404
+from django.http import Http404, HttpResponseServerError
 from django.shortcuts import redirect
+from logging import getLogger
 
 from ej_boards.models import BoardSubscription
 from . import urlpatterns, conversation_url
 from .. import forms, models
+
+log = getLogger('ej')
 
 
 @urlpatterns.route('add/', login=True, perms=['ej.can_add_promoted_conversation'])
@@ -16,7 +19,7 @@ def create(request):
                 author=request.user,
                 is_promoted=True,
             )
-        return redirect(conversation.get_absolute_url())
+        return redirect(conversation.get_absolute_url() + 'stereotypes/')
 
     return {'form': form}
 
@@ -57,11 +60,14 @@ def edit_context(request, conversation):
             if comment.is_pending:
                 comments.append(comment)
 
+    user = request.user
     return {
         'conversation': conversation,
+        'can_promote_conversation': user.has_perm('can_publish_promoted'),
         'comments': comments,
         'board': board,
         'form': form,
+        'manage_stereotypes_url': conversation.get_absolute_url() + 'stereotypes/',
     }
 
 
@@ -69,14 +75,24 @@ def moderate_context(request, conversation):
     comments = []
     if request.method == 'POST':
         comment = models.Comment.objects.get(id=request.POST['comment'])
-        comment.status = comment.STATUS.approved if request.POST['vote'] == 'approve' else comment.STATUS.rejected
-        comment.rejection_reason = request.POST['rejection_reason']
+        if request.POST['vote'] == 'approve':
+            comment.status = comment.STATUS.approved
+            comment.rejection_reason = ''
+        elif request.POST['vote'] == 'disapprove':
+            comment.status = comment.STATUS.rejected
+            comment.rejection_reason = request.POST['rejection_reason']
+        else:
+            # User is probably trying to something nasty ;)
+            log.warning(f'user {request.user.id} sent invalid POST request: {request.POST}')
+            return HttpResponseServerError('invalid action')
         comment.save()
-
-    for comment in models.Comment.objects.filter(conversation=conversation, status='pending'):
-        if comment.is_pending:
-            comments.append(comment)
+    status = request.GET.get('status')
+    status = 'pending' if status not in ['pending', 'approved', 'rejected'] else status
+    for comment in models.Comment.objects.filter(conversation=conversation, status=status):
+        comments.append(comment)
     return {
         'conversation': conversation,
+        'comment_status': status,
+        'edit_url': conversation.get_absolute_url() + 'edit/',
         'comments': comments,
     }

@@ -1,5 +1,6 @@
 {% extends 'base.jinja2' %}
 {% from 'ej_conversations/components/comment-list.jinja2' import comment_list %}
+{% from 'ej_conversations/components/simple-tab.jinja2' import simple_tab %}
 
 {% block content %}
     <div class="Moderate">
@@ -14,8 +15,7 @@
                 </div>
                 <h1>{{ conversation.text }}</h1>
                 <div class="Conversation-edit">
-                    {{ action_button( _('Edit Conversation'), 'conversation:edit',
-                                     url_args={'conversation': conversation}) }}
+                    {{ action_button( _('Edit Conversation'), edit_url) }}
                 </div>
             </div>
 
@@ -23,13 +23,12 @@
         </div>
         <div class="Moderate-comments">
             <h1>{{ _('Comments in this conversation') }}</h1>
-            {% if comments | length >= 1 %}
-                {% for comment in comments %}
-                    {{ comment|role('moderate') }}
-                {% endfor %}
-            {% else %}
-                <p>{{ _('No comments left') }}</p>
-            {% endif %}
+            <ul class="Moderate-comments-tabs">
+              {{ simple_tab(comment_status, 'pending', conversation.get_absolute_url() + 'moderate?status=pending', _('Pending')) }}
+              {{ simple_tab(comment_status, 'approved', conversation.get_absolute_url() + 'moderate?status=approved', _('Approved')) }}
+              {{ simple_tab(comment_status, 'rejected', conversation.get_absolute_url() + 'moderate?status=rejected', _('Rejected')) }}
+            </ul>
+            {{ comment_list(comments, request=request) }}
         </div>
     </div>
 {% endblock %}

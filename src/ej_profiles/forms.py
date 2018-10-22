@@ -8,12 +8,24 @@ EDITABLE_FIELDS = ['city', 'state', 'country', 'gender', 'race', 'ethnicity', 'p
 EXCLUDE_EDITABLE_FIELDS = settings.EJ_EXCLUDE_PROFILE_FIELDS
 
 
+class UsernameForm(ModelForm):
+
+    class Meta:
+
+        model = models.User
+        fields = ['name']
+        help_texts = {
+            'name': '',
+        }
+
+
 class ProfileForm(ModelForm):
     """
     User profile form
     """
 
     class Meta:
+
         model = models.Profile
         fields = [field for field in EDITABLE_FIELDS if field not in EXCLUDE_EDITABLE_FIELDS]
         widgets = {

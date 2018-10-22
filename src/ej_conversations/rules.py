@@ -6,6 +6,8 @@ from django.utils.timezone import now
 
 from boogie import rules
 
+from .models import Comment
+
 
 #
 # Global values and configurations
@@ -50,6 +52,14 @@ def next_comment(conversation, user):
     """
     Return a randomly selected comment for the user to vote.
     """
+    unvoted_own_comments = conversation.approved_comments.filter(
+        ~Q(votes__author_id=user.id),
+        author_id=user.id,
+    )
+    own_size = unvoted_own_comments.count()
+    if own_size:
+        return unvoted_own_comments[randrange(0, own_size)]
+
     unvoted_comments = conversation.approved_comments.filter(
         ~Q(author_id=user.id),
         ~Q(votes__author_id=user.id),
@@ -73,6 +83,16 @@ def remaining_comments(conversation, user):
         return 0
     comments = user.comments.filter(conversation=conversation).count()
     return max(max_comments_per_conversation() - comments, 0)
+
+
+@rules.register_value('ej_conversations.comments_under_moderation')
+def comments_under_moderation(conversation, user):
+    """
+    The number of comments under moderation of a user in a conversation.
+    """
+    if user.id is None:
+        return 0
+    return user.comments.filter(conversation=conversation, status=Comment.STATUS.pending).count()
 
 
 @rules.register_value('ej_conversations.vote_cooldown')

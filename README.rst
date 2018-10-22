@@ -41,7 +41,7 @@ _Invoke: http://www.pyinvoke.org/
 Local development (virtualenv)
 ------------------------------
 
-EJ platform **requires** you to `Prepare environment`_ + with the
+EJ platform **requires** you to _`Prepare environment` + with the
 development headers. Please install those packages using your distro package
 manager. This is a list of packages that you should have installed locally:
 
@@ -64,10 +64,22 @@ command.
 Running it
 ~~~~~~~~~~
 
-Unless you prefer to type long django management commands, use IThere are many other nvoke_ to start
+Unless you prefer to type long django management commands, use Invoke_ to start
 the dev server::
 
     $ inv run
+
+Before runing, make sure you regenerate the PO files and compile. It's necessary to compile sass either:
+
+    $ inv i18n  
+    
+    $ inv i18n -c  
+    
+    $ inv sass run  
+
+To run on brazilian portuguese:
+
+    $ export COUNTRY=brasil
 
 Tests are executed with Pytest_::
 
@@ -108,6 +120,10 @@ development::
 This creates a few conversations with comments and votes plus several users and
 an admin:admin <admin@admin.com> user.
 
+Documentation
+~~~~~~~~~~~~~
+
+Documentation can be updated with `$ sphinx-build docs build/docs` and will be available at http://localhost:8000/docs.
 
 Using docker
 ------------
