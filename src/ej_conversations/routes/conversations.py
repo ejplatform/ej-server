@@ -24,6 +24,13 @@ def conversation_list(request):
     }
 
 
+@urlpatterns.route(conversation_url + 'promote')
+def conversation_promote(conversation, request):
+    return{
+        'teste': 0
+    }
+
+
 @urlpatterns.route(conversation_url)
 def detail(request, conversation):
     if not conversation.is_promoted:
