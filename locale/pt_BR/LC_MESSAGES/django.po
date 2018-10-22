@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-15 15:05+0000\n"
+"POT-Creation-Date: 2018-10-22 16:17+0000\n"
 "PO-Revision-Date: 2018-10-15 12:10-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: \n"
@@ -22,6 +22,45 @@ msgstr ""
 #: docs/_templates/layout.html:3
 msgid "Documentation"
 msgstr "Documentação"
+
+#: ext-apps/django-courier/courier/models.py:11
+#, fuzzy
+msgid "Sender"
+msgstr "Remetende"
+
+#: ext-apps/django-courier/courier/models.py:12 src/ej_boards/models.py:25
+#: src/ej_conversations/models/conversation.py:57
+msgid "Title"
+msgstr "Título"
+
+#: ext-apps/django-courier/courier/models.py:14
+msgid "Short Description"
+msgstr "Descrição curta"
+
+#: ext-apps/django-courier/courier/models.py:29
+msgid "Waiting"
+msgstr "Esperando"
+
+#: ext-apps/django-courier/courier/models.py:30
+msgid "Read"
+msgstr "Lido"
+
+#: ext-apps/django-courier/courier/models.py:31
+msgid "Seen"
+msgstr "Visto"
+
+#: ext-apps/django-courier/courier/models.py:32
+msgid "Unseen"
+msgstr "Não Visto"
+
+#: ext-apps/django-courier/courier/models.py:44
+#, fuzzy
+msgid "Status"
+msgstr "Estado"
+
+#: ext-apps/django-courier/courier/pushnotifications/providers/onesignal/models.py:14
+msgid "OneSignal Id"
+msgstr "Id OneSignal"
 
 #: local/vendor/django-boogie/src/boogie/apps/users/models.py:23
 #: local/vendor/django-boogie/src/boogie/models/abstract/user.py:64
@@ -492,10 +531,6 @@ msgstr "Murais"
 msgid "Slug"
 msgstr "Identificador"
 
-#: src/ej_boards/models.py:25 src/ej_conversations/models/conversation.py:57
-msgid "Title"
-msgstr "Título"
-
 #: src/ej_boards/models.py:29 src/ej_clusters/models.py:127
 #: src/ej_clusters/models.py:194
 msgid "Description"
@@ -796,7 +831,7 @@ msgstr ""
 "Comentários promovidos são priorizados no momento da exibição aleatória de "
 "comentários aos usuários."
 
-#: src/ej_conversations/models/comment.py:103
+#: src/ej_conversations/models/comment.py:111
 msgid "Must give a reason to reject a comment"
 msgstr "Deve fornecer uma razão para rejeitar o comentário"
 
@@ -1120,11 +1155,11 @@ msgstr "Usuário administrativo"
 msgid "Regular user"
 msgstr "Usuário regular"
 
-#: src/ej_profiles/routes.py:89
+#: src/ej_profiles/routes.py:85
 msgid "My conversations"
 msgstr "Suas conversas"
 
-#: src/ej_profiles/routes.py:90
+#: src/ej_profiles/routes.py:86
 msgid "See all conversations created by you"
 msgstr "Ver todas as conversas criadas por você"
 
@@ -2332,28 +2367,6 @@ msgstr "Atualizar"
 #, fuzzy
 #~ msgid "User updated at"
 #~ msgstr "Atualizado em"
-
-#, fuzzy
-#~ msgid "Sender"
-#~ msgstr "Remetende"
-
-#~ msgid "Short Description"
-#~ msgstr "Descrição curta"
-
-#~ msgid "Waiting"
-#~ msgstr "Esperando"
-
-#~ msgid "Read"
-#~ msgstr "Lido"
-
-#~ msgid "Seen"
-#~ msgstr "Visto"
-
-#~ msgid "Unseen"
-#~ msgstr "Não Visto"
-
-#~ msgid "OneSignal Id"
-#~ msgstr "Id OneSignal"
 
 #~ msgid "s comments"
 #~ msgstr " comentários"
