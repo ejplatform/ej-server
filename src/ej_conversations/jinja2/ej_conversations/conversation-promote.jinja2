@@ -1,0 +1,8 @@
+{% extends 'base.jinja2' %}
+{% block content %}
+{{ conversations|role('balloon') }}
+
+    <h1>{{title}}</h1>
+    {{ comments|role('promote') }}
+
+{% endblock %}

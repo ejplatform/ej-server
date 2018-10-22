@@ -129,6 +129,34 @@ def comment_list_item(comment, **kwargs):
         'disagree': comment.disagree_count,
     }
 
+@with_template(models.Comment, role='promote')
+def comment_promote(comment, **kwargs):
+    """
+    Show each comment as an item in a list of comments.
+    """
+
+    rejection_reason = comment.rejection_reason
+    if rejection_reason in dict(models.Comment.REJECTION_REASON) and comment.status == comment.STATUS.rejected:
+        rejection_reason = dict(models.Comment.REJECTION_REASON)[comment.rejection_reason]
+    else:
+        rejection_reason = None
+    return {
+        'rejection_reasons': dict(models.Comment.REJECTION_REASON),
+        'comment': comment,
+        'content': comment.content,
+        'creation_date': comment.created.strftime('%d-%m-%Y às %Hh %M'),
+        'conversation_url': comment.conversation.get_absolute_url(),
+        'status': comment.status,
+        'status_name': dict(models.Comment.STATUS)[comment.status].capitalize(),
+        'rejection_reason': rejection_reason,
+
+        # Votes
+        'agree': comment.agree_count,
+        'skip': comment.skip_count,
+        'disagree': comment.disagree_count,
+    }
+
+
 
 @with_template(models.Conversation, role='comment-form')
 def comment_form(conversation, request=None, comment_content=None, **kwargs):

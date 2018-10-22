@@ -1,0 +1,22 @@
+<div class="CommentListItem">
+    <div class="CommentListItem-header">
+        <span class='date'>{{ creation_date }}</span>
+    </div>
+    <div class="CommentListItem-content">{{ content }}</div>
+    <ul class="CommentListItem-actions" style="list-style-type:none">
+        <li class='agree'>
+            <i class="fas fa-check"></i><span>{{ agree }}</span>
+        </li>
+        <li class="CommentListItem-skip">
+            <i class="fas fa-arrow-right"></i><span>{{ skip }}</span>
+        </li>
+        <li class="CommentListItem-disagree">
+            <i class="fas fa-times"></i><span>{{ disagree }}</span>
+        </li>
+    </ul>
+    <div class="CommentListItem-footer">
+        <div class="CommentListItem-footeritem">
+            <a class="Link-new" href=""><i class="far fa-hand-point-up"></i> {{ _('Promote') }}</a>
+        </div>
+    </div>
+</div>
