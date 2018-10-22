@@ -14,6 +14,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='board',
             name='slug',
-            field=models.SlugField(unique=True, validators=[ej_boards.validators.validate_board_url], verbose_name='Slug'),
+            field=models.SlugField(unique=True, validators=[ej_boards.validators.validate_board_slug], verbose_name='Slug'),
         ),
     ]
