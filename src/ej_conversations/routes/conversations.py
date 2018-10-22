@@ -3,6 +3,7 @@ from django.http import HttpResponseServerError, Http404
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from hyperpython import a
+from boogie import rules
 
 from . import urlpatterns, conversation_url
 from ..models import Conversation, Comment
@@ -43,6 +44,7 @@ def conversation_detail_context(request, conversation):
     is_favorite = user.is_authenticated and conversation.followers.filter(user=user).exists()
     comment = None
     comment_form = CommentForm(request.POST or None, conversation=conversation)
+    n_comments_under_moderation = rules.compute('ej_conversations.comments_under_moderation', conversation, user)
 
     # User is voting in the current comment. We still need to choose a random
     # comment to display next.
@@ -82,6 +84,7 @@ def conversation_detail_context(request, conversation):
         'can_view_comment': user.is_authenticated,
         'can_edit': user.has_perm('ej.can_edit_conversation', conversation),
         'cannot_comment_reason': '',
+        'comments_under_moderation': n_comments_under_moderation,
     }
 
 
