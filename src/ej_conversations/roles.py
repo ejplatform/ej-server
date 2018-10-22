@@ -120,7 +120,6 @@ def comment_list_item(comment, **kwargs):
         'creation_date': comment.created.strftime('%d-%m-%Y às %Hh %M'),
         'conversation_url': comment.conversation.get_absolute_url(),
         'status': comment.status,
-        'status_name': dict(models.Comment.STATUS)[comment.status].capitalize(),
         'rejection_reason': rejection_reason,
 
         # Votes
@@ -128,6 +127,7 @@ def comment_list_item(comment, **kwargs):
         'skip': comment.skip_count,
         'disagree': comment.disagree_count,
     }
+
 
 @with_template(models.Comment, role='promote')
 def comment_promote(comment, **kwargs):
@@ -155,7 +155,6 @@ def comment_promote(comment, **kwargs):
         'skip': comment.skip_count,
         'disagree': comment.disagree_count,
     }
-
 
 
 @with_template(models.Conversation, role='comment-form')
