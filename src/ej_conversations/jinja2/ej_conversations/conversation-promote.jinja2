@@ -2,7 +2,9 @@
 {% block content %}
 {{ conversations|role('balloon') }}
 
-    <h1>{{title}}</h1>
-    {{ comments|role('promote') }}
 
+    <div class="Profile">
+       <h1>{{title}}</h1>
+    {{ comments|role('promote') }}
+    </div>
 {% endblock %}
