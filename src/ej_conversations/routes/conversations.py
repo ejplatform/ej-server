@@ -3,6 +3,7 @@ from django.http import HttpResponseServerError, Http404
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from hyperpython import a
+from boogie import rules
 
 from . import urlpatterns, conversation_url
 from ..models import Conversation, Comment
@@ -83,6 +84,7 @@ def conversation_detail_context(request, conversation):
         'can_view_comment': user.is_authenticated,
         'can_edit': user.has_perm('ej.can_edit_conversation', conversation),
         'cannot_comment_reason': '',
+        'comments_under_moderation': n_comments_under_moderation,
     }
 
 
