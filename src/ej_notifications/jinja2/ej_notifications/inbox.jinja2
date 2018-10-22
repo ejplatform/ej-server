@@ -1,5 +1,36 @@
 {% extends 'base.jinja2' %}
 
 {% block content %}
-    Under construction :P
+    <div class="Inbox">
+        <div class="Inbox-config">
+            <div>
+                <p>{{_('Limit Notifications')}}</p>
+                <i class="fa fa-cog"></i>
+            </div>
+            <div>
+                <div>
+                    <p>{{_('Max per day')}}</p>
+                    <div>
+                        <input type="radio">1
+                        <input type="radio">3
+                    </div>
+                </div>
+                <div>
+                    <p>{{_('Max per week')}}</p>
+                    <div>
+                        <input type="radio">1
+                        <input type="radio">5
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="Inbox-notifications">
+            {% for item in notifications %}
+                <p>
+                    {{item.notification}}
+                    Restam: {{item.remaining_time}} hora(s)
+                </p>
+            {% endfor %}
+        </div>
+    </div>
 {% endblock %}

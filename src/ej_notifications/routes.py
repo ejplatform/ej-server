@@ -33,5 +33,14 @@ def inbox(request):
     user = request.user
     return {
         'user': user,
-        'notifications':[]
+        'notifications':[
+            {
+                "notification": "Você recebeu o poder Ponte de diálogo. Promova um comentário ou crie um comentário promovido",
+                "remaining_time": 35,
+            },
+            {
+                "notification": "Você recebeu o poder Ponte ativista de minoria. Crie um comentário promovido",
+                "remaining_time": 35,
+            }
+        ],
     }
