@@ -1,0 +1,33 @@
+/*
+ NOTIFICATION PAGE
+ ======================================================================== */
+ @import '../2_tools/index';
+
+.Inbox {
+    width: 90vw;
+    margin: 0 auto;
+
+    &-config {
+        &-title {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid $color-secundary;
+            p {
+                margin: $spacing-unit-tiny 0;
+            }
+            i {
+                color: $color-secundary;
+                font-size: $font-size-large;
+            }
+        }
+        &-options {
+            display: flex;
+            flex-direction: row;
+            align-content: center;
+            justify-content: space-between;
+
+        }
+    }
+}
