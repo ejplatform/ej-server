@@ -1,0 +1,32 @@
+{% macro modalities(title, content) %}
+    <div class="modalities">
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                <h3>{{title}}</h3>
+                <p>{{content}}</p>
+                </div>
+                <div class="swiper-slide">sdghfaksjdhgaskdjhaskdjh</div>
+            </div>
+            <div class="swiper-pagination"></div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+        </div>
+    <script>
+        var swiper = new Swiper('.swiper-container', {
+            pagination: {
+                el: '.swiper-pagination',
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+        });
+    </script>
+    <script>
+        function showModalities-slider() {
+            var x = document.getElementByClassName("modalities-slider");
+            x.className = "show";
+        }
+    </script>
+{% endmacro %}

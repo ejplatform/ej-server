@@ -8,7 +8,7 @@ from hyperpython import a
 from boogie import rules
 from . import urlpatterns, conversation_url
 from ..forms import CommentForm
-from ..models import Conversation, Comment
+from ..models import Conversation, Comment, Vote
 from ej_conversations.rules import max_comments_per_conversation
 
 log = getLogger('ej')
@@ -76,12 +76,11 @@ def get_conversation_detail_context(request, conversation):
 
     n_comments_under_moderation = rules.compute('ej_conversations.comments_under_moderation', conversation, user)
     if user.is_authenticated:
+        voted = Vote.objects.filter(author=user).exists()
         comments_made = user.comments.filter(conversation=conversation).count()
     else:
         comments_made = 0
 
-    if isinstance(user, AnonymousUser):
-        voted = Vote.objects.filter(author=user).exists()
     return {
         # Objects
         'conversation': conversation,

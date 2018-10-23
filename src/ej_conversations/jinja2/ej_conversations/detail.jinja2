@@ -1,6 +1,17 @@
 {% extends 'base.jinja2' %}
+{% from 'components/generic/modalities-slider.jinja2' import modalities with context %}
 
 {% block content %}
+    <div class="Modalities-slider">
+        {% if voted == None %}
+            {{modalities("Bem Vinda(o)", "Você está com cede e  não sai para beber água por que?")}}
+            <script>
+                showModalities-slider()
+            </script>
+        {% else %}
+            {{voted}}
+        {% endif %}
+    </div>
     <div class="ConversationDetail">
         {# Ballon with title #}
         {{ conversation|role('balloon') }}
@@ -36,7 +47,7 @@
                     <i class="fas fa-plus"></i> {{ _("CREATE COMMENT") }}
                 </button>
             </p>
-            
+
             <p>{{ _("{}/{} comment{}.").format(comments_made, max_comments if can_comment else 0, "" if max_comments == 1 else "s")}}</p>
             <p>{{ _("{} waiting moderation.").format(comments_under_moderation)}}</p>
         </div>

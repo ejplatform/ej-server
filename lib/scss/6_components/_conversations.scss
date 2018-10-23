@@ -432,6 +432,83 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
     }
 
 }
+.Modalities-slider{
+    .modalities{
+        /*width: 100vw;
+        display: block;
+        background-color: rgba(0, 0, 0, 0.3);
+        padding-right: 0;
+        z-index: 4;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        outline: 0;
+        line-height: 1.2;
+        text-align: center;
+        border-radius: 7px;
+        position: absolute;*/
+        display: flex;
+        align-content: center;
+        flex-direction: column;
+        align-items: center;
+        align-self: center;
+        background-color: rgba(0, 0, 0, 0.3);
+        padding-right: 0;
+        position: absolute;
+        z-index: 4;
+        top: $spacing-unit-huge * 2;
+        //top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        outline: 0;
+        .swiper-slide {
+            line-height: 1.2;
+            bottom: auto;
+            background-color: $color-content;
+            text-align: center;
+            border-radius: 7px;
+            position: relative;
+            border: 1px solid $color-accent;
+            padding: $spacing-padding;
+            /*margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            display: flex;
+            align-content: center;
+            flex-direction: column;
+            align-items: center;
+            align-self: center;
+            z-index: 4;
+            text-align: center;
+            bottom: auto;
+            background-color: $color-content;
+            bottom: auto;
+            border: 1px solid $color-accent;
+            line-height: 1.2;
+            border-radius: 7px;
+            padding: $spacing-padding; */
+            p {
+                padding: 0 0 $spacing-unit-large 0;
+                margin: 0;
+                font-size: $font-size-small;
+                color: $color-content;
+            }
+            h3{
+                padding: $spacing-unit-tiny 0 0 0;
+                margin: 0;
+                font-family: $font-raleway;
+                font-weight: bold;
+                font-size: $font-size-default;
+                color: $color-accent;
+            }
+        }
+    }
+
+    .modalities-slider.show{
+        visibility: visible;
+    }
+}
 
 .Comment-create{
     position: relative;
@@ -452,6 +529,8 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
 
 .Comment {
     position: relative;
+    background-color: $color-background;
+    color: $color-accent;
     min-height: 300px !important;
     width: 100% !important;
     max-width: $header-wrapper-max-width;
@@ -501,7 +580,6 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
                 background: $color-primary-text;
                 padding: 0;
             }
-
             ul {
                 display: flex;
                 font-weight: bold;
@@ -740,8 +818,8 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
                     border: $border-radius-tiny solid $color-primary;
                     border-radius: $spacing-unit-large;
                     padding: $spacing-unit-tiny;
+                }
             }
-        }
         }
     }
 
@@ -751,54 +829,6 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
         animation: fade 8s both;
     }
 
-    #modalities{
-        div{
-            display: flex;
-            align-content: center;
-            flex-direction: column;
-            align-items: center;
-            align-self: center;
-            background-color: rgba(0, 0, 0, 0.3);
-            padding-right: 0;
-            position: absolute;
-            z-index: 3;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
-            outline: 0;
-            div {
-                line-height: 1.2;
-                bottom: auto;
-                background-color: $color-content;
-                text-align: center;
-                border-radius: 7px;
-                position: relative;
-                top: $spacing-unit-huge * 2;
-                border: 1px solid $color-magenta;
-                padding: $spacing-padding;
-                //max-width: $spacing-unit-huge;
-                p {
-                    padding: 0 0 $spacing-unit-tiny 0;
-                    margin: 0;
-                    font-size: $font-size-small;
-                    color: $toast-font-color;
-                }
-                h3{
-                    padding: $spacing-unit-tiny 0 0 0;
-                    margin: 0;
-                    font-family: $font-raleway;
-                    font-weight: bold;
-                    font-size: $font-size-default;
-                    color: $color-magenta;
-                }
-            }
-        }
-    }
-
-    #modalities.show{
-        visibility: visible;
-    }
 
 
     @keyframes fade {
@@ -815,9 +845,9 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
         100% {opacity: 0;}
 
     }
-
-
 }
+
+
 
 .CircleButton {
     @include color('content');

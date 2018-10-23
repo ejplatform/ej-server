@@ -36,12 +36,4 @@
     {% else %}
         <p>{% trans %}Please {{ login_anchor }} to vote on this conversation.{% endtrans %}</p>
     {% endif %}
-    {% if voted == None %}
-        {{modalities("Bem Vinda(o)", "Você está com cede e  não sai para beber água por que?")}}
-        <script>
-            showModalities()
-        </script>
-    {% else %}
-        {{voted}}
-    {% endif %}
 </div>
