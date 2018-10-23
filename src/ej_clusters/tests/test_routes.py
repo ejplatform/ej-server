@@ -138,42 +138,43 @@ class TestStereotypeRoutes:
         response = routes.edit_stereotype(request, stereotype.conversation, stereotype)
         assert not response['votes_form'].is_valid()
 
-        def test_edit_get_stereotype(self, rf, user, stereotype):
-            request = rf.get('')
-            request.user = user
-            response = routes.edit_stereotype(request, stereotype.conversation, stereotype)
-            assert response['stereotype_form']
-            assert response['votes_form']
+    def test_edit_get_stereotype(self, rf, user, stereotype):
+        request = rf.get('')
+        request.user = user
+        response = routes.edit_stereotype(request, stereotype.conversation, stereotype)
+        assert response['stereotype_form']
+        assert response['votes_form']
 
-        def test_edit_stereotype_of_other_conversation(self, user, rf):
-            another_conversation = Conversation.objects.create(title='other_conversation', author=user)
-            comment = another_conversation.create_comment(self.user, 'comment', 'approved')
-            stereotype = Stereotype.objects.create(name='stereo', conversation=another_conversation, owner=user)
-            StereotypeVote.objects.create(author=stereotype, choice=Choice.SKIP, comment=comment)
-            data = {'name': 'stereo',
-                    'form-TOTAL_FORMS': 1,
-                    'form-INITIAL_FORMS': 0,
-                    'form-MIN_NUM_FORMS': 0,
-                    'form-MAX_NUM_FORMS': 1000,
-                    'form-0-comment': '30',
-                    'form-0-choice': '1',
-                    'form-0-id': ''}
-            request = rf.post('', data)
-            request.user = user
-            with pytest.raises(Http404):
-                routes.edit_stereotype(request, stereotype.conversation, stereotype)
+    def test_edit_stereotype_of_other_conversation(self, user, rf, conversation):
+        another_conversation = Conversation.objects.create(title='other_conversation', author=user)
+        comment = another_conversation.create_comment(user, 'comment', 'approved')
+        stereotype = Stereotype.objects.create(name='stereo', conversation=conversation, owner=user)
+        StereotypeVote.objects.create(author=stereotype, choice=Choice.SKIP, comment=comment)
+        data = {'name': 'stereo',
+                'form-TOTAL_FORMS': 1,
+                'form-INITIAL_FORMS': 0,
+                'form-MIN_NUM_FORMS': 0,
+                'form-MAX_NUM_FORMS': 1000,
+                'form-0-comment': '30',
+                'form-0-choice': '1',
+                'form-0-id': ''}
+        request = rf.post('', data)
+        request.user = user
+        with pytest.raises(Http404):
+            routes.edit_stereotype(request, another_conversation, stereotype)
 
-        def test_stereotype_vote_post(self, rf, user, conversation, stereotype, comment):
-            data = {'choice-' + str(comment.id): ['DISAGREE']}
-            request = rf.post('', data)
-            request.user = user
-            response = routes.stereotype_vote(request, conversation, stereotype)
-            assert response['conversation'] == conversation
-            assert response['stereotype'] == stereotype
+    def test_stereotype_vote_post(self, rf, user, conversation, stereotype, comment):
+        new_comment = conversation.create_comment(user, 'new comment', 'approved')
+        data = {'choice-' + str(new_comment.id): ['AGREE']}
+        request = rf.post('', data)
+        request.user = user
+        response = routes.stereotype_vote(request, conversation, stereotype)
+        assert response['conversation'] == conversation
+        assert response['stereotype'] == stereotype
 
-        def test_stereotype_vote_get(self, rf, user, conversation, stereotype):
-            request = rf.get('')
-            request.user = user
-            response = routes.stereotype_vote(request, conversation, stereotype)
-            assert response['conversation'] == conversation
-            assert response['stereotype'] == stereotype
+    def test_stereotype_vote_get(self, rf, user, conversation, stereotype):
+        request = rf.get('')
+        request.user = user
+        response = routes.stereotype_vote(request, conversation, stereotype)
+        assert response['conversation'] == conversation
+        assert response['stereotype'] == stereotype
