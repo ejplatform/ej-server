@@ -94,10 +94,9 @@ class Command(BaseCommand):
                 is_superuser=False,
             )
             user.get_profile()
-            if random.random() < 0.5:
-                profile = user.get_profile()
-                profile.gender = random.choice([GENDER_CHOICES])
-
+            profile = user.get_profile()
+            profile.gender = random.choice(GENDER_CHOICES)
+            print(profile.gender)
             users_created += 1
 
         # Create regular users
@@ -110,6 +109,10 @@ class Command(BaseCommand):
                 is_staff=False,
                 is_superuser=False,
             )
+            user.get_profile()
+            profile = user.get_profile()
+            profile.gender = random.choice(GENDER_CHOICES)
+            print(profile.gender)
             users_created += 1
 
         # Feedback

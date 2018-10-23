@@ -11,6 +11,7 @@ from ej_clusters.math import get_votes
 from ej_conversations.models import Conversation
 from ej_dataviz import render_dataframe
 from ej_math import VoteStats
+from ej_profiles.choices import Gender
 
 from sklearn.decomposition import PCA
 
@@ -26,33 +27,47 @@ urlpatterns = Router(
     login=True,
 )
 User = get_user_model()
+GENDER_CHOICES = list(Gender)
 
 
 def generate_scatter(request, conversation):
-    gender = list(User.objects.values_list('raw_profile__gender'))
+    users_by_gender = list(User.objects.values_list('raw_profile__gender'))
 
     votes = get_votes(conversation)
     votes = votes.where((pd.notnull(votes)), 0.0)
 
     pca = PCA(n_components=2)
     pca.fit(votes)
-    votes_pca = pca.transform(votes)
+    votes_data = pca.transform(votes)
 
-    votes_array = votes_pca.tolist()
+    votes_data = votes_data.tolist()
+    real_data = {}
+
+    for person in range(len(users_by_gender)):
+        new_gender_value = 19
+        if users_by_gender[person][0] is not None:
+            new_gender_value = users_by_gender[person][0]
+        if Gender(new_gender_value) not in real_data.keys():
+            real_data[Gender(new_gender_value)] = []
+        votes_data[person].append(Gender(new_gender_value))
+        real_data[Gender(new_gender_value)].append(votes_data[person])
+
     data = []
-    dict_data = {}
-    print(len(gender), len(votes_array))
-    for person in range(len(gender)):
-        if gender[person][0] not in dict_data.keys():
-            dict_data[gender[person][0]] = []
-        votes_array[person].append(gender[person][0])
-        dict_data[gender[person][0]].append(votes_array[person])
-    for item in dict_data:
-        data.append(dict_data[item])
-    js_data = json.dumps(data)
+    for item in real_data:
+        data.append(real_data[item])
+        # data[item].append(real_data[item])
+    js_data = json.dumps(real_data)
     print(js_data)
 
-    response = {'plot_data': js_data}
+    gender_list = []
+    for item in GENDER_CHOICES:
+        gender_list.append(item)
+    print(gender_list)
+
+    js_gender = json.dumps(gender_list)
+
+
+    response = {'plot_data': js_data, 'js_gender': js_gender}
     return response
 
 

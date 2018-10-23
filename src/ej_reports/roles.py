@@ -13,9 +13,9 @@ def file_button(information):
     Render a button on reports page.
     """
     content = []
-    for item in information:
+    for item, files in information.items():
         key_name = item
-        for name, type in information[item].items():
+        for name, type in files.items():
             content.append(p(a(name, href_=f'{item}.{type}')))
 
     return div(class_='dropdown') [
