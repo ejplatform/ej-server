@@ -31,6 +31,7 @@
             {#        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css">#}
             <link rel="stylesheet" href="/static/js/jquery-ui/jquery-ui.min.css">
             <link rel="stylesheet" href="/static/js/jquery-ui/jquery-ui.structure.min.css">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.1/css/swiper.css">
             <link rel="stylesheet" href="/static/css/main.css">
         {% endblock %}
 
@@ -48,8 +49,9 @@
             <script src="https://unpkg.com/unpoly@0.54.0/dist/unpoly.min.js"
                     integrity="sha384-6QMkTrFSjoO7UIWKZ1oYV4FCzxclb0Q4gP+TJzTZB93bAUeffVvNLblrRevbIkIw"
                     crossorigin="anonymous"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js" defer></script>
+            {#<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.1/js/swiper.min.js"></script>#}
             <script src="/static/js/jquery-ui/jquery-ui.min.js" defer></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.1/js/swiper.min.js"></script>
             <script src="/static/js/main.js" defer></script>
             <script src="/static/js/hicontrast.js"></script>
             <script src="/static/js/specific-pages.js"></script>
@@ -156,7 +158,6 @@
             })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
             ga('create', 'UA-104880284-1', 'auto');
         </script>
-
         {% if service_worker %}
             <!-- Service worker -->
             <script>

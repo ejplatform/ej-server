@@ -1,5 +1,4 @@
 {% from 'ej_conversations/toast.jinja2' import toast with context %}
-{% from 'components/generic/modalities.jinja2' import modalities with context %}
 
 {% macro comment_form(csrf_input, comment_content) %}
     <form method="post">
@@ -14,8 +13,6 @@
         {% endif %}
     </form>
 {% endmacro %}
-
-
 
 <div class="CommentForm">
     {% if user_is_owner %}
@@ -35,13 +32,5 @@
         </div>
     {% else %}
         <p>{% trans %}Please {{ login_anchor }} to vote on this conversation.{% endtrans %}</p>
-    {% endif %}
-    {% if voted == None %}
-        {{modalities("Bem Vinda(o)", "Você está com cede e  não sai para beber água por que?")}}
-        <script>
-            showModalities()
-        </script>
-    {% else %}
-        {{voted}}
     {% endif %}
 </div>
