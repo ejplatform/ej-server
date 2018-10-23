@@ -10,27 +10,46 @@
             <div class="Inbox-config-options">
                 <div>
                     <p>{{_('Max per day')}}</p>
-                    <div>
-                        <label><input type="radio">1</label>
-                        <label><input type="radio">3</label>
+                    <div class="Inbox-config-selection">
+                        <label>
+                            <input type="radio">1
+                            <span class="checkmark"></span>
+                        </label>
+                        <label>
+                            <input type="radio">3
+                            <span class="checkmark"></span>
+                        </label>
+                        
                     </div>
                 </div>
                 <div>
                     <p>{{_('Max per week')}}</p>
-                    <div>
-                        <label><input type="radio">1</label>
-                        <label><input type="radio">5</label>
+                    <div class="Inbox-config-selection">
+                        <label>
+                            <input type="radio">1
+                            <span class="checkmark"></span>
+                        </label>
+                        <label>
+                            <input type="radio">5
+                            <span class="checkmark"></span>
+                        </label>
                     </div>
                 </div>
             </div>
         </div>
         <div class="Inbox-notifications">
             {% for item in notifications %}
-                <p>
-                    {{item.notification}}
-                    Restam: {{item.remaining_time}} hora(s)
-                </p>
+                <div class="Inbox-notifications-circle"></div>
+                <img class="Inbox-notifications-icon"src="/static/img/icons/talks.svg" />
+
+                <div>
+                    <p class="Inbox-notifications-description">
+                        {{item.notification}}
+                        <span class="Inbox-notifications-info">Restam: {{item.remaining_time}} hora(s)</span>
+                    </p>
+                </div>    
             {% endfor %}
         </div>
     </div>
 {% endblock %}
+
