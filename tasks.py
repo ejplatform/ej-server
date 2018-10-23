@@ -5,6 +5,7 @@ import sys
 from invoke import task
 
 python = sys.executable
+directory = os.path.dirname(__file__)
 sys.path.append('src')
 
 
@@ -93,12 +94,12 @@ def gunicorn(ctx, debug=None, environment='production', port=8000, workers=4):
     if debug is not None:
         env['DJANGO_DEBUG'] = str(debug).lower()
     os.environ.update(env)
-
     args = [
         'ej.wsgi', '-w', str(workers), '-b', f'0.0.0.0:{port}',
         '--error-logfile=-',
         '--access-logfile=-',
         '--log-level', 'info',
+        f'--pythonpath={directory}/src'
     ]
     sys.argv = ['gunicorn', *args]
     run_gunicorn()
