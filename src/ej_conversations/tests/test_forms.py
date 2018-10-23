@@ -1,27 +1,7 @@
 import pytest
 
-from ej_conversations import create_conversation
-from ej_users.models import User
 from ej_conversations.forms import CommentForm
 from ej_conversations.models import Comment
-
-
-@pytest.fixture
-def user(db):
-    user = User.objects.create_user('email@server.com', 'password')
-    user.board_name = 'testboard'
-    user.save()
-    return user
-
-
-@pytest.fixture
-def conversation(db, user):
-    return create_conversation(text='test', title='title', author=user, is_promoted=True)
-
-
-@pytest.fixture
-def comment(db, conversation, user):
-    return conversation.create_comment(user, 'content', 'approved')
 
 
 class TestCommentForm:

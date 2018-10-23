@@ -34,7 +34,6 @@ class TestRoutes(UrlTester, BoardRecipes, ConversationRecipes):
         board.save()
         conversation.author = author_db
         conversation.save()
-        print(author_db.profile)
         board.add_conversation(conversation)
 
 
