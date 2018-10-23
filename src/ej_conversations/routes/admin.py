@@ -57,8 +57,7 @@ def edit_context(request, conversation):
             board = boards[0].board
         form = forms.ConversationForm(instance=conversation)
         for comment in models.Comment.objects.filter(conversation=conversation, status='pending'):
-            if comment.is_pending:
-                comments.append(comment)
+            comments.append(comment)
 
     user = request.user
     return {
