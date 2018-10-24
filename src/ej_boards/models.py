@@ -1,7 +1,8 @@
 from django.conf import settings
+from django.core.exceptions import ValidationError
 from django.db import models
-from django.utils.translation import ugettext_lazy as _
 from django.utils.text import slugify
+from django.utils.translation import ugettext_lazy as _
 from model_utils.models import TimeStampedModel
 
 from ej_conversations.models import Conversation, ConversationTag
@@ -31,11 +32,6 @@ class Board(TimeStampedModel):
         blank=True,
     )
 
-    def save(self, *args, **kwargs):
-        if self.pk is None:
-            self.slug = slugify(self.slug)
-        super().save(*args, **kwargs)
-
     @property
     def conversations(self):
         return Conversation.objects.filter(board_subscriptions__board=self)
@@ -50,6 +46,19 @@ class Board(TimeStampedModel):
 
     def __str__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        if self.pk is None:
+            self.slug = slugify(self.slug)
+        super().save(*args, **kwargs)
+
+    def clean(self):
+        try:
+            board = Board.objects.get(slug=self.slug)
+            if board.slug == self.slug and board.id != self.id:
+                raise ValidationError(_('Slug already exists.'))
+        except Board.DoesNotExist:
+            pass
 
     def get_absolute_url(self):
         return f'/{self.slug}/'

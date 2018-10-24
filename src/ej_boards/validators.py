@@ -11,10 +11,3 @@ def validate_board_slug(slug):
         raise ValidationError(_('Invalid slug.'))
     elif '/' in slug:
         raise ValidationError(_('Slug cannot contain a backslash character.'))
-    try:
-        from ej_boards.models import Board
-        Board.objects.get(slug=slugify(slug))
-    except ObjectDoesNotExist:
-        pass
-    else:
-        raise ValidationError(_('Slug already exists.'))
