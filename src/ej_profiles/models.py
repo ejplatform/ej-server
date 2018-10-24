@@ -41,7 +41,7 @@ class Profile(models.Model):
     biography = models.TextField(_('Biography'), blank=True)
     occupation = models.CharField(_('Occupation'), blank=True, max_length=50)
     political_activity = models.TextField(_('Political activity'), blank=True)
-    image = models.ImageField(_('Image'), blank=True, null=True, upload_to='profile_images')
+    profile_photo = models.ImageField(_('Profile Photo'), blank=True, null=True, upload_to='profile_images')
 
     name = delegate_to('user')
     email = delegate_to('user')
@@ -85,7 +85,7 @@ class Profile(models.Model):
     @property
     def image_url(self):
         try:
-            return self.image.url
+            return self.profile_photo.url
         except ValueError:
             for account in SocialAccount.objects.filter(user=self.user):
                 picture = account.get_avatar_url()
@@ -94,7 +94,7 @@ class Profile(models.Model):
 
     @property
     def has_image(self):
-        return self.image or SocialAccount.objects.filter(user_id=self.id)
+        return self.profile_photo or SocialAccount.objects.filter(user_id=self.id)
 
     @property
     def is_filled(self):

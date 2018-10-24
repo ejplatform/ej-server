@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-15 15:05+0000\n"
-"PO-Revision-Date: 2018-10-15 12:10-0300\n"
+"POT-Creation-Date: 2018-10-24 12:54+0000\n"
+"PO-Revision-Date: 2018-10-24 09:53-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: \n"
 "Language: pt_BR\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "Generated-By: Babel 2.5.3\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 2.0.6\n"
 
 #: docs/_templates/layout.html:3
 msgid "Documentation"
@@ -484,24 +484,24 @@ msgstr ""
 "<strong>Nota:</strong> você ainda poe <a href=\"%(email_url)s\">mudar seu "
 "endereço de email</a>."
 
-#: src/ej_boards/apps.py:7 src/ej_boards/models.py:43
+#: src/ej_boards/apps.py:7 src/ej_boards/models.py:49
 msgid "Boards"
 msgstr "Murais"
 
-#: src/ej_boards/models.py:15
+#: src/ej_boards/models.py:16
 msgid "Slug"
 msgstr "Identificador"
 
-#: src/ej_boards/models.py:25 src/ej_conversations/models/conversation.py:57
+#: src/ej_boards/models.py:26 src/ej_conversations/models/conversation.py:57
 msgid "Title"
 msgstr "Título"
 
-#: src/ej_boards/models.py:29 src/ej_clusters/models.py:127
+#: src/ej_boards/models.py:30 src/ej_clusters/models.py:127
 #: src/ej_clusters/models.py:194
 msgid "Description"
 msgstr "Descrição"
 
-#: src/ej_boards/models.py:42
+#: src/ej_boards/models.py:48
 msgid "Board"
 msgstr "Mural"
 
@@ -524,15 +524,17 @@ msgid "Stereotypes"
 msgstr "Estereótipos"
 
 #: src/ej_boards/validators.py:11
-msgid "Invalid URL."
+#, fuzzy
+msgid "Invalid slug."
 msgstr "URL inválida."
 
 #: src/ej_boards/validators.py:13
 msgid "Slug cannot contain a backslash character."
 msgstr "O identificador não pode conter uma barra."
 
-#: src/ej_boards/validators.py:19
-msgid "URL already exists."
+#: src/ej_boards/validators.py:20
+#, fuzzy
+msgid "Slug already exists."
 msgstr "Essa URL já existe."
 
 #: src/ej_clusters/apps.py:7 src/ej_clusters/routes.py:40
@@ -796,7 +798,7 @@ msgstr ""
 "Comentários promovidos são priorizados no momento da exibição aleatória de "
 "comentários aos usuários."
 
-#: src/ej_conversations/models/comment.py:103
+#: src/ej_conversations/models/comment.py:111
 msgid "Must give a reason to reject a comment"
 msgstr "Deve fornecer uma razão para rejeitar o comentário"
 
@@ -884,7 +886,7 @@ msgid "non-moderated comments cannot receive votes"
 msgstr "comentários não-moderados não podem receber votos"
 
 #: src/ej_conversations/roles.py:78
-#: src/ej_conversations/routes/conversations.py:77
+#: src/ej_conversations/routes/conversations.py:80
 msgid "login"
 msgstr "entrar"
 
@@ -892,7 +894,7 @@ msgstr "entrar"
 msgid "List conversations"
 msgstr "Listar conversas"
 
-#: src/ej_conversations/routes/conversations.py:20
+#: src/ej_conversations/routes/conversations.py:21
 msgid ""
 "A space for adolescents to discuss actions that promote, guarantee and "
 "defend their rights"
@@ -900,12 +902,12 @@ msgstr ""
 "Um espaço para adolescentes debaterem ações que promovam, garantam e "
 "defendam seus direitos"
 
-#: src/ej_conversations/routes/conversations.py:21
+#: src/ej_conversations/routes/conversations.py:22
 msgid "Public conversations"
 msgstr "Conversas públicas"
 
-#: src/ej_conversations/routes/conversations.py:22
 #: src/ej_conversations/routes/conversations.py:23
+#: src/ej_conversations/routes/conversations.py:24
 msgid ""
 "Participate of conversations and give your opinion with comments and votes!"
 msgstr "Participe das conversas e dê sua opinião com comentários e votos!"
@@ -1105,8 +1107,8 @@ msgid "Political activity"
 msgstr "Atividade política"
 
 #: src/ej_profiles/models.py:44
-msgid "Image"
-msgstr "Imagem"
+msgid "Profile Photo"
+msgstr "Foto de Perfil"
 
 #: src/ej_profiles/models.py:167
 msgid "Root"
@@ -1120,11 +1122,11 @@ msgstr "Usuário administrativo"
 msgid "Regular user"
 msgstr "Usuário regular"
 
-#: src/ej_profiles/routes.py:89
+#: src/ej_profiles/routes.py:85
 msgid "My conversations"
 msgstr "Suas conversas"
 
-#: src/ej_profiles/routes.py:90
+#: src/ej_profiles/routes.py:86
 msgid "See all conversations created by you"
 msgstr "Ver todas as conversas criadas por você"
 
@@ -1442,6 +1444,7 @@ msgstr "Painel"
 #: src/ej/templates/jinja2/components/generic/page_header.jinja2:109
 #: src/ej/templates/jinja2/components/generic/page_header.jinja2:110
 #: src/ej/templates/jinja2/components/generic/page_menu.jinja2:30
+#, fuzzy
 msgid "Profile"
 msgstr "Perfil"
 
@@ -1960,6 +1963,19 @@ msgstr "Parabéns!"
 msgid "There are no comments left to vote :)"
 msgstr "Não há comentários para votar :)"
 
+#: src/ej_conversations/jinja2/ej_conversations/detail.jinja2:18
+#, fuzzy
+msgid "You have {} comment{} under moderation."
+msgstr "Você criou essa conversa"
+
+#: src/ej_conversations/jinja2/ej_conversations/detail.jinja2:20
+msgid "Click here"
+msgstr ""
+
+#: src/ej_conversations/jinja2/ej_conversations/detail.jinja2:21
+msgid "to see {}."
+msgstr ""
+
 #: src/ej_conversations/jinja2/ej_conversations/edit.jinja2:53
 msgid "Manage stereotypes"
 msgstr "Gerenciar estereótipos"
@@ -2176,6 +2192,9 @@ msgstr "Tente novamente"
 #: src/ej_users/jinja2/ej_users/reset-password.jinja2:23
 msgid "Update"
 msgstr "Atualizar"
+
+#~ msgid "Image"
+#~ msgstr "Imagem"
 
 #, fuzzy
 #~ msgid ""
