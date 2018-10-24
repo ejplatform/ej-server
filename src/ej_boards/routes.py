@@ -10,7 +10,10 @@ from ej_clusters.models import Stereotype
 from ej_clusters.routes import create_stereotype_context, edit_stereotype_context
 from ej_conversations import forms
 from ej_conversations.models import Conversation
-from ej_conversations.routes import conversation_detail_context, get_conversation_moderate_context, get_conversation_edit_context
+from ej_conversations.routes import (get_conversation_detail_context,
+                                     get_conversation_moderate_context,
+                                     get_conversation_edit_context)
+from ej_reports import routes as report_routes
 from .forms import BoardForm
 
 app_name = 'ej_boards'
@@ -81,7 +84,7 @@ def conversation_create(request, board):
 @urlpatterns.route('<model:board>/conversations/<model:conversation>/')
 def conversation_detail(request, board, conversation):
     assure_correct_board(conversation, board)
-    return conversation_detail_context(request, conversation)
+    return get_conversation_detail_context(request, conversation)
 
 
 @urlpatterns.route('<model:board>/conversations/<model:conversation>/edit/',
@@ -184,6 +187,42 @@ def board_edit(request, board):
     return {
         'form': form,
     }
+
+
+#
+# Reports
+#
+reports_url = '<model:board>/conversations/<model:conversation>/reports/'
+
+
+@urlpatterns.route(reports_url, login=True)
+def report(board, conversation):
+    assure_correct_board(conversation, board)
+    return report_routes.index(conversation)
+
+
+@urlpatterns.route(reports_url + 'scatter/')
+def report_scatter(board, conversation):
+    assure_correct_board(conversation, board)
+    return report_routes.index(conversation)
+
+
+@urlpatterns.route(reports_url + 'votes.<format>', login=True)
+def report_votes_data(board, conversation, format):
+    assure_correct_board(conversation, board)
+    return report_routes.generate_votes(conversation, format)
+
+
+@urlpatterns.route(reports_url + 'users.<format>', login=True)
+def report_users_data(board, conversation, format):
+    assure_correct_board(conversation, board)
+    return report_routes.generate_users(conversation, format)
+
+
+@urlpatterns.route(reports_url + 'comments.<format>', login=True)
+def report_comments_data(board, conversation, format):
+    assure_correct_board(conversation, board)
+    return report_routes.generate_comments(conversation, format)
 
 
 #

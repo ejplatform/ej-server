@@ -31,8 +31,8 @@ conversation_url = '<model:conversation>/reports/'
 User = get_user_model()
 
 
-@urlpatterns.route(conversation_url)
-def index(request, conversation):
+@urlpatterns.route(conversation_url, login=True)
+def index(conversation):
     statistics = conversation.statistics()
     votes = get_raw_votes(conversation)
     comments = comments_table(conversation, votes)
@@ -68,8 +68,8 @@ def index(request, conversation):
     return response
 
 
-@urlpatterns.route(conversation_url + 'scatter/')
-def scatter(request, conversation):
+@urlpatterns.route(conversation_url + 'scatter/', login=True)
+def scatter(conversation):
     votes = get_votes(conversation)
     votes = votes.where((pd.notnull(votes)), 0.0)
 
@@ -107,7 +107,7 @@ def generate_data_file(data, format, response):
         return
 
 
-@urlpatterns.route(conversation_url + 'votes.<format>')
+@urlpatterns.route(conversation_url + 'votes.<format>', login=True)
 def generate_votes(conversation, format):
     response = file_response(conversation, 'votes', format)
     votes = get_raw_votes(conversation)
@@ -115,7 +115,7 @@ def generate_votes(conversation, format):
     return response
 
 
-@urlpatterns.route(conversation_url + 'users.<format>')
+@urlpatterns.route(conversation_url + 'users.<format>', login=True)
 def generate_users(conversation, format):
     response = file_response(conversation, 'users', format)
     votes = get_raw_votes(conversation)
@@ -124,7 +124,7 @@ def generate_users(conversation, format):
     return response
 
 
-@urlpatterns.route(conversation_url + 'comments.<format>')
+@urlpatterns.route(conversation_url + 'comments.<format>', login=True)
 def generate_comments(conversation, format):
     response = file_response(conversation, 'comments', format)
     votes = get_raw_votes(conversation)
