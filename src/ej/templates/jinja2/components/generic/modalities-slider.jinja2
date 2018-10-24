@@ -1,12 +1,18 @@
-{% macro modalities(title, content) %}
+
+{% from 'components/generic/modalities.jinja2' import modalities with context %}
+
+{% macro modalities(title, content, title2, content2) %}
     <div class="modalities">
         <div class="swiper-container">
             <div class="swiper-wrapper">
                 <div class="swiper-slide">
                 <h3>{{title}}</h3>
-                <p>{{content}}</p>
+                <p><b>{{content}}</b></p>
                 </div>
-                <div class="swiper-slide">sdghfaksjdhgaskdjhaskdjh</div>
+                <div class="swiper-slide">
+                <h3>{{title2}}</h3>
+                <p><b>{{content2}}</b></p>
+                </div>
             </div>
             <div class="swiper-pagination"></div>
             <div class="swiper-button-next"></div>
