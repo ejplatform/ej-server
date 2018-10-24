@@ -18,6 +18,6 @@ urlpatterns = Router(
 conversation_url = f'<model:conversation>/'
 
 # Must import after urlpatterns
-from .admin import create, edit, moderate_context, edit_context, moderate
+from .admin import create, edit, get_conversation_moderate_context, get_conversation_edit_context, moderate
 from .conversations import conversation_list, conversation_detail_context, detail
 from .comments import comment_list, comment_detail

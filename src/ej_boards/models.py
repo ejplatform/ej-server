@@ -69,6 +69,12 @@ class Board(TimeStampedModel):
         """
         self.board_subscriptions.get_or_create(conversation=conversation)
 
+    def has_conversation(self, conversation):
+        """
+        Return True if conversation is present in board.
+        """
+        return bool(self.board_subscriptions.filter(conversation=conversation))
+
 
 class BoardSubscription(models.Model):
     """

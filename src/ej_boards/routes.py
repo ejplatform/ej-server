@@ -10,7 +10,7 @@ from ej_clusters.models import Stereotype
 from ej_clusters.routes import create_stereotype_context, edit_stereotype_context
 from ej_conversations import forms
 from ej_conversations.models import Conversation
-from ej_conversations.routes import conversation_detail_context, moderate_context, edit_context
+from ej_conversations.routes import conversation_detail_context, get_conversation_moderate_context, get_conversation_edit_context
 from .forms import BoardForm
 
 app_name = 'ej_boards'
@@ -80,30 +80,30 @@ def conversation_create(request, board):
 
 @urlpatterns.route('<model:board>/conversations/<model:conversation>/')
 def conversation_detail(request, board, conversation):
-    if conversation not in board.conversations.all():
-        raise Http404
+    assure_correct_board(conversation, board)
     return conversation_detail_context(request, conversation)
 
 
 @urlpatterns.route('<model:board>/conversations/<model:conversation>/edit/',
                    perms=['ej.can_edit_conversation'])
 def conversation_edit(request, board, conversation):
-    if conversation not in board.conversations.all():
-        raise Http404
-    return edit_context(request, conversation)
+    assure_correct_board(conversation, board)
+    ctx = get_conversation_edit_context(request, conversation)
+    ctx['board'] = board
+    return ctx
 
 
 @urlpatterns.route('<model:board>/conversations/<model:conversation>/moderate/',
                    perms=['ej.can_edit_conversation'])
 def conversation_moderate(request, board, conversation):
-    if conversation not in board.conversations.all():
-        raise Http404
-    return moderate_context(request, conversation)
+    assure_correct_board(conversation, board)
+    return get_conversation_moderate_context(request, conversation)
 
 
 @urlpatterns.route('<model:board>/conversations/<model:conversation>/stereotypes/',
                    perms=['ej.can_manage_stereotypes'])
-def conversation_stereotype_list(request, board, conversation):
+def conversation_stereotype_list(board, conversation):
+    assure_correct_board(conversation, board)
     return {
         'content_title': _('Stereotypes'),
         'conversation_title': conversation.title,
@@ -116,12 +116,14 @@ def conversation_stereotype_list(request, board, conversation):
 @urlpatterns.route('<model:board>/conversations/<model:conversation>/stereotypes/add/',
                    perms=['ej.can_manage_stereotypes'])
 def conversation_stereotype_create(request, board, conversation):
+    assure_correct_board(conversation, board)
     return create_stereotype_context(request, conversation)
 
 
 @urlpatterns.route('<model:board>/conversations/<model:conversation>/stereotypes/<model:stereotype>/edit/',
                    perms=['ej.can_manage_stereotypes'])
 def conversation_stereotype_edit(request, board, conversation, stereotype):
+    assure_correct_board(conversation, board)
     return edit_stereotype_context(request, conversation, stereotype)
 
 
@@ -182,3 +184,14 @@ def board_edit(request, board):
     return {
         'form': form,
     }
+
+
+#
+# Utility functions
+#
+def assure_correct_board(conversation, board):
+    """
+    Raise 404 if conversation does not belong to board.
+    """
+    if not board.has_conversation(conversation):
+        raise Http404
