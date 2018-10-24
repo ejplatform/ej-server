@@ -34,8 +34,7 @@ urlpatterns = Router(
 #
 # Conversation URLs
 #
-@urlpatterns.route('<model:board>/conversations/',
-                   template='ej_conversations/list.jinja2')
+@urlpatterns.route('<model:board>/conversations/')
 def conversation_list(request, board):
     user = request.user
     conversations = board.conversations.all()
@@ -51,13 +50,12 @@ def conversation_list(request, board):
     return {
         'can_add_conversation': user_is_owner,
         'can_edit_board': user_is_owner,
-        'create_url': reverse('boards:create-conversation', kwargs={'board': board}),
-        'edit_url': reverse('boards:edit', kwargs={'board': board}),
+        'create_url': reverse('boards:conversation-create', kwargs={'board': board}),
+        'edit_url': reverse('boards:board-edit', kwargs={'board': board}),
         'conversations': conversations,
         'boards_count': boards_count,
         'boards': boards,
         'current_board': board,
-        'is_a_board': True,
         'title': board.title,
         'description': board.description
     }
@@ -65,7 +63,7 @@ def conversation_list(request, board):
 
 @urlpatterns.route('<model:board>/conversations/add/',
                    perms=['ej_boards.can_add_conversation'])
-def create_conversation(request, board):
+def conversation_create(request, board):
     user = request.user
     form = forms.ConversationForm(request.POST or None)
 
@@ -89,7 +87,7 @@ def conversation_detail(request, board, conversation):
 
 @urlpatterns.route('<model:board>/conversations/<model:conversation>/edit/',
                    perms=['ej.can_edit_conversation'])
-def edit_conversation(request, board, conversation):
+def conversation_edit(request, board, conversation):
     if conversation not in board.conversations.all():
         raise Http404
     return edit_context(request, conversation)
@@ -97,7 +95,7 @@ def edit_conversation(request, board, conversation):
 
 @urlpatterns.route('<model:board>/conversations/<model:conversation>/moderate/',
                    perms=['ej.can_edit_conversation'])
-def moderate_conversation(request, board, conversation):
+def conversation_moderate(request, board, conversation):
     if conversation not in board.conversations.all():
         raise Http404
     return moderate_context(request, conversation)
@@ -117,21 +115,21 @@ def conversation_stereotype_list(request, board, conversation):
 
 @urlpatterns.route('<model:board>/conversations/<model:conversation>/stereotypes/add/',
                    perms=['ej.can_manage_stereotypes'])
-def create_conversation_stereotype(request, board, conversation):
+def conversation_stereotype_create(request, board, conversation):
     return create_stereotype_context(request, conversation)
 
 
 @urlpatterns.route('<model:board>/conversations/<model:conversation>/stereotypes/<model:stereotype>/edit/',
                    perms=['ej.can_manage_stereotypes'])
-def edit_conversation_stereotype(request, board, conversation, stereotype):
+def conversation_stereotype_edit(request, board, conversation, stereotype):
     return edit_stereotype_context(request, conversation, stereotype)
 
 
 #
 # Board URLs
 #
-@urlpatterns.route('profile/boards/', template='ej_boards/list.jinja2', login=True)
-def list(request):
+@urlpatterns.route('profile/boards/', login=True)
+def board_list(request):
     user = request.user
     boards = user.boards.all()
     can_add_board = user.has_perm('ej_boards.can_add_board')
@@ -146,7 +144,7 @@ def list(request):
 
 
 @urlpatterns.route('profile/boards/add/', login=True)
-def create(request):
+def board_create(request):
     user = request.user
     if not user.has_perm('ej_boards.can_add_board'):
         raise Http404
@@ -171,7 +169,7 @@ def create(request):
 
 # Conversation and boards management
 @urlpatterns.route('<model:board>/edit/')
-def edit(request, board):
+def board_edit(request, board):
     if request.user != board.owner:
         raise PermissionError
     if request.method == 'POST':
