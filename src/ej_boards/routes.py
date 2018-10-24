@@ -4,14 +4,38 @@ from django.shortcuts import redirect
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
-from ej_conversations import forms
-from ej_conversations.routes import conversation_detail_context, moderate_context, edit_context
-
+from boogie.router import Router
+from ej_boards.models import Board
+from ej_clusters.models import Stereotype
 from ej_clusters.routes import create_stereotype_context, edit_stereotype_context
-from . import urlpatterns
+from ej_conversations import forms
+from ej_conversations.models import Conversation
+from ej_conversations.routes import conversation_detail_context, moderate_context, edit_context
+from .forms import BoardForm
+
+app_name = 'ej_boards'
+
+#
+# Board management
+#
+urlpatterns = Router(
+    template=['ej_boards/{name}.jinja2', 'generic.jinja2'],
+    object='conversation',
+    models={
+        'board': Board,
+        'conversation': Conversation,
+        'stereotype': Stereotype,
+    },
+    lookup_field={'conversation': 'slug', 'board': 'slug'},
+    lookup_type={'conversation': 'slug', 'board': 'slug'},
+)
 
 
-@urlpatterns.route('<model:board>/conversations/', template='ej_conversations/list.jinja2')
+#
+# Conversation URLs
+#
+@urlpatterns.route('<model:board>/conversations/',
+                   template='ej_conversations/list.jinja2')
 def conversation_list(request, board):
     user = request.user
     conversations = board.conversations.all()
@@ -34,13 +58,13 @@ def conversation_list(request, board):
         'boards': boards,
         'current_board': board,
         'is_a_board': True,
-        'title': _("%s' conversations") % board.title,
-        'subtitle': _("These are %s's conversations. Contribute to them too") % board.title,
+        'title': board.title,
         'description': board.description
     }
 
 
-@urlpatterns.route('<model:board>/conversations/add/', perms=['ej_boards.can_add_conversation'])
+@urlpatterns.route('<model:board>/conversations/add/',
+                   perms=['ej_boards.can_add_conversation'])
 def create_conversation(request, board):
     user = request.user
     form = forms.ConversationForm(request.POST or None)
@@ -63,14 +87,16 @@ def conversation_detail(request, board, conversation):
     return conversation_detail_context(request, conversation)
 
 
-@urlpatterns.route('<model:board>/conversations/<model:conversation>/edit/', perms=['ej.can_edit_conversation'])
+@urlpatterns.route('<model:board>/conversations/<model:conversation>/edit/',
+                   perms=['ej.can_edit_conversation'])
 def edit_conversation(request, board, conversation):
     if conversation not in board.conversations.all():
         raise Http404
     return edit_context(request, conversation)
 
 
-@urlpatterns.route('<model:board>/conversations/<model:conversation>/moderate/', perms=['ej.can_edit_conversation'])
+@urlpatterns.route('<model:board>/conversations/<model:conversation>/moderate/',
+                   perms=['ej.can_edit_conversation'])
 def moderate_conversation(request, board, conversation):
     if conversation not in board.conversations.all():
         raise Http404
@@ -99,3 +125,62 @@ def create_conversation_stereotype(request, board, conversation):
                    perms=['ej.can_manage_stereotypes'])
 def edit_conversation_stereotype(request, board, conversation, stereotype):
     return edit_stereotype_context(request, conversation, stereotype)
+
+
+#
+# Board URLs
+#
+@urlpatterns.route('profile/boards/', template='ej_boards/list.jinja2', login=True)
+def list(request):
+    user = request.user
+    boards = user.boards.all()
+    can_add_board = user.has_perm('ej_boards.can_add_board')
+
+    if not can_add_board and user.boards.count() == 1:
+        return redirect(f'{boards[0].get_absolute_url()}conversations/')
+
+    return {
+        'boards': boards,
+        'can_add_board': can_add_board,
+    }
+
+
+@urlpatterns.route('profile/boards/add/', login=True)
+def create(request):
+    user = request.user
+    if not user.has_perm('ej_boards.can_add_board'):
+        raise Http404
+
+    form_class = BoardForm
+    if request.method == 'POST':
+        form = form_class(request.POST)
+        if form.is_valid():
+            board = form.save(commit=False)
+            board.owner = user
+            board.save()
+
+            return redirect(board.get_absolute_url())
+    else:
+        form = form_class()
+
+    return {
+        'content_title': _('Create board'),
+        'form': form,
+    }
+
+
+# Conversation and boards management
+@urlpatterns.route('<model:board>/edit/')
+def edit(request, board):
+    if request.user != board.owner:
+        raise PermissionError
+    if request.method == 'POST':
+        form = BoardForm(request.POST, instance=board)
+        if form.is_valid():
+            form.instance.save()
+            return redirect(board.get_absolute_url())
+    else:
+        form = BoardForm(instance=board)
+    return {
+        'form': form,
+    }
