@@ -45,7 +45,7 @@
 
           <div class="ConversationEdit-attributes">
             <p><i class="fa fa-link"></i> <span>{{ conversation.slug }}</span></p>
-            {% if board %}
+            {% if board is defined and board %}
                 <p><i class="fa fa-list-ul"></i> <span>{{ board.title }}</span></p>
             {% endif %}
           </div>

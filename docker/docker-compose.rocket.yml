@@ -31,7 +31,7 @@ services:
       - "mongo:mongo"
     build: 
       context: .
-      dockerfile: ./Dockerfile-wait
+      dockerfile: ./Dockerfile.waitmongo
     depends_on:
       - mongo
 volumes:

@@ -1,5 +1,3 @@
-import uuid
-
 from django.db.models import QuerySet, Model
 from hyperpython import html, div, h2, span, Text
 from hyperpython.components import fa_icon, html_list
@@ -29,15 +27,11 @@ def render_collapsible(lst, item_role='collapsible-item', title=None, expanded=F
             raise TypeError('must provide an explicit title!')
 
     data = [html(x, item_role, **kwargs) for x in lst]
-    random_id = str(uuid.uuid4())
-    display = 'block' if expanded else 'none'
-
-    return div(class_='CollapsibleList')[
-        h2(
-            onclick=f"$('#{random_id}').toggle()",
-            children=[title, span(f'({len(data)})'), fa_icon('angle-down')]
-        ),
-        html_list(data, style=f'display: {display}', id=random_id),
+    return div(class_='CollapsibleList', is_component=True)[
+        h2([title, span(f'({len(data)})'), fa_icon('angle-up')]),
+        div(class_='CollapsibleList-data')[
+            html_list(data),
+        ]
     ]
 
 

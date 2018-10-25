@@ -34,7 +34,7 @@ services:
     command: clean db -m db-assets sass collect  gunicorn
 
   postgres:
-    image: postgres:alpine
+    image: postgres:10-alpine
     restart: always
     env_file:
       - ./env/deploy.env

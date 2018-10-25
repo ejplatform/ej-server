@@ -27,7 +27,7 @@ services:
     command: sass db -m run
 
   postgres:
-    image: postgres:alpine
+    image: postgres:10-alpine
     restart: always
     ports:
       - 5432:5432
