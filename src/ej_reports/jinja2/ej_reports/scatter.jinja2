@@ -19,32 +19,29 @@
 {% block javascript_body %}
     {{ super() }}
     {% if plot_data is defined %}
-        <script src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
-        <script src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>
-        <script src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>
-        <script src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
-        <script src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
-        <script src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
-        <script src="https://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM"></script>
-        <script src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
-        <script src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/4.1.0/echarts.min.js"></script>
+{#        <script src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>#}
+{#        <script src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>#}
+{#        <script src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>#}
+{#        <script src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>#}
+{#        <script src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>#}
+{#        <script src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>#}
+{#        <script src="https://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM"></script>#}
+{#        <script src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>#}
+{#        <script src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>#}
         <script>
             var dom = document.getElementById("container");
             var myChart = echarts.init(dom);
-            var app = {};
-            var data_from_django = {{ plot_data }};
-            console.log(data_from_django)
-            option = null;
-            option = {
+            var plotData = {{ plot_data }};
+            var option = {
                 xAxis: {},
                 yAxis: {},
                 series: [{
-                    symbolSize: 20,
-                    data: data_from_django,
+                    symbolSize: 10,
+                    data: plotData,
                     type: 'scatter'
                 }]
             };
-            ;
             if (option && typeof option === "object") {
                 myChart.setOption(option, true);
             }

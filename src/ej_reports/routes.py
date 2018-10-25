@@ -1,9 +1,12 @@
+import json
+
 import numpy as np
 import pandas as pd
 from django.contrib.auth import get_user_model
 from django.http import HttpResponse
 from django.utils.translation import ugettext_lazy as _, ugettext as __
-import json
+from hyperpython.components import html_table, hyperlink
+from sklearn.decomposition import PCA
 
 from boogie.router import Router
 from boogie.rules import proxy_seq
@@ -11,9 +14,6 @@ from ej_clusters.math import get_raw_votes, get_votes
 from ej_conversations.models import Conversation
 from ej_dataviz import render_dataframe
 from ej_math import VoteStats
-from hyperpython.components import html_table, hyperlink
-
-from sklearn.decomposition import PCA
 
 urlpatterns = Router(
     template=['ej_reports/{name}.jinja2', 'generic.jinja2'],
