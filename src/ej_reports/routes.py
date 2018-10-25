@@ -17,7 +17,7 @@ from sklearn.decomposition import PCA
 
 urlpatterns = Router(
     template=['ej_reports/{name}.jinja2', 'generic.jinja2'],
-    perms=['ej_reports.can_view_report'],
+    perms=['ej.can_view_report'],
     object='conversation',
     models={
         'conversation': Conversation,
@@ -70,23 +70,14 @@ def index(conversation):
 
 @urlpatterns.route(conversation_url + 'scatter/', login=True)
 def scatter(conversation):
-    votes = get_votes(conversation)
-    votes = votes.where((pd.notnull(votes)), 0.0)
+    votes = get_votes(conversation).fillna(0).values
+    if votes.shape[0] <= 1 or votes.shape[1] <= 1:
+        return {'error': 'insufficient data'}
 
     pca = PCA(n_components=2)
     pca.fit(votes)
     votes_pca = pca.transform(votes)
-
-    # plt.scatter(votes_pca[:, 0], votes_pca[:, 1],
-    #             c = ['red', 'green', 'blue'],
-    #             edgecolor='none', alpha=0.5,)
-    # plt.savefig('foo.png')
-
-    votes_array = votes_pca.tolist()
-    js_data = json.dumps(votes_array)
-
-    response = {'plot_data': js_data}
-    return response
+    return {'plot_data': json.dumps(votes_pca.tolist())}
 
 
 def file_response(conversation, data_cat, format):

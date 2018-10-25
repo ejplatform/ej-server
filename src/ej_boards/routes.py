@@ -193,33 +193,34 @@ def board_edit(request, board):
 # Reports
 #
 reports_url = '<model:board>/conversations/<model:conversation>/reports/'
+reports_kwargs = {'perms': ['ej.can_view_report']}
 
 
-@urlpatterns.route(reports_url, login=True)
+@urlpatterns.route(reports_url, **reports_kwargs)
 def report(board, conversation):
     assure_correct_board(conversation, board)
     return report_routes.index(conversation)
 
 
-@urlpatterns.route(reports_url + 'scatter/')
+@urlpatterns.route(reports_url + 'scatter/', **reports_kwargs)
 def report_scatter(board, conversation):
     assure_correct_board(conversation, board)
-    return report_routes.index(conversation)
+    return report_routes.scatter(conversation)
 
 
-@urlpatterns.route(reports_url + 'votes.<format>', login=True)
+@urlpatterns.route(reports_url + 'votes.<format>', **reports_kwargs)
 def report_votes_data(board, conversation, format):
     assure_correct_board(conversation, board)
     return report_routes.generate_votes(conversation, format)
 
 
-@urlpatterns.route(reports_url + 'users.<format>', login=True)
+@urlpatterns.route(reports_url + 'users.<format>', **reports_kwargs)
 def report_users_data(board, conversation, format):
     assure_correct_board(conversation, board)
     return report_routes.generate_users(conversation, format)
 
 
-@urlpatterns.route(reports_url + 'comments.<format>', login=True)
+@urlpatterns.route(reports_url + 'comments.<format>', **reports_kwargs)
 def report_comments_data(board, conversation, format):
     assure_correct_board(conversation, board)
     return report_routes.generate_comments(conversation, format)
