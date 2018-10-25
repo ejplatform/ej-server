@@ -1,11 +1,30 @@
 import pytest
 from django.test import TestCase, Client
+from django.http import Http404
 
+from ej_conversations.models.utils import votes_counter
 from ej_conversations.mommy_recipes import ConversationRecipes
+from ej_conversations.models import Comment
 from ej_boards.models import Board
 from ej_boards.mommy_recipes import BoardRecipes
 from ej.testing import UrlTester
 from ej_users.models import User
+from ej_boards.routes import conversations
+
+
+@pytest.fixture
+def user(db):
+    user = User.objects.create_user('email@server.com', 'password')
+    user.save()
+    return user
+
+
+@pytest.fixture
+def board(db, user):
+    user.save()
+    board = Board.objects.create(owner=user, title='tiel', slug='slugs')
+    board.save()
+    return board
 
 
 class TestRoutes(UrlTester, BoardRecipes, ConversationRecipes):
@@ -18,7 +37,7 @@ class TestRoutes(UrlTester, BoardRecipes, ConversationRecipes):
         '/ej_boards/add/',
         '/ej_boards/board/edit/',
         '/profile/boards/add/',
-        '/profile/boards/'
+        '/profile/boards/',
     ]
     owner_urls = [
         '/board-slug/edit/',
@@ -35,6 +54,106 @@ class TestRoutes(UrlTester, BoardRecipes, ConversationRecipes):
         conversation.author = author_db
         conversation.save()
         board.add_conversation(conversation)
+
+
+class TestBoardConversationRoutes(ConversationRecipes):
+    def test_create_conversation(self, rf, board):
+        request = rf.post('', {'title': 'whatever', 'tags': 'tag', 'text': 'description', 'comments_count': 0})
+        request.user = board.owner
+        response = conversations.create_conversation(request, board)
+        assert response.status_code == 302
+        assert response.url == '/slugs/conversations/whatever/stereotypes/'
+
+    def test_create_invalid_conversation(self, rf, board):
+        request = rf.post('', {'title': '', 'tags': 'tag', 'text': 'description', 'comments_count': 0})
+        request.user = board.owner
+        response = conversations.create_conversation(request, board)
+        assert not response['form'].is_valid()
+
+    def test_edit_conversation(self, rf, board, db, conversation):
+        conversation.author = board.owner
+        conversation.save()
+        request = rf.post('', {'title': 'whatever', 'tags': 'tag', 'text': 'description', 'comments_count': 0})
+        request.user = conversation.author
+        conversation.is_promoted = False
+        board.add_conversation(conversation)
+        response = conversations.edit_conversation(request, board, conversation)
+        assert response.status_code == 302
+        assert response.url == '/slugs/conversations/conversation/moderate/'
+
+    def test_edit_invalid_conversation(self, rf, db, board, conversation):
+        conversation.author = board.owner
+        conversation.save()
+        request = rf.post('', {'title': '', 'tags': 'tag', 'text': 'description', 'comments_count': 0})
+        request.user = conversation.author
+        conversation.is_promoted = False
+        board.add_conversation(conversation)
+        response = conversations.edit_conversation(request, board, conversation)
+        assert not response['form'].is_valid()
+
+    def test_edit_conversation_not_in_board(self, rf, db, board, conversation):
+        conversation.author = board.owner
+        conversation.save()
+        request = rf.post('', {'title': '', 'tags': 'tag', 'text': 'description', 'comments_count': 0})
+        with pytest.raises(Http404):
+            conversations.edit_conversation(request, board, conversation)
+
+    def test_conversation_detail(self, rf, db, board, conversation):
+        conversation.author = board.owner
+        conversation.save()
+        request = rf.get('', {})
+        request.user = conversation.author
+        conversation.is_promoted = False
+        board.add_conversation(conversation)
+        response = conversations.conversation_detail(request, board, conversation)
+        assert response['conversation'] == conversation
+        assert response['can_view_comment']
+        assert response['can_edit']
+
+    def test_conversation_detail_post_comment(self, rf, db, board, conversation):
+        user = board.owner
+        conversation.author = user
+        conversation.save()
+        request = rf.post('', {'action': 'comment', 'content': 'test comment'})
+        request.user = conversation.author
+        conversation.is_promoted = False
+        board.add_conversation(conversation)
+        response = conversations.conversation_detail(request, board, conversation)
+        assert response['conversation'] == conversation
+        assert response['can_view_comment']
+        assert response['can_edit']
+        assert Comment.objects.filter(author=user)[0].content == 'test comment'
+
+    def test_conversation_detail_vote_comment(self, rf, db, board, conversation):
+        user = board.owner
+        conversation.author = user
+        conversation.save()
+        comment = conversation.create_comment(user, 'comment')
+        request = rf.post('', {'action': 'vote', 'vote': 'agree', 'comment_id': comment.id})
+        request.user = conversation.author
+        conversation.is_promoted = False
+        board.add_conversation(conversation)
+        response = conversations.conversation_detail(request, board, conversation)
+        assert response['conversation'] == conversation
+        assert response['can_view_comment']
+        assert response['can_edit']
+        assert votes_counter(comment) == 1
+
+    def test_conversation_detail_not_in_board(self, rf, db, board, conversation):
+        conversation.author = board.owner
+        conversation.save()
+        request = rf.post('', {'action': 'comment', 'content': 'test comment'})
+        request.user = conversation.author
+        with pytest.raises(Http404):
+            conversations.conversation_detail(request, board, conversation)
+
+    def test_get_moderate_conversation_not_in_board(self, rf, db, board, conversation):
+        conversation.author = board.owner
+        conversation.save()
+        request = rf.get('', {})
+        request.user = conversation.author
+        with pytest.raises(Http404):
+            conversations.moderate_conversation(request, board, conversation)
 
 
 class TestBoardRoutes(TestCase):
