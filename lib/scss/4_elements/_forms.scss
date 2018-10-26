@@ -6,7 +6,7 @@
 $form-element-color: $color-white !default;
 $form-element-color-text: $color-hint-text !default;
 $form-input-border-box: inset 0 1px 3px 0 rgba(0, 0, 0, 0.3);
-
+$form-border-color: $color-primary !default;
 
 input[type=email],
 input[type=number],
@@ -83,7 +83,7 @@ label {
 }
 
 input[type=submit] {
-    background: $form-input-color;
+    background: $color-accent;
     width: inherit;
 }
 
@@ -94,9 +94,16 @@ button:focus {
     outline: none;
 }
 
-select {
+select, select:active {
     -webkit-appearance: none;
     -moz-appearance: none;
-    background: $icon-arrow-down-blue white no-repeat calc(100% - 10px) !important;
     background-size: 15px !important;
+}
+
+select {
+    background: $icon-arrow-down-blue white no-repeat calc(100% - 10px);
+}
+
+select:active {
+    background: $icon-arrow-up-blue white no-repeat calc(100% - 10px);
 }

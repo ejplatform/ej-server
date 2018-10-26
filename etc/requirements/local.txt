@@ -19,7 +19,7 @@ Pillow ~= 4.2
 # Django
 django ~= 2.1.1
 rules ~= 1.4.0
-django-boogie ~= 0.9.2
+django-boogie ~= 0.9.3
 
 # Configuration
 django-environ ~= 0.4.4
