@@ -74,6 +74,7 @@ def get_conversation_detail_context(request, conversation):
         log.warning(f'user {user.id} se nt invalid POST request: {request.POST}')
         return HttpResponseServerError('invalid action')
 
+    voted = None
     n_comments_under_moderation = rules.compute('ej_conversations.comments_under_moderation', conversation, user)
     if user.is_authenticated:
         voted = Vote.objects.filter(author=user).exists()

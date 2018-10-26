@@ -4,7 +4,6 @@ from hyperpython import a
 from hyperpython.django import csrf_input
 from boogie import rules
 
-from ej_conversations.models import Vote
 from ej.roles import with_template
 from . import models
 
