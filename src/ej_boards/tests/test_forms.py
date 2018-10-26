@@ -30,7 +30,7 @@ class TestStereotypeForm:
         assert board.slug == "slug"
         assert board.description == "description"
 
-    def test_blank_data(self):
+    def test_blank_data(self, db):
         form = BoardForm({})
         assert not form.is_valid()
         assert form.errors == {

@@ -1,7 +1,7 @@
-{% from 'ej_conversations/toast.jinja2' import toast with context %}
+{% from 'components/generic/toast.jinja2' import toast with context %}
 
 {% macro comment_form(csrf_input, comment_content) %}
-    <form method="post" up-target=".ConversationDetail" up-restore-scroll="true">
+    <form method="post" up-restore-scroll="true">
         {{ csrf_input }}
         <input type="hidden" name="action" value="comment">
             {{comment_content.content}}

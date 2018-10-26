@@ -76,18 +76,26 @@ class Comment(StatusModel, TimeStampedModel):
     is_pending = property(lambda self: self.status == self.STATUS.pending)
     is_rejected = property(lambda self: self.status == self.STATUS.rejected)
 
-    # Statistics
-    agree_count = lazy(votes_counter(Choice.AGREE), name='agree_count')
-    disagree_count = lazy(votes_counter(Choice.DISAGREE), name='disagree_count')
-    skip_count = lazy(votes_counter(Choice.SKIP), name='skip_count')
-
-    @lazy
-    def total_votes(self):
-        return self.agree_count + self.disagree_count + self.skip_count
-
     @lazy
     def missing_votes(self):
         return Vote.objects.distinct().count() - self.total_votes
+
+    # Statistics
+    @property
+    def agree_count(self):
+        return votes_counter(self, choice=Choice.AGREE)
+
+    @property
+    def skip_count(self):
+        return votes_counter(self, choice=Choice.SKIP)
+
+    @property
+    def disagree_count(self):
+        return votes_counter(self, choice=Choice.DISAGREE)
+
+    @property
+    def total_votes(self):
+        return self.agree_count + self.disagree_count + self.skip_count
 
     objects = CommentManager()
 

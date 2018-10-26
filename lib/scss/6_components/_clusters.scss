@@ -1,5 +1,9 @@
 .StereotypeList {
     @extend .Container;
+    &-title, &-search, &-cardList, &-singleStereotype {
+        max-width: $content-wrapper-max-width;
+    }
+
     &-title {
         text-align: center;
         width: 80vw;
@@ -52,6 +56,7 @@
     &-search {
         width: 80vw;
         margin: 0 auto;
+
         >p {
             margin: $spacing-unit 0 0 0;
         }
@@ -70,6 +75,7 @@
             position: relative;
             left: 94%;
             bottom: 23px;
+            display: block;
         }
     }
 
