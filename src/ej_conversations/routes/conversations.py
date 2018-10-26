@@ -72,9 +72,9 @@ def conversation_detail_context(request, conversation):
         log.warning(f'user {user.id} sent invalid POST request: {request.POST}')
         return HttpResponseServerError('invalid action')
 
-    if user != AnonymousUser:
+    voted = None
+    if not isinstance(user, AnonymousUser):
         voted = Vote.objects.filter(author=user).exists()
-
 
     return {
         # Objects
@@ -88,7 +88,7 @@ def conversation_detail_context(request, conversation):
         'can_view_comment': user.is_authenticated,
         'can_edit': user.has_perm('ej.can_edit_conversation', conversation),
         'cannot_comment_reason': '',
-        'voted': voted or None,
+        'voted': voted,
     }
 
 
