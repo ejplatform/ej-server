@@ -162,7 +162,7 @@ $profile-label-clear-color: #30BFD3 !default;
         height: $profile-image-size;
         // FIXME See if it will necessary
         // border: $spacing-unit-small solid $color-green;
-        // border-radius: 50ch;
+        border-radius: $spacing-unit + $spacing-unit-tiny + $spacing-unit-huge;
     }
     &-rocket {
         text-align: center;
