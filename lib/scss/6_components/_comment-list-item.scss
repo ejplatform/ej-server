@@ -5,7 +5,7 @@
 
 .CommentListItem {
     &-header {
-        color: $color-primary;
+        color: $color-blue-light;
         display: flex;
         justify-content: center;
         &::after {
@@ -54,5 +54,13 @@
     }
     &-status-pending {
         color: $color-primary;
+    }
+
+    &-skip{
+        color: $color-primary;
+    }
+
+    &-disagree{
+        color: $color-action-primary;
     }
 }

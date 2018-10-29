@@ -763,7 +763,19 @@ $profile-label-clear-color: #30BFD3 !default;
     color: $conversation-link-edit-color;
     i {
         color: $conversation-link-edit-icon-color;
-    }   
+    }
+}
+
+.Link-promote {
+    @extend .Link-new;
+    color: $color-primary;
+    border-bottom: 1px solid $color-blue-light;
+    width: 90%;
+    margin: 0 auto;
+
+    i {
+        color: $color-primary;
+    }
 }
 
 .view-board {
