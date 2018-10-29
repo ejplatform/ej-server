@@ -1,13 +1,14 @@
 from logging import getLogger
+
 from django.http import HttpResponseServerError, Http404
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from hyperpython import a
-from boogie import rules
 
+from boogie import rules
 from . import urlpatterns, conversation_url
+from ..forms import CommentForm
 from ..models import Conversation, Comment
-from ej_conversations.forms import CommentForm
 
 log = getLogger('ej')
 
@@ -29,13 +30,13 @@ def conversation_list(request):
 def detail(request, conversation):
     if not conversation.is_promoted:
         raise Http404
-    return conversation_detail_context(request, conversation)
+    return get_conversation_detail_context(request, conversation)
 
 
 #
 # Auxiliary and re-usable functions
 #
-def conversation_detail_context(request, conversation):
+def get_conversation_detail_context(request, conversation):
     """
     Common implementation used by both /conversations/<slug> and inside boards
     in /<board>/conversations/<slug>/

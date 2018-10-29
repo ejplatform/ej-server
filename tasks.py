@@ -315,7 +315,7 @@ def i18n(ctx, compile=False, edit=False, lang='pt_BR', keep_pot=False):
         ctx.run(f'{python} etc/scripts/compilemessages.py')
     else:
         print('Collecting messages')
-        manage(ctx, 'makemessages', all=True, keep_pot=True)
+        manage(ctx, 'makemessages', keep_pot=True, locale=lang)
 
         print('Extract Jinja translations')
         ctx.run('pybabel extract -F etc/babel.cfg -o locale/jinja2.pot .')
