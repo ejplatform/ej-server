@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-22 16:17+0000\n"
-"PO-Revision-Date: 2018-10-15 12:10-0300\n"
+"POT-Creation-Date: 2018-10-25 21:24+0000\n"
+"PO-Revision-Date: 2018-10-25 18:26-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: \n"
 "Language: pt_BR\n"
@@ -23,50 +23,11 @@ msgstr ""
 msgid "Documentation"
 msgstr "Documentação"
 
-#: ext-apps/django-courier/courier/models.py:11
-#, fuzzy
-msgid "Sender"
-msgstr "Remetende"
-
-#: ext-apps/django-courier/courier/models.py:12 src/ej_boards/models.py:25
-#: src/ej_conversations/models/conversation.py:57
-msgid "Title"
-msgstr "Título"
-
-#: ext-apps/django-courier/courier/models.py:14
-msgid "Short Description"
-msgstr "Descrição curta"
-
-#: ext-apps/django-courier/courier/models.py:29
-msgid "Waiting"
-msgstr "Esperando"
-
-#: ext-apps/django-courier/courier/models.py:30
-msgid "Read"
-msgstr "Lido"
-
-#: ext-apps/django-courier/courier/models.py:31
-msgid "Seen"
-msgstr "Visto"
-
-#: ext-apps/django-courier/courier/models.py:32
-msgid "Unseen"
-msgstr "Não Visto"
-
-#: ext-apps/django-courier/courier/models.py:44
-#, fuzzy
-msgid "Status"
-msgstr "Estado"
-
-#: ext-apps/django-courier/courier/pushnotifications/providers/onesignal/models.py:14
-msgid "OneSignal Id"
-msgstr "Id OneSignal"
-
 #: local/vendor/django-boogie/src/boogie/apps/users/models.py:23
 #: local/vendor/django-boogie/src/boogie/models/abstract/user.py:64
 #: src/ej_clusters/models.py:123 src/ej_clusters/models.py:180
 #: src/ej_clusters/routes.py:216 src/ej_configurations/models.py:128
-#: src/ej_reports/routes.py:174
+#: src/ej_reports/routes.py:165
 msgid "Name"
 msgstr "Nome"
 
@@ -523,52 +484,46 @@ msgstr ""
 "<strong>Nota:</strong> você ainda poe <a href=\"%(email_url)s\">mudar seu "
 "endereço de email</a>."
 
-#: src/ej_boards/apps.py:7 src/ej_boards/models.py:43
+#: src/ej_boards/apps.py:7 src/ej_boards/models.py:45
 msgid "Boards"
 msgstr "Murais"
 
-#: src/ej_boards/models.py:15
+#: src/ej_boards/models.py:17
 msgid "Slug"
 msgstr "Identificador"
 
-#: src/ej_boards/models.py:29 src/ej_clusters/models.py:127
+#: src/ej_boards/models.py:27 src/ej_conversations/models/conversation.py:57
+msgid "Title"
+msgstr "Título"
+
+#: src/ej_boards/models.py:31 src/ej_clusters/models.py:127
 #: src/ej_clusters/models.py:194
 msgid "Description"
 msgstr "Descrição"
 
-#: src/ej_boards/models.py:42
+#: src/ej_boards/models.py:44
 msgid "Board"
 msgstr "Mural"
 
-#: src/ej_boards/routes/boards.py:43
-msgid "Create board"
-msgstr "Criar mural"
+#: src/ej_boards/models.py:59
+msgid "Slug already exists."
+msgstr "Essa URL já existe."
 
-#: src/ej_boards/routes/conversations.py:37
-#, python-format
-msgid "%s' conversations"
-msgstr "%s"
-
-#: src/ej_boards/routes/conversations.py:38
-#, python-format
-msgid "These are %s's conversations. Contribute to them too"
-msgstr "Essas são as conversas do mural %s. Contribua com elas também"
-
-#: src/ej_boards/routes/conversations.py:84 src/ej_clusters/routes.py:74
+#: src/ej_boards/routes.py:111 src/ej_clusters/routes.py:74
 msgid "Stereotypes"
 msgstr "Estereótipos"
 
-#: src/ej_boards/validators.py:11
-msgid "Invalid URL."
+#: src/ej_boards/routes.py:170
+msgid "Create board"
+msgstr "Criar mural"
+
+#: src/ej_boards/validators.py:9
+msgid "Invalid slug."
 msgstr "URL inválida."
 
-#: src/ej_boards/validators.py:13
+#: src/ej_boards/validators.py:11
 msgid "Slug cannot contain a backslash character."
 msgstr "O identificador não pode conter uma barra."
-
-#: src/ej_boards/validators.py:19
-msgid "URL already exists."
-msgstr "Essa URL já existe."
 
 #: src/ej_clusters/apps.py:7 src/ej_clusters/routes.py:40
 msgid "Clusters"
@@ -602,7 +557,7 @@ msgstr ""
 "esse estereótipo quer capturar"
 
 #: src/ej_clusters/models.py:286 src/ej_clusters/routes.py:226
-#: src/ej_reports/routes.py:171
+#: src/ej_reports/routes.py:162
 msgid "Comment"
 msgstr "Comentário"
 
@@ -728,7 +683,7 @@ msgstr "Formato cru do conteúdo do fragmento"
 msgid "Conversations"
 msgstr "Conversas"
 
-#: src/ej_configurations/routes.py:32 src/ej_reports/routes.py:163
+#: src/ej_configurations/routes.py:32 src/ej_reports/routes.py:154
 msgid "Votes"
 msgstr "Votos"
 
@@ -891,11 +846,11 @@ msgstr "Não há comentários disponíveis para esse usuário"
 msgid "Skip"
 msgstr "Pular"
 
-#: src/ej_conversations/models/vote.py:15 src/ej_reports/routes.py:166
+#: src/ej_conversations/models/vote.py:15 src/ej_reports/routes.py:157
 msgid "Agree"
 msgstr "Concorda"
 
-#: src/ej_conversations/models/vote.py:16 src/ej_reports/routes.py:167
+#: src/ej_conversations/models/vote.py:16 src/ej_reports/routes.py:158
 msgid "Disagree"
 msgstr "Discorda"
 
@@ -919,7 +874,7 @@ msgid "non-moderated comments cannot receive votes"
 msgstr "comentários não-moderados não podem receber votos"
 
 #: src/ej_conversations/roles.py:78
-#: src/ej_conversations/routes/conversations.py:77
+#: src/ej_conversations/routes/conversations.py:81
 msgid "login"
 msgstr "entrar"
 
@@ -927,7 +882,7 @@ msgstr "entrar"
 msgid "List conversations"
 msgstr "Listar conversas"
 
-#: src/ej_conversations/routes/conversations.py:20
+#: src/ej_conversations/routes/conversations.py:22
 msgid ""
 "A space for adolescents to discuss actions that promote, guarantee and "
 "defend their rights"
@@ -935,12 +890,12 @@ msgstr ""
 "Um espaço para adolescentes debaterem ações que promovam, garantam e "
 "defendam seus direitos"
 
-#: src/ej_conversations/routes/conversations.py:21
+#: src/ej_conversations/routes/conversations.py:23
 msgid "Public conversations"
 msgstr "Conversas públicas"
 
-#: src/ej_conversations/routes/conversations.py:22
-#: src/ej_conversations/routes/conversations.py:23
+#: src/ej_conversations/routes/conversations.py:24
+#: src/ej_conversations/routes/conversations.py:25
 msgid ""
 "Participate of conversations and give your opinion with comments and votes!"
 msgstr "Participe das conversas e dê sua opinião com comentários e votos!"
@@ -1171,39 +1126,39 @@ msgstr "Relatórios"
 msgid "Report"
 msgstr "Relatório"
 
-#: src/ej_reports/routes.py:161
+#: src/ej_reports/routes.py:152
 msgid "Author"
 msgstr "Autor"
 
-#: src/ej_reports/routes.py:162
+#: src/ej_reports/routes.py:153
 msgid "Text"
 msgstr "Texto"
 
-#: src/ej_reports/routes.py:164
+#: src/ej_reports/routes.py:155
 msgid "Missing"
 msgstr "Faltando"
 
-#: src/ej_reports/routes.py:165
+#: src/ej_reports/routes.py:156
 msgid "Skipped"
 msgstr "Pulados"
 
-#: src/ej_reports/routes.py:168
+#: src/ej_reports/routes.py:159
 msgid "Average"
 msgstr "Média"
 
-#: src/ej_reports/routes.py:169
+#: src/ej_reports/routes.py:160
 msgid "Divergence"
 msgstr "Divergência"
 
-#: src/ej_reports/routes.py:170
+#: src/ej_reports/routes.py:161
 msgid "Entropy"
 msgstr "Entropia"
 
-#: src/ej_reports/routes.py:172
+#: src/ej_reports/routes.py:163
 msgid "User"
 msgstr "Usuário"
 
-#: src/ej_reports/routes.py:173
+#: src/ej_reports/routes.py:164
 msgid "Participation ratio"
 msgstr "Índice de participação"
 
@@ -1421,15 +1376,15 @@ msgstr "Email ou senha inválidos"
 msgid "Please reset your password"
 msgstr "Por favor reset sua senha"
 
-#: src/ej/templates/jinja2/base.jinja2:84
+#: src/ej/templates/jinja2/base.jinja2:86
 msgid "EJ - A platform of social participation."
 msgstr "EJ - Uma plataforma para participação social."
 
-#: src/ej/templates/jinja2/base.jinja2:93
+#: src/ej/templates/jinja2/base.jinja2:95
 msgid "EJ - A platform of social participacion."
 msgstr "EJ - Uma plataforma para participação social."
 
-#: src/ej/templates/jinja2/base.jinja2:131
+#: src/ej/templates/jinja2/base.jinja2:133
 msgid "Please override the \"content\" block of your template!"
 msgstr "Por favor substitua o bloco \"content\" do seu template!"
 
@@ -1655,31 +1610,21 @@ msgstr "Comunidade EJ"
 msgid "Who is using EJ"
 msgstr "Quem já adotou o EJ"
 
-#: src/ej_boards/jinja2/ej_boards/conversation-list.jinja2:15
-#: src/ej_conversations/jinja2/ej_conversations/list.jinja2:40
-msgid "public conversations"
-msgstr "conversas públicas"
-
-#: src/ej_boards/jinja2/ej_boards/conversation-list.jinja2:19
-#: src/ej_conversations/jinja2/ej_conversations/list.jinja2:44
-msgid "go to my conversations"
-msgstr "Suas conversas"
-
-#: src/ej_boards/jinja2/ej_boards/create.jinja2:7
+#: src/ej_boards/jinja2/ej_boards/board-create.jinja2:7
 #: src/ej_conversations/jinja2/ej_conversations/create.jinja2:39
 #: src/ej_conversations/jinja2/ej_conversations/edit.jinja2:14
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: src/ej_boards/jinja2/ej_boards/create.jinja2:11
+#: src/ej_boards/jinja2/ej_boards/board-create.jinja2:11
 msgid "Save board"
 msgstr "Salvar mural"
 
-#: src/ej_boards/jinja2/ej_boards/create.jinja2:16
-msgid "Fill up the form to create or edit this conversation board"
-msgstr "Preencha os campos para criar ou editar esse mural de conversas"
+#: src/ej_boards/jinja2/ej_boards/board-create.jinja2:17
+msgid "Fill up the form to create a new conversation board"
+msgstr "Preencha os campos para criar ou editar o mural de conversas"
 
-#: src/ej_boards/jinja2/ej_boards/create.jinja2:21
+#: src/ej_boards/jinja2/ej_boards/board-create.jinja2:23
 #: src/ej_boards/jinja2/ej_boards/jinja2/ej_clusters/edit-stereotype.jinja2:5
 #: src/ej_clusters/jinja2/ej_clusters/edit-stereotype.jinja2:5
 #: src/ej_conversations/jinja2/ej_conversations/edit.jinja2:18
@@ -1687,11 +1632,19 @@ msgstr "Preencha os campos para criar ou editar esse mural de conversas"
 msgid "Save"
 msgstr "Salvar"
 
-#: src/ej_boards/jinja2/ej_boards/list.jinja2:7
+#: src/ej_boards/jinja2/ej_boards/board-edit.jinja2:5
+msgid "Edit board"
+msgstr "Editar mural"
+
+#: src/ej_boards/jinja2/ej_boards/board-edit.jinja2:6
+msgid "Fill up the form to edit this conversation board"
+msgstr "Preencha os campos para criar ou editar o mural de conversas"
+
+#: src/ej_boards/jinja2/ej_boards/board-list.jinja2:7
 msgid "Create boards to group similar conversations!"
 msgstr "Crie murais para agrupar conversas similares!"
 
-#: src/ej_boards/jinja2/ej_boards/list.jinja2:17
+#: src/ej_boards/jinja2/ej_boards/board-list.jinja2:17
 msgid "Create a new board!"
 msgstr "Criar um novo mural!"
 
@@ -1909,43 +1862,43 @@ msgstr "por"
 msgid "Approve"
 msgstr "Aprovar"
 
-#: src/ej_conversations/jinja2/ej/role/comment-moderate.jinja2:18
+#: src/ej_conversations/jinja2/ej/role/comment-moderate.jinja2:19
 msgid "Disapprove"
 msgstr "Rejeitar"
 
-#: src/ej_conversations/jinja2/ej/role/comment-moderate.jinja2:22
+#: src/ej_conversations/jinja2/ej/role/comment-moderate.jinja2:24
 msgid "Reason"
 msgstr "Justificativa"
 
-#: src/ej_conversations/jinja2/ej/role/comment-moderate.jinja2:23
+#: src/ej_conversations/jinja2/ej/role/comment-moderate.jinja2:25
 msgid "The comment will receive your rejection reason"
 msgstr "O comentário vai receber sua justificativa de rejeição"
 
-#: src/ej_conversations/jinja2/ej/role/conversation-balloon.jinja2:8
+#: src/ej_conversations/jinja2/ej/role/conversation-balloon.jinja2:7
 msgid "Tags"
 msgstr "Tags"
 
-#: src/ej_conversations/jinja2/ej/role/conversation-balloon.jinja2:13
+#: src/ej_conversations/jinja2/ej/role/conversation-balloon.jinja2:12
 msgid "{count} comments"
 msgstr "{count} comentários"
 
-#: src/ej_conversations/jinja2/ej/role/conversation-balloon.jinja2:14
+#: src/ej_conversations/jinja2/ej/role/conversation-balloon.jinja2:13
 msgid "{count} votes"
 msgstr "{count} votos"
 
-#: src/ej_conversations/jinja2/ej/role/conversation-balloon.jinja2:15
+#: src/ej_conversations/jinja2/ej/role/conversation-balloon.jinja2:14
 msgid "{count} favorites"
 msgstr "{count} favoritos"
 
-#: src/ej_conversations/jinja2/ej/role/conversation-balloon.jinja2:27
+#: src/ej_conversations/jinja2/ej/role/conversation-balloon.jinja2:26
 msgid "Unfavorite"
 msgstr "Desfavoritar"
 
-#: src/ej_conversations/jinja2/ej/role/conversation-balloon.jinja2:31
+#: src/ej_conversations/jinja2/ej/role/conversation-balloon.jinja2:30
 msgid "Favorite"
 msgstr "Favorito"
 
-#: src/ej_conversations/jinja2/ej/role/conversation-balloon.jinja2:36
+#: src/ej_conversations/jinja2/ej/role/conversation-balloon.jinja2:35
 msgid "Share"
 msgstr "Compartilhar"
 
@@ -1995,6 +1948,18 @@ msgstr "Parabéns!"
 msgid "There are no comments left to vote :)"
 msgstr "Não há comentários para votar :)"
 
+#: src/ej_conversations/jinja2/ej_conversations/detail.jinja2:18
+msgid "You have {} comment{} under moderation."
+msgstr "Você tem {} comentário{} aguardando moderação."
+
+#: src/ej_conversations/jinja2/ej_conversations/detail.jinja2:20
+msgid "Click here"
+msgstr "Clique aqui"
+
+#: src/ej_conversations/jinja2/ej_conversations/detail.jinja2:21
+msgid "to see {}."
+msgstr "para ver {}."
+
 #: src/ej_conversations/jinja2/ej_conversations/edit.jinja2:53
 msgid "Manage stereotypes"
 msgstr "Gerenciar estereótipos"
@@ -2023,6 +1988,14 @@ msgstr "Visualizando mural"
 #: src/ej_conversations/jinja2/ej_conversations/list.jinja2:24
 msgid "Create a new board"
 msgstr "Criar um novo mural"
+
+#: src/ej_conversations/jinja2/ej_conversations/list.jinja2:40
+msgid "public conversations"
+msgstr "conversas públicas"
+
+#: src/ej_conversations/jinja2/ej_conversations/list.jinja2:44
+msgid "go to my conversations"
+msgstr "Suas conversas"
 
 #: src/ej_conversations/jinja2/ej_conversations/moderate.jinja2:27
 msgid "Pending"
@@ -2116,6 +2089,14 @@ msgstr "Informação do grupo"
 #: src/ej_reports/jinja2/ej_reports/index.jinja2:101
 msgid "{n} users"
 msgstr "{n} usuários"
+
+#: src/ej_reports/jinja2/ej_reports/scatter.jinja2:8
+msgid "Error!"
+msgstr "Erro!"
+
+#: src/ej_reports/jinja2/ej_reports/scatter.jinja2:9
+msgid "Not enough data to show scatter plot!"
+msgstr "Sem dados suficientes para exibir o scatter plot"
 
 #: src/ej_rocketchat/jinja2/ej_rocketchat/config.jinja2:2
 msgid "Configure Rocket.Chat Integration"
@@ -2211,6 +2192,38 @@ msgstr "Tente novamente"
 #: src/ej_users/jinja2/ej_users/reset-password.jinja2:23
 msgid "Update"
 msgstr "Atualizar"
+
+#~ msgid "%s' conversations"
+#~ msgstr "%s"
+
+#~ msgid "These are %s's conversations. Contribute to them too"
+#~ msgstr "Essas são as conversas do mural %s. Contribua com elas também"
+
+#, fuzzy
+#~ msgid "Sender"
+#~ msgstr "Remetende"
+
+#~ msgid "Short Description"
+#~ msgstr "Descrição curta"
+
+#~ msgid "Waiting"
+#~ msgstr "Esperando"
+
+#~ msgid "Read"
+#~ msgstr "Lido"
+
+#~ msgid "Seen"
+#~ msgstr "Visto"
+
+#~ msgid "Unseen"
+#~ msgstr "Não Visto"
+
+#, fuzzy
+#~ msgid "Status"
+#~ msgstr "Estado"
+
+#~ msgid "OneSignal Id"
+#~ msgstr "Id OneSignal"
 
 #, fuzzy
 #~ msgid ""
