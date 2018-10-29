@@ -1,9 +1,9 @@
 
-{% macro modalities(title, img, img2, img3, inc, inc2, inc3, content, buttoncont) %}
+{% macro modalities(title, ifimg, img, img2, img3, inc, inc2, inc3, content) %}
     <div id="modalities">
         <h3>{{title}}</h3>
         {% if img != "" %}
-            <img src={{img}}/>
+            <img {{ifimg}} src={{img}}/>
             {% if img2 != "" %}
                 <img src={{img2}}/>
                 {% if img3 != "" %}

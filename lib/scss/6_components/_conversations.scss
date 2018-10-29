@@ -539,7 +539,8 @@ $modalities-content-width-max: ($page-content-width-max / 2) - 29 !default;
                 max-width: 28%;
             }
             .Button{
-                font: 11px "Raleway", sans-serif;
+                font-weight: bold;
+                font-size: 11px;
             }
             .fa-times{
                 padding: 0px $spacing-unit-small;
@@ -554,7 +555,7 @@ $modalities-content-width-max: ($page-content-width-max / 2) - 29 !default;
             .fa-check{
                 padding: 0px $spacing-unit-small;
                 font-size: $spacing-unit - $spacing-unit-tiny;
-                color: $color-box-shadow;
+                color: $color-blue-dark;
             }
         }
     @media only screen and (min-width: $breakpoint-small) {
@@ -565,7 +566,7 @@ $modalities-content-width-max: ($page-content-width-max / 2) - 29 !default;
                 max-width: $modalities-content-width-max; 
                 .Button{
                     font-weight: bold;
-                    font: 15px "Raleway", sans-serif;
+                    font-size: 13px;
                 }
             }
             img{
@@ -585,7 +586,7 @@ $modalities-content-width-max: ($page-content-width-max / 2) - 29 !default;
             .fa-check{
                 padding: 0px $spacing-unit-small;
                 font-size: $spacing-unit - $spacing-unit-tiny;
-                color: $color-box-shadow;
+                color: $color-blue-dark;
             }
         }
 
