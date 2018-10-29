@@ -39,7 +39,12 @@
         </div>
         <div class="Inbox-notifications">
             {% for item in notifications %}
-            <div class="Inbox-notifications-card">
+            {% if item.already_seen %}
+                {% set notification_class = "" %}
+            {% else %}
+                {% set notification_class = "darken" %}
+            {% endif %}
+            <div class="Inbox-notifications-card {{notification_class}}">
                 <div>
                 <div class="Inbox-notifications-circle"></div>
                 </div>
