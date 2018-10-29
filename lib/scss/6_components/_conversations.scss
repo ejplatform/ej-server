@@ -126,7 +126,6 @@ $profile-label-clear-color: #30BFD3 !default;
     justify-content: center;
     display: flex;
     flex-direction: column;
-
     p {
         text-align: center;
     }
@@ -136,7 +135,7 @@ $profile-label-clear-color: #30BFD3 !default;
     @include color($color-blue-nav, $color-primary, $force: true);
     font-weight: bold;
     text-align: center;
-    padding: $spacing-unit / 2 0;
+    padding: $spacing-unit-small + $spacing-unit-tiny $spacing-unit-small $spacing-unit-small $spacing-unit-small;
     background-color: $conversation-top-background;
 }
 
@@ -155,17 +154,13 @@ $profile-label-clear-color: #30BFD3 !default;
     height: 320px;
     overflow: hidden;
     position: relative;
+    padding: 0;
     .ConversationTags {
         background-color: $card-conversation-top-background;
         color: $card-conversation-top-font-color;
     }
-
-    > * {
-        padding: $spacing-unit-small;
-    }
-
     h1 {
-        font-size: $font-size-h3;
+        font-size: $font-size-h4;
         font-family: $font-paragraph;
         font-weight: 600;
         text-transform: none;
@@ -221,6 +216,7 @@ $profile-label-clear-color: #30BFD3 !default;
     }
 
     &-cover + .ConversationCard-actions {
+        padding: 0 $spacing-unit-small $spacing-unit-small $spacing-unit-small;
         background-size: 30px;
         background: $card-conversation-bottom-background;
         margin-top: $spacing-unit;
@@ -232,10 +228,11 @@ $profile-label-clear-color: #30BFD3 !default;
 
     &-actions {
         .Button[primary] {
+            padding: $spacing-unit-small + $spacing-unit-tiny;
             background: $card-conversation-button-background;
             font-size: $font-size-small;
-            padding-top: $button-vpadding * 2;
-            padding-bottom: $button-vpadding * 2;
+            padding-top: $font-size-small;
+            padding-bottom: $font-size-small;
             i {
                 margin-left: $spacing-unit-tiny;
             }
@@ -246,7 +243,7 @@ $profile-label-clear-color: #30BFD3 !default;
         color: $color-blue-nav;
         display: flex;
         justify-content: center;
-        padding: 0 $spacing-unit;
+        padding: $spacing-unit-small;
         margin: $spacing-unit-tiny $spacing-unit;
         font-weight: bold;
 
@@ -732,6 +729,11 @@ $profile-label-clear-color: #30BFD3 !default;
     }
 }
 
+.Link {
+    display: flex;
+    flex-direction: row;
+}
+
 .Link-new {
     text-align: center;
     display: block;
@@ -739,17 +741,29 @@ $profile-label-clear-color: #30BFD3 !default;
     text-transform: uppercase;
     font-size: $spacing-unit / 2;
     font-weight: bold;
-    box-shadow: $header-box-shadow-upper;
+    border-bottom: 1px solid $color-gray-lighter;
     margin: 0;
     padding: $spacing-unit-small 0;
-
-    a {
-        color: $color-black;
-    }
-
+    color: $conversation-link-new-color;
     i {
-        color: $color-magenta;
+        color: $conversation-link-new-icon-color;
     }
+}
+
+.Link-edit {
+    text-align: center;
+    display: block;
+    width: 100%;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: bold;
+    border-bottom: 1px solid $color-gray-lighter;
+    margin: 0;
+    padding: $spacing-unit-small 0;
+    color: $conversation-link-edit-color;
+    i {
+        color: $conversation-link-edit-icon-color;
+    }   
 }
 
 .view-board {
@@ -882,6 +896,7 @@ $profile-label-clear-color: #30BFD3 !default;
             box-shadow: none;
             padding-left: 0;
             outline: 0;
+            margin: 0;
         }
     }
 

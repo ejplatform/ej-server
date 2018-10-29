@@ -10,7 +10,6 @@ variables:
   POSTGRES_USER: ej
   POSTGRES_PASSWORD: ej
 
-
 # -----------------------------------------------------------------------------
 # Test: test in different environments by changing the database or running
 # different linters.
@@ -39,6 +38,7 @@ flake8:
   stage: test
   script:
     - flake8 src/
+    - flake8 docs/
 
 
 # -----------------------------------------------------------------------------
@@ -72,13 +72,12 @@ rebuild base docker images:
     - docker:dind
   before_script:
     - *login
-    - echo "$CI_COMMIT_SHA; $CI_COMMIT_TITLE"
+    - echo "$CI_COMMIT_SHA; $CI_COMMIT_TITLE; $CI_COMMIT_TAG;"
   script:
     - "docker build . -f docker/Dockerfile.deploy -t ejplatform/web:$DOCKER_TAG
             --cache-from ejplatform/web:$DOCKER_TAG
             --build-arg COMMIT_TITLE=\"$CI_COMMIT_TITLE\"
             --build-arg COMMIT_HASH=\"$CI_COMMIT_SHA\""
-  after_script:
     - docker push ejplatform/web:$DOCKER_TAG
   tags:
     - docker
@@ -91,7 +90,6 @@ rebuild base docker images:
             --build-arg THEME=cpa
             --build-arg COMMIT_TITLE=\"$CI_COMMIT_TITLE\"
             --build-arg COMMIT_HASH=\"$CI_COMMIT_SHA\""
-  after_script:
     - docker push mdhcpa/web:$DOCKER_TAG
 
 publish web develop:
@@ -105,7 +103,9 @@ publish web staging:
   environment: staging
   only:
     - master
-
+  except:
+    - tags
+  
 publish web cpa develop:
   extends: .publish web cpa
   environment: develop
@@ -117,20 +117,22 @@ publish web cpa staging:
   environment: staging
   only:
     - master
-
+  except:
+    - tags
+  
 publish ejplatform/web tagged:
   extends: .publish web generic
+  environment: production
   script:
     - "docker build . -f docker/Dockerfile.deploy 
             -t ejplatform/web:$CI_COMMIT_TAG
             -t ejplatform/web:$DOCKER_TAG
             -t ejplatform/web:latest
-            --cache-from ejplatform/web:$CI_COMMIT_TAG
             --build-arg COMMIT_TITLE=\"$CI_COMMIT_TITLE\"
             --build-arg COMMIT_HASH=\"$CI_COMMIT_SHA\""
-  after_script:
     - docker push ejplatform/web:$CI_COMMIT_TAG
     - docker push ejplatform/web:$DOCKER_TAG
+    - docker push ejplatform/web:latest
   only:
     - master
     - tags
@@ -138,18 +140,18 @@ publish ejplatform/web tagged:
 
 publish mdhcpa/web tagged:
   extends: publish ejplatform/web tagged
+  environment: production
   script:
     - "docker build . -f docker/Dockerfile.deploy
             -t mdhcpa/web:$CI_COMMIT_TAG
             -t mdhcpa/web:$DOCKER_TAG
             -t mdhcpa/web:latest
-            --cache-from mdhcpa/web:$CI_COMMIT_TAG
             --build-arg THEME=cpa
             --build-arg COMMIT_TITLE=\"$CI_COMMIT_TITLE\"
             --build-arg COMMIT_HASH=\"$CI_COMMIT_SHA\""
-  after_script:
     - docker push mdhcpa/web:$CI_COMMIT_TAG
     - docker push mdhcpa/web:$DOCKER_TAG
+    - docker push mdhcpa/web:latest
   only:
     - master
     - tags
@@ -178,7 +180,6 @@ publish mdhcpa/web tagged:
             --stack $RANCHER_STACK_CPA
             --rancher-key $RANCHER_ACCESS_KEY
             --rancher-secret $RANCHER_SECRET_KEY"
-  after_script:
     - "upgrade
             --service nginx
             --environment $RANCHER_ENVIRONMENT
@@ -196,6 +197,8 @@ deploy generic dev:
 # deploy generic staging:
 #   extends: .deploy
 #   environment: staging
+#   except:
+#     - tags
 #   only:
 #     - master
 
@@ -215,6 +218,8 @@ deploy generic dev:
 # deploy cpa staging:
 #   extends: .deploy-cpa
 #   environment: staging
+#   except:
+#     - tags
 #   only:
 #     - master
 

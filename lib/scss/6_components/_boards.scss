@@ -6,6 +6,44 @@
 
 $board-ul-margin: 40px;
 $board-link-margin: 15px;
+$board-top-menu-border: 1px #DDDDDD solid;
+
+.BoardForm {
+    label {
+        font-size: $font-size-small;
+        color: $board-label-color;
+        margin-left: $spacing-unit-small;
+    }
+
+}
+
+.Board{
+
+    &-TopMenu {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        border-bottom: $board-top-menu-border;    
+        img {
+            width: $spacing-unit-small;
+        } 
+        button {
+            margin: $spacing-unit-small $spacing-unit-small $spacing-unit-tiny $spacing-unit-small;
+            text-transform: uppercase;
+            background-color: transparent;
+            border: none;
+            color: $board-menu-font-color;
+            font-size: $font-size-small;
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+
+    &-Title {
+        color: $board-title-color;
+    }
+}
 
 .BoardList {
     text-align: center;

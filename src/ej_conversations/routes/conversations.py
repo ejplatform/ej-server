@@ -1,12 +1,14 @@
 from logging import getLogger
+
 from django.http import HttpResponseServerError, Http404
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from hyperpython import a
 
+from boogie import rules
 from . import urlpatterns, conversation_url
+from ..forms import CommentForm
 from ..models import Conversation, Comment
-from ej_conversations.forms import CommentForm
 
 log = getLogger('ej')
 
@@ -20,6 +22,7 @@ def conversation_list(request):
         'topic': _('A space for adolescents to discuss actions that promote, guarantee and defend their rights'),
         'title': _('Public conversations'),
         'subtitle': _('Participate of conversations and give your opinion with comments and votes!'),
+        'description': _('Participate of conversations and give your opinion with comments and votes!'),
     }
 
 
@@ -27,13 +30,13 @@ def conversation_list(request):
 def detail(request, conversation):
     if not conversation.is_promoted:
         raise Http404
-    return conversation_detail_context(request, conversation)
+    return get_conversation_detail_context(request, conversation)
 
 
 #
 # Auxiliary and re-usable functions
 #
-def conversation_detail_context(request, conversation):
+def get_conversation_detail_context(request, conversation):
     """
     Common implementation used by both /conversations/<slug> and inside boards
     in /<board>/conversations/<slug>/
@@ -41,8 +44,8 @@ def conversation_detail_context(request, conversation):
     user = request.user
     is_favorite = user.is_authenticated and conversation.followers.filter(user=user).exists()
     comment = None
-
-    comment_content = CommentForm(request.POST or None, conversation=conversation)
+    comment_form = CommentForm(None, conversation=conversation)
+    n_comments_under_moderation = rules.compute('ej_conversations.comments_under_moderation', conversation, user)
 
     # User is voting in the current comment. We still need to choose a random
     # comment to display next.
@@ -55,9 +58,11 @@ def conversation_detail_context(request, conversation):
     # User is posting a new comment. We need to validate the form and try to
     # keep the same comment that was displayed before.
     elif request.POST.get('action') == 'comment':
-        if comment_content.is_valid():
-            new_comment = comment_content.cleaned_data['content']
+        comment_form = CommentForm(request.POST, conversation=conversation)
+        if comment_form.is_valid():
+            new_comment = comment_form.cleaned_data['content']
             new_comment = conversation.create_comment(user, new_comment)
+            comment_form = CommentForm(conversation=conversation)
             log.info(f'user {user.id} posted comment {new_comment.id} on {conversation.id}')
 
     # User toggled the favorite status of conversation.
@@ -74,13 +79,14 @@ def conversation_detail_context(request, conversation):
         'conversation': conversation,
         'comment': comment or conversation.next_comment(user, None),
         'login_link': login_link(_('login'), conversation),
-        'comment_form': comment_content,
+        'comment_form': comment_form,
 
         # Permissions and predicates
         'is_favorite': is_favorite,
         'can_view_comment': user.is_authenticated,
         'can_edit': user.has_perm('ej.can_edit_conversation', conversation),
         'cannot_comment_reason': '',
+        'comments_under_moderation': n_comments_under_moderation,
     }
 
 

@@ -7,6 +7,8 @@ from django.utils.timezone import now
 from boogie import rules
 from ej_powers.rules import promoted_comments_in_conversation
 
+from .models import Comment
+
 
 #
 # Global values and configurations
@@ -89,6 +91,16 @@ def remaining_comments(conversation, user):
         return 0
     comments = user.comments.filter(conversation=conversation).count()
     return max(max_comments_per_conversation() - comments, 0)
+
+
+@rules.register_value('ej_conversations.comments_under_moderation')
+def comments_under_moderation(conversation, user):
+    """
+    The number of comments under moderation of a user in a conversation.
+    """
+    if user.id is None:
+        return 0
+    return user.comments.filter(conversation=conversation, status=Comment.STATUS.pending).count()
 
 
 @rules.register_value('ej_conversations.vote_cooldown')

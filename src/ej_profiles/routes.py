@@ -1,11 +1,10 @@
 from boogie.router import Router
-from django.db.models import Count, Q
 from django.http import Http404
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
-from ej_conversations.models import FavoriteConversation, Comment, Choice
+from ej_conversations.models import FavoriteConversation, Comment
 from .forms import ProfileForm, UsernameForm
 
 app_name = 'ej_profiles'
@@ -35,9 +34,6 @@ def detail(request):
             .all()
             .select_related('conversation')
             .select_related('author')
-            .annotate(agree_count=Count(Q(votes__choice=Choice.AGREE)))
-            .annotate(disagree_count=Count(Q(votes__choice=Choice.DISAGREE)))
-            .annotate(skip_count=Count(Q(votes__choice=Choice.SKIP)))
     )
 
     return {

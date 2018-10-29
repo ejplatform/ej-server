@@ -1,3 +1,9 @@
+// Color
+$color-accent: #3F1B53;
+$color-magenta: #C6027B;
+$color-primary: $color-blue;
+
+
 // Page
 $page-background-image: url(/static/img/page-bg.svg) top center no-repeat;
 
@@ -6,6 +12,8 @@ $button-border-radius-default: 8px;
 
 // Forms
 $form-item-border-radius: 7px;
+$form-border-color: $color-purple-dark;
+$form-input-color: $color-magenta;
 
 //Profile
 //$profile-font-color-primary: white;
@@ -91,6 +99,11 @@ $conversation-tag-color: #30BEC0;
 $conversation-statistics-color: #30c0d3;
 $conversation-arrow-border: 28px solid #D4F7F5;
 $conversation-topic-diplay: block;
+$conversation-link-new-color: $color-accent !default;
+$conversation-link-new-icon-color: $color-primary !default;
+$conversation-link-edit-color: $color-accent !default;
+$conversation-link-edit-icon-color: $color-primary !default;
+
 
 // Conversation: edit
 $conversation-edit-action-cancel-border: transparent;
@@ -132,10 +145,6 @@ $selected-stereotype-cluster-menu-color: #b62a52;
 $selected-stereotype-cluster-menu-border: none;
 $selected-stereotype-cluster-menu-padding: none;
 
-// Color
-$color-accent: $color-secundary;
-$color-magenta: $color-secundary;
-
 // Stereotypes
 $stereotype-title: #3F1B53;
 $stereotype-new-text: #30bec0;
@@ -145,3 +154,9 @@ $stereotype-add-title-color: $color-secundary;
 $stereotype-add-submit-color: $color-secundary;
 $stereotype-add-input-border-radius: 0px;
 $stereotype-add-comment-color: #30BEC0;
+
+
+// Boards
+$board-menu-font-color: #3F1B53;
+$board-title-color: #C6027B;
+$board-label-color: #3F1B53;

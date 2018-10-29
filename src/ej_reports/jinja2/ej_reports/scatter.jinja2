@@ -1,7 +1,14 @@
 {% extends 'base.jinja2' %}
 {% block content %}
     <div class="Container">
-        <div id="container" style="width 100%; min-height: 400px"></div>
+        {% if plot_data is defined %}
+            <div id="container" style="width 100%; min-height: 400px"></div>
+        {% else %}
+            <div class="CenteredContainer">
+                <h1>{% trans %}Error!{% endtrans %}</h1>
+                <p>{% trans %}Not enough data to show scatter plot!{% endtrans %}</p>
+            </div>
+        {% endif %}
         <div>
             <a href="..">Go back</a>
         </div>
@@ -11,40 +18,38 @@
 
 {% block javascript_body %}
     {{ super() }}
-    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
-    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>
-    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>
-    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
-    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
-    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
-    <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM"></script>
-    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
-    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>
-    <script type="text/javascript">
-var dom = document.getElementById("container");
-var myChart = echarts.init(dom);
-var app = {};
-var data_from_django = {{ plot_data }};
-console.log(data_from_django)
-option = null;
-option = {
-    xAxis: {},
-    yAxis: {},
-    series: [{
-        symbolSize: 20,
-        data: data_from_django,
-        type: 'scatter'
-    }]
-};
-;
-if (option && typeof option === "object") {
- myChart.setOption(option, true);
-}
-$(window).on('resize', function(){
-    if(myChart !== null && myChart !== undefined){
-        myChart.resize();
-    }
-});
-    </script>
+    {% if plot_data is defined %}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/4.1.0/echarts.min.js"></script>
+{#        <script src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>#}
+{#        <script src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>#}
+{#        <script src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>#}
+{#        <script src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>#}
+{#        <script src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>#}
+{#        <script src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>#}
+{#        <script src="https://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM"></script>#}
+{#        <script src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>#}
+{#        <script src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>#}
+        <script>
+            var dom = document.getElementById("container");
+            var myChart = echarts.init(dom);
+            var plotData = {{ plot_data }};
+            var option = {
+                xAxis: {},
+                yAxis: {},
+                series: [{
+                    symbolSize: 10,
+                    data: plotData,
+                    type: 'scatter'
+                }]
+            };
+            if (option && typeof option === "object") {
+                myChart.setOption(option, true);
+            }
+            $(window).on('resize', function () {
+                if (myChart !== null && myChart !== undefined) {
+                    myChart.resize();
+                }
+            });
+        </script>
+    {% endif %}
 {% endblock %}

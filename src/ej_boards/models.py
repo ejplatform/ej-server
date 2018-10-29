@@ -1,10 +1,12 @@
 from django.conf import settings
+from django.core.exceptions import ValidationError
 from django.db import models
+from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
 from model_utils.models import TimeStampedModel
 
 from ej_conversations.models import Conversation, ConversationTag
-from .validators import validate_board_url
+from .validators import validate_board_slug
 
 
 class Board(TimeStampedModel):
@@ -13,11 +15,8 @@ class Board(TimeStampedModel):
     """
     slug = models.SlugField(
         _('Slug'),
-        help_text=(
-            'Short text used to identify the board URL (e.g.: "johns-board")'
-        ),
         unique=True,
-        validators=[validate_board_url],
+        validators=[validate_board_slug],
     )
     owner = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -48,6 +47,19 @@ class Board(TimeStampedModel):
     def __str__(self):
         return self.title
 
+    def save(self, *args, **kwargs):
+        if self.pk is None:
+            self.slug = slugify(self.slug)
+        super().save(*args, **kwargs)
+
+    def clean(self):
+        try:
+            board = Board.objects.get(slug=self.slug)
+            if board.slug == self.slug and board.id != self.id:
+                raise ValidationError(_('Slug already exists.'))
+        except Board.DoesNotExist:
+            pass
+
     def get_absolute_url(self):
         return f'/{self.slug}/'
 
@@ -56,6 +68,12 @@ class Board(TimeStampedModel):
         Add conversation to board.
         """
         self.board_subscriptions.get_or_create(conversation=conversation)
+
+    def has_conversation(self, conversation):
+        """
+        Return True if conversation is present in board.
+        """
+        return bool(self.board_subscriptions.filter(conversation=conversation))
 
 
 class BoardSubscription(models.Model):

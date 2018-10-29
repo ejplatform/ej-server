@@ -1,0 +1,26 @@
+{
+  "name": "ej",
+  "main": "build/js/index.js",
+  "license": "GPL-3.0-or-later",
+  "scripts": {
+    "watch": "rollup --config --watch",
+    "build": "rollup --config",
+    "prepublish": "yarn run build"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-flow": "^6.23.0",
+    "flow-bin": "^0.59.0",
+    "rimraf": "^2.6.2",
+    "rollup": "^0.52.0",
+    "rollup-plugin-babel": "^3.0.2",
+    "rollup-plugin-flow": "^1.1.1",
+    "rollup-plugin-node-resolve": "^3.4.0"
+  },
+  "dependencies": {
+    "unpoly": "^0.57.0"
+  }
+}
