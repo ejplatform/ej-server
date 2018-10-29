@@ -1,18 +1,80 @@
 {% extends 'base.jinja2' %}
-{% from 'components/generic/modalities-slider.jinja2' import modalities with context %}
+{% from 'components/generic/modalities.jinja2' import modalities with context %}
 
 {% block content %}
-    <div class="Modalities-slider">
-        {% if voted == None %}
-            {{modalities("Bem Vinda(o)", "Você iniciou sua participação! Comece votando em comentários: você pode concordar, discordar ou passar se quiser votar depois",
-            "Participação", "A partir de seus votos, você será posicionado em um grupo de opinião, e poderá ganhar poderes que ajudarão a diversificar os diálogos e furar bolhas  de opinião")}}
+    {% if voted == None %}
+        <div class="Modalities-slider">
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        {{modalities("Bem Vinda(o)", "", "", "", "Você iniciou sua participação! Comece votando em comentários: você pode concordar, discordar ou passar se quiser votar depois", "PRÓXIMO")}}
+                        <p class="append-buttons">
+                            <a href="#" class="next-slide-1">PRÓXIMO</a>
+                        </p>
+                    </div>
+                    <div class="swiper-slide">
+                        {{modalities("Participação", "", "", "", "A partir de seus votos, você será posicionado em um grupo de opnião, e poderá ganhar poderes que ajudarão a diversificar os diálogos e furar bolhas de opinião!", "PRÓXIMO")}}
+                        <p class="append-buttons">
+                            <a href="#" class="next-slide-2">PRÓXIMO</a>
+                        </p>
+                     </div>
+                    <div class="swiper-slide">
+                        {{modalities("Poderes", "/static/img/icons/iconponte.svg", "/static/img/icons/iconativista.svg", "", "Com os poderes, Ativista de Minoria, Ponte de Diálogo e Fura-Bolhas, você ganhará mais poder de fala, aumentando o seu limite de comentários e/ou a visibilidade deles!", "CONTINUAR PARTICIPANDO")}}
+                        <button type="submit" form="Comment-form" name="vote" class="Button" value="skip">CONTINUAR PARTICIPANDO</button>
+                    </div>
+                </div>
+                <div class="swiper-pagination"></div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+            <script>
+
+                var nextArrow = document.createElement('i');
+                var prevArrow = document.createElement('i');
+                
+                nextArrow.setAttribute('class', 'fas fa-angle-right')
+                prevArrow.setAttribute('class', 'fas fa-angle-left')
+
+                $(".swiper-button-next").css('cssText', 'background-image: none')
+                $(".swiper-button-prev").css('cssText', 'background-image: none')
+
+                var nextBtnDiv = $(".swiper-button-next");
+                var prevBtnDiv = $(".swiper-button-prev");
+
+                nextBtnDiv.append(nextArrow);
+                prevBtnDiv.append(prevArrow);
+
+                var swiper = new Swiper('.swiper-container', {
+                    pagination: {
+                        el: '.swiper-pagination',
+                    },
+                    navigation: {
+                        nextEl: '.swiper-button-next',
+                        prevEl: '.swiper-button-prev',
+                    },
+                });
+                document.querySelector('.next-slide-1').addEventListener('click', function (e) {
+                e.preventDefault();
+                swiper.slideTo(1, 0);
+                });
+                document.querySelector('.next-slide-2').addEventListener('click', function (e) {
+                e.preventDefault();
+                swiper.slideTo(2, 0);
+                });
+            </script>
+            <script>
+                function showModalities-slider() {
+                    var x = document.getElementByClassName("Modalities-slider");
+                    x.className = "show";
+                }
+            </script>
             <script>
                 showModalities-slider()
             </script>
-        {% else %}
-            {{voted}}
-        {% endif %}
-    </div>
+        </div>
+    {% else %}
+        {{voted}}
+    {% endif %}
     <div class="ConversationDetail">
         {# Ballon with title #}
         {{ conversation|role('balloon') }}
