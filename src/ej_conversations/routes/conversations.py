@@ -47,6 +47,11 @@ def get_conversation_detail_context(request, conversation):
     comment = None
     comment_form = CommentForm(None, conversation=conversation)
     n_comments_under_moderation = rules.compute('ej_conversations.comments_under_moderation', conversation, user)
+    print(request.POST)
+
+    voted = False
+    if not isinstance(user, AnonymousUser):
+        voted = Vote.objects.filter(author=user).exists()
 
     # User is voting in the current comment. We still need to choose a random
     # comment to display next.
@@ -71,14 +76,14 @@ def get_conversation_detail_context(request, conversation):
         conversation.toggle_favorite(user)
         log.info(f'user {user.id} toggled favorite status of conversation {conversation.id}')
 
+    # User to pass modalities
+    elif request.POST.get('modalities') == 'pass':
+        voted = True
+
     # User is probably trying to something nasty ;)
     elif request.method == 'POST':
         log.warning(f'user {user.id} sent invalid POST request: {request.POST}')
         return HttpResponseServerError('invalid action')
-
-    voted = None
-    if not isinstance(user, AnonymousUser):
-        voted = Vote.objects.filter(author=user).exists()
 
     return {
         # Objects

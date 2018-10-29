@@ -1,5 +1,5 @@
 
-{% macro modalities(title, img, img2, img3, content, buttoncont) %}
+{% macro modalities(title, img, img2, img3, inc, inc2, inc3, content, buttoncont) %}
     <div id="modalities">
         <h3>{{title}}</h3>
         {% if img != "" %}
@@ -11,8 +11,16 @@
                 {% endif %}
             {% endif %}
         {% endif %}
+        {% if inc != "" %}
+            <i class="{{inc}}"></i>
+            {% if inc2 != "" %}
+                <i class="{{inc2}}"></i>
+                {% if inc3 != "" %}
+                    <i class="{{inc3}}"></i>
+                {% endif %}
+            {% endif %}
+        {% endif %}
         <p>{{content}}</p>
-        {#<button class="Button" onclick="swiper-function()">{{buttoncont}}</button>#}
     </div>
     <script>
         function showModalities() {

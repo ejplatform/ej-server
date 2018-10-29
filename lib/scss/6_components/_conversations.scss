@@ -473,8 +473,12 @@ $modalities-content-width-max: ($page-content-width-max / 2) - 29 !default;
         flex-direction: row;
         align-items: center;
         -webkit-justify-content: center;
-        append-buttons{
-            color: $color-primary;
+        .append-buttons{
+            padding: $spacing-unit-tiny 0px;
+            a{
+                color: $color-primary;
+                font-weight: bold;
+            }
         }
         p {
             padding: $spacing-unit-small 0 $spacing-unit-tiny 0;
@@ -537,6 +541,21 @@ $modalities-content-width-max: ($page-content-width-max / 2) - 29 !default;
             .Button{
                 font: 11px "Raleway", sans-serif;
             }
+            .fa-times{
+                padding: 0px $spacing-unit-small;
+                font-size: $spacing-unit - $spacing-unit-tiny;
+                color: $color-accent;
+            }
+            .fa-arrow-right{
+                padding: 0px $spacing-unit-small;
+                font-size: $spacing-unit - $spacing-unit-tiny;
+                color: $color-primary;
+            }
+            .fa-check{
+                padding: 0px $spacing-unit-small;
+                font-size: $spacing-unit - $spacing-unit-tiny;
+                color: $color-box-shadow;
+            }
         }
     @media only screen and (min-width: $breakpoint-small) {
             .swiper-container{
@@ -544,13 +563,29 @@ $modalities-content-width-max: ($page-content-width-max / 2) - 29 !default;
             }
             .swiper-slide{
                 max-width: $modalities-content-width-max; 
+                .Button{
+                    font-weight: bold;
+                    font: 15px "Raleway", sans-serif;
+                }
             }
             img{
                 padding: 0px $spacing-unit - $spacing-unit-tiny;
                 max-width: 16%;
             }
-            .Button{
-                font: 15px "Raleway", sans-serif;
+            .fa-times{
+                padding: 0px $spacing-unit-small;
+                font-size: $spacing-unit - $spacing-unit-tiny;
+                color: $color-accent;
+            }
+            .fa-arrow-right{
+                padding: 0px $spacing-unit-small;
+                font-size: $spacing-unit - $spacing-unit-tiny;
+                color: $color-primary;
+            }
+            .fa-check{
+                padding: 0px $spacing-unit-small;
+                font-size: $spacing-unit - $spacing-unit-tiny;
+                color: $color-box-shadow;
             }
         }
 
