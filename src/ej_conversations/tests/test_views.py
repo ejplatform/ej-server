@@ -60,6 +60,16 @@ class TestConversationComments:
         ctx = comments.comment_detail(conversation, comment)
         assert ctx['comment'] is comment
 
+    def test_comment_list_not_promoted_convesation(self, request_with_user, conversation, user):
+        conversation.is_promoted = False
+        with raises(Http404):
+            comments.comment_list(request_with_user, conversation)
+
+    def test_udetail_of_a_comment_not_promoted(self, conversation, comment):
+        conversation.is_promoted = False
+        with raises(Http404):
+            comments.comment_detail(conversation, comment)
+
 
 class TestAdminViews:
     def test_create_conversation(self, rf, user):

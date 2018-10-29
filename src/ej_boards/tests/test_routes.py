@@ -80,6 +80,7 @@ class TestBoardConversationRoutes(ConversationRecipes):
         response = routes.conversation_edit(request, board, conversation)
         assert response.status_code == 302
         assert response.url == '/slugs/conversations/conversation/moderate/'
+        assert routes.report(board, conversation)
 
     def test_edit_invalid_conversation(self, rf, db, board, conversation):
         conversation.author = board.owner
@@ -154,6 +155,51 @@ class TestBoardConversationRoutes(ConversationRecipes):
         request.user = conversation.author
         with pytest.raises(Http404):
             routes.conversation_moderate(request, board, conversation)
+
+
+class TestBoardViewRoutest:
+    def test_get_create_board(self, rf, user):
+        request = rf.get('', {})
+        request.user = user
+        response = routes.board_create(request)
+        assert response['content_title']
+        assert response['form']
+
+    def test_post_create_valid_board(self, rf, user):
+        data = {'slug': 'slug',
+                'title': 'new title',
+                'description': 'description'}
+        request = rf.post('', data)
+        request.user = user
+        response = routes.board_create(request)
+        assert response.url == '/slug/'
+        assert response.status_code == 302
+
+        data = {'slug': 'slug2',
+                'title': 'new title',
+                'description': 'description'}
+        request = rf.post('', data)
+        request.user = user
+        with pytest.raises(Http404):
+            routes.board_create(request)
+
+    def test_post_create_invalid_board(self, rf, user):
+        data = {'slug': '',
+                'title': 'new title',
+                'description': 'description'}
+        request = rf.post('', data)
+        request.user = user
+        response = routes.board_create(request)
+        assert not response['form'].is_valid()
+        assert response['content_title']
+
+    def test_list_board_only_one_board(self, rf, user, board):
+        board.owner = user
+        request = rf.get('', {})
+        request.user = user
+        response = routes.board_list(request)
+        assert response.status_code == 302
+        assert response.url == board.get_absolute_url() + 'conversations/'
 
 
 class TestBoardRoutes(TestCase):
