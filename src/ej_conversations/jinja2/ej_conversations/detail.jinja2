@@ -2,25 +2,28 @@
 {% from 'components/generic/modalities.jinja2' import modalities with context %}
 
 {% block content %}
-    {% if voted == None %}
+    {% if voted == False %}
         <div class="Modalities-slider">
             <div class="swiper-container">
                 <div class="swiper-wrapper">
                     <div class="swiper-slide">
-                        {{modalities("Bem Vinda(o)", "", "", "", "Você iniciou sua participação! Comece votando em comentários: você pode concordar, discordar ou passar se quiser votar depois", "PRÓXIMO")}}
-                        <p class="append-buttons">
+                        {{modalities("Bem Vinda(o)", "", "", "", "fa fa-times", "fa fa-arrow-right", "fa fa-check", "Você iniciou sua participação! Comece votando em comentários: você pode concordar, discordar ou passar se quiser votar depois", "PRÓXIMO")}}
+                        <div class="append-buttons">
                             <a href="#" class="next-slide-1">PRÓXIMO</a>
-                        </p>
+                        </div>
                     </div>
                     <div class="swiper-slide">
-                        {{modalities("Participação", "", "", "", "A partir de seus votos, você será posicionado em um grupo de opnião, e poderá ganhar poderes que ajudarão a diversificar os diálogos e furar bolhas de opinião!", "PRÓXIMO")}}
-                        <p class="append-buttons">
+                        {{modalities("Participação", "/static/img/icons/artboard.svg", "", "", "", "", "", "A partir de seus votos, você será posicionado em um grupo de opnião, e poderá ganhar poderes que ajudarão a diversificar os diálogos e furar bolhas de opinião!", "PRÓXIMO")}}
+                        <div class="append-buttons">
                             <a href="#" class="next-slide-2">PRÓXIMO</a>
-                        </p>
+                        </div>
                      </div>
                     <div class="swiper-slide">
-                        {{modalities("Poderes", "/static/img/icons/iconponte.svg", "/static/img/icons/iconativista.svg", "", "Com os poderes, Ativista de Minoria, Ponte de Diálogo e Fura-Bolhas, você ganhará mais poder de fala, aumentando o seu limite de comentários e/ou a visibilidade deles!", "CONTINUAR PARTICIPANDO")}}
-                        <button type="submit" form="Comment-form" name="vote" class="Button" value="skip">CONTINUAR PARTICIPANDO</button>
+                        {{modalities("Poderes", "/static/img/icons/iconponte.svg", "/static/img/icons/iconativista.svg", "", "", "", "", "Com os poderes, Ativista de Minoria, Ponte de Diálogo e Fura-Bolhas, você ganhará mais poder de fala, aumentando o seu limite de comentários e/ou a visibilidade deles!", "CONTINUAR PARTICIPANDO")}}
+                        <form method="post">
+                            {{ csrf_input }}
+                            <button type="submit" name="modalities" class="Button" value="pass">CONTINUAR PARTICIPANDO</button>
+                        </form>
                     </div>
                 </div>
                 <div class="swiper-pagination"></div>
@@ -72,8 +75,6 @@
                 showModalities-slider()
             </script>
         </div>
-    {% else %}
-        {{voted}}
     {% endif %}
     <div class="ConversationDetail">
         {# Ballon with title #}

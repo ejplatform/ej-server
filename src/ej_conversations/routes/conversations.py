@@ -69,6 +69,10 @@ def get_conversation_detail_context(request, conversation):
         conversation.toggle_favorite(user)
         log.info(f'user {user.id} toggled favorite status of conversation {conversation.id}')
 
+    # User to pass modalities
+    elif request.POST.get('modalities') == 'pass':
+        voted = True
+
     # User is probably trying to something nasty ;)
     elif request.method == 'POST':
         log.warning(f'user {user.id} se nt invalid POST request: {request.POST}')
