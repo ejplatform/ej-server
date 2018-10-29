@@ -46,6 +46,11 @@
     }
 
     &-notifications {
+        &-card {
+            flex-direction: row;
+            display: flex;
+        }
+        
         &-info {
             color: $color-secundary;
         }
