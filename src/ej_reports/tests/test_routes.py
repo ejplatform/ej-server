@@ -50,7 +50,7 @@ class TestReportRoutes(ConversationRecipes):
         request = request_as_admin
         request.GET = QueryDict('')
         request.get(path)
-        response = index(request, conversation)
+        response = index(conversation)
 
         assert REPORT_RESPONSE['statistics'] in response.values()
 
