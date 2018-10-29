@@ -27,6 +27,7 @@
             flex-direction: row;
             align-content: center;
             justify-content: space-between;
+            border-bottom: 1px solid $color-secundary;
 
         }
         &-selection {
@@ -49,6 +50,10 @@
         &-card {
             flex-direction: row;
             display: flex;
+        }
+
+        p {
+            margin-top: 5vw;
         }
         
         &-info {

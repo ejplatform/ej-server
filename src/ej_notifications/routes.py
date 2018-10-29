@@ -37,10 +37,12 @@ def inbox(request):
             {
                 "notification": "Você recebeu o poder Ponte de diálogo. Promova um comentário ou crie um comentário promovido",
                 "remaining_time": 35,
+                "already_seen": False,
             },
             {
                 "notification": "Você recebeu o poder Ponte ativista de minoria. Crie um comentário promovido",
                 "remaining_time": 35,
+                "already_seen": True,
             }
         ],
     }
