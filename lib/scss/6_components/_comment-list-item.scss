@@ -6,6 +6,8 @@
 .CommentListItem {
     &-header {
         color: $color-primary;
+        display: flex;
+        justify-content: center;
         &::after {
             content: "";
             clear: both;
@@ -25,6 +27,7 @@
     &-actions {
         display: flex;
         justify-content: space-between;
+        padding: 0 $spacing-unit-large;
         li {
             border: none;
             font-weight: bold;

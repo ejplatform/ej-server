@@ -120,6 +120,7 @@ def comment_list_item(comment, **kwargs):
         'creation_date': comment.created.strftime('%d-%m-%Y às %Hh %M'),
         'conversation_url': comment.conversation.get_absolute_url(),
         'status': comment.status,
+        'status_name': dict(models.Comment.STATUS)[comment.status].capitalize(),
         'rejection_reason': rejection_reason,
 
         # Votes
