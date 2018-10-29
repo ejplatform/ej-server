@@ -8,6 +8,7 @@
 
     h2 {
         color: $color-content-text;
+        cursor: pointer;
         font-weight: normal;
         text-align: left;
 
@@ -21,15 +22,22 @@
             color: $color-accent;
         }
     }
-    > ul, > li {
-        padding: 0;
-        margin: 0;
+    &-data {
+        > ul, > li {
+            padding: 0;
+            margin: 0;
+        }
+        > ul > li {
+            border-bottom: 2px solid $color-blue-light;
+            list-style: none;
+            > * {
+                margin: 0 auto;
+            }
+        }
     }
-    > ul > li {
-        border-bottom: 2px solid $color-blue-light;
-        list-style: none;
-        > * {
-            margin: 0 auto;
+    &--hidden {
+        > h2 > i {
+            transform: rotate(180deg) translateX(-50%);
         }
     }
 }

@@ -17,6 +17,7 @@ class CommentForm(forms.ModelForm):
     def clean(self):
         super().clean()
         content = self.cleaned_data.get('content')
+        comment_exists = Comment.objects.filter(content=content, conversation=self.conversation).exists()
         if comment_exists:
             msg = _("It seems that you created repeated comments. Please verify if there aren't any equal comments")
             self._errors['content'] = self.error_class([msg])

@@ -9,7 +9,8 @@ COPY ./etc/scripts/compilemessages.py /usr/bin/compilemessages
 COPY ./locale/ /app/locale/
 WORKDIR /app
 RUN chmod +x /usr/bin/compilemessages \
- && compilemessages
+  && compilemessages
+
 
 # Build Sass
 ARG THEME=default
@@ -22,22 +23,18 @@ RUN mkdir -p /app/lib/build/css/ \
 # Build javascript assets (TODO)
 RUN inv -e js
 
-
-#
-# Create python packages
-#
-FROM ejplatform/python:buster as pymodules
-
 #
 # Final image
 #
 FROM ejplatform/python:deploy
+
 
 # Set theme and environment variables
 ENV DJANGO_SETTINGS_MODULE=ej.settings
 ENV DJANGO_ENVIRONMENT=production
 ENV PYTHONPATH="/app/src/:$PYTHONPATH"
 WORKDIR /app
+
 
 # Copy requirements and update packages
 # Most of the time, this will not install anything new.
@@ -50,6 +47,9 @@ COPY ./lib/ /app/lib/
 COPY ./locale/ /app/locale/
 COPY ./manage.py /app/manage.py
 COPY ./src/ /app/src/
+COPY ./docs/ /app/docs
+
+RUN sphinx-build docs/ /app/build/docs
 
 # Set enviroment variables
 ARG COUNTRY=brasil
@@ -71,8 +71,8 @@ RUN mkdir -p local/logs local/static/ local/media/ local/db/ \
 
 # Create django user
 RUN groupadd -r django \
- && useradd -r -g django django \
- && chown -R django:django /app
+  && useradd -r -g django django \
+  && chown -R django:django /app
 USER django
 
 # Save commit info

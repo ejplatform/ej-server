@@ -69,7 +69,7 @@ def get_votes_with_stereotypes(conversation, comments=None, fillna=None):
     return user_votes, stereotype_votes
 
 
-def build_dataframe(df, fillna=None):
+def build_dataframe(df, fillna=None) -> pd.DataFrame:
     """
     Convert a list of (column, index, value) items into a data frame.
     """

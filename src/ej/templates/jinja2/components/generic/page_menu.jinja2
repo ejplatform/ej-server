@@ -19,7 +19,7 @@
                             {{ icon_link(_('Public conversations'), 'conversation:list', '', fa=True) }}
                         </li>
                         <li>
-                            {{ icon_link(_('Your conversations'), 'boards:list', '', fa=True) }}
+                            {{ icon_link(_('Your conversations'), 'boards:board-list', '', fa=True) }}
                         </li>
                         <li>
                             {{ icon_link(_('Favorite conversations'), 'profile:favorite-conversations', 'far fa-star', fa=True) }}
@@ -53,6 +53,7 @@
                     </li>
                 </ul>
             </li>
+            <li>{{ icon_link(_('Documentation'), '/docs', 'fa fa-book') }}</li>
             {% if user.is_active %}
                 <li>
                     <form method="post" action="/logout/">

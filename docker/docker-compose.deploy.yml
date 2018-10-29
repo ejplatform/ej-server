@@ -7,6 +7,7 @@ services:
     volumes:
       - media_files:/usr/share/nginx/html/media
       - static_files:/usr/share/nginx/html/static
+      - docs:/usr/share/nginx/html/docs
     ports:
       - 80:80
     depends_on:
@@ -24,14 +25,16 @@ services:
       - ./env/django.env
       - ./env/postgres.env
       - ./env/deploy.env
+      - ./env/email.env
     volumes:
       - media_files:/app/local/media/
       - static_files:/app/local/static/
+      - docs:/app/build/docs/
       - nginx_conf:/etc/nginx/conf.d/
-    command: db -m gunicorn
+    command: clean db -m db-assets sass collect  gunicorn
 
   postgres:
-    image: postgres:alpine
+    image: postgres:10-alpine
     restart: always
     env_file:
       - ./env/deploy.env
@@ -48,3 +51,4 @@ volumes:
   media_files:
   static_files:
   nginx_conf:
+  docs:

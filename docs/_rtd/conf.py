@@ -13,13 +13,12 @@
 # All configuration values have a default; values that are commented out
 # serve to show the default.
 
-import sys
 import os
 import pathlib
+import sys
 
 # Add src/ to path
 sys.path.append(pathlib.Path(__file__).parent.parent / 'src')
-
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -60,7 +59,6 @@ project = 'EJ - Empurrando Juntos'
 project_title = project.title()
 author = 'UnB/Hacklab'
 copyright = '2018, %s' % author
-
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -113,7 +111,6 @@ pygments_style = 'sphinx'
 
 # If true, `todo` and `todoList` produce output, else they produce nothing.
 todo_include_todos = False
-
 
 # -- Options for HTML output ----------------------------------------------
 

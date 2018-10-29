@@ -13,8 +13,8 @@ from taggit.models import TaggedItemBase
 
 from boogie import rules
 from boogie.rest import rest_api
-from ej_conversations.models.utils import normalize_status
 from .comment import Comment
+from .utils import normalize_status
 from .vote import Vote, Choice
 from ..managers import ConversationManager
 
