@@ -1,9 +1,12 @@
+import json
+
 import numpy as np
 import pandas as pd
 from django.contrib.auth import get_user_model
 from django.http import HttpResponse
 from django.utils.translation import ugettext_lazy as _, ugettext as __
-import json
+from hyperpython.components import html_table, hyperlink
+from sklearn.decomposition import PCA
 
 from boogie.router import Router
 from boogie.rules import proxy_seq
@@ -11,13 +14,10 @@ from ej_clusters.math import get_raw_votes, get_votes
 from ej_conversations.models import Conversation
 from ej_dataviz import render_dataframe
 from ej_math import VoteStats
-from hyperpython.components import html_table, hyperlink
-
-from sklearn.decomposition import PCA
 
 urlpatterns = Router(
     template=['ej_reports/{name}.jinja2', 'generic.jinja2'],
-    perms=['ej_reports.can_view_report'],
+    perms=['ej.can_view_report'],
     object='conversation',
     models={
         'conversation': Conversation,
@@ -31,8 +31,8 @@ conversation_url = '<model:conversation>/reports/'
 User = get_user_model()
 
 
-@urlpatterns.route(conversation_url)
-def index(request, conversation):
+@urlpatterns.route(conversation_url, login=True)
+def index(conversation):
     statistics = conversation.statistics()
     votes = get_raw_votes(conversation)
     comments = comments_table(conversation, votes)
@@ -68,25 +68,16 @@ def index(request, conversation):
     return response
 
 
-@urlpatterns.route(conversation_url + 'scatter/')
-def scatter(request, conversation):
-    votes = get_votes(conversation)
-    votes = votes.where((pd.notnull(votes)), 0.0)
+@urlpatterns.route(conversation_url + 'scatter/', login=True)
+def scatter(conversation):
+    votes = get_votes(conversation).fillna(0).values
+    if votes.shape[0] <= 1 or votes.shape[1] <= 1:
+        return {'error': 'insufficient data'}
 
     pca = PCA(n_components=2)
     pca.fit(votes)
     votes_pca = pca.transform(votes)
-
-    # plt.scatter(votes_pca[:, 0], votes_pca[:, 1],
-    #             c = ['red', 'green', 'blue'],
-    #             edgecolor='none', alpha=0.5,)
-    # plt.savefig('foo.png')
-
-    votes_array = votes_pca.tolist()
-    js_data = json.dumps(votes_array)
-
-    response = {'plot_data': js_data}
-    return response
+    return {'plot_data': json.dumps(votes_pca.tolist())}
 
 
 def file_response(conversation, data_cat, format):
@@ -107,7 +98,7 @@ def generate_data_file(data, format, response):
         return
 
 
-@urlpatterns.route(conversation_url + 'votes.<format>')
+@urlpatterns.route(conversation_url + 'votes.<format>', login=True)
 def generate_votes(conversation, format):
     response = file_response(conversation, 'votes', format)
     votes = get_raw_votes(conversation)
@@ -115,7 +106,7 @@ def generate_votes(conversation, format):
     return response
 
 
-@urlpatterns.route(conversation_url + 'users.<format>')
+@urlpatterns.route(conversation_url + 'users.<format>', login=True)
 def generate_users(conversation, format):
     response = file_response(conversation, 'users', format)
     votes = get_raw_votes(conversation)
@@ -124,7 +115,7 @@ def generate_users(conversation, format):
     return response
 
 
-@urlpatterns.route(conversation_url + 'comments.<format>')
+@urlpatterns.route(conversation_url + 'comments.<format>', login=True)
 def generate_comments(conversation, format):
     response = file_response(conversation, 'comments', format)
     votes = get_raw_votes(conversation)

@@ -48,7 +48,7 @@
                 <div class="ConversationDetail-banner">
                     <div class="ConversationTags">
                         <div class="ConversationField"><i class="fa fa-tags"></i>
-                            {{ form.tags }}
+                            {% for tag in form.tags %}{{ tag }} {% endfor %}
                         </div>
                     </div>
 
