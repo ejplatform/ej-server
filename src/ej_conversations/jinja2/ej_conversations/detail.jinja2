@@ -1,26 +1,38 @@
 {% extends 'base.jinja2' %}
 {% from 'components/generic/modalities.jinja2' import modalities with context %}
 
+{% macro modalicon(icons) %}
+    {% for icon in icons %}
+        <i class="fa {{ icon }}"></i>
+    {% endfor %}
+{% endmacro %}
+
+{% macro modalimg(imgs) %}
+    {% for img, class in imgs.items() %}
+        <img class="{{ class }}" src="{{ img }}"></i>
+    {% endfor %}
+{% endmacro %}
+
 
 {% block content %}
     {% if voted == False %}
-        <div class="Modalities-slider">
+        <div class="Modalities">
             <div class="swiper-container">
                 <div class="swiper-wrapper">
                     <div class="swiper-slide">
-                        {{modalities("Bem Vinda(o)", "", "", "", "", "fa fa-times", "fa fa-arrow-right", "fa fa-check", "Você iniciou sua participação! Comece votando em comentários: você pode concordar, discordar ou passar se quiser votar depois")}}
+                        {{modalities("Bem Vinda(o)", modalicon(["fa-times", "fa-arrow-right", "fa-check"]), "Você iniciou sua participação! Comece votando em comentários: você pode concordar, discordar ou passar se quiser votar depois")}}
                         <div class="append-buttons">
                             <a href="#" class="next-slide-1">PRÓXIMO</a>
                         </div>
                     </div>
                     <div class="swiper-slide">
-                        {{modalities("Participação", "style=max-width:70%", "/static/img/icons/artboard.svg", "", "", "", "", "", "A partir de seus votos, você será posicionado em um grupo de opnião, e poderá ganhar poderes que ajudarão a diversificar os diálogos e furar bolhas de opinião!")}}
+                        {{modalities("Participação", modalimg({'/static/img/icons/artboard.svg' : 'imgpart'}), "A partir de seus votos, você será posicionado em um grupo de opnião, e poderá ganhar poderes que ajudarão a diversificar os diálogos e furar bolhas de opinião!")}}
                         <div class="append-buttons">
                             <a href="#" class="next-slide-2">PRÓXIMO</a>
                         </div>
                      </div>
                     <div class="swiper-slide">
-                        {{modalities("Poderes", "", "/static/img/icons/iconponte.svg", "/static/img/icons/iconativista.svg", "", "", "", "", "Com os poderes, Ativista de Minoria, Ponte de Diálogo e Fura-Bolhas, você ganhará mais poder de fala, aumentando o seu limite de comentários e/ou a visibilidade deles!")}}
+                        {{modalities("Poderes", modalimg({'/static/img/icons/iconponte.svg' : 'img', '/static/img/icons/iconativista.svg' : 'img'}), "Com os poderes, Ativista de Minoria, Ponte de Diálogo e Fura-Bolhas, você ganhará mais poder de fala, aumentando o seu limite de comentários e/ou a visibilidade deles!")}}
                         <form method="post">
                             {{ csrf_input }}
                             <button type="submit" name="modalities" class="Button" value="pass">CONTINUAR PARTICIPANDO</button>
@@ -76,7 +88,26 @@
                 showModalities-slider()
             </script>
         </div>
+    {% else %}
+        <div class="Modalities">
+            <div class="style-slide-center">
+                <div class="style-slide">
+                    {{modalities("Bem Vinda(o)", modalimg({'/static/img/icons/artboard.svg' : 'imgpart'}), "Você iniciou sua participação! Comece votando em comentários: você pode concordar, discordar ou passar se quiser votar depois")}}            
+                </div>
+            </div>
+        </div>
+        <script>
+            function showModalities-slider() {
+                var x = document.getElementByClassName("modalities");
+                x.className = "show";
+            }
+        </script>
+        <script>
+            showModalities-slider()
+        </script>
     {% endif %}
+
+
     <div class="ConversationDetail">
         {# Ballon with title #}
         {{ conversation|role('balloon') }}

@@ -1,25 +1,7 @@
-
-{% macro modalities(title, ifimg, img, img2, img3, inc, inc2, inc3, content) %}
+{% macro modalities(title, conteudo, content) %}
     <div id="modalities">
         <h3>{{title}}</h3>
-        {% if img != "" %}
-            <img {{ifimg}} src={{img}}/>
-            {% if img2 != "" %}
-                <img src={{img2}}/>
-                {% if img3 != "" %}
-                    <img src={{img3}}/>
-                {% endif %}
-            {% endif %}
-        {% endif %}
-        {% if inc != "" %}
-            <i class="{{inc}}"></i>
-            {% if inc2 != "" %}
-                <i class="{{inc2}}"></i>
-                {% if inc3 != "" %}
-                    <i class="{{inc3}}"></i>
-                {% endif %}
-            {% endif %}
-        {% endif %}
+        <div>{{conteudo}}</div>
         <p>{{content}}</p>
     </div>
     <script>

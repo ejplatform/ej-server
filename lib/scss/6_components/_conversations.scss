@@ -435,7 +435,7 @@ $modalities-content-width-max: ($page-content-width-max / 2) - 29 !default;
     }
 }
 
-.Modalities-slider{
+.Modalities{
     display: flex;
     align-content: center;
     flex-direction: column;
@@ -450,6 +450,10 @@ $modalities-content-width-max: ($page-content-width-max / 2) - 29 !default;
     bottom: 0;
     left: 0;
     outline: 0;
+
+
+    //Modalities slider
+
     .swiper-container{
         margin: auto auto;
         max-width: $spacing-unit-huge * 4;
@@ -457,7 +461,12 @@ $modalities-content-width-max: ($page-content-width-max / 2) - 29 !default;
     .swiper-wrapper{
         align-items: center;
         margin: auto $spacing-unit-small + $spacing-unit;
-    }    
+    }
+    .style-slide-center{
+        margin: auto auto;
+        align-items: center;
+        margin: auto $spacing-unit-small + $spacing-unit;
+    }
     .swiper-slide {
         margin: 0px $spacing-unit-huge - $spacing-unit 0px 0px;
         max-width: $modalities-content-width-max; 
@@ -528,69 +537,124 @@ $modalities-content-width-max: ($page-content-width-max / 2) - 29 !default;
         visibility: visible;
     }
     @media only screen and (min-width: $breakpoint-medium - $breakpoint-small) {
-            .swiper-container{
-                max-width: $spacing-unit-huge * 3;
-            }
-            .swiper-slide{
-                max-width: $spacing-unit-huge * 2 - $spacing-unit-small; 
-            }
-            img{
-                padding: 0px $spacing-unit - $spacing-unit-tiny;
-                max-width: 28%;
-            }
+        .swiper-container{
+            max-width: $spacing-unit-huge * 3;
+        }
+        .swiper-slide{
+            max-width: $spacing-unit-huge * 2 - $spacing-unit-small; 
+        }
+        img{
+            padding: 0px $spacing-unit - $spacing-unit-tiny;
+            max-width: 28%;
+        }
+        .imgpart{
+            padding: 0px $spacing-unit - $spacing-unit-tiny;
+            max-width: 70%;
+        }
+        .Button{
+            font-weight: bold;
+            font-size: 11px;
+        }
+        .fa-times{
+            padding: 0px $spacing-unit-small;
+            font-size: $spacing-unit - $spacing-unit-tiny;
+            color: $color-accent;
+        }
+        .fa-arrow-right{
+            padding: 0px $spacing-unit-small;
+            font-size: $spacing-unit - $spacing-unit-tiny;
+            color: $color-primary;
+        }
+        .fa-check{
+            padding: 0px $spacing-unit-small;
+            font-size: $spacing-unit - $spacing-unit-tiny;
+            color: $color-blue-dark;
+        }
+    }
+    @media only screen and (min-width: $breakpoint-small) {
+        .swiper-container{
+            max-width: $spacing-unit-huge * 4;
+        }
+        .swiper-slide{
+            max-width: $modalities-content-width-max; 
             .Button{
                 font-weight: bold;
-                font-size: 11px;
-            }
-            .fa-times{
-                padding: 0px $spacing-unit-small;
-                font-size: $spacing-unit - $spacing-unit-tiny;
-                color: $color-accent;
-            }
-            .fa-arrow-right{
-                padding: 0px $spacing-unit-small;
-                font-size: $spacing-unit - $spacing-unit-tiny;
-                color: $color-primary;
-            }
-            .fa-check{
-                padding: 0px $spacing-unit-small;
-                font-size: $spacing-unit - $spacing-unit-tiny;
-                color: $color-blue-dark;
+                font-size: 13px;
             }
         }
-    @media only screen and (min-width: $breakpoint-small) {
-            .swiper-container{
-                max-width: $spacing-unit-huge * 4;
-            }
-            .swiper-slide{
-                max-width: $modalities-content-width-max; 
-                .Button{
-                    font-weight: bold;
-                    font-size: 13px;
-                }
-            }
-            img{
-                padding: 0px $spacing-unit - $spacing-unit-tiny;
-                max-width: 16%;
-            }
-            .fa-times{
-                padding: 0px $spacing-unit-small;
-                font-size: $spacing-unit - $spacing-unit-tiny;
-                color: $color-accent;
-            }
-            .fa-arrow-right{
-                padding: 0px $spacing-unit-small;
-                font-size: $spacing-unit - $spacing-unit-tiny;
+        img{
+            padding: 0px $spacing-unit - $spacing-unit-tiny;
+            max-width: 16%;
+        }
+        .imgpart{
+            padding: 0px $spacing-unit - $spacing-unit-tiny;
+            max-width: 77%;
+        }
+        .fa-times{
+            padding: 0px $spacing-unit-small;
+            font-size: $spacing-unit - $spacing-unit-tiny;
+            color: $color-accent;
+        }
+        .fa-arrow-right{
+            padding: 0px $spacing-unit-small;
+            font-size: $spacing-unit - $spacing-unit-tiny;
+            color: $color-primary;
+        }
+        .fa-check{
+            padding: 0px $spacing-unit-small;
+            font-size: $spacing-unit - $spacing-unit-tiny;
+            color: $color-blue-dark;
+        }
+    }
+
+
+    //Modalities static
+
+    .style-slide{
+        margin: 0px;
+        max-width: $modalities-content-width-max; 
+        width: $spacing-unit-huge * 3;
+        line-height: 1.2;
+        bottom: auto;
+        background-color: $color-content;
+        text-align: center;
+        border-radius: 7px;
+        position: relative;
+        border: 1px solid $color-magenta;
+        padding: $spacing-padding * 2;
+        flex-direction: row;
+        align-items: center;
+        -webkit-justify-content: center;
+        .append-buttons{
+            padding: $spacing-unit-tiny 0px;
+            a{
                 color: $color-primary;
-            }
-            .fa-check{
-                padding: 0px $spacing-unit-small;
-                font-size: $spacing-unit - $spacing-unit-tiny;
-                color: $color-blue-dark;
+                font-weight: bold;
             }
         }
+        p {
+            padding: $spacing-unit-small 0 $spacing-unit-tiny 0;
+            margin: 0;
+            font-size: $font-size-small;
+            color: $toast-font-color;
+        }
+        h3{
+            padding: $spacing-unit-tiny 0 $spacing-unit-small 0;
+            margin: 0;
+            font-family: $font-raleway;
+            font-weight: bold;
+            font-size: $font-size-large;
+            color: $color-magenta;
+        }
+    }
+
+
 
 }
+
+
+
+
 
 .Comment {
     background-color: $conversation-comment-background-color;
