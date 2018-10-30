@@ -136,7 +136,7 @@ def clean_migrations(ctx, all=False, yes=False):
 
     print('Listing auto migrations')
     for file in remove_files:
-        print(f'* {fiinvle}')
+        print(f'* {file}')
     if all:
         print('REMOVING ALL MIGRATIONS IS DANGEROUS AND SHOULD ONLY BE '
               'USED IN TESTING')
