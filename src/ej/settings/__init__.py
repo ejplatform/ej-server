@@ -47,10 +47,12 @@ class Conf(ThemesConf,
     ACCOUNT_USERNAME_REQUIRED = False
     ACCOUNT_USER_MODEL_USERNAME_FIELD = None
     LOGIN_REDIRECT_URL = '/'
+    ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
+    ACCOUNT_EMAIL_VERIFICATION = 'none'
     SOCIALACCOUNT_PROVIDERS = {
         'facebook': {
             'SCOPE': ['email'],
-            'METHOD': 'js_sdk'  # instead of 'oauth2'
+            'METHOD': 'oauth2'
         }
     }
 

@@ -53,9 +53,9 @@
 {% macro social_login(buttons, js) %}
     {% if buttons %}
         {{ js }}
-        <p>{% trans %}Social login{% endtrans %}</p>
+        <p>{{ _('or sign up through other networks') }}</p>
         <div class="Login-socialButtons">
-            {% for button in social_buttons %}{{ button }}{% endfor %}
+            {% for button in buttons %}{{ button }}{% endfor %}
         </div>
     {% endif %}
 {% endmacro %}
