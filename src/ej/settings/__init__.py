@@ -48,7 +48,7 @@ class Conf(ThemesConf,
     ACCOUNT_USER_MODEL_USERNAME_FIELD = None
     LOGIN_REDIRECT_URL = '/'
     ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
-    ACCOUNT_EMAIL_VERIFICATION = 'none'
+    # ACCOUNT_EMAIL_VERIFICATION = 'none'
     SOCIALACCOUNT_PROVIDERS = {
         'facebook': {
             'SCOPE': ['email'],
