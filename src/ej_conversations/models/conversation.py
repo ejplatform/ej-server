@@ -89,6 +89,13 @@ class Conversation(TimeStampedModel):
             'endpoint.'
         ),
     )
+    hidden = models.BooleanField(
+        _('hidden'),
+        default=False,
+        help_text=_(
+            "Hidden conversations doesn't appears in his board"
+        ),
+    )
 
     objects = ConversationManager()
     tags = TaggableManager(through='ConversationTag')
