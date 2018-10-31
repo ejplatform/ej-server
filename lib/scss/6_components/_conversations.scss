@@ -432,191 +432,234 @@ $profile-label-clear-color: #30BFD3 !default;
             color: $conversation-info-content;
         }
     }
+
+}
+
+.Comment-create{
+    position: relative;
 }
 
 .Comment {
-    background-color: $conversation-comment-background-color;
-    color: $conversation-comment-title-color;
-
-    box-sizing: border-box;
-    border-radius: $conversation-comment-border-radius;
-    font-size: $font-size-h3;
-    margin: 0 auto;
-    max-width: $page-content-width-max;
-    min-height: 250px !important;
-    width: 100% !important;
-    z-index: 3;
     position: relative;
-    padding: ($spacing-unit-large - $spacing-unit-tiny) ($spacing-unit-large - $spacing-unit-small);
+    max-width: $page-content-width-max;
+    min-height: 300px !important;
+    width: 100% !important;
+    padding: $spacing-unit-large;
 
-    &-counter {
-        text-align: center;
-        p {
-            margin: 0;
-        }
-    }
-
-    img {
-        background: $color-primary-text;
-        border: 1px solid #fff;
-        border-radius: $spacing-unit-large;
-        padding: 4px $spacing-unit-tiny;
-    }
-
-    i.fa {
-        background: $color-primary-text;
-        border: 2px solid #fff;
-        border-radius: $spacing-unit-large;
-        padding: $spacing-unit-tiny;
-    }
-
-    &-voteArea {
-        button {
-            border: none;
-            border-radius: 50%;
-            background: $color-primary-text;
-            padding: 0;
-        }
-
-        ul {
-            display: flex;
-            font-weight: bold;
-            margin: 0;
-            padding: 0;
-            text-transform: uppercase;
-            width: 100%;
-
-            span {
-                font-size: $conversation-vote-font-size;
-            }
-
-            li {
-                @extend .Col--center;
-                list-style: none;
-                flex-grow: 1;
-
-                i.fa {
-                    background: #fff;
-                    height: $conversation-vote-circle-size;
-                    width: $conversation-vote-circle-size;
-                    padding: $conversation-vote-circle-spacing;
-                    cursor: pointer;
-                }
-                &.voteAgree {
-                    width: ($spacing-unit + $spacing-unit-tiny);
-                    &:active {
-                        color: $conversation-vote-agree-color;;
-                    }
-                    i.fa {
-                        color: $conversation-vote-agree-color;
-                        &:hover {
-                            background: $conversation-vote-agree-color;
-                            color: #fff;
-                        }
-                    }
-
-                }
-                &.voteSkip {
-                    width: ($spacing-unit + $spacing-unit-tiny);
-                    &:active {
-                        color: $conversation-vote-skip-color;;
-                    }
-                    i.fa {
-                        color: $conversation-vote-skip-color;
-                        &:hover {
-                            background: $conversation-vote-skip-color;
-                            color: #fff;
-                        }
-                    }
-
-                }
-                &.voteDisagree {
-                    width: ($spacing-unit + $spacing-unit-tiny);
-                    &:active {
-                        color: $conversation-vote-disagree-color;;
-                    }
-                    i.fa {
-                        color: $conversation-vote-disagree-color;
-                        &:hover {
-                            background: $conversation-vote-disagree-color;
-                            color: #fff;
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    &-user {
-        font-size: $font-size-h5;
-        img {
-
-            @media only screen and (min-width: $breakpoint-medium - $breakpoint-small) {
-                max-width: 6%;
-            }
-            @media only screen and (min-width: $breakpoint-small) {
-                max-width: 3%;
-            }
-
-            color: $color-accent;
-            margin-right: $spacing-unit-small;
-            background: #fff;
-        }
-        i.fa {
-            color: $color-accent;
-            margin-right: $spacing-unit-small;
-            background: #fff;
-        }
-    }
-}
-
-.CommentForm {
-    margin-top: $spacing-unit-tiny;
-    text-align: center;
-    background: $conversation-comment-form-background-color;
-    margin-top: -60px;
-    border-radius: 0 0 $spacing-unit * 2 $spacing-unit * 2;
-    z-index: 2;
-    max-width: 682px;
-    margin-left: auto;
-    margin-right: auto;
-    padding-bottom: $spacing-unit;
-
-    h1 {
+    .CommentCard {
+        position: absolute;
+        box-sizing: border-box;
+        border-radius: $conversation-comment-border-radius;
         font-size: $font-size-h3;
-        margin: $spacing-unit-tiny 0;
-        // color: $color-primary !important;
-        padding-top: 100px;
-        color: $conversation-comment-form-title-color;
+        margin: 0 auto;
+        max-width: $page-content-width-max;
+        min-height: 300px !important;
+        width: 100% !important;
+        z-index: 3;
+        padding: ($spacing-unit-large - $spacing-unit-tiny) ($spacing-unit-large - $spacing-unit-small);
+        background-color: $conversation-comment-background-color;
+        color: $conversation-comment-title-color;
+
+        &-counter {
+            text-align: center;
+            p {
+                margin: 0;
+            }
+        }
+
+        img {
+            background: $color-primary-text;
+            border: 1px solid #fff;
+            border-radius: $spacing-unit-large;
+            padding: 4px $spacing-unit-tiny;
+        }
+
+        i.fa {
+            background: $color-primary-text;
+            border: 2px solid #fff;
+            border-radius: $spacing-unit-large;
+            padding: $spacing-unit-tiny;
+        }
+
+        &-voteArea {
+            button {
+                border: none;
+                border-radius: 50%;
+                background: $color-primary-text;
+                padding: 0;
+            }
+
+            ul {
+                display: flex;
+                font-weight: bold;
+                margin: 0;
+                padding: 0;
+                text-transform: uppercase;
+                width: 100%;
+
+                span {
+                    font-size: $conversation-vote-font-size;
+                }
+
+                li {
+                    @extend .Col--center;
+                    list-style: none;
+                    flex-grow: 1;
+
+                    i.fa {
+                        background: #fff;
+                        height: $conversation-vote-circle-size;
+                        width: $conversation-vote-circle-size;
+                        padding: $conversation-vote-circle-spacing;
+                        cursor: pointer;
+                    }
+                    &.voteAgree {
+                        width: ($spacing-unit + $spacing-unit-tiny);
+                        &:active {
+                            color: $conversation-vote-agree-color;;
+                        }
+                        i.fa {
+                            color: $conversation-vote-agree-color;
+                            &:hover {
+                                background: $conversation-vote-agree-color;
+                                color: #fff;
+                            }
+                        }
+
+                    }
+                    &.voteSkip {
+                        width: ($spacing-unit + $spacing-unit-tiny);
+                        &:active {
+                            color: $conversation-vote-skip-color;;
+                        }
+                        i.fa {
+                            color: $conversation-vote-skip-color;
+                            &:hover {
+                                background: $conversation-vote-skip-color;
+                                color: #fff;
+                            }
+                        }
+
+                    }
+                    &.voteDisagree {
+                        width: ($spacing-unit + $spacing-unit-tiny);
+                        &:active {
+                            color: $conversation-vote-disagree-color;;
+                        }
+                        i.fa {
+                            color: $conversation-vote-disagree-color;
+                            &:hover {
+                                background: $conversation-vote-disagree-color;
+                                color: #fff;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        &-user {
+            font-size: $font-size-h5;
+            img {
+
+                @media only screen and (min-width: $breakpoint-medium - $breakpoint-small) {
+                    max-width: 6%;
+                }
+                @media only screen and (min-width: $breakpoint-small) {
+                    max-width: 3%;
+                }
+
+                color: $color-accent;
+                margin-right: $spacing-unit-small;
+                background: #fff;
+            }
+            i.fa {
+                color: $color-accent;
+                margin-right: $spacing-unit-small;
+                background: #fff;
+            }
+        }
     }
-    p {
-        margin: $spacing-unit-tiny 0;
-        color: $color-content-text;
+    #commentform {
+        position: absolute;
+        visibility: hidden;
+        max-width: $page-content-width-max;
+        min-height: 300px !important;
+        width: 100% !important;
+        box-sizing: border-box;
+        text-align: center;
+        background: $conversation-comment-form-background-color;
+        border-radius: $conversation-comment-border-radius;
+        padding: ($spacing-unit-large - $spacing-unit-tiny) ($spacing-unit-large - $spacing-unit-small);
+        z-index: 5;
+
+        h1 {
+            font-size: $font-size-h3;
+            margin: $spacing-unit-tiny 0;
+            // color: $color-primary !important;
+            color: $conversation-comment-form-title-color;
+        }
+        p {
+            margin: $spacing-unit-tiny 0;
+            color: $color-content-text;
+        }
+
+        textarea {
+            display: block;
+            min-height: 3 * $font-size;
+            outline: none;
+            border: 2px solid $color-primary;
+            background: transparent;
+            color: #333;
+            box-shadow: none;
+        }
+
+        &-fakeButton,
+        input[type=submit] {
+            border-radius: $conversation-comment-button-border-radius;
+            color: #fff;
+            background: $conversation-comment-button-background;
+            border: 0;
+            padding: $spacing-unit-small $spacing-unit;
+            font-size: $spacing-unit / 2;
+            box-shadow: none;
+            text-transform: uppercase;
+            font-weight: bold;
+            margin-top: $spacing-unit-small;
+        }
+    }
+    #commentform.show {
+        visibility: visible;
+        -webkit-animation: fadeInUp 500ms ease-in-out;
+        animation: fadeInUp 500ms ease-in-out;
     }
 
-    textarea {
-        display: block;
-        min-height: 3 * $font-size;
-        outline: none;
-        border: 2px solid $color-primary;
-        background: transparent;
-        color: #333;
-        box-shadow: none;
+    @-webkit-keyframes fadeInUp {
+        0% {
+            opacity: 0;
+            -webkit-transform: translateY(40px);
+        }
+        100% {
+            opacity: 1;
+            -webkit-transform: translateY(0);
+        }
+    }
+    #commentform.hidden {
+        visibility: visible;
+        -webkit-animation: fadeOutDown 500ms ease-in-out;
+        animation: fadeOutDown 500ms ease-in-out;
+    }
+    @-webkit-keyframes fadeOutDown {
+        0% {
+            opacity: 1;
+            -webkit-transform: translateY(0);
+        }
+        100% {
+            opacity: 0;
+            -webkit-transform: translateY(40px);
+        }
     }
 
-    &-fakeButton,
-    input[type=submit] {
-        border-radius: $conversation-comment-button-border-radius;
-        color: #fff;
-        background: $conversation-comment-button-background;
-        border: 0;
-        padding: $spacing-unit-small $spacing-unit;
-        font-size: $spacing-unit / 2;
-        box-shadow: none;
-        text-transform: uppercase;
-        font-weight: bold;
-        margin-top: $spacing-unit-small;
-    }
 
     #toast {
         line-height: 1.2;
@@ -763,7 +806,7 @@ $profile-label-clear-color: #30BFD3 !default;
     color: $conversation-link-edit-color;
     i {
         color: $conversation-link-edit-icon-color;
-    }   
+    }
 }
 
 .view-board {
