@@ -16,7 +16,7 @@
 
 {% block content %}
     {% if voted == False %}
-        <div class="Modalities">
+        {#<div class="Modalities">
             <div class="swiper-container">
                 <div class="swiper-wrapper">
                     <div class="swiper-slide">
@@ -88,11 +88,43 @@
                 showModalities-slider()
             </script>
         </div>
-    {#{% else %}
+    {% else %}#}
         <div class="Modalities">
             <div class="style-slide-center">
                 <div class="style-slide">
-                    {{modalities("Bem Vinda(o)", modalimg({'/static/img/icons/artboard.svg' : 'imgpart'}), "Você iniciou sua participação! Comece votando em comentários: você pode concordar, discordar ou passar se quiser votar depois")}}            
+                    <form method="get" action={{conversation.get_absolute_url()}}>
+                        <button type="submit" class="Button-closer">
+                            <i class="fa fa-times"></i>
+                        </button>
+                    </form>
+                    {{modalities("Ativista de Minoria", modalimg({'/static/img/icons/iconativista.svg' : 'imgponte'}), "O seu grupo parece concordar com você! Mas você votou contrário à maioria nesse comentário\n\n Todas as regiões devem ser priorizados nas relações do Brazil. EUA e países do eixo Sul-Sul!\n\n Para exercer o seu poder de ativista escolha fazer um comentário promovido extra ou promover um comentário seu já criado na conversa")}}            
+                    <form method="post">
+                        <button type="submit" class="Button">QUERO IR</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <script>
+            function showModalities-slider() {
+                var x = document.getElementByClassName("modalities");
+                x.className = "show";
+            }
+        </script>
+        <script>
+            showModalities-slider()
+        </script>
+        {#<div class="Modalities">
+            <div class="style-slide-center">
+                <div class="style-slide">
+                    <form method="get" action={{conversation.get_absolute_url()}}>
+                        <button type="submit" class="Button-closer">
+                            <i class="fa fa-times"></i>
+                        </button>
+                    </form>
+                    {{modalities("Ponte de diálogo", modalimg({'/static/img/icons/iconponte.svg' : 'imgponte'}), "Você recebeu o poder Ponte de diálogo, porque, de acordo com as suas opiniões, você está próximo da borda do seu grupo de opinião\n\n Para exercer o seu poder de ponte, escolha fazer um comentário promovido extra ou promover um comentário seu já criado na conversa")}}            
+                    <form method="post">
+                        <button type="submit" class="Button">QUERO IR</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -106,6 +138,8 @@
             showModalities-slider()
         </script>#}
     {% endif %}
+
+
 
 
     <div class="ConversationDetail">
