@@ -261,6 +261,8 @@ $modalities-content-width-max: ($page-content-width-max / 2) - 29 !default;
     }
 }
 
+
+
 .ConversationDetail {
     margin: 0 auto;
     max-width: $header-wrapper-max-width;
@@ -648,9 +650,43 @@ $modalities-content-width-max: ($page-content-width-max / 2) - 29 !default;
             font-size: $font-size-large;
             color: $color-magenta;
         }
+        .Button-closer{
+            margin: 0px 0px (-$spacing-unit) $spacing-unit-huge * 2.5;
+            background-color: $color-blue-dark;
+            border: none;
+            border-radius: 56px;
+            box-sizing: border-box;
+            cursor: pointer;
+            display: inline-block;
+            font-weight: bold;
+            padding: 0px;
+            text-align: center;
+            text-transform: uppercase;
+            transition: all 200ms ease-in-out;
+            vertical-align: middle;
+            .fa-times {
+                padding: $spacing-unit-tiny;
+                font-size: $spacing-unit-tiny;
+                color: $color-content;
+            }
+        }
     }
 
+    // Imagens do modal com especificações diferentes
 
+
+    @media only screen and (min-width: $breakpoint-medium - $breakpoint-small) {
+        .imgponte{
+            margin: -($spacing-unit * 2 + $spacing-unit-tiny) ($spacing-unit-huge * 2 + $spacing-unit-tiny) 0px 0px;
+            max-width: 16%;
+        }
+    }
+
+    @media only screen and (min-width: $breakpoint-small) {
+        .imgponte{
+            margin: -($spacing-unit * 2 + $spacing-unit-tiny) ($spacing-unit-huge * 2 + $spacing-unit-tiny) 0px 0px;
+        }
+    }
 
 }
 
