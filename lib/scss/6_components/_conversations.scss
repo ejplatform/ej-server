@@ -437,6 +437,19 @@ $profile-label-clear-color: #30BFD3 !default;
 
 .Comment-create{
     position: relative;
+    justify-content: center;
+    button {
+        color: $conversation-tag-color;
+        background: transparent no-repeat;
+        border: none;
+        cursor: pointer;
+        overflow: hidden;
+        outline: none;
+        font-weight: bold;
+    }
+    p {
+        text-align: center;
+    }
 }
 
 .Comment {
