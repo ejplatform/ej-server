@@ -10,4 +10,9 @@
     {% else %}
         <p>{{ _('No comments left') }}</p>
     {% endif %}
+     {#   <div class="CommentListItem-footeritem CommentListItem-status CommentListItem-status-{{ status }}">
+            {% if rejection_reason %}
+                &nbsp;({{ rejection_reason }})
+            {% endif %}
+        </div> #}
 {% endmacro %}
