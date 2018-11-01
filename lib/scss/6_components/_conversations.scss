@@ -440,7 +440,7 @@ $profile-label-clear-color: #30BFD3 !default;
     justify-content: center;
     padding: $spacing-unit-large;
     button {
-        color: $conversation-tag-color;
+        color: $conversation-create-comment-color;
         background: transparent no-repeat;
         border: none;
         cursor: pointer;
@@ -624,13 +624,18 @@ $profile-label-clear-color: #30BFD3 !default;
         }
 
         textarea {
-            display: block;
+            width: 100%;
+            margin: 0 0 0 0;
             min-height: 3 * $font-size;
             outline: none;
             border: 2px solid $color-primary;
             background: $color-content;
             color: #333;
             box-shadow: none;
+        }
+        #characters-count{
+            display: block;
+            text-align: right;
         }
 
         &-fakeButton,
@@ -663,7 +668,7 @@ $profile-label-clear-color: #30BFD3 !default;
             -webkit-transform: translateY(0);
         }
     }
-    #commentform.hidden {
+    #commentform.hideanimation {
         visibility: visible;
         -webkit-animation: fadeOutDown 500ms ease-in-out;
         animation: fadeOutDown 500ms ease-in-out;
