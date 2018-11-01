@@ -92,6 +92,15 @@ class Conf(ThemesConf,
     #     'REGISTER_SERIALIZER': 'ej_users.serializers.RegistrationSerializer'
     # }
 
+    # Use this variable to change the ej environment during the docker build step.
+    ENVIRONMENT = 'local'
+
+    if (ENVIRONMENT == 'production'):
+      EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend';
+      # the api key will be informed during the docker build step.
+      ANYMAIL = {'MAILGUN_API_KEY': ''};
+      DEFAULT_FROM_EMAIL = "Empurrando Juntos <noreply@ejplatform.org>"
+
 
 
 Conf.save_settings(globals())
