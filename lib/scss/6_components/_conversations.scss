@@ -438,7 +438,6 @@ $profile-label-clear-color: #30BFD3 !default;
 .Comment-create{
     position: relative;
     justify-content: center;
-    padding: $spacing-unit-large;
     button {
         color: $conversation-create-comment-color;
         background: transparent no-repeat;
@@ -459,7 +458,7 @@ $profile-label-clear-color: #30BFD3 !default;
     width: 100% !important;
     max-width: $header-wrapper-max-width;
     margin: 0 auto;
-    padding: 0;
+    padding-bottom: $spacing-unit-large;
     .CommentCard {
         left: 0;
         right: 0;
@@ -598,6 +597,7 @@ $profile-label-clear-color: #30BFD3 !default;
     }
     #commentform {
         position: absolute;
+        height: 100%;
         left: 0;
         right: 0;
         margin: auto;
