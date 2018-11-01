@@ -6,8 +6,6 @@
 .CommentListItem {
     &-header {
         color: $color-blue-light;
-        display: flex;
-        justify-content: center;
         &::after {
             content: "";
             clear: both;
@@ -56,11 +54,17 @@
         color: $color-primary;
     }
 
-    &-skip{
+    &-skip {
         color: $color-primary;
     }
 
-    &-disagree{
+    &-disagree {
         color: $color-action-primary;
+    }
+}
+
+.CommentPromote {
+    .ConversationDetail-statistics {
+        display: none;
     }
 }

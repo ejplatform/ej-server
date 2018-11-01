@@ -33,7 +33,7 @@ def conversation_promote(request, conversation):
         'comments': Comment.objects.filter(conversation=conversation),
         'conversations': conversation,
         'comment_form': comment_form,
-        'title': _('My Conversations'),
+        'title': _('My Comments'),
 
     }
 

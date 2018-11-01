@@ -1,10 +1,10 @@
 {% extends 'base.jinja2' %}
 {% block content %}
-{{ conversations|role('balloon') }}
-
-
+<div class="CommentPromote">
+    {{ conversations|role('balloon') }}
     <div class="ConversationList-title">
        <h1>{{title}}</h1>
     {{ comments|role('promote') }}
     </div>
+</div>
 {% endblock %}

@@ -28,6 +28,11 @@ $profile-label-clear-color: #30BFD3 !default;
         .topic {
             display: none;
         }
+
+        .CommentListItem-header {
+            display: flex;
+            justify-content: center;
+        }
     }
 
     &-urls {
