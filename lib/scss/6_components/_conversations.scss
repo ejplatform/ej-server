@@ -438,6 +438,7 @@ $profile-label-clear-color: #30BFD3 !default;
 .Comment-create{
     position: relative;
     justify-content: center;
+    padding: $spacing-unit-large;
     button {
         color: $conversation-tag-color;
         background: transparent no-repeat;
@@ -456,14 +457,17 @@ $profile-label-clear-color: #30BFD3 !default;
     position: relative;
     min-height: 300px !important;
     width: 100% !important;
+    max-width: $header-wrapper-max-width;
     margin: 0 auto;
     padding: 0;
     .CommentCard {
+        left: 0;
+        right: 0;
+        margin: auto;
         position: absolute;
         box-sizing: border-box;
         border-radius: $conversation-comment-border-radius;
         font-size: $font-size-h3;
-        margin: 0 auto;
         max-width: $page-content-width-max;
         min-height: 300px !important;
         width: 100% !important;
@@ -594,6 +598,9 @@ $profile-label-clear-color: #30BFD3 !default;
     }
     #commentform {
         position: absolute;
+        left: 0;
+        right: 0;
+        margin: auto;
         visibility: hidden;
         max-width: $page-content-width-max;
         min-height: 300px !important;
