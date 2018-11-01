@@ -484,21 +484,6 @@ msgstr ""
 "<strong>Nota:</strong> você ainda poe <a href=\"%(email_url)s\">mudar seu "
 "endereço de email</a>."
 
-<<<<<<< HEAD
-#: src/ej_boards/apps.py:7 src/ej_boards/models.py:49
-msgid "Boards"
-msgstr "Murais"
-
-#: src/ej_boards/models.py:16
-msgid "Slug"
-msgstr "Identificador"
-
-#: src/ej_boards/models.py:26 src/ej_conversations/models/conversation.py:57
-msgid "Title"
-msgstr "Título"
-
-#: src/ej_boards/models.py:30 src/ej_clusters/models.py:127
-=======
 #: src/ej_boards/apps.py:7 src/ej_boards/models.py:45
 msgid "Boards"
 msgstr "Murais"
@@ -512,16 +497,11 @@ msgid "Title"
 msgstr "Título"
 
 #: src/ej_boards/models.py:31 src/ej_clusters/models.py:127
->>>>>>> develop
 #: src/ej_clusters/models.py:194
 msgid "Description"
 msgstr "Descrição"
 
-<<<<<<< HEAD
-#: src/ej_boards/models.py:48
-=======
 #: src/ej_boards/models.py:44
->>>>>>> develop
 msgid "Board"
 msgstr "Mural"
 
@@ -533,16 +513,11 @@ msgstr "Essa URL já existe."
 msgid "Stereotypes"
 msgstr "Estereótipos"
 
-<<<<<<< HEAD
-#: src/ej_boards/validators.py:11
-#, fuzzy
-=======
 #: src/ej_boards/routes.py:170
 msgid "Create board"
 msgstr "Criar mural"
 
 #: src/ej_boards/validators.py:9
->>>>>>> develop
 msgid "Invalid slug."
 msgstr "URL inválida."
 
@@ -550,14 +525,6 @@ msgstr "URL inválida."
 msgid "Slug cannot contain a backslash character."
 msgstr "O identificador não pode conter uma barra."
 
-<<<<<<< HEAD
-#: src/ej_boards/validators.py:20
-#, fuzzy
-msgid "Slug already exists."
-msgstr "Essa URL já existe."
-
-=======
->>>>>>> develop
 #: src/ej_clusters/apps.py:7 src/ej_clusters/routes.py:40
 msgid "Clusters"
 msgstr "Grupos"
@@ -907,11 +874,7 @@ msgid "non-moderated comments cannot receive votes"
 msgstr "comentários não-moderados não podem receber votos"
 
 #: src/ej_conversations/roles.py:78
-<<<<<<< HEAD
-#: src/ej_conversations/routes/conversations.py:80
-=======
 #: src/ej_conversations/routes/conversations.py:81
->>>>>>> develop
 msgid "login"
 msgstr "entrar"
 
@@ -919,11 +882,7 @@ msgstr "entrar"
 msgid "List conversations"
 msgstr "Listar conversas"
 
-<<<<<<< HEAD
-#: src/ej_conversations/routes/conversations.py:21
-=======
 #: src/ej_conversations/routes/conversations.py:22
->>>>>>> develop
 msgid ""
 "A space for adolescents to discuss actions that promote, guarantee and "
 "defend their rights"
@@ -931,21 +890,12 @@ msgstr ""
 "Um espaço para adolescentes debaterem ações que promovam, garantam e "
 "defendam seus direitos"
 
-<<<<<<< HEAD
-#: src/ej_conversations/routes/conversations.py:22
-msgid "Public conversations"
-msgstr "Conversas públicas"
-
-#: src/ej_conversations/routes/conversations.py:23
-#: src/ej_conversations/routes/conversations.py:24
-=======
 #: src/ej_conversations/routes/conversations.py:23
 msgid "Public conversations"
 msgstr "Conversas públicas"
 
 #: src/ej_conversations/routes/conversations.py:24
 #: src/ej_conversations/routes/conversations.py:25
->>>>>>> develop
 msgid ""
 "Participate of conversations and give your opinion with comments and votes!"
 msgstr "Participe das conversas e dê sua opinião com comentários e votos!"
@@ -2000,19 +1950,6 @@ msgid "There are no comments left to vote :)"
 msgstr "Não há comentários para votar :)"
 
 #: src/ej_conversations/jinja2/ej_conversations/detail.jinja2:18
-<<<<<<< HEAD
-#, fuzzy
-msgid "You have {} comment{} under moderation."
-msgstr "Você criou essa conversa"
-
-#: src/ej_conversations/jinja2/ej_conversations/detail.jinja2:20
-msgid "Click here"
-msgstr ""
-
-#: src/ej_conversations/jinja2/ej_conversations/detail.jinja2:21
-msgid "to see {}."
-msgstr ""
-=======
 msgid "You have {} comment{} under moderation."
 msgstr "Você tem {} comentário{} aguardando moderação."
 
@@ -2023,7 +1960,6 @@ msgstr "Clique aqui"
 #: src/ej_conversations/jinja2/ej_conversations/detail.jinja2:21
 msgid "to see {}."
 msgstr "para ver {}."
->>>>>>> develop
 
 #: src/ej_conversations/jinja2/ej_conversations/edit.jinja2:53
 msgid "Manage stereotypes"
@@ -2258,10 +2194,6 @@ msgstr "Tente novamente"
 msgid "Update"
 msgstr "Atualizar"
 
-<<<<<<< HEAD
-#~ msgid "Image"
-#~ msgstr "Imagem"
-=======
 #~ msgid "%s' conversations"
 #~ msgstr "%s"
 
@@ -2293,7 +2225,6 @@ msgstr "Atualizar"
 
 #~ msgid "OneSignal Id"
 #~ msgstr "Id OneSignal"
->>>>>>> develop
 
 #, fuzzy
 #~ msgid ""
