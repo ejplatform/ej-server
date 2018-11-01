@@ -1,4 +1,5 @@
 import pytest
+
 from ej.testing import UrlTester
 from ej_conversations.mommy_recipes import ConversationRecipes
 

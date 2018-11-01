@@ -1,5 +1,5 @@
 import pytest
-from ej_users.models import User, PasswordResetToken
+from ej_users.models import User, PasswordResetToken, generate_token, clean_expired_tokens
 from ej_profiles.choices import Race, Gender
 
 
@@ -48,3 +48,15 @@ class TestTokenUser:
         token = PasswordResetToken(user=user)
         token.save()
         assert not token.is_expired
+
+    def test_generate_token(self, db, user):
+        token = generate_token(user)
+        assert token.user == user
+        assert token.url
+
+    def test_delete_used_token(self, db, user):
+        token = generate_token(user)
+        token.is_used = True
+        token.save()
+        clean_expired_tokens()
+        assert not PasswordResetToken.objects.filter(user=user).exists()

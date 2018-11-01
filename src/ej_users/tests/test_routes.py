@@ -4,7 +4,8 @@ from django.test import Client
 from django.test import TestCase
 
 from ej.testing import UrlTester
-from ej_users.models import User
+from ej_users.models import User, generate_token
+from ej_users import routes
 
 
 @pytest.fixture
@@ -66,6 +67,43 @@ class TestLoginRoute:
         assert isinstance(response, HttpResponseRedirect)
         assert response.url == '/'
         assert int(client.session['_auth_user_id']) == user.pk
+
+    def test_login_route_unexistent_user(self, db, mk_user, rf):
+        user = mk_user
+        email = user.email
+        user.delete()
+        request = rf.post('', {'email': email, 'password': 'password'})
+        request.user = None
+        response = routes.login(request)
+        assert response['form'].errors
+
+
+class TestPasswordRoutes:
+    @pytest.fixture
+    def token(db, mk_user):
+        token = generate_token(mk_user)
+        return token
+
+    def test_get_change_password(self, db, token, rf):
+        user = token.user
+        request = rf.get('', {})
+        response = routes.reset_password(request, token)
+        assert response['user'] == user
+        assert response['form']
+        assert not response['isExpired']
+
+    def test_post_matching_passwords(self, db, token, rf):
+        request = rf.post('', {'new_password': 'pass', 'new_password_confirm': 'pass'})
+        response = routes.reset_password(request, token)
+        assert response.status_code == 302
+
+    def test_post_invalid_change_password(self, db, token, rf):
+        user = token.user
+        request = rf.post('', {'new_password': 'pass123', 'new_password_confirm': 'pass'})
+        response = routes.reset_password(request, token)
+        assert response['user'] == user
+        assert response['form']
+        assert not response['isExpired']
 
 
 class TestRegisterRoute(TestCase):
