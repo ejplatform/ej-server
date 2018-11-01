@@ -454,11 +454,10 @@ $profile-label-clear-color: #30BFD3 !default;
 
 .Comment {
     position: relative;
-    max-width: $page-content-width-max;
     min-height: 300px !important;
     width: 100% !important;
-    padding: $spacing-unit-large;
-
+    margin: 0 auto;
+    padding: 0;
     .CommentCard {
         position: absolute;
         box-sizing: border-box;

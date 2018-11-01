@@ -32,7 +32,7 @@
         </div>
         <div class="Comment-create">
             <p>
-                <button onclick="showForm()" id="button-create">
+                <button onclick="showForm($(this))" id="button-create">
                     <i class="fas fa-plus"></i> {{ _("CREATE COMMENT") }}
                 </button>
             </p>
@@ -40,6 +40,5 @@
             <p>{{ _("{} waiting moderation.").format(comments_under_moderation)}}</p>
         </div>
     </div>
-    <script src="/static/js/comment-form-animation.js" defer></script>
 
 {% endblock %}
