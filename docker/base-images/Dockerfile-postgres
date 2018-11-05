@@ -1,0 +1,9 @@
+FROM postgres:10
+
+COPY ./docker/postgres-entrypoint.sh /postgres-entrypoint.sh
+ENTRYPOINT ["/postgres-entrypoint.sh"]
+
+RUN mkdir /var/lib/postgresql/data/backup
+
+EXPOSE 5432
+CMD ["postgres"]
