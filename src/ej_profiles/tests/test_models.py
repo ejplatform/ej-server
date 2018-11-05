@@ -13,7 +13,7 @@ class TestProfile:
     def profile(self):
         return Profile(
             user=User(email='user@domain.com', name='name'),
-            image='image',
+            profile_photo='profile_photo',
             birth_date=date(1996, 1, 17),
             country='country',
             city='city',
