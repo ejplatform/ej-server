@@ -27,7 +27,10 @@ services:
     command: sass db -m run
 
   postgres:
-    image: postgres:10-alpine
+    image: ejplatform/postgres:latest
+    build:
+      context: ../
+      dockerfile: ./docker/base-images/Dockerfile-postgres
     restart: always
     ports:
       - 5432:5432
@@ -35,6 +38,7 @@ services:
       - ./env/postgres.env
     volumes:
       - dev_db_data:/var/lib/postgresql/data/
+      - ./db_backup/:/var/lib/postgresql/data/backup/
 
   redis:
     image: redis:alpine
