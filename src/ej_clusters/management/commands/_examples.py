@@ -3,23 +3,19 @@ A few functions for creating plausible synthetic data.
 """
 
 from django.contrib.auth import get_user_model
-from faker import Factory
 
 from ej_clusters.factories import set_clusters_from_comments
 from ej_conversations import create_conversation
 from ej_conversations.models import Conversation
 
-fake = Factory.create()
 User = get_user_model()
 
 
-def make_clusters(verbose=True, force=False):
-    if force:
-        Conversation.objects.filter(title='Economy').delete()
-
+def make_clusters(verbose=True):
     conversation = create_conversation(
         'How should our society organize the production of goods and services?',
         'Economy',
+        is_promoted=True,
         author=User.objects.filter(is_staff=True).first(),
     )
     set_clusters_from_comments(conversation, {
@@ -33,5 +29,10 @@ def make_clusters(verbose=True, force=False):
             'Government and the society as a whole must regulate business '
             'decisions to favor the common good rather than private interests.',
             'State leadership is necessary to drive a strong economy.',
+        ],
+        'Facist': [
+            'Government should elliminate opposition in order to ensure '
+            'governability.',
+            'Military should occupy high ranks in government.',
         ]
     })

@@ -1,4 +1,11 @@
-from ej_clusters.models import Cluster, Stereotype, StereotypeClusterMap, UserClusterMap
+from django.contrib.auth import get_user_model
+from django.db.models import Avg
+import random
+
+from ej_clusters.models import Cluster, Stereotype, StereotypeVote
+from ej_conversations.models import Choice, Vote
+
+User = get_user_model()
 
 
 def set_clusters_from_comments(conversation, comment_map, exclusive=True,
@@ -19,6 +26,7 @@ def set_clusters_from_comments(conversation, comment_map, exclusive=True,
         })
     """
     author = author or conversation.author
+    clusterization = conversation.get_clusterization()
     created_comments = []
     created_stereotypes = []
 
@@ -30,18 +38,16 @@ def set_clusters_from_comments(conversation, comment_map, exclusive=True,
 
         # Create cluster and stereotype
         cluster = Cluster.objects.create(
-            conversation=conversation,
+            clusterization=clusterization,
             name=cluster_name,
         )
         stereotype, _ = Stereotype.objects.get_or_create(
             name=cluster_name,
             description=description,
-        )
-        StereotypeClusterMap.objects.create(
-            stereotype=stereotype,
-            cluster=cluster,
+            owner=author,
             conversation=conversation,
         )
+        cluster.stereotypes.add(stereotype)
         created_stereotypes.append(stereotype)
 
         # Save comments for stereotype
@@ -66,6 +72,48 @@ def set_clusters_from_comments(conversation, comment_map, exclusive=True,
             stereotype.cast_votes(votes)
 
     return created_comments
+
+
+def cluster_votes(conversation, users):
+    clusterization = conversation.get_clusterization()
+    comments = list(conversation.comments.all())
+    comments_map = {comment.id: comment for comment in comments}
+    clusters = {cluster: [] for cluster in clusterization.clusters.all()}
+    cluster_list = list(clusters)
+    n_clusters = len(cluster_list)
+
+    for i, user in enumerate(users):
+        cluster = cluster_list[i % n_clusters]
+        clusters[cluster].append(user)
+
+    votes = []
+    for cluster, users in clusters.items():
+        vote_profiles = (
+            StereotypeVote.objects
+                .filter(author__in=cluster.stereotypes.all())
+                .values('comment')
+                .annotate(average=Avg('choice'))
+        )
+        for data in vote_profiles:
+            comment_id = data['comment']
+            prob = 0.5 + data['average'] * 0.4
+
+            for user in users:
+                r = random.random()
+                if r < 0.25:
+                    vote = Choice.SKIP
+                elif r < 0.50:
+                    vote = None
+                elif random.random() < prob:
+                    vote = Choice.AGREE
+                else:
+                    vote = Choice.DISAGREE
+
+                if vote is not None:
+                    vote = comments_map[comment_id].vote(user, vote, commit=False)
+                    votes.append(vote)
+
+    Vote.objects.bulk_create(votes)
 
 
 def set_clusters(conversation, stereotype_map=None, user_map=None, clean=False):
