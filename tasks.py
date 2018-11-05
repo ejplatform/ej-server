@@ -1,6 +1,7 @@
 import os
 import pathlib
 import sys
+import datetime
 
 from invoke import task
 
@@ -223,6 +224,11 @@ def db_assets(ctx, force=False, theme=None):
         manage(ctx, 'loadsocialmediaicons', path=path, force=force)
 
 
+@task
+def dump(ctx):
+    now = datetime.datetime.now()
+    date = now.strftime("%Y%m%d_%H%M%S")
+    manage(ctx, f'dumpdata > {date}.json')
 #
 # Docker
 #
