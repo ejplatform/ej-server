@@ -40,7 +40,7 @@ urlpatterns = Router(
 @urlpatterns.route('<model:board>/conversations/')
 def conversation_list(request, board):
     user = request.user
-    conversations = board.conversations.all()
+    conversations = board.conversations.filter(hidden=False)
     board_user = board.owner
     boards = []
     boards_count = 0

@@ -599,7 +599,7 @@ $profile-label-clear-color: #30BFD3 !default;
         min-height: 3 * $font-size;
         outline: none;
         border: 2px solid $color-primary;
-        background: transparent;
+        background: $color-content;
         color: #333;
         box-shadow: none;
     }
