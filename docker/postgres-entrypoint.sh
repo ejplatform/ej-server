@@ -161,3 +161,20 @@ if [ "$1" = 'postgres' ]; then
 	fi
 fi
 
+#Define backup procedure to run on container "down" command
+backup() {
+	export FNAME="$(date +%Y%m%d_%H%M%S)".sql
+	pg_dump -U $POSTGRES_USER -d $POSTGRES_DB > /var/lib/postgresql/data/backup/$FNAME
+	chmod 777 /var/lib/postgresql/data/backup/$FNAME
+}
+
+#Trap SIGTERM sent by docker to unmount the container 
+trap 'backup' SIGTERM
+
+#Execute a command
+"${@}" &
+
+#Wait
+wait $!
+
+exec "$@"
