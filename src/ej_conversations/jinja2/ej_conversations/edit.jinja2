@@ -35,9 +35,7 @@
 
                   <p><textarea onfocus="this.style.height = (this.scrollHeight) + 'px'" onkeyup="this.style.height = (this.scrollHeight) + 'px'" class="Conversation-edit-field" name="text" required id="id_text">{{ conversation.text }}</textarea></p>
 
-                  <div class="Conversation-edit">
-                    <b>{{_('Edit Conversation') }}</b>
-                  </div>
+                  <input type="hidden" name="comments_count" value="0">
               </div>
 
               <div class="ConversationDetail-arrow"></div>
