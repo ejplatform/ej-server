@@ -13,6 +13,7 @@ class CommentForm(forms.ModelForm):
     def __init__(self, *args, conversation, **kwargs):
         self.conversation = conversation
         super(CommentForm, self).__init__(*args, **kwargs)
+        self.fields['content'].widget.attrs['placeholder'] = _('Give your opinion here')
 
     def clean(self):
         super().clean()

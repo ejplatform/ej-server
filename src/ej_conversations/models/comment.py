@@ -52,7 +52,7 @@ class Comment(StatusModel, TimeStampedModel):
     )
     content = models.TextField(
         _('Content'),
-        max_length=210,
+        max_length=252,
         validators=[MinLengthValidator(2), is_not_empty],
         help_text=_('Body of text for the comment'),
     )
