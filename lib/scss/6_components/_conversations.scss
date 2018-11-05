@@ -477,7 +477,7 @@ $modalities-content-width-max: ($page-content-width-max / 2) - 29 !default;
         bottom: auto;
         background-color: $color-content;
         text-align: center;
-        border-radius: 7px;
+        border-radius: $spacing-unit-tiny;
         position: relative;
         border: 1px solid $color-magenta;
         padding: $spacing-padding * 2;
@@ -614,7 +614,6 @@ $modalities-content-width-max: ($page-content-width-max / 2) - 29 !default;
     
     .style-slide{
         margin: 0px;
-        max-width: $modalities-content-width-max; 
         width: $spacing-unit-huge * 3;
         line-height: 1.2;
         bottom: auto;
@@ -649,7 +648,6 @@ $modalities-content-width-max: ($page-content-width-max / 2) - 29 !default;
             color: $color-magenta;
         }
         .Button-closer{
-            margin: 0px 0px (-$spacing-unit) $spacing-unit-huge * 2.5;
             background-color: $color-blue-dark;
             border: none;
             border-radius: 56px;
@@ -663,7 +661,6 @@ $modalities-content-width-max: ($page-content-width-max / 2) - 29 !default;
             transition: all 200ms ease-in-out;
             vertical-align: middle;
             .fa-times {
-                padding: $spacing-unit-tiny;
                 font-size: $spacing-unit-tiny;
                 color: $color-content;
             }
@@ -674,15 +671,33 @@ $modalities-content-width-max: ($page-content-width-max / 2) - 29 !default;
     
     
     @media only screen and (min-width: $breakpoint-medium - $breakpoint-small) {
+        .style-slide{
+            max-width: $spacing-unit-huge * 2 - $spacing-unit-small; 
+        }
         .imgponte{
-            margin: -($spacing-unit * 2 + $spacing-unit-tiny) ($spacing-unit-huge * 2 + $spacing-unit-tiny) 0px 0px;
+            margin: -($spacing-unit * 2 + $spacing-unit-tiny) ($spacing-unit-huge - $spacing-unit-tiny) 0px (-$spacing-unit-huge + $spacing-unit - $spacing-unit-tiny);
             max-width: 16%;
+        }
+        .Button-closer{
+            margin: 0px 0px (-$spacing-unit-tiny) ($spacing-unit-huge * 2 - $spacing-unit);
+            .fa-times{
+                padding: 6px $spacing-unit-tiny;
+            }
         }
     }
     
     @media only screen and (min-width: $breakpoint-small) {
+        .style-slide{
+            max-width: $modalities-content-width-max; 
+        }
         .imgponte{
             margin: -($spacing-unit * 2 + $spacing-unit-tiny) ($spacing-unit-huge * 2 + $spacing-unit-tiny) 0px 0px;
+        }
+        .Button-closer{
+            margin: 0px 0px (-$spacing-unit) $spacing-unit-huge * 2.5;
+            .fa-times{
+                padding: $spacing-unit-tiny;
+            }
         }
     }
     

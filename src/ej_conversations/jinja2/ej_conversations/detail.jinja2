@@ -16,23 +16,23 @@
 
 {% block content %}
     {% if voted == False %}
-        {#<div class="Modalities">
+        <div class="Modalities">
             <div class="swiper-container">
                 <div class="swiper-wrapper">
                     <div class="swiper-slide">
-                        {{modalities("Bem Vinda(o)", modalicon(["fa-times", "fa-arrow-right", "fa-check"]), "Você iniciou sua participação! Comece votando em comentários: você pode concordar, discordar ou passar se quiser votar depois")}}
+                        {{modalities("Bem Vinda(o)", modalicon(["fa-times", "fa-arrow-right", "fa-check"]), ["Você iniciou sua participação! Comece votando em comentários: você pode concordar, discordar ou passar se quiser votar depois"])}}
                         <div class="append-buttons">
                             <a href="#" class="next-slide-1">PRÓXIMO</a>
                         </div>
                     </div>
                     <div class="swiper-slide">
-                        {{modalities("Participação", modalimg({'/static/img/icons/artboard.svg' : 'imgpart'}), "A partir de seus votos, você será posicionado em um grupo de opnião, e poderá ganhar poderes que ajudarão a diversificar os diálogos e furar bolhas de opinião!")}}
+                        {{modalities("Participação", modalimg({'/static/img/icons/artboard.svg' : 'imgpart'}), ["A partir de seus votos, você será posicionado em um grupo de opnião, e poderá ganhar poderes que ajudarão a diversificar os diálogos e furar bolhas de opinião!"])}}
                         <div class="append-buttons">
                             <a href="#" class="next-slide-2">PRÓXIMO</a>
                         </div>
                      </div>
                     <div class="swiper-slide">
-                        {{modalities("Poderes", modalimg({'/static/img/icons/iconponte.svg' : 'img', '/static/img/icons/iconativista.svg' : 'img'}), "Com os poderes, Ativista de Minoria, Ponte de Diálogo e Fura-Bolhas, você ganhará mais poder de fala, aumentando o seu limite de comentários e/ou a visibilidade deles!")}}
+                        {{modalities("Poderes", modalimg({'/static/img/icons/iconponte.svg' : 'img', '/static/img/icons/iconativista.svg' : 'img'}), ["Com os poderes, Ativista de Minoria, Ponte de Diálogo e Fura-Bolhas, você ganhará mais poder de fala, aumentando o seu limite de comentários e/ou a visibilidade deles!"])}}
                         <form method="post">
                             {{ csrf_input }}
                             <button type="submit" name="modalities" class="Button" value="pass">CONTINUAR PARTICIPANDO</button>
@@ -88,7 +88,10 @@
                 showModalities-slider()
             </script>
         </div>
-    {% else %}#}
+    {% else %}
+
+
+        {# Modal estático para implementação da gamificação (Ativista de Minoria)
         <div class="Modalities">
             <div class="style-slide-center">
                 <div class="style-slide">
@@ -97,7 +100,7 @@
                             <i class="fa fa-times"></i>
                         </button>
                     </form>
-                    {{modalities("Ativista de Minoria", modalimg({'/static/img/icons/iconativista.svg' : 'imgponte'}), "O seu grupo parece concordar com você! Mas você votou contrário à maioria nesse comentário\n\n Todas as regiões devem ser priorizados nas relações do Brazil. EUA e países do eixo Sul-Sul!\n\n Para exercer o seu poder de ativista escolha fazer um comentário promovido extra ou promover um comentário seu já criado na conversa")}}            
+                    {{modalities("Ativista de Minoria", modalimg({'/static/img/icons/iconativista.svg' : 'imgponte'}), ["O seu grupo parece concordar com você! Mas você votou contrário à maioria nesse comentário.", "Todas as regiões devem ser priorizados nas relações do Brazil. EUA e países do eixo Sul-Sul!", "Para exercer o seu poder de ativista escolha fazer um comentário promovido extra ou promover um comentário seu já criado na conversa"])}}            
                     <form method="post">
                         <button type="submit" class="Button">QUERO IR</button>
                     </form>
@@ -113,7 +116,11 @@
         <script>
             showModalities-slider()
         </script>
-        {#<div class="Modalities">
+
+
+
+        Modal estático para implementação da gamificação (Ponte de diálogo)
+        <div class="Modalities">
             <div class="style-slide-center">
                 <div class="style-slide">
                     <form method="get" action={{conversation.get_absolute_url()}}>
@@ -121,7 +128,7 @@
                             <i class="fa fa-times"></i>
                         </button>
                     </form>
-                    {{modalities("Ponte de diálogo", modalimg({'/static/img/icons/iconponte.svg' : 'imgponte'}), "Você recebeu o poder Ponte de diálogo, porque, de acordo com as suas opiniões, você está próximo da borda do seu grupo de opinião\n\n Para exercer o seu poder de ponte, escolha fazer um comentário promovido extra ou promover um comentário seu já criado na conversa")}}            
+                    {{modalities("Ponte de diálogo", modalimg({'/static/img/icons/iconponte.svg' : 'imgponte'}), ["Você recebeu o poder Ponte de diálogo, porque, de acordo com as suas opiniões, você está próximo da borda do seu grupo de opinião", "Para exercer o seu poder de ponte, escolha fazer um comentário promovido extra ou promover um comentário seu já criado na conversa"])}}            
                     <form method="post">
                         <button type="submit" class="Button">QUERO IR</button>
                     </form>
@@ -136,8 +143,8 @@
         </script>
         <script>
             showModalities-slider()
-        </script>#}
-    {% endif %}
+        </script>
+    {% endif %}#}
 
 
 
