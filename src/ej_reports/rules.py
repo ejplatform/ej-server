@@ -13,3 +13,4 @@ def can_edit_conversation(user, conversation):
         return True
     else:
         return False
+
