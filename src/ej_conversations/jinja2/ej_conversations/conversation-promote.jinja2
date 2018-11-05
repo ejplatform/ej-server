@@ -7,6 +7,8 @@
     {% for comment in comments %}
         {{ comment|role('promote') }}
     {% endfor %}
+       <h1> {{form_title}}</h1>
+        {{ conversations|role('promote-form', comment_content=comment_form) }}
     </div>
 </div>
 {% endblock %}

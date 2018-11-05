@@ -34,6 +34,7 @@ def conversation_promote(request, conversation):
         'conversations': conversation,
         'comment_form': comment_form,
         'title': _('My Comments'),
+        'form_title': _('Comment and Promote')
 
     }
 

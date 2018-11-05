@@ -93,7 +93,6 @@ def comment_moderate(comment, request=None, **kwargs):
     """
     Render a comment inside a moderation card.
     """
-
     return {
         'comment': comment,
         'rejection_reasons': dict(models.Comment.REJECTION_REASON),
@@ -155,6 +154,18 @@ def comment_promote(comment, **kwargs):
         'agree': comment.agree_count,
         'skip': comment.skip_count,
         'disagree': comment.disagree_count,
+    }
+
+
+@with_template(models.Conversation, role='promote-form')
+def comment_promote_form(conversation, request=None, comment_content=None, **kwargs):
+    """
+    Render comment form for one conversation.
+    """
+
+    return {
+        'csrf_input': csrf_input(request),
+        'comment_content': comment_content,
     }
 
 

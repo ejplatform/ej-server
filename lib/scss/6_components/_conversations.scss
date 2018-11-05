@@ -699,6 +699,11 @@ $profile-label-clear-color: #30BFD3 !default;
 
 }
 
+.CommentPromoteForm {
+    @extend .CommentForm;
+    background: transparent;
+}
+
 .CircleButton {
     @include color('content');
 

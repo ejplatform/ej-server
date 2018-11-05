@@ -1,0 +1,16 @@
+{% macro comment_form(csrf_input, comment_content) %}
+    <form method="post" up-restore-scroll="true">
+        {{ csrf_input }}
+        <input type="hidden" name="action" value="comment">
+            {{comment_content.content}}
+        <input type="submit" name="submit" value="{{ _('Comment') }}" primary>
+
+    </form>
+{% endmacro %}
+
+
+<div class="CommentPromoteForm">
+        {{ comment_form(csrf_input, comment_content) }}
+</div>
+
+
