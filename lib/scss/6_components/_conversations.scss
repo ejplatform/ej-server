@@ -737,8 +737,8 @@ $profile-label-clear-color: #30BFD3 !default;
 
     #toast.show {
         visibility: visible;
-        -webkit-animation: fade 8s;
-        animation: fade 8s;
+        // -webkit-animation: fade 8s;
+        animation: fade 8s both;
     }
 
 
