@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "Generated-By: Babel 2.5.3\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 2.0.6\n"
 
 #: docs/_templates/layout.html:3
 msgid "Documentation"
@@ -1095,8 +1095,8 @@ msgid "Political activity"
 msgstr "Atividade política"
 
 #: src/ej_profiles/models.py:44
-msgid "Image"
-msgstr "Imagem"
+msgid "Profile Photo"
+msgstr "Foto de Perfil"
 
 #: src/ej_profiles/models.py:167
 msgid "Root"
@@ -1432,6 +1432,7 @@ msgstr "Painel"
 #: src/ej/templates/jinja2/components/generic/page_header.jinja2:109
 #: src/ej/templates/jinja2/components/generic/page_header.jinja2:110
 #: src/ej/templates/jinja2/components/generic/page_menu.jinja2:30
+#, fuzzy
 msgid "Profile"
 msgstr "Perfil"
 

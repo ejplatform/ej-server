@@ -20,4 +20,4 @@ Devel Guide
    ci
    dev-style
    dev-community
-
+   social-login

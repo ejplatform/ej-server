@@ -7,11 +7,6 @@
                 <li>{{ link(_('frequent questions') , 'help:faq', title=_('Frequently asked questions'), preload=True) }}</li>
                 <li>{{ link(_('usage'), 'help:usage', title=_('Usage terms'), preload=True) }}</li>
             </ul>
-            <ul class="TopHeader-social">
-                {% for icon in social_icons %}
-                    <li>{{ icon }}</li>
-                {% endfor %}
-            </ul>
         </div>
     </header>
 {% endmacro %}
