@@ -4,8 +4,9 @@
     <form method="post" up-target=".ConversationDetail" up-restore-scroll="true">
         {{ csrf_input }}
         <input type="hidden" name="action" value="comment">
-            {{comment_content.content}}
-        <input type="submit" name="submit" value="{{ _('Send your opinion') }}" primary>
+        {{comment_content.content}}
+        <span id="characters-count">0 / 252</span>
+        <input type="submit" name="submit" value="{{ _('Comment') }}" primary>
         {{toast("OPS!", comment_content.content.errors|striptags)}}
     </form>
     <script>
@@ -17,7 +18,7 @@
 
 
 
-<div class="CommentForm">
+<div id="commentform">
     {% if user_is_owner %}
         <h1>{% trans %}Leave your comment{% endtrans %}</h1>
         <p>{% trans %}You have created this conversation.{% endtrans %}</p>

@@ -1,5 +1,5 @@
 import pytest
-
+import datetime
 from django.utils.translation import ugettext as _
 
 from ej_profiles.choices import Gender, Race
@@ -13,7 +13,7 @@ class TestProfile:
     def profile(self):
         return Profile(
             user=User(email='user@domain.com', name='name'),
-            image='image',
+            profile_photo='profile_photo',
             birth_date=date(1996, 1, 17),
             country='country',
             city='city',
@@ -49,3 +49,12 @@ class TestProfile:
         # Remove a field
         profile.occupation = ''
         assert not profile.is_filled
+
+    def test_profile_variants(self, db, profile):
+        delta = datetime.datetime.now().date() - date(1996, 1, 17)
+        age = abs(int(delta.days // 365.25))
+        assert profile.age == age
+        assert profile.gender_description == Gender.FEMALE.description
+        profile.gender = Gender.UNDECLARED
+        assert profile.gender_description == profile.gender_other
+        assert profile.has_image

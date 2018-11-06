@@ -9,6 +9,7 @@ from boogie import rules
 from . import urlpatterns, conversation_url
 from ..forms import CommentForm
 from ..models import Conversation, Comment
+from ej_conversations.rules import max_comments_per_conversation
 
 log = getLogger('ej')
 
@@ -45,8 +46,6 @@ def get_conversation_detail_context(request, conversation):
     is_favorite = user.is_authenticated and conversation.followers.filter(user=user).exists()
     comment = None
     comment_form = CommentForm(None, conversation=conversation)
-    n_comments_under_moderation = rules.compute('ej_conversations.comments_under_moderation', conversation, user)
-
     # User is voting in the current comment. We still need to choose a random
     # comment to display next.
     if request.POST.get('action') == 'vote':
@@ -74,6 +73,11 @@ def get_conversation_detail_context(request, conversation):
     elif request.method == 'POST':
         log.warning(f'user {user.id} sent invalid POST request: {request.POST}')
         return HttpResponseServerError('invalid action')
+    n_comments_under_moderation = rules.compute('ej_conversations.comments_under_moderation', conversation, user)
+    if user.is_authenticated:
+        comments_made = user.comments.filter(conversation=conversation).count()
+    else:
+        comments_made = 0
     return {
         # Objects
         'conversation': conversation,
@@ -87,6 +91,8 @@ def get_conversation_detail_context(request, conversation):
         'can_edit': user.has_perm('ej.can_edit_conversation', conversation),
         'cannot_comment_reason': '',
         'comments_under_moderation': n_comments_under_moderation,
+        'comments_made': comments_made,
+        'max_comments': max_comments_per_conversation(),
     }
 
 

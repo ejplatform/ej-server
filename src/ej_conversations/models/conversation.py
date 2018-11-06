@@ -93,7 +93,8 @@ class Conversation(TimeStampedModel):
         _('hidden'),
         default=False,
         help_text=_(
-            "Hidden conversations doesn't appears in his board"
+            'Hidden conversations does not appears in boards or in the main /conversations '
+            'endpoint.'
         ),
     )
 
