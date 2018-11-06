@@ -17,7 +17,7 @@ log = getLogger('ej')
 @urlpatterns.route('', name='list')
 def conversation_list(request):
     return {
-        'conversations': Conversation.objects.filter(is_promoted=True, hidden=False),
+        'conversations': Conversation.objects.filter(is_promoted=True),
         'can_add_conversation': request.user.has_perm('ej.can_add_promoted_conversation'),
         'create_url': reverse('conversation:create'),
         'topic': _('A space for adolescents to discuss actions that promote, guarantee and defend their rights'),
@@ -71,7 +71,7 @@ def get_conversation_detail_context(request, conversation):
 
     # User is probably trying to something nasty ;)
     elif request.method == 'POST':
-        log.warning(f'user {user.id} sent invalid POST request: {request.POST}')
+        log.warning(f'user {user.id} se nt invalid POST request: {request.POST}')
         return HttpResponseServerError('invalid action')
     n_comments_under_moderation = rules.compute('ej_conversations.comments_under_moderation', conversation, user)
     if user.is_authenticated:

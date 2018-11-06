@@ -27,12 +27,12 @@ def conversation_download_data(conversation, *, which, formats=DEFAULT_FORMATS, 
 
 
 @html.register(models.Conversation, role='stats-table')
-def stats_table(conversation, request=None):
-    statistics = conversation.statistics()
-    cols = statistics['votes']
-    array = np.array(list(cols.items())).T
-    cols, body = array
-    cols = [__(col) for col in cols]
+def stats_table(conversation, request=None, stats=None, data='votes'):
+    if stats is None:
+        stats = conversation.statistics()
+    cols = stats[data]
+    cols, body = np.array(list(cols.items())).T
+    cols = [COLUMN_NAMES.get(x, x) for x in cols]
     return html_table([body], columns=cols, class_='ReportTable table')
 
 
@@ -78,6 +78,11 @@ COLUMN_NAMES = {
     'user': _('User'),
     'participation': _('Participation ratio'),
     'name': _('Name'),
+    'total': _('Total'),
+    'skip': _('Skip'),
+    'approved': _('Approved'),
+    'rejected': _('Rejected'),
+    'pending': _('Pending'),
 }
 PC_COLUMNS = [
     'missing', 'skipped', 'agree', 'disagree', 'average',

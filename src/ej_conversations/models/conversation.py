@@ -67,14 +67,6 @@ class Conversation(TimeStampedModel):
             'endpoint.'
         ),
     )
-    hidden = models.BooleanField(
-        _('hidden'),
-        default=False,
-        help_text=_(
-            'Hidden conversations does not appears in boards or in the main /conversations '
-            'endpoint.'
-        ),
-    )
 
     objects = ConversationManager()
     tags = TaggableManager(through='ConversationTag')
@@ -175,10 +167,17 @@ class Conversation(TimeStampedModel):
             kwargs['choice'] = which
         return Vote.objects.filter(**kwargs).count()
 
-    def statistics(self):
+    def statistics(self, cache=True):
         """
         Return a dictionary with basic statistics about conversation.
         """
+        if cache:
+            try:
+                return self._cached_statistics
+            except AttributeError:
+                self._cached_statistics = self.statistics(False)
+                return self._cached_statistics
+
         return {
             # Vote counts
             'votes': {

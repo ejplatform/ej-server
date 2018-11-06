@@ -11,9 +11,7 @@ from ej_conversations.models import Conversation
 urlpatterns = Router(
     template=['ej_reports/{name}.jinja2', 'generic.jinja2'],
     object='conversation',
-    models={
-        'conversation': Conversation,
-    },
+    models={'conversation': Conversation},
     lookup_field='slug',
     lookup_type='slug',
     login=True,
@@ -30,16 +28,18 @@ User = get_user_model()
 def index(request, conversation):
     user = request.user
     can_download_data = user.has_perm('ej.can_edit_conversation', conversation)
-
+    clusterization = conversation.get_clusterization()
+    clusterization.update()
     return {
+        'clusters': clusterization.clusters.all(),
         'conversation': conversation,
+        'users': conversation.statistics()['participants'],
         'can_download_data': can_download_data,
         'can_see_participants': can_download_data,
     }
 
 
-@urlpatterns.route(reports_url + 'participants/',
-                   perms=['ej.can_view_report'])
+@urlpatterns.route(reports_url + 'participants/', staff=True)
 def participants_table(conversation):
     return {'conversation': conversation}
 
@@ -82,8 +82,7 @@ def votes_data(conversation, format):
 @urlpatterns.route(reports_url + 'data/comments.<format>')
 def comments_data(conversation, format):
     response = file_response(conversation, 'comments', format)
-    votes = get_raw_votes(conversation)
-    comments = comments_table(conversation, votes)
+    comments = conversation.comments_dataframe()
     generate_data_file(comments, format, response)
     return response
 
