@@ -25,12 +25,21 @@ def update(cls):
 
 @update(models.Conversation)
 class ConversationMixin:
-    def comments_dataframe(self, votes=None):
+    _votes_dataframe = None
+
+    def votes_dataframe(self, cache=False):
+        if cache:
+            if self._votes_dataframe is None:
+                self._votes_dataframe = self.votes_dataframe(cache=False)
+            return self._votes_dataframe
+        return get_raw_votes(self)
+
+    def comments_dataframe(self, votes=None, cache=False):
         """
         Data frame with information about each comment in conversation.
         """
         if votes is None:
-            votes = get_raw_votes(self)
+            votes = self.votes_dataframe(cache)
 
         stats = VoteStats(votes)
         df = stats.comments(pc=True)
@@ -46,11 +55,12 @@ class ConversationMixin:
         comments['disagree'] = 0.01 * comments['disagree'] * remaining
         return comments
 
-    def participants_dataframe(self):
+    def participants_dataframe(self, votes=None, cache=False):
         """
         Data frame with information about each participant in conversation.
         """
-        votes = get_raw_votes(self)
+        if votes is None:
+            votes = self.votes_dataframe(cache)
         stats = VoteStats(votes)
         df = stats.users(pc=True)
 

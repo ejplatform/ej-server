@@ -22,6 +22,7 @@
         {% if clusters %}
         <h2>{% trans %}Clusters{% endtrans %}</h2>
             {% for cluster in clusters %}
+                <h3>{{ cluster.name }}</h3>
                 {{ cluster|role('comments-stats-table') }}
             {% endfor %}
         {% endif %}

@@ -1,9 +1,11 @@
 import numpy as np
 from django.contrib.auth import get_user_model
-from django.utils.translation import ugettext_lazy as _, ugettext as __
+from django.utils.translation import ugettext_lazy as _
 from hyperpython import html
 
 from ej.roles import with_template, html_table
+from ej_clusters.math import get_raw_votes
+from ej_clusters.models import Cluster
 from ej_conversations import models
 from ej_dataviz import render_dataframe
 
@@ -49,12 +51,13 @@ def participants_table(conversation, request=None):
 #
 # Clusters
 #
-def cluster_comments_table(cluster):
+@html.register(Cluster, role='comments-stats-table')
+def cluster_comments_table(cluster, request=None, votes=None):
     usernames = list(cluster.users.all().values_list('email', flat=True))
+    votes = get_raw_votes(cluster.conversation)
 
     # Filter votes by users present in cluster
-    df = cluster.all_votes
-    votes = df[df['user'].isin(usernames)]
+    votes = votes[votes['user'].isin(usernames)]
     data = cluster.conversation.comments_dataframe(votes=votes)
     data = data.sort_values('agree', ascending=False)
     return df_to_table(data)
