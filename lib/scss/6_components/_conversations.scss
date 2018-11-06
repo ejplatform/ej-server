@@ -694,7 +694,7 @@ $profile-label-clear-color: #30BFD3 !default;
         z-index: 3;
         width: 100vw;
         left: 0;
-        bottom: $header-top-nav-height;
+        bottom: 0;//$header-top-nav-height;
         > div {
             padding: $spacing-padding;
             max-width: 660px;
@@ -737,8 +737,8 @@ $profile-label-clear-color: #30BFD3 !default;
 
     #toast.show {
         visibility: visible;
-        -webkit-animation: fade 8s;
-        animation: fade 8s;
+        // -webkit-animation: fade 8s;
+        animation: fade 8s both;
     }
 
 
