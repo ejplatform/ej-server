@@ -1,6 +1,9 @@
 from django.core.management.base import BaseCommand
-
+from django.contrib.auth import get_user_model
+from ej_conversations.models import Conversation
 from ._examples import make_clusters
+from ...factories import cluster_votes
+User = get_user_model()
 
 
 class Command(BaseCommand):
@@ -19,4 +22,9 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, silent=False, force=False, **options):
-        make_clusters(verbose=not silent, force=force)
+        if force:
+            Conversation.objects.filter(title='Economy').delete()
+        make_clusters(verbose=not silent)
+
+        conversation = Conversation.objects.get(title='Economy')
+        cluster_votes(conversation, User.objects.all())

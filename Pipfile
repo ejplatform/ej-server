@@ -30,6 +30,8 @@ scikit-learn = "*"
 coreapi = "*"
 pillow = "*"
 "argon2-cffi" = "*"
+requests = ">=2.20.0"
+
 
 [dev-packages]
 django-debug-toolbar = "*"

@@ -2,7 +2,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 
-from .models import VOTE_VALUES, Conversation, Comment
+from .models import Conversation, Comment
 
 
 class CommentForm(forms.ModelForm):
@@ -13,6 +13,7 @@ class CommentForm(forms.ModelForm):
     def __init__(self, *args, conversation, **kwargs):
         self.conversation = conversation
         super(CommentForm, self).__init__(*args, **kwargs)
+        self.fields['content'].widget.attrs['placeholder'] = _('Give your opinion here')
 
     def clean(self):
         super().clean()
@@ -78,21 +79,3 @@ class ConversationForm(forms.ModelForm):
                 conversation.create_comment(author, value, **kwargs)
 
         return conversation
-
-
-class VoteForm(forms.Form):
-    value = forms.IntegerField(required=False)
-    action = forms.ChoiceField(choices=['agree', 'disagree', 'skip'], required=False)
-
-    def get_value(self):
-        if not self.is_valid():
-            raise ValidationError(self.errors)
-
-        value = self.cleaned_data["choice"]
-        if value is not None:
-            return value
-
-        action = self.cleaned_data['action']
-        if action:
-            return VOTE_VALUES[action]
-        return 0
