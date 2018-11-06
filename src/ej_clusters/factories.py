@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from django.db.models import Avg
 import random
 
-from ej_clusters.models import Cluster, Stereotype, StereotypeVote
+from ej_clusters.models import Cluster, Stereotype, StereotypeVote, UserClusterMap, StereotypeClusterMap
 from ej_conversations.models import Choice, Vote
 
 User = get_user_model()
@@ -99,21 +99,26 @@ def cluster_votes(conversation, users):
             prob = 0.5 + data['average'] * 0.4
 
             for user in users:
-                r = random.random()
-                if r < 0.25:
-                    vote = Choice.SKIP
-                elif r < 0.50:
-                    vote = None
-                elif random.random() < prob:
-                    vote = Choice.AGREE
-                else:
-                    vote = Choice.DISAGREE
+                vote = random_vote(prob)
 
                 if vote is not None:
                     vote = comments_map[comment_id].vote(user, vote, commit=False)
                     votes.append(vote)
 
     Vote.objects.bulk_create(votes)
+
+
+def random_vote(prob):
+    r = random.random()
+    if r < 0.25:
+        vote = Choice.SKIP
+    elif r < 0.50:
+        vote = None
+    elif random.random() < prob:
+        vote = Choice.AGREE
+    else:
+        vote = Choice.DISAGREE
+    return vote
 
 
 def set_clusters(conversation, stereotype_map=None, user_map=None, clean=False):

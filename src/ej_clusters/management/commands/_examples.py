@@ -6,7 +6,7 @@ from django.contrib.auth import get_user_model
 
 from ej_clusters.factories import set_clusters_from_comments
 from ej_conversations import create_conversation
-from ej_conversations.models import Conversation
+
 
 User = get_user_model()
 
