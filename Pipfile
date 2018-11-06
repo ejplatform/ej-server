@@ -31,7 +31,7 @@ coreapi = "*"
 pillow = "*"
 "argon2-cffi" = "*"
 requests = ">=2.20.0"
-
+django_push_notifications = "*"
 
 [dev-packages]
 django-debug-toolbar = "*"

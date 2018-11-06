@@ -40,6 +40,26 @@ def clusters(request):
     }
 
 
+@urlpatterns.route('inbox/')
+def inbox(request):
+    user = request.user
+    return {
+        'user': user,
+        'notifications':[
+            {
+                "notification": "Você recebeu o poder Ponte de diálogo. Promova um comentário ou crie um comentário promovido",
+                "remaining_time": 35,
+                "already_seen": True,
+            },
+            {
+                "notification": "Você recebeu o poder Ponte ativista de minoria. Crie um comentário promovido",
+                "remaining_time": 35,
+                "already_seen": False,
+            }
+        ],
+    }
+
+
 @urlpatterns.route('read/' + notification_url)
 def read_notification(request, notification):
     notification.read = True
