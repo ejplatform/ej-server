@@ -1,0 +1,15 @@
+{% extends 'ej_reports/base.jinja2' %}
+
+{% block content %}
+    <div class="Container">
+        <h1>{{ _('Conversation report: list of participants') }}
+            [ {{ conversation.get_anchor(_('back'), 'report:index') }} ]</h1>
+        <h2>{{ conversation.title }}</h2>
+        <p>{{ conversation.text }}</p>
+        <hr>
+
+        <h2>{{ _('Data') }}</h2>
+        {{ conversation|role('participants-stats-table') }}
+        {{ conversation|role('download-data', which='users-data') }}
+    </div>
+{% endblock %}

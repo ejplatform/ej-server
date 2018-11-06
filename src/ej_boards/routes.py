@@ -40,7 +40,7 @@ urlpatterns = Router(
 @urlpatterns.route('<model:board>/conversations/')
 def conversation_list(request, board):
     user = request.user
-    conversations = board.conversations.filter(hidden=False)
+    conversations = board.conversations.all()
     board_user = board.owner
     boards = []
     boards_count = 0
@@ -64,10 +64,12 @@ def conversation_list(request, board):
     }
 
 
-@urlpatterns.route('<model:board>/conversations/add/',
-                   perms=['ej_boards.can_add_conversation'])
+@urlpatterns.route('<model:board>/conversations/add/')
 def conversation_create(request, board):
     user = request.user
+    if not user == board.owner:
+        raise Http404
+
     form = forms.ConversationForm(request.POST or None)
 
     if request.method == 'POST' and form.is_valid():
@@ -193,13 +195,19 @@ def board_edit(request, board):
 # Reports
 #
 reports_url = '<model:board>/conversations/<model:conversation>/reports/'
-reports_kwargs = {'perms': ['ej.can_view_report']}
+reports_kwargs = {'login': True}
 
 
 @urlpatterns.route(reports_url, **reports_kwargs)
-def report(board, conversation):
+def report(request, board, conversation):
     assure_correct_board(conversation, board)
-    return report_routes.index(conversation)
+    return report_routes.index(request, conversation)
+
+
+@urlpatterns.route(reports_url + 'participants/', staff=True, **reports_kwargs)
+def report_participants(request, board, conversation):
+    assure_correct_board(conversation, board)
+    return report_routes.participants_table(conversation)
 
 
 @urlpatterns.route(reports_url + 'scatter/', **reports_kwargs)
