@@ -9,16 +9,18 @@ from sidekick import deferred
 os.environ.setdefault('DJANGO_SETTINGS_MODEL', 'ej.settings')
 django.setup()
 
-from django.conf import settings
+#
+# Django imports
+#
+from django.conf import settings  # noqa: E402
+from django.contrib.auth.models import AnonymousUser  # noqa: E402
+from ej_users.models import User  # noqa: E402
+from ej_conversations.models import Conversation, Comment  # noqa: E402
 
+#
+# Create examples
+#
 settings.ALLOWED_HOSTS.append('testserver')
-
-#
-# Import models
-#
-from django.contrib.auth.models import AnonymousUser
-from ej_users.models import User
-from ej_conversations.models import Conversation, Comment
 
 _first = lambda cls: deferred(lambda: cls.objects.first())
 

@@ -43,5 +43,4 @@ class TestCluster():
 
 class TestStereotype:
     def test_inject_stereotype_related_manager_on_conversation(self, conversation):
-        assert not conversation.stereotypes
-        assert hasattr(conversation, 'stereotypes')
+        assert not conversation.stereotypes.all()
