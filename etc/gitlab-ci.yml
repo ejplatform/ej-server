@@ -134,6 +134,7 @@ publish ejplatform/web tagged:
     - docker push ejplatform/web:$DOCKER_TAG
     - docker push ejplatform/web:latest
   only:
+    - master
     - tags
 
 
@@ -152,6 +153,7 @@ publish mdhcpa/web tagged:
     - docker push mdhcpa/web:$DOCKER_TAG
     - docker push mdhcpa/web:latest
   only:
+    - master
     - tags
 
 # -----------------------------------------------------------------------------
