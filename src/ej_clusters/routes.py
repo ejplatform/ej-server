@@ -70,6 +70,7 @@ def clusterize(conversation):
 @urlpatterns.route('conversations/<model:conversation>/stereotypes/',
                    perms=['ej.can_manage_stereotypes'])
 def stereotype_list(conversation):
+    print(conversation.stereotypes.all())
     return {
         'content_title': _('Stereotypes'),
         'conversation_title': conversation.title,

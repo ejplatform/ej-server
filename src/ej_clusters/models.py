@@ -104,7 +104,7 @@ class Clusterization(TimeStampedModel):
         rule = rules.get_rule('ej.conversation_must_update_clusters')
         return rule.test(conversation)
 
-  
+
 @rest_api(exclude=['users', 'stereotypes'])
 class Cluster(TimeStampedModel):
     """
@@ -306,4 +306,3 @@ def get_clusterization(conversation):
 Conversation.get_clusterization = get_clusterization
 Conversation._clusterization = lazy(get_clusterization)
 Conversation.clusters = delegate_to('_clusterization')
-Conversation.stereotypes = delegate_to('_clusterization')
