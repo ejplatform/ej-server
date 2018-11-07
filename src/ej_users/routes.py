@@ -156,9 +156,10 @@ def recover_password(request):
 
             user = User.objects.get_by_email(request.POST['email'])
             token = generate_token(user)
+            from_email = settings.DEFAULT_FROM_EMAIL
             template_message = template.render({'link': host + '/reset-password/' + token.url})
             send_mail(_("Please reset your password"), template_message,
-                      'empurrandojuntos@gmail.com', [request.POST['email']],
+                      from_email, [request.POST['email']],
                       fail_silently=False)
 
     return {
