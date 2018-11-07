@@ -10,9 +10,9 @@ from .. import forms, models
 log = getLogger('ej')
 
 
-@urlpatterns.route('add/')
+@urlpatterns.route('add/', login=True)
 def create(request):
-    #TODO: Fix this case of permission in django-boogie
+    # TODO: Fix this case of permission in django-boogie
     if not request.user.has_perm('ej.can_add_promoted_conversation'):
         raise Http404
 
