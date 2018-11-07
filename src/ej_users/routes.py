@@ -152,7 +152,7 @@ def recover_password(request):
                 host = 'http://localhost:8000'
 
             else:
-                host = 'http://' + settings.HOSTNAME
+                host = settings.HOSTNAME
 
             user = User.objects.get_by_email(request.POST['email'])
             token = generate_token(user)
