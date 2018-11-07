@@ -99,7 +99,7 @@ class Conf(ThemesConf,
       EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend';
       # the api key will be informed during the docker build step.
       ANYMAIL = {'MAILGUN_API_KEY': ''};
-      DEFAULT_FROM_EMAIL = "Empurrando Juntos <noreply@ejplatform.org>"
+      DEFAULT_FROM_EMAIL = "Empurrando Juntos <noreply@mail.ejplatform.org>"
 
 
 
