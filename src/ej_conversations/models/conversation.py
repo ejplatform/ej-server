@@ -131,7 +131,7 @@ class Conversation(TimeStampedModel):
         """
         if user.id is None:
             return Vote.objects.none()
-        return Vote.objects.filter(comment__conversation=self, author=user)
+        return Vote.objects.filter(comment__conversation=self, author=user, comment__status=Comment.STATUS.approved)
 
     def create_comment(self, author, content, commit=True, *, status=None,
                        check_limits=True, **kwargs):
