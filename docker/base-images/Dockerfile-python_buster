@@ -6,6 +6,7 @@ ENV LANG=C.UTF-8
 # Install stable Debian dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
         python3.6 \
+        procps \
         python3-pip \
         ruby-sass \
         python3-setuptools \

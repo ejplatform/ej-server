@@ -14,6 +14,8 @@ services:
       - web
     links:
       - web
+    networks:
+      - ejserver
 
   web:
     image: ejplatform/web:latest
@@ -26,12 +28,15 @@ services:
       - ./env/postgres.env
       - ./env/deploy.env
       - ./env/email.env
+      - ./env/rocket.env
     volumes:
       - media_files:/app/local/media/
       - static_files:/app/local/static/
       - docs:/app/build/docs/
       - nginx_conf:/etc/nginx/conf.d/
     command: clean db -m db-assets sass collect  gunicorn
+    networks:
+      - ejserver
 
   postgres:
     image: postgres:10-alpine
@@ -40,10 +45,14 @@ services:
       - ./env/deploy.env
     volumes:
       - db_data:/var/lib/postgresql/data
+    networks:
+      - ejserver
 
   redis:
     image: redis:alpine
     restart: always
+    networks:
+      - ejserver
 
 
 volumes:
@@ -52,3 +61,7 @@ volumes:
   static_files:
   nginx_conf:
   docs:
+
+networks:
+  ejserver:
+    driver: bridge

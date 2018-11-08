@@ -12,6 +12,8 @@ services:
       - mongo:mongo
     ports:
       - 3000:3000/tcp
+    networks:
+      - ejserver
 
   mongo:
     image: mongo
@@ -25,6 +27,8 @@ services:
       - --smallfiles
       - --oplogSize
       - '128'
+    networks:
+      - ejserver
 
   rocketconfig:
     links:
@@ -34,6 +38,11 @@ services:
       dockerfile: ./Dockerfile.waitmongo
     depends_on:
       - mongo
+    networks:
+      - ejserver
 volumes:
   db_rocketchat:
 
+networks:
+  ejserver:
+    driver: bridge
