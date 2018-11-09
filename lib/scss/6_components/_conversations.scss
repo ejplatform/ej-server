@@ -11,6 +11,7 @@ $profile-label-clear-color: #30BFD3 !default;
 
 .ConversationList {
     @extend .Container;
+    max-width: 100%;
 
     p {
         padding: 0 $spacing-unit / 3;
