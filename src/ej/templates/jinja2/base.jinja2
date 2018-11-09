@@ -9,6 +9,7 @@
 {% set page_title = page_title|default(content_title or settings.EJ_PAGE_TITLE) %}
 {% set hide_footer = hide_footer|default(False) %}
 {% set enable_navbar = enable_navbar|default(True) %}
+{% set logged_in = request and request.user and request.user.is_authenticated %}
 
 {% if target == 'all' %}
     <!DOCTYPE html>
@@ -118,7 +119,7 @@
 
     <div class="Page-content-container">
         <div class="NavMenu-fixed">
-            {% if request and request.user and request.user.is_authenticated and request.path != '/home/' %}
+            {% if logged_in and request.path != '/home/' %}
                 {{ menu(request.user) }}
             {% endif %}
         </div>
@@ -126,7 +127,7 @@
         {# MAIN BLOCK #}
         {% block main %}
 
-            <main class="Page-content" {{ salt_attr()|safe }}>
+            <main class="Page-content {{ 'logged-in' if logged_in else '' }}" {{ salt_attr()|safe }}>
                 {% if content_title %}
                     <div class="Page-title"><h1>{{ content_title }}</h1></div>{% endif %}
                 {% if content is defined %}

@@ -32,7 +32,7 @@ $page-title-font-size: 1.1 * $font-size-h1 !default;
     }
     
     @media only screen and (min-width: 960px) {
-        &-content, #docs {
+        &-content.logged-in, #docs {
             padding-left: 400px !important;
         }
     }
