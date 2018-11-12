@@ -48,7 +48,7 @@ def send_conversation_fcm_message(sender, instance, created, **kwargs):
             for user in channel.users.all():
 
                 setting = NotificationConfig.objects.get(profile__user__id=user.id)
-                if setting.conversation_notifications:
+                if setting.notification_option == NotificationOptions.PUSH_NOTIFICATIONS:
                     users_to_send.append(user)
             fcm_devices = GCMDevice.objects.filter(cloud_message_type="FCM", user__in=users_to_send)
             fcm_devices.send_message("", extra={"title": instance.title, "body": instance.body,
