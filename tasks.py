@@ -33,6 +33,9 @@ def sass(ctx, watch=False, theme='default', trace=False, dry_run=False, rocket=T
     """
     theme, root = set_theme(theme)
     root = f'{root}scss/'
+    print("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww")
+    print(theme)
+    print(root)
     os.environ['EJ_THEME'] = theme or 'default'
     go = runner(ctx, dry_run, pty=True)
     cmd = f'sass {root}main.scss:lib/build/css/main.css'
