@@ -2,8 +2,6 @@
  COLORS ROLES
  =========================================================================== */
 
-@import '../0_constants/index';
-
 // Background and text colors
 $color-content: #052B47 !default;
 $color-content-text: white !default;
@@ -50,6 +48,6 @@ $color-action-primary-text-hover: $color-accent-text !default;
 $color-action-secondary-text-hover: $color-hint-text !default;
 
 // Color roles
-$color-role-ok: $color-green-dark !default;
-$color-role-error: $color-red !default;
-$color-role-warning: $color-yellow !default;
+$color-role-ok: #30BEC0 !default;
+$color-role-error: #FF3D72 !default;
+$color-role-warning: #30BFD3 !default;

@@ -64,28 +64,6 @@ $color-palette-radius: 150px;
         @include color-style($color-action-secondary, $color-action-secondary-text);
     }
 
-    // Named
-    .color-white {
-        @include color-style-triple($color-gray, $color-black, white);
-    }
-    .color-gray {
-        @include color-style-triple($color-gray, $color-gray-dark, $color-gray-light);
-    }
-    .color-blue {
-        @include color-style-triple($color-primary, $color-content, $color-hint);
-    }
-    .color-green {
-        @include color-style-triple($color-green, $color-green-dark, $color-green-light);
-    }
-    .color-purple {
-        @include color-style-triple($color-purple, $color-content, $color-purple-light);
-    }
-    .color-red {
-        @include color-style-triple($color-red, $color-red-dark, $color-red-light);
-    }
-    .color-yellow {
-        @include color-style-triple($color-yellow, $color-yellow-dark, $color-yellow-light);
-    }
 }
 
 .ColorPalette {

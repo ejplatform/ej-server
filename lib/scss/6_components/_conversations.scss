@@ -4,9 +4,9 @@ CONVERSATIONS
 @import '../2_tools/index';
 
 $conversation-vote-circle-size: 18px !default;
-
 $conversation-toast-image-border: $spacing-unit-tiny / 3;
 $conversation-button-size: $spacing-unit-small + $spacing-unit-tiny !default;
+$icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
 
 .ConversationList {
     @extend .Container;
@@ -173,7 +173,7 @@ $conversation-button-size: $spacing-unit-small + $spacing-unit-tiny !default;
         text-transform: uppercase;
         display: block;
         font-weight: bold;
-        color: $color-gray;
+        color: $color-content;
         font-size: $font-size-tiny;
         margin: $spacing-unit / 2 0;
     }
@@ -243,7 +243,6 @@ $conversation-button-size: $spacing-unit-small + $spacing-unit-tiny !default;
         justify-content: center;
         padding: $spacing-unit-small;
         margin: $spacing-unit-tiny $spacing-unit;
-        font-weight: bold;
 
         li {
             list-style: none;
@@ -315,7 +314,7 @@ $conversation-button-size: $spacing-unit-small + $spacing-unit-tiny !default;
     }
     &-banner {
         background: $color-hint;
-        border-radius: 0px 0px $border-radius-large $border-radius-large;
+        border-radius: 0 0 $border-radius-large $border-radius-large;
         color: $color-content;
         margin: 0;
         padding: $spacing-unit-tiny $spacing-unit-tiny $spacing-unit $spacing-unit-tiny;
@@ -381,7 +380,7 @@ $conversation-button-size: $spacing-unit-small + $spacing-unit-tiny !default;
     &-statistics,
     &-statisticsBottom {
         display: flex;
-        font-size: $font-size-small;
+        font-size: $font-size-tiny;
         font-weight: normal;
         justify-content: space-between;
         margin: 0 auto;
@@ -817,7 +816,7 @@ $conversation-button-size: $spacing-unit-small + $spacing-unit-tiny !default;
     text-transform: uppercase;
     font-size: $spacing-unit / 2;
     font-weight: bold;
-    border-bottom: 1px solid $color-gray-lighter;
+    border-bottom: 1px solid $color-hint;
     margin: 0;
     padding: $spacing-unit-small 0;
     color: $color-accent;
@@ -833,7 +832,7 @@ $conversation-button-size: $spacing-unit-small + $spacing-unit-tiny !default;
     text-transform: uppercase;
     font-size: 14px;
     font-weight: bold;
-    border-bottom: 1px solid $color-gray-lighter;
+    border-bottom: 1px solid $color-hint;
     margin: 0;
     padding: $spacing-unit-small 0;
     color: $color-content;
@@ -943,10 +942,10 @@ $conversation-button-size: $spacing-unit-small + $spacing-unit-tiny !default;
                 font-family: 'Font Awesome\ 5 Free';
                 font-weight: 900;
                 display: inline-block;
-                color: $color-green-dark;
+                //color: $color-green-dark;
                 padding: 2px 4px;
                 font-size: 11px;
-                border: 2px solid $color-green-dark;
+                //border: 2px solid $color-green-dark;
                 border-radius: 50%;
             }
         }
@@ -1019,7 +1018,7 @@ $conversation-button-size: $spacing-unit-small + $spacing-unit-tiny !default;
             box-shadow: none;
             box-sizing: border-box;
             width: 90%;
-            background: $color-pink;
+            background: $color-accent;
         }
     }
 
@@ -1101,7 +1100,7 @@ $conversation-button-size: $spacing-unit-small + $spacing-unit-tiny !default;
 
             &.create-conversation-icon {
                 color: $color-accent;
-                border-color: $color-pink;
+                border-color: $color-accent;
             }
         }
     }

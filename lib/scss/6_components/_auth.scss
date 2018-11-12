@@ -4,7 +4,6 @@
 @import '../2_tools/index';
 
 $login-icon-size: 150px !default;
-$login-icon-color: $color-gray-light !default;
 $login-icon-border-width: 10px !default;
 $login-social-icons-size: $font-size-h1 !default;
 $login-title-color: $color-content;
@@ -48,7 +47,6 @@ $login-new-user-background-color: #052B47 !default;
     }
     &-icon {
         border-radius: 50%;
-        color: $login-icon-color;
         height: $login-icon-size;
         margin: $spacing-unit-large auto;
         width: $login-icon-size;

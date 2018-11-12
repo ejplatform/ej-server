@@ -29,12 +29,12 @@ $profile-label-clear-color: #30BFD3 !default;
         margin: $spacing-unit-large;
         padding: 0;
         text-transform: uppercase;
-        color: $color-gray-dark;
+        color: $color-content;
         opacity: 0.8;
         text-align: center;
         a {
             margin: $spacing-unit * 2 0;
-            color: $color-gray-dark;
+            color: $color-content;
             opacity: 0.8;
         }
     }

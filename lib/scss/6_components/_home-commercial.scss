@@ -31,7 +31,7 @@
         font-size: 32px;
 
         &:before {
-            background: -webkit-linear-gradient($color-accent, $color-green);
+            background: -webkit-linear-gradient($color-accent, $color-primary);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -209,7 +209,7 @@
     }
 
     &-community {
-        background: $color-gray-lighter;
+        background: $color-hint-faded;
 
         ul {
             li {

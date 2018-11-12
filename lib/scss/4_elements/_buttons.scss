@@ -4,7 +4,7 @@
 
 @import '../2_tools/index';
 
-$button-border-radius: $border-radius-large;
+$button-border-radius: $border-radius-large, !default;
 $button-hpadding: $spacing-unit-small + $spacing-unit-tiny !default;
 $button-vpadding: $spacing-unit-tiny + 2px !default;
 

@@ -4,7 +4,10 @@
 @import '../2_tools/index';
 
 $how-it-work-icon-size: 1.5 * $font-size-h1 !default;
-$how-it-work-icon-color: $color-gray-dark !default;
+$how-it-work-icon-color: $color-content !default;
+$home-how-it-works-card-icon-person: "\f1ae" !default;
+$home-how-it-works-card-icon-conversation: "\f086" !default;
+$home-background-image-url: url(/static/img/page-bg.svg) !default;
 
 .HomeBanner {
     @extend .CenteredContainer;
@@ -20,7 +23,6 @@ $how-it-work-icon-color: $color-gray-dark !default;
         }
     }
     h1 {
-        font-family: $font-headings;
         color: $color-content;
     }
 
@@ -75,7 +77,7 @@ $how-it-work-icon-color: $color-gray-dark !default;
     text-align: left;
     align-items: center;
     display: flex;
-    border-top: 1px solid rgba($color-black, 0.1);
+    border-top: 1px solid rgba($color-content, 0.1);
 
     h1 {
         font-size: $font-size-h3;
@@ -157,7 +159,7 @@ $how-it-work-icon-color: $color-gray-dark !default;
 }
 
 .StartPage {
-    background: $page-background-image;
+    background: $home-background-image-url center no-repeat;
     background-size: contain;
 
     .ConversationFooter {
