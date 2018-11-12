@@ -3,10 +3,11 @@ CONVERSATIONS
 ======================================================================== */
 @import '../2_tools/index';
 
-$conversation-vote-circle-size: 18px !default;
 $conversation-toast-image-border: $spacing-unit-tiny / 3;
 $conversation-button-size: $spacing-unit-small + $spacing-unit-tiny !default;
-$icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
+$conversation-card-font-size-small: 12px !default;
+$conversation-card-border-arrow-size: $spacing-unit;
+$profile-label-clear-color: #30BFD3 !default;
 
 .ConversationList {
     @extend .Container;
@@ -22,7 +23,7 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
 
         h1 {
             font-size: $font-size-h2;
-            color: $color-accent;;
+            color: $color-magenta;
         }
 
         .topic {
@@ -31,13 +32,13 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
     }
 
     &-urls {
-        font-size: $font-size-tiny;
+        font-size: $conversation-card-font-size-small;
         a, i {
-            color: $color-content;
+            color: $card-conversation-navigation-font-color;
         }
 
         i {
-            font-size: $font-size-tiny * 0.8;
+            font-size: $conversation-card-font-size-small * 0.8;
         }
         .public {
             float: left;
@@ -132,19 +133,19 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
 }
 
 .ConversationTags {
-    @include color($color-primary, $color-primary, $force: true);
+    @include color($color-blue-nav, $color-primary, $force: true);
     font-weight: bold;
     text-align: center;
     padding: $spacing-unit-small + $spacing-unit-tiny $spacing-unit-small $spacing-unit-small $spacing-unit-small;
-    background-color: $color-hint;
+    background-color: $conversation-top-background;
 }
 
 .ConversationCard {
-    background-color: $color-primary;
+    @include color($card-conversation-middle-background, $color-white, $force: true);
     align-self: stretch;
     box-sizing: border-box;
     border: 0;
-    border-radius: $border-radius-round;
+    border-radius: $card-conversation-border-radius;
     flex-grow: 1;
     margin: 0;
     margin-bottom: $spacing-unit;
@@ -155,6 +156,10 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
     overflow: hidden;
     position: relative;
     padding: 0;
+    .ConversationTags {
+        background-color: $card-conversation-top-background;
+        color: $card-conversation-top-font-color;
+    }
     h1 {
         font-size: $font-size-h4;
         font-family: $font-paragraph;
@@ -174,8 +179,8 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
         text-transform: uppercase;
         display: block;
         font-weight: bold;
-        color: $color-content;
-        font-size: $font-size-tiny;
+        color: $color-gray;
+        font-size: $conversation-card-font-size-small;
         margin: $spacing-unit / 2 0;
     }
 
@@ -195,13 +200,10 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
             flex-flow: column;
             margin: 0;
             vertical-align: middle;
-            a {
-                color: white;
-            }
         }
 
         dl {
-            font-size: $font-size-tiny;
+            font-size: $conversation-card-font-size-small;
             margin: $spacing-unit-tiny 0;
 
             dt {
@@ -217,7 +219,7 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
     &-cover + .ConversationCard-actions {
         padding: 0 $spacing-unit-small $spacing-unit-small $spacing-unit-small;
         background-size: 30px;
-        background: $color-primary;
+        background: $card-conversation-bottom-background;
         margin-top: $spacing-unit;
         bottom: 0;
         position: absolute;
@@ -228,7 +230,7 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
     &-actions {
         .Button[primary] {
             padding: $spacing-unit-small + $spacing-unit-tiny;
-            background: $color-content;
+            background: $card-conversation-button-background;
             font-size: $font-size-small;
             padding-top: $font-size-small;
             padding-bottom: $font-size-small;
@@ -239,11 +241,12 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
     }
 
     &-statistics {
-        color: $color-hint;
+        color: $color-blue-nav;
         display: flex;
         justify-content: center;
         padding: $spacing-unit-small;
         margin: $spacing-unit-tiny $spacing-unit;
+        font-weight: bold;
 
         li {
             list-style: none;
@@ -287,7 +290,7 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
             display: inline-block;
             button {
                 i {
-                    color: $color-accent;;
+                    color: $color-magenta;
                 }
                 background-color: transparent;
                 background-repeat: no-repeat;
@@ -307,21 +310,21 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
             outline: none;
             font-weight: bold;
             i {
-                color: $color-accent;;
+                color: $color-magenta;
             }
             float: right;
         }
 
     }
     &-banner {
-        background: $color-hint;
-        border-radius: 0 0 $border-radius-large $border-radius-large;
-        color: $color-content;
+        background: $conversation-background;
+        border-radius: $conversation-bottom-border-radius;
+        color: $color-purple-dark;
         margin: 0;
         padding: $spacing-unit-tiny $spacing-unit-tiny $spacing-unit $spacing-unit-tiny;
         .ConversationTags {
-            background-color: $color-hint;
-            color: $color-accent;
+            background-color: $conversation-top-background;
+            color: $conversation-tag-color;
         }
 
         h1 {
@@ -333,18 +336,18 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
             font-weight: 200 !important;
             font-size: $spacing-unit !important;
             font-family: $font-paragraph;
-            color: $color-content;
 
             @media only screen and (min-width: $breakpoint-large) {
                 padding: $spacing-unit-large 0;
             }
+            color: $conversation-font-color;
         }
 
         .Conversation-edit {
             text-align: center;
 
             a, b {
-                color: $color-content;
+                color: $color-purple-dark;
                 background: transparent;
                 font-weight: bold;
                 text-transform: uppercase;
@@ -352,12 +355,12 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
 
                 &:hover {
                     background: transparent;
-                    color: $color-content;
+                    color: $color-purple-dark;
                 }
 
                 &:before {
                     content: "\f044 ";
-                    font-family: $font-awesome;
+                    font-family: 'Font Awesome\ 5 Free';
                     display: inline-block;
                     font-size: $spacing-unit / 2;
                     margin-right: 3px;
@@ -368,9 +371,9 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
     }
 
     &-arrow {
-        border-left: $spacing-unit solid transparent;
-        border-right: $spacing-unit solid transparent;
-        border-top: $border-radius solid $color-hint;
+        border-left: $conversation-card-border-arrow-size solid transparent;
+        border-right: $conversation-card-border-arrow-size solid transparent;
+        border-top: $conversation-arrow-border;
         height: 0;
         margin: 0 auto;
         padding: 0;
@@ -381,13 +384,13 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
     &-statistics,
     &-statisticsBottom {
         display: flex;
-        font-size: $font-size-tiny;
+        font-size: $font-size-small;
         font-weight: normal;
         justify-content: space-between;
         margin: 0 auto;
         max-width: $content-wrapper-max-width - 2 * $spacing-unit-huge;
         padding: 0 $spacing-unit-small;
-        color: $color-accent;
+        color: $conversation-statistics-color;
 
         li {
             list-style: none;
@@ -395,7 +398,7 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
     }
 
     &-statisticsBottom {
-        bottom: ($spacing-unit - $spacing-unit-tiny);
+        bottom: ($conversation-card-border-arrow-size - $spacing-unit-tiny);
         font-weight: normal;
         padding: 0 ($spacing-unit + $spacing-unit-small);
         position: relative;
@@ -409,7 +412,7 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
         :last-child {
             text-align: right;
             a {
-                color: $color-content;
+                color: $color-content-text;
             }
         }
     }
@@ -423,11 +426,11 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
             font-size: $spacing-unit !important;
             letter-spacing: 1px;
             font-weight: 300 !important;
-            color: $color-accent;
+            color: $conversation-info-title;
         }
         p {
             margin-top: $spacing-unit-tiny;
-            color: $color-content;
+            color: $conversation-info-content;
         }
     }
 
@@ -437,7 +440,7 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
     position: relative;
     justify-content: center;
     button {
-        color: $color-accent;
+        color: $conversation-create-comment-color;
         background: transparent no-repeat;
         border: none;
         cursor: pointer;
@@ -463,15 +466,15 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
         margin: auto;
         position: absolute;
         box-sizing: border-box;
-        border-radius: $border-radius-large;
+        border-radius: $conversation-comment-border-radius;
         font-size: $font-size-h3;
         max-width: $page-content-width-max;
         min-height: 300px !important;
         width: 100% !important;
         z-index: 3;
         padding: ($spacing-unit-large - $spacing-unit-tiny) ($spacing-unit-large - $spacing-unit-small);
-        background-color: $color-primary;
-        color: $color-content;
+        background-color: $conversation-comment-background-color;
+        color: $conversation-comment-title-color;
 
         &-counter {
             text-align: center;
@@ -511,7 +514,7 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
                 width: 100%;
 
                 span {
-                    font-size: $font-size-small;
+                    font-size: $conversation-vote-font-size;
                 }
 
                 li {
@@ -523,45 +526,46 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
                         background: #fff;
                         height: $conversation-vote-circle-size;
                         width: $conversation-vote-circle-size;
-                        padding: $spacing-padding;
+                        padding: $conversation-vote-circle-spacing;
                         cursor: pointer;
-                        border: none;
                     }
                     &.voteAgree {
                         width: ($spacing-unit + $spacing-unit-tiny);
                         &:active {
-                            color: $color-content;
+                            color: $conversation-vote-agree-color;;
                         }
                         i.fa {
-                            color: $color-content;
+                            color: $conversation-vote-agree-color;
                             &:hover {
-                                background: $color-content;
+                                background: $conversation-vote-agree-color;
                                 color: #fff;
                             }
                         }
+
                     }
                     &.voteSkip {
                         width: ($spacing-unit + $spacing-unit-tiny);
                         &:active {
-                            color: $color-primary;
+                            color: $conversation-vote-skip-color;;
                         }
                         i.fa {
-                            color: $color-primary;
+                            color: $conversation-vote-skip-color;
                             &:hover {
-                                background: $color-primary;
+                                background: $conversation-vote-skip-color;
                                 color: #fff;
                             }
                         }
+
                     }
                     &.voteDisagree {
                         width: ($spacing-unit + $spacing-unit-tiny);
                         &:active {
-                            color: $color-accent;
+                            color: $conversation-vote-disagree-color;;
                         }
                         i.fa {
-                            color: $color-accent;
+                            color: $conversation-vote-disagree-color;
                             &:hover {
-                                background: $color-accent;
+                                background: $conversation-vote-disagree-color;
                                 color: #fff;
                             }
                         }
@@ -603,15 +607,16 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
         width: 100% !important;
         box-sizing: border-box;
         text-align: center;
-        background: $color-primary;
-        border-radius: $border-radius-large;
+        background: $conversation-comment-form-background-color;
+        border-radius: $conversation-comment-border-radius;
         padding: ($spacing-unit-large - $spacing-unit-tiny) ($spacing-unit-large - $spacing-unit-small);
         z-index: 5;
 
         h1 {
             font-size: $font-size-h3;
             margin: $spacing-unit-tiny 0;
-            color: $color-primary;
+            // color: $color-primary !important;
+            color: $conversation-comment-form-title-color;
         }
         p {
             margin: $spacing-unit-tiny 0;
@@ -635,9 +640,9 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
 
         &-fakeButton,
         input[type=submit] {
-            border-radius: $border-radius;
+            border-radius: $conversation-comment-button-border-radius;
             color: #fff;
-            background: $color-primary;
+            background: $conversation-comment-button-background;
             border: 0;
             padding: $spacing-unit-small $spacing-unit;
             font-size: $spacing-unit / 2;
@@ -667,20 +672,6 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
         visibility: visible;
         -webkit-animation: fadeOutDown 500ms ease-in-out;
         animation: fadeOutDown 500ms ease-in-out;
-
-    }
-    &-fakeButton,
-    input[type=submit] {
-        border-radius: $border-radius;
-        color: #fff;
-        background: $color-accent;
-        border: 0;
-        padding: $spacing-unit-small $spacing-unit;
-        font-size: $spacing-unit / 2;
-        box-shadow: none;
-        text-transform: uppercase;
-        font-weight: bold;
-        margin-top: $spacing-unit-small;
     }
     @-webkit-keyframes fadeOutDown {
         0% {
@@ -713,7 +704,7 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
                 padding: 0 0 $spacing-unit-tiny 0;
                 margin: 0;
                 font-size: $font-size-small;
-                color: $color-content;
+                color: $toast-font-color;
             }
             h3{
                 padding: $spacing-unit-tiny 0 0 0;
@@ -728,7 +719,7 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
                     max-width: $spacing-unit;
                     margin: $spacing-padding $spacing-unit-small auto 0;
                     background-color: #fff;
-                    border: ($border-radius-tiny * 4) / 3 solid $color-primary;
+                    border: ($conversation-toast-image-border * 4) / 3 solid $color-primary;
                     border-radius: $spacing-unit-large;
                     padding: $spacing-unit-tiny;
                 }
@@ -737,7 +728,7 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
                     //margin-right: $spacing-unit-small;
                     margin: auto $spacing-unit-small auto 0;
                     background-color: #fff;
-                    border: $border-radius-tiny solid $color-primary;
+                    border: $conversation-toast-image-border solid $color-primary;
                     border-radius: $spacing-unit-large;
                     padding: $spacing-unit-tiny;
             }
@@ -817,12 +808,12 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
     text-transform: uppercase;
     font-size: $spacing-unit / 2;
     font-weight: bold;
-    border-bottom: 1px solid $color-hint;
+    border-bottom: 1px solid $color-gray-lighter;
     margin: 0;
     padding: $spacing-unit-small 0;
-    color: $color-accent;
+    color: $conversation-link-new-color;
     i {
-        color: $color-accent;
+        color: $conversation-link-new-icon-color;
     }
 }
 
@@ -833,12 +824,12 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
     text-transform: uppercase;
     font-size: 14px;
     font-weight: bold;
-    border-bottom: 1px solid $color-hint;
+    border-bottom: 1px solid $color-gray-lighter;
     margin: 0;
     padding: $spacing-unit-small 0;
-    color: $color-content;
+    color: $conversation-link-edit-color;
     i {
-        color: $color-content;
+        color: $conversation-link-edit-icon-color;
     }
 }
 
@@ -866,12 +857,12 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
 .Moderate {
     .ConversationDetail-banner h1 {
         font-family: "Raleway", sans-serif;
-        color: $color-content;
+        color: $color-purple-dark;
     }
 
     &-comments-tabs {
         padding: 0;
-        background: $color-hint;
+        background: $color-blue-nav;
         display: flex;
         flex-wrap: wrap;
 
@@ -884,7 +875,7 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
             text-align: center;
 
             a {
-                color: $color-primary;
+                color: $profile-label-clear-color;
                 opacity: 0.5;
                 border-bottom: 2px solid transparent;
                 padding: 5px 0;
@@ -892,7 +883,7 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
 
                 &.active {
                     opacity: 1;
-                    border-bottom: 2px solid $color-primary;
+                    border-bottom: 2px solid $profile-label-clear-color;
                 }
             }
         }
@@ -901,17 +892,17 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
     &-comments {
         h1 {
             text-align: center;
-            color: $color-accent;;
+            color: $color-magenta;
         }
 
         .Comment {
             background: #fff;
-            color: $color-content;
+            color: $color-purple-dark;
             font-family: "Raleway", sans-serif;
             font-size: $spacing-unit / 2;
             border: 0;
             border-radius: 0;
-            border-bottom: 1px solid $color-hint;
+            border-bottom: 1px solid $color-blue-light;
             min-height: 0 !important;
             padding: $unit;
 
@@ -922,7 +913,7 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
             }
 
             &-metadata {
-                color: $color-hint;
+                color: $color-blue-light;
                 font-size: $spacing-unit / 2;
                 display: flex;
                 justify-content: space-between;
@@ -943,10 +934,10 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
                 font-family: 'Font Awesome\ 5 Free';
                 font-weight: 900;
                 display: inline-block;
-                //color: $color-green-dark;
+                color: $color-green-dark;
                 padding: 2px 4px;
                 font-size: 11px;
-                //border: 2px solid $color-green-dark;
+                border: 2px solid $color-green-dark;
                 border-radius: 50%;
             }
         }
@@ -968,7 +959,7 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
             background: #fff;
             font-weight: bold;
             font-size: $spacing-unit / 2;
-            color: $color-content;
+            color: $color-purple-dark;
             box-shadow: none;
             padding-left: 0;
             outline: 0;
@@ -998,9 +989,9 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
     }
 
     .Comment-rejection {
-        background: $color-hint;
-        border-top: 1px solid $color-hint;
-        border-bottom: 1px solid $color-hint;
+        background: $color-blue-nav;
+        border-top: 1px solid $color-blue-light;
+        border-bottom: 1px solid $color-blue-light;
         text-align: center;
 
         p {
@@ -1012,14 +1003,14 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
             outline: 0;
             border-style: solid;
             box-shadow: inset 0 0 0 0 black;
-            border-color: $color-hint;
+            border-color: $color-blue-light;
         }
 
         .Button {
             box-shadow: none;
             box-sizing: border-box;
             width: 90%;
-            background: $color-accent;
+            background: $color-pink;
         }
     }
 
@@ -1030,14 +1021,14 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
         background-color: rgba(255, 255, 255, 0.5);
         border: 0;
         font-family: "Raleway", sans-serif;
-        color: $color-content;
+        color: $color-purple-dark;
         padding: $unit + 5;
         text-align: center;
         font-weight: 200 !important;
         font-size: $spacing-unit !important;
         box-shadow: none;
-        border: 1px solid $color-hint;
-        border-radius: $border-radius-small;
+        border: 1px solid $color-blue-light;
+        border-radius: $conversation-edit-radius;
         resize: none;
         overflow: hidden;
         min-height: 50px;
@@ -1046,7 +1037,7 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
         width: 100%;
 
         &::placeholder {
-            color: $color-content;
+            color: $color-purple-dark;
             opacity: 1;
         }
 
@@ -1065,14 +1056,14 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
 
             i {
                 border-radius: 50%;
-                border: $border-radius-tiny solid $color-content ;
+                border: $conversation-edit-action-cancel-border;
                 display: inline-block;
                 width: 16px;
                 height: 16px;
                 padding: 4px 2px 0 2px;
                 font-size: 11px;
-                color: $color-content;
-                background: $color-background;
+                color: $conversation-edit-action-cancel-font-color;
+                background: $conversation-edit-action-cancel-background;
             }
         }
 
@@ -1083,7 +1074,7 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
             box-shadow: none;
             font-family: "Raleway", sans-serif;
             font-size: $spacing-unit / 2;
-            color: $color-content;
+            color: $color-purple-dark;
             text-transform: uppercase;
             font-weight: bold;
             cursor: pointer;
@@ -1095,13 +1086,13 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
         }
 
         span + span i {
-            color: $color-content;
-            border-color: $color-content;
-            background: $color-background;
+            color: $conversation-edit-action-save-font-color;
+            border-color: $conversation-edit-action-save-border;
+            background: $conversation-edit-action-save-background;
 
             &.create-conversation-icon {
-                color: $color-accent;
-                border-color: $color-accent;
+                color: $conversation-edit-save-color;
+                border-color: $color-pink;
             }
         }
     }
@@ -1114,30 +1105,30 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
     i {
         padding: 0 $unit * 2;
         align-self: center;
-        color: $color-accent;
+        color: $conversation-tag-color;
     }
 
     input, select {
-        border: 1px solid $color-hint;
-        border-radius: $border-radius-small;
+        border: 1px solid $color-blue-light;
+        border-radius: $conversation-edit-radius;
         background-color: rgba(255, 255, 255, 0.5);
         box-shadow: none;
         outline: 0;
         padding-top: 8px;
         font-size: $spacing-unit / 2;
-        color: $color-content;
+        color: $color-purple-dark;
         flex-grow: 1;
         margin-right: $unit;
         max-width: none;
 
         &::placeholder {
-            color: $color-content;
+            color: $color-purple-dark;
             opacity: 1;
         }
     }
 
     input + i, select + i {
-        color: $color-content;
+        color: $color-purple-dark;
         font-weight: lighter;
         display: none;
     }
@@ -1147,12 +1138,12 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
     padding: $unit;
 
     i {
-        color: $color-accent;
+        color: $conversation-tag-color;
         margin-right: $unit;
     }
 
     span {
-        color: $color-content;
+        color: $color-purple-dark;
         opacity: 0.5;
         font-size: $spacing-unit / 2;
     }
@@ -1168,12 +1159,12 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
     input {
         width: auto;
         box-shadow: none;
-        border: 1px solid $color-content;
+        border: 1px solid $color-purple-dark;
         background: white;
     }
 
     label {
-        color: $color-content;
+        color: $color-purple-dark;
         font-size: $spacing-unit / 2;
         font-weight: bold;
         display: inline;

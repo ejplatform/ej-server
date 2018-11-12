@@ -1,0 +1,13 @@
+/*
+ CONFIG
+ =============================================================================*/
+
+$config: ( env: dev, debug: true, );
+
+// Project-level configuration, feature switches, etc.
+//
+// Example usage:  @if (config(debug) == true) { ... }
+@function config($key) {
+    @return map-get($config, $key);
+}
+

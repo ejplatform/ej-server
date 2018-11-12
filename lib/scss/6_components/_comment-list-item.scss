@@ -44,10 +44,10 @@
         font-weight: normal;
     }
     &-status-approved {
-        color: $color-role-ok;
+        color: $color-green-dark;
     }
     &-status-rejected {
-        color: $color-role-error;
+        color: $color-red-dark;
     }
     &-status-pending {
         color: $color-primary;

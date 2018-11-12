@@ -28,7 +28,7 @@
         } @else if ($which == 'emph') {
             @include __color-aux($color-emph, $color-emph-text, $force);
         } @else if ($which == 'content') {
-            @include __color-aux($color-content-text, $color-content, $force);
+            @include __color-aux($color-content, $color-content-text, $force);
         } @else {
             @error "invalid color mixin";
         }

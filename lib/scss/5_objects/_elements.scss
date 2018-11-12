@@ -30,13 +30,13 @@
     }
 
     > thead {
-        background: $color-content;
-        color: $color-content-text;
+        background: $color-content-text;
+        color: $color-content;
     }
 
     > tbody {
         tr:nth-child(odd) {
-            background: $color-hint;
+            background: $color-gray-light;
         }
     }
 }

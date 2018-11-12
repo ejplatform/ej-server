@@ -5,11 +5,6 @@
 
 $page-title-font-size: 1.1 * $font-size-h1 !default;
 
-// Background images
-$card-background-image-url: url(/static/img/icons/bg.png) !default;
-$page-background-image-url: url(/static/img/page-bg.svg) !default;
-
-
 .Page {
     box-sizing: border-box;
     display: flex;
@@ -49,7 +44,7 @@ $page-background-image-url: url(/static/img/page-bg.svg) !default;
     }
 
     &-mainContainer {
-        background: $page-background-image-url center no-repeat;
+        background: $page-background-image;
         background-size: contain;
         box-sizing: border-box;
         height: 100vh;

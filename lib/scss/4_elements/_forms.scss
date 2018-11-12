@@ -2,12 +2,11 @@
  UNSTYLED FORM ELEMENTS
  ======================================================================== */
 @import '../2_tools/index';
-@import 'buttons';
 
+$form-element-color: $color-white !default;
+$form-element-color-text: $color-hint-text !default;
 $form-input-border-box: inset 0 1px 3px 0 rgba(0, 0, 0, 0.3);
 $form-border-color: $color-primary !default;
-$icon-arrow-down-blue: url(/static/img/icons/arrow-down-blue.svg) !default;
-$icon-arrow-up-blue: url(/static/img/icons/arrow-up-blue.svg) !default;
 
 input[type=email],
 input[type=number],
@@ -22,7 +21,7 @@ label,
 select,
 .FormItem {
     box-sizing: border-box;
-    font-size: $font-size-default;
+    font-size: 16px;
     max-width: $breakpoint-small;
     width: 85%;
 }
@@ -38,10 +37,10 @@ input:not([type]),
 textarea,
 select,
 .FormItem {
-    border-radius: $button-border-radius;
-    background: $color-background;
-    border: 1px solid $color-primary;
-    color: $color-content;
+    border-radius: $form-item-border-radius;
+    background: $form-element-color;
+    border: 1px solid $form-border-color;
+    color: $form-element-color-text;
     margin: $spacing-unit-tiny auto;
     padding: $spacing-unit-small ($spacing-unit-small $spacing-unit-small);
 }
@@ -49,7 +48,7 @@ select,
 input[type=checkbox] {
     -webkit-appearance: none;
     background-color: #fafafa;
-    border: 1px solid $color-primary;
+    border: 1px solid $form-border-color;
     box-shadow: $form-input-border-box;
     padding: $spacing-unit-tiny + 1;
     border-radius: 3px;
@@ -57,15 +56,15 @@ input[type=checkbox] {
     position: relative;
 
     &:active, &:checked:active {
-        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0 1px 3px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px 1px 3px rgba(0, 0, 0, 0.1);
     }
 
     &:checked:after {
         content: '\f111';
-        font-family: $font-awesome;
+        font-family: 'Font Awesome\ 5 Free';
         font-size: $spacing-unit-tiny + 1;
         font-weight: 900;
-        color: $color-accent;
+        color: $check-box-color;
         position: absolute;
         top: calc(50% - 4px);
         left: calc(50% - 4px);
@@ -77,14 +76,14 @@ textarea {
 }
 
 label {
-    color: $color-content;
+    color: $color-content-text;
     font-weight: bold;
     font-size: $font-size-h5;
     margin: 0 auto;
 }
 
 input[type=submit] {
-    background: $color-action-primary;
+    background: $color-accent;
     width: inherit;
 }
 

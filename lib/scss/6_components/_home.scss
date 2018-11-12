@@ -1,13 +1,12 @@
 /*
  HOME PAGE
  ======================================================================== */
+
 @import '../2_tools/index';
 
+
 $how-it-work-icon-size: 1.5 * $font-size-h1 !default;
-$how-it-work-icon-color: $color-content !default;
-$home-how-it-works-card-icon-person: "\f1ae" !default;
-$home-how-it-works-card-icon-conversation: "\f086" !default;
-$home-background-image-url: url(/static/img/page-bg.svg) !default;
+$how-it-work-icon-color: $color-gray-dark !default;
 
 .HomeBanner {
     @extend .CenteredContainer;
@@ -23,17 +22,19 @@ $home-background-image-url: url(/static/img/page-bg.svg) !default;
         }
     }
     h1 {
-        color: $color-content;
+        font-family: var( --home-banner-title-font-family);
+        color: $home-banner-title-font-color;
     }
 
     .Button[primary] {
-        @include color($color-accent, $color-accent-text);
-        padding: $unit $unit * 2;
+        background: $home-banner-button-background;
+        color: $color-white;
+        padding: $unit $unit*2;
     }
 }
 
 .HowItWorks {
-    background: $color-hint;
+    background: $home-how-it-works-background;
     padding-top: $spacing-unit;
 
     > * {
@@ -44,12 +45,12 @@ $home-background-image-url: url(/static/img/page-bg.svg) !default;
         font-size: $font-size-h4;
     }
     h1 {
-        color: $color-content;
+        color: $home-how-it-works-title-font-color;
     }
     p {
         padding: 0 10px;
         line-height: 30px;
-        color: $color-content;
+        color: $color-content-text;
     }
 
     .fa-child:before {
@@ -65,23 +66,23 @@ $home-background-image-url: url(/static/img/page-bg.svg) !default;
 .HowItWorksCard {
     > .fa {
 
-        background: $color-hint;
+        background: $home-how-it-works-card-icon-background;
         border-radius: 50%;
         width: $unit * 7;
         height: $unit * 7;
         display: inline-block;
-        color: $color-content;
+        color: $color-blue-dark;
         padding-top: $unit * 2;
         margin: $unit * 2;
     }
     text-align: left;
     align-items: center;
     display: flex;
-    border-top: 1px solid rgba($color-content, 0.1);
+    border-top: 1px solid rgba($color-black, 0.1);
 
     h1 {
         font-size: $font-size-h3;
-        color: $color-content;
+        color: $home-how-it-works-card-title-font-color;
 
         i {
             padding: $spacing-unit-small;
@@ -99,7 +100,7 @@ $home-background-image-url: url(/static/img/page-bg.svg) !default;
     }
 
     p {
-        color: $color-content;
+        color: $home-how-it-works-card-content-font-color;
     }
 
     &-content {
@@ -146,7 +147,8 @@ $home-background-image-url: url(/static/img/page-bg.svg) !default;
     background: $color-hint;
     padding: $spacing-unit;
     text-align: center;
-    display: block;
+    display: $home-start-now-display;
+
 
     > * {
         @extend .Container;
@@ -159,7 +161,7 @@ $home-background-image-url: url(/static/img/page-bg.svg) !default;
 }
 
 .StartPage {
-    background: $home-background-image-url center no-repeat;
+    background: $page-background-image;
     background-size: contain;
 
     .ConversationFooter {

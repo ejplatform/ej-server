@@ -4,23 +4,21 @@
 
 @import '../2_tools/index';
 @import 'auth';
-
 $profile-image-size: 2 * $login-icon-size !default;
 $profile-arrow-size: $spacing-unit-small !default;
 $profile-label-clear-color: #30BFD3 !default;
-
 .Profile {
     @extend .Container;
     text-align: center;
     padding-top: $spacing-unit;
     h1 {
         margin-bottom: 0;
-        color: $color-content;
+        color: $color-purple-dark;
         font-size: $font-size-h1;
         font-weight: bold;
     }
     h2 {
-        color: $color-hint;
+        color: $color-blue-light;
         font-size: $font-size-h4;
         font-weight: bold;
         margin-top: 0;
@@ -29,12 +27,12 @@ $profile-label-clear-color: #30BFD3 !default;
         margin: $spacing-unit-large;
         padding: 0;
         text-transform: uppercase;
-        color: $color-content;
+        color: $color-gray-dark;
         opacity: 0.8;
         text-align: center;
         a {
             margin: $spacing-unit * 2 0;
-            color: $color-content;
+            color: $color-gray-dark;
             opacity: 0.8;
         }
     }
@@ -50,14 +48,14 @@ $profile-label-clear-color: #30BFD3 !default;
             text-align: justify;
             font-weight: normal;
             span {
-                color: $color-accent;;
+                color: $color-magenta;
                 font-weight: bold;
             }
             i {
                 float: right;
                 font-weight: bold;
                 font-size: $font-size-huge;
-                color: $color-accent;;
+                color: $color-magenta;
             }
         }
         .conversations {
@@ -76,14 +74,14 @@ $profile-label-clear-color: #30BFD3 !default;
             text-align: justify;
             font-weight: normal;
             span {
-                color: $color-accent;;
+                color: $color-magenta;
                 font-weight: bold;
             }
             i {
                 float: right;
                 font-weight: bold;
                 font-size: $font-size-huge;
-                color: $color-accent;;
+                color: $color-magenta;
             }
         }
         ul {
@@ -97,7 +95,7 @@ $profile-label-clear-color: #30BFD3 !default;
                         clear: both;
                         display: table;
                     }
-                    color: $color-hint;
+                    color: $color-blue-light;
                     .label {
                         float: left;
                     }
@@ -116,10 +114,10 @@ $profile-label-clear-color: #30BFD3 !default;
                     li {
                         &.agree {}
                         &.skip {
-                            color: $color-hint;
+                            color: $color-blue-light;
                         }
                         &.disagree {
-                            color: $color-accent;;
+                            color: $color-magenta;
                         }
                         span {
                             margin-left: 0.5em;
@@ -131,12 +129,12 @@ $profile-label-clear-color: #30BFD3 !default;
                 .footer {
                     margin-top: $spacing-unit-small;
                     margin-bottom: $spacing-unit-small;
-                    color: $color-accent;;
+                    color: $color-magenta;
                     font-weight: bold;
                 }
                 padding: 0;
                 margin: 0;
-                border-bottom: 2px solid $color-hint;
+                border-bottom: 2px solid $color-blue-light;
                 list-style: none;
             }
         }
@@ -146,7 +144,7 @@ $profile-label-clear-color: #30BFD3 !default;
         height: 0;
         border-left: $profile-arrow-size solid transparent;
         border-right: $profile-arrow-size solid transparent;
-        border-bottom: $profile-arrow-size solid $color-hint;
+        border-bottom: $profile-arrow-size solid $color-blue-nav;
     }
     &-breadcrumbs {
         text-align: left;
@@ -189,7 +187,7 @@ $profile-label-clear-color: #30BFD3 !default;
             margin: 0 $spacing-unit;
         }
         a {
-            color: $color-content;
+            color: $color-purple-dark;
             margin: 0;
             display: inline-block;
             min-width: $spacing-unit * 2;
@@ -206,7 +204,7 @@ $profile-label-clear-color: #30BFD3 !default;
     }
     &-tabContainer {}
     &-tabContent {
-        background: $color-hint;
+        background: $profile-background-color;
         text-align: left;
         border-radius: 0.7em;
     }
@@ -218,7 +216,7 @@ $profile-label-clear-color: #30BFD3 !default;
             text-align: center;
             .Button {
                 text-transform: uppercase;
-                background-color: $color-accent;
+                background-color: $profile-button-background-color;
                 padding: 15px 25px 15px 25px;
             }
         }
@@ -232,7 +230,7 @@ $profile-label-clear-color: #30BFD3 !default;
             padding: 0;
             li {
                 span {
-                    color: $color-primary;
+                    color: $profile-font-color-primary;
                     font-weight: 600;
                     &.amount {
                         font-weight: 800;
@@ -262,11 +260,11 @@ $profile-label-clear-color: #30BFD3 !default;
             padding: 0;
             .Button {
                 padding: 15px 25px 15px 25px;
-                background: $color-accent;
+                background: $profile-button-background-color;
             }
             li {
                 span {
-                    color: $color-primary;
+                    color: $profile-font-color-primary;
                     font-weight: 600;
                     display: block;
                     margin-top: $spacing-unit-small;
@@ -286,14 +284,14 @@ $profile-label-clear-color: #30BFD3 !default;
         }
         dl {
             dt {
-                color: $color-primary;
+                color: $profile-font-color-primary;
                 text-transform: lowercase;
                 font-weight: bold;
             }
             dd {
                 font-size: $font-size-h5;
                 margin: 0 0 $spacing-unit-small 0;
-                color: $color-content;
+                color: $profile-font-color-secondary;
             }
         }
     }
@@ -345,7 +343,7 @@ $profile-label-clear-color: #30BFD3 !default;
                 min-width: fit-content;
                 border-bottom-left-radius: inherit;
                 border-top-left-radius: inherit;
-                background-color: $color-hint;
+                background-color: $profile-file-input-color;
             }
             &:nth-child(2) {
                 width: -webkit-fill-available;

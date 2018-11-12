@@ -4,6 +4,7 @@
 
 .ActionButton {
     @extend .Button;
+    @extend .Button--primary;
 }
 
 .RocketButton {

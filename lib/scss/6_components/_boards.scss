@@ -11,7 +11,7 @@ $board-top-menu-border: 1px #DDDDDD solid;
 .BoardForm {
     label {
         font-size: $font-size-small;
-        color: $color-accent;
+        color: $board-label-color;
         margin-left: $spacing-unit-small;
     }
 
@@ -23,16 +23,16 @@ $board-top-menu-border: 1px #DDDDDD solid;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-        border-bottom: $board-top-menu-border;
+        border-bottom: $board-top-menu-border;    
         img {
             width: $spacing-unit-small;
-        }
+        } 
         button {
             margin: $spacing-unit-small $spacing-unit-small $spacing-unit-tiny $spacing-unit-small;
             text-transform: uppercase;
             background-color: transparent;
             border: none;
-            color: $color-content;
+            color: $board-menu-font-color;
             font-size: $font-size-small;
             &:hover {
                 cursor: pointer;
@@ -41,7 +41,7 @@ $board-top-menu-border: 1px #DDDDDD solid;
     }
 
     &-Title {
-        color: $color-content;
+        color: $board-title-color;
     }
 }
 
@@ -50,7 +50,7 @@ $board-top-menu-border: 1px #DDDDDD solid;
     &-title {
         h1 {
             font-size: $font-size-h2;
-            color: $color-accent;;
+            color: $color-magenta;
         }
     }
 

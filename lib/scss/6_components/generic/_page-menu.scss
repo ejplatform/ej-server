@@ -11,7 +11,7 @@ $nav-menu-border: 1px solid $nav-menu-border-color !default;
 // Layout
 $nav-menu-font-size: $font-size-default !default;
 $nav-menu-opacity: 1.0 !default;
-$nav-menu-shadow: 2px 0 4px 0 rgba(18, 48, 102, 0.08)  !default;
+$nav-menu-shadow: $box-shadow !default;
 $nav-menu-width: 75vw !default;
 $nav-menu-max-width: 400px !default;
 $nav-menu-ul-padding: 0 !default;
@@ -67,7 +67,7 @@ $nav-menu-ul-padding: 0 !default;
             margin-right: -3px;
             margin-bottom: 3px;
         }
-
+        
         i + i{
             font-size: $font-size-tiny;
         }
@@ -86,7 +86,7 @@ $nav-menu-ul-padding: 0 !default;
     }
 
     ul {
-        padding: $nav-menu-ul-padding;
+        padding: $nav-menu-ul-padding; 
     }
 
     &-DropDown {
@@ -110,5 +110,5 @@ $nav-menu-ul-padding: 0 !default;
             margin-left: $spacing-unit;
         }
     }
-
+    
 }
