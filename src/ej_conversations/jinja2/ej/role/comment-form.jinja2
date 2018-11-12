@@ -28,7 +28,7 @@
     <h1>{% trans %}Leave your comment{% endtrans %}</h1>
         <p>{{ _('You still have {n} available comments').format(n=comments_left) }}</p>
         {{ comment_form(csrf_input, comment_content) }}
-    {% elif comments_left == 0 %}
+    {% elif can_comment and comments_left == 0 %}
         <div class="CommentForm-toast">
             <h3>{% trans %}Ooops!{% endtrans %}</h3>
             <p>{% trans %}You reached the limit of comments in this conversation.{% endtrans %}</p>
