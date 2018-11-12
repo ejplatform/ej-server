@@ -29,11 +29,12 @@ def index(request, conversation):
     user = request.user
     can_download_data = user.has_perm('ej.can_edit_conversation', conversation)
     clusterization = conversation.get_clusterization()
+    statistics = conversation.statistics()
     clusterization.update()
     return {
         'clusters': clusterization.clusters.all(),
         'conversation': conversation,
-        'users': conversation.statistics()['participants'],
+        'users': statistics['participants']['voters'],
         'can_download_data': can_download_data,
         'can_see_participants': can_download_data,
     }

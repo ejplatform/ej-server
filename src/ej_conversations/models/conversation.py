@@ -213,13 +213,18 @@ class Conversation(TimeStampedModel):
             },
 
             # Participants count
-            'participants': (
-                get_user_model()
+            'participants': {
+                'voters': get_user_model()
                     .objects
                     .filter(votes__comment__conversation_id=self.id)
                     .distinct()
-                    .count()
-            ),
+                    .count(),
+                'commenters': get_user_model()
+                            .objects
+                            .filter(comments__conversation_id=self.id, comments__status=Comment.STATUS.approved)
+                            .distinct()
+                            .count(),
+            },
         }
 
     def user_statistics(self, user):
