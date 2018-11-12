@@ -4,7 +4,7 @@ from push_notifications.models import GCMDevice
 from django.db.models import Q
 from django.contrib.auth import get_user_model
 
-from ej_notifications.models import Message, Channel, NotificationConfig, Purpose
+from ej_notifications.models import Message, Channel, NotificationConfig, Purpose, NotificationOptions
 from ej_profiles.models import Profile
 
 User = get_user_model()
@@ -30,7 +30,7 @@ def send_admin_fcm_message(sender, instance, created, **kwargs):
         if channel.purpose == 'admin':
             for user in channel.users.all():
                 setting = NotificationConfig.objects.get(profile__user__id=user.id)
-                if (setting.admin_notifications):
+                if setting.notification_option == NotificationOptions.PUSH_NOTIFICATIONS:
                     users_to_send.append(user)
             fcm_devices = GCMDevice.objects.filter(cloud_message_type="FCM", user__in=users_to_send)
             fcm_devices.send_message("", extra={"title": instance.title, "body": instance.body,
