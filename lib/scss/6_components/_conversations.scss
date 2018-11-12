@@ -553,6 +553,14 @@ $modalities-content-width-max: ($page-content-width-max / 2) - 29 !default;
             padding: 0px $spacing-unit - $spacing-unit-tiny;
             max-width: 70%;
         }
+        .imgponte{
+            padding: 0px $spacing-unit - $spacing-unit-tiny;
+            max-width: 70%;
+        }
+        .imgopn{
+            padding: 0px $spacing-unit - $spacing-unit-tiny;
+            max-width: 70%;
+        }
         .Button{
             font-weight: bold;
             font-size: 11px;
@@ -589,6 +597,14 @@ $modalities-content-width-max: ($page-content-width-max / 2) - 29 !default;
             max-width: 16%;
         }
         .imgpart{
+            padding: 0px $spacing-unit - $spacing-unit-tiny;
+            max-width: 77%;
+        }
+        .imgponte{
+            padding: 0px $spacing-unit - $spacing-unit-tiny;
+            max-width: 77%;
+        }
+        .imgopn{
             padding: 0px $spacing-unit - $spacing-unit-tiny;
             max-width: 77%;
         }
