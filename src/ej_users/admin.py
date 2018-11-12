@@ -11,6 +11,7 @@ class UserAdmin(AuthUserAdmin):
     fieldsets = (
         (None, {'fields': ('email', 'name', 'password')}),
         (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser',
+                                       'limit_board_conversations',
                                        'groups', 'user_permissions')}),
         (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
     )

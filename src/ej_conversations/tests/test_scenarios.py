@@ -114,6 +114,7 @@ class TestStatistics(ConversationRecipes):
                 'total': 35,
             },
             'participants': {
+                'commenters': 1,
                 'voters': 8,
             },
         }

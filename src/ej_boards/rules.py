@@ -1,5 +1,5 @@
 from constance import config
-
+from django.conf import settings
 from boogie import rules
 from .models import Board
 
@@ -30,3 +30,12 @@ def can_add_board(user):
 @rules.register_perm('ej_boards.can_add_conversation')
 def can_add_conversation(user, board):
     return board.owner == user
+
+
+@rules.register_rule('ej_boards.conversation_limit')
+def conversation_limit(user):
+    user_limit = user.limit_board_conversations
+    if user_limit:
+        return user_limit
+    else:
+        return getattr(settings, 'EJ_BOARD_MAX_CONVERSATIONS', 50)

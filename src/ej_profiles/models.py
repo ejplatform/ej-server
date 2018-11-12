@@ -48,6 +48,7 @@ class Profile(models.Model):
     is_active = delegate_to('user')
     is_staff = delegate_to('user')
     is_superuser = delegate_to('user')
+    limit_board_conversations = delegate_to('user')
 
     @property
     def age(self):

@@ -36,6 +36,14 @@ class User(AbstractUser):
 
     objects = UserManager()
 
+    limit_board_conversations = models.IntegerField(
+        _('Limit users'),
+        null=True,
+        help_text=_(
+            'Limit number of conversations in user board '
+        ),
+    )
+
     @property
     def username(self):
         return self.email.replace('@', '__')
