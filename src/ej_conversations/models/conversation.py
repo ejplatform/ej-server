@@ -76,6 +76,15 @@ class Conversation(TimeStampedModel):
         ),
     )
 
+    limit_report_users = models.IntegerField(
+        _('Limit users'),
+        default=False,
+        help_text=_(
+            'Limit number of participants, making /reports/ route unavailable if limit is reached '
+            'except for super admin.'
+        ),
+    )
+
     objects = ConversationManager()
     tags = TaggableManager(through='ConversationTag')
     votes = property(lambda self: Vote.objects.filter(comment__conversation=self))
