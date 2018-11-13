@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-13 16:41+0000\n"
+"POT-Creation-Date: 2018-11-06 16:51+0000\n"
 "PO-Revision-Date: 2018-11-06 15:03-0200\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: \n"
@@ -1394,31 +1394,13 @@ msgstr "endereço de email"
 msgid "User token"
 msgstr "Token do usuário"
 
-#: src/ej_users/routes.py:69
+#: src/ej_users/routes.py:71
 msgid "Invalid email or password"
 msgstr "Email ou senha inválidos"
 
-#: src/ej_users/routes.py:150
+#: src/ej_users/routes.py:160
 msgid "Please reset your password"
 msgstr "Por favor reset sua senha"
-
-#: src/ej_users/routes.py:197
-#, fuzzy, python-brace-format
-msgid ""
-"\n"
-"    Hello! You can use the following link to reset your password:\n"
-"    {link}\n"
-"    Thanks,\n"
-"    Your friends at Empurrando Juntos."
-msgstr ""
-"\n"
-"    Olá! Você pode acessar esse link para resetar sua senha::\n"
-"    {link}\n"
-"    Obrigado,\n"
-"    Seus amigos do Empurrando Juntos."
-
-"Esqueceu sua senha? Insira seu endereço de e-mail abaixo, e nós vamos lhe "
-"enviar uma mensagem com instruções para recriar sua senha."
 
 #: src/ej/templates/jinja2/base.jinja2:87
 msgid "EJ - A platform of social participation."

@@ -1,4 +1,5 @@
 import logging
+import os
 
 from django.conf import settings
 from django.contrib import auth
@@ -10,6 +11,7 @@ from django.http import HttpResponseServerError
 from django.shortcuts import redirect
 from django.template.loader import get_template
 from django.utils.translation import ugettext_lazy as _
+from jinja2 import FileSystemLoader, Environment
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 
@@ -132,6 +134,14 @@ def reset_password(request, token):
 @urlpatterns.route('recover-password/')
 def recover_password(request):
     form = forms.RecoverPasswordForm(request.POST or None)
+
+    dirname = os.path.dirname(__file__)
+    template_dir = os.path.join(dirname, 'jinja2/ej_users')
+
+    loader = FileSystemLoader(searchpath=template_dir)
+    environment = Environment(loader=loader)
+    template_file = "recover-password-message.jinja2"
+    template = environment.get_template(template_file)
     user = None
     success = False
 
@@ -146,7 +156,7 @@ def recover_password(request):
 
             user = User.objects.get_by_email(request.POST['email'])
             token = generate_token(user)
-            template_message = _recover_password_message(host + '/reset-password/' + token.url)
+            template_message = template.render({'link': host + '/reset-password/' + token.url})
             send_mail(_("Please reset your password"), template_message,
                       'empurrandojuntos@gmail.com', [request.POST['email']],
                       fail_silently=False)
@@ -190,12 +200,3 @@ def api_key(request):
 # Auxiliary functions and templates
 #
 login_extra_template = get_template('socialaccount/snippets/login_extra.html')
-
-
-# E-MAIL MESSAGE
-def _recover_password_message(link):
-    return _(f"""
-    Hello! You can use the following link to reset your password:
-    {link}
-    Thanks,
-    Your friends at Empurrando Juntos.""")
