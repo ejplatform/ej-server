@@ -52,11 +52,15 @@ def clean_expired_promotions():
         log.info(f'excluded {size} expired promotions')
 
 
-def give_promotion_power(power_class, user, conversation, users, expires=None):
+def _give_promotion_power(power_class, user, conversation, users, expires=None):
     """
     Give user power to promote comments
     Args:
-    Returns:
+        power_class(GivenMinorityPower or GivenBridgePower): kind of power that will be given
+        user (User): that power will be given
+        conversation(Conversation): conversation that power will be available
+        users (Queryset User): Group that will be affected by this power
+    Returns: (GivenMinorityPower or GivenBridgePower) Power object
     """
     expires = expires or timezone.now() + DEFAULT_EXPIRATION_TIME_DELTA
     power = power_class(user=user, conversation=conversation, end=expires)
@@ -69,18 +73,26 @@ def give_promotion_power(power_class, user, conversation, users, expires=None):
 def give_minority_power(user, conversation, users, expires=None):
     """
     Create Minority power for user to promote comments
+    Args:
+        user (User): that power will be given
+        conversation(Conversation): conversation that power will be available
+        users (Queryset User): Group that will be affected by this power
     Returns: Created GivenMinorityPower object
     """
-    return give_promotion_power(models.GivenMinorityPower, user, conversation, users, expires)
+    return _give_promotion_power(models.GivenMinorityPower, user, conversation, users, expires)
 
 
 def give_bridge_power(user, conversation, users, expires=None):
     """
     Create Bridge power for user to promote comments
     Args:
+        power_class(GivenMinorityPower or GivenBridgePower): kind of power that will be given
+        user (User): that power will be given
+        conversation(Conversation): conversation that power will be available
+        users (Queryset User): Group that will be affected by this power
     Returns:  Created GivenBridgePower object
     """
-    return give_promotion_power(models.GivenBridgePower, user, conversation, users, expires)
+    return _give_promotion_power(models.GivenBridgePower, user, conversation, users, expires)
 
 
 def clean_expired_promotion_powers():
