@@ -7,8 +7,8 @@
     padding: $spacing-unit-small;
 
     h2 {
-        color: $color-content-text;
         cursor: pointer;
+        color: $color-content;
         font-weight: normal;
         text-align: left;
 
@@ -28,7 +28,7 @@
             margin: 0;
         }
         > ul > li {
-            border-bottom: 2px solid $color-blue-light;
+            border-bottom: 2px solid $color-hint;
             list-style: none;
             > * {
                 margin: 0 auto;

@@ -4,8 +4,8 @@
 
 // Constants
 // Top and botton navigation bars. Styled as content, but can be overriden.
-$top-header-color: darken($color-content, 5%) !default;
-$top-header-color-text: $color-content-text !default;
+$top-header-color: darken($color-content-text, 5%) !default;
+$top-header-color-text: $color-content !default;
 $top-header-icon-color: $top-header-color-text !default;
 $top-header-icon-size: $font-size-default !default;
 $top-header-links-margin: $spacing-unit-tiny;
