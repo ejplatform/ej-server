@@ -10,6 +10,7 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
 
 .ConversationList {
     @extend .Container;
+    max-width: 100%;
 
     p {
         padding: 0 $spacing-unit / 3;
