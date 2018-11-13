@@ -83,7 +83,7 @@ def conversations_list(request):
         # you can't add conversations because there can be more than one board being displayed
         'can_add_conversation': False,
         'title': _('My conversations'),
-        'subtitle': _('See all conversations created by you'),
+        'description': _('See all conversations created by you'),
     }
 
 
@@ -97,7 +97,7 @@ def comments_list(request):
     }
 
 
-@urlpatterns.route('favorites/', login=True)
+@urlpatterns.route('favorites/')
 def favorite_conversations(request):
     user = request.user
     favorites = FavoriteConversation.objects.filter(user=user)
@@ -107,14 +107,10 @@ def favorite_conversations(request):
     }
 
 
-@urlpatterns.route('comments/<which>/', login=False)
+@urlpatterns.route('comments/<which>/')
 def comments_tab(request, which):
     if which not in {'approved', 'pending', 'rejected'}:
         raise Http404
-    if not request.user.is_authenticaded:
-        url = reverse('auth:login')
-        this_url = reverse('profile:comments-tab', kwargs={'which': which})
-        redirect(f'{url}?next={this_url}')
 
     st = Comment.STATUS
     status_map = {'approved': st.approved, 'pending': st.pending, 'rejected': st.rejected}

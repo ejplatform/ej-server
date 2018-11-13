@@ -1,4 +1,5 @@
 import pytest
+
 from ej.testing import UrlTester
 from ej_conversations.mommy_recipes import ConversationRecipes
 
@@ -8,7 +9,7 @@ class TestRoutes(UrlTester, ConversationRecipes):
         '/conversations/',
         '/conversations/conversation/',
     ]
-    login_urls = [
+    admin_urls = [
         '/conversations/add/',
     ]
     owner_urls = [

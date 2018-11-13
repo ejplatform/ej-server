@@ -154,14 +154,14 @@ def can_comment(user, conversation):
 
 
 @rules.register_perm('ej.can_add_promoted_conversation')
-def can_add_promoted_conversation(user, conversation):
+def can_add_promoted_conversation(user):
     """
-    Check if user can comment in conversation.
+    Check if user can add a promoted conversation
 
     * Has explicit 'ej_conversations.can_publish_promoted' permission
       stored in the db.
     """
-    return user.has_perm('ej_conversations.can_publish_promoted', conversation)
+    return user.has_perm('ej_conversations.can_publish_promoted')
 
 
 @rules.register_perm('ej.can_edit_conversation')

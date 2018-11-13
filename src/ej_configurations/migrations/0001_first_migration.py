@@ -21,7 +21,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=150, verbose_name='Color name')),
-                ('hex_value', models.CharField(help_text='Color code in hex (e.g., #RRGGBBAA) format.', max_length=30, validators=[ej_conversations.validators.validate_color], verbose_name='Color')),
+                ('hex_value', models.CharField(help_text='Color code in hex (e.g., #RRGGBBAA) format.', max_length=30, validators=[ej_configurations.validators.validate_color], verbose_name='Color')),
             ],
         ),
         migrations.CreateModel(

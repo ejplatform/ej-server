@@ -36,12 +36,12 @@ class TestEditProfile:
     def test_user_logged_edit_profile_picture(self, logged_client):
         avatar = create_image('avatar.png')
         avatar_file = SimpleUploadedFile('front.png', avatar.getvalue())
-        form_data = {'name': 'Maurice', 'image': avatar_file, 'gender': 0, 'race': 0}
+        form_data = {'name': 'Maurice', 'profile_photo': avatar_file, 'gender': 0, 'race': 0}
 
         response = logged_client.post('/profile/edit/', form_data)
         assert response.status_code == 302 and response.url == '/profile/'
         user = User.objects.get(email='email@server.com')
-        assert user.profile.image.name
+        assert user.profile.profile_photo.name
 
     def test_user_logged_edit_profile_basic_info(self, logged_client):
         def rand_str(size):
