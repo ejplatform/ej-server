@@ -9,7 +9,9 @@ def can_edit_conversation(user, conversation):
     * User can edit conversation
     * OR user has explict permission to see reports (not implemented)
     """
-    if user.has_perm('ej.can_edit_conversation', conversation):
+    if user.is_superuser:
         return True
-    else:
-        return False
+    elif user.has_perm('ej.can_edit_conversation', conversation):
+        if not conversation.statistics()['participants']['commenters'] > conversation.limit_report_users:
+            return True
+    return False
