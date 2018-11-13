@@ -18,8 +18,8 @@ class Gender(IntEnum):
     UNFILLED = 0, _('Not filled')
     FEMALE = 1, _('Female')
     MALE = 2, _('Male')
-    OTHER = 20, _('Other')
-    UNDECLARED = 21, _('Not declared')
+    # OTHER = 20, _('Other')
+    # UNDECLARED = 21, _('Not declared')
 
     # CIS_FEMALE = 3, _('Cis Female')
     # CIS_MALE = 4, _('Cis Male')

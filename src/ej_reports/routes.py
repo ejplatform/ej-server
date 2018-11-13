@@ -7,6 +7,8 @@ from sklearn.decomposition import PCA
 from boogie.router import Router
 from ej_clusters.math import get_raw_votes, get_votes
 from ej_conversations.models import Conversation
+from ej_dataviz.routes import generate_scatter_plot
+
 
 urlpatterns = Router(
     template=['ej_reports/{name}.jinja2', 'generic.jinja2'],
@@ -47,6 +49,7 @@ def participants_table(conversation):
 @urlpatterns.route(reports_url + 'scatter/')
 def scatter(conversation):
     # TODO: make it use the pca-data.json endpoint
+    generate_scatter_plot(conversation)
     votes = get_votes(conversation).fillna(0).values
     if votes.shape[0] <= 1 or votes.shape[1] <= 1:
         return {'error': 'insufficient data'}

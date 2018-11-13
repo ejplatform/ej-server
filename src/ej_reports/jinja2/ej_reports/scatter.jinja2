@@ -33,6 +33,25 @@
             var dom = document.getElementById("container");
             var myChart = echarts.init(dom);
             var plotData = {{ plot_data }};
+            for (gender in plotData) {
+                full_series.push({
+                    name: gender[2],
+                    data: gender,
+                    type: 'scatter',
+                    symbolSize: function (data) {
+                        return 10;
+                    },
+                    label: {
+                        emphasis: {
+                            show: true,
+                            formatter: function (param) {
+                                return gender[2];
+                            },
+                            position: 'top'
+                        }
+                    }
+                })
+            }
             var option = {
                 xAxis: {},
                 yAxis: {},
