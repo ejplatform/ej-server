@@ -18,7 +18,7 @@ def conversation_card(conversation, request=None, url=None, **kwargs):
     """
 
     user = getattr(request, 'user', None)
-    is_author = conversation.author == user
+    can_moderate = user.has_perm('ej.can_moderate_conversation', conversation)
     return {
         'conversation': conversation,
         'url': url or conversation.get_absolute_url(),
@@ -26,7 +26,7 @@ def conversation_card(conversation, request=None, url=None, **kwargs):
         'n_comments': conversation.approved_comments.count(),
         'n_votes': conversation.vote_count(),
         'n_followers': conversation.followers.count(),
-        'is_author': is_author,
+        'user_can_moderate': can_moderate,
         **kwargs,
     }
 
