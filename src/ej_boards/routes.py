@@ -4,6 +4,7 @@ from django.shortcuts import redirect
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
+from boogie import rules
 from boogie.router import Router
 from ej_boards.models import Board
 from ej_clusters.models import Stereotype
@@ -51,7 +52,7 @@ def conversation_list(request, board):
     else:
         user_is_owner = False
     return {
-        'can_add_conversation': user_is_owner,
+        'can_add_conversation': user.has_perm('ej_boards.can_add_conversation', board),
         'can_edit_board': user_is_owner,
         'create_url': reverse('boards:conversation-create', kwargs={'board': board}),
         'edit_url': reverse('boards:board-edit', kwargs={'board': board}),

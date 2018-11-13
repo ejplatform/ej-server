@@ -37,7 +37,7 @@ class User(AbstractUser):
     objects = UserManager()
 
     limit_board_conversations = models.IntegerField(
-        _('Limit users'),
+        _('Limit conversations in board'),
         null=True,
         help_text=_(
             'Limit number of conversations in user board '

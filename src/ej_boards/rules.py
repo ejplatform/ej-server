@@ -29,13 +29,17 @@ def can_add_board(user):
 
 @rules.register_perm('ej_boards.can_add_conversation')
 def can_add_conversation(user, board):
-    return board.owner == user
+    if board.owner == user:
+        conversation_limit = rules.compute('ej_boards.conversation_limit', user)
+        if board.conversations.count() < conversation_limit:
+            return True
+    return False
 
 
-@rules.register_rule('ej_boards.conversation_limit')
+@rules.register_value('ej_boards.conversation_limit')
 def conversation_limit(user):
     user_limit = user.limit_board_conversations
-    if user_limit:
+    if user_limit is not None:
         return user_limit
     else:
         return getattr(settings, 'EJ_BOARD_MAX_CONVERSATIONS', 50)

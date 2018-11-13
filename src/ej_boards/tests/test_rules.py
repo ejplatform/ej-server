@@ -18,6 +18,10 @@ class TestBoardRules:
     def test_user_can_add_conversation_in_board(self, db, user):
         board = Board.objects.create(owner=user, title='title', slug='slug')
         assert rules.can_add_conversation(user, board)
+        user.limit_board_conversations = 0
+        user.save()
+        print(rules.conversation_limit(user))
+        assert not rules.can_add_conversation(user, board)
         other_user = User.objects.create_user('name@name.com', '123')
         board.owner = other_user
         assert not rules.can_add_conversation(user, board)
