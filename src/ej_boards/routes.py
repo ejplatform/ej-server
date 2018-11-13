@@ -4,7 +4,6 @@ from django.shortcuts import redirect
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
-from boogie import rules
 from boogie.router import Router
 from ej_boards.models import Board
 from ej_clusters.models import Stereotype

@@ -76,7 +76,7 @@ class Conversation(TimeStampedModel):
         ),
     )
 
-    limit_report_users = models.IntegerField(
+    limit_report_users = models.PositiveIntegerField(
         _('Limit users'),
         null=True,
         help_text=_(

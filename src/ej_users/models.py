@@ -36,7 +36,7 @@ class User(AbstractUser):
 
     objects = UserManager()
 
-    limit_board_conversations = models.IntegerField(
+    limit_board_conversations = models.PositiveIntegerField(
         _('Limit conversations in board'),
         null=True,
         help_text=_(
