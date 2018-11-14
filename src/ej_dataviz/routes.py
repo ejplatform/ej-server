@@ -31,29 +31,26 @@ GENDER_CHOICES = list(Gender)
 
 def generate_scatter_plot(conversation):
     votes = get_votes(conversation).fillna(0)
-    # print(votes)
-    # print(votes.index.values)
     gender_list = User.objects.filter(email__in=votes.index.tolist()).values_list('email', 'raw_profile__gender')
-    # print(gender_list)
     if votes.shape[0] <= 1 or votes.shape[1] <= 1:
         return {'error': 'insufficient data'}
 
     pca = PCA(n_components=2)
-    data = pca.fit_transform(votes)
-    data = data.tolist()
+    data = pca.fit_transform(votes).tolist()
     dict_data = {}
     for gender_value, item in zip(gender_list, data):
-        gender = gender_value
+        gender = 0
         if gender_value[1] is not None:
-            gender_value = gender_value
-        item.append(gender_value)
-        if gender_value not in dict_data.keys():
-            dict_data[gender_value] = []
-        dict_data[gender_value].append(item)
+            gender = gender_value[1]
+        item.append(gender)
+        if gender not in dict_data.keys():
+            dict_data[gender] = []
+        dict_data[gender].append(item)
     js_data = []
-    for item in dict_data:
-        js_data.append(item)
+    for item in dict_data.keys():
+        js_data.append(dict_data[item])
     return {'plot_data': json.dumps(js_data)}
+
 
 #
 # Auxiliary functions and data
@@ -79,6 +76,7 @@ PC_COLUMNS = [
     'divergence', 'entropy', 'participation',
 ]
 
+
 def map_to_table(data):
     return np.array(list(data.items())).T
 
@@ -97,6 +95,7 @@ def df_to_table(df, pc=True):
                 df[col] = to_pc(df[col])
     return render_dataframe(df, col_display=COLUMN_NAMES, class_='table long')
 
+
 def to_pc(data):
     """
     Map floats to percentages.
@@ -113,7 +112,7 @@ def to_pc(data):
 
 def cluster_comments_table(cluster):
     usernames = list(cluster.users.all().values_list('email', flat=True))
-     # Filter votes by users present in cluster
+    # Filter votes by users present in cluster
     df = cluster.all_votes
     votes = df[df['user'].isin(usernames)]
     data = comments_table(cluster.conversation, votes)
@@ -130,7 +129,7 @@ def comments_table(conversation, votes):
     comments = conversation.comments.approved().display_dataframe()
     comments = comments[['author', 'text']]
     for col in ['agree', 'disagree', 'skipped', 'divergence']:
-   		comments[col] = df[col]
+        comments[col] = df[col]
     comments['participation'] = 100 - df['missing']
     comments.dropna(inplace=True)
     return comments

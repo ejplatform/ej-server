@@ -1,5 +1,3 @@
-import json
-
 from django.contrib.auth import get_user_model
 from django.http import HttpResponse
 from sklearn.decomposition import PCA
@@ -49,15 +47,7 @@ def participants_table(conversation):
 @urlpatterns.route(reports_url + 'scatter/')
 def scatter(conversation):
     # TODO: make it use the pca-data.json endpoint
-    generate_scatter_plot(conversation)
-    votes = get_votes(conversation).fillna(0).values
-    if votes.shape[0] <= 1 or votes.shape[1] <= 1:
-        return {'error': 'insufficient data'}
-
-    pca = PCA(n_components=2)
-    pca.fit(votes)
-    votes_pca = pca.transform(votes)
-    return {'plot_data': json.dumps(votes_pca.tolist())}
+    return generate_scatter_plot(conversation)
 
 
 #
