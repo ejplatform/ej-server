@@ -61,10 +61,15 @@
     {% endblock %}
     <nav class="Header-topNav">
         {% if request.path not in ['/start/', '/conversations/', '/home/'] %}
-            <a title="{{ _('Back') }}" class="Header-topIcon" onclick="history.back()">
-                <i class="fa fa-chevron-left"></i>
-            </a>
-
+            {% if not '/conversations/' in request.path %}
+                <a title="{{ _('Back') }}" class="Header-topIcon" onclick="history.back()">
+                    <i class="fa fa-chevron-left"></i>
+                </a>
+            {% else %}
+                <a href="{{request.path.split('/conversations/')[0] + '/conversations/'}}" title="{{ _('Back') }}" class="Header-topIcon">
+                    <i class="fa fa-chevron-left"></i>
+                </a>
+            {% endif %}
             {% call link(href='/', class="Header-ejLogo") %}
                 <img src="/static/img/logo/logo.svg" alt="{{_('Site logo')}}">
             {% endcall %}

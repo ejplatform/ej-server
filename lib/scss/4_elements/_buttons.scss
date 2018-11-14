@@ -4,32 +4,24 @@
 
 @import '../2_tools/index';
 
-$button-border-radius: $spacing-unit-large;
-$button-ghost-border-width: 1px !default;
-$button-ghost-color: $color-primary !default;
-$button-ghost-color-hover: rgba(0, 0, 0, 0.05);
+$button-border-radius: $border-radius-large, !default;
 $button-hpadding: $spacing-unit-small + $spacing-unit-tiny !default;
 $button-vpadding: $spacing-unit-tiny + 2px !default;
-$button-font-size: $font-size-default !default;
-$button-font-size-small: $font-size-small !default;
-$button-font-size-large: $font-size-large !default;
-$button-font-weight: bold !default;
-$button-font-family: $font-sans-accent !default;
-$button-text-tranform: uppercase;
 
 .Button {
-    @include color($color-action-default, $color-action-default-text);
+    @include color($color-action-primary, $color-action-primary-text);
+
     border: none;
-    border-radius: $button-border-radius-default;
+    border-radius: $button-border-radius;
     box-sizing: border-box;
     cursor: pointer;
     display: inline-block;
-    font: $button-font-size $button-font-family;
-    font-weight: $button-font-weight;
+    font: $font-size-small $font-paragraph;
+    font-weight: bold;
     margin: $spacing-unit-tiny $spacing-unit-tiny $spacing-unit-small $spacing-unit-tiny;
     padding: $button-vpadding $button-hpadding;
     text-align: center;
-    text-transform: $button-text-tranform;
+    text-transform: uppercase;
     transition: $global-transition;
     vertical-align: middle;
 
@@ -37,19 +29,11 @@ $button-text-tranform: uppercase;
     &:hover,
     &:active,
     &:focus {
+        @include color($color-action-primary-hover, $color-action-primary-text-hover);
         text-decoration: none;
     }
 
     // Button roles
-    &[primary],
-    .Button--primary {
-        @include color($color-action-primary, $color-action-primary-text);
-        &:hover,
-        &:focus {
-            @include color($color-action-primary-hover, $color-action-primary-text-hover);
-        }
-    }
-
     &[secondary],
     .Button--secondary {
         @include color($color-action-secondary, $color-action-secondary-text);
@@ -62,44 +46,13 @@ $button-text-tranform: uppercase;
     // Size variants
     &[small],
     .Button--small {
-        font-size: $button-font-size-small;
+        font-size: $font-size-small;
         padding: ($button-vpadding / 2) ($button-hpadding / 2);
     }
 
     &[large],
     .Button--large {
-        font-size: $button-font-size-large;
+        font-size: $font-size-large;
         padding: (2 * $button-vpadding) (2 * $button-hpadding);
-    }
-
-    // Ghost buttons (see-through backgrounds and are bordered)
-    &[ghost],
-    .Button--ghost {
-        @include color(none, $button-ghost-color);
-        border: $button-ghost-border-width solid $button-ghost-color;
-        padding: ($button-vpadding - $button-ghost-border-width) ($button-hpadding - $button-ghost-border-width);
-
-        &:hover,
-        &:focus {
-            background: $button-ghost-color-hover;
-        }
-
-        [primary],
-        .Button--ghost-primary {
-            color: $color-action-primary;
-            &:hover,
-            &:focus {
-                color: $color-action-primary-hover;
-            }
-        }
-
-        [secondary],
-        .Button--ghost-secondary {
-            color: $color-action-secondary;
-            &:hover,
-            &:focus {
-                color: $color-action-secondary-hover;
-            }
-        }
     }
 }

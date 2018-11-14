@@ -1,3 +1,6 @@
+@import '../2_tools/index';
+
+
 .StereotypeList {
     @extend .Container;
     &-title, &-search, &-cardList, &-singleStereotype {
@@ -10,7 +13,7 @@
         margin: 30px auto 0 auto;
         h1 {
             font-size: $font-size-huge;
-            color: $color-magenta;
+            color: $color-accent;;
             font-weight: 300;
         }
         p {
@@ -23,14 +26,14 @@
         align-items: center;
         justify-content: space-around;
         height: $spacing-unit-small * 3;
-        background-color: $color-blue-nav;
+        background-color: $color-hint;
         a {
             color: $color-primary;
             &.up-current {
-                color: $selected-stereotype-cluster-menu-color;
+                color: $color-primary;
                 font-weight: bold;
-                border-bottom: $selected-stereotype-cluster-menu-border;
-                padding: $selected-stereotype-cluster-menu-padding;
+                border-bottom: $border-radius-tiny solid $color-primary;
+                padding: $spacing-padding 0px;
 
             }
         }
@@ -44,12 +47,12 @@
         font-weight: bold;
         box-shadow: 0 2px 4px 0;
         padding: 14px 0;
-        color: $stereotype-new-text;
+        color: $color-content;
         line-height: 1.2;
         text-decoration: none;
 
         i {
-            color: $stereotype-new-icon;
+            color: $color-accent;
         }
     }
 
@@ -64,7 +67,7 @@
             box-shadow: none;
             border: none;
             border-radius: 0;
-            border-bottom: 1px solid $color-blue-light;
+            border-bottom: 1px solid $color-hint;
             margin: 0;
             width: 100%;
             &:focus {
@@ -95,13 +98,13 @@
         margin: 0 auto;
         h2 {
             font-weight: normal;
-            color: $stereotype-title;
+            color: $color-text;
         }
     }
 
     &-icons {
         i {
-            color: $color-blue-light;
+            color: $color-hint;
             font-size: $font-size-larger;
         }
     }
@@ -111,7 +114,7 @@
     padding: 5vw;
     h1 {
         font-size: $font-size-huge;
-        color: $stereotype-add-title-color;
+        color: $color-accent;
         font-weight: 300;
         text-align: center;
         margin-top: 0;
@@ -121,8 +124,7 @@
         select {
             border: 1px solid $color-primary;
             width: 100%;
-            border-radius: $stereotype-add-input-border-radius;
-            margin: 0;
+            border-radius: $border-radius-small;
             max-width: 100%;
             margin: 7px auto;
         }
@@ -161,13 +163,13 @@
         }
         input, textarea {
             border: 1px solid $color-primary;
-            border-radius: $stereotype-add-input-border-radius;
+            border-radius: $border-radius-small;
             max-width: 100%;
             width: 100%;
         }
         .helptext {
             color: #052B47;
-            font-family: Raleway;
+            font-family: $font-raleway;
             font-size: $font-size-tiny;
             font-weight: bold;
             margin: 7px auto;
@@ -183,10 +185,10 @@
             border-style: solid;
             color: $color-primary;
             border-color: $color-primary;
-            background-color: $color-white;
+            background-color: $color-background;
         }
         span {
-            color: $stereotype-add-comment-color;
+            color: $color-content;
             font-family: Raleway;
             font-weight: bold;
             line-height: 14px;
@@ -198,17 +200,17 @@
         select {
             border: 1px solid $color-primary;
             width: 100%;
-            border-radius: $stereotype-add-input-border-radius;
+            border-radius: $border-radius-small;
         }
     }
 
     &-submit {
         input {
             border-radius: 25px;
-            background-color: $stereotype-add-submit-color;
+            background-color: $color-accent;
             width: 100%;
             height: 50px;
-            color: $color-white;
+            color: $color-content;
             margin-bottom: 50px;
             margin-top: 10px;
         }

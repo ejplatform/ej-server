@@ -9,7 +9,7 @@ class TestRoutes(UrlTester, ConversationRecipes):
         '/conversations/',
         '/conversations/conversation/',
     ]
-    login_urls = [
+    admin_urls = [
         '/conversations/add/',
     ]
     owner_urls = [

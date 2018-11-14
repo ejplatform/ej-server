@@ -17,7 +17,7 @@ log = getLogger('ej')
 @urlpatterns.route('', name='list')
 def conversation_list(request):
     return {
-        'conversations': Conversation.objects.filter(is_promoted=True),
+        'conversations': Conversation.objects.filter(is_promoted=True, is_hidden=False),
         'can_add_conversation': request.user.has_perm('ej.can_add_promoted_conversation'),
         'create_url': reverse('conversation:create'),
         'topic': _('A space for adolescents to discuss actions that promote, guarantee and defend their rights'),
@@ -87,7 +87,7 @@ def get_conversation_detail_context(request, conversation):
 
         # Permissions and predicates
         'is_favorite': is_favorite,
-        'can_view_comment': user.is_authenticated,
+        'can_comment': user.is_authenticated,
         'can_edit': user.has_perm('ej.can_edit_conversation', conversation),
         'cannot_comment_reason': '',
         'comments_under_moderation': n_comments_under_moderation,
