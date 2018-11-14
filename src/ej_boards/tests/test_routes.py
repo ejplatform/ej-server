@@ -107,7 +107,7 @@ class TestBoardConversationRoutes(ConversationRecipes):
         board.add_conversation(conversation)
         response = routes.conversation_detail(request, board, conversation)
         assert response['conversation'] == conversation
-        assert response['can_view_comment']
+        assert response['can_comment']
         assert response['can_edit']
 
     def test_conversation_detail_post_comment(self, rf, db, board, conversation):
@@ -120,7 +120,7 @@ class TestBoardConversationRoutes(ConversationRecipes):
         board.add_conversation(conversation)
         response = routes.conversation_detail(request, board, conversation)
         assert response['conversation'] == conversation
-        assert response['can_view_comment']
+        assert response['can_comment']
         assert response['can_edit']
         assert Comment.objects.filter(author=user)[0].content == 'test comment'
 
@@ -135,7 +135,7 @@ class TestBoardConversationRoutes(ConversationRecipes):
         board.add_conversation(conversation)
         response = routes.conversation_detail(request, board, conversation)
         assert response['conversation'] == conversation
-        assert response['can_view_comment']
+        assert response['can_comment']
         assert response['can_edit']
         assert votes_counter(comment) == 1
 

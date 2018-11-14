@@ -87,7 +87,7 @@ def get_conversation_detail_context(request, conversation):
 
         # Permissions and predicates
         'is_favorite': is_favorite,
-        'can_view_comment': user.is_authenticated,
+        'can_comment': user.is_authenticated,
         'can_edit': user.has_perm('ej.can_edit_conversation', conversation),
         'cannot_comment_reason': '',
         'comments_under_moderation': n_comments_under_moderation,
