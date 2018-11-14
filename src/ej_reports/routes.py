@@ -1,5 +1,5 @@
 import json
-
+from django.http import Http404
 from django.contrib.auth import get_user_model
 from django.http import HttpResponse
 from sklearn.decomposition import PCA
@@ -26,6 +26,9 @@ User = get_user_model()
 #
 @urlpatterns.route(reports_url)
 def index(request, conversation):
+    # TODO: Fix this case of permission in django-boogie
+    if not request.user.has_perm('ej.can_view_report', conversation):
+        raise Http404
     user = request.user
     can_download_data = user.has_perm('ej.can_edit_conversation', conversation)
     clusterization = conversation.get_clusterization()
@@ -41,12 +44,18 @@ def index(request, conversation):
 
 
 @urlpatterns.route(reports_url + 'participants/', staff=True)
-def participants_table(conversation):
+def participants_table(request, conversation):
+    # TODO: Fix this case of permission in django-boogie
+    if not request.user.has_perm('ej.can_view_report', conversation):
+        raise Http404
     return {'conversation': conversation}
 
 
 @urlpatterns.route(reports_url + 'scatter/')
-def scatter(conversation):
+def scatter(request, conversation):
+    # TODO: Fix this case of permission in django-boogie
+    if not request.user.has_perm('ej.can_view_report', conversation):
+        raise Http404
     # TODO: make it use the pca-data.json endpoint
     votes = get_votes(conversation).fillna(0).values
     if votes.shape[0] <= 1 or votes.shape[1] <= 1:

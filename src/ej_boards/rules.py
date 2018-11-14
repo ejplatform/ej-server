@@ -31,7 +31,7 @@ def can_add_board(user):
 def can_add_conversation(user, board):
     if board.owner == user:
         conversation_limit = rules.compute('ej_boards.conversation_limit', user)
-        if board.conversations.count() < conversation_limit:
+        if board.conversations.count() < conversation_limit or conversation_limit == 0:
             return True
     return False
 
@@ -39,7 +39,7 @@ def can_add_conversation(user, board):
 @rules.register_value('ej_boards.conversation_limit')
 def conversation_limit(user):
     user_limit = user.limit_board_conversations
-    if user_limit is not None:
+    if user_limit != 0:
         return user_limit
     else:
-        return getattr(settings, 'EJ_BOARD_MAX_CONVERSATIONS', 50)
+        return getattr(settings, 'EJ_BOARD_MAX_CONVERSATIONS', 0)

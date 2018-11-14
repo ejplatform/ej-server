@@ -78,7 +78,7 @@ class Conversation(TimeStampedModel):
 
     limit_report_users = models.PositiveIntegerField(
         _('Limit users'),
-        null=True,
+        default=0,
         help_text=_(
             'Limit number of participants, making /reports/ route unavailable if limit is reached '
             'except for super admin.'
