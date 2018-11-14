@@ -35,11 +35,12 @@
         <script type="text/javascript">
             // this function controls the open/close button of "conversations dropdown on page_menu
             function openDropDown(openDiv) {
-                let element = document.getElementsByClassName(openDiv);
-                if (element[0].style.display === "inline")
-                    element[0].style.display = "none";
+                let elements = document.getElementsByClassName(openDiv);
+                let element = elements[1]
+                if (element.style.display === "inline")
+                    element.style.display = "none";
                 else
-                    element[0].style.display = "inline";
+                    element.style.display = "inline";
             }
         </script>
 
