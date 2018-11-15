@@ -36,7 +36,7 @@
             // this function controls the open/close button of "conversations dropdown on page_menu
             function openDropDown(openDiv) {
                 let elements = document.getElementsByClassName(openDiv);
-                let element = elements[1]
+                let element = ((elements.length > 1) ? elements[1] : elements[0]);
                 if (element.style.display === "inline")
                     element.style.display = "none";
                 else
