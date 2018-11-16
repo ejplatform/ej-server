@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-06 16:51+0000\n"
-"PO-Revision-Date: 2018-11-06 15:03-0200\n"
+"POT-Creation-Date: 2018-11-14 03:05+0000\n"
+"PO-Revision-Date: 2018-11-14 01:09-0200\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: \n"
 "Language: pt_BR\n"
@@ -837,23 +837,33 @@ msgstr "promovido?"
 msgid "Promoted conversations appears in the main /conversations/ endpoint."
 msgstr "Conversas promovidas aparecem no mural principal /conversations."
 
-#: src/ej_conversations/models/conversation.py:82
+#: src/ej_conversations/models/conversation.py:71
+msgid "hidden?"
+msgstr "oculta?"
+
+#: src/ej_conversations/models/conversation.py:74
+msgid ""
+"Hidden conversations does not appears in boards or in the main /"
+"conversations/ endpoint."
+msgstr "Conversas ocultas não aparecem no mural principal /conversations/"
+
+#: src/ej_conversations/models/conversation.py:90
 msgid "Can publish promoted conversations"
 msgstr "Pode publicar conversas promovidas"
 
-#: src/ej_conversations/models/conversation.py:83
+#: src/ej_conversations/models/conversation.py:91
 msgid "Can moderate comments in any conversation"
 msgstr "Pode moderar comentários em qualquer conversa"
 
-#: src/ej_conversations/models/conversation.py:98
+#: src/ej_conversations/models/conversation.py:106
 msgid "User does not have permission to create a promoted conversation."
 msgstr "Usuário não tem permissão para criar uma conversa promovida."
 
-#: src/ej_conversations/models/conversation.py:153
+#: src/ej_conversations/models/conversation.py:161
 msgid "automatically rejected"
 msgstr "rejeitado automaticamente"
 
-#: src/ej_conversations/models/conversation.py:242
+#: src/ej_conversations/models/conversation.py:250
 msgid "No comments available for this user"
 msgstr "Não há comentários disponíveis para esse usuário"
 
@@ -888,7 +898,7 @@ msgstr "Criado em"
 msgid "non-moderated comments cannot receive votes"
 msgstr "comentários não-moderados não podem receber votos"
 
-#: src/ej_conversations/roles.py:76
+#: src/ej_conversations/roles.py:76 src/ej_conversations/roles.py:140
 #: src/ej_conversations/routes/conversations.py:85
 msgid "login"
 msgstr "entrar"
@@ -1394,23 +1404,38 @@ msgstr "endereço de email"
 msgid "User token"
 msgstr "Token do usuário"
 
-#: src/ej_users/routes.py:71
+#: src/ej_users/routes.py:69
 msgid "Invalid email or password"
 msgstr "Email ou senha inválidos"
 
-#: src/ej_users/routes.py:160
+#: src/ej_users/routes.py:151
 msgid "Please reset your password"
 msgstr "Por favor reset sua senha"
 
-#: src/ej/templates/jinja2/base.jinja2:87
+#: src/ej_users/routes.py:198
+#, python-brace-format
+msgid ""
+"\n"
+"    Hello! You can use the following link to reset your password:\n"
+"    {link}\n"
+"    Thanks,\n"
+"    Your friends at Empurrando Juntos."
+msgstr ""
+"\n"
+"    Olá! Você pode usar o seguinte link para resetar sua senha:\n"
+"    {link}\n"
+"    Obrigada,\n"
+"    Suas amigas da Empurrando Juntas."
+
+#: src/ej/templates/jinja2/base.jinja2:88
 msgid "EJ - A platform of social participation."
 msgstr "EJ - Uma plataforma para participação social."
 
-#: src/ej/templates/jinja2/base.jinja2:96
+#: src/ej/templates/jinja2/base.jinja2:97
 msgid "EJ - A platform of social participacion."
 msgstr "EJ - Uma plataforma para participação social."
 
-#: src/ej/templates/jinja2/base.jinja2:134
+#: src/ej/templates/jinja2/base.jinja2:142
 msgid "Please override the \"content\" block of your template!"
 msgstr "Por favor substitua o bloco \"content\" do seu template!"
 
@@ -1432,31 +1457,32 @@ msgstr "Começar agora!"
 msgid "LOGIN"
 msgstr "ENTRAR"
 
-#: src/ej/templates/jinja2/components/generic/page_header.jinja2:64
+#: src/ej/templates/jinja2/components/generic/page_header.jinja2:65
+#: src/ej/templates/jinja2/components/generic/page_header.jinja2:69
 msgid "Back"
 msgstr "Voltar"
 
-#: src/ej/templates/jinja2/components/generic/page_header.jinja2:69
-#: src/ej/templates/jinja2/components/generic/page_header.jinja2:85
+#: src/ej/templates/jinja2/components/generic/page_header.jinja2:74
+#: src/ej/templates/jinja2/components/generic/page_header.jinja2:90
 msgid "Site logo"
 msgstr "Logo do site"
 
-#: src/ej/templates/jinja2/components/generic/page_header.jinja2:72
-#: src/ej/templates/jinja2/components/generic/page_header.jinja2:79
+#: src/ej/templates/jinja2/components/generic/page_header.jinja2:77
+#: src/ej/templates/jinja2/components/generic/page_header.jinja2:84
 msgid "Navigation menu"
 msgstr "Menu de navegação"
 
-#: src/ej/templates/jinja2/components/generic/page_header.jinja2:102
-#: src/ej/templates/jinja2/components/generic/page_header.jinja2:103
-#: src/ej/templates/jinja2/components/generic/page_header.jinja2:104
+#: src/ej/templates/jinja2/components/generic/page_header.jinja2:107
+#: src/ej/templates/jinja2/components/generic/page_header.jinja2:108
+#: src/ej/templates/jinja2/components/generic/page_header.jinja2:109
 #: src/ej_rocketchat/jinja2/ej_rocketchat/iframe.jinja2:2
 #: src/ej_rocketchat/jinja2/ej_rocketchat/intro.jinja2:3
 msgid "Panel"
 msgstr "Painel"
 
-#: src/ej/templates/jinja2/components/generic/page_header.jinja2:108
-#: src/ej/templates/jinja2/components/generic/page_header.jinja2:109
-#: src/ej/templates/jinja2/components/generic/page_header.jinja2:110
+#: src/ej/templates/jinja2/components/generic/page_header.jinja2:113
+#: src/ej/templates/jinja2/components/generic/page_header.jinja2:114
+#: src/ej/templates/jinja2/components/generic/page_header.jinja2:115
 #: src/ej/templates/jinja2/components/generic/page_menu.jinja2:30
 msgid "Profile"
 msgstr "Perfil"
@@ -2001,11 +2027,11 @@ msgstr "para ver {}."
 msgid "CREATE COMMENT"
 msgstr "CRIAR COMENTÁRIO"
 
-#: src/ej_conversations/jinja2/ej_conversations/detail.jinja2:39
+#: src/ej_conversations/jinja2/ej_conversations/detail.jinja2:40
 msgid "{}/{} comment{}."
 msgstr "{}/{} commentário{}."
 
-#: src/ej_conversations/jinja2/ej_conversations/detail.jinja2:40
+#: src/ej_conversations/jinja2/ej_conversations/detail.jinja2:41
 msgid "{} waiting moderation."
 msgstr "{} aguardando moderação."
 
@@ -2190,6 +2216,20 @@ msgstr "Registre agora!"
 msgid "or sign up through other networks"
 msgstr "ou entre usando outras redes"
 
+#: src/ej_users/jinja2/ej_users/recover-password-message.jinja2:2
+msgid ""
+"Hello !\n"
+"    You can use the following link to reset your password:\n"
+"    {{ link }}\n"
+"    Thanks,\n"
+"    Your friends at Empurrando Juntos."
+msgstr ""
+"Olá !\n"
+"    Você pode usar o seguinte link para resetar sua senha:\n"
+"    {{ link }}\n"
+"    Obrigada,\n"
+"    Suas amigas da Empurrando Juntas."
+
 #: src/ej_users/jinja2/ej_users/recover-password.jinja2:3
 #: src/ej_users/jinja2/ej_users/remove-account.jinja2:2
 msgid "Reset password"
@@ -2328,14 +2368,6 @@ msgstr "Atualizar"
 #~ msgstr ""
 #~ "Exemplo: Prezado usuário, seu comentário foi rejeitado porque contém "
 #~ "conteúdo discriminatório."
-
-#, fuzzy
-#~ msgid ""
-#~ "Hello ! \n"
-#~ " You can use the following link to reset your password:"
-#~ msgstr ""
-#~ "Esqueceu sua senha? Insira seu endereço de e-mail abaixo, e nós vamos lhe "
-#~ "enviar uma mensagem com instruções para recriar sua senha."
 
 #~ msgid "Create conversation"
 #~ msgstr "Criar conversa"

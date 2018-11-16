@@ -67,6 +67,14 @@ class Conversation(TimeStampedModel):
             'endpoint.'
         ),
     )
+    is_hidden = models.BooleanField(
+        _('hidden?'),
+        default=False,
+        help_text=_(
+            'Hidden conversations does not appears in boards or in the main /conversations/ '
+            'endpoint.'
+        ),
+    )
 
     objects = ConversationManager()
     tags = TaggableManager(through='ConversationTag')
@@ -123,7 +131,7 @@ class Conversation(TimeStampedModel):
         """
         if user.id is None:
             return Vote.objects.none()
-        return Vote.objects.filter(comment__conversation=self, author=user)
+        return Vote.objects.filter(comment__conversation=self, author=user, comment__status=Comment.STATUS.approved)
 
     def create_comment(self, author, content, commit=True, *, status=None,
                        check_limits=True, **kwargs):

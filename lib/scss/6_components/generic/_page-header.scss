@@ -41,6 +41,13 @@ $header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.2) !default;
 
     &-topIcon {
         cursor: pointer;
+        display: none;
+    }
+
+    @media only screen and (max-width: 960px) {
+        &-topIcon {
+            display: block;
+        }
     }
 
     // Elements

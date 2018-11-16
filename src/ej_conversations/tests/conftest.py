@@ -12,6 +12,10 @@ from ej_users.models import User
 def user(db):
     user = User.objects.create_user('email@server.com', 'password')
     user.board_name = 'testboard'
+
+    # TODO: Fix this dirty way to set user permissions
+    user.has_perm = lambda x, y=None: True
+
     user.save()
     return user
 
