@@ -39,6 +39,8 @@ class InstalledAppsConf(Base, EjOptions):
         # 'corsheaders',
         'constance',
         'constance.backends.database',
+        # test
+        'behave_django'
     ]
 
     def get_django_contrib_apps(self):
