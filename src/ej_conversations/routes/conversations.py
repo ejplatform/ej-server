@@ -45,7 +45,9 @@ def get_conversation_detail_context(request, conversation):
     user = request.user
     is_favorite = user.is_authenticated and conversation.followers.filter(user=user).exists()
     comment = None
-    voted = None
+    voted = False
+    if user.is_authenticated:
+        voted = Vote.objects.filter(author=user).exists()
 
     comment_form = CommentForm(None, conversation=conversation)
     # User is voting in the current comment. We still need to choose a random
@@ -82,7 +84,6 @@ def get_conversation_detail_context(request, conversation):
 
     n_comments_under_moderation = rules.compute('ej_conversations.comments_under_moderation', conversation, user)
     if user.is_authenticated:
-        voted = Vote.objects.filter(author=user).exists()
         comments_made = user.comments.filter(conversation=conversation).count()
     else:
         comments_made = 0
@@ -102,7 +103,7 @@ def get_conversation_detail_context(request, conversation):
         'comments_under_moderation': n_comments_under_moderation,
         'comments_made': comments_made,
         'max_comments': max_comments_per_conversation(),
-        'voted': voted or None,
+        'voted': voted,
     }
 
 
