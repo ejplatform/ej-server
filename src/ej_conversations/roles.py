@@ -4,6 +4,7 @@ from hyperpython import a
 from hyperpython.django import csrf_input
 from boogie import rules
 
+from ej_conversations.models import Vote
 from ej.roles import with_template
 from . import models
 
@@ -18,8 +19,7 @@ def conversation_card(conversation, request=None, url=None, **kwargs):
     """
 
     user = getattr(request, 'user', None)
-    is_author = conversation.author == user
-    moderate_url = None
+    can_moderate = user.has_perm('ej.can_moderate_conversation', conversation)
     return {
         'conversation': conversation,
         'url': url or conversation.get_absolute_url(),
@@ -27,8 +27,7 @@ def conversation_card(conversation, request=None, url=None, **kwargs):
         'n_comments': conversation.approved_comments.count(),
         'n_votes': conversation.vote_count(),
         'n_followers': conversation.followers.count(),
-        'moderate_url': moderate_url,
-        'is_author': is_author,
+        'user_can_moderate': can_moderate,
         **kwargs,
     }
 
@@ -136,11 +135,18 @@ def comment_form(conversation, request=None, comment_content=None, **kwargs):
     Render comment form for one conversation.
     """
     user = getattr(request, 'user', None)
+    if user.is_authenticated:
+        voted = Vote.objects.filter(author=user).exists()
     n_comments = rules.compute('ej_conversations.remaining_comments', conversation, user)
+    conversation_url = conversation.get_absolute_url()
+    login = reverse('auth:login')
+    login_anchor = a(_('login'), href=f'{login}?next={conversation_url}')
     return {
         'can_comment': user.has_perm('ej.can_comment', conversation),
         'comments_left': n_comments,
         'user_is_owner': conversation.author == user,
         'csrf_input': csrf_input(request),
         'comment_content': comment_content,
+        'voted': voted or None,
+        'login_anchor': login_anchor,
     }

@@ -15,24 +15,27 @@
 
 
 {% block content %}
-    {% if voted == False %}
+{% if voted == None %}
         <div class="Modalities">
             <div class="swiper-container">
                 <div class="swiper-wrapper">
                     <div class="swiper-slide">
-                        {{modalities(_("Welcome"), modalicon(["fa-times", "fa-arrow-right", "fa-check"]), [_("You started your participation! Start voting in comments: you can agree, desagree or pass if you want to vote after")])}}
+                        {{modalities(_("Welcome"), modalicon(["fa-times", "fa-arrow-right", "fa-check"]),
+                            [_("You started your participation! Start voting in comments: you can agree, desagree or pass if you want to vote after")])}}
                         <div class="append-buttons">
-                            <a href="#">NEXT</a>
+                            <a class="next-slide-1" href="#">NEXT</a>
                         </div>
                     </div>
                     <div class="swiper-slide">
-                        {{modalities(_("Participation"), modalimg({'/static/img/icons/artboard.svg' : 'imgpart'}), [_("From your votes, you will be setted up in a opnion group, and you will can get powers that it will help you to diversify dialogues and sticking opnion bubbles!")])}}
+                        {{modalities(_("Participation"), modalimg({'/static/img/icons/artboard.svg' : 'imgpart'}),
+                            [_("From your votes, you will be setted up in a opnion group, and you will can get powers that it will help you to diversify dialogues and sticking opnion bubbles!")])}}
                         <div class="append-buttons">
-                            <a href="#">NEXT</a>
+                            <a class="next-slide-2" href="#">NEXT</a>
                         </div>
                      </div>
                     <div class="swiper-slide">
-                        {{modalities(_("Powers"), modalimg({'/static/img/icons/iconponte.svg' : 'img', '/static/img/icons/iconativista.svg' : 'img'}), [_("With the powers, Minority Activist, Dialogue Brigde and Sticks Bubble, you will get more speech powers, increasing your comment limit and/or their visibility!")])}}
+                        {{modalities(_("Powers"), modalimg({'/static/img/icons/iconponte.svg' : 'img', '/static/img/icons/iconativista.svg' : 'img'}),
+                            [_("With the powers, Minority Activist, Dialogue Brigde and Sticks Bubble, you will get more speech powers, increasing your comment limit and/or their visibility!")])}}
                         <form method="post">
                             {{ csrf_input }}
                             <button type="submit" name="modalities" class="Button" value="pass">CONTINUE PARTICIPATING</button>
@@ -43,51 +46,8 @@
                 <div class="swiper-button-next"></div>
                 <div class="swiper-button-prev"></div>
             </div>
-            <script>
-
-                var nextArrow = document.createElement('i');
-                var prevArrow = document.createElement('i');
-                
-                nextArrow.setAttribute('class', 'fas fa-angle-right')
-                prevArrow.setAttribute('class', 'fas fa-angle-left')
-
-                $(".swiper-button-next").css('cssText', 'background-image: none')
-                $(".swiper-button-prev").css('cssText', 'background-image: none')
-
-                var nextBtnDiv = $(".swiper-button-next");
-                var prevBtnDiv = $(".swiper-button-prev");
-
-                nextBtnDiv.append(nextArrow);
-                prevBtnDiv.append(prevArrow);
-
-                var swiper = new Swiper('.swiper-container', {
-                    pagination: {
-                        el: '.swiper-pagination',
-                    },
-                    navigation: {
-                        nextEl: '.swiper-button-next',
-                        prevEl: '.swiper-button-prev',
-                    },
-                });
-                document.querySelector('.next-slide-1').addEventListener('click', function (e) {
-                e.preventDefault();
-                swiper.slideTo(1, 0);
-                });
-                document.querySelector('.next-slide-2').addEventListener('click', function (e) {
-                e.preventDefault();
-                swiper.slideTo(2, 0);
-                });
-            </script>
-            <script>
-                function showModalities-slider() {
-                    var x = document.getElementByClassName("Modalities-slider");
-                    x.className = "show";
-                }
-            </script>
-            <script>
-                showModalities-slider()
-            </script>
-        </div>
+            <script src="/static/js/slider-modalities-conversation.js" defer></script>
+</div>
 {#}    {% else %}
 
 
@@ -100,7 +60,7 @@
                             <i class="fa fa-times"></i>
                         </button>
                     </form>
-                    {{modalities(_("Minority Activist"), modalimg({'/static/img/icons/iconativista.svg' : 'imgponte'}), [_("O seu grupo parece concordar com você! Mas você votou contrário à maioria nesse comentário."), _("Todas as regiões devem ser priorizados nas relações do Brazil. EUA e países do eixo Sul-Sul!"), _("Para exercer o seu poder de ativista escolha fazer um comentário promovido extra ou promover um comentário seu já criado na conversa")])}}            
+                    {{modalities(_("Minority Activist"), modalimg({'/static/img/icons/iconativista.svg' : 'imgponte'}), [_("O seu grupo parece concordar com você! Mas você votou contrário à maioria nesse comentário."), _("Todas as regiões devem ser priorizados nas relações do Brazil. EUA e países do eixo Sul-Sul!"), _("Para exercer o seu poder de ativista escolha fazer um comentário promovido extra ou promover um comentário seu já criado na conversa")])}}
                     <form method="post">
                         <button type="submit" class="Button">QUERO IR</button>
                     </form>
@@ -128,7 +88,7 @@
                             <i class="fa fa-times"></i>
                         </button>
                     </form>
-                    {{modalities(_("Dialogue Brigde"), modalimg({'/static/img/icons/iconponte.svg' : 'imgponte'}), [_("Você recebeu o poder Ponte de diálogo, porque, de acordo com as suas opiniões, você está próximo da borda do seu grupo de opinião"), _("Para exercer o seu poder de ponte, escolha fazer um comentário promovido extra ou promover um comentário seu já criado na conversa")])}}            
+                    {{modalities(_("Dialogue Brigde"), modalimg({'/static/img/icons/iconponte.svg' : 'imgponte'}), [_("Você recebeu o poder Ponte de diálogo, porque, de acordo com as suas opiniões, você está próximo da borda do seu grupo de opinião"), _("Para exercer o seu poder de ponte, escolha fazer um comentário promovido extra ou promover um comentário seu já criado na conversa")])}}
                     <form method="post">
                         <button type="submit" class="Button">QUERO IR</button>
                     </form>
@@ -144,7 +104,7 @@
         <script>
             showModalities-slider()
         </script>
-        
+
         Modal estático para implementação do dataviz (Grupos de opiniões)
         <div class="Modalities">
             <div class="style-slide-center">
@@ -154,7 +114,7 @@
                             <i class="fa fa-times"></i>
                         </button>
                     </form>
-                    {{modalities(_("Opinion groups"), modalimg({'/static/img/icons/artboard.svg' : 'imgopn'}), [_("A partir de uma certa quantidadde de votos, os participantes serão classificados em grupos de opinião, assim poderão ser analisados os dados estatisticos desta conversa")])}}            
+                    {{modalities(_("Opinion groups"), modalimg({'/static/img/icons/artboard.svg' : 'imgopn'}), [_("A partir de uma certa quantidadde de votos, os participantes serão classificados em grupos de opinião, assim poderão ser analisados os dados estatisticos desta conversa")])}}
                     <form method="post">
                         <button type="submit" class="Button">BACK</button>
                     </form>
@@ -181,27 +141,39 @@
         {{ conversation|role('balloon') }}
 
         {# Current comment #}
-        <div class="ConversationDetail-header"><h1>{{ _('Comments') }}</h1></div>
-        {% if comment %}
-            {{ comment|role('card') }}
-        {% else %}
-            <div class="Comment">
-                <h1>{{ _('Congratulations!') }}</h1>
-                <p>{{ _("There are no comments left to vote :)") }}</p>
-                 <p>
-                    {# FIXME Add a less hardcoded pluralization  #}
-                    {{ _("You have {} comment{} under moderation.").format(comments_under_moderation, "" if comments_under_moderation == 1 else "s")}}
-                    {% if comments_under_moderation > 0 %}
-                        {{ link(_('Click here'), href='/profile/') }}
-                        {{ _("to see {}.").format("it" if comments_under_moderation == 1 else "them") }}
-                    {% endif %}
-                </p>
+        <div class="ConversationDetail-header">
+            <h1>{{ _('Comments') }}</h1>
+        </div>
+        <div class="Comment">
+            <div class="CommentCard">
+                {% if comment %}
+                    {{ comment|role('card') }}
+                {% else %}
+                        <h1>{{ _('Congratulations!') }}</h1>
+                        <p>{{ _("There are no comments left to vote :)") }}</p>
+                         <p>
+                            {# FIXME Add a less hardcoded pluralization  #}
+                            {{ _("You have {} comment{} under moderation.").format(comments_under_moderation, "" if comments_under_moderation == 1 else "s")}}
+                            {% if comments_under_moderation > 0 %}
+                                {{ link(_('Click here'), href='/profile/') }}
+                                {{ _("to see {}.").format("it" if comments_under_moderation == 1 else "them") }}
+                            {% endif %}
+                        </p>
+                {% endif %}
             </div>
-        {% endif %}
 
+            {# Post a new comment #}
+            {{ conversation|role('comment-form', comment_content=comment_form) }}
+        </div>
+        <div class="Comment-create">
+            <p>
+                <button onclick="showForm($(this))" id="button-create">
+                    <i class="fas fa-plus"></i> {{ _("CREATE COMMENT") }}
+                </button>
+            </p>
 
-
-        {# Post a new comment #}
-        {{ conversation|role('comment-form', comment_content=comment_form) }}
+            <p>{{ _("{}/{} comment{}.").format(comments_made, max_comments if can_comment else 0, "" if max_comments == 1 else "s")}}</p>
+            <p>{{ _("{} waiting moderation.").format(comments_under_moderation)}}</p>
+        </div>
     </div>
 {% endblock %}

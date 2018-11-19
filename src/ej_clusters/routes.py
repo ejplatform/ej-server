@@ -29,7 +29,7 @@ urlpatterns = Router(
 #
 # Cluster info
 #
-@urlpatterns.route('conversations/<model:conversation>/clusters/',
+@urlpatterns.route('conversations/<model:conversation>/clusters/', template='ej_clusters/list-cluster.jinja2',
                    perms=['ej.can_edit_conversation'])
 def index(conversation):
     clusters = proxy_seq(
@@ -70,6 +70,7 @@ def clusterize(conversation):
 @urlpatterns.route('conversations/<model:conversation>/stereotypes/',
                    perms=['ej.can_manage_stereotypes'])
 def stereotype_list(conversation):
+    print(conversation.stereotypes.all())
     return {
         'content_title': _('Stereotypes'),
         'conversation_title': conversation.title,
@@ -77,6 +78,18 @@ def stereotype_list(conversation):
         'stereotype_url': conversation.get_absolute_url() + 'stereotypes/',
         'conversation_url': conversation.get_absolute_url(),
     }
+
+
+@urlpatterns.route('conversations/<model:conversation>/stereotypes/add/',
+                   perms=['ej.can_manage_stereotypes'])
+def create_stereotype(request, conversation):
+    return create_stereotype_context(request, conversation)
+
+
+@urlpatterns.route('conversations/<model:conversation>/stereotypes/<model:stereotype>/edit/',
+                   perms=['ej.can_manage_stereotypes'])
+def edit_stereotype(request, conversation, stereotype):
+    return edit_stereotype_context(request, conversation, stereotype)
 
 
 @urlpatterns.route('conversations/<model:conversation>/stereotypes/<model:stereotype>/',
@@ -102,18 +115,6 @@ def stereotype_vote(request, conversation, stereotype):
         'non_voted_comments_count': non_voted_comments.count(),
         'voted_comments_count': non_voted_comments.count(),
     }
-
-
-@urlpatterns.route('conversations/<model:conversation>/stereotypes/add/',
-                   perms=['ej.can_manage_stereotypes'])
-def create_stereotype(request, conversation):
-    return create_stereotype_context(request, conversation)
-
-
-@urlpatterns.route('conversations/<model:conversation>/stereotypes/<model:stereotype>/edit/',
-                   perms=['ej.can_manage_stereotypes'])
-def edit_stereotype(request, conversation, stereotype):
-    return edit_stereotype_context(request, conversation, stereotype)
 
 
 #

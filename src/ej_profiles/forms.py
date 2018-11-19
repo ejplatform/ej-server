@@ -4,7 +4,7 @@ from django.conf import settings
 from . import models
 
 EDITABLE_FIELDS = ['city', 'state', 'country', 'gender', 'race', 'ethnicity', 'political_activity',
-                   'biography', 'birth_date', 'occupation', 'education', 'image']
+                   'biography', 'birth_date', 'occupation', 'education', 'profile_photo']
 EXCLUDE_EDITABLE_FIELDS = settings.EJ_EXCLUDE_PROFILE_FIELDS
 
 
@@ -36,4 +36,4 @@ class ProfileForm(ModelForm):
 class ProfileImageForm(ModelForm):
     class Meta:
         model = models.Profile
-        fields = ['image']
+        fields = ['profile_photo']

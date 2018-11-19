@@ -7,4 +7,4 @@ Guia de Desenvolvimento
 
    install
    contribuicoes
-
+   social-login
