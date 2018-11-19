@@ -45,6 +45,8 @@ def get_conversation_detail_context(request, conversation):
     user = request.user
     is_favorite = user.is_authenticated and conversation.followers.filter(user=user).exists()
     comment = None
+    voted = None
+
     comment_form = CommentForm(None, conversation=conversation)
     # User is voting in the current comment. We still need to choose a random
     # comment to display next.
@@ -78,7 +80,6 @@ def get_conversation_detail_context(request, conversation):
         log.warning(f'user {user.id} se nt invalid POST request: {request.POST}')
         return HttpResponseServerError('invalid action')
 
-    voted = None
     n_comments_under_moderation = rules.compute('ej_conversations.comments_under_moderation', conversation, user)
     if user.is_authenticated:
         voted = Vote.objects.filter(author=user).exists()
