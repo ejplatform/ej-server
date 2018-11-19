@@ -16,10 +16,22 @@ $login-new-user-background-color: #052B47 !default;
     padding: $spacing-unit;
     text-align: center;
     font-family: $font-paragraph;
+    margin: 0px;
 
+    a {
+        color: $color-primary;
+        font-family: $font-paragraph;
+        font-size: $font-size-small;
+    }
+    p {
+        text-align: center;
+        font-family: $font-paragraph;
+        margin: 0px 0px $spacing-unit-small 0px;
+    }
     h1 {
-        color: $login-title-color;
-        font-size: $login-title-size;
+        color: $color-accent;
+        font-size: $font-size-larger;
+        margin: 0px;
     }
     input,
     textarea,
@@ -28,7 +40,7 @@ $login-new-user-background-color: #052B47 !default;
         display: block;
         margin-left: auto;
         margin-right: auto;
-        height: 50px;
+        height: $spacing-unit + $spacing-unit-small;
     }
     input {
         width: $layout-compact-container-width / 2;
@@ -37,19 +49,20 @@ $login-new-user-background-color: #052B47 !default;
         display: block;
         margin-top: $spacing-unit;
         border: none;
-        width: 180px;
+        width: $spacing-unit-huge - $spacing-unit-tiny;
         height: 38px;
         box-shadow: none
     }
     a[class=Button] {
-        min-width: 200px;
+        min-width: $spacing-unit-huge * 2 - $spacing-unit - $spacing-unit-small;
         padding: 12px;
+        color: $color-content-text;
     }
     &-icon {
-        border-radius: 50%;
-        height: $login-icon-size;
-        margin: $spacing-unit-large auto;
-        width: $login-icon-size;
+        height: $spacing-unit-huge + $spacing-unit-large;
+        margin: $spacing-unit-small auto;
+        padding: 0px 0px 0px $spacing-unit;
+        width: $spacing-unit-huge * 2 - $spacing-unit-small;
         img > * {
             color: $color-hint;
         }
@@ -103,9 +116,12 @@ $login-new-user-background-color: #052B47 !default;
     &-newUser {
         margin: $spacing-unit auto;
         width: 85%;
+        border-top: 1px solid $color-primary;
+        padding: $spacing-unit-small 0px 0px 0px;
         h1 {
             color: $color-content;
-            font-size: $font-size-h3;
+            font-size: $font-size-default;
+            font-family: $font-paragraph;
             display: inline;
         }
         .Button {
@@ -120,5 +136,14 @@ $login-new-user-background-color: #052B47 !default;
         z-index: -1;
         display: none;
         width: 100vw;
+    }
+    .Name-field {
+        font-size: $font-size-tiny;
+        text-align: left;
+        font-family: $font-paragraph;
+        font-weight: bold;
+        margin: auto;
+        max-width: $spacing-unit-huge * 2 + $spacing-unit-small + $spacing-unit-tiny;
+        color: $color-primary;
     }
 }
