@@ -439,7 +439,7 @@ $modalities-content-width-max: ($page-content-width-max / 2) - 29 !default;
 
 }
 
-.Modalities-slider{
+.Modalities{
     display: flex;
     align-content: center;
     flex-direction: column;
@@ -477,7 +477,7 @@ $modalities-content-width-max: ($page-content-width-max / 2) - 29 !default;
         width: $spacing-unit-huge * 3;
         line-height: 1.2;
         bottom: auto;
-        background-color: $color-content;
+        background-color: $color-background;
         text-align: center;
         border-radius: $spacing-unit-tiny;
         position: relative;
@@ -632,7 +632,6 @@ $modalities-content-width-max: ($page-content-width-max / 2) - 29 !default;
 
     .style-slide{
         margin: 0px;
-        max-width: $modalities-content-width-max;
         width: $spacing-unit-huge * 3;
         line-height: 1.2;
         bottom: auto;

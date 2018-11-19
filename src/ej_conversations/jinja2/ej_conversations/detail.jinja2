@@ -15,24 +15,27 @@
 
 
 {% block content %}
-    {% if voted == False %}
+{% if voted == None %}
         <div class="Modalities">
             <div class="swiper-container">
                 <div class="swiper-wrapper">
                     <div class="swiper-slide">
-                        {{modalities(_("Welcome"), modalicon(["fa-times", "fa-arrow-right", "fa-check"]), [_("You started your participation! Start voting in comments: you can agree, desagree or pass if you want to vote after")])}}
+                        {{modalities(_("Welcome"), modalicon(["fa-times", "fa-arrow-right", "fa-check"]),
+                            [_("You started your participation! Start voting in comments: you can agree, desagree or pass if you want to vote after")])}}
                         <div class="append-buttons">
-                            <a href="#">NEXT</a>
+                            <a class="next-slide-1" href="#">NEXT</a>
                         </div>
                     </div>
                     <div class="swiper-slide">
-                        {{modalities(_("Participation"), modalimg({'/static/img/icons/artboard.svg' : 'imgpart'}), [_("From your votes, you will be setted up in a opnion group, and you will can get powers that it will help you to diversify dialogues and sticking opnion bubbles!")])}}
+                        {{modalities(_("Participation"), modalimg({'/static/img/icons/artboard.svg' : 'imgpart'}),
+                            [_("From your votes, you will be setted up in a opnion group, and you will can get powers that it will help you to diversify dialogues and sticking opnion bubbles!")])}}
                         <div class="append-buttons">
-                            <a href="#">NEXT</a>
+                            <a class="next-slide-2" href="#">NEXT</a>
                         </div>
                      </div>
                     <div class="swiper-slide">
-                        {{modalities(_("Powers"), modalimg({'/static/img/icons/iconponte.svg' : 'img', '/static/img/icons/iconativista.svg' : 'img'}), [_("With the powers, Minority Activist, Dialogue Brigde and Sticks Bubble, you will get more speech powers, increasing your comment limit and/or their visibility!")])}}
+                        {{modalities(_("Powers"), modalimg({'/static/img/icons/iconponte.svg' : 'img', '/static/img/icons/iconativista.svg' : 'img'}),
+                            [_("With the powers, Minority Activist, Dialogue Brigde and Sticks Bubble, you will get more speech powers, increasing your comment limit and/or their visibility!")])}}
                         <form method="post">
                             {{ csrf_input }}
                             <button type="submit" name="modalities" class="Button" value="pass">CONTINUE PARTICIPATING</button>
@@ -43,51 +46,8 @@
                 <div class="swiper-button-next"></div>
                 <div class="swiper-button-prev"></div>
             </div>
-            <script>
-
-                var nextArrow = document.createElement('i');
-                var prevArrow = document.createElement('i');
-
-                nextArrow.setAttribute('class', 'fas fa-angle-right')
-                prevArrow.setAttribute('class', 'fas fa-angle-left')
-
-                $(".swiper-button-next").css('cssText', 'background-image: none')
-                $(".swiper-button-prev").css('cssText', 'background-image: none')
-
-                var nextBtnDiv = $(".swiper-button-next");
-                var prevBtnDiv = $(".swiper-button-prev");
-
-                nextBtnDiv.append(nextArrow);
-                prevBtnDiv.append(prevArrow);
-
-                var swiper = new Swiper('.swiper-container', {
-                    pagination: {
-                        el: '.swiper-pagination',
-                    },
-                    navigation: {
-                        nextEl: '.swiper-button-next',
-                        prevEl: '.swiper-button-prev',
-                    },
-                });
-                document.querySelector('.next-slide-1').addEventListener('click', function (e) {
-                e.preventDefault();
-                swiper.slideTo(1, 0);
-                });
-                document.querySelector('.next-slide-2').addEventListener('click', function (e) {
-                e.preventDefault();
-                swiper.slideTo(2, 0);
-                });
-            </script>
-            <script>
-                function showModalities-slider() {
-                    var x = document.getElementByClassName("Modalities-slider");
-                    x.className = "show";
-                }
-            </script>
-            <script>
-                showModalities-slider()
-            </script>
-        </div>
+            <script src="/static/js/slider-modalities-conversation.js" defer></script>
+</div>
 {#}    {% else %}
 
 
