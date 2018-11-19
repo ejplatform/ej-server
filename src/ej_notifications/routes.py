@@ -1,7 +1,7 @@
 from django.utils.translation import ugettext_lazy as _
 from boogie.router import Router
 
-from ej_notifications.models import Notification
+from ej_notifications.models import Notification, Channel, Message
 
 app_name = 'ej_notifications'
 urlpatterns = Router(
@@ -43,6 +43,12 @@ def clusters(request):
 @urlpatterns.route('inbox/')
 def inbox(request):
     user = request.user
+
+    channels = Channel.objects.filter(users=user)
+    messages = Message.objects.none()
+    for item in channels:
+        messages = messages | (Message.objects.filter(channel=item))
+    print(messages)
     return {
         'user': user,
         'notifications':[
@@ -57,6 +63,7 @@ def inbox(request):
                 "already_seen": False,
             }
         ],
+        'messages': messages
     }
 
 

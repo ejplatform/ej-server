@@ -7,6 +7,11 @@
     width: 90vw;
     margin: 0 auto;
 
+    &-body {
+        display: flex;
+        flex-direction: column;
+    }
+
     &-config {
         &-title {
             display: flex;
@@ -57,7 +62,12 @@
         }
 
         p {
-            margin-top: 5vw;
+            margin: 0;
+        }
+
+        h6 {
+            margin: 0;
+            margin-top: $spacing-unit;
         }
         
         &-info {

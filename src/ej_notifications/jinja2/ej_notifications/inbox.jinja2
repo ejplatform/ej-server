@@ -38,20 +38,25 @@
             </div>
         </div>
         <div class="Inbox-notifications">
-            {% for item in notifications %}
-            {% if item.already_seen %}
+            {% for item in messages %}
+            {# {% if item.already_seen %}
                 {% set notification_class = "" %}
             {% else %}
                 {% set notification_class = "darken" %}
-            {% endif %}
-            <div class="Inbox-notifications-card {{notification_class}}">
+            {% endif %} #}
+            <div class="Inbox-notifications-card">
                 <div>
                 <div class="Inbox-notifications-circle"></div>
                 </div>
-                <p class="Inbox-notifications-description">
-                    {{item.notification}}
-                    <span class="Inbox-notifications-info">Restam: {{item.remaining_time}} hora(s)</span>
-                </p>
+                <div class="Inbox-notifications-body">
+                    <h6>{{item.title}}</h6>
+                    <p class="Inbox-notifications-description">
+                        {{ item.body}}
+                        {%if item.link != ''%}
+                            <span class="Inbox-notifications-info"> - {{item.link}}</span>
+                        {% endif %}
+                    </p>
+                </div>
             </div>
             {% endfor %}
         </div>
