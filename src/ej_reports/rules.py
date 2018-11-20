@@ -11,8 +11,7 @@ def can_edit_conversation(user, conversation):
     """
     if user.is_superuser:
         return True
-    elif user.has_perm('ej.can_edit_conversation', conversation):
-        if (conversation.limit_report_users == 0 or
-                not conversation.statistics()['participants']['commenters'] > conversation.limit_report_users):
-            return True
+    elif (conversation.limit_report_users == 0 or
+          not conversation.statistics()['participants']['commenters'] > conversation.limit_report_users):
+        return True
     return False

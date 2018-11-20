@@ -211,9 +211,9 @@ def report_participants(request, board, conversation):
 
 
 @urlpatterns.route(reports_url + 'scatter/', **reports_kwargs)
-def report_scatter(board, conversation):
+def report_scatter(request, board, conversation):
     assure_correct_board(conversation, board)
-    return report_routes.scatter(conversation)
+    return report_routes.scatter(request, conversation)
 
 
 @urlpatterns.route(reports_url + 'votes.<format>', **reports_kwargs)
