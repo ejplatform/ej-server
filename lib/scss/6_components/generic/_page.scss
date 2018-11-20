@@ -5,6 +5,11 @@
 
 $page-title-font-size: 1.1 * $font-size-h1 !default;
 
+// Background images
+$card-background-image-url: url(/static/img/icons/bg.png) !default;
+$page-background-image-url: url(/static/img/page-bg.svg) !default;
+
+
 .Page {
     box-sizing: border-box;
     display: flex;
@@ -23,8 +28,28 @@ $page-title-font-size: 1.1 * $font-size-h1 !default;
         }
     }
 
+    &-content-container {
+        display: flex;
+
+        .NavMenu {
+            position: fixed;
+        }
+    }
+    
+    @media only screen and (min-width: 960px) {
+        &-content.logged-in, #docs {
+            padding-left: 400px !important;
+        }
+    }
+    
+    @media only screen and (max-width: 960px) {
+        .NavMenu-fixed {
+            display: none;
+        }
+    }
+
     &-mainContainer {
-        background: $page-background-image;
+        background: $page-background-image-url center no-repeat;
         background-size: contain;
         box-sizing: border-box;
         height: 100vh;

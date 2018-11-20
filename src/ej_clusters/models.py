@@ -50,10 +50,7 @@ class Clusterization(TimeStampedModel):
 
     @property
     def stereotypes(self):
-        return (
-            Stereotype.objects
-                .filter(clusters__in=self.clusters.all())
-        )
+        return Stereotype.objects.filter(clusters__in=self.clusters.all())
 
     class Meta:
         ordering = ['conversation_id']
@@ -309,4 +306,3 @@ def get_clusterization(conversation):
 Conversation.get_clusterization = get_clusterization
 Conversation._clusterization = lazy(get_clusterization)
 Conversation.clusters = delegate_to('_clusterization')
-Conversation.stereotypes = delegate_to('_clusterization')
