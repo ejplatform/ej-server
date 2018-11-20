@@ -83,11 +83,7 @@ def get_conversation_detail_context(request, conversation):
         return HttpResponseServerError('invalid action')
 
     n_comments_under_moderation = rules.compute('ej_conversations.comments_under_moderation', conversation, user)
-    if user.is_authenticated:
-        comments_made = user.comments.filter(conversation=conversation).count()
-    else:
-        comments_made = 0
-
+    comments_made = rules.compute('ej_conversations.comments_made', conversation, user)
     return {
         # Objects
         'conversation': conversation,
