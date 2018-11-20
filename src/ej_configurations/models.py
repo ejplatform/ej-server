@@ -7,10 +7,9 @@ from boogie.rest import rest_api
 from boogie.fields import EnumField, Enum
 from hyperpython import a, div, Text
 
-from ej_conversations.validators import validate_color
 from .icons import default_icon_name
 from .sanitizer import sanitize_html
-from .validators import validate_icon_name
+from .validators import validate_icon_name, validate_color
 
 
 class Format(Enum):
