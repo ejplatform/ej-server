@@ -4,7 +4,6 @@
 
 @import '../2_tools/index';
 
-$error-title-color: $color-white !default;
 $error-title-font-size: 86px  !default;
 $error-background-color: $color-primary !default;
 $error-content-height: 70vh !default;
@@ -31,7 +30,7 @@ $error-content-height: 70vh !default;
 
     h1 {
         margin: 0;
-        color: $error-title-color;
+        color: $color-primary-text;
         font-family: $font-raleway;
         font-size: $error-title-font-size;
     }
@@ -42,7 +41,7 @@ $error-content-height: 70vh !default;
       line-height: $line-height;
       font-family: $font-raleway;
       text-transform: uppercase;
-      color: $color-purple-dark;
+      color: $color-content;
     }
 
 }
