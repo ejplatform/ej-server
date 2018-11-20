@@ -9,28 +9,26 @@
         <div class="ConversationDetail-header">
             <h1>{{ _('Comments') }}</h1>
         </div>
-        <div class="ConversationDetail-content">
-            <div class="Comment">
-                <div class="CommentCard">
-                    {% if comment %}
-                        {{ comment|role('card') }}
-                    {% else %}
-                            <h1>{{ _('Congratulations!') }}</h1>
-                            <p>{{ _("There are no comments left to vote :)") }}</p>
-                             <p>
-                                {# FIXME Add a less hardcoded pluralization  #}
-                                {{ _("You have {} comment{} under moderation.").format(comments_under_moderation, "" if comments_under_moderation == 1 else "s")}}
-                                {% if comments_under_moderation > 0 %}
-                                    {{ link(_('Click here'), href='/profile/') }}
-                                    {{ _("to see {}.").format("it" if comments_under_moderation == 1 else "them") }}
-                                {% endif %}
-                            </p>
-                    {% endif %}
-                </div>
-
-                {# Post a new comment #}
-                {{ conversation|role('comment-form', comment_content=comment_form) }}
+        <div class="Comment">
+            {{ conversation|role('comment-form', comment_content=comment_form) }}
+            <div class="CommentCard">
+                {% if comment %}
+                    {{ comment|role('card') }}
+                {% else %}
+                        <h1>{{ _('Congratulations!') }}</h1>
+                        <p>{{ _("There are no comments left to vote :)") }}</p>
+                            <p>
+                            {# FIXME Add a less hardcoded pluralization  #}
+                            {{ _("You have {} comment{} under moderation.").format(comments_under_moderation, "" if comments_under_moderation == 1 else "s")}}
+                            {% if comments_under_moderation > 0 %}
+                                {{ link(_('Click here'), href='/profile/') }}
+                                {{ _("to see {}.").format("it" if comments_under_moderation == 1 else "them") }}
+                            {% endif %}
+                        </p>
+                {% endif %}
             </div>
+
+            {# Post a new comment #}
             <div class="Comment-create">
                 <p>
                     <button onclick="showForm($(this))" id="button-create">
