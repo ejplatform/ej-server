@@ -10,6 +10,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         ruby-sass \
         python3-setuptools \
         unzip \
+        cron\
  && pip3 install --upgrade pip setuptools invoke~=0.23 \
  && ln -s /usr/bin/python3 /usr/bin/python \
  && ln -s /usr/bin/pip3 /usr/bin/pip \

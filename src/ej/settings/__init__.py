@@ -54,6 +54,14 @@ class Conf(ThemesConf,
         }
     }
 
+    #
+    # Django-Crontab jobs
+    #
+    CRONTAB_DJANGO_MANAGE_PATH = "/app/manage.py"
+    CRONJOBS = [
+        ('* * * * *', 'ej.backup.run_backup')
+    ]
+    
     # MANAGER CONFIGURATION
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#admins
     MANAGERS = ADMINS = [

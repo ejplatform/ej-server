@@ -31,7 +31,7 @@ services:
       - static_files:/app/local/static/
       - docs:/app/build/docs/
       - nginx_conf:/etc/nginx/conf.d/
-    command: clean db -m db-assets sass collect  gunicorn
+    command: clean db -m db-assets sass collect gunicorn
 
   postgres:
     image: postgres:10-alpine

@@ -74,6 +74,10 @@ def run(ctx, no_toolbar=False, theme=None):
     if no_toolbar:
         env['DISABLE_DJANGO_DEBUG_TOOLBAR'] = 'true'
     else:
+
+        do = runner(ctx, False, pty=True)
+        do('service cron start')
+        manage(ctx, 'crontab add')
         manage(ctx, 'runserver 0.0.0.0:8000', env=env)
 
 
