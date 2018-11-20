@@ -7,9 +7,9 @@ def see_login_button(context):
     find_by_css(context, '.Header-lowerNotLogged')
 
 
-@then('I see the conversations')
-def see_conversations(context):
-    find_by_css(context, '.Page home')
+@then('I see the promoted conversations')
+def see_promoted_conversations(context):
+    # context.browser.screenshot(full=True)
     find_by_css(context, '.ConversationCard-container')
 
 
@@ -20,8 +20,9 @@ def see_profile_button(context):
 
 @then('I see the side menu')
 def see_the_side_menu(context):
-#     b = context.browser
-#     e = b.find_by_css('.NavMenu')
-#     print(e)
-#     assert e
     find_by_css(context, '.NavMenu')
+
+
+@then('I see the conversations button')
+def see_conversations_button(context):
+    find_by_css(context, '.conversations-link')
