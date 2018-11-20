@@ -127,6 +127,7 @@ def comment_list_item(comment, **kwargs):
         'disagree': comment.disagree_count,
     }
 
+
 @with_template(models.Comment, role='reject-reason')
 def comment_reject_reason(comment, **kwargs):
     """
@@ -146,6 +147,7 @@ def comment_reject_reason(comment, **kwargs):
         'status_name': dict(models.Comment.STATUS)[comment.status].capitalize(),
         'rejection_reason': rejection_reason
     }
+
 
 @with_template(models.Conversation, role='comment-form')
 def comment_form(conversation, request=None, comment_content=None, **kwargs):
