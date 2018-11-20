@@ -52,6 +52,8 @@ def is_personal_conversations_enabled():
 def next_comment(conversation, user):
     """
     Return a randomly selected comment for the user to vote.
+    It will first choose a comment from promoted comments, then
+    from user own unvoted comments and then the rest of the comments
     """
     unvoted_promoted_comments = promoted_comments_in_conversation(user,
                                                                   conversation).filter(~Q(votes__author_id=user.id),)
@@ -67,7 +69,6 @@ def next_comment(conversation, user):
     if own_size:
         return unvoted_own_comments[randrange(0, own_size)]
 
-    # TODO if there are any promoted comments, they should be shown before others
     unvoted_comments = conversation.approved_comments.filter(
         ~Q(author_id=user.id),
         ~Q(votes__author_id=user.id),

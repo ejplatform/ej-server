@@ -2,17 +2,19 @@ from django.contrib.auth.models import AnonymousUser
 from ej_powers.models import GivenPower, CommentPromotion
 from ej_conversations.models import Conversation, Comment
 from rules import predicate
+from ej_powers.models import GivenBridgePower, GivenMinorityPower
 
 
 @predicate
-def is_opinion_bridge(user, conversation):
+def has_opinion_bridge_power(user, conversation):
     """
     Return true if user has the "opinion bridge"
     """
+    return GivenBridgePower.objects.filter(user=user, conversation=conversation).exists()
 
 
 @predicate
-def can_be_opinion_link(user, conversation):
+def can_be_opinion_bridge(user, conversation):
     """
     Opinion bridges sits between two clusters and may help to promote dialogue
     between both clusters.
@@ -20,12 +22,16 @@ def can_be_opinion_link(user, conversation):
 
 
 @predicate
-def is_group_activist(user, conversation):
-    pass
+def has_activist_power(user, conversation):
+    return GivenMinorityPower.objects.filter(user=user, conversation=conversation).exists()
 
 
 @predicate
-def can_be_group_activist(user, conversation):
+def can_be_activist(user, conversation):
+    """
+    Activist is someone that is in a cluster and agrees with most opinions, but
+    has some divergent opinion
+    """
     pass
 
 
@@ -34,12 +40,7 @@ def can_be_group_activist(user, conversation):
 #
 @predicate
 def can_promote_comment(user, conversation):
-    return conversation in self_promote_set(user)
-
-
-@predicate
-def can_promote_self_comment(user, conversation):
-    return conversation in self_promote_set(user)
+    return conversation in promote_set(user)
 
 
 def promote_set(user):
@@ -64,7 +65,3 @@ def promoted_comments_in_conversation(user, conversation):
         return comments
     else:
         return Comment.objects.none()
-
-
-def self_promote_set(user):
-    pass

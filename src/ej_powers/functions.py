@@ -52,24 +52,6 @@ def clean_expired_promotions():
         log.info(f'excluded {size} expired promotions')
 
 
-def _give_promotion_power(power_class, user, conversation, users, expires=None):
-    """
-    Give user power to promote comments
-    Args:
-        power_class(GivenMinorityPower or GivenBridgePower): kind of power that will be given
-        user (User): that power will be given
-        conversation(Conversation): conversation that power will be available
-        users (Queryset User): Group that will be affected by this power
-    Returns: (GivenMinorityPower or GivenBridgePower) Power object
-    """
-    expires = expires or timezone.now() + DEFAULT_EXPIRATION_TIME_DELTA
-    power = power_class(user=user, conversation=conversation, end=expires)
-
-    power.set_affected_users(users)
-    power.save()
-    return power
-
-
 def give_minority_power(user, conversation, users, expires=None):
     """
     Create Minority power for user to promote comments
@@ -93,6 +75,24 @@ def give_bridge_power(user, conversation, users, expires=None):
     Returns:  Created GivenBridgePower object
     """
     return _give_promotion_power(models.GivenBridgePower, user, conversation, users, expires)
+
+
+def _give_promotion_power(power_class, user, conversation, users, expires=None):
+    """
+    Give user power to promote comments
+    Args:
+        power_class(GivenMinorityPower or GivenBridgePower): kind of power that will be given
+        user (User): that power will be given
+        conversation(Conversation): conversation that power will be available
+        users (Queryset User): Group that will be affected by this power
+    Returns: (GivenMinorityPower or GivenBridgePower) Power object
+    """
+    expires = expires or timezone.now() + DEFAULT_EXPIRATION_TIME_DELTA
+    power = power_class(user=user, conversation=conversation, end=expires)
+
+    power.set_affected_users(users)
+    power.save()
+    return power
 
 
 def clean_expired_promotion_powers():
