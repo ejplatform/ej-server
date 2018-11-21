@@ -139,7 +139,7 @@ def comment_form(conversation, request=None, comment_content=None, **kwargs):
     login = reverse('auth:login')
     login_anchor = a(_('login'), href=f'{login}?next={conversation_url}')
     return {
-        'can_comment': user.has_perm('ej.can_comment', conversation),
+        'can_comment': user.is_authenticated,
         'comments_left': n_comments,
         'user_is_owner': conversation.author == user,
         'csrf_input': csrf_input(request),

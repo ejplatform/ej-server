@@ -38,7 +38,7 @@ input:not([type]),
 textarea,
 select,
 .FormItem {
-    border-radius: $button-border-radius;
+    border-radius: $border-radius-small + $border-radius-tiny;
     background: $color-background;
     border: 1px solid $color-primary;
     color: $color-content;
