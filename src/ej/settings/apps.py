@@ -25,7 +25,6 @@ class InstalledAppsConf(Base, EjOptions):
         'taggit',
         'rules',
         'allauth',
-        'django_crontab',
         'allauth.account',
         'allauth.socialaccount',
         'allauth.socialaccount.providers.facebook',
