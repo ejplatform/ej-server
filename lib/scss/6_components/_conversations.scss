@@ -433,212 +433,250 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
 
 }
 
-.Comment-create{
-    position: relative;
-    justify-content: center;
-    button {
-        padding: $spacing-unit 0px 0px 0px;
-        color: $color-accent;
-        background: transparent no-repeat;
-        border: none;
-        cursor: pointer;
-        overflow: hidden;
-        outline: none;
-        font-weight: bold;
-    }
-    p {
-        text-align: center;
-    }
-}
-.Comment {
-    position: relative;
-    min-height: 300px !important;
-    width: 100% !important;
-    max-width: $header-wrapper-max-width;
-    margin: 0 auto;
-    padding-bottom: $spacing-unit-large;
-    .CommentCard {
-        left: 0;
-        right: 0;
-        margin: auto;
+.ConversationDetail-content{
+    .Comment-create{
         position: relative;
-        box-sizing: border-box;
-        border-radius: $border-radius-large;
-        font-size: $font-size-h3;
-        max-width: $page-content-width-max;
+        justify-content: center;
+        button {
+            padding: $spacing-unit 0px 0px 0px;
+            color: $color-accent;
+            background: transparent no-repeat;
+            border: none;
+            cursor: pointer;
+            overflow: hidden;
+            outline: none;
+            font-weight: bold;
+        }
+        p {
+            text-align: center;
+        }
+    }
+    .Comment {
+        position: relative;
         min-height: 300px !important;
         width: 100% !important;
-        z-index: 3;
-        padding: ($spacing-unit-large - $spacing-unit-tiny) ($spacing-unit-large - $spacing-unit-small);
-        background-color: $color-primary;
-        color: $color-content-text;
+        max-width: $header-wrapper-max-width;
+        margin: 0 auto;
+        padding-bottom: $spacing-unit-large;
 
-        &-counter {
-            text-align: center;
-            p {
-                margin: 0;
-            }
-        }
+        .CommentCard {
+            left: 0;
+            right: 0;
+            margin: auto;
+            position: absolute;
+            box-sizing: border-box;
+            border-radius: $border-radius-large;
+            font-size: $font-size-h3;
+            max-width: $page-content-width-max;
+            min-height: 300px !important;
+            width: 100% !important;
+            z-index: 3;
+            padding: ($spacing-unit-large - $spacing-unit-tiny) ($spacing-unit-large - $spacing-unit-small);
+            background-color: $color-primary;
+            color: $color-content-text;
 
-        img {
-            background: $color-primary-text;
-            border: 1px solid #fff;
-            border-radius: $spacing-unit-large;
-            padding: 4px $spacing-unit-tiny;
-        }
-
-        i.fa {
-            background: $color-primary-text;
-            border: 2px solid #fff;
-            border-radius: $spacing-unit-large;
-            padding: $spacing-unit-tiny;
-        }
-
-        &-voteArea {
-            button {
-                border: none;
-                border-radius: 50%;
-                background: $color-primary-text;
-                padding: 0;
-            }
-
-            ul {
-                display: flex;
-                font-weight: bold;
-                margin: 0;
-                padding: 0;
-                text-transform: uppercase;
-                width: 100%;
-
-                span {
-                    font-size: $font-size-small;
-                }
-
-                li {
-                    @extend .Col--center;
-                    list-style: none;
-                    flex-grow: 1;
-
-                    i.fa {
-                        background: #fff;
-                        height: $conversation-vote-circle-size;
-                        width: $conversation-vote-circle-size;
-                        padding: $spacing-padding;
-                        cursor: pointer;
-                        border: none;
-                    }
-                    &.voteAgree {
-                        width: ($spacing-unit + $spacing-unit-tiny);
-                        &:active {
-                            color: $color-content;
-                        }
-                        i.fa {
-                            color: $color-content;
-                            &:hover {
-                                background: $color-content;
-                                color: #fff;
-                            }
-                        }
-                    }
-                    &.voteSkip {
-                        width: ($spacing-unit + $spacing-unit-tiny);
-                        &:active {
-                            color: $color-primary;
-                        }
-                        i.fa {
-                            color: $color-primary;
-                            &:hover {
-                                background: $color-primary;
-                                color: #fff;
-                            }
-                        }
-                    }
-                    &.voteDisagree {
-                        width: ($spacing-unit + $spacing-unit-tiny);
-                        &:active {
-                            color: $color-accent;
-                        }
-                        i.fa {
-                            color: $color-accent;
-                            &:hover {
-                                background: $color-accent;
-                                color: #fff;
-                            }
-                        }
-                    }
+            &-counter {
+                text-align: center;
+                p {
+                    margin: 0;
                 }
             }
-        }
 
-        &-user {
-            font-size: $font-size-h5;
             img {
+                background: $color-primary-text;
+                border: 1px solid #fff;
+                border-radius: $spacing-unit-large;
+                padding: 4px $spacing-unit-tiny;
+            }
 
+            i.fa {
+                background: $color-primary-text;
+                border: 2px solid #fff;
+                border-radius: $spacing-unit-large;
+                padding: $spacing-unit-tiny;
+            }
+
+            &-voteArea {
+                button {
+                    border: none;
+                    border-radius: 50%;
+                    background: $color-primary-text;
+                    padding: 0;
+                }
+
+                ul {
+                    display: flex;
+                    font-weight: bold;
+                    margin: 0;
+                    padding: 0;
+                    text-transform: uppercase;
+                    width: 100%;
+
+                    span {
+                        font-size: $font-size-small;
+                    }
+
+                    li {
+                        @extend .Col--center;
+                        list-style: none;
+                        flex-grow: 1;
+
+                        i.fa {
+                            background: #fff;
+                            height: $conversation-vote-circle-size;
+                            width: $conversation-vote-circle-size;
+                            padding: $spacing-padding;
+                            cursor: pointer;
+                            border: none;
+                        }
+                        &.voteAgree {
+                            width: ($spacing-unit + $spacing-unit-tiny);
+                            &:active {
+                                color: $color-content;
+                            }
+                            i.fa {
+                                color: $color-content;
+                                &:hover {
+                                    background: $color-content;
+                                    color: #fff;
+                                }
+                            }
+                        }
+                        &.voteSkip {
+                            width: ($spacing-unit + $spacing-unit-tiny);
+                            &:active {
+                                color: $color-primary;
+                            }
+                            i.fa {
+                                color: $color-primary;
+                                &:hover {
+                                    background: $color-primary;
+                                    color: #fff;
+                                }
+                            }
+                        }
+                        &.voteDisagree {
+                            width: ($spacing-unit + $spacing-unit-tiny);
+                            &:active {
+                                color: $color-accent;
+                            }
+                            i.fa {
+                                color: $color-accent;
+                                &:hover {
+                                    background: $color-accent;
+                                    color: #fff;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            &-user {
+                font-size: $font-size-h5;
+                img {
+
+                    @media only screen and (min-width: $breakpoint-medium - $breakpoint-small) {
+                        max-width: 6%;
+                    }
+                    @media only screen and (min-width: $breakpoint-small) {
+                        max-width: 3%;
+                    }
+
+                    color: $color-accent;
+                    margin-right: $spacing-unit-small;
+                    background: #fff;
+                }
+                i.fa {
+                    color: $color-accent;
+                    margin-right: $spacing-unit-small;
+                    background: #fff;
+                }
+            }
+        }
+        #commentform {
+            position: absolute;
+            left: 0;
+            right: 0;
+            margin: auto;
+            visibility: hidden;
+            max-width: $page-content-width-max;
+            min-height: 300px !important;
+            width: 100% !important;
+            box-sizing: border-box;
+            text-align: center;
+            background: $color-hint;
+            border-radius: $border-radius-large;
+            padding: ($spacing-unit-large - $spacing-unit-tiny) ($spacing-unit-large - $spacing-unit-small);
+            z-index: 5;
+
+            p {
+                margin: $spacing-unit-small ($spacing-unit + $spacing-unit-tiny);
+                color: $color-content;
+            }
+
+            textarea {
+                width: 100%;
+                margin: 0 0 0 0;
+                min-height: 3 * $font-size;
+                outline: none;
+                border: 2px solid $color-primary;
+                background: $color-content-text;
+                color: #333;
+                box-shadow: none;
+            }
+            #characters-count{
+                display: block;
+                text-align: right;
                 @media only screen and (min-width: $breakpoint-medium - $breakpoint-small) {
-                    max-width: 6%;
+                    padding: 0px;
                 }
                 @media only screen and (min-width: $breakpoint-small) {
-                    max-width: 3%;
+                    padding: 0px ($spacing-unit + $spacing-unit-tiny) 0px 0px;
                 }
-
-                color: $color-accent;
-                margin-right: $spacing-unit-small;
-                background: #fff;
             }
-            i.fa {
-                color: $color-accent;
-                margin-right: $spacing-unit-small;
-                background: #fff;
-            }
-        }
-    }
-    #commentform {
-        position: absolute;
-        left: 0;
-        right: 0;
-        margin: auto;
-        visibility: hidden;
-        max-width: $page-content-width-max;
-        min-height: 300px !important;
-        width: 100% !important;
-        box-sizing: border-box;
-        text-align: center;
-        background: $color-hint;
-        border-radius: $border-radius-large;
-        padding: ($spacing-unit-large - $spacing-unit-tiny) ($spacing-unit-large - $spacing-unit-small);
-        z-index: 5;
 
-        p {
-            margin: $spacing-unit-small ($spacing-unit + $spacing-unit-tiny);
-            color: $color-content;
-        }
-
-        textarea {
-            width: 100%;
-            margin: 0 0 0 0;
-            min-height: 3 * $font-size;
-            outline: none;
-            border: 2px solid $color-primary;
-            background: $color-content-text;
-            color: #333;
-            box-shadow: none;
-        }
-        #characters-count{
-            display: block;
-            text-align: right;
-            @media only screen and (min-width: $breakpoint-medium - $breakpoint-small) {
-                padding: 0px;
-            }
-            @media only screen and (min-width: $breakpoint-small) {
-                padding: 0px ($spacing-unit + $spacing-unit-tiny) 0px 0px;
+            &-fakeButton,
+            input[type=submit] {
+                border-radius: $border-radius;
+                color: #fff;
+                background: $color-primary;
+                border: 0;
+                padding: $spacing-unit-small $spacing-unit;
+                font-size: $spacing-unit / 2;
+                box-shadow: none;
+                text-transform: uppercase;
+                font-weight: bold;
+                margin-top: $spacing-unit-small;
             }
         }
+        #commentform.show {
+            visibility: visible;
+            -webkit-animation: fadeInUp 500ms ease-in-out;
+            animation: fadeInUp 500ms ease-in-out;
+        }
 
+        @-webkit-keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                -webkit-transform: translateY(40px);
+            }
+            100% {
+                opacity: 1;
+                -webkit-transform: translateY(0);
+            }
+        }
+        #commentform.hideanimation {
+            visibility: visible;
+            -webkit-animation: fadeOutDown 500ms ease-in-out;
+            animation: fadeOutDown 500ms ease-in-out;
+
+        }
         &-fakeButton,
         input[type=submit] {
             border-radius: $border-radius;
             color: #fff;
-            background: $color-primary;
+            background: $color-accent;
             border: 0;
             padding: $spacing-unit-small $spacing-unit;
             font-size: $spacing-unit / 2;
@@ -647,130 +685,94 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
             font-weight: bold;
             margin-top: $spacing-unit-small;
         }
-    }
-    #commentform.show {
-        visibility: visible;
-        -webkit-animation: fadeInUp 500ms ease-in-out;
-        animation: fadeInUp 500ms ease-in-out;
-    }
-
-    @-webkit-keyframes fadeInUp {
-        0% {
-            opacity: 0;
-            -webkit-transform: translateY(40px);
-        }
-        100% {
-            opacity: 1;
-            -webkit-transform: translateY(0);
-        }
-    }
-    #commentform.hideanimation {
-        visibility: visible;
-        -webkit-animation: fadeOutDown 500ms ease-in-out;
-        animation: fadeOutDown 500ms ease-in-out;
-
-    }
-    &-fakeButton,
-    input[type=submit] {
-        border-radius: $border-radius;
-        color: #fff;
-        background: $color-accent;
-        border: 0;
-        padding: $spacing-unit-small $spacing-unit;
-        font-size: $spacing-unit / 2;
-        box-shadow: none;
-        text-transform: uppercase;
-        font-weight: bold;
-        margin-top: $spacing-unit-small;
-    }
-    @-webkit-keyframes fadeOutDown {
-        0% {
-            opacity: 1;
-            -webkit-transform: translateY(0);
-        }
-        100% {
-            opacity: 0;
-            -webkit-transform: translateY(40px);
-        }
-    }
-
-
-    #toast {
-        line-height: 1.2;
-        visibility: hidden;
-        background-color: $color-hint;
-        text-align: left;
-        border-radius: $spacing-unit-tiny;
-        position: fixed;
-        z-index: 3;
-        width: 100vw;
-        left: 0;
-        bottom: 0;//$header-top-nav-height;
-        > div {
-            padding: $spacing-padding;
-            max-width: 660px;
-            margin: 0 auto;
-            p {
-                padding: 0 0 $spacing-unit-tiny 0;
-                margin: 0;
-                font-size: $font-size-small;
-                color: $color-content;
+        @-webkit-keyframes fadeOutDown {
+            0% {
+                opacity: 1;
+                -webkit-transform: translateY(0);
             }
-            h3{
-                padding: $spacing-unit-tiny 0 0 0;
-                margin: 0;
-                font-family: $font-raleway;
-                font-weight: bold;
-                font-size: $font-size-default;
-                color: $color-primary;
+            100% {
+                opacity: 0;
+                -webkit-transform: translateY(40px);
             }
-            img {
-                @media only screen and (min-width: $breakpoint-medium - $breakpoint-small) {
-                    max-width: $spacing-unit;
-                    margin: $spacing-padding $spacing-unit-small auto 0;
-                    background-color: #fff;
-                    border: ($border-radius-tiny * 4) / 3 solid $color-primary;
-                    border-radius: $spacing-unit-large;
-                    padding: $spacing-unit-tiny;
+        }
+
+
+        #toast {
+            line-height: 1.2;
+            visibility: hidden;
+            background-color: $color-hint;
+            text-align: left;
+            border-radius: $spacing-unit-tiny;
+            position: fixed;
+            z-index: 3;
+            width: 100vw;
+            left: 0;
+            bottom: 0;//$header-top-nav-height;
+            > div {
+                padding: $spacing-padding;
+                max-width: 660px;
+                margin: 0 auto;
+                p {
+                    padding: 0 0 $spacing-unit-tiny 0;
+                    margin: 0;
+                    font-size: $font-size-small;
+                    color: $color-content;
                 }
-                @media only screen and (min-width: $breakpoint-small) {
-                    max-width: $spacing-unit;
-                    //margin-right: $spacing-unit-small;
-                    margin: auto $spacing-unit-small auto 0;
-                    background-color: #fff;
-                    border: $border-radius-tiny solid $color-primary;
-                    border-radius: $spacing-unit-large;
-                    padding: $spacing-unit-tiny;
+                h3{
+                    padding: $spacing-unit-tiny 0 0 0;
+                    margin: 0;
+                    font-family: $font-raleway;
+                    font-weight: bold;
+                    font-size: $font-size-default;
+                    color: $color-primary;
+                }
+                img {
+                    @media only screen and (min-width: $breakpoint-medium - $breakpoint-small) {
+                        max-width: $spacing-unit;
+                        margin: $spacing-padding $spacing-unit-small auto 0;
+                        background-color: #fff;
+                        border: ($border-radius-tiny * 4) / 3 solid $color-primary;
+                        border-radius: $spacing-unit-large;
+                        padding: $spacing-unit-tiny;
+                    }
+                    @media only screen and (min-width: $breakpoint-small) {
+                        max-width: $spacing-unit;
+                        //margin-right: $spacing-unit-small;
+                        margin: auto $spacing-unit-small auto 0;
+                        background-color: #fff;
+                        border: $border-radius-tiny solid $color-primary;
+                        border-radius: $spacing-unit-large;
+                        padding: $spacing-unit-tiny;
+                }
+            }
             }
         }
+
+        #toast.show {
+            visibility: visible;
+            // -webkit-animation: fade 8s;
+            animation: fade 8s both;
         }
-    }
-
-    #toast.show {
-        visibility: visible;
-        // -webkit-animation: fade 8s;
-        animation: fade 8s both;
-    }
 
 
-    @keyframes fade {
-        0%   {
-            opacity: 0;
-            bottom: 0;
+        @keyframes fade {
+            0%   {
+                opacity: 0;
+                bottom: 0;
+            }
+            20%  {
+                opacity: 1;
+                bottom: 45px;
+            }
+            70%  {opacity: 1;}
+            90% {opacity: 0;}
+            100% {opacity: 0;}
+
         }
-        20%  {
-            opacity: 1;
-            bottom: 45px;
-        }
-        70%  {opacity: 1;}
-        90% {opacity: 0;}
-        100% {opacity: 0;}
+
 
     }
-
-
 }
-
 
 .CircleButton {
     @include color('content');
