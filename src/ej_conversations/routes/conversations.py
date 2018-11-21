@@ -93,6 +93,7 @@ def get_conversation_detail_context(request, conversation):
         'comments_under_moderation': n_comments_under_moderation,
         'comments_made': comments_made,
         'max_comments': max_comments_per_conversation(),
+        'user_is_owner': conversation.author == user,
     }
 
 

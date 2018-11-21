@@ -434,41 +434,31 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
 }
 
 .ConversationDetail-content{
-    .Comment-create{
-        position: relative;
-        justify-content: center;
-        button {
-            padding: $spacing-unit 0px 0px 0px;
-            color: $color-accent;
-            background: transparent no-repeat;
-            border: none;
-            cursor: pointer;
-            overflow: hidden;
-            outline: none;
-            font-weight: bold;
-        }
-        p {
-            text-align: center;
-        }
-    }
+    position: relative;
+
     .Comment {
         position: relative;
-        min-height: 300px !important;
+        min-height: 340px !important;
         width: 100% !important;
+        display: inline-block;
+        float: left;
         max-width: $header-wrapper-max-width;
         margin: 0 auto;
-        padding-bottom: $spacing-unit-large;
+        display: flex;
+        flex-direction: column;
 
         .CommentCard {
+            word-wrap: break-word;
+            flex: 1;
+            flex-basis: auto;
             left: 0;
             right: 0;
             margin: auto;
-            position: absolute;
             box-sizing: border-box;
             border-radius: $border-radius-large;
             font-size: $font-size-h3;
             max-width: $page-content-width-max;
-            min-height: 300px !important;
+            min-height: 340px !important;
             width: 100% !important;
             z-index: 3;
             padding: ($spacing-unit-large - $spacing-unit-tiny) ($spacing-unit-large - $spacing-unit-small);
@@ -595,19 +585,22 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
             }
         }
         #commentform {
+            flex: 1;
+            flex-basis: auto;
             position: absolute;
             left: 0;
             right: 0;
             margin: auto;
             visibility: hidden;
             max-width: $page-content-width-max;
-            min-height: 300px !important;
+            min-height: 340px !important;
+            height: 100% !important;
             width: 100% !important;
             box-sizing: border-box;
             text-align: center;
             background: $color-hint;
             border-radius: $border-radius-large;
-            padding: ($spacing-unit-large - $spacing-unit-tiny) ($spacing-unit-large - $spacing-unit-small);
+            padding: (3 * $spacing-unit-tiny) ($spacing-unit-large - $spacing-unit-small);
             z-index: 5;
 
             p {
@@ -641,13 +634,11 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
                 border-radius: $border-radius;
                 color: #fff;
                 background: $color-primary;
-                border: 0;
                 padding: $spacing-unit-small $spacing-unit;
                 font-size: $spacing-unit / 2;
                 box-shadow: none;
                 text-transform: uppercase;
                 font-weight: bold;
-                margin-top: $spacing-unit-small;
             }
         }
         #commentform.show {
@@ -771,6 +762,24 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
         }
 
 
+    }
+
+    .Comment-create{
+        position: relative;
+        justify-content: center;
+        button {
+            padding: $spacing-unit 0px 0px 0px;
+            color: $color-accent;
+            background: transparent no-repeat;
+            border: none;
+            cursor: pointer;
+            overflow: hidden;
+            outline: none;
+            font-weight: bold;
+        }
+        p {
+            text-align: center;
+        }
     }
 }
 
