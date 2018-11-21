@@ -1,5 +1,6 @@
 import logging
 
+import hyperpython as hp
 from autoslug import AutoSlugField
 from django.conf import settings
 from django.contrib.auth import get_user_model
@@ -20,29 +21,6 @@ from ..managers import ConversationManager
 
 NOT_GIVEN = object()
 log = logging.getLogger('ej_conversations')
-
-
-class FavoriteConversation(models.Model):
-    """
-    M2M relation from users to conversations.
-    """
-    conversation = models.ForeignKey(
-        'ej_conversations.Conversation',
-        on_delete=models.CASCADE,
-        related_name='followers',
-    )
-    user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name='favorite_conversations',
-    )
-
-
-class TaggedConversation(TaggedItemBase):
-    """
-    Add tags to Conversations with real Foreign Keys
-    """
-    content_object = models.ForeignKey('Conversation', on_delete=models.CASCADE)
 
 
 @rest_api(
@@ -89,11 +67,11 @@ class Conversation(TimeStampedModel):
             'endpoint.'
         ),
     )
-    hidden = models.BooleanField(
-        _('hidden'),
+    is_hidden = models.BooleanField(
+        _('hidden?'),
         default=False,
         help_text=_(
-            'Hidden conversations does not appears in boards or in the main /conversations '
+            'Hidden conversations does not appears in boards or in the main /conversations/ '
             'endpoint.'
         ),
     )
@@ -102,16 +80,16 @@ class Conversation(TimeStampedModel):
     tags = TaggableManager(through='ConversationTag')
     votes = property(lambda self: Vote.objects.filter(comment__conversation=self))
 
+    @property
+    def approved_comments(self):
+        return self.comments.filter(status=Comment.STATUS.approved)
+
     class Meta:
         ordering = ['created']
         permissions = (
             ('can_publish_promoted', _('Can publish promoted conversations')),
             ('is_moderator', _('Can moderate comments in any conversation')),
         )
-
-    @property
-    def approved_comments(self):
-        return self.comments.filter(status=Comment.STATUS.approved)
 
     def __str__(self):
         return self.title
@@ -140,13 +118,20 @@ class Conversation(TimeStampedModel):
             kwargs['board'] = board
             return reverse('boards:conversation-detail', kwargs=kwargs)
 
+    def get_url(self, which, **kwargs):
+        kwargs['conversation'] = self
+        return reverse(which, kwargs=kwargs)
+
+    def get_anchor(self, name, which, **kwargs):
+        return hp.a(name, href=self.get_url(which, **kwargs))
+
     def user_votes(self, user):
         """
         Get all votes in conversation for the given user.
         """
         if user.id is None:
             return Vote.objects.none()
-        return Vote.objects.filter(comment__conversation=self, author=user)
+        return Vote.objects.filter(comment__conversation=self, author=user, comment__status=Comment.STATUS.approved)
 
     def create_comment(self, author, content, commit=True, *, status=None,
                        check_limits=True, **kwargs):
@@ -185,40 +170,48 @@ class Conversation(TimeStampedModel):
         """
         Return the number of votes of a given type.
         """
-        kwargs = dict(comment__conversation_id=self.id)
+        kwargs = {'comment__conversation_id': self.id}
         if which is not None:
             kwargs['choice'] = which
         return Vote.objects.filter(**kwargs).count()
 
-    def statistics(self):
+    def statistics(self, cache=True):
         """
         Return a dictionary with basic statistics about conversation.
         """
+        if cache:
+            try:
+                return self._cached_statistics
+            except AttributeError:
+                self._cached_statistics = self.statistics(False)
+                return self._cached_statistics
 
-        # Fixme: this takes several SQL queries. Maybe we can optimize further
-        return dict(
+        return {
             # Vote counts
-            votes=dict(
-                agree=self.vote_count(Choice.AGREE),
-                disagree=self.vote_count(Choice.DISAGREE),
-                skip=self.vote_count(Choice.SKIP),
-                total=self.vote_count(),
-            ),
+            'votes': {
+                'agree': self.vote_count(Choice.AGREE),
+                'disagree': self.vote_count(Choice.DISAGREE),
+                'skip': self.vote_count(Choice.SKIP),
+                'total': self.vote_count(),
+            },
 
             # Comment counts
-            comments=dict(
-                approved=comment_count(self, Comment.STATUS.approved),
-                rejected=comment_count(self, Comment.STATUS.rejected),
-                pending=comment_count(self, Comment.STATUS.pending),
-                total=comment_count(self),
-            ),
+            'comments': {
+                'approved': comment_count(self, Comment.STATUS.approved),
+                'rejected': comment_count(self, Comment.STATUS.rejected),
+                'pending': comment_count(self, Comment.STATUS.pending),
+                'total': comment_count(self),
+            },
 
             # Participants count
-            participants=get_user_model().objects
-                .filter(votes__comment__conversation_id=self.id)
-                .distinct()
-                .count(),
-        )
+            'participants': (
+                get_user_model()
+                    .objects
+                    .filter(votes__comment__conversation_id=self.id)
+                    .distinct()
+                    .count()
+            ),
+        }
 
     def user_statistics(self, user):
         """
@@ -237,11 +230,11 @@ class Conversation(TimeStampedModel):
         )
 
         e = 1e-50  # for numerical stability
-        return dict(
-            votes=given_votes,
-            missing_votes=max_votes - given_votes,
-            participation_ratio=given_votes / (max_votes + e),
-        )
+        return {
+            'votes': given_votes,
+            'missing_votes': max_votes - given_votes,
+            'participation_ratio': given_votes / (max_votes + e),
+        }
 
     def next_comment(self, user, default=NOT_GIVEN):
         """
@@ -292,11 +285,26 @@ class ConversationTag(TaggedItemBase):
     """
     Add tags to Conversations with real Foreign Keys
     """
-    content_object = models.ForeignKey('Conversation', on_delete=models.CASCADE)
+    content_object = models.ForeignKey(
+        'Conversation',
+        on_delete=models.CASCADE,
+    )
 
-    # FIXME: return a url with associated conversations
-    def get_absolute_url(self):
-        return ''
+
+class FavoriteConversation(models.Model):
+    """
+    M2M relation from users to conversations.
+    """
+    conversation = models.ForeignKey(
+        'Conversation',
+        on_delete=models.CASCADE,
+        related_name='followers',
+    )
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='favorite_conversations',
+    )
 
 
 #

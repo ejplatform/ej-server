@@ -2,6 +2,7 @@ import os
 import pathlib
 import sys
 import datetime
+from pathlib import Path
 
 from invoke import task
 
@@ -510,6 +511,24 @@ def docker_deploy(ctx, task, environment='production', command=None, dry_run=Fal
     else:
         raise SystemExit(f'invalid command: {task}\n'
                          f'Possible commands: build, up, run, publish, notify')
+
+
+#
+# Tools
+#
+@task
+def notebook(ctx):
+    """
+    Start a notebook server.
+    """
+
+    base = Path(directory)
+    db_path = os.path.abspath(base / 'local' / 'db' / 'db.sqlite3')
+    ctx.run('jupyter-notebook', env={
+        'PYTHONPATH': base / 'src',
+        'DJANGO_SETTINGS_MODULE': 'ej.settings',
+        'DJANGO_DB_URL': f'sqlite:///{db_path}'
+    })
 
 
 #

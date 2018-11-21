@@ -1,15 +1,15 @@
 import pytest
-from django.test import TestCase, Client
 from django.http import Http404
+from django.test import TestCase, Client
 
-from ej_conversations.models.utils import votes_counter
-from ej_conversations.mommy_recipes import ConversationRecipes
-from ej_conversations.models import Comment
+from ej.testing import UrlTester
+from ej_boards import routes
 from ej_boards.models import Board
 from ej_boards.mommy_recipes import BoardRecipes
-from ej.testing import UrlTester
+from ej_conversations.models import Comment
+from ej_conversations.models.utils import votes_counter
+from ej_conversations.mommy_recipes import ConversationRecipes
 from ej_users.models import User
-from ej_boards import routes
 
 
 @pytest.fixture
@@ -32,15 +32,14 @@ class TestRoutes(UrlTester, BoardRecipes, ConversationRecipes):
         '/board-slug/conversations/',
         '/board-slug/conversations/conversation/'
     ]
-    login_urls = [
-        '/ej_boards/',
-        '/ej_boards/add/',
-        '/ej_boards/board/edit/',
+    user_urls = [
+        '/board-slug/conversations/conversation/reports/',
+        '/board-slug/conversations/conversation/reports/scatter/',
         '/profile/boards/add/',
         '/profile/boards/',
     ]
     owner_urls = [
-        '/board-slug/edit/',
+        '/board-slug/conversations/add/',
         '/board-slug/conversations/conversation/edit/',
         '/board-slug/conversations/conversation/moderate/',
         '/board-slug/conversations/conversation/stereotypes/',
@@ -80,7 +79,7 @@ class TestBoardConversationRoutes(ConversationRecipes):
         response = routes.conversation_edit(request, board, conversation)
         assert response.status_code == 302
         assert response.url == '/slugs/conversations/conversation/moderate/'
-        assert routes.report(board, conversation)
+        assert routes.report(request, board, conversation)
 
     def test_edit_invalid_conversation(self, rf, db, board, conversation):
         conversation.author = board.owner
@@ -108,7 +107,7 @@ class TestBoardConversationRoutes(ConversationRecipes):
         board.add_conversation(conversation)
         response = routes.conversation_detail(request, board, conversation)
         assert response['conversation'] == conversation
-        assert response['can_view_comment']
+        assert response['can_comment']
         assert response['can_edit']
 
     def test_conversation_detail_post_comment(self, rf, db, board, conversation):
@@ -121,7 +120,7 @@ class TestBoardConversationRoutes(ConversationRecipes):
         board.add_conversation(conversation)
         response = routes.conversation_detail(request, board, conversation)
         assert response['conversation'] == conversation
-        assert response['can_view_comment']
+        assert response['can_comment']
         assert response['can_edit']
         assert Comment.objects.filter(author=user)[0].content == 'test comment'
 
@@ -136,7 +135,7 @@ class TestBoardConversationRoutes(ConversationRecipes):
         board.add_conversation(conversation)
         response = routes.conversation_detail(request, board, conversation)
         assert response['conversation'] == conversation
-        assert response['can_view_comment']
+        assert response['can_comment']
         assert response['can_edit']
         assert votes_counter(comment) == 1
 

@@ -47,10 +47,12 @@ class Conf(ThemesConf,
     ACCOUNT_USERNAME_REQUIRED = False
     ACCOUNT_USER_MODEL_USERNAME_FIELD = None
     LOGIN_REDIRECT_URL = '/'
+    ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
+    # ACCOUNT_EMAIL_VERIFICATION = 'none'
     SOCIALACCOUNT_PROVIDERS = {
         'facebook': {
             'SCOPE': ['email'],
-            'METHOD': 'js_sdk'  # instead of 'oauth2'
+            'METHOD': 'oauth2'
         }
     }
 
@@ -90,6 +92,17 @@ class Conf(ThemesConf,
     # REST_AUTH_REGISTER_SERIALIZERS = {
     #     'REGISTER_SERIALIZER': 'ej_users.serializers.RegistrationSerializer'
     # }
+
+    # Use this variable to change the ej environment during the docker build step.
+    ENVIRONMENT = 'local'
+
+    if (ENVIRONMENT == 'production'):
+      EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend';
+      # the api key will be informed during the docker build step.
+      ANYMAIL = {'MAILGUN_API_KEY': ''};
+      DEFAULT_FROM_EMAIL = "Empurrando Juntos <noreply@mail.ejplatform.org>"
+      HOSTNAME = 'https://ejplatform.org'
+
 
 
 Conf.save_settings(globals())

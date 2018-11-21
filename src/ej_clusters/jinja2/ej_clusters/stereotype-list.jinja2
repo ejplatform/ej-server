@@ -1,6 +1,35 @@
 {% extends 'base.jinja2' %}
-{% from 'ej_clusters/components/stereotype-list.jinja2' import stereotype_list with context %}
 
 {% block content %}
-    {{ stereotype_list(stereotypes, conversation_title, javascript_enabled=javascript_enabled) }}
+    <div class="StereotypeList">
+        <div class="StereotypeList-title">
+            <h1>{% trans %}Manage personas: {{ conversation_title }}{% endtrans %}</h1>
+            <p>{% trans %}Create, delete and edit personas{% endtrans %}</p>
+        </div>
+
+        <h2>Personas</h2>
+        {% if stereotypes %}
+            <div class="StereotypeList-cardList">
+                {% for stereotype in stereotypes %}
+                    <div class="StereotypeList-singleStereotype">
+                        <h3>{{ stereotype.name }} </h3>
+                        <div class="StereotypeList-icons">
+                            <a href="{{ stereotype_url }}{{ stereotype.id }}/edit/">
+                                <i class="far fa-edit"></i>
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>{% trans %}No stereotypes found{% endtrans %}</p>
+        {% endif %}
+
+        <p style="text-align: center">
+            <a class="Button" href="{{ stereotype_url }}add/">
+                <i class="fa fa-plus-circle"></i> {{ _('New stereotype') }}</a>
+            <br>
+            {{ action_button(_('Done'), conversation_url) }}
+        </p>
+    </div>
 {% endblock %}
