@@ -8,6 +8,7 @@ class MiddlewareConf(Base):
             # 'corsheaders.middleware.CorsMiddleware',
             'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
             'ej_boards.middleware.BoardFallbackMiddleware',
+            'ej_boards.middleware.BoardDomainRedirectMiddleware',
             'ej_conversations.middleware.ConversationFallbackMiddleware',
             *middleware,
         ]

@@ -51,6 +51,12 @@ class Board(TimeStampedModel):
                               blank=True,
                               null=True)
 
+    custom_domain = models.CharField(
+      _('Custom Domain'),
+      blank= True,
+      max_length=50
+    )
+
     @property
     def conversations(self):
         return Conversation.objects.filter(board_subscriptions__board=self)
@@ -106,6 +112,14 @@ class Board(TimeStampedModel):
     def get_default_css_palette():
         return 'bluePalette'
 
+
+    @staticmethod
+    def with_custom_domain(domain):
+      try:
+        board = Board.objects.get(custom_domain=domain).slug;
+        return [board, True]
+      except:
+        return [None, False]
 
 class BoardSubscription(models.Model):
     """

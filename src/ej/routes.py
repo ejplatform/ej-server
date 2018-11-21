@@ -6,6 +6,8 @@ from django.shortcuts import render, redirect
 from boogie.router import Router
 from ej_configurations import fragment, social_icons
 from ej_conversations.models import Conversation
+from ej_conversations.proxy import conversations_with_moderation
+from ej_boards.models import Board
 
 log = logging.getLogger('ej')
 urlpatterns = Router(
@@ -18,11 +20,14 @@ urlpatterns = Router(
 #
 @urlpatterns.route('')
 def index(request):
+    domain = request.META['HTTP_HOST'].split(':')[0]
+    board, board_exists = Board.with_custom_domain(domain)
+    if(board_exists):
+        return redirect('/%s/conversations' % board)
     if request.user.id:
         return redirect(settings.EJ_USER_HOME_PATH)
     else:
         return redirect(settings.EJ_ANONYMOUS_HOME_PATH)
-
 
 @urlpatterns.route('start/')
 def start(request):

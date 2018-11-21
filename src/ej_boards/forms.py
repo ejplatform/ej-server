@@ -17,5 +17,5 @@ class PaletteWidget(forms.RadioSelect):
 class BoardForm(forms.ModelForm):
     class Meta:
         model = models.Board
-        fields = ['slug', 'title', 'description', 'palette', 'image']
-        widgets = {'palette': PaletteWidget, 'image': FileInput}
+        fields = ['slug', 'title', 'description',
+                  'palette', 'image', 'custom_domain']

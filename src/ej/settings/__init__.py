@@ -90,6 +90,7 @@ class Conf(ThemesConf,
         'DEFAULT_VERSION': 'v1',
     }
 
+    ALLOWED_HOSTS = '*'
     # REST_AUTH_REGISTER_SERIALIZERS = {
     #     'REGISTER_SERIALIZER': 'ej_users.serializers.RegistrationSerializer'
     # }
