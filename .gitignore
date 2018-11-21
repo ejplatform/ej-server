@@ -63,7 +63,7 @@ lib/assets/css/main*.css
 # Ignore automatic migrations
 src/*/migrations/*_auto_*.py
 src/*/migrations/*_merge_*.py
-
+[0-9_]*.json
 # Themes
 lib/assets/cpa
 lib/assets/brasil-que-o-povo-quer
@@ -73,3 +73,5 @@ docker/base-images/nginx.conf
 
 # virtualenv
 venv
+
+cron\.log
