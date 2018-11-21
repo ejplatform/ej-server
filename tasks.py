@@ -108,7 +108,7 @@ def gunicorn(ctx, debug=None, environment='production', port=8000, workers=4):
     
     do = runner(ctx, False, pty=True)
     do('cron')
-    
+
     sys.argv = ['gunicorn', *args]
     run_gunicorn()
 
@@ -235,7 +235,7 @@ def db_assets(ctx, force=False, theme=None):
 def dump(ctx):
     now = datetime.datetime.now()
     date = now.strftime("%Y%m%d_%H%M%S")
-    manage(ctx, f'dumpdata > {date}.json')
+    manage(ctx, f'dumpdata > db_backups/{date}.json')
 #
 # Docker
 #
