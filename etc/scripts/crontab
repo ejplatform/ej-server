@@ -1,0 +1,7 @@
+POSTGRES_DB=ej
+POSTGRES_USER=ej
+POSTGRES_PASSWORD=ej
+DJANGO_DB_URL=psql://ej:ej@postgres:5432/ej
+PYTHONPATH=/app/src/:/pypackages/lib/python3.6/site-packages
+PATH=$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+* * * * * cd /app && inv dump >> /app/cron.log 2>&1
