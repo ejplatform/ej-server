@@ -9,8 +9,7 @@ def see_login_button(context):
 
 @then('I see the promoted conversations')
 def see_promoted_conversations(context):
-    # context.browser.screenshot(full=True)
-    find_by_css(context, '.ConversationCard-container')
+    find_by_css(context, '.ConversationList')
 
 
 @then('I see the profile button')
@@ -26,3 +25,8 @@ def see_the_side_menu(context):
 @then('I see the conversations button')
 def see_conversations_button(context):
     find_by_css(context, '.conversations-link')
+
+
+@then('I see the hamburger menu')
+def see_hamburger_menu(context):
+    find_by_css(context, '.Header-topIcon')
