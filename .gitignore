@@ -28,7 +28,7 @@ node_modules/
 db.sqlite3
 local/
 ej/media/
-
+docker/db_backup
 
 # Editors and system specific files
 *.sublime-workspace

@@ -105,6 +105,10 @@ def gunicorn(ctx, debug=None, environment='production', port=8000, workers=4):
         '--log-level', 'info',
         f'--pythonpath={directory}/src'
     ]
+    
+    do = runner(ctx, False, pty=True)
+    do('cron')
+    
     sys.argv = ['gunicorn', *args]
     run_gunicorn()
 

@@ -21,8 +21,6 @@ RUN mv /app/local/vendor/ /vendor/ \
 ARG UID=1000
 ARG GID=1000
 
-
-
 # Create django user
 RUN groupadd -r django -g ${GID} \
  && useradd -r -g django django -u ${UID} \
@@ -31,15 +29,13 @@ RUN groupadd -r django -g ${GID} \
  && echo "DJANGO USER CREATED"
 
 # Copy crontab file to cron directory
-RUN cp /app/etc/scripts/crontab /etc/cron.d/hello-cron
-
+RUN cp /app/etc/scripts/crontab /etc/cron.d/backup_cron
 # Give execution rights on the cron job
-RUN chmod 0644 /etc/cron.d/hello-cron
-
+RUN chmod 0644 /etc/cron.d/backup_cron
 # Apply cron job
-RUN crontab /etc/cron.d/hello-cron
-
 # Still needing to run the cron, will be done on inv run
+RUN crontab /etc/cron.d/backup_cron
+
 # Entry point defaults to inv run
 EXPOSE 8000
 ENTRYPOINT ["inv"]
