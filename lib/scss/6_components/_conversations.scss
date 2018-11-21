@@ -11,6 +11,9 @@ $conversation-card-font-size-small: 12px !default;
 $conversation-card-border-arrow-size: $spacing-unit;
 $profile-label-clear-color: #30BFD3 !default;
 $modalities-content-width-max: ($page-content-width-max / 2) - 29 !default;
+$color-for-unfolding: rgba(0, 0, 0, 0.3); 
+$color-background-button-modalities: rgba(255, 255, 255, 0.3);
+
 
 .ConversationList {
     @extend .Container;
@@ -445,7 +448,7 @@ $modalities-content-width-max: ($page-content-width-max / 2) - 29 !default;
     flex-direction: column;
     align-items: center;
     align-self: center;
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: $color-for-unfolding;
     padding-right: 0;
     position: absolute;
     z-index: 4;
@@ -509,26 +512,29 @@ $modalities-content-width-max: ($page-content-width-max / 2) - 29 !default;
         }
     }
     .swiper-button-next{
-        width: $spacing-unit-small;
+        margin: -($spacing-unit-small + $spacing-unit-tiny) 0px 0px 0px;
+        width: $spacing-unit;
         color: $color-primary;
         border: 1px solid;
         height:$spacing-unit-large - $spacing-unit-tiny;
-        padding: 0px 17px;
-        background-color: rgba(255, 255, 255, 0.3);
+        padding: 0px $spacing-unit-tiny 0px $spacing-unit-small;
+        background-color: $color-background-button-modalities;
         border-radius: $spacing-unit-large;
         font-size: $spacing-unit + $spacing-unit-tiny;
-        background-size: 27px $spacing-unit + $spacing-unit-tiny;
+        background-size: $spacing-unit ($spacing-unit + $spacing-unit-tiny);
     }
     .swiper-button-prev{
+        margin: -($spacing-unit-small + $spacing-unit-tiny) $spacing-unit-tiny 0px 0px;
+        width: $spacing-unit;
         color: $color-primary;
-        left: 12px;
+        left: $spacing-unit-small;
         border: 1px solid;
         height:$spacing-unit-large - $spacing-unit-tiny;
-        padding: 0px 10px;
-        background-color: rgba(255, 255, 255, 0.3);
+        padding: 0px $spacing-unit-tiny 0px $spacing-unit-small;
+        background-color: $color-background-button-modalities;
         border-radius: $spacing-unit-large;
         font-size: $spacing-unit + $spacing-unit-tiny;
-        background-size: 27px $spacing-unit + $spacing-unit-tiny;
+        background-size: $spacing-unit $spacing-unit + $spacing-unit-tiny;
     }
     .swiper-pagination-bullet{
         background: $color-background;
@@ -635,9 +641,9 @@ $modalities-content-width-max: ($page-content-width-max / 2) - 29 !default;
         width: $spacing-unit-huge * 3;
         line-height: 1.2;
         bottom: auto;
-        background-color: $color-content;
+        background-color: $color-background;
         text-align: center;
-        border-radius: 7px;
+        border-radius: $spacing-unit-tiny;
         position: relative;
         border: 1px solid $color-accent;
         padding: $spacing-padding * 2;
@@ -668,7 +674,7 @@ $modalities-content-width-max: ($page-content-width-max / 2) - 29 !default;
         .Button-closer{
             background-color: $color-content;
             border: none;
-            border-radius: 56px;
+            border-radius: $spacing-unit-large;
             box-sizing: border-box;
             cursor: pointer;
             display: inline-block;
@@ -680,7 +686,7 @@ $modalities-content-width-max: ($page-content-width-max / 2) - 29 !default;
             vertical-align: middle;
             .fa-times {
                 font-size: $spacing-unit-tiny;
-                color: $color-content;
+                color: $color-background;
             }
         }
     }
@@ -699,7 +705,7 @@ $modalities-content-width-max: ($page-content-width-max / 2) - 29 !default;
         .Button-closer{
             margin: 0px 0px (-$spacing-unit-tiny) ($spacing-unit-huge * 2 - $spacing-unit);
             .fa-times{
-                padding: 6px $spacing-unit-tiny;
+                padding: $spacing-unit-tiny $spacing-unit-tiny;
             }
         }
     }
