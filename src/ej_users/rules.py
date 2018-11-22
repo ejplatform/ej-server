@@ -20,3 +20,24 @@ def profile_class():
     Return a profile instance for user.
     """
     return import_later('ej_profiles.models:Profile')
+
+
+@rules.register_value('auth.notification_options')
+def notification_options(user):
+    """
+    Return a profile instance for user.
+    """
+    notification_config_class = rules.compute('auth.notification_config_class')
+    try:
+        return user.raw_notificationsconfig
+    except (notification_config_class.DoesNotExist,
+            user._meta.model.raw_notificationsconfig.RelatedObjectDoesNotExist):
+        return notification_config_class.objects.create(user=user)
+
+
+@rules.register_value('auth.notification_config_class')
+def notification_config_class():
+    """
+    Return notification config class
+    """
+    return import_later('ej_notifications.models:NotificationConfig')

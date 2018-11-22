@@ -6,8 +6,6 @@ from django.utils.translation import ugettext_lazy as _
 from boogie import IntEnum
 from boogie.fields import EnumField
 
-from ej_profiles.models import Profile
-
 User = get_user_model()
 
 
@@ -69,5 +67,5 @@ class Notification(models.Model):
 
 @rest_api(['id', 'notification_option'])
 class NotificationConfig(models.Model):
-    profile = models.OneToOneField(Profile, on_delete=models.CASCADE, related_name='raw_notificationsconfig')
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='raw_notificationsconfig')
     notification_option = EnumField(NotificationOptions, _('Notification options'), default=NotificationOptions.ENABLED)

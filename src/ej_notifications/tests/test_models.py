@@ -53,7 +53,7 @@ class TestChannelManager:
 
     def test_ensure_settings_created(self, db, mk_user):
         user = mk_user
-        configurations = user.profile.notifications_config
-        db_fetched_config = NotificationConfig.objects.filter(profile=user.profile)
+        configurations = user.notifications_options
+        db_fetched_config = NotificationConfig.objects.filter(user=user)
         assert db_fetched_config.exists()
         assert db_fetched_config[0] == configurations

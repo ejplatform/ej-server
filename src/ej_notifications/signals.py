@@ -5,7 +5,6 @@ from django.db.models import Q
 from django.contrib.auth import get_user_model
 
 from ej_notifications.models import Message, Channel, NotificationConfig, Purpose, NotificationOptions
-from ej_profiles.models import Profile
 
 User = get_user_model()
 
@@ -47,7 +46,7 @@ def send_conversation_fcm_message(sender, instance, created, **kwargs):
         if channel.purpose:
             for user in channel.users.all():
 
-                setting = NotificationConfig.objects.get(profile__user__id=user.id)
+                setting = NotificationConfig.objects.get(user__id=user.id)
                 if setting.notification_option == NotificationOptions.PUSH_NOTIFICATIONS:
                     users_to_send.append(user)
             fcm_devices = GCMDevice.objects.filter(cloud_message_type="FCM", user__in=users_to_send)
@@ -55,14 +54,7 @@ def send_conversation_fcm_message(sender, instance, created, **kwargs):
                                      "icon": "https://i.imgur.com/D1wzP69.png", "click_action": url})
 
 
-@receiver(post_save, sender=Profile)
-def ensure_settings_created(sender, **kwargs):
-    instance = kwargs.get('instance')
-    user_id = instance.user.id
-    NotificationConfig.objects.get_or_create(profile=instance, profile__user__id=user_id)
-
-
-@receiver(post_save, sender=Profile)
+@receiver(post_save, sender=NotificationConfig)
 def insert_user_on_general_channels(sender, created, **kwargs):
     if created:
         instance = kwargs.get('instance')
@@ -74,7 +66,7 @@ def insert_user_on_general_channels(sender, created, **kwargs):
             channel.save()
 
 
-@receiver(post_save, sender=Profile)
+@receiver(post_save, sender=NotificationConfig)
 def create_user_trophy_channel(sender, instance, created, **kwargs):
     if created:
         user = instance.user
