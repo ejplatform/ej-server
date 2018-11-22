@@ -60,6 +60,10 @@
             </div>
             {% endfor %}
         </div>
+        <form method="post" class="django-form-as-p">
+        {{ csrf_input }}
+        {{notification_form.as_p()}}
+        </form>
     </div>
 {% endblock %}
 
