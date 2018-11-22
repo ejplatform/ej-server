@@ -998,6 +998,10 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
         opacity: 1;
     }
 
+    .Comment-status-rejected .CommentListItem-footer {
+        text-align: center;
+    }
+
     .Comment-rejection {
         background: $color-hint;
         border-top: 1px solid $color-hint;
