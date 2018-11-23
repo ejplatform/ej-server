@@ -45,13 +45,21 @@ def clusters(request):
 def inbox(request):
     user = request.user
 
-    channels = Channel.objects.filter(users=user)
-    messages = Message.objects.none()
+    notifications = Notification.objects.filter(receiver=user)
+    print(notifications)
+    for item in notifications:
+        if(item.read == True):
+            item.already_seen =  True
+        else:
+            item.already_seen =  False
+        
+        item.read = True
+        item.save()
+    
+    notifications = reversed(notifications)
+    print(notifications)
+
     notificationConfig = request.user.notifications_options
-    print(notificationConfig)
-    for item in channels:
-        messages = messages | (Message.objects.filter(channel=item))
-    print(messages)
 
     notification_form = NotificationConfigForm(request.POST or None, instance=notificationConfig)
     if request.method == 'POST':
@@ -60,19 +68,7 @@ def inbox(request):
     
     return {
         'user': user,
-        'notifications':[
-            {
-                "notification": "Você recebeu o poder Ponte de diálogo. Promova um comentário ou crie um comentário promovido",
-                "remaining_time": 35,
-                "already_seen": True,
-            },
-            {
-                "notification": "Você recebeu o poder Ponte ativista de minoria. Crie um comentário promovido",
-                "remaining_time": 35,
-                "already_seen": False,
-            }
-        ],
-        'messages': messages,
+        'notifications': notifications,
         'notification_form': notification_form
     }
 
