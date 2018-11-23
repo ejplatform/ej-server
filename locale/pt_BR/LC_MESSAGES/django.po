@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-14 03:05+0000\n"
+"POT-Creation-Date: 2018-11-23 16:55+0000\n"
 "PO-Revision-Date: 2018-11-14 01:09-0200\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: \n"
@@ -898,7 +898,7 @@ msgstr "Criado em"
 msgid "non-moderated comments cannot receive votes"
 msgstr "comentários não-moderados não podem receber votos"
 
-#: src/ej_conversations/roles.py:76 src/ej_conversations/roles.py:140
+#: src/ej_conversations/roles.py:76 src/ej_conversations/roles.py:161
 #: src/ej_conversations/routes/conversations.py:85
 msgid "login"
 msgstr "entrar"
@@ -982,29 +982,13 @@ msgstr "Notificações"
 msgid "List of notifications"
 msgstr "Lista de notificações"
 
-#: src/ej_powers/models.py:14
+#: src/ej_powers/models.py:15
 msgid "user does not have the right to promote this comment"
 msgstr "usuário não tem permissão para promover esse comentário"
 
-#: src/ej_powers/models.py:37
-msgid "Any comment in conversation"
-msgstr "Qualquer comentário na conversa"
-
-#: src/ej_powers/models.py:38
-msgid "Self promotion"
-msgstr "Auto promoção"
-
-#: src/ej_powers/models.py:39
-msgid "Endorse comment from other user"
-msgstr "Endorsar comentário de outro usuário"
-
-#: src/ej_powers/models.py:40
-msgid "Endorse comment from a user in the user's cluster"
-msgstr "Endorsar comentário de usuário de outro grupo"
-
-#: src/ej_powers/models.py:41
-msgid "Endorse comment from user from a different cluster"
-msgstr "Endorsar comentário de usuário de um grupo diferente do seu"
+#: src/ej_powers/models.py:90
+msgid "Comment is not in conversation that user can promote or is expired."
+msgstr ""
 
 #: src/ej_profiles/admin.py:9
 msgid "Basic information"
@@ -1408,12 +1392,12 @@ msgstr "Token do usuário"
 msgid "Invalid email or password"
 msgstr "Email ou senha inválidos"
 
-#: src/ej_users/routes.py:151
+#: src/ej_users/routes.py:152
 msgid "Please reset your password"
 msgstr "Por favor reset sua senha"
 
-#: src/ej_users/routes.py:198
-#, python-brace-format
+#: src/ej_users/routes.py:199
+#, fuzzy, python-brace-format
 msgid ""
 "\n"
 "    Hello! You can use the following link to reset your password:\n"
@@ -1457,32 +1441,32 @@ msgstr "Começar agora!"
 msgid "LOGIN"
 msgstr "ENTRAR"
 
-#: src/ej/templates/jinja2/components/generic/page_header.jinja2:65
-#: src/ej/templates/jinja2/components/generic/page_header.jinja2:69
+#: src/ej/templates/jinja2/components/generic/page_header.jinja2:66
+#: src/ej/templates/jinja2/components/generic/page_header.jinja2:70
 msgid "Back"
 msgstr "Voltar"
 
-#: src/ej/templates/jinja2/components/generic/page_header.jinja2:74
-#: src/ej/templates/jinja2/components/generic/page_header.jinja2:90
+#: src/ej/templates/jinja2/components/generic/page_header.jinja2:75
+#: src/ej/templates/jinja2/components/generic/page_header.jinja2:91
 msgid "Site logo"
 msgstr "Logo do site"
 
-#: src/ej/templates/jinja2/components/generic/page_header.jinja2:77
-#: src/ej/templates/jinja2/components/generic/page_header.jinja2:84
+#: src/ej/templates/jinja2/components/generic/page_header.jinja2:78
+#: src/ej/templates/jinja2/components/generic/page_header.jinja2:85
 msgid "Navigation menu"
 msgstr "Menu de navegação"
 
-#: src/ej/templates/jinja2/components/generic/page_header.jinja2:107
 #: src/ej/templates/jinja2/components/generic/page_header.jinja2:108
 #: src/ej/templates/jinja2/components/generic/page_header.jinja2:109
+#: src/ej/templates/jinja2/components/generic/page_header.jinja2:110
 #: src/ej_rocketchat/jinja2/ej_rocketchat/iframe.jinja2:2
 #: src/ej_rocketchat/jinja2/ej_rocketchat/intro.jinja2:3
 msgid "Panel"
 msgstr "Painel"
 
-#: src/ej/templates/jinja2/components/generic/page_header.jinja2:113
 #: src/ej/templates/jinja2/components/generic/page_header.jinja2:114
 #: src/ej/templates/jinja2/components/generic/page_header.jinja2:115
+#: src/ej/templates/jinja2/components/generic/page_header.jinja2:116
 #: src/ej/templates/jinja2/components/generic/page_menu.jinja2:30
 msgid "Profile"
 msgstr "Perfil"
@@ -1881,31 +1865,29 @@ msgstr ""
 "            enviar um comentário!"
 
 #: src/ej_conversations/jinja2/ej/role/comment-form.jinja2:23
-#: src/ej_conversations/jinja2/ej/role/comment-form.jinja2:28
-msgid "Leave your comment"
-msgstr "Deixe o seu comentário"
-
-#: src/ej_conversations/jinja2/ej/role/comment-form.jinja2:24
 msgid "You have created this conversation."
 msgstr "Você criou essa conversa"
 
-#: src/ej_conversations/jinja2/ej/role/comment-form.jinja2:25
+#: src/ej_conversations/jinja2/ej/role/comment-form.jinja2:24
 msgid "Include something new and avoid similar opinions."
 msgstr "Escreva algo novo e evite opiniões similares."
 
-#: src/ej_conversations/jinja2/ej/role/comment-form.jinja2:29
-msgid "You still have {n} available comments"
-msgstr "Você ainda tem {n} comentários disponíveis"
+#: src/ej_conversations/jinja2/ej/role/comment-form.jinja2:27
+#, fuzzy
+msgid ""
+"Include something new and avoid similar opinions. You still have {n} "
+"available comments"
+msgstr "Escreva algo novo e evite opiniões similares."
 
-#: src/ej_conversations/jinja2/ej/role/comment-form.jinja2:33
+#: src/ej_conversations/jinja2/ej/role/comment-form.jinja2:31
 msgid "Ooops!"
 msgstr "Oooopa!"
 
-#: src/ej_conversations/jinja2/ej/role/comment-form.jinja2:34
+#: src/ej_conversations/jinja2/ej/role/comment-form.jinja2:32
 msgid "You reached the limit of comments in this conversation."
 msgstr "Você atingiu o limite de comentários nesta conversa."
 
-#: src/ej_conversations/jinja2/ej/role/comment-form.jinja2:37
+#: src/ej_conversations/jinja2/ej/role/comment-form.jinja2:35
 #, python-format
 msgid "Please %(login_anchor)s to vote on this conversation."
 msgstr "Favor %(login_anchor)s para votar nesta conversa."
@@ -1913,10 +1895,6 @@ msgstr "Favor %(login_anchor)s para votar nesta conversa."
 #: src/ej_conversations/jinja2/ej/role/comment-list-item.jinja2:3
 msgid "Opinion"
 msgstr "Opinião"
-
-#: src/ej_conversations/jinja2/ej/role/comment-list-item.jinja2:26
-msgid "See Conversation"
-msgstr "Ver Conversa"
 
 #: src/ej_conversations/jinja2/ej/role/comment-moderate.jinja2:3
 msgid "by"
@@ -1930,13 +1908,17 @@ msgstr "Aprovar"
 msgid "Disapprove"
 msgstr "Rejeitar"
 
-#: src/ej_conversations/jinja2/ej/role/comment-moderate.jinja2:24
+#: src/ej_conversations/jinja2/ej/role/comment-moderate.jinja2:29
 msgid "Reason"
 msgstr "Justificativa"
 
-#: src/ej_conversations/jinja2/ej/role/comment-moderate.jinja2:25
+#: src/ej_conversations/jinja2/ej/role/comment-moderate.jinja2:30
 msgid "The comment will receive your rejection reason"
 msgstr "O comentário vai receber sua justificativa de rejeição"
+
+#: src/ej_conversations/jinja2/ej/role/comment-reject-reason.jinja2:9
+msgid "See Conversation"
+msgstr "Ver Conversa"
 
 #: src/ej_conversations/jinja2/ej/role/conversation-balloon.jinja2:7
 msgid "Tags"
@@ -2216,20 +2198,6 @@ msgstr "Registre agora!"
 msgid "or sign up through other networks"
 msgstr "ou entre usando outras redes"
 
-#: src/ej_users/jinja2/ej_users/recover-password-message.jinja2:2
-msgid ""
-"Hello !\n"
-"    You can use the following link to reset your password:\n"
-"    {{ link }}\n"
-"    Thanks,\n"
-"    Your friends at Empurrando Juntos."
-msgstr ""
-"Olá !\n"
-"    Você pode usar o seguinte link para resetar sua senha:\n"
-"    {{ link }}\n"
-"    Obrigada,\n"
-"    Suas amigas da Empurrando Juntas."
-
 #: src/ej_users/jinja2/ej_users/recover-password.jinja2:3
 #: src/ej_users/jinja2/ej_users/remove-account.jinja2:2
 msgid "Reset password"
@@ -2278,6 +2246,40 @@ msgstr "Tente novamente"
 #: src/ej_users/jinja2/ej_users/reset-password.jinja2:23
 msgid "Update"
 msgstr "Atualizar"
+
+#~ msgid "Any comment in conversation"
+#~ msgstr "Qualquer comentário na conversa"
+
+#~ msgid "Self promotion"
+#~ msgstr "Auto promoção"
+
+#~ msgid "Endorse comment from other user"
+#~ msgstr "Endorsar comentário de outro usuário"
+
+#~ msgid "Endorse comment from a user in the user's cluster"
+#~ msgstr "Endorsar comentário de usuário de outro grupo"
+
+#~ msgid "Endorse comment from user from a different cluster"
+#~ msgstr "Endorsar comentário de usuário de um grupo diferente do seu"
+
+#~ msgid "Leave your comment"
+#~ msgstr "Deixe o seu comentário"
+
+#~ msgid "You still have {n} available comments"
+#~ msgstr "Você ainda tem {n} comentários disponíveis"
+
+#~ msgid ""
+#~ "Hello !\n"
+#~ "    You can use the following link to reset your password:\n"
+#~ "    {{ link }}\n"
+#~ "    Thanks,\n"
+#~ "    Your friends at Empurrando Juntos."
+#~ msgstr ""
+#~ "Olá !\n"
+#~ "    Você pode usar o seguinte link para resetar sua senha:\n"
+#~ "    {{ link }}\n"
+#~ "    Obrigada,\n"
+#~ "    Suas amigas da Empurrando Juntas."
 
 #~ msgid "Report"
 #~ msgstr "Relatório"
