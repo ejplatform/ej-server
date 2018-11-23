@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-23 18:46+0000\n"
+"POT-Creation-Date: 2018-11-23 19:20+0000\n"
 "PO-Revision-Date: 2018-11-23 17:41+0000\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -1385,32 +1385,30 @@ msgstr "endereço de email"
 msgid "User token"
 msgstr "Token do usuário"
 
-#: src/ej_users/routes.py:69
+#: src/ej_users/routes.py:70
 msgid "Invalid email or password"
 msgstr "Email ou senha inválidos"
 
-#: src/ej_users/routes.py:151
+#: src/ej_users/routes.py:152
 msgid "Please reset your password"
 msgstr "Por favor reset sua senha"
 
-#: src/ej_users/routes.py:198
+#: src/ej_users/routes.py:200
 #, fuzzy
-msgid ""
-"\n"
-"    Hello! You can use the following link to reset your password:\n"
+msgid "Hello! You can use the following link to reset your password:\n"
 msgstr ""
 "\n"
 "    Olá! Você pode usar este link para recuperar sua senha:\n"
 
-#: src/ej_users/routes.py:201
+#: src/ej_users/routes.py:202
+#, fuzzy
 msgid ""
+"\n"
 "Thanks,\n"
-"    Your friends at Empurrando Juntos.\n"
-"    "
+"    Your friends at Empurrando Juntos."
 msgstr ""
 "Obrigada,\n"
-"    Suas amigas da Empurrando Juntas.\n"
-"    "
+"    Suas amigas da Empurrando Juntas."
 
 #: src/ej/templates/jinja2/base.jinja2:103
 msgid "EJ - A platform of social participacion."
