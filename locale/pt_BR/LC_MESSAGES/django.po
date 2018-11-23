@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-11-23 17:30+0000\n"
-"PO-Revision-Date: 2018-11-23 17:32+0000\n"
+"PO-Revision-Date: 2018-11-23 17:41+0000\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
 "Language: pt-BR\n"
@@ -1387,11 +1387,14 @@ msgstr "Email ou senha inválidos"
 msgid "Please reset your password"
 msgstr "Por favor reset sua senha"
 
+#  
 #: src/ej_users/routes.py:199
 msgid ""
 "\n"
 "    AF MEU DEUS"
-msgstr "AGORA FOI"
+msgstr ""
+"\n"
+"    AGORA FOI"
 
 #: src/ej/templates/jinja2/base.jinja2:88
 msgid "EJ - A platform of social participation."
