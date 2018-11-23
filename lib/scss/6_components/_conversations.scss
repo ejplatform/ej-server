@@ -777,7 +777,7 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
 }
 
 .CommentPromoteForm {
-    @extend .CommentForm;
+    @extend .Comment;
     background: transparent;
 }
 
