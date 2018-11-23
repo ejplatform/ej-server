@@ -20,10 +20,6 @@ urlpatterns = Router(
 #
 @urlpatterns.route('')
 def index(request):
-    domain = request.META['HTTP_HOST'].split(':')[0]
-    board, board_exists = Board.with_custom_domain(domain)
-    if(board_exists):
-        return redirect('/%s/conversations' % board)
     if request.user.id:
         return redirect(settings.EJ_USER_HOME_PATH)
     else:

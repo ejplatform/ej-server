@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.core.exceptions import ValidationError
+from django.core.validators import RegexValidator
 from django.db import models
 from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
@@ -54,7 +55,13 @@ class Board(TimeStampedModel):
     custom_domain = models.CharField(
       _('Custom Domain'),
       blank= True,
-      max_length=50
+      max_length=50,
+      validators=[
+        RegexValidator(
+          regex='\w{3}.?[a-z]+\.[a-z]+',
+          message='Domínio invalido'
+        )
+      ]
     )
 
     @property

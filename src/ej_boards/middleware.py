@@ -2,6 +2,7 @@ from django.conf import settings
 from django.utils.text import slugify
 from django.urls import resolve
 from django.http import Http404, HttpResponsePermanentRedirect
+import re
 
 from .models import Board
 
@@ -58,11 +59,14 @@ def BoardDomainRedirectMiddleware(get_response):
   def middleware(request):
     response = get_response(request)
     path_info = request.META['PATH_INFO']
-    if(path_info == '/home/'):
-      domain = request.META['HTTP_HOST'].split(':')[0]
-      board, board_exists = Board.with_custom_domain(domain)
-      if(board_exists):
-        return HttpResponsePermanentRedirect('/%s/conversations' % board)
+    if(re.match('^\/home\/?', path_info)):
+      try:
+        domain = request.META['HTTP_HOST'].split(':')[0]
+        board, board_exists = Board.with_custom_domain(domain)
+        if(board_exists):
+          return HttpResponsePermanentRedirect('/%s/conversations' % board)
+      except:
+        return response
     return response
 
   return middleware
