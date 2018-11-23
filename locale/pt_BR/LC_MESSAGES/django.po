@@ -2242,13 +2242,5 @@ msgstr "Tente novamente"
 msgid "Update"
 msgstr "Atualizar"
 
-#  
-#~ msgid ""
-#~ "\n"
-#~ "    AF MEU DEUS"
-#~ msgstr ""
-#~ "\n"
-#~ "    AGORA FOI"
-
 #~ msgid "EJ - A platform of social participation."
 #~ msgstr "EJ - Uma plataforma para participação social."
