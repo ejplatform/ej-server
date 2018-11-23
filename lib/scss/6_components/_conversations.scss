@@ -848,14 +848,14 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
     padding: $spacing-unit-small 0;
     color: $color-content;
     i {
-        color: $conversation-link-edit-icon-color;
+        color: $color-content;
     }
 }
 
 .Link-promote {
     @extend .Link-new;
     color: $color-primary;
-    border-bottom: 1px solid $color-blue-light;
+    border-bottom: 1px solid $color-primary;
     width: 90%;
     margin: 0 auto;
 

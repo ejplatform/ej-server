@@ -5,7 +5,7 @@
 
 .CommentListItem {
     &-header {
-        color: $color-blue-light;
+        color: $color-primary;
         &::after {
             content: "";
             clear: both;
