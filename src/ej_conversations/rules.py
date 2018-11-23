@@ -5,6 +5,7 @@ from django.db.models import Q
 from django.utils.timezone import now
 
 from boogie import rules
+from ej_powers.rules import promoted_comments_in_conversation
 
 from .models import Comment
 
@@ -51,6 +52,8 @@ def is_personal_conversations_enabled():
 def next_comment(conversation, user):
     """
     Return a randomly selected comment for the user to vote.
+    It will first choose a comment from promoted comments, then
+    from user own unvoted comments and then the rest of the comments
     """
     if user.is_authenticated:
         unvoted_promoted_comments = promoted_comments_in_conversation(
