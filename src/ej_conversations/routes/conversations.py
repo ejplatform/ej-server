@@ -44,7 +44,6 @@ def get_conversation_detail_context(request, conversation):
     """
     user = request.user
     is_favorite = user.is_authenticated and conversation.followers.filter(user=user).exists()
-    comment = None
     comment_form = CommentForm(None, conversation=conversation)
     # User is voting in the current comment. We still need to choose a random
     # comment to display next.
@@ -78,10 +77,11 @@ def get_conversation_detail_context(request, conversation):
         comments_made = user.comments.filter(conversation=conversation).count()
     else:
         comments_made = 0
+
     return {
         # Objects
         'conversation': conversation,
-        'comment': comment or conversation.next_comment(user, None),
+        'comment': conversation.next_comment(user, None),
         'login_link': login_link(_('login'), conversation),
         'comment_form': comment_form,
 
