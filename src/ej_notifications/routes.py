@@ -47,13 +47,17 @@ def inbox(request):
 
     channels = Channel.objects.filter(users=user)
     messages = Message.objects.none()
-    notificationConfig = NotificationConfig.objects.filter(user=user).first()
+    notificationConfig = request.user.notifications_options
     print(notificationConfig)
     for item in channels:
         messages = messages | (Message.objects.filter(channel=item))
     print(messages)
 
-    notification_form = NotificationConfigForm(request.POST, instance=notificationConfig)
+    notification_form = NotificationConfigForm(request.POST or None, instance=notificationConfig)
+    if request.method == 'POST':
+        if notification_form.is_valid():
+            notification_form.save()
+    
     return {
         'user': user,
         'notifications':[

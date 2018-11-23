@@ -3,7 +3,7 @@
 {% block content %}
     <div class="Inbox">
         <div class="Inbox-config">
-            <div class="Inbox-config-title">
+            {# <div class="Inbox-config-title">
                 <p>{{_('Limit Notifications')}}</p>
                 <i class="fa fa-cog"></i>
             </div>
@@ -35,7 +35,13 @@
                         </label>
                     </div>
                 </div>
-            </div>
+            </div> #}
+            <form method="post" id="form" class="none">
+                {{ csrf_input }}
+                {{notification_form.as_p()}}
+                <input class="Button" type="submit" name="submit" value="{{ _('Save') }}">
+            </form>
+
         </div>
         <div class="Inbox-notifications">
             {% for item in messages %}
@@ -60,10 +66,7 @@
             </div>
             {% endfor %}
         </div>
-        <form method="post" class="django-form-as-p">
-        {{ csrf_input }}
-        {{notification_form.as_p()}}
-        </form>
+
     </div>
 {% endblock %}
 
