@@ -1396,9 +1396,7 @@ msgstr "Por favor reset sua senha"
 #: src/ej_users/routes.py:200
 #, fuzzy
 msgid "Hello! You can use the following link to reset your password:\n"
-msgstr ""
-"\n"
-"    Olá! Você pode usar este link para recuperar sua senha:\n"
+msgstr "Olá! Você pode usar este link para recuperar sua senha:\n"
 
 #: src/ej_users/routes.py:202
 #, fuzzy
@@ -1407,6 +1405,7 @@ msgid ""
 "Thanks,\n"
 "    Your friends at Empurrando Juntos."
 msgstr ""
+"\n"
 "Obrigada,\n"
 "    Suas amigas da Empurrando Juntas."
 
