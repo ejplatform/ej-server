@@ -148,7 +148,7 @@ def recover_password(request):
             token = generate_token(user)
             from_email = settings.DEFAULT_FROM_EMAIL
             template_message = _recover_password_message(host + '/reset-password/' + token.url)
-            send_mail(_("Please reset your password"), template_message,
+            send_mail(_("Please reset your password"), _(template_message),
                       from_email, [request.POST['email']],
                       fail_silently=False)
 
@@ -195,7 +195,8 @@ login_extra_template = get_template('socialaccount/snippets/login_extra.html')
 
 # E-MAIL MESSAGE
 def _recover_password_message(link):
-    return (
-        _('Hello! You can use the following link to reset your password:\n') +
-        link + _('Thanks,\nYour friends at Empurrando Juntos.')
+    return(
+        'Hello! You can use the following link to reset your password:\n' +
+        link +
+        '\nThanks,\nYour friends at Empurrando Juntos.'
     )
