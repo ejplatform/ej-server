@@ -197,7 +197,4 @@ login_extra_template = get_template('socialaccount/snippets/login_extra.html')
 # E-MAIL MESSAGE
 def _recover_password_message(link):
     return _(f"""
-    Hello! You can use the following link to reset your password:
-    {link}
-    Thanks,
-    Your friends at Empurrando Juntos.""")
+    AF MEU DEUS""")
