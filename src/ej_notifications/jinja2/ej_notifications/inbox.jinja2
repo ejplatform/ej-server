@@ -36,10 +36,9 @@
                     </div>
                 </div>
             </div> #}
-            <form method="post" id="form" class="none">
+            <form method="post" id="form" class="none" up-autosubmit>
                 {{ csrf_input }}
                 {{notification_form.as_p()}}
-                <input class="Button" type="submit" name="submit" value="{{ _('Save') }}">
             </form>
 
         </div>
