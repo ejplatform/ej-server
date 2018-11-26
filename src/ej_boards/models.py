@@ -33,6 +33,15 @@ class Board(TimeStampedModel):
         blank=True,
     )
 
+    PALLET_CHOICES = (
+      ('Blue', 'Blue'),
+      ('Grey', 'Grey'),
+      ('Pink', 'Pink'),
+    )
+    palette = models.CharField(max_length=10, 
+                              choices=PALLET_CHOICES,
+                              default='Blue')
+
     @property
     def conversations(self):
         return Conversation.objects.filter(board_subscriptions__board=self)
@@ -79,6 +88,9 @@ class Board(TimeStampedModel):
     def get_url(self, which, **kwargs):
         kwargs['board'] = self
         return SafeUrl(which, **kwargs)
+
+    def pallet_class(self):
+      return 'Pallet' + self.palette
 
 
 class BoardSubscription(models.Model):
