@@ -111,6 +111,17 @@ def comments_under_moderation(conversation, user):
     return user.comments.filter(conversation=conversation, status=Comment.STATUS.pending).count()
 
 
+@rules.register_value('ej_conversations.comments_made')
+def comments_made(conversation, user):
+    """
+    The number of comments made by user in a conversation
+    """
+    if user.id is None:
+        return 0
+    else:
+        return user.comments.filter(conversation=conversation).count()
+
+
 @rules.register_value('ej_conversations.vote_cooldown')
 def vote_cooldown(conversation, user):
     """
