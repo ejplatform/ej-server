@@ -4,7 +4,11 @@ import bs4
 import django
 from django.test.client import Client
 from hyperpython import Text
-from sidekick import deferred
+from sidekick import deferred, import_later
+
+pd = import_later('pandas')
+np = import_later('numpy')
+plt = import_later('matplotlib.pyplot')
 
 os.environ.setdefault('DJANGO_SETTINGS_MODEL', 'ej.settings')
 django.setup()
@@ -12,28 +16,49 @@ django.setup()
 #
 # Django imports
 #
+from boogie.models import F, Q
 from django.conf import settings  # noqa: E402
 from django.contrib.auth.models import AnonymousUser  # noqa: E402
 from ej_users.models import User  # noqa: E402
-from ej_conversations.models import Conversation, Comment  # noqa: E402
+from ej_conversations.models import Conversation, Comment, Vote, FavoriteConversation, ConversationTag  # noqa: E402
+from ej_clusters.models import Clusterization, Stereotype, Cluster, ClusterStatus, StereotypeVote  # noqa: E402
+
+_export = {F, Q}
+_enums = {ClusterStatus}
 
 #
 # Create examples
 #
 settings.ALLOWED_HOSTS.append('testserver')
 
-_first = lambda cls: deferred(lambda: cls.objects.first())
+_first = lambda obj: deferred(lambda: obj.first())
+
+
+def extract(obj):
+    return obj._obj__
+
 
 # User app
-users = User.objects.all()
+users = User.objects
 anonymous = AnonymousUser()
-admin = deferred(lambda: User.objects.filter(is_superuser=True).first())
-user = deferred(lambda: User.objects.filter(is_superuser=False).first())
+admin = deferred(lambda: users.filter(is_superuser=True).first())
+user = deferred(lambda: users.filter(is_superuser=False).first())
 
 # Conversation app
-conversations = Conversation.objects.all()
-conversation = _first(Conversation)
+conversations = Conversation.objects
+conversation = _first(conversations)
 comment = _first(Comment)
+votes = Vote.objects
+favorite_conversations = FavoriteConversation.objects
+conversation_tags = ConversationTag.objects
+
+# Clusterizations app
+clusterizations = Clusterization.objects
+clusterization = _first(clusterizations)
+stereotypes = Stereotype.objects
+stereotype = _first(stereotypes)
+clusters = Cluster.objects
+stereotype_votes = StereotypeVote.objects
 
 
 def fix_links(data, prefix='http://localhost:8000'):

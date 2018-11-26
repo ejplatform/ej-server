@@ -1,5 +1,9 @@
+import functools
+
 import pytest
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import AnonymousUser
+from django.test import TestCase
 from model_mommy.recipe import Recipe
 
 User = get_user_model()
@@ -81,6 +85,18 @@ def fixture_method(fixture):
     return method
 
 
+def wraps(func):
+    @functools.wraps(func)
+    def method(self, *args, **kwargs):
+        try:
+            testcase = self._testcase
+        except AttributeError:
+            testcase = self._testcase = TestCase()
+        return func(testcase, *args, **kwargs)
+
+    return method
+
+
 class EjRecipes(metaclass=FixtureMeta):
     """
     Base recipes for the site
@@ -88,3 +104,46 @@ class EjRecipes(metaclass=FixtureMeta):
     user = Recipe(User, is_superuser=False, email='user@domain.com', name='user')
     author = Recipe(User, is_superuser=False, email='author@domain.com', name='author')
     root = Recipe(User, is_superuser=True, email='root@domain.com', is_staff=True, name='root')
+
+    @pytest.fixture
+    def anonymous_user(self):
+        return AnonymousUser()
+
+    @pytest.fixture
+    def user_client(self, client, user_db):
+        client.force_login(user_db)
+        return client
+
+    @pytest.fixture
+    def author_client(self, client, author_db):
+        client.force_login(author_db)
+        return client
+
+    @pytest.fixture
+    def admin_client(self, client, root_db):
+        client.force_login(root_db)
+        return client
+
+    # Settings
+    settings = TestCase.settings
+    modify_settings = TestCase.modify_settings
+
+    assert_redirects = wraps(TestCase.assertRedirects)
+    assert_contains = wraps(TestCase.assertContains)
+    assert_not_contains = wraps(TestCase.assertNotContains)
+    assert_form_error = wraps(TestCase.assertFormError)
+    assert_formset_error = wraps(TestCase.assertFormsetError)
+    assert_template_used = wraps(TestCase.assertTemplateUsed)
+    assert_template_not_used = wraps(TestCase.assertTemplateNotUsed)
+    assert_raises_message = wraps(TestCase.assertRaisesMessage)
+    assert_warns_message = wraps(TestCase.assertWarnsMessage)
+    assert_field_output = wraps(TestCase.assertFieldOutput)
+    assert_html_equal = wraps(TestCase.assertHTMLEqual)
+    assert_html_not_equal = wraps(TestCase.assertHTMLNotEqual)
+    assert_in_html = wraps(TestCase.assertInHTML)
+    assert_json_equal = wraps(TestCase.assertJSONEqual)
+    assert_json_not_equal = wraps(TestCase.assertJSONNotEqual)
+    assert_xml_equal = wraps(TestCase.assertXMLEqual)
+    assert_xml_not_equal = wraps(TestCase.assertXMLNotEqual)
+
+    sub_test = TestCase.subTest
