@@ -5,15 +5,15 @@ from autoslug import AutoSlugField
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError, ObjectDoesNotExist
-from django.db import models
-from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from model_utils.models import TimeStampedModel
 from taggit.managers import TaggableManager
 from taggit.models import TaggedItemBase
 
+from boogie import models
 from boogie import rules
 from boogie.rest import rest_api
+from ej.utils.url import SafeUrl
 from .comment import Comment
 from .utils import normalize_status
 from .vote import Vote, Choice
@@ -87,7 +87,8 @@ class Conversation(TimeStampedModel):
 
     objects = ConversationManager()
     tags = TaggableManager(through='ConversationTag')
-    votes = property(lambda self: Vote.objects.filter(comment__conversation=self))
+    all_votes = property(lambda self: Vote.objects.filter(comment__conversation=self))
+    votes = property(lambda self: self.all_votes.filter(comment__status=Comment.STATUS.approved))
 
     @property
     def approved_comments(self):
@@ -116,20 +117,19 @@ class Conversation(TimeStampedModel):
                 'conversation.')
             )
 
-    def get_absolute_url(self):
+    def get_absolute_url(self, board=None):
         kwargs = {'conversation': self}
-        from ej_boards.models import BoardSubscription
-        is_conversation_in_board = BoardSubscription.objects.filter(conversation=self).exists()
-        if not is_conversation_in_board:
-            return reverse('conversation:detail', kwargs=kwargs)
-        else:
-            board = BoardSubscription.objects.get(conversation=self).board
+        if board is None:
+            board = getattr(self, 'board', None)
+        if board:
             kwargs['board'] = board
-            return reverse('boards:conversation-detail', kwargs=kwargs)
+            return SafeUrl('boards:conversation-detail', **kwargs)
+        else:
+            return SafeUrl('conversation:detail', **kwargs)
 
     def get_url(self, which, **kwargs):
         kwargs['conversation'] = self
-        return reverse(which, kwargs=kwargs)
+        return SafeUrl(which, **kwargs)
 
     def get_anchor(self, name, which, **kwargs):
         return hp.a(name, href=self.get_url(which, **kwargs))

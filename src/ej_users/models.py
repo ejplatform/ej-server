@@ -1,37 +1,31 @@
 from datetime import datetime, timedelta
 from secrets import token_urlsafe
 
+from boogie import rules
+from boogie.apps.users.models import AbstractUser
+from boogie.rest import rest_api
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from model_utils.models import TimeStampedModel
 
-from boogie import rules
-from boogie.apps.users.models import AbstractUser
-from boogie.rest import rest_api
 from .manager import UserManager
-from .utils import random_name
 
 
-@rest_api(['id', 'display_name'])
+def token_factory():
+    return token_urlsafe(30)
+
+
+@rest_api(['id'])
 class User(AbstractUser):
     """
     Default user model for EJ platform.
     """
 
-    display_name = models.CharField(
-        _('Display name'),
-        max_length=140,
-        unique=True,
-        default=random_name,
-        help_text=_(
-            'A randomly generated name used to identify each user.'
-        ),
-    )
     email = models.EmailField(
         _('email address'),
         unique=True,
-        help_text=('Your e-mail address')
+        help_text=_('Your e-mail address')
     )
 
     objects = UserManager()
@@ -73,6 +67,7 @@ class PasswordResetToken(TimeStampedModel):
         _('User token'),
         max_length=50,
         unique=True,
+        default=token_factory,
     )
     is_used = models.BooleanField(default=False)
     user = models.ForeignKey(
@@ -85,15 +80,10 @@ class PasswordResetToken(TimeStampedModel):
         time_now = datetime.now(timezone.utc)
         return (time_now - self.created).total_seconds() > 600
 
-    def generate_token(self):
-        self.url = token_urlsafe(30)
-
-
-def generate_token(user):
-    token = PasswordResetToken(user=user)
-    token.generate_token()
-    token.save()
-    return token
+    def use(self, commit=True):
+        self.is_used = True
+        if commit:
+            self.save(update_fields=['is_used'])
 
 
 def clean_expired_tokens():
