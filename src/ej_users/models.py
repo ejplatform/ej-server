@@ -36,6 +36,14 @@ class User(AbstractUser):
 
     objects = UserManager()
 
+    limit_board_conversations = models.PositiveIntegerField(
+        _('Limit conversations in board'),
+        default=0,
+        help_text=_(
+            'Limit number of conversations in user board '
+        ),
+    )
+
     @property
     def username(self):
         return self.email.replace('@', '__')

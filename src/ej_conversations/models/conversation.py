@@ -76,6 +76,15 @@ class Conversation(TimeStampedModel):
         ),
     )
 
+    limit_report_users = models.PositiveIntegerField(
+        _('Limit users'),
+        default=0,
+        help_text=_(
+            'Limit number of participants, making /reports/ route unavailable if limit is reached '
+            'except for super admin.'
+        ),
+    )
+
     objects = ConversationManager()
     tags = TaggableManager(through='ConversationTag')
     votes = property(lambda self: Vote.objects.filter(comment__conversation=self))
@@ -204,13 +213,18 @@ class Conversation(TimeStampedModel):
             },
 
             # Participants count
-            'participants': (
-                get_user_model()
+            'participants': {
+                'voters': get_user_model()
                     .objects
                     .filter(votes__comment__conversation_id=self.id)
                     .distinct()
-                    .count()
-            ),
+                    .count(),
+                'commenters': get_user_model()
+                            .objects
+                            .filter(comments__conversation_id=self.id, comments__status=Comment.STATUS.approved)
+                            .distinct()
+                            .count(),
+            },
         }
 
     def user_statistics(self, user):
