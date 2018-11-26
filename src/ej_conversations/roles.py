@@ -128,6 +128,27 @@ def comment_list_item(comment, **kwargs):
     }
 
 
+@with_template(models.Comment, role='reject-reason')
+def comment_reject_reason(comment, **kwargs):
+    """
+    Show reject reason for each comment.
+    """
+
+    rejection_reason = comment.rejection_reason
+    if rejection_reason in dict(models.Comment.REJECTION_REASON) and comment.status == comment.STATUS.rejected:
+        rejection_reason = dict(models.Comment.REJECTION_REASON)[comment.rejection_reason]
+    else:
+        rejection_reason = None
+    return {
+        'rejection_reasons': dict(models.Comment.REJECTION_REASON),
+        'comment': comment,
+        'conversation_url': comment.conversation.get_absolute_url(),
+        'status': comment.status,
+        'status_name': dict(models.Comment.STATUS)[comment.status].capitalize(),
+        'rejection_reason': rejection_reason
+    }
+
+
 @with_template(models.Conversation, role='comment-form')
 def comment_form(conversation, request=None, comment_content=None, **kwargs):
     """
