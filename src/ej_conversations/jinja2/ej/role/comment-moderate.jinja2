@@ -20,6 +20,11 @@
                 </button>
             </li>
         </ul>
+        {% if comment.status == "rejected" %}
+            <div class="CommentRejectReason">
+                {{ comment|role('reject-reason') }}
+            <div>
+        {% endif %}
         <div id="Comment-{{ comment.id }}-rejection_reason" class="Comment-rejection" style="display: none;">
             <h3>{{ _('Reason') }}</h3>
             <p>{{ _('The comment will receive your rejection reason') }}</p>

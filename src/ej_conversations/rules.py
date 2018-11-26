@@ -5,6 +5,7 @@ from django.db.models import Q
 from django.utils.timezone import now
 
 from boogie import rules
+from ej_powers.rules import promoted_comments_in_conversation
 
 from .models import Comment
 
@@ -51,24 +52,39 @@ def is_personal_conversations_enabled():
 def next_comment(conversation, user):
     """
     Return a randomly selected comment for the user to vote.
+    It will first choose a comment from promoted comments, then
+    from user own unvoted comments and then the rest of the comments
     """
-    unvoted_own_comments = conversation.approved_comments.filter(
-        ~Q(votes__author_id=user.id),
-        author_id=user.id,
-    )
-    own_size = unvoted_own_comments.count()
-    if own_size:
-        return unvoted_own_comments[randrange(0, own_size)]
+    if user.is_authenticated:
+        unvoted_promoted_comments = promoted_comments_in_conversation(
+            user, conversation).filter(~Q(votes__author_id=user.id),)
+        promoted_size = unvoted_promoted_comments.count()
+        if promoted_size:
+            return unvoted_promoted_comments[randrange(0, promoted_size)]
 
-    unvoted_comments = conversation.approved_comments.filter(
-        ~Q(author_id=user.id),
-        ~Q(votes__author_id=user.id),
-    )
-    size = unvoted_comments.count()
-    if size:
-        return unvoted_comments[randrange(0, size)]
+        unvoted_own_comments = conversation.approved_comments.filter(
+            ~Q(votes__author_id=user.id),
+            author_id=user.id,
+        )
+        own_size = unvoted_own_comments.count()
+        if own_size:
+            return unvoted_own_comments[randrange(0, own_size)]
+
+        unvoted_comments = conversation.approved_comments.filter(
+            ~Q(author_id=user.id),
+            ~Q(votes__author_id=user.id),
+        )
+        size = unvoted_comments.count()
+        if size:
+            return unvoted_comments[randrange(0, size)]
+        else:
+            return None
     else:
-        return None
+        size = conversation.approved_comments.count()
+        if size:
+            return conversation.approved_comments[randrange(0, size)]
+        else:
+            return None
 
 
 #

@@ -330,17 +330,17 @@ $color-background-button-modalities: rgba(255, 255, 255, 0.3);
         padding: $spacing-unit-tiny $spacing-unit-tiny $spacing-unit $spacing-unit-tiny;
         .ConversationTags {
             background-color: $color-hint;
-            color: $color-accent;
+            color: $color-primary;
         }
 
         h1 {
             @extend .Container;
-
+            padding: ($spacing-unit + $spacing-unit-small);
             padding-top: $spacing-unit-tiny;
             padding-bottom: $spacing-unit;
             text-align: center;
             font-weight: 200 !important;
-            font-size: $spacing-unit !important;
+            font-size: ($spacing-unit-tiny + $spacing-unit-small) !important;
             font-family: $font-paragraph;
             color: $color-content;
 
@@ -396,7 +396,7 @@ $color-background-button-modalities: rgba(255, 255, 255, 0.3);
         margin: 0 auto;
         max-width: $content-wrapper-max-width - 2 * $spacing-unit-huge;
         padding: 0 $spacing-unit-small;
-        color: $color-accent;
+        color: $color-primary;
 
         li {
             list-style: none;
@@ -767,7 +767,7 @@ $color-background-button-modalities: rgba(255, 255, 255, 0.3);
         z-index: 3;
         padding: ($spacing-unit-large - $spacing-unit-tiny) ($spacing-unit-large - $spacing-unit-small);
         background-color: $color-primary;
-        color: $color-content;
+        color: $color-content-text;
 
         &-counter {
             text-align: center;
@@ -898,19 +898,14 @@ $color-background-button-modalities: rgba(255, 255, 255, 0.3);
         width: 100% !important;
         box-sizing: border-box;
         text-align: center;
-        background: $color-primary;
+        background: $color-hint;
         border-radius: $border-radius-large;
         padding: ($spacing-unit-large - $spacing-unit-tiny) ($spacing-unit-large - $spacing-unit-small);
         z-index: 5;
 
-        h1 {
-            font-size: $font-size-h3;
-            margin: $spacing-unit-tiny 0;
-            color: $color-primary;
-        }
         p {
-            margin: $spacing-unit-tiny 0;
-            color: $color-content-text;
+            margin: $spacing-unit-small ($spacing-unit + $spacing-unit-tiny);
+            color: $color-content;
         }
 
         textarea {
@@ -919,13 +914,19 @@ $color-background-button-modalities: rgba(255, 255, 255, 0.3);
             min-height: 3 * $font-size;
             outline: none;
             border: 2px solid $color-primary;
-            background: $color-content;
+            background: $color-content-text;
             color: #333;
             box-shadow: none;
         }
         #characters-count{
             display: block;
             text-align: right;
+            @media only screen and (min-width: $breakpoint-medium - $breakpoint-small) {
+                padding: 0px;
+            }
+            @media only screen and (min-width: $breakpoint-small) {
+                padding: 0px ($spacing-unit + $spacing-unit-tiny) 0px 0px;
+            }
         }
 
         &-fakeButton,
@@ -1291,6 +1292,10 @@ $color-background-button-modalities: rgba(255, 255, 255, 0.3);
     .Comment-status-approved .ConversationComment-actions li:hover,
     .Comment-status-rejected .ConversationComment-actions li:hover {
         opacity: 1;
+    }
+
+    .Comment-status-rejected .CommentListItem-footer {
+        text-align: center;
     }
 
     .Comment-rejection {

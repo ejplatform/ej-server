@@ -10,6 +10,7 @@ from django.http import HttpResponseServerError
 from django.shortcuts import redirect
 from django.template.loader import get_template
 from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 
@@ -195,8 +196,8 @@ login_extra_template = get_template('socialaccount/snippets/login_extra.html')
 
 # E-MAIL MESSAGE
 def _recover_password_message(link):
-    return _(f"""
-    Hello! You can use the following link to reset your password:
-    {link}
-    Thanks,
-    Your friends at Empurrando Juntos.""")
+    return (
+        ugettext('Hello! You can use the following link to reset your password:\n') +
+        link +
+        ugettext('\nThanks,\n    Your friends at Empurrando Juntos.')
+    )
