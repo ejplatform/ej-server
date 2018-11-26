@@ -448,6 +448,9 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
     p {
         text-align: center;
     }
+    .waiting{
+        padding: 0px 0px $spacing-unit-large 0px;
+    }
 }
 
 .Comment {

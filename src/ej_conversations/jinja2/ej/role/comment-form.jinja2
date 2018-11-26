@@ -7,7 +7,7 @@
         {{comment_content.content}}
         <span id="characters-count">0 / 252</span>
         <input type="submit" name="submit" value="{{ _('Comment') }}" primary>
-        {{toast("OPS!", comment_content.content.errors|striptags)}}
+        {{toast("OPS!", comment_content.content.errors|striptags, 'imgtoast', '/static/img/icons/attention.svg')}}
     </form>
     <script>
         document.body.addEventListener('DOMSubtreeModified', function () {
