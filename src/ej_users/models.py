@@ -36,6 +36,14 @@ class User(AbstractUser):
 
     objects = UserManager()
 
+    limit_board_conversations = models.PositiveIntegerField(
+        _('Limit conversations in board'),
+        default=0,
+        help_text=_(
+            'Limit number of conversations in user board '
+        ),
+    )
+
     @property
     def username(self):
         return self.email.replace('@', '__')
@@ -47,6 +55,11 @@ class User(AbstractUser):
     def profile(self):
         profile = rules.get_value('auth.profile')
         return profile(self)
+
+    @property
+    def notifications_options(self):
+        notifications_options = rules.get_value('auth.notification_options')
+        return notifications_options(self)
 
     class Meta:
         swappable = 'AUTH_USER_MODEL'

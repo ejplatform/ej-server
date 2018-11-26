@@ -113,7 +113,10 @@ class TestStatistics(ConversationRecipes):
                 'skip': 5,
                 'total': 35,
             },
-            'participants': 8,
+            'participants': {
+                'commenters': 1,
+                'voters': 8,
+            },
         }
 
         # User can also check its own stats
