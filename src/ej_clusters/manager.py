@@ -1,4 +1,4 @@
-from django.db.models import QuerySet, Manager
+from boogie.models import QuerySet, Manager
 
 from sidekick import import_later
 
@@ -16,7 +16,7 @@ class ClusterManager(Manager.from_queryset(ClusterQuerySet)):
         conversation.
         """
         return conversation.votes.values_list(
-            'comment__conversation__',
+            'comment__conversation_id',
             'comment_id',
             'choice',
         )

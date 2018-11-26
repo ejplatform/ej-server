@@ -14,6 +14,7 @@ from sidekick import delegate_to, alias, lazy
 
 from boogie import rules
 from boogie.fields import EnumField
+from boogie.models import Manager as BoogieManager
 from boogie.rest import rest_api
 from ej_conversations.models import Choice, Conversation
 from ej_conversations.models.vote import normalize_choice
@@ -24,7 +25,7 @@ log = logging.getLogger('ej')
 math = sk.import_later('.math', package=__package__)
 
 
-@rest_api()
+@rest_api(['conversation', 'cluster_status'])
 class Clusterization(TimeStampedModel):
     """
     Manages clusterization tasks for a given conversation.
@@ -104,7 +105,7 @@ class Clusterization(TimeStampedModel):
         return rule.test(conversation)
 
 
-@rest_api(exclude=['users', 'stereotypes'])
+@rest_api(['clusterization', 'name', 'description'], inline=True)
 class Cluster(TimeStampedModel):
     """
     Represents an opinion group.
@@ -167,6 +168,7 @@ class Cluster(TimeStampedModel):
             return df.pivot_table('choice', index='comment', aggfunc='mean')
 
 
+@rest_api(['conversation', 'name', 'description', 'owner'], inline=True)
 class Stereotype(models.Model):
     """
     A "fake" user created to help with classification.
