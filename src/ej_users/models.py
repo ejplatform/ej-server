@@ -53,6 +53,11 @@ class User(AbstractUser):
         notifications_options = rules.get_value('auth.notification_options')
         return notifications_options(self)
 
+    @property
+    def notifications(self):
+        notifications = rules.get_value('auth.notifications')
+        return notifications(self)
+
     class Meta:
         swappable = 'AUTH_USER_MODEL'
 

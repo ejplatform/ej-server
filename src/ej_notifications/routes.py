@@ -45,19 +45,20 @@ def clusters(request):
 def inbox(request):
     user = request.user
 
-    notifications = Notification.objects.filter(receiver=user)
+    notifications =  user.notifications.all() #Notification.objects.filter(receiver=user)
     print(notifications)
+    print (user.notifications_options)
     for item in notifications:
         if(item.read == True):
             item.already_seen =  True
         else:
             item.already_seen =  False
-        
+
         item.read = True
         item.save()
     
     notifications = reversed(notifications)
-    print(notifications)
+    # print(notifications)
 
     notificationConfig = request.user.notifications_options
 

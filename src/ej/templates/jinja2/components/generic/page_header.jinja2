@@ -114,10 +114,11 @@
             <img src="/static/img/icons/navbar_profile.svg" title="{{ _('Profile') }}" alt="{{_('Profile')}}" class="Header-lowerIcon">
             <span>{{ _('Profile') }}</span>
         {% endcall %}
-        {% if request.user.notifications_options.notification_option|string == 'NotificationOptions.ENABLED' %}
+        {% if request.user.notifications_options.notification_option|string == 'NotificationOptions.ENABLED' %} {# Better way to do this? #}
         {% call link('/profile/notifications/inbox', title=_('Alerts'), class='alerts-link', preload=True) %}
             <img src="/static/img/icons/navbar_alerts.svg" alt="{{ _('Alerts') }}" class="Header-lowerIcon">
             <span>{{ _('Alerts') }}</span>
+            <p>{{settings}}</p>
         {% endcall %}
         {% endif %}
     </nav>
