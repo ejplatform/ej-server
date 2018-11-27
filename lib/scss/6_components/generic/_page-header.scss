@@ -148,4 +148,15 @@ $header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.2) !default;
 
         }
     }
+
+    &-lowerNotifications {
+        background-color: $color-red;
+        color: $color-white;
+        font-size: $font-size-default;
+        padding: $spacing-unit-tiny-tiny;
+        border-radius: $spacing-unit-small;
+        position: absolute;
+        right: $spacing-unit-small;
+        bottom: 0;
+    }
 }
