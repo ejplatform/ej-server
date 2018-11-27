@@ -2,18 +2,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-23 19:20+0000\n"
-"PO-Revision-Date: 2018-11-23 17:41+0000\n"
+"POT-Creation-Date: 2018-11-26 19:41+0000\n"
+"PO-Revision-Date: 2018-11-26 18:03-0200\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
-"Language: pt-BR\n"
+"Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Loco-Source-Locale: pt_BR\n"
 "Generated-By: Babel 2.5.3\n"
-"X-Generator: Loco https://localise.biz/\n"
+"X-Generator: Poedit 1.8.7.1\n"
 "X-Loco-Parser: loco_parse_po\n"
 
 #: docs/_templates/layout.html:3
@@ -65,7 +65,7 @@ msgid "An enumeration field"
 msgstr "Um campo de enumeração"
 
 #: local/vendor/django-boogie/src/boogie/models/abstract/user.py:55
-#: src/ej_profiles/models.py:131 src/ej_users/forms.py:47
+#: src/ej_profiles/models.py:133 src/ej_users/forms.py:47
 #: src/ej_users/forms.py:49 src/ej_users/forms.py:59
 msgid "E-mail"
 msgstr "Email"
@@ -594,7 +594,7 @@ msgstr "Esperando por mais dados"
 msgid "Active"
 msgstr "Ativo"
 
-#: src/ej_clusters/types.py:9
+#: src/ej_clusters/types.py:9 src/ej_notifications/models.py:24
 msgid "Disabled"
 msgstr "Desabilitado"
 
@@ -844,23 +844,35 @@ msgid ""
 "conversations/ endpoint."
 msgstr "Conversas ocultas não aparecem no mural principal /conversations/"
 
-#: src/ej_conversations/models/conversation.py:90
+#: src/ej_conversations/models/conversation.py:80
+msgid "Limit users"
+msgstr "Limitar usuários"
+
+#: src/ej_conversations/models/conversation.py:83
+msgid ""
+"Limit number of participants, making /reports/ route unavailable if limit is "
+"reached except for super admin."
+msgstr ""
+"Limitar o numero de participantes, tornando a rota /reports/ indisponível  "
+"se o limite é atingido (exceto para usuário admin)."
+
+#: src/ej_conversations/models/conversation.py:99
 msgid "Can publish promoted conversations"
 msgstr "Pode publicar conversas promovidas"
 
-#: src/ej_conversations/models/conversation.py:91
+#: src/ej_conversations/models/conversation.py:100
 msgid "Can moderate comments in any conversation"
 msgstr "Pode moderar comentários em qualquer conversa"
 
-#: src/ej_conversations/models/conversation.py:106
+#: src/ej_conversations/models/conversation.py:115
 msgid "User does not have permission to create a promoted conversation."
 msgstr "Usuário não tem permissão para criar uma conversa promovida."
 
-#: src/ej_conversations/models/conversation.py:161
+#: src/ej_conversations/models/conversation.py:170
 msgid "automatically rejected"
 msgstr "rejeitado automaticamente"
 
-#: src/ej_conversations/models/conversation.py:250
+#: src/ej_conversations/models/conversation.py:264
 msgid "No comments available for this user"
 msgstr "Não há comentários disponíveis para esse usuário"
 
@@ -895,8 +907,8 @@ msgstr "Criado em"
 msgid "non-moderated comments cannot receive votes"
 msgstr "comentários não-moderados não podem receber votos"
 
-#: src/ej_conversations/roles.py:76 src/ej_conversations/roles.py:161
-#: src/ej_conversations/routes/conversations.py:85
+#: src/ej_conversations/roles.py:76 src/ej_conversations/roles.py:162
+#: src/ej_conversations/routes/conversations.py:89
 msgid "login"
 msgstr "entrar"
 
@@ -975,7 +987,51 @@ msgstr "Módulo matemático"
 msgid "Notifications"
 msgstr "Notificações"
 
-#: src/ej_notifications/routes.py:16
+#: src/ej_notifications/models.py:13
+msgid "General"
+msgstr "Geral"
+
+#: src/ej_notifications/models.py:14
+msgid "Conversation"
+msgstr "Conversa"
+
+#: src/ej_notifications/models.py:15
+msgid "Group"
+msgstr "Grupo\t\t"
+
+#: src/ej_notifications/models.py:16
+msgid "Trophies"
+msgstr "Troféus"
+
+#: src/ej_notifications/models.py:17
+msgid "Admin"
+msgstr "Usuário administrativo"
+
+#: src/ej_notifications/models.py:18
+msgid "Approved Notifications"
+msgstr "Notificações aprovadas"
+
+#: src/ej_notifications/models.py:19
+msgid "Disapproved Notifications"
+msgstr "Notificações não aprovadas"
+
+#: src/ej_notifications/models.py:23
+msgid "Enabled"
+msgstr "Habilitado"
+
+#: src/ej_notifications/models.py:25
+msgid "Push notifications"
+msgstr "Notificações"
+
+#: src/ej_notifications/models.py:35
+msgid "Purpose"
+msgstr "Propósito"
+
+#: src/ej_notifications/models.py:71
+msgid "Notification options"
+msgstr "Opções de notificações"
+
+#: src/ej_notifications/routes.py:27
 msgid "List of notifications"
 msgstr "Lista de notificações"
 
@@ -986,6 +1042,8 @@ msgstr "usuário não tem permissão para promover esse comentário"
 #: src/ej_powers/models.py:90
 msgid "Comment is not in conversation that user can promote or is expired."
 msgstr ""
+"Esse comentário está expirado ou não está numa conversa que o usuário pode "
+"promover."
 
 #: src/ej_profiles/admin.py:9
 msgid "Basic information"
@@ -1047,71 +1105,71 @@ msgstr "Masculino"
 msgid "Other"
 msgstr "Outro"
 
-#: src/ej_profiles/models.py:26
+#: src/ej_profiles/models.py:27
 msgid "Race"
 msgstr "Raça"
 
-#: src/ej_profiles/models.py:27
+#: src/ej_profiles/models.py:28
 msgid "Ethnicity"
 msgstr "Etnia"
 
-#: src/ej_profiles/models.py:28
+#: src/ej_profiles/models.py:29
 msgid "Education"
 msgstr "Escolaridade"
 
-#: src/ej_profiles/models.py:29
+#: src/ej_profiles/models.py:30
 msgid "Gender identity"
 msgstr "Identidade de gênero"
 
-#: src/ej_profiles/models.py:30
+#: src/ej_profiles/models.py:31
 msgid "User provided gender"
 msgstr "Gênero fornecido pelo usuário"
 
-#: src/ej_profiles/models.py:31 src/ej_profiles/models.py:127
+#: src/ej_profiles/models.py:32 src/ej_profiles/models.py:129
 msgid "Age"
 msgstr "Idade"
 
-#: src/ej_profiles/models.py:32
+#: src/ej_profiles/models.py:33
 msgid "Birth Date"
 msgstr "Data de Nascimento"
 
-#: src/ej_profiles/models.py:33
+#: src/ej_profiles/models.py:34
 msgid "Country"
 msgstr "País"
 
-#: src/ej_profiles/models.py:35
+#: src/ej_profiles/models.py:36
 msgid "State"
 msgstr "Estado"
 
-#: src/ej_profiles/models.py:40
+#: src/ej_profiles/models.py:41
 msgid "City"
 msgstr "Cidade"
 
-#: src/ej_profiles/models.py:41
+#: src/ej_profiles/models.py:42
 msgid "Biography"
 msgstr "Biografia"
 
-#: src/ej_profiles/models.py:42
+#: src/ej_profiles/models.py:43
 msgid "Occupation"
 msgstr "Ocupação"
 
-#: src/ej_profiles/models.py:43
+#: src/ej_profiles/models.py:44
 msgid "Political activity"
 msgstr "Atividade política"
 
-#: src/ej_profiles/models.py:44
+#: src/ej_profiles/models.py:45
 msgid "Profile Photo"
 msgstr "Foto de Perfil"
 
-#: src/ej_profiles/models.py:167
+#: src/ej_profiles/models.py:169
 msgid "Root"
 msgstr "Root"
 
-#: src/ej_profiles/models.py:169
+#: src/ej_profiles/models.py:171
 msgid "Administrative user"
 msgstr "Usuário administrativo"
 
-#: src/ej_profiles/models.py:170 src/ej_profiles/tests/test_models.py:47
+#: src/ej_profiles/models.py:172 src/ej_profiles/tests/test_models.py:47
 msgid "Regular user"
 msgstr "Usuário regular"
 
@@ -1345,7 +1403,7 @@ msgstr "Configurações do rocketchat"
 msgid "Permissions"
 msgstr "Permissões"
 
-#: src/ej_users/admin.py:15
+#: src/ej_users/admin.py:16
 msgid "Important dates"
 msgstr "Datas importantes"
 
@@ -1381,7 +1439,15 @@ msgstr "Um nome gerado aleatoriamente para identificar cada usuário."
 msgid "email address"
 msgstr "endereço de email"
 
-#: src/ej_users/models.py:60
+#: src/ej_users/models.py:40
+msgid "Limit conversations in board"
+msgstr "Limitar conversas no board"
+
+#: src/ej_users/models.py:43
+msgid "Limit number of conversations in user board "
+msgstr "Limitar o número de conversas no mural do usuário"
+
+#: src/ej_users/models.py:73
 msgid "User token"
 msgstr "Token do usuário"
 
@@ -1394,12 +1460,10 @@ msgid "Please reset your password"
 msgstr "Por favor reset sua senha"
 
 #: src/ej_users/routes.py:200
-#, fuzzy
 msgid "Hello! You can use the following link to reset your password:\n"
 msgstr "Olá! Você pode usar este link para recuperar sua senha:\n"
 
 #: src/ej_users/routes.py:202
-#, fuzzy
 msgid ""
 "\n"
 "Thanks,\n"
@@ -1409,11 +1473,11 @@ msgstr ""
 "Obrigada,\n"
 "    Suas amigas da Empurrando Juntas."
 
-#: src/ej/templates/jinja2/base.jinja2:103
+#: src/ej/templates/jinja2/base.jinja2:106
 msgid "EJ - A platform of social participacion."
 msgstr "EJ - Uma plataforma para participação social."
 
-#: src/ej/templates/jinja2/base.jinja2:145
+#: src/ej/templates/jinja2/base.jinja2:148
 msgid "Please override the \"content\" block of your template!"
 msgstr "Por favor substitua o bloco \"content\" do seu template!"
 
@@ -1859,29 +1923,18 @@ msgstr ""
 "            enviar um comentário!"
 
 #: src/ej_conversations/jinja2/ej/role/comment-form.jinja2:23
-msgid "You have created this conversation."
-msgstr "Você criou essa conversa"
-
-#: src/ej_conversations/jinja2/ej/role/comment-form.jinja2:24
 msgid "Include something new and avoid similar opinions."
 msgstr "Escreva algo novo e evite opiniões similares."
 
 #: src/ej_conversations/jinja2/ej/role/comment-form.jinja2:27
-#, fuzzy
-msgid ""
-"Include something new and avoid similar opinions. You still have {n} "
-"available comments"
-msgstr "Escreva algo novo e evite opiniões similares."
-
-#: src/ej_conversations/jinja2/ej/role/comment-form.jinja2:31
 msgid "Ooops!"
 msgstr "Oooopa!"
 
-#: src/ej_conversations/jinja2/ej/role/comment-form.jinja2:32
+#: src/ej_conversations/jinja2/ej/role/comment-form.jinja2:28
 msgid "You reached the limit of comments in this conversation."
 msgstr "Você atingiu o limite de comentários nesta conversa."
 
-#: src/ej_conversations/jinja2/ej/role/comment-form.jinja2:35
+#: src/ej_conversations/jinja2/ej/role/comment-form.jinja2:31
 #, python-format
 msgid "Please %(login_anchor)s to vote on this conversation."
 msgstr "Favor %(login_anchor)s para votar nesta conversa."
@@ -1942,10 +1995,6 @@ msgstr "Favorito"
 msgid "Share"
 msgstr "Compartilhar"
 
-#: src/ej_conversations/jinja2/ej/role/conversation-card.jinja2:10
-msgid "Conversation"
-msgstr "Conversa"
-
 #: src/ej_conversations/jinja2/ej/role/conversation-card.jinja2:23
 msgid "Participate now!"
 msgstr "Participar agora!"
@@ -1979,35 +2028,86 @@ msgstr "Adicionar mais comentários"
 msgid "Send"
 msgstr "Enviar"
 
-#: src/ej_conversations/jinja2/ej_conversations/detail.jinja2:27
+#: src/ej_conversations/jinja2/ej_conversations/detail.jinja2:33
+msgid "Welcome"
+msgstr "Boas vindas"
+
+#: src/ej_conversations/jinja2/ej_conversations/detail.jinja2:34
+msgid ""
+"You started your participation! Start voting in comments: you can agree, "
+"desagree or pass if you want to vote after"
+msgstr ""
+"Você iniciou sua participação! Comece a votar nos comentários: você pode "
+"concordar, discordar ou pular"
+
+#: src/ej_conversations/jinja2/ej_conversations/detail.jinja2:40
+msgid "Participation"
+msgstr "Índice de participação"
+
+#: src/ej_conversations/jinja2/ej_conversations/detail.jinja2:41
+msgid ""
+"From your votes, you will be setted up in a opnion group, and you will can "
+"get powers that it will help you to diversify dialogues and sticking opnion "
+"bubbles!"
+msgstr ""
+"A partir dos seus votos, você será inserido num grupo de opinião, e você "
+"receberá poderes que te ajudarão a diversificar os diálogos e furar as "
+"bolhas de opinião!"
+
+#: src/ej_conversations/jinja2/ej_conversations/detail.jinja2:47
+msgid "Powers"
+msgstr "Poderes"
+
+#: src/ej_conversations/jinja2/ej_conversations/detail.jinja2:48
+msgid ""
+"With the powers, Minority Activist, Dialogue Brigde and Sticks Bubble, you "
+"will get more speech powers, increasing your comment limit and/or their "
+"visibility!"
+msgstr ""
+"Com os poderes de Ativista de Minoria e Ponte de Diálogo, você ganhará mais "
+"poder de fala, aumentando a visibilidade dos seus comentários!"
+
+#: src/ej_conversations/jinja2/ej_conversations/detail.jinja2:163
 msgid "Congratulations!"
 msgstr "Parabéns!"
 
-#: src/ej_conversations/jinja2/ej_conversations/detail.jinja2:28
+#: src/ej_conversations/jinja2/ej_conversations/detail.jinja2:164
 msgid "There are no comments left to vote :)"
 msgstr "Não há comentários para votar :)"
 
-#: src/ej_conversations/jinja2/ej_conversations/detail.jinja2:31
+#: src/ej_conversations/jinja2/ej_conversations/detail.jinja2:167
 msgid "You have {} comment{} under moderation."
 msgstr "Você tem {} comentário{} aguardando moderação."
 
-#: src/ej_conversations/jinja2/ej_conversations/detail.jinja2:33
+#: src/ej_conversations/jinja2/ej_conversations/detail.jinja2:169
 msgid "Click here"
 msgstr "Clique aqui"
 
-#: src/ej_conversations/jinja2/ej_conversations/detail.jinja2:34
+#: src/ej_conversations/jinja2/ej_conversations/detail.jinja2:170
 msgid "to see {}."
 msgstr "para ver {}."
 
-#: src/ej_conversations/jinja2/ej_conversations/detail.jinja2:46
+#: src/ej_conversations/jinja2/ej_conversations/detail.jinja2:181
 msgid "CREATE COMMENT"
 msgstr "CRIAR COMENTÁRIO"
 
-#: src/ej_conversations/jinja2/ej_conversations/detail.jinja2:50
+#: src/ej_conversations/jinja2/ej_conversations/detail.jinja2:185
+msgid "{} comment{}."
+msgstr "{} commentário{}."
+
+#: src/ej_conversations/jinja2/ej_conversations/detail.jinja2:186
+msgid ""
+"Your comments will not be moderated because you are the author of this "
+"conversation."
+msgstr ""
+"Seus comentários não serão moderados porque você é a autora/autor dessa "
+"conversa."
+
+#: src/ej_conversations/jinja2/ej_conversations/detail.jinja2:188
 msgid "{}/{} comment{}."
 msgstr "{}/{} commentário{}."
 
-#: src/ej_conversations/jinja2/ej_conversations/detail.jinja2:51
+#: src/ej_conversations/jinja2/ej_conversations/detail.jinja2:189
 msgid "{} waiting moderation."
 msgstr "{} aguardando moderação."
 
@@ -2240,6 +2340,15 @@ msgstr "Tente novamente"
 #: src/ej_users/jinja2/ej_users/reset-password.jinja2:23
 msgid "Update"
 msgstr "Atualizar"
+
+#~ msgid "You have created this conversation."
+#~ msgstr "Você criou essa conversa"
+
+#, fuzzy
+#~ msgid ""
+#~ "Include something new and avoid similar opinions. You still have {n} "
+#~ "available comments"
+#~ msgstr "Escreva algo novo e evite opiniões similares."
 
 #~ msgid "EJ - A platform of social participation."
 #~ msgstr "EJ - Uma plataforma para participação social."
