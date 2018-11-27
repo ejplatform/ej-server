@@ -173,6 +173,7 @@ def comment_form(conversation, request=None, comment_content=None, **kwargs):
     Render comment form for one conversation.
     """
     user = getattr(request, 'user', None)
+
     n_comments = rules.compute('ej_conversations.remaining_comments', conversation, user)
     conversation_url = conversation.get_absolute_url()
     login = reverse('auth:login')

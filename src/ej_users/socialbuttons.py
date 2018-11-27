@@ -75,7 +75,8 @@ def github_button(request):
         'next': '/conversations/',
     }
     url = provider.get_login_url(request, **query)
-    return fa_icon('github', href=url, id='github-button')
+    return fa_icon('github', href=url, id='github-button', aria_label="GitHub Icon",
+                   class_="fab fa-github icon-github rounded-icon")
 
 
 @register_button('google')
@@ -86,7 +87,7 @@ def google_button(request):
     }
     url = provider.get_login_url(request, **query)
     return fa_icon('google', href=url, id='google-button', aria_label="Google Icon",
-                   class_="fab fa-google icon-google rounded-icon")
+                   class_="fab fa-google-plus-g icon-google rounded-icon")
 
 
 #

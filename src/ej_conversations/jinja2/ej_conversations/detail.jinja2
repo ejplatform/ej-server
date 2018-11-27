@@ -1,6 +1,150 @@
 {% extends 'base.jinja2' %}
+{% from 'components/generic/modalities.jinja2' import modalities with context %}
+
+{% macro modalicon(icons) %}
+    {% for icon in icons %}
+        <i class="fa {{ icon }}"></i>
+    {% endfor %}
+{% endmacro %}
+
+{% macro modalimg(imgs) %}
+    {% for img, class in imgs.items() %}
+        <img class="{{ class }}" src="{{ img }}"></i>
+    {% endfor %}
+{% endmacro %}
+
+
+{% block metaOG2 %}
+
+    <meta name="description" property="og:title" content="{{conversation.text}}">
+    <meta property="og:description" content="Participe e dê sua opinião com comentários e votos!">
+
+    <!-- Twitter && Telegram -->
+    <meta name="twitter:title" content="{{conversation.text}}">
+
+{% endblock metaOG2 %}
 
 {% block content %}
+{% if voted == False %}
+        <div class="Modalities">
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        {{modalities(_("Welcome"), modalicon(["fa-times", "fa-arrow-right", "fa-check"]),
+                            [_("You started your participation! Start voting in comments: you can agree, desagree or pass if you want to vote after")])}}
+                        <div class="append-buttons">
+                            <a class="next-slide-1" href="#">NEXT</a>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        {{modalities(_("Participation"), modalimg({'/static/img/icons/artboard.svg' : 'imgpart'}),
+                            [_("From your votes, you will be setted up in a opnion group, and you will can get powers that it will help you to diversify dialogues and sticking opnion bubbles!")])}}
+                        <div class="append-buttons">
+                            <a class="next-slide-2" href="#">NEXT</a>
+                        </div>
+                     </div>
+                    <div class="swiper-slide">
+                        {{modalities(_("Powers"), modalimg({'/static/img/icons/iconponte.svg' : 'img', '/static/img/icons/iconativista.svg' : 'img'}),
+                            [_("With the powers, Minority Activist, Dialogue Brigde and Sticks Bubble, you will get more speech powers, increasing your comment limit and/or their visibility!")])}}
+                        <form method="post">
+                            {{ csrf_input }}
+                            <button type="submit" name="modalities" class="Button" value="pass">CONTINUE PARTICIPATING</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="swiper-pagination"></div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+</div>
+{#}    {% else %}
+
+
+        Modal estático para implementação da gamificação (Ativista de Minoria)
+        <div class="Modalities">
+            <div class="style-slide-center">
+                <div class="style-slide">
+                    <form method="get" action={{conversation.get_absolute_url()}}>
+                        <button type="submit" class="Button-closer">
+                            <i class="fa fa-times"></i>
+                        </button>
+                    </form>
+                    {{modalities(_("Minority Activist"), modalimg({'/static/img/icons/iconativista.svg' : 'imgponte'}), [_("O seu grupo parece concordar com você! Mas você votou contrário à maioria nesse comentário."), _("Todas as regiões devem ser priorizados nas relações do Brazil. EUA e países do eixo Sul-Sul!"), _("Para exercer o seu poder de ativista escolha fazer um comentário promovido extra ou promover um comentário seu já criado na conversa")])}}
+                    <form method="post">
+                        <button type="submit" class="Button">QUERO IR</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <script>
+            function showModalities-slider() {
+                var x = document.getElementByClassName("modalities");
+                x.className = "show";
+            }
+        </script>
+        <script>
+            showModalities-slider()
+        </script>
+
+
+
+        Modal estático para implementação da gamificação (Ponte de diálogo)
+        <div class="Modalities">
+            <div class="style-slide-center">
+                <div class="style-slide">
+                    <form method="get" action={{conversation.get_absolute_url()}}>
+                        <button type="submit" class="Button-closer">
+                            <i class="fa fa-times"></i>
+                        </button>
+                    </form>
+                    {{modalities(_("Dialogue Brigde"), modalimg({'/static/img/icons/iconponte.svg' : 'imgponte'}), [_("Você recebeu o poder Ponte de diálogo, porque, de acordo com as suas opiniões, você está próximo da borda do seu grupo de opinião"), _("Para exercer o seu poder de ponte, escolha fazer um comentário promovido extra ou promover um comentário seu já criado na conversa")])}}
+                    <form method="post">
+                        <button type="submit" class="Button">QUERO IR</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <script>
+            function showModalities-slider() {
+                var x = document.getElementByClassName("modalities");
+                x.className = "show";
+            }
+        </script>
+        <script>
+            showModalities-slider()
+        </script>
+
+        Modal estático para implementação do dataviz (Grupos de opiniões)
+        <div class="Modalities">
+            <div class="style-slide-center">
+                <div class="style-slide">
+                    <form method="get" action={{conversation.get_absolute_url()}}>
+                        <button type="submit" class="Button-closer">
+                            <i class="fa fa-times"></i>
+                        </button>
+                    </form>
+                    {{modalities(_("Opinion groups"), modalimg({'/static/img/icons/artboard.svg' : 'imgopn'}), [_("A partir de uma certa quantidadde de votos, os participantes serão classificados em grupos de opinião, assim poderão ser analisados os dados estatisticos desta conversa")])}}
+                    <form method="post">
+                        <button type="submit" class="Button">BACK</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <script>
+            function showModalities-slider() {
+                var x = document.getElementByClassName("modalities");
+                x.className = "show";
+            }
+        </script>
+        <script>
+            showModalities-slider()
+        </script>#}
+
+    {% endif %}
+
+
+
+
     <div class="ConversationDetail">
         {# Ballon with title #}
         {{ conversation|role('balloon') }}
@@ -9,36 +153,42 @@
         <div class="ConversationDetail-header">
             <h1>{{ _('Comments') }}</h1>
         </div>
-        <div class="Comment">
-            <div class="CommentCard">
-                {% if comment %}
-                    {{ comment|role('card') }}
-                {% else %}
-                        <h1>{{ _('Congratulations!') }}</h1>
-                        <p>{{ _("There are no comments left to vote :)") }}</p>
-                         <p>
-                            {# FIXME Add a less hardcoded pluralization  #}
-                            {{ _("You have {} comment{} under moderation.").format(comments_under_moderation, "" if comments_under_moderation == 1 else "s")}}
-                            {% if comments_under_moderation > 0 %}
-                                {{ link(_('Click here'), href='/profile/') }}
-                                {{ _("to see {}.").format("it" if comments_under_moderation == 1 else "them") }}
-                            {% endif %}
-                        </p>
-                {% endif %}
+        <div class="ConversationDetail-content">
+            <div class="Comment">
+                {{ conversation|role('comment-form', comment_content=comment_form) }}
+                <div class="CommentCard">
+                    {% if comment %}
+                        {{ comment|role('card') }}
+                    {% else %}
+                            <h1>{{ _('Congratulations!') }}</h1>
+                            <p>{{ _("There are no comments left to vote :)") }}</p>
+                                <p>
+                                {# FIXME Add a less hardcoded pluralization  #}
+                                {{ _("You have {} comment{} under moderation.").format(comments_under_moderation, "" if comments_under_moderation == 1 else "s")}}
+                                {% if comments_under_moderation > 0 %}
+                                    {{ link(_('Click here'), href='/profile/') }}
+                                    {{ _("to see {}.").format("it" if comments_under_moderation == 1 else "them") }}
+                                {% endif %}
+                            </p>
+                    {% endif %}
+                </div>
             </div>
 
             {# Post a new comment #}
-            {{ conversation|role('comment-form', comment_content=comment_form) }}
-        </div>
-        <div class="Comment-create">
-            <p>
-                <button onclick="showForm($(this))" id="button-create">
-                    <i class="fas fa-plus"></i> {{ _("CREATE COMMENT") }}
-                </button>
-            </p>
-            
-            <p>{{ _("{}/{} comment{}.").format(comments_made, max_comments if can_comment else 0, "" if max_comments == 1 else "s")}}</p>
-            <p>{{ _("{} waiting moderation.").format(comments_under_moderation)}}</p>
+            <div class="Comment-create">
+                <p>
+                    <button onclick="showForm($(this))" id="button-create">
+                        <i class="fas fa-plus"></i> {{ _("CREATE COMMENT") }}
+                    </button>
+                </p>
+                {% if user_is_owner %}
+                    <p>{{ _("{} comment{}.").format(comments_made, "" if comments_made < 2 else "s")}}</p>
+                    <p>{% trans %}Your comments will not be moderated because you are the author of this conversation.{% endtrans %}</p>
+                {% else %}
+                    <p>{{ _("{}/{} comment{}.").format(comments_made, max_comments if can_comment else 0, "" if max_comments == 1 else "s")}}</p>
+                    <p>{{ _("{} waiting moderation.").format(comments_under_moderation)}}</p>
+                {% endif %}
+            </div>
         </div>
     </div>
 {% endblock %}
