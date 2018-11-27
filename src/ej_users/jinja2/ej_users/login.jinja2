@@ -6,8 +6,8 @@
     }</style>
 
     <div class="Login">
-        {# <div class="Login-icon"><img src="/static/img/login/ej-cat.svg"></div> #}
         <h1 class="Login-title">{{ _(settings.EJ_LOGIN_TITLE_TEXT) }}</h1>
+        <div class="Login-icon"><img src="/static/img/login/login.svg"></div>
 
         <form method="post" class="Form" is-placeholder-form>
             {{ csrf_input }}
@@ -15,6 +15,7 @@
             {% for field in form %}
                 <div class="fieldWrapper">
                     {{ field.errors }}
+                    <p class="Name-field"> {{_(field.name)}}
                     <p>
                         <input for="{{field.id_for_label}}"
                             name="{{field.name}}"
@@ -35,7 +36,7 @@
         </form>
 
         <h1><a href="{{ '/recover-password/' + ('?next=' + next if next else '') }}"
-                  primary>{{ _('Forgot your password?') }}</a></h1>
+                  primary>{{ _('forgot my password') }}</a></h1>
 
         {{ social_login(social_buttons, social_js) }}
 
@@ -53,7 +54,7 @@
 {% macro social_login(buttons, js) %}
     {% if buttons %}
         {{ js }}
-        <p>{{ _('or sign up through other networks') }}</p>
+        <p class="Text-socialButtons">{{ _('or sign up through other networks') }}</p>
         <div class="Login-socialButtons">
             {% for button in buttons %}{{ button }}{% endfor %}
         </div>
