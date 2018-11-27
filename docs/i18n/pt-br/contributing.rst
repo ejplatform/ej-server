@@ -1,6 +1,10 @@
 Adicionar funcionalidades no ej-server
 ======================================
 
+.. contents::
+   :depth: 2
+
+
 Para cada issue a ser resolvida, seguir o seguinte procedimento:
 
 - Caso seu ambiente de desenvolvimento ainda não esteja preparado,
