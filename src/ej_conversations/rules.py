@@ -132,7 +132,7 @@ def vote_progres_porcentage(conversation, user):
     else:
         total = conversation.approved_comments.count()
         comments_voted = conversation.user_votes(user).count()
-        if total == remaining_comments or total == 0:
+        if total == 0:
             return 100
         return comments_voted / total * 100
 
