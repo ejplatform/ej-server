@@ -5,6 +5,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AnonymousUser
 from django.test import TestCase
 from model_mommy.recipe import Recipe
+from sidekick import record
 
 User = get_user_model()
 
@@ -104,6 +105,7 @@ class EjRecipes(metaclass=FixtureMeta):
     user = Recipe(User, is_superuser=False, email='user@domain.com', name='user')
     author = Recipe(User, is_superuser=False, email='author@domain.com', name='author')
     root = Recipe(User, is_superuser=True, email='root@domain.com', is_staff=True, name='root')
+    admin = Recipe(User, is_superuser=True, email='admin@domain.com', is_staff=True, name='admin')
 
     @pytest.fixture
     def anonymous_user(self):
@@ -123,6 +125,17 @@ class EjRecipes(metaclass=FixtureMeta):
     def admin_client(self, client, root_db):
         client.force_login(root_db)
         return client
+
+    @pytest.fixture
+    def data(self, request):
+        user, author, admin = self.get_users(request)
+        return record(user=user, author=author, admin=admin)
+
+    def get_users(self, request):
+        user = request.getfixturevalue('user_db')
+        author = request.getfixturevalue('author_db')
+        admin = request.getfixturevalue('admin_db')
+        return user, author, admin
 
     # Settings
     settings = TestCase.settings
