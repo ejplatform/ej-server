@@ -11,7 +11,6 @@ from django.shortcuts import redirect
 from django.template.loader import get_template
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
-from django.utils.translation import ugettext
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 

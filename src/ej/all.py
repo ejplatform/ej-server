@@ -16,7 +16,7 @@ django.setup()
 #
 # Django imports
 #
-from boogie.models import F, Q
+from boogie.models import F, Q  # noqa: E402
 from django.conf import settings  # noqa: E402
 from django.contrib.auth.models import AnonymousUser  # noqa: E402
 from ej_users.models import User  # noqa: E402
