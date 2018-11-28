@@ -52,11 +52,13 @@
             <div class="Inbox-notifications-card {{notification_class}}">
                 <div>
                 <div class="Inbox-notifications-circle"></div>
+                {# {{item.channel.purpose}}   #} {# Trocar por icone adequado a cada canal!! #}
                 </div>
                 <div class="Inbox-notifications-body">
                     <h6>{{item.message.title}}</h6>
                     <p class="Inbox-notifications-description">
                         {{ item.message.body}}
+                        
                         {%if item.message.link != ''%}
                             <span class="Inbox-notifications-info"> - {{item.message.link}}</span>
                         {% endif %}

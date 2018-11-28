@@ -1,5 +1,4 @@
 from django.forms import ModelForm
-from django.conf import settings
 
 from . import models
 
