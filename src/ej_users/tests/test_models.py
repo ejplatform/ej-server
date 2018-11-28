@@ -1,4 +1,4 @@
-from boogie.testing.model import ModelTester
+from boogie.testing.pytest import ModelTester
 from ej.testing import EjRecipes
 from ej_profiles.choices import Race, Gender
 from ej_users import password_reset_token

@@ -1,7 +1,6 @@
 from django.contrib.auth import get_user_model
 
-from boogie.testing import crawler
-from boogie.testing import url
+from boogie.testing.pytest import CrawlerTester, UrlTester
 
 User = get_user_model()
 
@@ -11,24 +10,21 @@ class MakeUserMixin:
         return User.objects.create_user(name=username, **kwargs)
 
 
-class TestCrawl(MakeUserMixin, crawler.TestCrawl):
-    bases = [
-        ('/', None),
-        # ('/', 'user'),
-        # ('/', 'author'),
-        # ('/', 'admin'),
-    ]
+class TestUserCrawl(MakeUserMixin, CrawlerTester):
+    start = '/'
+    user = 'user'
 
 
-class TestUrls(MakeUserMixin, url.TestUrls):
+class TestAuthorCrawl(MakeUserMixin, CrawlerTester):
+    start = '/'
+    user = 'author'
+
+
+class TestUrls(MakeUserMixin, UrlTester):
     urls = {
         None: [
             '/',
             '/home/',
             '/conversations/'
         ],
-
-        'user': [
-
-        ]
     }
