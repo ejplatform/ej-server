@@ -1,15 +1,18 @@
 import logging
 from datetime import datetime
-from django.utils import timezone
-from django.db import models
-from django.utils.translation import ugettext_lazy as _
+
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
+from django.db import models
+from django.db.models import QuerySet
+from django.utils import timezone
+from django.utils.translation import ugettext_lazy as _
+from jsonfield import JSONField
 from model_utils.models import TimeFramedModel
 from polymorphic.models import PolymorphicModel
-from picklefield.fields import PickledObjectField
 
 from ej_conversations.fields import UserRef, CommentRef, ConversationRef
+from ej_powers.manager import GivenPowerManager
 from .functions import promote_comment
 
 NO_PROMOTE_MSG = _('user does not have the right to promote this comment')
@@ -40,7 +43,7 @@ class CommentPromotion(TimeFramedModel):
             log.info(f'Removed expired promotion for {self.comment} comment.')
 
 
-class GivenPower(TimeFramedModel, PolymorphicModel):
+class GivenPower(PolymorphicModel, TimeFramedModel):
     """
     Concede a power to some specific user.
 
@@ -51,9 +54,26 @@ class GivenPower(TimeFramedModel, PolymorphicModel):
     """
     user = UserRef()
     conversation = ConversationRef()
-    data = PickledObjectField()
+    data = JSONField(default=dict)
     is_exhausted = models.BooleanField(default=False)
     is_expired = property(lambda self: self.end < datetime.now(timezone.utc))
+    objects = GivenPowerManager()
+
+    @property
+    def affected_users(self):
+        """
+        Queryset with all affected users.
+        """
+        user_ids = self.data['affected_users']
+        return get_user_model().objects.filter(id__in=user_ids)
+
+    @affected_users.setter
+    def affected_users(self, users):
+        if isinstance(users, QuerySet):
+            id_list = list(users.distinct().values_list('id', flat=True))
+        else:
+            id_list = list(set(user.id for user in users))
+        self.data = {'affected_users': id_list}
 
     def use_power(self, **kwargs):
         raise NotImplementedError('implement in subclass')
@@ -67,24 +87,12 @@ class GivenBridgePower(GivenPower):
     class Meta:
         proxy = True
 
-    def get_affected_users(self):
-        """
-        Return queryset with all affected users.
-        """
-        user_ids = self.data['affected_users']
-        return get_user_model().objects.filter(id__in=user_ids)
-
-    def set_affected_users(self, users):
-        """
-        Convert users queryset to a list and save it to affected_users
-        """
-        self.data = {'affected_users': set(user.id for user in users)}
-
     def use_power(self, comment):
+
         if comment.conversation == self.conversation and not self.is_expired:
             return promote_comment(comment,
                                    author=self.user,
-                                   users=self.get_affected_users(),
+                                   users=self.affected_users.all(),
                                    expires=self.end)
         else:
             raise ValidationError(_('Comment is not in conversation that user can promote or is expired.'))
@@ -95,9 +103,7 @@ class GivenMinorityPower(GivenPower):
     Given "Minority activist" power.
     """
 
+    use_power = GivenBridgePower.use_power
+
     class Meta:
         proxy = True
-
-    get_affected_users = GivenBridgePower.get_affected_users
-    set_affected_users = GivenBridgePower.set_affected_users
-    use_power = GivenBridgePower.use_power
