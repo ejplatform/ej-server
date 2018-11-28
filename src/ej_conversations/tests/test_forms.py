@@ -141,6 +141,22 @@ class TestConversationForm:
                     is_promoted=True,
                 )
 
+    def test_edit_conversation_form(self, db, conversation):
+        conversation.tags.add('oldtag')
+        form = ConversationForm(
+            data={'title': 'tiaatle',
+                  'tags': 'newtag',
+                  'text': 'description',
+                  'comments_count': 0, },
+            instance=conversation,
+        )
+
+        assert form.is_valid()
+        form.save()
+        conversation.refresh_from_db()
+        assert str(conversation.tags.first()) == 'newtag'
+        assert conversation.tags.count() == 1
+
 
 class TestCommentForm:
     def test_init(self, conversation):

@@ -57,12 +57,9 @@ class ConversationForm(forms.ModelForm):
         for k, v in kwargs.items():
             setattr(conversation, k, v)
         conversation.save()
+
         # Save tags on the database
-        tags = conversation.tags.all()
-        if tags:
-            conversation.tags = None
-        for tag in self.cleaned_data['tags']:
-            conversation.tags.add(tag)
+        self.save_m2m()
 
         # Save board
         if board:
