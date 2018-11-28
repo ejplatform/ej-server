@@ -1,6 +1,6 @@
 {% extends 'base.jinja2' %}
 
-{% set content_title = gettext('Edit profile: <em>%(name)s</em>', name=request.user.name) %}
+{% set content_title = gettext('Edit profile: %(name)s', name=request.user.name) %}
 
 {% block content %}
     <div class="ProfileEdit">

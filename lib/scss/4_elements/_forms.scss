@@ -38,12 +38,16 @@ input:not([type]),
 textarea,
 select,
 .FormItem {
+    font-family: $font-raleway;
+    font-size: $font-size-default;
     border-radius: $border-radius-small + $border-radius-tiny;
     background: $color-background;
     border: 1px solid $color-primary;
     color: $color-content;
     margin: $spacing-unit-tiny auto;
     padding: $spacing-unit-small ($spacing-unit-small $spacing-unit-small);
+    text-shadow: 2px 2px 8px $color-content 15%; 
+    box-shadow: inset  2px 2px 8px #052B4721;
 }
 
 input[type=checkbox] {
@@ -73,13 +77,16 @@ input[type=checkbox] {
 }
 
 textarea {
-    height: 6 * $font-size-default;
+    height: 7 * $font-size-default + 10; // 115
 }
 
 label {
-    color: $color-content;
+    text-transform: lowercase;
+    font-family: $font-raleway;
+    color: $color-primary;
     font-weight: bold;
-    font-size: $font-size-h5;
+    font-size: $font-size-tiny;
+    padding-left: 20px;
     margin: 0 auto;
 }
 
