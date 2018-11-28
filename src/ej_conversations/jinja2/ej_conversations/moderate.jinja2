@@ -7,8 +7,8 @@
         <div class="ConversationDetail">
             <div class="ConversationDetail-banner">
                 <div class="ConversationTags"><i class="fa fa-tags"></i>
-                    {% if conversation.tags.count() > 0 %}
-                        {{ (conversation.tags.all()[0]|string).title() }}
+                    {% if tags %}
+                        {{ ', '.join(tags) }}
                     {% else %}
                         Tags
                     {% endif %}

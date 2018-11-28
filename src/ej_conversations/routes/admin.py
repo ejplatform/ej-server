@@ -80,10 +80,12 @@ def get_conversation_moderate_context(request, conversation):
         comment.save()
 
     status = request.GET.get('status', 'pending')
+    tags = list(map(str, conversation.tags.all()))
 
     return {
         'conversation': conversation,
         'comment_status': status,
         'edit_url': conversation.get_absolute_url() + 'edit/',
         'comments': list(conversation.comments.filter(status=status)),
+        'tags': tags,
     }

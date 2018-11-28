@@ -41,7 +41,8 @@ def conversation_balloon(conversation, request=None, **kwargs):
     favorites = models.FavoriteConversation.objects
     is_authenticated = getattr(user, 'is_authenticated', False)
     is_favorite = is_authenticated and conversation.is_favorite(user)
-    tags = list(map(str, conversation.tags.all()[:3]))
+    tags = list(map(str, conversation.tags.all()))
+
     return {
         'conversation': conversation,
         'tags': tags,
