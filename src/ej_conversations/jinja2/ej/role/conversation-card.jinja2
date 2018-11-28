@@ -19,6 +19,7 @@
         </div>
         <div class="ConversationCard-cover">
             <h1 up-expand><a href="{{ url }}">{{ conversation.text }}</a></h1>
+            {{conversation|role('progress-bar')}}
         </div>
         <div class="ConversationCard-actions">{{ action_button(_('Participate now!'), url) }}</div>
     </div>

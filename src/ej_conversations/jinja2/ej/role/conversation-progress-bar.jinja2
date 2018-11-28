@@ -1,6 +1,16 @@
-<div class="progress-status">
-
-<div class="progress-porcentage">{{porcentage}}%</div><div class="wtf"> <div class="progress-bar">
-  <div class="progress-bar-content" style="width:{{porcentage}}%"></div></div>
-</div><div class="progress-absolute">{{voted}}/{{total}} </div>
+<div class="Progress-status">
+    <div class="Progress-porcentage">
+        {{porcentage}}%
+    </div>
+    <div class="Progress-bar">
+        <div class="Progress-bar-border">
+            <div class="Progress-bar-content" style="width:{{porcentage}}%">
+            </div>
+        </div>
+    </div>
+    {% if voted %}
+        <div class="Progress-absolute">
+            {{voted}}/{{total}}
+        </div>
+    {% endif %}
 </div>

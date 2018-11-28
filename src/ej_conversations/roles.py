@@ -58,22 +58,22 @@ def conversation_progress_bar(conversation, request=None, show_absolute=False, *
     Render a progress bar showing porcentage of user votes in a conversation comments.
     """
     user = getattr(request, 'user', None)
-    show = False
-    if user.is_authenticated:
-        show = True
-    porcentage = rules.compute('ej_conversations.votes_progress_porcentage', conversation, user)
+    is_authenticated = getattr(user, 'is_authenticated', False)
+    porcentage = 0
+    if is_authenticated:
+        porcentage = rules.compute('ej_conversations.votes_progress_porcentage', conversation, user)
 
     total = None
-    remaining = None
+    voted = None
     if show_absolute:
         total = conversation.approved_comments.count()
-        remaining = total - conversation.user_votes(user).count()
-    print(show_absolute)
+        voted = conversation.user_votes(user).count()
+
     return {
-        'show': show,
+        'show': is_authenticated,
         'porcentage': porcentage,
         'total': total,
-        'voted': remaining,
+        'voted': voted,
     }
 
 
