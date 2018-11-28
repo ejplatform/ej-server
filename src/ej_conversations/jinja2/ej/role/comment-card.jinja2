@@ -1,6 +1,3 @@
-<div class="CommentCard-counter">
-    <p>{{ voted }} / {{ total }}</p>
-</div>
 <div class="CommentCard-user">
     <img src="/static/img/icons/catlogo.svg" ><span>{{ comment.author.name }}</span>
 </div>
@@ -11,11 +8,11 @@
         <input type="hidden" name="action" value="vote">
         <input type="hidden" name="comment_id" value="{{ comment.id }}">
         <ul class="ConversationComment-actions">
-            <li class="voteAgree" up-expand>
-                <button type="submit" form="Comment-form" name="vote" value="agree">
-                    <i class="fa fa-check"></i>
+            <li class="voteDisagree" up-expand>
+                <button type="submit" form="Comment-form" name="vote" value="disagree">
+                    <i class="fa fa-times"></i>
                 </button>
-                <span>{{ _('Agree') }}</span>
+                <span>{{ _('Disagree') }}</span>
             </li>
             <li class="voteSkip" up-expand>
                 <button type="submit" form="Comment-form" name="vote" value="skip">
@@ -23,12 +20,13 @@
                 </button>
                 <span>{{ _('Skip') }}</span>
             </li>
-            <li class="voteDisagree" up-expand>
-                <button type="submit" form="Comment-form" name="vote" value="disagree">
-                    <i class="fa fa-times"></i>
+            <li class="voteAgree" up-expand>
+                <button type="submit" form="Comment-form" name="vote" value="agree">
+                    <i class="fa fa-check"></i>
                 </button>
-                <span>{{ _('Disagree') }}</span>
+                <span>{{ _('Agree') }}</span>
             </li>
+
         </ul>
     </form>
 {% else %}

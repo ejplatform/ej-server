@@ -134,7 +134,7 @@ def vote_progres_porcentage(conversation, user):
         comments_voted = conversation.user_votes(user).count()
         if total == 0:
             return 100
-        return comments_voted / total * 100
+        return int(comments_voted / total * 100)
 
 
 @rules.register_value('ej_conversations.vote_cooldown')

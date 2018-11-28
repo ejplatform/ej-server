@@ -20,7 +20,7 @@
         {# Current comment #}
         <div class="ConversationDetail-header">
             <h1>{{ _('Comments') }}</h1>
-            {{ conversation|role('progress-bar')}}
+            {{ conversation|role('progress-bar', show_absolute=True)}}
         </div>
         <div class="ConversationDetail-content">
             <div class="Comment">

@@ -38,16 +38,12 @@ def conversation_balloon(conversation, request=None, **kwargs):
     """
 
     user = getattr(request, 'user', None)
-    favorites = models.FavoriteConversation.objects
     is_authenticated = getattr(user, 'is_authenticated', False)
     is_favorite = is_authenticated and conversation.is_favorite(user)
     tags = list(map(str, conversation.tags.all()[:3]))
     return {
         'conversation': conversation,
         'tags': tags,
-        'comments_count': conversation.approved_comments.count(),
-        'votes_count': conversation.votes.count(),
-        'favorites_count': favorites.filter(conversation=conversation).count(),
         'user': user,
         'csrf_input': csrf_input(request),
         'show_user_actions': is_authenticated,
@@ -57,7 +53,7 @@ def conversation_balloon(conversation, request=None, **kwargs):
 
 
 @with_template(models.Conversation, role='progress-bar')
-def conversation_progress_bar(conversation, request=None, **kwatgs):
+def conversation_progress_bar(conversation, request=None, show_absolute=False, **kwargs):
     """
     Render a progress bar showing porcentage of user votes in a conversation comments.
     """
@@ -66,10 +62,18 @@ def conversation_progress_bar(conversation, request=None, **kwatgs):
     if user.is_authenticated:
         show = True
     porcentage = rules.compute('ej_conversations.votes_progress_porcentage', conversation, user)
-    print(porcentage)
+
+    total = None
+    remaining = None
+    if show_absolute:
+        total = conversation.approved_comments.count()
+        remaining = total - conversation.user_votes(user).count()
+    print(show_absolute)
     return {
         'show': show,
         'porcentage': porcentage,
+        'total': total,
+        'voted': remaining,
     }
 
 
@@ -84,9 +88,6 @@ def comment_card(comment, request=None, **kwargs):
 
     user = getattr(request, 'user', None)
     is_authenticated = getattr(user, 'is_authenticated', False)
-    total = comment.conversation.approved_comments.count()
-    remaining = total - comment.conversation.user_votes(user).count()
-    voted = total - remaining + 1
 
     login = reverse('auth:login')
     comment_url = comment.conversation.get_absolute_url()
@@ -94,8 +95,6 @@ def comment_card(comment, request=None, **kwargs):
     return {
         'comment': comment,
         'rejection_reasons': dict(models.Comment.REJECTION_REASON),
-        'total': total,
-        'voted': voted,
         'show_user_actions': is_authenticated,
         'csrf_input': csrf_input(request),
         'login_anchor': login_anchor,
