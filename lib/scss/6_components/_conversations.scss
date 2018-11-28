@@ -1499,10 +1499,27 @@ $color-background-button-modalities: rgba(255, 255, 255, 0.3);
     font-size: $spacing-unit / 2;
 }
 
+.progress-status{
+    display: table;
+    .progress-porcentage{
+        display: table-cell;
+        font-size: 7px;
+    }
+    .progress-absolute{
+        display: table-cell;
+        font-size: 7px;
+    }
+}
 .progress-bar{
-    background: $color-content;
+    display: table-cell;
+    background: $color-background;
+    border: 1px solid  $color-primary;
+    border-radius: $spacing-unit-tiny;
+    width: 80%;
     &-content{
-        height:24px;
-        background: $color-accent;
+        height:7px;
+        background: $color-hint;
+        border-top-left-radius: $spacing-unit-tiny;
+        border-bottom-left-radius: $spacing-unit-tiny;
     }
 }
