@@ -152,6 +152,7 @@
         {# Current comment #}
         <div class="ConversationDetail-header">
             <h1>{{ _('Comments') }}</h1>
+            {{ conversation|role('progress-bar')}}
         </div>
         <div class="ConversationDetail-content">
             <div class="Comment">

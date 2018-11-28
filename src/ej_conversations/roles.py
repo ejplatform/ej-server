@@ -56,6 +56,23 @@ def conversation_balloon(conversation, request=None, **kwargs):
     }
 
 
+@with_template(models.Conversation, role='progress-bar')
+def conversation_progress_bar(conversation, request=None, **kwatgs):
+    """
+    Render a progress bar showing porcentage of user votes in a conversation comments.
+    """
+    user = getattr(request, 'user', None)
+    show = False
+    if user.is_authenticated:
+        show = True
+    porcentage = rules.compute('ej_conversations.votes_progress_porcentage', conversation, user)
+    print(porcentage)
+    return {
+        'show': show,
+        'porcentage': porcentage,
+    }
+
+
 #
 # Comments
 #

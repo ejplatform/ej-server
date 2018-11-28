@@ -122,6 +122,21 @@ def comments_made(conversation, user):
         return user.comments.filter(conversation=conversation).count()
 
 
+@rules.register_value('ej_conversations.votes_progress_porcentage')
+def vote_progres_porcentage(conversation, user):
+    """
+    The percentage of comments that were already voted by a user in a conversation
+    """
+    if user.id is None:
+        return 0
+    else:
+        total = conversation.approved_comments.count()
+        comments_voted = conversation.user_votes(user).count()
+        if total == remaining_comments or total == 0:
+            return 100
+        return comments_voted / total * 100
+
+
 @rules.register_value('ej_conversations.vote_cooldown')
 def vote_cooldown(conversation, user):
     """

@@ -6,7 +6,7 @@
 </div>
 <p>{{ comment.content }}</p>
 {% if show_user_actions %}
-    <form method="post" class="CommentCard-voteArea" id="Comment-form" up-target=".CommentCard" up-transition="move-left">
+    <form method="post" class="CommentCard-voteArea" id="Comment-form" up-target=".ConversationDetail" up-transition="move-left" up-restore-scroll="true">
         {{ csrf_input }}
         <input type="hidden" name="action" value="vote">
         <input type="hidden" name="comment_id" value="{{ comment.id }}">
