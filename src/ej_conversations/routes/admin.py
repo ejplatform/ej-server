@@ -43,14 +43,16 @@ def get_conversation_edit_context(request, conversation):
             instance=conversation,
         )
         if form.is_valid():
-            form.instance.save()
+            form.save()
             return redirect(conversation.get_absolute_url() + 'moderate/')
     else:
         form = forms.ConversationForm(instance=conversation)
+    tags = list(map(str, conversation.tags.all()))
 
     return {
         'form': form,
         'conversation': conversation,
+        'tags': ",".join(tags),
         'can_promote_conversation': request.user.has_perm('can_publish_promoted'),
         'comments': list(conversation.comments.filter(status='pending')),
         'manage_stereotypes_url': conversation.get_absolute_url() + 'stereotypes/',
