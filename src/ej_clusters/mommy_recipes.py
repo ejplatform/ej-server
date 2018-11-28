@@ -6,10 +6,10 @@ from ej_conversations.models import Choice
 from ej_conversations.mommy_recipes import ConversationRecipes
 from .models import Stereotype, StereotypeVote, Clusterization, Cluster
 
-__all__ = ['UserRecipes']
+__all__ = ['ClusterRecipes']
 
 
-class UserRecipes(ConversationRecipes):
+class ClusterRecipes(ConversationRecipes):
     clusterization = Recipe(
         Clusterization,
         conversation=_foreign_key(ConversationRecipes.conversation),
@@ -42,4 +42,4 @@ class UserRecipes(ConversationRecipes):
         return record(data, stereotype=stereotype, stereotype_votes=votes)
 
 
-UserRecipes.update_globals(globals())
+ClusterRecipes.update_globals(globals())

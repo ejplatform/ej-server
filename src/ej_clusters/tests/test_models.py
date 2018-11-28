@@ -1,13 +1,13 @@
-from ej_clusters.mommy_recipes import UserRecipes
+from ej_clusters.mommy_recipes import ClusterRecipes
 
 
-class TestBasicAPI(UserRecipes):
+class TestBasicAPI(ClusterRecipes):
     def test_related_fields(self, conversation):
         assert conversation.stereotypes
         assert conversation.get_clusterization
 
 
-class TestClusterization(UserRecipes):
+class TestClusterization(ClusterRecipes):
     def test_inject_clusters_related_manager_on_conversation(self, conversation_db):
         conversation_db.get_clusterization()
         assert hasattr(conversation_db.clusterization, 'clusters')
@@ -18,7 +18,7 @@ class TestClusterization(UserRecipes):
         assert clusterization.get_absolute_url() == f'{conversation.get_absolute_url()}clusters/'
 
 
-class TestCluster(UserRecipes):
+class TestCluster(ClusterRecipes):
     def test_cluster_str_method(self, cluster, conversation):
         cluster.id = 42
         assert f'cluster ("{conversation}" conversation)' == str(cluster)

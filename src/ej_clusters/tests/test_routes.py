@@ -4,12 +4,12 @@ from django.http import Http404
 from ej.testing import UrlTester
 from ej_clusters import routes
 from ej_clusters.models import Stereotype, StereotypeVote, Cluster
-from ej_clusters.mommy_recipes import UserRecipes
+from ej_clusters.mommy_recipes import ClusterRecipes
 from ej_conversations.models import Conversation, Choice
 from ej_users.models import User
 
 
-class TestRoutes(UrlTester, UserRecipes):
+class TestRoutes(UrlTester, ClusterRecipes):
     owner_urls = [
         '/conversations/conversation/stereotypes/add/',
         '/conversations/conversation/stereotypes/',
