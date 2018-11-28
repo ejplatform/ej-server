@@ -8,12 +8,11 @@ language: python
 python:
   - '3.6'
 install:
-  - pip install invoke
-  - inv update-deps --all
-  - inv clean-migrations --all -y
-  - inv update-deps db
+  - pip install pipenv
+  - pipenv install
+  - pipenv run inv db
 script:
-  - pytest
+  - pipenv run pytest
 before_script:
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
