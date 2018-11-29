@@ -19,7 +19,10 @@
         </div>
         <div class="ConversationCard-cover">
             <h1 up-expand><a href="{{ url }}">{{ conversation.text }}</a></h1>
+        </div>
+        <div class="ConversationCard-information">
             {{conversation|role('progress-bar')}}
+            {{ _('by: ') }} {{author}}
         </div>
         <div class="ConversationCard-actions">{{ action_button(_('Participate now!'), url) }}</div>
     </div>

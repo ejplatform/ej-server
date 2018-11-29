@@ -185,7 +185,26 @@ $color-background-button-modalities: rgba(255, 255, 255, 0.3);
         font-size: $font-size-tiny;
         margin: $spacing-unit / 2 0;
     }
-
+    &-information{
+        padding-top: $spacing-unit-tiny;
+        color: $color-hint;
+        font-size: $font-size-tiny;
+        .Progress-status{
+            .Progress-porcentage{
+                color: $color-hint;
+                font-size: $font-size-tiny;
+            }
+            .Progress-bar{
+                width: 88%;
+                &-border{
+                    border-color: $color-hint;
+                }
+                &-content{
+                    height: $spacing-unit-tiny;
+                }
+            }
+        }
+    }
     &-cover {
         display: flex;
         flex-flow: column;
@@ -195,7 +214,7 @@ $color-background-button-modalities: rgba(255, 255, 255, 0.3);
         position: relative;
         z-index: 2;
         overflow: hidden;
-        max-height: 86px;
+        max-height: 96px;
 
         h1 {
             display: flex;
@@ -251,7 +270,7 @@ $color-background-button-modalities: rgba(255, 255, 255, 0.3);
         justify-content: center;
         padding: $spacing-unit-small;
         margin: $spacing-unit-tiny $spacing-unit;
-
+        font-size: $font-size-tiny;
         li {
             list-style: none;
             display: inline-block;
@@ -1476,7 +1495,7 @@ $color-background-button-modalities: rgba(255, 255, 255, 0.3);
         display: table-cell;
         width: 80%;
         &-border{
-            background: $color-background;
+            background: transparent;
             border: 1px solid  $color-primary;
             border-radius: $spacing-unit-tiny;
             height: $spacing-unit-tiny;

@@ -21,6 +21,7 @@ def conversation_card(conversation, request=None, url=None, **kwargs):
     can_moderate = user.has_perm('ej.can_moderate_conversation', conversation)
     return {
         'conversation': conversation,
+        'author': conversation.author,
         'url': url or conversation.get_absolute_url(),
         'tags': conversation.tags.all(),
         'n_comments': conversation.approved_comments.count(),
@@ -57,6 +58,7 @@ def conversation_progress_bar(conversation, request=None, show_absolute=False, *
     """
     Render a progress bar showing porcentage of user votes in a conversation comments.
     """
+    print(request)
     user = getattr(request, 'user', None)
     is_authenticated = getattr(user, 'is_authenticated', False)
     porcentage = 0
