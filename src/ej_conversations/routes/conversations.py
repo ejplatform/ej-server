@@ -28,6 +28,7 @@ def conversation_list(request):
         'subtitle': _('Participate of conversations and give your opinion with comments and votes!'),
         'description': _('Participate of conversations and give your opinion with comments and votes!'),
         'show_welcome_window': show_welcome_window,
+        'board_palette': 'PaletteBlue'
     }
     response = render(request, 'ej_conversations/list.jinja2', ctx)
     if (show_welcome_window):
@@ -109,6 +110,7 @@ def get_conversation_detail_context(request, conversation):
         'max_comments': max_comments_per_conversation(),
         'user_is_owner': conversation.author == user,
         'voted': voted,
+        'board_palette': conversation.palette
     }
 
 
