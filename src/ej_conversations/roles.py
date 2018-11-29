@@ -16,7 +16,6 @@ def conversation_card(conversation, request=None, url=None, **kwargs):
     """
     Render a round card representing a conversation in a list.
     """
-
     user = getattr(request, 'user', None)
     can_moderate = user.has_perm('ej.can_moderate_conversation', conversation)
     return {
@@ -28,6 +27,7 @@ def conversation_card(conversation, request=None, url=None, **kwargs):
         'n_votes': conversation.vote_count(),
         'n_followers': conversation.followers.count(),
         'user_can_moderate': can_moderate,
+        'request': request,
         **kwargs,
     }
 
@@ -58,7 +58,6 @@ def conversation_progress_bar(conversation, request=None, show_absolute=False, *
     """
     Render a progress bar showing porcentage of user votes in a conversation comments.
     """
-    print(request)
     user = getattr(request, 'user', None)
     is_authenticated = getattr(user, 'is_authenticated', False)
     porcentage = 0

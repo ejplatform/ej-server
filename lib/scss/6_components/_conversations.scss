@@ -185,6 +185,7 @@ $color-background-button-modalities: rgba(255, 255, 255, 0.3);
         font-size: $font-size-tiny;
         margin: $spacing-unit / 2 0;
     }
+
     &-information{
         padding-top: $spacing-unit-tiny;
         color: $color-hint;
@@ -195,7 +196,7 @@ $color-background-button-modalities: rgba(255, 255, 255, 0.3);
                 font-size: $font-size-tiny;
             }
             .Progress-bar{
-                width: 88%;
+                width: 87%;
                 &-border{
                     border-color: $color-hint;
                 }
@@ -205,6 +206,7 @@ $color-background-button-modalities: rgba(255, 255, 255, 0.3);
             }
         }
     }
+
     &-cover {
         display: flex;
         flex-flow: column;

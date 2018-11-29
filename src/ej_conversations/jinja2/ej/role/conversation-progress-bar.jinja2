@@ -8,9 +8,9 @@
             </div>
         </div>
     </div>
-    {% if voted %}
+    {% if total != None %}
         <div class="Progress-absolute">
-            {{voted}}/{{total}}
+            <strong>{{voted}}</strong>/{{total}}
         </div>
     {% endif %}
 </div>

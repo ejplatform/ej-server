@@ -2,7 +2,6 @@
 
 
 {% block content %}
-    {{request}}
     <div class="Link">
         {% if can_add_conversation and create_url %}
             <a class="Link-new" href="{{ create_url }}"><i class="fa fa-plus-circle"></i> {{ _('New conversation') }}</a>
