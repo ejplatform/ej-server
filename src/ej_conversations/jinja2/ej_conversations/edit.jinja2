@@ -43,7 +43,10 @@
             {% endif %}
           </div>
 
-          <p style="text-align: center;">{{ action_button(_('Manage stereotypes'), manage_stereotypes_url, primary=False) }}</p>
+          <p style="text-align: center;">{{ action_button(_('Manage stereotypes'),
+                                          href='cluster:stereotype-list',
+                                          url_args={'conversation': conversation},
+                                          primary=False) }}</p>
 
           {% if can_promote_conversation %}
               <p class="ConversationEdit-promote">

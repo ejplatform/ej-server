@@ -1,10 +1,10 @@
-from django.db import models
-from django.contrib.auth import get_user_model
-from boogie.rest import rest_api
 from autoslug import AutoSlugField
+from django.contrib.auth import get_user_model
+from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from boogie import IntEnum
-from boogie.fields import EnumField
+
+from boogie.fields import EnumField, IntEnum
+from boogie.rest import rest_api
 
 User = get_user_model()
 

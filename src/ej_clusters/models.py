@@ -15,7 +15,6 @@ from sidekick import delegate_to, alias, lazy
 from boogie import rules
 from boogie.fields import EnumField
 from boogie.rest import rest_api
-from ej_conversations.managers import BoogieManager
 from ej_conversations.models import Choice, Conversation
 from ej_conversations.models.vote import normalize_choice
 from .manager import ClusterManager
@@ -286,7 +285,6 @@ class StereotypeVote(models.Model):
     )
     choice = EnumField(Choice, _('Choice'))
     stereotype = alias('author')
-    objects = BoogieManager()
 
     def __str__(self):
         return f'StereotypeVote({self.author}, value={self.choice})'

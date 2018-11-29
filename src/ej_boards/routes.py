@@ -243,3 +243,4 @@ def assure_correct_board(conversation, board):
     """
     if not board.has_conversation(conversation):
         raise Http404
+    conversation.board = board
