@@ -1,5 +1,6 @@
 import logging
 import typing
+import warnings
 from pprint import pprint
 
 import pytest
@@ -18,6 +19,10 @@ class UrlTester(EjRecipes):
     success_codes = {200}
     failure_codes = {404, 403}
     redirect_codes = {302}
+
+    def setUp(self):
+        warnings.warn('EJ\'s UrlTester is deprecated, please move your tests '
+                      'to boogie.testing.pytest.UrlTester')
 
     @property
     def require_login_codes(self):
