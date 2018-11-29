@@ -8,10 +8,8 @@ language: python
 python:
   - '3.6'
 install:
-  - pip install invoke
-  - inv update-deps --all
-  - inv clean-migrations --all -y
-  - inv update-deps db
+  - pip install invoke "pytest<3.8.0"
+  - inv configure --silent
 script:
   - pytest
 before_script:

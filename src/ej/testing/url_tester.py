@@ -29,10 +29,6 @@ class UrlTester(EjRecipes):
         prep = as_code_set
         return {*prep(self.redirect_codes), *prep(self.success_codes)}
 
-    @pytest.fixture
-    def data(self):
-        return None
-
     @pytest.mark.django_db
     def test_anonymous_user_can_access_urls(self, client, caplog, data):
         caplog.set_level(logging.CRITICAL, logger='django')
