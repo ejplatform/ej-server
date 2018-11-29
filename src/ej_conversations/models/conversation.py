@@ -5,6 +5,7 @@ from autoslug import AutoSlugField
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError, ObjectDoesNotExist
+from django.db.models import Count, Q
 from django.utils.translation import ugettext_lazy as _
 from model_utils.models import TimeStampedModel
 from taggit.managers import TaggableManager
@@ -140,7 +141,7 @@ class Conversation(TimeStampedModel):
         """
         if user.id is None:
             return Vote.objects.none()
-        return Vote.objects.filter(comment__conversation=self, author=user, comment__status=Comment.STATUS.approved)
+        return self.votes.filter(author=user)
 
     def create_comment(self, author, content, commit=True, *, status=None,
                        check_limits=True, **kwargs):
@@ -197,20 +198,20 @@ class Conversation(TimeStampedModel):
 
         return {
             # Vote counts
-            'votes': {
-                'agree': self.vote_count(Choice.AGREE),
-                'disagree': self.vote_count(Choice.DISAGREE),
-                'skip': self.vote_count(Choice.SKIP),
-                'total': self.vote_count(),
-            },
+            'votes': self.votes.aggregate(
+                agree=Count('choice', filter=Q(choice=Choice.AGREE)),
+                disagree=Count('choice', filter=Q(choice=Choice.DISAGREE)),
+                skip=Count('choice', filter=Q(choice=Choice.SKIP)),
+                total=Count('choice'),
+            ),
 
             # Comment counts
-            'comments': {
-                'approved': comment_count(self, Comment.STATUS.approved),
-                'rejected': comment_count(self, Comment.STATUS.rejected),
-                'pending': comment_count(self, Comment.STATUS.pending),
-                'total': comment_count(self),
-            },
+            'comments': self.comments.aggregate(
+                approved=Count('status', filter=Q(status=Comment.STATUS.approved)),
+                rejected=Count('status', filter=Q(status=Comment.STATUS.rejected)),
+                pending=Count('status', filter=Q(status=Comment.STATUS.pending)),
+                total=Count('status'),
+            ),
 
             # Participants count
             'participants': {
@@ -324,14 +325,6 @@ class FavoriteConversation(models.Model):
 #
 # Utility functions
 #
-def comment_count(conversation, type=None):
-    """
-    Return the number of comments of a given type.
-    """
-    kwargs = {'status': type} if type is not None else {}
-    return conversation.comments.filter(**kwargs).count()
-
-
 def make_clean(cls, commit=True, **kwargs):
     obj = cls(**kwargs)
     obj.full_clean()
