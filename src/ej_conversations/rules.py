@@ -123,7 +123,7 @@ def comments_made(conversation, user):
 
 
 @rules.register_value('ej_conversations.votes_progress_porcentage')
-def vote_progres_porcentage(conversation, user):
+def vote_progress_porcentage(conversation, user):
     """
     The percentage of comments that were already voted by a user in a conversation
     """
