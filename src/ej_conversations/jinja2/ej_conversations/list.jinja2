@@ -1,12 +1,13 @@
 {% extends 'base.jinja2' %}
 
+{% block _menu %} {{ menu(request.user, board_palette) }} {% endblock %}
 
 {% block content %}
     <div class="Link">
         {% if can_add_conversation and create_url %}
             <a class="Link-new" href="{{ create_url }}"><i class="fa fa-plus-circle"></i> {{ _('New conversation') }}</a>
         {% endif %}
-        
+
         {% if can_edit_board is defined and can_edit_board and edit_url %}
             <a class="Link-edit" href="{{ edit_url }}"><i class="far fa-edit"></i> {{ _('Edit Board') }}</a>
         {% endif %}
