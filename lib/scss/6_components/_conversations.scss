@@ -139,11 +139,9 @@ $color-background-button-modalities: rgba(255, 255, 255, 0.3);
 }
 
 .ConversationTags {
-    @include color($color-primary, $color-primary, $force: true);
     font-weight: bold;
     text-align: center;
     padding: $spacing-unit-small + $spacing-unit-tiny $spacing-unit-small $spacing-unit-small $spacing-unit-small;
-    background-color: $color-hint;
 }
 
 .ConversationCard {
@@ -267,31 +265,89 @@ $color-background-button-modalities: rgba(255, 255, 255, 0.3);
 }
 
 .PalettePink {
-    background-color: #FF3D72;
-    &-light {
-      background-color: #FFE3EA;
+  background-color: #FF3D72;
+  &-light {
+    background-color: #FFE3EA;
+    color: #FF3D72;
+
+    textarea {
       color: #FF3D72;
     }
-    &-text {
-      color: #FFE3EA;
-    }
+  }
+  &-text {
+    color: #FFE3EA;
+  }
 }
 
 .PaletteBlue  {
-    background-color: #30BFD3;
-    &-light {
-      background-color: #C4F2F4;
+  background-color: #30BFD3;
+  &-light {
+    background-color: #C4F2F4;
+    color: #30BFD3;
+    textarea {
       color: #30BFD3;
     }
-    &-text {
-      color: #C4F2F4;
-    }
+  }
+  &-text {
+    color: #C4F2F4;
+  }
 }
 
 .PaletteGrey {
-  background-color: grey;
+  background-color: #666666;
+  &-light {
+    background-color: #EEEEEE;
+    color: #666666;
+    textarea {
+      color: #666666;
+    }
+  }
+  &-text {
+    color: #EEEEEE;
+  }
 }
 
+.PaletteGreen {
+  background-color:  #36C273;
+  &-light {
+    background-color: #B4FDD4;
+    color: #36C273;
+    textarea {
+      color: #36C273;
+    }
+  }
+  &-text {
+    color: #B4FDD4;
+  }
+}
+
+.PaletteOrange {
+  background-color:  #F5700A;
+  &-light {
+    background-color: #FFE1CA;
+    color: #F5700A;
+    textarea {
+      color: #F5700A;
+    }
+  }
+  &-text {
+    color: #FFE1CA;
+  }
+}
+
+.PalettePurple {
+  background-color:  #7758B3;
+  &-light {
+    background-color: #E7DBFF;
+    color: #7758B3;
+    textarea {
+      color: #7758B3;
+    }
+  }
+  &-text {
+    color: #E7DBFF;
+  }
+}
 .ConversationDetail {
     margin: 0 auto;
     max-width: $header-wrapper-max-width;
@@ -349,15 +405,9 @@ $color-background-button-modalities: rgba(255, 255, 255, 0.3);
 
     }
     &-banner {
-        background: $color-hint;
         border-radius: 0 0 $border-radius-large $border-radius-large;
-        color: $color-content;
         margin: 0;
         padding: $spacing-unit-tiny $spacing-unit-tiny $spacing-unit $spacing-unit-tiny;
-        .ConversationTags {
-            background-color: $color-hint;
-            color: $color-primary;
-        }
 
         h1 {
             @extend .Container;
@@ -368,7 +418,6 @@ $color-background-button-modalities: rgba(255, 255, 255, 0.3);
             font-weight: 200 !important;
             font-size: ($spacing-unit-tiny + $spacing-unit-small) !important;
             font-family: $font-paragraph;
-            color: $color-content;
 
             @media only screen and (min-width: $breakpoint-large) {
                 padding: $spacing-unit-large 0;
@@ -405,7 +454,7 @@ $color-background-button-modalities: rgba(255, 255, 255, 0.3);
     &-arrow {
         border-left: $spacing-unit solid transparent;
         border-right: $spacing-unit solid transparent;
-        border-top: $border-radius solid $color-hint;
+        border-top: $border-radius solid;
         height: 0;
         margin: 0 auto;
         padding: 0;
@@ -422,7 +471,6 @@ $color-background-button-modalities: rgba(255, 255, 255, 0.3);
         margin: 0 auto;
         max-width: $content-wrapper-max-width - 2 * $spacing-unit-huge;
         padding: 0 $spacing-unit-small;
-        color: $color-primary;
 
         li {
             list-style: none;
@@ -469,7 +517,7 @@ $color-background-button-modalities: rgba(255, 255, 255, 0.3);
 }
 
 .Modalities{
-    display: flex;
+    display: none;
     align-content: center;
     flex-direction: column;
     align-items: center;
@@ -809,7 +857,7 @@ $color-background-button-modalities: rgba(255, 255, 255, 0.3);
             width: 100% !important;
             z-index: 3;
             padding: ($spacing-unit-large - $spacing-unit-tiny) ($spacing-unit-large - $spacing-unit-small);
-            background-color: $color-primary;
+            //background-color: $color-primary;
             color: $color-content-text;
 
             &-counter {
@@ -945,7 +993,7 @@ $color-background-button-modalities: rgba(255, 255, 255, 0.3);
             width: 100% !important;
             box-sizing: border-box;
             text-align: center;
-            background: $color-hint;
+            //background: $color-hint;
             border-radius: $border-radius-large;
             padding: (3 * $spacing-unit-tiny) ($spacing-unit-large - $spacing-unit-small);
             z-index: 5;
@@ -960,9 +1008,10 @@ $color-background-button-modalities: rgba(255, 255, 255, 0.3);
                 margin: 0 0 0 0;
                 min-height: 3 * $font-size;
                 outline: none;
-                border: 2px solid $color-primary;
+                //border: 2px solid $color-primary;
+                border: 2px solid;
                 background: $color-content-text;
-                color: #333;
+                //color: #333;
                 box-shadow: none;
             }
             #characters-count{
@@ -980,7 +1029,7 @@ $color-background-button-modalities: rgba(255, 255, 255, 0.3);
             input[type=submit] {
                 border-radius: $border-radius;
                 color: #fff;
-                background: $color-primary;
+                //background: $color-primary;
                 padding: $spacing-unit-small $spacing-unit;
                 font-size: $spacing-unit / 2;
                 box-shadow: none;
