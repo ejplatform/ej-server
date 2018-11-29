@@ -8,11 +8,10 @@ language: python
 python:
   - '3.6'
 install:
-  - pip install pipenv
-  - pipenv install --dev
-  - pipenv run inv db
+  - pip install invoke "pytest<3.8.0"
+  - inv configure --silent
 script:
-  - pipenv run pytest
+  - pytest
 before_script:
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
