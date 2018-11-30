@@ -20,7 +20,7 @@ def conversation_card(conversation, request=None, url=None, **kwargs):
     can_moderate = user.has_perm('ej.can_moderate_conversation', conversation)
     return {
         'conversation': conversation,
-        'author': conversation.author,
+        'author': conversation.author.name,
         'url': url or conversation.get_absolute_url(),
         'tags': conversation.tags.all(),
         'n_comments': conversation.approved_comments.count(),
