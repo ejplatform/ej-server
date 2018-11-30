@@ -117,6 +117,12 @@ $profile-label-clear-color: #30BFD3 !default;
     &-link {
         text-align: center;
     }
+
+    img {
+      max-width: 245px;
+      width: 100%;
+      max-height: 60px;
+    }
 }
 
 .ConversationFooter {
