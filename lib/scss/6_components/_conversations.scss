@@ -103,7 +103,12 @@ $color-background-button-modalities: rgba(255, 255, 255, 0.3);
         padding-bottom: $spacing-unit;
 
         > * {
-            margin: $spacing-unit;
+            @media only screen and (min-width: $breakpoint-medium - $breakpoint-small)  {
+                margin: $spacing-unit 0px;
+            }
+            @media only screen and (min-width: $breakpoint-small){
+                margin: $spacing-unit;
+            }
         }
 
         .slick-list {
