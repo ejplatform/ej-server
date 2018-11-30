@@ -7,11 +7,11 @@
         <div class="ConversationDetail">
             <div class="ConversationDetail-banner">
                 <div class="ConversationTags"><i class="fa fa-tags"></i>
-                    {%- if conversation.tags.count() > 0 -%}
-                        {{ (conversation.tags.all()[0]|string).title() }}
-                    {%- else -%}
-                        {{ _('Tags') }}
-                    {%- endif -%}
+                    {% if tags %}
+                        {{ ', '.join(tags) }}
+                    {% else %}
+                        Tags
+                    {% endif %}
                 </div>
                 <h1>{{ conversation.text }}</h1>
                 <div class="Conversation-edit">

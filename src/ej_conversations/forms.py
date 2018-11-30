@@ -59,8 +59,7 @@ class ConversationForm(forms.ModelForm):
         conversation.save()
 
         # Save tags on the database
-        for tag in self.cleaned_data['tags']:
-            conversation.tags.add(tag)
+        self.save_m2m()
 
         # Save board
         if board:
