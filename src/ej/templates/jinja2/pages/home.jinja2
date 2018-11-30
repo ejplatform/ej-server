@@ -1,14 +1,14 @@
 {% extends 'base.jinja2' %}
 
 {% block main %}
-<div id="HomeCommercial">
-  <div id="HomeCommercial-inner">
-    <div id="HomeCommercial-cover">
-      <div>
-        <p>{{ _('Create opinion surveys.') }}</p>
-        {{ action_button(_('Try'), '/conversations')}}
-      </div>
-    </div>
+    <div id="HomeCommercial">
+        <div id="HomeCommercial-inner">
+            <div id="HomeCommercial-cover">
+                <div>
+                    <p>{{ _('Create opinion surveys.') }}</p>
+                    {{ action_button(_('Try'), href='conversation:list') }}
+                </div>
+            </div>
 
     <div id="HomeCommercial-how">
       <h2>{{ _('How it works') }}</h2>
@@ -53,8 +53,8 @@
         <div><img src="/static/img/home/cellphone.png" alt="" /></div>
       </div>
 
-      <p>{{ action_button(_('Create a conversation'), '/profile/boards/add')}}</p>
-    </div>
+                <p>{{ action_button(_('Create a conversation'), href='conversation:create') }}</p>
+            </div>
 
     <div id="HomeCommercial-documentation">
       <h2>{{ _('Documentation') }}</h2>
@@ -131,4 +131,6 @@
         <li class="HomeCommercial-logo"><img src="/static/img/home/pcdob.png" alt="" /></li>
       </ul>
     </div>
+  </div>
+</div>
 {% endblock %}

@@ -8,7 +8,7 @@ django = ">=2.1.2"
 numpy = "*"
 pandas = "*"
 django-rest-framework = "*"
-django-boogie = ">=0.9.1"
+django-boogie = "~=0.11.0"
 hyperpython = "*"
 invoke = "*"
 celery = "*"
@@ -31,7 +31,6 @@ coreapi = "*"
 pillow = "*"
 "argon2-cffi" = "*"
 requests = ">=2.20.0"
-
 
 [dev-packages]
 django-debug-toolbar = "*"

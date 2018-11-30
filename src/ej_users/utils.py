@@ -1,7 +1,7 @@
 from random import choice
 
-from faker import Factory
 from django.db.utils import DatabaseError
+from faker import Factory
 
 fake = Factory.create('pt-BR')
 
@@ -11,7 +11,7 @@ ADJECTIVES = [
 
 
 def random_name(fmt='{adjective} {noun}'):
-    for _iter in range(100):
+    for _iter in range(20):
         name = fmt.format(adjective=get_adjective(), noun=get_noun())
         if not name_exists(name):
             return name

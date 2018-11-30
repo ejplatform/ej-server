@@ -1,26 +1,26 @@
-import pytest
-from ej_users.models import User, PasswordResetToken, generate_token, clean_expired_tokens
+from boogie.testing.pytest import ModelTester
+from ej.testing import EjRecipes
 from ej_profiles.choices import Race, Gender
+from ej_users import password_reset_token
+from ej_users.models import User, PasswordResetToken, clean_expired_tokens
+from ej_users.mommy_recipes import UserRecipes
 
 
-@pytest.fixture
-def user(db):
-    user = User.objects.create_user('name@server.com', '1234', name='name')
-    user.save()
-    return user
+class TestUser(UserRecipes, ModelTester):
+    model = User
+    representation = 'user@domain.com'
 
 
-class TestUserManager:
+class TestUserManager(EjRecipes):
     def test_can_create_and_fetch_simple_user(self, db):
         user = User.objects.create_user('name@server.com', '1234', name='name')
         assert user.name == 'name'
         assert user.password != '1234'
         assert User.objects.get_by_email('name@server.com') == user
 
-    def test_generate_username(self, db):
-        user = User.objects.create_user('email@at.com', 'pass')
-        expected = 'email__at.com'
-        assert user.username == expected
+    def test_generate_username(self):
+        user = User(email='email@at.com')
+        assert user.username == 'email__at.com'
 
     def test_user_profile_default_values(self, db):
         user = User.objects.create_user('email@at.com', 'pass')
@@ -36,27 +36,19 @@ class TestUserManager:
         assert user.profile.political_activity == ''
 
 
-class TestTokenUser:
-    def test_token_exists(self, db, user):
+class TestPasswordResetToken(EjRecipes):
+    def test_expiration(self, user):
         token = PasswordResetToken(user=user)
-        assert not token.url
-        token.generate_token()
-        token.save()
-        assert token.url
-
-    def test_token_is_not_expired(self, db, user):
-        token = PasswordResetToken(user=user)
-        token.save()
         assert not token.is_expired
 
-    def test_generate_token(self, db, user):
-        token = generate_token(user)
+    def test_password_reset_token(self, user):
+        token = password_reset_token(user, commit=False)
         assert token.user == user
         assert token.url
 
-    def test_delete_used_token(self, db, user):
-        token = generate_token(user)
-        token.is_used = True
-        token.save()
+    def test_clean_expired_tokens(self, user_db):
+        token = password_reset_token(user_db)
+        assert PasswordResetToken.objects.filter(user=user_db).exists()
+        token.use()
         clean_expired_tokens()
-        assert not PasswordResetToken.objects.filter(user=user).exists()
+        assert not PasswordResetToken.objects.filter(user=user_db).exists()

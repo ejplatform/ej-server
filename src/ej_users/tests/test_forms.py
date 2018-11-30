@@ -1,8 +1,10 @@
+from boogie.testing.mock import assume_unique
 from ej_users.forms import RegistrationForm, LoginForm, ResetPasswordForm
 
 
 class TestRegistrationForm:
-    def test_valid_data(self, db):
+    @assume_unique()
+    def test_valid_data(self):
         form = RegistrationForm({
             'name': "Turanga Leela",
             'email': "leela@example.com",
@@ -10,11 +12,12 @@ class TestRegistrationForm:
             'password_confirm': 'pass123'
         })
         assert form.is_valid()
-        registered_user = form.save()
-        assert registered_user.name == "Turanga Leela"
-        assert registered_user.email == "leela@example.com"
+        user = form.save(commit=False)
+        assert user.name == "Turanga Leela"
+        assert user.email == "leela@example.com"
 
-    def test_blank_data(self, db):
+    @assume_unique()
+    def test_blank_data(self):
         form = RegistrationForm({})
         required = ['This field is required.']
         assert not form.is_valid()
@@ -25,7 +28,8 @@ class TestRegistrationForm:
             'password_confirm': required,
         }
 
-    def test_not_matching_passwords(self, db):
+    @assume_unique()
+    def test_not_matching_passwords(self):
         form = RegistrationForm({
             'name': "Turanga Leela",
             'email': "leela@example.com",
@@ -39,7 +43,7 @@ class TestRegistrationForm:
 
 
 class TestLoginForm:
-    def test_valid_data(self, db):
+    def test_valid_data(self):
         form = LoginForm({
             'email': "leela@example.com",
             'password': "pass123",
@@ -57,7 +61,6 @@ class TestLoginForm:
 
 
 class TestResetPasswordForm:
-
     def test_create_new_password(self):
         form = ResetPasswordForm({
             'new_password': '123',
@@ -65,7 +68,7 @@ class TestResetPasswordForm:
         })
         assert form.is_valid()
 
-    def test_not_matching_passwords(self, db):
+    def test_not_matching_passwords(self):
         form = ResetPasswordForm({
             'new_password': "pass123",
             'new_password_confirm': 'wrong123',

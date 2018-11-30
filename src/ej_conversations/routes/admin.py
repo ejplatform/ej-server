@@ -53,7 +53,6 @@ def get_conversation_edit_context(request, conversation):
         'conversation': conversation,
         'can_promote_conversation': request.user.has_perm('can_publish_promoted'),
         'comments': list(conversation.comments.filter(status='pending')),
-        'manage_stereotypes_url': conversation.get_absolute_url() + 'stereotypes/',
     }
 
 
