@@ -1,7 +1,9 @@
 {% macro toast(title, content, class, img) %}
     <div id="toast">
         <div>
-            <img class="{{ class }}" src="{{ img }}"></i>
+            <img class="{{ class }}" src="{{ img }}">
+        </div>
+        <div id="text">
             <h3>{{title}}</h3>
             <p>{{content}}</p>
         </div>

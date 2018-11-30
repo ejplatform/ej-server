@@ -709,10 +709,37 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
         width: 100vw;
         left: 0;
         bottom: 0;//$header-top-nav-height;
+        display: flex;
+        flex-direction: row;
         > div {
+            flex-direction: column;
+            align-self: center;
             padding: $spacing-padding;
             max-width: 660px;
-            margin: 0 auto;
+            margin: 0 $spacing-unit-tiny 0 auto;
+            img {
+                @media only screen and (min-width: $breakpoint-medium - $breakpoint-small) {
+                    margin: 0 ($spacing-unit - $spacing-unit-tiny) 0 $spacing-unit-tiny;
+                    background-color: #fff;
+                    border: ($border-radius-tiny * 2) / 3 solid $color-primary;
+                    border-radius: $spacing-unit-large;
+                    width: $spacing-unit;
+                    padding: $spacing-unit-tiny;
+                }
+                @media only screen and (min-width: $breakpoint-small) {
+                    margin: 0;
+                    max-width: $spacing-unit;
+                    background-color: #fff;
+                    border: $border-radius-tiny / 2 solid $color-primary;
+                    border-radius: $spacing-unit-large;
+                    padding: $spacing-unit-tiny;
+                }
+            }
+        }
+        #text {
+            margin: 0 auto 0 0;
+            flex-direction: column;
+            align-self: center;
             p {
                 padding: 0 0 $spacing-unit-tiny 0;
                 margin: 0;
@@ -727,32 +754,13 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
                 font-size: $font-size-default;
                 color: $color-primary;
             }
-            img {
-                @media only screen and (min-width: $breakpoint-medium - $breakpoint-small) {
-                    max-width: $spacing-unit;
-                    margin: $spacing-padding $spacing-unit-small auto 0;
-                    background-color: #fff;
-                    border: ($border-radius-tiny * 4) / 3 solid $color-primary;
-                    border-radius: $spacing-unit-large;
-                    padding: $spacing-unit-tiny;
-                }
-                @media only screen and (min-width: $breakpoint-small) {
-                    max-width: $spacing-unit;
-                    //margin-right: $spacing-unit-small;
-                    margin: auto $spacing-unit-small auto 0;
-                    background-color: #fff;
-                    border: $border-radius-tiny solid $color-primary;
-                    border-radius: $spacing-unit-large;
-                    padding: $spacing-unit-tiny;
-            }
-        }
         }
     }
 
     #toast.show {
         visibility: visible;
         // -webkit-animation: fade 8s;
-        animation: fade 8s both;
+        animation: fade 8s;
     }
 
 
@@ -767,7 +775,10 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
         }
         70%  {opacity: 1;}
         90% {opacity: 0;}
-        100% {opacity: 0;}
+        100% {opacity: 0;
+            
+            bottom: 45px;
+        }
 
     }
 

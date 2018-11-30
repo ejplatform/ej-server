@@ -31,7 +31,7 @@
 {% macro header_top_nav(request) %}
     {% block javascript %}
 
-        {# this function controls the open/close button of "conversations dropdown on page_menu #}
+        {#this function controls the open/close button of "conversations dropdown on page_menu#} 
         <script type="text/javascript">
             // this function controls the open/close button of "conversations dropdown on page_menu
             function openDropDown(openDiv) {
@@ -116,9 +116,9 @@
             <span>{{ _('Profile') }}</span>
         {% endcall %}
 
-        {# {% call link('/alerts/', title=_('Alerts'), class='alerts-link', preload=True) %}
+        {#{% call link('/alerts/', title=_('Alerts'), class='alerts-link', preload=True) %}
             <img src="/static/img/icons/navbar_alerts.svg" alt="{{ _('Alerts') }}" class="Header-lowerIcon">
             <span>{{ _('Alerts') }}</span>
-        {% endcall %} #}
+        {% endcall %}#}
     </nav>
 {% endmacro %}
