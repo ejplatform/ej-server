@@ -174,7 +174,7 @@ def board_create(request):
 @urlpatterns.route('<model:board>/edit/', perms=['ej.can_edit_board:board'])
 def board_edit(request, board):
     if request.method == 'POST':
-        form = BoardForm(request.POST, instance=board)
+        form = BoardForm(request.POST, request.FILES, instance=board)
         if form.is_valid():
             form.instance.save()
             return redirect(board.get_absolute_url())

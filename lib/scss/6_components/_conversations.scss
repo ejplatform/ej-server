@@ -123,6 +123,12 @@ $color-background-button-modalities: rgba(255, 255, 255, 0.3);
     &-link {
         text-align: center;
     }
+
+    img {
+      max-width: 245px;
+      width: 100%;
+      max-height: 60px;
+    }
 }
 
 .ConversationFooter {
