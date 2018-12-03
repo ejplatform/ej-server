@@ -30,11 +30,12 @@ class User(AbstractUser):
         unique=True,
         help_text=_('Your e-mail address')
     )
+    # FIXME: this is not related to auth, and hence should leave this model.
     limit_board_conversations = models.PositiveIntegerField(
-        _('Limit conversations in board'),
+        _('Maximum number of conversations in board'),
         default=0,
         help_text=_(
-            'Limit number of conversations in user board '
+            'Maximum number of conversations in user board'
         ),
     )
 
