@@ -1,7 +1,7 @@
 import numpy as np
 from sklearn.preprocessing import Imputer
 
-from ej_math.math.kmeans import euclidean_distance as distance
+from ej_clusters.math.kmeans import euclidean_distance as distance
 
 
 def opinion_bridge_index(df, labels):

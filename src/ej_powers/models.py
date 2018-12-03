@@ -12,8 +12,8 @@ from model_utils.models import TimeFramedModel
 from polymorphic.models import PolymorphicModel
 
 from ej_conversations.fields import UserRef, CommentRef, ConversationRef
-from ej_powers.manager import GivenPowerManager
 from .functions import promote_comment
+from .manager import GivenPowerManager
 
 NO_PROMOTE_MSG = _('user does not have the right to promote this comment')
 log = logging.getLogger('ej')
@@ -88,7 +88,6 @@ class GivenBridgePower(GivenPower):
         proxy = True
 
     def use_power(self, comment):
-
         if comment.conversation == self.conversation and not self.is_expired:
             return promote_comment(comment,
                                    author=self.user,
