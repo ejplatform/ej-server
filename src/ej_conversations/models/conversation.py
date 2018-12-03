@@ -46,6 +46,12 @@ class ConversationQuerySet(ConversationMixin, QuerySet):
         size = self.count()
         return self.all()[randrange(size)]
 
+    def promoted(self):
+        """
+        Show only promoted conversations.
+        """
+        return self.filter(is_promoted=True)
+
 
 # ==============================================================================
 # MODEL

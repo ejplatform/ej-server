@@ -29,7 +29,8 @@ urlpatterns = Router(
 #
 # Cluster info
 #
-@urlpatterns.route('conversations/<model:conversation>/clusters/', template='ej_clusters/list-cluster.jinja2',
+@urlpatterns.route('conversations/<model:conversation>/clusters/',
+                   template='ej_clusters/list-cluster.jinja2',
                    perms=['ej.can_edit_conversation:conversation'])
 def index(conversation):
     clusters = proxy_seq(
