@@ -9,7 +9,7 @@
             {{ header_top_nav(request) }}
             {% if request.user.is_active %}
                 {{ header_lower_nav(request) }}
-            {% else %}
+            {% elif not '/login/' in request.path %}
                 {% if request.path != '/home/' %}
                     {%- call link(href='auth:login', link_next=request.path) %}
                         <div class="Header-lowerNotLogged">

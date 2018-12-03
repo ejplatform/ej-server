@@ -1,0 +1,15 @@
+{% macro modalities(title, image, contents) %}
+    <div id="modalities">
+        <h3>{{title}}</h3>
+        <div>{{image}}</div>
+        {% for content in contents %}
+            <p>{{content}}</p>
+        {% endfor %}
+    </div>
+    <script>
+        function showModalities() {
+            var x = document.getElementById("modalities");
+            x.className = "show";
+        }
+    </script>
+{% endmacro %}

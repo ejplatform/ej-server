@@ -18,6 +18,15 @@ $page-background-image-url: url(/static/img/page-bg.svg) !default;
     overflow: hidden;
     padding: $header-top-nav-height 0 $header-top-nav-height 0;
 
+    #docs {
+        width: 100%;
+        height: 100vh;
+
+	iframe {
+            height: 100%;
+        }
+    }
+
     @media only screen and (min-width: $breakpoint-small) {
         padding: ($header-height-tablet + $top-header-height) 0 $header-top-nav-height 0;
     }

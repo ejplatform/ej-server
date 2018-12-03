@@ -51,7 +51,7 @@ def conversation_list(request, board):
     else:
         user_is_owner = False
     return {
-        'can_add_conversation': user_is_owner,
+        'can_add_conversation': user.has_perm('ej_boards.can_add_conversation', board),
         'can_edit_board': user_is_owner,
         'create_url': reverse('boards:conversation-create', kwargs={'board': board}),
         'edit_url': reverse('boards:board-edit', kwargs={'board': board}),
@@ -211,9 +211,9 @@ def report_participants(request, board, conversation):
 
 
 @urlpatterns.route(reports_url + 'scatter/', **reports_kwargs)
-def report_scatter(board, conversation):
+def report_scatter(request, board, conversation):
     assure_correct_board(conversation, board)
-    return report_routes.scatter(conversation)
+    return report_routes.scatter(request, conversation)
 
 
 @urlpatterns.route(reports_url + 'votes.<format>', **reports_kwargs)
@@ -243,3 +243,4 @@ def assure_correct_board(conversation, board):
     """
     if not board.has_conversation(conversation):
         raise Http404
+    conversation.board = board

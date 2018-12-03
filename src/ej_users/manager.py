@@ -1,4 +1,4 @@
-from django.contrib.auth.models import UserManager as BaseUserManager
+from boogie.apps.users.models import UserManager as BaseUserManager
 
 
 class UserManager(BaseUserManager):

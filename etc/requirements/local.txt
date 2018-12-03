@@ -19,7 +19,7 @@ Pillow ~= 4.2
 # Django
 django ~= 2.1.1
 rules ~= 1.4.0
-django-boogie ~= 0.9.3
+django-boogie ~= 0.11.0
 
 # Configuration
 django-environ ~= 0.4.4
@@ -43,7 +43,7 @@ django-picklefield ~= 1.1.0
 argon2-cffi ~= 16.3.0
 
 # User registration, either via email or social
-django-allauth ~= 0.33.0
+django-allauth ~= 0.37.0
 
 # Rest framework
 djangorestframework ~= 3.8.2
@@ -80,3 +80,6 @@ django-extensions >= 1.9.0
 
 # Html
 hyperpython ~= 1.0.1
+
+# Notifications
+django-push-notifications ~= 1.6.0

@@ -15,15 +15,5 @@
             <i class="fas fa-times"></i><span>{{ disagree }}</span>
         </li>
     </ul>
-    <div class="CommentListItem-footer">
-        <div class="CommentListItem-footeritem CommentListItem-status CommentListItem-status-{{ status }}">
-            {{ status_name }}
-            {% if rejection_reason %}
-                &nbsp;({{ rejection_reason }})
-            {% endif %}
-        </div>
-        <div class="CommentListItem-footeritem">
-            {{ link(_('See Conversation'), href=conversation_url) }}
-        </div>
-    </div>
+    {{ comment|role('reject-reason') }}
 </div>

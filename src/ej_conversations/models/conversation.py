@@ -5,15 +5,16 @@ from autoslug import AutoSlugField
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError, ObjectDoesNotExist
-from django.db import models
-from django.urls import reverse
+from django.db.models import Count, Q
 from django.utils.translation import ugettext_lazy as _
 from model_utils.models import TimeStampedModel
 from taggit.managers import TaggableManager
 from taggit.models import TaggedItemBase
 
+from boogie import models
 from boogie import rules
 from boogie.rest import rest_api
+from ej.utils.url import SafeUrl
 from .comment import Comment
 from .utils import normalize_status
 from .vote import Vote, Choice
@@ -76,9 +77,19 @@ class Conversation(TimeStampedModel):
         ),
     )
 
+    limit_report_users = models.PositiveIntegerField(
+        _('Limit users'),
+        default=0,
+        help_text=_(
+            'Limit number of participants, making /reports/ route unavailable if limit is reached '
+            'except for super admin.'
+        ),
+    )
+
     objects = ConversationManager()
     tags = TaggableManager(through='ConversationTag')
-    votes = property(lambda self: Vote.objects.filter(comment__conversation=self))
+    all_votes = property(lambda self: Vote.objects.filter(comment__conversation=self))
+    votes = property(lambda self: self.all_votes.filter(comment__status=Comment.STATUS.approved))
 
     @property
     def approved_comments(self):
@@ -107,20 +118,19 @@ class Conversation(TimeStampedModel):
                 'conversation.')
             )
 
-    def get_absolute_url(self):
+    def get_absolute_url(self, board=None):
         kwargs = {'conversation': self}
-        from ej_boards.models import BoardSubscription
-        is_conversation_in_board = BoardSubscription.objects.filter(conversation=self).exists()
-        if not is_conversation_in_board:
-            return reverse('conversation:detail', kwargs=kwargs)
-        else:
-            board = BoardSubscription.objects.get(conversation=self).board
+        if board is None:
+            board = getattr(self, 'board', None)
+        if board:
             kwargs['board'] = board
-            return reverse('boards:conversation-detail', kwargs=kwargs)
+            return SafeUrl('boards:conversation-detail', **kwargs)
+        else:
+            return SafeUrl('conversation:detail', **kwargs)
 
     def get_url(self, which, **kwargs):
         kwargs['conversation'] = self
-        return reverse(which, kwargs=kwargs)
+        return SafeUrl(which, **kwargs)
 
     def get_anchor(self, name, which, **kwargs):
         return hp.a(name, href=self.get_url(which, **kwargs))
@@ -131,7 +141,7 @@ class Conversation(TimeStampedModel):
         """
         if user.id is None:
             return Vote.objects.none()
-        return Vote.objects.filter(comment__conversation=self, author=user, comment__status=Comment.STATUS.approved)
+        return self.votes.filter(author=user)
 
     def create_comment(self, author, content, commit=True, *, status=None,
                        check_limits=True, **kwargs):
@@ -188,29 +198,34 @@ class Conversation(TimeStampedModel):
 
         return {
             # Vote counts
-            'votes': {
-                'agree': self.vote_count(Choice.AGREE),
-                'disagree': self.vote_count(Choice.DISAGREE),
-                'skip': self.vote_count(Choice.SKIP),
-                'total': self.vote_count(),
-            },
+            'votes': self.votes.aggregate(
+                agree=Count('choice', filter=Q(choice=Choice.AGREE)),
+                disagree=Count('choice', filter=Q(choice=Choice.DISAGREE)),
+                skip=Count('choice', filter=Q(choice=Choice.SKIP)),
+                total=Count('choice'),
+            ),
 
             # Comment counts
-            'comments': {
-                'approved': comment_count(self, Comment.STATUS.approved),
-                'rejected': comment_count(self, Comment.STATUS.rejected),
-                'pending': comment_count(self, Comment.STATUS.pending),
-                'total': comment_count(self),
-            },
+            'comments': self.comments.aggregate(
+                approved=Count('status', filter=Q(status=Comment.STATUS.approved)),
+                rejected=Count('status', filter=Q(status=Comment.STATUS.rejected)),
+                pending=Count('status', filter=Q(status=Comment.STATUS.pending)),
+                total=Count('status'),
+            ),
 
             # Participants count
-            'participants': (
-                get_user_model()
+            'participants': {
+                'voters': get_user_model()
                     .objects
                     .filter(votes__comment__conversation_id=self.id)
                     .distinct()
-                    .count()
-            ),
+                    .count(),
+                'commenters': get_user_model()
+                            .objects
+                            .filter(comments__conversation_id=self.id, comments__status=Comment.STATUS.approved)
+                            .distinct()
+                            .count(),
+            },
         }
 
     def user_statistics(self, user):
@@ -310,14 +325,6 @@ class FavoriteConversation(models.Model):
 #
 # Utility functions
 #
-def comment_count(conversation, type=None):
-    """
-    Return the number of comments of a given type.
-    """
-    kwargs = {'status': type} if type is not None else {}
-    return conversation.comments.filter(**kwargs).count()
-
-
 def make_clean(cls, commit=True, **kwargs):
     obj = cls(**kwargs)
     obj.full_clean()
