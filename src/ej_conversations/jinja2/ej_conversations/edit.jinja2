@@ -19,19 +19,14 @@
             </span>
           </div>
 
-          {% if conversation.tags.count() > 0 %}
-              {% set tags = (conversation.tags.all()[0]|string).title() %}
-          {% else %}
-              {% set tags = 'Tags' %}
-          {% endif %}
-
-          <input type="hidden" name="tags" value="{{ tags }}" />
 
           <div class="ConversationDetail">
               <div class="ConversationDetail-banner">
-                  <div class="ConversationTags"><i class="fa fa-tags"></i>
-                    {{ tags }}
-                  </div>
+                  <div class="ConversationTags">
+                    <div class="ConversationField">
+                        <i class="fa fa-tags"></i><input name="tags" value="{{ tags }}" />
+                    </div>
+                 </div>
 
                   <p><textarea onfocus="this.style.height = (this.scrollHeight) + 'px'" onkeyup="this.style.height = (this.scrollHeight) + 'px'" class="Conversation-edit-field" name="text" required id="id_text">{{ conversation.text }}</textarea></p>
 

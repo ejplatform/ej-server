@@ -49,7 +49,7 @@ def social_buttons(request):
 def facebook_button(request):
     provider = providers.registry.by_id('facebook', request)
     query = {
-        'next': '/conversations/',
+        'next': request.GET.get('next', '/conversations/'),
         'method': 'oauth2',
     }
     url = provider.get_login_url(request, **query)
@@ -61,7 +61,7 @@ def facebook_button(request):
 def twitter_button(request):
     provider = providers.registry.by_id('twitter', request)
     query = {
-        'next': '/conversations/',
+        'next': request.GET.get('next', '/conversations/'),
     }
     url = provider.get_login_url(request, **query)
     return fa_icon('twitter', href=url, id='twitter-button', aria_label="Twitter Icon",
@@ -72,7 +72,7 @@ def twitter_button(request):
 def github_button(request):
     provider = providers.registry.by_id('github', request)
     query = {
-        'next': '/conversations/',
+        'next': request.GET.get('next', '/conversations/'),
     }
     url = provider.get_login_url(request, **query)
     return fa_icon('github', href=url, id='github-button')
@@ -82,7 +82,7 @@ def github_button(request):
 def google_button(request):
     provider = providers.registry.by_id('google', request)
     query = {
-        'next': '/conversations/',
+        'next': request.GET.get('next', '/conversations/'),
     }
     url = provider.get_login_url(request, **query)
     return fa_icon('google', href=url, id='google-button', aria_label="Google Icon",
