@@ -41,12 +41,14 @@ class Board(TimeStampedModel):
       ('Orange', 'Orange'),
       ('Purple', 'Purple'),
     )
+
     palette = models.CharField(_('Palette'),
                                max_length=10,
                               choices=PALLET_CHOICES,
                               default='Blue')
 
     image = models.ImageField(_('Image'),
+                              blank=True,
                               null=True)
 
     @property
@@ -98,7 +100,6 @@ class Board(TimeStampedModel):
 
     def pallet_class(self):
       return 'Pallet' + self.palette
-
 
 class BoardSubscription(models.Model):
     """

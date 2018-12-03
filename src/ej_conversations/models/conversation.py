@@ -350,7 +350,7 @@ class Conversation(TimeStampedModel):
     def get_palette(self):
         from ej_boards.models import BoardSubscription
         board = BoardSubscription.objects.get(conversation_id=self.id).board
-        return 'Palette' + board.palette
+        return board.palette.lower() + 'Palette'
 
 
 # ==============================================================================
