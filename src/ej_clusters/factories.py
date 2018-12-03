@@ -46,7 +46,6 @@ def set_clusters_from_comments(conversation, comment_map, exclusive=True, author
             name=cluster_name,
             description=description,
             owner=author,
-            conversation=conversation,
         )
         cluster.stereotypes.add(stereotype)
         created_stereotypes.append(stereotype)
