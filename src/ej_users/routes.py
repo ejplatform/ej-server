@@ -1,5 +1,4 @@
 import logging
-import os
 
 from django.conf import settings
 from django.contrib import auth
@@ -10,14 +9,15 @@ from django.http import Http404, JsonResponse
 from django.http import HttpResponseServerError
 from django.shortcuts import redirect
 from django.template.loader import get_template
+from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
-from jinja2 import FileSystemLoader, Environment
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 
 from boogie.router import Router
 from . import forms
-from .models import PasswordResetToken, generate_token
+from . import password_reset_token
+from .models import PasswordResetToken
 from .socialbuttons import social_buttons
 
 User = get_user_model()
@@ -134,39 +134,25 @@ def reset_password(request, token):
 @urlpatterns.route('recover-password/')
 def recover_password(request):
     form = forms.RecoverPasswordForm(request.POST or None)
-
-    dirname = os.path.dirname(__file__)
-    template_dir = os.path.join(dirname, 'jinja2/ej_users')
-
-    loader = FileSystemLoader(searchpath=template_dir)
-    environment = Environment(loader=loader)
-    template_file = "recover-password-message.jinja2"
-    template = environment.get_template(template_file)
     user = None
     success = False
 
     if request.method == "POST" and form.is_valid():
         success = True
         if User.objects.filter(email=form.cleaned_data['email']).exists():
-            if settings.HOSTNAME == 'localhost':
-                host = 'http://localhost:8000'
+            email = form.cleaned_data['email']
+            user = User.objects.get_by_email(email)
+            token = password_reset_token(user)
+            from_email = settings.DEFAULT_FROM_EMAIL
+            path = reverse('auth:reset-password', kwargs={'token': token})
+            template = get_template('ej_users/recover-password-message.jinja2')
+            email_body = template.render({'url': raw_url(request, path)})
+            send_mail(subject=_("Please reset your password"),
+                      message=email_body,
+                      from_email=from_email,
+                      recipient_list=[email])
 
-            else:
-                host = 'http://' + settings.HOSTNAME
-
-            user = User.objects.get_by_email(request.POST['email'])
-            token = generate_token(user)
-            template_message = template.render({'link': host + '/reset-password/' + token.url})
-            send_mail(_("Please reset your password"), template_message,
-                      'empurrandojuntos@gmail.com', [request.POST['email']],
-                      fail_silently=False)
-
-    return {
-        'user': user,
-        'form': form,
-        'success': success,
-
-    }
+    return {'user': user, 'form': form, 'success': success}
 
 
 @urlpatterns.route('profile/remove/', login=True)
@@ -200,3 +186,11 @@ def api_key(request):
 # Auxiliary functions and templates
 #
 login_extra_template = get_template('socialaccount/snippets/login_extra.html')
+
+
+def raw_url(request, path):
+    port = request.get_port()
+    port = '' if port == '80' else f':{port}'
+    if not path.startswith('/'):
+        path = request.path.rstrip('/') + '/' + path
+    return f'{request.scheme}://{request.get_host()}{port}{path}'

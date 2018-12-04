@@ -1,6 +1,6 @@
 {% from 'components/generic/page_header.jinja2' import page_header %}
 {% from 'components/generic/page_top-header.jinja2' import page_top_header %}
-{% from 'components/generic/page_menu.jinja2' import sidebar %}
+{% from 'components/generic/page_menu.jinja2' import menu with context %}
 
 {% set javascript_enabled = request.COOKIES.get('javascriptEnabled', 'No Cookie') if request else True %}
 {% set target_context = request.GET.target|default('all') if request else 'all' %}
@@ -9,6 +9,7 @@
 {% set page_title = page_title|default(content_title or settings.EJ_PAGE_TITLE) %}
 {% set hide_footer = hide_footer|default(False) %}
 {% set enable_navbar = enable_navbar|default(True) %}
+{% set logged_in = request and request.user and request.user.is_authenticated %}
 
 {% if target == 'all' %}
     <!DOCTYPE html>
@@ -31,6 +32,7 @@
             {#        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css">#}
             <link rel="stylesheet" href="/static/js/jquery-ui/jquery-ui.min.css">
             <link rel="stylesheet" href="/static/js/jquery-ui/jquery-ui.structure.min.css">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.1/css/swiper.css">
             <link rel="stylesheet" href="/static/css/main.css">
         {% endblock %}
 
@@ -48,8 +50,9 @@
             <script src="https://unpkg.com/unpoly@0.54.0/dist/unpoly.min.js"
                     integrity="sha384-6QMkTrFSjoO7UIWKZ1oYV4FCzxclb0Q4gP+TJzTZB93bAUeffVvNLblrRevbIkIw"
                     crossorigin="anonymous"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js" defer></script>
+            {#<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.1/js/swiper.min.js"></script>#}
             <script src="/static/js/jquery-ui/jquery-ui.min.js" defer></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.1/js/swiper.min.js"></script>
             <script src="/static/js/main.js" defer></script>
             <script src="/static/js/hicontrast.js"></script>
             <script src="/static/js/specific-pages.js"></script>
@@ -57,6 +60,7 @@
             <script src="/static/js/web-share.js"></script>
             <script src="/static/js/fontScale.js" defer></script>
             <script src="/static/js/comment-form-animation.js" defer></script>
+            <script src="/static/js/slider-modalities-conversation.js" defer></script>
             <script src="/static/js/bundle.js" defer></script>
         {% endblock javascript %}
 
@@ -82,26 +86,29 @@
         <meta http-equiv="cache-control" content="{{ cache_control|default('no-cache') }}">
         <meta http-equiv="expires" content="{{ cache_expires|default(120) }}">
 
-        <!-- SEO -->
-        <meta name="description"
-              content="{{ page_description|default(_('EJ - A platform of social participation.')) }}">
-        <meta itemprop="name" content="EJ - Empurrando Juntos!">
-        <meta itemprop="image" content="/static/img/logo/logo.svg">
-
         <!-- Twitter -->
         <meta name="twitter:card" content="summary">
-        <meta name="twitter:title" content="EJ Platform - Consultas de opinião">
+        
+        {% block metaOG %}
+            <!-- Open Graph general (Facebook, Pinterest & Google+) -->
+            <meta itemprop="image" property="og:image" content="/static/img/logo/logo.svg">
+            <meta property="og:image:type" content="image/svg">
+            <meta property="og:image:width" content="1200">
+            <meta property="og:image:height" content="630">
+            <meta itemprop="name" property="og:site_name" content="EJ - Empurrando Juntos!">
+            <meta property="og:url" content="https://ejplatform.org/">
+            <meta property="og:type" content="website">
+            <meta property="og:locale" content="pt_BR">
 
-        <!-- Open Graph general (Facebook, Pinterest & Google+) -->
-        <meta property="og:title" content="{{ title|default(_('EJ - A platform of social participacion.')) }}">
-        <meta property="og:image" content="/static/img/logo/logo.svg">
-        <meta property="og:image:width" content="1200">
-        <meta property="og:image:height" content="630">
-        <meta property="og:url" content="https://ejplatform.org/">
-        <meta property="og:site_name" content="EJ - Empurrando Juntos!">
-        <meta property="og:locale" content="pt_BR">
-        <meta property="og:type" content="website">
-        <meta property="fb:app_id" content="1757744567588794">
+        {% endblock metaOG %}
+
+        {% block metaOG2 %}
+            <meta name="description" property="og:title" content="{{ title|default(_('EJ - A platform of social participacion.')) }}">
+    
+            <!-- Twitter && Telegram -->
+            <meta name="twitter:title" content="EJ Platform - Consultas de opinião">
+    
+        {% endblock metaOG2 %}
     </head>
 
     <body class="{{ body_class|default('Page') }} {{ request.path.replace('/','') if request else '' }}">
@@ -116,27 +123,35 @@
         <div class="Page-mainContainer">
     {% endif %}
 
-    {# MAIN BLOCK #}
-    {% block main %}
-
-        <main class="Page-content" {{ salt_attr()|safe }}>
-            {% if content_title %}
-                <div class="Page-title"><h1>{{ content_title }}</h1></div>{% endif %}
-            {% if content is defined %}
-                {{ content }}
-            {% else %}
-                {% block content %}
-                    {% if content_html %}
-                        <div class="Container">
-                            {{ content_html|safe }}
-                        </div>
-                    {% else %}
-                        <p>{{ _('Please override the "content" block of your template!') }}</p>
-                    {% endif %}
-                {% endblock %}
+    <div class="Page-content-container">
+        <div class="NavMenu-fixed">
+            {% if logged_in and request.path != '/home/' %}
+                {{ menu(request.user) }}
             {% endif %}
-        </main>
-    {% endblock %}
+        </div>
+
+        {# MAIN BLOCK #}
+        {% block main %}
+
+            <main class="Page-content {{ 'logged-in' if logged_in else '' }}" {{ salt_attr()|safe }}>
+                {% if content_title %}
+                    <div class="Page-title"><h1>{{ content_title }}</h1></div>{% endif %}
+                {% if content is defined %}
+                    {{ content }}
+                {% else %}
+                    {% block content %}
+                        {% if content_html %}
+                            <div class="Container">
+                                {{ content_html|safe }}
+                            </div>
+                        {% else %}
+                            <p>{{ _('Please override the "content" block of your template!') }}</p>
+                        {% endif %}
+                    {% endblock %}
+                {% endif %}
+            </main>
+        {% endblock %}
+    </div>
 
 
 {% endblock %}
@@ -159,7 +174,6 @@
             })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
             ga('create', 'UA-104880284-1', 'auto');
         </script>
-
         {% if service_worker %}
             <!-- Service worker -->
             <script>

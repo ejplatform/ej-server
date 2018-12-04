@@ -4,10 +4,9 @@
 @import '../2_tools/index';
 
 $login-icon-size: 150px !default;
-$login-icon-color: $color-gray-light !default;
 $login-icon-border-width: 10px !default;
 $login-social-icons-size: $font-size-h1 !default;
-$login-title-color: $color-purple-dark;
+$login-title-color: $color-content;
 $login-title-size: 14px;
 $login-link-color: $color-accent !default;
 $login-new-user-background-color: #052B47 !default;
@@ -17,10 +16,23 @@ $login-new-user-background-color: #052B47 !default;
     padding: $spacing-unit;
     text-align: center;
     font-family: $font-paragraph;
+    margin: 0px;
 
+    a {
+        color: $color-primary;
+        font-family: $font-paragraph;
+        font-size: $font-size-small;
+        font-weight: bold;
+    }
+    p {
+        text-align: center;
+        font-family: $font-paragraph;
+        margin: 0px 0px $spacing-unit-small 0px;
+    }
     h1 {
-        color: $login-title-color;
-        font-size: $login-title-size;
+        color: $color-accent;
+        font-size: $font-size-larger;
+        margin: 0px;
     }
     input,
     textarea,
@@ -29,80 +41,87 @@ $login-new-user-background-color: #052B47 !default;
         display: block;
         margin-left: auto;
         margin-right: auto;
-        height: 50px;
+        height: $spacing-unit + $spacing-unit-small;
     }
     input {
-        border: $login-fields-border;
-        height: $login-fields-height;
         width: $layout-compact-container-width / 2;
-        border-radius: $login-fields-border-radius;
     }
     input[type=submit] {
         display: block;
         margin-top: $spacing-unit;
         border: none;
-        width: 180px;
+        width: $spacing-unit-huge - $spacing-unit-tiny;
         height: 38px;
-        background: $login-button-login-background;
         box-shadow: none
     }
     a[class=Button] {
-        border-radius: $login-button-register-button-radius;
-        width: $login-button-register-size;
-        min-width: 200px;
+        min-width: $spacing-unit-huge * 2 - $spacing-unit - $spacing-unit-small;
         padding: 12px;
+        color: $color-content-text;
     }
     &-icon {
-        border: $login-icon-border;
-        border-radius: 50%;
-        color: $login-icon-color;
-        height: $login-icon-size;
-        margin: $spacing-unit-large auto;
-        padding: $login-icon-padding-align;
-        width: $login-icon-size;
+        height: $spacing-unit-huge + $spacing-unit-large;
+        margin: $spacing-unit-small auto;
+        padding: 0px 0px 0px $spacing-unit;
+        width: $spacing-unit-huge * 2 - $spacing-unit-small;
         img > * {
             color: $color-hint;
         }
         img {
             position: relative;
             z-index: -1;
-            padding: $login-icon-padding;
-            transform: $login-icon-scale;
         }
     }
     &-button {
-        @extend .Button--primary;
+        @extend .Button;
+    }
+    .Text-socialButtons{
+        font-size: $font-size-default;
+        padding: 14px 0px 0px 0px;
     }
     &-socialButtons {
-        display: $social-buttons-display;
+        display: flex;
         flex-direction: row;
         justify-content: center;
 
+        
         > i {
-            font-size: $social-buttons-icon-size;
+            font-size: $font-size-large;
         }
-
+        
         .rounded-icon {
             border-radius: 50%;
-            width: $social-buttons-border-size;
-            height: $social-buttons-border-size;
+            width: $font-size-large;
+            height: $font-size-large;
             margin: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: $font-size-huge;
         }
-        .icon-google {
+        #github-button {
+            background-color: #000;
+            padding: $spacing-unit-small;
+            color: white;
+            font-size: $spacing-unit-small + $spacing-unit-tiny;
+        }
+        #google-button {
             background-color: #dd4b39;
+            padding: $spacing-unit-small;
             color: white;
+            font-size: $spacing-unit-small + $spacing-unit-tiny;
         }
-        .icon-facebook {
+        #facebook-button {
             background-color: #4460A0;
+            padding: $spacing-unit-small;
             color: white;
+            font-size: $spacing-unit-small + $spacing-unit-tiny;
         }
-        .icon-twitter {
+        #twitter-button {
             background-color: #00AAEC;
+            padding: $spacing-unit-small;
             color: white;
+            font-size: $spacing-unit-small + $spacing-unit-tiny;
         }
     }
     &-password {
@@ -113,13 +132,15 @@ $login-new-user-background-color: #052B47 !default;
         }
     }
     &-newUser {
-        border-top: $login-new-user-border;
-        margin: $spacing-unit auto;
+        margin: $spacing-unit-small auto;
         width: 85%;
+        border-top: 1px solid $color-primary;
+        padding: $spacing-unit-small 0px 0px 0px;
         h1 {
-            color: $color-content-text;
-            font-size: $font-size-h3;
-            display: $login-new-user-h1-display;
+            color: $color-content;
+            font-size: $font-size-default;
+            font-family: $font-paragraph;
+            display: inline;
         }
         .Button {
             background-color: $login-new-user-background-color;
@@ -127,11 +148,20 @@ $login-new-user-background-color: #052B47 !default;
     }
 
     &-reticule {
-        position: $login-reticule-position;
-        bottom: $login-reticule-bottom;
-        margin-bottom: $login-reticule-margin-bottom;
-        z-index: $login-reticule-z-index;
-        display: $login-reticule-display;
+        position: relative;
+        bottom: $spacing-unit-large;
+        margin-bottom: (0 - $spacing-unit-large);
+        z-index: -1;
+        display: none;
         width: 100vw;
+    }
+    .Name-field {
+        font-size: $font-size-tiny;
+        text-align: left;
+        font-family: $font-paragraph;
+        font-weight: bold;
+        margin: auto;
+        max-width: $spacing-unit-huge * 2 + $spacing-unit-small + $spacing-unit-tiny;
+        color: $color-primary;
     }
 }

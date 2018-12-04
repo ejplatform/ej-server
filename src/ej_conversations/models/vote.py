@@ -1,8 +1,8 @@
 from django.conf import settings
 from django.core.exceptions import ValidationError
-from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
+from boogie import models
 from boogie.fields import IntEnum, EnumField
 from boogie.rest import rest_api
 

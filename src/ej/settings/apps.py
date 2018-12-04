@@ -22,6 +22,9 @@ class InstalledAppsConf(Base, EjOptions):
         'ej_notifications',
         'ej_profiles',
         'ej_users',
+
+        # Gamification
+        'ej_powers',
     ]
 
     third_party_apps = [

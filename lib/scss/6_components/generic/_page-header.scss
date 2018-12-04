@@ -6,8 +6,8 @@
 
 // Constants
 // Top and bottom navigation bars. Styled as content, but can be overridden.
-$header-color: $color-content !default;
-$header-color-text: $color-content-text !default;
+$header-color: $color-content-text !default;
+$header-color-text: $color-content !default;
 $header-box-shadow-upper: 0 2px 4px 0 rgba(0, 0, 0, 0.2) !default;
 $header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.2) !default;
 
@@ -41,6 +41,13 @@ $header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.2) !default;
 
     &-topIcon {
         cursor: pointer;
+        display: none;
+    }
+
+    @media only screen and (max-width: 960px) {
+        &-topIcon {
+            display: block;
+        }
     }
 
     // Elements
@@ -61,10 +68,6 @@ $header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.2) !default;
         height: $header-top-nav-height;
         min-width: $spacing-unit-large + $header-icon-size;
         padding: 0 $spacing-unit;
-        background-color: $header-background-color;
-        a {
-            color: $header-font-color;
-        }
 
         @include breakpoint(small) {
             padding-top: $top-header-height;
@@ -100,7 +103,7 @@ $header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.2) !default;
             flex-flow: column;
             justify-content: center;
             width: 50%;
-            color: $navigation-bottom-font-color !important;
+            color: $color-content !important;
 
             &:before {
                 font-family: 'Font Awesome 5 Free', sans-serif;
@@ -124,6 +127,8 @@ $header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.2) !default;
     }
 
     &-lowerNotLogged {
+        @include color($color-action-secondary, $color-action-secondary-text);
+
         box-sizing: border-box;
         display: flex;
         justify-content: center;
@@ -135,14 +140,12 @@ $header-box-shadow-lower: 0 -2px 4px 0 rgba(0, 0, 0, 0.2) !default;
         height: $header-top-nav-height;
         text-transform: uppercase;
         font-size: $font-size-tiny-tiny;
-        background-color: $login-button-color;
 
         &:hover {
             cursor: pointer;
         }
 
         p {
-            color: $color-white;
             font-weight: bold;
             font-size: $font-size-large;
 

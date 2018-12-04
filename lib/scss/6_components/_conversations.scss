@@ -3,14 +3,21 @@ CONVERSATIONS
 ======================================================================== */
 @import '../2_tools/index';
 
+$conversation-vote-circle-size: 18px !default;
 $conversation-toast-image-border: $spacing-unit-tiny / 3;
 $conversation-button-size: $spacing-unit-small + $spacing-unit-tiny !default;
+$icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
 $conversation-card-font-size-small: 12px !default;
 $conversation-card-border-arrow-size: $spacing-unit;
 $profile-label-clear-color: #30BFD3 !default;
+$modalities-content-width-max: ($page-content-width-max / 2) - 29 !default;
+$color-for-unfolding: rgba(0, 0, 0, 0.3);
+$color-background-button-modalities: rgba(255, 255, 255, 0.3);
+
 
 .ConversationList {
     @extend .Container;
+    max-width: 100%;
 
     p {
         padding: 0 $spacing-unit / 3;
@@ -22,7 +29,7 @@ $profile-label-clear-color: #30BFD3 !default;
 
         h1 {
             font-size: $font-size-h2;
-            color: $color-magenta;
+            color: $color-accent;;
         }
 
         .topic {
@@ -31,13 +38,13 @@ $profile-label-clear-color: #30BFD3 !default;
     }
 
     &-urls {
-        font-size: $conversation-card-font-size-small;
+        font-size: $font-size-tiny;
         a, i {
-            color: $card-conversation-navigation-font-color;
+            color: $color-content;
         }
 
         i {
-            font-size: $conversation-card-font-size-small * 0.8;
+            font-size: $font-size-tiny * 0.8;
         }
         .public {
             float: left;
@@ -132,19 +139,19 @@ $profile-label-clear-color: #30BFD3 !default;
 }
 
 .ConversationTags {
-    @include color($color-blue-nav, $color-primary, $force: true);
+    @include color($color-primary, $color-primary, $force: true);
     font-weight: bold;
     text-align: center;
     padding: $spacing-unit-small + $spacing-unit-tiny $spacing-unit-small $spacing-unit-small $spacing-unit-small;
-    background-color: $conversation-top-background;
+    background-color: $color-hint;
 }
 
 .ConversationCard {
-    @include color($card-conversation-middle-background, $color-white, $force: true);
+    background-color: $color-primary;
     align-self: stretch;
     box-sizing: border-box;
     border: 0;
-    border-radius: $card-conversation-border-radius;
+    border-radius: $border-radius-round;
     flex-grow: 1;
     margin: 0;
     margin-bottom: $spacing-unit;
@@ -155,10 +162,6 @@ $profile-label-clear-color: #30BFD3 !default;
     overflow: hidden;
     position: relative;
     padding: 0;
-    .ConversationTags {
-        background-color: $card-conversation-top-background;
-        color: $card-conversation-top-font-color;
-    }
     h1 {
         font-size: $font-size-h4;
         font-family: $font-paragraph;
@@ -178,8 +181,8 @@ $profile-label-clear-color: #30BFD3 !default;
         text-transform: uppercase;
         display: block;
         font-weight: bold;
-        color: $color-gray;
-        font-size: $conversation-card-font-size-small;
+        color: $color-content;
+        font-size: $font-size-tiny;
         margin: $spacing-unit / 2 0;
     }
 
@@ -199,10 +202,13 @@ $profile-label-clear-color: #30BFD3 !default;
             flex-flow: column;
             margin: 0;
             vertical-align: middle;
+            a {
+                color: white;
+            }
         }
 
         dl {
-            font-size: $conversation-card-font-size-small;
+            font-size: $font-size-tiny;
             margin: $spacing-unit-tiny 0;
 
             dt {
@@ -218,7 +224,7 @@ $profile-label-clear-color: #30BFD3 !default;
     &-cover + .ConversationCard-actions {
         padding: 0 $spacing-unit-small $spacing-unit-small $spacing-unit-small;
         background-size: 30px;
-        background: $card-conversation-bottom-background;
+        background: $color-primary;
         margin-top: $spacing-unit;
         bottom: 0;
         position: absolute;
@@ -229,7 +235,7 @@ $profile-label-clear-color: #30BFD3 !default;
     &-actions {
         .Button[primary] {
             padding: $spacing-unit-small + $spacing-unit-tiny;
-            background: $card-conversation-button-background;
+            background: $color-content;
             font-size: $font-size-small;
             padding-top: $font-size-small;
             padding-bottom: $font-size-small;
@@ -240,12 +246,11 @@ $profile-label-clear-color: #30BFD3 !default;
     }
 
     &-statistics {
-        color: $color-blue-nav;
+        color: $color-hint;
         display: flex;
         justify-content: center;
         padding: $spacing-unit-small;
         margin: $spacing-unit-tiny $spacing-unit;
-        font-weight: bold;
 
         li {
             list-style: none;
@@ -258,6 +263,8 @@ $profile-label-clear-color: #30BFD3 !default;
         margin: $spacing-unit-tiny;
     }
 }
+
+
 
 .ConversationDetail {
     margin: 0 auto;
@@ -289,7 +296,7 @@ $profile-label-clear-color: #30BFD3 !default;
             display: inline-block;
             button {
                 i {
-                    color: $color-magenta;
+                    color: $color-accent;;
                 }
                 background-color: transparent;
                 background-repeat: no-repeat;
@@ -309,44 +316,44 @@ $profile-label-clear-color: #30BFD3 !default;
             outline: none;
             font-weight: bold;
             i {
-                color: $color-magenta;
+                color: $color-accent;;
             }
             float: right;
         }
 
     }
     &-banner {
-        background: $conversation-background;
-        border-radius: $conversation-bottom-border-radius;
-        color: $color-purple-dark;
+        background: $color-hint;
+        border-radius: 0 0 $border-radius-large $border-radius-large;
+        color: $color-content;
         margin: 0;
         padding: $spacing-unit-tiny $spacing-unit-tiny $spacing-unit $spacing-unit-tiny;
         .ConversationTags {
-            background-color: $conversation-top-background;
-            color: $conversation-tag-color;
+            background-color: $color-hint;
+            color: $color-primary;
         }
 
         h1 {
             @extend .Container;
-
+            padding: ($spacing-unit + $spacing-unit-small);
             padding-top: $spacing-unit-tiny;
             padding-bottom: $spacing-unit;
             text-align: center;
             font-weight: 200 !important;
-            font-size: $spacing-unit !important;
+            font-size: ($spacing-unit-tiny + $spacing-unit-small) !important;
             font-family: $font-paragraph;
+            color: $color-content;
 
             @media only screen and (min-width: $breakpoint-large) {
                 padding: $spacing-unit-large 0;
             }
-            color: $conversation-font-color;
         }
 
         .Conversation-edit {
             text-align: center;
 
             a, b {
-                color: $color-purple-dark;
+                color: $color-content;
                 background: transparent;
                 font-weight: bold;
                 text-transform: uppercase;
@@ -354,12 +361,12 @@ $profile-label-clear-color: #30BFD3 !default;
 
                 &:hover {
                     background: transparent;
-                    color: $color-purple-dark;
+                    color: $color-content;
                 }
 
                 &:before {
                     content: "\f044 ";
-                    font-family: 'Font Awesome\ 5 Free';
+                    font-family: $font-awesome;
                     display: inline-block;
                     font-size: $spacing-unit / 2;
                     margin-right: 3px;
@@ -370,9 +377,9 @@ $profile-label-clear-color: #30BFD3 !default;
     }
 
     &-arrow {
-        border-left: $conversation-card-border-arrow-size solid transparent;
-        border-right: $conversation-card-border-arrow-size solid transparent;
-        border-top: $conversation-arrow-border;
+        border-left: $spacing-unit solid transparent;
+        border-right: $spacing-unit solid transparent;
+        border-top: $border-radius solid $color-hint;
         height: 0;
         margin: 0 auto;
         padding: 0;
@@ -383,13 +390,13 @@ $profile-label-clear-color: #30BFD3 !default;
     &-statistics,
     &-statisticsBottom {
         display: flex;
-        font-size: $font-size-small;
+        font-size: $font-size-tiny;
         font-weight: normal;
         justify-content: space-between;
         margin: 0 auto;
         max-width: $content-wrapper-max-width - 2 * $spacing-unit-huge;
         padding: 0 $spacing-unit-small;
-        color: $conversation-statistics-color;
+        color: $color-primary;
 
         li {
             list-style: none;
@@ -397,7 +404,7 @@ $profile-label-clear-color: #30BFD3 !default;
     }
 
     &-statisticsBottom {
-        bottom: ($conversation-card-border-arrow-size - $spacing-unit-tiny);
+        bottom: ($spacing-unit - $spacing-unit-tiny);
         font-weight: normal;
         padding: 0 ($spacing-unit + $spacing-unit-small);
         position: relative;
@@ -411,7 +418,7 @@ $profile-label-clear-color: #30BFD3 !default;
         :last-child {
             text-align: right;
             a {
-                color: $color-content-text;
+                color: $color-content;
             }
         }
     }
@@ -425,223 +432,536 @@ $profile-label-clear-color: #30BFD3 !default;
             font-size: $spacing-unit !important;
             letter-spacing: 1px;
             font-weight: 300 !important;
-            color: $conversation-info-title;
+            color: $color-accent;
         }
         p {
             margin-top: $spacing-unit-tiny;
-            color: $conversation-info-content;
+            color: $color-content;
         }
     }
 
 }
 
-.Comment-create{
-    position: relative;
-    justify-content: center;
-    button {
-        color: $conversation-create-comment-color;
-        background: transparent no-repeat;
-        border: none;
-        cursor: pointer;
-        overflow: hidden;
-        outline: none;
-        font-weight: bold;
+.Modalities{
+    display: flex;
+    align-content: center;
+    flex-direction: column;
+    align-items: center;
+    align-self: center;
+    background-color: $color-for-unfolding;
+    padding-right: 0;
+    position: absolute;
+    z-index: 4;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    outline: 0;
+
+
+    //Modalities slider
+
+    .swiper-container{
+        margin: auto auto;
+        max-width: $spacing-unit-huge * 4;
     }
-    p {
+    .swiper-wrapper{
+        align-items: center;
+        margin: auto $spacing-unit-small + $spacing-unit;
+    }
+    .style-slide-center{
+        margin: auto auto;
+        align-items: center;
+        margin: auto $spacing-unit-small + $spacing-unit;
+    }
+    .swiper-slide {
+        margin: 0px $spacing-unit-huge - $spacing-unit 0px 0px;
+        max-width: $modalities-content-width-max;
+        width: $spacing-unit-huge * 3;
+        line-height: 1.2;
+        bottom: auto;
+        background-color: $color-background;
         text-align: center;
-    }
-}
-
-.Comment {
-    position: relative;
-    min-height: 300px !important;
-    width: 100% !important;
-    max-width: $header-wrapper-max-width;
-    margin: 0 auto;
-    padding-bottom: $spacing-unit-large;
-    .CommentCard {
-        left: 0;
-        right: 0;
-        margin: auto;
-        position: absolute;
-        box-sizing: border-box;
-        border-radius: $conversation-comment-border-radius;
-        font-size: $font-size-h3;
-        max-width: $page-content-width-max;
-        min-height: 300px !important;
-        width: 100% !important;
-        z-index: 3;
-        padding: ($spacing-unit-large - $spacing-unit-tiny) ($spacing-unit-large - $spacing-unit-small);
-        background-color: $conversation-comment-background-color;
-        color: $conversation-comment-title-color;
-
-        &-counter {
-            text-align: center;
-            p {
-                margin: 0;
-            }
-        }
-
-        img {
-            background: $color-primary-text;
-            border: 1px solid #fff;
-            border-radius: $spacing-unit-large;
-            padding: 4px $spacing-unit-tiny;
-        }
-
-        i.fa {
-            background: $color-primary-text;
-            border: 2px solid #fff;
-            border-radius: $spacing-unit-large;
-            padding: $spacing-unit-tiny;
-        }
-
-        &-voteArea {
-            button {
-                border: none;
-                border-radius: 50%;
-                background: $color-primary-text;
-                padding: 0;
-            }
-
-            ul {
-                display: flex;
+        border-radius: $spacing-unit-tiny;
+        position: relative;
+        border: 1px solid $color-accent;
+        padding: $spacing-padding * 2;
+        flex-direction: row;
+        align-items: center;
+        -webkit-justify-content: center;
+        .append-buttons{
+            padding: $spacing-unit-tiny 0px;
+            a{
+                color: $color-primary;
                 font-weight: bold;
-                margin: 0;
-                padding: 0;
-                text-transform: uppercase;
-                width: 100%;
-
-                span {
-                    font-size: $conversation-vote-font-size;
-                }
-
-                li {
-                    @extend .Col--center;
-                    list-style: none;
-                    flex-grow: 1;
-
-                    i.fa {
-                        background: #fff;
-                        height: $conversation-vote-circle-size;
-                        width: $conversation-vote-circle-size;
-                        padding: $conversation-vote-circle-spacing;
-                        cursor: pointer;
-                    }
-                    &.voteAgree {
-                        width: ($spacing-unit + $spacing-unit-tiny);
-                        &:active {
-                            color: $conversation-vote-agree-color;;
-                        }
-                        i.fa {
-                            color: $conversation-vote-agree-color;
-                            &:hover {
-                                background: $conversation-vote-agree-color;
-                                color: #fff;
-                            }
-                        }
-
-                    }
-                    &.voteSkip {
-                        width: ($spacing-unit + $spacing-unit-tiny);
-                        &:active {
-                            color: $conversation-vote-skip-color;;
-                        }
-                        i.fa {
-                            color: $conversation-vote-skip-color;
-                            &:hover {
-                                background: $conversation-vote-skip-color;
-                                color: #fff;
-                            }
-                        }
-
-                    }
-                    &.voteDisagree {
-                        width: ($spacing-unit + $spacing-unit-tiny);
-                        &:active {
-                            color: $conversation-vote-disagree-color;;
-                        }
-                        i.fa {
-                            color: $conversation-vote-disagree-color;
-                            &:hover {
-                                background: $conversation-vote-disagree-color;
-                                color: #fff;
-                            }
-                        }
-                    }
-                }
             }
-        }
-
-        &-user {
-            font-size: $font-size-h5;
-            img {
-
-                @media only screen and (min-width: $breakpoint-medium - $breakpoint-small) {
-                    max-width: 6%;
-                }
-                @media only screen and (min-width: $breakpoint-small) {
-                    max-width: 3%;
-                }
-
-                color: $color-accent;
-                margin-right: $spacing-unit-small;
-                background: #fff;
-            }
-            i.fa {
-                color: $color-accent;
-                margin-right: $spacing-unit-small;
-                background: #fff;
-            }
-        }
-    }
-    #commentform {
-        position: absolute;
-        left: 0;
-        right: 0;
-        margin: auto;
-        visibility: hidden;
-        max-width: $page-content-width-max;
-        min-height: 300px !important;
-        width: 100% !important;
-        box-sizing: border-box;
-        text-align: center;
-        background: $conversation-comment-form-background-color;
-        border-radius: $conversation-comment-border-radius;
-        padding: ($spacing-unit-large - $spacing-unit-tiny) ($spacing-unit-large - $spacing-unit-small);
-        z-index: 5;
-
-        h1 {
-            font-size: $font-size-h3;
-            margin: $spacing-unit-tiny 0;
-            // color: $color-primary !important;
-            color: $conversation-comment-form-title-color;
         }
         p {
-            margin: $spacing-unit-tiny 0;
+            padding: $spacing-unit-small 0 $spacing-unit-tiny 0;
+            margin: 0;
+            font-size: $font-size-small;
+            color: $color-content;
+        }
+        h3{
+            padding: $spacing-unit-tiny 0 $spacing-unit-small 0;
+            margin: 0;
+            font-family: $font-raleway;
+            font-weight: bold;
+            font-size: $font-size-large;
+            color: $color-accent;
+        }
+    }
+    .swiper-button-next{
+        margin: -($spacing-unit-small + $spacing-unit-tiny) 0px 0px 0px;
+        width: $spacing-unit;
+        color: $color-primary;
+        border: 1px solid;
+        height:$spacing-unit-large - $spacing-unit-tiny;
+        padding: 0px $spacing-unit-tiny 0px $spacing-unit-small;
+        background-color: $color-background-button-modalities;
+        border-radius: $spacing-unit-large;
+        font-size: $spacing-unit + $spacing-unit-tiny;
+        background-size: $spacing-unit ($spacing-unit + $spacing-unit-tiny);
+    }
+    .swiper-button-prev{
+        margin: -($spacing-unit-small + $spacing-unit-tiny) $spacing-unit-tiny 0px 0px;
+        width: $spacing-unit;
+        color: $color-primary;
+        left: $spacing-unit-small;
+        border: 1px solid;
+        height:$spacing-unit-large - $spacing-unit-tiny;
+        padding: 0px $spacing-unit-tiny 0px $spacing-unit-small;
+        background-color: $color-background-button-modalities;
+        border-radius: $spacing-unit-large;
+        font-size: $spacing-unit + $spacing-unit-tiny;
+        background-size: $spacing-unit $spacing-unit + $spacing-unit-tiny;
+    }
+    .swiper-pagination-bullet{
+        background: $color-background;
+    }
+    .swiper-pagination-bullet-active{
+        background: $color-content-text;
+    }
+
+    .modalities-slider.show{
+        visibility: visible;
+    }
+    @media only screen and (min-width: $breakpoint-medium - $breakpoint-small) {
+        .swiper-container{
+            max-width: $spacing-unit-huge * 3;
+        }
+        .swiper-slide{
+            max-width: $spacing-unit-huge * 2 - $spacing-unit-small;
+        }
+        img{
+            padding: 0px $spacing-unit - $spacing-unit-tiny;
+            max-width: 28%;
+        }
+        .imgpart{
+            padding: 0px $spacing-unit - $spacing-unit-tiny;
+            max-width: 70%;
+        }
+        .imgponte{
+            padding: 0px $spacing-unit - $spacing-unit-tiny;
+            max-width: 70%;
+        }
+        .imgopn{
+            padding: 0px $spacing-unit - $spacing-unit-tiny;
+            max-width: 70%;
+        }
+        .Button{
+            font-weight: bold;
+            font-size: 11px;
+        }
+        .fa-times{
+            padding: 0px $spacing-unit-small;
+            font-size: $spacing-unit - $spacing-unit-tiny;
+            color: $color-accent;
+        }
+        .fa-arrow-right{
+            padding: 0px $spacing-unit-small;
+            font-size: $spacing-unit - $spacing-unit-tiny;
+            color: $color-primary;
+        }
+        .fa-check{
+            padding: 0px $spacing-unit-small;
+            font-size: $spacing-unit - $spacing-unit-tiny;
+            color: $color-content;
+        }
+    }
+    @media only screen and (min-width: $breakpoint-small) {
+        .swiper-container{
+            max-width: $spacing-unit-huge * 4;
+        }
+        .swiper-slide{
+            max-width: $modalities-content-width-max;
+            .Button{
+                font-weight: bold;
+                font-size: 13px;
+            }
+        }
+        img{
+            padding: 0px $spacing-unit - $spacing-unit-tiny;
+            max-width: 16%;
+        }
+        .imgpart{
+            padding: 0px $spacing-unit - $spacing-unit-tiny;
+            max-width: 77%;
+        }
+        .imgponte{
+            padding: 0px $spacing-unit - $spacing-unit-tiny;
+            max-width: 77%;
+        }
+        .imgopn{
+            padding: 0px $spacing-unit - $spacing-unit-tiny;
+            max-width: 77%;
+        }
+        .fa-times{
+            padding: 0px $spacing-unit-small;
+            font-size: $spacing-unit - $spacing-unit-tiny;
+            color: $color-accent;
+        }
+        .fa-arrow-right{
+            padding: 0px $spacing-unit-small;
+            font-size: $spacing-unit - $spacing-unit-tiny;
+            color: $color-primary;
+        }
+        .fa-check{
+            padding: 0px $spacing-unit-small;
+            font-size: $spacing-unit - $spacing-unit-tiny;
+            color: $color-content;
+        }
+    }
+
+
+    //Modalities static
+
+    .style-slide{
+        margin: 0px;
+        width: $spacing-unit-huge * 3;
+        line-height: 1.2;
+        bottom: auto;
+        background-color: $color-background;
+        text-align: center;
+        border-radius: $spacing-unit-tiny;
+        position: relative;
+        border: 1px solid $color-accent;
+        padding: $spacing-padding * 2;
+        flex-direction: row;
+        align-items: center;
+        -webkit-justify-content: center;
+        .append-buttons{
+            padding: $spacing-unit-tiny 0px;
+            a{
+                color: $color-primary;
+                font-weight: bold;
+            }
+        }
+        p {
+            padding: $spacing-unit-small 0 $spacing-unit-tiny 0;
+            margin: 0;
+            font-size: $font-size-small;
+            color: $color-content;
+        }
+        h3{
+            padding: $spacing-unit-tiny 0 $spacing-unit-small 0;
+            margin: 0;
+            font-family: $font-raleway;
+            font-weight: bold;
+            font-size: $font-size-large;
+            color: $color-accent;
+        }
+        .Button-closer{
+            background-color: $color-content;
+            border: none;
+            border-radius: $spacing-unit-large;
+            box-sizing: border-box;
+            cursor: pointer;
+            display: inline-block;
+            font-weight: bold;
+            padding: 0px;
+            text-align: center;
+            text-transform: uppercase;
+            transition: all 200ms ease-in-out;
+            vertical-align: middle;
+            .fa-times {
+                font-size: $spacing-unit-tiny;
+                color: $color-background;
+            }
+        }
+    }
+
+    // Imagens do modal com especificações diferentes
+
+
+    @media only screen and (min-width: $breakpoint-medium - $breakpoint-small) {
+        .style-slide{
+            max-width: $spacing-unit-huge * 2 - $spacing-unit-small;
+        }
+        .imgponte{
+            margin: -($spacing-unit * 2 + $spacing-unit-tiny) ($spacing-unit-huge - $spacing-unit-tiny) 0px (-$spacing-unit-huge + $spacing-unit - $spacing-unit-tiny);
+            max-width: 16%;
+        }
+        .Button-closer{
+            margin: 0px 0px (-$spacing-unit-tiny) ($spacing-unit-huge * 2 - $spacing-unit);
+            .fa-times{
+                padding: $spacing-unit-tiny $spacing-unit-tiny;
+            }
+        }
+    }
+
+    @media only screen and (min-width: $breakpoint-small) {
+        .style-slide{
+            max-width: $modalities-content-width-max;
+        }
+        .imgponte{
+            margin: -($spacing-unit * 2 + $spacing-unit-tiny) ($spacing-unit-huge * 2 + $spacing-unit-tiny) 0px 0px;
+        }
+        .Button-closer{
+            margin: 0px 0px (-$spacing-unit) $spacing-unit-huge * 2.5;
+            .fa-times{
+                padding: $spacing-unit-tiny;
+            }
+        }
+    }
+
+}
+
+.ConversationDetail-content{
+    position: relative;
+
+    .Comment {
+        position: relative;
+        min-height: 340px !important;
+        width: 100% !important;
+        display: inline-block;
+        float: left;
+        max-width: $header-wrapper-max-width;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+
+        .CommentCard {
+            word-wrap: break-word;
+            flex: 1;
+            flex-basis: auto;
+            left: 0;
+            right: 0;
+            margin: auto;
+            box-sizing: border-box;
+            border-radius: $border-radius-large;
+            font-size: $font-size-h3;
+            max-width: $page-content-width-max;
+            min-height: 340px !important;
+            width: 100% !important;
+            z-index: 3;
+            padding: ($spacing-unit-large - $spacing-unit-tiny) ($spacing-unit-large - $spacing-unit-small);
+            background-color: $color-primary;
             color: $color-content-text;
+
+            &-counter {
+                text-align: center;
+                p {
+                    margin: 0;
+                }
+            }
+
+            img {
+                background: $color-primary-text;
+                border: 1px solid #fff;
+                border-radius: $spacing-unit-large;
+                padding: 4px $spacing-unit-tiny;
+            }
+
+            i.fa {
+                background: $color-primary-text;
+                border: 2px solid #fff;
+                border-radius: $spacing-unit-large;
+                padding: $spacing-unit-tiny;
+            }
+
+            &-voteArea {
+                button {
+                    border: none;
+                    border-radius: 50%;
+                    background: $color-primary-text;
+                    padding: 0;
+                }
+
+                ul {
+                    display: flex;
+                    font-weight: bold;
+                    margin: 0;
+                    padding: 0;
+                    text-transform: uppercase;
+                    width: 100%;
+
+                    span {
+                        font-size: $font-size-small;
+                    }
+
+                    li {
+                        @extend .Col--center;
+                        list-style: none;
+                        flex-grow: 1;
+
+                        i.fa {
+                            background: #fff;
+                            height: $conversation-vote-circle-size;
+                            width: $conversation-vote-circle-size;
+                            padding: $spacing-padding;
+                            cursor: pointer;
+                            border: none;
+                        }
+                        &.voteAgree {
+                            width: ($spacing-unit + $spacing-unit-tiny);
+                            &:active {
+                                color: $color-content;
+                            }
+                            i.fa {
+                                color: $color-content;
+                                &:hover {
+                                    background: $color-content;
+                                    color: #fff;
+                                }
+                            }
+                        }
+                        &.voteSkip {
+                            width: ($spacing-unit + $spacing-unit-tiny);
+                            &:active {
+                                color: $color-primary;
+                            }
+                            i.fa {
+                                color: $color-primary;
+                                &:hover {
+                                    background: $color-primary;
+                                    color: #fff;
+                                }
+                            }
+                        }
+                        &.voteDisagree {
+                            width: ($spacing-unit + $spacing-unit-tiny);
+                            &:active {
+                                color: $color-accent;
+                            }
+                            i.fa {
+                                color: $color-accent;
+                                &:hover {
+                                    background: $color-accent;
+                                    color: #fff;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            &-user {
+                font-size: $font-size-h5;
+                img {
+
+                    @media only screen and (min-width: $breakpoint-medium - $breakpoint-small) {
+                        max-width: 6%;
+                    }
+                    @media only screen and (min-width: $breakpoint-small) {
+                        max-width: 3%;
+                    }
+
+                    color: $color-accent;
+                    margin-right: $spacing-unit-small;
+                    background: #fff;
+                }
+                i.fa {
+                    color: $color-accent;
+                    margin-right: $spacing-unit-small;
+                    background: #fff;
+                }
+            }
+        }
+        #commentform {
+            flex: 1;
+            flex-basis: auto;
+            position: absolute;
+            left: 0;
+            right: 0;
+            margin: auto;
+            visibility: hidden;
+            max-width: $page-content-width-max;
+            min-height: 340px !important;
+            height: 100% !important;
+            width: 100% !important;
+            box-sizing: border-box;
+            text-align: center;
+            background: $color-hint;
+            border-radius: $border-radius-large;
+            padding: (3 * $spacing-unit-tiny) ($spacing-unit-large - $spacing-unit-small);
+            z-index: 5;
+
+            p {
+                margin: $spacing-unit-small ($spacing-unit + $spacing-unit-tiny);
+                color: $color-content;
+            }
+
+            textarea {
+                width: 100%;
+                margin: 0 0 0 0;
+                min-height: 3 * $font-size;
+                outline: none;
+                border: 2px solid $color-primary;
+                background: $color-content-text;
+                color: #333;
+                box-shadow: none;
+            }
+            #characters-count{
+                display: block;
+                text-align: right;
+                @media only screen and (min-width: $breakpoint-medium - $breakpoint-small) {
+                    padding: 0px;
+                }
+                @media only screen and (min-width: $breakpoint-small) {
+                    padding: 0px ($spacing-unit + $spacing-unit-tiny) 0px 0px;
+                }
+            }
+
+            &-fakeButton,
+            input[type=submit] {
+                border-radius: $border-radius;
+                color: #fff;
+                background: $color-primary;
+                padding: $spacing-unit-small $spacing-unit;
+                font-size: $spacing-unit / 2;
+                box-shadow: none;
+                text-transform: uppercase;
+                font-weight: bold;
+            }
+        }
+        #commentform.show {
+            visibility: visible;
+            -webkit-animation: fadeInUp 500ms ease-in-out;
+            animation: fadeInUp 500ms ease-in-out;
         }
 
-        textarea {
-            width: 100%;
-            margin: 0 0 0 0;
-            min-height: 3 * $font-size;
-            outline: none;
-            border: 2px solid $color-primary;
-            background: $color-content;
-            color: #333;
-            box-shadow: none;
+        @-webkit-keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                -webkit-transform: translateY(40px);
+            }
+            100% {
+                opacity: 1;
+                -webkit-transform: translateY(0);
+            }
         }
-        #characters-count{
-            display: block;
-            text-align: right;
-        }
+        #commentform.hideanimation {
+            visibility: visible;
+            -webkit-animation: fadeOutDown 500ms ease-in-out;
+            animation: fadeOutDown 500ms ease-in-out;
 
+        }
         &-fakeButton,
         input[type=submit] {
-            border-radius: $conversation-comment-button-border-radius;
+            border-radius: $border-radius;
             color: #fff;
-            background: $conversation-comment-button-background;
+            background: $color-accent;
             border: 0;
             padding: $spacing-unit-small $spacing-unit;
             font-size: $spacing-unit / 2;
@@ -650,114 +970,111 @@ $profile-label-clear-color: #30BFD3 !default;
             font-weight: bold;
             margin-top: $spacing-unit-small;
         }
-    }
-    #commentform.show {
-        visibility: visible;
-        -webkit-animation: fadeInUp 500ms ease-in-out;
-        animation: fadeInUp 500ms ease-in-out;
-    }
-
-    @-webkit-keyframes fadeInUp {
-        0% {
-            opacity: 0;
-            -webkit-transform: translateY(40px);
-        }
-        100% {
-            opacity: 1;
-            -webkit-transform: translateY(0);
-        }
-    }
-    #commentform.hideanimation {
-        visibility: visible;
-        -webkit-animation: fadeOutDown 500ms ease-in-out;
-        animation: fadeOutDown 500ms ease-in-out;
-    }
-    @-webkit-keyframes fadeOutDown {
-        0% {
-            opacity: 1;
-            -webkit-transform: translateY(0);
-        }
-        100% {
-            opacity: 0;
-            -webkit-transform: translateY(40px);
-        }
-    }
-
-
-    #toast {
-        line-height: 1.2;
-        visibility: hidden;
-        background-color: $color-hint;
-        text-align: left;
-        border-radius: $spacing-unit-tiny;
-        position: fixed;
-        z-index: 3;
-        width: 100vw;
-        left: 0;
-        bottom: 0;//$header-top-nav-height;
-        > div {
-            padding: $spacing-padding;
-            max-width: 660px;
-            margin: 0 auto;
-            p {
-                padding: 0 0 $spacing-unit-tiny 0;
-                margin: 0;
-                font-size: $font-size-small;
-                color: $toast-font-color;
+        @-webkit-keyframes fadeOutDown {
+            0% {
+                opacity: 1;
+                -webkit-transform: translateY(0);
             }
-            h3{
-                padding: $spacing-unit-tiny 0 0 0;
-                margin: 0;
-                font-family: $font-raleway;
-                font-weight: bold;
-                font-size: $font-size-default;
-                color: $color-primary;
+            100% {
+                opacity: 0;
+                -webkit-transform: translateY(40px);
             }
-            img {
-                @media only screen and (min-width: $breakpoint-medium - $breakpoint-small) {
-                    max-width: $spacing-unit;
-                    margin: $spacing-padding $spacing-unit-small auto 0;
-                    background-color: #fff;
-                    border: ($conversation-toast-image-border * 4) / 3 solid $color-primary;
-                    border-radius: $spacing-unit-large;
-                    padding: $spacing-unit-tiny;
+        }
+
+
+        #toast {
+            line-height: 1.2;
+            visibility: hidden;
+            background-color: $color-hint;
+            text-align: left;
+            border-radius: $spacing-unit-tiny;
+            position: fixed;
+            z-index: 3;
+            width: 100vw;
+            left: 0;
+            bottom: 0;//$header-top-nav-height;
+            > div {
+                padding: $spacing-padding;
+                max-width: 660px;
+                margin: 0 auto;
+                p {
+                    padding: 0 0 $spacing-unit-tiny 0;
+                    margin: 0;
+                    font-size: $font-size-small;
+                    color: $color-content;
                 }
-                @media only screen and (min-width: $breakpoint-small) {
-                    max-width: $spacing-unit;
-                    //margin-right: $spacing-unit-small;
-                    margin: auto $spacing-unit-small auto 0;
-                    background-color: #fff;
-                    border: $conversation-toast-image-border solid $color-primary;
-                    border-radius: $spacing-unit-large;
-                    padding: $spacing-unit-tiny;
+                h3{
+                    padding: $spacing-unit-tiny 0 0 0;
+                    margin: 0;
+                    font-family: $font-raleway;
+                    font-weight: bold;
+                    font-size: $font-size-default;
+                    color: $color-primary;
+                }
+                img {
+                    @media only screen and (min-width: $breakpoint-medium - $breakpoint-small) {
+                        max-width: $spacing-unit;
+                        margin: $spacing-padding $spacing-unit-small auto 0;
+                        background-color: #fff;
+                        border: ($border-radius-tiny * 4) / 3 solid $color-primary;
+                        border-radius: $spacing-unit-large;
+                        padding: $spacing-unit-tiny;
+                    }
+                    @media only screen and (min-width: $breakpoint-small) {
+                        max-width: $spacing-unit;
+                        //margin-right: $spacing-unit-small;
+                        margin: auto $spacing-unit-small auto 0;
+                        background-color: #fff;
+                        border: $border-radius-tiny solid $color-primary;
+                        border-radius: $spacing-unit-large;
+                        padding: $spacing-unit-tiny;
+                }
+            }
             }
         }
+
+        #toast.show {
+            visibility: visible;
+            // -webkit-animation: fade 8s;
+            animation: fade 8s both;
         }
+
+
+        @keyframes fade {
+            0%   {
+                opacity: 0;
+                bottom: 0;
+            }
+            20%  {
+                opacity: 1;
+                bottom: 45px;
+            }
+            70%  {opacity: 1;}
+            90% {opacity: 0;}
+            100% {opacity: 0;}
+
+        }
+
+
     }
 
-    #toast.show {
-        visibility: visible;
-        // -webkit-animation: fade 8s;
-        animation: fade 8s both;
-    }
-
-
-    @keyframes fade {
-        0%   {
-            opacity: 0;
-            bottom: 0;
+    .Comment-create{
+        position: relative;
+        justify-content: center;
+        button {
+            padding: $spacing-unit 0px 0px 0px;
+            color: $color-accent;
+            background: transparent no-repeat;
+            border: none;
+            cursor: pointer;
+            overflow: hidden;
+            outline: none;
+            font-weight: bold;
         }
-        20%  {
-            opacity: 1;
-            bottom: 45px;
+        p {
+            text-align: center;
         }
-        70%  {opacity: 1;}
-        90% {opacity: 0;}
-        100% {opacity: 0;}
-
     }
-
-
 }
 
 .CircleButton {
@@ -807,12 +1124,12 @@ $profile-label-clear-color: #30BFD3 !default;
     text-transform: uppercase;
     font-size: $spacing-unit / 2;
     font-weight: bold;
-    border-bottom: 1px solid $color-gray-lighter;
+    border-bottom: 1px solid $color-hint;
     margin: 0;
     padding: $spacing-unit-small 0;
-    color: $conversation-link-new-color;
+    color: $color-accent;
     i {
-        color: $conversation-link-new-icon-color;
+        color: $color-accent;
     }
 }
 
@@ -823,12 +1140,12 @@ $profile-label-clear-color: #30BFD3 !default;
     text-transform: uppercase;
     font-size: 14px;
     font-weight: bold;
-    border-bottom: 1px solid $color-gray-lighter;
+    border-bottom: 1px solid $color-hint;
     margin: 0;
     padding: $spacing-unit-small 0;
-    color: $conversation-link-edit-color;
+    color: $color-content;
     i {
-        color: $conversation-link-edit-icon-color;
+        color: $color-content;
     }
 }
 
@@ -856,12 +1173,12 @@ $profile-label-clear-color: #30BFD3 !default;
 .Moderate {
     .ConversationDetail-banner h1 {
         font-family: "Raleway", sans-serif;
-        color: $color-purple-dark;
+        color: $color-content;
     }
 
     &-comments-tabs {
         padding: 0;
-        background: $color-blue-nav;
+        background: $color-hint;
         display: flex;
         flex-wrap: wrap;
 
@@ -874,7 +1191,7 @@ $profile-label-clear-color: #30BFD3 !default;
             text-align: center;
 
             a {
-                color: $profile-label-clear-color;
+                color: $color-primary;
                 opacity: 0.5;
                 border-bottom: 2px solid transparent;
                 padding: 5px 0;
@@ -882,7 +1199,7 @@ $profile-label-clear-color: #30BFD3 !default;
 
                 &.active {
                     opacity: 1;
-                    border-bottom: 2px solid $profile-label-clear-color;
+                    border-bottom: 2px solid $color-primary;
                 }
             }
         }
@@ -891,17 +1208,17 @@ $profile-label-clear-color: #30BFD3 !default;
     &-comments {
         h1 {
             text-align: center;
-            color: $color-magenta;
+            color: $color-accent;;
         }
 
         .Comment {
             background: #fff;
-            color: $color-purple-dark;
+            color: $color-content;
             font-family: "Raleway", sans-serif;
             font-size: $spacing-unit / 2;
             border: 0;
             border-radius: 0;
-            border-bottom: 1px solid $color-blue-light;
+            border-bottom: 1px solid $color-hint;
             min-height: 0 !important;
             padding: $unit;
 
@@ -912,7 +1229,7 @@ $profile-label-clear-color: #30BFD3 !default;
             }
 
             &-metadata {
-                color: $color-blue-light;
+                color: $color-hint;
                 font-size: $spacing-unit / 2;
                 display: flex;
                 justify-content: space-between;
@@ -933,10 +1250,10 @@ $profile-label-clear-color: #30BFD3 !default;
                 font-family: 'Font Awesome\ 5 Free';
                 font-weight: 900;
                 display: inline-block;
-                color: $color-green-dark;
+                //color: $color-green-dark;
                 padding: 2px 4px;
                 font-size: 11px;
-                border: 2px solid $color-green-dark;
+                //border: 2px solid $color-green-dark;
                 border-radius: 50%;
             }
         }
@@ -958,7 +1275,7 @@ $profile-label-clear-color: #30BFD3 !default;
             background: #fff;
             font-weight: bold;
             font-size: $spacing-unit / 2;
-            color: $color-purple-dark;
+            color: $color-content;
             box-shadow: none;
             padding-left: 0;
             outline: 0;
@@ -987,10 +1304,14 @@ $profile-label-clear-color: #30BFD3 !default;
         opacity: 1;
     }
 
+    .Comment-status-rejected .CommentListItem-footer {
+        text-align: center;
+    }
+
     .Comment-rejection {
-        background: $color-blue-nav;
-        border-top: 1px solid $color-blue-light;
-        border-bottom: 1px solid $color-blue-light;
+        background: $color-hint;
+        border-top: 1px solid $color-hint;
+        border-bottom: 1px solid $color-hint;
         text-align: center;
 
         p {
@@ -1002,14 +1323,14 @@ $profile-label-clear-color: #30BFD3 !default;
             outline: 0;
             border-style: solid;
             box-shadow: inset 0 0 0 0 black;
-            border-color: $color-blue-light;
+            border-color: $color-hint;
         }
 
         .Button {
             box-shadow: none;
             box-sizing: border-box;
             width: 90%;
-            background: $color-pink;
+            background: $color-accent;
         }
     }
 
@@ -1020,14 +1341,14 @@ $profile-label-clear-color: #30BFD3 !default;
         background-color: rgba(255, 255, 255, 0.5);
         border: 0;
         font-family: "Raleway", sans-serif;
-        color: $color-purple-dark;
+        color: $color-content;
         padding: $unit + 5;
         text-align: center;
         font-weight: 200 !important;
         font-size: $spacing-unit !important;
         box-shadow: none;
-        border: 1px solid $color-blue-light;
-        border-radius: $conversation-edit-radius;
+        border: 1px solid $color-hint;
+        border-radius: $border-radius-small;
         resize: none;
         overflow: hidden;
         min-height: 50px;
@@ -1036,7 +1357,7 @@ $profile-label-clear-color: #30BFD3 !default;
         width: 100%;
 
         &::placeholder {
-            color: $color-purple-dark;
+            color: $color-content;
             opacity: 1;
         }
 
@@ -1055,14 +1376,14 @@ $profile-label-clear-color: #30BFD3 !default;
 
             i {
                 border-radius: 50%;
-                border: $conversation-edit-action-cancel-border;
+                border: $border-radius-tiny solid $color-content ;
                 display: inline-block;
                 width: 16px;
                 height: 16px;
                 padding: 4px 2px 0 2px;
                 font-size: 11px;
-                color: $conversation-edit-action-cancel-font-color;
-                background: $conversation-edit-action-cancel-background;
+                color: $color-content;
+                background: $color-background;
             }
         }
 
@@ -1073,7 +1394,7 @@ $profile-label-clear-color: #30BFD3 !default;
             box-shadow: none;
             font-family: "Raleway", sans-serif;
             font-size: $spacing-unit / 2;
-            color: $color-purple-dark;
+            color: $color-content;
             text-transform: uppercase;
             font-weight: bold;
             cursor: pointer;
@@ -1085,13 +1406,13 @@ $profile-label-clear-color: #30BFD3 !default;
         }
 
         span + span i {
-            color: $conversation-edit-action-save-font-color;
-            border-color: $conversation-edit-action-save-border;
-            background: $conversation-edit-action-save-background;
+            color: $color-content;
+            border-color: $color-content;
+            background: $color-background;
 
             &.create-conversation-icon {
-                color: $conversation-edit-save-color;
-                border-color: $color-pink;
+                color: $color-accent;
+                border-color: $color-accent;
             }
         }
     }
@@ -1104,30 +1425,30 @@ $profile-label-clear-color: #30BFD3 !default;
     i {
         padding: 0 $unit * 2;
         align-self: center;
-        color: $conversation-tag-color;
+        color: $color-accent;
     }
 
     input, select {
-        border: 1px solid $color-blue-light;
-        border-radius: $conversation-edit-radius;
+        border: 1px solid $color-hint;
+        border-radius: $border-radius-small;
         background-color: rgba(255, 255, 255, 0.5);
         box-shadow: none;
         outline: 0;
         padding-top: 8px;
         font-size: $spacing-unit / 2;
-        color: $color-purple-dark;
+        color: $color-content;
         flex-grow: 1;
         margin-right: $unit;
         max-width: none;
 
         &::placeholder {
-            color: $color-purple-dark;
+            color: $color-content;
             opacity: 1;
         }
     }
 
     input + i, select + i {
-        color: $color-purple-dark;
+        color: $color-content;
         font-weight: lighter;
         display: none;
     }
@@ -1137,12 +1458,12 @@ $profile-label-clear-color: #30BFD3 !default;
     padding: $unit;
 
     i {
-        color: $conversation-tag-color;
+        color: $color-accent;
         margin-right: $unit;
     }
 
     span {
-        color: $color-purple-dark;
+        color: $color-content;
         opacity: 0.5;
         font-size: $spacing-unit / 2;
     }
@@ -1158,12 +1479,12 @@ $profile-label-clear-color: #30BFD3 !default;
     input {
         width: auto;
         box-shadow: none;
-        border: 1px solid $color-purple-dark;
+        border: 1px solid $color-content;
         background: white;
     }
 
     label {
-        color: $color-purple-dark;
+        color: $color-content;
         font-size: $spacing-unit / 2;
         font-weight: bold;
         display: inline;
