@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-12-04 16:34+0000\n"
-"PO-Revision-Date: 2018-12-04 14:54-0200\n"
+"PO-Revision-Date: 2018-12-04 16:01-0200\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
 "Language: pt_BR\n"
@@ -534,7 +534,7 @@ msgstr "Essa URL já existe."
 
 #: src/ej_boards/routes.py:113 src/ej_clusters/routes.py:75
 msgid "Stereotypes"
-msgstr "Estereótipos"
+msgstr "Personas"
 
 #: src/ej_boards/routes.py:172
 msgid "Create board"
@@ -554,7 +554,7 @@ msgstr "Grupos"
 
 #: src/ej_clusters/forms.py:22
 msgid "Stereotype for this conversation with this name already exists."
-msgstr "Um estereótipo com esse nome já existe nessa conversa"
+msgstr "Uma persona com esse nome já existe nessa conversa"
 
 #: src/ej_clusters/models.py:126
 msgid "How was this cluster conceived?"
@@ -575,9 +575,9 @@ msgid ""
 "specify a background history, or give hints on the exact profile the "
 "stereotype wants to capture."
 msgstr ""
-"Descrição detalhada do seu estereótipo para referencia futura. Você pode "
+"Descrição detalhada da sua persona para referencia futura. Você pode "
 "especificar uma história de referência, ou dar dicas do perfil exato que "
-"esse estereótipo quer capturar"
+"essa persona quer capturar"
 
 #: src/ej_clusters/models.py:282 src/ej_clusters/routes.py:227
 #: src/ej_reports/roles.py:80
@@ -595,7 +595,7 @@ msgstr "Forçar agrupamento"
 #: src/ej_clusters/routes.py:105
 #, python-brace-format
 msgid "Stereotype votes ({conversation})"
-msgstr "Votos de estereótipo ({conversation})"
+msgstr "Votos de persona ({conversation})"
 
 #: src/ej_clusters/routes.py:217 src/ej_rocketchat/forms.py:30
 #: src/ej_rocketchat/models.py:33
@@ -1746,13 +1746,13 @@ msgstr "Criar um novo mural!"
 #: src/ej_boards/jinja2/ej_boards/jinja2/ej_clusters/create-stereotype.jinja2:11
 #: src/ej_clusters/jinja2/ej_clusters/create-stereotype.jinja2:11
 msgid "New Stereotype for conversation: "
-msgstr "Novo Estereótipo da conversa:"
+msgstr "Nova Persona da conversa:"
 
 #: src/ej_boards/jinja2/ej_boards/jinja2/ej_clusters/create-stereotype.jinja2:12
 #: src/ej_clusters/jinja2/ej_clusters/create-stereotype.jinja2:12
 msgid "List below comments about this stereotype and define votes."
 msgstr ""
-"Liste abaixo os comentários referentes a esse estereótipo e defina os votos."
+"Liste abaixo os comentários referentes a essa persona e defina os votos."
 
 #: src/ej_boards/jinja2/ej_boards/jinja2/ej_clusters/create-stereotype.jinja2:13
 #: src/ej_clusters/jinja2/ej_clusters/create-stereotype.jinja2:13
@@ -1777,7 +1777,7 @@ msgstr "Adicionar comentário"
 
 #: src/ej_boards/jinja2/ej_boards/jinja2/ej_clusters/edit-stereotype.jinja2:5
 msgid "Edit Stereotype"
-msgstr "Editar estereótipo"
+msgstr "Editar persona"
 
 #: src/ej_boards/jinja2/ej_boards/jinja2/ej_clusters/index.jinja2:6
 #: src/ej_clusters/jinja2/ej_clusters/index.jinja2:6
@@ -1788,7 +1788,7 @@ msgstr "Grupo: {name}"
 #: src/ej_boards/jinja2/ej_boards/jinja2/ej_clusters/stereotype-vote.jinja2:8
 #: src/ej_clusters/jinja2/ej_clusters/stereotype-vote.jinja2:8
 msgid "Please vote on the comments bellow to define your stereotype."
-msgstr "Por favor vote nos comentários abaixo para definir seu estereótipo."
+msgstr "Por favor vote nos comentários abaixo para definir a persona."
 
 #: src/ej_boards/jinja2/ej_boards/jinja2/ej_clusters/stereotype-vote.jinja2:12
 #: src/ej_clusters/jinja2/ej_clusters/stereotype-vote.jinja2:12
@@ -1803,7 +1803,7 @@ msgid ""
 "            "
 msgstr ""
 "\n"
-"            Esse estereótipo já votou em todos os comentários.\n"
+"            Essa persona já votou em todos os comentários.\n"
 "            "
 
 #: src/ej_boards/jinja2/ej_boards/jinja2/ej_clusters/stereotype-vote.jinja2:21
@@ -1814,7 +1814,7 @@ msgstr "Já votou"
 #: src/ej_boards/jinja2/ej_boards/jinja2/ej_clusters/stereotype-vote.jinja2:22
 #: src/ej_clusters/jinja2/ej_clusters/stereotype-vote.jinja2:22
 msgid "The stereotype has voted in the following comments."
-msgstr "O estereótipo já votou nos seguintes comentários."
+msgstr "A persona já votou nos seguintes comentários."
 
 #: src/ej_boards/jinja2/ej_boards/jinja2/ej_clusters/stereotype-vote.jinja2:26
 #: src/ej_clusters/jinja2/ej_clusters/stereotype-vote.jinja2:26
@@ -1824,11 +1824,11 @@ msgstr "Mudar votos"
 #: src/ej_boards/jinja2/ej_boards/jinja2/ej_clusters/components/stereotype-list.jinja2:24
 #: src/ej_clusters/jinja2/ej_clusters/stereotype-list.jinja2:30
 msgid "New stereotype"
-msgstr "Adicionar novo estereótipo"
+msgstr "Adicionar nova persona"
 
 #: src/ej_boards/jinja2/ej_boards/jinja2/ej_clusters/components/stereotype-list.jinja2:30
 msgid "Search Stereotype:"
-msgstr "Pesquisar Estereótipo:"
+msgstr "Pesquisar Persona:"
 
 #: src/ej_boards/jinja2/ej_boards/jinja2/ej_clusters/components/stereotype-list.jinja2:51
 #: src/ej_clusters/jinja2/ej_clusters/stereotype-list.jinja2:32
@@ -1854,7 +1854,7 @@ msgstr "Criar, excluir e editar personas"
 
 #: src/ej_clusters/jinja2/ej_clusters/stereotype-list.jinja2:25
 msgid "No stereotypes found"
-msgstr "Nenhum estereótipo encontrado"
+msgstr "Nenhuma persona encontrada"
 
 #: src/ej_configurations/jinja2/configurations/django-settings.jinja2:2
 #: src/ej_configurations/jinja2/configurations/fragment-list.jinja2:2
@@ -2110,7 +2110,7 @@ msgstr "{} aguardando moderação."
 
 #: src/ej_conversations/jinja2/ej_conversations/edit.jinja2:46
 msgid "Manage stereotypes"
-msgstr "Gerenciar estereótipos"
+msgstr "Gerenciar personas"
 
 #: src/ej_conversations/jinja2/ej_conversations/edit.jinja2:58
 msgid "Promote conversation on public list"
