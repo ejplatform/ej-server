@@ -14,8 +14,6 @@ else:
     LOCAL = BASE_PATH / 'local'
     VENDOR = LOCAL / 'vendor'
 mod_map = {
-    'boogie': 'https://github.com/fabiommendes/django-boogie.git/',
-    'hyperpython': 'https://github.com/fabiommendes/hyperpython.git/',
 }
 
 
