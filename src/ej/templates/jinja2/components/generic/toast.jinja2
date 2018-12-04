@@ -1,20 +1,11 @@
-{% macro toast(title, content, class, img) %}
-    <div id="toast">
+{% macro toast(idtoast, title, content, img) %}
+    <div id="{{ idtoast }}" class="Toast">
         <div>
-            <img class="{{ class }}" src="{{ img }}">
+            <img src="{{ img }}">
         </div>
         <div id="text">
             <h3>{{title}}</h3>
             <p>{{content}}</p>
         </div>
     </div>
-    <script>
-        function showToaster() {
-            var x = document.getElementById("toast");
-            if (x && x.querySelector('p').innerHTML) {
-                x.className = "show";
-                setTimeout(function(){ x.className = x.className.replace("show", ""); }, 8000);
-            }
-        }
-    </script>
 {% endmacro %}

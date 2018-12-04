@@ -1,5 +1,6 @@
 {% extends 'base.jinja2' %}
-
+{% from 'components/generic/toast.jinja2' import toast with context %}
+{% from 'components/generic/show_toast.jinja2' import show_toast with context %}
 
 {% block content %}
     <div class="ConversationDetail">
@@ -42,4 +43,13 @@
             <p class="waiting" >{{ _("{} waiting moderation.").format(comments_under_moderation)}}</p>
         </div>
     </div>
+    {#{% if request %}
+        <h1>{{request.POST}}</h1>
+    {% endif %}#}
+    {#{% if request %}#}
+        {% if request %}
+            <h1>OI</h1>
+            <h2>{{request.POST}}</h2>
+        {% endif %}
+    {#{% endif %}#}
 {% endblock %}

@@ -1,0 +1,11 @@
+{% macro show_toast() %}
+    <script>
+        function showToaster(idtoast) {
+            var x = document.getElementById(idtoast);
+            if (x && x.querySelector('p').innerHTML) {
+                x.className += " show";
+                setTimeout(function(){ x.className = x.className.replace(" show", ""); }, 8000);
+            }
+        }
+    </script>
+{% endmacro %}

@@ -698,7 +698,7 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
     }
 
 
-    #toast {
+    .Toast {
         line-height: 1.2;
         visibility: hidden;
         background-color: $color-hint;
@@ -757,10 +757,10 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
         }
     }
 
-    #toast.show {
+    .show {
         visibility: visible;
         // -webkit-animation: fade 8s;
-        animation: fade 8s;
+        animation: fade 8s both;
     }
 
 
