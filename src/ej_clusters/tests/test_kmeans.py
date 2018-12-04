@@ -2,7 +2,7 @@ import numpy as np
 import pytest
 from numpy.testing import assert_almost_equal, assert_equal
 
-from ej.ej_math.math import kmeans
+from ej_clusters.math import kmeans
 
 # A very easy dataset with k=2
 STEREOTYPES = np.array([[1, 1, 1], [-1, -1, -1]], dtype=float)
@@ -89,8 +89,3 @@ class TestKmeans:
         # If no guidance is given, convergence is unlikely to happen
         labels, clusters = kmeans.kmeans(DATA, 2, max_iter=1, n_runs=2)
         assert (labels != [0, 0, 0, 1, 1, 1]).any()
-
-
-class TestFetchConversationData:
-    def test_load_votes_data(self, conversation, users):
-        pass

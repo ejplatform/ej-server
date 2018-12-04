@@ -2,7 +2,7 @@ import pytest
 from model_mommy.recipe import Recipe, foreign_key as _foreign_key
 from sidekick import record
 
-from ej_conversations.models import Choice
+from ej_conversations import Choice
 from ej_conversations.mommy_recipes import ConversationRecipes
 from .models import Stereotype, StereotypeVote, Clusterization, Cluster
 
@@ -22,7 +22,7 @@ class ClusterRecipes(ConversationRecipes):
     stereotype = Recipe(
         Stereotype,
         name='stereotype',
-        conversation=_foreign_key(ConversationRecipes.conversation),
+        owner=_foreign_key(ConversationRecipes.author.extend(email='stereotype-author@domain.com')),
     )
     stereotype_vote = Recipe(
         StereotypeVote,
@@ -34,7 +34,7 @@ class ClusterRecipes(ConversationRecipes):
     @pytest.fixture
     def data(self, request):
         data = super().data(request)
-        stereotype = self.stereotype.make(conversation=data.conversation)
+        stereotype = self.stereotype.make(owner=data.author)
         votes = [
             self.stereotype_vote.make(author=stereotype, comment=comment)
             for comment in data.comments

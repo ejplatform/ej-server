@@ -4,8 +4,8 @@ from django.contrib.auth import get_user_model
 from django.db.models import Avg
 
 from ej_clusters.models import Cluster, Stereotype, StereotypeVote
-from ej_conversations import create_conversation
-from ej_conversations.models import Choice, Vote
+from ej_conversations import create_conversation, Choice
+from ej_conversations.models import Vote
 
 User = get_user_model()
 

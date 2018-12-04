@@ -1,8 +1,8 @@
 import pytest
 from django.core.exceptions import ValidationError
 
-from ej_conversations import create_conversation
-from ej_conversations.models import Vote, Choice
+from ej_conversations import create_conversation, Choice
+from ej_conversations.models import Vote
 from ej_conversations.mommy_recipes import ConversationRecipes
 from ej_users.models import User
 
