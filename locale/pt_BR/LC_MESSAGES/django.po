@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-12-04 16:34+0000\n"
-"PO-Revision-Date: 2018-12-04 14:37-0200\n"
+"PO-Revision-Date: 2018-12-04 14:54-0200\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
 "Language: pt_BR\n"
@@ -2286,7 +2286,7 @@ msgstr "Botão de registro"
 #: src/ej_users/jinja2/ej_users/login.jinja2:48
 #: src/ej_users/jinja2/ej_users/register.jinja2:30
 msgid "Register now!"
-msgstr "Registre agora!"
+msgstr "Registrar!"
 
 #: src/ej_users/jinja2/ej_users/login.jinja2:57
 msgid "or sign up through other networks"
@@ -2342,7 +2342,7 @@ msgstr ""
 
 #: src/ej_users/jinja2/ej_users/register.jinja2:10
 msgid "Register new user"
-msgstr "Registre agora!"
+msgstr "Registre novo usuário"
 
 #: src/ej_users/jinja2/ej_users/reset-password.jinja2:2
 msgid "Recover password"
