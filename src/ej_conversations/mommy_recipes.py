@@ -3,7 +3,8 @@ from sidekick import record
 
 import pytest
 from ej.testing import EjRecipes
-from .models import Comment, Conversation, Vote, Choice
+from .models import Comment, Conversation, Vote
+from ej_conversations import Choice
 
 __all__ = ['ConversationRecipes']
 

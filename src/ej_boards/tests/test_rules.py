@@ -13,9 +13,9 @@ def user(db):
 
 class TestBoardRules:
     def test_user_has_board(self, db, user):
-        assert not rules.has_board(user)
+        assert not rules.user_has_board(user)
         Board.objects.create(owner=user, title='title', slug='slug')
-        assert rules.has_board(user)
+        assert rules.user_has_board(user)
 
     def test_user_can_add_conversation_in_board(self, db, user):
         board = Board.objects.create(owner=user, title='title', slug='slug')

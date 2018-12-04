@@ -1,4 +1,5 @@
 import logging
+from random import randrange
 
 import hyperpython as hp
 from autoslug import AutoSlugField
@@ -13,21 +14,49 @@ from taggit.models import TaggedItemBase
 
 from boogie import models
 from boogie import rules
+from boogie.models import QuerySet
 from boogie.rest import rest_api
 from ej.utils.url import SafeUrl
 from .comment import Comment
+from .mixins import ConversationMixin
 from .utils import normalize_status
-from .vote import Vote, Choice
-from ..managers import ConversationManager
+from .vote import Vote
+from .. import Choice
 
 NOT_GIVEN = object()
 log = logging.getLogger('ej_conversations')
 
 
-@rest_api(
-    ['title', 'text', 'author', 'slug', 'created'],
-    lookup_field='slug',
-)
+# ==============================================================================
+# QUERYSET
+
+class ConversationQuerySet(ConversationMixin, QuerySet):
+    """
+    A table of conversations.
+    """
+    conversations = (lambda self: self)
+
+    def random(self, user=None):
+        """
+        Return a random conversation.
+
+        If user is given, tries to select the conversation that is most likely
+        to engage the given user.
+        """
+        size = self.count()
+        return self.all()[randrange(size)]
+
+    def promoted(self):
+        """
+        Show only promoted conversations.
+        """
+        return self.filter(is_promoted=True)
+
+
+# ==============================================================================
+# MODEL
+
+@rest_api(['title', 'text', 'author', 'slug', 'created'], lookup_field='slug')
 class Conversation(TimeStampedModel):
     """
     A topic of conversation.
@@ -86,10 +115,14 @@ class Conversation(TimeStampedModel):
         ),
     )
 
-    objects = ConversationManager()
+    objects = ConversationQuerySet.as_manager()
     tags = TaggableManager(through='ConversationTag')
     all_votes = property(lambda self: Vote.objects.filter(comment__conversation=self))
     votes = property(lambda self: self.all_votes.filter(comment__status=Comment.STATUS.approved))
+
+    @property
+    def users(self):
+        return get_user_model().objects.filter(votes__in=self.votes)
 
     @property
     def approved_comments(self):
@@ -215,16 +248,17 @@ class Conversation(TimeStampedModel):
 
             # Participants count
             'participants': {
-                'voters': get_user_model()
-                    .objects
-                    .filter(votes__comment__conversation_id=self.id)
-                    .distinct()
-                    .count(),
-                'commenters': get_user_model()
-                            .objects
-                            .filter(comments__conversation_id=self.id, comments__status=Comment.STATUS.approved)
-                            .distinct()
-                            .count(),
+                'voters':
+                    (get_user_model().objects
+                        .filter(votes__comment__conversation_id=self.id)
+                        .distinct()
+                        .count()),
+                'commenters':
+                    (get_user_model().objects
+                        .filter(comments__conversation_id=self.id,
+                                comments__status=Comment.STATUS.approved)
+                        .distinct()
+                        .count()),
             },
         }
 
@@ -232,17 +266,15 @@ class Conversation(TimeStampedModel):
         """
         Get information about user.
         """
-        max_votes = (
-            self.comments
+        max_votes = \
+            (self.comments
                 .filter(status=Comment.STATUS.approved)
                 .exclude(author_id=user.id)
-                .count()
-        )
-        given_votes = 0 if user.id is None else (
-            Vote.objects
+                .count())
+        given_votes = 0 if user.id is None else \
+            (Vote.objects
                 .filter(comment__conversation_id=self.id, author=user)
-                .count()
-        )
+                .count())
 
         e = 1e-50  # for numerical stability
         return {
@@ -296,6 +328,9 @@ class Conversation(TimeStampedModel):
             self.make_favorite(user)
 
 
+# ==============================================================================
+# AUXILIARY MODELS
+
 class ConversationTag(TaggedItemBase):
     """
     Add tags to Conversations with real Foreign Keys
@@ -322,9 +357,9 @@ class FavoriteConversation(models.Model):
     )
 
 
-#
-# Utility functions
-#
+# ==============================================================================
+# UTILITY FUNCTIONS
+
 def make_clean(cls, commit=True, **kwargs):
     obj = cls(**kwargs)
     obj.full_clean()

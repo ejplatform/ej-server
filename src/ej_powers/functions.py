@@ -1,5 +1,6 @@
 import datetime
 import logging
+
 import sidekick as sk
 
 timezone = sk.import_later('django.utils.timezone')
@@ -54,12 +55,18 @@ def clean_expired_promotions():
 
 def give_minority_power(user, conversation, users, expires=None):
     """
-    Create Minority power for user to promote comments
+    Create Minority power for user to promote comments.
+
     Args:
-        user (User): that power will be given
-        conversation(Conversation): conversation that power will be available
-        users (Queryset User): Group that will be affected by this power
-    Returns: Created GivenMinorityPower object
+        user (User):
+            User receiving power
+        conversation (Conversation):
+            Conversation that for which power will be available.
+        users (sequence or queryset):
+            List of users affected by this power
+
+    Returns:
+        A GivenMinorityPower object
     """
     return _give_promotion_power(models.GivenMinorityPower, user, conversation, users, expires)
 
@@ -67,30 +74,28 @@ def give_minority_power(user, conversation, users, expires=None):
 def give_bridge_power(user, conversation, users, expires=None):
     """
     Create Bridge power for user to promote comments
+
     Args:
-        power_class(GivenMinorityPower or GivenBridgePower): kind of power that will be given
-        user (User): that power will be given
-        conversation(Conversation): conversation that power will be available
-        users (Queryset User): Group that will be affected by this power
-    Returns:  Created GivenBridgePower object
+        user (User):
+            User receiving power
+        conversation (Conversation):
+            Conversation that for which power will be available.
+        users (sequence or queryset):
+            List of users affected by this power
+
+    Returns:
+        A GivenBridgePower object
     """
     return _give_promotion_power(models.GivenBridgePower, user, conversation, users, expires)
 
 
 def _give_promotion_power(power_class, user, conversation, users, expires=None):
     """
-    Give user power to promote comments
-    Args:
-        power_class(GivenMinorityPower or GivenBridgePower): kind of power that will be given
-        user (User): that power will be given
-        conversation(Conversation): conversation that power will be available
-        users (Queryset User): Group that will be affected by this power
-    Returns: (GivenMinorityPower or GivenBridgePower) Power object
+    Used internally by give_minority_power and give_bridge_power.
     """
     expires = expires or timezone.now() + DEFAULT_EXPIRATION_TIME_DELTA
     power = power_class(user=user, conversation=conversation, end=expires)
-
-    power.set_affected_users(users)
+    power.affected_users = users
     power.save()
     return power
 

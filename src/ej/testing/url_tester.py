@@ -17,7 +17,7 @@ class UrlTester(EjRecipes):
     owner_urls = []
     admin_urls = []
     success_codes = {200}
-    failure_codes = {404, 403}
+    failure_codes = {302, 404, 403}
     redirect_codes = {302}
 
     def setUp(self):
