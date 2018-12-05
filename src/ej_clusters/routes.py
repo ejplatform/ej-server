@@ -10,7 +10,7 @@ from boogie.rules import proxy_seq
 from ej_clusters.forms import StereotypeForm, StereotypeVoteCreateFormSet, StereotypeVoteEditFormSet
 from ej_conversations import Choice
 from ej_conversations.models import Conversation, Comment
-from .models import Stereotype, Cluster, StereotypeVote, Clusterization
+from .models import Stereotype, Cluster, StereotypeVote
 
 app_name = 'ej_cluster'
 urlpatterns = Router(
@@ -145,7 +145,7 @@ def create_stereotype_context(request, conversation):
             for vote in votes_formset.save(commit=False):
                 vote.author = stereotype
                 vote.save()
-            clusterization = Clusterization.objects.get(conversation=conversation)
+            clusterization = conversation.get_clusterization()
             cluster = Cluster(clusterization=clusterization, name=stereotype.name)
             cluster.save()
             cluster.stereotypes.add(stereotype)
