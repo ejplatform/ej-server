@@ -32,31 +32,33 @@
                     <div class="swiper-slide">
                         {{modalities(_("Welcome"), modalicon(["fa-times", "fa-arrow-right", "fa-check"]),
                             [_("You started your participation! Start voting in comments: you can agree, desagree or pass if you want to vote after")])}}
+                        <div class="swiper-pagination"></div>
                         <div class="append-buttons">
-                            <a class="next-slide-1" href="#">NEXT</a>
+                            <a class="next-slide-1" href="#">{{_("NEXT")}}</a>
                         </div>
                     </div>
                     <div class="swiper-slide">
                         {{modalities(_("Participation"), modalimg({'/static/img/icons/artboard.svg' : 'imgpart'}),
                             [_("From your votes, you will be setted up in a opnion group, and you will can get powers that it will help you to diversify dialogues and sticking opnion bubbles!")])}}
+                        <div class="swiper-pagination"></div>
                         <div class="append-buttons">
-                            <a class="next-slide-2" href="#">NEXT</a>
+                            <a class="next-slide-2" href="#">{{_("NEXT")}}</a>
                         </div>
                      </div>
                     <div class="swiper-slide">
-                        {{modalities(_("Powers"), modalimg({'/static/img/icons/iconponte.svg' : 'img', '/static/img/icons/iconativista.svg' : 'img'}),
+                        {{modalities(_("Powers"), modalimg({'/static/img/icons/iconativista.svg' : 'img', '/static/img/icons/iconponte.svg' : 'img'}),
                             [_("With the powers, Minority Activist, Dialogue Brigde and Sticks Bubble, you will get more speech powers, increasing your comment limit and/or their visibility!")])}}
+                        <div class="swiper-pagination"></div>
                         <form method="post">
                             {{ csrf_input }}
-                            <button type="submit" name="modalities" class="Button" value="pass">CONTINUE PARTICIPATING</button>
+                            <button type="submit" name="modalities" class="Button" value="pass">{{_("CONTINUE PARTICIPATING")}}</button>
                         </form>
                     </div>
                 </div>
-                <div class="swiper-pagination"></div>
                 <div class="swiper-button-next"></div>
                 <div class="swiper-button-prev"></div>
             </div>
-</div>
+        </div>
 {#}    {% else %}
 
 
