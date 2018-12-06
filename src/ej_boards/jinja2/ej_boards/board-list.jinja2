@@ -10,7 +10,7 @@
         {# Links #}
         <div class="BoardList-linkList">
             {% for board in boards %}
-                <p>{{ link(_(board.title), href=board.get_absolute_url()) }}</p>
+                <p>{{ link(_(board.title), href=board.get_url('boards:conversation-list')) }}</p>
             {% endfor %}
         </div>
         {% if can_add_board %}
