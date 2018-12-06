@@ -4,8 +4,10 @@ from .options import EjOptions
 
 class InstalledAppsConf(Base, EjOptions):
     project_apps = [
+        # Gamification
+        'ej_powers',
+
         # Math
-        'ej_math',
         'ej_reports',
         'ej_clusters',
 
@@ -22,9 +24,6 @@ class InstalledAppsConf(Base, EjOptions):
         'ej_notifications',
         'ej_profiles',
         'ej_users',
-
-        # Gamification
-        'ej_powers',
     ]
 
     third_party_apps = [

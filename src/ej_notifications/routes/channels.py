@@ -13,6 +13,5 @@ urlpatterns = Router(
         'channel': 'slug',
     },
     lookup_type='slug',
-    object='channel',
 )
 notification_url = f'<model:channel>/'

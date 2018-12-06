@@ -1,28 +1,88 @@
 import logging
 
-from boogie.rest import rest_api
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.core.validators import MinLengthValidator
-from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from model_utils.choices import Choices
 from model_utils.models import TimeStampedModel, StatusModel
 from sidekick import lazy
 
+from boogie import db
+from boogie import models
+from boogie.rest import rest_api
+from .mixins import ConversationMixin
 from .utils import votes_counter
-from .vote import Vote, normalize_choice, Choice
-from ..managers import CommentManager
+from .vote import Vote, normalize_choice
+from .. import Choice
+from ..math import comment_statistics
 from ..validators import is_not_empty
 
 log = logging.getLogger('ej-conversations')
 
 
+# ==============================================================================
+# QUERYSET
+
+class CommentQuerySet(ConversationMixin, models.QuerySet):
+    """
+    A table of comments.
+    """
+    comments = (lambda self, conversation=None: self)
+
+    def _votes_from_comments(self, comments):
+        return Vote.objects.filter(comment__in=self)
+
+    def conversations(self):
+        conversations = self.values_list('conversation', flat=True)
+        return db.ej_conversations.conversations.filter(id__in=conversations)
+
+    def approved(self):
+        """
+        Keeps only approved comments.
+        """
+        return self.filter(status=self.model.STATUS.approved)
+
+    def pending(self):
+        """
+        Keeps only pending comments.
+        """
+        return self.filter(status=self.model.STATUS.pending)
+
+    def rejected(self):
+        """
+        Keeps only rejected comments.
+        """
+        return self.filter(status=self.model.STATUS.rejected)
+
+    def statistics(self):
+        return [x.statistics() for x in self]
+
+    def statistics_summary_dataframe(self, normalization=1.0, votes=None):
+        """
+        Return a dataframe with basic voting statistics.
+
+        The resulting dataframe has the 'author', 'text', 'agree', 'disagree'
+        'skipped', 'divergence' and 'participation' columns.
+        """
+        votes = (votes or self.votes()).dataframe('comment', 'author', 'choice')
+        stats = comment_statistics(votes, participation=True, divergence=True, ratios=True)
+        stats *= normalization
+        stats = self.extend_dataframe(stats, 'author__name', 'content')
+        stats['author'] = stats.pop('author__name')
+        cols = ['author', 'content', 'agree', 'disagree', 'skipped', 'divergence', 'participation']
+        return stats[cols]
+
+
+# ==============================================================================
+# MODEL
+# noinspection PyUnresolvedReferences
 @rest_api(['content', 'author', 'status', 'created', 'rejection_reason'])
 class Comment(StatusModel, TimeStampedModel):
     """
     A comment on a conversation.
     """
+
     STATUS = Choices(
         ('pending', _('awaiting moderation')),
         ('approved', _('approved')),
@@ -97,7 +157,7 @@ class Comment(StatusModel, TimeStampedModel):
     def total_votes(self):
         return self.agree_count + self.disagree_count + self.skip_count
 
-    objects = CommentManager()
+    objects = CommentQuerySet.as_manager()
 
     class Meta:
         unique_together = ('conversation', 'content')
@@ -116,7 +176,7 @@ class Comment(StatusModel, TimeStampedModel):
         Cast a vote for the current comment. Vote must be one of 'agree', 'skip'
         or 'disagree'.
 
-        >>> comment.vote(request.user, 'agree')                 # doctest: +SKIP
+        >>> comment.vote(user, 'agree')                         # doctest: +SKIP
         """
         choice = normalize_choice(choice)
         log.debug(f'Vote: {author} - {choice}')

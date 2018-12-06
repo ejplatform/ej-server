@@ -1,8 +1,8 @@
-<div class="dropdown">
-    <button class="dropbtn">{{ _('Download raw data') }}</button>
-    <div class="dropdown-content">
+<div class="DownloadLinkList">
+    <span class="DownloadLinkList-title">{{ title|default(_('Downloads: ')) }}</span>
+    <ul class="DownloadLinkList-links">
         {%- for format, name in formats -%}
-            <p><a href="{{ url(view_name, kwargs={'conversation': conversation, 'format': format}) }}">{{ name }}</a></p>
+            <li><a href="{{ url(view_name, kwargs={'conversation': conversation, 'format': format}) }}">{{ name }}</a></li>
         {% endfor %}
-    </div>
+    </ul>
 </div>

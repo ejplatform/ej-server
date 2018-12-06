@@ -20,8 +20,6 @@ test with sqlite3:
   stage: test
   script:
     - mkdir -p local/logs
-    - pip install https://github.com/fabiommendes/hyperpython/archive/master.zip
-    - pip install https://github.com/fabiommendes/django-boogie/archive/master.zip
     - pip install -r etc/requirements/develop.txt
     - pytest --cov=./
     - codecov -t $CODECOV_TOKEN

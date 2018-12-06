@@ -1,5 +1,4 @@
 from boogie.rest import rest_api
-from ej_clusters.math import get_raw_votes
 from ej_conversations.models import Conversation
 
 
@@ -8,8 +7,7 @@ from ej_conversations.models import Conversation
 #
 @rest_api.action('ej_conversations.Conversation')
 def vote_dataset(request, conversation):
-    df = get_raw_votes(conversation)
-    return df.to_dict(orient='list')
+    return conversation.votes.dataframe().to_dict(orient='list')
 
 
 @rest_api.action('ej_conversations.Conversation')

@@ -18,12 +18,12 @@
             flex-direction: row;
             align-items: center;
             justify-content: space-between;
-            border-bottom: 1px solid $color-secundary;
+            border-bottom: 1px solid $color-primary-variant;
             p {
                 margin: $spacing-unit-tiny 0;
             }
             i {
-                color: $color-secundary;
+                color: $color-primary-variant;
                 font-size: $font-size-large;
             }
         }
@@ -32,7 +32,7 @@
             flex-direction: row;
             align-content: center;
             justify-content: space-between;
-            border-bottom: 1px solid $color-secundary;
+            border-bottom: 1px solid $color-primary-variant;
 
         }
         &-selection {
@@ -69,14 +69,14 @@
             margin: 0;
             margin-top: $spacing-unit;
         }
-        
+
         &-info {
-            color: $color-secundary;
+            color: $color-primary-variant;
         }
 
         &-circle {
             margin: $spacing-unit;
-            background: $color-secundary;
+            background: $color-primary-variant;
             width: $spacing-unit-large;
             height: $spacing-unit-large;
             position: relative;
@@ -91,7 +91,7 @@
           left: 0;
           height: $spacing-unit-large;
           width: $spacing-unit-large;
-          background: $color-secundary;
+          background: $color-primary-variant;
         }
 
         &-circle:before {

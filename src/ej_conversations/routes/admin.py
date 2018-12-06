@@ -10,12 +10,8 @@ from .. import forms, models
 log = getLogger('ej')
 
 
-@urlpatterns.route('add/', login=True)
+@urlpatterns.route('add/', perms=['ej.can_add_promoted_conversation'])
 def create(request):
-    # TODO: Fix this case of permission in django-boogie
-    if not request.user.has_perm('ej.can_add_promoted_conversation'):
-        raise Http404
-
     form = forms.ConversationForm(request.POST or None)
     if request.method == 'POST' and form.is_valid():
         with transaction.atomic():
@@ -24,12 +20,11 @@ def create(request):
                 is_promoted=True,
             )
         return redirect(conversation.get_absolute_url() + 'stereotypes/')
-
     return {'form': form}
 
 
 @urlpatterns.route(conversation_url + 'edit/',
-                   perms=['ej.can_edit_conversation'])
+                   perms=['ej.can_edit_conversation:conversation'])
 def edit(request, conversation):
     if not conversation.is_promoted:
         raise Http404
@@ -58,7 +53,8 @@ def get_conversation_edit_context(request, conversation):
     }
 
 
-@urlpatterns.route(conversation_url + 'moderate/', perms=['ej.can_moderate_conversation'])
+@urlpatterns.route(conversation_url + 'moderate/',
+                   perms=['ej.can_moderate_conversation:conversation'])
 def moderate(request, conversation):
     if not conversation.is_promoted:
         raise Http404
