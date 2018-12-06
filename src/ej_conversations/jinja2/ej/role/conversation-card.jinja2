@@ -2,10 +2,9 @@
     <div class="ConversationCard">
         <div class="ConversationTags">
             <i class="fa fa-tags"></i>
-              {% if tags %}
-                {% for tag in tags %}
-                  {{ tag }}
-                {% endfor %}
+              {% if tag %}
+                {# Only conversation first tag is shown in card to prevent overflow #}
+                {{ tag }}
               {% else %}
                 {{ _('Conversation') }}
               {% endif %}

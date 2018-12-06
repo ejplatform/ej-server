@@ -18,6 +18,7 @@ $spacing-unit-factor-huge  : 16 !default;
 // It is not recommended that you modify these following variables
 // (it can break your vertical rhythm), but if you need to, you can.
 $spacing-unit       : $spacing-baseline * $spacing-unit-factor !default;
+$spacing-unit-tiny-tiny  : $spacing-baseline * $spacing-unit-factor-tiny - 3px !default;
 $spacing-unit-tiny  : $spacing-baseline * $spacing-unit-factor-tiny !default;
 $spacing-unit-small : $spacing-baseline * $spacing-unit-factor-small !default;
 $spacing-unit-large : $spacing-baseline * $spacing-unit-factor-large !default;
