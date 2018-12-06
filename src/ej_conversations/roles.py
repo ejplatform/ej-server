@@ -19,12 +19,13 @@ def conversation_card(conversation, request=None, url=None, **kwargs):
 
     user = getattr(request, 'user', None)
     can_moderate = user.has_perm('ej.can_moderate_conversation', conversation)
+    tag = conversation.tags.first()  # only first is shown in card to prevent overflow
     return {
         'conversation': conversation,
         'url': url or conversation.get_absolute_url(),
-        'tags': conversation.tags.all(),
+        'tag': tag,
         'n_comments': conversation.approved_comments.count(),
-        'n_votes': conversation.vote_count(),
+        'n_votes': conversation.votes.count(),
         'n_followers': conversation.followers.count(),
         'user_can_moderate': can_moderate,
         **kwargs,
@@ -41,7 +42,8 @@ def conversation_balloon(conversation, request=None, **kwargs):
     favorites = models.FavoriteConversation.objects
     is_authenticated = getattr(user, 'is_authenticated', False)
     is_favorite = is_authenticated and conversation.is_favorite(user)
-    tags = list(map(str, conversation.tags.all()[:3]))
+    tags = list(map(str, conversation.tags.all()))
+
     return {
         'conversation': conversation,
         'tags': tags,

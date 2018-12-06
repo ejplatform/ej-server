@@ -1,32 +1,62 @@
 import logging
+from random import randrange
 
 import hyperpython as hp
 from autoslug import AutoSlugField
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError, ObjectDoesNotExist
-from django.db import models
-from django.urls import reverse
+from django.db.models import Count, Q
 from django.utils.translation import ugettext_lazy as _
 from model_utils.models import TimeStampedModel
 from taggit.managers import TaggableManager
 from taggit.models import TaggedItemBase
 
+from boogie import models
 from boogie import rules
+from boogie.models import QuerySet
 from boogie.rest import rest_api
+from ej.utils.url import SafeUrl
 from .comment import Comment
+from .mixins import ConversationMixin
 from .utils import normalize_status
-from .vote import Vote, Choice
-from ..managers import ConversationManager
+from .vote import Vote
+from .. import Choice
 
 NOT_GIVEN = object()
 log = logging.getLogger('ej_conversations')
 
 
-@rest_api(
-    ['title', 'text', 'author', 'slug', 'created'],
-    lookup_field='slug',
-)
+# ==============================================================================
+# QUERYSET
+
+class ConversationQuerySet(ConversationMixin, QuerySet):
+    """
+    A table of conversations.
+    """
+    conversations = (lambda self: self)
+
+    def random(self, user=None):
+        """
+        Return a random conversation.
+
+        If user is given, tries to select the conversation that is most likely
+        to engage the given user.
+        """
+        size = self.count()
+        return self.all()[randrange(size)]
+
+    def promoted(self):
+        """
+        Show only promoted conversations.
+        """
+        return self.filter(is_promoted=True)
+
+
+# ==============================================================================
+# MODEL
+
+@rest_api(['title', 'text', 'author', 'slug', 'created'], lookup_field='slug')
 class Conversation(TimeStampedModel):
     """
     A topic of conversation.
@@ -85,9 +115,14 @@ class Conversation(TimeStampedModel):
         ),
     )
 
-    objects = ConversationManager()
+    objects = ConversationQuerySet.as_manager()
     tags = TaggableManager(through='ConversationTag')
-    votes = property(lambda self: Vote.objects.filter(comment__conversation=self))
+    all_votes = property(lambda self: Vote.objects.filter(comment__conversation=self))
+    votes = property(lambda self: self.all_votes.filter(comment__status=Comment.STATUS.approved))
+
+    @property
+    def users(self):
+        return get_user_model().objects.filter(votes__in=self.votes)
 
     @property
     def approved_comments(self):
@@ -116,20 +151,19 @@ class Conversation(TimeStampedModel):
                 'conversation.')
             )
 
-    def get_absolute_url(self):
+    def get_absolute_url(self, board=None):
         kwargs = {'conversation': self}
-        from ej_boards.models import BoardSubscription
-        is_conversation_in_board = BoardSubscription.objects.filter(conversation=self).exists()
-        if not is_conversation_in_board:
-            return reverse('conversation:detail', kwargs=kwargs)
-        else:
-            board = BoardSubscription.objects.get(conversation=self).board
+        if board is None:
+            board = getattr(self, 'board', None)
+        if board:
             kwargs['board'] = board
-            return reverse('boards:conversation-detail', kwargs=kwargs)
+            return SafeUrl('boards:conversation-detail', **kwargs)
+        else:
+            return SafeUrl('conversation:detail', **kwargs)
 
     def get_url(self, which, **kwargs):
         kwargs['conversation'] = self
-        return reverse(which, kwargs=kwargs)
+        return SafeUrl(which, **kwargs)
 
     def get_anchor(self, name, which, **kwargs):
         return hp.a(name, href=self.get_url(which, **kwargs))
@@ -140,7 +174,7 @@ class Conversation(TimeStampedModel):
         """
         if user.id is None:
             return Vote.objects.none()
-        return Vote.objects.filter(comment__conversation=self, author=user, comment__status=Comment.STATUS.approved)
+        return self.votes.filter(author=user)
 
     def create_comment(self, author, content, commit=True, *, status=None,
                        check_limits=True, **kwargs):
@@ -197,33 +231,34 @@ class Conversation(TimeStampedModel):
 
         return {
             # Vote counts
-            'votes': {
-                'agree': self.vote_count(Choice.AGREE),
-                'disagree': self.vote_count(Choice.DISAGREE),
-                'skip': self.vote_count(Choice.SKIP),
-                'total': self.vote_count(),
-            },
+            'votes': self.votes.aggregate(
+                agree=Count('choice', filter=Q(choice=Choice.AGREE)),
+                disagree=Count('choice', filter=Q(choice=Choice.DISAGREE)),
+                skip=Count('choice', filter=Q(choice=Choice.SKIP)),
+                total=Count('choice'),
+            ),
 
             # Comment counts
-            'comments': {
-                'approved': comment_count(self, Comment.STATUS.approved),
-                'rejected': comment_count(self, Comment.STATUS.rejected),
-                'pending': comment_count(self, Comment.STATUS.pending),
-                'total': comment_count(self),
-            },
+            'comments': self.comments.aggregate(
+                approved=Count('status', filter=Q(status=Comment.STATUS.approved)),
+                rejected=Count('status', filter=Q(status=Comment.STATUS.rejected)),
+                pending=Count('status', filter=Q(status=Comment.STATUS.pending)),
+                total=Count('status'),
+            ),
 
             # Participants count
             'participants': {
-                'voters': get_user_model()
-                    .objects
-                    .filter(votes__comment__conversation_id=self.id)
-                    .distinct()
-                    .count(),
-                'commenters': get_user_model()
-                            .objects
-                            .filter(comments__conversation_id=self.id, comments__status=Comment.STATUS.approved)
-                            .distinct()
-                            .count(),
+                'voters':
+                    (get_user_model().objects
+                        .filter(votes__comment__conversation_id=self.id)
+                        .distinct()
+                        .count()),
+                'commenters':
+                    (get_user_model().objects
+                        .filter(comments__conversation_id=self.id,
+                                comments__status=Comment.STATUS.approved)
+                        .distinct()
+                        .count()),
             },
         }
 
@@ -231,17 +266,15 @@ class Conversation(TimeStampedModel):
         """
         Get information about user.
         """
-        max_votes = (
-            self.comments
+        max_votes = \
+            (self.comments
                 .filter(status=Comment.STATUS.approved)
                 .exclude(author_id=user.id)
-                .count()
-        )
-        given_votes = 0 if user.id is None else (
-            Vote.objects
+                .count())
+        given_votes = 0 if user.id is None else \
+            (Vote.objects
                 .filter(comment__conversation_id=self.id, author=user)
-                .count()
-        )
+                .count())
 
         e = 1e-50  # for numerical stability
         return {
@@ -295,6 +328,9 @@ class Conversation(TimeStampedModel):
             self.make_favorite(user)
 
 
+# ==============================================================================
+# AUXILIARY MODELS
+
 class ConversationTag(TaggedItemBase):
     """
     Add tags to Conversations with real Foreign Keys
@@ -321,16 +357,8 @@ class FavoriteConversation(models.Model):
     )
 
 
-#
-# Utility functions
-#
-def comment_count(conversation, type=None):
-    """
-    Return the number of comments of a given type.
-    """
-    kwargs = {'status': type} if type is not None else {}
-    return conversation.comments.filter(**kwargs).count()
-
+# ==============================================================================
+# UTILITY FUNCTIONS
 
 def make_clean(cls, commit=True, **kwargs):
     obj = cls(**kwargs)

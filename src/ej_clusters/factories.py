@@ -1,15 +1,16 @@
-from django.contrib.auth import get_user_model
-from django.db.models import Avg
 import random
 
-from ej_clusters.models import Cluster, Stereotype, StereotypeVote, UserClusterMap, StereotypeClusterMap
-from ej_conversations.models import Choice, Vote
+from django.contrib.auth import get_user_model
+from django.db.models import Avg
+
+from ej_clusters.models import Cluster, Stereotype, StereotypeVote
+from ej_conversations import create_conversation, Choice
+from ej_conversations.models import Vote
 
 User = get_user_model()
 
 
-def set_clusters_from_comments(conversation, comment_map, exclusive=True,
-                               author=None):
+def set_clusters_from_comments(conversation, comment_map, exclusive=True, author=None):
     """
     Create clusters and stereotypes from conversation.
 
@@ -45,7 +46,6 @@ def set_clusters_from_comments(conversation, comment_map, exclusive=True,
             name=cluster_name,
             description=description,
             owner=author,
-            conversation=conversation,
         )
         cluster.stereotypes.add(stereotype)
         created_stereotypes.append(stereotype)
@@ -111,43 +111,41 @@ def cluster_votes(conversation, users):
 def random_vote(prob):
     r = random.random()
     if r < 0.25:
-        vote = Choice.SKIP
+        return Choice.SKIP
     elif r < 0.50:
-        vote = None
+        return None
     elif random.random() < prob:
-        vote = Choice.AGREE
+        return Choice.AGREE
     else:
-        vote = Choice.DISAGREE
-    return vote
+        return Choice.DISAGREE
 
 
-def set_clusters(conversation, stereotype_map=None, user_map=None, clean=False):
-    """
-    Update cluster
-    """
-    user_map = user_map or {}
-    stereotype_map = stereotype_map or {}
-    cluster_names = set()
-    cluster_names.update(user_map.values())
-    cluster_names.update(stereotype_map.values())
-
-    if clean:
-        UserClusterMap.objects.filter(conversation=conversation).delete()
-        StereotypeClusterMap.objects.filter(conversation=conversation).delete()
-
-    clusters = {
-        k: Cluster.objects.get_or_create(conversation=conversation, name=k)[0]
-        for k in cluster_names
-    }
-
-    factory = UserClusterMap.objects.create
-    for user, cluster_name in user_map.items():
-        cluster = clusters[cluster_name]
-        factory(user=user, conversation=conversation, cluster=cluster)
-
-    factory = StereotypeClusterMap.objects.create
-    for user, cluster_name in stereotype_map.items():
-        cluster = clusters[cluster_name]
-        factory(stereotype=user, conversation=conversation, cluster=cluster)
-
-    return list(clusters.values())
+#
+# Examples
+#
+def make_conversation_with_clusters():
+    conversation = create_conversation(
+        'How should our society organize the production of goods and services?',
+        'Economy',
+        is_promoted=True,
+        author=User.objects.filter(is_staff=True).first(),
+    )
+    set_clusters_from_comments(conversation, {
+        'Liberal': [
+            'Free market should regulate how enterprises invest money and hire '
+            'employees.',
+            'State should provide a stable judicial system and refrain from '
+            'regulating the economy.',
+        ],
+        'Socialist': [
+            'Government and the society as a whole must regulate business '
+            'decisions to favor the common good rather than private interests.',
+            'State leadership is necessary to drive a strong economy.',
+        ],
+        'Facist': [
+            'Government should eliminate opposition in order to ensure '
+            'governability.',
+            'Military should occupy high ranks in government.',
+        ]
+    })
+    return conversation

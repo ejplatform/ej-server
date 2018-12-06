@@ -7,10 +7,8 @@ class EjReportsConfig(AppConfig):
     verbose_name = _('Reports')
     rules = None
     roles = None
-    fixes = None
 
     def ready(self):
-        from . import rules, roles, fixes
+        from . import rules, roles
         self.rules = rules
         self.roles = roles
-        self.fixes = fixes

@@ -1,9 +1,7 @@
-from django.db import models
-
-from ej_powers.models import ConversationPowers
+from polymorphic.managers import PolymorphicQuerySet, PolymorphicManager
 
 
-class ConversationPowersQuerySet(models.QuerySet):
+class GivenPowerQuerySet(PolymorphicQuerySet):
     def incr_by(self, user, conversation, **kwargs):
         """
         Increment the given numeric powers/achievements by the given quantity.
@@ -29,7 +27,10 @@ class ConversationPowersQuerySet(models.QuerySet):
         """
         try:
             powers = self.get(user=user, conversation=conversation)
-        except ConversationPowers.DoesNotExist:
+        except self.model.DoesNotExist:
             return False
         else:
             return powers.has_powers
+
+
+GivenPowerManager = PolymorphicManager.from_queryset(GivenPowerQuerySet)

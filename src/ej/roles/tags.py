@@ -1,13 +1,13 @@
 import logging
-import warnings
 
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy
-
 from hyperpython import a, i, meta
 from hyperpython import h, html
 from hyperpython.components import html_table, html_list, html_map, Head as BaseHead
+
+from ej.utils.url import Url
 
 static = staticfiles_storage.url
 lazy_string_class = type(ugettext_lazy('hello'))
@@ -28,12 +28,14 @@ def link(value, href='#', target='.Page-mainContainer .Header-topIcon',
          preload=False, scroll=False, prefetch=False, primary=False, args=None,
          query=None, url_args=None,
          **kwargs):
-    if href.startswith('/'):
-        # raise ValueError(href)
-        warnings.warn(
+    if isinstance(href, Url):
+        href = str(href)
+    elif href.startswith('/'):
+        raise ValueError(
             'Do not use absolute urls in the link function (%s).'
             'Prefer using view function names such as auth:login instead of '
-            '/login/' % href)
+            '/login/. You can also wrap the url into a ej.utils.Url instance '
+            'if you want to return a calculated url value.' % href)
     else:
         href = reverse(href, kwargs=url_args)
     if query is not None:

@@ -1,15 +1,16 @@
 from logging import getLogger
 
+from boogie import rules
 from django.http import HttpResponseServerError, Http404
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from hyperpython import a
 
-from boogie import rules
+from ej_conversations.models import Vote
 from . import urlpatterns, conversation_url
 from ..forms import CommentForm
-from ..models import Conversation, Comment, Vote
-from ej_conversations.rules import max_comments_per_conversation
+from ..models import Conversation, Comment
+from ..rules import max_comments_per_conversation
 
 log = getLogger('ej')
 
@@ -61,6 +62,7 @@ def get_conversation_detail_context(request, conversation):
     voted = False
     if user.is_authenticated:
         voted = Vote.objects.filter(author=user).exists()
+
     # User is voting in the current comment. We still need to choose a random
     # comment to display next.
     if request.POST.get('action') == 'vote':
@@ -95,6 +97,7 @@ def get_conversation_detail_context(request, conversation):
 
     n_comments_under_moderation = rules.compute('ej_conversations.comments_under_moderation', conversation, user)
     comments_made = rules.compute('ej_conversations.comments_made', conversation, user)
+
     return {
         # Objects
         'conversation': conversation,
