@@ -41,6 +41,7 @@ urlpatterns = [
     path('', include('ej_boards.routes', namespace='boards')),
     path('conversations/', include('ej_conversations.routes', namespace='conversation')),
     path('', include('ej_clusters.routes', namespace='cluster')),
+    path('', include('ej_powers.routes', namespace='powers')),
     path('conversations/', include('ej_reports.routes', namespace='report')),
 
     # Configurations

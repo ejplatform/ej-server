@@ -28,19 +28,6 @@ def conversation_list(request):
     }
 
 
-@urlpatterns.route(conversation_url + 'promote')
-def conversation_promote(request, conversation):
-    comment_form = CommentForm(request.POST or None, conversation=conversation)
-    return{
-        'comments': Comment.objects.filter(conversation=conversation),
-        'conversations': conversation,
-        'comment_form': comment_form,
-        'title': _('My Comments'),
-        'form_title': _('Comment and Promote')
-
-    }
-
-
 @urlpatterns.route(conversation_url)
 def detail(request, conversation):
     if not conversation.is_promoted:
