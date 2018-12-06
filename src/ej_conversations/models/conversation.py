@@ -163,6 +163,14 @@ class Conversation(TimeStampedModel):
 
     def get_url(self, which, **kwargs):
         kwargs['conversation'] = self
+        from ej_boards.models import BoardSubscription
+        subscription = BoardSubscription.objects.filter(conversation=self)
+        if subscription.exists():
+            board = subscription[0].board
+            kwargs['board'] = board
+            which = 'boards:conversation-' + which.split(":", 1)[1]
+            print(which)
+            return SafeUrl(which, **kwargs)
         return SafeUrl(which, **kwargs)
 
     def get_anchor(self, name, which, **kwargs):

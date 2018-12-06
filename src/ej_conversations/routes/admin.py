@@ -82,7 +82,6 @@ def get_conversation_moderate_context(request, conversation):
     return {
         'conversation': conversation,
         'comment_status': status,
-        'edit_url': conversation.get_absolute_url() + 'edit/',
         'comments': list(conversation.comments.filter(status=status)),
         'tags': tags,
     }
