@@ -93,7 +93,7 @@ def conversation_detail(request, board, conversation):
                    perms=['ej.can_edit_conversation:conversation'])
 def conversation_edit(request, board, conversation):
     assure_correct_board(conversation, board)
-    ctx = get_conversation_edit_context(request, conversation)
+    ctx = get_conversation_edit_context(request, conversation, board)
     ctx['board'] = board
     return ctx
 
@@ -109,7 +109,7 @@ def conversation_moderate(request, board, conversation):
                    perms=['ej.can_manage_stereotypes:conversation'])
 def conversation_stereotype_list(board, conversation):
     assure_correct_board(conversation, board)
-    return cluster_routes.stereotype_list(conversation)
+    return cluster_routes.stereotype_list_context(conversation)
 
 
 @urlpatterns.route('<model:board>/conversations/<model:conversation>/stereotypes/add/',

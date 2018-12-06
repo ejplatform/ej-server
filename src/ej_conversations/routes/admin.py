@@ -31,7 +31,7 @@ def edit(request, conversation):
     return get_conversation_edit_context(request, conversation)
 
 
-def get_conversation_edit_context(request, conversation):
+def get_conversation_edit_context(request, conversation, board=None):
     if request.method == 'POST':
         form = forms.ConversationForm(
             data=request.POST,
@@ -50,6 +50,7 @@ def get_conversation_edit_context(request, conversation):
         'tags': ",".join(tags),
         'can_promote_conversation': request.user.has_perm('can_publish_promoted'),
         'comments': list(conversation.comments.filter(status='pending')),
+        'board': board,
     }
 
 
