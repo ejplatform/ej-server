@@ -33,3 +33,6 @@ Babel ~= 2.6.0
 
 # Codecov
 codecov ~= 2.0.15
+
+# Notifications
+django_push_notifications ~= 1.6.0
