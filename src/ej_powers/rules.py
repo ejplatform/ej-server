@@ -40,7 +40,11 @@ def can_be_activist(user, conversation):
 #
 @predicate
 def can_promote_comment(user, conversation):
-    return conversation in promote_set(user)
+    conversations = promote_set(user)
+    if conversations:
+        return conversation in conversations
+    else:
+        return False
 
 
 def promote_set(user):

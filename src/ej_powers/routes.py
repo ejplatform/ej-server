@@ -6,6 +6,7 @@ from ej_boards.routes import assure_correct_board
 from ej_boards.models import Board
 from ej_conversations.models import Conversation, Comment
 from ej_conversations.forms import CommentForm
+from ej_powers.rules import can_promote_comment
 
 conversation_url = f'conversations/<model:conversation>/'
 app_name = 'ej_powers'
@@ -37,12 +38,15 @@ def board_conversation_promote(request, board, conversation):
 
 # Auxiliar function
 def conversation_promote_context(request, conversation):
-    comment_form = CommentForm(request.POST or None, conversation=conversation)
-    return{
-        'comments': Comment.objects.filter(conversation=conversation),
-        'conversations': conversation,
-        'comment_form': comment_form,
-        'title': _('My Comments'),
-        'form_title': _('Comment and Promote')
+    if can_promote_comment(request.user, conversation):
+        comment_form = CommentForm(request.POST or None, conversation=conversation)
+        return{
+            'comments': Comment.objects.filter(conversation=conversation),
+            'conversations': conversation,
+            'comment_form': comment_form,
+            'title': _('My Comments'),
+            'form_title': _('Comment and Promote')
 
-    }
+        }
+    else:
+        return Http404
