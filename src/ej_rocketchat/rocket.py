@@ -33,8 +33,10 @@ class RCConfigWrapper:
         return self.configs.default_config(raises=False) is not None
 
     admin_username = delegate_to('config')
+    admin_password = delegate_to('config')
     admin_id = delegate_to('config')
     admin_token = delegate_to('config')
+    save = delegate_to('config')
 
     def register(self, user, username):
         """
@@ -85,10 +87,13 @@ class RCConfigWrapper:
         account.save()
         return account
 
-    def password_login(self, username, password):
+    def password_login(self, username=None, password=None):
         """
         Login with explicit credentials.
         """
+        if username is None and password is None:
+            username = self.admin_username
+            password = self.admin_password
         payload = {'username': username, 'password': password}
         try:
             response = self.api_call('login', payload=payload, auth='admin')

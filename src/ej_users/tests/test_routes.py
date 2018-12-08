@@ -42,11 +42,11 @@ class TestRoutes(UrlTester):
         client.post('/logout/')
         assert '_auth_user_id' not in client.session
 
-    def test_logout_fails_with_anonymous_user(self, client):
+    def test_logout_fails_with_anonymous_user(self, client, db):
         response = client.post('/logout/')
         assert response.status_code == 500
 
-    def test_logout_fails_with_get(self, client):
+    def test_logout_fails_with_get(self, client, db):
         response = client.get('/logout/')
         assert response.status_code == 500
 

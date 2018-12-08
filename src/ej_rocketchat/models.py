@@ -50,7 +50,6 @@ class RCAccount(models.Model):
         max_length=50,
         blank=True,
     )
-
     user_rc_id = models.CharField(
         _('Rocketchat user id'),
         max_length=50,
@@ -124,6 +123,15 @@ class RCConfig(models.Model):
         default='ej-admin',
         help_text=_(
             'Username for Rocket.Chat admin user'
+        ),
+    )
+    admin_password = models.CharField(
+        _('Password'),
+        max_length=50,
+        help_text=_(
+            'Password for the administrative account. It is unfortunately '
+            'necessary to store this value since Rocket.Chat authentication '
+            'tokens expire at unpredictable times.'
         ),
     )
     admin_id = models.CharField(

@@ -10,24 +10,14 @@ from boogie import rules
 from boogie.apps.users.models import AbstractUser
 from boogie.rest import rest_api
 from .manager import UserManager
-from .utils import random_name
 
 
-@rest_api(['id', 'display_name'])
+@rest_api(['id', 'name'])
 class User(AbstractUser):
     """
     Default user model for EJ platform.
     """
 
-    display_name = models.CharField(
-        _('Display name'),
-        max_length=140,
-        unique=True,
-        default=random_name,
-        help_text=_(
-            'A randomly generated name used to identify each user.'
-        ),
-    )
     email = models.EmailField(
         _('email address'),
         unique=True,
