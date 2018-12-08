@@ -105,7 +105,7 @@
         {% endcall %}
 
         {% if request.user.has_perm('ej_rocketchat.can_create_account') and settings.EJ_ROCKETCHAT_INTEGRATION %}
-            {% call link('rocket:iframe', title=_('Panel'), class='panel-link', preload=True) %}
+            {% call link('rocket:index', title=_('Panel'), class='panel-link', preload=True) %}
                 <img src="/static/img/icons/navbar_panel.svg" alt="{{ _('Panel') }}" class="Header-lowerIcon">
                 <span>{{ _('Panel') }}</span>
             {% endcall %}

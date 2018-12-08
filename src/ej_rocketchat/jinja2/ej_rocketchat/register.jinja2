@@ -3,6 +3,20 @@
 {% set content_title = _('Panel settings') %}
 
 {% block content %}
+    <style>
+        .CenteredContainer form label {
+            display: block;
+            text-align: left;
+        }
+        .CenteredContainer form .helptext {
+            display: block;
+            text-align: center;
+        }
+        .CenteredContainer form .errorlist {
+            list-style: none;
+            color: darkred;
+        }
+    </style>
     <div class="CenteredContainer">
         <form method="post">
             {{ csrf_input }}

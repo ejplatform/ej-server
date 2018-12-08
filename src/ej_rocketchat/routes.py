@@ -18,7 +18,7 @@ urlpatterns = Router(
 
 
 @urlpatterns.route('', decorators=[requires_rc_perm, security_policy])
-def iframe(request):
+def index(request):
     ask_password_form = None
     ask_password = False
 
@@ -32,6 +32,7 @@ def iframe(request):
             rocket.password_login(rocket.admin_username, password)
             ask_password = False
 
+    # This is the path taken for regular users
     else:
         account = rocket.find_or_create_account(request.user)
         if account is None:
@@ -61,11 +62,11 @@ def ask_admin_password(request):
 @urlpatterns.route('register/', decorators=[requires_rc_perm, security_policy])
 def register(request):
     if RCAccount.objects.filter(user=request.user).exists():
-        return redirect('rocket:iframe')
+        return redirect('rocket:index')
 
     form = forms.CreateUsernameForm.bind(request, user=request.user)
     if form.is_valid_post():
-        return redirect('rocket:iframe')
+        return redirect('rocket:index')
     return {'form': form}
 
 
@@ -84,7 +85,7 @@ def config(request):
         password = form.cleaned_data['password']
         username = form.cleaned_data['username']
         rocket.password_login(username, password)
-        return redirect('rocket:iframe')
+        return redirect('rocket:index')
 
     return {'form': form}
 

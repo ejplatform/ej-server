@@ -90,6 +90,7 @@ class RocketIntegrationForm(PlaceholderForm, forms.Form):
         config.admin_id = user_id
         config.admin_token = auth_token
         config.admin_username = self.cleaned_data['username']
+        config.admin_password = self.cleaned_data['password']
         config.is_active = True
         config.save()
         return config
@@ -108,7 +109,7 @@ class CreateUsernameForm(PlaceholderForm, forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.user = user
 
-    def full_clean(self):
+    def full_clean(self, _retry=True):
         super().full_clean()
         try:
             username = self.cleaned_data['username'].lstrip('@')
@@ -126,6 +127,7 @@ class CreateUsernameForm(PlaceholderForm, forms.ModelForm):
                 msg = _(f'User with {email} e-mail already exists.')
                 self.add_error('username', msg)
             else:
+                rocket.password_login()
                 raise
         else:
             rocket.login(self.user)
@@ -149,3 +151,6 @@ class AskAdminPasswordForm(PlaceholderForm):
                 rocket.password_login(rocket.admin_username, password)
             except PermissionError:
                 self.add_error('password', _('Invalid password'))
+            else:
+                rocket.admin_password = password
+                rocket.save()
