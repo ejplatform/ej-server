@@ -15,6 +15,7 @@
 
 {% block _menu %} {{ menu(request.user, board_palette) }} {% endblock %}
 
+{% block _header %} {{page_header(request, options) }} {% endblock %}
 {% block content %}
     {% if show_welcome_window == True %}
         <div class="Modalities">

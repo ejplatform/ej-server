@@ -3,7 +3,8 @@
         {%- if href == '#' %}{% set href=value %}{% endif -%}
         {%- set value = caller() -%}
     {%- endif -%}
-    <a href="{{ href if href.startswith('/') else url(href) }}
+    {% if href.startswith('https') %}
+    <a href="{{href}}
         {%- if link_next %}?next={{ link_next }}{% endif %}"
         {%- if title %} title="{{ title }}"{% endif %}
         {%- if class %} class="{{ class }}"{% endif %}
@@ -15,4 +16,18 @@
         {%- if scroll -%} up-restore-scroll{% endif %}
         {%- if preload -%} up-preload{% endif %}
         {%- if args %} {{ args }}{% endif %}>{{ value }}</a>
+    {% else %}
+    <a href="{{ href if href.startswith('/') or href.startswith('https') else url(href) }}
+        {%- if link_next %}?next={{ link_next }}{% endif %}"
+        {%- if title %} title="{{ title }}"{% endif %}
+        {%- if class %} class="{{ class }}"{% endif %}
+        {%- if button %} class="Button"{% endif %}
+        {%- if primary %} primary{% endif %}
+        {%- if action %} {{ 'up-%s' % action }}="{{ target }}"{% endif %}
+        {%- if instant %} up-instant{% endif %}
+        {%- if transition %} up-transition="{{ transition }}"{% endif %}
+        {%- if scroll -%} up-restore-scroll{% endif %}
+        {%- if preload -%} up-preload{% endif %}
+        {%- if args %} {{ args }}{% endif %}>{{ value }}</a>
+    {% endif %}
 {% endmacro %}

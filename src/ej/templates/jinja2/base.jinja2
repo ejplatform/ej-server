@@ -64,6 +64,7 @@
             <script src="/static/js/slider-modalities-conversation.js" defer></script>
             <script src="/static/js/file-input.js" defer></script>
             <script src="/static/js/bundle.js" defer></script>
+            <script src="/static/js/subDomainRedirect.js" defer></script>
         {% endblock javascript %}
 
         <!-- Favicons -->
@@ -120,7 +121,7 @@
     {% if target == 'all' or target == 'page' %}
         {% if enable_navbar %}
             {{ page_top_header(social_icons()) }}
-            {{ page_header(request) }}
+            {% block _header %} {{ page_header(request) }} {% endblock %}
         {% endif %}
         <div class="Page-mainContainer">
     {% endif %}

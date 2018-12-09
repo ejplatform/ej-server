@@ -3,14 +3,22 @@
 
 
 {# Generate the header element #}
-{% macro page_header(request) %}
+{% macro page_header(request, options={}) %}
     <header class="Header">
         <div class="Header-wrapper">
             {{ header_top_nav(request) }}
             {% if request.user.is_active %}
                 {{ header_lower_nav(request) }}
-            {% elif not '/login/' in request.path %}
-                {% if request.path != '/home/' %}
+            {% else %}
+                {% if options.get("sub_domain") %}
+                    {%- call link(href='auth:login', 
+                    link_next=options.get('sub_domain'),
+                    target='', instant=False, transition='') %}
+                        <div class="Header-lowerNotLogged">
+                            <p>{{ _('LOGIN') }}</p>
+                        </div>
+                    {% endcall %}
+                {% elif request.path != '/home/' %}
                     {%- call link(href='auth:login', link_next=request.path) %}
                         <div class="Header-lowerNotLogged">
                             <p>{{ _('LOGIN') }}</p>

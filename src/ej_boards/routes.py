@@ -38,6 +38,7 @@ urlpatterns = Router(
 #
 @urlpatterns.route('<model:board>/conversations/')
 def conversation_list(request, board):
+    from django.conf import settings
     user = request.user
     conversations = board.conversations.filter(is_hidden=False)
     board_user = board.owner
@@ -61,7 +62,9 @@ def conversation_list(request, board):
         'title': board.title,
         'description': board.description,
         'show_welcome_window': False,
-        'board_palette': board.css_palette
+        'board_palette': board.css_palette,
+        'options': {'domain': board.domain_from_sub_domain() + '/login',
+                    'sub_domain': 'http://' + board.custom_domain}
     }
 
 

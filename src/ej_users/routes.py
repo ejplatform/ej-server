@@ -1,4 +1,5 @@
 import logging
+import re
 
 from django.conf import settings
 from django.contrib import auth
@@ -74,6 +75,10 @@ def login(request, redirect_to='/'):
     form = forms.LoginForm.bind(request)
     error_msg = _('Invalid email or password')
     next_url = request.GET.get('next', redirect_to)
+    custom_domain = request.GET.get('custom_domain')
+    if (re.match('^.*.pencillabs.com.br', next_url)):
+      from django.http import HttpResponseRedirect
+      return HttpResponseRedirect('https://ej.pencillabs.com.br/login/?next=ejtest.pencillabs.com.br')
     fast = request.GET.get('fast', 'false') == 'true' or 'fast' in request.GET
 
     if form.is_valid_post():
