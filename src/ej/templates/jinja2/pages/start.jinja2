@@ -1,13 +1,59 @@
 {% extends 'base.jinja2' %}
-
-{% from 'components/home.jinja2' import how_it_works, start_now %}
 {% from 'ej_conversations/components/conversation-list.jinja2' import conversation_list with context %}
 
 
-{% block main %}
-    <div class="StartPage">
-        {{ conversation_list(conversations, javascript_enabled=javascript_enabled) }}
-        {{ how_it_works(how_it_works_fragment) }}
-        {{ start_now(start_now_fragment, user) }}
+{% block content %}
+    {# Description #}
+     <div class="CenteredContainer" style="padding-top: 24px">{{ home_banner_fragment.html() }}</div>
+
+    {# How does it work? #}
+    <div class="HowItWorks">
+        <div class="HowItWorks-cards">
+            {{ how_it_works_card(
+                    'cpa_circulo',
+                    'Painel CPA',
+                    'Ícone painel CPA',
+                    'Aqui, quem faz parte do Comitê de Participação de Adolescente (CPA),
+                        no Conanda, troca ideias, compartilha informações e ajuda nas decisões
+                        do Conselho') }}
+            {{ how_it_works_card(
+                    'conversas',
+                    'Conversas Públicas',
+                    'Ícone balões de conversa',
+                    'Não fique fora dessa! Participe das conversas! Vote, dê sua opinião.
+                        Veja alguns exemplos de conversa abaixo.') }}
+        </div>
+    </div>
+
+    {# Conversations #}
+    {{ conversation_list(conversations, javascript_enabled=javascript_enabled) }}
+
+    {# Start now! #}
+     <div class="CenteredContainer" style="padding-top: 24px">
+        {{ start_now_fragment.html() }}
+        {% if user.id %}
+            <p>{{ action_button(_('Start now!'), 'conversation:list') }}</p>
+        {% else %}
+            <p>{{ action_button(_('Start now!'), 'auth:login') }}</p>
+        {% endif %}
     </div>
 {% endblock %}
+
+
+
+{% macro how_it_works_card(icon, title, alternative, comment) %}
+    <article class="HowItWorksCard">
+        <div class="HowItWorksCard-iconWrapper {{ icon }}">
+            <img
+                src="/static/img/icons/{{ icon }}.svg"
+                class="HowItWorksCard-icon"
+                alt="{{alternative}}"></img>
+        </div>
+        <div class="HowItWorksCard-content">
+            <h1>{{ title }} <i class="fa fa-angle-right"></i></h1>
+            <aside class="HowItWorksCard-extra">
+                <p>{{ comment }}</p>
+            </aside>
+        </div>
+    </article>
+{% endmacro %}

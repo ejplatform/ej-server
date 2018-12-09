@@ -196,7 +196,7 @@ either local/pages or lib/pages/.
     Explain the rules of how the "EJ game" works.
 /faq/ (help:faq):
     Frequently asked questions.
-/about/ (help:about):
+/about-us/ (help:about):
     About EJ or the organization deploying an instance.
 /usage/ (help:usage):
     Usage terms for the platform.

@@ -35,11 +35,7 @@ $how-it-work-icon-color: $color-gray-dark !default;
 
 .HowItWorks {
     background: $home-how-it-works-background;
-    padding-top: $spacing-unit;
-
-    > * {
-        @extend .CenteredContainer;
-    }
+    padding: 0;
 
     h2 {
         font-size: $font-size-h4;
@@ -79,6 +75,7 @@ $how-it-work-icon-color: $color-gray-dark !default;
     align-items: center;
     display: flex;
     border-top: 1px solid rgba($color-black, 0.1);
+    padding: 0;
 
     h1 {
         font-size: $font-size-h3;
