@@ -24,18 +24,17 @@ $page-title-font-size: 1.1 * $font-size-h1 !default;
     }
 
     &-content-container {
-
         .NavMenu {
             position: fixed;
         }
     }
-    
+
     @media only screen and (min-width: 960px) {
-        &-content.logged-in, #docs {
-            padding-left: 400px !important;
+        &-content, #docs {
+            padding-left: 300px !important;
         }
     }
-    
+
     @media only screen and (max-width: 960px) {
         .NavMenu-fixed {
             display: none;
@@ -54,7 +53,7 @@ $page-title-font-size: 1.1 * $font-size-h1 !default;
     }
 
     &-title {
-        background: $color-primary;
+        background: rgba($color-primary, 0.6);
         color: $color-primary-text;
         margin: 0 0 $spacing-unit 0;
         box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);

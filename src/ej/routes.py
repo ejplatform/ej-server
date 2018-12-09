@@ -28,7 +28,7 @@ def index(request):
 def start(request):
     return {
         'conversations': conversations_with_moderation(request.user),
-        'how_it_works_fragment': fragment('home.how-it-works', raises=False),
+        'home_banner_fragment': fragment('home.banner', raises=False),
         'start_now_fragment': fragment('home.start-now', raises=False),
         'social_media_icons': social_icons(),
         'user': request.user,
