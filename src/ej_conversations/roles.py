@@ -6,6 +6,7 @@ from boogie import rules
 
 from ej.roles import with_template
 from . import models
+from ej_boards.models import BoardSubscription
 
 
 #
@@ -20,9 +21,13 @@ def conversation_card(conversation, request=None, url=None, **kwargs):
     user = getattr(request, 'user', None)
     can_moderate = user.has_perm('ej.can_moderate_conversation', conversation)
     tag = conversation.tags.first()  # only first is shown in card to prevent overflow
+    subscription = BoardSubscription.objects.filter(conversation=conversation)
+    board = None
+    if subscription.exists():
+        board = subscription[0].board
     return {
         'conversation': conversation,
-        'url': url or conversation.get_absolute_url(),
+        'url': url or conversation.get_absolute_url(board),
         'tag': tag,
         'n_comments': conversation.approved_comments.count(),
         'n_votes': conversation.votes.count(),

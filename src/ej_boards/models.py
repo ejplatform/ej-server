@@ -5,6 +5,7 @@ from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
 from model_utils.models import TimeStampedModel
 
+from ej.utils.url import SafeUrl
 from ej_conversations.models import Conversation, ConversationTag
 from .validators import validate_board_slug
 
@@ -74,6 +75,10 @@ class Board(TimeStampedModel):
         Return True if conversation is present in board.
         """
         return bool(self.board_subscriptions.filter(conversation=conversation))
+
+    def get_url(self, which, **kwargs):
+        kwargs['board'] = self
+        return SafeUrl(which, **kwargs)
 
 
 class BoardSubscription(models.Model):
