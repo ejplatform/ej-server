@@ -18,4 +18,5 @@ class BoardForm(forms.ModelForm):
     class Meta:
         model = models.Board
         fields = ['slug', 'title', 'description',
-                  'palette', 'image', 'custom_domain']
+                  'custom_domain', 'palette', 'image', ]
+        widgets = { 'palette': PaletteWidget, 'image': FileInput }

@@ -8,7 +8,7 @@ from model_utils.models import TimeStampedModel
 
 from ej.utils.url import SafeUrl
 from ej_conversations.models import Conversation, ConversationTag
-from .validators import validate_board_slug
+from .validators import *
 
 
 class Board(TimeStampedModel):
@@ -56,13 +56,16 @@ class Board(TimeStampedModel):
       _('Custom Domain'),
       blank= True,
       max_length=50,
+      unique=True,
       validators=[
         RegexValidator(
           regex='\w{3}.?[a-z]+\.[a-z]+',
           message='Domínio invalido'
-        )
+        ),
+        validate_custom_domain
       ]
     )
+
 
     @property
     def conversations(self):

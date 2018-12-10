@@ -10,8 +10,8 @@
             {% if request.user.is_active %}
                 {{ header_lower_nav(request) }}
             {% else %}
-                {% if options.get("sub_domain") %}
-                    {%- call link(href='auth:login', 
+                {% if options is defined and options.get("sub_domain") %}
+                    {%- call link(href='auth:login',
                     link_next=options.get('sub_domain'),
                     action='', instant=False, transition='') %}
                         <div class="Header-lowerNotLogged">

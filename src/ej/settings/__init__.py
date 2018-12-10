@@ -90,7 +90,8 @@ class Conf(ThemesConf,
         'DEFAULT_VERSION': 'v1',
     }
 
-    ALLOWED_HOSTS = '*'
+    SESSION_COOKIE_DOMAIN = '.pencillabs.com.br'
+    ALLOWED_HOSTS = ['127.0.0.1', '.pencillabs.com.br']
     # REST_AUTH_REGISTER_SERIALIZERS = {
     #     'REGISTER_SERIALIZER': 'ej_users.serializers.RegistrationSerializer'
     # }
