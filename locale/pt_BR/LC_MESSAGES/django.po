@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-10 13:12+0000\n"
-"PO-Revision-Date: 2018-12-10 11:15-0200\n"
+"POT-Creation-Date: 2018-12-10 18:23-0200\n"
+"PO-Revision-Date: 2018-12-10 18:25-0200\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: \n"
 "Language: pt_BR\n"
@@ -146,7 +146,7 @@ msgstr "usuário"
 msgid "No %(verbose_name)s found matching the query"
 msgstr "Nenhum nome %(verbose_name)s encontrado"
 
-#: src/ej/jinja2.py:157
+#: src/ej/jinja2.py:159
 msgid "This template defines no extra variables"
 msgstr "Este template não define variáveis extras"
 
@@ -166,15 +166,15 @@ msgstr "Acesse o Painel CPA!"
 msgid "Go!"
 msgstr "Quero ir!\t\t"
 
-#: src/ej/settings/options.py:32
+#: src/ej/settings/options.py:32 src/ej/settings/options.py:33
 msgid "EJ Platform"
 msgstr "Plataforma EJ"
 
-#: src/ej/settings/options.py:33
+#: src/ej/settings/options.py:34
 msgid "Not part of EJ yet?"
 msgstr "Não faz parte do EJ ainda?"
 
-#: src/ej/settings/options.py:34
+#: src/ej/settings/options.py:35
 msgid "Login in EJ"
 msgstr "Login no EJ"
 
@@ -985,10 +985,38 @@ msgstr "Perfil preenchido"
 msgid "Help"
 msgstr "Ajuda"
 
-#: src/ej_help/routes.py:41
+#: src/ej_help/forms.py:7
+msgid "Subject"
+msgstr "Assunto"
+
+#: src/ej_help/forms.py:10
+msgid "Message"
+msgstr "Mensagem"
+
+#: src/ej_help/routes.py:44
 #, python-brace-format
 msgid "Page {slug} not found"
 msgstr "Página {slug} não encontrada"
+
+#: src/ej_help/routes.py:65
+#, python-brace-format
+msgid "[EJ] {subject}"
+msgstr "[EJ] {subject}"
+
+#: src/ej_help/routes.py:66
+#, python-brace-format
+msgid ""
+"E-mail from: {email}\n"
+"\n"
+"{message}"
+msgstr ""
+"E-mail de: {email}\n"
+"\n"
+"{message}"
+
+#: src/ej_help/routes.py:76
+msgid "Your message was successfully sent!"
+msgstr "Sua mensagem foi enviada com sucesso!"
 
 #: src/ej_math/apps.py:7
 msgid "Math"
@@ -1449,11 +1477,7 @@ msgstr ""
 "    Obrigada,\n"
 "    Suas amigas da Empurrando Juntas."
 
-#: src/ej/templates/jinja2/base.jinja2:103
-msgid "EJ - A platform of social participacion."
-msgstr "EJ - Uma plataforma para participação social."
-
-#: src/ej/templates/jinja2/base.jinja2:145
+#: src/ej/templates/jinja2/base.jinja2:143
 msgid "Please override the \"content\" block of your template!"
 msgstr "Por favor substitua o bloco \"content\" do seu template!"
 
@@ -1496,7 +1520,7 @@ msgstr "Painel"
 #: src/ej/templates/jinja2/components/generic/page_header.jinja2:114
 #: src/ej/templates/jinja2/components/generic/page_header.jinja2:115
 #: src/ej/templates/jinja2/components/generic/page_header.jinja2:116
-#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:30
+#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:32
 msgid "Profile"
 msgstr "Perfil"
 
@@ -1508,42 +1532,46 @@ msgstr "Sobre"
 msgid "Frequently Asked Questions"
 msgstr "Perguntas frequentes"
 
+#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:8
+msgid "Talk to us"
+msgstr "Fale conosco"
+
 #: src/ej/templates/jinja2/components/generic/page_menu.jinja2:9
 #: src/ej/templates/jinja2/components/generic/page_top-header.jinja2:8
 msgid "Usage terms"
 msgstr "Termos de uso"
 
-#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:22
+#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:23
 msgid "Your conversations"
 msgstr "Suas conversas"
 
-#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:25
+#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:27
 #: src/ej_profiles/jinja2/ej_profiles/favorite-conversations.jinja2:6
 #: src/ej_profiles/jinja2/ej_profiles/favorite-conversations.jinja2:9
 msgid "Favorite conversations"
 msgstr "Conversas Favoritas"
 
-#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:31
+#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:33
 msgid "Home"
 msgstr "Início"
 
-#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:33
+#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:35
 msgid "Accessibility"
 msgstr "Acessibilidade"
 
-#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:41
+#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:43
 msgid "Increase font size"
 msgstr "Aumentar o tamanho da fonte"
 
-#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:48
+#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:50
 msgid "Decrease font size"
 msgstr "Diminuir o tamanho da fonte"
 
-#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:52
+#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:54
 msgid "High contrast mode"
 msgstr "Modo de alto contraste"
 
-#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:62
+#: src/ej/templates/jinja2/components/generic/page_menu.jinja2:64
 #: src/ej_profiles/jinja2/ej_profiles/detail.jinja2:54
 msgid "Logout"
 msgstr "Sair"
@@ -2009,6 +2037,7 @@ msgid "Add more comments"
 msgstr "Adicionar mais comentários"
 
 #: src/ej_conversations/jinja2/ej_conversations/create.jinja2:77
+#: src/ej_help/jinja2/ej_help/talk-to-us.jinja2:15
 #: src/ej_rocketchat/jinja2/ej_rocketchat/config.jinja2:23
 #: src/ej_rocketchat/jinja2/ej_rocketchat/index.jinja2:47
 #: src/ej_rocketchat/jinja2/ej_rocketchat/register.jinja2:24
@@ -2096,6 +2125,10 @@ msgstr "Não há mais comentários"
 #: src/ej_conversations/jinja2/ej_conversations/components/conversation-list.jinja2:11
 msgid "View all conversations"
 msgstr "Ver todas as conversas"
+
+#: src/ej_help/jinja2/ej_help/talk-to-us.jinja2:11
+msgid "Contact form"
+msgstr "Campo de contato"
 
 #: src/ej_profiles/jinja2/ej_profiles/detail.jinja2:9
 msgid "Profile picture"
@@ -2321,6 +2354,9 @@ msgstr "Tente novamente"
 msgid "Update"
 msgstr "Atualizar"
 
+#~ msgid "EJ - A platform of social participacion."
+#~ msgstr "EJ - Uma plataforma para participação social."
+
 #~ msgid "Display name"
 #~ msgstr "Nome público"
 
@@ -2451,9 +2487,6 @@ msgstr "Atualizar"
 #~ "Participate of the conversations and give your opinion with comments and "
 #~ "votes!"
 #~ msgstr "Participe das conversas e dê sua opinião com comentários e votos!"
-
-#~ msgid "Talk to us"
-#~ msgstr "Fale conosco"
 
 #~ msgid "Add conversation"
 #~ msgstr "Criar conversa"
