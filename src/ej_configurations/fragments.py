@@ -1,10 +1,4 @@
-from functools import lru_cache
-
-
-#
 # Load fragments by name
-#
-@lru_cache(256)
 def fragment(name, raises=True):
     """
     Return a fragment instance with the given name.
@@ -46,7 +40,6 @@ MISSING_FRAGMENT = '''
 <h1>Missing "{name}" fragment</h1>
 <p>Click <a href="/debug/fragments/{name}/" up-modal="main">here</a> to know more</p>
 '''
-
 
 #
 # Default messages

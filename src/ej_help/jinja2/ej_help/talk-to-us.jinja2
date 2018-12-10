@@ -1,0 +1,20 @@
+{% extends 'base.jinja2' %}
+
+{% block content %}
+    <div class="Container" style="margin: 0 24px">
+        {% if thank_you_message %}
+            <p>{{ thank_you_message }}</p>
+        {% else %}
+            {{ fragment }}
+
+            {% if form %}
+                <h2>{{ _('Contact form') }}</h2>
+                <form method="post">
+                    {{ csrf_input }}
+                    {{ form }}
+                    <input class="Button" type="submit" name="{{ _('Send') }}">
+                </form>
+            {% endif %}
+        {% endif %}
+    </div>
+{% endblock %}

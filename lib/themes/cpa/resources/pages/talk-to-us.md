@@ -22,7 +22,7 @@ Para denúncias <b>Disque</b> 100 e <b>#HUMANIZAREDES.</b>
         console.log($("#subject").val());
         console.log($("#message").val());
 
-        const sucessMessage = 
+        const successMessage = 
         `
             <div style="padding: 10px;
             border: 1px solid #30BFD3;
@@ -36,7 +36,7 @@ Para denúncias <b>Disque</b> 100 e <b>#HUMANIZAREDES.</b>
             </div>
         `
 
-        $('#emailsending-form').replaceWith(sucessMessage);
+        $('#emailsending-form').replaceWith(successMessage);
 
 
         return false;
