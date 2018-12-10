@@ -27,7 +27,7 @@ def conversation_promote(request, conversation):
     if conversation.is_promoted:
         return conversation_promote_context(request, conversation)
     else:
-        return Http404
+        raise Http404
 
 
 @urlpatterns.route('<model:board>/' + conversation_url + 'promote/', template='ej_powers/conversation-promote.jinja2')
@@ -49,4 +49,4 @@ def conversation_promote_context(request, conversation):
 
         }
     else:
-        return Http404
+        raise Http404
