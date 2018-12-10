@@ -74,5 +74,7 @@ docker/base-images/nginx.conf
 # virtualenv
 venv
 Untitled.ipynb
+*.orig
+Untitle.ipynb
 
 cron\.log

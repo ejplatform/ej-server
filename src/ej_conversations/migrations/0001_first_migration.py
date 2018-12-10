@@ -7,6 +7,8 @@ import django.core.validators
 from django.db import migrations, models
 import django.db.models.deletion
 import django.utils.timezone
+
+import ej_conversations
 import ej_conversations.models.vote
 import ej_conversations.validators
 import model_utils.fields
@@ -98,7 +100,7 @@ class Migration(migrations.Migration):
             name='Vote',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('choice', boogie.fields.enum_field.EnumField(ej_conversations.models.vote.Choice, help_text='Agree, disagree or skip', verbose_name='Choice')),
+                ('choice', boogie.fields.enum_field.EnumField(ej_conversations.Choice, help_text='Agree, disagree or skip', verbose_name='Choice')),
                 ('created', models.DateTimeField(auto_now_add=True, verbose_name='Created at')),
                 ('author', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='votes', to=settings.AUTH_USER_MODEL)),
                 ('comment', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='votes', to='ej_conversations.Comment')),

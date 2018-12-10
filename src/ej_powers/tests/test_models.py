@@ -1,12 +1,12 @@
 import datetime
+
 import pytest
-from django.utils import timezone
 from django.core.exceptions import ValidationError
+from django.utils import timezone
 
 from ej.testing.fixture_class import EjRecipes
-from ej_powers.models import CommentPromotion, GivenPower, GivenBridgePower, GivenMinorityPower
 from ej_conversations.mommy_recipes import ConversationRecipes
-
+from ej_powers.models import CommentPromotion, GivenPower, GivenBridgePower, GivenMinorityPower
 
 today = datetime.datetime.now(timezone.utc)
 yesterday = today - datetime.timedelta(days=1)
@@ -43,46 +43,33 @@ class TestGivenPower:
             power.use_power()
 
 
-class GivenPowerConcreteTester(ConversationRecipes, EjRecipes):
+class GivenPowerAbstractTester(ConversationRecipes, EjRecipes):
     power = None
 
     def test_given_power(self, db, mk_conversation, mk_user):
         conversation = mk_conversation()
-        user = mk_user(email='email@email.com')
-        other_user = mk_user(email='email@otheremail.com')
-        power = self.power(start=today, end=tomorrow, user=user, conversation=conversation)
-        power.save()
-        users = [user, other_user]
-        power.set_affected_users(users)
-        affected_users = {user.id, other_user.id}
-        assert power.data['affected_users'] == affected_users
-        get_affected_users = set(user.id for user in power.get_affected_users())
-        assert get_affected_users == affected_users
+        users = [mk_user(email='foo@a.com'), mk_user(email='foo@b.com')]
+        power = self.power.objects.create(start=today, end=tomorrow, user=users[0], conversation=conversation)
+        power.affected_users = users
+        assert set(power.data['affected_users']) == {user.id for user in users}
+        assert all(user in power.affected_users for user in users)
 
     def test_use_power(self, db, mk_conversation, mk_user):
         conversation = mk_conversation()
-        user = mk_user(email='email@email.com')
-        other_user = mk_user(email='email@otheremail.com')
-        power = self.power(start=today, end=tomorrow, user=user, conversation=conversation)
-        power.save()
-        users = [user, other_user]
-        power.set_affected_users(users)
-
+        users = [mk_user(email='foo@a.com'), mk_user(email='foo@b.com')]
+        power = self.power.objects.create(start=today, end=tomorrow, user=users[0], conversation=conversation)
+        power.affected_users = users
         mk_comment = conversation.create_comment
-        comment = mk_comment(user, 'promoted_comment', status='approved', check_limits=False)
+        comment = mk_comment(users[0], 'promoted_comment', status='approved', check_limits=False)
         power.use_power(comment)
-
-        promotion_exists = CommentPromotion.objects.filter(comment=comment).exists()
-        assert promotion_exists
+        assert CommentPromotion.objects.filter(comment=comment).exists()
 
     def test_use_power_validation_error(self, db, mk_conversation, mk_user, conversation):
-        conversation_ = mk_conversation()
+        conversation1 = mk_conversation()
         user = mk_user(email='email@email.com')
         other_user = mk_user(email='email@otheremail.com')
-        power = self.power(start=today, end=tomorrow, user=user, conversation=conversation_)
-        power.save()
-        users = [user, other_user]
-        power.set_affected_users(users)
+        power = self.power.objects.create(start=today, end=tomorrow, user=user, conversation=conversation1)
+        power.affected_users = [user, other_user]
 
         conversation2 = conversation
         conversation2.title = 'title21'
@@ -94,9 +81,9 @@ class GivenPowerConcreteTester(ConversationRecipes, EjRecipes):
             power.use_power(comment)
 
 
-class TestBridgePower(GivenPowerConcreteTester):
+class TestBridgePower(GivenPowerAbstractTester):
     power = GivenBridgePower
 
 
-class TestGivenMinorityPower(GivenPowerConcreteTester):
+class TestGivenMinorityPower(GivenPowerAbstractTester):
     power = GivenMinorityPower

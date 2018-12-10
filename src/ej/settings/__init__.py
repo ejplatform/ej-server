@@ -1,8 +1,10 @@
 import logging
+
 from boogie.configurations import DjangoConf, env
+from ej.settings.dramatiq import DramatiqConf
 from .apps import InstalledAppsConf
-from .celery import CeleryConf
 from .constance import ConstanceConf
+from .email import EmailConf
 from .log import LoggingConf
 from .middleware import MiddlewareConf
 from .notifications import NotificationsConf
@@ -10,7 +12,6 @@ from .options import EjOptions
 from .paths import PathsConf
 from .security import SecurityConf
 from .themes import ThemesConf
-from .email import EmailConf
 from .. import fixes
 
 log = logging.getLogger('ej')
@@ -20,7 +21,7 @@ class Conf(ThemesConf,
            ConstanceConf,
            MiddlewareConf,
            NotificationsConf,
-           CeleryConf,
+           DramatiqConf,
            SecurityConf,
            LoggingConf,
            PathsConf,
@@ -37,7 +38,6 @@ class Conf(ThemesConf,
 
     USING_DOCKER = env(False, name='USING_DOCKER')
     HOSTNAME = env('localhost')
-
 
     #
     # Accounts
@@ -99,12 +99,11 @@ class Conf(ThemesConf,
     ENVIRONMENT = 'local'
 
     if (ENVIRONMENT == 'production'):
-      EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend';
-      # the api key will be informed during the docker build step.
-      ANYMAIL = {'MAILGUN_API_KEY': ''};
-      DEFAULT_FROM_EMAIL = "Empurrando Juntos <noreply@mail.ejplatform.org>"
-      HOSTNAME = 'https://ejplatform.org'
-
+        EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend';
+        # the api key will be informed during the docker build step.
+        ANYMAIL = {'MAILGUN_API_KEY': ''};
+        DEFAULT_FROM_EMAIL = "Empurrando Juntos <noreply@mail.ejplatform.org>"
+        HOSTNAME = 'https://ejplatform.org'
 
 
 Conf.save_settings(globals())

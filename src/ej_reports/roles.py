@@ -4,7 +4,6 @@ from django.utils.translation import ugettext_lazy as _
 from hyperpython import html
 
 from ej.roles import with_template, html_table
-from ej_clusters.math import get_raw_votes
 from ej_clusters.models import Cluster
 from ej_conversations import models
 from ej_dataviz import render_dataframe
@@ -17,7 +16,7 @@ DEFAULT_FORMATS = {'csv': 'CSV', 'msgpack': 'MsgPack', 'json': 'JSON'}
 # Conversation roles
 #
 @with_template(models.Conversation, role='download-data')
-def conversation_download_data(conversation, *, which, formats=DEFAULT_FORMATS, request=None):
+def conversation_download_data(conversation, *, which, formats=DEFAULT_FORMATS, **kwargs):
     if ':' not in which:
         which = f'report:{which}'
 
@@ -29,7 +28,7 @@ def conversation_download_data(conversation, *, which, formats=DEFAULT_FORMATS, 
 
 
 @html.register(models.Conversation, role='stats-table')
-def stats_table(conversation, request=None, stats=None, data='votes'):
+def stats_table(conversation, stats=None, data='votes', **kwargs):
     if stats is None:
         stats = conversation.statistics()
     cols = stats[data]
@@ -39,28 +38,27 @@ def stats_table(conversation, request=None, stats=None, data='votes'):
 
 
 @html.register(models.Conversation, role='comments-stats-table')
-def comments_table(conversation, request=None):
-    return df_to_table(conversation.comments_dataframe())
+def comments_table(conversation, **kwargs):
+    data = conversation.comments.statistics_summary_dataframe(normalization=100)
+    data = data.sort_values('agree', ascending=False)
+    return prepare_dataframe(data, pc=True)
 
 
 @html.register(models.Conversation, role='participants-stats-table')
-def participants_table(conversation, request=None):
-    return df_to_table(conversation.participants_dataframe())
+def participants_table(conversation, **kwargs):
+    data = conversation.users.statistics_summary_dataframe(normalization=100)
+    data = data.sort_values('agree', ascending=False)
+    return prepare_dataframe(data, pc=True)
 
 
 #
 # Clusters
 #
 @html.register(Cluster, role='comments-stats-table')
-def cluster_comments_table(cluster, request=None, votes=None):
-    usernames = list(cluster.users.all().values_list('email', flat=True))
-    votes = get_raw_votes(cluster.conversation)
-
-    # Filter votes by users present in cluster
-    votes = votes[votes['user'].isin(usernames)]
-    data = cluster.conversation.comments_dataframe(votes=votes)
+def cluster_comments_table(cluster, **kwargs):
+    data = cluster.comments_statistics_summary_dataframe(normalization=100)
     data = data.sort_values('agree', ascending=False)
-    return df_to_table(data)
+    return prepare_dataframe(data, pc=True)
 
 
 #
@@ -93,25 +91,13 @@ PC_COLUMNS = [
 ]
 
 
-def df_to_table(df, pc=True):
-    if pc:
-        for col in PC_COLUMNS:
-            if col in df:
-                df[col] = to_pc(df[col])
+def prepare_dataframe(df, pc=False):
+    """
+    Renders dataframe in a HTML table.
+    """
+    if pc is True:
+        df = df.copy()
+        for col, data in df.items():
+            if data.dtype == float:
+                df[col] = data.apply(lambda x: '-' if np.isnan(x) else '%d%%' % x)
     return render_dataframe(df, col_display=COLUMN_NAMES, class_='table long')
-
-
-def to_pc(data):
-    """
-    Map floats to percentages.
-    """
-
-    def transform(x):
-        if isinstance(x, int):
-            return str(x)
-        elif np.isnan(x):
-            return '-'
-        else:
-            return '%d%%' % x
-
-    return [transform(x) for x in data]

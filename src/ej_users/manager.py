@@ -1,7 +1,13 @@
-from boogie.apps.users.models import UserManager as BaseUserManager
+from boogie.apps.users.models import UserManager as BaseUserManager, UserQuerySet as BaseUserQuerySet
 
 
-class UserManager(BaseUserManager):
+class UserQuerySet(BaseUserQuerySet):
+    """
+    User queryset.
+    """
+
+
+class UserManager(BaseUserManager.from_queryset(UserQuerySet)):
     def get_by_email(self, value):
         """
         Return a user with the given e-mail.

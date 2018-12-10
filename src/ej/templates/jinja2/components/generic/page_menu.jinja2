@@ -28,6 +28,7 @@
                 </li>
             {% endif %}
             <li>{{ icon_link(_('Profile'), '/profile/', 'profile', fa=False) }}</li>
+            <li>{{ icon_link(_('Notifications'), '/profile/notifications/inbox/', 'fas fa-bell') }}</li>
             <li>{{ icon_link(_('Home'), '/', 'fa fa-home') }}</li>
             <li class="NavMenu-DropDown" onclick="openDropDown('NavMenu-Accessibility')">
                 <i class="fas fa-universal-access"></i>{{ _('Accessibility') }}
