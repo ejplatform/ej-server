@@ -76,9 +76,9 @@ def login(request, redirect_to='/'):
     error_msg = _('Invalid email or password')
     next_url = request.GET.get('next', redirect_to)
     custom_domain = request.GET.get('custom_domain')
-    if (re.match('^.*.pencillabs.com.br', next_url)):
+    if (request.META['HTTP_HOST'] == next_url[8:] and re.match('^.*.pencillabs.com.br', next_url)):
       from django.http import HttpResponseRedirect
-      return HttpResponseRedirect('https://ej.pencillabs.com.br/login/?next=ejtest.pencillabs.com.br')
+      return HttpResponseRedirect('https://ej.pencillabs.com.br/login/?next=https://ejtest.pencillabs.com.br')
     fast = request.GET.get('fast', 'false') == 'true' or 'fast' in request.GET
 
     if form.is_valid_post():

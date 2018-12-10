@@ -13,7 +13,7 @@
                 {% if options.get("sub_domain") %}
                     {%- call link(href='auth:login', 
                     link_next=options.get('sub_domain'),
-                    target='', instant=False, transition='') %}
+                    action='', instant=False, transition='') %}
                         <div class="Header-lowerNotLogged">
                             <p>{{ _('LOGIN') }}</p>
                         </div>

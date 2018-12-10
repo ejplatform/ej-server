@@ -64,7 +64,7 @@ def conversation_list(request, board):
         'show_welcome_window': False,
         'board_palette': board.css_palette,
         'options': {'domain': board.domain_from_sub_domain() + '/login',
-                    'sub_domain': 'http://' + board.custom_domain}
+                    'sub_domain': 'https://' + board.custom_domain}
     }
 
 
