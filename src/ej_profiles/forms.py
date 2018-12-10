@@ -1,5 +1,5 @@
-from django.forms import ModelForm, DateInput
 from django.conf import settings
+from django.forms import ModelForm, DateInput
 
 from . import models
 
@@ -9,9 +9,7 @@ EXCLUDE_EDITABLE_FIELDS = settings.EJ_EXCLUDE_PROFILE_FIELDS
 
 
 class UsernameForm(ModelForm):
-
     class Meta:
-
         model = models.User
         fields = ['name']
         help_texts = {
@@ -25,7 +23,6 @@ class ProfileForm(ModelForm):
     """
 
     class Meta:
-
         model = models.Profile
         fields = [field for field in EDITABLE_FIELDS if field not in EXCLUDE_EDITABLE_FIELDS]
         widgets = {

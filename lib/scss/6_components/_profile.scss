@@ -11,18 +11,7 @@ $profile-label-clear-color: #30BFD3 !default;
     @extend .Container;
     text-align: center;
     padding-top: $spacing-unit;
-    h1 {
-        margin-bottom: 0;
-        color: $color-purple-dark;
-        font-size: $font-size-h1;
-        font-weight: bold;
-    }
-    h2 {
-        color: $color-blue-light;
-        font-size: $font-size-h4;
-        font-weight: bold;
-        margin-top: 0;
-    }
+
     &-actions {
         margin: $spacing-unit-large;
         padding: 0;

@@ -6,10 +6,12 @@
 .CollapsibleList {
     padding: $spacing-unit-small;
 
-    h2 {
-        color: $color-content-text;
+    > h2 {
+        color: $color-blue-light;
         cursor: pointer;
-        font-weight: normal;
+        font-size: $font-size-h4;
+        font-weight: bold;
+        margin-top: 0;
         text-align: left;
 
         i, span {
