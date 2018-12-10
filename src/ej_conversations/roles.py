@@ -18,7 +18,7 @@ def conversation_card(conversation, request=None, url=None, **kwargs):
     """
 
     user = getattr(request, 'user', None)
-    can_moderate = user.has_perm('ej.can_moderate_conversation', conversation)
+    can_moderate = user and user.has_perm('ej.can_moderate_conversation', conversation)
     tag = conversation.tags.first()  # only first is shown in card to prevent overflow
     return {
         'conversation': conversation,

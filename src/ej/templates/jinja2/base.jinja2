@@ -6,7 +6,7 @@
 {% set target_context = request.GET.target|default('all') if request else 'all' %}
 {% set target = target|default(target_context) %}
 {% set content_title = content_title|default('') %}
-{% set page_title = page_title|default(content_title or settings.EJ_PAGE_TITLE) %}
+{% set page_title = page_title|default('%s %s' % (settings.EJ_PAGE_TITLE, content_title)) %}
 {% set hide_footer = hide_footer|default(False) %}
 {% set enable_navbar = enable_navbar|default(True) %}
 {% set logged_in = request and request.user and request.user.is_authenticated %}
@@ -85,27 +85,25 @@
 
         <!-- Twitter -->
         <meta name="twitter:card" content="summary">
-        
-        {% block metaOG %}
+
+        {% block meta_og %}
             <!-- Open Graph general (Facebook, Pinterest & Google+) -->
-            <meta itemprop="image" property="og:image" content="/static/img/logo/logo.svg">
+            <meta property="og:type" content="website">
+            <meta property="og:title" content="{{ page_title }}">
+            <meta property="og:image" content="/static/img/logo/logo.svg">
+            <meta property="og:url" content="{{ request.get_raw_uri() }}">
+            <meta property="og:site_name" content="{{ settings.EJ_SITE_NAME }}">
+            <meta property="og:locale" content="{{ settings.LOCALE_NAME.split('.')[0] }}">
+            {% if page_description is defined -%}
+                <meta property="og:description" content="{{ page_description }}">
+            {% endif %}
             <meta property="og:image:type" content="image/svg">
             <meta property="og:image:width" content="1200">
             <meta property="og:image:height" content="630">
-            <meta itemprop="name" property="og:site_name" content="EJ - Empurrando Juntos!">
-            <meta property="og:url" content="https://ejplatform.org/">
-            <meta property="og:type" content="website">
-            <meta property="og:locale" content="pt_BR">
 
-        {% endblock metaOG %}
-
-        {% block metaOG2 %}
-            <meta name="description" property="og:title" content="{{ title|default(_('EJ - A platform of social participacion.')) }}">
-    
             <!-- Twitter && Telegram -->
-            <meta name="twitter:title" content="EJ Platform - Consultas de opinião">
-    
-        {% endblock metaOG2 %}
+            <meta name="twitter:title" content="{{ page_title }}">
+        {% endblock meta_og %}
     </head>
 
     <body class="{{ body_class|default('Page') }} {{ request.path.replace('/','') if request else '' }}">

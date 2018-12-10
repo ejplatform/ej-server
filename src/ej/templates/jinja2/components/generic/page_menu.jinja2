@@ -18,9 +18,11 @@
                         <li>
                             {{ icon_link(_('Public conversations'), 'conversation:list', '', fa=True) }}
                         </li>
+                        {% if rules.get_value('ej.maximum_number_of_boards')(user) > 0 %}
                         <li>
                             {{ icon_link(_('Your conversations'), 'boards:board-list', '', fa=True) }}
                         </li>
+                        {% endif %}
                         <li>
                             {{ icon_link(_('Favorite conversations'), 'profile:favorite-conversations', 'far fa-star', fa=True) }}
                         </li>

@@ -12,6 +12,7 @@ from markdown import markdown
 from markupsafe import Markup
 
 import hyperpython.jinja2
+from boogie import rules
 from ej_configurations import social_icons, fragment
 from hyperpython import html
 from . import roles
@@ -32,6 +33,7 @@ def environment(**options):
         static=staticfiles_storage.url,
         url=reverse,
         settings=settings,
+        rules=rules,
 
         # Localization
         get_language=get_language,

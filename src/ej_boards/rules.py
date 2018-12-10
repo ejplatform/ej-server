@@ -30,3 +30,13 @@ def can_add_board(user):
 @rules.register_perm('ej_boards.can_add_conversation')
 def can_add_conversation(user, board):
     return board.owner == user
+
+
+@rules.register_value('ej.maximum_number_of_boards')
+def number_of_boards(user):
+    """
+    Return the number of boards user can create.
+    """
+    if user.is_superuser:
+        return float('inf')
+    return config.EJ_MAX_BOARD_NUMBER

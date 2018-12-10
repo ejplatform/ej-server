@@ -117,6 +117,10 @@ $profile-label-clear-color: #30BFD3 !default;
     &-link {
         text-align: center;
     }
+
+    @media screen and (min-width: $breakpoint-large) {
+        max-width: ($breakpoint-large * 0.9);
+    }
 }
 
 .ConversationFooter {

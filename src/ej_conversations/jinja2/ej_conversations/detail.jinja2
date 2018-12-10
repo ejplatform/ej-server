@@ -1,6 +1,6 @@
 {% extends 'base.jinja2' %}
 
-{% block metaOG2 %}
+{% block meta_og %}
 
     <meta name="description" property="og:title" content="{{conversation.text}}">
     <meta property="og:description" content="Participe e dê sua opinião com comentários e votos!">
@@ -8,7 +8,7 @@
     <!-- Twitter && Telegram -->
     <meta name="twitter:title" content="{{conversation.text}}">
 
-{% endblock metaOG2 %}
+{% endblock meta_og %}
 
 {% block content %}
     <div class="ConversationDetail">
@@ -46,7 +46,7 @@
                     <i class="fas fa-plus"></i> {{ _("CREATE COMMENT") }}
                 </button>
             </p>
-            
+
             <p>{{ _("{}/{} comment{}.").format(comments_made, max_comments if can_comment else 0, "" if max_comments == 1 else "s")}}</p>
             <p>{{ _("{} waiting moderation.").format(comments_under_moderation)}}</p>
         </div>

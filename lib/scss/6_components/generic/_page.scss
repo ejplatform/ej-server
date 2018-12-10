@@ -29,13 +29,13 @@ $page-title-font-size: 1.1 * $font-size-h1 !default;
         }
     }
 
-    @media only screen and (min-width: 960px) {
-        &-content, #docs {
+    @media only screen and (min-width: $breakpoint-large) {
+        &-content.logged-in, #docs {
             padding-left: 300px !important;
         }
     }
 
-    @media only screen and (max-width: 960px) {
+    @media only screen and (max-width: $breakpoint-large) {
         .NavMenu-fixed {
             display: none;
         }
@@ -53,8 +53,8 @@ $page-title-font-size: 1.1 * $font-size-h1 !default;
     }
 
     &-title {
-        background: rgba($color-primary, 0.6);
-        color: $color-primary-text;
+        background: rgba(desaturate(lighten($color-primary, 30%), 40%), 0.25);
+        color: $color-content-text;
         margin: 0 0 $spacing-unit 0;
         box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
 

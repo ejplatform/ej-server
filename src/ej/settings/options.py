@@ -30,5 +30,6 @@ class EjOptions(Conf):
 
     # Messages
     EJ_PAGE_TITLE = env(_('EJ Platform'), name='{attr}')
+    EJ_SITE_NAME = env(_('EJ Platform'), name='{attr}')
     EJ_REGISTER_TEXT = _('Not part of EJ yet?')
     EJ_LOGIN_TITLE_TEXT = _('Login in EJ')
