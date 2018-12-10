@@ -37,6 +37,6 @@ def number_of_boards(user):
     """
     Return the number of boards user can create.
     """
-    if user.is_superuser:
+    if user.has_perm('ej_boards.add_board'):
         return float('inf')
     return config.EJ_MAX_BOARD_NUMBER
