@@ -10,6 +10,9 @@ class FileInput(widgets.FileInput):
     to attrs dict.
     E.g.: widgets.FileInput(attrs={'accept':'image/*'})
     """
+    class Media:
+        js = ('js/file-input.js',)
+
     def render(self, name, value, attrs=None, renderer=None):
         widget = self.get_context(name, value, attrs)['widget']
 

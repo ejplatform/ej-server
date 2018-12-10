@@ -7,6 +7,7 @@
     font-family: $font-raleway;
     font-size: $font-size-tiny;
     overflow: hidden;
+    font-weight: 600;
 
     .PickFileButton {
         border-top-left-radius: $border-radius-small + $border-radius-tiny;
@@ -19,6 +20,7 @@
         padding-right: 7px;
         float:left;
         position: relative;
+        color: $color-primary-text;
         input[type=file] {
             height: 45px;;
             width: 100%;
@@ -29,6 +31,7 @@
     }
 
     .FileStatus {
+        font-weight: 600;
         width: 100%;
         height: inherit;
         line-height: 45px;
