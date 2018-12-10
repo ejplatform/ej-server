@@ -6,6 +6,7 @@
 {% set target_context = request.GET.target|default('all') if request else 'all' %}
 {% set target = target|default(target_context) %}
 {% set content_title = content_title|default('') %}
+{% set settings = settings|default({'EJ_PAGE_TITLE': 'EJ', 'EJ_SITE_NAME': 'EJ', 'LOCALE_NAME': 'pt_BR'}) %}
 {% set page_title = page_title|default('%s %s' % (settings.EJ_PAGE_TITLE, content_title)) %}
 {% set hide_footer = hide_footer|default(False) %}
 {% set enable_navbar = enable_navbar|default(True) %}
@@ -91,7 +92,7 @@
             <meta property="og:type" content="website">
             <meta property="og:title" content="{{ page_title }}">
             <meta property="og:image" content="/static/img/logo/logo.svg">
-            <meta property="og:url" content="{{ request.get_raw_uri() }}">
+            {% if request %}<meta property="og:url" content="{{ request.get_raw_uri() }}">{% endif %}
             <meta property="og:site_name" content="{{ settings.EJ_SITE_NAME }}">
             <meta property="og:locale" content="{{ settings.LOCALE_NAME.split('.')[0] }}">
             {% if page_description is defined -%}
