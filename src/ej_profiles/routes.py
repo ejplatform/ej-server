@@ -84,6 +84,7 @@ def conversations_list(request):
         'can_add_conversation': False,
         'title': _('My conversations'),
         'description': _('See all conversations created by you'),
+        'show_welcome_window': False,
     }
 
 

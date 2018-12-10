@@ -4,6 +4,7 @@ from boogie import rules
 from django.http import HttpResponseServerError, Http404
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
+from django.shortcuts import render
 from hyperpython import a
 
 from ej_conversations.models import Vote
@@ -17,7 +18,8 @@ log = getLogger('ej')
 
 @urlpatterns.route('', name='list')
 def conversation_list(request):
-    return {
+    show_welcome_window = 'show_welcome_window' in request.COOKIES.keys()
+    ctx = {
         'conversations': Conversation.objects.filter(is_promoted=True, is_hidden=False),
         'can_add_conversation': request.user.has_perm('ej.can_add_promoted_conversation'),
         'create_url': reverse('conversation:create'),
@@ -25,7 +27,12 @@ def conversation_list(request):
         'title': _('Public conversations'),
         'subtitle': _('Participate of conversations and give your opinion with comments and votes!'),
         'description': _('Participate of conversations and give your opinion with comments and votes!'),
+        'show_welcome_window': show_welcome_window,
     }
+    response = render(request, 'ej_conversations/list.jinja2', ctx)
+    if (show_welcome_window):
+        response.delete_cookie('show_welcome_window')
+    return response
 
 
 @urlpatterns.route(conversation_url)

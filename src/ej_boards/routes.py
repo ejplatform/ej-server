@@ -59,7 +59,8 @@ def conversation_list(request, board):
         'boards': boards,
         'current_board': board,
         'title': board.title,
-        'description': board.description
+        'description': board.description,
+        'show_welcome_window': False,
     }
 
 
