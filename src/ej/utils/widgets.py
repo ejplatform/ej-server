@@ -32,8 +32,3 @@ class FileInput(widgets.FileInput):
             ],
             div(class_="FileStatus")[_("No file chosen")]
         ].render()
-
-
-# MUDAR TRADUÇÃÕ
-# "Nenhum arquivo selecionado"
-# "Escolher arquivo"
