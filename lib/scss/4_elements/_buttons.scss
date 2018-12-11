@@ -55,4 +55,7 @@ $button-vpadding: $spacing-unit-tiny + 2px !default;
         font-size: $font-size-large;
         padding: (2 * $button-vpadding) (2 * $button-hpadding);
     }
+    &-done{
+        background-color: $color-accent;
+    }
 }
