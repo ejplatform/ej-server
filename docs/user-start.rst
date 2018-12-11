@@ -1,12 +1,13 @@
+*******************************************
 Creating a registration and starting to use
-===========================================
+*******************************************
 
 .. contents::
    :depth: 2
 
 
 How do I create my account?
----------------------------
+===========================
 
 To create an account, go to **XXFXIMEXX/register/**
 
@@ -16,7 +17,7 @@ To create an account, go to **XXFXIMEXX/register/**
 
 
 How do I edit my profile?
--------------------------
+=========================
 
 To edit or add to your profile, visit **XXFIXMEXX/profile/**
 
@@ -27,7 +28,7 @@ To edit or add to your profile, visit **XXFIXMEXX/profile/**
 
  
 What if an account is using my email, name or photo?
-----------------------------------------------------
+====================================================
 
 If you are creating an account and our system says that an account already exists using your email, you can regain access by clicking on "I forgot my password" to request that a new password be sent to your email.
 
@@ -35,7 +36,7 @@ If you are creating an account and our system says that an account already exist
 
 
 How do I report a threat or any other breach of the term of use?
-----------------------------------------------------------------
+================================================================
 
 
 If you are a victim of libel, defamation or any other type of threat, you can send a print of the conversation to our complaint channel and we will resolve it as soon as possible.
