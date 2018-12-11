@@ -6,6 +6,7 @@ CONVERSATIONS
 $conversation-vote-circle-size: 18px !default;
 $conversation-toast-image-border: $spacing-unit-tiny / 3;
 $conversation-button-size: $spacing-unit-small + $spacing-unit-tiny !default;
+$conversation-card-cover: 96px !default;
 $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
 $conversation-card-font-size-small: 12px !default;
 $conversation-card-border-arrow-size: $spacing-unit;
@@ -221,7 +222,7 @@ $color-background-button-modalities: rgba(255, 255, 255, 0.3);
         position: relative;
         z-index: 2;
         overflow: hidden;
-        max-height: 96px;
+        max-height: $conversation-card-cover;
 
         h1 {
             display: flex;
@@ -1490,12 +1491,12 @@ $color-background-button-modalities: rgba(255, 255, 255, 0.3);
     .Progress-porcentage{
         font-weight: bold;
         display: table-cell;
-        font-size: $spacing-unit-tiny * 2;
+        font-size: $font-size-default;
         padding-right: $spacing-unit-tiny;
     }
     .Progress-absolute{
         display: table-cell;
-        font-size: $spacing-unit-tiny * 2;
+        font-size: $font-size-default;
         padding-left: $spacing-unit-tiny;
     }
     .Progress-bar{
@@ -1504,14 +1505,14 @@ $color-background-button-modalities: rgba(255, 255, 255, 0.3);
         &-border{
             background: transparent;
             border: 1px solid  $color-primary;
-            border-radius: $spacing-unit-tiny;
+            border-radius: $border-radius-tiny;
             height: $spacing-unit-tiny;
         }
         &-content{
             height: $spacing-unit-tiny;
             background: $color-hint;
-            border-top-left-radius: $spacing-unit-tiny;
-            border-bottom-left-radius: $spacing-unit-tiny;
+            border-top-left-radius: $border-radius-tiny;
+            border-bottom-left-radius: $border-radius-tiny;
         }
     }
 }
