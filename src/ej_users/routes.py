@@ -9,6 +9,7 @@ from django.http import Http404, JsonResponse
 from django.http import HttpResponseServerError
 from django.shortcuts import redirect
 from django.template.loader import get_template
+from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from rest_framework import status
 from rest_framework.authtoken.models import Token
@@ -137,27 +138,24 @@ def recover_password(request):
 
     if request.method == "POST" and form.is_valid():
         success = True
-        if User.objects.filter(email=form.cleaned_data['email']).exists():
-            if settings.HOSTNAME == 'localhost':
-                host = 'http://localhost:8000'
+        email = form.cleaned_data['email']
 
-            else:
-                host = settings.HOSTNAME
-
-            user = User.objects.get_by_email(request.POST['email'])
+        try:
+            user = User.objects.get_by_email(email)
+        except User.DoesNotExist:
+            pass
+        else:
             token = generate_token(user)
             from_email = settings.DEFAULT_FROM_EMAIL
-            template_message = _recover_password_message(host + '/reset-password/' + token.url)
-            send_mail(_("Please reset your password"), template_message,
-                      from_email, [request.POST['email']],
-                      fail_silently=False)
+            path = reverse('auth:reset-password', kwargs={'token': token})
+            template = get_template('ej_users/recover-password-message.jinja2')
+            email_body = template.render({'url': raw_url(request, path)}, request=request)
+            send_mail(subject=_("Please reset your password"),
+                      message=email_body,
+                      from_email=from_email,
+                      recipient_list=[email])
 
-    return {
-        'user': user,
-        'form': form,
-        'success': success,
-
-    }
+    return {'user': user, 'form': form, 'success': success}
 
 
 @urlpatterns.route('profile/remove/', login=True)
@@ -200,3 +198,9 @@ def _recover_password_message(link):
     {link}
     Thanks,
     Your friends at Empurrando Juntos.""")
+
+
+def raw_url(request, path):
+    if not path.startswith('/'):
+        path = request.path.rstrip('/') + '/' + path
+    return f'{request.scheme}://{request.get_host()}{path}'
