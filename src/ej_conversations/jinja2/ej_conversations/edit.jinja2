@@ -42,12 +42,17 @@
                 <p><i class="fa fa-list-ul"></i> <span>{{ board.title }}</span></p>
             {% endif %}
           </div>
-
-          <p style="text-align: center;">{{ action_button(_('Manage stereotypes'),
-                                          href='cluster:stereotype-list',
-                                          url_args={'conversation': conversation},
-                                          primary=False) }}</p>
-
+          {% if board %}
+              <p style="text-align: center;">{{ action_button(_('Manage stereotypes'),
+                                              href='boards:conversation-stereotype-list',
+                                              url_args={'board': board, 'conversation': conversation},
+                                              primary=False) }}</p>
+          {% else %}
+              <p style="text-align: center;">{{ action_button(_('Manage stereotypes'),
+                                              href='cluster:stereotype-list',
+                                              url_args={'conversation': conversation},
+                                              primary=False) }}</p>
+          {% endif %}
           {% if can_promote_conversation %}
               <p class="ConversationEdit-promote">
                 {% if conversation.is_promoted %}

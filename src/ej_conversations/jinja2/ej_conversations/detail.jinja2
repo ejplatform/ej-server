@@ -35,7 +35,7 @@
                                 {# FIXME Add a less hardcoded pluralization  #}
                                 {{ _("You have {} comment{} under moderation.").format(comments_under_moderation, "" if comments_under_moderation == 1 else "s")}}
                                 {% if comments_under_moderation > 0 %}
-                                    {{ link(_('Click here'), href='/profile/') }}
+                                    {{ link(_('Click here'), href='profile:detail') }}
                                     {{ _("to see {}.").format("it" if comments_under_moderation == 1 else "them") }}
                                 {% endif %}
                             </p>

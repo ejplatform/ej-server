@@ -72,15 +72,10 @@ def clusterize(conversation):
 @urlpatterns.route('conversations/<model:conversation>/stereotypes/',
                    perms=['ej.can_manage_stereotypes:conversation'])
 def stereotype_list(conversation):
-    clusterization = conversation.get_clusterization(None)
-    stereotypes = () if clusterization is None else clusterization.stereotypes.all()
-    return {
-        'content_title': _('Stereotypes'),
-        'conversation_title': conversation.title,
-        'stereotypes': stereotypes,
-        'stereotype_url': conversation.get_absolute_url() + 'stereotypes/',
-        'conversation_url': conversation.get_absolute_url(),
-    }
+    if conversation.is_promoted:
+        return stereotype_list_context(conversation)
+    else:
+        raise Http404
 
 
 @urlpatterns.route('conversations/<model:conversation>/stereotypes/add/',
@@ -135,6 +130,18 @@ def list_cluster(request):
 #
 # Auxiliary functions
 #
+def stereotype_list_context(conversation):
+    clusterization = conversation.get_clusterization(None)
+    stereotypes = () if clusterization is None else clusterization.stereotypes.all()
+    return {
+        'content_title': _('Stereotypes'),
+        'conversation_title': conversation.title,
+        'stereotypes': stereotypes,
+        'stereotype_url': conversation.get_absolute_url() + 'stereotypes/',
+        'conversation_url': conversation.get_absolute_url(),
+    }
+
+
 def create_stereotype_context(request, conversation):
     if request.method == 'POST':
         stereotype_form = StereotypeForm(request.POST, owner=request.user)
