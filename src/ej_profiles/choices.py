@@ -1,6 +1,6 @@
 from django.utils.translation import ugettext_lazy as _
 
-from boogie import IntEnum
+from boogie.fields import IntEnum
 
 
 class Race(IntEnum):

@@ -1,5 +1,6 @@
 import logging
 import typing
+import warnings
 from pprint import pprint
 
 import pytest
@@ -16,17 +17,17 @@ class UrlTester(EjRecipes):
     owner_urls = []
     admin_urls = []
     success_codes = {200}
-    failure_codes = {404, 403}
+    failure_codes = {302, 404, 403}
     redirect_codes = {302}
+
+    def setUp(self):
+        warnings.warn('EJ\'s UrlTester is deprecated, please move your tests '
+                      'to boogie.testing.pytest.UrlTester')
 
     @property
     def require_login_codes(self):
         prep = as_code_set
         return {*prep(self.redirect_codes), *prep(self.success_codes)}
-
-    @pytest.fixture
-    def data(self):
-        return None
 
     @pytest.mark.django_db
     def test_anonymous_user_can_access_urls(self, client, caplog, data):

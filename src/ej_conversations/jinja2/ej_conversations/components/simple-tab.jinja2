@@ -1,3 +1,0 @@
-{% macro simple_tab(active_condition, active_value, url, label) %}
-    <li><a class="{{ 'active' if active_condition == active_value else '' }}" href="{{ url }}">{{ label }}</a></li>
-{% endmacro %}

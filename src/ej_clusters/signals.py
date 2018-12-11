@@ -1,10 +1,8 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-from ej_conversations.models import Vote, Conversation
-from . import models
-
-log = models.log
+from ej_conversations.models import Vote
+from . import tasks
 
 
 @receiver(post_save, sender=Vote)
@@ -14,23 +12,11 @@ def on_user_vote(sender, instance, created, **kwargs):
     """
     if created:
         vote = instance
-        log.info(vote)
-
         comment = vote.comment
         conversation = comment.conversation
-        clusterization = models.get_clusterization(conversation)
+        clusterization = conversation.get_clusterization(None)
 
-        if comment.votes.count() == 5:
-            clusterization.unprocessed_comments += 1
-        if vote.author.has_perm('ej.can_be_clusterized', conversation):
-            clusterization.unprocessed_votes += 1
-        clusterization.update()
-
-
-@receiver(post_save, sender=Conversation)
-def on_conversation(sender, instance, created, **kwargs):
-    """
-    Save one clusterization object per conversation.s
-    """
-    if created:
-        models.Clusterization.objects.create(conversation=instance)
+        if clusterization is not None:
+            clusterization.pending_votes.add(vote)
+            clusterization.pending_comments.add(comment)
+            tasks.update_clusterization.send(clusterization.id)

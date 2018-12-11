@@ -13,7 +13,6 @@ urlpatterns = Router(
         'comment': 'slug',
     },
     lookup_type='slug',
-    object='conversation',
 )
 conversation_url = f'<model:conversation>/'
 
