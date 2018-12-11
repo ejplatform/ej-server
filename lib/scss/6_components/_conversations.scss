@@ -1132,10 +1132,12 @@ $color-background-button-modalities: rgba(255, 255, 255, 0.3);
 
     &-leftConversationSlider {
         left: $spacing-unit-tiny;
+        z-index: 3;
     }
 
     &-rightConversationSlider {
         right: $spacing-unit-tiny;
+        z-index: 3;
     }
 }
 
