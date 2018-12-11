@@ -1,5 +1,6 @@
+##############
 Best Practices
-==============
+##############
 
 .. contents::
    :depth: 2
@@ -7,9 +8,14 @@ Best Practices
 
 .. include:: dev-repository.rst
 
-> Para codificação #407
-> Proteja a privacidade do usuário
-> Segurança
-> Como criar testes
-> Changelog / Registro de alterações
+
+Para codificação #407
+
+Proteja a privacidade do usuário
+
+Segurança
+
+Como criar testes
+
+Changelog / Registro de alterações
 
