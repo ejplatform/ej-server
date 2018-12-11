@@ -1371,12 +1371,12 @@ $color-background-button-modalities: rgba(255, 255, 255, 0.3);
         border: 0;
         font-family: "Raleway", sans-serif;
         color: $color-content;
-        padding: $unit + 5;
+        padding: $unit;
         text-align: center;
         font-weight: 200 !important;
-        font-size: $spacing-unit !important;
+        font-size: $spacing-unit - $spacing-unit-tiny !important;
         box-shadow: none;
-        border: 1px solid $color-hint;
+        border: 1px solid $color-primary;
         border-radius: $border-radius-small;
         resize: none;
         overflow: hidden;
@@ -1405,7 +1405,7 @@ $color-background-button-modalities: rgba(255, 255, 255, 0.3);
 
             i {
                 border-radius: 50%;
-                border: $border-radius-tiny solid $color-content ;
+                border: 3px solid $color-content ;
                 display: inline-block;
                 width: 16px;
                 height: 16px;
@@ -1454,11 +1454,11 @@ $color-background-button-modalities: rgba(255, 255, 255, 0.3);
     i {
         padding: 0 $unit * 2;
         align-self: center;
-        color: $color-accent;
+        color: $color-primary;
     }
 
     input, select {
-        border: 1px solid $color-hint;
+        border: 1px solid $color-primary;
         border-radius: $border-radius-small;
         background-color: rgba(255, 255, 255, 0.5);
         box-shadow: none;
