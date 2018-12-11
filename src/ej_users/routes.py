@@ -55,7 +55,11 @@ def register(request):
                                      password=password)
             auth.login(request, user)
             log.info(f'user {user} ({email}) logged in')
-            return redirect(next_url)
+
+            response = redirect(next_url)
+            response.set_cookie('show_welcome_window', 'true')
+
+            return response
 
     return {
         'user': request.user,
