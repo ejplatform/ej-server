@@ -25,7 +25,7 @@
         <div class="ConversationDetail-content">
             <div class="Comment">
                 {{ conversation|role('comment-form', comment_content=comment_form) }}
-                <div class="CommentCard CommentCard--{{conversation.palette}}">
+                <div class="CommentCard CommentCard--{{conversation.css_palette}}">
                     {% if comment %}
                         {{ comment|role('card') }}
                     {% else %}
