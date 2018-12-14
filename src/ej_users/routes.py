@@ -55,7 +55,11 @@ def register(request):
                                      password=password)
             auth.login(request, user)
             log.info(f'user {user} ({email}) logged in')
-            return redirect(next_url)
+
+            response = redirect(next_url)
+            response.set_cookie('show_welcome_window', 'true')
+
+            return response
 
     return {
         'user': request.user,
@@ -139,14 +143,18 @@ def recover_password(request):
 
     if request.method == "POST" and form.is_valid():
         success = True
-        if User.objects.filter(email=form.cleaned_data['email']).exists():
-            email = form.cleaned_data['email']
+        email = form.cleaned_data['email']
+
+        try:
             user = User.objects.get_by_email(email)
+        except User.DoesNotExist:
+            pass
+        else:
             token = password_reset_token(user)
             from_email = settings.DEFAULT_FROM_EMAIL
             path = reverse('auth:reset-password', kwargs={'token': token})
             template = get_template('ej_users/recover-password-message.jinja2')
-            email_body = template.render({'url': raw_url(request, path)})
+            email_body = template.render({'url': raw_url(request, path)}, request=request)
             send_mail(subject=_("Please reset your password"),
                       message=email_body,
                       from_email=from_email,
@@ -189,8 +197,6 @@ login_extra_template = get_template('socialaccount/snippets/login_extra.html')
 
 
 def raw_url(request, path):
-    port = request.get_port()
-    port = '' if port == '80' else f':{port}'
     if not path.startswith('/'):
         path = request.path.rstrip('/') + '/' + path
-    return f'{request.scheme}://{request.get_host()}{port}{path}'
+    return f'{request.scheme}://{request.get_host()}{path}'
