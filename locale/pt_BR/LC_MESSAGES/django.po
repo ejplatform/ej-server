@@ -6,7 +6,7 @@ msgstr ""
 "PO-Revision-Date: 2018-12-11 16:34-0200\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
-"Language: pt_BR\n"
+"Language: pt-BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -506,6 +506,14 @@ msgstr ""
 #: src/ej/templates/django/socialaccount/signup.html:10
 msgid "Please enter your e-mail to finish the process:"
 msgstr "Favor confirmar seu endereço de email:"
+
+#: src/ej/utils/widgets.py:31
+msgid "Choose a file"
+msgstr "Escolher arquivo"
+
+#: src/ej/utils/widgets.py:33
+msgid "No file chosen"
+msgstr "Nenhum arquivo selecionado"
 
 #: src/ej_boards/apps.py:7 src/ej_boards/models.py:46
 msgid "Boards"
@@ -1175,6 +1183,11 @@ msgstr "Atividade política"
 #: src/ej_profiles/models.py:45
 msgid "Profile Photo"
 msgstr "Foto de Perfil"
+
+#: src/ej_profiles/models.py:133 src/ej_users/forms.py:47
+#: src/ej_users/forms.py:49 src/ej_users/forms.py:59
+msgid "E-mail"
+msgstr "Email"
 
 #: src/ej_profiles/models.py:169
 msgid "Root"
@@ -2197,17 +2210,9 @@ msgid "Edit profile"
 msgstr "Editar perfil"
 
 #: src/ej_profiles/jinja2/ej_profiles/edit.jinja2:3
-#, python-format
-msgid "Edit profile: <em>%(name)s</em>"
+#, fuzzy, python-format
+msgid "Edit profile: %(name)s"
 msgstr "Editar perfil: <em>%(name)s</em>"
-
-#: src/ej_profiles/jinja2/ej_profiles/edit.jinja2:14
-msgid "Choose a file"
-msgstr "Escolha um arquivo"
-
-#: src/ej_profiles/jinja2/ej_profiles/edit.jinja2:17
-msgid "No file chosen"
-msgstr "Nenhum arquivo foi escolhido"
 
 #: src/ej_profiles/jinja2/ej_profiles/favorite-conversations.jinja2:10
 msgid "You do not have any favorite conversations!"

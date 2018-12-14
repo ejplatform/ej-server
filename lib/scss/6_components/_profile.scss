@@ -329,30 +329,4 @@ $profile-label-clear-color: #30BFD3 !default;
             display: block;
         }
     }
-    .CustomFileInput {
-        @extend .FormItem;
-        padding: 0;
-        line-height: 1.15;
-        display: flex;
-        cursor: pointer;
-        margin-bottom: $spacing-unit;
-        font-family: inherit;
-        font-weight: normal;
-        div {
-            padding: $spacing-unit-small $spacing-unit-small $spacing-unit-tiny;
-            text-align: center;
-            &:first-child {
-                min-width: fit-content;
-                border-bottom-left-radius: inherit;
-                border-top-left-radius: inherit;
-                background-color: $color-hint;
-            }
-            &:nth-child(2) {
-                width: -webkit-fill-available;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-            }
-        }
-    }
 }

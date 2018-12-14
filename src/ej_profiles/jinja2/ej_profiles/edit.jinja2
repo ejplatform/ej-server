@@ -1,6 +1,6 @@
 {% extends 'base.jinja2' %}
 
-{% set content_title = gettext('Edit profile: <em>%(name)s</em>', name=request.user.name) %}
+{% set content_title = gettext('Edit profile: %(name)s', name=request.user.name) %}
 
 {% block content %}
     <div class="ProfileEdit">
@@ -9,14 +9,6 @@
             {{ form.non_field_errors() }}
             {{ name_form.as_p() }}
             {{ form.as_p() }}
-           <label for="id_image" class="FormItem CustomFileInput">
-               <div>
-                   {{ _('Choose a file') }}
-               </div>
-               <div id="image-filename">
-                   {{ _('No file chosen') }}
-               </div>
-           </label>
             <input class="Button" type="submit" name="submit" value="{{ _('Save') }}">
         </form>
     </div>
