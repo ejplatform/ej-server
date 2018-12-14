@@ -152,7 +152,6 @@ $color-background-button-modalities: rgba(255, 255, 255, 0.3);
 }
 
 .ConversationCard {
-    //background-color: $color-primary;
     align-self: stretch;
     box-sizing: border-box;
     border: 0;
@@ -229,7 +228,6 @@ $color-background-button-modalities: rgba(255, 255, 255, 0.3);
     &-cover + .ConversationCard-actions {
         padding: 0 $spacing-unit-small $spacing-unit-small $spacing-unit-small;
         background-size: 30px;
-        //background: $color-primary;
         margin-top: $spacing-unit;
         bottom: 0;
         position: absolute;
@@ -240,7 +238,7 @@ $color-background-button-modalities: rgba(255, 255, 255, 0.3);
     &-actions {
         .Button[primary] {
             padding: $spacing-unit-small + $spacing-unit-tiny;
-            //background: $color-content;
+            background: $color-content;
             font-size: $font-size-small;
             padding-top: $font-size-small;
             padding-bottom: $font-size-small;
