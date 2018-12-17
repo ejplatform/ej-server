@@ -62,8 +62,7 @@ class TestConversation(ConversationRecipes):
               owner=user,
               palette='Orange',
               description="board").save()
-        board_subscription = BoardSubscription(conversation=conversation,
-                                               board=Board.objects.last()).save()
+        BoardSubscription(conversation=conversation, board=Board.objects.last()).save()
         assert conversation.css_palette == 'orangePalette'
         assert conversation.css_light_palette == 'orangePalette-light'
         assert conversation.css_text_palette == 'orangePalette-text'
@@ -74,10 +73,8 @@ class TestConversation(ConversationRecipes):
         Board(slug="board1",
               owner=user,
               description="board").save()
-        board_subscription = BoardSubscription(conversation=conversation,
-                                               board=Board.objects.last()).save()
+        BoardSubscription(conversation=conversation, board=Board.objects.last()).save()
         assert conversation.css_palette == 'bluePalette'
-
 
 
 class TestVote:

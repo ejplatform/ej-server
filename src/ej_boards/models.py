@@ -34,7 +34,7 @@ class Board(TimeStampedModel):
     )
 
     PALLET_CHOICES = (
-      ('Blue', 'Blue'),
+        ('Blue', 'Blue'),
       ('Grey', 'Grey'),
       ('Pink', 'Pink'),
       ('Green', 'Green'),
@@ -44,8 +44,8 @@ class Board(TimeStampedModel):
 
     palette = models.CharField(_('Palette'),
                                max_length=10,
-                              choices=PALLET_CHOICES,
-                              default='Blue')
+                               choices=PALLET_CHOICES,
+                               default='Blue')
 
     image = models.ImageField(_('Image'),
                               blank=True,
@@ -100,11 +100,12 @@ class Board(TimeStampedModel):
 
     @property
     def css_palette(self):
-      return self.palette.lower() + 'Palette'
+        return self.palette.lower() + 'Palette'
 
     @staticmethod
     def get_default_css_palette():
-      return 'bluePalette'
+        return 'bluePalette'
+
 
 class BoardSubscription(models.Model):
     """

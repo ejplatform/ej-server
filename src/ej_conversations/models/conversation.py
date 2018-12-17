@@ -352,7 +352,7 @@ class Conversation(TimeStampedModel):
         try:
             board = BoardSubscription.objects.get(conversation_id=self.id).board
             return board.css_palette
-        except:
+        except BoardSubscription.DoesNotExist:
             return Conversation.get_default_css_palette()
 
     @staticmethod
@@ -362,6 +362,7 @@ class Conversation(TimeStampedModel):
 
 # ==============================================================================
 # AUXILIARY MODELS
+
 
 class ConversationTag(TaggedItemBase):
     """
