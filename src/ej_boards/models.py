@@ -33,6 +33,24 @@ class Board(TimeStampedModel):
         blank=True,
     )
 
+    PALLET_CHOICES = (
+      ('Blue', 'Blue'),
+      ('Grey', 'Grey'),
+      ('Pink', 'Pink'),
+      ('Green', 'Green'),
+      ('Orange', 'Orange'),
+      ('Purple', 'Purple'),
+    )
+
+    palette = models.CharField(_('Palette'),
+                               max_length=10,
+                              choices=PALLET_CHOICES,
+                              default='Blue')
+
+    image = models.ImageField(_('Image'),
+                              blank=True,
+                              null=True)
+
     @property
     def conversations(self):
         return Conversation.objects.filter(board_subscriptions__board=self)
@@ -80,6 +98,13 @@ class Board(TimeStampedModel):
         kwargs['board'] = self
         return SafeUrl(which, **kwargs)
 
+    @property
+    def css_palette(self):
+      return self.palette.lower() + 'Palette'
+
+    @staticmethod
+    def get_default_css_palette():
+      return 'bluePalette'
 
 class BoardSubscription(models.Model):
     """

@@ -28,7 +28,7 @@ $nav-menu-ul-padding: 0 !default;
     opacity: $nav-menu-opacity;
     -ms-overflow-style: none;
     overflow: -moz-scrollbars-none;
-    background: $nav-menu-color;
+    //background: $nav-menu-color;
     color: $nav-menu-color-text;
 
     a, button{
@@ -111,4 +111,6 @@ $nav-menu-ul-padding: 0 !default;
         }
     }
 
+    @include palette;
 }
+
