@@ -1,11 +1,11 @@
+import re
+import logging
 from django.conf import settings
 from django.utils.text import slugify
 from django.urls import resolve
 from django.http import Http404, HttpResponsePermanentRedirect
-import re
 
 from .models import Board
-
 
 def BoardFallbackMiddleware(get_response):  # noqa: N802, C901
     """
@@ -53,20 +53,19 @@ def BoardFallbackMiddleware(get_response):  # noqa: N802, C901
     return middleware
 
 def BoardDomainRedirectMiddleware(get_response):
+    from ej_boards.models import Board
 
-  from ej_boards.models import Board
-
-  def middleware(request):
-    response = get_response(request)
-    path_info = request.META['PATH_INFO']
-    if(re.match('^\/home\/?', path_info)):
-      try:
-        domain = request.META['HTTP_HOST'].split(':')[0]
-        board, board_exists = Board.with_custom_domain(domain)
-        if(board_exists):
-          return HttpResponsePermanentRedirect('/%s/conversations' % board)
-      except:
+    def middleware(request):
+        response = get_response(request)
+        path_info = request.META['PATH_INFO']
+        if(re.match('^\/home\/?', path_info)):
+            try:
+                domain = request.META['HTTP_HOST'].split(':')[0]
+                board, board_exists = Board.with_custom_domain(domain)
+                if(board_exists):
+                    return HttpResponsePermanentRedirect('/%s/conversations' % board)
+            except:
+                return response
         return response
-    return response
 
-  return middleware
+    return middleware

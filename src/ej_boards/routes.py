@@ -63,9 +63,8 @@ def conversation_list(request, board):
         'description': board.description,
         'show_welcome_window': False,
         'board_palette': board.css_palette,
-        'options': {'sub_domain': 'https://' + board.custom_domain}
+        'options': {'sub_domain': board.custom_domain_with_scheme}
     }
-
 
 @urlpatterns.route('<model:board>/conversations/add/')
 def conversation_create(request, board):

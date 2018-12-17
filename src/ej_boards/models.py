@@ -130,11 +130,11 @@ class Board(TimeStampedModel):
         return [board, True]
       except:
         return [None, False]
-      
-    def domain_from_sub_domain(self):
-      sub_domain_name = self.custom_domain[self.custom_domain.find('.')+1:]
-      return 'https://' + sub_domain_name
 
+    @property
+    def custom_domain_with_scheme(self):
+        custom_domain = 'https://' + self.custom_domain
+        return '/'.join([custom_domain, self.slug, 'conversations'])
 
 class BoardSubscription(models.Model):
     """

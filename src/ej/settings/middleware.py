@@ -9,6 +9,7 @@ class MiddlewareConf(Base):
             'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
             'ej_boards.middleware.BoardFallbackMiddleware',
             'ej_boards.middleware.BoardDomainRedirectMiddleware',
+            'ej_users.middleware.CustomDomainAuthMiddleware',
             'ej_conversations.middleware.ConversationFallbackMiddleware',
             *middleware,
         ]
