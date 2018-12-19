@@ -52,17 +52,17 @@ class Board(TimeStampedModel):
                               blank=True,
                               null=True)
 
-    custom_domain = models.CharField(
-      _('Custom Domain'),
+    sub_domain = models.CharField(
+      _('SubDomain'),
       blank= True,
       max_length=50,
       unique=True,
       validators=[
         RegexValidator(
           regex='\w{3}.?[a-z]+\.[a-z]+',
-          message='Domínio invalido'
+          message=_('Invalid subdomain')
         ),
-        validate_custom_domain
+        validate_sub_domain
       ]
     )
 
@@ -124,17 +124,17 @@ class Board(TimeStampedModel):
 
 
     @staticmethod
-    def with_custom_domain(domain):
+    def with_sub_domain(domain):
       try:
-        board = Board.objects.get(custom_domain=domain).slug;
+        board = Board.objects.get(sub_domain=domain).slug;
         return [board, True]
       except:
         return [None, False]
 
     @property
-    def custom_domain_with_scheme(self):
-        custom_domain = 'https://' + self.custom_domain
-        return '/'.join([custom_domain, self.slug, 'conversations'])
+    def sub_domain_with_scheme(self):
+        sub_domain = 'https://' + self.sub_domain
+        return '/'.join([sub_domain, self.slug, 'conversations'])
 
 class BoardSubscription(models.Model):
     """

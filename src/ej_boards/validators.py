@@ -10,19 +10,13 @@ def validate_board_slug(slug):
     elif '/' in slug:
         raise ValidationError(_('Slug cannot contain a backslash character.'))
 
-def validate_custom_domain(custom_domain):
+def validate_sub_domain(sub_domain):
     """
-    Validates if custom_domain is a sub domain from the 
+    Validates if sub_domain is a subdomain from the
     application domain.
     """
     from django.conf import settings
     import re
-    valid_domains = settings.ALLOWED_HOSTS
-    valid_domain = False
-    for domain in valid_domains:
-        domain_without_subdomain_rule = domain[1:]
-        if(re.match('^.*\.\.?'+ domain_without_subdomain_rule, custom_domain)):
-            valid_domain = True
-            break
-    if (not valid_domain):
-        raise ValidationError( _('custom_domain must be a sobdomain of %s' % str(valid_domains)))
+    domain = settings.SESSION_COOKIE_DOMAIN
+    if(not(re.match("^.*"+ domain, sub_domain))):
+        raise ValidationError( _('This field must be a subdomain of %s' % str(domain[1:])))

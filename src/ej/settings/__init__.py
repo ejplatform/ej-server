@@ -90,16 +90,6 @@ class Conf(ThemesConf,
         'DEFAULT_VERSION': 'v1',
     }
 
-<<<<<<< HEAD
-    SESSION_COOKIE_DOMAIN = '.pencillabs.com.br'
-    ALLOWED_HOSTS = ['127.0.0.1', '.pencillabs.com.br']
-=======
-    #this settings must be anabled only on production.
-    #SESSION_COOKIE_DOMAIN = '.ejplatform.org'
-
-    ALLOWED_HOSTS = ['127.0.0.1', '.ejplatform.org', '.ejparticipe.com.br', '.pencillabs.com.br']
-
->>>>>>> de342c9c... Use middleware for login redirect.
     # REST_AUTH_REGISTER_SERIALIZERS = {
     #     'REGISTER_SERIALIZER': 'ej_users.serializers.RegistrationSerializer'
     # }
@@ -114,6 +104,14 @@ class Conf(ThemesConf,
             return 'anymail.backends.mailgun.EmailBackend'
         else:
             return 'django.core.mail.backends.console.EmailBackend'
+
+    # The SESSION_COOKIE_DOMAIN variable must be enabled for subdomains login.
+    # In this case, all subdomains of ejplatform.org will be able to login on ej.
+    def get_session_cookie_domain(self):
+        if self.ENVIRONMENT == 'production':
+            return '.ejplatform.org'
+        else:
+            return ''
 
 
 Conf.save_settings(globals())

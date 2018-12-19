@@ -1,9 +1,8 @@
 import re
-import logging
 from django.conf import settings
 from django.utils.text import slugify
 from django.urls import resolve
-from django.http import Http404, HttpResponsePermanentRedirect
+from django.http import Http404, HttpResponseRedirect
 
 from .models import Board
 
@@ -52,20 +51,28 @@ def BoardFallbackMiddleware(get_response):  # noqa: N802, C901
 
     return middleware
 
-def BoardDomainRedirectMiddleware(get_response):
+def BoardSubDomainRedirectMiddleware(get_response):
     from ej_boards.models import Board
 
     def middleware(request):
+        """
+        This middleware is responsible to redirect the user to some board
+        that was created with a valid subdomain. If the user is accessing
+        from https://example.ejplatform.org, this middleware will try to
+        find some board where the sub_domain field have the
+        value 'https://example.ejplatform.org' and redirect the user to it.
+        """
         response = get_response(request)
         path_info = request.META['PATH_INFO']
-        if(re.match('^\/home\/?', path_info)):
+        valid_route = re.match('^(\/home\/)?(\/conversations\/)?', path_info)
+        if(valid_route.group(0) or valid_route.group(1)):
             try:
                 domain = request.META['HTTP_HOST'].split(':')[0]
-                board, board_exists = Board.with_custom_domain(domain)
+                board, board_exists = Board.with_sub_domain(domain)
                 if(board_exists):
-                    return HttpResponsePermanentRedirect('/%s/conversations' % board)
+                    return HttpResponseRedirect('/%s/conversations' % board)
             except:
-                return response
+                pass
         return response
 
     return middleware
