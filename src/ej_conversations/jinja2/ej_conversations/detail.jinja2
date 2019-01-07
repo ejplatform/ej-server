@@ -11,8 +11,13 @@
 
 {% endblock metaOG2 %}
 
+{% block _menu %}
+    {{ menu(request.user, board_palette) }}
+{% endblock %}
+
 {% block content %}
     {{conversation_detail_modalities(voted)}}
+
     <div class="ConversationDetail">
         {# Ballon with title #}
         {{ conversation|role('balloon') }}
@@ -25,7 +30,7 @@
         <div class="ConversationDetail-content">
             <div class="Comment">
                 {{ conversation|role('comment-form', comment_content=comment_form) }}
-                <div class="CommentCard">
+                <div class="CommentCard CommentCard--{{conversation.css_palette}}">
                     {% if comment %}
                         {{ comment|role('card') }}
                     {% else %}

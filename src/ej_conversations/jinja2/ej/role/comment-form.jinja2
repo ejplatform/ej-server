@@ -18,7 +18,7 @@
 
 
 
-<div id="commentform">
+<div id="commentform" class="CommentCard--{{ board_palette }}" >
     {% if can_comment and comments_left > 0 or user_is_owner %}
         <p>{% trans %}Include something new and avoid similar opinions.{% endtrans %}</p>
         {{ comment_form(csrf_input, comment_content) }}

@@ -59,7 +59,9 @@ def conversation_list(request, board):
         'boards': boards,
         'current_board': board,
         'title': board.title,
-        'description': board.description
+        'description': board.description,
+        'show_welcome_window': False,
+        'board_palette': board.css_palette
     }
 
 
@@ -172,7 +174,7 @@ def board_create(request):
 @urlpatterns.route('<model:board>/edit/', perms=['ej.can_edit_board:board'])
 def board_edit(request, board):
     if request.method == 'POST':
-        form = BoardForm(request.POST, instance=board)
+        form = BoardForm(request.POST, request.FILES, instance=board)
         if form.is_valid():
             form.instance.save()
             return redirect(board.get_absolute_url())

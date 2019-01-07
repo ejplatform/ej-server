@@ -1,6 +1,6 @@
 /*
- BOARDS
- ======================================================================== */
+BOARDS
+======================================================================== */
 
 @import '../2_tools/index';
 
@@ -9,57 +9,106 @@ $board-link-margin: 15px;
 $board-top-menu-border: 1px #DDDDDD solid;
 
 .BoardForm {
-    label {
-        font-size: $font-size-small;
-        color: $color-accent;
-        margin-left: $spacing-unit-small;
+  label {
+    font-size: $font-size-small;
+    color: $color-accent;
+    margin-left: $spacing-unit-small;
+  }
+
+  &-paletteItem {
+    display: flex;
+    border-radius: 50% 50%;
+    div {
+      width: 20px;
+      height: 20px;
+      margin-left: 5px;
+      border-radius: 50% 50%;
+
+      &[class^="Blue-dark"] {
+        background-color: #30BFD3;
+      }
+      &[class^="Blue-light"] {
+        background-color: #C4F2F4;
+      }
+
+      &[class^="Pink-dark"] {
+        background-color: #FF3D72;
+      }
+      &[class^="Pink-light"] {
+        background-color: #FFE3EA;
+      }
+      &[class^="Orange-dark"] {
+        background-color: #F5700A;
+      }
+      &[class^="Orange-light"] {
+        background-color: #FFE1CA;
+      }
+      &[class^="Grey-dark"] {
+        background-color: #666666;
+      }
+      &[class^="Grey-light"] {
+        background-color: #EEEEEE;
+      }
+      &[class^="Green-dark"] {
+        background-color: #36C273;
+      }
+      &[class^="Green-light"] {
+        background-color: #B4FDD4;
+      }
+      &[class^="Purple-dark"] {
+        background-color: #7758B3;
+      }
+      &[class^="Purple-light"] {
+        background-color: #E7DBFF;
+      }
     }
+  }
 
 }
 
 .Board{
 
-    &-TopMenu {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        border-bottom: $board-top-menu-border;
-        img {
-            width: $spacing-unit-small;
-        }
-        button {
-            margin: $spacing-unit-small $spacing-unit-small $spacing-unit-tiny $spacing-unit-small;
-            text-transform: uppercase;
-            background-color: transparent;
-            border: none;
-            color: $color-content;
-            font-size: $font-size-small;
-            &:hover {
-                cursor: pointer;
-            }
-        }
+  &-TopMenu {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border-bottom: $board-top-menu-border;
+    img {
+      width: $spacing-unit-small;
     }
+    button {
+      margin: $spacing-unit-small $spacing-unit-small $spacing-unit-tiny $spacing-unit-small;
+      text-transform: uppercase;
+      background-color: transparent;
+      border: none;
+      color: $color-content;
+      font-size: $font-size-small;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
 
-    &-Title {
-        color: $color-content;
-    }
+  &-Title {
+    color: $color-content;
+  }
 }
 
 .BoardList {
-    text-align: center;
-    &-title {
-        h1 {
-            font-size: $font-size-h2;
-            color: $color-accent;;
-        }
+  text-align: center;
+  &-title {
+    h1 {
+      font-size: $font-size-h2;
+      color: $color-accent;;
     }
+  }
 
-    &-linkList {
-        margin: $board-ul-margin;
-    }
+  &-linkList {
+    margin: $board-ul-margin;
+  }
 
-    &-linkList li {
-        list-style-type: none;
-        margin: $board-link-margin;
-    }
+  &-linkList li {
+    list-style-type: none;
+    margin: $board-link-margin;
+  }
 }

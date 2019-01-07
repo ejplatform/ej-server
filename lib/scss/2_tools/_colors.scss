@@ -37,3 +37,93 @@
     }
 }
 
+
+/**
+ * Mixin that changes the user board, and conversations palette.
+ */
+@mixin palette {
+
+  &--bluePalette  {
+    background-color: $color-primary;
+    &-light {
+      background-color: $color-hint;
+      color: $color-primary;
+      textarea {
+        color: $color-primary;
+      }
+    }
+    &-text {
+      color: $color-hint;
+    }
+  }
+
+  &--greyPalette {
+    background-color: #666666;
+    &-light {
+      background-color: #EEEEEE;
+      color: #666666;
+      textarea {
+        color: #666666;
+      }
+    }
+    &-text {
+      color: #EEEEEE;
+    }
+  }
+
+  &--greenPalette {
+    background-color:  #36C273;
+    &-light {
+      background-color: #B4FDD4;
+      color: #36C273;
+      textarea {
+        color: #36C273;
+      }
+    }
+    &-text {
+      color: #B4FDD4;
+    }
+  }
+
+  &--orangePalette {
+    background-color:  #F5700A;
+    &-light {
+      background-color: #FFE1CA;
+      color: #F5700A;
+      textarea {
+        color: #F5700A;
+      }
+    }
+    &-text {
+      color: #FFE1CA;
+    }
+  }
+
+  &--purplePalette {
+    background-color:  #7758B3;
+    &-light {
+      background-color: #E7DBFF;
+      color: #7758B3;
+      textarea {
+        color: #7758B3;
+      }
+    }
+    &-text {
+      color: #E7DBFF;
+    }
+  }
+
+  &--pinkPalette {
+    background-color: $color-accent;
+    &-light {
+      background-color: #FFE3EA;
+      color: $color-accent;
+      textarea {
+        color: $color-accent;
+      }
+    }
+    &-text {
+      color: #FFE3EA;
+    }
+  }
+}

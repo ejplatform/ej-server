@@ -12,9 +12,8 @@ $conversation-card-font-size-small: 12px !default;
 $conversation-card-border-arrow-size: $spacing-unit;
 $profile-label-clear-color: #30BFD3 !default;
 $modalities-content-width-max: ($page-content-width-max / 2) - 29 !default;
-$color-for-unfolding: rgba(0, 0, 0, 0.3);
+$color-for-unfolding: rgba(2, 16.9, 27.8, 0.6);
 $color-background-button-modalities: rgba(255, 255, 255, 0.3);
-
 
 .ConversationList {
     @extend .Container;
@@ -129,6 +128,12 @@ $color-background-button-modalities: rgba(255, 255, 255, 0.3);
     &-link {
         text-align: center;
     }
+
+    img {
+      max-width: 245px;
+      width: 100%;
+      max-height: 60px;
+    }
 }
 
 .ConversationFooter {
@@ -145,15 +150,14 @@ $color-background-button-modalities: rgba(255, 255, 255, 0.3);
 }
 
 .ConversationTags {
-    @include color($color-primary, $color-primary, $force: true);
     font-weight: bold;
     text-align: center;
     padding: $spacing-unit-small + $spacing-unit-tiny $spacing-unit-small $spacing-unit-small $spacing-unit-small;
-    background-color: $color-hint;
+
+    @include palette;
 }
 
 .ConversationCard {
-    background-color: $color-primary;
     align-self: stretch;
     box-sizing: border-box;
     border: 0;
@@ -251,7 +255,6 @@ $color-background-button-modalities: rgba(255, 255, 255, 0.3);
     &-cover + .ConversationCard-actions {
         padding: 0 $spacing-unit-small $spacing-unit-small $spacing-unit-small;
         background-size: 30px;
-        background: $color-primary;
         margin-top: $spacing-unit;
         bottom: 0;
         position: absolute;
@@ -289,9 +292,9 @@ $color-background-button-modalities: rgba(255, 255, 255, 0.3);
     @media only screen and (min-width: $breakpoint-small) {
         margin: $spacing-unit-tiny;
     }
+
+    @include palette
 }
-
-
 
 .ConversationDetail {
     margin: 0 auto;
@@ -350,15 +353,9 @@ $color-background-button-modalities: rgba(255, 255, 255, 0.3);
 
     }
     &-banner {
-        background: $color-hint;
         border-radius: 0 0 $border-radius-large $border-radius-large;
-        color: $color-content;
         margin: 0;
         padding: $spacing-unit-tiny $spacing-unit-tiny $spacing-unit $spacing-unit-tiny;
-        .ConversationTags {
-            background-color: $color-hint;
-            color: $color-primary;
-        }
 
         h1 {
             @extend .Container;
@@ -369,7 +366,6 @@ $color-background-button-modalities: rgba(255, 255, 255, 0.3);
             font-weight: 200 !important;
             font-size: ($spacing-unit-tiny + $spacing-unit-small) !important;
             font-family: $font-paragraph;
-            color: $color-content;
 
             @media only screen and (min-width: $breakpoint-large) {
                 padding: $spacing-unit-large 0;
@@ -406,7 +402,7 @@ $color-background-button-modalities: rgba(255, 255, 255, 0.3);
     &-arrow {
         border-left: $spacing-unit solid transparent;
         border-right: $spacing-unit solid transparent;
-        border-top: $border-radius solid $color-hint;
+        border-top: $border-radius solid;
         height: 0;
         margin: 0 auto;
         padding: 0;
@@ -414,6 +410,40 @@ $color-background-button-modalities: rgba(255, 255, 255, 0.3);
         width: 0;
     }
 
+    &-statistics,
+    &-statisticsBottom {
+        display: flex;
+        font-size: $font-size-tiny;
+        font-weight: normal;
+        justify-content: space-between;
+        margin: 0 auto;
+        max-width: $content-wrapper-max-width - 2 * $spacing-unit-huge;
+        padding: 0 $spacing-unit-small;
+
+        li {
+            list-style: none;
+        }
+    }
+
+    &-statisticsBottom {
+        bottom: ($spacing-unit - $spacing-unit-tiny);
+        font-weight: normal;
+        padding: 0 ($spacing-unit + $spacing-unit-small);
+        position: relative;
+
+        :first-child {
+            a {
+                font-weight: bold;
+            }
+        }
+
+        :last-child {
+            text-align: right;
+            a {
+                color: $color-content;
+            }
+        }
+    }
 
     &-header {
         text-align: center;
@@ -432,10 +462,11 @@ $color-background-button-modalities: rgba(255, 255, 255, 0.3);
         }
     }
 
+    @include palette;
 }
 
 .Modalities{
-    display: flex;
+    display: none;
     align-content: center;
     flex-direction: column;
     align-items: center;
@@ -459,7 +490,12 @@ $color-background-button-modalities: rgba(255, 255, 255, 0.3);
     }
     .swiper-wrapper{
         align-items: center;
-        margin: auto $spacing-unit-small + $spacing-unit;
+        @media only screen and (min-width: $breakpoint-medium - $breakpoint-small) {
+            margin: auto 0 auto $spacing-unit - $spacing-unit-tiny;
+        }
+        @media only screen and (min-width: $breakpoint-small) {
+            margin: auto 0 auto $spacing-unit + $spacing-unit-small;
+        }
     }
     .style-slide-center{
         margin: auto auto;
@@ -467,44 +503,65 @@ $color-background-button-modalities: rgba(255, 255, 255, 0.3);
         margin: auto $spacing-unit-small + $spacing-unit;
     }
     .swiper-slide {
-        margin: 0px $spacing-unit-huge - $spacing-unit 0px 0px;
-        max-width: $modalities-content-width-max;
-        width: $spacing-unit-huge * 3;
+        @media only screen and (min-width: $breakpoint-medium - $breakpoint-small) {
+            margin: 0px $spacing-unit + $spacing-unit-small 0px 0px;
+        }
+        @media only screen and (min-width: $breakpoint-small) {
+            margin: 0px $spacing-unit-large + $spacing-unit 0px 0px;
+        }
+        display: flex;
+        width: $spacing-unit-huge * 3 - $spacing-unit-small;
         line-height: 1.2;
         bottom: auto;
         background-color: $color-background;
         text-align: center;
-        border-radius: $spacing-unit-tiny;
+        border-radius: $spacing-unit-small;
         position: relative;
         border: 1px solid $color-accent;
         padding: $spacing-padding * 2;
-        flex-direction: row;
+        flex-direction: column;
         align-items: center;
         -webkit-justify-content: center;
         .append-buttons{
-            padding: $spacing-unit-tiny 0px;
+            padding: $spacing-unit-small + $spacing-unit-tiny 0px $spacing-unit-tiny 0px;
             a{
                 color: $color-primary;
                 font-weight: bold;
+                font-size: $font-size-default;
             }
         }
         p {
-            padding: $spacing-unit-small 0 $spacing-unit-tiny 0;
+            padding: $spacing-unit 0 $spacing-unit-tiny 0;
             margin: 0;
-            font-size: $font-size-small;
+            font-size: $spacing-unit-small;
             color: $color-content;
         }
         h3{
-            padding: $spacing-unit-tiny 0 $spacing-unit-small 0;
+            padding: $spacing-unit-small 0 $spacing-unit 0;
             margin: 0;
             font-family: $font-raleway;
             font-weight: bold;
-            font-size: $font-size-large;
+            font-size: $font-size-larger;
             color: $color-accent;
+        }
+        .swiper-pagination{
+            position: relative;
+        }
+        .swiper-pagination-bullet{
+            margin: 0px $font-size-tiny-tiny;
+            background: $color-hint;
+        }
+        .swiper-pagination-bullet-active{
+            background: $color-content;
         }
     }
     .swiper-button-next{
-        margin: -($spacing-unit-small + $spacing-unit-tiny) 0px 0px 0px;
+        @media only screen and (min-width: $breakpoint-medium - $breakpoint-small) {
+            margin: -($spacing-unit-small + $spacing-unit-tiny) (-$spacing-unit-small - $spacing-unit-tiny) 0px 0px;
+        }
+        @media only screen and (min-width: $breakpoint-small) {
+            margin: -($spacing-unit-small + $spacing-unit-tiny) 0px 0px 0px;
+        }
         width: $spacing-unit;
         color: $color-primary;
         border: 1px solid;
@@ -516,7 +573,12 @@ $color-background-button-modalities: rgba(255, 255, 255, 0.3);
         background-size: $spacing-unit ($spacing-unit + $spacing-unit-tiny);
     }
     .swiper-button-prev{
-        margin: -($spacing-unit-small + $spacing-unit-tiny) $spacing-unit-tiny 0px 0px;
+        @media only screen and (min-width: $breakpoint-medium - $breakpoint-small) {
+            margin: -($spacing-unit-small + $spacing-unit-tiny) $spacing-unit-tiny 0px $spacing-unit-tiny - $spacing-unit;
+        }
+        @media only screen and (min-width: $breakpoint-small) {
+            margin: -($spacing-unit-small + $spacing-unit-tiny) $spacing-unit-tiny 0px (-$spacing-unit-tiny);
+        }
         width: $spacing-unit;
         color: $color-primary;
         left: $spacing-unit-small;
@@ -528,30 +590,24 @@ $color-background-button-modalities: rgba(255, 255, 255, 0.3);
         font-size: $spacing-unit + $spacing-unit-tiny;
         background-size: $spacing-unit $spacing-unit + $spacing-unit-tiny;
     }
-    .swiper-pagination-bullet{
-        background: $color-background;
-    }
-    .swiper-pagination-bullet-active{
-        background: $color-content-text;
-    }
 
     .modalities-slider.show{
         visibility: visible;
     }
     @media only screen and (min-width: $breakpoint-medium - $breakpoint-small) {
         .swiper-container{
-            max-width: $spacing-unit-huge * 3;
+            max-width: $spacing-unit-huge * 3 - $spacing-unit-small - $spacing-unit-tiny;
         }
         .swiper-slide{
-            max-width: $spacing-unit-huge * 2 - $spacing-unit-small;
+            max-width: ($spacing-unit-huge * 2) + $spacing-unit-tiny;
         }
         img{
             padding: 0px $spacing-unit - $spacing-unit-tiny;
-            max-width: 28%;
+            max-width: 25%;
         }
         .imgpart{
-            padding: 0px $spacing-unit - $spacing-unit-tiny;
-            max-width: 70%;
+            padding: 0px $spacing-unit-small;
+            max-width: 90%;
         }
         .imgponte{
             padding: 0px $spacing-unit - $spacing-unit-tiny;
@@ -563,20 +619,22 @@ $color-background-button-modalities: rgba(255, 255, 255, 0.3);
         }
         .Button{
             font-weight: bold;
-            font-size: 11px;
+            font-size: $spacing-unit-small;
+            margin: $spacing-unit + $spacing-unit-tiny 0px $spacing-unit-tiny 0px;
+            background-color: #30BFD3;
         }
         .fa-times{
-            padding: 0px $spacing-unit-small;
+            padding: 0px $spacing-unit - $spacing-unit-tiny;
             font-size: $spacing-unit - $spacing-unit-tiny;
             color: $color-accent;
         }
         .fa-arrow-right{
-            padding: 0px $spacing-unit-small;
+            padding: 0px $spacing-unit - $spacing-unit-tiny;
             font-size: $spacing-unit - $spacing-unit-tiny;
             color: $color-primary;
         }
         .fa-check{
-            padding: 0px $spacing-unit-small;
+            padding: 0px $spacing-unit - $spacing-unit-tiny;
             font-size: $spacing-unit - $spacing-unit-tiny;
             color: $color-content;
         }
@@ -589,12 +647,12 @@ $color-background-button-modalities: rgba(255, 255, 255, 0.3);
             max-width: $modalities-content-width-max;
             .Button{
                 font-weight: bold;
-                font-size: 13px;
+                font-size: 17px;
             }
         }
         img{
             padding: 0px $spacing-unit - $spacing-unit-tiny;
-            max-width: 16%;
+            max-width: 20%;
         }
         .imgpart{
             padding: 0px $spacing-unit - $spacing-unit-tiny;
@@ -609,17 +667,17 @@ $color-background-button-modalities: rgba(255, 255, 255, 0.3);
             max-width: 77%;
         }
         .fa-times{
-            padding: 0px $spacing-unit-small;
+            padding: 0px $spacing-unit - $spacing-unit-tiny;
             font-size: $spacing-unit - $spacing-unit-tiny;
             color: $color-accent;
         }
         .fa-arrow-right{
-            padding: 0px $spacing-unit-small;
+            padding: 0px $spacing-unit - $spacing-unit-tiny;
             font-size: $spacing-unit - $spacing-unit-tiny;
             color: $color-primary;
         }
         .fa-check{
-            padding: 0px $spacing-unit-small;
+            padding: 0px $spacing-unit - $spacing-unit-tiny;
             font-size: $spacing-unit - $spacing-unit-tiny;
             color: $color-content;
         }
@@ -652,7 +710,7 @@ $color-background-button-modalities: rgba(255, 255, 255, 0.3);
         p {
             padding: $spacing-unit-small 0 $spacing-unit-tiny 0;
             margin: 0;
-            font-size: $font-size-small;
+            font-size: $font-size-default;
             color: $color-content;
         }
         h3{
@@ -748,7 +806,7 @@ $color-background-button-modalities: rgba(255, 255, 255, 0.3);
             width: 100% !important;
             z-index: 3;
             padding: ($spacing-unit-large - $spacing-unit-tiny) ($spacing-unit-large - $spacing-unit-small);
-            background-color: $color-primary;
+            //background-color: $color-primary;
             color: $color-content-text;
 
             img {
@@ -862,6 +920,8 @@ $color-background-button-modalities: rgba(255, 255, 255, 0.3);
                     background: #fff;
                 }
             }
+
+          @include palette;
         }
         #commentform {
             flex: 1;
@@ -877,7 +937,7 @@ $color-background-button-modalities: rgba(255, 255, 255, 0.3);
             width: 100% !important;
             box-sizing: border-box;
             text-align: center;
-            background: $color-hint;
+            //background: $color-hint;
             border-radius: $border-radius-large;
             padding: (3 * $spacing-unit-tiny) ($spacing-unit-large - $spacing-unit-small);
             z-index: 5;
@@ -892,9 +952,10 @@ $color-background-button-modalities: rgba(255, 255, 255, 0.3);
                 margin: 0 0 0 0;
                 min-height: 3 * $font-size;
                 outline: none;
-                border: 2px solid $color-primary;
+                //border: 2px solid $color-primary;
+                border: 2px solid;
                 background: $color-content-text;
-                color: #333;
+                //color: #333;
                 box-shadow: none;
             }
             #characters-count{
@@ -912,13 +973,14 @@ $color-background-button-modalities: rgba(255, 255, 255, 0.3);
             input[type=submit] {
                 border-radius: $border-radius;
                 color: #fff;
-                background: $color-primary;
+                //background: $color-primary;
                 padding: $spacing-unit-small $spacing-unit;
                 font-size: $spacing-unit / 2;
                 box-shadow: none;
                 text-transform: uppercase;
                 font-weight: bold;
             }
+
         }
         #commentform.show {
             visibility: visible;
@@ -1039,8 +1101,6 @@ $color-background-button-modalities: rgba(255, 255, 255, 0.3);
             100% {opacity: 0;}
 
         }
-
-
     }
 
     .Comment-create{
@@ -1090,10 +1150,12 @@ $color-background-button-modalities: rgba(255, 255, 255, 0.3);
 
     &-leftConversationSlider {
         left: $spacing-unit-tiny;
+        z-index: 3;
     }
 
     &-rightConversationSlider {
         right: $spacing-unit-tiny;
+        z-index: 3;
     }
 }
 
@@ -1327,12 +1389,12 @@ $color-background-button-modalities: rgba(255, 255, 255, 0.3);
         border: 0;
         font-family: "Raleway", sans-serif;
         color: $color-content;
-        padding: $unit + 5;
+        padding: $unit;
         text-align: center;
         font-weight: 200 !important;
-        font-size: $spacing-unit !important;
+        font-size: $spacing-unit - $spacing-unit-tiny !important;
         box-shadow: none;
-        border: 1px solid $color-hint;
+        border: 1px solid $color-primary;
         border-radius: $border-radius-small;
         resize: none;
         overflow: hidden;
@@ -1361,7 +1423,7 @@ $color-background-button-modalities: rgba(255, 255, 255, 0.3);
 
             i {
                 border-radius: 50%;
-                border: $border-radius-tiny solid $color-content ;
+                border: 3px solid $color-content ;
                 display: inline-block;
                 width: 16px;
                 height: 16px;
@@ -1410,11 +1472,11 @@ $color-background-button-modalities: rgba(255, 255, 255, 0.3);
     i {
         padding: 0 $unit * 2;
         align-self: center;
-        color: $color-accent;
+        color: $color-primary;
     }
 
     input, select {
-        border: 1px solid $color-hint;
+        border: 1px solid $color-primary;
         border-radius: $border-radius-small;
         background-color: rgba(255, 255, 255, 0.5);
         box-shadow: none;

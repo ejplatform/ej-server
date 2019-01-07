@@ -53,6 +53,7 @@
             {#<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.1/js/swiper.min.js"></script>#}
             <script src="/static/js/jquery-ui/jquery-ui.min.js" defer></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.1/js/swiper.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
             <script src="/static/js/main.js" defer></script>
             <script src="/static/js/hicontrast.js"></script>
             <script src="/static/js/specific-pages.js"></script>
@@ -61,6 +62,7 @@
             <script src="/static/js/fontScale.js" defer></script>
             <script src="/static/js/comment-form-animation.js" defer></script>
             <script src="/static/js/slider-modalities-conversation.js" defer></script>
+            <script src="/static/js/file-input.js" defer></script>
             <script src="/static/js/bundle.js" defer></script>
         {% endblock javascript %}
 
@@ -88,7 +90,7 @@
 
         <!-- Twitter -->
         <meta name="twitter:card" content="summary">
-        
+
         {% block metaOG %}
             <!-- Open Graph general (Facebook, Pinterest & Google+) -->
             <meta itemprop="image" property="og:image" content="/static/img/logo/logo.svg">
@@ -104,10 +106,10 @@
 
         {% block metaOG2 %}
             <meta name="description" property="og:title" content="{{ title|default(_('EJ - A platform of social participacion.')) }}">
-    
+
             <!-- Twitter && Telegram -->
             <meta name="twitter:title" content="EJ Platform - Consultas de opinião">
-    
+
         {% endblock metaOG2 %}
     </head>
 
@@ -126,7 +128,7 @@
     <div class="Page-content-container">
         <div class="NavMenu-fixed">
             {% if logged_in and request.path != '/home/' %}
-                {{ menu(request.user) }}
+                {% block _menu %}{{ menu(request.user) }}{% endblock %}
             {% endif %}
         </div>
 

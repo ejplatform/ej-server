@@ -2,6 +2,7 @@ from django.forms import ModelForm, DateInput
 from django.conf import settings
 
 from . import models
+from ej.utils import widgets as ej_widgets
 
 EDITABLE_FIELDS = ['city', 'state', 'country', 'gender', 'race', 'ethnicity', 'political_activity',
                    'biography', 'birth_date', 'occupation', 'education', 'profile_photo']
@@ -29,7 +30,8 @@ class ProfileForm(ModelForm):
         model = models.Profile
         fields = [field for field in EDITABLE_FIELDS if field not in EXCLUDE_EDITABLE_FIELDS]
         widgets = {
-            'birth_date': DateInput(attrs={'type': 'date'})
+            'birth_date': DateInput(attrs={'type': 'date'}),
+            'profile_photo': ej_widgets.FileInput(attrs={'accept': 'image/*'})
         }
 
 
