@@ -10,43 +10,53 @@ from boogie import rules
 from boogie.apps.users.models import AbstractUser
 from boogie.rest import rest_api
 from .manager import UserManager
-from .utils import random_name
 
 
-@rest_api(['id', 'display_name'])
+def token_factory():
+    return token_urlsafe(30)
+
+
+@rest_api(['id'])
 class User(AbstractUser):
     """
     Default user model for EJ platform.
     """
 
-    display_name = models.CharField(
-        _('Display name'),
-        max_length=140,
-        unique=True,
-        default=random_name,
-        help_text=_(
-            'A randomly generated name used to identify each user.'
-        ),
-    )
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['name']
+
     email = models.EmailField(
         _('email address'),
         unique=True,
-        help_text=('Your e-mail address')
+        help_text=_('Your e-mail address')
     )
-
-    objects = UserManager()
+    # FIXME: this is not related to auth, and hence should leave this model.
+    limit_board_conversations = models.PositiveIntegerField(
+        _('Maximum number of conversations in board'),
+        default=0,
+        help_text=_(
+            'Maximum number of conversations in user board'
+        ),
+    )
 
     @property
     def username(self):
         return self.email.replace('@', '__')
 
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['name']
-
     @property
     def profile(self):
-        profile = rules.get_value('auth.profile')
-        return profile(self)
+        return rules.compute('auth.profile', self)
+
+    @property
+    def notifications_options(self):
+        return rules.compute('auth.notification_options', self)
+
+    objects = UserManager()
+
+    @property
+    def notifications(self):
+        notifications = rules.get_value('auth.notifications')
+        return notifications(self)
 
     class Meta:
         swappable = 'AUTH_USER_MODEL'
@@ -60,6 +70,7 @@ class PasswordResetToken(TimeStampedModel):
         _('User token'),
         max_length=50,
         unique=True,
+        default=token_factory,
     )
     is_used = models.BooleanField(default=False)
     user = models.ForeignKey(
@@ -72,15 +83,10 @@ class PasswordResetToken(TimeStampedModel):
         time_now = datetime.now(timezone.utc)
         return (time_now - self.created).total_seconds() > 600
 
-    def generate_token(self):
-        self.url = token_urlsafe(30)
-
-
-def generate_token(user):
-    token = PasswordResetToken(user=user)
-    token.generate_token()
-    token.save()
-    return token
+    def use(self, commit=True):
+        self.is_used = True
+        if commit:
+            self.save(update_fields=['is_used'])
 
 
 def clean_expired_tokens():

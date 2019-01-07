@@ -7,6 +7,7 @@ Guia de Uso
 
    user-start
    user-conversation
+   user-stereotypes
    user-vote
    user-popular
    user-admin

@@ -6,6 +6,7 @@ from django.contrib.auth import get_user_model
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _, ugettext as __
+
 from rest_framework.authtoken.models import Token
 import datetime
 
@@ -48,6 +49,7 @@ class Profile(models.Model):
     is_active = delegate_to('user')
     is_staff = delegate_to('user')
     is_superuser = delegate_to('user')
+    limit_board_conversations = delegate_to('user')
 
     @property
     def age(self):

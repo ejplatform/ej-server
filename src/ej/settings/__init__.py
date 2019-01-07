@@ -1,15 +1,17 @@
 import logging
+
 from boogie.configurations import DjangoConf, env
+from ej.settings.dramatiq import DramatiqConf
 from .apps import InstalledAppsConf
-from .celery import CeleryConf
 from .constance import ConstanceConf
+from .email import EmailConf
 from .log import LoggingConf
 from .middleware import MiddlewareConf
+from .notifications import NotificationsConf
 from .options import EjOptions
 from .paths import PathsConf
 from .security import SecurityConf
 from .themes import ThemesConf
-from .email import EmailConf
 from .. import fixes
 
 log = logging.getLogger('ej')
@@ -18,7 +20,8 @@ log = logging.getLogger('ej')
 class Conf(ThemesConf,
            ConstanceConf,
            MiddlewareConf,
-           CeleryConf,
+           NotificationsConf,
+           DramatiqConf,
            SecurityConf,
            LoggingConf,
            PathsConf,
@@ -35,7 +38,6 @@ class Conf(ThemesConf,
 
     USING_DOCKER = env(False, name='USING_DOCKER')
     HOSTNAME = env('localhost')
-
 
     #
     # Accounts
@@ -94,14 +96,14 @@ class Conf(ThemesConf,
 
     # Use this variable to change the ej environment during the docker build step.
     ENVIRONMENT = 'local'
+    DEFAULT_FROM_EMAIL = "Empurrando Juntos <noreply@mail.ejplatform.org>"
 
-    if (ENVIRONMENT == 'production'):
-      EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend';
-      # the api key will be informed during the docker build step.
-      ANYMAIL = {'MAILGUN_API_KEY': ''};
-      DEFAULT_FROM_EMAIL = "Empurrando Juntos <noreply@mail.ejplatform.org>"
-      HOSTNAME = 'https://ejplatform.org'
-
+    def get_email_backend(self):
+        if self.ENVIRONMENT == 'production':
+            self.ANYMAIL = {'MAILGUN_API_KEY': ''}
+            return 'anymail.backends.mailgun.EmailBackend'
+        else:
+            return 'django.core.mail.backends.console.EmailBackend'
 
 
 Conf.save_settings(globals())

@@ -1,22 +1,25 @@
 from logging import getLogger
 
+from boogie import rules
 from django.http import HttpResponseServerError, Http404
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
+from django.shortcuts import render
 from hyperpython import a
 
-from boogie import rules
+from ej_conversations.models import Vote
 from . import urlpatterns, conversation_url
 from ..forms import CommentForm
 from ..models import Conversation, Comment
-from ej_conversations.rules import max_comments_per_conversation
+from ..rules import max_comments_per_conversation
 
 log = getLogger('ej')
 
 
 @urlpatterns.route('', name='list')
 def conversation_list(request):
-    return {
+    show_welcome_window = 'show_welcome_window' in request.COOKIES.keys()
+    ctx = {
         'conversations': Conversation.objects.filter(is_promoted=True, is_hidden=False),
         'can_add_conversation': request.user.has_perm('ej.can_add_promoted_conversation'),
         'create_url': reverse('conversation:create'),
@@ -24,7 +27,13 @@ def conversation_list(request):
         'title': _('Public conversations'),
         'subtitle': _('Participate of conversations and give your opinion with comments and votes!'),
         'description': _('Participate of conversations and give your opinion with comments and votes!'),
+        'show_welcome_window': show_welcome_window,
+        'board_palette': Conversation.get_default_css_palette()
     }
+    response = render(request, 'ej_conversations/list.jinja2', ctx)
+    if (show_welcome_window):
+        response.delete_cookie('show_welcome_window')
+    return response
 
 
 @urlpatterns.route(conversation_url)
@@ -44,8 +53,11 @@ def get_conversation_detail_context(request, conversation):
     """
     user = request.user
     is_favorite = user.is_authenticated and conversation.followers.filter(user=user).exists()
-    comment = None
     comment_form = CommentForm(None, conversation=conversation)
+    voted = False
+    if user.is_authenticated:
+        voted = Vote.objects.filter(author=user).exists()
+
     # User is voting in the current comment. We still need to choose a random
     # comment to display next.
     if request.POST.get('action') == 'vote':
@@ -69,19 +81,22 @@ def get_conversation_detail_context(request, conversation):
         conversation.toggle_favorite(user)
         log.info(f'user {user.id} toggled favorite status of conversation {conversation.id}')
 
+    # User to pass modalities
+    elif request.POST.get('modalities') == 'pass':
+        voted = True
+
     # User is probably trying to something nasty ;)
     elif request.method == 'POST':
         log.warning(f'user {user.id} se nt invalid POST request: {request.POST}')
         return HttpResponseServerError('invalid action')
+
     n_comments_under_moderation = rules.compute('ej_conversations.comments_under_moderation', conversation, user)
-    if user.is_authenticated:
-        comments_made = user.comments.filter(conversation=conversation).count()
-    else:
-        comments_made = 0
+    comments_made = rules.compute('ej_conversations.comments_made', conversation, user)
+
     return {
         # Objects
         'conversation': conversation,
-        'comment': comment or conversation.next_comment(user, None),
+        'comment': conversation.next_comment(user, None),
         'login_link': login_link(_('login'), conversation),
         'comment_form': comment_form,
 
@@ -93,6 +108,9 @@ def get_conversation_detail_context(request, conversation):
         'comments_under_moderation': n_comments_under_moderation,
         'comments_made': comments_made,
         'max_comments': max_comments_per_conversation(),
+        'user_is_owner': conversation.author == user,
+        'voted': voted,
+        'board_palette': conversation.css_palette
     }
 
 

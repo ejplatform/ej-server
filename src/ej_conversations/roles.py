@@ -6,6 +6,7 @@ from boogie import rules
 
 from ej.roles import with_template
 from . import models
+from ej_boards.models import BoardSubscription
 
 
 #
@@ -19,12 +20,17 @@ def conversation_card(conversation, request=None, url=None, **kwargs):
 
     user = getattr(request, 'user', None)
     can_moderate = user.has_perm('ej.can_moderate_conversation', conversation)
+    tag = conversation.tags.first()  # only first is shown in card to prevent overflow
+    subscription = BoardSubscription.objects.filter(conversation=conversation)
+    board = None
+    if subscription.exists():
+        board = subscription[0].board
     return {
         'conversation': conversation,
-        'url': url or conversation.get_absolute_url(),
-        'tags': conversation.tags.all(),
+        'url': url or conversation.get_absolute_url(board),
+        'tag': tag,
         'n_comments': conversation.approved_comments.count(),
-        'n_votes': conversation.vote_count(),
+        'n_votes': conversation.votes.count(),
         'n_followers': conversation.followers.count(),
         'user_can_moderate': can_moderate,
         **kwargs,
@@ -41,7 +47,8 @@ def conversation_balloon(conversation, request=None, **kwargs):
     favorites = models.FavoriteConversation.objects
     is_authenticated = getattr(user, 'is_authenticated', False)
     is_favorite = is_authenticated and conversation.is_favorite(user)
-    tags = list(map(str, conversation.tags.all()[:3]))
+    tags = list(map(str, conversation.tags.all()))
+
     return {
         'conversation': conversation,
         'tags': tags,
@@ -128,12 +135,34 @@ def comment_list_item(comment, **kwargs):
     }
 
 
+@with_template(models.Comment, role='reject-reason')
+def comment_reject_reason(comment, **kwargs):
+    """
+    Show reject reason for each comment.
+    """
+
+    rejection_reason = comment.rejection_reason
+    if rejection_reason in dict(models.Comment.REJECTION_REASON) and comment.status == comment.STATUS.rejected:
+        rejection_reason = dict(models.Comment.REJECTION_REASON)[comment.rejection_reason]
+    else:
+        rejection_reason = None
+    return {
+        'rejection_reasons': dict(models.Comment.REJECTION_REASON),
+        'comment': comment,
+        'conversation_url': comment.conversation.get_absolute_url(),
+        'status': comment.status,
+        'status_name': dict(models.Comment.STATUS)[comment.status].capitalize(),
+        'rejection_reason': rejection_reason
+    }
+
+
 @with_template(models.Conversation, role='comment-form')
 def comment_form(conversation, request=None, comment_content=None, **kwargs):
     """
     Render comment form for one conversation.
     """
     user = getattr(request, 'user', None)
+
     n_comments = rules.compute('ej_conversations.remaining_comments', conversation, user)
     conversation_url = conversation.get_absolute_url()
     login = reverse('auth:login')
@@ -144,5 +173,6 @@ def comment_form(conversation, request=None, comment_content=None, **kwargs):
         'user_is_owner': conversation.author == user,
         'csrf_input': csrf_input(request),
         'comment_content': comment_content,
+        'board_palette': conversation.css_light_palette,
         'login_anchor': login_anchor,
     }

@@ -7,6 +7,12 @@ $conversation-vote-circle-size: 18px !default;
 $conversation-toast-image-border: $spacing-unit-tiny / 3;
 $conversation-button-size: $spacing-unit-small + $spacing-unit-tiny !default;
 $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
+$conversation-card-font-size-small: 12px !default;
+$conversation-card-border-arrow-size: $spacing-unit;
+$profile-label-clear-color: #30BFD3 !default;
+$modalities-content-width-max: ($page-content-width-max / 2) - 29 !default;
+$color-for-unfolding: rgba(2, 16.9, 27.8, 0.6);
+$color-background-button-modalities: rgba(255, 255, 255, 0.3);
 
 .ConversationList {
     @extend .Container;
@@ -116,6 +122,12 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
     &-link {
         text-align: center;
     }
+
+    img {
+      max-width: 245px;
+      width: 100%;
+      max-height: 60px;
+    }
 }
 
 .ConversationFooter {
@@ -132,15 +144,14 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
 }
 
 .ConversationTags {
-    @include color($color-primary, $color-primary, $force: true);
     font-weight: bold;
     text-align: center;
     padding: $spacing-unit-small + $spacing-unit-tiny $spacing-unit-small $spacing-unit-small $spacing-unit-small;
-    background-color: $color-hint;
+
+    @include palette;
 }
 
 .ConversationCard {
-    background-color: $color-primary;
     align-self: stretch;
     box-sizing: border-box;
     border: 0;
@@ -217,7 +228,6 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
     &-cover + .ConversationCard-actions {
         padding: 0 $spacing-unit-small $spacing-unit-small $spacing-unit-small;
         background-size: 30px;
-        background: $color-primary;
         margin-top: $spacing-unit;
         bottom: 0;
         position: absolute;
@@ -255,6 +265,8 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
     @media only screen and (min-width: $breakpoint-small) {
         margin: $spacing-unit-tiny;
     }
+
+    @include palette
 }
 
 .ConversationDetail {
@@ -314,15 +326,9 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
 
     }
     &-banner {
-        background: $color-hint;
         border-radius: 0 0 $border-radius-large $border-radius-large;
-        color: $color-content;
         margin: 0;
         padding: $spacing-unit-tiny $spacing-unit-tiny $spacing-unit $spacing-unit-tiny;
-        .ConversationTags {
-            background-color: $color-hint;
-            color: $color-primary;
-        }
 
         h1 {
             @extend .Container;
@@ -333,7 +339,6 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
             font-weight: 200 !important;
             font-size: ($spacing-unit-tiny + $spacing-unit-small) !important;
             font-family: $font-paragraph;
-            color: $color-content;
 
             @media only screen and (min-width: $breakpoint-large) {
                 padding: $spacing-unit-large 0;
@@ -370,7 +375,7 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
     &-arrow {
         border-left: $spacing-unit solid transparent;
         border-right: $spacing-unit solid transparent;
-        border-top: $border-radius solid $color-hint;
+        border-top: $border-radius solid;
         height: 0;
         margin: 0 auto;
         padding: 0;
@@ -387,7 +392,6 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
         margin: 0 auto;
         max-width: $content-wrapper-max-width - 2 * $spacing-unit-huge;
         padding: 0 $spacing-unit-small;
-        color: $color-primary;
 
         li {
             list-style: none;
@@ -431,217 +435,563 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
         }
     }
 
+    @include palette;
 }
 
-.Comment-create{
-    position: relative;
-    justify-content: center;
-    button {
-        color: $color-accent;
-        background: transparent no-repeat;
-        border: none;
-        cursor: pointer;
-        overflow: hidden;
-        outline: none;
-        font-weight: bold;
+.Modalities{
+    display: none;
+    align-content: center;
+    flex-direction: column;
+    align-items: center;
+    align-self: center;
+    background-color: $color-for-unfolding;
+    padding-right: 0;
+    position: absolute;
+    z-index: 4;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    outline: 0;
+
+
+    //Modalities slider
+
+    .swiper-container{
+        margin: auto auto;
+        max-width: $spacing-unit-huge * 4;
     }
-    p {
+    .swiper-wrapper{
+        align-items: center;
+        @media only screen and (min-width: $breakpoint-medium - $breakpoint-small) {
+            margin: auto 0 auto $spacing-unit - $spacing-unit-tiny;
+        }
+        @media only screen and (min-width: $breakpoint-small) {
+            margin: auto 0 auto $spacing-unit + $spacing-unit-small;
+        }
+    }
+    .style-slide-center{
+        margin: auto auto;
+        align-items: center;
+        margin: auto $spacing-unit-small + $spacing-unit;
+    }
+    .swiper-slide {
+        @media only screen and (min-width: $breakpoint-medium - $breakpoint-small) {
+            margin: 0px $spacing-unit + $spacing-unit-small 0px 0px;
+        }
+        @media only screen and (min-width: $breakpoint-small) {
+            margin: 0px $spacing-unit-large + $spacing-unit 0px 0px;
+        }
+        display: flex;
+        width: $spacing-unit-huge * 3 - $spacing-unit-small;
+        line-height: 1.2;
+        bottom: auto;
+        background-color: $color-background;
         text-align: center;
+        border-radius: $spacing-unit-small;
+        position: relative;
+        border: 1px solid $color-accent;
+        padding: $spacing-padding * 2;
+        flex-direction: column;
+        align-items: center;
+        -webkit-justify-content: center;
+        .append-buttons{
+            padding: $spacing-unit-small + $spacing-unit-tiny 0px $spacing-unit-tiny 0px;
+            a{
+                color: $color-primary;
+                font-weight: bold;
+                font-size: $font-size-default;
+            }
+        }
+        p {
+            padding: $spacing-unit 0 $spacing-unit-tiny 0;
+            margin: 0;
+            font-size: $spacing-unit-small;
+            color: $color-content;
+        }
+        h3{
+            padding: $spacing-unit-small 0 $spacing-unit 0;
+            margin: 0;
+            font-family: $font-raleway;
+            font-weight: bold;
+            font-size: $font-size-larger;
+            color: $color-accent;
+        }
+        .swiper-pagination{
+            position: relative;
+        }
+        .swiper-pagination-bullet{
+            margin: 0px $font-size-tiny-tiny;
+            background: $color-hint;
+        }
+        .swiper-pagination-bullet-active{           
+            background: $color-content;
+        }
+    }
+    .swiper-button-next{
+        @media only screen and (min-width: $breakpoint-medium - $breakpoint-small) {
+            margin: -($spacing-unit-small + $spacing-unit-tiny) (-$spacing-unit-small - $spacing-unit-tiny) 0px 0px;
+        }
+        @media only screen and (min-width: $breakpoint-small) {
+            margin: -($spacing-unit-small + $spacing-unit-tiny) 0px 0px 0px;
+        }
+        width: $spacing-unit;
+        color: $color-primary;
+        border: 1px solid;
+        height:$spacing-unit-large - $spacing-unit-tiny;
+        padding: 0px $spacing-unit-tiny 0px $spacing-unit-small;
+        background-color: $color-background-button-modalities;
+        border-radius: $spacing-unit-large;
+        font-size: $spacing-unit + $spacing-unit-tiny;
+        background-size: $spacing-unit ($spacing-unit + $spacing-unit-tiny);
+    }
+    .swiper-button-prev{
+        @media only screen and (min-width: $breakpoint-medium - $breakpoint-small) {
+            margin: -($spacing-unit-small + $spacing-unit-tiny) $spacing-unit-tiny 0px $spacing-unit-tiny - $spacing-unit;
+        }
+        @media only screen and (min-width: $breakpoint-small) {
+            margin: -($spacing-unit-small + $spacing-unit-tiny) $spacing-unit-tiny 0px (-$spacing-unit-tiny);
+        }
+        width: $spacing-unit;
+        color: $color-primary;
+        left: $spacing-unit-small;
+        border: 1px solid;
+        height:$spacing-unit-large - $spacing-unit-tiny;
+        padding: 0px $spacing-unit-tiny 0px $spacing-unit-small;
+        background-color: $color-background-button-modalities;
+        border-radius: $spacing-unit-large;
+        font-size: $spacing-unit + $spacing-unit-tiny;
+        background-size: $spacing-unit $spacing-unit + $spacing-unit-tiny;
+    }
+
+    .modalities-slider.show{
+        visibility: visible;
+    }
+    @media only screen and (min-width: $breakpoint-medium - $breakpoint-small) {
+        .swiper-container{
+            max-width: $spacing-unit-huge * 3 - $spacing-unit-small - $spacing-unit-tiny;
+        }
+        .swiper-slide{
+            max-width: ($spacing-unit-huge * 2) + $spacing-unit-tiny;
+        }
+        img{
+            padding: 0px $spacing-unit - $spacing-unit-tiny;
+            max-width: 25%;
+        }
+        .imgpart{
+            padding: 0px $spacing-unit-small;
+            max-width: 90%;
+        }
+        .imgponte{
+            padding: 0px $spacing-unit - $spacing-unit-tiny;
+            max-width: 70%;
+        }
+        .imgopn{
+            padding: 0px $spacing-unit - $spacing-unit-tiny;
+            max-width: 70%;
+        }
+        .Button{
+            font-weight: bold;
+            font-size: $spacing-unit-small;
+            margin: $spacing-unit + $spacing-unit-tiny 0px $spacing-unit-tiny 0px;
+            background-color: #30BFD3;
+        }
+        .fa-times{
+            padding: 0px $spacing-unit - $spacing-unit-tiny;
+            font-size: $spacing-unit - $spacing-unit-tiny;
+            color: $color-accent;
+        }
+        .fa-arrow-right{
+            padding: 0px $spacing-unit - $spacing-unit-tiny;
+            font-size: $spacing-unit - $spacing-unit-tiny;
+            color: $color-primary;
+        }
+        .fa-check{
+            padding: 0px $spacing-unit - $spacing-unit-tiny;
+            font-size: $spacing-unit - $spacing-unit-tiny;
+            color: $color-content;
+        }
+    }
+    @media only screen and (min-width: $breakpoint-small) {
+        .swiper-container{
+            max-width: $spacing-unit-huge * 4;
+        }
+        .swiper-slide{
+            max-width: $modalities-content-width-max;
+            .Button{
+                font-weight: bold;
+                font-size: 17px;
+            }
+        }
+        img{
+            padding: 0px $spacing-unit - $spacing-unit-tiny;
+            max-width: 20%;
+        }
+        .imgpart{
+            padding: 0px $spacing-unit - $spacing-unit-tiny;
+            max-width: 77%;
+        }
+        .imgponte{
+            padding: 0px $spacing-unit - $spacing-unit-tiny;
+            max-width: 77%;
+        }
+        .imgopn{
+            padding: 0px $spacing-unit - $spacing-unit-tiny;
+            max-width: 77%;
+        }
+        .fa-times{
+            padding: 0px $spacing-unit - $spacing-unit-tiny;
+            font-size: $spacing-unit - $spacing-unit-tiny;
+            color: $color-accent;
+        }
+        .fa-arrow-right{
+            padding: 0px $spacing-unit - $spacing-unit-tiny;
+            font-size: $spacing-unit - $spacing-unit-tiny;
+            color: $color-primary;
+        }
+        .fa-check{
+            padding: 0px $spacing-unit - $spacing-unit-tiny;
+            font-size: $spacing-unit - $spacing-unit-tiny;
+            color: $color-content;
+        }
     }
     .waiting{
         padding: 0px 0px $spacing-unit-large 0px;
     }
 }
 
-.Comment {
-    position: relative;
-    min-height: 300px !important;
-    width: 100% !important;
-    max-width: $header-wrapper-max-width;
-    margin: 0 auto;
-    padding-bottom: $spacing-unit-large;
-    .CommentCard {
-        left: 0;
-        right: 0;
-        margin: auto;
-        position: absolute;
-        box-sizing: border-box;
-        border-radius: $border-radius-large;
-        font-size: $font-size-h3;
-        max-width: $page-content-width-max;
-        min-height: 300px !important;
-        width: 100% !important;
-        z-index: 3;
-        padding: ($spacing-unit-large - $spacing-unit-tiny) ($spacing-unit-large - $spacing-unit-small);
-        background-color: $color-primary;
-        color: $color-content-text;
 
-        &-counter {
-            text-align: center;
-            p {
-                margin: 0;
-            }
-        }
+    //Modalities static
 
-        img {
-            background: $color-primary-text;
-            border: 1px solid #fff;
-            border-radius: $spacing-unit-large;
-            padding: 4px $spacing-unit-tiny;
-        }
-
-        i.fa {
-            background: $color-primary-text;
-            border: 2px solid #fff;
-            border-radius: $spacing-unit-large;
-            padding: $spacing-unit-tiny;
-        }
-
-        &-voteArea {
-            button {
-                border: none;
-                border-radius: 50%;
-                background: $color-primary-text;
-                padding: 0;
-            }
-
-            ul {
-                display: flex;
+    .style-slide{
+        margin: 0px;
+        width: $spacing-unit-huge * 3;
+        line-height: 1.2;
+        bottom: auto;
+        background-color: $color-background;
+        text-align: center;
+        border-radius: $spacing-unit-tiny;
+        position: relative;
+        border: 1px solid $color-accent;
+        padding: $spacing-padding * 2;
+        flex-direction: row;
+        align-items: center;
+        -webkit-justify-content: center;
+        .append-buttons{
+            padding: $spacing-unit-tiny 0px;
+            a{
+                color: $color-primary;
                 font-weight: bold;
-                margin: 0;
-                padding: 0;
-                text-transform: uppercase;
-                width: 100%;
-
-                span {
-                    font-size: $font-size-small;
-                }
-
-                li {
-                    @extend .Col--center;
-                    list-style: none;
-                    flex-grow: 1;
-
-                    i.fa {
-                        background: #fff;
-                        height: $conversation-vote-circle-size;
-                        width: $conversation-vote-circle-size;
-                        padding: $spacing-padding;
-                        cursor: pointer;
-                        border: none;
-                    }
-                    &.voteAgree {
-                        width: ($spacing-unit + $spacing-unit-tiny);
-                        &:active {
-                            color: $color-content;
-                        }
-                        i.fa {
-                            color: $color-content;
-                            &:hover {
-                                background: $color-content;
-                                color: #fff;
-                            }
-                        }
-                    }
-                    &.voteSkip {
-                        width: ($spacing-unit + $spacing-unit-tiny);
-                        &:active {
-                            color: $color-primary;
-                        }
-                        i.fa {
-                            color: $color-primary;
-                            &:hover {
-                                background: $color-primary;
-                                color: #fff;
-                            }
-                        }
-                    }
-                    &.voteDisagree {
-                        width: ($spacing-unit + $spacing-unit-tiny);
-                        &:active {
-                            color: $color-accent;
-                        }
-                        i.fa {
-                            color: $color-accent;
-                            &:hover {
-                                background: $color-accent;
-                                color: #fff;
-                            }
-                        }
-                    }
-                }
             }
         }
-
-        &-user {
-            font-size: $font-size-h5;
-            img {
-
-                @media only screen and (min-width: $breakpoint-medium - $breakpoint-small) {
-                    max-width: 6%;
-                }
-                @media only screen and (min-width: $breakpoint-small) {
-                    max-width: 3%;
-                }
-
-                color: $color-accent;
-                margin-right: $spacing-unit-small;
-                background: #fff;
-            }
-            i.fa {
-                color: $color-accent;
-                margin-right: $spacing-unit-small;
-                background: #fff;
+        p {
+            padding: $spacing-unit-small 0 $spacing-unit-tiny 0;
+            margin: 0;
+            font-size: $font-size-default;
+            color: $color-content;
+        }
+        h3{
+            padding: $spacing-unit-tiny 0 $spacing-unit-small 0;
+            margin: 0;
+            font-family: $font-raleway;
+            font-weight: bold;
+            font-size: $font-size-large;
+            color: $color-accent;
+        }
+        .Button-closer{
+            background-color: $color-content;
+            border: none;
+            border-radius: $spacing-unit-large;
+            box-sizing: border-box;
+            cursor: pointer;
+            display: inline-block;
+            font-weight: bold;
+            padding: 0px;
+            text-align: center;
+            text-transform: uppercase;
+            transition: all 200ms ease-in-out;
+            vertical-align: middle;
+            .fa-times {
+                font-size: $spacing-unit-tiny;
+                color: $color-background;
             }
         }
     }
-    #commentform {
-        position: absolute;
-        left: 0;
-        right: 0;
-        margin: auto;
-        visibility: hidden;
-        max-width: $page-content-width-max;
-        min-height: 300px !important;
+
+    // Imagens do modal com especificações diferentes
+
+
+    @media only screen and (min-width: $breakpoint-medium - $breakpoint-small) {
+        .style-slide{
+            max-width: $spacing-unit-huge * 2 - $spacing-unit-small;
+        }
+        .imgponte{
+            margin: -($spacing-unit * 2 + $spacing-unit-tiny) ($spacing-unit-huge - $spacing-unit-tiny) 0px (-$spacing-unit-huge + $spacing-unit - $spacing-unit-tiny);
+            max-width: 16%;
+        }
+        .Button-closer{
+            margin: 0px 0px (-$spacing-unit-tiny) ($spacing-unit-huge * 2 - $spacing-unit);
+            .fa-times{
+                padding: $spacing-unit-tiny $spacing-unit-tiny;
+            }
+        }
+    }
+
+    @media only screen and (min-width: $breakpoint-small) {
+        .style-slide{
+            max-width: $modalities-content-width-max;
+        }
+        .imgponte{
+            margin: -($spacing-unit * 2 + $spacing-unit-tiny) ($spacing-unit-huge * 2 + $spacing-unit-tiny) 0px 0px;
+        }
+        .Button-closer{
+            margin: 0px 0px (-$spacing-unit) $spacing-unit-huge * 2.5;
+            .fa-times{
+                padding: $spacing-unit-tiny;
+            }
+        }
+    }
+
+
+.ConversationDetail-content{
+    position: relative;
+
+    .Comment {
+        position: relative;
+        min-height: 340px !important;
         width: 100% !important;
-        box-sizing: border-box;
-        text-align: center;
-        background: $color-hint;
-        border-radius: $border-radius-large;
-        padding: ($spacing-unit-large - $spacing-unit-tiny) ($spacing-unit-large - $spacing-unit-small);
-        z-index: 5;
+        display: inline-block;
+        float: left;
+        max-width: $header-wrapper-max-width;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
 
-        p {
-            margin: $spacing-unit-small ($spacing-unit + $spacing-unit-tiny);
-            color: $color-content;
-        }
+        .CommentCard {
+            word-wrap: break-word;
+            flex: 1;
+            flex-basis: auto;
+            left: 0;
+            right: 0;
+            margin: auto;
+            box-sizing: border-box;
+            border-radius: $border-radius-large;
+            font-size: $font-size-h3;
+            max-width: $page-content-width-max;
+            min-height: 340px !important;
+            width: 100% !important;
+            z-index: 3;
+            padding: ($spacing-unit-large - $spacing-unit-tiny) ($spacing-unit-large - $spacing-unit-small);
+            //background-color: $color-primary;
+            color: $color-content-text;
 
-        textarea {
-            width: 100%;
-            margin: 0 0 0 0;
-            min-height: 3 * $font-size;
-            outline: none;
-            border: 2px solid $color-primary;
-            background: $color-content-text;
-            color: #333;
-            box-shadow: none;
-        }
-        #characters-count{
-            display: block;
-            text-align: right;
-            @media only screen and (min-width: $breakpoint-medium - $breakpoint-small) {
-                padding: 0px;
+            &-counter {
+                text-align: center;
+                p {
+                    margin: 0;
+                }
             }
-            @media only screen and (min-width: $breakpoint-small) {
-                padding: 0px ($spacing-unit + $spacing-unit-tiny) 0px 0px;
+
+            img {
+                background: $color-primary-text;
+                border: 1px solid #fff;
+                border-radius: $spacing-unit-large;
+                padding: 4px $spacing-unit-tiny;
             }
+
+            i.fa {
+                background: $color-primary-text;
+                border: 2px solid #fff;
+                border-radius: $spacing-unit-large;
+                padding: $spacing-unit-tiny;
+            }
+
+            &-voteArea {
+                button {
+                    border: none;
+                    border-radius: 50%;
+                    background: $color-primary-text;
+                    padding: 0;
+                }
+
+                ul {
+                    display: flex;
+                    font-weight: bold;
+                    margin: 0;
+                    padding: 0;
+                    text-transform: uppercase;
+                    width: 100%;
+
+                    span {
+                        font-size: $font-size-small;
+                    }
+
+                    li {
+                        @extend .Col--center;
+                        list-style: none;
+                        flex-grow: 1;
+
+                        i.fa {
+                            background: #fff;
+                            height: $conversation-vote-circle-size;
+                            width: $conversation-vote-circle-size;
+                            padding: $spacing-padding;
+                            cursor: pointer;
+                            border: none;
+                        }
+                        &.voteAgree {
+                            width: ($spacing-unit + $spacing-unit-tiny);
+                            &:active {
+                                color: $color-content;
+                            }
+                            i.fa {
+                                color: $color-content;
+                                &:hover {
+                                    background: $color-content;
+                                    color: #fff;
+                                }
+                            }
+                        }
+                        &.voteSkip {
+                            width: ($spacing-unit + $spacing-unit-tiny);
+                            &:active {
+                                color: $color-primary;
+                            }
+                            i.fa {
+                                color: $color-primary;
+                                &:hover {
+                                    background: $color-primary;
+                                    color: #fff;
+                                }
+                            }
+                        }
+                        &.voteDisagree {
+                            width: ($spacing-unit + $spacing-unit-tiny);
+                            &:active {
+                                color: $color-accent;
+                            }
+                            i.fa {
+                                color: $color-accent;
+                                &:hover {
+                                    background: $color-accent;
+                                    color: #fff;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            &-user {
+                font-size: $font-size-h5;
+                img {
+
+                    @media only screen and (min-width: $breakpoint-medium - $breakpoint-small) {
+                        max-width: 6%;
+                    }
+                    @media only screen and (min-width: $breakpoint-small) {
+                        max-width: 3%;
+                    }
+
+                    color: $color-accent;
+                    margin-right: $spacing-unit-small;
+                    background: #fff;
+                }
+                i.fa {
+                    color: $color-accent;
+                    margin-right: $spacing-unit-small;
+                    background: #fff;
+                }
+            }
+
+          @include palette;
+        }
+        #commentform {
+            flex: 1;
+            flex-basis: auto;
+            position: absolute;
+            left: 0;
+            right: 0;
+            margin: auto;
+            visibility: hidden;
+            max-width: $page-content-width-max;
+            min-height: 340px !important;
+            height: 100% !important;
+            width: 100% !important;
+            box-sizing: border-box;
+            text-align: center;
+            //background: $color-hint;
+            border-radius: $border-radius-large;
+            padding: (3 * $spacing-unit-tiny) ($spacing-unit-large - $spacing-unit-small);
+            z-index: 5;
+
+            p {
+                margin: $spacing-unit-small ($spacing-unit + $spacing-unit-tiny);
+                color: $color-content;
+            }
+
+            textarea {
+                width: 100%;
+                margin: 0 0 0 0;
+                min-height: 3 * $font-size;
+                outline: none;
+                //border: 2px solid $color-primary;
+                border: 2px solid;
+                background: $color-content-text;
+                //color: #333;
+                box-shadow: none;
+            }
+            #characters-count{
+                display: block;
+                text-align: right;
+                @media only screen and (min-width: $breakpoint-medium - $breakpoint-small) {
+                    padding: 0px;
+                }
+                @media only screen and (min-width: $breakpoint-small) {
+                    padding: 0px ($spacing-unit + $spacing-unit-tiny) 0px 0px;
+                }
+            }
+
+            &-fakeButton,
+            input[type=submit] {
+                border-radius: $border-radius;
+                color: #fff;
+                //background: $color-primary;
+                padding: $spacing-unit-small $spacing-unit;
+                font-size: $spacing-unit / 2;
+                box-shadow: none;
+                text-transform: uppercase;
+                font-weight: bold;
+            }
+
+        }
+        #commentform.show {
+            visibility: visible;
+            -webkit-animation: fadeInUp 500ms ease-in-out;
+            animation: fadeInUp 500ms ease-in-out;
         }
 
+        @-webkit-keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                -webkit-transform: translateY(40px);
+            }
+            100% {
+                opacity: 1;
+                -webkit-transform: translateY(0);
+            }
+        }
+        #commentform.hideanimation {
+            visibility: visible;
+            -webkit-animation: fadeOutDown 500ms ease-in-out;
+            animation: fadeOutDown 500ms ease-in-out;
+
+        }
         &-fakeButton,
         input[type=submit] {
             border-radius: $border-radius;
             color: #fff;
-            background: $color-primary;
+            background: $color-accent;
             border: 0;
             padding: $spacing-unit-small $spacing-unit;
             font-size: $spacing-unit / 2;
@@ -650,139 +1000,110 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
             font-weight: bold;
             margin-top: $spacing-unit-small;
         }
-    }
-    #commentform.show {
-        visibility: visible;
-        -webkit-animation: fadeInUp 500ms ease-in-out;
-        animation: fadeInUp 500ms ease-in-out;
-    }
-
-    @-webkit-keyframes fadeInUp {
-        0% {
-            opacity: 0;
-            -webkit-transform: translateY(40px);
+        @-webkit-keyframes fadeOutDown {
+            0% {
+                opacity: 1;
+                -webkit-transform: translateY(0);
+            }
+            100% {
+                opacity: 0;
+                -webkit-transform: translateY(40px);
+            }
         }
-        100% {
-            opacity: 1;
-            -webkit-transform: translateY(0);
-        }
-    }
-    #commentform.hideanimation {
-        visibility: visible;
-        -webkit-animation: fadeOutDown 500ms ease-in-out;
-        animation: fadeOutDown 500ms ease-in-out;
-
-    }
-    &-fakeButton,
-    input[type=submit] {
-        border-radius: $border-radius;
-        color: #fff;
-        background: $color-accent;
-        border: 0;
-        padding: $spacing-unit-small $spacing-unit;
-        font-size: $spacing-unit / 2;
-        box-shadow: none;
-        text-transform: uppercase;
-        font-weight: bold;
-        margin-top: $spacing-unit-small;
-    }
-    @-webkit-keyframes fadeOutDown {
-        0% {
-            opacity: 1;
-            -webkit-transform: translateY(0);
-        }
-        100% {
-            opacity: 0;
-            -webkit-transform: translateY(40px);
-        }
-    }
 
 
-    .Toast {
-        line-height: 1.2;
-        visibility: hidden;
-        background-color: $color-hint;
-        text-align: left;
-        border-radius: $spacing-unit-tiny;
-        position: fixed;
-        z-index: 3;
-        width: 100vw;
-        left: 0;
-        bottom: 0;//$header-top-nav-height;
-        display: flex;
-        flex-direction: row;
-        > div {
-            flex-direction: column;
-            align-self: center;
-            padding: $spacing-padding;
-            max-width: 660px;
-            margin: 0 $spacing-unit-tiny 0 auto;
-            img {
-                @media only screen and (min-width: $breakpoint-medium - $breakpoint-small) {
-                    margin: 0 ($spacing-unit - $spacing-unit-tiny) 0 $spacing-unit-tiny;
-                    background-color: #fff;
-                    border: ($border-radius-tiny * 2) / 3 solid $color-primary;
-                    border-radius: $spacing-unit-large;
-                    width: $spacing-unit;
-                    padding: $spacing-unit-tiny;
-                }
-                @media only screen and (min-width: $breakpoint-small) {
+        #toast {
+            line-height: 1.2;
+            visibility: hidden;
+            background-color: $color-hint;
+            text-align: left;
+            border-radius: $spacing-unit-tiny;
+            position: fixed;
+            z-index: 3;
+            width: 100vw;
+            left: 0;
+            bottom: 0;//$header-top-nav-height;
+            > div {
+                padding: $spacing-padding;
+                max-width: 660px;
+                margin: 0 auto;
+                p {
+                    padding: 0 0 $spacing-unit-tiny 0;
                     margin: 0;
-                    max-width: $spacing-unit;
-                    background-color: #fff;
-                    border: $border-radius-tiny / 2 solid $color-primary;
-                    border-radius: $spacing-unit-large;
-                    padding: $spacing-unit-tiny;
+                    font-size: $font-size-small;
+                    color: $color-content;
+                }
+                h3{
+                    padding: $spacing-unit-tiny 0 0 0;
+                    margin: 0;
+                    font-family: $font-raleway;
+                    font-weight: bold;
+                    font-size: $font-size-default;
+                    color: $color-primary;
+                }
+                img {
+                    @media only screen and (min-width: $breakpoint-medium - $breakpoint-small) {
+                        max-width: $spacing-unit;
+                        margin: $spacing-padding $spacing-unit-small auto 0;
+                        background-color: #fff;
+                        border: ($border-radius-tiny * 4) / 3 solid $color-primary;
+                        border-radius: $spacing-unit-large;
+                        padding: $spacing-unit-tiny;
+                    }
+                    @media only screen and (min-width: $breakpoint-small) {
+                        max-width: $spacing-unit;
+                        //margin-right: $spacing-unit-small;
+                        margin: auto $spacing-unit-small auto 0;
+                        background-color: #fff;
+                        border: $border-radius-tiny solid $color-primary;
+                        border-radius: $spacing-unit-large;
+                        padding: $spacing-unit-tiny;
+                    }
                 }
             }
         }
-        #text {
-            margin: 0 auto 0 0;
-            flex-direction: column;
-            align-self: center;
-            p {
-                padding: 0 0 $spacing-unit-tiny 0;
-                margin: 0;
-                font-size: $font-size-small;
-                color: $color-content;
+
+        #toast.show {
+            visibility: visible;
+            // -webkit-animation: fade 8s;
+            animation: fade 8s both;
+        }
+
+        @keyframes fade {
+            0%   {
+                opacity: 0;
+                bottom: 0;
             }
-            h3{
-                padding: $spacing-unit-tiny 0 0 0;
-                margin: 0;
-                font-family: $font-raleway;
-                font-weight: bold;
-                font-size: $font-size-default;
-                color: $color-primary;
+            20%  {
+                opacity: 1;
+                bottom: 45px;
             }
-        }
-    }
-
-    .show {
-        visibility: visible;
-        // -webkit-animation: fade 8s;
-        animation: fade 8s both;
-    }
-
-
-    @keyframes fade {
-        0%   {
-            opacity: 0;
-            bottom: 0;
-        }
-        20%  {
-            opacity: 1;
-            bottom: 45px;
-        }
-        70%  {opacity: 1;}
-        90% {opacity: 0;}
-        100% {opacity: 0;
+            70%  {opacity: 1;}
+            90% {opacity: 0;}
+            100% {opacity: 0;
             
             bottom: 45px;
+            }
         }
-
     }
 
-
+    .Comment-create{
+        position: relative;
+        justify-content: center;
+        button {
+            padding: $spacing-unit 0px 0px 0px;
+            color: $color-accent;
+            background: transparent no-repeat;
+            border: none;
+            cursor: pointer;
+            overflow: hidden;
+            outline: none;
+            font-weight: bold;
+        }
+        p {
+            text-align: center;
+        }
+    }
 }
 
 .CircleButton {
@@ -813,10 +1134,12 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
 
     &-leftConversationSlider {
         left: $spacing-unit-tiny;
+        z-index: 3;
     }
 
     &-rightConversationSlider {
         right: $spacing-unit-tiny;
+        z-index: 3;
     }
 }
 
@@ -1012,6 +1335,10 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
         opacity: 1;
     }
 
+    .Comment-status-rejected .CommentListItem-footer {
+        text-align: center;
+    }
+
     .Comment-rejection {
         background: $color-hint;
         border-top: 1px solid $color-hint;
@@ -1046,12 +1373,12 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
         border: 0;
         font-family: "Raleway", sans-serif;
         color: $color-content;
-        padding: $unit + 5;
+        padding: $unit;
         text-align: center;
         font-weight: 200 !important;
-        font-size: $spacing-unit !important;
+        font-size: $spacing-unit - $spacing-unit-tiny !important;
         box-shadow: none;
-        border: 1px solid $color-hint;
+        border: 1px solid $color-primary;
         border-radius: $border-radius-small;
         resize: none;
         overflow: hidden;
@@ -1080,7 +1407,7 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
 
             i {
                 border-radius: 50%;
-                border: $border-radius-tiny solid $color-content ;
+                border: 3px solid $color-content ;
                 display: inline-block;
                 width: 16px;
                 height: 16px;
@@ -1129,11 +1456,11 @@ $icon-arrow-down: url(/static/img/icons/arrow-down.svg) !default;
     i {
         padding: 0 $unit * 2;
         align-self: center;
-        color: $color-accent;
+        color: $color-primary;
     }
 
     input, select {
-        border: 1px solid $color-hint;
+        border: 1px solid $color-primary;
         border-radius: $border-radius-small;
         background-color: rgba(255, 255, 255, 0.5);
         box-shadow: none;

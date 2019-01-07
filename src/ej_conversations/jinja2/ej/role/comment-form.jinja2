@@ -20,6 +20,7 @@
 
 
 
+<<<<<<< HEAD
 <div id="commentform">
     {{conversation|role(arequest=request)}}
     {% if request %}
@@ -32,10 +33,11 @@
     {% endif %}#}
     {% if user_is_owner %}
         <p>{% trans %}You have created this conversation.{% endtrans %}</p>
+=======
+<div id="commentform" class="CommentCard--{{ board_palette }}" >
+    {% if can_comment and comments_left > 0 or user_is_owner %}
+>>>>>>> 90b11a39411dad726b4d14c2851b29105f83a313
         <p>{% trans %}Include something new and avoid similar opinions.{% endtrans %}</p>
-        {{ comment_form(csrf_input, comment_content) }}
-    {% elif can_comment and comments_left > 0 %}
-        <p>{{ _('Include something new and avoid similar opinions. You still have {n} available comments').format(n=comments_left) }}</p>
         {{ comment_form(csrf_input, comment_content) }}
     {% elif can_comment and comments_left == 0 %}
         <div class="CommentForm-toast">

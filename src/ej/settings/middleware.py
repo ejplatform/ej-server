@@ -11,7 +11,7 @@ class MiddlewareConf(Base):
             'ej_conversations.middleware.ConversationFallbackMiddleware',
             *middleware,
         ]
-        if self.DEBUG:
+        if 'debug_toolbar' in self.INSTALLED_APPS:
             middleware = [
                 'debug_toolbar.middleware.DebugToolbarMiddleware',
                 *middleware

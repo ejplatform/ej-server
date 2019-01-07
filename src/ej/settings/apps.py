@@ -4,10 +4,15 @@ from .options import EjOptions
 
 class InstalledAppsConf(Base, EjOptions):
     project_apps = [
+        # Gamification
+        'ej_powers',
+
         # Math
-        'ej_math',
         'ej_reports',
         'ej_clusters',
+
+        # Notifications
+        'ej_notifications',
 
         # Conversations
         'ej_boards',
@@ -16,6 +21,7 @@ class InstalledAppsConf(Base, EjOptions):
         # Core apps
         'ej_help',
         'ej_configurations',
+        'ej_notifications',
         'ej_profiles',
         'ej_users',
     ]
@@ -39,6 +45,7 @@ class InstalledAppsConf(Base, EjOptions):
         # 'corsheaders',
         'constance',
         'constance.backends.database',
+        'push_notifications',
     ]
 
     def get_django_contrib_apps(self):

@@ -2,6 +2,19 @@
 {% from 'components/generic/toast.jinja2' import toast with context %}
 {% from 'components/generic/show_toast.jinja2' import show_toast with context %}
 
+
+{% block metaOG2 %}
+
+    <meta name="description" property="og:title" content="{{conversation.text}}">
+    <meta property="og:description" content="Participe e dê sua opinião com comentários e votos!">
+
+    <!-- Twitter && Telegram -->
+    <meta name="twitter:title" content="{{conversation.text}}">
+
+{% endblock metaOG2 %}
+
+{% block _menu %} {{ menu(request.user, board_palette) }} {% endblock %}
+
 {% block content %}
     <div class="ConversationDetail">
         {# Ballon with title #}
@@ -11,25 +24,29 @@
         <div class="ConversationDetail-header">
             <h1>{{ _('Comments') }}</h1>
         </div>
-        <div class="Comment">
-            <div class="CommentCard">
-                {% if comment %}
-                    {{ comment|role('card') }}
-                {% else %}
-                        <h1>{{ _('Congratulations!') }}</h1>
-                        <p>{{ _("There are no comments left to vote :)") }}</p>
-                         <p>
-                            {# FIXME Add a less hardcoded pluralization  #}
-                            {{ _("You have {} comment{} under moderation.").format(comments_under_moderation, "" if comments_under_moderation == 1 else "s")}}
-                            {% if comments_under_moderation > 0 %}
-                                {{ link(_('Click here'), href='/profile/') }}
-                                {{ _("to see {}.").format("it" if comments_under_moderation == 1 else "them") }}
-                            {% endif %}
-                        </p>
-                {% endif %}
+        <div class="ConversationDetail-content">
+            <div class="Comment">
+                {{ conversation|role('comment-form', comment_content=comment_form) }}
+                <div class="CommentCard CommentCard--{{conversation.css_palette}}">
+                    {% if comment %}
+                        {{ comment|role('card') }}
+                    {% else %}
+                            <h1>{{ _('Congratulations!') }}</h1>
+                            <p>{{ _("There are no comments left to vote :)") }}</p>
+                                <p>
+                                {# FIXME Add a less hardcoded pluralization  #}
+                                {{ _("You have {} comment{} under moderation.").format(comments_under_moderation, "" if comments_under_moderation == 1 else "s")}}
+                                {% if comments_under_moderation > 0 %}
+                                    {{ link(_('Click here'), href='profile:detail') }}
+                                    {{ _("to see {}.").format("it" if comments_under_moderation == 1 else "them") }}
+                                {% endif %}
+                            </p>
+                    {% endif %}
+                </div>
             </div>
 
             {# Post a new comment #}
+<<<<<<< HEAD
             {{ conversation|role('comment-form', comment_content=comment_form) }}
         </div>
         <div class="Comment-create">
@@ -41,6 +58,22 @@
             
             <p>{{ _("{}/{} comment{}.").format(comments_made, max_comments if can_comment else 0, "" if max_comments == 1 else "s")}}</p>
             <p class="waiting" >{{ _("{} waiting moderation.").format(comments_under_moderation)}}</p>
+=======
+            <div class="Comment-create">
+                <p>
+                    <button onclick="showForm($(this))" id="button-create">
+                        <i class="fas fa-plus"></i> {{ _("CREATE COMMENT") }}
+                    </button>
+                </p>
+                {% if user_is_owner %}
+                    <p>{{ _("{} comment{}.").format(comments_made, "" if comments_made < 2 else "s")}}</p>
+                    <p>{% trans %}Your comments will not be moderated because you are the author of this conversation.{% endtrans %}</p>
+                {% else %}
+                    <p>{{ _("{}/{} comment{}.").format(comments_made, max_comments if can_comment else 0, "" if max_comments == 1 else "s")}}</p>
+                    <p>{{ _("{} waiting moderation.").format(comments_under_moderation)}}</p>
+                {% endif %}
+            </div>
+>>>>>>> 90b11a39411dad726b4d14c2851b29105f83a313
         </div>
     </div>
     {#{% if request %}

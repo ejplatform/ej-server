@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('ej_users', '0002_create_password_token_model'),
     ]
@@ -19,5 +18,9 @@ class Migration(migrations.Migration):
             model_name='passwordresettoken',
             name='url',
             field=models.CharField(max_length=50, unique=True, verbose_name='User token'),
+        ),
+        migrations.RemoveField(
+            model_name='user',
+            name='display_name'
         ),
     ]

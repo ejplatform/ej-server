@@ -19,19 +19,14 @@
             </span>
           </div>
 
-          {% if conversation.tags.count() > 0 %}
-              {% set tags = (conversation.tags.all()[0]|string).title() %}
-          {% else %}
-              {% set tags = 'Tags' %}
-          {% endif %}
-
-          <input type="hidden" name="tags" value="{{ tags }}" />
 
           <div class="ConversationDetail">
               <div class="ConversationDetail-banner">
-                  <div class="ConversationTags"><i class="fa fa-tags"></i>
-                    {{ tags }}
-                  </div>
+                  <div class="ConversationTags">
+                    <div class="ConversationField">
+                        <i class="fa fa-tags"></i><input name="tags" value="{{ tags }}" />
+                    </div>
+                 </div>
 
                   <p><textarea onfocus="this.style.height = (this.scrollHeight) + 'px'" onkeyup="this.style.height = (this.scrollHeight) + 'px'" class="Conversation-edit-field" name="text" required id="id_text">{{ conversation.text }}</textarea></p>
 
@@ -47,9 +42,17 @@
                 <p><i class="fa fa-list-ul"></i> <span>{{ board.title }}</span></p>
             {% endif %}
           </div>
-
-          <p style="text-align: center;">{{ action_button(_('Manage stereotypes'), manage_stereotypes_url, primary=False) }}</p>
-
+          {% if board %}
+              <p style="text-align: center;">{{ action_button(_('Manage stereotypes'),
+                                              href='boards:conversation-stereotype-list',
+                                              url_args={'board': board, 'conversation': conversation},
+                                              primary=False) }}</p>
+          {% else %}
+              <p style="text-align: center;">{{ action_button(_('Manage stereotypes'),
+                                              href='cluster:stereotype-list',
+                                              url_args={'conversation': conversation},
+                                              primary=False) }}</p>
+          {% endif %}
           {% if can_promote_conversation %}
               <p class="ConversationEdit-promote">
                 {% if conversation.is_promoted %}

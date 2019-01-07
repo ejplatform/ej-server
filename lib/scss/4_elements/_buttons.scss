@@ -4,7 +4,7 @@
 
 @import '../2_tools/index';
 
-$button-border-radius: $border-radius-large, !default;
+$button-border-radius: $border-radius, !default;
 $button-hpadding: $spacing-unit-small + $spacing-unit-tiny !default;
 $button-vpadding: $spacing-unit-tiny + 2px !default;
 
@@ -17,7 +17,8 @@ $button-vpadding: $spacing-unit-tiny + 2px !default;
     cursor: pointer;
     display: inline-block;
     font: $font-size-small $font-paragraph;
-    font-weight: bold;
+    font-weight: 600; //semi-bold
+    font-family: $font-raleway;
     margin: $spacing-unit-tiny $spacing-unit-tiny $spacing-unit-small $spacing-unit-tiny;
     padding: $button-vpadding $button-hpadding;
     text-align: center;
@@ -54,5 +55,8 @@ $button-vpadding: $spacing-unit-tiny + 2px !default;
     .Button--large {
         font-size: $font-size-large;
         padding: (2 * $button-vpadding) (2 * $button-hpadding);
+    }
+    &-done{
+        background-color: $color-accent;
     }
 }

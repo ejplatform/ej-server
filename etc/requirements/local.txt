@@ -10,7 +10,7 @@ matplotlib ~= 2.2
 numpy ~= 1.14
 pandas ~= 0.23
 django-pandas ~= 0.5
-scikit-learn ~= 0.19.2
+scikit-learn == 0.20.1
 scipy ~= 1.1.0
 
 # Images
@@ -19,7 +19,7 @@ Pillow ~= 4.2
 # Django
 django ~= 2.1.1
 rules ~= 1.4.0
-django-boogie ~= 0.9.3
+django-boogie ~= 0.11.1
 
 # Configuration
 django-environ ~= 0.4.4
@@ -34,14 +34,16 @@ django-configurations ~= 2.0
 # Models
 django-model-utils ~= 3.0.0
 django-taggit ~= 0.23.0
+django-polymorphic ~= 2.0.3
 django-manager-utils ~= 1.1.1
 django-bulk-update ~= 2.2.0
+django-picklefield ~= 1.1.0
 
 # Password storage
 argon2-cffi ~= 16.3.0
 
 # User registration, either via email or social
-django-allauth ~= 0.33.0
+django-allauth ~= 0.37.0
 
 # Rest framework
 djangorestframework ~= 3.8.2
@@ -67,7 +69,7 @@ django-autoslug ~= 1.9.3
 django-jsonfield ~= 1.0.1
 
 # Background tasks
-celery ~= 4.1.0
+dramatiq ~= 1.4.0
 
 # Fake data
 Faker ~= 0.8.13
@@ -78,3 +80,6 @@ django-extensions >= 1.9.0
 
 # Html
 hyperpython ~= 1.0.1
+
+# Notifications
+django-push-notifications ~= 1.6.0
