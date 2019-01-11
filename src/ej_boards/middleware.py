@@ -53,6 +53,7 @@ def BoardFallbackMiddleware(get_response):  # noqa: N802, C901
 
 def BoardSubDomainRedirectMiddleware(get_response):
     from ej_boards.models import Board
+    ROOT_URL_PATTERN = '^(\/home\/)?(\/conversations\/)?'
 
     def middleware(request):
         """
@@ -64,8 +65,8 @@ def BoardSubDomainRedirectMiddleware(get_response):
         """
         response = get_response(request)
         path_info = request.META['PATH_INFO']
-        valid_route = re.match('^(\/home\/)?(\/conversations\/)?', path_info)
-        if(valid_route.group(0) or valid_route.group(1)):
+        route = re.match(ROOT_URL_PATTERN, path_info)
+        if(route.group(0) or route.group(1)):
             try:
                 domain = request.META['HTTP_HOST'].split(':')[0]
                 board, board_exists = Board.with_sub_domain(domain)
