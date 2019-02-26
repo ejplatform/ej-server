@@ -1,29 +1,24 @@
-<div class="ConversationCard-container">
-      <div class="ConversationCard ConversationCard--{{conversation.css_palette}}">
-        <div class="ConversationTags ConversationTags--{{conversation.css_light_palette}}">
-            <i class="fa fa-tags"></i>
-              {% if tag %}
-                {# Only conversation first tag is shown in card to prevent overflow #}
-                {{ tag }}
-              {% else %}
-                {{ _('Conversation') }}
-              {% endif %}
+<div class="conversation-card {{ conversation_modifiers }}">
+    <div class="conversation-card__content">
+        <div class="conversation-card__tags">
+            {{ span_icon(tag if tag else _('Conversation'), 'tags') }}
         </div>
-        <div class="ConversationCard-actions ">
-            <ul class="ConversationCard-statistics ConversationCard--{{conversation.css_text_palette}}">
-                <li><i class="fa fa-comment"></i> {{ n_comments }}</li>
-                <li><i class="fa fa-sliders-h"></i> {{ n_votes }}</li>
-                <li><i class="fa fa-star"></i> {{ n_followers }}</li>
-            </ul>
+        <ul class="conversation-card__statistics">
+            <li>{{ span_icon(n_comments, 'comment') }}</li>
+            <li>{{ span_icon(n_votes, 'sliders-h') }}</li>
+            <li>{{ span_icon(n_followers, 'star') }}</li>
+        </ul>
+        <div class="conversation-card__text">
+            <a href="{{ url }}">{{ conversation.text }}</a>
         </div>
-        <div class="ConversationCard-cover">
-            <h1 up-expand><a href="{{ url }}">{{ conversation.text }}</a></h1>
-        </div>
-        <div class="ConversationCard-actions {{conversation.css_palette}}">{{ action_button(_('Participate now!'), url) }}</div>
+        <div class="conversation-card__author">{{ _('by:') }} <strong>{{ author }}</strong></div>
+        <div class="conversation-card__button">{{ action_button(_('Participate now!'), url) }}</div>
     </div>
     {% if user_can_moderate %}
-        <a class="ConversationCard-moderation" href="{{ url }}moderate/">
+        <a class="conversation-card__moderate" href="{{ moderate_url }}">
             <i class="fas fa-cog"></i> {{ _('Moderate Conversation') }}
         </a>
     {% endif %}
 </div>
+
+

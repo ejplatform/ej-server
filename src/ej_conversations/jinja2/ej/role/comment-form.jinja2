@@ -1,33 +1,19 @@
-{% from 'components/generic/toast.jinja2' import toast with context %}
-
-{% macro comment_form(csrf_input, comment_content) %}
-    <form method="post" up-target=".ConversationDetail" up-restore-scroll="true">
-        {{ csrf_input }}
-        <input type="hidden" name="action" value="comment">
-        {{comment_content.content}}
-        <span id="characters-count">0 / 252</span>
-        <input type="submit" name="submit" value="{{ _('Comment') }}" primary>
-        {{toast("OPS!", comment_content.content.errors|striptags)}}
-    </form>
-    <script>
-        document.body.addEventListener('DOMSubtreeModified', function () {
-            showToaster()
-        }, false);
-    </script>
-{% endmacro %}
-
-
-
-<div id="commentform" class="CommentCard--{{ board_palette }}" >
-    {% if can_comment and comments_left > 0 or user_is_owner %}
-        <p>{% trans %}Include something new and avoid similar opinions.{% endtrans %}</p>
-        {{ comment_form(csrf_input, comment_content) }}
-    {% elif can_comment and comments_left == 0 %}
-        <div class="CommentForm-toast">
-            <h3>{% trans %}Ooops!{% endtrans %}</h3>
-            <p>{% trans %}You reached the limit of comments in this conversation.{% endtrans %}</p>
-        </div>
-    {% else %}
+<div class="comment-form">
+    {% if user == None %}
         <p>{% trans %}Please {{ login_anchor }} to vote on this conversation.{% endtrans %}</p>
+    {% elif comments_exceeded|default(False) %}
+        <h3>{% trans %}Ooops!{% endtrans %}</h3>
+        <p>{% trans %}You reached the limit of comments in this conversation.{% endtrans %}</p>
+    {% else %}
+        <p>{% trans %}Include something new and avoid similar opinions. You can post up to
+            <span class="text-accent">{{ n_comments }}</span> comments.{% endtrans %}</p>
+        <form method="post" up-target="main" up-restore-scroll="true">
+            {{ csrf_input }}
+            <input type="hidden" name="action" value="comment">
+            <textarea placeholder="{{ _('Comment here') }}">{{ content or '' }}</textarea>
+            <div class="comment-form__count"><span>0</span> / 240</div>
+            <div class="clearfix"></div>
+            <input type="submit" name="submit" value="{{ _('Comment') }}">
+        </form>
     {% endif %}
 </div>

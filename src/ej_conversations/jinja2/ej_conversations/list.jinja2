@@ -21,28 +21,29 @@
             <div class="swiper-container">
                 <div class="swiper-wrapper">
                     <div class="swiper-slide">
-                        {{modalities(_("Welcome"), modalicon(["fa-times", "fa-arrow-right", "fa-check"]),
-                            [_("You started your participation! Start voting in comments: you can agree, desagree or pass if you want to vote after")])}}
+                        {{ modalities(_("Welcome"), modalicon(["fa-times", "fa-arrow-right", "fa-check"]),
+                            [_("You started your participation! Start voting in comments: you can agree, desagree or pass if you want to vote after")]) }}
                         <div class="swiper-pagination"></div>
                         <div class="append-buttons">
-                            <a class="next-slide-1" href="#">{{_("NEXT")}}</a>
+                            <a class="next-slide-1" href="#">{{ _("NEXT") }}</a>
                         </div>
                     </div>
                     <div class="swiper-slide">
-                        {{modalities(_("Participation"), modalimg({'/static/img/icons/artboard.svg' : 'imgpart'}),
-                            [_("From your votes, you will be setted up in a opnion group, and you will can get powers that it will help you to diversify dialogues and sticking opnion bubbles!")])}}
+                        {{ modalities(_("Participation"), modalimg({'/static/img/icons/artboard.svg' : 'imgpart'}),
+                            [_("From your votes, you will be setted up in a opnion group, and you will can get powers that it will help you to diversify dialogues and sticking opnion bubbles!")]) }}
                         <div class="swiper-pagination"></div>
                         <div class="append-buttons">
-                            <a class="next-slide-2" href="#">{{_("NEXT")}}</a>
+                            <a class="next-slide-2" href="#">{{ _("NEXT") }}</a>
                         </div>
-                     </div>
+                    </div>
                     <div class="swiper-slide">
-                        {{modalities(_("Powers"), modalimg({'/static/img/icons/iconativista.svg' : 'img', '/static/img/icons/iconponte.svg' : 'img'}),
-                            [_("With the powers, Minority Activist, Dialogue Brigde and Sticks Bubble, you will get more speech powers, increasing your comment limit and/or their visibility!")])}}
+                        {{ modalities(_("Powers"), modalimg({'/static/img/icons/iconativista.svg' : 'img', '/static/img/icons/iconponte.svg' : 'img'}),
+                            [_("With the powers, Minority Activist, Dialogue Brigde and Sticks Bubble, you will get more speech powers, increasing your comment limit and/or their visibility!")]) }}
                         <div class="swiper-pagination"></div>
-                        <form method="post" action="/conversations/" >
+                        <form method="post" action="/conversations/">
                             {{ csrf_input }}
-                            <button type="submit" name="modalities" class="Button" value="pass">{{_("CONTINUE PARTICIPATING")}}</button>
+                            <button type="submit" name="modalities" class="Button"
+                                    value="pass">{{ _("CONTINUE PARTICIPATING") }}</button>
                         </form>
                     </div>
                 </div>
@@ -50,7 +51,7 @@
                 <div class="swiper-button-prev"></div>
             </div>
         </div>
-{#    {% else %}
+        {#    {% else %}
 
 
         Modal estático para implementação da gamificação (Ativista de Minoria)
@@ -113,7 +114,8 @@
 
     <div class="Link">
         {% if can_add_conversation and create_url %}
-            <a class="Link-new" href="{{ create_url }}"><i class="fa fa-plus-circle"></i> {{ _('New conversation') }}</a>
+            <a class="Link-new" href="{{ create_url }}"><i class="fa fa-plus-circle"></i> {{ _('New conversation') }}
+            </a>
         {% endif %}
 
         {% if can_edit_board is defined and can_edit_board and edit_url %}
@@ -139,14 +141,11 @@
     <div class="ConversationList">
         {% if current_board is defined and current_board is not none and current_board.image %}
             <div class="ConversationList-title">
-              <img src="{{current_board.image.url}}">
-              <p>{{ description }}</p>
+                <img src="{{ current_board.image.url }}">
+                <p>{{ description }}</p>
             </div>
         {% else %}
-          <div class="ConversationList-title">
-              <h1> {{ title }}</h1>
-              <p>{{ description }}</p>
-          </div>
+            {{ intro(title, description) }}
         {% endif %}
 
         {% if is_a_board is defined %}

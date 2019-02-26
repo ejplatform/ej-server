@@ -90,7 +90,7 @@ def next_comment(conversation, user):
 #
 # Throttling and Limits
 #
-@rules.register_value('ej_conversations.remaining_comments')
+@rules.register_value('ej.remaining_comments')
 def remaining_comments(conversation, user):
     """
     The number of comments user still have in a conversation.
