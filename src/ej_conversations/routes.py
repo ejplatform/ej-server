@@ -34,6 +34,87 @@ conversation_url = f'<model:conversation>/'
 
 
 #
+# Admin URLs
+#
+@urlpatterns.route('add/', perms=['ej.can_add_promoted_conversation'])
+def create(request):
+    form = forms.ConversationForm(request.POST or None)
+    if request.method == 'POST' and form.is_valid():
+        with transaction.atomic():
+            conversation = form.save_all(
+                author=request.user,
+                is_promoted=True,
+            )
+        return redirect(conversation.get_absolute_url() + 'stereotypes/')
+    return {'form': form}
+
+
+@urlpatterns.route(conversation_url + 'edit/',
+                   perms=['ej.can_edit_conversation:conversation'])
+def edit(request, conversation):
+    if not conversation.is_promoted:
+        raise Http404
+    return get_conversation_edit_context(request, conversation)
+
+
+def get_conversation_edit_context(request, conversation, board=None):
+    if request.method == 'POST':
+        form = forms.ConversationForm(
+            data=request.POST,
+            instance=conversation,
+        )
+        if form.is_valid():
+            form.save()
+            return redirect(conversation.get_absolute_url() + 'moderate/')
+    else:
+        form = forms.ConversationForm(instance=conversation)
+    tags = list(map(str, conversation.tags.all()))
+
+    return {
+        'form': form,
+        'conversation': conversation,
+        'tags': ",".join(tags),
+        'can_promote_conversation': request.user.has_perm('can_publish_promoted'),
+        'comments': list(conversation.comments.filter(status='pending')),
+        'board': board,
+    }
+
+
+@urlpatterns.route(conversation_url + 'moderate/',
+                   perms=['ej.can_moderate_conversation:conversation'])
+def moderate(request, conversation):
+    if not conversation.is_promoted:
+        raise Http404
+    return get_conversation_moderate_context(request, conversation)
+
+
+def get_conversation_moderate_context(request, conversation):
+    if request.method == 'POST':
+        comment = models.Comment.objects.get(id=request.POST['comment'])
+        if request.POST['vote'] == 'approve':
+            comment.status = comment.STATUS.approved
+            comment.rejection_reason = ''
+        elif request.POST['vote'] == 'disapprove':
+            comment.status = comment.STATUS.rejected
+            comment.rejection_reason = request.POST['rejection_reason']
+        else:
+            # User is probably trying to something nasty ;)
+            log.warning(f'user {request.user.id} sent invalid POST request: {request.POST}')
+            return HttpResponseServerError('invalid action')
+        comment.save()
+
+    status = request.GET.get('status', 'pending')
+    tags = list(map(str, conversation.tags.all()))
+
+    return {
+        'conversation': conversation,
+        'comment_status': status,
+        'comments': list(conversation.comments.filter(status=status)),
+        'tags': tags,
+    }
+
+
+#
 # Display conversations
 #
 @urlpatterns.route('', name='list')
@@ -117,7 +198,7 @@ def get_conversation_detail_context(request, conversation):
         'comment_form': comment_form,
 
         # Statistics
-        'n_voted': conversation.votes.filter(author=user).count(),
+        'n_voted': conversation.votes.filter(author=user).count() if user.is_authenticated else 0,
         'total_comments': conversation.comments.approved().count(),
 
         # Permissions and predicates
@@ -131,87 +212,6 @@ def get_conversation_detail_context(request, conversation):
         'user_is_owner': conversation.author == user,
         'voted': voted,
         'board_palette': conversation.css_palette
-    }
-
-
-#
-# Admin URLs
-#
-@urlpatterns.route('add/', perms=['ej.can_add_promoted_conversation'])
-def create(request):
-    form = forms.ConversationForm(request.POST or None)
-    if request.method == 'POST' and form.is_valid():
-        with transaction.atomic():
-            conversation = form.save_all(
-                author=request.user,
-                is_promoted=True,
-            )
-        return redirect(conversation.get_absolute_url() + 'stereotypes/')
-    return {'form': form}
-
-
-@urlpatterns.route(conversation_url + 'edit/',
-                   perms=['ej.can_edit_conversation:conversation'])
-def edit(request, conversation):
-    if not conversation.is_promoted:
-        raise Http404
-    return get_conversation_edit_context(request, conversation)
-
-
-def get_conversation_edit_context(request, conversation, board=None):
-    if request.method == 'POST':
-        form = forms.ConversationForm(
-            data=request.POST,
-            instance=conversation,
-        )
-        if form.is_valid():
-            form.save()
-            return redirect(conversation.get_absolute_url() + 'moderate/')
-    else:
-        form = forms.ConversationForm(instance=conversation)
-    tags = list(map(str, conversation.tags.all()))
-
-    return {
-        'form': form,
-        'conversation': conversation,
-        'tags': ",".join(tags),
-        'can_promote_conversation': request.user.has_perm('can_publish_promoted'),
-        'comments': list(conversation.comments.filter(status='pending')),
-        'board': board,
-    }
-
-
-@urlpatterns.route(conversation_url + 'moderate/',
-                   perms=['ej.can_moderate_conversation:conversation'])
-def moderate(request, conversation):
-    if not conversation.is_promoted:
-        raise Http404
-    return get_conversation_moderate_context(request, conversation)
-
-
-def get_conversation_moderate_context(request, conversation):
-    if request.method == 'POST':
-        comment = models.Comment.objects.get(id=request.POST['comment'])
-        if request.POST['vote'] == 'approve':
-            comment.status = comment.STATUS.approved
-            comment.rejection_reason = ''
-        elif request.POST['vote'] == 'disapprove':
-            comment.status = comment.STATUS.rejected
-            comment.rejection_reason = request.POST['rejection_reason']
-        else:
-            # User is probably trying to something nasty ;)
-            log.warning(f'user {request.user.id} sent invalid POST request: {request.POST}')
-            return HttpResponseServerError('invalid action')
-        comment.save()
-
-    status = request.GET.get('status', 'pending')
-    tags = list(map(str, conversation.tags.all()))
-
-    return {
-        'conversation': conversation,
-        'comment_status': status,
-        'comments': list(conversation.comments.filter(status=status)),
-        'tags': tags,
     }
 
 

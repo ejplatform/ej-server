@@ -29,7 +29,7 @@
 {% if not hide_menu|default(False) %}{{ page_menu(menu_contents|default([]), request=request) }}{% endif %}
 
 {% block main %}
-<main class="{{ main_class|default('container') }}{{ '' if request.user.is_authenticated else 'is-anonymous' }}">
+<main class="{{ main_class|default('container') }}{{ '' if request.user.is_authenticated else ' is-anonymous' }}">
 {% if content is defined %}
     {{ content }}
 {% else %}

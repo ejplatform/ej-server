@@ -81,7 +81,7 @@ def comment_form(conversation, request=None, content=None, user=None, **kwargs):
         login = reverse('auth:login')
         return {
             'user': None,
-            'login': a(_('login'), href=f'{login}?next={conversation_url}')
+            'login_anchor': a(_('login'), href=f'{login}?next={conversation_url}')
         }
 
     # Check if user still have comments left

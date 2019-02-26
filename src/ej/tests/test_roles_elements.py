@@ -1,12 +1,14 @@
 import pytest
 
-from ej.roles.elements import intro, icon
+from ej.roles import intro
+from ej.roles.tags import icon
 
 
 class TestRolesElements:
     """
     Test CSS roles elements.
     """
+
     def test_create_paragraph_with_title_and_description(self):
         title_test = 'Test'
         desc_test = 'Something about test...'
