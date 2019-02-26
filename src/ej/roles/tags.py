@@ -1,11 +1,13 @@
 import logging
+from typing import Mapping
 
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy
-from hyperpython import a, i, meta
+from hyperpython import a, h1, p, div, components, strong, dl, dt, dd
 from hyperpython import h, html
-from hyperpython.components import html_table, html_list, html_map, Head as BaseHead
+from hyperpython.components import html_table, html_list, html_map, a_or_span
+from hyperpython.renderers.attrs import render_attrs
 
 from ej.utils.url import Url
 
@@ -19,15 +21,24 @@ __all__ = [
     'h', 'html_table', 'html_list', 'html_map',
 
     # EJ components
-    'link', 'rocket_button', 'action_button',
+    'link', 'link_attrs', 'action_button', 'intro', 'span_icon', 'progress_bar',
+    'extra_content', 'tabs', 'overlay', 'popup', 'toast', 'description', 'categories',
 ]
 
 
-def link(value, href='#', target='.Page-mainContainer .Header-topIcon',
-         action='target', instant=True, button=False, transition='cross-fade',
-         preload=False, scroll=False, prefetch=False, primary=False, args=None,
-         query=None, url_args=None,
-         **kwargs):
+def link(value, href='#', target='main', **kwargs):
+    return a(link_kwargs(href=href, target=target, **kwargs), value)
+
+
+def link_attrs(href='#', target='main', **kwargs):
+    return render_attrs(link_kwargs(href=href, target=target, **kwargs))
+
+
+def link_kwargs(href='#', target='main', action='target', instant=True,
+                button=False, transition='cross-fade',
+                preload=False, scroll=False, prefetch=False, primary=False, args=None,
+                query=None, url_args=None, class_=(),
+                **kwargs):
     if isinstance(href, Url):
         href = str(href)
     elif href.startswith('/'):
@@ -36,6 +47,8 @@ def link(value, href='#', target='.Page-mainContainer .Header-topIcon',
             'Prefer using view function names such as auth:login instead of '
             '/login/. You can also wrap the url into a ej.utils.Url instance '
             'if you want to return a calculated url value.' % href)
+    elif href == '#' or href is None:
+        href = '#'
     else:
         href = reverse(href, kwargs=url_args)
     if query is not None:
@@ -58,62 +71,209 @@ def link(value, href='#', target='.Page-mainContainer .Header-topIcon',
     if args:
         for arg in args.split():
             kwargs[arg] = True
-    elem = a(kwargs, value)
-    return elem.add_class('Button') if button else elem
 
-
-def rocket_button(value=_('Access CPA panel'), href='/talks/', **kwargs):
-    children = [i(class_='fa fa-comment'), value]
-    return link(children, href=href, class_="RocketButton", **kwargs)
+    # Add
+    if button and class_:
+        if isinstance(class_, str):
+            class_ = class_.split()
+        class_ = (*class_, 'button')
+    elif button:
+        class_ = ('button',)
+    if class_:
+        kwargs['class'] = class_
+    return kwargs
 
 
 def action_button(value=_('Go!'), href='#', primary=True, **kwargs):
-    return link(value, href, primary=primary, **kwargs).add_class('Button')
-
-
-class Head(BaseHead):
-    """
-    Base information describing the <head> tag of a page.
-    """
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
-        self.stylesheets = [
-            *self.stylesheets,
-            'https://fonts.googleapis.com/css?family=Raleway:400,700,900&subset=latin-ext',
-            'https://unpkg.com/unpoly@0.54.0/dist/unpoly.min.css',
-            static('css/fontawesome-all.min.css'),
-            static('js/jquery-ui/jquery-ui.min.css'),
-            static('js/jquery-ui/jquery-ui.structure.min.css'),
-            static('css/main.css'),
-        ]
-        self.scripts = [
-            'https://code.jquery.com/jquery-3.2.1.slim.min.js',
-            'https://unpkg.com/unpoly@0.54.0/dist/unpoly.min.js',
-            'https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js',
-            static('js/jquery-ui/jquery-ui.min.js'),
-            static('js/main.js'),
-        ]
-        self.favicons = dict(self.favicons)
-        self.favicons.update({
-            None: static('img/logo/logo.svg'),
-            16: static('img/logo/icon-16.png'),
-            32: static('img/logo/icon-32.png'),
-            57: static('img/logo/icon-57.png'),
-            72: static('img/logo/icon-72.png'),
-            96: static('img/logo/icon-96.png'),
-            114: static('img/logo/icon-114.png'),
-            192: static('img/logo/icon-192.png'),
-        })
-
-    def favicon_tags(self):
-        return [
-            *super().favicon_tags(),
-            meta(name='image', content=static('img/logo/logo.svg')),
-        ]
+    return link(value, href, primary=primary, **kwargs).add_class('button')
 
 
 @html.register(lazy_string_class)
 def _render_lazy_string(st, **kwargs):
     return html(str(st))
+
+
+#
+# Special EJ ui elements
+#
+def icon(name, href=None, **kwargs):
+    """
+    Generic icon function.
+
+    If name does not end with a file extension (e.g.: .svg, .png, etc), it
+    creates a font-awesome icon inside a <i> element. Otherwise, it returns
+    an <img> tag pointing to the correct icon.
+
+    If href is given, it wraps content inside an <a> tag.
+    """
+    if '.' in name:
+        raise NotImplementedError
+    else:
+        return components.fa_icon(name, href=href, **kwargs)
+
+
+def intro(title, description=None, **kwargs):
+    """
+    Display a centered title with a small description paragraph.
+
+    This content is wrapped into a div that centers the content into the main
+    page layout.
+    """
+    children = [h1(title)]
+    if description:
+        children.append(p(description))
+    return div(children, **kwargs).add_class('intro-paragraph', first=True)
+
+
+def span_icon(text, icon=None, **kwargs):
+    """
+    This element is a simple text with an icon placed on the left hand side.
+
+    If style='accent', it decorates the icon with the accent color. Style can
+    also be
+
+    href can be given towraps content inside an <a> tag.
+    """
+    text = '' if text is None else str(text)
+    kwargs['children'] = [_icon(icon), text] if icon else [text]
+    return a_or_span(**kwargs).add_class('span-icon')
+
+
+def extra_content(title, text, icon=None, **kwargs):
+    """
+    Simple element with a title and a small paragraph with information.
+
+    Used, for instance, in the detail page of conversations to link the
+    comment form or cluster information.
+
+    Args:
+        title: Title of the content
+        text: Paragraph that follows content.
+        icon: Optional icon to be included with title element.
+
+    Returns:
+
+    """
+    title = h1([_icon(icon), title]) if icon else h1(title)
+    return div([title, text], **kwargs).add_class('extra-content')
+
+
+def progress_bar(*args):
+    """
+    Display a progress bar.
+    """
+
+    # Compute fractions
+    if len(args) == 1:
+        pc = args[0]
+        n = total = None
+    else:
+        e = 1e-50
+        n, total = args
+        pc = round(100 * (n + e) / (total + e))
+
+    # Build children
+    children = [
+        div(strong(f'{pc}%')),
+        div(class_='progress-bar__progress', children=[
+            div(' ', class_='color-brand-lighter', style=f'flex-grow: {pc + 10};'),
+            div(' ', style=f'flex-grow: {110 - pc};'),
+        ]),
+    ]
+    if total is not None:
+        children.append(div([strong(n), '/', total]))
+
+    # Return
+    return div(children, class_='progress-bar')
+
+
+def tabs(items, select=0, **kwargs):
+    """
+    Return a tabbed interface.
+    """
+    items = items.items() if isinstance(items, Mapping) else items
+    children = []
+    for idx, (k, v) in enumerate(items):
+        args = {'href': v} if isinstance(v, str) else v
+        anchor = a(args, k)
+        if select == idx:
+            anchor = anchor.add_class('tabs__selected')
+        children.append(anchor)
+    return div(children, **kwargs).add_class('tabs')
+
+
+def categories(items, select=0, **kwargs):
+    """
+    Similar to tabs, but display several categories for the user to select.
+    """
+    items = items.items() if isinstance(items, Mapping) else items
+    children = [icon('chevron-left', class_='categories__left',
+                     is_component='categories:right')]
+    for idx, (k, v) in enumerate(items):
+        args = {'href': v} if isinstance(v, str) else v
+        anchor = a(args, k)
+        if select == idx:
+            anchor = anchor.add_class('categories__selected')
+        children.append(anchor)
+    children.append(icon('chevron-right', class_='categories_right',
+                         is_component='categories:right'))
+    return div(children, **kwargs).add_class('categories')
+
+
+def popup(title, content, action=None, **kwargs):
+    """
+    Return a popup screen.
+
+    It does not include positioning and the overlay element.
+
+    Args:
+        title: Title of the popup.
+        content: HTML or text content of the popup.
+        action: Action button. Can be an anchor or other element.
+    """
+    return div([
+        icon('times-circle', class_='popup__close', is_component='popup:close'),
+        div([
+            h1([title],
+               class_='title'),
+            p(content),
+            action and div(action),
+        ], class_='popup__contents'),
+    ], **kwargs).add_class('popup')
+
+
+def overlay(data, **kwargs):
+    """
+    Creates a popup overlay and includes the element inside
+    the overlay.
+    """
+    return div(data, **kwargs).add_class('overlay')
+
+
+def toast(icon, title, description=None, **kwargs):
+    """
+    Toast component: display some title with a highlighted icon.
+    """
+    body = [h1(title)]
+    if description:
+        body.append(p(description))
+    return div([
+        _icon(icon, class_='toast__icon'),
+        div(body, class_='toast__content'),
+    ], **kwargs).add_class('toast')
+
+
+def description(items, **kwargs):
+    """
+    A description list.
+
+    Can receive a dictionary or a list of tuples.
+    """
+    items = items.items() if isinstance(items, Mapping) else items
+    children = []
+    for k, v in items:
+        children.extend([dt(k), dd(v)])
+    return dl(children, **kwargs).add_class('description')
+
+
+_icon = icon

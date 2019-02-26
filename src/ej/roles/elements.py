@@ -1,50 +1,5 @@
-from hyperpython import components, span
 from hyperpython import div, h1, p
-from hyperpython.components import a_or_span, wrap
-
-
-def paragraph(title, description=None, **kwargs):
-    """
-    Display a centered title with a small description paragraph.
-
-    This content is wrapped into a div that centers the content into the main
-    page layout.
-    """
-    children = [h1(title, class_='Paragraph-title')]
-    if description:
-        children.append(p(description, class_='Paragraph-text'))
-    return div(children, **kwargs).add_class('Paragraph', first=True)
-
-
-def icon(name, href=None, **kwargs):
-    """
-    Generic icon function.
-
-    If name does not end with a file extension (e.g.: .svg, .png, etc), it
-    creates a font-awesome icon inside a <i> element. Otherwise, it returns
-    an <img> tag pointing to the correct icon.
-
-    If href is given, it wraps content inside an <a> tag.
-    """
-    if '.' in name:
-        raise NotImplementedError
-    else:
-        return components.fa_icon(name, href=href, **kwargs)
-
-
-def decorated_text(text, icon, style=None, href=None, **kwargs):
-    """
-    This element is a simple text with an icon placed on the left hand side.
-
-    If style='accent', it decorates the icon with the accent color. Style can
-    also be
-
-    href can be given towraps content inside an <a> tag.
-    """
-    return a_or_span(class_='DecoratedText', href=href, **kwargs)[
-        _icon(icon),
-        span(text)
-    ]
+from hyperpython.components import wrap
 
 
 def popup_content(title, text, action, **kwargs):
@@ -88,6 +43,3 @@ def command_bar(*actions, **kwargs):
     else:
         n = len(actions)
         raise ValueError(f'cannot include more than 2 actions, got: {n}')
-
-
-_icon = icon

@@ -69,6 +69,7 @@ pytest-splinter = "^2.0"
 pytest-pythonpath = "^0.7.3"
 mock = "^2.0"
 watchdog = "^0.9.0"
+libsass = "^0.17.0"
 
 [build-system]
 requires = ["poetry>=0.12"]

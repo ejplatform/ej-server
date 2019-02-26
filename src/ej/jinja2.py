@@ -1,23 +1,29 @@
 import random
 import string
 
+import hyperpython.jinja2
 from django.conf import settings
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.urls import reverse
 from django.utils import translation
-from django.utils.translation import get_language
 from django.utils.formats import date_format
+from django.utils.translation import get_language
+from hyperpython import html
 from jinja2 import Environment, StrictUndefined, contextfunction
 from markdown import markdown
 from markupsafe import Markup
 
-import hyperpython.jinja2
 from ej_configurations import social_icons, fragment
-from hyperpython import html
+from . import components
 from . import roles
 from .roles import tags
 
-TAG_MAP = {k: getattr(tags, k) for k in tags.__all__}
+FUNCTIONS = {}
+for _names, _mod in [(tags.__all__, tags), (dir(components), components)]:
+    for _name in _names:
+        value = getattr(_mod, _name, None)
+        if not _name.startswith('_') and callable(value):
+            FUNCTIONS[_name] = value
 SALT_CHARS = string.ascii_letters + string.digits + '-_'
 
 
@@ -53,7 +59,7 @@ def environment(**options):
 
         # Available tags and components
         tag=roles,
-        **TAG_MAP,
+        **FUNCTIONS,
     )
     env.filters.update(
         markdown=lambda x: Markup(markdown(x)),
@@ -141,7 +147,7 @@ def generic_context(ctx):
         # Globals
         'static', 'url', 'salt_attr', 'salt_tag', 'salt', 'social_icons',
         'service_worker', 'generic_context', 'render', 'fragment', 'tag',
-        'settings', *TAG_MAP,
+        'settings', *FUNCTIONS,
 
         # Variables injected by the base template
         'target', 'target_context',

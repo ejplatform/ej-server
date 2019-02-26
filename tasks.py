@@ -54,6 +54,44 @@ def sass(ctx, watch=False, theme='default', trace=False, dry_run=False, rocket=T
 
 
 @task
+def sassc(ctx, theme='default', watch=False, background=False):
+    """
+    Run Sass compiler
+    """
+    import sass
+
+    theme, root = set_theme(theme)
+    os.environ['EJ_THEME'] = theme or 'default'
+    ctx.run('mkdir -p lib/build/css')
+    root = f'{root}scss/'
+
+    def go():
+        import sass
+
+        root_url = f'file://{os.path.abspath("lib/build/css/")}'
+        for file in ('main', 'rocket'):
+            try:
+                map_path = f'lib/build/css/{file}.css.map'
+                css, sourcemap = sass.compile(filename=f'{root}{file}.scss',
+                                              # output_style='compressed',
+                                              source_map_filename=map_path,
+                                              source_map_root=root_url,
+                                              source_map_contents=True,
+                                              source_map_embed=True,
+                                              )
+                with open(f'lib/build/css/{file}.css', 'w') as fd:
+                    fd.write(css)
+                with open(map_path, 'w') as fd:
+                    fd.write(sourcemap)
+
+            except Exception as exc:
+                print(f'ERROR EXECUTING SASS COMPILATION: {exc}')
+
+    exec_watch(root, go, name='sassc', watch=watch, background=background)
+    print('Compilation finished!')
+
+
+@task
 def js(ctx):
     """
     Build js assets
@@ -576,3 +614,67 @@ def set_theme(theme):
 
     os.environ['EJ_THEME'] = theme or 'default'
     return theme, root
+
+
+def watch_path(path, func, poll_time=0.5, name=None, skip_first=False):
+    """
+    Watch path and execute the given function everytime a file changes.
+    """
+    import time
+    from watchdog.observers import Observer
+    from watchdog.events import FileSystemEventHandler, FileCreatedEvent, \
+        FileDeletedEvent, FileModifiedEvent, FileMovedEvent
+
+    file_event = (FileCreatedEvent, FileDeletedEvent, FileModifiedEvent, FileMovedEvent)
+    last = time.time()
+
+    def dispatch(ev):
+        nonlocal last
+
+        if (ev.src_path.endswith('__') or ev.src_path.startswith('__')
+            or ev.src_path.startswith('~') or ev.src_path.startswith('.')):
+            return
+
+        if isinstance(ev, file_event):
+            last = start = time.time()
+            time.sleep(poll_time)
+            if last == start:
+                print(f'File modified: {ev.src_path}')
+                func()
+
+    observer = Observer()
+    handler = FileSystemEventHandler()
+    handler.dispatch = dispatch
+    observer.schedule(handler, path, recursive=True)
+    observer.start()
+    name = name or func.__name__
+    print(f'Running {name} in watch mode.')
+    if not skip_first:
+        func()
+    try:
+        while True:
+            time.sleep(0.5)
+    except KeyboardInterrupt:
+        observer.stop()
+    observer.join()
+
+
+def exec_watch(path, func, name, watch=False, background=False, poll_time=0.5):
+    if watch and background:
+        go = lambda: watch_path(path, func, name=name, poll_time=poll_time)
+        return exec_watch(path, go, name, background=True)
+    elif watch:
+        return watch_path(path, func, name=name, poll_time=poll_time)
+    elif background:
+        from threading import Thread
+
+        def go():
+            try:
+                func()
+            except KeyboardInterrupt:
+                pass
+
+        thread = Thread(target=go, daemon=True)
+        thread.start()
+    else:
+        func()
