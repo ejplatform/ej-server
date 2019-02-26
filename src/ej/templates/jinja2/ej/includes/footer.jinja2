@@ -1,0 +1,14 @@
+{% macro link_macro(url) %}
+    {{- link(caller(), url, **kwargs) -}}
+{% endmacro %}
+
+<nav class="main-footer">
+    {% call link_macro('conversation:list', title=_('Conversations'), class_='main-footer__link') %}
+        <img src="{{ static('img/icons/navbar_conversations.svg') }}" alt="{{ _('Conversations') }}">
+        <span>{{ _('Conversations') }}</span>
+    {% endcall %}
+    {% call link_macro('profile:detail', title=_('Profile'), class_='main-footer__link') %}
+        <img src="{{ static('img/icons/navbar_profile.svg') }}" alt="{{ _('Profile') }}">
+        <span>{{ _('Profile') }}</span>
+    {% endcall %}
+</nav>

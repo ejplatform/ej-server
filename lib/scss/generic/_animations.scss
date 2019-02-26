@@ -1,0 +1,20 @@
+/*
+ ANIMATIONS
+ =========================================================================== */
+
+@import '../config';
+
+
+@keyframes highlight-content {
+    from {
+        background: $color-content-text;
+    }
+    to {
+        background: $color-accent;
+    }
+}
+
+
+%Link--content {
+    animation: highlight-content 200ms;
+}

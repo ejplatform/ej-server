@@ -1,0 +1,22 @@
+//------------------------------------------------------------------------------
+// OVERRIDE MENDELEEV.CSS ELEMENTS
+//------------------------------------------------------------------------------
+// In the future, Mendeleev should support this kind of personalization and this
+// module will go away.
+
+.container, .container-1, .container-2, .container-3 {
+    padding: 0;
+}
+
+@include breakpoint('sm') {
+    .container, .container-1, .container-2, .container-3 {
+        padding: 0 size(1);
+    }
+}
+
+label {
+    @extend .text-6;
+    color: color('action');
+    margin-left: 1.125rem;
+    text-transform: lowercase;
+}

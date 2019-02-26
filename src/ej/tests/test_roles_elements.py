@@ -1,6 +1,6 @@
 import pytest
 
-from ej.roles.elements import paragraph, icon
+from ej.roles.elements import intro, icon
 
 
 class TestRolesElements:
@@ -10,7 +10,7 @@ class TestRolesElements:
     def test_create_paragraph_with_title_and_description(self):
         title_test = 'Test'
         desc_test = 'Something about test...'
-        p = paragraph(title_test, description=desc_test)
+        p = intro(title_test, description=desc_test)
         assert p.tag == 'div'
         if len(p.children) == 2:
             ph1 = p.children[0]

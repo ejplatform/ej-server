@@ -1,0 +1,332 @@
+/*
+ USER PROFILE VIEWS
+ ======================================================================== */
+
+@import '../tools/index';
+@import 'auth';
+
+$profile-image-size: 2 * $login-icon-size !default;
+$profile-arrow-size: $spacing-unit-small !default;
+$profile-label-clear-color: #30BFD3 !default;
+
+.Profile {
+    @extend .Container;
+    text-align: center;
+    padding-top: $spacing-unit;
+    h1 {
+        margin-bottom: 0;
+        color: $color-content;
+        font-size: $font-size-h1;
+        font-weight: bold;
+    }
+    h2 {
+        color: $color-hint;
+        font-size: $font-size-h4;
+        font-weight: bold;
+        margin-top: 0;
+    }
+    &-actions {
+        margin: $spacing-unit-large;
+        padding: 0;
+        text-transform: uppercase;
+        color: $color-content;
+        opacity: 0.8;
+        text-align: center;
+        a {
+            margin: $spacing-unit * 2 0;
+            color: $color-content;
+            opacity: 0.8;
+        }
+    }
+    &-conversations {
+        padding: $spacing-unit-small;
+        h2 {
+            &.expanded {
+                i {
+                    transform: rotate(180deg);
+                }
+            }
+            color: black;
+            text-align: justify;
+            font-weight: normal;
+            span {
+                color: $color-accent;;
+                font-weight: bold;
+            }
+            i {
+                float: right;
+                font-weight: bold;
+                font-size: $font-size-huge;
+                color: $color-accent;;
+            }
+        }
+        .conversations {
+            display: none;
+        }
+    }
+    &-comments {
+        padding: $spacing-unit-small;
+        h2 {
+            &.expanded {
+                i {
+                    transform: rotate(180deg);
+                }
+            }
+            color: black;
+            text-align: justify;
+            font-weight: normal;
+            span {
+                color: $color-accent;;
+                font-weight: bold;
+            }
+            i {
+                float: right;
+                font-weight: bold;
+                font-size: $font-size-huge;
+                color: $color-accent;;
+            }
+        }
+        ul {
+            padding: 0;
+            margin: 0;
+            display: none;
+            li {
+                .header {
+                    &::after {
+                        content: "";
+                        clear: both;
+                        display: table;
+                    }
+                    color: $color-hint;
+                    .label {
+                        float: left;
+                    }
+                    .date {
+                        float: right;
+                    }
+                }
+                .content {
+                    font-weight: 600;
+                    margin-top: $spacing-unit-tiny;
+                    margin-bottom: $spacing-unit-tiny;
+                }
+                .actions {
+                    display: flex;
+                    justify-content: space-between;
+                    li {
+                        &.agree {}
+                        &.skip {
+                            color: $color-hint;
+                        }
+                        &.disagree {
+                            color: $color-accent;;
+                        }
+                        span {
+                            margin-left: 0.5em;
+                        }
+                        border: none;
+                        font-weight: bold;
+                    }
+                }
+                .footer {
+                    margin-top: $spacing-unit-small;
+                    margin-bottom: $spacing-unit-small;
+                    color: $color-accent;;
+                    font-weight: bold;
+                }
+                padding: 0;
+                margin: 0;
+                border-bottom: 2px solid $color-hint;
+                list-style: none;
+            }
+        }
+    }
+    &-arrow {
+        width: 0;
+        height: 0;
+        border-left: $profile-arrow-size solid transparent;
+        border-right: $profile-arrow-size solid transparent;
+        border-bottom: $profile-arrow-size solid $color-hint;
+    }
+    &-breadcrumbs {
+        text-align: left;
+    }
+    &-conversations {
+        .ConversationList-title h1 {
+            text-transform: uppercase;
+        }
+        p {
+            text-align: center;
+        }
+    }
+    &-image {
+        width: $profile-image-size;
+        height: $profile-image-size;
+        // FIXME See if it will necessary
+        // border: $spacing-unit-small solid $color-green;
+        border-radius: $spacing-unit + $spacing-unit-tiny + $spacing-unit-huge;
+    }
+    &-rocket {
+        text-align: center;
+        margin-top: $spacing-unit * 4;
+        h2 {
+            text-transform: uppercase;
+        }
+        .RocketButton {
+            background: color('primary');
+        }
+    }
+    &-tabs {
+        margin-top: $spacing-unit;
+    }
+    &-tabLinks {
+        display: flex;
+        justify-content: space-around;
+        font-size: $font-size-h5;
+        font-weight: $font-headings-weight;
+        text-transform: uppercase;
+        >* {
+            margin: 0 $spacing-unit;
+        }
+        a {
+            color: $color-content;
+            margin: 0;
+            display: inline-block;
+            min-width: $spacing-unit * 2;
+        }
+        div {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+    }
+    &-tabActive {
+        font-weight: bold;
+    }
+    &-tabContainer {}
+    &-tabContent {
+        background: $color-hint;
+        text-align: left;
+        border-radius: 0.7em;
+    }
+    &-info {
+        font-size: $font-size-h6;
+        padding: $spacing-unit;
+        .edit-button {
+            margin-top: $spacing-unit;
+            text-align: center;
+            .Button {
+                text-transform: uppercase;
+                background-color: $color-accent;
+                padding: 15px 25px 15px 25px;
+            }
+        }
+        .statistics {
+            &::after {
+                content: "";
+                clear: both;
+                display: table;
+            }
+            margin: 0;
+            padding: 0;
+            li {
+                span {
+                    color: color('primary');
+                    font-weight: 600;
+                    &.amount {
+                        font-weight: 800;
+                        font-size: $font-size-huge;
+                    }
+                    &.description {
+                        font-size: $font-size-small;
+                    }
+                    display: block;
+                }
+                float: left;
+                list-style: none;
+                text-align: center;
+                width: 50%;
+                height: 60px;
+            }
+            float: none;
+            clear: both;
+        }
+        .trophies {
+            &::after {
+                content: "";
+                clear: both;
+                display: table;
+            }
+            margin: 0;
+            padding: 0;
+            .Button {
+                padding: 15px 25px 15px 25px;
+                background: $color-accent;
+            }
+            li {
+                span {
+                    color: color('primary');
+                    font-weight: 600;
+                    display: block;
+                    margin-top: $spacing-unit-small;
+                }
+                float: left;
+                list-style: none;
+                text-align: center;
+                width: 50%;
+                height: 160px;
+            }
+            float: none;
+            clear: both;
+            text-align: center;
+        }
+        >* {
+            display: block;
+        }
+        dl {
+            dt {
+                color: color('primary');
+                text-transform: lowercase;
+                font-weight: bold;
+            }
+            dd {
+                font-size: $font-size-h5;
+                margin: 0 0 $spacing-unit-small 0;
+                color: $color-content;
+            }
+        }
+    }
+}
+
+.ProfileEdit {
+    @extend .Container;
+    input,
+    textarea,
+    label,
+    select,
+    .FormItem {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    p input[type=file] {
+        display: none;
+    }
+    label[for=image-clear_id] {
+        color: $profile-label-clear-color;
+        display: inline-block;
+    }
+    p input[type=checkbox][name=image-clear] {
+        display: inline-block;
+    }
+    form p:last-of-type {
+        padding: 0 $spacing-unit;
+        label[for=id_image] {
+            margin: 0;
+        }
+        a {
+            display: block;
+        }
+    }
+}

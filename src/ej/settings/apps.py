@@ -27,7 +27,6 @@ class InstalledAppsConf(Base, EjOptions):
     ]
 
     third_party_apps = [
-        # Third party apps
         'taggit',
         'rules',
         'allauth',
@@ -42,15 +41,13 @@ class InstalledAppsConf(Base, EjOptions):
         'rest_framework.authtoken',
         'rest_auth',
         'rest_auth.registration',
-        # 'corsheaders',
         'constance',
         'constance.backends.database',
         'push_notifications',
     ]
 
     def get_django_contrib_apps(self):
-        apps = super().get_django_contrib_apps()
-        return ['django.contrib.flatpages', *apps]
+        return [*super().get_django_contrib_apps(), 'django.contrib.flatpages']
 
     def get_project_apps(self):
         apps = [*super().get_project_apps(), *self.project_apps]

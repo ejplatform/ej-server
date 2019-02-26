@@ -1,0 +1,138 @@
+//------------------------------------------------------------------------------
+// GENERIC EJ UI ELEMENTS
+//------------------------------------------------------------------------------
+
+// Small tweaks
+i.fa, i.fas, i.fab {
+    margin: auto 0.5em;
+}
+
+.body {
+    margin-bottom: 5rem !important;
+    @include breakpoint('md') {
+        margin-bottom: 0 !important;
+    }
+}
+
+//------------------------------------------------------------------------------
+// Intro title
+.title {
+    @extend .h2, .text-center, .text-accent;
+}
+
+.intro-paragraph {
+    @extend .text-center;
+    h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+        @extend .title;
+    }
+    p {
+        padding-left: size(1);
+        padding-right: size(1);
+    }
+}
+
+//------------------------------------------------------------------------------
+// Tabs and categories
+.tabs, .categories {
+    @extend .text-center, .row, .flex-center, .bold;
+    a {
+        @extend .bold, .pad-2, .margin-x3;
+    }
+    &__selected {
+        @extend .text-brand;
+        border-bottom: 3px solid color('brand');
+    }
+}
+
+.tabs {
+    @extend .uppercase;
+    border-bottom: 2px solid color('accent');
+}
+
+.categories {
+    @include color('brand-lighter', 'brand');
+
+    a {
+        color: color('brand');
+    }
+}
+
+//------------------------------------------------------------------------------
+// Pop-up window
+.popup {
+    @extend .relative, .col;
+    background-color: color('background');
+    border: 1px solid color('accent');
+    border-radius: 1rem;
+    max-width: 30rem;
+    overflow-y: auto;
+
+    &__contents {
+        @extend .pad-3, .text-center, .col;
+        flex-grow: 1;
+        height: 100%;
+    }
+
+    &__close {
+        @extend .absolute, .pin-top, .pin-right, .margin-3;
+        color: color('black');
+    }
+}
+
+.overlay {
+    @extend .fixed, .pin;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 100vw;
+    height: 100vh;
+    z-index: 500;
+
+    > * {
+        margin: 12.5vh auto;
+        max-height: 75vh;
+        min-height: 40vh;
+        max-width: 80%;
+    }
+}
+
+//------------------------------------------------------------------------------
+// Toast element
+.toast {
+    @extend .color-brand-lighter, .pad-3;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+
+    &__icon {
+        @extend .pad-2;
+        @include color('white' 'brand');
+        border: 6px solid;
+        border-radius: 50rem;
+        box-sizing: content-box;
+        line-height: 2rem;
+        font-size: 2rem;
+        height: 2rem;
+        width: 2rem;
+    }
+    &__content {
+        > * {
+            margin: 0 !important;
+        }
+        h1 {
+            @extend .text-4, .uppercase, .sans-serif, .bold, .text-brand;
+        }
+    }
+}
+
+//------------------------------------------------------------------------------
+// Description list (for profile and others)
+.description {
+    dt {
+        @extend .bold, .text-6, .text-brand, .lowercase;
+        margin: 0;
+    }
+    dd {
+        margin: 0 0 2rem 0;
+    }
+}
+
+

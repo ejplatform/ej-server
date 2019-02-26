@@ -1,0 +1,128 @@
+//------------------------------------------------------------------------------
+// PAGE NAVIGATION ELEMENTS
+//------------------------------------------------------------------------------
+@import "../../config";
+
+//------------------------------------------------------------------------------
+// Footer and header navigation
+.main-header, .main-footer {
+    @extend .row, .items-center, .text-center;
+    @include color('navigation');
+    z-index: 100;
+
+    > * {
+        @extend .pad-y1, .pad-x3;
+    }
+    > a {
+        color: color('navigation-text');
+    }
+}
+
+.main-header {
+    @extend .sticky, .pin-top;
+    box-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.35);
+
+    &__logo {
+        flex: 1;
+        img {
+            width: 3rem
+        }
+    }
+}
+
+.main-footer {
+    @extend .fixed, .pin-bottom, .flex-around;
+    box-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.35);
+    width: 100%;
+
+    &__link {
+        @extend .col, .items-center, .uppercase, .text-8, .bold;
+        img {
+            width: 1.75rem;
+        }
+    }
+}
+
+// Reorganize using media queries
+@include breakpoint('md') {
+    .main-header, .main-footer {
+        height: 3rem;
+        line-height: 3rem;
+        position: fixed;
+        top: 0;
+    }
+    .main-header {
+        align-items: center;
+        justify-content: flex-start !important;
+        a {
+            text-align: left;
+            line-height: 3rem;
+        }
+        a:after {
+            content: "Empurrando Juntas";
+            font-weight: bold;
+            line-height: 3rem;
+            height: 3rem;
+            opacity: 0.33;
+            text-transform: uppercase;
+            top: 0;
+            position: absolute;
+        }
+        img {
+            margin: 0 2rem;
+            position: relative;
+            top: 0.5rem;
+            width: 4rem;
+        }
+        a:nth-child(1), a:nth-child(3) {
+            display: none;
+        }
+    }
+    .main-footer {
+        bottom: initial !important;
+        box-shadow: none;
+        justify-content: flex-end !important;
+        margin-right: 1rem;
+        right: 0;
+        width: initial;
+        z-index: 101;
+
+        &__link {
+            flex-flow: row !important;
+            font-size: 0.875rem !important;
+            padding: 0 size(1);
+            img {
+                display: none;
+            }
+        }
+    }
+}
+
+//------------------------------------------------------------------------------
+// Sidebar / menu
+
+.page-menu {
+    background-color: red;
+    display: none;
+}
+
+@include breakpoint('md') {
+    .page-menu {
+        display: block;
+        background-color: #eee;
+        flex: 1;
+        min-height: calc(100vh - 3rem);
+        min-width: size(7);
+        max-width: size(10);
+    }
+
+    #page-wrapper {
+        display: flex;
+        align-items: stretch;
+    }
+
+    .page-menu + * {
+        flex: 5;
+    }
+}
+

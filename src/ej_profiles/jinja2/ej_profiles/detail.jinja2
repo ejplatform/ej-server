@@ -6,7 +6,7 @@
 #}
 {% block content %}
     <div class="Profile">
-        <img class="Profile-image" src="{{ profile.image_url }}" alt="{{_('Profile picture')}}">
+        <img class="crProfile-image" src="{{ profile.image_url }}" alt="{{ _('Profile picture') }}">
 
         <h1>{{ profile.name }}</h1>
         {{ comments|role('collapsible-list', title=_('Comments'), item_role='list-item') }}
@@ -19,18 +19,18 @@
                         target='.Profile-tabs',
                         transition=None,
                         class_='Profile-tabActive' if which_tab == 'profile' else []) }}
-                        {% if which_tab == 'profile' %}
-                            <div class="Profile-arrow"></div>
-                        {% endif %}
-                </div>          
+                    {% if which_tab == 'profile' %}
+                        <div class="Profile-arrow"></div>
+                    {% endif %}
+                </div>
                 <div>
                     {{ link(_('Contributions'), 'profile:detail', query={'info': 'contributions'},
                         target='.Profile-tabs',
                         transition=None,
                         class_='Profile-tabActive' if which_tab == 'contributions' else []) }}
-                        {% if which_tab == 'contributions' %}
-                            <div class="Profile-arrow"></div>
-                        {% endif %}
+                    {% if which_tab == 'contributions' %}
+                        <div class="Profile-arrow"></div>
+                    {% endif %}
                 </div>
             </nav>
 
@@ -51,7 +51,7 @@
     <div class="Profile-actions">
         <form method="post" action="{{ url('auth:logout') }}">
             {{ csrf_input }}
-            <button class="Button" type="submit" aria-label="{{_('Logout button')}}">{{ _('Logout') }}</button>
+            <button class="Button" type="submit" aria-label="{{ _('Logout button') }}">{{ _('Logout') }}</button>
         </form>
     </div>
 {% endblock %}
@@ -64,20 +64,19 @@
     TODO: refactor to be a role.
 #}
 {% macro info_tab(profile) %}
-    <div class="Profile-info">
-        <dl>
-            {% for title, info in profile.profile_fields(true) %}
-                <dt>{{ title }}</dt>
-                {% if info == 'undeclared' %}
-                    <dd>{{ _((info).title()) }}</dd>
-                {% else %}
-                    <dd>{{ (info or '-') }}</dd>
-                {% endif %}
-            {% endfor %}
-        </dl>
-        <div class='edit-button'>
-            <a href="{{ url('profile:edit') }}" class="Button" primary  aria-label="{{_('Profile edit button')}}">{{ _('Edit profile')}}</a>
-        </div>
+    <dl class="description margin-y3">
+        {% for title, info in profile.profile_fields(true) %}
+            <dt>{{ title }}</dt>
+            {% if info == 'undeclared' %}
+                <dd>{{ _((info).title()) }}</dd>
+            {% else %}
+                <dd>{{ (info or '-') }}</dd>
+            {% endif %}
+        {% endfor %}
+    </dl>
+    <div class='edit-button'>
+        <a href="{{ url('profile:edit') }}" class="Button" primary
+           aria-label="{{ _('Profile edit button') }}">{{ _('Edit profile') }}</a>
     </div>
 {% endmacro %}
 

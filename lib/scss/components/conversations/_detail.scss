@@ -1,0 +1,128 @@
+//------------------------------------------------------------------------------
+// CONVERSATION DETAIL (balloon / comment card / comment form / extra / progress bar)
+//------------------------------------------------------------------------------
+@import '../../mendeleev/components/mixins/arrow';
+
+$component-border-radius: 3rem;
+
+.conversation-balloon {
+    @extend .text-center;
+
+    article {
+        @extend .color-brand-lighter, .pad-y3, .pad-x4;
+        border-radius: 0 0 $component-border-radius $component-border-radius;
+
+        span {
+            @extend .text-brand;
+        }
+    }
+    h1 {
+        @extend .sans-serif, .margin-y3, .h2;
+    }
+    &__arrow {
+        @include create-arrow(down, 2rem, color('brand-lighter'));
+        position: relative;
+        bottom: 1px;
+    }
+    &__social {
+        @extend .row, .pad-x4;
+        position: relative;
+        bottom: 1.5rem;
+        i {
+            color: color('accent');
+        }
+    }
+}
+
+.comment-card, .comment-form {
+    @extend .pad-4, .margin-x3;
+    border-radius: $component-border-radius;
+}
+
+.comment-card {
+    @extend .color-brand, .bold;
+
+    &__author {
+        img {
+            @extend .margin-r1;
+            background-color: color('white');
+            border-radius: 50%;
+            border: 2px solid color('white');
+            width: 1.5rem;
+            height: 1.5rem;
+            vertical-align: middle;
+        }
+    }
+    > article {
+        @extend .margin-y2, .text-4;
+        min-height: 7rem;
+        font-weight: 600;
+    }
+    > form {
+        max-width: 20rem;
+        margin: 0 auto;
+    }
+    &__button {
+        @extend .col, .items-center;
+        button {
+            @extend .text-2, .margin-2, .col, .flex-center;
+            @include color('brand-lighter' null);
+            border-radius: 50em;
+            border: none;
+            height: 3rem;
+            line-height: 3rem;
+            padding: 0;
+            width: 3rem;
+        }
+        span {
+            @extend .uppercase, .text-7;
+        }
+    }
+}
+
+.comment-form {
+    @extend .color-brand-lighter, .text-center;
+
+    textarea {
+        background-color: color('white');
+        margin: 0;
+        min-height: 10em;
+        width: 100%;
+    }
+    form {
+        margin: 0;
+    }
+    &__count {
+        @extend .text-7;
+        color: color('black', $alpha: 0.5);
+        position: relative;
+        right: 0.5rem;
+        bottom: 2rem;
+        float: right;
+    }
+}
+
+.extra-content {
+    @extend .text-center;
+    margin: 2rem auto;
+    width: 75%;
+
+    h1 {
+        @extend .text-4, .uppercase, .text-brand, .sans-serif, .bold;
+    }
+}
+
+.progress-bar {
+    @extend .row, .flex-center, .margin-y3;
+    margin: 0 auto;
+    max-width: 18rem;
+
+    &__progress {
+        border: 1px solid color('brand');
+        margin: 0.25rem;
+        border-radius: 50rem;
+        width: 100%;
+        height: 0.5rem;
+        display: flex;
+    }
+}

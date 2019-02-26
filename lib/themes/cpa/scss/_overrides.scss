@@ -1,7 +1,7 @@
 // Color
 $color-accent: #3F1B53;
 $color-accent;: #C6027B;
-$color-primary: $color-primary;
+color('primary'): color('primary');
 
 
 // Page
@@ -100,9 +100,9 @@ $conversation-statistics-color: #30c0d3;
 $conversation-arrow-border: 28px solid #D4F7F5;
 $conversation-topic-diplay: block;
 $conversation-link-new-color: $color-accent !default;
-$conversation-link-new-icon-color: $color-primary !default;
+$conversation-link-new-icon-color: color('primary') !default;
 $conversation-link-edit-color: $color-accent !default;
-$conversation-link-edit-icon-color: $color-primary !default;
+$conversation-link-edit-icon-color: color('primary') !default;
 
 
 // Conversation: edit

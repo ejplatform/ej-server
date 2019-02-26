@@ -1,0 +1,45 @@
+/*
+ FONTS FAMILIES AND SIZES
+ ============================================================== */
+
+@import '../mendeleev/prelude/config/constants';
+@import 'spacing';
+
+// Font roles and base styles
+$font-paragraph: $font-stack-raleway !default;
+$font-headings: $font-stack-patua-one !default;
+
+//// Transformations and weigh
+//$font-headings-weight: 400 !default;
+//$text-headings-transform: none !default;
+//$text-headings-transform-h1: uppercase !default;
+//
+//// Base typographical sizes
+//$font-size-tiny-tiny: 9px !default;
+//$font-size-tiny: ($font-size-tiny-tiny + 3px) !default; // 12px
+//$font-size-small: ($font-size-tiny + 1px) !default; // 13px
+//$font-size-default: ($font-size-small + 2px) !default; // 15px
+//$font-size-large: ($font-size-default + 2px) !default; // 17px
+//$font-size-larger: ($font-size-large + 3px) !default; // 20px
+//$font-size-huge: ($font-size-larger + 4px) !default; // 24px
+//
+//// Heading sizes
+//$font-size-h1: 1.4 * $font-size-default !default;
+//$font-size-h2: 1.3 * $font-size-default !default;
+//$font-size-h3: 1.2 * $font-size-default !default;
+//$font-size-h4: 1.1 * $font-size-default !default;
+//$font-size-h5: 1.05 * $font-size-default !default;
+//$font-size-h6: 1 * $font-size-default !default;
+
+
+$typography: () !default;
+$typography: map-merge-nested((
+    paragraph: (
+        family: $font-stack-raleway,
+    ),
+    headings: (
+        family: $font-stack-patua-one,
+        weight: 500,
+        ratios: (1.75, 1.5, 1.375, 1.25, 1.125, 1),
+    ),
+), $typography);

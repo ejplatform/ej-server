@@ -1,0 +1,50 @@
+//------------------------------------------------------------------------------
+// CONVERSATION CARD
+//------------------------------------------------------------------------------
+@import "../../config";
+
+.conversation-card {
+    @extend .text-center;
+
+    &__content {
+        @extend .text-6, .col, .items-center;
+        @include color('brand' 'brand-lighter');
+        border-radius: 50%;
+        height: 20rem;
+        margin: 0 auto;
+        overflow: hidden;
+        width: 20rem;
+    }
+    &__tags {
+        @extend .bg-brand-lighter, .text-brand, .text-6, .bold;
+        padding: size(0.5) 0 size(0.25) 0;
+        width: 100%;
+    }
+    &__statistics {
+        @extend .list-inline, .pad-y1;
+        > li {
+            @extend .pad-x1;
+        }
+    }
+    &__text {
+        @extend .col, .flex-center, .pad-3;
+        flex-grow: 1;
+
+        a {
+            @extend .text-4, .sans-serif;
+            display: block;
+            font-weight: 600;
+            color: color('white');
+        }
+    }
+    &__moderate {
+        @extend .uppercase, .text-6, .margin-2, .bold;
+        color: color('black');
+        display: block;
+    }
+    &__button {
+        @extend .pad-b3, .pad-t1, .margin-t1;
+        background: url("/static/img/bg/conversation-card.png");
+        width: 100%;
+    }
+}
