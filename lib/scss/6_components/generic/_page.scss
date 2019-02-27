@@ -1,7 +1,6 @@
 /*
  GENERIC PAGE ELEMENTS
  ======================================================================== */
-@import '../../2_tools/index';
 
 $page-title-font-size: 1.1 * $font-size-h1 !default;
 
@@ -27,11 +26,11 @@ $page-background-image-url: url(/static/img/page-bg.svg) !default;
         }
     }
 
-    @media only screen and (min-width: $breakpoint-small) {
+    @include breakpoint('sm') {
         padding: ($header-height-tablet + $top-header-height) 0 $header-top-nav-height 0;
     }
 
-    @media only screen and (max-width: $breakpoint-small) {
+    @include breakpoint('sm') {
         &.talks {
             padding: $header-top-nav-height 0 0 0;
         }
@@ -44,13 +43,13 @@ $page-background-image-url: url(/static/img/page-bg.svg) !default;
             position: fixed;
         }
     }
-    
+
     @media only screen and (min-width: 960px) {
         &-content.logged-in, #docs {
             padding-left: 400px !important;
         }
     }
-    
+
     @media only screen and (max-width: 960px) {
         .NavMenu-fixed {
             display: none;
@@ -69,13 +68,13 @@ $page-background-image-url: url(/static/img/page-bg.svg) !default;
     }
 
     &-title {
-        background: $color-primary;
-        color: $color-primary-text;
+        background: color('primary');
+        color: color('primary', contrast);
         margin: 0 0 $spacing-unit 0;
         box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
 
         h1 {
-            @extend .Container;
+            @extend .container;
 
             font-size: $page-title-font-size;
             padding: $spacing-unit-tiny ($spacing-unit - $spacing-unit-tiny);

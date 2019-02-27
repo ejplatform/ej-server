@@ -28,7 +28,7 @@
                 </div>
             {% endfor %}
             <input type="submit"
-                    class="Button"
+                    class="button"
                     value="{{ _('Login') }}"
                     name="login"
                     aria-label="{{_('Login button')}}"
@@ -42,7 +42,7 @@
 
         <div class="Login-newUser">
             <h1>{{ _(settings.EJ_REGISTER_TEXT) }}</h1>
-            <p><a class="Button"
+            <p><a class="button"
                     href="{{ '/register/' + ('?next=' + next if next else '') }}"
                     aria-label="{{_('Register button')}}"
                     primary>{{ _('Register now!') }}</a></p>

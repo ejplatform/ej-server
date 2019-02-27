@@ -9,12 +9,12 @@
         <input type="hidden" name="comment" value="{{ comment.id }}">
         <ul class="ConversationComment-actions">
             <li up-expand>
-                <button type="submit" class="Button" name="vote" value="approve">
+                <button type="submit" class="button" name="vote" value="approve">
                   {{ _('Approve') }}
                 </button>
             </li>
             <li up-expand>
-                <button type="submit" class="Button" name="vote" value="disapprove"
+                <button type="submit" class="button" name="vote" value="disapprove"
                         onClick="var $r = $('#Comment-{{ comment.id }}-rejection_reason'); return $r.is(':visible') ? true : $r.show() && false"/>
                   {{ _('Disapprove') }}
                 </button>
@@ -33,7 +33,7 @@
                   <option value={{ k }}>{{ v }}</option>
               {% endfor %}
             </select>
-            <input type="submit" class="Button" name="vote" value="disapprove"/>
+            <input type="submit"  name="vote" value="disapprove"/>
         </div>
     </form>
 </div>

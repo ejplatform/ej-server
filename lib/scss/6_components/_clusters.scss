@@ -1,8 +1,5 @@
-@import '../tools/index';
-
-
 .StereotypeList {
-    @extend .Container;
+    @extend .container;
     &-title, &-search, &-cardList, &-singleStereotype {
         max-width: $content-wrapper-max-width;
     }
@@ -33,7 +30,7 @@
                 color: color('primary');
                 font-weight: bold;
                 border-bottom: $border-radius-tiny solid color('primary');
-                padding: $spacing-padding 0px;
+                padding: $spacing-unit-tiny 0px;
 
             }
         }
@@ -169,7 +166,7 @@
         }
         .helptext {
             color: #052B47;
-            font-family: $font-raleway;
+            font-family: $font-stack-raleway;
             font-size: $font-size-tiny;
             font-weight: bold;
             margin: 7px auto;

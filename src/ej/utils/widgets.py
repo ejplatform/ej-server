@@ -6,7 +6,7 @@ from django.utils.translation import ugettext_lazy as _
 class FileInput(widgets.FileInput):
     """
     A custom file input widget used by all forms of ej.
-    To specify wich type of file it will accept, pass 'accept'
+    To specify witch type of file it will accept, pass 'accept'
     to attrs dict.
     E.g.: widgets.FileInput(attrs={'accept':'image/*'})
     """
@@ -20,7 +20,7 @@ class FileInput(widgets.FileInput):
         w_type = widget.get('type', '')
         w_attrs = widget.get('attrs', {})
 
-        return div(class_="EJ-fileInput")[
+        return div(class_="FileInput")[
             div(class_="PickFileButton")[
                 input_(
                     style="opacity: 0",

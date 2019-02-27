@@ -17,7 +17,7 @@
                     {{ field.errors }}
                     <p>
                         <input for="{{field.id_for_label}}"
-                            name="{{field.name}}" 
+                            name="{{field.name}}"
                             placeholder="{{field.label}}"
                             aria-label="{{field.help_text}}"
                             type="{{field.field.widget.input_type}}"
@@ -27,7 +27,7 @@
                 </div>
             {% endfor %}
             {# {{ form }} #}
-            <input type="submit" value="{{ _('Register!') }}" class="Button" name="register">
+            <input type="submit" value="{{ _('Register!') }}" class="button" name="register">
         </form>
         {{ social_login(social_buttons, social_js) }}
     </div>

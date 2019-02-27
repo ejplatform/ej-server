@@ -10,18 +10,18 @@
     max-width: $content-wrapper-max-width;
     padding: 0 0 $spacing-unit-small 0;
 
-    @media only screen and (min-width: $breakpoint-small) {
+    @include breakpoint('sm') {
         padding: 0 $spacing-unit $spacing-unit $spacing-unit;
     }
 
-    @media only screen and (min-width: $breakpoint-large) {
+    @include breakpoint('lg') {
         max-width: $content-wrapper-max-width;
         padding: 0 0 $spacing-unit-large 0;
     }
 }
 
 .CenteredContainer {
-    @extend .Container;
+    @extend .container;
     text-align: center;
     width: 80vw;
 }

@@ -51,7 +51,7 @@
     <div class="Profile-actions">
         <form method="post" action="{{ url('auth:logout') }}">
             {{ csrf_input }}
-            <button class="Button" type="submit" aria-label="{{ _('Logout button') }}">{{ _('Logout') }}</button>
+            <button type="submit" aria-label="{{ _('Logout button') }}">{{ _('Logout') }}</button>
         </form>
     </div>
 {% endblock %}
@@ -75,7 +75,7 @@
         {% endfor %}
     </dl>
     <div class='edit-button'>
-        <a href="{{ url('profile:edit') }}" class="Button" primary
+        <a href="{{ url('profile:edit') }}" class="button" primary
            aria-label="{{ _('Profile edit button') }}">{{ _('Edit profile') }}</a>
     </div>
 {% endmacro %}

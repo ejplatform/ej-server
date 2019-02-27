@@ -4,11 +4,6 @@
 
 @import 'spacing';
 
-// Media query break points
-$breakpoint-small: 550px;
-$breakpoint-medium: 800px;
-$breakpoint-large: 1200px;
-
 // Page header layout
 $header-icon-size: 40px !default;
 $header-logo-size: $header-icon-size - 15 !default;
@@ -21,7 +16,3 @@ $header-height-tablet: $header-top-nav-height !default;
 $page-content-width-max: 700px !default;
 $content-wrapper-max-width: $page-content-width-max !default;
 $header-wrapper-max-width: $content-wrapper-max-width + 2 * $spacing-unit-large !default;
-$layout-compact-container-width: $breakpoint-small !default;
-
-// Spacing element
-$block-elements-border-radius: $spacing-unit-large !default;

@@ -3,12 +3,19 @@
 //------------------------------------------------------------------------------
 @import "../../config";
 
+:root {
+    --card-color: #{color('brand')};
+    --card-light-color: #{color('brand-lighter')};
+}
+
 .conversation-card {
     @extend .text-center;
 
     &__content {
         @extend .text-6, .col, .items-center;
         @include color('brand' 'brand-lighter');
+        color: var(--card-light-color);
+        background-color: var(--card-color);
         border-radius: 50%;
         height: 20rem;
         margin: 0 auto;
@@ -16,7 +23,11 @@
         width: 20rem;
     }
     &__tags {
-        @extend .bg-brand-lighter, .text-brand, .text-6, .bold;
+        @extend .text-6, .bold;
+        background-color: color('brand-lighter');
+        background-color: var(--card-light-color);
+        color: color('brand');
+        color: var(--card-color);
         padding: size(0.5) 0 size(0.25) 0;
         width: 100%;
     }
@@ -44,7 +55,11 @@
     }
     &__button {
         @extend .pad-b3, .pad-t1, .margin-t1;
-        background: url("/static/img/bg/conversation-card.png");
+        background-image: url("/static/img/bg/conversation-card.png");
+        background-color: color('brand');
+        background-color: var(--card-color);
+        background-repeat: repeat;
+        background-blend-mode: luminosity;
         width: 100%;
     }
 }

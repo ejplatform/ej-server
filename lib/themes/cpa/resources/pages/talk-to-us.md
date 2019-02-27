@@ -10,7 +10,7 @@ Para dúvidas, críticas e sugestões sobre a plataforma, utilize o formulário 
 <form id="emailsending-form" onsubmit="return sendEmail()" style="display: flex; justify-content: center; flex-direction: column;">
     <input id="subject" type="text" placeholder="assunto" style="border: 1px solid #30BFD3" />
     <textarea id="message" rows="6" cols="50" placeholder="mensagem" style="border: 1px solid #30BFD3"></textarea>
-    <input type="submit" class="Button" value="ENVIAR" style="margin: 0 auto; width: 50%; background-color: #8EC73F;"/>
+    <input type="submit"  value="ENVIAR" style="margin: 0 auto; width: 50%; background-color: #8EC73F;"/>
 </form>
 
 # Denúncias

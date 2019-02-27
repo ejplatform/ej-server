@@ -9,45 +9,9 @@ $color-background: white !default;
 $color-text: $color-content !default;
 $color-text-variant: lighten($color-content, 15%) !default;
 
-// Color of the main elements in a page. Used, for instance, as the background
-// color of conversation cards and comment cards. May be applied to buttons and
-// highlighted elements.
-$color-primary: #30BFD3 !default;
-$color-primary-variant: darken($color-primary, 10%) !default;
-$color-primary-text: white !default;
-$color-primary-text-variant: rgba($color-primary-text, 0.9) !default;
-
-
-// Primary action buttons, fab, etc
-// Usually has a high contrast compared to primary. Usually applied to the
-// primary action in a UI to attract user attention from secondary actions
-// in the interface.
-$color-accent: #FF3D72 !default;
-$color-accent-text: white !default;
-
 // Discreetly highlighted content. We want some emphasis from the default content
 // background, but it should not be highlighted as strongly as primary content.
 $color-hint: #C4F2F4 !default;
 $color-hint-text: $color-content !default;
 $color-hint-text-variant: #A3D8DD !default;
 $color-hint-faded: #A3D8DD !default;
-
-// Color for action buttons
-$color-action-hint-darken-ratio: 10% !default;
-
-$color-action-primary: $color-primary !default;
-$color-action-secondary: $color-content !default;
-
-$color-action-primary-text: $color-primary-text !default;
-$color-action-secondary-text: $color-content-text !default;
-
-$color-action-primary-hover: darken($color-action-primary, $color-action-hint-darken-ratio) !default;
-$color-action-secondary-hover: darken($color-action-secondary, $color-action-hint-darken-ratio) !default;
-
-$color-action-primary-text-hover: $color-accent-text !default;
-$color-action-secondary-text-hover: $color-hint-text !default;
-
-// Color roles
-$color-role-ok: #30BEC0 !default;
-$color-role-error: #FF3D72 !default;
-$color-role-warning: #30BFD3 !default;

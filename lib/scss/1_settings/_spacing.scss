@@ -1,0 +1,27 @@
+/*
+ SPACING
+ =========================================================================== */
+
+// Baseline grid lines height.
+// Every spacing metric should be based on this.
+$spacing-baseline: 8px !default;
+
+// Spacing values are determined based on your project’s global baseline grid.
+// It is not recommended that you modify these following variables
+// (it can break your vertical rhythm), but if you need to, you can.
+$spacing-unit: $spacing-baseline * 4 !default;
+$spacing-unit-tiny-tiny: $spacing-baseline  - 3px !default;
+$spacing-unit-tiny: $spacing-baseline !default;
+$spacing-unit-small: $spacing-baseline * 2 !default;
+$spacing-unit-large: $spacing-baseline * 8 !default;
+$spacing-unit-huge: $spacing-baseline * 16 !default;
+
+// Border radius
+$border-radius-tiny: $spacing-unit-tiny !default;
+$border-radius-small: $spacing-unit-small !default;
+$border-radius: $spacing-unit !default;
+$border-radius-large: $spacing-unit-large !default;
+$border-radius-round: 50% !default;
+
+// Standardize UI treatments.
+$global-transition: all 200ms ease-in-out !default;

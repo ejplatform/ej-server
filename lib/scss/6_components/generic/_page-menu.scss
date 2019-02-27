@@ -3,8 +3,8 @@
  =========================================================================== */
 
 // Colors
-$nav-menu-color: $color-primary !default;
-$nav-menu-color-text: $color-primary-text !default;
+$nav-menu-color: color('primary') !default;
+$nav-menu-color-text: color('primary', contrast) !default;
 $nav-menu-border-color: rgba(#FFF, 0.25) !default;
 $nav-menu-border: 1px solid $nav-menu-border-color !default;
 
@@ -18,8 +18,7 @@ $nav-menu-ul-padding: 0 !default;
 
 // Element
 .NavMenu {
-    @include size($nav-menu-width, 100%);
-
+    width: 100%;
     min-height: 100vh;
     max-width: $nav-menu-max-width;
     box-shadow: $nav-menu-shadow;
@@ -110,7 +109,5 @@ $nav-menu-ul-padding: 0 !default;
             margin-left: $spacing-unit;
         }
     }
-
-    @include palette;
 }
 

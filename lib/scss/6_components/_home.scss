@@ -1,7 +1,6 @@
 /*
  HOME PAGE
  ======================================================================== */
-@import '../tools/index';
 
 $how-it-work-icon-size: 1.5 * $font-size-h1 !default;
 $how-it-work-icon-color: $color-content !default;
@@ -10,7 +9,7 @@ $home-how-it-works-card-icon-conversation: "\f086" !default;
 $home-background-image-url: url(/static/img/page-bg.svg) !default;
 
 .HomeBanner {
-    @extend .CenteredContainer;
+    @extend .container, .text-center;
     width: 80%;
     margin-top: 10px;
 
@@ -18,7 +17,7 @@ $home-background-image-url: url(/static/img/page-bg.svg) !default;
         display: none;
         font-size: $font-size-h3;
 
-        @media only screen and (min-width: $breakpoint-small) {
+        @include breakpoint('sm') {
             display: inherit;
         }
     }
@@ -26,9 +25,9 @@ $home-background-image-url: url(/static/img/page-bg.svg) !default;
         color: $color-content;
     }
 
-    .Button[primary] {
-        @include color($color-accent, $color-accent-text);
-        padding: $unit $unit * 2;
+    .button[primary] {
+        @include color('accent');
+        padding: $spacing-unit $spacing-unit * 2;
     }
 }
 
@@ -37,7 +36,7 @@ $home-background-image-url: url(/static/img/page-bg.svg) !default;
     padding-top: $spacing-unit;
 
     > * {
-        @extend .CenteredContainer;
+        @extend .container, .text-center;
     }
 
     h2 {
@@ -67,12 +66,12 @@ $home-background-image-url: url(/static/img/page-bg.svg) !default;
 
         background: $color-hint;
         border-radius: 50%;
-        width: $unit * 7;
-        height: $unit * 7;
+        width: $spacing-unit * 7;
+        height: $spacing-unit * 7;
         display: inline-block;
         color: $color-content;
-        padding-top: $unit * 2;
-        margin: $unit * 2;
+        padding-top: $spacing-unit * 2;
+        margin: $spacing-unit * 2;
     }
     text-align: left;
     align-items: center;
@@ -87,7 +86,7 @@ $home-background-image-url: url(/static/img/page-bg.svg) !default;
             padding: $spacing-unit-small;
             float: right;
 
-            @media only screen and (min-width: $breakpoint-small) {
+            @include breakpoint('sm') {
                 display: none;
             }
         }
@@ -131,14 +130,17 @@ $home-background-image-url: url(/static/img/page-bg.svg) !default;
     }
 
     &-extra {
-        @include breakpoint(small) {
-            .Button, .RocketButton, button {
+        @include breakpoint('sm') {
+            .button, button {
                 margin: $spacing-unit-small auto $spacing-unit auto;
             }
         }
     }
     &-extra.hide-on-small {
-        @include responsive-show(small, block);
+        display: none;
+        @include breakpoint('sm') {
+            display: block;
+        }
     }
 }
 
@@ -149,7 +151,7 @@ $home-background-image-url: url(/static/img/page-bg.svg) !default;
     display: block;
 
     > * {
-        @extend .Container;
+        @extend .container;
     }
 
     h2 {

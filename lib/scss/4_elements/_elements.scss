@@ -1,64 +1,64 @@
-/*
- GENERIC ELEMENTS
- =====================================================================*/
-
-@import '../2_tools/index';
-
-
-// Structural page elements
-html {
-    min-height: 100%;
-    line-height: $line-height / $font-size;
-    max-width: 500px;
-}
-
-body {
-    box-sizing: border-box;
-    background: $color-background;
-    color: $color-content;
-    font-size: $font-size-default;
-    font-family: $font-paragraph;
-    width: 100vw;
-}
-
-main {
-    box-sizing: border-box;
-    padding: 0;
-    width: 100%;
-}
-
-// Links
-a {
-    color: $color-accent;
-    line-height: 1.2;
-    text-decoration: none;
-    text-decoration-style: solid;
-}
-
-// Code and quotes
-code, pre, blockquote {
-    color: $color-hint-text;
-    background-color: $color-hint;
-}
-
-code, pre {
-    font-family: $font-mono monospace;
-}
-
-
-// Tables fills up as much space as possible
-table {
-    width: 100%;
-}
-
-// Fluid images
-img {
-    max-width: 100%;
-    font-style: italic;
-    vertical-align: middle;
-}
-
-// Iframes
-iframe, embed, object {
-    border: none;
-}
+///*
+// GENERIC ELEMENTS
+// =====================================================================*/
+//
+//@import '../tools/index';
+//
+//
+//// Structural page elements
+//html {
+//    min-height: 100%;
+//    line-height: $line-height / $font-size;
+//    max-width: 500px;
+//}
+//
+//body {
+//    box-sizing: border-box;
+//    background: $color-background;
+//    color: $color-content;
+//    font-size: $font-size-default;
+//    font-family: $font-stack-paragraph;
+//    width: 100vw;
+//}
+//
+//main {
+//    box-sizing: border-box;
+//    padding: 0;
+//    width: 100%;
+//}
+//
+//// Links
+//a {
+//    color: $color-accent;
+//    line-height: 1.2;
+//    text-decoration: none;
+//    text-decoration-style: solid;
+//}
+//
+//// Code and quotes
+//code, pre, blockquote {
+//    color: $color-hint-text;
+//    background-color: $color-hint;
+//}
+//
+//code, pre {
+//    font-family: $font-mono monospace;
+//}
+//
+//
+//// Tables fills up as much space as possible
+//table {
+//    width: 100%;
+//}
+//
+//// Fluid images
+//img {
+//    max-width: 100%;
+//    font-style: italic;
+//    vertical-align: middle;
+//}
+//
+//// Iframes
+//iframe, embed, object {
+//    border: none;
+//}

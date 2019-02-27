@@ -1,7 +1,6 @@
 /*
  NOTIFICATION PAGE
  ======================================================================== */
- @import '../tools/index';
 
 .Inbox {
     width: 90vw;
@@ -18,12 +17,12 @@
             flex-direction: row;
             align-items: center;
             justify-content: space-between;
-            border-bottom: 1px solid color('primary')-variant;
+            border-bottom: 1px solid color('accent');
             p {
                 margin: $spacing-unit-tiny 0;
             }
             i {
-                color: color('primary')-variant;
+                color: color('accent');
                 font-size: $font-size-large;
             }
         }
@@ -32,7 +31,7 @@
             flex-direction: row;
             align-content: center;
             justify-content: space-between;
-            border-bottom: 1px solid color('primary')-variant;
+            border-bottom: 1px solid color('accent');
 
         }
         &-selection {
@@ -71,12 +70,12 @@
         }
 
         &-info {
-            color: color('primary')-variant;
+            color: color('accent');
         }
 
         &-circle {
             margin: $spacing-unit;
-            background: color('primary')-variant;
+            background: color('accent');
             width: $spacing-unit-large;
             height: $spacing-unit-large;
             position: relative;
@@ -91,7 +90,7 @@
           left: 0;
           height: $spacing-unit-large;
           width: $spacing-unit-large;
-          background: color('primary')-variant;
+          background: color('accent');
         }
 
         &-circle:before {

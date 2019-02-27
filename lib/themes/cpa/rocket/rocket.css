@@ -75,7 +75,7 @@
   padding: 30px 20px;
 }
 
-.Rocket-action .Button {
+.Rocket-action .button {
   border-radius: 8px;
   background-color: #8EC73F;
   color: white;
@@ -83,7 +83,7 @@
   font-weight: bold ;
   text-transform: uppercase;
 }
-.Rocket-action .Button svg {
+.Rocket-action .button svg {
   font-size: 23px;
 }
 
@@ -101,7 +101,7 @@
     opacity: 0.78 !important;
 }
 
-.rc-directory-content .rc-directory-channel-info, .rc-table-td {     
+.rc-directory-content .rc-directory-channel-info, .rc-table-td {
   color: #3F1B53;
 }
 
@@ -119,7 +119,7 @@
   color: white;
   font-size: 24px;
 }
-    
+
 
 
 .rc-header__wrap {

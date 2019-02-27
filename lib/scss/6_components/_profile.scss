@@ -2,7 +2,6 @@
  USER PROFILE VIEWS
  ======================================================================== */
 
-@import '../tools/index';
 @import 'auth';
 
 $profile-image-size: 2 * $login-icon-size !default;
@@ -10,7 +9,7 @@ $profile-arrow-size: $spacing-unit-small !default;
 $profile-label-clear-color: #30BFD3 !default;
 
 .Profile {
-    @extend .Container;
+    @extend .container;
     text-align: center;
     padding-top: $spacing-unit;
     h1 {
@@ -172,9 +171,6 @@ $profile-label-clear-color: #30BFD3 !default;
         h2 {
             text-transform: uppercase;
         }
-        .RocketButton {
-            background: color('primary');
-        }
     }
     &-tabs {
         margin-top: $spacing-unit;
@@ -216,7 +212,7 @@ $profile-label-clear-color: #30BFD3 !default;
         .edit-button {
             margin-top: $spacing-unit;
             text-align: center;
-            .Button {
+            .button {
                 text-transform: uppercase;
                 background-color: $color-accent;
                 padding: 15px 25px 15px 25px;
@@ -260,7 +256,7 @@ $profile-label-clear-color: #30BFD3 !default;
             }
             margin: 0;
             padding: 0;
-            .Button {
+            .button {
                 padding: 15px 25px 15px 25px;
                 background: $color-accent;
             }
@@ -300,7 +296,7 @@ $profile-label-clear-color: #30BFD3 !default;
 }
 
 .ProfileEdit {
-    @extend .Container;
+    @extend .container;
     input,
     textarea,
     label,

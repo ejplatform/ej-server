@@ -1,7 +1,6 @@
 /*
  LOGIN/REGISTER COMPONENTS
  ======================================================================== */
-@import '../tools/index';
 
 $login-icon-size: 150px !default;
 $login-icon-border-width: 10px !default;
@@ -15,18 +14,18 @@ $login-new-user-background-color: #052B47 !default;
 .Login {
     padding: $spacing-unit;
     text-align: center;
-    font-family: $font-paragraph;
+    font-family: $font-stack-paragraph;
     margin: 0px;
 
     a {
         color: color('primary');
-        font-family: $font-paragraph;
+        font-family: $font-stack-paragraph;
         font-size: $font-size-small;
         font-weight: bold;
     }
     p {
         text-align: center;
-        font-family: $font-paragraph;
+        font-family: $font-stack-paragraph;
         margin: 0px 0px $spacing-unit-small 0px;
     }
     h1 {
@@ -44,7 +43,7 @@ $login-new-user-background-color: #052B47 !default;
         height: $spacing-unit + $spacing-unit-small;
     }
     input {
-        width: $layout-compact-container-width / 2;
+        width: 10em;
     }
     input[type=submit] {
         display: block;
@@ -54,7 +53,7 @@ $login-new-user-background-color: #052B47 !default;
         height: 38px;
         box-shadow: none
     }
-    a[class=Button] {
+    a.button {
         min-width: $spacing-unit-huge * 2 - $spacing-unit - $spacing-unit-small;
         padding: 12px;
         color: $color-content-text;
@@ -73,7 +72,7 @@ $login-new-user-background-color: #052B47 !default;
         }
     }
     &-button {
-        @extend .Button;
+        @extend .button;
     }
     .Text-socialButtons{
         font-size: $font-size-default;
@@ -139,10 +138,10 @@ $login-new-user-background-color: #052B47 !default;
         h1 {
             color: $color-content;
             font-size: $font-size-default;
-            font-family: $font-paragraph;
+            font-family: $font-stack-paragraph;
             display: inline;
         }
-        .Button {
+        .button {
             background-color: $login-new-user-background-color;
         }
     }
@@ -158,7 +157,7 @@ $login-new-user-background-color: #052B47 !default;
     .Name-field {
         font-size: $font-size-tiny;
         text-align: left;
-        font-family: $font-paragraph;
+        font-family: $font-stack-paragraph;
         font-weight: bold;
         margin: auto;
         max-width: $spacing-unit-huge * 2 + $spacing-unit-small + $spacing-unit-tiny;

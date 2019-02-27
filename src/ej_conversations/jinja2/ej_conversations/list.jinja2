@@ -42,7 +42,7 @@
                         <div class="swiper-pagination"></div>
                         <form method="post" action="/conversations/">
                             {{ csrf_input }}
-                            <button type="submit" name="modalities" class="Button"
+                            <button type="submit" name="modalities" class="button"
                                     value="pass">{{ _("CONTINUE PARTICIPATING") }}</button>
                         </form>
                     </div>
@@ -59,13 +59,13 @@
             <div class="style-slide-center">
                 <div class="style-slide">
                     <form method="get" action={{conversation.get_absolute_url()}}>
-                        <button type="submit" class="Button-closer">
+                        <button type="submit" class="button-closer">
                             <i class="fa fa-times"></i>
                         </button>
                     </form>
                     {{modalities(_("Minority Activist"), modalimg({'/static/img/icons/iconativista.svg' : 'imgponte'}), [_("O seu grupo parece concordar com você! Mas você votou contrário à maioria nesse comentário."), _("Todas as regiões devem ser priorizados nas relações do Brazil. EUA e países do eixo Sul-Sul!"), _("Para exercer o seu poder de ativista escolha fazer um comentário promovido extra ou promover um comentário seu já criado na conversa")])}}
                     <form method="post">
-                        <button type="submit" class="Button">QUERO IR</button>
+                        <button type="submit" class="button">QUERO IR</button>
                     </form>
                 </div>
             </div>
@@ -79,13 +79,13 @@
             <div class="style-slide-center">
                 <div class="style-slide">
                     <form method="get" action={{conversation.get_absolute_url()}}>
-                        <button type="submit" class="Button-closer">
+                        <button type="submit" class="button-closer">
                             <i class="fa fa-times"></i>
                         </button>
                     </form>
                     {{modalities(_("Dialogue Brigde"), modalimg({'/static/img/icons/iconponte.svg' : 'imgponte'}), [_("Você recebeu o poder Ponte de diálogo, porque, de acordo com as suas opiniões, você está próximo da borda do seu grupo de opinião"), _("Para exercer o seu poder de ponte, escolha fazer um comentário promovido extra ou promover um comentário seu já criado na conversa")])}}
                     <form method="post">
-                        <button type="submit" class="Button">QUERO IR</button>
+                        <button type="submit" class="button">QUERO IR</button>
                     </form>
                 </div>
             </div>
@@ -96,13 +96,13 @@
             <div class="style-slide-center">
                 <div class="style-slide">
                     <form method="get" action={{conversation.get_absolute_url()}}>
-                        <button type="submit" class="Button-closer">
+                        <button type="submit" class="button-closer">
                             <i class="fa fa-times"></i>
                         </button>
                     </form>
                     {{modalities(_("Opinion groups"), modalimg({'/static/img/icons/artboard.svg' : 'imgopn'}), [_("A partir de uma certa quantidadde de votos, os participantes serão classificados em grupos de opinião, assim poderão ser analisados os dados estatisticos desta conversa")])}}
                     <form method="post">
-                        <button type="submit" class="Button">BACK</button>
+                        <button type="submit" class="button">BACK</button>
                     </form>
                 </div>
             </div>

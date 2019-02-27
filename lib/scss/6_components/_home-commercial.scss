@@ -1,8 +1,6 @@
 /*
  LANDING PAGE
  ======================================================================== */
-@import '../tools/index';
-
 
 #HomeCommercial {
     width: 100%;
@@ -46,7 +44,7 @@
 
         & > div {
             position: absolute;
-            bottom: $unit * 3;
+            bottom: $spacing-unit * 3;
             left: 50%;
             width: 200px;
             margin-left: -100px;
@@ -68,16 +66,16 @@
     &-how {
         li {
             display: flex;
-            padding: $unit * 2;
+            padding: $spacing-unit * 2;
 
             div {
-                padding-left: $unit;
+                padding-left: $spacing-unit;
             }
         }
 
         h3 {
             margin: 0;
-            font-family: $font-paragraph;
+            font-family: $font-stack-paragraph;
             color: $color-content;
             text-transform: uppercase;
             font-weight: bold;
@@ -92,7 +90,7 @@
 
     &-conversations {
         background: $color-content url(/static/img/home/bg.png);
-        padding-top: $unit;
+        padding-top: $spacing-unit;
 
         & > div {
             display: flex;
@@ -118,8 +116,8 @@
             font-weight: bold;
             text-transform: uppercase;
             color: white;
-            margin: $unit;
-            margin-bottom: $unit * 2;
+            margin: $spacing-unit;
+            margin-bottom: $spacing-unit * 2;
             text-align: right;
         }
 
@@ -150,14 +148,14 @@
                 display: block;
                 list-style: none;
                 border: 2px solid $color-hint;
-                border-radius: $unit;
+                border-radius: $spacing-unit;
                 width: 140px;
-                margin: $unit;
+                margin: $spacing-unit;
                 text-align: center;
                 overflow: visible;
 
                 i {
-                    margin: $unit;
+                    margin: $spacing-unit;
                 }
 
                 span {
@@ -166,17 +164,17 @@
                     font-size: 12px;
                     color: $color-content;
                     font-weight: bold;
-                    margin-bottom: $unit;
+                    margin-bottom: $spacing-unit;
                 }
             }
         }
     }
 
     &-who, &-community {
-        padding-bottom: $unit * 3;
+        padding-bottom: $spacing-unit * 3;
 
         h2 {
-            padding: $unit * 3 0;
+            padding: $spacing-unit * 3 0;
         }
 
         ul {
@@ -188,7 +186,7 @@
             li {
                 width: 128px;
                 height: 128px;
-                margin: $unit;
+                margin: $spacing-unit;
             }
         }
     }
@@ -225,7 +223,7 @@
 
                 span {
                     display: block;
-                    font-family: $font-paragraph;
+                    font-family: $font-stack-paragraph;
                     color: $color-content;
                     font-size: 12px;
                 }

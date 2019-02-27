@@ -1,11 +1,10 @@
 /*
  UNSTYLED FORM ELEMENTS
  ======================================================================== */
-@import '../2_tools/index';
 @import 'buttons';
 
 $form-input-border-box: inset 0 1px 3px 0 rgba(0, 0, 0, 0.3);
-$form-border-color: $color-primary !default;
+$form-border-color: color('primary') !default;
 $icon-arrow-down-blue: url(/static/img/icons/arrow-down-blue.svg) !default;
 $icon-arrow-up-blue: url(/static/img/icons/arrow-up-blue.svg) !default;
 
@@ -38,22 +37,22 @@ input:not([type]),
 textarea,
 select,
 .FormItem {
-    font-family: $font-raleway;
+    font-family: $font-stack-raleway;
     font-size: $font-size-default;
     border-radius: $border-radius-small + $border-radius-tiny;
     background: $color-background;
-    border: 1px solid $color-primary;
+    border: 1px solid color('primary');
     color: $color-content;
     margin: $spacing-unit-tiny auto;
     padding: $spacing-unit-small ($spacing-unit-small $spacing-unit-small);
-    text-shadow: 2px 2px 8px $color-content 15%; 
+    text-shadow: 2px 2px 8px $color-content 15%;
     box-shadow: inset  2px 2px 8px #052B4721;
 }
 
 input[type=checkbox] {
     -webkit-appearance: none;
     background-color: #fafafa;
-    border: 1px solid $color-primary;
+    border: 1px solid color('primary');
     box-shadow: $form-input-border-box;
     padding: $spacing-unit-tiny + 1;
     border-radius: 3px;
@@ -66,7 +65,7 @@ input[type=checkbox] {
 
     &:checked:after {
         content: '\f111';
-        font-family: $font-awesome;
+        font-family: $font-stack-font-awesome;
         font-size: $spacing-unit-tiny + 1;
         font-weight: 900;
         color: $color-accent;
@@ -82,8 +81,8 @@ textarea {
 
 label {
     text-transform: lowercase;
-    font-family: $font-raleway;
-    color: $color-primary;
+    font-family: $font-stack-raleway;
+    color: color('primary');
     font-weight: bold;
     font-size: $font-size-tiny;
     padding-left: 20px;
@@ -115,3 +114,60 @@ select {
 select:active {
     background: $icon-arrow-up-blue white no-repeat calc(100% - 10px);
 }
+
+/*
+ DJANGO FORMS STYLING AND HELPERS
+ =========================================================================== */
+@import '../2_tools/index';
+
+.Form {
+    label {
+        display: block;
+        margin: 0;
+    }
+
+    text-align: left;
+
+    input, textarea {
+        width: 100%;
+    }
+
+    input[type=submit] {
+        width: initial;
+        display: block;
+        margin: 0 auto;
+    }
+
+    ul.errorlist {
+        color: color('negative');
+        font-size: 0.9em;
+        padding: 0;
+
+        li {
+            list-style: none;
+        }
+    }
+
+    .helptext {
+        color: $color-text-variant;
+        font-size: 0.9em;
+        display: block;
+        padding: 0;
+
+        li {
+            list-style: none;
+        }
+    }
+
+    &[hide-labels] label,
+    &[is-placeholder-form] label,
+    &[hide-help] .helptext,
+    &[hide-help] br,
+    &[is-placeholder-form] .helptext,
+    &[is-placeholder-form] br {
+        display: none;
+    }
+}
+
+
+

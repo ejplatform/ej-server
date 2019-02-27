@@ -1,7 +1,6 @@
 /*
  COMMENT LIST ITEM -- shown comments in listings
  ======================================================================== */
-@import '../tools/index';
 
 .CommentListItem {
     &-header {
@@ -44,10 +43,10 @@
         font-weight: normal;
     }
     &-status-approved {
-        color: $color-role-ok;
+        color: color('positive');
     }
     &-status-rejected {
-        color: $color-role-error;
+        color: color('negative');
     }
     &-status-pending {
         color: color('primary');
