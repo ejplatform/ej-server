@@ -2,6 +2,7 @@
 
 {% set main_class = "container-1 col items-center flex-start" %}
 {% set next = ('?next=' + next if next else '') %}
+{% block menu %}{% include 'ej_users/includes/menu.jinja2' %}{% endblock %}
 
 
 {% block content %}

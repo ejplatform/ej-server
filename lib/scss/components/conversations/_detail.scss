@@ -113,16 +113,16 @@ $component-border-radius: 3rem;
 }
 
 .progress-bar {
-    @extend .row, .flex-center, .margin-y3;
+    @extend .row, .flex-center, .items-center, .margin-y3;
     margin: 0 auto;
     max-width: 18rem;
 
     &__progress {
-        border: 1px solid color('brand');
-        margin: 0.25rem;
-        border-radius: 50rem;
-        width: 100%;
-        height: 0.5rem;
+        @include margin-scale((x: 2));
         display: flex;
+        border: 1px solid color('brand');
+        border-radius: 50rem;
+        height: 0.5rem;
+        width: 100%;
     }
 }
