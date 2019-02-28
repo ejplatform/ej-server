@@ -1,18 +1,6 @@
-{% extends 'base.jinja2' %}
+{% extends 'ej_profiles/base.jinja2' %}
 
-{% set main_class='container-1 col items-center flex-start' %}
-{% block menu %}{% include 'ej_profiles/includes/menu.jinja2' %}{% endblock %}
-
-{% block content %}
-    {% if profile.has_image %}
-        <img class="size-6 pad-t3 block rounded-full"
-             src="{{ profile.image_url }}" alt="{{ _('Profile picture') }}">
-    {% else %}
-        <img class="size-6 pad-t3 block relative"
-             src="{{ profile.image_url }}" alt="{{ _('Profile picture') }}" style="left: 1rem">
-    {% endif %}
-
-    <h1 class="h2 text-accent">{{ profile.name }}</h1>
+{% block page_content %}
     {{ tabs({_('Info'): '#profile-info', _('Contributions'): '#profile-contributions'}, class_='width-full') }}
     <div id="profile-info" class="pad-x3p pad-y4 width-full">
         <dl class="description text-4">

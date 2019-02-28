@@ -1,15 +1,14 @@
-{% extends 'base.jinja2' %}
+{% extends 'ej_profiles/base.jinja2' %}
 
-{% set content_title = gettext('Edit profile: %(name)s', name=request.user.name) %}
+{% block page_content %}
+    <form method="post" enctype="multipart/form-data" action="">
+        {{ csrf_input }}
+        {{ form.non_field_errors() }}
+        {{ name_form }}
+        {{ form }}
 
-{% block content %}
-    <div class="ProfileEdit">
-        <form method="post" enctype="multipart/form-data" action="">
-            {{ csrf_input }}
-            {{ form.non_field_errors() }}
-            {{ name_form.as_p() }}
-            {{ form.as_p() }}
-            <input class="button" type="submit" name="submit" value="{{ _('Save') }}">
-        </form>
-    </div>
+        <div class="margin-y3 margin-xauto">
+            <input type="submit" name="submit" value="{{ _('Save') }}" class="width-full">
+        </div>
+    </form>
 {% endblock %}
