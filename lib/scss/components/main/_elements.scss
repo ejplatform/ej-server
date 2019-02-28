@@ -34,15 +34,18 @@ i.fa, i.fas, i.fab {
 //------------------------------------------------------------------------------
 // Tabs and categories
 .tabs, .categories {
-    @extend .text-center, .row, .flex-center;
+    @extend .text-center, .row, .flex-center, .wrap;
 
     a {
-        @extend .pad-2, .margin-x3;
-        font-weight: 600;
+        @extend .pad-2, .margin-x2;
         border-bottom: 0.25rem solid transparent;
+        font-weight: 600;
+        overflow-clip: ellipsis;
+        white-space: nowrap;
     }
     a[is-selected] {
         @extend .text-brand;
+        overflow-clip: none;
         border-bottom-color: color('brand');
     }
 }

@@ -4,14 +4,15 @@ from hyperpython import a, html, Text
 from hyperpython.django import csrf_input
 
 from boogie import rules
-from ej.roles import with_template, extra_content
+from ej.roles import with_template, extra_content, progress_bar
 from ej_boards.models import BoardSubscription
 from . import models
 
 
-#
-# Conversation roles
-#
+# ------------------------------------------------------------------------------
+# Conversation
+# ------------------------------------------------------------------------------
+
 @with_template(models.Conversation, role='card')
 def conversation_card(conversation, request=None, url=None, **kwargs):
     """
@@ -99,7 +100,7 @@ def comment_form(conversation, request=None, content=None, user=None, **kwargs):
 
 
 @html.register(models.Conversation, role='ask-create-comment')
-def conversation_ask_create_comment(conversation, request=None, **kwargs):
+def comment_statistics(conversation, request=None, **kwargs):
     """
     Render comment form for one conversation.
     """
@@ -118,7 +119,7 @@ def conversation_ask_create_comment(conversation, request=None, **kwargs):
 
 
 @html.register(models.Conversation, role='ask-opinion-groups')
-def conversation_ask_opinion_group(conversation, request=None, **kwargs):
+def opinion_group(conversation, request=None, **kwargs):
     """
     Render comment form for one conversation.
     """
@@ -130,9 +131,39 @@ def conversation_ask_opinion_group(conversation, request=None, **kwargs):
     return extra_content(_('Opinion groups'), msg, icon='chart-pie')
 
 
-#
+@html.register(models.Conversation, role='user-progress')
+def user_progress(conversation, request=None, user=None):
+    """
+    Render comment form for one conversation.
+    """
+    user = user or request.user
+    try:
+        # Try from annotated value
+        n = conversation.number_of_participations
+        total = conversation.number_of_comments
+    except AttributeError:
+        n = user.votes.filter(comment__conversation=conversation).count()
+        total = conversation.comments.approved().count()
+    n = min(n, total)
+    return progress_bar(n, total)
+
+
+@with_template(models.Conversation, role='summary')
+def conversation_summary(conversation, request=None):
+    """
+    Show only essential information about a conversation.
+    """
+    return {
+        'text': conversation.text,
+        'tag': conversation.tags.first() or _('Conversation'),
+        'created': conversation.created,
+    }
+
+
+# ------------------------------------------------------------------------------
 # Comments
-#
+# ------------------------------------------------------------------------------
+
 @with_template(models.Comment, role='card')
 def comment_card(comment, request=None, **kwargs):
     """
@@ -176,28 +207,15 @@ def comment_moderate(comment, request=None, **kwargs):
     }
 
 
-@with_template(models.Comment, role='list-item')
-def comment_list_item(comment, **kwargs):
+@with_template(models.Comment, role='summary')
+def comment_summary(comment, **kwargs):
     """
-    Show each comment as an item in a list of comments.
+    Show comment summary.
     """
-
-    rejection_reason = comment.rejection_reason
-    if rejection_reason in dict(models.Comment.REJECTION_REASON) and comment.status == comment.STATUS.rejected:
-        rejection_reason = dict(models.Comment.REJECTION_REASON)[comment.rejection_reason]
-    else:
-        rejection_reason = None
     return {
-        'rejection_reasons': dict(models.Comment.REJECTION_REASON),
-        'comment': comment,
-        'content': comment.content,
-        'creation_date': comment.created.strftime('%d-%m-%Y às %Hh %M'),
-        'conversation_url': comment.conversation.get_absolute_url(),
-        'status': comment.status,
-        'status_name': dict(models.Comment.STATUS)[comment.status].capitalize(),
-        'rejection_reason': rejection_reason,
-
-        # Votes
+        'created': comment.created,
+        'tag': _('Comment'),
+        'text': comment.content,
         'agree': comment.agree_count,
         'skip': comment.skip_count,
         'disagree': comment.disagree_count,

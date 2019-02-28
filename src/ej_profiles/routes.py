@@ -20,7 +20,7 @@ def detail(request):
     return {
         'profile': user.profile,
         'n_conversations': user.conversations.count(),
-        'n_favorites': 42, #user.favorites.count(),
+        'n_favorites': user.favorite_conversations.count(),
         'n_comments': user.comments.count(),
         'n_votes': user.votes.count(),
     }
@@ -47,62 +47,16 @@ def edit(request):
     }
 
 
-@urlpatterns.route('conversations/', template='ej_conversations/list.jinja2')
-def conversations_list(request):
+@urlpatterns.route('contributions/')
+def contributions(request):
     user = request.user
-    boards = user.boards.all()
-    conversations = []
-    board = None
-    board_palette = Conversation.get_default_css_palette()
-    if len(boards) > 0:
-        board = boards[0]
-        conversations = board.conversations
-        board_palette = board.css_palette
     return {
+        'profile': user.profile,
         'user': user,
-        'conversations': conversations,
-        'current_board': board,
-        'boards': boards,
-        'create_url': reverse('conversation:create'),
-        # you can't add conversations because there can be more than one board being displayed
-        'can_add_conversation': False,
-        'title': _('My conversations'),
-        'description': _('See all conversations created by you'),
-        'show_welcome_window': False,
-        'board_palette': board_palette
-    }
-
-
-@urlpatterns.route('comments/')
-def comments_list(request):
-    user = request.user
-    return {
-        'user': user,
-        'comments': user.comments.all(),
-        'stats': user.comments.statistics(),
-    }
-
-
-@urlpatterns.route('favorites/')
-def favorite_conversations(request):
-    user = request.user
-    favorites = FavoriteConversation.objects.filter(user=user)
-    conversations = [fav.conversation for fav in favorites]
-    return {
-        'conversations': conversations,
-    }
-
-
-@urlpatterns.route('comments/<which>/')
-def comments_tab(request, which):
-    if which not in {'approved', 'pending', 'rejected'}:
-        raise Http404
-
-    st = Comment.STATUS
-    status_map = {'approved': st.approved, 'pending': st.pending, 'rejected': st.rejected}
-    user = request.user
-    return {
-        'user': user,
-        'comments': user.comments.filter(status=status_map[which]),
-        'stats': user.comments.statistics(),
+        'created_conversations': user.conversations.all(),
+        'favorite_conversations': user.favorite_conversations.all(),
+        'approved_comments': user.comments.approved(),
+        'rejected_comments': user.comments.rejected(),
+        'pending_comments': user.comments.pending(),
+        'voted_conversations': Conversation.objects.filter(comments__votes__author=user).distinct(),
     }

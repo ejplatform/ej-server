@@ -1,9 +1,9 @@
 from django.utils.translation import ugettext_lazy as _
-from hyperpython import nav, section, Block
+from hyperpython import nav, section, Block, a
 from hyperpython.components import hyperlink, html_list, fa_icon
 from typing import Callable, Iterable
 
-from ..roles import link, h1
+from ..roles import link, h1, div
 
 
 def page_menu(*items, request=None, caller=None, **kwargs):
@@ -56,7 +56,7 @@ def page_menu(*items, request=None, caller=None, **kwargs):
 
 
 def menu_from_sections(sections):
-    return nav(sections, class_="page-menu", is_component=True)
+    return nav(*sections, class_="page-menu", is_component=True)
 
 
 def menu_section(name, links, **kwargs):
@@ -143,8 +143,8 @@ def take_until(pred, it) -> Iterable:
 
 #: Accessibility menu
 page_menu.ACCESSIBILITY = thunk(lambda: menu_section(_('Accessibility'), [
-    link([fa_icon('text-height'), _('Toggle Font Size')], href="#", is_element="toggleFontSize"),
-    link([fa_icon('adjust'), _('Toggle Contrast'), ], href="#", is_element="toggleContrast"),
+    a([fa_icon('text-height'), _('Toggle Font Size')], href="#", is_element="toggleFontSize"),
+    a([fa_icon('adjust'), _('Toggle Contrast'), ], href="#", is_element="toggleContrast"),
 ]))
 
 #: Conversations menu

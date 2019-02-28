@@ -23,7 +23,6 @@ up.compiler('[is-component]', function (elem) {
     }
     let component = elem.component = new componentClass(elem);
     component.register();
-    debug(`Component initialized: ${name}`);
 });
 
 /**
@@ -88,7 +87,7 @@ export function component(cls) {
     if (componentRegistry.hasOwnProperty(cls.name)) {
         warn(`Component already registered: ${cls.name}`);
     }
-    debug(`Registering component: ${cls.name}`);
+    // debug(`Registering component: ${cls.name}`);
     componentRegistry[cls.name] = cls;
     componentRegistry[camelCaseToDash(cls.name)] = cls;
     return cls;
@@ -109,24 +108,35 @@ export class Component {
     constructor(elem: Element) {
         this.element = elem;
 
+        // Make sure it is the only component registered to DOM element
+        if (elem['ej-component'] === undefined) {
+            elem['ej-component'] = this;
+        } else {
+            debug('Element already registered to component');
+        }
+
         // Set attributes to default values
         for (let attr in this.attributes) {
-            console.log('attr', attr);
             if (!elem.hasAttribute(attr)) {
                 elem.setAttribute(attr, this.attributes[attr]);
             }
         }
     }
 
-    register() {
-        this.element.querySelectorAll('[is-element]').forEach(elem => {
-            let name = elem.getAttribute('is-element');
-            console.log("Elem:" + elem + name);
-        });
+    /** Must be overridden by child classes */
+    init() {
     }
 
-    // jQuery-like selectors and API
-    /** Call .querySelector() on element */
+    /** Mount element on the DOM */
+    register() {
+        this.$('[is-element]').each((_, elem) => {
+            registerElementForComponent(this, elem);
+        });
+        this.init();
+        debug(`${this.constructor['name']} component initialized`);
+    }
+
+    /** Call jQuery() on element */
     $(selector?: string) {
         if (selector === undefined) {
             return $(this.element);
@@ -134,18 +144,17 @@ export class Component {
         return $(selector, this.element);
     }
 
-
     /** Register event listener on sub-elements */
     on(event: string, ...args) {
         switch (args.length) {
-            case 2: {
-                let [selector, callback] = args;
-                this.$(selector).on(event, callback);
-                break;
-            }
             case 1: {
                 let [callback] = args;
                 this.$().on(event, callback);
+                break;
+            }
+            case 2: {
+                let [selector, callback] = args;
+                this.$(selector).on(event, callback);
                 break;
             }
             default: {
@@ -155,3 +164,40 @@ export class Component {
     }
 }
 
+
+function registerElementForComponent(component, elem) {
+    let $elem = $(elem),
+        name = $elem.attr('is-element'),
+        parts = name.split(':'),
+        event = 'click',
+        methodName = undefined;
+
+    // noinspection FallThroughInSwitchStatementJS
+    switch (parts.length) {
+        case 0: {
+            methodName = elem.classList[0].split('-')[1];
+            parts = [methodName];
+        }
+        case 1: {
+            [methodName] = parts;
+            parts = [methodName, 'click']
+        }
+        case 2: {
+            [methodName, event] = parts;
+            console.log(["REGISTERING", name, parts]);
+            let method = component[methodName];
+            if (method === undefined) {
+                warn(`Method ${methodName} not found!`);
+            }
+            method = method.bind(component);
+            $elem.on(event, ev => {
+                console.log('EVENT', ev, elem);
+                return method(elem, ev);
+            });
+            break;
+        }
+        default: {
+            throw 'Invalid number of arguments';
+        }
+    }
+}

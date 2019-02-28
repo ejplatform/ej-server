@@ -8,7 +8,7 @@
 .main-header, .main-footer {
     @extend .row, .items-center, .text-center;
     @include color('navigation');
-    z-index: 100;
+    z-index: 1000;
 
     > * {
         @extend .pad-y1, .pad-x3;
@@ -85,7 +85,7 @@
         margin-right: 1rem;
         right: 0;
         width: initial;
-        z-index: 101;
+        z-index: 1001;
 
         &__link {
             flex-flow: row !important;
@@ -113,6 +113,10 @@
     }
     &[is-menu][is-open] {
         @extend .size-x6;
+        display: block;
+        position: fixed;
+        right: 0;
+        z-index: 1002;
     }
     section {
         @extend .pad-2;
@@ -145,14 +149,16 @@
         background-color: rgba(0, 0, 0, 0.025);
         border-radius: 0 !important;
         box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.12);
-        display: block;
         flex: 1;
         min-height: calc(100vh - 3rem);
         min-width: size(7);
         max-width: size(10);
 
         &, &[is-menu], &[is-menu][is-open] {
+            display: block;
+            position: relative;
             width: 20%;
+            z-index: 0;
         }
         section {
             border-color: rgba(0, 0, 0, 0.08);

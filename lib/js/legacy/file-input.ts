@@ -1,11 +1,11 @@
 var initialFileStatus = $(".FileStatus").text();
 
 var pickFileFunction = function (){
-    elements = $(".PickFileButton");
+    let elements = $(".PickFileButton");
 
     elements.each(function(index) {
-        children = $(this).children();
-        status = $(this).siblings()
+        let children = $(this).children();
+        let status = $(this).siblings();
 
         children.blur(function() {
             $(this).parent().css("background-color", "#A3D8DD")
@@ -28,7 +28,7 @@ var pickFileFunction = function (){
 };
 
 function changeFileStatus(pickFile, newText) {
-    fileStatus = pickFile.siblings();
+    let fileStatus = pickFile.siblings();
 
     if (newText) {
         fileStatus.text(newText);

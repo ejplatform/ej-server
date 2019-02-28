@@ -1,0 +1,85 @@
+{% extends 'ej_profiles/base.jinja2' %}
+
+{% block page_content %}
+    {{ tabs({
+        _('Votes'): '#contribution-votes',
+        _('Comments'): '#contribution-comments',
+        _('Favorites'): '#contribution-favorites',
+        _('Conversations'): '#contribution-conversations'}, class_='width-full') }}
+
+    {#- Conversations in which the user participated #}
+    <div id="contribution-votes" class="pad-x3p pad-y4 width-full">
+        <p class="text-center">{% trans %}List of conversations you participated at least once.{% endtrans %}</p>
+        {{ render_conversations(voted_conversations) }}
+    </div>
+
+
+    {#- Conversations in which the user participated #}
+    <div id="contribution-comments" class="pad-x3p pad-y4 width-full">
+        <p class="text-center">{% trans %}Keep track of your comments here.{% endtrans %}</p>
+        <h1 class="h3 text-center text-accent">{% trans %}Approved comments{% endtrans %}</h1>
+        {{ render_comments(approved_comments) }}
+        <h1 class="h3 text-center text-accent">{% trans %}Pending moderation{% endtrans %}</h1>
+        {{ render_comments(pending_comments) }}
+        <h1 class="h3 text-center text-accent">{% trans %}Rejected{% endtrans %}</h1>
+        {{ render_comments(rejected_comments) }}
+    </div>
+
+
+    {#- Favorite conversations #}
+    <div id="contribution-favorites" class="pad-x3p pad-y4 width-full">
+        {% if favorite_conversations %}
+            <p class="text-center">{% trans %}Keep track of your favorite conversations here.{% endtrans %}</p>
+            {{ render_conversations(favorite_conversations) }}
+        {% else %}
+            <p class="text-center">{% trans %}You have not have any favorite conversations yet!{% endtrans %}</p>
+        {% endif %}
+    </div>
+
+
+    {#- Conversations created by user #}
+    <div id="contribution-conversations" class="pad-x3p pad-y4 width-full">
+        {% if not created_conversations %}
+            <p class="text-center">{% trans %}You have not created any conversation yet!{% endtrans %}</p>
+        {% else %}
+            <p class="text-center">{% trans %}List of conversations created by you.{% endtrans %}</p>
+            {{ render_conversations(created_conversations) }}
+        {% endif %}
+    </div>
+{% endblock %}
+
+
+{% macro render_conversations(conversations) %}
+    {% for conversation in conversations %}
+        <div class="measure-narrow margin-xauto">
+            {{ conversation|role('summary') }}
+            {{ conversation|role('user-progress', user=user) }}
+            <div class="text-brand text-center uppercase margin-b3">
+                <i class="fa fa-check"></i>
+                <a href="{{ conversation.get_absolute_url() }}" class="text-brand semi-bold">
+                    {% trans %}Participate{% endtrans %}</a>
+            </div>
+            <hr>
+        </div>
+    {% endfor %}
+{% endmacro %}
+
+
+
+{% macro render_comments(comments) %}
+    {% if not comments %}
+        <p class="text-center">{% trans %}Empty.{% endtrans %}</p>
+    {% else %}
+        {% for comment in comments %}
+            <div class="measure-narrow margin-xauto">
+                {{ comment|role('summary') }}
+                <div class="text-brand text-center uppercase margin-y3">
+                    <i class="fa fa-check"></i>
+                    <a href="{{ comment.conversation.get_absolute_url() }}" class="text-brand semi-bold">
+                        {% trans %}Go to conversation{% endtrans %}</a>
+                </div>
+                <hr>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endmacro %}
