@@ -1,34 +1,14 @@
-{% extends 'ej_users/login.jinja2' %}
+{% set title = _('Register new user') %}
+{% extends 'ej_users/base.jinja2' %}
 
 
-{% block content %}
-    <style>.Header-lowerNotLogged {
-        display: none;
-    }</style>
-
-    <div class="Register">
-        <h1 class="Register-title">{% trans %}Register new user{% endtrans %}</h1>
-
-        <form method="post" class="Form" is-placeholder-form>
-            {{ csrf_input }}
-            {{ form.non_field_errors() }}
-            {% for field in form %}
-                <div class="fieldWrapper">
-                    {{ field.errors }}
-                    <p>
-                        <input for="{{field.id_for_label}}"
-                            name="{{field.name}}"
-                            placeholder="{{field.label}}"
-                            aria-label="{{field.help_text}}"
-                            type="{{field.field.widget.input_type}}"
-                        ></input>
-                    </p>
-
-                </div>
-            {% endfor %}
-            {# {{ form }} #}
-            <input type="submit" value="{{ _('Register!') }}" class="button" name="register">
-        </form>
-        {{ social_login(social_buttons, social_js) }}
-    </div>
+{% block form_data %}
+    <form method="post">
+        {{ csrf_input }}
+        {{ form }}
+        <div class="margin-y3 margin-xauto">
+            <input type="submit" name="submit" value="{{ _('Register') }}" class="width-full">
+        </div>
+    </form>
+    <a href="{{ url('auth:login') + next }}" class="semi-bold underline">{{ _('Login') }}</a>
 {% endblock %}

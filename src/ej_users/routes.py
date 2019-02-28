@@ -36,7 +36,7 @@ log = logging.getLogger('ej')
 
 @urlpatterns.route('register/')
 def register(request):
-    form = forms.RegistrationForm.bind(request)
+    form = forms.RegistrationForm.bind_to_request(request)
     next_url = request.GET.get('next', '/')
 
     if form.is_valid_post():
@@ -64,6 +64,7 @@ def register(request):
     return {
         'user': request.user,
         'form': form,
+        'next': next_url,
         'social_js': login_extra_template.render(request=request),
         'social_buttons': social_buttons(request),
     }
@@ -71,7 +72,7 @@ def register(request):
 
 @urlpatterns.route('login/')
 def login(request, redirect_to='/'):
-    form = forms.LoginForm.bind(request)
+    form = forms.LoginForm.bind_to_request(request)
     error_msg = _('Invalid email or password')
     next_url = request.GET.get('next', redirect_to)
     fast = request.GET.get('fast', 'false') == 'true' or 'fast' in request.GET
@@ -115,36 +116,35 @@ def logout(request):
 
 @urlpatterns.route('reset-password/<model:token>/')
 def reset_password(request, token):
-    form = None
     next_url = request.GET.get('next', '/login/')
     user = token.user
+    form = forms.ResetPasswordForm.bind_to_request(request)
 
-    if not (token.is_expired or token.is_used):
-        form = forms.ResetPasswordForm.bind(request)
-        if request.method == 'POST' and form.is_valid():
-            new_password = form.cleaned_data['new_password']
-            user.set_password(new_password)
-            user.save()
-            token.delete()
-            return redirect(next_url)
+    if not (token.is_expired or token.is_used) and form.is_valid_post():
+        new_password = form.cleaned_data['new_password']
+        user.set_password(new_password)
+        user.save()
+        token.delete()
+        return redirect(next_url)
 
     return {
         'user': user,
         'form': form,
-        'isExpired': token.is_expired,
+        'next': next_url,
+        'is_expired': token.is_expired,
     }
 
 
 @urlpatterns.route('recover-password/')
 def recover_password(request):
-    form = forms.RecoverPasswordForm(request.POST or None)
+    next_url = request.GET.get('next', '/login/')
+    form = forms.RecoverPasswordForm.bind_to_request(request)
     user = None
     success = False
 
-    if request.method == "POST" and form.is_valid():
+    if form.is_valid_post():
         success = True
         email = form.cleaned_data['email']
-
         try:
             user = User.objects.get_by_email(email)
         except User.DoesNotExist:
@@ -160,7 +160,7 @@ def recover_password(request):
                       from_email=from_email,
                       recipient_list=[email])
 
-    return {'user': user, 'form': form, 'success': success}
+    return {'user': user, 'form': form, 'success': success, 'next': next_url}
 
 
 @urlpatterns.route('profile/remove/', login=True)

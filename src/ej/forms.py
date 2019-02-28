@@ -1,5 +1,6 @@
+from operator import attrgetter
+
 from django.forms import Form
-from django.http.request import HttpRequest
 
 
 class RequestForm(Form):
@@ -10,7 +11,7 @@ class RequestForm(Form):
     http_method = None
 
     @classmethod
-    def bind(cls, request, *args, **kwargs):
+    def bind_to_request(cls, request, *args, **kwargs):
         """
         Creates a form instance from the given request. Any additional
         positional and keyword argument is passed to the function as-is.
@@ -21,13 +22,6 @@ class RequestForm(Form):
             form = cls(*args, **kwargs)
         form.http_method = request.method
         return form
-
-    def __init__(self, *args, **kwargs):
-        if args and isinstance(args[0], HttpRequest):
-            self.request, *args = args
-            if self.request.method == 'POST':
-                args = (self.request.POST, *args)
-        super().__init__(*args, **kwargs)
 
     def is_valid_post(self):
         """
@@ -41,6 +35,20 @@ class RequestForm(Form):
         else:
             return False
 
+    def set_widget_attributes(self, attribute, value=None, from_attr=None):
+        """
+        Define the given attribute to all widgets in the form.
+        """
+        getter = from_attr and attrgetter(from_attr)
+        for elem in self:
+            if from_attr:
+                value = getter(elem)
+                elem.field.widget.attrs.setdefault(attribute, value)
+            elif value is None:
+                elem.field.widget.attrs.pop(attribute, None)
+            else:
+                elem.field.widget.attrs.setdefault(attribute, value)
+
 
 class PlaceholderForm(RequestForm):
     """
@@ -49,6 +57,4 @@ class PlaceholderForm(RequestForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-
-        for field in self:
-            field.field.widget.attrs.setdefault('placeholder', field.label)
+        self.set_widget_attributes('placeholder', from_attr='label')
