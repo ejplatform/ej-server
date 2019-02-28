@@ -17,9 +17,8 @@ class BoardRecipes(Base):
         owner=foreign_key(Base.author),
     )
 
-    @pytest.fixture
-    def data(self, request):
-        data = super().data(request)
+    def get_data(self, request):
+        data = super().get_data(request)
         board = self.board.make(owner=data.author)
         return record(data, board=board)
 

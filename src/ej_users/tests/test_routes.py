@@ -13,7 +13,6 @@ class TestRoutes(UserRecipes, UrlTester):
     user_urls = [
         # '/logout/', -- returns error 500, so we use specific tests
         '/profile/remove/',
-        '/profile/favorites/',
     ]
 
     #
@@ -75,7 +74,7 @@ class TestRoutes(UserRecipes, UrlTester):
         response = routes.reset_password(request, token)
         assert response['user'] == user
         assert response['form']
-        assert not response['isExpired']
+        assert not response['is_expired']
 
     def test_post_matching_passwords(self, db, token, user_db, rf):
         token.user = user_db
@@ -90,4 +89,4 @@ class TestRoutes(UserRecipes, UrlTester):
         response = routes.reset_password(request, token)
         assert response['user'] == user
         assert response['form']
-        assert not response['isExpired']
+        assert not response['is_expired']

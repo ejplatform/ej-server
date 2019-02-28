@@ -20,17 +20,6 @@ from ej_users.mommy_recipes import UserRecipes
 
 User = get_user_model()
 
-# Patch django-boogie as to remove the default implementation of the data
-# fixture.
-try:
-    del CrawlerTester.data  # incompatible data fixture method
-except AttributeError:
-    pass
-try:
-    del UrlTester.data  # incompatible data fixture method
-except AttributeError:
-    pass
-
 
 class DataMixin(ClusterRecipes,
                 BoardRecipes,

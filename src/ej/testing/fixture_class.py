@@ -128,6 +128,9 @@ class EjRecipes(metaclass=FixtureMeta):
 
     @pytest.fixture
     def data(self, request):
+        return self.get_data(request)
+
+    def get_data(self, request):
         user, author, admin = self.get_users(request)
         return record(user=user, author=author, admin=admin)
 

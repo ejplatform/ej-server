@@ -32,9 +32,8 @@ class ConversationRecipes(EjRecipes):
         choice=Choice.AGREE,
     )
 
-    @pytest.fixture
-    def data(self, request):
-        data = super().data(request)
+    def get_data(self, request):
+        data = super().get_data(request)
         conversation = self.conversation.make(author=data.author)
         comments = [
             self.comment.make(author=data.author, conversation=conversation, content='comment-author'),

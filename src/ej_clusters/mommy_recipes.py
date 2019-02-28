@@ -31,9 +31,8 @@ class ClusterRecipes(ConversationRecipes):
         comment=_foreign_key(ConversationRecipes.comment)
     )
 
-    @pytest.fixture
-    def data(self, request):
-        data = super().data(request)
+    def get_data(self, request):
+        data = super().get_data(request)
         stereotype = self.stereotype.make(owner=data.author)
         votes = [
             self.stereotype_vote.make(author=stereotype, comment=comment)

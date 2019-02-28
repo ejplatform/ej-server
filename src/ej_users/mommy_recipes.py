@@ -15,9 +15,8 @@ class UserRecipes(EjRecipes):
         user=_foreign_key(EjRecipes.user),
     )
 
-    @pytest.fixture
-    def data(self, request):
-        data = super().data(request)
+    def get_data(self, request):
+        data = super().get_data(request)
         return record(data, token=self.token.make(user=data.user))
 
 

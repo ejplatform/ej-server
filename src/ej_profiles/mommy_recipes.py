@@ -9,8 +9,7 @@ from .models import Profile
 class ProfileRecipes(EjRecipes):
     profile = Recipe(Profile)
 
-    @pytest.fixture
-    def data(self, request):
-        data = super().data(request)
+    def get_data(self, request):
+        data = super().get_data(request)
         profile = self.profile.make(user=data.user)
         return record(data, profile=profile)
