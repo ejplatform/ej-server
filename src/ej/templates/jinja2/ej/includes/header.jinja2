@@ -1,5 +1,5 @@
-<nav class="main-header">
-    <a title="{{ _('Back') }}" is-component="main-header:back">
+<nav class="main-header" is-component>
+    <a title="{{ _('Back') }}" is-element="back:click">
         <i class="fa fa-chevron-left"></i>
     </a>
 
@@ -7,7 +7,7 @@
         <img src={{ static("img/logo/logo.svg") }} alt="{{ settings.EJ_PAGE_TITLE }}">
     </a>
 
-    <a title="{{ _('Menu') }}" is-component="main-header:menu">
+    <a title="{{ _('Menu') }}" is-element="toggleMenu:click">
         <i class="fa fa-ellipsis-v"></i>
     </a>
 </nav>

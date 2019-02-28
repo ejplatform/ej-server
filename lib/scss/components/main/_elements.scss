@@ -34,23 +34,27 @@ i.fa, i.fas, i.fab {
 //------------------------------------------------------------------------------
 // Tabs and categories
 .tabs, .categories {
-    @extend .text-center, .row, .flex-center, .bold;
+    @extend .text-center, .row, .flex-center;
+
     a {
-        @extend .bold, .pad-2, .margin-x3;
+        @extend .pad-2, .margin-x3;
+        font-weight: 600;
+        border-bottom: 0.25rem solid transparent;
     }
-    &__selected {
+    a[is-selected] {
         @extend .text-brand;
-        border-bottom: 3px solid color('brand');
+        border-bottom-color: color('brand');
     }
 }
 
 .tabs {
     @extend .uppercase;
-    border-bottom: 2px solid color('accent');
+    border-bottom: 1px solid color('brand-light');
 }
 
 .categories {
     @include color('brand-lighter', 'brand');
+    @extend .bold;
 
     a {
         color: color('brand');

@@ -26,15 +26,15 @@ __all__ = [
 ]
 
 
-def link(value, href='#', target='main', **kwargs):
+def link(value, href='#', target='body', **kwargs):
     return a(link_kwargs(href=href, target=target, **kwargs), value)
 
 
-def link_attrs(href='#', target='main', **kwargs):
+def link_attrs(href='#', target='body', **kwargs):
     return render_attrs(link_kwargs(href=href, target=target, **kwargs))
 
 
-def link_kwargs(href='#', target='main', action='target', instant=True,
+def link_kwargs(href='#', target='body', action='target', instant=True,
                 button=False, transition='cross-fade',
                 preload=False, scroll=False, prefetch=False, primary=False, args=None,
                 query=None, url_args=None, class_=(),
@@ -62,7 +62,7 @@ def link_kwargs(href='#', target='main', action='target', instant=True,
         'up-restore-scroll': scroll,
         'up-preload': preload,
         'up-prefetch': prefetch,
-        **kwargs,
+        **{k.replace('_', '-'): v for k, v in kwargs.items()},
     }
     if action:
         kwargs[f'up-{action}'] = target
@@ -187,19 +187,19 @@ def progress_bar(*args):
     return div(children, class_='progress-bar')
 
 
-def tabs(items, select=0, **kwargs):
+def tabs(items, select=0, js=True, **kwargs):
     """
     Return a tabbed interface.
     """
     items = items.items() if isinstance(items, Mapping) else items
     children = []
+    if js:
+        kwargs['is-component'] = True
     for idx, (k, v) in enumerate(items):
         args = {'href': v} if isinstance(v, str) else v
-        anchor = a(args, k)
-        if select == idx:
-            anchor = anchor.add_class('tabs__selected')
+        anchor = a(args, k, is_selected=select == idx)
         children.append(anchor)
-    return div(children, **kwargs).add_class('tabs')
+    return div(children, **kwargs).add_class('tabs', first=True)
 
 
 def categories(items, select=0, **kwargs):

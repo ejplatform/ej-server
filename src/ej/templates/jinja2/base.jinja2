@@ -26,7 +26,14 @@
     {% if not hide_footer|default(False) %}{% include 'ej/includes/footer.jinja2' %}{% endif %}
 {% endif %}
 <div id="page-wrapper">
-{% if not hide_menu|default(False) %}{{ page_menu(menu_contents|default([]), request=request) }}{% endif %}
+{% if not hide_menu|default(False) %}
+    {% if menu_contents is defined %}{{ page_menu(menu_contents|default([]), request=request) }}
+    {% else %}
+        {% call page_menu() %}
+            {% block menu %}{{ page_menu.DEFAULT_MENU_SECTIONS()|safe }}{% endblock %}
+        {% endcall %}
+    {% endif %}
+{% endif %}
 
 {% block main %}
 <main class="{{ main_class|default('container') }}{{ '' if request.user.is_authenticated else ' is-anonymous' }}">

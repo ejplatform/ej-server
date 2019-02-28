@@ -102,18 +102,72 @@
 // Sidebar / menu
 
 .page-menu {
-    background-color: red;
-    display: none;
+    @extend .rounded-2;
+    background-color: color('white');
+    box-shadow: 0 0 8px 1px rgba(0, 0, 0, 0.12);
+    overflow: hidden auto;
+
+    &[is-menu] {
+        @extend .size-x6;
+        display: none;
+    }
+    &[is-menu][is-open] {
+        @extend .size-x6;
+    }
+    section {
+        @extend .pad-2;
+        border-bottom: 1px solid color('brand');
+        h1 {
+            display: none;
+        }
+        ul:first-child {
+            @extend .pad-t2;
+        }
+        ul {
+            @extend .list-reset;
+        }
+        li {
+            @extend .margin-y1;
+        }
+    }
+    section:first-child {
+        a {
+            @extend .bold;
+        }
+    }
+    section:last-child {
+        border-bottom: none;
+    }
 }
 
 @include breakpoint('md') {
     .page-menu {
+        background-color: rgba(0, 0, 0, 0.025);
+        border-radius: 0 !important;
+        box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.12);
         display: block;
-        background-color: #eee;
         flex: 1;
         min-height: calc(100vh - 3rem);
         min-width: size(7);
         max-width: size(10);
+
+        &, &[is-menu], &[is-menu][is-open] {
+            width: 20%;
+        }
+        section {
+            border-color: rgba(0, 0, 0, 0.08);
+            padding-top: 0 !important;
+
+            h1 {
+                display: block;
+                font-size: 0.875rem;
+                margin-top: 0;
+                margin-left: -(size(0.5));
+                margin-right: -(size(0.5));
+                opacity: 0.5;
+                padding: size(0.25) size(0.5);
+            }
+        }
     }
 
     #page-wrapper {

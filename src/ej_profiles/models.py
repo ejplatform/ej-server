@@ -3,6 +3,7 @@ import hashlib
 from allauth.socialaccount.models import SocialAccount
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from django.contrib.staticfiles.storage import staticfiles_storage
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _, ugettext as __
@@ -92,7 +93,7 @@ class Profile(models.Model):
             for account in SocialAccount.objects.filter(user=self.user):
                 picture = account.get_avatar_url()
                 return picture
-            return '/static/img/logo/avatar_default.svg'
+            return staticfiles_storage.url('/img/login/avatar.svg')
 
     @property
     def has_image(self):

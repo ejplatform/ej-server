@@ -22,18 +22,6 @@ up.compiler('.Profile-tabs', function ($elem) {
     );
 });
 
-up.compiler('.CollapsibleList', function ($elem) {
-    $elem.toggleClass('CollapsibleList--hidden');
-    $elem.find('.CollapsibleList-data').hide();
-
-    $elem.click(function () {
-        $elem.find('> h2 > i').css('transition', '500ms');
-        $elem.toggleClass('CollapsibleList--hidden');
-        $elem.find('.CollapsibleList-data').toggle(250);
-    });
-});
-
-
 // CONVERSATIONS
 // -----------------------------------------------------------------------------
 /**

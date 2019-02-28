@@ -1,0 +1,10 @@
+<section title="{{ _('Profile') }}">
+    <h1>{{ _('Profile') }}</h1>
+    <ul>
+        <li><a href="{{ url('profile:detail') }}">{{ _('Profile') }}</a></li>
+        <li><a href="{{ url('profile:edit') }}">{{ _('Edit profile') }}</a></li>
+        <li><a href="{{ url('auth:logout') }}">{{ _('Logout') }}</a></li>
+    </ul>
+</section>
+{{ page_menu.ABOUT() }}
+{{ page_menu.ACCESSIBILITY() }}

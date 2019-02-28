@@ -1,100 +1,36 @@
 {% extends 'base.jinja2' %}
 
+{% set main_class='container-1 col items-center flex-start' %}
+{% block menu %}{% include 'ej_profiles/includes/menu.jinja2' %}{% endblock %}
 
-{#
-    Main content of EJ user profile
-#}
 {% block content %}
-    <div class="Profile">
-        <img class="crProfile-image" src="{{ profile.image_url }}" alt="{{ _('Profile picture') }}">
+    {% if profile.has_image %}
+        <img class="size-6 pad-t3 block rounded-full"
+             src="{{ profile.image_url }}" alt="{{ _('Profile picture') }}">
+    {% else %}
+        <img class="size-6 pad-t3 block relative"
+             src="{{ profile.image_url }}" alt="{{ _('Profile picture') }}" style="left: 1rem">
+    {% endif %}
 
-        <h1>{{ profile.name }}</h1>
-        {{ comments|role('collapsible-list', title=_('Comments'), item_role='list-item') }}
-        {{ conversations|role('collapsible-list', title=_('Favorite Conversations'), item_role='card') }}
-
-        <div class="Profile-tabs">
-            <nav class="Profile-tabLinks">
-                <div>
-                    {{ link(_('Info'), 'profile:detail',
-                        target='.Profile-tabs',
-                        transition=None,
-                        class_='Profile-tabActive' if which_tab == 'profile' else []) }}
-                    {% if which_tab == 'profile' %}
-                        <div class="Profile-arrow"></div>
-                    {% endif %}
-                </div>
-                <div>
-                    {{ link(_('Contributions'), 'profile:detail', query={'info': 'contributions'},
-                        target='.Profile-tabs',
-                        transition=None,
-                        class_='Profile-tabActive' if which_tab == 'contributions' else []) }}
-                    {% if which_tab == 'contributions' %}
-                        <div class="Profile-arrow"></div>
-                    {% endif %}
-                </div>
-            </nav>
-
-            <div class="Profile-tabContainer">
-                <div class="Profile-tabContent">
-                    {% if which_tab == 'profile' %}
-                        {{ info_tab(profile) }}
-                    {% elif which_tab == 'contributions' %}
-                        {{ contributions_tab(profile) }}
-                    {% else %}
-                        <p>Invalid which_tab parameter: {{ which_tab }}</p>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
+    <h1 class="h2 text-accent">{{ profile.name }}</h1>
+    {{ tabs({_('Info'): '#profile-info', _('Contributions'): '#profile-contributions'}, class_='width-full') }}
+    <div id="profile-info" class="pad-x3p pad-y4 width-full">
+        <dl class="description text-4">
+            {% for title, info in profile.profile_fields(true) %}
+                <dt>{{ title }}</dt>
+                {% if info == 'undeclared' %}
+                    <dd>{{ _((info).title()) }}</dd>
+                {% else %}
+                    <dd>{{ (info or '-') }}</dd>
+                {% endif %}
+            {% endfor %}
+        </dl>
     </div>
-
-    <div class="Profile-actions">
-        <form method="post" action="{{ url('auth:logout') }}">
-            {{ csrf_input }}
-            <button type="submit" aria-label="{{ _('Logout button') }}">{{ _('Logout') }}</button>
-        </form>
+    <div id="profile-contributions" class="pad-4 text-center text-4 text-brand uppercase semibold">
+        <p><i class="fa fa-talks"></i> {{ n_conversations }} {{ _('Conversations') }}</p>
+        <p><i class="fa fa-talks"></i> {{ n_comments }} {{ _('Comments') }}</p>
+        <p><i class="fa fa-talks"></i> {{ n_votes }} {{ _('Votes') }}</p>
+        <p><i class="fa fa-talks"></i> {{ n_favorites }} {{ _('Favorites') }}</p>
     </div>
 {% endblock %}
 
-
-
-{#
-    Profile info tab
-
-    TODO: refactor to be a role.
-#}
-{% macro info_tab(profile) %}
-    <dl class="description margin-y3">
-        {% for title, info in profile.profile_fields(true) %}
-            <dt>{{ title }}</dt>
-            {% if info == 'undeclared' %}
-                <dd>{{ _((info).title()) }}</dd>
-            {% else %}
-                <dd>{{ (info or '-') }}</dd>
-            {% endif %}
-        {% endfor %}
-    </dl>
-    <div class='edit-button'>
-        <a href="{{ url('profile:edit') }}" class="button" primary
-           aria-label="{{ _('Profile edit button') }}">{{ _('Edit profile') }}</a>
-    </div>
-{% endmacro %}
-
-
-{#
-    Contributions tab
-
-    TODO: refactor to be a role.
-#}
-{% macro contributions_tab(profile) %}
-    <div class="Profile-info">
-        <ul class='statistics'>
-            {% for description, amount in profile.statistics().items() %}
-                <li>
-                    <span class='amount'>{{ amount }}</span>
-                    <span class='description'>{{ _(description).title() or '-' }}</span>
-                </li>
-            {% endfor %}
-        </ul>
-    </div>
-{% endmacro %}

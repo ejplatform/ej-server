@@ -17,30 +17,12 @@ urlpatterns = Router(
 @urlpatterns.route('')
 def detail(request):
     user = request.user
-
-    # Select conversations and comments in an optimized query
-    favorites = (
-        FavoriteConversation.objects
-            .filter(user=user)
-            .select_related('conversation')
-            .prefetch_related('conversation__followers')
-            .prefetch_related('conversation__tags')
-    )
-    conversations = [fav.conversation for fav in favorites]
-
-    # Comments
-    comments = (
-        user.comments
-            .all()
-            .select_related('conversation')
-            .select_related('author')
-    )
-
     return {
-        'which_tab': request.GET.get('info', 'profile'),
         'profile': user.profile,
-        'conversations': conversations,
-        'comments': comments,
+        'n_conversations': user.conversations.count(),
+        'n_favorites': 42, #user.favorites.count(),
+        'n_comments': user.comments.count(),
+        'n_votes': user.votes.count(),
     }
 
 

@@ -76,3 +76,4 @@ venv
 Untitled.ipynb
 *.orig
 Untitle.ipynb
+lib/js/*.js/

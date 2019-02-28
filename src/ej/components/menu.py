@@ -1,12 +1,12 @@
 from django.utils.translation import ugettext_lazy as _
-from hyperpython import nav
+from hyperpython import nav, section, Block
 from hyperpython.components import hyperlink, html_list, fa_icon
 from typing import Callable, Iterable
 
-from ..roles import link
+from ..roles import link, h1
 
 
-def page_menu(*items, request=None, **kwargs):
+def page_menu(*items, request=None, caller=None, **kwargs):
     """
     Creates a new menu from a list of sections.
 
@@ -40,17 +40,34 @@ def page_menu(*items, request=None, **kwargs):
     """
     if len(items) == 1 and isinstance(items[0], (list, tuple)):
         items = items[0]
-    sections = list(map(list, split_with(lambda x: x in (..., None), items)))
-    automatic = default_implementations(request, **kwargs)
-    return nav([*map(menu_section, sections), *automatic], class_="page-menu")
+
+    groups = split_with(lambda x: x in (..., None), items)
+    sections = [menu_section(None, group) for group in groups]
+    if caller is not None:
+        data = caller().strip()
+        if data:
+            sections = (*items, data)
+    else:
+        automatic = default_implementations(request, **kwargs)
+        sections = [*sections, *automatic]
+
+    result = menu_from_sections(sections)
+    return result.render() if caller else result
 
 
-def menu_section(links, **kwargs):
+def menu_from_sections(sections):
+    return nav(sections, class_="page-menu", is_component=True)
+
+
+def menu_section(name, links, **kwargs):
     """
     Wraps a list of elements into a menu section <ul>
     """
-    children = map(menu_item, links)
-    return html_list(children, **kwargs).add_class("menu-section")
+    children = [html_list(map(menu_item, links))]
+    if name:
+        children.insert(0, h1(name))
+        kwargs.setdefault('title', str(name))
+    return section(children, **kwargs)
 
 
 def menu_item(item):
@@ -125,20 +142,28 @@ def take_until(pred, it) -> Iterable:
 #
 
 #: Accessibility menu
-page_menu.ACCESSIBILITY = thunk(lambda: menu_section([
-    link([fa_icon('text-height'), _('Toggle Font Size')], href="#", is_component="Page:toggleFontSize"),
-    link([fa_icon('adjust'), _('Toggle Contrast'), ], href="#", is_component="Page:toggleContrast"),
+page_menu.ACCESSIBILITY = thunk(lambda: menu_section(_('Accessibility'), [
+    link([fa_icon('text-height'), _('Toggle Font Size')], href="#", is_element="toggleFontSize"),
+    link([fa_icon('adjust'), _('Toggle Contrast'), ], href="#", is_element="toggleContrast"),
 ]))
 
 #: Conversations menu
-page_menu.CONVERSATION = thunk(lambda: menu_section([
+page_menu.CONVERSATION = thunk(lambda: menu_section(_('Conversations'), [
+    link(_('Conversations'), href='conversation:list'),
     link(_('My Conversations'), href='boards:board-list'),
     link(_('Add Conversation'), href='boards:board-create'),
 ]))
 
 #: About menu
-page_menu.ABOUT = thunk(lambda: menu_section([
+page_menu.ABOUT = thunk(lambda: menu_section(_('About'), [
     link(_('About'), href='help:about-us'),
     link(_('Frequently Asked Questions'), href='help:faq'),
     link(_('Usage terms'), href='help:usage'),
+], is_optional=True))
+
+#: Default menu
+page_menu.DEFAULT_MENU_SECTIONS = thunk(lambda: Block([
+    page_menu.CONVERSATION(),
+    page_menu.ABOUT(),
+    page_menu.ACCESSIBILITY(),
 ]))
