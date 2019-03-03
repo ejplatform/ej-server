@@ -1,136 +1,184 @@
 {% extends 'base.jinja2' %}
+{% set hide_menu = true %}
+{% set main_class = 'width-full landing-page' %}
 
-{% block main %}
-    <div id="HomeCommercial">
-        <div id="HomeCommercial-inner">
-            <div id="HomeCommercial-cover">
-                <div>
-                    <p>{{ _('Create opinion surveys.') }}</p>
-                    {{ action_button(_('Try'), href='conversation:list') }}
-                </div>
-            </div>
+{# TODO: move data out of the template #}
+{% set people = {
+    'Alexandre.jpg': 'Alexandre Augusto',
+    'Arthur.jpg': 'Arthur Diniz',
+    'Bruna.jpg': 'Bruna Nayara',
+    'Bruno.jpg': 'Bruno Martin',
+    'Caio.jpg': 'Caio Almeida',
+    'Carla.jpg': 'Carla Rocha',
+    'Dani.jpg': 'Dani Sampaio ',
+    'Dayanne.jpg': 'Dayanne Fernandes',
+    'Fabiola.jpg': 'Fabíola Fleury',
+    'Fabio.jpg': 'Fabio Macedo',
+    'Fabricio.jpg': 'Fabricio Solagna',
+    'Gabriela.jpg': 'Gabriela Alves',
+    'Gardenia.jpg': 'Gardenia Nogueira',
+    'Guilherme.jpg': 'Guilherme Lacerda',
+    'Heloise.jpg': 'Heloise Cullen',
+    'Henrique.jpg': 'Henrique Parra',
+    'Jonathan.jpg': 'Jonathan Moares',
+    'Laury.jpg': 'Laury Bueno',
+    'Leandro.jpg': 'Leandro Nunes',
+    'Leonardo.jpg': 'Leonardo Gomes',
+    'Luan.jpg': 'Luan Guimarães',
+    'Lucas.jpg': 'Lucas Malta',
+    'Luiza.jpg': 'Luiza Peixe',
+    'Marcela.jpg': 'Marcela Rocha',
+    'Marco.jpg': 'Marco William',
+    'Matheus.jpg': 'Matheus Richard',
+    'Maurilio.jpg': 'Maurilio Atila',
+    'Pablo.jpg': 'Pablo Silva',
+    'Rafa.jpg': 'Rafa Ayala',
+    'Rafael.jpg': 'Rafael Makaha',
+    'Ricardo.jpg': 'Ricardo Poppi',
+    'Rodrigo.jpg': 'Rodrigo Oliveira',
+    'Tallys.jpg': 'Tallys Martins',
+    'Ulf.jpg': 'Ulf Treger',
+    'Vanessa.jpg': 'Vanessa Tonini',
+    'aulus.jpg': 'Áulus Diniz',
+    'arthur.jpg': 'Arthur Jam',
+    'davidcarlos.jpg': 'David Carlos',
+    'danielhenrique.jpg': 'Daniel Henrique',
+} %}
+{% set documentation_items = [
+    {'href': '/docs/?page=user-start.html',
+     'icon': 'fa fa-user-circle',
+     'text': _('User Guides') },
+    {'href': '/docs/?page=user-install.html',
+     'icon': 'fa fa-download',
+     'text': _('Installation') },
+    {'href': '/docs/?page=user-admin.html',
+     'icon': 'fa fa-cog',
+     'text': _('Administration Guides')},
+    {'href': '/docs/?page=dev.html',
+     'icon': 'fa fa-code',
+     'text': _('Development Guides')},
+    {'href': '/docs/?page=user-ai.html',
+     'icon': 'fas fa-microchip',
+     'text': _('Our Artificial Intelligence')},
+    {'href': '/docs/?page=contributing.html',
+     'icon': 'fab fa-github',
+     'text': _('Contributing')},
+    {'href': '/docs/?page=user-report.html',
+     'icon': 'far fa-life-ring',
+     'text': _('Getting Help')},
+] %}
+{% set partners = [
+    {'name': 'Instituto Cidade Democrática',
+     'url': 'https://instituto.cidadedemocratica.org.br',
+     'img': 'cidade.png'},
+    {'name': 'LAPPIS',
+     'url': 'https://lappis.rocks',
+     'img': 'lapis.png'},
+    {'name': 'Hacklab',
+     'url': 'https://hacklab.com.br',
+     'img': 'hacklab.png'},
+    {'name': 'Pencil Labs',
+     'url': 'https://pencillabs.com.br',
+     'img': 'pencil.png'},
+    {'name': 'Transparência Internacional',
+     'url': 'https://transparenciainternacional.org.br',
+     'img': 'ti.png'},
+    {'name': 'Fundação Perseu Abramo',
+     'url': 'https://fpabramo.org.br',
+     'img': 'fpa.png'},
+    {'name': 'PCdoB',
+     'url': 'https://pcdob.org.br',
+     'img': 'pcdob.png'},
+] %}
 
-    <div id="HomeCommercial-how">
-      <h2>{{ _('How it works') }}</h2>
 
-      <ul>
-        <li>
-          <i class="fa fa-microphone"></i>
-          <div>
-            <h3>{{ _('Create a conversation') }}</h3>
+{% block content %}
+    <div class="landing-page__cover width-full text-center color-brand col flex-center">
+        <p class="bold text-1">{{ _('Create opinion surveys') }}</p>
+        <p>{{ action_button(_('Try it now!'), href='conversation:list', secondary=true) }}</p>
+        <a class="landing-page__cover-scroll"
+           onclick="$('html, body').animate({scrollTop: $('#how-it-works').offset().top - $('.main-header').height() - 20}, 400);"><i
+            class="fa fa-chevron-down"></i></a>
+    </div>
+
+    <h1 class="text-center text-accent" id="how-it-works">{{ _('How does it work?') }}</h1>
+
+    <div class="landing-page__cards">
+        <div class="landing-page__card">
+            <i class="fa fa-microphone gradient text-huge"></i>
+            <h2>{{ _('Create a conversation') }}</h2>
             <p>{{ _('create conversations on EJ to receive ideas and opinions about politics, services or public equipments.') }}</p>
-          </div>
-        </li>
+        </div>
 
-        <li>
-          <i class="fas fa-clipboard"></i>
-          <div>
-            <h3>{{ _('Listen to the people') }}</h3>
+        <div class="landing-page__card">
+            <i class="fas fa-clipboard gradient text-huge"></i>
+            <h2>{{ _('Listen to the people') }}</h2>
             <p>{{ _('identify the priorities and the different opinion groups in the society.') }}</p>
-          </div>
-        </li>
+        </div>
 
-        <li>
-          <i class="far fa-flag"></i>
-          <div>
-            <h3>{{ _('Take decisions') }}</h3>
+        <div class="landing-page__card">
+            <i class="far fa-flag gradient text-huge"></i>
+            <h2>{{ _('Take decisions') }}</h2>
             <p>{{ _('make participants know, communicating directly and amplifying the responses.') }}</p>
-          </div>
-        </li>
-      </ul>
+        </div>
     </div>
 
-    <div id="HomeCommercial-conversations">
-      <h2>{{ _('Participative conversations') }}</h2>
+    <div class="landing-page__conversations width-full pad-1">
+        <h2 class="text-center">{{ _('Participative conversations') }}</h2>
 
-      <div>
-        <ul>
-          <li><i class="fa fa-globe"></i><br />{{ _('Many people') }}</li>
-          <li><i class="fa fa-fire"></i><br />{{ _('No attacks or fakes') }}</li>
-          <li><i class="fa fa-align-right"></i><br />{{ _('Nuances instead of bubbles') }}</li>
-          <li><i class="far fa-heart"></i><br />{{ _('Free') }}</li>
-        </ul>
-        <div><img src="/static/img/home/cellphone.png" alt="" /></div>
-      </div>
-
-                <p>{{ action_button(_('Create a conversation'), href='conversation:create') }}</p>
+        <div class="row margin-y3 margin-xauto measure">
+            <ul class="list-reset text-right bold uppercase">
+                <li><i class="fa fa-globe"></i><span>{{ _('Community driven') }}</span></li>
+                <li><i class="fa fa-fire"></i><span>{{ _('No attacks or fakes') }}</span></li>
+                <li><i class="fa fa-align-right"></i><span>{{ _('Nuances instead of bubbles') }}</span></li>
+                <li><i class="far fa-heart"></i><span>{{ _('Free and open source') }}</span></li>
+            </ul>
+            <div class="landing-page__ui-example">
+                <img src="{{ static('img/home/cellphone.png') }}" alt="Interface example"/>
             </div>
+        </div>
 
-    <div id="HomeCommercial-documentation">
-      <h2>{{ _('Documentation') }}</h2>
-
-      <p>{{ _('Explore the EJ resources with our documented guides') }}</p>
-
-      <ul>
-        <li><a href="/docs/?page=user-start.html"><i class="fa fa-user-circle"></i> <span>{{ _('User Guides') }}</span></a></li>
-        <li><a href="/docs/?page=install.html"><i class="fa fa-download"></i> <span>{{ _('Installation Guides') }}</span></a></li>
-        <li><a href="/docs/?page=user-admin.html"><i class="fa fa-cog"></i> <span>{{ _('Administration Guides') }}</span></a></li>
-        <li><a href="/docs/?page=dev.html"><i class="fa fa-code"></i> <span>{{ _('Development Guides') }}</span></a></li>
-        <li><a href="/docs/?page=user-ai.html"><i class="fas fa-microchip"></i> <span>{{ _('Our Artificial Intelligence') }}</span></a></li>
-        <li><a href="/docs/?page=contributing.html"><i class="fab fa-github"></i> <span>{{ _('Contributing') }}</span></a></li>
-        <li><a href="/docs/?page=user-report.html"><i class="far fa-life-ring"></i> <span>{{ _('Getting Help') }}</span></a></li>
-      </ul>
+        <p class="text-center margin-3">{{ action_button(_('Create a conversation'), href='conversation:create', secondary=true) }}</p>
     </div>
 
-    <div id="HomeCommercial-community">
-      <h2>{{ _('EJ Community') }}</h2>
+    <div class="container margin-y3">
+        <h2 class="text-accent">{{ _('Documentation') }}</h2>
+        <p>{{ _('Explore the EJ resources with our documented guides') }}</p>
 
-      <ul>
-        <li><img src="/static/img/home/team/Alexandre.jpg" alt="Alexandre Augusto" /><span>Alexandre<br />Augusto</span></li>
-        <li><img src="/static/img/home/team/Arthur.jpg" alt="Arthur Diniz" /><span>Arthur<br />Diniz</span></li>
-        <li><img src="/static/img/home/team/Bruna.jpg" alt="Bruna Nayara" /><span>Bruna<br />Nayara</span></li>
-        <li><img src="/static/img/home/team/Bruno.jpg" alt="Bruno Martin" /><span>Bruno<br />Martin</span></li>
-        <li><img src="/static/img/home/team/Caio.jpg" alt="Caio Almeida" /><span>Caio<br />Almeida</span></li>
-        <li><img src="/static/img/home/team/Carla.jpg" alt="Carla Rocha" /><span>Carla<br />Rocha</span></li>
-        <li><img src="/static/img/home/team/Dani.jpg" alt="Dani Sampaio " /><span>Dani<br />Sampaio </span></li>
-        <li><img src="/static/img/home/team/Dayanne.jpg" alt="Dayanne Fernandes " /><span>Dayanne<br />Fernandes </span></li>
-        <li><img src="/static/img/home/team/Fabiola.jpg" alt="Fabíola Fleury" /><span>Fabíola<br />Fleury</span></li>
-        <li><img src="/static/img/home/team/Fabio.jpg" alt="Fabio Macedo" /><span>Fabio<br />Macedo</span></li>
-        <li><img src="/static/img/home/team/Fabricio.jpg" alt="Fabricio Solagna" /><span>Fabricio<br />Solagna</span></li>
-        <li><img src="/static/img/home/team/Gabriela.jpg" alt="Gabriela Alves" /><span>Gabriela<br />Alves</span></li>
-        <li><img src="/static/img/home/team/Gardenia.jpg" alt="Gardenia Nogueira" /><span>Gardenia<br />Nogueira</span></li>
-        <li><img src="/static/img/home/team/Guilherme.jpg" alt="Guilherme Lacerda" /><span>Guilherme<br />Lacerda</span></li>
-        <li><img src="/static/img/home/team/Heloise.jpg" alt="Heloise Cullen" /><span>Heloise<br />Cullen</span></li>
-        <li><img src="/static/img/home/team/Henrique.jpg" alt="Henrique Parra" /><span>Henrique<br />Parra</span></li>
-        <li><img src="/static/img/home/team/Jonathan.jpg" alt="Jonathan Moares" /><span>Jonathan<br />Moares</span></li>
-        <li><img src="/static/img/home/team/Laury.jpg" alt="Laury Bueno" /><span>Laury<br />Bueno</span></li>
-        <li><img src="/static/img/home/team/Leandro.jpg" alt="Leandro Nunes" /><span>Leandro<br />Nunes</span></li>
-        <li><img src="/static/img/home/team/Leonardo.jpg" alt="Leonardo Gomes" /><span>Leonardo<br />Gomes </span></li>
-        <li><img src="/static/img/home/team/Luan.jpg" alt="Luan Guimarães" /><span>Luan<br />Guimarães</span></li>
-        <li><img src="/static/img/home/team/Lucas.jpg" alt="Lucas Malta" /><span>Lucas<br />Malta</span></li>
-        <li><img src="/static/img/home/team/Luiza.jpg" alt="Luiza Peixe" /><span>Luiza<br />Peixe</span></li>
-        <li><img src="/static/img/home/team/Marcela.jpg" alt="Marcela Rocha" /><span>Marcela<br />Rocha</span></li>
-        <li><img src="/static/img/home/team/Marco.jpg" alt="Marco William" /><span>Marco<br />William</span></li>
-        <li><img src="/static/img/home/team/Matheus.jpg" alt="Matheus Richard" /><span>Matheus<br />Richard</span></li>
-        <li><img src="/static/img/home/team/Maurilio.jpg" alt="Maurilio Atila" /><span>Maurilio<br />Atila</span></li>
-        <li><img src="/static/img/home/team/Pablo.jpg" alt="Pablo Silva" /><span>Pablo<br />Silva</span></li>
-        <li><img src="/static/img/home/team/Rafa.jpg" alt="Rafa Ayala" /><span>Rafa<br />Ayala</span></li>
-        <li><img src="/static/img/home/team/Rafael.jpg" alt="Rafael Makaha" /><span>Rafael<br />Makaha</span></li>
-        <li><img src="/static/img/home/team/Ricardo.jpg" alt="Ricardo Poppi" /><span>Ricardo<br />Poppi</span></li>
-        <li><img src="/static/img/home/team/Rodrigo.jpg" alt="Rodrigo Oliveira" /><span>Rodrigo<br />Oliveira</span></li>
-        <li><img src="/static/img/home/team/Tallys.jpg" alt="Tallys Martins" /><span>Tallys<br />Martins</span></li>
-        <li><img src="/static/img/home/team/Ulf.jpg" alt="Ulf Treger" /><span>Ulf<br />Treger</span></li>
-        <li><img src="/static/img/home/team/Vanessa.jpg" alt="Vanessa Tonini" /><span>Vanessa<br />Tonini</span></li>
-        <li><img src="/static/img/home/team/aulus.jpg" alt="Áulus Diniz" /><span>Áulus<br />Diniz</span></li>
-        <li><img src="/static/img/home/team/arthur.jpg" alt="Arthur Jam" /><span>Arthur<br />Jam</span></li>
-        <li><img src="/static/img/home/team/davidcarlos.jpg" alt="David Carlos" /><span>David<br />Carlos</span></li>
-        <li><img src="/static/img/home/team/danielhenrique.jpg" alt="Daniel Henrique" /><span>Daniel<br />Henrique</span></li>
-      </ul>
+        <div class="row wrap flex-center">
+
+            {% for doc in documentation_items %}
+                <a href="{{ doc.href }}"
+                   class="block text-brand-light size-x5p size-y5 rounded-3 margin-2 border-2 text-center pad-1 leading-solid">
+                    <i class="{{ doc.icon }} text-1 gradient block pad-1"></i>
+                    <span class="text-7 uppercase semi-bold text-brand">{{ doc.text }}</span></a>
+            {% endfor %}
+        </div>
     </div>
 
-    <div id="HomeCommercial-who">
-      <h2>{{ _('Who is using EJ') }}</h2>
 
-      <ul id="HomeCommercial-logos">
-        <li class="HomeCommercial-logo"><img src="/static/img/home/cidade.png" alt="" /></li>
-        <li class="HomeCommercial-logo"><img src="/static/img/home/lapis.png" alt="" /></li>
-        <li class="HomeCommercial-logo"><img src="/static/img/home/hacklab.png" alt="" /></li>
-        <li class="HomeCommercial-logo"><img src="/static/img/home/pencil.png" alt="" /></li>
-        <li class="HomeCommercial-logo"><img src="/static/img/home/ti.png" alt="" /></li>
-        <li class="HomeCommercial-logo"><img src="/static/img/home/fpa.png" alt="" /></li>
-        <li class="HomeCommercial-logo"><img src="/static/img/home/pcdob.png" alt="" /></li>
-      </ul>
+    <div class="pad-3" style="background: #eee;">
+        <h2 class="container">{{ _('EJ Community') }}</h2>
+        <ul class="container list-reset row wrap items-center flex-center margin-y3 margin-xauto pad-x0">
+            {% for file, name in people.items() %}
+                <li class="text-center text-7 margin-2 size-x4p">
+                    <img class="rounded-full size-4p block" src="{{ static("img/home/team/" + file) }}"
+                         alt="{{ name }}">
+                    {{ name }}</li>
+            {% endfor %}
+        </ul>
     </div>
-  </div>
-</div>
+
+    <div class="landing-page__partners container">
+        <h2 class="text-accent">{{ _('Who is using EJ?') }}</h2>
+        <ul class="container list-reset row wrap items-center flex-center margin-y3 pad-x0">
+            {% for partner in partners %}
+                <li class="margin-2 size-5p">
+                    <a target="_blank" rel="noopener noreferrer" href="{{ partner.url }}">
+                        <img class="width-full" src="{{ static('img/home/' + partner.img) }}" alt="{{ partner.name }}">
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
 {% endblock %}

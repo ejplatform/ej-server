@@ -3,11 +3,11 @@
 
 
 {% block form_data %}
-    <form method="post">
+    <form method="post" class="measure-narrow width-full">
         {{ csrf_input }}
         {{ form }}
         <div class="margin-y3 margin-xauto">
-            <input type="submit" name="submit" value="{{ _('Register') }}" class="width-full">
+            <input type="submit" name="submit" value="{{ _('Register') }}" class="width-full" primary>
         </div>
     </form>
     <a href="{{ url('auth:login') + next }}" class="semi-bold underline">{{ _('Login') }}</a>

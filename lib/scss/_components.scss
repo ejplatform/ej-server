@@ -1,7 +1,10 @@
 // Main elements
 @import 'components/main/navigation';
 @import 'components/main/elements';
-@import 'components/main/mendeleev-shame';
 @import 'components/conversations/card';
 @import 'components/conversations/detail';
 @import 'components/collapsible';
+@import 'components/landing-page';
+
+// FIXME (forever): remove shame ;-)
+@import 'components/main/mendeleev-shame';

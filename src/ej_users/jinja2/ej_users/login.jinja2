@@ -2,17 +2,18 @@
 
 
 {% block form_data %}
-    <form method="post" class="pad-t3">
+    <form method="post" class="pad-t3" class="measure-narrow width-full">
         {{ csrf_input }}
         {{ form }}
         <div class="margin-t3 margin-xauto">
-            <input type="submit" name="submit" value="{{ _('Login') }}" class="width-full">
+            <input type="submit" name="submit" value="{{ _('Login') }}" class="width-full" primary>
         </div>
     </form>
 {% endblock %}
 
+
 {% block form_footer %}
-<hr class="width-2/3 margin-y2">
-<div class="bold margin-y2">{{ _(settings.EJ_REGISTER_TEXT) }}</div>
-<p><a class="button" href="{{ url('auth:register') + next }}" secondary>{{ _('Register now!') }}</a></p>
+    <hr class="width-2/3 margin-y2">
+    <div class="bold margin-y2">{{ _(settings.EJ_REGISTER_TEXT) }}</div>
+    <p><a class="button" href="{{ url('auth:register') + next }}" secondary>{{ _('Register now!') }}</a></p>
 {% endblock %}
