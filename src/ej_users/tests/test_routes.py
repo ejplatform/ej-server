@@ -11,8 +11,8 @@ class TestRoutes(UserRecipes, UrlTester):
         '/recover-password/',
     ]
     user_urls = [
-        # '/logout/', -- returns error 500, so we use specific tests
-        '/profile/remove/',
+        # '/account/logout/', -- returns error 500, so we use specific tests
+        '/profile/account/remove/',
     ]
 
     #
@@ -36,15 +36,15 @@ class TestRoutes(UserRecipes, UrlTester):
     #
     def test_logout(self, user_client):
         assert '_auth_user_id' in user_client.session
-        user_client.post('/logout/')
+        user_client.post('/account/logout/')
         assert '_auth_user_id' not in user_client.session
 
     def test_logout_fails_with_anonymous_user(self, client):
-        response = client.post('/logout/')
+        response = client.post('/account/logout/')
         assert response.status_code == 500
 
     def test_logout_fails_with_get(self, client):
-        response = client.get('/logout/')
+        response = client.get('/account/logout/')
         assert response.status_code == 500
 
     #

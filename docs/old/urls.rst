@@ -12,19 +12,28 @@ Public views controlling authentication and creation of new users.
 Both login and register views accept a ?next=<url> tag that controls the
 redirect page.
 
+**Actions that do not require authentication**
 login/ (auth:login):
     Login page.
-logout/ (auth:logout):
-    End user session.
 register/ (auth:register):
     Register a new user.
-profile/recover-password/ (auth:recover-password):
+recover-password/ (auth:recover-password):
     Recover user password.
-profile/reset-password/ (auth:reset-password):
-    Allow user to change its password.
-profile/remove/ (auth:remove-account):
+recover-password/<token> (auth:reset-password-token):
+    URL sent by e-mail after user request a password reset.
+
+**Actions that require authentication**
+account/ (auth:account):
+    Manage basic account actions such as password reset, e-mail reset, etc.
+account/logout/ (auth:logout):
+    End user session.
+account/remove/ (auth:remove-account):
     Remove user account. This is an non-reversible operation that the user
     must confirm in order to actually remove the account.
+account/change-email/ (auth:manage-email):
+    Allow user to change its e-mail.
+account/change-password/ (auth:change-password):
+    Allow user to change its password.
 
 All views are included in the ej_accounts app.
 

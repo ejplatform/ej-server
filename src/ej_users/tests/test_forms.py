@@ -1,5 +1,5 @@
 from boogie.testing.mock import assume_unique
-from ej_users.forms import RegistrationForm, LoginForm, ResetPasswordForm
+from ej_users.forms import RegistrationForm, LoginForm, NewPasswordForm
 
 
 class TestRegistrationForm:
@@ -62,14 +62,14 @@ class TestLoginForm:
 
 class TestResetPasswordForm:
     def test_create_new_password(self):
-        form = ResetPasswordForm({
+        form = NewPasswordForm({
             'new_password': '123',
             'new_password_confirm': '123',
         })
         assert form.is_valid()
 
     def test_not_matching_passwords(self):
-        form = ResetPasswordForm({
+        form = NewPasswordForm({
             'new_password': "pass123",
             'new_password_confirm': 'wrong123',
         })

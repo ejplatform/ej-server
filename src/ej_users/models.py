@@ -97,3 +97,37 @@ def clean_expired_tokens():
     expired = PasswordResetToken.objects.filter(created__lte=threshold)
     used = PasswordResetToken.objects.filter(is_used=True)
     (used | expired).delete()
+
+
+def remove_account(user):
+    """
+    Remove user's account:
+
+    * Mark the account as inactive.
+    * Remove all information from user profile.
+    * Assign a random e-mail.
+    * Set user name to Anonymous.
+
+    # TODO:
+    * Remove all boards?
+    * Remove all conversations created by the user?
+    """
+    from ej_profiles.models import Profile
+
+    # Handle profile
+    profile = Profile(user=user, id=user.profile.id)
+    profile.save()
+
+    # Handle user object
+    user.is_active = False
+    user.is_superuser = False
+    user.is_staff = False
+    user.name = _('Anonymous')
+    user.save()
+
+    # Remove e-mail overriding django validator
+    new_email = f'anonymous-{user.id}@deleted-account'
+    User.objects.filter(id=user.id).update(email=new_email)
+    user = User.objects.get(id=user.id)
+    print(user, user.email)
+    assert user.email == new_email

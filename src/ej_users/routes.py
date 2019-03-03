@@ -9,15 +9,15 @@ from django.http import Http404, JsonResponse
 from django.http import HttpResponseServerError
 from django.shortcuts import redirect
 from django.template.loader import get_template
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 from rest_framework import status
 from rest_framework.authtoken.models import Token
-
+from allauth.account import views as allauth
 from boogie.router import Router
 from . import forms
 from . import password_reset_token
-from .models import PasswordResetToken
+from . import models
 from .socialbuttons import social_buttons
 
 User = get_user_model()
@@ -26,7 +26,7 @@ app_name = 'ej_users'
 urlpatterns = Router(
     template='ej_users/{name}.jinja2',
     models={
-        'token': PasswordResetToken,
+        'token': models.PasswordResetToken,
     },
     lookup_field={'token': 'url'}
 
@@ -34,40 +34,9 @@ urlpatterns = Router(
 log = logging.getLogger('ej')
 
 
-@urlpatterns.route('register/')
-def register(request):
-    form = forms.RegistrationForm(request=request)
-    next_url = request.GET.get('next', '/')
-
-    if form.is_valid_post():
-        data = form.cleaned_data
-        name, email, password = data['name'], data['email'], data['password']
-
-        try:
-            user = User.objects.create_user(email, password, name=name)
-            log.info(f'user {user} ({email}) successfully created')
-        except IntegrityError as ex:
-            form.add_error(None, str(ex))
-            log.info(f'invalid login attempt: {email}')
-        else:
-            user = auth.authenticate(request,
-                                     email=user.email,
-                                     password=password)
-            auth.login(request, user)
-            response = redirect(next_url)
-            response.set_cookie('show_welcome_window', 'true')
-
-            return response
-
-    return {
-        'user': request.user,
-        'form': form,
-        'next': next_url,
-        'social_js': social_js_template.render(request=request),
-        'social_buttons': social_buttons(request),
-    }
-
-
+#
+# Non-authenticated users
+#
 @urlpatterns.route('login/')
 def login(request, redirect_to='/'):
     form = forms.LoginForm(request=request)
@@ -104,19 +73,73 @@ def login(request, redirect_to='/'):
     }
 
 
-@urlpatterns.route('logout/')
-def logout(request):
-    if request.method == 'POST' and request.user.is_authenticated:
-        auth.logout(request)
-        return redirect(settings.EJ_ANONYMOUS_HOME_PATH)
-    return HttpResponseServerError()
+@urlpatterns.route('register/')
+def register(request):
+    form = forms.RegistrationForm(request=request)
+    next_url = request.GET.get('next', '/')
+
+    if form.is_valid_post():
+        data = form.cleaned_data
+        name, email, password = data['name'], data['email'], data['password']
+
+        try:
+            user = User.objects.create_user(email, password, name=name)
+            log.info(f'user {user} ({email}) successfully created')
+        except IntegrityError as ex:
+            form.add_error(None, str(ex))
+            log.info(f'invalid login attempt: {email}')
+        else:
+            user = auth.authenticate(request,
+                                     email=user.email,
+                                     password=password)
+            auth.login(request, user)
+            response = redirect(next_url)
+            response.set_cookie('show_welcome_window', 'true')
+
+            return response
+
+    return {
+        'user': request.user,
+        'form': form,
+        'next': next_url,
+        'social_js': social_js_template.render(request=request),
+        'social_buttons': social_buttons(request),
+    }
 
 
-@urlpatterns.route('reset-password/<model:token>/')
-def reset_password(request, token):
+@urlpatterns.route('recover-password/')
+def recover_password(request):
+    next_url = request.GET.get('next', '/login/')
+    form = forms.EmailForm(request=request)
+    user = None
+    success = False
+
+    if form.is_valid_post():
+        success = True
+        email = form.cleaned_data['email']
+        try:
+            user = User.objects.get_by_email(email)
+        except User.DoesNotExist:
+            pass
+        else:
+            token = password_reset_token(user)
+            from_email = settings.DEFAULT_FROM_EMAIL
+            path = reverse('auth:reset-password-token', kwargs={'token': token})
+            template = get_template('ej_users/recover-password-message.jinja2')
+            email_body = template.render({'url': raw_url(request, path)}, request=request)
+            send_mail(subject=_("Please reset your password"),
+                      message=email_body,
+                      from_email=from_email,
+                      recipient_list=[email])
+
+    return {'user': user, 'form': form, 'success': success, 'next': next_url}
+
+
+@urlpatterns.route('recover-password/<model:token>/')
+def recover_password_token(request, token):
     next_url = request.GET.get('next', '/login/')
     user = token.user
-    form = forms.ResetPasswordForm(request=request)
+    form = forms.NewPasswordForm(request=request)
 
     if form.is_valid_post() and not (token.is_expired or token.is_used):
         new_password = form.cleaned_data['new_password']
@@ -133,36 +156,11 @@ def reset_password(request, token):
     }
 
 
-@urlpatterns.route('recover-password/')
-def recover_password(request):
-    next_url = request.GET.get('next', '/login/')
-    form = forms.RecoverPasswordForm(request=request)
-    user = None
-    success = False
-
-    if form.is_valid_post():
-        success = True
-        email = form.cleaned_data['email']
-        try:
-            user = User.objects.get_by_email(email)
-        except User.DoesNotExist:
-            pass
-        else:
-            token = password_reset_token(user)
-            from_email = settings.DEFAULT_FROM_EMAIL
-            path = reverse('auth:reset-password', kwargs={'token': token})
-            template = get_template('ej_users/recover-password-message.jinja2')
-            email_body = template.render({'url': raw_url(request, path)}, request=request)
-            send_mail(subject=_("Please reset your password"),
-                      message=email_body,
-                      from_email=from_email,
-                      recipient_list=[email])
-
-    return {'user': user, 'form': form, 'success': success, 'next': next_url}
-
-
-@urlpatterns.route('profile/remove/', login=True)
-def remove_account(request):
+#
+# Account management
+#
+@urlpatterns.route('account/', login=True)
+def account(request):
     if request.method == 'POST':
         user = request.user
         if request.POST.get('remove_account', False) == 'true':
@@ -175,6 +173,51 @@ def remove_account(request):
         'user': request.user,
         'profile': request.user.profile,
     }
+
+
+@urlpatterns.route('account/logout/', login=True)
+def logout(request):
+    if request.method == 'POST':
+        auth.logout(request)
+        return {'has_logout': True}
+    return {'has_logout': False}
+
+
+@urlpatterns.route('account/remove/', login=True)
+def remove_account(request):
+    form = forms.RemoveAccountForm(request=request)
+    farewell_message = None
+    if form.is_valid_post():
+        user = request.user
+        if form.cleaned_data['confirm'] is False:
+            form.add_error('confirm', _('You must confirm that you want to remove your account.'))
+        elif form.cleaned_data['email'] != user.email:
+            form.add_error('email', _('Wrong e-mail address'))
+        elif user.is_superuser:
+            form.add_error(None, _('Cannot remove superuser accounts'))
+        else:
+            models.remove_account(user)
+            farewell_message = _('We are sorry to see you go :(<br><br>Good luck in your journey.')
+    return {'form': form, 'farewell_message': farewell_message}
+
+
+change_email = urlpatterns.register(
+    allauth.EmailView.as_view(
+        success_url=reverse_lazy('auth:manage-email'),
+    ),
+    path='account/manage-email/',
+    name='manage-email',
+    login=True,
+)
+
+change_password = urlpatterns.register(
+    allauth.PasswordChangeView.as_view(
+        success_url=reverse_lazy('auth:change-password'),
+    ),
+    path='account/change-password/',
+    name='change-password',
+    login=True,
+)
 
 
 #

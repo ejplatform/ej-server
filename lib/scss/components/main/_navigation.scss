@@ -101,7 +101,7 @@ $_md-header-height: size(2.5);
             span {
                 height: $_md-header-height;
                 border-bottom: 0 solid transparent;
-                }
+            }
             span:hover {
                 border-bottom: 8px solid #{color('black')};
             }
@@ -194,6 +194,19 @@ $_md-header-height: size(2.5);
 
     .page-menu + * {
         flex: 5;
+    }
+}
+
+@include breakpoint('lg') {
+    #page-wrapper::after {
+        background-color: rgba(0, 0, 0, 0.025);
+        box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.12);
+        content: ' ';
+        flex: 1;
+        min-height: calc(100vh - 3rem);
+        min-width: size(7);
+        max-width: size(10);
+        order: 2;
     }
 }
 

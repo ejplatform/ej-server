@@ -105,6 +105,10 @@ class Conf(ThemesConf,
         else:
             return 'django.core.mail.backends.console.EmailBackend'
 
+    #
+    # Templates
+    #
+    ACCOUNT_TEMPLATE_EXTENSION = 'jinja2'
 
 Conf.save_settings(globals())
 

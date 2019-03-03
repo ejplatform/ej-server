@@ -36,7 +36,8 @@ def link_attrs(href='#', target='body', **kwargs):
 
 def link_kwargs(href='#', target='body', action='target', instant=True,
                 button=False, transition='cross-fade',
-                preload=False, scroll=False, prefetch=False, primary=False, args=None,
+                preload=False, scroll=False, prefetch=False, primary=False,
+                secondary=False, args=None,
                 query=None, url_args=None, class_=(),
                 **kwargs):
     if isinstance(href, Url):
@@ -57,7 +58,6 @@ def link_kwargs(href='#', target='body', action='target', instant=True,
 
     kwargs = {
         'href': href,
-        'primary': primary,
         'up-instant': instant,
         'up-restore-scroll': scroll,
         'up-preload': preload,
@@ -72,13 +72,17 @@ def link_kwargs(href='#', target='body', action='target', instant=True,
         for arg in args.split():
             kwargs[arg] = True
 
-    # Add
+    # Class
     if button and class_:
         if isinstance(class_, str):
             class_ = class_.split()
         class_ = (*class_, 'button')
     elif button:
         class_ = ('button',)
+    if primary:
+        class_ = (*class_, 'is-primary')
+    if secondary:
+        class_ = (*class_, 'is-secondary')
     if class_:
         kwargs['class'] = class_
     return kwargs

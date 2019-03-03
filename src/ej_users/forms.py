@@ -3,12 +3,12 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext as _
 
-from ej.forms import PlaceholderForm
+from ej.forms import EjForm, EjModelForm
 
 User = get_user_model()
 
 
-class RegistrationForm(PlaceholderForm, forms.ModelForm):
+class RegistrationForm(EjModelForm):
     """
     Register new user
     """
@@ -40,9 +40,9 @@ class RegistrationForm(PlaceholderForm, forms.ModelForm):
             field.help_text = None
 
 
-class LoginForm(PlaceholderForm, forms.Form):
+class LoginForm(EjForm):
     """
-    User login
+    User login: email and password fields.
     """
     email_field_class = (
         forms.CharField
@@ -53,15 +53,22 @@ class LoginForm(PlaceholderForm, forms.Form):
     password = forms.CharField(label=_('Password'), widget=forms.PasswordInput)
 
 
-class RecoverPasswordForm(PlaceholderForm, forms.Form):
+class EmailForm(EjForm):
     """
-    Reset User Password
+    Form with a single e-mail field.
     """
 
     email = forms.EmailField(label=_('E-mail'))
 
+class RemoveAccountForm(EmailForm):
+    """
+    E-mail + confirmation checkbox.
+    """
 
-class ResetPasswordForm(PlaceholderForm, forms.Form):
+    confirm = forms.BooleanField(label=_('Yes, I understand the consequences.'))
+
+
+class NewPasswordForm(EjForm):
     """
     Recover User Password
     """

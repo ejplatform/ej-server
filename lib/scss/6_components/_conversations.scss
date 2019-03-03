@@ -196,7 +196,7 @@ $color-background-button-modalities: rgba(255, 255, 255, 0.3);
     }
 
     &-actions {
-        .button[primary] {
+        .button.is-primary {
             padding: $spacing-unit-small + $spacing-unit-tiny;
             background: $color-content;
             font-size: $font-size-small;
