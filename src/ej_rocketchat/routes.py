@@ -52,7 +52,7 @@ def iframe(request):
 
 def ask_admin_password(request):
     password = None
-    form = forms.AskAdminPasswordForm.bind_to_request(request)
+    form = forms.AskAdminPasswordForm(request=request)
     if form.is_valid_post():
         password = form.cleaned_data['password']
     return password, form
@@ -63,7 +63,7 @@ def register(request):
     if RCAccount.objects.filter(user=request.user).exists():
         return redirect('rocket:iframe')
 
-    form = forms.CreateUsernameForm.bind_to_request(request, user=request.user)
+    form = forms.CreateUsernameForm(request=request, user=request.user)
     if form.is_valid_post():
         return redirect('rocket:iframe')
     return {'form': form}
@@ -78,7 +78,7 @@ def config(request):
     form_kwargs = {}
     if config:
         form_kwargs['data'] = {'rocketchat_url': config.url}
-    form = forms.RocketIntegrationForm.bind_to_request(request, **form_kwargs)
+    form = forms.RocketIntegrationForm(request=request, **form_kwargs)
 
     if form.is_valid_post():
         password = form.cleaned_data['password']

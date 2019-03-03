@@ -1,7 +1,9 @@
-import numpy as np
+from sidekick import import_later
 from sklearn.preprocessing import Imputer
 
 from ej_clusters.math.kmeans import euclidean_distance as distance
+
+np = import_later('numpy')
 
 
 def opinion_bridge_index(df, labels):

@@ -1,10 +1,7 @@
-from boogie.router import Router
-from django.http import Http404
 from django.shortcuts import redirect
-from django.urls import reverse
-from django.utils.translation import ugettext_lazy as _
 
-from ej_conversations.models import Conversation, FavoriteConversation, Comment
+from boogie.router import Router
+from ej_conversations.models import Conversation
 from .forms import ProfileForm, UsernameForm
 
 app_name = 'ej_profiles'

@@ -1,5 +1,7 @@
-import numpy as np
-import pandas as pd
+from sidekick import import_later
+
+np = import_later('numpy')
+pd = import_later('pandas')
 
 
 def test_hist():

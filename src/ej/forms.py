@@ -1,39 +1,57 @@
 from operator import attrgetter
 
-from django.forms import Form
+from django.forms import Form, ModelForm
+
+NOT_GIVEN = object()
 
 
-class RequestForm(Form):
+# TODO: move this functionality to Django-Boogie
+class EjForm(Form):
     """
     Form with additional functionality.
     """
 
-    http_method = None
-
-    @classmethod
-    def bind_to_request(cls, request, *args, **kwargs):
-        """
-        Creates a form instance from the given request. Any additional
-        positional and keyword argument is passed to the function as-is.
-        """
-        if request.method == 'POST':
-            form = cls(request.POST, *args, **kwargs)
+    def __init__(self, *args, request=None, **kwargs):
+        if request is not None and request.method in self._meta_property('http_methods', ('POST',)):
+            method = request.method
+            data = getattr(request, method)
+            super().__init__(data, *args, **kwargs)
+            self.http_method = method
         else:
-            form = cls(*args, **kwargs)
-        form.http_method = request.method
-        return form
+            super().__init__(*args, **kwargs)
+            self.http_method = getattr(request, 'method', None)
 
-    def is_valid_post(self):
+    def _meta_property(self, prop, default=NOT_GIVEN):
+        try:
+            return getattr(getattr(self, 'Meta', None), prop)
+        except AttributeError:
+            if default is NOT_GIVEN:
+                raise
+            return default
+
+    def is_valid_http(self, method):
         """
-        Checks if data was submitted via POST and is valid.
+        Return true if form is valid and was submitted with the given HTTP
+        method.
+
+        Args:
+            method (str or sequence): A string describing the method or a list
+            of string
         """
         if self.http_method is None:
             msg = 'must be initialized with a request to use this function'
             raise RuntimeError(msg)
-        if self.http_method == 'POST':
+        if (isinstance(method, str) and self.http_method == method.upper()
+            or self.http_method in map(str.upper, method)):
             return self.is_valid()
         else:
             return False
+
+    is_valid_post = (lambda self: self.is_valid_http('POST'))
+    is_valid_get = (lambda self: self.is_valid_http('GET'))
+    is_valid_put = (lambda self: self.is_valid_http('PUT'))
+    is_valid_patch = (lambda self: self.is_valid_http('PATCH'))
+    is_valid_delete = (lambda self: self.is_valid_http('DELETE'))
 
     def set_widget_attributes(self, attribute, value=None, from_attr=None):
         """
@@ -50,7 +68,13 @@ class RequestForm(Form):
                 elem.field.widget.attrs.setdefault(attribute, value)
 
 
-class PlaceholderForm(RequestForm):
+class EjModelForm(EjForm, ModelForm):
+    """
+    A ModelForm version of the extended form.
+    """
+
+
+class PlaceholderForm(EjForm):
     """
     Add placeholders from field labels.
     """

@@ -1,8 +1,10 @@
-import numpy as np
 import pytest
 from numpy.testing import assert_almost_equal, assert_equal
+from sidekick import import_later
 
 from ej_clusters.math import kmeans
+
+np = import_later('numpy')
 
 # A very easy dataset with k=2
 STEREOTYPES = np.array([[1, 1, 1], [-1, -1, -1]], dtype=float)

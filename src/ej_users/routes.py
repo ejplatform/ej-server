@@ -36,7 +36,7 @@ log = logging.getLogger('ej')
 
 @urlpatterns.route('register/')
 def register(request):
-    form = forms.RegistrationForm.bind_to_request(request)
+    form = forms.RegistrationForm(request=request)
     next_url = request.GET.get('next', '/')
 
     if form.is_valid_post():
@@ -47,15 +47,13 @@ def register(request):
             user = User.objects.create_user(email, password, name=name)
             log.info(f'user {user} ({email}) successfully created')
         except IntegrityError as ex:
-            log.info(f'invalid login attempt: {email}')
             form.add_error(None, str(ex))
+            log.info(f'invalid login attempt: {email}')
         else:
             user = auth.authenticate(request,
                                      email=user.email,
                                      password=password)
             auth.login(request, user)
-            log.info(f'user {user} ({email}) logged in')
-
             response = redirect(next_url)
             response.set_cookie('show_welcome_window', 'true')
 
@@ -65,14 +63,14 @@ def register(request):
         'user': request.user,
         'form': form,
         'next': next_url,
-        'social_js': login_extra_template.render(request=request),
+        'social_js': social_js_template.render(request=request),
         'social_buttons': social_buttons(request),
     }
 
 
 @urlpatterns.route('login/')
 def login(request, redirect_to='/'):
-    form = forms.LoginForm.bind_to_request(request)
+    form = forms.LoginForm(request=request)
     error_msg = _('Invalid email or password')
     next_url = request.GET.get('next', redirect_to)
     fast = request.GET.get('fast', 'false') == 'true' or 'fast' in request.GET
@@ -84,13 +82,13 @@ def login(request, redirect_to='/'):
         try:
             user = User.objects.get_by_email(email)
             user = auth.authenticate(request, email=user.email, password=password)
-            log.info(f'user {user} ({email}) successfully authenticated')
             if user is None:
                 raise User.DoesNotExist
             auth.login(request, user, backend=user.backend)
+            log.info(f'user {user} ({email}) successfully authenticated')
         except User.DoesNotExist:
-            log.info(f'invalid login attempt: {email}')
             form.add_error(None, error_msg)
+            log.info(f'invalid login attempt: {email}')
         else:
             return redirect(next_url)
 
@@ -101,14 +99,14 @@ def login(request, redirect_to='/'):
         'user': request.user,
         'form': form,
         'next': next_url,
-        'social_js': login_extra_template.render(request=request),
+        'social_js': social_js_template.render(request=request),
         'social_buttons': social_buttons(request),
     }
 
 
 @urlpatterns.route('logout/')
 def logout(request):
-    if request.method == 'POST' and request.user.id:
+    if request.method == 'POST' and request.user.is_authenticated:
         auth.logout(request)
         return redirect(settings.EJ_ANONYMOUS_HOME_PATH)
     return HttpResponseServerError()
@@ -118,9 +116,9 @@ def logout(request):
 def reset_password(request, token):
     next_url = request.GET.get('next', '/login/')
     user = token.user
-    form = forms.ResetPasswordForm.bind_to_request(request)
+    form = forms.ResetPasswordForm(request=request)
 
-    if not (token.is_expired or token.is_used) and form.is_valid_post():
+    if form.is_valid_post() and not (token.is_expired or token.is_used):
         new_password = form.cleaned_data['new_password']
         user.set_password(new_password)
         user.save()
@@ -138,7 +136,7 @@ def reset_password(request, token):
 @urlpatterns.route('recover-password/')
 def recover_password(request):
     next_url = request.GET.get('next', '/login/')
-    form = forms.RecoverPasswordForm.bind_to_request(request)
+    form = forms.RecoverPasswordForm(request=request)
     user = None
     success = False
 
@@ -193,7 +191,7 @@ def api_key(request):
 #
 # Auxiliary functions and templates
 #
-login_extra_template = get_template('socialaccount/snippets/login_extra.html')
+social_js_template = get_template('socialaccount/snippets/login_extra.html')
 
 
 def raw_url(request, path):

@@ -24,12 +24,13 @@ urlpatterns = Router(
     lookup_field={'conversation': 'slug'},
     lookup_type={'conversation': 'slug'},
 )
+base_url = 'conversations/<model:conversation>'
 
 
 #
 # Cluster info
 #
-@urlpatterns.route('conversations/<model:conversation>/clusters/',
+@urlpatterns.route(base_url + 'clusters/',
                    template='ej_clusters/list-cluster.jinja2',
                    perms=['ej.can_edit_conversation:conversation'])
 def index(conversation):
@@ -44,7 +45,7 @@ def index(conversation):
     }
 
 
-@urlpatterns.route('conversations/<model:conversation>/clusters/<model:cluster>/',
+@urlpatterns.route(base_url + 'clusters/<model:cluster>/',
                    perms=['ej.can_edit_conversation:conversation'])
 def detail(conversation, cluster):
     return {
@@ -53,7 +54,7 @@ def detail(conversation, cluster):
     }
 
 
-@urlpatterns.route('conversations/<model:conversation>/clusterize/',
+@urlpatterns.route(base_url + 'clusterize/',
                    perms=['ej.can_edit_conversation:conversation'])
 def clusterize(conversation):
     clusterization = conversation.get_clusterization(None)
@@ -69,7 +70,7 @@ def clusterize(conversation):
 #
 # Stereotypes
 #
-@urlpatterns.route('conversations/<model:conversation>/stereotypes/',
+@urlpatterns.route(base_url + 'stereotypes/',
                    perms=['ej.can_manage_stereotypes:conversation'])
 def stereotype_list(conversation):
     if conversation.is_promoted:
@@ -78,19 +79,19 @@ def stereotype_list(conversation):
         raise Http404
 
 
-@urlpatterns.route('conversations/<model:conversation>/stereotypes/add/',
+@urlpatterns.route(base_url + 'stereotypes/add/',
                    perms=['ej.can_manage_stereotypes:conversation'])
 def create_stereotype(request, conversation):
     return create_stereotype_context(request, conversation)
 
 
-@urlpatterns.route('conversations/<model:conversation>/stereotypes/<model:stereotype>/edit/',
+@urlpatterns.route(base_url + 'stereotypes/<model:stereotype>/edit/',
                    perms=['ej.can_manage_stereotypes:stereotype'])
 def edit_stereotype(request, conversation, stereotype):
     return edit_stereotype_context(request, conversation, stereotype)
 
 
-@urlpatterns.route('conversations/<model:conversation>/stereotypes/<model:stereotype>/',
+@urlpatterns.route(base_url + 'stereotypes/<model:stereotype>/',
                    perms=['ej.can_manage_stereotypes:stereotype'])
 def stereotype_vote(request, conversation, stereotype):
     if request.method == 'POST':

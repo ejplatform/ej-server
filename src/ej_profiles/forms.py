@@ -1,6 +1,7 @@
 from django.conf import settings
-from django.forms import ModelForm, DateInput
+from django.forms import DateInput
 
+from ej.forms import EjModelForm
 from ej.utils import widgets as ej_widgets
 from . import models
 
@@ -9,7 +10,7 @@ EDITABLE_FIELDS = ['city', 'state', 'country', 'gender', 'race', 'ethnicity', 'p
 EXCLUDE_EDITABLE_FIELDS = settings.EJ_EXCLUDE_PROFILE_FIELDS
 
 
-class UsernameForm(ModelForm):
+class UsernameForm(EjModelForm):
     class Meta:
         model = models.User
         fields = ['name']
@@ -18,7 +19,7 @@ class UsernameForm(ModelForm):
         }
 
 
-class ProfileForm(ModelForm):
+class ProfileForm(EjModelForm):
     """
     User profile form
     """
@@ -32,7 +33,7 @@ class ProfileForm(ModelForm):
         }
 
 
-class ProfileImageForm(ModelForm):
+class ProfileImageForm(EjModelForm):
     class Meta:
         model = models.Profile
         fields = ['profile_photo']

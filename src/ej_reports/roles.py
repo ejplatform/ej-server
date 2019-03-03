@@ -1,13 +1,14 @@
-import numpy as np
 from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _
 from hyperpython import html
+from sidekick import import_later
 
 from ej.roles import with_template, html_table
 from ej_clusters.models import Cluster
 from ej_conversations import models
 from ej_dataviz import render_dataframe
 
+np = import_later('numpy')
 User = get_user_model()
 DEFAULT_FORMATS = {'csv': 'CSV', 'msgpack': 'MsgPack', 'json': 'JSON'}
 

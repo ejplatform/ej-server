@@ -1,6 +1,7 @@
-import numpy as np
-
 from hyperpython.components import html_table
+from sidekick import import_later
+
+np = import_later('numpy')
 
 
 def render_dataframe(df, index=False, *, datatable=False, class_=(),

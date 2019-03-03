@@ -1,7 +1,9 @@
-import pandas as pd
 import pytest
+from sidekick import import_later
 
 from ej_dataviz.tables import render_dataframe
+
+pd = import_later('pandas')
 
 
 @pytest.fixture

@@ -1,13 +1,12 @@
-from itertools import chain
-
-import pandas as pd
 from django.contrib.auth import get_user_model
 from django.db import transaction
 from django.db.models import Subquery
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
+from itertools import chain
 from model_utils.models import TimeStampedModel
 from sidekick import delegate_to, import_later
+from sidekick import import_later
 
 from boogie import models
 from boogie.models import QuerySet, F, Manager
@@ -17,9 +16,10 @@ from ej_conversations.models import Conversation
 from .mixins import ClusterizationBaseMixin
 from .stereotype_vote import StereotypeVote
 from .. import log
-from ..math import clusterization_pipeline
 
+pd = import_later('pandas')
 np = import_later('numpy')
+clusterization_pipeline = import_later('..math:clusterization_pipeline', package=__package__)
 
 
 # ==============================================================================
@@ -177,7 +177,7 @@ class ClusterQuerySet(ClusterizationBaseMixin, QuerySet):
                                 cluster_col=None,
                                 mean_stereotype=True)
 
-    def find_clusters(self, pipeline_factory=clusterization_pipeline()):
+    def find_clusters(self, pipeline_factory=None):
         """
         Find clusters using the given clusterization pipeline. This method does
         not writes clusters to the database, but rather return the
@@ -200,6 +200,7 @@ class ClusterQuerySet(ClusterizationBaseMixin, QuerySet):
                 A scikit learn Pipeline object that performed the classification
                 task.
         """
+        pipeline_factory = pipeline_factory or clusterization_pipeline()
 
         # Check the number of clusters to initialize the pipeline
         n_clusters = self.count()
@@ -221,7 +222,7 @@ class ClusterQuerySet(ClusterizationBaseMixin, QuerySet):
         series = pd.Series(labels_, name='cluster', index=pd.Index(users_, name='users'))
         return series, pipe
 
-    def clusterize_from_votes(self, pipeline_factory=clusterization_pipeline()):
+    def clusterize_from_votes(self, pipeline_factory=None):
         """
         Similar to .find_clusters(), but writes results to the database in an
         atomic transaction.
@@ -229,6 +230,7 @@ class ClusterQuerySet(ClusterizationBaseMixin, QuerySet):
         Returns:
              The clusterization pipeline object.
         """
+        pipeline_factory = pipeline_factory or clusterization_pipeline()
         series, pipe = self.find_clusters(pipeline_factory)
         self.update_membership(series.to_dict())
         return pipe

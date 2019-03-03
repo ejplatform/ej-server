@@ -7,9 +7,11 @@ external package.
 """
 import random
 
-import numpy as np
+from sidekick import import_later
 from sklearn.cluster import KMeans
 from sklearn.utils.validation import check_is_fitted
+
+np = import_later('numpy')
 
 
 #
