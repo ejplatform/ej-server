@@ -100,6 +100,17 @@ python-versions = "*"
 version = "0.1.0"
 
 [[package]]
+category = "main"
+description = "Screen-scraping library"
+name = "beautifulsoup4"
+optional = false
+python-versions = "*"
+version = "4.7.1"
+
+[package.dependencies]
+soupsieve = ">=1.2"
+
+[[package]]
 category = "dev"
 description = "The uncompromising code formatter."
 name = "black"
@@ -124,6 +135,17 @@ version = "3.1.0"
 [package.dependencies]
 six = ">=1.9.0"
 webencodings = "*"
+
+[[package]]
+category = "main"
+description = "Dummy package for Beautiful Soup"
+name = "bs4"
+optional = false
+python-versions = "*"
+version = "0.0.1"
+
+[package.dependencies]
+beautifulsoup4 = "*"
 
 [[package]]
 category = "main"
@@ -1245,6 +1267,14 @@ python-versions = "*"
 version = "1.2.1"
 
 [[package]]
+category = "main"
+description = "A CSS4 selector implementation for Beautiful Soup."
+name = "soupsieve"
+optional = false
+python-versions = "*"
+version = "1.8"
+
+[[package]]
 category = "dev"
 description = "Python documentation generator"
 name = "sphinx"
@@ -1418,7 +1448,7 @@ python-versions = "*"
 version = "0.5.1"
 
 [metadata]
-content-hash = "8e07a327c58de7cf70d33bb5a0ef99716dc16f2035daad1202607a008693c911"
+content-hash = "94eac7bccbf5e37a34b1c6a08252a3946e8dd316000306a89d04262209ab6535"
 python-versions = "~3.7.1"
 
 [metadata.hashes]
@@ -1433,8 +1463,10 @@ atomicwrites = ["03472c30eb2c5d1ba9227e4c2ca66ab8287fbfbbda3888aa93dc2e28fc6811b
 attrs = ["10cbf6e27dbce8c30807caf056c8eb50917e0eaafe86347671b57254006c3e69", "ca4be454458f9dec299268d472aaa5a11f67a4ff70093396e1ceae9c76cf4bbb"]
 babel = ["6778d85147d5d85345c14a26aada5e478ab04e39b078b0745ee6870c2b5cf669", "8cba50f48c529ca3fa18cf81fa9403be176d374ac4d60738b839122dfaaa3d23"]
 backcall = ["38ecd85be2c1e78f77fd91700c76e14667dc21e2713b63876c0eb901196e01e4", "bbbf4b1e5cd2bdb08f915895b51081c041bac22394fdfcfdfbe9f14b77c08bf2"]
+beautifulsoup4 = ["034740f6cb549b4e932ae1ab975581e6103ac8f942200a0e9759065984391858", "945065979fb8529dd2f37dbb58f00b661bdbcbebf954f93b32fdf5263ef35348", "ba6d5c59906a85ac23dadfe5c88deaf3e179ef565f4898671253e50a78680718"]
 black = ["817243426042db1d36617910df579a54f1afd659adb96fc5032fcf4b36209739", "e030a9a28f542debc08acceb273f228ac422798e5215ba2a791a6ddeaaca22a5"]
 bleach = ["213336e49e102af26d9cde77dd2d0397afabc5a6bf2fed985dc35b5d1e285a16", "3fdf7f77adcf649c9911387df51254b813185e32b2c6619f690b593a617e19fa"]
+bs4 = ["36ecea1fd7cc5c0c6e4a1ff075df26d50da647b75376626cc186e2212886dd3a"]
 certifi = ["47f9c83ef4c0c621eaef743f133f09fa8a74a9b75f037e8624f83bd1b6626cb7", "993f830721089fef441cdfeb4b2c8c9df86f0c63239f06bd025a76a7daddb033"]
 cffi = ["00b97afa72c233495560a0793cdc86c2571721b4271c0667addc83c417f3d90f", "0ba1b0c90f2124459f6966a10c03794082a2f3985cd699d7d63c4a8dae113e11", "0bffb69da295a4fc3349f2ec7cbe16b8ba057b0a593a92cbe8396e535244ee9d", "21469a2b1082088d11ccd79dd84157ba42d940064abbfa59cf5f024c19cf4891", "2e4812f7fa984bf1ab253a40f1f4391b604f7fc424a3e21f7de542a7f8f7aedf", "2eac2cdd07b9049dd4e68449b90d3ef1adc7c759463af5beb53a84f1db62e36c", "2f9089979d7456c74d21303c7851f158833d48fb265876923edcb2d0194104ed", "3dd13feff00bddb0bd2d650cdb7338f815c1789a91a6f68fdc00e5c5ed40329b", "4065c32b52f4b142f417af6f33a5024edc1336aa845b9d5a8d86071f6fcaac5a", "51a4ba1256e9003a3acf508e3b4f4661bebd015b8180cc31849da222426ef585", "59888faac06403767c0cf8cfb3f4a777b2939b1fbd9f729299b5384f097f05ea", "59c87886640574d8b14910840327f5cd15954e26ed0bbd4e7cef95fa5aef218f", "610fc7d6db6c56a244c2701575f6851461753c60f73f2de89c79bbf1cc807f33", "70aeadeecb281ea901bf4230c6222af0248c41044d6f57401a614ea59d96d145", "71e1296d5e66c59cd2c0f2d72dc476d42afe02aeddc833d8e05630a0551dad7a", "8fc7a49b440ea752cfdf1d51a586fd08d395ff7a5d555dc69e84b1939f7ddee3", "9b5c2afd2d6e3771d516045a6cfa11a8da9a60e3d128746a7fe9ab36dfe7221f", "9c759051ebcb244d9d55ee791259ddd158188d15adee3c152502d3b69005e6bd", "b4d1011fec5ec12aa7cc10c05a2f2f12dfa0adfe958e56ae38dc140614035804", "b4f1d6332339ecc61275bebd1f7b674098a66fea11a00c84d1c58851e618dc0d", "c030cda3dc8e62b814831faa4eb93dd9a46498af8cd1d5c178c2de856972fd92", "c2e1f2012e56d61390c0e668c20c4fb0ae667c44d6f6a2eeea5d7148dcd3df9f", "c37c77d6562074452120fc6c02ad86ec928f5710fbc435a181d69334b4de1d84", "c8149780c60f8fd02752d0429246088c6c04e234b895c4a42e1ea9b4de8d27fb", "cbeeef1dc3c4299bd746b774f019de9e4672f7cc666c777cd5b409f0b746dac7", "e113878a446c6228669144ae8a56e268c91b7f1fafae927adc4879d9849e0ea7", "e21162bf941b85c0cda08224dade5def9360f53b09f9f259adb85fc7dd0e7b35", "fb6934ef4744becbda3143d30c6604718871495a5e36c408431bf33d9c146889"]
 chardet = ["84ab92ed1c4d4f16916e05906b6b75a6c0fb5db821cc65e70cbd64a3e2a5eaae", "fc323ffcaeaed0e0a02bf4d117757b98aed530d9ed4531e3e15460124c106691"]
@@ -1542,6 +1574,7 @@ selenium = ["2d7131d7bc5a5b99a2d9b04aaf2612c411b03b8ca1b1ee8d3de5845a9be2cb3c", 
 sidekick = ["e3e29490a4517899c4e3530d61b3997f70ff5e9a28723d76fb4f58e917defc13"]
 six = ["3350809f0555b11f552448330d0b52d5f24c91a322ea4a15ef22629740f3761c", "d16a0141ec1a18405cd4ce8b4613101da75da0e9a7aec5bdd4fa804d0e0eba73"]
 snowballstemmer = ["919f26a68b2c17a7634da993d91339e288964f93c274f1343e3bbbe2096e1128", "9f3bcd3c401c3e862ec0ebe6d2c069ebc012ce142cce209c098ccb5b09136e89"]
+soupsieve = ["afa56bf14907bb09403e5d15fbed6275caa4174d36b975226e3b67a3bb6e2c4b", "eaed742b48b1f3e2d45ba6f79401b2ed5dc33b2123dfe216adb90d4bfa0ade26"]
 sphinx = ["b53904fa7cb4b06a39409a492b949193a1b68cc7241a1a8ce9974f86f0d24287", "c1c00fc4f6e8b101a0d037065043460dffc2d507257f2f11acaed71fd2b0c83c"]
 sphinxcontrib-websupport = ["68ca7ff70785cbe1e7bccc71a48b5b6d965d79ca50629606c7861a21b206d9dd", "9de47f375baf1ea07cdb3436ff39d7a9c76042c10a769c52353ec46e4e8fc3b9"]
 splinter = ["2d9f370536e6c1607824f5538e0bff9808bc02f086b07622b3790424dd3daff4", "5d9913bddb6030979c18d6801578813b02bbf8a03b43fb057f093228ed876d62"]

@@ -81,7 +81,7 @@ class Migration(migrations.Migration):
             name='FavoriteConversation',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('conversation', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='followers', to='ej_conversations.Conversation')),
+                ('conversation', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='favorites', to='ej_conversations.Conversation')),
                 ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='favorite_conversations', to=settings.AUTH_USER_MODEL)),
             ],
         ),

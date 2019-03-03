@@ -165,6 +165,9 @@ def extra_content(title, text, icon=None, **kwargs):
 def progress_bar(*args):
     """
     Display a progress bar.
+
+    progress_bar(pc)       --> tell a percentage
+    progress_bar(n, total) --> pass the number of items and total
     """
 
     # Compute fractions
@@ -180,8 +183,8 @@ def progress_bar(*args):
     children = [
         div(strong(f'{pc}%')),
         div(class_='progress-bar__progress', children=[
-            div(' ', class_='color-brand-lighter', style=f'flex-grow: {pc + 10};'),
-            div(' ', style=f'flex-grow: {110 - pc};'),
+            div(' ', class_='color-brand-lighter', style=f'flex-grow: {pc + 3};'),
+            div(' ', style=f'flex-grow: {100 - pc};'),
         ]),
     ]
     if total is not None:

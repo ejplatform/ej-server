@@ -50,11 +50,9 @@ profile/ (profile:index):
     Show user profile.
 profile/edit/ (profile:edit):
     Edit profile.
-profile/comments/ (profile:comments):
-    Show statistics about all comments created by a user.
-profile/comments/<which>/ (profile:comments-filter):
-    Show statistics about all created by a user in the given category. <which>
-    can be "approved", "rejected" or "pending".
+profile/contributions/ (profile:comments):
+    Show statistics and information about all contributions of the user to
+    conversations in the platform.
 
 Those URLs require login and are implemented in the ej_profiles app.
 

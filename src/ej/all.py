@@ -90,11 +90,13 @@ def fix_links(data, prefix='http://localhost:8000'):
 # Math module
 #
 from ej_clusters import math as _cmath  # noqa: E402
+from ej_clusters.math import factories as _factories
 
 math = namespace(
     clusters=_cmath,
-    kmeans=_cmath.k_means,
+    kmeans=_cmath.kmeans,
     pipeline=_cmath.pipeline,
+    factories=_factories,
 )
 
 

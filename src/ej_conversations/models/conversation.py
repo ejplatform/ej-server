@@ -6,7 +6,8 @@ from autoslug import AutoSlugField
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError, ObjectDoesNotExist
-from django.db.models import Count, Q
+from django.db.models import Count, Q, Avg
+from django.db.models.functions import FirstValue
 from django.utils.translation import ugettext_lazy as _
 from model_utils.models import TimeStampedModel
 from taggit.managers import TaggableManager
@@ -14,7 +15,7 @@ from taggit.models import TaggedItemBase
 
 from boogie import models
 from boogie import rules
-from boogie.models import QuerySet
+from boogie.models import QuerySet, Manager, F, Window
 from boogie.rest import rest_api
 from ej.utils.url import SafeUrl
 from .comment import Comment
@@ -51,6 +52,43 @@ class ConversationQuerySet(ConversationMixin, QuerySet):
         Show only promoted conversations.
         """
         return self.filter(is_promoted=True)
+
+    def annotate_with(self, *values, user=None, **kwargs):
+        """
+        Annotate each conversation with the progress made by the given user.
+
+        Args:
+            tag_first:
+                Annotate with the first tag in the list of tags.
+            approved_comments:
+                Annotate with the number of approved comments.
+            user_votes:
+                Annotate with the number of votes cast by user.
+        """
+        for arg in values:
+            kwargs.setdefault(arg, True)
+
+        annotations = {}
+        if kwargs.pop('tag_first', False):
+            annotations['annotation_tag_first'] = \
+                Window(FirstValue('tags__name'))
+        if kwargs.pop('approved_comments', False):
+            annotations['annotation_approved_comments'] = \
+                Count('comments', filter=Q(comments__status=Comment.STATUS.approved), distinct=True)
+        if kwargs.pop('user_votes', False):
+            annotations['annotation_user_votes'] = \
+                Count('comments__votes', filter=Q(comments__votes__author=user))
+
+        if kwargs:
+            raise TypeError(f'bad attribute: {kwargs.popitem()[0]}')
+
+        if not annotations:
+            return self
+        return self.annotate(**annotations)
+
+
+class ConversationManager(Manager.from_queryset(ConversationQuerySet)):
+    pass
 
 
 # ==============================================================================
@@ -311,27 +349,27 @@ class Conversation(TimeStampedModel):
         """
         Checks if conversation is favorite for the given user.
         """
-        return bool(self.followers.filter(user=user).exists())
+        return bool(self.favorites.filter(user=user).exists())
 
     def make_favorite(self, user):
         """
         Make conversation favorite for user.
         """
-        self.followers.update_or_create(user=user)
+        self.favorites.update_or_create(user=user)
 
     def remove_favorite(self, user):
         """
         Remove favorite status for conversation
         """
         if self.is_favorite(user):
-            self.followers.filter(user=user).delete()
+            self.favorites.filter(user=user).delete()
 
     def toggle_favorite(self, user):
         """
         Toggles favorite status of conversation.
         """
         try:
-            self.followers.get(user=user).delete()
+            self.favorites.get(user=user).delete()
         except ObjectDoesNotExist:
             self.make_favorite(user)
 
@@ -360,6 +398,7 @@ class Conversation(TimeStampedModel):
         from ej_boards.models import Board
         return Board.get_default_css_palette()
 
+
 # ==============================================================================
 # AUXILIARY MODELS
 
@@ -381,7 +420,7 @@ class FavoriteConversation(models.Model):
     conversation = models.ForeignKey(
         'Conversation',
         on_delete=models.CASCADE,
-        related_name='followers',
+        related_name='favorites',
     )
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -399,3 +438,11 @@ def make_clean(cls, commit=True, **kwargs):
     if commit:
         obj.save()
     return obj
+
+
+def conversations_with_votes(user):
+    return Conversation.objects.filter(comments__votes__author=user).distinct()
+
+
+def patch_user_model(model):
+    model.conversations_with_votes = property(conversations_with_votes)

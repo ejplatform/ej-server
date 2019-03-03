@@ -150,7 +150,7 @@ def get_conversation_detail_context(request, conversation):
     in /<board>/conversations/<slug>/
     """
     user = request.user
-    is_favorite = user.is_authenticated and conversation.followers.filter(user=user).exists()
+    is_favorite = user.is_authenticated and conversation.favorites.filter(user=user).exists()
     comment_form = CommentForm(None, conversation=conversation)
     voted = False
     if user.is_authenticated:

@@ -9,6 +9,14 @@ from ej_boards.models import BoardSubscription
 from . import models
 
 
+def get_annotation(obj, annotation, fallback):
+    attr = f'annotation_{annotation}'
+    if hasattr(obj, attr):
+        return getattr(obj, attr)
+    else:
+        return fallback()
+
+
 # ------------------------------------------------------------------------------
 # Conversation
 # ------------------------------------------------------------------------------
@@ -36,7 +44,7 @@ def conversation_card(conversation, request=None, url=None, **kwargs):
         'tag': tag,
         'n_comments': conversation.approved_comments.count(),
         'n_votes': conversation.votes.count(),
-        'n_followers': conversation.followers.count(),
+        'n_favorites': conversation.favorites.count(),
         'user_can_moderate': can_moderate,
         'moderate_url': moderate_url,
         'conversation_modifiers': '',
@@ -137,13 +145,14 @@ def user_progress(conversation, request=None, user=None):
     Render comment form for one conversation.
     """
     user = user or request.user
-    try:
-        # Try from annotated value
-        n = conversation.number_of_participations
-        total = conversation.number_of_comments
-    except AttributeError:
-        n = user.votes.filter(comment__conversation=conversation).count()
-        total = conversation.comments.approved().count()
+    n = get_annotation(
+        conversation, 'user_votes',
+        lambda: user.votes.filter(comment__conversation=conversation).count()
+    )
+    total = get_annotation(
+        conversation, 'approved_comments',
+        lambda: conversation.comments.approved().count()
+    )
     n = min(n, total)
     return progress_bar(n, total)
 
@@ -153,9 +162,15 @@ def conversation_summary(conversation, request=None):
     """
     Show only essential information about a conversation.
     """
+
+    # Optimized tag
+    tag = get_annotation(
+        conversation, 'tag_first',
+        lambda: conversation.tags.first())
+
     return {
         'text': conversation.text,
-        'tag': conversation.tags.first() or _('Conversation'),
+        'tag': tag or _('Conversation'),
         'created': conversation.created,
     }
 

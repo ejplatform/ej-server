@@ -49,6 +49,7 @@ bleach = "^3.1"
 Faker = "^1.0"
 redis = "^3.1"
 invoke = "^1.2"
+bs4 = "^0.0.1"
 
 
 [tool.poetry.dev-dependencies]

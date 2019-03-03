@@ -138,24 +138,36 @@ class Comment(StatusModel, TimeStampedModel):
 
     @lazy
     def missing_votes(self):
-        return Vote.objects.distinct().count() - self.total_votes
+        return self.conversation.users.count() - self.total_votes
 
     # Statistics
     @property
     def agree_count(self):
-        return votes_counter(self, choice=Choice.AGREE)
+        try:
+            return self.annotation_agree_count
+        except AttributeError:
+            return votes_counter(self, choice=Choice.AGREE)
 
     @property
     def skip_count(self):
-        return votes_counter(self, choice=Choice.SKIP)
+        try:
+            return self.annotation_skip_count
+        except AttributeError:
+            return votes_counter(self, choice=Choice.SKIP)
 
     @property
     def disagree_count(self):
-        return votes_counter(self, choice=Choice.DISAGREE)
+        try:
+            return self.annotation_disagree_count
+        except AttributeError:
+            return votes_counter(self, choice=Choice.DISAGREE)
 
     @property
     def total_votes(self):
-        return self.agree_count + self.disagree_count + self.skip_count
+        try:
+            return self.annotation_total_votes
+        except AttributeError:
+            return self.agree_count + self.disagree_count + self.skip_count
 
     objects = CommentQuerySet.as_manager()
 
