@@ -11,10 +11,11 @@ class EjForm(Form):
     Form with additional functionality.
     """
 
-    def __init__(self, *args, request=None, **kwargs):
+    def __init__(self, data=None, files=None, *args, request=None, **kwargs):
         if request is not None and request.method in self._meta_property('http_methods', ('POST',)):
             method = request.method
             data = getattr(request, method)
+            kwargs.setdefault('files', request.FILES)
             super().__init__(data, *args, **kwargs)
             self.http_method = method
         else:

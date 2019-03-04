@@ -27,22 +27,14 @@ def detail(request):
 @urlpatterns.route('edit/')
 def edit(request):
     profile = request.user.profile
-    if request.method == 'POST':
-        form = forms.ProfileForm(request.POST, instance=profile, files=request.FILES)
-        name_form = forms.UsernameForm(request.POST, instance=request.user)
-        if form.is_valid() and name_form.is_valid():
-            form.save()
-            name_form.save()
-            return redirect('/profile/')
-    else:
-        form = forms.ProfileForm(instance=profile)
-        name_form = form.UsernameForm(instance=request.user)
+    form = forms.ProfileForm(instance=profile, request=request)
 
-    return {
-        'form': form,
-        'name_form': name_form,
-        'profile': profile,
-    }
+    if form.is_valid_post():
+        form.files = request.FILES
+        form.save()
+        return redirect('/profile/')
+
+    return {'form': form, 'profile': profile}
 
 
 @urlpatterns.route('contributions/')

@@ -14,9 +14,7 @@ class UsernameForm(EjModelForm):
     class Meta:
         model = models.User
         fields = ['name']
-        help_texts = {
-            'name': '',
-        }
+        help_texts = {'name': ''}
 
 
 class ProfileForm(EjModelForm):
@@ -32,8 +30,14 @@ class ProfileForm(EjModelForm):
             'profile_photo': ej_widgets.FileInput(attrs={'accept': 'image/*'})
         }
 
+    def __init__(self, *args, instance, **kwargs):
+        super().__init__(*args, instance=instance, **kwargs)
+        self.user_form = UsernameForm(*args, instance=instance.user, **kwargs)
+        self.fields = {**self.user_form.fields, **self.fields}
+        self.initial.update(self.user_form.initial)
 
-class ProfileImageForm(EjModelForm):
-    class Meta:
-        model = models.Profile
-        fields = ['profile_photo']
+    def save(self, commit=True):
+        result = super().save(commit=commit)
+        self.user_form.instance = result.user
+        self.user_form.save(commit=commit)
+        return result
