@@ -9,10 +9,8 @@ from ej_boards.models import Board
 from ej_clusters import routes as cluster_routes
 from ej_clusters.models import Stereotype
 from ej_conversations import forms
-from ej_conversations.models import Conversation
-from ej_conversations.routes import (get_conversation_detail_context,
-                                     get_conversation_moderate_context,
-                                     get_conversation_edit_context)
+from ej_conversations.forms import CommentForm
+from ej_conversations.models import Conversation, Vote
 from ej_reports import routes as report_routes
 from .forms import BoardForm
 
@@ -75,10 +73,7 @@ def conversation_create(request, board):
 
     if request.method == 'POST' and form.is_valid():
         with transaction.atomic():
-            conversation = form.save_all(
-                author=user,
-                board=board,
-            )
+            conversation = form.save_comments(author=user,board=board)
         kwargs = {'board': board, 'conversation': conversation}
         return redirect(reverse('boards:conversation-stereotype-list', kwargs=kwargs))
 
@@ -238,3 +233,97 @@ def assure_correct_board(conversation, board):
     if not board.has_conversation(conversation):
         raise Http404
     conversation.board = board
+
+
+def get_conversation_detail_context(request, conversation):
+    """
+    Common implementation used by both /conversations/<slug> and inside boards
+    in /<board>/conversations/<slug>/
+    """
+    user = request.user
+    is_favorite = user.is_authenticated and conversation.favorites.filter(user=user).exists()
+    comment_form = CommentForm(None, conversation=conversation)
+    voted = False
+    if user.is_authenticated:
+        voted = Vote.objects.filter(author=user).exists()
+
+    # User is voting in the current comment. We still need to choose a random
+    # comment to display next.
+    if request.POST.get('action') == 'vote':
+        vote = request.POST['vote']
+        comment_id = request.POST['comment_id']
+        Comment.objects.get(id=comment_id).vote(user, vote)
+        log.info(f'user {user.id} voted {vote} on comment {comment_id}')
+
+    # User is posting a new comment. We need to validate the form and try to
+    # keep the same comment that was displayed before.
+    elif request.POST.get('action') == 'comment':
+        comment_form = CommentForm(request.POST, conversation=conversation)
+        if comment_form.is_valid():
+            new_comment = comment_form.cleaned_data['content']
+            new_comment = conversation.create_comment(user, new_comment)
+            comment_form = CommentForm(conversation=conversation)
+            log.info(f'user {user.id} posted comment {new_comment.id} on {conversation.id}')
+
+    # User toggled the favorite status of conversation.
+    elif request.POST.get('action') == 'favorite':
+        conversation.toggle_favorite(user)
+        log.info(f'user {user.id} toggled favorite status of conversation {conversation.id}')
+
+    # User to pass modalities
+    elif request.POST.get('modalities') == 'pass':
+        voted = True
+
+    # User is probably trying to something nasty ;)
+    elif request.method == 'POST':
+        log.warning(f'user {user.id} se nt invalid POST request: {request.POST}')
+        return HttpResponseServerError('invalid action')
+
+    n_comments_under_moderation = rules.compute('ej_conversations.comments_under_moderation', conversation, user)
+    comments_made = rules.compute('ej_conversations.comments_made', conversation, user)
+
+    return {
+        # Objects
+        'conversation': conversation,
+        'comment': conversation.next_comment(user, None),
+        'comment_form': comment_form,
+
+        # Statistics
+        'n_voted': conversation.votes.filter(author=user).count() if user.is_authenticated else 0,
+        'total_comments': conversation.comments.approved().count(),
+
+        # Permissions and predicates
+        'is_favorite': is_favorite,
+        'can_comment': user.is_authenticated,
+        'can_edit': user.has_perm('ej.can_edit_conversation', conversation),
+        'cannot_comment_reason': '',
+        'comments_under_moderation': n_comments_under_moderation,
+        'comments_made': comments_made,
+        'max_comments': max_comments_per_conversation(),
+        'user_is_owner': conversation.author == user,
+        'voted': voted,
+        'board_palette': conversation.css_palette
+    }
+
+
+def get_conversation_edit_context(request, conversation, board=None):
+    if request.method == 'POST':
+        form = forms.ConversationForm(
+            data=request.POST,
+            instance=conversation,
+        )
+        if form.is_valid():
+            form.save()
+            return redirect(conversation.get_absolute_url() + 'moderate/')
+    else:
+        form = forms.ConversationForm(instance=conversation)
+    tags = list(map(str, conversation.tags.all()))
+
+    return {
+        'form': form,
+        'conversation': conversation,
+        'tags': ",".join(tags),
+        'can_promote_conversation': request.user.has_perm('can_publish_promoted'),
+        'comments': list(conversation.comments.filter(status='pending')),
+        'board': board,
+    }

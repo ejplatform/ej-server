@@ -5,7 +5,6 @@ from hyperpython.django import csrf_input
 
 from boogie import rules
 from ej.roles import with_template, extra_content, progress_bar
-from ej_boards.models import BoardSubscription
 from . import models
 
 
@@ -22,59 +21,47 @@ def get_annotation(obj, annotation, fallback):
 # ------------------------------------------------------------------------------
 
 @with_template(models.Conversation, role='card')
-def conversation_card(conversation, request=None, url=None, **kwargs):
+def conversation_card(conversation, url=None, **kwargs):
     """
     Render a round card representing a conversation in a list.
     """
 
-    user = getattr(request, 'user', None)
-    moderate_url = None
-    can_moderate = user.has_perm('ej.can_moderate_conversation', conversation)
-    if can_moderate:
-        moderate_url = reverse('conversation:moderate', kwargs={'conversation': conversation})
     tag = conversation.tags.first()  # only first is shown in card to prevent overflow
-    subscription = BoardSubscription.objects.filter(conversation=conversation)
-    board = None
-    if subscription.exists():
-        board = subscription[0].board
     return {
         'author': conversation.author.name,
         'conversation': conversation,
-        'url': url or conversation.get_absolute_url(board),
+        'url': url or conversation.get_absolute_url(),
         'tag': tag,
         'n_comments': conversation.approved_comments.count(),
         'n_votes': conversation.votes.count(),
         'n_favorites': conversation.favorites.count(),
-        'user_can_moderate': can_moderate,
-        'moderate_url': moderate_url,
         'conversation_modifiers': '',
         **kwargs,
     }
 
 
 @with_template(models.Conversation, role='balloon')
-def conversation_balloon(conversation, request=None, **kwargs):
+def conversation_balloon(conversation, request=None, actions=None,
+                         is_favorite=False, **kwargs):
     """
     Render details of a conversation inside a conversation balloon.
     """
 
     user = getattr(request, 'user', None)
-    favorites = models.FavoriteConversation.objects
-    is_authenticated = getattr(user, 'is_authenticated', False)
-    is_favorite = is_authenticated and conversation.is_favorite(user)
-    tags = list(map(str, conversation.tags.all()))
+
+    # Share and favorite actions bellow the balloon
+    if actions is not False:
+        is_authenticated = getattr(user, 'is_authenticated', False)
+        is_favorite = is_authenticated and conversation.is_favorite(user)
+        if actions is None:
+            actions = is_authenticated
 
     return {
         'conversation': conversation,
-        'tags': tags,
-        'comments_count': conversation.approved_comments.count(),
-        'votes_count': conversation.votes.count(),
-        'favorites_count': favorites.filter(conversation=conversation).count(),
         'user': user,
-        'csrf_input': csrf_input(request),
-        'show_user_actions': is_authenticated,
+        'tags': list(conversation.tags.values_list('name', flat=True)),
         'is_favorite': is_favorite,
-        **kwargs,
+        'actions': actions,
     }
 
 
@@ -215,10 +202,11 @@ def comment_moderate(comment, request=None, **kwargs):
     """
 
     return {
-        'comment': comment,
-        'rejection_reasons': dict(models.Comment.REJECTION_REASON),
-        'csrf_input': csrf_input(request),
-        **kwargs,
+        'created': comment.created,
+        'author': get_annotation(comment, 'author_name',
+                                 lambda: comment.author.name),
+        'text': comment.content,
+        # 'rejection_reasons': dict(models.Comment.REJECTION_REASON),
     }
 
 

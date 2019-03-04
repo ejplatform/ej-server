@@ -17,6 +17,13 @@
 label {
     @extend .text-6;
     color: color('action');
-    margin-left: 1.125rem;
+    text-indent: 1.125rem;
     text-transform: lowercase;
+}
+
+legend {
+    margin-left: size(1);
+    margin-right: size(1);
+    text-align: center;
+    opacity: 0.75;
 }

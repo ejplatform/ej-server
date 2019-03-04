@@ -1,24 +1,17 @@
 <div class="conversation-card {{ conversation_modifiers }}">
-    <div class="conversation-card__content">
-        <div class="conversation-card__tags">
-            {{ span_icon(tag if tag else _('Conversation'), 'tags') }}
-        </div>
-        <ul class="conversation-card__statistics">
-            <li>{{ span_icon(n_comments, 'comment') }}</li>
-            <li>{{ span_icon(n_votes, 'sliders-h') }}</li>
-            <li>{{ span_icon(n_favorites, 'star') }}</li>
-        </ul>
-        <div class="conversation-card__text">
-            <a href="{{ url }}">{{ conversation.text }}</a>
-        </div>
-        <div class="conversation-card__author">{{ _('by:') }} <strong>{{ author }}</strong></div>
-        <div class="conversation-card__button">{{ action_button(_('Participate now!'), url) }}</div>
+    <div class="conversation-card__tags">
+        {{ span_icon(tag if tag else _('Conversation'), 'tags') }}
     </div>
-    {% if user_can_moderate %}
-        <a class="conversation-card__moderate" href="{{ moderate_url }}">
-            <i class="fas fa-cog"></i> {{ _('Moderate Conversation') }}
-        </a>
-    {% endif %}
+    <ul class="conversation-card__statistics">
+        <li>{{ span_icon(n_comments, 'comment') }}</li>
+        <li>{{ span_icon(n_votes, 'sliders-h') }}</li>
+        <li>{{ span_icon(n_favorites, 'star') }}</li>
+    </ul>
+    <div class="conversation-card__text">
+        <a href="{{ url }}">{{ conversation.text }}</a>
+    </div>
+    <div class="conversation-card__author">{{ _('by:') }} <strong>{{ author }}</strong></div>
+    <div class="conversation-card__button">{{ action_button(_('Participate now!'), url) }}</div>
 </div>
 
 

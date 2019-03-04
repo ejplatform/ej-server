@@ -5,6 +5,7 @@ from django.db import migrations, models
 import django.db.models.deletion
 
 import ej_conversations
+import ej_conversations.enums
 import ej_conversations.models.vote
 
 
@@ -18,7 +19,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='stereotypevote',
             name='choice',
-            field=boogie.fields.enum_field.EnumField(ej_conversations.Choice, verbose_name='Choice'),
+            field=boogie.fields.enum_field.EnumField(ej_conversations.enums.Choice, verbose_name='Choice'),
         ),
         migrations.AlterField(
             model_name='stereotypevote',

@@ -3,25 +3,24 @@
 //------------------------------------------------------------------------------
 @import "../../config";
 
+$_card-width: 20rem;
+
 :root {
     --card-color: #{color('brand')};
     --card-light-color: #{color('brand-lighter')};
 }
 
 .conversation-card {
-    @extend .text-center;
+    @extend .text-center, .text-6, .col, .items-center;
+    @include color('brand' 'brand-lighter');
+    color: var(--card-light-color);
+    background-color: var(--card-color);
+    border-radius: 50%;
+    height: $_card-width;
+    margin: auto;
+    overflow: hidden;
+    width: $_card-width;
 
-    &__content {
-        @extend .text-6, .col, .items-center;
-        @include color('brand' 'brand-lighter');
-        color: var(--card-light-color);
-        background-color: var(--card-color);
-        border-radius: 50%;
-        height: 20rem;
-        margin: 0 auto;
-        overflow: hidden;
-        width: 20rem;
-    }
     &__tags {
         @extend .text-6, .bold;
         background-color: color('brand-lighter');
@@ -62,4 +61,45 @@
         background-blend-mode: luminosity;
         width: 100%;
     }
+}
+
+
+.alternate-cards {
+    @include breakpoint('md') {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    @include breakpoint('md') {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: $_card-width * 0.25 + size(1);
+
+        > * {
+            height: $_card-width * 0.75;
+            margin: size(0.5);
+        }
+        > *:nth-child(odd) {
+            transform: translateX(-35%);
+        }
+        > *:nth-child(even) {
+            transform: translateX(35%);
+        }
+    }
+
+    //@include breakpoint('lg') {
+    //    margin-bottom: $_card-width * 0.51 + size(1);
+    //
+    //    > * {
+    //        height: $_card-width * 0.49;
+    //    }
+    //    > *:nth-child(odd) {
+    //        transform: translateX(-50%);
+    //    }
+    //    > *:nth-child(even) {
+    //        transform: translateX(50%);
+    //    }
+    //}
 }

@@ -32,7 +32,7 @@ from django.conf import settings  # noqa: E402
 from django.contrib.auth.models import AnonymousUser  # noqa: E402
 from ej_users.models import User  # noqa: E402
 from ej_conversations.models import (Conversation, Comment, Vote, FavoriteConversation, ConversationTag)  # noqa: E402
-from ej_conversations import Choice  # noqa: E402
+from ej_conversations.enums import Choice
 from ej_clusters.models import Clusterization, Stereotype, Cluster, StereotypeVote  # noqa: E402
 from ej_clusters import ClusterStatus  # noqa: E402
 

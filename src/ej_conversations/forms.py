@@ -1,7 +1,9 @@
 from django import forms
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
+from sidekick import identity
 
+from ej.forms import EjModelForm
 from .models import Conversation, Comment
 
 
@@ -27,48 +29,84 @@ class CommentForm(forms.ModelForm):
         return self.cleaned_data
 
 
-class ConversationForm(forms.ModelForm):
+class ModerationForm(EjModelForm):
+    """
+    Form used during moderation of a conversation's comments.
+    """
+
+    class Meta:
+        model = Comment
+        fields = ['status', 'rejection_reason_option', 'rejection_reason']
+        help_texts = {'rejection_reason': None}
+
+    def _clean_fields(self):
+        self.data = self.data.copy()
+        if 'reject_id' in self.data:
+            comment_id = int(self.data['reject_id'])
+            self.instance = Comment.objects.get(id=comment_id)
+            self.data['status'] = Comment.STATUS.rejected
+        elif 'approve_id' in self.data:
+            comment_id = int(self.data['approve_id'])
+            self.instance = Comment.objects.get(id=comment_id)
+            self.data['status'] = Comment.STATUS.approved
+        else:
+            raise ValueError('invalid POST data')
+        super()._clean_fields()
+
+
+class ConversationForm(EjModelForm):
+    """
+    Form used to create and edit conversations.
+    """
+    comments_count = forms.IntegerField(initial=3, required=False)
+    tags = forms.CharField(label=_('Tags'), help_text=_('Tags, separated by commas.'))
+
     class Meta:
         model = Conversation
-        fields = ['title', 'text', 'tags']
-
-    comments_count = forms.IntegerField(initial=5)
+        fields = ['title', 'text', 'is_promoted', 'is_hidden']
+        help_texts = {'is_promoted': _('Place conversation in the main /conversations/ URL.'),
+                      'is_hidden': _('Mark to make the conversation invisible.')}
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.set_placeholder('tags', _('Tags, separated by commas'))
-        self.set_placeholder('text', _('Type here the question for your research'))
-        self.set_placeholder('title', _('Permanent link.'))
-        self.fields['text'].widget.attrs.update({
-            'onfocus': "this.style.height = (this.scrollHeight) + 'px'",
-            'onkeyup': "this.style.height = (this.scrollHeight) + 'px'",
-            'class': "Conversation-edit-field",
-        })
+        for field in ('tags', 'text'):
+            self.set_placeholder(field, self[field].help_text)
+        if self.instance and not self.instance.id is None:
+            self.fields['tags'].initial = ', '.join(self.instance.tags.values_list('name', flat=True))
 
     def set_placeholder(self, field, value):
         self.fields[field].widget.attrs['placeholder'] = value
 
-    def save_all(self, author, board=None, **kwargs):
+    def save(self, commit=True, board=None, **kwargs):
+        conversation = super().save(commit=False)
+        for k, v in kwargs.items():
+            setattr(conversation, k, v)
+
+        if commit:
+            conversation.save()
+
+            # Save tags on the database
+            tags = self.cleaned_data['tags'].split(',')
+            tags = map(lambda x: x.strip(',.'), tags)
+            conversation.tags.set(*filter(identity, tags), clear=True)
+
+            # Save board
+            if board:
+                board.add_conversation(conversation)
+
+        return conversation
+
+    def save_comments(self, author, check_limits=True,
+                      status=Comment.STATUS.approved, **kwargs):
         """
         Save model, tags and comments.
         """
-        conversation = self.save(commit=False)
-        conversation.author = author
-        for k, v in kwargs.items():
-            setattr(conversation, k, v)
-        conversation.save()
-
-        # Save tags on the database
-        self.save_m2m()
-
-        # Save board
-        if board:
-            board.add_conversation(conversation)
+        conversation = self.save(author=author, **kwargs)
 
         # Create comments
         kwargs = {
-            'status': Comment.STATUS.approved,
-            'check_limits': True,
+            'status': status,
+            'check_limits': check_limits,
         }
         n = int(self.data['comments_count'])
         for i in range(n):

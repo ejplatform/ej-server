@@ -1,5 +1,3 @@
-import logging
-
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.core.validators import MinLengthValidator
@@ -8,74 +6,15 @@ from model_utils.choices import Choices
 from model_utils.models import TimeStampedModel, StatusModel
 from sidekick import lazy
 
-from boogie import db
 from boogie import models
 from boogie.rest import rest_api
-from .mixins import ConversationMixin
-from .utils import votes_counter
+from .comment_queryset import CommentQuerySet, log
 from .vote import Vote, normalize_choice
-from .. import Choice
-from ..math import comment_statistics
+from ..enums import Choice, RejectionReason
+from ..utils import votes_counter
 from ..validators import is_not_empty
 
-log = logging.getLogger('ej-conversations')
 
-
-# ==============================================================================
-# QUERYSET
-
-class CommentQuerySet(ConversationMixin, models.QuerySet):
-    """
-    A table of comments.
-    """
-    comments = (lambda self, conversation=None: self)
-
-    def _votes_from_comments(self, comments):
-        return Vote.objects.filter(comment__in=self)
-
-    def conversations(self):
-        conversations = self.values_list('conversation', flat=True)
-        return db.ej_conversations.conversations.filter(id__in=conversations)
-
-    def approved(self):
-        """
-        Keeps only approved comments.
-        """
-        return self.filter(status=self.model.STATUS.approved)
-
-    def pending(self):
-        """
-        Keeps only pending comments.
-        """
-        return self.filter(status=self.model.STATUS.pending)
-
-    def rejected(self):
-        """
-        Keeps only rejected comments.
-        """
-        return self.filter(status=self.model.STATUS.rejected)
-
-    def statistics(self):
-        return [x.statistics() for x in self]
-
-    def statistics_summary_dataframe(self, normalization=1.0, votes=None):
-        """
-        Return a dataframe with basic voting statistics.
-
-        The resulting dataframe has the 'author', 'text', 'agree', 'disagree'
-        'skipped', 'divergence' and 'participation' columns.
-        """
-        votes = (votes or self.votes()).dataframe('comment', 'author', 'choice')
-        stats = comment_statistics(votes, participation=True, divergence=True, ratios=True)
-        stats *= normalization
-        stats = self.extend_dataframe(stats, 'author__name', 'content')
-        stats['author'] = stats.pop('author__name')
-        cols = ['author', 'content', 'agree', 'disagree', 'skipped', 'divergence', 'participation']
-        return stats[cols]
-
-
-# ==============================================================================
-# MODEL
 # noinspection PyUnresolvedReferences
 @rest_api(['content', 'author', 'status', 'created', 'rejection_reason'])
 class Comment(StatusModel, TimeStampedModel):
@@ -116,8 +55,13 @@ class Comment(StatusModel, TimeStampedModel):
         validators=[MinLengthValidator(2), is_not_empty],
         help_text=_('Body of text for the comment'),
     )
-    rejection_reason = models.TextField(
+    rejection_reason_option = models.EnumField(
+        RejectionReason,
         _('Rejection reason'),
+        null=True, blank=True,
+    )
+    rejection_reason = models.TextField(
+        _('Rejection reason (free-form)'),
         blank=True,
         help_text=_(
             'You must provide a reason to reject a comment. Users will receive '
@@ -135,6 +79,8 @@ class Comment(StatusModel, TimeStampedModel):
     is_approved = property(lambda self: self.status == self.STATUS.approved)
     is_pending = property(lambda self: self.status == self.STATUS.pending)
     is_rejected = property(lambda self: self.status == self.STATUS.rejected)
+    has_rejection_explanation = property(lambda self: bool(self.rejection_reason == ''
+                                                           or self.rejection_reason_option is None))
 
     @lazy
     def missing_votes(self):
@@ -169,6 +115,19 @@ class Comment(StatusModel, TimeStampedModel):
         except AttributeError:
             return self.agree_count + self.disagree_count + self.skip_count
 
+    @property
+    def rejection_reason_display(self):
+        if self.status == self.STATUS.approved:
+            return _('Comment is approved')
+        elif self.status == self.STATUS.pending:
+            return _('Comment is pending moderation')
+        elif self.rejection_reason:
+            return rejection_reason
+        elif self.rejection_reason_option is not None:
+            return self.rejection_reason_option.description
+        else:
+            raise AssertionError
+
     objects = CommentQuerySet.as_manager()
 
     class Meta:
@@ -179,7 +138,8 @@ class Comment(StatusModel, TimeStampedModel):
 
     def clean(self):
         super().clean()
-        if self.status == self.STATUS.rejected and not self.rejection_reason:
+        print(self, self.status, self.rejection_reason, self.rejection_reason_option, self.has_rejection_explanation)
+        if self.status == self.STATUS.rejected and not self.has_rejection_explanation:
             msg = _('Must give a reason to reject a comment')
             raise ValidationError({'rejection_reason': msg})
 

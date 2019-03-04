@@ -4,7 +4,7 @@ from sidekick import record
 import pytest
 from ej.testing import EjRecipes
 from .models import Comment, Conversation, Vote
-from ej_conversations import Choice
+from ej_conversations.enums import Choice
 
 __all__ = ['ConversationRecipes']
 

@@ -3,6 +3,9 @@
 //------------------------------------------------------------------------------
 @import "../../config";
 
+$_sm-header-height: size(2);
+$_md-header-height: size(2.5);
+
 //------------------------------------------------------------------------------
 // Footer and header navigation
 .main-header, .main-footer {
@@ -11,21 +14,29 @@
     z-index: 1000;
 
     > * {
-        @extend .pad-y1, .pad-x3;
+        @extend .pad-x1;
     }
     > a {
+        @extend .margin-0;
         color: color('navigation-text');
+        height: $_sm-header-height;
     }
 }
 
 .main-header {
     @extend .sticky, .pin-top;
     box-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.35);
+    height: $_sm-header-height;
+    line-height: $_sm-header-height;
 
     &__logo {
         flex: 1;
+        vertical-align: middle;
+
         img {
-            width: 3rem
+            height: $_sm-header-height * 0.8;
+            position: relative;
+            top: $_sm-header-height * 0.1;
         }
     }
 }
@@ -35,6 +46,9 @@
     box-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.35);
     width: 100%;
 
+    > * {
+        @extend .pad-y1;
+    }
     &__link {
         @extend .col, .items-center, .uppercase, .text-8, .bold;
         img {
@@ -43,45 +57,54 @@
     }
 }
 
-$_md-header-height: size(2.5);
-
 // Reorganize using media queries
-@include breakpoint('md') {
+@include breakpoint('sm') {
     .main-header, .main-footer {
         height: $_md-header-height;
         line-height: 4rem;
         position: fixed;
         top: 0;
+
+        @include breakpoint('md') {
+            > * {
+                padding: 0 size(0.5) !important;
+            }
+        }
     }
     .main-header {
         align-items: center;
         justify-content: flex-start !important;
+
         a {
             text-align: left;
             line-height: $_md-header-height;
         }
-        a:after {
-            content: "Empurrando Juntas";
-            font-weight: 600;
-            line-height: $_md-header-height;
-            height: $_md-header-height;
-            opacity: 0.33;
-            position: absolute;
-            text-transform: uppercase;
-            top: 0;
-        }
         img {
             height: $_md-header-height * 0.8;
-            line-height: $_md-header-height;
-            margin: 0 2rem;
-            position: relative;
-            vertical-align: middle;
-            width: auto;
+            left: size(1.5);
+            top: $_md-header-height * 0.1;
+            position: absolute;
         }
         a:nth-child(1), a:nth-child(3) {
             display: none;
         }
+        @include breakpoint('lg') {
+            a:after {
+                content: "Empurrando Juntas";
+                font-weight: 600;
+                line-height: $_md-header-height;
+                height: $_md-header-height;
+                left: 0;
+                right: 0;
+                opacity: 0.33;
+                position: absolute;
+                text-transform: uppercase;
+                text-align: center;
+                top: 0;
+            }
+        }
     }
+
     .main-footer {
         bottom: initial !important;
         box-shadow: none;
@@ -94,7 +117,7 @@ $_md-header-height: size(2.5);
         &__link {
             flex-flow: row !important;
             font-size: 0.875rem !important;
-            padding: 0 size(1);
+
             img {
                 display: none;
             }
@@ -155,7 +178,7 @@ $_md-header-height: size(2.5);
     }
 }
 
-@include breakpoint('md') {
+@include breakpoint('sm') {
     .page-menu {
         background-color: rgba(0, 0, 0, 0.025);
         border-radius: 0 !important;

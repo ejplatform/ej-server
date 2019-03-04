@@ -1,17 +1,17 @@
-{% extends 'base.jinja2' %}
+{% extends 'ej_conversations/base.jinja2' %}
 {% set main_class = 'container-1 pad-x0' %}
 
 {% block metaOG %}
-    <meta name="description" property="og:title" content="{{ conversation.text }}">
-    <meta property="og:description" content="{{ _('Participate with comments and votes!') }}">
-    <meta name="twitter:title" content="{{ conversation.text }}">
+    <meta name="description" property="og:title" content="{{ conversation.title}}">
+    <meta property="og:description" content="{{ conversation.text }}">
+    <meta name="twitter:title" content="{{ conversation.title }}">
 {% endblock %}
 
 
 {% block content %}
     {{ conversation|role('balloon') }}
     <h1 class="title">{{ _('Comments') }}</h1>
-    {{ progress_bar(n_voted, total_comments) }}
+    {{ conversation|role('user-progress') }}
     {% if comment %}
         {{ comment|role('card') }}
     {% else %}

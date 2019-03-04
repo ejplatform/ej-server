@@ -6,6 +6,7 @@ from django.db import migrations, models
 import django.utils.timezone
 
 import ej_conversations
+import ej_conversations.enums
 import ej_conversations.models.vote
 import ej_clusters
 import model_utils.fields
@@ -63,7 +64,7 @@ class Migration(migrations.Migration):
             name='StereotypeVote',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('choice', boogie.fields.enum_field.EnumField(ej_conversations.Choice)),
+                ('choice', boogie.fields.enum_field.EnumField(ej_conversations.enums.Choice)),
                 ('author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='votes', to='ej_clusters.Stereotype')),
                 ('comment', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='stereotype_votes', to='ej_conversations.Comment')),
             ],

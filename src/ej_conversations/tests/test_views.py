@@ -4,7 +4,7 @@ from pytest import raises
 
 from ej_conversations import routes
 from ej_conversations.models import Comment, FavoriteConversation
-from ej_conversations.models.utils import votes_counter
+from ej_conversations.utils import votes_counter
 from ej_users.models import User
 
 

@@ -1,15 +1,15 @@
-<div class="conversation-balloon">
+<div class="conversation-balloon"{# TODO: is-component #}>
     <article>
         {{ span_icon(', '.join(tags)  if tags else _('Conversation'), 'tags', class_='text-7') }}
         <h1>{{ conversation.text }}</h1>
     </article>
     <div class="conversation-balloon__arrow"></div>
-    {% if show_user_actions %}
+    {% if actions %}
         <div class="conversation-balloon__social">
-            <span is-component="conversation:toggleFavorite"><i class="fa fa-star"></i>
+            <span is-element="toggleFavorite:click"><i class="fa fa-star"></i>
                 {%- if is_favorite %}{{ _("Unfavorite") }}{% else %}{{ _("Favorite") }}{% endif %}
             </span>
-            <span is-component="conversation:share"><i class="fas fa-share-alt"></i>{{ _("Share") }}</span>
+            <span is-element="share:click"><i class="fas fa-share-alt"></i>{{ _("Share") }}</span>
         </div>
     {% endif %}
 </div>

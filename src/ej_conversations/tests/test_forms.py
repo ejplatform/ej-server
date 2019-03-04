@@ -48,7 +48,7 @@ class TestConversationForm:
         form_is_valid = form.is_valid()
         assert form_is_valid
         with transaction.atomic():
-            conversation = form.save_all(
+            conversation = form.save_comments(
                 author=user,
                 is_promoted=True,
             )
@@ -69,7 +69,7 @@ class TestConversationForm:
         form_is_valid = form.is_valid()
         assert form_is_valid
         with transaction.atomic():
-            conversation = form.save_all(
+            conversation = form.save_comments(
                 author=user,
                 is_promoted=True,
             )
@@ -92,7 +92,7 @@ class TestConversationForm:
         form_is_valid = form.is_valid()
         assert form_is_valid
         with transaction.atomic():
-            conversation = form.save_all(
+            conversation = form.save_comments(
                 author=user,
                 board=board,
             )
@@ -113,7 +113,7 @@ class TestConversationForm:
         form_is_valid = form.is_valid()
         assert form_is_valid
         with transaction.atomic():
-            conversation = form.save_all(
+            conversation = form.save_comments(
                 author=user,
                 is_promoted=True,
             )
@@ -136,7 +136,7 @@ class TestConversationForm:
         assert form_is_valid
         with pytest.raises(IntegrityError):
             with transaction.atomic():
-                form.save_all(
+                form.save_comments(
                     author=None,
                     is_promoted=True,
                 )

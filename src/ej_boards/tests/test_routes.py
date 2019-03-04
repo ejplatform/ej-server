@@ -7,7 +7,7 @@ from ej_boards import routes
 from ej_boards.models import Board
 from ej_boards.mommy_recipes import BoardRecipes
 from ej_conversations.models import Comment
-from ej_conversations.models.utils import votes_counter
+from ej_conversations.utils import votes_counter
 from ej_conversations.mommy_recipes import ConversationRecipes
 from ej_users.models import User
 

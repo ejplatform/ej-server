@@ -37,7 +37,6 @@ i.fa, i.fas, i.fab {
     @extend .text-center, .row, .flex-center, .wrap;
 
     a {
-        @extend .pad-2, .margin-x2;
         border-bottom: 0.25rem solid transparent;
         font-weight: 600;
         overflow-clip: ellipsis;
@@ -53,14 +52,22 @@ i.fa, i.fas, i.fab {
 .tabs {
     @extend .uppercase;
     border-bottom: 1px solid color('brand-light');
+
+    a {
+        @extend .pad-2, .margin-x2;
+    }
 }
 
 .categories {
-    @include color('brand-lighter', 'brand');
+    @include color(mix(color('brand-lighter'), color('white')), 'brand');
     @extend .bold;
 
-    a {
+    * {
+        @extend .pad-1, .margin-x1;
         color: color('brand');
+    }
+    a:hover:not([is-selected]) {
+        border-bottom-color: color('brand', $alpha: 0.5);
     }
 }
 

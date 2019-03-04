@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 
 from boogie import db
-from ej_conversations.models import ConversationMixin
+from ej_conversations.mixins import ConversationMixin
 
 db = db.ej_clusters
 

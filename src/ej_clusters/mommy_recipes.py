@@ -2,7 +2,7 @@ import pytest
 from model_mommy.recipe import Recipe, foreign_key as _foreign_key
 from sidekick import record
 
-from ej_conversations import Choice
+from ej_conversations.enums import Choice
 from ej_conversations.mommy_recipes import ConversationRecipes
 from .models import Stereotype, StereotypeVote, Clusterization, Cluster
 

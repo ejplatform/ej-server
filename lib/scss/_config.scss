@@ -109,6 +109,9 @@ $MENDELEEV_TYPEFACE: $font-stack-paragraph;
 
 @import 'mendeleev/preflight';
 
+// Breaking points
+$_: set-mendeleev-config('breakpoints.sm', 35rem);
+
 // Typography
 $_: set-mendeleev-config('typography.sans-serif', $font-stack-paragraph);
 $_: set-mendeleev-config('typography.headings', $EJ_HEADINGS);
@@ -135,7 +138,6 @@ $_: set-mendeleev-config('button', (
     'border-radius': 2.25rem / 2,
     'font-weight': 700,
 ), $merge: true);
-
 
 //------------------------------------------------------------------------------
 // IMPORT REGISTRY

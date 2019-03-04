@@ -7,8 +7,9 @@ from django.utils.translation import ugettext_lazy as _
 from boogie import models
 from boogie.models import QuerySet
 from boogie.rest import rest_api
-from ej_conversations import Choice
-from ej_conversations.models import UserMixin, Comment, conversation_filter
+from ej_conversations.enums import Choice
+from ej_conversations.mixins import UserMixin, conversation_filter
+from ej_conversations.models import Comment
 from .stereotype_vote import StereotypeVote
 from .. import log
 

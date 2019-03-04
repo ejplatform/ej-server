@@ -5,7 +5,7 @@ from django.core.exceptions import ImproperlyConfigured
 
 from boogie import db
 from boogie.models import QuerySet
-from ..math import user_statistics
+from .math import user_statistics
 
 db = db.ej_conversations
 

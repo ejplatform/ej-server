@@ -128,6 +128,3 @@ def remove_account(user):
     # Remove e-mail overriding django validator
     new_email = f'anonymous-{user.id}@deleted-account'
     User.objects.filter(id=user.id).update(email=new_email)
-    user = User.objects.get(id=user.id)
-    print(user, user.email)
-    assert user.email == new_email

@@ -8,7 +8,7 @@ from hyperpython.components import html_list, html_table
 from boogie.router import Router
 from boogie.rules import proxy_seq
 from ej_clusters.forms import StereotypeForm, StereotypeVoteCreateFormSet, StereotypeVoteEditFormSet
-from ej_conversations import Choice
+from ej_conversations.enums import Choice
 from ej_conversations.models import Conversation, Comment
 from .models import Stereotype, Cluster, StereotypeVote
 

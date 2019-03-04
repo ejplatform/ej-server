@@ -1,13 +1,9 @@
-import logging
-from random import randrange
-
 import hyperpython as hp
 from autoslug import AutoSlugField
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError, ObjectDoesNotExist
-from django.db.models import Count, Q, Avg
-from django.db.models.functions import FirstValue
+from django.db.models import Count, Q
 from django.utils.translation import ugettext_lazy as _
 from model_utils.models import TimeStampedModel
 from taggit.managers import TaggableManager
@@ -15,84 +11,16 @@ from taggit.models import TaggedItemBase
 
 from boogie import models
 from boogie import rules
-from boogie.models import QuerySet, Manager, F, Window
 from boogie.rest import rest_api
 from ej.utils.url import SafeUrl
 from .comment import Comment
-from .mixins import ConversationMixin
-from .utils import normalize_status
+from .conversation_queryset import log, ConversationQuerySet
 from .vote import Vote
-from .. import Choice
+from ..enums import Choice
+from ..utils import normalize_status
 
 NOT_GIVEN = object()
-log = logging.getLogger('ej_conversations')
 
-
-# ==============================================================================
-# QUERYSET
-
-class ConversationQuerySet(ConversationMixin, QuerySet):
-    """
-    A table of conversations.
-    """
-    conversations = (lambda self: self)
-
-    def random(self, user=None):
-        """
-        Return a random conversation.
-
-        If user is given, tries to select the conversation that is most likely
-        to engage the given user.
-        """
-        size = self.count()
-        return self.all()[randrange(size)]
-
-    def promoted(self):
-        """
-        Show only promoted conversations.
-        """
-        return self.filter(is_promoted=True)
-
-    def annotate_with(self, *values, user=None, **kwargs):
-        """
-        Annotate each conversation with the progress made by the given user.
-
-        Args:
-            tag_first:
-                Annotate with the first tag in the list of tags.
-            approved_comments:
-                Annotate with the number of approved comments.
-            user_votes:
-                Annotate with the number of votes cast by user.
-        """
-        for arg in values:
-            kwargs.setdefault(arg, True)
-
-        annotations = {}
-        if kwargs.pop('tag_first', False):
-            annotations['annotation_tag_first'] = \
-                Window(FirstValue('tags__name'))
-        if kwargs.pop('approved_comments', False):
-            annotations['annotation_approved_comments'] = \
-                Count('comments', filter=Q(comments__status=Comment.STATUS.approved), distinct=True)
-        if kwargs.pop('user_votes', False):
-            annotations['annotation_user_votes'] = \
-                Count('comments__votes', filter=Q(comments__votes__author=user))
-
-        if kwargs:
-            raise TypeError(f'bad attribute: {kwargs.popitem()[0]}')
-
-        if not annotations:
-            return self
-        return self.annotate(**annotations)
-
-
-class ConversationManager(Manager.from_queryset(ConversationQuerySet)):
-    pass
-
-
-# ==============================================================================
-# MODEL
 
 @rest_api(['title', 'text', 'author', 'slug', 'created'], lookup_field='slug')
 class Conversation(TimeStampedModel):
@@ -103,16 +31,14 @@ class Conversation(TimeStampedModel):
         _('Title'),
         max_length=255,
         help_text=_(
-            'A short description about this conversation. This is used internally '
-            'and to create URL slugs. (e.g. School system)'
+            'Short description used to create URL slugs (e.g. School system).'
         ),
         unique=True,
     )
     text = models.TextField(
         _('Question'),
         help_text=_(
-            'A question that is displayed to the users in a conversation card. (e.g.: How can we '
-            'improve the school system in our community?)'
+            'What do you want to ask?'
         ),
     )
     author = models.ForeignKey(
@@ -124,11 +50,11 @@ class Conversation(TimeStampedModel):
         )
     )
     slug = AutoSlugField(
-        unique=True,
+        unique=False,
         populate_from='title',
     )
     is_promoted = models.BooleanField(
-        _('promoted?'),
+        _('Promote conversation?'),
         default=False,
         help_text=_(
             'Promoted conversations appears in the main /conversations/ '
@@ -136,14 +62,13 @@ class Conversation(TimeStampedModel):
         ),
     )
     is_hidden = models.BooleanField(
-        _('hidden?'),
+        _('Hide conversation?'),
         default=False,
         help_text=_(
             'Hidden conversations does not appears in boards or in the main /conversations/ '
             'endpoint.'
         ),
     )
-
     limit_report_users = models.PositiveIntegerField(
         _('Limit users'),
         default=0,
@@ -190,7 +115,7 @@ class Conversation(TimeStampedModel):
             )
 
     def get_absolute_url(self, board=None):
-        kwargs = {'conversation': self}
+        kwargs = {'conversation': self, 'slug': self.slug}
         if board is None:
             board = getattr(self, 'board', None)
         if board:
@@ -199,16 +124,20 @@ class Conversation(TimeStampedModel):
         else:
             return SafeUrl('conversation:detail', **kwargs)
 
-    def get_url(self, which, **kwargs):
+    def get_url(self, which, board=None, **kwargs):
         kwargs['conversation'] = self
-        from ej_boards.models import BoardSubscription
-        subscription = BoardSubscription.objects.filter(conversation=self)
-        if subscription.exists():
-            board = subscription[0].board
-            kwargs['board'] = board
-            which = 'boards:conversation-' + which.split(":", 1)[1]
-            print(which)
-            return SafeUrl(which, **kwargs)
+        kwargs['slug'] = self.slug
+        if board is None:
+            board = getattr(self, 'board', None)
+        if board:
+            from ej_boards.models import BoardSubscription
+            subscription = BoardSubscription.objects.filter(conversation=self)
+            if subscription.exists():
+                board = subscription[0].board
+                kwargs['board'] = board
+                which = 'boards:conversation-' + which.split(":", 1)[1]
+                return SafeUrl(which, **kwargs)
+
         return SafeUrl(which, **kwargs)
 
     def get_anchor(self, name, which, **kwargs):
@@ -399,10 +328,9 @@ class Conversation(TimeStampedModel):
         return Board.get_default_css_palette()
 
 
-# ==============================================================================
-# AUXILIARY MODELS
-
-
+#
+#  AUXILIARY MODELS
+#
 class ConversationTag(TaggedItemBase):
     """
     Add tags to Conversations with real Foreign Keys
@@ -429,9 +357,9 @@ class FavoriteConversation(models.Model):
     )
 
 
-# ==============================================================================
+#
 # UTILITY FUNCTIONS
-
+#
 def make_clean(cls, commit=True, **kwargs):
     obj = cls(**kwargs)
     obj.full_clean()

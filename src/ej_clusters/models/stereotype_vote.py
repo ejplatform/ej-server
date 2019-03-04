@@ -4,7 +4,7 @@ from sidekick import alias
 from boogie import models
 from boogie.fields import EnumField
 from boogie.models import QuerySet
-from ej_conversations import Choice
+from ej_conversations.enums import Choice
 from ej_conversations.models import VoteQuerySet, CommentQuerySet
 
 

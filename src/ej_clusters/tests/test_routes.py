@@ -4,7 +4,7 @@ from ej.testing import UrlTester
 from ej_clusters import routes
 from ej_clusters.models import Stereotype, StereotypeVote, Cluster
 from ej_clusters.mommy_recipes import ClusterRecipes
-from ej_conversations import Choice
+from ej_conversations.enums import Choice
 from ej_conversations.models import Conversation
 from ej_users.models import User
 
