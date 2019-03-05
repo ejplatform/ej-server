@@ -31,10 +31,10 @@ conversation_url = f'<model:conversation>/<slug:slug>/'
 def conversation_list(request,
                       queryset=(Conversation.objects
                           .filter(is_promoted=True, is_hidden=False)),
-                      new_perm='ej.can_add_promoted_conversation',
+                      add_perm='ej.can_add_promoted_conversation',
                       perm_obj=None,
                       url=None):
-    if request.user.has_perm(new_perm, perm_obj):
+    if request.user.has_perm(add_perm, perm_obj):
         url = url or reverse('conversation:create')
         menu_links = [a(_('New Conversation'), href=url)]
     else:

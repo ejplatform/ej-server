@@ -31,7 +31,7 @@ urlpatterns = Router(
 # Constants
 board_profile_admin_url = 'profile/boards/'
 board_base_url = '<model:board>/conversations/'
-board_conversations_url = board_base_url + '<model:conversation>/<slug:slug>/'
+board_conversation_url = board_base_url + '<model:conversation>/<slug:slug>/'
 reports_url = '<model:board>/conversations/<model:conversation>/reports/'
 reports_kwargs = {'login': True}
 
@@ -78,17 +78,10 @@ def board_edit(request, board):
 #
 @urlpatterns.route(board_base_url)
 def conversation_list(request, board):
-    # Attach board to each conversation
-    conversations_ = []
-    for conversation in board.conversations.all():
-        conversation.board = board
-        conversations_.append(conversation)
-
-    # Call super method
     return conversations.conversation_list(
         request,
-        queryset=conversations_,
-        new_perm='ej.can_edit_board',
+        queryset=board.conversations.annotate_attr(board=board),
+        add_perm='ej.can_edit_board',
         perm_obj=board,
         url=reverse('boards:conversation-create', kwargs={'board': board}),
     )
@@ -99,17 +92,17 @@ def conversation_create(request, board):
     return conversations.create(request, board=board)
 
 
-@urlpatterns.route(board_conversations_url)
+@urlpatterns.route(board_conversation_url)
 def conversation_detail(request, board, **kwargs):
     return conversations.detail(request, **kwargs, check=check_board(board))
 
 
-@urlpatterns.route(board_conversations_url + 'edit/', perms=['ej.can_edit_conversation:conversation'])
+@urlpatterns.route(board_conversation_url + 'edit/', perms=['ej.can_edit_conversation:conversation'])
 def conversation_edit(request, board, **kwargs):
     return conversations.edit(request, board=board, check=check_board(board), **kwargs)
 
 
-@urlpatterns.route(board_conversations_url + 'moderate/', perms=['ej.can_edit_conversation:conversation'])
+@urlpatterns.route(board_conversation_url + 'moderate/', perms=['ej.can_edit_conversation:conversation'])
 def conversation_moderate(request, board, **kwargs):
     return conversations.moderate(request, check=check_board(board), **kwargs)
 

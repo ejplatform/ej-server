@@ -1,7 +1,6 @@
 from logging import getLogger
 
 from django.http import Http404, HttpResponseServerError
-from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from hyperpython import a
 from sidekick import import_later
@@ -46,14 +45,11 @@ def conversation_admin_menu_links(conversation, user):
 
     menu_links = []
     if user.has_perm('ej.can_edit_conversation', conversation):
-        url = reverse('conversation:edit',
-                      kwargs={'conversation': conversation, 'slug': conversation.slug})
+        url = conversation.get_url('conversation:edit')
         menu_links.append(a(_('Edit'), href=url))
     if user.has_perm('ej.can_moderate_conversation', conversation):
-        url = reverse('conversation:moderate',
-                      kwargs={'conversation': conversation, 'slug': conversation.slug})
+        url = conversation.get_url('conversation:moderate')
         menu_links.append(a(_('Moderate'), href=url))
-
     return menu_links
 
 
