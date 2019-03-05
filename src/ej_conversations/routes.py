@@ -19,15 +19,7 @@ log = getLogger('ej')
 app_name = 'ej_conversations'
 urlpatterns = Router(
     template='ej_conversations/{name}.jinja2',
-    models={
-        'conversation': models.Conversation,
-        'comment': models.Comment,
-    },
-    lookup_field={
-        'conversation': 'id',
-        'comment': 'slug',
-    },
-    lookup_type='slug',
+    models={'conversation': models.Conversation},
 )
 conversation_url = f'<model:conversation>/<slug:slug>/'
 
@@ -42,7 +34,6 @@ def conversation_list(request,
                       new_perm='ej.can_add_promoted_conversation',
                       perm_obj=None,
                       url=None):
-
     if request.user.has_perm(new_perm, perm_obj):
         url = url or reverse('conversation:create')
         menu_links = [a(_('New Conversation'), href=url)]

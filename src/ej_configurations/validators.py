@@ -12,7 +12,7 @@ try:
 except ImportError:
     COLOR_NAMES = {}
 
-COLOR_RE = re.compile(r'^#[0-9A-Fa-f]{3,4}(?:[0-9A-Fa-f]{3,4})?$')
+COLOR_RE = re.compile(r'^#([0-9A-Fa-f]{3,4}|[0-9A-Fa-f]{6}|[0-9A-Fa-f]{8})$')
 
 
 def validate_color(color):

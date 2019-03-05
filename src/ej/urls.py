@@ -30,7 +30,6 @@ urlpatterns = [
     # Basic authentication and authorization
     path('', include('ej.routes')),
     path('', include('ej_users.routes', namespace='auth')),
-    path('', include('ej_help.routes', namespace='help')),
 
     # Profile URLS
     path('profile/', include(('ej_profiles.routes', 'ej_profiles'), namespace='profile')),
@@ -40,7 +39,7 @@ urlpatterns = [
     # Conversations and other EJ-specific routes
     path('', include('ej_boards.routes', namespace='boards')),
     path('conversations/', include('ej_conversations.routes', namespace='conversation')),
-    path('', include('ej_clusters.routes', namespace='cluster')),
+    path('conversations/', include('ej_clusters.routes', namespace='cluster')),
     path('conversations/', include('ej_reports.routes', namespace='report')),
 
     # Configurations

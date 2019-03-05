@@ -197,22 +197,18 @@ Urls with the intention of explaining how to use the platform. Most of those
 urls are implemented as flat pages and are stored as HTML or markdown under
 either local/pages or lib/pages/.
 
-/start/ (help:start):
+/start/ (configurations:start):
     Landing-page broadly explaining what is EJ and how to use the platform.
-/rules/ (help:rules):
+/rules/ (configurations:rules):
     Explain the rules of how the "EJ game" works.
-/faq/ (help:faq):
+/faq/ (configurations:faq):
     Frequently asked questions.
-/about/ (help:about):
+/about/ (configurations:about):
     About EJ or the organization deploying an instance.
-/usage/ (help:usage):
+/usage/ (configurations:usage):
     Usage terms for the platform.
-/social/ (help:social):
-    Links to EJ social networks.
-/contacts/ (help:contacts):
-    External contacts.
 
-All urls are implemented in the ej_help app.
+All urls are implemented in the ej_configurations app.
 
 
 

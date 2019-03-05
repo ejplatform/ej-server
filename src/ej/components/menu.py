@@ -156,9 +156,9 @@ page_menu.CONVERSATION = thunk(lambda: menu_section(_('Conversations'), [
 
 #: About menu
 page_menu.ABOUT = thunk(lambda: menu_section(_('About'), [
-    link(_('About'), href='help:about-us'),
-    link(_('Frequently Asked Questions'), href='help:faq'),
-    link(_('Usage terms'), href='help:usage'),
+    link(_('About'), href='configurations:about-us'),
+    link(_('Frequently Asked Questions'), href='configurations:faq'),
+    link(_('Usage terms'), href='configurations:usage'),
 ], is_optional=True))
 
 #: Default menu

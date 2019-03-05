@@ -93,6 +93,12 @@
 
 
 {% block content %}
+    <style>
+        #page-wrapper::after {
+            display: none !important;
+            content: none;
+        }
+    </style>
     <div class="landing-page__cover width-full text-center color-brand col flex-center">
         <p class="bold text-1">{{ _('Create opinion surveys') }}</p>
         <p>{{ action_button(_('Try it now!'), href='conversation:list', secondary=true) }}</p>

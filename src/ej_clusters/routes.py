@@ -10,6 +10,7 @@ from boogie.rules import proxy_seq
 from ej_clusters.forms import StereotypeForm, StereotypeVoteCreateFormSet, StereotypeVoteEditFormSet
 from ej_conversations.enums import Choice
 from ej_conversations.models import Conversation, Comment
+from ej_conversations.routes import conversation_url
 from .models import Stereotype, Cluster, StereotypeVote
 
 app_name = 'ej_cluster'
@@ -21,19 +22,15 @@ urlpatterns = Router(
         'stereotype': Stereotype,
         'cluster': Cluster,
     },
-    lookup_field={'conversation': 'slug'},
-    lookup_type={'conversation': 'slug'},
 )
-base_url = 'conversations/<model:conversation>'
 
 
 #
 # Cluster info
 #
-@urlpatterns.route(base_url + 'clusters/',
-                   template='ej_clusters/list-cluster.jinja2',
-                   perms=['ej.can_edit_conversation:conversation'])
-def index(conversation):
+@urlpatterns.route(conversation_url + 'clusters/',
+                   )#perms=['ej.can_edit_conversation:conversation'])
+def index(conversation, slug):
     clusters = proxy_seq(
         conversation.clusters.all(),
         info=cluster_info,
@@ -45,7 +42,7 @@ def index(conversation):
     }
 
 
-@urlpatterns.route(base_url + 'clusters/<model:cluster>/',
+@urlpatterns.route(conversation_url + 'clusters/<model:cluster>/',
                    perms=['ej.can_edit_conversation:conversation'])
 def detail(conversation, cluster):
     return {
@@ -54,7 +51,7 @@ def detail(conversation, cluster):
     }
 
 
-@urlpatterns.route(base_url + 'clusterize/',
+@urlpatterns.route(conversation_url + 'clusterize/',
                    perms=['ej.can_edit_conversation:conversation'])
 def clusterize(conversation):
     clusterization = conversation.get_clusterization(None)
@@ -67,10 +64,19 @@ def clusterize(conversation):
     }
 
 
+@urlpatterns.route('clusters/')
+def list_cluster(request):
+    user_clusters = Cluster.objects.filter(clusterization__conversation__author=request.user)
+    return {
+        'clusters': user_clusters,
+        'create_url': '/profile/clusters/add/',
+    }
+
+
 #
 # Stereotypes
 #
-@urlpatterns.route(base_url + 'stereotypes/',
+@urlpatterns.route(conversation_url + 'stereotypes/',
                    perms=['ej.can_manage_stereotypes:conversation'])
 def stereotype_list(conversation):
     if conversation.is_promoted:
@@ -79,19 +85,19 @@ def stereotype_list(conversation):
         raise Http404
 
 
-@urlpatterns.route(base_url + 'stereotypes/add/',
+@urlpatterns.route(conversation_url + 'stereotypes/add/',
                    perms=['ej.can_manage_stereotypes:conversation'])
 def create_stereotype(request, conversation):
     return create_stereotype_context(request, conversation)
 
 
-@urlpatterns.route(base_url + 'stereotypes/<model:stereotype>/edit/',
+@urlpatterns.route(conversation_url + 'stereotypes/<model:stereotype>/edit/',
                    perms=['ej.can_manage_stereotypes:stereotype'])
 def edit_stereotype(request, conversation, stereotype):
     return edit_stereotype_context(request, conversation, stereotype)
 
 
-@urlpatterns.route(base_url + 'stereotypes/<model:stereotype>/',
+@urlpatterns.route(conversation_url + 'stereotypes/<model:stereotype>/',
                    perms=['ej.can_manage_stereotypes:stereotype'])
 def stereotype_vote(request, conversation, stereotype):
     if request.method == 'POST':
@@ -113,18 +119,6 @@ def stereotype_vote(request, conversation, stereotype):
         'voted_table': votes_table(voted_comments),
         'non_voted_comments_count': non_voted_comments.count(),
         'voted_comments_count': non_voted_comments.count(),
-    }
-
-
-#
-# User profile
-#
-@urlpatterns.route('profile/clusters/')
-def list_cluster(request):
-    user_clusters = Cluster.objects.filter(clusterization__conversation__author=request.user)
-    return {
-        'clusters': user_clusters,
-        'create_url': '/profile/clusters/add/',
     }
 
 

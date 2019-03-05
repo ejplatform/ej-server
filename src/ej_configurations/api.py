@@ -1,6 +1,7 @@
-from . import api_views as views
+from boogie.rest import rest_api
+from . import models
 
 
-def register(router):
-    router.register(r'social_media', views.SocialMediaViewSet)
-    router.register(r'color_pallet', views.ColorPalletViewSet)
+@rest_api.property(models.SocialMediaIcon)
+def fa_class(obj):
+    return obj.fa_class

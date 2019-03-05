@@ -141,19 +141,12 @@ def stereotype_edit(request, board, conversation, stereotype):
 #
 # Reports
 #
-for view in report.loose_perms_views:
+for view in report.loose_perms_views + report.strict_perms_views:
     urlpatterns.register(
         make_view(view),
         path=board_base_url + view.route.path,
         name='report-' + view.route.name,
-        template=view.route.template[0].replace('ej_reports/', 'ej_boards/report-')
-    )
-
-for view in report.strict_perms_views:
-    urlpatterns.register(
-        make_view(view),
-        path=board_base_url + view.route.path,
-        name='report-' + view.route.name,
+        login=True,
+        perms=view.route.perms,
         template=view.route.template[0].replace('ej_reports/', 'ej_boards/report-'),
-        perms=report.strict_perms,
     )

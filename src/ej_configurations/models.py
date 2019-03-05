@@ -6,6 +6,7 @@ from markdown import markdown
 from boogie.rest import rest_api
 from boogie.fields import EnumField, Enum
 from hyperpython import a, div, Text
+from hyperpython.components.icons import FA_COLLECTIONS
 
 from .icons import default_icon_name
 from .sanitizer import sanitize_html
@@ -17,7 +18,7 @@ class Format(Enum):
     MARKDOWN = 'md', _('Markdown')
 
 
-@rest_api(exclude=['index'])
+@rest_api(['social_network', 'url', 'icon_name'])
 class SocialMediaIcon(models.Model):
     """
     Configurable reference to a social media icon.
@@ -48,6 +49,11 @@ class SocialMediaIcon(models.Model):
         _('URL'),
         help_text=_('Link to your social account page.')
     )
+
+    @property
+    def fa_class(self):
+        collection = FA_COLLECTIONS.get(self.icon_name)
+        return collection and f'{collection} fa-{self.icon_name}'
 
     class Meta:
         ordering = ['index', 'id']
@@ -180,9 +186,3 @@ class FragmentLock(models.Model):
     )
 
 
-def class_string(class_list):
-    if class_list:
-        class_ = ' '.join(class_list)
-        return f' class="{class_}"'
-    else:
-        return ''
