@@ -2,9 +2,9 @@ import datetime
 import pytest
 from django.utils import timezone
 
-from ej_powers.models import GivenBridgePower, GivenMinorityPower
-from ej_powers.functions import (promote_comment, is_promoted,
-                                 clean_expired_promotions, give_bridge_power, give_minority_power)
+from ej_gamification.models import GivenBridgePower, GivenMinorityPower
+from ej_gamification.functions import (promote_comment, is_promoted,
+                                       clean_expired_promotions, give_bridge_power, give_minority_power)
 from ej_conversations.mommy_recipes import ConversationRecipes
 
 

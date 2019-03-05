@@ -6,7 +6,7 @@ from django.utils import timezone
 
 from ej.testing.fixture_class import EjRecipes
 from ej_conversations.mommy_recipes import ConversationRecipes
-from ej_powers.models import CommentPromotion, GivenPower, GivenBridgePower, GivenMinorityPower
+from ej_gamification.models import CommentPromotion, GivenPower, GivenBridgePower, GivenMinorityPower
 
 today = datetime.datetime.now(timezone.utc)
 yesterday = today - datetime.timedelta(days=1)

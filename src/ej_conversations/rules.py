@@ -5,7 +5,7 @@ from django.db.models import Q
 from django.utils.timezone import now
 
 from boogie import rules
-from ej_powers.rules import promoted_comments_in_conversation
+from ej_gamification.rules import promoted_comments_in_conversation
 
 from .models import Comment
 

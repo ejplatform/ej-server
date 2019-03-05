@@ -5,7 +5,7 @@ from .options import EjOptions
 class InstalledAppsConf(Base, EjOptions):
     project_apps = [
         # Gamification
-        'ej_powers',
+        'ej_gamification',
 
         # Math
         'ej_reports',

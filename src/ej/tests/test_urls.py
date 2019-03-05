@@ -11,7 +11,6 @@ from ej_users.mommy_recipes import UserRecipes
 # TODO: from ej_gamification.mommy_recipes import GamificationRecipes
 # TODO: from ej_clusterviz.mommy_recipes import ClustervizRecipes
 # TODO: from ej_notifications.mommy_recipes import NotificationRecipes
-# TODO: from ej_powers.mommy_recipes import PowerRecipes
 # TODO: from ej_reports.mommy_recipes import ReportsRecipes
 # TODO: from ej_configurations.mommy_recipes import ConfigurationRecipes
 

@@ -1,8 +1,7 @@
 from django.contrib.auth.models import AnonymousUser
-from ej_powers.models import GivenPower, CommentPromotion
 from ej_conversations.models import Conversation, Comment
 from rules import predicate
-from ej_powers.models import GivenBridgePower, GivenMinorityPower
+from .models import GivenPower, CommentPromotion, GivenBridgePower, GivenMinorityPower
 
 
 @predicate
