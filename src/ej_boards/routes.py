@@ -198,5 +198,6 @@ def check_board(board):
         if not board.has_conversation(conversation):
             raise Http404
         conversation.board = board
+        return conversation
 
     return check_function

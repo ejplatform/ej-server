@@ -20,6 +20,7 @@ def check_promoted(conversation):
     """
     if not conversation.is_promoted or conversation.is_hidden:
         raise Http404
+    return conversation
 
 
 def process_conversation_detail_post(request, conversation):

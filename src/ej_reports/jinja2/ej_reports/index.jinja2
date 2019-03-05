@@ -7,17 +7,17 @@
         <p>{{ conversation.text }}</p>
         <hr>
 
-        <h2>{% trans %}Summary ({{ users }} active users){% endtrans %}</h2>
+        <h2>{% trans users=statistics.participants.voters %}Summary ({{ users }} active users){% endtrans %}</h2>
         <h3>{% trans %}Votes{% endtrans %}</h3>
         {{ conversation|role('stats-table') }}
 
         <h3>{% trans %}Comments{% endtrans %}</h3>
         {{ conversation|role('stats-table', data='comments') }}
-        {% if can_download_data %}{{ conversation|role('download-data', which='votes-data') }}{% endif %}
+        {% if can_view_detail %}{{ conversation|role('download-data', which='votes-data') }}{% endif %}
 
         <h2>{% trans %}Statistics{% endtrans %}</h2>
         {{ conversation|role('comments-stats-table') }}
-        {% if can_download_data %}{{ conversation|role('download-data', which='comments-data') }}{% endif %}
+        {% if can_view_detail %}{{ conversation|role('download-data', which='comments-data') }}{% endif %}
 
         {% if clusters %}
         <h2>{% trans %}Clusters{% endtrans %}</h2>
@@ -27,7 +27,7 @@
             {% endfor %}
         {% endif %}
 
-        {% if can_see_participants %}
+        {% if can_view_detail %}
         <h2>{% trans %}More info{% endtrans %}</h2>
         <dl>
             <dd>{{ conversation.get_anchor(_('Participants'), 'report:participants-table') }}
