@@ -1,5 +1,6 @@
 from django import forms
 from django.template.loader import get_template
+from django.utils.translation import ugettext_lazy as _
 
 from ej.forms import EjModelForm
 from ej.utils.widgets import FileInput
@@ -20,3 +21,4 @@ class BoardForm(EjModelForm):
         model = models.Board
         fields = ['title', 'description', 'slug', 'palette', 'image']
         widgets = {'palette': PaletteWidget, 'image': FileInput}
+        help_texts = {'slug': _('You cannot change this value afterwards')}

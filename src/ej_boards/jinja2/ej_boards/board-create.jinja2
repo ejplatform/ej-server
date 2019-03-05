@@ -3,15 +3,13 @@
 
 
 {% block content %}
-    {% block form_identification %}
-        <h1 class="h2 text-accent text-center">{{ _('Create board') }}</h1>
-        <p class="text-center">{{ _('Fill up the form to create a new conversation board') }}</p>
-    {% endblock %}
+    <h1 class="h2 text-accent text-center">{{ title|default(_('Create board')) }}</h1>
+    <p class="text-center">{{ _('Fill up the form to create a new conversation board') }}</p>
     <form method="post" enctype="multipart/form-data">
         {{ csrf_input }}
         {{ form }}
         <p class="text-center margin-y3">
-            <input type="submit" value="{{ _('Create Board') }}" name="create" class="is-primary">
+            <input type="submit" value="{{ action|default(_('Create Board')) }}" name="create" class="is-primary">
         </p>
     </form>
 {% endblock %}

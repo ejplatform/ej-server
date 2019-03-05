@@ -1,1 +1,11 @@
 @import 'mendeleev/elements';
+
+label + input + br {
+    display: none;
+}
+
+label + input + br + .helptext {
+    @extend legend;
+    margin-top: size(0.25) - $_label-margin-bottom;
+    margin-bottom: size(1);
+}

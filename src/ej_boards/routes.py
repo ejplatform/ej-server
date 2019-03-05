@@ -1,15 +1,15 @@
 from django.http import Http404
 from django.shortcuts import redirect
 from django.urls import reverse
+from django.utils.translation import ugettext_lazy as _
 
 from boogie.router import Router
 from ej_boards.models import Board
-from ej_clusters import routes as cluster_routes
+from ej_clusters import routes as clusters
 from ej_clusters.models import Stereotype
-from ej_conversations import forms
 from ej_conversations import routes as conversations
 from ej_conversations.models import Conversation
-from ej_reports import routes as report_routes
+from ej_reports import routes as report
 from .forms import BoardForm
 
 app_name = 'ej_boards'
@@ -63,16 +63,14 @@ def board_create(request):
 
 @urlpatterns.route('<model:board>/edit/', perms=['ej.can_edit_board:board'])
 def board_edit(request, board):
-    if request.method == 'POST':
-        form = BoardForm(request.POST, request.FILES, instance=board)
-        if form.is_valid():
-            form.instance.save(owner=request.user)
-            return redirect(board.get_absolute_url())
-    else:
-        form = BoardForm(instance=board)
-    return {
-        'form': form,
-    }
+    form = BoardForm(instance=board, request=request)
+    form.fields['slug'].help_text = _('You cannot change this value')
+    form.fields['slug'].disabled = True
+
+    if form.is_valid_post():
+        form.save()
+        return redirect(board.get_absolute_url())
+    return {'form': form}
 
 
 #
@@ -121,62 +119,62 @@ def conversation_moderate(request, board, **kwargs):
 #
 @urlpatterns.route('<model:board>/conversations/<model:conversation>/stereotypes/',
                    perms=['ej.can_manage_stereotypes:conversation'])
-def conversation_stereotype_list(board, conversation):
+def stereotype_list(board, conversation):
     assure_correct_board(conversation, board)
-    return cluster_routes.stereotype_list_context(conversation)
+    return clusters.stereotype_list_context(conversation)
 
 
 @urlpatterns.route('<model:board>/conversations/<model:conversation>/stereotypes/add/',
                    perms=['ej.can_manage_stereotypes:conversation'])
-def conversation_stereotype_create(request, board, conversation):
+def stereotype_create(request, board, conversation):
     assure_correct_board(conversation, board)
-    return cluster_routes.create_stereotype_context(request, conversation)
+    return clusters.create_stereotype_context(request, conversation)
 
 
 @urlpatterns.route('<model:board>/conversations/<model:conversation>/stereotypes/<model:stereotype>/edit/',
                    perms=['ej.can_manage_stereotypes:conversation'])
-def conversation_stereotype_edit(request, board, conversation, stereotype):
+def stereotype_edit(request, board, conversation, stereotype):
     assure_correct_board(conversation, board)
-    return cluster_routes.edit_stereotype_context(request, conversation, stereotype)
+    return clusters.edit_stereotype_context(request, conversation, stereotype)
 
 
 #
 # Reports
 #
 @urlpatterns.route(reports_url, **reports_kwargs)
-def report(request, board, conversation):
+def report_index(request, board, conversation):
     assure_correct_board(conversation, board)
-    return report_routes.index(request, conversation)
+    return report.index(request, conversation)
 
 
 @urlpatterns.route(reports_url + 'participants/', staff=True, **reports_kwargs)
 def report_participants(board, conversation):
     assure_correct_board(conversation, board)
-    return report_routes.participants_table(conversation)
+    return report.participants_table(conversation)
 
 
 @urlpatterns.route(reports_url + 'scatter/', **reports_kwargs)
 def report_scatter(board, conversation):
     assure_correct_board(conversation, board)
-    return report_routes.scatter(conversation)
+    return report.scatter(conversation)
 
 
 @urlpatterns.route(reports_url + 'votes.<format>', **reports_kwargs)
 def report_votes_data(board, conversation, format):
     assure_correct_board(conversation, board)
-    return report_routes.votes_data(conversation, format)
+    return report.votes_data(conversation, format)
 
 
 @urlpatterns.route(reports_url + 'users.<format>', **reports_kwargs)
 def report_users_data(board, conversation, format):
     assure_correct_board(conversation, board)
-    return report_routes.users_data(conversation, format)
+    return report.users_data(conversation, format)
 
 
 @urlpatterns.route(reports_url + 'comments.<format>', **reports_kwargs)
 def report_comments_data(board, conversation, format):
     assure_correct_board(conversation, board)
-    return report_routes.comments_data(conversation, format)
+    return report.comments_data(conversation, format)
 
 
 #
@@ -202,26 +200,3 @@ def check_board(board):
         conversation.board = board
 
     return check_function
-
-
-def get_conversation_edit_context(request, conversation, board=None):
-    if request.method == 'POST':
-        form = forms.ConversationForm(
-            data=request.POST,
-            instance=conversation,
-        )
-        if form.is_valid():
-            form.save()
-            return redirect(conversation.get_absolute_url() + 'moderate/')
-    else:
-        form = forms.ConversationForm(instance=conversation)
-    tags = list(map(str, conversation.tags.all()))
-
-    return {
-        'form': form,
-        'conversation': conversation,
-        'tags': ",".join(tags),
-        'can_promote_conversation': request.user.has_perm('can_publish_promoted'),
-        'comments': list(conversation.comments.filter(status='pending')),
-        'board': board,
-    }
