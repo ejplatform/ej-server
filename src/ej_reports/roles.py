@@ -1,14 +1,15 @@
 from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _
 from hyperpython import html
+from hyperpython.components import html_table
 from sidekick import import_later
 
-from ej.roles import with_template, html_table
+from ej.roles import with_template
 from ej_clusters.models import Cluster
 from ej_conversations import models
-from ej_dataviz import render_dataframe
 
 np = import_later('numpy')
+
 User = get_user_model()
 DEFAULT_FORMATS = {'csv': 'CSV', 'msgpack': 'MsgPack', 'json': 'JSON'}
 
@@ -102,3 +103,43 @@ def prepare_dataframe(df, pc=False):
             if data.dtype == float:
                 df[col] = data.apply(lambda x: '-' if np.isnan(x) else '%d%%' % x)
     return render_dataframe(df, col_display=COLUMN_NAMES, class_='table long')
+
+
+def render_dataframe(df, index=False, *, datatable=False, class_=(),
+                     col_display=None, **kwargs):
+    """
+    Convert a Pandas dataframe to a hyperpython structure.
+
+    Args:
+        df (DataFrame):
+            Input data frame.
+        col_display (map):
+            An optional mapping from column names in a dataframe to their
+            corresponding human friendly counterparts.
+        datatable (bool):
+            If True, prepare data to be handled by the Data table js library.
+        index (bool):
+            If given, add index as the first column.
+
+    Additional attributes (such as class, id, etc) can be passed as keyword
+    arguments.
+    """
+    if datatable:
+        class_ = [*class_, 'display', 'cell-border', 'compact']
+
+    data = np.array(df.astype(object))
+    columns = df.columns
+
+    if index:
+        data = np.hstack([df.index[:, None], df])
+        columns = [df.index.name or 'index', *columns]
+
+    columns = as_display_values(columns, col_display)
+    return html_table(data, columns=columns, class_=class_, **kwargs)
+
+
+def as_display_values(seq, translations=None):
+    if translations is None:
+        return list(map(str, seq))
+    else:
+        return [str(translations.get(x, x)) for x in seq]
