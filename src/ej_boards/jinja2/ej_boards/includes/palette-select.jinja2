@@ -1,0 +1,23 @@
+<style>
+    .color-choice {
+        border-radius: 50%;
+        display: inline-block;
+        position: relative;
+        top: 0.1rem;
+        height: 1.2rem;
+        width: 1.2rem;
+    }
+</style>
+<ul class="row wrap list-reset">
+    {% for _, lst, __ in widget.optgroups %}
+        {% set params = lst[0] %}
+        <li title="{{ params.value }}">
+            <label for="radio-{{ params.value }}" class="flex items-center content-center margin-2 size-x6">
+                <input type="radio"{% if params.selected %} checked{% endif %} id="radio-{{ params.value }}" name="{{ params.name }}" value="{{ params.value }}">
+                    <span class="color-choice bg-theme-{{ params.value }}"> </span>
+                    <span class="color-choice bg-theme-{{ params.value }}-light"></span>
+                {{ params.label }}
+            </label>
+        </li>
+    {% endfor %}
+</ul>

@@ -1,21 +1,22 @@
-from django.forms.renderers import TemplatesSetting
 from django import forms
+from django.template.loader import get_template
 
-from . import models
+from ej.forms import EjModelForm
 from ej.utils.widgets import FileInput
+from . import models
 
 
 class PaletteWidget(forms.RadioSelect):
-    template_name = 'forms/templates/radio.html'
+    template_name = 'ej_boards/includes/palette-select.jinja2'
+    renderer = get_template(template_name)
 
-    def render(self, name, value, attrs, renderer):
+    def render(self, name, value, attrs=None, renderer=None):
         context = self.get_context(name, value, attrs)
-        renderer = TemplatesSetting()
-        return renderer.render(self.template_name, context)
+        return self.renderer.render(context)
 
 
-class BoardForm(forms.ModelForm):
+class BoardForm(EjModelForm):
     class Meta:
         model = models.Board
-        fields = ['slug', 'title', 'description', 'palette', 'image']
+        fields = ['title', 'description', 'slug', 'palette', 'image']
         widgets = {'palette': PaletteWidget, 'image': FileInput}

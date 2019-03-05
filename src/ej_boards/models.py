@@ -14,6 +14,14 @@ class Board(TimeStampedModel):
     """
     A board that contains a list of conversations.
     """
+    PALETTE_CHOICES = (
+        ('brand', _('Default')),
+        ('accent', _('Alternative')),
+        ('grey', _('Grey')),
+        ('green', _('Green')),
+        ('orange', _('Orange')),
+        ('purple', _('Purple')),
+    )
     slug = models.SlugField(
         _('Slug'),
         unique=True,
@@ -32,24 +40,17 @@ class Board(TimeStampedModel):
         _('Description'),
         blank=True,
     )
-
-    PALLET_CHOICES = (
-        ('Blue', 'Blue'),
-      ('Grey', 'Grey'),
-      ('Pink', 'Pink'),
-      ('Green', 'Green'),
-      ('Orange', 'Orange'),
-      ('Purple', 'Purple'),
+    palette = models.CharField(
+        _('Palette'),
+        max_length=10,
+        choices=PALETTE_CHOICES,
+        default='Blue',
     )
-
-    palette = models.CharField(_('Palette'),
-                               max_length=10,
-                               choices=PALLET_CHOICES,
-                               default='Blue')
-
-    image = models.ImageField(_('Image'),
-                              blank=True,
-                              null=True)
+    image = models.ImageField(
+        _('Image'),
+        blank=True,
+        null=True,
+    )
 
     @property
     def conversations(self):
@@ -57,7 +58,7 @@ class Board(TimeStampedModel):
 
     @property
     def tags(self):
-        return ConversationTag.objects.all()
+        return ConversationTag.objects.filter(id__in=self.conversations)
 
     class Meta:
         verbose_name = _('Board')
@@ -82,6 +83,10 @@ class Board(TimeStampedModel):
     def get_absolute_url(self):
         return f'/{self.slug}/'
 
+    def get_url(self, which, **kwargs):
+        kwargs['board'] = self
+        return SafeUrl(which, **kwargs)
+
     def add_conversation(self, conversation):
         """
         Add conversation to board.
@@ -92,19 +97,7 @@ class Board(TimeStampedModel):
         """
         Return True if conversation is present in board.
         """
-        return bool(self.board_subscriptions.filter(conversation=conversation))
-
-    def get_url(self, which, **kwargs):
-        kwargs['board'] = self
-        return SafeUrl(which, **kwargs)
-
-    @property
-    def css_palette(self):
-        return self.palette.lower() + 'Palette'
-
-    @staticmethod
-    def get_default_css_palette():
-        return 'bluePalette'
+        return self.board_subscriptions.filter(conversation=conversation).exists()
 
 
 class BoardSubscription(models.Model):

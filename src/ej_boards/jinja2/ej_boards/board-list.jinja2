@@ -1,20 +1,34 @@
-{% extends 'base.jinja2' %}
+{% extends 'ej_boards/base.jinja2' %}
+{% set main_class = main_class|default('container-1 pad-x0 col items-center flex-start') %}
+
 
 {% block content %}
-    <div class="BoardList">
-        <div class="BoardList-title">
-            <h1 class="h1">{{ _('Boards') }}</h1>
-            <p>{{ _('Create boards to group similar conversations!') }}</p>
-        </div>
+    {# Title #}
+    <h1 class="h2 text-accent">{{ _('Boards') }}</h1>
+    <p class="measure">
+        {{ _('Boards are separate spaces that you can put your own conversations.') }}
+        {% if can_add_board %}{{ _('This page lets you find the boards you created and find new boards.') }}{% endif %}
+    </p>
 
-        {# Links #}
-        <div class="BoardList-linkList">
-            {% for board in boards %}
-                <p>{{ link(_(board.title), href=board.get_url('boards:conversation-list')) }}</p>
-            {% endfor %}
-        </div>
+    {# List of boards #}
+    <h2 class="h3 text-accent">{{ _('List of boards') }}</h2>
+    {% if boards %}
+        {% for board in boards %}
+            <dl>
+                {% set url = board.get_url('boards:conversation-list') %}
+                <dt class="uppercase"><i class="far fa-comments"></i> {{ link(board.title, href=url, class_='bold underline') }}</dt>
+                <dd>{{ link(board.slug + '/', href=url, class_='bold') }} - {{ board.description }}</dd>
+            </dl>
+        {% endfor %}
+    {% else %}
         {% if can_add_board %}
-            {{ action_button(_('Create a new board!'), 'boards:board-create') }}
+            <p>{{ _('You haven\'t created any boards yet!' ) }}</p>
+        {% else %}
+            <p>{{ _('Sorry, you cannot create new boards.' ) }}</p>
         {% endif %}
-    </div>
+    {% endif %}
+
+    {% if can_add_board %}
+        {{ action_button(_('Create a new board!'), 'boards:board-create') }}
+    {% endif %}
 {% endblock %}

@@ -302,31 +302,6 @@ class Conversation(TimeStampedModel):
         except ObjectDoesNotExist:
             self.make_favorite(user)
 
-    @property
-    def css_light_palette(self):
-        return self.css_palette + '-light'
-
-    @property
-    def css_text_palette(self):
-        return self.css_palette + '-text'
-
-    @property
-    def css_palette(self):
-        return self._get_css_palette()
-
-    def _get_css_palette(self):
-        from ej_boards.models import BoardSubscription
-        try:
-            board = BoardSubscription.objects.get(conversation_id=self.id).board
-            return board.css_palette
-        except BoardSubscription.DoesNotExist:
-            return Conversation.get_default_css_palette()
-
-    @staticmethod
-    def get_default_css_palette():
-        from ej_boards.models import Board
-        return Board.get_default_css_palette()
-
 
 #
 #  AUXILIARY MODELS

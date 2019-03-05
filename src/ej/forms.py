@@ -74,6 +74,15 @@ class EjModelForm(EjForm, ModelForm):
     A ModelForm version of the extended form.
     """
 
+    def save(self, commit=True, **kwargs):
+        instance = super().save(commit=False)
+        for k, v in kwargs.items():
+            setattr(instance, k, v)
+        if commit:
+            instance.save()
+            self._save_m2m()
+        return instance
+
 
 class PlaceholderForm(EjForm):
     """

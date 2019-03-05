@@ -36,14 +36,20 @@ conversation_url = f'<model:conversation>/<slug:slug>/'
 # Display conversations
 #
 @urlpatterns.route('', name='list')
-def conversation_list(request):
-    if request.user.has_perm('ej.can_add_promoted_conversation'):
-        url = reverse('conversation:create')
+def conversation_list(request,
+                      queryset=(Conversation.objects
+                          .filter(is_promoted=True, is_hidden=False)),
+                      new_perm='ej.can_add_promoted_conversation',
+                      perm_obj=None,
+                      url=None):
+
+    if request.user.has_perm(new_perm, perm_obj):
+        url = url or reverse('conversation:create')
         menu_links = [a(_('New Conversation'), href=url)]
     else:
         menu_links = []
     return {
-        'conversations': Conversation.objects.filter(is_promoted=True, is_hidden=False),
+        'conversations': getattr(queryset, 'all', lambda: queryset)(),
         'title': _('Public conversations'),
         'subtitle': _('Participate voting and creating comments!'),
         'menu_links': menu_links,
@@ -51,7 +57,7 @@ def conversation_list(request):
 
 
 @urlpatterns.route(conversation_url, login=True)
-def detail(request, conversation, slug=None, check=check_promoted):
+def detail(request, conversation, slug=None, check=check_promoted, **kwargs):
     check(conversation)
     user = request.user
     if request.method == 'POST':
@@ -61,6 +67,7 @@ def detail(request, conversation, slug=None, check=check_promoted):
         'conversation': conversation,
         'comment': next_comment(conversation, user),
         'menu_links': conversation_admin_menu_links(conversation, user),
+        **kwargs,
     }
 
 

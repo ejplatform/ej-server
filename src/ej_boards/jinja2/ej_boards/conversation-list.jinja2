@@ -1,9 +1,8 @@
 {% extends 'ej_conversations/list.jinja2' %}
 
-{% block metaOG2 %}
 
-    <meta name="description" property="og:title" content="{{current_board.title}}">
-    <meta property="og:description" content="Participe e dê sua opinião com comentários e votos!">  
-    <!-- Twitter && Telegram -->
-    <meta name="twitter:title" content="{{current_board.title}}">
+{% block metaOG2 %}
+    <meta name="description" property="og:title" content="{{ board.title }}">
+    <meta property="og:description" content="{{ board.description }}">
+    <meta name="twitter:title" content="{{ board.title }}">
 {% endblock metaOG2 %}
