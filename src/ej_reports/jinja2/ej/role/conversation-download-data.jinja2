@@ -2,9 +2,7 @@
     <span class="DownloadLinkList-title">{{ title|default(_('Downloads: ')) }}</span>
     <ul class="DownloadLinkList-links">
         {%- for format, name in formats -%}
-            <li><a
-                href="{{ url(view_name, kwargs={'conversation': conversation, 'format': format, 'slug': conversation.slug}) }}">{{ name }}</a>
-            </li>
+            <li>{{ conversation.get_anchor(name, view_name, format=format) }}</li>
         {% endfor %}
     </ul>
 </div>

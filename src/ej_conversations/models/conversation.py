@@ -135,7 +135,7 @@ class Conversation(TimeStampedModel):
             if subscription.exists():
                 board = subscription[0].board
                 kwargs['board'] = board
-                which = 'boards:conversation-' + which.split(":", 1)[1]
+                which = 'boards:' + which.replace(':', '-')
                 return SafeUrl(which, **kwargs)
 
         return SafeUrl(which, **kwargs)

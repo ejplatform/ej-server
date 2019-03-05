@@ -16,6 +16,7 @@ urlpatterns = Router(
 app_name = 'ej_reports'
 reports_url = conversation_url + 'reports/'
 loose_perms = []
+strict_perms = urlpatterns.perms
 User = get_user_model()
 
 

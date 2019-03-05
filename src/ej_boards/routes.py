@@ -1,10 +1,10 @@
-from django.http import Http404
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
 from boogie.router import Router
 from ej_boards.models import Board
+from ej_boards.utils import make_view, assure_correct_board, check_board
 from ej_clusters import routes as clusters
 from ej_clusters.models import Stereotype
 from ej_conversations import routes as conversations
@@ -141,63 +141,19 @@ def stereotype_edit(request, board, conversation, stereotype):
 #
 # Reports
 #
-@urlpatterns.route(reports_url, **reports_kwargs)
-def report_index(request, board, conversation):
-    assure_correct_board(conversation, board)
-    return report.index(request, conversation)
+for view in report.loose_perms_views:
+    urlpatterns.register(
+        make_view(view),
+        path=board_base_url + view.route.path,
+        name='report-' + view.route.name,
+        template=view.route.template[0].replace('ej_reports/', 'ej_boards/report-')
+    )
 
-
-@urlpatterns.route(reports_url + 'participants/', staff=True, **reports_kwargs)
-def report_participants(board, conversation):
-    assure_correct_board(conversation, board)
-    return report.participants_table(conversation)
-
-
-@urlpatterns.route(reports_url + 'scatter/', **reports_kwargs)
-def report_scatter(board, conversation):
-    assure_correct_board(conversation, board)
-    return report.scatter(conversation)
-
-
-@urlpatterns.route(reports_url + 'votes.<format>', **reports_kwargs)
-def report_votes_data(board, conversation, format):
-    assure_correct_board(conversation, board)
-    return report.votes_data(conversation, format)
-
-
-@urlpatterns.route(reports_url + 'users.<format>', **reports_kwargs)
-def report_users_data(board, conversation, format):
-    assure_correct_board(conversation, board)
-    return report.users_data(conversation, format)
-
-
-@urlpatterns.route(reports_url + 'comments.<format>', **reports_kwargs)
-def report_comments_data(board, conversation, format):
-    assure_correct_board(conversation, board)
-    return report.comments_data(conversation, format)
-
-
-#
-# Utility functions
-#
-def assure_correct_board(conversation, board):
-    """
-    Raise 404 if conversation does not belong to board.
-    """
-    if not board.has_conversation(conversation):
-        raise Http404
-    conversation.board = board
-
-
-def check_board(board):
-    """
-    Raise 404 if conversation does not belong to board.
-    """
-
-    def check_function(conversation):
-        if not board.has_conversation(conversation):
-            raise Http404
-        conversation.board = board
-        return conversation
-
-    return check_function
+for view in report.strict_perms_views:
+    urlpatterns.register(
+        make_view(view),
+        path=board_base_url + view.route.path,
+        name='report-' + view.route.name,
+        template=view.route.template[0].replace('ej_reports/', 'ej_boards/report-'),
+        perms=report.strict_perms,
+    )

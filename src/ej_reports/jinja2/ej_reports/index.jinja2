@@ -30,7 +30,7 @@
         {% if can_view_detail %}
         <h2>{% trans %}More info{% endtrans %}</h2>
         <dl>
-            <dd>{{ conversation.get_anchor(_('Participants'), 'report:participants-table') }}
+            <dt>{% block participant_table_link %}{{ conversation.get_anchor(_('Participants'), 'report:participants-table') }}{% endblock %}</dt>
             <dd>{% trans %}See statistics about each participant.{% endtrans %}</dd>
         </dl>
         {% endif %}
