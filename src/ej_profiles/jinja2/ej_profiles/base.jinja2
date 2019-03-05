@@ -5,7 +5,7 @@
 
 {% block content %}
     {% if profile.has_image %}
-        <img class="size-6 pad-t3 block rounded-full"
+        <img class="size-6 margin-t3 block rounded-full"
              src="{{ profile.image_url }}" alt="{{ _('Profile picture') }}">
     {% else %}
         <img class="size-6 pad-t3 block relative"

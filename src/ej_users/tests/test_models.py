@@ -1,6 +1,6 @@
 from boogie.testing.pytest import ModelTester
 from ej.testing import EjRecipes
-from ej_profiles.choices import Race, Gender
+from ej_profiles.enums import Race, Gender
 from ej_users import password_reset_token
 from ej_users.models import User, PasswordResetToken, clean_expired_tokens
 from ej_users.mommy_recipes import UserRecipes
@@ -24,8 +24,8 @@ class TestUserManager(EjRecipes):
 
     def test_user_profile_default_values(self, db):
         user = User.objects.create_user('email@at.com', 'pass')
-        assert user.profile.gender == Gender.UNFILLED
-        assert user.profile.race == Race.UNFILLED
+        assert user.profile.gender == Gender.NOT_FILLED
+        assert user.profile.race == Race.NOT_FILLED
         assert user.profile.age is None
         assert user.profile.gender_other == ''
         assert user.profile.country == ''

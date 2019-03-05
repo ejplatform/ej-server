@@ -1,3 +1,4 @@
+import datetime
 import hashlib
 
 from allauth.socialaccount.models import SocialAccount
@@ -7,14 +8,12 @@ from django.contrib.staticfiles.storage import staticfiles_storage
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _, ugettext as __
-
 from rest_framework.authtoken.models import Token
-import datetime
+from sidekick import delegate_to
 
 from boogie.fields import EnumField
 from boogie.rest import rest_api
-from sidekick import delegate_to
-from .choices import Race, Gender
+from .enums import Race, Gender
 
 User = get_user_model()
 
@@ -25,10 +24,10 @@ class Profile(models.Model):
     User profile
     """
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='raw_profile')
-    race = EnumField(Race, _('Race'), default=Race.UNFILLED)
+    race = EnumField(Race, _('Race'), default=Race.NOT_FILLED)
     ethnicity = models.CharField(_('Ethnicity'), blank=True, max_length=50)
     education = models.CharField(_('Education'), blank=True, max_length=140)
-    gender = EnumField(Gender, _('Gender identity'), default=Gender.UNFILLED)
+    gender = EnumField(Gender, _('Gender identity'), default=Gender.NOT_FILLED)
     gender_other = models.CharField(_('User provided gender'), max_length=50, blank=True)
     age = models.IntegerField(_('Age'), null=True, blank=True)
     birth_date = models.DateField(_('Birth Date'), null=True, blank=True)
@@ -117,14 +116,18 @@ class Profile(models.Model):
         fields = ['city', 'state', 'country', 'occupation', 'education', 'ethnicity', 'gender', 'race',
                   'political_activity', 'biography']
         field_map = {field.name: field for field in self._meta.fields}
+        null_values = {Gender.NOT_FILLED, Race.NOT_FILLED}
 
         # Create a tuples of (attribute, human-readable name, value)
         triple_list = []
         for field in fields:
             description = field_map[field].verbose_name
-            getter = getattr(self, f'get_{field}_display', lambda: getattr(self, field))
-            triple = (field, description.capitalize(), getter())
-            triple_list.append(triple)
+            value = getattr(self, field)
+            if value in null_values:
+                value = None
+            elif hasattr(self, f'get_{field}_display'):
+                value = getattr(self, f'get_{field}_display')()
+            triple_list.append((field, description, value))
 
         # Age is not a real field, but a property. We insert it after occupation
         triple_list.insert(3, ('age', _('Age'), self.age))

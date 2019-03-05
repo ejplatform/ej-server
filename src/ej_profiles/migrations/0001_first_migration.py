@@ -4,7 +4,7 @@ import boogie.fields.enum_field
 from django.conf import settings
 from django.db import migrations, models
 import django.db.models.deletion
-import ej_profiles.choices
+import ej_profiles.enums
 
 
 class Migration(migrations.Migration):
@@ -20,10 +20,10 @@ class Migration(migrations.Migration):
             name='Profile',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('race', boogie.fields.enum_field.EnumField(ej_profiles.choices.Race, default=ej_profiles.choices.Race(0), verbose_name='Race')),
+                ('race', boogie.fields.enum_field.EnumField(ej_profiles.enums.Race, default=ej_profiles.enums.Race(0), verbose_name='Race')),
                 ('ethnicity', models.CharField(blank=True, max_length=50, verbose_name='Ethnicity')),
                 ('education', models.CharField(blank=True, max_length=140, verbose_name='Education')),
-                ('gender', boogie.fields.enum_field.EnumField(ej_profiles.choices.Gender, default=ej_profiles.choices.Gender(0), verbose_name='Gender identity')),
+                ('gender', boogie.fields.enum_field.EnumField(ej_profiles.enums.Gender, default=ej_profiles.enums.Gender(0), verbose_name='Gender identity')),
                 ('gender_other', models.CharField(blank=True, max_length=50, verbose_name='User provided gender')),
                 ('birth_date', models.DateField(blank=True, null=True, verbose_name='Birth Date')),
                 ('country', models.CharField(blank=True, max_length=50, verbose_name='Country')),

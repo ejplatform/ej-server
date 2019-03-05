@@ -6,11 +6,11 @@
         <dl class="description text-4">
             {% for title, info in profile.profile_fields(true) %}
                 <dt>{{ title }}</dt>
-                {% if info == 'undeclared' %}
-                    <dd>{{ _((info).title()) }}</dd>
-                {% else %}
+{#                {% if info == 'undeclared' %}#}
+{#                    <dd>{{ _((info).title()) }}</dd>#}
+{#                {% else %}#}
                     <dd>{{ (info or '-') }}</dd>
-                {% endif %}
+{#                {% endif %}#}
             {% endfor %}
         </dl>
     </div>
