@@ -7,11 +7,11 @@
     {% include 'ej_users/includes/ej-cat.jinja2' %}
     <h2 class="h4">{{ _('What do you want to do?') }}</h2>
     <ul class="width-full leading-loose">
-        <li><a href="{{ url('auth:change-password') }}">{% trans %}Change your password{% endtrans %}</a></li>
-        <li><a href="{{ url('auth:manage-email') }}">{% trans %}Manage e-mail settings{% endtrans %}</a></li>
+        <li><a href="{{ url('account:change-password') }}">{% trans %}Change your password{% endtrans %}</a></li>
+        <li><a href="{{ url('account:manage-email') }}">{% trans %}Manage e-mail settings{% endtrans %}</a></li>
         <li><a href="{{ url('profile:detail') }}">{% trans %}Manage user profile{% endtrans %}</a></li>
         <li><a href="{{ url('auth:login') }}">{% trans %}Login with a different user{% endtrans %}</a></li>
-        <li><a href="{{ url('auth:logout') }}">{% trans %}Logout{% endtrans %}</a></li>
-        <li><a href="{{ url('auth:remove-account') }}">{% trans %}Remove account{% endtrans %}</a></li>
+        <li><a href="{{ url('account:logout') }}">{% trans %}Logout{% endtrans %}</a></li>
+        <li><a href="{{ url('account:remove-account') }}">{% trans %}Remove account{% endtrans %}</a></li>
     </ul>
 {% endblock %}

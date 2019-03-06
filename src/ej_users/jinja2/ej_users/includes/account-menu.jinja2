@@ -1,10 +1,10 @@
 <section title="{{ _('Account') }}">
     <h1>{{ _('Account') }}</h1>
     <ul>
-        <li><a href="{{ url('auth:account') }}">{% trans %}Manage account{% endtrans %}</a></li>
-        <li><a href="{{ url('auth:change-password') }}">{% trans %}Change password{% endtrans %}</a></li>
+        <li><a href="{{ url('account:index') }}">{% trans %}Manage account{% endtrans %}</a></li>
+        <li><a href="{{ url('account:change-password') }}">{% trans %}Change password{% endtrans %}</a></li>
         <li><a href="{{ url('profile:detail') }}">{% trans %}Profile{% endtrans %}</a></li>
-        <li><a href="{{ url('auth:logout') }}">{% trans %}Logout{% endtrans %}</a></li>
+        <li><a href="{{ url('account:logout') }}">{% trans %}Logout{% endtrans %}</a></li>
     </ul>
 </section>
 {{ page_menu.ABOUT() }}

@@ -6,18 +6,17 @@ from django.contrib.auth import get_user_model
 from django.core.mail import send_mail
 from django.db import IntegrityError
 from django.http import Http404, JsonResponse
-from django.http import HttpResponseServerError
 from django.shortcuts import redirect
 from django.template.loader import get_template
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from rest_framework import status
 from rest_framework.authtoken.models import Token
-from allauth.account import views as allauth
+
 from boogie.router import Router
 from . import forms
-from . import password_reset_token
 from . import models
+from . import password_reset_token
 from .socialbuttons import social_buttons
 
 User = get_user_model()
@@ -25,18 +24,12 @@ User = get_user_model()
 app_name = 'ej_users'
 urlpatterns = Router(
     template='ej_users/{name}.jinja2',
-    models={
-        'token': models.PasswordResetToken,
-    },
+    models={'token': models.PasswordResetToken},
     lookup_field={'token': 'url'}
-
 )
 log = logging.getLogger('ej')
 
 
-#
-# Non-authenticated users
-#
 @urlpatterns.route('login/')
 def login(request, redirect_to='/'):
     form = forms.LoginForm(request=request)
@@ -157,73 +150,9 @@ def recover_password_token(request, token):
 
 
 #
-# Account management
-#
-@urlpatterns.route('account/', login=True)
-def account(request):
-    if request.method == 'POST':
-        user = request.user
-        if request.POST.get('remove_account', False) == 'true':
-            user.is_active = False
-            user.delete()
-            return redirect(settings.EJ_ANONYMOUS_HOME_PATH)
-        else:
-            return HttpResponseServerError('invalid POST request')
-    return {
-        'user': request.user,
-        'profile': request.user.profile,
-    }
-
-
-@urlpatterns.route('account/logout/', login=True)
-def logout(request):
-    if request.method == 'POST':
-        auth.logout(request)
-        return {'has_logout': True}
-    return {'has_logout': False}
-
-
-@urlpatterns.route('account/remove/', login=True)
-def remove_account(request):
-    form = forms.RemoveAccountForm(request=request)
-    farewell_message = None
-    if form.is_valid_post():
-        user = request.user
-        if form.cleaned_data['confirm'] is False:
-            form.add_error('confirm', _('You must confirm that you want to remove your account.'))
-        elif form.cleaned_data['email'] != user.email:
-            form.add_error('email', _('Wrong e-mail address'))
-        elif user.is_superuser:
-            form.add_error(None, _('Cannot remove superuser accounts'))
-        else:
-            models.remove_account(user)
-            farewell_message = _('We are sorry to see you go :(<br><br>Good luck in your journey.')
-    return {'form': form, 'farewell_message': farewell_message}
-
-
-change_email = urlpatterns.register(
-    allauth.EmailView.as_view(
-        success_url=reverse_lazy('auth:manage-email'),
-    ),
-    path='account/manage-email/',
-    name='manage-email',
-    login=True,
-)
-
-change_password = urlpatterns.register(
-    allauth.PasswordChangeView.as_view(
-        success_url=reverse_lazy('auth:change-password'),
-    ),
-    path='account/change-password/',
-    name='change-password',
-    login=True,
-)
-
-
-#
 # Registration via API + cookies
 #
-@urlpatterns.route('profile/api-key/')
+@urlpatterns.route('login/api-key/')
 def api_key(request):
     if request.user.id is None:
         raise Http404

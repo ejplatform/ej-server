@@ -30,6 +30,7 @@ urlpatterns = [
     # Basic authentication and authorization
     path('', include('ej.routes')),
     path('', include('ej_users.routes', namespace='auth')),
+    path('account/', include('ej_users.routes_account', namespace='account')),
 
     # Profile URLS
     path('profile/', include(('ej_profiles.routes', 'ej_profiles'), namespace='profile')),
