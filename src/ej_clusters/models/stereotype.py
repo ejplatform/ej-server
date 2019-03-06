@@ -23,19 +23,19 @@ class Stereotype(models.Model):
     name = models.CharField(
         _('Name'),
         max_length=64,
+        help_text=_('Public identification of persona.'),
     )
     owner = models.ForeignKey(
         settings.AUTH_USER_MODEL,
+        related_name='stereotypes',
         on_delete=models.CASCADE,
     )
     description = models.TextField(
         _('Description'),
         blank=True,
         help_text=_(
-            'A detailed description of your stereotype for future reference. '
-            'You can specify a background history, or give hints on the exact '
-            'profile the stereotype wants to capture. This information is not '
-            'public.'
+            'Specify a background history, or give hints about the profile this persona wants to '
+            'capture. This information is optional and is not made public.'
         ),
     )
     objects = StereotypeQuerySet.as_manager()

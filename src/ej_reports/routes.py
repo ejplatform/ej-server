@@ -8,13 +8,13 @@ from ej_conversations.models import Conversation
 from ej_conversations.routes import conversation_url, check_promoted
 
 urlpatterns = Router(
+    base_path=conversation_url + 'reports/',
     template=['ej_reports/{name}.jinja2', 'generic.jinja2'],
     models={'conversation': Conversation},
     login=True,
     perms=['ej.can_view_report_detail:conversation']
 )
 app_name = 'ej_reports'
-reports_url = conversation_url + 'reports/'
 loose_perms = []
 strict_perms = urlpatterns.perms
 User = get_user_model()
@@ -23,7 +23,7 @@ User = get_user_model()
 #
 # Base report URLs
 #
-@urlpatterns.route(reports_url, perms=loose_perms)
+@urlpatterns.route('', perms=loose_perms)
 def index(request, conversation, slug, check=check_promoted):
     check(conversation)
     user = request.user
@@ -46,17 +46,17 @@ def index(request, conversation, slug, check=check_promoted):
     }
 
 
-@urlpatterns.route(reports_url + 'participants/')
+@urlpatterns.route('participants/')
 def participants_table(conversation, slug, check=check_promoted):
     return {'conversation': check(conversation)}
 
 
-@urlpatterns.route(reports_url + 'scatter/', perms=loose_perms)
+@urlpatterns.route('scatter/', perms=loose_perms)
 def scatter(conversation, slug, check=check_promoted):
     return {'conversation': check(conversation)}
 
 
-@urlpatterns.route(reports_url + 'scatter/pca.json', perms=loose_perms)
+@urlpatterns.route('scatter/pca.json', perms=loose_perms)
 def scatter_pca_json(conversation, slug, check=check_promoted):
     check(conversation)
     df = conversation.votes.pca_reduction()
@@ -66,7 +66,7 @@ def scatter_pca_json(conversation, slug, check=check_promoted):
 #
 # Raw data
 #
-@urlpatterns.route(reports_url + 'data/votes.<format>')
+@urlpatterns.route('data/votes.<format>')
 def votes_data(conversation, format, slug, check=check_promoted):
     check(conversation)
     filename = conversation.slug + '-votes'
@@ -74,7 +74,7 @@ def votes_data(conversation, format, slug, check=check_promoted):
     return data_response(data, format, filename)
 
 
-@urlpatterns.route(reports_url + 'data/comments.<format>')
+@urlpatterns.route('data/comments.<format>')
 def comments_data(conversation, format, slug, check=check_promoted):
     check(conversation)
     check(conversation)
@@ -83,7 +83,7 @@ def comments_data(conversation, format, slug, check=check_promoted):
     return data_response(data, format, filename)
 
 
-@urlpatterns.route(reports_url + 'data/users.<format>')
+@urlpatterns.route('data/users.<format>')
 def users_data(conversation, format, slug, check=check_promoted):
     check(conversation)
     filename = conversation.slug + '-users'

@@ -1,37 +1,31 @@
-from django.forms import modelformset_factory, ModelForm, ValidationError
-from django.utils.translation import ugettext_lazy as _
+from django.forms import modelformset_factory, ModelForm
 
+from ej.forms import EjModelForm
 from .models import Stereotype, StereotypeVote
 
 
-class StereotypeForm(ModelForm):
+class StereotypeForm(EjModelForm):
+    """
+    Create and edit new stereotypes
+    """
+
     class Meta:
+        # We have to add the owner attribute to enable the unique owner + name
+        # validation constraint. This is not ideal since we have to fake the
+        # existence of this field using default values
         model = Stereotype
-        fields = ['name', 'description']
+        fields = ['name', 'description', 'owner']
 
-    def __init__(self, *args, owner=None, **kwargs):
+    def __init__(self, *args, owner=None, instance=None, **kwargs):
+        self.owner_instance = owner = owner or instance.owner
+        kwargs['instance'] = instance
+        kwargs['initial'] = {'owner': owner, **kwargs.get('initial', {})}
         super(StereotypeForm, self).__init__(*args, **kwargs)
-        self.owner = owner or self.instance.owner
 
-    def clean(self):
-        super(StereotypeForm, self).clean()
-        name = self.cleaned_data.get('name')
-        if self.instance and name == self.instance.name:
-            return self.cleaned_data
-        elif self._check_stereotype_exists(name):
-            msg = _('A stereotype with this name already exists.')
-            raise ValidationError(msg)
-        return self.cleaned_data
-
-    def save(self, commit=True):
-        stereotype = super().save(commit=False)
-        stereotype.owner = self.owner
-        if commit:
-            stereotype.save()
-        return stereotype
-
-    def _check_stereotype_exists(self, name):
-        return Stereotype.objects.filter(name=name, owner=self.owner).exists()
+    def full_clean(self):
+        self.data = self.data.copy()
+        self.data['owner'] = str(self.owner_instance.id)
+        return super().full_clean()
 
 
 class StereotypeVoteForm(ModelForm):

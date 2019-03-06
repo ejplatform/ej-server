@@ -4,8 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from boogie.router import Router
 from ej_boards.models import Board
-from ej_boards.utils import make_view, assure_correct_board, check_board
-from ej_clusters import routes as clusters
+from ej_boards.utils import make_view, check_board
 from ej_clusters.models import Stereotype
 from ej_conversations import routes as conversations
 from ej_conversations.models import Conversation
@@ -13,10 +12,6 @@ from ej_reports import routes as report
 from .forms import BoardForm
 
 app_name = 'ej_boards'
-
-#
-# Board management
-#
 urlpatterns = Router(
     template=['ej_boards/{name}.jinja2', 'generic.jinja2'],
     models={
@@ -108,36 +103,12 @@ def conversation_moderate(request, board, **kwargs):
 
 
 #
-# Stereotypes and clusters
-#
-@urlpatterns.route('<model:board>/conversations/<model:conversation>/stereotypes/',
-                   perms=['ej.can_manage_stereotypes:conversation'])
-def stereotype_list(board, conversation):
-    assure_correct_board(conversation, board)
-    return clusters.stereotype_list_context(conversation)
-
-
-@urlpatterns.route('<model:board>/conversations/<model:conversation>/stereotypes/add/',
-                   perms=['ej.can_manage_stereotypes:conversation'])
-def stereotype_create(request, board, conversation):
-    assure_correct_board(conversation, board)
-    return clusters.create_stereotype_context(request, conversation)
-
-
-@urlpatterns.route('<model:board>/conversations/<model:conversation>/stereotypes/<model:stereotype>/edit/',
-                   perms=['ej.can_manage_stereotypes:conversation'])
-def stereotype_edit(request, board, conversation, stereotype):
-    assure_correct_board(conversation, board)
-    return clusters.edit_stereotype_context(request, conversation, stereotype)
-
-
-#
 # Reports
 #
 for view in report.loose_perms_views + report.strict_perms_views:
     urlpatterns.register(
         make_view(view),
-        path=board_base_url + view.route.path,
+        path=f'{board_base_url}{report.urlpatterns.base_path}{view.route.path}',
         name='report-' + view.route.name,
         login=True,
         perms=view.route.perms,

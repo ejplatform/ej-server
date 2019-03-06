@@ -25,7 +25,7 @@ class Clusterization(TimeStampedModel):
     conversation = models.OneToOneField(
         'ej_conversations.Conversation',
         on_delete=models.CASCADE,
-        related_name='clusterization',
+        related_name='clusterizations',
     )
     cluster_status = EnumField(
         ClusterStatus,

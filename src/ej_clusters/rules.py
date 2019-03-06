@@ -108,8 +108,8 @@ def can_be_clusterized(user, conversation):
 #
 # Stereotypes
 #
-@rules.register_perm('ej.can_manage_stereotypes')
-def can_manage_stereotypes(user, conversation):
+@rules.register_perm('ej.can_edit_stereotype')
+def can_edit_stereotype(user, stereotype):
     """
     Check if user can manage stereotypes in conversation.
 
