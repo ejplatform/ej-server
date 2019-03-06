@@ -1,16 +1,16 @@
+from django.db.models import Count
 from django.http import Http404
 from django.shortcuts import redirect
-from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
-from hyperpython import a, input_, label, Block
+from hyperpython import input_, label, Block
 from hyperpython.components import html_list, html_table
 
+from boogie.models import F
 from boogie.router import Router
-from boogie.rules import proxy_seq
 from ej_clusters.forms import StereotypeForm, StereotypeVoteCreateFormSet, StereotypeVoteEditFormSet
 from ej_conversations.enums import Choice
 from ej_conversations.models import Conversation, Comment
-from ej_conversations.routes import conversation_url
+from ej_conversations.routes import conversation_url, check_promoted
 from .models import Stereotype, Cluster, StereotypeVote
 
 app_name = 'ej_cluster'
@@ -23,53 +23,19 @@ urlpatterns = Router(
         'cluster': Cluster,
     },
 )
+stereotype_perms = {'perms': ['ej.can_manage_stereotypes:conversation']}
 
 
 #
-# Cluster info
+# Cluster visualization
 #
-@urlpatterns.route(conversation_url + 'clusters/',
-                   )#perms=['ej.can_edit_conversation:conversation'])
-def index(conversation, slug):
-    clusters = proxy_seq(
-        conversation.clusters.all(),
-        info=cluster_info,
-    )
-    return {
-        'content_title': _('Clusters'),
-        'conversation': conversation,
-        'clusters': clusters,
-    }
-
-
-@urlpatterns.route(conversation_url + 'clusters/<model:cluster>/',
-                   perms=['ej.can_edit_conversation:conversation'])
-def detail(conversation, cluster):
+@urlpatterns.route(conversation_url + 'clusters/')
+def index(conversation, slug, check=check_promoted):
     return {
         'conversation': conversation,
-        'cluster': cluster,
-    }
-
-
-@urlpatterns.route(conversation_url + 'clusterize/',
-                   perms=['ej.can_edit_conversation:conversation'])
-def clusterize(conversation):
-    clusterization = conversation.get_clusterization(None)
-    if clusterization is not None:
-        clusterization.update_clusterization(force=True)
-    return {
-        'content_title': _('Force clusterization'),
-        'clusterization': clusterization,
-        'conversation': conversation,
-    }
-
-
-@urlpatterns.route('clusters/')
-def list_cluster(request):
-    user_clusters = Cluster.objects.filter(clusterization__conversation__author=request.user)
-    return {
-        'clusters': user_clusters,
-        'create_url': '/profile/clusters/add/',
+        'clusters': conversation.clusters
+            .annotate(size=Count(F.users))
+            .prefetch_related('stereotypes'),
     }
 
 
@@ -78,53 +44,11 @@ def list_cluster(request):
 #
 @urlpatterns.route(conversation_url + 'stereotypes/',
                    perms=['ej.can_manage_stereotypes:conversation'])
-def stereotype_list(conversation):
-    if conversation.is_promoted:
-        return stereotype_list_context(conversation)
-    else:
-        raise Http404
+def stereotype_list(conversation, slug, check=check_promoted):
+    check(conversation)
+    return stereotype_list_context(conversation)
 
 
-@urlpatterns.route(conversation_url + 'stereotypes/add/',
-                   perms=['ej.can_manage_stereotypes:conversation'])
-def create_stereotype(request, conversation):
-    return create_stereotype_context(request, conversation)
-
-
-@urlpatterns.route(conversation_url + 'stereotypes/<model:stereotype>/edit/',
-                   perms=['ej.can_manage_stereotypes:stereotype'])
-def edit_stereotype(request, conversation, stereotype):
-    return edit_stereotype_context(request, conversation, stereotype)
-
-
-@urlpatterns.route(conversation_url + 'stereotypes/<model:stereotype>/',
-                   perms=['ej.can_manage_stereotypes:stereotype'])
-def stereotype_vote(request, conversation, stereotype):
-    if request.method == 'POST':
-        for k, v in request.POST.items():
-            if k.startswith('choice-'):
-                pk = int(k[7:])
-                comment = Comment.objects.get(pk=pk, conversation=conversation)
-                stereotype.vote(comment, v.lower())
-
-    title = _('Stereotype votes ({conversation})').format(conversation=conversation)
-    non_voted_comments = stereotype.non_voted_comments(conversation)
-    voted_comments = stereotype.voted_comments(conversation)
-
-    return {
-        'content_title': title,
-        'conversation': conversation,
-        'stereotype': stereotype,
-        'non_voted_table': votes_table(non_voted_comments),
-        'voted_table': votes_table(voted_comments),
-        'non_voted_comments_count': non_voted_comments.count(),
-        'voted_comments_count': non_voted_comments.count(),
-    }
-
-
-#
-# Auxiliary functions
-#
 def stereotype_list_context(conversation):
     clusterization = conversation.get_clusterization(None)
     stereotypes = () if clusterization is None else clusterization.stereotypes.all()
@@ -135,6 +59,12 @@ def stereotype_list_context(conversation):
         'stereotype_url': conversation.get_absolute_url() + 'stereotypes/',
         'conversation_url': conversation.get_absolute_url(),
     }
+
+
+@urlpatterns.route(conversation_url + 'stereotypes/add/',
+                   perms=['ej.can_manage_stereotypes:conversation'])
+def create_stereotype(request, conversation):
+    return create_stereotype_context(request, conversation)
 
 
 def create_stereotype_context(request, conversation):
@@ -167,6 +97,12 @@ def create_stereotype_context(request, conversation):
     }
 
 
+@urlpatterns.route(conversation_url + 'stereotypes/<model:stereotype>/edit/',
+                   perms=['ej.can_manage_stereotypes:stereotype'])
+def edit_stereotype(request, conversation, stereotype):
+    return edit_stereotype_context(request, conversation, stereotype)
+
+
 def edit_stereotype_context(request, conversation, stereotype):
     if stereotype.owner != request.user:
         raise Http404
@@ -197,26 +133,34 @@ def edit_stereotype_context(request, conversation, stereotype):
     }
 
 
-def cluster_info(cluster):
-    stereotypes = cluster.stereotypes.all()
-    user_data = [
-        (user.username, user.name)
-        for user in cluster.users.all()
-    ]
+@urlpatterns.route(conversation_url + 'stereotypes/<model:stereotype>/',
+                   perms=['ej.can_manage_stereotypes:stereotype'])
+def stereotype_vote(request, conversation, stereotype):
+    if request.method == 'POST':
+        for k, v in request.POST.items():
+            if k.startswith('choice-'):
+                pk = int(k[7:])
+                comment = Comment.objects.get(pk=pk, conversation=conversation)
+                stereotype.vote(comment, v.lower())
+
+    title = _('Stereotype votes ({conversation})').format(conversation=conversation)
+    non_voted_comments = stereotype.non_voted_comments(conversation)
+    voted_comments = stereotype.voted_comments(conversation)
+
     return {
-        'size': cluster.users.count(),
-        'stereotypes': stereotypes,
-        'stereotype_links': [
-            a(str(stereotype),
-              href=reverse(
-                  'cluster:stereotype-vote', kwargs={
-                      'conversation': cluster.conversation,
-                      'stereotype': stereotype,
-                  }))
-            for stereotype in stereotypes
-        ],
-        'users': html_table(user_data, columns=[_('Username'), _('Name')])
+        'content_title': title,
+        'conversation': conversation,
+        'stereotype': stereotype,
+        'non_voted_table': votes_table(non_voted_comments),
+        'voted_table': votes_table(voted_comments),
+        'non_voted_comments_count': non_voted_comments.count(),
+        'voted_comments_count': non_voted_comments.count(),
     }
+
+
+#
+# Auxiliary functions
+#
 
 
 def votes_table(comments):

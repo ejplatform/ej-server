@@ -4,7 +4,8 @@ from django.db.models import Count
 
 from boogie import rules
 from ej_conversations.models import Conversation
-from . import models, ClusterStatus
+from . import models
+from ej_clusters.enums import ClusterStatus
 
 log = logging.getLogger('ej')
 

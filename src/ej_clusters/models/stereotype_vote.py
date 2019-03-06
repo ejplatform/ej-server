@@ -3,25 +3,9 @@ from sidekick import alias
 
 from boogie import models
 from boogie.fields import EnumField
-from boogie.models import QuerySet
 from ej_conversations.enums import Choice
-from ej_conversations.models import VoteQuerySet, CommentQuerySet
+from .querysets import StereotypeVoteQuerySet
 
-
-# ==============================================================================
-# QUERYSET
-
-class StereotypeVoteQuerySet(QuerySet):
-    """
-    Represents a table of StereotypeVote objects.
-    """
-
-    votes = (lambda self: self)
-    votes_table = VoteQuerySet.votes_table
-
-
-# ==============================================================================
-# MODEL
 
 class StereotypeVote(models.Model):
     """
@@ -46,18 +30,3 @@ class StereotypeVote(models.Model):
 
     def __str__(self):
         return f'StereotypeVote({self.author}, value={self.choice})'
-
-
-# ==============================================================================
-# PATCH STANDARD COMMENT QUERYSET
-
-class CommentQuerySetMixin:
-    def stereotype_votes(self):
-        """
-        Return a queryset with all stereotype votes related to the current
-        comments.
-        """
-        return StereotypeVote.objects.filter(comment__in=self)
-
-
-CommentQuerySet.stereotype_votes = CommentQuerySetMixin.stereotype_votes

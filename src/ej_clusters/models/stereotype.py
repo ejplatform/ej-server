@@ -1,3 +1,4 @@
+from logging import getLogger
 from random import randrange
 
 from django.conf import settings
@@ -5,61 +6,13 @@ from django.db.models import OuterRef, Subquery
 from django.utils.translation import ugettext_lazy as _
 
 from boogie import models
-from boogie.models import QuerySet
 from boogie.rest import rest_api
 from ej_conversations.enums import Choice
-from ej_conversations.mixins import UserMixin, conversation_filter
-from ej_conversations.models import Comment
+from .querysets import StereotypeQuerySet
 from .stereotype_vote import StereotypeVote
-from .. import log
 
+log = getLogger('ej')
 
-# ==============================================================================
-# QUERYSET
-
-class StereotypeQuerySet(UserMixin, QuerySet):
-    """
-    Represents a table of Stereotype objects.
-    """
-
-    _votes_from_comments = (lambda _, comments: comments.stereotype_votes())
-
-    def fill_votes(self, choice=Choice.DISAGREE, comments=None):
-        """
-        Gather all comments voted by the current queryset and fill the votes of
-        the other stereotypes with the given vote.
-
-        Args:
-            choice:
-                The choice to fill in (agree, disagree, etc)
-            comments:
-                Optionally restrict votes to the comments in the given
-                queryset, if given.
-
-        Returns:
-            None
-        """
-        raise NotImplementedError
-
-    def comments(self, conversation=None):
-        """
-        Return a comments queryset with all comments voted by the given
-        stereotypes.
-
-        Args:
-            conversation:
-                Filter comments by conversation, if given. Can be a conversation
-                instance, an id, or a queryset.
-        """
-        votes = StereotypeVote.objects.filter(author__in=self)
-        comments = Comment.objects.filter(stereotype_votes__in=votes)
-        if conversation:
-            comments = comments.filter(**conversation_filter(conversation))
-        return comments
-
-
-# ==============================================================================
-# MODEL
 
 @rest_api(['name', 'description', 'owner'], inline=True)
 class Stereotype(models.Model):
@@ -71,14 +24,18 @@ class Stereotype(models.Model):
         _('Name'),
         max_length=64,
     )
-    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    owner = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+    )
     description = models.TextField(
         _('Description'),
         blank=True,
         help_text=_(
             'A detailed description of your stereotype for future reference. '
             'You can specify a background history, or give hints on the exact '
-            'profile the stereotype wants to capture.'
+            'profile the stereotype wants to capture. This information is not '
+            'public.'
         ),
     )
     objects = StereotypeQuerySet.as_manager()

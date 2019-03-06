@@ -1,40 +1,21 @@
+from logging import getLogger
+
 from django.urls import reverse
 from model_utils.models import TimeStampedModel
 from sidekick import delegate_to, lazy
 
 from boogie import models, rules
 from boogie.fields import EnumField
-from boogie.models import QuerySet, Manager
 from boogie.rest import rest_api
 from ej_conversations.models import Conversation
-from .mixins import ClusterizationBaseMixin
+from .querysets import ClusterizationManager
 from .stereotype import Stereotype
-from .utils import use_transaction
-from .. import ClusterStatus, log, NOT_GIVEN
+from ..enums import ClusterStatus
+from ..utils import use_transaction
 
+NOT_GIVEN = object()
+log = getLogger('ej')
 
-# ==============================================================================
-# QUERYSET AND MANAGER
-
-class ClusterizationQuerySet(ClusterizationBaseMixin, QuerySet):
-    """
-    Represents a table of Clusterization objects.
-    """
-
-    def conversations(self):
-        return Conversation.objects.filter(clusterization__in=self)
-
-
-class ClusterizationManager(Manager.from_queryset(ClusterizationQuerySet)):
-    def create_with_stereotypes(self):
-        """
-        Create clusterization with the given stereotypes.
-        """
-        raise NotImplementedError
-
-
-# ==============================================================================
-# MODEL
 
 @rest_api(['conversation', 'cluster_status'])
 class Clusterization(TimeStampedModel):
@@ -113,9 +94,9 @@ class Clusterization(TimeStampedModel):
                 self.save()
 
 
-# ==============================================================================
+#
 # AUXILIARY METHODS
-
+#
 def get_clusterization(conversation, default=NOT_GIVEN):
     """
     Initialize a clusterization object for the given conversation, if it does
