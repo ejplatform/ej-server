@@ -26,7 +26,7 @@ User = get_user_model()
 #
 @urlpatterns.route('', perms=loose_perms)
 def index(request, conversation, slug, check=check_promoted):
-    check(conversation)
+    check(conversation, request)
     user = request.user
     can_view_detail = user.has_perm('ej.can_view_report_detail', conversation)
     statistics = conversation.statistics()
@@ -53,13 +53,13 @@ def participants_table(conversation, slug, check=check_promoted):
 
 
 @urlpatterns.route('scatter/', perms=loose_perms)
-def scatter(conversation, slug, check=check_promoted):
-    return {'conversation': check(conversation)}
+def scatter(request, conversation, slug, check=check_promoted):
+    return {'conversation': check(conversation, request)}
 
 
 @urlpatterns.route('scatter/pca.json', perms=loose_perms)
-def scatter_pca_json(conversation, slug, check=check_promoted):
-    check(conversation)
+def scatter_pca_json(request, conversation, slug, check=check_promoted):
+    check(conversation, request)
     df = conversation.votes.pca_reduction()
     return {'votes': json.dumps(df.tolist())}
 
@@ -68,25 +68,24 @@ def scatter_pca_json(conversation, slug, check=check_promoted):
 # Raw data
 #
 @urlpatterns.route('data/votes.<format>')
-def votes_data(conversation, format, slug, check=check_promoted):
-    check(conversation)
+def votes_data(request, conversation, format, slug, check=check_promoted):
+    check(conversation, request)
     filename = conversation.slug + '-votes'
     data = conversation.votes.dataframe()
     return data_response(data, format, filename)
 
 
 @urlpatterns.route('data/comments.<format>')
-def comments_data(conversation, format, slug, check=check_promoted):
-    check(conversation)
-    check(conversation)
+def comments_data(request, conversation, format, slug, check=check_promoted):
+    check(conversation, request)
     filename = conversation.slug + '-comments'
     data = conversation.comments.statistics_summary_dataframe()
     return data_response(data, format, filename)
 
 
 @urlpatterns.route('data/users.<format>')
-def users_data(conversation, format, slug, check=check_promoted):
-    check(conversation)
+def users_data(request, conversation, format, slug, check=check_promoted):
+    check(conversation, request)
     filename = conversation.slug + '-users'
     data = conversation.users.statistics_summary_dataframe()
     return data_response(data, format, filename)

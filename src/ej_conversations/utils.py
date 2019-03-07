@@ -14,21 +14,23 @@ forms = import_later('.forms', package=__package__)
 #
 # Functions
 #
-def check_promoted(conversation):
+def check_promoted(conversation, request):
     """
     Raise a Http404 if conversation is not promoted
     """
-    if not conversation.is_promoted or conversation.is_hidden:
+    if not conversation.is_promoted:
+        raise Http404
+    if conversation.is_hidden and not request.user.has_perm('ej.can_edit_conversation', conversation):
         raise Http404
     return conversation
 
 
-def process_conversation_detail_post(request, conversation):
+def process_conversation_detail_post(request, conversation, form):
     """
     Process a POST in a conversation:detail view..
     """
 
-    runner = ConversationDetailPostActions(request, conversation)
+    runner = ConversationDetailPostActions(request, conversation, form)
     action = request.POST['action']
     try:
         method = getattr(runner, 'action_' + action)
@@ -36,7 +38,7 @@ def process_conversation_detail_post(request, conversation):
         log.warning(f'user {request.user.id} se nt invalid POST request: {request.POST}')
         return HttpResponseServerError('invalid action')
     else:
-        return method(request.POST)
+        method(request.POST)
 
 
 def conversation_admin_menu_links(conversation, user):
@@ -82,10 +84,11 @@ def normalize_status(value):
 # Auxiliary classes
 #
 class ConversationDetailPostActions:
-    def __init__(self, request, conversation):
+    def __init__(self, request, conversation, form):
         self.request = request
         self.conversation = conversation
         self.user = request.user
+        self.form = form
 
     def action_vote(self, data):
         """
@@ -106,9 +109,8 @@ class ConversationDetailPostActions:
         User is posting a new comment. We need to validate the form and try to
         keep the same comment that was displayed before.
         """
-        comment_form = forms.CommentForm(data, conversation=self.conversation)
-        if comment_form.is_valid():
-            new_comment = comment_form.cleaned_data['content']
+        if self.form.is_valid():
+            new_comment = self.form.cleaned_data['content']
             new_comment = self.conversation.create_comment(self.user, new_comment)
             log.info(f'user {self.user.id} posted comment {new_comment.id} on {self.conversation.id}')
 

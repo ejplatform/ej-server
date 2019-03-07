@@ -103,7 +103,7 @@ class Conversation(TimeStampedModel):
     #
     first_tag = lazy(lambda self: self.tags.values_list('name', flat=True).first(), name='first_tag')
     tag_names = lazy(lambda self: list(self.tags.values_list('name', flat=True)), name='tag_names')
-    n_comments = lazy(lambda self: self.comments.count(), name='n_comments')
+    n_comments = lazy(lambda self: self.comments.filter(status=Comment.STATUS.approved).count(), name='n_comments')
     n_favorites = lazy(lambda self: self.favorites.count(), name='n_favorites')
     n_votes = lazy(lambda self: self.votes.count(), name='n_votes')
     n_user_votes = lazy(lambda self: self.votes.filter(author=self.for_user).count(), name='n_user_votes')
@@ -175,7 +175,8 @@ class Conversation(TimeStampedModel):
         """
 
         # Convert status, if necessary
-        if author.id == self.author.id:
+        if status is None and (author.id == self.author.id
+                               or author.has_perm('ej.can_edit_conversation', self)):
             kwargs['status'] = Comment.STATUS.approved
         else:
             kwargs['status'] = normalize_status(status)

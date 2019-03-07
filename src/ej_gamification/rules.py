@@ -1,13 +1,13 @@
-from django.contrib.auth.models import AnonymousUser
-from ej_conversations.models import Conversation, Comment
 from rules import predicate
+
+from ej_conversations.models import Conversation, Comment
 from .models import GivenPower, CommentPromotion, GivenBridgePower, GivenMinorityPower
 
 
 @predicate
 def has_opinion_bridge_power(user, conversation):
     """
-    Return true if user has the "opinion bridge"
+    Return true if user is a "opinion bridge" in conversation.
     """
     return GivenBridgePower.objects.filter(user=user, conversation=conversation).exists()
 
@@ -54,13 +54,12 @@ def promote_set(user):
     return conversations
 
 
-def promoted_comments_in_conversation(user, conversation):
+def promoted_comments(user, conversation):
     """
     Return all comments promoted in a conversation for a user
     """
-    if not isinstance(user, AnonymousUser):
-        comment_promotions = CommentPromotion.objects.filter(comment__conversation=conversation, users=user)
-        comments = Comment.objects.filter(commentpromotion__in=comment_promotions)
-        return comments
-    else:
+    if not user.is_authenticated:
         return Comment.objects.none()
+    else:
+        promotions = CommentPromotion.timeframed.filter(comment__conversation=conversation, users=user)
+        return Comment.objects.filter(promotions__in=promotions)

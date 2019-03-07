@@ -67,14 +67,6 @@ class Stereotype(models.Model):
         StereotypeVote.objects.bulk_update(votes)
         return votes
 
-    def next_comment(self, conversation):
-        """
-        Get next available comment for the given conversation.
-        """
-        remaining = self.non_voted_comments(conversation)
-        size = remaining.count()
-        return remaining[randrange(size)]
-
     def non_voted_comments(self, conversation):
         """
         Return a queryset with all comments that did not receive votes.

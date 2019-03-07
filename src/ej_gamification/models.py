@@ -11,7 +11,6 @@ from jsonfield import JSONField
 from model_utils.models import TimeFramedModel
 from polymorphic.models import PolymorphicModel
 
-from ej_conversations.fields import UserRef, CommentRef, ConversationRef
 from .functions import promote_comment
 from .manager import GivenPowerManager
 
@@ -21,13 +20,21 @@ log = logging.getLogger('ej')
 
 class CommentPromotion(TimeFramedModel):
     """
-    Describes the act of one user promoting an specific comment.
+    User endorsement to an specific comment.
 
-    Better use the :func:`ej_gamification.promote_comment` function instead of
-    creating instances of this class manually.
+    Use :func:`ej_gamification.promote_comment` instead of creating instances
+    of this class manually.
     """
-    comment = CommentRef()
-    promoter = UserRef(related_name='promotions')
+    comment = models.ForeignKey(
+        'ej_conversations.Comment',
+        on_delete=models.CASCADE,
+        related_name='promotions',
+    )
+    promoter = models.ForeignKey(
+        get_user_model(),
+        on_delete=models.CASCADE,
+        related_name='promotions',
+    )
     users = models.ManyToManyField(
         get_user_model(),
         related_name='see_promotions',
@@ -52,8 +59,16 @@ class GivenPower(PolymorphicModel, TimeFramedModel):
     Relation with other users are stored in a CommaSeparatedIntegerField blob
     to make DB usage more efficient.
     """
-    user = UserRef()
-    conversation = ConversationRef()
+    promoter = models.ForeignKey(
+        get_user_model(),
+        on_delete=models.CASCADE,
+        related_name='given_powers',
+    )
+    conversation= models.ForeignKey(
+        'ej_conversations.Conversation',
+        on_delete=models.CASCADE,
+        related_name='given_powers',
+    )
     data = JSONField(default=dict)
     is_exhausted = models.BooleanField(default=False)
     is_expired = property(lambda self: self.end < datetime.now(timezone.utc))

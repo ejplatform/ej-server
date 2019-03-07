@@ -34,15 +34,21 @@ def conversation_list(request,
                       perm_obj=None,
                       url=None,
                       context=None):
-    if request.user.has_perm(add_perm, perm_obj):
+    user = request.user
+    if user.has_perm(add_perm, perm_obj):
         url = url or reverse('conversation:create')
         menu_links = [a(_('New Conversation'), href=url)]
     else:
         menu_links = []
 
-    # Annotate queryset for efficiency db access
+    # Select the list of conversations: staff get to see hidden conversations while
+    # regular users cannot
+    if not (user.is_staff or user.is_superuser):
+        queryset = queryset.filter(is_hidden=False)
+
+    # Annotate queryset for efficient db access
     annotations = ('n_votes', 'n_comments', 'n_user_votes', 'first_tag', 'n_favorites', 'author_name')
-    queryset = queryset.filter(is_hidden=False).cache_annotations(*annotations, user=request.user)
+    queryset = queryset.cache_annotations(*annotations, user=user)
 
     return {
         'conversations': queryset,
@@ -55,15 +61,18 @@ def conversation_list(request,
 
 @urlpatterns.route(conversation_url, login=True)
 def detail(request, conversation, slug=None, check=check_promoted, **kwargs):
-    check(conversation)
+    check(conversation, request)
     user = request.user
+    form = forms.CommentForm(conversation=conversation, request=request)
+
     if request.method == 'POST':
-        process_conversation_detail_post(request, conversation)
+        process_conversation_detail_post(request, conversation, form)
 
     return {
         'conversation': conversation,
         'comment': next_comment(conversation, user),
         'menu_links': conversation_admin_menu_links(conversation, user),
+        'comment_form': form,
         **kwargs,
     }
 
@@ -85,7 +94,7 @@ def create(request, context=None, **kwargs):
 @urlpatterns.route(conversation_url + 'edit/',
                    perms=['ej.can_edit_conversation:conversation'])
 def edit(request, conversation, slug=None, check=check_promoted, **kwargs):
-    check(conversation)
+    check(conversation, request)
     form = forms.ConversationForm(request=request, instance=conversation)
     can_publish = request.user.has_perm('can_publish_promoted')
 
@@ -119,7 +128,7 @@ def edit(request, conversation, slug=None, check=check_promoted, **kwargs):
 @urlpatterns.route(conversation_url + 'moderate/',
                    perms=['ej.can_moderate_conversation:conversation'])
 def moderate(request, conversation, slug=None, check=check_promoted):
-    check(conversation)
+    check(conversation, request)
     form = forms.ModerationForm(request=request)
 
     if form.is_valid_post():

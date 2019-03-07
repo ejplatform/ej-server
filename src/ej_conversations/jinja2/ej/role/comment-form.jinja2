@@ -10,7 +10,9 @@
         <form method="post" up-target="main" up-restore-scroll="true">
             {{ csrf_input }}
             <input type="hidden" name="action" value="comment">
-            <textarea placeholder="{{ _('Comment here') }}">{{ content or '' }}</textarea>
+            {{ form.non_field_errors()}}
+            {{ form.content.errors }}
+            {{ form.content }}
             <div class="comment-form__count"><span>0</span> / 240</div>
             <div class="clearfix"></div>
             <input type="submit" name="submit" value="{{ _('Comment') }}">

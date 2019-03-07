@@ -4,7 +4,7 @@ from random import randrange
 from django.db.models import Window, Count, Q
 from django.db.models.functions import FirstValue
 
-from boogie.models import QuerySet, F
+from boogie.models import QuerySet, F, Value, IntegerField
 from .comment import Comment
 from ..mixins import ConversationMixin
 
@@ -63,8 +63,11 @@ class ConversationQuerySet(ConversationMixin, QuerySet):
 
         # Count votes for user
         if kwargs.pop('n_user_votes', False):
-            annotations[prefix + 'n_user_votes'] = \
-                Count('comments__votes', filter=Q(comments__votes__author=user))
+            if user.is_authenticated:
+                data = Count('comments__votes', filter=Q(comments__votes__author=user))
+            else:
+                data = Value(0, IntegerField())
+            annotations[prefix + 'n_user_votes'] = data
 
         # Author name
         if kwargs.pop('author_name', False):

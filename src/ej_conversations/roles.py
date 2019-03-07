@@ -5,8 +5,9 @@ from hyperpython.django import csrf_input
 
 from boogie import rules
 from ej.roles import with_template, extra_content, progress_bar
-from ej_conversations.routes_comments import comment_url
+from . import forms
 from . import models
+from .routes_comments import comment_url
 
 
 # ------------------------------------------------------------------------------
@@ -14,21 +15,21 @@ from . import models
 # ------------------------------------------------------------------------------
 
 @with_template(models.Conversation, role='card')
-def conversation_card(conversation, url=None, request=None):
+def conversation_card(conversation, url=None, request=None, text=None, hidden=None):
     """
     Render a round card representing a conversation in a list.
     """
 
     return {
         'author': conversation.author_name,
-        'conversation': conversation,
+        'text': text or conversation.text,
+        'progress': user_progress(conversation, request=request),
+        'hidden': conversation.is_hidden if hidden is None else hidden,
         'url': url or conversation.get_absolute_url(),
         'tag': conversation.first_tag,
         'n_comments': conversation.n_comments,
         'n_votes': conversation.n_votes,
         'n_favorites': conversation.n_favorites,
-        'conversation_modifiers': '',
-        'request': request,
     }
 
 
@@ -52,13 +53,14 @@ def conversation_balloon(conversation, request=None, actions=None,
         'text': conversation.text,
         'user': user,
         'tags': conversation.tag_names,
+        'hidden': conversation.is_hidden,
         'is_favorite': is_favorite,
         'actions': actions,
     }
 
 
 @with_template(models.Conversation, role='comment-form')
-def comment_form(conversation, request=None, content=None, user=None, **kwargs):
+def comment_form(conversation, request=None, content=None, user=None, form=None):
     """
     Render comment form for conversation.
     """
@@ -74,8 +76,8 @@ def comment_form(conversation, request=None, content=None, user=None, **kwargs):
 
     # Check if user still have comments left
     n_comments = rules.compute('ej.remaining_comments', conversation, user)
-    if conversation.author != user and n_comments == 0:
-        return {'comments_exceeded': True}
+    if conversation.author != user and n_comments <= 0:
+        return {'comments_exceeded': True, 'user': user}
 
     # Everything is ok, proceed ;)
     return {
@@ -83,6 +85,7 @@ def comment_form(conversation, request=None, content=None, user=None, **kwargs):
         'csrf_input': csrf_input(request),
         'n_comments': n_comments,
         'content': content,
+        'form': form or forms.CommentForm(request=request, conversation=conversation),
     }
 
 

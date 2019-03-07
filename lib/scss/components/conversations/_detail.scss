@@ -47,7 +47,7 @@ $component-border-radius: 3rem;
 }
 
 .comment-card, .comment-form {
-    @extend .pad-4, .margin-x3;
+    @extend .pad-3p, .margin-x2, .measure, .width-full;
     border-radius: $component-border-radius;
 }
 
@@ -100,7 +100,7 @@ $component-border-radius: 3rem;
 }
 
 .comment-form {
-    @extend .text-center, .text-black;
+    @extend .text-center, .text-black, .margin-t3;
     @include themed('background', light);
 
     textarea {
@@ -122,6 +122,7 @@ $component-border-radius: 3rem;
     }
     input[type=submit] {
         @include themed('background');
+        margin-bottom: 0;
     }
 }
 

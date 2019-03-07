@@ -2,7 +2,7 @@
 {% set main_class = 'container-1 pad-x0' %}
 
 {% block metaOG %}
-    <meta name="description" property="og:title" content="{{ conversation.title}}">
+    <meta name="description" property="og:title" content="{{ conversation.title }}">
     <meta property="og:description" content="{{ conversation.text }}">
     <meta name="twitter:title" content="{{ conversation.title }}">
 {% endblock %}
@@ -10,19 +10,35 @@
 
 {% block content %}
     {{ conversation|role('balloon') }}
-    <h1 class="title">{{ _('Comments') }}</h1>
-    {{ conversation|role('user-progress') }}
-    {% if comment %}
-        {{ comment|role('card') }}
-    {% else %}
-        <div class="comment-card text-center">
-            <article>
-                <h1 class="h3">{{ _('Congratulations!') }}</h1>
-                <p>{{ _("There are no comments left to vote :)") }}</p>
-            </article>
+    {% if conversation.is_hidden %}
+        <div class="color-negative margin-3 pad-x3 pad-y2 rounded-3 text-center">
+            <h2>{{ _('Warning!') }}</h2>
+            <p>{% trans here=edit_link() %}This conversation is hidden. Click {{ here }} to edit and make it visible
+                again.{% endtrans %}</p>
         </div>
+
+    {% else %}
+        <h1 class="h2 text-accent margin-y0 text-center">{{ _('Comments') }}</h1>
+        {{ conversation|role('user-progress') }}
+        <div class="comment-area col items-center margin-y2">
+            {% if comment %}
+                {{ comment|role('card') }}
+            {% else %}
+                <div class="comment-card text-center">
+                    <article>
+                        <h1 class="h3">{{ _('Congratulations!') }}</h1>
+                        <p>{{ _("There are no comments left to vote :)") }}</p>
+                    </article>
+                </div>
+            {% endif %}
+            {{ conversation|role('comment-form', form=comment_form) }}
+        </div>
+        {{ conversation|role('ask-create-comment') }}
     {% endif %}
-    {{ conversation|role('comment-form') }}
-    {{ conversation|role('ask-create-comment') }}
     {{ conversation|role('ask-opinion-groups') }}
 {% endblock %}
+
+
+{% macro edit_link() %}
+    <a href="{{ conversation.get_url('conversation:edit') }}" class="bold">{{ _('here') }}</a>
+{% endmacro %}

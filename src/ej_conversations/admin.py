@@ -1,9 +1,11 @@
 from django.conf import settings
 from django.contrib import admin
 from django.utils.translation import ugettext as _
+
 from . import models
 
 SHOW_VOTES = getattr(settings, 'EJ_CONVERSATIONS_SHOW_VOTES', False)
+descr = (lambda msg: lambda f: setattr(f, 'short_description', msg) or f)
 
 
 class VoteInline(admin.TabularInline):
@@ -40,3 +42,25 @@ class ConversationAdmin(AuthorIsUserMixin, admin.ModelAdmin):
     list_display = ['title', 'slug', 'author', 'created', 'is_promoted', 'is_hidden']
     list_filter = ['created', 'is_promoted', 'is_hidden']
     list_editable = ['is_promoted', 'is_hidden']
+    actions = ['force_clusterization', 'update_clusterization']
+
+    #
+    # Clusterization actions
+    #
+    @descr(_('Force clusterization (slow)'))
+    def force_clusterization(self, request, queryset, force=True):
+        for conversation in queryset:
+            clusterization = conversation.get_clusterization(None)
+            clusterization.update_clusterization(force=force)
+        self.message_user(request, _('Clusterization complete!'))
+
+    @descr(_('Update clusterization (slow)'))
+    def update_clusterization(self, request, queryset):
+        self.force_clusterization(request, queryset, force=False)
+
+    #
+    # Gamification actions
+    #
+    @descr(_('Compute the opinion bridge user for all conversations.'))
+    def compute_opinion_bridge(self, request, queryset):
+        pass

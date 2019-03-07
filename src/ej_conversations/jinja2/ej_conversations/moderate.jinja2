@@ -48,7 +48,7 @@
                 {{ comment|role('moderate') }}
 
                 {% if id == 'pending' %}
-                    <div class="row margin-3">{{ reject_button }}{{ approve_button() }}</div>
+                    <div class="row margin-3">{{ reject_button(comment) }}{{ approve_button(comment) }}</div>
                 {% endif %}
 
                 {% if id == 'approved' %}

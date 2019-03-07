@@ -19,13 +19,15 @@ def assure_correct_board(conversation, board):
     conversation.board = board
 
 
-def check_board(board):
+def check_board(board, request):
     """
     Raise 404 if conversation does not belong to board.
     """
 
-    def check_function(conversation):
+    def check_function(conversation, request):
         if not board.has_conversation(conversation):
+            raise Http404
+        if conversation.is_hidden and not request.user.has_perm('ej.can_edit_conversation', conversation):
             raise Http404
         conversation.board = board
         return conversation
