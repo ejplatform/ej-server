@@ -1,5 +1,6 @@
 from logging import getLogger
 
+from django.core.exceptions import ValidationError
 from django.http import Http404, HttpResponseServerError
 from django.utils.translation import ugettext_lazy as _
 from hyperpython import a
@@ -93,8 +94,12 @@ class ConversationDetailPostActions:
         """
         vote = data['vote']
         comment_id = data['comment_id']
-        models.Comment.objects.get(id=comment_id).vote(self.user, vote)
-        log.info(f'user {self.user.id} voted {vote} on comment {comment_id}')
+        try:
+            models.Comment.objects.get(id=comment_id).vote(self.user, vote)
+            log.info(f'user {self.user.id} voted {vote} on comment {comment_id}')
+        except ValidationError:
+            # User voted twice and too quickly... We simply ignore the last vote
+            log.info(f'duplicated vote for user {self.user.id} on comment {comment_id}')
 
     def action_comment(self, data):
         """
