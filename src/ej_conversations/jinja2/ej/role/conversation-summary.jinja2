@@ -1,6 +1,6 @@
 <div class="summary">
     <div class="row text-brand semi-bold text-7">
-        {{ span_icon(tag, 'tags') }}
+        {{ span_icon(tag, 'tags', href=tag_link|default(None)) }}
         <span>{{ created|role('simple') }}</span>
     </div>
 

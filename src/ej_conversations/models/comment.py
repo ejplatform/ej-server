@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.core.validators import MinLengthValidator
+from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
 from model_utils.choices import Choices
 from model_utils.models import TimeStampedModel, StatusModel
@@ -82,38 +83,15 @@ class Comment(StatusModel, TimeStampedModel):
     has_rejection_explanation = property(lambda self: bool(self.rejection_reason == ''
                                                            or self.rejection_reason_option is None))
 
-    @lazy
-    def missing_votes(self):
-        return self.conversation.users.count() - self.total_votes
-
-    # Statistics
-    @property
-    def agree_count(self):
-        try:
-            return self.annotation_agree_count
-        except AttributeError:
-            return votes_counter(self, choice=Choice.AGREE)
-
-    @property
-    def skip_count(self):
-        try:
-            return self.annotation_skip_count
-        except AttributeError:
-            return votes_counter(self, choice=Choice.SKIP)
-
-    @property
-    def disagree_count(self):
-        try:
-            return self.annotation_disagree_count
-        except AttributeError:
-            return votes_counter(self, choice=Choice.DISAGREE)
-
-    @property
-    def total_votes(self):
-        try:
-            return self.annotation_total_votes
-        except AttributeError:
-            return self.agree_count + self.disagree_count + self.skip_count
+    #
+    # Annotations
+    #
+    author_name = lazy(lambda self: self.author.name, name='author_name')
+    missing_votes = lazy(lambda self: self.conversation.users.count() - self.n_votes, name='missing_votes')
+    agree_count = lazy(lambda self: votes_counter(self, choice=Choice.AGREE), name='agree_count')
+    skip_count = lazy(lambda self: votes_counter(self, choice=Choice.SKIP), name='skip_count')
+    disagree_count = lazy(lambda self: votes_counter(self, choice=Choice.DISAGREE), name='disagree_count')
+    n_votes = lazy(lambda self: votes_counter(self), name='n_votes')
 
     @property
     def rejection_reason_display(self):
@@ -152,8 +130,25 @@ class Comment(StatusModel, TimeStampedModel):
         """
         choice = normalize_choice(choice)
         log.debug(f'Vote: {author} - {choice}')
+
+        # We do not full_clean since the uniqueness constraint will only be
+        # enforced when strictly necessary.
         vote = Vote(author=author, comment=self, choice=choice)
-        vote.full_clean()
+        vote.clean_fields()
+
+        # Check if vote exists and if its existence represents an error
+        try:
+            saved_vote = Vote.objects.get(author=author, comment=self)
+        except Vote.DoesNotExist:
+            pass
+        else:
+            if saved_vote.choice == choice or saved_vote.choice == Choice.SKIP:
+                vote.id = saved_vote.id
+                vote.created = now()
+            else:
+                raise ValidationError('Cannot change user vote')
+
+        # Send possibly saved vote
         if commit:
             vote.save()
         return vote
@@ -182,16 +177,16 @@ class Comment(StatusModel, TimeStampedModel):
             'agree': self.agree_count,
             'disagree': self.disagree_count,
             'skip': self.skip_count,
-            'total': self.total_votes,
+            'total': self.n_votes,
             'missing': self.missing_votes
         }
 
         if ratios:
             e = 1e-50  # prevents ZeroDivisionErrors
             stats.update(
-                agree_ratio=self.agree_count / (self.total_votes + e),
-                disagree_ratio=self.disagree_count / (self.total_votes + e),
-                skip_ratio=self.skip_count / (self.total_votes + e),
-                missing_ratio=self.missing_votes / (self.missing_votes + self.total_votes + e),
+                agree_ratio=self.agree_count / (self.n_votes + e),
+                disagree_ratio=self.disagree_count / (self.n_votes + e),
+                skip_ratio=self.skip_count / (self.n_votes + e),
+                missing_ratio=self.missing_votes / (self.missing_votes + self.n_votes + e),
             )
         return stats

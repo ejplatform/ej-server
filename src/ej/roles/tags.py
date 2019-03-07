@@ -49,6 +49,8 @@ def link_kwargs(href='#', target='body', action='target', instant=True,
             'if you want to return a calculated url value.' % href)
     elif href == '#' or href is None:
         href = '#'
+    elif href.startswith('http'):
+        pass
     else:
         href = reverse(href, kwargs=url_args)
     if query is not None:

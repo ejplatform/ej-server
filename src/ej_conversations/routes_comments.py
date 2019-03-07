@@ -60,10 +60,9 @@ def detail(request, comment, hash):
 # Auxiliary functions
 #
 def comment_url(comment):
-    return reverse('comments:vote', kwargs={
+    return reverse('comments:detail', kwargs={
         'comment': comment,
-        'conversation': comment.conversation,
-        'hash': comment_url(comment),
+        'hash': comment_url_hash(comment),
     })
 
 

@@ -94,10 +94,10 @@ class TestVote:
     def test_create_agree_vote_happy_paths(self, comment_db, mk_user):
         vote1 = comment_db.vote(mk_user(email='user1@domain.com'), 'agree')
         assert comment_db.agree_count == 1
-        assert comment_db.total_votes == 1
+        assert comment_db.n_votes == 1
         vote2 = comment_db.vote(mk_user(email='user2@domain.com'), Choice.AGREE)
         assert comment_db.agree_count == 2
-        assert comment_db.total_votes == 2
+        assert comment_db.n_votes == 2
         assert vote1.choice == vote2.choice
 
     def test_create_vote_unhappy_paths(self, comment_db, user_db):
@@ -107,17 +107,17 @@ class TestVote:
     def test_create_disagree_vote_happy_paths(self, comment_db, mk_user):
         vote1 = comment_db.vote(mk_user(email='user1@domain.com'), 'disagree')
         assert comment_db.disagree_count == 1
-        assert comment_db.total_votes == 1
+        assert comment_db.n_votes == 1
         vote2 = comment_db.vote(mk_user(email='user2@domain.com'), Choice.DISAGREE)
         assert comment_db.disagree_count == 2
-        assert comment_db.total_votes == 2
+        assert comment_db.n_votes == 2
         assert vote1.choice == vote2.choice
 
     def test_create_skip_vote_happy_paths(self, comment_db, mk_user):
         vote1 = comment_db.vote(mk_user(email='user1@domain.com'), 'skip')
         assert comment_db.skip_count == 1
-        assert comment_db.total_votes == 1
+        assert comment_db.n_votes == 1
         vote2 = comment_db.vote(mk_user(email='user2@domain.com'), Choice.SKIP)
         assert comment_db.skip_count == 2
-        assert comment_db.total_votes == 2
+        assert comment_db.n_votes == 2
         assert vote1.choice == vote2.choice

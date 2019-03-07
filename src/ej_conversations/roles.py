@@ -5,15 +5,8 @@ from hyperpython.django import csrf_input
 
 from boogie import rules
 from ej.roles import with_template, extra_content, progress_bar
+from ej_conversations.routes_comments import comment_url
 from . import models
-
-
-def get_annotation(obj, annotation, fallback):
-    attr = f'annotation_{annotation}'
-    if hasattr(obj, attr):
-        return getattr(obj, attr)
-    else:
-        return fallback()
 
 
 # ------------------------------------------------------------------------------
@@ -21,22 +14,21 @@ def get_annotation(obj, annotation, fallback):
 # ------------------------------------------------------------------------------
 
 @with_template(models.Conversation, role='card')
-def conversation_card(conversation, url=None, **kwargs):
+def conversation_card(conversation, url=None, request=None):
     """
     Render a round card representing a conversation in a list.
     """
 
-    tag = conversation.tags.first()  # only first is shown in card to prevent overflow
     return {
-        'author': conversation.author.name,
+        'author': conversation.author_name,
         'conversation': conversation,
         'url': url or conversation.get_absolute_url(),
-        'tag': tag,
-        'n_comments': conversation.approved_comments.count(),
-        'n_votes': conversation.votes.count(),
-        'n_favorites': conversation.favorites.count(),
+        'tag': conversation.first_tag,
+        'n_comments': conversation.n_comments,
+        'n_votes': conversation.n_votes,
+        'n_favorites': conversation.n_favorites,
         'conversation_modifiers': '',
-        **kwargs,
+        'request': request,
     }
 
 
@@ -57,9 +49,9 @@ def conversation_balloon(conversation, request=None, actions=None,
             actions = is_authenticated
 
     return {
-        'conversation': conversation,
+        'text': conversation.text,
         'user': user,
-        'tags': list(conversation.tags.values_list('name', flat=True)),
+        'tags': conversation.tag_names,
         'is_favorite': is_favorite,
         'actions': actions,
     }
@@ -131,17 +123,12 @@ def user_progress(conversation, request=None, user=None):
     """
     Render comment form for one conversation.
     """
+
     user = user or request.user
-    n = get_annotation(
-        conversation, 'user_votes',
-        lambda: user.votes.filter(comment__conversation=conversation).count()
-    )
-    total = get_annotation(
-        conversation, 'approved_comments',
-        lambda: conversation.comments.approved().count()
-    )
-    n = min(n, total)
-    return progress_bar(n, total)
+    conversation.for_user = user
+    n = conversation.n_user_votes
+    total = conversation.n_comments
+    return progress_bar(min(n, total), total)
 
 
 @with_template(models.Conversation, role='summary')
@@ -150,14 +137,9 @@ def conversation_summary(conversation, request=None):
     Show only essential information about a conversation.
     """
 
-    # Optimized tag
-    tag = get_annotation(
-        conversation, 'tag_first',
-        lambda: conversation.tags.first())
-
     return {
         'text': conversation.text,
-        'tag': tag or _('Conversation'),
+        'tag': conversation.first_tag or _('Conversation'),
         'created': conversation.created,
     }
 
@@ -203,10 +185,8 @@ def comment_moderate(comment, request=None, **kwargs):
 
     return {
         'created': comment.created,
-        'author': get_annotation(comment, 'author_name',
-                                 lambda: comment.author.name),
+        'author': comment.author_name,
         'text': comment.content,
-        # 'rejection_reasons': dict(models.Comment.REJECTION_REASON),
     }
 
 
@@ -218,6 +198,7 @@ def comment_summary(comment, **kwargs):
     return {
         'created': comment.created,
         'tag': _('Comment'),
+        'tag_link': comment_url(comment),
         'text': comment.content,
         'agree': comment.agree_count,
         'skip': comment.skip_count,

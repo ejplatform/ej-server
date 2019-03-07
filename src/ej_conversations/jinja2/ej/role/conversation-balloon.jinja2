@@ -1,7 +1,7 @@
 <div class="conversation-balloon"{# TODO: is-component #}>
     <article>
         {{ span_icon(', '.join(tags)  if tags else _('Conversation'), 'tags', class_='text-7') }}
-        <h1>{{ conversation.text }}</h1>
+        <h1>{{ text }}</h1>
     </article>
     <div class="conversation-balloon__arrow"></div>
     {% if actions %}

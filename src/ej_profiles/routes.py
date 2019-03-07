@@ -42,24 +42,23 @@ def contributions(request):
     user = request.user
 
     # Fetch all conversations the user created
-    created = (
-        user.conversations
-            .annotate_with('tag_first', 'user_votes', 'approved_comments', user=user))
+    created = user.conversations.cache_annotations('first_tag', 'n_user_votes', 'n_comments', user=user)
 
     # Fetch voted conversations
     # This code merges in python 2 querysets. The first is annotated with
     # tag and the number of user votes. The second is annotated with the total
     # number of comments in each conversation
     voted = user.conversations_with_votes.exclude(id__in=[x.id for x in created])
-    voted = voted.annotate_with('tag_first', 'user_votes', user=user)
+    voted = voted.cache_annotations('first_tag', 'n_user_votes', user=user)
     voted_extra = (
         Conversation.objects
             .filter(id__in=[x.id for x in voted])
-            .annotate_with('approved_comments')
-            .values('id', 'annotation_approved_comments'))
+            .cache_annotations('n_comments')
+            .values('id', 'n_comments')
+    )
     total_votes = {}
     for item in voted_extra:
-        total_votes[item['id']] = item['annotation_approved_comments']
+        total_votes[item['id']] = item['n_comments']
     for conversation in voted:
         conversation.annotation_total_votes = total_votes[conversation.id]
 
@@ -67,13 +66,13 @@ def contributions(request):
     favorites = (
         Conversation.objects
             .filter(favorites__user=user)
-            .annotate_with('tag_first', 'user_votes', 'approved_comments', user=user))
+            .cache_annotations('first_tag', 'n_user_votes', 'n_comments', user=user))
 
     # Comments
     comments = user.comments.select_related('conversation').annotate(
-        annotation_skip_count=Count('votes', filter=Q(votes__choice=0)),
-        annotation_agree_count=Count('votes', filter=Q(votes__choice__gt=0)),
-        annotation_disagree_count=Count('votes', filter=Q(votes__choice__lt=0)),
+        skip_count=Count('votes', filter=Q(votes__choice=0)),
+        agree_count=Count('votes', filter=Q(votes__choice__gt=0)),
+        disagree_count=Count('votes', filter=Q(votes__choice__lt=0)),
     )
     groups = toolz.groupby(lambda x: x.status, comments)
     approved = groups.get(Comment.STATUS.approved, ())

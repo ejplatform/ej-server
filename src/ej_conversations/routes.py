@@ -29,7 +29,7 @@ conversation_url = f'<model:conversation>/<slug:slug>/'
 #
 @urlpatterns.route('', name='list')
 def conversation_list(request,
-                      queryset=(Conversation.objects.filter(is_promoted=True, is_hidden=False)),
+                      queryset=Conversation.objects.filter(is_promoted=True),
                       add_perm='ej.can_add_promoted_conversation',
                       perm_obj=None,
                       url=None,
@@ -39,8 +39,13 @@ def conversation_list(request,
         menu_links = [a(_('New Conversation'), href=url)]
     else:
         menu_links = []
+
+    # Annotate queryset for efficiency db access
+    annotations = ('n_votes', 'n_comments', 'n_user_votes', 'first_tag', 'n_favorites', 'author_name')
+    queryset = queryset.filter(is_hidden=False).cache_annotations(*annotations, user=request.user)
+
     return {
-        'conversations': getattr(queryset, 'all', lambda: queryset)(),
+        'conversations': queryset,
         'title': _('Public conversations'),
         'subtitle': _('Participate voting and creating comments!'),
         'menu_links': menu_links,

@@ -6,6 +6,7 @@ from django.core.exceptions import ValidationError, ObjectDoesNotExist
 from django.db.models import Count, Q
 from django.utils.translation import ugettext_lazy as _
 from model_utils.models import TimeStampedModel
+from sidekick import lazy
 from taggit.managers import TaggableManager
 from taggit.models import TaggedItemBase
 
@@ -80,8 +81,7 @@ class Conversation(TimeStampedModel):
 
     objects = ConversationQuerySet.as_manager()
     tags = TaggableManager(through='ConversationTag')
-    all_votes = property(lambda self: Vote.objects.filter(comment__conversation=self))
-    votes = property(lambda self: self.all_votes.filter(comment__status=Comment.STATUS.approved))
+    votes = property(lambda self: Vote.objects.filter(comment__conversation=self))
 
     @property
     def users(self):
@@ -97,6 +97,17 @@ class Conversation(TimeStampedModel):
             ('can_publish_promoted', _('Can publish promoted conversations')),
             ('is_moderator', _('Can moderate comments in any conversation')),
         )
+
+    #
+    # Possibly annotated values
+    #
+    first_tag = lazy(lambda self: self.tags.values_list('name', flat=True).first(), name='first_tag')
+    tag_names = lazy(lambda self: list(self.tags.values_list('name', flat=True)), name='tag_names')
+    n_comments = lazy(lambda self: self.comments.count(), name='n_comments')
+    n_favorites = lazy(lambda self: self.favorites.count(), name='n_favorites')
+    n_votes = lazy(lambda self: self.votes.count(), name='n_votes')
+    n_user_votes = lazy(lambda self: self.votes.filter(author=self.for_user).count(), name='n_user_votes')
+    author_name = lazy(lambda self: self.author.name, name='author_name')
 
     def __str__(self):
         return self.title

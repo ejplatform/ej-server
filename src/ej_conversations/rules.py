@@ -56,8 +56,10 @@ def next_comment(conversation, user):
     from user own unvoted comments and then the rest of the comments
     """
     if user.is_authenticated:
-        unvoted_promoted_comments = promoted_comments_in_conversation(
-            user, conversation).filter(~Q(votes__author_id=user.id),)
+        unvoted_promoted_comments = (
+            promoted_comments_in_conversation(user, conversation)
+                .filter(~Q(votes__author_id=user.id),)
+        )
         promoted_size = unvoted_promoted_comments.count()
         if promoted_size:
             return unvoted_promoted_comments[randrange(0, promoted_size)]

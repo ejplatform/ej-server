@@ -4,7 +4,7 @@ from random import randrange
 from django.db.models import Window, Count, Q
 from django.db.models.functions import FirstValue
 
-from boogie.models import QuerySet
+from boogie.models import QuerySet, F
 from .comment import Comment
 from ..mixins import ConversationMixin
 
@@ -33,31 +33,42 @@ class ConversationQuerySet(ConversationMixin, QuerySet):
         """
         return self.filter(is_promoted=True)
 
-    def annotate_with(self, *values, user=None, **kwargs):
+    def cache_annotations(self, *values, user=None, prefix='', **kwargs):
         """
         Annotate each conversation with the progress made by the given user.
-
-        Args:
-            tag_first:
-                Annotate with the first tag in the list of tags.
-            approved_comments:
-                Annotate with the number of approved comments.
-            user_votes:
-                Annotate with the number of votes cast by user.
         """
         for arg in values:
             kwargs.setdefault(arg, True)
 
         annotations = {}
-        if kwargs.pop('tag_first', False):
-            annotations['annotation_tag_first'] = \
-                Window(FirstValue('tags__name'))
-        if kwargs.pop('approved_comments', False):
-            annotations['annotation_approved_comments'] = \
+        prefix = prefix or ''
+
+        # First tag
+        if kwargs.pop('first_tag', False):
+            annotations[prefix + 'first_tag'] = Window(FirstValue('tags__name'))
+
+        # Count comments
+        if kwargs.pop('n_comments', False):
+            annotations[prefix + 'n_comments'] = \
                 Count('comments', filter=Q(comments__status=Comment.STATUS.approved), distinct=True)
-        if kwargs.pop('user_votes', False):
-            annotations['annotation_user_votes'] = \
+
+        # Count favorites
+        if kwargs.pop('n_favorites', False):
+            annotations[prefix + 'n_favorites'] = \
+                Count('favorites')
+
+        # Count votes
+        if kwargs.pop('n_votes', False):
+            annotations[prefix + 'n_votes'] = Count('comments__votes')
+
+        # Count votes for user
+        if kwargs.pop('n_user_votes', False):
+            annotations[prefix + 'n_user_votes'] = \
                 Count('comments__votes', filter=Q(comments__votes__author=user))
+
+        # Author name
+        if kwargs.pop('author_name', False):
+            annotations[prefix + 'author_name'] = F('author__name')
 
         if kwargs:
             raise TypeError(f'bad attribute: {kwargs.popitem()[0]}')
