@@ -5,7 +5,8 @@ from django.http import HttpResponse
 
 from boogie.router import Router
 from ej_conversations.models import Conversation
-from ej_conversations.routes import conversation_url, check_promoted
+from ej_conversations.routes import conversation_url
+from ej_conversations.utils import check_promoted
 
 urlpatterns = Router(
     base_path=conversation_url + 'reports/',

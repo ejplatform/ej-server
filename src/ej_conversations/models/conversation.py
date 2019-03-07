@@ -85,7 +85,7 @@ class Conversation(TimeStampedModel):
 
     @property
     def users(self):
-        return get_user_model().objects.filter(votes__in=self.votes)
+        return get_user_model().objects.filter(votes__in=self.votes).distinct()
 
     @property
     def approved_comments(self):

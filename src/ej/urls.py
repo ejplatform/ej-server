@@ -42,6 +42,7 @@ urlpatterns = [
     path('conversations/', include('ej_conversations.routes', namespace='conversation')),
     path('conversations/', include('ej_clusters.routes', namespace='cluster')),
     path('conversations/', include('ej_reports.routes', namespace='report')),
+    path('comments/', include('ej_conversations.routes_comments', namespace='comments')),
 
     # Global stereotype and cluster management
     path('stereotypes/', include('ej_clusters.routes_stereotypes', namespace='stereotypes')),

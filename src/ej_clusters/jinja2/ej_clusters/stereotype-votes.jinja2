@@ -1,0 +1,91 @@
+{% extends 'base.jinja2' %}
+{% set main_class = 'measure-wide pad-x2 text-center margin-xauto' %}
+
+
+{% block content %}
+    <style>
+        .votes-table td:nth-child(2) {
+            text-align: center;
+        }
+
+        .votes-table td:nth-child(3) {
+            text-align: center;
+            transform: scale(0.875);
+        }
+    </style>
+
+    {% if stereotypes is defined %}
+        <h1 class="h2 text-accent">{{ _('Define personas') }}</h1>
+        <p>{% trans %}Mark the votes for each stereotype in your conversation.{% endtrans %}</p>
+
+        {{ categories(groups, class_='margin-t3') }}
+
+        {% for stereotype in stereotypes %}
+            <div id="stereotype-{{ stereotype.id }}">{{ show_stereotype(stereotype) }}</div>
+        {% endfor %}
+    {% else %}
+        <h1 class="h2 text-accent">{{ _('Error') }}
+            <br><small>{{ _('There are no personas defined for this conversation') }}</small>
+        </h1>
+        <p>{% trans %}Mark the votes for each stereotype in your conversation.{% endtrans %}</p>
+    {% endif %}
+{% endblock %}
+
+
+{% macro show_stereotype(stereotype) %}
+    <h2 class="h3 text-accent">{{ _('{name}\'s votes').format(name=stereotype.name) }}</h2>
+    <p>{% trans %}Select the votes you want to modify.{% endtrans %}</p>
+
+    <form method="post" class="width-full">
+        {{ csrf_input }}
+        <input type="hidden" name="stereotype" value="{{ stereotype.id }}">
+        <table class="votes-table">
+            <thead>
+            <tr>
+                <th>{{ _('Comment') }}</th>
+                <th>{{ _('Choice') }}</th>
+                <th><i class="fa fa-edit"></i></th>
+            </tr>
+            </thead>
+
+            <tbody class="text-6">
+            {% for vote in stereotype.given_votes %}
+                <tr>
+                    <td>{{ vote.comment.content }}</td>
+                    <td>{% if vote.choice == 0 %}{{ _('Neutral') }}{% else %}
+                        {{ vote.choice.description }}{% endif %}</td>
+                    <td><input type="checkbox" name="vote" value="{{ vote.id }}"></td>
+                </tr>
+            {% endfor %}
+            {% for comment in stereotype.non_voted_comments %}
+                <tr>
+                    <td>{{ comment.content }}</td>
+                    <td>{{ _('n/a') }}</td>
+                    <td><input type="checkbox" name="comment" value="{{ comment.id }}"></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="margin-t3">
+            <span class="text-negative"><button class="is-clear" name="action" value="disagree">
+                <i class="fa fa-times"></i> {{ _('Disagree') }}
+            </button></span>
+            <span class="margin-x2"><button class="is-clear" name="action" value="skip">
+                <i class="far fa-meh"></i> {{ _('Neutral') }}
+            </button></span>
+            <span class="text-positive"><button class="is-clear" name="action" value="agree">
+                <i class="fa fa-check"></i> {{ _('Agree') }}
+            </button></span>
+            <br>
+            <button class="is-primary margin-y3" name="action" value="discard">{{ _('Discard votes') }}</button>
+        </div>
+    </form>
+
+    {% if stereotype.description %}
+        <dl class="pad-x3 pad-y2 margin-b3 color-brand-lighter rounded-3 text-left">
+            <dt class="bold"><i class="fa fa-info"></i>{{ _('Notes') }}</dt>
+            <dd>{{ stereotype.description }}</dd>
+        </dl>
+    {% endif %}
+{% endmacro %}

@@ -162,8 +162,22 @@ export class Component {
             }
         }
     }
+
+    /** Checks if event is a keypress of space or return */
+    isReturnEvent(ev) {
+        return (contains(['keypress', 'keyup', 'keydown'], ev.type)
+            && contains([13, 32], ev.keyCode));
+    }
 }
 
+function contains(xs, value) {
+    for (let x of xs) {
+        if (x === value) {
+            return true;
+        }
+    }
+    return false;
+}
 
 function registerElementForComponent(component, elem) {
     let $elem = $(elem),

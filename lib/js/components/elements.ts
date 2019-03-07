@@ -1,12 +1,18 @@
 import {Component, component} from "./base";
 
+
 @component
 class Collapsible extends Component {
     attributes = {'is-collapsed': true};
 
     register() {
-        this.on('click', ".collapsible__title", () => {
-            this.element.toggleAttribute('is-collapsed');
+        let $elem = $(this.element),
+            self = this;
+
+        if ($elem.attr('start-expanded') !== null) $elem.attr('is-collapsed', null);
+        this.on('click keypress', ":nth-child(1)", (ev) => {
+            if (!self.isReturnEvent(ev)) return true;
+            self.element.toggleAttribute('is-collapsed');
         });
     }
 }
@@ -14,10 +20,6 @@ class Collapsible extends Component {
 
 @component
 class Tabs extends Component {
-    constructor(element) {
-        super(element);
-    }
-
     register() {
         super.register();
         const $anchors = this.$('> a');
@@ -27,6 +29,7 @@ class Tabs extends Component {
 
         // Register click handlers for tab anchor elements
         $anchors.on('click', (ev) => {
+            if (!this.isReturnEvent(ev)) return true;
             let $elem = $(ev.target),
                 href = $elem.attr('href');
 
@@ -48,3 +51,35 @@ class Tabs extends Component {
         }
     }
 }
+
+
+@component
+class Categories extends Tabs {
+    leftArrow() {
+        this.incrementBy(-1);
+    }
+
+    rightArrow() {
+        this.incrementBy(1);
+    }
+
+    incrementBy(idx: number) {
+        let $anchors = this.$('> a'),
+            anchorMap = {},
+            selected = 0,
+            size = 0;
+
+        // Store values of each anchor with the corresponding index.
+        $anchors.each((i, e) => {
+            anchorMap[i] = e;
+            size++;
+            if ($(e).attr('is-selected') !== null) {
+                selected = i;
+            }
+        });
+
+        // Click on the corresponding element
+        anchorMap[(selected + idx) % size].trigger('click');
+    }
+}
+

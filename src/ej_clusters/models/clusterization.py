@@ -10,6 +10,7 @@ from boogie.rest import rest_api
 from ej_conversations.models import Conversation
 from .querysets import ClusterizationManager
 from .stereotype import Stereotype
+from .stereotype_vote import StereotypeVote
 from ..enums import ClusterStatus
 from ..utils import use_transaction
 
@@ -25,7 +26,7 @@ class Clusterization(TimeStampedModel):
     conversation = models.OneToOneField(
         'ej_conversations.Conversation',
         on_delete=models.CASCADE,
-        related_name='clusterizations',
+        related_name='clusterization',
     )
     cluster_status = EnumField(
         ClusterStatus,
@@ -54,6 +55,10 @@ class Clusterization(TimeStampedModel):
     @property
     def stereotypes(self):
         return Stereotype.objects.filter(clusters__in=self.clusters.all())
+
+    @property
+    def stereotype_votes(self):
+        return StereotypeVote.objects.filter(comment__in=self.comments.all())
 
     objects = ClusterizationManager()
 
@@ -104,7 +109,7 @@ def get_clusterization(conversation, default=NOT_GIVEN):
     """
     try:
         return conversation.clusterization
-    except Clusterization.DoesNotExist:
+    except (AttributeError, Clusterization.DoesNotExist):
         if default is NOT_GIVEN:
             mgm, _ = Clusterization.objects.get_or_create(conversation=conversation)
             return mgm

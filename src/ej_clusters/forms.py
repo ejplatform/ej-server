@@ -1,7 +1,8 @@
-from django.forms import modelformset_factory, ModelForm
+from django import forms
+from django.utils.translation import ugettext_lazy as _
 
 from ej.forms import EjModelForm
-from .models import Stereotype, StereotypeVote
+from .models import Stereotype, Cluster
 
 
 class StereotypeForm(EjModelForm):
@@ -28,23 +29,50 @@ class StereotypeForm(EjModelForm):
         return super().full_clean()
 
 
-class StereotypeVoteForm(ModelForm):
+class ClusterForm(EjModelForm):
+    """
+    Edit clusters when configuring opinion groups
+    """
+
     class Meta:
-        model = StereotypeVote
-        fields = ['comment', 'choice']
+        model = Cluster
+        fields = ['name', 'description', 'stereotypes']
+        help_texts = {
+            'stereotypes': _(
+                'You can select multiple personas for each group. Personas are '
+                'fake users that you control and define the opinion profile of '
+                'your group.'
+            )
+        }
+        labels = {'stereotypes': _('Personas'), 'new_persona': ''}
 
     def __init__(self, *args, **kwargs):
-        super(StereotypeVoteForm, self).__init__(*args, **kwargs)
-        self.fields['comment'].widget.attrs = {'class': 'comment_select'}
+        super().__init__(*args, **kwargs)
+        self.fields['stereotypes'].required = False
 
 
-StereotypeVoteCreateFormSet = modelformset_factory(
-    StereotypeVote,
-    form=StereotypeVoteForm,
-)
+class ClusterFormNew(ClusterForm):
+    new_persona = forms.BooleanField(
+        required=False,
+        initial=True,
+        help_text=_(
+            'Create new persona for this group. You can re-use it in '
+            'other groups.'
+        ),
+    )
 
-StereotypeVoteEditFormSet = modelformset_factory(
-    StereotypeVote,
-    form=StereotypeVoteForm,
-    extra=0,
-)
+    def clean(self):
+        if not self.cleaned_data['new_persona'] and not self.cleaned_data['stereotypes']:
+            self.add_error('stereotypes', _('You must select a persona or create a new one.'))
+
+    def _save_m2m(self):
+        super()._save_m2m()
+        print(self.instance.stereotypes.all())
+        if self.cleaned_data['new_persona']:
+            owner = self.instance.clusterization.conversation.author
+            stereotype, _ = Stereotype.objects.get_or_create(
+                name=self.cleaned_data['name'],
+                description=self.cleaned_data['description'],
+                owner=owner)
+            self.instance.stereotypes.add(stereotype)
+            print(self.instance.stereotypes.all())

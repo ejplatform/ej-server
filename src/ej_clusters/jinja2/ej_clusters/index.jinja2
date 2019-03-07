@@ -1,17 +1,62 @@
 {% extends 'base.jinja2' %}
+{% set main_class = 'measure margin-xauto pad-x2' %}
+
 
 {% block content %}
-    <h1 class="h2 text-center text-accent">{% trans %}Clusters{% endtrans %}</h1>
-    {% for cluster in clusters %}
-        <h2>{{ _('Cluster: {name}').format(name=cluster.name) }}</h2>
-        <dl class="description">
-            <dt>{{ _('Size') }}</dt><dd>{{ cluster.size }}</dd>
-            <dt>{{ _('Stereotypes') }}</dt>
-            <dd><ul>
-                {% for stereotype in cluster.stereotypes %}
-                    <li>{{ stereotype }}</li>
-                {% endfor %}
-            </ul></dd>
-        </dl>
-    {% endfor %}
+    <h1 class="h2 text-center text-accent">{% trans %}Opinion groups{% endtrans %}</h1>
+    <p class="text-center">
+        <i class="fa fa-user"></i> {{ _('Participants') }}: <strong>{{ participants }}</strong>
+        <br>
+        <i class="fa fa-comments"></i> {{ _('Groups') }}: <strong>{{ groups|length }}</strong>
+    </p>
+
+    {% if clusters %}
+        {{ categories(groups, class_='margin-t3') }}
+
+        {% for cluster in clusters %}
+            <div id="cluster-{{ cluster.id }}">{{ show_cluster(cluster) }}</div>
+        {% endfor %}
+    {% else %}
+        <div class="pad-x3 rounded-3 color-negative border-1">
+            <h2 class="h3 text-center">{{ _('Error') }}</h2>
+            <p class="text-center">{% trans %}Could not determine the opinion groups for this
+                conversation.{% endtrans %}</p>
+        </div>
+        {% if is_conversation_admin %}
+            <p class="text-center margin-3">{% trans link=edit_link %}You can edit the clusterization options for this
+                conversation {{ link }}.{% endtrans %}</p>
+        {% endif %}
+    {% endif %}
 {% endblock %}
+
+
+{% macro show_cluster(cluster) %}
+    <dl class="margin-y3 margin-x2  ">
+        <dt><i class="fa fa-user"></i> {{ _('Participants') }}</dt>
+        <dd>{{ cluster.size }} ({{ cluster.size_pc }}%)</dd>
+
+        <dt><i class="fa fa-hand-holding"></i> {{ _('Cohesion level') }}</dt>
+        <dd>{{ cluster.cohesion_category }} ({{ cluster.cohesion_pc }}%)</dd>
+    </dl>
+
+    <div class="collapsible">
+        <h2>{{ _('Typical comments') }}</h2>
+        <div>{% for comment in cluster.typical_comments %}{{ comment|role('summary') }}{% endfor %}</div>
+    </div>
+
+    <div class="collapsible">
+        <h2>{{ _('Personas') }}</h2>
+        <ul>
+            {% for stereotype in cluster.stereotypes.all() %}
+                <li>
+                    <dl>
+                        <dt>{{ _('Name') }}</dt>
+                        <dd>{{ stereotype.name }}</dd>
+                        <dt>{{ _('Description') }}</dt>
+                        <dd>{{ stereotype.description or '-' }}</dd>
+                    </dl>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endmacro %}

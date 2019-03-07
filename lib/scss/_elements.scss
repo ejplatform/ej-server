@@ -1,12 +1,14 @@
 @import 'mendeleev/elements';
 
 label + input + br,
-label + textarea + br {
+label + textarea + br,
+label + select + br {
     display: none;
 }
 
 label + input + br + .helptext,
-label + textarea + br + .helptext{
+label + textarea + br + .helptext,
+label + select + br + .helptext {
     @extend legend;
     margin-top: size(0.25) - $_label-margin-bottom;
     margin-bottom: size(1);

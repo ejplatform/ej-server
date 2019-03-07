@@ -20,8 +20,10 @@
             </div>
         </form>
     {% else %}
-        <p class="comment-card__login">
-            {% trans %}It is necessary to {{ login_anchor }} before voting or sending a comment!{% endtrans %}
+        <p class="comment-card__message">
+            {% if message is defined %}{{ message }}{% else %}
+                {% trans %}It is necessary to {{ login_anchor }} before voting or sending a comment!{% endtrans %}
+            {% endif %}
         </p>
     {% endif %}
 </div>

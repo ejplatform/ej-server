@@ -78,6 +78,11 @@ $component-border-radius: 3rem;
             @extend .uppercase, .text-7;
         }
     }
+    &__message {
+        strong {
+            @extend .uppercase, .color-accent, .pad-1, .rounded-2;
+        }
+    }
 }
 
 .comment-form {
