@@ -65,7 +65,7 @@ def board_edit(request, board):
     if form.is_valid_post():
         form.save()
         return redirect(board.get_absolute_url())
-    return {'form': form}
+    return {'form': form, 'board': board}
 
 
 #
@@ -78,13 +78,14 @@ def conversation_list(request, board):
         queryset=board.conversations.annotate_attr(board=board),
         add_perm='ej.can_edit_board',
         perm_obj=board,
+        context={'board': board},
         url=reverse('boards:conversation-create', kwargs={'board': board}),
     )
 
 
 @urlpatterns.route(board_base_url + 'add/', perms=['ej.can_edit_board:board'])
 def conversation_create(request, board):
-    return conversations.create(request, board=board)
+    return conversations.create(request, board=board, context={'board': board})
 
 
 @urlpatterns.route(board_conversation_url)

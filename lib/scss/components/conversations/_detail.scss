@@ -5,15 +5,26 @@
 
 $component-border-radius: 3rem;
 
+@mixin themed($prop, $value: null) {
+    @if $value == light {
+        #{$prop}: color('brand-lighter');
+        #{$prop}: var(--theme-light-color);
+    } @else {
+        #{$prop}: color('brand');
+        #{$prop}: var(--theme-color);
+    }
+}
+
 .conversation-balloon {
     @extend .text-center;
 
     article {
-        @extend .color-brand-lighter, .pad-y3, .pad-x4;
+        @extend .pad-y3, .pad-x4;
+        @include themed('background', light);
         border-radius: 0 0 $component-border-radius $component-border-radius;
 
         span {
-            @extend .text-brand;
+            @include themed('color');
         }
     }
     h1 {
@@ -21,6 +32,7 @@ $component-border-radius: 3rem;
     }
     &__arrow {
         @include create-arrow(down, 2rem, color('brand-lighter'));
+        color: var(--theme-light-color);
         position: relative;
         bottom: 1px;
     }
@@ -40,7 +52,9 @@ $component-border-radius: 3rem;
 }
 
 .comment-card {
-    @extend .color-brand, .bold;
+    @extend .bold;
+    @include themed('background');
+    color: color('white');
 
     &__author {
         img {
@@ -66,7 +80,7 @@ $component-border-radius: 3rem;
         @extend .col, .items-center;
         button {
             @extend .text-2, .margin-2, .col, .flex-center;
-            @include color('brand-lighter' null);
+            @include color(rgba(255, 255, 255, 0.75) null);
             border-radius: 50em;
             border: none;
             height: 3rem;
@@ -86,7 +100,8 @@ $component-border-radius: 3rem;
 }
 
 .comment-form {
-    @extend .color-brand-lighter, .text-center;
+    @extend .text-center, .text-black;
+    @include themed('background', light);
 
     textarea {
         background-color: color('white');
@@ -104,6 +119,9 @@ $component-border-radius: 3rem;
         right: 0.5rem;
         bottom: 2rem;
         float: right;
+    }
+    input[type=submit] {
+        @include themed('background');
     }
 }
 

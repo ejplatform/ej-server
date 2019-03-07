@@ -180,7 +180,7 @@ def comment_card(comment, request=None, **kwargs):
     login_anchor = a(_('login'), href=f'{login}?next={comment_url}')
     buttons = {
         'disagree': ('fa-times', 'text-negative', _('Disagree')),
-        'skip': ('fa-arrow-right', '', _('Skip')),
+        'skip': ('fa-arrow-right', 'text-black', _('Skip')),
         'agree': ('fa-check', 'text-positive', _('Agree')),
     }
     return {

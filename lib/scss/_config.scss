@@ -120,7 +120,7 @@ $_: set-mendeleev-config('typography.scale', ('start': 9/8, 'sm': 8/7, 'md': 7/6
 
 // Colors
 $_: set-mendeleev-config('color.roles.simple',
-        ('primary', 'secondary', 'action', 'positive', 'negative', 'warning'));
+        ('primary', 'secondary', 'action', 'positive', 'negative', 'warning', 'white', 'black'));
 $_: set-mendeleev-config('contrast', (
     #30BFD3: $color-white,
     #FF3D72: $color-white,

@@ -6,15 +6,15 @@
 $_card-width: 20rem;
 
 :root {
-    --card-color: #{color('brand')};
-    --card-light-color: #{color('brand-lighter')};
+    --theme-color: #{color('brand')};
+    --theme-light-color: #{color('brand-lighter')};
 }
 
 .conversation-card {
     @extend .text-center, .text-6, .col, .items-center;
     @include color('brand' 'brand-lighter');
-    color: var(--card-light-color);
-    background-color: var(--card-color);
+    color: var(--theme-light-color);
+    background-color: var(--theme-color);
     border-radius: 50%;
     height: $_card-width;
     margin: auto;
@@ -24,9 +24,9 @@ $_card-width: 20rem;
     &__tags {
         @extend .text-6, .bold;
         background-color: color('brand-lighter');
-        background-color: var(--card-light-color);
+        background-color: var(--theme-light-color);
         color: color('brand');
-        color: var(--card-color);
+        color: var(--theme-color);
         padding: size(0.5) 0 size(0.25) 0;
         width: 100%;
     }
@@ -56,7 +56,7 @@ $_card-width: 20rem;
         @extend .pad-b3, .pad-t1, .margin-t1;
         background-image: url("/static/img/bg/conversation-card.png");
         background-color: color('brand');
-        background-color: var(--card-color);
+        background-color: var(--theme-color);
         background-repeat: repeat;
         background-blend-mode: luminosity;
         width: 100%;

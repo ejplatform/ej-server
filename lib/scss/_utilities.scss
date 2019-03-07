@@ -4,13 +4,23 @@
 // Color themes
 @each $color in (theme-brand theme-accent theme-green theme-orange theme-purple theme-grey) {
     .#{$color} {
-        --theme-color: color($color);
-        --theme-light-color: color(#{$color}-light);
+        --theme-color: #{color($color)};
+        --theme-light-color: #{color(#{$color}-light)};
     }
     .bg-#{$color} {
         background: color($color);
     }
     .bg-#{$color}-light {
         background: color(#{$color}-light);
+    }
+}
+
+
+.theme-brand, .theme-accent, .theme-green, .theme-orange, .theme-purple, .theme-grey {
+    input[type="text"], textarea {
+        border-color: var(--theme-color);
+    }
+    label {
+        color: var(--theme-color);
     }
 }

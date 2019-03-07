@@ -29,11 +29,11 @@ conversation_url = f'<model:conversation>/<slug:slug>/'
 #
 @urlpatterns.route('', name='list')
 def conversation_list(request,
-                      queryset=(Conversation.objects
-                          .filter(is_promoted=True, is_hidden=False)),
+                      queryset=(Conversation.objects.filter(is_promoted=True, is_hidden=False)),
                       add_perm='ej.can_add_promoted_conversation',
                       perm_obj=None,
-                      url=None):
+                      url=None,
+                      context=None):
     if request.user.has_perm(add_perm, perm_obj):
         url = url or reverse('conversation:create')
         menu_links = [a(_('New Conversation'), href=url)]
@@ -44,6 +44,7 @@ def conversation_list(request,
         'title': _('Public conversations'),
         'subtitle': _('Participate voting and creating comments!'),
         'menu_links': menu_links,
+        **(context or {}),
     }
 
 
@@ -66,14 +67,14 @@ def detail(request, conversation, slug=None, check=check_promoted, **kwargs):
 # Admin URLs
 #
 @urlpatterns.route('add/', perms=['ej.can_add_promoted_conversation'])
-def create(request, **kwargs):
+def create(request, context=None, **kwargs):
     kwargs.setdefault('is_promoted', True)
     form = forms.ConversationForm(request=request)
     if form.is_valid_post():
         with transaction.atomic():
             conversation = form.save_comments(request.user, **kwargs)
         return redirect(conversation.get_absolute_url())
-    return {'form': form}
+    return {'form': form, **(context or {})}
 
 
 @urlpatterns.route(conversation_url + 'edit/',
