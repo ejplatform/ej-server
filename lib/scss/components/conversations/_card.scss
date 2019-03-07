@@ -61,6 +61,13 @@ $_card-width: 20rem;
         background-blend-mode: luminosity;
         width: 100%;
     }
+
+    .progress-bar {
+        width: 10rem;
+        &__progress {
+            border-color: color('white');
+        }
+    }
 }
 
 

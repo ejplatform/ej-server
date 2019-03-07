@@ -10,6 +10,7 @@
     <div class="conversation-card__text">
         <a href="{{ url }}">{{ conversation.text }}</a>
     </div>
+    {{ conversation|role('user-progress') }}
     <div class="conversation-card__author">{{ _('by:') }} <strong>{{ author }}</strong></div>
     <div class="conversation-card__button">{{ action_button(_('Participate now!'), url) }}</div>
 </div>

@@ -136,12 +136,12 @@ $component-border-radius: 3rem;
 }
 
 .progress-bar {
-    @extend .row, .flex-center, .items-center, .margin-y3;
+    @extend .row, .flex-center, .items-center, .margin-y1;
     margin: 0 auto;
-    max-width: 18rem;
+    max-width: 18em;
 
     &__progress {
-        @include margin-scale((x: 2));
+        @include margin-scale((x: 1));
         display: flex;
         border: 1px solid color('brand');
         border-radius: 50rem;
