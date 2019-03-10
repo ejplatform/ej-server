@@ -3,7 +3,9 @@
     <ul>
         <li><a href="{{ url('account:index') }}">{% trans %}Manage account{% endtrans %}</a></li>
         <li><a href="{{ url('account:change-password') }}">{% trans %}Change password{% endtrans %}</a></li>
-        <li><a href="{{ url('profile:detail') }}">{% trans %}Profile{% endtrans %}</a></li>
+        {% if settings.has_profiles %}
+            <li><a href="{{ url('profile:detail') }}">{% trans %}Profile{% endtrans %}</a></li>
+        {% endif %}
         <li><a href="{{ url('account:logout') }}">{% trans %}Logout{% endtrans %}</a></li>
     </ul>
 </section>

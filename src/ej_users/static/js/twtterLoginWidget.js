@@ -1,5 +1,5 @@
 (function() {
-  document.addEventListener("DOMContentLoaded", function() {
+  window.addEventListener("load", function() {
     // Open twitter login link in a new window when this page is embed in a
     // iframe.
 

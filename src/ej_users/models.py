@@ -1,22 +1,20 @@
 from datetime import datetime, timedelta
-from secrets import token_urlsafe
+from logging import getLogger
 
+from boogie.apps.users.models import AbstractUser
+from boogie.rest import rest_api
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from model_utils.models import TimeStampedModel
 
-from boogie import rules
-from boogie.apps.users.models import AbstractUser
-from boogie.rest import rest_api
 from .manager import UserManager
+from .utils import random_name, token_factory
+
+log = getLogger('ej')
 
 
-def token_factory():
-    return token_urlsafe(30)
-
-
-@rest_api(['id'])
+@rest_api(['id', 'display_name'])
 class User(AbstractUser):
     """
     Default user model for EJ platform.
@@ -30,12 +28,11 @@ class User(AbstractUser):
         unique=True,
         help_text=_('Your e-mail address')
     )
-    # FIXME: this is not related to auth, and hence should leave this model.
-    limit_board_conversations = models.PositiveIntegerField(
-        _('Maximum number of conversations in board'),
-        default=0,
+    display_name = models.CharField(
+        max_length=50,
+        default=random_name,
         help_text=_(
-            'Maximum number of conversations in user board'
+            'Name used to publicly identify user'
         ),
     )
 
@@ -43,20 +40,7 @@ class User(AbstractUser):
     def username(self):
         return self.email.replace('@', '__')
 
-    @property
-    def profile(self):
-        return rules.compute('auth.profile', self)
-
-    @property
-    def notifications_options(self):
-        return rules.compute('auth.notification_options', self)
-
     objects = UserManager()
-
-    @property
-    def notifications(self):
-        notifications = rules.get_value('auth.notifications')
-        return notifications(self)
 
     class Meta:
         swappable = 'AUTH_USER_MODEL'
@@ -112,13 +96,11 @@ def remove_account(user):
     * Remove all boards?
     * Remove all conversations created by the user?
     """
-    from ej_profiles.models import Profile
-
-    # Handle profile
-    profile = Profile(user=user, id=user.profile.id)
-    profile.save()
+    if hasattr(user, 'profile'):
+        remove_profile(user)
 
     # Handle user object
+    email = user.email
     user.is_active = False
     user.is_superuser = False
     user.is_staff = False
@@ -128,3 +110,13 @@ def remove_account(user):
     # Remove e-mail overriding django validator
     new_email = f'anonymous-{user.id}@deleted-account'
     User.objects.filter(id=user.id).update(email=new_email)
+    log.info(f'{email} removed account')
+
+
+def remove_profile(user):
+    """
+    Erase profile information.
+    """
+
+    profile = user.profile.__class__(user=user, id=user.profile.id)
+    profile.save()

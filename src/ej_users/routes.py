@@ -1,5 +1,8 @@
 import logging
+from functools import lru_cache
 
+from boogie.router import Router
+from django.apps import apps
 from django.conf import settings
 from django.contrib import auth
 from django.contrib.auth import get_user_model
@@ -12,8 +15,8 @@ from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from rest_framework import status
 from rest_framework.authtoken.models import Token
+from sidekick import record
 
-from boogie.router import Router
 from . import forms
 from . import models
 from . import password_reset_token
@@ -61,7 +64,7 @@ def login(request, redirect_to='/'):
         'user': request.user,
         'form': form,
         'next': next_url,
-        'social_js': social_js_template.render(request=request),
+        'social_js': social_js_template().render(request=request),
         'social_buttons': social_buttons(request),
     }
 
@@ -95,7 +98,7 @@ def register(request):
         'user': request.user,
         'form': form,
         'next': next_url,
-        'social_js': social_js_template.render(request=request),
+        'social_js': social_js_template().render(request=request),
         'social_buttons': social_buttons(request),
     }
 
@@ -115,15 +118,7 @@ def recover_password(request):
         except User.DoesNotExist:
             pass
         else:
-            token = password_reset_token(user)
-            from_email = settings.DEFAULT_FROM_EMAIL
-            path = reverse('auth:reset-password-token', kwargs={'token': token})
-            template = get_template('ej_users/recover-password-message.jinja2')
-            email_body = template.render({'url': raw_url(request, path)}, request=request)
-            send_mail(subject=_("Please reset your password"),
-                      message=email_body,
-                      from_email=from_email,
-                      recipient_list=[email])
+            send_recover_password_email(request, user, email)
 
     return {'user': user, 'form': form, 'success': success, 'next': next_url}
 
@@ -132,11 +127,11 @@ def recover_password(request):
 def recover_password_token(request, token):
     next_url = request.GET.get('next', '/login/')
     user = token.user
-    form = forms.NewPasswordForm(request=request)
+    form = forms.PasswordForm(request=request)
 
     if form.is_valid_post() and not (token.is_expired or token.is_used):
-        new_password = form.cleaned_data['new_password']
-        user.set_password(new_password)
+        password = form.cleaned_data['password']
+        user.set_password(password)
         user.save()
         token.delete()
         return redirect(next_url)
@@ -163,7 +158,27 @@ def api_key(request):
 #
 # Auxiliary functions and templates
 #
-social_js_template = get_template('socialaccount/snippets/login_extra.html')
+@lru_cache(1)
+def social_js_template():
+    if apps.is_installed('allauth.socialaccount'):
+        return get_template('socialaccount/snippets/login_extra.html')
+    else:
+        return record(render=lambda *args, **kwargs: '')
+
+
+def send_recover_password_email(request, user, email):
+    token = password_reset_token(user)
+    from_email = settings.DEFAULT_FROM_EMAIL
+    path = reverse('auth:recover-password-token', kwargs={'token': token})
+    template = get_template('ej_users/recover-password-message.jinja2')
+    email_body = template.render({'url': raw_url(request, path)}, request=request)
+    send_mail(
+        subject=_("Please reset your password"),
+        message=email_body,
+        from_email=from_email,
+        recipient_list=[email]
+    )
+    log.info(f'user {user} requested a password reset.')
 
 
 def raw_url(request, path):

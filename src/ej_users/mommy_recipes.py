@@ -1,4 +1,3 @@
-import pytest
 from model_mommy.recipe import Recipe, foreign_key as _foreign_key
 from sidekick import record
 

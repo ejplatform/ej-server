@@ -9,15 +9,18 @@ class TestRoutes(UserRecipes, UrlTester):
         '/register/',
         '/login/',
         '/recover-password/',
+        # '/recover-password/<token>' -- requires special initialization
+
     ]
     user_urls = [
-        # '/account/logout/', -- returns error 500, so we use specific tests
-        '/profile/account/remove/',
+        '/account/',
+        '/account/logout/',
+        '/account/remove/',
+        '/account/manage-email/',
+        '/account/change-password/',
     ]
 
-    #
-    # Login
-    #
+    # Login / logout
     def test_invalid_login(self, db, rf, anonymous_user):
         credentials = {'email': 'email@server.com', 'password': '1234'}
         request = rf.post('/login/', credentials)
@@ -31,30 +34,13 @@ class TestRoutes(UserRecipes, UrlTester):
         user_client.post('/login/', data=credentials)
         assert user_client.session['_auth_user_id'] == str(user_db.pk)
 
-    #
-    # Logout
-    #
     def test_logout(self, user_client):
         assert '_auth_user_id' in user_client.session
         user_client.post('/account/logout/')
         assert '_auth_user_id' not in user_client.session
 
-    def test_logout_fails_with_anonymous_user(self, client):
-        response = client.post('/account/logout/')
-        assert response.status_code == 500
-
-    def test_logout_fails_with_get(self, client):
-        response = client.get('/account/logout/')
-        assert response.status_code == 500
-
-    #
     # Register
-    #
-    def test_register_route(self, client, db):
-        response = client.post('/register/', data={'name': 'something'})
-        assert response.status_code == 200
-
-    def test_register_valid_fields(self, client, db):
+    def test_register_valid_user(self, client, db):
         response = client.post('/register/', data={
             'name': "Turanga Leela",
             'email': "leela@example.com",
@@ -65,28 +51,25 @@ class TestRoutes(UserRecipes, UrlTester):
         assert client.session['_auth_user_id'] == str(user.pk)
         self.assert_redirects(response, '/conversations/', 302, 200)
 
-    #
-    # Reset Password
-    #
-    def test_get_change_password(self, db, token, rf):
-        user = token.user
-        request = rf.get('', {})
-        response = routes.reset_password(request, token)
-        assert response['user'] == user
-        assert response['form']
-        assert not response['is_expired']
+    # Recover password
+    def test_recover_user_password(self, db, user, client):
+        user.save()
+        response = client.post('/recover-password/', data={'email': user.email})
 
-    def test_post_matching_passwords(self, db, token, user_db, rf):
-        token.user = user_db
-        token.save()
-        request = rf.post('', {'new_password': 'pass', 'new_password_confirm': 'pass'})
-        response = routes.reset_password(request, token)
-        assert response.status_code == 302
+        # Fetch token url and go to token page saving new password
+        token_url = response.context[0]['url'].partition('/testserver')[2]
+        client.post(token_url, data={'password': '12345', 'password_confirm': '12345'})
 
-    def test_post_invalid_change_password(self, db, token, rf):
-        user = token.user
-        request = rf.post('', {'new_password': 'pass123', 'new_password_confirm': 'pass'})
-        response = routes.reset_password(request, token)
-        assert response['user'] == user
-        assert response['form']
-        assert not response['is_expired']
+        # Check credentials
+        client.login(email=user.email, password='12345')
+        assert client.session['_auth_user_id'] == str(user.pk)
+
+    # Recover password
+    def test_remove_account(self, user_client, user_db):
+        client, user = user_client, user_db
+        client.post('/account/remove/', data={
+            'confirm': 'true',
+            'email': user.email,
+        })
+        updated_user = User.objects.get(id=user.id)
+        assert updated_user.email.endswith('@deleted-account')

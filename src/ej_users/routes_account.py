@@ -1,15 +1,12 @@
 import logging
 
 from allauth.account import views as allauth
-from django.conf import settings
+from boogie.router import Router
 from django.contrib import auth
 from django.contrib.auth import get_user_model
-from django.http import HttpResponseServerError
-from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
-from boogie.router import Router
 from . import forms
 from . import models
 
@@ -28,17 +25,9 @@ log = logging.getLogger('ej')
 #
 @urlpatterns.route('')
 def index(request):
-    if request.method == 'POST':
-        user = request.user
-        if request.POST.get('remove_account', False) == 'true':
-            user.is_active = False
-            user.delete()
-            return redirect(settings.EJ_ANONYMOUS_HOME_PATH)
-        else:
-            return HttpResponseServerError('invalid POST request')
     return {
         'user': request.user,
-        'profile': request.user.profile,
+        'profile': getattr(request.user, 'profile', None),
     }
 
 

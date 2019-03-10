@@ -29,22 +29,22 @@
 
   <a id="facebook-button" class="btn btn-primary btn-block btn-social btn-facebook"
      href="{% provider_login_url "facebook" method="js_sdk" next="/conversations/" %}"
-     style="color: #fff"><i class="fa fa-facebook"></i>Conectar com Facebook</a>
+     style="color: #fff"><i class="fa fa-facebook"></i>{{ _('Connect with Facebook') }}</a>
   <a id="twitter-login-link"
      class="btn btn-primary btn-block btn-social btn-twitter"
      href="{% provider_login_url "twitter" next="/conversations/" %}"
      style="color: #fff;">
-    <i class="fa fa-twitter"></i>Conectar com Twitter</a>
+    <i class="fa fa-twitter"></i>{{ _('Connect with Twitter') }}</a>
   <a id="github-login-link"
      class="btn btn-primary btn-block btn-social btn-github"
      href="{% provider_login_url "github" next="/conversations/" %}"
      style="color: #fff;">
-    <i class="fa fa-twitter"></i>Conectar com o Github</a>
+    <i class="fa fa-twitter"></i>{{ _('Connect with Github') }}</a>
   <a id="google-login-link"
      class="btn btn-primary btn-block btn-social btn-google"
      href="{% provider_login_url "google" next="/conversations/" %}"
      style="color: #fff;">
-    <i class="fa fa-twitter"></i>Conectar com o Google</a>
+    <i class="fa fa-twitter"></i>{{ _('Connect with Google') }}</a>
 
 
   <form class="login" method="POST" action="{% url 'account_login' %}">
@@ -59,6 +59,6 @@
   </form>
 
   <a class="btn btn-primary btn-block" href="{% url 'account_signup' %}"
-     style="color: #fff"><i class=""></i>Cadastrar-se</a>
+     style="color: #fff"><i class=""></i>{{ _('Register') }}</a>
 
 {% endblock %}
