@@ -1,8 +1,0 @@
-<div class="DownloadLinkList">
-    <span class="DownloadLinkList-title">{{ title|default(_('Downloads: ')) }}</span>
-    <ul class="DownloadLinkList-links">
-        {%- for format, name in formats -%}
-            <li>{{ conversation.get_anchor(name, view_name, format=format) }}</li>
-        {% endfor %}
-    </ul>
-</div>
