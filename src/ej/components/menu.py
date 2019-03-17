@@ -1,9 +1,11 @@
+from collections import defaultdict
+
 from django.utils.translation import ugettext_lazy as _
 from hyperpython import nav, section, Block, a
 from hyperpython.components import hyperlink, html_list, fa_icon
-from typing import Callable, Iterable
 
-from ..roles import link, h1, div
+from ej.components.functional import thunk, split_with
+from ..roles import link, h1
 
 
 def page_menu(*items, request=None, caller=None, **kwargs):
@@ -87,9 +89,7 @@ def default_implementations(request=None, **kwargs):
     kwargs.setdefault('about', True)
     kwargs.setdefault('accessibility', True)
     for name, value in kwargs.items():
-        if name == 'conversation' and value:
-            yield page_menu.CONVERSATION()
-        elif name == 'about' and value:
+        if name == 'about' and value:
             yield page_menu.ABOUT()
         elif name == 'accessibility' and value:
             yield page_menu.ACCESSIBILITY()
@@ -98,48 +98,33 @@ def default_implementations(request=None, **kwargs):
 
 
 #
-# Auxiliary functions
-#
-NOT_GIVEN = object()
-
-
-def thunk(func, result=NOT_GIVEN):
-    """
-    Some objects must be implemented as thunks to avoid circular imports
-    before Django is fully initialized.
-    """
-    if result is not NOT_GIVEN:
-        value = result
-
-    def wrapped():
-        nonlocal value
-        try:
-            return value
-        except NameError:
-            value = func()
-            return value
-
-    return wrapped
-
-
-def split_with(pred, lst, make_list: Callable = list):
-    it = iter(lst)
-    elem = make_list(take_until(pred, it))
-    while elem:
-        yield elem
-        elem = make_list(take_until(pred, it))
-
-
-def take_until(pred, it) -> Iterable:
-    for x in it:
-        if pred(x):
-            break
-        yield x
-
-
-#
 # Sections and styles
 #
+def menu_links(section, request, object=None):
+    """
+    Return a list of links for some menu section.
+    """
+    try:
+        render_functions = MENU_FUNCTIONS[section]
+    except KeyError:
+        raise ValueError(r'invalid section: {section!r}')
+    for func in render_functions:
+        yield from func(request, object)
+
+
+def register_menu(section):
+    """
+    Register a function that generates links using the :func:`menu_links`
+    function. The function must receive a request and a second object
+    (which can be None) pertaining to that section. Ex.: in a route that
+    configures the user profile, that object can be the profile object for the
+    request user.
+    """
+    return lambda f: MENU_FUNCTIONS[section].append(f) or f
+
+
+# Storage
+MENU_FUNCTIONS = defaultdict(list)
 
 #: Accessibility menu
 page_menu.ACCESSIBILITY = thunk(lambda: menu_section(_('Accessibility'), [
@@ -147,23 +132,22 @@ page_menu.ACCESSIBILITY = thunk(lambda: menu_section(_('Accessibility'), [
     a([fa_icon('adjust'), _('Toggle Contrast'), ], href="#", is_element="toggleContrast"),
 ]))
 
-#: Conversations menu
-page_menu.CONVERSATION = thunk(lambda: menu_section(_('Conversations'), [
-    link(_('Conversations'), href='conversation:list'),
-    link(_('My Conversations'), href='boards:board-list'),
-    link(_('Add Conversation'), href='boards:board-create'),
-]))
-
 #: About menu
 page_menu.ABOUT = thunk(lambda: menu_section(_('About'), [
-    link(_('About'), href='configurations:about-us'),
-    link(_('Frequently Asked Questions'), href='configurations:faq'),
-    link(_('Usage terms'), href='configurations:usage'),
+    link(_('About'), href='about-us'),
+    link(_('Frequently Asked Questions'), href='faq'),
+    link(_('Usage terms'), href='usage'),
 ], is_optional=True))
 
 #: Default menu
 page_menu.DEFAULT_MENU_SECTIONS = thunk(lambda: Block([
-    page_menu.CONVERSATION(),
     page_menu.ABOUT(),
     page_menu.ACCESSIBILITY(),
 ]))
+
+#: Links
+page_menu.links = menu_links
+page_menu.register = register_menu
+
+#: Create entire sections from links
+page_menu.section = lambda title, ref, *args: menu_section(title, menu_links(ref))

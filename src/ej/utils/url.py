@@ -32,7 +32,7 @@ class Url(str):
         It must pass the anchor contents as the first argument. It also accepts
         a additional attributes as keyword arguments.
         """
-        return a(href=self.url, **kwargs, children=[name])
+        return a(name, href=self.url, **kwargs)
 
 
 class SafeUrl(Url):

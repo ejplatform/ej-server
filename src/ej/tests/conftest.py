@@ -1,4 +1,6 @@
 from django.contrib.auth import get_user_model
+from django.test import signals
+from jinja2 import Template as Jinja2Template
 from model_mommy.recipe import Recipe
 
 __all__ = ['user', 'root']
@@ -40,3 +42,27 @@ def make_fixture(recipe, name):
 [make_fixture(v, k)
  for k, v in list(globals().items())
  if isinstance(v, Recipe)]
+
+
+#
+# Patch Jinja2 to sent template_rendered signal after rendering template
+#
+def patch_jinja2():
+    render = Jinja2Template.render
+
+    def context_render(self, *args, **kwargs):
+        context = dict(*args, **kwargs)
+        result = render(self, *args, **kwargs)
+        signals.template_rendered.send(
+            sender=self,
+            template=self,
+            context=context
+        )
+        return result
+
+    if not getattr(Jinja2Template, '_render_patch', False):
+        Jinja2Template.render = context_render
+        Jinja2Template._render_patch = True
+
+
+patch_jinja2()

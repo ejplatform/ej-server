@@ -18,4 +18,5 @@ def unregister_app(app_label):
 
 def unregister_apps():
     for app in UNREGISTER_APPS:
-        unregister_app(app)
+        if apps.is_installed(app):
+            unregister_app(app)

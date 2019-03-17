@@ -4,25 +4,23 @@ from .options import EjOptions
 
 class InstalledAppsConf(Base, EjOptions):
     project_apps = [
-        # Gamification
+        # # Gamification
         'ej_gamification',
 
+        # # Notifications
+        # 'ej_notifications',
+
+        # # Boards
+        # 'ej_boards',
+
         # Math
-        'ej_reports',
         'ej_clusters',
-
-        # Notifications
-        'ej_notifications',
-
-        # Conversations
-        'ej_boards',
-        'ej_conversations',
+        'ej_dataviz',
 
         # Core apps
-        'ej_configurations',
-        'ej_notifications',
         'ej_profiles',
         'ej_users',
+        'ej_conversations',
     ]
 
     third_party_apps = [
@@ -30,19 +28,20 @@ class InstalledAppsConf(Base, EjOptions):
         'rules',
         'allauth',
         'allauth.account',
-        'allauth.socialaccount',
-        'allauth.socialaccount.providers.facebook',
-        'allauth.socialaccount.providers.twitter',
-        'allauth.socialaccount.providers.github',
-        'allauth.socialaccount.providers.google',
-        'django_filters',
+        'boogie.apps.fragments',
+        # 'allauth.socialaccount',
+        # 'allauth.socialaccount.providers.facebook',
+        # 'allauth.socialaccount.providers.twitter',
+        # 'allauth.socialaccount.providers.github',
+        # 'allauth.socialaccount.providers.google',
+        # 'django_filters',
         'rest_framework',
-        'rest_framework.authtoken',
-        'rest_auth',
-        'rest_auth.registration',
-        'constance',
-        'constance.backends.database',
-        'push_notifications',
+        # 'rest_framework.authtoken',
+        # 'rest_auth',
+        # 'rest_auth.registration',
+        # 'constance',
+        # 'constance.backends.database',
+        # 'push_notifications',
     ]
 
     def get_django_contrib_apps(self):

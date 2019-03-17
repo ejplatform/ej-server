@@ -3,6 +3,7 @@ import os
 import bs4
 import django
 import sidekick as sk
+from django.apps import apps
 from django.test.client import Client
 from hyperpython import Text
 from sidekick import deferred, import_later, namespace
@@ -27,17 +28,15 @@ django.setup()
 #
 # Django imports
 #
-from boogie.models import F, Q  # noqa: E402
+from boogie.models import F, Q, Sum, Max, Min  # noqa: E402
 from django.conf import settings  # noqa: E402
 from django.contrib.auth.models import AnonymousUser  # noqa: E402
-from ej_users.models import User  # noqa: E402
-from ej_conversations.models import (Conversation, Comment, Vote, FavoriteConversation, ConversationTag)  # noqa: E402
-from ej_conversations.enums import Choice
-from ej_clusters.models import Clusterization, Stereotype, Cluster, StereotypeVote  # noqa: E402
 from ej_clusters.enums import ClusterStatus
+from ej_profiles.enums import Race, Gender
+from ej_conversations.enums import Choice, RejectionReason
 
-_export = {F, Q, sk}
-_enums = {ClusterStatus, Choice}
+_export = {F, Q, Max, Min, Sum, sk}
+_enums = {ClusterStatus, Choice, RejectionReason, Race, Gender}
 
 #
 # Create models, manager accessors and examples
@@ -51,13 +50,9 @@ def extract(obj):
     return obj._obj__
 
 
-# User app
-users = User.objects
-anonymous = AnonymousUser()
-admin = deferred(lambda: users.filter(is_superuser=True).first())
-user = deferred(lambda: users.filter(is_superuser=False).first())
-
 # Conversation app
+from ej_conversations.models import (Conversation, Comment, Vote, FavoriteConversation, ConversationTag)  # noqa: E402
+
 conversations = Conversation.objects
 conversation = _first(conversations)
 comments = Comment.objects
@@ -68,15 +63,42 @@ favorite_conversation = _first(FavoriteConversation)
 conversation_tags = ConversationTag.objects
 conversation_tag = _first(ConversationTag)
 
-# Clusterizations app
-clusterizations = Clusterization.objects
-clusterization = _first(clusterizations)
-stereotypes = Stereotype.objects
-stereotype = _first(stereotypes)
-clusters = Cluster.objects
-cluster = _first(Cluster)
-stereotype_votes = StereotypeVote.objects
-stereotype_vote = _first(StereotypeVote)
+# User app
+if apps.is_installed('ej_users'):
+    from ej_users.models import User  # noqa: E402
+
+    users = User.objects
+    anonymous = AnonymousUser()
+    admin = deferred(lambda: users.filter(is_superuser=True).first())
+    user = deferred(lambda: users.filter(is_superuser=False).first())
+
+# Profiles app
+if apps.is_installed('ej_profiles'):
+    from ej_profiles.models import Profile  # noqa: E402
+
+    profiles = Profile.objects
+    profile = _first(Profile)
+
+# Clusterization app
+if apps.is_installed('ej_clusters'):
+    from ej_clusters.models import Clusterization, Stereotype, Cluster, StereotypeVote  # noqa: E402
+
+    clusterizations = Clusterization.objects
+    clusterization = _first(clusterizations)
+    stereotypes = Stereotype.objects
+    stereotype = _first(stereotypes)
+    clusters = Cluster.objects
+    cluster = _first(Cluster)
+    stereotype_votes = StereotypeVote.objects
+    stereotype_vote = _first(StereotypeVote)
+
+# Gamification app
+if apps.is_installed('ej_gamification'):
+    from ej_gamification.models import UserProgress, ConversationProgress, ParticipationProgress # noqa: E402
+
+    user_progresses = UserProgress.objects
+    conversation_progresses = ConversationProgress.objects
+    participation_progresses = ParticipationProgress.objects
 
 
 def fix_links(data, prefix='http://localhost:8000'):

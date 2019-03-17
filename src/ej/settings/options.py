@@ -7,17 +7,18 @@ class EjOptions(Conf):
     """
     Options for EJ installation.
     """
+    # Conversations and boards limits
+    EJ_MAX_COMMENTS_PER_CONVERSATION = env(2, name='{attr}')
+    EJ_MAX_CONVERSATIONS_PER_BOARD = env(None, type=int, name='{attr}')
+    EJ_MAX_USERS_ON_PUBLIC_REPORTS = env(None, type=int, name='{attr}')
+    EJ_ENABLE_BOARDS = env(True, name='{attr}')
 
-    # Integrations with Rocket.Chat
-    EJ_ROCKETCHAT_INTEGRATION = env(False, name='{attr}')
-    EJ_ROCKETCHAT_URL = env('http://localhost:3000', name='{attr}')
-    EJ_ROCKETCHAT_AUTH_TOKEN = env('', name='{attr}')
-    EJ_ROCKETCHAT_USERNAME = env('ej-admin', name='{attr}')
-    EJ_ROCKETCHAT_USER_ID = env('', name='{attr}')
-
-    # Conversations Configurations
-    EJ_CONVERSATIONS_ALLOW_PERSONAL_CONVERSATIONS = env(True, name='{attr}')
-    EJ_CONVERSATIONS_MAX_COMMENTS = env(2, name='{attr}')
+    # Disable parts of the system
+    EJ_ENABLE_PROFILES = env(True, name='{attr}')
+    EJ_ENABLE_NOTIFICATIONS = env(True, name='{attr}')
+    EJ_ENABLE_CLUSTERS = env(True, name='{attr}')
+    EJ_ENABLE_DATAVIZ = env(True, name='{attr}')
+    EJ_ENABLE_GAMIFICATION = env(True, name='{attr}')
 
     # TODO: remove those in the future? Maybe all personalization strings
     # should be options in Django constance with a cache fallback
@@ -32,3 +33,10 @@ class EjOptions(Conf):
     EJ_PAGE_TITLE = env(_('EJ Platform'), name='{attr}')
     EJ_REGISTER_TEXT = _('Not part of EJ yet?')
     EJ_LOGIN_TITLE_TEXT = _('Welcome!')
+
+    # Integrations with Rocket.Chat
+    EJ_ROCKETCHAT_INTEGRATION = env(False, name='{attr}')
+    EJ_ROCKETCHAT_URL = env('http://localhost:3000', name='{attr}')
+    EJ_ROCKETCHAT_AUTH_TOKEN = env('', name='{attr}')
+    EJ_ROCKETCHAT_USERNAME = env('ej-admin', name='{attr}')
+    EJ_ROCKETCHAT_USER_ID = env('', name='{attr}')

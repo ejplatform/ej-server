@@ -1,6 +1,8 @@
 from operator import attrgetter
 
-from django.forms import Form, ModelForm
+from django.forms import Form, ModelForm, widgets
+from django.utils.translation import ugettext_lazy as _
+from hyperpython import div, input_
 
 NOT_GIVEN = object()
 
@@ -19,7 +21,7 @@ class EjForm(Form):
             super().__init__(data, *args, **kwargs)
             self.http_method = method
         else:
-            super().__init__(*args, **kwargs)
+            super().__init__(data, *args, **kwargs)
             self.http_method = getattr(request, 'method', None)
 
     def _meta_property(self, prop, default=NOT_GIVEN):
@@ -92,3 +94,34 @@ class PlaceholderForm(EjForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.set_widget_attributes('placeholder', from_attr='label')
+
+
+class FileInput(widgets.FileInput):
+    """
+    A custom file input widget used by all forms of ej.
+    To specify witch type of file it will accept, pass 'accept'
+    to attrs dict.
+    E.g.: widgets.FileInput(attrs={'accept':'image/*'})
+    """
+    class Media:
+        js = ('js/file-input.js',)
+
+    def render(self, name, value, attrs=None, renderer=None):
+        widget = self.get_context(name, value, attrs)['widget']
+
+        w_name = widget.get('name', '')
+        w_type = widget.get('type', '')
+        w_attrs = widget.get('attrs', {})
+
+        return div(class_="FileInput")[
+            div(class_="PickFileButton")[
+                input_(
+                    style="opacity: 0",
+                    type_=w_type,
+                    name=w_name,
+                    **w_attrs
+                ),
+                _("Choose a file")
+            ],
+            div(class_="FileStatus")[_("No file chosen")]
+        ].render()

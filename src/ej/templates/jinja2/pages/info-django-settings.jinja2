@@ -1,15 +1,15 @@
 {% extends 'base.jinja2' %}
-{% set content_title = _('Fragment list') %}
+{% set page_title = _('Django settings') %}
 
 
 {% block content %}
-<article class="Container">
     <h1>{% trans %}Django Settings{% endtrans %}</h1>
-    <dl>
+    <dl class="description">
         {% for name, value in settings %}
-            <dt><strong>{{ name }}</strong></dt>
-            <dd><pre>{{ value }}</pre></dd>
+            <dt>{{ name }}</dt>
+            <dd>
+                <pre>{{ value }}</pre>
+            </dd>
         {% endfor %}
     </dl>
-</article>
 {% endblock %}

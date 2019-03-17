@@ -8,7 +8,6 @@ class MiddlewareConf(Base):
             # 'corsheaders.middleware.CorsMiddleware',
             'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
             'ej_boards.middleware.BoardFallbackMiddleware',
-            'ej_conversations.middleware.ConversationFallbackMiddleware',
             *middleware,
         ]
         if 'debug_toolbar' in self.INSTALLED_APPS:

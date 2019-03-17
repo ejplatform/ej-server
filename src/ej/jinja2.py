@@ -2,7 +2,10 @@ import random
 import string
 
 import hyperpython.jinja2
+from boogie.apps.fragments import fragment
+from django.apps import apps
 from django.conf import settings
+from django.contrib.messages import get_messages
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.urls import reverse
 from django.utils import translation
@@ -12,19 +15,11 @@ from hyperpython import html
 from jinja2 import Environment, StrictUndefined, contextfunction
 from markdown import markdown
 from markupsafe import Markup
+from sidekick import record
 
-from ej_configurations import social_icons, fragment
 from . import components
 from . import roles
 from .roles import tags
-
-FUNCTIONS = {}
-for _names, _mod in [(tags.__all__, tags), (dir(components), components)]:
-    for _name in _names:
-        value = getattr(_mod, _name, None)
-        if not _name.startswith('_') and callable(value):
-            FUNCTIONS[_name] = value
-SALT_CHARS = string.ascii_letters + string.digits + '-_'
 
 
 def environment(**options):
@@ -37,7 +32,16 @@ def environment(**options):
     env.globals.update(
         static=staticfiles_storage.url,
         url=reverse,
-        settings=settings,
+        settings=record(
+            **{k: getattr(settings, k) for k in dir(settings)},
+            has_boards=apps.is_installed('ej_boards'),
+            has_clusters=apps.is_installed('ej_clusters'),
+            has_dataviz=apps.is_installed('ej_dataviz'),
+            has_gamification=apps.is_installed('ej_gamification'),
+            has_profiles=apps.is_installed('ej_profiles'),
+            has_users=apps.is_installed('ej_users'),
+            service_worker=getattr(settings, 'SERVICE_WORKER', False),
+        ),
 
         # Localization
         get_language=get_language,
@@ -49,15 +53,12 @@ def environment(**options):
         salt=salt,
 
         # Platform functions
-        social_icons=social_icons,
-        fragment=fragment,
-        service_worker=getattr(settings, 'SERVICE_WORKER', False),
         generic_context=generic_context,
-
-        # Hyperpython tag functions
-        render=non_strict_render,
+        get_messages=messages,
 
         # Available tags and components
+        fragment=context_fragment,
+        render=html,
         tag=roles,
         **FUNCTIONS,
     )
@@ -131,6 +132,24 @@ def salt_tag():
     return f'<div style="display: none" {salt_attr()}></div>'
 
 
+#
+# Messaging and services
+#
+@contextfunction
+def messages(ctx):
+    try:
+        request = ctx['request']
+    except KeyError:
+        return []
+    else:
+        return get_messages(request)
+
+
+@contextfunction
+def context_fragment(ctx, ref, **kwargs):
+    return fragment(ref, request=ctx.get('request'), **kwargs)
+
+
 @contextfunction
 def generic_context(ctx):
     """
@@ -165,5 +184,13 @@ def generic_context(ctx):
         raise Http404
 
 
-def non_strict_render(obj, role=None, ctx=None, strict=False):
-    return html(obj, role=role, ctx=ctx, strict=strict)
+#
+# Constants
+#
+FUNCTIONS = {}
+for _names, _mod in [(tags.__all__, tags), (dir(components), components)]:
+    for _name in _names:
+        value = getattr(_mod, _name, None)
+        if not _name.startswith('_') and callable(value):
+            FUNCTIONS[_name] = value
+SALT_CHARS = string.ascii_letters + string.digits + '-_'
