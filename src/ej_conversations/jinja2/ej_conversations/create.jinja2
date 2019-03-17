@@ -1,5 +1,6 @@
-{% extends 'ej_conversations/base.jinja2' %}
+{% extends 'base.jinja2' %}
 {% set main_class = 'container-1 pad-x0' %}
+{% block menu %}{% include 'ej_conversations/includes/menu-list.jinja2' %}{% endblock %}
 
 
 {% block content %}
@@ -53,6 +54,7 @@
 
 {% block javascript_body %}
     {{ super() }}
+    <!--suppress SpellCheckingInspection -->
     <script defer>
         window.addEventListener('load', function () {
             $('#add-more-comments')

@@ -14,10 +14,10 @@ from .vote import Vote, normalize_choice
 from ..enums import Choice, RejectionReason
 from ..utils import votes_counter
 from ..validators import is_not_empty
-
+from ..signals import vote_cast
 
 # noinspection PyUnresolvedReferences
-@rest_api(['content', 'author', 'status', 'created', 'rejection_reason'])
+@rest_api(['content', 'author', 'status', 'created', 'rejection_reason', 'rejection_reason_text'])
 class Comment(StatusModel, TimeStampedModel):
     """
     A comment on a conversation.
@@ -33,13 +33,7 @@ class Comment(StatusModel, TimeStampedModel):
         'approved': STATUS.approved,
         'rejected': STATUS.rejected,
     }
-    REJECTION_REASON = Choices(
-        ('incomplete_text', _('Incomplete or incomprehensible text')),
-        ('off_topic', _('Off-topic')),
-        ('offensive_language', _('Offensive content or language')),
-        ('duplicated_comment', _('Duplicated content')),
-        ('against_terms_of_service', _('Violates terms of service of the platform')),
-    )
+
     conversation = models.ForeignKey(
         'Conversation',
         related_name='comments',
@@ -56,18 +50,24 @@ class Comment(StatusModel, TimeStampedModel):
         validators=[MinLengthValidator(2), is_not_empty],
         help_text=_('Body of text for the comment'),
     )
-    rejection_reason_option = models.EnumField(
+    rejection_reason = models.EnumField(
         RejectionReason,
         _('Rejection reason'),
-        null=True, blank=True,
+        default=RejectionReason.USER_PROVIDED,
     )
-    rejection_reason = models.TextField(
+    rejection_reason_text = models.TextField(
         _('Rejection reason (free-form)'),
         blank=True,
         help_text=_(
             'You must provide a reason to reject a comment. Users will receive '
             'this feedback.'
         ),
+    )
+    moderator = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name='rejected_comments',
+        on_delete=models.SET_NULL,
+        blank=True, null=True,
     )
     is_promoted = models.BooleanField(
         _('Promoted comment?'),
@@ -80,8 +80,13 @@ class Comment(StatusModel, TimeStampedModel):
     is_approved = property(lambda self: self.status == self.STATUS.approved)
     is_pending = property(lambda self: self.status == self.STATUS.pending)
     is_rejected = property(lambda self: self.status == self.STATUS.rejected)
-    has_rejection_explanation = property(lambda self: bool(self.rejection_reason == ''
-                                                           or self.rejection_reason_option is None))
+
+    @property
+    def has_rejection_explanation(self):
+        return (
+            self.rejection_reason != RejectionReason.USER_PROVIDED
+            or (self.rejection_reason.USER_PROVIDED and self.rejection_reason_text)
+        )
 
     #
     # Annotations
@@ -99,10 +104,10 @@ class Comment(StatusModel, TimeStampedModel):
             return _('Comment is approved')
         elif self.status == self.STATUS.pending:
             return _('Comment is pending moderation')
-        elif self.rejection_reason:
-            return rejection_reason
-        elif self.rejection_reason_option is not None:
-            return self.rejection_reason_option.description
+        elif self.rejection_reason_text:
+            return rejection_reason_text
+        elif self.rejection_reason is not None :
+            return self.rejection_reason.description
         else:
             raise AssertionError
 
@@ -116,10 +121,8 @@ class Comment(StatusModel, TimeStampedModel):
 
     def clean(self):
         super().clean()
-        print(self, self.status, self.rejection_reason, self.rejection_reason_option, self.has_rejection_explanation)
         if self.status == self.STATUS.rejected and not self.has_rejection_explanation:
-            msg = _('Must give a reason to reject a comment')
-            raise ValidationError({'rejection_reason': msg})
+            raise ValidationError({'rejection_reason': _('Must give a reason to reject a comment')})
 
     def vote(self, author, choice, commit=True):
         """
@@ -129,7 +132,6 @@ class Comment(StatusModel, TimeStampedModel):
         >>> comment.vote(user, 'agree')                         # doctest: +SKIP
         """
         choice = normalize_choice(choice)
-        log.debug(f'Vote: {author} - {choice}')
 
         # We do not full_clean since the uniqueness constraint will only be
         # enforced when strictly necessary.
@@ -137,20 +139,26 @@ class Comment(StatusModel, TimeStampedModel):
         vote.clean_fields()
 
         # Check if vote exists and if its existence represents an error
+        is_changed = False
         try:
             saved_vote = Vote.objects.get(author=author, comment=self)
         except Vote.DoesNotExist:
             pass
         else:
-            if saved_vote.choice == choice or saved_vote.choice == Choice.SKIP:
+            if saved_vote.choice == choice:
+                commit = False
+            elif saved_vote.choice == Choice.SKIP:
                 vote.id = saved_vote.id
                 vote.created = now()
+                is_changed = True
             else:
                 raise ValidationError('Cannot change user vote')
 
         # Send possibly saved vote
         if commit:
             vote.save()
+            log.debug(f'Registered vote: {author} - {choice}')
+            vote_cast.send(Comment, vote=vote, comment=self, choice=choice, is_update=is_changed)
         return vote
 
     def statistics(self, ratios=False):

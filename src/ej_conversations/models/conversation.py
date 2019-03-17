@@ -1,18 +1,17 @@
-import hyperpython as hp
 from autoslug import AutoSlugField
+from boogie import models
+from boogie import rules
+from boogie.rest import rest_api
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError, ObjectDoesNotExist
 from django.db.models import Count, Q
 from django.utils.translation import ugettext_lazy as _
 from model_utils.models import TimeStampedModel
-from sidekick import lazy
+from sidekick import lazy, placeholder as this
 from taggit.managers import TaggableManager
 from taggit.models import TaggedItemBase
 
-from boogie import models
-from boogie import rules
-from boogie.rest import rest_api
 from ej.utils.url import SafeUrl
 from .comment import Comment
 from .conversation_queryset import log, ConversationQuerySet
@@ -23,7 +22,7 @@ from ..utils import normalize_status
 NOT_GIVEN = object()
 
 
-@rest_api(['title', 'text', 'author', 'slug', 'created'], lookup_field='slug')
+@rest_api(['title', 'text', 'author', 'slug', 'created'])
 class Conversation(TimeStampedModel):
     """
     A topic of conversation.
@@ -50,6 +49,14 @@ class Conversation(TimeStampedModel):
             'Only the author and administrative staff can edit this conversation.'
         )
     )
+    moderators = models.ManyToManyField(
+        settings.AUTH_USER_MODEL,
+        blank=True,
+        related_name='moderated_conversations',
+        help_text=_(
+            'Moderators can accept and reject comments.'
+        ),
+    )
     slug = AutoSlugField(
         unique=False,
         populate_from='title',
@@ -70,22 +77,14 @@ class Conversation(TimeStampedModel):
             'endpoint.'
         ),
     )
-    limit_report_users = models.PositiveIntegerField(
-        _('Limit users'),
-        default=0,
-        help_text=_(
-            'Limit number of participants, making /reports/ route unavailable if limit is reached '
-            'except for super admin.'
-        ),
-    )
 
     objects = ConversationQuerySet.as_manager()
-    tags = TaggableManager(through='ConversationTag')
+    tags = TaggableManager(through='ConversationTag', blank=True)
     votes = property(lambda self: Vote.objects.filter(comment__conversation=self))
 
     @property
     def users(self):
-        return get_user_model().objects.filter(votes__in=self.votes).distinct()
+        return get_user_model().objects.filter(votes__comment__conversation=self).distinct()
 
     @property
     def approved_comments(self):
@@ -99,15 +98,39 @@ class Conversation(TimeStampedModel):
         )
 
     #
-    # Possibly annotated values
+    # Statistics and annotated values
     #
-    first_tag = lazy(lambda self: self.tags.values_list('name', flat=True).first(), name='first_tag')
-    tag_names = lazy(lambda self: list(self.tags.values_list('name', flat=True)), name='tag_names')
-    n_comments = lazy(lambda self: self.comments.filter(status=Comment.STATUS.approved).count(), name='n_comments')
-    n_favorites = lazy(lambda self: self.favorites.count(), name='n_favorites')
-    n_votes = lazy(lambda self: self.votes.count(), name='n_votes')
-    n_user_votes = lazy(lambda self: self.votes.filter(author=self.for_user).count(), name='n_user_votes')
-    author_name = lazy(lambda self: self.author.name, name='author_name')
+    author_name = lazy(this.author.name)
+    first_tag = lazy(this.tags.values_list('name', flat=True).first())
+    tag_names = lazy(this.tags.values_list('name', flat=True))
+
+    # Statistics
+    n_comments = lazy(lambda self: self.comments.filter(status=Comment.STATUS.approved).count())
+    n_rejected_comments = lazy(lambda self: self.comments.filter(status=Comment.STATUS.rejected).count())
+    n_favorites = lazy(this.favorites.count())
+    n_tags = lazy(this.tags.count())
+    n_votes = lazy(this.votes.count())
+    n_participants = lazy(this.users.count())
+
+    # Statistics for the request user
+    n_user_votes = lazy(lambda self: self.votes.filter(author=self.for_user).count())
+
+    # TODO: move as patches from other apps
+    @lazy
+    def n_clusters(self):
+        try:
+            return self.clusterization.n_clusters
+        except AttributeError:
+            return 0
+
+    @lazy
+    def n_stereotypes(self):
+        try:
+            return self.clusterization.n_clusters
+        except AttributeError:
+            return 0
+
+    n_endorsements = 0
 
     def __str__(self):
         return self.title
@@ -135,7 +158,10 @@ class Conversation(TimeStampedModel):
         else:
             return SafeUrl('conversation:detail', **kwargs)
 
-    def get_url(self, which, board=None, **kwargs):
+    def url(self, which, board=None, **kwargs):
+        """
+        Return a url pertaining to the current conversation.
+        """
         kwargs['conversation'] = self
         kwargs['slug'] = self.slug
         if board is None:
@@ -150,9 +176,6 @@ class Conversation(TimeStampedModel):
                 return SafeUrl(which, **kwargs)
 
         return SafeUrl(which, **kwargs)
-
-    def get_anchor(self, name, which, **kwargs):
-        return hp.a(name, href=self.get_url(which, **kwargs))
 
     def user_votes(self, user):
         """
@@ -277,7 +300,7 @@ class Conversation(TimeStampedModel):
         If default value is not given, raises a Comment.DoesNotExit exception
         if no comments are available for user.
         """
-        comment = rules.compute('ej_conversations.next_comment', self, user)
+        comment = rules.compute('ej.next_comment', self, user)
         if comment:
             return comment
         elif default is NOT_GIVEN:
@@ -308,11 +331,15 @@ class Conversation(TimeStampedModel):
     def toggle_favorite(self, user):
         """
         Toggles favorite status of conversation.
+
+        Return the final favorite status.
         """
         try:
             self.favorites.get(user=user).delete()
+            return False
         except ObjectDoesNotExist:
             self.make_favorite(user)
+            return True
 
 
 #
@@ -355,9 +382,8 @@ def make_clean(cls, commit=True, **kwargs):
     return obj
 
 
-def conversations_with_votes(user):
-    return Conversation.objects.filter(comments__votes__author=user).distinct()
-
-
 def patch_user_model(model):
+    def conversations_with_votes(user):
+        return Conversation.objects.filter(comments__votes__author=user).distinct()
+
     model.conversations_with_votes = property(conversations_with_votes)

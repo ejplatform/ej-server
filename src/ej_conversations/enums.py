@@ -7,11 +7,12 @@ class RejectionReason(IntEnum):
     """
     Possible rejection reasons for a comment.
     """
-    INCOMPLETE_TEXT = (0, _('Incomplete or incomprehensible text'))
-    OFF_TOPIC = (1, _('Off-topic'))
-    OFFENSIVE_LANGUAGE = (2, _('Offensive content or language'))
-    DUPLICATED_COMMENT = (3, _('Duplicated content'))
-    VIOLATE_TERMS_OF_SERVICE = (4, _('Violates terms of service of the platform'))
+    USER_PROVIDED = 0, _('User provided')
+    INCOMPLETE_TEXT = (10, _('Incomplete or incomprehensible text'))
+    OFF_TOPIC = (20, _('Off-topic'))
+    OFFENSIVE_LANGUAGE = (30, _('Offensive content or language'))
+    DUPLICATED_COMMENT = (40, _('Duplicated content'))
+    VIOLATE_TERMS_OF_SERVICE = (50, _('Violates terms of service of the platform'))
 
 
 class Choice(IntEnum):

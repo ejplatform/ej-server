@@ -34,7 +34,7 @@
             {% if id != 'rejected' %}
                 <div is-element="rejection-reason-form">
                     {{ form.non_field_errors() }}
-                    {% for field in [form.rejection_reason_option, form.rejection_reason] %}
+                    {% for field in [form.rejection_reason, form.rejection_reason_text] %}
                         {{ field.errors }}
                         <label>{{ field.label }}{{ field }}</label>
                     {% endfor %}

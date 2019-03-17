@@ -4,7 +4,6 @@ from django.conf import settings
 from django.utils.timezone import now
 
 from boogie import rules
-from ej_gamification.rules import promoted_comments
 from .enums import Choice
 from .models import Comment
 
@@ -16,7 +15,7 @@ def max_comments_per_conversation():
     """
     Limit the number of comments in a single conversation
     """
-    return getattr(settings, 'EJ_CONVERSATIONS_MAX_COMMENTS', 2)
+    return getattr(settings, 'EJ_MAX_COMMENTS_PER_CONVERSATION', 2)
 
 
 def comment_throttle():
@@ -41,13 +40,13 @@ def is_personal_conversations_enabled():
     """
     Check global config to see if personal conversations are allowed.
     """
-    return getattr(settings, 'EJ_CONVERSATIONS_ALLOW_PERSONAL_CONVERSATIONS', True)
+    return getattr(settings, 'EJ_ENABLE_BOARDS', True)
 
 
 #
 # Comments
 #
-@rules.register_value('ej_conversations.next_comment')
+@rules.register_value('ej.next_comment')
 def next_comment(conversation, user):
     """
     Return a randomly selected comment for the user to vote.
@@ -55,29 +54,23 @@ def next_comment(conversation, user):
     from user own non-voted comments and then the rest of the comments
     """
     if user.is_authenticated:
-        # Check promoted
-        comments = (
-            promoted_comments(user, conversation)
-                .exclude(votes__author=user)
-                .filter(status=Comment.STATUS.approved))
+        # Non voted user-created comments
+        comments = conversation.approved_comments \
+            .filter(author=user)\
+            .exclude(votes__author=user)
         size = comments.count()
         if size:
             return comments[randrange(0, size)]
 
         # Regular comments
-        comments = (
-            conversation.comments
-                .exclude(votes__author=user)
-                .filter(status=Comment.STATUS.approved))
-        size = comments.count()
-        if size:
-            return comments[randrange(0, size)]
+        try:
+            return conversation.approved_comments.exclude(votes__author=user).random()
+        except Comment.DoesNotExist:
+            pass
 
         # Comments the user has skip
-        comments = (
-            conversation.comments
-                .filter(votes__author=user, votes__choice=Choice.SKIP)
-                .filter(status=Comment.STATUS.approved))
+        comments = conversation.approved_comments \
+            .filter(votes__author=user, votes__choice=Choice.SKIP)
         size = comments.count()
         if size:
             return comments[randrange(0, size)]
@@ -144,14 +137,11 @@ def vote_cooldown(conversation, user):
 @rules.register_perm('ej.can_vote')
 def can_vote(user, conversation):
     """
-    User can vote in a conversation if there are unvoted comments.
+    User can vote in a conversation if there are non-voted comments.
     """
     if user.id is None:
         return False
-    return bool(
-        conversation.approved_comments
-            .exclude(votes__author_id=user.id)
-    )
+    return conversation.approved_comments.exclude(votes__author=user).exists()
 
 
 @rules.register_perm('ej.can_comment')
@@ -168,17 +158,6 @@ def can_comment(user, conversation):
         return True
     remaining = remaining_comments(conversation, user)
     return remaining > 0
-
-
-@rules.register_perm('ej.can_add_promoted_conversation')
-def can_add_promoted_conversation(user):
-    """
-    Check if user can add a promoted conversation
-
-    * Has explicit 'ej_conversations.can_publish_promoted' permission
-      stored in the db.
-    """
-    return user.has_perm('ej_conversations.can_publish_promoted')
 
 
 @rules.register_perm('ej.can_edit_conversation')
@@ -202,20 +181,21 @@ def can_moderate_conversation(user, conversation):
     Can moderate a given conversation.
 
     * User can edit conversation
-    * OR user is an moderator (explicit admin permission)
+    * OR user is an explict moderator (explicit permission)
+    * OR user is an moderator in conversation
     """
     return (
         can_edit_conversation(user, conversation)
         or user.has_perm('ej_conversations.is_moderator')
+        or user in conversation.moderators.all()
     )
 
 
-@rules.register_perm('ej.can_promote_conversation')
+@rules.register_perm('ej.can_promote_conversations')
 def can_promote_conversation(user):
     """
-    Can promote a conversation of a board to the list of promoted conversations.
+    Check if user can add a promoted conversation
+
+    * User is a publisher (explicit admin permission).
     """
-    return (
-        user.is_superuser
-        or user.has_perm('ej_conversations.can_publish_promoted')
-    )
+    return user.has_perm('ej_conversations.can_publish_promoted')

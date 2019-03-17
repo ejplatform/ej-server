@@ -27,8 +27,8 @@ def bulk_create(func):
                     .order_by('-id')
                     .values_list('id', flat=True)[:len(result)]
             )
-            for id, item in zip(ids, reversed(result)):
-                item.id = id
+            for id_, item in zip(ids, reversed(result)):
+                item.id = id_
         return result
 
     return method

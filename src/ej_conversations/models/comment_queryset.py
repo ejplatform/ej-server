@@ -1,14 +1,16 @@
 import logging
 
-from boogie import models, db
+from boogie import db
+from boogie.models.wordcloud import WordCloudQuerySet
+
 from .vote import Vote
 from ..math import comment_statistics
-from ..mixins import ConversationMixin
+from ..mixins import ConversationMixin, EXTEND_FIELDS as _EXTEND_FIELDS
 
 log = logging.getLogger('ej')
 
 
-class CommentQuerySet(ConversationMixin, models.QuerySet):
+class CommentQuerySet(ConversationMixin, WordCloudQuerySet):
     """
     A table of comments.
     """
@@ -42,7 +44,7 @@ class CommentQuerySet(ConversationMixin, models.QuerySet):
     def statistics(self):
         return [x.statistics() for x in self]
 
-    def statistics_summary_dataframe(self, normalization=1.0, votes=None):
+    def statistics_summary_dataframe(self, normalization=1.0, votes=None, extend_fields=()):
         """
         Return a dataframe with basic voting statistics.
 
@@ -52,7 +54,16 @@ class CommentQuerySet(ConversationMixin, models.QuerySet):
         votes = (votes or self.votes()).dataframe('comment', 'author', 'choice')
         stats = comment_statistics(votes, participation=True, divergence=True, ratios=True)
         stats *= normalization
-        stats = self.extend_dataframe(stats, 'author__name', 'content')
+        extend_full_fields = [EXTEND_FIELDS[x] for x in extend_fields]  # TODO: implement this
+        stats = self.extend_dataframe(stats, 'author__name', *extend_fields, 'content')
         stats['author'] = stats.pop('author__name')
         cols = ['author', 'content', 'agree', 'disagree', 'skipped', 'divergence', 'participation']
         return stats[cols]
+
+
+#
+# Constants
+#
+EXTEND_FIELDS = {
+    **{'author__' + k: v for k, v in _EXTEND_FIELDS.items()}
+}

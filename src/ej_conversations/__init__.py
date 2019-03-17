@@ -13,4 +13,6 @@ def create_conversation(text, title, author, *, is_promoted=False, tags=(), comm
     conversation.clean()
     if commit:
         conversation.save()
+    if tags:
+        conversation.tags.set(tags)
     return conversation

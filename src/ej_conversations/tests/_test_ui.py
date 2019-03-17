@@ -36,7 +36,7 @@ def env(live_server, driver, user):
         time.sleep(1)  # wait page load
         assert f'{live_server.url}/login/' in driver.url
     else:
-        pytest.fail('Couln\'t find conversation title or login button.')
+        pytest.fail('Could not find conversation title or login button.')
     yield {'driver': driver, 'live_server': live_server}
     assert driver.url == f'{live_server.url}/conversations/title/'
 
@@ -58,7 +58,7 @@ class TestUIVote:
             pass_f.first.fill('password')
             login_button.first._element.send_keys(Keys.SPACE)
         else:
-            pytest.fail('Couln\'t find email, password field or login button.')
+            pytest.fail('Could not find email, password field or login button.')
 
     @pytest.mark.skipif(os.environ.get('EJ_BASE_URL') != 'localhost',
                         reason="selenium tests only run in localhost yet")
@@ -83,4 +83,4 @@ class TestUIVote:
             pass_conf_f.first.fill(pw)
             register_b.first.click()
         else:
-            pytest.fail('Couln\'t find name, email, password, password confirmation field or register button.')
+            pytest.fail('Could not find name, email, password, password confirmation field or register button.')

@@ -28,7 +28,7 @@ COMMENT = {
     'author_name': 'comment_author',
     'content': 'comment',
     'id': 1,
-    'rejection_reason': '',
+    'rejection_reason': null,
     'statistics': {
         'agree': 0,
         'disagree': 0,

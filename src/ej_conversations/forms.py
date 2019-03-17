@@ -37,8 +37,8 @@ class ModerationForm(EjModelForm):
 
     class Meta:
         model = Comment
-        fields = ['status', 'rejection_reason_option', 'rejection_reason']
-        help_texts = {'rejection_reason': None}
+        fields = ['status', "rejection_reason", "rejection_reason_text"]
+        help_texts = {"rejection_reason_text": None}
 
     def _clean_fields(self):
         self.data = self.data.copy()
@@ -60,7 +60,7 @@ class ConversationForm(EjModelForm):
     Form used to create and edit conversations.
     """
     comments_count = forms.IntegerField(initial=3, required=False)
-    tags = forms.CharField(label=_('Tags'), help_text=_('Tags, separated by commas.'))
+    tags = forms.CharField(label=_('Tags'), help_text=_('Tags, separated by commas.'), required=False)
 
     class Meta:
         model = Conversation

@@ -6,7 +6,6 @@ from ej_conversations.enums import Choice
 from ej_conversations.models import Vote
 from ej_conversations.mommy_recipes import ConversationRecipes
 from ej_users.models import User
-from ej_boards.models import Board, BoardSubscription
 
 ConversationRecipes.update_globals(globals())
 
@@ -42,7 +41,7 @@ class TestConversation(ConversationRecipes):
         user.board_name = 'name'
         user.save()
         board_url = '/' + user.board_name + '/'
-        api.get(board_url, raw=True).status_code == 200
+        assert api.get(board_url, raw=True).status_code == 200
 
     def test_mark_conversation_favorite(self, mk_conversation, mk_user):
         user = mk_user()

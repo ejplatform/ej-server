@@ -1,5 +1,6 @@
-{% extends 'ej_conversations/base.jinja2' %}
-
+{% extends 'base.jinja2' %}
+{% set main_class = main_class|default('container pad-x0') %}
+{% block menu %}{% include 'ej_conversations/includes/menu-list.jinja2' %}{% endblock %}
 
 {% block content %}
     <h1 class="h2 text-accent text-center margin-b3">{{ title }}</h1>

@@ -1,31 +1,22 @@
 import logging
-from random import randrange
 
+from boogie.models import F, Value, IntegerField, FieldDoesNotExist
+from boogie.models.wordcloud import WordCloudQuerySet
+from django.contrib.auth import get_user_model
 from django.db.models import Window, Count, Q
 from django.db.models.functions import FirstValue
 
-from boogie.models import QuerySet, F, Value, IntegerField
 from .comment import Comment
 from ..mixins import ConversationMixin
 
 log = logging.getLogger('ej')
 
 
-class ConversationQuerySet(ConversationMixin, QuerySet):
+class ConversationQuerySet(ConversationMixin, WordCloudQuerySet):
     """
     A table of conversations.
     """
     conversations = (lambda self: self)
-
-    def random(self, user=None):
-        """
-        Return a random conversation.
-
-        If user is given, tries to select the conversation that is most likely
-        to engage the given user.
-        """
-        size = self.count()
-        return self.all()[randrange(size)]
 
     def promoted(self):
         """
@@ -71,7 +62,7 @@ class ConversationQuerySet(ConversationMixin, QuerySet):
 
         # Author name
         if kwargs.pop('author_name', False):
-            annotations[prefix + 'author_name'] = F('author__name')
+            annotations[prefix + 'author_name'] = F(AUTHOR_NAME_FIELD)
 
         if kwargs:
             raise TypeError(f'bad attribute: {kwargs.popitem()[0]}')
@@ -79,3 +70,13 @@ class ConversationQuerySet(ConversationMixin, QuerySet):
         if not annotations:
             return self
         return self.annotate(**annotations)
+
+
+#
+# Constants and configurations
+#
+try:
+    get_user_model()._meta.get_field('name')
+    AUTHOR_NAME_FIELD = 'author__name'
+except FieldDoesNotExist:
+    AUTHOR_NAME_FIELD = 'author__username'

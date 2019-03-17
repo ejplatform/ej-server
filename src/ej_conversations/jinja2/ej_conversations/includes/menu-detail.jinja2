@@ -1,0 +1,26 @@
+<section title="{{ _('Conversation') }}">
+    <h1>{{ _('Conversation') }}</h1>
+    <ul>
+        <li><a href="{{ conversation.url('conversation:detail') }}">{{ _('Conversation') }}</a></li>
+        {% for link in page_menu.links('conversations:detail-actions', request, conversation) %}
+            <li>{{ link }}</li>
+        {% endfor %}
+    </ul>
+</section>
+<section title="{{ _('Admin') }}">
+    <h1>{{ _('Admin') }}</h1>
+    <ul>
+        {% if request.user.has_perm('ej.can_edit_conversation', conversation) %}
+            <li><a href="{{ conversation.url('conversation:edit') }}">{{ _('Edit') }}</a></li>
+        {% else %}
+            <li><a href="{{ url('conversation:list') }}">{{ _('Back to conversations') }}</a></li>
+        {% endif %}
+        {%- if request.user.has_perm('ej.can_moderate_conversation', conversation) %}
+            <li><a href="{{ conversation.url('conversation:moderate') }}">{{ _('Moderate') }}</a></li>
+        {% endif %}
+        {% for link in page_menu.links('conversations:detail-admin', request, conversation) %}
+            <li>{{ link }}</li>
+        {% endfor %}
+    </ul>
+</section>
+{{ page_menu.ACCESSIBILITY() }}

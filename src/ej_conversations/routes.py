@@ -1,18 +1,20 @@
 from logging import getLogger
 
+from boogie.models import F
+from boogie.router import Router
 from django.db import transaction
+from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from hyperpython import a
 
-from boogie.models import F
-from boogie.router import Router
-from ej_conversations.rules import next_comment
-from ej_conversations.utils import check_promoted, process_conversation_detail_post, \
-    conversation_admin_menu_links
 from . import forms, models
 from .models import Conversation
+from .rules import next_comment
+from .tour import TOUR
+from .utils import check_promoted, conversation_admin_menu_links, \
+    handle_detail_post
 
 log = getLogger('ej')
 
@@ -28,18 +30,10 @@ conversation_url = f'<model:conversation>/<slug:slug>/'
 # Display conversations
 #
 @urlpatterns.route('', name='list')
-def conversation_list(request,
-                      queryset=Conversation.objects.filter(is_promoted=True),
-                      add_perm='ej.can_add_promoted_conversation',
-                      perm_obj=None,
-                      url=None,
-                      context=None):
+def list_view(request,
+              queryset=Conversation.objects.filter(is_promoted=True),
+              context=None):
     user = request.user
-    if user.has_perm(add_perm, perm_obj):
-        url = url or reverse('conversation:create')
-        menu_links = [a(_('New Conversation'), href=url)]
-    else:
-        menu_links = []
 
     # Select the list of conversations: staff get to see hidden conversations while
     # regular users cannot
@@ -47,40 +41,55 @@ def conversation_list(request,
         queryset = queryset.filter(is_hidden=False)
 
     # Annotate queryset for efficient db access
-    annotations = ('n_votes', 'n_comments', 'n_user_votes', 'first_tag', 'n_favorites', 'author_name')
+    annotations = (
+        'n_votes', 'n_comments', 'n_user_votes', 'first_tag', 'n_favorites',
+        'author_name')
     queryset = queryset.cache_annotations(*annotations, user=user)
 
     return {
         'conversations': queryset,
         'title': _('Public conversations'),
         'subtitle': _('Participate voting and creating comments!'),
-        'menu_links': menu_links,
         **(context or {}),
     }
 
 
+@urlpatterns.route('tour/')
+def tour(request):
+    if request.method == 'POST':
+        status = TourStatus(request.POST['state'])
+        response = HttpResponse()
+        response.set_cookie('conversations.tour', status)
+        request.user.tour.status = TourStatus.DONE
+        request.user.tour.save()
+        return response
+    return list_view(request, context={'tour': TOUR})
+
+
 @urlpatterns.route(conversation_url, login=True)
-def detail(request, conversation, slug=None, check=check_promoted, **kwargs):
+def detail(request, conversation, slug=None, check=check_promoted):
     check(conversation, request)
     user = request.user
-    form = forms.CommentForm(conversation=conversation, request=request)
+    form = forms.CommentForm(conversation=conversation)
+    ctx = {}
 
     if request.method == 'POST':
-        process_conversation_detail_post(request, conversation, form)
+        action = request.POST['action']
+        ctx = handle_detail_post(request, conversation, action)
 
     return {
         'conversation': conversation,
         'comment': next_comment(conversation, user),
         'menu_links': conversation_admin_menu_links(conversation, user),
         'comment_form': form,
-        **kwargs,
+        **ctx,
     }
 
 
 #
 # Admin URLs
 #
-@urlpatterns.route('add/', perms=['ej.can_add_promoted_conversation'])
+@urlpatterns.route('add/', perms=['ej.can_promote_conversations'])
 def create(request, context=None, **kwargs):
     kwargs.setdefault('is_promoted', True)
     form = forms.ConversationForm(request=request)

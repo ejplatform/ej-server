@@ -4,7 +4,7 @@
     </div>
     <article class="col flex-center"><span>{{ comment.content }}</span></article>
     {% if show_actions %}
-        <form method="post" up-transition="move-left" id="comment-form">
+        <form method="post" id="comment-form" up-target="{{ target or 'main' }}" up-restore-scroll up-transition="move-to-right/fade-in">
             {{ csrf_input }}
             <input type="hidden" name="action" value="vote">
             <input type="hidden" name="comment_id" value="{{ comment.id }}">

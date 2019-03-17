@@ -2,11 +2,14 @@
     <h1>{{ _('Conversations') }}</h1>
     <ul>
         <li><a href="{{ url('conversation:list') }}">{{ _('Conversations') }}</a></li>
-        <li><a href="{{ url('boards:board-list') }}">{{ _('Your conversations') }}</a></li>
-        {% for link in menu_links|default([]) %}
+        {%- if request.user.has_perm('ej.can_promote_conversations') %}
+            <li><a href="{{ url('conversation:create') }}">{{_('New Conversation') }}</a></li>
+        {% endif %}
+        {% for link in page_menu.links('conversations:list', request) %}
             <li>{{ link }}</li>
         {% endfor %}
     </ul>
+
 </section>
 {{ page_menu.ABOUT() }}
 {{ page_menu.ACCESSIBILITY() }}

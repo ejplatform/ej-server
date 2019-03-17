@@ -1,11 +1,11 @@
 from hashlib import blake2b
 from logging import getLogger
 
+from boogie.router import Router
 from django.http import Http404
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
-from boogie.router import Router
 from . import models
 from .enums import Choice
 
@@ -18,6 +18,7 @@ urlpatterns = Router(
         'conversation': models.Conversation,
         'comment': models.Comment,
     },
+    login=True,
 )
 conversation_url = f'<model:conversation>/<slug:slug>/'
 
@@ -25,9 +26,9 @@ conversation_url = f'<model:conversation>/<slug:slug>/'
 #
 # Display conversations
 #
-@urlpatterns.route('<model:comment>-<hash>/')
-def detail(request, comment, hash):
-    if hash != comment_url_hash(comment):
+@urlpatterns.route('<model:comment>-<hex_hash>/')
+def detail(request, comment, hex_hash):
+    if hex_hash != comment_url_hash(comment):
         raise Http404
 
     # We show an option for the user to vote, if it hasn't voted in the comment
@@ -62,7 +63,7 @@ def detail(request, comment, hash):
 def comment_url(comment):
     return reverse('comments:detail', kwargs={
         'comment': comment,
-        'hash': comment_url_hash(comment),
+        'hex_hash': comment_url_hash(comment),
     })
 
 
