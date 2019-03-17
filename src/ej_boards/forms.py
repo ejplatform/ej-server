@@ -2,8 +2,7 @@ from django import forms
 from django.template.loader import get_template
 from django.utils.translation import ugettext_lazy as _
 
-from ej.forms import EjModelForm
-from ej.utils.widgets import FileInput
+from ej.forms import EjModelForm, FileInput
 from . import models
 
 

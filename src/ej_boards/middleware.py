@@ -1,52 +1,28 @@
-from django.conf import settings
-from django.utils.text import slugify
+from django.apps import apps
+from django.core.exceptions import MiddlewareNotUsed
 from django.urls import resolve
-from django.http import Http404
-
-from .models import Board
 
 
+# noinspection PyPep8Naming
 def BoardFallbackMiddleware(get_response):  # noqa: N802, C901
     """
     Look for board urls after 404 errors.
     """
-    from .routes import conversation_list
-    view_function = conversation_list.as_view()
+    if not apps.is_installed('ej_boards'):
+        raise MiddlewareNotUsed
 
     def middleware(request):
         response = get_response(request)
         if response.status_code != 404:
             return response
 
-        # noinspection PyBroadException
-        try:
-            slugfied_terms = [slugify(x) for x in request.path.split('/')]
-            slug = slugfied_terms[1]
-
-            if '/' in slug:
-                return response
-
-            board = Board.objects.get(slug=slug)
-
-            # make a url with the real board slug e.g.: /Slug/edit/ becomes /slug/edit/
-            new_path = '/'.join(slugfied_terms)
-
-            try:
-                view, args, kwargs = resolve(new_path)
-                new_response = view(request, **kwargs)
-                return new_response
-            except Http404:
-                # accessing /board-slug/
-                if '/' not in request.path.strip('/'):
-                    return view_function(request, board=board)
-
-                return response
-
-        except Board.DoesNotExist:
+        # Match a URL like /<board-slug>/
+        slug, _, remaining = request.path[1:].partition('/')
+        if remaining:
             return response
-        except Exception:
-            if settings.DEBUG:
-                raise
-            return response
+
+        # Handle as /<board-slug>/conversations/
+        view, args, kwargs = resolve(f'{slug}/conversations/')
+        return view(request, **kwargs)
 
     return middleware

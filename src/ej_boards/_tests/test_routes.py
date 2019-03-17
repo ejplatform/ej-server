@@ -79,7 +79,7 @@ class TestBoardConversationRoutes(ConversationRecipes):
         response = routes.conversation_edit(request, board, conversation)
         assert response.status_code == 302
         assert response.url == '/slugs/conversations/conversation/moderate/'
-        assert routes.report(request, board, conversation)
+        assert routes.dataviz(request, board, conversation)
 
     def test_edit_invalid_conversation(self, rf, db, board, conversation):
         conversation.author = board.owner

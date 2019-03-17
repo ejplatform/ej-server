@@ -19,7 +19,7 @@ def assure_correct_board(conversation, board):
     conversation.board = board
 
 
-def check_board(board, request):
+def check_board(board):
     """
     Raise 404 if conversation does not belong to board.
     """

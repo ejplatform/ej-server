@@ -15,7 +15,7 @@
     {% if boards %}
         {% for board in boards %}
             <dl>
-                {% set url = board.get_url('boards:conversation-list') %}
+                {% set url = board.url('boards:conversation-list') %}
                 <dt class="uppercase"><i class="far fa-comments"></i> {{ link(board.title, href=url, class_='bold underline') }}</dt>
                 <dd>{{ link(board.slug + '/', href=url, class_='bold') }} - {{ board.description }}</dd>
             </dl>

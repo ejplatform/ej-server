@@ -8,7 +8,8 @@ from ej_boards.utils import make_view, check_board
 from ej_clusters.models import Stereotype
 from ej_conversations import routes as conversations
 from ej_conversations.models import Conversation
-from ej_reports import routes as report
+from ej_dataviz import routes as dataviz
+from ej_dataviz import routes_report as report
 from .forms import BoardForm
 
 app_name = 'ej_boards'
@@ -73,7 +74,7 @@ def board_edit(request, board):
 #
 @urlpatterns.route(board_base_url)
 def conversation_list(request, board):
-    return conversations.conversation_list(
+    return conversations.list(
         request,
         queryset=board.conversations.annotate_attr(board=board),
         add_perm='ej.can_edit_board',
@@ -106,12 +107,13 @@ def conversation_moderate(request, board, **kwargs):
 #
 # Reports
 #
-for view in report.loose_perms_views + report.strict_perms_views:
+for route in dataviz.urlpatterns.routes:
     urlpatterns.register(
-        make_view(view),
-        path=f'{board_base_url}{report.urlpatterns.base_path}{view.route.path}',
-        name='report-' + view.route.name,
+        make_view(route.function),
+        path=f'{board_base_url}{dataviz.urlpatterns.base_path}{route.path}',
+        name='dataviz-' + route.name,
         login=True,
-        perms=view.route.perms,
-        template=view.route.template[0].replace('ej_reports/', 'ej_boards/report-'),
+        perms=route.perms,
+        template=route.template[0].replace('ej_dataviz/', 'ej_boards/ej_dataviz'),
     )
+
