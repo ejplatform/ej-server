@@ -82,11 +82,11 @@ EJ_USER_HOME_PATH (/conversations/):
 Rules and limits
 ----------------
 
-EJ_CONVERSATIONS_ALLOW_PERSONAL_CONVERSATIONS (true):
+EJ_ENABLE_BOARDS (true):
     The default behavior is that each user can own a single board of
     conversations independent of the main board under /conversations/.
     Set to "false" in order to disable those personal boards.
-EJ_CONVERSATIONS_MAX_COMMENTS (2):
+EJ_MAX_COMMENTS_PER_CONVERSATION (2):
     Default number of comments that each user has in each conversation.
 EJ_EXCLUDE_PROFILE_FIELDS:
     Optional list of fields that should be excluded from user profile

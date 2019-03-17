@@ -111,8 +111,7 @@ def run(ctx, no_toolbar=False, theme=None):
     env = {}
     if no_toolbar:
         env['DISABLE_DJANGO_DEBUG_TOOLBAR'] = 'true'
-    else:
-        manage(ctx, 'runserver 0.0.0.0:8000', env=env)
+    manage(ctx, 'runserver 0.0.0.0:8000', env=env)
 
 
 @task

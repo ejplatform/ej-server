@@ -357,6 +357,18 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 version = "2.4.1"
 
 [[package]]
+category = "dev"
+description = "Django template coverage.py plugin"
+name = "django-coverage-plugin"
+optional = false
+python-versions = "*"
+version = "1.6.0"
+
+[package.dependencies]
+coverage = ">=4.0"
+six = ">=1.4.0"
+
+[[package]]
 category = "main"
 description = "Best way to have Django DRY forms"
 name = "django-crispy-forms"
@@ -1338,6 +1350,14 @@ six = ">=1.10.0"
 
 [[package]]
 category = "main"
+description = "Get list of common stop words in various languages in Python"
+name = "stop-words"
+optional = false
+python-versions = "*"
+version = "2018.7.23"
+
+[[package]]
+category = "main"
 description = "The most basic Text::Unidecode port"
 name = "text-unidecode"
 optional = false
@@ -1447,8 +1467,20 @@ optional = false
 python-versions = "*"
 version = "0.5.1"
 
+[[package]]
+category = "main"
+description = "A little word cloud generator"
+name = "wordcloud"
+optional = false
+python-versions = "*"
+version = "1.5.0"
+
+[package.dependencies]
+numpy = ">=1.6.1"
+pillow = "*"
+
 [metadata]
-content-hash = "94eac7bccbf5e37a34b1c6a08252a3946e8dd316000306a89d04262209ab6535"
+content-hash = "0f724686e262a7e95015ae0451700004bab404d31e16ecaaa59508d0673e3950"
 python-versions = "~3.7.1"
 
 [metadata.hashes]
@@ -1487,6 +1519,7 @@ django-boogie = ["789e1439a958aeecdf17dc9c61189f124f10be4d0ac505e6bd538c91251a1a
 django-bulk-update = ["49a403392ae05ea872494d74fb3dfa3515f8df5c07cc277c3dc94724c0ee6985", "5ab7ce8a65eac26d19143cc189c0f041d5c03b9d1b290ca240dc4f3d6aaeb337"]
 django-constance = ["5a4fec5361214b4658c64184b45a6678cb8f8bf8d342f56976f87d5c6645860a", "a49735063b2c30015d2e52a90609ea9798da722ed070f091de51714758a5d018"]
 django-cors-headers = ["8f94f96d2cdfa46360c62b892daae42477591997686ebf36c4f1cd9015528d22", "ff46a244965bddd71070bb71c2f0e27ceae2d73c52db5d4ffa09ecc51d47548e"]
+django-coverage-plugin = ["8810678115ea541f85f4fdfa248e2bf703f05ac6740f6dbd9860d11a9861672f"]
 django-crispy-forms = ["5952bab971110d0b86c278132dae0aa095beee8f723e625c3d3fa28888f1675f", "705ededc554ad8736157c666681165fe22ead2dec0d5446d65fc9dd976a5a876"]
 django-debug-toolbar = ["89d75b60c65db363fb24688d977e5fbf0e73386c67acf562d278402a10fc3736", "c2b0134119a624f4ac9398b44f8e28a01c7686ac350a12a74793f3dd57a9eea0"]
 django-environ = ["6c9d87660142608f63ec7d5ce5564c49b603ea8ff25da595fd6098f6dc82afde", "c57b3c11ec1f319d9474e3e5a79134f40174b17c7cc024bbb2fad84646b120c4"]
@@ -1580,6 +1613,7 @@ sphinxcontrib-websupport = ["68ca7ff70785cbe1e7bccc71a48b5b6d965d79ca50629606c78
 splinter = ["2d9f370536e6c1607824f5538e0bff9808bc02f086b07622b3790424dd3daff4", "5d9913bddb6030979c18d6801578813b02bbf8a03b43fb057f093228ed876d62"]
 sqlparse = ["ce028444cfab83be538752a2ffdb56bc417b7784ff35bb9a3062413717807dec", "d9cf190f51cbb26da0412247dfe4fb5f4098edb73db84e02f9fc21fdca31fed4"]
 stevedore = ["7be098ff53d87f23d798a7ce7ae5c31f094f3deb92ba18059b1aeb1ca9fec0a0", "7d1ce610a87d26f53c087da61f06f9b7f7e552efad2a7f6d2322632b5f932ea2"]
+stop-words = ["6df3ad5f5de697daa437e4445c86c73604e6bc138dd0dc0fac55664aa4e6b03e"]
 text-unidecode = ["5a1375bb2ba7968740508ae38d92e1f889a0832913cb1c447d5e2046061a396d", "801e38bd550b943563660a91de8d4b6fa5df60a542be9093f7abf819f86050cc"]
 toml = ["229f81c57791a41d65e399fc06bf0848bab550a9dfd5ed66df18ce5f05e73d5c", "235682dd292d5899d361a811df37e04a8828a5b1da3115886b73cf81ebc9100e", "f1db651f9657708513243e61e6cc67d101a39bad662eaa9b5546f789338e07a3"]
 toolz = ["929f0a7ea7f61c178bd951bdae93920515d3fbdbafc8e6caf82d752b9b3b31c9"]
@@ -1592,3 +1626,4 @@ virtualenvwrapper = ["51a1a934e7ed0ff221bdd91bf9d3b604d875afbb3aa2367133503fee16
 watchdog = ["965f658d0732de3188211932aeb0bb457587f04f63ab4c1e33eab878e9de961d"]
 wcwidth = ["3df37372226d6e63e1b1e1eda15c594bca98a22d33a23832a90998faa96bc65e", "f4ebe71925af7b40a864553f761ed559b43544f8f71746c2d756c7fe788ade7c"]
 webencodings = ["a0af1213f3c2226497a97e2b3aa01a7e4bee4f403f95be16fc9acd2947514a78", "b36a1c245f2d304965eb4e0a82848379241dc04b865afcc4aab16748587e1923"]
+wordcloud = ["1ba7de6e3179f77f390fa70a363fcd8a3708dd79df7994738f0ba20e6b4eec4a", "2804995d361438fde75114543d5e48cf4b9f6bc74327c7ed6973ccba0e11221d", "2c67ae08992ced6ee465b31e307e2d686c593fd5d25459b7bf79effd08e5b797", "5259f04f0e06a58c313e4c9c145a11ca8c4443bb5d9195414160c0f359d047d8", "5425b176d9d8a634130db398400a830aa1f43a2bd1d60e16801764ae2b44ed4a", "578996a2ac83d2199f96661e66af587f010ffb472744fd834186cdfd060d5e38", "5a90670745e346e468ec0e203e329e8c44392a4e9aae38dcceb4d313ac0dc939", "6ceed30c943b49e8e8b222a4d5a6725bbeca180fada7a04c4121ed238d6896e6", "78a856ca60be4c912cd27c3050dd4ad79e34ca021cd83fd61b77bbb10a84a089", "80b6646a821537faa88b4bba78e35c20f9056bd7227b76fcf065b6627709c089", "9b87d3ccb7829f8e5fbe1847126f9d232bd7d8d299475e5fc8e5331c5cd52fa6", "a0e70a23de1e978059a35a1fda976d921b802f0ef7cd145283be7a0772f46b11", "a8b7b896e7c767afc4d195d0c1657320d6e3db1e02a919eeb2d895b0c277afd9", "c567d8d5e6743932f1748ac0db6235dc8948fdf34c4819dffebc4914b9e37d3c", "c7c0de04c68bef168d51ece614e979b19a22287101efbf86ad0b23e91a9f8405", "d13cce1ad31d5dc6d9d276a5745fe1067d40b680901fad45527bad660f28232e", "f2df3140b4355b589316f4bc80e08f4385cd74a57d6de6e97d2f85847e2161c5"]

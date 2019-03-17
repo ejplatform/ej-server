@@ -170,7 +170,7 @@ conversations/<conversation>/reports/divergence/ (reports:divergence):
     Hierarchical view for the degree of divergence and concordance of each
     comment.
 
-Reports have its own app at ej_reports.
+Reports have its own app at ej_dataviz.
 
 
 Clusters
@@ -197,18 +197,16 @@ Urls with the intention of explaining how to use the platform. Most of those
 urls are implemented as flat pages and are stored as HTML or markdown under
 either local/pages or lib/pages/.
 
-/start/ (configurations:start):
+/start/ (home):
     Landing-page broadly explaining what is EJ and how to use the platform.
-/rules/ (configurations:rules):
-    Explain the rules of how the "EJ game" works.
-/faq/ (configurations:faq):
+/faq/ (faq):
     Frequently asked questions.
-/about/ (configurations:about):
+/about/ (about):
     About EJ or the organization deploying an instance.
-/usage/ (configurations:usage):
+/usage/ (usage):
     Usage terms for the platform.
 
-All urls are implemented in the ej_configurations app.
+All urls are implemented in the main project.
 
 
 

@@ -50,6 +50,8 @@ Faker = "^1.0"
 redis = "^3.1"
 invoke = "^1.2"
 bs4 = "^0.0.1"
+wordcloud = "^1.5"
+stop-words = "^2018.7"
 
 
 [tool.poetry.dev-dependencies]
@@ -74,6 +76,7 @@ ipython = "^7.2"
 libsass = "^0.17.0"
 gunicorn = "^19.9"
 watchdog = "^0.9.0"
+django-coverage-plugin = "^1.6"
 
 [build-system]
 requires = ["poetry>=0.12"]
