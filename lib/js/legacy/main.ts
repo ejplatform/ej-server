@@ -1,27 +1,5 @@
 console.log('[EJ] hydrating HTML.');
 
-// PROFILE
-// -----------------------------------------------------------------------------
-/**
- * Move arrow in the profile page under the active tab.
- */
-up.compiler('.Profile-tabs', function ($elem) {
-    $elem.ready(function () {
-            let $active = $elem.find('.Profile-tabActive');
-            let $arrow = $elem.find('.Profile-arrow');
-            let arrowOffset = $arrow.offset();
-            let activeOffset = $active.offset();
-
-            if (arrowOffset !== undefined && activeOffset !== undefined) {
-                let x = arrowOffset.left;
-                let leftMargin = activeOffset.left - x + ($active.width() / 2) - 28;
-                $arrow.css('visibility', 'inherit');
-                $arrow.css('margin-left', leftMargin);
-            }
-        }
-    );
-});
-
 // CONVERSATIONS
 // -----------------------------------------------------------------------------
 /**
@@ -44,48 +22,3 @@ function registerSlick($elem) {
         })
     }
 }
-
-up.compiler('.ConversationList-cardList', function ($elem) {
-    registerSlick($elem);
-});
-
-up.compiler('#HomeCommercial-logos', function ($elem) {
-    registerSlick($elem);
-});
-
-// Navigate to board url
-up.compiler('#select-board', function () {
-    $(this).on('change', function () {
-        window.location = this.value;
-    });
-});
-
-
-// HOME PAGE
-// -----------------------------------------------------------------------------
-up.compiler('.HowItWorksCard-extra', function ($elem) {
-    $elem.addClass('hide-on-small');
-});
-
-up.compiler('.HowItWorksCard', function ($card) {
-    $card.find('.HowItWorksCard-content h1').click(function () {
-        $card.find('.HowItWorksCard-content h1').toggleClass('expanded');
-        $card.find('.HowItWorksCard-extra').toggleClass('hide-on-small');
-    })
-});
-
-
-// Profile edit
-up.compiler('#id_image', function ($fileInput) {
-    $fileInput.change(function () {
-        let $displayedFileName = $('#image-filename');
-        let filename = $fileInput.prop('files')[0].name;
-        $displayedFileName.text(filename);
-    })
-});
-
-console.log('[EJ] finished.');
-
-
-
-ConversationList-cardList
