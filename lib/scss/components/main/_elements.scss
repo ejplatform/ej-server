@@ -36,13 +36,15 @@ i.fa, i.fas, i.fab, i.far {
 .tabs, .categories {
     @extend .text-center, .row, .flex-center, .wrap;
 
-    a {
+    > * {
         border-bottom: 0.25rem solid transparent;
+    }
+    a {
         font-weight: 600;
         overflow-clip: ellipsis;
         white-space: nowrap;
     }
-    a[is-selected] {
+    [is-selected] {
         @extend .text-brand;
         overflow-clip: none;
         border-bottom-color: color('brand');
@@ -141,12 +143,35 @@ i.fa, i.fas, i.fab, i.far {
 // Description list (for profile and others)
 .description {
     dt {
-        @extend .bold, .text-6, .text-brand, .lowercase;
-        margin: 0;
+        @extend .bold, .text-6, .text-brand, .lowercase, .margin-0;
     }
     dd {
         margin: 0 0 2rem 0;
     }
 }
 
+.stat-slab {
+    @extend .row, .wrap, .items-center;
+
+    dl {
+        @extend .pad-0;
+        margin: 0 0 size(1) 0;
+
+        dt {
+            @extend .bold, .text-brand, .lowercase, .margin-0, .inline, .inline-block;
+            width: size(3.5);
+        }
+
+        dd {
+            @extend .bold, .inline-block;
+            font-size: 2rem;
+            line-height: size(1);
+            margin: 0 0 2rem 0;
+            position: relative;
+            top: size(1.5);
+            right: size(3);
+            width: 0;
+        }
+    }
+}
 

@@ -44,6 +44,22 @@ $component-border-radius: 3rem;
             color: color('accent');
         }
     }
+
+    // For forms
+    input,
+    textarea {
+        max-width: 100% !important;
+        background: rgba(255, 255, 255, 0.25) !important;
+        border-radius: 0.375rem;
+        line-height: 2rem;
+        height: 2rem;
+    }
+    textarea {
+        height: 4.5rem;
+        font-size: 1.5rem;
+        line-height: 2.25rem;
+        text-align: center;
+    }
 }
 
 .comment-card, .comment-form {
@@ -79,10 +95,11 @@ $component-border-radius: 3rem;
     &__button {
         @extend .col, .items-center;
         button {
-            @extend .text-2, .margin-2, .col, .flex-center;
+            @extend .margin-2, .col, .flex-center;
             @include color(rgba(255, 255, 255, 0.75) null);
             border-radius: 50em;
             border: none;
+            font-size: 1.5rem;
             height: 3rem;
             line-height: 3rem;
             padding: 0;
