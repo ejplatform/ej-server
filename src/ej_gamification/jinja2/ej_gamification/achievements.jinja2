@@ -1,0 +1,11 @@
+{% extends 'base.jinja2' %}
+
+
+
+
+{% block content %}
+    <h1 class="h2 text-accent text-center">{{ _('Your achievements') }}</h1>
+    {{ html_map(achievements, class_='description') }}
+{% endblock %}
+
+

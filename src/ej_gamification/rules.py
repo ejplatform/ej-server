@@ -37,21 +37,6 @@ def can_be_activist(user, conversation):
 #
 # Powers
 #
-@predicate
-def can_promote_comment(user, conversation):
-    return conversation in promote_set(user)
-
-
-def promote_set(user):
-    """
-    Return all conversations that user can promote a comment.
-    """
-    given_power_query = GivenPower.objects.filter(user=user).get_real_instances()
-    if given_power_query:
-        conversations = Conversation.objects.filter(givenpower__in=given_power_query)
-    else:
-        conversations = None
-    return conversations
 
 
 def promoted_comments(user, conversation):
@@ -61,5 +46,5 @@ def promoted_comments(user, conversation):
     if not user.is_authenticated:
         return Comment.objects.none()
     else:
-        promotions = CommentPromotion.timeframed.filter(comment__conversation=conversation, users=user)
+        promotions = Promotion.timeframed.filter(comment__conversation=conversation, users=user)
         return Comment.objects.filter(promotions__in=promotions)

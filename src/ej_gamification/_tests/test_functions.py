@@ -10,7 +10,7 @@ from ej_conversations.mommy_recipes import ConversationRecipes
 
 class TestPowerFuctions(ConversationRecipes):
     @pytest.fixture
-    def create_comment(db, mk_conversation, mk_user):
+    def create_comment(self, db, mk_conversation, mk_user):
         conversation = mk_conversation()
         user = mk_user(email='user@domain.com')
         mk_comment = conversation.create_comment
