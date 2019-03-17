@@ -1,12 +1,18 @@
 from django.conf import settings
 from django.forms import DateInput
 
+import ej.forms
 from ej.forms import EjModelForm
-from ej.utils import widgets as ej_widgets
 from . import models
 
-EDITABLE_FIELDS = ['city', 'state', 'country', 'gender', 'race', 'ethnicity', 'political_activity',
-                   'biography', 'birth_date', 'occupation', 'education', 'profile_photo']
+EDITABLE_FIELDS = [
+    'occupation', 'education',
+    'gender', 'race', 'ethnicity',
+    'birth_date',
+    'city', 'state', 'country',
+    'political_activity', 'biography',
+    'profile_photo',
+]
 EXCLUDE_EDITABLE_FIELDS = settings.EJ_EXCLUDE_PROFILE_FIELDS
 
 
@@ -27,7 +33,7 @@ class ProfileForm(EjModelForm):
         fields = [field for field in EDITABLE_FIELDS if field not in EXCLUDE_EDITABLE_FIELDS]
         widgets = {
             'birth_date': DateInput(attrs={'type': 'date'}),
-            'profile_photo': ej_widgets.FileInput(attrs={'accept': 'image/*'})
+            'profile_photo': ej.forms.FileInput(attrs={'accept': 'image/*'})
         }
 
     def __init__(self, *args, instance, **kwargs):
@@ -36,8 +42,8 @@ class ProfileForm(EjModelForm):
         self.fields = {**self.user_form.fields, **self.fields}
         self.initial.update(self.user_form.initial)
 
-    def save(self, commit=True):
-        result = super().save(commit=commit)
+    def save(self, commit=True, **kwargs):
+        result = super().save(commit=commit, **kwargs)
         self.user_form.instance = result.user
         self.user_form.save(commit=commit)
         return result

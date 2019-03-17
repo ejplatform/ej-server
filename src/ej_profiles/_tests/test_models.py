@@ -1,11 +1,12 @@
-import pytest
 import datetime
+from datetime import date
+
+import pytest
 from django.utils.translation import ugettext as _
 
 from ej_profiles.enums import Gender, Race
 from ej_profiles.models import Profile
 from ej_users.models import User
-from datetime import date
 
 
 class TestProfile:
@@ -27,20 +28,19 @@ class TestProfile:
             education="undergraduate",
         )
 
-    @pytest.mark.skip(reason="Translations are breaking this kind of test")
     def test_profile_invariants(self, profile):
         assert str(profile) == 'name\'s profile'
         assert profile.profile_fields() == [
-            ('Cidade', 'city'),
-            ('País', 'country'),
-            ('Ocupação', 'occupation'),
-            ('Idade', profile.age),
-            ('Escolaridade', 'undergraduate'),
-            ('Etnia', 'ethnicity'),
-            ('Identidade de gênero', 'female'),
-            ('Raça', 'indigenous'),
-            ('Atividade política', 'political_activity'),
-            ('Biografia', 'biography'),
+            ('City', 'city'),
+            ('Country', 'country'),
+            ('Occupation', 'occupation'),
+            ('Age', profile.age),
+            ('Education', 'undergraduate'),
+            ('Ethnicity', 'ethnicity'),
+            ('Gender identity', 'female'),
+            ('Race', 'indigenous'),
+            ('Political activity', 'political_activity'),
+            ('Biography', 'biography'),
         ]
         assert profile.is_filled
         assert profile.statistics() == {'votes': 0, 'comments': 0, 'conversations': 0}
@@ -58,3 +58,17 @@ class TestProfile:
         profile.gender = Gender.UNDECLARED
         assert profile.gender_description == profile.gender_other
         assert profile.has_image
+
+
+    def test_user_profile_default_values(self, db):
+        user = User.objects.create_user('email@at.com', 'pass')
+        assert user.profile.gender == Gender.NOT_FILLED
+        assert user.profile.race == Race.NOT_FILLED
+        assert user.profile.age is None
+        assert user.profile.gender_other == ''
+        assert user.profile.country == ''
+        assert user.profile.state == ''
+        assert user.profile.city == ''
+        assert user.profile.biography == ''
+        assert user.profile.occupation == ''
+        assert user.profile.political_activity == ''

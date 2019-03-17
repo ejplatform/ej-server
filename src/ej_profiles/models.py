@@ -1,7 +1,8 @@
-import datetime
 import hashlib
 
-from allauth.socialaccount.models import SocialAccount
+from boogie.fields import EnumField
+from boogie.rest import rest_api
+from django.apps import apps
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.staticfiles.storage import staticfiles_storage
@@ -9,12 +10,12 @@ from django.db import models
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _, ugettext as __
 from rest_framework.authtoken.models import Token
-from sidekick import delegate_to
+from sidekick import delegate_to, import_later
 
-from boogie.fields import EnumField
-from boogie.rest import rest_api
 from .enums import Race, Gender
+from .utils import years_from
 
+SocialAccount = import_later('allauth.socialaccount.models:SocialAccount')
 User = get_user_model()
 
 
@@ -23,13 +24,12 @@ class Profile(models.Model):
     """
     User profile
     """
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='raw_profile')
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     race = EnumField(Race, _('Race'), default=Race.NOT_FILLED)
     ethnicity = models.CharField(_('Ethnicity'), blank=True, max_length=50)
     education = models.CharField(_('Education'), blank=True, max_length=140)
     gender = EnumField(Gender, _('Gender identity'), default=Gender.NOT_FILLED)
     gender_other = models.CharField(_('User provided gender'), max_length=50, blank=True)
-    age = models.IntegerField(_('Age'), null=True, blank=True)
     birth_date = models.DateField(_('Birth Date'), null=True, blank=True)
     country = models.CharField(_('Country'), blank=True, max_length=50)
     state = models.CharField(
@@ -53,12 +53,7 @@ class Profile(models.Model):
 
     @property
     def age(self):
-        if not self.birth_date:
-            age = None
-        else:
-            delta = datetime.datetime.now().date() - self.birth_date
-            age = abs(int(delta.days // 365.25))
-        return age
+        return None if self.birth_date is None else years_from(self.birth_date)
 
     class Meta:
         ordering = ['user__email']
@@ -89,14 +84,19 @@ class Profile(models.Model):
         try:
             return self.profile_photo.url
         except ValueError:
-            for account in SocialAccount.objects.filter(user=self.user):
-                picture = account.get_avatar_url()
-                return picture
+            if apps.is_installed('allauth.socialaccount'):
+                for account in SocialAccount.objects.filter(user=self.user):
+                    picture = account.get_avatar_url()
+                    return picture
             return staticfiles_storage.url('/img/login/avatar.svg')
 
     @property
     def has_image(self):
-        return self.profile_photo or SocialAccount.objects.filter(user_id=self.id)
+        return bool(
+            self.profile_photo
+            or (apps.is_installed('allauth.socialaccount')
+                and SocialAccount.objects.filter(user_id=self.id))
+        )
 
     @property
     def is_filled(self):
@@ -176,11 +176,11 @@ class Profile(models.Model):
         return _('Regular user')
 
 
-def gravatar_fallback(id):
+def gravatar_fallback(id_):
     """
     Computes gravatar fallback image URL from a unique string identifier
     """
-    digest = hashlib.md5(id.encode('utf-8')).hexdigest()
+    digest = hashlib.md5(id_.encode('utf-8')).hexdigest()
     return "https://gravatar.com/avatar/{}?s=40&d=mm".format(digest)
 
 

@@ -1,6 +1,6 @@
 {% extends 'base.jinja2' %}
 
-{% set main_class='container-1 col items-center flex-start' %}
+{% set main_class='col items-center flex-start' %}
 {% block menu %}{% include 'ej_profiles/includes/menu.jinja2' %}{% endblock %}
 
 
@@ -12,7 +12,7 @@
         <img class="size-6 pad-t3 block relative"
              src="{{ profile.image_url }}" alt="{{ _('Profile picture') }}" style="left: 1rem">
     {% endif %}
-    {% block page_title %}<h1 class="h2 text-accent">{{ profile.name }}</h1>{% endblock %}
+    {% block page_title %}<h1 class="h2 text-accent text-center">{{ profile.name }}</h1>{% endblock %}
     {% block page_content %}{% endblock %}
 {% endblock %}
 

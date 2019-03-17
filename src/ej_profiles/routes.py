@@ -16,7 +16,7 @@ urlpatterns = Router(
 def detail(request):
     user = request.user
     return {
-        'profile': user.profile,
+        'profile': user.get_profile(),
         'n_conversations': user.conversations.count(),
         'n_favorites': user.favorite_conversations.count(),
         'n_comments': user.comments.count(),
