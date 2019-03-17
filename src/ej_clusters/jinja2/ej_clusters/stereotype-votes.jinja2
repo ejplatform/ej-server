@@ -1,5 +1,6 @@
 {% extends 'base.jinja2' %}
 {% set main_class = 'measure-wide pad-x2 text-center margin-xauto' %}
+{% block menu %}{% include 'ej_conversations/includes/menu-detail.jinja2' %}{% endblock %}
 
 
 {% block content %}
@@ -36,7 +37,7 @@
     <h2 class="h3 text-accent">{{ _('{name}\'s votes').format(name=stereotype.name) }}</h2>
     <p>{% trans %}Select the votes you want to modify.{% endtrans %}</p>
 
-    <form method="post" class="width-full">
+    <form method="post" class="width-full" action="#stereotype-{{ stereotype.id }}">
         {{ csrf_input }}
         <input type="hidden" name="stereotype" value="{{ stereotype.id }}">
         <table class="votes-table">

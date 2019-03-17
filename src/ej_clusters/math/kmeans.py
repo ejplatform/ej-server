@@ -44,6 +44,7 @@ class StereotypeKMeans(KMeans):
         self.aggregator = aggregator
         self._args = dict(max_iter=max_iter, distance=distance, aggregator=aggregator)
 
+    # noinspection PyIncorrectDocstring
     def fit(self, X, y=None, sample_weight=None):
         """
         Compute k-means using stereotype initialization.

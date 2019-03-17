@@ -54,13 +54,13 @@ def compute_cluster_affinities(votes, distance=lambda x, y: np.sum(np.abs(x - y)
     return dict(fractions)
 
 
-def summarize_affininties(affinities):
+def summarize_affinities(affinities):
     """
     Process the result of :func:`compute_cluster_affinities`
     and returns a list of summaries for each cluster/intersection. This data
     is exposed in the /api/v1/clusterizations/<id>/affinities/ as:
 
-    >>> summarize_affininties(affinities)  # doctest: +SKIP
+    >>> summarize_affinities(affinities)  # doctest: +SKIP
     [{'sets': [1, 2], 'size': 3.14},
      {'sets': [1],    'size': 42},
      {'sets': [2],    'size': 10}]

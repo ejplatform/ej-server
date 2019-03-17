@@ -51,13 +51,13 @@ def index(request, conversation, slug, check=check_promoted):
         'groups': {cluster.name: f'#cluster-{cluster.id}' for cluster in clusters},
         'participants': participants,
         'is_conversation_admin': user.has_perm('ej.can_edit_conversation', conversation),
-        'edit_link': a(_('here'), href=conversation.get_url('cluster:edit')),
+        'edit_link': a(_('here'), href=conversation.url('cluster:edit')),
     }
 
 
 @urlpatterns.route(conversation_url + 'clusters/edit/')
 def edit(request, conversation, slug, check=check_promoted):
-    check(conversation)
+    check(conversation, request)
     new_cluster_form = forms.ClusterFormNew(request=request)
     clusterization = conversation.get_clusterization()
 
@@ -80,7 +80,7 @@ def edit(request, conversation, slug, check=check_promoted):
         cluster = cluster_map[int(request.POST['action'])]
         if request.POST['submit'] == 'delete':
             cluster.delete()
-            return redirect(conversation.get_url('cluster:edit'))
+            return redirect(conversation.url('cluster:edit'))
         elif cluster.form.is_valid():
             cluster.form.save()
             cluster.form = forms.ClusterForm(instance=cluster)
@@ -96,9 +96,8 @@ def edit(request, conversation, slug, check=check_promoted):
 @urlpatterns.route(conversation_url + 'stereotypes/',
                    perms=['ej.can_manage_stereotypes:conversation'])
 def stereotype_votes(request, conversation, slug, check=check_promoted):
-    check(conversation)
+    check(conversation, request)
     clusterization = conversation.get_clusterization(default=None)
-    log.debug(f'conversation {conversation.title} has no clusterization.')
     if clusterization is None:
         return {'conversation': conversation}
 
@@ -124,7 +123,7 @@ def stereotype_votes(request, conversation, slug, check=check_promoted):
             choice = choice_map[action]
             votes.update(choice=choice)
             StereotypeVote.objects.bulk_create([
-                StereotypeVote(choice=choice, comment=comment, author_id=request.user.id)
+                StereotypeVote(choice=choice, comment=comment, author_id=stereotype.id)
                 for comment in comments
             ])
 

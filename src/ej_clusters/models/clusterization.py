@@ -1,12 +1,12 @@
 from logging import getLogger
 
-from django.urls import reverse
-from model_utils.models import TimeStampedModel
-from sidekick import delegate_to, lazy
-
 from boogie import models, rules
 from boogie.fields import EnumField
 from boogie.rest import rest_api
+from django.urls import reverse
+from model_utils.models import TimeStampedModel
+from sidekick import delegate_to, lazy, placeholder as this
+
 from ej_conversations.models import Conversation
 from .querysets import ClusterizationManager
 from .stereotype import Stereotype
@@ -59,6 +59,13 @@ class Clusterization(TimeStampedModel):
     @property
     def stereotype_votes(self):
         return StereotypeVote.objects.filter(comment__in=self.comments.all())
+
+    #
+    # Statistics and annotated values
+    #
+    n_clusters = lazy(this.clusters.count())
+    n_stereotypes = lazy(this.stereotypes.count())
+    n_stereotype_votes = lazy(this.stereotype_votes.count())
 
     objects = ClusterizationManager()
 

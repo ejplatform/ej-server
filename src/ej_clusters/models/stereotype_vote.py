@@ -1,8 +1,8 @@
+from boogie import models
+from boogie.fields import EnumField
 from django.utils.translation import ugettext_lazy as _
 from sidekick import alias
 
-from boogie import models
-from boogie.fields import EnumField
 from ej_conversations.enums import Choice
 from .querysets import StereotypeVoteQuerySet
 
@@ -27,6 +27,9 @@ class StereotypeVote(models.Model):
     choice = EnumField(Choice, _('Choice'))
     stereotype = alias('author')
     objects = StereotypeVoteQuerySet.as_manager()
+
+    class Meta:
+        unique_together = [('author', 'comment')]
 
     def __str__(self):
         return f'StereotypeVote({self.author}, value={self.choice})'

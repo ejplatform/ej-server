@@ -143,7 +143,7 @@ def make_conversation_with_clusters():
             'decisions to favor the common good rather than private interests.',
             'State leadership is necessary to drive a strong economy.',
         ],
-        'Facist': [
+        'Fascist': [
             'Government should eliminate opposition in order to ensure '
             'governability.',
             'Military should occupy high ranks in government.',

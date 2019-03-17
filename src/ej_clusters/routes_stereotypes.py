@@ -7,7 +7,7 @@ from .models import Stereotype
 
 app_name = 'ej_cluster'
 urlpatterns = Router(
-    template=['ej_clusters/stereotypes/{name}.jinja2'],
+    template='ej_clusters/stereotypes/{name}.jinja2',
     models={'stereotype': Stereotype},
     login=True,
 )
