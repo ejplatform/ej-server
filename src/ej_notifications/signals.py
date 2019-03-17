@@ -4,7 +4,8 @@ from push_notifications.models import GCMDevice
 from django.db.models import Q
 from django.contrib.auth import get_user_model
 
-from ej_notifications.models import Message, Channel, NotificationConfig, Purpose, NotificationOptions
+from .models import Message, Channel, NotificationConfig, Notification
+from .enums import Purpose, NotificationMode
 
 User = get_user_model()
 
@@ -12,11 +13,7 @@ User = get_user_model()
 @receiver(post_save, sender=Message)
 def generate_notifications(sender, instance, created, **kwargs):
     if created:
-        # avoid circular import
-        from ej_notifications.models import Notification
-        channel_id = instance.channel.id
-        channel = Channel.objects.get(id=channel_id)
-        for user in channel.users.all():
+        for user in instance.channel.users.all():
             Notification.objects.create(receiver=user, channel=channel, message=instance)
 
 
@@ -29,7 +26,7 @@ def send_admin_fcm_message(sender, instance, created, **kwargs):
         if channel.purpose == 'admin':
             for user in channel.users.all():
                 setting = NotificationConfig.objects.get(profile__user__id=user.id)
-                if setting.notification_option == NotificationOptions.PUSH_NOTIFICATIONS:
+                if setting.notification_option == NotificationMode.PUSH_NOTIFICATIONS:
                     users_to_send.append(user)
             fcm_devices = GCMDevice.objects.filter(cloud_message_type="FCM", user__in=users_to_send)
             fcm_devices.send_message("", extra={"title": instance.title, "body": instance.body,
@@ -47,7 +44,7 @@ def send_conversation_fcm_message(sender, instance, created, **kwargs):
             for user in channel.users.all():
 
                 setting = NotificationConfig.objects.get(user__id=user.id)
-                if setting.notification_option == NotificationOptions.PUSH_NOTIFICATIONS:
+                if setting.notification_option == NotificationMode.PUSH_NOTIFICATIONS:
                     users_to_send.append(user)
             fcm_devices = GCMDevice.objects.filter(cloud_message_type="FCM", user__in=users_to_send)
             fcm_devices.send_message("", extra={"title": instance.title, "body": instance.body,

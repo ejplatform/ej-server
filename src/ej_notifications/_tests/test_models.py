@@ -6,13 +6,13 @@ from ej_notifications.models import Channel, Message, Notification, Notification
 
 class TestChannelManager:
     @pytest.fixture
-    def mk_user(db):
+    def mk_user(self, db):
         user = User.objects.create_user('email@server.com', 'password')
         user.save()
         return user
 
     @pytest.fixture
-    def mk_user2(db):
+    def mk_user2(self, db):
         user = User.objects.create_user('email@email.com', 'password')
         user.save()
         return user
