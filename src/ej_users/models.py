@@ -38,7 +38,7 @@ class User(AbstractUser):
 
     @property
     def username(self):
-        return self.email.replace('@', '__')
+        return self.name
 
     objects = UserManager()
 
