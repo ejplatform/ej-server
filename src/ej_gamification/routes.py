@@ -1,6 +1,6 @@
 from boogie.router import Router
 
-from . import get_progress
+from ej_gamification.models.progress import get_progress
 
 app_name = 'ej_gamification'
 urlpatterns = Router(

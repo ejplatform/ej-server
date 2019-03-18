@@ -3,8 +3,9 @@ import pytest
 from django.utils import timezone
 
 from ej_gamification.models import GivenBridgePower, GivenMinorityPower
-from ej_gamification.functions import (promote_comment, is_promoted,
-                                       clean_expired_promotions, give_bridge_power, give_minority_power)
+from ej_gamification.functions import (give_bridge_power, give_minority_power)
+from ej_gamification.models.endorsement import clean_expired_promotions
+from ej_gamification import endorse_comment, is_endorsed
 from ej_conversations.mommy_recipes import ConversationRecipes
 
 
@@ -23,19 +24,19 @@ class TestPowerFuctions(ConversationRecipes):
         comment = create_comment
         users = [mk_user(email='email@email.com'), mk_user(email='email@dot.com')]
         promoter = mk_user(email='promoter@email.com')
-        promotion = promote_comment(comment=comment, author=promoter, users=users)
+        promotion = endorse_comment(comment=comment, author=promoter, users=users)
         assert not promotion.is_expired
 
     def test_is_promoted_true(self, create_comment, mk_user):
         comment = create_comment
         user = mk_user(email='email@email.com')
-        promote_comment(comment=comment, author=user, users=[user])
-        assert is_promoted(comment, user)
+        endorse_comment(comment=comment, author=user, users=[user])
+        assert is_endorsed(comment, user)
 
     def test_is_promoted_false(self, create_comment, mk_user):
         comment = create_comment
         user = mk_user(email='email@mail.com')
-        assert not is_promoted(comment, user)
+        assert not is_endorsed(comment, user)
 
     def test_give_bridge_power(self, db, mk_user, mk_conversation):
         conversation = mk_conversation()
@@ -64,10 +65,10 @@ class TestPowerFuctions(ConversationRecipes):
         user = mk_user(email='email@email.com')
         today = datetime.datetime.now(timezone.utc)
         yesterday = today - datetime.timedelta(days=1)
-        promote_comment(comment=comment, author=user, users=[user], expires=yesterday)
+        endorse_comment(comment=comment, author=user, users=[user], expires=yesterday)
 
         mk_comment = comment.conversation.create_comment
         comment2 = mk_comment(user, 'commen11t', status='approved', check_limits=False)
-        promote_comment(comment=comment2, author=user, users=[user], expires=yesterday)
+        endorse_comment(comment=comment2, author=user, users=[user], expires=yesterday)
         clean_expired_promotions()
         assert True

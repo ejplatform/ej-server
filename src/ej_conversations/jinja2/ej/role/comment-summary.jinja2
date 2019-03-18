@@ -1,9 +1,4 @@
 <div class="comment-summary">
     {% include 'ej/role/conversation-summary.jinja2' %}
-
-    <ul class="list-reset row bold margin-nt2 margin-b3 margin-x3">
-        <li class="text-positive"><i class="fas fa-check"></i><span>{{ agree }}</span></li>
-        <li><i class="fas fa-arrow-right pad-r1"></i><span>{{ skip }}</span></li>
-        <li class="text-negative"><i class="fas fa-times"></i><span>{{ disagree }}</span></li>
-    </ul>
+    {% include 'ej/role/voting-stats.jinja2' %}
 </div>

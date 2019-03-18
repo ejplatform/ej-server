@@ -380,3 +380,38 @@ class ParticipationProgress(ProgressBase):
             + 50 * self.n_given_minority_activist_powers
             + 50 * self.is_focused
         )
+
+
+def get_participation(user, conversation, sync=False):
+    """
+    Return a valid ParticipationProgress() for user.
+    """
+    progress, created = user.participation_progresses.get_or_create(conversation=conversation)
+    if created:
+        progress.sync().save()
+        return progress
+    if sync:
+        progress.sync().save()
+    return progress
+
+
+def get_progress(obj, sync=False):
+    """
+    Return a valid ConversationProgress() or UserProgress() for object.
+    """
+    from .models import UserProgress, ConversationProgress
+    from ej_conversations.models import Conversation
+
+    try:
+        progress = obj.progress
+    except AttributeError:
+        if isinstance(obj, Conversation):
+            progress = ConversationProgress(conversation=obj).sync()
+        else:
+            progress = UserProgress(user=obj).sync()
+        progress.save()
+        return progress
+
+    if sync:
+        progress.sync().save()
+    return progress

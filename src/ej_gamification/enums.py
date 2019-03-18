@@ -9,8 +9,15 @@ from ej_profiles.models import get_profile
 
 
 class LevelMixin:
-    _tests = {}
-    _next_achievement_checks = {}
+    """
+    Basic abstract interface to all Level track enums.
+
+    They all have a few properties in common:
+
+        * The minimum interface defined by this class
+        * Start at the first level NONE, represented as zero.
+        * Have four more levels afterwards.
+    """
 
     @classmethod
     def check_level(cls, data):
@@ -32,9 +39,10 @@ class LevelMixin:
         raise NotImplementedError
 
 
-#
-# Global levels
-#
+# ==============================================================================
+# Levels that consume UserProgress information and track global user progress
+# ------------------------------------------------------------------------------
+
 class CommenterLevel(LevelMixin, IntEnum):
     """
     COMMENTER TRACK
@@ -177,20 +185,20 @@ class ProfileLevel(LevelMixin, IntEnum):
             return level
 
         # Second level: user uploaded a photo.
-        if profile.profile_photo and check_gender_and_race(profile, fields):
+        if profile.profile_photo and filled_gender_and_race(profile, fields):
             level = cls.RELEVANT
         else:
             return level
 
         # Third level: all one-liner fields.
-        if check_filled(profile, basic_profile_fields(fields)):
+        if filled_fields(profile, basic_profile_fields(fields)):
             level = cls.INFORMATIVE
         else:
             return level
 
         # Last level: user filled *ALL* profile info.
-        if (check_gender_and_race(profile, fields)
-            and check_filled(profile, fields)):
+        if (filled_gender_and_race(profile, fields)
+            and filled_fields(profile, fields)):
             level = cls.COMPLETE
         return level
 
@@ -212,16 +220,19 @@ class ProfileLevel(LevelMixin, IntEnum):
                 missing.append(_('gender'))
             if not p.profile_photo:
                 missing.append(_('profile photo'))
-            return show_missing_fields(missing[:3])
+            return missing_fields_message(missing[:3])
 
         elif self == self.RELEVANT:
-            return create_missing_fields_message(basic_profile_fields(fields), p)
+            fields_ = basic_profile_fields(fields)
+            return missing_fields_message(missing_fields(p, fields_))
 
         elif self == self.INFORMATIVE:
-            return create_missing_fields_message(fields, p)
+            return missing_fields_message(missing_fields(p, fields))
 
 
-def check_gender_and_race(p, fields):
+# Helper functions
+
+def filled_gender_and_race(p, fields):
     if 'race' in fields and p.race == Race.NOT_FILLED:
         return False
     if 'gender' in fields and p.gender == Gender.NOT_FILLED:
@@ -229,18 +240,26 @@ def check_gender_and_race(p, fields):
     return True
 
 
-def check_filled(profile, fields):
+def filled_fields(profile, fields):
     is_filled = (lambda f: f is not None and f != '')
     return all(is_filled(getattr(profile, f)) for f in fields)
 
 
 def basic_profile_fields(fields):
-    return fields.intersection({'gender', 'race', 'birth_date', 'occupation',
-                                'city', 'state', 'country', 'education'})
+    basic = {'gender', 'race', 'birth_date', 'occupation', 'city', 'state', 'country', 'education'}
+    return fields.intersection(basic)
 
 
-def show_missing_fields(fields):
-    data = fields[0] if len(fields) == 1 else humanize_list_of_values(fields)
+def missing_fields(profile, fields):
+    missing = []
+    for field in fields:
+        if getattr(profile, field, None) in (None, ''):
+            missing.append(_(field))
+    return missing[:3]
+
+
+def missing_fields_message(fields):
+    data = fields[0] if len(fields) == 1 else humanize_list(fields)
     return ngettext(
         'Please fill up the {} field of your profile',
         'Please fill up the {} fields of your profile',
@@ -248,23 +267,16 @@ def show_missing_fields(fields):
     ).format(data)
 
 
-def create_missing_fields_message(fields, profile):
-    missing = []
-    for field in fields:
-        if getattr(profile, field, None) in (None, ''):
-            missing.append(_(field))
-    return show_missing_fields(missing[:3])
-
-
-def humanize_list_of_values(lst):
+def humanize_list(lst):
     lst = lst.copy()
     last = lst.pop()
     return __('{} and {}').format(', '.join(map(str, lst)), last)
 
 
-#
-# Conversation based levels
-#
+# ==============================================================================
+# Levels that consume ConversationProgress information
+# ------------------------------------------------------------------------------
+
 class ConversationLevel(LevelMixin, IntEnum):
     """
     CONVERSATION TRACK
@@ -301,9 +313,10 @@ class ConversationLevel(LevelMixin, IntEnum):
         return _('Conversation already achieved the maximum level.')
 
 
-#
-# Participation based levels
-#
+# ==============================================================================
+# Levels that consume ParticipationProgresss information
+# ------------------------------------------------------------------------------
+
 class VoterLevel(LevelMixin, IntEnum):
     """
     VOTER TRACK

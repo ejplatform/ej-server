@@ -6,11 +6,12 @@ from hyperpython.django import csrf_input
 from ej.roles import with_template
 from .. import models
 from ..enums import RejectionReason
+from ..models import Comment
 from ..routes_comments import comment_url
 
 
-@with_template(models.Comment, role='card')
-def comment_card(comment, request=None, target=None, show_actions=None, **kwargs):
+@with_template(Comment, role='card')
+def comment_card(comment: Comment, request=None, target=None, show_actions=None, **kwargs):
     """
     Render comment information inside a comment card.
     """
@@ -42,8 +43,8 @@ def comment_card(comment, request=None, target=None, show_actions=None, **kwargs
     }
 
 
-@with_template(models.Comment, role='moderate')
-def comment_moderate(comment, request=None, **kwargs):
+@with_template(Comment, role='moderate')
+def comment_moderate(comment: Comment, request=None, **kwargs):
     """
     Render a comment inside a moderation card.
     """
@@ -55,8 +56,8 @@ def comment_moderate(comment, request=None, **kwargs):
     }
 
 
-@with_template(models.Comment, role='reject-reason')
-def comment_reject_reason(comment, **kwargs):
+@with_template(Comment, role='reject-reason')
+def comment_reject_reason(comment: Comment, **kwargs):
     """
     Show reject reason for each comment.
     """
@@ -76,8 +77,8 @@ def comment_reject_reason(comment, **kwargs):
     }
 
 
-@with_template(models.Comment, role='summary')
-def comment_summary(comment, **kwargs):
+@with_template(Comment, role='summary')
+def comment_summary(comment: Comment, **kwargs):
     """
     Show comment summary.
     """
@@ -89,4 +90,14 @@ def comment_summary(comment, **kwargs):
         'agree': comment.agree_count,
         'skip': comment.skip_count,
         'disagree': comment.disagree_count,
+    }
+
+
+@with_template(Comment, role='stats', template='ej/role/voting-stats.jinja2')
+def comment_stats(comment: Comment, request=None):
+    return {
+        'agree': comment.agree_count,
+        'skip': comment.skip_count,
+        'disagree': comment.disagree_count,
+        'request': request,
     }

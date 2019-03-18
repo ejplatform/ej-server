@@ -1,41 +1,51 @@
-# from .endorsement import Endorsement
+from .endorsement import Endorsement, endorse_comment, is_endorsed
 # from .given_powers import GivenBridgePower, GivenMinorityPower, GivenPower
-
 from .progress import UserProgress, ConversationProgress, ParticipationProgress
 
-# from sidekick import call as _call
-_call = lambda: lambda f: f()
+# ------------------------------------------------------------------------------
+# Patch models
+# ------------------------------------------------------------------------------
+__run = lambda: lambda f: f()
 
 
-@_call()
-def _patch_user():
+@__run()
+def _patch_models():
     """
-    Patch user model with gamification properties.
+    Patch external models with gamification properties.
     """
     from django.db.models import Sum
     from django.contrib.auth import get_user_model
     from sidekick import lazy
 
-    model = get_user_model()
+    user = get_user_model()
 
-    def patch(func):
-        setattr(model, func.__name__, lazy(func))
-        return func
+    def patch(model, how=lambda x: x):
+        def patcher(func):
+            setattr(model, func.__name__, how(func))
+            return func
+
+        return patcher
 
     #
-    # Progress tracks
+    # Patch user model with progress tracks
     #
-    @patch
+    @patch(user, lazy)
     def total_conversation_score(user):
         agg = user.conversations.aggregate(r=Sum('progress__score'))
         return agg['r'] or 0
 
-    @patch
+    @patch(user, lazy)
     def total_participation_score(user):
         agg = user.participation_progresses.aggregate(r=Sum('score'))
         return agg['r'] or 0
 
-    model.n_endorsements = 0
-    model.n_given_opinion_bridge_powers = 0
-    model.n_given_minority_activist_powers = 0
-    return None
+    user.n_endorsements = 0
+    user.n_given_opinion_bridge_powers = 0
+    user.n_given_minority_activist_powers = 0
+
+    #
+    # Patch comment
+    #
+
+    # Return a no-op function, if someone wants to call us again
+    return lambda: None
