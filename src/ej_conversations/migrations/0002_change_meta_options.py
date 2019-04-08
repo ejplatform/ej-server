@@ -5,18 +5,27 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('ej_conversations', '0001_first_migration'),
-    ]
+    dependencies = [("ej_conversations", "0001_first_migration")]
 
     operations = [
         migrations.AlterModelOptions(
-            name='conversation',
-            options={'ordering': ['created'], 'permissions': (('can_publish_promoted', 'Can publish promoted conversations'), ('is_moderator', 'Can moderate comments in any conversation'))},
+            name="conversation",
+            options={
+                "ordering": ["created"],
+                "permissions": (
+                    ("can_publish_promoted", "Can publish promoted conversations"),
+                    ("is_moderator", "Can moderate comments in any conversation"),
+                ),
+            },
         ),
         migrations.AlterField(
-            model_name='conversation',
-            name='title',
-            field=models.CharField(help_text='A short description about this conversation. This is used internally and to create URL slugs. (e.g. School system)', max_length=255, unique=True, verbose_name='Title'),
+            model_name="conversation",
+            name="title",
+            field=models.CharField(
+                help_text="A short description about this conversation. This is used internally and to create URL slugs. (e.g. School system)",
+                max_length=255,
+                unique=True,
+                verbose_name="Title",
+            ),
         ),
     ]

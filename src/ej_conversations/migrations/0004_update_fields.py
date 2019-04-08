@@ -7,34 +7,33 @@ import ej_conversations.validators
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('ej_conversations', '0003_conversation_hidden'),
-    ]
+    dependencies = [("ej_conversations", "0003_conversation_hidden")]
 
     operations = [
-        migrations.RemoveField(
-            model_name='taggedconversation',
-            name='content_object',
-        ),
-        migrations.RemoveField(
-            model_name='taggedconversation',
-            name='tag',
-        ),
-        migrations.RemoveField(
-            model_name='conversation',
-            name='hidden',
-        ),
+        migrations.RemoveField(model_name="taggedconversation", name="content_object"),
+        migrations.RemoveField(model_name="taggedconversation", name="tag"),
+        migrations.RemoveField(model_name="conversation", name="hidden"),
         migrations.AddField(
-            model_name='conversation',
-            name='is_hidden',
-            field=models.BooleanField(default=False, help_text='Hidden conversations does not appears in boards or in the main /conversations/ endpoint.', verbose_name='hidden?'),
+            model_name="conversation",
+            name="is_hidden",
+            field=models.BooleanField(
+                default=False,
+                help_text="Hidden conversations does not appears in boards or in the main /conversations/ endpoint.",
+                verbose_name="hidden?",
+            ),
         ),
         migrations.AlterField(
-            model_name='comment',
-            name='content',
-            field=models.TextField(help_text='Body of text for the comment', max_length=252, validators=[django.core.validators.MinLengthValidator(2), ej_conversations.validators.is_not_empty], verbose_name='Content'),
+            model_name="comment",
+            name="content",
+            field=models.TextField(
+                help_text="Body of text for the comment",
+                max_length=252,
+                validators=[
+                    django.core.validators.MinLengthValidator(2),
+                    ej_conversations.validators.is_not_empty,
+                ],
+                verbose_name="Content",
+            ),
         ),
-        migrations.DeleteModel(
-            name='TaggedConversation',
-        ),
+        migrations.DeleteModel(name="TaggedConversation"),
     ]

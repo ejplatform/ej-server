@@ -4,24 +4,17 @@ from ej_conversations.routes_comments import comment_url
 
 
 class TestRoutes(UrlTester, ConversationRecipes):
-    public_urls = [
-        '/conversations/',
-    ]
+    public_urls = ["/conversations/"]
     user_urls = [
-        '/conversations/1/slug/',
+        "/conversations/1/slug/",
         # '/comments/<id>-<hash>/'
     ]
-    admin_urls = [
-        '/conversations/add/',
-    ]
-    owner_urls = [
-        '/conversations/1/slug/edit/',
-        '/conversations/1/slug/moderate/',
-    ]
+    admin_urls = ["/conversations/add/"]
+    owner_urls = ["/conversations/1/slug/edit/", "/conversations/1/slug/moderate/"]
 
     def get_data(self, request):
-        conversation = request.getfixturevalue('conversation')
-        conversation.author = request.getfixturevalue('author_db')
+        conversation = request.getfixturevalue("conversation")
+        conversation.author = request.getfixturevalue("author_db")
         conversation.is_promoted = True
         conversation.save()
 

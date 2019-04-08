@@ -2,15 +2,22 @@ from numbers import Number
 
 from sidekick import import_later
 
-pd = import_later('pandas')
+pd = import_later("pandas")
 
 
 # ==============================================================================
 # BASIC STATISTICAL FUNCTIONS
 
 # noinspection PyIncorrectDocstring
-def comment_statistics(votes, author='author', comment='comment', choice='choice',
-                       divergence=False, participation=False, ratios=False):
+def comment_statistics(
+    votes,
+    author="author",
+    comment="comment",
+    choice="choice",
+    divergence=False,
+    participation=False,
+    ratios=False,
+):
     """
     Return a dataframe with ['agree', 'disagree', 'skipped'] columns that counts
     the number of votes for each comment/choice with those given values.
@@ -39,23 +46,34 @@ def comment_statistics(votes, author='author', comment='comment', choice='choice
         Input data usually comes from a call to vote_queryset.dataframe().
     """
     table = _make_table(votes, comment, author, choice)
-    table.index.name = 'comment'
+    table.index.name = "comment"
     if participation:
         participation = len(votes[author].unique())
-    return _statistics(table, divergence=divergence, participation=participation, ratios=ratios)
+    return _statistics(
+        table, divergence=divergence, participation=participation, ratios=ratios
+    )
 
 
-def user_statistics(votes, author='author', comment='comment', choice='choice',
-                    divergence=False, participation=False, ratios=False):
+def user_statistics(
+    votes,
+    author="author",
+    comment="comment",
+    choice="choice",
+    divergence=False,
+    participation=False,
+    ratios=False,
+):
     """
     Similar to :func:`comments_statistics`, but gathers information by user,
     rather than by comment. It accepts the same parameters.
     """
     table = _make_table(votes, author, comment, choice)
-    table.index.name = 'user'
+    table.index.name = "user"
     if participation:
         participation = len(votes[comment].unique())
-    return _statistics(table, divergence=divergence, participation=participation, ratios=ratios)
+    return _statistics(
+        table, divergence=divergence, participation=participation, ratios=ratios
+    )
 
 
 def _make_table(votes, row, col, choice):
@@ -80,29 +98,29 @@ def _statistics(table, divergence=False, ratios=False, participation=False):
     functions.
     """
     # Fill empty columns and update their names.
-    col_names = {1: 'agree', -1: 'disagree', 0: 'skipped'}
+    col_names = {1: "agree", -1: "disagree", 0: "skipped"}
     for col in col_names:
         if col not in table:
             table[col] = 0
     table.columns = [col_names[k] for k in table.columns]
-    table = table[['agree', 'disagree', 'skipped']].copy()
+    table = table[["agree", "disagree", "skipped"]].copy()
 
     # Adds additional columns
     if divergence:
-        table['divergence'] = compute_divergence(table)
+        table["divergence"] = compute_divergence(table)
     if participation is not False:
-        table['participation'] = compute_participation(table, participation)
+        table["participation"] = compute_participation(table, participation)
     if ratios:
         e = 1e-50
-        data = table[['agree', 'disagree', 'skipped']]
+        data = table[["agree", "disagree", "skipped"]]
         norm = data.sum(axis=1).values
         norm = norm[:, None][:, [0, 0, 0]]  # Adopts the same shape of the dataframe
-        data /= (norm + e)
-        table[['agree', 'disagree', 'skipped']] = data
+        data /= norm + e
+        table[["agree", "disagree", "skipped"]] = data
     return table
 
 
-def compute_divergence(df, agree='agree', disagree='disagree'):
+def compute_divergence(df, agree="agree", disagree="disagree"):
     """
     Compute the fractional divergence coefficient from a dataframe that have an
     'agree' and a 'disagree' columns.
@@ -111,8 +129,9 @@ def compute_divergence(df, agree='agree', disagree='disagree'):
     return abs(df[agree] - df[disagree]) / (df[agree] + df[disagree] + e)
 
 
-def compute_participation(df, n_users,
-                          agree='agree', disagree='disagree', skipped='skipped'):
+def compute_participation(
+    df, n_users, agree="agree", disagree="disagree", skipped="skipped"
+):
     """
     Compute the participation ratio column from the total number of users and a
     dataframe that have 'agree', 'disagree' and 'skipped' columns.
@@ -123,6 +142,7 @@ def compute_participation(df, n_users,
 
 # ==============================================================================
 # IMPUTATION
+
 
 def imputation(data, method, keep_empty=True):
     """
@@ -146,12 +166,12 @@ def imputation(data, method, keep_empty=True):
     """
     if isinstance(method, Number):
         data = data.fillna(method)
-    elif method == 'zero':
+    elif method == "zero":
         data = data.fillna(0)
-    elif method == 'mean':
+    elif method == "mean":
         data.fillna(data.mean(), inplace=True)
     elif method is not None:
-        raise ValueError(f'invalid imputation method: {method}')
+        raise ValueError(f"invalid imputation method: {method}")
     if not keep_empty:
-        data.dropna('columns', inplace=True)
+        data.dropna("columns", inplace=True)
     return data

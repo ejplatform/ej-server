@@ -10,53 +10,57 @@ from ..models import Comment
 from ..routes_comments import comment_url
 
 
-@with_template(Comment, role='card')
-def comment_card(comment: Comment, request=None, target=None, show_actions=None, **kwargs):
+@with_template(Comment, role="card")
+def comment_card(
+    comment: Comment, request=None, target=None, show_actions=None, **kwargs
+):
     """
     Render comment information inside a comment card.
     """
 
-    user = getattr(request, 'user', None)
-    is_authenticated = getattr(user, 'is_authenticated', False)
+    user = getattr(request, "user", None)
+    is_authenticated = getattr(user, "is_authenticated", False)
 
     if is_authenticated:
         login_anchor = None
     else:
-        login = reverse('auth:login')
-        login_anchor = a(_('login'), href=f'{login}?next={comment.conversation.get_absolute_url()}')
+        login = reverse("auth:login")
+        login_anchor = a(
+            _("login"), href=f"{login}?next={comment.conversation.get_absolute_url()}"
+        )
 
     buttons = {
-        'disagree': ('fa-times', 'text-negative', _('Disagree')),
-        'skip': ('fa-arrow-right', 'text-black', _('Skip')),
-        'agree': ('fa-check', 'text-positive', _('Agree')),
+        "disagree": ("fa-times", "text-negative", _("Disagree")),
+        "skip": ("fa-arrow-right", "text-black", _("Skip")),
+        "agree": ("fa-check", "text-positive", _("Agree")),
     }
 
     return {
-        'author': comment.author.username,
-        'comment': comment,
-        'show_actions': is_authenticated,
-        'csrf_input': csrf_input(request),
-        'buttons': buttons,
-        'login_anchor': login_anchor,
-        'target': target,
-        **kwargs
+        "author": comment.author.username,
+        "comment": comment,
+        "show_actions": is_authenticated,
+        "csrf_input": csrf_input(request),
+        "buttons": buttons,
+        "login_anchor": login_anchor,
+        "target": target,
+        **kwargs,
     }
 
 
-@with_template(Comment, role='moderate')
+@with_template(Comment, role="moderate")
 def comment_moderate(comment: Comment, request=None, **kwargs):
     """
     Render a comment inside a moderation card.
     """
 
     return {
-        'created': comment.created,
-        'author': comment.author_name,
-        'text': comment.content,
+        "created": comment.created,
+        "author": comment.author_name,
+        "text": comment.content,
     }
 
 
-@with_template(Comment, role='reject-reason')
+@with_template(Comment, role="reject-reason")
 def comment_reject_reason(comment: Comment, **kwargs):
     """
     Show reject reason for each comment.
@@ -69,35 +73,35 @@ def comment_reject_reason(comment: Comment, **kwargs):
         rejection_reason = comment.rejection_reason.description
 
     return {
-        'comment': comment,
-        'conversation_url': comment.conversation.get_absolute_url(),
-        'status': comment.status,
-        'status_name': dict(models.Comment.STATUS)[comment.status].capitalize(),
-        'rejection_reason': rejection_reason
+        "comment": comment,
+        "conversation_url": comment.conversation.get_absolute_url(),
+        "status": comment.status,
+        "status_name": dict(models.Comment.STATUS)[comment.status].capitalize(),
+        "rejection_reason": rejection_reason,
     }
 
 
-@with_template(Comment, role='summary')
+@with_template(Comment, role="summary")
 def comment_summary(comment: Comment, **kwargs):
     """
     Show comment summary.
     """
     return {
-        'created': comment.created,
-        'tag': _('Comment'),
-        'tag_link': comment_url(comment),
-        'text': comment.content,
-        'agree': comment.agree_count,
-        'skip': comment.skip_count,
-        'disagree': comment.disagree_count,
+        "created": comment.created,
+        "tag": _("Comment"),
+        "tag_link": comment_url(comment),
+        "text": comment.content,
+        "agree": comment.agree_count,
+        "skip": comment.skip_count,
+        "disagree": comment.disagree_count,
     }
 
 
-@with_template(Comment, role='stats', template='ej/role/voting-stats.jinja2')
+@with_template(Comment, role="stats", template="ej/role/voting-stats.jinja2")
 def comment_stats(comment: Comment, request=None):
     return {
-        'agree': comment.agree_count,
-        'skip': comment.skip_count,
-        'disagree': comment.disagree_count,
-        'request': request,
+        "agree": comment.agree_count,
+        "skip": comment.skip_count,
+        "disagree": comment.disagree_count,
+        "request": request,
     }

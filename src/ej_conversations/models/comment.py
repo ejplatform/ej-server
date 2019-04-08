@@ -1,3 +1,5 @@
+from boogie import models
+from boogie.rest import rest_api
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.core.validators import MinLengthValidator
@@ -7,75 +9,70 @@ from model_utils.choices import Choices
 from model_utils.models import TimeStampedModel, StatusModel
 from sidekick import lazy
 
-from boogie import models
-from boogie.rest import rest_api
 from .comment_queryset import CommentQuerySet, log
 from .vote import Vote, normalize_choice
 from ..enums import Choice, RejectionReason
+from ..signals import vote_cast
 from ..utils import votes_counter
 from ..validators import is_not_empty
-from ..signals import vote_cast
+
 
 # noinspection PyUnresolvedReferences
-@rest_api(['content', 'author', 'status', 'created', 'rejection_reason', 'rejection_reason_text'])
+@rest_api(
+    [
+        "content",
+        "author",
+        "status",
+        "created",
+        "rejection_reason",
+        "rejection_reason_text",
+    ]
+)
 class Comment(StatusModel, TimeStampedModel):
     """
     A comment on a conversation.
     """
 
     STATUS = Choices(
-        ('pending', _('awaiting moderation')),
-        ('approved', _('approved')),
-        ('rejected', _('rejected')),
+        ("pending", _("awaiting moderation")),
+        ("approved", _("approved")),
+        ("rejected", _("rejected")),
     )
     STATUS_MAP = {
-        'pending': STATUS.pending,
-        'approved': STATUS.approved,
-        'rejected': STATUS.rejected,
+        "pending": STATUS.pending,
+        "approved": STATUS.approved,
+        "rejected": STATUS.rejected,
     }
 
     conversation = models.ForeignKey(
-        'Conversation',
-        related_name='comments',
-        on_delete=models.CASCADE,
+        "Conversation", related_name="comments", on_delete=models.CASCADE
     )
     author = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        related_name='comments',
-        on_delete=models.CASCADE,
+        settings.AUTH_USER_MODEL, related_name="comments", on_delete=models.CASCADE
     )
     content = models.TextField(
-        _('Content'),
+        _("Content"),
         max_length=252,
         validators=[MinLengthValidator(2), is_not_empty],
-        help_text=_('Body of text for the comment'),
+        help_text=_("Body of text for the comment"),
     )
     rejection_reason = models.EnumField(
-        RejectionReason,
-        _('Rejection reason'),
-        default=RejectionReason.USER_PROVIDED,
+        RejectionReason, _("Rejection reason"), default=RejectionReason.USER_PROVIDED
     )
     rejection_reason_text = models.TextField(
-        _('Rejection reason (free-form)'),
+        _("Rejection reason (free-form)"),
         blank=True,
         help_text=_(
-            'You must provide a reason to reject a comment. Users will receive '
-            'this feedback.'
+            "You must provide a reason to reject a comment. Users will receive "
+            "this feedback."
         ),
     )
     moderator = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        related_name='rejected_comments',
+        related_name="rejected_comments",
         on_delete=models.SET_NULL,
-        blank=True, null=True,
-    )
-    is_promoted = models.BooleanField(
-        _('Promoted comment?'),
-        default=False,
-        help_text=_(
-            'Promoted comments are prioritized when selecting random comments'
-            'to users.'
-        ),
+        blank=True,
+        null=True,
     )
     is_approved = property(lambda self: self.status == self.STATUS.approved)
     is_pending = property(lambda self: self.status == self.STATUS.pending)
@@ -83,30 +80,38 @@ class Comment(StatusModel, TimeStampedModel):
 
     @property
     def has_rejection_explanation(self):
-        return (
-            self.rejection_reason != RejectionReason.USER_PROVIDED
-            or (self.rejection_reason.USER_PROVIDED and self.rejection_reason_text)
+        return self.rejection_reason != RejectionReason.USER_PROVIDED or (
+            self.rejection_reason.USER_PROVIDED and self.rejection_reason_text
         )
 
     #
     # Annotations
     #
-    author_name = lazy(lambda self: self.author.name, name='author_name')
-    missing_votes = lazy(lambda self: self.conversation.users.count() - self.n_votes, name='missing_votes')
-    agree_count = lazy(lambda self: votes_counter(self, choice=Choice.AGREE), name='agree_count')
-    skip_count = lazy(lambda self: votes_counter(self, choice=Choice.SKIP), name='skip_count')
-    disagree_count = lazy(lambda self: votes_counter(self, choice=Choice.DISAGREE), name='disagree_count')
-    n_votes = lazy(lambda self: votes_counter(self), name='n_votes')
+    author_name = lazy(lambda self: self.author.name, name="author_name")
+    missing_votes = lazy(
+        lambda self: self.conversation.users.count() - self.n_votes,
+        name="missing_votes",
+    )
+    agree_count = lazy(
+        lambda self: votes_counter(self, choice=Choice.AGREE), name="agree_count"
+    )
+    skip_count = lazy(
+        lambda self: votes_counter(self, choice=Choice.SKIP), name="skip_count"
+    )
+    disagree_count = lazy(
+        lambda self: votes_counter(self, choice=Choice.DISAGREE), name="disagree_count"
+    )
+    n_votes = lazy(lambda self: votes_counter(self), name="n_votes")
 
     @property
     def rejection_reason_display(self):
         if self.status == self.STATUS.approved:
-            return _('Comment is approved')
+            return _("Comment is approved")
         elif self.status == self.STATUS.pending:
-            return _('Comment is pending moderation')
+            return _("Comment is pending moderation")
         elif self.rejection_reason_text:
             return rejection_reason_text
-        elif self.rejection_reason is not None :
+        elif self.rejection_reason is not None:
             return self.rejection_reason.description
         else:
             raise AssertionError
@@ -114,7 +119,7 @@ class Comment(StatusModel, TimeStampedModel):
     objects = CommentQuerySet.as_manager()
 
     class Meta:
-        unique_together = ('conversation', 'content')
+        unique_together = ("conversation", "content")
 
     def __str__(self):
         return self.content
@@ -122,7 +127,9 @@ class Comment(StatusModel, TimeStampedModel):
     def clean(self):
         super().clean()
         if self.status == self.STATUS.rejected and not self.has_rejection_explanation:
-            raise ValidationError({'rejection_reason': _('Must give a reason to reject a comment')})
+            raise ValidationError(
+                {"rejection_reason": _("Must give a reason to reject a comment")}
+            )
 
     def vote(self, author, choice, commit=True):
         """
@@ -152,13 +159,15 @@ class Comment(StatusModel, TimeStampedModel):
                 vote.created = now()
                 is_changed = True
             else:
-                raise ValidationError('Cannot change user vote')
+                raise ValidationError("Cannot change user vote")
 
         # Send possibly saved vote
         if commit:
             vote.save()
-            log.debug(f'Registered vote: {author} - {choice}')
-            vote_cast.send(Comment, vote=vote, comment=self, choice=choice, is_update=is_changed)
+            log.debug(f"Registered vote: {author} - {choice}")
+            vote_cast.send(
+                Comment, vote=vote, comment=self, choice=choice, is_update=is_changed
+            )
         return vote
 
     def statistics(self, ratios=False):
@@ -182,11 +191,11 @@ class Comment(StatusModel, TimeStampedModel):
         """
 
         stats = {
-            'agree': self.agree_count,
-            'disagree': self.disagree_count,
-            'skip': self.skip_count,
-            'total': self.n_votes,
-            'missing': self.missing_votes
+            "agree": self.agree_count,
+            "disagree": self.disagree_count,
+            "skip": self.skip_count,
+            "total": self.n_votes,
+            "missing": self.missing_votes,
         }
 
         if ratios:
@@ -195,6 +204,7 @@ class Comment(StatusModel, TimeStampedModel):
                 agree_ratio=self.agree_count / (self.n_votes + e),
                 disagree_ratio=self.disagree_count / (self.n_votes + e),
                 skip_ratio=self.skip_count / (self.n_votes + e),
-                missing_ratio=self.missing_votes / (self.missing_votes + self.n_votes + e),
+                missing_ratio=self.missing_votes
+                / (self.missing_votes + self.n_votes + e),
             )
         return stats

@@ -4,8 +4,8 @@ from django.utils.translation import ugettext_lazy as _
 
 
 class EjConversationsConfig(AppConfig):
-    name = 'ej_conversations'
-    verbose_name = _('Conversations')
+    name = "ej_conversations"
+    verbose_name = _("Conversations")
     rules = None
     api = None
     roles = None
@@ -13,6 +13,7 @@ class EjConversationsConfig(AppConfig):
     def ready(self):
         from . import rules, api, roles
         from .models.conversation import patch_user_model
+
         self.rules = rules
         self.api = api
         self.roles = roles

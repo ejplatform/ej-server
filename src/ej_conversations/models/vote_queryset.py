@@ -8,11 +8,12 @@ class VoteQuerySet(QuerySet):
     """
     A table of votes.
     """
-    votes = (lambda self: self)
+
+    votes = lambda self: self
 
     def dataframe(self, *fields, index=None, verbose=False):
         if not fields:
-            fields = ('author', 'comment', 'choice')
+            fields = ("author", "comment", "choice")
         return super().dataframe(*fields, index=index, verbose=verbose)
 
     def votes_table(self, data_imputation=None):
@@ -32,11 +33,13 @@ class VoteQuerySet(QuerySet):
                 * numeric value: Uses the given value to fill missing data.
 
         """
-        if data_imputation == 'zero':
+        if data_imputation == "zero":
             data_imputation = 0
 
         if isinstance(data_imputation, Number):
-            return self.pivot_table('author', 'comment', 'choice', fill_value=data_imputation)
+            return self.pivot_table(
+                "author", "comment", "choice", fill_value=data_imputation
+            )
         else:
-            data = self.pivot_table('author', 'comment', 'choice')
+            data = self.pivot_table("author", "comment", "choice")
             return imputation(data, data_imputation)

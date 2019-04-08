@@ -44,7 +44,7 @@ class ConversationMixin:
         Return queryset with all conversations associated with the current
         queryset.
         """
-        raise NotImplementedError('must be overridden in subclass')
+        raise NotImplementedError("must be overridden in subclass")
 
     def comments(self, conversation=None):
         """
@@ -101,7 +101,9 @@ class UserMixin(ConversationMixin):
             comments = comments.filter(**conversation_filter(conversation))
         return comments
 
-    def statistics_summary_dataframe(self, normalization=1.0, votes=None, comments=None, extend_fields=()):
+    def statistics_summary_dataframe(
+        self, normalization=1.0, votes=None, comments=None, extend_fields=()
+    ):
         """
         Return a dataframe with basic voting statistics.
 
@@ -114,28 +116,36 @@ class UserMixin(ConversationMixin):
         if votes is None:
             votes = comments.votes().filter(author__in=self)
 
-        votes = votes.dataframe('comment', 'author', 'choice')
+        votes = votes.dataframe("comment", "author", "choice")
         stats = user_statistics(votes, participation=True, divergence=True, ratios=True)
         stats *= normalization
 
         # Extend fields with additional data
-        extend_full_fields = [
-            EXTEND_FIELDS[x]
-            for x in extend_fields]
+        extend_full_fields = [EXTEND_FIELDS[x] for x in extend_fields]
 
         transforms = {
             x: EXTEND_FIELDS_VERBOSE[x]
             for x in extend_fields
-            if x in EXTEND_FIELDS_VERBOSE}
+            if x in EXTEND_FIELDS_VERBOSE
+        }
 
         # Save extended dataframe
         extend_fields = list(extend_fields)
-        stats = self.extend_dataframe(stats, 'name', 'email', *extend_full_fields)
+        stats = self.extend_dataframe(stats, "name", "email", *extend_full_fields)
         if extend_fields:
-            columns = list(stats.columns[:-len(extend_fields)])
+            columns = list(stats.columns[: -len(extend_fields)])
             columns.extend(extend_fields)
             stats.columns = columns
-        cols = ['name', 'email', *extend_fields, 'agree', 'disagree', 'skipped', 'divergence', 'participation']
+        cols = [
+            "name",
+            "email",
+            *extend_fields,
+            "agree",
+            "disagree",
+            "skipped",
+            "divergence",
+            "participation",
+        ]
         stats = stats[cols]
 
         # Use better values for extended columns
@@ -148,15 +158,15 @@ class UserMixin(ConversationMixin):
 #
 # Auxiliary functions
 #
-def conversation_filter(conversation, field='conversation'):
+def conversation_filter(conversation, field="conversation"):
     if isinstance(conversation, int):
-        return {field + '_id': conversation}
+        return {field + "_id": conversation}
     elif isinstance(conversation, db.conversation_model):
         return {field: conversation}
     elif isinstance(conversation, (QuerySet, Iterable)):
-        return {field + '__in': conversation}
+        return {field + "__in": conversation}
     else:
-        raise ValueError(f'invalid value for conversation: {conversation}')
+        raise ValueError(f"invalid value for conversation: {conversation}")
 
 
 #
@@ -171,14 +181,16 @@ def patch_user_class():
         from django.contrib.auth.models import User, UserManager
 
         if get_user_model() is User:
-            UserManager._queryset_class = type('UserQueryset', (UserMixin, UserManager._queryset_class), {})
+            UserManager._queryset_class = type(
+                "UserQueryset", (UserMixin, UserManager._queryset_class), {}
+            )
             return
         else:
             raise ImproperlyConfigured(
-                'You cannot use a generic QuerySet for your user model.\n'
-                'ej_conversations have to patch the queryset class for this model and\n'
-                'by adding a new base class and we do not want to patch the base\n'
-                'QuerySet since that would affect all models.'
+                "You cannot use a generic QuerySet for your user model.\n"
+                "ej_conversations have to patch the queryset class for this model and\n"
+                "by adding a new base class and we do not want to patch the base\n"
+                "QuerySet since that would affect all models."
             )
 
     qs_type.__bases__ = (UserMixin, *qs_type.__bases__)
@@ -191,17 +203,17 @@ patch_user_class()
 # Constants
 #
 EXTEND_FIELDS = {
-    'gender': 'profile__gender',
-    'race': 'profile__race',
-    'education': 'profile__education',
-    'occupation': 'profile__occupation',
-    'birth_date': 'profile__birth_date',
-    'country': 'profile__country',
-    'state': 'profile__state',
-    'age': 'profile__birth_date',
+    "gender": "profile__gender",
+    "race": "profile__race",
+    "education": "profile__education",
+    "occupation": "profile__occupation",
+    "birth_date": "profile__birth_date",
+    "country": "profile__country",
+    "state": "profile__state",
+    "age": "profile__birth_date",
 }
 EXTEND_FIELDS_VERBOSE = {
-    'gender': lambda x: '' if x is None else Gender(x).name.lower(),
-    'race': lambda x: '' if x is None else Race(x).name.lower(),
-    'age': lambda x: x if x is None else years_from(x, now().date()),
+    "gender": lambda x: "" if x is None else Gender(x).name.lower(),
+    "race": lambda x: "" if x is None else Race(x).name.lower(),
+    "age": lambda x: x if x is None else years_from(x, now().date()),
 }

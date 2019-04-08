@@ -9,13 +9,19 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('ej_conversations', '0007_auto_20190305_1617'),
+        ("ej_conversations", "0007_auto_20190305_1617"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='comment',
-            name='moderator',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='rejected_comments', to=settings.AUTH_USER_MODEL),
-        ),
+            model_name="comment",
+            name="moderator",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                related_name="rejected_comments",
+                to=settings.AUTH_USER_MODEL,
+            ),
+        )
     ]

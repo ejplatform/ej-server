@@ -10,8 +10,8 @@ from ej_users.models import User
 
 @pytest.fixture
 def user(db):
-    user = User.objects.create_user('email@server.com', 'password')
-    user.board_name = 'testboard'
+    user = User.objects.create_user("email@server.com", "password")
+    user.board_name = "testboard"
 
     # TODO: Fix this dirty way to set user permissions
     user.has_perm = lambda x, y=None: True
@@ -22,43 +22,45 @@ def user(db):
 
 @pytest.fixture
 def conversation(db, user):
-    return create_conversation(text='test', title='title', author=user, is_promoted=True)
+    return create_conversation(
+        text="test", title="title", author=user, is_promoted=True
+    )
 
 
 @pytest.fixture
 def comment(db, conversation, user):
-    return conversation.create_comment(user, 'content', 'approved')
+    return conversation.create_comment(user, "content", "approved")
 
 
 @pytest.fixture
 def vote(db, user, comment):
-    return comment.vote(author=user, choice='agree')
+    return comment.vote(author=user, choice="agree")
 
 
 @pytest.fixture
 def post_request(rf):
-    request = rf.post('')
+    request = rf.post("")
     request.user = AnonymousUser()
     return request
 
 
 @pytest.fixture
 def request_(rf):
-    request = rf.get('')
+    request = rf.get("")
     request.user = AnonymousUser()
     return request
 
 
 @pytest.fixture
 def request_with_user(rf, user):
-    request = rf.get('/testboard/')
+    request = rf.get("/testboard/")
     request.user = user
     return request
 
 
 @pytest.fixture
-def mk_user(db, email='default@user.com', is_staff=False):
-    return User.objects.create_user(email, '1234', is_staff=is_staff)
+def mk_user(db, email="default@user.com", is_staff=False):
+    return User.objects.create_user(email, "1234", is_staff=is_staff)
 
 
 @pytest.fixture
@@ -82,7 +84,7 @@ class ApiClient:
     def _prepare(self, data):
         if isinstance(data, bytes):
             return data
-        return json.dumps(data).encode('utf8')
+        return json.dumps(data).encode("utf8")
 
     def get(self, url, raw=False, **kwargs):
         response = self.client.get(url)
@@ -91,7 +93,7 @@ class ApiClient:
 
     def post(self, url, data, **kwargs):
         data = self._prepare(data)
-        response = self.client.post(url, data, content_type='application/json')
+        response = self.client.post(url, data, content_type="application/json")
         obj = json.loads(response.content)
         print(obj)
         return self._result(obj, **kwargs)

@@ -8,9 +8,9 @@ from django.utils.translation import ugettext_lazy as _
 from hyperpython import a
 from sidekick import import_later
 
-log = getLogger('ej')
-models = import_later('.models', package=__package__)
-forms = import_later('.forms', package=__package__)
+log = getLogger("ej")
+models = import_later(".models", package=__package__)
+forms = import_later(".forms", package=__package__)
 
 
 #
@@ -22,8 +22,9 @@ def check_promoted(conversation, request):
     """
     if not conversation.is_promoted:
         raise Http404
-    if conversation.is_hidden and not request.user.has_perm('ej.can_edit_conversation',
-                                                            conversation):
+    if conversation.is_hidden and not request.user.has_perm(
+        "ej.can_edit_conversation", conversation
+    ):
         raise Http404
     return conversation
 
@@ -33,15 +34,17 @@ def handle_detail_post(request, conversation, action):
     Process a POST in a conversation:detail view..
     """
 
-    if action == 'vote':
+    if action == "vote":
         return handle_detail_vote(request)
-    elif action == 'comment':
+    elif action == "comment":
         return handle_detail_comment(request, conversation)
-    elif action == 'favorite':
+    elif action == "favorite":
         return handle_detail_favorite(request, conversation)
     else:
-        log.warning(f'user {request.user.id} se nt invalid POST request: {request.POST}')
-        return HttpResponseServerError('invalid action')
+        log.warning(
+            f"user {request.user.id} se nt invalid POST request: {request.POST}"
+        )
+        return HttpResponseServerError("invalid action")
 
 
 def conversation_admin_menu_links(conversation, user):
@@ -50,12 +53,12 @@ def conversation_admin_menu_links(conversation, user):
     """
 
     menu_links = []
-    if user.has_perm('ej.can_edit_conversation', conversation):
-        url = conversation.url('conversation:edit')
-        menu_links.append(a(_('Edit'), href=url))
-    if user.has_perm('ej.can_moderate_conversation', conversation):
-        url = conversation.url('conversation:moderate')
-        menu_links.append(a(_('Moderate'), href=url))
+    if user.has_perm("ej.can_edit_conversation", conversation):
+        url = conversation.url("conversation:edit")
+        menu_links.append(a(_("Edit"), href=url))
+    if user.has_perm("ej.can_moderate_conversation", conversation):
+        url = conversation.url("conversation:moderate")
+        menu_links.append(a(_("Moderate"), href=url))
     return menu_links
 
 
@@ -80,7 +83,7 @@ def normalize_status(value):
     try:
         return Comment.STATUS_MAP[value.lower()]
     except KeyError:
-        raise ValueError(f'invalid status value: {value}')
+        raise ValueError(f"invalid status value: {value}")
 
 
 #
@@ -93,16 +96,16 @@ def handle_detail_vote(request):
     """
     data = request.POST
     user = request.user
-    vote = data['vote']
-    comment_id = data['comment_id']
+    vote = data["vote"]
+    comment_id = data["comment_id"]
     try:
         models.Comment.objects.get(id=comment_id).vote(user, vote)
-        toast(request, _('Thanks for voting.'))
+        toast(request, _("Thanks for voting."))
 
-        log.info(f'user {user.id} voted {vote} on comment {comment_id}')
+        log.info(f"user {user.id} voted {vote} on comment {comment_id}")
     except ValidationError:
         # User voted twice and too quickly... We simply ignore the last vote
-        log.info(f'duplicated vote for user {user.id} on comment {comment_id}')
+        log.info(f"duplicated vote for user {user.id} on comment {comment_id}")
     return {}
 
 
@@ -113,12 +116,12 @@ def handle_detail_comment(request, conversation):
     """
     form = forms.CommentForm(conversation=conversation, request=request)
     if form.is_valid():
-        new_comment = form.cleaned_data['content']
+        new_comment = form.cleaned_data["content"]
         user = request.user
         new_comment = conversation.create_comment(user, new_comment)
-        toast(request, _('Your comment has been saved.'))
-        log.info(f'user {user.id} posted comment {new_comment.id} on {conversation.id}')
-    return {'form': form}
+        toast(request, _("Your comment has been saved."))
+        log.info(f"user {user.id} posted comment {new_comment.id} on {conversation.id}")
+    return {"form": form}
 
 
 def handle_detail_favorite(request, conversation):
@@ -128,11 +131,13 @@ def handle_detail_favorite(request, conversation):
     user = request.user
     is_favorite = conversation.toggle_favorite(user)
     if is_favorite:
-        toast(request, _('This conversation is now favorite.'))
+        toast(request, _("This conversation is now favorite."))
     else:
-        toast(request, _('Conversation removed from favorites.'))
+        toast(request, _("Conversation removed from favorites."))
 
-    log.info(f'user {user.id} toggled favorite status of conversation {conversation.id}')
+    log.info(
+        f"user {user.id} toggled favorite status of conversation {conversation.id}"
+    )
 
 
 def toast(request, msg, **kwargs):
