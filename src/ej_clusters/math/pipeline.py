@@ -7,7 +7,7 @@ from .kmeans import StereotypeKMeans
 #
 # Default pipeline
 #
-def clusterization_pipeline(whiten=True, distance='l1', only_preprocess=False):
+def clusterization_pipeline(whiten=True, distance="l1", only_preprocess=False):
     """
     Define the main clusterization pipeline that starts with some vote_table().
     that should include some stereotype votes.
@@ -46,7 +46,8 @@ def pipeline(memory=None, **kwargs):
 
 
 identity_transformer = preprocessing.FunctionTransformer(
-    sk.identity, sk.identity, validate=True, accept_sparse=True)
+    sk.identity, sk.identity, validate=True, accept_sparse=True
+)
 
 
 def optional_whitener(enable):

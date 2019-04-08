@@ -6,7 +6,7 @@ from ej_conversations.mixins import UserMixin, conversation_filter
 from ej_conversations.models import Conversation, VoteQuerySet, Comment, CommentQuerySet
 from ..mixins import ClusterizationBaseMixin
 
-models = import_later('.models', package=__package__)
+models = import_later(".models", package=__package__)
 
 
 class ClusterizationQuerySet(ClusterizationBaseMixin, QuerySet):
@@ -31,7 +31,7 @@ class StereotypeVoteQuerySet(QuerySet):
     A table of StereotypeVotes.
     """
 
-    votes = (lambda self: self)
+    votes = lambda self: self
     votes_table = VoteQuerySet.votes_table
 
 
@@ -40,7 +40,7 @@ class StereotypeQuerySet(UserMixin, QuerySet):
     A table of Stereotypes.
     """
 
-    _votes_from_comments = (lambda _, comments: comments.stereotype_votes())
+    _votes_from_comments = lambda _, comments: comments.stereotype_votes()
 
     def fill_votes(self, choice=Choice.DISAGREE, comments=None):
         """

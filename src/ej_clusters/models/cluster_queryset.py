@@ -10,11 +10,13 @@ from ej_conversations.math import imputation
 from ej_conversations.models import Conversation
 from ..mixins import ClusterizationBaseMixin
 
-pd = import_later('pandas')
-np = import_later('numpy')
-clusterization_pipeline = import_later('..math:clusterization_pipeline', package=__package__)
-models = import_later('.models', package=__package__)
-log = getLogger('ej')
+pd = import_later("pandas")
+np = import_later("numpy")
+clusterization_pipeline = import_later(
+    "..math:clusterization_pipeline", package=__package__
+)
+models = import_later(".models", package=__package__)
+log = getLogger("ej")
 
 
 class ClusterQuerySet(ClusterizationBaseMixin, QuerySet):
@@ -22,7 +24,7 @@ class ClusterQuerySet(ClusterizationBaseMixin, QuerySet):
     Represents a table of Cluster objects.
     """
 
-    clusters = (lambda self: self)
+    clusters = lambda self: self
 
     def users(self, by_comment=False):
         """
@@ -49,14 +51,14 @@ class ClusterQuerySet(ClusterizationBaseMixin, QuerySet):
         related = self._known_related_objects
         if len(related) == 1:
             # noinspection PyProtectedMember
-            data = related.get(self.model._meta.get_field('clusterization'))
+            data = related.get(self.model._meta.get_field("clusterization"))
             if data is not None and len(data) == 1:
                 return
 
         # Otherwise we check in the database if we can find more than one
         # clusterization root
-        if self.values_list('clusterization').distinct().count() > 1:
-            msg = 'more than one clusterization found on dataset'
+        if self.values_list("clusterization").distinct().count() > 1:
+            msg = "more than one clusterization found on dataset"
             raise ValueError(msg)
 
     def conversations(self):
@@ -68,9 +70,7 @@ class ClusterQuerySet(ClusterizationBaseMixin, QuerySet):
         conversation.
         """
         return conversation.votes.values_list(
-            'comment__conversation_id',
-            'comment_id',
-            'choice',
+            "comment__conversation_id", "comment_id", "choice"
         )
 
     def votes_dataframe(self, conversation):
@@ -78,11 +78,18 @@ class ClusterQuerySet(ClusterizationBaseMixin, QuerySet):
         Like .votes_data(), but Return a dataframe.
         """
         data = list(self.votes_data(conversation))
-        return pd.DataFrame(data, columns=['cluster, comment', 'choice'])
+        return pd.DataFrame(data, columns=["cluster, comment", "choice"])
 
-    def votes_table(self, data_imputation=None, cluster_col='cluster',
-                    kind_col=None, mean_stereotype=False,
-                    non_classified=False, check_unique=True, **kwargs):
+    def votes_table(
+        self,
+        data_imputation=None,
+        cluster_col="cluster",
+        kind_col=None,
+        mean_stereotype=False,
+        non_classified=False,
+        check_unique=True,
+        **kwargs
+    ):
         """
         Return a votes table that joins the results from regular users
         and stereotypes. Stereotypes are identified with negative index labels.
@@ -117,9 +124,9 @@ class ClusterQuerySet(ClusterizationBaseMixin, QuerySet):
         """
 
         # Select comments
-        if 'comments' in kwargs:
-            raise TypeError('invalid argument: comments')
-        kwargs['comments'] = self.comments()
+        if "comments" in kwargs:
+            raise TypeError("invalid argument: comments")
+        kwargs["comments"] = self.comments()
 
         # Checks
         if check_unique:
@@ -146,7 +153,7 @@ class ClusterQuerySet(ClusterizationBaseMixin, QuerySet):
         else:
             stereotype_votes.index *= -1
         if cluster_col is not None:
-            clusters = self.dataframe('id', index='stereotypes')
+            clusters = self.dataframe("id", index="stereotypes")
             if not kind_col:
                 clusters.index *= -1
             stereotype_votes[cluster_col] = clusters
@@ -158,16 +165,16 @@ class ClusterQuerySet(ClusterizationBaseMixin, QuerySet):
         if kind_col is not None:
             user_votes[kind_col] = True
         if cluster_col is not None:
-            clusters = self.dataframe('id', index='users')
+            clusters = self.dataframe("id", index="users")
             user_votes[cluster_col] = clusters
         return user_votes
 
     def _votes_table_for_clusterization(self):
         # Return votes table with the default parameters used on clusterization
         # jobs.
-        return self.votes_table(non_classified=True,
-                                cluster_col=None,
-                                mean_stereotype=True)
+        return self.votes_table(
+            non_classified=True, cluster_col=None, mean_stereotype=True
+        )
 
     def find_clusters(self, pipeline_factory=None):
         """
@@ -197,10 +204,10 @@ class ClusterQuerySet(ClusterizationBaseMixin, QuerySet):
         # Check the number of clusters to initialize the pipeline
         n_clusters = self.count()
         if n_clusters == 0:
-            log.error('Trying to clusterize empty cluster set.')
-            raise ValueError('empty cluster set')
+            log.error("Trying to clusterize empty cluster set.")
+            raise ValueError("empty cluster set")
         elif n_clusters == 1:
-            log.warning('Creating clusters for cluster set with a single element.')
+            log.warning("Creating clusters for cluster set with a single element.")
 
         # Fetch data and clusterize
         pipe = pipeline_factory(n_clusters)
@@ -211,7 +218,9 @@ class ClusterQuerySet(ClusterizationBaseMixin, QuerySet):
         # Create result
         labels_ = cluster_map[labels[:-n_clusters]]
         users_ = votes.index[:-n_clusters].values
-        series = pd.Series(labels_, name='cluster', index=pd.Index(users_, name='users'))
+        series = pd.Series(
+            labels_, name="cluster", index=pd.Index(users_, name="users")
+        )
         return series, pipe
 
     def clusterize_from_votes(self, pipeline_factory=None):
@@ -233,16 +242,22 @@ class ClusterQuerySet(ClusterizationBaseMixin, QuerySet):
         atomically.
         """
         if by_cluster:
-            return chain(*(((user, cluster) for user in users)
-                           for cluster, users in mapping.items()))
+            return chain(
+                *(
+                    ((user, cluster) for user in users)
+                    for cluster, users in mapping.items()
+                )
+            )
 
-        if hasattr(mapping, 'items'):
+        if hasattr(mapping, "items"):
             mapping = mapping.items()
 
         m2m = self.model.users.through
         links = [
-            m2m(cluster_id=getattr(cluster, 'id', cluster),
-                user_id=getattr(user, 'id', user))
+            m2m(
+                cluster_id=getattr(cluster, "id", cluster),
+                user_id=getattr(user, "id", user),
+            )
             for user, cluster in mapping
         ]
         with transaction.atomic():
@@ -254,19 +269,22 @@ class ClusterQuerySet(ClusterizationBaseMixin, QuerySet):
         Return a dataframe with the average vote per cluster considering all
         stereotypes in the cluster.
         """
-        votes = \
-            (self.stereotype_votes()
-                .annotate(cluster=F.author.clusters)
-                .dataframe('author', 'comment', 'choice', 'cluster'))
+        votes = (
+            self.stereotype_votes()
+            .annotate(cluster=F.author.clusters)
+            .dataframe("author", "comment", "choice", "cluster")
+        )
 
         if votes.shape[0]:
-            votes = votes.pivot_table(values='choice', index=['author', 'cluster'], columns='comment')
+            votes = votes.pivot_table(
+                values="choice", index=["author", "cluster"], columns="comment"
+            )
         else:
-            raise ValueError('no votes found')
+            raise ValueError("no votes found")
 
-        votes['cluster'] = votes.index.get_level_values('cluster')
+        votes["cluster"] = votes.index.get_level_values("cluster")
         votes.index = np.arange(votes.shape[0])
-        votes = votes.groupby('cluster').mean()
+        votes = votes.groupby("cluster").mean()
         return imputation(votes, data_imputation)
 
 

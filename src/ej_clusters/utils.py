@@ -11,12 +11,12 @@ def use_transaction(which=None, **kwargs):
     Context manager that puts the block inside a transaction of the specified
     kind.
     """
-    kinds = {'atomic', 'commit', 'rollback'}
+    kinds = {"atomic", "commit", "rollback"}
 
     if which in kinds:
         kwargs[which] = True
     elif which is not None:
-        raise ValueError(f'invalid operation: {which}')
+        raise ValueError(f"invalid operation: {which}")
 
     methods, args = sk.split_by(kinds.__contains__, kwargs)
     methods = [getattr(transaction, k) for k in methods if kwargs[k]]

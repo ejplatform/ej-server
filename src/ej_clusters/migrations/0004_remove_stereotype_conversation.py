@@ -5,13 +5,6 @@ from django.db import migrations
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('ej_clusters', '0003_update_field_clusterization'),
-    ]
+    dependencies = [("ej_clusters", "0003_update_field_clusterization")]
 
-    operations = [
-        migrations.RemoveField(
-            model_name='stereotype',
-            name='conversation',
-        ),
-    ]
+    operations = [migrations.RemoveField(model_name="stereotype", name="conversation")]

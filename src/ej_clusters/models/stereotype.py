@@ -11,46 +11,42 @@ from ej_conversations.enums import Choice
 from .querysets import StereotypeQuerySet
 from .stereotype_vote import StereotypeVote
 
-log = getLogger('ej')
+log = getLogger("ej")
 
 
-@rest_api(['name', 'description', 'owner'], inline=True)
+@rest_api(["name", "description", "owner"], inline=True)
 class Stereotype(models.Model):
     """
     A "fake" user created to help with classification.
     """
 
     name = models.CharField(
-        _('Name'),
-        max_length=64,
-        help_text=_('Public identification of persona.'),
+        _("Name"), max_length=64, help_text=_("Public identification of persona.")
     )
     owner = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        related_name='stereotypes',
-        on_delete=models.CASCADE,
+        settings.AUTH_USER_MODEL, related_name="stereotypes", on_delete=models.CASCADE
     )
     description = models.TextField(
-        _('Description'),
+        _("Description"),
         blank=True,
         help_text=_(
-            'Specify a background history, or give hints about the profile this persona wants to '
-            'capture. This information is optional and is not made public.'
+            "Specify a background history, or give hints about the profile this persona wants to "
+            "capture. This information is optional and is not made public."
         ),
     )
     objects = StereotypeQuerySet.as_manager()
 
     class Meta:
-        unique_together = [('name', 'owner')]
+        unique_together = [("name", "owner")]
 
-    __str__ = (lambda self: self.name)
+    __str__ = lambda self: self.name
 
     def vote(self, comment, choice, commit=True):
         """
         Cast a single vote for the stereotype.
         """
         choice = Choice.normalize(choice)
-        log.debug(f'Vote: {self.name} (stereotype) - {choice}')
+        log.debug(f"Vote: {self.name} (stereotype) - {choice}")
         vote = StereotypeVote(author=self, comment=comment, choice=choice)
         vote.full_clean()
         if commit:
@@ -71,8 +67,10 @@ class Stereotype(models.Model):
         """
         Return a queryset with all comments that did not receive votes.
         """
-        voted = StereotypeVote.objects.filter(author=self, comment__conversation=conversation)
-        comment_ids = voted.values_list('comment', flat=True)
+        voted = StereotypeVote.objects.filter(
+            author=self, comment__conversation=conversation
+        )
+        comment_ids = voted.values_list("comment", flat=True)
         return conversation.comments.exclude(id__in=comment_ids)
 
     def voted_comments(self, conversation):
@@ -82,13 +80,11 @@ class Stereotype(models.Model):
         The resulting queryset is annotated with the vote value using the choice
         attribute.
         """
-        voted = StereotypeVote.objects.filter(author=self, comment__conversation=conversation)
-        voted_subquery = \
-            (voted
-                .filter(comment=OuterRef('id'))
-                .values('choice'))
-        comment_ids = voted.values_list('comment', flat=True)
-        return \
-            (conversation.comments
-                .filter(id__in=comment_ids)
-                .annotate(choice=Subquery(voted_subquery)))
+        voted = StereotypeVote.objects.filter(
+            author=self, comment__conversation=conversation
+        )
+        voted_subquery = voted.filter(comment=OuterRef("id")).values("choice")
+        comment_ids = voted.values_list("comment", flat=True)
+        return conversation.comments.filter(id__in=comment_ids).annotate(
+            choice=Subquery(voted_subquery)
+        )

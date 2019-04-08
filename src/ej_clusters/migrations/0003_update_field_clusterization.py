@@ -8,31 +8,36 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('ej_conversations', '0005_conversation_limit_report_users'),
-        ('ej_clusters', '0002_update_field_choices'),
+        ("ej_conversations", "0005_conversation_limit_report_users"),
+        ("ej_clusters", "0002_update_field_choices"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='clusterization',
-            name='unprocessed_comments',
+            model_name="clusterization", name="unprocessed_comments"
         ),
-        migrations.RemoveField(
-            model_name='clusterization',
-            name='unprocessed_votes',
+        migrations.RemoveField(model_name="clusterization", name="unprocessed_votes"),
+        migrations.AddField(
+            model_name="clusterization",
+            name="pending_comments",
+            field=models.ManyToManyField(
+                blank=True,
+                editable=False,
+                related_name="pending_in_clusterizations",
+                to="ej_conversations.Comment",
+            ),
         ),
         migrations.AddField(
-            model_name='clusterization',
-            name='pending_comments',
-            field=models.ManyToManyField(blank=True, editable=False, related_name='pending_in_clusterizations', to='ej_conversations.Comment'),
-        ),
-        migrations.AddField(
-            model_name='clusterization',
-            name='pending_votes',
-            field=models.ManyToManyField(blank=True, editable=False, related_name='pending_in_clusterizations', to='ej_conversations.Vote'),
+            model_name="clusterization",
+            name="pending_votes",
+            field=models.ManyToManyField(
+                blank=True,
+                editable=False,
+                related_name="pending_in_clusterizations",
+                to="ej_conversations.Vote",
+            ),
         ),
         migrations.AlterUniqueTogether(
-            name='stereotype',
-            unique_together={('name', 'owner')},
+            name="stereotype", unique_together={("name", "owner")}
         ),
     ]

@@ -1,1 +1,1 @@
-default_app_config = 'ej_clusters.apps.EjClustersConfig'
+default_app_config = "ej_clusters.apps.EjClustersConfig"

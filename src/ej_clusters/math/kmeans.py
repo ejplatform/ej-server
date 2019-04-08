@@ -11,7 +11,7 @@ from sidekick import import_later
 from sklearn.cluster import KMeans
 from sklearn.utils.validation import check_is_fitted
 
-np = import_later('numpy')
+np = import_later("numpy")
 
 
 #
@@ -32,7 +32,8 @@ class StereotypeKMeans(KMeans):
         aggregator (str or callable):
             Aggregator function used to form clusters (defaults to 'mean')
     """
-    _fit_parameters = ('labels_', 'cluster_centers_')
+
+    _fit_parameters = ("labels_", "cluster_centers_")
 
     # noinspection PyMissingConstructor
     def __init__(self, n_clusters=None, max_iter=20, distance=None, aggregator=None):
@@ -55,10 +56,12 @@ class StereotypeKMeans(KMeans):
             y, sample_weight (ignored):
                 not used, present here for API consistency by convention.
         """
-        data = X[:-self.n_clusters]
-        stereotypes = X[-self.n_clusters:]
+        data = X[: -self.n_clusters]
+        stereotypes = X[-self.n_clusters :]
         labels, centroids = kmeans_stereotypes(data, stereotypes, **self._args)
-        stereotype_labels = compute_labels(stereotypes, centroids, distance=self.distance)
+        stereotype_labels = compute_labels(
+            stereotypes, centroids, distance=self.distance
+        )
         self.labels_ = np.hstack([labels, stereotype_labels])
         self.cluster_centers_ = centroids
         return self
@@ -85,7 +88,7 @@ class StereotypeKMeans(KMeans):
             labels (array[n_samples])
                 Index of the cluster each sample belongs to.
         """
-        check_is_fitted(self, 'cluster_centers_')
+        check_is_fitted(self, "cluster_centers_")
         X = self._check_test_data(X)
         return compute_labels(X, self.cluster_centers_, self.distance)
 
@@ -108,12 +111,17 @@ class StereotypeKMeans(KMeans):
             score (float):
                 Opposite of the value of X on the K-means objective.
         """
-        check_is_fitted(self, 'cluster_centers_')
+        check_is_fitted(self, "cluster_centers_")
         X = self._check_test_data(X)
         labels = self.predict(X)
-        transform = ((lambda x: x * x) if squared else (lambda x: x))
-        return -vq(X, labels, self.cluster_centers_,
-                   distance=self.distance, transform=transform)
+        transform = (lambda x: x * x) if squared else (lambda x: x)
+        return -vq(
+            X,
+            labels,
+            self.cluster_centers_,
+            distance=self.distance,
+            transform=transform,
+        )
 
 
 #
@@ -136,8 +144,8 @@ def kmeans(data, k, n_runs=10, **kwargs):
     See also:
         It accepts all keyword arguments of the :func:`kmeans_single` function.
     """
-    distance = kwargs.get('distance')
-    objective = (lambda x: vq(data, *x, distance=distance))
+    distance = kwargs.get("distance")
+    objective = lambda x: vq(data, *x, distance=distance)
     return worker(n_runs, objective, kmeans_run, data, k, **kwargs)
 
 
@@ -190,7 +198,9 @@ def kmeans_stereotypes(data, stereotypes, max_iter=20, distance=None, aggregator
     return labels, centroids
 
 
-def kmeans_run(data, k: int, max_iter=10, init_centroids=None, distance=None, aggregator=None):
+def kmeans_run(
+    data, k: int, max_iter=10, init_centroids=None, distance=None, aggregator=None
+):
     """
     Compute a single k-means run with at most max_iter iterations.
 
@@ -236,7 +246,7 @@ def init_kmeanspp(data, k):
     if k == n:
         selected = range(n)
     elif k > n:
-        raise ValueError(f'we need at least {n} samples in the dataset')
+        raise ValueError(f"we need at least {n} samples in the dataset")
     else:
         selected = set()
         while len(selected) < n:
@@ -354,11 +364,12 @@ def l1_distance(x, y):
 
 
 DISTANCE_MAP = {
-    None: euclidean_distance, 'euclidean': euclidean_distance,
-    'euclidean-non-zero': euclidean_distance_non_zero,
-    'euclidiean-finite': euclidean_distance_finite,
-    'l1': l1_distance,
-    'l2': euclidean_distance,
+    None: euclidean_distance,
+    "euclidean": euclidean_distance,
+    "euclidean-non-zero": euclidean_distance_non_zero,
+    "euclidiean-finite": euclidean_distance_finite,
+    "l1": l1_distance,
+    "l2": euclidean_distance,
 }
 
 
@@ -371,7 +382,7 @@ def normalize_distance(value):
     try:
         return DISTANCE_MAP[value]
     except KeyError:
-        raise ValueError(f'invalid distance: {value}')
+        raise ValueError(f"invalid distance: {value}")
 
 
 def vq(data, labels, centroids, distance=None, transform=(lambda x: x * x)):
@@ -398,7 +409,7 @@ def mean_aggregator(data):
 def normalize_aggregator(value):
     if callable(value):
         return value
-    elif value in ('mean', None):
+    elif value in ("mean", None):
         return mean_aggregator
     else:
-        raise ValueError(f'invalid aggregator: {value}')
+        raise ValueError(f"invalid aggregator: {value}")

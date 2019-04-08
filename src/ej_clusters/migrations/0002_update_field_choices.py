@@ -11,19 +11,24 @@ import ej_conversations.models.vote
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('ej_clusters', '0001_first_migration'),
-    ]
+    dependencies = [("ej_clusters", "0001_first_migration")]
 
     operations = [
         migrations.AlterField(
-            model_name='stereotypevote',
-            name='choice',
-            field=boogie.fields.enum_field.EnumField(ej_conversations.enums.Choice, verbose_name='Choice'),
+            model_name="stereotypevote",
+            name="choice",
+            field=boogie.fields.enum_field.EnumField(
+                ej_conversations.enums.Choice, verbose_name="Choice"
+            ),
         ),
         migrations.AlterField(
-            model_name='stereotypevote',
-            name='comment',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='stereotype_votes', to='ej_conversations.Comment', verbose_name='Comment'),
+            model_name="stereotypevote",
+            name="comment",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="stereotype_votes",
+                to="ej_conversations.Comment",
+                verbose_name="Comment",
+            ),
         ),
     ]

@@ -1,13 +1,13 @@
 import logging
 
+from boogie import rules
 from django.db.models import Count
 
-from boogie import rules
+from ej_clusters.enums import ClusterStatus
 from ej_conversations.models import Conversation
 from . import models
-from ej_clusters.enums import ClusterStatus
 
-log = logging.getLogger('ej')
+log = logging.getLogger("ej")
 
 VOTES_FOR_USER_TO_PARTICIPATE_IN_CLUSTERIZATION = 5
 VOTES_FOR_COMMENT_TO_PARTICIPATE_IN_CLUSTERIZATION = 5
@@ -17,7 +17,7 @@ MINIMUM_NUMBER_OF_CLUSTERS = 2
 #
 # Conversation permissions
 #
-@rules.register_rule('ej.must_update_clusterization')
+@rules.register_rule("ej.must_update_clusterization")
 def must_update_clusterization(obj):
     """
     Check if it requires a full re-clusterization.
@@ -46,7 +46,7 @@ def must_update_clusterization(obj):
     )
 
 
-@rules.register_rule('ej.can_activate_clusterization')
+@rules.register_rule("ej.can_activate_clusterization")
 def can_activate_clusterization(obj):
     """
     Check if conversation/clusterization has sufficient data to start
@@ -60,16 +60,16 @@ def can_activate_clusterization(obj):
     if clusterization is None:
         return False
 
-    filled_comments = \
-        (clusterization.comments
-            .annotate(count=Count('votes'))
-            .filter(count__gte=5)
-            .count())
-    filled_clusters = \
-        (clusterization.clusters
-            .annotate(count=Count('stereotypes'))
-            .filter(count__gte=2)
-            .count())
+    filled_comments = (
+        clusterization.comments.annotate(count=Count("votes"))
+        .filter(count__gte=5)
+        .count()
+    )
+    filled_clusters = (
+        clusterization.clusters.annotate(count=Count("stereotypes"))
+        .filter(count__gte=2)
+        .count()
+    )
     return filled_comments >= 5 and filled_clusters >= 2
 
 
@@ -79,18 +79,20 @@ def requires_update(self):
     """
     conversation = self.conversation
     if self.cluster_status == ClusterStatus.PENDING_DATA:
-        rule = rules.get_rule('ej.conversation_can_start_clusterization')
+        rule = rules.get_rule("ej.conversation_can_start_clusterization")
         if not rule.test(self):
-            log.info(f'[clusters] {conversation}: not enough data to start clusterization')
+            log.info(
+                f"[clusters] {conversation}: not enough data to start clusterization"
+            )
             return False
     elif self.cluster_status == ClusterStatus.DISABLED:
         return False
 
-    rule = rules.get_rule('ej.conversation_must_update_clusters')
+    rule = rules.get_rule("ej.conversation_must_update_clusters")
     return rule.test(conversation)
 
 
-@rules.register_perm('ej.can_be_clusterized')
+@rules.register_perm("ej.can_be_clusterized")
 def can_be_clusterized(user, conversation):
     """
     Check if user can be clusterized in conversation.
@@ -101,21 +103,8 @@ def can_be_clusterized(user, conversation):
     if num_votes > 5:
         return True
     else:
-        log.info(f'{user} only has {num_votes} and won\'t be clusterized')
+        log.info(f"{user} only has {num_votes} and won't be clusterized")
         return False
-
-
-#
-# Stereotypes
-#
-@rules.register_perm('ej.can_edit_stereotype')
-def can_edit_stereotype(user, stereotype):
-    """
-    Check if user can manage stereotypes in conversation.
-
-    * User can edit conversation
-    """
-    return user.has_perm('ej.can_edit_conversation', conversation)
 
 
 #
@@ -140,9 +129,11 @@ def get_clusterization(obj):
         except obj.DoesNotExist:
             return None
     elif obj is None:
-        raise TypeError('trying to call rule with a null clusterization object.\n'
-                        'You probably forgot to pass the clusterization/conversation\n'
-                        'to rules.test_rule() or user.has_perm()')
+        raise TypeError(
+            "trying to call rule with a null clusterization object.\n"
+            "You probably forgot to pass the clusterization/conversation\n"
+            "to rules.test_rule() or user.has_perm()"
+        )
     else:
-        msg = 'must be a clusterization or conversation object, got {}'
+        msg = "must be a clusterization or conversation object, got {}"
         raise TypeError(msg.format(obj.__class__.__name__))

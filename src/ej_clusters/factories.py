@@ -40,13 +40,10 @@ def set_clusters_from_comments(conversation, comment_map, exclusive=True, author
 
         # Create cluster and stereotype
         cluster = Cluster.objects.create(
-            clusterization=clusterization,
-            name=cluster_name,
+            clusterization=clusterization, name=cluster_name
         )
         stereotype, _ = Stereotype.objects.get_or_create(
-            name=cluster_name,
-            description=description,
-            owner=author,
+            name=cluster_name, description=description, owner=author
         )
         cluster.stereotypes.add(stereotype)
         created_stereotypes.append(stereotype)
@@ -56,19 +53,18 @@ def set_clusters_from_comments(conversation, comment_map, exclusive=True, author
             comments = [comments]
         for text in comments:
             comment = conversation.create_comment(
-                author, text,
-                status='approved',
-                check_limits=False,
+                author, text, status="approved", check_limits=False
             )
             created_comments.append(comment)
-            stereotype.vote(comment, 'agree')
+            stereotype.vote(comment, "agree")
 
     if exclusive:
         for stereotype in created_stereotypes:
-            voted_ids = stereotype.votes.values_list('comment_id', flat=True)
+            voted_ids = stereotype.votes.values_list("comment_id", flat=True)
             votes = {
-                comment: 'disagree'
-                for comment in created_comments if comment.id not in voted_ids
+                comment: "disagree"
+                for comment in created_comments
+                if comment.id not in voted_ids
             }
             stereotype.cast_votes(votes)
 
@@ -90,14 +86,13 @@ def cluster_votes(conversation, users):
     votes = []
     for cluster, users in clusters.items():
         vote_profiles = (
-            StereotypeVote.objects
-                .filter(author__in=cluster.stereotypes.all())
-                .values('comment')
-                .annotate(average=Avg('choice'))
+            StereotypeVote.objects.filter(author__in=cluster.stereotypes.all())
+            .values("comment")
+            .annotate(average=Avg("choice"))
         )
         for data in vote_profiles:
-            comment_id = data['comment']
-            prob = 0.5 + data['average'] * 0.4
+            comment_id = data["comment"]
+            prob = 0.5 + data["average"] * 0.4
 
             for user in users:
                 vote = random_vote(prob)
@@ -126,27 +121,30 @@ def random_vote(prob):
 #
 def make_conversation_with_clusters():
     conversation = create_conversation(
-        'How should our society organize the production of goods and services?',
-        'Economy',
+        "How should our society organize the production of goods and services?",
+        "Economy",
         is_promoted=True,
         author=User.objects.filter(is_staff=True).first(),
     )
-    set_clusters_from_comments(conversation, {
-        'Liberal': [
-            'Free market should regulate how enterprises invest money and hire '
-            'employees.',
-            'State should provide a stable judicial system and refrain from '
-            'regulating the economy.',
-        ],
-        'Socialist': [
-            'Government and the society as a whole must regulate business '
-            'decisions to favor the common good rather than private interests.',
-            'State leadership is necessary to drive a strong economy.',
-        ],
-        'Fascist': [
-            'Government should eliminate opposition in order to ensure '
-            'governability.',
-            'Military should occupy high ranks in government.',
-        ]
-    })
+    set_clusters_from_comments(
+        conversation,
+        {
+            "Liberal": [
+                "Free market should regulate how enterprises invest money and hire "
+                "employees.",
+                "State should provide a stable judicial system and refrain from "
+                "regulating the economy.",
+            ],
+            "Socialist": [
+                "Government and the society as a whole must regulate business "
+                "decisions to favor the common good rather than private interests.",
+                "State leadership is necessary to drive a strong economy.",
+            ],
+            "Fascist": [
+                "Government should eliminate opposition in order to ensure "
+                "governability.",
+                "Military should occupy high ranks in government.",
+            ],
+        },
+    )
     return conversation

@@ -4,9 +4,9 @@ from boogie.fields import IntEnum
 
 
 class ClusterStatus(IntEnum):
-    PENDING_DATA = 0, _('Waiting for more data')
-    ACTIVE = 1, _('Active')
-    DISABLED = 2, _('Disabled')
+    PENDING_DATA = 0, _("Waiting for more data")
+    ACTIVE = 1, _("Active")
+    DISABLED = 2, _("Disabled")
 
     # FIXME: deprecated, a future boogie version will implement this!
     @classmethod
@@ -19,7 +19,7 @@ class ClusterStatus(IntEnum):
         elif isinstance(obj, str):
             value = getattr(cls, obj.upper(), None)
             if value is None:
-                raise ValueError(f'invalid {cls.__name__}: {obj}')
+                raise ValueError(f"invalid {cls.__name__}: {obj}")
             elif isinstance(obj, int):
                 return cls(obj)
             else:

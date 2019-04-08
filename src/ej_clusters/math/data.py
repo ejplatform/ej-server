@@ -3,9 +3,9 @@ from collections import defaultdict, Counter
 
 from sidekick import import_later
 
-log = logging.getLogger('ej')
-np = import_later('numpy')
-models = import_later('..models', package=__package__)
+log = logging.getLogger("ej")
+np = import_later("numpy")
+models = import_later("..models", package=__package__)
 
 
 #
@@ -29,8 +29,8 @@ def compute_cluster_affinities(votes, distance=lambda x, y: np.sum(np.abs(x - y)
             Distance function.
     """
     votes = votes.copy()
-    centroids = votes.groupby('cluster').mean()
-    clusters = votes.pop('cluster')
+    centroids = votes.groupby("cluster").mean()
+    clusters = votes.pop("cluster")
     fractions = defaultdict(list)
 
     for k, x in zip(clusters.values, votes.values):
@@ -81,6 +81,6 @@ def summarize_affinities(affinities):
             if intersections[k_, k] > v:
                 del intersections[k_, k]
 
-    json = [{'sets': [k], 'size': n} for k, n in counts.items()]
-    json.extend({'sets': list(k), 'size': n} for k, n in intersections.items())
+    json = [{"sets": [k], "size": n} for k, n in counts.items()]
+    json.extend({"sets": list(k), "size": n} for k, n in intersections.items())
     return json

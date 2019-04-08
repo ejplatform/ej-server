@@ -2,13 +2,18 @@ import matplotlib.pyplot as plt
 
 from sidekick import import_later
 from sklearn.decomposition import PCA, KernelPCA
-from sklearn.manifold import TSNE, Isomap, MDS, LocallyLinearEmbedding, \
-    SpectralEmbedding
+from sklearn.manifold import (
+    TSNE,
+    Isomap,
+    MDS,
+    LocallyLinearEmbedding,
+    SpectralEmbedding,
+)
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import Imputer
 
-pd = import_later('pandas')
-np = import_later('numpy')
+pd = import_later("pandas")
+np = import_later("numpy")
 DEFAULT_ALPHA = 0.5
 
 
@@ -78,7 +83,7 @@ def remove_votes(votes, prob=0.5, gamma=2 * DEFAULT_ALPHA):
 
     for p, user_votes in zip(profiles, votes):
         remove = np.random.uniform(size=n_comments) < p
-        user_votes[remove] = float('nan')
+        user_votes[remove] = float("nan")
     return votes
 
 
@@ -97,7 +102,7 @@ def sizes_to_labels(sizes, values=None):
     return labels
 
 
-def reduce_dimensionality(votes, method='pca', **kwargs):
+def reduce_dimensionality(votes, method="pca", **kwargs):
     """
     Project dataset into 2 dimensions for better visualization.
 
@@ -112,44 +117,42 @@ def reduce_dimensionality(votes, method='pca', **kwargs):
     * 'se': *bad?*
     """
     standard_methods = {
-        'pca': (PCA, (2,), {}),
-        'k-pca': (KernelPCA, (2,), {}),
-        't-sne': (TSNE, (2,), {}),
-        'isomap': (Isomap, (2,), {}),
-        'mds': (MDS, (2,), {}),
-        'lle': (LocallyLinearEmbedding, (2,), {}),
-        'se': (SpectralEmbedding, (2,), {}),
+        "pca": (PCA, (2,), {}),
+        "k-pca": (KernelPCA, (2,), {}),
+        "t-sne": (TSNE, (2,), {}),
+        "isomap": (Isomap, (2,), {}),
+        "mds": (MDS, (2,), {}),
+        "lle": (LocallyLinearEmbedding, (2,), {}),
+        "se": (SpectralEmbedding, (2,), {}),
     }
     try:
         cls, args, kwargs = standard_methods[method]
     except KeyError:
-        raise ValueError(f'invalid method: {method}')
+        raise ValueError(f"invalid method: {method}")
 
-    pipeline = Pipeline([
-        ('fill', Imputer()),
-        ('reduce', cls(*args, *kwargs)),
-    ])
+    pipeline = Pipeline([("fill", Imputer()), ("reduce", cls(*args, *kwargs))])
     data = pipeline.fit_transform(votes)
     return data, pipeline
 
 
-def show_votes(votes, method='pca', display=True,
-               title=None, labels=None, legend=None, **kwargs):
+def show_votes(
+    votes, method="pca", display=True, title=None, labels=None, legend=None, **kwargs
+):
     """
     Show votes dataset in a 2D plot.
     """
 
     data, _ = reduce_dimensionality(votes, method=method, **kwargs)
     if labels is not None:
-        df = pd.DataFrame(data, columns=['x', 'y'])
-        df['label'] = labels
-        for label, group in df.groupby('label'):
+        df = pd.DataFrame(data, columns=["x", "y"])
+        df["label"] = labels
+        for label, group in df.groupby("label"):
             plt.scatter(group.x, group.y, label=label)
         if legend is None:
             legend = True
     else:
         plt.scatter(*data.T)
-    plt.title(title or f'Reduced votes ({method})')
+    plt.title(title or f"Reduced votes ({method})")
     if legend:
         plt.legend()
     if display:
@@ -158,7 +161,7 @@ def show_votes(votes, method='pca', display=True,
 
 def cluster_error(labels, true_labels):
     if len(labels) != len(true_labels):
-        raise ValueError('two sets of labels must hve the same size')
+        raise ValueError("two sets of labels must hve the same size")
 
     e = 1e-50  # regularization factor
     k = len(set(true_labels))

@@ -5,44 +5,46 @@ from ej_clusters.forms import StereotypeForm
 from ej_clusters.utils import check_stereotype
 from .models import Stereotype
 
-app_name = 'ej_cluster'
+app_name = "ej_cluster"
 urlpatterns = Router(
-    template='ej_clusters/stereotypes/{name}.jinja2',
-    models={'stereotype': Stereotype},
+    template="ej_clusters/stereotypes/{name}.jinja2",
+    models={"stereotype": Stereotype},
     login=True,
 )
 
 
-@urlpatterns.route('')
+@urlpatterns.route("")
 def list(request):
-    qs = request.user.stereotypes.prefetch_related('clusters__clusterization__conversation')
+    qs = request.user.stereotypes.prefetch_related(
+        "clusters__clusterization__conversation"
+    )
     stereotypes = []
     for stereotype in qs:
         stereotype.conversations = conversations = []
         for cluster in stereotype.clusters.all():
             conversations.append(cluster.clusterization.conversation)
         stereotypes.append(stereotype)
-    return {'stereotypes': stereotypes}
+    return {"stereotypes": stereotypes}
 
 
-@urlpatterns.route('add/')
+@urlpatterns.route("add/")
 def create(request):
     form = StereotypeForm(request=request, owner=request.user)
     if form.is_valid_post():
         form.save()
-        return redirect('stereotypes:list')
-    return {'form': form}
+        return redirect("stereotypes:list")
+    return {"form": form}
 
 
-@urlpatterns.route('<model:stereotype>/edit/')
+@urlpatterns.route("<model:stereotype>/edit/")
 def edit(request, stereotype):
     check_stereotype(stereotype, request.user)
     form = StereotypeForm(request=request, instance=stereotype)
 
-    if request.POST.get('action') == 'delete':
+    if request.POST.get("action") == "delete":
         stereotype.delete()
-        return redirect('stereotypes:list')
+        return redirect("stereotypes:list")
     elif form.is_valid_post():
         form.save()
-        return redirect('stereotypes:list')
-    return {'form': form, 'stereotype': stereotype}
+        return redirect("stereotypes:list")
+    return {"form": form, "stereotype": stereotype}

@@ -3,8 +3,8 @@ from django.utils.translation import ugettext_lazy as _
 
 
 class EjClustersConfig(AppConfig):
-    name = 'ej_clusters'
-    verbose_name = _('Clusters')
+    name = "ej_clusters"
+    verbose_name = _("Clusters")
     rules = None
     signals = None
     api = None
