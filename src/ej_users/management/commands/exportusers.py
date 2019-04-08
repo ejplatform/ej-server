@@ -5,11 +5,11 @@ User = get_user_model()
 
 
 class Command(BaseCommand):
-    help = 'Export users data in a csv file'
+    help = "Export users data in a csv file"
 
     def handle(self, *files, **options):
-        with open('users.csv', 'w') as csv:
-            csv.write('id, name, email, last_login,\n')
+        with open("users.csv", "w") as csv:
+            csv.write("id, name, email, last_login,\n")
             for user in User.objects.all():
-                line = ', '.join([user.id, user.name, user.email, user.last_login])
-                csv.write(line + '\n')
+                line = ", ".join([user.id, user.name, user.email, user.last_login])
+                csv.write(line + "\n")

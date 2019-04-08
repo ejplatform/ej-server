@@ -4,23 +4,20 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-    dependencies = [
-        ('ej_users', '0002_create_password_token_model'),
-    ]
+    dependencies = [("ej_users", "0002_create_password_token_model")]
 
     operations = [
         migrations.AddField(
-            model_name='passwordresettoken',
-            name='is_used',
+            model_name="passwordresettoken",
+            name="is_used",
             field=models.BooleanField(default=False),
         ),
         migrations.AlterField(
-            model_name='passwordresettoken',
-            name='url',
-            field=models.CharField(max_length=50, unique=True, verbose_name='User token'),
+            model_name="passwordresettoken",
+            name="url",
+            field=models.CharField(
+                max_length=50, unique=True, verbose_name="User token"
+            ),
         ),
-        migrations.RemoveField(
-            model_name='user',
-            name='display_name'
-        ),
+        migrations.RemoveField(model_name="user", name="display_name"),
     ]

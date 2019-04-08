@@ -7,19 +7,19 @@ from ej_users.mommy_recipes import UserRecipes
 
 class TestUser(UserRecipes, ModelTester):
     model = User
-    representation = 'user@domain.com'
+    representation = "user@domain.com"
 
 
 class TestUserManager(EjRecipes):
     def test_can_create_and_fetch_simple_user(self, db):
-        user = User.objects.create_user('name@server.com', '1234', name='name')
-        assert user.name == 'name'
-        assert user.password != '1234'
-        assert User.objects.get_by_email('name@server.com') == user
+        user = User.objects.create_user("name@server.com", "1234", name="name")
+        assert user.name == "name"
+        assert user.password != "1234"
+        assert User.objects.get_by_email("name@server.com") == user
 
     def test_generate_username(self):
-        user = User(email='email@at.com')
-        assert user.username == 'email__at.com'
+        user = User(email="email@at.com")
+        assert user.username == "email__at.com"
 
 
 class TestPasswordResetToken(EjRecipes):

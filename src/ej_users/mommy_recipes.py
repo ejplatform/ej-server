@@ -4,14 +4,12 @@ from sidekick import record
 from ej.testing import EjRecipes
 from .models import PasswordResetToken
 
-__all__ = ['UserRecipes']
+__all__ = ["UserRecipes"]
 
 
 class UserRecipes(EjRecipes):
     token = Recipe(
-        PasswordResetToken,
-        url='random-data',
-        user=_foreign_key(EjRecipes.user),
+        PasswordResetToken, url="random-data", user=_foreign_key(EjRecipes.user)
     )
 
     def get_data(self, request):

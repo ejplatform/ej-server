@@ -5,14 +5,16 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('ej_users', '0003_add_is_used_field'),
-    ]
+    dependencies = [("ej_users", "0003_add_is_used_field")]
 
     operations = [
         migrations.AddField(
-            model_name='user',
-            name='limit_board_conversations',
-            field=models.PositiveIntegerField(default=0, help_text='Limit number of conversations in user board ', verbose_name='Limit conversations in board'),
-        ),
+            model_name="user",
+            name="limit_board_conversations",
+            field=models.PositiveIntegerField(
+                default=0,
+                help_text="Limit number of conversations in user board ",
+                verbose_name="Limit conversations in board",
+            ),
+        )
     ]

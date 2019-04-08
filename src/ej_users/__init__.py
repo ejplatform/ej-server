@@ -1,4 +1,4 @@
-default_app_config = 'ej_users.apps.EjUsersConfig'
+default_app_config = "ej_users.apps.EjUsersConfig"
 
 
 def password_reset_token(user, commit=True):

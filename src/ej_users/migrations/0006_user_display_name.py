@@ -5,14 +5,16 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('ej_users', '0005_auto_20190201_1624'),
-    ]
+    dependencies = [("ej_users", "0005_auto_20190201_1624")]
 
     operations = [
         migrations.AddField(
-            model_name='user',
-            name='display_name',
-            field=models.CharField(blank=True, help_text='Name used to publicly identify user', max_length=50),
-        ),
+            model_name="user",
+            name="display_name",
+            field=models.CharField(
+                blank=True,
+                help_text="Name used to publicly identify user",
+                max_length=50,
+            ),
+        )
     ]

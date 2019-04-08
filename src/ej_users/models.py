@@ -11,56 +11,49 @@ from model_utils.models import TimeStampedModel
 from .manager import UserManager
 from .utils import random_name, token_factory
 
-log = getLogger('ej')
+log = getLogger("ej")
 
 
-@rest_api(['id', 'display_name'])
+@rest_api(["id", "display_name"])
 class User(AbstractUser):
     """
     Default user model for EJ platform.
     """
 
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['name']
+    USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = ["name"]
 
     email = models.EmailField(
-        _('email address'),
-        unique=True,
-        help_text=_('Your e-mail address')
+        _("email address"), unique=True, help_text=_("Your e-mail address")
     )
     display_name = models.CharField(
         max_length=50,
         default=random_name,
-        help_text=_(
-            'Name used to publicly identify user'
-        ),
+        help_text=_("Name used to publicly identify user"),
     )
 
-    @property
+    username = property(lambda self: self.email.replace("@", "__"))
+
+    @username.setter
     def username(self):
-        return self.name
+        self.email = self.email.replace("__", "@")
 
     objects = UserManager()
 
     class Meta:
-        swappable = 'AUTH_USER_MODEL'
+        swappable = "AUTH_USER_MODEL"
 
 
 class PasswordResetToken(TimeStampedModel):
     """
     Expiring token for password recovery.
     """
+
     url = models.CharField(
-        _('User token'),
-        max_length=50,
-        unique=True,
-        default=token_factory,
+        _("User token"), max_length=50, unique=True, default=token_factory
     )
     is_used = models.BooleanField(default=False)
-    user = models.ForeignKey(
-        'User',
-        on_delete=models.CASCADE,
-    )
+    user = models.ForeignKey("User", on_delete=models.CASCADE)
 
     @property
     def is_expired(self):
@@ -70,7 +63,7 @@ class PasswordResetToken(TimeStampedModel):
     def use(self, commit=True):
         self.is_used = True
         if commit:
-            self.save(update_fields=['is_used'])
+            self.save(update_fields=["is_used"])
 
 
 def clean_expired_tokens():
@@ -96,7 +89,7 @@ def remove_account(user):
     * Remove all boards?
     * Remove all conversations created by the user?
     """
-    if hasattr(user, 'profile'):
+    if hasattr(user, "profile"):
         remove_profile(user)
 
     # Handle user object
@@ -104,13 +97,13 @@ def remove_account(user):
     user.is_active = False
     user.is_superuser = False
     user.is_staff = False
-    user.name = _('Anonymous')
+    user.name = _("Anonymous")
     user.save()
 
     # Remove e-mail overriding django validator
-    new_email = f'anonymous-{user.id}@deleted-account'
+    new_email = f"anonymous-{user.id}@deleted-account"
     User.objects.filter(id=user.id).update(email=new_email)
-    log.info(f'{email} removed account')
+    log.info(f"{email} removed account")
 
 
 def remove_profile(user):
