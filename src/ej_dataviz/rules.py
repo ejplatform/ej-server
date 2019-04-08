@@ -1,7 +1,7 @@
 from boogie import rules
 
 
-@rules.register_perm('ej.can_view_report')
+@rules.register_perm("ej.can_view_report")
 def can_view_report(user, conversation):
     """
     Can edit a given conversation.

@@ -5,16 +5,17 @@ from ej.testing import UrlTester
 from ej_conversations.mommy_recipes import ConversationRecipes
 from ej_users.models import User
 
-BASE_URL = '/api/v1'
+BASE_URL = "/api/v1"
 
 
 class TestRoutes(ConversationRecipes, UrlTester):
     user_urls = [
-        '/conversations/conversation/reports/',
-        '/conversations/conversation/reports/scatter/',
+        "/conversations/1/conversation/scatter/",
+        "/conversations/1/conversation/word-cloud/",
     ]
     admin_urls = [
-        '/conversations/conversation/reports/participants/',
+        "/conversations/1/conversation/reports/",
+        "/conversations/1/conversation/reports/users/",
     ]
 
     @pytest.fixture
@@ -30,10 +31,9 @@ class TestReportRoutes(ConversationRecipes):
 
     @pytest.fixture
     def admin_user(self, db):
-        admin_user = User.objects.create_superuser('admin@test.com', 'pass')
+        admin_user = User.objects.create_superuser("admin@test.com", "pass")
         admin_user.save()
-        yield admin_user
-        admin_user.delete()
+        return admin_user
 
     @pytest.fixture
     def request_as_admin(self, request_factory, admin_user):
