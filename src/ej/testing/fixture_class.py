@@ -128,6 +128,7 @@ class EjRecipes(metaclass=FixtureMeta):
 
     @pytest.fixture
     def data(self, request):
+        self.get_fixture('db', request)
         return self.get_data(request)
 
     def get_data(self, request):
@@ -135,10 +136,13 @@ class EjRecipes(metaclass=FixtureMeta):
         return record(user=user, author=author, admin=admin)
 
     def get_users(self, request):
-        user = request.getfixturevalue('user_db')
-        author = request.getfixturevalue('author_db')
-        admin = request.getfixturevalue('admin_db')
+        user = self.get_fixture('user_db', request)
+        author = self.get_fixture('author_db', request)
+        admin = self.get_fixture('admin_db', request)
         return user, author, admin
+
+    def get_fixture(self, fixture, request):
+        return request.getfixturevalue(fixture)
 
     # Settings
     settings = TestCase.settings

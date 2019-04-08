@@ -3,7 +3,7 @@ from types import MappingProxyType
 from django.db import models
 from django.db.models import QuerySet
 
-from hyperpython import html, Text
+from hyperpython import html, Text, Blob
 from hyperpython.components import html_list
 from hyperpython.html import django_loader
 
@@ -97,7 +97,7 @@ def render_with_template(func, template):
         ctx = func(obj, **kwargs)
         request = ctx.get('request')
         data = renderer(context=ctx, request=request)
-        return Text(data, escape=False)
+        return Blob(data)
 
     return wrapped
 

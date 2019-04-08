@@ -100,8 +100,9 @@ class Conf(ThemesConf,
 
     def get_email_backend(self):
         if self.ENVIRONMENT == 'production':
-            self.ANYMAIL = {'MAILGUN_API_KEY': ''}
-            return 'anymail.backends.mailgun.EmailBackend'
+            # self.ANYMAIL = {'MAILGUN_API_KEY': ''}
+            # 'anymail.backends.mailgun.EmailBackend'
+            return 'django.core.mail.backends.smtp.EmailBackend'
         else:
             return 'django.core.mail.backends.console.EmailBackend'
 

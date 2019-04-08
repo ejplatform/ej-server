@@ -32,7 +32,6 @@ class Conversation(TimeStampedModel):
         _("Title"),
         max_length=255,
         help_text=_("Short description used to create URL slugs (e.g. School system)."),
-        unique=True,
     )
     text = models.TextField(_("Question"), help_text=_("What do you want to ask?"))
     author = models.ForeignKey(

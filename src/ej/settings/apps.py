@@ -6,6 +6,7 @@ class InstalledAppsConf(Base, EjOptions):
     project_apps = [
         # # Gamification
         'ej_gamification',
+        'ej_experiments',
 
         # # Notifications
         # 'ej_notifications',
@@ -24,12 +25,12 @@ class InstalledAppsConf(Base, EjOptions):
     ]
 
     third_party_apps = [
+        'boogie.apps.fragments',
         'taggit',
         'rules',
         'allauth',
         'allauth.account',
-        'boogie.apps.fragments',
-        # 'allauth.socialaccount',
+        'allauth.socialaccount',
         # 'allauth.socialaccount.providers.facebook',
         # 'allauth.socialaccount.providers.twitter',
         # 'allauth.socialaccount.providers.github',

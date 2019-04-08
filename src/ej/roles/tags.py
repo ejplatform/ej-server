@@ -26,7 +26,7 @@ __all__ = [
 
 
 def link(value, href='#', target='body', **kwargs):
-    return a(link_kwargs(href=href, target=target, **kwargs), value)
+    return a(link_kwargs(href=href, target=target, **kwargs), [value])
 
 
 def link_attrs(href='#', target='body', **kwargs):

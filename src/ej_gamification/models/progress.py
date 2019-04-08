@@ -399,7 +399,6 @@ def get_progress(obj, sync=False):
     """
     Return a valid ConversationProgress() or UserProgress() for object.
     """
-    from .models import UserProgress, ConversationProgress
     from ej_conversations.models import Conversation
 
     try:

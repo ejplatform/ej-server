@@ -5,7 +5,7 @@ import django
 import sidekick as sk
 from django.apps import apps
 from django.test.client import Client
-from hyperpython import Text
+from hyperpython import Text, Blob
 from sidekick import deferred, import_later, namespace
 
 # Pydata
@@ -133,7 +133,7 @@ class EjClient(Client):
         return response.content.decode(response.charset)
 
     def get_html(self, *args, **kwargs):
-        return Text(self.get_data(*args, **kwargs), escape=False)
+        return Blob(self.get_data(*args, **kwargs))
 
     def get_soup(self, *args, **kwargs):
         return bs4.BeautifulSoup(self.get_data(*args, **kwargs))

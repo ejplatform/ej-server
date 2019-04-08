@@ -27,7 +27,8 @@ def manage(ctx, cmd, env=None, **kwargs):
 # Build assets
 #
 @task
-def sass(ctx, watch=False, theme='default', trace=False, dry_run=False, rocket=True, background=False):
+def sass(ctx, watch=False, theme='default', trace=False, dry_run=False, rocket=True,
+         background=False):
     """
     Run Sass compiler
     """
@@ -58,7 +59,6 @@ def sassc(ctx, theme='default', watch=False, background=False):
     """
     Run Sass compiler
     """
-    import sass
 
     theme, root = set_theme(theme)
     os.environ['EJ_THEME'] = theme or 'default'
@@ -206,7 +206,7 @@ def db_reset(ctx):
 
 
 @task
-def db_fake(ctx, users=True, conversations=True, admin=True, safe=False, theme=None):
+def db_fake(ctx, users=True, conversations=True, admin=True, safe=False, theme=None, clusters=True):
     """
     Adds fake data to the database
     """
@@ -222,6 +222,8 @@ def db_fake(ctx, users=True, conversations=True, admin=True, safe=False, theme=N
         manage(ctx, 'createfakeusers', admin=admin)
     if conversations:
         manage(ctx, 'createfakeconversations')
+    if clusters:
+        manage(ctx, 'createfakeclusters')
 
 
 @task
@@ -359,7 +361,8 @@ def i18n(ctx, compile=False, edit=False, lang='pt_BR', keep_pot=False):
         ctx.run('pybabel extract -F etc/babel.cfg -o locale/jinja2.pot .')
 
         print('Join Django + Jinja translation files')
-        ctx.run('msgcat locale/django.pot locale/jinja2.pot --use-first -o locale/join.pot', pty=True)
+        ctx.run('msgcat locale/django.pot locale/jinja2.pot --use-first -o locale/join.pot',
+                pty=True)
         ctx.run(r'''sed -i '/"Language: \\n"/d' locale/join.pot''', pty=True)
 
         print(f'Update locale {lang} with Jinja2 messages')

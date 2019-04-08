@@ -8,34 +8,17 @@ license = "AGPL-3.0"
 [tool.poetry.dependencies]
 python = "~3.7.1"
 django = "^2.1"
-django-boogie = "=0.11.1"
-django-model-utils = "^3.1"
-django-polymorphic = "^2.0"
-django-manager-utils = "^1.3"
-django-bulk-update = "^2.2"
-django-environ = "^0.4.5"
-django-crispy-forms = "^1.7"
-django-constance = {version = "^2.3",extras = ["database"]}
-django-taggit = "^0.23.0"
-django-picklefield = "^2.0"
+django-boogie = {version = "^0.13.1", extras=["stack"]}
+django-constance = {version = "^2.3", extras = ["database"]}
+django-rest-auth = {version = "^0.9.3", extras = ["with_social"]}
 django-allauth = "^0.38.0"
-djangorestframework = "^3.9"
-django-rest-auth = {version = "^0.9.3",extras = ["with_social"]}
-django-push-notifications = "^1.6"
-django-extensions = "^2.1"
+django-taggit = "^0.23.0"
 django-autoslug = "^1.9"
 django-jsonfield = "^1.0"
-django-anymail = "^5.0"
-django-redis = "^4.10"
-django-storages = "^1.7"
-django-pandas = "^0.6.0"
-django-filter = "^2.1"
-django-cors-headers = "^2.4"
 coreapi = "^2.3"
-hyperpython = "^1.0.2"
+hyperpython = "^1.1.0"
 rules = "<2.0"
-toolz = "^0.9.0"
-sidekick = "^0.4.2"
+sidekick = "^0.5.0"
 numpy = "^1.16"
 scipy = "^1.2"
 pandas = "^0.24.0"
@@ -76,8 +59,15 @@ ipython = "^7.2"
 libsass = "^0.17.0"
 gunicorn = "^19.9"
 watchdog = "^0.9.0"
-django-coverage-plugin = "^1.6"
+
 
 [build-system]
 requires = ["poetry>=0.12"]
 build-backend = "poetry.masonry.api"
+
+
+#django-anymail = "^5.0"
+#django-redis = "^4.10"
+#django-storages = "^1.7"
+#django-push-notifications = "^1.6"
+#django-cors-headers = "^2.4"

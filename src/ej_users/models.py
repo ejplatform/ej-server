@@ -31,12 +31,7 @@ class User(AbstractUser):
         default=random_name,
         help_text=_("Name used to publicly identify user"),
     )
-
-    username = property(lambda self: self.email.replace("@", "__"))
-
-    @username.setter
-    def username(self):
-        self.email = self.email.replace("__", "@")
+    username = property(lambda self: self.name or self.email.replace("@", "__"))
 
     objects = UserManager()
 

@@ -56,6 +56,9 @@ def get_urlpatterns():
         # Admin
         path(fix_url(settings.ADMIN_URL), admin.site.urls),
 
+        # Debug routes
+        *with_app('ej_experiments', 'info/experiments/', namespace='experiments'),
+
         # REST API
         path('api/', include(rest_api.urls)),
         path('api/v1/docs/', include_docs_urls(title='ej API Docs', public=False)),
