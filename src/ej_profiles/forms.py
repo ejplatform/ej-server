@@ -6,12 +6,18 @@ from ej.forms import EjModelForm
 from . import models
 
 EDITABLE_FIELDS = [
-    'occupation', 'education',
-    'gender', 'race', 'ethnicity',
-    'birth_date',
-    'city', 'state', 'country',
-    'political_activity', 'biography',
-    'profile_photo',
+    "occupation",
+    "education",
+    "gender",
+    "race",
+    "ethnicity",
+    "birth_date",
+    "city",
+    "state",
+    "country",
+    "political_activity",
+    "biography",
+    "profile_photo",
 ]
 EXCLUDE_EDITABLE_FIELDS = settings.EJ_EXCLUDE_PROFILE_FIELDS
 
@@ -19,8 +25,8 @@ EXCLUDE_EDITABLE_FIELDS = settings.EJ_EXCLUDE_PROFILE_FIELDS
 class UsernameForm(EjModelForm):
     class Meta:
         model = models.User
-        fields = ['name']
-        help_texts = {'name': ''}
+        fields = ["name"]
+        help_texts = {"name": ""}
 
 
 class ProfileForm(EjModelForm):
@@ -30,10 +36,12 @@ class ProfileForm(EjModelForm):
 
     class Meta:
         model = models.Profile
-        fields = [field for field in EDITABLE_FIELDS if field not in EXCLUDE_EDITABLE_FIELDS]
+        fields = [
+            field for field in EDITABLE_FIELDS if field not in EXCLUDE_EDITABLE_FIELDS
+        ]
         widgets = {
-            'birth_date': DateInput(attrs={'type': 'date'}),
-            'profile_photo': ej.forms.FileInput(attrs={'accept': 'image/*'})
+            "birth_date": DateInput(attrs={"type": "date"}),
+            "profile_photo": ej.forms.FileInput(attrs={"accept": "image/*"}),
         }
 
     def __init__(self, *args, instance, **kwargs):
