@@ -127,15 +127,24 @@ $_: set-mendeleev-config('contrast', (
     #042A46: $color-white,
 ), $merge: true);
 
+// Styles
+$_: set-mendeleev-config('style', (
+    'border-radius': 3rem,
+    'button-radius': 2.25rem / 2,
+));
+$_: set-mendeleev-config('configuration-card', (
+    'border-radius': 50%,
+));
+
 // Forms
 $_: set-mendeleev-config('input', (
-    'border-radius': 2.25rem / 2,
+    'border-radius': config('style.button-radius'),
     'min-width': 15em,
     'width': 100%,
     'max-width': 30rem,
 ), $merge: true);
 $_: set-mendeleev-config('button', (
-    'border-radius': 2.25rem / 2,
+    'border-radius': config('style.button-radius'),
     'font-weight': 700,
 ), $merge: true);
 

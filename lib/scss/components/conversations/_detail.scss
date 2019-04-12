@@ -3,7 +3,7 @@
 //------------------------------------------------------------------------------
 @import '../../mendeleev/components/mixins/arrow';
 
-$component-border-radius: 3rem;
+$component-border-radius: size(config('style.border-radius'));
 
 @mixin themed($prop, $value: null) {
     @if $value == light {

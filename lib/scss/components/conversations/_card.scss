@@ -10,12 +10,13 @@ $_card-width: 20rem;
     --theme-light-color: #{color('brand-lighter')};
 }
 
+
 .conversation-card {
     @extend .text-center, .text-6, .col, .items-center;
     @include color('brand' 'brand-lighter');
     color: var(--theme-light-color);
     background-color: var(--theme-color);
-    border-radius: 50%;
+    border-radius: size(config('configuration-card.border-radius'));
     height: $_card-width;
     margin: auto;
     overflow: hidden;

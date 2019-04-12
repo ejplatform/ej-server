@@ -27,35 +27,7 @@ def manage(ctx, cmd, env=None, **kwargs):
 # Build assets
 #
 @task
-def sass(ctx, watch=False, theme='default', trace=False, dry_run=False, rocket=True,
-         background=False):
-    """
-    Run Sass compiler
-    """
-    theme, root = set_theme(theme)
-    root = f'{root}scss/'
-    os.environ['EJ_THEME'] = theme or 'default'
-    go = runner(ctx, dry_run, pty=True)
-    cmd = f'sass {root}main.scss:lib/build/css/main.css'
-    cmd += f' {root}rocket.scss:lib/build/css/rocket.css' if rocket else ''
-    cmd += ' --watch' if watch else ''
-    cmd += ' --trace' if trace else ''
-    go('rm -rf .sass-cache lib/build/css/main.css lib/build/css/rocket.css')
-    go('mkdir -p lib/build/css')
-
-    if background:
-        from threading import Thread
-        thread = Thread(target=go, args=(cmd,), daemon=True)
-        try:
-            thread.start()
-        except KeyboardInterrupt:
-            thread.join(0)
-    else:
-        go(cmd)
-
-
-@task
-def sassc(ctx, theme='default', watch=False, background=False):
+def sass(ctx, theme='default', watch=False, background=False):
     """
     Run Sass compiler
     """
@@ -63,6 +35,7 @@ def sassc(ctx, theme='default', watch=False, background=False):
     theme, root = set_theme(theme)
     os.environ['EJ_THEME'] = theme or 'default'
     ctx.run('mkdir -p lib/build/css')
+    print(root, theme)
     root = f'{root}scss/'
 
     def go():
@@ -73,7 +46,6 @@ def sassc(ctx, theme='default', watch=False, background=False):
             try:
                 map_path = f'lib/build/css/{file}.css.map'
                 css, sourcemap = sass.compile(filename=f'{root}{file}.scss',
-                                              # output_style='compressed',
                                               source_map_filename=map_path,
                                               source_map_root=root_url,
                                               source_map_contents=True,
@@ -87,7 +59,7 @@ def sassc(ctx, theme='default', watch=False, background=False):
             except Exception as exc:
                 print(f'ERROR EXECUTING SASS COMPILATION: {exc}')
 
-    exec_watch(root, go, name='sassc', watch=watch, background=background)
+    exec_watch(root, go, name='sass', watch=watch, background=background)
     print('Compilation finished!')
 
 
@@ -608,6 +580,8 @@ def set_theme(theme):
         theme = theme.rstrip('/')
         root = f'{theme}/'
         theme = os.path.basename(theme)
+    elif theme != 'default':
+        root = f'lib/themes/{theme}/'
     elif 'EJ_THEME' in os.environ:
         theme = os.environ['EJ_THEME']
         root = 'lib/' if theme == 'default' else f'lib/themes/{theme}/'
