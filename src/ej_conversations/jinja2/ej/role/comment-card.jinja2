@@ -11,8 +11,8 @@
             <div class="row">
                 {% for value, (icon, cls, msg) in buttons.items() %}
                     <div up-expand class="comment-card__button">
-                        <button type="submit" form="comment-form" name="vote" value="{{ value }}" class="{{ cls }}">
-                            <i class="fa {{ icon }}"></i>
+                        <button type="submit" form="comment-form" name="vote" value="{{ value }}">
+                            <i class="fa {{ icon }} {{ cls }}"></i>
                         </button>
                         <span>{{ msg }}</span>
                     </div>

@@ -4,8 +4,8 @@
 
 
 {% block content %}
-    <h1 class="h2 text-center text-accent">{% trans %}Opinion groups{% endtrans %}</h1>
-    <p class="text-center">
+    <h1 class="h2 center text-accent">{% trans %}Opinion groups{% endtrans %}</h1>
+    <p class="center">
         <i class="fa fa-user"></i> {{ _('Participants') }}: <strong>{{ participants }}</strong>
         <br>
         <i class="fa fa-comments"></i> {{ _('Groups') }}: <strong>{{ groups|length }}</strong>
@@ -19,12 +19,12 @@
         {% endfor %}
     {% else %}
         <div class="pad-x3 rounded-3 color-negative border-1">
-            <h2 class="h3 text-center">{{ _('Error') }}</h2>
-            <p class="text-center">{% trans %}Could not determine the opinion groups for this
+            <h2 class="h3 center">{{ _('Error') }}</h2>
+            <p class="center">{% trans %}Could not determine the opinion groups for this
                 conversation.{% endtrans %}</p>
         </div>
         {% if is_conversation_admin %}
-            <p class="text-center margin-3">{% trans link=edit_link %}You can edit the clusterization options for this
+            <p class="center margin-3">{% trans link=edit_link %}You can edit the clusterization options for this
                 conversation {{ link }}.{% endtrans %}</p>
         {% endif %}
     {% endif %}

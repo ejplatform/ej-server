@@ -10,7 +10,7 @@
     </a></p>
 
     <div class="measure margin-xauto">
-        <h1 class="h2 text-accent text-center">{{ _('Edit conversation') }}</h1>
+        <h1 class="h2 text-accent center">{{ _('Edit conversation') }}</h1>
 
         {{ form.non_field_errors() }}
         {{ form.title.errors }}
@@ -27,11 +27,11 @@
         <label>{{ form.is_hidden }} {{ form.is_hidden.label }}</label>
         <legend>{{ form.is_hidden.help_text }}</legend>
 
-        <div class="margin-xauto margin-y3 text-center">
+        <div class="margin-xauto margin-y3 center">
             <input class="is-primary" type="submit" value="{{ _('Save modifications') }}">
         </div>
 
-        <h2 class="h3 text-accent text-center">{{ _('Other options') }}</h2>
+        <h2 class="h3 text-accent center">{{ _('Other options') }}</h2>
         <ul>
             <li>
                 <button class="is-clear" name="next" value="stereotypes">{{ _('Save and manage stereotypes') }}</button>

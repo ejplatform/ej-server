@@ -6,7 +6,7 @@
 {% block content %}
     {% if farewell_message %}
         <div class="col height-full flex-center">
-            <p class="text-1 text-center margin-y4 margin-x3">{{ farewell_message|safe }}</p>
+            <p class="text-1 center margin-y4 margin-x3">{{ farewell_message|safe }}</p>
         </div>
     {% else %}
         <h1 class="h2 text-negative">{% trans %}Danger! Remove account{% endtrans %}</h1>

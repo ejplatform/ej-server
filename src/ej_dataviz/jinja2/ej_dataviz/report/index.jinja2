@@ -2,7 +2,7 @@
 
 
 {% block report %}
-    <h1 class="h2 text-accent text-center">
+    <h1 class="h2 text-accent center">
         {% trans n = statistics.participants.voters %}Basic report ({{ n }} users){% endtrans %}
     </h1>
 
@@ -18,7 +18,7 @@
     </div>
     {% if can_view_detail %}{{ conversation|role('download-data', which='votes-data') }}{% endif %}
 
-    <h2 class="h3 text-accent text-center" id="report-comments">{% trans %}Comments{% endtrans %}</h2>
+    <h2 class="h3 text-accent center" id="report-comments">{% trans %}Comments{% endtrans %}</h2>
     {{ conversation|role('comments-stats-table') }}
     {% if can_view_detail %}{{ conversation|role('download-data', which='comments-data') }}{% endif %}
 
@@ -31,7 +31,7 @@
     {% endif %}
 
     {% if can_view_detail %}
-        <h2 class="h3 text-accent text-center">{% trans %}More info{% endtrans %}</h2>
+        <h2 class="h3 text-accent center">{% trans %}More info{% endtrans %}</h2>
         <dl>
             <dt>{% block participant_table_link %}
                 <a href="{{ conversation.url('report:users') }}">{{ _('Participants') }}</a>

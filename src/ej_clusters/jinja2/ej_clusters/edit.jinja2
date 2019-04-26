@@ -13,17 +13,17 @@
     {{ conversation|role('balloon', actions=False) }}
 
     <div class="measure margin-xauto">
-        <h1 class="h2 text-center text-accent">{% trans %}Configure opinion groups{% endtrans %}</h1>
+        <h1 class="h2 center text-accent">{% trans %}Configure opinion groups{% endtrans %}</h1>
         {{ categories(groups, class_='margin-t3') }}
 
         {# New cluster #}
         <form method="post" class="width-full" action="#cluster-new" id="cluster-new">
-            <h2 class="h3 text-center text-accent">{{ _('New group') }}</h2>
+            <h2 class="h3 center text-accent">{{ _('New group') }}</h2>
             {{ csrf_input }}
             <input type="hidden" name="action" value="new">
             {{ new_cluster_form }}
 
-            <div class="text-center">
+            <div class="center">
                 <button class="is-primary pad-x3" name="submit" value="new"><i
                     class="fa fa-plus-circle"></i> {{ _('Create group') }}</button>
             </div>
@@ -31,7 +31,7 @@
 
         {% for cluster in clusters %}
             <form method="post" class="width-full" action="#cluster-{{ cluster.id }}" id="cluster-{{ cluster.id }}">
-                <h2 class="h3 text-center text-accent">{{ cluster.name }}</h2>
+                <h2 class="h3 center text-accent">{{ cluster.name }}</h2>
                 {{ csrf_input }}
                 <input type="hidden" name="action" value="{{ cluster.id }}">
                 {{ cluster.form }}

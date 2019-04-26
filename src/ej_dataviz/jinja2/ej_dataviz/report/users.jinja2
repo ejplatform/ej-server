@@ -2,9 +2,9 @@
 
 
 {% block report %}
-    <h1 class="h2 text-accent text-center">{{ _('List of participants') }}</h1>
+    <h1 class="h2 text-accent center">{{ _('List of participants') }}</h1>
 
-    <h2 class="h3 text-accent text-center">{{ _('Usage data') }}</h2>
+    <h2 class="h3 text-accent center">{{ _('Usage data') }}</h2>
     {{ conversation|role('participants-stats-table') }}
     {{ conversation|role('download-data', which='users-data') }}
 {% endblock %}

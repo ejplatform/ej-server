@@ -13,7 +13,7 @@
             content: none;
         }
     </style>
-    <div class="landing-page__cover width-full text-center color-brand col flex-center">
+    <div class="landing-page__cover width-full center color-brand col flex-center">
         <p class="bold text-1">{{ _('Create opinion surveys') }}</p>
         <p>{{ action_button(_('Try it now!'), href='conversation:list', secondary=true) }}</p>
         <a class="landing-page__cover-scroll"
@@ -21,7 +21,7 @@
             class="fa fa-chevron-down"></i></a>
     </div>
 
-    <h1 class="text-center text-accent" id="how-it-works">{{ _('How does it work?') }}</h1>
+    <h1 class="center text-accent" id="how-it-works">{{ _('How does it work?') }}</h1>
 
     <div class="landing-page__cards">
         <div class="landing-page__card">
@@ -44,7 +44,7 @@
     </div>
 
     <div class="landing-page__conversations width-full pad-1">
-        <h2 class="text-center">{{ _('Participative conversations') }}</h2>
+        <h2 class="center">{{ _('Participative conversations') }}</h2>
 
         <div class="row margin-y3 margin-xauto measure">
             <ul class="list-reset text-right bold uppercase">
@@ -58,10 +58,10 @@
             </div>
         </div>
 
-        <p class="text-center margin-3">{{ action_button(_('Create a conversation'), href='conversation:create', secondary=true) }}</p>
+        <p class="center margin-3">{{ action_button(_('Create a conversation'), href='conversation:create', secondary=true) }}</p>
     </div>
 
-    <div class="container margin-y3">
+    <div class="container-1 margin-y3">
         <h2 class="text-accent">{{ _('Documentation') }}</h2>
         <p>{{ _('Explore the EJ resources with our documented guides') }}</p>
 
@@ -69,7 +69,7 @@
 
             {% for doc in documentation_items %}
                 <a href="{{ doc.href }}"
-                   class="block text-brand-light size-x5p size-y5 rounded-3 margin-2 border-2 text-center pad-1 leading-solid">
+                   class="block text-brand-light size-x5p size-y5 rounded-3 margin-2 border-2 center pad-1 leading-solid">
                     <i class="{{ doc.icon }} text-1 gradient block pad-1"></i>
                     <span class="text-7 uppercase semi-bold text-brand">{{ doc.text }}</span></a>
             {% endfor %}
@@ -78,10 +78,10 @@
 
 
     <div class="pad-3" style="background: #eee;">
-        <h2 class="container">{{ _('EJ Community') }}</h2>
-        <ul class="container list-reset row wrap items-center flex-center margin-y3 margin-xauto pad-x0">
+        <h2 class="container-1">{{ _('EJ Community') }}</h2>
+        <ul class="container-1 list-reset row wrap items-center flex-center margin-y3 margin-xauto pad-x0">
             {% for file, name in people.items() %}
-                <li class="text-center text-7 margin-2 size-x4p">
+                <li class="center text-7 margin-2 size-x4p">
                     <img class="rounded-full size-4p block" src="{{ static("img/home/team/" + file) }}"
                          alt="{{ name }}">
                     {{ name }}</li>
@@ -91,7 +91,7 @@
 
     <div class="landing-page__partners container">
         <h2 class="text-accent">{{ _('Who is using EJ?') }}</h2>
-        <ul class="container list-reset row wrap items-center flex-center margin-y3 pad-x0">
+        <ul class="container-1 list-reset row wrap items-center flex-center margin-y3 pad-x0">
             {% for partner in partners %}
                 <li class="margin-2 size-5p">
                     <a target="_blank" rel="noopener noreferrer" href="{{ partner.url }}">

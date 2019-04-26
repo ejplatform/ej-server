@@ -39,9 +39,9 @@
 
 
 {% block content %}
-    <h1 class="h2 text-accent text-center">{{ _('Your achievements') }}</h1>
+    <h1 class="h2 text-accent center">{{ _('Your achievements') }}</h1>
     {{ html_map(fields, class_='description') }}
-    <h1 class="h2 text-accent text-center">{{ _('Conversation activity') }}</h1>
+    <h1 class="h2 text-accent center">{{ _('Conversation activity') }}</h1>
     {{ html_map(conversation_fields, class_='description') }}
 
 {% endblock %}

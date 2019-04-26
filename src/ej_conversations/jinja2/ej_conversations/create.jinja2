@@ -11,8 +11,8 @@
         {% block form_content %}
             <div class="measure margin-xauto">
                 {# CONVERSATION FORM #}
-                <h1 class="h2 text-accent text-center">{{ _('Conversation') }}</h1>
-                <p class="text-center">{% trans %}Please fill the details bellow.{% endtrans %}</p>
+                <h1 class="h2 text-accent center">{{ _('Conversation') }}</h1>
+                <p class="center">{% trans %}Please fill the details bellow.{% endtrans %}</p>
 
                 {{ form.non_field_errors() }}
                 {{ form.title.errors }}
@@ -21,8 +21,8 @@
 
 
                 {# ADD COMMENTS #}
-                <h1 class="h2 text-accent text-center">{{ _('Initial comments') }}</h1>
-                <p class="text-center">
+                <h1 class="h2 text-accent center">{{ _('Initial comments') }}</h1>
+                <p class="center">
                     {% trans %}Add as many comments as you like (including none).{% endtrans %}{{ ' ' }}
                     {% trans %}Remember to give a minimum context and something for other users to
                         explore.{% endtrans %}{{ ' ' }}
@@ -39,11 +39,11 @@
                     {% endfor %}
                 </div>
 
-                <a class="block uppercase text-center semi-bold" id="add-more-comments" tabindex="0">
+                <a class="block uppercase center semi-bold" id="add-more-comments" tabindex="0">
                     <i class="fa fa-plus"></i> {{ _('Add more comments') }}
                 </a>
 
-                <div class="margin-xauto margin-y3 text-center">
+                <div class="margin-xauto margin-y3 center">
                     <input class="is-primary" type="submit" value="{{ _('Create conversation') }}">
                 </div>
             </div>

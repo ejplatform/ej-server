@@ -12,21 +12,21 @@
 {% block content %}
     {{ conversation|role('balloon') }}
     {% if conversation.is_hidden %}
-        <div class="color-negative margin-3 pad-x3 pad-y2 rounded-3 text-center">
+        <div class="color-negative margin-3 pad-x3 pad-y2 rounded-3 center">
             <h2>{{ _('Warning!') }}</h2>
             <p>{% trans here=edit_link() %}This conversation is hidden. Click {{ here }} to edit and make it visible
                 again.{% endtrans %}</p>
         </div>
 
     {% else %}
-        <h1 class="h2 text-accent margin-y0 text-center">{{ _('Comments') }}</h1>
+        <h1 class="h2 text-accent margin-y0 center">{{ _('Comments') }}</h1>
         <div class="comment-area pad-x2">
             {{ conversation|role('user-progress') }}
             <div class="col items-center margin-y2">
                 {% if comment %}
                     {{ comment|role('card', target='.comment-area') }}
                 {% else %}
-                    <div class="comment-card text-center">
+                    <div class="comment-card center">
                         <article>
                             <h1 class="h3">{{ _('Congratulations!') }}</h1>
                             <p>{{ _("There are no comments left to vote :)") }}</p>
