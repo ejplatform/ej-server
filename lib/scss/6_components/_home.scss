@@ -1,6 +1,6 @@
 /*
  HOME PAGE
- ======================================================================== */
+ ========================================================================
 
 $how-it-work-icon-size: 1.5 * $font-size-h1 !default;
 $how-it-work-icon-color: $color-content !default;
@@ -9,7 +9,7 @@ $home-how-it-works-card-icon-conversation: "\f086" !default;
 $home-background-image-url: url(/static/img/page-bg.svg) !default;
 
 .HomeBanner {
-    @extend .container, .text-center;
+    @extend .container-1, .center;
     width: 80%;
     margin-top: 10px;
 
@@ -36,7 +36,7 @@ $home-background-image-url: url(/static/img/page-bg.svg) !default;
     padding-top: $spacing-unit;
 
     > * {
-        @extend .container, .text-center;
+        @extend .container-1, .center;
     }
 
     h2 {
@@ -151,7 +151,7 @@ $home-background-image-url: url(/static/img/page-bg.svg) !default;
     display: block;
 
     > * {
-        @extend .container;
+        @extend .container-1;
     }
 
     h2 {
@@ -168,3 +168,4 @@ $home-background-image-url: url(/static/img/page-bg.svg) !default;
         margin-top: 70px;
     }
 }
+*/

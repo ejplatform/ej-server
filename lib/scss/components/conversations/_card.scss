@@ -10,67 +10,69 @@ $_card-width: 20rem;
     --theme-light-color: #{color('brand-lighter')};
 }
 
-
 .conversation-card {
-    @extend .text-center, .text-6, .col, .items-center;
-    @include color('brand' 'brand-lighter');
-    color: var(--theme-light-color);
-    background-color: var(--theme-color);
-    border-radius: size(config('configuration-card.border-radius'));
+    @include utilities('center text-6 col items-center');
+
+    background-color: css-var(--theme-color, color('brand'));
+    border-radius: size(config('ej.configuration-card.border-radius'));
+    color: css-var(--theme-light-color, color('brand-lighter'));
     height: $_card-width;
     margin: auto;
     overflow: hidden;
     width: $_card-width;
 
     &__tags {
-        @extend .text-6, .bold;
-        background-color: color('brand-lighter');
-        background-color: var(--theme-light-color);
-        color: color('brand');
-        color: var(--theme-color);
+        @include utilities('text-6 bold');
+
+        @if config('ej.configuration-card.highlight-tags') {
+            background-color: css-var(--theme-light-color, color('brand-lighter'));
+            color: css-var(--theme-color, color('brand'));
+        }
         padding: size(0.5) 0 size(0.25) 0;
         width: 100%;
     }
     &__statistics {
-        @extend .list-inline, .pad-y1;
+        @include utilities('list-inline pad-y1');
+
         > li {
-            @extend .pad-x1;
+            @include utilities('pad-x1');
         }
     }
     &__text {
-        @extend .col, .flex-center, .pad-3;
+        @include utilities('col flex-center pad-3');
+
         flex-grow: 1;
 
         a {
-            @extend .text-4, .sans-serif;
+            @include utilities('text-4 sans-serif');
+
+            color: color('white');
             display: block;
             font-weight: 600;
-            color: color('white');
         }
     }
     &__moderate {
-        @extend .uppercase, .text-6, .margin-2, .bold;
+        @include utilities('uppercase text-6 margin-2 bold');
+
         color: color('black');
         display: block;
     }
     &__button {
-        @extend .pad-b3, .pad-t1, .margin-t1;
-        background-image: url("/static/img/bg/conversation-card.png");
-        background-color: color('brand');
-        background-color: var(--theme-color);
-        background-repeat: repeat;
+        @include utilities('pad-b3 pad-t1 margin-t1');
+
+        background: css-var(--theme-color, color('brand')) url("/static/img/bg/conversation-card.png") repeat;
         background-blend-mode: luminosity;
         width: 100%;
     }
 
     .progress-bar {
         width: 10rem;
+
         &__progress {
             border-color: color('white');
         }
     }
 }
-
 
 .alternate-cards {
     @include breakpoint('md') {
@@ -80,34 +82,14 @@ $_card-width: 20rem;
     }
 
     @include breakpoint('md') {
-        display: flex;
-        flex-direction: column;
         align-items: center;
-        margin-bottom: $_card-width * 0.25 + size(1);
+        display: flex;
 
         > * {
-            height: $_card-width * 0.75;
             margin: size(0.5);
-        }
-        > *:nth-child(odd) {
-            transform: translateX(-35%);
-        }
-        > *:nth-child(even) {
-            transform: translateX(35%);
+            > * {
+                border-radius: size(0.5);
+            }
         }
     }
-
-    //@include breakpoint('lg') {
-    //    margin-bottom: $_card-width * 0.51 + size(1);
-    //
-    //    > * {
-    //        height: $_card-width * 0.49;
-    //    }
-    //    > *:nth-child(odd) {
-    //        transform: translateX(-50%);
-    //    }
-    //    > *:nth-child(even) {
-    //        transform: translateX(50%);
-    //    }
-    //}
 }

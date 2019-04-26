@@ -4,12 +4,12 @@
 // In the future, Mendeleev should support this kind of personalization and this
 // module will go away.
 
-.container, .container-1, .container-2, .container-3 {
+.container-1, .container-2, .container-3, .container-4 {
     padding: 0;
 }
 
 @include breakpoint('sm') {
-    .container, .container-1, .container-2, .container-3 {
+    .container-1, .container-2, .container-3, .container-4 {
         padding: 0 size(1);
     }
 }

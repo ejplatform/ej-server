@@ -17,11 +17,11 @@ i.fa, i.fas, i.fab, i.far {
 //------------------------------------------------------------------------------
 // Intro title
 .title {
-    @extend .h2, .text-center, .text-accent;
+    @extend .h2, .center, .text-accent;
 }
 
 .intro-paragraph {
-    @extend .text-center;
+    @extend .center;
     h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
         @extend .title;
     }
@@ -34,7 +34,7 @@ i.fa, i.fas, i.fab, i.far {
 //------------------------------------------------------------------------------
 // Tabs and categories
 .tabs, .categories {
-    @extend .text-center, .row, .flex-center, .wrap;
+    @extend .center, .row, .flex-center, .wrap;
 
     > * {
         border-bottom: 0.25rem solid transparent;
@@ -84,7 +84,7 @@ i.fa, i.fas, i.fab, i.far {
     overflow-y: auto;
 
     &__contents {
-        @extend .pad-3, .text-center, .col;
+        @extend .pad-3, .center, .col;
         flex-grow: 1;
         height: 100%;
     }

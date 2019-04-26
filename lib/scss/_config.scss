@@ -1,6 +1,7 @@
 //------------------------------------------------------------------------------
 // COLORS ROLES
 //------------------------------------------------------------------------------
+@import '../node_modules/mendeleev.css/src/fn';
 
 // Brand colors: they are used on the logo and on the main elements on the page,
 // like buttons, conversation cards, links, etc.
@@ -47,7 +48,7 @@ $color-navigation: $color-white !default;
 $color-navigation-text: $color-black !default;
 
 // Override default Mendeleev color palette
-$MENDELEEV_COLORS: (
+$mendeleev-color-palette: (
     //
     // Brand colors
     'brand': $color-brand,
@@ -89,67 +90,86 @@ $MENDELEEV_COLORS: (
 // TYPOGRAPHY
 //------------------------------------------------------------------------------
 
-@import 'mendeleev/prelude/config/font-stacks';
+@import '../node_modules/mendeleev.css/src/profiles/default';
 
 // Font roles and base styles
 $font-stack-paragraph: $font-stack-raleway !default;
 $font-stack-headings: $font-stack-patua-one !default;
 
-$EJ_HEADINGS: (
+// Reset Mendeleev variables and styles
+$mendeleev-typeface: $font-stack-paragraph;
+$mendeleev-color-contrast: () !default;
+$mendeleev-color-contrast: map-merge($mendeleev-color-contrast, (
+    #30BFD3: $color-white,
+    #FF3D72: $color-white,
+    #042A46: $color-white,
+));
+
+// EJ configurations
+$ej-headings: (
     font-weight: 400,
     font-family: $font-stack-headings,
 ) !default;
+$ej-button-radius: 2.25rem / 2 !default;
 
 //------------------------------------------------------------------------------
 // MENDELEEV CONFIG
 //------------------------------------------------------------------------------
 
-// Set variables before importing pre-flight
-$MENDELEEV_TYPEFACE: $font-stack-paragraph;
+$mendeleev-config: map-merge-deep(
+        $mendeleev-config, (
+        // Breaking points
+        'breakpoints': (
+            'sm': 35rem,
+        ),
+        // Typography
+        'typography': (
+            'headings': $ej-headings,
+            'sans-serif': $font-stack-paragraph,
+            'size': (
+                'start': 16,
+                'sm': 16,
+                'md': 17,
+                'lg': 18,
+            ),
+            'scale': (
+                'start': 9/8,
+                'sm': 9/8,
+                'md': 8/7,
+                'lg': 7/6,
+            ),
+        ),
+        // Colors
+        'color':(
+            'roles': (
+                'primary', 'secondary',
+                'action', 'positive', 'negative',
+                'warning', 'white', 'black',
+            ),
+        ),
+        // Forms
+        'input': (
+            'border-radius': $ej-button-radius,
+            'min-width': 15em,
+            'width': 100%,
+            'max-width': 30rem,
+        ),
+        'button': (
+            'border-radius': $ej-button-radius,
+            'font-weight': 700,
+        ),
+        // EJ Global styles
+        'style' : (
+            'border-radius': 3rem,
+            'button-radius': 2.25rem / 2,
+        ),
+        // EJ Components
+        'ej': (
+            'configuration-card': (
+                'border-radius': 50%,
+                'highlight-tags': true,
+            ),
+        )
+    ));
 
-@import 'mendeleev/preflight';
-
-// Breaking points
-$_: set-mendeleev-config('breakpoints.sm', 35rem);
-
-// Typography
-$_: set-mendeleev-config('typography.sans-serif', $font-stack-paragraph);
-$_: set-mendeleev-config('typography.headings', $EJ_HEADINGS);
-$_: set-mendeleev-config('typography.size', ('start': 16, 'md': 17, 'lg': 18));
-$_: set-mendeleev-config('typography.scale', ('start': 9/8, 'sm': 8/7, 'md': 7/6, 'lg': 6/5));
-
-// Colors
-$_: set-mendeleev-config('color.roles.simple',
-        ('primary', 'secondary', 'action', 'positive', 'negative', 'warning', 'white', 'black'));
-$_: set-mendeleev-config('contrast', (
-    #30BFD3: $color-white,
-    #FF3D72: $color-white,
-    #042A46: $color-white,
-), $merge: true);
-
-// Styles
-$_: set-mendeleev-config('style', (
-    'border-radius': 3rem,
-    'button-radius': 2.25rem / 2,
-));
-$_: set-mendeleev-config('configuration-card', (
-    'border-radius': 50%,
-));
-
-// Forms
-$_: set-mendeleev-config('input', (
-    'border-radius': config('style.button-radius'),
-    'min-width': 15em,
-    'width': 100%,
-    'max-width': 30rem,
-), $merge: true);
-$_: set-mendeleev-config('button', (
-    'border-radius': config('style.button-radius'),
-    'font-weight': 700,
-), $merge: true);
-
-//------------------------------------------------------------------------------
-// IMPORT REGISTRY
-//------------------------------------------------------------------------------
-
-@import 'mendeleev/registry';
+@import '../node_modules/mendeleev.css/src/mendeleev';

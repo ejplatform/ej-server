@@ -1,9 +1,9 @@
 //------------------------------------------------------------------------------
 // CONVERSATION DETAIL (balloon / comment card / comment form / extra / progress bar)
 //------------------------------------------------------------------------------
-@import '../../mendeleev/components/mixins/arrow';
+@import '../../../node_modules/mendeleev.css/src/components/mixins/arrow';
 
-$component-border-radius: size(config('style.border-radius'));
+$component-border-radius: size(config('ej.configuration-card.border-radius'));
 
 @mixin themed($prop, $value: null) {
     @if $value == light {
@@ -16,11 +16,12 @@ $component-border-radius: size(config('style.border-radius'));
 }
 
 .conversation-balloon {
-    @extend .text-center;
+    @extend .center;
 
     article {
-        @extend .pad-y3, .pad-x4;
+        @include utilities('pad-y3 pad-x4');
         @include themed('background', light);
+
         border-radius: 0 0 $component-border-radius $component-border-radius;
 
         span {
@@ -28,18 +29,21 @@ $component-border-radius: size(config('style.border-radius'));
         }
     }
     h1 {
-        @extend .sans-serif, .margin-y3, .h2;
+        @include utilities('sans-serif margin-y3');
+        @extend .h2;
     }
     &__arrow {
         @include create-arrow(down, 2rem, color('brand-lighter'));
+
+        bottom: 1px;
         color: var(--theme-light-color);
         position: relative;
-        bottom: 1px;
     }
     &__social {
-        @extend .row, .pad-x4;
-        position: relative;
+        @include utilities('row pad-x4');
+
         bottom: 1.5rem;
+        position: relative;
         i {
             color: color('accent');
         }
@@ -48,11 +52,11 @@ $component-border-radius: size(config('style.border-radius'));
     // For forms
     input,
     textarea {
-        max-width: 100% !important;
-        background: rgba(255, 255, 255, 0.25) !important;
+        background: rgba(255, 255, 255, 0.25);
         border-radius: 0.375rem;
-        line-height: 2rem;
         height: 2rem;
+        line-height: 2rem;
+        max-width: 100%;
     }
     textarea {
         height: 4.5rem;
@@ -63,40 +67,46 @@ $component-border-radius: size(config('style.border-radius'));
 }
 
 .comment-card, .comment-form {
-    @extend .pad-3p, .margin-x2, .measure, .width-full;
+    @include utilities('pad-3p margin-x2 measure width-full');
+
     border-radius: $component-border-radius;
 }
 
 .comment-card {
-    @extend .bold;
+    @include utilities('bold');
     @include themed('background');
+
     color: color('white');
 
     &__author {
         img {
-            @extend .margin-r1;
+            @include utilities('margin-r1');
+
             background-color: color('white');
             border-radius: 50%;
             border: 2px solid color('white');
-            width: 1.5rem;
             height: 1.5rem;
             vertical-align: middle;
+            width: 1.5rem;
         }
     }
     > article {
-        @extend .margin-y2, .text-4;
-        min-height: 7rem;
+        @include utilities('margin-y2 text-4');
+
         font-weight: 600;
+        min-height: 7rem;
     }
     > form {
         max-width: 20rem;
         margin: 0 auto;
     }
     &__button {
-        @extend .col, .items-center;
+        @include utilities('col items-center');
+
         button {
-            @extend .margin-2, .col, .flex-center;
+            @include utilities('margin-2 col flex-center');
             @include color(rgba(255, 255, 255, 0.75) null);
+
             border-radius: 50em;
             border: none;
             font-size: 1.5rem;
@@ -106,18 +116,18 @@ $component-border-radius: size(config('style.border-radius'));
             width: 3rem;
         }
         span {
-            @extend .uppercase, .text-7;
+            @include utilities('uppercase text-7');
         }
     }
     &__message {
         strong {
-            @extend .uppercase, .color-accent, .pad-1, .rounded-2;
+            @include utilities('uppercase color-accent pad-1 rounded-2');
         }
     }
 }
 
 .comment-form {
-    @extend .text-center, .text-black, .margin-t3;
+    @include utilities('center text-black margin-t3');
     @include themed('background', light);
 
     textarea {
@@ -130,36 +140,42 @@ $component-border-radius: size(config('style.border-radius'));
         margin: 0;
     }
     &__count {
-        @extend .text-7;
+        @include utilities('text-7');
+
+        bottom: 2rem;
         color: color('black', $alpha: 0.5);
+        float: right;
         position: relative;
         right: 0.5rem;
-        bottom: 2rem;
-        float: right;
     }
     input[type=submit] {
         @include themed('background');
+
+        border-color: css-var(--theme-color, color('brand'));
         margin-bottom: 0;
     }
 }
 
 .extra-content {
-    @extend .text-center;
+    @include utilities('center');
+
     margin: 2rem auto;
     width: 75%;
 
     h1 {
-        @extend .text-4, .uppercase, .text-brand, .sans-serif, .bold;
+        @include utilities('text-4 uppercase text-brand sans-serif bold');
     }
 }
 
 .progress-bar {
-    @extend .row, .flex-center, .items-center, .margin-y1;
+    @include utilities('row flex-center items-center margin-y1');
+
     margin: 0 auto;
     max-width: 18em;
 
     &__progress {
         @include margin-scale((x: 1));
+
         display: flex;
         border: 1px solid color('brand');
         border-radius: 50rem;

@@ -41,7 +41,7 @@
 }
 
 .dataTables_info {
-    @extend .text-right, .text-6, .margin-x1;
+    @extend .right, .text-6, .margin-x1;
 }
 
 .dataTables_paginate {

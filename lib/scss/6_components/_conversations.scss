@@ -1,6 +1,6 @@
 /*
 CONVERSATIONS
-======================================================================== */
+========================================================================
 
 $conversation-vote-circle-size: 18px !default;
 $conversation-toast-image-border: $spacing-unit-tiny / 3;
@@ -14,7 +14,7 @@ $color-for-unfolding: rgba(2, 16.9, 27.8, 0.6);
 $color-background-button-modalities: rgba(255, 255, 255, 0.3);
 
 .ConversationList {
-    @extend .container;
+    @extend .container-1;
     max-width: 100%;
 
     p {
@@ -1052,7 +1052,7 @@ $color-background-button-modalities: rgba(255, 255, 255, 0.3);
     }
 
     .Conversation-edit-field {
-        @extend .container;
+        @extend .container-1;
 
         outline: 0;
         background-color: rgba(255, 255, 255, 0.5);
@@ -1215,3 +1215,4 @@ $color-background-button-modalities: rgba(255, 255, 255, 0.3);
     font-weight: bold;
     font-size: $spacing-unit / 2;
 }
+*/

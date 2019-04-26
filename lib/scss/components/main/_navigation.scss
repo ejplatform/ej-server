@@ -9,25 +9,29 @@ $_md-header-height: size(2.5);
 //------------------------------------------------------------------------------
 // Footer and header navigation
 .main-header, .main-footer {
-    @extend .row, .items-center, .text-center;
+    @include utilities('row items-center center');
     @include color('navigation');
+
     z-index: 1000;
 
     > * {
-        @extend .pad-x1;
+        @include utilities('pad-x1');
     }
     > a {
-        @extend .margin-0;
+        @include utilities('margin-0');
+
         color: color('navigation-text');
         height: $_sm-header-height;
     }
 }
 
 .main-header {
-    @extend .sticky, .pin-top;
+    @include utilities('sticky pin-top');
+
     box-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.35);
     height: $_sm-header-height;
     line-height: $_sm-header-height;
+    width: 100%;
 
     &__logo {
         flex: 1;
@@ -42,15 +46,16 @@ $_md-header-height: size(2.5);
 }
 
 .main-footer {
-    @extend .fixed, .pin-bottom, .flex-around;
+    @include utilities('fixed pin-bottom flex-around');
+
     box-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.35);
     width: 100%;
 
     > * {
-        @extend .pad-y1;
+        @include utilities('pad-y1');
     }
     &__link {
-        @extend .col, .items-center, .uppercase, .text-8, .bold;
+        @include utilities('col items-center uppercase text-8 bold');
         img {
             width: 1.75rem;
         }
@@ -62,18 +67,17 @@ $_md-header-height: size(2.5);
     .main-header, .main-footer {
         height: $_md-header-height;
         line-height: 4rem;
-        position: fixed;
         top: 0;
 
         @include breakpoint('md') {
             > * {
-                padding: 0 size(0.5) !important;
+                padding: 0 size(0.5);
             }
         }
     }
     .main-header {
         align-items: center;
-        justify-content: flex-start !important;
+        justify-content: flex-start;
 
         a {
             text-align: left;
@@ -82,41 +86,26 @@ $_md-header-height: size(2.5);
         img {
             height: $_md-header-height * 0.8;
             left: size(1.5);
-            top: $_md-header-height * 0.1;
             position: absolute;
+            top: $_md-header-height * 0.1;
         }
         a:nth-child(1), a:nth-child(3) {
             display: none;
         }
-        @include breakpoint('lg') {
-            a:after {
-                content: "Empurrando Juntas";
-                font-weight: 600;
-                line-height: $_md-header-height;
-                height: $_md-header-height;
-                left: 0;
-                right: 0;
-                opacity: 0.33;
-                position: absolute;
-                text-transform: uppercase;
-                text-align: center;
-                top: 0;
-            }
-        }
     }
 
     .main-footer {
-        bottom: initial !important;
+        bottom: initial;
         box-shadow: none;
-        justify-content: flex-end !important;
+        justify-content: flex-end;
         margin-right: 1rem;
         right: 0;
         width: initial;
         z-index: 1001;
 
         &__link {
-            flex-flow: row !important;
-            font-size: 0.875rem !important;
+            flex-flow: row;
+            font-size: 0.875rem;
 
             img {
                 display: none;
@@ -136,41 +125,45 @@ $_md-header-height: size(2.5);
 // Sidebar / menu
 
 .page-menu {
-    @extend .rounded-2;
+    @include utilities('rounded-2');
+
     background-color: color('white');
     box-shadow: 0 0 8px 1px rgba(0, 0, 0, 0.12);
     overflow: hidden auto;
 
     &[is-menu] {
-        @extend .size-x6;
+        @include utilities('size-x6');
+
         display: none;
     }
     &[is-menu][is-open] {
-        @extend .size-x6;
+        @include utilities('size-x6');
+
         display: block;
         position: fixed;
         right: 0;
         z-index: 1002;
     }
     section {
-        @extend .pad-2;
+        @include utilities('pad-2');
+
         border-bottom: 1px solid color('brand');
         h1 {
             display: none;
         }
         ul:first-child {
-            @extend .pad-t2;
+            @include utilities('pad-t2');
         }
         ul {
-            @extend .list-reset;
+            @include utilities('list-reset');
         }
         li {
-            @extend .margin-y1;
+            @include utilities('margin-y1');
         }
     }
     section:first-child {
         a {
-            @extend .bold;
+            @include utilities('bold');
         }
     }
     section:last-child {
@@ -180,13 +173,13 @@ $_md-header-height: size(2.5);
 
 @include breakpoint('sm') {
     .page-menu {
-        background-color: rgba(0, 0, 0, 0.025);
-        border-radius: 0 !important;
+        background-color: rgba(0, 0, 0, 0.008);
+        border-radius: 0;
         box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.12);
         flex: 1;
         min-height: calc(100vh - 3rem);
         min-width: size(7);
-        max-width: size(10);
+        max-width: size(11);
 
         &, &[is-menu], &[is-menu][is-open] {
             display: block;
@@ -195,8 +188,8 @@ $_md-header-height: size(2.5);
             z-index: 0;
         }
         section {
-            border-color: rgba(0, 0, 0, 0.08);
-            padding-top: 0 !important;
+            border: none;
+            padding-top: 0;
 
             h1 {
                 display: block;
@@ -208,10 +201,22 @@ $_md-header-height: size(2.5);
                 padding: size(0.25) size(0.5);
             }
         }
+        section::after {
+            background: rgba(0, 0, 0, 0.12);
+            display: block;
+            content: ' ';
+            height: 1px;
+            margin: size(0.5) auto 0 auto;
+            width: 75%;
+        }
+        section:last-child::after {
+            content: none;
+        }
     }
 
     #page-wrapper {
         display: flex;
+        flex-direction: row-reverse;
         align-items: stretch;
     }
 
@@ -222,13 +227,9 @@ $_md-header-height: size(2.5);
 
 @include breakpoint('lg') {
     #page-wrapper::after {
-        background-color: rgba(0, 0, 0, 0.025);
-        box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.12);
         content: ' ';
         flex: 1;
-        min-height: calc(100vh - 3rem);
-        min-width: size(7);
-        max-width: size(10);
+        max-width: size(11);
         order: 2;
     }
 }
