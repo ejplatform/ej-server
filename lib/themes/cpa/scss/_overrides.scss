@@ -1,15 +1,20 @@
 // Color
-$color-primary: #3F1B53;
 $color-accent: #D20078;
-$color-brand: #00C0C0;
+$color-brand: #00b7b7;
+$color-action: #3F1B53;
+$color-primary: $color-accent;
 
+// Dimensions
+$unit: 1.5rem;
+$ej-button-radius: $unit / 4;
 
+// Global configuration
 $config: (
-    'style': (
-        'border-radius': 0.375rem,
-        'button-radius': 0.375rem,
+    // EJ components
+    'ej':(
+        'configuration-card': (
+            'border-radius': $unit / 4,
+            'highlight-tags': false,
+        ),
     ),
-    'configuration-card': (
-        'border-radius': 0.375rem,
-    )
 );

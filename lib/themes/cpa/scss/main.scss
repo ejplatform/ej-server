@@ -1,2 +1,22 @@
 @import 'overrides';
 @import '../../../scss/main';
+
+// Elements and manual overrides
+a, a:hover, a:active, a:focus {
+    color: $color-action;
+}
+
+.conversation-balloon h1 {
+    color: $color-action;
+}
+
+.conversation-card {
+    &__statistics {
+        display: none;
+    }
+    &__button {
+        background: css-var(--theme-color, color('brand')) url("/static/img/bg/conversation-card.svg") no-repeat;
+        background-position-y: bottom;
+    }
+}
+
