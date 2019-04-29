@@ -35,7 +35,7 @@ def scatter(request, conversation, slug, check=check_promoted):
     return {"conversation": check(conversation, request)}
 
 
-@urlpatterns.route("scatter/pca.json")
+@urlpatterns.route("scatter/pca.json", template=None)
 def scatter_pca_json(request, conversation, slug, check=check_promoted):
     from sklearn.decomposition import PCA
 

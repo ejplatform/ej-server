@@ -73,8 +73,8 @@ class Conversation(TimeStampedModel):
     def users(self):
         return (
             get_user_model()
-            .objects.filter(votes__comment__conversation=self)
-            .distinct()
+                .objects.filter(votes__comment__conversation=self)
+                .distinct()
         )
 
     @property
@@ -160,19 +160,16 @@ class Conversation(TimeStampedModel):
         """
         Return a url pertaining to the current conversation.
         """
-        kwargs["conversation"] = self
-        kwargs["slug"] = self.slug
         if board is None:
             board = getattr(self, "board", None)
-        if board:
-            from ej_boards.models import BoardSubscription
 
-            subscription = BoardSubscription.objects.filter(conversation=self)
-            if subscription.exists():
-                board = subscription[0].board
-                kwargs["board"] = board
-                which = "boards:" + which.replace(":", "-")
-                return SafeUrl(which, **kwargs)
+        kwargs["conversation"] = self
+        kwargs["slug"] = self.slug
+
+        if board:
+            kwargs["board"] = board
+            which = "boards:" + which.replace(":", "-")
+            return SafeUrl(which, **kwargs)
 
         return SafeUrl(which, **kwargs)
 
@@ -260,18 +257,18 @@ class Conversation(TimeStampedModel):
             "participants": {
                 "voters": (
                     get_user_model()
-                    .objects.filter(votes__comment__conversation_id=self.id)
-                    .distinct()
-                    .count()
+                        .objects.filter(votes__comment__conversation_id=self.id)
+                        .distinct()
+                        .count()
                 ),
                 "commenters": (
                     get_user_model()
-                    .objects.filter(
+                        .objects.filter(
                         comments__conversation_id=self.id,
                         comments__status=Comment.STATUS.approved,
                     )
-                    .distinct()
-                    .count()
+                        .distinct()
+                        .count()
                 ),
             },
         }
@@ -282,8 +279,8 @@ class Conversation(TimeStampedModel):
         """
         max_votes = (
             self.comments.filter(status=Comment.STATUS.approved)
-            .exclude(author_id=user.id)
-            .count()
+                .exclude(author_id=user.id)
+                .count()
         )
         given_votes = (
             0

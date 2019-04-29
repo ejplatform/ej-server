@@ -102,6 +102,7 @@ class ConversationForm(EjModelForm):
 
             # Save board
             if board:
+                conversation.board = board
                 board.add_conversation(conversation)
 
         return conversation

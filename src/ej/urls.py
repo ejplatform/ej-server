@@ -31,7 +31,6 @@ def get_urlpatterns():
         # Conversations and other EJ-specific routes
         path('conversations/', include('ej_conversations.routes', namespace='conversation')),
         path('comments/', include('ej_conversations.routes_comments', namespace='comments')),
-        *with_app('ej_boards', '', namespace='boards'),
 
         # Profile URLS
         *with_app('ej_profiles', 'profile/', namespace='profile'),
@@ -74,6 +73,9 @@ def get_urlpatterns():
         # Documentation in development mode
         re_path(r'^static_docs/$', serve, {'document_root': 'build/docs', 'path': 'index.html'}),
         re_path(r'^static_docs/(?P<path>.*)$', serve, {'document_root': 'build/docs/'}),
+
+        # Boards
+        *with_app('ej_boards', '', namespace='boards'),
     ]
 
     if settings.DEBUG:

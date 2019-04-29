@@ -1,15 +1,13 @@
+from boogie.router import Router
+from django.apps import apps
 from django.shortcuts import redirect
-from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
-from boogie.router import Router
 from ej_boards.models import Board
-from ej_boards.utils import make_view, check_board
+from ej_boards.utils import check_board, register_route
 from ej_clusters.models import Stereotype
 from ej_conversations import routes as conversations
 from ej_conversations.models import Conversation
-from ej_dataviz import routes as dataviz
-from ej_dataviz import routes_report as report
 from .forms import BoardForm
 
 app_name = 'ej_boards'
@@ -74,13 +72,10 @@ def board_edit(request, board):
 #
 @urlpatterns.route(board_base_url)
 def conversation_list(request, board):
-    return conversations.list(
+    return conversations.list_view(
         request,
         queryset=board.conversations.annotate_attr(board=board),
-        add_perm='ej.can_edit_board',
-        perm_obj=board,
         context={'board': board},
-        url=reverse('boards:conversation-create', kwargs={'board': board}),
     )
 
 
@@ -94,26 +89,39 @@ def conversation_detail(request, board, **kwargs):
     return conversations.detail(request, **kwargs, check=check_board(board))
 
 
-@urlpatterns.route(board_conversation_url + 'edit/', perms=['ej.can_edit_conversation:conversation'])
+@urlpatterns.route(board_conversation_url + 'edit/',
+                   perms=['ej.can_edit_conversation:conversation'])
 def conversation_edit(request, board, **kwargs):
     return conversations.edit(request, board=board, check=check_board(board), **kwargs)
 
 
-@urlpatterns.route(board_conversation_url + 'moderate/', perms=['ej.can_edit_conversation:conversation'])
+@urlpatterns.route(board_conversation_url + 'moderate/',
+                   perms=['ej.can_edit_conversation:conversation'])
 def conversation_moderate(request, board, **kwargs):
     return conversations.moderate(request, check=check_board(board), **kwargs)
 
 
 #
-# Reports
+# Dataviz
 #
-for route in dataviz.urlpatterns.routes:
-    urlpatterns.register(
-        make_view(route.function),
-        path=f'{board_base_url}{dataviz.urlpatterns.base_path}{route.path}',
-        name='dataviz-' + route.name,
-        login=True,
-        perms=route.perms,
-        template=route.template[0].replace('ej_dataviz/', 'ej_boards/ej_dataviz'),
-    )
+if apps.is_installed('ej_dataviz'):
+    from ej_dataviz import routes as dataviz
+    from ej_dataviz import routes_report as report
 
+    base_path = board_base_url + dataviz.urlpatterns.base_path
+    for route in dataviz.urlpatterns.routes:
+        register_route(urlpatterns, route, base_path, 'dataviz')
+
+    base_path = board_base_url + report.urlpatterns.base_path
+    for route in report.urlpatterns.routes:
+        register_route(urlpatterns, route, base_path, 'report')
+
+#
+# Clusters
+#
+if apps.is_installed('ej_clusters'):
+    from ej_clusters import routes as cluster
+
+    base_path = board_base_url + cluster.urlpatterns.base_path
+    for route in cluster.urlpatterns.routes:
+        register_route(urlpatterns, route, base_path, 'cluster')

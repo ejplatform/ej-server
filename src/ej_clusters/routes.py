@@ -30,6 +30,7 @@ stereotype_perms = {"perms": ["ej.can_manage_stereotypes:conversation"]}
 #
 @urlpatterns.route(conversation_url + "clusters/")
 def index(request, conversation, slug, check=check_promoted):
+    check(conversation, request)
     user = request.user
     participants = conversation.users.count()
     clusters = (

@@ -4,15 +4,15 @@ from .options import EjOptions
 
 class InstalledAppsConf(Base, EjOptions):
     project_apps = [
-        # # Gamification
+        # Gamification
         'ej_gamification',
         'ej_experiments',
 
-        # # Notifications
+        # Notifications
         # 'ej_notifications',
 
-        # # Boards
-        # 'ej_boards',
+        # Boards
+        'ej_boards',
 
         # Math
         'ej_clusters',

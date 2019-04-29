@@ -274,7 +274,7 @@ description = "Django with swagger: better managers, APIs, configurations and ur
 name = "django-boogie"
 optional = false
 python-versions = "*"
-version = "0.13.1"
+version = "0.13.3"
 
 [package.dependencies]
 django = ">=2.0"
@@ -1342,7 +1342,7 @@ decorator = ["86156361c50488b84a3f148056ea716ca587df2f0de1d34750d35c21312725de",
 django = ["7c3543e4fb070d14e10926189a7fcf42ba919263b7473dceaefce34d54e8a119", "a2814bffd1f007805b19194eb0b9a331933b82bd5da1c3ba3d7b7ba16e06dc4b"]
 django-allauth = ["45661b6fe308466154adf54461679fab6f0c6850b10c56dc322fbbb9d47e03d9"]
 django-autoslug = ["08ba143ce5914d2689972c0adaea56abc37fb7175e9f6939fe0e3ac26374e7a0", "aece8613eb173854462c656e91d81aa7ddfacaa49fb500d549f2143d1ce48721"]
-django-boogie = ["1dc6423f002f58c8f9395977bd48c329f2b9bce8d6a6076f403131a73fe76976"]
+django-boogie = ["657799ae308a04ab32ac153c4204c5f7b8d12c032e89146d9112e662baa08c3a"]
 django-bulk-update = ["49a403392ae05ea872494d74fb3dfa3515f8df5c07cc277c3dc94724c0ee6985", "5ab7ce8a65eac26d19143cc189c0f041d5c03b9d1b290ca240dc4f3d6aaeb337"]
 django-constance = ["19ff1ae8295aeffc2917ab67da4b310bfaf8c42f34d570f89e289fd54c4217b0", "417f9866a4fcd93c198acd16d5bc22b68e491eaabb18efea4c70d183d42daa45"]
 django-debug-toolbar = ["89d75b60c65db363fb24688d977e5fbf0e73386c67acf562d278402a10fc3736", "c2b0134119a624f4ac9398b44f8e28a01c7686ac350a12a74793f3dd57a9eea0"]

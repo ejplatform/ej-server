@@ -6,7 +6,7 @@ from django.utils.translation import ugettext_lazy as _
 from model_utils.models import TimeStampedModel
 
 from ej.utils.url import SafeUrl
-from ej_conversations.models import Conversation, ConversationTag
+from ej_conversations.models import ConversationTag
 from .validators import validate_board_slug
 
 
@@ -93,10 +93,12 @@ class Board(TimeStampedModel):
         """
         Add conversation to board.
         """
-        self.board_subscriptions.get_or_create(conversation=conversation)
+        if conversation.id is None:
+            conversation.save()
+        self.conversations.add(conversation)
 
     def has_conversation(self, conversation):
         """
         Return True if conversation is present in board.
         """
-        return self.board_subscriptions.filter(conversation=conversation).exists()
+        return conversation in self.conversations.all()

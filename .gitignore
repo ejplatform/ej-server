@@ -110,3 +110,4 @@ lib/js/legacy/web-share\.js
 profile.txt
 ej_questions
 .coverage .coverage.c3po.12402.283405 .coverage.c3po.12402.913692 .coveragerc
+.coverage*

@@ -93,7 +93,9 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% for opt in 'brand accent action primary secondary positive warning negative'.split() %}
+                {% for opt in ('brand-lighter brand-light brand brand-dark brand-darker'.split()
+                               + 'accent-lighter accent-light accent accent-dark accent-darker'.split()
+                               + 'action primary secondary positive warning negative'.split()) %}
                     {{ example_row('color-' + opt) }}
                 {% endfor %}
 
