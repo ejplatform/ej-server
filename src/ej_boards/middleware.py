@@ -8,7 +8,7 @@ def BoardFallbackMiddleware(get_response):  # noqa: N802, C901
     """
     Look for board urls after 404 errors.
     """
-    if not apps.is_installed('ej_boards'):
+    if not apps.is_installed("ej_boards"):
         raise MiddlewareNotUsed
 
     def middleware(request):
@@ -17,12 +17,12 @@ def BoardFallbackMiddleware(get_response):  # noqa: N802, C901
             return response
 
         # Match a URL like /<board-slug>/
-        slug, _, remaining = request.path[1:].partition('/')
+        slug, _, remaining = request.path[1:].partition("/")
         if remaining:
             return response
 
         # Handle as /<board-slug>/conversations/
-        view, args, kwargs = resolve(f'{slug}/conversations/')
+        view, args, kwargs = resolve(f"{slug}/conversations/")
         return view(request, **kwargs)
 
     return middleware

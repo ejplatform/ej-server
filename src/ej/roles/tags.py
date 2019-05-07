@@ -12,63 +12,88 @@ from hyperpython.renderers.attrs import render_attrs
 from ej.utils.url import Url
 
 static = staticfiles_storage.url
-lazy_string_class = type(ugettext_lazy('hello'))
-log = logging.getLogger('ej')
+lazy_string_class = type(ugettext_lazy("hello"))
+log = logging.getLogger("ej")
 _ = lambda x: x
 
 __all__ = [
     # Hyperpython components
-    'h', 'html_table', 'html_list', 'html_map',
-
+    "h",
+    "html_table",
+    "html_list",
+    "html_map",
     # EJ components
-    'link', 'link_attrs', 'action_button', 'intro', 'span_icon', 'progress_bar',
-    'extra_content', 'overlay', 'popup', 'toast', 'description', ]
+    "link",
+    "link_attrs",
+    "action_button",
+    "intro",
+    "span_icon",
+    "progress_bar",
+    "extra_content",
+    "overlay",
+    "popup",
+    "toast",
+    "description",
+]
 
 
-def link(value, href='#', target='body', **kwargs):
+def link(value, href="#", target="body", **kwargs):
     return a(link_kwargs(href=href, target=target, **kwargs), [value])
 
 
-def link_attrs(href='#', target='body', **kwargs):
+def link_attrs(href="#", target="body", **kwargs):
     return render_attrs(link_kwargs(href=href, target=target, **kwargs))
 
 
-def link_kwargs(href='#', target='body', action='target', instant=True,
-                button=False, transition='cross-fade',
-                preload=False, scroll=False, prefetch=False, primary=False,
-                secondary=False, args=None,
-                query=None, url_args=None, class_=(),
-                **kwargs):
+def link_kwargs(
+    href="#",
+    target="body",
+    action="target",
+    instant=True,
+    button=False,
+    transition="cross-fade",
+    preload=False,
+    scroll=False,
+    prefetch=False,
+    primary=False,
+    secondary=False,
+    args=None,
+    query=None,
+    url_args=None,
+    class_=(),
+    **kwargs,
+):
     if isinstance(href, Url):
         href = str(href)
-    elif href.startswith('/'):
+    elif href.startswith("/"):
         raise ValueError(
-            'Do not use absolute urls in the link function (%s).'
-            'Prefer using view function names such as auth:login instead of '
-            '/login/. You can also wrap the url into a ej.utils.Url instance '
-            'if you want to return a calculated url value.' % href)
-    elif href == '#' or href is None:
-        href = '#'
-    elif href.startswith('http'):
+            "Do not use absolute urls in the link function (%s)."
+            "Prefer using view function names such as auth:login instead of "
+            "/login/. You can also wrap the url into a ej.utils.Url instance "
+            "if you want to return a calculated url value." % href
+        )
+    elif href == "#" or href is None:
+        href = "#"
+    elif href.startswith("http"):
         pass
     else:
         href = reverse(href, kwargs=url_args)
     if query is not None:
-        query = '&'.join(f'{k}={v}' for k, v in query.items())
-        href = f'{href}?{query}'
+        query = "&".join(f"{k}={v}" for k, v in query.items())
+        href = f"{href}?{query}"
 
     kwargs = {
-        'href': href,
-        'up-instant': instant,
-        'up-restore-scroll': scroll,
-        'up-preload': preload,
-        'up-prefetch': prefetch,
-        **{k.replace('_', '-'): v for k, v in kwargs.items()},
+        "href": href,
+        "up-instant": instant,
+        "up-restore-scroll": scroll,
+        "up-preload": preload,
+        "up-prefetch": prefetch,
+        **{k.replace("_", "-"): v for k, v in kwargs.items()},
     }
     if action:
-        kwargs[f'up-{action}'] = target
+        kwargs[f"up-{action}"] = target
     if transition:
-        kwargs['up-transition'] = transition
+        kwargs["up-transition"] = transition
     if args:
         for arg in args.split():
             kwargs[arg] = True
@@ -77,20 +102,20 @@ def link_kwargs(href='#', target='body', action='target', instant=True,
     if button and class_:
         if isinstance(class_, str):
             class_ = class_.split()
-        class_ = (*class_, 'button')
+        class_ = (*class_, "button")
     elif button:
-        class_ = ('button',)
+        class_ = ("button",)
     if primary:
-        class_ = (*class_, 'is-primary')
+        class_ = (*class_, "is-primary")
     if secondary:
-        class_ = (*class_, 'is-secondary')
+        class_ = (*class_, "is-secondary")
     if class_:
-        kwargs['class'] = class_
+        kwargs["class"] = class_
     return kwargs
 
 
-def action_button(value=_('Go!'), href='#', primary=True, **kwargs):
-    return link(value, href, primary=primary, **kwargs).add_class('button')
+def action_button(value=_("Go!"), href="#", primary=True, **kwargs):
+    return link(value, href, primary=primary, **kwargs).add_class("button")
 
 
 @html.register(lazy_string_class)
@@ -111,7 +136,7 @@ def icon(name, href=None, **kwargs):
 
     If href is given, it wraps content inside an <a> tag.
     """
-    if '.' in name:
+    if "." in name:
         raise NotImplementedError
     else:
         return components.fa_icon(name, href=href, **kwargs)
@@ -127,7 +152,7 @@ def intro(title, description=None, **kwargs):
     children = [h1(title)]
     if description:
         children.append(p(description))
-    return div(children, **kwargs).add_class('intro-paragraph', first=True)
+    return div(children, **kwargs).add_class("intro-paragraph", first=True)
 
 
 def span_icon(text, icon=None, **kwargs):
@@ -139,9 +164,9 @@ def span_icon(text, icon=None, **kwargs):
 
     href can be given towraps content inside an <a> tag.
     """
-    text = '' if text is None else str(text)
-    kwargs['children'] = [_icon(icon), text] if icon else [text]
-    return a_or_span(**kwargs).add_class('span-icon')
+    text = "" if text is None else str(text)
+    kwargs["children"] = [_icon(icon), text] if icon else [text]
+    return a_or_span(**kwargs).add_class("span-icon")
 
 
 def extra_content(title, text, icon=None, **kwargs):
@@ -160,7 +185,7 @@ def extra_content(title, text, icon=None, **kwargs):
 
     """
     title = h1([_icon(icon), title]) if icon else h1(title)
-    return div([title, text], **kwargs).add_class('extra-content')
+    return div([title, text], **kwargs).add_class("extra-content")
 
 
 def progress_bar(*args):
@@ -182,17 +207,20 @@ def progress_bar(*args):
 
     # Build children
     children = [
-        div(strong(f'{pc}%')),
-        div(class_='progress-bar__progress', children=[
-            div(' ', class_='color-brand-lighter', style=f'flex-grow: {pc + 3};'),
-            div(' ', style=f'flex-grow: {100 - pc};'),
-        ]),
+        div(strong(f"{pc}%")),
+        div(
+            class_="progress-bar__progress",
+            children=[
+                div(" ", class_="color-brand-lighter", style=f"flex-grow: {pc + 3};"),
+                div(" ", style=f"flex-grow: {100 - pc};"),
+            ],
+        ),
     ]
     if total is not None:
-        children.append(div([strong(n), '/', total]))
+        children.append(div([strong(n), "/", total]))
 
     # Return
-    return div(children, class_='progress-bar')
+    return div(children, class_="progress-bar")
 
 
 def popup(title, content, action=None, **kwargs):
@@ -206,15 +234,16 @@ def popup(title, content, action=None, **kwargs):
         content: HTML or text content of the popup.
         action: Action button. Can be an anchor or other element.
     """
-    return div([
-        icon('times-circle', class_='popup__close', is_component='popup:close'),
-        div([
-            h1([title],
-               class_='title'),
-            p(content),
-            action and div(action),
-        ], class_='popup__contents'),
-    ], **kwargs).add_class('popup')
+    return div(
+        [
+            icon("times-circle", class_="popup__close", is_component="popup:close"),
+            div(
+                [h1([title], class_="title"), p(content), action and div(action)],
+                class_="popup__contents",
+            ),
+        ],
+        **kwargs,
+    ).add_class("popup")
 
 
 def overlay(data, **kwargs):
@@ -222,7 +251,7 @@ def overlay(data, **kwargs):
     Creates a popup overlay and includes the element inside
     the overlay.
     """
-    return div(data, **kwargs).add_class('overlay')
+    return div(data, **kwargs).add_class("overlay")
 
 
 def toast(icon, title, description=None, **kwargs):
@@ -232,10 +261,10 @@ def toast(icon, title, description=None, **kwargs):
     body = [h1(title)]
     if description:
         body.append(p(description))
-    return div([
-        _icon(icon, class_='toast__icon'),
-        div(body, class_='toast__content'),
-    ], **kwargs).add_class('toast')
+    return div(
+        [_icon(icon, class_="toast__icon"), div(body, class_="toast__content")],
+        **kwargs,
+    ).add_class("toast")
 
 
 def description(items, **kwargs):
@@ -248,7 +277,7 @@ def description(items, **kwargs):
     children = []
     for k, v in items:
         children.extend([dt(k), dd(v)])
-    return dl(children, **kwargs).add_class('description')
+    return dl(children, **kwargs).add_class("description")
 
 
 _icon = icon

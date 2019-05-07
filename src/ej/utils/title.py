@@ -12,7 +12,7 @@ def title(obj):
         return obj.title
     except AttributeError:
         cls_name = type(obj).__name__
-        raise TypeError(f'cannot determine title for object: {cls_name}')
+        raise TypeError(f"cannot determine title for object: {cls_name}")
 
 
 @title.register(Model)

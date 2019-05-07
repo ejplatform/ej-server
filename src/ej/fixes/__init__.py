@@ -1,6 +1,6 @@
 import logging
 
-log = logging.getLogger('ej-fixes')
+log = logging.getLogger("ej-fixes")
 
 
 def apply_all():
@@ -10,5 +10,5 @@ def apply_all():
     fixes = [django_old_apis.fix, sidekick.fix]  # , pinax_points.fix]
 
     for fix in fixes:
-        log.info('monkey patch: ' + fix.__doc__.strip())
+        log.info("monkey patch: " + fix.__doc__.strip())
         fix()

@@ -16,13 +16,13 @@ admin.site.register(models.ParticipationProgress)
 #
 # Extend conversation admin
 #
-@descr(_('Recalculate progress for conversation'))
+@descr(_("Recalculate progress for conversation"))
 def compute_progress(admin, request, queryset):
     n = 0
     for conversation in queryset:
         get_progress(conversation, sync=True)
         n += 1
-    admin.message_user(request, _('{n} values updated.').format(n=n))
+    admin.message_user(request, _("{n} values updated.").format(n=n))
 
 
 ConversationAdmin.actions.extend([compute_progress])

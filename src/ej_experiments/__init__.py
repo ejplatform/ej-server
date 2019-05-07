@@ -1,1 +1,1 @@
-default_app_config = 'ej_experiments.apps.EjExperimentsConfig'
+default_app_config = "ej_experiments.apps.EjExperimentsConfig"

@@ -14,21 +14,23 @@ from .security import SecurityConf
 from .themes import ThemesConf
 from .. import fixes
 
-log = logging.getLogger('ej')
+log = logging.getLogger("ej")
 
 
-class Conf(ThemesConf,
-           ConstanceConf,
-           MiddlewareConf,
-           NotificationsConf,
-           DramatiqConf,
-           SecurityConf,
-           LoggingConf,
-           PathsConf,
-           InstalledAppsConf,
-           DjangoConf,
-           EjOptions,
-           EmailConf):
+class Conf(
+    ThemesConf,
+    ConstanceConf,
+    MiddlewareConf,
+    NotificationsConf,
+    DramatiqConf,
+    SecurityConf,
+    LoggingConf,
+    PathsConf,
+    InstalledAppsConf,
+    DjangoConf,
+    EjOptions,
+    EmailConf,
+):
     """
     Configuration class for the EJ platform.
 
@@ -36,58 +38,54 @@ class Conf(ThemesConf,
     the global namespace.
     """
 
-    USING_DOCKER = env(False, name='USING_DOCKER')
-    HOSTNAME = env('localhost')
+    USING_DOCKER = env(False, name="USING_DOCKER")
+    HOSTNAME = env("localhost")
 
     #
     # Accounts
     #
-    AUTH_USER_MODEL = 'ej_users.User'
-    ACCOUNT_AUTHENTICATION_METHOD = 'email'
+    AUTH_USER_MODEL = "ej_users.User"
+    ACCOUNT_AUTHENTICATION_METHOD = "email"
     ACCOUNT_EMAIL_REQUIRED = True
     ACCOUNT_UNIQUE_EMAIL = True
     ACCOUNT_USERNAME_REQUIRED = False
     ACCOUNT_USER_MODEL_USERNAME_FIELD = None
-    LOGIN_REDIRECT_URL = '/'
-    ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
+    LOGIN_REDIRECT_URL = "/"
+    ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
     # ACCOUNT_EMAIL_VERIFICATION = 'none'
-    SOCIALACCOUNT_PROVIDERS = {
-        'facebook': {
-            'SCOPE': ['email'],
-            'METHOD': 'oauth2'
-        }
-    }
+    SOCIALACCOUNT_PROVIDERS = {"facebook": {"SCOPE": ["email"], "METHOD": "oauth2"}}
 
     # MANAGER CONFIGURATION
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#admins
     MANAGERS = ADMINS = [
-        ('Bruno Martin, Luan Guimarães, Ricardo Poppi, Henrique Parra', 'bruno@hacklab.com.br'),
-        ('Laury Bueno', 'laury@hacklab.com.br'),
+        (
+            "Bruno Martin, Luan Guimarães, Ricardo Poppi, Henrique Parra",
+            "bruno@hacklab.com.br",
+        ),
+        ("Laury Bueno", "laury@hacklab.com.br"),
     ]
 
     #
     # Third party modules
     #
-    MIGRATION_MODULES = {
-        'sites': 'ej.contrib.sites.migrations'
-    }
+    MIGRATION_MODULES = {"sites": "ej.contrib.sites.migrations"}
 
     EJ_CONVERSATIONS_URLMAP = {
-        'conversation-detail': '/conversations/{conversation.slug}/',
-        'conversation-list': 'conversation:list',
+        "conversation-detail": "/conversations/{conversation.slug}/",
+        "conversation-list": "conversation:list",
     }
 
     REST_FRAMEWORK = {
-        'DEFAULT_AUTHENTICATION_CLASSES': (
-            'rest_framework.authentication.TokenAuthentication',
-            'rest_framework.authentication.SessionAuthentication',
+        "DEFAULT_AUTHENTICATION_CLASSES": (
+            "rest_framework.authentication.TokenAuthentication",
+            "rest_framework.authentication.SessionAuthentication",
         ),
-        'DEFAULT_PERMISSION_CLASSES': (
-            'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+        "DEFAULT_PERMISSION_CLASSES": (
+            "rest_framework.permissions.IsAuthenticatedOrReadOnly",
         ),
-        'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-        'PAGE_SIZE': 50,
-        'DEFAULT_VERSION': 'v1',
+        "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+        "PAGE_SIZE": 50,
+        "DEFAULT_VERSION": "v1",
     }
 
     # REST_AUTH_REGISTER_SERIALIZERS = {
@@ -95,21 +93,22 @@ class Conf(ThemesConf,
     # }
 
     # Use this variable to change the ej environment during the docker build step.
-    ENVIRONMENT = 'local'
+    ENVIRONMENT = "local"
     DEFAULT_FROM_EMAIL = "Empurrando Juntos <noreply@mail.ejplatform.org>"
 
     def get_email_backend(self):
-        if self.ENVIRONMENT == 'production':
+        if self.ENVIRONMENT == "production":
             # self.ANYMAIL = {'MAILGUN_API_KEY': ''}
             # 'anymail.backends.mailgun.EmailBackend'
-            return 'django.core.mail.backends.smtp.EmailBackend'
+            return "django.core.mail.backends.smtp.EmailBackend"
         else:
-            return 'django.core.mail.backends.console.EmailBackend'
+            return "django.core.mail.backends.console.EmailBackend"
 
     #
     # Templates
     #
-    ACCOUNT_TEMPLATE_EXTENSION = 'jinja2'
+    ACCOUNT_TEMPLATE_EXTENSION = "jinja2"
+
 
 Conf.save_settings(globals())
 

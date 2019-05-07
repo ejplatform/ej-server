@@ -4,7 +4,6 @@ from . import models
 
 
 class NotificationConfigForm(ModelForm):
-
     class Meta:
         model = models.NotificationConfig
-        fields = ['notification_option']
+        fields = ["notification_option"]

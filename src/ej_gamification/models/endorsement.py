@@ -11,8 +11,8 @@ from model_utils.models import TimeFramedModel
 from ..rules import power_expiration_time
 from .endorsement_queryset import EndorsementQuerySet
 
-NO_PROMOTE_MSG = _('user does not have the right to promote this comment')
-log = logging.getLogger('ej')
+NO_PROMOTE_MSG = _("user does not have the right to promote this comment")
+log = logging.getLogger("ej")
 
 
 class Endorsement(TimeFramedModel):
@@ -26,35 +26,30 @@ class Endorsement(TimeFramedModel):
     Use utility functions at ej_gamification instead of creating instances
     of this class manually.
     """
+
     comment = models.ForeignKey(
-        'ej_conversations.Comment',
+        "ej_conversations.Comment",
         on_delete=models.CASCADE,
-        related_name='endorsements',
+        related_name="endorsements",
     )
     author = models.ForeignKey(
-        get_user_model(),
-        on_delete=models.CASCADE,
-        related_name='given_endorsements',
+        get_user_model(), on_delete=models.CASCADE, related_name="given_endorsements"
     )
     affected_users = models.ManyToManyField(
-        settings.AUTH_USER_MODEL,
-        blank=True,
-        related_name='affecting_endorsements',
+        settings.AUTH_USER_MODEL, blank=True, related_name="affecting_endorsements"
     )
     message = models.TextField(
-        _('Endorsement reason'),
+        _("Endorsement reason"),
         blank=True,
         help_text=_(
-            'Optional message explaining why the endorsement affected the '
-            'given set of users.'
-        )
+            "Optional message explaining why the endorsement affected the "
+            "given set of users."
+        ),
     )
     is_global = models.BooleanField(
-        _('Is it global?'),
+        _("Is it global?"),
         default=False,
-        help_text=_(
-            'Global comments affect all users in conversation'
-        ),
+        help_text=_("Global comments affect all users in conversation"),
     )
     is_expired = property(lambda self: self.end < datetime.now(timezone.utc))
     objects = EndorsementQuerySet.as_manager()
@@ -63,12 +58,12 @@ class Endorsement(TimeFramedModel):
         msg = str(self.comment)
         states = []
         if self.is_global:
-            states.append(__('global'))
+            states.append(__("global"))
         if self.is_expired:
-            states.append(__('expired'))
+            states.append(__("expired"))
         if states:
-            states = ', '.join(states)
-            msg = f'{msg} ({states})'
+            states = ", ".join(states)
+            msg = f"{msg} ({states})"
         return msg
 
     def recycle(self):
@@ -78,7 +73,7 @@ class Endorsement(TimeFramedModel):
         if self.is_expired:
             self.delete()
             self.id = None
-            log.info(f'Removed expired promotion for {self.comment} comment.')
+            log.info(f"Removed expired promotion for {self.comment} comment.")
         return self
 
 
@@ -88,7 +83,7 @@ class Endorsement(TimeFramedModel):
 endorsements = Endorsement.timeframed
 
 
-def endorse_comment(comment, *, author, users=None, expires='default'):
+def endorse_comment(comment, *, author, users=None, expires="default"):
     """
     Promotes comment for the given users.
 
@@ -108,13 +103,10 @@ def endorse_comment(comment, *, author, users=None, expires='default'):
     Returns:
         A CommentPromotion object
     """
-    if expires == 'default':
-        expires = power_expiration_time('')
+    if expires == "default":
+        expires = power_expiration_time("")
     promotion = Endorsement.objects.create(
-        comment=comment,
-        author=author,
-        end=expires,
-        is_global=users is None,
+        comment=comment, author=author, end=expires, is_global=users is None
     )
     if users:
         promotion.affected_users.set(users)
@@ -137,4 +129,4 @@ def clean_expired_endorsements():
     size = qs.count()
     if size > 0:
         qs.delete()
-        log.info(f'excluded {size} expired promotions')
+        log.info(f"excluded {size} expired promotions")

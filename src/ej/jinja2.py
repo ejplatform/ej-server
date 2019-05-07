@@ -23,10 +23,10 @@ from .roles import tags
 
 
 def environment(**options):
-    options.pop('debug', None)
-    options.setdefault('trim_blocks', True)
-    options.setdefault('lstrip_blocks', True)
-    options['undefined'] = StrictUndefined
+    options.pop("debug", None)
+    options.setdefault("trim_blocks", True)
+    options.setdefault("lstrip_blocks", True)
+    options["undefined"] = StrictUndefined
     env = Environment(**options)
 
     env.globals.update(
@@ -34,28 +34,24 @@ def environment(**options):
         url=reverse,
         settings=record(
             **{k: getattr(settings, k) for k in dir(settings)},
-            has_boards=apps.is_installed('ej_boards'),
-            has_clusters=apps.is_installed('ej_clusters'),
-            has_dataviz=apps.is_installed('ej_dataviz'),
-            has_gamification=apps.is_installed('ej_gamification'),
-            has_profiles=apps.is_installed('ej_profiles'),
-            has_users=apps.is_installed('ej_users'),
-            service_worker=getattr(settings, 'SERVICE_WORKER', False),
+            has_boards=apps.is_installed("ej_boards"),
+            has_clusters=apps.is_installed("ej_clusters"),
+            has_dataviz=apps.is_installed("ej_dataviz"),
+            has_gamification=apps.is_installed("ej_gamification"),
+            has_profiles=apps.is_installed("ej_profiles"),
+            has_users=apps.is_installed("ej_users"),
+            service_worker=getattr(settings, "SERVICE_WORKER", False),
         ),
-
         # Localization
         get_language=get_language,
         date_format=date_format,
-
         # Security
         salt_attr=salt_attr,
         salt_tag=salt_tag,
         salt=salt,
-
         # Platform functions
         generic_context=generic_context,
         get_messages=messages,
-
         # Available tags and components
         fragment=context_fragment,
         render=html,
@@ -77,7 +73,7 @@ def environment(**options):
 # String formatting
 #
 def format_percent(x):
-    return f'{int(x * 100)}%'
+    return f"{int(x * 100)}%"
 
 
 #
@@ -116,7 +112,7 @@ def salt(size=None):
     size = random.randint(4, 10) if size is None else size
     func = random.choice
     chars = SALT_CHARS
-    return ''.join(func(chars) for _ in range(size))
+    return "".join(func(chars) for _ in range(size))
 
 
 def salt_attr():
@@ -139,7 +135,7 @@ def salt_tag():
 @contextfunction
 def messages(ctx):
     try:
-        request = ctx['request']
+        request = ctx["request"]
     except KeyError:
         return []
     else:
@@ -148,7 +144,7 @@ def messages(ctx):
 
 @contextfunction
 def context_fragment(ctx, ref, **kwargs):
-    return fragment(ref, request=ctx.get('request'), **kwargs)
+    return fragment(ref, request=ctx.get("request"), **kwargs)
 
 
 @contextfunction
@@ -161,26 +157,51 @@ def generic_context(ctx):
 
     blacklist = {
         # Jinja2
-        'range', 'dict', 'lipsum', 'cycler', 'joiner', 'namespace', '_',
-        'gettext', 'ngettext', 'request', 'csrf_input', 'csrf_token',
-
+        "range",
+        "dict",
+        "lipsum",
+        "cycler",
+        "joiner",
+        "namespace",
+        "_",
+        "gettext",
+        "ngettext",
+        "request",
+        "csrf_input",
+        "csrf_token",
         # Globals
-        'static', 'url', 'salt_attr', 'salt_tag', 'salt', 'social_icons',
-        'service_worker', 'generic_context', 'render', 'fragment', 'tag',
-        'settings', *FUNCTIONS,
-
+        "static",
+        "url",
+        "salt_attr",
+        "salt_tag",
+        "salt",
+        "social_icons",
+        "service_worker",
+        "generic_context",
+        "render",
+        "fragment",
+        "tag",
+        "settings",
+        *FUNCTIONS,
         # Variables injected by the base template
-        'target', 'target_context',
-        'sidebar', 'page_top_header', 'page_header',
-        'page_title', 'title', 'content_title', 'enable_navbar', 'hide_footer',
-        'javascript_enabled',
+        "target",
+        "target_context",
+        "sidebar",
+        "page_top_header",
+        "page_header",
+        "page_title",
+        "title",
+        "content_title",
+        "enable_navbar",
+        "hide_footer",
+        "javascript_enabled",
     }
     ctx = {k: v for k, v in ctx.items() if k not in blacklist}
     if settings.DEBUG:
         if ctx:
             return tags.html_map(ctx)
         else:
-            return tags.h('p', _('This template defines no extra variables'))
+            return tags.h("p", _("This template defines no extra variables"))
     else:
         raise Http404
 
@@ -192,6 +213,6 @@ FUNCTIONS = {}
 for _names, _mod in [(tags.__all__, tags), (dir(components), components)]:
     for _name in _names:
         value = getattr(_mod, _name, None)
-        if not _name.startswith('_') and callable(value):
+        if not _name.startswith("_") and callable(value):
             FUNCTIONS[_name] = value
-SALT_CHARS = string.ascii_letters + string.digits + '-_'
+SALT_CHARS = string.ascii_letters + string.digits + "-_"

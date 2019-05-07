@@ -7,7 +7,7 @@ from . import models
 
 
 class PaletteWidget(forms.RadioSelect):
-    template_name = 'ej_boards/includes/palette-select.jinja2'
+    template_name = "ej_boards/includes/palette-select.jinja2"
     renderer = get_template(template_name)
 
     def render(self, name, value, attrs=None, renderer=None):
@@ -18,6 +18,6 @@ class PaletteWidget(forms.RadioSelect):
 class BoardForm(EjModelForm):
     class Meta:
         model = models.Board
-        fields = ['title', 'description', 'slug', 'palette', 'image']
-        widgets = {'palette': PaletteWidget, 'image': FileInput}
-        help_texts = {'slug': _('You cannot change this value afterwards')}
+        fields = ["title", "description", "slug", "palette", "image"]
+        widgets = {"palette": PaletteWidget, "image": FileInput}
+        help_texts = {"slug": _("You cannot change this value afterwards")}

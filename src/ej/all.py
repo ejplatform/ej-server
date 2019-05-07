@@ -9,20 +9,20 @@ from hyperpython import Text, Blob
 from sidekick import deferred, import_later, namespace
 
 # Pydata
-pd = import_later('pandas')
-np = import_later('numpy')
-plt = import_later('matplotlib.pyplot')
+pd = import_later("pandas")
+np = import_later("numpy")
+plt = import_later("matplotlib.pyplot")
 
 # Scikit learn
-pca = import_later('sklearn.decomposition.pca')
-svm = import_later('sklearn.svm')
-decomposition = import_later('sklearn.decomposition')
-model_selection = import_later('sklearn.model_selection')
-preprocessing = import_later('sklearn.preprocessing')
-impute = import_later('sklearn.impute')
+pca = import_later("sklearn.decomposition.pca")
+svm = import_later("sklearn.svm")
+decomposition = import_later("sklearn.decomposition")
+model_selection = import_later("sklearn.model_selection")
+preprocessing = import_later("sklearn.preprocessing")
+impute = import_later("sklearn.impute")
 
 # Start django
-os.environ.setdefault('DJANGO_SETTINGS_MODEL', 'ej.settings')
+os.environ.setdefault("DJANGO_SETTINGS_MODEL", "ej.settings")
 django.setup()
 
 #
@@ -41,7 +41,7 @@ _enums = {ClusterStatus, Choice, RejectionReason, Race, Gender}
 #
 # Create models, manager accessors and examples
 #
-settings.ALLOWED_HOSTS.append('testserver')
+settings.ALLOWED_HOSTS.append("testserver")
 
 _first = lambda obj: deferred(lambda: obj.first())
 
@@ -51,7 +51,13 @@ def extract(obj):
 
 
 # Conversation app
-from ej_conversations.models import (Conversation, Comment, Vote, FavoriteConversation, ConversationTag)  # noqa: E402
+from ej_conversations.models import (
+    Conversation,
+    Comment,
+    Vote,
+    FavoriteConversation,
+    ConversationTag,
+)  # noqa: E402
 
 conversations = Conversation.objects
 conversation = _first(conversations)
@@ -64,7 +70,7 @@ conversation_tags = ConversationTag.objects
 conversation_tag = _first(ConversationTag)
 
 # User app
-if apps.is_installed('ej_users'):
+if apps.is_installed("ej_users"):
     from ej_users.models import User  # noqa: E402
 
     users = User.objects
@@ -73,15 +79,20 @@ if apps.is_installed('ej_users'):
     user = deferred(lambda: users.filter(is_superuser=False).first())
 
 # Profiles app
-if apps.is_installed('ej_profiles'):
+if apps.is_installed("ej_profiles"):
     from ej_profiles.models import Profile  # noqa: E402
 
     profiles = Profile.objects
     profile = _first(Profile)
 
 # Clusterization app
-if apps.is_installed('ej_clusters'):
-    from ej_clusters.models import Clusterization, Stereotype, Cluster, StereotypeVote  # noqa: E402
+if apps.is_installed("ej_clusters"):
+    from ej_clusters.models import (
+        Clusterization,
+        Stereotype,
+        Cluster,
+        StereotypeVote,
+    )  # noqa: E402
 
     clusterizations = Clusterization.objects
     clusterization = _first(clusterizations)
@@ -93,19 +104,23 @@ if apps.is_installed('ej_clusters'):
     stereotype_vote = _first(StereotypeVote)
 
 # Gamification app
-if apps.is_installed('ej_gamification'):
-    from ej_gamification.models import UserProgress, ConversationProgress, ParticipationProgress # noqa: E402
+if apps.is_installed("ej_gamification"):
+    from ej_gamification.models import (
+        UserProgress,
+        ConversationProgress,
+        ParticipationProgress,
+    )  # noqa: E402
 
     user_progresses = UserProgress.objects
     conversation_progresses = ConversationProgress.objects
     participation_progresses = ParticipationProgress.objects
 
 
-def fix_links(data, prefix='http://localhost:8000'):
+def fix_links(data, prefix="http://localhost:8000"):
     soup = bs4.BeautifulSoup(data)
-    for link in soup.find_all('a'):
-        if link['href'].starswith('/'):
-            link['href'] = prefix + link['href']
+    for link in soup.find_all("a"):
+        if link["href"].starswith("/"):
+            link["href"] = prefix + link["href"]
 
 
 #
@@ -128,7 +143,7 @@ math = namespace(
 class EjClient(Client):
     def get_data(self, *args, fix_links=False, **kwargs):
         response = self.get(*args, **kwargs)
-        if getattr(response, 'url', None):
+        if getattr(response, "url", None):
             return self.get_data(response.url, fix_links=fix_links)
         return response.content.decode(response.charset)
 

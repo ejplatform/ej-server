@@ -5,23 +5,26 @@ from hyperpython.components import fa_icon, html_list
 from ..utils import title as _title
 
 
-@html.register(object, role='collapsible')
+@html.register(object, role="collapsible")
 def collapsible(data, title=None, collapsed=False):
     """
     Renders a collapsible content.
     """
 
-    angle = fa_icon('angle-up', class_='collapsible__handle')
-    return \
-        div(class_='collapsible', is_component=True, is_collapsed=collapsed,
-            children=[
-                h2([title, angle], class_='collapsible__title'),
-                div(data, class_='collapsible__data')
-            ])
+    angle = fa_icon("angle-up", class_="collapsible__handle")
+    return div(
+        class_="collapsible",
+        is_component=True,
+        is_collapsed=collapsed,
+        children=[
+            h2([title, angle], class_="collapsible__title"),
+            div(data, class_="collapsible__data"),
+        ],
+    )
 
 
-@html.register(object, role='collapsible-list')
-def collapsible_list(lst, item_role='list-item', title=None, **kwargs):
+@html.register(object, role="collapsible-list")
+def collapsible_list(lst, item_role="list-item", title=None, **kwargs):
     """
     Renders a queryset or list of objects
 
@@ -38,9 +41,9 @@ def collapsible_list(lst, item_role='list-item', title=None, **kwargs):
     """
     size = len(lst)
     title = _title(lst) if title is None else title
-    title = Block([title, span(f' ({size})', class_='text-accent')])
+    title = Block([title, span(f" ({size})", class_="text-accent")])
     items = [html(x, item_role, **kwargs) for x in lst]
-    data = html_list(items, class_='list-reset')
+    data = html_list(items, class_="list-reset")
     return collapsible(data, title=title)
 
 

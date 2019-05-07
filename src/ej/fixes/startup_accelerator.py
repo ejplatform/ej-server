@@ -6,9 +6,8 @@ TODO: make it usable. This has been useful for profiling, but it is not a seriou
 import builtins
 
 builtin_import = builtins.__import__
-BLACKLIST = [
-    'pandas._libs.tslibs.nattype',
-]
+BLACKLIST = ["pandas._libs.tslibs.nattype"]
+
 
 def make_lazy_importer(names):
     import demandimport
@@ -21,15 +20,17 @@ def make_lazy_importer(names):
 
     def __import__(name, globals=None, locals=None, fromlist=None, level=0):
         track.append(name)
-        base = name.split('.')[0]
+        base = name.split(".")[0]
         if base in slow_modules and name not in blacklist:
             # raise ValueError(name)
             if base != name or True:
-                raise ValueError([x for x in track if x.startswith('ej') or x.startswith('boogie')])
+                raise ValueError(
+                    [x for x in track if x.startswith("ej") or x.startswith("boogie")]
+                )
             try:
                 mod = lazy_import(name, globals, locals, fromlist, level)
             except KeyError:
-                print('bad import:', name)
+                print("bad import:", name)
                 return sys_import(name, globals, locals, fromlist, level)
         else:
             return sys_import(name, globals, locals, fromlist, level)
@@ -39,7 +40,12 @@ def make_lazy_importer(names):
 
 
 def accelerate():
-    builtins.__import__ = make_lazy_importer([
-        # Scientific
-        'numpy', 'scipy', 'pandas', 'scikit',
-    ])
+    builtins.__import__ = make_lazy_importer(
+        [
+            # Scientific
+            "numpy",
+            "scipy",
+            "pandas",
+            "scikit",
+        ]
+    )

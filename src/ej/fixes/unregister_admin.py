@@ -4,9 +4,7 @@
 from django.apps import apps
 from django.contrib import admin
 
-UNREGISTER_APPS = [
-    'authtoken',
-]
+UNREGISTER_APPS = ["authtoken"]
 
 
 def unregister_app(app_label):

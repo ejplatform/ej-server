@@ -1,7 +1,7 @@
 from hyperpython import a
 from sidekick import import_later
 
-urls = import_later('django.urls')
+urls = import_later("django.urls")
 
 
 class Url(str):
@@ -14,16 +14,16 @@ class Url(str):
 
     def __truediv__(self, other):
         try:
-            if self.endswith('/') or other.startswith('/'):
-                sep = ''
+            if self.endswith("/") or other.startswith("/"):
+                sep = ""
             else:
-                sep = '/'
+                sep = "/"
             return Url(self.url + sep + str(other))
         except AttributeError:
             return NotImplementedError
 
     def __repr__(self):
-        return f'Url({self.url!r})'
+        return f"Url({self.url!r})"
 
     def anchor(self, name, **kwargs):
         """
@@ -54,10 +54,10 @@ class SafeUrl(Url):
         super().__init__(self.url)
 
     def __repr__(self):
-        all_args = ', '.join(self._repr_args())
-        return f'SafeUrl({all_args})'
+        all_args = ", ".join(self._repr_args())
+        return f"SafeUrl({all_args})"
 
     def _repr_args(self):
         yield repr(self.ref)
         yield from map(repr, self.url_args)
-        yield from (f'{k}={v!r}' for k, v in self.url_kwargs.items())
+        yield from (f"{k}={v!r}" for k, v in self.url_kwargs.items())

@@ -14,7 +14,7 @@ from polymorphic.models import PolymorphicModel
 from ej_gamification.models import endorse_comment
 from ej_gamification.rules import power_expiration_time
 
-log = logging.getLogger('ej')
+log = logging.getLogger("ej")
 
 
 class GivenPower(PolymorphicModel, TimeFramedModel):
@@ -29,15 +29,14 @@ class GivenPower(PolymorphicModel, TimeFramedModel):
     different form to different users or might make db access more efficient
     by replacing the need for M2M fields that might spawn additional queries.
     """
+
     user = models.ForeignKey(
-        get_user_model(),
-        on_delete=models.CASCADE,
-        related_name='given_powers',
+        get_user_model(), on_delete=models.CASCADE, related_name="given_powers"
     )
     conversation = models.ForeignKey(
-        'ej_conversations.Conversation',
+        "ej_conversations.Conversation",
         on_delete=models.CASCADE,
-        related_name='given_powers',
+        related_name="given_powers",
     )
     data = JSONField(default=dict)
     is_exhausted = models.BooleanField(default=False)
@@ -65,7 +64,7 @@ class GivenPower(PolymorphicModel, TimeFramedModel):
         self.save()
 
     def _use_power(self, request, related, info):
-        raise NotImplementedError('must be implemented in subclass')
+        raise NotImplementedError("must be implemented in subclass")
 
 
 # ------------------------------------------------------------------------------
@@ -88,16 +87,16 @@ class HasAffectedUsersMixin:
         """
         Queryset with all affected users.
         """
-        user_ids = self.data['affected_users']
+        user_ids = self.data["affected_users"]
         return get_user_model().objects.filter(id__in=user_ids)
 
     @affected_users.setter
     def affected_users(self, users):
         if isinstance(users, QuerySet):
-            id_list = list(users.distinct().values_list('id', flat=True))
+            id_list = list(users.distinct().values_list("id", flat=True))
         else:
             id_list = list(set(user.id for user in users))
-        self.data['affected_users'] = id_list
+        self.data["affected_users"] = id_list
 
 
 class EndorsementPowerMixin(HasAffectedUsersMixin):
@@ -108,26 +107,31 @@ class EndorsementPowerMixin(HasAffectedUsersMixin):
     def _use_power(self, _request, related, _info):
         comment = related
         if comment.conversation != self.conversation:
-            raise ValidationError(_('Comment is not in conversation that user can promote.'))
+            raise ValidationError(
+                _("Comment is not in conversation that user can promote.")
+            )
         elif self.is_expired:
-            raise ValidationError(_('Sorry, your power is expired'))
+            raise ValidationError(_("Sorry, your power is expired"))
         else:
-            return endorse_comment(comment,
-                                   author=self.user,
-                                   users=self.affected_users.all(),
-                                   expires=self.end)
+            return endorse_comment(
+                comment,
+                author=self.user,
+                users=self.affected_users.all(),
+                expires=self.end,
+            )
 
 
 # ------------------------------------------------------------------------------
 # Concrete powers
 # ------------------------------------------------------------------------------
 
+
 class GivenBridgePower(EndorsementPowerMixin, GivenPower):
     """
     Given "Conversation bridge" power.
     """
 
-    slug = 'bridge-power'
+    slug = "bridge-power"
 
     class Meta:
         proxy = True
@@ -138,7 +142,7 @@ class GivenMinorityPower(EndorsementPowerMixin, GivenPower):
     Given "Minority activist" power.
     """
 
-    slug = 'minority-power'
+    slug = "minority-power"
 
     class Meta:
         proxy = True
@@ -148,7 +152,8 @@ class GivenMinorityPower(EndorsementPowerMixin, GivenPower):
 # Utility functions
 # ------------------------------------------------------------------------------
 
-def give_minority_power(user, conversation, users, expires='default'):
+
+def give_minority_power(user, conversation, users, expires="default"):
     """
     Create Minority power for user to promote comments.
 
@@ -168,7 +173,7 @@ def give_minority_power(user, conversation, users, expires='default'):
     return _give_promotion_power(GivenMinorityPower, user, conversation, users, expires)
 
 
-def give_bridge_power(user, conversation, users, expires='default'):
+def give_bridge_power(user, conversation, users, expires="default"):
     """
     Create Bridge power for user to promote comments
 
@@ -205,9 +210,7 @@ def clean_expired_promotion_powers():
     database.
     """
 
-    qs = GivenPower.objects \
-        .filter(end__lte=timezone.now()) \
-        .get_real_instances()
+    qs = GivenPower.objects.filter(end__lte=timezone.now()).get_real_instances()
 
     size = len(qs.update(is_expired=True, data={}))
-    log.info(f'excluded {size} expired promotion powers')
+    log.info(f"excluded {size} expired promotion powers")

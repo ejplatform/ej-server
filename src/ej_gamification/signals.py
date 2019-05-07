@@ -6,10 +6,22 @@ from ej_gamification.models.progress import get_participation
 #
 # Application signals
 #
-user_level_achieved = Signal(providing_args=['user', 'level', 'track', 'is_improvement', 'progress'])
-conversation_level_achieved = Signal(providing_args=['conversation', 'level', 'track', 'is_improvement', 'progress'])
+user_level_achieved = Signal(
+    providing_args=["user", "level", "track", "is_improvement", "progress"]
+)
+conversation_level_achieved = Signal(
+    providing_args=["conversation", "level", "track", "is_improvement", "progress"]
+)
 participation_level_achieved = Signal(
-    providing_args=['user', 'conversation', 'level', 'track', 'is_improvement', 'progress'])
+    providing_args=[
+        "user",
+        "conversation",
+        "level",
+        "track",
+        "is_improvement",
+        "progress",
+    ]
+)
 
 
 #

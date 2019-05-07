@@ -4,10 +4,10 @@ from boogie.configurations import Conf, env
 
 
 class DramatiqConf(Conf):
-    DRAMATIQ_BROKER_URL = env('', name='{name}')
-    DRAMATIQ_BROKER_TYPE = env('stub', name='{name}')
-    DRAMATIQ_BROKER_HOST = env('', name='{name}')
-    DRAMATIQ_BROKER_PORT = env(0, name='{name}')
+    DRAMATIQ_BROKER_URL = env("", name="{name}")
+    DRAMATIQ_BROKER_TYPE = env("stub", name="{name}")
+    DRAMATIQ_BROKER_HOST = env("", name="{name}")
+    DRAMATIQ_BROKER_PORT = env(0, name="{name}")
 
     def get_dramatiq_broker_object(self):
         """
@@ -18,10 +18,10 @@ class DramatiqConf(Conf):
         if self.DRAMATIQ_BROKER_URL:
             url = self.DRAMATIQ_BROKER_URL.strip()
             if url is None:
-                kind, host, port = 'stub', None, None
+                kind, host, port = "stub", None, None
             else:
-                kind, _, url = url.partition('://')
-                host, _, port = url.partition(':')
+                kind, _, url = url.partition("://")
+                host, _, port = url.partition(":")
                 host = host or None
                 port = int(port) if port else None
         else:
@@ -30,21 +30,24 @@ class DramatiqConf(Conf):
             port = self.DRAMATIQ_BROKER_PORT or None
 
         # Separate non-null args
-        kwargs = [('host', host), ('port', port)]
+        kwargs = [("host", host), ("port", port)]
         kwargs = {k: v for k, v in kwargs if v is not None}
 
         # Initializes broker
-        if kind == 'stub':
+        if kind == "stub":
             from dramatiq.brokers.stub import StubBroker
+
             broker = StubBroker()
-        elif kind == 'redis':
+        elif kind == "redis":
             from dramatiq.brokers.redis import RedisBroker
+
             broker = RedisBroker(**kwargs)
-        elif kind == 'rabbitmq':
+        elif kind == "rabbitmq":
             from dramatiq.brokers.rabbitmq import RabbitmqBroker
+
             broker = RabbitmqBroker(**kwargs)
         else:
-            raise ValueError(f'invalid dramatiq broker: {kind}')
+            raise ValueError(f"invalid dramatiq broker: {kind}")
 
         # Configure as default and exit
         dramatiq.set_broker(broker)

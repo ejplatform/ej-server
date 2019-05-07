@@ -4,7 +4,7 @@ from django.core.exceptions import ImproperlyConfigured
 from django.db import models
 from sidekick import import_later
 
-pd = import_later('pandas')
+pd = import_later("pandas")
 
 
 #
@@ -15,13 +15,13 @@ class DataFrameQuerySet(models.QuerySet):
         """
         Return queryset as the default dataframe.
         """
-        columns = getattr(self, 'DATAFRAME_COLUMNS', None)
+        columns = getattr(self, "DATAFRAME_COLUMNS", None)
         if columns is None:
-            columns = getattr(self.model, 'DATAFRAME_COLUMNS', None)
+            columns = getattr(self.model, "DATAFRAME_COLUMNS", None)
         if columns is None:
             raise ImproperlyConfigured(
-                'DATAFRAME_COLUMNS must be defined either on the model or on the '
-                'queryset class'
+                "DATAFRAME_COLUMNS must be defined either on the model or on the "
+                "queryset class"
             )
         columns = normalize_columns(columns)
         return self.values_list(**dict(zip(*columns)))
@@ -56,9 +56,9 @@ class DataFrameQuerySet(models.QuerySet):
 
         columns = list(zip(args, args)) + list(kwargs.items())
         names, values = normalize_columns(columns)
-        qs = self.values_list('id', *names)
-        df = pd.DataFrame(list(qs), columns=['id', *values])
-        df.index = df.pop('id')
+        qs = self.values_list("id", *names)
+        df = pd.DataFrame(list(qs), columns=["id", *values])
+        df.index = df.pop("id")
         return df
 
 

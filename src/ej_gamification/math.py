@@ -3,7 +3,7 @@ from sklearn.preprocessing import Imputer
 
 from ej_clusters.math.kmeans import euclidean_distance as distance
 
-np = import_later('numpy')
+np = import_later("numpy")
 
 
 def opinion_bridge_index(df, labels):
@@ -23,7 +23,7 @@ def opinion_bridge_index(df, labels):
     for i, sample in enumerate(data):
         for j, centroid in enumerate(centroids):
             if label_set[j] == labels[i]:
-                distances[i, j] = float('inf')
+                distances[i, j] = float("inf")
             else:
                 distances[i, j] = distance(sample, centroid)
     return distances.min(axis=1)

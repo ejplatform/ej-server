@@ -14,19 +14,21 @@ class EjForm(Form):
     """
 
     def __init__(self, data=None, files=None, *args, request=None, **kwargs):
-        if request is not None and request.method in self._meta_property('http_methods', ('POST',)):
+        if request is not None and request.method in self._meta_property(
+            "http_methods", ("POST",)
+        ):
             method = request.method
             data = getattr(request, method)
-            kwargs.setdefault('files', request.FILES)
+            kwargs.setdefault("files", request.FILES)
             super().__init__(data, *args, **kwargs)
             self.http_method = method
         else:
             super().__init__(data, *args, **kwargs)
-            self.http_method = getattr(request, 'method', None)
+            self.http_method = getattr(request, "method", None)
 
     def _meta_property(self, prop, default=NOT_GIVEN):
         try:
-            return getattr(getattr(self, 'Meta', None), prop)
+            return getattr(getattr(self, "Meta", None), prop)
         except AttributeError:
             if default is NOT_GIVEN:
                 raise
@@ -42,19 +44,22 @@ class EjForm(Form):
             of string
         """
         if self.http_method is None:
-            msg = 'must be initialized with a request to use this function'
+            msg = "must be initialized with a request to use this function"
             raise RuntimeError(msg)
-        if (isinstance(method, str) and self.http_method == method.upper()
-            or self.http_method in map(str.upper, method)):
+        if (
+            isinstance(method, str)
+            and self.http_method == method.upper()
+            or self.http_method in map(str.upper, method)
+        ):
             return self.is_valid()
         else:
             return False
 
-    is_valid_post = (lambda self: self.is_valid_http('POST'))
-    is_valid_get = (lambda self: self.is_valid_http('GET'))
-    is_valid_put = (lambda self: self.is_valid_http('PUT'))
-    is_valid_patch = (lambda self: self.is_valid_http('PATCH'))
-    is_valid_delete = (lambda self: self.is_valid_http('DELETE'))
+    is_valid_post = lambda self: self.is_valid_http("POST")
+    is_valid_get = lambda self: self.is_valid_http("GET")
+    is_valid_put = lambda self: self.is_valid_http("PUT")
+    is_valid_patch = lambda self: self.is_valid_http("PATCH")
+    is_valid_delete = lambda self: self.is_valid_http("DELETE")
 
     def set_widget_attributes(self, attribute, value=None, from_attr=None):
         """
@@ -93,7 +98,7 @@ class PlaceholderForm(EjForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.set_widget_attributes('placeholder', from_attr='label')
+        self.set_widget_attributes("placeholder", from_attr="label")
 
 
 class FileInput(widgets.FileInput):
@@ -103,25 +108,21 @@ class FileInput(widgets.FileInput):
     to attrs dict.
     E.g.: widgets.FileInput(attrs={'accept':'image/*'})
     """
+
     class Media:
-        js = ('js/file-input.js',)
+        js = ("js/file-input.js",)
 
     def render(self, name, value, attrs=None, renderer=None):
-        widget = self.get_context(name, value, attrs)['widget']
+        widget = self.get_context(name, value, attrs)["widget"]
 
-        w_name = widget.get('name', '')
-        w_type = widget.get('type', '')
-        w_attrs = widget.get('attrs', {})
+        w_name = widget.get("name", "")
+        w_type = widget.get("type", "")
+        w_attrs = widget.get("attrs", {})
 
         return div(class_="FileInput")[
             div(class_="PickFileButton")[
-                input_(
-                    style="opacity: 0",
-                    type_=w_type,
-                    name=w_name,
-                    **w_attrs
-                ),
-                _("Choose a file")
+                input_(style="opacity: 0", type_=w_type, name=w_name, **w_attrs),
+                _("Choose a file"),
             ],
-            div(class_="FileStatus")[_("No file chosen")]
+            div(class_="FileStatus")[_("No file chosen")],
         ].render()

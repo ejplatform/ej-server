@@ -5,9 +5,9 @@ from . import models
 
 @admin.register(models.Board)
 class BoardAdmin(admin.ModelAdmin):
-    fields = ['title', 'description', 'slug', 'conversations']
-    list_display = ['title', 'owner', 'description', 'slug']
-    list_filter = ['created']
+    fields = ["title", "description", "slug", "conversations"]
+    list_display = ["title", "owner", "description", "slug"]
+    list_filter = ["created"]
 
     def save_model(self, request, obj, form, change):
         obj.owner = request.user

@@ -10,7 +10,7 @@ def find_descriptor_name(descriptor, cls: type, hint=None):
         value = getattr(cls, attr, None)
         if value is descriptor:
             return attr
-    raise RuntimeError('%r is not a member of class' % descriptor)
+    raise RuntimeError("%r is not a member of class" % descriptor)
 
 
 def fix():
@@ -20,4 +20,5 @@ def fix():
     next version of sidekick.
     """
     from sidekick import lazy
-    lazy.__globals__['find_descriptor_name'] = find_descriptor_name
+
+    lazy.__globals__["find_descriptor_name"] = find_descriptor_name

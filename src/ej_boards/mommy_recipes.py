@@ -5,15 +5,15 @@ from sidekick import record
 from ej_conversations.mommy_recipes import ConversationRecipes as Base
 from .models import Board
 
-__all__ = ['BoardRecipes']
+__all__ = ["BoardRecipes"]
 
 
 class BoardRecipes(Base):
     board = Recipe(
         Board,
-        slug='board-slug',
-        title='Title',
-        description='Description',
+        slug="board-slug",
+        title="Title",
+        description="Description",
         owner=foreign_key(Base.author),
     )
 

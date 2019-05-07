@@ -13,17 +13,20 @@ from ej_users.models import User
 fake = Factory.create()
 GENDERS = [Gender.FEMALE, Gender.MALE] * 3 + [Gender.OTHER]
 RACES = [Race.BLACK, Race.WHITE] * 3 + list(Race)
-COMMENT_STATUS = [Comment.STATUS.approved] * 4 + [Comment.STATUS.rejected, Comment.STATUS.pending]
+COMMENT_STATUS = [Comment.STATUS.approved] * 4 + [
+    Comment.STATUS.rejected,
+    Comment.STATUS.pending,
+]
 RANDOM_PROFILE_FIELDS = {
-    'race': lambda: choice(RACES),
-    'gender': lambda: choice(GENDERS),
-    'birth_date': fake.date_of_birth,
-    'country': fake.country,
-    'state': fake.state,
-    'city': fake.city,
-    'biography': fake.paragraph,
-    'occupation': fake.job,
-    'political_activity': fake.paragraph,
+    "race": lambda: choice(RACES),
+    "gender": lambda: choice(GENDERS),
+    "birth_date": fake.date_of_birth,
+    "country": fake.country,
+    "state": fake.state,
+    "city": fake.city,
+    "biography": fake.paragraph,
+    "occupation": fake.job,
+    "political_activity": fake.paragraph,
 }
 
 
@@ -35,9 +38,10 @@ def create_users(n, fill_profile=True):
     Create n random new users.
     """
 
-    ids = User.objects[:, 'id']
-    User.objects.bulk_create([User(name=fake.name(), email=fake.email())
-                              for _ in range(n)])
+    ids = User.objects[:, "id"]
+    User.objects.bulk_create(
+        [User(name=fake.name(), email=fake.email()) for _ in range(n)]
+    )
     user_ids = User.objects.exclude(id__in=ids)
 
     if fill_profile:
@@ -76,7 +80,7 @@ def create_conversation(users, n_comments):
     with transaction.atomic():
         conversation = Conversation.objects.create(
             title=fake.catch_phrase(),
-            text=fake.catch_phrase() + '?',
+            text=fake.catch_phrase() + "?",
             author=users.random(),
             slug=fake.slug(),
             is_promoted=choice([True, False]),
@@ -97,8 +101,16 @@ def create_conversation(users, n_comments):
 #
 # Votes in conversation
 #
-def random_votes(n, conversation, users=None, n_users=None, bias=0.7, skip=0.333,
-                 miss=0.5, profile=None):
+def random_votes(
+    n,
+    conversation,
+    users=None,
+    n_users=None,
+    bias=0.7,
+    skip=0.333,
+    miss=0.5,
+    profile=None,
+):
     """
     Create an average of n random votes per comment in the given conversation.
     """
@@ -112,7 +124,7 @@ def random_votes(n, conversation, users=None, n_users=None, bias=0.7, skip=0.333
         m = n / miss_
         has_voted = set()
 
-        for author in voters.order_by('?').distinct()[0:m]:
+        for author in voters.order_by("?").distinct()[0:m]:
             if author.id in has_voted or random() < miss_:
                 continue
 
@@ -130,7 +142,7 @@ def random_voting_profile(comments):
 def random_voters_for_conversation(n, conversation, users=None):
     authors = conversation.comments.authors()
     extra = as_queryset(users or User.objects.all(), User)
-    return (authors | extra.order_by('?')[:n - len(authors)]).distinct()
+    return (authors | extra.order_by("?")[: n - len(authors)]).distinct()
 
 
 def partition_voters(n, users):

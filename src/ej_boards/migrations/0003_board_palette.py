@@ -5,14 +5,16 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('ej_boards', '0002_add_slug_field'),
-    ]
+    dependencies = [("ej_boards", "0002_add_slug_field")]
 
     operations = [
         migrations.AddField(
-            model_name='board',
-            name='palette',
-            field=models.CharField(choices=[('blue', 'blue'), ('grey', 'grey'), ('pink', 'pink')], default='blue', max_length=10),
-        ),
+            model_name="board",
+            name="palette",
+            field=models.CharField(
+                choices=[("blue", "blue"), ("grey", "grey"), ("pink", "pink")],
+                default="blue",
+                max_length=10,
+            ),
+        )
     ]

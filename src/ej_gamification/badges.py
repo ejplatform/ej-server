@@ -6,10 +6,8 @@ from ej_conversations.models import Vote, Conversation
 
 class UserCreatedBadge(Badge):
     slug = "user_created_badge"
-    levels = [
-        BadgeDetail("created", "Badge POVOQUER"),
-    ]
-    events = ["user_created", ]
+    levels = [BadgeDetail("created", "Badge POVOQUER")]
+    events = ["user_created"]
 
     multiple = False
 
@@ -19,10 +17,8 @@ class UserCreatedBadge(Badge):
 
 class UserProfileFilledBadge(Badge):
     slug = "user_profile_created_badge"
-    levels = [
-        BadgeDetail("user_profile_filled", "User Profile Filled"),
-    ]
-    events = ["user_profile_filled", ]
+    levels = [BadgeDetail("user_profile_filled", "User Profile Filled")]
+    events = ["user_profile_filled"]
     multiple = False
 
     def award(self, **state):
@@ -37,10 +33,10 @@ class OpinionatorBadge(Badge):
         BadgeDetail("opinionator_first_three_votes", "User Voted First 3 Times"),
         BadgeDetail("opinionator_level_2", "User Voted 40 Times"),
         BadgeDetail("opinionator_level_3", "User Voted 80 Times"),
-        BadgeDetail("opinionator_level_4", "User Voted 120 Times")
+        BadgeDetail("opinionator_level_4", "User Voted 120 Times"),
     ]
 
-    events = ["vote_cast", ]
+    events = ["vote_cast"]
     multiple = False
 
     def award(self, **state):
@@ -80,15 +76,17 @@ class KnowItAllBadge(Badge):
         BadgeDetail("know_it_all_level_19", "Know-it-all level 19"),
         BadgeDetail("know_it_all_level_20", "Know-it-all level 20"),
     ]
-    events = ["vote_cast", ]
+    events = ["vote_cast"]
     multiple = False
 
     def award(self, **state):
         award_level = 0
 
         user = state["user"]
-        votes_list = [Vote.objects.filter(comment__conversation=c, author=user).count() for c in
-                      Conversation.objects.all()]
+        votes_list = [
+            Vote.objects.filter(comment__conversation=c, author=user).count()
+            for c in Conversation.objects.all()
+        ]
 
         # If the user has any number of votes in at least two conversations, give him the level 1
         if sum(i > 0 for i in votes_list) >= 2:

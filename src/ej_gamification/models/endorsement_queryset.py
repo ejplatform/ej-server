@@ -33,8 +33,10 @@ class EndorsementQuerySet(QuerySet):
         Filter only endorsements in the correct timeframe.
         """
         now = timezone.now()
-        return self.filter((Q(start__lte=now) | Q(start__isnull=True))
-                           & (Q(end__gte=now) | Q(end__isnull=True)))
+        return self.filter(
+            (Q(start__lte=now) | Q(start__isnull=True))
+            & (Q(end__gte=now) | Q(end__isnull=True))
+        )
 
     def expired(self):
         """

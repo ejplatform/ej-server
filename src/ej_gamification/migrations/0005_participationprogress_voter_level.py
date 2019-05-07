@@ -7,14 +7,15 @@ import ej_gamification.enums
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('ej_gamification', '0004_auto_20190311_1327'),
-    ]
+    dependencies = [("ej_gamification", "0004_auto_20190311_1327")]
 
     operations = [
         migrations.AddField(
-            model_name='participationprogress',
-            name='voter_level',
-            field=boogie.fields.enum_field.EnumField(ej_gamification.enums.VoterLevel, default=ej_gamification.enums.VoterLevel(0)),
-        ),
+            model_name="participationprogress",
+            name="voter_level",
+            field=boogie.fields.enum_field.EnumField(
+                ej_gamification.enums.VoterLevel,
+                default=ej_gamification.enums.VoterLevel(0),
+            ),
+        )
     ]

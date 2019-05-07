@@ -73,8 +73,8 @@ class Conversation(TimeStampedModel):
     def users(self):
         return (
             get_user_model()
-                .objects.filter(votes__comment__conversation=self)
-                .distinct()
+            .objects.filter(votes__comment__conversation=self)
+            .distinct()
         )
 
     @property
@@ -257,18 +257,18 @@ class Conversation(TimeStampedModel):
             "participants": {
                 "voters": (
                     get_user_model()
-                        .objects.filter(votes__comment__conversation_id=self.id)
-                        .distinct()
-                        .count()
+                    .objects.filter(votes__comment__conversation_id=self.id)
+                    .distinct()
+                    .count()
                 ),
                 "commenters": (
                     get_user_model()
-                        .objects.filter(
+                    .objects.filter(
                         comments__conversation_id=self.id,
                         comments__status=Comment.STATUS.approved,
                     )
-                        .distinct()
-                        .count()
+                    .distinct()
+                    .count()
                 ),
             },
         }
@@ -279,8 +279,8 @@ class Conversation(TimeStampedModel):
         """
         max_votes = (
             self.comments.filter(status=Comment.STATUS.approved)
-                .exclude(author_id=user.id)
-                .count()
+            .exclude(author_id=user.id)
+            .count()
         )
         given_votes = (
             0

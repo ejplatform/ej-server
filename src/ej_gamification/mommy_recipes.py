@@ -4,11 +4,11 @@ from model_mommy.recipe import Recipe, foreign_key
 from ej_conversations.mommy_recipes import ConversationRecipes
 from .models import GivenBridgePower, GivenMinorityPower, CommentPromotion
 
-__all__ = ['PowerRecipes']
+__all__ = ["PowerRecipes"]
 
 recipe = ConversationRecipes
 _power_kwargs = dict(
-    user=foreign_key(recipe.user.extend(email='has-power@domain.com')),
+    user=foreign_key(recipe.user.extend(email="has-power@domain.com")),
     conversation=foreign_key(recipe.conversation),
 )
 
@@ -19,7 +19,7 @@ class PowerRecipes(ConversationRecipes):
     comment_promotion = Recipe(
         CommentPromotion,
         comment=foreign_key(recipe.comment),
-        promoter=foreign_key(recipe.author.extend(email='comment_promoter@domain.com')),
+        promoter=foreign_key(recipe.author.extend(email="comment_promoter@domain.com")),
     )
 
     @pytest.fixture

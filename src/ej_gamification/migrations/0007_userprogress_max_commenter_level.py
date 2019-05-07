@@ -7,14 +7,15 @@ import ej_gamification.enums
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('ej_gamification', '0006_auto_20190311_1342'),
-    ]
+    dependencies = [("ej_gamification", "0006_auto_20190311_1342")]
 
     operations = [
         migrations.AddField(
-            model_name='userprogress',
-            name='max_commenter_level',
-            field=boogie.fields.enum_field.EnumField(ej_gamification.enums.CommenterLevel, default=ej_gamification.enums.CommenterLevel(0)),
-        ),
+            model_name="userprogress",
+            name="max_commenter_level",
+            field=boogie.fields.enum_field.EnumField(
+                ej_gamification.enums.CommenterLevel,
+                default=ej_gamification.enums.CommenterLevel(0),
+            ),
+        )
     ]

@@ -12,107 +12,210 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('contenttypes', '0002_remove_content_type_name'),
-        ('ej_conversations', '0008_comment_moderator'),
+        ("contenttypes", "0002_remove_content_type_name"),
+        ("ej_conversations", "0008_comment_moderator"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='ConversationProgress',
+            name="ConversationProgress",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('score', models.PositiveSmallIntegerField(default=0)),
-                ('score_bias', models.SmallIntegerField(default=0)),
-                ('conversation', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='progress', to='ej_conversations.Conversation')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("score", models.PositiveSmallIntegerField(default=0)),
+                ("score_bias", models.SmallIntegerField(default=0)),
+                (
+                    "conversation",
+                    models.OneToOneField(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="progress",
+                        to="ej_conversations.Conversation",
+                    ),
+                ),
             ],
-            options={
-                'abstract': False,
-            },
+            options={"abstract": False},
         ),
         migrations.CreateModel(
-            name='Endorsement',
+            name="Endorsement",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('start', models.DateTimeField(blank=True, null=True, verbose_name='start')),
-                ('end', models.DateTimeField(blank=True, null=True, verbose_name='end')),
-                ('comment', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='promotions', to='ej_conversations.Comment')),
-                ('promoter', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='promotions', to=settings.AUTH_USER_MODEL)),
-                ('users', models.ManyToManyField(related_name='affecting_promotions', to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "start",
+                    models.DateTimeField(blank=True, null=True, verbose_name="start"),
+                ),
+                (
+                    "end",
+                    models.DateTimeField(blank=True, null=True, verbose_name="end"),
+                ),
+                (
+                    "comment",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="promotions",
+                        to="ej_conversations.Comment",
+                    ),
+                ),
+                (
+                    "promoter",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="promotions",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
+                (
+                    "users",
+                    models.ManyToManyField(
+                        related_name="affecting_promotions", to=settings.AUTH_USER_MODEL
+                    ),
+                ),
             ],
-            options={
-                'abstract': False,
-            },
+            options={"abstract": False},
         ),
         migrations.CreateModel(
-            name='GivenPower',
+            name="GivenPower",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('start', models.DateTimeField(blank=True, null=True, verbose_name='start')),
-                ('end', models.DateTimeField(blank=True, null=True, verbose_name='end')),
-                ('data', jsonfield.fields.JSONField(default=dict)),
-                ('is_exhausted', models.BooleanField(default=False)),
-                ('conversation', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='given_powers', to='ej_conversations.Conversation')),
-                ('polymorphic_ctype', models.ForeignKey(editable=False, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='polymorphic_ej_gamification.givenpower_set+', to='contenttypes.ContentType')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='given_powers', to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "start",
+                    models.DateTimeField(blank=True, null=True, verbose_name="start"),
+                ),
+                (
+                    "end",
+                    models.DateTimeField(blank=True, null=True, verbose_name="end"),
+                ),
+                ("data", jsonfield.fields.JSONField(default=dict)),
+                ("is_exhausted", models.BooleanField(default=False)),
+                (
+                    "conversation",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="given_powers",
+                        to="ej_conversations.Conversation",
+                    ),
+                ),
+                (
+                    "polymorphic_ctype",
+                    models.ForeignKey(
+                        editable=False,
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="polymorphic_ej_gamification.givenpower_set+",
+                        to="contenttypes.ContentType",
+                    ),
+                ),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="given_powers",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
-            options={
-                'abstract': False,
-                'base_manager_name': 'objects',
-            },
+            options={"abstract": False, "base_manager_name": "objects"},
         ),
         migrations.CreateModel(
-            name='ParticipationProgress',
+            name="ParticipationProgress",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('score', models.PositiveSmallIntegerField(default=0)),
-                ('score_bias', models.SmallIntegerField(default=0)),
-                ('is_owner', models.BooleanField(default=False)),
-                ('conversation', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='progress_tracks', to='ej_conversations.Conversation')),
-                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='progress_tracks', to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("score", models.PositiveSmallIntegerField(default=0)),
+                ("score_bias", models.SmallIntegerField(default=0)),
+                ("is_owner", models.BooleanField(default=False)),
+                (
+                    "conversation",
+                    models.OneToOneField(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="progress_tracks",
+                        to="ej_conversations.Conversation",
+                    ),
+                ),
+                (
+                    "user",
+                    models.OneToOneField(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="progress_tracks",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
-            options={
-                'abstract': False,
-            },
+            options={"abstract": False},
         ),
         migrations.CreateModel(
-            name='UserProgress',
+            name="UserProgress",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('score', models.PositiveSmallIntegerField(default=0)),
-                ('score_bias', models.SmallIntegerField(default=0)),
-                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='progress', to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("score", models.PositiveSmallIntegerField(default=0)),
+                ("score_bias", models.SmallIntegerField(default=0)),
+                (
+                    "user",
+                    models.OneToOneField(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="progress",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
-            options={
-                'abstract': False,
-            },
+            options={"abstract": False},
         ),
         migrations.CreateModel(
-            name='GivenBridgePower',
-            fields=[
-            ],
-            options={
-                'proxy': True,
-                'indexes': [],
-            },
-            bases=('ej_gamification.givenpower',),
+            name="GivenBridgePower",
+            fields=[],
+            options={"proxy": True, "indexes": []},
+            bases=("ej_gamification.givenpower",),
             managers=[
-                ('timeframed', django.db.models.manager.Manager()),
-                ('objects', django.db.models.manager.Manager()),
+                ("timeframed", django.db.models.manager.Manager()),
+                ("objects", django.db.models.manager.Manager()),
             ],
         ),
         migrations.CreateModel(
-            name='GivenMinorityPower',
-            fields=[
-            ],
-            options={
-                'proxy': True,
-                'indexes': [],
-            },
-            bases=('ej_gamification.givenpower',),
+            name="GivenMinorityPower",
+            fields=[],
+            options={"proxy": True, "indexes": []},
+            bases=("ej_gamification.givenpower",),
             managers=[
-                ('timeframed', django.db.models.manager.Manager()),
-                ('objects', django.db.models.manager.Manager()),
+                ("timeframed", django.db.models.manager.Manager()),
+                ("objects", django.db.models.manager.Manager()),
             ],
         ),
     ]

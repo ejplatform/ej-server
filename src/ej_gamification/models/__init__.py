@@ -1,4 +1,5 @@
 from .endorsement import Endorsement, endorse_comment, is_endorsed
+
 # from .given_powers import GivenBridgePower, GivenMinorityPower, GivenPower
 from .progress import UserProgress, ConversationProgress, ParticipationProgress
 
@@ -31,13 +32,13 @@ def _patch_models():
     #
     @patch(user, lazy)
     def total_conversation_score(user):
-        agg = user.conversations.aggregate(r=Sum('progress__score'))
-        return agg['r'] or 0
+        agg = user.conversations.aggregate(r=Sum("progress__score"))
+        return agg["r"] or 0
 
     @patch(user, lazy)
     def total_participation_score(user):
-        agg = user.participation_progresses.aggregate(r=Sum('score'))
-        return agg['r'] or 0
+        agg = user.participation_progresses.aggregate(r=Sum("score"))
+        return agg["r"] or 0
 
     user.n_endorsements = 0
     user.n_given_opinion_bridge_powers = 0

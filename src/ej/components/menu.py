@@ -68,12 +68,12 @@ def menu_section(name, links, **kwargs):
     children = [html_list(map(menu_item, links))]
     if name:
         children.insert(0, h1(name))
-        kwargs.setdefault('title', str(name))
+        kwargs.setdefault("title", str(name))
     return section(children, **kwargs)
 
 
 def menu_item(item):
-    if hasattr(item, '__html__'):
+    if hasattr(item, "__html__"):
         return item
     else:
         return hyperlink(item)
@@ -86,15 +86,15 @@ def default_implementations(request=None, **kwargs):
     See Also:
         :func:`menu` for more details.
     """
-    kwargs.setdefault('about', True)
-    kwargs.setdefault('accessibility', True)
+    kwargs.setdefault("about", True)
+    kwargs.setdefault("accessibility", True)
     for name, value in kwargs.items():
-        if name == 'about' and value:
+        if name == "about" and value:
             yield page_menu.ABOUT()
-        elif name == 'accessibility' and value:
+        elif name == "accessibility" and value:
             yield page_menu.ACCESSIBILITY()
         else:
-            raise TypeError(f'invalid parameter {name}')
+            raise TypeError(f"invalid parameter {name}")
 
 
 #
@@ -107,7 +107,7 @@ def menu_links(section, request, object=None):
     try:
         render_functions = MENU_FUNCTIONS[section]
     except KeyError:
-        raise ValueError(r'invalid section: {section!r}')
+        raise ValueError(r"invalid section: {section!r}")
     for func in render_functions:
         yield from func(request, object)
 
@@ -127,23 +127,41 @@ def register_menu(section):
 MENU_FUNCTIONS = defaultdict(list)
 
 #: Accessibility menu
-page_menu.ACCESSIBILITY = thunk(lambda: menu_section(_('Accessibility'), [
-    a([fa_icon('text-height'), _('Toggle Font Size')], href="#", is_element="toggleFontSize"),
-    a([fa_icon('adjust'), _('Toggle Contrast'), ], href="#", is_element="toggleContrast"),
-]))
+page_menu.ACCESSIBILITY = thunk(
+    lambda: menu_section(
+        _("Accessibility"),
+        [
+            a(
+                [fa_icon("text-height"), _("Toggle Font Size")],
+                href="#",
+                is_element="toggleFontSize",
+            ),
+            a(
+                [fa_icon("adjust"), _("Toggle Contrast")],
+                href="#",
+                is_element="toggleContrast",
+            ),
+        ],
+    )
+)
 
 #: About menu
-page_menu.ABOUT = thunk(lambda: menu_section(_('About'), [
-    link(_('About'), href='about-us'),
-    link(_('Frequently Asked Questions'), href='faq'),
-    link(_('Usage terms'), href='usage'),
-], is_optional=True))
+page_menu.ABOUT = thunk(
+    lambda: menu_section(
+        _("About"),
+        [
+            link(_("About"), href="about-us"),
+            link(_("Frequently Asked Questions"), href="faq"),
+            link(_("Usage terms"), href="usage"),
+        ],
+        is_optional=True,
+    )
+)
 
 #: Default menu
-page_menu.DEFAULT_MENU_SECTIONS = thunk(lambda: Block([
-    page_menu.ABOUT(),
-    page_menu.ACCESSIBILITY(),
-]))
+page_menu.DEFAULT_MENU_SECTIONS = thunk(
+    lambda: Block([page_menu.ABOUT(), page_menu.ACCESSIBILITY()])
+)
 
 #: Links
 page_menu.links = menu_links

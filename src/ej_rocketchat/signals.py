@@ -7,10 +7,10 @@ from django.dispatch import receiver
 
 from .rocket import rocket
 
-log = getLogger('ej')
+log = getLogger("ej")
 executor = ThreadPoolExecutor(max_workers=2)
-submit = (lambda f, *args: f(*args))
-ROCKETCHAT_PERM = 'ej_rocketchat.can_login_rocketchat'
+submit = lambda f, *args: f(*args)
+ROCKETCHAT_PERM = "ej_rocketchat.can_login_rocketchat"
 
 
 #
@@ -35,7 +35,7 @@ def silence_exceptions(func):
         try:
             return func(*args, **kwargs)
         except Exception as exc:
-            msg = f'Error encountered executing {func.__name__}: {exc}'
+            msg = f"Error encountered executing {func.__name__}: {exc}"
             log.error(msg)
 
     return wrapped

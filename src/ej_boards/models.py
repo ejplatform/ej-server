@@ -14,48 +14,28 @@ class Board(TimeStampedModel):
     """
     A board that contains a list of conversations.
     """
+
     PALETTE_CHOICES = (
-        ('brand', _('Default')),
-        ('accent', _('Alternative')),
-        ('grey', _('Grey')),
-        ('green', _('Green')),
-        ('orange', _('Orange')),
-        ('purple', _('Purple')),
+        ("brand", _("Default")),
+        ("accent", _("Alternative")),
+        ("grey", _("Grey")),
+        ("green", _("Green")),
+        ("orange", _("Orange")),
+        ("purple", _("Purple")),
     )
-    slug = models.SlugField(
-        _('Slug'),
-        unique=True,
-        validators=[validate_board_slug],
-    )
+    slug = models.SlugField(_("Slug"), unique=True, validators=[validate_board_slug])
     owner = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name='boards'
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="boards"
     )
     conversations = models.ManyToManyField(
-        'ej_conversations.Conversation',
-        blank=True,
-        related_name='boards',
+        "ej_conversations.Conversation", blank=True, related_name="boards"
     )
-    title = models.CharField(
-        _('Title'),
-        max_length=50,
-    )
-    description = models.TextField(
-        _('Description'),
-        blank=True,
-    )
+    title = models.CharField(_("Title"), max_length=50)
+    description = models.TextField(_("Description"), blank=True)
     palette = models.CharField(
-        _('Palette'),
-        max_length=10,
-        choices=PALETTE_CHOICES,
-        default='Blue',
+        _("Palette"), max_length=10, choices=PALETTE_CHOICES, default="Blue"
     )
-    image = models.ImageField(
-        _('Image'),
-        blank=True,
-        null=True,
-    )
+    image = models.ImageField(_("Image"), blank=True, null=True)
 
     @property
     def tags(self):
@@ -63,8 +43,8 @@ class Board(TimeStampedModel):
         return tags.filter(content_object__in=self.conversations.all())
 
     class Meta:
-        verbose_name = _('Board')
-        verbose_name_plural = _('Boards')
+        verbose_name = _("Board")
+        verbose_name_plural = _("Boards")
 
     def __str__(self):
         return self.title
@@ -78,15 +58,15 @@ class Board(TimeStampedModel):
         try:
             board = Board.objects.get(slug=self.slug)
             if board.slug == self.slug and board.id != self.id:
-                raise ValidationError(_('Slug already exists.'))
+                raise ValidationError(_("Slug already exists."))
         except Board.DoesNotExist:
             pass
 
     def get_absolute_url(self):
-        return f'/{self.slug}/'
+        return f"/{self.slug}/"
 
     def url(self, which, **kwargs):
-        kwargs['board'] = self
+        kwargs["board"] = self
         return SafeUrl(which, **kwargs)
 
     def add_conversation(self, conversation):
