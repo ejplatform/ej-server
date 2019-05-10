@@ -1,20 +1,35 @@
-os: linux
-dist: trusty
-sudo: required
+language: python
+cache: pip
+sudo: false
+
+
 env:
   global:
     - CC_TEST_REPORTER_ID=774db8cce863050fe5bc219651c79d338521ca894b66ee3df3b9a2eb6a27f3e7
-language: python
-python:
-  - '3.6'
+
+
+matrix:
+  include:
+   - env: TOXENV=py37
+     python: '3.7'
+   - env: TOXENV=py36
+     python: '3.6'
+
+
 install:
-  - pip install invoke "pytest<3.8.0"
+  - pip install invoke
   - inv configure --silent
+
+
 script:
-  - pytest
+  - inv test
+
+
 before_script:
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build
+
+
 after_script:
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT

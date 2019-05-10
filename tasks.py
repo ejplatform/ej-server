@@ -393,8 +393,7 @@ def update_deps(ctx, all=False, vendor=None):
     """
     suffix = f' --vendor {vendor}' if vendor else ''
     if all:
-        ctx.run(f'{python} -m pip install -r etc/requirements/local.txt')
-        ctx.run(f'{python} -m pip install -r etc/requirements/develop.txt')
+        ctx.run(f'poetry install')
     else:
         print('By default we only update the volatile dependencies. Run '
               '"inv update-deps --all" in order to update everything.')
