@@ -455,6 +455,17 @@ def test(ctx):
     ctx.run('pytest')
 
 
+@task
+def lint(ctx, python=True, js=True):
+    """
+    Run all linters.
+    """
+    if python:
+        ctx.run('flake8 src/')
+    if js:
+        print('NOT IMPLEMENTED')
+
+
 @task(name='manage')
 def manage_task(ctx, command, noinput=False, args=''):
     """
