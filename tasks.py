@@ -387,20 +387,6 @@ def install_hooks(ctx):
 
 
 @task
-def update_deps(ctx, all=False, vendor=None):
-    """
-    Update volatile dependencies
-    """
-    suffix = f' --vendor {vendor}' if vendor else ''
-    if all:
-        ctx.run(f'poetry install')
-    else:
-        print('By default we only update the volatile dependencies. Run '
-              '"inv update-deps --all" in order to update everything.')
-    ctx.run(f'{python} etc/scripts/install-deps.py' + suffix)
-
-
-@task
 def configure(ctx, silent=False):
     """
     Install dependencies and configure a test server.
@@ -410,19 +396,15 @@ def configure(ctx, silent=False):
     else:
         ask = (lambda x: input(x + ' (y/n) ').lower() == 'y')
 
-    print('\nLoading dependencies (inv update-deps)')
-    update_deps(ctx, all=True)
+    if ask('\nInstall dependencies?'):
+        ctx.run(f'{python} etc/scripts/install-deps.py')
 
-    print('\nCreating database and running migrations (inv db)')
-    db(ctx)
-
-    if ask('\nLoad assets to database?'):
-        print('Running inv db-assets')
-        db_assets(ctx)
-
-    if ask('\nLoad fake data to database?'):
-        print('Running inv db-fake')
-        db_fake(ctx)
+    if ask('\nInitialize database (inv db)?'):
+        db(ctx)
+        if ask('\nLoad assets to database (inv db-assets)?'):
+            db_assets(ctx)
+        if ask('\nLoad fake data to database (inv db-fake)?'):
+            db_fake(ctx)
 
 
 #

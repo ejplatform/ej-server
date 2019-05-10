@@ -28,7 +28,7 @@ command::
 
 For most cases, however we recommend that you prepare your machine with some
 tools. Developers may choose between docker or virtualenv for day to day
-development. In both cases, we recommend that you have Invoke_ >= 0.23 installed
+development. In both cases, we recommend that you have Invoke_ >= 1.0 installed
 in your machine.
 
 Docker will probably get you started quicker, but in the long run it may be
@@ -45,11 +45,10 @@ EJ platform **requires** you to _`Prepare environment` + with the
 development headers. Please install those packages using your distro package
 manager. This is a list of packages that you should have installed locally:
 
-- Python 3.6
+- Python 3.7
 - Virtualenv or virtualenvwrapper
-- Invoke (>= 0.23)
-- Sass
-- Node.js
+- Invoke (>= 1.0)
+- Node.js and npm
 
 Once everything is installed, and your virtualenv is activated, just run the
 configure.sh script::
@@ -60,24 +59,25 @@ Grab a cup of coffee while it downloads and install all dependencies. If
 everything works, you should be able to run the server using the ``inv run``
 command.
 
+This task creates a test database with a few conversations, comments and votes,
+plus several users. Notably, it automatically creates the ``admin:admin <admin@admin.com>``
+and ``user:user <user@user.com>``users.
 
 Running it
 ~~~~~~~~~~
 
-Unless you prefer to type long django management commands, use Invoke_ to start
+Unless you prefer to type long Django management commands, use Invoke_ to start
 the dev server::
 
     $ inv run
 
-Before runing, make sure you regenerate the PO files and compile. It's necessary to compile sass either:
+Before running, make sure you compiled all static assets. This command will
+compile translations, build stylesheets and JavaScript
 
-    $ inv i18n  
-    
-    $ inv i18n -c  
-    
-    $ inv sass run  
+    $ inv i18n -c sass js
 
-To run on brazilian portuguese:
+You can control many configurations using environment variables. To run using
+the Brazilian Portuguese translation, for instance, just export:
 
     $ export COUNTRY=brasil
 
@@ -100,25 +100,14 @@ The script installs the invoke task runner, fetches all dependencies from pip,
 and initializes the database. If you prefer (or if something goes wrong with the
 previous instructions), you can do all steps manually. The first step is to
 install the Invoke_ task runner to run each step of the installation (if you are
-not familiar to Invoke, think of it a Python reinterpretation of Make::
+not familiar to Invoke, think of it a Python reinterpretation of Make. First
+install invoke, then run the "configure" task::
 
     $ pip install invoke
+    $ inv configure
 
-You can install dependencies manually using the files in /etc/requirements/, or
-simply use the update-deps task. The later is preferable since it installs the
-volatile dependencies in a special folder that makes it easier and faster to
-do further updates::
+It will ask a few questions and conduct the installation procedure.
 
-    $ inv update-deps --all
-
-Invoke allow us to execute a sequence of tasks very easily. The command bellow
-will run migrations and populate the database with fake data for local
-development::
-
-    $ inv update-deps db db-assets db-fake
-
-This creates a few conversations with comments and votes plus several users and
-an admin:admin <admin@admin.com> user.
 
 Documentation
 ~~~~~~~~~~~~~

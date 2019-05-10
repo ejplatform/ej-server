@@ -17,7 +17,7 @@ matrix:
 
 
 install:
-  - pip install invoke
+  - pip install invoke poetry
   - inv configure --silent
 
 
