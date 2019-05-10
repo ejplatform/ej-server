@@ -10,9 +10,9 @@ env:
 
 matrix:
   include:
-   - env: TOXENV=py37
+   - env: TOXENV=py37-sqlite
      python: '3.7'
-   - env: TOXENV=py36
+   - env: TOXENV=py36-sqlite
      python: '3.6'
 
 
