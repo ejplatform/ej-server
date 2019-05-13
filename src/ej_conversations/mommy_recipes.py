@@ -1,10 +1,9 @@
 from model_mommy.recipe import Recipe, foreign_key as _foreign_key
 from sidekick import record
 
-import pytest
 from ej.testing import EjRecipes
-from .models import Comment, Conversation, Vote
 from ej_conversations.enums import Choice
+from .models import Comment, Conversation, Vote
 
 __all__ = ["ConversationRecipes"]
 

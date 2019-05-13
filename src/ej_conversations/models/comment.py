@@ -110,7 +110,7 @@ class Comment(StatusModel, TimeStampedModel):
         elif self.status == self.STATUS.pending:
             return _("Comment is pending moderation")
         elif self.rejection_reason_text:
-            return rejection_reason_text
+            return self.rejection_reason_text
         elif self.rejection_reason is not None:
             return self.rejection_reason.description
         else:

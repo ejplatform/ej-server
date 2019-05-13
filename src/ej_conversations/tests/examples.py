@@ -20,7 +20,7 @@ COMMENT = {
     "author_name": "comment_author",
     "content": "comment",
     "id": 1,
-    "rejection_reason": null,
+    "rejection_reason": None,
     "statistics": {"agree": 0, "disagree": 0, "missing": 0, "skip": 0, "total": 0},
     "status": "APPROVED",
 }

@@ -79,7 +79,7 @@ class ConversationForm(EjModelForm):
         super().__init__(*args, **kwargs)
         for field in ("tags", "text"):
             self.set_placeholder(field, self[field].help_text)
-        if self.instance and not self.instance.id is None:
+        if self.instance and self.instance.id is not None:
             self.fields["tags"].initial = ", ".join(
                 self.instance.tags.values_list("name", flat=True)
             )

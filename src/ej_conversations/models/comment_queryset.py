@@ -67,9 +67,6 @@ class CommentQuerySet(ConversationMixin, WordCloudQuerySet):
             votes, participation=True, divergence=True, ratios=True
         )
         stats *= normalization
-        extend_full_fields = [
-            EXTEND_FIELDS[x] for x in extend_fields
-        ]  # TODO: implement this
         stats = self.extend_dataframe(stats, "author__name", *extend_fields, "content")
         stats["author"] = stats.pop("author__name")
         cols = [

@@ -71,7 +71,6 @@ class ClusterFormNew(ClusterForm):
 
     def _save_m2m(self):
         super()._save_m2m()
-        print(self.instance.stereotypes.all())
         if self.cleaned_data["new_persona"]:
             owner = self.instance.clusterization.conversation.author
             stereotype, _ = Stereotype.objects.get_or_create(
@@ -80,4 +79,3 @@ class ClusterFormNew(ClusterForm):
                 owner=owner,
             )
             self.instance.stereotypes.add(stereotype)
-            print(self.instance.stereotypes.all())

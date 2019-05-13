@@ -2,8 +2,7 @@ from types import MappingProxyType
 
 from django.db import models
 from django.db.models import QuerySet
-
-from hyperpython import html, Text, Blob
+from hyperpython import html, Blob
 from hyperpython.components import html_list
 from hyperpython.html import django_loader
 

@@ -1,12 +1,10 @@
 from random import choice
 
-import pytest
 from model_mommy.recipe import Recipe
 from sidekick import record
 
 from ej.testing import EjRecipes
 from ej_profiles.enums import Gender, Race
-from ej_profiles.models import Profile
 from .models import Profile
 
 

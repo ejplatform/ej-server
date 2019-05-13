@@ -55,24 +55,6 @@ class TestConversation(ConversationRecipes):
         conversation.toggle_favorite(user)
         assert conversation.is_favorite(user)
 
-    def test_get_board_palette_from_conversation(self, mk_conversation, mk_user):
-        user = mk_user(email="someuser@mail.com")
-        conversation = create_conversation("foo", "conv1", user)
-        Board(slug="board1", owner=user, palette="Orange", description="board").save()
-        BoardSubscription(conversation=conversation, board=Board.objects.last()).save()
-        assert conversation.css_palette == "orangePalette"
-        assert conversation.css_light_palette == "orangePalette-light"
-        assert conversation.css_text_palette == "orangePalette-text"
-
-    def test_get_board_default_palette_from_conversation(
-        self, mk_conversation, mk_user
-    ):
-        user = mk_user(email="someuser@mail.com")
-        conversation = create_conversation("foo", "conv1", user)
-        Board(slug="board1", owner=user, description="board").save()
-        BoardSubscription(conversation=conversation, board=Board.objects.last()).save()
-        assert conversation.css_palette == "bluePalette"
-
 
 class TestVote:
     def test_unique_vote_per_comment(self, mk_user, comment_db):

@@ -16,5 +16,5 @@ def dataviz_links(request, conversation):
 
 
 @register_menu("conversations:detail-admin")
-def dataviz_links(request, conversation):
+def report_links(request, conversation):
     return [a(_("Usage report"), href=conversation.url("report:index"))]

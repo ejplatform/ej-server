@@ -45,7 +45,7 @@ def link_attrs(href="#", target="body", **kwargs):
     return render_attrs(link_kwargs(href=href, target=target, **kwargs))
 
 
-def link_kwargs(
+def link_kwargs(  # noqa: C901
     href="#",
     target="body",
     action="target",

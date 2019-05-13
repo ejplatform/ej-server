@@ -3,6 +3,7 @@ from datetime import timedelta
 from django.conf import settings
 from django.utils import timezone
 from rules import predicate
+from . import models
 
 # from .models import GivenBridgePower
 POWER_ROLE_CONFIGURATION_MAP = {
@@ -43,7 +44,7 @@ def has_opinion_bridge_power(user, conversation):
     """
     Return true if user is a "opinion bridge" in conversation.
     """
-    return GivenBridgePower.objects.filter(
+    return models.GivenBridgePower.objects.filter(
         user=user, conversation=conversation
     ).exists()
 
@@ -58,7 +59,7 @@ def can_be_opinion_bridge(user, conversation):
 
 @predicate
 def has_activist_power(user, conversation):
-    return GivenMinorityPower.objects.filter(
+    return models.GivenMinorityPower.objects.filter(
         user=user, conversation=conversation
     ).exists()
 

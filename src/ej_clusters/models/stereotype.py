@@ -1,12 +1,11 @@
 from logging import getLogger
-from random import randrange
 
+from boogie import models
+from boogie.rest import rest_api
 from django.conf import settings
 from django.db.models import OuterRef, Subquery
 from django.utils.translation import ugettext_lazy as _
 
-from boogie import models
-from boogie.rest import rest_api
 from ej_conversations.enums import Choice
 from .querysets import StereotypeQuerySet
 from .stereotype_vote import StereotypeVote

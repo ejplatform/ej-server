@@ -1,7 +1,7 @@
 from boogie import rules
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
-from hyperpython import a, html, Text, Blob
+from hyperpython import a, html, Blob
 from hyperpython.django import csrf_input
 
 from ej.roles import with_template, extra_content, progress_bar
