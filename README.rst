@@ -26,12 +26,12 @@ command::
 
     $ sudo docker-compose -f docker/docker-compose.yml up
 
-For most cases, however we recommend that you prepare your machine with some
+For most cases, however, we recommend that you prepare your machine with some
 tools. Developers may choose between docker or virtualenv for day to day
 development. In both cases, we recommend that you have Invoke_ >= 1.0 installed
 in your machine.
 
-Docker will probably get you started quicker, but in the long run it may be
+Docker will probably get you started quicker, but in the long run, it may be
 harder to integrate with your tools and often requires long builds not needed when
 using virtualenv.
 
@@ -55,13 +55,14 @@ configure.sh script::
 
     $ sh configure.sh
 
+This task creates a test database with a few conversations, comments and votes,
+plus several users. Notably, it automatically creates the ``admin:admin <admin@admin.com>``
+and ``user:user <user@user.com>``users.
+
 Grab a cup of coffee while it downloads and install all dependencies. If
 everything works, you should be able to run the server using the ``inv run``
 command.
 
-This task creates a test database with a few conversations, comments and votes,
-plus several users. Notably, it automatically creates the ``admin:admin <admin@admin.com>``
-and ``user:user <user@user.com>``users.
 
 Running it
 ~~~~~~~~~~
@@ -77,7 +78,8 @@ compile translations, build stylesheets and JavaScript
     $ inv i18n -c sass js
 
 You can control many configurations using environment variables. To run using
-the Brazilian Portuguese translation, for instance, just export:
+the Brazilian Portuguese translation, for instance, just export the correct
+COUNTRY setting:
 
     $ export COUNTRY=brasil
 

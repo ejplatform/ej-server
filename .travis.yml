@@ -19,11 +19,11 @@ matrix:
 
 install:
   - pip install invoke poetry
-  - inv configure --silent
+  - poetry run inv configure --silent
 
 
 script:
-  - inv test
+  - poetry run inv test
 
 
 before_script:
