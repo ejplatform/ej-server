@@ -12,6 +12,7 @@ matrix:
   include:
    - env: TOXENV=py37-sqlite
      python: '3.7'
+     dist: xenial
    - env: TOXENV=py36-sqlite
      python: '3.6'
 
