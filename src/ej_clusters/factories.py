@@ -148,3 +148,43 @@ def make_conversation_with_clusters():
         },
     )
     return conversation
+
+
+def make_conversation_with_clusters():
+    conversation = create_conversation(
+        "Que medidas devem ser feitas para melhorar a educação de jovens e adolescentes?",
+        "Educação",
+        is_promoted=True,
+        author=User.objects.filter(is_staff=True).first(),
+    )
+    set_clusters_from_comments(
+        conversation,
+        {
+            "Estatista": [
+                "É necessário aumentar a verba destinada à educação pública de qualidade",
+                "Devemos incentivar a participação da classe média na escola pública reservando vagas nas universidades.",
+                "O Brasil deve utilizar o dinheiro do pré-sal somente para a educação.",
+            ],
+            "Privatista": [
+                "Estado deve financiar a criação de parcerias público-privadas para a educação",
+                "Escolas particulares promovem maior autonomia pedagógica e dão poder de escolha aos pais.",
+                "O Brasil deve financiar alunos carentes com vagas em escolas particulares.",
+            ],
+            "Liberal": [
+                "Escolas devem promover criatividade e autonomia dos jovens",
+                "Jovens devem possuir atividades extra-classe regulares em museus, parques, bibliotecas, etc.",
+                "É necessário dar aulas de filosofia, sociologia, etc para incentivar o pensamento crítico",
+            ],
+            "Disciplinador": [
+                "Escolas devem treinar a disciplina e respeito à autoridade e ao cumprimento de regras.",
+                "Alunos e professores devem ser punidos exemplarmente por desordem e violação das regras.",
+                "As escolas devem proibir manifestações políticas do professor em sala de aula",
+            ],
+            "Tecnocrata": [
+                "A escola deve fornecer treinamento para o mercado de trabalho e capacitação profissional desde cedo.",
+                "As disciplinas e conteúdos ensinados na escola devem refletir demandas do mercado de trabalho.",
+                "É necessário um currículo e testes unificados.",
+            ],
+        },
+    )
+    return conversation
