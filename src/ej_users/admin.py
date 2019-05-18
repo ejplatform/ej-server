@@ -1,12 +1,8 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as AuthUserAdmin
 from django.utils.translation import ugettext_lazy as _
-from sidekick import import_later
 
 from .models import User
-
-descr = lambda msg: lambda f: setattr(f, "short_description", msg) or f
-recipes = import_later(".mommy_recipes", package=__package__)
 
 
 @admin.register(User)
@@ -39,12 +35,3 @@ class UserAdmin(AuthUserAdmin):
     )
     search_fields = ["name", "email"]
     ordering = ["email"]
-    actions = ["fill_profiles"]
-
-    #
-    # Debug actions
-    #
-    @descr(_("dbg: Fill profile randomly"))
-    def fill_profiles(self, request, queryset):
-        for user in queryset:
-            recipes.get_random_profile(user).save()

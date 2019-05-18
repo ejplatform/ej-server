@@ -1,3 +1,4 @@
+import pytest
 from boogie.testing.pytest import ModelTester
 from ej.testing import EjRecipes
 from ej_users import password_reset_token
@@ -15,7 +16,22 @@ class TestUserManager(EjRecipes):
         user = User.objects.create_user("name@server.com", "1234", name="name")
         assert user.name == "name"
         assert user.password != "1234"
+        assert not user.is_superuser
         assert User.objects.get_by_email("name@server.com") == user
+
+    def test_can_create_and_fetch_superuser(self, db):
+        user = User.objects.create_superuser("name@server.com", "1234", name="name")
+        assert user.name == "name"
+        assert user.password != "1234"
+        assert user.is_superuser
+        assert User.objects.get_by_email("name@server.com") == user
+
+        # Check unhappy paths
+        with pytest.raises(ValueError):
+            User.objects.create_superuser("name@server.com", "1234", is_superuser=False)
+        with pytest.raises(ValueError):
+            User.objects.create_superuser("name@server.com", "1234", is_staff=False)
+
 
     def test_generate_username(self):
         user = User(email="email@at.com")
