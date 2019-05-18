@@ -18,7 +18,7 @@ def use_transaction(which=None, **kwargs):
     elif which is not None:
         raise ValueError(f"invalid operation: {which}")
 
-    methods, args = sk.split_by(kinds.__contains__, kwargs)
+    methods, args = sk.separate(kinds.__contains__, kwargs)
     methods = [getattr(transaction, k) for k in methods if kwargs[k]]
     kwargs = {k: kwargs[k] for k in args}
 

@@ -5,7 +5,7 @@ from sidekick import import_later
 
 log = logging.getLogger("ej")
 np = import_later("numpy")
-models = import_later("..models", package=__package__)
+models = import_later("..models", package=__name__)
 
 
 #

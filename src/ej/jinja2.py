@@ -22,12 +22,12 @@ from . import roles
 from .roles import tags
 
 
-def environment(**options):
+def environment(autoescape=True, **options):
     options.pop("debug", None)
     options.setdefault("trim_blocks", True)
     options.setdefault("lstrip_blocks", True)
     options["undefined"] = StrictUndefined
-    env = Environment(**options)
+    env = Environment(autoescape=True, **options)
 
     env.globals.update(
         static=staticfiles_storage.url,

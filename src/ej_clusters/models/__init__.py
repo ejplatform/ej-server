@@ -20,7 +20,7 @@ _apply_patch = lambda f: f()
 def _patch_conversation_app():
     from ej.components import register_menu
     from ej_conversations.models import Conversation
-    from django.utils.translation import ugettext as __
+    from django.utils.translation import ugettext as _
     from sidekick import delegate_to, lazy
     from hyperpython import a
 
@@ -45,12 +45,12 @@ def _patch_conversation_app():
     Conversation.clusters = delegate_to("_clusterization")
 
     @register_menu("conversations:detail-admin")
-    def _(request, conversation):
+    def _detail_links(request, conversation):
         return [
-            a(__("Edit groups"), href=conversation.url("cluster:edit")),
-            a(__("Manage personas"), href=conversation.url("cluster:stereotype-votes")),
+            a(_("Edit groups"), href=conversation.url("cluster:edit")),
+            a(_("Manage personas"), href=conversation.url("cluster:stereotype-votes")),
         ]
 
     @register_menu("conversations:detail-actions")
-    def _(request, conversation):
-        return [a(__("Opinion groups"), href=conversation.url("cluster:index"))]
+    def _detail_links(request, conversation):
+        return [a(_("Opinion groups"), href=conversation.url("cluster:index"))]

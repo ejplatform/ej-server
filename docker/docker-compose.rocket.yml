@@ -29,7 +29,7 @@ services:
   rocketconfig:
     links:
       - "mongo:mongo"
-    build: 
+    build:
       context: .
       dockerfile: ./Dockerfile.waitmongo
     depends_on:

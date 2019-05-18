@@ -6,7 +6,7 @@ from ej_conversations.mixins import UserMixin, conversation_filter
 from ej_conversations.models import Conversation, VoteQuerySet, Comment, CommentQuerySet
 from ..mixins import ClusterizationBaseMixin
 
-models = import_later(".models", package=__package__)
+models = import_later("..models", package=__package__)
 
 
 class ClusterizationQuerySet(ClusterizationBaseMixin, QuerySet):

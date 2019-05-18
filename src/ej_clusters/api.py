@@ -29,7 +29,7 @@ def clusters(clusterization):
 def affinities(clusterization):
     votes = clusterization.clusters.votes_table("mean")
     affinities = math.compute_cluster_affinities(votes)
-    return math.summarize_affininties(affinities)
+    return math.summarize_affinities(affinities)
 
 
 @rest_api.property(models.Cluster)
