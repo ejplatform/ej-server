@@ -1,7 +1,7 @@
 from sidekick import import_later as _import_later
 
 # Import public functions from inner apps
-_import = lambda x: _import_later(x, package=__package__)
+_import = lambda x: _import_later('ej_gamification' + x)
 
 # Participation
 get_participation = _import(".models:get_participation")
