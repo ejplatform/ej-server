@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-15 19:49+0000\n"
-"PO-Revision-Date: 2019-05-15 16:51-0300\n"
+"POT-Creation-Date: 2019-05-18 18:18+0000\n"
+"PO-Revision-Date: 2019-05-18 15:20-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
 "Language: pt_BR\n"
@@ -243,7 +243,7 @@ msgstr ""
 
 #: src/ej_clusters/forms.py:47
 msgid "Personas"
-msgstr ""
+msgstr "Personas"
 
 #: src/ej_clusters/forms.py:59
 msgid "Create new persona for this group. You can re-use it in other groups."
@@ -308,6 +308,7 @@ msgstr "Escolha"
 msgid ""
 "This conversation has {n_groups} groups, and you are in group {group_id}."
 msgstr ""
+"Esta conversa possui {n_groups} grupos e você está no grupo {group_id}."
 
 #: src/ej_clusters/routes.py:40
 msgid "high"
@@ -337,7 +338,7 @@ msgid "Delete all comments for selected conversations"
 msgstr "Pode moderar comentários em qualquer conversa"
 
 #: src/ej_conversations/admin.py:70
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "{n} comments removed!"
 msgstr "{n} comentários removidos!"
 
@@ -512,7 +513,7 @@ msgstr "Questão"
 
 #: src/ej_conversations/models/conversation.py:36
 msgid "What do you want to ask?"
-msgstr ""
+msgstr "O que você deseja perguntar?"
 
 #: src/ej_conversations/models/conversation.py:42
 msgid "Only the author and administrative staff can edit this conversation."
@@ -587,9 +588,9 @@ msgid "login"
 msgstr "entrar"
 
 #: src/ej_conversations/roles/conversations.py:99
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "{n} awaiting moderation"
-msgstr "{n} aguardando moderação."
+msgstr "{n} aguardando moderação"
 
 #: src/ej_conversations/roles/conversations.py:100
 #, fuzzy, python-brace-format
@@ -624,7 +625,7 @@ msgstr ""
 
 #: src/ej_conversations/routes_comments.py:46
 msgid "Your vote has been computed :-)"
-msgstr ""
+msgstr "Seu voto foi computado :-)"
 
 #: src/ej_conversations/tour.py:4
 msgid "Next"
@@ -690,7 +691,7 @@ msgstr "Moderar"
 
 #: src/ej_conversations/utils.py:103
 msgid "Thanks for voting."
-msgstr ""
+msgstr "Obrigado por votar."
 
 #: src/ej_conversations/utils.py:122
 #, fuzzy
@@ -721,7 +722,7 @@ msgstr "Nuvem de pontos"
 
 #: src/ej_dataviz/models.py:14
 msgid "Word cloud"
-msgstr ""
+msgstr "Nuvem de palavras"
 
 #: src/ej_dataviz/models.py:20
 msgid "Usage report"
@@ -813,7 +814,7 @@ msgstr "Número médio de votos por comentário"
 
 #: src/ej_experiments/forms.py:44
 msgid "Number of clusters/personas"
-msgstr ""
+msgstr "Número de grupos/personas"
 
 #: src/ej_gamification/_signals.py:14
 msgid "Created Comment"
@@ -970,7 +971,7 @@ msgstr ""
 
 #: src/ej_gamification/enums.py:225
 msgid "gender"
-msgstr ""
+msgstr "gênero"
 
 #: src/ej_gamification/enums.py:227
 #, fuzzy
@@ -1067,7 +1068,7 @@ msgstr ""
 
 #: src/ej_gamification/models/given_powers.py:114
 msgid "Sorry, your power is expired"
-msgstr ""
+msgstr "Desculpe, seu poder expirou"
 
 #: src/ej_gamification/models/progress.py:171
 msgid "User progress list"
@@ -1852,12 +1853,11 @@ msgstr "Conversas Favoritas"
 
 #: src/ej_clusters/jinja2/ej_clusters/stereotype-votes.jinja2:29
 msgid "There are no personas defined for this conversation"
-msgstr ""
+msgstr "Não existem personas definidas para esta conversa"
 
 #: src/ej_clusters/jinja2/ej_clusters/stereotype-votes.jinja2:37
-#, fuzzy
 msgid "{name}'s votes"
-msgstr "{count} votos"
+msgstr "Votos de {name}"
 
 #: src/ej_clusters/jinja2/ej_clusters/stereotype-votes.jinja2:38
 msgid "Select the votes you want to modify."
@@ -1995,8 +1995,9 @@ msgid ""
 msgstr ""
 
 #: src/ej_conversations/jinja2/ej_conversations/create.jinja2:15
+#, fuzzy
 msgid "Please fill the details bellow."
-msgstr ""
+msgstr "Selecione um filtro"
 
 #: src/ej_conversations/jinja2/ej_conversations/create.jinja2:24
 #, fuzzy
@@ -2141,21 +2142,20 @@ msgid "Downloads: "
 msgstr "Downloads: "
 
 #: src/ej_dataviz/jinja2/ej_dataviz/scatter.jinja2:7
-#, fuzzy
 msgid "Opinion profiles"
-msgstr "Opinião"
+msgstr "Perfis de opinião"
 
 #: src/ej_dataviz/jinja2/ej_dataviz/scatter.jinja2:8
 msgid "Each point in the plot represents a different opinion."
-msgstr ""
+msgstr "Cada ponto no gráfico representa uma opinião diferente."
 
 #: src/ej_dataviz/jinja2/ej_dataviz/scatter.jinja2:9
 msgid "Select a filter bellow"
-msgstr ""
+msgstr "Selecione um filtro"
 
 #: src/ej_dataviz/jinja2/ej_dataviz/scatter.jinja2:12
 msgid "Gender"
-msgstr ""
+msgstr "Gênero"
 
 #: src/ej_dataviz/jinja2/ej_dataviz/scatter.jinja2:14
 msgid "All"
@@ -2163,7 +2163,7 @@ msgstr "Todos"
 
 #: src/ej_dataviz/jinja2/ej_dataviz/scatter.jinja2:18
 msgid "Loading data..."
-msgstr ""
+msgstr "Carregando dados..."
 
 #: src/ej_dataviz/jinja2/ej_dataviz/word-cloud.jinja2:8
 msgid "Words most commonly found in conversation."
@@ -2171,7 +2171,7 @@ msgstr "Palavras mais frequentes."
 
 #: src/ej_dataviz/jinja2/ej_dataviz/word-cloud.jinja2:9
 msgid "Size of the word is proportional to usage frequency."
-msgstr ""
+msgstr "Tamanho de cada palavra é proporcional à frequência de uso."
 
 #: src/ej_dataviz/jinja2/ej_dataviz/word-cloud.jinja2:12
 msgid "Generating word cloud. Please wait..."
@@ -2195,9 +2195,8 @@ msgid "Basic report (%(n)s users)"
 msgstr "Relatório Básico (%(n)s usuários)"
 
 #: src/ej_dataviz/jinja2/ej_dataviz/report/index.jinja2:28
-#, fuzzy
 msgid "{n} users"
-msgstr "Usuário administrativo"
+msgstr "{n} usuários"
 
 #: src/ej_dataviz/jinja2/ej_dataviz/report/index.jinja2:34
 msgid "More info"
@@ -2255,7 +2254,7 @@ msgstr "Criado em"
 #: src/ej_gamification/jinja2/ej_gamification/achievements.jinja2:7
 #: src/ej_gamification/jinja2/ej_gamification/conversation/achievements.jinja2:42
 msgid "Your achievements"
-msgstr ""
+msgstr "Suas conquista"
 
 #: src/ej_gamification/jinja2/ej_gamification/conversation/achievements.jinja2:44
 #, fuzzy
@@ -2434,7 +2433,6 @@ msgid "Panel settings"
 msgstr "Configurações do Painel"
 
 #: src/ej_users/jinja2/account/account_inactive.jinja2:2
-#, fuzzy
 msgid "Account is inactive"
 msgstr "Conta inativa"
 
@@ -2472,7 +2470,7 @@ msgstr "Não verificado"
 #: src/ej_users/jinja2/account/email.jinja2:33
 #: src/ej_users/jinja2/account/index.jinja2:8
 msgid "What do you want to do?"
-msgstr ""
+msgstr "O que você deseja fazer?"
 
 #: src/ej_users/jinja2/account/email.jinja2:37
 msgid "Make selected e-mail primary"
@@ -2551,9 +2549,8 @@ msgstr "Remover comentário"
 
 #: src/ej_users/jinja2/account/logout.jinja2:2
 #: src/ej_users/jinja2/account/password_change.jinja2:2
-#, fuzzy
 msgid "Account: Change password"
-msgstr "mudar a senha"
+msgstr "Conta: Mudar a senha"
 
 #: src/ej_users/jinja2/account/logout.jinja2:10
 msgid "We hope we'll see you soon ;)"
