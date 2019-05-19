@@ -9,26 +9,32 @@ trophy_template = get_template('roles/ej/trophy.jinja2')
 
 
 def profile_trophy(progress: UserProgress):
+    level = progress.profile_level
     return trophy(
         'profile', _('Profile'),
-        level=progress.profile_level,
+        level=level,
         href=reverse('profile:detail'),
+        msg=level.achieve_next_level_msg(progress),
     )
 
 
 def host_trophy(progress: UserProgress):
+    level = progress.host_level
     return trophy(
         'host_all', _('Conversations'),
-        level=progress.host_level,
+        level=level,
         href=reverse('profile:contributions') + '#contribution-conversations',
+        msg=level.achieve_next_level_msg(progress),
     )
 
 
 def participation_trophy(progress: UserProgress):
+    level = progress.commenter_level
     return trophy(
         'participation_all', _('Participation'),
-        level=progress.commenter_level,
+        level=level,
         href=reverse('profile:contributions') + '#contribution-comments',
+        msg=level.achieve_next_level_msg(progress),
     )
 
 
@@ -54,25 +60,29 @@ def host_conversation_trophy(progress: ConversationProgress):
     )
 
 
-def trophy(icon, name, level=1, href=None, msg=''):
+def trophy(icon, name, level=0, href=None, msg=''):
     """
     Render a trophy
     """
-    is_maximum = False
+    banner = None
     img_classes = []
-    if level == 1:
+    if level == 0:
         img_classes.append('opacity-3')
-    elif level == 2:
+    elif level == 1:
         img_classes.append('opacity-4')
+    elif level == 2:
+        banner = 'star'
+    elif level == 2:
+        banner = 'shield-alt'
     elif level == 4:
-        is_maximum = True
+        banner = 'crown'
 
     return Blob(trophy_template.render({
         'icon_name': icon,
         'name': name,
-        'level': level,
+        'level': int(level),
         'href': href,
         'msg': msg,
         'img_classes': ' '.join(img_classes),
-        'is_maximum': is_maximum,
+        'banner': banner,
     }))

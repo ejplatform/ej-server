@@ -14,7 +14,7 @@ sign = lambda x: 1 if x >= 0 else -1
 def achievements(request):
     user = request.user
     progress = get_progress(user, sync=True)
-    participations = map(participate_conversation_trophy, user.participation_progresses.all())
+    participation = map(participate_conversation_trophy, user.participation_progresses.all())
     conversation_trophies = map(
         host_conversation_trophy,
         ConversationProgress.objects.filter(conversation__author=user)
@@ -26,7 +26,7 @@ def achievements(request):
         "position_idx": progress.position,
         "n_users": UserProgress.objects.count(),
         "n_trophies": progress.n_trophies,
-        "participation_trophies": participations,
+        "participation_trophies": participation,
         "conversation_trophies": conversation_trophies,
         "profile_trophy": profile_trophy(progress),
         "participation_trophy": participation_trophy(progress),

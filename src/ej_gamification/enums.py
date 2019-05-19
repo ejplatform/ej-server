@@ -1,3 +1,4 @@
+from collections import namedtuple
 from math import ceil
 
 from boogie.fields import IntEnum
@@ -84,7 +85,7 @@ class CommenterLevel(LevelMixin, IntEnum):
         required_score = self._levels()[self.value] - self.score(data)
         n = ceil(required_score)
         m = ceil(2 * required_score)
-        msg = _("You need to publish {n} new comments or {m} receive new endorsements")
+        msg = _("You need to publish {n} new comments or receive {m} new endorsements")
         return msg.format(n=n, m=m)
 
 
@@ -335,7 +336,7 @@ class ConversationLevel(LevelMixin, IntEnum):
 # ==============================================================================
 # Levels that consume ParticipationProgresss information
 # ------------------------------------------------------------------------------
-
+VoterLevelConfig = namedtuple('VoterLevelConfig', ['votes', 'ratio', 'votes_sure'])
 
 class VoterLevel(LevelMixin, IntEnum):
     """
@@ -357,20 +358,27 @@ class VoterLevel(LevelMixin, IntEnum):
     # value, which we don't want.
     @staticmethod
     def _ranges():
-        # range[i] = (m, r, n)
         # m: minimum number of votes
         # r: minimum ratio between number of votes and number of comments
         # n: number of votes that yields level, even if r is not enough
-        return ((5, 0, 10), (10, 0.25, 25), (25, 0.50, 75), (50, 0.99, 250))
+        return (
+            VoterLevelConfig(votes=5, ratio=0, votes_sure=10),
+            VoterLevelConfig(votes=10, ratio=0.25, votes_sure=25),
+            VoterLevelConfig(votes=25, ratio=0.50, votes_sure=75),
+            VoterLevelConfig(votes=50, ratio=0.99, votes_sure=250),
+        )
 
     @classmethod
     def check_level(cls, obj):
         result = cls.NONE
+        votes = obj.n_votes
+        ratio = obj.votes_ratio
+
         for level, (m, r, n) in zip(cls.skipping_none(), cls._ranges()):
-            if obj.n_votes >= m and obj.votes_ratio >= r or n >= obj.n_votes:
-                result = level
-            else:
+            if votes < n and (votes < m or ratio < r):
                 break
+            else:
+                result = level
         return result
 
     def achieve_next_level_msg(self, obj):
@@ -381,18 +389,18 @@ class VoterLevel(LevelMixin, IntEnum):
             )
 
         # Now we compute how many votes are necessary to progress
+        votes = obj.n_votes
         m, r, n = self._ranges()[self]
-        if obj.n_votes == obj.n_conversation_comments:
+        print(obj.conversation, votes, m, r, n)
+        if votes == obj.n_conversation_comments:
             msg = _(
-                "Conversation must have at least {n} comments for you be able to progress."
+                "You cannot progress unless conversation has at least {n} comments :-("
             )
             return msg.format(n=m)
 
         delta = float("inf")
         delta_ = ceil((r - obj.votes_ratio) * obj.n_conversation_comments)
-        delta_ = max(delta_, m - obj.n_votes)
+        delta_ = max(delta_, m - votes)
         delta = min(delta_, delta)
-        delta = min(delta, n - obj.n_votes)
-        return _("You need to cast {n} more votes to achieve the next level!").format(
-            n=delta
-        )
+        delta = min(delta, n - votes)
+        return _("You need to cast {n} more votes!").format(n=delta)
