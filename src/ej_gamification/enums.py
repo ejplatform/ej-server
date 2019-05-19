@@ -338,6 +338,7 @@ class ConversationLevel(LevelMixin, IntEnum):
 # ------------------------------------------------------------------------------
 VoterLevelConfig = namedtuple('VoterLevelConfig', ['votes', 'ratio', 'votes_sure'])
 
+
 class VoterLevel(LevelMixin, IntEnum):
     """
     VOTER TRACK
@@ -385,13 +386,12 @@ class VoterLevel(LevelMixin, IntEnum):
         # Special cases
         if self == self.PERFECTIONIST:
             return _(
-                "Congratulations! You already achieved the maximum participation level"
+                "Congratulations! You already achieved the maximum participation level."
             )
 
         # Now we compute how many votes are necessary to progress
         votes = obj.n_votes
         m, r, n = self._ranges()[self]
-        print(obj.conversation, votes, m, r, n)
         if votes == obj.n_conversation_comments:
             msg = _(
                 "You cannot progress unless conversation has at least {n} comments :-("
