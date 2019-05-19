@@ -1,4 +1,13 @@
 <div>
-    <img src="{{ static('img/trophies/{icon}.svg'.format(icon=icon)) }}" class="size-4p">
-    <p class="text-brand text-6 lowercase">{{ name }}</p>
+    {% if href %}<a href="{{ href|safe }}">{% endif %}
+    {% if is_maximum %}
+        <div class="relative size-4p margin-xauto">
+            <i class="fa fa-crown block bg-accent text-white shadow-1 rounded-0p pad-0p absolute pin-top pin-right" style="margin: 0"></i>
+            <img src="{{ static('img/trophies/{icon}.svg'.format(icon=icon_name)) }}" class="{{ img_classes }}" title="{{ msg }}">
+        </div>
+    {% else %}
+         <img src="{{ static('img/trophies/{icon}.svg'.format(icon=icon_name)) }}" class="size-4p {{ img_classes }}" alt="{{ msg }}">
+    {% endif %}
+    <p class="text-brand text-6">{{ name }}</p>
+    {% if href %}</a>{% endif %}
 </div>
