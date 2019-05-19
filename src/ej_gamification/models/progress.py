@@ -38,6 +38,14 @@ class ProgressBase(models.Model):
     def level_achievement_signal(self):
         raise NotImplementedError("must be defined in subclass")
 
+    @lazy
+    def position(self):
+        return len(
+            type(self).objects
+                .order_by('-score')
+                .filter(score__gt=self.score)
+        )
+
     class Meta:
         abstract = True
 
@@ -166,6 +174,8 @@ class UserProgress(ProgressBase):
 
     # Signals
     level_achievement_signal = lazy(lambda _: signals.user_level_achieved, shared=True)
+
+    n_trophies = 0
 
     class Meta:
         verbose_name_plural = _("User progress list")

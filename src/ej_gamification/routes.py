@@ -1,44 +1,50 @@
 from boogie.router import Router
+from django.shortcuts import render
 
-from ej_gamification.models.progress import get_progress
+from ej_gamification.models.progress import get_progress, UserProgress
+from .roles import profile_trophy, commenter_trophy, host_trophy
 
 app_name = "ej_gamification"
 urlpatterns = Router(template="ej_gamification/{name}.jinja2", login=True)
+sign = lambda x: 1 if x >= 0 else -1
 
 
 @urlpatterns.route("achievements/")
 def achievements(request):
     user = request.user
-    p = get_progress(user, sync=True)
+    progress = get_progress(user, sync=True)
+
     return {
         "user": user,
-        "achievements": {
-            "score": p.score,
-            "score_bias": p.score_bias,
-            "commenter_level": p.commenter_level,
-            "max_commenter_level": p.max_commenter_level,
-            "next_commenter_level": p.commenter_level.achieve_next_level_msg(p),
-            "host_level": p.host_level,
-            "max_host_level": p.max_host_level,
-            "next_host_level": p.host_level.achieve_next_level_msg(p),
-            "profile_level": p.profile_level,
-            "max_profile_level": p.max_profile_level,
-            "next_profile_level": p.profile_level.achieve_next_level_msg(p),
-            "lvl1_conv": p.n_conversation_lvl_1,
-            "lvl2_conv": p.n_conversation_lvl_2,
-            "lvl3_conv": p.n_conversation_lvl_3,
-            "lvl4_conv": p.n_conversation_lvl_4,
-            "n_conversations": p.n_conversations,
-            "n_comments": p.n_comments,
-            "n_rejected_comments": p.n_rejected_comments,
-            "n_votes": p.n_votes,
-            "n_endorsements": p.n_endorsements,
-            "n_given_opinion_bridge_powers": p.n_given_opinion_bridge_powers,
-            "n_given_minority_activist_powers": p.n_given_minority_activist_powers,
-            "total_conversation_score": p.total_conversation_score,
-            "total_participation_score": p.total_participation_score,
-        },
+        "progress": progress,
+        "position_idx": progress.position,
+        "n_users": UserProgress.objects.count(),
+        "n_trophies": progress.n_trophies,
+        "participation_trophies": [],
+        "conversation_trophies": [],
+        "profile_trophy": profile_trophy(progress),
+        "commenter_trophy": commenter_trophy(progress),
+        "host_trophy": host_trophy(progress),
     }
+
+
+@urlpatterns.route("achievements/progress-flag-<int:position>-<int:total>.svg")
+def progress_flag(request, position, total):
+    alpha = 2
+    e = 1e-50
+    scale = 137.99982 / 38.45
+    start = 0.1
+    end = 35.76
+    pc = (total - position + e) / (total + e)
+    x = 2 * (pc - 0.5)
+    pc = 0.5 * sign(x) * x ** alpha + 0.5
+    cx = scale * (pc * (end - start) + start)
+
+    return render(
+        request, 'ej_gamification/progress-flag.jinja2',
+        {'circle_cx': cx},
+        content_type='image/svg+xml',
+    )
 
 
 @urlpatterns.route("powers/")

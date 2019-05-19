@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-05-18 18:18+0000\n"
-"PO-Revision-Date: 2019-05-18 15:20-0300\n"
+"PO-Revision-Date: 2019-05-18 21:06-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
 "Language: pt_BR\n"
@@ -2254,7 +2254,7 @@ msgstr "Criado em"
 #: src/ej_gamification/jinja2/ej_gamification/achievements.jinja2:7
 #: src/ej_gamification/jinja2/ej_gamification/conversation/achievements.jinja2:42
 msgid "Your achievements"
-msgstr "Suas conquista"
+msgstr "Suas conquistas"
 
 #: src/ej_gamification/jinja2/ej_gamification/conversation/achievements.jinja2:44
 #, fuzzy
