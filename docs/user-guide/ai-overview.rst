@@ -1,5 +1,5 @@
-User AI
-=======
+Understanding the AI
+====================
 
 .. contents::
    :depth: 2
