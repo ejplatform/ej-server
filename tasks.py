@@ -82,12 +82,12 @@ def run(ctx, no_toolbar=False, theme=None):
     set_theme(theme)
     env = {}
     if no_toolbar:
-        env['DISABLE_DJANGO_DEBUG_TOOLBAR'] = 'true'
+        env['DJANGO_DEBUG_TOOLBAR'] = 'disabled'
     manage(ctx, 'runserver 0.0.0.0:8000', env=env)
 
 
 @task
-def gunicorn(ctx, debug=None, environment='production', port=8000, workers=4):
+def gunicorn(ctx, debug=None, environment='production', port=8000, workers=0):
     """
     Run application using gunicorn for production deploys.
 
@@ -95,6 +95,7 @@ def gunicorn(ctx, debug=None, environment='production', port=8000, workers=4):
     """
 
     from gunicorn.app.wsgiapp import run as run_gunicorn
+    workers = workers or os.cpu_count() or 1
 
     env = {
         'DISABLE_DJANGO_DEBUG_TOOLBAR': str(not debug),

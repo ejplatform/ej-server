@@ -13,9 +13,13 @@ $ej-button-radius: $unit / 4;
 $config: (
     // EJ components
     'ej':(
-        'configuration-card': (
+        'style': (
+            'border-radius': $unit / 4,
+        ),
+        'conversation-card': (
             'border-radius': $unit / 4,
             'highlight-tags': false,
+            'bg-image': '/static/img/bg/conversation-card.svg',
         ),
     ),
 );

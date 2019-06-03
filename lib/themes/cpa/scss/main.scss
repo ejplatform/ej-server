@@ -15,7 +15,6 @@ a, a:hover, a:active, a:focus {
         display: none;
     }
     &__button {
-        background: css-var(--theme-color, color('brand')) url("/static/img/bg/conversation-card.svg") no-repeat;
         background-position-y: bottom;
     }
 }

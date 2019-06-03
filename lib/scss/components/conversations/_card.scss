@@ -4,6 +4,7 @@
 @import "../../config";
 
 $_card-width: 20rem;
+$_card-bg: config('ej.conversation-card.bg-image');
 
 :root {
     --theme-color: #{color('brand')};
@@ -14,7 +15,7 @@ $_card-width: 20rem;
     @include utilities('center text-6 col items-center');
 
     background-color: css-var(--theme-color, color('brand'));
-    border-radius: size(config('ej.configuration-card.border-radius'));
+    border-radius: size(config('ej.conversation-card.border-radius'));
     color: css-var(--theme-light-color, color('brand-lighter'));
     height: $_card-width;
     margin: auto;
@@ -24,7 +25,7 @@ $_card-width: 20rem;
     &__tags {
         @include utilities('text-6 bold');
 
-        @if config('ej.configuration-card.highlight-tags') {
+        @if config('ej.conversation-card.highlight-tags') {
             background-color: css-var(--theme-light-color, color('brand-lighter'));
             color: css-var(--theme-color, color('brand'));
         }
@@ -60,7 +61,9 @@ $_card-width: 20rem;
     &__button {
         @include utilities('pad-b3 pad-t1 margin-t1');
 
-        background: css-var(--theme-color, color('brand')) url("/static/img/bg/conversation-card.png") repeat;
+        @if $_card-bg {
+            background: css-var(--theme-color, color('brand')) url("#{$_card-bg}") repeat;
+        }
         background-blend-mode: luminosity;
         width: 100%;
     }

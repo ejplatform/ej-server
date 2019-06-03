@@ -3,16 +3,13 @@ Deploy
 ======
 
 EJ relies on Docker and a Docker orchestration technology in its deployment
-process. We assume for the sake of simplicity that your deployment is going to use Docker
-Compose. It works with other technologies (we use Rancher, for instance),
-but of course we cannot anticipate the details of your infrastructure to provide
-a detailed guide. Docker Compose is a useful reference and common ground for many
-other orchestration technologies.
+process. We assume for the sake of simplicity that your deployment is going to
+use Docker Compose.
 
 The easiest way to proceed is to use the pre-build images available on `Docker Hub`_
 and personalize your installation using environment variables. You must
-understand that a basic EJ stack uses 4 containers described in `EJ Stack`_
-session: the Nginx reverse proxy, the Django application and Redis and Postgres
+understand that a basic EJ stack uses 3 containers described in `EJ Stack`_
+session: the Nginx reverse proxy, the Django application and Postgres
 databases.
 
 .. _Docker Hub: https://hub.docker.com/u/ejplatform/

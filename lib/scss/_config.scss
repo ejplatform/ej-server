@@ -158,16 +158,15 @@ $mendeleev-config: map-merge-deep(
             'border-radius': $ej-button-radius,
             'font-weight': 700,
         ),
-        // EJ Global styles
-        'style' : (
-            'border-radius': 3rem,
-            'button-radius': 2.25rem / 2,
-        ),
-        // EJ Components
+        // EJ Global styles and components
         'ej': (
-            'configuration-card': (
+            'style' : (
+                'border-radius': 3rem,
+            ),
+            'conversation-card': (
                 'border-radius': 50%,
                 'highlight-tags': true,
+                'bg-image': '/static/img/bg/conversation-card.png',
             ),
         )
     ));
