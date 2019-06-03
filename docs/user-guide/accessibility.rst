@@ -1,5 +1,5 @@
-Learn about the Accessibility features of the EJ Platform
-=========================================================
+Accessibility features
+======================
 
 .. contents::
    :depth: 2

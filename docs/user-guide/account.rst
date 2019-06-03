@@ -1,6 +1,6 @@
-*******************************************
-Creating a registration and starting to use
-*******************************************
+**********************
+Creating a new account
+**********************
 
 .. contents::
    :depth: 2
@@ -26,7 +26,7 @@ To edit or add to your profile, visit **XXFIXMEXX/profile/**
  - Know our terms of use and privacy.
  - Get to know our artificial intelligence system.
 
- 
+
 What if an account is using my email, name or photo?
 ====================================================
 

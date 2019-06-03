@@ -1,9 +1,9 @@
+==========
+Management
+==========
+
 How can I search or organize my conversations?
 =============================================
-
-.. contents::
-   :depth: 2
-
 
 
 How do I find new conversations that I might be interested in?
@@ -32,4 +32,25 @@ What are public conversations?
 Public conversations were created by the administration of an environment and its proposal is to involve every possible participation. Check out the list of public talks through this link ###FIXME###/conversations/
 
 You can participate in public conversations by registering your opinion with comments and votes.
+
+
+Stereotypes
+===========
+
+
+
+How to make my conversation popular?
+====================================
+
+
+How do I make a conversation popular?
+-------------------------------------
+
+* Tips on how to make a popular / relevant conversation within the environment.
+
+
+How to share a conversation on other networks?
+----------------------------------------------
+
+*  Can I share my conversations in other networks or by email? As?
 
