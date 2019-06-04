@@ -68,7 +68,12 @@ def js(ctx):
     """
     Build js assets
     """
-    print('Nothing to do now ;)')
+    cwd = os.getcwd()
+    os.chdir(cwd + '/lib')
+    try:
+        ctx.run('npm install')
+    finally:
+        os.chdir(cwd)
 
 
 @task
@@ -77,6 +82,46 @@ def docs(ctx):
     Builds Sphinx documentation.
     """
     ctx.run('sphinx-build docs/ build/docs/', pty=True)
+
+
+@task
+def requirements(ctx):
+    """
+    Extract requirements.txt from Poetry file
+    """
+    import toml
+
+    def extract_deps(deps):
+        deps = deps.copy()
+        deps.pop('python', None)
+        lst = []
+
+        for k, v in deps.items():
+            if isinstance(v, str):
+                version = v
+                extra = ()
+            else:
+                version = v['version']
+                extra = v.get('extras', ())
+
+            if version[0] == '^':
+                lst.append(f'{k} ~= {version[1:]}')
+            else:
+                lst.append(f'{k}{version}')
+            for extra in extra:
+                lst.append(f'{k}[{extra}]')
+        return '\n'.join(lst)
+
+    with open('pyproject.toml') as F:
+        data = toml.load(F)
+        deps = data['tool']['poetry']['dependencies']
+        dev_deps = data['tool']['poetry']['dev-dependencies']
+
+        with open('etc/requirements.txt', 'w') as F:
+            F.write(extract_deps(deps))
+
+        with open('etc/requirements-dev.txt', 'w') as F:
+            F.write(extract_deps(dev_deps))
 
 
 #
@@ -290,23 +335,23 @@ def docker(ctx, task, cmd=None, port=8000, clean_perms=False, prod=False,
 
 
 @task
-def docker_build(ctx, tag='latest', theme='default:ejplatform', dry_run=False,
-                 web=False, dev=False):
+def docker_build(ctx, theme='default', tag='latest', dry_run=False,
+                 org='ejplatform', deploy=False, dev=False):
     """
     Rebuild all docker images for the project.
     """
     do = runner(ctx, dry_run, pty=True)
     cmd = su_docker(f'docker build . -f docker/Dockerfile')
-    if dev is False and web is False:
-        web = dev = True
+    if dev is False and deploy is False:
+        deploy = dev = True
     if dev:
-        do(f'{cmd}-dev -t ej-dev:{tag} '
+        do(f'{cmd} -t {org}/web:dev '
+           f'  --build-arg THEME={theme}'
            f'  --build-arg UID={os.getuid()}'
            f'  --build-arg GID={os.getgid()}')
-    if web:
-        for item in theme.split(','):
-            theme, org = item.split(':') if ':' in item else (item, item)
-            do(f'{cmd} -t {org}/web:{tag} --build-arg THEME={theme}')
+    if deploy:
+        do(f'{cmd}-deploy -t {org}/web:{tag}'
+           f'  --build-arg THEME={theme}')
 
 
 @task

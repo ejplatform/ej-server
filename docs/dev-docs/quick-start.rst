@@ -24,8 +24,8 @@ Ubuntu/Debian
 Everything you need is one apt away::
 
     $ sudo apt update
-    $ sudo apt install python3-dev npm sass
-
+    $ sudo apt install python3-dev npm
+    $ sudo pip install invoke~=1.0
 
 
 Archlinux
@@ -34,5 +34,6 @@ Archlinux
 Everything you need is package for Pacman::
 
     $ sudo pacman -S python npm
+    $ sudo pip install invoke~=1.0
 
 .. include:: ../../README.rst

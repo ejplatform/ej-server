@@ -35,11 +35,11 @@ in your machine to make execution of chores easier.
 Local development (virtualenv)
 ------------------------------
 
-EJ platform **requires** you to _`Prepare environment` + with the Python
+EJ platform **requires** you to prepare your environment with the Python
 development packages. This is a list of packages that you should have installed
 locally before we start:
 
-- Python 3.7
+- Python 3.6+ (Python 3.7 is recommended)
 - Virtualenv or virtualenvwrapper
 - Invoke (>= 1.0)
 - Node.js and npm

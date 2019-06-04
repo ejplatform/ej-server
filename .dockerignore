@@ -22,6 +22,7 @@ htmlcov/
 node_modules/
 
 .ipynb_checkpoints/
+.scanerwork/
 .cache/
 .git/
 .gitattributes
@@ -29,6 +30,7 @@ node_modules/
 .dockerignore
 .pytest_cache/
 .sass_cache/
+.sass-cache/
 .idea/
 .atom/
 .coverage

@@ -7,15 +7,29 @@ in its deployment process.
 
 The easiest way to proceed is to use the pre-build images available on `Docker Hub`_
 and personalize your installation using environment variables. You must
-understand that a basic EJ stack uses 3 containers described in `EJ Stack`_
+understand that a basic EJ stack uses 3 containers described in `EJ Architecture`_
 session: the Nginx reverse proxy, the Django application and Postgres
 databases.
 
 .. _Docker Hub: https://hub.docker.com/u/ejplatform/
-.. _EJ Stack: stack.html
+.. _EJ Architecture: architecture.html
 
-You can run a useful "deployable" stack by simply calling the command bellow from
-the ej-server repository::
+The first step is to build the deployment image for the main application. You
+must have a working development environment in your machine and just type in
+the prompt::
+
+    $ inv docker-build --deploy
+
+The docker-build command accepts additional configurations such as ``--theme cpa``,
+``--tag v1.0`` and others (``inv docker-build -h`` shows additional options).
+
+
+Docker compose
+==============
+
+A standard build of EJ can be easily run using docker-compose. In very simple
+scenarios in which no customization is necessary, this is all you need to deploy
+EJ. All you need is to call the command bellow from the ej-server repository::
 
     $ inv docker-run production
 
