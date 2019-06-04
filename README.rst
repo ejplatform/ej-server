@@ -16,34 +16,28 @@ You can visit EJ website at http://ejplatform.org.
 Getting started
 ===============
 
-First clone the repository and point to it::
+First clone the repository::
 
     $ git clone http://github.com/ejplatform/ej-server/
     $ cd ej-server
 
-If you use docker, you can quickly start the development server using the
+If you use Docker, you can quickly start the development server using the
 command::
 
     $ sudo docker-compose -f docker/docker-compose.yml up
 
 For most cases, however, we recommend that you prepare your machine with some
-tools. Developers may choose between docker or virtualenv for day to day
+tools. Developers may choose between Docker or Poetry/Virtualenv for day to day
 development. In both cases, we recommend that you have Invoke_ >= 1.0 installed
-in your machine.
-
-Docker will probably get you started quicker, but in the long run, it may be
-harder to integrate with your tools and often requires long builds not needed when
-using virtualenv.
-
-_Invoke: http://www.pyinvoke.org/
+in your machine to make execution of chores easier.
 
 
 Local development (virtualenv)
 ------------------------------
 
-EJ platform **requires** you to _`Prepare environment` + with the
-development headers. Please install those packages using your distro package
-manager. This is a list of packages that you should have installed locally:
+EJ platform **requires** you to _`Prepare environment` + with the Python
+development packages. This is a list of packages that you should have installed
+locally before we start:
 
 - Python 3.7
 - Virtualenv or virtualenvwrapper
@@ -65,7 +59,7 @@ command.
 
 
 Running it
-~~~~~~~~~~
+----------
 
 Unless you prefer to type long Django management commands, use Invoke_ to start
 the dev server::
@@ -96,7 +90,7 @@ Invoke manages many other important tasks, you can discover them using::
 
 
 Semi-manual installation
-~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 The script installs the invoke task runner, fetches all dependencies from pip,
 and initializes the database. If you prefer (or if something goes wrong with the
@@ -108,16 +102,18 @@ install invoke, then run the "configure" task::
     $ pip install invoke
     $ inv configure
 
-It will ask a few questions and conduct the installation procedure.
+It will ask a few questions and complete the installation procedure.
 
 
 Documentation
-~~~~~~~~~~~~~
+-------------
 
-Documentation can be updated with `$ sphinx-build docs build/docs` and will be available at http://localhost:8000/docs.
+Documentation can be updated with `$ inv docs` and will be available at the
+`build/docs/` directory.
+
 
 Using docker
-------------
+============
 
 If you want to use docker, build the containers and just start docker compose::
 
@@ -145,13 +141,13 @@ version::
 
 
 Tests
-~~~~~
+-----
 
-There are two ways to locally execute tests using docker-compose::
+Tests are run in a docker container by using the following command::
 
     $ sudo docker-compose -f docker/docker-compose.yml run web tests
 
-or using inv::
+or use inv for a more compact alternative::
 
     $ inv docker-run run -c tests     # uses postgresql
     $ inv docker-run single -c tests  # uses sqlite3

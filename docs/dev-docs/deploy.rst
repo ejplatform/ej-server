@@ -2,9 +2,8 @@
 Deploy
 ======
 
-EJ relies on Docker and a Docker orchestration technology in its deployment
-process. We assume for the sake of simplicity that your deployment is going to
-use Docker Compose.
+EJ relies on Docker and a Docker orchestration technology such as Docker Compose
+in its deployment process.
 
 The easiest way to proceed is to use the pre-build images available on `Docker Hub`_
 and personalize your installation using environment variables. You must

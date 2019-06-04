@@ -7,7 +7,7 @@ license = "AGPL-3.0"
 
 [tool.poetry.dependencies]
 python = ">= 3.6.1"
-django = "^2.1"
+django = "^2.2"
 django-boogie = {version = "^0.13.1", extras=["stack"]}
 django-constance = {version = "^2.3", extras = ["database"]}
 django-rest-auth = {version = "^0.9.3", extras = ["with_social"]}
@@ -64,10 +64,3 @@ watchdog = "^0.9.0"
 [build-system]
 requires = ["poetry>=0.12"]
 build-backend = "poetry.masonry.api"
-
-
-#django-anymail = "^5.0"
-#django-redis = "^4.10"
-#django-storages = "^1.7"
-#django-push-notifications = "^1.6"
-#django-cors-headers = "^2.4"

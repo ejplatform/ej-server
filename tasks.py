@@ -71,6 +71,14 @@ def js(ctx):
     print('Nothing to do now ;)')
 
 
+@task
+def docs(ctx):
+    """
+    Builds Sphinx documentation.
+    """
+    ctx.run('sphinx-build docs/ build/docs/', pty=True)
+
+
 #
 # Django tasks
 #

@@ -2,7 +2,8 @@
 Contributing to EJ
 ==================
 
-Ej-server uses "master" as the main development branch and tags for stable
+
+EJ main repository uses "master" as the main development branch and tags for stable
 releases. Generally, we want to move code to the master as soon as possible, but
 we need some discipline to make it work. The master is locked and submissions
 of new features are done using pull requests.

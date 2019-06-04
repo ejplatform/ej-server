@@ -11,7 +11,7 @@ Running different themes
 The theme is controlled by a environment variable. A new theme can
 be chosen by setting ``EJ_THEME`` to name or path to the desired theme::
 
-    $ export EJ_THEME=mdh
+    $ export EJ_THEME=cpa
 
 We've implemented a few default themes at /lib/themes/. Those themes are also
 a good reference of what can be done within the theme structure.

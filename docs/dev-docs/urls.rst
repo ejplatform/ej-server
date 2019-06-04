@@ -13,6 +13,7 @@ Both login and register views accept a ?next=<url> tag that controls the
 redirect page.
 
 **Actions that do not require authentication**
+
 login/ (auth:login):
     Login page.
 register/ (auth:register):
@@ -23,6 +24,7 @@ recover-password/<token> (auth:reset-password-token):
     URL sent by e-mail after user request a password reset.
 
 **Actions that require authentication**
+
 account/ (account:index):
     Manage basic account actions such as password reset, e-mail reset, etc.
 account/logout/ (account:logout):

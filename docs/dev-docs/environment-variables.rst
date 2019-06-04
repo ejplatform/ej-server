@@ -31,15 +31,15 @@ COUNTRY (Brazil):
 
 DJANGO_DEBUG (False):
     Setting DEBUG=True, display a traceback when Django encounters an error. This
-    configuration is useful in staging environment, but should never be enabled
+    configuration is useful in a staging environment, but should never be enabled
     in the final production build.
 
 DJANGO_DB_URL (psql://<user>:<password>@postgres:5432/<dbname>):
     Describes the connection with the Postgres database. The default unsafe values
-    are ``user = password = dbname = "ej"``. You can change to other databases
-    (e.g., sqlite:///path-to-db-file). **Warning:** The way Django parses this
-    string puts some limitations on valid passwords. Stay safe and use only
-    letters and numbers in the password.
+    are ``user = password = dbname = "ej"``. You can change to other database types
+    or configurations (e.g., sqlite:///path-to-db-file). **Warning:** The way
+    Django parses this string puts some limitations on valid passwords. Stay
+    safe and use only letters and numbers in the password.
 
 
 Security
@@ -64,8 +64,10 @@ Override strings
 
 EJ_PAGE_TITLE (Empurrando Juntos):
     Default title of the home page.
+
 EJ_REGISTER_TEXT (Not part of EJ yet?):
     Text displayed requesting user registration.
+
 EJ_LOGIN_TITLE_TEXT (Login in EJ):
     Asks user login.
 
@@ -86,8 +88,10 @@ EJ_ENABLE_BOARDS (true):
     The default behavior is that each user can own a single board of
     conversations independent of the main board under /conversations/.
     Set to "false" in order to disable those personal boards.
+
 EJ_MAX_COMMENTS_PER_CONVERSATION (2):
     Default number of comments that each user has in each conversation.
+
 EJ_EXCLUDE_PROFILE_FIELDS:
     Optional list of fields that should be excluded from user profile
     visualization.
@@ -99,14 +103,18 @@ Integration with Rocket.Chat
 EJ_ROCKETCHAT_INTEGRATION (false):
     Enable/disable integration with Rocket.Chat. It is necessary to configure
     the Rocket.Chat container if this option is enabled.
+
 EJ_ROCKETCHAT_URL:
     URL of Rocket.Chat instance (e.g.: http://localhost:3000 or https://your-chat-instance.com)
+
 EJ_ROCKETCHAT_USERNAME:
     Username of Rocket.Chat admin.
+
 EJ_ROCKETCHAT_AUTH_TOKEN:
     Authentication token for the Rocket.Chat admin. This can be configured
     in Django backend after initial installation. Check `Rocket API`_ for more
     information.
+
 EJ_ROCKETCHAT_USER_ID:
     Unique id of Rocket.Chat admin.
 

@@ -93,8 +93,8 @@ JavaScript/TypeScript
 .. _Parcel: https://parceljs.org
 
 
-Django application overview
-===========================
+Django application
+==================
 
 Django splits a web system into modules called "apps" which implement reusable
 database models, routes and functionalities. This section describes all "apps"
@@ -260,8 +260,6 @@ Third party Apps
 .. _allauth: https://www.intenct.nl/projects/django-allauth/
 .. _Django-taggit: https://github.com/jazzband/django-taggit
 .. _Django-Rest-Framework: https://www.django-rest-framework.org
-
-
 
 
 App structure

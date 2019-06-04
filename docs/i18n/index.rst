@@ -4,4 +4,4 @@ Translations
 .. toctree::
    :maxdepth: 2
 
-   pt-br/index.rst
+   pt-br/_index

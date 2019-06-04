@@ -5,5 +5,5 @@ Welcome to EJ documentation!
    :maxdepth: 2
 
    user-guide/_index
-   dev/index
+   dev-docs/_index
    i18n/index
