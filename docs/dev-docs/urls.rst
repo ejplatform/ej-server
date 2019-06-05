@@ -143,38 +143,17 @@ conversations/<id>/<slug>/moderate/ (conversations:moderate-comments):
     Implementation :func:`ej_conversations.routes.moderate`.
 
 
-Stereotype management (ej_clusters)
------------------------------------
+
+Reports (ej_dataviz)
+--------------------
 
 Only staff members and the conversation owner have access to those pages.
 
-conversations/<id>/<slug>/stereotypes/ (clusters:stereotype-list):
-    List of all stereotypes showing information about the assigned cluster and
-    statistics.
-conversations/<id>/<slug>/stereotypes/<id>/ (clusters:stereotype-vote):
-    Allow the given stereotype to vote in conversation.
-
-Stereotypes are implemented in ej_clusters.
-
-
-Reports
--------
-
-Only staff members and the conversation owner have access to those pages.
-
-conversations/<conversation>/reports/ (reports:index):
+conversations/<id>/<slug>/reports/ (reports:index):
     Aggregate reports for the given conversation.
-conversations/<conversation>/reports/clusters/ (reports:clusters):
-    Show information for each cluster.
-conversations/<conversation>/reports/radar/ (reports:radar):
+conversations/<id>/<slug>/reports/users/ (reports:radar):
     Display comments in a 2D layout to show the distribution of opinions and
     comments.
-conversations/<conversation>/reports/divergence/ (reports:divergence):
-    Hierarchical view for the degree of divergence and concordance of each
-    comment.
-
-Reports have its own app at ej_dataviz.
-
 
 Clusters
 --------
@@ -192,6 +171,17 @@ conversations/<conversation>/clusters/<index>/ (clusters:detail):
 Urls are implemented into the ej_clusters app.
 
 
+Clusters and Stereotypes (ej_clusters)
+--------------------------------------
+
+Only staff members and the conversation owner have access to those pages.
+
+conversations/<id>/<slug>/stereotypes/ (clusters:stereotype-list):
+    List of all stereotypes showing information about the assigned cluster and
+    statistics.
+conversations/<id>/<slug>/stereotypes/<id>/ (clusters:stereotype-vote):
+    Allow the given stereotype to vote in conversation.
+
 
 Help
 ====
@@ -204,19 +194,22 @@ either local/pages or lib/pages/.
     Landing-page broadly explaining what is EJ and how to use the platform.
 /faq/ (faq):
     Frequently asked questions.
-/about/ (about):
+/about-us/ (about):
     About EJ or the organization deploying an instance.
 /usage/ (usage):
     Usage terms for the platform.
+/contact/ (contact):
+    Contact information
 
-All urls are implemented in the main project.
+All URLs are implemented as flat pages in the Django Admin. The content
+of those URLs can be editable at ``/admin/flatpages/flatpage/``.
 
 
 
 Talks
 =====
 
-Rocketchat integration.
+Rocket.Chat integration.
 
 /talks/ (rocket:index)
     Display Rocketchat inside a <iframe>.
@@ -235,15 +228,14 @@ Administrative tasks
 All views in this section require staff permissions.
 
 admin/:
-    Django admin.
-debug/styles/ (config:styles):
+    Django admin page. Users must be staff members.
+/info/ (info):
+    Show basic debug information about the server
+    Implementation :func:`ej.routes.info`.
+/info/styles/ (info-styles):
     Exhibit the main design elements like colors and typography applied in the
     current theme.
-debug/info/ (config:info):
-    Show basic debug information about the server
-debug/logs/ (config:logs):
-    Platform logs.
-debug/data/ (config:data):
-    Importable resources like reports, backups, etc.
-    * User list
-    * Logs
+    Implementation :func:`ej.routes.info_styles`.
+/info/ (info-django-settings):
+    Display current Django settings. Only the admin user can see this page.
+    Implementation :func:`ej.routes.info_django_settings`.

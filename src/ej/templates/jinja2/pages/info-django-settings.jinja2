@@ -3,13 +3,15 @@
 
 
 {% block content %}
-    <h1>{% trans %}Django Settings{% endtrans %}</h1>
+    <h1 class="text-accent">{% trans %}Django Settings{% endtrans %}</h1>
+    <div class="measure-wide overflow-auto">
     <dl class="description">
-        {% for name, value in settings %}
-            <dt>{{ name }}</dt>
+        {% for name, value in settings_data %}
+            <dt style="text-transform: uppercase">{{ name }}</dt>
             <dd>
                 <pre>{{ value }}</pre>
             </dd>
         {% endfor %}
     </dl>
+    </div>
 {% endblock %}

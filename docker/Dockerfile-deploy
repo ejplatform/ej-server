@@ -13,10 +13,10 @@ COPY ./src/ /app/src/
 
 # Prepare assets
 RUN mkdir -p local/logs local/static/ local/media/ local/db/ \
- && python manage.py collectstatic --noinput \
  && inv -e docs \
  && inv -e js \
  && inv -e sass \
+ && python manage.py collectstatic --noinput \
  && echo "COLLECTED STATIC ASSETS"
 
 # Default command

@@ -294,7 +294,7 @@ def db_assets(ctx, force=False, theme=None):
 #
 @task
 def docker(ctx, task, cmd=None, port=8000, clean_perms=False, prod=False,
-           compose_file=None, dry_run=False, tag='latest', namespace='ej'):
+           compose_file=None, dry_run=False):
     """
     Runs EJ platform using a docker container.
 
@@ -314,7 +314,7 @@ def docker(ctx, task, cmd=None, port=8000, clean_perms=False, prod=False,
            f'  -v `pwd`:/app'
            f'  -p {port}:8000'
            f'  -u django'
-           f'  -it ej-dev:{tag} {cmd or "bash"}')
+           f'  -it ej/web {cmd or "bash"}')
     elif task == 'start':
         do(f'{compose} up -d')
         do(f'{compose} run -p {port}:8000 web {cmd or "bash"}')

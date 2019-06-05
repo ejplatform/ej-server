@@ -50,7 +50,8 @@ start:
 You can install all dependencies on recent Ubuntu/Debian variants with the
 following commands::
 
-    $ sudo apt install python3-dev python3-pip virtualenvwrapper npm gettext docker.io
+    $ sudo apt install python3-dev python3-pip virtualenvwrapper \
+                       npm gettext docker.io docker-compose
     $ sudo pip3 install invoke
 
 Once everything is installed, create and activate your virtualenv. We will create

@@ -20,6 +20,9 @@ docs/_build/
 dist/
 htmlcov/
 node_modules/
+lib/.ipynb_checkpoints/
+lib/dist/
+lib/node_modules/
 lib/.cache/
 
 .ipynb_checkpoints/

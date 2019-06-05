@@ -171,7 +171,7 @@ def info_django_settings(request):
         for name in dir(settings)
         if name.isupper()
     ]
-    return {"settings": sorted(data)}
+    return {"settings_data": sorted(data)}
 
 
 #
