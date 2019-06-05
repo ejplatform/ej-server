@@ -54,7 +54,7 @@ account/change-password/ (account:change-password):
     Allow user to change its password.
     Implementation :func:`ej_users.routes_account.change_password`.
 
-All views are included in the ej_accounts app.
+All views are included in the ``ej_accounts`` app.
 
 
 

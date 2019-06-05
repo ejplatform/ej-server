@@ -45,11 +45,12 @@ start:
 - Invoke (>= 1.0)
 - Node.js and npm
 - Gettext
+- Docker (optional, for deployment)
 
 You can install all dependencies on recent Ubuntu/Debian variants with the
 following commands::
 
-    $ sudo apt install python3-dev python3-pip virtualenvwrapper npm gettext
+    $ sudo apt install python3-dev python3-pip virtualenvwrapper npm gettext docker.io
     $ sudo pip3 install invoke
 
 Once everything is installed, create and activate your virtualenv. We will create
@@ -168,3 +169,4 @@ or use inv for a more compact alternative::
 
     $ inv docker-run run -c tests     # uses postgresql
     $ inv docker-run single -c tests  # uses sqlite3
+

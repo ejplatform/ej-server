@@ -26,6 +26,7 @@ RUN pip3 install --upgrade pip setuptools \
         toml \
         markupsafe \
         toolz \
+        psycopg2-binary \
  && pip3 install sidekick \
  && ln -s /usr/bin/python3 /usr/bin/python \
  && ln -s /usr/bin/pip3 /usr/bin/pip \
