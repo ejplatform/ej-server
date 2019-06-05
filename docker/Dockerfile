@@ -7,12 +7,11 @@ ENV PYTHONPATH="/app/src/:$PYTHONPATH"
 WORKDIR /app
 
 # Copy necessary files
-COPY ./requirements.txt /app/requirements.txt
-COPY ./etc/scripts/ /app/etc/scripts/
+COPY ./etc/ /app/etc/
 COPY ./tasks.py /app/tasks.py
 
 # Install dependencies
-RUN pip install -r requirements.txt
+RUN pip install -r etc/requirements.txt -r etc/requirements-dev.txt
 
 ARG UID=1000
 ARG GID=1000

@@ -20,7 +20,7 @@ services:
     restart: always
     links:
       - postgres
-      - redis
+      # - redis
     env_file:
       - ./env/django.env
       - ./env/postgres.env

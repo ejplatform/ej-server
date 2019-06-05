@@ -8,20 +8,36 @@ in its deployment process.
 The easiest way to proceed is to use the pre-build images available on `Docker Hub`_
 and personalize your installation using environment variables. You must
 understand that a basic EJ stack uses 3 containers described in `EJ Architecture`_
-session: the Nginx reverse proxy, the Django application and Postgres
-databases.
+session: the Nginx reverse proxy, the Django application and a Postgres
+database.
 
 .. _Docker Hub: https://hub.docker.com/u/ejplatform/
 .. _EJ Architecture: architecture.html
 
 The first step is to build the deployment image for the main application. You
-must have a working development environment in your machine and just type in
-the prompt::
+must have a working development environment in your machine. Activate the virtualenv
+using ``workon ej`` and then enter the command::
 
     $ inv docker-build --deploy
 
-The docker-build command accepts additional configurations such as ``--theme cpa``,
-``--tag v1.0`` and others (``inv docker-build -h`` shows additional options).
+The docker-build command accepts additional configurations such as
+``--theme cpa``, ``--country brasil``, ``--tag v1.0``, and others
+(``inv docker-build -h`` shows additional options).
+
+After building the image, the first step is to initialize assets, collect static
+files, initialize the database and configurations. This is done chaining
+inv commands such as in the example::
+
+    $ sudo docker-compose -f docker/docker-compose.deploy.yml run web db db-assets
+
+(you can also add db-fake to add fake data and test users).
+
+Fire all containers using::
+
+    $ sudo docker-compose -f docker/docker-compose.deploy.yml up
+
+The EJ instance should be available at port 80.
+
 
 
 Docker compose

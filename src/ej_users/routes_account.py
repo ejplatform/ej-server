@@ -59,7 +59,7 @@ def remove_account(request):
 #
 # Reuse allauth views
 #
-change_email = urlpatterns.register(
+manage_email = urlpatterns.register(
     allauth.EmailView.as_view(success_url=reverse_lazy("account:manage-email")),
     path="manage-email/",
     name="manage-email",

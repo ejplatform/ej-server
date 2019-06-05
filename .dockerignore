@@ -14,15 +14,16 @@ __pycache__/
 .eslintcache
 .installed.cfg
 .pytest_cache/
-.tox/
 build/
+local/
 docs/_build/
 dist/
 htmlcov/
 node_modules/
+lib/.cache/
 
 .ipynb_checkpoints/
-.scanerwork/
+.scannerwork/
 .cache/
 .git/
 .gitattributes
@@ -33,8 +34,10 @@ node_modules/
 .sass-cache/
 .idea/
 .atom/
+.vscode/
 .coverage
-.env
+.env/
+.tox/
 .gitlab-ci.yml
 .travis.yml
 image.tar

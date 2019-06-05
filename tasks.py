@@ -283,9 +283,9 @@ def db_assets(ctx, force=False, theme=None):
     # Load assets from Django commands
     for path in pages:
         manage(ctx, 'loadpages', path=path, force=force)
-    #for path in fragments:
+    # for path in fragments:
     #    manage(ctx, 'loadfragments', path=path, force=force)
-    #for path in icons:
+    # for path in icons:
     #    manage(ctx, 'loadsocialmediaicons', path=path, force=force)
 
 
@@ -298,7 +298,7 @@ def docker(ctx, task, cmd=None, port=8000, clean_perms=False, prod=False,
     """
     Runs EJ platform using a docker container.
 
-    Use inv docker-run <cmd>, where cmd is one of single, start, up, run,
+    Use inv docker <cmd>, where cmd is one of single, start, up, run,
     deploy.
     """
     docker = su_docker('docker')
@@ -335,23 +335,36 @@ def docker(ctx, task, cmd=None, port=8000, clean_perms=False, prod=False,
 
 
 @task
-def docker_build(ctx, theme='default', tag='latest', dry_run=False,
-                 org='ejplatform', deploy=False, dev=False):
+def docker_build(ctx, theme='default', tag='latest', dry_run=False, build_kit=True,
+                 org='ej', deploy=False, dev=False, country='brazil',
+                 hostname='localhost'):
     """
     Rebuild all docker images for the project.
     """
+    prefix = 'DOCKER_BUILDKIT=1 ' if build_kit else ''
     do = runner(ctx, dry_run, pty=True)
-    cmd = su_docker(f'docker build . -f docker/Dockerfile')
-    if dev is False and deploy is False:
-        deploy = dev = True
-    if dev:
-        do(f'{cmd} -t {org}/web:dev '
-           f'  --build-arg THEME={theme}'
+    cmd = su_docker(f'{prefix}docker build . -f docker/Dockerfile')
+
+    # Build base docker image
+    requirements(ctx)
+    do(f'{cmd}-base -t {org}/web:base'
+       f'  --build-arg COMMIT_HASH="`git log -n 1 --format="%H"`"'
+       f'  --build-arg COMMIT_TITLE="`git log -n 1 --format="%s"`"'
+       f'  --build-arg HOSTNAME={hostname}'
+       f'  --build-arg THEME={theme}'
+       f'  --build-arg COUNTRY={country}')
+
+    build_all = deploy == dev == False
+
+    if dev or build_all:
+        do(f'{cmd}-dev -t {org}/web:dev '
+           f'  --build-arg ORG={org}'
            f'  --build-arg UID={os.getuid()}'
            f'  --build-arg GID={os.getgid()}')
-    if deploy:
+
+    if deploy or build_all:
         do(f'{cmd}-deploy -t {org}/web:{tag}'
-           f'  --build-arg THEME={theme}')
+           f'  --build-arg ORG={org}')
 
 
 @task
@@ -450,6 +463,9 @@ def configure(ctx, silent=False, dev=False):
     else:
         ask = (lambda x: input(x + ' (y/n) ')[0].lower() == 'y')
 
+    # Update requirements
+    requirements(ctx)
+
     if ask('\nInstall dependencies?'):
         suffix = ' -r etc/requirements-dev.txt' if dev else ''
         ctx.run(f'{python} -m pip install markupsafe toolz')
@@ -463,14 +479,15 @@ def configure(ctx, silent=False, dev=False):
         if ask('\nLoad fake data to database (inv db-fake)?'):
             db_fake(ctx)
 
-    if ask('\nCompile CSS resources (inv sass)?'):
-        sass(ctx)
     if ask('\nCompile js assets? (inv js)?'):
         js(ctx)
+    if ask('\nCompile CSS resources (inv sass)?'):
+        sass(ctx)
     if ask('\nCompile translations (inv i18n -c)?'):
         i18n(ctx, compile=True)
     if ask('\nBuild documentation (inv docs)?'):
         docs(ctx)
+
 
 #
 # Useful docker entry points

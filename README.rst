@@ -22,22 +22,23 @@ First clone the repository::
     $ cd ej-server
 
 If you use Docker, you can quickly start the development server using the
-command::
+commands::
 
-    $ sudo docker-compose -f docker/docker-compose.yml up
+    $ pip3 install invoke --user
+    $ inv docker-build
+    $ inv docker up
 
 For most cases, however, we recommend that you prepare your machine with some
-tools. Developers may choose between Docker or Poetry/Virtualenv for day to day
-development. In both cases, we recommend that you have Invoke_ >= 1.0 installed
+extra tools. Developers may choose between Docker or Poetry/Virtualenv for day to day
+development. In both cases, we recommend that you have Invoke_ installed
 in your machine to make execution of chores easier.
 
 
 Local development (virtualenv)
 ------------------------------
 
-EJ platform **requires** you to prepare your environment with the Python
-development packages. This is a list of packages that you should have installed
-locally before we start:
+This is a list of packages that you should have installed locally before we
+start:
 
 - Python 3.6+ (Python 3.7 is recommended)
 - Virtualenv or virtualenvwrapper
@@ -45,7 +46,7 @@ locally before we start:
 - Node.js and npm
 - Gettext
 
-You can install all dependencies in recent Ubuntu/Debian variants with the
+You can install all dependencies on recent Ubuntu/Debian variants with the
 following commands::
 
     $ sudo apt install python3-dev python3-pip virtualenvwrapper npm gettext
@@ -57,8 +58,8 @@ a new virtualenv called "ej"::
     $ bash
     $ mkvirtualenv ej -p /usr/bin/python3
 
-The new virtualenv can be activated using the command ``workon ej``, but it should
-be already activated once created.
+This command creates and activates the virtualenv. When you want to work with the
+repository in a later time, activate the virtual env using the command ``workon ej``.
 
 The following steps are handled by the configure.sh script::
 

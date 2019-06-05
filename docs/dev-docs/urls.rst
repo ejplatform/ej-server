@@ -1,3 +1,4 @@
+=============
 URL structure
 =============
 
@@ -5,44 +6,60 @@ This document register the default URLs used in the platform and where to find
 them in their corresponding apps.
 
 
-Users/login
------------
+Users/login (ej_users)
+======================
 
 Public views controlling authentication and creation of new users.
 Both login and register views accept a ?next=<url> tag that controls the
 redirect page.
 
-**Actions that do not require authentication**
+
+Actions that do not require authentication
+------------------------------------------
 
 login/ (auth:login):
     Login page.
+    Implementation :func:`ej_users.routes.login`.
 register/ (auth:register):
     Register a new user.
+    Implementation :func:`ej_users.routes.register`.
 recover-password/ (auth:recover-password):
     Recover user password.
-recover-password/<token> (auth:reset-password-token):
+    Implementation :func:`ej_users.routes.recover_password`
+recover-password/<token> (auth:recover-password-token):
     URL sent by e-mail after user request a password reset.
+    Implementation :func:`ej_users.routes.recover_password_token`.
+login/api-key/ (auth:api-key):
+    API-based authorization. Used by Rocket.Chat integration.
+    Implementation :func:`ej_users.routes.login`.
 
-**Actions that require authentication**
+
+Actions that require authentication
+-----------------------------------
 
 account/ (account:index):
     Manage basic account actions such as password reset, e-mail reset, etc.
+    Implementation :func:`ej_users.routes_account.index`.
 account/logout/ (account:logout):
     End user session.
+    Implementation :func:`ej_users.routes_account.logout`.
 account/remove/ (account:remove-account):
     Remove user account. This is an non-reversible operation that the user
     must confirm in order to actually remove the account.
-account/change-email/ (account:manage-email):
+    Implementation :func:`ej_users.routes_account.remove`.
+account/manage-email/ (account:manage-email):
     Allow user to change its e-mail.
+    Implementation :func:`ej_users.routes_account.manage_email`.
 account/change-password/ (account:change-password):
     Allow user to change its password.
+    Implementation :func:`ej_users.routes_account.change_password`.
 
 All views are included in the ej_accounts app.
 
 
 
 Profile views
--------------
+=============
 
 Users cannot see each other's profiles since EJ is not meant to be a traditional
 social network. There is no concept of "friends", "followers",
@@ -85,7 +102,7 @@ platform.
 
 
 Notifications
--------------
+=============
 
 Notifications are displayed using alerts (push notifications) for most users.
 However, some users may not have support for this technology on their browsers
@@ -102,7 +119,7 @@ All notifications are managed by the ej_notifications app.
 
 
 Conversations
--------------
+=============
 
 Public views for displaying information about conversations.
 
@@ -193,7 +210,7 @@ Urls are implemented into the ej_clusters app.
 
 
 Help
-----
+====
 
 Urls with the intention of explaining how to use the platform. Most of those
 urls are implemented as flat pages and are stored as HTML or markdown under
@@ -213,7 +230,7 @@ All urls are implemented in the main project.
 
 
 Talks
------
+=====
 
 Rocketchat integration.
 
@@ -229,7 +246,7 @@ All urls are implemented in the ej_rocketchat app.
 
 
 Administrative tasks
---------------------
+====================
 
 All views in this section require staff permissions.
 
