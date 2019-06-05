@@ -451,7 +451,7 @@ def configure(ctx, silent=False, dev=False):
         ask = (lambda x: input(x + ' (y/n) ').lower() == 'y')
 
     if ask('\nInstall dependencies?'):
-        suffix = ' -r etc/requirements.dev.txt' if dev else ''
+        suffix = ' -r etc/requirements-dev.txt' if dev else ''
         ctx.run(f'{python} -m pip install -r etc/requirements.txt' + suffix)
 
     if ask('\nInitialize database (inv db)?'):

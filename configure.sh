@@ -5,6 +5,6 @@ if [ -z $VIRTUAL_ENV ]; then
     echo "If you have virtualenvwrapper installed, run 'mkvirtualenv ej -p /usr/bin/python3'"
     exit
 fi
-pip install invoke
+pip install invoke toml
 inv -e requirements
 inv -e configure --silent --dev
