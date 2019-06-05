@@ -441,7 +441,7 @@ def install_hooks(ctx):
 
 
 @task
-def configure(ctx, silent=False):
+def configure(ctx, silent=False, dev=False):
     """
     Install dependencies and configure a test server.
     """
@@ -451,7 +451,8 @@ def configure(ctx, silent=False):
         ask = (lambda x: input(x + ' (y/n) ').lower() == 'y')
 
     if ask('\nInstall dependencies?'):
-        ctx.run(f'{python} etc/scripts/install-deps.py')
+        suffix = ' -r etc/requirements.dev.txt' if dev else ''
+        ctx.run(f'{python} -m pip install -r etc/requirements.txt' + suffix)
 
     if ask('\nInitialize database (inv db)?'):
         db(ctx)

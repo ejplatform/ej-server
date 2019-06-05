@@ -6,4 +6,5 @@ if [ -z $VIRTUAL_ENV ]; then
     exit
 fi
 pip install invoke
-inv configure --silent
+inv -e requirements
+inv -e configure --silent --dev

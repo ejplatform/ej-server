@@ -44,8 +44,22 @@ locally before we start:
 - Invoke (>= 1.0)
 - Node.js and npm
 
-Once everything is installed, and your virtualenv is activated, just run the
-configure.sh script::
+You can install all dependencies in recent Ubuntu/Debian variants with the
+following commands::
+
+    $ sudo apt install python3-dev python3-pip virtualenvwrapper npm
+    $ sudo pip3 install invoke
+
+Once everything is installed, create and activate your virtualenv. We will create
+a new virtualenv called "ej"::
+
+    $ bash
+    $ mkvirtualenv ej -p /usr/bin/python3
+
+The new virtualenv can be activated using the command ``workon ej``, but it should
+be already activated once created.
+
+The following steps are handled by the configure.sh script::
 
     $ sh configure.sh
 
