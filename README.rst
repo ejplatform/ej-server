@@ -114,6 +114,20 @@ Documentation can be updated with `$ inv docs` and will be available at the
 `build/docs/` directory.
 
 
+Changing theme
+--------------
+
+The previous commands build EJ using the "default" theme. EJ accepts additional
+themes and currently comes pre-installed with the alternate "cpa" theme. The
+first step is to rebuild static assets::
+
+    $ inv sass -t cpa js db-assets
+
+Now run the server using the --theme flag::
+
+    $ inv run -t cpa
+
+
 Using docker
 ============
 

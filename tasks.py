@@ -283,10 +283,10 @@ def db_assets(ctx, force=False, theme=None):
     # Load assets from Django commands
     for path in pages:
         manage(ctx, 'loadpages', path=path, force=force)
-    for path in fragments:
-        manage(ctx, 'loadfragments', path=path, force=force)
-    for path in icons:
-        manage(ctx, 'loadsocialmediaicons', path=path, force=force)
+    #for path in fragments:
+    #    manage(ctx, 'loadfragments', path=path, force=force)
+    #for path in icons:
+    #    manage(ctx, 'loadsocialmediaicons', path=path, force=force)
 
 
 #
