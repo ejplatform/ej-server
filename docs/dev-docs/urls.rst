@@ -6,8 +6,8 @@ This document register the default URLs used in the platform and where to find
 them in their corresponding apps.
 
 
-Users/login (ej_users)
-======================
+Users/login (ej_users app)
+==========================
 
 Public views controlling authentication and creation of new users.
 Both login and register views accept a ?next=<url> tag that controls the
@@ -58,92 +58,75 @@ All views are included in the ``ej_accounts`` app.
 
 
 
-Profile views
-=============
+Profile views (ej_profiles)
+===========================
 
 Users cannot see each other's profiles since EJ is not meant to be a traditional
 social network. There is no concept of "friends", "followers",
 "private conversations" etc.
 
-profile/ (profile:index):
+profile/ (profile:detail):
     Show user profile.
+    Implementation :func:`ej_profiles.routes.detail`.
 profile/edit/ (profile:edit):
     Edit profile.
+    Implementation :func:`ej_profiles.routes.edit`.
 profile/contributions/ (profile:comments):
     Show statistics and information about all contributions of the user to
     conversations in the platform.
+    Implementation :func:`ej_profiles.routes.contributions`.
 
-Those URLs require login and are implemented in the ej_profiles app.
 
 
-Gamification
-............
+Gamification (ej_gamification)
+------------------------------
 
 Show gamification information for the user profile.
 
-profile/badges/ (gamification:badges)
-    List of badges for the user.
-profile/leaderboard/ (gamification:leaderboard)
-    Show the user position in the leaderboard.
-profile/powers/ (gamification:powers)
-    See all unused powers.
-profile/quests/ (gamification:quests)
-    See all open quests.
-
-Those views are implemented in the ej_gamification app.
+profile/achievements/ (gamification:badges)
+    List of points and badges for the user. Also display user position on the
+    leaderboard.
+    Implementation :func:`ej_gamification.routes.achievements`.
 
 
-Global powers
-.............
-
-Interface that users can use to manage global powers and resources in the
-platform.
-
-
-
-Notifications
-=============
-
-Notifications are displayed using alerts (push notifications) for most users.
-However, some users may not have support for this technology on their browsers
-and even the users who have, might want to keep a record of the later
-notifications in the system.
-
-profile/notifications/ (notifications:index):
-    List all unread notifications.
-profile/notifications/history/ (notifications:history):
-    List all notifications.
-
-All notifications are managed by the ej_notifications app.
-
+-- under construction
+    Global powers
+    -------------
+    |
+    Interface that users can use to manage global powers and resources in the
+    platform.
+    |
+    Notifications
+    =============
+    |
+    Notifications are displayed using alerts (push notifications) for most users.
+    However, some users may not have support for this technology on their browsers
+    and even the users who have, might want to keep a record of the later
+    notifications in the system.
+    |
+    profile/notifications/ (notifications:index):
+        List all unread notifications.
+    profile/notifications/history/ (notifications:history):
+        List all notifications.
+    |
+    All notifications are managed by the ej_notifications app.
 
 
-Conversations
-=============
+Conversations (ej_conversations)
+================================
 
 Public views for displaying information about conversations.
 
 conversations/ (conversations:list):
     List all available conversations
-conversations/<conversation>/ (conversations:conversation-detail):
+    Implementation :func:`ej_conversations.routes.list_view`.
+conversations/<id>/<slug>/ (conversations:conversation-detail):
     Detail page for an specific conversation.
-conversations/<conversation>/comments/  (conversations:comment-list):
-    Show all comments the user already voted in the given conversation.
-conversations/<conversation>/my-comments/  (conversations:user-comments):
-    Show information about all comments a user posted in a conversation.
-conversations/<conversation>/comments/<id>/ (conversations:comment-detail):
-    Show a specific comment + associated statistics.
-conversations/<conversation>/info/ (conversations:info):
-    Advanced information about conversation (statistics, graphs, etc)
-conversations/<conversation>/leaderboard/ (conversations:leaderboard):
-    Leaderboard: show a list of users sorted by rank.
-
-Those URLs are implemented in the ej_conversations app. Notice that this app
-lives in a separate repository at http://github.com/ejplatform/ej-conversations.
+    Implementation :func:`ej_conversations.routes.detail`.
 
 
-CRUD
-....
+CRUD (ej_conversations)
+-----------------------
 
 All those URLS are only available for users with permission to edit
 conversations. This can be applied to staff members or to the owner of the
@@ -151,30 +134,31 @@ conversation.
 
 conversations/create/ (conversations:create-conversation):
     Add a new conversation.
-conversations/<conversation>/edit/ (conversations:edit-conversation):
+    Implementation :func:`ej_conversations.routes.create`.
+conversations/<id>/<slug>/edit/ (conversations:edit-conversation):
     Edit conversation.
-conversations/<conversation>/moderate/ (conversations:moderate-comments):
+    Implementation :func:`ej_conversations.routes.edit`.
+conversations/<id>/<slug>/moderate/ (conversations:moderate-comments):
     Can classify all non-moderated comments.
+    Implementation :func:`ej_conversations.routes.moderate`.
 
-Those tree urls are implemented in the ej_conversations app.
 
-
-Stereotype management
-.....................
+Stereotype management (ej_clusters)
+-----------------------------------
 
 Only staff members and the conversation owner have access to those pages.
 
-conversations/<conversation>/stereotypes/ (clusters:stereotype-list):
+conversations/<id>/<slug>/stereotypes/ (clusters:stereotype-list):
     List of all stereotypes showing information about the assigned cluster and
     statistics.
-conversations/<conversation>/stereotypes/<id>/ (clusters:stereotype-vote):
+conversations/<id>/<slug>/stereotypes/<id>/ (clusters:stereotype-vote):
     Allow the given stereotype to vote in conversation.
 
 Stereotypes are implemented in ej_clusters.
 
 
 Reports
-.......
+-------
 
 Only staff members and the conversation owner have access to those pages.
 
@@ -193,7 +177,7 @@ Reports have its own app at ej_dataviz.
 
 
 Clusters
-........
+--------
 
 Display the clusters associated with a conversation. All those urls require
 authentication, but are visible to all users.
