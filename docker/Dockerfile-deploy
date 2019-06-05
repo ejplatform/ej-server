@@ -3,11 +3,13 @@ FROM ${ORG}/web:base
 
 # Copy files
 COPY ./.coveragerc /app/
-COPY ./manage.py /app/
+COPY ./*.py /app/
+COPY ./*.rst /app/
+COPY ./etc/ /app/etc/
 COPY ./docs/ /app/docs
+COPY ./locale/ /app/locale/
 COPY ./lib/ /app/lib/
 COPY ./src/ /app/src/
-COPY ./locale/ /app/locale/
 
 # Prepare assets
 RUN mkdir -p local/logs local/static/ local/media/ local/db/ \
