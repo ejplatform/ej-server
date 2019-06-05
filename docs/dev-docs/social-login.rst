@@ -2,7 +2,7 @@
 Social Login
 ============
 
-Users can login to EJ with Twitter or Facebook, too. In order to do that, you
+Users can login to EJ with Twitter, Facebook or Google, too. In order to do that, you
 need to prepare the environment and to create the social apps on the respective
 social networks.
 
@@ -40,8 +40,8 @@ Basic and add the host to "Application domains" and "Site". Add the product
 https://your-host/accounts/facebook/login/callback as a valid OAuth URI.
 
 Now, on the Django side, go to the admin interface and create a new social app:
-http://localhost:8000/admin/socialaccount/socialapp/add/. Choose "Facebook" as
-the provider, put a name like "EJ Facebook", choose the ejplatform.org.br site
+http://your-host/admin/socialaccount/socialapp/add/. Choose "Facebook" as
+the provider, put a name like "EJ Facebook", choose the your-host site
 and put the app id under "Client id" and secret key under "Secret key" fields.
 You can find the app id and secret key on the Facebook app page, under
 Configurations > Basic.
@@ -52,13 +52,14 @@ Google
 
 In order to have Google login, you need a first-level valid domain that you can
 confirm the ownership. Go go the developers console
-(https://console.developers.google.com/) and create a new project. Create a new
-credential and add https://your-host/accounts/google/login/callback/ as an
-authorized redirect URI. Remember to also add the domain as a valid domain.
+(https://console.cloud.google.com/) and create a new project. Create a new
+credential (https://console.cloud.google.com/apis/credentials) and add
+https://your-host/accounts/google/login/callback/ as an authorized redirect URI.
+Remember to also add the domain as a valid domain.
 
 Now, on the Django side, go to the admin interface and create a new social app:
-http://localhost:8000/admin/socialaccount/socialapp/add/. Choose "Google" as the
-provider, put a name like "EJ Google", choose the ejplatform.org.br site and put
+http://your-host/admin/socialaccount/socialapp/add/. Choose "Google" as the
+provider, put a name like "EJ Google", choose the your-host site and put
 the app id under "Client id" and secret key under "Secret key" fields. You can
 find the app id and secret key on the Google app page, under Credentials.
 
