@@ -452,6 +452,7 @@ def configure(ctx, silent=False, dev=False):
 
     if ask('\nInstall dependencies?'):
         suffix = ' -r etc/requirements-dev.txt' if dev else ''
+        ctx.run(f'{python} -m pip install markupsafe toolz sidekick')
         ctx.run(f'{python} -m pip install -r etc/requirements.txt' + suffix)
 
     if ask('\nInitialize database (inv db)?'):
