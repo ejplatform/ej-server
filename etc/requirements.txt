@@ -6,7 +6,7 @@ django-constance[database]
 django-rest-auth ~= 0.9.3
 django-rest-auth[with_social]
 django-allauth ~= 0.38.0
-django-taggit ~= 0.23.0
+django-taggit ~= 1.1.0
 django-autoslug ~= 1.9
 django-jsonfield ~= 1.0
 django-environ ~= 0.4.5
