@@ -43,11 +43,12 @@ locally before we start:
 - Virtualenv or virtualenvwrapper
 - Invoke (>= 1.0)
 - Node.js and npm
+- Gettext
 
 You can install all dependencies in recent Ubuntu/Debian variants with the
 following commands::
 
-    $ sudo apt install python3-dev python3-pip virtualenvwrapper npm
+    $ sudo apt install python3-dev python3-pip virtualenvwrapper npm gettext
     $ sudo pip3 install invoke
 
 Once everything is installed, create and activate your virtualenv. We will create
@@ -63,13 +64,13 @@ The following steps are handled by the configure.sh script::
 
     $ sh configure.sh
 
-This task creates a test database with a few conversations, comments and votes,
-plus several users. Notably, it automatically creates the ``admin:admin <admin@admin.com>``
-and ``user:user <user@user.com>``users.
+This task creates a test database with a few conversations, users, comments, and
+votes. Notably, it automatically creates an admin user (password:
+admin, email: admin@admin.com) a regular user (password: user, email: user@user.com).
 
-Grab a cup of coffee while it downloads and install all dependencies. If
-everything works, you should be able to run the server using the ``inv run``
-command.
+This step takes some time. Grab a cup of coffee while it downloads and install
+all dependencies. If everything works as expected, you should be able to run
+the server using the ``inv run`` command after it is finished.
 
 
 Running it
@@ -80,44 +81,31 @@ the dev server::
 
     $ inv run
 
-Before running, make sure you compiled all static assets. This command will
-compile translations, build stylesheets and JavaScript
-
-    $ inv i18n -c sass js
-
 You can control many configurations using environment variables. To run using
 the Brazilian Portuguese translation, for instance, just export the correct
 COUNTRY setting:
 
     $ export COUNTRY=brasil
 
-Tests are executed with Pytest_::
+Depending on your network configurations, you might need to set the ALLOWED_HOSTS
+setting for your Django installation. This is a basic security setting that
+controls which hosts can serve pages securely. In non-production settings, set
+DJANGO_ALLOWED_HOSTS environment variable to * to allow connections in any
+network topology.
 
-    $ pytest
+    $ DJANGO_ALLOWED_HOSTS=*
 
 Invoke manages many other important tasks, you can discover them using::
 
     $ inv -l
 
+If you are making changes to EJ codebase, do not forget to run tests frequently.
+EJ uses Pytest_::
+
+    $ pytest
+
 .. _Invoke: http://www.pyinvoke.org/
 .. _Pytest: http://pytest.org
-
-
-Semi-manual installation
--------------------------
-
-The script installs the invoke task runner, fetches all dependencies from pip,
-and initializes the database. If you prefer (or if something goes wrong with the
-previous instructions), you can do all steps manually. The first step is to
-install the Invoke_ task runner to run each step of the installation (if you are
-not familiar to Invoke, think of it a Python reinterpretation of Make. First
-install invoke, then run the "configure" task::
-
-    $ pip install invoke
-    $ inv configure
-
-It will ask a few questions and complete the installation procedure.
-
 
 Documentation
 -------------

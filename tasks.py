@@ -448,11 +448,12 @@ def configure(ctx, silent=False, dev=False):
     if silent:
         ask = (lambda x: print(x + 'yes') or True)
     else:
-        ask = (lambda x: input(x + ' (y/n) ').lower() == 'y')
+        ask = (lambda x: input(x + ' (y/n) ')[0].lower() == 'y')
 
     if ask('\nInstall dependencies?'):
         suffix = ' -r etc/requirements-dev.txt' if dev else ''
-        ctx.run(f'{python} -m pip install markupsafe toolz sidekick')
+        ctx.run(f'{python} -m pip install markupsafe toolz')
+        ctx.run(f'{python} -m pip install sidekick')
         ctx.run(f'{python} -m pip install -r etc/requirements.txt' + suffix)
 
     if ask('\nInitialize database (inv db)?'):
@@ -462,6 +463,14 @@ def configure(ctx, silent=False, dev=False):
         if ask('\nLoad fake data to database (inv db-fake)?'):
             db_fake(ctx)
 
+    if ask('\nCompile CSS resources (inv sass)?'):
+        sass(ctx)
+    if ask('\nCompile js assets? (inv js)?'):
+        js(ctx)
+    if ask('\nCompile translations (inv i18n -c)?'):
+        i18n(ctx, compile=True)
+    if ask('\nBuild documentation (inv docs)?'):
+        docs(ctx)
 
 #
 # Useful docker entry points
