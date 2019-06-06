@@ -14,6 +14,8 @@ recommended way to deploy EJ is to run each service in a separate container in
 order to provide a good level of isolation. The aforementioned services
 are organized in a simple 3-layer architecture described bellow:
 
+.. image:: img/ej_arch.svg
+
 Nginx
     Web traffic should not be handled directly by the application service.
     Gunicorn is not efficient to serve static files and an additional reverse

@@ -17,7 +17,7 @@ two callback URLs: https://your-host/accounts/twitter/login/callback/ and
 http://your-host/accounts/twitter/login/callback/.
 
 Now, on the Django side, go to the admin interface and create a new social
-app: http://localhost:8000/admin/socialaccount/socialapp/add/. Choose "Twitter"
+app: http://your-host/admin/socialaccount/socialapp/add/. Choose "Twitter"
 as the provider, put a name like "EJ Twitter", choose the ejplatform.org.br site
 and put the consumer key under "Client id" and consumer secret under "Secret key"
 fields. You can find the consumer key and consumer secret on the Twitter app page,
@@ -68,6 +68,6 @@ Other information
 =================
 
 For all cases, for local development you may need to set, at
-``src/ej/settings/__init__.py``, ACCOUNT_EMAIL_VERIFICATION = 'none'.
+``src/ej/settings/__init__.py``, ``ACCOUNT_EMAIL_VERIFICATION = 'none'``.
 
 More details at https://django-allauth.readthedocs.io/en/latest/providers.html.

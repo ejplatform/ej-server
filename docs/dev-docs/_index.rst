@@ -13,5 +13,6 @@ Developer's Guide
    social-login
    themes
    i18n
+   processes
    api-docs
    contributing

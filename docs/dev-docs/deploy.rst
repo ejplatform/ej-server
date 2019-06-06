@@ -36,11 +36,13 @@ Now execute the commands to populate the database::
 
 (you can also add db-fake to add fake data and test users).
 
-Fire all containers using::
+Finally, fire all containers using::
 
     $ inv docker up --deploy
 
 The EJ instance should be available at port 80.
+
+**Observation**
 
 The ``inv docker *`` tasks are simply alias to longer docker-compose commands.
 If you want to discover the equivalent docker command, add the --dry-run option
@@ -67,7 +69,6 @@ we recommend to store the environment files on a private fork of the main
 repository.
 
 .. _Environment Variables: environment-variables.html
-
 
 
 Rocket.Chat integration
