@@ -1,199 +1,175 @@
 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Login social &#8212; Documentação Empurrando Juntos 2.0rc1</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Índice" href="../genindex.html" />
+    <link rel="search" title="Pesquisar" href="../search.html" />
+    <link rel="next" title="Temas" href="themes.html" />
+    <link rel="prev" title="Implantação" href="deploy.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
+  </head><body>
+  
 
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
 
-
-
-
-
-
-
-
-
-
-
-    <!DOCTYPE html>
-    <html lang="pt-br">
-
-    <head>
-        <meta charset="utf-8">
-        <title>EJ Documentation</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        
-            <!-- CSS -->
-            <link rel="stylesheet"
-                  href="https://fonts.googleapis.com/css?family=Patua+One|Raleway:400,600,700&subset=latin-ext">
-            <link rel="stylesheet" href="https://unpkg.com/unpoly@0.54.0/dist/unpoly.min.css"
-                  integrity="sha384-zsXMcPyhYSZEF/yA0Rprx9nn7gnz84QyiSrxSH5xuo0DalUAlfSmfsxILtkg5fJ/"
-                  crossorigin="anonymous">
-            <link rel="stylesheet" href="/static/css/fontawesome-all.min.css">
+          <div class="body" role="main">
             
-            
-            <link rel="stylesheet" href="/static/js/jquery-ui/jquery-ui.min.css">
-            <link rel="stylesheet" href="/static/js/jquery-ui/jquery-ui.structure.min.css">
-            <link rel="stylesheet" href="/static/css/main.css">
-        
-
-        
-            <!-- Javascript -->
-            <!--[if lt IE 9]>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
-            <![endif]-->
-
-            
-            <script
-                    src="https://code.jquery.com/jquery-3.3.1.min.js"
-                    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-                    crossorigin="anonymous"></script>
-            <script src="https://unpkg.com/unpoly@0.54.0/dist/unpoly.min.js"
-                    integrity="sha384-6QMkTrFSjoO7UIWKZ1oYV4FCzxclb0Q4gP+TJzTZB93bAUeffVvNLblrRevbIkIw"
-                    crossorigin="anonymous"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js" defer></script>
-            <script src="/static/js/jquery-ui/jquery-ui.min.js" defer></script>
-            <script src="/static/js/main.js" defer></script>
-            <script src="/static/js/hicontrast.js"></script>
-            <script src="/static/js/specific-pages.js"></script>
-            <script src="/static/js/utils.js"></script>
-            <script src="/static/js/web-share.js"></script>
-            <script src="/static/js/fontScale.js" defer></script>
-            <script src="/static/js/comment-form-animation.js" defer></script>
-            <script src="/static/js/bundle.js" defer></script>
-        
-
-        <!-- Favicons -->
-        <link rel="icon" href="/static/img/logo/logo.svg"/>
-        <link rel="apple-touch-icon" sizes="57x57" href="/static/img/logo/icon-57.png">
-        <link rel="apple-touch-icon" sizes="72x72" href="/static/img/logo/icon-72.png">
-        <link rel="apple-touch-icon" sizes="114x114" href="/static/img/logo/icon-114.png">
-        <link rel="icon" type="image/png" sizes="192x192" href="/static/img/logo/icon-192.png">
-        <link rel="icon" type="image/png" sizes="32x32" href="/static/img/logo/icon-32.png">
-        <link rel="icon" type="image/png" sizes="96x96" href="/static/img/logo/icon-96.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/static/img/logo/icon-16.png">
-        <link rel="shortcut icon" href="/static/img/logo/favicon.ico"/>
-        <meta name="msapplication-TileImage" content="/static/img/logo/icon-144.png">
-        <meta name="msapplication-TileColor" content="#ffffff">
-        <meta name="image" content="/static/img/logo/logo.svg">
-
-        <!-- PWA -->
-        <link rel="manifest" href="/static/manifest.json">
-        <meta name="theme-color" content="#fff">
-
-        <!-- Cache busting metas -->
-        <meta http-equiv="cache-control" content="no-cache">
-        <meta http-equiv="expires" content="120">
-
-        <!-- Twitter -->
-        <meta name="twitter:card" content="summary">
-
-        
-            <!-- Open Graph general (Facebook, Pinterest & Google+) -->
-            <meta property="og:type" content="website">
-            <meta property="og:title" content="EJ Documentation">
-            <meta property="og:image" content="/static/img/logo/logo.svg">
-            
-            <meta property="og:site_name" content="EJ">
-            <meta property="og:locale" content="pt_BR">
-            
-            <meta property="og:image:type" content="image/svg">
-            <meta property="og:image:width" content="1200">
-            <meta property="og:image:height" content="630">
-
-            <!-- Twitter && Telegram -->
-            <meta name="twitter:title" content="EJ Documentation">
-        
-    </head>
-
-    <body class="Docs ">
-
-
-
-  <div class="section" id="login-social">
-<h1>Login Social<a class="headerlink" href="#login-social" title="Permalink to this headline">¶</a></h1>
-<p>Usuários podem entrar no EJ com a conta do Twitter ou Facebook, também. Para isso, é necessário preparar o ambiente e criar os apps sociais nas respectivas redes sociais.</p>
+  <div class="section" id="social-login">
+<h1>Login Social<a class="headerlink" href="#social-login" title="Permalink to this headline">¶</a></h1>
+<p>Ususários também podem fazer login no EJ com o Twitter, o Facebook ou o Google. Para fazer isso, você precisa preparar o ambiente e criar os aplicativos sociaisnas respectivas redes sociais.</p>
 <div class="section" id="twitter">
 <h2>Twitter<a class="headerlink" href="#twitter" title="Permalink to this headline">¶</a></h2>
-<p>Primeiro, vá para a interface de desenvolvedor do Twitter (<a class="reference external" href="https://apps.twitter.com">https://apps.twitter.com</a>) e crie um app. O ponto principal é definir as “Callback URLs” e marcar a caixa “Allow this application to be used to Sign in with Twitter”. Por favor adicione duas URLs de callback: <a class="reference external" href="https://your-host/accounts/twitter/login/callback/">https://your-host/accounts/twitter/login/callback/</a> e <a class="reference external" href="http://your-host/accounts/twitter/login/callback/">http://your-host/accounts/twitter/login/callback/</a>.</p>
-<p>Agora, no Django, vá para a interface de administração e crie um novo aplicativo social: <a class="reference external" href="http://localhost:8000/admin/socialaccount/socialapp/add/">http://localhost:8000/admin/socialaccount/socialapp/add/</a>. Escolha o provedor “Twitter”, coloque um nome tipo “EJ Twitter”, escolha o site ejplatform.org.br e coloque a consumer key no campo “Client id” e consumer secret no campo “Secret key”. Você pode encontrar a consumer key e consumer secret na página do aplicativo do Twitter, na aba “Keys and Access Tokens”.</p>
+<p>Primeiro, vá para a interface do desenvolvedor do Twitter (<a class="reference external" href="https://apps.twitter.com"> https://apps.twitter.com </a>) e crie um aplicativo. O ponto importante é configurar os “URLs de retorno” e marcar a caixa de seleção “Permitir que este aplicativo seja usado para entrar no Twitter”. Adicione
+duas URLs de retorno: <a class="reference external" href="https://your-host/accounts/twitter/login/callback/">https://your-host/accounts/twitter/login/callback/</a> e
+<a class="reference external" href="http://your-host/accounts/twitter/login/callback/">http://your-host/accounts/twitter/login/callback/</a>.</p>
+<p>Agora, no Django, vá para a interface de administração e crie um novo app social: <a class="reference external" href="http://your-host/admin/socialaccount/socialapp/add/">http://your-host/admin/socialaccount/socialapp/add/</a>. Escolha “Twitter”
+como provedor, coloque um nome como “EJ Twitter”, escolha o site (ex: ejplatform.org.br)
+e coloque a chave do consumidor em “Client id” e o segredo do consumidor em “Secret key”. Você pode encontrar a chave do consumidor e o segredo do consumidor na página do aplicativo do Twitter,
+na guia “Chaves e tokens de acesso”.</p>
 </div>
 <div class="section" id="facebook">
 <h2>Facebook<a class="headerlink" href="#facebook" title="Permalink to this headline">¶</a></h2>
-<p>Importante ter em mente: Facebook apenas permite HTTPS e não permite localhost. Então, para desenvolvimento local, sugerimos ferramentas como Local Tunnel (<a class="reference external" href="http://localtunnel.github.io/www/">http://localtunnel.github.io/www/</a>) ou Ngrok (<a class="reference external" href="https://ngrok.com/">https://ngrok.com/</a>) para ter uma URL HTTPS pública que redireciona para sua instância local do EJ. Lembre-se de adicionar este host ao DJANGO_ALLOWED_HOSTS.</p>
-<p>Uma vez com o host em mãos, vá para a interface de gerenciamento de aplicativos do Facebook (<a class="reference external" href="https://developers.facebook.com/apps">https://developers.facebook.com/apps</a>) e adicione um novo aplicativo web. Vá para Configurações &gt; Básico e adicione o host a “Domínios do aplicativo” e “Site”. Adicione o produto “Login do Facebook” à sua aplicação e, nas suas configurações, adicione <a class="reference external" href="https://your-host/accounts/facebook/login/callback">https://your-host/accounts/facebook/login/callback</a> como um URIs de redirecionamento do OAuth válido.</p>
-<p>Agora, no Django, vá para a interface de administração e crie um novo aplicativo social: <a class="reference external" href="http://localhost:8000/admin/socialaccount/socialapp/add/">http://localhost:8000/admin/socialaccount/socialapp/add/</a>. Escolha o provedor “Facebook”, coloque um nome tipo “EJ Facebook”, escolha o site ejplatform.org.br e coloque o id do aplicativo no campo “Client id” e a chave secreta do aplicativo no campo “Secret key”. Você pode encontrar ambos na página do aplicativo do Facebook, em Configurações &gt; Básico.</p>
+<p>É importante ter em mente: o Facebook só permite HTTPS e não permite
+host local. Então, para desenvolvimento local, sugerimos usar uma ferramenta como o Local
+Tunnel (<a class="reference external" href="http://localtunnel.github.io/www/">http://localtunnel.github.io/www/</a>) ou Ngrok (<a class="reference external" href="https://ngrok.com/">https://ngrok.com/</a>) para obter um URL HTTPS público que redirecione para sua instância EJ local. Lembre-se
+para adicionar esse host ao DJANGO_ALLOWED_HOSTS.</p>
+<p>Uma vez que você tem o host, vá para a página de gerenciamento de aplicativos do Facebook
+(<a class="reference external" href="https://developers.facebook.com/apps">https://developers.facebook.com/apps</a>) e adicione um novo aplicativo web. Vá para Configurações &gt;
+Básico e adicione o host a "domínios de aplicação" e "Site". Adicione o produto
+"Login do Facebook" ao seu aplicativo e, em suas configurações, adicione
+<a class="reference external" href="https://your-host/accounts/facebook/login/callback">https://your-host/accounts/facebook/login/callback</a> como um URI OAuth válido.</p>
+<p>Agora, no lado Django, vá para a interface de administração e crie um novo aplicativo social:
+<a class="reference external" href="http://your-host/admin/socialaccount/socialapp/add/">http://your-host/admin/socialaccount/socialapp/add/</a>. Escolha "Facebook" como
+o provedor, coloque um nome como "EJ Facebook", escolha o site do seu host
+e coloque o id do aplicativo sob a chave "Cliente id" e secreta sob os campos "Chave Secreta".
+Você pode encontrar a Id do aplicativo e a chave secreta na página do aplicativo do Facebook, em
+Configurações &gt; Basic.</p>
 </div>
 <div class="section" id="google">
-<h2>Google<a class="headerlink" href="#google" title="Permalink to this headline">¶</a></h2>
-<p>Para permitir login via conta do Google, é necessário um domínio de primeiro nível válido em que você possa confirmar a propriedade. Vá para a interface de administração de aplicativos (<a class="reference external" href="https://console.developers.google.com/">https://console.developers.google.com/</a>) e crie um projeto. Crie uma nova credencial e adicione <a class="reference external" href="https://your-host/accounts/google/login/callback/">https://your-host/accounts/google/login/callback/</a> como URI de redirecionamento autorizada. Lembre-se também de adicionar o domínio como um domínio válido.</p>
-<p>Agora, no Django, vá para a interface de administração e crie um novo aplicativo social: <a class="reference external" href="http://localhost:8000/admin/socialaccount/socialapp/add/">http://localhost:8000/admin/socialaccount/socialapp/add/</a>. Escolha o provedor “Google”, coloque um nome tipo “EJ Google”, escolha o site ejplatform.org.br e coloque o id do aplicativo no campo “Client id” e a chave secreta do aplicativo no campo “Secret key”. Você pode encontrar ambos na página do aplicativo do Google, em Credenciais.</p>
+<h2>Google <a class="headerlink" href="#google" title="Permalink to this headline"> ¶ </a></h2>
+<p>Para ter o login do Google, você precisa de um domínio de primeiro nível válido que possa
+confirmar a propriedade. Vá para o console de desenvolvedores
+(<a class="reference external" href="https://console.cloud.google.com/">https://console.cloud.google.com/</a>) e crie um novo projeto. Crie uma nova credencial
+(<a class="reference external" href="https://console.cloud.google.com/apis/credentials">https://console.cloud.google.com/apis/credentials</a>) e adicione
+<a class="reference external" href="https://your-host/accounts/google/login/callback/">https://your-host/accounts/google/login/callback/</a> como um URI de redirecionamento autorizado.
+Lembre-se de adicionar um domínio válido.</p>
+<p>Agora, no lado Django, vá para a interface de administração e crie um novo aplicativo social:
+<a class="reference external" href="http://your-host/admin/socialaccount/socialapp/add/">http://your-host/admin/socialaccount/socialapp/add/</a>. Escolha "Google" como o provedor, coloque um nome como "EJ Google", escolha o site do seu host e coloque
+o ID do aplicativo em "ID do cliente" e a chave secreta em "Chave secreta". É possível
+encontrar a Id do aplicativo e a chave secreta na página do Google App, em credenciais.</p>
 </div>
-<div class="section" id="outras-informacoes">
-<h2>Outras informações<a class="headerlink" href="#outras-informacoes" title="Permalink to this headline">¶</a></h2>
-<p>Para todos os casos, para desenvolvimento local, você pode também precisar definir, em src/ej/settings/__init__.py, ACCOUNT_EMAIL_VERIFICATION = ‘none’.</p>
+<div class="section" id="other-information">
+<h2>Outras informações<a class="headerlink" href="#other-information" title="Permalink to this headline">¶</a></h2>
+<p>Em todos os casos, para desenvolvimento local você pode precisar definir, em
+<code class="docutils literal notranslate"><span class="pre">src/ej/settings/__init__.py</span></code>, <code class="docutils literal notranslate"><span class="pre">ACCOUNT_EMAIL_VERIFICATION</span> <span class="pre">=</span> <span class="pre">'none'</span></code>.</p>
 <p>Mais detalhes em <a class="reference external" href="https://django-allauth.readthedocs.io/en/latest/providers.html">https://django-allauth.readthedocs.io/en/latest/providers.html</a>.</p>
 </div>
 </div>
 
 
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Empurrando Juntos</a></h1>
 
+
+
+
+
+
+
+
+<h3>Navegação</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../user-guide/_index.html">Guia do usuário</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="_index.html">Guia do desenvolvedor</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="quick-start.html">Início rápido</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html">Arquitetura</a></li>
+<li class="toctree-l2"><a class="reference internal" href="urls.html">Estrutura de URLs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environment-variables.html">Variáveis de Ambiente</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deploy.html">Implantação</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Login social</a></li>
+<li class="toctree-l2"><a class="reference internal" href="themes.html">Temas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="i18n.html">Internacionalização</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-docs.html">Documentação da API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html">Contribuindo para EJ</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../i18n/index.html">Traduções</a></li>
+</ul>
+
+<div class="relations">
+<h3>Tópicos Relacionados</h3>
+<ul>
+  <li><a href="../index.html">Visão geral da documentação</a><ul>
+  <li><a href="_index.html">Guia do desenvolvedor</a><ul>
+      <li>Anterior: <a href="deploy.html" title="previous chapter">Implantação</a></li>
+      <li>Próximo: <a href="themes.html" title="next chapter">Temas</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Pesquisa rápida</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Ir" />
+      <input type="hidden" name="check_keywords" value="sim" />
+      <input type="hidden" name="area" value="padrão" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, EJ.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/dev-docs/social-login.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
 
     
 
     
-        <!-- Google Analytics -->
-        <script defer>
-            (function (i, s, o, g, r, a, m) {
-                i['GoogleAnalyticsObject'] = r;
-                i[r] = i[r] || function () {
-                    (i[r].q = i[r].q || []).push(arguments)
-                }, i[r].l = 1 * new Date();
-                a = s.createElement(o), m = s.getElementsByTagName(o)[0];
-                a.async = 1;
-                a.src = g;
-                m.parentNode.insertBefore(a, m)
-            })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
-            ga('create', 'UA-104880284-1', 'auto');
-        </script>
-
-        
-
-        <!-- Run AJAX-loaded scripts -->
-        <script>
-            function runRemoteScripts() {
-                var scripts = document.getElementsByClassName('remoteScript');
-                for (var i = 0; i < scripts.length; i++) {
-                    var id = 'script-' + scripts[i].getAttribute('id');
-                    if (document.getElementById(id)) {
-                        document.getElementById(id).outerHTML = '';
-                    }
-                    var script = document.createElement('script');
-                    script.id = id;
-                    script.type = 'text/javascript';
-                    var src = scripts[i].getAttribute('data-script-src');
-                    if (!!src) {
-                        script.src = src;
-                    }
-                    else {
-                        script.text = scripts[i].innerHTML;
-                    }
-                    document.getElementsByTagName('body')[0].appendChild(script);
-                }
-            }
-
-            window.onload = function () {
-                checkHicontrast();
-                runRemoteScripts();
-                checkFontSize();
-                up.on('up:fragment:inserted', function (event, fragment) {
-                    runRemoteScripts();
-                    checkHicontrast();
-                    checkSpecificPages(fragment);
-                    enableFadeBottomDiv();
-                });
-            };
-        </script>
-    
-
-    </body>
-    </html>
+  </body>
+</html>

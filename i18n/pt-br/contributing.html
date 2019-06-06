@@ -1,214 +1,181 @@
 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Contribuindo para a EJ &#8212; Empurrando juntos 2.0 RC1 documentação</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Índice" href="../genindex.html" />
+    <link rel="search" title="Pesquisar" href="../search.html" />
+    <link rel="next" title="Traduções" href="../i18n/index.html" />
+    <link rel="prev" title="Documentação da API" href="api-docs.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
+  </head><body>
+  
 
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
 
-
-
-
-
-
-
-
-
-
-
-    <!DOCTYPE html>
-    <html lang="pt-br">
-
-    <head>
-        <meta charset="utf-8">
-        <title>EJ Documentation</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        
-            <!-- CSS -->
-            <link rel="stylesheet"
-                  href="https://fonts.googleapis.com/css?family=Patua+One|Raleway:400,600,700&subset=latin-ext">
-            <link rel="stylesheet" href="https://unpkg.com/unpoly@0.54.0/dist/unpoly.min.css"
-                  integrity="sha384-zsXMcPyhYSZEF/yA0Rprx9nn7gnz84QyiSrxSH5xuo0DalUAlfSmfsxILtkg5fJ/"
-                  crossorigin="anonymous">
-            <link rel="stylesheet" href="/static/css/fontawesome-all.min.css">
+          <div class="body" role="main">
             
-            
-            <link rel="stylesheet" href="/static/js/jquery-ui/jquery-ui.min.css">
-            <link rel="stylesheet" href="/static/js/jquery-ui/jquery-ui.structure.min.css">
-            <link rel="stylesheet" href="/static/css/main.css">
-        
-
-        
-            <!-- Javascript -->
-            <!--[if lt IE 9]>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
-            <![endif]-->
-
-            
-            <script
-                    src="https://code.jquery.com/jquery-3.3.1.min.js"
-                    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-                    crossorigin="anonymous"></script>
-            <script src="https://unpkg.com/unpoly@0.54.0/dist/unpoly.min.js"
-                    integrity="sha384-6QMkTrFSjoO7UIWKZ1oYV4FCzxclb0Q4gP+TJzTZB93bAUeffVvNLblrRevbIkIw"
-                    crossorigin="anonymous"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js" defer></script>
-            <script src="/static/js/jquery-ui/jquery-ui.min.js" defer></script>
-            <script src="/static/js/main.js" defer></script>
-            <script src="/static/js/hicontrast.js"></script>
-            <script src="/static/js/specific-pages.js"></script>
-            <script src="/static/js/utils.js"></script>
-            <script src="/static/js/web-share.js"></script>
-            <script src="/static/js/fontScale.js" defer></script>
-            <script src="/static/js/comment-form-animation.js" defer></script>
-            <script src="/static/js/bundle.js" defer></script>
-        
-
-        <!-- Favicons -->
-        <link rel="icon" href="/static/img/logo/logo.svg"/>
-        <link rel="apple-touch-icon" sizes="57x57" href="/static/img/logo/icon-57.png">
-        <link rel="apple-touch-icon" sizes="72x72" href="/static/img/logo/icon-72.png">
-        <link rel="apple-touch-icon" sizes="114x114" href="/static/img/logo/icon-114.png">
-        <link rel="icon" type="image/png" sizes="192x192" href="/static/img/logo/icon-192.png">
-        <link rel="icon" type="image/png" sizes="32x32" href="/static/img/logo/icon-32.png">
-        <link rel="icon" type="image/png" sizes="96x96" href="/static/img/logo/icon-96.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/static/img/logo/icon-16.png">
-        <link rel="shortcut icon" href="/static/img/logo/favicon.ico"/>
-        <meta name="msapplication-TileImage" content="/static/img/logo/icon-144.png">
-        <meta name="msapplication-TileColor" content="#ffffff">
-        <meta name="image" content="/static/img/logo/logo.svg">
-
-        <!-- PWA -->
-        <link rel="manifest" href="/static/manifest.json">
-        <meta name="theme-color" content="#fff">
-
-        <!-- Cache busting metas -->
-        <meta http-equiv="cache-control" content="no-cache">
-        <meta http-equiv="expires" content="120">
-
-        <!-- Twitter -->
-        <meta name="twitter:card" content="summary">
-
-        
-            <!-- Open Graph general (Facebook, Pinterest & Google+) -->
-            <meta property="og:type" content="website">
-            <meta property="og:title" content="EJ Documentation">
-            <meta property="og:image" content="/static/img/logo/logo.svg">
-            
-            <meta property="og:site_name" content="EJ">
-            <meta property="og:locale" content="pt_BR">
-            
-            <meta property="og:image:type" content="image/svg">
-            <meta property="og:image:width" content="1200">
-            <meta property="og:image:height" content="630">
-
-            <!-- Twitter && Telegram -->
-            <meta name="twitter:title" content="EJ Documentation">
-        
-    </head>
-
-    <body class="Docs ">
-
-
-
-  <div class="section" id="adicionar-funcionalidades-no-ej-server">
-<h1>Adicionar funcionalidades no ej-server<a class="headerlink" href="#adicionar-funcionalidades-no-ej-server" title="Permalink to this headline">¶</a></h1>
-<p>Para cada issue a ser resolvida, seguir o seguinte procedimento:</p>
+  <div class="section" id="contributing-to-ej">
+<h1>Contribuindo para EJ<a class="headerlink" href="#contributing-to-ej" title="Permalink to this headline"></a></h1>
+<p>O repositório principal do EJ usa o "master" como principal ramificação de desenvolvimento e tags para releases estáveis. Geralmente, queremos mover o código para a master o mais rápido possível, mas
+precisamos de alguma disciplina para fazê-lo funcionar. A master é bloqueada e envios
+de novos recursos são feitos usando pull requests.</p>
+<p>Para cada problema ser resolvido, siga o procedimento abaixo:</p>
 <ul>
-<li><p class="first">Caso seu ambiente de desenvolvimento ainda não esteja preparado,
-então clone o repositório, prepare ele conforme é explicado no
-<a class="reference external" href="README.rst">README.rst</a> e instale os hooks para checar seu código com:</p>
+<li><p class="first">No caso do seu ambiente de desenvolvimento ainda não estar construído, clone o repositório, e siga o guia de instalação em <a class="reference external" href="README.rst"> README.rst </a>. Instale os ganchos de commit
+para verificar estatisticamente seu código antes de cada commit:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ inv install-hooks
 </pre></div>
 </div>
 </li>
-<li><p class="first">Mude a branch local para <code class="docutils literal notranslate"><span class="pre">dev</span></code> ou qualquer outra que queira criar
-para resolver sua issue específica. E.g.:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git checkout dev
+<li><p class="first">Faça o checkout para um ramo que você criou para resolver seu problema. Para coisas simples,
+use o ramo genérico <code class="docutils literal notranslate"><span class="pre"> develop </span></code>, caso contrário, descreva o que você vai fazer
+por exemplo:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git checkout -b facebook-login
 </pre></div>
 </div>
 </li>
-<li><p class="first">Sempre rode os testes antes de fazer qualquer commit (rode mesmo
-porque seu PR não será aceito se seus testes não estiverem passando!):</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ inv test
+<li><p class="first">Sempre execute todos os testes antes de qualquer commit, caso contrário seu pull request não será mesclado!</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pytest   # backend tests
 </pre></div>
 </div>
 </li>
-<li><p class="first">Ao terminar sua issue, para enviar para a branch MASTER, abra um
-ticket de pull request no github com o sentido (base &lt;- head):</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ejplatform</span><span class="o">/</span><span class="n">ej</span><span class="o">-</span><span class="n">server</span><span class="o">/</span><span class="n">master</span> <span class="o">&lt;-</span> <span class="n">ejplatform</span><span class="o">/</span><span class="n">ej</span><span class="o">-</span><span class="n">server</span><span class="o">/</span><span class="n">dev</span>
+<li><p class="first">Após terminar, abra um pull request para a master:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ejplatform</span><span class="o">/</span><span class="n">ej</span><span class="o">-</span><span class="n">server</span><span class="o">/&lt;</span><span class="n">your</span><span class="o">-</span><span class="n">branch</span><span class="o">&gt;</span>  <span class="o">==&gt;</span>  <span class="n">ejplatform</span><span class="o">/</span><span class="n">ej</span><span class="o">-</span><span class="n">server</span><span class="o">/</span><span class="n">master</span>
 </pre></div>
 </div>
+<p>e espere até que Travis CI, GitLab CI e Code Clima execute todos os testes de integração.
+Seu PR deve ter uma pequena explicação sobre o que ele faz de preferência com um link
+para a issue original. Por favor, diga explicitamente se o PR fecha essa issso
+ou não e mova o problema para o slot apropriado no quadro <a class="reference external" href="https://github.com/ejplatform/ej-server/projects/1">Projetos</a>.</p>
 </li>
-<li><p class="first">Espere o Travis CI, GitLab CI e o Code Climate executar os testes de
-integração</p>
+<li><p class="first">Qualquer colaborador pode mesclar seu PR após os testes passados. Idealmente, podemos usar
+um segundo par de olhos para rever o código, especialmente para código complicado. Mas, se
+Você está com pressa, você pode aceitar o seu próprio PR.</p>
 </li>
-<li><p class="first">Se os testes passarem, você ou outro contribuidor estarão livres para
-aceitar seu PR :rocket:</p>
-</li>
-<li><p class="first">Se a branch que criou não for a <code class="docutils literal notranslate"><span class="pre">dev</span></code> lembre-se de fechá-la após
-seu PR ser aceito!</p>
+<li><p class="first">Se alterações foram feitas em um branch diferente de <code class="docutils literal notranslate"><span class="pre">dev</span></code>, então exclua-o depois de sua PR ser mesclada.</p>
 </li>
 </ul>
+<div class="section" id="what-should-be-committed-directly-to-dev">
+<h2>O que deve ser cometido diretamente para dev?<a class="headerlink" href="#what-should-be-committed-directly-to-dev" title="Permalink to this headline"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre"> dev </span></code> é o ramo para pequenas contribuições de manutenção e é provável que mais de um desenvolvedor estará trabalhando nele simultaneamente.
+Trabalho aceitável para fazer em <code class="docutils literal notranslate"><span class="pre">dev</span></code> inclui:</p>
+<ul class="simple">
+<li>Pequenas correções de bug que afetam apenas algumas funções em um único arquivo.</li>
+<li>Pequenos ajustes em modelos CSS e HTML.</li>
+<li>Escrever novos testes.</li>
+<li>Refatorar partes pequenas do código para aumentar a qualidade do código ou o desempenho.</li>
+<li>Implementação de recursos simples isolados que não afetam outras partes
+do sistema (ou seja, criar uma nova view ou api)</li>
+<li>Atualiza os arquivos de tradução .po.</li>
+<li>Atualiza a documentação.</li>
+</ul>
+</div>
 </div>
 
 
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Empurrando Juntos</a></h1>
 
+
+
+
+
+
+
+
+<h3>Navegação</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../user-guide/_index.html">Guia do usuário</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="_index.html">Guia do desenvolvedor</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="quick-start.html">Início rápido</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html">Arquitetura</a></li>
+<li class="toctree-l2"><a class="reference internal" href="urls.html">Estrutura de URLs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environment-variables.html">Variáveis de Ambiente</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deploy.html">Implantação</a></li>
+<li class="toctree-l2"><a class="reference internal" href="social-login.html">Login social</a></li>
+<li class="toctree-l2"><a class="reference internal" href="themes.html">Temas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="i18n.html">Internacionalização</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-docs.html">Documentação da API</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Contribuindo para EJ</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../i18n/index.html">Traduções</a></li>
+</ul>
+
+<div class="relations">
+<h3>Tópicos Relacionados</h3>
+<ul>
+  <li><a href="../index.html">Visão geral da documentação</a><ul>
+  <li><a href="_index.html">Guia do desenvolvedor</a><ul>
+      <li>Anterior: <a href="api-docs.html" title="previous chapter">Documentação da API</a></li>
+      <li>Próximo: <a href="../i18n/index.html" title="next chapter">Traduções</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Pesquisa rápida</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Ir" />
+      <input type="hidden" name="check_keywords" value="sim" />
+      <input type="hidden" name="area" value="padrão" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, EJ.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/dev-docs/contributing.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
 
     
 
     
-        <!-- Google Analytics -->
-        <script defer>
-            (function (i, s, o, g, r, a, m) {
-                i['GoogleAnalyticsObject'] = r;
-                i[r] = i[r] || function () {
-                    (i[r].q = i[r].q || []).push(arguments)
-                }, i[r].l = 1 * new Date();
-                a = s.createElement(o), m = s.getElementsByTagName(o)[0];
-                a.async = 1;
-                a.src = g;
-                m.parentNode.insertBefore(a, m)
-            })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
-            ga('create', 'UA-104880284-1', 'auto');
-        </script>
-
-        
-
-        <!-- Run AJAX-loaded scripts -->
-        <script>
-            function runRemoteScripts() {
-                var scripts = document.getElementsByClassName('remoteScript');
-                for (var i = 0; i < scripts.length; i++) {
-                    var id = 'script-' + scripts[i].getAttribute('id');
-                    if (document.getElementById(id)) {
-                        document.getElementById(id).outerHTML = '';
-                    }
-                    var script = document.createElement('script');
-                    script.id = id;
-                    script.type = 'text/javascript';
-                    var src = scripts[i].getAttribute('data-script-src');
-                    if (!!src) {
-                        script.src = src;
-                    }
-                    else {
-                        script.text = scripts[i].innerHTML;
-                    }
-                    document.getElementsByTagName('body')[0].appendChild(script);
-                }
-            }
-
-            window.onload = function () {
-                checkHicontrast();
-                runRemoteScripts();
-                checkFontSize();
-                up.on('up:fragment:inserted', function (event, fragment) {
-                    runRemoteScripts();
-                    checkHicontrast();
-                    checkSpecificPages(fragment);
-                    enableFadeBottomDiv();
-                });
-            };
-        </script>
-    
-
-    </body>
-    </html>
+  </body>
+</html>

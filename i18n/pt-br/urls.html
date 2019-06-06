@@ -1,0 +1,336 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Estrutura de URL &#8212; Empurrando Juntos 2.0rc1 documentação</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Índice" href="../genindex.html" />
+    <link rel="search" title="Pesquisar" href="../search.html" />
+    <link rel="next" title="Variáveis de Ambiente" href="environment-variables.html" />
+    <link rel="prev" title="Arquitetura" href="architecture.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="url-structure">
+<h1>Estrutura de URL <a class="headerlink" href="#url-structure" title="Permalink to this headline"> ¶ </a></h1>
+<p>Esse documento registra as URLs padrão usada na plataforma e onde encontrá-las em seus aplicativos correspondentes.</p>
+<div class="section" id="users-login-ej-users-app">
+<h2>Usuários/login (ej_users app)<a class="headerlink" href="#users-login-ej-users-app" title="Permalink to this headline">¶</a></h2>
+<p>Views públicas controlando a autenticação e a criação de novos usuários.
+Tanto as views de login como de registro aceitam uma tag ?next=&lt;url&gt; que controla a página de redirecionamento.
+.</p>
+<div class="section" id="actions-that-do-not-require-authentication">
+<h3>Ações que não requerem autenticação <a class="headerlink" href="#actions-that-do-not-require-authentication" title="Permalink to this headline"> ¶ </a></h3>
+<dl class="docutils">
+<dt>login/ (auth:login):</dt>
+<dd>Página de login.
+Implementação <code class="xref py py-func docutils literal notranslate"><span class="pre">ej_users.routes.login()</span></code>.</dd>
+<dt>register/ (auth:register):</dt>
+<dd>Registrar um novo usuário.
+Implementação <code class="xref py py-func docutils literal notranslate"><span class="pre">ej_users.routes.register()</span></code>.</dd>
+<dt>recover-password/ (auth:recover-password):</dt>
+<dd>Recuperar a senha de usuário.
+Implementação <code class="xref py py-func docutils literal notranslate"><span class="pre">ej_users.routes.recover_password()</span></code></dd>
+<dt>recover-password/&lt;token&gt; (auth:recover-password-token):</dt>
+<dd>URL enviada por e-mail após o usuário solicitar uma redefinição de senha.
+Implementação <code class="xref py py-func docutils literal notranslate"><span class="pre">ej_users.routes.recover_password_token()</span></code>.</dd>
+<dt>login/api-key/ (auth:api-key):</dt>
+<dd>Autorização baseada na API. Usado pela integração com o Rocket.Chat.
+Implementação <code class="xref py py-func docutils literal notranslate"><span class="pre">ej_users.routes.login()</span></code>.</dd>
+</dl>
+</div>
+<div class="section" id="actions-that-require-authentication">
+<h3>Ações que requerem autenticação<a class="headerlink" href="#actions-that-require-authentication" title="Permalink to this headline">¶</a></h3>
+<dl class="docutils">
+<dt>account/ (account:index):</dt>
+<dd>Gerenciar ações básicas de conta, como redefinição de senha, redefinição de e-mail, etc.
+Implementação <code class="xref py py-func docutils literal notranslate"><span class="pre">ej_users.routes_account.index()</span></code>.</dd>
+<dt>account/logout/ (account:logout):</dt>
+<dd>Encerrar sessão de usuário.
+Implementação <code class="xref py py-func docutils literal notranslate"><span class="pre">ej_users.routes_account.logout()</span></code>.</dd>
+<dt>account/remove/ (account:remove-account):</dt>
+<dd>Remover conta de usuário. Esta é uma operação não reversível que o usuário
+deve confirmar para de fato remover a conta.
+Implementação <code class="xref py py-func docutils literal notranslate"><span class="pre">ej_users.routes_account.remove()</span></code>.</dd>
+<dt>account/manage-email/ (account:manage-email):</dt>
+<dd>Permitir que o usuário altere seu e-mail.
+Implementação <code class="xref py py-func docutils literal notranslate"><span class="pre">ej_users.routes_account.manage_email()</span></code>.</dd>
+<dt>account/change-password/ (account:change-password):</dt>
+<dd>Permitir que o usuário altere sua senha.
+Implementação <code class="xref py py-func docutils literal notranslate"><span class="pre">ej_users.routes_account.change_password()</span></code>.</dd>
+</dl>
+<p>Todas as views estão incluídas no aplicativo <code class="docutils literal notranslate"><span class="pre">ej_accounts</span></code>.</p>
+</div>
+</div>
+<div class="section" id="profile-views-ej-profiles">
+<h2>Visualizações de perfil (ej_profiles) <a class="headerlink" href="#profile-views-ej-profiles" title="Permalink to this headline"> ¶ </a></h2>
+<p>Os usuários não podem ver os perfis uns dos outros, porque o EJ não foi pensado como uma rede social tradicional. Não existem conceitos como os de "amigos", "seguidores",
+"conversas privadas" etc.</p>
+<dl class="docutils">
+<dt>profile/ (profile:detail):</dt>
+<dd>Mostrar perfil de usuário.
+Implementação <code class="xref py py-func docutils literal notranslate"><span class="pre">ej_profiles.routes.detail()</span></code>.</dd>
+<dt>profile/edit/ (profile:edit):</dt>
+<dd>Editar perfil.
+Implementação <code class="xref py py-func docutils literal notranslate"><span class="pre">ej_profiles.routes.edit()</span></code>.</dd>
+<dt>profile/contributions/ (profile:comments):</dt>
+<dd>Mostrar estatísticas e informações sobre todas as contribuições do usuário para
+conversas na plataforma.
+Implementação <code class="xref py py-func docutils literal notranslate"><span class="pre">ej_profiles.routes.contributions()</span></code>.</dd>
+</dl>
+<div class="section" id="gamification-ej-gamification">
+<h3>Gamificação (ej_gamification) <a class="headerlink" href="#gamification-ej-gamification" title="Permalink to this headline"> ¶ </a></h3>
+<p>Mostrar informações de gamificação para o perfil do usuário.</p>
+<dl class="docutils">
+<dt>profile/achievements/ (gamification:badges)</dt>
+<dd>Lista de pontos e medalhas para o usuário. Mostra também a posição do usuário no quadro de classificação.
+Implementação <code class="xref py py-func docutils literal notranslate"><span class="pre">ej_gamification.routes.achievements()</span></code>.</dd>
+<dt>– em construção</dt>
+<dd><div class="first line-block">
+<div class="line"><br /></div>
+</div>
+<p>Interface que os usuários podem usar para gerenciar poderes e recursos globais na plataforma.
+|
+Notifications
+==========
+|
+Notificações são exibidas usando alertas (notificações push) para a maioria dos usuários.
+No entanto, alguns usuários podem não ter suporte para esta tecnologia em seus navegadores e mesmo os usuários que têm, podem preferir manter um registro das notificações mais recentes no sistema.
+|
+profile/notifications/ (notifications:index):</p>
+<blockquote>
+<div>Listar todas as notificações não lidas.</div></blockquote>
+<dl class="docutils">
+<dt>profile/notifications/history/ (notifications:history):</dt>
+<dd>Listar todas as notificações.</dd>
+</dl>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p class="last">Todas as notificações são gerenciadas pelo aplicativo ej_notifications.</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="conversations-ej-conversations">
+<h2>Conversas (ej_conversations) <a class="headerlink" href="#conversations-ej-conversations" title="Permalink to this headline"> ¶ </a></h2>
+<p>Views públicas para exibir informações sobre conversas.</p>
+<dl class="docutils">
+<dt>conversations/ (conversations:list):</dt>
+<dd>Lista todas as converas disponíveis
+Implementação <code class="xref py py-func docutils literal notranslate"><span class="pre">ej_conversations.routes.list_view()</span></code>.</dd>
+<dt>conversations/&lt;id&gt;/&lt;slug&gt;/ (conversations:conversation-detail):</dt>
+<dd>Página de detalhes para uma conversa específica.
+Implementação <code class="xref py py-func docutils literal notranslate"><span class="pre">ej_conversations.routes.detail()</span></code>.</dd>
+</dl>
+<div class="section" id="crud-ej-conversations">
+<h3>CRUD (ej_conversations)<a class="headerlink" href="#crud-ej-conversations" title="Permalink to this headline">¶</a></h3>
+<p>Todas essas URLS estão disponíveis apenas para usuários com permissão para editar conversas. Isto pode ser aplicado aos membros da equipe ou ao proprietário da conversa.</p>
+<dl class="docutils">
+<dt>conversations/create/ (conversations:create-conversation):</dt>
+<dd>Adicionar uma nova conversa.
+Implementação <code class="xref py py-func docutils literal notranslate"><span class="pre">ej_conversations.routes.create()</span></code>.</dd>
+<dt>conversations/&lt;id&gt;/&lt;slug&gt;/edit/ (conversations:edit-conversation):</dt>
+<dd>Editar conversa.
+Implementação <code class="xref py py-func docutils literal notranslate"><span class="pre">ej_conversations.routes.edit()</span></code>.</dd>
+<dt>conversations/&lt;id&gt;/&lt;slug&gt;/moderate/ (conversations:moderate-comments):</dt>
+<dd>Pode classificar todos os comentários não moderados.
+Implementation <code class="xref py py-func docutils literal notranslate"><span class="pre">ej_conversations.routes.moderate()</span></code>.</dd>
+</dl>
+</div>
+<div class="section" id="reports-ej-dataviz">
+<h3>Relatórios (ej_dataviz)<a class="headerlink" href="#reports-ej-dataviz" title="Permalink to this headline">¶</a></h3>
+<p>Apenas membros da equipe e o proprietário da conversa têm acesso a essas páginas.</p>
+<dl class="docutils">
+<dt>conversations/&lt;id&gt;/&lt;slug&gt;/reports/ (reports:index):</dt>
+<dd>Agrega relatórios para a conversa em questão.</dd>
+<dt>conversations/&lt;id&gt;/&lt;slug&gt;/reports/users/ (reports:radar):</dt>
+<dd>Exibir comentários em um layout 2D para mostrar a distribuição de opiniões e
+comentários.</dd>
+</dl>
+</div>
+<div class="section" id="clusters-ej-clusters">
+<h3>Grupos (ej_clusters)<a class="headerlink" href="#clusters-ej-clusters" title="Permalink to this headline">¶</a></h3>
+<p>Exibe os grupos associados a uma conversa. Todas essas urls requerem autenticação, mas são visíveis para todos os usuários.</p>
+<dl class="docutils">
+<dt>conversations/&lt;id&gt;/&lt;slug&gt;/clusters/ (clusters:index):</dt>
+<dd>Veja informações de grupo na conversa.
+Implementação <code class="xref py py-func docutils literal notranslate"><span class="pre">ej_clusters.routes.index()</span></code>.</dd>
+<dt>conversations/&lt;id&gt;/&lt;slug&gt;/clusters/edit/ (clusters:edit):</dt>
+<dd>Editar configurações de agrupamento.
+Implementação <code class="xref py py-func docutils literal notranslate"><span class="pre">ej_clusters.routes.edit()</span></code>.</dd>
+<dt>conversations/&lt;id&gt;/&lt;slug&gt;/stereotypes/ (clusters:stereotype-votes):</dt>
+<dd>Elencar votos estereotípicos na conversa.
+Implementação <code class="xref py py-func docutils literal notranslate"><span class="pre">ej_clusters.routes.stereotype_votes()</span></code>.</dd>
+</dl>
+</div>
+<div class="section" id="clusters-and-stereotypes-ej-clusters">
+<h3>Grupos e estereótipos (ej_clusters)<a class="headerlink" href="#clusters-and-stereotypes-ej-clusters" title="Permalink to this headline">¶</a></h3>
+<p>Apenas membros da equipe e o proprietário da conversa têm acesso a essas páginas.</p>
+<dl class="docutils">
+<dt>conversations/&lt;id&gt;/&lt;slug&gt;/stereotypes/ (clusters:stereotype-list):</dt>
+<dd>Lista de todos os estereótipos que mostram informações sobre o grupo atribuído e de estatísticas.</dd>
+<dt>conversations/&lt;id&gt;/&lt;slug&gt;/stereotypes/&lt;id&gt;/ (clusters:stereotype-vote):</dt>
+<dd>Permite que o estereótipo em questão vote na conversa.</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="help">
+<h2>Ajuda<a class="headerlink" href="#help" title="Permalink to this headline">¶</a></h2>
+<p>Urge com a intenção de explicar como usar a plataforma. A maioria dessas urls são implementadas como páginas planas e são armazenadas como HTML ou markdown em local/pages ou lib/pages/.</p>
+<dl class="docutils">
+<dt>/start/ (home):</dt>
+<dd>Página inicial explicando de forma geral o que é o EJ e como usar a plataforma.</dd>
+<dt>/faq/ (faq):</dt>
+<dd>Perguntas frequentes.</dd>
+<dt>/about-us/ (about):</dt>
+<dd>Sobre o EJ ou a organização que opera uma instância.</dd>
+<dt>/usage/ (usage):</dt>
+<dd>Termos de uso para a plataforma.</dd>
+<dt>/contact/ (contact):</dt>
+<dd>Informação de contato.</dd>
+</dl>
+<p>Todas as URLs são implementadas como páginas planas no Django Admin. O conteúdo dessas URLs pode ser editado em <code class="docutils literal notranslate"><span class="pre">/admin/flatpage/flatpage/</span></code>.</p>
+</div>
+<div class="section" id="talks">
+<h2>Painel<a class="headerlink" href="#talks" title="Permalink to this headline">¶</a></h2>
+<p>Integração com o Rocket. chat.</p>
+<dl class="docutils">
+<dt>/talks/ (rocket:index)</dt>
+<dd>Exibe o Rocketchat dentro de um &lt;iframe&gt;.</dd>
+<dt>/talks/intro (rocket:intro):</dt>
+<dd>Página inicial exibida pela instância do Rocketchat.</dd>
+<dt>/talks/channels (rocket:channels):</dt>
+<dd>Lista de canais de Rocketchat disponíveis para o usuário.</dd>
+</dl>
+<p>Todas as urls são implementadas no aplicativo ej_rocketchat.</p>
+</div>
+<div class="section" id="administrative-urls">
+<h2>URLs administrativas<a class="headerlink" href="#administrative-urls" title="Permalink to this headline">¶</a></h2>
+<p>Todas as views nesta seção requerem permissões de equipe.</p>
+<dl class="docutils">
+<dt>admin/:</dt>
+<dd>Página do Django admin. Usuários devem ser membros da equipe.</dd>
+<dt>/info/ (info):</dt>
+<dd>Mostrar informações básicas de depuração sobre o servidor
+Implementação <code class="xref py py-func docutils literal notranslate"><span class="pre">ej.routes.info()</span></code>.</dd>
+<dt>/info/styles/ (info-styles):</dt>
+<dd>Exibir os principai elementos de design, como cores e tipografia aplicados no tema atual.
+Implementation <code class="xref py py-func docutils literal notranslate"><span class="pre">ej.routes.info_styles()</span></code>.</dd>
+<dt>/info/ (info-django-settings):</dt>
+<dd>Exibir configurações atuais do Django. Apenas o usuário admin pode ver esta página.
+Implementação <code class="xref py py-func docutils literal notranslate"><span class="pre">ej.routes.info_django_settings()</span></code>.</dd>
+</dl>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Empurrando Juntos</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navegação</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../user-guide/_index.html">Guia do usuário</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="_index.html">Guia do desenvolvedor</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="quick-start.html">Início rápido</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html">Arquitetura</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Estrutura de URLs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environment-variables.html">Variáveis de Ambiente</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deploy.html">Implantação</a></li>
+<li class="toctree-l2"><a class="reference internal" href="social-login.html">Login social</a></li>
+<li class="toctree-l2"><a class="reference internal" href="themes.html">Temas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="i18n.html">Internacionalização</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-docs.html">Documentação da API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html">Contribuindo para EJ</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../i18n/index.html">Traduções</a></li>
+</ul>
+
+<div class="relations">
+<h3>Tópicos Relacionados</h3>
+<ul>
+  <li><a href="../index.html">Visão geral da documentação</a><ul>
+  <li><a href="_index.html">Guia do desenvolvedor</a><ul>
+      <li>Anterior: <a href="architecture.html" title="previous chapter">Arquitetura</a></li>
+      <li>Próximo: <a href="environment-variables.html" title="next chapter">Variáveis de Ambiente</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Pesquisa rápida</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Ir" />
+      <input type="hidden" name="check_keywords" value="sim" />
+      <input type="hidden" name="area" value="padrão" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, EJ.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/dev-docs/urls.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
