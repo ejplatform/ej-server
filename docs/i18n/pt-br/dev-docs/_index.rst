@@ -2,9 +2,11 @@
 Developer's Guide
 #################
 
-.. toctree::
-   :maxdepth: 2
+Em construção!
 
+.. comment
+   toctree::
+   :maxdepth: 2
    quick-start
    architecture
    urls
