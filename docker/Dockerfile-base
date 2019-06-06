@@ -19,14 +19,16 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
  && echo "BASIC APT INSTALLATION IS DONE!"
 
 # Install pip dependencies
-RUN pip3 install --upgrade pip setuptools \
+RUN pip3 install --upgrade \
         invoke~=1.0 \
-        poetry \
-        virtualenvwrapper \
-        toml \
         markupsafe \
-        toolz \
+        pip \
+        poetry \
         psycopg2-binary \
+        setuptools \
+        toml \
+        toolz \
+        virtualenvwrapper \
  && pip3 install sidekick \
  && ln -s /usr/bin/python3 /usr/bin/python \
  && ln -s /usr/bin/pip3 /usr/bin/pip \
