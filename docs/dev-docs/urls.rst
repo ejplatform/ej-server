@@ -89,7 +89,7 @@ profile/achievements/ (gamification:badges)
     Implementation :func:`ej_gamification.routes.achievements`.
 
 
--- under construction
+.. under construction
     Global powers
     -------------
     |

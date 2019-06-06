@@ -1,4 +1,4 @@
-aqwThemes
+Themes
 ======
 
 The EJ platform has a theme structure that can be easily tweaked and adapted

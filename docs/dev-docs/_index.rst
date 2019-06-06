@@ -6,6 +6,7 @@ Developer's Guide
    :maxdepth: 2
 
    quick-start
+   preparation
    architecture
    urls
    environment-variables
