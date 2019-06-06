@@ -1,0 +1,333 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!DOCTYPE html>
+    <html lang="pt-br">
+
+    <head>
+        <meta charset="utf-8">
+        <title>EJ Documentation</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        
+            <!-- CSS -->
+            <link rel="stylesheet"
+                  href="https://fonts.googleapis.com/css?family=Patua+One|Raleway:400,600,700&subset=latin-ext">
+            <link rel="stylesheet" href="https://unpkg.com/unpoly@0.54.0/dist/unpoly.min.css"
+                  integrity="sha384-zsXMcPyhYSZEF/yA0Rprx9nn7gnz84QyiSrxSH5xuo0DalUAlfSmfsxILtkg5fJ/"
+                  crossorigin="anonymous">
+            <link rel="stylesheet" href="/static/css/fontawesome-all.min.css">
+            
+            
+            <link rel="stylesheet" href="/static/js/jquery-ui/jquery-ui.min.css">
+            <link rel="stylesheet" href="/static/js/jquery-ui/jquery-ui.structure.min.css">
+            <link rel="stylesheet" href="/static/css/main.css">
+        
+
+        
+            <!-- Javascript -->
+            <!--[if lt IE 9]>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+            <![endif]-->
+
+            
+            <script
+                    src="https://code.jquery.com/jquery-3.3.1.min.js"
+                    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+                    crossorigin="anonymous"></script>
+            <script src="https://unpkg.com/unpoly@0.54.0/dist/unpoly.min.js"
+                    integrity="sha384-6QMkTrFSjoO7UIWKZ1oYV4FCzxclb0Q4gP+TJzTZB93bAUeffVvNLblrRevbIkIw"
+                    crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js" defer></script>
+            <script src="/static/js/jquery-ui/jquery-ui.min.js" defer></script>
+            <script src="/static/js/main.js" defer></script>
+            <script src="/static/js/hicontrast.js"></script>
+            <script src="/static/js/specific-pages.js"></script>
+            <script src="/static/js/utils.js"></script>
+            <script src="/static/js/web-share.js"></script>
+            <script src="/static/js/fontScale.js" defer></script>
+            <script src="/static/js/comment-form-animation.js" defer></script>
+            <script src="/static/js/bundle.js" defer></script>
+        
+
+        <!-- Favicons -->
+        <link rel="icon" href="/static/img/logo/logo.svg"/>
+        <link rel="apple-touch-icon" sizes="57x57" href="/static/img/logo/icon-57.png">
+        <link rel="apple-touch-icon" sizes="72x72" href="/static/img/logo/icon-72.png">
+        <link rel="apple-touch-icon" sizes="114x114" href="/static/img/logo/icon-114.png">
+        <link rel="icon" type="image/png" sizes="192x192" href="/static/img/logo/icon-192.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/static/img/logo/icon-32.png">
+        <link rel="icon" type="image/png" sizes="96x96" href="/static/img/logo/icon-96.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/static/img/logo/icon-16.png">
+        <link rel="shortcut icon" href="/static/img/logo/favicon.ico"/>
+        <meta name="msapplication-TileImage" content="/static/img/logo/icon-144.png">
+        <meta name="msapplication-TileColor" content="#ffffff">
+        <meta name="image" content="/static/img/logo/logo.svg">
+
+        <!-- PWA -->
+        <link rel="manifest" href="/static/manifest.json">
+        <meta name="theme-color" content="#fff">
+
+        <!-- Cache busting metas -->
+        <meta http-equiv="cache-control" content="no-cache">
+        <meta http-equiv="expires" content="120">
+
+        <!-- Twitter -->
+        <meta name="twitter:card" content="summary">
+
+        
+            <!-- Open Graph general (Facebook, Pinterest & Google+) -->
+            <meta property="og:type" content="website">
+            <meta property="og:title" content="EJ Documentation">
+            <meta property="og:image" content="/static/img/logo/logo.svg">
+            
+            <meta property="og:site_name" content="EJ">
+            <meta property="og:locale" content="pt_BR">
+            
+            <meta property="og:image:type" content="image/svg">
+            <meta property="og:image:width" content="1200">
+            <meta property="og:image:height" content="630">
+
+            <!-- Twitter && Telegram -->
+            <meta name="twitter:title" content="EJ Documentation">
+        
+    </head>
+
+    <body class="Docs ">
+
+
+
+  <div class="section" id="deploy">
+<h1>Deploy<a class="headerlink" href="#deploy" title="Permalink to this headline">¶</a></h1>
+<p>EJ relies on Docker and a Docker orchestration technology in its deployment
+process. We assume for the sake of simplicity that your deployment is going to use Docker
+Compose. It works with other technologies (we use Rancher, for instance),
+but of course we cannot anticipate the details of your infrastructure to provide
+a detailed guide. Docker Compose is a useful reference and common ground for many
+other orchestration technologies.</p>
+<p>The easiest way to proceed is to use the pre-build images available on <a class="reference external" href="https://hub.docker.com/u/ejplatform/">Docker Hub</a>
+and personalize your installation using environment variables. You must
+understand that a basic EJ stack uses 4 containers described in <a class="reference external" href="stack.html">EJ Stack</a>
+session: the Nginx reverse proxy, the Django application and Redis and Postgres
+databases.</p>
+<p>You can run a useful “deployable” stack by simply calling the command bellow from
+the ej-server repository:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ inv docker-run production
+</pre></div>
+</div>
+<p>This is actually a shortcut for the longer list of Docker Compose commands
+that builds and run the stack:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo docker-compose -f docker/docker-compose.production.yml build
+$ sudo docker-compose -f docker/docker-compose.production.yml up
+</pre></div>
+</div>
+<p>This is all fine for testing, but it is very likely to fail in a real life
+situation. You need to provide specific configurations such as the domain name,
+credentials to different services, the location and passwords of your database
+server, etc.</p>
+<p>In order to make things simple, we created an example repository with a bare
+bones Docker Compose configuration that you can adapt to your own use case.
+Start by cloning it to the local/deploy folder with the command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git clone https://github.com/ejplatform/docker-compose-deploy.git local/deploy/
+</pre></div>
+</div>
+<p>This will copy the example files to local/deploy. This folder is ignored by git
+versioning and you can maintain it as a private repository independent of
+<code class="docutils literal notranslate"><span class="pre">ejplatform/ej-server</span></code>.</p>
+<p>Adapt the files on this folder to your needs by setting the values of all
+necessary <a class="reference external" href="environment-variables.html">Environment Variables</a>. In the long run, it is probably best to use
+a private repository to keep those files with version control. Bear in mind that
+many of the configuration variables are secrets that cannot be shared in a
+public location.</p>
+<p>Now rebuild the deployment images using the command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ inv docker-deploy build
+</pre></div>
+</div>
+<p>and</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ inv docker-deploy up
+</pre></div>
+</div>
+<p>to execute the stack.</p>
+<div class="section" id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
+<p>The standard structure of the <a class="reference external" href="https://github.com/ejplatform/docker-compose-deploy/">docker-compose-deploy</a> repository implement a few
+options that the <code class="docutils literal notranslate"><span class="pre">inv</span> <span class="pre">docker-deploy</span></code> task understand. We list a few useful
+commands bellow:</p>
+<dl class="docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">inv</span> <span class="pre">docker-deploy</span> <span class="pre">build</span></code>:</dt>
+<dd>Builds all images necessary for the Docker Compose file to run.</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">inv</span> <span class="pre">docker-deploy</span> <span class="pre">up</span></code>:</dt>
+<dd>Executes the full stack using Docker Compose.</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">inv</span> <span class="pre">docker-deploy</span> <span class="pre">run</span> <span class="pre">-c</span> <span class="pre">bash</span></code>:</dt>
+<dd>Executes the full stack and runs the given command in the Django container.
+It can be any task registered in tasks.py. The command bellow uses the
+“bash” task to open a bash shell in the container.</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">inv</span> <span class="pre">docker-deploy</span> <span class="pre">publish</span></code>:</dt>
+<dd>Publish all images in Docker Hub.</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">inv</span> <span class="pre">docker-deploy</span> <span class="pre">notify</span></code>:</dt>
+<dd>Notify your stack that all images were updated. We implement a script that
+integrates with Rancher, but you can override this script and use any
+integration you like.</dd>
+</dl>
+<p>All those commands accept a <code class="docutils literal notranslate"><span class="pre">-e</span> <span class="pre">ENVIRONMENT</span></code> option that allows us to specify
+different environments other than “production”. A common pattern is to use two
+separate deploys: the “production” and “staging” environments. All environments
+share the same docker images, but uses different Docker Compose files.</p>
+<div class="section" id="config-py">
+<h3>config.py<a class="headerlink" href="#config-py" title="Permalink to this headline">¶</a></h3>
+<p>This script is executed and it must define a JSON-like structure that is used
+to fill the environment variables passed to docker-compose when starting the
+containers. The main variables defined on config.py are listed bellow:</p>
+<dl class="docutils">
+<dt>ORGANIZATION (ejplatform):</dt>
+<dd>Name of organization or user in Docker Hub used to store images. It defaults
+to  ejplatform, but you need to change to some organization that you can
+publish images to.</dd>
+<dt>TAG (latest):</dt>
+<dd>Release number for the built images. Leave as “latest” if desired.</dd>
+<dt>THEME (default):</dt>
+<dd>Theme used to construct images. This sets the EJ_THEME variable in the
+docker container.</dd>
+<dt>LISTENERS:</dt>
+<dd>A list of listeners that implement the notify command. Each listener must
+have a corresponding notify.&lt;listener&gt;.sh script. We provide an example
+using Rancher.</dd>
+</dl>
+<p>The <cite>config.py</cite> file can also be used to set arbitrary configuration variables
+that are injected in the environment.</p>
+</div>
+</div>
+<div class="section" id="rocket-chat-integration">
+<h2>Rocket.Chat integration<a class="headerlink" href="#rocket-chat-integration" title="Permalink to this headline">¶</a></h2>
+<p>Integrating Rocket.Chat to the stack requires a few additional steps. The first
+step is to uncomment all services in the Rocket.Chat section of the example
+docker-compose.yml file to enable the necessary containers.</p>
+<p>You also need to set the following environment variable either in config.env or
+in the docker-compose.yml file:</p>
+<dl class="docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">EJ_ROCKETCHAT_INTEGRATION=true</span></code>:</dt>
+<dd>If true, enables the Rocket chat integration in the Django application.
+Remember to configure the docker-compose.yml file accordingly.</dd>
+</dl>
+<p>Now build the containers and execute compose:</p>
+<blockquote>
+<div>$ inv docker-deploy build
+$ inv docker-deploy up</div></blockquote>
+<p>In order to integrate the main EJ application with an instance of Rocket.Chat,
+open your Rocket.Chat url and you will be redirected to /setup-wizard, create
+an admin user and configure the server. After you finish the setup-wizard, the
+next step is to login as an the superuser in EJ and point to &lt;EJ URL&gt;/talks/config/.
+This URL presents a form that you can be used to configure the basic parameters of
+Rocket.Chat integration, here you have to put the admin credentials you created
+on Rocket.Chat setup-wizard.</p>
+<p>There are other ways to retrieve this data from the API. Visit
+<a class="reference external" href="https://rocket.chat/docs/developer-guides/rest-api/">Rocket.Chat API docs</a> to learn more.</p>
+<p>Now, go to the Rocket.Chat administration page. It will be something like
+<code class="docutils literal notranslate"><span class="pre">http://&lt;rocket-host&gt;/admin/Accounts</span></code>. Setup the
+<a class="reference external" href="https://rocket.chat/docs/developer-guides/iframe-integration/authentication/">IFrame login integration</a> at <code class="docutils literal notranslate"><span class="pre">Administration</span> <span class="pre">&gt;</span> <span class="pre">Accounts</span> <span class="pre">&gt;</span> <span class="pre">IFrame</span></code>.</p>
+<p>In this page, follow the instructions bellow:</p>
+<ol class="arabic simple">
+<li>Set the <code class="docutils literal notranslate"><span class="pre">Enabled</span></code> option to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</li>
+<li>In order to enable redirection after successful <em>login</em>, set <code class="docutils literal notranslate"><span class="pre">Iframe</span> <span class="pre">URL</span></code>
+to <code class="docutils literal notranslate"><span class="pre">http://&lt;django-host&gt;/talks/login/?next=/talks/</span></code> (replacing Django with the
+address of your actual Django instance).</li>
+<li>Rocket.Chat needs to check if an user is already authenticated. Set
+<code class="docutils literal notranslate"><span class="pre">API</span> <span class="pre">URL</span></code> to <code class="docutils literal notranslate"><span class="pre">http://&lt;django-host&gt;/talks/check-login/</span></code>.</li>
+<li>Set <code class="docutils literal notranslate"><span class="pre">API</span> <span class="pre">Method</span></code> to <code class="docutils literal notranslate"><span class="pre">POST</span></code>.</li>
+<li>Save the changes.</li>
+</ol>
+<p>Now, go to <code class="docutils literal notranslate"><span class="pre">Administration</span> <span class="pre">&gt;</span> <span class="pre">Accounts</span></code> and disable the following features:</p>
+<ul class="simple">
+<li>Allow changes to user profile</li>
+<li>Allow</li>
+</ul>
+<p>The final step is to setup EJ using a superuser account. Go to <a class="reference external" href="http:/">http:/</a>/&lt;django-host&gt;/talks/
+and it will request additional information before continuing.</p>
+<p>Now each time you try to access Rocket.Chat without Django authentication, the
+user will be redirected to the EJ login page.</p>
+<div class="section" id="rocket-chat-style">
+<h3>Rocket.Chat style<a class="headerlink" href="#rocket-chat-style" title="Permalink to this headline">¶</a></h3>
+<p>It is possible to override the default style and some static content in the
+website. Go to <code class="docutils literal notranslate"><span class="pre">Administration</span> <span class="pre">&gt;</span> <span class="pre">Layout</span> <span class="pre">&gt;</span> <span class="pre">Content</span></code> and save the content of the
+home page there. We recommend to keep this data versioned in the configuration
+repository. Similarly, it is possible to set a custom CSS and save it using
+Rocket.Chat admin page at at <code class="docutils literal notranslate"><span class="pre">Administration</span> <span class="pre">&gt;</span> <span class="pre">Layout</span> <span class="pre">&gt;</span> <span class="pre">Custom</span> <span class="pre">CSS</span></code>.</p>
+<p>Follow the <a class="reference external" href="https://drive.google.com/file/d/1LoEMIU4XwaypUJe1D2na8R1Qf4Fwxgy4/view">tutorial</a> for further explanations (in Portuguese).</p>
+</div>
+</div>
+</div>
+
+
+
+
+    
+
+    
+        <!-- Google Analytics -->
+        <script defer>
+            (function (i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r;
+                i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date();
+                a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+                a.async = 1;
+                a.src = g;
+                m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+            ga('create', 'UA-104880284-1', 'auto');
+        </script>
+
+        
+
+        <!-- Run AJAX-loaded scripts -->
+        <script>
+            function runRemoteScripts() {
+                var scripts = document.getElementsByClassName('remoteScript');
+                for (var i = 0; i < scripts.length; i++) {
+                    var id = 'script-' + scripts[i].getAttribute('id');
+                    if (document.getElementById(id)) {
+                        document.getElementById(id).outerHTML = '';
+                    }
+                    var script = document.createElement('script');
+                    script.id = id;
+                    script.type = 'text/javascript';
+                    var src = scripts[i].getAttribute('data-script-src');
+                    if (!!src) {
+                        script.src = src;
+                    }
+                    else {
+                        script.text = scripts[i].innerHTML;
+                    }
+                    document.getElementsByTagName('body')[0].appendChild(script);
+                }
+            }
+
+            window.onload = function () {
+                checkHicontrast();
+                runRemoteScripts();
+                checkFontSize();
+                up.on('up:fragment:inserted', function (event, fragment) {
+                    runRemoteScripts();
+                    checkHicontrast();
+                    checkSpecificPages(fragment);
+                    enableFadeBottomDiv();
+                });
+            };
+        </script>
+    
+
+    </body>
+    </html>

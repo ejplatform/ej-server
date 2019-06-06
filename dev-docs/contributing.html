@@ -1,0 +1,186 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Contributing to EJ &#8212; Empurrando Juntos 2.0rc1 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Translations" href="../i18n/index.html" />
+    <link rel="prev" title="API Documentation" href="api-docs.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="contributing-to-ej">
+<h1>Contributing to EJ<a class="headerlink" href="#contributing-to-ej" title="Permalink to this headline">¶</a></h1>
+<p>EJ main repository uses “master” as the main development branch and tags for stable
+releases. Generally, we want to move code to the master as soon as possible, but
+we need some discipline to make it work. The master is locked and submissions
+of new features are done using pull requests.</p>
+<p>For each issue to be solved, follow the procedure below:</p>
+<ul>
+<li><p class="first">In case of your development environment isn’t already built, then clone the
+repository, follow the installation guide at <a class="reference external" href="README.rst">README.rst</a>. Install the
+commit hooks to statically check your code before each commit:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ inv install-hooks
+</pre></div>
+</div>
+</li>
+<li><p class="first">Checkout to a branch you created to solve your issue. For simple things,
+use the generic <code class="docutils literal notranslate"><span class="pre">dev</span></code> branch, otherwise, describe what you are going to do
+e.g.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git checkout -b facebook-login
+</pre></div>
+</div>
+</li>
+<li><p class="first">Always run all tests before any commit,otherwise your pull request will not be
+merged!</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pytest   # backend tests
+</pre></div>
+</div>
+</li>
+<li><p class="first">After you finished, open a pull request MASTER:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ejplatform</span><span class="o">/</span><span class="n">ej</span><span class="o">-</span><span class="n">server</span><span class="o">/&lt;</span><span class="n">your</span><span class="o">-</span><span class="n">branch</span><span class="o">&gt;</span>  <span class="o">==&gt;</span>  <span class="n">ejplatform</span><span class="o">/</span><span class="n">ej</span><span class="o">-</span><span class="n">server</span><span class="o">/</span><span class="n">master</span>
+</pre></div>
+</div>
+<p>and wait until Travis CI, GitLab CI and Code Climate run all the integration tests.
+Your PR should have a small explanation of what it does preferably with a link
+to the originating issue. Please tell explicitly if the PR closes that issue
+or not and move the issue to the proper slot on the <a class="reference external" href="https://github.com/ejplatform/ej-server/projects/1">Projects</a> board.</p>
+</li>
+<li><p class="first">Any contributor can merge your PR after your tests passed. Ideally, we can use
+a second pair of eyes to review the code, specially for tricky code. But, if
+you are in hurry, you can accept your own PR.</p>
+</li>
+<li><p class="first">If changes were made in a branch different from <code class="docutils literal notranslate"><span class="pre">dev</span></code>, then delete it after
+your PR gets merged.</p>
+</li>
+</ul>
+<div class="section" id="what-should-be-committed-directly-to-dev">
+<h2>What should be committed directly to dev?<a class="headerlink" href="#what-should-be-committed-directly-to-dev" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">dev</span></code> is the branch to go for small maintenance contributions and it is likely
+that more than one developer will be working on it simultaneously.
+Acceptable work to do in <code class="docutils literal notranslate"><span class="pre">dev</span></code> includes:</p>
+<ul class="simple">
+<li>Small bug fixes that affects only a few functions in a single file.</li>
+<li>Small tweaks in CSS and HTML templates.</li>
+<li>Writing new tests for integrated features.</li>
+<li>Refactor small parts of the code to increase code quality or performance.</li>
+<li>Implementation of simple isolated features that do not affect other parts
+of the system (i.e., create a new view or api entry point)</li>
+<li>Updates to the .po files by translators.</li>
+<li>Updates to the documentation.</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Empurrando Juntos</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../user-guide/_index.html">User Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="_index.html">Developer’s Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="quick-start.html">Quick Start</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html">Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="urls.html">URL structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environment-variables.html">Environment Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deploy.html">Deploy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="social-login.html">Social Login</a></li>
+<li class="toctree-l2"><a class="reference internal" href="themes.html">Themes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="i18n.html">Internationalization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-docs.html">API Documentation</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Contributing to EJ</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../i18n/index.html">Translations</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="_index.html">Developer’s Guide</a><ul>
+      <li>Previous: <a href="api-docs.html" title="previous chapter">API Documentation</a></li>
+      <li>Next: <a href="../i18n/index.html" title="next chapter">Translations</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, EJ.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/dev-docs/contributing.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

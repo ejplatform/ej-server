@@ -1,0 +1,277 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!DOCTYPE html>
+    <html lang="pt-br">
+
+    <head>
+        <meta charset="utf-8">
+        <title>EJ Documentation</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        
+            <!-- CSS -->
+            <link rel="stylesheet"
+                  href="https://fonts.googleapis.com/css?family=Patua+One|Raleway:400,600,700&subset=latin-ext">
+            <link rel="stylesheet" href="https://unpkg.com/unpoly@0.54.0/dist/unpoly.min.css"
+                  integrity="sha384-zsXMcPyhYSZEF/yA0Rprx9nn7gnz84QyiSrxSH5xuo0DalUAlfSmfsxILtkg5fJ/"
+                  crossorigin="anonymous">
+            <link rel="stylesheet" href="/static/css/fontawesome-all.min.css">
+            
+            
+            <link rel="stylesheet" href="/static/js/jquery-ui/jquery-ui.min.css">
+            <link rel="stylesheet" href="/static/js/jquery-ui/jquery-ui.structure.min.css">
+            <link rel="stylesheet" href="/static/css/main.css">
+        
+
+        
+            <!-- Javascript -->
+            <!--[if lt IE 9]>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+            <![endif]-->
+
+            
+            <script
+                    src="https://code.jquery.com/jquery-3.3.1.min.js"
+                    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+                    crossorigin="anonymous"></script>
+            <script src="https://unpkg.com/unpoly@0.54.0/dist/unpoly.min.js"
+                    integrity="sha384-6QMkTrFSjoO7UIWKZ1oYV4FCzxclb0Q4gP+TJzTZB93bAUeffVvNLblrRevbIkIw"
+                    crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js" defer></script>
+            <script src="/static/js/jquery-ui/jquery-ui.min.js" defer></script>
+            <script src="/static/js/main.js" defer></script>
+            <script src="/static/js/hicontrast.js"></script>
+            <script src="/static/js/specific-pages.js"></script>
+            <script src="/static/js/utils.js"></script>
+            <script src="/static/js/web-share.js"></script>
+            <script src="/static/js/fontScale.js" defer></script>
+            <script src="/static/js/comment-form-animation.js" defer></script>
+            <script src="/static/js/bundle.js" defer></script>
+        
+
+        <!-- Favicons -->
+        <link rel="icon" href="/static/img/logo/logo.svg"/>
+        <link rel="apple-touch-icon" sizes="57x57" href="/static/img/logo/icon-57.png">
+        <link rel="apple-touch-icon" sizes="72x72" href="/static/img/logo/icon-72.png">
+        <link rel="apple-touch-icon" sizes="114x114" href="/static/img/logo/icon-114.png">
+        <link rel="icon" type="image/png" sizes="192x192" href="/static/img/logo/icon-192.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/static/img/logo/icon-32.png">
+        <link rel="icon" type="image/png" sizes="96x96" href="/static/img/logo/icon-96.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/static/img/logo/icon-16.png">
+        <link rel="shortcut icon" href="/static/img/logo/favicon.ico"/>
+        <meta name="msapplication-TileImage" content="/static/img/logo/icon-144.png">
+        <meta name="msapplication-TileColor" content="#ffffff">
+        <meta name="image" content="/static/img/logo/logo.svg">
+
+        <!-- PWA -->
+        <link rel="manifest" href="/static/manifest.json">
+        <meta name="theme-color" content="#fff">
+
+        <!-- Cache busting metas -->
+        <meta http-equiv="cache-control" content="no-cache">
+        <meta http-equiv="expires" content="120">
+
+        <!-- Twitter -->
+        <meta name="twitter:card" content="summary">
+
+        
+            <!-- Open Graph general (Facebook, Pinterest & Google+) -->
+            <meta property="og:type" content="website">
+            <meta property="og:title" content="EJ Documentation">
+            <meta property="og:image" content="/static/img/logo/logo.svg">
+            
+            <meta property="og:site_name" content="EJ">
+            <meta property="og:locale" content="pt_BR">
+            
+            <meta property="og:image:type" content="image/svg">
+            <meta property="og:image:width" content="1200">
+            <meta property="og:image:height" content="630">
+
+            <!-- Twitter && Telegram -->
+            <meta name="twitter:title" content="EJ Documentation">
+        
+    </head>
+
+    <body class="Docs ">
+
+
+
+  <div class="section" id="environment-variables">
+<h1>Environment Variables<a class="headerlink" href="#environment-variables" title="Permalink to this headline">¶</a></h1>
+<p>EJ uses 12-factor approach to configuration and uses environment variables to
+customize most behavior and settings of the platform. The environment variables
+can either be set directly on the host environment, or saved to a environment
+file so they can be shared between different environments. This section describes
+the main configuration variables with their standard values.</p>
+<div class="section" id="basic-settings">
+<h2>Basic settings<a class="headerlink" href="#basic-settings" title="Permalink to this headline">¶</a></h2>
+<p>Those are the minimum set of required configurations. <strong>Warning:</strong> Remember
+reading the “Security” section before completing your deploy.</p>
+<dl class="docutils">
+<dt>DJANGO_HOSTNAME (localhost):</dt>
+<dd>Host name for the EJ application. Can be something like “ejplatform.org”.
+This is the address in which your instance is deployed.</dd>
+<dt>COUNTRY (Brazil):</dt>
+<dd>Country used for localization and internationalization. This configuration
+controls simultaneously the DJANGO_LOCALE_NAME, DJANGO_LANGUAGE_CODE,
+DJANGO_TIME_ZONE variables using the default configurations for your
+country. Countries are specified by name (e.g., USA, Brazil, Argentina,
+Canada, etc). You can use a COUNTRY as base and personalize any variable
+of those variables independently (e.g., COUNTRY=”Canada”,
+LANGUAGE_CODE=”fr-ca”)</dd>
+<dt>DJANGO_DEBUG (False):</dt>
+<dd>Setting DEBUG=True, display a traceback when Django encounters an error. This
+configuration is useful in staging environment, but should never be enabled
+in the final production build.</dd>
+<dt>DJANGO_DB_URL (psql://&lt;user&gt;:&lt;password&gt;&#64;postgres:5432/&lt;dbname&gt;):</dt>
+<dd>Describes the connection with the Postgres database. The default unsafe values
+are <code class="docutils literal notranslate"><span class="pre">user</span> <span class="pre">=</span> <span class="pre">password</span> <span class="pre">=</span> <span class="pre">dbname</span> <span class="pre">=</span> <span class="pre">&quot;ej&quot;</span></code>. You can change to other databases
+(e.g., sqlite:///path-to-db-file). <strong>Warning:</strong> The way Django parses this
+string puts some limitations on valid passwords. Stay safe and use only
+letters and numbers in the password.</dd>
+</dl>
+</div>
+<div class="section" id="security">
+<h2>Security<a class="headerlink" href="#security" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt><strong>DJANGO_SECRET_KEY</strong> (random value):</dt>
+<dd>A random string of text that should be out of public sight. This string is
+used to negotiate sessions and for encryption in some parts of Django. This
+can be a random sequence of characters that is treated as a secret since in
+theory an attacker that knows the secret key could use this value to forge
+sessions and impersonate other users.</dd>
+</dl>
+</div>
+<div class="section" id="personalization">
+<h2>Personalization<a class="headerlink" href="#personalization" title="Permalink to this headline">¶</a></h2>
+<p>Those variables customize the behavior of the EJ platform in different ways.</p>
+<div class="section" id="override-strings">
+<h3>Override strings<a class="headerlink" href="#override-strings" title="Permalink to this headline">¶</a></h3>
+<dl class="docutils">
+<dt>EJ_PAGE_TITLE (Empurrando Juntos):</dt>
+<dd>Default title of the home page.</dd>
+<dt>EJ_REGISTER_TEXT (Not part of EJ yet?):</dt>
+<dd>Text displayed requesting user registration.</dd>
+<dt>EJ_LOGIN_TITLE_TEXT (Login in EJ):</dt>
+<dd>Asks user login.</dd>
+</dl>
+</div>
+<div class="section" id="override-paths">
+<h3>Override paths<a class="headerlink" href="#override-paths" title="Permalink to this headline">¶</a></h3>
+<dl class="docutils">
+<dt>EJ_ANONYMOUS_HOME_PATH (/home/):</dt>
+<dd>Redirect users to this path before login.</dd>
+<dt>EJ_USER_HOME_PATH (/conversations/):</dt>
+<dd>Redirect logged users to this path.</dd>
+</dl>
+</div>
+<div class="section" id="rules-and-limits">
+<h3>Rules and limits<a class="headerlink" href="#rules-and-limits" title="Permalink to this headline">¶</a></h3>
+<dl class="docutils">
+<dt>EJ_CONVERSATIONS_ALLOW_PERSONAL_CONVERSATIONS (true):</dt>
+<dd>The default behavior is that each user can own a single board of
+conversations independent of the main board under /conversations/.
+Set to “false” in order to disable those personal boards.</dd>
+<dt>EJ_CONVERSATIONS_MAX_COMMENTS (2):</dt>
+<dd>Default number of comments that each user has in each conversation.</dd>
+<dt>EJ_EXCLUDE_PROFILE_FIELDS:</dt>
+<dd>Optional list of fields that should be excluded from user profile
+visualization.</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="integration-with-rocket-chat">
+<h2>Integration with Rocket.Chat<a class="headerlink" href="#integration-with-rocket-chat" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>EJ_ROCKETCHAT_INTEGRATION (false):</dt>
+<dd>Enable/disable integration with Rocket.Chat. It is necessary to configure
+the Rocket.Chat container if this option is enabled.</dd>
+<dt>EJ_ROCKETCHAT_URL:</dt>
+<dd>URL of Rocket.Chat instance (e.g.: <a class="reference external" href="http://localhost:3000">http://localhost:3000</a> or <a class="reference external" href="https://your-chat-instance.com">https://your-chat-instance.com</a>)</dd>
+<dt>EJ_ROCKETCHAT_USERNAME:</dt>
+<dd>Username of Rocket.Chat admin.</dd>
+<dt>EJ_ROCKETCHAT_AUTH_TOKEN:</dt>
+<dd>Authentication token for the Rocket.Chat admin. This can be configured
+in Django backend after initial installation. Check <a class="reference external" href="https://rocket.chat/docs/developer-guides/rest-api/authentication/">Rocket API</a> for more
+information.</dd>
+<dt>EJ_ROCKETCHAT_USER_ID:</dt>
+<dd>Unique id of Rocket.Chat admin.</dd>
+</dl>
+</div>
+</div>
+
+
+
+
+    
+
+    
+        <!-- Google Analytics -->
+        <script defer>
+            (function (i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r;
+                i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date();
+                a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+                a.async = 1;
+                a.src = g;
+                m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+            ga('create', 'UA-104880284-1', 'auto');
+        </script>
+
+        
+
+        <!-- Run AJAX-loaded scripts -->
+        <script>
+            function runRemoteScripts() {
+                var scripts = document.getElementsByClassName('remoteScript');
+                for (var i = 0; i < scripts.length; i++) {
+                    var id = 'script-' + scripts[i].getAttribute('id');
+                    if (document.getElementById(id)) {
+                        document.getElementById(id).outerHTML = '';
+                    }
+                    var script = document.createElement('script');
+                    script.id = id;
+                    script.type = 'text/javascript';
+                    var src = scripts[i].getAttribute('data-script-src');
+                    if (!!src) {
+                        script.src = src;
+                    }
+                    else {
+                        script.text = scripts[i].innerHTML;
+                    }
+                    document.getElementsByTagName('body')[0].appendChild(script);
+                }
+            }
+
+            window.onload = function () {
+                checkHicontrast();
+                runRemoteScripts();
+                checkFontSize();
+                up.on('up:fragment:inserted', function (event, fragment) {
+                    runRemoteScripts();
+                    checkHicontrast();
+                    checkSpecificPages(fragment);
+                    enableFadeBottomDiv();
+                });
+            };
+        </script>
+    
+
+    </body>
+    </html>

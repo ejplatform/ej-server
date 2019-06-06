@@ -1,0 +1,388 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!DOCTYPE html>
+    <html lang="pt-br">
+
+    <head>
+        <meta charset="utf-8">
+        <title>EJ Documentation</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        
+            <!-- CSS -->
+            <link rel="stylesheet"
+                  href="https://fonts.googleapis.com/css?family=Patua+One|Raleway:400,600,700&subset=latin-ext">
+            <link rel="stylesheet" href="https://unpkg.com/unpoly@0.54.0/dist/unpoly.min.css"
+                  integrity="sha384-zsXMcPyhYSZEF/yA0Rprx9nn7gnz84QyiSrxSH5xuo0DalUAlfSmfsxILtkg5fJ/"
+                  crossorigin="anonymous">
+            <link rel="stylesheet" href="/static/css/fontawesome-all.min.css">
+            
+            
+            <link rel="stylesheet" href="/static/js/jquery-ui/jquery-ui.min.css">
+            <link rel="stylesheet" href="/static/js/jquery-ui/jquery-ui.structure.min.css">
+            <link rel="stylesheet" href="/static/css/main.css">
+        
+
+        
+            <!-- Javascript -->
+            <!--[if lt IE 9]>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+            <![endif]-->
+
+            
+            <script
+                    src="https://code.jquery.com/jquery-3.3.1.min.js"
+                    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+                    crossorigin="anonymous"></script>
+            <script src="https://unpkg.com/unpoly@0.54.0/dist/unpoly.min.js"
+                    integrity="sha384-6QMkTrFSjoO7UIWKZ1oYV4FCzxclb0Q4gP+TJzTZB93bAUeffVvNLblrRevbIkIw"
+                    crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js" defer></script>
+            <script src="/static/js/jquery-ui/jquery-ui.min.js" defer></script>
+            <script src="/static/js/main.js" defer></script>
+            <script src="/static/js/hicontrast.js"></script>
+            <script src="/static/js/specific-pages.js"></script>
+            <script src="/static/js/utils.js"></script>
+            <script src="/static/js/web-share.js"></script>
+            <script src="/static/js/fontScale.js" defer></script>
+            <script src="/static/js/comment-form-animation.js" defer></script>
+            <script src="/static/js/bundle.js" defer></script>
+        
+
+        <!-- Favicons -->
+        <link rel="icon" href="/static/img/logo/logo.svg"/>
+        <link rel="apple-touch-icon" sizes="57x57" href="/static/img/logo/icon-57.png">
+        <link rel="apple-touch-icon" sizes="72x72" href="/static/img/logo/icon-72.png">
+        <link rel="apple-touch-icon" sizes="114x114" href="/static/img/logo/icon-114.png">
+        <link rel="icon" type="image/png" sizes="192x192" href="/static/img/logo/icon-192.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/static/img/logo/icon-32.png">
+        <link rel="icon" type="image/png" sizes="96x96" href="/static/img/logo/icon-96.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/static/img/logo/icon-16.png">
+        <link rel="shortcut icon" href="/static/img/logo/favicon.ico"/>
+        <meta name="msapplication-TileImage" content="/static/img/logo/icon-144.png">
+        <meta name="msapplication-TileColor" content="#ffffff">
+        <meta name="image" content="/static/img/logo/logo.svg">
+
+        <!-- PWA -->
+        <link rel="manifest" href="/static/manifest.json">
+        <meta name="theme-color" content="#fff">
+
+        <!-- Cache busting metas -->
+        <meta http-equiv="cache-control" content="no-cache">
+        <meta http-equiv="expires" content="120">
+
+        <!-- Twitter -->
+        <meta name="twitter:card" content="summary">
+
+        
+            <!-- Open Graph general (Facebook, Pinterest & Google+) -->
+            <meta property="og:type" content="website">
+            <meta property="og:title" content="EJ Documentation">
+            <meta property="og:image" content="/static/img/logo/logo.svg">
+            
+            <meta property="og:site_name" content="EJ">
+            <meta property="og:locale" content="pt_BR">
+            
+            <meta property="og:image:type" content="image/svg">
+            <meta property="og:image:width" content="1200">
+            <meta property="og:image:height" content="630">
+
+            <!-- Twitter && Telegram -->
+            <meta name="twitter:title" content="EJ Documentation">
+        
+    </head>
+
+    <body class="Docs ">
+
+
+
+  <div class="section" id="url-structure">
+<h1>URL structure<a class="headerlink" href="#url-structure" title="Permalink to this headline">¶</a></h1>
+<p>This document register the default URLs used in the platform and where to find
+them in their corresponding apps.</p>
+<div class="section" id="users-login">
+<h2>Users/login<a class="headerlink" href="#users-login" title="Permalink to this headline">¶</a></h2>
+<p>Public views controlling authentication and creation of new users.
+Both login and register views accept a ?next=&lt;url&gt; tag that controls the
+redirect page.</p>
+<dl class="docutils">
+<dt>login/ (auth:login):</dt>
+<dd>Login page.</dd>
+<dt>logout/ (auth:logout):</dt>
+<dd>End user session.</dd>
+<dt>register/ (auth:register):</dt>
+<dd>Register a new user.</dd>
+<dt>profile/recover-password/ (auth:recover-password):</dt>
+<dd>Recover user password.</dd>
+<dt>profile/reset-password/ (auth:reset-password):</dt>
+<dd>Allow user to change its password.</dd>
+<dt>profile/remove/ (auth:remove-account):</dt>
+<dd>Remove user account. This is an non-reversible operation that the user
+must confirm in order to actually remove the account.</dd>
+</dl>
+<p>All views are included in the ej_accounts app.</p>
+</div>
+<div class="section" id="profile-views">
+<h2>Profile views<a class="headerlink" href="#profile-views" title="Permalink to this headline">¶</a></h2>
+<p>Users cannot see each other’s profiles since EJ is not meant to be a traditional
+social network. There is no concept of “friends”, “followers”,
+“private conversations” etc.</p>
+<dl class="docutils">
+<dt>profile/ (profile:index):</dt>
+<dd>Show user profile.</dd>
+<dt>profile/edit/ (profile:edit):</dt>
+<dd>Edit profile.</dd>
+<dt>profile/comments/ (profile:comments):</dt>
+<dd>Show statistics about all comments created by a user.</dd>
+<dt>profile/comments/&lt;which&gt;/ (profile:comments-filter):</dt>
+<dd>Show statistics about all created by a user in the given category. &lt;which&gt;
+can be “approved”, “rejected” or “pending”.</dd>
+</dl>
+<p>Those URLs require login and are implemented in the ej_profiles app.</p>
+<div class="section" id="gamification">
+<h3>Gamification<a class="headerlink" href="#gamification" title="Permalink to this headline">¶</a></h3>
+<p>Show gamification information for the user profile.</p>
+<dl class="docutils">
+<dt>profile/badges/ (gamification:badges)</dt>
+<dd>List of badges for the user.</dd>
+<dt>profile/leaderboard/ (gamification:leaderboard)</dt>
+<dd>Show the user position in the leaderboard.</dd>
+<dt>profile/powers/ (gamification:powers)</dt>
+<dd>See all unused powers.</dd>
+<dt>profile/quests/ (gamification:quests)</dt>
+<dd>See all open quests.</dd>
+</dl>
+<p>Those views are implemented in the ej_gamification app.</p>
+</div>
+<div class="section" id="global-powers">
+<h3>Global powers<a class="headerlink" href="#global-powers" title="Permalink to this headline">¶</a></h3>
+<p>Interface that users can use to manage global powers and resources in the
+platform.</p>
+</div>
+</div>
+<div class="section" id="notifications">
+<h2>Notifications<a class="headerlink" href="#notifications" title="Permalink to this headline">¶</a></h2>
+<p>Notifications are displayed using alerts (push notifications) for most users.
+However, some users may not have support for this technology on their browsers
+and even the users who have, might want to keep a record of the later
+notifications in the system.</p>
+<dl class="docutils">
+<dt>profile/notifications/ (notifications:index):</dt>
+<dd>List all unread notifications.</dd>
+<dt>profile/notifications/history/ (notifications:history):</dt>
+<dd>List all notifications.</dd>
+</dl>
+<p>All notifications are managed by the ej_notifications app.</p>
+</div>
+<div class="section" id="conversations">
+<h2>Conversations<a class="headerlink" href="#conversations" title="Permalink to this headline">¶</a></h2>
+<p>Public views for displaying information about conversations.</p>
+<dl class="docutils">
+<dt>conversations/ (conversations:list):</dt>
+<dd>List all available conversations</dd>
+<dt>conversations/&lt;conversation&gt;/ (conversations:conversation-detail):</dt>
+<dd>Detail page for an specific conversation.</dd>
+<dt>conversations/&lt;conversation&gt;/comments/  (conversations:comment-list):</dt>
+<dd>Show all comments the user already voted in the given conversation.</dd>
+<dt>conversations/&lt;conversation&gt;/my-comments/  (conversations:user-comments):</dt>
+<dd>Show information about all comments a user posted in a conversation.</dd>
+<dt>conversations/&lt;conversation&gt;/comments/&lt;id&gt;/ (conversations:comment-detail):</dt>
+<dd>Show a specific comment + associated statistics.</dd>
+<dt>conversations/&lt;conversation&gt;/info/ (conversations:info):</dt>
+<dd>Advanced information about conversation (statistics, graphs, etc)</dd>
+<dt>conversations/&lt;conversation&gt;/leaderboard/ (conversations:leaderboard):</dt>
+<dd>Leaderboard: show a list of users sorted by rank.</dd>
+</dl>
+<p>Those URLs are implemented in the ej_conversations app. Notice that this app
+lives in a separate repository at <a class="reference external" href="http://github.com/ejplatform/ej-conversations">http://github.com/ejplatform/ej-conversations</a>.</p>
+<div class="section" id="crud">
+<h3>CRUD<a class="headerlink" href="#crud" title="Permalink to this headline">¶</a></h3>
+<p>All those URLS are only available for users with permission to edit
+conversations. This can be applied to staff members or to the owner of the
+conversation.</p>
+<dl class="docutils">
+<dt>conversations/create/ (conversations:create-conversation):</dt>
+<dd>Add a new conversation.</dd>
+<dt>conversations/&lt;conversation&gt;/edit/ (conversations:edit-conversation):</dt>
+<dd>Edit conversation.</dd>
+<dt>conversations/&lt;conversation&gt;/moderate/ (conversations:moderate-comments):</dt>
+<dd>Can classify all non-moderated comments.</dd>
+</dl>
+<p>Those tree urls are implemented in the ej_conversations app.</p>
+</div>
+<div class="section" id="stereotype-management">
+<h3>Stereotype management<a class="headerlink" href="#stereotype-management" title="Permalink to this headline">¶</a></h3>
+<p>Only staff members and the conversation owner have access to those pages.</p>
+<dl class="docutils">
+<dt>conversations/&lt;conversation&gt;/stereotypes/ (clusters:stereotype-list):</dt>
+<dd>List of all stereotypes showing information about the assigned cluster and
+statistics.</dd>
+<dt>conversations/&lt;conversation&gt;/stereotypes/&lt;id&gt;/ (clusters:stereotype-vote):</dt>
+<dd>Allow the given stereotype to vote in conversation.</dd>
+</dl>
+<p>Stereotypes are implemented in ej_clusters.</p>
+</div>
+<div class="section" id="reports">
+<h3>Reports<a class="headerlink" href="#reports" title="Permalink to this headline">¶</a></h3>
+<p>Only staff members and the conversation owner have access to those pages.</p>
+<dl class="docutils">
+<dt>conversations/&lt;conversation&gt;/reports/ (reports:index):</dt>
+<dd>Aggregate reports for the given conversation.</dd>
+<dt>conversations/&lt;conversation&gt;/reports/clusters/ (reports:clusters):</dt>
+<dd>Show information for each cluster.</dd>
+<dt>conversations/&lt;conversation&gt;/reports/radar/ (reports:radar):</dt>
+<dd>Display comments in a 2D layout to show the distribution of opinions and
+comments.</dd>
+<dt>conversations/&lt;conversation&gt;/reports/divergence/ (reports:divergence):</dt>
+<dd>Hierarchical view for the degree of divergence and concordance of each
+comment.</dd>
+</dl>
+<p>Reports have its own app at ej_reports.</p>
+</div>
+<div class="section" id="clusters">
+<h3>Clusters<a class="headerlink" href="#clusters" title="Permalink to this headline">¶</a></h3>
+<p>Display the clusters associated with a conversation. All those urls require
+authentication, but are visible to all users.</p>
+<dl class="docutils">
+<dt>conversations/&lt;conversation&gt;/clusters/ (clusters:index):</dt>
+<dd>See cluster information in conversation. Display in which cluster the user
+was classified. The user must have cast a minimum number of votes if it
+wants to be classified into clusters.</dd>
+<dt>conversations/&lt;conversation&gt;/clusters/&lt;index&gt;/ (clusters:detail):</dt>
+<dd>Show information about a specific cluster.</dd>
+</dl>
+<p>Urls are implemented into the ej_clusters app.</p>
+</div>
+</div>
+<div class="section" id="help">
+<h2>Help<a class="headerlink" href="#help" title="Permalink to this headline">¶</a></h2>
+<p>Urls with the intention of explaining how to use the platform. Most of those
+urls are implemented as flat pages and are stored as HTML or markdown under
+either local/pages or lib/pages/.</p>
+<dl class="docutils">
+<dt>/start/ (help:start):</dt>
+<dd>Landing-page broadly explaining what is EJ and how to use the platform.</dd>
+<dt>/rules/ (help:rules):</dt>
+<dd>Explain the rules of how the “EJ game” works.</dd>
+<dt>/faq/ (help:faq):</dt>
+<dd>Frequently asked questions.</dd>
+<dt>/about-us/ (help:about):</dt>
+<dd>About EJ or the organization deploying an instance.</dd>
+<dt>/usage/ (help:usage):</dt>
+<dd>Usage terms for the platform.</dd>
+<dt>/social/ (help:social):</dt>
+<dd>Links to EJ social networks.</dd>
+<dt>/contacts/ (help:contacts):</dt>
+<dd>External contacts.</dd>
+</dl>
+<p>All urls are implemented in the ej_help app.</p>
+</div>
+<div class="section" id="talks">
+<h2>Talks<a class="headerlink" href="#talks" title="Permalink to this headline">¶</a></h2>
+<p>Rocketchat integration.</p>
+<dl class="docutils">
+<dt>/talks/ (rocket:index)</dt>
+<dd>Display Rocketchat inside a &lt;iframe&gt;.</dd>
+<dt>/talks/intro (rocket:intro):</dt>
+<dd>Initial page displayed by the Rocketchat instance.</dd>
+<dt>/talks/channels (rocket:channels):</dt>
+<dd>List of Rocketchat channels available for the user.</dd>
+</dl>
+<p>All urls are implemented in the ej_rocketchat app.</p>
+</div>
+<div class="section" id="administrative-tasks">
+<h2>Administrative tasks<a class="headerlink" href="#administrative-tasks" title="Permalink to this headline">¶</a></h2>
+<p>All views in this section require staff permissions.</p>
+<dl class="docutils">
+<dt>admin/:</dt>
+<dd>Django admin.</dd>
+<dt>debug/styles/ (config:styles):</dt>
+<dd>Exhibit the main design elements like colors and typography applied in the
+current theme.</dd>
+<dt>debug/info/ (config:info):</dt>
+<dd>Show basic debug information about the server</dd>
+<dt>debug/logs/ (config:logs):</dt>
+<dd>Platform logs.</dd>
+<dt>debug/data/ (config:data):</dt>
+<dd>Importable resources like reports, backups, etc.
+* User list
+* Logs</dd>
+</dl>
+</div>
+</div>
+
+
+
+
+    
+
+    
+        <!-- Google Analytics -->
+        <script defer>
+            (function (i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r;
+                i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date();
+                a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+                a.async = 1;
+                a.src = g;
+                m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+            ga('create', 'UA-104880284-1', 'auto');
+        </script>
+
+        
+
+        <!-- Run AJAX-loaded scripts -->
+        <script>
+            function runRemoteScripts() {
+                var scripts = document.getElementsByClassName('remoteScript');
+                for (var i = 0; i < scripts.length; i++) {
+                    var id = 'script-' + scripts[i].getAttribute('id');
+                    if (document.getElementById(id)) {
+                        document.getElementById(id).outerHTML = '';
+                    }
+                    var script = document.createElement('script');
+                    script.id = id;
+                    script.type = 'text/javascript';
+                    var src = scripts[i].getAttribute('data-script-src');
+                    if (!!src) {
+                        script.src = src;
+                    }
+                    else {
+                        script.text = scripts[i].innerHTML;
+                    }
+                    document.getElementsByTagName('body')[0].appendChild(script);
+                }
+            }
+
+            window.onload = function () {
+                checkHicontrast();
+                runRemoteScripts();
+                checkFontSize();
+                up.on('up:fragment:inserted', function (event, fragment) {
+                    runRemoteScripts();
+                    checkHicontrast();
+                    checkSpecificPages(fragment);
+                    enableFadeBottomDiv();
+                });
+            };
+        </script>
+    
+
+    </body>
+    </html>

@@ -1,0 +1,189 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Developer’s Guide &#8212; Empurrando Juntos 2.0rc1 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Quick Start" href="quick-start.html" />
+    <link rel="prev" title="User Guide" href="../user-guide/_index.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="developer-s-guide">
+<h1>Developer’s Guide<a class="headerlink" href="#developer-s-guide" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="quick-start.html">Quick Start</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="quick-start.html#ej-platform">EJ Platform</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Architecture</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#high-level-overview">High level overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#django-application">Django application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#app-structure">App structure</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="urls.html">URL structure</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="urls.html#users-login-ej-users-app">Users/login (ej_users app)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="urls.html#profile-views-ej-profiles">Profile views (ej_profiles)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="urls.html#conversations-ej-conversations">Conversations (ej_conversations)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="urls.html#help">Help</a></li>
+<li class="toctree-l2"><a class="reference internal" href="urls.html#talks">Talks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="urls.html#administrative-urls">Administrative URLs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="environment-variables.html">Environment Variables</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="environment-variables.html#basic-settings">Basic settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environment-variables.html#security">Security</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environment-variables.html#personalization">Personalization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environment-variables.html#integration-with-rocket-chat">Integration with Rocket.Chat</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="deploy.html">Deploy</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="deploy.html#docker-compose">Docker compose</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deploy.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deploy.html#rocket-chat-integration">Rocket.Chat integration</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="social-login.html">Social Login</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="social-login.html#twitter">Twitter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="social-login.html#facebook">Facebook</a></li>
+<li class="toctree-l2"><a class="reference internal" href="social-login.html#google">Google</a></li>
+<li class="toctree-l2"><a class="reference internal" href="social-login.html#other-information">Other information</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="themes.html">Themes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="themes.html#running-different-themes">Running different themes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="themes.html#creating-a-new-theme-for-the-ej-platform">Creating a new theme for the EJ platform</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="i18n.html">Internationalization</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="i18n.html#frontend">Frontend</a></li>
+<li class="toctree-l2"><a class="reference internal" href="i18n.html#documentation">Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api-docs.html">API Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api-docs.html#django-project">Django Project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-docs.html#django-apps">Django Apps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-docs.html#stylesheet">Stylesheet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-docs.html#javascript">Javascript</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing to EJ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#what-should-be-committed-directly-to-dev">What should be committed directly to dev?</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Empurrando Juntos</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../user-guide/_index.html">User Guide</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Developer’s Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="quick-start.html">Quick Start</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html">Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="urls.html">URL structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environment-variables.html">Environment Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deploy.html">Deploy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="social-login.html">Social Login</a></li>
+<li class="toctree-l2"><a class="reference internal" href="themes.html">Themes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="i18n.html">Internationalization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-docs.html">API Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html">Contributing to EJ</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../i18n/index.html">Translations</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="../user-guide/_index.html" title="previous chapter">User Guide</a></li>
+      <li>Next: <a href="quick-start.html" title="next chapter">Quick Start</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, EJ.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/dev-docs/_index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,8 +1,0 @@
-{% extends 'base.jinja2' %}
-
-{% set page_title = flatpage.title %}
-
-{% block content %}
-  <h1 class="text-accent">{{ flatpage.title }}</h1>
-  {% block render_flatpage %}{{ flatpage.content|safe }}{% endblock %}
-{% endblock %}

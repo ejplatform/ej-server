@@ -1,0 +1,332 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!DOCTYPE html>
+    <html lang="pt-br">
+
+    <head>
+        <meta charset="utf-8">
+        <title>EJ Documentation</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        
+            <!-- CSS -->
+            <link rel="stylesheet"
+                  href="https://fonts.googleapis.com/css?family=Patua+One|Raleway:400,600,700&subset=latin-ext">
+            <link rel="stylesheet" href="https://unpkg.com/unpoly@0.54.0/dist/unpoly.min.css"
+                  integrity="sha384-zsXMcPyhYSZEF/yA0Rprx9nn7gnz84QyiSrxSH5xuo0DalUAlfSmfsxILtkg5fJ/"
+                  crossorigin="anonymous">
+            <link rel="stylesheet" href="/static/css/fontawesome-all.min.css">
+            
+            
+            <link rel="stylesheet" href="/static/js/jquery-ui/jquery-ui.min.css">
+            <link rel="stylesheet" href="/static/js/jquery-ui/jquery-ui.structure.min.css">
+            <link rel="stylesheet" href="/static/css/main.css">
+        
+
+        
+            <!-- Javascript -->
+            <!--[if lt IE 9]>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+            <![endif]-->
+
+            
+            <script
+                    src="https://code.jquery.com/jquery-3.3.1.min.js"
+                    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+                    crossorigin="anonymous"></script>
+            <script src="https://unpkg.com/unpoly@0.54.0/dist/unpoly.min.js"
+                    integrity="sha384-6QMkTrFSjoO7UIWKZ1oYV4FCzxclb0Q4gP+TJzTZB93bAUeffVvNLblrRevbIkIw"
+                    crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js" defer></script>
+            <script src="/static/js/jquery-ui/jquery-ui.min.js" defer></script>
+            <script src="/static/js/main.js" defer></script>
+            <script src="/static/js/hicontrast.js"></script>
+            <script src="/static/js/specific-pages.js"></script>
+            <script src="/static/js/utils.js"></script>
+            <script src="/static/js/web-share.js"></script>
+            <script src="/static/js/fontScale.js" defer></script>
+            <script src="/static/js/comment-form-animation.js" defer></script>
+            <script src="/static/js/bundle.js" defer></script>
+        
+
+        <!-- Favicons -->
+        <link rel="icon" href="/static/img/logo/logo.svg"/>
+        <link rel="apple-touch-icon" sizes="57x57" href="/static/img/logo/icon-57.png">
+        <link rel="apple-touch-icon" sizes="72x72" href="/static/img/logo/icon-72.png">
+        <link rel="apple-touch-icon" sizes="114x114" href="/static/img/logo/icon-114.png">
+        <link rel="icon" type="image/png" sizes="192x192" href="/static/img/logo/icon-192.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/static/img/logo/icon-32.png">
+        <link rel="icon" type="image/png" sizes="96x96" href="/static/img/logo/icon-96.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/static/img/logo/icon-16.png">
+        <link rel="shortcut icon" href="/static/img/logo/favicon.ico"/>
+        <meta name="msapplication-TileImage" content="/static/img/logo/icon-144.png">
+        <meta name="msapplication-TileColor" content="#ffffff">
+        <meta name="image" content="/static/img/logo/logo.svg">
+
+        <!-- PWA -->
+        <link rel="manifest" href="/static/manifest.json">
+        <meta name="theme-color" content="#fff">
+
+        <!-- Cache busting metas -->
+        <meta http-equiv="cache-control" content="no-cache">
+        <meta http-equiv="expires" content="120">
+
+        <!-- Twitter -->
+        <meta name="twitter:card" content="summary">
+
+        
+            <!-- Open Graph general (Facebook, Pinterest & Google+) -->
+            <meta property="og:type" content="website">
+            <meta property="og:title" content="EJ Documentation">
+            <meta property="og:image" content="/static/img/logo/logo.svg">
+            
+            <meta property="og:site_name" content="EJ">
+            <meta property="og:locale" content="pt_BR">
+            
+            <meta property="og:image:type" content="image/svg">
+            <meta property="og:image:width" content="1200">
+            <meta property="og:image:height" content="630">
+
+            <!-- Twitter && Telegram -->
+            <meta name="twitter:title" content="EJ Documentation">
+        
+    </head>
+
+    <body class="Docs ">
+
+
+
+  <div class="section" id="prepare-environment">
+<h1><a class="toc-backref" href="#id1">Prepare environment</a><a class="headerlink" href="#prepare-environment" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#prepare-environment" id="id1">Prepare environment</a><ul>
+<li><a class="reference internal" href="#ubuntu-14-04-to-16-04" id="id2">Ubuntu 14.04 to 16.04</a></li>
+<li><a class="reference internal" href="#ubuntu-16-10-and-debian-9" id="id3">Ubuntu 16.10+ and Debian 9+</a></li>
+<li><a class="reference internal" href="#fedora" id="id4">Fedora</a></li>
+<li><a class="reference internal" href="#arch-linux" id="id5">Arch Linux</a></li>
+<li><a class="reference internal" href="#centos" id="id6">CentOS</a></li>
+<li><a class="reference internal" href="#mac-osx" id="id7">Mac OSX</a></li>
+<li><a class="reference internal" href="#building-from-sources" id="id8">Building from sources</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="ubuntu-14-04-to-16-04">
+<h2><a class="toc-backref" href="#id2">Ubuntu 14.04 to 16.04</a><a class="headerlink" href="#ubuntu-14-04-to-16-04" title="Permalink to this headline">¶</a></h2>
+<p>If you are using Ubuntu 14.04 to 16.04, you can use Felix Krull’s deadsnakes
+PPA at <a class="reference external" href="https://launchpad.net/~deadsnakes/+archive/ubuntu/ppa">https://launchpad.net/~deadsnakes/+archive/ubuntu/ppa</a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo add-apt-repository ppa:deadsnakes/ppa
+$ sudo apt-get update
+$ sudo apt-get install python3.6-dev virtualenvwrapper npm sass
+</pre></div>
+</div>
+</div>
+<div class="section" id="ubuntu-16-10-and-debian-9">
+<h2><a class="toc-backref" href="#id3">Ubuntu 16.10+ and Debian 9+</a><a class="headerlink" href="#ubuntu-16-10-and-debian-9" title="Permalink to this headline">¶</a></h2>
+<p>For Ubuntu 16.10 and 17.04 do not come with Python 3.6 by default, but it is in
+the Universe repository, You should be able to install it with the following commands:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo apt-get update
+$ sudo apt-get install python3.6-dev npm sass
+</pre></div>
+</div>
+</div>
+<div class="section" id="fedora">
+<h2><a class="toc-backref" href="#id4">Fedora</a><a class="headerlink" href="#fedora" title="Permalink to this headline">¶</a></h2>
+<p>If the python3 installed on your system is not 3.6, you can use the following
+command to install it:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo dnf install python36 npm ruby-sass
+</pre></div>
+</div>
+</div>
+<div class="section" id="arch-linux">
+<h2><a class="toc-backref" href="#id5">Arch Linux</a><a class="headerlink" href="#arch-linux" title="Permalink to this headline">¶</a></h2>
+<p>Arch Linux is fairly aggressive about keeping up with Python releases. It is
+likely you already have the latest version. If not, you can use this command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo pacman -S python python-virtualenvwrapper npm ruby-sass
+</pre></div>
+</div>
+</div>
+<div class="section" id="centos">
+<h2><a class="toc-backref" href="#id6">CentOS</a><a class="headerlink" href="#centos" title="Permalink to this headline">¶</a></h2>
+<p>The IUS Community does a nice job of providing newer versions of software for
+“Enterprise Linux” distros (i.e. Red Hat Enterprise and CentOS). You can use
+their work to help you install Python 3.</p>
+<p>To install, you should first update your system with the yum package manager:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo yum update
+$ sudo yum install yum-utils
+</pre></div>
+</div>
+<p>You can then install the CentOS IUS package which will get you up to date with
+their site:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo yum install https://centos7.iuscommunity.org/ius-release.rpm
+</pre></div>
+</div>
+<p>Finally you can then install Python and pip:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo yum install python36u
+$ sudo yum install python36u-pip
+</pre></div>
+</div>
+<p>For last, install node package manager and sass:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ curl --silent --location https://rpm.nodesource.com/setup_8.x | sudo bash -
+$ sudo yum install nodejs
+$ sudo npm install sass
+</pre></div>
+</div>
+</div>
+<div class="section" id="mac-osx">
+<h2><a class="toc-backref" href="#id7">Mac OSX</a><a class="headerlink" href="#mac-osx" title="Permalink to this headline">¶</a></h2>
+<p>We’ll start by installing homebrew to make things easier and then Python 3, followed by Sass.</p>
+<blockquote>
+<div>$ /usr/bin/ruby -e “$(curl -fsSL <a class="reference external" href="https://raw.githubusercontent.com/Homebrew/install/master/install">https://raw.githubusercontent.com/Homebrew/install/master/install</a>)”
+$ brew install python
+$ brew install sass/sass/sass</div></blockquote>
+</div>
+<div class="section" id="building-from-sources">
+<h2><a class="toc-backref" href="#id8">Building from sources</a><a class="headerlink" href="#building-from-sources" title="Permalink to this headline">¶</a></h2>
+<p>Step 1: Download the Source Code:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ wget https://www.python.org/ftp/python/3.6.5/Python-3.6.5.tgz
+</pre></div>
+</div>
+<p>Step 2: Prepare Your System:</p>
+<p>1. The first step you should take when doing an operation like this is to update
+the system packages on your machine before you start. On Debian, this is what
+that looks like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo apt-get update
+$ sudo apt-get upgrade
+</pre></div>
+</div>
+<p>2. Next, we want to make sure the system has the tools needed to build Python.
+There are a bunch of them and you might already have some, but that’s fine. I’ve
+listed them all in one command line, but you can break the list into shorter
+commands by just repeating the sudo apt-get install -y portion:</p>
+<ul>
+<li><p class="first">For apt-based systems (like Debian, Ubuntu, and Mint):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo apt-get install -y make build-essential libssl-dev zlib1g-dev \
+    libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
+    libncurses5-dev  libncursesw5-dev xz-utils tk-dev
+</pre></div>
+</div>
+</li>
+<li><p class="first">For yum-based systems (like CentOS):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo yum -y groupinstall development
+$ sudo yum -y install zlib-devel
+</pre></div>
+</div>
+</li>
+</ul>
+<p>Step 3: Build Python</p>
+<p>1. Once you have the prerequisites and the tar file, you can unpack the source
+into a directory. Note that the following command will create a new directory
+called Python-3.6.5 under the one you are in:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ tar xvf Python-3.6.5.tgz
+$ cd Python-3.6.5
+</pre></div>
+</div>
+<ol class="arabic" start="2">
+<li><p class="first">Now you need to run the ./configure tool to prepare the build:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ ./configure --enable-optimizations --with-ensurepip=install
+</pre></div>
+</div>
+</li>
+</ol>
+<p>3. Next, you build the Python programs using make. The -j option simply tells
+make to split the building into parallel steps to speed up the compilation. Even
+with the parallel builds, this step can take a several minutes:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ make -j 8
+</pre></div>
+</div>
+<p>4. Then, you’ll want to install your new version of Python. You’ll use the
+altinstall target here in order to not overwrite the system’s version of Python.
+Since you’re installing Python into /usr/bin, you’ll need to run as root:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo make altinstall
+</pre></div>
+</div>
+<p>Step 4: Setup Sass</p>
+<ol class="arabic">
+<li><p class="first">For last, install node package manager and sass:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo apt-get install npm
+$ sudo npm install sass
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+
+
+
+
+    
+
+    
+        <!-- Google Analytics -->
+        <script defer>
+            (function (i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r;
+                i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date();
+                a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+                a.async = 1;
+                a.src = g;
+                m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+            ga('create', 'UA-104880284-1', 'auto');
+        </script>
+
+        
+
+        <!-- Run AJAX-loaded scripts -->
+        <script>
+            function runRemoteScripts() {
+                var scripts = document.getElementsByClassName('remoteScript');
+                for (var i = 0; i < scripts.length; i++) {
+                    var id = 'script-' + scripts[i].getAttribute('id');
+                    if (document.getElementById(id)) {
+                        document.getElementById(id).outerHTML = '';
+                    }
+                    var script = document.createElement('script');
+                    script.id = id;
+                    script.type = 'text/javascript';
+                    var src = scripts[i].getAttribute('data-script-src');
+                    if (!!src) {
+                        script.src = src;
+                    }
+                    else {
+                        script.text = scripts[i].innerHTML;
+                    }
+                    document.getElementsByTagName('body')[0].appendChild(script);
+                }
+            }
+
+            window.onload = function () {
+                checkHicontrast();
+                runRemoteScripts();
+                checkFontSize();
+                up.on('up:fragment:inserted', function (event, fragment) {
+                    runRemoteScripts();
+                    checkHicontrast();
+                    checkSpecificPages(fragment);
+                    enableFadeBottomDiv();
+                });
+            };
+        </script>
+    
+
+    </body>
+    </html>

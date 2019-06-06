@@ -1,0 +1,157 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Themes &#8212; Empurrando Juntos 2.0rc1 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Internationalization" href="i18n.html" />
+    <link rel="prev" title="Social Login" href="social-login.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="themes">
+<h1>Themes<a class="headerlink" href="#themes" title="Permalink to this headline">¶</a></h1>
+<p>The EJ platform has a theme structure that can be easily tweaked and adapted
+for different instances.</p>
+<div class="section" id="running-different-themes">
+<h2>Running different themes<a class="headerlink" href="#running-different-themes" title="Permalink to this headline">¶</a></h2>
+<p>The theme is controlled by a environment variable. A new theme can
+be chosen by setting <code class="docutils literal notranslate"><span class="pre">EJ_THEME</span></code> to name or path to the desired theme:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ export EJ_THEME=cpa
+</pre></div>
+</div>
+<p>We’ve implemented a few default themes at /lib/themes/. Those themes are also
+a good reference of what can be done within the theme structure.</p>
+<p>Once this variable is set, the CSS will be built using the desired theme. The
+theme can also override static assets and even Django settings.</p>
+</div>
+<div class="section" id="creating-a-new-theme-for-the-ej-platform">
+<h2>Creating a new theme for the EJ platform<a class="headerlink" href="#creating-a-new-theme-for-the-ej-platform" title="Permalink to this headline">¶</a></h2>
+<p>A theme is organized within the following file structure:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span> <span class="o">&lt;</span><span class="n">theme</span><span class="o">-</span><span class="n">name</span><span class="o">&gt;</span>
+    <span class="o">|-</span> <span class="n">assets</span><span class="o">/</span>   <span class="p">(</span><span class="n">overrides</span> <span class="n">default</span> <span class="n">assets</span><span class="p">)</span>
+    \<span class="o">-</span> <span class="n">scss</span><span class="o">/</span>
+        <span class="o">|-</span> <span class="n">_settings</span><span class="o">.</span><span class="n">scss</span> <span class="p">(</span><span class="n">overrides</span> <span class="n">SASS</span> <span class="n">variables</span><span class="p">)</span>
+        <span class="o">|-</span> <span class="n">main</span><span class="o">.</span><span class="n">scss</span>
+        \<span class="o">-</span> <span class="n">rocket</span><span class="o">.</span><span class="n">scss</span>
+</pre></div>
+</div>
+<p>Both main.scss and rocket.scss have standard implementations and can be simply
+copied from one theme to the other. Most of your work will probably concentrate
+in the _settings.scss file: it defines all overrides of scss variables and can
+be used to declare colors, fonts, layouts, spacing, etc.</p>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Empurrando Juntos</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../user-guide/_index.html">User Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="_index.html">Developer’s Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="quick-start.html">Quick Start</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html">Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="urls.html">URL structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environment-variables.html">Environment Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deploy.html">Deploy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="social-login.html">Social Login</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Themes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="i18n.html">Internationalization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-docs.html">API Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html">Contributing to EJ</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../i18n/index.html">Translations</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="_index.html">Developer’s Guide</a><ul>
+      <li>Previous: <a href="social-login.html" title="previous chapter">Social Login</a></li>
+      <li>Next: <a href="i18n.html" title="next chapter">Internationalization</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, EJ.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/dev-docs/themes.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

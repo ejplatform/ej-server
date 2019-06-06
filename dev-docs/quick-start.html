@@ -1,0 +1,275 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Quick Start &#8212; Empurrando Juntos 2.0rc1 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Architecture" href="architecture.html" />
+    <link rel="prev" title="Developer’s Guide" href="_index.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="quick-start">
+<h1>Quick Start<a class="headerlink" href="#quick-start" title="Permalink to this headline">¶</a></h1>
+<a class="reference external image-reference" href="https://codeclimate.com/github/ejplatform/ej-server/maintainability"><img alt="Maintainability" src="https://api.codeclimate.com/v1/badges/fd8f8c7d5d2bc74c38df/maintainability" /></a>
+<a class="reference external image-reference" href="https://codecov.io/gh/ejplatform/ej-server"><img alt="https://codecov.io/gh/ejplatform/ej-server/branch/master/graph/badge.svg" src="https://codecov.io/gh/ejplatform/ej-server/branch/master/graph/badge.svg" /></a>
+<a class="reference external image-reference" href="https://gitlab.com/ejplatform/ej-server/commits/master"><img alt="https://gitlab.com/ejplatform/ej-server/badges/master/pipeline.svg" src="https://gitlab.com/ejplatform/ej-server/badges/master/pipeline.svg" /></a>
+<div class="section" id="ej-platform">
+<h2>EJ Platform<a class="headerlink" href="#ej-platform" title="Permalink to this headline">¶</a></h2>
+<p>You can visit EJ website at <a class="reference external" href="http://ejplatform.org">http://ejplatform.org</a>.</p>
+<div class="section" id="getting-started">
+<h3>Getting started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h3>
+<p>First clone the repository:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git clone http://github.com/ejplatform/ej-server/
+$ cd ej-server
+</pre></div>
+</div>
+<p>If you use Docker, you can quickly start the development server using the
+commands:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pip3 install invoke --user
+$ inv docker-build
+$ inv docker up
+</pre></div>
+</div>
+<p>For most cases, however, we recommend that you prepare your machine with some
+extra tools. Developers may choose between Docker or Poetry/Virtualenv for day to day
+development. In both cases, we recommend that you have <a class="reference external" href="http://www.pyinvoke.org/">Invoke</a> installed
+in your machine to make execution of chores easier.</p>
+<div class="section" id="local-development-virtualenv">
+<h4>Local development (virtualenv)<a class="headerlink" href="#local-development-virtualenv" title="Permalink to this headline">¶</a></h4>
+<p>This is a list of packages that you should have installed locally before we
+start:</p>
+<ul class="simple">
+<li>Python 3.6+ (Python 3.7 is recommended)</li>
+<li>Virtualenv or virtualenvwrapper</li>
+<li>Invoke (&gt;= 1.0)</li>
+<li>Node.js and npm</li>
+<li>Gettext</li>
+<li>Docker (optional, for deployment)</li>
+</ul>
+<p>You can install all dependencies on recent Ubuntu/Debian variants with the
+following commands:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo apt install python3-dev python3-pip virtualenvwrapper \
+                   npm gettext docker.io docker-compose
+$ sudo pip3 install invoke
+</pre></div>
+</div>
+<p>Once everything is installed, create and activate your virtualenv. We will create
+a new virtualenv called “ej”:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ bash
+$ mkvirtualenv ej -p /usr/bin/python3
+</pre></div>
+</div>
+<p>This command creates and activates the virtualenv. When you want to work with the
+repository in a later time, activate the virtual env using the command <code class="docutils literal notranslate"><span class="pre">workon</span> <span class="pre">ej</span></code>.</p>
+<p>The following steps are handled by the configure.sh script:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sh configure.sh
+</pre></div>
+</div>
+<p>This task creates a test database with a few conversations, users, comments, and
+votes. Notably, it automatically creates an admin user (password:
+admin, email: <a class="reference external" href="mailto:admin&#37;&#52;&#48;admin&#46;com">admin<span>&#64;</span>admin<span>&#46;</span>com</a>) a regular user (password: user, email: <a class="reference external" href="mailto:user&#37;&#52;&#48;user&#46;com">user<span>&#64;</span>user<span>&#46;</span>com</a>).</p>
+<p>This step takes some time. Grab a cup of coffee while it downloads and install
+all dependencies. If everything works as expected, you should be able to run
+the server using the <code class="docutils literal notranslate"><span class="pre">inv</span> <span class="pre">run</span></code> command after it is finished.</p>
+</div>
+<div class="section" id="running-it">
+<h4>Running it<a class="headerlink" href="#running-it" title="Permalink to this headline">¶</a></h4>
+<p>Unless you prefer to type long Django management commands, use <a class="reference external" href="http://www.pyinvoke.org/">Invoke</a> to start
+the dev server:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ inv run
+</pre></div>
+</div>
+<p>You can control many configurations using environment variables. To run using
+the Brazilian Portuguese translation, for instance, just export the correct
+COUNTRY setting:</p>
+<blockquote>
+<div>$ export COUNTRY=brasil</div></blockquote>
+<p>Depending on your network configurations, you might need to set the ALLOWED_HOSTS
+setting for your Django installation. This is a basic security setting that
+controls which hosts can serve pages securely. In non-production settings, set
+DJANGO_ALLOWED_HOSTS environment variable to * to allow connections in any
+network topology.</p>
+<blockquote>
+<div>$ DJANGO_ALLOWED_HOSTS=*</div></blockquote>
+<p>Invoke manages many other important tasks, you can discover them using:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ inv -l
+</pre></div>
+</div>
+<p>If you are making changes to EJ codebase, do not forget to run tests frequently.
+EJ uses <a class="reference external" href="http://pytest.org">Pytest</a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pytest
+</pre></div>
+</div>
+</div>
+<div class="section" id="documentation">
+<h4>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h4>
+<p>Documentation can be updated with <cite>$ inv docs</cite> and will be available at the
+<cite>build/docs/</cite> directory.</p>
+</div>
+<div class="section" id="changing-theme">
+<h4>Changing theme<a class="headerlink" href="#changing-theme" title="Permalink to this headline">¶</a></h4>
+<p>The previous commands build EJ using the “default” theme. EJ accepts additional
+themes and currently comes pre-installed with the alternate “cpa” theme. The
+first step is to rebuild static assets:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ inv sass -t cpa js db-assets
+</pre></div>
+</div>
+<p>Now run the server using the –theme flag:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ inv run -t cpa
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="using-docker">
+<h3>Using docker<a class="headerlink" href="#using-docker" title="Permalink to this headline">¶</a></h3>
+<p>If you want to use docker, build the containers and just start docker compose:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo docker-compose -f docker/deploy/docker-compose.yml build
+$ sudo docker-compose -f docker/docker-compose.yml up -d
+</pre></div>
+</div>
+<p>After the command, <strong>ej-server</strong> can be accessed at <a class="reference external" href="http://localhost:8000">http://localhost:8000</a>.</p>
+<p>At some point, you probably will want to execute commands inside the container.
+It is possible to open a bash shell in the main “web” container with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo docker-compose -f docker/docker-compose.yml run web bash
+</pre></div>
+</div>
+<p>In fact, it integrates with invoke and we can replace “bash” by any sequence of
+invoke tasks. For instance, we can migrate the database and run tests
+afterwards by doing:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo docker-compose -f docker/docker-compose.yml exec web db tests
+</pre></div>
+</div>
+<p>If you have invoke installed on the host machine, you can use the short
+version:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ inv docker-run dev
+</pre></div>
+</div>
+<div class="section" id="tests">
+<h4>Tests<a class="headerlink" href="#tests" title="Permalink to this headline">¶</a></h4>
+<p>Tests are run in a docker container by using the following command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo docker-compose -f docker/docker-compose.yml run web tests
+</pre></div>
+</div>
+<p>or use inv for a more compact alternative:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ inv docker-run run -c tests     # uses postgresql
+$ inv docker-run single -c tests  # uses sqlite3
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Empurrando Juntos</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../user-guide/_index.html">User Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="_index.html">Developer’s Guide</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Quick Start</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html">Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="urls.html">URL structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environment-variables.html">Environment Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deploy.html">Deploy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="social-login.html">Social Login</a></li>
+<li class="toctree-l2"><a class="reference internal" href="themes.html">Themes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="i18n.html">Internationalization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-docs.html">API Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html">Contributing to EJ</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../i18n/index.html">Translations</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="_index.html">Developer’s Guide</a><ul>
+      <li>Previous: <a href="_index.html" title="previous chapter">Developer’s Guide</a></li>
+      <li>Next: <a href="architecture.html" title="next chapter">Architecture</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, EJ.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/dev-docs/quick-start.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

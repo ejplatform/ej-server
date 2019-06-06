@@ -1,0 +1,194 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Repositório de código &#8212; Empurrando Juntos 2.0rc1 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="repositorio-de-codigo">
+<h1><a class="toc-backref" href="#id1">Repositório de código</a><a class="headerlink" href="#repositorio-de-codigo" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#repositorio-de-codigo" id="id1">Repositório de código</a><ul>
+<li><a class="reference internal" href="#politica-de-commits" id="id2">Política de Commits</a></li>
+<li><a class="reference internal" href="#politica-de-branches" id="id3">Política de Branches</a></li>
+<li><a class="reference internal" href="#padrao-para-criacao-e-uso-das-branches" id="id4">Padrão para criação e uso das branches</a></li>
+<li><a class="reference internal" href="#automatizacao-de-fechamento-de-issue" id="id5">Automatização de Fechamento de Issue</a></li>
+<li><a class="reference internal" href="#pull-requests-tempestivos-e-permanentes" id="id6">Pull-requests tempestivos e permanentes</a></li>
+<li><a class="reference internal" href="#conflitos-nos-pull-requests" id="id7">Conflitos nos Pull-requests</a></li>
+<li><a class="reference internal" href="#release-cycle" id="id8">Release cycle</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="politica-de-commits">
+<h2><a class="toc-backref" href="#id2">Política de Commits</a><a class="headerlink" href="#politica-de-commits" title="Permalink to this headline">¶</a></h2>
+<p>Adota-se para este projeto padrões para o comentário e execução dos commits. O idioma padrão para efetuar commits neste repositório é o inglês. As mensagens devem ser sucintas e expressarem de forma clara e objetiva a ação do commit.</p>
+<p>Como exemplo, considere o trabalho da construção de uma tela inicial da aplicação. O commit deverá ser efetuado como segue:
+<code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">git</span> <span class="pre">commit</span> <span class="pre">-m</span> <span class="pre">&quot;Create</span> <span class="pre">new</span> <span class="pre">home</span> <span class="pre">Screen&quot;</span>
+<span class="pre">`</span></code></p>
+<p>Atente ainda para os seguintes aspectos:
+* O commit deve iniciar com letras maiúsculas.
+* O commit deve iniciar com verbo no infinitivo.</p>
+<p>Exemplos:
+-“Fix login auth error”
+-“Create User model”
+-“Refactor profile View”
+-“Translate flat pages”</p>
+</div>
+<div class="section" id="politica-de-branches">
+<h2><a class="toc-backref" href="#id3">Política de Branches</a><a class="headerlink" href="#politica-de-branches" title="Permalink to this headline">¶</a></h2>
+<p>O repositório possui uma branch <cite>master</cite>, que possui objetivo de manter a versão estável do projeto.
+Possui também uma branch para desenvolvimento chamada <cite>devel</cite>, cujo objetivo é manter-se atualizada.
+Desta forma nenhum commit deve ser efetuado diretamente nestas branchs. As alterações devem ser criadas inicialmente em branchs de funcionalidades ou de configuração e correção, toda branch de funcionalidade deve ser criada a partir da branch devel.</p>
+<p>A imagem a seguir, ilustra como deve ser a organização das branchs e os eventos de criação e merge de acordo com o [Git Flow](<a class="reference external" href="https://leanpub.com/git-flow/read">https://leanpub.com/git-flow/read</a>).
+[[<a class="reference external" href="https://leanpub.com/site_images/git-flow/git-workflow-release-cycle-2feature.png">https://leanpub.com/site_images/git-flow/git-workflow-release-cycle-2feature.png</a>]]</p>
+<p>Como pode ser visto, após a etapa de desenvolvimento em uma branch de funcionalidade ser concluída, deve ser submetido um pull request em caso de alguma revisão ou merge da mesma. O pull request deve ser conferido por um membro da equipe e se estiver em conformidade, então o pull request é aceito.</p>
+</div>
+<div class="section" id="padrao-para-criacao-e-uso-das-branches">
+<h2><a class="toc-backref" href="#id4">Padrão para criação e uso das branches</a><a class="headerlink" href="#padrao-para-criacao-e-uso-das-branches" title="Permalink to this headline">¶</a></h2>
+<p>Deve-se criar novas branches para trabalho em seguindo padrão [GitFlow](<a class="reference external" href="https://datasift.github.io/gitflow/IntroducingGitFlow.html">https://datasift.github.io/gitflow/IntroducingGitFlow.html</a>). Estas devem ser criadas a partir da branch __develop__, e devem seguir a nomenclatura padrão abaixo, redigidas no idioma inglês.</p>
+<p>O código das branchs deve estar sincronizado com alguma Issue do repositório, sendo então o nome padrão para as branchs no formato:
+__i401_validate_username__
+__i397_create_cluster_group__</p>
+</div>
+<div class="section" id="automatizacao-de-fechamento-de-issue">
+<h2><a class="toc-backref" href="#id5">Automatização de Fechamento de Issue</a><a class="headerlink" href="#automatizacao-de-fechamento-de-issue" title="Permalink to this headline">¶</a></h2>
+<p>Caso termine sua funcionalidade e deseje fechar a Issue automaticamente é possivel através das palavras chaves na descrição do commit ou pull request:
+<cite>resolves: #numeroDaIssue</cite>
+Em caso de múltiplas issues é necessário replicar o comando:
+<cite>resolves: #numeroDaIssue</cite>
+<cite>resolves: #numeroDaIssue2</cite>
+<cite>resolves: #numeroDaIssue3</cite></p>
+</div>
+<div class="section" id="pull-requests-tempestivos-e-permanentes">
+<h2><a class="toc-backref" href="#id6">Pull-requests tempestivos e permanentes</a><a class="headerlink" href="#pull-requests-tempestivos-e-permanentes" title="Permalink to this headline">¶</a></h2>
+<p>Nesse projeto adotamos a política dos pull requests tempestivos e permanentes, ou seja, a partir do primeiro commit deve ser criado o pull request de merge da branch da issue com a develop. Esse pull request é, portanto, tempestivo - criado no primeiro commit - e permanente - permanece aberto enquanto o trabalho da issue estiver sendo executado. Além disso, sugere-se, para alterações no frontend, o envio também de prints ou gifs que ajudem a entender o trabalho realizado.</p>
+<p>O autor do pull request deve assignar o grupo de revisão: <a class="reference external" href="https://github.com/orgs/ejplatform/teams/revision">https://github.com/orgs/ejplatform/teams/revision</a></p>
+</div>
+<div class="section" id="conflitos-nos-pull-requests">
+<h2><a class="toc-backref" href="#id7">Conflitos nos Pull-requests</a><a class="headerlink" href="#conflitos-nos-pull-requests" title="Permalink to this headline">¶</a></h2>
+<p>A branch do PR deve estar sempre atualizado com a branch de desenvolvimento (develop) em caso de conflitos, deve-se realizar um rebase na branch com a develop</p>
+<p>‘’‘Exceções: commits que podem ser feitos diretamente na devel’‘’</p>
+<ul class="simple">
+<li>Fix de conteúdo e css (não arquiteturais)</li>
+<li>Tradução</li>
+<li>Cobertura de teste</li>
+<li>Atualizar assets</li>
+<li>Commits de melhoramentos/bugfix de pipeline (que precisam ser commitados na branch do pipeline)</li>
+</ul>
+</div>
+<div class="section" id="release-cycle">
+<h2><a class="toc-backref" href="#id8">Release cycle</a><a class="headerlink" href="#release-cycle" title="Permalink to this headline">¶</a></h2>
+<p>O EJ vai ter como meta um release mensal. Então o nosso release cycle é de 4 semanas, sendo 3 semanas para desenvolvimento das features e validação dos PRs de produto (os que são submetidos da develop pra master) e a última semana do mês para a definição do release candidate a partir dos PRs incluidos na master.</p>
+<div class="section" id="trabalho-no-board-e-validacoes-de-ux">
+<h3>Trabalho no board e validações de UX<a class="headerlink" href="#trabalho-no-board-e-validacoes-de-ux" title="Permalink to this headline">¶</a></h3>
+<p>O board segue no mesmo lugar: <a class="reference external" href="https://github.com/ejplatform/ej-server/projects/1?fullscreen=true">https://github.com/ejplatform/ej-server/projects/1?fullscreen=true</a>
+Ele já está automatizado para carregar as issues fechadas pra coluna de staging. A coluna de staging é onde acontecem as validações de ux das features. Uma vez validadas, o grupo de ux transporta pra done.</p>
+</div>
+<div class="section" id="validacoes-de-produto">
+<h3>Validações de produto<a class="headerlink" href="#validacoes-de-produto" title="Permalink to this headline">¶</a></h3>
+<p>As validações de produto acontecem motivadas pelos PRs do develop para a master. Sempre que um revisor fizer o merge dos PRs vindos das branches de issue pra develop, gera um PR correspondente pra master, acionando a validação de produto, focada na release.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Empurrando Juntos</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user-guide/_index.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../i18n/index.html">Translations</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, EJ.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/dev-docs/dev-repository.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

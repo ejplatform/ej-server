@@ -1,0 +1,239 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!DOCTYPE html>
+    <html lang="pt-br">
+
+    <head>
+        <meta charset="utf-8">
+        <title>EJ Documentation</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        
+            <!-- CSS -->
+            <link rel="stylesheet"
+                  href="https://fonts.googleapis.com/css?family=Patua+One|Raleway:400,600,700&subset=latin-ext">
+            <link rel="stylesheet" href="https://unpkg.com/unpoly@0.54.0/dist/unpoly.min.css"
+                  integrity="sha384-zsXMcPyhYSZEF/yA0Rprx9nn7gnz84QyiSrxSH5xuo0DalUAlfSmfsxILtkg5fJ/"
+                  crossorigin="anonymous">
+            <link rel="stylesheet" href="/static/css/fontawesome-all.min.css">
+            
+            
+            <link rel="stylesheet" href="/static/js/jquery-ui/jquery-ui.min.css">
+            <link rel="stylesheet" href="/static/js/jquery-ui/jquery-ui.structure.min.css">
+            <link rel="stylesheet" href="/static/css/main.css">
+        
+
+        
+            <!-- Javascript -->
+            <!--[if lt IE 9]>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+            <![endif]-->
+
+            
+            <script
+                    src="https://code.jquery.com/jquery-3.3.1.min.js"
+                    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+                    crossorigin="anonymous"></script>
+            <script src="https://unpkg.com/unpoly@0.54.0/dist/unpoly.min.js"
+                    integrity="sha384-6QMkTrFSjoO7UIWKZ1oYV4FCzxclb0Q4gP+TJzTZB93bAUeffVvNLblrRevbIkIw"
+                    crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js" defer></script>
+            <script src="/static/js/jquery-ui/jquery-ui.min.js" defer></script>
+            <script src="/static/js/main.js" defer></script>
+            <script src="/static/js/hicontrast.js"></script>
+            <script src="/static/js/specific-pages.js"></script>
+            <script src="/static/js/utils.js"></script>
+            <script src="/static/js/web-share.js"></script>
+            <script src="/static/js/fontScale.js" defer></script>
+            <script src="/static/js/comment-form-animation.js" defer></script>
+            <script src="/static/js/bundle.js" defer></script>
+        
+
+        <!-- Favicons -->
+        <link rel="icon" href="/static/img/logo/logo.svg"/>
+        <link rel="apple-touch-icon" sizes="57x57" href="/static/img/logo/icon-57.png">
+        <link rel="apple-touch-icon" sizes="72x72" href="/static/img/logo/icon-72.png">
+        <link rel="apple-touch-icon" sizes="114x114" href="/static/img/logo/icon-114.png">
+        <link rel="icon" type="image/png" sizes="192x192" href="/static/img/logo/icon-192.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/static/img/logo/icon-32.png">
+        <link rel="icon" type="image/png" sizes="96x96" href="/static/img/logo/icon-96.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/static/img/logo/icon-16.png">
+        <link rel="shortcut icon" href="/static/img/logo/favicon.ico"/>
+        <meta name="msapplication-TileImage" content="/static/img/logo/icon-144.png">
+        <meta name="msapplication-TileColor" content="#ffffff">
+        <meta name="image" content="/static/img/logo/logo.svg">
+
+        <!-- PWA -->
+        <link rel="manifest" href="/static/manifest.json">
+        <meta name="theme-color" content="#fff">
+
+        <!-- Cache busting metas -->
+        <meta http-equiv="cache-control" content="no-cache">
+        <meta http-equiv="expires" content="120">
+
+        <!-- Twitter -->
+        <meta name="twitter:card" content="summary">
+
+        
+            <!-- Open Graph general (Facebook, Pinterest & Google+) -->
+            <meta property="og:type" content="website">
+            <meta property="og:title" content="EJ Documentation">
+            <meta property="og:image" content="/static/img/logo/logo.svg">
+            
+            <meta property="og:site_name" content="EJ">
+            <meta property="og:locale" content="pt_BR">
+            
+            <meta property="og:image:type" content="image/svg">
+            <meta property="og:image:width" content="1200">
+            <meta property="og:image:height" content="630">
+
+            <!-- Twitter && Telegram -->
+            <meta name="twitter:title" content="EJ Documentation">
+        
+    </head>
+
+    <body class="Docs ">
+
+
+
+  <div class="section" id="docker-remote-debugging">
+<h1>Docker Remote Debugging<a class="headerlink" href="#docker-remote-debugging" title="Permalink to this headline">¶</a></h1>
+<p>To connect to python remote interpreter inside docker, you have to make sure
+first, that Pycharm is aware of your docker.</p>
+<p>Go to <em>Settings &gt; Build, Execution, Deployment &gt; Docker</em>. If you are on linux,
+you can use docker directly using its socket  <cite>unix:///var/run/docker.sock</cite>, if
+you are on Windows or Mac, make sure that you have docker-machine installed,
+then you can simply <em>Import credentials from Docker Machine</em>.</p>
+<img alt="../_images/1.png" src="../_images/1.png" />
+<div class="section" id="configure-remote-python-interpreter">
+<h2>Configure Remote Python Interpreter<a class="headerlink" href="#configure-remote-python-interpreter" title="Permalink to this headline">¶</a></h2>
+<p>This repository comes with already prepared “Run/Debug Configurations” for
+docker.</p>
+<img alt="../_images/2.png" src="../_images/2.png" />
+<p>But as you can see, at the beggining there is something wrong with them. They
+have red X on django icon, and they cannot be used, without configuring remote
+python interpteter. To do that, you have to go to
+<em>Settings &gt; Build, Execution, Deployment</em> first.</p>
+<p>Next, you have to add new remote python interpreter, based on already tested
+deployment settings. Go to <em>Settings &gt; Project &gt; Project Interpreter</em>. Click on
+the cog icon, and click <em>Add Remote</em>.</p>
+<img alt="../_images/3.png" src="../_images/3.png" />
+<p>Switch to <em>Docker Compose</em> and select <cite>local.yml</cite> file from directory of your
+project, next set <em>Service name</em> to <cite>django</cite></p>
+<img alt="../_images/4.png" src="../_images/4.png" />
+<p>Because Pycharm restarts container every time you use Configuration Run, to not
+have server restarted during running tests, we defined second service in <cite>local.yml</cite>
+file called pycharm. To use it, you have to add interpreter of second service as well.</p>
+<img alt="../_images/5.png" src="../_images/5.png" />
+<p>The final result should be:</p>
+<img alt="../_images/6.png" src="../_images/6.png" />
+<p>Having that, click <em>OK</em>. Close <em>Settings</em> panel, and wait few seconds…</p>
+<img alt="../_images/7.png" src="../_images/7.png" />
+<p>After few seconds, all <em>Run/Debug Configurations</em> should be ready to use.</p>
+<img alt="../_images/8.png" src="../_images/8.png" />
+<p><strong>Things you can do with provided configuration</strong>:</p>
+<ul class="simple">
+<li>run and debug python code
+.. image:: images/f1.png</li>
+<li>run and debug tests
+.. image:: images/f2.png
+.. image:: images/f3.png</li>
+<li>run and debug migrations or different django management commands
+.. image:: images/f4.png</li>
+<li>and many others..</li>
+</ul>
+</div>
+<div class="section" id="known-issues">
+<h2>Known issues<a class="headerlink" href="#known-issues" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Pycharm hangs on “Connecting to Debugger”</li>
+</ul>
+<img alt="../_images/issue1.png" src="../_images/issue1.png" />
+<p>This might be fault of your firewall. Take a look on this ticket - <a class="reference external" href="https://youtrack.jetbrains.com/issue/PY-18913">https://youtrack.jetbrains.com/issue/PY-18913</a></p>
+<ul class="simple">
+<li>Modified files in <cite>.idea</cite> directory</li>
+</ul>
+<p>Most of the files from <cite>.idea/</cite> were added to <cite>.gitignore</cite> with a few exceptions, which were made, to provide “ready to go” configuration. After adding remote interpreter some of these files are altered by PyCharm:</p>
+<img alt="../_images/issue2.png" src="../_images/issue2.png" />
+<p>In theory you can remove them from repository, but then, other people will lose a ability to initialize a project from provided configurations as you did. To get rid of this annoying state, you can run command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git update-index --assume-unchanged ej.iml
+</pre></div>
+</div>
+</div>
+</div>
+
+
+
+
+    
+
+    
+        <!-- Google Analytics -->
+        <script defer>
+            (function (i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r;
+                i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date();
+                a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+                a.async = 1;
+                a.src = g;
+                m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+            ga('create', 'UA-104880284-1', 'auto');
+        </script>
+
+        
+
+        <!-- Run AJAX-loaded scripts -->
+        <script>
+            function runRemoteScripts() {
+                var scripts = document.getElementsByClassName('remoteScript');
+                for (var i = 0; i < scripts.length; i++) {
+                    var id = 'script-' + scripts[i].getAttribute('id');
+                    if (document.getElementById(id)) {
+                        document.getElementById(id).outerHTML = '';
+                    }
+                    var script = document.createElement('script');
+                    script.id = id;
+                    script.type = 'text/javascript';
+                    var src = scripts[i].getAttribute('data-script-src');
+                    if (!!src) {
+                        script.src = src;
+                    }
+                    else {
+                        script.text = scripts[i].innerHTML;
+                    }
+                    document.getElementsByTagName('body')[0].appendChild(script);
+                }
+            }
+
+            window.onload = function () {
+                checkHicontrast();
+                runRemoteScripts();
+                checkFontSize();
+                up.on('up:fragment:inserted', function (event, fragment) {
+                    runRemoteScripts();
+                    checkHicontrast();
+                    checkSpecificPages(fragment);
+                    enableFadeBottomDiv();
+                });
+            };
+        </script>
+    
+
+    </body>
+    </html>

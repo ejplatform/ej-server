@@ -1,0 +1,267 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Adicionar funcionalidades no ej-server &mdash; EJ - Empurrando Juntos  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="prev" title="Bem vindo à documentação do EJ" href="index.html" /> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> EJ - Empurrando Juntos
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../user.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev.html">Devel Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Translations</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Bem vindo à documentação do EJ</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Contribuindo para o projeto</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#indices-and-tables">Indices and tables</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">EJ - Empurrando Juntos</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Translations</a> &raquo;</li>
+        
+          <li><a href="index.html">Bem vindo à documentação do EJ</a> &raquo;</li>
+        
+      <li>Adicionar funcionalidades no ej-server</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/i18n/pt-br/contribuicoes.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="adicionar-funcionalidades-no-ej-server">
+<h1>Adicionar funcionalidades no ej-server<a class="headerlink" href="#adicionar-funcionalidades-no-ej-server" title="Permalink to this headline">¶</a></h1>
+<p>Para cada issue a ser resolvida, seguir o seguinte procedimento:</p>
+<ul>
+<li><p class="first">Caso seu ambiente de desenvolvimento ainda não esteja preparado,
+então clone o repositório, prepare ele conforme é explicado no
+<a class="reference external" href="README.rst">README.rst</a> e instale os hooks para checar seu código com:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ inv install-hooks
+</pre></div>
+</div>
+</li>
+<li><p class="first">Mude a branch local para <code class="docutils literal notranslate"><span class="pre">dev</span></code> ou qualquer outra que queira criar
+para resolver sua issue específica. E.g.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git checkout dev
+</pre></div>
+</div>
+</li>
+<li><p class="first">Sempre rode os testes antes de fazer qualquer commit (rode mesmo
+porque seu PR não será aceito se seus testes não estiverem passando!):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ inv test
+</pre></div>
+</div>
+</li>
+<li><p class="first">Ao terminar sua issue, para enviar para a branch MASTER, abra um
+ticket de pull request no github com o sentido (base &lt;- head):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ejplatform</span><span class="o">/</span><span class="n">ej</span><span class="o">-</span><span class="n">server</span><span class="o">/</span><span class="n">master</span> <span class="o">&lt;-</span> <span class="n">ejplatform</span><span class="o">/</span><span class="n">ej</span><span class="o">-</span><span class="n">server</span><span class="o">/</span><span class="n">dev</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Espere o Travis CI, GitLab CI e o Code Climate executar os testes de
+integração</p>
+</li>
+<li><p class="first">Se os testes passarem, você ou outro contribuidor estarão livres para
+aceitar seu PR :rocket:</p>
+</li>
+<li><p class="first">Se a branch que criou não for a <code class="docutils literal notranslate"><span class="pre">dev</span></code> lembre-se de fechá-la após
+seu PR ser aceito!</p>
+</li>
+</ul>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="Bem vindo à documentação do EJ" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, UnB/Hacklab.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

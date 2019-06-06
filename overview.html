@@ -1,0 +1,315 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!DOCTYPE html>
+    <html lang="pt-br">
+
+    <head>
+        <meta charset="utf-8">
+        <title>EJ Documentation</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        
+            <!-- CSS -->
+            <link rel="stylesheet"
+                  href="https://fonts.googleapis.com/css?family=Patua+One|Raleway:400,600,700&subset=latin-ext">
+            <link rel="stylesheet" href="https://unpkg.com/unpoly@0.54.0/dist/unpoly.min.css"
+                  integrity="sha384-zsXMcPyhYSZEF/yA0Rprx9nn7gnz84QyiSrxSH5xuo0DalUAlfSmfsxILtkg5fJ/"
+                  crossorigin="anonymous">
+            <link rel="stylesheet" href="/static/css/fontawesome-all.min.css">
+            
+            
+            <link rel="stylesheet" href="/static/js/jquery-ui/jquery-ui.min.css">
+            <link rel="stylesheet" href="/static/js/jquery-ui/jquery-ui.structure.min.css">
+            <link rel="stylesheet" href="/static/css/main.css">
+        
+
+        
+            <!-- Javascript -->
+            <!--[if lt IE 9]>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+            <![endif]-->
+
+            
+            <script
+                    src="https://code.jquery.com/jquery-3.3.1.min.js"
+                    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+                    crossorigin="anonymous"></script>
+            <script src="https://unpkg.com/unpoly@0.54.0/dist/unpoly.min.js"
+                    integrity="sha384-6QMkTrFSjoO7UIWKZ1oYV4FCzxclb0Q4gP+TJzTZB93bAUeffVvNLblrRevbIkIw"
+                    crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js" defer></script>
+            <script src="/static/js/jquery-ui/jquery-ui.min.js" defer></script>
+            <script src="/static/js/main.js" defer></script>
+            <script src="/static/js/hicontrast.js"></script>
+            <script src="/static/js/specific-pages.js"></script>
+            <script src="/static/js/utils.js"></script>
+            <script src="/static/js/web-share.js"></script>
+            <script src="/static/js/fontScale.js" defer></script>
+            <script src="/static/js/comment-form-animation.js" defer></script>
+            <script src="/static/js/bundle.js" defer></script>
+        
+
+        <!-- Favicons -->
+        <link rel="icon" href="/static/img/logo/logo.svg"/>
+        <link rel="apple-touch-icon" sizes="57x57" href="/static/img/logo/icon-57.png">
+        <link rel="apple-touch-icon" sizes="72x72" href="/static/img/logo/icon-72.png">
+        <link rel="apple-touch-icon" sizes="114x114" href="/static/img/logo/icon-114.png">
+        <link rel="icon" type="image/png" sizes="192x192" href="/static/img/logo/icon-192.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/static/img/logo/icon-32.png">
+        <link rel="icon" type="image/png" sizes="96x96" href="/static/img/logo/icon-96.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/static/img/logo/icon-16.png">
+        <link rel="shortcut icon" href="/static/img/logo/favicon.ico"/>
+        <meta name="msapplication-TileImage" content="/static/img/logo/icon-144.png">
+        <meta name="msapplication-TileColor" content="#ffffff">
+        <meta name="image" content="/static/img/logo/logo.svg">
+
+        <!-- PWA -->
+        <link rel="manifest" href="/static/manifest.json">
+        <meta name="theme-color" content="#fff">
+
+        <!-- Cache busting metas -->
+        <meta http-equiv="cache-control" content="no-cache">
+        <meta http-equiv="expires" content="120">
+
+        <!-- Twitter -->
+        <meta name="twitter:card" content="summary">
+
+        
+            <!-- Open Graph general (Facebook, Pinterest & Google+) -->
+            <meta property="og:type" content="website">
+            <meta property="og:title" content="EJ Documentation">
+            <meta property="og:image" content="/static/img/logo/logo.svg">
+            
+            <meta property="og:site_name" content="EJ">
+            <meta property="og:locale" content="pt_BR">
+            
+            <meta property="og:image:type" content="image/svg">
+            <meta property="og:image:width" content="1200">
+            <meta property="og:image:height" content="630">
+
+            <!-- Twitter && Telegram -->
+            <meta name="twitter:title" content="EJ Documentation">
+        
+    </head>
+
+    <body class="Docs ">
+
+
+
+  <a class="reference external image-reference" href="https://codeclimate.com/github/ejplatform/ej-server/maintainability"><img alt="Maintainability" src="https://api.codeclimate.com/v1/badges/fd8f8c7d5d2bc74c38df/maintainability" /></a>
+<a class="reference external image-reference" href="https://codecov.io/gh/ejplatform/ej-server"><img alt="https://codecov.io/gh/ejplatform/ej-server/branch/master/graph/badge.svg" src="https://codecov.io/gh/ejplatform/ej-server/branch/master/graph/badge.svg" /></a>
+<a class="reference external image-reference" href="https://gitlab.com/ejplatform/ej-server/commits/master"><img alt="https://gitlab.com/ejplatform/ej-server/badges/master/pipeline.svg" src="https://gitlab.com/ejplatform/ej-server/badges/master/pipeline.svg" /></a>
+<div class="section" id="ej-platform">
+<h1>EJ Platform<a class="headerlink" href="#ej-platform" title="Permalink to this headline">¶</a></h1>
+<p>You can visit EJ website at <a class="reference external" href="http://ejplatform.org">http://ejplatform.org</a>.</p>
+<div class="section" id="getting-started">
+<h2>Getting started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
+<p>First clone the repository and point to it:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git clone http://github.com/ejplatform/ej-server/
+$ cd ej-server
+</pre></div>
+</div>
+<p>If you use docker, you can quickly start the development server using the
+command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo docker-compose -f docker/docker-compose.yml up
+</pre></div>
+</div>
+<p>For most cases, however we recommend that you prepare your machine with some
+tools. Developers may choose between docker or virtualenv for day to day
+development. In both cases, we recommend that you have <a class="reference external" href="http://www.pyinvoke.org/">Invoke</a> &gt;= 0.23 installed
+in your machine.</p>
+<p>Docker will probably get you started quicker, but in the long run it may be
+harder to integrate with your tools and often requires long builds not needed when
+using virtualenv.</p>
+<p>_Invoke: <a class="reference external" href="http://www.pyinvoke.org/">http://www.pyinvoke.org/</a></p>
+<div class="section" id="local-development-virtualenv">
+<h3>Local development (virtualenv)<a class="headerlink" href="#local-development-virtualenv" title="Permalink to this headline">¶</a></h3>
+<p>EJ platform <strong>requires</strong> you to <span class="target" id="prepare-environment">Prepare environment</span> + with the
+development headers. Please install those packages using your distro package
+manager. This is a list of packages that you should have installed locally:</p>
+<ul class="simple">
+<li>Python 3.6</li>
+<li>Virtualenv or virtualenvwrapper</li>
+<li>Invoke (&gt;= 0.23)</li>
+<li>Sass</li>
+<li>Node.js</li>
+</ul>
+<p>Once everything is installed, and your virtualenv is activated, just run the
+configure.sh script:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sh configure.sh
+</pre></div>
+</div>
+<p>Grab a cup of coffee while it downloads and install all dependencies. If
+everything works, you should be able to run the server using the <code class="docutils literal notranslate"><span class="pre">inv</span> <span class="pre">run</span></code>
+command.</p>
+<div class="section" id="running-it">
+<h4>Running it<a class="headerlink" href="#running-it" title="Permalink to this headline">¶</a></h4>
+<p>Unless you prefer to type long django management commands, use <a class="reference external" href="http://www.pyinvoke.org/">Invoke</a> to start
+the dev server:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ inv run
+</pre></div>
+</div>
+<p>Before runing, make sure you regenerate the PO files and compile. It’s necessary to compile sass either:</p>
+<blockquote>
+<div><p>$ inv i18n</p>
+<p>$ inv i18n -c</p>
+<p>$ inv sass run</p>
+</div></blockquote>
+<p>To run on brazilian portuguese:</p>
+<blockquote>
+<div>$ export COUNTRY=brasil</div></blockquote>
+<p>Tests are executed with <a class="reference external" href="http://pytest.org">Pytest</a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pytest
+</pre></div>
+</div>
+<p>Invoke manages many other important tasks, you can discover them using:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ inv -l
+</pre></div>
+</div>
+</div>
+<div class="section" id="semi-manual-installation">
+<h4>Semi-manual installation<a class="headerlink" href="#semi-manual-installation" title="Permalink to this headline">¶</a></h4>
+<p>The script installs the invoke task runner, fetches all dependencies from pip,
+and initializes the database. If you prefer (or if something goes wrong with the
+previous instructions), you can do all steps manually. The first step is to
+install the <a class="reference external" href="http://www.pyinvoke.org/">Invoke</a> task runner to run each step of the installation (if you are
+not familiar to Invoke, think of it a Python reinterpretation of Make:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pip install invoke
+</pre></div>
+</div>
+<p>You can install dependencies manually using the files in /etc/requirements/, or
+simply use the update-deps task. The later is preferable since it installs the
+volatile dependencies in a special folder that makes it easier and faster to
+do further updates:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ inv update-deps --all
+</pre></div>
+</div>
+<p>Invoke allow us to execute a sequence of tasks very easily. The command bellow
+will run migrations and populate the database with fake data for local
+development:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ inv update-deps db db-assets db-fake
+</pre></div>
+</div>
+<p>This creates a few conversations with comments and votes plus several users and
+an admin:admin &lt;admin&#64;admin.com&gt; user.</p>
+</div>
+<div class="section" id="documentation">
+<h4>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h4>
+<p>Documentation can be updated with <cite>$ sphinx-build docs build/docs</cite> and will be available at <a class="reference external" href="http://localhost:8000/docs">http://localhost:8000/docs</a>.</p>
+</div>
+</div>
+<div class="section" id="using-docker">
+<h3>Using docker<a class="headerlink" href="#using-docker" title="Permalink to this headline">¶</a></h3>
+<p>If you want to use docker, build the containers and just start docker compose:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo docker-compose -f docker/deploy/docker-compose.yml build
+$ sudo docker-compose -f docker/docker-compose.yml up -d
+</pre></div>
+</div>
+<p>After the command, <strong>ej-server</strong> can be accessed at <a class="reference external" href="http://localhost:8000">http://localhost:8000</a>.</p>
+<p>At some point, you probably will want to execute commands inside the container.
+It is possible to open a bash shell in the main “web” container with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo docker-compose -f docker/docker-compose.yml run web bash
+</pre></div>
+</div>
+<p>In fact, it integrates with invoke and we can replace “bash” by any sequence of
+invoke tasks. For instance, we can migrate the database and run tests
+afterwards by doing:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo docker-compose -f docker/docker-compose.yml exec web db tests
+</pre></div>
+</div>
+<p>If you have invoke installed on the host machine, you can use the short
+version:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ inv docker-run dev
+</pre></div>
+</div>
+<div class="section" id="tests">
+<h4>Tests<a class="headerlink" href="#tests" title="Permalink to this headline">¶</a></h4>
+<p>There are two ways to locally execute tests using docker-compose:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo docker-compose -f docker/docker-compose.yml run web tests
+</pre></div>
+</div>
+<p>or using inv:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ inv docker-run run -c tests     # uses postgresql
+$ inv docker-run single -c tests  # uses sqlite3
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+
+
+    
+
+    
+        <!-- Google Analytics -->
+        <script defer>
+            (function (i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r;
+                i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date();
+                a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+                a.async = 1;
+                a.src = g;
+                m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+            ga('create', 'UA-104880284-1', 'auto');
+        </script>
+
+        
+
+        <!-- Run AJAX-loaded scripts -->
+        <script>
+            function runRemoteScripts() {
+                var scripts = document.getElementsByClassName('remoteScript');
+                for (var i = 0; i < scripts.length; i++) {
+                    var id = 'script-' + scripts[i].getAttribute('id');
+                    if (document.getElementById(id)) {
+                        document.getElementById(id).outerHTML = '';
+                    }
+                    var script = document.createElement('script');
+                    script.id = id;
+                    script.type = 'text/javascript';
+                    var src = scripts[i].getAttribute('data-script-src');
+                    if (!!src) {
+                        script.src = src;
+                    }
+                    else {
+                        script.text = scripts[i].innerHTML;
+                    }
+                    document.getElementsByTagName('body')[0].appendChild(script);
+                }
+            }
+
+            window.onload = function () {
+                checkHicontrast();
+                runRemoteScripts();
+                checkFontSize();
+                up.on('up:fragment:inserted', function (event, fragment) {
+                    runRemoteScripts();
+                    checkHicontrast();
+                    checkSpecificPages(fragment);
+                    enableFadeBottomDiv();
+                });
+            };
+        </script>
+    
+
+    </body>
+    </html>

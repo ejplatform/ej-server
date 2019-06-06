@@ -1,0 +1,199 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!DOCTYPE html>
+    <html lang="pt-br">
+
+    <head>
+        <meta charset="utf-8">
+        <title>EJ Documentation</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        
+            <!-- CSS -->
+            <link rel="stylesheet"
+                  href="https://fonts.googleapis.com/css?family=Patua+One|Raleway:400,600,700&subset=latin-ext">
+            <link rel="stylesheet" href="https://unpkg.com/unpoly@0.54.0/dist/unpoly.min.css"
+                  integrity="sha384-zsXMcPyhYSZEF/yA0Rprx9nn7gnz84QyiSrxSH5xuo0DalUAlfSmfsxILtkg5fJ/"
+                  crossorigin="anonymous">
+            <link rel="stylesheet" href="/static/css/fontawesome-all.min.css">
+            
+            
+            <link rel="stylesheet" href="/static/js/jquery-ui/jquery-ui.min.css">
+            <link rel="stylesheet" href="/static/js/jquery-ui/jquery-ui.structure.min.css">
+            <link rel="stylesheet" href="/static/css/main.css">
+        
+
+        
+            <!-- Javascript -->
+            <!--[if lt IE 9]>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+            <![endif]-->
+
+            
+            <script
+                    src="https://code.jquery.com/jquery-3.3.1.min.js"
+                    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+                    crossorigin="anonymous"></script>
+            <script src="https://unpkg.com/unpoly@0.54.0/dist/unpoly.min.js"
+                    integrity="sha384-6QMkTrFSjoO7UIWKZ1oYV4FCzxclb0Q4gP+TJzTZB93bAUeffVvNLblrRevbIkIw"
+                    crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js" defer></script>
+            <script src="/static/js/jquery-ui/jquery-ui.min.js" defer></script>
+            <script src="/static/js/main.js" defer></script>
+            <script src="/static/js/hicontrast.js"></script>
+            <script src="/static/js/specific-pages.js"></script>
+            <script src="/static/js/utils.js"></script>
+            <script src="/static/js/web-share.js"></script>
+            <script src="/static/js/fontScale.js" defer></script>
+            <script src="/static/js/comment-form-animation.js" defer></script>
+            <script src="/static/js/bundle.js" defer></script>
+        
+
+        <!-- Favicons -->
+        <link rel="icon" href="/static/img/logo/logo.svg"/>
+        <link rel="apple-touch-icon" sizes="57x57" href="/static/img/logo/icon-57.png">
+        <link rel="apple-touch-icon" sizes="72x72" href="/static/img/logo/icon-72.png">
+        <link rel="apple-touch-icon" sizes="114x114" href="/static/img/logo/icon-114.png">
+        <link rel="icon" type="image/png" sizes="192x192" href="/static/img/logo/icon-192.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/static/img/logo/icon-32.png">
+        <link rel="icon" type="image/png" sizes="96x96" href="/static/img/logo/icon-96.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/static/img/logo/icon-16.png">
+        <link rel="shortcut icon" href="/static/img/logo/favicon.ico"/>
+        <meta name="msapplication-TileImage" content="/static/img/logo/icon-144.png">
+        <meta name="msapplication-TileColor" content="#ffffff">
+        <meta name="image" content="/static/img/logo/logo.svg">
+
+        <!-- PWA -->
+        <link rel="manifest" href="/static/manifest.json">
+        <meta name="theme-color" content="#fff">
+
+        <!-- Cache busting metas -->
+        <meta http-equiv="cache-control" content="no-cache">
+        <meta http-equiv="expires" content="120">
+
+        <!-- Twitter -->
+        <meta name="twitter:card" content="summary">
+
+        
+            <!-- Open Graph general (Facebook, Pinterest & Google+) -->
+            <meta property="og:type" content="website">
+            <meta property="og:title" content="EJ Documentation">
+            <meta property="og:image" content="/static/img/logo/logo.svg">
+            
+            <meta property="og:site_name" content="EJ">
+            <meta property="og:locale" content="pt_BR">
+            
+            <meta property="og:image:type" content="image/svg">
+            <meta property="og:image:width" content="1200">
+            <meta property="og:image:height" content="630">
+
+            <!-- Twitter && Telegram -->
+            <meta name="twitter:title" content="EJ Documentation">
+        
+    </head>
+
+    <body class="Docs ">
+
+
+
+  <div class="section" id="social-login">
+<h1>Social Login<a class="headerlink" href="#social-login" title="Permalink to this headline">¶</a></h1>
+<p>Users can login to EJ with Twitter or Facebook, too. In order to do that, you need to prepare the environment and to create the social apps on the respective social networks.</p>
+<div class="section" id="twitter">
+<h2>Twitter<a class="headerlink" href="#twitter" title="Permalink to this headline">¶</a></h2>
+<p>First, go to Twitter Developer interface (<a class="reference external" href="https://apps.twitter.com">https://apps.twitter.com</a>) and create an app. The important point is to setup the “Callback URLs” and to mark the checkbox “Allow this application to be used to Sign in with Twitter”. Please add two callback URLs: <a class="reference external" href="https://your-host/accounts/twitter/login/callback/">https://your-host/accounts/twitter/login/callback/</a> and <a class="reference external" href="http://your-host/accounts/twitter/login/callback/">http://your-host/accounts/twitter/login/callback/</a>.</p>
+<p>Now, on the Django side, go to the admin interface and create a new social app: <a class="reference external" href="http://localhost:8000/admin/socialaccount/socialapp/add/">http://localhost:8000/admin/socialaccount/socialapp/add/</a>. Choose “Twitter” as the provider, put a name like “EJ Twitter”, choose the ejplatform.org.br site and put the consumer key under “Client id” and consumer secret under “Secret key” fields. You can find the consumer key and consumer secret on the Twitter app page, under the “Keys and Access Tokens” tab.</p>
+</div>
+<div class="section" id="facebook">
+<h2>Facebook<a class="headerlink" href="#facebook" title="Permalink to this headline">¶</a></h2>
+<p>Important thing to keep in mind: Facebook only allows HTTPS and doesn’t allow localhost. So, for local development, we suggest to use a tool like Local Tunnel (<a class="reference external" href="http://localtunnel.github.io/www/">http://localtunnel.github.io/www/</a>) or Ngrok (<a class="reference external" href="https://ngrok.com/">https://ngrok.com/</a>) in order to have a public HTTPS URL that redirects to your local EJ instance. Remember to add that host to DJANGO_ALLOWED_HOSTS.</p>
+<p>Once you have the host, go to the Facebook Apps Management page (<a class="reference external" href="https://developers.facebook.com/apps">https://developers.facebook.com/apps</a>) and add a new web app. Go to Configurations &gt; Basic and add the host to “Application domains” and “Site”. Add the product “Facebook Login” to your app and, under its settings, add <a class="reference external" href="https://your-host/accounts/facebook/login/callback">https://your-host/accounts/facebook/login/callback</a> as a valid OAuth URI.</p>
+<p>Now, on the Django side, go to the admin interface and create a new social app: <a class="reference external" href="http://localhost:8000/admin/socialaccount/socialapp/add/">http://localhost:8000/admin/socialaccount/socialapp/add/</a>. Choose “Facebook” as the provider, put a name like “EJ Facebook”, choose the ejplatform.org.br site and put the app id under “Client id” and secret key under “Secret key” fields. You can find the app id and secret key on the Facebook app page, under Configurations &gt; Basic.</p>
+</div>
+<div class="section" id="google">
+<h2>Google<a class="headerlink" href="#google" title="Permalink to this headline">¶</a></h2>
+<p>In order to have Google login, you need a first-level valid domain that you can confirm the ownership. Go go the developers console (<a class="reference external" href="https://console.developers.google.com/">https://console.developers.google.com/</a>) and create a new project. Create a new credential and add <a class="reference external" href="https://your-host/accounts/google/login/callback/">https://your-host/accounts/google/login/callback/</a> as an authorized redirect URI. Remember to also add the domain as a valid domain.</p>
+<p>Now, on the Django side, go to the admin interface and create a new social app: <a class="reference external" href="http://localhost:8000/admin/socialaccount/socialapp/add/">http://localhost:8000/admin/socialaccount/socialapp/add/</a>. Choose “Google” as the provider, put a name like “EJ Google”, choose the ejplatform.org.br site and put the app id under “Client id” and secret key under “Secret key” fields. You can find the app id and secret key on the Google app page, under Credentials.</p>
+</div>
+<div class="section" id="other-information">
+<h2>Other information<a class="headerlink" href="#other-information" title="Permalink to this headline">¶</a></h2>
+<p>For all cases, for local development you may need to set, at src/ej/settings/__init__.py, ACCOUNT_EMAIL_VERIFICATION = ‘none’.</p>
+<p>More details at <a class="reference external" href="https://django-allauth.readthedocs.io/en/latest/providers.html">https://django-allauth.readthedocs.io/en/latest/providers.html</a>.</p>
+</div>
+</div>
+
+
+
+
+    
+
+    
+        <!-- Google Analytics -->
+        <script defer>
+            (function (i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r;
+                i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date();
+                a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+                a.async = 1;
+                a.src = g;
+                m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+            ga('create', 'UA-104880284-1', 'auto');
+        </script>
+
+        
+
+        <!-- Run AJAX-loaded scripts -->
+        <script>
+            function runRemoteScripts() {
+                var scripts = document.getElementsByClassName('remoteScript');
+                for (var i = 0; i < scripts.length; i++) {
+                    var id = 'script-' + scripts[i].getAttribute('id');
+                    if (document.getElementById(id)) {
+                        document.getElementById(id).outerHTML = '';
+                    }
+                    var script = document.createElement('script');
+                    script.id = id;
+                    script.type = 'text/javascript';
+                    var src = scripts[i].getAttribute('data-script-src');
+                    if (!!src) {
+                        script.src = src;
+                    }
+                    else {
+                        script.text = scripts[i].innerHTML;
+                    }
+                    document.getElementsByTagName('body')[0].appendChild(script);
+                }
+            }
+
+            window.onload = function () {
+                checkHicontrast();
+                runRemoteScripts();
+                checkFontSize();
+                up.on('up:fragment:inserted', function (event, fragment) {
+                    runRemoteScripts();
+                    checkHicontrast();
+                    checkSpecificPages(fragment);
+                    enableFadeBottomDiv();
+                });
+            };
+        </script>
+    
+
+    </body>
+    </html>

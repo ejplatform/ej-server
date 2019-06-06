@@ -1,0 +1,350 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!DOCTYPE html>
+    <html lang="pt-br">
+
+    <head>
+        <meta charset="utf-8">
+        <title>EJ Documentation</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        
+            <!-- CSS -->
+            <link rel="stylesheet"
+                  href="https://fonts.googleapis.com/css?family=Patua+One|Raleway:400,600,700&subset=latin-ext">
+            <link rel="stylesheet" href="https://unpkg.com/unpoly@0.54.0/dist/unpoly.min.css"
+                  integrity="sha384-zsXMcPyhYSZEF/yA0Rprx9nn7gnz84QyiSrxSH5xuo0DalUAlfSmfsxILtkg5fJ/"
+                  crossorigin="anonymous">
+            <link rel="stylesheet" href="/static/css/fontawesome-all.min.css">
+            
+            
+            <link rel="stylesheet" href="/static/js/jquery-ui/jquery-ui.min.css">
+            <link rel="stylesheet" href="/static/js/jquery-ui/jquery-ui.structure.min.css">
+            <link rel="stylesheet" href="/static/css/main.css">
+        
+
+        
+            <!-- Javascript -->
+            <!--[if lt IE 9]>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+            <![endif]-->
+
+            
+            <script
+                    src="https://code.jquery.com/jquery-3.3.1.min.js"
+                    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+                    crossorigin="anonymous"></script>
+            <script src="https://unpkg.com/unpoly@0.54.0/dist/unpoly.min.js"
+                    integrity="sha384-6QMkTrFSjoO7UIWKZ1oYV4FCzxclb0Q4gP+TJzTZB93bAUeffVvNLblrRevbIkIw"
+                    crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js" defer></script>
+            <script src="/static/js/jquery-ui/jquery-ui.min.js" defer></script>
+            <script src="/static/js/main.js" defer></script>
+            <script src="/static/js/hicontrast.js"></script>
+            <script src="/static/js/specific-pages.js"></script>
+            <script src="/static/js/utils.js"></script>
+            <script src="/static/js/web-share.js"></script>
+            <script src="/static/js/fontScale.js" defer></script>
+            <script src="/static/js/comment-form-animation.js" defer></script>
+            <script src="/static/js/bundle.js" defer></script>
+        
+
+        <!-- Favicons -->
+        <link rel="icon" href="/static/img/logo/logo.svg"/>
+        <link rel="apple-touch-icon" sizes="57x57" href="/static/img/logo/icon-57.png">
+        <link rel="apple-touch-icon" sizes="72x72" href="/static/img/logo/icon-72.png">
+        <link rel="apple-touch-icon" sizes="114x114" href="/static/img/logo/icon-114.png">
+        <link rel="icon" type="image/png" sizes="192x192" href="/static/img/logo/icon-192.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/static/img/logo/icon-32.png">
+        <link rel="icon" type="image/png" sizes="96x96" href="/static/img/logo/icon-96.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/static/img/logo/icon-16.png">
+        <link rel="shortcut icon" href="/static/img/logo/favicon.ico"/>
+        <meta name="msapplication-TileImage" content="/static/img/logo/icon-144.png">
+        <meta name="msapplication-TileColor" content="#ffffff">
+        <meta name="image" content="/static/img/logo/logo.svg">
+
+        <!-- PWA -->
+        <link rel="manifest" href="/static/manifest.json">
+        <meta name="theme-color" content="#fff">
+
+        <!-- Cache busting metas -->
+        <meta http-equiv="cache-control" content="no-cache">
+        <meta http-equiv="expires" content="120">
+
+        <!-- Twitter -->
+        <meta name="twitter:card" content="summary">
+
+        
+            <!-- Open Graph general (Facebook, Pinterest & Google+) -->
+            <meta property="og:type" content="website">
+            <meta property="og:title" content="EJ Documentation">
+            <meta property="og:image" content="/static/img/logo/logo.svg">
+            
+            <meta property="og:site_name" content="EJ">
+            <meta property="og:locale" content="pt_BR">
+            
+            <meta property="og:image:type" content="image/svg">
+            <meta property="og:image:width" content="1200">
+            <meta property="og:image:height" content="630">
+
+            <!-- Twitter && Telegram -->
+            <meta name="twitter:title" content="EJ Documentation">
+        
+    </head>
+
+    <body class="Docs ">
+
+
+
+  <div class="section" id="developing-with-docker">
+<h1>Developing with Docker<a class="headerlink" href="#developing-with-docker" title="Permalink to this headline">¶</a></h1>
+<p>You can develop your application in a <a class="reference external" href="https://www.docker.com/">Docker</a> container for simpler deployment
+onto bare Linux machines later. This instruction assumes an <a class="reference external" href="http://aws.amazon.com/">Amazon Web Services</a>
+EC2 instance, but it should work on any machine with Docker &gt; 1.3 and
+<a class="reference external" href="https://docs.docker.com/compose/">Docker compose</a> installed.</p>
+<div class="section" id="setting-up">
+<h2>Setting up<a class="headerlink" href="#setting-up" title="Permalink to this headline">¶</a></h2>
+<p>Docker encourages running one container for each process. This might mean one
+container for your web server, one for Django application and a third for your
+database. Once you’re happy composing containers in this way you can easily add
+more, such as a <a class="reference external" href="http://redis.io/">Redis</a> cache.</p>
+<p>The Docker compose tool (previously known as <a class="reference external" href="http://www.fig.sh/">fig</a>) makes linking these
+containers easy. An example set up for your Cookiecutter Django project might
+look like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">webapp</span><span class="o">/</span> <span class="c1"># Your cookiecutter project would be in here</span>
+    <span class="n">Dockerfile</span>
+    <span class="o">...</span>
+<span class="n">database</span><span class="o">/</span>
+    <span class="n">Dockerfile</span>
+    <span class="o">...</span>
+<span class="n">webserver</span><span class="o">/</span>
+    <span class="n">Dockerfile</span>
+    <span class="o">...</span>
+<span class="n">production</span><span class="o">.</span><span class="n">yml</span>
+</pre></div>
+</div>
+<p>Each component of your application would get its own <a class="reference external" href="https://docs.docker.com/reference/builder/">Dockerfile</a>. The rest of
+this example assumes you are using the <a class="reference external" href="https://registry.hub.docker.com/_/postgres/">base postgres image</a> for your database.
+Your database settings in <cite>config/base.py</cite> might then look something like:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">DATABASES</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;ENGINE&#39;</span><span class="p">:</span> <span class="s1">&#39;django.db.backends.postgresql_psycopg2&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;NAME&#39;</span><span class="p">:</span> <span class="s1">&#39;postgres&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;USER&#39;</span><span class="p">:</span> <span class="s1">&#39;postgres&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;HOST&#39;</span><span class="p">:</span> <span class="s1">&#39;database&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;PORT&#39;</span><span class="p">:</span> <span class="mi">5432</span><span class="p">,</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+</pre></div>
+</div>
+<p>The <a class="reference external" href="https://docs.docker.com/compose/#compose-documentation">Docker compose documentation</a> explains in detail what you can accomplish
+in the <cite>production.yml</cite> file, but an example configuration might look like
+this:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">database</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">build</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">database</span>
+<span class="l l-Scalar l-Scalar-Plain">webapp</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">build</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">webapp</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">command</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">/usr/bin/python3.4 manage.py runserver 0.0.0.0:8000</span> <span class="c1"># dev setting</span>
+    <span class="c1"># command: gunicorn -b 0.0.0.0:8000 wsgi:application # production setting</span>
+    <span class="l l-Scalar l-Scalar-Plain">volumes</span><span class="p p-Indicator">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">webapp/your_project_name:/path/to/container/workdir/</span>
+    <span class="l l-Scalar l-Scalar-Plain">links</span><span class="p p-Indicator">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">database</span>
+<span class="l l-Scalar l-Scalar-Plain">webserver</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">build</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">webserver</span>
+    <span class="l l-Scalar l-Scalar-Plain">ports</span><span class="p p-Indicator">:</span>
+        <span class="p p-Indicator">-</span> <span class="s">&quot;80:80&quot;</span>
+        <span class="p p-Indicator">-</span> <span class="s">&quot;443:443&quot;</span>
+    <span class="l l-Scalar l-Scalar-Plain">links</span><span class="p p-Indicator">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">webapp</span>
+</pre></div>
+</div>
+<p>We’ll ignore the webserver for now (you’ll want to comment that part out while
+we do). A working Dockerfile to run your cookiecutter application might look
+like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FROM</span> <span class="n">ubuntu</span><span class="p">:</span><span class="mf">14.04</span>
+<span class="n">ENV</span> <span class="n">REFRESHED_AT</span> <span class="mi">2015</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">13</span>
+
+<span class="c1"># update packages and prepare to build software</span>
+<span class="n">RUN</span> <span class="p">[</span><span class="s2">&quot;apt-get&quot;</span><span class="p">,</span> <span class="s2">&quot;update&quot;</span><span class="p">]</span>
+<span class="n">RUN</span> <span class="p">[</span><span class="s2">&quot;apt-get&quot;</span><span class="p">,</span> <span class="s2">&quot;-y&quot;</span><span class="p">,</span> <span class="s2">&quot;install&quot;</span><span class="p">,</span> <span class="s2">&quot;build-essential&quot;</span><span class="p">,</span> <span class="s2">&quot;vim&quot;</span><span class="p">,</span> <span class="s2">&quot;git&quot;</span><span class="p">,</span> <span class="s2">&quot;curl&quot;</span><span class="p">]</span>
+<span class="n">RUN</span> <span class="p">[</span><span class="s2">&quot;locale-gen&quot;</span><span class="p">,</span> <span class="s2">&quot;en_GB.UTF-8&quot;</span><span class="p">]</span>
+
+<span class="c1"># install latest python</span>
+<span class="n">RUN</span> <span class="p">[</span><span class="s2">&quot;apt-get&quot;</span><span class="p">,</span> <span class="s2">&quot;-y&quot;</span><span class="p">,</span> <span class="s2">&quot;build-dep&quot;</span><span class="p">,</span> <span class="s2">&quot;python3-dev&quot;</span><span class="p">,</span> <span class="s2">&quot;python3-imaging&quot;</span><span class="p">]</span>
+<span class="n">RUN</span> <span class="p">[</span><span class="s2">&quot;apt-get&quot;</span><span class="p">,</span> <span class="s2">&quot;-y&quot;</span><span class="p">,</span> <span class="s2">&quot;install&quot;</span><span class="p">,</span> <span class="s2">&quot;python3-dev&quot;</span><span class="p">,</span> <span class="s2">&quot;python3-imaging&quot;</span><span class="p">,</span> <span class="s2">&quot;python3-pip&quot;</span><span class="p">]</span>
+
+<span class="c1"># prepare postgreSQL support</span>
+<span class="n">RUN</span> <span class="p">[</span><span class="s2">&quot;apt-get&quot;</span><span class="p">,</span> <span class="s2">&quot;-y&quot;</span><span class="p">,</span> <span class="s2">&quot;build-dep&quot;</span><span class="p">,</span> <span class="s2">&quot;python3-psycopg2&quot;</span><span class="p">]</span>
+
+<span class="c1"># move into our working directory</span>
+<span class="c1"># ADD must be after chown see http://stackoverflow.com/a/26145444/1281947</span>
+<span class="n">RUN</span> <span class="p">[</span><span class="s2">&quot;groupadd&quot;</span><span class="p">,</span> <span class="s2">&quot;python&quot;</span><span class="p">]</span>
+<span class="n">RUN</span> <span class="p">[</span><span class="s2">&quot;useradd&quot;</span><span class="p">,</span> <span class="s2">&quot;python&quot;</span><span class="p">,</span> <span class="s2">&quot;-s&quot;</span><span class="p">,</span> <span class="s2">&quot;/bin/bash&quot;</span><span class="p">,</span> <span class="s2">&quot;-m&quot;</span><span class="p">,</span> <span class="s2">&quot;-g&quot;</span><span class="p">,</span> <span class="s2">&quot;python&quot;</span><span class="p">,</span> <span class="s2">&quot;-G&quot;</span><span class="p">,</span> <span class="s2">&quot;python&quot;</span><span class="p">]</span>
+<span class="n">ENV</span> <span class="n">HOME</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">python</span>
+<span class="n">WORKDIR</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">python</span>
+<span class="n">RUN</span> <span class="p">[</span><span class="s2">&quot;chown&quot;</span><span class="p">,</span> <span class="s2">&quot;-R&quot;</span><span class="p">,</span> <span class="s2">&quot;python:python&quot;</span><span class="p">,</span> <span class="s2">&quot;/home/python&quot;</span><span class="p">]</span>
+<span class="n">ADD</span> <span class="o">./</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">python</span>
+
+<span class="c1"># manage requirements</span>
+<span class="n">ENV</span> <span class="n">REQUIREMENTS_REFRESHED_AT</span> <span class="mi">2015</span><span class="o">-</span><span class="mi">02</span><span class="o">-</span><span class="mi">25</span>
+<span class="n">RUN</span> <span class="p">[</span><span class="s2">&quot;pip3&quot;</span><span class="p">,</span> <span class="s2">&quot;install&quot;</span><span class="p">,</span> <span class="s2">&quot;-r&quot;</span><span class="p">,</span> <span class="s2">&quot;requirements.txt&quot;</span><span class="p">]</span>
+
+<span class="c1"># uncomment the line below to use container as a non-root user</span>
+<span class="n">USER</span> <span class="n">python</span><span class="p">:</span><span class="n">python</span>
+</pre></div>
+</div>
+<p>Running <cite>sudo docker-compose -f production.yml build</cite> will follow the
+instructions in your <cite>production.yml</cite> file and build the database container,
+then your webapp, before mounting your cookiecutter project files as a volume in
+the webapp container and linking to the database. Our example yaml file runs in
+development mode but changing it to production mode is as simple as commenting
+out the line using <cite>runserver</cite> and uncommenting the line using <cite>gunicorn</cite>.</p>
+<p>Both are set to run on port <cite>0.0.0.0:8000</cite>, which is where the Docker daemon
+will discover it. You can now run <cite>sudo docker-compose -f production.yml up</cite>
+and browse to <cite>localhost:8000</cite> to see your application running.</p>
+</div>
+<div class="section" id="deployment">
+<h2>Deployment<a class="headerlink" href="#deployment" title="Permalink to this headline">¶</a></h2>
+<p>You’ll need a webserver container for deployment. An example setup for <a class="reference external" href="http://wiki.nginx.org/Main">Nginx</a>
+might look like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FROM</span> <span class="n">ubuntu</span><span class="p">:</span><span class="mf">14.04</span>
+<span class="n">ENV</span> <span class="n">REFRESHED_AT</span> <span class="mi">2015</span><span class="o">-</span><span class="mi">02</span><span class="o">-</span><span class="mi">11</span>
+
+<span class="c1"># get the nginx package and set it up</span>
+<span class="n">RUN</span> <span class="p">[</span><span class="s2">&quot;apt-get&quot;</span><span class="p">,</span> <span class="s2">&quot;update&quot;</span><span class="p">]</span>
+<span class="n">RUN</span> <span class="p">[</span><span class="s2">&quot;apt-get&quot;</span><span class="p">,</span> <span class="s2">&quot;-y&quot;</span><span class="p">,</span> <span class="s2">&quot;install&quot;</span><span class="p">,</span> <span class="s2">&quot;nginx&quot;</span><span class="p">]</span>
+
+<span class="c1"># forward request and error logs to docker log collector</span>
+<span class="n">RUN</span> <span class="n">ln</span> <span class="o">-</span><span class="n">sf</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">stdout</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">access</span><span class="o">.</span><span class="n">log</span>
+<span class="n">RUN</span> <span class="n">ln</span> <span class="o">-</span><span class="n">sf</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">stderr</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">error</span><span class="o">.</span><span class="n">log</span>
+<span class="n">VOLUME</span> <span class="p">[</span><span class="s2">&quot;/var/cache/nginx&quot;</span><span class="p">]</span>
+<span class="n">EXPOSE</span> <span class="mi">80</span> <span class="mi">443</span>
+
+<span class="c1"># load nginx conf</span>
+<span class="n">ADD</span> <span class="o">./</span><span class="n">site</span><span class="o">.</span><span class="n">conf</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">sites</span><span class="o">-</span><span class="n">available</span><span class="o">/</span><span class="n">your_cookiecutter_project</span>
+<span class="n">RUN</span> <span class="p">[</span><span class="s2">&quot;ln&quot;</span><span class="p">,</span> <span class="s2">&quot;-s&quot;</span><span class="p">,</span> <span class="s2">&quot;/etc/nginx/sites-available/your_cookiecutter_project&quot;</span><span class="p">,</span> <span class="s2">&quot;/etc/nginx/sites-enabled/your_cookiecutter_project&quot;</span><span class="p">]</span>
+<span class="n">RUN</span> <span class="p">[</span><span class="s2">&quot;rm&quot;</span><span class="p">,</span> <span class="s2">&quot;-rf&quot;</span><span class="p">,</span> <span class="s2">&quot;/etc/nginx/sites-available/default&quot;</span><span class="p">]</span>
+
+<span class="c1">#start the server</span>
+<span class="n">CMD</span> <span class="p">[</span><span class="s2">&quot;nginx&quot;</span><span class="p">,</span> <span class="s2">&quot;-g&quot;</span><span class="p">,</span> <span class="s2">&quot;daemon off;&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>That Dockerfile assumes you have an Nginx conf file named <cite>site.conf</cite> in the
+same directory as the webserver Dockerfile. A very basic example, which forwards
+traffic onto the development server or gunicorn for processing, would look like
+this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># see http://serverfault.com/questions/577370/how-can-i-use-environment-variables-in-nginx-conf#comment730384_577370</span>
+<span class="n">upstream</span> <span class="n">localhost</span> <span class="p">{</span>
+    <span class="n">server</span> <span class="n">webapp_1</span><span class="p">:</span><span class="mi">8000</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="n">server</span> <span class="p">{</span>
+    <span class="n">location</span> <span class="o">/</span> <span class="p">{</span>
+        <span class="n">proxy_pass</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">localhost</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Running <cite>sudo docker-compose -f production.yml build webserver</cite> will build your
+server container. Running <cite>sudo docker-compose -f production.yml up</cite> will now
+expose your application directly on <cite>localhost</cite> (no need to specify the port
+number).</p>
+</div>
+<div class="section" id="building-and-running-your-app-on-ec2">
+<h2>Building and running your app on EC2<a class="headerlink" href="#building-and-running-your-app-on-ec2" title="Permalink to this headline">¶</a></h2>
+<p>All you now need to do to run your app in production is:</p>
+<ul class="simple">
+<li>Create an empty EC2 Linux instance (any Linux machine should do).</li>
+<li>Install your preferred source control solution, Docker and Docker compose on the news instance.</li>
+<li>Pull in your code from source control. The root directory should be the one with your <cite>production.yml</cite> file in it.</li>
+<li>Run <cite>sudo docker-compose -f production.yml build</cite> and <cite>sudo docker-compose -f production.yml up</cite>.</li>
+<li>Assign an <a class="reference external" href="https://aws.amazon.com/articles/1346">Elastic IP address</a> to your new machine.</li>
+<li>Point your domain name to the elastic IP.</li>
+</ul>
+<p><strong>Be careful with Elastic IPs</strong> because, on the AWS free tier, if you assign one and then stop the machine you will
+incur charges while the machine is down (presumably because you’re preventing them allocating the IP to someone else).</p>
+</div>
+<div class="section" id="security-advisory">
+<h2>Security advisory<a class="headerlink" href="#security-advisory" title="Permalink to this headline">¶</a></h2>
+<p>The setup described in this instruction will get you up-and-running but it
+hasn’t been audited for security. If you are running your own setup like this it
+is always advisable to, at a minimum, examine your application with a tool like
+<a class="reference external" href="https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project">OWASP ZAP</a> to see what security holes you might be leaving open.</p>
+</div>
+</div>
+
+
+
+
+    
+
+    
+        <!-- Google Analytics -->
+        <script defer>
+            (function (i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r;
+                i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date();
+                a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+                a.async = 1;
+                a.src = g;
+                m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+            ga('create', 'UA-104880284-1', 'auto');
+        </script>
+
+        
+
+        <!-- Run AJAX-loaded scripts -->
+        <script>
+            function runRemoteScripts() {
+                var scripts = document.getElementsByClassName('remoteScript');
+                for (var i = 0; i < scripts.length; i++) {
+                    var id = 'script-' + scripts[i].getAttribute('id');
+                    if (document.getElementById(id)) {
+                        document.getElementById(id).outerHTML = '';
+                    }
+                    var script = document.createElement('script');
+                    script.id = id;
+                    script.type = 'text/javascript';
+                    var src = scripts[i].getAttribute('data-script-src');
+                    if (!!src) {
+                        script.src = src;
+                    }
+                    else {
+                        script.text = scripts[i].innerHTML;
+                    }
+                    document.getElementsByTagName('body')[0].appendChild(script);
+                }
+            }
+
+            window.onload = function () {
+                checkHicontrast();
+                runRemoteScripts();
+                checkFontSize();
+                up.on('up:fragment:inserted', function (event, fragment) {
+                    runRemoteScripts();
+                    checkHicontrast();
+                    checkSpecificPages(fragment);
+                    enableFadeBottomDiv();
+                });
+            };
+        </script>
+    
+
+    </body>
+    </html>
