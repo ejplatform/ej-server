@@ -17,6 +17,7 @@ services:
     image: mongo
     volumes:
       - db_rocketchat:/data/db
+      - ./scripts:/scripts/
 
     ports:
       - 27017:27017/tcp
@@ -26,14 +27,6 @@ services:
       - --oplogSize
       - '128'
 
-  rocketconfig:
-    links:
-      - "mongo:mongo"
-    build:
-      context: .
-      dockerfile: ./Dockerfile.waitmongo
-    depends_on:
-      - mongo
 volumes:
   db_rocketchat:
 

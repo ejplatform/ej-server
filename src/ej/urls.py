@@ -76,7 +76,9 @@ def get_urlpatterns():
         *with_app("ej_rocketchat", "talks/", namespace="rocket"),
 
         # Admin
-        path(fix_url(settings.ADMIN_URL), admin.site.urls),
+        *([path(fix_url(settings.ADMIN_URL), admin.site.urls)]
+          if apps.is_installed('admin')
+          else ()),
 
         # Debug routes
         *with_app("ej_experiments", "info/experiments/", namespace="experiments"),

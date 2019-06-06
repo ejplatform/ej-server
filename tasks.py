@@ -308,16 +308,16 @@ def db_assets(ctx, force=False, theme=None):
 # Docker
 #
 @task
-def docker(ctx, task, cmd=None, port=8000, prod=False,
-           file=None, dry_run=False, rocket=False, clean_perms=False):
+def docker(ctx, task, cmd=None, port=8000, file=None, dry_run=False,
+           deploy=False, rocket=False, clean_perms=False):
     """
     Runs EJ platform using a docker container.
 
-    Use inv docker <cmd>, where cmd is one of single, start, up, down, run.
+    Use inv docker <cmd>, where cmd is one of single, start, up, down, run, exec.
     """
     docker = su_docker('docker')
     do = runner(ctx, dry_run, pty=True)
-    if file is None and prod or task == 'production':
+    if file is None and deploy or task == 'production':
         file = 'docker/docker-compose.deploy.yml'
     elif file is None:
         file = 'docker/docker-compose.yml'
@@ -337,8 +337,8 @@ def docker(ctx, task, cmd=None, port=8000, prod=False,
         do(f'{compose} stop')
     elif task in ('up', 'down'):
         do(f'{compose} {task}')
-    elif task == 'run':
-        do(f'{compose} run -p {port}:8000 web {cmd or "bash"}')
+    elif task in ('run', 'exec'):
+        do(f'{compose} -p {port}:8000 {task} web {cmd or "bash"}')
     else:
         raise SystemExit(f'invalid task: {task}')
     if clean_perms:

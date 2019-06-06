@@ -1,6 +1,6 @@
-======
-Deploy
-======
+==========
+Deployment
+==========
 
 EJ relies on Docker and a Docker orchestration technology such as Docker Compose
 in its deployment process.
@@ -24,166 +24,78 @@ The docker-build command accepts additional configurations such as
 ``--theme cpa``, ``--country brasil``, ``--tag v1.0``, and others
 (``inv docker-build -h`` shows additional options).
 
-After building the image, the first step is to initialize assets, collect static
-files, initialize the database and configurations. This is done chaining
-inv commands such as in the example::
+After building the image, you must initialize the database. Open a terminal in
+the Django container with the command::
 
-    $ sudo docker-compose -f docker/docker-compose.deploy.yml run web db db-assets
+    $ inv docker run --deploy
+
+Now execute the commands to populate the database::
+
+    $ python manage.py migrate ej_users
+    $ inv db db-assets
 
 (you can also add db-fake to add fake data and test users).
 
 Fire all containers using::
 
-    $ sudo docker-compose -f docker/docker-compose.deploy.yml up
+    $ inv docker up --deploy
 
 The EJ instance should be available at port 80.
 
-
-
-Docker compose
-==============
-
-A standard build of EJ can be easily run using docker-compose. In very simple
-scenarios in which no customization is necessary, this is all you need to deploy
-EJ. All you need is to call the command bellow from the ej-server repository::
-
-    $ inv docker-run production
-
-This is actually a shortcut for the longer list of Docker Compose commands
-that builds and run the stack::
-
-    $ sudo docker-compose -f docker/docker-compose.production.yml build
-    $ sudo docker-compose -f docker/docker-compose.production.yml up
-
-This is all fine for testing, but it is very likely to fail in a real life
-situation. You need to provide specific configurations such as the domain name,
-credentials to different services, the location and passwords of your database
-server, etc.
-
-In order to make things simple, we created an example repository with a bare
-bones Docker Compose configuration that you can adapt to your own use case.
-Start by cloning it to the local/deploy folder with the command::
-
-    $ git clone https://github.com/ejplatform/docker-compose-deploy.git local/deploy/
-
-This will copy the example files to local/deploy. This folder is ignored by git
-versioning and you can maintain it as a private repository independent of
-``ejplatform/ej-server``.
-
-Adapt the files on this folder to your needs by setting the values of all
-necessary `Environment Variables`_. In the long run, it is probably best to use
-a private repository to keep those files with version control. Bear in mind that
-many of the configuration variables are secrets that cannot be shared in a
-public location.
-
-.. _Environment Variables: environment-variables.html
-
-Now rebuild the deployment images using the command::
-
-    $ inv docker-deploy build
-
-and
+The ``inv docker *`` tasks are simply alias to longer docker-compose commands.
+If you want to discover the equivalent docker command, add the --dry-run option
+to any command.
 
 ::
 
-    $ inv docker-deploy up
+    $ inv docker up --deploy
 
-to execute the stack.
+You will see that it is equivalent to::
+
+    sudo docker-compose -f docker/docker-compose.deploy.yml up
 
 
 Configuration
 =============
 
-The standard structure of the docker-compose-deploy_ repository implement a few
-options that the ``inv docker-deploy`` task understand. We list a few useful
-commands bellow:
+EJ is configured using `Environment Variables`_. Those variables can be
+conveniently set up in the files inside the /docker/env/ folder. Edit those
+files and then run ``$ inv docker up --deploy`` in order to update the container
+with the new configurations. Bear in mind that many of the configuration
+variables are secrets that cannot be shared in a public location. Because of this,
+we recommend to store the environment files on a private fork of the main
+repository.
 
-.. _docker-compose-deploy: https://github.com/ejplatform/docker-compose-deploy/
+.. _Environment Variables: environment-variables.html
 
-``inv docker-deploy build``:
-    Builds all images necessary for the Docker Compose file to run.
-
-``inv docker-deploy up``:
-    Executes the full stack using Docker Compose.
-
-``inv docker-deploy run -c bash``:
-    Executes the full stack and runs the given command in the Django container.
-    It can be any task registered in tasks.py. The command bellow uses the
-    "bash" task to open a bash shell in the container.
-
-``inv docker-deploy publish``:
-    Publish all images in Docker Hub.
-
-``inv docker-deploy notify``:
-    Notify your stack that all images were updated. We implement a script that
-    integrates with Rancher, but you can override this script and use any
-    integration you like.
-
-All those commands accept a ``-e ENVIRONMENT`` option that allows us to specify
-different environments other than "production". A common pattern is to use two
-separate deploys: the "production" and "staging" environments. All environments
-share the same docker images, but uses different Docker Compose files.
-
-
-config.py
----------
-
-This script is executed and it must define a JSON-like structure that is used
-to fill the environment variables passed to docker-compose when starting the
-containers. The main variables defined on config.py are listed bellow:
-
-ORGANIZATION (ejplatform):
-    Name of organization or user in Docker Hub used to store images. It defaults
-    to  ejplatform, but you need to change to some organization that you can
-    publish images to.
-
-TAG (latest):
-    Release number for the built images. Leave as "latest" if desired.
-
-THEME (default):
-    Theme used to construct images. This sets the EJ_THEME variable in the
-    docker container.
-
-LISTENERS:
-    A list of listeners that implement the notify command. Each listener must
-    have a corresponding notify.<listener>.sh script. We provide an example
-    using Rancher.
-
-The `config.py` file can also be used to set arbitrary configuration variables
-that are injected in the environment.
 
 
 Rocket.Chat integration
 =======================
 
-Integrating Rocket.Chat to the stack requires a few additional steps. The first
-step is to uncomment all services in the Rocket.Chat section of the example
-docker-compose.yml file to enable the necessary containers.
+Integrating Rocket.Chat to the stack requires a few additional steps. You must
+edit the docker/env/django.env file and set ``EJ_ROCKETCHAT_INTEGRATION=true``.
+Depending on your configuration, you might need to set other environment variables
+such as EJ_ROCKETCHAT_URL and EJ_ROCKETCHAT_USERNAME.
 
-You also need to set the following environment variable either in config.env or
-in the docker-compose.yml file:
+You can start the Rocket.Chat containers either running
 
-``EJ_ROCKETCHAT_INTEGRATION=true``:
-    If true, enables the Rocket chat integration in the Django application.
-    Remember to configure the docker-compose.yml file accordingly.
+::
 
-Now build the containers and execute compose:
+    $ sudo docker-compose -f docker/docker-compose.rocket.yml up
 
-    $ inv docker-deploy build
-    $ inv docker-deploy up
+or by adding a flag --rocket after the ``docker up`` command
+
+::
+
+    $ inv docker up --deploy --rocket
 
 In order to integrate the main EJ application with an instance of Rocket.Chat,
 open your Rocket.Chat url and you will be redirected to /setup-wizard, create
 an admin user and configure the server. After you finish the setup-wizard, the
 next step is to login as an the superuser in EJ and point to <EJ URL>/talks/config/.
-This URL presents a form that you can be used to configure the basic parameters of
-Rocket.Chat integration, here you have to put the admin credentials you created
-on Rocket.Chat setup-wizard.
-
-There are other ways to retrieve this data from the API. Visit
-`Rocket.Chat API docs`_ to learn more.
-
-
+This URL presents a form to configure the basic parameters of Rocket.Chat integration.
+Here you have to provide the admin credentials you created on Rocket.Chat setup-wizard.
 
 Now, go to the Rocket.Chat administration page. It will be something like
 ``http://<rocket-host>/admin/Accounts``. Setup the
@@ -224,6 +136,10 @@ home page there. We recommend to keep this data versioned in the configuration
 repository. Similarly, it is possible to set a custom CSS and save it using
 Rocket.Chat admin page at at ``Administration > Layout > Custom CSS``.
 
-Follow the tutorial_ for further explanations (in Portuguese).
+The following command makes a few automatic customizations to the Rocket.Chat
+account::
 
-.. _tutorial: https://drive.google.com/file/d/1LoEMIU4XwaypUJe1D2na8R1Qf4Fwxgy4/view
+    $ sudo docker-compose -f docker/docker-compose.rocket.yml exec mongo bash
+
+This command opens a bash CLI and must be executed while Mongo db is running on
+the background. Now execute ``mongo /scripts/mongo_script.js`` on the terminal.

@@ -24,7 +24,6 @@ services:
       - ./env/django.env
       - ./env/postgres.env
       - ./env/deploy.env
-      - ./env/email.env
     volumes:
       - media_files:/app/local/media/
       - static_files:/app/local/static/
@@ -35,13 +34,13 @@ services:
     image: postgres:10-alpine
     restart: always
     env_file:
-      - ./env/deploy.env
+      - ./env/postgres.env
     volumes:
-      - db_data:/var/lib/postgresql/data
+      - ej_db_data:/var/lib/postgresql/data
 
 
 volumes:
-  db_data:
+  ej_db_data:
   media_files:
   static_files:
   nginx_conf:
