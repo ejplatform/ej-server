@@ -1,7 +1,7 @@
 import {Component, component} from "./base";
 
 
-@component
+@component('collapsible')
 class Collapsible extends Component {
     attributes = {'is-collapsed': true};
 
@@ -18,7 +18,7 @@ class Collapsible extends Component {
 }
 
 
-@component
+@component('tabs')
 class Tabs extends Component {
     register() {
         super.register();
@@ -29,18 +29,16 @@ class Tabs extends Component {
 
         // Register click handlers for tab anchor elements
         $anchors.on('click', (ev) => {
-            if (!this.isReturnEvent(ev)) return true;
             let $elem = $(ev.target),
                 href = $elem.attr('href');
 
-            // Setup tabs bar
+            // // Setup tabs bar
             $anchors.attr('is-selected', null);
             $elem.attr('is-selected', '');
 
             // Show only the correct page
             $pages.hide();
             $pages.filter(href).show();
-
             ev.preventDefault();
         });
 
@@ -53,7 +51,7 @@ class Tabs extends Component {
 }
 
 
-@component
+@component('categories')
 class Categories extends Tabs {
     leftArrow() {
         this.incrementBy(-1);

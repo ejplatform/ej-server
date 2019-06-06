@@ -9,11 +9,15 @@
     "unpoly": "^0.60.0"
   },
   "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-flow": "^6.23.0",
     "parcel-bundler": "^1.11.0",
     "typescript": "^3.4.5"
   },
   "scripts": {
-    "watch": "parcel watch js/index.ts",
-    "build": "parcel build js/index.ts"
+    "watch": "parcel watch js/main.ts -d build/js/",
+    "build": "parcel build js/main.ts -d build/js/"
   }
 }

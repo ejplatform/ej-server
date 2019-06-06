@@ -155,20 +155,22 @@ conversations/<id>/<slug>/reports/users/ (reports:radar):
     Display comments in a 2D layout to show the distribution of opinions and
     comments.
 
-Clusters
---------
+Clusters (ej_clusters)
+----------------------
 
 Display the clusters associated with a conversation. All those urls require
 authentication, but are visible to all users.
 
-conversations/<conversation>/clusters/ (clusters:index):
-    See cluster information in conversation. Display in which cluster the user
-    was classified. The user must have cast a minimum number of votes if it
-    wants to be classified into clusters.
-conversations/<conversation>/clusters/<index>/ (clusters:detail):
-    Show information about a specific cluster.
+conversations/<id>/<slug>/clusters/ (clusters:index):
+    See cluster information in conversation.
+    Implementation :func:`ej_clusters.routes.index`.
+conversations/<id>/<slug>/clusters/edit/ (clusters:edit):
+    Edit clusterization configurations.
+    Implementation :func:`ej_clusters.routes.edit`.
+conversations/<id>/<slug>/stereotypes/ (clusters:stereotype-votes):
+    Cast stereotype votes in conversation.
+    Implementation :func:`ej_clusters.routes.stereotype_votes`.
 
-Urls are implemented into the ej_clusters app.
 
 
 Clusters and Stereotypes (ej_clusters)
@@ -222,8 +224,8 @@ All urls are implemented in the ej_rocketchat app.
 
 
 
-Administrative tasks
-====================
+Administrative URLs
+===================
 
 All views in this section require staff permissions.
 

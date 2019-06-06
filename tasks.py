@@ -68,10 +68,14 @@ def js(ctx):
     """
     Build js assets
     """
+    from pathlib import Path
     cwd = os.getcwd()
-    os.chdir(cwd + '/lib')
     try:
-        ctx.run('npm install')
+        path = Path(__file__).parent / 'lib'
+        os.chdir(path)
+        ctx.run('mkdir -p build/js/')
+        ctx.run('rm build/js/main.js* -f')
+        ctx.run('npm run build')
     finally:
         os.chdir(cwd)
 
@@ -293,21 +297,22 @@ def db_assets(ctx, force=False, theme=None):
 # Docker
 #
 @task
-def docker(ctx, task, cmd=None, port=8000, clean_perms=False, prod=False,
-           compose_file=None, dry_run=False):
+def docker(ctx, task, cmd=None, port=8000, prod=False,
+           file=None, dry_run=False, rocket=False, clean_perms=False):
     """
     Runs EJ platform using a docker container.
 
-    Use inv docker <cmd>, where cmd is one of single, start, up, run,
-    deploy.
+    Use inv docker <cmd>, where cmd is one of single, start, up, down, run.
     """
     docker = su_docker('docker')
     do = runner(ctx, dry_run, pty=True)
-    if compose_file is None and prod or task == 'production':
-        compose_file = 'docker/docker-compose.deploy.yml'
-    elif compose_file is None:
-        compose_file = 'docker/docker-compose.yml'
-    compose = f'{docker}-compose -f {compose_file}'
+    if file is None and prod or task == 'production':
+        file = 'docker/docker-compose.deploy.yml'
+    elif file is None:
+        file = 'docker/docker-compose.yml'
+    compose = f'{docker}-compose -f {file}'
+    if rocket:
+        compose += ' -f docker/docker-compose.rocket.yml'
 
     if task == 'single':
         do(f'{docker} run'
@@ -319,15 +324,10 @@ def docker(ctx, task, cmd=None, port=8000, clean_perms=False, prod=False,
         do(f'{compose} up -d')
         do(f'{compose} run -p {port}:8000 web {cmd or "bash"}')
         do(f'{compose} stop')
-    elif task == 'up':
-        do(f'{compose} up')
+    elif task in ('up', 'down'):
+        do(f'{compose} {task}')
     elif task == 'run':
         do(f'{compose} run -p {port}:8000 web {cmd or "bash"}')
-    elif task == 'production':
-        do(f'{compose} up')
-    elif task == 'rocket':
-        compose = su_docker('docker-compose')
-        do(f'{compose} -f docker/docker-compose.rocket.yml up')
     else:
         raise SystemExit(f'invalid task: {task}')
     if clean_perms:
@@ -471,6 +471,14 @@ def configure(ctx, silent=False, dev=False):
         ctx.run(f'{python} -m pip install markupsafe toolz')
         ctx.run(f'{python} -m pip install sidekick')
         ctx.run(f'{python} -m pip install -r etc/requirements.txt' + suffix)
+
+    if ask('\nInstall js dependencies?'):
+        cwd = os.getcwd()
+        os.chdir(cwd + '/lib')
+        try:
+            ctx.run('npm install')
+        finally:
+            os.chdir(cwd)
 
     if ask('\nInitialize database (inv db)?'):
         db(ctx)

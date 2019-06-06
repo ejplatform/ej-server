@@ -43,7 +43,10 @@ class ConversationQuerySet(ConversationMixin, WordCloudQuerySet):
 
         # First tag
         if kwargs.pop("first_tag", False):
-            annotations[prefix + "first_tag"] = Window(FirstValue("tags__name"))
+            ...
+            # Fixme: does not work with Postgres. Disabling this creates a N+1
+            # error fetching tags, but at least display conversations.
+            # annotations[prefix + "first_tag"] = Window(FirstValue("tags__name"))
 
         # Count comments
         if kwargs.pop("n_comments", False):

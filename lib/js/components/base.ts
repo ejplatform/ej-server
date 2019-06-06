@@ -83,14 +83,16 @@ hook.load = (name) => hook.on('load', name);
 /**
  * Register a component class.
  */
-export function component(cls) {
-    if (componentRegistry.hasOwnProperty(cls.name)) {
-        warn(`Component already registered: ${cls.name}`);
+export function component(name: string) {
+    return (cls) => {
+        debug(`Registering component: ${name}`);
+        if (componentRegistry.hasOwnProperty(name)) {
+            warn(`Component already registered: ${name}`);
+        }
+        cls.componentName = name;
+        componentRegistry[name] = cls;
+        return cls;
     }
-    // debug(`Registering component: ${cls.name}`);
-    componentRegistry[cls.name] = cls;
-    componentRegistry[camelCaseToDash(cls.name)] = cls;
-    return cls;
 }
 
 
@@ -133,7 +135,7 @@ export class Component {
             registerElementForComponent(this, elem);
         });
         this.init();
-        debug(`${this.constructor['name']} component initialized`);
+        debug(`${this.constructor['componentName']} component initialized`);
     }
 
     /** Call jQuery() on element */

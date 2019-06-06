@@ -1,7 +1,7 @@
 import {component, Component} from "./base";
 
 
-@component
+@component('main-header')
 class MainHeader extends Component {
     isOpen: boolean;
 
@@ -53,7 +53,7 @@ class MainHeader extends Component {
 }
 
 
-@component
+@component('page-menu')
 class PageMenu extends Component {
     attributes = {'is-open': true};
     isFontLarge: boolean;
