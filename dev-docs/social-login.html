@@ -16,8 +16,8 @@
     <script type="text/javascript" src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Themes" href="themes.html" />
-    <link rel="prev" title="Deploy" href="deploy.html" />
+    <link rel="next" title="aqwThemes" href="themes.html" />
+    <link rel="prev" title="Deployment" href="deploy.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
@@ -47,7 +47,7 @@ checkbox “Allow this application to be used to Sign in with Twitter”. Please
 two callback URLs: <a class="reference external" href="https://your-host/accounts/twitter/login/callback/">https://your-host/accounts/twitter/login/callback/</a> and
 <a class="reference external" href="http://your-host/accounts/twitter/login/callback/">http://your-host/accounts/twitter/login/callback/</a>.</p>
 <p>Now, on the Django side, go to the admin interface and create a new social
-app: <a class="reference external" href="http://localhost:8000/admin/socialaccount/socialapp/add/">http://localhost:8000/admin/socialaccount/socialapp/add/</a>. Choose “Twitter”
+app: <a class="reference external" href="http://your-host/admin/socialaccount/socialapp/add/">http://your-host/admin/socialaccount/socialapp/add/</a>. Choose “Twitter”
 as the provider, put a name like “EJ Twitter”, choose the ejplatform.org.br site
 and put the consumer key under “Client id” and consumer secret under “Secret key”
 fields. You can find the consumer key and consumer secret on the Twitter app page,
@@ -89,7 +89,7 @@ find the app id and secret key on the Google app page, under Credentials.</p>
 <div class="section" id="other-information">
 <h2>Other information<a class="headerlink" href="#other-information" title="Permalink to this headline">¶</a></h2>
 <p>For all cases, for local development you may need to set, at
-<code class="docutils literal notranslate"><span class="pre">src/ej/settings/__init__.py</span></code>, ACCOUNT_EMAIL_VERIFICATION = ‘none’.</p>
+<code class="docutils literal notranslate"><span class="pre">src/ej/settings/__init__.py</span></code>, <code class="docutils literal notranslate"><span class="pre">ACCOUNT_EMAIL_VERIFICATION</span> <span class="pre">=</span> <span class="pre">'none'</span></code>.</p>
 <p>More details at <a class="reference external" href="https://django-allauth.readthedocs.io/en/latest/providers.html">https://django-allauth.readthedocs.io/en/latest/providers.html</a>.</p>
 </div>
 </div>
@@ -118,9 +118,9 @@ find the app id and secret key on the Google app page, under Credentials.</p>
 <li class="toctree-l2"><a class="reference internal" href="architecture.html">Architecture</a></li>
 <li class="toctree-l2"><a class="reference internal" href="urls.html">URL structure</a></li>
 <li class="toctree-l2"><a class="reference internal" href="environment-variables.html">Environment Variables</a></li>
-<li class="toctree-l2"><a class="reference internal" href="deploy.html">Deploy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deploy.html">Deployment</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Social Login</a></li>
-<li class="toctree-l2"><a class="reference internal" href="themes.html">Themes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="themes.html">aqwThemes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="i18n.html">Internationalization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-docs.html">API Documentation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="contributing.html">Contributing to EJ</a></li>
@@ -134,8 +134,8 @@ find the app id and secret key on the Google app page, under Credentials.</p>
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
   <li><a href="_index.html">Developer’s Guide</a><ul>
-      <li>Previous: <a href="deploy.html" title="previous chapter">Deploy</a></li>
-      <li>Next: <a href="themes.html" title="next chapter">Themes</a></li>
+      <li>Previous: <a href="deploy.html" title="previous chapter">Deployment</a></li>
+      <li>Next: <a href="themes.html" title="next chapter">aqwThemes</a></li>
   </ul></li>
   </ul></li>
 </ul>

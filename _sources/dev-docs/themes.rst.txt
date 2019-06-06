@@ -1,4 +1,4 @@
-Themes
+aqwThemes
 ======
 
 The EJ platform has a theme structure that can be easily tweaked and adapted
@@ -28,7 +28,7 @@ A theme is organized within the following file structure::
     - <theme-name>
         |- assets/   (overrides default assets)
         \- scss/
-            |- _settings.scss (overrides SASS variables)
+            |- _overrides.scss (overrides SASS variables)
             |- main.scss
             \- rocket.scss
 
