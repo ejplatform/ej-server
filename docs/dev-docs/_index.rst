@@ -13,6 +13,6 @@ Developer's Guide
    deploy
    social-login
    themes
-   i18n
+   i18n_
    processes
    contributing
