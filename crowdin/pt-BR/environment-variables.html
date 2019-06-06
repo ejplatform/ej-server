@@ -1,0 +1,224 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Variáveis de Ambiente &#8212; Empurrando Juntos 2.0rc1 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Índice" href="../genindex.html" />
+    <link rel="search" title="Pesquisar" href="../search.html" />
+    <link rel="next" title="Implantação" href="deploy.html" />
+    <link rel="prev" title="Estrutura de URLs" href="urls.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="environment-variables">
+<h1>Variáveis de Ambiente <a class="headerlink" href="#environment-variables" title="Permalink to this headline"> ¶ </a></h1>
+<p>EJ utiliza usa variáveis de ambiente para
+personalizar a maioria dos comportamentos e as configurações da plataforma. As variáveis de ambiente
+podem ser definidas diretamente no ambiente do host ou salvas em um arquivo do ambiente
+para que possam ser compartilhadas entre diferentes locais. Esta seção descreve
+as principais variáveis de configuração com seus valores padrão.</p>
+<div class="section" id="basic-settings">
+<h2>Configurações básicas<a class="headerlink" href="#basic-settings" title="Permalink to this headline">¶</a></h2>
+<p>Esses são o conjunto mínimo de configurações necessárias. <strong> Aviso: </strong> Lembre-se de
+a leitura da seção “Segurança” antes de completar a sua implementação.</p>
+<dl class="docutils">
+<dt>DJANGO_HOSTNAME (localhost):</dt>
+<dd>Nome do host para o aplicativo EJ. Pode ser algo como "ejplatform.org".
+Este é o endereço em que sua instância é implantada.</dd>
+<dt>COUNTRY (Brazil):</dt>
+<dd>País utilizado para localização e internacionalização. Esta configuração
+controla simultaneamente as variáveis DJANGO_LOCALE_NAME, DJANGO_LANGUAGE_CODE,
+DJANGO_TIME_ZONE usando as configurações padrão para seu país. Os países são especificados pelo nome (e.g., USA, Brazil, Argentina,
+Canada, etc). Você pode usar um COUNTRY como base e personalizar qualquer uma
+dessas variáveis de forma independente (por exemplo, COUNTRY = "Canada",
+LANGUAGE_CODE = "fr-ca")</dd>
+<dt>DJANGO_DEBUG (False):</dt>
+<dd>Definindo DEBUG = True, exibe um traceback quando o Django encontra um erro. Esta configuração
+é útil em um ambiente de staging, mas nunca deve ser ativada
+na versão de produção.</dd>
+<dt>DJANGO_DB_URL (psql://&lt;user&gt;:&lt;password&gt;&#64;postgres:5432/&lt;dbname&gt;):</dt>
+<dd>Descreve a conexão com o banco de dados Postgres. Os valores inseguros padrão
+são <code class="docutils literal notranslate"><span class="pre">user</span> <span class="pre">=</span> <span class="pre">password</span> <span class="pre">=</span> <span class="pre">dbname</span> <span class="pre">=</span> <span class="pre">&quot;ej&quot;</span></code>. Você pode mudar para outros tipos de banco de dados
+ou configurações (ex.: sqlite://path-to-db-file). <strong>Aviso:</strong> A maneira
+Django analisa esta string coloca algumas limitações em senhas válidas. Fique
+seguro e use apenas letras e números na senha.</dd>
+</dl>
+</div>
+<div class="section" id="security">
+<h2>Segurança <a class="headerlink" href="#security" title="Permalink to this headline"> ¶ </a></h2>
+<dl class="docutils">
+<dt><strong>DJANGO_SECRET_KEY</strong> (random value):</dt>
+<dd>Uma seqüência aleatória de texto que deve estar fora da vista do público. Esta string é
+usada para negociar sessões e criptografia em algumas partes do Django. Esta
+pode ser uma seqüência aleatória de caracteres que é tratado como um segredo, uma vez em
+teoria um atacante que sabe a chave secreta pode usar esse valor para forjar
+sessões e se passar por outros usuários.</dd>
+</dl>
+</div>
+<div class="section" id="personalization">
+<h2>Personalização <a class="headerlink" href="#personalization" title="Permalink to this headline"> ¶ </a></h2>
+<p>Essas variáveis personalizam o comportamento da plataforma EJ de diferentes maneiras.</p>
+<div class="section" id="override-strings">
+<h3>Substituir strings<a class="headerlink" href="#override-strings" title="Permalink to this headline"></a></h3>
+<dl class="docutils">
+<dt>EJ_PAGE_TITLE (Empurrando Juntos):</dt>
+<dd>Título padrão da página inicial.</dd>
+<dt>EJ_REGISTER_TEXT (Not part of EJ yet?):</dt>
+<dd>Texto exibido solicitando o registro do usuário.</dd>
+<dt>EJ_LOGIN_TITLE_TEXT (Login in EJ):</dt>
+<dd>Solicita login de usuário.</dd>
+</dl>
+</div>
+<div class="section" id="override-paths">
+<h3>Substituir caminhos <a class="headerlink" href="#override-paths" title="Permalink to this headline"> ¶ </a></h3>
+<dl class="docutils">
+<dt>EJ_ANONYMOUS_HOME_PATH (/start/):</dt>
+<dd>Redirecionar usuários para este caminho antes de fazer login.</dd>
+<dt>EJ_USER_HOME_PATH (/conversations/):</dt>
+<dd>Redirecionar usuários registrados para este caminho.</dd>
+</dl>
+</div>
+<div class="section" id="rules-and-limits">
+<h3>Regras e limites<a class="headerlink" href="#rules-and-limits" title="Permalink to this headline">¶</a></h3>
+<dl class="docutils">
+<dt>EJ_ENABLE_BOARDS (true):</dt>
+<dd>O comportamento padrão é que cada usuário possui um único quadro de
+conversas independentes do quadro principal em /conversations/.
+Defina como "falso" para desativar esses fóruns pessoais.</dd>
+<dt>EJ_MAX_COMMENTS_PER_CONVERSATION (2):</dt>
+<dd>Número padrão de comentários que cada usuário tem em cada conversa.</dd>
+<dt>EJ_EXCLUDE_PROFILE_FIELDS:</dt>
+<dd>Lista opcional de campos que devem ser excluídos da visualização do perfil de usuário.</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="integration-with-rocket-chat">
+<h2>Integração com o Rocket.Chat <a class="headerlink" href="#integration-with-rocket-chat" title="Permalink to this headline"> ¶ </a></h2>
+<dl class="docutils">
+<dt>EJ_ROCKETCHAT_INTEGRATION (false):</dt>
+<dd>Ativar/desativar a integração com Rocket.Chat. É necessário configurar
+o contêiner Rocket.Chat se esta opção estiver habilitada.</dd>
+<dt>EJ_ROCKETCHAT_URL:</dt>
+<dd>URL da instância do Rocket.Chat (por exemplo: <a class="reference external" href="http://localhost:3000"> http://localhost: 3000 </a> ou <a class="reference external" href="https://your-chat-instance.com"> https://your-chat-instance.com </a>)</dd>
+<dt>EJ_ROCKETCHAT_USERNAME:</dt>
+<dd>Nome de usuário do administrador do Rocket.Chat.</dd>
+<dt>EJ_ROCKETCHAT_AUTH_TOKEN:</dt>
+<dd>Token de autenticação para o administrador do Rocket.Chat. Isso pode ser configurado
+no backend do Django após a instalação inicial. Verifique a <a class="reference external" href="https://rocket.chat/docs/developer-guides/rest-api/authentication/">API do Rocket</a> para mais informações.</dd>
+<dt>EJ_ROCKETCHAT_USER_ID:</dt>
+<dd>Id único do administrador do Rocket.Chat.</dd>
+</dl>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Empurrando Juntos</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navegação</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../user-guide/_index.html">Guia do usuário</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="_index.html">Guia do desenvolvedor</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="quick-start.html">Início rápido</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html">Arquitetura</a></li>
+<li class="toctree-l2"><a class="reference internal" href="urls.html">Estrutura de URLs</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Variáveis de Ambiente</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deploy.html">Implantação</a></li>
+<li class="toctree-l2"><a class="reference internal" href="social-login.html">Login social</a></li>
+<li class="toctree-l2"><a class="reference internal" href="themes.html">Temas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="i18n.html">Internacionalização</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-docs.html">Documentação da API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html">Contribuindo para EJ</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../i18n/index.html">Traduções</a></li>
+</ul>
+
+<div class="relations">
+<h3>Tópicos Relacionados</h3>
+<ul>
+  <li><a href="../index.html">Visão geral da documentação</a><ul>
+  <li><a href="_index.html">Guia do desenvolvedor</a><ul>
+      <li>Anterior: <a href="urls.html" title="previous chapter">Estrutura das URLs</a></li>
+      <li>Próximo: <a href="deploy.html" title="next chapter">Implantação</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Pesquisa rápida</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Ir" />
+      <input type="hidden" name="check_keywords" value="sim" />
+      <input type="hidden" name="area" value="padrão" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, EJ.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/dev-docs/environment-variables.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

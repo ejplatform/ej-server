@@ -1,0 +1,175 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Login social &#8212; Documentação Empurrando Juntos 2.0rc1</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Índice" href="../genindex.html" />
+    <link rel="search" title="Pesquisar" href="../search.html" />
+    <link rel="next" title="Temas" href="themes.html" />
+    <link rel="prev" title="Implantação" href="deploy.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="social-login">
+<h1>Login Social<a class="headerlink" href="#social-login" title="Permalink to this headline">¶</a></h1>
+<p>Ususários também podem fazer login no EJ com o Twitter, o Facebook ou o Google. Para fazer isso, você precisa preparar o ambiente e criar os aplicativos sociaisnas respectivas redes sociais.</p>
+<div class="section" id="twitter">
+<h2>Twitter<a class="headerlink" href="#twitter" title="Permalink to this headline">¶</a></h2>
+<p>Primeiro, vá para a interface do desenvolvedor do Twitter (<a class="reference external" href="https://apps.twitter.com"> https://apps.twitter.com </a>) e crie um aplicativo. O ponto importante é configurar os “URLs de retorno” e marcar a caixa de seleção “Permitir que este aplicativo seja usado para entrar no Twitter”. Adicione
+duas URLs de retorno: <a class="reference external" href="https://your-host/accounts/twitter/login/callback/">https://your-host/accounts/twitter/login/callback/</a> e
+<a class="reference external" href="http://your-host/accounts/twitter/login/callback/">http://your-host/accounts/twitter/login/callback/</a>.</p>
+<p>Agora, no Django, vá para a interface de administração e crie um novo app social: <a class="reference external" href="http://your-host/admin/socialaccount/socialapp/add/">http://your-host/admin/socialaccount/socialapp/add/</a>. Escolha “Twitter”
+como provedor, coloque um nome como “EJ Twitter”, escolha o site (ex: ejplatform.org.br)
+e coloque a chave do consumidor em “Client id” e o segredo do consumidor em “Secret key”. Você pode encontrar a chave do consumidor e o segredo do consumidor na página do aplicativo do Twitter,
+na guia “Chaves e tokens de acesso”.</p>
+</div>
+<div class="section" id="facebook">
+<h2>Facebook<a class="headerlink" href="#facebook" title="Permalink to this headline">¶</a></h2>
+<p>É importante ter em mente: o Facebook só permite HTTPS e não permite
+host local. Então, para desenvolvimento local, sugerimos usar uma ferramenta como o Local
+Tunnel (<a class="reference external" href="http://localtunnel.github.io/www/">http://localtunnel.github.io/www/</a>) ou Ngrok (<a class="reference external" href="https://ngrok.com/">https://ngrok.com/</a>) para obter um URL HTTPS público que redirecione para sua instância EJ local. Lembre-se
+para adicionar esse host ao DJANGO_ALLOWED_HOSTS.</p>
+<p>Uma vez que você tem o host, vá para a página de gerenciamento de aplicativos do Facebook
+(<a class="reference external" href="https://developers.facebook.com/apps">https://developers.facebook.com/apps</a>) e adicione um novo aplicativo web. Vá para Configurações &gt;
+Básico e adicione o host a "domínios de aplicação" e "Site". Adicione o produto
+"Login do Facebook" ao seu aplicativo e, em suas configurações, adicione
+<a class="reference external" href="https://your-host/accounts/facebook/login/callback">https://your-host/accounts/facebook/login/callback</a> como um URI OAuth válido.</p>
+<p>Agora, no lado Django, vá para a interface de administração e crie um novo aplicativo social:
+<a class="reference external" href="http://your-host/admin/socialaccount/socialapp/add/">http://your-host/admin/socialaccount/socialapp/add/</a>. Escolha "Facebook" como
+o provedor, coloque um nome como "EJ Facebook", escolha o site do seu host
+e coloque o id do aplicativo sob a chave "Cliente id" e secreta sob os campos "Chave Secreta".
+Você pode encontrar a Id do aplicativo e a chave secreta na página do aplicativo do Facebook, em
+Configurações &gt; Basic.</p>
+</div>
+<div class="section" id="google">
+<h2>Google <a class="headerlink" href="#google" title="Permalink to this headline"> ¶ </a></h2>
+<p>Para ter o login do Google, você precisa de um domínio de primeiro nível válido que possa
+confirmar a propriedade. Vá para o console de desenvolvedores
+(<a class="reference external" href="https://console.cloud.google.com/">https://console.cloud.google.com/</a>) e crie um novo projeto. Crie uma nova credencial
+(<a class="reference external" href="https://console.cloud.google.com/apis/credentials">https://console.cloud.google.com/apis/credentials</a>) e adicione
+<a class="reference external" href="https://your-host/accounts/google/login/callback/">https://your-host/accounts/google/login/callback/</a> como um URI de redirecionamento autorizado.
+Lembre-se de adicionar um domínio válido.</p>
+<p>Agora, no lado Django, vá para a interface de administração e crie um novo aplicativo social:
+<a class="reference external" href="http://your-host/admin/socialaccount/socialapp/add/">http://your-host/admin/socialaccount/socialapp/add/</a>. Escolha "Google" como o provedor, coloque um nome como "EJ Google", escolha o site do seu host e coloque
+o ID do aplicativo em "ID do cliente" e a chave secreta em "Chave secreta". É possível
+encontrar a Id do aplicativo e a chave secreta na página do Google App, em credenciais.</p>
+</div>
+<div class="section" id="other-information">
+<h2>Outras informações<a class="headerlink" href="#other-information" title="Permalink to this headline">¶</a></h2>
+<p>Em todos os casos, para desenvolvimento local você pode precisar definir, em
+<code class="docutils literal notranslate"><span class="pre">src/ej/settings/__init__.py</span></code>, <code class="docutils literal notranslate"><span class="pre">ACCOUNT_EMAIL_VERIFICATION</span> <span class="pre">=</span> <span class="pre">'none'</span></code>.</p>
+<p>Mais detalhes em <a class="reference external" href="https://django-allauth.readthedocs.io/en/latest/providers.html">https://django-allauth.readthedocs.io/en/latest/providers.html</a>.</p>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Empurrando Juntos</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navegação</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../user-guide/_index.html">Guia do usuário</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="_index.html">Guia do desenvolvedor</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="quick-start.html">Início rápido</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html">Arquitetura</a></li>
+<li class="toctree-l2"><a class="reference internal" href="urls.html">Estrutura de URLs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environment-variables.html">Variáveis de Ambiente</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deploy.html">Implantação</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Login social</a></li>
+<li class="toctree-l2"><a class="reference internal" href="themes.html">Temas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="i18n.html">Internacionalização</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-docs.html">Documentação da API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html">Contribuindo para EJ</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../i18n/index.html">Traduções</a></li>
+</ul>
+
+<div class="relations">
+<h3>Tópicos Relacionados</h3>
+<ul>
+  <li><a href="../index.html">Visão geral da documentação</a><ul>
+  <li><a href="_index.html">Guia do desenvolvedor</a><ul>
+      <li>Anterior: <a href="deploy.html" title="previous chapter">Implantação</a></li>
+      <li>Próximo: <a href="themes.html" title="next chapter">Temas</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Pesquisa rápida</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Ir" />
+      <input type="hidden" name="check_keywords" value="sim" />
+      <input type="hidden" name="area" value="padrão" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, EJ.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/dev-docs/social-login.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -14,10 +14,10 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/language_data.js"></script>
-    <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Internationalization" href="i18n.html" />
-    <link rel="prev" title="Social Login" href="social-login.html" />
+    <link rel="index" title="Índice" href="../genindex.html" />
+    <link rel="search" title="Pesquisar" href="../search.html" />
+    <link rel="next" title="Internacionalização" href="i18n.html" />
+    <link rel="prev" title="Login social" href="social-login.html" />
 
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
 
@@ -35,24 +35,24 @@
           <div class="body" role="main">
 
   <div class="section" id="aqwthemes">
-<h1>Themes<a class="headerlink" href="#aqwthemes" title="Permalink to this headline">¶</a></h1>
-<p>The EJ platform has a theme structure that can be easily tweaked and adapted
-for different instances.</p>
+<h1>Temas<a class="headerlink" href="#aqwthemes" title="Permalink to this headline"></a></h1>
+<p>A plataforma EJ tem uma estrutura de temas que pode ser facilmente ajustada e adaptada
+para instâncias diferentes.</p>
 <div class="section" id="running-different-themes">
-<h2>Running different themes<a class="headerlink" href="#running-different-themes" title="Permalink to this headline">¶</a></h2>
-<p>The theme is controlled by a environment variable. A new theme can
-be chosen by setting <code class="docutils literal notranslate"><span class="pre">EJ_THEME</span></code> to name or path to the desired theme:</p>
+<h2>Executando Temas Diferentes <a class="headerlink" href="#running-different-themes" title="Permalink to this headline"> ¶ </a></h2>
+<p>O tema é controlado por uma variável de ambiente. Um novo tema pode
+ser escolhido definindo <code class="docutils literal notranslate"><span class="pre">EJ_THEME</span></code> como o nome ou caminho para o tema desejado:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ export EJ_THEME=cpa
 </pre></div>
 </div>
-<p>We’ve implemented a few default themes at /lib/themes/. Those themes are also
-a good reference of what can be done within the theme structure.</p>
-<p>Once this variable is set, the CSS will be built using the desired theme. The
-theme can also override static assets and even Django settings.</p>
+<p>Nós implementamos alguns temas em /lib/themes/. Esses temas também são
+uma boa referência do que pode ser feito dentro da estrutura tema.</p>
+<p>Uma vez que esta variável for definida, o CSS será construído usando o tema desejado. O tema
+também pode substituir os recursos estáticos e até mesmo as configurações do Django.</p>
 </div>
 <div class="section" id="creating-a-new-theme-for-the-ej-platform">
-<h2>Creating a new theme for the EJ platform<a class="headerlink" href="#creating-a-new-theme-for-the-ej-platform" title="Permalink to this headline">¶</a></h2>
-<p>A theme is organized within the following file structure:</p>
+<h2>Criando um novo tema para a plataforma EJ<a class="headerlink" href="#creating-a-new-theme-for-the-ej-platform" title="Permalink to this headline">¶</a></h2>
+<p>Um tema é organizado dentro da seguinte estrutura de arquivos:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span> <span class="o">&lt;</span><span class="n">theme</span><span class="o">-</span><span class="n">name</span><span class="o">&gt;</span>
     <span class="o">|-</span> <span class="n">assets</span><span class="o">/</span>   <span class="p">(</span><span class="n">overrides</span> <span class="n">default</span> <span class="n">assets</span><span class="p">)</span>
     \<span class="o">-</span> <span class="n">scss</span><span class="o">/</span>
@@ -61,10 +61,10 @@ theme can also override static assets and even Django settings.</p>
         \<span class="o">-</span> <span class="n">rocket</span><span class="o">.</span><span class="n">scss</span>
 </pre></div>
 </div>
-<p>Both main.scss and rocket.scss have standard implementations and can be simply
-copied from one theme to the other. Most of your work will probably concentrate
-in the _settings.scss file: it defines all overrides of scss variables and can
-be used to declare colors, fonts, layouts, spacing, etc.</p>
+<p>Ambos main.scss e rocket.scss têm implementações padrão e podem ser simplesmente
+copiados de um tema para o outro. A maioria do seu trabalho irá provavelmente concentrar
+no arquivo _overrides.scss: ele define todas as sobreposições de variáveis scss e pode
+ser usado para declarar cores, fontes, layouts, espaçamento, etc.</p>
 </div>
 </div>
 
@@ -84,44 +84,44 @@ be used to declare colors, fonts, layouts, spacing, etc.</p>
 
 
 
-<h3>Navigation</h3>
+<h3>Navegação</h3>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../user-guide/_index.html">User Guide</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="_index.html">Developer’s Guide</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="quick-start.html">Quick Start</a></li>
-<li class="toctree-l2"><a class="reference internal" href="architecture.html">Architecture</a></li>
-<li class="toctree-l2"><a class="reference internal" href="urls.html">URL structure</a></li>
-<li class="toctree-l2"><a class="reference internal" href="environment-variables.html">Environment Variables</a></li>
-<li class="toctree-l2"><a class="reference internal" href="deploy.html">Deployment</a></li>
-<li class="toctree-l2"><a class="reference internal" href="social-login.html">Social Login</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Themes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="i18n.html">Internationalization</a></li>
-<li class="toctree-l2"><a class="reference internal" href="processes.html">Processes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="contributing.html">Contributing to EJ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user-guide/_index.html">Guia do usuário</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="_index.html">Guia do desenvolvedor</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="quick-start.html">Início rápido</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html">Arquitetura</a></li>
+<li class="toctree-l2"><a class="reference internal" href="urls.html">Estrutura de URLs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environment-variables.html">Variáveis de Ambiente</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deploy.html">Implantação</a></li>
+<li class="toctree-l2"><a class="reference internal" href="social-login.html">Login social</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Temas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="i18n.html">Internacionalização</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-docs.html">Documentação da API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html">Contribuindo para EJ</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../i18n/index.html">Translations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../i18n/index.html">Traduções</a></li>
 </ul>
 
 <div class="relations">
-<h3>Related Topics</h3>
+<h3>Tópicos Relacionados</h3>
 <ul>
-  <li><a href="../index.html">Documentation overview</a><ul>
-  <li><a href="_index.html">Developer’s Guide</a><ul>
-      <li>Previous: <a href="social-login.html" title="previous chapter">Social Login</a></li>
-      <li>Next: <a href="i18n.html" title="next chapter">Internationalization</a></li>
+  <li><a href="../index.html">Visão geral da documentação</a><ul>
+  <li><a href="_index.html">Guia do desenvolvedor</a><ul>
+      <li>Anterior: <a href="social-login.html" title="previous chapter">Login Social</a></li>
+      <li>Próximo: <a href="i18n.html" title="next chapter">Internacionalização</a></li>
   </ul></li>
   </ul></li>
 </ul>
 </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3>Pesquisa rápida</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
-      <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
+      <input type="submit" value="Ir" />
+      <input type="hidden" name="check_keywords" value="sim" />
+      <input type="hidden" name="area" value="padrão" />
     </form>
     </div>
 </div>

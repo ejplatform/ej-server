@@ -1,0 +1,231 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Implantação &#8212; Documentação Empurrando Juntos 2.0rc1</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Índice" href="../genindex.html" />
+    <link rel="search" title="Pesquisar" href="../search.html" />
+    <link rel="next" title="Login social" href="social-login.html" />
+    <link rel="prev" title="Variáveis de Ambiente" href="environment-variables.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="deployment">
+<h1>Implantação<a class="headerlink" href="#deployment" title="Permalink to this headline"></a></h1>
+<p>O EJ depende do Docker e de uma tecnologia de orquestração como Docker Compose
+em seu processo de implantação.</p>
+<p>A maneira mais fácil de prosseguir é usar as imagens pré-compiladas disponíveis em <a class="reference external" href="https://hub.docker.com/u/ejplatform/">Docker Hub</a>
+e personalizar sua instalação usando variáveis de ambiente. Você deve
+entender que uma stack EJ básica usa 3 contêineres descritos em <a class="reference external" href="architecture.html">Arquitetura EJ</a>: o proxy reverso Nginx, o aplicativo Django e um banco Postgres.</p>
+<p>O primeiro passo é construir a imagem de implantação para o aplicativo principal. Você
+deve ter um ambiente de desenvolvimento em funcionamento em sua máquina. Ative o virtualenv
+usando <code class="docutils literal notranslate"><span class="pre">workon</span> <span class="pre">ej</span></code> e, em seguida, insira o comando:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ inv docker-build --deploy
+</pre></div>
+</div>
+<p>O comando docker-build aceita configurações adicionais, como
+<code class="docutils literal notranslate"><span class="pre">--theme</span> <span class="pre">cpa</span></code>, <code class="docutils literal notranslate"><span class="pre">--country</span> <span class="pre">brasil</span></code>, <code class="docutils literal notranslate"><span class="pre">--tag</span> <span class="pre">v1.0</span></code>, e outros
+(<code class="docutils literal notranslate"><span class="pre">inv</span> <span class="pre">docker-build</span> <span class="pre">-h</span></code> mostra opções adicionais).</p>
+<p>Após construir a imagem, você deve inicializar o banco de dados. Abra um terminal no
+do contêiner do Django com o comando:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ inv docker run --deploy
+</pre></div>
+</div>
+<p>Agora execute os comandos para popular o banco de dados:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python manage.py migrate ej_users
+$ inv db db-assets
+</pre></div>
+</div>
+<p>(você também pode adicionar db-fake para adicionar dados falsos e testar usuários).</p>
+<p>Finalmente, dispare todos os containers usando:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ inv docker up --deploy
+</pre></div>
+</div>
+<p>The EJ instance should be available at port 80.</p>
+<p><strong>Observação</strong></p>
+<p>As tarefas <code class="docutils literal notranslate"><span class="pre">inv</span> <span class="pre">docker</span> <span class="pre">*</span></code> são simplesmente atalhos para comandos mais longos do docker-compose.
+Se você quiser descobrir o comando docker equivalente, inclua a opção –dry-run
+em qualquer comando.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ inv docker up --deploy
+</pre></div>
+</div>
+<p>Você verá que é equivalente a:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">docker</span><span class="o">-</span><span class="n">compose</span> <span class="o">-</span><span class="n">f</span> <span class="n">docker</span><span class="o">/</span><span class="n">docker</span><span class="o">-</span><span class="n">compose</span><span class="o">.</span><span class="n">deploy</span><span class="o">.</span><span class="n">yml</span> <span class="n">up</span>
+</pre></div>
+</div>
+<div class="section" id="configuration">
+<h2>Configuração<a class="headerlink" href="#configuration" title="Permalink to this headline"></a></h2>
+<p>O EJ é configurado usando <a class="reference external" href="environment-variables.html">Variáveis de ambiente</a>. Essas variáveis podem ser
+convenientemente configuradas nos arquivos dentro da pasta /docker/env /. Edite os arquivos
+e, em seguida, execute <code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">inv</span> <span class="pre">docker</span> <span class="pre">up</span> <span class="pre">--deploy</span></code> para atualizar o contêiner
+com as novas configurações. Tenha em mente que muitas das variáveis da configuração
+são segredos que não podem ser compartilhados em público. Por causa disso,
+Recomendamos armazenar os arquivos de ambiente em um fork privado do repositório principal.</p>
+</div>
+<div class="section" id="rocket-chat-integration">
+<h2>Integração Rocket.Chat<a class="headerlink" href="#rocket-chat-integration" title="Permalink to this headline"></a></h2>
+<p>Integrar Rocket.Chat requer alguns passos adicionais. Você deve
+editar o arquivo docker/env/django.env e definir <code class="docutils literal notranslate"><span class="pre">EJ_ROCKETCHAT_INTEGRATION=true</span></code>.
+Dependendo da sua configuração, você pode precisar definir outras variáveis de ambiente como EJ_ROCKETCHAT_URL e EJ_ROCKETCHAT_USERNAME.</p>
+<p>Você pode iniciar os contêineres do Rocket.Chat executando</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo docker-compose -f docker/docker-compose.rocket.yml up
+</pre></div>
+</div>
+<p>ou adicionando uma opção --rocket após o comando <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">up</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ inv docker up --deploy --rocket
+</pre></div>
+</div>
+<p>Para integrar o aplicativo EJ principal com uma instância do Rocket.Chat,
+abra seu URL do Rocket.Chat e você será redirecionado para o / setup-wizard, crie
+um usuário administrador e configure o servidor. Depois de concluir o assistente de configuração, o
+próxima etapa é fazer o login como um superusuário em EJ e apontar para &lt;EJ URL&gt;/talks/config/.
+Esta URL apresenta um formulário para configurar os parâmetros básicos da integração do Rocket.Chat.
+Aqui você tem que fornecer as credenciais de administrador que você criou no setup-wizard do Rocket.Chat.</p>
+<p>Agora, vá para a página de administração do Rocket.Chat. Será algo como <code class="docutils literal notranslate"><span class="pre">http://&lt;rocket-host&gt;/admin/Accounts</span></code>. Configure a
+<a class="reference external" href="https://rocket.chat/docs/developer-guides/iframe-integration/authentication/">Integração de login com IFrame</a> em <code class="docutils literal notranslate"><span class="pre">Administration</span> <span class="pre">&gt;</span> <span class="pre">Accounts</span> <span class="pre">&gt;</span> <span class="pre">IFrame</span></code>.</p>
+<p>Nesta página, siga as instruções abaixo:</p>
+<ol class="arabic simple">
+<li>Defina a opção <code class="docutils literal notranslate"><span class="pre">Ativada</span></code> para <code class="docutils literal notranslate"><span class="pre">Verdadeiro</span></code>.</li>
+<li>A fim permitir o redirecionamento após o <em>login</em>bem-sucedido, ajuste o <code class="docutils literal notranslate"> <span class="pre">iframe</span> <span class="pre">URL</span> </span> </code>
+para <code class="docutils literal notranslate"><span class="pre">http://&lt;django-host&gt;/talks/login/?next=/talks/</span></code> (substituindo Django pelo
+endereço de sua instância real).</4></3>.</li>
+<li>Rocket.Chat precisa verificar se um usuário já está autenticado. Defina
+<code class="docutils literal notranslate"><span class="pre">API</span> <span class="pre">URL</span></code> como <code class="docutils literal notranslate"><span class="pre">http://&lt;django-host&gt;/talks/check-login/</span></code>.</li>
+<li>Defina <code class="docutils literal notranslate"><span class="pre">API</span> <span class="pre">Method</span></code> como <code class="docutils literal notranslate"><span class="pre">POST</span></code>.</li>
+<li>Guarde as alterações.</li>
+</ol>
+<p>Agora, vá para <code class="docutils literal notranslate"><span class="pre">Administration</span> <span class="pre">&gt;</span> <span class="pre">Accounts</span></code> e desative os seguintes recursos:</p>
+<ul class="simple">
+<li>Permitir alterações ao perfil do usuário</li>
+<li>Permitir</li>
+</ul>
+<p>O passo final é configurar EJ usando uma conta de superusuário. Vá para <a class="reference external" href="http:/"> http: / </a> / &lt;django-host&gt; / talks /
+e solicitará informações adicionais antes de continuar.</p>
+<p>Agora, cada vez que você tentar acessar o Rocket.Chat sem autenticação Django, o usuário
+será redirecionado para a página de login do EJ.</p>
+<div class="section" id="rocket-chat-style">
+<h3>Estilo Rocket.Chat <a class="headerlink" href="#rocket-chat-style" title="Permalink to this headline"> ¶ </a></h3>
+<p>É possível substituir o estilo padrão e alguns conteúdos estáticos no site. Vá para <code class="docutils literal notranslate"><span class="pre">Administration</span> <span class="pre">&gt;</span> <span class="pre">Layout</span> <span class="pre">&gt;</span> <span class="pre">Content</span></code> e salve o conteúdo da
+home page lá. Recomendamos manter este dado versionado no repositório de configuração. Da mesma forma, é possível definir um CSS personalizado e salvá-lo usando
+a página de administração do Rocket.Chat em <code class="docutils literal notranslate"><span class="pre">Administration</span> <span class="pre">&gt;</span> <span class="pre">Layout</span> <span class="pre">&gt;</span> <span class="pre">Custom</span> <span class="pre">CSS</span></code>.</p>
+<p>O comando a seguir faz algumas personalizações automáticas na conta do Rocket.Chat:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo docker-compose -f docker/docker-compose.rocket.yml exec mongo bash
+</pre></div>
+</div>
+<p>Este comando abre um terminal bash e deve ser executado enquanto Mongo db está executando em
+segundo plano. Agora execute <code class="docutils literal notranslate"><span class="pre">mongo</span> <span class="pre">/scripts/mongo_script.js</span></code> no terminal.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Empurrando Juntos</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navegação</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../user-guide/_index.html">Guia do usuário</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="_index.html">Guia do desenvolvedor</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="quick-start.html">Início rápido</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html">Arquitetura</a></li>
+<li class="toctree-l2"><a class="reference internal" href="urls.html">Estrutura de URLs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environment-variables.html">Variáveis de Ambiente</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Implantação</a></li>
+<li class="toctree-l2"><a class="reference internal" href="social-login.html">Login social</a></li>
+<li class="toctree-l2"><a class="reference internal" href="themes.html">Temas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="i18n.html">Internacionalização</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-docs.html">Documentação da API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html">Contribuindo para EJ</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../i18n/index.html">Traduções</a></li>
+</ul>
+
+<div class="relations">
+<h3>Tópicos Relacionados</h3>
+<ul>
+  <li><a href="../index.html">Visão geral da documentação</a><ul>
+  <li><a href="_index.html">Guia do desenvolvedor</a><ul>
+      <li>Anterior: <a href="environment-variables.html" title="previous chapter"> Variáveis de ambiente </a></li>
+      <li>Próximo: <a href="social-login.html" title="next chapter"> Login social </a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Pesquisa rápida</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Ir" />
+      <input type="hidden" name="check_keywords" value="sim" />
+      <input type="hidden" name="area" value="padrão" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, EJ.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/dev-docs/deploy.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
