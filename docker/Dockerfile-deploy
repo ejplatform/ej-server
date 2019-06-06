@@ -14,8 +14,7 @@ COPY --chown=django:django ./src/ /app/src/
 
 # Prepare assets
 RUN mkdir -p local/logs local/static/ local/media/ local/db/ lib/build/ \
- && pip install pygraphviz \
- && inv -e docs --orm \
+ && inv -e docs \
  && inv -e sass \
  && echo "COLLECTED STATIC ASSETS"
 RUN inv -e js \
