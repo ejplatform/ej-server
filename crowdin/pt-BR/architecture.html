@@ -49,7 +49,7 @@
 </div>
 <div class="section" id="high-level-overview">
 <h2><a class="toc-backref" href="#id2">Visão geral de alto nível</a><a class="headerlink" href="#high-level-overview" title="Permalink to this headline"></a></h2>
-<p>O EJ aprova uma arquitetura monolítica com o servidor principal que controla a lógica de negócios
+<p>O EJ adota uma arquitetura monolítica com o servidor principal que controla a lógica de negócios
 e alguns serviços adicionais que complementam o aplicativo. A maneira recomendada para implantar o EJ é executar cada serviço em um contêiner separado a fim de proporcionar um bom nível de isolamento. Os serviços acima referidos
 são organizados em uma arquitetura simples de 3-camadas descrita abaixo:</p>
 <img alt="../_images/ej_arch.svg" src="../_images/ej_arch.svg" /><dl class="docutils">
@@ -104,24 +104,23 @@ requer o Gerenciador de Pacotes do Node (NPM) e <a class="reference external" hr
 <div class="section" id="django-application">
 <h2><a class="toc-backref" href="#id3">Aplicação Django</a><a class="headerlink" href="#django-application" title="Permalink to this headline"></a></h2>
 <p>Django divide um sistema web em módulos chamados "apps" que implementam modelos de banco de dados
-modelos, rotas e funcionalidades. Esta seção descreve todos os "apps"
+reusáveis, rotas e funcionalidades. Esta seção descreve todos os "apps"
 implementados em EJ.</p>
 <div class="section" id="ej-project">
 <h3>Projeto EJ<a class="headerlink" href="#ej-project" title="Permalink to this headline"></a></h3>
-<p>O módulo <cite>ej</cite> não é propriamente um aplicativo, mas sim um pacote Python regular usado para coordenar apps definindo configurações, funcionalidade comum e carregando arquivos estáticos
+<p>O módulo <cite>ej</cite> não é propriamente um aplicativo, mas sim um pacote Python regular usado para coordenar apps definindo configurações, funcionalidades comuns e carregando arquivos estáticos
 como Javascript, CSS, imagens, temas etc. Segue uma visão geral dos principais sub-pacotes e módulos:</p>
 <dl class="docutils">
 <dt><code class="docutils literal notranslate"><span class="pre">ej.all</span></code></dt>
-<dd>Espaço de nomes útil para ser usado em uma seção interativa em <code class="docutils literal notranslate">from ej.all import *</code>.
+<dd>Namespace útil para ser usado em uma seção interativa em <code class="docutils literal notranslate">from ej.all import *</code>.
 Importa modelos e managers de todos os apps ej e exemplos no namespace global.</dd>
 <dt><code class="docutils literal notranslate"><span class="pre">ej.components</span></code></dt>
-<dd>Da mesma forma que <code class="docutils literal notranslate"><span class="pre">ej.roles</span></code>, este módulo define renderizadores para reutilização da UI
-elementos. A diferença entre os dois módulos é que os componentes podem ter
+<dd>Da mesma forma que <code class="docutils literal notranslate"><span class="pre">ej.roles</span></code>, este módulo define renderizadores para reutilização de elementos de UI. A diferença entre os dois módulos é que os componentes podem ter
 uma estrutura mais complicada e pode não estar diretamente associada a
-tipo de dados Python conhecido.</dd>
+tipo de dados Python conhecidos.</dd>
 <dt><code class="docutils literal notranslate"><span class="pre">ej.contrib</span></code></dt>
 <dd>Local para incluir migrações ad-hoc. A maioria dos usuários
-e desenvolvedores nunca devem modificar isto.</dd>
+e desenvolvedores nunca deve modificar isto.</dd>
 <dt><code class="docutils literal notranslate"><span class="pre">ej.fixes</span></code></dt>
 <dd>Módulos que realizam "mokey patch" para consertar problemas com EJ ou qualquer uma de
 suas dependências.</dd>
