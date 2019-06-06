@@ -13,9 +13,10 @@ sys.path.append('src')
 #
 # Call python manage.py in a more robust way
 #
-def manage(ctx, cmd, env=None, **kwargs):
+def manage(ctx, cmd, *args, env=None, **kwargs):
     kwargs = {k.replace('_', '-'): v for k, v in kwargs.items() if v is not False}
     opts = ' '.join(f'--{k} {"" if v is True else v}' for k, v in kwargs.items())
+    opts = ' '.join((*args, opts))
     cmd = f'{python} manage.py {cmd} {opts}'
     env = {**os.environ, **(env or {})}
     path = env.get("PYTHONPATH", ":".join(sys.path))
@@ -81,10 +82,20 @@ def js(ctx):
 
 
 @task
-def docs(ctx):
+def docs(ctx, orm=False):
     """
     Builds Sphinx documentation.
     """
+    if orm:
+        for app in ['ej_users', 'ej_profiles', 'ej_conversations', 'ej_boards',
+                    'ej_clusters', 'ej_gamification', 'ej_dataviz',
+                    'ej_rocketchat']:
+            print(f'Making ORM graph for {app}')
+            env = {'EJ_ROCKETCHAT_INTEGRATION': 'true'} if app == 'ej_rocketchat' else {}
+            manage(ctx, 'graph_models', app, env=env, output=f'docs/dev-docs/orm/{app}.svg')
+    else:
+        print('call inv docs --orm to update ORM graphs')
+
     ctx.run('sphinx-build docs/ build/docs/', pty=True)
 
 

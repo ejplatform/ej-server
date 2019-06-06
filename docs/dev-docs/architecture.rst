@@ -183,34 +183,52 @@ The listing bellow describes all apps implemented inside EJ source tree.
 
 
 ``ej_conversations``
+    .. image:: orm/ej_conversations.svg
+       :target: ../_images/ej_conversations.svg
+
     This is the main application and defines models for conversations, comments,
     and votes. The ej_applications app implements the UI for creating, configuring
     and interacting with conversations.
 
 ``ej_users``
+    .. image:: orm/ej_users.svg
+       :target: ../_images/ej_users.svg
+
     This app defines the main User model for EJ and all routes related to
     authentication and account management (e.g., reset passwords, cancel account,
     etc). EJ can be used with Django's regular users, although this is not
     encouraged.
 
 ``ej_profiles``
+    .. image:: orm/ej_profiles.svg
+       :target: ../_images/ej_profiles.svg
+
     Implements profile management UI and defines a model that store profile
     information. This app can be easily modified to include extra profile fields
     or to remove unwanted fields for some particular installation.
 
 ``ej_clusters``
+    .. image:: orm/ej_clusters.svg
+       :target: ../_images/ej_clusters.svg
+
     Implements the mathematical routines to classify users into opinion groups.
     The ej_clusters.math module implements our modified K-means algorithm that
     takes into account "opinion stereotypes" and also provides interfaces to
     manage those stereotypes and the resulting clusters.
 
 ``ej_dataviz``
+    .. image:: orm/ej_dataviz.svg
+       :target: ../_images/ej_dataviz.svg
+
     Implements routines to visualize data about conversations. It generates
     structured reports and export data to spreadsheet-compatible formats. This
     module also implements visualization techniques such as Word Cloud and
     Scatter Maps of user opinions.
 
 ``ej_gamification``
+    .. image:: orm/ej_gamification.svg
+       :target: ../_images/ej_gamification.svg
+
     The gamification app implements the points and badges system in EJ. Most
     interactions in the platform are rewarded with points. Users that achieve
     pre-defined levels of participation receive badges that recognize different
@@ -218,6 +236,9 @@ The listing bellow describes all apps implemented inside EJ source tree.
     conversations, etc.
 
 ``ej_boards``
+    .. image:: orm/ej_boards.svg
+       :target: ../_images/ej_boards.svg
+
     The boards app allow regular users to have their own "board" or "timeline"
     of conversations. The default conversation feed in "/conversations/" can
     only be managed by users with special permissions.
