@@ -1,0 +1,18 @@
+/*
+ UNPOLY EXTRA STYLING
+ =========================================================================== */
+
+@import '../config';
+
+.up-modal-dialog {
+    max-width: $breakpoint-large !important;
+}
+
+.up-modal-close {
+    color: color('primary',contrast);
+}
+
+.up-modal-content {
+    margin: 0;
+    padding: 0;
+}

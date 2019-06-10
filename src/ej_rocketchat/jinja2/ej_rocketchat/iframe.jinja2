@@ -1,0 +1,40 @@
+{% extends 'base.jinja2' %}
+{% set page_title = _('Panel') %}
+{% set hide_lower_navbar = True %}
+
+{% block main %}
+    {% if ask_password %}
+        <div class="CenteredContainer">
+            <dl>
+                <dt>{% trans %}Admin user{% endtrans %}</dt>
+                <dd>{{ username }}</dd>
+                <dt>{% trans %}Access token{% endtrans %}</dt>
+                <dd>{{ auth_token }}</dd>
+            </dl>
+            <form method="post">
+                {{ csrf_input }}
+                {{ ask_password_form.as_p() }}
+                <input type="submit"  value="{{ _('Send') }}" name="send">
+            </form>
+        </div>
+    {% else %}
+        <iframe class="RocketIFrame" src="{{ rocketchat_url }}"></iframe>
+        <style>
+            /* Disable lower navigation bar */
+            .Header-lowerNav {
+                display: none;
+            }
+        </style>
+        <script>
+            // Login in Rocket.Chat using js.
+            (function () {
+                console.log("rocket.chat token: " + "{{ auth_token.replace('\"', '\\\\\"') }}");
+                document.querySelector('iframe.RocketIFrame').contentWindow.postMessage({
+                    externalCommand: 'login-with-token',
+                    token: "{{ auth_token.replace('"', '\\"') }}",
+                }, '*')
+            })();
+        </script>
+    {% endif %}
+{% endblock %}
+

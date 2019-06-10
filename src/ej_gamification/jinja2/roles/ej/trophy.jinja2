@@ -1,0 +1,13 @@
+<div>
+    {% if href %}<a href="{{ href|safe }}">{% endif %}
+    {% if banner %}
+        <div class="relative size-4p margin-xauto">
+            <i class="fa fa-{{ banner }} block bg-black text-white shadow-1 rounded-0p pad-0p absolute pin-top pin-right" style="margin: 0"></i>
+            <img src="{{ static('img/trophies/{icon}.svg'.format(icon=icon_name)) }}" class="{{ img_classes }}" title="{{ msg }}">
+        </div>
+    {% else %}
+         <img src="{{ static('img/trophies/{icon}.svg'.format(icon=icon_name)) }}" class="size-4p {{ img_classes }}" title="{{ msg }}">
+    {% endif %}
+    <p class="text-brand text-6">{{ name }} <span class="text-black opacity-4">({{ level }})</span></p>
+    {% if href %}</a>{% endif %}
+</div>

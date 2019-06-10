@@ -1,1 +1,1 @@
-default_app_config = 'ej_profiles.apps.EjProfilesConfig'
+default_app_config = "ej_profiles.apps.EjProfilesConfig"

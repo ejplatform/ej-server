@@ -2,25 +2,22 @@
   "name": "ej",
   "main": "build/js/index.js",
   "license": "GPL-3.0-or-later",
-  "scripts": {
-    "watch": "rollup --config --watch",
-    "build": "rollup --config",
-    "prepublish": "yarn run build"
+  "dependencies": {
+    "@types/jquery": "^3.3.29",
+    "jquery": "^3.3.1",
+    "mendeleev.css": "0.2.0",
+    "unpoly": "^0.60.0"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.0",
+    "babel-core": "^6.26.3",
     "babel-plugin-transform-class-properties": "^6.24.1",
-    "babel-preset-env": "^1.6.1",
+    "babel-preset-env": "^1.7.0",
     "babel-preset-flow": "^6.23.0",
-    "flow-bin": "^0.59.0",
-    "rimraf": "^2.6.2",
-    "rollup": "^0.52.0",
-    "rollup-plugin-babel": "^3.0.2",
-    "rollup-plugin-flow": "^1.1.1",
-    "rollup-plugin-node-resolve": "^3.4.0"
+    "parcel-bundler": "^1.11.0",
+    "typescript": "^3.4.5"
   },
-  "dependencies": {
-    "unpoly": "^0.57.0"
+  "scripts": {
+    "watch": "parcel watch js/main.ts -d build/js/",
+    "build": "parcel build js/main.ts -d build/js/"
   }
 }

@@ -2,8 +2,7 @@ from types import MappingProxyType
 
 from django.db import models
 from django.db.models import QuerySet
-
-from hyperpython import html, Text
+from hyperpython import html, Blob
 from hyperpython.components import html_list
 from hyperpython.html import django_loader
 
@@ -52,7 +51,7 @@ def queryset_closure():
         model = qs.model
         key = (model, role)
         if role:
-            kwargs['role'] = role
+            kwargs["role"] = role
 
         try:
             renderer = registry[key]
@@ -67,7 +66,7 @@ def queryset_closure():
         """
 
         if not (isinstance(model, type) and issubclass(model, models.Model)):
-            raise TypeError('model must be a Django Model subclass')
+            raise TypeError("model must be a Django Model subclass")
 
         def decorator(func):
             registry[model, role] = func
@@ -95,9 +94,9 @@ def render_with_template(func, template):
 
     def wrapped(obj, **kwargs):
         ctx = func(obj, **kwargs)
-        request = ctx.get('request')
+        request = ctx.get("request")
         data = renderer(context=ctx, request=request)
-        return Text(data, escape=False)
+        return Blob(data)
 
     return wrapped
 

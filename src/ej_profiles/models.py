@@ -1,68 +1,70 @@
 import hashlib
 
-from allauth.socialaccount.models import SocialAccount
+from boogie.fields import EnumField
+from boogie.rest import rest_api
+from django.apps import apps
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from django.contrib.staticfiles.storage import staticfiles_storage
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _, ugettext as __
 from rest_framework.authtoken.models import Token
-import datetime
+from sidekick import delegate_to, import_later
 
-from boogie.fields import EnumField
-from boogie.rest import rest_api
-from sidekick import delegate_to
-from .choices import Race, Gender
+from .enums import Race, Gender
+from .utils import years_from
 
+SocialAccount = import_later("allauth.socialaccount.models:SocialAccount")
 User = get_user_model()
 
 
-@rest_api(exclude=['user'])
+@rest_api(exclude=["user"])
 class Profile(models.Model):
     """
     User profile
     """
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='raw_profile')
-    race = EnumField(Race, _('Race'), default=Race.UNFILLED)
-    ethnicity = models.CharField(_('Ethnicity'), blank=True, max_length=50)
-    education = models.CharField(_('Education'), blank=True, max_length=140)
-    gender = EnumField(Gender, _('Gender identity'), default=Gender.UNFILLED)
-    gender_other = models.CharField(_('User provided gender'), max_length=50, blank=True)
-    age = models.IntegerField(_('Age'), null=True, blank=True)
-    birth_date = models.DateField(_('Birth Date'), null=True, blank=True)
-    country = models.CharField(_('Country'), blank=True, max_length=50)
+
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
+    race = EnumField(Race, _("Race"), default=Race.NOT_FILLED)
+    ethnicity = models.CharField(_("Ethnicity"), blank=True, max_length=50)
+    education = models.CharField(_("Education"), blank=True, max_length=140)
+    gender = EnumField(Gender, _("Gender identity"), default=Gender.NOT_FILLED)
+    gender_other = models.CharField(
+        _("User provided gender"), max_length=50, blank=True
+    )
+    birth_date = models.DateField(_("Birth Date"), null=True, blank=True)
+    country = models.CharField(_("Country"), blank=True, max_length=50)
     state = models.CharField(
-        _('State'),
+        _("State"),
         blank=True,
         max_length=settings.EJ_STATE_MAX_LENGTH,
         choices=settings.EJ_STATE_CHOICES,
     )
-    city = models.CharField(_('City'), blank=True, max_length=140)
-    biography = models.TextField(_('Biography'), blank=True)
-    occupation = models.CharField(_('Occupation'), blank=True, max_length=50)
-    political_activity = models.TextField(_('Political activity'), blank=True)
-    profile_photo = models.ImageField(_('Profile Photo'), blank=True, null=True, upload_to='profile_images')
+    city = models.CharField(_("City"), blank=True, max_length=140)
+    biography = models.TextField(_("Biography"), blank=True)
+    occupation = models.CharField(_("Occupation"), blank=True, max_length=50)
+    political_activity = models.TextField(_("Political activity"), blank=True)
+    profile_photo = models.ImageField(
+        _("Profile Photo"), blank=True, null=True, upload_to="profile_images"
+    )
 
-    name = delegate_to('user')
-    email = delegate_to('user')
-    is_active = delegate_to('user')
-    is_staff = delegate_to('user')
-    is_superuser = delegate_to('user')
+    name = delegate_to("user")
+    email = delegate_to("user")
+    is_active = delegate_to("user")
+    is_staff = delegate_to("user")
+    is_superuser = delegate_to("user")
+    limit_board_conversations = delegate_to("user")
 
     @property
     def age(self):
-        if not self.birth_date:
-            age = None
-        else:
-            delta = datetime.datetime.now().date() - self.birth_date
-            age = abs(int(delta.days // 365.25))
-        return age
+        return None if self.birth_date is None else years_from(self.birth_date)
 
     class Meta:
-        ordering = ['user__email']
+        ordering = ["user__email"]
 
     def __str__(self):
-        return __('{name}\'s profile').format(name=self.user.name)
+        return __("{name}'s profile").format(name=self.user.name)
 
     def __getattr__(self, attr):
         try:
@@ -73,7 +75,7 @@ class Profile(models.Model):
 
     @property
     def gender_description(self):
-        if self.gender != Gender.UNDECLARED:
+        if self.gender != Gender.NOT_FILLED:
             return self.gender.description
         return self.gender_other
 
@@ -87,23 +89,43 @@ class Profile(models.Model):
         try:
             return self.profile_photo.url
         except ValueError:
-            for account in SocialAccount.objects.filter(user=self.user):
-                picture = account.get_avatar_url()
-                return picture
-            return '/static/img/logo/avatar_default.svg'
+            if apps.is_installed("allauth.socialaccount"):
+                for account in SocialAccount.objects.filter(user=self.user):
+                    picture = account.get_avatar_url()
+                    return picture
+            return staticfiles_storage.url("/img/login/avatar.svg")
 
     @property
     def has_image(self):
-        return self.profile_photo or SocialAccount.objects.filter(user_id=self.id)
+        return bool(
+            self.profile_photo
+            or (
+                apps.is_installed("allauth.socialaccount")
+                and SocialAccount.objects.filter(user_id=self.id)
+            )
+        )
 
     @property
     def is_filled(self):
-        fields = ('race', 'age', 'birth_date', 'education', 'ethnicity', 'country', 'state', 'city',
-                  'biography', 'occupation', 'political_activity', 'has_image', 'gender_description')
+        fields = (
+            "race",
+            "age",
+            "birth_date",
+            "education",
+            "ethnicity",
+            "country",
+            "state",
+            "city",
+            "biography",
+            "occupation",
+            "political_activity",
+            "has_image",
+            "gender_description",
+        )
         return bool(all(getattr(self, field) for field in fields))
 
     def get_absolute_url(self):
-        return reverse('user-detail', kwargs={'pk': self.id})
+        return reverse("user-detail", kwargs={"pk": self.id})
 
     def profile_fields(self, user_fields=False, blacklist=None):
         """
@@ -111,24 +133,38 @@ class Profile(models.Model):
         registered profile fields.
         """
 
-        fields = ['city', 'state', 'country', 'occupation', 'education', 'ethnicity', 'gender', 'race',
-                  'political_activity', 'biography']
+        fields = [
+            "city",
+            "state",
+            "country",
+            "occupation",
+            "education",
+            "ethnicity",
+            "gender",
+            "race",
+            "political_activity",
+            "biography",
+        ]
         field_map = {field.name: field for field in self._meta.fields}
+        null_values = {Gender.NOT_FILLED, Race.NOT_FILLED}
 
         # Create a tuples of (attribute, human-readable name, value)
         triple_list = []
         for field in fields:
             description = field_map[field].verbose_name
-            getter = getattr(self, f'get_{field}_display', lambda: getattr(self, field))
-            triple = (field, description.capitalize(), getter())
-            triple_list.append(triple)
+            value = getattr(self, field)
+            if value in null_values:
+                value = None
+            elif hasattr(self, f"get_{field}_display"):
+                value = getattr(self, f"get_{field}_display")()
+            triple_list.append((field, description, value))
 
         # Age is not a real field, but a property. We insert it after occupation
-        triple_list.insert(3, ('age', _('Age'), self.age))
+        triple_list.insert(3, ("age", _("Age"), self.age))
 
         # Add fields in the user profile (e.g., e-mail)
         if user_fields:
-            triple_list.insert(0, ('email', _('E-mail'), self.user.email))
+            triple_list.insert(0, ("email", _("E-mail"), self.user.email))
 
         # Prepare blacklist of fields
         if blacklist is None:
@@ -164,17 +200,17 @@ class Profile(models.Model):
         A human-friendly description of the user role in the platform.
         """
         if self.user.is_superuser:
-            return _('Root')
+            return _("Root")
         if self.user.is_staff:
-            return _('Administrative user')
-        return _('Regular user')
+            return _("Administrative user")
+        return _("Regular user")
 
 
-def gravatar_fallback(id):
+def gravatar_fallback(id_):
     """
     Computes gravatar fallback image URL from a unique string identifier
     """
-    digest = hashlib.md5(id.encode('utf-8')).hexdigest()
+    digest = hashlib.md5(id_.encode("utf-8")).hexdigest()
     return "https://gravatar.com/avatar/{}?s=40&d=mm".format(digest)
 
 

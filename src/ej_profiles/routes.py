@@ -1,122 +1,90 @@
-from boogie.router import Router
-from django.http import Http404
+import toolz
+from django.db.models import Q, Count
 from django.shortcuts import redirect
-from django.urls import reverse
-from django.utils.translation import ugettext_lazy as _
+from boogie.router import Router
+from ej_conversations.models import Conversation, Comment
+from . import forms
 
-from ej_conversations.models import FavoriteConversation, Comment
-from .forms import ProfileForm, UsernameForm
-
-app_name = 'ej_profiles'
+app_name = "ej_profiles"
 urlpatterns = Router(
-    template=['ej_profiles/{name}.jinja2', 'generic.jinja2'],
-    login=True,
+    template=["ej_profiles/{name}.jinja2", "generic.jinja2"], login=True
 )
 
 
-@urlpatterns.route('')
+@urlpatterns.route("")
 def detail(request):
     user = request.user
+    return {
+        "profile": user.get_profile(),
+        "n_conversations": user.conversations.count(),
+        "n_favorites": user.favorite_conversations.count(),
+        "n_comments": user.comments.count(),
+        "n_votes": user.votes.count(),
+    }
 
-    # Select conversations and comments in an optimized query
-    favorites = (
-        FavoriteConversation.objects
-            .filter(user=user)
-            .select_related('conversation')
-            .prefetch_related('conversation__followers')
-            .prefetch_related('conversation__tags')
+
+@urlpatterns.route("edit/")
+def edit(request):
+    profile = request.user.get_profile()
+    form = forms.ProfileForm(instance=profile, request=request)
+
+    if form.is_valid_post():
+        form.files = request.FILES
+        form.save()
+        return redirect("/profile/")
+
+    return {"form": form, "profile": profile}
+
+
+@urlpatterns.route("contributions/")
+def contributions(request):
+    user = request.user
+
+    # Fetch all conversations the user created
+    created = user.conversations.cache_annotations(
+        "first_tag", "n_user_votes", "n_comments", user=user
     )
-    conversations = [fav.conversation for fav in favorites]
+
+    # Fetch voted conversations
+    # This code merges in python 2 querysets. The first is annotated with
+    # tag and the number of user votes. The second is annotated with the total
+    # number of comments in each conversation
+    voted = user.conversations_with_votes.exclude(id__in=[x.id for x in created])
+    voted = voted.cache_annotations("first_tag", "n_user_votes", user=user)
+    voted_extra = (
+        Conversation.objects.filter(id__in=[x.id for x in voted])
+        .cache_annotations("n_comments")
+        .values("id", "n_comments")
+    )
+    total_votes = {}
+    for item in voted_extra:
+        total_votes[item["id"]] = item["n_comments"]
+    for conversation in voted:
+        conversation.annotation_total_votes = total_votes[conversation.id]
+
+    # Now we get the favorite conversations from user
+    favorites = Conversation.objects.filter(favorites__user=user).cache_annotations(
+        "first_tag", "n_user_votes", "n_comments", user=user
+    )
 
     # Comments
-    comments = (
-        user.comments
-            .all()
-            .select_related('conversation')
-            .select_related('author')
+    comments = user.comments.select_related("conversation").annotate(
+        skip_count=Count("votes", filter=Q(votes__choice=0)),
+        agree_count=Count("votes", filter=Q(votes__choice__gt=0)),
+        disagree_count=Count("votes", filter=Q(votes__choice__lt=0)),
     )
+    groups = toolz.groupby(lambda x: x.status, comments)
+    approved = groups.get(Comment.STATUS.approved, ())
+    rejected = groups.get(Comment.STATUS.rejected, ())
+    pending = groups.get(Comment.STATUS.pending, ())
 
     return {
-        'which_tab': request.GET.get('info', 'profile'),
-        'profile': user.profile,
-        'conversations': conversations,
-        'comments': comments,
-    }
-
-
-@urlpatterns.route('edit/')
-def edit(request):
-    profile = request.user.profile
-    if request.method == 'POST':
-        form = ProfileForm(request.POST, instance=profile, files=request.FILES)
-        name_form = UsernameForm(request.POST, instance=request.user)
-        if form.is_valid() and name_form.is_valid():
-            form.save()
-            name_form.save()
-            return redirect('/profile/')
-    else:
-        form = ProfileForm(instance=profile)
-        name_form = UsernameForm(instance=request.user)
-
-    return {
-        'form': form,
-        'name_form': name_form,
-        'profile': profile,
-    }
-
-
-@urlpatterns.route('conversations/', template='ej_conversations/list.jinja2')
-def conversations_list(request):
-    user = request.user
-    boards = user.boards.all()
-    conversations = []
-    board = None
-    if len(boards) > 0:
-        board = boards[0]
-        conversations = board.conversations
-    return {
-        'user': user,
-        'conversations': conversations,
-        'current_board': board,
-        'boards': boards,
-        'create_url': reverse('conversation:create'),
-        # you can't add conversations because there can be more than one board being displayed
-        'can_add_conversation': False,
-        'title': _('My conversations'),
-        'description': _('See all conversations created by you'),
-    }
-
-
-@urlpatterns.route('comments/')
-def comments_list(request):
-    user = request.user
-    return {
-        'user': user,
-        'comments': user.comments.all(),
-        'stats': user.comments.statistics(),
-    }
-
-
-@urlpatterns.route('favorites/')
-def favorite_conversations(request):
-    user = request.user
-    favorites = FavoriteConversation.objects.filter(user=user)
-    conversations = [fav.conversation for fav in favorites]
-    return {
-        'conversations': conversations,
-    }
-
-
-@urlpatterns.route('comments/<which>/')
-def comments_tab(request, which):
-    if which not in {'approved', 'pending', 'rejected'}:
-        raise Http404
-
-    st = Comment.STATUS
-    status_map = {'approved': st.approved, 'pending': st.pending, 'rejected': st.rejected}
-    user = request.user
-    return {
-        'user': user,
-        'comments': user.comments.filter(status=status_map[which]),
-        'stats': user.comments.statistics(),
+        "profile": user.profile,
+        "user": user,
+        "created_conversations": created,
+        "favorite_conversations": favorites,
+        "voted_conversations": voted,
+        "approved_comments": approved,
+        "rejected_comments": rejected,
+        "pending_comments": pending,
     }

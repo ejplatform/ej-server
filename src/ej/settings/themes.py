@@ -3,18 +3,18 @@ from .paths import PathsConf
 
 
 class ThemesConf(PathsConf):
-    EJ_THEME = env('default', name='{attrs}')
+    EJ_THEME = env("default", name="{attrs}")
 
     def finalize(self, settings):
         theme = self.EJ_THEME
         settings = super().finalize(settings)
-        if theme in ('default', None):
+        if theme in ("default", None):
             return settings
 
         # Insert settings overrides
-        path = theme if '/' in theme else self.THEMES_DIR / theme
-        settings_path = path / 'settings.py'
-        assets_path = path / 'assets'
+        path = theme if "/" in theme else self.THEMES_DIR / theme
+        settings_path = path / "settings.py"
+        assets_path = path / "assets"
 
         if settings_path.exists():
             with open(settings_path) as fh:
@@ -25,7 +25,7 @@ class ThemesConf(PathsConf):
                 settings.update(globs)
 
         # Insert assets into
-        dirs = settings.setdefault('STATICFILES_DIRS', [])
+        dirs = settings.setdefault("STATICFILES_DIRS", [])
         if assets_path.exists():
             dirs.insert(0, assets_path)
 

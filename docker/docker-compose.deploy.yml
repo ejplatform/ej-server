@@ -16,38 +16,31 @@ services:
       - web
 
   web:
-    image: ejplatform/web:latest
+    image: ej/web:latest
     restart: always
     links:
       - postgres
-      - redis
     env_file:
       - ./env/django.env
       - ./env/postgres.env
       - ./env/deploy.env
-      - ./env/email.env
     volumes:
       - media_files:/app/local/media/
       - static_files:/app/local/static/
       - docs:/app/build/docs/
       - nginx_conf:/etc/nginx/conf.d/
-    command: clean db -m db-assets sass collect  gunicorn
 
   postgres:
     image: postgres:10-alpine
     restart: always
     env_file:
-      - ./env/deploy.env
+      - ./env/postgres.env
     volumes:
-      - db_data:/var/lib/postgresql/data
-
-  redis:
-    image: redis:alpine
-    restart: always
+      - ej_db_data:/var/lib/postgresql/data
 
 
 volumes:
-  db_data:
+  ej_db_data:
   media_files:
   static_files:
   nginx_conf:

@@ -16,117 +16,123 @@ You can visit EJ website at http://ejplatform.org.
 Getting started
 ===============
 
-First clone the repository and point to it::
+First clone the repository::
 
     $ git clone http://github.com/ejplatform/ej-server/
     $ cd ej-server
 
-If you use docker, you can quickly start the development server using the
-command::
+If you use Docker, you can quickly start the development server using the
+commands::
 
-    $ sudo docker-compose -f docker/docker-compose.yml up
+    $ pip3 install invoke --user
+    $ inv docker-build
+    $ inv docker up
 
-For most cases, however we recommend that you prepare your machine with some
-tools. Developers may choose between docker or virtualenv for day to day
-development. In both cases, we recommend that you have Invoke_ >= 0.23 installed
-in your machine.
-
-Docker will probably get you started quicker, but in the long run it may be
-harder to integrate with your tools and often requires long builds not needed when
-using virtualenv.
-
-_Invoke: http://www.pyinvoke.org/
+For most cases, however, we recommend that you prepare your machine with some
+extra tools. Developers may choose between Docker or Poetry/Virtualenv for day to day
+development. In both cases, we recommend that you have Invoke_ installed
+in your machine to make execution of chores easier.
 
 
 Local development (virtualenv)
 ------------------------------
 
-EJ platform **requires** you to _`Prepare environment` + with the
-development headers. Please install those packages using your distro package
-manager. This is a list of packages that you should have installed locally:
+This is a list of packages that you should have installed locally before we
+start:
 
-- Python 3.6
+- Python 3.6+ (Python 3.7 is recommended)
 - Virtualenv or virtualenvwrapper
-- Invoke (>= 0.23)
-- Sass
-- Node.js
+- Invoke (>= 1.0)
+- Node.js and npm
+- Gettext
+- Docker (optional, for deployment)
 
-Once everything is installed, and your virtualenv is activated, just run the
-configure.sh script::
+You can install all dependencies on recent Ubuntu/Debian variants with the
+following commands::
+
+    $ sudo apt install python3-dev python3-pip virtualenvwrapper \
+                       npm gettext docker.io docker-compose
+    $ sudo pip3 install invoke
+
+Once everything is installed, create and activate your virtualenv. We will create
+a new virtualenv called "ej"::
+
+    $ bash
+    $ mkvirtualenv ej -p /usr/bin/python3
+
+This command creates and activates the virtualenv. When you want to work with the
+repository in a later time, activate the virtual env using the command ``workon ej``.
+
+The following steps are handled by the configure.sh script::
 
     $ sh configure.sh
 
-Grab a cup of coffee while it downloads and install all dependencies. If
-everything works, you should be able to run the server using the ``inv run``
-command.
+This task creates a test database with a few conversations, users, comments, and
+votes. Notably, it automatically creates an admin user (password:
+admin, email: admin@admin.com) a regular user (password: user, email: user@user.com).
+
+This step takes some time. Grab a cup of coffee while it downloads and install
+all dependencies. If everything works as expected, you should be able to run
+the server using the ``inv run`` command after it is finished.
 
 
 Running it
-~~~~~~~~~~
+----------
 
-Unless you prefer to type long django management commands, use Invoke_ to start
+Unless you prefer to type long Django management commands, use Invoke_ to start
 the dev server::
 
     $ inv run
 
-Before runing, make sure you regenerate the PO files and compile. It's necessary to compile sass either:
-
-    $ inv i18n  
-    
-    $ inv i18n -c  
-    
-    $ inv sass run  
-
-To run on brazilian portuguese:
+You can control many configurations using environment variables. To run using
+the Brazilian Portuguese translation, for instance, just export the correct
+COUNTRY setting:
 
     $ export COUNTRY=brasil
 
-Tests are executed with Pytest_::
+Depending on your network configurations, you might need to set the ALLOWED_HOSTS
+setting for your Django installation. This is a basic security setting that
+controls which hosts can serve pages securely. In non-production settings, set
+DJANGO_ALLOWED_HOSTS environment variable to * to allow connections in any
+network topology.
 
-    $ pytest
+    $ DJANGO_ALLOWED_HOSTS=*
 
 Invoke manages many other important tasks, you can discover them using::
 
     $ inv -l
 
+If you are making changes to EJ codebase, do not forget to run tests frequently.
+EJ uses Pytest_::
+
+    $ pytest
+
 .. _Invoke: http://www.pyinvoke.org/
 .. _Pytest: http://pytest.org
 
-
-Semi-manual installation
-~~~~~~~~~~~~~~~~~~~~~~~~
-
-The script installs the invoke task runner, fetches all dependencies from pip,
-and initializes the database. If you prefer (or if something goes wrong with the
-previous instructions), you can do all steps manually. The first step is to
-install the Invoke_ task runner to run each step of the installation (if you are
-not familiar to Invoke, think of it a Python reinterpretation of Make::
-
-    $ pip install invoke
-
-You can install dependencies manually using the files in /etc/requirements/, or
-simply use the update-deps task. The later is preferable since it installs the
-volatile dependencies in a special folder that makes it easier and faster to
-do further updates::
-
-    $ inv update-deps --all
-
-Invoke allow us to execute a sequence of tasks very easily. The command bellow
-will run migrations and populate the database with fake data for local
-development::
-
-    $ inv update-deps db db-assets db-fake
-
-This creates a few conversations with comments and votes plus several users and
-an admin:admin <admin@admin.com> user.
-
 Documentation
-~~~~~~~~~~~~~
+-------------
 
-Documentation can be updated with `$ sphinx-build docs build/docs` and will be available at http://localhost:8000/docs.
+Documentation can be updated with `$ inv docs` and will be available at the
+`build/docs/` directory.
+
+
+Changing theme
+--------------
+
+The previous commands build EJ using the "default" theme. EJ accepts additional
+themes and currently comes pre-installed with the alternate "cpa" theme. The
+first step is to rebuild static assets::
+
+    $ inv sass -t cpa js db-assets
+
+Now run the server using the --theme flag::
+
+    $ inv run -t cpa
+
 
 Using docker
-------------
+============
 
 If you want to use docker, build the containers and just start docker compose::
 
@@ -154,13 +160,14 @@ version::
 
 
 Tests
-~~~~~
+-----
 
-There are two ways to locally execute tests using docker-compose::
+Tests are run in a docker container by using the following command::
 
     $ sudo docker-compose -f docker/docker-compose.yml run web tests
 
-or using inv::
+or use inv for a more compact alternative::
 
     $ inv docker-run run -c tests     # uses postgresql
     $ inv docker-run single -c tests  # uses sqlite3
+

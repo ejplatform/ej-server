@@ -7,16 +7,11 @@ ENV PYTHONPATH="/app/src/:$PYTHONPATH"
 WORKDIR /app
 
 # Copy necessary files
-COPY ./etc/requirements/ /app/etc/requirements/
-COPY ./etc/scripts/ /app/etc/scripts/
+COPY ./etc/ /app/etc/
 COPY ./tasks.py /app/tasks.py
 
 # Install dependencies
-RUN inv update-deps --all --vendor /vendor
-
-# Move vendorized apps away from /app
-RUN mv /app/local/vendor/ /vendor/ \
- && echo "RELOCATED PYTHON MODULES"
+RUN pip install -r etc/requirements.txt -r etc/requirements-dev.txt
 
 ARG UID=1000
 ARG GID=1000

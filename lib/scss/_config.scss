@@ -1,0 +1,174 @@
+//------------------------------------------------------------------------------
+// COLORS ROLES
+//------------------------------------------------------------------------------
+@import '../node_modules/mendeleev.css/src/fn';
+
+// Brand colors: they are used on the logo and on the main elements on the page,
+// like buttons, conversation cards, links, etc.
+$color-brand: #30BFD3 !default;
+$color-accent: #FF3E72 !default;
+
+// Derived brand colors
+$color-accent-light: scale-color($color-accent, $saturation: -10%, $lightness: 10%) !default; // #FF5783
+$color-accent-lighter: scale-color($color-accent, $lightness: 85%, $saturation: -10%) !default; // #FFE3EA
+$color-brand-light: scale-color($color-brand, $lightness: 55%, $saturation: 20%) !default; // #9FE5EA
+$color-brand-lighter: scale-color($color-brand, $lightness: 85%, $saturation: 10%) !default; // #E0F7F8
+$color-brand-alternate: scale-color($color-brand, $lightness: 55%, $saturation: -45%) !default; //#A3D8DD
+@if $color-brand == #30BFD3 {
+    $color-brand-light: #9FE5EA;
+    $color-brand-lighter: #C4F2F4;
+    $color-brand-alternate: #A3D8DD;
+}
+
+// Text and background
+$color-black: #042A46 !default;
+$color-white: white !default;
+
+// Color themes
+$color-theme-brand: $color-brand !default;
+$color-theme-brand-light: $color-brand-lighter !default;
+$color-theme-accent: $color-accent !default;
+$color-theme-accent-light: $color-accent-lighter !default;
+$color-theme-green: #36C273 !default;
+$color-theme-green-light: #B4FDD4 !default;
+$color-theme-orange: #F68128 !default;
+$color-theme-orange-light: #FFE1CA !default;
+$color-theme-purple: #7758B3 !default;
+$color-theme-purple-light: #E7DBFF !default;
+$color-theme-grey: #797979 !default;
+$color-theme-grey-light: #EEEEEE !default;
+
+// Action colors
+$color-action: $color-brand !default;
+$color-primary: $color-black !default;
+$color-secondary: $color-accent !default;
+
+// Navigation item
+$color-navigation: $color-white !default;
+$color-navigation-text: $color-black !default;
+
+// Override default Mendeleev color palette
+$mendeleev-color-palette: (
+    //
+    // Brand colors
+    'brand': $color-brand,
+    'accent': $color-accent,
+    'brand-light': $color-brand-light,
+    'brand-lighter': $color-brand-lighter,
+    'brand-alternate': $color-brand-alternate,
+    'accent-light': $color-accent-light,
+    'accent-lighter': $color-accent-lighter,
+    //
+    // Action colors
+    'primary': $color-primary,
+    'secondary': $color-secondary,
+    'navigation': $color-navigation,
+    'navigation-text': $color-navigation-text,
+    //
+    // Text
+    'black': $color-black,
+    'white': $color-white,
+    'dark': $color-black,
+    'light': $color-white,
+    //
+    // Theme colors
+    'theme-brand': $color-theme-brand,
+    'theme-brand-light': $color-theme-brand-light,
+    'theme-accent': $color-theme-accent,
+    'theme-accent-light': $color-theme-accent-light,
+    'theme-green': $color-theme-green,
+    'theme-green-light': $color-theme-green-light,
+    'theme-orange': $color-theme-orange,
+    'theme-orange-light': $color-theme-orange-light,
+    'theme-purple': $color-theme-purple,
+    'theme-purple-light': $color-theme-purple-light,
+    'theme-grey': $color-theme-grey,
+    'theme-grey-light': $color-theme-grey-light,
+);
+
+//------------------------------------------------------------------------------
+// TYPOGRAPHY
+//------------------------------------------------------------------------------
+
+@import '../node_modules/mendeleev.css/src/profiles/default';
+
+// Font roles and base styles
+$font-stack-paragraph: $font-stack-raleway !default;
+$font-stack-headings: $font-stack-patua-one !default;
+
+// Reset Mendeleev variables and styles
+$mendeleev-typeface: $font-stack-paragraph;
+$mendeleev-color-contrast: () !default;
+$mendeleev-color-contrast: map-merge($mendeleev-color-contrast, (
+    #30BFD3: $color-white,
+    #FF3D72: $color-white,
+    #042A46: $color-white,
+));
+
+// EJ configurations
+$ej-headings: (
+    font-weight: 400,
+    font-family: $font-stack-headings,
+) !default;
+$ej-button-radius: 2.25rem / 2 !default;
+
+//------------------------------------------------------------------------------
+// MENDELEEV CONFIG
+//------------------------------------------------------------------------------
+
+$mendeleev-config: map-merge-deep(
+        $mendeleev-config, (
+        // Breaking points
+        'breakpoints': (
+            'sm': 35rem,
+        ),
+        // Typography
+        'typography': (
+            'headings': $ej-headings,
+            'sans-serif': $font-stack-paragraph,
+            'size': (
+                'start': 16,
+                'sm': 16,
+                'md': 17,
+                'lg': 18,
+            ),
+            'scale': (
+                'start': 9/8,
+                'sm': 9/8,
+                'md': 8/7,
+                'lg': 7/6,
+            ),
+        ),
+        // Colors
+        'color':(
+            'roles': (
+                'primary', 'secondary',
+                'action', 'positive', 'negative',
+                'warning', 'white', 'black',
+            ),
+        ),
+        // Forms
+        'input': (
+            'border-radius': $ej-button-radius,
+            'min-width': 15em,
+            'width': 100%,
+            'max-width': 30rem,
+        ),
+        'button': (
+            'border-radius': $ej-button-radius,
+            'font-weight': 700,
+        ),
+        // EJ Global styles and components
+        'ej': (
+            'style' : (
+                'border-radius': 3rem,
+            ),
+            'conversation-card': (
+                'border-radius': 50%,
+                'highlight-tags': true,
+                'bg-image': '/static/img/bg/conversation-card.png',
+            ),
+        )
+    ));
+
+@import '../node_modules/mendeleev.css/src/mendeleev';

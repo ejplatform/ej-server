@@ -1,0 +1,10 @@
+<!-- PWA -->
+<link rel="manifest" href="/static/manifest.json">
+<meta name="theme-color" content="{{ theme_color|default('#fff') }}">
+
+<!-- Cache busting metas -->
+<meta http-equiv="cache-control" content="{{ cache_control|default('no-cache') }}">
+<meta http-equiv="expires" content="{{ cache_expires|default(120) }}">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary">

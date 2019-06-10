@@ -1,46 +1,81 @@
-from django.forms import modelformset_factory, ModelForm, ValidationError
+from django import forms
 from django.utils.translation import ugettext_lazy as _
-from .models import Stereotype, StereotypeVote
+
+from ej.forms import EjModelForm
+from .models import Stereotype, Cluster
 
 
-class StereotypeForm(ModelForm):
+class StereotypeForm(EjModelForm):
+    """
+    Create and edit new stereotypes
+    """
+
     class Meta:
+        # We have to add the owner attribute to enable the unique owner + name
+        # validation constraint. This is not ideal since we have to fake the
+        # existence of this field using default values
         model = Stereotype
-        fields = ['name', 'description']
+        fields = ["name", "description", "owner"]
 
-    def __init__(self, *args, **kwargs):
-        self.conversation = kwargs.pop("conversation")
+    def __init__(self, *args, owner=None, instance=None, **kwargs):
+        self.owner_instance = owner = owner or instance.owner
+        kwargs["instance"] = instance
+        kwargs["initial"] = {"owner": owner, **kwargs.get("initial", {})}
         super(StereotypeForm, self).__init__(*args, **kwargs)
 
-    def clean(self):
-        super(StereotypeForm, self).clean()
-        name = self.cleaned_data.get('name')
-        stereotype_exists = Stereotype.objects.filter(name=name, conversation=self.conversation).exists()
-        if self.instance and name == self.instance.name:
-            return self.cleaned_data
-        elif stereotype_exists:
-            msg = _('Stereotype for this conversation with this name already exists.')
-            raise ValidationError(msg)
-        return self.cleaned_data
+    def full_clean(self):
+        self.data = self.data.copy()
+        self.data["owner"] = str(self.owner_instance.id)
+        return super().full_clean()
 
 
-class StereotypeVoteForm(ModelForm):
+class ClusterForm(EjModelForm):
+    """
+    Edit clusters when configuring opinion groups
+    """
+
     class Meta:
-        model = StereotypeVote
-        fields = ['comment', 'choice']
+        model = Cluster
+        fields = ["name", "description", "stereotypes"]
+        help_texts = {
+            "stereotypes": _(
+                "You can select multiple personas for each group. Personas are "
+                "fake users that you control and define the opinion profile of "
+                "your group."
+            )
+        }
+        labels = {"stereotypes": _("Personas"), "new_persona": ""}
 
     def __init__(self, *args, **kwargs):
-        super(StereotypeVoteForm, self).__init__(*args, **kwargs)
-        self.fields['comment'].widget.attrs = {'class': 'comment_select'}
+        super().__init__(*args, **kwargs)
+        self.fields["stereotypes"].required = False
 
 
-StereotypeVoteCreateFormSet = modelformset_factory(
-    StereotypeVote,
-    form=StereotypeVoteForm,
-)
+class ClusterFormNew(ClusterForm):
+    new_persona = forms.BooleanField(
+        required=False,
+        initial=True,
+        help_text=_(
+            "Create new persona for this group. You can re-use it in " "other groups."
+        ),
+    )
 
-StereotypeVoteEditFormSet = modelformset_factory(
-    StereotypeVote,
-    form=StereotypeVoteForm,
-    extra=0,
-)
+    def clean(self):
+        if (
+            not self.cleaned_data["new_persona"]
+            and not self.cleaned_data["stereotypes"]
+        ):
+            self.add_error(
+                "stereotypes", _("You must select a persona or create a new one.")
+            )
+
+    def _save_m2m(self):
+        super()._save_m2m()
+        if self.cleaned_data["new_persona"]:
+            owner = self.instance.clusterization.conversation.author
+            stereotype, _ = Stereotype.objects.get_or_create(
+                name=self.cleaned_data["name"],
+                description=self.cleaned_data["description"],
+                owner=owner,
+            )
+            self.instance.stereotypes.add(stereotype)

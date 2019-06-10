@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <browserconfig>
-  <msapplication>
-    <tile>
-      <square70x70logo src="static/img/icon/icon-70.png"/>
-      <square150x150logo src="static/img/icon/icon-150.png"/>
-      <wide310x150logo src="static/img/icon/icon-310x150.png"/>
-      <square310x310logo src="static/img/icon/icon-310.png"/>
-      <TileColor>{{ tilecolor|default('#009900') }}</TileColor>
-    </tile>
-  </msapplication>
+    <msapplication>
+        <tile>
+            <square70x70logo src="static/img/logo/logo-70.png"/>
+            <square150x150logo src="static/img/icon/logo-150.png"/>
+            <wide310x150logo src="static/img/icon/logo-310x150.png"/>
+            <square310x310logo src="static/img/icon/logo-310.png"/>
+            <TileColor>{{ tilecolor|default('#009900') }}</TileColor>
+        </tile>
+    </msapplication>
 </browserconfig>

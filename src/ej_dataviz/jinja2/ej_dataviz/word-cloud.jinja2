@@ -1,0 +1,76 @@
+{% extends 'base.jinja2' %}
+{% set main_class = 'measure-wide margin-xauto pad-x2' %}
+{% block menu %}{% include 'ej_conversations/includes/menu-detail.jinja2' %}{% endblock %}
+
+{% block content %}
+    <h1 class="h2 center text-accent">{{ _('Word cloud') }}</h1>
+    <p class="center">
+        {% trans %}Words most commonly found in conversation.{% endtrans %}{{ ' ' }}
+        {% trans %}Size of the word is proportional to usage frequency.{% endtrans %}
+    </p>
+    <div id="word-cloud" class="width-full">
+        <div class="margin-3 text-2 center">{{ _('Generating word cloud. Please wait...') }}</div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.9.1/d3.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-cloud/1.2.5/d3.layout.cloud.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js" defer></script>
+    <script defer>
+        // TODO: Build with parcel or use Django to compile ES6 features
+        function drawWorldCloud(words, layout) {
+            var x = layout.size()[0],
+                y = layout.size()[1];
+
+            $('#word-cloud').find('div').remove();
+            d3.select('#word-cloud').append('svg')
+                .attr('width', x)
+                .attr('height', y)
+                .append('g')
+                .attr('transform', `translate(${x / 2}, ${y / 2})`)
+                .selectAll('text')
+                .data(words)
+                .enter()
+                .append('text')
+                .style('font-size', word => word.size + 'px')
+                .style('font-family', 'Raleway')
+                .style('fill', word => word.color)
+                .attr('text-anchor', 'middle')
+                .attr('transform', word => `translate(${word.x},${word.y})rotate(${word.rotate})`)
+                .text(word => word.text);
+        }
+
+        window.addEventListener('load', function () {
+            $('#word-cloud').find('div').hide(1500);
+            var palette = [
+                '#042A46', '#FF3E72', '#30BFD3',
+                '#042A46', '#FF3E72', '#30BFD3',
+                '#36C273', '#7758B3', '#797979', '#F68128',
+            ];
+
+            $.ajax('words.json').then(function (json) {
+                var $cloud = $('#word-cloud'),
+                    aspect = ($(window).height() - 4 * $('.main-header').height()) / $cloud.width(),
+                    scaleFunction = (x => Math.sqrt(x)),
+                    pairs = _.sortBy(_.pairs(json.cloud), x => -x[1])
+                        .slice(0, 50).reverse(),
+                    count = _.reduce(pairs.map(x => x[1]), (x, y) => x + y),
+                    scale = $cloud.width() * aspect * 0.5,
+                    words = pairs.map(item => ({
+                        text: item[0],
+                        size: scaleFunction(item[1] / (count + 1)) * scale,
+                        color: palette[_.random(0, palette.length - 1)]
+                    })),
+
+                    // Create word-cloud layout
+                    layout = d3.layout.cloud()
+                        .size([$cloud.width(), $cloud.width() * aspect])
+                        .words(words)
+                        .padding(-1)
+                        .rotate(() => ~~(Math.random() * 5) * 120 / 5 - 60)
+                        .font('Raleway')
+                        .fontSize(word => word.size)
+                        .on('end', x => drawWorldCloud(x, layout));
+                layout.start();
+            })
+        });
+    </script>
+{% endblock %}

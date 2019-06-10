@@ -1,38 +1,30 @@
-<div class="CommentCard-counter">
-    <p>{{ voted }} / {{ total }}</p>
+<div class="comment-card">
+    <div class="comment-card__author">
+        <img src="{{ static('/img/icons/catlogo.svg') }}"> {{ author }}
+    </div>
+    <article class="col flex-center"><span>{{ comment.content }}</span></article>
+    {% if show_actions %}
+        <form method="post" id="comment-form" up-target="{{ target or 'main' }}" up-restore-scroll up-transition="move-to-right/fade-in">
+            {{ csrf_input }}
+            <input type="hidden" name="action" value="vote">
+            <input type="hidden" name="comment_id" value="{{ comment.id }}">
+            <div class="row">
+                {% for value, (icon, cls, msg) in buttons.items() %}
+                    <div up-expand class="comment-card__button">
+                        <button type="submit" form="comment-form" name="vote" value="{{ value }}">
+                            <i class="fa {{ icon }} {{ cls }}"></i>
+                        </button>
+                        <span>{{ msg }}</span>
+                    </div>
+                {% endfor %}
+            </div>
+        </form>
+    {% else %}
+        <p class="comment-card__message">
+            {% if message is defined %}{{ message }}{% else %}
+                {% trans %}It is necessary to {{ login_anchor }} before voting or sending a comment!{% endtrans %}
+            {% endif %}
+        </p>
+    {% endif %}
 </div>
-<div class="CommentCard-user">
-    <img src="/static/img/icons/catlogo.svg" ><span>{{ comment.author.name }}</span>
-</div>
-<p>{{ comment.content }}</p>
-{% if show_user_actions %}
-    <form method="post" class="CommentCard-voteArea" id="Comment-form" up-target=".CommentCard" up-transition="move-left">
-        {{ csrf_input }}
-        <input type="hidden" name="action" value="vote">
-        <input type="hidden" name="comment_id" value="{{ comment.id }}">
-        <ul class="ConversationComment-actions">
-            <li class="voteAgree" up-expand>
-                <button type="submit" form="Comment-form" name="vote" value="agree">
-                    <i class="fa fa-check"></i>
-                </button>
-                <span>{{ _('Agree') }}</span>
-            </li>
-            <li class="voteSkip" up-expand>
-                <button type="submit" form="Comment-form" name="vote" value="skip">
-                    <i class="fa fa-arrow-right"></i>
-                </button>
-                <span>{{ _('Skip') }}</span>
-            </li>
-            <li class="voteDisagree" up-expand>
-                <button type="submit" form="Comment-form" name="vote" value="disagree">
-                    <i class="fa fa-times"></i>
-                </button>
-                <span>{{ _('Disagree') }}</span>
-            </li>
-        </ul>
-    </form>
-{% else %}
-    <p class="CommentCard-loginWarn">
-        {% trans %}It is necessary to {{ login_anchor }} before voting or
-            sending a comment!{% endtrans %}</p>
-{% endif %}
+

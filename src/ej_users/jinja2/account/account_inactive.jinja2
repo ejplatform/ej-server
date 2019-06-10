@@ -1,0 +1,8 @@
+{% extends "account/base.jinja2" %}
+{% set page_title = _('Account is inactive') %}
+
+
+{% block content %}
+    <h1 class="h2 text-accent">{% trans %}Error{% endtrans %}</h1>
+    <p>{% trans %}This account is inactive.{% endtrans %}</p>
+{% endblock %}

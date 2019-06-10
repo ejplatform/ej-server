@@ -1,8 +1,0 @@
-<div class="dropdown">
-    <button class="dropbtn">{{ _('Download raw data') }}</button>
-    <div class="dropdown-content">
-        {%- for format, name in formats -%}
-            <p><a href="{{ url(view_name, kwargs={'conversation': conversation, 'format': format}) }}">{{ name }}</a></p>
-        {% endfor %}
-    </div>
-</div>

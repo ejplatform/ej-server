@@ -2,22 +2,10 @@
  FONTS FAMILIES AND SIZES
  ============================================================== */
 
-@import '../0_constants/typography';
 @import 'spacing';
-
-// Font roles and base styles
-$font-mono: $font-ibm-plex !default;
-$font-sans: $font-raleway !default;
-$font-sans-accent: $font-raleway !default;
-$font-serif: $font-georgia !default;
-$font-cursive: $font-comic-sans !default;
-$font-paragraph: $font-sans !default;
-$font-headings: $font-patua-one !default;
 
 // Transformations and weigh
 $font-headings-weight: 400 !default;
-$text-headings-transform: none !default;
-$text-headings-transform-h1: uppercase !default;
 
 // Base typographical sizes
 $font-size-tiny-tiny: 9px !default;

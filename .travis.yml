@@ -1,22 +1,36 @@
-os: linux
-dist: trusty
-sudo: required
+language: python
+#cache: pip
+sudo: false
+
+
 env:
   global:
     - CC_TEST_REPORTER_ID=774db8cce863050fe5bc219651c79d338521ca894b66ee3df3b9a2eb6a27f3e7
-language: python
-python:
-  - '3.6'
+
+
+matrix:
+  include:
+   - env: TOXENV=py37-sqlite
+     python: '3.7'
+     dist: xenial
+   - env: TOXENV=py36-sqlite
+     python: '3.6'
+
+
 install:
-  - pip install invoke
-  - inv update-deps --all
-  - inv clean-migrations --all -y
-  - inv update-deps db
+  - pip install invoke poetry
+  - poetry run inv configure --silent
+
+
 script:
-  - pytest
+  - poetry run inv test
+
+
 before_script:
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build
+
+
 after_script:
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT

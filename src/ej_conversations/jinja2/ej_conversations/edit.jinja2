@@ -1,64 +1,44 @@
-{% extends 'base.jinja2' %}
-{% from 'ej_conversations/components/comment-list.jinja2' import comment_list with context %}
-
-{% block content %}
-    <div class="Moderate">
-        <form method="post" class="django-form-as-p">
-          {{ csrf_input }}
-
-          <input type="hidden" name="title" value="{{ conversation.title }}" />
-
-          <div class="ConversationEdit-actions">
-            <span>
-              <i class="fa fa-times"></i>
-              <input type="reset" value="{{ _('Cancel') }}" name="cancel" onClick="history.back(-1)">
-            </span>
-            <span>
-              <i class="fa fa-check create-conversation-icon"></i>
-              <input type="submit" value="{{ _('Save') }}" name="create">
-            </span>
-          </div>
+{% extends 'ej_conversations/create.jinja2' %}
+{% block menu %}{% include 'ej_conversations/includes/menu-detail.jinja2' %}{% endblock %}
 
 
-          <div class="ConversationDetail">
-              <div class="ConversationDetail-banner">
-                  <div class="ConversationTags">
-                    <div class="ConversationField">
-                        <i class="fa fa-tags"></i><input name="tags" value="{{ tags }}" />
-                    </div>
-                 </div>
+{% block form_content %}
+    <p><a href="{{ conversation.get_absolute_url() }}"
+          title="{{ _('Back (skip changes)') }}"
+          class="lowercase bold text-brand">
+        <i class="fa fa-chevron-left"></i>{% trans %}Back to conversation{% endtrans %}
+    </a></p>
 
-                  <p><textarea onfocus="this.style.height = (this.scrollHeight) + 'px'" onkeyup="this.style.height = (this.scrollHeight) + 'px'" class="Conversation-edit-field" name="text" required id="id_text">{{ conversation.text }}</textarea></p>
+    <div class="measure margin-xauto">
+        <h1 class="h2 text-accent center">{{ _('Edit conversation') }}</h1>
 
-                  <input type="hidden" name="comments_count" value="0">
-              </div>
+        {{ form.non_field_errors() }}
+        {{ form.title.errors }}
+        <label>{{ form.title.label }}{{ form.title }}</label>
+        <legend>{{ form.title.help_text }}</legend>
 
-              <div class="ConversationDetail-arrow"></div>
-          </div>
+        {% if can_publish %}
+            {{ form.is_promoted.errors }}
+            <label>{{ form.is_promoted }} {{ form.is_promoted.label }}</label>
+            <legend>{{ form.is_promoted.help_text }}</legend>
+        {% endif %}
 
-          <div class="ConversationEdit-attributes">
-            <p><i class="fa fa-link"></i> <span>{{ conversation.slug }}</span></p>
-            {% if board is defined and board %}
-                <p><i class="fa fa-list-ul"></i> <span>{{ board.title }}</span></p>
-            {% endif %}
-          </div>
+        {{ form.is_hidden.errors }}
+        <label>{{ form.is_hidden }} {{ form.is_hidden.label }}</label>
+        <legend>{{ form.is_hidden.help_text }}</legend>
 
-          <p style="text-align: center;">{{ action_button(_('Manage stereotypes'), manage_stereotypes_url, primary=False) }}</p>
-
-          {% if can_promote_conversation %}
-              <p class="ConversationEdit-promote">
-                {% if conversation.is_promoted %}
-                  <input type="checkbox" name="is_promoted" id="is_promoted" checked value="1" />
-                {% else %}
-                  <input type="checkbox" name="is_promoted" id="is_promoted" value="1" />
-                {% endif %}
-                <label for="is_promoted">{{ _('Promote conversation on public list') }}</label>
-              </p>
-            </form>
-          {% endif %}
-        <div class="Moderate-comments">
-            <h1>{{ _('Comments in this conversation') }}</h1>
-            {{ comment_list(comments, csrf_input) }}
+        <div class="margin-xauto margin-y3 center">
+            <input class="is-primary" type="submit" value="{{ _('Save modifications') }}">
         </div>
+
+        <h2 class="h3 text-accent center">{{ _('Other options') }}</h2>
+        <ul>
+            <li>
+                <button class="is-clear" name="next" value="stereotypes">{{ _('Save and manage stereotypes') }}</button>
+            </li>
+            <li>
+                <button class="is-clear" name="next" value="moderate">{{ _('Save and moderate comments') }}</button>
+            </li>
+        </ul>
     </div>
 {% endblock %}

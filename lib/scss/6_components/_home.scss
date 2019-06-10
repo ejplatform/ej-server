@@ -1,15 +1,15 @@
 /*
  HOME PAGE
- ======================================================================== */
-
-@import '../2_tools/index';
-
+ ========================================================================
 
 $how-it-work-icon-size: 1.5 * $font-size-h1 !default;
-$how-it-work-icon-color: $color-gray-dark !default;
+$how-it-work-icon-color: $color-content !default;
+$home-how-it-works-card-icon-person: "\f1ae" !default;
+$home-how-it-works-card-icon-conversation: "\f086" !default;
+$home-background-image-url: url(/static/img/page-bg.svg) !default;
 
 .HomeBanner {
-    @extend .CenteredContainer;
+    @extend .container-1, .center;
     width: 80%;
     margin-top: 10px;
 
@@ -17,36 +17,38 @@ $how-it-work-icon-color: $color-gray-dark !default;
         display: none;
         font-size: $font-size-h3;
 
-        @media only screen and (min-width: $breakpoint-small) {
+        @include breakpoint('sm') {
             display: inherit;
         }
     }
     h1 {
-        font-family: var( --home-banner-title-font-family);
-        color: $home-banner-title-font-color;
+        color: $color-content;
     }
 
-    .Button[primary] {
-        background: $home-banner-button-background;
-        color: $color-white;
-        padding: $unit $unit*2;
+    .button[primary] {
+        @include color('accent');
+        padding: $spacing-unit $spacing-unit * 2;
     }
 }
 
 .HowItWorks {
-    background: $home-how-it-works-background;
-    padding: 0;
+    background: $color-hint;
+    padding-top: $spacing-unit;
+
+    > * {
+        @extend .container-1, .center;
+    }
 
     h2 {
         font-size: $font-size-h4;
     }
     h1 {
-        color: $home-how-it-works-title-font-color;
+        color: $color-content;
     }
     p {
         padding: 0 10px;
         line-height: 30px;
-        color: $color-content-text;
+        color: $color-content;
     }
 
     .fa-child:before {
@@ -62,30 +64,29 @@ $how-it-work-icon-color: $color-gray-dark !default;
 .HowItWorksCard {
     > .fa {
 
-        background: $home-how-it-works-card-icon-background;
+        background: $color-hint;
         border-radius: 50%;
-        width: $unit * 7;
-        height: $unit * 7;
+        width: $spacing-unit * 7;
+        height: $spacing-unit * 7;
         display: inline-block;
-        color: $color-blue-dark;
-        padding-top: $unit * 2;
-        margin: $unit * 2;
+        color: $color-content;
+        padding-top: $spacing-unit * 2;
+        margin: $spacing-unit * 2;
     }
     text-align: left;
     align-items: center;
     display: flex;
-    border-top: 1px solid rgba($color-black, 0.1);
-    padding: 0;
+    border-top: 1px solid rgba($color-content, 0.1);
 
     h1 {
         font-size: $font-size-h3;
-        color: $home-how-it-works-card-title-font-color;
+        color: $color-content;
 
         i {
             padding: $spacing-unit-small;
             float: right;
 
-            @media only screen and (min-width: $breakpoint-small) {
+            @include breakpoint('sm') {
                 display: none;
             }
         }
@@ -97,7 +98,7 @@ $how-it-work-icon-color: $color-gray-dark !default;
     }
 
     p {
-        color: $home-how-it-works-card-content-font-color;
+        color: $color-content;
     }
 
     &-content {
@@ -129,14 +130,17 @@ $how-it-work-icon-color: $color-gray-dark !default;
     }
 
     &-extra {
-        @include breakpoint(small) {
-            .Button, .RocketButton, button {
+        @include breakpoint('sm') {
+            .button, button {
                 margin: $spacing-unit-small auto $spacing-unit auto;
             }
         }
     }
     &-extra.hide-on-small {
-        @include responsive-show(small, block);
+        display: none;
+        @include breakpoint('sm') {
+            display: block;
+        }
     }
 }
 
@@ -144,11 +148,10 @@ $how-it-work-icon-color: $color-gray-dark !default;
     background: $color-hint;
     padding: $spacing-unit;
     text-align: center;
-    display: $home-start-now-display;
-
+    display: block;
 
     > * {
-        @extend .Container;
+        @extend .container-1;
     }
 
     h2 {
@@ -158,10 +161,11 @@ $how-it-work-icon-color: $color-gray-dark !default;
 }
 
 .StartPage {
-    background: $page-background-image;
+    background: $home-background-image-url center no-repeat;
     background-size: contain;
 
     .ConversationFooter {
         margin-top: 70px;
     }
 }
+*/

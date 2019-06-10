@@ -73,3 +73,42 @@ docker/base-images/nginx.conf
 
 # virtualenv
 venv
+Untitled.ipynb
+*.orig
+Untitle.ipynb
+lib/js/*.js/
+
+lib/js/legacy/comment-form-animation\.js
+
+lib/js/legacy/dynamic-form\.js
+
+lib/js/legacy/echarts\.min\.js
+
+lib/js/legacy/file-input\.js
+
+lib/js/legacy/fontScale\.js
+
+lib/js/legacy/headerScroll\.js
+
+lib/js/legacy/hicontrast\.js
+
+lib/js/legacy/main\.js
+
+lib/js/legacy/navigatorPush\.service\.js
+
+lib/js/legacy/sitetour\.js
+
+lib/js/legacy/slider-modalities-conversation\.js
+
+lib/js/legacy/specific-pages\.js
+
+lib/js/legacy/utils\.js
+
+lib/js/legacy/utilsPushNotification\.js
+
+lib/js/legacy/web-share\.js
+profile.txt
+ej_questions
+.coverage .coverage.c3po.12402.283405 .coverage.c3po.12402.913692 .coveragerc
+.coverage*
+.scannerwork

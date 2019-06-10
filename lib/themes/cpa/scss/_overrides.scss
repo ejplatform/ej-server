@@ -1,162 +1,25 @@
 // Color
-$color-accent: #3F1B53;
-$color-magenta: #C6027B;
-$color-primary: $color-blue;
+$color-accent: #d20078;
+$color-brand: #00b7b7;
+$color-brand-lighter: #cef9f5;
+$color-action: #3f1b53;
+$color-primary: $color-accent;
 
+// Dimensions
+$unit: 1.5rem;
+$ej-button-radius: $unit / 4;
 
-// Page
-$page-background-image: url(/static/img/page-bg.svg) top center no-repeat;
-
-// Default buttons
-$button-border-radius-default: 8px;
-
-// Forms
-$form-item-border-radius: 7px;
-$form-border-color: $color-purple-dark;
-$form-input-color: $color-magenta;
-
-//Profile
-//$profile-font-color-primary: white;
-//$profile-font-color-secondary: white;
-//$profile-button-background-color: #FF3E72;
-//$profile-background-color: #30BFD3;
-
-$color-secundary: #c6027b;
-
-// Login
-$login-icon-border: 10px solid #3F1B53;
-$login-icon-scale: scale(1.2);
-$login-icon-padding: 25px 0px 0px 0px;
-$login-icon-padding-align: 22px;
-$login-fields-border: 1px solid #30c0d3;
-$login-fields-border-radius: 8px;
-$login-fields-height: 50px;
-$login-link-color: $color-secundary;
-$login-new-user-background-color: $color-secundary;
-$login-button-login-size: 65%;
-$login-button-login-background: $color-green-atlantis;
-$login-button-register-size: 60%;
-$login-button-register-button-radius: 8px;
-$login-button-color: $color-green-atlantis;
-$login-new-user-h1-display: none;
-$login-new-user-border: none;
-$login-reticle-position: relative;
-$login-reticle-bottom: 0px;
-$login-reticle-margin-bottom: 0px ;
-$login-reticle-z-index: -1;
-$login-reticle-display: inline;
-
-// Social
-$social-buttons-display: flex;
-$social-buttons-size: 15px;
-$social-buttons-border: 1px solid #30c0d3;
-$social-buttons-color: #111;
-$social-buttons-background-color: #fff;
-$social-buttons-border-size: 40px;
-$social-buttons-icon-size: 15px;
-
-//Header
-$header-logo-size: 30px;
-$header-icon-size: 40px;
-
-// Home Banner
-$home-banner-title-font-family: Raleway;
-$home-banner-button-background: $color-green-atlantis;
-
-// Home How It Works
-$home-how-it-works-title-font-color: $color-secundary;
-$home-how-it-works-background: #D4F7F5;
-$home-how-it-works-card-icon-background: #fff;
-$home-how-it-works-card-icon-person: "\f007";
-$home-how-it-works-card-icon-conversation: "\f086";
-$home-how-it-works-card-title-font-color: #3F1B53;
-$home-how-it-works-card-content-font-color: #3F1B53;
-
-// Home StartNow
-$home-start-now-display: none;
-
-// navigation bottom
-$navigation-bottom-font-color: #3F1B53;
-$navigation-bottom-icon-conversations: url(/static/img/icons/navbar_conversations.svg);
-$navigation-bottom-icon-panel: url(/static/img/icons/navbar_panel.svg);
-$navigation-bottom-icon-profile: url(/static/img/icons/navbar_profile.svg);
-
-// Card Conversation
-$card-conversation-navigation-font-color: #30c0d3;
-$card-conversation-top-background: #30c0d3;
-$card-conversation-top-font-color: #D4F7F5;
-$card-conversation-bottom-background: url(/static/img/card-bg.svg) bottom center no-repeat;
-$card-conversation-middle-background: #30c0d3;
-$card-conversation-button-background: $color-secundary;
-$card-conversation-border-radius: 10px;
-
-// Conversation
-$conversation-top-background: #D4F7F5;
-$conversation-background: #D4F7F5;
-$conversation-bottom-border-radius: 0 0 0 0 !default;
-$conversation-font-color: #3F1B53;
-$conversation-tag-color: #30BEC0;
-$conversation-statistics-color: #30c0d3;
-$conversation-arrow-border: 28px solid #D4F7F5;
-$conversation-topic-diplay: block;
-$conversation-link-new-color: $color-accent !default;
-$conversation-link-new-icon-color: $color-primary !default;
-$conversation-link-edit-color: $color-accent !default;
-$conversation-link-edit-icon-color: $color-primary !default;
-
-
-// Conversation: edit
-$conversation-edit-action-cancel-border: transparent;
-$conversation-edit-action-cancel-background: $color-secundary;
-$conversation-edit-action-cancel-font-color: #fff;
-$conversation-edit-action-save-border: transparent;
-$conversation-edit-action-save-background: $color-green-atlantis;
-$conversation-edit-action-save-font-color: #fff;
-$conversation-edit-radius: 0px;
-$conversation-edit-save-color: white;
-
-// Conversation: info
-$conversation-info-title: $color-secundary;
-
-// Conversation: vote
-$conversation-vote-font-size: 13px;
-$conversation-vote-circle-spacing: 7px;
-$conversation-vote-agree-color: #3F1B53;
-$conversation-vote-skip-color: #30BEC0;
-$conversation-vote-disagree-color: $color-secundary;
-
-// Conversation: comment
-$conversation-comment-background-color: #30BEC0;
-$conversation-comment-title-color: white;
-$conversation-comment-border-radius: 4px;
-
-// Conversation: comment form
-$conversation-comment-form-background-color: white;
-$conversation-comment-form-title-color: $color-secundary;
-$conversation-comment-button-border-radius: 10px;
-$conversation-comment-button-background: $color-secundary;
-$toast-font-color: #3F1B53;
-
-// Conversation: moderate comments
-$profile-label-clear-color: $color-secundary;
-
-// Clusters and Stereotypes
-$selected-stereotype-cluster-menu-color: #b62a52;
-$selected-stereotype-cluster-menu-border: none;
-$selected-stereotype-cluster-menu-padding: none;
-
-// Stereotypes
-$stereotype-title: #3F1B53;
-$stereotype-new-text: #30bec0;
-$stereotype-new-icon: #30bec0;
-
-$stereotype-add-title-color: $color-secundary;
-$stereotype-add-submit-color: $color-secundary;
-$stereotype-add-input-border-radius: 0px;
-$stereotype-add-comment-color: #30BEC0;
-
-
-// Boards
-$board-menu-font-color: #3F1B53;
-$board-title-color: #C6027B;
-$board-label-color: #3F1B53;
+// Global configuration
+$config: (
+    // EJ components
+    'ej':(
+        'style': (
+            'border-radius': $unit / 4,
+        ),
+        'conversation-card': (
+            'border-radius': $unit / 4,
+            'highlight-tags': false,
+            'bg-image': '/static/img/bg/conversation-card.svg',
+        ),
+    ),
+);

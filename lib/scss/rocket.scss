@@ -1,169 +1,170 @@
-@import '0_constants/index';
-@import '1_settings/index';
-@import '2_tools/index';
-@import '3_generic/index';
-@import '4_elements/buttons';
-
-/*
- ROCKET CHAT OVERRIDES
- =============================================================================*/
-
-.Rocket-title {
-    color: #C4F2F4;
-    font-weight: bold;
-    padding: 10px 20px 0 20px;
-}
-
-.Rocket .title {
-    padding: 10px 20px;
-    color: #30BEC0;
-    font-family: $font-paragraph;
-    font-size: 16px;
-    font-weight: bold;
-    line-height: 19px;
-}
-
-.Rocket-title h1 {
-    color: #C6027B;
-    font-weight: bold !important;
-    text-transform: none !important;
-    font-family: $font-paragraph;
-    margin-bottom: 5px !important;
-    font-size: 34px;
-}
-
-.Rocket-title h2 {
-    color: #3F1B53;
-    font-family: $font-paragraph;
-    font-size: 15px;
-    line-height: 18px;
-    text-transform: none !important;
-    font-weight: bold !important;
-}
-
-.Rocket-detail {
-    color: #042049;
-    padding: 0 20px 0 20px;
-    font-family: $font-paragraph;
-    font-size: 16px;
-}
-
-.Rocket-items {
-    background-color: #C4F2F4;
-    padding: 14px;
-}
-
-.Rocket-items .item {
-    padding: 13px;
-}
-
-.Rocket-items .item .item-position {
-    color: #C6027B;
-    font-size: 32px;
-    font-family: $font-paragraph;
-    width: auto;
-    float: left;
-}
-
-.Rocket-items .item .item-content {
-    color: #042049;
-    padding-left: 33px;
-    font-size: 16px;
-    font-family: $font-paragraph;
-    width: auto;
-}
-
-.Rocket-action {
-    text-align: center;
-    padding: 20px;
-    .Button {
-        border-radius: 8px;
-        font-family: $font-paragraph;
-        background-color: #8EC73F;
-        padding: 15px 40px;
-        svg {
-            font-size: 23px;
-        }
-    }
-}
-
-/*# sourceMappingURL=rocket.css.map */
-
-.rc-old .page-container .content {
-    padding: 0;
-}
-
-.sidebar {
-    background-color: #3F1B53;
-}
-
-.sidebar-wrap {
-    background-color: #3F1B53 !important;
-    opacity: 0.78 !important;
-}
-
-.rc-directory-content {
-    .rc-directory-channel-info, .rc-table-td {
-        color: #3F1B53;
-    }
-    .rc-table-tr {
-        box-shadow: 1px 1px 0 #30BEC0;
-    }
-}
-
-.rc-header {
-    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.1);
-    .rc-button {
-        &.rc-directory-plus {
-            background-color: #C6027B;
-        }
-        .rc-icon {
-            color: white;
-            font-size: 24px;
-        }
-    }
-}
-
-.rc-header__wrap {
-    box-shadow: none;
-}
-
-.message {
-    .user-card-message {
-        color: #C6027B;
-    }
-    .body {
-        color: #3F1B53;
-        &.color-info-font-color {
-            color: #a0a0a0;
-        }
-    }
-}
-
-.contextual-bar {
-    h1 {
-        color: #C6027B;
-    }
-    .attachments {
-        .attachments__content {
-            color: #3F1B53;
-            .attachments__name {
-                color: #3F1B53;
-            }
-        }
-    }
-}
-
-footer, .sidebar__footer {
-    display: block;
-}
-
-.create-channel .rc-button--primary, .rc-modal-wrapper .rc-button--primary, .contextual-bar .rc-button--primary {
-    border-radius: 8px;
-    background-color: #8EC73F;
-}
-
-.emoji-picker.rc-popover__content.show {
-    left: 0 !important;
-    bottom: 40px !important
-}
+//// Configurations
+//@import 'config';
+//
+//// Generic elements and 3rd party personalization
+//@import "generic";
+//
+//
+///*
+// ROCKET CHAT OVERRIDES
+// =============================================================================*/
+//
+//.Rocket-title {
+//    color: #C4F2F4;
+//    font-weight: bold;
+//    padding: 10px 20px 0 20px;
+//}
+//
+//.Rocket .title {
+//    padding: 10px 20px;
+//    color: #30BEC0;
+//    font-family: $font-stack-paragraph;
+//    font-size: 16px;
+//    font-weight: bold;
+//    line-height: 19px;
+//}
+//
+//.Rocket-title h1 {
+//    color: #C6027B;
+//    font-weight: bold !important;
+//    text-transform: none !important;
+//    font-family: $font-stack-paragraph;
+//    margin-bottom: 5px !important;
+//    font-size: 34px;
+//}
+//
+//.Rocket-title h2 {
+//    color: #3F1B53;
+//    font-family: $font-stack-paragraph;
+//    font-size: 15px;
+//    line-height: 18px;
+//    text-transform: none !important;
+//    font-weight: bold !important;
+//}
+//
+//.Rocket-detail {
+//    color: #042049;
+//    padding: 0 20px 0 20px;
+//    font-family: $font-stack-paragraph;
+//    font-size: 16px;
+//}
+//
+//.Rocket-items {
+//    background-color: #C4F2F4;
+//    padding: 14px;
+//}
+//
+//.Rocket-items .item {
+//    padding: 13px;
+//}
+//
+//.Rocket-items .item .item-position {
+//    color: #C6027B;
+//    font-size: 32px;
+//    font-family: $font-stack-paragraph;
+//    width: auto;
+//    float: left;
+//}
+//
+//.Rocket-items .item .item-content {
+//    color: #042049;
+//    padding-left: 33px;
+//    font-size: 16px;
+//    font-family: $font-stack-paragraph;
+//    width: auto;
+//}
+//
+//.Rocket-action {
+//    text-align: center;
+//    padding: 20px;
+//    .button {
+//        border-radius: 8px;
+//        font-family: $font-stack-paragraph;
+//        background-color: #8EC73F;
+//        padding: 15px 40px;
+//        svg {
+//            font-size: 23px;
+//        }
+//    }
+//}
+//
+///*# sourceMappingURL=rocket.css.map */
+//
+//.rc-old .page-container .content {
+//    padding: 0;
+//}
+//
+//.sidebar {
+//    background-color: #3F1B53;
+//}
+//
+//.sidebar-wrap {
+//    background-color: #3F1B53 !important;
+//    opacity: 0.78 !important;
+//}
+//
+//.rc-directory-content {
+//    .rc-directory-channel-info, .rc-table-td {
+//        color: #3F1B53;
+//    }
+//    .rc-table-tr {
+//        box-shadow: 1px 1px 0 #30BEC0;
+//    }
+//}
+//
+//.rc-header {
+//    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.1);
+//    .rc-button {
+//        &.rc-directory-plus {
+//            background-color: #C6027B;
+//        }
+//        .rc-icon {
+//            color: white;
+//            font-size: 24px;
+//        }
+//    }
+//}
+//
+//.rc-header__wrap {
+//    box-shadow: none;
+//}
+//
+//.message {
+//    .user-card-message {
+//        color: #C6027B;
+//    }
+//    .body {
+//        color: #3F1B53;
+//        &.color-info-font-color {
+//            color: #a0a0a0;
+//        }
+//    }
+//}
+//
+//.contextual-bar {
+//    h1 {
+//        color: #C6027B;
+//    }
+//    .attachments {
+//        .attachments__content {
+//            color: #3F1B53;
+//            .attachments__name {
+//                color: #3F1B53;
+//            }
+//        }
+//    }
+//}
+//
+//footer, .sidebar__footer {
+//    display: block;
+//}
+//
+//.create-channel .rc-button--primary, .rc-modal-wrapper .rc-button--primary, .contextual-bar .rc-button--primary {
+//    border-radius: 8px;
+//    background-color: #8EC73F;
+//}
+//
+//.emoji-picker.rc-popover__content.show {
+//    left: 0 !important;
+//    bottom: 40px !important
+//}

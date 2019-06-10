@@ -1,0 +1,175 @@
+//------------------------------------------------------------------------------
+// GENERIC EJ UI ELEMENTS
+//------------------------------------------------------------------------------
+
+// Small tweaks
+i.fa, i.fas, i.fab, i.far {
+    margin: auto 0.5em;
+}
+
+.body {
+    margin-bottom: 5rem !important;
+    @include breakpoint('md') {
+        margin-bottom: 0 !important;
+    }
+}
+
+//------------------------------------------------------------------------------
+// Intro title
+.title {
+    @extend .h2, .center, .text-accent;
+}
+
+.intro-paragraph {
+    @extend .center;
+    h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+        @extend .title;
+    }
+    p {
+        padding-left: size(1);
+        padding-right: size(1);
+    }
+}
+
+//------------------------------------------------------------------------------
+// Tabs and categories
+.tabs, .categories {
+    @extend .center, .row, .flex-center, .wrap;
+
+    > * {
+        border-bottom: 0.25rem solid transparent;
+    }
+    a {
+        font-weight: 600;
+        white-space: nowrap;
+    }
+    [is-selected] {
+        @extend .text-brand;
+        border-bottom-color: color('brand');
+    }
+}
+
+.tabs {
+    @extend .uppercase;
+    border-bottom: 1px solid color('brand-light');
+
+    a {
+        @extend .pad-2, .margin-x2;
+    }
+}
+
+.categories {
+    @include color(mix(color('brand-lighter'), color('white')), 'brand');
+    @extend .bold;
+
+    * {
+        @extend .pad-1, .margin-x1;
+        color: color('brand');
+    }
+    a:hover:not([is-selected]) {
+        border-bottom-color: color('brand', $alpha: 0.5);
+    }
+}
+
+//------------------------------------------------------------------------------
+// Pop-up window
+.popup {
+    @extend .relative, .col;
+    background-color: color('background');
+    border: 1px solid color('accent');
+    border-radius: 1rem;
+    max-width: 30rem;
+    overflow-y: auto;
+
+    &__contents {
+        @extend .pad-3, .center, .col;
+        flex-grow: 1;
+        height: 100%;
+    }
+
+    &__close {
+        @extend .absolute, .pin-top, .pin-right, .margin-3;
+        color: color('black');
+    }
+}
+
+.overlay {
+    @extend .fixed, .pin;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 100vw;
+    height: 100vh;
+    z-index: 500;
+
+    > * {
+        margin: 12.5vh auto;
+        max-height: 75vh;
+        min-height: 40vh;
+        max-width: 80%;
+    }
+}
+
+//------------------------------------------------------------------------------
+// Toast element
+.toast {
+    @extend .color-brand-lighter, .pad-3;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+
+    &__icon {
+        @extend .pad-2;
+        @include color('white' 'brand');
+        border: 6px solid;
+        border-radius: 50rem;
+        box-sizing: content-box;
+        line-height: 2rem;
+        font-size: 2rem;
+        height: 2rem;
+        width: 2rem;
+    }
+    &__content {
+        > * {
+            margin: 0 !important;
+        }
+        h1 {
+            @extend .text-4, .uppercase, .sans-serif, .bold, .text-brand;
+        }
+    }
+}
+
+//------------------------------------------------------------------------------
+// Description list (for profile and others)
+.description {
+    dt {
+        @extend .bold, .text-6, .text-brand, .lowercase, .margin-0;
+    }
+    dd {
+        margin: 0 0 2rem 0;
+    }
+}
+
+.stat-slab {
+    @extend .row, .wrap, .items-center;
+
+    dl {
+        @extend .pad-0;
+        margin: 0 0 size(1) 0;
+
+        dt {
+            @extend .bold, .text-brand, .lowercase, .margin-0, .inline, .inline-block;
+            width: size(3.5);
+        }
+
+        dd {
+            @extend .bold, .inline-block;
+            font-size: 2rem;
+            line-height: size(1);
+            margin: 0 0 2rem 0;
+            position: relative;
+            top: size(1.5);
+            right: size(3);
+            width: 0;
+        }
+    }
+}
+

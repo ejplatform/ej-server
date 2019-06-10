@@ -1,0 +1,98 @@
+//------------------------------------------------------------------------------
+// CONVERSATION CARD
+//------------------------------------------------------------------------------
+@import "../../config";
+
+$_card-width: 20rem;
+$_card-bg: config('ej.conversation-card.bg-image');
+
+:root {
+    --theme-color: #{color('brand')};
+    --theme-light-color: #{color('brand-lighter')};
+}
+
+.conversation-card {
+    @include utilities('center text-6 col items-center');
+
+    background-color: css-var(--theme-color, color('brand'));
+    border-radius: size(config('ej.conversation-card.border-radius'));
+    color: css-var(--theme-light-color, color('brand-lighter'));
+    height: $_card-width;
+    margin: auto;
+    overflow: hidden;
+    width: $_card-width;
+
+    &__tags {
+        @include utilities('text-6 bold');
+
+        @if config('ej.conversation-card.highlight-tags') {
+            background-color: css-var(--theme-light-color, color('brand-lighter'));
+            color: css-var(--theme-color, color('brand'));
+        }
+        padding: size(0.5) 0 size(0.25) 0;
+        width: 100%;
+    }
+    &__statistics {
+        @include utilities('list-inline pad-y1');
+
+        > li {
+            @include utilities('pad-x1');
+        }
+    }
+    &__text {
+        @include utilities('col flex-center pad-3');
+
+        flex-grow: 1;
+
+        a {
+            @include utilities('text-4 sans-serif');
+
+            color: color('white');
+            display: block;
+            font-weight: 600;
+        }
+    }
+    &__moderate {
+        @include utilities('uppercase text-6 margin-2 bold');
+
+        color: color('black');
+        display: block;
+    }
+    &__button {
+        @include utilities('pad-b3 pad-t1 margin-t1');
+
+        @if $_card-bg {
+            background: css-var(--theme-color, color('brand')) url("#{$_card-bg}") repeat;
+        }
+        background-blend-mode: luminosity;
+        width: 100%;
+    }
+
+    .progress-bar {
+        width: 10rem;
+
+        &__progress {
+            border-color: color('white');
+        }
+    }
+}
+
+.alternate-cards {
+    @include breakpoint('md') {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    @include breakpoint('md') {
+        align-items: center;
+        display: flex;
+
+        > * {
+            margin: size(0.5);
+            > * {
+                border-radius: size(0.5);
+            }
+        }
+    }
+}

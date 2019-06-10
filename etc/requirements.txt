@@ -1,0 +1,40 @@
+django ~= 2.2
+django-boogie ~= 0.13.1
+django-boogie[stack]
+django-constance ~= 2.3
+django-constance[database]
+django-rest-auth ~= 0.9.3
+django-rest-auth[with_social]
+django-allauth ~= 0.38.0
+django-taggit ~= 1.1.0
+django-autoslug ~= 1.9
+django-jsonfield ~= 1.0
+django-environ ~= 0.4.5
+django-extensions ~= 2.1
+django-bulk-update ~= 2.2
+django-manager-utils ~= 1.4
+django-polymorphic ~= 2.0
+django-pandas ~= 0.5.1
+django-filter ~= 1.1
+django-model-utils ~= 3.1
+coreapi ~= 2.3
+hyperpython ~= 1.1.1
+rules<2.0
+sidekick ~= 0.5.1
+numpy ~= 1.16
+scipy ~= 1.2
+pandas ~= 0.24.0
+scikit-learn ~= 0.20.2
+pillow ~= 5.4
+matplotlib ~= 3.0
+dramatiq ~= 1.4
+argon2-cffi ~= 19.1
+markdown ~= 3.0
+bleach ~= 3.1
+Faker ~= 1.0
+redis ~= 3.1
+invoke ~= 1.2
+bs4 ~= 0.0.1
+wordcloud ~= 1.5
+stop-words ~= 2018.7
+djangorestframework ~= 3.9

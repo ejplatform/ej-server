@@ -1,0 +1,15 @@
+<section title="{{ _('Stereotypes') }}">
+    <h1>{{ _('Profile') }}</h1>
+    <ul>
+        <li><a href="{{ url('stereotypes:list') }}">{{ _('Manage personas') }}</a></li>
+        <li><a href="{{ url('stereotypes:create') }}">{{ _('New persona') }}</a></li>
+    </ul>
+</section>
+<section title="{{ _('Profile') }}">
+    <h1>{{ _('Profile') }}</h1>
+    <ul>
+        <li><a href="{{ url('profile:detail') }}">{{ _('Profile') }}</a></li>
+        <li><a href="{{ url('account:index') }}">{{ _('Account') }}</a></li>
+    </ul>
+</section>
+{{ page_menu.ACCESSIBILITY() }}

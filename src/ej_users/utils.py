@@ -1,39 +1,15 @@
-from random import choice
+from secrets import token_urlsafe
 
-from faker import Factory
-from django.db.utils import DatabaseError
-
-fake = Factory.create('pt-BR')
-
-ADJECTIVES = [
-    'grumpy', 'happy', 'cute', 'smart', 'witty', 'quick'
-]
+from boogie.utils import random_name as _random_name
 
 
-def random_name(fmt='{adjective} {noun}'):
-    for _iter in range(100):
-        name = fmt.format(adjective=get_adjective(), noun=get_noun())
-        if not name_exists(name):
-            return name
-    else:
-        raise RuntimeError(
-            'maximum number of attempts reached when trying to generate a '
-            'unique random name'
-        )
+def random_name():
+    # This function stays here to be picklable from a location we can control.
+    # In the future we may want to add other sources of random names and
+    # avoid an unnecessary migration because the location of the function
+    # changed.
+    return _random_name()
 
 
-def get_noun():
-    return fake.name()
-
-
-def get_adjective():
-    return choice(ADJECTIVES)
-
-
-def name_exists(name):
-    from .models import User
-
-    try:
-        return User.objects.filter(display_name=name).exists()
-    except DatabaseError:
-        return False
+def token_factory():
+    return token_urlsafe(30)

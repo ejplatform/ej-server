@@ -4,8 +4,8 @@ class ApiError(Exception):
     """
 
     value = property(lambda self: self.args[0])
-    response = property(lambda self: self.value.get('response', {}))
-    code = property(lambda self: self.value.get('code'))
+    response = property(lambda self: self.value.get("response", {}))
+    code = property(lambda self: self.value.get("code"))
 
 
 class UserLoggedInError(Exception):

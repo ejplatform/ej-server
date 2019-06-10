@@ -1,0 +1,31 @@
+{% extends "account/base.jinja2" %}
+{% set page_title = _('Remove account') %}
+{% set show_account_link = false %}
+
+
+{% block content %}
+    {% if farewell_message %}
+        <div class="col height-full flex-center">
+            <p class="text-1 center margin-y4 margin-x3">{{ farewell_message|safe }}</p>
+        </div>
+    {% else %}
+        <h1 class="h2 text-negative">{% trans %}Danger! Remove account{% endtrans %}</h1>
+        <p><i class="fa fa-skull-crossbones margin-4" style="font-size: 3em"></i></p>
+        <p>{% trans %}By removing your account, we will delete all your profile information and
+            assign your votes and comments to an anonymous account.{% endtrans %}
+            <strong>{% trans %}This operation cannot be undone!{% endtrans %}</strong></p>
+        <form method="POST" class="width-full">
+            <p>{% trans %}You have to type your e-mail to confirm.{% endtrans %}</p>
+            {{ csrf_input }}
+            {{ form.non_field_errors() }}
+            {{ form.email.errors }}
+            {{ form.email.label_tag() }}
+            {{ form.email }}
+            {{ form.confirm.errors }}
+            <label>{{ form.confirm }} {{ form.confirm.label }}</label>
+            <button class="is-primary width-full" type="submit" name="action">
+                {% trans %}Remove account{% endtrans %}</button>
+        </form>
+    {% endif %}
+{% endblock %}
+

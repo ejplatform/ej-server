@@ -1,0 +1,44 @@
+{% extends 'ej_conversations/list.jinja2' %}
+{% set main_class = main_class|default('container pad-x0') %}
+{% block menu %}{% include 'ej_conversations/includes/menu-list.jinja2' %}{% endblock %}
+
+{% block content %}
+    {{ super() }}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/shepherd.js@2.4.0/dist/css/shepherd-theme-default.css">
+    <script src="https://unpkg.com/popper.js@1/dist/umd/popper.min.js"></script>
+    <script src="https://unpkg.com/tippy.js@4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/shepherd.js@2.4.0/dist/js/shepherd.min.js"></script>
+    <script defer>
+        (function () {
+            var options = {{ tour|tojson }},
+                i18n = options.i18n,
+                tour = new Shepherd.Tour(options.options),
+
+                // Define special kind of buttons
+                buttons = {
+                    default: [
+                        {text: i18n.dismiss, action: tour.cancel},
+                        {text: i18n.next, action: tour.next},
+                    ],
+                    none: [],
+                },
+                transforms = {
+                    '': function (x) {
+                        return x
+                    }
+                };
+
+            for (var step of options.steps) {
+                var name = step[0],
+                    opts = step[1];
+                opts.buttons = buttons[opts.buttons || 'default'];
+                for (var transform of (opts.transforms || '').split(' ')) {
+                    opts = transforms[transform](opts);
+                }
+                tour.addStep(step[0], step[1]);
+            }
+
+            window.setTimeout(tour.start.bind(tour), 500);
+        })();
+    </script>
+{% endblock %}

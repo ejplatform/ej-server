@@ -1,0 +1,15 @@
+{% extends 'base.jinja2' %}
+{% set main_class = 'measure-wide margin-xauto' %}
+{% block menu %}{% include 'ej_conversations/includes/menu-detail.jinja2' %}{% endblock %}
+
+
+{% block content %}
+    {{ conversation|role('balloon', actions=False) }}
+    <div class="pad-x3">
+        {% block report %}{% endblock %}
+    </div>
+    {% include 'ej_dataviz/includes/datatables.jinja2' %}
+{% endblock %}
+
+
+

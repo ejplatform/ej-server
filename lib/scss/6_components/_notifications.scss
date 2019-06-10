@@ -1,0 +1,111 @@
+/*
+ NOTIFICATION PAGE
+ ======================================================================== */
+
+.Inbox {
+    width: 90vw;
+    margin: 0 auto;
+
+    &-body {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &-config {
+        &-title {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid color('accent');
+            p {
+                margin: $spacing-unit-tiny 0;
+            }
+            i {
+                color: color('accent');
+                font-size: $font-size-large;
+            }
+        }
+        &-options {
+            display: flex;
+            flex-direction: row;
+            align-content: center;
+            justify-content: space-between;
+            border-bottom: 1px solid color('accent');
+
+        }
+        &-selection {
+            label {
+                font-weight: normal;
+                >input {
+                    margin: $spacing-unit-tiny-tiny;
+                    vertical-align: middle;
+                }
+            }
+
+            label:nth-child(2) {
+                margin: 0 0 0 $spacing-unit;
+            }
+
+        }
+    }
+
+    &-notifications {
+        &-card {
+            flex-direction: row;
+            display: flex;
+        }
+
+        .darken {
+            opacity: 0.6;
+        }
+
+        p {
+            margin: 0;
+        }
+
+        h6 {
+            margin: 0;
+            margin-top: $spacing-unit;
+        }
+
+        &-info {
+            color: color('accent');
+        }
+
+        &-circle {
+            margin: $spacing-unit;
+            background: color('accent');
+            width: $spacing-unit-large;
+            height: $spacing-unit-large;
+            position: relative;
+            text-align: center;
+          }
+
+        &-circle:before,
+        &-circle:after {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: $spacing-unit-large;
+          width: $spacing-unit-large;
+          background: color('accent');
+        }
+
+        &-circle:before {
+          transform: rotate(30deg);
+        }
+
+        &-circle:after {
+          transform: rotate(60deg);
+        }
+
+        &-icon {
+            position: relative;
+            width: $spacing-unit;
+            bottom: $spacing-unit-large;
+            left: $spacing-unit-large;
+        }
+    }
+}

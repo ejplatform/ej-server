@@ -1,34 +1,7 @@
-<div class="Comment Comment-status-{{ comment.status }}">
-    <div class="Comment-metadata">
-        <span>{{ _('by') }}: <b>{{ comment.author.name }}</b></span>
-        <span class="date">{{ date_format(comment.created) }}</span>
+<div class="comment-moderation">
+    <div class="row semi-bold text-7">
+        <span>by: <strong>{{ author }}</strong></span>
+        <span>{{ created|role('simple') }}</span>
     </div>
-    <p>{{ comment.content }}</p>
-    <form method="post">
-        {{ csrf_input }}
-        <input type="hidden" name="comment" value="{{ comment.id }}">
-        <ul class="ConversationComment-actions">
-            <li up-expand>
-                <button type="submit" class="Button" name="vote" value="approve">
-                  {{ _('Approve') }}
-                </button>
-            </li>
-            <li up-expand>
-                <button type="submit" class="Button" name="vote" value="disapprove"
-                        onClick="var $r = $('#Comment-{{ comment.id }}-rejection_reason'); return $r.is(':visible') ? true : $r.show() && false"/>
-                  {{ _('Disapprove') }}
-                </button>
-            </li>
-        </ul>
-        <div id="Comment-{{ comment.id }}-rejection_reason" class="Comment-rejection" style="display: none;">
-            <h3>{{ _('Reason') }}</h3>
-            <p>{{ _('The comment will receive your rejection reason') }}</p>
-            <select name="rejection_reason" id="Comment-{{ comment.id }}-rejection_reason">
-              {% for k, v in rejection_reasons.items(): %}
-                  <option value={{ k }}>{{ v }}</option>
-              {% endfor %}
-            </select>
-            <input type="submit" class="Button" name="vote" value="disapprove"/>
-        </div>
-    </form>
+    <p class="pad-t2 margin-b0">{{ text }}</p>
 </div>

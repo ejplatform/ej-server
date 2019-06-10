@@ -1,0 +1,4 @@
+{% extends 'base.jinja2' %}
+
+{% set main_class = main_class|default('container pad-x0') %}
+{% block menu %}{% include 'ej_conversations/includes/menu-detail.jinja2' %}{% endblock %}

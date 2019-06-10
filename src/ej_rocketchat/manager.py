@@ -4,7 +4,7 @@ from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from django.db import models
 
-log = getLogger('ej')
+log = getLogger("ej")
 
 
 class RCConfigManager(models.Manager):
@@ -30,13 +30,13 @@ class RCConfigManager(models.Manager):
                     admin_username=settings.EJ_ROCKETCHAT_USERNAME,
                 )
 
-            log.error('RocketChat settings were not configured.')
+            log.error("RocketChat settings were not configured.")
             if raises:
                 raise ImproperlyConfigured(
-                    'Rocketchat integration was not correctly configured\n'
-                    '\n'
-                    'Please go to /rocketchat/config/ as an administrator to '
-                    'configure the RocketChat integration.'
+                    "Rocketchat integration was not correctly configured\n"
+                    "\n"
+                    "Please go to /rocketchat/config/ as an administrator to "
+                    "configure the RocketChat integration."
                 )
             return None
 
@@ -45,6 +45,8 @@ def has_settings(settings):
     """
     Return True if all settings are defined.
     """
-    return (settings.EJ_ROCKETCHAT_URL
-            and settings.EJ_ROCKETCHAT_AUTH_TOKEN
-            and settings.EJ_ROCKETCHAT_USER_ID)
+    return (
+        settings.EJ_ROCKETCHAT_URL
+        and settings.EJ_ROCKETCHAT_AUTH_TOKEN
+        and settings.EJ_ROCKETCHAT_USER_ID
+    )

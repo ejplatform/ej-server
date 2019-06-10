@@ -1,0 +1,30 @@
+{% extends 'base.jinja2' %}
+{% set main_class = 'container measure center' %}
+
+
+{% block content %}
+    <h1 class="h2 text-accent">{{ _('Endorse comments') }}</h1>
+    <p>
+        {{ _('Endorsed comments are seen with a greater priority by users in a conversation.') }}{{ ' ' }}
+        {{ _('You can select which comments will be endorsed to increase the likelyhood they will appear to users.') }}
+    </p>
+
+    <h2 class="h3 text-accent">{{ _('Select comments') }}</h2>
+    <p>{{ _('Endorsed comments are not displayed in this list.') }}</p>
+    <form method="post">
+        {{ csrf_input }}
+        {% for comment in comments %}
+            {% if loop.index0 != 0 %}<hr class="margin-x4">{% endif %}
+            <label class="text-left margin-t3">
+            <input type="checkbox" name="endorse-{{ comment.id }}" style="transform: scale(1.0)">
+                <span class="regular text-black" style="text-transform: none">{{ comment.content }}</span>
+                <div class="margin-t3">{{ comment|role('stats') }}</div>
+            </label>
+        {% else %}
+            <p>{{ _('Error: No available comments!') }}</p>
+        {% endfor %}
+        <button class="is-primary">{{ _('Endorse comments') }}</button>
+    </form>
+{% endblock %}
+
+

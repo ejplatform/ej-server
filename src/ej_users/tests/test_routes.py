@@ -1,132 +1,75 @@
-import pytest
-from django.http import HttpResponseRedirect
-from django.test import Client
-from django.test import TestCase
-
 from ej.testing import UrlTester
-from ej_users.models import User, generate_token
 from ej_users import routes
+from ej_users.models import User
+from ej_users.mommy_recipes import UserRecipes
 
 
-@pytest.fixture
-def logged_client(db):
-    user = User.objects.create_user('name@server.com', '1234', name='name')
-    client = Client()
-    client.force_login(user)
-    return client
-
-
-@pytest.fixture
-def mk_user():
-    return User.objects.create_user('user@user.com', '1234')
-
-
-class TestRoutes(UrlTester):
+class TestRoutes(UserRecipes, UrlTester):
     public_urls = [
-        '/register/',
-        '/login/',
-        '/recover-password/',
-
+        "/register/",
+        "/login/",
+        "/recover-password/",
+        # '/recover-password/<token>' -- requires special initialization
     ]
     user_urls = [
-        # '/logout/', -- returns error 500, so we use specific tests
-        '/profile/remove/',
-        '/profile/favorites/',
+        "/account/",
+        "/account/logout/",
+        "/account/remove/",
+        "/account/manage-email/",
+        "/account/change-password/",
     ]
 
-    # TODO test profile/api-key/
+    # Login / logout
+    def test_invalid_login(self, db, rf, anonymous_user):
+        credentials = {"email": "email@server.com", "password": "1234"}
+        request = rf.post("/login/", credentials)
+        request.user = anonymous_user
+        ctx = routes.login(request)
+        assert ctx["form"].errors
 
-    def test_logout(self, logged_client):
-        client = logged_client
-        assert '_auth_user_id' in client.session
-        client.post('/logout/')
-        assert '_auth_user_id' not in client.session
+    def test_successful_login(self, user_client, user_db):
+        user_db.set_password("1234")
+        credentials = {"email": user_db.email, "password": "1234"}
+        user_client.post("/login/", data=credentials)
+        assert user_client.session["_auth_user_id"] == str(user_db.pk)
 
-    def test_logout_fails_with_anonymous_user(self, client, db):
-        response = client.post('/logout/')
-        assert response.status_code == 500
+    def test_logout(self, user_client):
+        assert "_auth_user_id" in user_client.session
+        user_client.post("/account/logout/")
+        assert "_auth_user_id" not in user_client.session
 
-    def test_logout_fails_with_get(self, client, db):
-        response = client.get('/logout/')
-        assert response.status_code == 500
+    # Register
+    def test_register_valid_user(self, client, db):
+        response = client.post(
+            "/register/",
+            data={
+                "name": "Turanga Leela",
+                "email": "leela@example.com",
+                "password": "pass123",
+                "password_confirm": "pass123",
+            },
+            follow=True,
+        )
+        user = User.objects.get(email="leela@example.com")
+        assert client.session["_auth_user_id"] == str(user.pk)
+        self.assert_redirects(response, "/conversations/", 302, 200)
 
+    # Recover password
+    def test_recover_user_password(self, db, user, client):
+        user.save()
+        response = client.post("/recover-password/", data={"email": user.email})
 
-class TestLoginRoute:
-    def test_login_route(self, db):
-        client = Client()
-        response = client.post('/login/', data={'email': 'email'})
-        assert response.status_code == 200
+        # Fetch token url and go to token page saving new password
+        token_url = response.context[0]["url"].partition("/testserver")[2]
+        client.post(token_url, data={"password": "12345", "password_confirm": "12345"})
 
-    def test_login_user_route(self, db, mk_user):
-        user = mk_user
-        client = Client()
-        assert '_auth_user_id' not in client.session
-        response = client.post('/login/', data={'email': 'user@user.com', 'password': '1234'})
+        # Check credentials
+        client.login(email=user.email, password="12345")
+        assert client.session["_auth_user_id"] == str(user.pk)
 
-        assert response.status_code == 302
-        assert isinstance(response, HttpResponseRedirect)
-        assert response.url == '/'
-        assert int(client.session['_auth_user_id']) == user.pk
-
-    def test_login_route_unexistent_user(self, db, mk_user, rf):
-        user = mk_user
-        email = user.email
-        user.delete()
-        request = rf.post('', {'email': email, 'password': 'password'})
-        request.user = None
-        response = routes.login(request)
-        assert response['form'].errors
-
-
-class TestPasswordRoutes:
-    @pytest.fixture
-    def token(db, mk_user):
-        token = generate_token(mk_user)
-        return token
-
-    def test_get_change_password(self, db, token, rf):
-        user = token.user
-        request = rf.get('', {})
-        response = routes.reset_password(request, token)
-        assert response['user'] == user
-        assert response['form']
-        assert not response['isExpired']
-
-    def test_post_matching_passwords(self, db, token, rf):
-        request = rf.post('', {'new_password': 'pass', 'new_password_confirm': 'pass'})
-        response = routes.reset_password(request, token)
-        assert response.status_code == 302
-
-    def test_post_invalid_change_password(self, db, token, rf):
-        user = token.user
-        request = rf.post('', {'new_password': 'pass123', 'new_password_confirm': 'pass'})
-        response = routes.reset_password(request, token)
-        assert response['user'] == user
-        assert response['form']
-        assert not response['isExpired']
-
-
-class TestRegisterRoute(TestCase):
-    def setUp(self):
-        self.user = User.objects.create_user('name@server.com', '1234', name='name')
-        client = Client()
-        client.force_login(self.user)
-        self.logged_client = client
-
-    def test_register_route(self):
-        client = Client()
-        response = client.post('/register/', data={'name': 'something'})
-        self.assertEqual(response.status_code, 200)
-
-    def test_register_valid_fields(self):
-        client = Client()
-        assert '_auth_user_id' not in client.session
-        response = client.post('/register/', data={
-            'name': "Turanga Leela",
-            'email': "leela@example.com",
-            'password': "pass123",
-            'password_confirm': 'pass123'
-        }, follow=True)
-        user_pk = User.objects.get(email="leela@example.com").pk
-        self.assertEqual(int(client.session['_auth_user_id']), user_pk)
-        self.assertRedirects(response, '/conversations/', 302, 200)
+    # Recover password
+    def test_remove_account(self, user_client, user_db):
+        client, user = user_client, user_db
+        client.post("/account/remove/", data={"confirm": "true", "email": user.email})
+        updated_user = User.objects.get(id=user.id)
+        assert updated_user.email.endswith("@deleted-account")

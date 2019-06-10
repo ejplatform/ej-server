@@ -13,9 +13,10 @@ sys.path.append('src')
 #
 # Call python manage.py in a more robust way
 #
-def manage(ctx, cmd, env=None, **kwargs):
+def manage(ctx, cmd, *args, env=None, **kwargs):
     kwargs = {k.replace('_', '-'): v for k, v in kwargs.items() if v is not False}
     opts = ' '.join(f'--{k} {"" if v is True else v}' for k, v in kwargs.items())
+    opts = ' '.join((*args, opts))
     cmd = f'{python} manage.py {cmd} {opts}'
     env = {**os.environ, **(env or {})}
     path = env.get("PYTHONPATH", ":".join(sys.path))
@@ -27,30 +28,40 @@ def manage(ctx, cmd, env=None, **kwargs):
 # Build assets
 #
 @task
-def sass(ctx, watch=False, theme='default', trace=False, dry_run=False, rocket=True, background=False):
+def sass(ctx, theme='default', watch=False, background=False):
     """
     Run Sass compiler
     """
-    theme, root = set_theme(theme)
-    root = f'{root}scss/'
-    os.environ['EJ_THEME'] = theme or 'default'
-    go = runner(ctx, dry_run, pty=True)
-    cmd = f'sass {root}main.scss:lib/build/css/main.css'
-    cmd += f' {root}rocket.scss:lib/build/css/rocket.css' if rocket else ''
-    cmd += ' --watch' if watch else ''
-    cmd += ' --trace' if trace else ''
-    go('rm -rf .sass-cache lib/build/css/main.css lib/build/css/rocket.css')
-    go('mkdir -p lib/build/css')
 
-    if background:
-        from threading import Thread
-        thread = Thread(target=go, args=(cmd,), daemon=True)
-        try:
-            thread.start()
-        except KeyboardInterrupt:
-            thread.join(0)
-    else:
-        go(cmd)
+    theme, root = set_theme(theme)
+    os.environ['EJ_THEME'] = theme or 'default'
+    ctx.run('mkdir -p lib/build/css')
+    print(root, theme)
+    root = f'{root}scss/'
+
+    def go():
+        import sass
+
+        root_url = f'file://{os.path.abspath("lib/build/css/")}'
+        for file in ('main', 'rocket'):
+            try:
+                map_path = f'lib/build/css/{file}.css.map'
+                css, sourcemap = sass.compile(filename=f'{root}{file}.scss',
+                                              source_map_filename=map_path,
+                                              source_map_root=root_url,
+                                              source_map_contents=True,
+                                              source_map_embed=True,
+                                              )
+                with open(f'lib/build/css/{file}.css', 'w') as fd:
+                    fd.write(css)
+                with open(map_path, 'w') as fd:
+                    fd.write(sourcemap)
+
+            except Exception as exc:
+                print(f'ERROR EXECUTING SASS COMPILATION: {exc}')
+
+    exec_watch(root, go, name='sass', watch=watch, background=background)
+    print('Compilation finished!')
 
 
 @task
@@ -58,7 +69,74 @@ def js(ctx):
     """
     Build js assets
     """
-    print('Nothing to do now ;)')
+    from pathlib import Path
+    cwd = os.getcwd()
+    try:
+        path = Path(__file__).parent / 'lib'
+        os.chdir(path)
+        ctx.run('mkdir -p build/js/')
+        ctx.run('rm build/js/main.js* -f')
+        ctx.run('npm run build')
+    finally:
+        os.chdir(cwd)
+
+
+@task
+def docs(ctx, orm=False):
+    """
+    Builds Sphinx documentation.
+    """
+    if orm:
+        for app in ['ej_users', 'ej_profiles', 'ej_conversations', 'ej_boards',
+                    'ej_clusters', 'ej_gamification', 'ej_dataviz',
+                    'ej_rocketchat']:
+            print(f'Making ORM graph for {app}')
+            env = {'EJ_ROCKETCHAT_INTEGRATION': 'true'} if app == 'ej_rocketchat' else {}
+            manage(ctx, 'graph_models', app, env=env, output=f'docs/dev-docs/orm/{app}.svg')
+    else:
+        print('call inv docs --orm to update ORM graphs')
+
+    ctx.run('sphinx-build docs/ build/docs/', pty=True)
+
+
+@task
+def requirements(ctx):
+    """
+    Extract requirements.txt from Poetry file
+    """
+    import toml
+
+    def extract_deps(deps):
+        deps = deps.copy()
+        deps.pop('python', None)
+        lst = []
+
+        for k, v in deps.items():
+            if isinstance(v, str):
+                version = v
+                extra = ()
+            else:
+                version = v['version']
+                extra = v.get('extras', ())
+
+            if version[0] == '^':
+                lst.append(f'{k} ~= {version[1:]}')
+            else:
+                lst.append(f'{k}{version}')
+            for extra in extra:
+                lst.append(f'{k}[{extra}]')
+        return '\n'.join(lst)
+
+    with open('pyproject.toml') as F:
+        data = toml.load(F)
+        deps = data['tool']['poetry']['dependencies']
+        dev_deps = data['tool']['poetry']['dev-dependencies']
+
+        with open('etc/requirements.txt', 'w') as F:
+            F.write(extract_deps(deps))
+
+        with open('etc/requirements-dev.txt', 'w') as F:
+            F.write(extract_deps(dev_deps))
 
 
 #
@@ -72,13 +150,12 @@ def run(ctx, no_toolbar=False, theme=None):
     set_theme(theme)
     env = {}
     if no_toolbar:
-        env['DISABLE_DJANGO_DEBUG_TOOLBAR'] = 'true'
-    else:
-        manage(ctx, 'runserver 0.0.0.0:8000', env=env)
+        env['DJANGO_DEBUG_TOOLBAR'] = 'disabled'
+    manage(ctx, 'runserver 0.0.0.0:8000', env=env)
 
 
 @task
-def gunicorn(ctx, debug=None, environment='production', port=8000, workers=4):
+def gunicorn(ctx, debug=None, environment='production', port=8000, workers=0):
     """
     Run application using gunicorn for production deploys.
 
@@ -86,6 +163,7 @@ def gunicorn(ctx, debug=None, environment='production', port=8000, workers=4):
     """
 
     from gunicorn.app.wsgiapp import run as run_gunicorn
+    workers = workers or os.cpu_count() or 1
 
     env = {
         'DISABLE_DJANGO_DEBUG_TOOLBAR': str(not debug),
@@ -169,7 +247,7 @@ def db_reset(ctx):
 
 
 @task
-def db_fake(ctx, users=True, conversations=True, admin=True, safe=False, theme=None):
+def db_fake(ctx, users=True, conversations=True, admin=True, safe=False, theme=None, clusters=True):
     """
     Adds fake data to the database
     """
@@ -185,6 +263,8 @@ def db_fake(ctx, users=True, conversations=True, admin=True, safe=False, theme=N
         manage(ctx, 'createfakeusers', admin=admin)
     if conversations:
         manage(ctx, 'createfakeconversations')
+    if clusters:
+        manage(ctx, 'createfakeclusters')
 
 
 @task
@@ -218,51 +298,47 @@ def db_assets(ctx, force=False, theme=None):
     # Load assets from Django commands
     for path in pages:
         manage(ctx, 'loadpages', path=path, force=force)
-    for path in fragments:
-        manage(ctx, 'loadfragments', path=path, force=force)
-    for path in icons:
-        manage(ctx, 'loadsocialmediaicons', path=path, force=force)
+    # for path in fragments:
+    #    manage(ctx, 'loadfragments', path=path, force=force)
+    # for path in icons:
+    #    manage(ctx, 'loadsocialmediaicons', path=path, force=force)
 
 
 #
 # Docker
 #
 @task
-def docker(ctx, task, cmd=None, port=8000, clean_perms=False, prod=False,
-           compose_file=None, dry_run=False, tag='latest', namespace='ej'):
+def docker(ctx, task, cmd=None, port=8000, file=None, dry_run=False,
+           deploy=False, rocket=False, clean_perms=False):
     """
     Runs EJ platform using a docker container.
 
-    Use inv docker-run <cmd>, where cmd is one of single, start, up, run,
-    deploy.
+    Use inv docker <cmd>, where cmd is one of single, start, up, down, run, exec.
     """
     docker = su_docker('docker')
     do = runner(ctx, dry_run, pty=True)
-    if compose_file is None and prod or task == 'production':
-        compose_file = 'docker/docker-compose.deploy.yml'
-    elif compose_file is None:
-        compose_file = 'docker/docker-compose.yml'
-    compose = f'{docker}-compose -f {compose_file}'
+    if file is None and deploy or task == 'production':
+        file = 'docker/docker-compose.deploy.yml'
+    elif file is None:
+        file = 'docker/docker-compose.yml'
+    compose = f'{docker}-compose -f {file}'
+    if rocket:
+        compose += ' -f docker/docker-compose.rocket.yml'
 
     if task == 'single':
         do(f'{docker} run'
            f'  -v `pwd`:/app'
            f'  -p {port}:8000'
            f'  -u django'
-           f'  -it ej-dev:{tag} {cmd or "bash"}')
+           f'  -it ej/web {cmd or "bash"}')
     elif task == 'start':
         do(f'{compose} up -d')
         do(f'{compose} run -p {port}:8000 web {cmd or "bash"}')
         do(f'{compose} stop')
-    elif task == 'up':
-        do(f'{compose} up')
-    elif task == 'run':
-        do(f'{compose} run -p {port}:8000 web {cmd or "bash"}')
-    elif task == 'production':
-        do(f'{compose} up')
-    elif task == 'rocket':
-        compose = su_docker('docker-compose')
-        do(f'{compose} -f docker/docker-compose.rocket.yml up')
+    elif task in ('up', 'down'):
+        do(f'{compose} {task}')
+    elif task in ('run', 'exec'):
+        do(f'{compose} -p {port}:8000 {task} web {cmd or "bash"}')
     else:
         raise SystemExit(f'invalid task: {task}')
     if clean_perms:
@@ -270,23 +346,36 @@ def docker(ctx, task, cmd=None, port=8000, clean_perms=False, prod=False,
 
 
 @task
-def docker_build(ctx, tag='latest', theme='default:ejplatform', dry_run=False,
-                 web=False, dev=False):
+def docker_build(ctx, theme='default', tag='latest', dry_run=False, build_kit=True,
+                 org='ej', deploy=False, dev=False, country='brazil',
+                 hostname='localhost'):
     """
     Rebuild all docker images for the project.
     """
+    prefix = 'DOCKER_BUILDKIT=1 ' if build_kit else ''
     do = runner(ctx, dry_run, pty=True)
-    cmd = su_docker(f'docker build . -f docker/Dockerfile')
-    if dev is False and web is False:
-        web = dev = True
-    if dev:
-        do(f'{cmd}-dev -t ej-dev:{tag} '
+    cmd = su_docker(f'{prefix}docker build . -f docker/Dockerfile')
+
+    # Build base docker image
+    requirements(ctx)
+    do(f'{cmd}-base -t {org}/web:base'
+       f'  --build-arg COMMIT_HASH="`git log -n 1 --format="%H"`"'
+       f'  --build-arg COMMIT_TITLE="`git log -n 1 --format="%s"`"'
+       f'  --build-arg HOSTNAME={hostname}'
+       f'  --build-arg THEME={theme}'
+       f'  --build-arg COUNTRY={country}')
+
+    build_all = deploy == dev == False
+
+    if dev or build_all:
+        do(f'{cmd}-dev -t {org}/web:dev '
+           f'  --build-arg ORG={org}'
            f'  --build-arg UID={os.getuid()}'
            f'  --build-arg GID={os.getgid()}')
-    if web:
-        for item in theme.split(','):
-            theme, org = item.split(':') if ':' in item else (item, item)
-            do(f'{cmd} -t {org}/web:{tag} --build-arg THEME={theme}')
+
+    if deploy or build_all:
+        do(f'{cmd}-deploy -t {org}/web:{tag}'
+           f'  --build-arg ORG={org}')
 
 
 @task
@@ -322,7 +411,8 @@ def i18n(ctx, compile=False, edit=False, lang='pt_BR', keep_pot=False):
         ctx.run('pybabel extract -F etc/babel.cfg -o locale/jinja2.pot .')
 
         print('Join Django + Jinja translation files')
-        ctx.run('msgcat locale/django.pot locale/jinja2.pot --use-first -o locale/join.pot', pty=True)
+        ctx.run('msgcat locale/django.pot locale/jinja2.pot --use-first -o locale/join.pot',
+                pty=True)
         ctx.run(r'''sed -i '/"Language: \\n"/d' locale/join.pot''', pty=True)
 
         print(f'Update locale {lang} with Jinja2 messages')
@@ -375,43 +465,47 @@ def install_hooks(ctx):
 
 
 @task
-def update_deps(ctx, all=False, vendor=None):
-    """
-    Update volatile dependencies
-    """
-    suffix = f' --vendor {vendor}' if vendor else ''
-    if all:
-        ctx.run(f'{python} -m pip install -r etc/requirements/local.txt')
-        ctx.run(f'{python} -m pip install -r etc/requirements/develop.txt')
-    else:
-        print('By default we only update the volatile dependencies. Run '
-              '"inv update-deps --all" in order to update everything.')
-    ctx.run(f'{python} etc/scripts/install-deps.py' + suffix)
-
-
-@task
-def configure(ctx, silent=False):
+def configure(ctx, silent=False, dev=False):
     """
     Install dependencies and configure a test server.
     """
     if silent:
         ask = (lambda x: print(x + 'yes') or True)
     else:
-        ask = (lambda x: input(x + ' (y/n) ').lower() == 'y')
+        ask = (lambda x: input(x + ' (y/n) ')[0].lower() == 'y')
 
-    print('\nLoading dependencies (inv update-deps)')
-    update_deps(ctx, all=True)
+    # Update requirements
+    requirements(ctx)
 
-    print('\nCreating database and running migrations (inv db)')
-    db(ctx)
+    if ask('\nInstall dependencies?'):
+        suffix = ' -r etc/requirements-dev.txt' if dev else ''
+        ctx.run(f'{python} -m pip install markupsafe toolz')
+        ctx.run(f'{python} -m pip install sidekick')
+        ctx.run(f'{python} -m pip install -r etc/requirements.txt' + suffix)
 
-    if ask('\nLoad assets to database?'):
-        print('Running inv db-assets')
-        db_assets(ctx)
+    if ask('\nInstall js dependencies?'):
+        cwd = os.getcwd()
+        os.chdir(cwd + '/lib')
+        try:
+            ctx.run('npm install')
+        finally:
+            os.chdir(cwd)
 
-    if ask('\nLoad fake data to database?'):
-        print('Running inv db-fake')
-        db_fake(ctx)
+    if ask('\nInitialize database (inv db)?'):
+        db(ctx)
+        if ask('\nLoad assets to database (inv db-assets)?'):
+            db_assets(ctx)
+        if ask('\nLoad fake data to database (inv db-fake)?'):
+            db_fake(ctx)
+
+    if ask('\nCompile js assets? (inv js)?'):
+        js(ctx)
+    if ask('\nCompile CSS resources (inv sass)?'):
+        sass(ctx)
+    if ask('\nCompile translations (inv i18n -c)?'):
+        i18n(ctx, compile=True)
+    if ask('\nBuild documentation (inv docs)?'):
+        docs(ctx)
 
 
 #
@@ -442,6 +536,17 @@ def test(ctx):
     if not os.environ.get('EJ_BASE_URL'):
         os.environ['EJ_BASE_URL'] = 'localhost'
     ctx.run('pytest')
+
+
+@task
+def lint(ctx, python=True, js=True):
+    """
+    Run all linters.
+    """
+    if python:
+        ctx.run('flake8 src/')
+    if js:
+        print('NOT IMPLEMENTED')
 
 
 @task(name='manage')
@@ -568,6 +673,8 @@ def set_theme(theme):
         theme = theme.rstrip('/')
         root = f'{theme}/'
         theme = os.path.basename(theme)
+    elif theme != 'default':
+        root = f'lib/themes/{theme}/'
     elif 'EJ_THEME' in os.environ:
         theme = os.environ['EJ_THEME']
         root = 'lib/' if theme == 'default' else f'lib/themes/{theme}/'
@@ -576,3 +683,67 @@ def set_theme(theme):
 
     os.environ['EJ_THEME'] = theme or 'default'
     return theme, root
+
+
+def watch_path(path, func, poll_time=0.5, name=None, skip_first=False):
+    """
+    Watch path and execute the given function everytime a file changes.
+    """
+    import time
+    from watchdog.observers import Observer
+    from watchdog.events import FileSystemEventHandler, FileCreatedEvent, \
+        FileDeletedEvent, FileModifiedEvent, FileMovedEvent
+
+    file_event = (FileCreatedEvent, FileDeletedEvent, FileModifiedEvent, FileMovedEvent)
+    last = time.time()
+
+    def dispatch(ev):
+        nonlocal last
+
+        if (ev.src_path.endswith('__') or ev.src_path.startswith('__')
+            or ev.src_path.startswith('~') or ev.src_path.startswith('.')):
+            return
+
+        if isinstance(ev, file_event):
+            last = start = time.time()
+            time.sleep(poll_time)
+            if last == start:
+                print(f'File modified: {ev.src_path}')
+                func()
+
+    observer = Observer()
+    handler = FileSystemEventHandler()
+    handler.dispatch = dispatch
+    observer.schedule(handler, path, recursive=True)
+    observer.start()
+    name = name or func.__name__
+    print(f'Running {name} in watch mode.')
+    if not skip_first:
+        func()
+    try:
+        while True:
+            time.sleep(0.5)
+    except KeyboardInterrupt:
+        observer.stop()
+    observer.join()
+
+
+def exec_watch(path, func, name, watch=False, background=False, poll_time=0.5):
+    if watch and background:
+        go = lambda: watch_path(path, func, name=name, poll_time=poll_time)
+        return exec_watch(path, go, name, background=True)
+    elif watch:
+        return watch_path(path, func, name=name, poll_time=poll_time)
+    elif background:
+        from threading import Thread
+
+        def go():
+            try:
+                func()
+            except KeyboardInterrupt:
+                pass
+
+        thread = Thread(target=go, daemon=True)
+        thread.start()
+    else:
+        func()

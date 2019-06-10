@@ -3,23 +3,22 @@
  =========================================================================== */
 
 // Colors
-$nav-menu-color: $color-primary !default;
-$nav-menu-color-text: $color-primary-text !default;
+$nav-menu-color: color('primary') !default;
+$nav-menu-color-text: color('primary', contrast) !default;
 $nav-menu-border-color: rgba(#FFF, 0.25) !default;
 $nav-menu-border: 1px solid $nav-menu-border-color !default;
 
 // Layout
 $nav-menu-font-size: $font-size-default !default;
 $nav-menu-opacity: 1.0 !default;
-$nav-menu-shadow: $box-shadow !default;
+$nav-menu-shadow: 2px 0 4px 0 rgba(18, 48, 102, 0.08)  !default;
 $nav-menu-width: 75vw !default;
-$nav-menu-max-width: 300px !default;
+$nav-menu-max-width: 400px !default;
 $nav-menu-ul-padding: 0 !default;
 
 // Element
 .NavMenu {
-    @include size($nav-menu-width, 100%);
-
+    width: 100%;
     min-height: 100vh;
     max-width: $nav-menu-max-width;
     box-shadow: $nav-menu-shadow;
@@ -28,9 +27,8 @@ $nav-menu-ul-padding: 0 !default;
     opacity: $nav-menu-opacity;
     -ms-overflow-style: none;
     overflow: -moz-scrollbars-none;
-    background: $nav-menu-color;
+    //background: $nav-menu-color;
     color: $nav-menu-color-text;
-    padding: $spacing-unit $spacing-unit-small $spacing-unit ($spacing-unit-tiny + $spacing-unit-small);
 
     a, button{
         color: $nav-menu-color-text;
@@ -40,6 +38,7 @@ $nav-menu-ul-padding: 0 !default;
         display: none;
     }
 
+    padding: $spacing-unit;
     em {
         font-weight: bold;
         font-style: normal;
@@ -110,5 +109,5 @@ $nav-menu-ul-padding: 0 !default;
             margin-left: $spacing-unit;
         }
     }
-
 }
+

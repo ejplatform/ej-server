@@ -1,34 +1,84 @@
-{% extends 'base.jinja2' %}
-{% from 'ej_conversations/components/comment-list.jinja2' import comment_list %}
-{% from 'ej_conversations/components/simple-tab.jinja2' import simple_tab %}
+{% extends 'ej_conversations/base.jinja2' %}
+{% set main_class = 'container-1 pad-x0' %}
+
 
 {% block content %}
-    <div class="Moderate Container">
-        <div class="ConversationDetail">
-            <div class="ConversationDetail-banner">
-                <div class="ConversationTags"><i class="fa fa-tags"></i>
-                    {% if tags %}
-                        {{ ', '.join(tags) }}
-                    {% else %}
-                        Tags
-                    {% endif %}
-                </div>
-                <h1>{{ conversation.text }}</h1>
-                <div class="Conversation-edit">
-                    {{ action_button( _('Edit Conversation'), edit_url) }}
-                </div>
-            </div>
-
-            <div class="ConversationDetail-arrow"></div>
-        </div>
-        <div class="Moderate-comments">
-            <h1>{{ _('Comments in this conversation') }}</h1>
-            <ul class="Moderate-comments-tabs">
-              {{ simple_tab(comment_status, 'pending', conversation.get_absolute_url() + 'moderate?status=pending', _('Pending')) }}
-              {{ simple_tab(comment_status, 'approved', conversation.get_absolute_url() + 'moderate?status=approved', _('Approved')) }}
-              {{ simple_tab(comment_status, 'rejected', conversation.get_absolute_url() + 'moderate?status=rejected', _('Rejected')) }}
-            </ul>
-            {{ comment_list(comments, request=request) }}
-        </div>
-    </div>
+    {{ conversation|role('balloon', actions=False) }}
+    <p><a href="{{ conversation.get_absolute_url() }}" title="{{ _('Back to conversation') }}" class="lowercase bold text-brand">
+        <i class="fa fa-chevron-left"></i>{% trans %}Back to conversation{% endtrans %}
+    </a></p>
+    <h1 class="h2 text-accent center">{{ _('Comments') }}</h1>
+    {{ tabs({_('Pending'): '#moderate-pending',
+             _('Approved'): '#moderate-approved',
+             _('Rejected'): '#moderate-rejected'}) }}
+    {{ show_comments(pending, 'pending') }}
+    {{ show_comments(approved, 'approved') }}
+    {{ show_comments(rejected, 'rejected') }}
 {% endblock %}
+
+
+{% macro show_comments(comments, id) %}
+    {%- set n = comments|length -%}
+    {%- set n_strong = ('<strong>%s</strong>' % n)|safe -%}
+
+    <form method="POST" action="#moderate-{{ id }}" id="moderate-{{ id }}" class="measure-narrow margin-xauto block">
+        {{ csrf_input }}
+
+        {% if comments %}
+            <p class="margin-t3">
+                {% trans count=n, n=n_strong %}Found {{ n }} comment.
+                    {% pluralize %}Found {{ n }} comments.{% endtrans %}
+            </p>
+
+            {# Rejection reason form #}
+            {% if id != 'rejected' %}
+                <div is-element="rejection-reason-form">
+                    {{ form.non_field_errors() }}
+                    {% for field in [form.rejection_reason, form.rejection_reason_text] %}
+                        {{ field.errors }}
+                        <label>{{ field.label }}{{ field }}</label>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {# List of comments #}
+            {% for comment in comments %}
+                {% if loop.index != 1 %}
+                    <hr class="margin-x4 margin-y3">{% endif %}
+                {{ comment|role('moderate') }}
+
+                {% if id == 'pending' %}
+                    <div class="row margin-3">{{ reject_button(comment) }}{{ approve_button(comment) }}</div>
+                {% endif %}
+
+                {% if id == 'approved' %}
+                    <div class="text-right margin-1">{{ reject_button(comment) }}</div>
+                {% endif %}
+
+                {% if id == 'rejected' %}
+                    <p class="pad-x2 pad-y1 margin-y1 opacity-4 rounded-2 color-negative text-6">{{ comment.rejection_reason_display }}</p>
+                    <div class="text-right margin-1">{{ approve_button(comment) }}</div>
+                {% endif %}
+            {% endfor %}
+
+        {% else %}
+            {# No comments found #}
+            <p class="margin-t3">{{ _('No comments left') }}</p>
+        {% endif %}
+    </form>
+{% endmacro %}
+
+
+{% macro reject_button(comment) %}
+    <span class="text-negative"><button class="is-clear" name="reject_id" value="{{ comment.id }}">
+        <i class="fa fa-times"></i>{{ _('Reject') }}
+    </button></span>
+{% endmacro %}
+
+
+{% macro approve_button(comment) %}
+    <span class="text-positive"><button class="is-clear" name="approve_id" value="{{ comment.id }}">
+        <i class="fa fa-check"></i>{{ _('Approve') }}
+    </button></span>
+{% endmacro %}
+

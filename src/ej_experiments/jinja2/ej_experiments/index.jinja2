@@ -1,0 +1,36 @@
+{% extends 'base.jinja2' %}
+{% set main_class = 'measure-wide margin-xauto pad-x2' %}
+
+
+{% block content %}
+    <h1>{{ _('Create random data') }}</h1>
+
+    {# RANDOM USERS #}
+    <h2>{{ _('Random users') }} ({{ n_users }})</h2>
+    <form method="post">
+        {{ csrf_input }}
+        <input type="hidden" name="action" value="create-users">
+        {{ users_form }}
+        <div><button class="is-primary">{{ _('Create users') }}</button></div>
+    </form>
+
+
+    {# RANDOM CONVERSATION #}
+    <h2>{{ _('Random conversations') }} ({{ n_conversations }})</h2>
+    <form method="post">
+        {{ csrf_input }}
+        <input type="hidden" name="action" value="create-conversations">
+        {{ conversations_form }}
+        <div><button class="is-primary">{{ _('Create conversations') }}</button></div>
+    </form>
+
+
+    {# RANDOM VOTES #}
+    <h2>{{ _('Random Votes') }} ({{ n_votes }})</h2>
+    <form method="post">
+        {{ csrf_input }}
+        <input type="hidden" name="action" value="create-votes">
+        {{ votes_form }}
+        <div><button class="is-primary">{{ _('Create votes') }}</button></div>
+    </form>
+{% endblock %}

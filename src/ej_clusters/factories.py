@@ -1,15 +1,17 @@
-from django.contrib.auth import get_user_model
-from django.db.models import Avg
 import random
 
-from ej_clusters.models import Cluster, Stereotype, StereotypeVote, UserClusterMap, StereotypeClusterMap
-from ej_conversations.models import Choice, Vote
+from django.contrib.auth import get_user_model
+from django.db.models import Avg
+
+from ej_clusters.models import Cluster, Stereotype, StereotypeVote
+from ej_conversations import create_conversation
+from ej_conversations.enums import Choice
+from ej_conversations.models import Vote
 
 User = get_user_model()
 
 
-def set_clusters_from_comments(conversation, comment_map, exclusive=True,
-                               author=None):
+def set_clusters_from_comments(conversation, comment_map, exclusive=True, author=None):
     """
     Create clusters and stereotypes from conversation.
 
@@ -38,14 +40,10 @@ def set_clusters_from_comments(conversation, comment_map, exclusive=True,
 
         # Create cluster and stereotype
         cluster = Cluster.objects.create(
-            clusterization=clusterization,
-            name=cluster_name,
+            clusterization=clusterization, name=cluster_name
         )
         stereotype, _ = Stereotype.objects.get_or_create(
-            name=cluster_name,
-            description=description,
-            owner=author,
-            conversation=conversation,
+            name=cluster_name, description=description, owner=author
         )
         cluster.stereotypes.add(stereotype)
         created_stereotypes.append(stereotype)
@@ -55,19 +53,18 @@ def set_clusters_from_comments(conversation, comment_map, exclusive=True,
             comments = [comments]
         for text in comments:
             comment = conversation.create_comment(
-                author, text,
-                status='approved',
-                check_limits=False,
+                author, text, status="approved", check_limits=False
             )
             created_comments.append(comment)
-            stereotype.vote(comment, 'agree')
+            stereotype.vote(comment, "agree")
 
     if exclusive:
         for stereotype in created_stereotypes:
-            voted_ids = stereotype.votes.values_list('comment_id', flat=True)
+            voted_ids = stereotype.votes.values_list("comment_id", flat=True)
             votes = {
-                comment: 'disagree'
-                for comment in created_comments if comment.id not in voted_ids
+                comment: "disagree"
+                for comment in created_comments
+                if comment.id not in voted_ids
             }
             stereotype.cast_votes(votes)
 
@@ -89,14 +86,13 @@ def cluster_votes(conversation, users):
     votes = []
     for cluster, users in clusters.items():
         vote_profiles = (
-            StereotypeVote.objects
-                .filter(author__in=cluster.stereotypes.all())
-                .values('comment')
-                .annotate(average=Avg('choice'))
+            StereotypeVote.objects.filter(author__in=cluster.stereotypes.all())
+            .values("comment")
+            .annotate(average=Avg("choice"))
         )
         for data in vote_profiles:
-            comment_id = data['comment']
-            prob = 0.5 + data['average'] * 0.4
+            comment_id = data["comment"]
+            prob = 0.5 + data["average"] * 0.4
 
             for user in users:
                 vote = random_vote(prob)
@@ -111,43 +107,84 @@ def cluster_votes(conversation, users):
 def random_vote(prob):
     r = random.random()
     if r < 0.25:
-        vote = Choice.SKIP
+        return Choice.SKIP
     elif r < 0.50:
-        vote = None
+        return None
     elif random.random() < prob:
-        vote = Choice.AGREE
+        return Choice.AGREE
     else:
-        vote = Choice.DISAGREE
-    return vote
+        return Choice.DISAGREE
 
 
-def set_clusters(conversation, stereotype_map=None, user_map=None, clean=False):
-    """
-    Update cluster
-    """
-    user_map = user_map or {}
-    stereotype_map = stereotype_map or {}
-    cluster_names = set()
-    cluster_names.update(user_map.values())
-    cluster_names.update(stereotype_map.values())
+#
+# Examples
+#
+def make_conversation_with_clusters():
+    conversation = create_conversation(
+        "How should our society organize the production of goods and services?",
+        "Economy",
+        is_promoted=True,
+        author=User.objects.filter(is_staff=True).first(),
+    )
+    set_clusters_from_comments(
+        conversation,
+        {
+            "Liberal": [
+                "Free market should regulate how enterprises invest money and hire "
+                "employees.",
+                "State should provide a stable judicial system and refrain from "
+                "regulating the economy.",
+            ],
+            "Socialist": [
+                "Government and the society as a whole must regulate business "
+                "decisions to favor the common good rather than private interests.",
+                "State leadership is necessary to drive a strong economy.",
+            ],
+            "Fascist": [
+                "Government should eliminate opposition in order to ensure "
+                "governability.",
+                "Military should occupy high ranks in government.",
+            ],
+        },
+    )
+    return conversation
 
-    if clean:
-        UserClusterMap.objects.filter(conversation=conversation).delete()
-        StereotypeClusterMap.objects.filter(conversation=conversation).delete()
 
-    clusters = {
-        k: Cluster.objects.get_or_create(conversation=conversation, name=k)[0]
-        for k in cluster_names
-    }
-
-    factory = UserClusterMap.objects.create
-    for user, cluster_name in user_map.items():
-        cluster = clusters[cluster_name]
-        factory(user=user, conversation=conversation, cluster=cluster)
-
-    factory = StereotypeClusterMap.objects.create
-    for user, cluster_name in stereotype_map.items():
-        cluster = clusters[cluster_name]
-        factory(stereotype=user, conversation=conversation, cluster=cluster)
-
-    return list(clusters.values())
+def make_conversation_with_clusters():
+    conversation = create_conversation(
+        "Que medidas devem ser feitas para melhorar a educação de jovens e adolescentes?",
+        "Educação",
+        is_promoted=True,
+        author=User.objects.filter(is_staff=True).first(),
+    )
+    set_clusters_from_comments(
+        conversation,
+        {
+            "Estatista": [
+                "É necessário aumentar a verba destinada à educação pública de qualidade",
+                "Devemos incentivar a participação da classe média na escola pública reservando vagas nas universidades.",
+                "O Brasil deve utilizar o dinheiro do pré-sal somente para a educação.",
+            ],
+            "Privatista": [
+                "Estado deve financiar a criação de parcerias público-privadas para a educação",
+                "Escolas particulares promovem maior autonomia pedagógica e dão poder de escolha aos pais.",
+                "O Brasil deve financiar alunos carentes com vagas em escolas particulares.",
+            ],
+            "Liberal": [
+                "Escolas devem promover criatividade e autonomia dos jovens",
+                "Jovens devem possuir atividades extra-classe regulares em museus, parques, bibliotecas, etc.",
+                "É necessário dar aulas de filosofia, sociologia, etc para incentivar o pensamento crítico",
+            ],
+            "Disciplinador": [
+                "Escolas devem treinar a disciplina e respeito à autoridade e ao cumprimento de regras.",
+                "Alunos e professores devem ser punidos exemplarmente por desordem e violação das regras.",
+                "As escolas devem proibir manifestações políticas do professor em sala de aula",
+            ],
+            "Tecnocrata": [
+                "A escola deve fornecer treinamento para o mercado de trabalho e capacitação profissional desde cedo.",
+                "As disciplinas e conteúdos ensinados na escola devem refletir demandas do mercado de trabalho.",
+                "É necessário um currículo e testes unificados.",
+            ],
+        },
+    )
+    return conversation

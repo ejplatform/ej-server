@@ -1,61 +1,63 @@
 import random
 import string
 
+import hyperpython.jinja2
+from boogie.apps.fragments import fragment
+from django.apps import apps
 from django.conf import settings
+from django.contrib.messages import get_messages
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.urls import reverse
 from django.utils import translation
-from django.utils.translation import get_language
 from django.utils.formats import date_format
+from django.utils.translation import get_language
+from hyperpython import html, Blob
 from jinja2 import Environment, StrictUndefined, contextfunction
 from markdown import markdown
 from markupsafe import Markup
+from sidekick import record
 
-import hyperpython.jinja2
-from boogie import rules
-from ej_configurations import social_icons, fragment
-from hyperpython import html
+from . import components
 from . import roles
 from .roles import tags
 
-TAG_MAP = {k: getattr(tags, k) for k in tags.__all__}
-SALT_CHARS = string.ascii_letters + string.digits + '-_'
 
-
-def environment(**options):
-    options.pop('debug', None)
-    options.setdefault('trim_blocks', True)
-    options.setdefault('lstrip_blocks', True)
-    options['undefined'] = StrictUndefined
-    env = Environment(**options)
+def environment(autoescape=True, **options):
+    options.pop("debug", None)
+    options.setdefault("trim_blocks", True)
+    options.setdefault("lstrip_blocks", True)
+    options["undefined"] = StrictUndefined
+    env = Environment(autoescape=True, **options)
 
     env.globals.update(
         static=staticfiles_storage.url,
         url=reverse,
-        settings=settings,
-        rules=rules,
-
+        settings=record(
+            **{k: getattr(settings, k) for k in dir(settings)},
+            has_boards=apps.is_installed("ej_boards"),
+            has_clusters=apps.is_installed("ej_clusters"),
+            has_dataviz=apps.is_installed("ej_dataviz"),
+            has_gamification=apps.is_installed("ej_gamification"),
+            has_profiles=apps.is_installed("ej_profiles"),
+            has_users=apps.is_installed("ej_users"),
+            service_worker=getattr(settings, "SERVICE_WORKER", False),
+        ),
         # Localization
         get_language=get_language,
         date_format=date_format,
-
         # Security
         salt_attr=salt_attr,
         salt_tag=salt_tag,
         salt=salt,
-
         # Platform functions
-        social_icons=social_icons,
-        fragment=fragment,
-        service_worker=getattr(settings, 'SERVICE_WORKER', False),
         generic_context=generic_context,
-
-        # Hyperpython tag functions
-        render=non_strict_render,
-
+        get_messages=messages,
         # Available tags and components
+        fragment=context_fragment,
+        render=html,
         tag=roles,
-        **TAG_MAP,
+        blob=Blob,
+        **FUNCTIONS,
     )
     env.filters.update(
         markdown=lambda x: Markup(markdown(x)),
@@ -71,7 +73,7 @@ def environment(**options):
 # String formatting
 #
 def format_percent(x):
-    return f'{int(x * 100)}%'
+    return f"{int(x * 100)}%"
 
 
 #
@@ -110,7 +112,7 @@ def salt(size=None):
     size = random.randint(4, 10) if size is None else size
     func = random.choice
     chars = SALT_CHARS
-    return ''.join(func(chars) for _ in range(size))
+    return "".join(func(chars) for _ in range(size))
 
 
 def salt_attr():
@@ -127,6 +129,24 @@ def salt_tag():
     return f'<div style="display: none" {salt_attr()}></div>'
 
 
+#
+# Messaging and services
+#
+@contextfunction
+def messages(ctx):
+    try:
+        request = ctx["request"]
+    except KeyError:
+        return []
+    else:
+        return get_messages(request)
+
+
+@contextfunction
+def context_fragment(ctx, ref, **kwargs):
+    return fragment(ref, request=ctx.get("request"), **kwargs)
+
+
 @contextfunction
 def generic_context(ctx):
     """
@@ -137,29 +157,62 @@ def generic_context(ctx):
 
     blacklist = {
         # Jinja2
-        'range', 'dict', 'lipsum', 'cycler', 'joiner', 'namespace', '_',
-        'gettext', 'ngettext', 'request', 'csrf_input', 'csrf_token',
-
+        "range",
+        "dict",
+        "lipsum",
+        "cycler",
+        "joiner",
+        "namespace",
+        "_",
+        "gettext",
+        "ngettext",
+        "request",
+        "csrf_input",
+        "csrf_token",
         # Globals
-        'static', 'url', 'salt_attr', 'salt_tag', 'salt', 'social_icons',
-        'service_worker', 'generic_context', 'render', 'fragment', 'tag',
-        'settings', *TAG_MAP,
-
+        "static",
+        "url",
+        "salt_attr",
+        "salt_tag",
+        "salt",
+        "social_icons",
+        "service_worker",
+        "generic_context",
+        "render",
+        "fragment",
+        "tag",
+        "settings",
+        *FUNCTIONS,
         # Variables injected by the base template
-        'target', 'target_context',
-        'sidebar', 'page_top_header', 'page_header',
-        'page_title', 'title', 'content_title', 'enable_navbar', 'hide_footer',
-        'javascript_enabled',
+        "target",
+        "target_context",
+        "sidebar",
+        "page_top_header",
+        "page_header",
+        "page_title",
+        "title",
+        "content_title",
+        "enable_navbar",
+        "hide_footer",
+        "javascript_enabled",
     }
     ctx = {k: v for k, v in ctx.items() if k not in blacklist}
     if settings.DEBUG:
         if ctx:
             return tags.html_map(ctx)
         else:
-            return tags.h('p', _('This template defines no extra variables'))
+            return tags.h("p", _("This template defines no extra variables"))
     else:
         raise Http404
 
 
-def non_strict_render(obj, role=None, ctx=None, strict=False):
-    return html(obj, role=role, ctx=ctx, strict=strict)
+#
+# Constants
+#
+FUNCTIONS = {}
+for _names, _mod in [(tags.__all__, tags), (dir(components), components)]:
+    for _name in _names:
+        value = getattr(_mod, _name, None)
+        if not _name.startswith("_") and callable(value):
+            FUNCTIONS[_name] = value
+SALT_CHARS = string.ascii_letters + string.digits + "-_"

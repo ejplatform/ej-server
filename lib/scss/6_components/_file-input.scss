@@ -1,0 +1,42 @@
+
+
+.FileInput {
+    padding: 0;
+    font-family: $font-stack-raleway;
+    font-size: $font-size-tiny;
+    overflow: hidden;
+    font-weight: 600;
+
+    .PickFileButton {
+        border-top-left-radius: $border-radius-small + $border-radius-tiny;
+        border-bottom-left-radius: $border-radius-small + $border-radius-tiny;
+        background: color('primary');
+        height: 45px;
+        width: max-content;
+        line-height: 45px;
+        padding-left: 7px;
+        padding-right: 7px;
+        float:left;
+        position: relative;
+        color: color('primary', contrast);
+        input[type=file] {
+            height: 45px;;
+            width: 100%;
+            // float: left;
+            position: absolute;
+            // background-color: black;
+        }
+    }
+
+    .FileStatus {
+        font-weight: 600;
+        width: 100%;
+        height: inherit;
+        line-height: 45px;
+        text-align: center;
+    }
+}
+
+
+
+

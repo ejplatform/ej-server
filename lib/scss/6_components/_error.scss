@@ -1,12 +1,9 @@
 /*
  403/404/500 COMPONENTS
- ======================================================================== */
+ ========================================================================
 
-@import '../2_tools/index';
-
-$error-title-color: $color-white !default;
-$error-title-font-size: 86px  !default;
-$error-background-color: $color-primary !default;
+$error-title-font-size: 86px !default;
+$error-background-color: color('primary') !default;
 $error-content-height: 70vh !default;
 
 .Error {
@@ -15,34 +12,35 @@ $error-content-height: 70vh !default;
     height: 100vh;
 
     &-back {
-      i{
-        margin: $spacing-unit 0 0 $spacing-unit;
-      }
+        i {
+            margin: $spacing-unit 0 0 $spacing-unit;
+        }
     }
 
     &-content {
-      display: flex;
-      align-items: center;
-      justify-content: space-around;
-      flex-direction: column;
-      padding-top: $spacing-unit-large;
-      height: $error-content-height;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        flex-direction: column;
+        padding-top: $spacing-unit-large;
+        height: $error-content-height;
     }
 
     h1 {
         margin: 0;
-        color: $error-title-color;
-        font-family: $font-raleway;
+        color: color('primary', contrast);
+        font-family: $font-stack-raleway;
         font-size: $error-title-font-size;
     }
 
     p {
-      font-size: $font-size-large;
-      font-weight: bold;
-      line-height: $line-height;
-      font-family: $font-raleway;
-      text-transform: uppercase;
-      color: $color-purple-dark;
+        font-size: $font-size-large;
+        font-weight: bold;
+        line-height: $line-height;
+        font-family: $font-stack-raleway;
+        text-transform: uppercase;
+        color: $color-content;
     }
 
 }
+*/

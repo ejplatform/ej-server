@@ -8,22 +8,19 @@ class LoggingConf(Base):
 
     def get_logging(self):
         return {
-            'version': 1,
-            'disable_existing_loggers': False,
-            'handlers': {
-                'file': {
-                    'level': 'DEBUG',
-                    'class': 'logging.FileHandler',
-                    'filename': self.LOG_DIR / 'debug.log',
+            "version": 1,
+            "disable_existing_loggers": False,
+            "handlers": {
+                "file": {
+                    "level": "DEBUG",
+                    "class": "logging.FileHandler",
+                    "filename": self.LOG_DIR / "debug.log",
                 },
-                'console': {
-                    'level': 'DEBUG',
-                    'class': 'logging.StreamHandler',
-                },
+                "console": {"level": "DEBUG", "class": "logging.StreamHandler"},
             },
-            'loggers': {
-                'ej': self.DEBUG_LOGGER,
-                'django': self.DEFAULT_LOGGER,
-                'celery': self.DEFAULT_LOGGER,
+            "loggers": {
+                "ej": self.DEBUG_LOGGER,
+                "django": self.DEFAULT_LOGGER,
+                "celery": self.DEFAULT_LOGGER,
             },
         }

@@ -1,80 +1,77 @@
 {% extends 'base.jinja2' %}
+{% set main_class = 'container-1 pad-x0' %}
+{% block menu %}{% include 'ej_conversations/includes/menu-list.jinja2' %}{% endblock %}
+
+
+{% block content %}
+    <form method="POST" class="width-full">
+        {{ csrf_input }}
+        {% include 'ej_conversations/includes/editable-conversation-balloon.jinja2' %}
+
+        {% block form_content %}
+            <div class="measure margin-xauto">
+                {# CONVERSATION FORM #}
+                <h1 class="h2 text-accent center">{{ _('Conversation') }}</h1>
+                <p class="center">{% trans %}Please fill the details bellow.{% endtrans %}</p>
+
+                {{ form.non_field_errors() }}
+                {{ form.title.errors }}
+                <label>{{ form.title.label }}{{ form.title }}</label>
+                <legend>{{ form.title.help_text }}</legend>
+
+
+                {# ADD COMMENTS #}
+                <h1 class="h2 text-accent center">{{ _('Initial comments') }}</h1>
+                <p class="center">
+                    {% trans %}Add as many comments as you like (including none).{% endtrans %}{{ ' ' }}
+                    {% trans %}Remember to give a minimum context and something for other users to
+                        explore.{% endtrans %}{{ ' ' }}
+                    {% trans %}You can add as many comments as you want later.{% endtrans %}
+                </p>
+                <input type="hidden" name="comments_count" value="3">
+                <div id="comment-list">
+                    {% for i in range(1, 4) %}
+                        <label>
+                            {% trans %}Comment {{ i }}{% endtrans %}
+                            <textarea name="comment-{{ i }}"
+                                      placeholder="{{ _('Type your comment here') }} #{{ i }}"></textarea>
+                        </label>
+                    {% endfor %}
+                </div>
+
+                <a class="block uppercase center semi-bold" id="add-more-comments" tabindex="0">
+                    <i class="fa fa-plus"></i> {{ _('Add more comments') }}
+                </a>
+
+                <div class="margin-xauto margin-y3 center">
+                    <input class="is-primary" type="submit" value="{{ _('Create conversation') }}">
+                </div>
+            </div>
+        {% endblock %}
+    </form>
+{% endblock %}
+
 
 {% block javascript_body %}
     {{ super() }}
-    <script>
-        function addCommentField() {
-            let $input = $('input[name="comments_count"]');
-            let index = parseInt($input.val(), 10) + 1;
-            $input.val(index);
-            let template = (
-                '<div class="ConversationField"><i class="far fa-comment"></i> ' +
-                '<input type="text" name="comment-%INDEX%" ' +
-                'placeholder="{{ _('Type here the comment') }} #%INDEX%" /> </div>');
-            $('.Moderate-comments').append(template.replace(/%INDEX%/g, index));
-        }
+    <!--suppress SpellCheckingInspection -->
+    <script defer>
+        window.addEventListener('load', function () {
+            $('#add-more-comments')
+                .on('click keypress', function (ev) {
+                    // keycodes: 13 = return; 32 = space
+                    if (ev.type === "keypress" && (![13, 32].includes(ev.keyCode))) return;
+                    console.log(ev.keyCode);
+                    var $input = $('input[name="comments_count"]'),
+                        index = parseInt($input.val(), 10) + 1,
+                        template = (
+                            '<label>' +
+                            '{% trans %}Comment %i%{% endtrans %}' +
+                            '<textarea name="comment-%i%" placeholder="{{ _('Type your comment here') }} #%i%"></textarea>' +
+                            '</label>');
+                    $input.val(index);
+                    $('#comment-list').append(template.replace(/%i%/g, index));
+                });
+        });
     </script>
-{% endblock %}
-
-{% block content %}
-    <div class="Moderate Create CenteredContainer">
-        <form method="post" class="django-form-as-p">
-            {{ csrf_input }}
-            {% if form.errors %}
-                <!-- Error messaging -->
-                <div id="errors">
-                    <div class="inner">
-                        <p>
-                        {%trans%}There were some errors in the information you entered. Please correct the problems bellow.{% endtrans %}</p>
-                        {{ form.non_field_errors() }}
-                        {{ form.errors }}
-                    </div>
-                </div>
-            {% endif %}
-            <input type="hidden" name="title" value=""/>
-
-            <div class="ConversationEdit-actions">
-                <span>
-                    <i class="fa fa-times"></i>
-                    <input type="reset" value="{{ _('Cancel') }}" name="cancel" onClick="history.back(-1)">
-                </span>
-                <span>
-                    <i class="fa fa-check create-conversation-icon"></i>
-                    <input type="submit" value="{{ _('Create') }}" name="create">
-                </span>
-            </div>
-
-            <div class="ConversationDetail">
-                <div class="ConversationDetail-banner">
-                    <div class="ConversationTags">
-                        <div class="ConversationField"><i class="fa fa-tags"></i>
-                            {% for tag in form.tags %}{{ tag }} {% endfor %}
-                        </div>
-                    </div>
-
-                    <p>{{ form.text }}</p>
-
-                </div>
-                <div class="ConversationDetail-arrow"></div>
-            </div>
-
-            <div class="ConversationField"><i class="fa fa-link"></i>{{ form.title }}</div>
-            <input type="hidden" name="comments_count" value="5">
-
-            <div class="Moderate-comments">
-                <h1>{{ _('Comments') }}</h1>
-                {% for i in range(1, 6) %}
-                    <div class="ConversationField"><i class="far fa-comment"></i>
-                        <input type="text" name="comment-{{ i }}"
-                               placeholder="{{ _('Type your comment here') }} #{{ i }}"/>
-                    </div>
-                {% endfor %}
-            </div>
-            <p class="Conversation-AddComment" onclick="addCommentField()">
-                <i class="fa fa-plus"></i> {{ _('Add more comments') }}
-            </p>
-
-            <input class="Button" type="submit" value="{{ _('Send') }}">
-        </form>
-    </div>
 {% endblock %}

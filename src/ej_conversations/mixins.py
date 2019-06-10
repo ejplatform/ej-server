@@ -1,126 +1,219 @@
-"""
-Generic classes that are likely to leave this app and eventually go to
-a separate library.
-"""
+from collections import Iterable
+from random import randrange
 
-from django.urls import reverse
-from rest_framework import serializers
+from boogie import db
+from boogie.models import QuerySet
+from django.contrib.auth import get_user_model
+from django.core.exceptions import ImproperlyConfigured
+from django.utils.timezone import now
 
+from ej_profiles.enums import Gender, Race
+from ej_profiles.utils import years_from
+from .math import user_statistics
 
-class HasLinksSerializer(serializers.HyperlinkedModelSerializer):
-    links = serializers.SerializerMethodField()
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        request = self.context['request']
-        self.url_prefix = f'{request.scheme}://{request.get_host()}'
-
-    def get_detail_url_name(self):
-        """
-        The Django-name for the detail url for the current resource.
-
-        This is usually "<model-name>-detail"
-        """
-        return self.Meta.model.__name__.lower() + '-detail'
-
-    def get_self_url_path(self, obj):
-        """
-        Return the absolute path (i.e., without the http://host part)
-        of the detail url for the current resource.
-        """
-        url_name = self.get_detail_url_name()
-        lookup_field = (
-            getattr(self.Meta, 'extra_kwargs', {})
-            .get('url', {})
-            .get('lookup_field', 'pk')
-        )
-        lookup_value = getattr(obj, lookup_field)
-        return reverse(url_name, kwargs={lookup_field: lookup_value})
-
-    def get_links(self, obj):
-        """
-        Return the links dictionary mapping resource names to their
-        corresponding links according to HATEAOS.
-        """
-        # Create default payload
-        self_path = self.get_self_url_path(obj)
-        self_uri = self.url_prefix + self_path
-        payload = {'self': self_uri}
-
-        # Fill inner links
-        inner_links = self.get_inner_links(obj)
-        if inner_links:
-            if hasattr(inner_links, 'items'):
-                inner_links = inner_links.items()
-            else:
-                inner_links = [(x, x) for x in inner_links]
-            payload.update((name, join_url(self_uri, path))
-                           for name, path in inner_links)
-        return payload
-
-    def get_inner_links(self, obj):
-        """
-        Return a dictionary or list of inner resources for the current object.
-
-        If, for instance get_inner_links() returns {'foo': 'foo'}, it will
-        create serialization like::
-
-            {
-                "links": {
-                    "self": "http://my-site/api/resource/id/",
-                    "foo": "http://my-site/api/resource/id/foo",
-                }
-                ...,
-            }
-        """
-        return ()
+db = db.ej_conversations
+NOT_GIVEN = object()
 
 
-class HasAuthorSerializer(HasLinksSerializer):
-    author_name = serializers.SerializerMethodField()
-
-    def get_links(self, obj):
-        payload = super().get_links(obj)
-
-        # Insert author url as an absolute url
-        url_path = reverse('user-detail',
-                           kwargs={'username': obj.author.username})
-        payload['author'] = self.url_prefix + url_path
-        return payload
-
-    def get_author_name(self, obj):
-        author = obj.author
-        return author.get_full_name() or author.username
-
-
-class AuthorAsCurrentUserMixin:
-    def perform_create(self, serializer):
-        serializer.save(author=self.request.user)
-
-    def perform_update(self, serializer):
-        serializer.save(author=self.request.user)
-
-
-def join_url(head, *args):
+class ConversationMixin:
     """
-    Join url parts. It prevents duplicate backslashes when joining url
-    elements.
+    Implements an interface with a predictable route to fetch conversations,
+    comments and votes related to the current queryset.
+
+    Different models may interpret this relation slightly different, and this
+    mixin just implements sane defaults.
     """
-    if not args:
-        return head
+
+    def _votes_from_comments(self, comments):
+        return comments.votes()
+
+    def random(self, default=NOT_GIVEN):
+        """
+        Returns a random element.
+        """
+        size = self.count()
+        if size == 0 and default is NOT_GIVEN:
+            raise self.model.DoesNotExist
+        elif size == 0:
+            return default
+        else:
+            return self[randrange(size)]
+
+    def conversations(self):
+        """
+        Return queryset with all conversations associated with the current
+        queryset.
+        """
+        raise NotImplementedError("must be overridden in subclass")
+
+    def comments(self, conversation=None):
+        """
+        Return queryset with all comments associated with the current
+        queryset.
+        """
+        conversations = self.conversations()
+        qs = db.comments.filter(conversation__in=conversations)
+        if conversation:
+            qs = qs.filter(**conversation_filter(conversation, qs))
+        return qs
+
+    def votes(self, conversation=None, comments=None):
+        """
+        Return a queryset all all votes from the given authors.
+
+        Args:
+            conversation:
+                Filter comments by conversation, if given. Can be a conversation
+                instance, an id, or a queryset.
+            comments:
+                An optional queryset of comments to filter the return set of
+                votes. If given as queryset, ignore the conversation parameter.
+        """
+        if comments is None:
+            comments = self.comments(conversation)
+        elif not isinstance(comments, QuerySet):
+            comments = self.comments(conversation).filter(comments__in=comments)
+        return self._votes_from_comments(comments)
+
+    def votes_table(self, data_imputation=None, conversation=None, comments=None):
+        """
+        An alias to self.votes().table(), accepts parameters of both functions.
+        """
+        return self.votes(conversation, comments).votes_table(data_imputation)
+
+
+class UserMixin(ConversationMixin):
+    extend_dataframe = QuerySet.extend_dataframe
+
+    def comments(self, conversation=None):
+        """
+        Return a comments queryset with all comments voted by the given
+        users.
+
+        Args:
+            conversation:
+                Filter comments by conversation, if given. Can be a conversation
+                instance, an id, or a queryset.
+        """
+        votes = db.vote_objects.filter(author__in=self)
+        comments = db.comments.filter(votes__in=votes)
+        if conversation:
+            comments = comments.filter(**conversation_filter(conversation))
+        return comments
+
+    def statistics_summary_dataframe(
+        self, normalization=1.0, votes=None, comments=None, extend_fields=()
+    ):
+        """
+        Return a dataframe with basic voting statistics.
+
+        The resulting dataframe has the 'author', 'text', 'agree', 'disagree'
+        'skipped', 'divergence' and 'participation' columns.
+        """
+
+        if votes is None and comments is None:
+            votes = db.votes.filter(author__in=self)
+        if votes is None:
+            votes = comments.votes().filter(author__in=self)
+
+        votes = votes.dataframe("comment", "author", "choice")
+        stats = user_statistics(votes, participation=True, divergence=True, ratios=True)
+        stats *= normalization
+
+        # Extend fields with additional data
+        extend_full_fields = [EXTEND_FIELDS[x] for x in extend_fields]
+
+        transforms = {
+            x: EXTEND_FIELDS_VERBOSE[x]
+            for x in extend_fields
+            if x in EXTEND_FIELDS_VERBOSE
+        }
+
+        # Save extended dataframe
+        extend_fields = list(extend_fields)
+        stats = self.extend_dataframe(stats, "name", "email", *extend_full_fields)
+        if extend_fields:
+            columns = list(stats.columns[: -len(extend_fields)])
+            columns.extend(extend_fields)
+            stats.columns = columns
+        cols = [
+            "name",
+            "email",
+            *extend_fields,
+            "agree",
+            "disagree",
+            "skipped",
+            "divergence",
+            "participation",
+        ]
+        stats = stats[cols]
+
+        # Use better values for extended columns
+        for field, transform in transforms.items():
+            stats[field] = stats[field].apply(transform)
+
+        return stats
+
+
+#
+# Auxiliary functions
+#
+def conversation_filter(conversation, field="conversation"):
+    if isinstance(conversation, int):
+        return {field + "_id": conversation}
+    elif isinstance(conversation, db.conversation_model):
+        return {field: conversation}
+    elif isinstance(conversation, (QuerySet, Iterable)):
+        return {field + "__in": conversation}
     else:
-        tail = join_url(*args)
-        return f"{head.rstrip('/')}/{tail.lstrip('/')}"
+        raise ValueError(f"invalid value for conversation: {conversation}")
 
 
-def validation_error(err, status_code=403):
-    """
-    Return a JSON message describing a validation error.
-    """
-    errors = err.messages
-    msg = {'status_code': status_code, 'error': True}
-    if len(errors) == 1:
-        msg['message'] = errors[0]
-    else:
-        msg['messages'] = errors
-    return msg
+#
+# Patch user class
+#
+def patch_user_class():
+    qs_type = type(get_user_model().objects.get_queryset())
+    manager_type = type(get_user_model().objects)
+
+    if qs_type in (QuerySet, *QuerySet.__bases__):
+        # We take special actions for Django's builtin user model
+        from django.contrib.auth.models import User, UserManager
+
+        if get_user_model() is User:
+            UserManager._queryset_class = type(
+                "UserQueryset", (UserMixin, UserManager._queryset_class), {}
+            )
+            return
+        else:
+            raise ImproperlyConfigured(
+                "You cannot use a generic QuerySet for your user model.\n"
+                "ej_conversations have to patch the queryset class for this model and\n"
+                "by adding a new base class and we do not want to patch the base\n"
+                "QuerySet since that would affect all models."
+            )
+
+    qs_type.__bases__ = (UserMixin, *qs_type.__bases__)
+    manager_type.__bases__ = (UserMixin, *manager_type.__bases__)
+
+
+patch_user_class()
+
+#
+# Constants
+#
+EXTEND_FIELDS = {
+    "gender": "profile__gender",
+    "race": "profile__race",
+    "education": "profile__education",
+    "occupation": "profile__occupation",
+    "birth_date": "profile__birth_date",
+    "country": "profile__country",
+    "state": "profile__state",
+    "age": "profile__birth_date",
+}
+EXTEND_FIELDS_VERBOSE = {
+    "gender": lambda x: "" if x is None else Gender(x).name.lower(),
+    "race": lambda x: "" if x is None else Race(x).name.lower(),
+    "age": lambda x: x if x is None else years_from(x, now().date()),
+}

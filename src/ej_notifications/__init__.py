@@ -1,1 +1,1 @@
-default_app_config = 'ej_notifications.apps.EjNotificationsConfig'
+default_app_config = "ej_notifications.apps.EjNotificationsConfig"

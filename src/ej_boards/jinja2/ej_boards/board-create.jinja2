@@ -1,27 +1,15 @@
-{% extends 'base.jinja2' %}
+{% extends 'ej_boards/base.jinja2' %}
+{% set main_class = 'container measure pad-x0 col flex-start items-center' %}
+
 
 {% block content %}
-    <div class="Board-TopMenu">
-        <button onclick="history.back()">
-            <img src="/static/img/icons/icon_cancel.svg"/>
-            {{ _('Cancel') }}
-        </button>
-        <button form="create-board-form" type=submit>
-            <img src="/static/img/icons/icon_save.svg"/>
-            {{ _('Save board') }}
-        </button>
-    </div>
-    <div class="CenteredContainer" compact>
-        {% block form_identification %}
-        <h1 class="Board-Title">{{ _('Create board') }}</h1>
-        <p>{{ _('Fill up the form to create a new conversation board') }}</p>
-        {% endblock %}
-        <form id="create-board-form" method="post" class="Form BoardForm">
-            {{ csrf_input }}
-            {{ form.as_p() }}
-            <div>
-                <input type="submit" class="Button" value="{{ _('Save') }}" name="create">
-            </div>
-        </form>
-    </div>
+    <h1 class="h2 text-accent center">{{ title|default(_('Create board')) }}</h1>
+    <p class="center">{{ _('Fill up the form to create a new conversation board') }}</p>
+    <form method="post" enctype="multipart/form-data">
+        {{ csrf_input }}
+        {{ form }}
+        <p class="center margin-y3">
+            <input type="submit" value="{{ action|default(_('Create Board')) }}" name="create" class="is-primary">
+        </p>
+    </form>
 {% endblock %}

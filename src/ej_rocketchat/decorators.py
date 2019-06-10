@@ -44,9 +44,9 @@ def requires_rc_perm(func):
         # Try to build the initial context
         if not rocket.has_config:
             if user.is_superuser:
-                return redirect('rocket:config')
+                return redirect("rocket:config")
             else:
-                return HttpResponseServerError('invalid-rc-config')
+                return HttpResponseServerError("invalid-rc-config")
         return func(request, *args, **kwargs)
 
     return decorated
@@ -56,13 +56,13 @@ def get_rocket_url():
     try:
         return rocket.url
     except ImproperlyConfigured:
-        return settings.EJ_ROCKETCHAT_URL or 'http://localhost:3000'
+        return settings.EJ_ROCKETCHAT_URL or "http://localhost:3000"
 
 
 def with_headers(response):
-    policy = ' '.join(['frame-ancestors', *settings.CSRF_TRUSTED_ORIGINS])
-    response['Access-Control-Allow-Origin'] = get_rocket_url()
-    response['Access-Control-Allow-Credentials'] = 'true'
-    response['Content-Security-Policy'] = policy
-    response['X-Frame-Options'] = f'allow-from {get_rocket_url()}'
+    policy = " ".join(["frame-ancestors", *settings.CSRF_TRUSTED_ORIGINS])
+    response["Access-Control-Allow-Origin"] = get_rocket_url()
+    response["Access-Control-Allow-Credentials"] = "true"
+    response["Content-Security-Policy"] = policy
+    response["X-Frame-Options"] = f"allow-from {get_rocket_url()}"
     return response
