@@ -33,3 +33,17 @@ export function debug(...args) {
 export function camelCaseToDash(myStr) {
     return myStr.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
 }
+
+
+//==============================================================================
+// COOKIE AND STATE HANDLING
+//==============================================================================
+
+/**
+ * Return content of the given named cookie or undefined if cookie is not found.
+ */
+export function cookie(name) {
+    let re = RegExp(name + '=([^;]+)'),
+       m = document.cookie.match(re);
+    return m? m[1]: undefined;
+}

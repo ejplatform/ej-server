@@ -1,4 +1,5 @@
 import {component, Component} from "./base";
+import {cookie} from "../utils";
 
 
 @component('main-header')
@@ -63,19 +64,29 @@ class PageMenu extends Component {
     init() {
         this.$().attr('is-menu', '');
         this.isFontLarge = false;
-        this.hasContrast = false;
+        this.hasContrast = cookie('hicontrast') == 'true';
         this.scaleFactor = 1.5;
+        this.setContrast();
+    }
+
+    // TOGGLE MENU
+    toggleMenu() {
+        $('.main-header')[0]['ej-component'].toggleMenu();
+        return false;
     }
 
     // TOGGLE CONTRASTS
     toggleContrast() {
-        $('body').toggleClass('hicontrast');
+        this.hasContrast = !this.hasContrast;
+        this.setContrast();
+        this.toggleMenu();
         return false;
     }
 
     // TOGGLE FONT SIZES
     toggleFontSize() {
         this.isFontLarge ? this.makeFontsRegular() : this.makeFontsLarge();
+        this.toggleMenu();
         return false;
     }
 
@@ -94,6 +105,7 @@ class PageMenu extends Component {
         this.scaleFont($main, (2 * this.scaleFactor + 1) / 3);
     }
 
+    // noinspection JSMethodCanBeStatic
     storeFontSize($elem) {
         $elem.data('original-font-size', {
             size: $elem.css('font-size'),
@@ -102,6 +114,7 @@ class PageMenu extends Component {
         return $elem;
     }
 
+    // noinspection JSMethodCanBeStatic
     restoreFontSize($elem) {
         let data = $elem.data('original-font-size');
         if (data === undefined) {
@@ -113,6 +126,7 @@ class PageMenu extends Component {
         }
     }
 
+    // noinspection JSMethodCanBeStatic
     scaleFont($elem, by) {
         let size = parseInt($elem.data('original-font-size').size),
             newSize = (by * size) | 0;
@@ -120,5 +134,21 @@ class PageMenu extends Component {
             $elem.css('font-size', `${newSize}px`)
         }
         return $elem;
+    }
+
+    setContrast() {
+        let $link = $('#main-css-link'),
+            href = $link.attr('href');
+
+        if (this.hasContrast) {
+            $link.attr({href: href.replace('main.css', 'hicontrast.css')});
+            $link.data({style: 'hicontrast'});
+            document.cookie = "hicontrast = true";
+        }
+        else {
+            $link.attr({href: href.replace('hicontrast.css', 'main.css')});
+            $link.data({style: 'main'});
+            document.cookie = "hicontrast = false";
+        }
     }
 }

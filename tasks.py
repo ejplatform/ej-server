@@ -36,14 +36,13 @@ def sass(ctx, theme='default', watch=False, background=False):
     theme, root = set_theme(theme)
     os.environ['EJ_THEME'] = theme or 'default'
     ctx.run('mkdir -p lib/build/css')
-    print(root, theme)
     root = f'{root}scss/'
 
     def go():
         import sass
 
         root_url = f'file://{os.path.abspath("lib/build/css/")}'
-        for file in ('main', 'rocket'):
+        for file in ('main', 'rocket', 'hicontrast'):
             try:
                 map_path = f'lib/build/css/{file}.css.map'
                 css, sourcemap = sass.compile(filename=f'{root}{file}.scss',
@@ -65,18 +64,20 @@ def sass(ctx, theme='default', watch=False, background=False):
 
 
 @task
-def js(ctx):
+def js(ctx, watch=False):
     """
     Build js assets
     """
     from pathlib import Path
+
+    build_cmd = 'npm run watch' if watch else 'npm run build'
     cwd = os.getcwd()
     try:
         path = Path(__file__).parent / 'lib'
         os.chdir(path)
         ctx.run('mkdir -p build/js/')
         ctx.run('rm build/js/main.js* -f')
-        ctx.run('npm run build')
+        ctx.run(build_cmd)
     finally:
         os.chdir(cwd)
 
