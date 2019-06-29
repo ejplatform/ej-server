@@ -114,7 +114,10 @@ def render_dataframe(df, index=False, *, col_display=None, **kwargs):
 #
 # Constants
 #
-DEFAULT_FORMATS = {"csv": "CSV", "msgpack": "MsgPack", "json": "JSON"}
+
+# TODO: make list of formats configurable
+# "msgpack": "MsgPack"
+DEFAULT_FORMATS = {"csv": "CSV", "json": "JSON"}
 
 COLUMN_NAMES = {
     "agree": _("Agree"),
