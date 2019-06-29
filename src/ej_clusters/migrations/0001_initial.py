@@ -13,49 +13,143 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Cluster',
+            name="Cluster",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created', model_utils.fields.AutoCreatedField(default=django.utils.timezone.now, editable=False, verbose_name='created')),
-                ('modified', model_utils.fields.AutoLastModifiedField(default=django.utils.timezone.now, editable=False, verbose_name='modified')),
-                ('name', models.CharField(max_length=64, verbose_name='Name')),
-                ('description', models.TextField(blank=True, help_text='How was this cluster conceived?', verbose_name='Description')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "created",
+                    model_utils.fields.AutoCreatedField(
+                        default=django.utils.timezone.now,
+                        editable=False,
+                        verbose_name="created",
+                    ),
+                ),
+                (
+                    "modified",
+                    model_utils.fields.AutoLastModifiedField(
+                        default=django.utils.timezone.now,
+                        editable=False,
+                        verbose_name="modified",
+                    ),
+                ),
+                ("name", models.CharField(max_length=64, verbose_name="Name")),
+                (
+                    "description",
+                    models.TextField(
+                        blank=True,
+                        help_text="How was this cluster conceived?",
+                        verbose_name="Description",
+                    ),
+                ),
             ],
-            options={
-                'abstract': False,
-            },
+            options={"abstract": False},
         ),
         migrations.CreateModel(
-            name='Clusterization',
+            name="Clusterization",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created', model_utils.fields.AutoCreatedField(default=django.utils.timezone.now, editable=False, verbose_name='created')),
-                ('modified', model_utils.fields.AutoLastModifiedField(default=django.utils.timezone.now, editable=False, verbose_name='modified')),
-                ('cluster_status', boogie.fields.enum_field.EnumField(ej_clusters.enums.ClusterStatus, default=ej_clusters.enums.ClusterStatus(0))),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "created",
+                    model_utils.fields.AutoCreatedField(
+                        default=django.utils.timezone.now,
+                        editable=False,
+                        verbose_name="created",
+                    ),
+                ),
+                (
+                    "modified",
+                    model_utils.fields.AutoLastModifiedField(
+                        default=django.utils.timezone.now,
+                        editable=False,
+                        verbose_name="modified",
+                    ),
+                ),
+                (
+                    "cluster_status",
+                    boogie.fields.enum_field.EnumField(
+                        ej_clusters.enums.ClusterStatus,
+                        default=ej_clusters.enums.ClusterStatus(0),
+                    ),
+                ),
             ],
-            options={
-                'ordering': ['conversation_id'],
-            },
+            options={"ordering": ["conversation_id"]},
         ),
         migrations.CreateModel(
-            name='Stereotype',
+            name="Stereotype",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(help_text='Public identification of persona.', max_length=64, verbose_name='Name')),
-                ('description', models.TextField(blank=True, help_text='Specify a background history, or give hints about the profile this persona wants to capture. This information is optional and is not made public.', verbose_name='Description')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "name",
+                    models.CharField(
+                        help_text="Public identification of persona.",
+                        max_length=64,
+                        verbose_name="Name",
+                    ),
+                ),
+                (
+                    "description",
+                    models.TextField(
+                        blank=True,
+                        help_text="Specify a background history, or give hints about the profile this persona wants to capture. This information is optional and is not made public.",
+                        verbose_name="Description",
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='StereotypeVote',
+            name="StereotypeVote",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('choice', boogie.fields.enum_field.EnumField(ej_conversations.enums.Choice, verbose_name='Choice')),
-                ('author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='votes', to='ej_clusters.Stereotype')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "choice",
+                    boogie.fields.enum_field.EnumField(
+                        ej_conversations.enums.Choice, verbose_name="Choice"
+                    ),
+                ),
+                (
+                    "author",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="votes",
+                        to="ej_clusters.Stereotype",
+                    ),
+                ),
             ],
         ),
     ]

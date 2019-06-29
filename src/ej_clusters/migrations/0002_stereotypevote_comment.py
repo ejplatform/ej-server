@@ -9,14 +9,19 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('ej_conversations', '0001_initial'),
-        ('ej_clusters', '0001_initial'),
+        ("ej_conversations", "0001_initial"),
+        ("ej_clusters", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='stereotypevote',
-            name='comment',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='stereotype_votes', to='ej_conversations.Comment', verbose_name='Comment'),
-        ),
+            model_name="stereotypevote",
+            name="comment",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="stereotype_votes",
+                to="ej_conversations.Comment",
+                verbose_name="Comment",
+            ),
+        )
     ]

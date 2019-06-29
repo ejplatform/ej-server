@@ -11,84 +11,198 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='ConversationProgress',
+            name="ConversationProgress",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('score', models.PositiveSmallIntegerField(default=0)),
-                ('score_bias', models.SmallIntegerField(default=0)),
-                ('conversation_level', boogie.fields.enum_field.EnumField(ej_gamification.enums.ConversationLevel, default=ej_gamification.enums.CommenterLevel(0))),
-                ('max_conversation_level', boogie.fields.enum_field.EnumField(ej_gamification.enums.ConversationLevel, default=ej_gamification.enums.CommenterLevel(0))),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("score", models.PositiveSmallIntegerField(default=0)),
+                ("score_bias", models.SmallIntegerField(default=0)),
+                (
+                    "conversation_level",
+                    boogie.fields.enum_field.EnumField(
+                        ej_gamification.enums.ConversationLevel,
+                        default=ej_gamification.enums.CommenterLevel(0),
+                    ),
+                ),
+                (
+                    "max_conversation_level",
+                    boogie.fields.enum_field.EnumField(
+                        ej_gamification.enums.ConversationLevel,
+                        default=ej_gamification.enums.CommenterLevel(0),
+                    ),
+                ),
             ],
-            options={
-                'verbose_name_plural': 'Conversation progress list',
-            },
+            options={"verbose_name_plural": "Conversation progress list"},
         ),
         migrations.CreateModel(
-            name='Endorsement',
+            name="Endorsement",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('start', models.DateTimeField(blank=True, null=True, verbose_name='start')),
-                ('end', models.DateTimeField(blank=True, null=True, verbose_name='end')),
-                ('message', models.TextField(blank=True, help_text='Optional message explaining why the endorsement affected the given set of users.', verbose_name='Endorsement reason')),
-                ('is_global', models.BooleanField(default=False, help_text='Global comments affect all users in conversation', verbose_name='Is it global?')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "start",
+                    models.DateTimeField(blank=True, null=True, verbose_name="start"),
+                ),
+                (
+                    "end",
+                    models.DateTimeField(blank=True, null=True, verbose_name="end"),
+                ),
+                (
+                    "message",
+                    models.TextField(
+                        blank=True,
+                        help_text="Optional message explaining why the endorsement affected the given set of users.",
+                        verbose_name="Endorsement reason",
+                    ),
+                ),
+                (
+                    "is_global",
+                    models.BooleanField(
+                        default=False,
+                        help_text="Global comments affect all users in conversation",
+                        verbose_name="Is it global?",
+                    ),
+                ),
             ],
-            options={
-                'abstract': False,
-            },
+            options={"abstract": False},
         ),
         migrations.CreateModel(
-            name='GivenPower',
+            name="GivenPower",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('start', models.DateTimeField(blank=True, null=True, verbose_name='start')),
-                ('end', models.DateTimeField(blank=True, null=True, verbose_name='end')),
-                ('data', jsonfield.fields.JSONField(default=dict)),
-                ('is_exhausted', models.BooleanField(default=False)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "start",
+                    models.DateTimeField(blank=True, null=True, verbose_name="start"),
+                ),
+                (
+                    "end",
+                    models.DateTimeField(blank=True, null=True, verbose_name="end"),
+                ),
+                ("data", jsonfield.fields.JSONField(default=dict)),
+                ("is_exhausted", models.BooleanField(default=False)),
             ],
-            options={
-                'abstract': False,
-                'base_manager_name': 'objects',
-            },
+            options={"abstract": False, "base_manager_name": "objects"},
             managers=[
-                ('timeframed', django.db.models.manager.Manager()),
-                ('objects', django.db.models.manager.Manager()),
+                ("timeframed", django.db.models.manager.Manager()),
+                ("objects", django.db.models.manager.Manager()),
             ],
         ),
         migrations.CreateModel(
-            name='ParticipationProgress',
+            name="ParticipationProgress",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('score', models.PositiveSmallIntegerField(default=0)),
-                ('score_bias', models.SmallIntegerField(default=0)),
-                ('voter_level', boogie.fields.enum_field.EnumField(ej_gamification.enums.VoterLevel, default=ej_gamification.enums.VoterLevel(0))),
-                ('max_voter_level', boogie.fields.enum_field.EnumField(ej_gamification.enums.VoterLevel, default=ej_gamification.enums.VoterLevel(0))),
-                ('is_owner', models.BooleanField(default=False)),
-                ('is_focused', models.BooleanField(default=False)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("score", models.PositiveSmallIntegerField(default=0)),
+                ("score_bias", models.SmallIntegerField(default=0)),
+                (
+                    "voter_level",
+                    boogie.fields.enum_field.EnumField(
+                        ej_gamification.enums.VoterLevel,
+                        default=ej_gamification.enums.VoterLevel(0),
+                    ),
+                ),
+                (
+                    "max_voter_level",
+                    boogie.fields.enum_field.EnumField(
+                        ej_gamification.enums.VoterLevel,
+                        default=ej_gamification.enums.VoterLevel(0),
+                    ),
+                ),
+                ("is_owner", models.BooleanField(default=False)),
+                ("is_focused", models.BooleanField(default=False)),
             ],
-            options={
-                'abstract': False,
-            },
+            options={"abstract": False},
         ),
         migrations.CreateModel(
-            name='UserProgress',
+            name="UserProgress",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('score', models.PositiveSmallIntegerField(default=0)),
-                ('score_bias', models.SmallIntegerField(default=0)),
-                ('commenter_level', boogie.fields.enum_field.EnumField(ej_gamification.enums.CommenterLevel, default=ej_gamification.enums.CommenterLevel(0))),
-                ('max_commenter_level', boogie.fields.enum_field.EnumField(ej_gamification.enums.CommenterLevel, default=ej_gamification.enums.CommenterLevel(0))),
-                ('host_level', boogie.fields.enum_field.EnumField(ej_gamification.enums.HostLevel, default=ej_gamification.enums.HostLevel(0))),
-                ('max_host_level', boogie.fields.enum_field.EnumField(ej_gamification.enums.HostLevel, default=ej_gamification.enums.HostLevel(0))),
-                ('profile_level', boogie.fields.enum_field.EnumField(ej_gamification.enums.ProfileLevel, default=ej_gamification.enums.ProfileLevel(0))),
-                ('max_profile_level', boogie.fields.enum_field.EnumField(ej_gamification.enums.ProfileLevel, default=ej_gamification.enums.ProfileLevel(0))),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("score", models.PositiveSmallIntegerField(default=0)),
+                ("score_bias", models.SmallIntegerField(default=0)),
+                (
+                    "commenter_level",
+                    boogie.fields.enum_field.EnumField(
+                        ej_gamification.enums.CommenterLevel,
+                        default=ej_gamification.enums.CommenterLevel(0),
+                    ),
+                ),
+                (
+                    "max_commenter_level",
+                    boogie.fields.enum_field.EnumField(
+                        ej_gamification.enums.CommenterLevel,
+                        default=ej_gamification.enums.CommenterLevel(0),
+                    ),
+                ),
+                (
+                    "host_level",
+                    boogie.fields.enum_field.EnumField(
+                        ej_gamification.enums.HostLevel,
+                        default=ej_gamification.enums.HostLevel(0),
+                    ),
+                ),
+                (
+                    "max_host_level",
+                    boogie.fields.enum_field.EnumField(
+                        ej_gamification.enums.HostLevel,
+                        default=ej_gamification.enums.HostLevel(0),
+                    ),
+                ),
+                (
+                    "profile_level",
+                    boogie.fields.enum_field.EnumField(
+                        ej_gamification.enums.ProfileLevel,
+                        default=ej_gamification.enums.ProfileLevel(0),
+                    ),
+                ),
+                (
+                    "max_profile_level",
+                    boogie.fields.enum_field.EnumField(
+                        ej_gamification.enums.ProfileLevel,
+                        default=ej_gamification.enums.ProfileLevel(0),
+                    ),
+                ),
             ],
-            options={
-                'verbose_name_plural': 'User progress list',
-            },
+            options={"verbose_name_plural": "User progress list"},
         ),
     ]

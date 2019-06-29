@@ -1,9 +1,18 @@
 from boogie.router import Router
 from django.shortcuts import render
 
-from ej_gamification.models.progress import get_progress, UserProgress, ConversationProgress
-from .roles import profile_trophy, participation_trophy, host_trophy, participate_conversation_trophy, \
-    host_conversation_trophy
+from ej_gamification.models.progress import (
+    get_progress,
+    UserProgress,
+    ConversationProgress,
+)
+from .roles import (
+    profile_trophy,
+    participation_trophy,
+    host_trophy,
+    participate_conversation_trophy,
+    host_conversation_trophy,
+)
 
 app_name = "ej_gamification"
 urlpatterns = Router(template="ej_gamification/{name}.jinja2", login=True)
@@ -14,10 +23,12 @@ sign = lambda x: 1 if x >= 0 else -1
 def achievements(request):
     user = request.user
     progress = get_progress(user, sync=True)
-    participation = map(participate_conversation_trophy, user.participation_progresses.all())
+    participation = map(
+        participate_conversation_trophy, user.participation_progresses.all()
+    )
     conversation_trophies = map(
         host_conversation_trophy,
-        ConversationProgress.objects.filter(conversation__author=user)
+        ConversationProgress.objects.filter(conversation__author=user),
     )
 
     return {
@@ -47,9 +58,10 @@ def progress_flag(request, position, total):
     cx = scale * (pc * (end - start) + start)
 
     return render(
-        request, 'ej_gamification/progress-flag.jinja2',
-        {'circle_cx': cx},
-        content_type='image/svg+xml',
+        request,
+        "ej_gamification/progress-flag.jinja2",
+        {"circle_cx": cx},
+        content_type="image/svg+xml",
     )
 
 

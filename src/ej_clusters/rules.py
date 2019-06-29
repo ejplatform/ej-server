@@ -114,7 +114,7 @@ def votes_in_conversation(user, conversation):
     """
     Return the number of votes of a user in conversation.
     """
-    return conversation.user_votes(user).count()
+    return conversation.votes_for_user(user).count()
 
 
 def get_clusterization(obj):

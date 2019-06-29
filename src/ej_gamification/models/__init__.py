@@ -1,8 +1,13 @@
 from .endorsement import Endorsement, endorse_comment, is_endorsed
 
 from .given_powers import GivenBridgePower, GivenMinorityPower, GivenPower
-from .progress import UserProgress, ConversationProgress, ParticipationProgress, \
-    get_participation, get_progress
+from .progress import (
+    UserProgress,
+    ConversationProgress,
+    ParticipationProgress,
+    get_participation,
+    get_progress,
+)
 
 # ------------------------------------------------------------------------------
 # Patch models

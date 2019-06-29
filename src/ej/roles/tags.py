@@ -223,8 +223,6 @@ def progress_bar(*args):
     return div(children, class_="progress-bar")
 
 
-
-
 def popup(title, content, action=None, **kwargs):
     """
     Return a popup screen.

@@ -4,28 +4,25 @@ from .options import EjOptions
 
 
 class InstalledAppsConf(Base, EjOptions):
-    USE_DJANGO_ADMIN = env(True, name='{name}')
+    USE_DJANGO_ADMIN = env(True, name="{name}")
 
     project_apps = [
         # Gamification
         "ej_gamification",
         "ej_experiments",
-
         # Notifications
         # 'ej_notifications',
-
         # Boards
         "ej_boards",
-
         # Math
         "ej_clusters",
         "ej_dataviz",
-
         # Core apps
         "ej_profiles",
         "ej_conversations",
     ]
     from allauth import account
+
     third_party_apps = [
         "boogie.apps.fragments",
         "taggit",
@@ -33,9 +30,9 @@ class InstalledAppsConf(Base, EjOptions):
         "allauth",
         "allauth.account",
         "allauth.socialaccount",
-        'allauth.socialaccount.providers.facebook',
-        'allauth.socialaccount.providers.twitter',
-        'allauth.socialaccount.providers.google',
+        "allauth.socialaccount.providers.facebook",
+        "allauth.socialaccount.providers.twitter",
+        "allauth.socialaccount.providers.google",
         # 'allauth.socialaccount.providers.github',
         "ej_users",
         # 'django_filters',

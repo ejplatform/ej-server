@@ -12,7 +12,7 @@ def vote_dataset(request, conversation):
 
 @rest_api.action("ej_conversations.Conversation")
 def user_statistics(request, conversation):
-    return conversation.user_statistics(request.user)
+    return conversation.statistics_for_user(request.user)
 
 
 @rest_api.action("ej_conversations.Conversation")

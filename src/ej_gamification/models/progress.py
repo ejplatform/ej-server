@@ -40,11 +40,7 @@ class ProgressBase(models.Model):
 
     @lazy
     def position(self):
-        return len(
-            type(self).objects
-                .order_by('-score')
-                .filter(score__gt=self.score)
-        )
+        return len(type(self).objects.order_by("-score").filter(score__gt=self.score))
 
     class Meta:
         abstract = True

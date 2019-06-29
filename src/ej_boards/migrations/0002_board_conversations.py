@@ -7,15 +7,14 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-        ('ej_boards', '0001_initial'),
-        ('ej_conversations', '0001_initial'),
-    ]
+    dependencies = [("ej_boards", "0001_initial"), ("ej_conversations", "0001_initial")]
 
     operations = [
         migrations.AddField(
-            model_name='board',
-            name='conversations',
-            field=models.ManyToManyField(blank=True, related_name='boards', to='ej_conversations.Conversation'),
-        ),
+            model_name="board",
+            name="conversations",
+            field=models.ManyToManyField(
+                blank=True, related_name="boards", to="ej_conversations.Conversation"
+            ),
+        )
     ]

@@ -1,10 +1,11 @@
 from boogie import rules
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
-from hyperpython import a, html, Blob
+from hyperpython import a, html, Blob, div
 from hyperpython.django import csrf_input
 
-from ej.roles import with_template, extra_content, progress_bar
+from ej.roles import with_template, progress_bar
+from ..rules import max_comments_per_conversation
 from .. import forms
 from .. import models
 
@@ -93,18 +94,26 @@ def conversation_create_comment(conversation, request=None, **kwargs):
     """
     Render "create comment" button for one conversation.
     """
-    n_moderation = 0
-    n_comments = 0
-    max_comments = 3
+    conversation.set_request(request)
+    n_comments = conversation.n_user_comments
+    n_moderation = conversation.n_pending_comments
+    max_comments = max_comments_per_conversation()
     moderation_msg = _("{n} awaiting moderation").format(n=n_moderation)
     comments_count = _("{ratio} comments").format(
         ratio=f"<strong>{n_comments}</strong> / {max_comments}"
     )
-    return extra_content(
-        _("Create comment"),
+
+    # FIXME: Reactivate when full UI for the comment form is implemented
+    # return extra_content(
+    #     _("Create comment"),
+    #     Blob(f"{comments_count}" f'<div class="text-7 strong">{moderation_msg}</div>'),
+    #     icon="plus",
+    #     id="create-comment",
+    # )
+    return div(
         Blob(f"{comments_count}" f'<div class="text-7 strong">{moderation_msg}</div>'),
-        icon="plus",
         id="create-comment",
+        class_="extra-content",
     )
 
 
