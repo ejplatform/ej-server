@@ -1,8 +1,17 @@
-<div class="DownloadLinkList">
-    <span class="DownloadLinkList-title">{{ title|default(_('Downloads: ')) }}</span>
-    <ul class="DownloadLinkList-links">
+<div class="margin-t3">
+    <span class="bold">{{ title|default(_('Downloads: ')) }}</span>
+    <ul class="list-reset margin-x3">
         {%- for format, name in formats -%}
-            <li><a href="{{ conversation.url(view_name, fmt=format) }}">{{ name }}</a></li>
+            <li class="margin-0"><a href="{{ conversation.url(view_name, fmt=format) }}">
+                <span class="brand bold">{{ name }}</span></a>
+                {%- if format == 'csv' %}
+                    - {{ _('Text-based table format that can be imported to Excel and other spreadsheets.') }}
+                {% elif format == 'json' %}
+                    - {{ _('Simple data format expressed as a list of dictionaries. (For advanced users)') }}
+                {% elif format == 'msgpack' %}
+                    - {{ _('Binary faster alternative to JSON.') }}
+                {% endif %}
+            </li>
         {% endfor %}
     </ul>
 </div>

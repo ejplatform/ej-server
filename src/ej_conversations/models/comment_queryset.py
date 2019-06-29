@@ -59,7 +59,7 @@ class CommentQuerySet(ConversationMixin, WordCloudQuerySet):
         """
         Return a dataframe with basic voting statistics.
 
-        The resulting dataframe has the 'author', 'text', 'agree', 'disagree'
+        The resulting dataframe has the 'content', 'author', 'agree', 'disagree'
         'skipped', 'divergence' and 'participation' columns.
         """
         votes = (votes or self.votes()).dataframe("comment", "author", "choice")
@@ -70,8 +70,8 @@ class CommentQuerySet(ConversationMixin, WordCloudQuerySet):
         stats = self.extend_dataframe(stats, "author__name", *extend_fields, "content")
         stats["author"] = stats.pop("author__name")
         cols = [
-            "author",
             "content",
+            "author",
             "agree",
             "disagree",
             "skipped",

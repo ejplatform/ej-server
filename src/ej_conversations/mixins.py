@@ -6,12 +6,14 @@ from boogie.models import QuerySet
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ImproperlyConfigured
 from django.utils.timezone import now
+from sidekick import import_later
 
 from ej_profiles.enums import Gender, Race
 from ej_profiles.utils import years_from
 from .math import user_statistics
 
 db = db.ej_conversations
+np = import_later('numpy')
 NOT_GIVEN = object()
 
 
@@ -121,10 +123,10 @@ class UserMixin(ConversationMixin):
         stats *= normalization
 
         # Extend fields with additional data
-        extend_full_fields = [EXTEND_FIELDS[x] for x in extend_fields]
+        extend_full_fields = [EXTEND_FIELDS.get(x, x) for x in extend_fields]
 
         transforms = {
-            x: EXTEND_FIELDS_VERBOSE[x]
+            x: EXTEND_FIELDS_VERBOSE.get(x, x)
             for x in extend_fields
             if x in EXTEND_FIELDS_VERBOSE
         }
@@ -199,6 +201,9 @@ def patch_user_class():
 
 patch_user_class()
 
+def is_empty(x):
+    return x is None or np.isnan(x)
+
 #
 # Constants
 #
@@ -213,7 +218,7 @@ EXTEND_FIELDS = {
     "age": "profile__birth_date",
 }
 EXTEND_FIELDS_VERBOSE = {
-    "gender": lambda x: "" if x is None else Gender(x).name.lower(),
-    "race": lambda x: "" if x is None else Race(x).name.lower(),
-    "age": lambda x: x if x is None else years_from(x, now().date()),
+    "gender": lambda x: "" if is_empty(x) else Gender(x).name.lower(),
+    "race": lambda x: "" if is_empty(x) else Race(x).name.lower(),
+    "age": lambda x: x if is_empty(x) else years_from(x, now().date()),
 }
