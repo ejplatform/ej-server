@@ -8,7 +8,7 @@ from django.core.exceptions import ValidationError, ObjectDoesNotExist
 from django.db.models import Count, Q
 from django.utils.translation import ugettext_lazy as _
 from model_utils.models import TimeStampedModel
-from sidekick import lazy, placeholder as this
+from sidekick import lazy, property as property, placeholder as this
 from taggit.managers import TaggableManager
 from taggit.models import TaggedItemBase
 
@@ -96,11 +96,12 @@ class Conversation(TimeStampedModel):
     tag_names = lazy(this.tags.values_list("name", flat=True))
 
     # Statistics
-    n_comments = lazy(
-        lambda self: self.comments.filter(status=Comment.STATUS.approved).count()
+    n_comments = lazy(this.comments.filter(status=Comment.STATUS.approved).count())
+    n_pending_comments = lazy(
+        this.comments.filter(status=Comment.STATUS.pending).count()
     )
     n_rejected_comments = lazy(
-        lambda self: self.comments.filter(status=Comment.STATUS.rejected).count()
+        this.comments.filter(status=Comment.STATUS.rejected).count()
     )
     n_favorites = lazy(this.favorites.count())
     n_tags = lazy(this.tags.count())
@@ -108,7 +109,28 @@ class Conversation(TimeStampedModel):
     n_participants = lazy(this.users.count())
 
     # Statistics for the request user
-    n_user_votes = lazy(lambda self: self.votes.filter(author=self.for_user).count())
+    user_comments = property(this.comments.filter(author=this.for_user))
+    user_votes = property(this.votes.filter(author=this.for_user))
+    n_user_comments = lazy(
+        this.user_comments.filter(status=Comment.STATUS.approved).count()
+    )
+    n_user_rejected_comments = lazy(
+        this.user_comments.filter(status=Comment.STATUS.rejected).count()
+    )
+    n_user_pending_comments = lazy(
+        this.user_comments.filter(status=Comment.STATUS.pending).count()
+    )
+    n_user_votes = lazy(this.user_votes.count())
+    is_user_favorite = lazy(this.is_favorite(this.for_user))
+
+    @lazy
+    def for_user(self):
+        return self.request.user
+
+    @lazy
+    def request(self):
+        msg = "Set the request object by calling the .set_request(request) method first"
+        raise RuntimeError(msg)
 
     # TODO: move as patches from other apps
     @lazy
@@ -129,6 +151,27 @@ class Conversation(TimeStampedModel):
 
     def __str__(self):
         return self.title
+
+    def set_request(self, request_or_user):
+        """
+        Saves optional user and request attributes in model. Those attributes are
+        used to compute and cache many other attributes and statistics in the
+        conversation model instance.
+        """
+        request = None
+        user = request_or_user
+        if not isinstance(request_or_user, get_user_model()):
+            user = request_or_user.user
+            request = request_or_user
+
+        if (
+            self.__dict__.get("for_user", user) != user
+            or self.__dict__.get("request", request) != request
+        ):
+            raise ValueError("user/request already set in conversation!")
+
+        self.for_user = user
+        self.request = request
 
     def save(self, *args, **kwargs):
         if self.id is None:
@@ -173,7 +216,7 @@ class Conversation(TimeStampedModel):
 
         return SafeUrl(which, **kwargs)
 
-    def user_votes(self, user):
+    def votes_for_user(self, user):
         """
         Get all votes in conversation for the given user.
         """
@@ -273,7 +316,7 @@ class Conversation(TimeStampedModel):
             },
         }
 
-    def user_statistics(self, user):
+    def statistics_for_user(self, user):
         """
         Get information about user.
         """

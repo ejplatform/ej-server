@@ -10,25 +10,73 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Board',
+            name="Board",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created', model_utils.fields.AutoCreatedField(default=django.utils.timezone.now, editable=False, verbose_name='created')),
-                ('modified', model_utils.fields.AutoLastModifiedField(default=django.utils.timezone.now, editable=False, verbose_name='modified')),
-                ('slug', models.SlugField(unique=True, validators=[ej_boards.validators.validate_board_slug], verbose_name='Slug')),
-                ('title', models.CharField(max_length=50, verbose_name='Title')),
-                ('description', models.TextField(blank=True, verbose_name='Description')),
-                ('palette', models.CharField(choices=[('brand', 'Default'), ('accent', 'Alternative'), ('grey', 'Grey'), ('green', 'Green'), ('orange', 'Orange'), ('purple', 'Purple')], default='Blue', max_length=10, verbose_name='Palette')),
-                ('image', models.ImageField(blank=True, null=True, upload_to='', verbose_name='Image')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "created",
+                    model_utils.fields.AutoCreatedField(
+                        default=django.utils.timezone.now,
+                        editable=False,
+                        verbose_name="created",
+                    ),
+                ),
+                (
+                    "modified",
+                    model_utils.fields.AutoLastModifiedField(
+                        default=django.utils.timezone.now,
+                        editable=False,
+                        verbose_name="modified",
+                    ),
+                ),
+                (
+                    "slug",
+                    models.SlugField(
+                        unique=True,
+                        validators=[ej_boards.validators.validate_board_slug],
+                        verbose_name="Slug",
+                    ),
+                ),
+                ("title", models.CharField(max_length=50, verbose_name="Title")),
+                (
+                    "description",
+                    models.TextField(blank=True, verbose_name="Description"),
+                ),
+                (
+                    "palette",
+                    models.CharField(
+                        choices=[
+                            ("brand", "Default"),
+                            ("accent", "Alternative"),
+                            ("grey", "Grey"),
+                            ("green", "Green"),
+                            ("orange", "Orange"),
+                            ("purple", "Purple"),
+                        ],
+                        default="Blue",
+                        max_length=10,
+                        verbose_name="Palette",
+                    ),
+                ),
+                (
+                    "image",
+                    models.ImageField(
+                        blank=True, null=True, upload_to="", verbose_name="Image"
+                    ),
+                ),
             ],
-            options={
-                'verbose_name': 'Board',
-                'verbose_name_plural': 'Boards',
-            },
-        ),
+            options={"verbose_name": "Board", "verbose_name_plural": "Boards"},
+        )
     ]

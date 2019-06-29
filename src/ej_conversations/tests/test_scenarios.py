@@ -107,22 +107,22 @@ class TestStatistics(ConversationRecipes):
         }
 
         # User can also check its own stats
-        assert conversation.user_statistics(g1[0]) == {
+        assert conversation.statistics_for_user(g1[0]) == {
             "missing_votes": 0,
             "participation_ratio": 1.0,
             "votes": 5,
         }
-        assert conversation.user_statistics(g1[2]) == {
+        assert conversation.statistics_for_user(g1[2]) == {
             "missing_votes": 0,
             "participation_ratio": 1.0,
             "votes": 5,
         }
-        assert conversation.user_statistics(g3[0]) == {
+        assert conversation.statistics_for_user(g3[0]) == {
             "missing_votes": 2,
             "participation_ratio": 3 / 5,
             "votes": 3,
         }
-        assert conversation.user_statistics(g3[1]) == {
+        assert conversation.statistics_for_user(g3[1]) == {
             "missing_votes": 3,
             "participation_ratio": 2 / 5,
             "votes": 2,

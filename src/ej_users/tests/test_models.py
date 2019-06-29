@@ -32,7 +32,6 @@ class TestUserManager(EjRecipes):
         with pytest.raises(ValueError):
             User.objects.create_superuser("name@server.com", "1234", is_staff=False)
 
-
     def test_generate_username(self):
         user = User(email="email@at.com")
         assert user.username == "email__at.com"

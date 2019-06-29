@@ -9,9 +9,8 @@ users_recipes = import_later("ej_users.mommy_recipes")
 #
 # EJ users
 #
-if apps.is_installed('ej_users'):
+if apps.is_installed("ej_users"):
     import ej_users.admin
-
 
     @register_actions(ej_users.admin.UserAdmin)
     class UserActions:

@@ -336,7 +336,7 @@ class ConversationLevel(LevelMixin, IntEnum):
 # ==============================================================================
 # Levels that consume ParticipationProgresss information
 # ------------------------------------------------------------------------------
-VoterLevelConfig = namedtuple('VoterLevelConfig', ['votes', 'ratio', 'votes_sure'])
+VoterLevelConfig = namedtuple("VoterLevelConfig", ["votes", "ratio", "votes_sure"])
 
 
 class VoterLevel(LevelMixin, IntEnum):

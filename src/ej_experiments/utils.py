@@ -8,13 +8,13 @@ def register_actions(target_cls):
     Register all functions defined in decorated class as extra actions in the
     given target class.
     """
-    actions = getattr(target_cls, 'actions', [])
+    actions = getattr(target_cls, "actions", [])
 
     def decorator(source_cls):
         for k, v in vars(source_cls).items():
-            if k.startswith('__'):
+            if k.startswith("__"):
                 continue
-            elif not k.startswith('_'):
+            elif not k.startswith("_"):
                 actions.append(k)
             setattr(target_cls, k, v)
         return source_cls
