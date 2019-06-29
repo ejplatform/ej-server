@@ -1,7 +1,10 @@
 import toolz
+from boogie.router import Router
+from django.apps import apps
 from django.db.models import Q, Count
 from django.shortcuts import redirect
-from boogie.router import Router
+from django.urls import reverse
+
 from ej_conversations.models import Conversation, Comment
 from . import forms
 
@@ -20,6 +23,9 @@ def detail(request):
         "n_favorites": user.favorite_conversations.count(),
         "n_comments": user.comments.count(),
         "n_votes": user.votes.count(),
+        "achievements_href":
+            reverse('gamification:achievements')
+            if apps.is_installed('ej_gamification') else None,
     }
 
 
@@ -53,8 +59,8 @@ def contributions(request):
     voted = voted.cache_annotations("first_tag", "n_user_votes", user=user)
     voted_extra = (
         Conversation.objects.filter(id__in=[x.id for x in voted])
-        .cache_annotations("n_comments")
-        .values("id", "n_comments")
+            .cache_annotations("n_comments")
+            .values("id", "n_comments")
     )
     total_votes = {}
     for item in voted_extra:

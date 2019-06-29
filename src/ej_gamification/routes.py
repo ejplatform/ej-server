@@ -63,15 +63,3 @@ def progress_flag(request, position, total):
         {"circle_cx": cx},
         content_type="image/svg+xml",
     )
-
-
-@urlpatterns.route("powers/")
-def powers(request):
-    user = request.user
-    return {"user": user}
-
-
-@urlpatterns.route("quests/")
-def quests(request):
-    user = request.user
-    return {"user": user}
