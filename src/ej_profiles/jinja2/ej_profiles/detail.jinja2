@@ -21,6 +21,10 @@
                 class="fas fa-vote-yea"></i> {{ n_votes }} {{ _('Votes') }}</a>
             <p><a href="{{ base_url }}#contribution-favorites" class="text-brand semi-bold"><i
                 class="fa fa-star"></i> {{ n_favorites }} {{ _('Favorites') }}</a>
+                {% if achievements_href %}
+                    <p><a href="{{ achievements_href }}" class="text-brand semi-bold"><i
+                    class="fa fa-trophy"></i> {{ _('Achievements') }}</a>
+                {% endif %}
         </div>
     </div>
 {% endblock %}
