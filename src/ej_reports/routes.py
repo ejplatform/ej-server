@@ -105,11 +105,10 @@ def cluster_data(conversation, cluster_slug, format):
         data_cat = f'_{cluster_slug}'
     else:
         board = BoardSubscription.objects.get(conversation=conversation).board
-        data_cat = f'{board.slug}_{cluster_slug.lower()}'
+        data_cat = f'{board.slug}_{cluster_slug}'
     response = file_response(conversation, data_cat, format)
-    cluster_name = cluster_slug.replace('-', ' ')
     try:
-        cluster_users = get_raw_cluster_users(conversation, cluster_name)
+        cluster_users = get_raw_cluster_users(conversation, cluster_slug)
     except:
         response.status_code = 404
         return response
