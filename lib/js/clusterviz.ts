@@ -335,10 +335,9 @@ personSvg.setAttribute('width', '106');
 personSvg.setAttribute('height', '120');
 personSvg.setAttribute('viewBox', '0 0 106 120');
 
-
-window.addEventListener('load', () => {
+export function initializeForceLayout(elem = "#canvas", data = null) {
     // Setup canvas
-    const canvas: HTMLCanvasElement = document.getElementById("canvas") as HTMLCanvasElement;
+    const canvas: HTMLCanvasElement = document.querySelector(elem) as HTMLCanvasElement;
     setup(canvas);
 
     // Svg symbol
@@ -346,33 +345,9 @@ window.addEventListener('load', () => {
     personSvgSymbol = new Symbol(raster.importSVG(personSvg, {insert: false}));
 
     // Init simulation
-    let layout = ForceLayout.fromJSON(clusters);
+    let layout = ForceLayout.fromJSON(data);
     view.onFrame = (ev) => layout.update(Math.min(ev.delta, 0.032));
-});
+}
 
-// Cluster data
-let clusters: JSONMessage = {
-    shapes: [
-        {
-            intersections: [0.0, 0.0, 0.0, 0.0],
-            size: 25,
-            name: "Group 1",
-        },
-        {
-            intersections: [0.0, 0.0, 10, 0.0],
-            size: 50,
-            name: "Group 2",
-            highlight: true,
-        },
-        {
-            intersections: [0.0, 10, 0.0, 7],
-            size: 40,
-            name: "Group 3",
-        },
-        {
-            intersections: [0.0, 0.0, 7, 0.0],
-            size: 25,
-            name: "Group 4",
-        }
-    ],
-};
+
+window['initializeForceLayout'] = initializeForceLayout;

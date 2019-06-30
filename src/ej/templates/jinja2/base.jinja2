@@ -3,7 +3,17 @@
 
 <!DOCTYPE html>
 <html lang="{{ get_language() }}">
-{% include 'ej/includes/head/head.jinja2' %}
+<head>
+    <meta charset="utf-8">
+    <title>{{ page_title }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    {% block css %}{% include 'ej/includes/head/css.jinja2' %}{% endblock %}
+    {% block javascript %}{% include 'ej/includes/head/javascript.jinja2' %}{% endblock %}
+    {% include ['ej/includes/head/favicons.jinja2',
+                'ej/includes/head/pwa.jinja2',
+                'ej/includes/head/open_graph.jinja2'] %}
+</head>
 
 
 {%- block body %}
