@@ -1,5 +1,5 @@
 import {component, Component} from "./base";
-import {cookie} from "../lib/utils";
+import {Cookies} from "../lib/dependencies";
 
 
 @component('main-header')
@@ -57,47 +57,58 @@ class MainHeader extends Component {
 @component('page-menu')
 class PageMenu extends Component {
     attributes = {'is-open': true};
-    isFontLarge: boolean;
-    hasContrast: boolean;
+    largefont: boolean;
+    hicontrast: boolean;
     scaleFactor: number;
 
     init() {
         this.$().attr('is-menu', '');
-        this.isFontLarge = false;
-        this.hasContrast = cookie('hicontrast') == 'true';
-        this.scaleFactor = 1.5;
+        this.largefont = Cookies.get('largefont') === 'y';
+        this.hicontrast = Cookies.get('hicontrast') === 'y';
+        this.scaleFactor = 1.35;
         this.setContrast();
+        if (this.largefont && $('html').data('large-font') !== 'true') {
+            this.makeFontsLarge();
+        }
     }
 
     // TOGGLE MENU
-    toggleMenu() {
-        $('.main-header')[0]['ej-component'].toggleMenu();
+    closeMenu() {
+        $('.main-header')[0]['ej-component'].closeMenu();
         return false;
     }
 
     // TOGGLE CONTRASTS
     toggleContrast() {
-        this.hasContrast = !this.hasContrast;
+        this.hicontrast = !this.hicontrast;
+        if (this.hicontrast) {
+            Cookies.set("hicontrast", 'y', {path: '/'});
+        }
         this.setContrast();
-        this.toggleMenu();
+        this.closeMenu();
         return false;
     }
 
     // TOGGLE FONT SIZES
     toggleFontSize() {
-        this.isFontLarge ? this.makeFontsRegular() : this.makeFontsLarge();
-        this.toggleMenu();
+        this.largefont ? this.makeFontsRegular() : this.makeFontsLarge();
+        if (this.largefont) {
+            Cookies.set("largefont", 'y', {path: '/'});
+        }
+        this.closeMenu();
         return false;
     }
 
     makeFontsRegular() {
         $('*').each((_, elem) => this.restoreFontSize($(elem)));
-        this.isFontLarge = false;
+        this.largefont = false;
     }
 
     makeFontsLarge() {
-        this.isFontLarge = true;
+        this.largefont = true;
         let $main = $('html');
+        $main.data('large-font', 'true');
+
         $('body *')
             .map((_, elem) => this.storeFontSize($(elem)))
             .map((_, $elem) => this.scaleFont($elem, this.scaleFactor));
@@ -117,6 +128,9 @@ class PageMenu extends Component {
     // noinspection JSMethodCanBeStatic
     restoreFontSize($elem) {
         let data = $elem.data('original-font-size');
+        Cookies.remove("largefont", {path: '/'});
+        $('html').data('large-font', 'false');
+
         if (data === undefined) {
             return;
         } else if (data.hasOwnStyle) {
@@ -140,15 +154,12 @@ class PageMenu extends Component {
         let $link = $('#main-css-link'),
             href = $link.attr('href');
 
-        if (this.hasContrast) {
+        if (this.hicontrast) {
             $link.attr({href: href.replace('main.css', 'hicontrast.css')});
-            $link.data({style: 'hicontrast'});
-            document.cookie = "hicontrast = true";
         }
         else {
             $link.attr({href: href.replace('hicontrast.css', 'main.css')});
-            $link.data({style: 'main'});
-            document.cookie = "hicontrast = false";
+            Cookies.remove("hicontrast", {path: '/'});
         }
     }
 }
