@@ -161,9 +161,12 @@ class ClusterQuerySet(ClusterizationBaseMixin, QuerySet):
             stereotype_votes.index *= -1
 
         if cluster_col is not None:
-            clusters = self._get_cluster_to_user_column_table('stereotypes')
-            if not kind_col and len(clusters.index) != 0:
-                clusters.index *= -1
+            if self.count():
+                clusters = self._get_cluster_to_user_column_table('stereotypes')
+                if not kind_col and len(clusters.index) != 0:
+                    clusters.index *= -1
+            else:
+                clusters = float('nan')
             stereotype_votes[cluster_col] = clusters
         return stereotype_votes
 
@@ -174,8 +177,12 @@ class ClusterQuerySet(ClusterizationBaseMixin, QuerySet):
         if kind_col is not None:
             user_votes[kind_col] = True
 
-        if cluster_col is not None and self.count():
-            user_votes[cluster_col] = self._get_cluster_to_user_column_table('users')
+        if cluster_col is not None:
+            if self.count():
+                clusters = self._get_cluster_to_user_column_table('users')
+            else:
+                clusters = float('nan')
+            user_votes[cluster_col] = clusters
         return user_votes
 
     def _votes_table_for_clusterization(self):

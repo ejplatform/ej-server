@@ -36,6 +36,8 @@ def index(request, conversation, slug, check=check_promoted):
     user = request.user
     clusterization = getattr(conversation, 'clusterization', None)
 
+    if clusterization and clusterization.clusters.count() == 0:
+        clusterization = None
     if clusterization is None:
         clusters = ()
         shapes_json = None
@@ -64,7 +66,7 @@ def index(request, conversation, slug, check=check_promoted):
 def edit(request, conversation, slug, check=check_promoted):
     check(conversation, request)
     new_cluster_form = forms.ClusterFormNew(request=request)
-    clusterization = conversation.get_clusterization()
+    clusterization = getattr(conversation, 'clusterization', None)
 
     # Handle POST requests for new clusters
     if (
@@ -72,13 +74,17 @@ def edit(request, conversation, slug, check=check_promoted):
         and request.POST["action"] == "new"
         and new_cluster_form.is_valid()
     ):
+        clusterization = clusterization or conversation.get_clusterization()
         new_cluster_form.save(clusterization=clusterization)
         new_cluster_form = forms.ClusterFormNew()
 
     # Decorate clusters
-    clusters = clusterization.clusters.annotate_attr(
-        form=lambda x: forms.ClusterForm(request=request, instance=x)
-    )
+    if clusterization is None:
+        clusters = ()
+    else:
+        clusters = clusterization.clusters.annotate_attr(
+            form=lambda x: forms.ClusterForm(request=request, instance=x)
+        )
     groups = [
         (fa_icon("plus", alt=__("Create new group")), "#cluster-new"),
         # (_('New'), '#cluster-new'),

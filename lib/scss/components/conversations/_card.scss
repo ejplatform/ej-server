@@ -78,6 +78,9 @@ $_card-bg: config('ej.conversation-card.bg-image');
 }
 
 .alternate-cards {
+    max-width: size(40);
+    margin: 0 auto;
+
     @include breakpoint('md') {
         display: flex;
         flex-wrap: wrap;
