@@ -1,13 +1,14 @@
+import json
 from logging import getLogger
 
+from boogie.models import F
+from boogie.router import Router
 from django.db.models import Count
 from django.shortcuts import redirect
 from django.utils.translation import ugettext_lazy as _, ugettext as __
 from hyperpython import a
 from hyperpython.components import fa_icon
 
-from boogie.models import F
-from boogie.router import Router
 from ej_conversations.enums import Choice
 from ej_conversations.models import Conversation, Comment
 from ej_conversations.routes import conversation_url, check_promoted
@@ -35,13 +36,13 @@ def index(request, conversation, slug, check=check_promoted):
     participants = conversation.users.count()
     clusters = (
         conversation.clusters.annotate(size=Count(F.users))
-        .annotate_attr(
-            size_pc=lambda obj: int(100 * obj.size / participants),
+            .annotate_attr(
+            size_pc=lambda obj: int(100 * obj.size / (participants + 1e-6)),
             cohesion_category=_("high"),
             cohesion_pc=80,
             typical_comments=[],
         )
-        .prefetch_related("stereotypes")
+            .prefetch_related("stereotypes")
     )
 
     return {
@@ -53,6 +54,16 @@ def index(request, conversation, slug, check=check_promoted):
             "ej.can_edit_conversation", conversation
         ),
         "edit_link": a(_("here"), href=conversation.url("cluster:edit")),
+        "json_data": json.dumps({
+            "shapes": [
+                {"name": "Foo1",
+                 "intersections": [0, 2],
+                 "size": 10},
+                {"name": "Foo2",
+                 "intersections": [2, 0],
+                 "size": 15},
+            ],
+        })
     }
 
 

@@ -1,14 +1,18 @@
 {% extends 'base.jinja2' %}
-{% set main_class = 'measure margin-xauto pad-x2' %}
+{% set main_class = 'measure-wide margin-xauto pad-x2' %}
 {% block menu %}{% include 'ej_conversations/includes/menu-detail.jinja2' %}{% endblock %}
 
 
 {% block content %}
     <h1 class="h2 center text-accent">{% trans %}Opinion groups{% endtrans %}</h1>
+    <div id="cluster-canvas-container">
+        <canvas id="cluster-canvas" class="bg-white margin-xauto block" style="width: 300px; height: 300px;"></canvas>
+    </div>
+
     <p class="center">
-        <i class="fa fa-user"></i> {{ _('Participants') }}: <strong>{{ participants }}</strong>
-        <br>
-        <i class="fa fa-comments"></i> {{ _('Groups') }}: <strong>{{ groups|length }}</strong>
+{#        <i class="fa fa-user"></i> {{ _('Participants') }}: <strong>{{ participants }}</strong>#}
+{#        <br>#}
+{#        <i class="fa fa-comments"></i> {{ _('Groups') }}: <strong>{{ groups|length }}</strong>#}
     </p>
 
     {% if clusters %}
@@ -61,3 +65,18 @@
         </ul>
     </div>
 {% endmacro %}
+
+{% block javascript %}
+    {{ super() }}
+    <script src="{{ static('js/clusterviz.js') }}"></script>
+    <script>
+    window.addEventListener('load', function () {
+        var $canvas = $('#cluster-canvas'),
+            $canvasContainer = $('#cluster-canvas-container'),
+            size = Math.min($canvasContainer.width(), 400);
+
+        $canvas.css({width: size, height: size});
+        initializeForceLayout('#cluster-canvas', {{ json_data | safe }});
+    });
+    </script>
+{% endblock %}

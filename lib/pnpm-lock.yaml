@@ -1,7 +1,9 @@
 dependencies:
   '@types/jquery': 3.3.30
+  '@types/js-cookie': 2.2.2
   '@types/paper': 0.11.14
   jquery: 3.4.1
+  js-cookie: 2.2.0
   mendeleev.css: 0.2.0
   paper: 0.12.3
   parcel: 1.12.3
@@ -755,6 +757,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-chB+QbLulamShZAFcTJtl8opZwHFBpDOP6nRLrPGkhC6N1aKWrDXg2Nc71tEg6ny6E8SQpRwbWSi9GdstH5VJA==
+  /@types/js-cookie/2.2.2:
+    dev: false
+    resolution:
+      integrity: sha512-vkuGzldF9mNsWS9cmmMFfW1rufa7IdPUorS150gKoU/2fzLJ/0LXiMMtRqIBWz0sZ/VF2VxwB25WXEOo6akU6w==
   /@types/paper/0.11.14:
     dev: false
     resolution:
@@ -2984,6 +2990,10 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-OMwf/tPDpE/BLlYKqZOhqWsd3/z2N3KOlyn1wsCRGFwViE8LOQTcDtathQvHvZc+q+zWmcNAbwKSC+iJoMaH2Q==
+  /js-cookie/2.2.0:
+    dev: false
+    resolution:
+      integrity: sha1-Gywnmm7s44ChIWi5JIUmWzWx7/s=
   /js-levenshtein/1.1.6:
     engines:
       node: '>=0.10.0'
@@ -5093,12 +5103,14 @@ packages:
       integrity: sha1-HBH5IY8HYImkfdUS+TxmmaaoHVI=
 specifiers:
   '@types/jquery': ^3.3.29
+  '@types/js-cookie': ^2.2.2
   '@types/paper': ^0.11.14
   babel-core: ^6.26.3
   babel-plugin-transform-class-properties: ^6.24.1
   babel-preset-env: ^1.7.0
   babel-preset-flow: ^6.23.0
   jquery: ^3.3.1
+  js-cookie: ^2.2.0
   mendeleev.css: 0.2.0
   paper: ^0.12.3
   parcel: ^1.12.3
