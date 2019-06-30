@@ -15,7 +15,6 @@ from ej.fixes import unregister_admin
 
 unregister_admin.unregister_apps()
 
-
 #
 # Optional urls
 #
@@ -70,8 +69,8 @@ def get_urlpatterns():
         *with_app("ej_rocketchat", "talks/", namespace="rocket"),
         # Admin
         *(
-            [path(fix_url(settings.ADMIN_URL), admin.site.urls)]
-            if apps.is_installed("admin")
+            [path(fix_url(settings.ADMIN_URL.lstrip('/')), admin.site.urls)]
+            if apps.is_installed("django.contrib.admin")
             else ()
         ),
         # Debug routes

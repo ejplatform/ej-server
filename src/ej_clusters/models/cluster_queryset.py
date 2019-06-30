@@ -1,11 +1,11 @@
 from itertools import chain
 from logging import getLogger
 
+from boogie.models import QuerySet, F, Manager, Value, IntegerField
 from django.contrib.auth import get_user_model
 from django.db import transaction
 from sidekick import import_later
 
-from boogie.models import QuerySet, F, Manager
 from ej_conversations.math import imputation
 from ej_conversations.models import Conversation
 from ..mixins import ClusterizationBaseMixin
@@ -139,7 +139,13 @@ class ClusterQuerySet(ClusterizationBaseMixin, QuerySet):
 
         # Imputation must occur after both set of votes are joined together.
         votes = user_votes.append(stereotype_votes)
-        return imputation(votes, data_imputation)
+        if cluster_col is None:
+            return imputation(votes, data_imputation)
+
+        cluster_series = votes[cluster_col]
+        votes = imputation(votes, data_imputation)
+        votes[cluster_col] = cluster_series
+        return votes.dropna()
 
     def _stereotypes_votes_table(self, mean, kind_col, cluster_col, **kwargs):
         # Prepare stereotype votes
@@ -148,13 +154,15 @@ class ClusterQuerySet(ClusterizationBaseMixin, QuerySet):
         else:
             stereotypes = self.stereotypes()
             stereotype_votes = stereotypes.votes_table(**kwargs)
+
         if kind_col:
             stereotype_votes[kind_col] = False
-        else:
+        elif len(stereotype_votes.index) != 0:
             stereotype_votes.index *= -1
+
         if cluster_col is not None:
-            clusters = self.dataframe("id", index="stereotypes")
-            if not kind_col:
+            clusters = self._get_cluster_to_user_column_table('stereotypes')
+            if not kind_col and len(clusters.index) != 0:
                 clusters.index *= -1
             stereotype_votes[cluster_col] = clusters
         return stereotype_votes
@@ -162,11 +170,12 @@ class ClusterQuerySet(ClusterizationBaseMixin, QuerySet):
     def _users_votes_table(self, non_classified, kind_col, cluster_col, **kwargs):
         users = self.participants() if non_classified else self.users()
         user_votes = users.votes_table(**kwargs)
+
         if kind_col is not None:
             user_votes[kind_col] = True
-        if cluster_col is not None:
-            clusters = self.dataframe("id", index="users")
-            user_votes[cluster_col] = clusters
+
+        if cluster_col is not None and self.count():
+            user_votes[cluster_col] = self._get_cluster_to_user_column_table('users')
         return user_votes
 
     def _votes_table_for_clusterization(self):
@@ -175,6 +184,25 @@ class ClusterQuerySet(ClusterizationBaseMixin, QuerySet):
         return self.votes_table(
             non_classified=True, cluster_col=None, mean_stereotype=True
         )
+
+    def _get_cluster_to_user_column_table(self, user_field='users'):
+        Int = IntegerField()
+
+        cluster, *rest = self
+        users = list(
+            getattr(cluster, user_field)
+                .annotate(cluster=Value(cluster.id, output_field=Int))
+                .values_list('id', 'cluster'))
+
+        for cl in rest:
+            users.extend(
+                getattr(cl, user_field)
+                    .annotate(cluster=Value(cl.id, output_field=Int))
+                    .values_list('id', 'cluster'))
+
+        col = pd.DataFrame(list(users), columns=['user', 'cluster'])
+        col.index = col.pop('user')
+        return col.pop('cluster')
 
     def find_clusters(self, pipeline_factory=None):
         """
@@ -271,8 +299,8 @@ class ClusterQuerySet(ClusterizationBaseMixin, QuerySet):
         """
         votes = (
             self.stereotype_votes()
-            .annotate(cluster=F.author.clusters)
-            .dataframe("author", "comment", "choice", "cluster")
+                .annotate(cluster=F.author.clusters)
+                .dataframe("author", "comment", "choice", "cluster")
         )
 
         if votes.shape[0]:

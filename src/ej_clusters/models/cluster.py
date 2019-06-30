@@ -7,6 +7,7 @@ from django.utils.translation import ugettext_lazy as _
 from model_utils.models import TimeStampedModel
 from sidekick import delegate_to, lazy, import_later, placeholder as this
 
+from ej_conversations.models import Comment
 from .cluster_queryset import ClusterManager
 from .stereotype_vote import StereotypeVote
 
@@ -84,3 +85,34 @@ class Cluster(TimeStampedModel):
         """
         kwargs = dict(normalization=normalization, votes=self.votes)
         return self.comments.statistics_summary_dataframe(**kwargs)
+
+    def separate_comments(self, sort=True):
+        """
+        Separate comments into a pair for comments that cluster agrees to and
+        comments that cluster disagree.
+        """
+        tol = 1e-6
+        table = self.votes.votes_table()
+
+        n_agree = (table > 0).sum()
+        n_disagree = (table < 0).sum()
+        total = n_agree + n_disagree + (table == 0).sum() + tol
+
+        d_agree = dict(((n_agree[n_agree >= n_disagree] + tol) / total).dropna().items())
+        d_disagree = dict(((n_disagree[n_disagree > n_agree] + tol) / total).dropna().items())
+
+        agree = []
+        disagree = []
+        for comment in Comment.objects.filter(id__in=d_agree):
+            comment.agree = d_agree[comment.id]
+            agree.append(comment)
+
+        for comment in Comment.objects.filter(id__in=d_disagree):
+            comment.disagree = d_disagree[comment.id]
+            disagree.append(comment)
+
+        if sort:
+            agree.sort(key=lambda c: c.agree, reverse=True)
+            disagree.sort(key=lambda c: c.disagree, reverse=True)
+
+        return agree, disagree

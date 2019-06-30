@@ -3,7 +3,7 @@ from sidekick import import_later
 from boogie.rest import rest_api
 from ej_conversations.models import Conversation
 from . import models
-
+from .utils import cluster_shapes
 math = import_later(".math", package=__package__)
 
 
@@ -26,10 +26,8 @@ def clusters(clusterization):
 
 
 @rest_api.detail_action(models.Clusterization)
-def affinities(clusterization):
-    votes = clusterization.clusters.votes_table("mean")
-    affinities = math.compute_cluster_affinities(votes)
-    return math.summarize_affinities(affinities)
+def affinities(request, clusterization):
+    return cluster_shapes(clusterization, user=request.user)
 
 
 @rest_api.property(models.Cluster)
