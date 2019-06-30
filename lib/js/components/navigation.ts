@@ -1,5 +1,5 @@
 import {component, Component} from "./base";
-import {cookie} from "../utils";
+import {cookie} from "../lib/utils";
 
 
 @component('main-header')
