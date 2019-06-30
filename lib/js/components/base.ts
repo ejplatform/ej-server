@@ -1,5 +1,5 @@
-import {up} from '../dependencies';
-import {camelCaseToDash, debug, warn} from '../utils';
+import {up} from '../lib/dependencies';
+import {camelCaseToDash, debug, warn} from '../lib/utils';
 
 //==============================================================================
 // UNPOLY INTERFACE

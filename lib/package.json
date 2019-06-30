@@ -4,8 +4,11 @@
   "license": "GPL-3.0-or-later",
   "dependencies": {
     "@types/jquery": "^3.3.29",
+    "@types/paper": "^0.11.14",
     "jquery": "^3.3.1",
     "mendeleev.css": "0.2.0",
+    "paper": "^0.12.3",
+    "parcel": "^1.12.3",
     "unpoly": "^0.60.0"
   },
   "devDependencies": {
@@ -17,7 +20,8 @@
     "typescript": "^3.4.5"
   },
   "scripts": {
-    "watch": "parcel watch js/main.ts -d build/js/",
-    "build": "parcel build js/main.ts -d build/js/"
+    "watch": "parcel watch js/*.ts -d build/js/ --no-source-maps",
+    "build": "parcel build js/*.ts -d build/js/ --no-source-maps",
+    "clusterviz": "parcel serve js/clusterviz.html --no-source-maps"
   }
 }
