@@ -279,17 +279,17 @@ class ClusterQuerySet(ClusterizationBaseMixin, QuerySet):
 
         if hasattr(mapping, "items"):
             mapping = mapping.items()
+        mapping = {(k, v) for k, v in mapping if k >= 0}
 
         m2m = self.model.users.through
         links = [
-            m2m(
-                cluster_id=getattr(cluster, "id", cluster),
-                user_id=getattr(user, "id", user),
-            )
+            m2m(cluster_id=getattr(cluster, "id", cluster),
+                user_id=getattr(user, "id", user))
             for user, cluster in mapping
         ]
         with transaction.atomic():
-            m2m.objects.filter(cluster__in=self).delete()
+            cluster_ids = set(x for _, x in mapping)
+            m2m.objects.filter(cluster__in=cluster_ids).delete()
             m2m.objects.bulk_create(links)
 
     def mean_stereotypes_votes_table(self, data_imputation=None):

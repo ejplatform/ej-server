@@ -5,16 +5,26 @@
 
 {% block content %}
     <h1 class="h2 center text-accent">{% trans %}Opinion groups{% endtrans %}</h1>
-    <div id="cluster-canvas-container">
-        <canvas id="cluster-canvas" class="bg-white margin-xauto block"></canvas>
-    </div>
-
     {% if clusters %}
+        <div id="cluster-canvas-container">
+            <canvas id="cluster-canvas" class="bg-white margin-xauto block"></canvas>
+        </div>
+
         {{ categories(groups, class_='margin-t3') }}
 
         {% for cluster in clusters %}
             <div id="cluster-{{ cluster.id }}">{{ show_cluster(cluster) }}</div>
         {% endfor %}
+
+        {% if has_edit_perm %}
+            <div class="center bg-brand-lighter pad-2 rounded-2 margin-b4">
+                <h2 class="h4 uppercase margin-t2">{{ _('Admin actions') }}</h2>
+                <form class="margin-0" method="POST" action="./ctrl/">
+                    {{ csrf_input }}
+                    <button name="action" value="force-clusterization">{{ _('Force clusterization') }}</button>
+                </form>
+            </div>
+        {% endif %}
     {% else %}
         <div class="pad-x3 rounded-3 color-negative border-1">
             <h2 class="h3 center">{{ _('Error') }}</h2>
@@ -31,7 +41,7 @@
 
 {% macro show_cluster(cluster) %}
     <div class="collapsible">
-        <h2>{{ _('Positive comments') }}</h2>
+        <h2 class="h4 uppercase text-accent">{{ _('Positive comments') }}</h2>
         {% set agree = cluster.separated_comments[0] %}
         {% set disagree = cluster.separated_comments[1] %}
         {% if agree %}
@@ -45,7 +55,7 @@
             <p>{{ _('No positive comments in cluster') }}</p>
         {% endif %}
 
-        <h2>{{ _('Negative comments') }}</h2>
+        <h2 class="h4 uppercase text-accent">{{ _('Negative comments') }}</h2>
         {% if disagree %}
             <dl>{% for comment in disagree[:5] %}
                 {% set pc = '%.1f' % (100 * comment.disagree) %}
@@ -62,15 +72,17 @@
 
 {% block javascript %}
     {{ super() }}
-    <script src="{{ static('js/clusterviz.js') }}"></script>
-    <script>
-        window.addEventListener('load', function () {
-            var $canvas = $('#cluster-canvas'),
-                $canvasContainer = $('#cluster-canvas-container'),
-                size = Math.min($canvasContainer.width(), 500);
+    {% if json_data %}
+        <script src="{{ static('js/clusterviz.js') }}"></script>
+        <script>
+            window.addEventListener('load', function () {
+                var $canvas = $('#cluster-canvas'),
+                    $canvasContainer = $('#cluster-canvas-container'),
+                    size = Math.min($canvasContainer.width(), 500);
 
-            $canvas.css({width: size, height: size * 0.80});
-            initializeForceLayout('#cluster-canvas', {{ json_data | safe }});
-        });
-    </script>
+                $canvas.css({width: size, height: size * 0.80});
+                initializeForceLayout('#cluster-canvas', {{ json_data | safe }});
+            });
+        </script>
+    {% endif %}
 {% endblock %}

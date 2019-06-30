@@ -2,12 +2,18 @@
 from __future__ import print_function
 
 import os
+from random import random, choice
 
+from django.apps import apps
 from django.contrib.auth import get_user_model
 from django.core.management.base import BaseCommand
 from faker import Factory
 
 User = get_user_model()
+Profile = None
+if apps.is_installed('ej_profiles'):
+    from ej_profiles.models import Profile
+    from ej_profiles.enums import Gender, Race
 
 
 class Command(BaseCommand):
@@ -65,43 +71,29 @@ class Command(BaseCommand):
             if username not in blocked_usernames:
                 usernames.add(username)
 
-        # Create admin user
+        # Create special users with known passwords
         if admin:
             users_created = create_admin(admin_password, users_created)
-        # Create user@user.com user
-        if admin:
-            if not User.objects.filter(email="user@user.com"):
-                user = User.objects.create(
-                    name="Joe User",
-                    email="user@user.com",
-                    is_active=True,
-                    is_staff=False,
-                    is_superuser=False,
-                )
-                user.set_password(
-                    user_password or os.environ.get("USER_PASSWORD", "user")
-                )
-                user.save()
-                users_created += 1
-            else:
-                print("Default user was already created!")
+        if user:
+            users_created = create_default_user(user_password, users_created)
 
         # Create staff users
         for _ in range(staff):
             username = usernames.pop()
-            User.objects.create(
+            user = User.objects.create(
                 name=fake.name(),
                 email=username + "@" + fake.domain_name(),
                 is_active=True,
                 is_staff=True,
                 is_superuser=False,
             )
+            set_profile(user)
             users_created += 1
 
         # Create regular users
         for _ in range(users):
             username = usernames.pop()
-            User.objects.create(
+            user = User.objects.create(
                 name=fake.name(),
                 email=username + "@" + fake.domain_name(),
                 is_active=True,
@@ -109,6 +101,7 @@ class Command(BaseCommand):
                 is_superuser=False,
             )
             users_created += 1
+            set_profile(user)
 
         # Feedback
         print(f"Created {users_created} fake users")
@@ -125,7 +118,38 @@ def create_admin(admin_password, users_created):
         )
         user.set_password(admin_password or os.environ.get("ADMIN_PASSWORD", "admin"))
         user.save()
+        set_profile(user)
         users_created += 1
     else:
         print("Admin user was already created!")
     return users_created
+
+
+def create_default_user(user_password, users_created):
+    if not User.objects.filter(email="user@user.com"):
+        user = User.objects.create(
+            name="Joe User",
+            email="user@user.com",
+            is_active=True,
+            is_staff=False,
+            is_superuser=False,
+        )
+        user.set_password(
+            user_password or os.environ.get("USER_PASSWORD", "user")
+        )
+        user.save()
+        set_profile(user)
+        users_created += 1
+    else:
+        print("Default user was already created!")
+
+
+def set_profile(user):
+    if Profile is not None:
+        kwargs = {}
+        if random() < 0.5:
+            kwargs['gender'] = choice(list(Gender))
+        if random() < 0.5:
+            kwargs['race'] = choice(list(Race))
+
+        Profile.objects.create(user=user, **kwargs)
