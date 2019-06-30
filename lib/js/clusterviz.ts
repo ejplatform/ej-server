@@ -26,7 +26,7 @@ class Shape {
     dragConstant: number = 6;
     impulseForce: number = 5000;
     maxVel: number = 700;
-    decay: number = 0;
+    decay: number = 1;
     initialVelocity: number = 200;
 
     // Superpositions
@@ -172,7 +172,6 @@ class Shape {
         if (this.decay > 0.75) {
             this.decay = 1 - decay * (1 - this.decay);
             this.springConstant *= decay;
-            this.dragConstant *= decay;
             this.impulseForce *= decay;
         }
     }
@@ -230,13 +229,14 @@ class ForceLayout {
      * Initialize Layout from JSON data.
      */
     static fromJSON(data: JSONMessage) {
-        let nShapes = data.shapes.length,
-            unity = new Point(Math.min(view.size.width, view.size.height) * 0.6, 0),
+        let reg = 5,
+            nShapes = data.shapes.length,
+            unity = new Point(Math.min(view.size.width, view.size.height) * 0.4, 0),
             rotation = Math.random() * 360,
             index = 0,
-            totalSize = sum(data.shapes.map(({size}) => size)),
+            totalSize = sum(data.shapes.map(({size}) => size + reg)),
             shapes = data.shapes.map(({size, intersections, name, highlight}) => {
-                let radius = Math.sqrt(size / totalSize) * view.size.width / 4,
+                let radius = Math.sqrt((size + reg) / totalSize) * view.size.width / 4,
                     pos = unity.rotate(rotation + 360 * index / nShapes, new Point(0, 0));
                 pos = pos.add(new Point(view.size.width / 2, view.size.height / 2));
                 index++;

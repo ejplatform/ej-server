@@ -21,8 +21,6 @@ class InstalledAppsConf(Base, EjOptions):
         "ej_profiles",
         "ej_conversations",
     ]
-    from allauth import account
-
     third_party_apps = [
         "boogie.apps.fragments",
         "taggit",

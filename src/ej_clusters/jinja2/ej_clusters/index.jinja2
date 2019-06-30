@@ -6,14 +6,8 @@
 {% block content %}
     <h1 class="h2 center text-accent">{% trans %}Opinion groups{% endtrans %}</h1>
     <div id="cluster-canvas-container">
-        <canvas id="cluster-canvas" class="bg-white margin-xauto block" style="width: 300px; height: 300px;"></canvas>
+        <canvas id="cluster-canvas" class="bg-white margin-xauto block"></canvas>
     </div>
-
-    <p class="center">
-{#        <i class="fa fa-user"></i> {{ _('Participants') }}: <strong>{{ participants }}</strong>#}
-{#        <br>#}
-{#        <i class="fa fa-comments"></i> {{ _('Groups') }}: <strong>{{ groups|length }}</strong>#}
-    </p>
 
     {% if clusters %}
         {{ categories(groups, class_='margin-t3') }}
@@ -36,47 +30,47 @@
 
 
 {% macro show_cluster(cluster) %}
-    <dl class="margin-y3 margin-x2  ">
-        <dt><i class="fa fa-user"></i> {{ _('Participants') }}</dt>
-        <dd>{{ cluster.size }} ({{ cluster.size_pc }}%)</dd>
-
-        <dt><i class="fa fa-hand-holding"></i> {{ _('Cohesion level') }}</dt>
-        <dd>{{ cluster.cohesion_category }} ({{ cluster.cohesion_pc }}%)</dd>
-    </dl>
-
     <div class="collapsible">
-        <h2>{{ _('Typical comments') }}</h2>
-        <div>{% for comment in cluster.typical_comments %}{{ comment|role('summary') }}{% endfor %}</div>
-    </div>
-
-    <div class="collapsible">
-        <h2>{{ _('Personas') }}</h2>
-        <ul>
-            {% for stereotype in cluster.stereotypes.all() %}
-                <li>
-                    <dl>
-                        <dt>{{ _('Name') }}</dt>
-                        <dd>{{ stereotype.name }}</dd>
-                        <dt>{{ _('Description') }}</dt>
-                        <dd>{{ stereotype.description or '-' }}</dd>
-                    </dl>
-                </li>
+        <h2>{{ _('Positive comments') }}</h2>
+        {% set agree = cluster.separated_comments[0] %}
+        {% set disagree = cluster.separated_comments[1] %}
+        {% if agree %}
+            <dl>{% for comment in agree[:5] %}
+                {% set pc = '%.1f' % (100 * comment.agree) %}
+                <dt class="bold">{{ _('Agree: {pc}').format(pc=pc) }}%</dt>
+                <dd>{{ comment.content }}</dd>
             {% endfor %}
-        </ul>
+            </dl>
+        {% else %}
+            <p>{{ _('No positive comments in cluster') }}</p>
+        {% endif %}
+
+        <h2>{{ _('Negative comments') }}</h2>
+        {% if disagree %}
+            <dl>{% for comment in disagree[:5] %}
+                {% set pc = '%.1f' % (100 * comment.disagree) %}
+                <dt class="bold">{{ _('Disagree: {pc}').format(pc=pc) }}%</dt>
+                <dd>{{ comment.content }}</dd>
+            {% endfor %}
+            </dl>
+        {% else %}
+            <p>{{ _('No negative comments in cluster') }}</p>
+        {% endif %}
     </div>
 {% endmacro %}
+
 
 {% block javascript %}
     {{ super() }}
     <script src="{{ static('js/clusterviz.js') }}"></script>
     <script>
-    window.addEventListener('load', function () {
-        var $canvas = $('#cluster-canvas'),
-            $canvasContainer = $('#cluster-canvas-container'),
-            size = Math.min($canvasContainer.width(), 400);
+        window.addEventListener('load', function () {
+            var $canvas = $('#cluster-canvas'),
+                $canvasContainer = $('#cluster-canvas-container'),
+                size = Math.min($canvasContainer.width(), 500);
 
-        $canvas.css({width: size, height: size});
-        initializeForceLayout('#cluster-canvas', {{ json_data | safe }});
-    });
+            $canvas.css({width: size, height: size * 0.80});
+            initializeForceLayout('#cluster-canvas', {{ json_data | safe }});
+        });
     </script>
 {% endblock %}

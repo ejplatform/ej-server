@@ -15,6 +15,7 @@ from ej_conversations.routes import conversation_url, check_promoted
 from . import forms
 from .models import Stereotype, Cluster
 from .models import StereotypeVote
+from .utils import cluster_shapes
 
 log = getLogger("ej")
 app_name = "ej_cluster"
@@ -33,37 +34,27 @@ stereotype_perms = {"perms": ["ej.can_manage_stereotypes:conversation"]}
 def index(request, conversation, slug, check=check_promoted):
     check(conversation, request)
     user = request.user
-    participants = conversation.users.count()
+
+    annotations = {
+        'separated_comments': lambda c: c.separate_comments(),
+    }
+
     clusters = (
-        conversation.clusters.annotate(size=Count(F.users))
-            .annotate_attr(
-            size_pc=lambda obj: int(100 * obj.size / (participants + 1e-6)),
-            cohesion_category=_("high"),
-            cohesion_pc=80,
-            typical_comments=[],
-        )
+        conversation.clusters
+            .annotate(size=Count(F.users))
+            .annotate_attr(**annotations)
             .prefetch_related("stereotypes")
     )
 
+    shapes = cluster_shapes(conversation.clusterization, clusters, user)
+    can_edit = user.has_perm("ej.can_edit_conversation", conversation)
     return {
         "conversation": conversation,
         "clusters": clusters,
         "groups": {cluster.name: f"#cluster-{cluster.id}" for cluster in clusters},
-        "participants": participants,
-        "is_conversation_admin": user.has_perm(
-            "ej.can_edit_conversation", conversation
-        ),
+        "is_conversation_admin": can_edit,
         "edit_link": a(_("here"), href=conversation.url("cluster:edit")),
-        "json_data": json.dumps({
-            "shapes": [
-                {"name": "Foo1",
-                 "intersections": [0, 2],
-                 "size": 10},
-                {"name": "Foo2",
-                 "intersections": [2, 0],
-                 "size": 15},
-            ],
-        })
+        "json_data": json.dumps({"shapes": list(shapes.values())})
     }
 
 
