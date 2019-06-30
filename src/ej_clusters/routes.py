@@ -34,27 +34,29 @@ stereotype_perms = {"perms": ["ej.can_manage_stereotypes:conversation"]}
 def index(request, conversation, slug, check=check_promoted):
     check(conversation, request)
     user = request.user
+    clusterization = getattr(conversation, 'clusterization', None)
 
-    annotations = {
-        'separated_comments': lambda c: c.separate_comments(),
-    }
+    if clusterization is None:
+        clusters = ()
+        shapes_json = None
+    else:
+        clusters = (
+            clusterization.clusters
+                .annotate(size=Count(F.users))
+                .annotate_attr(separated_comments=lambda c: c.separate_comments())
+                .prefetch_related("stereotypes")
+        )
+        shapes = cluster_shapes(clusterization, clusters, user)
+        shapes_json = json.dumps({"shapes": list(shapes.values())})
 
-    clusters = (
-        conversation.clusters
-            .annotate(size=Count(F.users))
-            .annotate_attr(**annotations)
-            .prefetch_related("stereotypes")
-    )
-
-    shapes = cluster_shapes(conversation.clusterization, clusters, user)
     can_edit = user.has_perm("ej.can_edit_conversation", conversation)
     return {
         "conversation": conversation,
         "clusters": clusters,
         "groups": {cluster.name: f"#cluster-{cluster.id}" for cluster in clusters},
-        "is_conversation_admin": can_edit,
+        "has_edit_perm": can_edit,
         "edit_link": a(_("here"), href=conversation.url("cluster:edit")),
-        "json_data": json.dumps({"shapes": list(shapes.values())})
+        "json_data": shapes_json,
     }
 
 
@@ -162,3 +164,18 @@ def stereotype_votes(request, conversation, slug, check=check_promoted):
         "stereotypes": stereotypes,
         "groups": {x.name: f"#stereotype-{x.id}" for x in stereotypes},
     }
+
+
+@urlpatterns.route(conversation_url + "clusters/ctrl/")
+def ctrl(request, conversation, slug, check=check_promoted):
+    check(conversation, request)
+    user = request.user
+    if not user.has_perm("ej.can_edit_conversation", conversation):
+        raise PermissionError
+    if request.method != 'POST':
+        raise PermissionError
+    if request.POST['action'] == 'force-clusterization':
+        conversation.clusterization.update_clusterization(force=True)
+
+    return redirect(conversation.url('cluster:index'))
+

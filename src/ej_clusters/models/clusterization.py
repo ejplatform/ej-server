@@ -75,7 +75,7 @@ class Clusterization(TimeStampedModel):
     def get_absolute_url(self):
         return self.conversation.url("cluster:index")
 
-    def update_clusterization(self, force=False, atomic=True):
+    def update_clusterization(self, force=False, atomic=False):
         """
         Update clusters if necessary, unless force=True, in which it
         unconditionally updates the clusterization.
@@ -98,4 +98,6 @@ class Clusterization(TimeStampedModel):
                 self.pending_votes.all().delete()
                 if self.cluster_status == ClusterStatus.PENDING_DATA:
                     self.cluster_status = ClusterStatus.ACTIVE
+                x = self.id
+                y = self.conversation_id
                 self.save()
