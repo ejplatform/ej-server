@@ -200,14 +200,12 @@ function registerElementForComponent(component, elem) {
         }
         case 2: {
             [methodName, event] = parts;
-            console.log(["REGISTERING", name, parts]);
             let method = component[methodName];
             if (method === undefined) {
                 warn(`Method ${methodName} not found!`);
             }
             method = method.bind(component);
             $elem.on(event, ev => {
-                console.log('EVENT', ev, elem);
                 return method(elem, ev);
             });
             break;

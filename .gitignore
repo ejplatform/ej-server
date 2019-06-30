@@ -112,3 +112,4 @@ ej_questions
 .coverage .coverage.c3po.12402.283405 .coverage.c3po.12402.913692 .coveragerc
 .coverage*
 .scannerwork
+lib/js/dependencies.js lib/js/utils.js
