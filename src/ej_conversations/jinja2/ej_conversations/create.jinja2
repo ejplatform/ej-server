@@ -61,7 +61,6 @@
                 .on('click keypress', function (ev) {
                     // keycodes: 13 = return; 32 = space
                     if (ev.type === "keypress" && (![13, 32].includes(ev.keyCode))) return;
-                    console.log(ev.keyCode);
                     var $input = $('input[name="comments_count"]'),
                         index = parseInt($input.val(), 10) + 1,
                         template = (

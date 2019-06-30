@@ -1,0 +1,25 @@
+// Color
+$color-accent: #d20078;
+$color-brand: #00b7b7;
+$color-brand-lighter: #cef9f5;
+$color-action: #3f1b53;
+$color-primary: $color-accent;
+
+// Dimensions
+$unit: 1.5rem;
+$ej-button-radius: $unit / 4;
+
+// Global configuration
+$config: (
+    // EJ components
+    'ej':(
+        'style': (
+            'border-radius': $unit / 4,
+        ),
+        'conversation-card': (
+            'border-radius': $unit / 4,
+            'highlight-tags': false,
+            'bg-image': '/static/img/bg/conversation-card.svg',
+        ),
+    ),
+);

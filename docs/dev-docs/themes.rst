@@ -28,8 +28,10 @@ A theme is organized within the following file structure::
     - <theme-name>
         |- assets/   (overrides default assets)
         \- scss/
-            |- _overrides.scss (overrides SASS variables)
+            |- _config.scss (set SASS variables and configurations)
+            |- _overrides.scss (ad-hoc overrides of styles)
             |- main.scss
+            |- hicontrast.scss
             \- rocket.scss
 
 Both main.scss and rocket.scss have standard implementations and can be simply

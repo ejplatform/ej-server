@@ -19,4 +19,8 @@
 
 
 <!-- Main css file -->
+{% if request.COOKIES.hicontrast|default('false') == 'true' %}
+<link id="main-css-link" rel="stylesheet" href="/static/css/hicontrast.css">
+{% else %}
 <link id="main-css-link" rel="stylesheet" href="/static/css/main.css">
+{% endif %}
