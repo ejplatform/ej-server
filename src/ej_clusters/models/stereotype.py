@@ -38,7 +38,7 @@ class Stereotype(models.Model):
     class Meta:
         unique_together = [("name", "owner")]
 
-    __str__ = lambda self: self.name
+    __str__ = lambda self: f'{self.name} ({self.owner})'
 
     def vote(self, comment, choice, commit=True):
         """

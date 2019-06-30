@@ -224,13 +224,3 @@ $_md-header-height: size(2.5);
         flex: 5;
     }
 }
-
-@include breakpoint('lg') {
-    #page-wrapper::after {
-        content: ' ';
-        flex: 1;
-        max-width: size(11);
-        order: 2;
-    }
-}
-

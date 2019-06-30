@@ -56,7 +56,7 @@ class ClusterFormNew(ClusterForm):
         required=False,
         initial=True,
         help_text=_(
-            "Create new persona for this group. You can re-use it in " "other groups."
+            "Create new persona with the name of the group if no other persona isselected."
         ),
     )
 
@@ -71,7 +71,8 @@ class ClusterFormNew(ClusterForm):
 
     def _save_m2m(self):
         super()._save_m2m()
-        if self.cleaned_data["new_persona"]:
+        has_stereotypes = len(self.cleaned_data['stereotypes']) != 0
+        if self.cleaned_data["new_persona"] and not has_stereotypes:
             owner = self.instance.clusterization.conversation.author
             stereotype, _ = Stereotype.objects.get_or_create(
                 name=self.cleaned_data["name"],
