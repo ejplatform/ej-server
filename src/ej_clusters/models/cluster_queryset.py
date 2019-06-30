@@ -200,8 +200,13 @@ class ClusterQuerySet(ClusterizationBaseMixin, QuerySet):
                     .annotate(cluster=Value(cl.id, output_field=Int))
                     .values_list('id', 'cluster'))
 
-        col = pd.DataFrame(list(users), columns=['user', 'cluster'])
+        # Remove duplicates from cluster/user pairs
+        # This should never happen, but sometimes it does and we don't want to
+        # crash the application due to a minor bug.
+        data = list(dict(users).items())
+        col = pd.DataFrame(data, columns=['user', 'cluster'])
         col.index = col.pop('user')
+        col.index.name = 'author'
         return col.pop('cluster')
 
     def find_clusters(self, pipeline_factory=None):

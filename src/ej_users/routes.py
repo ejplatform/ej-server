@@ -143,7 +143,7 @@ def recover_password_token(request, token):
 
 
 #
-# Registration via API + cookies
+# Registration via API + jsCookies
 #
 @urlpatterns.route("login/api-key/")
 def api_key(request):

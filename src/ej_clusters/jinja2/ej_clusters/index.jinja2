@@ -31,7 +31,7 @@
             <p class="center">{% trans %}Could not determine the opinion groups for this
                 conversation.{% endtrans %}</p>
         </div>
-        {% if is_conversation_admin %}
+        {% if has_edit_perm %}
             <p class="center margin-3">{% trans link=edit_link %}You can edit the clusterization options for this
                 conversation {{ link }}.{% endtrans %}</p>
         {% endif %}
