@@ -27,6 +27,8 @@
         {% for cluster in clusters %}
             <h3>{{ cluster.name }} ({{ _('{n} users').format(n=cluster.n_users) }})</h3>
             {{ cluster|role('comments-stats-table') }}
+            {% if can_view_detail %}{{ conversation|role('download-data', which='comments-data', cluster=cluster) }}{% endif %}
+
         {% endfor %}
     {% endif %}
 

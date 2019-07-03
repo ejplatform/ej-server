@@ -104,8 +104,13 @@ class Cluster(TimeStampedModel):
         agree = []
         disagree = []
         for comment in Comment.objects.filter(id__in=d_agree):
-            comment.agree = d_agree[comment.id]
-            agree.append(comment)
+            # It would accept 0% agreement since we test sfor n_agree >= n_disagree
+            # We must prevent cases with 0 agrees (>= 0 disagrees) to enter in
+            # the calculation
+            n_agree = d_agree[comment.id]
+            if n_agree:
+                comment.agree = n_agree
+                agree.append(comment)
 
         for comment in Comment.objects.filter(id__in=d_disagree):
             comment.disagree = d_disagree[comment.id]
