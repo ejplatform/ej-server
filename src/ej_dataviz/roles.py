@@ -16,15 +16,25 @@ User = get_user_model()
 # Conversation roles
 #
 @with_template(models.Conversation, role="download-data")
-def conversation_download_data(conversation, *, which, formats=None, **kwargs):
+def conversation_download_data(conversation, *, which, formats=None, cluster=None, **url_kwargs):
     if ":" not in which:
         which = f"report:{which}"
-    formats = formats or DEFAULT_FORMATS
+        if cluster is not None:
+            which += '-cluster'
+
+    # Prepare urls
+    url_kwargs = {}
+    if cluster is not None:
+        url_kwargs['cluster_id'] = cluster.id
+
+    format_lst = []
+    for format, name in (formats or DEFAULT_FORMATS).items():
+        url = conversation.url(which, fmt=format, **url_kwargs)
+        format_lst.append((format, name, url))
 
     return {
-        "view_name": which,
         "conversation": conversation,
-        "formats": formats.items(),
+        "formats": format_lst,
     }
 
 

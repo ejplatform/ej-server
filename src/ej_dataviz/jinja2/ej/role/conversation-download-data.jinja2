@@ -1,8 +1,8 @@
 <div class="margin-t3">
     <span class="bold">{{ title|default(_('Downloads: ')) }}</span>
     <ul class="list-reset margin-x3">
-        {%- for format, name in formats -%}
-            <li class="margin-0"><a href="{{ conversation.url(view_name, fmt=format) }}">
+        {%- for format, name, url in formats -%}
+            <li class="margin-0"><a href="{{ url }}">
                 <span class="brand bold">{{ name }}</span></a>
                 {%- if format == 'csv' %}
                     - {{ _('Text-based table format that can be imported to Excel and other spreadsheets.') }}
