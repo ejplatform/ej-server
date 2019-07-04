@@ -1,8 +1,10 @@
 {% extends 'base.jinja2' %}
 {% set content_title = _('Configure Rocket.Chat Integration') %}
+{% set main_class = 'container pad-x2' %}
+
 
 {% block content %}
-    <div class="CenteredContainer">
+    <div class="measure margin-xauto margin-t3">
         <form method="post">
             {{ csrf_input }}
             {{ form.as_table() }}

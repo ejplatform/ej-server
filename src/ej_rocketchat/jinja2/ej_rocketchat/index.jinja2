@@ -1,0 +1,26 @@
+{% extends 'base.jinja2' %}
+{% set page_title = _('Panel') %}
+{% set main_class = "container pad-x2" %}
+
+{% block content %}
+    <div class="measure margin-xauto margin-t3">
+        <h1 class="h2 text-accent">{{ _('Administrative login') }}</h1>
+        <p>{% trans %}Administrative users do not have user accounts in Rocket.Chat. Instead, they all control
+            the common administrative account for Rocket.Chat.{% endtrans %}</p>
+{#        <h2 class="h3 text-accent">{{ _('Account info') }}</h2>#}
+{#        <dl>#}
+{#            <dt>{% trans %}Admin user{% endtrans %}</dt>#}
+{#            <dd>{{ username }}</dd>#}
+{#            <dt>{% trans %}Access token{% endtrans %}</dt>#}
+{#            <dd>{{ token }}</dd>#}
+{#        </dl>#}
+        <h2 class="h3 text-accent">{{ _('Login') }}</h2>
+        <p>{{ _('Please type the <strong>Rocket.Chat</strong> admin password')|safe }}</p>
+        <form method="post">
+            {{ csrf_input }}
+            {{ form.as_p() }}
+            <input type="submit" value="{{ _('Send') }}" name="send">
+        </form>
+    </div>
+{% endblock %}
+

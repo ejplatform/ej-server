@@ -40,10 +40,23 @@ class RCAccount(models.Model):
             )
         ],
     )
-    password = models.CharField(_("Password"), max_length=50, blank=True)
-
-    user_rc_id = models.CharField(_("Rocketchat user id"), max_length=50)
-    auth_token = models.CharField(_("Rocketchat user token"), max_length=50, blank=True)
+    password = models.CharField(
+        _("Password"),
+        max_length=50,
+        blank=True,
+    )
+    user_rc_email = models.EmailField(
+        _('E-mail used to create RC account'),
+    )
+    user_rc_id = models.CharField(
+        _("Rocketchat user id"),
+        max_length=50,
+    )
+    auth_token = models.CharField(
+        _("Rocketchat user token"),
+        max_length=50,
+        blank=True,
+    )
     account_data = JSONField(
         _("Account data"),
         null=True,
@@ -73,7 +86,7 @@ class RCAccount(models.Model):
 
     def update_info(self, commit=True):
         """
-        Update user info from Rocketchat and user permissions.
+        Update user info from Rocket.Chat and user permissions.
         """
         config = RCConfig.objects.default_config()
         self.user_rc_id, self.auth_token = config.user_info(self.user)
@@ -83,7 +96,7 @@ class RCAccount(models.Model):
 
 class RCConfig(models.Model):
     """
-    Store Rocketchat configuration.
+    Store Rocket.Chat configuration.
     """
 
     url = models.URLField(
@@ -99,7 +112,7 @@ class RCConfig(models.Model):
         null=True,
         help_text=_(
             "A private URL used only for API calls. Can be used to override "
-            "the public URL if Rocket.Chat is available in an internal "
+            "the public URL if Rocket.Chat is also available from an internal "
             "address in your network."
         ),
     )
@@ -118,6 +131,11 @@ class RCConfig(models.Model):
         _("Login token"),
         max_length=50,
         help_text=_("Login token for the Rocket.Chat admin user."),
+    )
+    admin_password = models.CharField(
+        _("Admin password"),
+        max_length=50,
+        help_text=_("Password for the Rocket.Chat admin user."),
     )
     is_active = models.BooleanField(
         _("Is active"),

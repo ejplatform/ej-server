@@ -1,9 +1,9 @@
 from logging import getLogger
 
-from django.http import HttpResponse, JsonResponse, Http404
-from django.shortcuts import redirect
-
 from boogie.router import Router
+from django.http import HttpResponse, JsonResponse, Http404
+from django.shortcuts import redirect, render
+
 from ej_users.routes import login as ej_login
 from . import forms
 from .decorators import security_policy, requires_rc_perm
@@ -16,73 +16,56 @@ urlpatterns = Router(template=["ej_rocketchat/{name}.jinja2"])
 
 
 @urlpatterns.route("", decorators=[requires_rc_perm, security_policy])
-def iframe(request):
-    ask_password_form = None
-    ask_password = False
-
+def index(request):
     # Superuser must type the password since it is not stored in the database
     if request.user.is_superuser:
-        ask_password = True
-        password, ask_password_form = ask_admin_password(request)
-        token = rocket.admin_token
-        username = rocket.admin_username
-        if password:
-            rocket.password_login(rocket.admin_username, password)
-            ask_password = False
-
+        form = forms.AskAdminPasswordForm(request=request)
+        if not form.is_valid_post():
+            return {
+                "rocketchat_url": rocket.url,
+                "username": rocket.admin_username,
+                "token": rocket.admin_token,
+                "form": form,
+            }
     else:
         account = rocket.find_or_create_account(request.user)
         if account is None:
             return redirect("rocket:register")
-        token = account.auth_token
-        username = account.username
-        rocket.login(request.user)
 
-    return {
-        "rocketchat_url": rocket.url,
-        "username": username,
-        "auth_token": token,
-        "auth_token_repr": repr(token),
-        "ask_password_form": ask_password_form,
-        "ask_password": ask_password,
+    ctx = {
+        'url': rocket.url + '/home/',
+        'url_escape': repr(rocket.url + '/home/'),
     }
+    return render(request, 'ej_rocketchat/redirect.jinja2', ctx)
 
 
-def ask_admin_password(request):
-    password = None
-    form = forms.AskAdminPasswordForm(request=request)
-    if form.is_valid_post():
-        password = form.cleaned_data["password"]
-    return password, form
-
-
-@urlpatterns.route("register/", decorators=[requires_rc_perm, security_policy])
+@urlpatterns.route("register/", decorators=[requires_rc_perm])
 def register(request):
     if RCAccount.objects.filter(user=request.user).exists():
-        return redirect("rocket:iframe")
+        return redirect("rocket:index")
 
     form = forms.CreateUsernameForm(request=request, user=request.user)
     if form.is_valid_post():
-        return redirect("rocket:iframe")
+        return redirect("rocket:index")
     return {"form": form}
 
 
-@urlpatterns.route("config/", decorators=[security_policy])
+@urlpatterns.route("config/")
 def config(request):
     if not request.user.is_superuser:
         raise Http404
 
-    config = RCConfig.objects.default_config(raises=False)
+    cfg = RCConfig.objects.default_config(raises=False)
     form_kwargs = {}
-    if config:
-        form_kwargs["data"] = {"rocketchat_url": config.url}
+    if cfg:
+        form_kwargs["data"] = {"rocketchat_url": cfg.url}
     form = forms.RocketIntegrationForm(request=request, **form_kwargs)
 
     if form.is_valid_post():
         password = form.cleaned_data["password"]
         username = form.cleaned_data["username"]
         rocket.password_login(username, password)
-        return redirect("rocket:iframe")
+        return redirect("rocket:index")
 
     return {"form": form}
 
@@ -93,7 +76,9 @@ def intro():
 
 
 @urlpatterns.route(
-    "login/", decorators=[security_policy], template="ej_users/login.jinja2"
+    "login/",
+    decorators=[security_policy],
+    template="ej_users/login.jinja2"
 )
 def login(request):
     log.info(f"login attempt via /talks/login: {request.user}")
@@ -102,12 +87,12 @@ def login(request):
     return ej_login(request, redirect_to="/talks/")
 
 
-@urlpatterns.route("check-login/", decorators=[security_policy])
+@urlpatterns.route("api-login/", decorators=[security_policy])
 def check_login(request):
     if not request.user.is_authenticated:
+        log.warning(f'Rocket.Chat: anonymous user login attempt.')
         return HttpResponse(status=401)
-    if request.user.is_superuser:
-        auth_token = rocket.admin_token
-    else:
-        auth_token = rocket.get_auth_token(request.user)
+
+    auth_token = rocket.get_auth_token(request.user)
+    log.info(f'Rocket.Chat: {request.user} attempted login')
     return JsonResponse({"loginToken": auth_token})
