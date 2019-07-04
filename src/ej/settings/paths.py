@@ -47,10 +47,22 @@ class PathsConf(Base):
         return [repo_dir / "lib/build", repo_dir / "lib/assets"]
 
     def get_django_templates_dirs(self):
-        return [self.ROOT_TEMPLATE_DIR / "django"]
+        dirs = [self.ROOT_TEMPLATE_DIR / "django"]
+        if self.EJ_THEME:
+            dirs.insert(0, self.EJ_THEME_PATH / 'templates' / 'django')
+        return dirs
 
     def get_jinja_templates_dirs(self):
-        return [self.ROOT_TEMPLATE_DIR / "jinja2"]
+        dirs = [self.ROOT_TEMPLATE_DIR / "jinja2"]
+        if self.EJ_THEME:
+            dirs.insert(0, self.EJ_THEME_PATH / 'templates' / 'jinja2')
+        return dirs
+
+    def get_ej_theme_path(self):
+        if os.path.sep in self.EJ_THEME:
+            return self.EJ_THEME
+        else:
+            return self.THEMES_DIR / self.EJ_THEME
 
 
 def mkdir_recursive(path):

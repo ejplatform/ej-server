@@ -61,46 +61,4 @@
 
         <p class="center margin-3">{{ action_button(_('Create a conversation'), href='conversation:create', secondary=true) }}</p>
     </div>
-
-
-    <div class="container-1 margin-y3">
-        <h2 class="text-accent">{{ _('Documentation') }}</h2>
-        <p>{{ _('Explore the EJ resources with our documented guides') }}</p>
-
-        <div class="row wrap flex-center">
-            {% for doc in documentation_items %}
-                <a href="{{ doc.href }}"
-                   class="block text-brand-light size-x5p size-y5 rounded-3 margin-2 border-2 center pad-1 leading-solid">
-                    <i class="{{ doc.icon }} text-1 gradient block pad-1"></i>
-                    <span class="text-7 uppercase semi-bold text-brand">{{ doc.text }}</span></a>
-            {% endfor %}
-        </div>
-    </div>
-
-
-    <div class="pad-3" style="background: #eee;">
-        <h2 class="container-1">{{ _('EJ Community') }}</h2>
-        <ul class="container-1 list-reset row wrap items-center flex-center margin-y3 margin-xauto pad-x0">
-            {% for file, name in people.items() %}
-                <li class="center text-7 margin-2 size-x4p">
-                    <img class="rounded-full size-4p block" src="{{ static("img/home/team/" + file) }}"
-                         alt="{{ name }}">
-                    {{ name }}</li>
-            {% endfor %}
-        </ul>
-    </div>
-
-
-    <div class="container-1">
-        <h2 class="text-accent">{{ _('Who is using EJ?') }}</h2>
-        <ul class="container-1 list-reset row wrap items-center flex-center margin-y3 pad-x0">
-            {% for partner in partners %}
-                <li class="margin-2 size-5p">
-                    <a target="_blank" rel="noopener noreferrer" href="{{ partner.url }}">
-                        <img class="width-full" src="{{ static('img/home/' + partner.img) }}" alt="{{ partner.name }}">
-                    </a>
-                </li>
-            {% endfor %}
-        </ul>
-    </div>
 {% endblock %}
