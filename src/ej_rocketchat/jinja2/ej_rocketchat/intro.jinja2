@@ -1,11 +1,18 @@
 {% extends 'base.jinja2' %}
 
 {% set content_title = _('Panel') %}
-{% set enable_navbar = False %}
+{% set hide_header = True %}
+{% set hide_footer = True %}
+{% set hide_menu = True %}
+
+{% block css %}
+    {{ super() }}
+    <link id="main-css-link" rel="stylesheet" href="/static/css/rocket.css">
+{% endblock %}
 
 
 {% block main %}
-    <div class="Rocket">
+    <div class="measure-wide margin-xauto">
         <div class="Rocket-title">
             <span>Oi! Bem vindo ao </span>
 

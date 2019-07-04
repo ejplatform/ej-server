@@ -2,7 +2,7 @@ import random
 import string
 from logging import getLogger
 
-from sidekick import lazy, delegate_to
+from sidekick import lazy, delegate_to, record
 
 from .exceptions import ApiError
 
@@ -35,6 +35,7 @@ class RCConfigWrapper:
         return self.configs.default_config(raises=False) is not None
 
     admin_username = delegate_to("config")
+    admin_password = delegate_to("config")
     admin_id = delegate_to("config")
     admin_token = delegate_to("config")
 
@@ -43,12 +44,13 @@ class RCConfigWrapper:
         Call Rocket.Chat API to register a new user, if not already registered.
         """
         password = random_password(30)
+        email = user.email
         result = self.api_call(
             "users.create",
             auth="admin",
             raises=False,
             payload={
-                "email": user.email,
+                "email": email,
                 "name": user.name,
                 "username": username,
                 "password": password,
@@ -68,6 +70,7 @@ class RCConfigWrapper:
             username=username,
             password=password,
             user_rc_id=result["user"]["_id"],
+            user_rc_email=email,
             is_active=True,
             account_data=result,
         )
@@ -78,6 +81,23 @@ class RCConfigWrapper:
 
         User must already been registered and provided a RC username.
         """
+        # Super-user share the global config account. Login will force login and
+        # update the global config
+        if user.is_superuser:
+            from .models import RCAccount
+            response = self.password_login(self.admin_username, self.admin_password)
+            self.config.admin_token = response["data"]["authToken"]
+            self.config.save()
+            return record(
+                config=self.config,
+                username=self.admin_username,
+                password=self.admin_password,
+                auth_token=self.config.admin_token,
+                user_rc_id=self.admin_id,
+                user=user,
+            )
+
+        # Handle regular accounts
         account = self.accounts.get(user=user)
         if not account.is_active:
             return account
@@ -93,7 +113,7 @@ class RCConfigWrapper:
         """
         payload = {"username": username, "password": password}
         try:
-            response = self.api_call("login", payload=payload, auth="admin")
+            response = self.api_call("login", payload=payload)
         except ApiError as exc:
             if exc.response["error"].lower() == "unauthorized":
                 raise PermissionError("invalid credentials")
@@ -103,7 +123,7 @@ class RCConfigWrapper:
 
     def logout(self, user):
         """
-        Force logout of Django user.
+        Force logout of RC user.
         """
         users = list(self.accounts.filter(user=user))
         if not users:
@@ -118,11 +138,17 @@ class RCConfigWrapper:
             account.save()
             log.info(f"{user} successfully logged out from Rocket.Chat")
 
-    def get_auth_token(self, user):
+    def get_auth_token(self, user, fast=False):
         """
         Return the login auth token for the given user.
         """
-        return self.accounts.get(user=user).auth_token
+        if fast and user.is_superuser:
+            return self.admin_token
+        elif fast:
+            return self.accounts.get(user=user).auth_token
+
+        account = self.login(user)
+        return account.auth_token
 
     def api_call(self, *args, **kwargs):
         """

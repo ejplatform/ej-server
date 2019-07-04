@@ -1,10 +1,15 @@
 {% extends 'base.jinja2' %}
 {% set page_title = _('Panel: Register username') %}
 {% set content_title = _('Panel settings') %}
+{% set main_class = 'container pad-x2' %}
 
 {% block content %}
-    <div class="CenteredContainer">
-        <form method="post">
+    <div class="measure margin-xauto margin-t3">
+        <h1 class="h2 text-accent">{{ _('Rocket.Chat user name') }}</h1>
+        <p>{% trans %}You need a unique username to use the Rocket.Chat panel.
+        Please select the username and we will create an account for you.
+        {% endtrans %}</p>
+         <form method="post">
             {{ csrf_input }}
             {{ form.as_p() }}
             <input type="submit"  value="{{ _('Send') }}" name="send">
