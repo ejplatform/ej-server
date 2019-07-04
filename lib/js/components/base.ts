@@ -43,6 +43,13 @@ up.compiler('[is-hook]', function (elem: Element) {
     debug(`Hook initialized: ${name}`);
 });
 
+/**
+ * Run js forces running scripts after fragment finishes loading.
+ */
+up.compiler('script[up-always-execute]', function (elem: HTMLScriptElement) {
+    eval(elem.innerText);
+});
+
 
 //==============================================================================
 // DECORATORS

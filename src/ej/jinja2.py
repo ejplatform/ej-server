@@ -40,6 +40,7 @@ def environment(autoescape=True, **options):
             has_gamification=apps.is_installed("ej_gamification"),
             has_profiles=apps.is_installed("ej_profiles"),
             has_users=apps.is_installed("ej_users"),
+            has_rocketchat=apps.is_installed("ej_rocketchat"),
             service_worker=getattr(settings, "SERVICE_WORKER", False),
         ),
         # Localization
