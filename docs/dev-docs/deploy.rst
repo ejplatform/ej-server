@@ -112,14 +112,15 @@ In this page, follow the instructions bellow:
    to ``http://<django-host>/talks/login/?next=/talks/`` (replacing Django with the
    address of your actual Django instance).
 3. Rocket.Chat needs to check if an user is already authenticated. Set
-   ``API URL`` to ``http://<django-host>/talks/check-login/``.
+   ``API URL`` to ``http://<django-host>/talks/api-login/``.
 4. Set ``API Method`` to ``POST``.
 5. Save the changes.
 
 Now, go to ``Administration > Accounts`` and disable the following features:
 
-* Allow changes to user profile
-* Allow
+* Allow change username
+* Allow change e-mail
+* Allow change password
 
 The final step is to setup EJ using a superuser account. Go to http://<django-host>/talks/
 and it will request additional information before continuing.

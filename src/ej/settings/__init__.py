@@ -92,17 +92,6 @@ class Conf(
     #     'REGISTER_SERIALIZER': 'ej_users.serializers.RegistrationSerializer'
     # }
 
-    # Use this variable to change the ej environment during the docker build step.
-    ENVIRONMENT = "local"
-    DEFAULT_FROM_EMAIL = "Empurrando Juntos <noreply@mail.ejplatform.org>"
-
-    def get_email_backend(self):
-        if self.ENVIRONMENT == "production":
-            # self.ANYMAIL = {'MAILGUN_API_KEY': ''}
-            # 'anymail.backends.mailgun.EmailBackend'
-            return "django.core.mail.backends.smtp.EmailBackend"
-        else:
-            return "django.core.mail.backends.console.EmailBackend"
 
     #
     # Templates

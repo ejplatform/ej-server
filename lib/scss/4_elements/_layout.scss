@@ -20,15 +20,6 @@
     }
 }
 
-.CenteredContainer {
-    @extend .container-1;
-    text-align: center;
-    width: 80vw;
-}
-
-.CenteredContainer[compact] {
-    max-width: $layout-compact-container-width;
-}
 
 // Flex box based layouts
 .Col--center {

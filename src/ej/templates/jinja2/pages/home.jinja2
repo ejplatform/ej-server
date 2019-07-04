@@ -14,15 +14,15 @@
         }
     </style>
     <div class="landing-page__cover width-full center color-brand col flex-center">
-        <p class="bold text-1">{{ _('Create opinion surveys') }}</p>
+        <p class="bold text-1 text-white">{{ _('Create opinion surveys') }}</p>
         <p>{{ action_button(_('Try it now!'), href='conversation:list', secondary=true) }}</p>
         <a class="landing-page__cover-scroll"
            onclick="$('html, body').animate({scrollTop: $('#how-it-works').offset().top - $('.main-header').height() - 20}, 400);"><i
             class="fa fa-chevron-down"></i></a>
     </div>
 
-    <h1 class="center text-accent" id="how-it-works">{{ _('How does it work?') }}</h1>
 
+    <h1 class="center text-accent" id="how-it-works">{{ _('How does it work?') }}</h1>
     <div class="landing-page__cards">
         <div class="landing-page__card">
             <i class="fa fa-microphone gradient text-huge"></i>
@@ -43,6 +43,7 @@
         </div>
     </div>
 
+
     <div class="landing-page__conversations width-full pad-1">
         <h2 class="center">{{ _('Participative conversations') }}</h2>
 
@@ -61,12 +62,12 @@
         <p class="center margin-3">{{ action_button(_('Create a conversation'), href='conversation:create', secondary=true) }}</p>
     </div>
 
+
     <div class="container-1 margin-y3">
         <h2 class="text-accent">{{ _('Documentation') }}</h2>
         <p>{{ _('Explore the EJ resources with our documented guides') }}</p>
 
         <div class="row wrap flex-center">
-
             {% for doc in documentation_items %}
                 <a href="{{ doc.href }}"
                    class="block text-brand-light size-x5p size-y5 rounded-3 margin-2 border-2 center pad-1 leading-solid">
@@ -89,7 +90,8 @@
         </ul>
     </div>
 
-    <div class="landing-page__partners container">
+
+    <div class="container-1">
         <h2 class="text-accent">{{ _('Who is using EJ?') }}</h2>
         <ul class="container-1 list-reset row wrap items-center flex-center margin-y3 pad-x0">
             {% for partner in partners %}
