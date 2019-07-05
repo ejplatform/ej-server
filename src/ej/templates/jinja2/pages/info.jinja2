@@ -21,7 +21,7 @@
 
 
         {# CONVERSATIONS #}
-        <h1>Conversations</h1>
+        <h1>{{ _('Conversations') }}</h1>
         <table>
             <tr>
                 <th>{{ _('Name') }}</th>
@@ -35,6 +35,15 @@
                 </tr>
             {% endfor %}
         </table>
+
+        {# LINKS #}
+        <h1>{{ _('More info') }}</h1>
+        <ul>
+            <li><a href="{{ url('info-django-settings') }}">{{ _('Django Settings') }}</a></li>
+            <li><a href="{{ url('info-environ') }}">{{ _('Execution environment') }}</a></li>
+            <li><a href="{{ url('info-styles') }}">{{ _('Styles') }}</a></li>
+        </ul>
+
     </div>
 {% endblock %}
 

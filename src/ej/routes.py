@@ -1,4 +1,5 @@
 import logging
+import os
 from pprint import pformat
 
 from boogie.router import Router
@@ -75,6 +76,13 @@ def info_django_settings(request):
         if name.isupper()
     ]
     return {"settings_data": sorted(data)}
+
+
+@urlpatterns.route("info/environment/")
+def info_environ(request):
+    if not request.user.is_superuser:
+        raise PermissionError
+    return {"settings_data": sorted(os.environ.items())}
 
 
 #

@@ -60,5 +60,7 @@ class InstalledAppsConf(Base, EjOptions):
         elif self.DEBUG:
             apps = ["debug_toolbar", *apps]
         if self.ENVIRONMENT == "production":
-            apps = ["raven.contrib.django.raven_compat", "gunicorn", "anymail", *apps]
+            # "raven.contrib.django.raven_compat" ?
+            # "anymail"?
+            apps = ["gunicorn", *apps]
         return apps
