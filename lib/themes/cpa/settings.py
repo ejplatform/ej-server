@@ -1,3 +1,9 @@
+from boogie.configurations import env
+
+# CPA configurations
+CPA_SHOW_START_PAGE_EXPLANATION_BANNER = env(True, name='{attr}')
+
+# Override EJ configurtions
 EJ_ANONYMOUS_HOME_PATH = '/start/'
 EJ_PAGE_TITLE = 'Plataforma CPA'
 EJ_REGISTER_TEXT = 'Não faz parte da Plataforma CPA?'

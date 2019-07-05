@@ -42,6 +42,7 @@ def environment(autoescape=True, **options):
             has_users=apps.is_installed("ej_users"),
             has_rocketchat=apps.is_installed("ej_rocketchat"),
             service_worker=getattr(settings, "SERVICE_WORKER", False),
+            all=settings,
         ),
         # Localization
         get_language=get_language,
