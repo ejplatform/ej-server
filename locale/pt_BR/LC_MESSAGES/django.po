@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-19 19:12+0000\n"
-"PO-Revision-Date: 2019-05-19 16:18-0300\n"
+"POT-Creation-Date: 2019-07-05 03:00+0000\n"
+"PO-Revision-Date: 2019-07-05 00:01-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
 "Language: pt_BR\n"
@@ -16,14 +16,14 @@ msgstr ""
 "X-Generator: Poedit 2.2.1\n"
 "X-Loco-Parser: loco_parse_po\n"
 
-#: docs/_templates/layout.html:3
+#: docs/_templates_simple/layout.html:3
 msgid "Documentation"
 msgstr "Documentação"
 
 #: src/ej/components/builtins.py:10
 #, python-brace-format
 msgid "{date} at {time}"
-msgstr ""
+msgstr "{date} às {time}"
 
 #: src/ej/components/menu.py:132
 msgid "Accessibility"
@@ -57,7 +57,7 @@ msgstr "Escolha um arquivo"
 msgid "No file chosen"
 msgstr "Nenhum arquivo selecionado"
 
-#: src/ej/jinja2.py:204
+#: src/ej/jinja2.py:206
 msgid "This template defines no extra variables"
 msgstr "Este template não define variáveis extras"
 
@@ -73,47 +73,46 @@ msgstr "olá"
 msgid "Go!"
 msgstr "Quero ir!"
 
-#: src/ej/routes.py:76
-msgid "User Guides"
-msgstr "Guias de Usuário"
-
-#: src/ej/routes.py:81
-#, fuzzy
-msgid "Installation"
-msgstr "Guias de Instalação"
-
-#: src/ej/routes.py:86
-msgid "Administration Guides"
-msgstr "Guias de Administração"
-
-#: src/ej/routes.py:91
-msgid "Development Guides"
-msgstr "Guias de Desenvolvimento"
-
-#: src/ej/routes.py:96
-msgid "Our Artificial Intelligence"
-msgstr "Nossa Inteligência Artificial"
-
-#: src/ej/routes.py:101
-msgid "Contributing"
-msgstr "Contribuindo"
-
-#: src/ej/routes.py:106
-msgid "Getting Help"
-msgstr "Obtendo Ajuda"
-
-#: src/ej/routes.py:151 src/ej_conversations/apps.py:8
-#: src/ej_gamification/roles.py:24
+#: src/ej/routes.py:54 src/ej_conversations/apps.py:8
+#: src/ej_gamification/roles.py:26
 msgid "Conversations"
 msgstr "Conversas"
 
-#: src/ej/routes.py:152 src/ej_dataviz/roles.py:139
+#: src/ej/routes.py:55 src/ej_dataviz/roles.py:152
 msgid "Votes"
 msgstr "Votos"
 
-#: src/ej/routes.py:153
+#: src/ej/routes.py:56
 msgid "Comments"
 msgstr "Comentários"
+
+#: src/ej/routes.py:148
+msgid "User Guides"
+msgstr "Guias de Usuário"
+
+#: src/ej/routes.py:153
+msgid "Installation"
+msgstr "Guias de Instalação"
+
+#: src/ej/routes.py:158
+msgid "Administration Guides"
+msgstr "Guias de Administração"
+
+#: src/ej/routes.py:163
+msgid "Development Guides"
+msgstr "Guias de Desenvolvimento"
+
+#: src/ej/routes.py:168
+msgid "Our Artificial Intelligence"
+msgstr "Nossa Inteligência Artificial"
+
+#: src/ej/routes.py:173
+msgid "Contributing"
+msgstr "Contribuindo"
+
+#: src/ej/routes.py:178
+msgid "Getting Help"
+msgstr "Obtendo Ajuda"
 
 #: src/ej/settings/options.py:34
 msgid "EJ Platform"
@@ -138,11 +137,11 @@ msgstr "Murais"
 
 #: src/ej_boards/forms.py:23
 msgid "You cannot change this value afterwards"
-msgstr ""
+msgstr "Você não pode alterar este valor depois"
 
 #: src/ej_boards/models.py:19
 msgid "Default"
-msgstr ""
+msgstr "Padrão"
 
 #: src/ej_boards/models.py:20
 msgid "Alternative"
@@ -158,12 +157,11 @@ msgstr "Verde"
 
 #: src/ej_boards/models.py:23
 msgid "Orange"
-msgstr ""
+msgstr "Laranja"
 
 #: src/ej_boards/models.py:24
-#, fuzzy
 msgid "Purple"
-msgstr "Propósito"
+msgstr "Roxa"
 
 #: src/ej_boards/models.py:26
 msgid "Slug"
@@ -173,7 +171,7 @@ msgstr "Identificador"
 msgid "Title"
 msgstr "Título"
 
-#: src/ej_boards/models.py:34 src/ej_clusters/models/cluster.py:31
+#: src/ej_boards/models.py:34 src/ej_clusters/models/cluster.py:32
 #: src/ej_clusters/models/stereotype.py:29
 msgid "Description"
 msgstr "Descrição"
@@ -192,33 +190,31 @@ msgstr "Mural"
 
 #: src/ej_boards/models.py:61
 msgid "Slug already exists."
-msgstr "Essa URL já existe."
+msgstr "Identificador já existe."
 
 #: src/ej_boards/routes.py:59
 msgid "You cannot change this value"
-msgstr ""
+msgstr "Você não pode mudar este valor"
 
 #: src/ej_boards/validators.py:9
 msgid "Invalid slug."
-msgstr "URL inválida."
+msgstr "Identificador inválido."
 
 #: src/ej_boards/validators.py:11
 msgid "Slug cannot contain a backslash character."
 msgstr "O identificador não pode conter uma barra."
 
 #: src/ej_clusters/admin.py:28
-#, fuzzy
 msgid "Force clusterization (slow)"
 msgstr "Forçar agrupamento"
 
 #: src/ej_clusters/admin.py:32
 msgid "Clusterization complete!"
-msgstr ""
+msgstr "Clusterização completa!"
 
 #: src/ej_clusters/admin.py:34
-#, fuzzy
 msgid "Update clusterization (slow)"
-msgstr "Forçar agrupamento"
+msgstr "Atualizar clusterização (lento)"
 
 #: src/ej_clusters/apps.py:7
 msgid "Clusters"
@@ -241,18 +237,23 @@ msgid ""
 "You can select multiple personas for each group. Personas are fake users "
 "that you control and define the opinion profile of your group."
 msgstr ""
+"Você pode selecionar várias personas para cada grupo. \"Personas\" são "
+"usuários falsos que você controla e definem o perfil de opinião do seu grupo."
 
 #: src/ej_clusters/forms.py:47
 msgid "Personas"
 msgstr "Personas"
 
 #: src/ej_clusters/forms.py:59
-msgid "Create new persona for this group. You can re-use it in other groups."
+msgid ""
+"Create new persona with the name of the group if no other persona isselected."
 msgstr ""
+"Crie uma nova persona com o nome do grupo, se nenhuma outra persona for "
+"selecionada."
 
 #: src/ej_clusters/forms.py:69
 msgid "You must select a persona or create a new one."
-msgstr ""
+msgstr "Você deve selecionar uma persona ou criar uma nova."
 
 #: src/ej_clusters/models/__init__.py:50
 msgid "Edit groups"
@@ -263,20 +264,19 @@ msgid "Manage personas"
 msgstr "Gerenciar personas"
 
 #: src/ej_clusters/models/__init__.py:56 src/ej_clusters/roles.py:18
-#, fuzzy
 msgid "Opinion groups"
-msgstr "Opinião"
+msgstr "Grupos de opinião"
 
-#: src/ej_clusters/models/cluster.py:29 src/ej_clusters/models/stereotype.py:23
-#: src/ej_dataviz/roles.py:130
+#: src/ej_clusters/models/cluster.py:30 src/ej_clusters/models/stereotype.py:23
+#: src/ej_dataviz/roles.py:143
 msgid "Name"
 msgstr "Nome"
 
-#: src/ej_clusters/models/cluster.py:31
+#: src/ej_clusters/models/cluster.py:32
 msgid "How was this cluster conceived?"
 msgstr "Como este grupo foi concebido?"
 
-#: src/ej_clusters/models/cluster.py:57
+#: src/ej_clusters/models/cluster.py:58
 #, python-brace-format
 msgid "{name} (\"{conversation}\" conversation, {n} users)"
 msgstr ""
@@ -285,17 +285,19 @@ msgstr ""
 
 #: src/ej_clusters/models/stereotype.py:23
 msgid "Public identification of persona."
-msgstr ""
+msgstr "Nome público da persona."
 
 #: src/ej_clusters/models/stereotype.py:32
 msgid ""
 "Specify a background history, or give hints about the profile this persona "
 "wants to capture. This information is optional and is not made public."
 msgstr ""
+"Especifique um histórico ou dê dicas sobre o perfil que essa persona deseja "
+"capturar. Esta informação é opcional e não é pública."
 
 #: src/ej_clusters/models/stereotype_vote.py:22
-#: src/ej_conversations/roles/comments.py:91 src/ej_dataviz/roles.py:124
-#: src/ej_dataviz/roles.py:125
+#: src/ej_conversations/roles/comments.py:91 src/ej_dataviz/roles.py:137
+#: src/ej_dataviz/roles.py:138
 msgid "Comment"
 msgstr "Comentar"
 
@@ -311,11 +313,7 @@ msgid ""
 msgstr ""
 "Esta conversa possui {n_groups} grupos e você está no grupo {group_id}."
 
-#: src/ej_clusters/routes.py:40
-msgid "high"
-msgstr "alto"
-
-#: src/ej_clusters/routes.py:55
+#: src/ej_clusters/routes.py:60
 msgid "here"
 msgstr "aqui"
 
@@ -324,19 +322,17 @@ msgid "Moderation"
 msgstr "Moderação"
 
 #: src/ej_conversations/admin.py:58
-#, fuzzy
 msgid "Delete all votes for selected conversations"
 msgstr "Conversas Favoritas"
 
 #: src/ej_conversations/admin.py:63
 #, python-brace-format
 msgid "{n} votes removed!"
-msgstr ""
+msgstr "{n} votos removidos!"
 
 #: src/ej_conversations/admin.py:65
-#, fuzzy
 msgid "Delete all comments for selected conversations"
-msgstr "Pode moderar comentários em qualquer conversa"
+msgstr "Excluir todos os comentários para conversas selecionadas"
 
 #: src/ej_conversations/admin.py:70
 #, python-brace-format
@@ -345,44 +341,41 @@ msgstr "{n} comentários removidos!"
 
 #: src/ej_conversations/admin.py:75
 msgid "Cast 50 random votes per selected conversation (slow)"
-msgstr ""
+msgstr "Realizar 50 votos aleatórios por conversa selecionada (lenta)"
 
 #: src/ej_conversations/admin.py:79
 msgid "Cast 500 random votes per selected conversation (slow)"
-msgstr ""
+msgstr "Realizar 500 votos aleatórios por conversa selecionada (lenta)"
 
 #: src/ej_conversations/admin.py:83
 msgid "Cast 5000 random votes per selected conversation (slow)"
-msgstr ""
+msgstr "Realizar 5000 votos aleatórios por conversa selecionada (lenta)"
 
 #: src/ej_conversations/admin.py:87
-#, fuzzy
 msgid "Create 10 random comments in each selected conversation (slow)"
-msgstr "Pode moderar comentários em qualquer conversa"
+msgstr "Criar 10 comentários aleatórios em cada conversa selecionada (lenta)"
 
 #: src/ej_conversations/admin.py:91
-#, fuzzy
 msgid "Create 100 random comments in each selected conversation (slow)"
-msgstr "Pode moderar comentários em qualquer conversa"
+msgstr "Criar 100 comentários aleatórios em cada conversa selecionada (lenta)"
 
 #: src/ej_conversations/admin.py:95
-#, fuzzy
 msgid "Create 1000 random comments in each selected conversation (slow)"
-msgstr "Pode moderar comentários em qualquer conversa"
+msgstr "Criar 1000 comentários aleatórios em cada conversa selecionada (lenta)"
 
 #: src/ej_conversations/admin.py:119
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Created {n} comments"
 msgstr "{n} comentários criados"
 
 #: src/ej_conversations/admin.py:141
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Created {n} votes"
 msgstr "{n} votos criados"
 
 #: src/ej_conversations/admin.py:161
 msgid "Compute the opinion bridge user for all conversations."
-msgstr ""
+msgstr "Calcule o usuário da ponte de opinião para todas as conversas."
 
 #: src/ej_conversations/enums.py:11
 msgid "User provided"
@@ -409,17 +402,17 @@ msgid "Violates terms of service of the platform"
 msgstr "Viola os termos de uso da plataforma"
 
 #: src/ej_conversations/enums.py:24 src/ej_conversations/roles/comments.py:34
-#: src/ej_dataviz/roles.py:134 src/ej_dataviz/roles.py:148
+#: src/ej_dataviz/roles.py:147 src/ej_dataviz/roles.py:161
 msgid "Skip"
 msgstr "Pular"
 
 #: src/ej_conversations/enums.py:25 src/ej_conversations/roles/comments.py:35
-#: src/ej_dataviz/roles.py:120 src/ej_dataviz/roles.py:144
+#: src/ej_dataviz/roles.py:133 src/ej_dataviz/roles.py:157
 msgid "Agree"
 msgstr "Concorda"
 
 #: src/ej_conversations/enums.py:26 src/ej_conversations/roles/comments.py:33
-#: src/ej_dataviz/roles.py:126 src/ej_dataviz/roles.py:146
+#: src/ej_dataviz/roles.py:139 src/ej_dataviz/roles.py:159
 msgid "Disagree"
 msgstr "Discorda"
 
@@ -429,25 +422,23 @@ msgstr "Dê a sua opinião aqui"
 
 #: src/ej_conversations/forms.py:29
 msgid "You already submitted this comment."
-msgstr ""
+msgstr "Você já enviou este comentário."
 
 #: src/ej_conversations/forms.py:67
 msgid "Tags"
 msgstr "Tags"
 
 #: src/ej_conversations/forms.py:67
-#, fuzzy
 msgid "Tags, separated by commas."
-msgstr "Tags, separadas por vírgula"
+msgstr "Tags, separadas por vírgula."
 
 #: src/ej_conversations/forms.py:74
 msgid "Place conversation in the main /conversations/ URL."
 msgstr "Conversas promovidas aparecem no mural principal."
 
 #: src/ej_conversations/forms.py:75
-#, fuzzy
 msgid "Mark to make the conversation invisible."
-msgstr "ir para minhas conversas"
+msgstr "Selecione para fazer conversa invisível."
 
 #: src/ej_conversations/models/comment.py:37
 msgid "awaiting moderation"
@@ -474,7 +465,6 @@ msgid "Rejection reason"
 msgstr "Motivo para rejeição"
 
 #: src/ej_conversations/models/comment.py:63
-#, fuzzy
 msgid "Rejection reason (free-form)"
 msgstr "Motivo para rejeição"
 
@@ -487,21 +477,18 @@ msgstr ""
 "comentário verá este feedback."
 
 #: src/ej_conversations/models/comment.py:109
-#, fuzzy
 msgid "Comment is approved"
-msgstr "Teve comentário aprovado"
+msgstr "Comentário aprovado"
 
 #: src/ej_conversations/models/comment.py:111
-#, fuzzy
 msgid "Comment is pending moderation"
-msgstr "Comentários da conversa"
+msgstr "Comentário está com moderação pendente"
 
 #: src/ej_conversations/models/comment.py:131
 msgid "Must give a reason to reject a comment"
 msgstr "Deve fornecer uma razão para rejeitar o comentário"
 
 #: src/ej_conversations/models/conversation.py:34
-#, fuzzy
 msgid "Short description used to create URL slugs (e.g. School system)."
 msgstr ""
 "Uma breve descrição sobre essa conversa. Isso é usado internamente para "
@@ -521,21 +508,19 @@ msgstr "Apenas o autor e o administrador podem editar esta conversa."
 
 #: src/ej_conversations/models/conversation.py:49
 msgid "Moderators can accept and reject comments."
-msgstr ""
+msgstr "Os moderadores podem aceitar e rejeitar comentários."
 
 #: src/ej_conversations/models/conversation.py:53
-#, fuzzy
 msgid "Promote conversation?"
-msgstr "Crie uma conversa"
+msgstr "Promover conversa?"
 
 #: src/ej_conversations/models/conversation.py:56
 msgid "Promoted conversations appears in the main /conversations/ endpoint."
 msgstr "Conversas promovidas aparecem no mural principal /conversations."
 
 #: src/ej_conversations/models/conversation.py:60
-#, fuzzy
 msgid "Hide conversation?"
-msgstr "Nova conversa"
+msgstr "Esconder conversa?"
 
 #: src/ej_conversations/models/conversation.py:63
 msgid ""
@@ -551,15 +536,15 @@ msgstr "Pode publicar conversas promovidas"
 msgid "Can moderate comments in any conversation"
 msgstr "Pode moderar comentários em qualquer conversa"
 
-#: src/ej_conversations/models/conversation.py:146
+#: src/ej_conversations/models/conversation.py:189
 msgid "User does not have permission to create a promoted conversation."
 msgstr "Usuário não tem permissão para criar uma conversa promovida."
 
-#: src/ej_conversations/models/conversation.py:213
+#: src/ej_conversations/models/conversation.py:256
 msgid "automatically rejected"
 msgstr "rejeitado automaticamente"
 
-#: src/ej_conversations/models/conversation.py:313
+#: src/ej_conversations/models/conversation.py:356
 msgid "No comments available for this user"
 msgstr "Não há comentários disponíveis para esse usuário"
 
@@ -583,25 +568,21 @@ msgid "non-moderated comments cannot receive votes"
 msgstr "comentários não-moderados não podem receber votos"
 
 #: src/ej_conversations/roles/comments.py:29
-#: src/ej_conversations/roles/conversations.py:72
+#: src/ej_conversations/roles/conversations.py:73
 msgid "login"
 msgstr "entrar"
 
-#: src/ej_conversations/roles/conversations.py:99
+#: src/ej_conversations/roles/conversations.py:101
 #, python-brace-format
 msgid "{n} awaiting moderation"
 msgstr "{n} aguardando moderação"
 
-#: src/ej_conversations/roles/conversations.py:100
+#: src/ej_conversations/roles/conversations.py:102
 #, python-brace-format
 msgid "{ratio} comments"
 msgstr "{ratio} comentários"
 
-#: src/ej_conversations/roles/conversations.py:104
-msgid "Create comment"
-msgstr "Criar comentário"
-
-#: src/ej_conversations/roles/conversations.py:124
+#: src/ej_conversations/roles/conversations.py:133
 #: src/ej_conversations/tour.py:83 src/ej_notifications/enums.py:8
 msgid "Conversation"
 msgstr "Conversa"
@@ -620,6 +601,8 @@ msgid ""
 "You already voted in this comment as <strong>{vote}</strong>. You cannot "
 "change your vote."
 msgstr ""
+"Você já votou neste comentário como <strong>{vote}</ strong>. Você não pode "
+"mudar seu voto."
 
 #: src/ej_conversations/routes_comments.py:46
 msgid "Your vote has been computed :-)"
@@ -627,19 +610,19 @@ msgstr "Seu voto foi computado :-)"
 
 #: src/ej_conversations/tour.py:4
 msgid "Next"
-msgstr ""
+msgstr "Próximo"
 
 #: src/ej_conversations/tour.py:4
 msgid "Dismiss"
-msgstr ""
+msgstr "Dispensar"
 
 #: src/ej_conversations/tour.py:16
 msgid "Welcome to EJ!"
-msgstr "Boas vindas!"
+msgstr "Bem vindo ao EJ!"
 
 #: src/ej_conversations/tour.py:17
 msgid "Creating a Shepherd is easy too! Just create ..."
-msgstr ""
+msgstr "Criar um pastor também é fácil! Apenas crie ..."
 
 #: src/ej_conversations/tour.py:23 src/ej_conversations/tour.py:33
 #: src/ej_conversations/tour.py:41
@@ -649,30 +632,32 @@ msgstr "Cabeçalho do aplicativo"
 #: src/ej_conversations/tour.py:25
 msgid "This header displays the main actions you can do in each page."
 msgstr ""
+"Este cabeçalho exibe as ações principais que você pode fazer em cada página."
 
 #: src/ej_conversations/tour.py:34
 msgid "Like going back to the previous page..."
-msgstr ""
+msgstr "Como voltar para a página anterior ..."
 
 #: src/ej_conversations/tour.py:42
 msgid "... or opening the \"options\" menu."
-msgstr ""
+msgstr "... ou abrindo o menu \"Opções\"."
 
 #: src/ej_conversations/tour.py:52 src/ej_conversations/tour.py:60
 #: src/ej_conversations/tour.py:70
-#, fuzzy
 msgid "Conversation Card"
-msgstr "Conversa"
+msgstr "Cartão de Conversa"
 
 #: src/ej_conversations/tour.py:53
 msgid "But here is where the magic starts..."
-msgstr ""
+msgstr "Mas aqui é onde a mágica começa ..."
 
 #: src/ej_conversations/tour.py:62
 msgid ""
 "Conversations consist questions asked by other users about interesting "
 "topics of discussion."
 msgstr ""
+"Conversas consistem em perguntas feitas por outros usuários sobre tópicos "
+"interessantes de discussão."
 
 #: src/ej_conversations/tour.py:71 src/ej_conversations/tour.py:84
 msgid "Click here to join in!"
@@ -691,19 +676,16 @@ msgid "Thanks for voting."
 msgstr "Obrigado por votar."
 
 #: src/ej_conversations/utils.py:122
-#, fuzzy
 msgid "Your comment has been saved."
-msgstr "Escreva aqui o seu comentário"
+msgstr "Seu comentário foi salvo."
 
 #: src/ej_conversations/utils.py:134
-#, fuzzy
 msgid "This conversation is now favorite."
-msgstr "Listar conversas"
+msgstr "Esta conversa é agora favorita."
 
 #: src/ej_conversations/utils.py:136
-#, fuzzy
 msgid "Conversation removed from favorites."
-msgstr "Relatório da conversa: lista de participantes"
+msgstr "Conversa removida dos favoritos."
 
 #: src/ej_conversations/validators.py:7
 msgid "Field cannot be empty!"
@@ -711,7 +693,7 @@ msgstr "Campo não pode estar vazio!"
 
 #: src/ej_dataviz/apps.py:7
 msgid "Visualization"
-msgstr ""
+msgstr "Visualização"
 
 #: src/ej_dataviz/models.py:13
 msgid "Scatter plot"
@@ -725,89 +707,85 @@ msgstr "Nuvem de palavras"
 msgid "Usage report"
 msgstr "Relatório de uso"
 
-#: src/ej_dataviz/roles.py:121
+#: src/ej_dataviz/roles.py:134
 msgid "Author"
 msgstr "Autor"
 
-#: src/ej_dataviz/roles.py:122
+#: src/ej_dataviz/roles.py:135
 msgid "Approved"
 msgstr "Aprovado"
 
-#: src/ej_dataviz/roles.py:123
+#: src/ej_dataviz/roles.py:136
 msgid "Average"
 msgstr "Média"
 
-#: src/ej_dataviz/roles.py:127 src/ej_dataviz/roles.py:145
+#: src/ej_dataviz/roles.py:140 src/ej_dataviz/roles.py:158
 msgid "Divergence"
 msgstr "Divergência"
 
-#: src/ej_dataviz/roles.py:128
+#: src/ej_dataviz/roles.py:141
 msgid "Entropy"
 msgstr "Entropia"
 
-#: src/ej_dataviz/roles.py:129
+#: src/ej_dataviz/roles.py:142
 msgid "Missing"
 msgstr "Faltando"
 
-#: src/ej_dataviz/roles.py:131 src/ej_dataviz/roles.py:147
+#: src/ej_dataviz/roles.py:144 src/ej_dataviz/roles.py:160
 msgid "Participation ratio"
 msgstr "Índice de participação"
 
-#: src/ej_dataviz/roles.py:132
+#: src/ej_dataviz/roles.py:145
 msgid "Pending"
 msgstr "Esperando"
 
-#: src/ej_dataviz/roles.py:133
+#: src/ej_dataviz/roles.py:146
 msgid "Rejected"
 msgstr "Rejeitado"
 
-#: src/ej_dataviz/roles.py:135 src/ej_dataviz/roles.py:149
+#: src/ej_dataviz/roles.py:148 src/ej_dataviz/roles.py:162
 msgid "Skipped"
 msgstr "Pulados"
 
-#: src/ej_dataviz/roles.py:136
+#: src/ej_dataviz/roles.py:149
 msgid "Text"
 msgstr "Texto"
 
-#: src/ej_dataviz/roles.py:137
+#: src/ej_dataviz/roles.py:150
 msgid "Total"
 msgstr "Total"
 
-#: src/ej_dataviz/roles.py:138
+#: src/ej_dataviz/roles.py:151
 msgid "User"
 msgstr "Usuário"
 
 #: src/ej_dataviz/routes.py:45
 msgid "Not enough data"
-msgstr ""
+msgstr "Não há dados suficientes"
 
-#: src/ej_experiments/admin.py:18
+#: src/ej_experiments/admin.py:17
 msgid "dbg: Fill profile randomly"
-msgstr ""
+msgstr "dbg: preencher perfil aleatoriamente"
 
 #: src/ej_experiments/apps.py:7
-#, fuzzy
 msgid "Experiments"
-msgstr "Lista de fragmentos"
+msgstr "Experimentos"
 
 #: src/ej_experiments/forms.py:17
-#, fuzzy
 msgid "Number of new users"
-msgstr "Nome completo do usuário."
+msgstr "Número de novos usuários"
 
 #: src/ej_experiments/forms.py:19
 msgid "Fill profile with random data?"
-msgstr ""
+msgstr "Preencha perfil com dados aleatórios?"
 
 #: src/ej_experiments/forms.py:29
-#, fuzzy
 msgid "Number of new conversations"
-msgstr "Nova conversa"
+msgstr "Número de novas conversas"
 
 #: src/ej_experiments/forms.py:31
-#, fuzzy
 msgid "Number of comments per conversation"
-msgstr "Pode moderar comentários em qualquer conversa"
+msgstr "Número de comentários por conversa"
 
 #: src/ej_experiments/forms.py:42
 msgid "Average number of votes per comment"
@@ -818,14 +796,13 @@ msgid "Number of clusters/personas"
 msgstr "Número de grupos/personas"
 
 #: src/ej_gamification/admin.py:19
-#, fuzzy
 msgid "Recalculate progress for conversation"
-msgstr "Nova Persona da conversa: "
+msgstr "Recalcular o progresso da conversa"
 
 #: src/ej_gamification/admin.py:25
 #, python-brace-format
 msgid "{n} values updated."
-msgstr ""
+msgstr "{n} valores atualizados."
 
 #: src/ej_gamification/apps.py:7
 msgid "Gamification"
@@ -835,11 +812,11 @@ msgstr "Gamificação"
 #: src/ej_gamification/enums.py:176 src/ej_gamification/enums.py:306
 #: src/ej_gamification/enums.py:351
 msgid "No level"
-msgstr ""
+msgstr "Sem nível"
 
 #: src/ej_gamification/enums.py:60
 msgid "Shy"
-msgstr ""
+msgstr "Tímido"
 
 #: src/ej_gamification/enums.py:61 src/ej_gamification/enums.py:353
 msgid "Participative"
@@ -847,20 +824,21 @@ msgstr "Participativo"
 
 #: src/ej_gamification/enums.py:62
 msgid "Outspoken"
-msgstr ""
+msgstr "Extrovertido"
 
 #: src/ej_gamification/enums.py:63
 msgid "Vocal"
-msgstr ""
+msgstr "Vocal"
 
 #: src/ej_gamification/enums.py:88
 #, python-brace-format
 msgid "You need to publish {n} new comments or receive {m} new endorsements"
 msgstr ""
+"Você precisa publicar {n} novos comentários ou receber {m} novos endossos"
 
 #: src/ej_gamification/enums.py:104
 msgid "Chaperon"
-msgstr ""
+msgstr "Chaperon"
 
 #: src/ej_gamification/enums.py:105
 msgid "Influencer"
@@ -876,35 +854,35 @@ msgstr "Autoridade"
 
 #: src/ej_gamification/enums.py:127
 msgid "Congratulations! You reached the maximum level"
-msgstr ""
+msgstr "Parabéns! Você atingiu o nível máximo"
 
 #: src/ej_gamification/enums.py:135
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "You need at least one more conversation at level 4"
 msgid_plural "You need at least {n} level 4 conversations"
-msgstr[0] "Você não tem nenhuma conversa favorita ainda!"
-msgstr[1] "Você não tem nenhuma conversa favorita ainda!"
+msgstr[0] "Você precisa de pelo menos mais uma conversa no nível 4"
+msgstr[1] "Você precisa de pelo menos {n} conversas nível 4"
 
 #: src/ej_gamification/enums.py:144
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "You need at least one more conversation at level 3"
 msgid_plural "You need at least {n} level 3 conversations"
-msgstr[0] "Você não tem nenhuma conversa favorita ainda!"
-msgstr[1] "Você não tem nenhuma conversa favorita ainda!"
+msgstr[0] "Você precisa de pelo menos mais uma conversa no nível 3"
+msgstr[1] "Você precisa de pelo menos {n} conversas nível 3"
 
 #: src/ej_gamification/enums.py:153
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "You need at least one more conversation at level 2"
 msgid_plural "You need at least {n} level 2 conversations"
-msgstr[0] "Você não tem nenhuma conversa favorita ainda!"
-msgstr[1] "Você não tem nenhuma conversa favorita ainda!"
+msgstr[0] "Você precisa de pelo menos mais uma conversa no nível 2"
+msgstr[1] "Você precisa de pelo menos {n} conversas nível 2"
 
 #: src/ej_gamification/enums.py:161
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "You need at least one more conversation at level 1"
 msgid_plural "You need at least {n} level 1 conversations"
-msgstr[0] "Você não tem nenhuma conversa favorita ainda!"
-msgstr[1] "Você não tem nenhuma conversa favorita ainda!"
+msgstr[0] "Você precisa de pelo menos mais uma conversa no nível 1"
+msgstr[1] "Você precisa de pelo menos {n} conversas nível 1"
 
 #: src/ej_gamification/enums.py:177
 msgid "Basic"
@@ -912,12 +890,11 @@ msgstr "Básico"
 
 #: src/ej_gamification/enums.py:178
 msgid "Relevant"
-msgstr ""
+msgstr "Relevante"
 
 #: src/ej_gamification/enums.py:179
-#, fuzzy
 msgid "Informative"
-msgstr "É ativo"
+msgstr "Informativo"
 
 #: src/ej_gamification/enums.py:180
 msgid "Complete"
@@ -925,79 +902,80 @@ msgstr "Completo"
 
 #: src/ej_gamification/enums.py:216
 msgid "Congratulations! Your profile is complete!"
-msgstr ""
+msgstr "Parabéns! Seu perfil está completo!"
 
 #: src/ej_gamification/enums.py:219
 msgid "Please take the site tour!"
-msgstr ""
+msgstr "Por favor, faça o tour pelo site!"
 
 #: src/ej_gamification/enums.py:224
 msgid "race"
-msgstr ""
+msgstr "raça"
 
 #: src/ej_gamification/enums.py:226
 msgid "gender"
 msgstr "gênero"
 
 #: src/ej_gamification/enums.py:228
-#, fuzzy
 msgid "profile photo"
-msgstr "Foto de Perfil"
+msgstr "foto de perfil"
 
 #: src/ej_gamification/enums.py:280
 msgid "Please fill up the {} field of your profile"
 msgid_plural "Please fill up the {} fields of your profile"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Por favor, preencha o campo {} do seu perfil"
+msgstr[1] "Por favor, preencha o campo {} do seu perfil"
 
 #: src/ej_gamification/enums.py:307
 msgid "Alive"
-msgstr ""
+msgstr "Vivo"
 
 #: src/ej_gamification/enums.py:308
 msgid "Engaging"
-msgstr ""
+msgstr "Interessante"
 
 #: src/ej_gamification/enums.py:309
 msgid "Noteworthy"
-msgstr ""
+msgstr "Digno de nota"
 
 #: src/ej_gamification/enums.py:310
 msgid "Debate"
-msgstr ""
+msgstr "Debate"
 
 #: src/ej_gamification/enums.py:330
 #, python-brace-format
 msgid "Conversation needs a score of at least {n} points, it has {m}."
-msgstr ""
+msgstr "A conversa precisa de pelo menos {n} pontos, tem {m}."
 
 #: src/ej_gamification/enums.py:333
 msgid "Conversation already achieved the maximum level."
-msgstr ""
+msgstr "Conversa já alcançou o nível máximo."
 
 #: src/ej_gamification/enums.py:352
 msgid "Curious"
-msgstr ""
+msgstr "Curioso"
 
 #: src/ej_gamification/enums.py:354
 msgid "Dedicated"
-msgstr ""
+msgstr "Dedicado"
 
 #: src/ej_gamification/enums.py:355
 msgid "Perfectionist"
-msgstr ""
+msgstr "Perfeccionista"
 
 #: src/ej_gamification/enums.py:389
 msgid "Congratulations! You already achieved the maximum participation level."
-msgstr ""
+msgstr "Parabéns! Você já alcançou o nível máximo de participação."
 
 #: src/ej_gamification/enums.py:397
 #, python-brace-format
 msgid "You cannot progress unless conversation has at least {n} comments :-("
 msgstr ""
+"Você não pode progredir a menos que a conversa tenha pelo menos {n} "
+"comentários :-("
 
 #: src/ej_gamification/enums.py:406
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "You need to cast {n} more votes!"
 msgstr "Você deve votar {n} vezes!"
 
@@ -1007,48 +985,45 @@ msgstr "usuário não tem permissão para promover esse comentário"
 
 #: src/ej_gamification/models/endorsement.py:42
 msgid "Endorsement reason"
-msgstr ""
+msgstr "Razão de endosso"
 
 #: src/ej_gamification/models/endorsement.py:45
 msgid ""
 "Optional message explaining why the endorsement affected the given set of "
 "users."
 msgstr ""
+"Mensagem opcional explicando porque o endosso afetou o conjunto de usuários "
+"fornecido."
 
 #: src/ej_gamification/models/endorsement.py:50
 msgid "Is it global?"
 msgstr "É global?"
 
 #: src/ej_gamification/models/endorsement.py:52
-#, fuzzy
 msgid "Global comments affect all users in conversation"
 msgstr "Pode moderar comentários em qualquer conversa"
 
 #: src/ej_gamification/models/given_powers.py:111
-#, fuzzy
 msgid "Comment is not in conversation that user can promote."
-msgstr ""
-"Esse comentário está expirado ou não está numa conversa que o usuário pode "
-"promover."
+msgstr "O comentário não está na conversa que o usuário pode promover."
 
 #: src/ej_gamification/models/given_powers.py:114
 msgid "Sorry, your power is expired"
 msgstr "Desculpe, seu poder expirou"
 
-#: src/ej_gamification/models/progress.py:181
+#: src/ej_gamification/models/progress.py:177
 msgid "User progress list"
-msgstr ""
+msgstr "Lista de progresso do usuário"
 
-#: src/ej_gamification/models/progress.py:252
-#, fuzzy
+#: src/ej_gamification/models/progress.py:248
 msgid "Conversation progress list"
-msgstr "Relatório da conversa: informações básicas"
+msgstr "Lista de progresso da conversa"
 
-#: src/ej_gamification/roles.py:14
+#: src/ej_gamification/roles.py:15
 msgid "Profile"
 msgstr "Perfil"
 
-#: src/ej_gamification/roles.py:34
+#: src/ej_gamification/roles.py:37
 msgid "Participation"
 msgstr "Participação"
 
@@ -1215,7 +1190,7 @@ msgstr "Email"
 
 #: src/ej_profiles/models.py:203
 msgid "Root"
-msgstr "Root"
+msgstr "Raiz"
 
 #: src/ej_profiles/models.py:205
 msgid "Administrative user"
@@ -1225,16 +1200,11 @@ msgstr "Usuário administrativo"
 msgid "Regular user"
 msgstr "Usuário regular"
 
-#: src/ej_questions/apps.py:7
-#, fuzzy
-msgid "Questions"
-msgstr "Questão"
-
 #: src/ej_rocketchat/apps.py:7
 msgid "Rocket.Chat integration"
 msgstr "Integração com o Rocket.Chat"
 
-#: src/ej_rocketchat/forms.py:25 src/ej_rocketchat/models.py:90
+#: src/ej_rocketchat/forms.py:25 src/ej_rocketchat/models.py:103
 msgid "Rocket.Chat URL"
 msgstr "URL do Rocket.Chat"
 
@@ -1251,7 +1221,7 @@ msgid "Username for Rocket.Chat admin user."
 msgstr "Nome de usuário do administrador do Rocket.Chat."
 
 #: src/ej_rocketchat/forms.py:35 src/ej_rocketchat/forms.py:136
-#: src/ej_rocketchat/models.py:43 src/ej_users/forms.py:17
+#: src/ej_rocketchat/models.py:44 src/ej_users/forms.py:17
 #: src/ej_users/forms.py:52
 msgid "Password"
 msgstr "Senha"
@@ -1301,98 +1271,111 @@ msgstr ""
 msgid "Username must consist of letters, numbers and dashes."
 msgstr "Nomes de usuário devem conter letras, números e hífens."
 
-#: src/ej_rocketchat/models.py:45
+#: src/ej_rocketchat/models.py:49
+msgid "E-mail used to create RC account"
+msgstr "E-mail usado para criar uma conta RC"
+
+#: src/ej_rocketchat/models.py:52
 msgid "Rocketchat user id"
 msgstr "Usuário no Rocketchat"
 
-#: src/ej_rocketchat/models.py:46
+#: src/ej_rocketchat/models.py:56
 msgid "Rocketchat user token"
 msgstr "Token de usuário no Rocketchat"
 
-#: src/ej_rocketchat/models.py:48
+#: src/ej_rocketchat/models.py:61
 msgid "Account data"
 msgstr "Dados da conta"
 
-#: src/ej_rocketchat/models.py:51
+#: src/ej_rocketchat/models.py:64
 msgid "JSON-encoded data for user account."
 msgstr "Dados em formato JSON para conta do usuário."
 
-#: src/ej_rocketchat/models.py:54
+#: src/ej_rocketchat/models.py:67
 msgid "Is user active?"
 msgstr "O usúario está ativo?"
 
-#: src/ej_rocketchat/models.py:56
+#: src/ej_rocketchat/models.py:69
 msgid "True for active Rocket.Chat accounts."
 msgstr "Verdadeiro para contas ativas de Rocket.Chat."
 
-#: src/ej_rocketchat/models.py:62
+#: src/ej_rocketchat/models.py:75
 msgid "Rocket.Chat Account"
 msgstr "Conta do Rocketchat"
 
-#: src/ej_rocketchat/models.py:63
+#: src/ej_rocketchat/models.py:76
 msgid "Rocket.Chat Accounts"
 msgstr "Contas do Rocketchat"
 
-#: src/ej_rocketchat/models.py:67
+#: src/ej_rocketchat/models.py:80
 msgid "Can login in the Rocket.Chat instance."
 msgstr "Pode logar na instancia Rocket.Chat."
 
-#: src/ej_rocketchat/models.py:93
+#: src/ej_rocketchat/models.py:106
 msgid "Public URL in which the Rocket.Chat instance is installed."
 msgstr "URL Pública na qual a instância Rocket.Chat é instalada."
 
-#: src/ej_rocketchat/models.py:96
+#: src/ej_rocketchat/models.py:109
 msgid "Rocket.Chat private URL"
 msgstr "URL privada do Rocket.Chat"
 
-#: src/ej_rocketchat/models.py:101
+#: src/ej_rocketchat/models.py:114
 msgid ""
 "A private URL used only for API calls. Can be used to override the public "
-"URL if Rocket.Chat is available in an internal address in your network."
+"URL if Rocket.Chat is also available from an internal address in your "
+"network."
 msgstr ""
 "Uma URL privada usada apenas para as chamadas de API. Pode ser usada para "
 "sobrescrever a URL publica se o Rocket.Chat está disponível num endereço "
 "interno da sua rede."
 
-#: src/ej_rocketchat/models.py:107
+#: src/ej_rocketchat/models.py:120
 msgid "Admin username"
 msgstr "Nome de usuário administrativo"
 
-#: src/ej_rocketchat/models.py:110
+#: src/ej_rocketchat/models.py:123
 msgid "Username for Rocket.Chat admin user"
 msgstr "Nome de usuário do administrador do Rocket.Chat"
 
-#: src/ej_rocketchat/models.py:113
+#: src/ej_rocketchat/models.py:126
 msgid "Admin user id"
 msgstr "Id do usuário administrativo"
 
-#: src/ej_rocketchat/models.py:115
+#: src/ej_rocketchat/models.py:128
 msgid "Id string for the Rocket.Chat admin user."
 msgstr "Identificador para o admin do Rocket.Chat."
 
-#: src/ej_rocketchat/models.py:118
+#: src/ej_rocketchat/models.py:131
 msgid "Login token"
 msgstr "Token de login"
 
-#: src/ej_rocketchat/models.py:120
+#: src/ej_rocketchat/models.py:133
 msgid "Login token for the Rocket.Chat admin user."
 msgstr "Token de login para o usúario admin do Rocket.Chat."
 
-#: src/ej_rocketchat/models.py:123
+#: src/ej_rocketchat/models.py:136
+msgid "Admin password"
+msgstr "Alterar a senha"
+
+#: src/ej_rocketchat/models.py:138
+msgid "Password for the Rocket.Chat admin user."
+msgstr "Senha para o usuário admin do Rocket.Chat."
+
+#: src/ej_rocketchat/models.py:141
 msgid "Is active"
 msgstr "É ativo"
 
-#: src/ej_rocketchat/models.py:125
+#: src/ej_rocketchat/models.py:143
 msgid "Set to false to temporarily disable RocketChat integration."
 msgstr ""
 "Marque como falso para desabilitar temporariamente a integração com o "
 "RocketChat."
 
-#: src/ej_rocketchat/models.py:131
+#: src/ej_rocketchat/models.py:149
 msgid "Rocket.Chat Configuration"
 msgstr "Configuração do rocketchat"
 
-#: src/ej_rocketchat/models.py:132
+#: src/ej_rocketchat/models.py:150
 msgid "Rocket.Chat Configurations"
 msgstr "Configurações do rocketchat"
 
@@ -1418,7 +1401,7 @@ msgstr "Senhas não são iguais"
 
 #: src/ej_users/forms.py:68
 msgid "Yes, I understand the consequences."
-msgstr ""
+msgstr "Sim, entendo as conseqüências."
 
 #: src/ej_users/jinja2/account/allauth/email/email_confirmation_message.txt:1
 #, python-format
@@ -1494,9 +1477,8 @@ msgid "Your e-mail address"
 msgstr "Seu endereço de e-mail"
 
 #: src/ej_users/models.py:32
-#, fuzzy
 msgid "Name used to publicly identify user"
-msgstr "Apelido público usado para identificar o usuário."
+msgstr "Apelido público usado para identificar o usuário"
 
 #: src/ej_users/models.py:48
 msgid "User token"
@@ -1510,13 +1492,13 @@ msgstr "Anônimo"
 msgid "Invalid email or password"
 msgstr "Email ou senha inválidos"
 
-#: src/ej_users/routes.py:174
+#: src/ej_users/routes.py:176
 msgid "Please reset your password"
 msgstr "Por favor reset sua senha"
 
 #: src/ej_users/routes_account.py:44
 msgid "You must confirm that you want to remove your account."
-msgstr ""
+msgstr "Você deve confirmar que deseja remover sua conta."
 
 #: src/ej_users/routes_account.py:47
 msgid "Wrong e-mail address"
@@ -1528,9 +1510,25 @@ msgstr "Não pode remover contas de superusuário"
 
 #: src/ej_users/routes_account.py:53
 msgid "We are sorry to see you go :(<br><br>Good luck in your journey."
-msgstr ""
+msgstr "Lamentamos que você vá :( <br> <br> Boa sorte em sua jornada."
 
-#: src/ej/templates/jinja2/base.jinja2:44
+#: lib/themes/cpa/templates/jinja2/pages/home.jinja2:63
+msgid "Community driven"
+msgstr "Orientado pela comunidade"
+
+#: lib/themes/cpa/templates/jinja2/pages/home.jinja2:64
+msgid "No attacks or fakes"
+msgstr "Sem ataques ou fakes"
+
+#: lib/themes/cpa/templates/jinja2/pages/home.jinja2:65
+msgid "Nuances instead of bubbles"
+msgstr "Nuances invés de bolhas"
+
+#: lib/themes/cpa/templates/jinja2/pages/home.jinja2:66
+msgid "Free and open source"
+msgstr "Código livre e aberta"
+
+#: src/ej/templates/jinja2/base.jinja2:54
 msgid "Please override the \"content\" block of your template!"
 msgstr "Por favor substitua o bloco \"content\" do seu template!"
 
@@ -1547,14 +1545,19 @@ msgstr "Varíaveis de contexto"
 msgid "Start now!"
 msgstr "Começar agora!"
 
+#: src/ej/templates/jinja2/ej/includes/footer.jinja2:11
+#: src/ej/templates/jinja2/ej/includes/footer.jinja2:12
+#: src/ej/templates/jinja2/ej/includes/footer.jinja2:13
+msgid "Talks"
+msgstr "Conversas"
+
 #: src/ej/templates/jinja2/ej/includes/header.jinja2:2
 msgid "Back"
 msgstr "Voltar"
 
 #: src/ej/templates/jinja2/ej/includes/header.jinja2:6
-#, fuzzy
 msgid "Logo"
-msgstr "Sair"
+msgstr "Logotipo"
 
 #: src/ej/templates/jinja2/ej/includes/header.jinja2:10
 msgid "Menu"
@@ -1563,89 +1566,6 @@ msgstr "Menu"
 #: src/ej/templates/jinja2/ej/includes/head/open_graph.jinja2:11
 msgid "EJ - A platform for social participation."
 msgstr "EJ - Uma plataforma de participação social."
-
-#: src/ej/templates/jinja2/pages/home.jinja2:17
-msgid "Create opinion surveys"
-msgstr "Crie consultas de opinião."
-
-#: src/ej/templates/jinja2/pages/home.jinja2:18
-#, fuzzy
-msgid "Try it now!"
-msgstr "Começar agora!"
-
-#: src/ej/templates/jinja2/pages/home.jinja2:24
-#, fuzzy
-msgid "How does it work?"
-msgstr "Como funciona"
-
-#: src/ej/templates/jinja2/pages/home.jinja2:29
-#: src/ej/templates/jinja2/pages/home.jinja2:61
-#, fuzzy
-msgid "Create a conversation"
-msgstr "Criar conversa"
-
-#: src/ej/templates/jinja2/pages/home.jinja2:30
-msgid ""
-"create conversations on EJ to receive ideas and opinions about politics, "
-"services or public equipments."
-msgstr ""
-"crie conversas no EJ para receber ideias e opiniões sobre políticas, "
-"serviços ou equipamentos públicos."
-
-#: src/ej/templates/jinja2/pages/home.jinja2:35
-msgid "Listen to the people"
-msgstr "Escute a população"
-
-#: src/ej/templates/jinja2/pages/home.jinja2:36
-msgid ""
-"identify the priorities and the different opinion groups in the society."
-msgstr ""
-"identifique suas prioridades e os diferentes grupos de opinião existentes na "
-"sociedade."
-
-#: src/ej/templates/jinja2/pages/home.jinja2:41
-msgid "Take decisions"
-msgstr "Tome decisões"
-
-#: src/ej/templates/jinja2/pages/home.jinja2:42
-msgid ""
-"make participants know, communicating directly and amplifying the responses."
-msgstr ""
-"faça os participantes saberem, comunicando diretamente e amplificando as "
-"respostas."
-
-#: src/ej/templates/jinja2/pages/home.jinja2:47
-msgid "Participative conversations"
-msgstr "Conversas participativas"
-
-#: src/ej/templates/jinja2/pages/home.jinja2:51
-#, fuzzy
-msgid "Community driven"
-msgstr "Comunidade EJ"
-
-#: src/ej/templates/jinja2/pages/home.jinja2:52
-msgid "No attacks or fakes"
-msgstr "Sem ataques ou fakes"
-
-#: src/ej/templates/jinja2/pages/home.jinja2:53
-msgid "Nuances instead of bubbles"
-msgstr "Nuances invés de bolhas"
-
-#: src/ej/templates/jinja2/pages/home.jinja2:54
-msgid "Free and open source"
-msgstr ""
-
-#: src/ej/templates/jinja2/pages/home.jinja2:66
-msgid "Explore the EJ resources with our documented guides"
-msgstr "Explore o máximo dos recursos do EJ com nossos guias documentados"
-
-#: src/ej/templates/jinja2/pages/home.jinja2:81
-msgid "EJ Community"
-msgstr "Comunidade EJ"
-
-#: src/ej/templates/jinja2/pages/home.jinja2:93
-msgid "Who is using EJ?"
-msgstr "Quem já adotou o EJ?"
 
 #: src/ej/templates/jinja2/pages/info-django-settings.jinja2:2
 msgid "Django settings"
@@ -1662,12 +1582,21 @@ msgstr "Estilos"
 #: src/ej/templates/jinja2/pages/info-styles.jinja2:32
 #: src/ej/templates/jinja2/pages/info-styles.jinja2:91
 msgid "Class"
-msgstr ""
+msgstr "Classe"
 
 #: src/ej/templates/jinja2/pages/info-styles.jinja2:33
 #: src/ej/templates/jinja2/pages/info-styles.jinja2:92
 msgid "Example"
-msgstr ""
+msgstr "Exemplo"
+
+#: src/ej/templates/jinja2/pages/info.jinja2:13
+#: src/ej/templates/jinja2/pages/info.jinja2:28
+msgid "Value"
+msgstr "Valor"
+
+#: src/ej/templates/jinja2/pages/info.jinja2:17
+msgid "Registered users"
+msgstr "Registre novo usuário"
 
 #: src/ej_boards/jinja2/ej_boards/board-create.jinja2:6
 msgid "Create board"
@@ -1700,45 +1629,40 @@ msgstr "Murais são espaços separados onde você pode guardar suas conversas."
 #: src/ej_boards/jinja2/ej_boards/board-list.jinja2:10
 msgid "This page lets you find the boards you created and find new boards."
 msgstr ""
+"Esta página permite encontrar os murais que você criou e encontrar novos "
+"murais."
 
 #: src/ej_boards/jinja2/ej_boards/board-list.jinja2:14
-#, fuzzy
 msgid "List of boards"
-msgstr "Lista de papéis"
+msgstr "Lista de murais"
 
 #: src/ej_boards/jinja2/ej_boards/board-list.jinja2:25
-#, fuzzy
 msgid "You haven't created any boards yet!"
-msgstr "Preencha os campos para criar ou editar o mural de conversas"
+msgstr "Você ainda não criou murais!"
 
 #: src/ej_boards/jinja2/ej_boards/board-list.jinja2:27
-#, fuzzy
 msgid "Sorry, you cannot create new boards."
-msgstr "Preencha os campos para criar ou editar o mural de conversas"
+msgstr "Desculpe, você não pode criar novos murais."
 
 #: src/ej_boards/jinja2/ej_boards/board-list.jinja2:32
 msgid "Create a new board!"
 msgstr "Criar um novo mural!"
 
 #: src/ej_boards/jinja2/ej_boards/includes/menu.jinja2:4
-#, fuzzy
 msgid "Manage boards"
-msgstr "Salvar mural"
+msgstr "Gerenciar murais"
 
 #: src/ej_boards/jinja2/ej_boards/includes/menu.jinja2:6
-#, fuzzy
 msgid "New board"
-msgstr "Salvar mural"
+msgstr "Novo mural"
 
 #: src/ej_clusters/jinja2/ej_clusters/edit.jinja2:16
-#, fuzzy
 msgid "Configure opinion groups"
-msgstr "Opinião"
+msgstr "Configurar grupos de opinião"
 
 #: src/ej_clusters/jinja2/ej_clusters/edit.jinja2:21
-#, fuzzy
 msgid "New group"
-msgstr "Adicionar nova persona"
+msgstr "Novo grupo"
 
 #: src/ej_clusters/jinja2/ej_clusters/edit.jinja2:28
 msgid "Create group"
@@ -1747,58 +1671,68 @@ msgstr "Criar grupo"
 #: src/ej_clusters/jinja2/ej_clusters/edit.jinja2:41
 #: src/ej_clusters/jinja2/ej_clusters/stereotypes/edit.jinja2:25
 msgid "Delete"
-msgstr ""
+msgstr "Excluir"
 
-#: src/ej_clusters/jinja2/ej_clusters/index.jinja2:9
-#: src/ej_clusters/jinja2/ej_clusters/index.jinja2:36
-#: src/ej_dataviz/jinja2/ej_dataviz/report/index.jinja2:37
-msgid "Participants"
-msgstr "Participantes"
+#: src/ej_clusters/jinja2/ej_clusters/index.jinja2:21
+msgid "Admin actions"
+msgstr "Ações de administração"
 
-#: src/ej_clusters/jinja2/ej_clusters/index.jinja2:11
-#, fuzzy
-msgid "Groups"
-msgstr "Grupo"
+#: src/ej_clusters/jinja2/ej_clusters/index.jinja2:24
+msgid "Force clusterization"
+msgstr "Forçar agrupamento"
 
-#: src/ej_clusters/jinja2/ej_clusters/index.jinja2:22
+#: src/ej_clusters/jinja2/ej_clusters/index.jinja2:30
 #: src/ej_clusters/jinja2/ej_clusters/stereotype-votes.jinja2:28
 #: src/ej_users/jinja2/account/account_inactive.jinja2:6
-#, fuzzy
 msgid "Error"
-msgstr "Erro!"
+msgstr "Erro"
 
-#: src/ej_clusters/jinja2/ej_clusters/index.jinja2:23
+#: src/ej_clusters/jinja2/ej_clusters/index.jinja2:31
 msgid ""
 "Could not determine the opinion groups for this\n"
 "                conversation."
-msgstr ""
+msgstr "Não foi possível determinar os grupos de opinião para esta conversa."
 
-#: src/ej_clusters/jinja2/ej_clusters/index.jinja2:27
+#: src/ej_clusters/jinja2/ej_clusters/index.jinja2:35
 #, python-format
 msgid ""
 "You can edit the clusterization options for this\n"
 "                conversation %(link)s."
 msgstr ""
-
-#: src/ej_clusters/jinja2/ej_clusters/index.jinja2:39
-msgid "Cohesion level"
-msgstr ""
+"Você pode editar as opções de clusterização para esta conversa %(link)s."
 
 #: src/ej_clusters/jinja2/ej_clusters/index.jinja2:44
-#, fuzzy
-msgid "Typical comments"
-msgstr "{count} comentários"
+msgid "Positive comments"
+msgstr "Comentários positivos"
+
+#: src/ej_clusters/jinja2/ej_clusters/index.jinja2:50
+msgid "Agree: {pc}"
+msgstr "Concordo: {pc}"
+
+#: src/ej_clusters/jinja2/ej_clusters/index.jinja2:55
+msgid "No positive comments in cluster"
+msgstr "Nenhum comentário positivo no grupo"
+
+#: src/ej_clusters/jinja2/ej_clusters/index.jinja2:58
+msgid "Negative comments"
+msgstr "Comentários negativos"
+
+#: src/ej_clusters/jinja2/ej_clusters/index.jinja2:62
+msgid "Disagree: {pc}"
+msgstr "Discordo: {pc}"
+
+#: src/ej_clusters/jinja2/ej_clusters/index.jinja2:67
+msgid "No negative comments in cluster"
+msgstr "Nenhum comentário negativo no grupo"
 
 #: src/ej_clusters/jinja2/ej_clusters/stereotype-votes.jinja2:19
-#, fuzzy
 msgid "Define personas"
 msgstr "Gerenciar personas"
 
 #: src/ej_clusters/jinja2/ej_clusters/stereotype-votes.jinja2:20
 #: src/ej_clusters/jinja2/ej_clusters/stereotype-votes.jinja2:31
-#, fuzzy
 msgid "Mark the votes for each stereotype in your conversation."
-msgstr "Conversas Favoritas"
+msgstr "Marque os votos para cada persona na sua conversa."
 
 #: src/ej_clusters/jinja2/ej_clusters/stereotype-votes.jinja2:29
 msgid "There are no personas defined for this conversation"
@@ -1810,35 +1744,32 @@ msgstr "Votos de {name}"
 
 #: src/ej_clusters/jinja2/ej_clusters/stereotype-votes.jinja2:38
 msgid "Select the votes you want to modify."
-msgstr ""
+msgstr "Selecione os votos que você deseja modificar."
 
 #: src/ej_clusters/jinja2/ej_clusters/stereotype-votes.jinja2:56
 #: src/ej_clusters/jinja2/ej_clusters/stereotype-votes.jinja2:76
 msgid "Neutral"
-msgstr ""
+msgstr "Neutro"
 
 #: src/ej_clusters/jinja2/ej_clusters/stereotype-votes.jinja2:64
 msgid "n/a"
-msgstr ""
+msgstr "n/d"
 
 #: src/ej_clusters/jinja2/ej_clusters/stereotype-votes.jinja2:82
-#, fuzzy
 msgid "Discard votes"
-msgstr "Registre votos"
+msgstr "Descartar votos"
 
 #: src/ej_clusters/jinja2/ej_clusters/stereotype-votes.jinja2:88
-#, fuzzy
 msgid "Notes"
-msgstr "Votos"
+msgstr "Notas"
 
 #: src/ej_clusters/jinja2/ej_clusters/includes/stereotypes-menu.jinja2:1
 msgid "Stereotypes"
 msgstr "Personas"
 
 #: src/ej_clusters/jinja2/ej_clusters/includes/stereotypes-menu.jinja2:5
-#, fuzzy
 msgid "New persona"
-msgstr "Criar conversa"
+msgstr "Nova persona"
 
 #: src/ej_clusters/jinja2/ej_clusters/includes/stereotypes-menu.jinja2:12
 #: src/ej_profiles/jinja2/ej_profiles/includes/menu.jinja2:9
@@ -1870,17 +1801,15 @@ msgid "New stereotype"
 msgstr "Adicionar nova persona"
 
 #: src/ej_clusters/jinja2/ej_clusters/stereotypes/list.jinja2:14
-#, fuzzy
 msgid "List of personas"
 msgstr "Lista de papéis"
 
 #: src/ej_clusters/jinja2/ej_clusters/stereotypes/list.jinja2:36
-#, fuzzy
 msgid "You do not have any registered stereotype."
-msgstr "Você não tem nenhuma conversa favorita ainda!"
+msgstr "Você não possui nenhuma persona registrada."
 
 #: src/ej_conversations/jinja2/ej/role/comment-card.jinja2:25
-#, fuzzy, python-format
+#, python-format
 msgid "It is necessary to %(login_anchor)s before voting or sending a comment!"
 msgstr ""
 "É necessário %(login_anchor)s antes de votar ou\n"
@@ -1891,26 +1820,12 @@ msgid "See Conversation"
 msgstr "Ver Conversa"
 
 #: src/ej_conversations/jinja2/ej/role/conversation-balloon.jinja2:4
-#, fuzzy
 msgid "Hidden conversation"
-msgstr "Nova conversa"
-
-#: src/ej_conversations/jinja2/ej/role/conversation-balloon.jinja2:14
-msgid "Unfavorite"
-msgstr "Desfavoritar"
-
-#: src/ej_conversations/jinja2/ej/role/conversation-balloon.jinja2:14
-msgid "Favorite"
-msgstr "Favorito"
-
-#: src/ej_conversations/jinja2/ej/role/conversation-balloon.jinja2:16
-msgid "Share"
-msgstr "Compartilhar"
+msgstr "Conversa oculta"
 
 #: src/ej_conversations/jinja2/ej/role/conversation-card.jinja2:4
-#, fuzzy
 msgid "Hidden"
-msgstr "oculta?"
+msgstr "Oculta"
 
 #: src/ej_conversations/jinja2/ej/role/conversation-card.jinja2:18
 msgid "by:"
@@ -1939,39 +1854,40 @@ msgid ""
 "Include something new and avoid similar opinions. You can post up to\n"
 "            <span class=\"text-accent\">%(n_comments)s</span> comments."
 msgstr ""
+"Inclua algo novo e evite opiniões semelhantes. Você pode postar até \n"
+" <span class=\"text-accent\">%(n_comments)s</span> comentários."
 
 #: src/ej_conversations/jinja2/ej_conversations/create.jinja2:15
-#, fuzzy
 msgid "Please fill the details bellow."
-msgstr "Selecione um filtro"
+msgstr "Por favor, preencha os detalhes abaixo."
 
 #: src/ej_conversations/jinja2/ej_conversations/create.jinja2:24
-#, fuzzy
 msgid "Initial comments"
-msgstr "{count} comentários"
+msgstr "Comentários iniciais"
 
 #: src/ej_conversations/jinja2/ej_conversations/create.jinja2:26
 msgid "Add as many comments as you like (including none)."
-msgstr ""
+msgstr "Adicione quantos comentários quiser (incluindo nenhum)."
 
 #: src/ej_conversations/jinja2/ej_conversations/create.jinja2:27
 msgid ""
 "Remember to give a minimum context and something for other users to\n"
 "                        explore."
 msgstr ""
+"Lembre-se de fornecer um contexto mínimo e algo para outros usuários "
+"explorar."
 
 #: src/ej_conversations/jinja2/ej_conversations/create.jinja2:29
 msgid "You can add as many comments as you want later."
-msgstr ""
+msgstr "Você pode adicionar quantos comentários quiser depois."
 
 #: src/ej_conversations/jinja2/ej_conversations/create.jinja2:35
-#, fuzzy, python-format
+#, python-format
 msgid "Comment %(i)s"
 msgstr "Comentário %(i)s"
 
 #: src/ej_conversations/jinja2/ej_conversations/create.jinja2:37
-#: src/ej_conversations/jinja2/ej_conversations/create.jinja2:70
-#, fuzzy
+#: src/ej_conversations/jinja2/ej_conversations/create.jinja2:69
 msgid "Type your comment here"
 msgstr "Escreva aqui o comentário"
 
@@ -1983,10 +1899,10 @@ msgstr "Adicionar mais comentários"
 msgid "Create conversation"
 msgstr "Criar conversa"
 
-#: src/ej_conversations/jinja2/ej_conversations/create.jinja2:69
-#, fuzzy, python-format
+#: src/ej_conversations/jinja2/ej_conversations/create.jinja2:68
+#, python-format
 msgid "Comment %i%"
-msgstr "Comentar"
+msgstr "Comentário %i%"
 
 #: src/ej_conversations/jinja2/ej_conversations/detail.jinja2:16
 msgid "Warning!"
@@ -1998,6 +1914,8 @@ msgid ""
 "This conversation is hidden. Click %(here)s to edit and make it visible\n"
 "                again."
 msgstr ""
+"Esta conversa está escondida. Clique em %(here)s para editar e torná-lo "
+"visível novamente."
 
 #: src/ej_conversations/jinja2/ej_conversations/comments/detail.jinja2:13
 #: src/ej_conversations/jinja2/ej_conversations/detail.jinja2:31
@@ -2024,24 +1942,20 @@ msgid "Edit conversation"
 msgstr "Editar conversa"
 
 #: src/ej_conversations/jinja2/ej_conversations/edit.jinja2:31
-#, fuzzy
 msgid "Save modifications"
-msgstr "Notificações"
+msgstr "Salvar modificações"
 
 #: src/ej_conversations/jinja2/ej_conversations/edit.jinja2:34
-#, fuzzy
 msgid "Other options"
-msgstr "Opções"
+msgstr "Outras opções"
 
 #: src/ej_conversations/jinja2/ej_conversations/edit.jinja2:37
-#, fuzzy
 msgid "Save and manage stereotypes"
-msgstr "Gerenciar personas"
+msgstr "Salvar e gerenciar personas"
 
 #: src/ej_conversations/jinja2/ej_conversations/edit.jinja2:40
-#, fuzzy
 msgid "Save and moderate comments"
-msgstr "Adicionar mais comentários"
+msgstr "Salvar e moderar comentários"
 
 #: src/ej_conversations/jinja2/ej_conversations/moderate.jinja2:29
 #, python-format
@@ -2050,14 +1964,15 @@ msgid ""
 "                    "
 msgid_plural "Found %(n)s comments."
 msgstr[0] ""
-msgstr[1] ""
+"Encontrado %(n)s comentário.\n"
+"                    "
+msgstr[1] "Encontrados %(n)s comentários."
 
 #: src/ej_conversations/jinja2/ej_conversations/moderate.jinja2:66
 msgid "No comments left"
 msgstr "Não há mais comentários"
 
 #: src/ej_conversations/jinja2/ej_conversations/moderate.jinja2:74
-#, fuzzy
 msgid "Reject"
 msgstr "Rejeitado"
 
@@ -2067,22 +1982,38 @@ msgstr "Aprovar"
 
 #: src/ej_conversations/jinja2/ej_conversations/comments/detail.jinja2:20
 #: src/ej_profiles/jinja2/ej_profiles/contributions.jinja2:79
-#, fuzzy
 msgid "Go to conversation"
-msgstr "Suas conversas"
+msgstr "Ir para conversa"
 
 #: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:16
 msgid "Back to conversations"
 msgstr "De volta às conversas"
 
 #: src/ej_conversations/jinja2/ej_conversations/includes/menu-list.jinja2:6
-#, fuzzy
 msgid "New Conversation"
-msgstr "Ver Conversa"
+msgstr "Nova conversa"
 
 #: src/ej_dataviz/jinja2/ej/role/conversation-download-data.jinja2:2
 msgid "Downloads: "
 msgstr "Downloads: "
+
+#: src/ej_dataviz/jinja2/ej/role/conversation-download-data.jinja2:8
+msgid ""
+"Text-based table format that can be imported to Excel and other spreadsheets."
+msgstr ""
+"Formato de tabela baseado em texto que pode ser importado para o Excel e "
+"outras planilhas."
+
+#: src/ej_dataviz/jinja2/ej/role/conversation-download-data.jinja2:10
+msgid ""
+"Simple data format expressed as a list of dictionaries. (For advanced users)"
+msgstr ""
+"Formato de dados simples expresso como uma lista de dicionários. (Para "
+"usuários avançados)"
+
+#: src/ej_dataviz/jinja2/ej/role/conversation-download-data.jinja2:12
+msgid "Binary faster alternative to JSON."
+msgstr "Alternativa binária mais rápida ao JSON."
 
 #: src/ej_dataviz/jinja2/ej_dataviz/scatter.jinja2:7
 msgid "Opinion profiles"
@@ -2094,7 +2025,7 @@ msgstr "Cada ponto no gráfico representa uma opinião diferente."
 
 #: src/ej_dataviz/jinja2/ej_dataviz/scatter.jinja2:9
 msgid "Select a filter bellow"
-msgstr "Selecione um filtro"
+msgstr "Selecione um filtro abaixo"
 
 #: src/ej_dataviz/jinja2/ej_dataviz/scatter.jinja2:12
 msgid "Gender"
@@ -2122,7 +2053,7 @@ msgstr "Criando nuvem de palavras. Espere..."
 
 #: src/ej_dataviz/jinja2/ej_dataviz/includes/datatables.jinja2:8
 msgid "First"
-msgstr ""
+msgstr "Primeiro"
 
 #: src/ej_dataviz/jinja2/ej_dataviz/includes/datatables.jinja2:9
 msgid "Last"
@@ -2130,7 +2061,7 @@ msgstr "Último"
 
 #: src/ej_dataviz/jinja2/ej_dataviz/includes/datatables.jinja2:11
 msgid "Previous"
-msgstr ""
+msgstr "Anterior"
 
 #: src/ej_dataviz/jinja2/ej_dataviz/report/index.jinja2:6
 #, python-format
@@ -2141,57 +2072,53 @@ msgstr "Relatório Básico (%(n)s usuários)"
 msgid "{n} users"
 msgstr "{n} usuários"
 
-#: src/ej_dataviz/jinja2/ej_dataviz/report/index.jinja2:34
+#: src/ej_dataviz/jinja2/ej_dataviz/report/index.jinja2:36
 msgid "More info"
 msgstr "Mais informações"
 
 #: src/ej_dataviz/jinja2/ej_dataviz/report/index.jinja2:39
+msgid "Participants"
+msgstr "Participantes"
+
+#: src/ej_dataviz/jinja2/ej_dataviz/report/index.jinja2:41
 msgid "See statistics about each participant."
 msgstr "Veja as estatísticas de cada participante."
 
 #: src/ej_dataviz/jinja2/ej_dataviz/report/users.jinja2:5
-#, fuzzy
 msgid "List of participants"
-msgstr "Participantes"
+msgstr "Lista de participantes"
 
 #: src/ej_dataviz/jinja2/ej_dataviz/report/users.jinja2:7
-#, fuzzy
 msgid "Usage data"
-msgstr "Termos de uso"
+msgstr "Dados de uso"
 
 #: src/ej_experiments/jinja2/ej_experiments/index.jinja2:6
-#, fuzzy
 msgid "Create random data"
-msgstr "Criado em"
+msgstr "Crie dados aleatórios"
 
 #: src/ej_experiments/jinja2/ej_experiments/index.jinja2:9
-#, fuzzy
 msgid "Random users"
-msgstr "Usuário administrativo"
+msgstr "Usuários aleatórios"
 
 #: src/ej_experiments/jinja2/ej_experiments/index.jinja2:14
-#, fuzzy
 msgid "Create users"
-msgstr "Criar mural"
+msgstr "Crie usuários"
 
 #: src/ej_experiments/jinja2/ej_experiments/index.jinja2:19
-#, fuzzy
 msgid "Random conversations"
-msgstr "Suas conversas"
+msgstr "Conversas aleatórias"
 
 #: src/ej_experiments/jinja2/ej_experiments/index.jinja2:24
 msgid "Create conversations"
 msgstr "Criar conversas"
 
 #: src/ej_experiments/jinja2/ej_experiments/index.jinja2:29
-#, fuzzy
 msgid "Random Votes"
-msgstr "Usuário administrativo"
+msgstr "Votos Aleatórios"
 
 #: src/ej_experiments/jinja2/ej_experiments/index.jinja2:34
-#, fuzzy
 msgid "Create votes"
-msgstr "Criado em"
+msgstr "Criar votos"
 
 #: src/ej_gamification/jinja2/ej_gamification/achievements.jinja2:4
 #: src/ej_gamification/jinja2/ej_gamification/conversation/achievements.jinja2:42
@@ -2203,9 +2130,8 @@ msgid "Classification:"
 msgstr "Classificação:"
 
 #: src/ej_gamification/jinja2/ej_gamification/achievements.jinja2:10
-#, fuzzy
 msgid "Trophies:"
-msgstr "Troféus"
+msgstr "Troféus:"
 
 #: src/ej_gamification/jinja2/ej_gamification/achievements.jinja2:16
 msgid "Participation in conversations"
@@ -2214,16 +2140,15 @@ msgstr "Participação em conversas"
 #: src/ej_gamification/jinja2/ej_gamification/achievements.jinja2:20
 #: src/ej_gamification/jinja2/ej_gamification/achievements.jinja2:27
 msgid "Participate more to unlock achievements :-)"
-msgstr ""
+msgstr "Participe mais para desbloquear conquistas :-)"
 
 #: src/ej_gamification/jinja2/ej_gamification/achievements.jinja2:23
 msgid "Your conversations"
 msgstr "Suas conversas"
 
 #: src/ej_gamification/jinja2/ej_gamification/conversation/achievements.jinja2:44
-#, fuzzy
 msgid "Conversation activity"
-msgstr "Conversa"
+msgstr "Atividade na conversa"
 
 #: src/ej_gamification/jinja2/ej_gamification/conversation/endorse.jinja2:6
 #: src/ej_gamification/jinja2/ej_gamification/conversation/endorse.jinja2:26
@@ -2231,30 +2156,32 @@ msgid "Endorse comments"
 msgstr "Endorsar comentários"
 
 #: src/ej_gamification/jinja2/ej_gamification/conversation/endorse.jinja2:8
-#, fuzzy
 msgid ""
 "Endorsed comments are seen with a greater priority by users in a "
 "conversation."
-msgstr "Pode moderar comentários em qualquer conversa"
+msgstr ""
+"Os comentários endossados são vistos com maior prioridade pelos usuários em "
+"uma conversa."
 
 #: src/ej_gamification/jinja2/ej_gamification/conversation/endorse.jinja2:9
 msgid ""
 "You can select which comments will be endorsed to increase the likelyhood "
 "they will appear to users."
 msgstr ""
+"Você pode selecionar quais comentários serão endossados para aumentar a "
+"probabilidade de que eles aparecerão para os usuários."
 
 #: src/ej_gamification/jinja2/ej_gamification/conversation/endorse.jinja2:12
-#, fuzzy
 msgid "Select comments"
-msgstr "Comentário criado"
+msgstr "Selecione os comentários"
 
 #: src/ej_gamification/jinja2/ej_gamification/conversation/endorse.jinja2:13
 msgid "Endorsed comments are not displayed in this list."
-msgstr ""
+msgstr "Comentários endossados não são exibidos nesta lista."
 
 #: src/ej_gamification/jinja2/ej_gamification/conversation/endorse.jinja2:24
 msgid "Error: No available comments!"
-msgstr ""
+msgstr "Erro: Não há comentários disponíveis!"
 
 #: src/ej_profiles/jinja2/ej_profiles/base.jinja2:10
 #: src/ej_profiles/jinja2/ej_profiles/base.jinja2:13
@@ -2263,19 +2190,16 @@ msgstr "Foto de perfil"
 
 #: src/ej_profiles/jinja2/ej_profiles/contributions.jinja2:7
 #: src/ej_profiles/jinja2/ej_profiles/detail.jinja2:23
-#, fuzzy
 msgid "Favorites"
-msgstr "Favorito"
+msgstr "Favoritos"
 
 #: src/ej_profiles/jinja2/ej_profiles/contributions.jinja2:12
-#, fuzzy
 msgid "List of conversations you participated at least once."
-msgstr "Ver todas as conversas criadas por você"
+msgstr "Lista de conversas que você participou pelo menos uma vez."
 
 #: src/ej_profiles/jinja2/ej_profiles/contributions.jinja2:19
-#, fuzzy
 msgid "Keep track of your comments here."
-msgstr "Escreva aqui o comentário"
+msgstr "Acompanhe os seus comentários aqui."
 
 #: src/ej_profiles/jinja2/ej_profiles/contributions.jinja2:20
 msgid "Approved comments"
@@ -2286,24 +2210,20 @@ msgid "Pending moderation"
 msgstr "Aguardando moderação"
 
 #: src/ej_profiles/jinja2/ej_profiles/contributions.jinja2:32
-#, fuzzy
 msgid "Keep track of your favorite conversations here."
-msgstr "Você não tem nenhuma conversa favorita ainda!"
+msgstr "Acompanhe as suas conversas favoritas aqui."
 
 #: src/ej_profiles/jinja2/ej_profiles/contributions.jinja2:35
-#, fuzzy
 msgid "You have not have any favorite conversations yet!"
 msgstr "Você não tem nenhuma conversa favorita ainda!"
 
 #: src/ej_profiles/jinja2/ej_profiles/contributions.jinja2:43
-#, fuzzy
 msgid "You have not created any conversation yet!"
-msgstr "Preencha os campos para criar ou editar o mural de conversas"
+msgstr "Você ainda não criou nenhuma conversa!"
 
 #: src/ej_profiles/jinja2/ej_profiles/contributions.jinja2:45
-#, fuzzy
 msgid "List of conversations created by you."
-msgstr "Ver todas as conversas criadas por você"
+msgstr "Ver todas as conversas criadas por você."
 
 #: src/ej_profiles/jinja2/ej_profiles/contributions.jinja2:60
 msgid "Participate"
@@ -2311,7 +2231,7 @@ msgstr "Participar"
 
 #: src/ej_profiles/jinja2/ej_profiles/contributions.jinja2:71
 msgid "Empty."
-msgstr ""
+msgstr "Esvaziar."
 
 #: src/ej_profiles/jinja2/ej_profiles/detail.jinja2:5
 msgid "Info"
@@ -2322,67 +2242,90 @@ msgstr "Info"
 msgid "Contributions"
 msgstr "Contribuições"
 
+#: src/ej_profiles/jinja2/ej_profiles/detail.jinja2:26
+msgid "Achievements"
+msgstr "Suas conquistas"
+
 #: src/ej_profiles/jinja2/ej_profiles/includes/menu.jinja2:5
 msgid "Edit profile"
 msgstr "Editar perfil"
 
-#: src/ej_questions/jinja2/ej_users/base.jinja2:15
-#: src/ej_questions/jinja2/ej_users/includes/menu.jinja2:6
-#: src/ej_users/jinja2/ej_users/base.jinja2:15
-#: src/ej_users/jinja2/ej_users/includes/menu.jinja2:6
-#: src/ej_users/jinja2/ej_users/recover-password-token.jinja2:2
-msgid "Recover password"
-msgstr "Recriar minha senha"
+#: src/ej_rocketchat/jinja2/ej_rocketchat/config.jinja2:2
+msgid "Configure Rocket.Chat Integration"
+msgstr "Configurar a integração com o Rocket.Chat"
 
-#: src/ej_questions/jinja2/ej_users/base.jinja2:20
-#: src/ej_users/jinja2/ej_users/base.jinja2:20
-msgid "or sign up through other networks"
-msgstr "ou entre usando outras redes"
+#: src/ej_rocketchat/jinja2/ej_rocketchat/config.jinja2:11
+#: src/ej_rocketchat/jinja2/ej_rocketchat/index.jinja2:22
+#: src/ej_rocketchat/jinja2/ej_rocketchat/register.jinja2:15
+#: src/ej_users/jinja2/ej_users/recover-password.jinja2:19
+msgid "Send"
+msgstr "Enviar"
 
-#: src/ej_questions/jinja2/ej_users/includes/menu.jinja2:1
-#: src/ej_questions/jinja2/ej_users/includes/menu.jinja2:2
-#: src/ej_users/jinja2/ej_users/includes/menu.jinja2:1
-#: src/ej_users/jinja2/ej_users/includes/menu.jinja2:2
-msgid "Authentication"
-msgstr "Autenticação"
+#: src/ej_rocketchat/jinja2/ej_rocketchat/forbidden.jinja2:2
+#: src/ej_rocketchat/jinja2/ej_rocketchat/forbidden.jinja2:8
+msgid "Forbidden"
+msgstr "Oculta"
 
-#: src/ej_questions/jinja2/ej_users/includes/menu.jinja2:4
+#: src/ej_rocketchat/jinja2/ej_rocketchat/forbidden.jinja2:9
+msgid "You do not have permissions to access this page."
+msgstr "Você não tem permissão para acessar esta página."
+
+#: src/ej_rocketchat/jinja2/ej_rocketchat/index.jinja2:2
+#: src/ej_rocketchat/jinja2/ej_rocketchat/intro.jinja2:3
+msgid "Panel"
+msgstr "Painel"
+
+#: src/ej_rocketchat/jinja2/ej_rocketchat/index.jinja2:7
+msgid "Administrative login"
+msgstr "Usuário administrativo"
+
+#: src/ej_rocketchat/jinja2/ej_rocketchat/index.jinja2:8
+msgid ""
+"Administrative users do not have user accounts in Rocket.Chat. Instead, they "
+"all control\n"
+"            the common administrative account for Rocket.Chat."
+msgstr ""
+"Usuários administrativos não têm contas de usuário no Rocket.Chat. Em vez "
+"disso, todos controlam \n"
+" a conta administrativa comum do Rocket.Chat."
+
+#: src/ej_rocketchat/jinja2/ej_rocketchat/index.jinja2:17
 #: src/ej_users/jinja2/ej_users/includes/menu.jinja2:4
 #: src/ej_users/jinja2/ej_users/login.jinja2:9
 #: src/ej_users/jinja2/ej_users/register.jinja2:13
 msgid "Login"
 msgstr "Entrar"
 
-#: src/ej_questions/jinja2/ej_users/includes/menu.jinja2:5
-#: src/ej_users/jinja2/ej_users/includes/menu.jinja2:5
-#: src/ej_users/jinja2/ej_users/register.jinja2:10
-#, fuzzy
-msgid "Register"
-msgstr "Registrar!"
+#: src/ej_rocketchat/jinja2/ej_rocketchat/index.jinja2:18
+msgid "Please type the <strong>Rocket.Chat</strong> admin password"
+msgstr ""
+"Por favor, digite a senha de administrador do <strong>Rocket.Chat</ strong>"
 
-#: src/ej_rocketchat/jinja2/ej_rocketchat/config.jinja2:2
-msgid "Configure Rocket.Chat Integration"
-msgstr "Configurar a integração com o Rocket.Chat"
+#: src/ej_rocketchat/jinja2/ej_rocketchat/redirect.jinja2:2
+msgid "Redirecting to panel..."
+msgstr "Redirecionando para o painel ..."
 
-#: src/ej_rocketchat/jinja2/ej_rocketchat/config.jinja2:9
-#: src/ej_rocketchat/jinja2/ej_rocketchat/iframe.jinja2:17
-#: src/ej_rocketchat/jinja2/ej_rocketchat/register.jinja2:10
-#: src/ej_users/jinja2/ej_users/recover-password.jinja2:19
-msgid "Send"
-msgstr "Enviar"
+#: src/ej_rocketchat/jinja2/ej_rocketchat/redirect.jinja2:9
+msgid "Redirecting to panel"
+msgstr "Redirecionando para o painel"
 
-#: src/ej_rocketchat/jinja2/ej_rocketchat/iframe.jinja2:2
-#: src/ej_rocketchat/jinja2/ej_rocketchat/intro.jinja2:3
-msgid "Panel"
-msgstr "Painel"
+#: src/ej_rocketchat/jinja2/ej_rocketchat/redirect.jinja2:10
+msgid "Rocket.Chat panel"
+msgstr "Painel Rocket.Chat"
 
-#: src/ej_rocketchat/jinja2/ej_rocketchat/iframe.jinja2:9
-msgid "Admin user"
-msgstr "Usuário administrativo"
+#: src/ej_rocketchat/jinja2/ej_rocketchat/redirect.jinja2:11
+msgid "link"
+msgstr "ligação"
 
-#: src/ej_rocketchat/jinja2/ej_rocketchat/iframe.jinja2:11
-msgid "Access token"
-msgstr "Token de acesso"
+#: src/ej_rocketchat/jinja2/ej_rocketchat/redirect.jinja2:12
+#, python-format
+msgid "You are being redirected to %(rc_link)s..."
+msgstr "Você está sendo redirecionado para %(rc_link)s ..."
+
+#: src/ej_rocketchat/jinja2/ej_rocketchat/redirect.jinja2:13
+#, python-format
+msgid "Click this %(link)s to continue."
+msgstr "Clique neste %(link)s para continuar."
 
 #: src/ej_rocketchat/jinja2/ej_rocketchat/register.jinja2:2
 msgid "Panel: Register username"
@@ -2391,6 +2334,21 @@ msgstr "Painel: Registrar nome do usuário"
 #: src/ej_rocketchat/jinja2/ej_rocketchat/register.jinja2:3
 msgid "Panel settings"
 msgstr "Configurações do Painel"
+
+#: src/ej_rocketchat/jinja2/ej_rocketchat/register.jinja2:8
+msgid "Rocket.Chat user name"
+msgstr "Nome de usuário do Rocket.Chat"
+
+#: src/ej_rocketchat/jinja2/ej_rocketchat/register.jinja2:9
+msgid ""
+"You need a unique username to use the Rocket.Chat panel.\n"
+"        Please select the username and we will create an account for you.\n"
+"        "
+msgstr ""
+"Você precisa de um nome de usuário exclusivo para usar o painel Rocket."
+"Chat. \n"
+" Selecione o nome de usuário e criaremos uma conta para você.\n"
+"        "
 
 #: src/ej_users/jinja2/account/account_inactive.jinja2:2
 msgid "Account is inactive"
@@ -2409,13 +2367,12 @@ msgid "Account: E-mail"
 msgstr "Conta: E-mail"
 
 #: src/ej_users/jinja2/account/email.jinja2:7
-#, fuzzy
 msgid "Manage e-mail"
-msgstr "Configurações do Painel"
+msgstr "Gerenciar e-mail"
 
 #: src/ej_users/jinja2/account/email.jinja2:10
 msgid "The following e-mail addresses are associated with your account:"
-msgstr "Esse endereço de email está associado com a sua conta:"
+msgstr "Os seguintes endereços de e-mail estão associados à sua conta:"
 
 #: src/ej_users/jinja2/account/email.jinja2:24
 msgid "Verified"
@@ -2432,7 +2389,7 @@ msgstr "O que você deseja fazer?"
 
 #: src/ej_users/jinja2/account/email.jinja2:37
 msgid "Make selected e-mail primary"
-msgstr ""
+msgstr "Selecionar o e-mail primário"
 
 #: src/ej_users/jinja2/account/email.jinja2:43
 msgid "Re-send Verification"
@@ -2440,7 +2397,7 @@ msgstr "Reenviar a verificação"
 
 #: src/ej_users/jinja2/account/email.jinja2:49
 msgid "Remove selected e-mail"
-msgstr ""
+msgstr "Remover e-mail selecionado"
 
 #: src/ej_users/jinja2/account/email.jinja2:58
 msgid "Warning:"
@@ -2468,18 +2425,16 @@ msgid "Do you really want to remove the selected e-mail address?"
 msgstr "Você realmente quer remover os endrereços de email selecionados?"
 
 #: src/ej_users/jinja2/account/index.jinja2:3
-#, fuzzy
 msgid "Manage your account"
-msgstr "mudar a senha"
+msgstr "Gerenciar sua conta"
 
 #: src/ej_users/jinja2/account/index.jinja2:10
 msgid "Change your password"
 msgstr "Alterar sua senha"
 
 #: src/ej_users/jinja2/account/index.jinja2:11
-#, fuzzy
 msgid "Manage e-mail settings"
-msgstr "Configurações do Painel"
+msgstr "Gerenciar configurações de email"
 
 #: src/ej_users/jinja2/account/index.jinja2:13
 msgid "Manage user profile"
@@ -2487,7 +2442,7 @@ msgstr "Gerenciar perfil do usuário"
 
 #: src/ej_users/jinja2/account/index.jinja2:15
 msgid "Login with a different user"
-msgstr ""
+msgstr "Entre com um usuário diferente"
 
 #: src/ej_users/jinja2/account/index.jinja2:16
 #: src/ej_users/jinja2/account/logout.jinja2:13
@@ -2499,7 +2454,6 @@ msgstr "Sair"
 #: src/ej_users/jinja2/account/index.jinja2:17
 #: src/ej_users/jinja2/account/remove-account.jinja2:2
 #: src/ej_users/jinja2/account/remove-account.jinja2:27
-#, fuzzy
 msgid "Remove account"
 msgstr "Remover comentário"
 
@@ -2510,11 +2464,11 @@ msgstr "Conta: Mudar a senha"
 
 #: src/ej_users/jinja2/account/logout.jinja2:10
 msgid "We hope we'll see you soon ;)"
-msgstr ""
+msgstr "Esperamos ver você em breve;)"
 
 #: src/ej_users/jinja2/account/logout.jinja2:15
 msgid "Please press the logout button to confirm."
-msgstr ""
+msgstr "Por favor, pressione o botão de logout para confirmar."
 
 #: src/ej_users/jinja2/account/password_change.jinja2:6
 #: src/ej_users/jinja2/account/password_change.jinja2:11
@@ -2522,23 +2476,34 @@ msgid "Change Password"
 msgstr "Mudar a senha"
 
 #: src/ej_users/jinja2/account/remove-account.jinja2:12
-#, fuzzy
 msgid "Danger! Remove account"
-msgstr "Remover comentário"
+msgstr "Perigo! Remover conta"
 
 #: src/ej_users/jinja2/account/remove-account.jinja2:14
 msgid ""
 "By removing your account, we will delete all your profile information and\n"
 "            assign your votes and comments to an anonymous account."
 msgstr ""
+"Ao remover sua conta, excluiremos todas as informações do seu perfil e "
+"atribuiremos seus votos e comentários a uma conta anônima."
 
 #: src/ej_users/jinja2/account/remove-account.jinja2:16
 msgid "This operation cannot be undone!"
-msgstr ""
+msgstr "Esta operação não pode ser desfeita!"
 
 #: src/ej_users/jinja2/account/remove-account.jinja2:18
 msgid "You have to type your e-mail to confirm."
-msgstr ""
+msgstr "Você tem que digitar seu e-mail para confirmar."
+
+#: src/ej_users/jinja2/ej_users/base.jinja2:15
+#: src/ej_users/jinja2/ej_users/includes/menu.jinja2:6
+#: src/ej_users/jinja2/ej_users/recover-password-token.jinja2:2
+msgid "Recover password"
+msgstr "Recuperar senha"
+
+#: src/ej_users/jinja2/ej_users/base.jinja2:20
+msgid "or sign up through other networks"
+msgstr "ou entre usando outras redes"
 
 #: src/ej_users/jinja2/ej_users/login.jinja2:18
 msgid "Register now!"
@@ -2549,7 +2514,7 @@ msgid "Hello!"
 msgstr "Olá!"
 
 #: src/ej_users/jinja2/ej_users/recover-password-message.jinja2:3
-#, fuzzy, python-format
+#, python-format
 msgid "You can use the following link to reset your password: %(url)s."
 msgstr "Você pode usar o seguinte link para redefinir sua senha: %(url)s."
 
@@ -2558,12 +2523,12 @@ msgid ""
 "Thanks,\n"
 "Your friends at Empurrando Juntos."
 msgstr ""
-"Obrigada,\n"
-"Suas amigas da Empurrando Juntas."
+"Obrigado,\n"
+"Seus amigos no Empurrando Juntos."
 
 #: src/ej_users/jinja2/ej_users/recover-password-token.jinja2:8
 msgid "It looks like you clicked on an invalid password reset link."
-msgstr "Parece que você clicou em um link de nova senha inválido."
+msgstr "Parece que você clicou em um link de senha inválida."
 
 #: src/ej_users/jinja2/ej_users/recover-password-token.jinja2:14
 msgid "Update"
@@ -2579,14 +2544,11 @@ msgstr "Esqueceu a senha?"
 
 #: src/ej_users/jinja2/ej_users/recover-password.jinja2:7
 msgid "Check your email for a link to reset your password. "
-msgstr "Um link para mudar a senha foi enviado para seu e-mail."
+msgstr "Um link para mudar a senha foi enviado para seu e-mail. "
 
 #: src/ej_users/jinja2/ej_users/recover-password.jinja2:8
-#, fuzzy
 msgid "If it doesn't appear within a few minutes, check your spam folder."
-msgstr ""
-"Verifique se você recebeu em seu email um link para resetar sua senha.\n"
-"Se o link não aparecer em alguns minutos, verifique sua caixa de spam."
+msgstr "Se não aparecer dentro de alguns minutos, verifique sua pasta de spam."
 
 #: src/ej_users/jinja2/ej_users/recover-password.jinja2:10
 msgid "Return to Login"
@@ -2604,14 +2566,106 @@ msgstr ""
 msgid "Register new user"
 msgstr "Registre novo usuário"
 
+#: src/ej_users/jinja2/ej_users/includes/menu.jinja2:5
+#: src/ej_users/jinja2/ej_users/register.jinja2:10
+msgid "Register"
+msgstr "Registrar"
+
 #: src/ej_users/jinja2/ej_users/includes/account-menu.jinja2:4
-#, fuzzy
 msgid "Manage account"
-msgstr "Remover comentário"
+msgstr "Gerenciar conta"
 
 #: src/ej_users/jinja2/ej_users/includes/account-menu.jinja2:5
 msgid "Change password"
-msgstr "Alterar a senha"
+msgstr "Mudar a senha"
+
+#: src/ej_users/jinja2/ej_users/includes/menu.jinja2:1
+#: src/ej_users/jinja2/ej_users/includes/menu.jinja2:2
+msgid "Authentication"
+msgstr "Autenticação"
+
+#~ msgid "high"
+#~ msgstr "alto"
+
+#, fuzzy
+#~ msgid "Questions"
+#~ msgstr "Questão"
+
+#~ msgid "Create opinion surveys"
+#~ msgstr "Crie consultas de opinião."
+
+#, fuzzy
+#~ msgid "Try it now!"
+#~ msgstr "Começar agora!"
+
+#, fuzzy
+#~ msgid "How does it work?"
+#~ msgstr "Como funciona"
+
+#, fuzzy
+#~ msgid "Create a conversation"
+#~ msgstr "Criar conversa"
+
+#~ msgid ""
+#~ "create conversations on EJ to receive ideas and opinions about politics, "
+#~ "services or public equipments."
+#~ msgstr ""
+#~ "crie conversas no EJ para receber ideias e opiniões sobre políticas, "
+#~ "serviços ou equipamentos públicos."
+
+#~ msgid "Listen to the people"
+#~ msgstr "Escute a população"
+
+#~ msgid ""
+#~ "identify the priorities and the different opinion groups in the society."
+#~ msgstr ""
+#~ "identifique suas prioridades e os diferentes grupos de opinião existentes "
+#~ "na sociedade."
+
+#~ msgid "Take decisions"
+#~ msgstr "Tome decisões"
+
+#~ msgid ""
+#~ "make participants know, communicating directly and amplifying the "
+#~ "responses."
+#~ msgstr ""
+#~ "faça os participantes saberem, comunicando diretamente e amplificando as "
+#~ "respostas."
+
+#~ msgid "Participative conversations"
+#~ msgstr "Conversas participativas"
+
+#~ msgid "Explore the EJ resources with our documented guides"
+#~ msgstr "Explore o máximo dos recursos do EJ com nossos guias documentados"
+
+#~ msgid "EJ Community"
+#~ msgstr "Comunidade EJ"
+
+#~ msgid "Who is using EJ?"
+#~ msgstr "Quem já adotou o EJ?"
+
+#, fuzzy
+#~ msgid "Groups"
+#~ msgstr "Grupo"
+
+#, fuzzy
+#~ msgid "Typical comments"
+#~ msgstr "{count} comentários"
+
+#~ msgid "Unfavorite"
+#~ msgstr "Desfavoritar"
+
+#~ msgid "Favorite"
+#~ msgstr "Favorito"
+
+#~ msgid "Share"
+#~ msgstr "Compartilhar"
+
+#~ msgid "Admin user"
+#~ msgstr "Usuário administrativo"
+
+#~ msgid "Access token"
+#~ msgstr "Token de acesso"
 
 #~ msgid "Created Comment"
 #~ msgstr "Comentário criado"
