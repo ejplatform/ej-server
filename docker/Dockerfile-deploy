@@ -12,12 +12,13 @@ COPY --chown=django:django ./locale/ /app/locale/
 COPY --chown=django:django ./lib/ /app/lib/
 COPY --chown=django:django ./src/ /app/src/
 
+# Rocket.Chat integration
+ARG ROCKETCHAT=false
+ENV EJ_ROCKETCHAT_INTEGRATION=${ROCKETCHAT}
+
 # Prepare assets
 RUN mkdir -p local/logs local/static/ local/media/ local/db/ lib/build/ \
- && inv -e docs \
- && inv -e sass \
- && echo "COLLECTED STATIC ASSETS"
-RUN inv -e js \
+ && inv -e sass -t ${EJ_THEME} js docs i18n -c \
  && python manage.py collectstatic --noinput \
  && echo "COLLECTED STATIC ASSETS"
 
