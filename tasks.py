@@ -28,7 +28,7 @@ def manage(ctx, cmd, *args, env=None, **kwargs):
 # Build assets
 #
 @task
-def sass(ctx, theme='default', watch=False, background=False):
+def sass(ctx, theme=None, watch=False, background=False):
     """
     Run Sass compiler
     """
@@ -356,6 +356,7 @@ def docker_build(ctx, theme='default', tag='latest', dry_run=False, build_kit=Tr
     prefix = 'DOCKER_BUILDKIT=1 ' if build_kit else ''
     do = runner(ctx, dry_run, pty=True)
     cmd = su_docker(f'{prefix}docker build . -f docker/Dockerfile')
+    rocket = str(rocket_chat_integration).lower()
 
     # Build base docker image
     requirements(ctx)
@@ -375,7 +376,6 @@ def docker_build(ctx, theme='default', tag='latest', dry_run=False, build_kit=Tr
            f'  --build-arg GID={os.getgid()}')
 
     if deploy or build_all:
-        rocket = str(rocket_chat_integration).lower()
         do(f'{cmd}-deploy -t {org}/web:{tag}'
            f'  --build-arg ORG={org}'
            f'  --build-arg ROCKETCHAT={rocket}')
@@ -564,10 +564,11 @@ def manage_task(ctx, command, noinput=False, args=''):
 
 
 @task
-def collect(ctx):
+def collect(ctx, theme=None):
     """
     Runs Django's collectstatic command
     """
+    set_theme(theme)
     manage(ctx, 'collectstatic --noinput')
 
 
@@ -684,7 +685,8 @@ def set_theme(theme):
     else:
         root = 'lib/'
 
-    os.environ['EJ_THEME'] = theme or 'default'
+    theme = theme or 'default'
+    os.environ['EJ_THEME'] = theme
     return theme, root
 
 

@@ -6,6 +6,7 @@ from boogie.router import Router
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.flatpages.models import FlatPage
+from django.http import Http404
 from django.shortcuts import render, redirect
 from django.utils.translation import ugettext as _
 from sidekick import import_later, Proxy
@@ -42,7 +43,7 @@ def info(request):
     from ej_conversations.models import Conversation, Comment, Vote
 
     if not request.user.is_superuser:
-        raise PermissionError
+        raise Http404
 
     count = lambda x: x.objects.count()
     return {
@@ -62,14 +63,14 @@ def info(request):
 @urlpatterns.route("info/styles/")
 def info_styles(request):
     if not request.user.is_superuser:
-        raise PermissionError
+        raise Http404
     return {}
 
 
 @urlpatterns.route("info/django-settings/")
 def info_django_settings(request):
     if not request.user.is_superuser:
-        raise PermissionError
+        raise Http404
     data = [
         (name, pformat(getattr(settings, name)))
         for name in dir(settings)
@@ -81,7 +82,7 @@ def info_django_settings(request):
 @urlpatterns.route("info/environment/")
 def info_environ(request):
     if not request.user.is_superuser:
-        raise PermissionError
+        raise Http404
     return {"settings_data": sorted(os.environ.items())}
 
 
