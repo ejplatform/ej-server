@@ -23,7 +23,11 @@ def index(request):
         return render(request, 'ej_rocketchat/forbidden.jinja2')
 
     # Superuser must type the password since it is not stored in the database
-    if request.user.is_superuser:
+    if not rocket.has_config:
+        if request.user.is_superuser:
+            return redirect('rocket:config')
+        return render(request, 'ej_rocketchat/forbidden.jinja2')
+    elif request.user.is_superuser:
         form = forms.AskAdminPasswordForm(request=request)
         if not form.is_valid_post():
             return {
