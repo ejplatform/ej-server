@@ -7,16 +7,21 @@ from django.shortcuts import redirect, render
 from ej_users.routes import login as ej_login
 from . import forms
 from .decorators import security_policy, requires_rc_perm
-from .models import RCConfig, RCAccount
+from .models import RCConfig, RCAccount, CAN_LOGIN_PERM
 from .rocket import rocket
 
 log = getLogger("ej")
 app_name = "ej_rocketchat"
-urlpatterns = Router(template=["ej_rocketchat/{name}.jinja2"])
+urlpatterns = Router(
+    template=["ej_rocketchat/{name}.jinja2"],
+)
 
 
-@urlpatterns.route("", decorators=[requires_rc_perm, security_policy])
+@urlpatterns.route("", decorators=[security_policy])
 def index(request):
+    if not request.user.has_perm(CAN_LOGIN_PERM):
+        return render(request, 'ej_rocketchat/forbidden.jinja2')
+
     # Superuser must type the password since it is not stored in the database
     if request.user.is_superuser:
         form = forms.AskAdminPasswordForm(request=request)

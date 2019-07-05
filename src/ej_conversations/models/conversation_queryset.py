@@ -29,7 +29,7 @@ class ConversationQuerySet(ConversationMixin, WordCloudQuerySet):
         """
         Show only promoted conversations.
         """
-        return self.filter(is_promoted=True)
+        return self.filter(is_promoted=True, is_hidden=False)
 
     def cache_annotations(self, *values, user=None, prefix="", **kwargs):
         """

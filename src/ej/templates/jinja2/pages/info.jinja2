@@ -4,17 +4,17 @@
 
 
 {% block content %}
-    <div class="Container SiteInfo">
+    <div class="container-1">
         {# USERS #}
-        <h1>Users</h1>
+        <h1>{{ _('Users') }}</h1>
         <table>
             <tr>
-                <th>Name</th>
-                <th>Value</th>
+                <th>{{ _('Name') }}</th>
+                <th>{{ _('Value') }}</th>
             </tr>
 
             <tr>
-                <td>Registered users</td>
+                <td>{{ _('Registered users') }}</td>
                 <td>{{ user_count }}</td>
             </tr>
         </table>
@@ -24,8 +24,8 @@
         <h1>Conversations</h1>
         <table>
             <tr>
-                <th>Name</th>
-                <th>Value</th>
+                <th>{{ _('Name') }}</th>
+                <th>{{ _('Value') }}</th>
             </tr>
 
             {% for name, value in conversations_counts.items() %}

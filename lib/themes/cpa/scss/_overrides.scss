@@ -16,3 +16,14 @@ a, a:hover, a:active, a:focus {
         background-repeat: no-repeat;
     }
 }
+
+#page-wrapper {
+    background: url(/static/img/bg/page.svg) no-repeat top center;
+    background-size: contain;
+}
+
+@media screen and (min-width: 35rem) {
+    .page-menu {
+        background-color: #FDFDFD;
+    }
+}

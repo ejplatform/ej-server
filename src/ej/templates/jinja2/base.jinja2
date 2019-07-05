@@ -34,7 +34,7 @@
         {% endif %}
 
         {%- block main %}
-            <main class="{{ main_class|default('container') }}
+            <main class="{{ main_class|default('container-1') }}
                          {{- '' if request.user.is_authenticated else ' is-anonymous' }}">
                 {%- block message_area %}
                     <div id="message-area" up-hungry>
