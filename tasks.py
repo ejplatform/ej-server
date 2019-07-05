@@ -349,7 +349,7 @@ def docker(ctx, task, cmd=None, port=8000, file=None, dry_run=False,
 @task
 def docker_build(ctx, theme='default', tag='latest', dry_run=False, build_kit=True,
                  org='ej', deploy=False, dev=False, country='brazil',
-                 hostname='localhost'):
+                 hostname='localhost', rocket_chat_integration=False):
     """
     Rebuild all docker images for the project.
     """
@@ -375,8 +375,10 @@ def docker_build(ctx, theme='default', tag='latest', dry_run=False, build_kit=Tr
            f'  --build-arg GID={os.getgid()}')
 
     if deploy or build_all:
+        rocket = str(rocket_chat_integration).lower()
         do(f'{cmd}-deploy -t {org}/web:{tag}'
-           f'  --build-arg ORG={org}')
+           f'  --build-arg ORG={org}'
+           f'  --build-arg ROCKETCHAT={rocket}')
 
 
 @task
