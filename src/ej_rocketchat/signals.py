@@ -21,7 +21,7 @@ def logout_handler(sender, user, request, **kwargs):
     Logout Rocketchat user when receives a Django logout signal.
     """
     # Superuser cannot logout because that would invalidate the Auth token
-    if not user.is_superuser:
+    if user and not user.is_superuser:
         submit(silence_exceptions(rocket.logout), user)
 
 

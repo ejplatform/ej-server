@@ -1,7 +1,6 @@
 import logging
 import os
 from pprint import pformat
-
 from boogie.router import Router
 from django.conf import settings
 from django.contrib.auth import get_user_model
@@ -9,7 +8,7 @@ from django.contrib.flatpages.models import FlatPage
 from django.http import Http404
 from django.shortcuts import render, redirect
 from django.utils.translation import ugettext as _
-from sidekick import import_later, Proxy
+from sidekick import import_later, once
 
 from ej.utils.flatpages import flat_page_route
 
@@ -32,8 +31,8 @@ def index(request):
 @urlpatterns.route("start/")
 def home(request):
     return {
-        'conversations': conversations.objects.promoted(),
-        'profile': Proxy(lambda: request.user.profile),
+        'conversations': once(lambda: conversations.objects.promoted()[:2]),
+        'profile': once(lambda: get_user_profile(request)),
         **home_page_ns,
     }
 
@@ -225,3 +224,10 @@ home_page_ns = {
         },
     ],
 }
+
+
+def get_user_profile(request):
+    try:
+        return request.user.profile
+    except AttributeError:
+        return None

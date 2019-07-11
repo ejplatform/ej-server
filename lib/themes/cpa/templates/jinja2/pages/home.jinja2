@@ -2,10 +2,6 @@
 {#{% set hide_menu = true %}#}
 {#{% set main_class = 'container-1' %}#}
 
-{# TODO: move data out of the template #}
-
-
-
 {% block content %}
     <style>
         main {
@@ -77,7 +73,7 @@
 
         <h1 class="h2 text-accent center margin-b3">Lista de conversas</h1>
         <div class="alternate-cards">
-            {% for conversation in conversations.all() %}
+            {% for conversation in conversations() %}
                 <div class="margin-y3">{{ conversation|role('card') }}</div>
             {% endfor %}
         </div>

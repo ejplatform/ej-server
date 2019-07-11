@@ -5,9 +5,9 @@ from hyperpython import a, html, Blob, div
 from hyperpython.django import csrf_input
 
 from ej.roles import with_template, progress_bar
-from ..rules import max_comments_per_conversation
 from .. import forms
 from .. import models
+from ..rules import max_comments_per_conversation
 
 
 @with_template(models.Conversation, role="balloon")
@@ -43,10 +43,16 @@ def conversation_card(conversation, url=None, request=None, text=None, hidden=No
     Render a round card representing a conversation in a list.
     """
 
+    # Non-authenticated users do not have progress
+    if request and request.user.is_authenticated:
+        progress = conversation_user_progress(conversation, request=request)
+    else:
+        progress = None
+
     return {
         "author": conversation.author_name,
         "text": text or conversation.text,
-        "progress": conversation_user_progress(conversation, request=request),
+        "progress": progress,
         "hidden": conversation.is_hidden if hidden is None else hidden,
         "url": url or conversation.get_absolute_url(),
         "tag": conversation.first_tag,
