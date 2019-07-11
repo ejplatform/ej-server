@@ -14,7 +14,7 @@
     <div class="conversation-card__text">
         <a href="{{ url }}">{{ text }}</a>
     </div>
-    {{ progress }}
+    {{ progress or '' }}
     <div class="conversation-card__author">{{ _('by:') }} <strong>{{ author }}</strong></div>
     <div class="conversation-card__button">{{ action_button(_('Participate now!'), url) }}</div>
 </div>

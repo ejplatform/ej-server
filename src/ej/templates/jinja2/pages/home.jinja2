@@ -2,8 +2,102 @@
 {% set hide_menu = true %}
 {% set main_class = 'width-full landing-page' %}
 
-{# TODO: move data out of the template #}
+
+{% block content %}
+    <style>
+        #page-wrapper::after {
+            display: none !important;
+            content: none;
+        }
+    </style>
+    <div class="landing-page__cover width-full center color-brand col flex-center">
+        <p class="bold text-1 text-white">{{ _('Create opinion surveys') }}</p>
+        <p>{{ action_button(_('Try it now!'), href='conversation:list', secondary=true) }}</p>
+        <a class="landing-page__cover-scroll"
+           onclick="$('html, body').animate({scrollTop: $('#how-it-works').offset().top - $('.main-header').height() - 20}, 400);">
+            <i class="fa fa-chevron-down"></i></a>
+    </div>
 
 
+    <h1 class="center text-accent" id="how-it-works">{{ _('How does it work?') }}</h1>
+    <div class="landing-page__cards">
+        <div class="landing-page__card">
+            <i class="fa fa-microphone gradient text-huge"></i>
+            <h2>{{ _('Create a conversation') }}</h2>
+            <p>{{ _('create conversations on EJ to receive ideas and opinions about politics, services or public equipments.') }}</p>
+        </div>
+
+        <div class="landing-page__card">
+            <i class="fas fa-clipboard gradient text-huge"></i>
+            <h2>{{ _('Listen to the people') }}</h2>
+            <p>{{ _('identify the priorities and the different opinion groups in the society.') }}</p>
+        </div>
+
+        <div class="landing-page__card">
+            <i class="far fa-flag gradient text-huge"></i>
+            <h2>{{ _('Take decisions') }}</h2>
+            <p>{{ _('make participants know, communicating directly and amplifying the responses.') }}</p>
+        </div>
+    </div>
 
 
+    <div class="landing-page__conversations width-full pad-1">
+        <h2 class="center">{{ _('Participative conversations') }}</h2>
+
+        <div class="row margin-y3 margin-xauto measure">
+            <ul class="list-reset text-right bold uppercase">
+                <li><i class="fa fa-globe"></i><span>{{ _('Community driven') }}</span></li>
+                <li><i class="fa fa-fire"></i><span>{{ _('No attacks or fakes') }}</span></li>
+                <li><i class="fa fa-align-right"></i><span>{{ _('Nuances instead of bubbles') }}</span></li>
+                <li><i class="far fa-heart"></i><span>{{ _('Free and open source') }}</span></li>
+            </ul>
+            <div class="landing-page__ui-example">
+                <img src="{{ static('img/home/cellphone.png') }}" alt="Interface example"/>
+            </div>
+        </div>
+
+        <p class="center margin-3">{{ action_button(_('Create a conversation'), href='conversation:create', secondary=true) }}</p>
+    </div>
+
+
+    <div class="container-1 margin-y3">
+        <h2 class="text-accent">{{ _('Documentation') }}</h2>
+        <p>{{ _('Explore the EJ resources with our documented guides') }}</p>
+
+        <div class="row wrap flex-center">
+            {% for doc in documentation_items %}
+                <a href="{{ doc.href }}"
+                   class="block text-brand-light size-x5p size-y5 rounded-3 margin-2 border-2 center pad-1 leading-solid">
+                    <i class="{{ doc.icon }} text-1 gradient block pad-1"></i>
+                    <span class="text-7 uppercase semi-bold text-brand">{{ doc.text }}</span></a>
+            {% endfor %}
+        </div>
+    </div>
+
+
+    <div class="pad-3" style="background: #eee;">
+        <h2 class="container-1">{{ _('EJ Community') }}</h2>
+        <ul class="container-1 list-reset row wrap items-center flex-center margin-y3 margin-xauto pad-x0">
+            {% for file, name in people.items() %}
+                <li class="center text-7 margin-2 size-x4p">
+                    <img class="rounded-full size-4p block" src="{{ static("img/home/team/" + file) }}"
+                         alt="{{ name }}">
+                    {{ name }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+
+    <div class="container-1">
+        <h2 class="text-accent">{{ _('Who is using EJ?') }}</h2>
+        <ul class="container-1 list-reset row wrap items-center flex-center margin-y3 pad-x0">
+            {% for partner in partners %}
+                <li class="margin-2 size-5p">
+                    <a target="_blank" rel="noopener noreferrer" href="{{ partner.url }}">
+                        <img class="width-full" src="{{ static('img/home/' + partner.img) }}" alt="{{ partner.name }}">
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

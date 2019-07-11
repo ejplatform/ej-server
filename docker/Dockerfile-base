@@ -64,11 +64,6 @@ RUN pip3 install -r etc/requirements-dev.txt
 COPY ./etc/requirements.txt /app/etc/requirements.txt
 RUN pip3 install -r etc/requirements.txt
 
-# Install core JS deps
-COPY ./lib/package.json /app/lib/package.json
-RUN cd lib && npm install \
- && echo "INSTALLED JS DEPENDENCIES"
-
 # Set environment variables from docker arguments
 ARG COUNTRY=brazil
 ARG HOSTNAME=localhost
@@ -84,6 +79,12 @@ RUN groupadd -r django -g ${GID} \
  && useradd -r -g django django -u ${UID} \
  && chown -R django:django /app \
  && echo "DJANGO USER CREATED"
+USER django
+
+# Install core JS deps
+COPY ./lib/package.json /app/lib/package.json
+RUN cd lib && npm install \
+ && echo "INSTALLED JS DEPENDENCIES"
 
 # Save commit info
 ARG COMMIT_TITLE=none
