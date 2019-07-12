@@ -115,7 +115,7 @@ class RCConfigWrapper:
         try:
             response = self.api_call("login", payload=payload)
         except ApiError as exc:
-            if exc.response["error"].lower() == "unauthorized":
+            if exc.is_permission_error:
                 raise PermissionError("invalid credentials")
             raise
         log.info(f"{username} successfully logged in at Rocket.Chat")
