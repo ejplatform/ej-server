@@ -77,7 +77,11 @@ ENV HOSTNAME=${HOSTNAME}
 # Create django user
 RUN groupadd -r django -g ${GID} \
  && useradd -r -g django django -u ${UID} \
+ && mkdir /home/django \
+ && mkdir /app/lib/ \
  && chown -R django:django /app \
+ && chown django:django /home/django \
+ && chown django:django /app/lib \
  && echo "DJANGO USER CREATED"
 USER django
 
