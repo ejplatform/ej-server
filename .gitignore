@@ -27,6 +27,7 @@ node_modules/
 # Database and secrets
 db.sqlite3
 local/
+deploy/
 ej/media/
 
 
