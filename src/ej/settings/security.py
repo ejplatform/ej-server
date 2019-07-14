@@ -11,6 +11,7 @@ class SecurityConf(Base):
         "allauth.account.auth_backends.AuthenticationBackend",
     ]
     X_FRAME_OPTIONS = env("SAMEORIGIN")
+    CONTENT_SECURITY_POLICY_FRAME_ANCESTORS = env([])
     CORS_ORIGIN_ALLOW_ALL = env(False)
     CORS_ALLOW_CREDENTIALS = env(False)
 

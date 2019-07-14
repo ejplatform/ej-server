@@ -77,6 +77,7 @@ Override paths
 
 EJ_ANONYMOUS_HOME_PATH (/start/):
     Redirect users to this path before login.
+
 EJ_USER_HOME_PATH (/conversations/):
     Redirect logged users to this path.
 
@@ -105,7 +106,11 @@ EJ_ROCKETCHAT_INTEGRATION (false):
     the Rocket.Chat container if this option is enabled.
 
 EJ_ROCKETCHAT_URL:
-    URL of Rocket.Chat instance (e.g.: http://localhost:3000 or https://your-chat-instance.com)
+    Public URL of Rocket.Chat instance (e.g.: http://localhost:3000 or https://your-chat-instance.com)
+
+EJ_ROCKETCHAT_API_URL:
+    Internal URL used to access Rocket.Chat on the intranet. Used to make
+    API requests.
 
 EJ_ROCKETCHAT_USERNAME:
     Username of Rocket.Chat admin.

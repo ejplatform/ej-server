@@ -198,7 +198,7 @@ def run(ctx, no_toolbar=False, theme=None):
 
 
 @task
-def gunicorn(ctx, debug=None, environment='production', port=8000, workers=0):
+def gunicorn(ctx, debug=None, environment='production', port=8000, workers=0, theme=None):
     """
     Run application using gunicorn for production deploys.
 
@@ -206,12 +206,14 @@ def gunicorn(ctx, debug=None, environment='production', port=8000, workers=0):
     """
 
     from gunicorn.app.wsgiapp import run as run_gunicorn
+    theme, _ = set_theme(theme)
     workers = workers or os.cpu_count() or 1
 
     env = {
         'DISABLE_DJANGO_DEBUG_TOOLBAR': str(not debug),
         'PYTHONPATH': 'src',
         'DJANGO_ENVIRONMENT': environment,
+        'EJ_THEME': theme,
     }
     if debug is not None:
         env['DJANGO_DEBUG'] = str(debug).lower()
@@ -290,7 +292,7 @@ def db_reset(ctx):
 
 
 @task
-def db_fake(ctx, users=True, conversations=True, admin=True, safe=False, theme=None, clusters=True):
+def db_fake(ctx, users=True, conversations=True, admin=True, user=True, safe=False, theme=None, clusters=True):
     """
     Adds fake data to the database
     """
@@ -303,7 +305,7 @@ def db_fake(ctx, users=True, conversations=True, admin=True, safe=False, theme=N
         else:
             return print(msg_error)
     if users:
-        manage(ctx, 'createfakeusers', admin=admin)
+        manage(ctx, 'createfakeusers', admin=admin, user=user)
     if conversations:
         manage(ctx, 'createfakeconversations')
     if clusters:
@@ -415,6 +417,7 @@ def docker_build(ctx, theme=None, dry_run=False, build_kit=False,
     """
     from subprocess import check_output
 
+    os.chdir(directory)
     theme, _ = set_theme(theme)
     prefix = 'DOCKER_BUILDKIT=1 ' if build_kit else ''
     do = runner(ctx, dry_run, pty=True)
@@ -427,41 +430,9 @@ def docker_build(ctx, theme=None, dry_run=False, build_kit=False,
         'COMMIT_HASH': check_output('git log -n 1 --format="%H"', shell=True).strip(),
     }
     cmd += ' '.join(f'--build-arg {k}={v}' for k, v in env.items())
+    requirements(ctx)
     do(cmd + f' -t {org}/web:{tag} --target deploy')
     do(cmd + f' -t {org}/app:{tag} --target local')
-
-    return
-    # Build base docker image
-    if which in ('base', 'all'):
-        try:
-            requirements(ctx)
-        except ImportError:
-            exit('Please install toml (pip3 install toml) before proceeding')
-        do(f'{cmd}-base -t {org}/web:base'
-           f'  --build-arg ORG={org}'
-           f'  --build-arg COMMIT_HASH="`git log -n 1 --format="%H"`"'
-           f'  --build-arg COMMIT_TITLE="`git log -n 1 --format="%s"`"'
-           f'  --build-arg THEME={theme}'
-           )
-
-        # Builds development image
-        if which in ('local', 'all'):
-            username = os.environ.get('USER', 'user')
-        if username == 'django':
-            username = 'django-local'
-        uid = os.getuid()
-        gid = os.getgid()
-        do(f'{cmd}-local -t {org}/web:local'
-           f'  --build-arg ORG={org}'
-           f'  --build-arg UID={uid}'
-           f'  --build-arg GID={gid}'
-           f'  --build-arg USERNAME={username}'
-           )
-
-        # Builds production image
-        if which in ('deploy', 'all'):
-            do(f'{cmd}-deploy -t {org}/web:{tag}'
-               f'  --build-arg ORG={org}')
 
 
 @task(
@@ -687,17 +658,17 @@ def collect(ctx, theme=None):
         from_path = root_css / (file + f'-{theme}.min.css')
         to_path = root_css / (file + '.css')
         if not from_path.exists():
-            exit('Please run "inv build-assets" first!')
+            print('Please run "inv build-assets" first!', file=sys.stderr)
         with open(to_path, 'w') as fd:
             fd.write(open(from_path).read())
 
     # Select minified javascript assets
     for file in os.listdir(root_js):
         if file.endswith('.min.js'):
-            from_path = root_js/ file
-            to_path = root_js/ (file[:-6] + 'js')
+            from_path = root_js / file
+            to_path = root_js / (file[:-6] + 'js')
             if not from_path.exists():
-                exit('Please run "inv build-assets" first!')
+                print('Please run "inv build-assets" first!', file=sys.stderr)
             with open(to_path, 'w') as fd:
                 fd.write(open(from_path).read())
 
@@ -815,9 +786,9 @@ def set_theme(theme):
         theme = os.environ['EJ_THEME']
         root = 'lib/' if theme == 'default' else f'lib/themes/{theme}/'
     else:
+        theme = 'default'
         root = 'lib/'
 
-    theme = theme or 'default'
     os.environ['EJ_THEME'] = theme
     return theme, root
 

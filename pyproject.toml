@@ -44,10 +44,10 @@ bs4 = "^0.0.1"
 wordcloud = "^1.5"
 stop-words = "^2018.7"
 djangorestframework = "^3.9"
+django-debug-toolbar = "^1.11"
 
 
 [tool.poetry.dev-dependencies]
-django-debug-toolbar = "^1.11"
 mock = "^2.0"
 factory-boy = "^2.11"
 model_mommy = "^1.6"

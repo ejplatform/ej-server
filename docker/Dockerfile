@@ -123,40 +123,6 @@ RUN echo "BUILT AND COLLECTED STATIC ASSETS"
 
 
 #===============================================================================
-# BASE DEPLOYMENT IMAGE
-#===============================================================================
-
-FROM python as deploy
-
-
-# Install gunicorn
-RUN pip install gunicorn~=19.9
-
-# Set basic parameters
-ARG THEME=default
-ENV EJ_THEME=${THEME}
-USER django
-
-# Copy build assets and source code
-COPY --from=builder --chown=django:django /app/locale /app/locale/
-COPY --from=builder --chown=django:django /app/lib/build/ /app/lib/build/
-COPY --chown=django:django ./lib/assets/ /app/lib/assets/
-COPY --chown=django:django ./src/ /app/src/
-COPY --chown=django:django *.py *.toml /app/
-
-# Save commit info
-ARG COMMIT_TITLE=none
-ARG COMMIT_HASH=none
-RUN echo "${COMMIT_HASH}: ${COMMIT_TITLE}" > commit.txt
-
-# Collect static files
-RUN inv -e collect
-
-# Default command
-CMD ["collect", "db", "-m", "gunicorn"]
-
-
-#===============================================================================
 # BASE DEVELOPMENT IMAGE
 #===============================================================================
 
@@ -194,3 +160,38 @@ USER ${USERNAME}
 
 
 COPY ./tasks.py /app/
+
+
+#===============================================================================
+# BASE DEPLOYMENT IMAGE
+#===============================================================================
+
+FROM python as deploy
+
+
+# Install gunicorn
+RUN pip install gunicorn~=19.9
+
+# Set basic parameters
+ARG THEME=default
+ENV EJ_THEME=${THEME}
+USER django
+
+# Copy build assets and source code
+COPY --from=builder --chown=django:django /app/locale /app/locale/
+COPY --from=builder --chown=django:django /app/lib/build/ /app/lib/build/
+COPY --chown=django:django ./lib/assets/ /app/lib/assets/
+COPY --chown=django:django ./lib/themes/ /app/lib/themes/
+COPY --chown=django:django ./src/ /app/src/
+COPY --chown=django:django *.py *.toml /app/
+
+# Save commit info
+ARG COMMIT_TITLE=none
+ARG COMMIT_HASH=none
+RUN echo "${COMMIT_HASH}: ${COMMIT_TITLE}" > commit.txt
+
+# Collect static files
+RUN inv -e collect
+
+# Default command
+CMD ["collect", "db", "-m", "gunicorn"]

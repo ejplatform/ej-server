@@ -2,8 +2,12 @@ version: '3.5'
 
 
 services:
+
+  # The Rocket.Chat container. It doesn't require much preparation at this stage.
+  # Integration with EJ is done at later stage using Rocket.Chat administrative
+  # UI.
   rocketchat:
-    image: rocketchat/rocket.chat:${ROCKETCHAT_VERSION:-latest}
+    image: rocketchat/rocket.chat:${ROCKETCHAT_VERSION:-0.74.3}
     restart: always
     environment:
       MONGO_URL: mongodb://mongo:27017/rocketchat
@@ -15,6 +19,9 @@ services:
       - 3000:3000/tcp
 
 
+  # The MONGO_DB database. You can drop this container if you want to use an
+  # external MongoDB instance. Just change the MONGO_URL environment variable
+  # to the correct value in the rocketchat section above.
   mongo:
     image: ej/mongo
     build:

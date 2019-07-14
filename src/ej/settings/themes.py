@@ -12,9 +12,9 @@ class ThemesConf(PathsConf):
             return settings
 
         # Insert settings overrides
+        print(f'Running theme: {theme}')
         path = theme if "/" in theme else self.THEMES_DIR / theme
         settings_path = path / "settings.py"
-        assets_path = path / "assets"
 
         if settings_path.exists():
             with open(settings_path) as fh:
@@ -23,10 +23,5 @@ class ThemesConf(PathsConf):
                 exec(data, globs)
                 globs = {k: v for k, v in globs.items() if k.isupper()}
                 settings.update(globs)
-
-        # Insert assets into
-        dirs = settings.setdefault("STATICFILES_DIRS", [])
-        if assets_path.exists():
-            dirs.insert(0, assets_path)
 
         return settings

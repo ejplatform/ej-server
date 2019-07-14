@@ -8,6 +8,7 @@
     <title>{{ page_title }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    {% block meta %}{% endblock %}
     {% block css %}{% include 'ej/includes/head/css.jinja2' %}{% endblock %}
     {% block javascript %}{% include 'ej/includes/head/javascript.jinja2' %}{% endblock %}
     {% include ['ej/includes/head/favicons.jinja2',

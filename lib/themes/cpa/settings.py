@@ -1,16 +1,18 @@
-from boogie.configurations import env
+from environ import Env
 
-# CPA configurations
-CPA_SHOW_START_PAGE_EXPLANATION_BANNER = env(True, name='{attr}')
+env = Env(DEBUG=(bool, False))
+
+print('Executing custom settings for theme CPA')
 
 # Override EJ configurtions
-EJ_ANONYMOUS_HOME_PATH = '/start/'
-EJ_PAGE_TITLE = 'Plataforma CPA'
-EJ_REGISTER_TEXT = 'Não faz parte da Plataforma CPA?'
-EJ_LOGIN_TITLE_TEXT = 'Participe dos debates, contribua para promover e defender seus direitos'
-EJ_EXCLUDE_PROFILE_FIELDS = ['political_activity']
-EJ_MAX_BOARD_NUMBER = 0
-EJ_STATE_MAX_LENGTH = 2
+CPA_SHOW_START_PAGE_EXPLANATION_BANNER = env('CPA_SHOW_START_PAGE_EXPLANATION_BANNER', default=True)
+EJ_ANONYMOUS_HOME_PATH = env('EJ_ANONYMOUS_HOME_PATH', default='/start/')
+EJ_PAGE_TITLE = env('EJ_PAGE_TITLE', default='Plataforma CPA')
+EJ_REGISTER_TEXT = env('EJ_REGISTER_TEXT', default='Não faz parte da Plataforma CPA?')
+EJ_LOGIN_TITLE_TEXT = env('EJ_LOGIN_TITLE_TEXT', default='Participe dos debates, contribua para promover e defender seus direitos')
+EJ_EXCLUDE_PROFILE_FIELDS = env('EJ_EXCLUDE_PROFILE_FIELDS', default=['political_activity'])
+EJ_MAX_BOARD_NUMBER = env('EJ_MAX_BOARD_NUMBER', default=0)
+EJ_STATE_MAX_LENGTH = env('EJ_STATE_MAX_LENGTH', default=2)
 EJ_STATE_CHOICES = (
     ('AC', 'Acre'),
     ('AL', 'Alagoas'),
