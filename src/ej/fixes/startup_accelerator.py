@@ -18,7 +18,7 @@ def make_lazy_importer(names):
     track = []
     blacklist = frozenset(BLACKLIST)
 
-    def __import__(name, globals=None, locals=None, fromlist=None, level=0):
+    def __import__(name, globals=None, locals=None, fromlist=None, level=0):  # noqa: N802
         track.append(name)
         base = name.split(".")[0]
         if base in slow_modules and name not in blacklist:

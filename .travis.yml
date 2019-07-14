@@ -12,8 +12,8 @@ matrix:
    - env: TOXENV=py37-sqlite
      python: '3.7'
      dist: xenial
-   - env: TOXENV=py36-sqlite
-     python: '3.6'
+   #- env: TOXENV=py36-sqlite
+   #  python: '3.6'
 
 before_install:
   - curl -L https://unpkg.com/@pnpm/self-installer | node

@@ -11,7 +11,7 @@ User = get_user_model()
 
 
 @receiver(post_save, sender=Message)
-def generate_notifications(sender, instance, created, **kwargs):
+def generate_notifications(sender, instance, created, channel, **kwargs):
     if created:
         for user in instance.channel.users.all():
             Notification.objects.create(receiver=user, channel=channel, message=instance)

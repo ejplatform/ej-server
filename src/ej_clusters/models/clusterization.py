@@ -90,6 +90,4 @@ class Clusterization(TimeStampedModel):
                 self.pending_votes.all().delete()
                 if self.cluster_status == ClusterStatus.PENDING_DATA:
                     self.cluster_status = ClusterStatus.ACTIVE
-                x = self.id
-                y = self.conversation_id
                 self.save()

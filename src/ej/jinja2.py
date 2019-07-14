@@ -211,7 +211,7 @@ def generic_context(ctx):
 def try_function(func, *args, **kwargs):
     try:
         return func(*args, **kwargs)
-    except:
+    except Exception:
         return StrictUndefined()
 
 

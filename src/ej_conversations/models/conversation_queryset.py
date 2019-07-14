@@ -1,11 +1,10 @@
 import logging
+import random
 
 from boogie.models import F, Value, IntegerField, FieldDoesNotExist
 from boogie.models.wordcloud import WordCloudQuerySet
 from django.contrib.auth import get_user_model
-from django.db.models import Window, Count, Q
-from django.db.models.functions import FirstValue
-import random
+from django.db.models import Count, Q
 
 from .comment import Comment
 from ..mixins import ConversationMixin

@@ -74,13 +74,11 @@ class RCConfigWrapper:
         """
         Force Django user to login at Rocket.Chat.
 
-        User must already been registered and provided a RC username.
+        User must already been registered with an RC username.
         """
         # Super-user share the global config account. Login will force login and
         # update the global config
         if user.is_superuser:
-            from .models import RCAccount
-
             response = self.password_login(self.admin_username, self.admin_password)
             self.config.admin_token = response["data"]["authToken"]
             self.config.save()

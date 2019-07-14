@@ -10,6 +10,7 @@ from django.utils.translation import ugettext_lazy as _
 from hyperpython import a
 
 from . import forms, models
+from .enums import TourStatus
 from .models import Conversation
 from .rules import next_comment
 from .tour import TOUR

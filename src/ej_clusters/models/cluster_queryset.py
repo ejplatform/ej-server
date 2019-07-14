@@ -187,19 +187,19 @@ class ClusterQuerySet(ClusterizationBaseMixin, QuerySet):
         return self.votes_table(non_classified=True, cluster_col=None, mean_stereotype=True)
 
     def _get_cluster_to_user_column_table(self, user_field="users"):
-        Int = IntegerField()
+        int_field = IntegerField()
 
         cluster, *rest = self
         users = list(
             getattr(cluster, user_field)
-            .annotate(cluster=Value(cluster.id, output_field=Int))
+            .annotate(cluster=Value(cluster.id, output_field=int_field))
             .values_list("id", "cluster")
         )
 
         for cl in rest:
             users.extend(
                 getattr(cl, user_field)
-                .annotate(cluster=Value(cl.id, output_field=Int))
+                .annotate(cluster=Value(cl.id, output_field=int_field))
                 .values_list("id", "cluster")
             )
 

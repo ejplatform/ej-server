@@ -30,7 +30,7 @@ class TestChannelManager:
         assert channel.name == "channel"
         assert Channel.objects.get(name="channel") == channel
 
-    def test_set_users_in_channel(sef, db, mk_channel, mk_user):
+    def test_set_users_in_channel(self, db, mk_channel, mk_user):
         user = mk_user
         channel = mk_channel
         channel.users.set([user])

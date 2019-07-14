@@ -79,8 +79,8 @@ def cluster_votes(conversation, users):
     for cluster, users in clusters.items():
         vote_profiles = (
             StereotypeVote.objects.filter(author__in=cluster.stereotypes.all())
-            .values("comment")
-            .annotate(average=Avg("choice"))
+                .values("comment")
+                .annotate(average=Avg("choice"))
         )
         for data in vote_profiles:
             comment_id = data["comment"]
@@ -111,7 +111,7 @@ def random_vote(prob):
 #
 # Examples
 #
-def make_conversation_with_clusters():
+def make_conversation_with_clusters_en():
     conversation = create_conversation(
         "How should our society organize the production of goods and services?",
         "Economy",
@@ -139,7 +139,7 @@ def make_conversation_with_clusters():
     return conversation
 
 
-def make_conversation_with_clusters():
+def make_conversation_with_clusters_pt_br():
     conversation = create_conversation(
         "Que medidas devem ser feitas para melhorar a educação de jovens e adolescentes?",
         "Educação",
@@ -151,7 +151,8 @@ def make_conversation_with_clusters():
         {
             "Estatista": [
                 "É necessário aumentar a verba destinada à educação pública de qualidade",
-                "Devemos incentivar a participação da classe média na escola pública reservando vagas nas universidades.",
+                "Devemos incentivar a participação da classe média na escola pública reservando vagas nas "
+                "universidades.",
                 "O Brasil deve utilizar o dinheiro do pré-sal somente para a educação.",
             ],
             "Privatista": [
@@ -177,3 +178,8 @@ def make_conversation_with_clusters():
         },
     )
     return conversation
+
+
+def make_conversation_with_clusters():
+    make_conversation_with_clusters_en()
+    make_conversation_with_clusters_pt_br()

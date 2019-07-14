@@ -46,7 +46,7 @@ class StereotypeKMeans(KMeans):
         self._args = dict(max_iter=max_iter, distance=distance, aggregator=aggregator)
 
     # noinspection PyIncorrectDocstring
-    def fit(self, X, y=None, sample_weight=None):
+    def fit(self, X, y=None, sample_weight=None):  # noqa: N803
         """
         Compute k-means using stereotype initialization.
 
@@ -57,18 +57,18 @@ class StereotypeKMeans(KMeans):
                 not used, present here for API consistency by convention.
         """
         data = X[: -self.n_clusters]
-        stereotypes = X[-self.n_clusters :]
+        stereotypes = X[-self.n_clusters:]
         labels, centroids = kmeans_stereotypes(data, stereotypes, **self._args)
         stereotype_labels = compute_labels(stereotypes, centroids, distance=self.distance)
-        self.labels_ = np.hstack([labels, stereotype_labels])
-        self.cluster_centers_ = centroids
+        self.labels_ = np.hstack([labels, stereotype_labels])  # noqa: N803
+        self.cluster_centers_ = centroids  # noqa: N803
         return self
 
-    def _transform(self, X):
+    def _transform(self, X):  # noqa: N803
         centers = self.cluster_centers_
         return compute_distance_matrix(X, centers, distance=self.distance)
 
-    def predict(self, X, sample_weight=None):
+    def predict(self, X, sample_weight=None):  # noqa: N803
         """
         Predict the closest cluster each sample in X belongs to.
 
@@ -87,10 +87,10 @@ class StereotypeKMeans(KMeans):
                 Index of the cluster each sample belongs to.
         """
         check_is_fitted(self, "cluster_centers_")
-        X = self._check_test_data(X)
+        X = self._check_test_data(X)  # noqa: N806
         return compute_labels(X, self.cluster_centers_, self.distance)
 
-    def score(self, X, y=None, sample_weight=None, squared=True):
+    def score(self, X, y=None, sample_weight=None, squared=True):  # noqa: N803
         """
         Sum of all squared distances between samples and their respective
         clusters.
@@ -98,7 +98,8 @@ class StereotypeKMeans(KMeans):
         Args:
             X (array[n_samples, n_features]):
                 New data.
-            y, sample_weight (ignored):
+            y (ignored):
+            sample_weight (ignored):
                 Not used, present here for API consistency by convention.
             squared (bool):
                 If False, do not square distances in the k-means objective.
@@ -110,7 +111,7 @@ class StereotypeKMeans(KMeans):
                 Opposite of the value of X on the K-means objective.
         """
         check_is_fitted(self, "cluster_centers_")
-        X = self._check_test_data(X)
+        X = self._check_test_data(X)  # noqa: N806
         labels = self.predict(X)
         transform = (lambda x: x * x) if squared else (lambda x: x)
         return -vq(X, labels, self.cluster_centers_, distance=self.distance, transform=transform)
