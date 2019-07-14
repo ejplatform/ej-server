@@ -12,7 +12,7 @@ class ThemesConf(PathsConf):
             return settings
 
         # Insert settings overrides
-        print(f'Running theme: {theme}')
+        print(f"Running theme: {theme}")
         path = theme if "/" in theme else self.THEMES_DIR / theme
         settings_path = path / "settings.py"
 

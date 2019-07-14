@@ -79,8 +79,8 @@ def cluster_votes(conversation, users):
     for cluster, users in clusters.items():
         vote_profiles = (
             StereotypeVote.objects.filter(author__in=cluster.stereotypes.all())
-                .values("comment")
-                .annotate(average=Avg("choice"))
+            .values("comment")
+            .annotate(average=Avg("choice"))
         )
         for data in vote_profiles:
             comment_id = data["comment"]
@@ -181,7 +181,7 @@ def make_conversation_with_clusters_pt_br():
 
 
 def make_conversation_with_clusters():
-    if settings.COUNTRY in ('brasil', 'brazil'):
+    if settings.COUNTRY in ("brasil", "brazil"):
         return make_conversation_with_clusters_pt_br()
     else:
         return make_conversation_with_clusters_pt_br()

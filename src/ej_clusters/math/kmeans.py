@@ -57,7 +57,7 @@ class StereotypeKMeans(KMeans):
                 not used, present here for API consistency by convention.
         """
         data = X[: -self.n_clusters]
-        stereotypes = X[-self.n_clusters:]
+        stereotypes = X[-self.n_clusters :]
         labels, centroids = kmeans_stereotypes(data, stereotypes, **self._args)
         stereotype_labels = compute_labels(stereotypes, centroids, distance=self.distance)
         self.labels_ = np.hstack([labels, stereotype_labels])  # noqa: N803

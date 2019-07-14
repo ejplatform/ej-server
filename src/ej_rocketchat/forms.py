@@ -31,10 +31,7 @@ class RocketIntegrationForm(PlaceholderForm, forms.Form):
         help_text=_("Optional URL used for communication with Rocket.Chat in the internal network."),
         required=False,
     )
-    username = forms.CharField(
-        label=_("Username"),
-        help_text=_("Username for Rocket.Chat admin user."),
-    )
+    username = forms.CharField(label=_("Username"), help_text=_("Username for Rocket.Chat admin user."))
     password = forms.CharField(
         widget=forms.PasswordInput,
         required=False,

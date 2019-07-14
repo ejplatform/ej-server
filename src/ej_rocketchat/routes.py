@@ -17,7 +17,7 @@ urlpatterns = Router(template=["ej_rocketchat/{name}.jinja2"])
 
 @urlpatterns.route("", decorators=[security_policy])
 def index(request):
-    base_url = request.scheme + '://' + request.get_host()
+    base_url = request.scheme + "://" + request.get_host()
 
     if not request.user.has_perm(CAN_LOGIN_PERM):
         return render(request, "ej_rocketchat/forbidden.jinja2")
@@ -79,10 +79,8 @@ def config(request):
 
 @urlpatterns.route("intro/", login=False, decorators=[security_policy])
 def intro(request):
-    base_url = request.scheme + '://' + request.get_host()
-    return {
-        'base_url': base_url,
-    }
+    base_url = request.scheme + "://" + request.get_host()
+    return {"base_url": base_url}
 
 
 @urlpatterns.route("login/", decorators=[security_policy], template="ej_users/login.jinja2")

@@ -47,7 +47,7 @@ class PathsConf(Base):
         dirs = [repo_dir / "lib/build", repo_dir / "lib/assets"]
         if self.EJ_THEME:
             path = self.EJ_THEME_PATH / "assets"
-            print('PATH', path, path.exists())
+            print("PATH", path, path.exists())
             if path.exists():
                 dirs.insert(0, path)
         return dirs
