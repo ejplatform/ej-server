@@ -5,6 +5,7 @@ from boogie.models.wordcloud import WordCloudQuerySet
 from django.contrib.auth import get_user_model
 from django.db.models import Window, Count, Q
 from django.db.models.functions import FirstValue
+import random
 
 from .comment import Comment
 from ..mixins import ConversationMixin
@@ -82,6 +83,45 @@ class ConversationQuerySet(ConversationMixin, WordCloudQuerySet):
         if not annotations:
             return self
         return self.annotate(**annotations)
+
+    def random_votes(self, users=None, probs=(0.1, 0.15, 0.25)):
+        """
+        Cast random votes for the list of users.
+
+        Args:
+            users (sequence of users):
+                List or queryset of users. Select all users if not given.
+            probs:
+                List of probabilities for (disagree, skip, agree). If normalized
+                for less than 1, some users will not even cast any vote.
+        """
+        from .vote import Vote, normalize_choice
+
+        if not users:
+            users = get_user_model().objects.filter(is_active=True)
+
+        vote_prob = sum(probs)
+        if vote_prob == 0:
+            return  # Nothing to vote
+        elif not 0 <= vote_prob <= 1:
+            raise ValueError('sum o probabilities must be in [0, 1] interval')
+
+        # Prepare to sample votes
+        probs = [p / vote_prob for p in probs]
+        choices = list(map(normalize_choice, ['disagree', 'skip', 'agree']))
+        comments = self.comments()
+        votes = set(map(tuple, comments.votes().values_list('comment_id', 'author_id')))
+
+        # Cast random votes
+        new_votes = []
+        for comment in comments:
+            for user in users:
+                if (comment.id, user.id) not in votes and random.random() < vote_prob:
+                    choice = random.choices(choices, probs)[0]
+                    vote = Vote(author=user, choice=choice, comment=comment)
+                    new_votes.append(vote)
+
+        return Vote.objects.bulk_create(new_votes)
 
 
 #
