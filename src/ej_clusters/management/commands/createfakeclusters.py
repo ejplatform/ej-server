@@ -20,6 +20,7 @@ class Command(BaseCommand):
     def handle(self, *args, silent=False, force=False, **options):
         if force:
             Conversation.objects.filter(title="Economy").delete()
+            Conversation.objects.filter(title="Educação").delete()
         try:
             conversation = make_conversation_with_clusters()
         except IntegrityError:

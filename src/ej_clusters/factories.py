@@ -2,7 +2,7 @@ import random
 
 from django.contrib.auth import get_user_model
 from django.db.models import Avg
-
+from django.conf import settings
 from ej_clusters.models import Cluster, Stereotype, StereotypeVote
 from ej_conversations import create_conversation
 from ej_conversations.enums import Choice
@@ -181,5 +181,7 @@ def make_conversation_with_clusters_pt_br():
 
 
 def make_conversation_with_clusters():
-    make_conversation_with_clusters_en()
-    make_conversation_with_clusters_pt_br()
+    if settings.COUNTRY in ('brasil', 'brazil'):
+        return make_conversation_with_clusters_pt_br()
+    else:
+        return make_conversation_with_clusters_pt_br()
