@@ -16,10 +16,10 @@ class EmailConf(Conf):
     DEFAULT_FROM_NAME = env("Empurrando Juntos", name="{attr}")
 
     def get_email_backend(self):
-        if self.ENVIRONMENT == "production":
-            backend = self.env("EMAIL_BACKEND", default=None)
-            if backend:
-                return backend
+        backend = self.env("EMAIL_BACKEND", default=None)
+        if backend:
+            return backend
+        elif self.ENVIRONMENT == "production":
             return "django.core.mail.backends.smtp.EmailBackend"
         else:
             return "django.core.mail.backends.console.EmailBackend"
