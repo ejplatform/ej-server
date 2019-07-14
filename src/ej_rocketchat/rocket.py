@@ -49,12 +49,7 @@ class RCConfigWrapper:
             "users.create",
             auth="admin",
             raises=False,
-            payload={
-                "email": email,
-                "name": user.name,
-                "username": username,
-                "password": password,
-            },
+            payload={"email": email, "name": user.name, "username": username, "password": password},
         )
 
         if not result.get("success"):
@@ -85,6 +80,7 @@ class RCConfigWrapper:
         # update the global config
         if user.is_superuser:
             from .models import RCAccount
+
             response = self.password_login(self.admin_username, self.admin_password)
             self.config.admin_token = response["data"]["authToken"]
             self.config.save()

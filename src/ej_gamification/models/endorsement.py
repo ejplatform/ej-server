@@ -28,9 +28,7 @@ class Endorsement(TimeFramedModel):
     """
 
     comment = models.ForeignKey(
-        "ej_conversations.Comment",
-        on_delete=models.CASCADE,
-        related_name="endorsements",
+        "ej_conversations.Comment", on_delete=models.CASCADE, related_name="endorsements"
     )
     author = models.ForeignKey(
         get_user_model(), on_delete=models.CASCADE, related_name="given_endorsements"
@@ -41,15 +39,10 @@ class Endorsement(TimeFramedModel):
     message = models.TextField(
         _("Endorsement reason"),
         blank=True,
-        help_text=_(
-            "Optional message explaining why the endorsement affected the "
-            "given set of users."
-        ),
+        help_text=_("Optional message explaining why the endorsement affected the " "given set of users."),
     )
     is_global = models.BooleanField(
-        _("Is it global?"),
-        default=False,
-        help_text=_("Global comments affect all users in conversation"),
+        _("Is it global?"), default=False, help_text=_("Global comments affect all users in conversation")
     )
     is_expired = property(lambda self: self.end < datetime.now(timezone.utc))
     objects = EndorsementQuerySet.as_manager()

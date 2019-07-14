@@ -13,7 +13,7 @@ from ej_profiles.utils import years_from
 from .math import user_statistics
 
 db = db.ej_conversations
-np = import_later('numpy')
+np = import_later("numpy")
 NOT_GIVEN = object()
 
 
@@ -103,9 +103,7 @@ class UserMixin(ConversationMixin):
             comments = comments.filter(**conversation_filter(conversation))
         return comments
 
-    def statistics_summary_dataframe(
-        self, normalization=1.0, votes=None, comments=None, extend_fields=()
-    ):
+    def statistics_summary_dataframe(self, normalization=1.0, votes=None, comments=None, extend_fields=()):
         """
         Return a dataframe with basic voting statistics.
 
@@ -126,9 +124,7 @@ class UserMixin(ConversationMixin):
         extend_full_fields = [EXTEND_FIELDS.get(x, x) for x in extend_fields]
 
         transforms = {
-            x: EXTEND_FIELDS_VERBOSE.get(x, x)
-            for x in extend_fields
-            if x in EXTEND_FIELDS_VERBOSE
+            x: EXTEND_FIELDS_VERBOSE.get(x, x) for x in extend_fields if x in EXTEND_FIELDS_VERBOSE
         }
 
         # Save extended dataframe
@@ -183,9 +179,7 @@ def patch_user_class():
         from django.contrib.auth.models import User, UserManager
 
         if get_user_model() is User:
-            UserManager._queryset_class = type(
-                "UserQueryset", (UserMixin, UserManager._queryset_class), {}
-            )
+            UserManager._queryset_class = type("UserQueryset", (UserMixin, UserManager._queryset_class), {})
             return
         else:
             raise ImproperlyConfigured(
@@ -201,8 +195,10 @@ def patch_user_class():
 
 patch_user_class()
 
+
 def is_empty(x):
     return x is None or np.isnan(x)
+
 
 #
 # Constants

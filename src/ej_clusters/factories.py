@@ -39,9 +39,7 @@ def set_clusters_from_comments(conversation, comment_map, exclusive=True, author
             description = f'Stereotype for the "{cluster_name}" cluster'
 
         # Create cluster and stereotype
-        cluster = Cluster.objects.create(
-            clusterization=clusterization, name=cluster_name
-        )
+        cluster = Cluster.objects.create(clusterization=clusterization, name=cluster_name)
         stereotype, _ = Stereotype.objects.get_or_create(
             name=cluster_name, description=description, owner=author
         )
@@ -52,20 +50,14 @@ def set_clusters_from_comments(conversation, comment_map, exclusive=True, author
         if isinstance(comments, str):
             comments = [comments]
         for text in comments:
-            comment = conversation.create_comment(
-                author, text, status="approved", check_limits=False
-            )
+            comment = conversation.create_comment(author, text, status="approved", check_limits=False)
             created_comments.append(comment)
             stereotype.vote(comment, "agree")
 
     if exclusive:
         for stereotype in created_stereotypes:
             voted_ids = stereotype.votes.values_list("comment_id", flat=True)
-            votes = {
-                comment: "disagree"
-                for comment in created_comments
-                if comment.id not in voted_ids
-            }
+            votes = {comment: "disagree" for comment in created_comments if comment.id not in voted_ids}
             stereotype.cast_votes(votes)
 
     return created_comments
@@ -130,10 +122,8 @@ def make_conversation_with_clusters():
         conversation,
         {
             "Liberal": [
-                "Free market should regulate how enterprises invest money and hire "
-                "employees.",
-                "State should provide a stable judicial system and refrain from "
-                "regulating the economy.",
+                "Free market should regulate how enterprises invest money and hire " "employees.",
+                "State should provide a stable judicial system and refrain from " "regulating the economy.",
             ],
             "Socialist": [
                 "Government and the society as a whole must regulate business "
@@ -141,8 +131,7 @@ def make_conversation_with_clusters():
                 "State leadership is necessary to drive a strong economy.",
             ],
             "Fascist": [
-                "Government should eliminate opposition in order to ensure "
-                "governability.",
+                "Government should eliminate opposition in order to ensure " "governability.",
                 "Military should occupy high ranks in government.",
             ],
         },

@@ -18,12 +18,7 @@ class TestStereotypeForm:
 
     def test_valid_data(self, user):
         form = BoardForm(
-            {
-                "slug": "slug",
-                "title": "title",
-                "description": "description",
-                "palette": "Grey",
-            }
+            {"slug": "slug", "title": "title", "description": "description", "palette": "Grey"}
         )
         assert form.is_valid()
         board = form.save(commit=False)

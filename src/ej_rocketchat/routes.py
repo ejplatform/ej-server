@@ -12,21 +12,19 @@ from .rocket import rocket
 
 log = getLogger("ej")
 app_name = "ej_rocketchat"
-urlpatterns = Router(
-    template=["ej_rocketchat/{name}.jinja2"],
-)
+urlpatterns = Router(template=["ej_rocketchat/{name}.jinja2"])
 
 
 @urlpatterns.route("", decorators=[security_policy])
 def index(request):
     if not request.user.has_perm(CAN_LOGIN_PERM):
-        return render(request, 'ej_rocketchat/forbidden.jinja2')
+        return render(request, "ej_rocketchat/forbidden.jinja2")
 
     # Superuser must type the password since it is not stored in the database
     if not rocket.has_config:
         if request.user.is_superuser:
-            return redirect('rocket:config')
-        return render(request, 'ej_rocketchat/forbidden.jinja2')
+            return redirect("rocket:config")
+        return render(request, "ej_rocketchat/forbidden.jinja2")
     elif request.user.is_superuser:
         form = forms.AskAdminPasswordForm(request=request)
         if not form.is_valid_post():
@@ -41,11 +39,8 @@ def index(request):
         if account is None:
             return redirect("rocket:register")
 
-    ctx = {
-        'url': rocket.url + '/home/',
-        'url_escape': repr(rocket.url + '/home/'),
-    }
-    return render(request, 'ej_rocketchat/redirect.jinja2', ctx)
+    ctx = {"url": rocket.url + "/home/", "url_escape": repr(rocket.url + "/home/")}
+    return render(request, "ej_rocketchat/redirect.jinja2", ctx)
 
 
 @urlpatterns.route("register/", decorators=[requires_rc_perm])
@@ -84,11 +79,7 @@ def intro():
     return {}
 
 
-@urlpatterns.route(
-    "login/",
-    decorators=[security_policy],
-    template="ej_users/login.jinja2"
-)
+@urlpatterns.route("login/", decorators=[security_policy], template="ej_users/login.jinja2")
 def login(request):
     log.info(f"login attempt via /talks/login: {request.user}")
     if request.user.is_authenticated:
@@ -99,9 +90,9 @@ def login(request):
 @urlpatterns.route("api-login/", decorators=[security_policy])
 def check_login(request):
     if not request.user.is_authenticated:
-        log.warning(f'Rocket.Chat: anonymous user login attempt.')
+        log.warning(f"Rocket.Chat: anonymous user login attempt.")
         return HttpResponse(status=401)
 
     auth_token = rocket.get_auth_token(request.user)
-    log.info(f'Rocket.Chat: {request.user} attempted login')
+    log.info(f"Rocket.Chat: {request.user} attempted login")
     return JsonResponse({"loginToken": auth_token})

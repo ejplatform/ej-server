@@ -131,16 +131,8 @@ page_menu.ACCESSIBILITY = thunk(
     lambda: menu_section(
         _("Accessibility"),
         [
-            a(
-                [fa_icon("text-height"), _("Toggle Font Size")],
-                href="#",
-                is_element="toggleFontSize",
-            ),
-            a(
-                [fa_icon("adjust"), _("Toggle Contrast")],
-                href="#",
-                is_element="toggleContrast",
-            ),
+            a([fa_icon("text-height"), _("Toggle Font Size")], href="#", is_element="toggleFontSize"),
+            a([fa_icon("adjust"), _("Toggle Contrast")], href="#", is_element="toggleContrast"),
         ],
     )
 )
@@ -159,9 +151,7 @@ page_menu.ABOUT = thunk(
 )
 
 #: Default menu
-page_menu.DEFAULT_MENU_SECTIONS = thunk(
-    lambda: Block([page_menu.ABOUT(), page_menu.ACCESSIBILITY()])
-)
+page_menu.DEFAULT_MENU_SECTIONS = thunk(lambda: Block([page_menu.ABOUT(), page_menu.ACCESSIBILITY()]))
 
 #: Links
 page_menu.links = menu_links

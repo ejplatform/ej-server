@@ -13,9 +13,7 @@ class PasswordForm(EjForm):
     Recover User Password
     """
 
-    password = forms.CharField(
-        label=_("Password"), required=True, widget=forms.PasswordInput
-    )
+    password = forms.CharField(label=_("Password"), required=True, widget=forms.PasswordInput)
     password_confirm = forms.CharField(
         label=_("Password confirmation"), required=True, widget=forms.PasswordInput
     )
@@ -44,9 +42,7 @@ class LoginForm(EjForm):
     """
 
     email_field_class = (
-        forms.CharField
-        if getattr(settings, "ALLOW_USERNAME_LOGIN", False)
-        else forms.EmailField
+        forms.CharField if getattr(settings, "ALLOW_USERNAME_LOGIN", False) else forms.EmailField
     )
     email = email_field_class(label=_("E-mail"))
     password = forms.CharField(label=_("Password"), widget=forms.PasswordInput)

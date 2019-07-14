@@ -29,18 +29,15 @@ def compute_cluster_affinities(votes, distance=lambda x, y: np.sum(np.abs(x - y)
             Distance function.
     """
     votes = votes.copy()
-    labels = votes['cluster'].copy()
+    labels = votes["cluster"].copy()
     votes = (votes - votes.mean()) / (votes.std() + 1e-6)
-    votes['cluster'] = labels
+    votes["cluster"] = labels
 
     centroids = votes.groupby("cluster").mean()
     clusters = votes.pop("cluster")
 
     tol = 1e-12
-    shapes = defaultdict(lambda: {
-        'intersections': defaultdict(float),
-        'size': 0,
-    })
+    shapes = defaultdict(lambda: {"intersections": defaultdict(float), "size": 0})
 
     for k, x in zip(clusters.values, votes.values):
         centroid_k = centroids.loc[k].values
@@ -53,10 +50,10 @@ def compute_cluster_affinities(votes, distance=lambda x, y: np.sum(np.abs(x - y)
 
             # Check if vectors point to the same direction
             if k == k_:
-                shape['size'] += 1
+                shape["size"] += 1
             elif np.sum(coords * centroid_k_) > 0:
                 distance_k_ = distance(coords, centroid_k_)
-                shape['intersections'][k_] += distance_k / (distance_k_ + tol) / 2
+                shape["intersections"][k_] += distance_k / (distance_k_ + tol) / 2
 
     return dict(shapes)
 

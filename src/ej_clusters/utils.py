@@ -54,7 +54,7 @@ def cluster_shapes(clusterization, clusters=None, user=None):
             belongs to.
     """
     clusters = clusterization.clusters if clusters is None else clusters
-    shapes = compute_cluster_affinities(clusters.votes_table('mean'))
+    shapes = compute_cluster_affinities(clusters.votes_table("mean"))
     ids = list(shapes.keys())
     names = {c.id: c.name for c in clusters}
 
@@ -62,15 +62,14 @@ def cluster_shapes(clusterization, clusters=None, user=None):
         user_cluster_id = set()
     else:
         user_cluster_id = set(
-            user.clusters
-                .filter(clusterization_id=clusterization.id)
-                .values_list('id', flat=True))
+            user.clusters.filter(clusterization_id=clusterization.id).values_list("id", flat=True)
+        )
 
     for k, shape in shapes.items():
-        old = shape['intersections']
-        shape['intersections'] = [old[id] for id in ids]
-        shape['name'] = names[k]
+        old = shape["intersections"]
+        shape["intersections"] = [old[id] for id in ids]
+        shape["name"] = names[k]
         if k in user_cluster_id:
-            shape['highlight'] = True
+            shape["highlight"] = True
 
     return shapes

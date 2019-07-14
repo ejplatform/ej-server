@@ -38,9 +38,7 @@ class Conversation(TimeStampedModel):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name="conversations",
-        help_text=_(
-            "Only the author and administrative staff can edit this conversation."
-        ),
+        help_text=_("Only the author and administrative staff can edit this conversation."),
     )
     moderators = models.ManyToManyField(
         settings.AUTH_USER_MODEL,
@@ -52,16 +50,13 @@ class Conversation(TimeStampedModel):
     is_promoted = models.BooleanField(
         _("Promote conversation?"),
         default=False,
-        help_text=_(
-            "Promoted conversations appears in the main /conversations/ " "endpoint."
-        ),
+        help_text=_("Promoted conversations appears in the main /conversations/ " "endpoint."),
     )
     is_hidden = models.BooleanField(
         _("Hide conversation?"),
         default=False,
         help_text=_(
-            "Hidden conversations does not appears in boards or in the main /conversations/ "
-            "endpoint."
+            "Hidden conversations does not appears in boards or in the main /conversations/ " "endpoint."
         ),
     )
 
@@ -71,11 +66,7 @@ class Conversation(TimeStampedModel):
 
     @property
     def users(self):
-        return (
-            get_user_model()
-            .objects.filter(votes__comment__conversation=self)
-            .distinct()
-        )
+        return get_user_model().objects.filter(votes__comment__conversation=self).distinct()
 
     @property
     def approved_comments(self):
@@ -97,12 +88,8 @@ class Conversation(TimeStampedModel):
 
     # Statistics
     n_comments = lazy(this.comments.filter(status=Comment.STATUS.approved).count())
-    n_pending_comments = lazy(
-        this.comments.filter(status=Comment.STATUS.pending).count()
-    )
-    n_rejected_comments = lazy(
-        this.comments.filter(status=Comment.STATUS.rejected).count()
-    )
+    n_pending_comments = lazy(this.comments.filter(status=Comment.STATUS.pending).count())
+    n_rejected_comments = lazy(this.comments.filter(status=Comment.STATUS.rejected).count())
     n_favorites = lazy(this.favorites.count())
     n_tags = lazy(this.tags.count())
     n_votes = lazy(this.votes.count())
@@ -111,15 +98,9 @@ class Conversation(TimeStampedModel):
     # Statistics for the request user
     user_comments = property(this.comments.filter(author=this.for_user))
     user_votes = property(this.votes.filter(author=this.for_user))
-    n_user_comments = lazy(
-        this.user_comments.filter(status=Comment.STATUS.approved).count()
-    )
-    n_user_rejected_comments = lazy(
-        this.user_comments.filter(status=Comment.STATUS.rejected).count()
-    )
-    n_user_pending_comments = lazy(
-        this.user_comments.filter(status=Comment.STATUS.pending).count()
-    )
+    n_user_comments = lazy(this.user_comments.filter(status=Comment.STATUS.approved).count())
+    n_user_rejected_comments = lazy(this.user_comments.filter(status=Comment.STATUS.rejected).count())
+    n_user_pending_comments = lazy(this.user_comments.filter(status=Comment.STATUS.pending).count())
     n_user_votes = lazy(this.user_votes.count())
     is_user_favorite = lazy(this.is_favorite(this.for_user))
 
@@ -164,10 +145,7 @@ class Conversation(TimeStampedModel):
             user = request_or_user.user
             request = request_or_user
 
-        if (
-            self.__dict__.get("for_user", user) != user
-            or self.__dict__.get("request", request) != request
-        ):
+        if self.__dict__.get("for_user", user) != user or self.__dict__.get("request", request) != request:
             raise ValueError("user/request already set in conversation!")
 
         self.for_user = user
@@ -180,14 +158,8 @@ class Conversation(TimeStampedModel):
 
     def clean(self):
         can_edit = "ej.can_edit_conversation"
-        if (
-            self.is_promoted
-            and self.author_id is not None
-            and not self.author.has_perm(can_edit, self)
-        ):
-            raise ValidationError(
-                _("User does not have permission to create a promoted " "conversation.")
-            )
+        if self.is_promoted and self.author_id is not None and not self.author.has_perm(can_edit, self):
+            raise ValidationError(_("User does not have permission to create a promoted " "conversation."))
 
     def get_absolute_url(self, board=None):
         kwargs = {"conversation": self, "slug": self.slug}
@@ -224,9 +196,7 @@ class Conversation(TimeStampedModel):
             return Vote.objects.none()
         return self.votes.filter(author=user)
 
-    def create_comment(
-        self, author, content, commit=True, *, status=None, check_limits=True, **kwargs
-    ):
+    def create_comment(self, author, content, commit=True, *, status=None, check_limits=True, **kwargs):
         """
         Create a new comment object for the given user.
 
@@ -239,8 +209,7 @@ class Conversation(TimeStampedModel):
 
         # Convert status, if necessary
         if status is None and (
-            author.id == self.author.id
-            or author.has_perm("ej.can_edit_conversation", self)
+            author.id == self.author.id or author.has_perm("ej.can_edit_conversation", self)
         ):
             kwargs["status"] = Comment.STATUS.approved
         else:
@@ -307,8 +276,7 @@ class Conversation(TimeStampedModel):
                 "commenters": (
                     get_user_model()
                     .objects.filter(
-                        comments__conversation_id=self.id,
-                        comments__status=Comment.STATUS.approved,
+                        comments__conversation_id=self.id, comments__status=Comment.STATUS.approved
                     )
                     .distinct()
                     .count()
@@ -320,19 +288,11 @@ class Conversation(TimeStampedModel):
         """
         Get information about user.
         """
-        max_votes = (
-            self.comments.filter(status=Comment.STATUS.approved)
-            .exclude(author_id=user.id)
-            .count()
-        )
+        max_votes = self.comments.filter(status=Comment.STATUS.approved).exclude(author_id=user.id).count()
         given_votes = (
             0
             if user.id is None
-            else (
-                Vote.objects.filter(
-                    comment__conversation_id=self.id, author=user
-                ).count()
-            )
+            else (Vote.objects.filter(comment__conversation_id=self.id, author=user).count())
         )
 
         e = 1e-50  # for numerical stability
@@ -407,13 +367,9 @@ class FavoriteConversation(models.Model):
     M2M relation from users to conversations.
     """
 
-    conversation = models.ForeignKey(
-        "Conversation", on_delete=models.CASCADE, related_name="favorites"
-    )
+    conversation = models.ForeignKey("Conversation", on_delete=models.CASCADE, related_name="favorites")
     user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name="favorite_conversations",
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="favorite_conversations"
     )
 
 

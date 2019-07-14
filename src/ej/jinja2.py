@@ -62,10 +62,7 @@ def environment(autoescape=True, **options):
         **FUNCTIONS,
     )
     env.filters.update(
-        markdown=lambda x: Markup(markdown(x)),
-        pc=format_percent,
-        salt=salt,
-        **hyperpython.jinja2.filters,
+        markdown=lambda x: Markup(markdown(x)), pc=format_percent, salt=salt, **hyperpython.jinja2.filters
     )
     env.install_gettext_translations(translation, newstyle=True)
     return env
@@ -225,4 +222,4 @@ for _names, _mod in [(tags.__all__, tags), (dir(components), components)]:
         if not _name.startswith("_") and callable(value):
             FUNCTIONS[_name] = value
 SALT_CHARS = string.ascii_letters + string.digits + "-_"
-FUNCTIONS['try'] = try_function
+FUNCTIONS["try"] = try_function

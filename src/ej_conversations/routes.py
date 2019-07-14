@@ -19,8 +19,7 @@ log = getLogger("ej")
 
 app_name = "ej_conversations"
 urlpatterns = Router(
-    template="ej_conversations/{name}.jinja2",
-    models={"conversation": models.Conversation},
+    template="ej_conversations/{name}.jinja2", models={"conversation": models.Conversation}
 )
 conversation_url = f"<model:conversation>/<slug:slug>/"
 
@@ -29,9 +28,7 @@ conversation_url = f"<model:conversation>/<slug:slug>/"
 # Display conversations
 #
 @urlpatterns.route("", name="list")
-def list_view(
-    request, queryset=Conversation.objects.filter(is_promoted=True), context=None
-):
+def list_view(request, queryset=Conversation.objects.filter(is_promoted=True), context=None):
     user = request.user
 
     # Select the list of conversations: staff get to see hidden conversations while
@@ -40,14 +37,7 @@ def list_view(
         queryset = queryset.filter(is_hidden=False)
 
     # Annotate queryset for efficient db access
-    annotations = (
-        "n_votes",
-        "n_comments",
-        "n_user_votes",
-        "first_tag",
-        "n_favorites",
-        "author_name",
-    )
+    annotations = ("n_votes", "n_comments", "n_user_votes", "first_tag", "n_favorites", "author_name")
     queryset = queryset.cache_annotations(*annotations, user=user)
 
     return {
@@ -104,9 +94,7 @@ def create(request, context=None, **kwargs):
     return {"form": form, **(context or {})}
 
 
-@urlpatterns.route(
-    conversation_url + "edit/", perms=["ej.can_edit_conversation:conversation"]
-)
+@urlpatterns.route(conversation_url + "edit/", perms=["ej.can_edit_conversation:conversation"])
 def edit(request, conversation, slug=None, check=check_promoted, **kwargs):
     check(conversation, request)
     form = forms.ConversationForm(request=request, instance=conversation)
@@ -139,9 +127,7 @@ def edit(request, conversation, slug=None, check=check_promoted, **kwargs):
     }
 
 
-@urlpatterns.route(
-    conversation_url + "moderate/", perms=["ej.can_moderate_conversation:conversation"]
-)
+@urlpatterns.route(conversation_url + "moderate/", perms=["ej.can_moderate_conversation:conversation"])
 def moderate(request, conversation, slug=None, check=check_promoted):
     check(conversation, request)
     form = forms.ModerationForm(request=request)

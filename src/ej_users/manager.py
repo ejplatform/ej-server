@@ -1,7 +1,4 @@
-from boogie.apps.users.models import (
-    UserManager as BaseUserManager,
-    UserQuerySet as BaseUserQuerySet,
-)
+from boogie.apps.users.models import UserManager as BaseUserManager, UserQuerySet as BaseUserQuerySet
 
 
 class UserQuerySet(BaseUserQuerySet):

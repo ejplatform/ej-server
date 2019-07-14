@@ -11,14 +11,9 @@ class MiddlewareConf(Base):
             *middleware,
         ]
         if "debug_toolbar" in self.INSTALLED_APPS:
-            middleware = [
-                "debug_toolbar.middleware.DebugToolbarMiddleware",
-                *middleware,
-            ]
+            middleware = ["debug_toolbar.middleware.DebugToolbarMiddleware", *middleware]
         if self.ENVIRONMENT == "testing":
             middleware.remove("django.middleware.locale.LocaleMiddleware")
         if self.EJ_ROCKETCHAT_INTEGRATION:
-            middleware.append(
-                "ej_rocketchat.middleware.ContentSecurityPolicyMiddleware"
-            )
+            middleware.append("ej_rocketchat.middleware.ContentSecurityPolicyMiddleware")
         return middleware

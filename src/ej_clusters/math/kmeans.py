@@ -59,9 +59,7 @@ class StereotypeKMeans(KMeans):
         data = X[: -self.n_clusters]
         stereotypes = X[-self.n_clusters :]
         labels, centroids = kmeans_stereotypes(data, stereotypes, **self._args)
-        stereotype_labels = compute_labels(
-            stereotypes, centroids, distance=self.distance
-        )
+        stereotype_labels = compute_labels(stereotypes, centroids, distance=self.distance)
         self.labels_ = np.hstack([labels, stereotype_labels])
         self.cluster_centers_ = centroids
         return self
@@ -115,13 +113,7 @@ class StereotypeKMeans(KMeans):
         X = self._check_test_data(X)
         labels = self.predict(X)
         transform = (lambda x: x * x) if squared else (lambda x: x)
-        return -vq(
-            X,
-            labels,
-            self.cluster_centers_,
-            distance=self.distance,
-            transform=transform,
-        )
+        return -vq(X, labels, self.cluster_centers_, distance=self.distance, transform=transform)
 
 
 #
@@ -198,9 +190,7 @@ def kmeans_stereotypes(data, stereotypes, max_iter=20, distance=None, aggregator
     return labels, centroids
 
 
-def kmeans_run(
-    data, k: int, max_iter=10, init_centroids=None, distance=None, aggregator=None
-):
+def kmeans_run(data, k: int, max_iter=10, init_centroids=None, distance=None, aggregator=None):
     """
     Compute a single k-means run with at most max_iter iterations.
 

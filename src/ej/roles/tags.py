@@ -238,8 +238,7 @@ def popup(title, content, action=None, **kwargs):
         [
             icon("times-circle", class_="popup__close", is_component="popup:close"),
             div(
-                [h1([title], class_="title"), p(content), action and div(action)],
-                class_="popup__contents",
+                [h1([title], class_="title"), p(content), action and div(action)], class_="popup__contents"
             ),
         ],
         **kwargs,
@@ -261,10 +260,9 @@ def toast(icon, title, description=None, **kwargs):
     body = [h1(title)]
     if description:
         body.append(p(description))
-    return div(
-        [_icon(icon, class_="toast__icon"), div(body, class_="toast__content")],
-        **kwargs,
-    ).add_class("toast")
+    return div([_icon(icon, class_="toast__icon"), div(body, class_="toast__content")], **kwargs).add_class(
+        "toast"
+    )
 
 
 def description(items, **kwargs):

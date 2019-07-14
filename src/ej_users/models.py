@@ -23,13 +23,9 @@ class User(AbstractUser):
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["name"]
 
-    email = models.EmailField(
-        _("email address"), unique=True, help_text=_("Your e-mail address")
-    )
+    email = models.EmailField(_("email address"), unique=True, help_text=_("Your e-mail address"))
     display_name = models.CharField(
-        max_length=50,
-        default=random_name,
-        help_text=_("Name used to publicly identify user"),
+        max_length=50, default=random_name, help_text=_("Name used to publicly identify user")
     )
     username = property(lambda self: self.name or self.email.replace("@", "__"))
 
@@ -44,9 +40,7 @@ class PasswordResetToken(TimeStampedModel):
     Expiring token for password recovery.
     """
 
-    url = models.CharField(
-        _("User token"), max_length=50, unique=True, default=token_factory
-    )
+    url = models.CharField(_("User token"), max_length=50, unique=True, default=token_factory)
     is_used = models.BooleanField(default=False)
     user = models.ForeignKey("User", on_delete=models.CASCADE)
 

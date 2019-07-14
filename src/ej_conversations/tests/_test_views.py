@@ -13,17 +13,13 @@ class TestConversationBase:
         user = User.objects.create_user("user@server.com", "password")
         conversation.comment = comment
         conversation.save()
-        request = rf.post(
-            "", {"action": "vote", "vote": "agree", "comment_id": comment.id}
-        )
+        request = rf.post("", {"action": "vote", "vote": "agree", "comment_id": comment.id})
         request.user = user
         routes.detail(request, conversation)
         assert votes_counter(comment) == 1
 
     def test_invalid_vote_in_comment(self, rf, conversation, comment):
-        request = rf.post(
-            "", {"action": "vote", "vote": "INVALID", "comment_id": comment.id}
-        )
+        request = rf.post("", {"action": "vote", "vote": "INVALID", "comment_id": comment.id})
         user = User.objects.create_user("user@server.com", "password")
         conversation = comment
         conversation.save()
@@ -63,15 +59,11 @@ class TestConversationBase:
         request = rf.post("", {"action": "favorite"})
         request.user = user
         routes.detail(request, conversation)
-        assert FavoriteConversation.objects.filter(
-            user=user, conversation=conversation
-        ).exists()
+        assert FavoriteConversation.objects.filter(user=user, conversation=conversation).exists()
 
 
 class TestConversationComments:
-    def test_user_can_get_all_his_comments(
-        self, request_with_user, conversation, user, comment
-    ):
+    def test_user_can_get_all_his_comments(self, request_with_user, conversation, user, comment):
         ctx = routes.comment_list(request_with_user, conversation)
         assert len(ctx["approved"]) == 1
         assert len(ctx["rejected"]) == 0
@@ -83,9 +75,7 @@ class TestConversationComments:
         ctx = routes.comment_detail(conversation, comment)
         assert ctx["comment"] is comment
 
-    def test_comment_list_not_promoted_convesation(
-        self, request_with_user, conversation, user
-    ):
+    def test_comment_list_not_promoted_convesation(self, request_with_user, conversation, user):
         conversation.is_promoted = False
         with raises(Http404):
             routes.comment_list(request_with_user, conversation)
@@ -99,13 +89,7 @@ class TestConversationComments:
 class TestAdminViews:
     def test_create_conversation(self, rf, user):
         request = rf.post(
-            "",
-            {
-                "title": "whatever",
-                "tags": "tag",
-                "text": "description",
-                "comments_count": 0,
-            },
+            "", {"title": "whatever", "tags": "tag", "text": "description", "comments_count": 0}
         )
         request.user = user
         response = routes.create(request)
@@ -113,22 +97,14 @@ class TestAdminViews:
         assert response.url == "/conversations/whatever/stereotypes/"
 
     def test_create_invalid_conversation(self, rf, user):
-        request = rf.post(
-            "", {"title": "", "tags": "tag", "text": "description", "comments_count": 0}
-        )
+        request = rf.post("", {"title": "", "tags": "tag", "text": "description", "comments_count": 0})
         request.user = user
         response = routes.create(request)
         assert not response["form"].is_valid()
 
     def test_edit_conversation(self, rf, conversation):
         request = rf.post(
-            "",
-            {
-                "title": "whatever",
-                "tags": "tag",
-                "text": "description",
-                "comments_count": 0,
-            },
+            "", {"title": "whatever", "tags": "tag", "text": "description", "comments_count": 0}
         )
         request.user = conversation.author
         response = routes.edit(request, conversation)
@@ -136,9 +112,7 @@ class TestAdminViews:
         assert response.url == "/conversations/title/moderate/"
 
     def test_edit_invalid_conversation(self, rf, conversation):
-        request = rf.post(
-            "", {"title": "", "tags": "tag", "text": "description", "comments_count": 0}
-        )
+        request = rf.post("", {"title": "", "tags": "tag", "text": "description", "comments_count": 0})
         request.user = conversation.author
         response = routes.edit(request, conversation)
         assert not response["form"].is_valid()
@@ -178,12 +152,7 @@ class TestAdminViews:
         comment = conversation.create_comment(other, "aa", check_limits=False)
         assert comment.status == comment.STATUS.pending
         request = rf.post(
-            "",
-            {
-                "comment": comment.id,
-                "vote": "disapprove",
-                "rejection_reason": "offensive_language",
-            },
+            "", {"comment": comment.id, "vote": "disapprove", "rejection_reason": "offensive_language"}
         )
         request.user = User.objects.get(email="email@server.com")
         routes.moderate(request, conversation)
@@ -204,12 +173,7 @@ class TestAdminViews:
         other = User.objects.create_user("email@email.br", "pass")
         comment = conversation.create_comment(other, "aa", check_limits=False)
         request = rf.post(
-            "",
-            {
-                "comment": comment.id,
-                "vote": "other",
-                "rejection_reason": "offensive_language",
-            },
+            "", {"comment": comment.id, "vote": "other", "rejection_reason": "offensive_language"}
         )
         request.user = User.objects.get(email="email@server.com")
         response = routes.moderate(request, conversation)

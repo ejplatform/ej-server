@@ -29,10 +29,7 @@ class AuthorIsUserMixin(admin.ModelAdmin):
 class CommentAdmin(AuthorIsUserMixin, admin.ModelAdmin):
     fieldsets = [
         (None, {"fields": ["conversation", "content"]}),
-        (
-            _("Moderation"),
-            {"fields": ["status", "rejection_reason", "rejection_reason_text"]},
-        ),
+        (_("Moderation"), {"fields": ["status", "rejection_reason", "rejection_reason_text"]}),
     ]
     list_display = ["content", "conversation", "created", "status"]
     list_editable = ["status"]

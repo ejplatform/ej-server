@@ -26,9 +26,7 @@ class RocketIntegrationForm(PlaceholderForm, forms.Form):
         help_text=_("Required URL for Rocket.Chat admin instance."),
         initial=settings.EJ_ROCKETCHAT_URL,
     )
-    username = forms.CharField(
-        label=_("Username"), help_text=_("Username for Rocket.Chat admin user.")
-    )
+    username = forms.CharField(label=_("Username"), help_text=_("Username for Rocket.Chat admin user."))
     password = forms.CharField(
         widget=forms.PasswordInput,
         required=False,
@@ -61,9 +59,7 @@ class RocketIntegrationForm(PlaceholderForm, forms.Form):
         url = data["rocketchat_url"]
         config = models.RCConfig(url=url)
         response = config.api_call(
-            "login",
-            payload={"username": data["username"], "password": data["password"]},
-            raises=False,
+            "login", payload={"username": data["username"], "password": data["password"]}, raises=False
         )
         if response.get("status") == "success":
             self.config = self._save_config(response["data"])

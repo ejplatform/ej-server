@@ -49,10 +49,7 @@ CONVERSATION = {
 }
 
 VOTE = {
-    "links": {
-        "comment": "http://testserver/comments/1/",
-        "self": "http://testserver/votes/1/",
-    },
+    "links": {"comment": "http://testserver/comments/1/", "self": "http://testserver/votes/1/"},
     "action": "agree",
     "comment_text": "comment",
 }

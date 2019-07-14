@@ -52,9 +52,7 @@ class ConversationQuerySet(ConversationMixin, WordCloudQuerySet):
         # Count comments
         if kwargs.pop("n_comments", False):
             annotations[prefix + "n_comments"] = Count(
-                "comments",
-                filter=Q(comments__status=Comment.STATUS.approved),
-                distinct=True,
+                "comments", filter=Q(comments__status=Comment.STATUS.approved), distinct=True
             )
 
         # Count favorites
@@ -104,13 +102,13 @@ class ConversationQuerySet(ConversationMixin, WordCloudQuerySet):
         if vote_prob == 0:
             return  # Nothing to vote
         elif not 0 <= vote_prob <= 1:
-            raise ValueError('sum o probabilities must be in [0, 1] interval')
+            raise ValueError("sum o probabilities must be in [0, 1] interval")
 
         # Prepare to sample votes
         probs = [p / vote_prob for p in probs]
-        choices = list(map(normalize_choice, ['disagree', 'skip', 'agree']))
+        choices = list(map(normalize_choice, ["disagree", "skip", "agree"]))
         comments = self.comments()
-        votes = set(map(tuple, comments.votes().values_list('comment_id', 'author_id')))
+        votes = set(map(tuple, comments.votes().values_list("comment_id", "author_id")))
 
         # Cast random votes
         new_votes = []

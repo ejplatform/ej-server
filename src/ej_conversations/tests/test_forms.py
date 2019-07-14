@@ -39,9 +39,7 @@ class TestConversationForm:
         assert conversation.comments.first().status == Comment.STATUS.approved
 
     def test_repeated_comments_error(self, conversation, db, user):
-        Comment.objects.create(
-            content="comment", conversation=conversation, author=user
-        )
+        Comment.objects.create(content="comment", conversation=conversation, author=user)
         form = CommentForm({"content": "comment"}, conversation=conversation)
         assert not form.is_valid()
         assert "already submitted" in form.errors["content"][0]

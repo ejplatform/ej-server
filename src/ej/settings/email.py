@@ -17,7 +17,7 @@ class EmailConf(Conf):
 
     def get_email_backend(self):
         if self.ENVIRONMENT == "production":
-            backend = self.env('EMAIL_BACKEND', default=None)
+            backend = self.env("EMAIL_BACKEND", default=None)
             if backend:
                 return backend
             return "django.core.mail.backends.smtp.EmailBackend"

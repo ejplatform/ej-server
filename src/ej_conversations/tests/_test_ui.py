@@ -47,8 +47,7 @@ class TestUIVote:
     """
 
     @pytest.mark.skipif(
-        os.environ.get("EJ_BASE_URL") != "localhost",
-        reason="selenium tests only run in localhost yet",
+        os.environ.get("EJ_BASE_URL") != "localhost", reason="selenium tests only run in localhost yet"
     )
     def test_user_vote_after_login(self, env):
         # login with user created
@@ -63,8 +62,7 @@ class TestUIVote:
             pytest.fail("Could not find email, password field or login button.")
 
     @pytest.mark.skipif(
-        os.environ.get("EJ_BASE_URL") != "localhost",
-        reason="selenium tests only run in localhost yet",
+        os.environ.get("EJ_BASE_URL") != "localhost", reason="selenium tests only run in localhost yet"
     )
     def test_user_vote_after_register(self, env):
         register_button = env["driver"].find_by_css('a[href*="/register/"]')

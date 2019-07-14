@@ -5,25 +5,35 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('ej_rocketchat', '0001_ada_lovelace_v1'),
-    ]
+    dependencies = [("ej_rocketchat", "0001_ada_lovelace_v1")]
 
     operations = [
         migrations.AddField(
-            model_name='rcaccount',
-            name='user_rc_email',
-            field=models.EmailField(default='', max_length=254, verbose_name='E-mail used to create RC account'),
+            model_name="rcaccount",
+            name="user_rc_email",
+            field=models.EmailField(
+                default="", max_length=254, verbose_name="E-mail used to create RC account"
+            ),
             preserve_default=False,
         ),
         migrations.AlterField(
-            model_name='rcconfig',
-            name='admin_password',
-            field=models.CharField(help_text='Password for the Rocket.Chat admin user.', max_length=50, verbose_name='Admin password'),
+            model_name="rcconfig",
+            name="admin_password",
+            field=models.CharField(
+                help_text="Password for the Rocket.Chat admin user.",
+                max_length=50,
+                verbose_name="Admin password",
+            ),
         ),
         migrations.AlterField(
-            model_name='rcconfig',
-            name='api_url',
-            field=models.URLField(blank=True, help_text='A private URL used only for API calls. Can be used to override the public URL if Rocket.Chat is also available from an internal address in your network.', null=True, unique=True, verbose_name='Rocket.Chat private URL'),
+            model_name="rcconfig",
+            name="api_url",
+            field=models.URLField(
+                blank=True,
+                help_text="A private URL used only for API calls. Can be used to override the public URL if Rocket.Chat is also available from an internal address in your network.",
+                null=True,
+                unique=True,
+                verbose_name="Rocket.Chat private URL",
+            ),
         ),
     ]

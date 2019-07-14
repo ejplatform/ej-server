@@ -14,9 +14,7 @@ User = get_user_model()
 def generate_notifications(sender, instance, created, **kwargs):
     if created:
         for user in instance.channel.users.all():
-            Notification.objects.create(
-                receiver=user, channel=channel, message=instance
-            )
+            Notification.objects.create(receiver=user, channel=channel, message=instance)
 
 
 @receiver(post_save, sender=Message)
@@ -30,9 +28,7 @@ def send_admin_fcm_message(sender, instance, created, **kwargs):
                 setting = NotificationConfig.objects.get(profile__user__id=user.id)
                 if setting.notification_option == NotificationMode.PUSH_NOTIFICATIONS:
                     users_to_send.append(user)
-            fcm_devices = GCMDevice.objects.filter(
-                cloud_message_type="FCM", user__in=users_to_send
-            )
+            fcm_devices = GCMDevice.objects.filter(cloud_message_type="FCM", user__in=users_to_send)
             fcm_devices.send_message(
                 "",
                 extra={
@@ -50,20 +46,14 @@ def send_conversation_fcm_message(sender, instance, created, **kwargs):
         channel_id = instance.channel.id
         channel = Channel.objects.get(id=channel_id)
         users_to_send = []
-        url = (
-            "https://localhost:8000/profile/"
-            + str(instance.target)
-            + "?notification=true"
-        )
+        url = "https://localhost:8000/profile/" + str(instance.target) + "?notification=true"
         if channel.purpose:
             for user in channel.users.all():
 
                 setting = NotificationConfig.objects.get(user__id=user.id)
                 if setting.notification_option == NotificationMode.PUSH_NOTIFICATIONS:
                     users_to_send.append(user)
-            fcm_devices = GCMDevice.objects.filter(
-                cloud_message_type="FCM", user__in=users_to_send
-            )
+            fcm_devices = GCMDevice.objects.filter(cloud_message_type="FCM", user__in=users_to_send)
             fcm_devices.send_message(
                 "",
                 extra={
@@ -81,9 +71,7 @@ def insert_user_on_general_channels(sender, created, **kwargs):
         instance = kwargs.get("instance")
         user_id = instance.user.id
         user = User.objects.get(id=user_id)
-        channels = Channel.objects.filter(
-            Q(purpose=Purpose.GENERAL) | Q(purpose=Purpose.ADMIN)
-        )
+        channels = Channel.objects.filter(Q(purpose=Purpose.GENERAL) | Q(purpose=Purpose.ADMIN))
         for channel in channels:
             channel.users.add(user)
             channel.save()
@@ -93,8 +81,6 @@ def insert_user_on_general_channels(sender, created, **kwargs):
 def create_user_trophy_channel(sender, instance, created, **kwargs):
     if created:
         user = instance.user
-        channel = Channel.objects.create(
-            name=str(Purpose.TROPHIES), purpose=Purpose.TROPHIES, owner=user
-        )
+        channel = Channel.objects.create(name=str(Purpose.TROPHIES), purpose=Purpose.TROPHIES, owner=user)
         channel.users.add(user)
         channel.save()

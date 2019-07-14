@@ -34,7 +34,7 @@ stereotype_perms = {"perms": ["ej.can_manage_stereotypes:conversation"]}
 def index(request, conversation, slug, check=check_promoted):
     check(conversation, request)
     user = request.user
-    clusterization = getattr(conversation, 'clusterization', None)
+    clusterization = getattr(conversation, "clusterization", None)
 
     if clusterization and clusterization.clusters.count() == 0:
         clusterization = None
@@ -43,10 +43,9 @@ def index(request, conversation, slug, check=check_promoted):
         shapes_json = None
     else:
         clusters = (
-            clusterization.clusters
-                .annotate(size=Count(F.users))
-                .annotate_attr(separated_comments=lambda c: c.separate_comments())
-                .prefetch_related("stereotypes")
+            clusterization.clusters.annotate(size=Count(F.users))
+            .annotate_attr(separated_comments=lambda c: c.separate_comments())
+            .prefetch_related("stereotypes")
         )
         shapes = cluster_shapes(clusterization, clusters, user)
         shapes_json = json.dumps({"shapes": list(shapes.values())})
@@ -66,14 +65,10 @@ def index(request, conversation, slug, check=check_promoted):
 def edit(request, conversation, slug, check=check_promoted):
     check(conversation, request)
     new_cluster_form = forms.ClusterFormNew(request=request)
-    clusterization = getattr(conversation, 'clusterization', None)
+    clusterization = getattr(conversation, "clusterization", None)
 
     # Handle POST requests for new clusters
-    if (
-        request.method == "POST"
-        and request.POST["action"] == "new"
-        and new_cluster_form.is_valid()
-    ):
+    if request.method == "POST" and request.POST["action"] == "new" and new_cluster_form.is_valid():
         clusterization = clusterization or conversation.get_clusterization()
         new_cluster_form.save(clusterization=clusterization)
         new_cluster_form = forms.ClusterFormNew()
@@ -110,9 +105,7 @@ def edit(request, conversation, slug, check=check_promoted):
     }
 
 
-@urlpatterns.route(
-    conversation_url + "stereotypes/", perms=["ej.can_edit_conversation:conversation"]
-)
+@urlpatterns.route(conversation_url + "stereotypes/", perms=["ej.can_edit_conversation:conversation"])
 def stereotype_votes(request, conversation, slug, check=check_promoted):
     check(conversation, request)
     clusterization = conversation.get_clusterization(default=None)
@@ -137,18 +130,12 @@ def stereotype_votes(request, conversation, slug, check=check_promoted):
         if action == "discard":
             votes.delete()
         else:
-            choice_map = {
-                "agree": Choice.AGREE,
-                "disagree": Choice.DISAGREE,
-                "skip": Choice.SKIP,
-            }
+            choice_map = {"agree": Choice.AGREE, "disagree": Choice.DISAGREE, "skip": Choice.SKIP}
             choice = choice_map[action]
             votes.update(choice=choice)
             StereotypeVote.objects.bulk_create(
                 [
-                    StereotypeVote(
-                        choice=choice, comment=comment, author_id=stereotype.id
-                    )
+                    StereotypeVote(choice=choice, comment=comment, author_id=stereotype.id)
                     for comment in comments
                 ]
             )
@@ -178,10 +165,9 @@ def ctrl(request, conversation, slug, check=check_promoted):
     user = request.user
     if not user.has_perm("ej.can_edit_conversation", conversation):
         raise PermissionError
-    if request.method != 'POST':
+    if request.method != "POST":
         raise PermissionError
-    if request.POST['action'] == 'force-clusterization':
+    if request.POST["action"] == "force-clusterization":
         conversation.clusterization.update_clusterization(force=True)
 
-    return redirect(conversation.url('cluster:index'))
-
+    return redirect(conversation.url("cluster:index"))

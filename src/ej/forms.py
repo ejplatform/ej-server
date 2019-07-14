@@ -14,9 +14,7 @@ class EjForm(Form):
     """
 
     def __init__(self, data=None, files=None, *args, request=None, **kwargs):
-        if request is not None and request.method in self._meta_property(
-            "http_methods", ("POST",)
-        ):
+        if request is not None and request.method in self._meta_property("http_methods", ("POST",)):
             method = request.method
             data = getattr(request, method)
             kwargs.setdefault("files", request.FILES)
@@ -121,8 +119,7 @@ class FileInput(widgets.FileInput):
 
         return div(class_="FileInput")[
             div(class_="PickFileButton")[
-                input_(style="opacity: 0", type_=w_type, name=w_name, **w_attrs),
-                _("Choose a file"),
+                input_(style="opacity: 0", type_=w_type, name=w_name, **w_attrs), _("Choose a file")
             ],
             div(class_="FileStatus")[_("No file chosen")],
         ].render()

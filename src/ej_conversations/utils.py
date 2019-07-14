@@ -22,9 +22,7 @@ def check_promoted(conversation, request):
     """
     if not conversation.is_promoted:
         raise Http404
-    if conversation.is_hidden and not request.user.has_perm(
-        "ej.can_edit_conversation", conversation
-    ):
+    if conversation.is_hidden and not request.user.has_perm("ej.can_edit_conversation", conversation):
         raise Http404
     return conversation
 
@@ -41,9 +39,7 @@ def handle_detail_post(request, conversation, action):
     elif action == "favorite":
         return handle_detail_favorite(request, conversation)
     else:
-        log.warning(
-            f"user {request.user.id} se nt invalid POST request: {request.POST}"
-        )
+        log.warning(f"user {request.user.id} se nt invalid POST request: {request.POST}")
         return HttpResponseServerError("invalid action")
 
 
@@ -135,9 +131,7 @@ def handle_detail_favorite(request, conversation):
     else:
         toast(request, _("Conversation removed from favorites."))
 
-    log.info(
-        f"user {user.id} toggled favorite status of conversation {conversation.id}"
-    )
+    log.info(f"user {user.id} toggled favorite status of conversation {conversation.id}")
 
 
 def toast(request, msg, **kwargs):

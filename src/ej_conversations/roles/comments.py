@@ -11,9 +11,7 @@ from ..routes_comments import comment_url
 
 
 @with_template(Comment, role="card")
-def comment_card(
-    comment: Comment, request=None, target=None, show_actions=None, **kwargs
-):
+def comment_card(comment: Comment, request=None, target=None, show_actions=None, **kwargs):
     """
     Render comment information inside a comment card.
     """
@@ -25,9 +23,7 @@ def comment_card(
         login_anchor = None
     else:
         login = reverse("auth:login")
-        login_anchor = a(
-            _("login"), href=f"{login}?next={comment.conversation.get_absolute_url()}"
-        )
+        login_anchor = a(_("login"), href=f"{login}?next={comment.conversation.get_absolute_url()}")
 
     buttons = {
         "disagree": ("fa-times", "text-negative", _("Disagree")),
@@ -53,11 +49,7 @@ def comment_moderate(comment: Comment, request=None, **kwargs):
     Render a comment inside a moderation card.
     """
 
-    return {
-        "created": comment.created,
-        "author": comment.author_name,
-        "text": comment.content,
-    }
+    return {"created": comment.created, "author": comment.author_name, "text": comment.content}
 
 
 @with_template(Comment, role="reject-reason")

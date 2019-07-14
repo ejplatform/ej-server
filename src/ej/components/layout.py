@@ -27,9 +27,7 @@ def categories(items, select=0, js=True, **kwargs):
     Similar to tabs, but display several categories for the user to select.
     """
     items = items.items() if isinstance(items, Mapping) else items
-    children = [
-        icon("chevron-left", class_="categories__left", is_element="leftArrow:click")
-    ]
+    children = [icon("chevron-left", class_="categories__left", is_element="leftArrow:click")]
     if js:
         kwargs["is-component"] = True
 
@@ -38,8 +36,6 @@ def categories(items, select=0, js=True, **kwargs):
         if select == idx or select == v:
             args["is-selected"] = True
         children.append(a(args, k))
-    children.append(
-        icon("chevron-right", class_="categories_right", is_element="rightArrow:click")
-    )
+    children.append(icon("chevron-right", class_="categories_right", is_element="rightArrow:click"))
 
     return div(children, **kwargs).add_class("categories", first=True)

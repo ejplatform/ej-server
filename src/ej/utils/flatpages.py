@@ -28,9 +28,7 @@ def flatpage_with_fallback(slug):
         return FlatPage(content=data, title=slug, template_name="flatpages/html.html")
     elif md.exists():
         data = open(md).read()
-        return FlatPage(
-            content=data, title=slug, template_name="flatpages/markdown.html"
-        )
+        return FlatPage(content=data, title=slug, template_name="flatpages/markdown.html")
     else:
         data = _("Page {slug} not found").format(slug=slug)
         return FlatPage(content=data, title=slug, template_name="flatpages/html.html")

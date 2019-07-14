@@ -36,7 +36,7 @@ class EjOptions(Conf):
 
     # Integrations with Rocket.Chat
     EJ_ROCKETCHAT_INTEGRATION = env(False, name="{attr}")
-    EJ_ROCKETCHAT_INTERNAL_DOMAINS = env('', name="{attr}")
+    EJ_ROCKETCHAT_INTERNAL_DOMAINS = env("", name="{attr}")
     EJ_ROCKETCHAT_URL = env("http://localhost:3000", name="{attr}")
     EJ_ROCKETCHAT_API_URL = env("", name="{attr}")
     EJ_ROCKETCHAT_AUTH_TOKEN = env("", name="{attr}")

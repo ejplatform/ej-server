@@ -35,8 +35,7 @@ def detail(request, comment, hex_hash):
     if qs and qs.first().choice != Choice.SKIP:
         show_actions = False
         message = _(
-            "You already voted in this comment as <strong>{vote}</strong>. "
-            "You cannot change your vote."
+            "You already voted in this comment as <strong>{vote}</strong>. " "You cannot change your vote."
         ).format(vote=qs.first().choice.description)
     elif request.method == "POST":
         vote = request.POST["vote"]
@@ -60,10 +59,7 @@ def detail(request, comment, hex_hash):
 # Auxiliary functions
 #
 def comment_url(comment):
-    return reverse(
-        "comments:detail",
-        kwargs={"comment": comment, "hex_hash": comment_url_hash(comment)},
-    )
+    return reverse("comments:detail", kwargs={"comment": comment, "hex_hash": comment_url_hash(comment)})
 
 
 def comment_url_hash(comment):

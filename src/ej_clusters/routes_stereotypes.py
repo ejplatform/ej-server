@@ -7,17 +7,13 @@ from .models import Stereotype
 
 app_name = "ej_cluster"
 urlpatterns = Router(
-    template="ej_clusters/stereotypes/{name}.jinja2",
-    models={"stereotype": Stereotype},
-    login=True,
+    template="ej_clusters/stereotypes/{name}.jinja2", models={"stereotype": Stereotype}, login=True
 )
 
 
 @urlpatterns.route("")
 def list(request):
-    qs = request.user.stereotypes.prefetch_related(
-        "clusters__clusterization__conversation"
-    )
+    qs = request.user.stereotypes.prefetch_related("clusters__clusterization__conversation")
     stereotypes = []
     for stereotype in qs:
         stereotype.conversations = conversations = []

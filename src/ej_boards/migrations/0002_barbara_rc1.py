@@ -5,28 +5,37 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('ej_conversations', '0002_barbara_rc1'),
-        ('ej_boards', '0001_ada_lovelace_v1'),
-    ]
+    dependencies = [("ej_conversations", "0002_barbara_rc1"), ("ej_boards", "0001_ada_lovelace_v1")]
 
     operations = [
         migrations.AddField(
-            model_name='board',
-            name='conversations',
-            field=models.ManyToManyField(blank=True, related_name='boards', to='ej_conversations.Conversation'),
+            model_name="board",
+            name="conversations",
+            field=models.ManyToManyField(
+                blank=True, related_name="boards", to="ej_conversations.Conversation"
+            ),
         ),
         migrations.AddField(
-            model_name='board',
-            name='image',
-            field=models.ImageField(blank=True, null=True, upload_to='', verbose_name='Image'),
+            model_name="board",
+            name="image",
+            field=models.ImageField(blank=True, null=True, upload_to="", verbose_name="Image"),
         ),
         migrations.AddField(
-            model_name='board',
-            name='palette',
-            field=models.CharField(choices=[('brand', 'Default'), ('accent', 'Alternative'), ('grey', 'Grey'), ('green', 'Green'), ('orange', 'Orange'), ('purple', 'Purple')], default='Blue', max_length=10, verbose_name='Palette'),
+            model_name="board",
+            name="palette",
+            field=models.CharField(
+                choices=[
+                    ("brand", "Default"),
+                    ("accent", "Alternative"),
+                    ("grey", "Grey"),
+                    ("green", "Green"),
+                    ("orange", "Orange"),
+                    ("purple", "Purple"),
+                ],
+                default="Blue",
+                max_length=10,
+                verbose_name="Palette",
+            ),
         ),
-        migrations.DeleteModel(
-            name='BoardSubscription',
-        ),
+        migrations.DeleteModel(name="BoardSubscription"),
     ]

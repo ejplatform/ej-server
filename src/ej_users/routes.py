@@ -134,12 +134,7 @@ def recover_password_token(request, token):
         token.delete()
         return redirect(next_url)
 
-    return {
-        "user": user,
-        "form": form,
-        "next": next_url,
-        "is_expired": token.is_expired,
-    }
+    return {"user": user, "form": form, "next": next_url, "is_expired": token.is_expired}
 
 
 #
@@ -168,7 +163,7 @@ def send_recover_password_email(request, user, email):
     token = password_reset_token(user)
     from_email = settings.DEFAULT_FROM_EMAIL
     if settings.DEFAULT_FROM_NAME:
-        from_email = f'{settings.DEFAULT_FROM_NAME} <{from_email}>'
+        from_email = f"{settings.DEFAULT_FROM_NAME} <{from_email}>"
     path = reverse("auth:recover-password-token", kwargs={"token": token})
     template = get_template("ej_users/recover-password-message.jinja2")
     email_body = template.render({"url": raw_url(request, path)}, request=request)

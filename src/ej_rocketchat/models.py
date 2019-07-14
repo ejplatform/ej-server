@@ -23,9 +23,7 @@ class RCAccount(models.Model):
 
     config = models.ForeignKey("RCConfig", on_delete=models.CASCADE)
     user = models.OneToOneField(
-        get_user_model(),
-        on_delete=models.CASCADE,
-        related_name="rocketchat_subscription",
+        get_user_model(), on_delete=models.CASCADE, related_name="rocketchat_subscription"
     )
     username = models.CharField(
         _("Username"),
@@ -36,38 +34,19 @@ class RCAccount(models.Model):
         ),
         validators=[
             RegexValidator(
-                r"^\@?(\w+-)*\w+$",
-                message=_("Username must consist of letters, numbers and dashes."),
+                r"^\@?(\w+-)*\w+$", message=_("Username must consist of letters, numbers and dashes.")
             )
         ],
     )
-    password = models.CharField(
-        _("Password"),
-        max_length=50,
-        blank=True,
-    )
-    user_rc_email = models.EmailField(
-        _('E-mail used to create RC account'),
-    )
-    user_rc_id = models.CharField(
-        _("Rocketchat user id"),
-        max_length=50,
-    )
-    auth_token = models.CharField(
-        _("Rocketchat user token"),
-        max_length=50,
-        blank=True,
-    )
+    password = models.CharField(_("Password"), max_length=50, blank=True)
+    user_rc_email = models.EmailField(_("E-mail used to create RC account"))
+    user_rc_id = models.CharField(_("Rocketchat user id"), max_length=50)
+    auth_token = models.CharField(_("Rocketchat user token"), max_length=50, blank=True)
     account_data = JSONField(
-        _("Account data"),
-        null=True,
-        blank=True,
-        help_text=_("JSON-encoded data for user account."),
+        _("Account data"), null=True, blank=True, help_text=_("JSON-encoded data for user account.")
     )
     is_active = models.BooleanField(
-        _("Is user active?"),
-        default=True,
-        help_text=_("True for active Rocket.Chat accounts."),
+        _("Is user active?"), default=True, help_text=_("True for active Rocket.Chat accounts.")
     )
     rc_username = property(lambda self: f"ej-user-{self.user.id}")
     can_login_perm = CAN_LOGIN_PERM
@@ -75,12 +54,7 @@ class RCAccount(models.Model):
     class Meta:
         verbose_name = _("Rocket.Chat Account")
         verbose_name_plural = _("Rocket.Chat Accounts")
-        permissions = [
-            (
-                CAN_LOGIN_PERM.partition(".")[-1],
-                _("Can login in the Rocket.Chat instance."),
-            )
-        ]
+        permissions = [(CAN_LOGIN_PERM.partition(".")[-1], _("Can login in the Rocket.Chat instance."))]
 
     def __str__(self):
         return f"{self.user} ({self.user_rc_id})"
@@ -126,19 +100,13 @@ class RCConfig(models.Model):
         help_text=_("Username for Rocket.Chat admin user"),
     )
     admin_id = models.CharField(
-        _("Admin user id"),
-        max_length=50,
-        help_text=_("Id string for the Rocket.Chat admin user."),
+        _("Admin user id"), max_length=50, help_text=_("Id string for the Rocket.Chat admin user.")
     )
     admin_token = models.CharField(
-        _("Login token"),
-        max_length=50,
-        help_text=_("Login token for the Rocket.Chat admin user."),
+        _("Login token"), max_length=50, help_text=_("Login token for the Rocket.Chat admin user.")
     )
     admin_password = models.CharField(
-        _("Admin password"),
-        max_length=50,
-        help_text=_("Password for the Rocket.Chat admin user."),
+        _("Admin password"), max_length=50, help_text=_("Password for the Rocket.Chat admin user.")
     )
     is_active = models.BooleanField(
         _("Is active"),

@@ -40,10 +40,7 @@ def must_update_clusterization(obj):
     if clusterization is None:
         return False
 
-    return (
-        clusterization.unprocessed_votes >= 5
-        or clusterization.unprocessed_comments >= 1
-    )
+    return clusterization.unprocessed_votes >= 5 or clusterization.unprocessed_comments >= 1
 
 
 @rules.register_rule("ej.can_activate_clusterization")
@@ -60,15 +57,9 @@ def can_activate_clusterization(obj):
     if clusterization is None:
         return False
 
-    filled_comments = (
-        clusterization.comments.annotate(count=Count("votes"))
-        .filter(count__gte=5)
-        .count()
-    )
+    filled_comments = clusterization.comments.annotate(count=Count("votes")).filter(count__gte=5).count()
     filled_clusters = (
-        clusterization.clusters.annotate(count=Count("stereotypes"))
-        .filter(count__gte=2)
-        .count()
+        clusterization.clusters.annotate(count=Count("stereotypes")).filter(count__gte=2).count()
     )
     return filled_comments >= 5 and filled_clusters >= 2
 
@@ -81,9 +72,7 @@ def requires_update(self):
     if self.cluster_status == ClusterStatus.PENDING_DATA:
         rule = rules.get_rule("ej.conversation_can_start_clusterization")
         if not rule.test(self):
-            log.info(
-                f"[clusters] {conversation}: not enough data to start clusterization"
-            )
+            log.info(f"[clusters] {conversation}: not enough data to start clusterization")
             return False
     elif self.cluster_status == ClusterStatus.DISABLED:
         return False

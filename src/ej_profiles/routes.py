@@ -9,9 +9,7 @@ from ej_conversations.models import Conversation, Comment
 from . import forms
 
 app_name = "ej_profiles"
-urlpatterns = Router(
-    template=["ej_profiles/{name}.jinja2", "generic.jinja2"], login=True
-)
+urlpatterns = Router(template=["ej_profiles/{name}.jinja2", "generic.jinja2"], login=True)
 
 
 @urlpatterns.route("")
@@ -23,9 +21,9 @@ def detail(request):
         "n_favorites": user.favorite_conversations.count(),
         "n_comments": user.comments.count(),
         "n_votes": user.votes.count(),
-        "achievements_href":
-            reverse('gamification:achievements')
-            if apps.is_installed('ej_gamification') else None,
+        "achievements_href": reverse("gamification:achievements")
+        if apps.is_installed("ej_gamification")
+        else None,
     }
 
 
@@ -47,9 +45,7 @@ def contributions(request):
     user = request.user
 
     # Fetch all conversations the user created
-    created = user.conversations.cache_annotations(
-        "first_tag", "n_user_votes", "n_comments", user=user
-    )
+    created = user.conversations.cache_annotations("first_tag", "n_user_votes", "n_comments", user=user)
 
     # Fetch voted conversations
     # This code merges in python 2 querysets. The first is annotated with
@@ -59,8 +55,8 @@ def contributions(request):
     voted = voted.cache_annotations("first_tag", "n_user_votes", user=user)
     voted_extra = (
         Conversation.objects.filter(id__in=[x.id for x in voted])
-            .cache_annotations("n_comments")
-            .values("id", "n_comments")
+        .cache_annotations("n_comments")
+        .values("id", "n_comments")
     )
     total_votes = {}
     for item in voted_extra:

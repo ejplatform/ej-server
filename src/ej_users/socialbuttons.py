@@ -39,9 +39,7 @@ def register_button(provider_id, fa_class=None, query=None):
     def social_button(request):
         redirect_url = reverse("conversation:list")
         provider = providers.registry.by_id(provider_id, request)
-        url = provider.get_login_url(
-            request, next=request.GET.get("next", redirect_url), **(query or {})
-        )
+        url = provider.get_login_url(request, next=request.GET.get("next", redirect_url), **(query or {}))
 
         return fa_icon(
             provider_id,

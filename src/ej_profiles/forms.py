@@ -36,9 +36,7 @@ class ProfileForm(EjModelForm):
 
     class Meta:
         model = models.Profile
-        fields = [
-            field for field in EDITABLE_FIELDS if field not in EXCLUDE_EDITABLE_FIELDS
-        ]
+        fields = [field for field in EDITABLE_FIELDS if field not in EXCLUDE_EDITABLE_FIELDS]
         widgets = {
             "birth_date": DateInput(attrs={"type": "date"}),
             "profile_photo": ej.forms.FileInput(attrs={"accept": "image/*"}),

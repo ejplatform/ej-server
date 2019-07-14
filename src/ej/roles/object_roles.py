@@ -16,10 +16,7 @@ def collapsible(data, title=None, collapsed=False):
         class_="collapsible",
         is_component=True,
         is_collapsed=collapsed,
-        children=[
-            h2([title, angle], class_="collapsible__title"),
-            div(data, class_="collapsible__data"),
-        ],
+        children=[h2([title, angle], class_="collapsible__title"), div(data, class_="collapsible__data")],
     )
 
 

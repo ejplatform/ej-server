@@ -2,28 +2,20 @@ from django.utils.translation import ugettext as _
 
 TOUR = {
     "i18n": {"next": _("Next"), "dismiss": _("Dismiss")},
-    "options": {
-        "defaultStepOptions": {"scrollTo": False, "showCancelLink": True},
-        "useModalOverlay": True,
-    },
+    "options": {"defaultStepOptions": {"scrollTo": False, "showCancelLink": True}, "useModalOverlay": True},
     "steps": [
         #
         # Show main interface
         #
         [
             "welcome",
-            {
-                "title": _("Welcome to EJ!"),
-                "text": _("Creating a Shepherd is easy too! Just create ..."),
-            },
+            {"title": _("Welcome to EJ!"), "text": _("Creating a Shepherd is easy too! Just create ...")},
         ],
         [
             "header",
             {
                 "title": _("App header"),
-                "text": _(
-                    "This header displays the main actions you can do in each page."
-                ),
+                "text": _("This header displays the main actions you can do in each page."),
                 "attachTo": ".main-header bottom",
             },
         ],

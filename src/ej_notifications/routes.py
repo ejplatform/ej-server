@@ -6,9 +6,7 @@ from .forms import NotificationConfigForm
 
 app_name = "ej_notifications"
 urlpatterns = Router(
-    login=True,
-    template="ej_notifications/{name}.jinja2",
-    models={"notification": Notification},
+    login=True, template="ej_notifications/{name}.jinja2", models={"notification": Notification}
 )
 notification_url = f"<model:notification>/"
 
@@ -16,22 +14,14 @@ notification_url = f"<model:notification>/"
 @urlpatterns.route()
 def index(request):
     user = request.user
-    notifications = Notification.objects.filter(
-        receiver__id=user.id, read=False
-    ).order_by("-created")
-    return {
-        "content_title": _("List of notifications"),
-        "user": user,
-        "notifications": notifications,
-    }
+    notifications = Notification.objects.filter(receiver__id=user.id, read=False).order_by("-created")
+    return {"content_title": _("List of notifications"), "user": user, "notifications": notifications}
 
 
 @urlpatterns.route("history/")
 def clusters(request):
     user = request.user
-    notifications = Notification.objects.filter(
-        receiver__id=user.id, read=True
-    ).order_by("-created")
+    notifications = Notification.objects.filter(receiver__id=user.id, read=True).order_by("-created")
     return {"user": user, "notifications": notifications}
 
 
@@ -39,9 +29,7 @@ def clusters(request):
 def inbox(request):
     user = request.user
 
-    notifications = (
-        user.notifications.all()
-    )  # Notification.objects.filter(receiver=user)
+    notifications = user.notifications.all()  # Notification.objects.filter(receiver=user)
     for item in notifications:
         if item.read is True:
             item.already_seen = True
@@ -60,11 +48,7 @@ def inbox(request):
         if notification_form.is_valid():
             notification_form.save()
 
-    return {
-        "user": user,
-        "notifications": notifications,
-        "notification_form": notification_form,
-    }
+    return {"user": user, "notifications": notifications, "notification_form": notification_form}
 
 
 @urlpatterns.route("read/" + notification_url)

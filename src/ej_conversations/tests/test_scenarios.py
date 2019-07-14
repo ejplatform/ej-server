@@ -78,9 +78,7 @@ class TestStatistics(ConversationRecipes):
 
         # User makes some comments
         comments = [
-            conversation.create_comment(
-                user, f"comment {i}", status="approved", check_limits=False
-            )
+            conversation.create_comment(user, f"comment {i}", status="approved", check_limits=False)
             for i in range(5)
         ]
 

@@ -9,9 +9,7 @@ User = get_user_model()
 
 
 class Command(BaseCommand):
-    help = (
-        "Update all scores, points and badges for users and conversations in your app"
-    )
+    help = "Update all scores, points and badges for users and conversations in your app"
     log = lambda self, *args, **kwargs: print(*args, **kwargs)
 
     def handle(self, *args, **options):

@@ -27,38 +27,20 @@ def get_urlpatterns():
         *with_app("ej_users", "", namespace="auth"),
         *with_app("ej_users", "account/", "routes_account", namespace="account"),
         # Conversations and other EJ-specific routes
-        path(
-            "conversations/",
-            include("ej_conversations.routes", namespace="conversation"),
-        ),
-        path(
-            "comments/",
-            include("ej_conversations.routes_comments", namespace="comments"),
-        ),
+        path("conversations/", include("ej_conversations.routes", namespace="conversation")),
+        path("comments/", include("ej_conversations.routes_comments", namespace="comments")),
         # Profile URLS
         *with_app("ej_profiles", "profile/", namespace="profile"),
         *with_app("ej_notifications", "notifications/", namespace="notifications"),
         # Data visualization
         *with_app("ej_dataviz", "conversations/", namespace="dataviz"),
-        *with_app(
-            "ej_dataviz", "conversations/", routes="routes_report", namespace="report"
-        ),
+        *with_app("ej_dataviz", "conversations/", routes="routes_report", namespace="report"),
         # Global stereotype and cluster management
         *with_app("ej_clusters", "conversations/", namespace="cluster"),
-        *with_app(
-            "ej_clusters",
-            "stereotypes/",
-            routes="routes_stereotypes",
-            namespace="stereotypes",
-        ),
+        *with_app("ej_clusters", "stereotypes/", routes="routes_stereotypes", namespace="stereotypes"),
         # Gamification
         *with_app("ej_gamification", "profile/", namespace="gamification"),
-        *with_app(
-            "ej_gamification",
-            "leaderboard/",
-            routes="routes_leaderboard",
-            namespace="leaderboard",
-        ),
+        *with_app("ej_gamification", "leaderboard/", routes="routes_leaderboard", namespace="leaderboard"),
         *with_app(
             "ej_gamification",
             "conversations/",
@@ -69,7 +51,7 @@ def get_urlpatterns():
         *with_app("ej_rocketchat", "talks/", namespace="rocket"),
         # Admin
         *(
-            [path(fix_url(settings.ADMIN_URL.lstrip('/')), admin.site.urls)]
+            [path(fix_url(settings.ADMIN_URL.lstrip("/")), admin.site.urls)]
             if apps.is_installed("django.contrib.admin")
             else ()
         ),
@@ -85,11 +67,7 @@ def get_urlpatterns():
         *static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),
         *static(settings.STATIC_URL, document_root=settings.STATIC_ROOT),
         # Documentation in development mode
-        re_path(
-            r"^static_docs/$",
-            serve,
-            {"document_root": "build/docs", "path": "index.html"},
-        ),
+        re_path(r"^static_docs/$", serve, {"document_root": "build/docs", "path": "index.html"}),
         re_path(r"^static_docs/(?P<path>.*)$", serve, {"document_root": "build/docs/"}),
         # Boards
         *with_app("ej_boards", "", namespace="boards"),
@@ -100,9 +78,7 @@ def get_urlpatterns():
         patterns.extend(
             [
                 path(
-                    "error/400/",
-                    default_views.bad_request,
-                    kwargs={"exception": Exception("Bad Request!")},
+                    "error/400/", default_views.bad_request, kwargs={"exception": Exception("Bad Request!")}
                 ),
                 path(
                     "error/403/",

@@ -42,9 +42,7 @@ def board_list(request):
     return {"boards": boards, "can_add_board": can_add_board}
 
 
-@urlpatterns.route(
-    board_profile_admin_url + "add/", login=True, perms=["ej.can_add_board"]
-)
+@urlpatterns.route(board_profile_admin_url + "add/", login=True, perms=["ej.can_add_board"])
 def board_create(request):
     form = BoardForm(request=request)
     if form.is_valid_post():
@@ -71,9 +69,7 @@ def board_edit(request, board):
 @urlpatterns.route(board_base_url)
 def conversation_list(request, board):
     return conversations.list_view(
-        request,
-        queryset=board.conversations.annotate_attr(board=board),
-        context={"board": board},
+        request, queryset=board.conversations.annotate_attr(board=board), context={"board": board}
     )
 
 
@@ -87,17 +83,12 @@ def conversation_detail(request, board, **kwargs):
     return conversations.detail(request, **kwargs, check=check_board(board))
 
 
-@urlpatterns.route(
-    board_conversation_url + "edit/", perms=["ej.can_edit_conversation:conversation"]
-)
+@urlpatterns.route(board_conversation_url + "edit/", perms=["ej.can_edit_conversation:conversation"])
 def conversation_edit(request, board, **kwargs):
     return conversations.edit(request, board=board, check=check_board(board), **kwargs)
 
 
-@urlpatterns.route(
-    board_conversation_url + "moderate/",
-    perms=["ej.can_edit_conversation:conversation"],
-)
+@urlpatterns.route(board_conversation_url + "moderate/", perms=["ej.can_edit_conversation:conversation"])
 def conversation_moderate(request, board, **kwargs):
     return conversations.moderate(request, check=check_board(board), **kwargs)
 

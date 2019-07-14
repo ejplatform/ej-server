@@ -12,9 +12,7 @@ from ..mixins import ClusterizationBaseMixin
 
 pd = import_later("pandas")
 np = import_later("numpy")
-clusterization_pipeline = import_later(
-    "..math:clusterization_pipeline", package=__package__
-)
+clusterization_pipeline = import_later("..math:clusterization_pipeline", package=__package__)
 models = import_later(".models", package=__package__)
 log = getLogger("ej")
 
@@ -69,9 +67,7 @@ class ClusterQuerySet(ClusterizationBaseMixin, QuerySet):
         Return a query set of (cluster, comment, choice) items from the given
         conversation.
         """
-        return conversation.votes.values_list(
-            "comment__conversation_id", "comment_id", "choice"
-        )
+        return conversation.votes.values_list("comment__conversation_id", "comment_id", "choice")
 
     def votes_dataframe(self, conversation):
         """
@@ -88,7 +84,7 @@ class ClusterQuerySet(ClusterizationBaseMixin, QuerySet):
         mean_stereotype=False,
         non_classified=False,
         check_unique=True,
-        **kwargs
+        **kwargs,
     ):
         """
         Return a votes table that joins the results from regular users
@@ -162,11 +158,11 @@ class ClusterQuerySet(ClusterizationBaseMixin, QuerySet):
 
         if cluster_col is not None:
             if self.count():
-                clusters = self._get_cluster_to_user_column_table('stereotypes')
+                clusters = self._get_cluster_to_user_column_table("stereotypes")
                 if not kind_col and len(clusters.index) != 0:
                     clusters.index *= -1
             else:
-                clusters = float('nan')
+                clusters = float("nan")
             stereotype_votes[cluster_col] = clusters
         return stereotype_votes
 
@@ -179,42 +175,42 @@ class ClusterQuerySet(ClusterizationBaseMixin, QuerySet):
 
         if cluster_col is not None:
             if self.count():
-                clusters = self._get_cluster_to_user_column_table('users')
+                clusters = self._get_cluster_to_user_column_table("users")
             else:
-                clusters = float('nan')
+                clusters = float("nan")
             user_votes[cluster_col] = clusters
         return user_votes
 
     def _votes_table_for_clusterization(self):
         # Return votes table with the default parameters used on clusterization
         # jobs.
-        return self.votes_table(
-            non_classified=True, cluster_col=None, mean_stereotype=True
-        )
+        return self.votes_table(non_classified=True, cluster_col=None, mean_stereotype=True)
 
-    def _get_cluster_to_user_column_table(self, user_field='users'):
+    def _get_cluster_to_user_column_table(self, user_field="users"):
         Int = IntegerField()
 
         cluster, *rest = self
         users = list(
             getattr(cluster, user_field)
-                .annotate(cluster=Value(cluster.id, output_field=Int))
-                .values_list('id', 'cluster'))
+            .annotate(cluster=Value(cluster.id, output_field=Int))
+            .values_list("id", "cluster")
+        )
 
         for cl in rest:
             users.extend(
                 getattr(cl, user_field)
-                    .annotate(cluster=Value(cl.id, output_field=Int))
-                    .values_list('id', 'cluster'))
+                .annotate(cluster=Value(cl.id, output_field=Int))
+                .values_list("id", "cluster")
+            )
 
         # Remove duplicates from cluster/user pairs
         # This should never happen, but sometimes it does and we don't want to
         # crash the application due to a minor bug.
         data = list(dict(users).items())
-        col = pd.DataFrame(data, columns=['user', 'cluster'])
-        col.index = col.pop('user')
-        col.index.name = 'author'
-        return col.pop('cluster')
+        col = pd.DataFrame(data, columns=["user", "cluster"])
+        col.index = col.pop("user")
+        col.index.name = "author"
+        return col.pop("cluster")
 
     def find_clusters(self, pipeline_factory=None):
         """
@@ -258,9 +254,7 @@ class ClusterQuerySet(ClusterizationBaseMixin, QuerySet):
         # Create result
         labels_ = cluster_map[labels[:-n_clusters]]
         users_ = votes.index[:-n_clusters].values
-        series = pd.Series(
-            labels_, name="cluster", index=pd.Index(users_, name="users")
-        )
+        series = pd.Series(labels_, name="cluster", index=pd.Index(users_, name="users"))
         return series, pipe
 
     def clusterize_from_votes(self, pipeline_factory=None):
@@ -282,12 +276,7 @@ class ClusterQuerySet(ClusterizationBaseMixin, QuerySet):
         atomically.
         """
         if by_cluster:
-            return chain(
-                *(
-                    ((user, cluster) for user in users)
-                    for cluster, users in mapping.items()
-                )
-            )
+            return chain(*(((user, cluster) for user in users) for cluster, users in mapping.items()))
 
         if hasattr(mapping, "items"):
             mapping = mapping.items()
@@ -295,8 +284,7 @@ class ClusterQuerySet(ClusterizationBaseMixin, QuerySet):
 
         m2m = self.model.users.through
         links = [
-            m2m(cluster_id=getattr(cluster, "id", cluster),
-                user_id=getattr(user, "id", user))
+            m2m(cluster_id=getattr(cluster, "id", cluster), user_id=getattr(user, "id", user))
             for user, cluster in mapping
         ]
         with transaction.atomic():
@@ -311,14 +299,12 @@ class ClusterQuerySet(ClusterizationBaseMixin, QuerySet):
         """
         votes = (
             self.stereotype_votes()
-                .annotate(cluster=F.author.clusters)
-                .dataframe("author", "comment", "choice", "cluster")
+            .annotate(cluster=F.author.clusters)
+            .dataframe("author", "comment", "choice", "cluster")
         )
 
         if votes.shape[0]:
-            votes = votes.pivot_table(
-                values="choice", index=["author", "cluster"], columns="comment"
-            )
+            votes = votes.pivot_table(values="choice", index=["author", "cluster"], columns="comment")
         else:
             raise ValueError("no votes found")
 

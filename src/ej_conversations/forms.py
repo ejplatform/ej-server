@@ -63,9 +63,7 @@ class ConversationForm(EjModelForm):
     """
 
     comments_count = forms.IntegerField(initial=3, required=False)
-    tags = forms.CharField(
-        label=_("Tags"), help_text=_("Tags, separated by commas."), required=False
-    )
+    tags = forms.CharField(label=_("Tags"), help_text=_("Tags, separated by commas."), required=False)
 
     class Meta:
         model = Conversation
@@ -80,9 +78,7 @@ class ConversationForm(EjModelForm):
         for field in ("tags", "text"):
             self.set_placeholder(field, self[field].help_text)
         if self.instance and self.instance.id is not None:
-            self.fields["tags"].initial = ", ".join(
-                self.instance.tags.values_list("name", flat=True)
-            )
+            self.fields["tags"].initial = ", ".join(self.instance.tags.values_list("name", flat=True))
 
     def set_placeholder(self, field, value):
         self.fields[field].widget.attrs["placeholder"] = value
@@ -107,9 +103,7 @@ class ConversationForm(EjModelForm):
 
         return conversation
 
-    def save_comments(
-        self, author, check_limits=True, status=Comment.STATUS.approved, **kwargs
-    ):
+    def save_comments(self, author, check_limits=True, status=Comment.STATUS.approved, **kwargs):
         """
         Save model, tags and comments.
         """

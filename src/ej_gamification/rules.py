@@ -44,9 +44,7 @@ def has_opinion_bridge_power(user, conversation):
     """
     Return true if user is a "opinion bridge" in conversation.
     """
-    return models.GivenBridgePower.objects.filter(
-        user=user, conversation=conversation
-    ).exists()
+    return models.GivenBridgePower.objects.filter(user=user, conversation=conversation).exists()
 
 
 @predicate
@@ -59,9 +57,7 @@ def can_be_opinion_bridge(user, conversation):
 
 @predicate
 def has_activist_power(user, conversation):
-    return models.GivenMinorityPower.objects.filter(
-        user=user, conversation=conversation
-    ).exists()
+    return models.GivenMinorityPower.objects.filter(user=user, conversation=conversation).exists()
 
 
 @predicate

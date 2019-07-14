@@ -24,9 +24,7 @@ def make_lazy_importer(names):
         if base in slow_modules and name not in blacklist:
             # raise ValueError(name)
             if base != name or True:
-                raise ValueError(
-                    [x for x in track if x.startswith("ej") or x.startswith("boogie")]
-                )
+                raise ValueError([x for x in track if x.startswith("ej") or x.startswith("boogie")])
             try:
                 mod = lazy_import(name, globals, locals, fromlist, level)
             except KeyError:

@@ -23,8 +23,7 @@ class UrlTester(EjRecipes):
 
     def setUp(self):
         warnings.warn(
-            "EJ's UrlTester is deprecated, please move your tests "
-            "to boogie.testing.pytest.UrlTester"
+            "EJ's UrlTester is deprecated, please move your tests " "to boogie.testing.pytest.UrlTester"
         )
 
     @property
@@ -48,9 +47,7 @@ class UrlTester(EjRecipes):
         client.force_login(user_db)
         check_urls(client, urls, self.success_codes, "regular user")
 
-    def test_urls_accessible_only_by_author_or_admin(
-        self, client, user_db, author_db, data, caplog
-    ):
+    def test_urls_accessible_only_by_author_or_admin(self, client, user_db, author_db, data, caplog):
         urls = self.owner_urls
         caplog.set_level(logging.CRITICAL, logger="django")
         pprint(data)
@@ -67,9 +64,7 @@ class UrlTester(EjRecipes):
         client.force_login(author_db)
         check_urls(client, urls, self.success_codes, "author")
 
-    def test_urls_accessible_only_by_admin(
-        self, client, user_db, root_db, data, caplog
-    ):
+    def test_urls_accessible_only_by_admin(self, client, user_db, root_db, data, caplog):
         urls = self.admin_urls
         caplog.set_level(logging.CRITICAL, logger="django")
         pprint(data)

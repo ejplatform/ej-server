@@ -2,13 +2,7 @@ import matplotlib.pyplot as plt
 
 from sidekick import import_later
 from sklearn.decomposition import PCA, KernelPCA
-from sklearn.manifold import (
-    TSNE,
-    Isomap,
-    MDS,
-    LocallyLinearEmbedding,
-    SpectralEmbedding,
-)
+from sklearn.manifold import TSNE, Isomap, MDS, LocallyLinearEmbedding, SpectralEmbedding
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import Imputer
 
@@ -135,9 +129,7 @@ def reduce_dimensionality(votes, method="pca", **kwargs):
     return data, pipeline
 
 
-def show_votes(
-    votes, method="pca", display=True, title=None, labels=None, legend=None, **kwargs
-):
+def show_votes(votes, method="pca", display=True, title=None, labels=None, legend=None, **kwargs):
     """
     Show votes dataset in a 2D plot.
     """

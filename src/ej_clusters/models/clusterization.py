@@ -23,22 +23,14 @@ class Clusterization(TimeStampedModel):
     """
 
     conversation = models.OneToOneField(
-        "ej_conversations.Conversation",
-        on_delete=models.CASCADE,
-        related_name="clusterization",
+        "ej_conversations.Conversation", on_delete=models.CASCADE, related_name="clusterization"
     )
     cluster_status = EnumField(ClusterStatus, default=ClusterStatus.PENDING_DATA)
     pending_comments = models.ManyToManyField(
-        "ej_conversations.Comment",
-        related_name="pending_in_clusterizations",
-        editable=False,
-        blank=True,
+        "ej_conversations.Comment", related_name="pending_in_clusterizations", editable=False, blank=True
     )
     pending_votes = models.ManyToManyField(
-        "ej_conversations.Vote",
-        related_name="pending_in_clusterizations",
-        editable=False,
-        blank=True,
+        "ej_conversations.Vote", related_name="pending_in_clusterizations", editable=False, blank=True
     )
 
     unprocessed_comments = property(lambda self: self.pending_comments.count())

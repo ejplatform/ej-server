@@ -20,22 +20,19 @@ def conversation_download_data(conversation, *, which, formats=None, cluster=Non
     if ":" not in which:
         which = f"report:{which}"
         if cluster is not None:
-            which += '-cluster'
+            which += "-cluster"
 
     # Prepare urls
     url_kwargs = {}
     if cluster is not None:
-        url_kwargs['cluster_id'] = cluster.id
+        url_kwargs["cluster_id"] = cluster.id
 
     format_lst = []
     for format, name in (formats or DEFAULT_FORMATS).items():
         url = conversation.url(which, fmt=format, **url_kwargs)
         format_lst.append((format, name, url))
 
-    return {
-        "conversation": conversation,
-        "formats": format_lst,
-    }
+    return {"conversation": conversation, "formats": format_lst}
 
 
 @html.register(models.Conversation, role="stats-table")
@@ -44,9 +41,9 @@ def stats_table(conversation, stats=None, data="votes", request=None, **kwargs):
         stats = conversation.statistics()
 
     get = COLUMN_NAMES.get
-    return div(
-        [html_map({get(k, k): v}) for k, v in stats[data].items()], **kwargs
-    ).add_class("stat-slab", first=True)
+    return div([html_map({get(k, k): v}) for k, v in stats[data].items()], **kwargs).add_class(
+        "stat-slab", first=True
+    )
 
 
 @html.register(models.Conversation, role="comments-stats-table")
@@ -88,9 +85,7 @@ def prepare_dataframe(df, pc=False):
         for col, data in df.items():
             if data.dtype == float:
                 df[col] = data.apply(lambda x: "-" if np.isnan(x) else "%d%%" % x)
-    return render_dataframe(
-        df, col_display=TABLE_COLUMN_NAMES, class_="table long text-6"
-    )
+    return render_dataframe(df, col_display=TABLE_COLUMN_NAMES, class_="table long text-6")
 
 
 def render_dataframe(df, index=False, *, col_display=None, **kwargs):

@@ -253,16 +253,7 @@ def filled_fields(profile, fields):
 
 
 def basic_profile_fields(fields):
-    basic = {
-        "gender",
-        "race",
-        "birth_date",
-        "occupation",
-        "city",
-        "state",
-        "country",
-        "education",
-    }
+    basic = {"gender", "race", "birth_date", "occupation", "city", "state", "country", "education"}
     return fields.intersection(basic)
 
 
@@ -326,9 +317,7 @@ class ConversationLevel(LevelMixin, IntEnum):
     def achieve_next_level_msg(self, obj):
         for level, score in zip(type(self), self._levels()):
             if score > obj.score:
-                msg = _(
-                    "Conversation needs a score of at least {n} points, it has {m}."
-                )
+                msg = _("Conversation needs a score of at least {n} points, it has {m}.")
                 return msg.format(n=score, m=obj.score)
         return _("Conversation already achieved the maximum level.")
 
@@ -385,17 +374,13 @@ class VoterLevel(LevelMixin, IntEnum):
     def achieve_next_level_msg(self, obj):
         # Special cases
         if self == self.PERFECTIONIST:
-            return _(
-                "Congratulations! You already achieved the maximum participation level."
-            )
+            return _("Congratulations! You already achieved the maximum participation level.")
 
         # Now we compute how many votes are necessary to progress
         votes = obj.n_votes
         m, r, n = self._ranges()[self]
         if votes == obj.n_conversation_comments:
-            msg = _(
-                "You cannot progress unless conversation has at least {n} comments :-("
-            )
+            msg = _("You cannot progress unless conversation has at least {n} comments :-(")
             return msg.format(n=m)
 
         delta = float("inf")

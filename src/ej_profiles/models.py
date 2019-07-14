@@ -30,24 +30,17 @@ class Profile(models.Model):
     ethnicity = models.CharField(_("Ethnicity"), blank=True, max_length=50)
     education = models.CharField(_("Education"), blank=True, max_length=140)
     gender = EnumField(Gender, _("Gender identity"), default=Gender.NOT_FILLED)
-    gender_other = models.CharField(
-        _("User provided gender"), max_length=50, blank=True
-    )
+    gender_other = models.CharField(_("User provided gender"), max_length=50, blank=True)
     birth_date = models.DateField(_("Birth Date"), null=True, blank=True)
     country = models.CharField(_("Country"), blank=True, max_length=50)
     state = models.CharField(
-        _("State"),
-        blank=True,
-        max_length=settings.EJ_STATE_MAX_LENGTH,
-        choices=settings.EJ_STATE_CHOICES,
+        _("State"), blank=True, max_length=settings.EJ_STATE_MAX_LENGTH, choices=settings.EJ_STATE_CHOICES
     )
     city = models.CharField(_("City"), blank=True, max_length=140)
     biography = models.TextField(_("Biography"), blank=True)
     occupation = models.CharField(_("Occupation"), blank=True, max_length=50)
     political_activity = models.TextField(_("Political activity"), blank=True)
-    profile_photo = models.ImageField(
-        _("Profile Photo"), blank=True, null=True, upload_to="profile_images"
-    )
+    profile_photo = models.ImageField(_("Profile Photo"), blank=True, null=True, upload_to="profile_images")
 
     name = delegate_to("user")
     email = delegate_to("user")
@@ -100,8 +93,7 @@ class Profile(models.Model):
         return bool(
             self.profile_photo
             or (
-                apps.is_installed("allauth.socialaccount")
-                and SocialAccount.objects.filter(user_id=self.id)
+                apps.is_installed("allauth.socialaccount") and SocialAccount.objects.filter(user_id=self.id)
             )
         )
 

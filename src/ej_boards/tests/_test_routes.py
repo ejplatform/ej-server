@@ -28,10 +28,7 @@ def board(db, user):
 
 
 class TestRoutes(UrlTester, BoardRecipes, ConversationRecipes):
-    public_urls = [
-        "/board-slug/conversations/",
-        "/board-slug/conversations/conversation/",
-    ]
+    public_urls = ["/board-slug/conversations/", "/board-slug/conversations/conversation/"]
     user_urls = [
         "/board-slug/conversations/conversation/reports/",
         "/board-slug/conversations/conversation/reports/scatter/",
@@ -58,13 +55,7 @@ class TestRoutes(UrlTester, BoardRecipes, ConversationRecipes):
 class TestBoardConversationRoutes(ConversationRecipes):
     def test_create_conversation(self, rf, board):
         request = rf.post(
-            "",
-            {
-                "title": "whatever",
-                "tags": "tag",
-                "text": "description",
-                "comments_count": 0,
-            },
+            "", {"title": "whatever", "tags": "tag", "text": "description", "comments_count": 0}
         )
         request.user = board.owner
         response = routes.conversation_create(request, board)
@@ -72,9 +63,7 @@ class TestBoardConversationRoutes(ConversationRecipes):
         assert response.url == "/slugs/conversations/whatever/stereotypes/"
 
     def test_create_invalid_conversation(self, rf, board):
-        request = rf.post(
-            "", {"title": "", "tags": "tag", "text": "description", "comments_count": 0}
-        )
+        request = rf.post("", {"title": "", "tags": "tag", "text": "description", "comments_count": 0})
         request.user = board.owner
         response = routes.conversation_create(request, board)
         assert not response["form"].is_valid()
@@ -83,13 +72,7 @@ class TestBoardConversationRoutes(ConversationRecipes):
         conversation.author = board.owner
         conversation.save()
         request = rf.post(
-            "",
-            {
-                "title": "whatever",
-                "tags": "tag",
-                "text": "description",
-                "comments_count": 0,
-            },
+            "", {"title": "whatever", "tags": "tag", "text": "description", "comments_count": 0}
         )
         request.user = conversation.author
         conversation.is_promoted = False
@@ -102,9 +85,7 @@ class TestBoardConversationRoutes(ConversationRecipes):
     def test_edit_invalid_conversation(self, rf, db, board, conversation):
         conversation.author = board.owner
         conversation.save()
-        request = rf.post(
-            "", {"title": "", "tags": "tag", "text": "description", "comments_count": 0}
-        )
+        request = rf.post("", {"title": "", "tags": "tag", "text": "description", "comments_count": 0})
         request.user = conversation.author
         conversation.is_promoted = False
         board.add_conversation(conversation)
@@ -114,9 +95,7 @@ class TestBoardConversationRoutes(ConversationRecipes):
     def test_edit_conversation_not_in_board(self, rf, db, board, conversation):
         conversation.author = board.owner
         conversation.save()
-        request = rf.post(
-            "", {"title": "", "tags": "tag", "text": "description", "comments_count": 0}
-        )
+        request = rf.post("", {"title": "", "tags": "tag", "text": "description", "comments_count": 0})
         with pytest.raises(Http404):
             routes.conversation_edit(request, board, conversation)
 
@@ -151,9 +130,7 @@ class TestBoardConversationRoutes(ConversationRecipes):
         conversation.author = user
         conversation.save()
         comment = conversation.create_comment(user, "comment")
-        request = rf.post(
-            "", {"action": "vote", "vote": "agree", "comment_id": comment.id}
-        )
+        request = rf.post("", {"action": "vote", "vote": "agree", "comment_id": comment.id})
         request.user = conversation.author
         conversation.is_promoted = False
         board.add_conversation(conversation)
@@ -189,12 +166,7 @@ class TestBoardViewRoutest:
         assert response["form"]
 
     def test_post_create_valid_board(self, rf, user):
-        data = {
-            "slug": "slug",
-            "title": "new title",
-            "description": "description",
-            "palette": "Blue",
-        }
+        data = {"slug": "slug", "title": "new title", "description": "description", "palette": "Blue"}
         request = rf.post("", data)
         request.user = user
         response = routes.board_create(request)
@@ -243,12 +215,7 @@ class TestBoardRoutes(TestCase):
 
     def test_create_board(self):
         client = self.logged_client
-        data = {
-            "slug": "slug",
-            "title": "new title",
-            "description": "description",
-            "palette": "Blue",
-        }
+        data = {"slug": "slug", "title": "new title", "description": "description", "palette": "Blue"}
         response = client.post("/profile/boards/add/", data=data)
         self.assertRedirects(response, "/slug/", 302, 200)
 
@@ -276,9 +243,7 @@ class TestBoardRoutes(TestCase):
 
     def test_edit_board_logged_user(self):
         client = self.logged_client
-        Board.objects.create(
-            slug="slug1", title="title1", owner=self.user, palette="orange"
-        )
+        Board.objects.create(slug="slug1", title="title1", owner=self.user, palette="orange")
         data = {"slug": "slug1", "title": "new title", "palette": "pink"}
         response = client.post("/slug1/edit/", data=data)
         self.assertTrue(response.status_code, 200)

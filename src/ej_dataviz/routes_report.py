@@ -11,15 +11,12 @@ from ej_conversations.routes import conversation_url
 from ej_conversations.utils import check_promoted
 from .routes import EXPOSED_PROFILE_FIELDS
 
-pd = import_later('pandas')
+pd = import_later("pandas")
 
 urlpatterns = Router(
     base_path=conversation_url + "reports/",
     template="ej_dataviz/report/{name}.jinja2",
-    models={
-        "conversation": Conversation,
-        "cluster": Cluster,
-    },
+    models={"conversation": Conversation, "cluster": Cluster},
     login=True,
     perms=["ej.can_view_report_detail:conversation"],
 )
@@ -62,6 +59,7 @@ def users(request, conversation, slug, check=check_promoted):
 # Votes raw data
 # ------------------------------------------------------------------------------
 
+
 @urlpatterns.route("data/votes.<fmt>")
 def votes_data(request, conversation, fmt, slug, check=check_promoted):
     check(conversation, request)
@@ -87,13 +85,14 @@ def vote_data_common(votes, filename, fmt):
     columns = "author__email", "author__name", "author__id", "comment__content", "comment__id", "choice"
     df = votes.dataframe(*columns)
     df.columns = "email", "author", "author_id", "comment", "comment_id", "choice"
-    df.choice = list(map({-1: 'disagree', 1: 'agree', 0: 'skip'}.get, df['choice']))
+    df.choice = list(map({-1: "disagree", 1: "agree", 0: "skip"}.get, df["choice"]))
     return data_response(df, fmt, filename)
 
 
 # ==============================================================================
 # Comments raw data
 # ------------------------------------------------------------------------------
+
 
 @urlpatterns.route("data/comments.<fmt>")
 def comments_data(request, conversation, fmt, slug, check=check_promoted):
@@ -135,6 +134,7 @@ def comments_data_common(comments, votes, filename, fmt):
 # Users raw data
 # ------------------------------------------------------------------------------
 
+
 @urlpatterns.route("data/users.<fmt>")
 def users_data(request, conversation, fmt, slug, check=check_promoted):
     check(conversation, request)
@@ -145,24 +145,30 @@ def users_data(request, conversation, fmt, slug, check=check_promoted):
     except AttributeError:
         pass
     else:
-        data = clusters.values_list('users__id', 'name', 'id')
-        extra = pd.DataFrame(data, columns=['user', 'cluster', 'cluster_id'])
-        extra.index = extra.pop('user')
-        df[['cluster', 'cluster_id']] = extra
-        df['cluster_id'] = df.cluster_id.fillna(-1).astype(int)
+        data = clusters.values_list("users__id", "name", "id")
+        extra = pd.DataFrame(data, columns=["user", "cluster", "cluster_id"])
+        extra.index = extra.pop("user")
+        df[["cluster", "cluster_id"]] = extra
+        df["cluster_id"] = df.cluster_id.fillna(-1).astype(int)
     return data_response(df, fmt, filename)
 
 
 def get_user_data(conversation):
-    df = conversation.users.statistics_summary_dataframe(
-        extend_fields=('id', *EXPOSED_PROFILE_FIELDS),
-    )
-    df = df[[
-        'email', 'id', 'name',
-        *EXPOSED_PROFILE_FIELDS,
-        'agree', 'disagree', 'skipped', 'divergence', 'participation',
-    ]]
-    df.columns = ['email', 'user_id', *df.columns[2:]]
+    df = conversation.users.statistics_summary_dataframe(extend_fields=("id", *EXPOSED_PROFILE_FIELDS))
+    df = df[
+        [
+            "email",
+            "id",
+            "name",
+            *EXPOSED_PROFILE_FIELDS,
+            "agree",
+            "disagree",
+            "skipped",
+            "divergence",
+            "participation",
+        ]
+    ]
+    df.columns = ["email", "user_id", *df.columns[2:]]
     return df
 
 

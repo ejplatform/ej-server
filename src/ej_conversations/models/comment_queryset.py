@@ -53,9 +53,7 @@ class CommentQuerySet(ConversationMixin, WordCloudQuerySet):
     def statistics(self):
         return [x.statistics() for x in self]
 
-    def statistics_summary_dataframe(
-        self, normalization=1.0, votes=None, extend_fields=()
-    ):
+    def statistics_summary_dataframe(self, normalization=1.0, votes=None, extend_fields=()):
         """
         Return a dataframe with basic voting statistics.
 
@@ -63,21 +61,11 @@ class CommentQuerySet(ConversationMixin, WordCloudQuerySet):
         'skipped', 'divergence' and 'participation' columns.
         """
         votes = (votes or self.votes()).dataframe("comment", "author", "choice")
-        stats = comment_statistics(
-            votes, participation=True, divergence=True, ratios=True
-        )
+        stats = comment_statistics(votes, participation=True, divergence=True, ratios=True)
         stats *= normalization
         stats = self.extend_dataframe(stats, "author__name", *extend_fields, "content")
         stats["author"] = stats.pop("author__name")
-        cols = [
-            "content",
-            "author",
-            "agree",
-            "disagree",
-            "skipped",
-            "divergence",
-            "participation",
-        ]
+        cols = ["content", "author", "agree", "disagree", "skipped", "divergence", "participation"]
         return stats[cols]
 
 

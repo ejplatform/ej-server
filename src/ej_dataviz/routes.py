@@ -65,9 +65,7 @@ def scatter_pca_json(request, conversation, slug, check=check_promoted):
                     "#FFE3EA",
                     "#EEEEEE",
                 ],
-                "series": [
-                    {"symbolSize": 16, "data": data.tolist(), "type": "scatter"}
-                ],
+                "series": [{"symbolSize": 16, "data": data.tolist(), "type": "scatter"}],
             },
             "userIds": df.index.tolist(),
         }
@@ -78,15 +76,11 @@ def scatter_pca_json(request, conversation, slug, check=check_promoted):
 def scatter_group(request, conversation, slug, groupby, check=check_promoted):
     check(conversation, request)
     if groupby not in VALID_GROUP_BY:
-        return JsonResponse(
-            {"error": "AttributeError", "message": "invalid groupby parameter"}
-        )
+        return JsonResponse({"error": "AttributeError", "message": "invalid groupby parameter"})
     param = VALID_GROUP_BY[groupby]
 
     # Process raw data to form clusters
-    data_pairs = User.objects.filter(
-        votes__comment__conversation=conversation
-    ).values_list("id", param)
+    data_pairs = User.objects.filter(votes__comment__conversation=conversation).values_list("id", param)
 
     data = defaultdict(list)
     for user, value in data_pairs:
@@ -151,12 +145,4 @@ GROUP_DESCRIPTIONS = {
     "race": lambda x: None if x is None else Race(x).description,
 }
 
-EXPOSED_PROFILE_FIELDS = (
-    "race",
-    "gender",
-    "age",
-    "occupation",
-    "education",
-    "country",
-    "state",
-)
+EXPOSED_PROFILE_FIELDS = ("race", "gender", "age", "occupation", "education", "country", "state")

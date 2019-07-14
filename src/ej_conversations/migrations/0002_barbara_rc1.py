@@ -13,70 +13,106 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('ej_conversations', '0001_ada_lovelace_v1'),
+        ("ej_conversations", "0001_ada_lovelace_v1"),
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='comment',
-            name='is_promoted',
+        migrations.RemoveField(model_name="comment", name="is_promoted"),
+        migrations.AddField(
+            model_name="comment",
+            name="moderator",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                related_name="rejected_comments",
+                to=settings.AUTH_USER_MODEL,
+            ),
         ),
         migrations.AddField(
-            model_name='comment',
-            name='moderator',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='rejected_comments', to=settings.AUTH_USER_MODEL),
+            model_name="comment",
+            name="rejection_reason_text",
+            field=models.TextField(
+                blank=True,
+                help_text="You must provide a reason to reject a comment. Users will receive this feedback.",
+                verbose_name="Rejection reason (free-form)",
+            ),
         ),
         migrations.AddField(
-            model_name='comment',
-            name='rejection_reason_text',
-            field=models.TextField(blank=True, help_text='You must provide a reason to reject a comment. Users will receive this feedback.', verbose_name='Rejection reason (free-form)'),
-        ),
-        migrations.AddField(
-            model_name='conversation',
-            name='moderators',
-            field=models.ManyToManyField(blank=True, help_text='Moderators can accept and reject comments.', related_name='moderated_conversations', to=settings.AUTH_USER_MODEL),
-        ),
-        migrations.AlterField(
-            model_name='comment',
-            name='rejection_reason',
-            field=boogie.fields.enum_field.EnumField(ej_conversations.enums.RejectionReason, default=ej_conversations.enums.RejectionReason(0), verbose_name='Rejection reason'),
+            model_name="conversation",
+            name="moderators",
+            field=models.ManyToManyField(
+                blank=True,
+                help_text="Moderators can accept and reject comments.",
+                related_name="moderated_conversations",
+                to=settings.AUTH_USER_MODEL,
+            ),
         ),
         migrations.AlterField(
-            model_name='conversation',
-            name='is_hidden',
-            field=models.BooleanField(default=False, help_text='Hidden conversations does not appears in boards or in the main /conversations/ endpoint.', verbose_name='Hide conversation?'),
+            model_name="comment",
+            name="rejection_reason",
+            field=boogie.fields.enum_field.EnumField(
+                ej_conversations.enums.RejectionReason,
+                default=ej_conversations.enums.RejectionReason(0),
+                verbose_name="Rejection reason",
+            ),
         ),
         migrations.AlterField(
-            model_name='conversation',
-            name='is_promoted',
-            field=models.BooleanField(default=False, help_text='Promoted conversations appears in the main /conversations/ endpoint.', verbose_name='Promote conversation?'),
+            model_name="conversation",
+            name="is_hidden",
+            field=models.BooleanField(
+                default=False,
+                help_text="Hidden conversations does not appears in boards or in the main /conversations/ endpoint.",
+                verbose_name="Hide conversation?",
+            ),
         ),
         migrations.AlterField(
-            model_name='conversation',
-            name='slug',
-            field=autoslug.fields.AutoSlugField(editable=False, populate_from='title'),
+            model_name="conversation",
+            name="is_promoted",
+            field=models.BooleanField(
+                default=False,
+                help_text="Promoted conversations appears in the main /conversations/ endpoint.",
+                verbose_name="Promote conversation?",
+            ),
         ),
         migrations.AlterField(
-            model_name='conversation',
-            name='tags',
-            field=taggit.managers.TaggableManager(blank=True, help_text='A comma-separated list of tags.', through='ej_conversations.ConversationTag', to='taggit.Tag', verbose_name='Tags'),
+            model_name="conversation",
+            name="slug",
+            field=autoslug.fields.AutoSlugField(editable=False, populate_from="title"),
         ),
         migrations.AlterField(
-            model_name='conversation',
-            name='text',
-            field=models.TextField(help_text='What do you want to ask?', verbose_name='Question'),
+            model_name="conversation",
+            name="tags",
+            field=taggit.managers.TaggableManager(
+                blank=True,
+                help_text="A comma-separated list of tags.",
+                through="ej_conversations.ConversationTag",
+                to="taggit.Tag",
+                verbose_name="Tags",
+            ),
         ),
         migrations.AlterField(
-            model_name='conversation',
-            name='title',
-            field=models.CharField(help_text='Short description used to create URL slugs (e.g. School system).', max_length=255, verbose_name='Title'),
+            model_name="conversation",
+            name="text",
+            field=models.TextField(help_text="What do you want to ask?", verbose_name="Question"),
         ),
         migrations.AlterField(
-            model_name='favoriteconversation',
-            name='conversation',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='favorites', to='ej_conversations.Conversation'),
+            model_name="conversation",
+            name="title",
+            field=models.CharField(
+                help_text="Short description used to create URL slugs (e.g. School system).",
+                max_length=255,
+                verbose_name="Title",
+            ),
         ),
-        migrations.DeleteModel(
-            name='CommentQueue',
+        migrations.AlterField(
+            model_name="favoriteconversation",
+            name="conversation",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="favorites",
+                to="ej_conversations.Conversation",
+            ),
         ),
+        migrations.DeleteModel(name="CommentQueue"),
     ]

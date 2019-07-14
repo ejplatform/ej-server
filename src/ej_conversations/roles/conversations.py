@@ -11,9 +11,7 @@ from ..rules import max_comments_per_conversation
 
 
 @with_template(models.Conversation, role="balloon")
-def conversation_balloon(
-    conversation, request=None, actions=None, is_favorite=False, **kwargs
-):
+def conversation_balloon(conversation, request=None, actions=None, is_favorite=False, **kwargs):
     """
     Render details of a conversation inside a conversation balloon.
     """
@@ -63,9 +61,7 @@ def conversation_card(conversation, url=None, request=None, text=None, hidden=No
 
 
 @with_template(models.Conversation, role="comment-form")
-def conversation_comment_form(
-    conversation, request=None, content=None, user=None, form=None, target=None
-):
+def conversation_comment_form(conversation, request=None, content=None, user=None, form=None, target=None):
     """
     Render comment form for conversation.
     """
@@ -74,10 +70,7 @@ def conversation_comment_form(
     if not user.is_authenticated:
         conversation_url = conversation.get_absolute_url()
         login = reverse("auth:login")
-        return {
-            "user": None,
-            "login_anchor": a(_("login"), href=f"{login}?next={conversation_url}"),
-        }
+        return {"user": None, "login_anchor": a(_("login"), href=f"{login}?next={conversation_url}")}
 
     # Check if user still have comments left
     n_comments = rules.compute("ej.remaining_comments", conversation, user)
@@ -105,9 +98,7 @@ def conversation_create_comment(conversation, request=None, **kwargs):
     n_moderation = conversation.n_pending_comments
     max_comments = max_comments_per_conversation()
     moderation_msg = _("{n} awaiting moderation").format(n=n_moderation)
-    comments_count = _("{ratio} comments").format(
-        ratio=f"<strong>{n_comments}</strong> / {max_comments}"
-    )
+    comments_count = _("{ratio} comments").format(ratio=f"<strong>{n_comments}</strong> / {max_comments}")
 
     # FIXME: Reactivate when full UI for the comment form is implemented
     # return extra_content(

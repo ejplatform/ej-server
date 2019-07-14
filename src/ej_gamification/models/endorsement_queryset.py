@@ -34,8 +34,7 @@ class EndorsementQuerySet(QuerySet):
         """
         now = timezone.now()
         return self.filter(
-            (Q(start__lte=now) | Q(start__isnull=True))
-            & (Q(end__gte=now) | Q(end__isnull=True))
+            (Q(start__lte=now) | Q(start__isnull=True)) & (Q(end__gte=now) | Q(end__isnull=True))
         )
 
     def expired(self):

@@ -12,26 +12,10 @@ class UserAdmin(AuthUserAdmin):
         (None, {"fields": ("email", "name", "display_name", "password")}),
         (
             _("Permissions"),
-            {
-                "fields": (
-                    "is_active",
-                    "is_staff",
-                    "is_superuser",
-                    "groups",
-                    "user_permissions",
-                )
-            },
+            {"fields": ("is_active", "is_staff", "is_superuser", "groups", "user_permissions")},
         ),
         (_("Important dates"), {"fields": ("last_login", "date_joined")}),
     )
-    add_fieldsets = (
-        (
-            None,
-            {
-                "classes": ("wide",),
-                "fields": ("email", "name", "password1", "password2"),
-            },
-        ),
-    )
+    add_fieldsets = ((None, {"classes": ("wide",), "fields": ("email", "name", "password1", "password2")}),)
     search_fields = ["name", "email"]
     ordering = ["email"]
