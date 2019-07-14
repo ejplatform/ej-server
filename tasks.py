@@ -680,6 +680,7 @@ def collect(ctx, theme=None):
     """
     theme, root = set_theme(theme)
     root_css = directory / 'lib/build/css/'
+    root_js = directory / 'lib/build/js/'
 
     # Select the correct minified build for CSS assets
     for file in ['main', 'rocket', 'hicontrast']:
@@ -691,6 +692,14 @@ def collect(ctx, theme=None):
             fd.write(open(from_path).read())
 
     # Select minified javascript assets
+    for file in os.listdir(root_js):
+        if file.endswith('.min.js'):
+            from_path = root_js/ file
+            to_path = root_js/ (file[:-6] + 'js')
+            if not from_path.exists():
+                exit('Please run "inv build-assets" first!')
+            with open(to_path, 'w') as fd:
+                fd.write(open(from_path).read())
 
     manage(ctx, 'collectstatic --noinput')
 

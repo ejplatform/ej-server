@@ -76,10 +76,10 @@ FROM python as tools
 RUN curl https://nodejs.org/dist/v8.11.3/node-v8.11.3-linux-x64.tar.xz -o node.tar.xz \
  && tar -xJf node.tar.xz \
  && mv node-v8.11.3-linux-x64 node \
- && mv /node/bin/* /usr/bin/ \
- && mv /node/lib/node_modules /usr/lib \
- && mv /node/include/node /usr/include \
- && rm -rf node* \
+ && mv /app/node/bin/* /usr/bin/ \
+ && mv /app/node/lib/node_modules /usr/lib \
+ && mv /app/node/include/node /usr/include \
+ && rm -rf /app/node* \
  && echo "NPM INSTALLATION IS DONE!"
 
 # Install global npm packages
@@ -106,14 +106,15 @@ RUN cd lib && pnpm install \
 
 FROM tools as builder
 
-COPY ./.coveragerc ./*.py ./*.rst ./*.toml /app/
-COPY ./etc/ /app/etc/
-COPY ./docs/ /app/docs/
-COPY ./locale/ /app/locale/
-COPY ./lib/ /app/lib/
-COPY ./src/ /app/src/
+COPY --chown=django:django ./.coveragerc ./*.py ./*.rst ./*.toml /app/
+COPY --chown=django:django ./etc/ /app/etc/
+COPY --chown=django:django ./docs/ /app/docs/
+COPY --chown=django:django ./locale/ /app/locale/
+COPY --chown=django:django ./lib/ /app/lib/
+COPY --chown=django:django ./src/ /app/src/
 
 # Prepare assets
+USER django
 RUN mkdir -p local/logs local/static/ local/media/ local/db/ lib/build/
 RUN inv -e i18n -c -l pt_BR
 RUN inv -e i18n -c -l en_US
@@ -127,6 +128,9 @@ RUN echo "BUILT AND COLLECTED STATIC ASSETS"
 
 FROM python as deploy
 
+
+# Install gunicorn
+RUN pip install gunicorn~=19.9
 
 # Set basic parameters
 ARG THEME=default
@@ -171,18 +175,21 @@ ENV PYTHONUNBUFFERED=1
 ENV PATH=$PATH:/opt/node_modules/.bin/
 
 # Make node_modules executables available even after mounting over /app
+USER root
 RUN mv /app/lib/node_modules /opt/node_modules/
 
 # Create user
 # Create django user
-RUN if [$UID != 1000] \
-then \
+RUN \
+if [ "$UID" != "1000" ]; then \
     groupadd -r ${USERNAME} -g ${GID} \
-    useradd -r -g ${USERNAME} ${USERNAME} -u ${UID} \
-    mkdir /home/${USERNAME} \
-    chown ${USERNAME}:${USERNAME} /home/django \
-    echo "USER CREATED" \
-fi;
+    && useradd -r -g ${USERNAME} ${USERNAME} -u ${UID} \
+    && mkdir /home/${USERNAME} \
+    && chown ${USERNAME}:${USERNAME} /home/django \
+    && echo "USER CREATED"; \
+else \
+    echo "USER ALREADY EXISTS"; \
+fi
 USER ${USERNAME}
 
 

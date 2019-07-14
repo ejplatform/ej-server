@@ -74,7 +74,19 @@ pre-commit = "^1.17"
 [tool.black]
 line-length = 108  # Strict maximum of 120
 target_version = ['py36']
-
+exclude = '''
+/(
+    \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+)/
+'''
 
 [tool.ej.conf]
 themes=["default", "cpa"]
