@@ -30,7 +30,7 @@ class TestProfile:
 
     def test_profile_invariants(self, profile):
         assert str(profile) == "name's profile"
-        assert profile.profile_fields() == [
+        assert set(profile.profile_fields()) == {
             ("City", "city"),
             ("State", "state"),
             ("Country", "country"),
@@ -42,7 +42,7 @@ class TestProfile:
             ("Race", "Indigenous"),
             ("Political activity", "political_activity"),
             ("Biography", "biography"),
-        ]
+        }
         assert profile.is_filled
         assert profile.statistics() == {"votes": 0, "comments": 0, "conversations": 0}
         assert profile.role() == _("Regular user")

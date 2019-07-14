@@ -20,10 +20,10 @@ before_install:
 
 install:
   - pip install invoke poetry toml
-  - poetry run inv configure --silent
+  - inv configure --silent
 
 script:
-  - poetry run inv test
+  - inv test
 
 before_script:
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter

@@ -98,6 +98,6 @@ class TestEditProfile:
             == datetime.strptime(form_data["birth_date"], "%Y-%m-%d").date()
         )
         inf_fields.remove("birth_date")
-        assert all(
-            map(lambda attr: getattr(user.profile, attr) == form_data[attr], inf_fields)
-        )
+
+        for attr in inf_fields:
+            assert getattr(user.profile, attr) == form_data[attr], attr

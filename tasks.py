@@ -563,7 +563,7 @@ def install_hooks(ctx):
 
 
 @task
-def configure(ctx, silent=False, dev=False):
+def configure(ctx, silent=False, dev=True):
     """
     Install dependencies and configure a test server.
     """
@@ -626,14 +626,29 @@ def shell(ctx):
     manage(ctx, 'shell')
 
 
-@task
-def test(ctx):
+@task(
+    help={
+        'verbose': 'Detailed error messages',
+        'lf': 'Run only the last failed tests',
+    }
+)
+def test(ctx, verbose=False, lf=False):
     """
     Run all unittests.
     """
-    if not os.environ.get('EJ_BASE_URL'):
-        os.environ['EJ_BASE_URL'] = 'localhost'
-    ctx.run('pytest')
+    opts = ''
+    if verbose:
+        opts += ' -vv'
+    if lf:
+        opts += ' --lf'
+    ctx.run(f'pytest {opts}', env={
+        'EJ_THEME': 'default',
+        'EJ_BASE_URL': 'localhost',
+        'USE_I18N': 'false',
+        'USE_L10N': 'false',
+        'USE_TZ': 'false',
+        'COUNTRY': '',
+    })
 
 
 @task
