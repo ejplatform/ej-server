@@ -19,7 +19,8 @@ before_install:
   - curl -L https://unpkg.com/@pnpm/self-installer | node
 
 install:
-  - pip install invoke poetry toml
+  - pip install invoke poetry toml flake8
+  - flake8
   - inv configure --silent
 
 script:

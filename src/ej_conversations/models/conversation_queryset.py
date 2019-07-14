@@ -38,8 +38,16 @@ class ConversationQuerySet(ConversationMixin, WordCloudQuerySet):
         for arg in values:
             kwargs.setdefault(arg, True)
 
+        annotations = self._get_annotations(kwargs, prefix or "", user)
+        if kwargs:
+            raise TypeError(f"bad attribute: {kwargs.popitem()[0]}")
+
+        if not annotations:
+            return self
+        return self.annotate(**annotations)
+
+    def _get_annotations(self, kwargs, prefix, user):
         annotations = {}
-        prefix = prefix or ""
 
         # First tag
         if kwargs.pop("first_tag", False):
@@ -73,13 +81,7 @@ class ConversationQuerySet(ConversationMixin, WordCloudQuerySet):
         # Author name
         if kwargs.pop("author_name", False):
             annotations[prefix + "author_name"] = F(AUTHOR_NAME_FIELD)
-
-        if kwargs:
-            raise TypeError(f"bad attribute: {kwargs.popitem()[0]}")
-
-        if not annotations:
-            return self
-        return self.annotate(**annotations)
+        return annotations
 
     def random_votes(self, users=None, probs=(0.1, 0.15, 0.25)):
         """
