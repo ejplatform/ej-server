@@ -11,6 +11,7 @@ from django.utils.translation import ugettext_lazy as _
 from ej.utils import JSONField
 from .exceptions import ApiError
 from .manager import RCConfigManager
+from .validators import WhiteListedURLValidator
 
 CAN_LOGIN_PERM = "ej_rocketchat.can_create_account"
 
@@ -105,16 +106,18 @@ class RCConfig(models.Model):
         default=settings.EJ_ROCKETCHAT_URL,
         help_text=_("Public URL in which the Rocket.Chat instance is installed."),
     )
-    api_url = models.URLField(
+    api_url = models.CharField(
         _("Rocket.Chat private URL"),
         unique=True,
         blank=True,
         null=True,
+        max_length=200,
         help_text=_(
             "A private URL used only for API calls. Can be used to override "
             "the public URL if Rocket.Chat is also available from an internal "
             "address in your network."
         ),
+        validators=[WhiteListedURLValidator()],
     )
     admin_username = models.CharField(
         _("Admin username"),
