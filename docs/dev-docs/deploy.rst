@@ -2,8 +2,8 @@
 Deployment
 ==========
 
-EJ relies on Docker and a Docker orchestration technology such as Docker Compose
-in its deployment process.
+EJ recommends using Docker with a container orchestration technology such as
+Docker Compose in its deployment process.
 
 The easiest way to proceed is to use the pre-build images available on `Docker Hub`_
 and personalize your installation using environment variables. You must
@@ -14,15 +14,28 @@ database.
 .. _Docker Hub: https://hub.docker.com/u/ejplatform/
 .. _EJ Architecture: architecture.html
 
+Building images
+===============
+
 The first step is to build the deployment image for the main application. You
 must have a working development environment in your machine. Activate the virtualenv
 using ``workon ej`` and then enter the command::
 
-    $ inv docker-build --deploy
+    $ inv docker-build
 
-The docker-build command accepts additional configurations such as
-``--theme cpa``, ``--country brasil``, ``--tag v1.0``, and others
-(``inv docker-build -h`` shows additional options).
+The docker-build command accepts additional configurations. ``inv docker-build -h``
+shows additional options, but here are some important options you probably should
+set manually:
+
+``--theme``:
+    Defines the current theme. (E.g. ``--theme cpa``. EJ currently accepts
+    "default" and "cpa").
+``--org, --tag``:
+    Name image as '<org>/web:<tag>'
+
+
+Initializing the database
+=========================
 
 After building the image, you must initialize the database. Open a terminal in
 the Django container with the command::
@@ -76,6 +89,8 @@ Rocket.Chat integration
 
 Integrating Rocket.Chat to the stack requires a few additional steps. You must
 edit the docker/env/django.env file and set ``EJ_ROCKETCHAT_INTEGRATION=true``.
+This configuration enables the ``ej_rocketchat`` application, but does not
+prepare the environment or connect to the rocketchat instance
 Depending on your configuration, you might need to set other environment variables
 such as EJ_ROCKETCHAT_URL and EJ_ROCKETCHAT_USERNAME.
 

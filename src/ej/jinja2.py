@@ -211,6 +211,13 @@ def generic_context(ctx):
 #
 # Constants
 #
+def try_function(func, *args, **kwargs):
+    try:
+        return func(*args, **kwargs)
+    except:
+        return StrictUndefined()
+
+
 FUNCTIONS = {}
 for _names, _mod in [(tags.__all__, tags), (dir(components), components)]:
     for _name in _names:
@@ -218,3 +225,4 @@ for _names, _mod in [(tags.__all__, tags), (dir(components), components)]:
         if not _name.startswith("_") and callable(value):
             FUNCTIONS[_name] = value
 SALT_CHARS = string.ascii_letters + string.digits + "-_"
+FUNCTIONS['try'] = try_function

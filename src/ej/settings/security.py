@@ -11,8 +11,8 @@ class SecurityConf(Base):
         "allauth.account.auth_backends.AuthenticationBackend",
     ]
     X_FRAME_OPTIONS = env("SAMEORIGIN")
-    CORS_ORIGIN_ALLOW_ALL = True
-    CORS_ALLOW_CREDENTIALS = env(True)
+    CORS_ORIGIN_ALLOW_ALL = env(False)
+    CORS_ALLOW_CREDENTIALS = env(False)
 
     def get_cors_origin_whitelist(self, hostname):
         return self.CSRF_TRUSTED_ORIGINS
@@ -24,6 +24,8 @@ class SecurityConf(Base):
         ]
         if self.EJ_ROCKETCHAT_INTEGRATION:
             trusted.append(remove_schema(self.EJ_ROCKETCHAT_URL))
+            if self.EJ_ROCKETCHAT_API_URL:
+                trusted.append(remove_schema(self.EJ_ROCKETCHAT_API_URL))
         return unique(trusted)
 
     def get_allowed_hosts(self, hostname):

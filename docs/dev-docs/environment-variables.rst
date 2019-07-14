@@ -118,4 +118,7 @@ EJ_ROCKETCHAT_AUTH_TOKEN:
 EJ_ROCKETCHAT_USER_ID:
     Unique id of Rocket.Chat admin.
 
+EJ_ROCKETCHAT_PASSWORD:
+    Rocket.Chat admin password.
+
 .. _Rocket API: https://rocket.chat/docs/developer-guides/rest-api/authentication/
