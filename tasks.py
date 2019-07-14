@@ -48,11 +48,13 @@ def build_assets(ctx):
     # Build CSS
     for theme in config['tool']['ej']['conf']['themes']:
         print(f'\nBuilding theme: {theme!r}')
+
         sass(ctx, theme, suffix=f'-{theme}', minify=True)
 
     # Build Javascript
+    # Parcel already minifies and 'minify' doesn't seem to be helping much.
     print('Building javascript assets')
-    js(ctx, minify=True)
+    js(ctx, minify=False)
 
 
 @task(help={
@@ -116,10 +118,10 @@ def js(ctx, watch=False, minify=False):
             minify = directory / 'lib/node_modules/.bin/minify'
             base = directory / 'lib/build/js/'
             for path in os.listdir(base):
-                if path.endswith('.js'):
+                if path.endswith('.js') and not path.endswith('.min.js'):
                     path = str(base / path)
                     print(f'Minifying {path}')
-                    ctx.run(f'{minify} {path} > {path[:-2]}.min.js')
+                    ctx.run(f'{minify} {path} > {path[:-3]}.min.js')
     finally:
         os.chdir(cwd)
 
