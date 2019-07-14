@@ -12,7 +12,7 @@ services:
     environment:
       MONGO_URL: mongodb://mongo:27017/rocketchat
       PORT: '3000'
-      ROOT_URL: http://${HOSTNAME:-rocketchat}:3000
+      ROOT_URL: http://${EJ_ROCKETCHAT_URL:-rocketchat}:3000
     links:
       - mongo:mongo
     ports:
