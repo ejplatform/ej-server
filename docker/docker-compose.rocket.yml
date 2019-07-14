@@ -1,5 +1,6 @@
 version: '3.5'
 
+
 services:
   rocketchat:
     image: rocketchat/rocket.chat:${ROCKETCHAT_VERSION:-latest}
@@ -13,12 +14,15 @@ services:
     ports:
       - 3000:3000/tcp
 
+
   mongo:
-    image: mongo
+    image: ej/mongo
+    build:
+      context: .
+      dockerfile: Dockerfile-mongo
     volumes:
       - db_rocketchat:/data/db
       - ./scripts:/scripts/
-
     ports:
       - 27017:27017/tcp
     command:
@@ -26,6 +30,7 @@ services:
       - --smallfiles
       - --oplogSize
       - '128'
+
 
 volumes:
   db_rocketchat:

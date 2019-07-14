@@ -6,8 +6,16 @@ from pathlib import Path
 from invoke import task
 
 python = sys.executable
-directory = os.path.dirname(__file__)
+directory = Path(os.path.dirname(__file__))
 sys.path.append('src')
+HELP_MESSAGES = {
+    'dry-run': 'Display docker commands on the screen without running them',
+    'theme': 'Set theme (e.g. cpa or default)',
+    'watch': 'Re-run when any file changes',
+    'minify': 'Minify resulting assets',
+    'background': 'Runs on background',
+    'rocket': 'Enable Rocket.Chat',
+}
 
 
 #
@@ -21,38 +29,66 @@ def manage(ctx, cmd, *args, env=None, **kwargs):
     env = {**os.environ, **(env or {})}
     path = env.get("PYTHONPATH", ":".join(sys.path))
     env.setdefault('PYTHONPATH', f'src:{path}')
-    ctx.run(cmd, pty=True, env=env)
+    os.chdir(directory)
+    ctx.run(cmd, pty=True, env=env, )
 
 
 #
 # Build assets
 #
 @task
-def sass(ctx, theme=None, watch=False, background=False):
+def build_assets(ctx):
+    """
+    Builds all required assets to make EJ ready for deployment.
+    """
+    from toml import load
+
+    config = load(open(directory / 'pyproject.toml'))
+
+    # Build CSS
+    for theme in config['tool']['ej']['conf']['themes']:
+        print(f'\nBuilding theme: {theme!r}')
+        sass(ctx, theme, suffix=f'-{theme}', minify=True)
+
+    # Build Javascript
+    print('Building javascript assets')
+    js(ctx, minify=True)
+
+
+@task(help={
+    **HELP_MESSAGES,
+    'suffix': 'Append suffix to resulting file names.',
+})
+def sass(ctx, theme=None, watch=False, background=False, suffix='', minify=False):
     """
     Run Sass compiler
     """
 
     theme, root = set_theme(theme)
     os.environ['EJ_THEME'] = theme or 'default'
-    ctx.run('mkdir -p lib/build/css')
-    root = f'{root}scss/'
+    ctx.run(f'mkdir -p {directory / "lib/build/css"}')
+    root = directory / f'{root}scss'
+    minify = directory / 'lib/node_modules/.bin/minify'
 
     def go():
         import sass
 
-        root_url = f'file://{os.path.abspath("lib/build/css/")}'
+        root_url = f'file://{directory / "lib/build/css/"}'
         for file in ('main', 'rocket', 'hicontrast'):
             try:
-                map_path = f'lib/build/css/{file}.css.map'
-                css, sourcemap = sass.compile(filename=f'{root}{file}.scss',
-                                              source_map_filename=map_path,
-                                              source_map_root=root_url,
+                css_path = directory / f'lib/build/css/{file}{suffix}.css'
+                css_min_path = directory / f'lib/build/css/{file}{suffix}.min.css'
+                map_path = directory / f'lib/build/css/{file}{suffix}.css.map'
+                css, sourcemap = sass.compile(filename=str(root / f'{file}.scss'),
+                                              source_map_filename=str(map_path),
+                                              source_map_root=str(root_url),
                                               source_map_contents=True,
                                               source_map_embed=True,
                                               )
-                with open(f'lib/build/css/{file}.css', 'w') as fd:
+                with open(css_path, 'w') as fd:
                     fd.write(css)
+                    if minify:
+                        ctx.run(f'{minify} {css_path} > {css_min_path}')
                 with open(map_path, 'w') as fd:
                     fd.write(sourcemap)
 
@@ -64,12 +100,10 @@ def sass(ctx, theme=None, watch=False, background=False):
 
 
 @task
-def js(ctx, watch=False):
+def js(ctx, watch=False, minify=False):
     """
     Build js assets
     """
-    from pathlib import Path
-
     build_cmd = 'npm run watch' if watch else 'npm run build'
     cwd = os.getcwd()
     try:
@@ -78,6 +112,14 @@ def js(ctx, watch=False):
         ctx.run('mkdir -p build/js/')
         ctx.run('rm build/js/main.js* -f')
         ctx.run(build_cmd)
+        if minify:
+            minify = directory / 'lib/node_modules/.bin/minify'
+            base = directory / 'lib/build/js/'
+            for path in os.listdir(base):
+                if path.endswith('.js'):
+                    path = str(base / path)
+                    print(f'Minifying {path}')
+                    ctx.run(f'{minify} {path} > {path[:-2]}.min.js')
     finally:
         os.chdir(cwd)
 
@@ -308,96 +350,149 @@ def db_assets(ctx, force=False, theme=None):
 #
 # Docker
 #
-@task
+@task(
+    help={
+        **HELP_MESSAGES,
+        'task': 'One of "local", "single", "up", "down", "run", "exec" or "rocket"',
+        'rocket': 'Enable Rocket.Chat',
+
+    },
+)
 def docker(ctx, task, cmd=None, port=8000, file=None, dry_run=False,
            deploy=False, rocket=False, clean_perms=False):
     """
     Runs EJ platform using a docker container.
-
-    Use inv docker <cmd>, where cmd is one of single, start, up, down, run, exec.
     """
     docker = su_docker('docker')
     do = runner(ctx, dry_run, pty=True)
-    if file is None and deploy or task == 'production':
+    app = 'web' if deploy else 'app'
+
+    if cmd == 'rocket':
+        file = 'docker/docker-compose.rocket.yml'
+    elif file is None and deploy:
         file = 'docker/docker-compose.deploy.yml'
     elif file is None:
-        file = 'docker/docker-compose.yml'
+        file = 'docker/docker-compose.local.yml'
     compose = f'{docker}-compose -f {file}'
     if rocket:
-        compose += ' -f docker/docker-compose.rocket.yml'
+        if task in ('local', 'run', 'exec', 'down'):
+            compose += ' -f docker/docker-compose.rocket.yml'
+        elif task != 'rocket':
+            exit('Rocket.Chat cannot be enabled during this task')
 
     if task == 'single':
         do(f'{docker} run'
            f'  -v `pwd`:/app'
            f'  -p {port}:8000'
-           f'  -u django'
-           f'  -it ej/web {cmd or "bash"}')
-    elif task == 'start':
-        do(f'{compose} up -d')
-        do(f'{compose} run -p {port}:8000 web {cmd or "bash"}')
+           f'  -u {os.getuid()}'
+           f'  -it ej/app:latest {cmd or "bash"}')
+    elif task == 'local':
+        do(f'{compose} run -p {port}:8000 {app} {cmd or "bash"}')
         do(f'{compose} stop')
     elif task in ('up', 'down'):
         do(f'{compose} {task}')
     elif task in ('run', 'exec'):
-        do(f'{compose} -p {port}:8000 {task} web {cmd or "bash"}')
+        do(f'{compose} -p {port}:8000 {task} {app} {cmd or "bash"}')
     else:
         raise SystemExit(f'invalid task: {task}')
     if clean_perms:
         do(f'sudo chown `whoami`:`whoami` * -R')
 
 
-@task
-def docker_build(ctx, theme='default', tag='latest', dry_run=False, build_kit=True,
-                 org='ej', deploy=False, dev=False, country='brazil',
-                 hostname='localhost', rocket_chat_integration=False):
+@task(
+    help={
+        **HELP_MESSAGES,
+        'build-kit': 'Build-kit is an experimental Docker feature that usually leads to faster builds',
+        'org': 'Organization owning the Docker images',
+        'tag': 'Tag for the resulting Docker image',
+        'which': 'Select image to build (base, local or deploy)',
+    },
+)
+def docker_build(ctx, theme=None, dry_run=False, build_kit=False,
+                 org='ej', tag='latest'):
     """
     Rebuild all docker images for the project.
     """
+    from subprocess import check_output
+
+    theme, _ = set_theme(theme)
     prefix = 'DOCKER_BUILDKIT=1 ' if build_kit else ''
     do = runner(ctx, dry_run, pty=True)
-    cmd = su_docker(f'{prefix}docker build . -f docker/Dockerfile')
-    rocket = str(rocket_chat_integration).lower()
+    cmd = su_docker(f'{prefix}docker build . -f docker/Dockerfile ')
+    env = {
+        'ORG': org,
+        'TAG': tag,
+        'THEME': theme,
+        'COMMIT_TITLE': check_output('git log -n 1 --format="%s"', shell=True).strip(),
+        'COMMIT_HASH': check_output('git log -n 1 --format="%H"', shell=True).strip(),
+    }
+    cmd += ' '.join(f'--build-arg {k}={v}' for k, v in env.items())
+    do(cmd + f' -t {org}/web:{tag} --target deploy')
+    do(cmd + f' -t {org}/app:{tag} --target local')
 
+    return
     # Build base docker image
-    requirements(ctx)
-    do(f'{cmd}-base -t {org}/web:base'
-       f'  --build-arg COMMIT_HASH="`git log -n 1 --format="%H"`"'
-       f'  --build-arg COMMIT_TITLE="`git log -n 1 --format="%s"`"'
-       f'  --build-arg HOSTNAME={hostname}'
-       f'  --build-arg THEME={theme}'
-       f'  --build-arg COUNTRY={country}')
-
-    build_all = deploy == dev == False
-
-    if dev or build_all:
-        do(f'{cmd}-dev -t {org}/web:dev '
+    if which in ('base', 'all'):
+        try:
+            requirements(ctx)
+        except ImportError:
+            exit('Please install toml (pip3 install toml) before proceeding')
+        do(f'{cmd}-base -t {org}/web:base'
            f'  --build-arg ORG={org}'
-           f'  --build-arg UID={os.getuid()}'
-           f'  --build-arg GID={os.getgid()}')
+           f'  --build-arg COMMIT_HASH="`git log -n 1 --format="%H"`"'
+           f'  --build-arg COMMIT_TITLE="`git log -n 1 --format="%s"`"'
+           f'  --build-arg THEME={theme}'
+           )
 
-    if deploy or build_all:
-        do(f'{cmd}-deploy -t {org}/web:{tag}'
+        # Builds development image
+        if which in ('local', 'all'):
+            username = os.environ.get('USER', 'user')
+        if username == 'django':
+            username = 'django-local'
+        uid = os.getuid()
+        gid = os.getgid()
+        do(f'{cmd}-local -t {org}/web:local'
            f'  --build-arg ORG={org}'
-           f'  --build-arg ROCKETCHAT={rocket}')
+           f'  --build-arg UID={uid}'
+           f'  --build-arg GID={gid}'
+           f'  --build-arg USERNAME={username}'
+           )
+
+        # Builds production image
+        if which in ('deploy', 'all'):
+            do(f'{cmd}-deploy -t {org}/web:{tag}'
+               f'  --build-arg ORG={org}')
 
 
-@task
-def docker_push(ctx, tag='latest', theme='default:ejplatform', dry_run=False):
+@task(
+    help={
+        **HELP_MESSAGES,
+        'spec': 'A string or list of strings of the form <theme>:<org>',
+    },
+)
+def docker_push(ctx, tag='latest', spec='default:ejplatform', dry_run=False):
     """
-    Push docker images for the web container.
+    Build and push docker images for the web container.
     """
     cmd = su_docker(f'docker push')
     do = runner(ctx, dry_run, pty=True)
 
-    for item in theme.split(','):
-        theme, org = item.split(':') if ':' in item else (item, item)
+    for item in spec.split(','):
+        spec, org = item.split(':') if ':' in item else (item, item)
         do(f'{cmd} {org}/web:{tag}')
 
 
 #
 # Translations
 #
-@task
+@task(
+    help={
+        'compile': 'Compile .po files',
+        'edit': 'Open poedit to edit translations',
+        'lang': 'Language',
+        'keep-pot': 'If true, do not clean up temporary .pot files (debug)',
+    },
+)
 def i18n(ctx, compile=False, edit=False, lang='pt_BR', keep_pot=False):
     """
     Extract messages for translation.
@@ -568,7 +663,20 @@ def collect(ctx, theme=None):
     """
     Runs Django's collectstatic command
     """
-    set_theme(theme)
+    theme, root = set_theme(theme)
+    root_css = directory / 'lib/build/css/'
+
+    # Select the correct minified build for CSS assets
+    for file in ['main', 'rocket', 'hicontrast']:
+        from_path = root_css / (file + f'-{theme}.min.css')
+        to_path = root_css / (file + '.css')
+        if not from_path.exists():
+            exit('Please run "inv build-assets" first!')
+        with open(to_path, 'w') as fd:
+            fd.write(open(from_path).read())
+
+    # Select minified javascript assets
+
     manage(ctx, 'collectstatic --noinput')
 
 
@@ -677,7 +785,7 @@ def set_theme(theme):
         theme = theme.rstrip('/')
         root = f'{theme}/'
         theme = os.path.basename(theme)
-    elif theme != 'default':
+    elif theme and theme != 'default':
         root = f'lib/themes/{theme}/'
     elif 'EJ_THEME' in os.environ:
         theme = os.environ['EJ_THEME']

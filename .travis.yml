@@ -1,12 +1,11 @@
 language: python
-#cache: pip
+cache: pip
 sudo: false
 
 
 env:
   global:
     - CC_TEST_REPORTER_ID=774db8cce863050fe5bc219651c79d338521ca894b66ee3df3b9a2eb6a27f3e7
-
 
 matrix:
   include:
@@ -16,21 +15,20 @@ matrix:
    - env: TOXENV=py36-sqlite
      python: '3.6'
 
+before_install:
+  - curl -L https://unpkg.com/@pnpm/self-installer | node
 
 install:
-  - pip install invoke poetry
+  - pip install invoke poetry toml
   - poetry run inv configure --silent
-
 
 script:
   - poetry run inv test
-
 
 before_script:
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build
-
 
 after_script:
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT

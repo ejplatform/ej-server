@@ -3,11 +3,14 @@ version: '3.5'
 
 services:
   nginx:
-    image: ejplatform/nginx:latest
+    image: ${ORG:-ej}/nginx:latest
+    build:
+      context: .
+      dockerfile: Dockerfile-nginx
+    restart: always
     volumes:
       - media_files:/usr/share/nginx/html/media
       - static_files:/usr/share/nginx/html/static
-      - docs:/usr/share/nginx/html/docs
     ports:
       - 80:80
     depends_on:
@@ -15,33 +18,35 @@ services:
     links:
       - web
 
+
   web:
-    image: ej/web:latest
+    image: ${ORG:-ej}/web:${TAG:-latest}
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile
+      target: deploy
+      args:
+        - THEME=${EJ_THEME:-default}
     restart: always
     links:
       - postgres
     env_file:
-      - ./env/django.env
-      - ./env/postgres.env
-      - ./env/deploy.env
+      - ./config.env
     volumes:
       - media_files:/app/local/media/
       - static_files:/app/local/static/
-      - docs:/app/build/docs/
-      - nginx_conf:/etc/nginx/conf.d/
+
 
   postgres:
     image: postgres:10-alpine
     restart: always
     env_file:
-      - ./env/postgres.env
+      - ./config.env
     volumes:
-      - ej_db_data:/var/lib/postgresql/data
+      - db_ej:/var/lib/postgresql/data
 
 
 volumes:
-  ej_db_data:
+  db_ej:
   media_files:
   static_files:
-  nginx_conf:
-  docs:

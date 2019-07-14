@@ -19,19 +19,22 @@
             defendam seus direitos</h1>
 
         <div class="bg-brand-lighter margin-y4">
-            <a class="row items-center block" href="{{ url('rocket:index') }}">
-                <div class="size-x5 center">
-                    <img src="{{ static('img/icons/cpa_circulo.svg') }}" alt="Ícone painel CPA">
-                </div>
-                <div class="flex-1 pad-y3 pad-r2">
-                    <h1 class="h3 text-black margin-t0">Painel CPA</h1>
-                    <aside>
-                        <p>Aqui, quem faz parte do Comitê de Participação de Adolescente (CPA),
-                            no Conanda, troca ideias, compartilha informações e ajuda nas decisões
-                            do Conselho</p>
-                    </aside>
-                </div>
-            </a>
+            {% set talks_url = try(url, 'rocket:index') %}
+            {% if talks_url is defined %}
+                <a class="row items-center block" href="{{ talks_url }}">
+                    <div class="size-x5 center">
+                        <img src="{{ static('img/icons/cpa_circulo.svg') }}" alt="Ícone painel CPA">
+                    </div>
+                    <div class="flex-1 pad-y3 pad-r2">
+                        <h1 class="h3 text-black margin-t0">Painel CPA</h1>
+                        <aside>
+                            <p>Aqui, quem faz parte do Comitê de Participação de Adolescente (CPA),
+                                no Conanda, troca ideias, compartilha informações e ajuda nas decisões
+                                do Conselho</p>
+                        </aside>
+                    </div>
+                </a>
+            {% endif %}
 
             <div class="bg-white size-y1"></div>
 
