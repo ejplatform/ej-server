@@ -6,10 +6,26 @@ label + select + br {
     display: none;
 }
 
-label + input + br + .helptext,
-label + textarea + br + .helptext,
-label + select + br + .helptext {
+input + .helptext,
+textarea + .helptext,
+select + .helptext,
+input + br + .helptext,
+textarea + br + .helptext,
+select + br + .helptext {
     @extend legend;
-    margin-top: size(0.25) - $mendeleev-label-margin-bottom;
+    margin-top: size(0.25) - $mendeleev-label-margin-bottom !important;
     margin-bottom: size(1);
+    margin-left: size(0.5);
+}
+
+.helptext {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+ul.errorlist {
+    color: color('red');
+    font-size: 0.9rem;
+    list-style: none;
+    margin: size(0.25);
 }

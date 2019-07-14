@@ -1,11 +1,10 @@
 from django.conf import settings
-from django.forms import DateInput
 
 import ej.forms
 from ej.forms import EjModelForm
 from . import models
 
-EDITABLE_FIELDS = [
+FULL_EDITABLE_FIELDS = [
     "occupation",
     "education",
     "gender",
@@ -20,6 +19,7 @@ EDITABLE_FIELDS = [
     "profile_photo",
 ]
 EXCLUDE_EDITABLE_FIELDS = settings.EJ_EXCLUDE_PROFILE_FIELDS
+EDITABLE_FIELDS = [f for f in FULL_EDITABLE_FIELDS if f not in EXCLUDE_EDITABLE_FIELDS]
 
 
 class UsernameForm(EjModelForm):
@@ -38,8 +38,11 @@ class ProfileForm(EjModelForm):
         model = models.Profile
         fields = [field for field in EDITABLE_FIELDS if field not in EXCLUDE_EDITABLE_FIELDS]
         widgets = {
-            "birth_date": DateInput(attrs={"type": "date"}),
-            "profile_photo": ej.forms.FileInput(attrs={"accept": "image/*"}),
+            # DateInput seems to not convert data in the database to a proper
+            # value. Dates already saved on the database are removed because
+            # they show as blanks
+            # "birth_date": DateInput(attrs={"type": "date"}, format="D d M Y"),
+            "profile_photo": ej.forms.FileInput(attrs={"accept": "image/*"})
         }
 
     def __init__(self, *args, instance, **kwargs):

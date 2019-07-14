@@ -197,7 +197,10 @@ patch_user_class()
 
 
 def is_empty(x):
-    return x is None or np.isnan(x)
+    try:
+        return x is None or np.isnan(x)
+    except TypeError:
+        return not bool(x)
 
 
 #

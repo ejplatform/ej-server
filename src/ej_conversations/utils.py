@@ -20,9 +20,8 @@ def check_promoted(conversation, request):
     """
     Raise a Http404 if conversation is not promoted
     """
-    if not conversation.is_promoted:
-        raise Http404
-    if conversation.is_hidden and not request.user.has_perm("ej.can_edit_conversation", conversation):
+    # Check if request.user.has_perm("ej.can_edit_conversation", conversation)))?
+    if not conversation.is_promoted or conversation.is_hidden:
         raise Http404
     return conversation
 

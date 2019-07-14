@@ -4,15 +4,19 @@ from boogie import rules
 @rules.register_perm("ej.can_view_report")
 def can_view_report(user, conversation):
     """
-    Can edit a given conversation.
-
-    * User can edit conversation
-    * OR user has explict permission to see reports (not implemented)
+    Can see basic report data
     """
-    # if user.is_superuser:
-    #     return True
-    # elif (conversation.limit_report_users == 0
-    #       or not conversation.statistics()['participants']['commenters'] > conversation.limit_report_users):
-    #     return True
-    # return False
-    return True
+    if can_view_report_detail(user, conversation):
+        return True
+    else:
+        return user.has_perm("ej.can_edit_conversation", conversation)
+
+
+@rules.register_perm("ej.can_view_report_detail")
+def can_view_report_detail(user, conversation):
+    """
+    Can see advanced report data
+
+    * Must be staff
+    """
+    return user.is_superuser or user.is_staff

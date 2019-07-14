@@ -8,7 +8,7 @@
         <p>{% trans %}Administrative users do not have user accounts in Rocket.Chat. Instead, they all control
             the common administrative account for Rocket.Chat.{% endtrans %}</p>
         <h2 class="h3 text-accent">{{ _('Login') }}</h2>
-        <p>{{ _('Please type the <strong>Rocket.Chat</strong> admin password')|safe }}</p>
+        <p>{{ _('Please type the Rocket.Chat admin password') }}</p>
         <form method="post">
             {{ csrf_input }}
             {{ form.as_p() }}

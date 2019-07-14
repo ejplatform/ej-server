@@ -45,8 +45,8 @@ def index(request, conversation, slug, check=check_promoted):
         try:
             clusters = (
                 clusterization.clusters.annotate(size=Count(F.users))
-                .annotate_attr(separated_comments=lambda c: c.separate_comments())
-                .prefetch_related("stereotypes")
+                    .annotate_attr(separated_comments=lambda c: c.separate_comments())
+                    .prefetch_related("stereotypes")
             )
             shapes = cluster_shapes(clusterization, clusters, user)
             shapes_json = json.dumps({"shapes": list(shapes.values())})
@@ -67,7 +67,7 @@ def index(request, conversation, slug, check=check_promoted):
     }
 
 
-@urlpatterns.route(conversation_url + "clusters/edit/")
+@urlpatterns.route(conversation_url + "clusters/edit/", perms=["ej.can_edit_conversation:conversation"])
 def edit(request, conversation, slug, check=check_promoted):
     check(conversation, request)
     new_cluster_form = forms.ClusterFormNew(request=request)
@@ -147,7 +147,7 @@ def stereotype_votes(request, conversation, slug, check=check_promoted):
             )
 
     all_votes = clusterization.stereotype_votes.all()
-    comments = conversation.comments.all()
+    comments = conversation.comments.approved()
 
     # Mark stereotypes with information about votes
     stereotypes = []

@@ -41,8 +41,8 @@ def scatter_pca_json(request, conversation, slug, check=check_promoted):
 
     check(conversation, request)
     df = conversation.votes.votes_table("mean")
-    if df.shape[0] <= 1 or df.shape[1] <= 1:
-        return {"error": "InsufficientData", "message": _("Not enough data")}
+    if df.shape[0] <= 3 or df.shape[1] <= 3:
+        return JsonResponse({"error": "InsufficientData", "message": _("Not enough data")})
 
     data = PCA(2).fit_transform(df.values)
     return JsonResponse(

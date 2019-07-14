@@ -839,6 +839,7 @@ def watch_path(path, func, poll_time=0.5, name=None, skip_first=False):
 
 
 def exec_watch(path, func, name, watch=False, background=False, poll_time=0.5):
+    path = str(path)
     if watch and background:
         go = lambda: watch_path(path, func, name=name, poll_time=poll_time)
         return exec_watch(path, go, name, background=True)

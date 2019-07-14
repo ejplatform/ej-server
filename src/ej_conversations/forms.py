@@ -67,7 +67,7 @@ class ConversationForm(EjModelForm):
 
     class Meta:
         model = Conversation
-        fields = ["title", "text", "is_promoted", "is_hidden"]
+        fields = ["title", "text", "is_promoted"]  # "is_hidden"
         help_texts = {
             "is_promoted": _("Place conversation in the main /conversations/ URL."),
             "is_hidden": _("Mark to make the conversation invisible."),
@@ -116,6 +116,9 @@ class ConversationForm(EjModelForm):
             name = f"comment-{i + 1}"
             value = self.data.get(name)
             if value:
-                conversation.create_comment(author, value, **kwargs)
-
+                try:
+                    conversation.create_comment(author, value, **kwargs)
+                # Duplicate or empty comment...
+                except ValidationError:
+                    pass
         return conversation

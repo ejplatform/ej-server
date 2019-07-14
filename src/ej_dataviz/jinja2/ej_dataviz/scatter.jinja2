@@ -29,6 +29,13 @@
                     width = $container.width();
                 $container.height(((width < 500) ? width : 500) + 'px');
 
+                // Check if data is valid
+                if (data.error) {
+                    $container.html('<div class="pad-3 margin-3 bg-accent rounded-3"><h3 class="text-white" id="error"></h3></div>');
+                    $container.find("#error").text(data.message);
+                    return;
+                }
+
                 // Init chart
                 var dom = $container[0],
                     chart = echarts.init(dom);

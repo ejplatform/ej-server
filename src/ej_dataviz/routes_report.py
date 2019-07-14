@@ -18,7 +18,7 @@ urlpatterns = Router(
     template="ej_dataviz/report/{name}.jinja2",
     models={"conversation": Conversation, "cluster": Cluster},
     login=True,
-    perms=["ej.can_view_report_detail:conversation"],
+    perms=["ej.can_view_report:conversation"],
 )
 app_name = "ej_dataviz"
 User = get_user_model()
@@ -50,8 +50,10 @@ def index(request, conversation, slug, check=check_promoted):
     }
 
 
-@urlpatterns.route("users/")
+@urlpatterns.route("users/", perms=["ej.can_view_report_detail"])
 def users(request, conversation, slug, check=check_promoted):
+    if not request.user.has_perm("ej.can_view_report_detail"):
+        raise Http404
     return {"conversation": check(conversation, request)}
 
 
@@ -60,7 +62,7 @@ def users(request, conversation, slug, check=check_promoted):
 # ------------------------------------------------------------------------------
 
 
-@urlpatterns.route("data/votes.<fmt>")
+@urlpatterns.route("data/votes.<fmt>", perms=["ej.can_view_report_detail"])
 def votes_data(request, conversation, fmt, slug, check=check_promoted):
     check(conversation, request)
     filename = conversation.slug + "-votes"
@@ -70,7 +72,7 @@ def votes_data(request, conversation, fmt, slug, check=check_promoted):
 
 # FIXME: why is <model:cluster> not working?
 # adjust conversation_download_data() after fixing this bug
-@urlpatterns.route("data/cluster-<int:cluster_id>/votes.<fmt>")
+@urlpatterns.route("data/cluster-<int:cluster_id>/votes.<fmt>", perms=["ej.can_view_report_detail"])
 def votes_data_cluster(request, conversation, fmt, cluster_id, slug, check=check_promoted):
     check(conversation, request)
     cluster = get_cluster_or_404(cluster_id, conversation)
@@ -145,7 +147,9 @@ def users_data(request, conversation, fmt, slug, check=check_promoted):
     except AttributeError:
         pass
     else:
+        # Retrieve non empty clusters.
         data = clusters.values_list("users__id", "name", "id")
+        data = filter(lambda x: x[0], data)
         extra = pd.DataFrame(data, columns=["user", "cluster", "cluster_id"])
         extra.index = extra.pop("user")
         df[["cluster", "cluster_id"]] = extra

@@ -52,10 +52,10 @@
 {% endblock %}
 
 
-{% block javascript_body %}
+{% block javascript %}
     {{ super() }}
     <!--suppress SpellCheckingInspection -->
-    <script defer>
+    <script>
         window.addEventListener('load', function () {
             $('#add-more-comments')
                 .on('click keypress', function (ev) {

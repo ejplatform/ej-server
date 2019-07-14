@@ -34,7 +34,7 @@ def list_view(request, queryset=Conversation.objects.filter(is_promoted=True), c
 
     # Select the list of conversations: staff get to see hidden conversations while
     # regular users cannot
-    if not (user.is_staff or user.is_superuser):
+    if not (user.is_staff or user.is_superuser or user.has_perm("ej_conversations.can_publish_promoted")):
         queryset = queryset.filter(is_hidden=False)
 
     # Annotate queryset for efficient db access
@@ -99,16 +99,18 @@ def create(request, context=None, **kwargs):
 def edit(request, conversation, slug=None, check=check_promoted, **kwargs):
     check(conversation, request)
     form = forms.ConversationForm(request=request, instance=conversation)
-    can_publish = request.user.has_perm("can_publish_promoted")
+    can_publish = request.user.has_perm("ej_conversations.can_publish_promoted")
+    is_promoted = conversation.is_promoted
 
     if form.is_valid_post():
         # Check if user is not trying to edit the is_promoted status without
         # permission. This is possible since the form sees this field
         # for all users and does not check if the user is authorized to
         # change is value.
-        if form.cleaned_data["is_promoted"] != conversation.is_promoted:
-            raise PermissionError("invalid operation")
-        form.save()
+        new = form.save()
+        if new.is_promoted != is_promoted:
+            new.is_promoted = is_promoted
+            new.save()
 
         # Now we decide the correct redirect page
         page = request.POST.get("next")
@@ -116,8 +118,10 @@ def edit(request, conversation, slug=None, check=check_promoted, **kwargs):
             url = reverse("cluster:conversation-stereotype")
         elif page == "moderate":
             url = reverse("conversation:moderate")
-        else:
+        elif conversation.is_promoted:
             url = conversation.get_absolute_url()
+        else:
+            url = reverse("conversation:list")
         return redirect(url)
 
     return {

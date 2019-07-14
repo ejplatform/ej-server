@@ -10,7 +10,7 @@ EJ_ANONYMOUS_HOME_PATH = env('EJ_ANONYMOUS_HOME_PATH', default='/start/')
 EJ_PAGE_TITLE = env('EJ_PAGE_TITLE', default='Plataforma CPA')
 EJ_REGISTER_TEXT = env('EJ_REGISTER_TEXT', default='Não faz parte da Plataforma CPA?')
 EJ_LOGIN_TITLE_TEXT = env('EJ_LOGIN_TITLE_TEXT', default='Participe dos debates, contribua para promover e defender seus direitos')
-EJ_EXCLUDE_PROFILE_FIELDS = env('EJ_EXCLUDE_PROFILE_FIELDS', default=['political_activity'])
+EJ_EXCLUDE_PROFILE_FIELDS = env('EJ_EXCLUDE_PROFILE_FIELDS', default=['political_activity', 'ethnicity'])
 EJ_MAX_BOARD_NUMBER = env('EJ_MAX_BOARD_NUMBER', default=0)
 EJ_STATE_MAX_LENGTH = env('EJ_STATE_MAX_LENGTH', default=2)
 EJ_STATE_CHOICES = (

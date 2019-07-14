@@ -35,6 +35,9 @@ def edit(request):
     if form.is_valid_post():
         form.files = request.FILES
         form.save()
+        from pprint import pprint
+
+        pprint(form.cleaned_data)
         return redirect("/profile/")
 
     return {"form": form, "profile": profile}
