@@ -26,7 +26,15 @@ class RocketIntegrationForm(PlaceholderForm, forms.Form):
         help_text=_("Required URL for Rocket.Chat admin instance."),
         initial=settings.EJ_ROCKETCHAT_URL,
     )
-    username = forms.CharField(label=_("Username"), help_text=_("Username for Rocket.Chat admin user."))
+    api_url = forms.CharField(
+        label=_("Internal URL"),
+        help_text=_("Optional URL used for communication with Rocket.Chat in the internal network."),
+        required=False,
+    )
+    username = forms.CharField(
+        label=_("Username"),
+        help_text=_("Username for Rocket.Chat admin user."),
+    )
     password = forms.CharField(
         widget=forms.PasswordInput,
         required=False,
@@ -57,7 +65,8 @@ class RocketIntegrationForm(PlaceholderForm, forms.Form):
         Return a saved RCConfig instance from form data.
         """
         url = data["rocketchat_url"]
-        config = models.RCConfig(url=url)
+        api_url = data["api_url"] or url
+        config = models.RCConfig(url=api_url)
         response = config.api_call(
             "login", payload={"username": data["username"], "password": data["password"]}, raises=False
         )
@@ -74,11 +83,13 @@ class RocketIntegrationForm(PlaceholderForm, forms.Form):
 
     def _save_config(self, data):
         url = self.cleaned_data["rocketchat_url"]
+        api_url = self.cleaned_data["api_url"] or ""
         user_id = data["userId"]
         auth_token = data["authToken"]
 
         # Save config
         config, _ = models.RCConfig.objects.get_or_create(url=url)
+        config.api_url = api_url
         config.admin_id = user_id
         config.admin_token = auth_token
         config.admin_username = self.cleaned_data["username"]

@@ -60,9 +60,10 @@ def get_rocket_url():
 
 
 def with_headers(response):
-    policy = " ".join(["frame-ancestors", *settings.CSRF_TRUSTED_ORIGINS])
+    frame_ancestors = getattr(settings, 'CONTENT_SECURITY_POLICY_FRAME_ANCESTORS', [])
+    frame_ancestors = " ".join(["frame-ancestors", *settings.CSRF_TRUSTED_ORIGINS, *frame_ancestors])
     response["Access-Control-Allow-Origin"] = get_rocket_url()
     response["Access-Control-Allow-Credentials"] = "true"
-    response["Content-Security-Policy"] = policy
+    response["Content-Security-Policy"] = frame_ancestors
     response["X-Frame-Options"] = f"allow-from {get_rocket_url()}"
     return response

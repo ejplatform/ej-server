@@ -17,6 +17,8 @@ urlpatterns = Router(template=["ej_rocketchat/{name}.jinja2"])
 
 @urlpatterns.route("", decorators=[security_policy])
 def index(request):
+    base_url = request.scheme + '://' + request.get_host()
+
     if not request.user.has_perm(CAN_LOGIN_PERM):
         return render(request, "ej_rocketchat/forbidden.jinja2")
 
@@ -33,13 +35,14 @@ def index(request):
                 "username": rocket.admin_username,
                 "token": rocket.admin_token,
                 "form": form,
+                "base_url": base_url,
             }
     else:
         account = rocket.find_or_create_account(request.user)
         if account is None:
             return redirect("rocket:register")
 
-    ctx = {"url": rocket.url + "/home/", "url_escape": repr(rocket.url + "/home/")}
+    ctx = {"url": rocket.url + "/home/", "url_escape": repr(rocket.url + "/home/"), "base_url": base_url}
     return render(request, "ej_rocketchat/redirect.jinja2", ctx)
 
 
@@ -74,9 +77,12 @@ def config(request):
     return {"form": form}
 
 
-@urlpatterns.route("intro/", login=True, decorators=[security_policy])
-def intro():
-    return {}
+@urlpatterns.route("intro/", login=False, decorators=[security_policy])
+def intro(request):
+    base_url = request.scheme + '://' + request.get_host()
+    return {
+        'base_url': base_url,
+    }
 
 
 @urlpatterns.route("login/", decorators=[security_policy], template="ej_users/login.jinja2")
