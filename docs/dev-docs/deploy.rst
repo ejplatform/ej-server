@@ -90,8 +90,10 @@ to load some fake data or old dumps from the database. Open a shell in the
 
     $ docker-compose run web bash
 
-Once inside the container, you'll probably need to create a superuser:
+Once inside the container, you'll probably need to execute migrations and
+create a superuser:
 
+    $ python manage.py migrate
     $ python manage.py createsuperuser
 
 Django's manage.py also has many other options that might be useful at this
@@ -102,6 +104,10 @@ the command bellow. ATTENTION: this pollutes the database with a lot of random
 information and obviously should not be used in production!
 
     $ inv db-fake -h
+
+Other potentially useful tasks are implemented on the invoke task file. Type
+``inv -l`` to list them all. Notice the production image is very limited and
+many tasks will not work because they require some missing dependencies.
 
 
 Troubleshooting

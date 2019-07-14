@@ -42,13 +42,19 @@ def index(request, conversation, slug, check=check_promoted):
         clusters = ()
         shapes_json = None
     else:
-        clusters = (
-            clusterization.clusters.annotate(size=Count(F.users))
-            .annotate_attr(separated_comments=lambda c: c.separate_comments())
-            .prefetch_related("stereotypes")
-        )
-        shapes = cluster_shapes(clusterization, clusters, user)
-        shapes_json = json.dumps({"shapes": list(shapes.values())})
+        try:
+            clusters = (
+                clusterization.clusters.annotate(size=Count(F.users))
+                .annotate_attr(separated_comments=lambda c: c.separate_comments())
+                .prefetch_related("stereotypes")
+            )
+            shapes = cluster_shapes(clusterization, clusters, user)
+            shapes_json = json.dumps({"shapes": list(shapes.values())})
+        except Exception as exc:
+            exc_name = exc.__class__.__name__
+            log.error(f"Error found during clusterization: {exc} ({exc_name})")
+            clusters = ()
+            shapes_json = {"shapes": [{"name": _("Error"), "size": 0, "intersections": [[0.0]]}]}
 
     can_edit = user.has_perm("ej.can_edit_conversation", conversation)
     return {

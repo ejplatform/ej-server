@@ -5,7 +5,7 @@ Preparing environment
 Python
 ======
 
-EJ requires Python 3.6+ and a POSIX environment. If you use a recent version of
+EJ requires Python 3.7+ and a POSIX environment. If you use a recent version of
 a Linux distribution, it is probably already installed in your system, otherwise
 you will have to follow system-specific instructions:
 

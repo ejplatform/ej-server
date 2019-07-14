@@ -65,11 +65,16 @@ def cluster_shapes(clusterization, clusters=None, user=None):
             user.clusters.filter(clusterization_id=clusterization.id).values_list("id", flat=True)
         )
 
+    result = {}
     for k, shape in shapes.items():
         old = shape["intersections"]
         shape["intersections"] = [old[id] for id in ids]
-        shape["name"] = names[k]
+        try:
+            shape["name"] = names[k]
+        except KeyError:
+            continue
         if k in user_cluster_id:
             shape["highlight"] = True
+        result[k] = shape
 
-    return shapes
+    return result
