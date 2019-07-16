@@ -1,7 +1,7 @@
 import logging
 
 from boogie.configurations import DjangoConf, env
-from ej.settings.dramatiq import DramatiqConf
+from .dramatiq import DramatiqConf
 from .apps import InstalledAppsConf
 from .constance import ConstanceConf
 from .email import EmailConf
