@@ -198,7 +198,7 @@ Troubleshooting
 
 If you are receiving error messages for invalid IFrame requests, try to
 set EJ_ROCKETCHAT_URL environment variable on config.env. If that still does not work,
-change DJANGO_X_FRAME_OPTIONS and select the correct X-Frame-Options_ policy.
+change HTTP_X_FRAME_OPTIONS and select the correct X-Frame-Options_ policy.
 
 You might also want to include the rocket chat URL to the
 DJANGO_CONTENT_SECURITY_POLICY_FRAME_ANCESTORS list in your environment file.

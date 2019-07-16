@@ -11,9 +11,15 @@ class SecurityConf(Base):
         "allauth.account.auth_backends.AuthenticationBackend",
     ]
     X_FRAME_OPTIONS = env("SAMEORIGIN")
-    CONTENT_SECURITY_POLICY_FRAME_ANCESTORS = env([])
+    CONTENT_SECURITY_POLICY_FRAME_ANCESTORS = env([])  # TODO: deprecated
     CORS_ORIGIN_ALLOW_ALL = env(False)
     CORS_ALLOW_CREDENTIALS = env(False)
+
+    # Configure HTTP headers
+    HTTP_CONTENT_SECURITY_POLICY = env('', name='{attr}')
+    HTTP_ACCESS_CONTROL_ALLOW_ORIGIN = env('', name='{attr}')
+    HTTP_ACCESS_CONTROL_ALLOW_CREDENTIALS = env('', name='{attr}')
+    HTTP_X_FRAME_OPTIONS = env('', name='{attr}')
 
     def get_cors_origin_whitelist(self, hostname):
         return self.CSRF_TRUSTED_ORIGINS
