@@ -126,7 +126,7 @@ def comments(group, author, conversation):
     global global_id
     from ej_conversations.models import Comment
 
-    last_pk = Comment.objects.order_by('id').last().id
+    last_pk = getattr(Comment.objects.order_by('id').last(), 'id')
     Comment.objects.bulk_create([
         Comment(
             status=Comment.STATUS.approved,
@@ -139,7 +139,12 @@ def comments(group, author, conversation):
     global_id += 1
 
     result = []
-    for comment in Comment.objects.filter(id__gt=last_pk):
+    if last_pk is None:
+        comments = Comment.objects.all()
+    else:
+        comments = Comment.objects.filter(id__gt=last_pk)
+
+    for comment in comments:
         comment.group = group
         comment.prob = int(comment.content.split(' - ')[-1].strip('%')) / 100
         result.append(comment)
