@@ -5,15 +5,18 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('ej_rocketchat', '0001_initial_migration'),
-    ]
+    dependencies = [("ej_rocketchat", "0001_initial_migration")]
 
     operations = [
         migrations.AddField(
-            model_name='rcconfig',
-            name='admin_password',
-            field=models.CharField(default='password1234', help_text='Password for the administrative account. It is unfortunately necessary to store this value since Rocket.Chat authentication tokens expire at unpredictable times.', max_length=50, verbose_name='Password'),
+            model_name="rcconfig",
+            name="admin_password",
+            field=models.CharField(
+                default="password1234",
+                help_text="Password for the administrative account. It is unfortunately necessary to store this value since Rocket.Chat authentication tokens expire at unpredictable times.",
+                max_length=50,
+                verbose_name="Password",
+            ),
             preserve_default=False,
-        ),
+        )
     ]

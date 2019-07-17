@@ -5,18 +5,15 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('ej_profiles', '0002_add_state_field'),
-    ]
+    dependencies = [("ej_profiles", "0002_add_state_field")]
 
     operations = [
-        migrations.RemoveField(
-            model_name='profile',
-            name='image',
-        ),
+        migrations.RemoveField(model_name="profile", name="image"),
         migrations.AddField(
-            model_name='profile',
-            name='profile_photo',
-            field=models.ImageField(blank=True, null=True, upload_to='profile_images', verbose_name='Profile Photo'),
+            model_name="profile",
+            name="profile_photo",
+            field=models.ImageField(
+                blank=True, null=True, upload_to="profile_images", verbose_name="Profile Photo"
+            ),
         ),
     ]

@@ -10,7 +10,7 @@ def apply_all():
     fixes = [
         # django_old_apis.fix,
         # pinax_points.fix,
-        sidekick.fix,
+        sidekick.fix
     ]
 
     try:

@@ -59,7 +59,7 @@ def get_urlpatterns():
         *with_app("ej_rocketchat", "talks/", namespace="rocket"),
         #
         #  Allauth
-        path('accounts/', include('allauth.urls')),
+        path("accounts/", include("allauth.urls")),
         #
         #  Admin
         *(

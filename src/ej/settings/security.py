@@ -16,10 +16,10 @@ class SecurityConf(Base):
     CORS_ALLOW_CREDENTIALS = env(False)
 
     # Configure HTTP headers
-    HTTP_CONTENT_SECURITY_POLICY = env('', name='{attr}')
-    HTTP_ACCESS_CONTROL_ALLOW_ORIGIN = env('', name='{attr}')
-    HTTP_ACCESS_CONTROL_ALLOW_CREDENTIALS = env('', name='{attr}')
-    HTTP_X_FRAME_OPTIONS = env('', name='{attr}')
+    HTTP_CONTENT_SECURITY_POLICY = env("", name="{attr}")
+    HTTP_ACCESS_CONTROL_ALLOW_ORIGIN = env("", name="{attr}")
+    HTTP_ACCESS_CONTROL_ALLOW_CREDENTIALS = env("", name="{attr}")
+    HTTP_X_FRAME_OPTIONS = env("", name="{attr}")
 
     def get_cors_origin_whitelist(self, hostname):
         return self.CSRF_TRUSTED_ORIGINS

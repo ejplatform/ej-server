@@ -4,18 +4,11 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-    dependencies = [
-        ('ej_conversations', '0006_comment_rejection_reason'),
-    ]
+    dependencies = [("ej_conversations", "0006_comment_rejection_reason")]
 
     operations = [
-        migrations.RemoveField(
-            model_name='comment',
-            name='rejection_reason',
-        ),
+        migrations.RemoveField(model_name="comment", name="rejection_reason"),
         migrations.RenameField(
-            model_name='comment',
-            old_name='rejection_reason_index',
-            new_name='rejection_reason',
+            model_name="comment", old_name="rejection_reason_index", new_name="rejection_reason"
         ),
     ]

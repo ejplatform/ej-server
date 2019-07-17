@@ -6,14 +6,14 @@ import ej_boards.validators
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('ej_boards', '0001_first_migration'),
-    ]
+    dependencies = [("ej_boards", "0001_first_migration")]
 
     operations = [
         migrations.AlterField(
-            model_name='board',
-            name='slug',
-            field=models.SlugField(unique=True, validators=[ej_boards.validators.validate_board_slug], verbose_name='Slug'),
-        ),
+            model_name="board",
+            name="slug",
+            field=models.SlugField(
+                unique=True, validators=[ej_boards.validators.validate_board_slug], verbose_name="Slug"
+            ),
+        )
     ]

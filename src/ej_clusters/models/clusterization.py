@@ -85,7 +85,7 @@ class Clusterization(TimeStampedModel):
                 try:
                     self.clusters.clusterize_from_votes()
                 except ValueError as exc:
-                    log.warning(f'Error during clusterization: [{exc}]')
+                    log.warning(f"Error during clusterization: [{exc}]")
                     return
                 self.pending_comments.all().delete()
                 self.pending_votes.all().delete()

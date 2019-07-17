@@ -5,13 +5,6 @@ from django.db import migrations
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('ej_users', '0003_add_is_used_field'),
-    ]
+    dependencies = [("ej_users", "0003_add_is_used_field")]
 
-    operations = [
-        migrations.RemoveField(
-            model_name='user',
-            name='display_name',
-        ),
-    ]
+    operations = [migrations.RemoveField(model_name="user", name="display_name")]

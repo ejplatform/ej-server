@@ -46,7 +46,7 @@ def _patch_conversation_app():
 
     @register_menu("conversations:detail-admin")
     def _detail_links(request, conversation):
-        if request.user.has_perm('ej.can_edit_conversation', conversation):
+        if request.user.has_perm("ej.can_edit_conversation", conversation):
             return [
                 a(_("Edit groups"), href=conversation.url("cluster:edit")),
                 a(_("Manage personas"), href=conversation.url("cluster:stereotype-votes")),

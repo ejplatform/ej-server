@@ -2,7 +2,7 @@ import os
 from django import setup
 
 
-def start(settings='ej.settings'):
+def start(settings="ej.settings"):
     """
     Start Django based on the given settings module.
     """

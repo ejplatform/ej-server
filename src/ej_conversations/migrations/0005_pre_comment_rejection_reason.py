@@ -6,20 +6,26 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-    dependencies = [
-        ('ej_conversations', '0001_ada_lovelace_v1'),
-    ]
+    dependencies = [("ej_conversations", "0001_ada_lovelace_v1")]
 
     operations = [
         migrations.AlterField(
-            model_name='commentqueue',
-            name='comments',
-            field=models.TextField(blank=True, validators=[django.core.validators.RegexValidator(re.compile('^\\d+(?:,\\d+)*\\Z'), code='invalid',
-                                                                                                 message='Enter only digits separated by commas.')]),
+            model_name="commentqueue",
+            name="comments",
+            field=models.TextField(
+                blank=True,
+                validators=[
+                    django.core.validators.RegexValidator(
+                        re.compile("^\\d+(?:,\\d+)*\\Z"),
+                        code="invalid",
+                        message="Enter only digits separated by commas.",
+                    )
+                ],
+            ),
         ),
         migrations.AddField(
-            model_name='comment',
-            name='rejection_reason_index',
-            field=models.IntegerField(default=0, verbose_name='Rejection reason index (temporary)'),
+            model_name="comment",
+            name="rejection_reason_index",
+            field=models.IntegerField(default=0, verbose_name="Rejection reason index (temporary)"),
         ),
     ]

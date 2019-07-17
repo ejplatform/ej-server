@@ -45,8 +45,8 @@ def index(request, conversation, slug, check=check_promoted):
         try:
             clusters = (
                 clusterization.clusters.annotate(size=Count(F.users))
-                    .annotate_attr(separated_comments=lambda c: c.separate_comments())
-                    .prefetch_related("stereotypes")
+                .annotate_attr(separated_comments=lambda c: c.separate_comments())
+                .prefetch_related("stereotypes")
             )
             shapes = cluster_shapes(clusterization, clusters, user)
             shapes_json = json.dumps({"shapes": list(shapes.values())})
