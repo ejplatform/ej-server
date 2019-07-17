@@ -53,7 +53,7 @@ def register_button(provider_id, fa_class=None, query=None):
     return social_button
 
 
-register_button("facebook", query={"method", "oauth2"})
+register_button("facebook", query={"method": "oauth2"})
 register_button("twitter")
 register_button("github")
 register_button("google", fa_class="fa-google-plus-g")

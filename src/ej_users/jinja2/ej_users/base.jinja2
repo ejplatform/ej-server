@@ -15,11 +15,16 @@
     <a href="{{ url('auth:recover-password') + next }}" class="semi-bold underline">{{ _('Recover password') }}</a>
 
     {# SOCIAL LOGIN #}
+    <style>
+    i {
+        font-size: 3rem;
+    }
+    </style>
     {% if social_buttons|default(false) %}
         {{ social_js }}
         <p>{{ _('or sign up through other networks') }}</p>
         <div class="row flex-center items-center">
-            {% for button in buttons %}{{ button }}{% endfor %}
+            {% for button in social_buttons %}{{ button }}{% endfor %}
         </div>
     {% endif %}
 

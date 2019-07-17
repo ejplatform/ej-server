@@ -17,7 +17,7 @@ def start_postgres():
     password = db["PASSWORD"]
     host = db["HOST"]
 
-    for _ in range(100):
+    for _ in range(10):
         if can_connect(dbname, user, password, host):
             log.info("Postgres is available. Continuing...")
             return

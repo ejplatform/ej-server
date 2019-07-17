@@ -2,20 +2,22 @@
 
 import autoslug.fields
 import boogie.fields.enum_field
+import django.db.models.deletion
+import taggit.managers
 from django.conf import settings
 from django.db import migrations, models
-import django.db.models.deletion
+
 import ej_conversations.enums
-import taggit.managers
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ("ej_conversations", "0001_ada_lovelace_v1"),
+        # ("ej_conversations", "0001_ada_lovelace_v1"),
+        ("ej_conversations", "0007_post_comment_rejection_reason"),
     ]
 
+    AlterEnumField = migrations.AlterField
     operations = [
         migrations.RemoveField(model_name="comment", name="is_promoted"),
         migrations.AddField(
@@ -48,7 +50,7 @@ class Migration(migrations.Migration):
                 to=settings.AUTH_USER_MODEL,
             ),
         ),
-        migrations.AlterField(
+        AlterEnumField(
             model_name="comment",
             name="rejection_reason",
             field=boogie.fields.enum_field.EnumField(
