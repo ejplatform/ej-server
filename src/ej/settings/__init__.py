@@ -96,11 +96,21 @@ class Conf(ThemesConf,
     ENVIRONMENT = 'local'
 
     if (ENVIRONMENT == 'production'):
-      EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend';
-      # the api key will be informed during the docker build step.
-      ANYMAIL = {'MAILGUN_API_KEY': ''};
-      DEFAULT_FROM_EMAIL = "Empurrando Juntos <noreply@mail.ejplatform.org>"
-      HOSTNAME = 'https://ejplatform.org'
+        DATABASES = {
+            'default': {
+                'ENGINE': 'django.db.backends.postgresql',
+                'NAME': 'ej',
+                'USER': 'ej',
+                'PASSWORD': '',
+                'HOST': 'ej_prod_db',
+                'PORT': '5432'
+            }
+        }
+        EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend';
+        # the api key will be informed during the docker build step.
+        ANYMAIL = {'MAILGUN_API_KEY': ''};
+        DEFAULT_FROM_EMAIL = "Empurrando Juntos <noreply@mail.ejplatform.org>"
+        HOSTNAME = 'https://ejplatform.org'
 
 
 
