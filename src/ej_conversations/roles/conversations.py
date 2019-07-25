@@ -94,7 +94,7 @@ def conversation_create_comment(conversation, request=None, **kwargs):
     Render "create comment" button for one conversation.
     """
     conversation.set_request(request)
-    n_comments = conversation.n_user_comments
+    n_comments = conversation.n_user_total_comments
     n_moderation = conversation.n_pending_comments
     max_comments = max_comments_per_conversation()
     moderation_msg = _("{n} awaiting moderation").format(n=n_moderation)

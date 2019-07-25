@@ -98,6 +98,7 @@ class Conversation(TimeStampedModel):
     # Statistics for the request user
     user_comments = property(this.comments.filter(author=this.for_user))
     user_votes = property(this.votes.filter(author=this.for_user))
+    n_user_total_comments = lazy(this.user_comments.count())
     n_user_comments = lazy(this.user_comments.filter(status=Comment.STATUS.approved).count())
     n_user_rejected_comments = lazy(this.user_comments.filter(status=Comment.STATUS.rejected).count())
     n_user_pending_comments = lazy(this.user_comments.filter(status=Comment.STATUS.pending).count())
