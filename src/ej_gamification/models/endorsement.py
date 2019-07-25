@@ -8,8 +8,8 @@ from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _, ugettext as __
 from model_utils.models import TimeFramedModel
 
-from ..rules import power_expiration_time
 from .endorsement_queryset import EndorsementQuerySet
+from ..rules import power_expiration_time
 
 NO_PROMOTE_MSG = _("user does not have the right to promote this comment")
 log = logging.getLogger("ej")
@@ -46,6 +46,10 @@ class Endorsement(TimeFramedModel):
     )
     is_expired = property(lambda self: self.end < datetime.now(timezone.utc))
     objects = EndorsementQuerySet.as_manager()
+
+    class Meta:
+        verbose_name = _("Endorsement")
+        verbose_name_plural = _("Endorsements")
 
     def __str__(self):
         msg = str(self.comment)

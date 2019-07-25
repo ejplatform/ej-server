@@ -39,6 +39,10 @@ class GivenPower(PolymorphicModel, TimeFramedModel):
     is_expired = property(lambda self: self.end < datetime.now(timezone.utc))
     is_active = property(lambda self: not (self.is_expired or self.is_exhausted))
 
+    class Meta:
+        verbose_name = _("Given Power")
+        verbose_name_plural = _("Given Powers")
+
     def use_power(self, request, related=None, info=None):
         """
         Use power in (optional) related object.

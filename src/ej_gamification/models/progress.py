@@ -13,8 +13,10 @@ class ProgressBase(models.Model):
     Common features of all Progress models.
     """
 
-    score = models.PositiveSmallIntegerField(default=0)
-    score_bias = models.SmallIntegerField(default=0)
+    score = models.PositiveSmallIntegerField(_("score"), default=0)
+    score_bias = models.SmallIntegerField(
+        _("score adjustment"), default=0, help_text=_("Artificially increase score for any reason")
+    )
 
     @classmethod
     def level_fields(cls):
@@ -42,6 +44,11 @@ class ProgressBase(models.Model):
     def sync(self):
         self.score = self.compute_score()
         self.update_levels(commit=False)
+        return self
+
+    def sync_and_save(self):
+        self.sync()
+        self.save()
         return self
 
     def update_level(self, name, commit=True):
@@ -114,13 +121,42 @@ class UserProgress(ProgressBase):
     Tracks global user evolution.
     """
 
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name="progress", on_delete=models.CASCADE)
-    commenter_level = models.EnumField(CommenterLevel, default=CommenterLevel.NONE)
-    max_commenter_level = models.EnumField(CommenterLevel, default=CommenterLevel.NONE)
-    host_level = models.EnumField(HostLevel, default=HostLevel.NONE)
-    max_host_level = models.EnumField(HostLevel, default=HostLevel.NONE)
-    profile_level = models.EnumField(ProfileLevel, default=ProfileLevel.NONE)
-    max_profile_level = models.EnumField(ProfileLevel, default=ProfileLevel.NONE)
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL, related_name="progress", on_delete=models.CASCADE, editable=False
+    )
+    commenter_level = models.EnumField(
+        CommenterLevel,
+        default=CommenterLevel.NONE,
+        verbose_name=_("commenter level"),
+        help_text=_("Measures how much user participated by contributing comments to conversations"),
+    )
+    max_commenter_level = models.EnumField(
+        CommenterLevel,
+        default=CommenterLevel.NONE,
+        editable=False,
+        verbose_name=_("maximum achieved commenter level"),
+    )
+    host_level = models.EnumField(
+        HostLevel,
+        default=HostLevel.NONE,
+        verbose_name=_("host level"),
+        help_text=_("Measures how much user participated by creating engaging conversations."),
+    )
+    max_host_level = models.EnumField(
+        HostLevel, default=HostLevel.NONE, editable=False, verbose_name=_("maximum achieved host level")
+    )
+    profile_level = models.EnumField(
+        ProfileLevel,
+        default=ProfileLevel.NONE,
+        verbose_name=_("profile level"),
+        help_text=_("Measures how complete is the user profile."),
+    )
+    max_profile_level = models.EnumField(
+        ProfileLevel,
+        default=ProfileLevel.NONE,
+        editable=False,
+        verbose_name=_("maximum achieved profile level"),
+    )
 
     # Non de-normalized fields: conversations app
     n_conversations = delegate_to("user")
@@ -154,10 +190,11 @@ class UserProgress(ProgressBase):
     n_trophies = 0
 
     class Meta:
-        verbose_name_plural = _("User progress list")
+        verbose_name = _("User score")
+        verbose_name_plural = _("User scores")
 
     def __str__(self):
-        return __("Progress for {user}").format(user=self.user)
+        return str(self.user)
 
     def compute_score(self):
         """
@@ -195,8 +232,18 @@ class ConversationProgress(ProgressBase):
     conversation = models.OneToOneField(
         "ej_conversations.Conversation", related_name="progress", on_delete=models.CASCADE
     )
-    conversation_level = models.EnumField(ConversationLevel, default=CommenterLevel.NONE)
-    max_conversation_level = models.EnumField(ConversationLevel, default=CommenterLevel.NONE)
+    conversation_level = models.EnumField(
+        ConversationLevel,
+        default=CommenterLevel.NONE,
+        verbose_name=_("conversation level"),
+        help_text=_("Measures the level of engagement for conversation."),
+    )
+    max_conversation_level = models.EnumField(
+        ConversationLevel,
+        default=CommenterLevel.NONE,
+        editable=False,
+        help_text=_("maximum achieved conversation level"),
+    )
 
     # Non de-normalized fields: conversations
     n_votes = delegate_to("conversation")
@@ -217,7 +264,8 @@ class ConversationProgress(ProgressBase):
     level_achievement_signal = lazy(lambda _: signals.conversation_level_achieved, shared=True)
 
     class Meta:
-        verbose_name_plural = _("Conversation progress list")
+        verbose_name = _("Conversation score")
+        verbose_name_plural = _("Conversation scores")
 
     def __str__(self):
         return __('Progress for "{conversation}"').format(conversation=self.conversation)
@@ -250,15 +298,36 @@ class ParticipationProgress(ProgressBase):
     """
 
     user = models.ForeignKey(
-        settings.AUTH_USER_MODEL, related_name="participation_progresses", on_delete=models.CASCADE
+        settings.AUTH_USER_MODEL,
+        related_name="participation_progresses",
+        on_delete=models.CASCADE,
+        editable=False,
     )
     conversation = models.ForeignKey(
-        "ej_conversations.Conversation", related_name="participation_progresses", on_delete=models.CASCADE
+        "ej_conversations.Conversation",
+        related_name="participation_progresses",
+        on_delete=models.CASCADE,
+        editable=False,
     )
-    voter_level = models.EnumField(VoterLevel, default=VoterLevel.NONE)
-    max_voter_level = models.EnumField(VoterLevel, default=VoterLevel.NONE)
-    is_owner = models.BooleanField(default=False)
-    is_focused = models.BooleanField(default=False)
+    voter_level = models.EnumField(
+        VoterLevel,
+        default=VoterLevel.NONE,
+        verbose_name=_("voter level"),
+        help_text=_("Measure how many votes user has given in conversation"),
+    )
+    max_voter_level = models.EnumField(
+        VoterLevel, default=VoterLevel.NONE, editable=False, verbose_name=_("maximum achieved voter level")
+    )
+    is_owner = models.BooleanField(
+        _("owner?"),
+        default=False,
+        help_text=_("Total score is computed differently if user owns conversation."),
+    )
+    is_focused = models.BooleanField(
+        _("focused?"),
+        default=False,
+        help_text=_("User received a focused badge (i.e., voted on all comments)"),
+    )
 
     # Non de-normalized fields: conversations
     is_favorite = lazy(lambda p: p.conversation.favorites.filter(user=p.user).exists())
@@ -295,6 +364,10 @@ class ParticipationProgress(ProgressBase):
     # Signals
     level_achievement_signal = lazy(lambda _: signals.participation_level_achieved, shared=True)
 
+    class Meta:
+        verbose_name = _("User score (per conversation)")
+        verbose_name_plural = _("User scores (per conversation)")
+
     def __str__(self):
         msg = __("Progress for user: {user} at {conversation}")
         return msg.format(user=self.user, conversation=self.conversation)
@@ -305,7 +378,7 @@ class ParticipationProgress(ProgressBase):
         # You cannot receive a focused achievement in your own conversation!
         if not self.is_owner:
             n_comments = self.conversation.n_comments
-            self.is_focused = n_comments == self.n_votes >= 20
+            self.is_focused = (self.n_votes >= 20) and (n_comments == self.n_votes)
 
         return super().sync()
 
