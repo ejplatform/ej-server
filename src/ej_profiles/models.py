@@ -12,7 +12,7 @@ from django.utils.translation import ugettext_lazy as _, ugettext as __
 from rest_framework.authtoken.models import Token
 from sidekick import delegate_to, import_later
 
-from .enums import Race, Gender
+from .enums import Race, Gender, STATE_CHOICES_MAP
 from .utils import years_from
 
 SocialAccount = import_later("allauth.socialaccount.models:SocialAccount")
@@ -33,9 +33,7 @@ class Profile(models.Model):
     gender_other = models.CharField(_("User provided gender"), max_length=50, blank=True)
     birth_date = models.DateField(_("Birth Date"), null=True, blank=True)
     country = models.CharField(_("Country"), blank=True, max_length=50)
-    state = models.CharField(
-        _("State"), blank=True, max_length=settings.EJ_STATE_MAX_LENGTH, choices=settings.EJ_STATE_CHOICES
-    )
+    state = models.CharField(_("State"), blank=True, max_length=2)
     city = models.CharField(_("City"), blank=True, max_length=140)
     biography = models.TextField(_("Biography"), blank=True)
     occupation = models.CharField(_("Occupation"), blank=True, max_length=50)
@@ -158,12 +156,12 @@ class Profile(models.Model):
         if user_fields:
             triple_list.insert(0, ("email", _("E-mail"), self.user.email))
 
-        # Prepare blacklist of fields
+        # Prepare blacklist of fields and overrides
         if blacklist is None:
-            blacklist = settings.EJ_EXCLUDE_PROFILE_FIELDS
+            blacklist = settings.EJ_PROFILE_EXCLUDE_FIELDS
+        name_overrides = getattr(settings, "EJ_PROFILE_FIELD_NAMES", {})
 
-        # Remove the attribute name from the list
-        return [(b, c) for a, b, c in triple_list if a not in blacklist]
+        return list(prepare_fields(triple_list, blacklist, name_overrides))
 
     def statistics(self):
         """
@@ -196,6 +194,17 @@ class Profile(models.Model):
         if self.user.is_staff:
             return _("Administrative user")
         return _("Regular user")
+
+    def get_state_display(self):
+        return STATE_CHOICES_MAP.get(self.state, self.state) or _("(Not Filled)")
+
+
+def prepare_fields(triples, blacklist, overrides):
+    for a, b, c in triples:
+        if a in blacklist:
+            continue
+        b = overrides.get(a, b)
+        yield b, c
 
 
 def gravatar_fallback(id_):

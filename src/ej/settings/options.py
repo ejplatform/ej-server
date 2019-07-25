@@ -27,7 +27,7 @@ class EjOptions(Conf):
     EJ_USER_HOME_PATH = env("/conversations/", name="{attr}")
 
     # Allow instances to exclude some profile fields from visualization
-    EJ_EXCLUDE_PROFILE_FIELDS = env([], name="{attr}")
+    EJ_PROFILE_EXCLUDE_FIELDS = env([], name="{attr}")
 
     # Messages
     EJ_PAGE_TITLE = env(_("EJ Platform"), name="{attr}")

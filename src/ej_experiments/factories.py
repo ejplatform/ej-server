@@ -11,8 +11,18 @@ from ej_profiles.models import Profile
 from ej_users.models import User
 
 fake = Factory.create()
-GENDERS = [Gender.FEMALE, Gender.MALE] * 3 + [Gender.OTHER]
-RACES = [Race.BLACK, Race.WHITE] * 3 + list(Race)
+
+# Create genders and make try to increase the probabilities of MALE and FEMALE
+# attributions if they likely exist.
+GENDERS = list(Gender)
+if len(GENDERS) > 3:
+    GENDERS += 3 * GENDERS[1:3]
+
+# Create races and increase the probability of the first 3 races.
+RACES = list(Race)
+if len(RACES) > 3:
+    RACES += 3 * RACES[1:3]
+
 COMMENT_STATUS = [Comment.STATUS.approved] * 4 + [Comment.STATUS.rejected, Comment.STATUS.pending]
 RANDOM_PROFILE_FIELDS = {
     "race": lambda: choice(RACES),

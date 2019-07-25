@@ -93,7 +93,7 @@ EJ_ENABLE_BOARDS (true):
 EJ_MAX_COMMENTS_PER_CONVERSATION (2):
     Default number of comments that each user has in each conversation.
 
-EJ_EXCLUDE_PROFILE_FIELDS:
+EJ_PROFILE_EXCLUDE_FIELDS:
     Optional list of fields that should be excluded from user profile
     visualization.
 

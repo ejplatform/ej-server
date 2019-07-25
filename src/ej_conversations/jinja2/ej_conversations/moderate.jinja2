@@ -27,8 +27,7 @@
 
         {% if comments %}
             <p class="margin-t3">
-                {% trans count=n, n=n_strong %}Found {{ n }} comment.{% endtrans %}
-                {% trans count=n, n=n_strong %}{% pluralize %}Found {{ n }} comments.{% endtrans %}
+                {% trans count=n, n=n_strong %}Found {{ n }} comment.{% pluralize %}Found {{ n }} comments.{% endtrans %}
             </p>
 
             {# Rejection reason form #}

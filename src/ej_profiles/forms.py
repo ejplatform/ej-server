@@ -1,8 +1,9 @@
+from django import forms
 from django.conf import settings
 
-import ej.forms
 from ej.forms import EjModelForm
 from . import models
+from .enums import STATE_CHOICES
 
 FULL_EDITABLE_FIELDS = [
     "occupation",
@@ -18,7 +19,7 @@ FULL_EDITABLE_FIELDS = [
     "biography",
     "profile_photo",
 ]
-EXCLUDE_EDITABLE_FIELDS = settings.EJ_EXCLUDE_PROFILE_FIELDS
+EXCLUDE_EDITABLE_FIELDS = settings.EJ_PROFILE_EXCLUDE_FIELDS
 EDITABLE_FIELDS = [f for f in FULL_EDITABLE_FIELDS if f not in EXCLUDE_EDITABLE_FIELDS]
 
 
@@ -42,7 +43,8 @@ class ProfileForm(EjModelForm):
             # value. Dates already saved on the database are removed because
             # they show as blanks
             # "birth_date": DateInput(attrs={"type": "date"}, format="D d M Y"),
-            "profile_photo": ej.forms.FileInput(attrs={"accept": "image/*"})
+            # "profile_photo": ej.forms.FileInput(attrs={"accept": "image/*"})
+            "state": forms.Select(choices=STATE_CHOICES)
         }
 
     def __init__(self, *args, instance, **kwargs):
@@ -50,6 +52,11 @@ class ProfileForm(EjModelForm):
         self.user_form = UsernameForm(*args, instance=instance.user, **kwargs)
         self.fields = {**self.user_form.fields, **self.fields}
         self.initial.update(self.user_form.initial)
+
+        # Override field names
+        name_overrides = getattr(settings, "EJ_PROFILE_FIELD_NAMES", {})
+        for name, value in name_overrides.items():
+            self[name].label = value
 
     def save(self, commit=True, **kwargs):
         result = super().save(commit=commit, **kwargs)
