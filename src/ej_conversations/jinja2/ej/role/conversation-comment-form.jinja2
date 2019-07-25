@@ -5,12 +5,12 @@
         <h3>{% trans %}Ooops!{% endtrans %}</h3>
         <p>{% trans %}You reached the limit of comments in this conversation.{% endtrans %}</p>
     {% else %}
-        <p>{% trans %}Include something new and avoid similar opinions. You can post up to
-            <span class="text-accent">{{ n_comments }}</span> comments.{% endtrans %}</p>
+        <p>{% trans %}Include something new and avoid similar opinions.{% endtrans %}
+            {% trans %}You can post up to  <span class="text-accent">{{ n_comments }}</span> comments.{% endtrans %}</p>
         <form method="post" up-target="{{ target or 'main' }}" up-transition="move-to-right/fade-in">
             {{ csrf_input }}
             <input type="hidden" name="action" value="comment">
-            {{ form.non_field_errors()}}
+            {{ form.non_field_errors() }}
             {{ form.content.errors }}
             {{ form.content }}
             <div class="comment-form__count"><span>0</span> / 240</div>

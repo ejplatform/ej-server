@@ -14,8 +14,8 @@
     {% if conversation.is_hidden %}
         <div class="color-negative margin-3 pad-x3 pad-y2 rounded-3 center">
             <h2>{{ _('Warning!') }}</h2>
-            <p>{% trans here=edit_link() %}This conversation is hidden. Click {{ here }} to edit and make it visible
-                again.{% endtrans %}</p>
+            <p>{% trans %}This conversation is hidden.{% endtrans %}
+                {% trans here=edit_link() %} Click {{ here }} to edit and make it visible again.{% endtrans %}</p>
         </div>
 
     {% else %}

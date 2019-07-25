@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-14 18:19-0300\n"
-"PO-Revision-Date: 2019-07-14 18:21-0300\n"
+"PO-Revision-Date: 2019-07-23 14:34-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
 "Language: pt_BR\n"
@@ -1591,7 +1591,7 @@ msgstr "EJ - Uma plataforma de participação social."
 
 #: src/ej/templates/jinja2/pages/home.jinja2:14
 msgid "Create opinion surveys"
-msgstr "Crie consultas de opinião."
+msgstr "Crie consultas de opinião"
 
 #: src/ej/templates/jinja2/pages/home.jinja2:15
 msgid "Try it now!"
@@ -2322,7 +2322,7 @@ msgstr "Participar"
 
 #: src/ej_profiles/jinja2/ej_profiles/contributions.jinja2:71
 msgid "Empty."
-msgstr "Esvaziar."
+msgstr "Vazio."
 
 #: src/ej_profiles/jinja2/ej_profiles/detail.jinja2:5
 msgid "Info"

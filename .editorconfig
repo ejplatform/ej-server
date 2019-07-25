@@ -18,9 +18,10 @@ known_first_party=ej
 multi_line_output=3
 default_section=THIRDPARTY
 
-[*.{html,json,yml}]
+[*.{html,json,yml,jinja2}]
 indent_style = space
-indent_size = 2
+indent_size = 4
+line_length = 150
 
 [*.{css,scss}]
 indent_style = space
