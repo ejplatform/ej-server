@@ -193,18 +193,30 @@ and disable *at least* the following features:
 .. _IFrame login integration: https://rocket.chat/docs/developer-guides/iframe-integration/authentication/
 
 
-Troubleshooting
----------------
+Configuring headers
+-------------------
 
-If you are receiving error messages for invalid IFrame requests, try to
-set EJ_ROCKETCHAT_URL environment variable on config.env. If that still does not work,
-change HTTP_X_FRAME_OPTIONS and select the correct X-Frame-Options_ policy.
+The Rocket.Chat integration occurs mostly via API calls between the Django and
+Rocket.Chat services. Rocket.Chat, however, uses IFrames to redirect any login
+attempt to Django. In order for this integration to work, it may be necessary
+to configure `Access Control`_, Content-Security-Policy_ (CSP) and X-Frame-Options_
+headers manually.
 
-You might also want to include the rocket chat URL to the
-DJANGO_CONTENT_SECURITY_POLICY_FRAME_ANCESTORS list in your environment file.
-This is used to setup the frame-accessors part of the Content-Security-Policy_ header,
-which is a more up-to-date way of setting up IFrame permissions.
+Like everything else, those options can be set in EJ via environment variables
+in config.env or exported in your own environment::
 
+    # Access control credentials
+    HTTP_ACCESS_CONTROL_ALLOW_CREDENTIALS=true
+    HTTP_ACCESS_CONTROL_ALLOW_ORIGIN=http://your-rocket-chat-host
+
+    # Enable CSP
+    HTTP_CONTENT_SECURITY_POLICY=frame-ancestors http://your-rocket-chat-host
+
+    # Enable X-Frame-Options for older browsers
+    HTTP_X_FRAME_OPTIONS=allow-from http://your-rocket-chat-host
+
+
+.. _Access Control: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Credentials
 .. _X-Frame-Options: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options
 .. _Content-Security-Policy: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy
 
@@ -225,3 +237,30 @@ account::
 
 This command opens a bash CLI and must be executed while Mongo db is running on
 the background. Now execute ``mongo /scripts/mongo_script.js`` on the terminal.
+
+
+Troubleshooting
+---------------
+
+If you are still having problems with the integration, `Rocket.Chat documentation`_
+is a good place to start.
+
+Sometimes, when something goes wrong on the initial configuration, you may end
+up in a state in which Rocket.Chat redirects login to Django, but due to some
+integration problem, Django cannot successfully authenticate a user in
+Rocket.Chat. You can still login as Rocket.Chat administrator using a manual
+method that is very handy to fix things:
+
+1) Open the Rocket.Chat URL and wait for the broken login page.
+2) Open the JavaScript console on that page and type ``Meteor.loginWithPassword('user', 'password')``
+(replacing by your own username and password, of course)
+
+Now, it will login Rocket.Chat, and you will have a chance to fix any broken
+configuration that might be impeding the successful integration with Django.
+
+The usual culprit are the IFrame Integration parameters at Rocket.Chat accounts
+configuration. Check if the URL is correct (and include the correct schema like "https://").
+Other possibility, is that the Django service is not visible from the Rocket.Chat
+container due to some network or firewall configuration.
+
+.. _Rocket.Chat documentation: https://rocket.chat/docs/developer-guides/rest-api/
