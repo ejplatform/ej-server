@@ -5,6 +5,7 @@
 
 {% block content %}
     {% include 'ej_users/includes/ej-cat.jinja2' %}
+    <div class="left">
     <h2 class="h4">{{ _('What do you want to do?') }}</h2>
     <ul class="width-full leading-loose">
         <li><a href="{{ url('account:change-password') }}">{% trans %}Change your password{% endtrans %}</a></li>
@@ -16,4 +17,5 @@
         <li><a href="{{ url('account:logout') }}">{% trans %}Logout{% endtrans %}</a></li>
         <li><a href="{{ url('account:remove-account') }}">{% trans %}Remove account{% endtrans %}</a></li>
     </ul>
+    </div>
 {% endblock %}

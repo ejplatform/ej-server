@@ -28,7 +28,9 @@
         </div>
     </div>
     <div class="center">
-        {{ link(_("Edit profile"), href="profile:edit", button=True) }}
+        {{ link(_("Edit profile"), href="profile:edit", button=True, class="block margin-y3") }}
+        {{ link(_("Manage accounts"), href="account:index", class="block margin-y2") }}
+        {{ link(_("Logout"), href="account:logout", class="block margin-y2") }}
     </div>
 {% endblock %}
 

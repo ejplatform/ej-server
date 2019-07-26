@@ -47,6 +47,7 @@ def register_button(provider_id, fa_class=None, query=None):
             id=f"{provider_id}-button",
             aria_label=f"{provider_id.title()} Icon",
             class_=f"fab {fa_class} icon-{provider_id} rounded-icon",
+            style="font-size: 2.5rem",
         )
 
     SOCIAL_BUTTON_REGISTRY[provider_id] = social_button
