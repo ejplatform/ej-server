@@ -362,7 +362,7 @@ class VoterLevel(LevelMixin, IntEnum):
     @classmethod
     def check_level(cls, obj):
         result = cls.NONE
-        votes = obj.n_votes
+        votes = obj.n_final_votes
         ratio = obj.votes_ratio
 
         for level, (m, r, n) in zip(cls.skipping_none(), cls._ranges()):
@@ -378,7 +378,7 @@ class VoterLevel(LevelMixin, IntEnum):
             return _("Congratulations! You already achieved the maximum participation level.")
 
         # Now we compute how many votes are necessary to progress
-        votes = obj.n_votes
+        votes = obj.n_final_votes
         m, r, n = self._ranges()[self]
         if votes == obj.n_conversation_comments:
             msg = _("You cannot progress unless conversation has at least {n} comments :-(")
@@ -389,4 +389,8 @@ class VoterLevel(LevelMixin, IntEnum):
         delta_ = max(delta_, m - votes)
         delta = min(delta_, delta)
         delta = min(delta, n - votes)
-        return _("You need to cast {n} more votes!").format(n=delta)
+        return ngettext(
+            "You are only one vote short of advancing to the next level!",
+            "You need to cast {n} more votes to advance to the next level!",
+            delta,
+        ).format(n=delta)

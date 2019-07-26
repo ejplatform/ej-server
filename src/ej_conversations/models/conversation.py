@@ -95,6 +95,7 @@ class Conversation(TimeStampedModel):
     n_favorites = lazy(this.favorites.count())
     n_tags = lazy(this.tags.count())
     n_votes = lazy(this.votes.count())
+    n_final_votes = lazy(this.votes.exclude(choice=Choice.SKIP).count())
     n_participants = lazy(this.users.count())
 
     # Statistics for the request user
@@ -174,7 +175,7 @@ class Conversation(TimeStampedModel):
         else:
             return SafeUrl("conversation:detail", **kwargs)
 
-    def url(self, which, board=None, **kwargs):
+    def url(self, which="conversation:detail", board=None, **kwargs):
         """
         Return a url pertaining to the current conversation.
         """

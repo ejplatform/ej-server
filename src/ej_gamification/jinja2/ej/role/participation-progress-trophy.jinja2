@@ -1,0 +1,17 @@
+<div class="row rounded-3 pad-3 width-full">
+    <img src="{{ static(img_src) }}" alt="{{ img_description }}" class="size-4p margin-r3">
+    <div class="flex-1 left">
+        <h1 class="h4 text-accent margin-t0">{{ link(conversation.title, href=conversation.url()) }}</h1>
+        {{ description }}
+
+        <div>
+            <h2 class="h5">{{ _('Values') }}</h2>
+            <dt>
+                {% for name, value, points in details %}
+                    <dt>{{ name }}</dt>
+                    <dd>{% trans %}{{ value }} ({{ points }} points){% endtrans %}</dd>
+                {% endfor %}
+            </dt>
+        </div>
+    </div>
+</div>

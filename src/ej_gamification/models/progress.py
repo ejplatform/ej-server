@@ -3,7 +3,9 @@ from django.conf import settings
 from django.utils.translation import ugettext as __, ugettext_lazy as _
 from sidekick import delegate_to, lazy, import_later, placeholder as this
 
+from ej_conversations import Choice
 from ..enums import CommenterLevel, HostLevel, ProfileLevel, ConversationLevel, VoterLevel
+from ..utils import compute_points
 
 signals = import_later("..signals", package=__package__)
 
@@ -162,7 +164,7 @@ class UserProgress(ProgressBase):
     n_conversations = delegate_to("user")
     n_comments = delegate_to("user")
     n_rejected_comments = delegate_to("user")
-    n_votes = delegate_to("user")
+    n_final_votes = delegate_to("user")
 
     # Gamification app
     n_endorsements = delegate_to("user")
@@ -215,7 +217,7 @@ class UserProgress(ProgressBase):
         return max(
             0,
             self.score_bias
-            + 10 * self.n_votes
+            + 10 * self.n_final_votes
             + 30 * self.n_comments
             - 30 * self.n_rejected_comments
             + 15 * self.n_endorsements
@@ -247,7 +249,7 @@ class ConversationProgress(ProgressBase):
     )
 
     # Non de-normalized fields: conversations
-    n_votes = delegate_to("conversation")
+    n_final_votes = delegate_to("conversation")
     n_comments = delegate_to("conversation")
     n_rejected_comments = delegate_to("conversation")
     n_participants = delegate_to("conversation")
@@ -286,7 +288,7 @@ class ConversationProgress(ProgressBase):
         """
         return (
             self.score_bias
-            + self.n_votes
+            + self.n_final_votes
             + 2 * self.n_comments
             - 3 * self.n_rejected_comments
             + 3 * self.n_endorsements
@@ -332,14 +334,18 @@ class ParticipationProgress(ProgressBase):
 
     # Non de-normalized fields: conversations
     is_favorite = lazy(lambda p: p.conversation.favorites.filter(user=p.user).exists())
-    n_votes = lazy(lambda p: p.user.votes.filter(comment__conversation=p.conversation).count())
+    n_final_votes = lazy(
+        lambda p: p.user.votes.filter(comment__conversation=p.conversation)
+        .exclude(choice=Choice.SKIP)
+        .count()
+    )
     n_comments = lazy(lambda p: p.user.comments.filter(conversation=p.conversation).count())
     n_rejected_comments = lazy(
         lambda p: p.user.rejected_comments.filter(conversation=p.conversation).count()
     )
     n_conversation_comments = delegate_to("conversation", name="n_comments")
     n_conversation_rejected_comments = delegate_to("conversation", name="n_rejected_comments")
-    votes_ratio = lazy(this.n_votes / (this.n_conversation_comments + 1e-50))
+    votes_ratio = lazy(this.n_final_votes / (this.n_conversation_comments + 1e-50))
 
     # Gamification
     # n_endorsements = lazy(lambda p: Endorsement.objects.filter(comment__author=p.user).count())
@@ -348,6 +354,15 @@ class ParticipationProgress(ProgressBase):
     n_endorsements = 0
     n_given_opinion_bridge_powers = 0
     n_given_minority_activist_powers = 0
+
+    # Points
+    pts_final_votes = compute_points(10)
+    pts_comments = compute_points(30)
+    pts_rejected_comments = compute_points(-30)
+    pts_endorsements = compute_points(15)
+    pts_given_opinion_bridge_powers = compute_points(50)
+    pts_given_minority_activist_powers = compute_points(50)
+    pts_is_focused = compute_points(50, name="is_focused")
 
     # Leaderboard
     @lazy
@@ -379,7 +394,7 @@ class ParticipationProgress(ProgressBase):
         # You cannot receive a focused achievement in your own conversation!
         if not self.is_owner:
             n_comments = self.conversation.n_comments
-            self.is_focused = (self.n_votes >= 20) and (n_comments == self.n_votes)
+            self.is_focused = (self.n_final_votes >= 20) and (n_comments == self.n_final_votes)
 
         return super().sync()
 
@@ -402,13 +417,13 @@ class ParticipationProgress(ProgressBase):
         """
         return (
             self.score_bias
-            + 10 * self.n_votes
-            + 30 * self.n_comments
-            - 30 * self.n_rejected_comments
-            + 15 * self.n_endorsements
-            + 50 * self.n_given_opinion_bridge_powers
-            + 50 * self.n_given_minority_activist_powers
-            + 50 * self.is_focused
+            + self.pts_final_votes
+            + self.pts_comments
+            + self.pts_rejected_comments
+            + self.pts_endorsements
+            + self.pts_given_opinion_bridge_powers
+            + self.pts_given_minority_activist_powers
+            + self.pts_is_focused
         )
 
 

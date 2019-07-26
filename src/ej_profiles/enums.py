@@ -5,6 +5,7 @@ from environ import ImproperlyConfigured
 
 _race_enums = getattr(settings, "EJ_PROFILE_RACE_CHOICES", None)
 _gender_enums = getattr(settings, "EJ_PROFILE_GENDER_CHOICES", None)
+_not_filed = getattr(settings, "EJ_NOT_FILLED_MARK", "---------")
 
 # Here we fool the IntEnum metaclass into believing that items of a list are
 # methods
@@ -12,7 +13,7 @@ _to_thunks = lambda lst: ((lambda: k, lambda: v) for k, v in lst)
 
 
 class Race(IntEnum):
-    NOT_FILLED = 0, _("(Not filled)")
+    NOT_FILLED = 0, _not_filed
 
     if _race_enums is None:
         BLACK = 1, _("Black")
@@ -27,7 +28,7 @@ class Race(IntEnum):
 
 
 class Gender(IntEnum):
-    NOT_FILLED = 0, _("(Not filled)")
+    NOT_FILLED = 0, _not_filed
 
     if _gender_enums is None:
         FEMALE = 1, _("Female")

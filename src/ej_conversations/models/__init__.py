@@ -4,6 +4,7 @@ from .conversation import Conversation, FavoriteConversation, ConversationTag
 from .conversation_queryset import ConversationQuerySet
 from .vote import Vote, normalize_choice
 from .vote_queryset import VoteQuerySet
+from ..enums import Choice
 
 #
 # Exposed default managers
@@ -33,7 +34,8 @@ def _patch():
     user.n_conversations = lazy(_.conversations.count())
     user.n_comments = lazy(_.approved_comments.count())
     user.n_rejected_comments = lazy(_.rejected_comments.count())
-    user.n_votes = lazy(_.approved_comments.count())
+    user.n_votes = lazy(_.votes.count())
+    user.n_final_votes = lazy(_.votes.exclude(choice=Choice.SKIP).count())
 
 
 _patch()

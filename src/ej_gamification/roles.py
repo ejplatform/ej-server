@@ -3,6 +3,7 @@ from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from hyperpython import Blob
 
+from ej.roles import with_template
 from .models import UserProgress, ParticipationProgress, ConversationProgress
 
 trophy_template = get_template("roles/ej/trophy.jinja2")
@@ -41,15 +42,19 @@ def participation_trophy(progress: UserProgress):
     )
 
 
-def participate_conversation_trophy(progress: ParticipationProgress):
+@with_template(ParticipationProgress, role="trophy")
+def participation_progress_trophy(progress: ParticipationProgress, request=None):
     level = progress.voter_level
-    return trophy(
-        "participate_conversation",
-        progress.conversation.title,
-        level=level,
-        href=progress.conversation.get_absolute_url(),
-        msg=level.achieve_next_level_msg(progress),
-    )
+    return {
+        "progress": progress,
+        "conversation": progress.conversation,
+        "user": progress.user,
+        "href": progress.conversation.get_absolute_url(),
+        "description": level.achieve_next_level_msg(progress),
+        "img_src": "/img/trophies/participate_conversation.svg",
+        "img_description": "fdfoss",
+        "details": (),
+    }
 
 
 def host_conversation_trophy(progress: ConversationProgress):
