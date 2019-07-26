@@ -45,6 +45,7 @@ wordcloud = "^1.5"
 stop-words = "^2018.7"
 djangorestframework = "^3.9"
 django-debug-toolbar = "^1.11"
+openpyxl = "^2.6"
 
 
 [tool.poetry.dev-dependencies]

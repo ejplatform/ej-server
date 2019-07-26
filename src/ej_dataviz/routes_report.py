@@ -184,14 +184,15 @@ def data_response(data: pd.DataFrame, fmt: str, filename: str):
     Prepare data response for file from dataframe.
     """
     response = HttpResponse(content_type=f"text/{fmt}")
-    filename = f"filename={filename}.{fmt}"
-    response["Content-Disposition"] = f"attachment; {filename}"
+    response["Content-Disposition"] = f"attachment; filename={filename}.{fmt}"
     if fmt == "json":
-        data.to_json(path_or_buf=response, force_ascii=False)
+        data.to_json(response, orient="records")
     elif fmt == "csv":
-        data.to_csv(path_or_buf=response, index=False, mode="a", float_format="%.3f")
+        data.to_csv(response, index=False, mode="a", float_format="%.3f")
     elif fmt == "msgpack":
-        data.to_msgpack(path_or_buf=response, encoding="utf-8")
+        data.to_msgpack(response, encoding="utf-8")
+    elif fmt == "xlsx":
+        data.to_excel(response, filename, index=False)
     else:
         raise ValueError(f"invalid format: {fmt}")
     return response
