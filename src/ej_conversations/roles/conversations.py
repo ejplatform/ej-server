@@ -7,7 +7,6 @@ from hyperpython.django import csrf_input
 from ej.roles import with_template, progress_bar
 from .. import forms
 from .. import models
-from ..rules import max_comments_per_conversation
 
 
 @with_template(models.Conversation, role="balloon")
@@ -96,7 +95,11 @@ def conversation_create_comment(conversation, request=None, **kwargs):
     conversation.set_request(request)
     n_comments = conversation.n_user_total_comments
     n_moderation = conversation.n_pending_comments
-    max_comments = max_comments_per_conversation()
+
+    fn = rules.get_value("ej.max_comments_per_conversation")
+    user = getattr(request, "user", None)
+    max_comments = fn(conversation, user)
+
     moderation_msg = _("{n} awaiting moderation").format(n=n_moderation)
     comments_count = _("{ratio} comments").format(ratio=f"<strong>{n_comments}</strong> / {max_comments}")
 

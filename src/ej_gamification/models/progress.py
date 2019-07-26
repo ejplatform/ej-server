@@ -212,7 +212,8 @@ class UserProgress(ProgressBase):
         Returns:
             Total score (int)
         """
-        return (
+        return max(
+            0,
             self.score_bias
             + 10 * self.n_votes
             + 30 * self.n_comments
@@ -220,7 +221,7 @@ class UserProgress(ProgressBase):
             + 15 * self.n_endorsements
             + 50 * self.n_given_opinion_bridge_powers
             + 50 * self.n_given_minority_activist_powers
-            + self.total_conversation_score
+            + self.total_conversation_score,
         )
 
 

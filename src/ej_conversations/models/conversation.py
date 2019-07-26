@@ -74,6 +74,8 @@ class Conversation(TimeStampedModel):
 
     class Meta:
         ordering = ["created"]
+        verbose_name = _("Conversation")
+        verbose_name_plural = _("Conversations")
         permissions = (
             ("can_publish_promoted", _("Can publish promoted conversations")),
             ("is_moderator", _("Can moderate comments in any conversation")),

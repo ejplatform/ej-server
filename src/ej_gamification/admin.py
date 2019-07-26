@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.utils.translation import ugettext as _
 
 from ej_conversations.admin import ConversationAdmin, descr
-from ej_gamification.models.progress import get_progress
+from ej_gamification.models.progress import get_progress, get_participation
 from . import models
 
 
@@ -46,7 +46,7 @@ class UserProgressAdmin(UserWithNameAdmin, RecomputableScoresAdmin):
 @admin.register(models.ParticipationProgress)
 class ParticipationProgressAdmin(UserWithNameAdmin, RecomputableScoresAdmin):
     list_display = ["conversation", "user", "user_name", "voter_level", "is_owner", "is_focused", "score"]
-    list_filter = ["voter_level", "is_owner", "is_focused"]
+    list_filter = ["conversation", "voter_level", "is_owner", "is_focused"]
 
 
 @admin.register(models.ConversationProgress)
@@ -64,13 +64,16 @@ class ConversationProgressAdmin(RecomputableScoresAdmin):
 #
 # Extend conversation admin
 #
-@descr(_("Recalculate progress for conversation"))
-def compute_progress(admin, request, queryset):
+@descr(_("Recalculate score for conversations"))
+def compute_score_by_conversation(admin, request, queryset):
     n = 0
     for conversation in queryset:
         get_progress(conversation, sync=True)
         n += 1
+        for user in conversation.users.all():
+            get_participation(user, conversation, sync=True)
+            n += 1
     admin.message_user(request, _("{n} values updated.").format(n=n))
 
 
-ConversationAdmin.actions.extend([compute_progress])
+ConversationAdmin.actions.extend([compute_score_by_conversation])

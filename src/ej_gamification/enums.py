@@ -342,6 +342,7 @@ class VoterLevel(LevelMixin, IntEnum):
     PARTICIPATIVE = 2, _("Participative")
     DEDICATED = 3, _("Dedicated")
     PERFECTIONIST = 4, _("Perfectionist")
+    comment_bonus = property(lambda self: int(self))
 
     # Must be a staticmethod because we can't access values directly from the
     # class and if it was a simple list instance, it would become a valid enum
