@@ -49,7 +49,13 @@ def comment_moderate(comment: Comment, request=None, **kwargs):
     Render a comment inside a moderation card.
     """
 
-    return {"created": comment.created, "author": comment.author_name, "text": comment.content}
+    moderator = getattr(comment.moderator, "name", None)
+    return {
+        "created": comment.created,
+        "author": comment.author_name,
+        "text": comment.content,
+        "moderator": moderator,
+    }
 
 
 @with_template(Comment, role="reject-reason")

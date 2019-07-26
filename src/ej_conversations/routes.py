@@ -139,7 +139,7 @@ def moderate(request, conversation, slug=None, check=check_promoted):
 
     if form.is_valid_post():
         form.save()
-        form = forms.ModerationForm()
+        form = forms.ModerationForm(user=request.user)
 
     # Fetch all comments and filter
     status_filter = lambda value: lambda x: x.status == value

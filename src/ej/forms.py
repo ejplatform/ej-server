@@ -74,6 +74,18 @@ class EjForm(Form):
                 elem.field.widget.attrs.setdefault(attribute, value)
 
 
+class EjUserForm(EjForm):
+    def __init__(self, *args, **kwargs):
+        if "user" in kwargs:
+            user = kwargs.pop("user")
+        elif "request" in kwargs:
+            user = kwargs["request"].user
+        else:
+            raise TypeError("User must be provided from request or user parameter")
+        super().__init__(*args, **kwargs)
+        self.user = user
+
+
 class EjModelForm(EjForm, ModelForm):
     """
     A ModelForm version of the extended form.

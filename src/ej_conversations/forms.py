@@ -3,7 +3,7 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 from sidekick import identity
 
-from ej.forms import EjModelForm
+from ej.forms import EjModelForm, EjUserForm
 from .models import Conversation, Comment
 
 
@@ -32,7 +32,7 @@ class CommentForm(EjModelForm):
         return self.cleaned_data
 
 
-class ModerationForm(EjModelForm):
+class ModerationForm(EjUserForm, EjModelForm):
     """
     Form used during moderation of a conversation's comments.
     """
@@ -44,6 +44,7 @@ class ModerationForm(EjModelForm):
 
     def _clean_fields(self):
         self.data = self.data.copy()
+
         if "reject_id" in self.data:
             comment_id = int(self.data["reject_id"])
             self.instance = Comment.objects.get(id=comment_id)
@@ -52,9 +53,14 @@ class ModerationForm(EjModelForm):
             comment_id = int(self.data["approve_id"])
             self.instance = Comment.objects.get(id=comment_id)
             self.data["status"] = Comment.STATUS.approved
+            self.fields["rejection_reason"].required = False
         else:
             raise ValueError("invalid POST data")
         super()._clean_fields()
+
+    def save(self, commit=True, **kwargs):
+        kwargs.setdefault("moderator", self.user)
+        return super().save(commit=commit, **kwargs)
 
 
 class ConversationForm(EjModelForm):
