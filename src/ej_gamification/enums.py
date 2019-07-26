@@ -226,7 +226,8 @@ class ProfileLevel(LevelMixin, IntEnum):
                 missing.append(_("gender"))
             if not p.profile_photo:
                 missing.append(_("profile photo"))
-            return missing_fields_message(missing[:3])
+            if missing:
+                return missing_fields_message(missing[:3])
 
         elif self == self.RELEVANT:
             fields_ = basic_profile_fields(fields)
@@ -261,7 +262,7 @@ def missing_fields(profile, fields):
     missing = []
     for field in fields:
         if getattr(profile, field, None) in (None, ""):
-            missing.append(_(field))
+            missing.append(_(field.replace("_", " ")))
     return missing[:3]
 
 
@@ -275,6 +276,8 @@ def missing_fields_message(fields):
 
 
 def humanize_list(lst):
+    if not lst:
+        return ""
     lst = lst.copy()
     last = lst.pop()
     return __("{} and {}").format(", ".join(map(str, lst)), last)

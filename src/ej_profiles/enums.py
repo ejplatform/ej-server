@@ -45,3 +45,35 @@ if not STATE_CHOICES:
     raise ImproperlyConfigured(
         "You must define the environment variable EJ_PROFILE_STATE_CHOICES in " "your Django settings."
     )
+
+# Those are profile field name translations that should be captured by gettext.
+FIELD_TRANSLATIONS = [
+    _("user"),
+    _("race"),
+    _("ethnicity"),
+    _("education"),
+    _("gender"),
+    _("gender_other"),
+    _("gender other"),
+    _("birth_date"),
+    _("birth date"),
+    _("country"),
+    _("state"),
+    _("city"),
+    _("biography"),
+    _("occupation"),
+    _("political_activity"),
+    _("political activity"),
+    _("profile_photo"),
+    _("profile photo"),
+    _("name"),
+    _("email"),
+    _("is_active"),
+    _("is active"),
+    _("is_staff"),
+    _("is staff"),
+    _("is_superuser"),
+    _("is superuser"),
+    _("limit_board_conversations"),
+    _("limit board conversations"),
+]

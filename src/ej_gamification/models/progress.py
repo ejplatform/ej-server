@@ -4,6 +4,7 @@ from django.utils.translation import ugettext as __, ugettext_lazy as _
 from sidekick import delegate_to, lazy, import_later, placeholder as this
 
 from ej_conversations import Choice
+from .progress_queryset import ProgressQuerySet
 from ..enums import CommenterLevel, HostLevel, ProfileLevel, ConversationLevel, VoterLevel
 from ..utils import compute_points
 
@@ -19,6 +20,7 @@ class ProgressBase(models.Model):
     score_bias = models.SmallIntegerField(
         _("score adjustment"), default=0, help_text=_("Artificially increase score for any reason")
     )
+    objects = ProgressQuerySet.as_manager()
 
     @classmethod
     def level_fields(cls):
@@ -191,6 +193,8 @@ class UserProgress(ProgressBase):
 
     n_trophies = 0
 
+    objects = ProgressQuerySet.as_manager()
+
     class Meta:
         verbose_name = _("User score")
         verbose_name_plural = _("User scores")
@@ -266,6 +270,8 @@ class ConversationProgress(ProgressBase):
     # Signals
     level_achievement_signal = lazy(lambda _: signals.conversation_level_achieved, shared=True)
 
+    objects = ProgressQuerySet.as_manager()
+
     class Meta:
         verbose_name = _("Conversation score")
         verbose_name_plural = _("Conversation scores")
@@ -286,12 +292,13 @@ class ConversationProgress(ProgressBase):
         Returns:
             Total score (int)
         """
-        return (
+        return max(
+            0,
             self.score_bias
             + self.n_final_votes
             + 2 * self.n_comments
             - 3 * self.n_rejected_comments
-            + 3 * self.n_endorsements
+            + 3 * self.n_endorsements,
         )
 
 
@@ -380,6 +387,8 @@ class ParticipationProgress(ProgressBase):
     # Signals
     level_achievement_signal = lazy(lambda _: signals.participation_level_achieved, shared=True)
 
+    objects = ProgressQuerySet.as_manager()
+
     class Meta:
         verbose_name = _("User score (per conversation)")
         verbose_name_plural = _("User scores (per conversation)")
@@ -415,7 +424,8 @@ class ParticipationProgress(ProgressBase):
         Returns:
             Total score (int)
         """
-        return (
+        return max(
+            0,
             self.score_bias
             + self.pts_final_votes
             + self.pts_comments
@@ -423,7 +433,7 @@ class ParticipationProgress(ProgressBase):
             + self.pts_endorsements
             + self.pts_given_opinion_bridge_powers
             + self.pts_given_minority_activist_powers
-            + self.pts_is_focused
+            + self.pts_is_focused,
         )
 
 

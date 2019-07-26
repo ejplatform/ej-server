@@ -1,4 +1,4 @@
-class compute_points:
+class compute_points:  # noqa: N801
     __slots__ = ("multiplier", "delegate_name", "own_name")
 
     def __init__(self, multiplier, name=None, own_name=None):

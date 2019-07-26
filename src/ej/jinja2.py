@@ -7,7 +7,6 @@ from django.apps import apps
 from django.conf import settings
 from django.contrib.messages import get_messages
 from django.contrib.staticfiles.storage import staticfiles_storage
-from django.urls import reverse
 from django.utils import translation
 from django.utils.formats import date_format
 from django.utils.translation import get_language
@@ -20,6 +19,7 @@ from sidekick import record
 from . import components
 from . import roles
 from .roles import tags
+from .utils.url import SafeUrl
 
 
 def environment(autoescape=True, **options):
@@ -31,7 +31,7 @@ def environment(autoescape=True, **options):
 
     env.globals.update(
         static=staticfiles_storage.url,
-        url=reverse,
+        url=SafeUrl,
         settings=record(
             **{k: getattr(settings, k) for k in dir(settings)},
             has_boards=apps.is_installed("ej_boards"),

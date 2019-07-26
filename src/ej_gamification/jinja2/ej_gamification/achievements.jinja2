@@ -3,46 +3,59 @@
 {% block content %}
     <h1 class="h2 text-accent center">{{ _('Your achievements') }}</h1>
 
-    <div class="center measure margin-xauto">
-        <p class="margin-b2 margin-t3"><i class="fa fa-medal"></i>{{ _('Classification:') }}
-            <strong>{{ position_idx + 1 }}</strong> / {{ n_users }}</p>
-        <img src="progress-flag-{{ position_idx }}-{{ n_users }}.svg" class="size-x6p">
+    <div class="measure margin-xauto">
+        <div class="center">
+            <p class="margin-b2 margin-t3"><i class="fa fa-medal"></i>{{ _('Classification:') }}
+                <strong>{{ position_idx + 1 }}</strong> / {{ n_users }}</p>
+            <img src="progress-flag-{{ position_idx }}-{{ n_users }}.svg" class="size-x6p">
+            <p class="margin-b2 margin-t3"><i class="fa fa-trophy"></i>{{ _('Trophies:') }}
+                <strong>{{ n_trophies }}</strong></p>
+        </div>
 
-        <p class="margin-b2 margin-t3"><i class="fa fa-trophy"></i>{{ _('Trophies:') }}
-            <strong>{{ n_trophies }}</strong></p>
         <div class="row wrap center-content">
-            <div class="width-1/3">{{ participation_trophy }}</div>
-            <div class="width-1/3">{{ profile_trophy }}</div>
-            <div class="width-1/3">{{ host_trophy }}</div>
+            {% set trophies_class = 'border pad-x3 rounded-3 border-1 width-full margin-x2' %}
+
+            <h2 class="width-full h3">{{ _('Generic') }}</h2>
+            <div class="{{ trophies_class }}" style="background: rgba(0, 0, 0, 0.05)">
+{#                {{ render_trophy(progress, score_level, _('User level'), url('profile:detail')) }}#}
+{#                <hr>#}
+                {{ render_trophy(progress, profile_level, _('User profile'), url('profile:detail'), statistics=False) }}
+                <hr>
+                {{ render_trophy(progress, commenter_level, _('Comments'),
+                                 href=url('profile:contributions', extra='#contribution-comments')) }}
+                <hr>
+                {{ render_trophy(progress, host_level, _('Hosted conversations'),
+                                 href=url('profile:contributions', extra='#contribution-conversations')) }}
+            </div>
 
             <h2 class="width-full h3">{{ _('Participation in conversations') }}</h2>
-
-            <div class="border pad-x3 border-1 width-full" style="background: rgba(0, 0, 0, 0.05)">
-                {% for trophy in participation_trophies %}
+            <div class="{{ trophies_class }}" style="background: rgba(0, 0, 0, 0.05)">
+                {% for p in participation_trophies %}
                     {% if not loop.first %}
                         <hr>
                     {% endif %}
-                    {#{{ trophy|role('trophy') }}#}
-                    {{ participation_trophy(trophy) }}
+                    {{ render_trophy(p, p.voter_level, p.conversation.title, p.conversation.url()) }}
                 {% else %}
-                    <p>{{ _('You have not engaged in any conversation yet.') }}
+                    <p class="margin-3">{{ _('You have not engaged in any conversation yet.') }}
                         {{ _('Participate more to unlock achievements :-)') }}</p>
                 {% endfor %}
             </div>
 
-            <h2 class="width-full h3">{{ _('Your conversations') }}</h2>
-            {% for trophy in conversation_trophies %}
-                <div class="width-1/3">{{ trophy }}</div>
-            {% else %}
-                <div class="width-full">{{ _('Participate more to unlock achievements :-)') }}</div>
-            {% endfor %}
+            {% if conversation_trophies %}
+                <h2 class="width-full h3">{{ _('Your conversations') }}</h2>
+                <div class="{{ trophies_class }}" style="background: rgba(0, 0, 0, 0.05)">
+                    {% for p in conversation_trophies %}
+                        {% if not loop.first %}
+                            <hr>
+                        {% endif %}
+                        {{ render_trophy(p, p.voter_level, p.conversation.title, p.conversation.url()) }}
+                    {% endfor %}
+                </div>
+            {% endif %}
         </div>
+        <div class="size-4"></div>
     </div>
-    {#    {{ html_map(achievements, class_='description') }}#}
-{% endblock %}
 
-{% block javascript %}
-    {{ super() }}
     <script>
         window.addEventListener('load', function () {
             $('.expand-details').on('click', function (e) {
@@ -53,94 +66,20 @@
 {% endblock %}
 
 
-{% macro participation_trophy(x) %}
+{% macro render_trophy(progress, level, title, href=url('profile:detail', extra='#profile-contributions'), statistics=True) %}
     <div class="row margin-y2">
-        {% set p = x.progress %}
-        {% set level = x.progress.voter_level %}
-        {% set stars = [None, 'far fa-star', 'fas fa-star-half-alt', 'fas fa-star', 'fas fa-trophy'] %}
-        <div class="center margin-r3 text-6">
-            <img src="{{ static(x.img_src) }}"
-                 alt="{% trans name=x.progress._meta.verbose_name %}Trophy: {{ name }}{% endtrans %}"
-                 width="90px"
-                 class="opacity-{{ level + 2 }} expand-details cursor-pointer">
-        </div>
+        {{ level|role('trophy-image') }}
 
         <div class="flex-1 left">
             <strong
-                class="block margin-b2">{{ link(x.conversation.title, href=x.conversation.url(), class="text-4 bold") }}
-                {% if level %}{{ ' ' }}[<i class="{{ stars[level] }}" aria-label="{{ level }}"></i>]{% endif %}
+                class="block margin-b2">{{ link(title, href=href, class="text-4 bold") }}
+                {{ level|role('stars', brackets='[]') }}
             </strong>
 
-            <span class="block text-6"><strong>{{ x.progress.voter_level }}</strong> (
-                {% trans n=x.progress.voter_level.__int__() %}level {{ n }}{% endtrans %})</span>
-            <span class="block text-6">{{ x.next_level_msg }}</span>
-            <div class="hidden details">
-                <table class="margin-2">
-                    <tr>
-                        <th></th>
-                        <th>{{ _('#') }}</th>
-                        <th>{{ _('Points') }}</th>
-                    </tr>
-
-                    {% if p.score_bias %}
-                        <tr>
-                            <td>{{ _('Extra') }}</td>
-                            <td>-</td>
-                            <td>{{ p.score_bias }}</td>
-                        </tr>
-                    {% endif %}
-                    <tr>
-                        <td>{{ _('Votes') }}</td>
-                        <td>{{ p.n_final_votes }}</td>
-                        <td>{{ p.pts_final_votes }}</td>
-                    </tr>
-                    <tr>
-                        <td>{{ _('Comments') }}</td>
-                        <td>{{ p.n_comments }}</td>
-                        <td>{{ p.pts_comments }}</td>
-                    </tr>
-                    {% if p.n_rejected_comments != 0 %}
-                        <tr>
-                            <td>{{ _('Rejected Comments') }}</td>
-                            <td>{{ p.n_rejected_comments }}</td>
-                            <td>{{ p.pts_rejected_comments }}</td>
-                        </tr>
-                    {% endif %}
-                    {% if p.n_endorsements != 0 %}
-                        <tr>
-                            <td>{{ _('Endorsements') }}</td>
-                            <td>{{ p.n_endorsements }}</td>
-                            <td>{{ p.pts_endorsements }}</td>
-                        </tr>
-                    {% endif %}
-                    {% if p.n_given_opinion_bridge_powers != 0 %}
-                        <tr>
-                            <td>{{ _('Opinion bridge') }}</td>
-                            <td>{{ p.n_given_opinion_bridge_powers }}</td>
-                            <td>{{ p.pts_given_opinion_bridge_powers }}</td>
-                        </tr>
-                    {% endif %}
-                    {% if p.n_given_minority_activist_powers != 0 %}
-                        <tr>
-                            <td>{{ _('Minority activist') }}</td>
-                            <td>{{ p.n_given_minority_activist_powers }}</td>
-                            <td>{{ p.pts_given_minority_activist_powers }}</td>
-                        </tr>
-                    {% endif %}
-                    {% if p.is_focused %}
-                        <tr>
-                            <td>{{ _('Focused?') }}</td>
-                            <td><i class="fa fa-check"></i></td>
-                            <td>{{ p.pts_is_focused }}</td>
-                        </tr>
-                    {% endif %}
-                    <tr>
-                        <td>{{ _('Total') }}</td>
-                        <td></td>
-                        <td><strong>{{ p.score }}</strong></td>
-                    </tr>
-                </table>
-            </div>
+            {{ level|role('description', progress=progress) }}
+            {% if statistics %}
+                <div class="hidden details">{{ progress|role('statistics') }}</div>
+            {% endif %}
         </div>
     </div>
 {% endmacro %}
