@@ -4,11 +4,26 @@
         $('.table').DataTable({
             order: [],
             language: {
+                emptyTable: "{{ _('Do data available') }}",
+                info: "{{ _('Showing from _START_ to _END_ of _TOTAL_ entries') }}",
+                infoEmpty: "{{ _('No entries found') }}",
+                infoFiltered: "{{ _('(Filtered from _MAX_ entries)') }}",
+                lengthMenu: "{{ _('Show _MENU_ entries') }}",
+                loadingRecords: "{{ _('Loading...') }}",
+                processing: "{{ _('Processing...') }}",
+                search: "{{ _('Search') }}",
+                zeroRecords: "{{ _('No entry found') }}",
+
                 paginate: {
-                    first: '{{ _('First') }}',
-                    last: '{{ _('Last') }}',
-                    next: '{{ _('Next') }}',
-                    previous: '{{ _('Previous') }}',
+                    first: "{{ _('First') }}",
+                    last: "{{ _('Last') }}",
+                    next: "{{ _('Next') }}",
+                    previous: "{{ _('Previous') }}",
+                },
+
+                aria: {
+                    sortAscending: ": {{ _('Sort column ascending') }}",
+                    sortDescending: ": {{ _('Sort column descending') }}"
                 }
             }
         });
