@@ -32,7 +32,10 @@ User = get_user_model()
 #
 @urlpatterns.route("scatter/")
 def scatter(request, conversation, slug, check=check_promoted):
-    return {"conversation": check(conversation, request)}
+    return {
+        "conversation": check(conversation, request),
+        "pca_link": _("https://en.wikipedia.org/wiki/Principal_component_analysis"),
+    }
 
 
 @urlpatterns.route("scatter/pca.json", template=None)
@@ -45,11 +48,12 @@ def scatter_pca_json(request, conversation, slug, check=check_promoted):
         return JsonResponse({"error": "InsufficientData", "message": _("Not enough data")})
 
     data = PCA(2).fit_transform(df.values)
+    axis_opts = {"axisTick": {"show": False}, "axisLabel": {"show": False}}
     return JsonResponse(
         {
             "option": {
-                "xAxis": {},  # {'show': False},
-                "yAxis": {},  # {'show': False},
+                "xAxis": axis_opts,
+                "yAxis": axis_opts,
                 "color": [
                     "#042A46",
                     "#FF3E72",
@@ -110,10 +114,11 @@ def word_cloud(request, conversation, slug, check=check_promoted):
 def words(request, conversation, slug, check=check_promoted):
     check(conversation, request)
 
-    data = "\n".join(conversation.comments.values_list("content", flat=True))
-    stop_words = get_stop_words()
-    wc = wordcloud.WordCloud(stopwords=stop_words)
-    return JsonResponse({"cloud": wc.process_text(data)})
+    data = "\n".join(conversation.approved_comments.values_list("content", flat=True))
+    regexp = r"\w[\w'\u0327]+"
+    wc = wordcloud.WordCloud(stopwords=get_stop_words(), regexp=regexp)
+    cloud = sorted(wc.process_text(data).items(), key=lambda x: -x[1])[:50]
+    return JsonResponse({"cloud": cloud})
 
 
 #
@@ -121,13 +126,17 @@ def words(request, conversation, slug, check=check_promoted):
 #
 def get_stop_words():
     lang = getattr(settings, "LANGUAGE_CODE", "en")
+    lang = NORMALIZE_LANGUAGES.get(lang, lang)
     if lang in stop_words.AVAILABLE_LANGUAGES:
         return stop_words.get_stop_words(lang)
-    elif lang.split("-")[0] in stop_words.AVAILABLE_LANGUAGES:
+
+    pre_lang = lang.split("-")[0]
+    pre_lang = NORMALIZE_LANGUAGES.get(pre_lang, pre_lang)
+    if pre_lang in stop_words.AVAILABLE_LANGUAGES:
         return stop_words.get_stop_words(lang.split("-")[0])
-    else:
-        log.error("Could not find stop words for language {lang!r}. Using English.")
-        return stop_words.get_stop_words("en")
+
+    log.error("Could not find stop words for language {lang!r}. Using English.")
+    return stop_words.get_stop_words("en")
 
 
 #
@@ -146,3 +155,32 @@ GROUP_DESCRIPTIONS = {
 }
 
 EXPOSED_PROFILE_FIELDS = ("race", "gender", "age", "occupation", "education", "country", "state")
+
+NORMALIZE_LANGUAGES = {
+    "de": "german",
+    "fr": "french",
+    "en": "english",
+    "es": "spanish",
+    "it": "italian",
+    "pt": "portuguese",
+    # TODO: discover correct language codes
+    # 'ar': 'arabic',
+    # 'bu': 'bulgarian',
+    # 'ca': 'catalan',
+    # 'cz': 'czech',
+    # 'da': 'danish',
+    # 'du': 'dutch',
+    # 'fi': 'finnish',
+    # 'hi': 'hindi',
+    # 'hu': 'hungarian',
+    # 'in': 'indonesian',
+    # 'no': 'norwegian',
+    # 'po': 'polish',
+    # 'ro': 'romanian',
+    # 'ru': 'russian',
+    # 'sl': 'slovak',
+    # 'sw': 'swedish',
+    # 'tu': 'turkish',
+    # 'uk': 'ukrainian',
+    # 'vi': 'vietnamese',
+}

@@ -124,7 +124,7 @@ def comments_data_common(comments, votes, filename, fmt):
         "agree",
         "disagree",
         "skipped",
-        "divergence",
+        "convergence",
         "participation",
     ]
     df = df[columns]
@@ -168,7 +168,7 @@ def get_user_data(conversation):
             "agree",
             "disagree",
             "skipped",
-            "divergence",
+            "convergence",
             "participation",
         ]
     ]

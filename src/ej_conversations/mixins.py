@@ -108,7 +108,7 @@ class UserMixin(ConversationMixin):
         Return a dataframe with basic voting statistics.
 
         The resulting dataframe has the 'author', 'text', 'agree', 'disagree'
-        'skipped', 'divergence' and 'participation' columns.
+        'skipped', 'convergence' and 'participation' columns.
         """
 
         if votes is None and comments is None:
@@ -117,7 +117,7 @@ class UserMixin(ConversationMixin):
             votes = comments.votes().filter(author__in=self)
 
         votes = votes.dataframe("comment", "author", "choice")
-        stats = user_statistics(votes, participation=True, divergence=True, ratios=True)
+        stats = user_statistics(votes, participation=True, convergence=True, ratios=True)
         stats *= normalization
 
         # Extend fields with additional data
@@ -141,7 +141,7 @@ class UserMixin(ConversationMixin):
             "agree",
             "disagree",
             "skipped",
-            "divergence",
+            "convergence",
             "participation",
         ]
         stats = stats[cols]

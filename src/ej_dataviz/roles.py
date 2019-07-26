@@ -131,6 +131,7 @@ COLUMN_NAMES = {
     "average": _("Average"),
     "comment": _("Comment"),
     "content": _("Comment"),
+    "convergence": _("Convergence"),
     "disagree": _("Disagree"),
     "divergence": _("Divergence"),
     "entropy": _("Entropy"),
@@ -150,7 +151,10 @@ COLUMN_NAMES = {
 TABLE_COLUMN_NAMES = {
     **COLUMN_NAMES,
     "agree": fa_icon("check", title=_("Agree")),
-    "divergence": fa_icon("not-equal", title=_("Divergence")),
+    "convergence": fa_icon(
+        "handshake",
+        title=_("Agreement level\n0%: votes are evenly split\n100%: everyone has the same opinion"),
+    ),
     "disagree": fa_icon("times", title=_("Disagree")),
     "participation": fa_icon("users", title=_("Participation ratio")),
     "skip": fa_icon("arrow-right", title=_("Skip")),
@@ -163,7 +167,7 @@ PC_COLUMNS = [
     "agree",
     "disagree",
     "average",
-    "divergence",
+    "convergence",
     "entropy",
     "participation",
 ]

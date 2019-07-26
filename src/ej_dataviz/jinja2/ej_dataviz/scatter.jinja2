@@ -5,7 +5,9 @@
 
 {% block content %}
     <h1 class="h2 center text-accent">{{ _('Opinion profiles') }}</h1>
-    <p class="center">{% trans %}Each point in the plot represents a different opinion.{% endtrans %}</p>
+    <p class="center">
+        {% trans %}Each point in the plot represents a different user.{% endtrans %}</p>
+
     <p class="text-6 center bold text-brand lowercase margin-b1">{{ _('Select a filter bellow') }}</p>
     <div class="categories" id="scatter-categories">
         <i class="fa fa-chevron-left"></i>
@@ -15,7 +17,11 @@
         <i class="fa fa-chevron-right"></i>
     </div>
 
-    <div id="scatter-container" class="center text-3" style="width: 100%">{{ _('Loading data...') }}</div>
+    <div id="scatter-container" class="center text-3" style="width: 100%"><div class="size-y6p col flex-center"><p>{{ _('Loading data...') }}</p></div></div>
+    <p class="center measure margin-xauto">
+        <a href="{{ pca_link }}" target="_blank">{{ _('PCA plot') }}</a>:{{ ' ' }}
+        {% trans %}Similar opinions are represented by nearby points, while users with different opinions are represented by points far apart.{% endtrans %}
+    </p>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/4.1.0/echarts.min.js" defer></script>
     <script defer>
@@ -85,10 +91,11 @@
                     points = [];
 
                 seriesMap[group] = {
-                    'symbolSize': 15,
-                    'data': points,
-                    'type': 'scatter',
-                    'name': descriptions[group]
+                    symbolSize: 15,
+                    data: points,
+                    type: 'scatter',
+
+                    name: descriptions[group]
                 };
                 for (var i = 0; i < users.length; i++) {
                     points.push(raw[users[i]]);

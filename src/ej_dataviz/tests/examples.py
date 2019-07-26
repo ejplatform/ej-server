@@ -9,7 +9,7 @@ REPORT_RESPONSE = {
 CSV_OUT = {
     "votes_header": "user,comment,choice",
     "votes_content": "0,0,0",
-    "comments_header": "author,text,agree,disagree,skipped,divergence,participation",
+    "comments_header": "author,text,agree,disagree,skipped,convergence,participation",
     "comments_content": "0,0,0,0,0,0,0",
-    "user_header": "name,agree,disagree,skipped,divergence",
+    "user_header": "name,agree,disagree,skipped,convergence",
 }
