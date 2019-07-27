@@ -23,12 +23,10 @@ def achievements(request):
     )
 
     users_after = list(
-        (
-            models.UserProgress.objects.filter(score__lte=progress.score)
-            .exclude(user_id=user.id)
-            .order_by("-score")
-            .values_list("user__name", "score")[: 9 - len(users_before)]
-        )
+        models.UserProgress.objects.filter(score__lte=progress.score)
+        .exclude(user_id=user.id)
+        .order_by("-score")
+        .values_list("user__name", "score")[: 9 - len(users_before)]
     )
 
     # Trophies

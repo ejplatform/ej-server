@@ -3,22 +3,26 @@
 
     <table class="margin-2">
         <tr>
+            <th>{{ _('#') }}</th>
             <th>{{ _('User') }}</th>
             <th>{{ _('Points') }}</th>
         </tr>
 
         {% for name, points in users_before %}
             <tr>
+                <td>{{ loop.index }}</td>
                 <td>{{ name }}</td>
                 <td>{{ points }}</td>
             </tr>
         {% endfor %}
         <tr>
+            <th>{{ position_idx + 1 }}</th>
             <th><i class="fa fa-star"></i>{{ user.get_full_name() }}</th>
             <th>{{ progress.score }}</th>
         </tr>
         {% for name, points in users_after %}
             <tr>
+                <td>{{ loop.index + position_idx + 1 }}</td>
                 <td>{{ name }}</td>
                 <td>{{ points }}</td>
             </tr>
