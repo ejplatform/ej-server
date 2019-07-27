@@ -164,7 +164,8 @@ class UserProgress(ProgressBase):
 
     # Non de-normalized fields: conversations app
     n_conversations = delegate_to("user")
-    n_comments = delegate_to("user")
+    n_pending_comments = delegate_to("user")
+    n_approved_comments = delegate_to("user")
     n_rejected_comments = delegate_to("user")
     n_final_votes = delegate_to("user")
 
@@ -222,7 +223,7 @@ class UserProgress(ProgressBase):
             0,
             self.score_bias
             + 10 * self.n_final_votes
-            + 30 * self.n_comments
+            + 30 * self.n_approved_comments
             - 30 * self.n_rejected_comments
             + 15 * self.n_endorsements
             + 50 * self.n_given_opinion_bridge_powers
@@ -254,7 +255,7 @@ class ConversationProgress(ProgressBase):
 
     # Non de-normalized fields: conversations
     n_final_votes = delegate_to("conversation")
-    n_comments = delegate_to("conversation")
+    n_approved_comments = delegate_to("conversation")
     n_rejected_comments = delegate_to("conversation")
     n_participants = delegate_to("conversation")
     n_favorites = delegate_to("conversation")
@@ -296,7 +297,7 @@ class ConversationProgress(ProgressBase):
             0,
             self.score_bias
             + self.n_final_votes
-            + 2 * self.n_comments
+            + 2 * self.n_approved_comments
             - 3 * self.n_rejected_comments
             + 3 * self.n_endorsements,
         )
@@ -346,7 +347,9 @@ class ParticipationProgress(ProgressBase):
         .exclude(choice=Choice.SKIP)
         .count()
     )
-    n_comments = lazy(lambda p: p.user.comments.filter(conversation=p.conversation).count())
+    n_approved_comments = lazy(
+        lambda p: p.user.approved_comments.filter(conversation=p.conversation).count()
+    )
     n_rejected_comments = lazy(
         lambda p: p.user.rejected_comments.filter(conversation=p.conversation).count()
     )
@@ -364,7 +367,7 @@ class ParticipationProgress(ProgressBase):
 
     # Points
     pts_final_votes = compute_points(10)
-    pts_comments = compute_points(30)
+    pts_approved_comments = compute_points(30)
     pts_rejected_comments = compute_points(-30)
     pts_endorsements = compute_points(15)
     pts_given_opinion_bridge_powers = compute_points(50)
@@ -402,7 +405,7 @@ class ParticipationProgress(ProgressBase):
 
         # You cannot receive a focused achievement in your own conversation!
         if not self.is_owner:
-            n_comments = self.conversation.n_comments
+            n_comments = self.conversation.n_approved_comments
             self.is_focused = (self.n_final_votes >= 20) and (n_comments == self.n_final_votes)
 
         return super().sync()
@@ -428,7 +431,7 @@ class ParticipationProgress(ProgressBase):
             0,
             self.score_bias
             + self.pts_final_votes
-            + self.pts_comments
+            + self.pts_approved_comments
             + self.pts_rejected_comments
             + self.pts_endorsements
             + self.pts_given_opinion_bridge_powers

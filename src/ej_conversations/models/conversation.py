@@ -12,6 +12,7 @@ from sidekick import lazy, property as property, placeholder as this
 from taggit.managers import TaggableManager
 from taggit.models import TaggedItemBase
 
+from ej.utils.functional import deprecate_lazy
 from ej.utils.url import SafeUrl
 from .comment import Comment
 from .conversation_queryset import log, ConversationQuerySet
@@ -68,9 +69,16 @@ class Conversation(TimeStampedModel):
     def users(self):
         return get_user_model().objects.filter(votes__comment__conversation=self).distinct()
 
-    @property
-    def approved_comments(self):
-        return self.comments.filter(status=Comment.STATUS.approved)
+    # Comment managers
+    def _filter_comments(*args):
+        *_, which = args
+        status = getattr(Comment.STATUS, which)
+        return property(lambda self: self.comments.filter(status=status))
+
+    approved_comments = _filter_comments("approved")
+    rejected_comments = _filter_comments("rejected")
+    pending_comments = _filter_comments("pending")
+    del _filter_comments
 
     class Meta:
         ordering = ["created"]
@@ -89,9 +97,14 @@ class Conversation(TimeStampedModel):
     tag_names = lazy(this.tags.values_list("name", flat=True))
 
     # Statistics
-    n_comments = lazy(this.comments.filter(status=Comment.STATUS.approved).count())
-    n_pending_comments = lazy(this.comments.filter(status=Comment.STATUS.pending).count())
-    n_rejected_comments = lazy(this.comments.filter(status=Comment.STATUS.rejected).count())
+    n_comments = deprecate_lazy(
+        this.n_approved_comments, "Conversation.n_comments was deprecated in favor of .n_approved_comments."
+    )
+    n_approved_comments = lazy(this.approved_comments.count())
+    n_pending_comments = lazy(this.pending_comments.count())
+    n_rejected_comments = lazy(this.rejected_comments.count().count())
+    n_total_comments = lazy(this.comments.count().count())
+
     n_favorites = lazy(this.favorites.count())
     n_tags = lazy(this.tags.count())
     n_votes = lazy(this.votes.count())
@@ -106,6 +119,7 @@ class Conversation(TimeStampedModel):
     n_user_rejected_comments = lazy(this.user_comments.filter(status=Comment.STATUS.rejected).count())
     n_user_pending_comments = lazy(this.user_comments.filter(status=Comment.STATUS.pending).count())
     n_user_votes = lazy(this.user_votes.count())
+    n_user_final_votes = lazy(this.user_votes.exclude(choice=Choice.SKIP).count())
     is_user_favorite = lazy(this.is_favorite(this.for_user))
 
     @lazy

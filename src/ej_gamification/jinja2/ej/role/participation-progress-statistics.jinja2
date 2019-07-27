@@ -4,6 +4,7 @@
         <th>{{ _('#') }}</th>
         <th>{{ _('Points') }}</th>
     </tr>
+
     {% if progress.score_bias %}
         <tr>
             <td>{{ _('Extra') }}</td>
@@ -18,8 +19,8 @@
     </tr>
     <tr>
         <td>{{ _('Comments') }}</td>
-        <td>{{ progress.n_comments }}</td>
-        <td>{{ progress.pts_comments }}</td>
+        <td>{{ progress.n_approved_comments }}</td>
+        <td>{{ progress.pts_approved_comments }}</td>
     </tr>
     {% if progress.n_rejected_comments != 0 %}
         <tr>

@@ -56,10 +56,11 @@
         <div class="size-4"></div>
     </div>
 
-    <script>
+    <script up-always-execute>
         window.addEventListener('load', function () {
-            $('.expand-details').on('click', function (e) {
+            $('.expand-details').off('click').on('click', function (e) {
                 $(e.target.parentNode.parentNode).find('.details').toggle(200);
+                e.preventDefault();
             });
         })
     </script>
@@ -72,13 +73,12 @@
 
         <div class="flex-1 left">
             <strong
-                class="block margin-b2">{{ link(title, href=href, class="text-4 bold") }}
-                {{ level|role('stars', brackets='[]') }}
+                class="block margin-b2">{{ link(title, href=href, class="text-4 bold text-accent") }}
             </strong>
 
             {{ level|role('description', progress=progress) }}
             {% if statistics %}
-                <div class="hidden details">{{ progress|role('statistics') }}</div>
+                <div class="hidden details">{{ progress|role('statistics', level=level) }}</div>
             {% endif %}
         </div>
     </div>

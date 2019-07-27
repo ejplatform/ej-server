@@ -53,8 +53,8 @@ def conversation_card(conversation, url=None, request=None, text=None, hidden=No
         "hidden": conversation.is_hidden if hidden is None else hidden,
         "url": url or conversation.get_absolute_url(),
         "tag": conversation.first_tag,
-        "n_comments": conversation.n_comments,
-        "n_votes": conversation.n_votes,
+        "n_comments": conversation.n_approved_comments,
+        "n_votes": conversation.n_final_votes,
         "n_favorites": conversation.n_favorites,
     }
 
@@ -143,6 +143,6 @@ def conversation_user_progress(conversation, request=None, user=None):
 
     user = user or request.user
     conversation.for_user = user
-    n = conversation.n_user_votes
-    total = conversation.n_comments
+    n = conversation.n_user_final_votes
+    total = conversation.n_approved_comments
     return progress_bar(min(n, total), total)

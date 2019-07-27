@@ -1,0 +1,41 @@
+{% if kind == 'host' %}
+    <table class="{{ classes|default('margin-2') }}">
+        <tr>
+            <th>{{ _('Conversation Trophies') }}</th>
+            <th>{{ _('#') }}</th>
+        </tr>
+        <tr>
+            <td>{{ _('Level 1') }}</td>
+            <td>{{ progress.n_conversation_lvl_1 }}</td>
+        </tr>
+        <tr>
+            <td>{{ _('Level 2') }}</td>
+            <td>{{ progress.n_conversation_lvl_2 }}</td>
+        </tr>
+        <tr>
+            <td>{{ _('Level 3') }}</td>
+            <td>{{ progress.n_conversation_lvl_3 }}</td>
+        </tr>
+        <tr>
+            <td>{{ _('Level 4') }}</td>
+            <td>{{ progress.n_conversation_lvl_4 }}</td>
+        </tr>
+    </table>
+{% elif kind == 'comment' %}
+    <table class="{{ classes|default('margin-2') }}">
+        <tr>
+            <th></th>
+            <th>{{ _('#') }}</th>
+        </tr>
+        <tr>
+            <td>{{ _('Approved comments') }}</td>
+            <td>{{ progress.n_approved_comments }}</td>
+        </tr>
+        {% if progress.n_endorsements %}
+            <tr>
+                <td>{{ _('Endorsements') }}</td>
+                <td>{{ progress.n_endorsements }}</td>
+            </tr>
+        {% endif %}
+    </table>
+{% endif %}

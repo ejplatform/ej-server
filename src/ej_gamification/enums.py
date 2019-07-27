@@ -68,7 +68,7 @@ class CommenterLevel(LevelMixin, IntEnum):
 
     @classmethod
     def score(cls, data):
-        n = data.n_comments
+        n = data.n_approved_comments
         m = data.n_endorsements
         return n + m / 2
 
