@@ -5,7 +5,7 @@ from sidekick import delegate_to, lazy, import_later, placeholder as this
 
 from ej_conversations import Choice
 from .progress_queryset import ProgressQuerySet
-from ..enums import CommenterLevel, HostLevel, ProfileLevel, ConversationLevel, VoterLevel
+from ..enums import CommenterLevel, HostLevel, ProfileLevel, ConversationLevel, VoterLevel, ScoreLevel
 from ..utils import compute_points
 
 signals = import_later("..signals", package=__package__)
@@ -189,10 +189,19 @@ class UserProgress(ProgressBase):
     total_conversation_score = delegate_to("user")
     total_participation_score = delegate_to("user")
 
+    # Score points
+    pts_final_votes = compute_points(10)
+    pts_approved_comments = compute_points(30)
+    pts_rejected_comments = compute_points(-15)
+    pts_endorsements = compute_points(15)
+    pts_given_opinion_bridge_powers = compute_points(50)
+    pts_given_minority_activist_powers = compute_points(50)
+
     # Signals
     level_achievement_signal = lazy(lambda _: signals.user_level_achieved, shared=True)
 
-    n_trophies = 0
+    n_trophies = 10
+    score_level = property(lambda self: ScoreLevel.from_score(self.score))
 
     objects = ProgressQuerySet.as_manager()
 
@@ -222,12 +231,12 @@ class UserProgress(ProgressBase):
         return max(
             0,
             self.score_bias
-            + 10 * self.n_final_votes
-            + 30 * self.n_approved_comments
-            - 30 * self.n_rejected_comments
-            + 15 * self.n_endorsements
-            + 50 * self.n_given_opinion_bridge_powers
-            + 50 * self.n_given_minority_activist_powers
+            + self.pts_final_votes
+            + self.pts_approved_comments
+            + self.pts_rejected_comments
+            + self.pts_endorsements
+            + self.pts_given_opinion_bridge_powers
+            + self.pts_given_minority_activist_powers
             + self.total_conversation_score,
         )
 
@@ -271,6 +280,12 @@ class ConversationProgress(ProgressBase):
     # Signals
     level_achievement_signal = lazy(lambda _: signals.conversation_level_achieved, shared=True)
 
+    # Points
+    pts_final_votes = compute_points(1)
+    pts_approved_comments = compute_points(2)
+    pts_rejected_comments = compute_points(-3)
+    pts_endorsements = compute_points(3)
+
     objects = ProgressQuerySet.as_manager()
 
     class Meta:
@@ -296,10 +311,10 @@ class ConversationProgress(ProgressBase):
         return max(
             0,
             self.score_bias
-            + self.n_final_votes
-            + 2 * self.n_approved_comments
-            - 3 * self.n_rejected_comments
-            + 3 * self.n_endorsements,
+            + self.pts_final_votes
+            + self.pts_approved_comments
+            + self.pts_rejected_comments
+            + self.pts_endorsements,
         )
 
 
@@ -368,7 +383,7 @@ class ParticipationProgress(ProgressBase):
     # Points
     pts_final_votes = compute_points(10)
     pts_approved_comments = compute_points(30)
-    pts_rejected_comments = compute_points(-30)
+    pts_rejected_comments = compute_points(-15)
     pts_endorsements = compute_points(15)
     pts_given_opinion_bridge_powers = compute_points(50)
     pts_given_minority_activist_powers = compute_points(50)

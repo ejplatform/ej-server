@@ -47,7 +47,7 @@ class Comment(StatusModel, TimeStampedModel):
     )
     moderator = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        related_name="rejected_comments",
+        related_name="moderated_comments",
         on_delete=models.SET_NULL,
         blank=True,
         null=True,

@@ -18,14 +18,12 @@ def achievements(request):
         "position_idx": progress.position,
         "n_users": models.UserProgress.objects.count(),
         "n_trophies": progress.n_trophies,
-        #
         #  Global achievements
         "progress": progress,
-        # "score_level": progress.commenter_level,
+        "score_level": progress.score_level,
         "profile_level": progress.profile_level,
         "commenter_level": progress.commenter_level,
         "host_level": progress.host_level,
-        #
         #  Local achievements
         "participation_trophies": user.participation_progresses.all(),
         "conversation_trophies": models.ConversationProgress.objects.filter(conversation__author=user),

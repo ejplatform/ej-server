@@ -17,9 +17,9 @@
 
             <h2 class="width-full h3">{{ _('Generic') }}</h2>
             <div class="{{ trophies_class }}" style="background: rgba(0, 0, 0, 0.05)">
-{#                {{ render_trophy(progress, score_level, _('User level'), url('profile:detail')) }}#}
-{#                <hr>#}
-                {{ render_trophy(progress, profile_level, _('User profile'), url('profile:detail'), statistics=False) }}
+                {{ render_trophy(progress, score_level, _('Total score'), url('profile:detail'), stars=False) }}
+                <hr>
+                {{ render_trophy(progress, profile_level, _('Profile'), url('profile:detail'), statistics=False) }}
                 <hr>
                 {{ render_trophy(progress, commenter_level, _('Comments'),
                                  href=url('profile:contributions', extra='#contribution-comments')) }}
@@ -67,7 +67,7 @@
 {% endblock %}
 
 
-{% macro render_trophy(progress, level, title, href=url('profile:detail', extra='#profile-contributions'), statistics=True) %}
+{% macro render_trophy(progress, level, title, href=url('profile:detail', extra='#profile-contributions'), statistics=True, stars=True) %}
     <div class="row margin-y2">
         {{ level|role('trophy-image') }}
 
@@ -76,7 +76,7 @@
                 class="block margin-b2">{{ link(title, href=href, class="text-4 bold text-accent") }}
             </strong>
 
-            {{ level|role('description', progress=progress) }}
+            {{ level|role('description', progress=progress, stars=stars) }}
             {% if statistics %}
                 <div class="hidden details">{{ progress|role('statistics', level=level) }}</div>
             {% endif %}

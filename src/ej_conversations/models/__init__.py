@@ -33,7 +33,8 @@ def _patch():
 
     # Enhanced querysets
     user.approved_comments = property(_.comments.approved())
-    user.n_rejected_comments = property(_.comments.rejected())
+    user.rejected_comments = property(_.comments.rejected())
+    user.pending_comments = property(_.comments.pending())
 
     # Statistics
     user.n_conversations = lazy(_.conversations.count())

@@ -4,11 +4,20 @@ from ej.roles import with_template
 from . import enums
 from .models import UserProgress, ParticipationProgress
 
+LEVEL_TYPES = (
+    enums.ConversationLevel,
+    enums.VoterLevel,
+    enums.CommenterLevel,
+    enums.HostLevel,
+    enums.ProfileLevel,
+    enums.ScoreLevel,
+)
+
 
 #
 # Generic roles
 #
-@with_template(enums.LevelMixin, role="stars")
+@with_template(LEVEL_TYPES, role="stars")
 def level_stars(level, request=None, brackets=None):
     if brackets:
         lbrack, rbrack = brackets
@@ -17,13 +26,13 @@ def level_stars(level, request=None, brackets=None):
     return {"level": level, "fa_icon": LEVEL_STARS[level], "lbrack": lbrack, "rbrack": rbrack}
 
 
-@with_template(enums.LevelMixin, role="description")
-def level_description(level, request=None, progress=None):
-    return {"level": level, "progress": progress}
+@with_template(LEVEL_TYPES, role="description")
+def level_description(level, progress=None, **kwargs):
+    return {"level": level, "progress": progress, **kwargs}
 
 
-@with_template(enums.LevelMixin, role="trophy-image")
-def level_trophy_image(level, request=None):
+@with_template(LEVEL_TYPES, role="trophy-image")
+def level_trophy_image(level, **kwargs):
     cls = type(level)
     return {"level": level, "img_src": TROPHY_IMG_SRC[cls], "name": TROPHY_NAMES.get(cls, _("Score"))}
 
@@ -42,7 +51,6 @@ def participation_progress_statistics(progress, *, classes="margin-y2", **kwargs
 def user_progress_statistics(progress, *, level, classes="margin-y2", **kwargs):
     if isinstance(classes, (tuple, list)):
         classes = " ".join(classes)
-
     return {"progress": progress, "classes": classes or "", "kind": LEVEL_KIND[type(level)], "level": level}
 
 
@@ -56,6 +64,7 @@ TROPHY_NAMES = {
     enums.HostLevel: _("Conversation score"),
     enums.ProfileLevel: _("Profile score"),
     enums.VoterLevel: _("Participation score"),
+    enums.ScoreLevel: _("Total score"),
 }
 TROPHY_IMG_SRC = {
     # Local
@@ -65,8 +74,8 @@ TROPHY_IMG_SRC = {
     enums.CommenterLevel: "/img/trophies/participation_all.svg",
     enums.HostLevel: "/img/trophies/host_all.svg",
     enums.ProfileLevel: "/img/trophies/profile.svg",
+    enums.ScoreLevel: "/img/trophies/total_score.svg",
 }
-LEVEL_TYPES = tuple(TROPHY_IMG_SRC)
 LEVEL_KIND = {
     # Global
     enums.ConversationLevel: "conversation",
@@ -75,4 +84,5 @@ LEVEL_KIND = {
     enums.HostLevel: "host",
     enums.CommenterLevel: "comment",
     enums.ProfileLevel: "profile",
+    enums.ScoreLevel: "score",
 }
