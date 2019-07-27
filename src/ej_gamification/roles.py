@@ -2,7 +2,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from ej.roles import with_template
 from . import enums
-from .models import UserProgress, ParticipationProgress
+from .models import UserProgress, ParticipationProgress, ConversationProgress
 
 LEVEL_TYPES = (
     enums.ConversationLevel,
@@ -47,7 +47,7 @@ def participation_progress_statistics(progress, *, classes="margin-y2", **kwargs
     return {"progress": progress, "classes": classes or ""}
 
 
-@with_template(UserProgress, role="statistics")
+@with_template([ConversationProgress, UserProgress], role="statistics")
 def user_progress_statistics(progress, *, level, classes="margin-y2", **kwargs):
     if isinstance(classes, (tuple, list)):
         classes = " ".join(classes)

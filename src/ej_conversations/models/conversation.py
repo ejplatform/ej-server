@@ -102,7 +102,7 @@ class Conversation(TimeStampedModel):
     )
     n_approved_comments = lazy(this.approved_comments.count())
     n_pending_comments = lazy(this.pending_comments.count())
-    n_rejected_comments = lazy(this.rejected_comments.count().count())
+    n_rejected_comments = lazy(this.rejected_comments.count())
     n_total_comments = lazy(this.comments.count().count())
 
     n_favorites = lazy(this.favorites.count())

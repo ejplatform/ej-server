@@ -1,7 +1,7 @@
 from django.dispatch import Signal, receiver
 
 from ej_conversations.signals import vote_cast
-from ej_gamification.models.progress import get_participation
+from ej_gamification.models.progress_base import get_participation
 
 #
 # Application signals

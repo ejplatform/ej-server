@@ -4,7 +4,7 @@ from django.utils import timezone
 from ej_conversations.models import Conversation
 from ej_conversations.utils import check_promoted
 from ej_gamification.models import endorse_comment
-from ej_gamification.models.progress import get_participation, get_progress
+from ej_gamification.models.progress_base import get_participation, get_progress
 
 app_name = "ej_gamification"
 urlpatterns = Router(

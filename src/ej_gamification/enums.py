@@ -115,9 +115,9 @@ class HostLevel(LevelMixin, IntEnum):
         level = cls.NONE
         for lvl, (a, b, c, d) in zip(cls.skipping_none(), cls._levels()):
             lvl4 = data.n_conversation_lvl_4
-            lvl3 = data.n_conversation_lvl_3 + lvl4
-            lvl2 = data.n_conversation_lvl_2 + lvl3
-            lvl1 = data.n_conversation_lvl_1 + lvl2
+            lvl3 = data.n_conversation_lvl_3
+            lvl2 = data.n_conversation_lvl_2
+            lvl1 = data.n_conversation_lvl_1
             if lvl4 >= d and lvl3 >= c and lvl2 >= b and lvl1 >= a:
                 level = lvl
         return level

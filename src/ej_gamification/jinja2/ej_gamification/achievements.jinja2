@@ -5,12 +5,20 @@
 
     <div class="measure margin-xauto">
         <div class="center">
-            <p class="margin-b2 margin-t3"><i class="fa fa-medal"></i>{{ _('Classification:') }}
-                <strong>{{ position_idx + 1 }}</strong> / {{ n_users }}</p>
-            <img src="progress-flag-{{ position_idx }}-{{ n_users }}.svg" class="size-x6p">
-            <p class="margin-b2 margin-t3"><i class="fa fa-trophy"></i>{{ _('Trophies:') }}
-                <strong>{{ n_trophies }}</strong></p>
+            <p class="margin-b2 margin-t3">
+                <i class="fa fa-trophy"></i>
+                {{ _('Trophies:') }} <strong>{{ n_trophies }}</strong>
+            </p>
+            <div class="expand-details cursor-pointer">
+                <div>
+                    <i class="fa fa-medal"></i>{{ _('Classification:') }}
+                    <strong>{{ position_idx + 1 }}</strong> / {{ n_users }}
+                </div>
+                <img src="progress-flag-{{ position_idx }}-{{ n_users }}.svg" class="size-x6p">
+            </div>
+            {% include 'ej_gamification/includes/leaderboard.jinja2' %}
         </div>
+
 
         <div class="row wrap center-content">
             {% set trophies_class = 'border pad-x3 rounded-3 border-1 width-full margin-x2' %}
@@ -48,7 +56,7 @@
                         {% if not loop.first %}
                             <hr>
                         {% endif %}
-                        {{ render_trophy(p, p.voter_level, p.conversation.title, p.conversation.url()) }}
+                        {{ render_trophy(p, p.conversation_level, p.conversation.title, p.conversation.url()) }}
                     {% endfor %}
                 </div>
             {% endif %}

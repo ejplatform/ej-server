@@ -1,0 +1,27 @@
+<div class="hidden details margin-xauto">
+    <h1 class="h3 text-accent">{{ _('Leaderboard') }}</h1>
+
+    <table class="margin-2">
+        <tr>
+            <th>{{ _('User') }}</th>
+            <th>{{ _('Points') }}</th>
+        </tr>
+
+        {% for name, points in users_before %}
+            <tr>
+                <td>{{ name }}</td>
+                <td>{{ points }}</td>
+            </tr>
+        {% endfor %}
+        <tr>
+            <th><i class="fa fa-star"></i>{{ user.get_full_name() }}</th>
+            <th>{{ progress.score }}</th>
+        </tr>
+        {% for name, points in users_after %}
+            <tr>
+                <td>{{ name }}</td>
+                <td>{{ points }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>

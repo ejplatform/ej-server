@@ -2,8 +2,8 @@ from django.contrib import admin
 from django.utils.translation import ugettext as _
 
 from ej_conversations.admin import ConversationAdmin, descr
-from ej_gamification.models.progress import get_progress, get_participation
 from . import models
+from .models import get_progress, get_participation
 
 
 # admin.site.register(models.GivenMinorityPower)

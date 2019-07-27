@@ -13,11 +13,38 @@ def achievements(request):
     user = request.user
     progress = models.get_progress(user, sync=True)
 
+    # Leaderboard
+    users_before = list(
+        reversed(
+            models.UserProgress.objects.filter(score__gt=progress.score)
+            .order_by("score")
+            .values_list("user__name", "score")[:4]
+        )
+    )
+
+    users_after = list(
+        reversed(
+            models.UserProgress.objects.filter(score__lte=progress.score)
+            .exclude(user_id=user.id)
+            .order_by("score")
+            .values_list("user__name", "score")[: 9 - len(users_before)]
+        )
+    )
+
+    # Trophies
+    conversation_trophies = models.ConversationProgress.objects.filter(conversation__author=user).order_by(
+        "-conversation_level"
+    )
+
+    participation_trophies = user.participation_progresses.order_by("-voter_level")
     return {
         "user": user,
         "position_idx": progress.position,
         "n_users": models.UserProgress.objects.count(),
         "n_trophies": progress.n_trophies,
+        # Leaderboard
+        "users_before": users_before,
+        "users_after": users_after,
         #  Global achievements
         "progress": progress,
         "score_level": progress.score_level,
@@ -25,13 +52,14 @@ def achievements(request):
         "commenter_level": progress.commenter_level,
         "host_level": progress.host_level,
         #  Local achievements
-        "participation_trophies": user.participation_progresses.all(),
-        "conversation_trophies": models.ConversationProgress.objects.filter(conversation__author=user),
+        "participation_trophies": participation_trophies,
+        "conversation_trophies": conversation_trophies,
     }
 
 
 @urlpatterns.route("achievements/progress-flag-<int:position>-<int:total>.svg")
 def progress_flag(request, position, total):
+    total -= 1
     alpha = 2
     e = 1e-50
     scale = 137.99982 / 38.45

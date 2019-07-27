@@ -104,4 +104,49 @@
             <td><strong>{{ progress.score }}</strong></td>
         </tr>
     </table>
+{% elif kind == 'conversation' %}
+    <table class="{{ classes|default('margin-2') }}">
+        <tr>
+            <th></th>
+            <th>{{ _('#') }}</th>
+            <th>{{ _('Points') }}</th>
+        </tr>
+
+        {% if progress.score_bias %}
+            <tr>
+                <td>{{ _('Extra') }}</td>
+                <td>-</td>
+                <td>{{ progress.score_bias }}</td>
+            </tr>
+        {% endif %}
+        <tr>
+            <td>{{ _('Votes') }}</td>
+            <td>{{ progress.n_final_votes }}</td>
+            <td>{{ progress.pts_final_votes }}</td>
+        </tr>
+        <tr>
+            <td>{{ _('Comments') }}</td>
+            <td>{{ progress.n_approved_comments }}</td>
+            <td>{{ progress.pts_approved_comments }}</td>
+        </tr>
+        {% if progress.n_rejected_comments != 0 %}
+            <tr>
+                <td>{{ _('Rejected Comments') }}</td>
+                <td>{{ progress.n_rejected_comments }}</td>
+                <td>{{ progress.pts_rejected_comments }}</td>
+            </tr>
+        {% endif %}
+        {% if progress.n_endorsements != 0 %}
+            <tr>
+                <td>{{ _('Endorsements') }}</td>
+                <td>{{ progress.n_endorsements }}</td>
+                <td>{{ progress.pts_endorsements }}</td>
+            </tr>
+        {% endif %}
+        <tr>
+            <td>{{ _('Total') }}</td>
+            <td></td>
+            <td><strong>{{ progress.score }}</strong></td>
+        </tr>
+    </table>
 {% endif %}
