@@ -23,10 +23,10 @@ def achievements(request):
     )
 
     users_after = list(
-        reversed(
+        (
             models.UserProgress.objects.filter(score__lte=progress.score)
             .exclude(user_id=user.id)
-            .order_by("score")
+            .order_by("-score")
             .values_list("user__name", "score")[: 9 - len(users_before)]
         )
     )
