@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-28 17:34+0000\n"
+"POT-Creation-Date: 2019-07-28 20:37+0000\n"
 "PO-Revision-Date: 2019-07-28 14:36-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -25,27 +25,27 @@ msgstr "Documentação"
 msgid "{date} at {time}"
 msgstr "{date} às {time}"
 
-#: src/ej/components/menu.py:132
+#: src/ej/components/menu.py:133
 msgid "Accessibility"
 msgstr "Acessibilidade"
 
-#: src/ej/components/menu.py:134
+#: src/ej/components/menu.py:135
 msgid "Toggle Font Size"
 msgstr "Tamanho da fonte"
 
-#: src/ej/components/menu.py:135
+#: src/ej/components/menu.py:136
 msgid "Toggle Contrast"
 msgstr "Alto contraste"
 
-#: src/ej/components/menu.py:143 src/ej/components/menu.py:145
+#: src/ej/components/menu.py:144 src/ej/components/menu.py:146
 msgid "About"
 msgstr "Sobre"
 
-#: src/ej/components/menu.py:146
+#: src/ej/components/menu.py:147
 msgid "Frequently Asked Questions"
 msgstr "Perguntas frequentes"
 
-#: src/ej/components/menu.py:147
+#: src/ej/components/menu.py:148
 msgid "Usage terms"
 msgstr "Termos de uso"
 
@@ -428,23 +428,28 @@ msgstr "Concluir"
 msgid "Give your opinion here"
 msgstr "Dê a sua opinião aqui"
 
-#: src/ej_conversations/forms.py:29
+#: src/ej_conversations/forms.py:20
+#, fuzzy
+msgid "Text for your comment"
+msgstr "Escreva aqui o comentário"
+
+#: src/ej_conversations/forms.py:30
 msgid "You already submitted this comment."
 msgstr "Você já enviou este comentário."
 
-#: src/ej_conversations/forms.py:72
+#: src/ej_conversations/forms.py:73
 msgid "Tags"
 msgstr "Tags"
 
-#: src/ej_conversations/forms.py:72
+#: src/ej_conversations/forms.py:73
 msgid "Tags, separated by commas."
 msgstr "Tags, separadas por vírgula."
 
-#: src/ej_conversations/forms.py:78
+#: src/ej_conversations/forms.py:79
 msgid "Place conversation in the main /conversations/ URL."
 msgstr "Conversas promovidas aparecem no mural principal."
 
-#: src/ej_conversations/forms.py:79
+#: src/ej_conversations/forms.py:80
 msgid "Mark to make the conversation invisible."
 msgstr "Selecione para fazer conversa invisível."
 
@@ -592,8 +597,8 @@ msgid "{n} awaiting moderation"
 msgstr "{n} aguardando moderação"
 
 #: src/ej_conversations/roles/conversations.py:104
-#, python-brace-format
-msgid "{ratio} comments"
+#, fuzzy, python-brace-format
+msgid "{n} of {m} comments"
 msgstr "{ratio} comentários"
 
 #: src/ej_conversations/routes.py:46
@@ -1115,7 +1120,7 @@ msgid "maximum achieved conversation level"
 msgstr "Conversas participativas"
 
 #: src/ej_gamification/models/progress_conversation.py:59
-#: src/ej_gamification/roles.py:63 src/ej_gamification/roles.py:64
+#: src/ej_gamification/roles.py:69 src/ej_gamification/roles.py:70
 msgid "Conversation score"
 msgstr "Pontuação da conversa"
 
@@ -1208,26 +1213,30 @@ msgstr "Pontuação do usuário"
 msgid "User scores"
 msgstr "Pontuações dos usuários"
 
-#: src/ej_gamification/roles.py:37
+#: src/ej_gamification/roles.py:31
+msgid "Ranked author (level \"{}\")"
+msgstr ""
+
+#: src/ej_gamification/roles.py:43
 #, fuzzy
 msgid "Score"
 msgstr "pontos"
 
-#: src/ej_gamification/roles.py:62
+#: src/ej_gamification/roles.py:68
 msgid "Comment score"
 msgstr "Pontos de comentários"
 
-#: src/ej_gamification/roles.py:65
+#: src/ej_gamification/roles.py:71
 #, fuzzy
 msgid "Profile score"
 msgstr "Foto de perfil"
 
-#: src/ej_gamification/roles.py:66
+#: src/ej_gamification/roles.py:72
 #, fuzzy
 msgid "Participation score"
 msgstr "Participação"
 
-#: src/ej_gamification/roles.py:67
+#: src/ej_gamification/roles.py:73
 #, fuzzy
 msgid "Total score"
 msgstr "Pontos de comentários"
@@ -1844,6 +1853,11 @@ msgstr "Não pode remover contas de superusuário"
 msgid "We are sorry to see you go :(<br><br>Good luck in your journey."
 msgstr "Lamentamos que você vá :( <br> <br> Boa sorte em sua jornada."
 
+#: src/ej_users/socialbuttons.py:49
+#, fuzzy
+msgid "Login using {}"
+msgstr "Botão de login"
+
 #: lib/themes/cpa/templates/jinja2/pages/home.jinja2:62
 #: src/ej/templates/jinja2/pages/home.jinja2:49
 msgid "Community driven"
@@ -1864,7 +1878,7 @@ msgstr "Nuances invés de bolhas"
 msgid "Free and open source"
 msgstr "Código livre e aberta"
 
-#: src/ej/templates/jinja2/base.jinja2:42
+#: src/ej/templates/jinja2/base.jinja2:43
 msgid "Please override the \"content\" block of your template!"
 msgstr "Por favor substitua o bloco \"content\" do seu template!"
 
@@ -1875,6 +1889,11 @@ msgstr "Em construção!"
 #: src/ej/templates/jinja2/generic.jinja2:9
 msgid "Context variables"
 msgstr "Varíaveis de contexto"
+
+#: src/ej/templates/jinja2/ej/includes/footer.jinja2:5
+#, fuzzy
+msgid "Navigation bar"
+msgstr "Menu de navegação"
 
 #: src/ej/templates/jinja2/ej/includes/footer.jinja2:8
 #, fuzzy
@@ -1907,6 +1926,11 @@ msgstr "Painel Rocket.Chat"
 #: src/ej_users/jinja2/ej_users/includes/account-menu.jinja2:13
 msgid "Profile"
 msgstr "Perfil"
+
+#: src/ej/templates/jinja2/ej/includes/header.jinja2:1
+#, fuzzy
+msgid "Top header"
+msgstr "Cabeçalho do aplicativo"
 
 #: src/ej/templates/jinja2/ej/includes/header.jinja2:2
 msgid "Back"
@@ -2301,9 +2325,19 @@ msgid "Include something new and avoid similar opinions."
 msgstr "Escreva algo novo e evite opiniões similares."
 
 #: src/ej_conversations/jinja2/ej/role/conversation-comment-form.jinja2:10
-#, python-format
-msgid "You can post up to %(n)s comments."
-msgstr "Você pode postar até %(n)s comentários."
+#, fuzzy, python-format
+msgid "You can only post %(n)s comment."
+msgid_plural "You can post up to %(n)s comments."
+msgstr[0] "Você pode postar até %(n)s comentários."
+msgstr[1] "Você pode postar até %(n)s comentários."
+
+#: src/ej_conversations/jinja2/ej/role/conversation-comment-form.jinja2:19
+#: src/ej_rocketchat/jinja2/ej_rocketchat/config.jinja2:11
+#: src/ej_rocketchat/jinja2/ej_rocketchat/index.jinja2:15
+#: src/ej_rocketchat/jinja2/ej_rocketchat/register.jinja2:13
+#: src/ej_users/jinja2/ej_users/recover-password.jinja2:19
+msgid "Send"
+msgstr "Enviar"
 
 #: src/ej_conversations/jinja2/ej_conversations/create.jinja2:15
 msgid "Please fill the details bellow."
@@ -2336,6 +2370,7 @@ msgstr "Comentário %(i)s"
 
 #: src/ej_conversations/jinja2/ej_conversations/create.jinja2:36
 #: src/ej_conversations/jinja2/ej_conversations/create.jinja2:68
+#, fuzzy
 msgid "Type your comment here"
 msgstr "Escreva aqui o comentário"
 
@@ -2352,16 +2387,21 @@ msgstr "Criar conversa"
 msgid "Comment %i%"
 msgstr "Comentário %i%"
 
-#: src/ej_conversations/jinja2/ej_conversations/detail.jinja2:16
+#: src/ej_conversations/jinja2/ej_conversations/detail.jinja2:3
+#, fuzzy
+msgid "Conversation: \"{}\""
+msgstr "Conversa: {name}"
+
+#: src/ej_conversations/jinja2/ej_conversations/detail.jinja2:17
 msgid "Warning!"
 msgstr "Atenção!"
 
-#: src/ej_conversations/jinja2/ej_conversations/detail.jinja2:17
+#: src/ej_conversations/jinja2/ej_conversations/detail.jinja2:18
 #, fuzzy
 msgid "This conversation is hidden."
 msgstr "Esta conversa é agora favorita."
 
-#: src/ej_conversations/jinja2/ej_conversations/detail.jinja2:18
+#: src/ej_conversations/jinja2/ej_conversations/detail.jinja2:19
 #, python-format
 msgid " Click %(here)s to edit and make it visible again."
 msgstr ""
@@ -2369,12 +2409,12 @@ msgstr ""
 "visível novamente."
 
 #: src/ej_conversations/jinja2/ej_conversations/comments/detail.jinja2:13
-#: src/ej_conversations/jinja2/ej_conversations/detail.jinja2:31
+#: src/ej_conversations/jinja2/ej_conversations/detail.jinja2:32
 msgid "Congratulations!"
 msgstr "Parabéns!"
 
 #: src/ej_conversations/jinja2/ej_conversations/comments/detail.jinja2:14
-#: src/ej_conversations/jinja2/ej_conversations/detail.jinja2:32
+#: src/ej_conversations/jinja2/ej_conversations/detail.jinja2:33
 msgid "There are no comments left to vote :)"
 msgstr "Não há comentários para votar :)"
 
@@ -2880,13 +2920,6 @@ msgstr "Sair"
 #: src/ej_rocketchat/jinja2/ej_rocketchat/config.jinja2:2
 msgid "Configure Rocket.Chat Integration"
 msgstr "Configurar a integração com o Rocket.Chat"
-
-#: src/ej_rocketchat/jinja2/ej_rocketchat/config.jinja2:11
-#: src/ej_rocketchat/jinja2/ej_rocketchat/index.jinja2:15
-#: src/ej_rocketchat/jinja2/ej_rocketchat/register.jinja2:13
-#: src/ej_users/jinja2/ej_users/recover-password.jinja2:19
-msgid "Send"
-msgstr "Enviar"
 
 #: src/ej_rocketchat/jinja2/ej_rocketchat/forbidden.jinja2:2
 #: src/ej_rocketchat/jinja2/ej_rocketchat/forbidden.jinja2:8
@@ -3687,9 +3720,6 @@ msgstr "Autenticação"
 #~ msgid "Site logo"
 #~ msgstr "Logo do site"
 
-#~ msgid "Navigation menu"
-#~ msgstr "Menu de navegação"
-
 #~ msgid "Alerts"
 #~ msgstr "Alertas"
 
@@ -3781,9 +3811,6 @@ msgstr "Autenticação"
 
 #~ msgid "Search Stereotype:"
 #~ msgstr "Pesquisar Persona:"
-
-#~ msgid "Conversation: {name}"
-#~ msgstr "Conversa: {name}"
 
 #~ msgid "Manage personas: %(conversation_title)s"
 #~ msgstr "Gerenciar personas: %(conversation_title)s"
@@ -3925,9 +3952,6 @@ msgstr "Autenticação"
 
 #~ msgid "Not enough data to show scatter plot!"
 #~ msgstr "Sem dados suficientes para exibir o scatter plot!"
-
-#~ msgid "Login button"
-#~ msgstr "Botão de login"
 
 #~ msgid "forgot my password"
 #~ msgstr "esqueci minha senha"

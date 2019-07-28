@@ -160,6 +160,7 @@ USER ${USERNAME}
 
 
 COPY ./tasks.py /app/
+COPY ./etc/tasklib/ /app/etc/tasklib/
 
 
 #===============================================================================

@@ -136,7 +136,7 @@ class Profile(models.Model):
             "biography",
         ]
         field_map = {field.name: field for field in self._meta.fields}
-        null_values = {Gender.NOT_FILLED, Race.NOT_FILLED}
+        null_values = {Gender.NOT_FILLED, Race.NOT_FILLED, None, ""}
 
         # Create a tuples of (attribute, human-readable name, value)
         triple_list = []
