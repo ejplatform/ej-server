@@ -1,17 +1,16 @@
-from itertools import chain
 from logging import getLogger
 
 from boogie.models import QuerySet, F, Manager, Value, IntegerField
 from django.contrib.auth import get_user_model
-from django.db import transaction
 from sidekick import import_later
 
 from ej_conversations.math import imputation
-from ej_conversations.models import Conversation
+from ej_conversations.models import Conversation, Comment
 from ..mixins import ClusterizationBaseMixin
 
 pd = import_later("pandas")
 np = import_later("numpy")
+impute = import_later("sklearn.impute")
 clusterization_pipeline = import_later("..math:clusterization_pipeline", package=__package__)
 models = import_later(".models", package=__package__)
 log = getLogger("ej")
@@ -56,7 +55,7 @@ class ClusterQuerySet(ClusterizationBaseMixin, QuerySet):
         # Otherwise we check in the database if we can find more than one
         # clusterization root
         if self.values_list("clusterization").distinct().count() > 1:
-            msg = "more than one clusterization found on dataset"
+            msg = "more than one clusterization found on cluster dataset"
             raise ValueError(msg)
 
     def conversations(self):
@@ -181,11 +180,6 @@ class ClusterQuerySet(ClusterizationBaseMixin, QuerySet):
             user_votes[cluster_col] = clusters
         return user_votes
 
-    def _votes_table_for_clusterization(self):
-        # Return votes table with the default parameters used on clusterization
-        # jobs.
-        return self.votes_table(non_classified=True, cluster_col=None, mean_stereotype=True)
-
     def _get_cluster_to_user_column_table(self, user_field="users"):
         int_field = IntegerField()
 
@@ -212,85 +206,98 @@ class ClusterQuerySet(ClusterizationBaseMixin, QuerySet):
         col.index.name = "author"
         return col.pop("cluster")
 
-    def find_clusters(self, pipeline_factory=None):
+    def find_clusters(self, pipeline_factory=None, commit=True):
         """
-        Find clusters using the given clusterization pipeline. This method does
-        not writes clusters to the database, but rather return the
-        clusterization results.
+        Find clusters using the given clusterization pipeline and write results
+        on the database.
 
         Args:
             pipeline_factory:
                 A function from the number of clusters to Clusterization
                 pipeline. The pipeline should receive a dataframe with raw
-                voting data, impute values to missing data, normalize and
-                classify using stereotype data. Unless you know what you are
+                voting mean_votes, impute values to missing mean_votes, normalize and
+                classify using stereotype mean_votes. Unless you know what you are
                 doing it must be constructed with
                 :func:`ej_clusters.math.clusterization_pipeline`.
+            commit (bool):
+                If False, prevents it from updating the database.
 
         Returns:
-            clusterization (pd.Series):
-                A column mapping each user as index to the corresponding
-                cluster id.
-            pipe (Pipeline):
-                A scikit learn Pipeline object that performed the classification
-                task.
+            A pair with a mapping from clusters ids to the corresponding sequence
+            of user ids. The mapping has a .pipeline attribute that holds the
+            resulting clusterization pipeline.
         """
-        pipeline_factory = pipeline_factory or clusterization_pipeline()
+
+        cluster_ids = list(self.values_list("id", flat=True))
+        n_clusters = len(cluster_ids)
 
         # Check the number of clusters to initialize the pipeline
-        n_clusters = self.count()
+        pipeline_factory = pipeline_factory or clusterization_pipeline()
+        pipeline = pipeline_factory(n_clusters)
         if n_clusters == 0:
             log.error("Trying to clusterize empty cluster set.")
-            raise ValueError("empty cluster set")
+            return ClusterDict(pipeline=pipeline)
         elif n_clusters == 1:
             log.warning("Creating clusters for cluster set with a single element.")
 
-        # Fetch data and clusterize
-        pipe = pipeline_factory(n_clusters)
-        votes = self._votes_table_for_clusterization()
-        labels = pipe.fit_predict(votes)
-        cluster_map = -votes.index[-n_clusters:].values
+        # Collect votes
+        imputer = impute.SimpleImputer()
+        votes_qs = self.votes().filter(comment__status=Comment.STATUS.approved)
+        user_votes = votes_qs.votes_table()
+        user_votes.values[:] = imputer.fit_transform(user_votes)
 
-        # Create result
-        labels_ = cluster_map[labels[:-n_clusters]]
-        users_ = votes.index[:-n_clusters].values
-        series = pd.Series(labels_, name="cluster", index=pd.Index(users_, name="users"))
-        return series, pipe
+        comments = Comment.objects.filter(id__in=votes_qs.values_list("comment_id", flat=True))
+        stereotype_votes = self.stereotype_votes(comments).votes_table("zero")
+        stereotype_ids = self.dataframe("id", "stereotypes__id", index=None)
+        cluster_votes = []
 
-    def clusterize_from_votes(self, pipeline_factory=None):
-        """
-        Similar to .find_clusters(), but writes results to the database in an
-        atomic transaction.
+        for cluster_id in cluster_ids:
+            ids = stereotype_ids[stereotype_ids.id == cluster_id]["stereotypes__id"]
+            mean_votes = stereotype_votes.loc[ids].mean(0)
 
-        Returns:
-             The clusterization pipeline object.
-        """
-        pipeline_factory = pipeline_factory or clusterization_pipeline()
-        series, pipe = self.find_clusters(pipeline_factory)
-        self.update_membership(series.to_dict())
-        return pipe
+            # We fill empty clusters with random values to avoid superposition of
+            # clusters
+            if (mean_votes == 0).all():
+                clusterization = self.get(id=cluster_id).clusterization
+                log.warning(f"[clusters] cluster {cluster_id} of {clusterization} is empty!")
+                mean_votes.values[:] = np.random.uniform(-1, 1, size=len(mean_votes))
 
-    def update_membership(self, mapping, by_cluster=False):
-        """
-        Receives a dictionary of users to clusters and update cluster memberships
-        atomically.
-        """
-        if by_cluster:
-            return chain(*(((user, cluster) for user in users) for cluster, users in mapping.items()))
+            mean_votes.name = cluster_id
+            cluster_votes.append(mean_votes)
 
-        if hasattr(mapping, "items"):
-            mapping = mapping.items()
-        mapping = {(k, v) for k, v in mapping if k >= 0}
+        # Aggregate user and cluster votes
+        cluster_votes = pd.DataFrame(cluster_votes)
+        cluster_votes.index *= -1
+        votes = user_votes.append(cluster_votes)
 
+        # Find labels and associate them with cluster labels
+        labels = [cluster_ids[i] for i in pipeline.fit_predict(votes)]
+        user_labels = labels[:-n_clusters]
+        user_labels = pd.DataFrame([list(user_votes.index), user_labels], index=["user", "label"]).T
+        stereotype_labels = labels[len(user_labels) :]
+
+        result = ClusterDict(pipeline=pipeline)
+        m2m_objects = []
         m2m = self.model.users.through
-        links = [
-            m2m(cluster_id=getattr(cluster, "id", cluster), user_id=getattr(user, "id", user))
-            for user, cluster in mapping
-        ]
-        with transaction.atomic():
-            cluster_ids = set(x for _, x in mapping)
+        for expected_id, got_id in zip(cluster_ids, stereotype_labels):
+            if expected_id != got_id:
+                expected = self.get(id=expected_id)
+                got = self.get(id=got_id)
+                log.warning(
+                    f"[clusters] Inconsistent clusters ({expected.clusterization}): "
+                    f'stereotype for "{expected.name}" was classified as "{got.name}"!'
+                )
+
+            user_ids = user_labels[user_labels.label == expected_id].user.values
+            result[expected_id] = user_ids
+            if commit:
+                m2m_objects.extend(m2m(cluster_id=expected_id, user_id=uid) for uid in user_ids)
+
+        if commit:
             m2m.objects.filter(cluster__in=cluster_ids).delete()
-            m2m.objects.bulk_create(links)
+            m2m.objects.bulk_create(m2m_objects)
+
+        return result
 
     def mean_stereotypes_votes_table(self, data_imputation=None):
         """
@@ -327,3 +334,13 @@ class ClusterManager(Manager.from_queryset(ClusterQuerySet)):
         name as the cluster.
         """
         raise NotImplementedError
+
+
+class ClusterDict(dict):
+    """
+    Custom dict class that stores extra attributes.
+    """
+
+    def __init__(self, d=(), pipeline=None):
+        super().__init__(d)
+        self.pipeline = pipeline

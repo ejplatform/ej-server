@@ -1,6 +1,10 @@
 <div class="comment-card">
     <div class="comment-card__author">
-        <img src="{{ static('/img/icons/catlogo.svg') }}"> {{ author }}
+        {% if badge %}
+            <span class="comment-card__author-img text-accent">{{ badge }}</span>
+        {% else %}
+            <img class="comment-card__author-img" src="{{ static('/img/icons/catlogo.svg') }}">
+        {% endif %} {{ author }}
     </div>
     <article class="col flex-center"><span>{{ comment.content }}</span></article>
     {% if show_actions %}

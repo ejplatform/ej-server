@@ -1,6 +1,7 @@
+from django.apps import apps
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
-from hyperpython import a
+from hyperpython import a, html
 from hyperpython.django import csrf_input
 
 from ej.roles import with_template
@@ -8,6 +9,8 @@ from .. import models
 from ..enums import RejectionReason
 from ..models import Comment
 from ..routes_comments import comment_url
+
+HAS_GAMIFICATION = apps.is_installed("ej_gamification")
 
 
 @with_template(Comment, role="card")
@@ -25,6 +28,13 @@ def comment_card(comment: Comment, request=None, target=None, show_actions=None,
         login = reverse("auth:login")
         login_anchor = a(_("login"), href=f"{login}?next={comment.conversation.get_absolute_url()}")
 
+    badge = ""
+    if HAS_GAMIFICATION:
+        from ej_gamification import get_participation
+
+        level = get_participation(user, comment.conversation).voter_level
+        badge = html(level, role="stars")
+
     buttons = {
         "disagree": ("fa-times", "text-negative", _("Disagree")),
         "skip": ("fa-arrow-right", "text-black", _("Skip")),
@@ -39,6 +49,7 @@ def comment_card(comment: Comment, request=None, target=None, show_actions=None,
         "buttons": buttons,
         "login_anchor": login_anchor,
         "target": target,
+        "badge": badge,
         **kwargs,
     }
 

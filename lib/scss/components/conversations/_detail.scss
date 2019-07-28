@@ -78,16 +78,21 @@ $component-border-radius: size(config('ej.style.border-radius'));
 
     color: color('white');
 
-    &__author {
-        img {
-            @include utilities('margin-r1');
+    &__author-img {
+        @include utilities('margin-r1');
 
-            background-color: color('white');
-            border-radius: 50%;
-            border: 2px solid color('white');
-            height: 1.5rem;
-            vertical-align: middle;
-            width: 1.5rem;
+        align-items: center;
+        display: inline-flex;
+        background-color: color('white');
+        border-radius: 50%;
+        border: 2px solid color('white');
+        height: 1.5rem;
+        justify-content: center;
+        vertical-align: middle;
+        width: 1.5rem;
+
+        .fa, .fas, .far {
+            margin: 0 !important;
         }
     }
     > article {

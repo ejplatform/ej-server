@@ -82,13 +82,13 @@ class Clusterization(TimeStampedModel):
                 return
 
             with use_transaction(atomic=atomic):
+                self.pending_comments.clear()
+                self.pending_votes.clear()
                 try:
-                    self.clusters.clusterize_from_votes()
+                    self.clusters.find_clusters()
                 except ValueError as exc:
-                    log.warning(f"Error during clusterization: [{exc}]")
-                    return
-                self.pending_comments.all().delete()
-                self.pending_votes.all().delete()
+                    log.error(f"[clusters] Error during clusterization: [{exc}]")
+                    raise
                 if self.cluster_status == ClusterStatus.PENDING_DATA:
                     self.cluster_status = ClusterStatus.ACTIVE
                 self.save()

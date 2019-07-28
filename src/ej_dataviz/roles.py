@@ -55,7 +55,7 @@ def comments_table(conversation, request=None, **kwargs):
 
 @html.register(models.Conversation, role="participants-stats-table")
 def participants_table(conversation, **kwargs):
-    data = conversation.users.statistics_summary_dataframe(normalization=100)
+    data = conversation.users.statistics_summary_dataframe(normalization=100, convergence=False)
     data = data.sort_values("agree", ascending=False)
     return prepare_dataframe(data, pc=True)
 

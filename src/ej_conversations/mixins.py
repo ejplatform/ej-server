@@ -103,7 +103,15 @@ class UserMixin(ConversationMixin):
             comments = comments.filter(**conversation_filter(conversation))
         return comments
 
-    def statistics_summary_dataframe(self, normalization=1.0, votes=None, comments=None, extend_fields=()):
+    def statistics_summary_dataframe(
+        self,
+        normalization=1,
+        votes=None,
+        comments=None,
+        extend_fields=(),
+        convergence=True,
+        participation=True,
+    ):
         """
         Return a dataframe with basic voting statistics.
 
@@ -117,7 +125,9 @@ class UserMixin(ConversationMixin):
             votes = comments.votes().filter(author__in=self)
 
         votes = votes.dataframe("comment", "author", "choice")
-        stats = user_statistics(votes, participation=True, convergence=True, ratios=True)
+        stats = user_statistics(votes, participation=participation, convergence=convergence, ratios=True)
+        print(stats)
+        print(votes)
         stats *= normalization
 
         # Extend fields with additional data
@@ -141,8 +151,8 @@ class UserMixin(ConversationMixin):
             "agree",
             "disagree",
             "skipped",
-            "convergence",
-            "participation",
+            *(["convergence"] if convergence else ()),
+            *(["participation"] if participation else ()),
         ]
         stats = stats[cols]
 

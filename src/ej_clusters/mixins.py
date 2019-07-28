@@ -12,12 +12,13 @@ class ClusterizationBaseMixin(ConversationMixin):
     querysets.
     """
 
-    def stereotype_votes(self):
+    def stereotype_votes(self, comments=None):
         """
         Return queryset with all votes associated with the current
         queryset.
         """
-        comments = self.comments()
+        if comments is None:
+            comments = self.comments()
         return db.stereotypevotes.filter(comment__in=comments)
 
     def clusters(self):
