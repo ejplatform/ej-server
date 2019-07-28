@@ -101,7 +101,7 @@ def conversation_create_comment(conversation, request=None, **kwargs):
     max_comments = fn(conversation, user)
 
     moderation_msg = _("{n} awaiting moderation").format(n=n_moderation)
-    comments_count = _("{ratio} comments").format(ratio=f"<strong>{n_comments}</strong> / {max_comments}")
+    comments_count = _("{n} of {m} comments").format(n=n_comments, m=max_comments)
 
     # FIXME: Reactivate when full UI for the comment form is implemented
     # return extra_content(

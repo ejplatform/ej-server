@@ -126,7 +126,7 @@ def _render_lazy_string(st, **kwargs):
 #
 # Special EJ ui elements
 #
-def icon(name, href=None, **kwargs):
+def icon(name, href=None, icon_description=None, **kwargs):
     """
     Generic icon function.
 
@@ -139,6 +139,8 @@ def icon(name, href=None, **kwargs):
     if "." in name:
         raise NotImplementedError
     else:
+        if icon_description:
+            kwargs["aria-label"] = icon_description
         return components.fa_icon(name, href=href, **kwargs)
 
 
@@ -155,7 +157,7 @@ def intro(title, description=None, **kwargs):
     return div(children, **kwargs).add_class("intro-paragraph", first=True)
 
 
-def span_icon(text, icon=None, **kwargs):
+def span_icon(text, icon=None, icon_description=None, **kwargs):
     """
     This element is a simple text with an icon placed on the left hand side.
 
@@ -165,7 +167,7 @@ def span_icon(text, icon=None, **kwargs):
     href can be given towraps content inside an <a> tag.
     """
     text = "" if text is None else str(text)
-    kwargs["children"] = [_icon(icon), text] if icon else [text]
+    kwargs["children"] = [_icon(icon, icon_description=icon_description), text] if icon else [text]
     return a_or_span(**kwargs).add_class("span-icon")
 
 
@@ -207,20 +209,22 @@ def progress_bar(*args):
 
     # Build children
     children = [
-        div(strong(f"{pc}%")),
+        strong(f"{pc}%", class_="block margin-r2"),
         div(
             class_="progress-bar__progress",
+            aria_hidden="true",
             children=[
                 div(" ", class_="color-brand-lighter", style=f"flex-grow: {pc + 3};"),
                 div(" ", style=f"flex-grow: {100 - pc};"),
             ],
         ),
     ]
+
     if total is not None:
         children.append(div([strong(n), "/", total]))
 
     # Return
-    return div(children, class_="progress-bar")
+    return div(children, class_="progress-bar", aria_hidden="true")
 
 
 def popup(title, content, action=None, **kwargs):

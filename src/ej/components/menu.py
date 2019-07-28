@@ -1,7 +1,7 @@
 from collections import defaultdict
 
 from django.utils.translation import ugettext_lazy as _
-from hyperpython import nav, section, Block, a
+from hyperpython import nav, Block, a, div
 from hyperpython.components import hyperlink, html_list, fa_icon
 
 from ej.components.functional import thunk, split_with
@@ -58,7 +58,7 @@ def page_menu(*items, request=None, caller=None, **kwargs):
 
 
 def menu_from_sections(sections):
-    return nav(*sections, class_="page-menu", is_component=True)
+    return div(*sections, class_="page-menu", id="page-menu", is_component=True, role="menu")
 
 
 def menu_section(name, links, **kwargs):
@@ -69,7 +69,8 @@ def menu_section(name, links, **kwargs):
     if name:
         children.insert(0, h1(name))
         kwargs.setdefault("title", str(name))
-    return section(children, **kwargs)
+        kwargs.setdefault("aria-label", str(name))
+    return nav(children, **kwargs)
 
 
 def menu_item(item):

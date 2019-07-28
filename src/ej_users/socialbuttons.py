@@ -1,4 +1,5 @@
 import logging
+from django.utils.translation import ugettext as _
 
 from allauth.socialaccount import providers
 from allauth.socialaccount.models import SocialApp
@@ -45,7 +46,7 @@ def register_button(provider_id, fa_class=None, query=None):
             provider_id,
             href=url,
             id=f"{provider_id}-button",
-            aria_label=f"{provider_id.title()} Icon",
+            aria_label=_("Login using {}").format(provider_id.title()),
             class_=f"fab {fa_class} icon-{provider_id} rounded-icon",
             style="font-size: 2.5rem",
         )

@@ -23,7 +23,13 @@ def level_stars(level, request=None, brackets=None):
         lbrack, rbrack = brackets
     else:
         lbrack = rbrack = ""
-    return {"level": level, "fa_icon": LEVEL_STARS[level], "lbrack": lbrack, "rbrack": rbrack}
+    return {
+        "level": level,
+        "fa_icon": LEVEL_STARS[level],
+        "lbrack": lbrack,
+        "rbrack": rbrack,
+        "aria_msg": _('Ranked author (level "{}")').format(level.description),
+    }
 
 
 @with_template(LEVEL_TYPES, role="description")

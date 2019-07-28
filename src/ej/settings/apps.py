@@ -4,7 +4,8 @@ from .options import EjOptions
 
 
 class InstalledAppsConf(Base, EjOptions):
-    USE_DJANGO_ADMIN = env(True, name="{name}")
+    USE_DJANGO_ADMIN = env(True, name="{attr}")
+    DISABLE_DJANGO_DEBUG_TOOLBAR = env(True, name="{attr}")
 
     project_apps = [
         # Gamification
@@ -56,8 +57,12 @@ class InstalledAppsConf(Base, EjOptions):
     def get_third_party_apps(self):
         apps = [*super().get_third_party_apps(), *self.third_party_apps]
         if self.ENVIRONMENT == "local":
-            apps = ["debug_toolbar", *apps, "django_extensions"]
-        elif self.DEBUG:
+            if self.DISABLE_DJANGO_DEBUG_TOOLBAR:
+                apps = [*apps, "django_extensions"]
+            else:
+                apps = ["debug_toolbar", *apps, "django_extensions"]
+
+        elif self.DEBUG and not self.DISABLE_DJANGO_DEBUG_TOOLBAR:
             apps = ["debug_toolbar", *apps]
         if self.ENVIRONMENT == "production":
             # "raven.contrib.django.raven_compat" ?
