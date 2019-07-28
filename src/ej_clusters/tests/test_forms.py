@@ -1,3 +1,4 @@
+from django.utils.translation import ugettext as _
 from ej_clusters.forms import StereotypeForm
 from ej_clusters.models import Stereotype
 from ej_clusters.mommy_recipes import ClusterRecipes
@@ -16,7 +17,7 @@ class TestStereotypeForm(ClusterRecipes):
     def test_blank_data(self, user_db):
         form = StereotypeForm({}, owner=user_db)
         assert not form.is_valid()
-        assert form.errors == {"name": ["This field is required."]}
+        assert form.errors == {"name": [_("This field is required.")]}
 
     def test_edit_existing_stereotype(self, user_db):
         instance = Stereotype.objects.create(name="Stereotype1", owner=user_db)
