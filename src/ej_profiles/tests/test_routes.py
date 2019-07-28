@@ -4,11 +4,13 @@ from datetime import datetime
 
 import pytest
 from PIL import Image
+from django.conf import settings
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import Client
 from django.utils.six import BytesIO
 
 from ej.testing import UrlTester
+from ej_profiles import enums
 from ej_users.models import User
 
 
@@ -71,8 +73,8 @@ class TestEditProfile:
         inf_values = [
             *[rand_str(15)] * 8,
             "DF",
-            rd.choice(list(range(0, 3)) + [20]),
-            rd.randint(0, 6),
+            int(rd.choice(list(enums.Gender))),
+            int(rd.choice(list(enums.Race))),
             gen_birth_date(),
         ]
         form_data = {k: v for k, v in zip(inf_fields, inf_values)}
@@ -89,5 +91,7 @@ class TestEditProfile:
         assert user.profile.birth_date == datetime.strptime(form_data["birth_date"], "%Y-%m-%d").date()
         inf_fields.remove("birth_date")
 
+        blacklist = settings.EJ_PROFILE_EXCLUDE_FIELDS
         for attr in inf_fields:
-            assert getattr(user.profile, attr) == form_data[attr], attr
+            if attr not in blacklist:
+                assert getattr(user.profile, attr) == form_data[attr], attr
