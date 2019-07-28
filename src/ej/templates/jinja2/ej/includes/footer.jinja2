@@ -2,20 +2,26 @@
     {{- link(caller(), url, **kwargs) -}}
 {% endmacro %}
 
-<nav class="main-footer">
+<nav class="main-footer" aria-label="{{ _('Navigation bar') }}">
     {% call link_macro('conversation:list', title=_('Conversations'), class_='main-footer__link') %}
-        <img src="{{ static('img/icons/navbar_conversations.svg') }}" alt="{{ _('Conversations') }}">
+        <img src="{{ static('img/icons/navbar_conversations.svg') }}"
+             alt="{{ _('Conversations page') }}"
+             aria-hidden="true">
         <span>{{ _('Conversations') }}</span>
     {% endcall %}
     {% if settings.has_rocketchat and request.user.has_perm('ej_rocketchat.can_create_account') %}
         {% call link_macro('rocket:index', title=_('Talks'), class_='main-footer__link') %}
-            <img src="{{ static('img/icons/navbar_panel.svg') }}" alt="{{ _('Talks') }}">
+            <img src="{{ static('img/icons/navbar_panel.svg') }}"
+                 alt="{{ _('Rocket.Chat Talks') }}"
+                 aria-hidden="true">
             <span>{{ _('Talks') }}</span>
         {% endcall %}
     {% endif %}
     {% if settings.has_profiles %}
         {% call link_macro('profile:detail', title=_('Profile'), class_='main-footer__link') %}
-            <img src="{{ static('img/icons/navbar_profile.svg') }}" alt="{{ _('Profile') }}">
+            <img src="{{ static('img/icons/navbar_profile.svg') }}"
+                 alt="{{ _('Profile') }}"
+                 aria-hidden="true">
             <span>{{ _('Profile') }}</span>
         {% endcall %}
     {% endif %}

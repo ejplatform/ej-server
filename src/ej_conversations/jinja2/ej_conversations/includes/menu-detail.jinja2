@@ -1,4 +1,4 @@
-<section title="{{ _('Conversation') }}">
+<nav title="{{ _('Conversation') }}">
     <h1>{{ _('Conversation') }}</h1>
     <ul>
         <li><a href="{{ conversation.url('conversation:detail') }}">{{ _('Conversation') }}</a></li>
@@ -6,8 +6,8 @@
             <li>{{ link }}</li>
         {% endfor %}
     </ul>
-</section>
-<section title="{{ _('Admin') }}">
+</nav>
+<nav title="{{ _('Admin') }}">
     <h1>{{ _('Admin') }}</h1>
     <ul>
         {% if request.user.has_perm('ej.can_edit_conversation', conversation) %}
@@ -22,5 +22,5 @@
             <li>{{ link }}</li>
         {% endfor %}
     </ul>
-</section>
+</nav>
 {{ page_menu.ACCESSIBILITY() }}

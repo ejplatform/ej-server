@@ -1,4 +1,4 @@
-<section title="{{ _('Boards') }}">
+<nav title="{{ _('Boards') }}">
     <h1>{{ _('Boards') }}</h1>
     <ul>
         <li><a href="{{ url('boards:board-list') }}">{{ _('Manage boards') }}</a></li>
@@ -6,6 +6,6 @@
         <li><a href="{{ url('boards:board-create') }}">{{ _('New board') }}</a></li>
         {% endif %}
     </ul>
-</section>
+</nav>
 {{ page_menu.ABOUT() }}
 {{ page_menu.ACCESSIBILITY() }}

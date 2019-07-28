@@ -7,7 +7,7 @@
 
 {% block content %}
     <h1 class="h2 text-accent">{{ title|default(_(settings.EJ_LOGIN_TITLE_TEXT)) }}</h1>
-    <img class="size-6 pad-t3 block relative margin-xauto" src="{{ static('/img/login/login.svg') }}" style="left: 1rem">
+    <img class="size-6 pad-t3 block relative margin-xauto" src="{{ static('/img/login/login.svg') }}" style="left: 1rem" alt="">
 
     {% block form_data %}{% endblock %}
 
@@ -22,8 +22,8 @@
             {% for button in social_buttons %}{{ button }}{% endfor %}
         </div>
     {% endif %}
-
     {% block form_footer %}{% endblock %}
+    <div class="size-4"></div>
 {% endblock %}
 
 

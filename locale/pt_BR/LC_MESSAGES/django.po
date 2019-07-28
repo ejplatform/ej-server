@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-26 23:11+0000\n"
-"PO-Revision-Date: 2019-07-26 20:13-0300\n"
+"POT-Creation-Date: 2019-07-28 17:34+0000\n"
+"PO-Revision-Date: 2019-07-28 14:36-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
 "Language: pt_BR\n"
@@ -57,7 +57,7 @@ msgstr "Escolha um arquivo"
 msgid "No file chosen"
 msgstr "Nenhum arquivo selecionado"
 
-#: src/ej/jinja2.py:204
+#: src/ej/jinja2.py:203
 msgid "This template defines no extra variables"
 msgstr "Este template não define variáveis extras"
 
@@ -74,8 +74,7 @@ msgid "Go!"
 msgstr "Quero ir!"
 
 #: src/ej/routes.py:54 src/ej_conversations/apps.py:8
-#: src/ej_conversations/models/conversation.py:78
-#: src/ej_gamification/roles.py:109
+#: src/ej_conversations/models/conversation.py:86
 msgid "Conversations"
 msgstr "Conversas"
 
@@ -168,7 +167,7 @@ msgstr "Roxa"
 msgid "Slug"
 msgstr "Identificador"
 
-#: src/ej_boards/models.py:31 src/ej_conversations/models/conversation.py:32
+#: src/ej_boards/models.py:31 src/ej_conversations/models/conversation.py:33
 msgid "Title"
 msgstr "Título"
 
@@ -297,7 +296,7 @@ msgstr ""
 "capturar. Esta informação é opcional e não é pública."
 
 #: src/ej_clusters/models/stereotype_vote.py:20
-#: src/ej_conversations/roles/comments.py:89 src/ej_dataviz/roles.py:132
+#: src/ej_conversations/roles/comments.py:100 src/ej_dataviz/roles.py:132
 #: src/ej_dataviz/roles.py:133
 msgid "Comment"
 msgstr "Comentar"
@@ -406,17 +405,17 @@ msgstr "Conteúdo duplicado"
 msgid "Violates terms of service of the platform"
 msgstr "Viola os termos de uso da plataforma"
 
-#: src/ej_conversations/enums.py:24 src/ej_conversations/roles/comments.py:30
+#: src/ej_conversations/enums.py:24 src/ej_conversations/roles/comments.py:40
 #: src/ej_dataviz/roles.py:143 src/ej_dataviz/roles.py:160
 msgid "Skip"
 msgstr "Pular"
 
-#: src/ej_conversations/enums.py:25 src/ej_conversations/roles/comments.py:31
+#: src/ej_conversations/enums.py:25 src/ej_conversations/roles/comments.py:41
 #: src/ej_dataviz/roles.py:128 src/ej_dataviz/roles.py:153
 msgid "Agree"
 msgstr "Concorda"
 
-#: src/ej_conversations/enums.py:26 src/ej_conversations/roles/comments.py:29
+#: src/ej_conversations/enums.py:26 src/ej_conversations/roles/comments.py:39
 #: src/ej_dataviz/roles.py:135 src/ej_dataviz/roles.py:158
 msgid "Disagree"
 msgstr "Discorda"
@@ -497,69 +496,69 @@ msgstr "Comentário está com moderação pendente"
 msgid "Must give a reason to reject a comment"
 msgstr "Deve fornecer uma razão para rejeitar o comentário"
 
-#: src/ej_conversations/models/conversation.py:34
+#: src/ej_conversations/models/conversation.py:35
 msgid "Short description used to create URL slugs (e.g. School system)."
 msgstr ""
 "Uma breve descrição sobre essa conversa. Isso é usado internamente para "
 "criar identificadores de URL (slugs. Ex: sistema de ensino)"
 
-#: src/ej_conversations/models/conversation.py:36
+#: src/ej_conversations/models/conversation.py:37
 msgid "Question"
 msgstr "Questão"
 
-#: src/ej_conversations/models/conversation.py:36
+#: src/ej_conversations/models/conversation.py:37
 msgid "What do you want to ask?"
 msgstr "O que você deseja perguntar?"
 
-#: src/ej_conversations/models/conversation.py:41
+#: src/ej_conversations/models/conversation.py:42
 msgid "Only the author and administrative staff can edit this conversation."
 msgstr "Apenas o autor e o administrador podem editar esta conversa."
 
-#: src/ej_conversations/models/conversation.py:47
+#: src/ej_conversations/models/conversation.py:48
 msgid "Moderators can accept and reject comments."
 msgstr "Os moderadores podem aceitar e rejeitar comentários."
 
-#: src/ej_conversations/models/conversation.py:51
+#: src/ej_conversations/models/conversation.py:52
 msgid "Promote conversation?"
 msgstr "Promover conversa?"
 
-#: src/ej_conversations/models/conversation.py:53
+#: src/ej_conversations/models/conversation.py:54
 msgid "Promoted conversations appears in the main /conversations/ endpoint."
 msgstr "Conversas promovidas aparecem no mural principal /conversations."
 
-#: src/ej_conversations/models/conversation.py:56
+#: src/ej_conversations/models/conversation.py:57
 msgid "Hide conversation?"
 msgstr "Esconder conversa?"
 
-#: src/ej_conversations/models/conversation.py:59
+#: src/ej_conversations/models/conversation.py:60
 msgid ""
 "Hidden conversations does not appears in boards or in the main /"
 "conversations/ endpoint."
 msgstr "Conversas ocultas não aparecem no mural principal /conversations/."
 
-#: src/ej_conversations/models/conversation.py:77
+#: src/ej_conversations/models/conversation.py:85
 #: src/ej_conversations/roles/conversations.py:133
 #: src/ej_conversations/tour.py:75 src/ej_notifications/enums.py:8
 msgid "Conversation"
 msgstr "Conversa"
 
-#: src/ej_conversations/models/conversation.py:80
+#: src/ej_conversations/models/conversation.py:88
 msgid "Can publish promoted conversations"
 msgstr "Pode publicar conversas promovidas"
 
-#: src/ej_conversations/models/conversation.py:81
+#: src/ej_conversations/models/conversation.py:89
 msgid "Can moderate comments in any conversation"
 msgstr "Pode moderar comentários em qualquer conversa"
 
-#: src/ej_conversations/models/conversation.py:166
+#: src/ej_conversations/models/conversation.py:180
 msgid "User does not have permission to create a promoted conversation."
 msgstr "Usuário não tem permissão para criar uma conversa promovida."
 
-#: src/ej_conversations/models/conversation.py:229
+#: src/ej_conversations/models/conversation.py:243
 msgid "automatically rejected"
 msgstr "rejeitado automaticamente"
 
-#: src/ej_conversations/models/conversation.py:320
+#: src/ej_conversations/models/conversation.py:334
 msgid "No comments available for this user"
 msgstr "Não há comentários disponíveis para esse usuário"
 
@@ -582,7 +581,7 @@ msgstr "Criado em"
 msgid "non-moderated comments cannot receive votes"
 msgstr "comentários não-moderados não podem receber votos"
 
-#: src/ej_conversations/roles/comments.py:26
+#: src/ej_conversations/roles/comments.py:29
 #: src/ej_conversations/roles/conversations.py:72
 msgid "login"
 msgstr "entrar"
@@ -849,6 +848,7 @@ msgid "Shy"
 msgstr "Tímido"
 
 #: src/ej_gamification/enums.py:61 src/ej_gamification/enums.py:345
+#: src/ej_gamification/enums.py:410
 msgid "Participative"
 msgstr "Participativo"
 
@@ -1011,6 +1011,32 @@ msgid_plural "You need to cast {n} more votes to advance to the next level!"
 msgstr[0] ""
 msgstr[1] ""
 
+#: src/ej_gamification/enums.py:408
+msgid "Beginner"
+msgstr ""
+
+#: src/ej_gamification/enums.py:409
+msgid "Intermediate"
+msgstr ""
+
+#: src/ej_gamification/enums.py:411
+#, fuzzy
+msgid "Professional"
+msgstr "Processando..."
+
+#: src/ej_gamification/enums.py:412
+msgid "Master"
+msgstr ""
+
+#: src/ej_gamification/enums.py:419
+msgid "Ultimate Master"
+msgstr ""
+
+#: src/ej_gamification/enums.py:442
+#, fuzzy, python-brace-format
+msgid "You need {n} more points to upgrade."
+msgstr "Você deve votar {n} vezes!"
+
 #: src/ej_gamification/models/endorsement.py:14
 msgid "user does not have the right to promote this comment"
 msgstr "usuário não tem permissão para promover esse comentário"
@@ -1062,152 +1088,149 @@ msgstr "O comentário não está na conversa que o usuário pode promover."
 msgid "Sorry, your power is expired"
 msgstr "Desculpe, seu poder expirou"
 
-#: src/ej_gamification/models/progress.py:19
+#: src/ej_gamification/models/progress_base.py:15
 msgid "score"
 msgstr "pontos"
 
-#: src/ej_gamification/models/progress.py:21
+#: src/ej_gamification/models/progress_base.py:17
 msgid "score adjustment"
 msgstr "ajuste de pontos"
 
-#: src/ej_gamification/models/progress.py:21
+#: src/ej_gamification/models/progress_base.py:17
 msgid "Artificially increase score for any reason"
 msgstr "Incrementa pontos artificialmente"
 
-#: src/ej_gamification/models/progress.py:134
+#: src/ej_gamification/models/progress_conversation.py:22
+msgid "conversation level"
+msgstr "nível da conversa"
+
+#: src/ej_gamification/models/progress_conversation.py:23
+#, fuzzy
+msgid "Measures the level of engagement for conversation."
+msgstr "Marque os votos para cada persona na sua conversa."
+
+#: src/ej_gamification/models/progress_conversation.py:29
+#, fuzzy
+msgid "maximum achieved conversation level"
+msgstr "Conversas participativas"
+
+#: src/ej_gamification/models/progress_conversation.py:59
+#: src/ej_gamification/roles.py:63 src/ej_gamification/roles.py:64
+msgid "Conversation score"
+msgstr "Pontuação da conversa"
+
+#: src/ej_gamification/models/progress_conversation.py:60
+msgid "Conversation scores"
+msgstr "Pontuações das conversas"
+
+#: src/ej_gamification/models/progress_participation.py:33
+msgid "voter level"
+msgstr "nível de \"votador\""
+
+#: src/ej_gamification/models/progress_participation.py:34
+#, fuzzy
+msgid "Measure how many votes user has given in conversation"
+msgstr "Marque os votos para cada persona na sua conversa."
+
+#: src/ej_gamification/models/progress_participation.py:37
+msgid "maximum achieved voter level"
+msgstr "nível máximo de \"votador\""
+
+#: src/ej_gamification/models/progress_participation.py:40
+msgid "owner?"
+msgstr "dono?"
+
+#: src/ej_gamification/models/progress_participation.py:42
+#, fuzzy
+msgid "Total score is computed differently if user owns conversation."
+msgstr "Pode moderar comentários em qualquer conversa"
+
+#: src/ej_gamification/models/progress_participation.py:45
+msgid "focused?"
+msgstr "focado?"
+
+#: src/ej_gamification/models/progress_participation.py:47
+msgid "User received a focused badge (i.e., voted on all comments)"
+msgstr ""
+
+#: src/ej_gamification/models/progress_participation.py:104
+msgid "User score (per conversation)"
+msgstr "Pontuação do usuário (por conversa)"
+
+#: src/ej_gamification/models/progress_participation.py:105
+msgid "User scores (per conversation)"
+msgstr "Pontuações dos usuários (por conversa)"
+
+#: src/ej_gamification/models/progress_user.py:23
 msgid "commenter level"
 msgstr "nível de \"comentador\""
 
-#: src/ej_gamification/models/progress.py:135
+#: src/ej_gamification/models/progress_user.py:24
 msgid ""
 "Measures how much user participated by contributing comments to conversations"
 msgstr ""
 "Mede o quanto o usuário participou contribuindo com comentários para as "
 "conversas"
 
-#: src/ej_gamification/models/progress.py:141
+#: src/ej_gamification/models/progress_user.py:30
 msgid "maximum achieved commenter level"
 msgstr "nível máximo de \"comentador\""
 
-#: src/ej_gamification/models/progress.py:146
+#: src/ej_gamification/models/progress_user.py:35
 msgid "host level"
 msgstr "nível de \"anfitrião\""
 
-#: src/ej_gamification/models/progress.py:147
+#: src/ej_gamification/models/progress_user.py:36
 msgid "Measures how much user participated by creating engaging conversations."
 msgstr ""
 
-#: src/ej_gamification/models/progress.py:150
+#: src/ej_gamification/models/progress_user.py:39
 msgid "maximum achieved host level"
 msgstr "nível máximo de \"anfitrião\""
 
-#: src/ej_gamification/models/progress.py:155
+#: src/ej_gamification/models/progress_user.py:44
 msgid "profile level"
 msgstr "nível do perfil"
 
-#: src/ej_gamification/models/progress.py:156
+#: src/ej_gamification/models/progress_user.py:45
 msgid "Measures how complete is the user profile."
 msgstr "Mede quão completo está o perfil de usuário."
 
-#: src/ej_gamification/models/progress.py:162
+#: src/ej_gamification/models/progress_user.py:51
 msgid "maximum achieved profile level"
 msgstr "nível máximo de perfil"
 
-#: src/ej_gamification/models/progress.py:199
+#: src/ej_gamification/models/progress_user.py:118
 msgid "User score"
 msgstr "Pontuação do usuário"
 
-#: src/ej_gamification/models/progress.py:200
+#: src/ej_gamification/models/progress_user.py:119
 msgid "User scores"
 msgstr "Pontuações dos usuários"
 
-#: src/ej_gamification/models/progress.py:245
-msgid "conversation level"
-msgstr "nível da conversa"
-
-#: src/ej_gamification/models/progress.py:246
-#, fuzzy
-msgid "Measures the level of engagement for conversation."
-msgstr "Marque os votos para cada persona na sua conversa."
-
-#: src/ej_gamification/models/progress.py:252
-#, fuzzy
-msgid "maximum achieved conversation level"
-msgstr "Conversas participativas"
-
-#: src/ej_gamification/models/progress.py:276 src/ej_gamification/roles.py:14
-#: src/ej_gamification/roles.py:15
-msgid "Conversation score"
-msgstr "Pontuação da conversa"
-
-#: src/ej_gamification/models/progress.py:277
-msgid "Conversation scores"
-msgstr "Pontuações das conversas"
-
-#: src/ej_gamification/models/progress.py:325
-msgid "voter level"
-msgstr "nível de \"votador\""
-
-#: src/ej_gamification/models/progress.py:326
-#, fuzzy
-msgid "Measure how many votes user has given in conversation"
-msgstr "Marque os votos para cada persona na sua conversa."
-
-#: src/ej_gamification/models/progress.py:329
-msgid "maximum achieved voter level"
-msgstr "nível máximo de \"votador\""
-
-#: src/ej_gamification/models/progress.py:332
-msgid "owner?"
-msgstr "dono?"
-
-#: src/ej_gamification/models/progress.py:334
-#, fuzzy
-msgid "Total score is computed differently if user owns conversation."
-msgstr "Pode moderar comentários em qualquer conversa"
-
-#: src/ej_gamification/models/progress.py:337
-msgid "focused?"
-msgstr "focado?"
-
-#: src/ej_gamification/models/progress.py:339
-msgid "User received a focused badge (i.e., voted on all comments)"
-msgstr ""
-
-#: src/ej_gamification/models/progress.py:393
-msgid "User score (per conversation)"
-msgstr "Pontuação do usuário (por conversa)"
-
-#: src/ej_gamification/models/progress.py:394
-msgid "User scores (per conversation)"
-msgstr "Pontuações dos usuários (por conversa)"
-
-#: src/ej_gamification/roles.py:13
-msgid "Comment score"
-msgstr "Pontos de comentários"
-
-#: src/ej_gamification/roles.py:16
-#, fuzzy
-msgid "Profile score"
-msgstr "Foto de perfil"
-
-#: src/ej_gamification/roles.py:17
-#, fuzzy
-msgid "Participation score"
-msgstr "Participação"
-
-#: src/ej_gamification/roles.py:57
+#: src/ej_gamification/roles.py:37
 #, fuzzy
 msgid "Score"
 msgstr "pontos"
 
-#: src/ej_gamification/roles.py:98
-msgid "Profile"
-msgstr "Perfil"
+#: src/ej_gamification/roles.py:62
+msgid "Comment score"
+msgstr "Pontos de comentários"
 
-#: src/ej_gamification/roles.py:120
-msgid "Participation"
+#: src/ej_gamification/roles.py:65
+#, fuzzy
+msgid "Profile score"
+msgstr "Foto de perfil"
+
+#: src/ej_gamification/roles.py:66
+#, fuzzy
+msgid "Participation score"
 msgstr "Participação"
+
+#: src/ej_gamification/roles.py:67
+#, fuzzy
+msgid "Total score"
+msgstr "Pontos de comentários"
 
 #: src/ej_notifications/apps.py:7
 msgid "Notifications"
@@ -1289,7 +1312,7 @@ msgstr "Branco"
 msgid "Yellow"
 msgstr "Amarelo"
 
-#: src/ej_profiles/enums.py:23
+#: src/ej_profiles/enums.py:23 src/ej_profiles/tests/test_models.py:45
 msgid "Indigenous"
 msgstr "Indígena"
 
@@ -1297,7 +1320,7 @@ msgstr "Indígena"
 msgid "Other"
 msgstr "Outro"
 
-#: src/ej_profiles/enums.py:34
+#: src/ej_profiles/enums.py:34 src/ej_profiles/tests/test_models.py:44
 msgid "Female"
 msgstr "Feminino"
 
@@ -1309,7 +1332,7 @@ msgstr "Masculino"
 msgid "user"
 msgstr "usuário"
 
-#: src/ej_profiles/enums.py:53
+#: src/ej_profiles/enums.py:53 src/ej_profiles/tests/test_models.py:43
 msgid "ethnicity"
 msgstr "Etnia"
 
@@ -1333,29 +1356,29 @@ msgstr "Data de Nascimento"
 msgid "birth date"
 msgstr "Data de Nascimento"
 
-#: src/ej_profiles/enums.py:60
+#: src/ej_profiles/enums.py:60 src/ej_profiles/tests/test_models.py:39
 msgid "country"
 msgstr "País"
 
-#: src/ej_profiles/enums.py:61
+#: src/ej_profiles/enums.py:61 src/ej_profiles/tests/test_models.py:38
 #, fuzzy
 msgid "state"
 msgstr "Estado"
 
-#: src/ej_profiles/enums.py:62
+#: src/ej_profiles/enums.py:62 src/ej_profiles/tests/test_models.py:37
 msgid "city"
 msgstr "Cidade"
 
-#: src/ej_profiles/enums.py:63
+#: src/ej_profiles/enums.py:63 src/ej_profiles/tests/test_models.py:47
 msgid "biography"
 msgstr "Biografia"
 
-#: src/ej_profiles/enums.py:64
+#: src/ej_profiles/enums.py:64 src/ej_profiles/tests/test_models.py:41
 #, fuzzy
 msgid "occupation"
 msgstr "Ocupação"
 
-#: src/ej_profiles/enums.py:65
+#: src/ej_profiles/enums.py:65 src/ej_profiles/tests/test_models.py:46
 #, fuzzy
 msgid "political_activity"
 msgstr "Atividade política"
@@ -1413,19 +1436,19 @@ msgstr "Suas conversas"
 msgid "limit board conversations"
 msgstr "Suas conversas"
 
-#: src/ej_profiles/models.py:29
+#: src/ej_profiles/models.py:29 src/ej_profiles/tests/test_models.py:45
 msgid "Race"
 msgstr "Raça"
 
-#: src/ej_profiles/models.py:30
+#: src/ej_profiles/models.py:30 src/ej_profiles/tests/test_models.py:43
 msgid "Ethnicity"
 msgstr "Etnia"
 
-#: src/ej_profiles/models.py:31
+#: src/ej_profiles/models.py:31 src/ej_profiles/tests/test_models.py:42
 msgid "Education"
 msgstr "Escolaridade"
 
-#: src/ej_profiles/models.py:32
+#: src/ej_profiles/models.py:32 src/ej_profiles/tests/test_models.py:44
 msgid "Gender identity"
 msgstr "Identidade de gênero"
 
@@ -1437,27 +1460,27 @@ msgstr "Gênero fornecido pelo usuário"
 msgid "Birth Date"
 msgstr "Data de Nascimento"
 
-#: src/ej_profiles/models.py:35
+#: src/ej_profiles/models.py:35 src/ej_profiles/tests/test_models.py:39
 msgid "Country"
 msgstr "País"
 
-#: src/ej_profiles/models.py:36
+#: src/ej_profiles/models.py:36 src/ej_profiles/tests/test_models.py:38
 msgid "State"
 msgstr "Estado"
 
-#: src/ej_profiles/models.py:37
+#: src/ej_profiles/models.py:37 src/ej_profiles/tests/test_models.py:37
 msgid "City"
 msgstr "Cidade"
 
-#: src/ej_profiles/models.py:38
+#: src/ej_profiles/models.py:38 src/ej_profiles/tests/test_models.py:47
 msgid "Biography"
 msgstr "Biografia"
 
-#: src/ej_profiles/models.py:39
+#: src/ej_profiles/models.py:39 src/ej_profiles/tests/test_models.py:41
 msgid "Occupation"
 msgstr "Ocupação"
 
-#: src/ej_profiles/models.py:40
+#: src/ej_profiles/models.py:40 src/ej_profiles/tests/test_models.py:46
 msgid "Political activity"
 msgstr "Atividade política"
 
@@ -1465,7 +1488,7 @@ msgstr "Atividade política"
 msgid "Profile Photo"
 msgstr "Foto de Perfil"
 
-#: src/ej_profiles/models.py:153
+#: src/ej_profiles/models.py:153 src/ej_profiles/tests/test_models.py:40
 msgid "Age"
 msgstr "Idade"
 
@@ -1482,13 +1505,22 @@ msgstr "Raiz"
 msgid "Administrative user"
 msgstr "Usuário administrativo"
 
-#: src/ej_profiles/models.py:196 src/ej_profiles/tests/test_models.py:48
+#: src/ej_profiles/models.py:196 src/ej_profiles/tests/test_models.py:53
 msgid "Regular user"
 msgstr "Usuário regular"
 
 #: src/ej_profiles/models.py:199
 msgid "(Not Filled)"
 msgstr "(Não preenchido)"
+
+#: src/ej_profiles/tests/test_models.py:42
+msgid "undergraduate"
+msgstr ""
+
+#: src/ej_profiles/tests/test_models.py:49
+#, fuzzy
+msgid "name's profile"
+msgstr "Gerenciar perfil do usuário"
 
 #: src/ej_rocketchat/apps.py:7
 msgid "Rocket.Chat integration"
@@ -1832,7 +1864,7 @@ msgstr "Nuances invés de bolhas"
 msgid "Free and open source"
 msgstr "Código livre e aberta"
 
-#: src/ej/templates/jinja2/base.jinja2:55
+#: src/ej/templates/jinja2/base.jinja2:42
 msgid "Please override the \"content\" block of your template!"
 msgstr "Por favor substitua o bloco \"content\" do seu template!"
 
@@ -1844,24 +1876,54 @@ msgstr "Em construção!"
 msgid "Context variables"
 msgstr "Varíaveis de contexto"
 
-#: src/ej/templates/jinja2/components/home.jinja2:56
-#: src/ej/templates/jinja2/components/home.jinja2:58
-msgid "Start now!"
-msgstr "Começar agora!"
+#: src/ej/templates/jinja2/ej/includes/footer.jinja2:8
+#, fuzzy
+msgid "Conversations page"
+msgstr "Conversas"
 
-#: src/ej/templates/jinja2/ej/includes/footer.jinja2:11
-#: src/ej/templates/jinja2/ej/includes/footer.jinja2:12
 #: src/ej/templates/jinja2/ej/includes/footer.jinja2:13
+#: src/ej/templates/jinja2/ej/includes/footer.jinja2:17
 msgid "Talks"
 msgstr "Painel"
+
+#: src/ej/templates/jinja2/ej/includes/footer.jinja2:15
+#, fuzzy
+msgid "Rocket.Chat Talks"
+msgstr "Painel Rocket.Chat"
+
+#: src/ej/templates/jinja2/ej/includes/footer.jinja2:21
+#: src/ej/templates/jinja2/ej/includes/footer.jinja2:23
+#: src/ej/templates/jinja2/ej/includes/footer.jinja2:25
+#: src/ej_clusters/jinja2/ej_clusters/includes/stereotypes-menu.jinja2:2
+#: src/ej_clusters/jinja2/ej_clusters/includes/stereotypes-menu.jinja2:8
+#: src/ej_clusters/jinja2/ej_clusters/includes/stereotypes-menu.jinja2:9
+#: src/ej_clusters/jinja2/ej_clusters/includes/stereotypes-menu.jinja2:11
+#: src/ej_gamification/jinja2/ej_gamification/achievements.jinja2:30
+#: src/ej_profiles/jinja2/ej_profiles/includes/menu.jinja2:1
+#: src/ej_profiles/jinja2/ej_profiles/includes/menu.jinja2:2
+#: src/ej_profiles/jinja2/ej_profiles/includes/menu.jinja2:4
+#: src/ej_users/jinja2/ej_users/includes/account-menu.jinja2:9
+#: src/ej_users/jinja2/ej_users/includes/account-menu.jinja2:10
+#: src/ej_users/jinja2/ej_users/includes/account-menu.jinja2:13
+msgid "Profile"
+msgstr "Perfil"
 
 #: src/ej/templates/jinja2/ej/includes/header.jinja2:2
 msgid "Back"
 msgstr "Voltar"
 
-#: src/ej/templates/jinja2/ej/includes/header.jinja2:6
+#: src/ej/templates/jinja2/ej/includes/header.jinja2:2
+#, fuzzy
+msgid "Go back"
+msgstr "voltar"
+
+#: src/ej/templates/jinja2/ej/includes/header.jinja2:7
 msgid "Logo"
 msgstr "Logotipo"
+
+#: src/ej/templates/jinja2/ej/includes/header.jinja2:7
+msgid "Back to inital page"
+msgstr ""
 
 #: src/ej/templates/jinja2/ej/includes/header.jinja2:10
 msgid "Menu"
@@ -2183,7 +2245,7 @@ msgstr "Lista de papéis"
 msgid "You do not have any registered stereotype."
 msgstr "Você não possui nenhuma persona registrada."
 
-#: src/ej_conversations/jinja2/ej/role/comment-card.jinja2:25
+#: src/ej_conversations/jinja2/ej/role/comment-card.jinja2:29
 #, python-format
 msgid "It is necessary to %(login_anchor)s before voting or sending a comment!"
 msgstr ""
@@ -2205,6 +2267,7 @@ msgid "See Conversation"
 msgstr "Ver Conversa"
 
 #: src/ej_conversations/jinja2/ej/role/conversation-balloon.jinja2:4
+#: src/ej_conversations/jinja2/ej/role/conversation-card.jinja2:4
 msgid "Hidden conversation"
 msgstr "Conversa oculta"
 
@@ -2212,35 +2275,35 @@ msgstr "Conversa oculta"
 msgid "Hidden"
 msgstr "Oculta"
 
+#: src/ej_conversations/jinja2/ej/role/conversation-card.jinja2:6
+msgid "tags"
+msgstr ""
+
 #: src/ej_conversations/jinja2/ej/role/conversation-card.jinja2:19
 msgid "Participate now!"
 msgstr "Participar agora!"
 
-#: src/ej_conversations/jinja2/ej/role/conversation-comment-form.jinja2:3
+#: src/ej_conversations/jinja2/ej/role/conversation-comment-form.jinja2:4
 #, python-format
 msgid "Please %(login_anchor)s to vote on this conversation."
 msgstr "Favor %(login_anchor)s para votar nesta conversa."
 
-#: src/ej_conversations/jinja2/ej/role/conversation-comment-form.jinja2:5
+#: src/ej_conversations/jinja2/ej/role/conversation-comment-form.jinja2:6
 msgid "Ooops!"
 msgstr "Oooopa!"
 
-#: src/ej_conversations/jinja2/ej/role/conversation-comment-form.jinja2:6
+#: src/ej_conversations/jinja2/ej/role/conversation-comment-form.jinja2:7
 msgid "You reached the limit of comments in this conversation."
 msgstr "Você atingiu o limite de comentários nesta conversa."
 
-#: src/ej_conversations/jinja2/ej/role/conversation-comment-form.jinja2:8
+#: src/ej_conversations/jinja2/ej/role/conversation-comment-form.jinja2:9
 msgid "Include something new and avoid similar opinions."
 msgstr "Escreva algo novo e evite opiniões similares."
 
-#: src/ej_conversations/jinja2/ej/role/conversation-comment-form.jinja2:9
-#, fuzzy, python-format
-msgid ""
-"You can post up to  <span class=\"text-accent\">%(n_comments)s</span> "
-"comments."
-msgstr ""
-"Inclua algo novo e evite opiniões semelhantes. Você pode postar até \n"
-" <span class=\"text-accent\">%(n_comments)s</span> comentários."
+#: src/ej_conversations/jinja2/ej/role/conversation-comment-form.jinja2:10
+#, python-format
+msgid "You can post up to %(n)s comments."
+msgstr "Você pode postar até %(n)s comentários."
 
 #: src/ej_conversations/jinja2/ej_conversations/create.jinja2:15
 msgid "Please fill the details bellow."
@@ -2472,6 +2535,7 @@ msgid "Loading..."
 msgstr "Carregando dados..."
 
 #: src/ej_dataviz/jinja2/ej_dataviz/includes/datatables.jinja2:13
+#, fuzzy
 msgid "Processing..."
 msgstr "Processando..."
 
@@ -2556,7 +2620,7 @@ msgstr "Votos Aleatórios"
 msgid "Create votes"
 msgstr "Criar votos"
 
-#: src/ej_gamification/jinja2/ej/role/level-description.jinja2:1
+#: src/ej_gamification/jinja2/ej/role/level-description.jinja2:2
 #, python-format
 msgid "level %(n)s"
 msgstr ""
@@ -2567,33 +2631,47 @@ msgid "Trophy: %(name)s"
 msgstr "Editar perfil: %(name)s"
 
 #: src/ej_gamification/jinja2/ej/role/participation-progress-statistics.jinja2:4
+#: src/ej_gamification/jinja2/ej/role/user-progress-statistics.jinja2:5
+#: src/ej_gamification/jinja2/ej/role/user-progress-statistics.jinja2:28
+#: src/ej_gamification/jinja2/ej/role/user-progress-statistics.jinja2:45
+#: src/ej_gamification/jinja2/ej/role/user-progress-statistics.jinja2:111
+#: src/ej_gamification/jinja2/ej_gamification/includes/leaderboard.jinja2:6
 msgid "#"
 msgstr ""
 
 #: src/ej_gamification/jinja2/ej/role/participation-progress-statistics.jinja2:5
+#: src/ej_gamification/jinja2/ej/role/user-progress-statistics.jinja2:46
+#: src/ej_gamification/jinja2/ej/role/user-progress-statistics.jinja2:112
+#: src/ej_gamification/jinja2/ej_gamification/includes/leaderboard.jinja2:8
 msgid "Points"
 msgstr "Pontos"
 
-#: src/ej_gamification/jinja2/ej/role/participation-progress-statistics.jinja2:9
+#: src/ej_gamification/jinja2/ej/role/participation-progress-statistics.jinja2:10
+#: src/ej_gamification/jinja2/ej/role/user-progress-statistics.jinja2:51
+#: src/ej_gamification/jinja2/ej/role/user-progress-statistics.jinja2:117
 msgid "Extra"
 msgstr ""
 
-#: src/ej_gamification/jinja2/ej/role/participation-progress-statistics.jinja2:26
+#: src/ej_gamification/jinja2/ej/role/participation-progress-statistics.jinja2:27
+#: src/ej_gamification/jinja2/ej/role/user-progress-statistics.jinja2:68
+#: src/ej_gamification/jinja2/ej/role/user-progress-statistics.jinja2:134
 #, fuzzy
 msgid "Rejected Comments"
 msgstr "Comentário criado"
 
-#: src/ej_gamification/jinja2/ej/role/participation-progress-statistics.jinja2:40
+#: src/ej_gamification/jinja2/ej/role/participation-progress-statistics.jinja2:41
+#: src/ej_gamification/jinja2/ej/role/user-progress-statistics.jinja2:82
 #, fuzzy
 msgid "Opinion bridge"
 msgstr "Perfis de opinião"
 
-#: src/ej_gamification/jinja2/ej/role/participation-progress-statistics.jinja2:47
+#: src/ej_gamification/jinja2/ej/role/participation-progress-statistics.jinja2:48
+#: src/ej_gamification/jinja2/ej/role/user-progress-statistics.jinja2:89
 #, fuzzy
 msgid "Minority activist"
 msgstr "Atividade política"
 
-#: src/ej_gamification/jinja2/ej/role/participation-progress-statistics.jinja2:54
+#: src/ej_gamification/jinja2/ej/role/participation-progress-statistics.jinja2:55
 msgid "Focused?"
 msgstr "Focado?"
 
@@ -2607,40 +2685,76 @@ msgstr "Valor"
 msgid "%(value)s (%(points)s points)"
 msgstr ""
 
+#: src/ej_gamification/jinja2/ej/role/user-progress-statistics.jinja2:4
+#, fuzzy
+msgid "Conversation Trophies"
+msgstr "Pontuações das conversas"
+
+#: src/ej_gamification/jinja2/ej/role/user-progress-statistics.jinja2:8
+msgid "Level 1"
+msgstr ""
+
+#: src/ej_gamification/jinja2/ej/role/user-progress-statistics.jinja2:12
+msgid "Level 2"
+msgstr ""
+
+#: src/ej_gamification/jinja2/ej/role/user-progress-statistics.jinja2:16
+msgid "Level 3"
+msgstr ""
+
+#: src/ej_gamification/jinja2/ej/role/user-progress-statistics.jinja2:20
+msgid "Level 4"
+msgstr ""
+
+#: src/ej_gamification/jinja2/ej/role/user-progress-statistics.jinja2:27
+msgid "Item"
+msgstr ""
+
+#: src/ej_gamification/jinja2/ej/role/user-progress-statistics.jinja2:31
+#: src/ej_profiles/jinja2/ej_profiles/contributions.jinja2:20
+msgid "Approved comments"
+msgstr "Comentários aprovados"
+
+#: src/ej_gamification/jinja2/ej/role/user-progress-statistics.jinja2:96
+#: src/ej_gamification/jinja2/ej_gamification/achievements.jinja2:53
+#, fuzzy
+msgid "Your conversations"
+msgstr "Conversas públicas"
+
 #: src/ej_gamification/jinja2/ej_gamification/achievements.jinja2:4
 #: src/ej_gamification/jinja2/ej_gamification/conversation/achievements.jinja2:42
 msgid "Your achievements"
 msgstr "Suas conquistas"
 
-#: src/ej_gamification/jinja2/ej_gamification/achievements.jinja2:8
-msgid "Classification:"
-msgstr "Classificação:"
-
-#: src/ej_gamification/jinja2/ej_gamification/achievements.jinja2:11
+#: src/ej_gamification/jinja2/ej_gamification/achievements.jinja2:10
 msgid "Trophies:"
 msgstr "Troféus:"
 
-#: src/ej_gamification/jinja2/ej_gamification/achievements.jinja2:16
+#: src/ej_gamification/jinja2/ej_gamification/achievements.jinja2:14
+msgid "Classification:"
+msgstr "Classificação:"
+
+#: src/ej_gamification/jinja2/ej_gamification/achievements.jinja2:26
 msgid "Generic"
 msgstr "Geral"
 
-#: src/ej_gamification/jinja2/ej_gamification/achievements.jinja2:25
+#: src/ej_gamification/jinja2/ej_gamification/achievements.jinja2:35
+#, fuzzy
+msgid "Hosted conversations"
+msgstr "Criar conversas"
+
+#: src/ej_gamification/jinja2/ej_gamification/achievements.jinja2:39
 msgid "Participation in conversations"
 msgstr "Participação em conversas"
 
-#: src/ej_gamification/jinja2/ej_gamification/achievements.jinja2:33
+#: src/ej_gamification/jinja2/ej_gamification/achievements.jinja2:47
 #, fuzzy
 msgid "You have not engaged in any conversation yet."
 msgstr "Você ainda não criou nenhuma conversa!"
 
-#: src/ej_gamification/jinja2/ej_gamification/achievements.jinja2:34
+#: src/ej_gamification/jinja2/ej_gamification/achievements.jinja2:48
 msgid "Participate more to unlock achievements :-)"
 msgstr "Participe mais para desbloquear conquistas :-)"
-
-#: src/ej_gamification/jinja2/ej_gamification/achievements.jinja2:39
-#, fuzzy
-msgid "Your conversations"
-msgstr "Conversas públicas"
 
 #: src/ej_gamification/jinja2/ej_gamification/conversation/achievements.jinja2:44
 msgid "Conversation activity"
@@ -2679,6 +2793,11 @@ msgstr "Comentários endossados não são exibidos nesta lista."
 msgid "Error: No available comments!"
 msgstr "Erro: Não há comentários disponíveis!"
 
+#: src/ej_gamification/jinja2/ej_gamification/includes/leaderboard.jinja2:2
+#, fuzzy
+msgid "Leaderboard"
+msgstr "Líder"
+
 #: src/ej_profiles/jinja2/ej_profiles/base.jinja2:10
 #: src/ej_profiles/jinja2/ej_profiles/base.jinja2:13
 #, fuzzy
@@ -2697,10 +2816,6 @@ msgstr "Lista de conversas que você participou pelo menos uma vez."
 #: src/ej_profiles/jinja2/ej_profiles/contributions.jinja2:19
 msgid "Keep track of your comments here."
 msgstr "Acompanhe os seus comentários aqui."
-
-#: src/ej_profiles/jinja2/ej_profiles/contributions.jinja2:20
-msgid "Approved comments"
-msgstr "Comentários aprovados"
 
 #: src/ej_profiles/jinja2/ej_profiles/contributions.jinja2:22
 msgid "Pending moderation"
@@ -2964,6 +3079,7 @@ msgid "Manage e-mail settings"
 msgstr "Gerenciar configurações de email"
 
 #: src/ej_users/jinja2/account/index.jinja2:14
+#, fuzzy
 msgid "Manage user profile"
 msgstr "Gerenciar perfil do usuário"
 
@@ -3109,8 +3225,19 @@ msgstr "Mudar a senha"
 msgid "Authentication"
 msgstr "Autenticação"
 
-#~ msgid "You need to cast {n} more votes!"
-#~ msgstr "Você deve votar {n} vezes!"
+#~ msgid "Participation"
+#~ msgstr "Participação"
+
+#~ msgid "Start now!"
+#~ msgstr "Começar agora!"
+
+#, fuzzy
+#~ msgid ""
+#~ "You can post up to  <span class=\"text-accent\">%(n_comments)s</span> "
+#~ "comments."
+#~ msgstr ""
+#~ "Inclua algo novo e evite opiniões semelhantes. Você pode postar até \n"
+#~ " <span class=\"text-accent\">%(n_comments)s</span> comentários."
 
 #~ msgid "(Not filled)"
 #~ msgstr "(Não preenchido)"
@@ -3792,9 +3919,6 @@ msgstr "Autenticação"
 
 #~ msgid "Summary (%(users)s active users)"
 #~ msgstr "Sumário  (%(users)s usuários ativos)"
-
-#~ msgid "back"
-#~ msgstr "voltar"
 
 #~ msgid "Data"
 #~ msgstr "Dados"

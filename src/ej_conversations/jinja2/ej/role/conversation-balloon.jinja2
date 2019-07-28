@@ -1,9 +1,9 @@
 <div class="conversation-balloon"{# TODO: is-component #}{% if hidden %} style="opacity: 0.5;"{% endif %}>
     <article>
         {% if hidden %}
-            {{ span_icon(_('Hidden conversation'), 'user-secret') }}
+            {{ span_icon(_('Hidden conversation'), 'user-secret', aria_hidden="true") }}
         {% else %}
-            {{ span_icon(', '.join(tags)  if tags else _('Conversation'), 'tags', class_='text-7') }}
+            {{ span_icon(', '.join(tags)  if tags else _('Conversation'), 'tags', class_='text-7', aria_hidden="true") }}
         {% endif %}
         <h1>{{ text }}</h1>
     </article>

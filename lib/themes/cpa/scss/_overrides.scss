@@ -17,6 +17,21 @@ a, a:hover, a:active, a:focus {
     }
 }
 
+@include breakpoint('sm') {
+    @keyframes header-logo-img {
+        from {
+            transform: none
+        }
+        to {
+            transform: scale(1.2) translate(calc((100vw - 400px) / 25 - 20px), 5px) rotate(-5deg);
+        }
+    }
+}
+
+.main-header__logo img {
+    animation: header-logo-img 0.25s linear 0.0s forwards;
+}
+
 #page-wrapper {
     background: url(/static/img/bg/page.svg) no-repeat top center;
     background-size: contain;

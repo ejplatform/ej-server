@@ -46,3 +46,18 @@ legend {
     text-align: center;
     opacity: 0.75;
 }
+
+body {
+    background-color: color('white');
+}
+
+// Neat trick from https://accessible360.com/accessible360-blog/use-aria-label-screen-reader-text/
+.screen-reader {
+    clip: rect(1px, 1px, 1px, 1px);
+    clip-path: polygon(0px 0px, 0px 0px, 0px 0px);
+    height: 1px;
+    overflow: hidden !important;
+    position: absolute;
+    width: 1px;
+    z-index: -1000;
+}

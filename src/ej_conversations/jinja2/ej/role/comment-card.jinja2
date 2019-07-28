@@ -1,9 +1,9 @@
-<div class="comment-card">
+<div class="comment-card" id="main">
     <div class="comment-card__author">
         {% if badge %}
             <span class="comment-card__author-img text-accent">{{ badge }}</span>
         {% else %}
-            <img class="comment-card__author-img" src="{{ static('/img/icons/catlogo.svg') }}">
+            <img class="comment-card__author-img" src="{{ static('/img/icons/catlogo.svg') }}" aria-label="Author:" alt="">
         {% endif %} {{ author }}
     </div>
     <article class="col flex-center"><span>{{ comment.content }}</span></article>
@@ -16,9 +16,9 @@
                 {% for value, (icon, cls, msg) in buttons.items() %}
                     <div up-expand class="comment-card__button">
                         <button type="submit" form="comment-form" name="vote" value="{{ value }}">
-                            <i class="fa {{ icon }} {{ cls }}"></i>
+                            <i class="fa {{ icon }} {{ cls }}"  title="{{ msg }}"></i>
                         </button>
-                        <span>{{ msg }}</span>
+                        <span aria-hidden="true">{{ msg }}</span>
                     </div>
                 {% endfor %}
             </div>

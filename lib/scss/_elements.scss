@@ -21,11 +21,23 @@ select + br + .helptext {
 .helptext {
     font-size: 0.9rem;
     opacity: 0.8;
+    text-align: left;
+}
+
+label + ul.errorlist {
+    margin-top: size(-0.5);
+    margin-bottom: 0;
+
+    & > li:last-child {
+        margin-bottom: 0;
+    }
 }
 
 ul.errorlist {
     color: color('red');
-    font-size: 0.9rem;
+    font-size: 0.75rem;
+    font-weight: 600;
     list-style: none;
     margin: size(0.25);
+    text-align: left;
 }
