@@ -1,7 +1,7 @@
 import sidekick as sk
 from sklearn import pipeline as pipeline_, preprocessing, decomposition
 
-from .kmeans import StereotypeKMeans
+from .kmeans_sklearn import StereotypeKMeans
 
 
 #

@@ -3,9 +3,10 @@ cache: pip
 sudo: false
 
 
-env:
-  global:
-    - CC_TEST_REPORTER_ID=774db8cce863050fe5bc219651c79d338521ca894b66ee3df3b9a2eb6a27f3e7
+addons:
+  code_climate:
+    repo_token:
+      secure: "YtXMcH1Ki9PiDWELVzhzd0S+/+zKcV51lg2ddUN+bnLwCJXdKXteWjHttmg2DaF/MFkVvXNysoAJM8o6IhwUajNneFbsNN+JGw+YId21EcObmYgW+8e7vmFKzAJhzE/GbBXnyjNbKKPsytXX9bqdZ4trkEvl0kiI797AD9OB+sNeSevetpgw+ddeIGopFVeFU2MWKBWgoWZKEtuT2UNQPTuDK+C47qja7DercHAQ/+nO1LDslM/dGuRtx7fsLTgRZqbX3DeaSa+StkexxwLiSmGINJbyJ5bGnasUEdYXuo6O//6qE4Y8AslDh32EHplmojCGht4MtH2eA2GMlkiK0cy6v6WqVOkfnVzzpiEh8K/zNvfZEvKU+LOFoeKDRpxxIz5tBn/vHAM2Jt05PehJri2BAYKfKAFQARRA5DNRjuECxx5Gz38q/10Uad6K3rM68DTnd10RGT1j4l8xowb2YgS809i7CCrODoZ+xERlGgjbPAY2oBnrw62+Gwg1R6dQCIuS3LTES8A0SK3Wh7WZk8EDWrZNhIDVIZwQOYQh0onHrx/u/87lrvlaiJ8lAdL7zoT2hAVeKwqNyHi44Tu4/XrIiw3hMjEcJBv6i+t1b745MJofvRzSdr5MkbN1W1L66v8QnZHc+BtHjv71Qykj670PPWi5KEmtUpM8IKEuboc="
 
 matrix:
   include:
@@ -32,4 +33,4 @@ before_script:
   - ./cc-test-reporter before-build
 
 after_script:
-  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT -t coverage.py
