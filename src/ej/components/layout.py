@@ -16,17 +16,12 @@ def categories(items, select=0, js=True, **kwargs):
     """
     Similar to tabs, but display several categories for the user to select.
     """
-
-    return _make_tabs(
-        "categories",
-        js,
-        kwargs,
-        [
-            icon("chevron-left", class_="categories__left", is_element="leftArrow:click"),
-            *_tab_anchors(items, select),
-            icon("chevron-right", class_="categories_right", is_element="rightArrow:click"),
-        ],
-    )
+    children = [
+        icon("chevron-left", class_="categories__left", is_element="leftArrow:click"),
+        *_tab_anchors(items, select),
+        icon("chevron-right", class_="categories_right", is_element="rightArrow:click"),
+    ]
+    return _make_tabs("categories", js, kwargs, children)
 
 
 def _tab_anchors(items, select):

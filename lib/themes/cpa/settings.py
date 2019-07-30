@@ -59,3 +59,13 @@ EJ_PROFILE_RACE_CHOICES = {
 }
 
 EJ_PROFILE_FIELD_NAMES = {"gender": "Sexo", "race": "Raça"}
+
+
+#
+# Gamification profiles
+#
+EJ_GAMIFICATION_SCORE_LEVELS = ["Iniciante", "Intermediário", "Experiente", "Profissional", "Mestre"]
+EJ_GAMIFICATION_VOTER_LEVELS = ["Curioso", "Participativo", "Dedicado", "Hiperativo"]
+EJ_GAMIFICATION_CONVERSATION_LEVELS = ["Viva", "Engajadora", "Agitada", "Intensa"]
+EJ_GAMIFICATION_COMMENTER_LEVELS = ["Tímido", "Sem cerimönias", "Papo reto", "Articulado"]
+EJ_GAMIFICATION_HOST_LEVELS = ["Boa praça", "Líder", "Influencer", "Autoridade"]

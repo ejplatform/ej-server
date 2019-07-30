@@ -20,40 +20,48 @@
 
 {%- block body %}
     <body class="{{ body_class|default('body') }}" data-current-url="{{ request.path }}" {{ salt_attr()|safe }}>
-    <script>(function () { document.querySelector('body').classList.add('js') })();</script>
+    <script>(function () {
+        document.querySelector('body').classList.add('js')
+    })();</script>
     <div id="page-wrapper">
         {%- block main %}
             <{{ main_tag }} class="{{ main_class|default('container-1') }}
-                         {{- '' if request.user.is_authenticated else ' is-anonymous' }}">
-                {%- block message_area %}
-                    <div id="message-area" up-hungry role="alert" aria-flowto="{{ aria_flowto }}">
-                        {% for msg in get_messages() %}
-                            <div class="toast"{% if msg.tags %} {{ msg.tags }}{% endif %}>{{ msg|safe }}</div>
-                        {% endfor %}
-                    </div>
-                {% endblock %}
+            {{- '' if request.user.is_authenticated else ' is-anonymous' }}">
+            {%- block message_area %}
+                <div id="message-area" up-hungry role="status" aria-live="polite" aria-flowto="{{ aria_flowto }}">
+                    {% for msg in get_messages() %}
+                        <div class="toast"{% if msg.tags %} {{ msg.tags }}{% endif %}>{{ msg|safe }}</div>
+                    {% endfor %}
+                </div>
+                <script> window.addEventListener('load', function () {
+                    var e = document.getElementById('message-area'),
+                        t = document.getElementById(e.getAttribute('aria-flowto'));
+                    if (!t) { e.removeAttribute('aria-flowto') }
+                });
+                </script>
+            {% endblock %}
 
-                {% if content is defined %}
-                    {{ content }}
-                {% else %}
-                    {% block content %}
-                        {% if content_html is defined %}
-                            {{ content_html|safe }}
-                        {% else %}
-                            <p>{{ _('Please override the "content" block of your template!') }}</p>
-                        {% endif %}
-                    {% endblock content %}
-                {% endif %}
+            {% if content is defined %}
+                {{ content }}
+            {% else %}
+                {% block content %}
+                    {% if content_html is defined %}
+                        {{ content_html|safe }}
+                    {% else %}
+                        <p>{{ _('Please override the "content" block of your template!') }}</p>
+                    {% endif %}
+                {% endblock content %}
+            {% endif %}
             </{{ main_tag }}>
         {% endblock %}
-        {%- if not hide_menu|default(False) %}
-            {%- if menu_contents is defined %}{{ page_menu(menu_contents|default([]), request=request) }}
-            {% else %}
-                {% call page_menu() %}
-                    {%- block menu %}{{ page_menu.DEFAULT_MENU_SECTIONS()|safe }}{% endblock %}
-                {% endcall %}
-            {% endif %}
+    {%- if not hide_menu|default(False) %}
+        {%- if menu_contents is defined %}{{ page_menu(menu_contents|default([]), request=request) }}
+        {% else %}
+            {% call page_menu() %}
+                {%- block menu %}{{ page_menu.DEFAULT_MENU_SECTIONS()|safe }}{% endblock %}
+            {% endcall %}
         {% endif %}
+    {% endif %}
     </div>
     {% if not hide_header|default(False) %}{% include 'ej/includes/header.jinja2' %}{% endif %}
     {% if not hide_footer|default(False) %}{% include 'ej/includes/footer.jinja2' %}{% endif %}

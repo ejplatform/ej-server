@@ -2,22 +2,20 @@
 // OVERRIDE COLORS TO HIGH CONTRAST
 //------------------------------------------------------------------------------
 
+$color-accent: #aa110a;
 $color-brand: #000000;
-$color-accent: #b30024;
-$color-brand: #000000;
-$color-brand-light: #494949;
-$color-brand-lighter: #a5a5a5;
+$color-brand-light: #767676;
+$color-brand-lighter: #d0d0d0;
 $color-brand-alternate: $color-brand-light;
-
 
 // Text and background
 $color-black: black;
 $color-white: white;
 
 // Action colors
-$color-action: #555 !default;
-$color-primary: black !default;
-$color-secondary: $color-accent !default;
+$color-action: $color-accent;
+$color-primary: black;
+$color-secondary: $color-accent;
 
 @import 'config';
 @import 'elements';
@@ -31,7 +29,7 @@ $color-secondary: $color-accent !default;
 
 // Default styles
 img {
-    filter: brightness(90%) grayscale(75%) contrast(120%);
+    filter: brightness(95%) contrast(120%);
 }
 
 a {
@@ -45,8 +43,16 @@ a {
     }
 }
 
+.comment-form__count {
+    color: $color-black;
+}
+
 .progress-bar__progress {
     div:first-child {
         background: $color-brand-light;
     }
+}
+
+.page-menu nav h1 {
+    opacity: 0.75;
 }

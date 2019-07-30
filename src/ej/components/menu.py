@@ -58,7 +58,8 @@ def page_menu(*items, request=None, caller=None, **kwargs):
 
 
 def menu_from_sections(sections):
-    return div(*sections, class_="page-menu", id="page-menu", is_component=True, role="menu")
+    # add role="menu" in the future?
+    return div(*sections, class_="page-menu", id="page-menu", is_component=True)
 
 
 def menu_section(name, links, **kwargs):
@@ -74,6 +75,7 @@ def menu_section(name, links, **kwargs):
 
 
 def menu_item(item):
+    # add role="menuitem" in the future?
     if hasattr(item, "__html__"):
         return item
     else:
