@@ -2,7 +2,8 @@ from logging import getLogger
 
 from .comment import Comment
 from .comment_queryset import CommentQuerySet
-from .conversation import Conversation, FavoriteConversation, ConversationTag
+from .conversation import Conversation, ConversationTag
+from ej_conversations.models.favorites import FavoriteConversation
 from .conversation_queryset import ConversationQuerySet
 from .vote import Vote, normalize_choice
 from .vote_queryset import VoteQuerySet

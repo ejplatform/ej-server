@@ -59,28 +59,37 @@ def cast_user_votes(comment_map, user_map, skip_prob):
 
     # Cast votes
     votes = []
+    for (user, u_color, comment, c_color) in randomizer(user_map, comment_map, skip_prob):
+        prob = 0.25
+        if u_color == "yellow":
+            if comment.group == "red":
+                a = user.idx / 10
+                b = 1 - a
+                prob = a * comment.prob + b * prob
+            elif comment.group == "green":
+                b = user.idx / 10
+                a = 1 - b
+                prob = a * comment.prob + b * prob
+        elif user.group == comment.group:
+            prob = comment.prob
+
+        choice = "agree" if random() <= prob else "disagree"
+        votes.append(comment.vote(user, choice, False))
+    print(f"{len(votes)} votes")
+    return Vote.objects.bulk_create(votes)
+
+
+def randomizer(user_map, comment_map, skip_prob):
+    """
+    Iterate over user_map and comment_map yielding a 4-tuple of
+    (user, user_color, comment, comment_color).
+    """
     for c_color, c_list in comment_map.items():
         for comment in c_list:
             for u_color, u_list in user_map.items():
                 for user in u_list:
                     if random() > skip_prob:
-                        prob = 0.25
-                        if u_color == "yellow":
-                            if comment.group == "red":
-                                a = user.idx / 10
-                                b = 1 - a
-                                prob = a * comment.prob + b * prob
-                            elif comment.group == "green":
-                                b = user.idx / 10
-                                a = 1 - b
-                                prob = a * comment.prob + b * prob
-                        elif user.group == comment.group:
-                            prob = comment.prob
-
-                        choice = "agree" if random() <= prob else "disagree"
-                        votes.append(comment.vote(user, choice, False))
-    print(f"{len(votes)} votes")
-    return Vote.objects.bulk_create(votes)
+                        yield user, u_color, comment, c_color
 
 
 def cast_stereotypes_votes(comment_map, clusterization):

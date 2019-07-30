@@ -45,24 +45,28 @@ def link_attrs(href="#", target="body", **kwargs):
     return render_attrs(link_kwargs(href=href, target=target, **kwargs))
 
 
-def link_kwargs(  # noqa: C901
-    href="#",
-    target="body",
-    action="target",
-    instant=True,
-    button=False,
-    transition="cross-fade",
-    preload=False,
-    scroll=False,
-    prefetch=False,
-    primary=False,
-    secondary=False,
-    args=None,
-    query=None,
-    url_args=None,
-    class_=(),
-    **kwargs,
-):
+def link_kwargs(href="#", action=None, args=(), **kwargs):
+    kwargs = {
+        "href": _normalize_href(href, kwargs.pop("url_args", None), kwargs.pop("query", None)),
+        "class": _normalize_class(kwargs),
+        "up-instant": kwargs.pop("instant", True),
+        "up-restore-scroll": kwargs.pop("scroll", False),
+        "up-preload": kwargs.pop("preload", False),
+        "up-prefetch": kwargs.pop("prefetch", False),
+        **{k.replace("_", "-"): v for k, v in kwargs.items()},
+    }
+
+    if action:
+        kwargs[f"up-{action}"] = kwargs.pop("target", "body")
+    if kwargs.get("transition"):
+        kwargs["up-transition"] = kwargs.pop("transition", "cross-fade")
+    for arg in args.split() if isinstance(args, str) else args:
+        kwargs[arg] = True
+
+    return kwargs
+
+
+def _normalize_href(href, url_args, query):
     if isinstance(href, Url):
         href = str(href)
     elif href.startswith("/"):
@@ -75,43 +79,31 @@ def link_kwargs(  # noqa: C901
     elif href == "#" or href is None:
         href = "#"
     elif href.startswith("http"):
-        pass
+        href = href
     else:
         href = reverse(href, kwargs=url_args)
+
     if query is not None:
         query = "&".join(f"{k}={v}" for k, v in query.items())
         href = f"{href}?{query}"
+    return href
 
-    kwargs = {
-        "href": href,
-        "up-instant": instant,
-        "up-restore-scroll": scroll,
-        "up-preload": preload,
-        "up-prefetch": prefetch,
-        **{k.replace("_", "-"): v for k, v in kwargs.items()},
-    }
-    if action:
-        kwargs[f"up-{action}"] = target
-    if transition:
-        kwargs["up-transition"] = transition
-    if args:
-        for arg in args.split():
-            kwargs[arg] = True
 
-    # Class
-    if button and class_:
-        if isinstance(class_, str):
-            class_ = class_.split()
-        class_ = (*class_, "button")
+def _normalize_class(kwargs):
+    cls = kwargs.pop("class", kwargs.pop("class_", ()))
+    if isinstance(cls, str):
+        cls = tuple(cls.split())
+    button = kwargs.pop("button", False)
+
+    if button and cls:
+        cls = (*cls, "button")
     elif button:
-        class_ = ("button",)
-    if primary:
-        class_ = (*class_, "is-primary")
-    if secondary:
-        class_ = (*class_, "is-secondary")
-    if class_:
-        kwargs["class"] = class_
-    return kwargs
+        cls = ("button",)
+    if kwargs.pop("primary", False):
+        cls = (*cls, "is-primary")
+    if kwargs.pop("secondary", False):
+        cls = (*cls, "is-secondary")
+    return cls or None
 
 
 def action_button(value=_("Go!"), href="#", primary=True, **kwargs):

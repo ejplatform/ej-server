@@ -4,8 +4,7 @@ from boogie import rules
 from boogie.rest import rest_api
 from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.core.exceptions import ValidationError, ObjectDoesNotExist
-from django.db.models import Count, Q
+from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 from model_utils.models import TimeStampedModel
 from sidekick import lazy, property as property, placeholder as this
@@ -14,8 +13,11 @@ from taggit.models import TaggedItemBase
 
 from ej.utils.functional import deprecate_lazy
 from ej.utils.url import SafeUrl
+from ej_conversations.models.util import make_clean
 from .comment import Comment
 from .conversation_queryset import log, ConversationQuerySet
+from .favorites import HasFavoriteMixin
+from .util import vote_count, statistics, statistics_for_user
 from .vote import Vote
 from ..enums import Choice
 from ..utils import normalize_status
@@ -24,7 +26,7 @@ NOT_GIVEN = object()
 
 
 @rest_api(["title", "text", "author", "slug", "created"])
-class Conversation(TimeStampedModel):
+class Conversation(HasFavoriteMixin, TimeStampedModel):
     """
     A topic of conversation.
     """
@@ -121,6 +123,11 @@ class Conversation(TimeStampedModel):
     n_user_votes = lazy(this.user_votes.count())
     n_user_final_votes = lazy(this.user_votes.exclude(choice=Choice.SKIP).count())
     is_user_favorite = lazy(this.is_favorite(this.for_user))
+
+    # Statistical methods
+    vote_count = vote_count
+    statistics = statistics
+    statistics_for_user = statistics_for_user
 
     @lazy
     def for_user(self):
@@ -248,78 +255,6 @@ class Conversation(TimeStampedModel):
         log.info("new comment: %s" % comment)
         return comment
 
-    def vote_count(self, which=None):
-        """
-        Return the number of votes of a given type.
-        """
-        kwargs = {"comment__conversation_id": self.id}
-        if which is not None:
-            kwargs["choice"] = which
-        return Vote.objects.filter(**kwargs).count()
-
-    def statistics(self, cache=True):
-        """
-        Return a dictionary with basic statistics about conversation.
-        """
-        if cache:
-            try:
-                return self._cached_statistics
-            except AttributeError:
-                self._cached_statistics = self.statistics(False)
-                return self._cached_statistics
-
-        return {
-            # Vote counts
-            "votes": self.votes.aggregate(
-                agree=Count("choice", filter=Q(choice=Choice.AGREE)),
-                disagree=Count("choice", filter=Q(choice=Choice.DISAGREE)),
-                skip=Count("choice", filter=Q(choice=Choice.SKIP)),
-                total=Count("choice"),
-            ),
-            # Comment counts
-            "comments": self.comments.aggregate(
-                approved=Count("status", filter=Q(status=Comment.STATUS.approved)),
-                rejected=Count("status", filter=Q(status=Comment.STATUS.rejected)),
-                pending=Count("status", filter=Q(status=Comment.STATUS.pending)),
-                total=Count("status"),
-            ),
-            # Participants count
-            "participants": {
-                "voters": (
-                    get_user_model()
-                    .objects.filter(votes__comment__conversation_id=self.id)
-                    .distinct()
-                    .count()
-                ),
-                "commenters": (
-                    get_user_model()
-                    .objects.filter(
-                        comments__conversation_id=self.id, comments__status=Comment.STATUS.approved
-                    )
-                    .distinct()
-                    .count()
-                ),
-            },
-        }
-
-    def statistics_for_user(self, user):
-        """
-        Get information about user.
-        """
-        max_votes = self.comments.filter(status=Comment.STATUS.approved).exclude(author_id=user.id).count()
-        given_votes = (
-            0
-            if user.id is None
-            else (Vote.objects.filter(comment__conversation_id=self.id, author=user).count())
-        )
-
-        e = 1e-50  # for numerical stability
-        return {
-            "votes": given_votes,
-            "missing_votes": max_votes - given_votes,
-            "participation_ratio": given_votes / (max_votes + e),
-        }
-
     def next_comment(self, user, default=NOT_GIVEN):
         """
         Returns a random comment that user didn't vote yet.
@@ -336,38 +271,6 @@ class Conversation(TimeStampedModel):
         else:
             return default
 
-    def is_favorite(self, user):
-        """
-        Checks if conversation is favorite for the given user.
-        """
-        return bool(self.favorites.filter(user=user).exists())
-
-    def make_favorite(self, user):
-        """
-        Make conversation favorite for user.
-        """
-        self.favorites.update_or_create(user=user)
-
-    def remove_favorite(self, user):
-        """
-        Remove favorite status for conversation
-        """
-        if self.is_favorite(user):
-            self.favorites.filter(user=user).delete()
-
-    def toggle_favorite(self, user):
-        """
-        Toggles favorite status of conversation.
-
-        Return the final favorite status.
-        """
-        try:
-            self.favorites.get(user=user).delete()
-            return False
-        except ObjectDoesNotExist:
-            self.make_favorite(user)
-            return True
-
 
 #
 #  AUXILIARY MODELS
@@ -378,32 +281,3 @@ class ConversationTag(TaggedItemBase):
     """
 
     content_object = models.ForeignKey("Conversation", on_delete=models.CASCADE)
-
-
-class FavoriteConversation(models.Model):
-    """
-    M2M relation from users to conversations.
-    """
-
-    conversation = models.ForeignKey("Conversation", on_delete=models.CASCADE, related_name="favorites")
-    user = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="favorite_conversations"
-    )
-
-
-#
-# UTILITY FUNCTIONS
-#
-def make_clean(cls, commit=True, **kwargs):
-    obj = cls(**kwargs)
-    obj.full_clean()
-    if commit:
-        obj.save()
-    return obj
-
-
-def patch_user_model(model):
-    def conversations_with_votes(user):
-        return Conversation.objects.filter(comments__votes__author=user).distinct()
-
-    model.conversations_with_votes = property(conversations_with_votes)
