@@ -47,7 +47,7 @@ def lint(ctx, python=True, js=True):
 
 
 @task(help={"verbose": "Detailed error messages", "lf": "Run only the last failed tests"})
-def test(ctx, verbose=False, lf=False):
+def test(ctx, verbose=False, lf=False, cov=False):
     """
     Run all unittests.
     """
@@ -56,6 +56,8 @@ def test(ctx, verbose=False, lf=False):
         opts += " -vv"
     if lf:
         opts += " --lf"
+    if cov:
+        opts += " --cov"
     ctx.run(
         f"pytest {opts}",
         env={
