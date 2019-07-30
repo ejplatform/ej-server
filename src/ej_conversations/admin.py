@@ -53,17 +53,16 @@ class ConversationAdmin(AuthorIsUserMixin, admin.ModelAdmin):
     # Generic actions
     @descr(_("Delete all votes for selected conversations"))
     def delete_votes(self, request, queryset):
-        votes = queryset.votes()
-        n_votes = votes.count()
-        votes.delete()
-        self.message_user(request, _("{n} votes removed!").format(n=n_votes))
+        self._delete_qs(request, queryset.votes(), "votes")
 
     @descr(_("Delete all comments for selected conversations"))
     def delete_comments(self, request, queryset):
-        comments = queryset.comments()
-        n_comments = comments.count()
-        comments.delete()
-        self.message_user(request, _("{n} comments removed!").format(n=n_comments))
+        self._delete_qs(request, queryset.comments(), "comments")
+
+    def _delete_qs(self, request, qs, which):
+        n = qs.count()
+        qs.delete()
+        self.message_user(request, _("{n} {which} removed!").format(n=n, which=which))
 
     #
     #  Debug actions

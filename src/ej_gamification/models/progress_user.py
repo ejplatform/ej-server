@@ -72,14 +72,14 @@ class UserProgress(ProgressBase):
         *_, lvl = args  # ugly trick to make static analysis happy
         return lazy(lambda p: p.user.participation_progresses.filter(voter_level__gte=lvl).count())
 
-    n_conversation_lvl_1 = _conversation_level_checker(ConversationLevel.ALIVE)
-    n_conversation_lvl_2 = _conversation_level_checker(ConversationLevel.ENGAGING)
-    n_conversation_lvl_3 = _conversation_level_checker(ConversationLevel.NOTEWORTHY)
-    n_conversation_lvl_4 = _conversation_level_checker(ConversationLevel.ENGAGING)
-    n_participation_lvl_1 = _participation_level_checker(VoterLevel.CURIOUS)
-    n_participation_lvl_2 = _participation_level_checker(VoterLevel.PARTICIPATIVE)
-    n_participation_lvl_3 = _participation_level_checker(VoterLevel.DEDICATED)
-    n_participation_lvl_4 = _participation_level_checker(VoterLevel.PERFECTIONIST)
+    n_conversation_lvl_1 = _conversation_level_checker(ConversationLevel.CONVERSATION_LVL1)
+    n_conversation_lvl_2 = _conversation_level_checker(ConversationLevel.CONVERSATION_LVL2)
+    n_conversation_lvl_3 = _conversation_level_checker(ConversationLevel.CONVERSATION_LVL3)
+    n_conversation_lvl_4 = _conversation_level_checker(ConversationLevel.CONVERSATION_LVL2)
+    n_participation_lvl_1 = _participation_level_checker(VoterLevel.VOTER_LVL1)
+    n_participation_lvl_2 = _participation_level_checker(VoterLevel.VOTER_LVL2)
+    n_participation_lvl_3 = _participation_level_checker(VoterLevel.VOTER_LVL3)
+    n_participation_lvl_4 = _participation_level_checker(VoterLevel.VOTER_LVL4)
 
     del _conversation_level_checker
     del _participation_level_checker

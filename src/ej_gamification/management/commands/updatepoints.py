@@ -5,6 +5,7 @@ from django.core.management.base import BaseCommand
 from django.db.models import F
 
 from ej_conversations.models import Conversation, Vote
+from ...models import ParticipationProgress
 from ... import get_progress, get_participation
 
 User = get_user_model()
@@ -49,7 +50,9 @@ class Command(BaseCommand):
 
     def update_participation_points(self, participations):
         action = lambda x, sync=True: get_participation(*x, sync=sync)
-        return self._update_points(participations, "participations", action)
+        self._update_points(participations, "participations", action)
+        ParticipationProgress.objects.filter(score=0).delete()
+        return participations
 
     def _update_points(self, coll, name, action=get_progress):
         self.log(f"Updating {name}".upper())

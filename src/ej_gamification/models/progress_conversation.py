@@ -50,7 +50,7 @@ class ConversationProgress(ProgressBase):
     # Points
     pts_final_votes = compute_points(1)
     pts_approved_comments = compute_points(2)
-    pts_rejected_comments = compute_points(-3)
+    pts_rejected_comments = compute_points(-0.125)
     pts_endorsements = compute_points(3)
 
     objects = ProgressQuerySet.as_manager()
@@ -75,11 +75,13 @@ class ConversationProgress(ProgressBase):
         Returns:
             Total score (int)
         """
-        return max(
-            0,
-            self.score_bias
-            + self.pts_final_votes
-            + self.pts_approved_comments
-            + self.pts_rejected_comments
-            + self.pts_endorsements,
+        return int(
+            max(
+                0,
+                self.score_bias
+                + self.pts_final_votes
+                + self.pts_approved_comments
+                + self.pts_rejected_comments
+                + self.pts_endorsements,
+            )
         )

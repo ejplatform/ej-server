@@ -6,7 +6,7 @@
         <h3>{% trans %}Ooops!{% endtrans %}</h3>
         <p>{% trans %}You reached the limit of comments in this conversation.{% endtrans %}</p>
     {% else %}
-        <p role="text">{% trans %}Include something new and avoid similar opinions.{% endtrans %}{{ ' ' }}
+        <p>{% trans %}Include something new and avoid similar opinions.{% endtrans %}{{ ' ' }}
             {% trans count = n_comments, n = n_comments_span %}You can only post {{ n }} comment.{% pluralize %}You can post up to {{ n }} comments.{% endtrans %}</p>
         <form method="post" up-target="{{ target or 'main' }}" up-transition="move-to-right/fade-in">
             {{ csrf_input }}

@@ -31,9 +31,11 @@
                 <hr>
                 {{ render_trophy(progress, commenter_level, _('Comments'),
                                  href=url('profile:contributions', extra='#contribution-comments')) }}
-                <hr>
-                {{ render_trophy(progress, host_level, _('Hosted conversations'),
-                                 href=url('profile:contributions', extra='#contribution-conversations')) }}
+                {% if progress.n_conversations %}
+                    <hr>
+                    {{ render_trophy(progress, host_level, _('Hosted conversations'),
+                                     href=url('profile:contributions', extra='#contribution-conversations')) }}
+                {% endif %}
             </div>
 
             <h2 class="width-full h3">{{ _('Participation in conversations') }}</h2>
