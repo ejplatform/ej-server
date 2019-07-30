@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-28 20:37+0000\n"
-"PO-Revision-Date: 2019-07-28 14:36-0300\n"
+"POT-Creation-Date: 2019-07-28 23:36+0000\n"
+"PO-Revision-Date: 2019-07-29 16:35-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
 "Language: pt_BR\n"
@@ -321,6 +321,10 @@ msgstr "Erro"
 msgid "here"
 msgstr "aqui"
 
+#: src/ej_clusters/tests/test_forms.py:20
+msgid "This field is required."
+msgstr ""
+
 #: src/ej_conversations/admin.py:32
 msgid "Moderation"
 msgstr "Moderação"
@@ -329,55 +333,50 @@ msgstr "Moderação"
 msgid "Delete all votes for selected conversations"
 msgstr "Conversas Favoritas"
 
-#: src/ej_conversations/admin.py:59
-#, python-brace-format
-msgid "{n} votes removed!"
-msgstr "{n} votos removidos!"
-
-#: src/ej_conversations/admin.py:61
+#: src/ej_conversations/admin.py:58
 msgid "Delete all comments for selected conversations"
 msgstr "Excluir todos os comentários para conversas selecionadas"
 
-#: src/ej_conversations/admin.py:66
+#: src/ej_conversations/admin.py:65
 #, python-brace-format
-msgid "{n} comments removed!"
-msgstr "{n} comentários removidos!"
+msgid "{n} {which} removed!"
+msgstr "{n} {which} removidos!"
 
-#: src/ej_conversations/admin.py:71
+#: src/ej_conversations/admin.py:70
 msgid "Cast 50 random votes per selected conversation (slow)"
 msgstr "Realizar 50 votos aleatórios por conversa selecionada (lenta)"
 
-#: src/ej_conversations/admin.py:75
+#: src/ej_conversations/admin.py:74
 msgid "Cast 500 random votes per selected conversation (slow)"
 msgstr "Realizar 500 votos aleatórios por conversa selecionada (lenta)"
 
-#: src/ej_conversations/admin.py:79
+#: src/ej_conversations/admin.py:78
 msgid "Cast 5000 random votes per selected conversation (slow)"
 msgstr "Realizar 5000 votos aleatórios por conversa selecionada (lenta)"
 
-#: src/ej_conversations/admin.py:83
+#: src/ej_conversations/admin.py:82
 msgid "Create 10 random comments in each selected conversation (slow)"
 msgstr "Criar 10 comentários aleatórios em cada conversa selecionada (lenta)"
 
-#: src/ej_conversations/admin.py:87
+#: src/ej_conversations/admin.py:86
 msgid "Create 100 random comments in each selected conversation (slow)"
 msgstr "Criar 100 comentários aleatórios em cada conversa selecionada (lenta)"
 
-#: src/ej_conversations/admin.py:91
+#: src/ej_conversations/admin.py:90
 msgid "Create 1000 random comments in each selected conversation (slow)"
 msgstr "Criar 1000 comentários aleatórios em cada conversa selecionada (lenta)"
 
-#: src/ej_conversations/admin.py:115
+#: src/ej_conversations/admin.py:114
 #, python-brace-format
 msgid "Created {n} comments"
 msgstr "{n} comentários criados"
 
-#: src/ej_conversations/admin.py:137
+#: src/ej_conversations/admin.py:136
 #, python-brace-format
 msgid "Created {n} votes"
 msgstr "{n} votos criados"
 
-#: src/ej_conversations/admin.py:157
+#: src/ej_conversations/admin.py:156
 msgid "Compute the opinion bridge user for all conversations."
 msgstr "Calcule o usuário da ponte de opinião para todas as conversas."
 
@@ -433,7 +432,7 @@ msgstr "Dê a sua opinião aqui"
 msgid "Text for your comment"
 msgstr "Escreva aqui o comentário"
 
-#: src/ej_conversations/forms.py:30
+#: src/ej_conversations/forms.py:30 src/ej_conversations/tests/test_forms.py:46
 msgid "You already submitted this comment."
 msgstr "Você já enviou este comentário."
 
@@ -597,9 +596,9 @@ msgid "{n} awaiting moderation"
 msgstr "{n} aguardando moderação"
 
 #: src/ej_conversations/roles/conversations.py:104
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "{n} of {m} comments"
-msgstr "{ratio} comentários"
+msgstr "{n} de {m} comentários"
 
 #: src/ej_conversations/routes.py:46
 msgid "Public conversations"
@@ -980,7 +979,7 @@ msgstr "Debate"
 #: src/ej_gamification/enums.py:323
 #, python-brace-format
 msgid "Conversation needs a score of at least {n} points, it has {m}."
-msgstr "A conversa precisa de pelo menos {n} pontos, tem {m}."
+msgstr "A conversa precisa de pelo menos {n} pontos, mas ela tem {m}."
 
 #: src/ej_gamification/enums.py:325
 msgid "Conversation already achieved the maximum level."
@@ -2284,7 +2283,7 @@ msgstr "por:"
 #: src/ej_conversations/jinja2/ej/role/comment-moderate.jinja2:8
 #, python-format
 msgid "(moderated by <strong>%(moderator)s</strong>)"
-msgstr ""
+msgstr "(modeado por <strong>%(moderator)s</strong>)"
 
 #: src/ej_conversations/jinja2/ej/role/comment-reject-reason.jinja2:10
 msgid "See Conversation"
@@ -2388,9 +2387,8 @@ msgid "Comment %i%"
 msgstr "Comentário %i%"
 
 #: src/ej_conversations/jinja2/ej_conversations/detail.jinja2:3
-#, fuzzy
 msgid "Conversation: \"{}\""
-msgstr "Conversa: {name}"
+msgstr "Conversa: \"{}\""
 
 #: src/ej_conversations/jinja2/ej_conversations/detail.jinja2:17
 msgid "Warning!"
@@ -2663,7 +2661,7 @@ msgstr "Criar votos"
 #: src/ej_gamification/jinja2/ej/role/level-description.jinja2:2
 #, python-format
 msgid "level %(n)s"
-msgstr ""
+msgstr "nível %(n)s"
 
 #: src/ej_gamification/jinja2/ej/role/level-trophy-image.jinja2:3
 #, fuzzy, python-format
@@ -2726,9 +2724,8 @@ msgid "%(value)s (%(points)s points)"
 msgstr ""
 
 #: src/ej_gamification/jinja2/ej/role/user-progress-statistics.jinja2:4
-#, fuzzy
 msgid "Conversation Trophies"
-msgstr "Pontuações das conversas"
+msgstr "Troféus de conversas"
 
 #: src/ej_gamification/jinja2/ej/role/user-progress-statistics.jinja2:8
 msgid "Level 1"
@@ -3257,6 +3254,9 @@ msgstr "Mudar a senha"
 #: src/ej_users/jinja2/ej_users/includes/menu.jinja2:2
 msgid "Authentication"
 msgstr "Autenticação"
+
+#~ msgid "{n} comments removed!"
+#~ msgstr "{n} comentários removidos!"
 
 #~ msgid "Participation"
 #~ msgstr "Participação"
