@@ -11,29 +11,30 @@
     <p class="text-6 center bold text-brand lowercase margin-b1">{{ _('Select a filter bellow') }}</p>
     <div class="categories" id="scatter-categories">
         <i class="fa fa-chevron-left"></i>
-        <span onclick="organizeBy(this, 'gender')">{{ _('Gender') }}</span>
-        <span onclick="organizeBy(this, 'race')">{{ _('Race') }}</span>
-        <span onclick="organizeBy(this, 'reset')" is-selected>{{ _('All') }}</span>
+        <span onclick="organizeBy(this, 2)" is-selected>{{ _('Opinions') }}</span>
+        <span onclick="organizeBy(this, 0)">{{ gender_field }}</span>
+        <span onclick="organizeBy(this, 1)">{{ race_field }}</span>
         <i class="fa fa-chevron-right"></i>
     </div>
 
-    <div id="scatter-container" class="center text-3" style="width: 100%"><div class="size-y6p col flex-center"><p>{{ _('Loading data...') }}</p></div></div>
+    <div id="scatter-container" class="center text-3" style="width: 100%">
+        <div class="size-y6p col flex-center"><p>{{ _('Loading data...') }}</p></div>
+    </div>
     <p class="center measure margin-xauto">
         <a href="{{ pca_link }}" target="_blank">{{ _('PCA plot') }}</a>:{{ ' ' }}
-        {% trans %}Similar opinions are represented by nearby points, while users with different opinions are represented by points far apart.{% endtrans %}
+        {% trans %}Similar opinions are represented by nearby points, while users with different opinions are
+            represented by points far apart.{% endtrans %}
     </p>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/4.1.0/echarts.min.js" defer></script>
     <script defer>
-        var chartDataStore = {descriptions: {}};
-
         window.addEventListener('load', function () {
             // Load main data from json.
             $.ajax('pca.json').then(function (data) {
                 // Prepare container
                 var $container = $("#scatter-container"),
-                    width = $container.width();
-                $container.height(((width < 500) ? width : 500) + 'px');
+                    width = $container.width() + 100;
+                $container.height(((width < 500) ? width : 600) + 'px');
 
                 // Check if data is valid
                 if (data.error) {
@@ -46,72 +47,35 @@
                 var dom = $container[0],
                     chart = echarts.init(dom);
                 dom['chart'] = chart;
-                chart.setOption(data.option, true);
+                chart.visualMap = data.visualMap;
+                chart.option = data.option;
+                chart.option.tooltip.formatter = function (e) {
+                    var name = e.data[2],
+                        gender = e.data[3],
+                        race = e.data[4],
+                        cluster = e.data[5];
+                    return (
+                        '<div class="left"><strong>' + name + '</strong><ul class="margin-y2">'
+                        + (gender?  "<li>" + {{ _('Gender').__str__().__repr__()|safe }} + ": " + gender + '</li>': '')
+                        + (race?  "<li>" + {{ _('Race').__str__().__repr__()|safe }} + ": " + race + '</li>': '')
+                        + (cluster?  "<li>" + {{ _('Cluster').__str__().__repr__()|safe }} + ": " + cluster + '</li>': '')
+                        + '</ul></div>'
+                    );
+                };
+                chart.option.visualMap = [data.visualMap[data.visualMap.length - 1]];
+                chart.setOption(chart.option, true);
                 chart.resize();
-
-                // Save data to store
-                var store = {},
-                    raw = data.option.series[0].data,
-                    ids = data.userIds;
-                for (var i = 0; i < ids.length; i++) {
-                    store[ids[i]] = raw[i];
-                }
-                chartDataStore.rawData = store;
-                chartDataStore.defaultOption = data.option;
-                chartDataStore.size = ids.length;
             });
         });
 
-        function organizeBy(elem, opt) {
+        function organizeBy(elem, idx) {
             // Change selected element
             $('#scatter-categories').find('[is-selected]').attr('is-selected', null);
             $(elem).attr('is-selected', '');
 
-            if (opt === 'reset') {
-                $('#scatter-container')[0].chart.setOption(chartDataStore.defaultOption, true);
-            } else if (!chartDataStore[opt]) {
-                $.ajax('group-' + opt + '.json').then(function (data) {
-                    chartDataStore[opt] = data.groups;
-                    chartDataStore.descriptions[opt] = data.descriptions;
-                    filterByGroup(chartDataStore[opt], chartDataStore.descriptions[opt]);
-                })
-            } else {
-                filterByGroup(chartDataStore[opt], chartDataStore.descriptions[opt]);
-            }
-        }
-
-        function filterByGroup(groups, descriptions) {
-            var seriesMap = {},
-                raw = chartDataStore.rawData;
-
-
-            // Gather data for each serie
-            for (var group in groups) {
-                var users = groups[group],
-                    points = [];
-
-                seriesMap[group] = {
-                    symbolSize: 15,
-                    data: points,
-                    type: 'scatter',
-
-                    name: descriptions[group]
-                };
-                for (var i = 0; i < users.length; i++) {
-                    points.push(raw[users[i]]);
-                }
-            }
-
-            // Create options object
-            var series = [];
-            for (var group in seriesMap) {
-                series.push(seriesMap[group]);
-            }
-            $('#scatter-container')[0].chart.setOption($.extend({},
-                chartDataStore.defaultOption, {
-                    legend: {type: 'plain'},
-                    series: series
-                }), true);
+            var chart = $('#scatter-container')[0].chart;
+            chart.option.visualMap = [chart.visualMap[idx]];
+            chart.setOption(chart.option, true);
         }
     </script>
 {% endblock %}

@@ -93,7 +93,7 @@ def default_implementations(request=None, **kwargs):
     kwargs.setdefault("accessibility", True)
     for name, value in kwargs.items():
         if name == "about" and value:
-            yield page_menu.ABOUT()
+            yield page_menu.ABOUT(request)
         elif name == "accessibility" and value:
             yield page_menu.ACCESSIBILITY()
         else:
@@ -103,7 +103,7 @@ def default_implementations(request=None, **kwargs):
 #
 # Sections and styles
 #
-def menu_links(section, request, object=None):
+def menu_links(section, request=None, object=None):
     """
     Return a list of links for some menu section.
     """
@@ -141,7 +141,7 @@ page_menu.ACCESSIBILITY = thunk(
 )
 
 #: About menu
-page_menu.ABOUT = thunk(
+page_menu._ABOUT = thunk(
     lambda: menu_section(
         _("About"),
         [
@@ -153,12 +153,33 @@ page_menu.ABOUT = thunk(
     )
 )
 
+page_menu._ABOUT_WITH_ADMIN = thunk(
+    lambda: menu_section(
+        _("About"),
+        [
+            link(_("About"), href="about-us"),
+            link(_("Frequently Asked Questions"), href="faq"),
+            link(_("Usage terms"), href="usage"),
+            link(_("Admin panel"), href="admin:index"),
+        ],
+        is_optional=True,
+    )
+)
+
+page_menu.ABOUT = (
+    lambda request=None: page_menu._ABOUT_WITH_ADMIN()
+    if request and request.user.is_staff
+    else page_menu._ABOUT()
+)
+
 #: Default menu
-page_menu.DEFAULT_MENU_SECTIONS = thunk(lambda: Block([page_menu.ABOUT(), page_menu.ACCESSIBILITY()]))
+page_menu.DEFAULT_MENU_SECTIONS = lambda request: Block(
+    [page_menu.ABOUT(request), page_menu.ACCESSIBILITY()]
+)
 
 #: Links
 page_menu.links = menu_links
 page_menu.register = register_menu
 
 #: Create entire sections from links
-page_menu.section = lambda title, ref, *args: menu_section(title, menu_links(ref))
+page_menu.section = lambda title, ref, request, *args: menu_section(title, menu_links(ref))

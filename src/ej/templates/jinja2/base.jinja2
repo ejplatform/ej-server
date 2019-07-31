@@ -58,7 +58,7 @@
         {%- if menu_contents is defined %}{{ page_menu(menu_contents|default([]), request=request) }}
         {% else %}
             {% call page_menu() %}
-                {%- block menu %}{{ page_menu.DEFAULT_MENU_SECTIONS()|safe }}{% endblock %}
+                {%- block menu %}{{ page_menu.DEFAULT_MENU_SECTIONS(request)|safe }}{% endblock %}
             {% endcall %}
         {% endif %}
     {% endif %}
