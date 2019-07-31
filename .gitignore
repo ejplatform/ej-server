@@ -114,3 +114,5 @@ ej_questions
 .coverage*
 .scannerwork
 lib/js/dependencies.js lib/js/utils.js
+coverage.xml
+cc-test-reporter
