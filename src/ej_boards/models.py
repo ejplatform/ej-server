@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.urls import reverse
 from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
 from model_utils.models import TimeStampedModel
@@ -59,7 +60,7 @@ class Board(TimeStampedModel):
             pass
 
     def get_absolute_url(self):
-        return f"/{self.slug}/"
+        return reverse("boards:conversation-list", kwargs={"board": self})
 
     def url(self, which, **kwargs):
         kwargs["board"] = self
