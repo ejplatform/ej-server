@@ -269,9 +269,10 @@ class ClusterQuerySet(ClusterizationBaseMixin, QuerySet):
         cluster_votes = pd.DataFrame(cluster_votes)
         cluster_votes.index *= -1
         votes = user_votes.append(cluster_votes)
+        votes_data = imputer.transform(votes.values)
 
         # Find labels and associate them with cluster labels
-        labels = [cluster_ids[i] for i in pipeline.fit_predict(votes)]
+        labels = [cluster_ids[i] for i in pipeline.fit_predict(votes_data)]
         user_labels = labels[:-n_clusters]
         user_labels = pd.DataFrame([list(user_votes.index), user_labels], index=["user", "label"]).T
         stereotype_labels = labels[len(user_labels) :]

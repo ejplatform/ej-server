@@ -6,14 +6,11 @@ class EjClustersConfig(AppConfig):
     name = "ej_clusters"
     verbose_name = _("Clusters")
     rules = None
-    signals = None
     api = None
 
     def ready(self):
         from . import rules
-        from . import signals
         from . import api
 
         self.rules = rules
-        self.signals = signals
         self.api = api

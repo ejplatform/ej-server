@@ -26,15 +26,6 @@ class Clusterization(TimeStampedModel):
         "ej_conversations.Conversation", on_delete=models.CASCADE, related_name="clusterization"
     )
     cluster_status = EnumField(ClusterStatus, default=ClusterStatus.PENDING_DATA)
-    pending_comments = models.ManyToManyField(
-        "ej_conversations.Comment", related_name="pending_in_clusterizations", editable=False, blank=True
-    )
-    pending_votes = models.ManyToManyField(
-        "ej_conversations.Vote", related_name="pending_in_clusterizations", editable=False, blank=True
-    )
-
-    unprocessed_comments = property(lambda self: self.pending_comments.count())
-    unprocessed_votes = property(lambda self: self.pending_votes.count())
     comments = delegate_to("conversation")
     users = delegate_to("conversation")
     votes = delegate_to("conversation")
@@ -47,6 +38,10 @@ class Clusterization(TimeStampedModel):
     @property
     def stereotype_votes(self):
         return StereotypeVote.objects.filter(comment__in=self.comments.all())
+
+    @property
+    def n_unprocessed_votes(self):
+        return self.conversation.votes(created__gte=self.modified).count()
 
     #
     # Statistics and annotated values
@@ -82,8 +77,6 @@ class Clusterization(TimeStampedModel):
                 return
 
             with use_transaction(atomic=atomic):
-                self.pending_comments.clear()
-                self.pending_votes.clear()
                 try:
                     self.clusters.find_clusters()
                 except ValueError as exc:

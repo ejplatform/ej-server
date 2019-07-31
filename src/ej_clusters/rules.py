@@ -2,16 +2,18 @@ import logging
 
 from boogie import rules
 from django.db.models import Count
+from django.utils.timezone import now, timedelta
 
-from ej_clusters.enums import ClusterStatus
 from ej_conversations.models import Conversation
 from . import models
+from .enums import ClusterStatus
 
 log = logging.getLogger("ej")
 
 VOTES_FOR_USER_TO_PARTICIPATE_IN_CLUSTERIZATION = 5
 VOTES_FOR_COMMENT_TO_PARTICIPATE_IN_CLUSTERIZATION = 5
 MINIMUM_NUMBER_OF_CLUSTERS = 2
+COOLDOWN_TIME = timedelta(minutes=5)
 
 
 #
@@ -27,20 +29,22 @@ def must_update_clusterization(obj):
         - test OK for the 'ej.can_activate_clusterization' rule
     * In either case, it must:
         - Have the minimum number of clusters
-        - Have not been clusterized sooner than TIMESTAMP - COOLDOWN_TIME
         - Have at least A unprocessed votes from active users
-        - (or) Has at least C unprocessed comments with V or more votes
-
-    A = VOTES_FOR_USER_TO_PARTICIPATE_IN_CLUSTERIZATION
-    B =
-    C =
-    Argument must be a conversation or a clusterization.
+        - Have not been clusterized sooner than TIMESTAMP - COOLDOWN_TIME
     """
     clusterization = get_clusterization(obj)
-    if clusterization is None:
+    if (
+        clusterization is None
+        or (
+            clusterization.cluster_status == ClusterStatus.PENDING_DATA
+            and not rules.test_rule("ej.can_activate_clusterization", clusterization)
+        )
+        or clusterization.n_clusters >= 2
+        or clusterization.n_unprocessed_votes < 5
+    ):
         return False
 
-    return clusterization.unprocessed_votes >= 5 or clusterization.unprocessed_comments >= 1
+    return clusterization.modified < now() - COOLDOWN_TIME
 
 
 @rules.register_rule("ej.can_activate_clusterization")
@@ -50,18 +54,18 @@ def can_activate_clusterization(obj):
     clusterization job.
 
     * Must have a defined clusterization
-    * Has at least 5 comments with at least 5 votes.
+    * Has at least 10 comments with at least 10 votes.
     * Has at least 2 clusters with at least 1 registered stereotype.
     """
     clusterization = get_clusterization(obj)
     if clusterization is None:
         return False
 
-    filled_comments = clusterization.comments.annotate(count=Count("votes")).filter(count__gte=5).count()
+    filled_comments = clusterization.comments.annotate(count=Count("votes")).filter(count__gte=10).count()
     filled_clusters = (
-        clusterization.clusters.annotate(count=Count("stereotypes")).filter(count__gte=2).count()
+        clusterization.clusters.annotate(count=Count("stereotypes")).filter(count__gte=10).count()
     )
-    return filled_comments >= 5 and filled_clusters >= 2
+    return filled_comments >= 10 and filled_clusters >= 10
 
 
 def requires_update(self):

@@ -7,7 +7,7 @@ from .kmeans_sklearn import StereotypeKMeans
 #
 # Default pipeline
 #
-def clusterization_pipeline(whiten=True, distance="l1", only_preprocess=False):
+def clusterization_pipeline(whiten=False, distance=None, only_preprocess=False):
     """
     Define the main clusterization pipeline that starts with some vote_table().
     that should include some stereotype votes.
