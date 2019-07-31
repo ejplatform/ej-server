@@ -245,25 +245,7 @@ class ClusterQuerySet(ClusterizationBaseMixin, QuerySet):
         votes_qs = self.votes().filter(comment__status=Comment.STATUS.approved)
         user_votes = votes_qs.votes_table()
         user_votes.values[:] = imputer.fit_transform(user_votes)
-
-        comments = Comment.objects.filter(id__in=votes_qs.values_list("comment_id", flat=True))
-        stereotype_votes = self.stereotype_votes(comments).votes_table("zero")
-        stereotype_ids = self.dataframe("id", "stereotypes__id", index=None)
-        cluster_votes = []
-
-        for cluster_id in cluster_ids:
-            ids = stereotype_ids[stereotype_ids.id == cluster_id]["stereotypes__id"]
-            mean_votes = stereotype_votes.loc[ids].mean(0)
-
-            # We fill empty clusters with random values to avoid superposition of
-            # clusters
-            if (mean_votes == 0).all():
-                clusterization = self.get(id=cluster_id).clusterization
-                log.warning(f"[clusters] cluster {cluster_id} of {clusterization} is empty!")
-                mean_votes.values[:] = np.random.uniform(-1, 1, size=len(mean_votes))
-
-            mean_votes.name = cluster_id
-            cluster_votes.append(mean_votes)
+        cluster_votes = self._cluster_votes(cluster_ids, votes_qs)
 
         # Aggregate user and cluster votes
         cluster_votes = pd.DataFrame(cluster_votes)
@@ -277,10 +259,34 @@ class ClusterQuerySet(ClusterizationBaseMixin, QuerySet):
         user_labels = pd.DataFrame([list(user_votes.index), user_labels], index=["user", "label"]).T
         stereotype_labels = labels[len(user_labels) :]
 
+        return self._save_clusterization(pipeline, cluster_ids, stereotype_labels, user_labels, commit)
+
+    def _cluster_votes(self, cluster_ids, votes):
+        comments = Comment.objects.filter(id__in=votes.values_list("comment_id", flat=True))
+        stereotype_votes = self.stereotype_votes(comments).votes_table("zero")
+        stereotype_ids = self.dataframe("id", "stereotypes__id", index=None)
+
+        cluster_votes = []
+        for cluster_id in cluster_ids:
+            ids = stereotype_ids[stereotype_ids.id == cluster_id]["stereotypes__id"]
+            mean_votes = stereotype_votes.loc[ids].mean(0)
+
+            # We fill empty clusters with random values to avoid superposition of
+            # clusters
+            if (mean_votes == 0).all():
+                clusterization = self.get(id=cluster_id).clusterization
+                log.warning(f"[clusters] cluster {cluster_id} of {clusterization} is empty!")
+                mean_votes.values[:] = np.random.uniform(-1, 1, size=len(mean_votes))
+
+            mean_votes.name = cluster_id
+            cluster_votes.append(mean_votes)
+        return cluster_votes
+
+    def _save_clusterization(self, pipeline, cluster_ids, stereotype, user, commit=True):
         result = ClusterDict(pipeline=pipeline)
         m2m_objects = []
         m2m = self.model.users.through
-        for expected_id, got_id in zip(cluster_ids, stereotype_labels):
+        for expected_id, got_id in zip(cluster_ids, stereotype):
             if expected_id != got_id:
                 expected = self.get(id=expected_id)
                 got = self.get(id=got_id)
@@ -289,7 +295,7 @@ class ClusterQuerySet(ClusterizationBaseMixin, QuerySet):
                     f'stereotype for "{expected.name}" was classified as "{got.name}"!'
                 )
 
-            user_ids = user_labels[user_labels.label == expected_id].user.values
+            user_ids = user[user.label == expected_id].user.values
             result[expected_id] = user_ids
             if commit:
                 m2m_objects.extend(m2m(cluster_id=expected_id, user_id=uid) for uid in user_ids)
@@ -297,7 +303,6 @@ class ClusterQuerySet(ClusterizationBaseMixin, QuerySet):
         if commit:
             m2m.objects.filter(cluster__in=cluster_ids).delete()
             m2m.objects.bulk_create(m2m_objects)
-
         return result
 
     def mean_stereotypes_votes_table(self, data_imputation=None):

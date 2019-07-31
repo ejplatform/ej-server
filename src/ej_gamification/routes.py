@@ -87,36 +87,35 @@ def progress_flag(request, position, total):
 @urlpatterns.route("leaderboard/", staff=True)
 def leaderboard(request):
     scores = models.UserProgress.objects.filter(score__gt=0).order_by("-score")
-    fns = {
-        _("Name"): attr("user.name"),
-        _("Score"): attr("score"),
-        _("Votes"): attr("n_final_votes"),
-        _("Comments"): attr("n_approved_comments"),
-        _("Rejected"): attr("n_rejected_comments"),
-        _("pts"): lambda x: x.pts_approved_comments - x.pts_rejected_comments,
-        _("Conversation"): attr("total_conversation_score"),
-    }
-    return {
-        "leaderboard": render_dataframe(
-            pd.DataFrame([[f(p) for f in fns.values()] for p in scores], columns=fns.keys()), class_="table"
-        )
-    }
+    transforms = {_("Name"): attr("user.name"), **FN_BASE}
+    return {"leaderboard": prepare_dataframe(scores, transforms, class_="table")}
 
 
 @urlpatterns.route("leaderboard/conversations/", staff=True, template="ej_gamification/leaderboard.jinja2")
 def leaderboard_conversations(request):
     scores = models.ConversationProgress.objects.filter(score__gt=0).order_by("-score")
-    fns = {
-        _("Name"): attr("conversation.title"),
-        _("Author"): attr("conversation.author.name"),
-        _("Score"): attr("score"),
-        _("Votes"): attr("n_final_votes"),
-        _("Comments"): attr("n_approved_comments"),
-        _("Rejected"): attr("n_rejected_comments"),
-        _("pts"): lambda x: x.pts_approved_comments - x.pts_rejected_comments,
-    }
-    return {
-        "leaderboard": render_dataframe(
-            pd.DataFrame([[f(p) for f in fns.values()] for p in scores], columns=fns.keys()), class_="table"
-        )
-    }
+    return {"leaderboard": prepare_dataframe(scores, FN_EXT, class_="table")}
+
+
+#
+# Constants and auxiliary functions
+#
+FN_BASE = {
+    _("Score"): attr("score"),
+    _("Votes"): attr("n_final_votes"),
+    _("Comments"): attr("n_approved_comments"),
+    _("Rejected"): attr("n_rejected_comments"),
+    _("pts"): lambda x: x.pts_approved_comments - x.pts_rejected_comments,
+}
+FN_EXT = {
+    _("Name"): attr("conversation.title"),
+    _("Author"): attr("conversation.author.name"),
+    **FN_BASE,
+    _("Conversation"): attr("total_conversation_score"),
+}
+
+
+def prepare_dataframe(data, transforms, **kwargs):
+    fns = transforms.values()
+    names = transforms.keys()
+    return render_dataframe(pd.DataFrame([[f(p) for f in fns] for p in data], columns=names), **kwargs)
