@@ -160,7 +160,6 @@ USER ${USERNAME}
 
 
 COPY ./tasks.py /app/
-COPY ./etc/tasklib/ /app/etc/tasklib/
 
 
 #===============================================================================
@@ -181,6 +180,7 @@ USER django
 # Copy build assets and source code
 COPY --from=builder --chown=django:django /app/locale /app/locale/
 COPY --from=builder --chown=django:django /app/lib/build/ /app/lib/build/
+COPY --from=builder --chown=django:django /app/etc/tasklib/ /app/etc/tasklib/
 COPY --chown=django:django ./lib/assets/ /app/lib/assets/
 COPY --chown=django:django ./lib/themes/ /app/lib/themes/
 COPY --chown=django:django ./src/ /app/src/
