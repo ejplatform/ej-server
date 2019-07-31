@@ -78,7 +78,7 @@ def conversation_create(request, board):
     return conversations.create(request, board=board, context={"board": board})
 
 
-@urlpatterns.route(board_conversation_url)
+@urlpatterns.route(board_conversation_url, login=True)
 def conversation_detail(request, board, **kwargs):
     return conversations.detail(request, **kwargs, check=check_board(board))
 
