@@ -132,7 +132,14 @@ class Comment(StatusModel, TimeStampedModel):
         if commit:
             vote.save()
             log.debug(f"Registered vote: {author} - {choice}")
-            vote_cast.send(Comment, vote=vote, comment=self, choice=choice, is_update=is_changed)
+            vote_cast.send(
+                Comment,
+                vote=vote,
+                comment=self,
+                choice=choice,
+                is_update=is_changed,
+                is_final=choice != Choice.SKIP,
+            )
         return vote
 
     def statistics(self, ratios=False):

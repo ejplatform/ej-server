@@ -3,6 +3,7 @@ from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from sidekick import delegate_to, lazy
 
+from ej_conversations.models import Vote, Comment
 from .progress_base import ProgressBase, signals
 from .progress_queryset import ProgressQuerySet
 from ..enums import CommenterLevel, HostLevel, ProfileLevel, ConversationLevel, ScoreLevel, VoterLevel
@@ -54,9 +55,17 @@ class UserProgress(ProgressBase):
     # Non de-normalized fields: conversations app
     n_conversations = delegate_to("user")
     n_pending_comments = delegate_to("user")
-    n_approved_comments = delegate_to("user")
     n_rejected_comments = delegate_to("user")
-    n_final_votes = delegate_to("user")
+
+    @lazy
+    def n_final_votes(self):
+        return (
+            Vote.objects.filter(author=self.user).exclude(comment__conversation__author=self.user).count()
+        )
+
+    @lazy
+    def n_approved_comments(self):
+        return Comment.objects.filter(author=self.user).exclude(conversation__author=self.user).count()
 
     # Gamification app
     n_endorsements = delegate_to("user")

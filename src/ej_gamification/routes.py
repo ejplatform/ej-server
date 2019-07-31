@@ -1,11 +1,18 @@
+from operator import attrgetter as attr
+
+from boogie.models import F
 from boogie.router import Router
 from django.shortcuts import render
+from django.utils.translation import ugettext as _
+from sidekick import import_later
 
+from ej_dataviz.roles import render_dataframe
 from . import models
 
 app_name = "ej_gamification"
 urlpatterns = Router(template="ej_gamification/{name}.jinja2", login=True)
 sign = lambda x: 1 if x >= 0 else -1
+pd = import_later("pandas")
 
 
 @urlpatterns.route("achievements/")
@@ -30,11 +37,15 @@ def achievements(request):
     )
 
     # Trophies
-    conversation_trophies = models.ConversationProgress.objects.filter(conversation__author=user).order_by(
-        "-conversation_level"
+    conversation_trophies = list(
+        models.ConversationProgress.objects.filter(conversation__author=user).order_by(
+            "-conversation_level"
+        )
+    )
+    participation_trophies = list(
+        user.participation_progresses.exclude(conversation__author=F.user).order_by("-voter_level")
     )
 
-    participation_trophies = user.participation_progresses.order_by("-voter_level")
     return {
         "user": user,
         "position_idx": progress.position,
@@ -71,3 +82,41 @@ def progress_flag(request, position, total):
     return render(
         request, "ej_gamification/progress-flag.jinja2", {"circle_cx": cx}, content_type="image/svg+xml"
     )
+
+
+@urlpatterns.route("leaderboard/", staff=True)
+def leaderboard(request):
+    scores = models.UserProgress.objects.filter(score__gt=0).order_by("-score")
+    fns = {
+        _("Name"): attr("user.name"),
+        _("Score"): attr("score"),
+        _("Votes"): attr("n_final_votes"),
+        _("Comments"): attr("n_approved_comments"),
+        _("Rejected"): attr("n_rejected_comments"),
+        _("pts"): lambda x: x.pts_approved_comments - x.pts_rejected_comments,
+        _("Conversation"): attr("total_conversation_score"),
+    }
+    return {
+        "leaderboard": render_dataframe(
+            pd.DataFrame([[f(p) for f in fns.values()] for p in scores], columns=fns.keys()), class_="table"
+        )
+    }
+
+
+@urlpatterns.route("leaderboard/conversations/", staff=True, template="ej_gamification/leaderboard.jinja2")
+def leaderboard_conversations(request):
+    scores = models.ConversationProgress.objects.filter(score__gt=0).order_by("-score")
+    fns = {
+        _("Name"): attr("conversation.title"),
+        _("Author"): attr("conversation.author.name"),
+        _("Score"): attr("score"),
+        _("Votes"): attr("n_final_votes"),
+        _("Comments"): attr("n_approved_comments"),
+        _("Rejected"): attr("n_rejected_comments"),
+        _("pts"): lambda x: x.pts_approved_comments - x.pts_rejected_comments,
+    }
+    return {
+        "leaderboard": render_dataframe(
+            pd.DataFrame([[f(p) for f in fns.values()] for p in scores], columns=fns.keys()), class_="table"
+        )
+    }

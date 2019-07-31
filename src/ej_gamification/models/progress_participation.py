@@ -132,6 +132,9 @@ class ParticipationProgress(ProgressBase):
             * Plus the total score of created conversations.
             * Got a focused badge: 50 points.
 
+        Observation:
+            Owner do not receive any points for its own conversations
+
         Returns:
             Total score (int)
         """
