@@ -1,13 +1,13 @@
-<nav title="{{ _('Account') }}">
-    <h3>{{ _('Account') }}</h3>
+<nav title="{{ _('Account') }}" aria-labelledby="menu-account">
+    <h3 id="menu-account">{{ _('Account') }}</h3>
     <ul>
         <li><a href="{{ url('account:index') }}">{% trans %}Manage account{% endtrans %}</a></li>
         <li><a href="{{ url('account:change-password') }}">{% trans %}Change password{% endtrans %}</a></li>
         <li><a href="{{ url('account:logout') }}">{% trans %}Logout{% endtrans %}</a></li>
     </ul>
 </nav>
-<nav title="{{ _('Profile') }}">
-    <h3>{{ _('Profile') }}</h3>
+<nav title="{{ _('Profile') }}" aria-labelledby="menu-profile">
+    <h3 id="menu-profile">{{ _('Profile') }}</h3>
     <ul>
         {% if settings.has_profiles %}
             <li><a href="{{ url('profile:detail') }}">{% trans %}Profile{% endtrans %}</a></li>

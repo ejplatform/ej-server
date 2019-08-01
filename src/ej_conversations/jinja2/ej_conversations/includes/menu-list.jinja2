@@ -1,5 +1,5 @@
-<nav title="{{ _('Conversations') }}">
-    <h3>{{ _('Conversations') }}</h3>
+<nav title="{{ _('Conversations') }}" aria-labelledby="menu-conversations">
+    <h3 id="menu-conversations">{{ _('Conversations') }}</h3>
     <ul>
         <li><a href="{{ url('conversation:list') }}">{{ _('Conversations') }}</a></li>
         {%- if request.user.has_perm('ej.can_promote_conversations') %}

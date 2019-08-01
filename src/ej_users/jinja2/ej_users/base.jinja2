@@ -12,7 +12,7 @@
     {% block form_data %}{% endblock %}
 
     {# PASSWORD RECOVERY #}
-    <a href="{{ url('auth:recover-password') + next }}" class="semi-bold underline">{{ _('Recover password') }}</a>
+    <a href="{{ url('auth:recover-password') }}" class="semi-bold underline">{{ _('Recover password') }}</a>
 
     {# SOCIAL LOGIN #}
     {% if social_buttons|default(false) %}

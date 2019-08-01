@@ -17,6 +17,7 @@ class CommentForm(EjModelForm):
         self.conversation = conversation
         super(CommentForm, self).__init__(*args, **kwargs)
         self.fields["content"].widget.attrs["placeholder"] = _("Give your opinion here")
+        self.fields["content"].widget.attrs["title"] = _("Suggest a new comment")
 
     def clean(self):
         super().clean()

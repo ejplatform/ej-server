@@ -1,5 +1,5 @@
-<nav title="{{ _('Authentication') }}">
-    <h3>{{ _('Authentication') }}</h3>
+<nav title="{{ _('Authentication') }}" aria-labelledby="menu-authentication">
+    <h3 id="menu-authentication">{{ _('Authentication') }}</h3>
     <ul>
         <li><a href="{{ url('auth:login') }}">{{ _('Login') }}</a></li>
         <li><a href="{{ url('auth:register') }}">{{ _('Register') }}</a></li>

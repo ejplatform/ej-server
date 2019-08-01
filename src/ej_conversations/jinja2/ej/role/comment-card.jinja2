@@ -1,5 +1,5 @@
 <div class="comment-card" id="main">
-    <article class="col flex-center comment-card__content"><span>{{ comment.content }}</span></article>
+    <article class="col flex-center comment-card__content" aria-label="{{ _("Comment") }}"><span>{{ comment.content }}</span></article>
     <div class="comment-card__author" style="order: -1;">
         {% if badge %}
             <span class="comment-card__author-img text-accent">{{ badge }}</span>

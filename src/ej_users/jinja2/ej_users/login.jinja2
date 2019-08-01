@@ -2,7 +2,7 @@
 
 
 {% block form_data %}
-    <form method="post" class="pad-t3 form-narrow">
+    <form method="post" class="pad-t3 form-narrow" aria-label="{{ _('Login form') }}">
         {{ csrf_input }}
         {{ form }}
         <div class="margin-t3 margin-xauto">
