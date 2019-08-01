@@ -1,0 +1,14 @@
+{% extends "ej_users/login.jinja2" %}
+
+
+{% block content %}
+    {{ super() }}
+    {% if auth_token %}
+        <script>
+            window.parent.postMessage({
+                event: 'login-with-token',
+                loginToken: {{ auth_token.__repr__()|safe }},
+            }, {{ rocket_chat_url.__repr__()|safe }});
+        </script>
+    {% endif %}
+{% endblock %}

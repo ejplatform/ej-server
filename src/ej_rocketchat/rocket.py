@@ -10,13 +10,12 @@ log = getLogger("ej")
 
 
 class RCConfigWrapper:
+    url = delegate_to("config")
+    api_url = delegate_to("config")
+
     @property
     def config(self):
         return self.configs.default_config()
-
-    @property
-    def url(self):
-        return self.config.url
 
     @lazy
     def accounts(self):
@@ -94,7 +93,7 @@ class RCConfigWrapper:
         # Handle regular accounts
         account = self.accounts.get(user=user)
         if not account.is_active:
-            return account
+            raise PermissionError("cannot login with inactive accounts")
 
         response = self.password_login(account.username, account.password)
         account.auth_token = response["data"]["authToken"]

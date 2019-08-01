@@ -13,6 +13,11 @@ from .rocket import rocket
 
 log = getLogger("ej")
 User = get_user_model()
+PASSWORD_MSG = _(
+    """Password for Rocket.Chat admin user.
+It is important to configure your Rocket.Chat instance with a unique password since
+this value will be stored in plain text into Django's own database."""
+)
 
 
 class RocketIntegrationForm(PlaceholderForm, forms.Form):
@@ -32,11 +37,9 @@ class RocketIntegrationForm(PlaceholderForm, forms.Form):
         required=False,
     )
     username = forms.CharField(label=_("Username"), help_text=_("Username for Rocket.Chat admin user."))
+
     password = forms.CharField(
-        widget=forms.PasswordInput,
-        required=False,
-        label=_("Password"),
-        help_text=_("Password for Rocket.Chat admin user."),
+        widget=forms.PasswordInput, required=False, label=_("Password"), help_text=PASSWORD_MSG
     )
     config = None
 
@@ -90,6 +93,7 @@ class RocketIntegrationForm(PlaceholderForm, forms.Form):
         config.admin_id = user_id
         config.admin_token = auth_token
         config.admin_username = self.cleaned_data["username"]
+        config.admin_password = self.cleaned_data["password"]
         config.is_active = True
         config.save()
         return config
@@ -129,24 +133,3 @@ class CreateUsernameForm(PlaceholderForm, forms.ModelForm):
                 raise
         else:
             rocket.login(self.user)
-
-
-class AskAdminPasswordForm(PlaceholderForm):
-    """
-    Asks EJ superusers for the Rocket.Chat admin user password.
-    """
-
-    password = forms.CharField(
-        label=_("Password"),
-        help_text=_("Password for the Rocket.Chat admin account"),
-        widget=forms.PasswordInput,
-    )
-
-    def full_clean(self):
-        super().full_clean()
-        if self.is_valid():
-            password = self.cleaned_data["password"]
-            try:
-                rocket.password_login(rocket.admin_username, password)
-            except PermissionError:
-                self.add_error("password", _("Invalid password"))
