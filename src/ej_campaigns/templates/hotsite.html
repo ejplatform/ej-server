@@ -11,10 +11,10 @@
     <link rel="stylesheet" href="https://unpkg.com/unpoly@0.54.0/dist/unpoly.min.css"
                            integrity="sha384-zsXMcPyhYSZEF/yA0Rprx9nn7gnz84QyiSrxSH5xuo0DalUAlfSmfsxILtkg5fJ/"
                            crossorigin="anonymous">
-    <link rel="stylesheet" href="https://ejplatform.pencillabs.com.br/static/css/fontawesome-all.min.css" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://ejplatform.pencillabs.com.br/static/js/jquery-ui/jquery-ui.min.css" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://ejplatform.pencillabs.com.br/static/js/jquery-ui/jquery-ui.structure.min.css" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://www.ejplatform.org/static/css/main.css">
+		<link rel="stylesheet" href="{{site_url}}/static/css/fontawesome-all.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{site_url}}/static/js/jquery-ui/jquery-ui.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{site_url}}/static/js/jquery-ui/jquery-ui.structure.min.css" crossorigin="anonymous">
+		<link rel="stylesheet" href="{{site_url}}/static/css/main.css">
 
     <!-- Favicons -->
     <link rel="icon" href="/static/img/logo/logo.svg"/>
@@ -30,6 +30,47 @@
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="image" content="/static/img/logo/logo.svg">
 
+		<style>
+		@media only screen and (max-width: 1024px) {
+			.ConversationDetail, .ConversationDetail-banner h1 {
+				font-size: 4rem !important;
+				max-width: unset;
+			}
+
+			.ConversationTags {
+				font-size: 3rem !important;
+			}
+
+			.Comment .CommentCard {
+				max-width: unset;
+			}
+			.ConversationDetail-header h1,
+			.CommentCard,
+			.CommentCard-user {
+				font-size: 3rem !important;
+			}
+			.Comment .CommentCard-voteArea ul span {
+				font-size: 2rem !important;
+			}
+			.Comment .CommentCard-voteArea button {
+				width: 80px;
+				height: 80px;
+			}
+			.Comment .CommentCard-voteArea ul li.voteAgree i.fa {
+				margin-right: 25px;
+			}
+			.Comment .CommentCard-voteArea ul li.voteSkip i.fa {
+				margin-right: 25px;
+			}
+			.Comment .CommentCard-voteArea ul li.voteDisagree i.fa {
+				margin-right: 15px;
+			}
+
+			.ConversationDetail-banner div span {
+				font-size: 2rem !important;
+			}
+		}
+		</style>
   </head>
 
   <body class="Page semanadeinovacaoconversationsservicos-publicos-futuro">
@@ -52,8 +93,8 @@
         <main class="Page-content logged-in" data-salt="LwHBIdlyM" style="padding: 0 !important">
           <div class="ConversationDetail">
             <div class="ConversationDetail">
-              <div class="ConversationDetail-banner">
-                <div class="ConversationTags"><i class="fa fa-tags"></i>
+							<div class="ConversationDetail-banner" style="{{palette_css['light']}}">
+                <div class="ConversationTags" style="{{palette_css['light']}}"><i class="fa fa-tags"></i>
 			{% if tags %}
 			{% for tag in tags %}
 				{{ tag }}
@@ -62,20 +103,20 @@
 			{{ _('Conversation') }}
 				{% endif %}
                 </div>
-                <h1>{{conversation_title}}</h1>
+                <h1 style="{{palette_css['light-h1']}}">{{conversation_title}}</h1>
+								<div style="width: 80%; margin: auto; font-size: 0.8rem; text-align: center;">
+									<span style="{{palette_css['light']}}">Sua participação é importante. Responda abaixo votando no comentário exibido. Você será levado à página da pesquisa para votar nos outros comentários também.</span>
+								</div>
               </div>
 
-              <div class="ConversationDetail-arrow"></div>
+              <div class="ConversationDetail-arrow" style="{{palette_css['arrow']}}"></div>
             </div>
 
             <div class="ConversationDetail-header">
-              <h1>Comentários</h1>
+              <h1 style="{{palette_css['dark-h1']}}">Comentários</h1>
             </div>
             <div class="Comment">
-              <div class="CommentCard">
-                <div class="CommentCard-counter">
-                  <p>1/1</p>
-                </div>
+							<div class="CommentCard" style="{{palette_css['dark']}}">
                 <div class="CommentCard-user">
 			<img src="{{site_url}}/static/img/icons/catlogo.svg"><span>{{comment_author}}</span>
                 </div>

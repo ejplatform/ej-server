@@ -21,44 +21,98 @@
 @mixin palette {
 
   &--bluePalette  {
-    @include __palette-aux($color-primary,$color-hint);
+    @include __palette-generator('bluePalette',$color-primary,$color-hint);
   }
 
   &--greyPalette {
-    @include __palette-aux(#666666,#EEEEEE);
+    @include __palette-generator('greyPalette',#666666,#EEEEEE,#052B47);
   }
 
   &--greenPalette {
-    @include __palette-aux(#36C273,#B4FDD4);
+    @include __palette-generator('greenPalette', #36C273,#B4FDD4,#052B47);
   }
 
   &--orangePalette {
-    @include __palette-aux(#F5700A,#FFE1CA);
+    @include __palette-generator('orangePalette',#F5700A,#FFE1CA,#052B47);
   }
 
   &--purplePalette {
-    @include __palette-aux(#7758B3,#E7DBFF)
+    @include __palette-generator('purplePalette',#7758B3,#E7DBFF,#052B47)
   }
 
   &--pinkPalette {
-    @include __palette-aux($color-accent,#FFE3EA)
+    @include __palette-generator('pinkPalette',$color-accent,#FFE3EA,#052B47);
+  }
+
+  &--campaignPalette {
+    @include __palette-generator('campaignPalette', #1c9dd9,#332f82,#ffffff,#1c9dd9, true, url(/static/img/icons/bg.png));
   }
 }
 
-@mixin __palette-aux($dark-color, $light-color) {
+@mixin __palette-generator(
+	$selector,
+	$dark-color,
+	$light-color,
+	$h1-detail-banner-color: 'unset',
+	$h1-detail-header-color: 'unset',
+	$round-borders: false,
+	$card-background-image: 'unset') {
     background-color:  $dark-color !important;
     color:  $light-color !important;
+		.CommentCard-counter,.CommentCard-user, p, span, text-area {
+			font-weight: 600 !important;
+			color:  white !important;
+		}
+		.CommentCard-loginWarn a {
+			color: #042049 !important;
+		}
     .Button:not(Button[primary]) {
       color:  $dark-color !important;
     }
+		@if $round-borders {
+			border-radius: unset;
+		}
+		.ConversationCard-actions--#{$selector} {
+			@if $card-background-image != 'none' {
+				background: $card-background-image !important;
+			}
+		}
+		&-light.show {
+			@if $selector == 'campaignPalette' {
+				background-color: $dark-color !important;
+				color: $light-color !important;
+				input[value="Comment"] {
+					color: $dark-color !important;
+					background-color: white !important;
+				}
+			}
+		}
     &-light {
-      background-color: $light-color !important;
-      color: $dark-color !important;
-      *:not(h1) {
+			background-color: $light-color !important;
+			color: $dark-color !important;
+      li > *, li {
         background-color: $light-color !important;
         color: $dark-color !important;
         border-color: $dark-color !important;
       }
+			h1 {
+				@if $h1-detail-banner-color != 'none' {
+					color: $h1-detail-banner-color !important;
+				}
+			}
+			@if $round-borders {
+				border-radius: unset !important;
+			}
+			input[type=submit] {
+				background-color: $dark-color !important;
+				color: white !important;
+			}
+			textarea {
+				border-color: $dark-color !important;
+			}
+			#characters-count {
+				color: #042049 !important;
+			}
     }
     &-text {
       *:not(h1,form) {
@@ -67,6 +121,11 @@
       #button-create {
         color: $dark-color;
       }
+			h1 {
+				@if $h1-detail-header-color != 'none' {
+					color: $h1-detail-header-color !important;
+				}
+			}
     }
     &-arrow {
       border-top: 28px solid $light-color !important;

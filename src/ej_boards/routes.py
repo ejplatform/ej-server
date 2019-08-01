@@ -197,7 +197,7 @@ def board_edit(request, board):
 # Reports
 #
 reports_url = '<model:board>/conversations/<model:conversation>/reports/'
-reports_kwargs = {'login': True}
+reports_kwargs = {'staff': True, 'login': True}
 
 
 @urlpatterns.route(reports_url, **reports_kwargs)
@@ -206,7 +206,7 @@ def report(request, board, conversation):
     return report_routes.index(request, conversation)
 
 
-@urlpatterns.route(reports_url + 'participants/', staff=True, **reports_kwargs)
+@urlpatterns.route(reports_url + 'participants/', **reports_kwargs)
 def report_participants(request, board, conversation):
     assure_correct_board(conversation, board)
     return report_routes.participants_table(conversation)
