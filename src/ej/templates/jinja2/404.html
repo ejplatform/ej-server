@@ -1,4 +1,4 @@
-{% extends "base.jinja2" %}
+{% extends "error-base.jinja2" %}
 
 {% block title %}Page not found{% endblock %}
 
@@ -11,7 +11,7 @@
             <img src="/static/img/error/404_icon.svg">
             <h1>404</h1>
             <p>Page not found</p>
-            <p>:'(</p>
+            <p aria-hidden="true">:'(</p>
         </div>
     </div>
 {% endblock content %}

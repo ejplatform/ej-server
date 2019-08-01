@@ -11,9 +11,9 @@
         <li>{{ span_icon(n_votes, 'sliders-h') }}</li>
         <li>{{ span_icon(n_favorites, 'star') }}</li>
     </ul>
-    <div class="conversation-card__text">
+    <h2 class="conversation-card__text">
         <a href="{{ url }}">{{ text }}</a>
-    </div>
+    </h2>
     {{ progress or '' }}
     <div class="conversation-card__author">{{ _('by:') }} <strong>{{ author }}</strong></div>
     <div class="conversation-card__button">{{ action_button(_('Participate now!'), url, tabindex=-1, aria_hidden="true") }}</div>

@@ -20,23 +20,24 @@
         </div>
 
     {% else %}
-        <h1 class="h2 text-accent margin-y0 center">{{ _('Comments') }}</h1>
+        {# <h1 class="h2 text-accent margin-y0 center">{{ _('Comments') }}</h1>#}
         <div class="comment-area pad-x2">
-            {{ conversation|role('user-progress') }}
-            <div class="col items-center margin-y2">
+            <div class="col items-center margin-y3">
                 {% if comment %}
                     {{ comment|role('card', target='.comment-area') }}
+                    {{ conversation|role('user-progress', class='width-full', style="margin-top: 1.5rem;") }}
                 {% else %}
                     <div class="comment-card center">
                         <article>
-                            <h1 class="h3">{{ _('Congratulations!') }}</h1>
+                            <h2 class="h3 text-accent">{{ _('Congratulations!') }}</h2>
                             <p>{{ _("There are no comments left to vote :)") }}</p>
                         </article>
                     </div>
                 {% endif %}
+                <h2 class="text-accent">{{ _('Suggest a new comment') }}</h2>
                 {{ conversation|role('comment-form', form=comment_form, target='.comment-area') }}
+                {{ conversation|role('create-comment') }}
             </div>
-            {{ conversation|role('create-comment') }}
         </div>
     {% endif %}
     {{ conversation|role('detail-page-extra') }}

@@ -51,6 +51,19 @@ html {
     background-color: color('white');
 }
 
+a.button {
+    &:hover, &:focus, &:active {
+        @include utilities('shadow-1');
+        @include color('action');
+    }
+}
+
+a.button.is-primary {
+    &:hover, &:focus, &:active {
+        @include color('accent');
+    }
+}
+
 // Neat trick from https://accessible360.com/accessible360-blog/use-aria-label-screen-reader-text/
 .screen-reader {
     clip: rect(1px, 1px, 1px, 1px);

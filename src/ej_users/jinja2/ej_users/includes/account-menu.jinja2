@@ -1,5 +1,5 @@
 <nav title="{{ _('Account') }}">
-    <h1>{{ _('Account') }}</h1>
+    <h3>{{ _('Account') }}</h3>
     <ul>
         <li><a href="{{ url('account:index') }}">{% trans %}Manage account{% endtrans %}</a></li>
         <li><a href="{{ url('account:change-password') }}">{% trans %}Change password{% endtrans %}</a></li>
@@ -7,7 +7,7 @@
     </ul>
 </nav>
 <nav title="{{ _('Profile') }}">
-    <h1>{{ _('Profile') }}</h1>
+    <h3>{{ _('Profile') }}</h3>
     <ul>
         {% if settings.has_profiles %}
             <li><a href="{{ url('profile:detail') }}">{% trans %}Profile{% endtrans %}</a></li>

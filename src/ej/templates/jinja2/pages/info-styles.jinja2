@@ -10,7 +10,7 @@
 {% endmacro %}
 
 {% block content %}
-    <div class="container-1">
+    <div class="container pad-y3 pad-x2">
         <p>
             Reference page for all styles in the current EJ instance. Use this page to tweak the
             theme to your linking and see the effects of colors, typography and layout elements.
@@ -118,7 +118,15 @@
             </p>
             <p>Links can also be styled as buttons, by adding the ".button" class like in
                 <code>{{ '<a class="button">Link</a>' }}</code>.
-            <p><a href="#" class="button">Link</a></p>
+            <p>
+                <a href="#" class="button">a.button</a>
+                <a href="#" class="button is-primary">a.button.is-primary</a>
+                <a href="#" class="button is-secondary">a.button.is-secondary</a>
+                <a href="#" class="button is-positive">a.button.is-positive</a>
+                <a href="#" class="button is-warning">a.button.is-warning</a>
+                <a href="#" class="button is-negative">a.button.is-negative</a>
+                <a href="#" class="button is-ghost">a.button.is-ghost</a>
+            </p>
 
             <h2>Forms</h2>
             <p>
@@ -155,21 +163,20 @@
 
             <h2>Lists</h2>
             <ul>
-                <li>Unordered list item 1</li>
-                <li>Unordered list item 2</li>
-                <li>Unordered list item 3</li>
+                <li>{{ _('Unordered list item 1') }}</li>
+                <li>{{ _('Unordered list item 2') }}</li>
+                <li>{{ _('Unordered list item 3') }}</li>
             </ul>
             <ol>
-                <li>Unordered list item 1</li>
-                <li>Unordered list item 2</li>
-                <li>Unordered list item 3</li>
+                <li>{{ _('Unordered list item 1') }}</li>
+                <li>{{ _('Unordered list item 2') }}</li>
+                <li>{{ _('Unordered list item 3') }}</li>
             </ol>
             <dl>
-                <dt>Name 1</dt>
-                <dd>Value 1</dd>
-
-                <dt>Name 2</dt>
-                <dd>Value 2</dd>
+                <dt>{{ _('Name 1') }}</dt>
+                <dd>{{ _('Value 1') }}</dd>
+                <dt>{{ _('Name 2') }}</dt>
+                <dd>{{ _('Value 2') }}</dd>
             </dl>
 
             <h2>Tables</h2>

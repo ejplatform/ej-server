@@ -1,11 +1,11 @@
 from collections import defaultdict
 
 from django.utils.translation import ugettext_lazy as _
-from hyperpython import nav, Block, a, div
+from hyperpython import nav, Block, a, div, h3
 from hyperpython.components import hyperlink, html_list, fa_icon
 
 from ej.components.functional import thunk, split_with
-from ..roles import link, h1
+from ..roles import link
 
 
 def page_menu(*items, request=None, caller=None, **kwargs):
@@ -68,7 +68,7 @@ def menu_section(name, links, **kwargs):
     """
     children = [html_list(map(menu_item, links))]
     if name:
-        children.insert(0, h1(name))
+        children.insert(0, h3(name))
         kwargs.setdefault("title", str(name))
         kwargs.setdefault("aria-label", str(name))
     return nav(children, **kwargs)

@@ -182,7 +182,7 @@ def extra_content(title, text, icon=None, **kwargs):
     return div([title, text], **kwargs).add_class("extra-content")
 
 
-def progress_bar(*args):
+def progress_bar(*args, **kwargs):
     """
     Display a progress bar.
 
@@ -194,17 +194,18 @@ def progress_bar(*args):
     if len(args) == 1:
         pc = args[0]
         n = total = None
+        aria_msg = _("Your progress: {pc} percent").format(pc=pc)
     else:
         e = 1e-50
         n, total = args
         pc = round(100 * (n + e) / (total + e))
+        aria_msg = _("Your progress: {n} of {total}").format(n=n, total=total)
 
     # Build children
     children = [
-        strong(f"{pc}%", class_="block margin-r2"),
+        strong(f"{pc}%", class_="block margin-r2", aria_hidden="true"),
         div(
             class_="progress-bar__progress",
-            aria_hidden="true",
             children=[
                 div(" ", class_="color-brand-lighter", style=f"flex-grow: {pc + 3};"),
                 div(" ", style=f"flex-grow: {100 - pc};"),
@@ -213,10 +214,10 @@ def progress_bar(*args):
     ]
 
     if total is not None:
-        children.append(div([strong(n), "/", total]))
+        children.append(div([strong(n), "/", total], aria_hidden="true"))
 
     # Return
-    return div(children, class_="progress-bar", aria_hidden="true")
+    return div(children, aria_label=aria_msg, role="img", **kwargs).add_class("progress-bar", first=True)
 
 
 def popup(title, content, action=None, **kwargs):

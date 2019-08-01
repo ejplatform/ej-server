@@ -1,5 +1,5 @@
 <nav title="{{ _('Profile') }}">
-    <h1>{{ _('Profile') }}</h1>
+    <h3>{{ _('Profile') }}</h3>
     <ul>
         <li><a href="{{ url('profile:detail') }}">{{ _('Profile') }}</a></li>
         <li><a href="{{ url('profile:edit') }}">{{ _('Edit profile') }}</a></li>
@@ -7,7 +7,7 @@
     </ul>
 </nav>
 <nav title="{{ _('Account') }}">
-    <h1>{{ _('Account') }}</h1>
+    <h3>{{ _('Account') }}</h3>
     <ul>
         <li><a href="{{ url('account:index') }}">{{ _('Account') }}</a></li>
         {% if settings.has_clusters %}<li><a href="{{ url('stereotypes:list') }}">{{ _('Personas') }}</a></li>{% endif %}

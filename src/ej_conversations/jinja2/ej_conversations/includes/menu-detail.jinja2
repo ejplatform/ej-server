@@ -1,5 +1,5 @@
 <nav title="{{ _('Conversation') }}">
-    <h1>{{ _('Conversation') }}</h1>
+    <h3>{{ _('Conversation') }}</h3>
     <ul>
         <li><a href="{{ conversation.url('conversation:detail') }}">{{ _('Conversation') }}</a></li>
         {% for link in page_menu.links('conversations:detail-actions', request, conversation) %}
@@ -8,7 +8,7 @@
     </ul>
 </nav>
 <nav title="{{ _('Admin') }}">
-    <h1>{{ _('Admin') }}</h1>
+    <h3>{{ _('Admin') }}</h3>
     <ul>
         {% if request.user.has_perm('ej.can_edit_conversation', conversation) %}
             <li><a href="{{ conversation.url('conversation:edit') }}">{{ _('Edit') }}</a></li>

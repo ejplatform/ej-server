@@ -3,7 +3,7 @@ from logging import getLogger
 from boogie.models import F
 from boogie.router import Router
 from django.db import transaction
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseServerError
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
@@ -14,7 +14,13 @@ from .enums import TourStatus
 from .models import Conversation
 from .rules import next_comment
 from .tour import TOUR
-from .utils import check_promoted, conversation_admin_menu_links, handle_detail_post
+from .utils import (
+    check_promoted,
+    conversation_admin_menu_links,
+    handle_detail_favorite,
+    handle_detail_comment,
+    handle_detail_vote,
+)
 
 log = getLogger("ej")
 
@@ -70,7 +76,16 @@ def detail(request, conversation, slug=None, check=check_promoted):
 
     if request.method == "POST":
         action = request.POST["action"]
-        ctx = handle_detail_post(request, conversation, action)
+
+        if action == "vote":
+            ctx = handle_detail_vote(request)
+        elif action == "comment":
+            ctx = handle_detail_comment(request, conversation)
+        elif action == "favorite":
+            ctx = handle_detail_favorite(request, conversation)
+        else:
+            log.warning(f"user {request.user.id} se nt invalid POST request: {request.POST}")
+            return HttpResponseServerError("invalid action")
 
     return {
         "conversation": conversation,

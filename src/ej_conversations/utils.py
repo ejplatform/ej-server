@@ -2,7 +2,7 @@ from logging import getLogger
 
 from django.contrib import messages
 from django.core.exceptions import ValidationError
-from django.http import Http404, HttpResponseServerError
+from django.http import Http404
 from django.utils.html import escape
 from django.utils.translation import ugettext_lazy as _
 from hyperpython import a
@@ -24,22 +24,6 @@ def check_promoted(conversation, request):
     if not conversation.is_promoted or conversation.is_hidden:
         raise Http404
     return conversation
-
-
-def handle_detail_post(request, conversation, action):
-    """
-    Process a POST in a conversation:detail view..
-    """
-
-    if action == "vote":
-        return handle_detail_vote(request)
-    elif action == "comment":
-        return handle_detail_comment(request, conversation)
-    elif action == "favorite":
-        return handle_detail_favorite(request, conversation)
-    else:
-        log.warning(f"user {request.user.id} se nt invalid POST request: {request.POST}")
-        return HttpResponseServerError("invalid action")
 
 
 def conversation_admin_menu_links(conversation, user):
@@ -131,6 +115,7 @@ def handle_detail_favorite(request, conversation):
         toast(request, _("Conversation removed from favorites."))
 
     log.info(f"user {user.id} toggled favorite status of conversation {conversation.id}")
+    return {}
 
 
 def toast(request, msg, **kwargs):

@@ -6,7 +6,7 @@
 {% block content %}
     <div class="container-1">
         {# USERS #}
-        <h1>{{ _('Users') }}</h1>
+        <h2>{{ _('Users') }}</h2>
         <table>
             <tr>
                 <th>{{ _('Name') }}</th>
@@ -21,7 +21,7 @@
 
 
         {# CONVERSATIONS #}
-        <h1>{{ _('Conversations') }}</h1>
+        <h2>{{ _('Conversations') }}</h2>
         <table>
             <tr>
                 <th>{{ _('Name') }}</th>
@@ -37,7 +37,7 @@
         </table>
 
         {# LINKS #}
-        <h1>{{ _('More info') }}</h1>
+        <h2>{{ _('More info') }}</h2>
         <ul>
             <li><a href="{{ url('info-django-settings') }}">{{ _('Django Settings') }}</a></li>
             <li><a href="{{ url('info-environ') }}">{{ _('Execution environment') }}</a></li>

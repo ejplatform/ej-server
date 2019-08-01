@@ -1,4 +1,4 @@
-{% extends "base.jinja2" %}
+{% extends "error-base.jinja2" %}
 
 {% block title %}Server Error{% endblock %}
 
@@ -11,7 +11,7 @@
             <img src="/static/img/error/500_icon.svg">
             <h1>500</h1>
             <p>Server Error</p>
-            <p>X|</p>
+            <p aria-hidden="true">X|</p>
         </div>
     </div>
 {% endblock content %}

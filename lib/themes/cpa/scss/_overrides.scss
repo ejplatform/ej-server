@@ -23,7 +23,8 @@ a, a:hover, a:active, a:focus {
             transform: none
         }
         to {
-            transform: scale(1.2) translate(calc((100vw - 400px) / 25 - 20px), 5px) rotate(-5deg);
+            // transform: scale(1.2) translate(calc((100vw - 400px) / 25 - 20px), 5px) rotate(-5deg);
+            transform: translate(calc((100vw - 400px) / 25 - 20px), 5px);
         }
     }
 }

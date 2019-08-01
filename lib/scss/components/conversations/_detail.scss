@@ -77,6 +77,8 @@ $component-border-radius: size(config('ej.style.border-radius'));
     @include themed('background');
 
     color: color('white');
+    display: flex;
+    flex-direction: column;
 
     &__author-img {
         @include utilities('margin-r1');
@@ -109,16 +111,30 @@ $component-border-radius: size(config('ej.style.border-radius'));
         @include utilities('col items-center');
 
         button {
-            @include utilities('margin-2 col flex-center');
-            @include color(rgba(255, 255, 255, 0.75) null);
+            @include utilities('flex-center');
+            background: transparent;
+            border: none;
+            height: initial;
+            margin: 0;
+            padding: 0;
 
+            &:hover {
+                box-shadow: none;
+            }
+        }
+        i {
+            background: rgba(255, 255, 255, 0.75);
             border-radius: 50em;
             border: none;
+            display: block;
             font-size: 1.5rem;
             height: 3rem;
             line-height: 3rem;
             padding: 0;
             width: 3rem;
+            &:hover {
+                @include utilities('shadow-2');
+            }
         }
         span {
             @include utilities('uppercase text-7');
@@ -132,12 +148,17 @@ $component-border-radius: size(config('ej.style.border-radius'));
 }
 
 .comment-form {
-    @include utilities('center text-black margin-t3');
+    @include utilities('center text-black');
     @include themed('background', light);
+
+    label {
+        @include utilities('regular margin-b2 text-black');
+        text-transform: none;
+    }
 
     textarea {
         background-color: color('white');
-        margin: 0;
+        margin: size(1) 0 0 0;
         min-height: 10em;
         width: 100%;
     }

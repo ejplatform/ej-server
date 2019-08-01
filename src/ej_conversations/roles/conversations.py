@@ -136,7 +136,7 @@ def conversation_summary(conversation, request=None):
 
 
 @html.register(models.Conversation, role="user-progress")
-def conversation_user_progress(conversation, request=None, user=None):
+def conversation_user_progress(conversation, request=None, user=None, **kwargs):
     """
     Render comment form for one conversation.
     """
@@ -145,4 +145,4 @@ def conversation_user_progress(conversation, request=None, user=None):
     conversation.for_user = user
     n = conversation.n_user_final_votes
     total = conversation.n_approved_comments
-    return progress_bar(min(n, total), total)
+    return progress_bar(min(n, total), total, **kwargs)
