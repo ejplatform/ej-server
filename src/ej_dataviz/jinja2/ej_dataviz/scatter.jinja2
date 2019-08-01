@@ -55,11 +55,7 @@
                         race = e.data[4],
                         cluster = e.data[5];
                     return (
-                        '<div class="left"><strong>' + name + '</strong><ul class="margin-y2">'
-                        + (gender?  "<li>" + {{ _('Gender').__str__().__repr__()|safe }} + ": " + gender + '</li>': '')
-                        + (race?  "<li>" + {{ _('Race').__str__().__repr__()|safe }} + ": " + race + '</li>': '')
-                        + (cluster?  "<li>" + {{ _('Cluster').__str__().__repr__()|safe }} + ": " + cluster + '</li>': '')
-                        + '</ul></div>'
+                        '<strong>' + name + '</strong>'
                     );
                 };
                 chart.option.visualMap = [data.visualMap[data.visualMap.length - 1]];

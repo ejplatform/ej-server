@@ -1,5 +1,6 @@
 from collections import defaultdict
 from logging import getLogger
+from typing import Callable
 
 from boogie.router import Router
 from django.apps import apps
@@ -13,6 +14,8 @@ from ej_conversations.models import Conversation
 from ej_conversations.routes import conversation_url
 from ej_conversations.utils import check_promoted
 from ej_profiles.enums import Gender, Race
+
+np = import_later("numpy")
 
 wordcloud = import_later("wordcloud")
 stop_words = import_later("stop_words")
@@ -48,6 +51,7 @@ def scatter_pca_json(request, conversation, slug, check=check_promoted):
     from sklearn import impute
 
     check(conversation, request)
+    kwargs = {}
     clusterization = getattr(conversation, "clusterization", None)
     if clusterization is not None:
         clusterization.update_clusterization()
@@ -69,95 +73,24 @@ def scatter_pca_json(request, conversation, slug, check=check_promoted):
     # Add extra columns (for now it is hardcoded as name, gender and race)
     # In the future, it might be configurable.
     extra_fields = ["name", "gender", "race"]
+    kwargs["extra_fields"] = extra_fields
     data[extra_fields] = User.objects.filter(id__in=data.index).dataframe(
         *(FIELD_DATA[f]["query"] for f in extra_fields)
     )
     for f in extra_fields:
         data[f] = FIELD_DATA[f].get("transform", lambda x: x)(data[f])
 
-    visual_map = [
-        {"dimension": n, **FIELD_DATA[f]["visual_map"]} for n, f in enumerate(extra_fields[1:], 3)
-    ]
-
     # Check clusters
-    visual_clusters = {}
-    stereotype_coords = []
-    visual_map.append(visual_clusters)
-    if apps.is_installed("ej_clusters"):
-        from ej_clusters.models import Stereotype
-
-        labels = conversation.clusterization.clusters.all().dataframe("name", index="users")
-        if labels.shape != (0, 0):
-            data["cluster"] = labels
-            data["cluster"].fillna(__("*Unknown*"), inplace=True)
-            clusters = [*pd.unique(labels.values.flat), _("*Unknown*")]
-            visual_clusters.update(
-                {
-                    **PIECEWISE_OPTIONS,
-                    "dimension": len(visual_map) + 2,
-                    "categories": clusters,
-                    "inRange": {"color": COLORS[: len(clusters)]},
-                }
-            )
-
-            # Stereotype votes
-            stereotypes = conversation.clusters.all().stereotypes()
-            names = dict(Stereotype.objects.values_list("id", "name"))
-            votes = stereotypes.votes_table()
-            missing_cols = set(df.columns) - set(votes.columns)
-            for col in missing_cols:
-                votes[col] = float("nan")
-            votes = votes[list(df.columns)]
-            points = pca.transform(imputer.transform(votes))
-            stereotype_coords = [
-                [x, y, names[pk], None, None, None] for pk, (x, y) in zip(votes.index, points)
-            ]
-
-    # Send JSON
-    axis_opts = {"axisTick": {"show": False}, "axisLabel": {"show": False}}
-
-    return JsonResponse(
-        {
-            "option": {
-                "legend": {"data": ["all"], "xAxis": "center"},
-                "tooltip": {
-                    "showDelay": 0,
-                    "axisPointer": {
-                        "show": True,
-                        "type": "cross",
-                        "lineStyle": {"type": "dashed", "width": 1},
-                    },
-                },
-                "xAxis": axis_opts,
-                "yAxis": axis_opts,
-                "series": [
-                    {
-                        "type": "scatter",
-                        "name": _("PCA data"),
-                        "symbolSize": 18,
-                        "markPoint": {
-                            "data": [
-                                {
-                                    "name": _("You!"),
-                                    "coord": [*user_coords, _("You!"), None, None],
-                                    "label": {"show": True, "formatter": _("You!")},
-                                }
-                            ]
-                        },
-                        "data": data.values.tolist(),
-                    },
-                    {
-                        "type": "effectScatter",
-                        "name": _("User and stereotypes"),
-                        "color": "#000",
-                        "symbolSize": 18,
-                        "data": [*stereotype_coords],
-                    },
-                ],
-            },
-            "visualMap": visual_map,
-        }
+    stereotype_coords = list(
+        create_stereotype_coords(
+            conversation,
+            data,
+            list(df.columns),
+            transformer=lambda x: pca.transform(imputer.transform(x)),
+            kwargs=kwargs,
+        )
     )
+    return format_echarts_option(data, user_coords, stereotype_coords, **kwargs)
 
 
 @urlpatterns.route("scatter/group-<groupby>.json")
@@ -206,6 +139,99 @@ def words(request, conversation, slug, check=check_promoted):
 
 
 #
+# Auxiliary functions
+#
+def create_stereotype_coords(conversation, table, comments: list, transformer: Callable, kwargs: dict):
+    if apps.is_installed("ej_clusters") and getattr(conversation, "clusterization", None):
+        from ej_clusters.models import Stereotype
+
+        labels = conversation.clusterization.clusters.all().dataframe("name", index="users")
+        if labels.shape != (0, 0):
+            table["cluster"] = labels
+            table["cluster"].fillna(__("*Unknown*"), inplace=True)
+            kwargs["labels"] = labels
+
+            # Stereotype votes
+            stereotypes = conversation.clusters.all().stereotypes()
+            names = dict(Stereotype.objects.values_list("id", "name"))
+            votes_ = stereotypes.votes_table()
+            missing_cols = set(comments) - set(votes_.columns)
+            for col in missing_cols:
+                votes_[col] = float("nan")
+            votes_ = votes_[comments]
+            points = transformer(votes_)
+
+            for pk, (x, y) in zip(votes_.index, points):
+                yield {
+                    "name": names[pk],
+                    "symbol": "circle",
+                    "coord": [x, y, names[pk], None, None],
+                    "label": {"show": True, "formatter": names[pk], "color": "black"},
+                    "itemStyle": {"opacity": 0.75, "color": "rgba(180, 180, 180, 0.33)"},
+                    "tooltip": {"formatter": _("{} persona").format(names[pk])},
+                }
+
+
+def format_echarts_option(data, user_coords, stereotype_coords, extra_fields: list, labels=None):
+    """
+    Format option JSON for echarts.
+    """
+    visual_map = [
+        {"dimension": n, **FIELD_DATA[f]["visual_map"]} for n, f in enumerate(extra_fields[1:], 3)
+    ]
+    if labels is not None:
+        clusters = [*pd.unique(labels.values.flat), _("*Unknown*")]
+        visual_map.append(
+            {
+                **PIECEWISE_OPTIONS,
+                "dimension": len(visual_map) + 3,
+                "categories": clusters,
+                "inRange": {"color": COLORS[: len(clusters)]},
+            }
+        )
+
+    axis_opts = {"axisTick": {"show": False}, "axisLabel": {"show": False}}
+    return JsonResponse(
+        {
+            "option": {
+                "legend": {"data": ["all"], "xAxis": "center"},
+                "tooltip": {
+                    "showDelay": 0,
+                    "axisPointer": {
+                        "show": True,
+                        "type": "cross",
+                        "lineStyle": {"type": "dashed", "width": 1},
+                    },
+                },
+                "xAxis": axis_opts,
+                "yAxis": axis_opts,
+                "series": [
+                    {
+                        "type": "scatter",
+                        "name": _("PCA data"),
+                        "symbolSize": 18,
+                        "markPoint": {
+                            "data": [
+                                {
+                                    "name": _("You!"),
+                                    "coord": [*user_coords, _("You!"), None, None],
+                                    "label": {"show": True, "formatter": _("You!")},
+                                    "itemStyle": {"color": "black"},
+                                    "tooltip": {"formatter": _("You!")},
+                                },
+                                *stereotype_coords,
+                            ]
+                        },
+                        "data": data.values.tolist(),
+                    }
+                ],
+            },
+            "visualMap": visual_map,
+        }
+    )
+
+
+#
 # Utilities
 #
 def get_stop_words():
@@ -226,6 +252,18 @@ def get_stop_words():
 #
 # Grouping constants
 #
+def field_descriptor(enum):
+    def formatter(x):
+        if isinstance(x, str):
+            return x
+        elif x is None or x == 0 or np.isnan(x):
+            return None
+        else:
+            return enum(x).description
+
+    return formatter
+
+
 VALID_GROUP_BY = {"gender": "profile__gender", "race": "profile__race"}
 
 GROUP_NAMES = {
@@ -240,33 +278,33 @@ GROUP_DESCRIPTIONS = {
 
 EXPOSED_PROFILE_FIELDS = ("race", "gender", "age", "occupation", "education", "country", "state")
 
+# Reference: https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
 NORMALIZE_LANGUAGES = {
+    "ar": "arabic",
+    "bg": "bulgarian",
+    "ca": "catalan",
+    "cs": "czech",
+    "da": "danish",
     "de": "german",
-    "fr": "french",
     "en": "english",
     "es": "spanish",
+    "fi": "finnish",
+    "fr": "french",
+    "hi": "hindi",
+    "hu": "hungarian",
+    "id": "indonesian",
     "it": "italian",
+    "nl": "dutch",
+    "no": "norwegian",
+    "pl": "polish",
     "pt": "portuguese",
-    # TODO: discover correct language codes
-    # 'ar': 'arabic',
-    # 'bu': 'bulgarian',
-    # 'ca': 'catalan',
-    # 'cz': 'czech',
-    # 'da': 'danish',
-    # 'du': 'dutch',
-    # 'fi': 'finnish',
-    # 'hi': 'hindi',
-    # 'hu': 'hungarian',
-    # 'in': 'indonesian',
-    # 'no': 'norwegian',
-    # 'po': 'polish',
-    # 'ro': 'romanian',
-    # 'ru': 'russian',
-    # 'sl': 'slovak',
-    # 'sw': 'swedish',
-    # 'tu': 'turkish',
-    # 'uk': 'ukrainian',
-    # 'vi': 'vietnamese',
+    "ro": "romanian",
+    "ru": "russian",
+    "sk": "slovak",
+    "sv": "swedish",
+    "tr": "turkish",
+    "uk": "ukrainian",
+    "vi": "vietnamese",
 }
 
 COLORS = [
@@ -302,7 +340,7 @@ FIELD_DATA = {
             "categories": [x.description for x in Gender if x != 0],
             "inRange": {"color": COLORS[: len(list(Gender))]},
         },
-        "transform": lambda col: col.apply(lambda x: (x or None) and Gender(x).description),
+        "transform": lambda col: col.apply(field_descriptor(Gender)),
     },
     "race": {
         "query": "profile__race",
@@ -312,7 +350,7 @@ FIELD_DATA = {
             "categories": [x.description for x in Race if x != 0],
             "inRange": {"color": COLORS[: len(list(Race))]},
         },
-        "transform": lambda col: col.apply(lambda x: (x or None) and Race(x).description),
+        "transform": lambda col: col.apply(field_descriptor(Race)),
     },
     "name": {"query": "name", "name": _("Name")},
 }
