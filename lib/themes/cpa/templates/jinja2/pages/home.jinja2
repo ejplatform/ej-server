@@ -92,10 +92,9 @@
                 <div aria-hidden="true"><h2 class="h2 text-black">Venha somar suas opiniões à nossa rede!</h2>
                     <p>Quanto mais opiniões mais ricas serão nossas discussões</p>
                 </div>
-                <p><a class="button primary" href="/conversations/" up-instant
-                      up-target=".Page-mainContainer .Header-topIcon"
-                      up-transition="cross-fade" class="Button">Faça seu cadastro!</a>
-                    <a href="/login/" class="block">Ou entre com a sua senha</a>
+                <h2 class="screen-reader">Entre na plataforma</h2>
+                <p><a class="button primary" href="{{ url('auth:register') }}">Faça seu cadastro!</a>
+                    <a href="{{ url('auth:login') + '?fast=true' }}" class="block">Ou entre com a sua senha</a>
                 </p>
             </div>
             <hr class="margin-b3">

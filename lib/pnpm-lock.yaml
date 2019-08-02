@@ -6,7 +6,7 @@ dependencies:
   js-cookie: 2.2.0
   mendeleev.css: 0.2.0
   paper: 0.12.3
-  unpoly: 0.60.0
+  unpoly: 0.60.1
 devDependencies:
   babel-core: 6.26.3
   babel-plugin-transform-class-properties: 6.24.1
@@ -5770,10 +5770,10 @@ packages:
     dev: true
     resolution:
       integrity: sha1-/+3ks2slKQaW5uFl1KWe25mOawI=
-  /unpoly/0.60.0:
+  /unpoly/0.60.1:
     dev: false
     resolution:
-      integrity: sha512-G9tG8i+IxxKK3rGFBJgNf/t6V/x0ZuAqGfXPvd9ca52DIy9vHTMVBlj0eaqlIswrqw9ouk4nHkJhqUVZwzWXGQ==
+      integrity: sha512-bOg2iVhaGrjEUHndEErErJnKLp3lxN311b66+c1KH9ECOxUaHlI/1FrJ6XSXzQem4htPdYARXCvollvG2doIsw==
   /unquote/1.1.1:
     dev: true
     resolution:
@@ -5978,4 +5978,4 @@ specifiers:
   parcel-bundler: ^1.11.0
   typescript: ^3.4.5
   uglify-js: ^3.6.0
-  unpoly: ^0.60.0
+  unpoly: ^0.60.1

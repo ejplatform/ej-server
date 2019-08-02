@@ -110,11 +110,65 @@ i.fa, i.fas, i.fab, i.far {
 
 //------------------------------------------------------------------------------
 // Toast element
+/* The snackbar - position it at the bottom and in the middle of the screen */
+#snackbar {
+    visibility: hidden; /* Hidden by default. Visible on click */
+    min-width: 250px; /* Set a default minimum width */
+    margin-left: -125px; /* Divide value of min-width by 2 */
+    background-color: #333; /* Black background color */
+    color: #fff; /* White text color */
+    text-align: center; /* Centered text */
+    border-radius: 2px; /* Rounded borders */
+    padding: 16px; /* Padding */
+    position: fixed; /* Sit on top of the screen */
+    z-index: 1; /* Add a z-index if needed */
+    left: 50%; /* Center the snackbar */
+    bottom: 30px; /* 30px from the bottom */
+}
+
+
+/* Animations to fade the snackbar in and out */
+$toast-height: size(1.5);
+
+@keyframes toast-show {
+    from {
+        top: $toast-height;
+        opacity: 0;
+    }
+    to {
+        top: 0;
+        opacity: 1;
+    }
+}
+
+@keyframes toast-hide {
+    from {
+        top: $toast-height;
+        opacity: 1;
+    }
+    to {
+        top: 0;
+        opacity: 0;
+    }
+}
+
 .toast {
-    @extend .color-brand-lighter, .pad-3;
+    @include utilities('color-brand-lighter pad-3 shadow-2 semi-bold');
     align-items: center;
+    animation: toast-show 0.25s 0.25s backwards, toast-hide 0.5s 4s forwards;
+    border-radius: size(0.5);
     display: flex;
+    filter: brightness(90%);
     justify-content: center;
+    left: 0;
+    max-width: 25rem;
+    margin: auto;
+    opacity: 0.7;
+    position: fixed;
+    right: 0;
+    top: $toast-height;
+    width: 90%;
+    z-index: 1001;
 
     &__icon {
         @extend .pad-2;
@@ -132,7 +186,7 @@ i.fa, i.fas, i.fab, i.far {
             margin: 0 !important;
         }
         h1 {
-            @extend .text-4, .uppercase, .sans-serif, .bold, .text-brand;
+            @include utilities('text-4 uppercase bold text-brand');
         }
     }
 }

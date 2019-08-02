@@ -45,7 +45,7 @@ def list_view(request, queryset=Conversation.objects.filter(is_promoted=True), c
 
     # Annotate queryset for efficient db access
     annotations = ("n_votes", "n_comments", "n_user_votes", "first_tag", "n_favorites", "author_name")
-    queryset = queryset.cache_annotations(*annotations, user=user)
+    queryset = queryset.cache_annotations(*annotations, user=user).order_by("-created")
 
     return {
         "conversations": queryset,

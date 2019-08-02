@@ -10,7 +10,7 @@
     "js-cookie": "^2.2.0",
     "mendeleev.css": "0.2.0",
     "paper": "^0.12.3",
-    "unpoly": "^0.60.0"
+    "unpoly": "^0.60.1"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",

@@ -154,7 +154,7 @@ body {
         @include utilities('pad-2');
 
         border-bottom: 1px solid color('brand');
-        h1 {
+        h1, h2, h3 {
             display: none;
         }
         ul:first-child {
@@ -231,5 +231,20 @@ body {
 
     .page-menu + * {
         flex: 5;
+    }
+}
+
+
+#first-link {
+    @extend .screen-reader;
+    tab-index: 0;
+
+    :focus {
+        background: 0;
+        bottom: size(0.5);
+        padding: size(0.25);
+        position: fixed;
+        text-align: center;
+        z-index: 1002;
     }
 }

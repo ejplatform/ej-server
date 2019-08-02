@@ -73,7 +73,7 @@ def conversation_comment_form(conversation, request=None, content=None, user=Non
 
     # Check if user still have comments left
     n_comments = rules.compute("ej.remaining_comments", conversation, user)
-    if conversation.author != user and n_comments <= 0:
+    if n_comments <= 0:
         return {"comments_exceeded": True, "user": user}
 
     # Everything is ok, proceed ;)

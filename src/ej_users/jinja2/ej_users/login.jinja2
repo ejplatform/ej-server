@@ -1,8 +1,14 @@
 {% extends 'ej_users/base.jinja2' %}
+{% set title_level = 2 %}
+
+{% block content %}
+    <h1 class="screen-reader">{{ _('Please enter your login credentials') }}</h1>
+    {{ super() }}
+{% endblock %}
 
 
 {% block form_data %}
-    <form method="post" class="pad-t3 form-narrow" aria-label="{{ _('Login form') }}">
+    <form method="post" class="pad-t3 form-narrow" aria-label="{{ _('Login form') }}" aria-live="assertive">
         {{ csrf_input }}
         {{ form }}
         <div class="margin-t3 margin-xauto">
@@ -14,6 +20,6 @@
 
 {% block form_footer %}
     <hr class="width-2/3 margin-y2">
-    <div class="bold margin-y2">{{ _(settings.EJ_REGISTER_TEXT) }}</div>
-    <p><a class="button" href="{{ url('auth:register') + next }}" secondary>{{ _('Register now!') }}</a></p>
+    <div class="bold margin-y2" aria-hidden="true">{{ _(settings.EJ_REGISTER_TEXT) }}</div>
+    <p><a class="button" href="{{ url('auth:register') + next }}" secondary aria-label="{{ _('Create your account!') }}">{{ _('Register now!') }}</a></p>
 {% endblock %}

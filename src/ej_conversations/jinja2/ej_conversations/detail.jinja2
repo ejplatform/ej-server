@@ -1,7 +1,7 @@
 {% extends 'ej_conversations/base.jinja2' %}
 {% set main_class = 'container-1 pad-x0' %}
 {% set page_title = _('Conversation: "{}"').format(conversation.text) %}
-
+{% set aria_flowto = 'comment-card' %}
 
 {% block metaOG %}
     <meta name="description" property="og:title" content="{{ conversation.title }}">
@@ -9,22 +9,28 @@
     <meta name="twitter:title" content="{{ conversation.title }}">
 {% endblock %}
 
-
 {% block content %}
-    {{ conversation|role('balloon') }}
-    {% if conversation.is_hidden %}
-        <div class="color-negative margin-3 pad-x3 pad-y2 rounded-3 center">
-            <h2>{{ _('Warning!') }}</h2>
-            <p>{% trans %}This conversation is hidden.{% endtrans %}
-                {% trans here=edit_link() %} Click {{ here }} to edit and make it visible again.{% endtrans %}</p>
-        </div>
-
-    {% else %}
-        {# <h1 class="h2 text-accent margin-y0 center">{{ _('Comments') }}</h1>#}
-        <div class="comment-area pad-x2">
-            <div class="col items-center margin-y3">
+    <div>
+        <script>
+            document.addEventListener('load', function () {
+                $('form').on('submit', function () {
+                    $('h1').attr('aria-hidden', true)
+                });
+                alert('ON')
+            })
+        </script>
+        {{ conversation|role('balloon') }}
+        {% if conversation.is_hidden %}
+            <div class="color-negative margin-3 pad-x3 pad-y2 rounded-3 center">
+                <h2>{{ _('Warning!') }}</h2>
+                <p>{% trans %}This conversation is hidden.{% endtrans %}
+                    {% trans here=edit_link() %} Click {{ here }} to edit and make it visible again.{% endtrans %}</p>
+            </div>
+        {% else %}
+            {# <h1 class="h2 text-accent margin-y0 center">{{ _('Comments') }}</h1>#}
+            <div class="col items-center margin-y3 pad-x2" id="comment-card">
                 {% if comment %}
-                    {{ comment|role('card', target='.comment-area') }}
+                    {{ comment|role('card', target='#comment-card') }}
                     {{ conversation|role('user-progress', class='width-full', style="margin-top: 1.5rem;") }}
                 {% else %}
                     <div class="comment-card center">
@@ -38,9 +44,9 @@
                 {{ conversation|role('comment-form', form=comment_form, target='.comment-area') }}
                 {{ conversation|role('create-comment') }}
             </div>
-        </div>
-    {% endif %}
-    {{ conversation|role('detail-page-extra') }}
+        {% endif %}
+        {{ conversation|role('detail-page-extra') }}
+    </div>
 {% endblock %}
 
 

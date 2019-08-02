@@ -11,8 +11,8 @@
             <p>{% trans %}Go back to {{ login_link }} page.{% endtrans %}</p>
         </div>
     {% else %}
-        <h1 class="h2 text-accent">{% trans %}Logout{% endtrans %}</h1>
-        <form method="POST" class="width-full">
+        <form method="POST" class="width-full margin-y5">
+            <h1 class="h2 text-accent">{% trans %}Logout{% endtrans %}</h1>
             <p>{% trans %}Please press the logout button to confirm.{% endtrans %}</p>
             {{ csrf_input }}
             <button class="is-primary width-full" type="submit" name="action">

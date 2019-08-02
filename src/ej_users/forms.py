@@ -22,7 +22,7 @@ class PasswordForm(EjForm):
         super()._post_clean()
         data = self.cleaned_data
         if data.get("password") != data.get("password_confirm"):
-            self.add_error("password_confirm", _("Passwords do not match"))
+            self.add_error("password", _("Passwords do not match"))
 
 
 class RegistrationForm(PasswordForm, EjModelForm):

@@ -24,13 +24,13 @@ a, a:hover, a:active, a:focus {
         }
         to {
             // transform: scale(1.2) translate(calc((100vw - 400px) / 25 - 20px), 5px) rotate(-5deg);
-            transform: translate(calc((100vw - 400px) / 25 - 20px), 5px);
+            transform: translate(calc((100vw - 400px) / 25 - 20px), 0);
         }
     }
 }
 
 .main-header__logo img {
-    animation: header-logo-img 0.25s linear 0.0s forwards;
+    animation: header-logo-img 0.5s ease-out 0.0s forwards;
 }
 
 #page-wrapper {
