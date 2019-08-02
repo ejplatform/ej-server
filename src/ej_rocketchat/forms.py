@@ -3,13 +3,12 @@ from logging import getLogger
 from django import forms
 from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.core.exceptions import ImproperlyConfigured
 from django.utils.translation import ugettext_lazy as _
 
 from ej.forms import PlaceholderForm
 from . import models
 from .exceptions import ApiError
-from .rocket import rocket
+from .rocket import new_config, RCConfigWrapper
 
 log = getLogger("ej")
 User = get_user_model()
@@ -43,35 +42,24 @@ class RocketIntegrationForm(PlaceholderForm, forms.Form):
     )
     config = None
 
-    def get_config(self):
-        """
-        Return Rocket.Chat config from form data.
-        """
-        if self.config is None:
-            return self._clean_config()
-        else:
-            return self.config
-
     def full_clean(self):
         super().full_clean()
-
-        try:
+        if self.is_bound:
             self._clean_config(self.cleaned_data)
-        except (AttributeError, ImproperlyConfigured, KeyError):
-            pass
 
     def _clean_config(self, data):
         """
-        Return a saved RCConfig instance from form data.
+        Return a RCConfig instance from form data.
         """
         url = data["rocketchat_url"]
         api_url = data["api_url"] or url
         config = models.RCConfig(url=api_url)
-        response = config.api_call(
-            "login", payload={"username": data["username"], "password": data["password"]}, raises=False
-        )
+        rocket_api = RCConfigWrapper(config)
+        payload = {"username": data["username"], "password": data["password"]}
+        response = rocket_api.api_call("login", payload=payload, raises=False)
+
         if response.get("status") == "success":
-            self.config = self._save_config(response["data"])
+            self.config = self._make_config(response["data"])
             return config
         elif response.get("error") in ("JSONDecodeError", "ConnectionError"):
             self.add_error("rocketchat_url", _("Error connecting to server"))
@@ -81,22 +69,24 @@ class RocketIntegrationForm(PlaceholderForm, forms.Form):
             log.error(f"Invalid response: {response}")
             self.add_error(None, _("Error registering on Rocket.Chat server"))
 
-    def _save_config(self, data):
+    def _make_config(self, data):
         url = self.cleaned_data["rocketchat_url"]
         api_url = self.cleaned_data["api_url"] or ""
         user_id = data["userId"]
         auth_token = data["authToken"]
 
         # Save config
-        config, _ = models.RCConfig.objects.get_or_create(url=url)
+        config = models.RCConfig(url=url)
         config.api_url = api_url
         config.admin_id = user_id
         config.admin_token = auth_token
         config.admin_username = self.cleaned_data["username"]
         config.admin_password = self.cleaned_data["password"]
         config.is_active = True
-        config.save()
         return config
+
+    def save(self):
+        self.config.save()
 
 
 class CreateUsernameForm(PlaceholderForm, forms.ModelForm):
@@ -118,18 +108,21 @@ class CreateUsernameForm(PlaceholderForm, forms.ModelForm):
             username = self.cleaned_data["username"].lstrip("@")
         except (KeyError, AttributeError):
             return
+
         try:
-            self.instance = rocket.register(self.user, username)
-        except ApiError as error:
-            msg = error.args[0]
-            error = msg.get("error", "")
-            if f"{username} is already in use" in error:
-                self.add_error("username", _("Username already in use."))
-            elif f"{self.user.email} is already in use" in error:
-                email = self.user.email
-                msg = _(f"User with {email} e-mail already exists.")
-                self.add_error("username", msg)
+            self.instance = new_config().register(self.user, username)
+        except ApiError as exc:
+            error = exc.error_message
+            if exc.value["errorType"] == "error-field-unavailable":
+                if f"{username} is already in use" in error:
+                    self.add_error("username", _("Username already in use."))
+                elif f"{self.user.email} is already in use" in error:
+                    msg = _(
+                        "User with {email} e-mail already exists.\n"
+                        "Please contact the system administrator."
+                    )
+                    self.add_error("username", msg.format(email=self.user.email))
+                else:
+                    self.add_error("username", _("Error: {}").format(error))
             else:
                 raise
-        else:
-            rocket.login(self.user)

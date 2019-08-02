@@ -1,7 +1,3 @@
-import json
-from json import JSONDecodeError
-
-import requests
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.validators import RegexValidator
@@ -9,7 +5,6 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 from ej.utils import JSONField
-from .exceptions import ApiError
 from .manager import RCConfigManager
 from .validators import WhiteListedURLValidator
 
@@ -103,7 +98,10 @@ class RCConfig(models.Model):
         _("Admin user id"), max_length=50, help_text=_("Id string for the Rocket.Chat admin user.")
     )
     admin_token = models.CharField(
-        _("Login token"), max_length=50, help_text=_("Login token for the Rocket.Chat admin user.")
+        _("Login token"),
+        max_length=50,
+        help_text=_("Login token for the Rocket.Chat admin user."),
+        blank=True,
     )
     admin_password = models.CharField(
         _("Admin password"), max_length=50, help_text=_("Password for the Rocket.Chat admin user.")
@@ -122,84 +120,3 @@ class RCConfig(models.Model):
 
     def __str__(self):
         return f"Rocket config: {self.url} ({self.admin_id})"
-
-    def api_call(
-        self,
-        uri,
-        version="v1",
-        payload=None,
-        args=None,
-        headers=None,
-        raises=True,
-        method="post",
-        auth=None,
-    ):
-        """
-        Makes a call to Rocketchat API.
-
-        Args:
-            uri, version:
-                Used to construct Rocket.Chat url as <rocketchat>/api/<version>/<uri>
-            payload (JSON):
-                JSON payload for the request
-            args (dict):
-                Query dictionary appended to the url.
-            headers (dict):
-                An optional dictionary of HTTP headers.
-            raises (bool):
-                If True (default) raises an ApiError for bad responses from the
-                API, otherwise, return the response dictionary.
-            method ('post', 'get'):
-                HTTP method used on the request.
-            auth:
-                Either None, a user with a registered Rocket.Chat account or
-                the string 'admin' for admin access to the API.
-        """
-        url = normalize_api_url(self.api_url or self.url, version, uri, args)
-        headers = normalize_headers(headers, auth, self)
-        kwargs = {}
-
-        # Payload
-        if payload is not None and method == "post":
-            kwargs["data"] = json.dumps(payload)
-            headers["Content-Type"] = "application/json"
-        method = getattr(requests, method)
-
-        # Makes API request
-        try:
-            response = method(url, headers=headers, **kwargs)
-            result = json.loads(response.content, encoding="utf-8")
-        except (requests.ConnectionError, JSONDecodeError) as exc:
-            msg = {"status": "error", "message": str(exc), "error": type(exc).__name__}
-            if raises:
-                raise ApiError(msg)
-            return msg
-        if response.status_code != 200 and raises:
-            error = {"code": response.status_code, "response": result}
-            raise ApiError(error)
-        return result
-
-
-def normalize_api_url(base, version, uri, args=None):
-    if "://" not in base:
-        base = "http://" + base
-
-    query = ""
-    if args:
-        query_param = "&".join(f"{k}={v}" for k, v in args.items())
-        query = f"?{query_param}"
-
-    return f"{base}/api/{version}/{uri}{query}"
-
-
-def normalize_headers(headers, auth, config):
-    headers = dict(headers or {})
-    if auth:
-        if auth == "admin":
-            id, token = config.admin_id, config.admin_token
-        elif isinstance(auth, dict):
-            id, token = auth["user_id"], auth["auth_token"]
-        else:
-            id, token = config.user_info(auth)
-        headers.update({"X-Auth-Token": token, "X-User-Id": id})
-    return headers

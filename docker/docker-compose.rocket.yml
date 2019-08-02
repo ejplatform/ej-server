@@ -17,6 +17,7 @@ services:
       - mongo:mongo
     ports:
       - 3000:3000/tcp
+      - 41101:41101
 
 
   # The MONGO_DB database. You can drop this container if you want to use an

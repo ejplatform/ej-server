@@ -3,23 +3,30 @@ class ApiError(Exception):
     Raised for generic API errors.
     """
 
-    response = property(lambda self: self.value.get("response", {}))
+    value = property(lambda self: self.args[0])
     code = property(lambda self: self.value.get("code"))
+    status = property(lambda self: self.value.get("status", "success"))
 
     @property
-    def value(self):
-        value = self.args[0]
-        return value if isinstance(value, dict) else {"value": value}
+    def error_message(self):
+        if self.is_error:
+            return self.value.get("error") or self.value.get("message", "unknown error")
+        return ""
+
+    @property
+    def is_error(self):
+        return self.status == "error" or self.value["error"]
 
     @property
     def is_permission_error(self):
         # Rocket.Chat error messages had changed in the past.
         # We try to see if the error field of Payload is "unauthorized" or
         # if the string "unauthorized" is present anywhere in the message.
-        return (
-            str(self.response.get("error", "")).lower() == "unauthorized"
-            or "unauthorized" in str(self.response).lower()
-        )
+        raise NotImplementedError
+
+    @property
+    def is_too_many_requests_error(self):
+        return "[error-too-many-requests]" in self.error_message
 
 
 class UserLoggedInError(Exception):

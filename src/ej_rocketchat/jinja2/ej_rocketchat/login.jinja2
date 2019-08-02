@@ -1,14 +1,22 @@
 {% extends "ej_users/login.jinja2" %}
 
+{% if auth_token %}
+    {% set hide_menu = True %}
+    {% set hide_header = True %}
+    {% set hide_footer = True %}
+{% endif %}
 
 {% block content %}
-    {{ super() }}
     {% if auth_token %}
+        <p class="margin-y4 measure-narrow"><a href="{{ talks_url }}">{{ _('Redirecting to Rocket.Chat...') }}</a></p>
         <script>
-            window.parent.postMessage({
-                event: 'login-with-token',
-                loginToken: {{ auth_token.__repr__()|safe }},
-            }, {{ rocket_chat_url.__repr__()|safe }});
+            window.addEventListener('load', function () {
+                var to = {{ rocket_chat_url.__repr__()|safe }};
+                window.parent.postMessage({event: 'try-iframe-login'}, to);
+                console.log('Sent message', msg, 'to', to);
+            });
         </script>
+    {% else %}
+        {{ super() }}
     {% endif %}
 {% endblock %}

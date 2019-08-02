@@ -7,7 +7,7 @@ from django.shortcuts import redirect
 from django.views.decorators.csrf import csrf_exempt
 
 from .models import CAN_LOGIN_PERM
-from .rocket import rocket
+from .rocket import new_config
 
 
 def security_policy(func):
@@ -42,7 +42,7 @@ def requires_rc_perm(func):
             raise Http404
 
         # Try to build the initial context
-        if not rocket.has_config:
+        if not new_config().has_config:
             if user.is_superuser:
                 return redirect("rocket:config")
             else:
@@ -54,7 +54,7 @@ def requires_rc_perm(func):
 
 def get_rocket_url():
     try:
-        return rocket.url
+        return new_config().url
     except ImproperlyConfigured:
         return settings.EJ_ROCKETCHAT_URL or "http://localhost:3000"
 
