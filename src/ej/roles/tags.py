@@ -35,17 +35,18 @@ __all__ = [
     "toast",
     "description",
 ]
+NOT_GIVEN = object()
 
 
-def link(value, href="#", target="body", **kwargs):
+def link(value, href="#", target=None, **kwargs):
     return a(link_kwargs(href=href, target=target, **kwargs), [value])
 
 
-def link_attrs(href="#", target="body", **kwargs):
+def link_attrs(href="#", target=None, **kwargs):
     return render_attrs(link_kwargs(href=href, target=target, **kwargs))
 
 
-def link_kwargs(href="#", action=None, args=(), **kwargs):
+def link_kwargs(href="#", action=NOT_GIVEN, args=(), **kwargs):
     kwargs = {
         "href": _normalize_href(href, kwargs.pop("url_args", None), kwargs.pop("query", None)),
         "class": _normalize_class(kwargs),
@@ -56,13 +57,16 @@ def link_kwargs(href="#", action=None, args=(), **kwargs):
         **{k.replace("_", "-"): v for k, v in kwargs.items()},
     }
 
-    if action:
-        kwargs[f"up-{action}"] = kwargs.pop("target", "body")
+    target = kwargs.pop("target", "body")
+    if action is NOT_GIVEN:
+        if target:
+            kwargs["up-target"] = target
+    elif action and target:
+        kwargs[f"up-{action}"] = target or "body"
     if kwargs.get("transition"):
         kwargs["up-transition"] = kwargs.pop("transition", "cross-fade")
     for arg in args.split() if isinstance(args, str) else args:
         kwargs[arg] = True
-
     return kwargs
 
 

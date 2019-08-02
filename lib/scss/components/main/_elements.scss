@@ -129,22 +129,23 @@ i.fa, i.fas, i.fab, i.far {
 
 /* Animations to fade the snackbar in and out */
 $toast-height: size(1.5);
+$toast-opacity: 0.75;
 
 @keyframes toast-show {
     from {
-        top: $toast-height;
+        top: 0;
         opacity: 0;
     }
     to {
-        top: 0;
-        opacity: 1;
+        top: $toast-height;
+        opacity: $toast-opacity;
     }
 }
 
 @keyframes toast-hide {
     from {
         top: $toast-height;
-        opacity: 1;
+        opacity: $toast-opacity;
     }
     to {
         top: 0;
@@ -163,7 +164,7 @@ $toast-height: size(1.5);
     left: 0;
     max-width: 25rem;
     margin: auto;
-    opacity: 0.7;
+    opacity: $toast-opacity;
     position: fixed;
     right: 0;
     top: $toast-height;
