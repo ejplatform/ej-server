@@ -13,13 +13,14 @@ from taggit.models import TaggedItemBase
 
 from ej.utils.functional import deprecate_lazy
 from ej.utils.url import SafeUrl
-from ej_conversations.models.util import make_clean
 from .comment import Comment
 from .conversation_queryset import log, ConversationQuerySet
 from .favorites import HasFavoriteMixin
+from .util import make_clean
 from .util import vote_count, statistics, statistics_for_user
 from .vote import Vote
 from ..enums import Choice
+from ..signals import comment_moderated
 from ..utils import normalize_status
 
 NOT_GIVEN = object()
@@ -237,6 +238,7 @@ class Conversation(HasFavoriteMixin, TimeStampedModel):
             author.id == self.author.id or author.has_perm("ej.can_edit_conversation", self)
         ):
             kwargs["status"] = Comment.STATUS.approved
+
         else:
             kwargs["status"] = normalize_status(status)
 
@@ -252,6 +254,14 @@ class Conversation(HasFavoriteMixin, TimeStampedModel):
 
         kwargs.update(author=author, content=content.strip())
         comment = make_clean(Comment, commit, conversation=self, **kwargs)
+        if comment.status == comment.STATUS.approved and author != self.author:
+            comment_moderated.send(
+                Comment,
+                comment=comment,
+                moderator=comment.moderator,
+                is_approved=True,
+                author=comment.author,
+            )
         log.info("new comment: %s" % comment)
         return comment
 

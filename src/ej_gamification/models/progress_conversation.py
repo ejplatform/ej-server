@@ -48,6 +48,11 @@ class ConversationProgress(ProgressBase):
     level_achievement_signal = lazy(lambda _: signals.conversation_level_achieved, shared=True)
 
     # Points
+    VOTE_POINTS = 1
+    APPROVED_COMMENT_POINTS = 2
+    REJECTED_COMMENT_POINTS = -0.125
+    ENDORSEMENT_POINTS = 3
+
     pts_final_votes = compute_points(1)
     pts_approved_comments = compute_points(2)
     pts_rejected_comments = compute_points(-0.125)

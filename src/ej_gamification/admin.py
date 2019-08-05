@@ -28,6 +28,7 @@ class RecomputableScoresAdmin(admin.ModelAdmin):
 
 class UserWithNameAdmin(admin.ModelAdmin):
     list_display = ["user", "user_name"]
+    search_fields = ["user__email", "user__name"]
 
     @descr(_("Name"))
     def user_name(self, obj):
@@ -53,6 +54,7 @@ class ParticipationProgressAdmin(UserWithNameAdmin, RecomputableScoresAdmin):
 class ConversationProgressAdmin(RecomputableScoresAdmin):
     list_display = ["conversation", "author", "author_name", "conversation_level", "score"]
     list_filter = ["conversation_level"]
+    search_fields = ["conversation__title", "conversation__text"]
 
     def author(self, obj):
         return obj.conversation.author.email

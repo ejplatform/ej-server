@@ -98,12 +98,19 @@ class UserProgress(ProgressBase):
     total_participation_score = delegate_to("user")
 
     # Score points
-    pts_final_votes = compute_points(10)
-    pts_approved_comments = compute_points(30)
-    pts_rejected_comments = compute_points(-15)
-    pts_endorsements = compute_points(15)
-    pts_given_opinion_bridge_powers = compute_points(50)
-    pts_given_minority_activist_powers = compute_points(50)
+    VOTE_POINTS = 10
+    APPROVED_COMMENT_POINTS = 30
+    REJECTED_COMMENT_POINTS = -15
+    ENDORSEMENT_POINTS = 15
+    OPINION_BRIDGE_POINTS = 50
+    MINORITY_ACTIVIST_POINTS = 50
+
+    pts_final_votes = compute_points(VOTE_POINTS)
+    pts_approved_comments = compute_points(APPROVED_COMMENT_POINTS)
+    pts_rejected_comments = compute_points(REJECTED_COMMENT_POINTS)
+    pts_endorsements = compute_points(ENDORSEMENT_POINTS)
+    pts_given_opinion_bridge_powers = compute_points(OPINION_BRIDGE_POINTS)
+    pts_given_minority_activist_powers = compute_points(MINORITY_ACTIVIST_POINTS)
 
     # Signals
     level_achievement_signal = lazy(lambda _: signals.user_level_achieved, shared=True)

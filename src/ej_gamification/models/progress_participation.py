@@ -74,13 +74,21 @@ class ParticipationProgress(ProgressBase):
     n_given_minority_activist_powers = 0
 
     # Points
-    pts_final_votes = compute_points(10)
-    pts_approved_comments = compute_points(30)
-    pts_rejected_comments = compute_points(-15)
-    pts_endorsements = compute_points(15)
-    pts_given_opinion_bridge_powers = compute_points(50)
-    pts_given_minority_activist_powers = compute_points(50)
-    pts_is_focused = compute_points(50, name="is_focused")
+    VOTE_POINTS = 10
+    APPROVED_COMMENT_POINTS = 30
+    REJECTED_COMMENT_POINTS = -15
+    ENDORSEMENT_POINTS = 15
+    OPINION_BRIDGE_POINTS = 50
+    MINORITY_ACTIVIST_POINTS = 50
+    IS_FOCUSED_POINTS = 50
+
+    pts_final_votes = compute_points(VOTE_POINTS)
+    pts_approved_comments = compute_points(APPROVED_COMMENT_POINTS)
+    pts_rejected_comments = compute_points(REJECTED_COMMENT_POINTS)
+    pts_endorsements = compute_points(ENDORSEMENT_POINTS)
+    pts_given_opinion_bridge_powers = compute_points(OPINION_BRIDGE_POINTS)
+    pts_given_minority_activist_powers = compute_points(MINORITY_ACTIVIST_POINTS)
+    pts_is_focused = compute_points(IS_FOCUSED_POINTS, name="is_focused")
 
     # Leaderboard
     @lazy

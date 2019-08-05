@@ -5,6 +5,7 @@ from sidekick import identity
 
 from ej.forms import EjModelForm, EjUserForm
 from .models import Conversation, Comment
+from .signals import comment_moderated
 
 
 class CommentForm(EjModelForm):
@@ -61,7 +62,15 @@ class ModerationForm(EjUserForm, EjModelForm):
 
     def save(self, commit=True, **kwargs):
         kwargs.setdefault("moderator", self.user)
-        return super().save(commit=commit, **kwargs)
+        comment = super().save(commit=commit, **kwargs)
+        comment_moderated.send(
+            Comment,
+            comment=comment,
+            moderator=self.user,
+            author=comment.author,
+            is_approved=comment.status == comment.STATUS.approved,
+        )
+        return comment
 
 
 class ConversationForm(EjModelForm):

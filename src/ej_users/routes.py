@@ -56,7 +56,7 @@ def login(request, redirect_to="/"):
             form.add_error(None, error_msg)
             log.info(f"invalid login attempt: {email}")
         else:
-            toast(request, _("Congratulations! You have successfully logged in."))
+            toast(request, _("Welcome to EJ!"))
             return redirect(next_url)
 
     elif fast and request.user.is_authenticated and next_url:
