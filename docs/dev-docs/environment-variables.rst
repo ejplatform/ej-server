@@ -112,7 +112,7 @@ EJ_ROCKETCHAT_API_URL:
     Internal URL used to access Rocket.Chat on the intranet. Used to make
     API requests.
 
-EJ_ROCKETCHAT_USERNAME:
+EJ_ROCKETCHAT_ADMIN_USERNAME:
     Username of Rocket.Chat admin.
 
 EJ_ROCKETCHAT_AUTH_TOKEN:
@@ -120,10 +120,10 @@ EJ_ROCKETCHAT_AUTH_TOKEN:
     in Django backend after initial installation. Check `Rocket API`_ for more
     information.
 
-EJ_ROCKETCHAT_USER_ID:
+EJ_ROCKETCHAT_ADMIN_ID:
     Unique id of Rocket.Chat admin.
 
-EJ_ROCKETCHAT_PASSWORD:
+EJ_ROCKETCHAT_ADMIN_PASSWORD:
     Rocket.Chat admin password.
 
 .. _Rocket API: https://rocket.chat/docs/developer-guides/rest-api/authentication/

@@ -12,11 +12,14 @@ from .rocket import new_config, RCConfigWrapper
 
 log = getLogger("ej")
 User = get_user_model()
-PASSWORD_MSG = _(
+
+PASSWORD_MSG_1 = _(
     """Password for Rocket.Chat admin user.
 It is important to configure your Rocket.Chat instance with a unique password since
 this value will be stored in plain text into Django's own database."""
 )
+PASSWORD_MSG_2 = _("Optionally override EJ_ROCKETCHAT_ADMIN_PASSWORD configuration")
+PASSWORD_MSG = PASSWORD_MSG_2 if getattr(settings, "EJ_ROCKETCHAT_ADMIN_PASSWORD") else PASSWORD_MSG_1
 
 
 class RocketIntegrationForm(PlaceholderForm, forms.Form):
@@ -28,17 +31,25 @@ class RocketIntegrationForm(PlaceholderForm, forms.Form):
     rocketchat_url = forms.CharField(
         label=_("Rocket.Chat URL"),
         help_text=_("Required URL for Rocket.Chat admin instance."),
-        initial=settings.EJ_ROCKETCHAT_URL,
+        initial=getattr(settings, "EJ_ROCKETCHAT_URL", None),
     )
     api_url = forms.CharField(
         label=_("Internal URL"),
         help_text=_("Optional URL used for communication with Rocket.Chat in the internal network."),
+        initial=getattr(settings, "EJ_ROCKETCHAT_API_URL", None),
         required=False,
     )
-    username = forms.CharField(label=_("Username"), help_text=_("Username for Rocket.Chat admin user."))
-
+    username = forms.CharField(
+        label=_("Username"),
+        initial=getattr(settings, "EJ_ROCKETCHAT_ADMIN_USERNAME", None),
+        help_text=_("Username for Rocket.Chat admin user."),
+    )
     password = forms.CharField(
-        widget=forms.PasswordInput, required=False, label=_("Password"), help_text=PASSWORD_MSG
+        widget=forms.PasswordInput,
+        required=False,
+        label=_("Password"),
+        help_text=PASSWORD_MSG,
+        initial=getattr(settings, "EJ_ROCKETCHAT_ADMIN_PASSWORD", None),
     )
     config = None
 
@@ -55,7 +66,8 @@ class RocketIntegrationForm(PlaceholderForm, forms.Form):
         api_url = data["api_url"] or url
         config = models.RCConfig(url=api_url)
         rocket_api = RCConfigWrapper(config)
-        payload = {"username": data["username"], "password": data["password"]}
+        password = getattr(settings, "EJ_ROCKETCHAT_ADMIN_PASSWORD", None)
+        payload = {"username": data["username"], "password": data["password"] or password}
         response = rocket_api.api_call("login", payload=payload, raises=False)
 
         if response.get("status") == "success":
@@ -76,12 +88,13 @@ class RocketIntegrationForm(PlaceholderForm, forms.Form):
         auth_token = data["authToken"]
 
         # Save config
+        password = getattr(settings, "EJ_ROCKETCHAT_ADMIN_PASSWORD", None)
         config = models.RCConfig(url=url)
         config.api_url = api_url
         config.admin_id = user_id
         config.admin_token = auth_token
         config.admin_username = self.cleaned_data["username"]
-        config.admin_password = self.cleaned_data["password"]
+        config.admin_password = self.cleaned_data["password"] or password
         config.is_active = True
         return config
 

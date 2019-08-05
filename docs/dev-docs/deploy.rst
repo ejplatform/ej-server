@@ -145,7 +145,7 @@ you access your Rocket.Chat instance. More crucially, remember the username
 and password for the administrative account.
 
 Depending on your configuration, you might prefer to set other environment
-variables such as EJ_ROCKETCHAT_URL and EJ_ROCKETCHAT_USERNAME to create a fully
+variables such as EJ_ROCKETCHAT_URL and EJ_ROCKETCHAT_ADMIN_USERNAME to create a fully
 functional connection. However, the easier way to proceed is to configure the
 integration using the wizard at http://<django-host>/talks/. Visit this URL
 as a superuser and complete the form.

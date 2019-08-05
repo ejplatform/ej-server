@@ -44,14 +44,14 @@ class RCConfigWrapper:
     def has_config(self):
         return self.configs.default_config(raises=False) is not None
 
+    admin_username = delegate_to("config")
+    admin_id = delegate_to("config")
+    admin_token = delegate_to("config")
+    admin_password = property(lambda self: self.config or settings.EJ_ROCKETCHAT_ADMIN_PASSWORD)
+
     def clean_config(self):
         del self.config
         return self
-
-    admin_username = delegate_to("config")
-    admin_password = delegate_to("config")
-    admin_id = delegate_to("config")
-    admin_token = delegate_to("config")
 
     def register(self, user, username):
         """

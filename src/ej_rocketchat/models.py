@@ -6,7 +6,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from ej.utils import JSONField
 from .manager import RCConfigManager
-from .validators import WhiteListedURLValidator
+from .validators import WhiteListedURLValidator, requires_setup_for_blank
 
 CAN_LOGIN_PERM = "ej_rocketchat.can_create_account"
 
@@ -71,13 +71,11 @@ class RCConfig(models.Model):
 
     url = models.URLField(
         _("Rocket.Chat URL"),
-        unique=True,
         default=settings.EJ_ROCKETCHAT_URL,
         help_text=_("Public URL in which the Rocket.Chat instance is installed."),
     )
     api_url = models.CharField(
         _("Rocket.Chat private URL"),
-        unique=True,
         blank=True,
         null=True,
         max_length=200,
@@ -104,7 +102,11 @@ class RCConfig(models.Model):
         blank=True,
     )
     admin_password = models.CharField(
-        _("Admin password"), max_length=50, help_text=_("Password for the Rocket.Chat admin user.")
+        _("Admin password"),
+        max_length=50,
+        help_text=_("Password for the Rocket.Chat admin user."),
+        blank=True,
+        validators=[requires_setup_for_blank],
     )
     is_active = models.BooleanField(
         _("Is active"),
