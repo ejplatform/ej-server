@@ -149,9 +149,7 @@ def run(ctx, no_toolbar=False, theme=None):
     Run development server
     """
     set_theme(theme)
-    env = {}
-    if no_toolbar:
-        env["DISABLE_DJANGO_DEBUG_TOOLBAR"] = "true"
+    env = {"DISABLE_DJANGO_DEBUG_TOOLBAR": "true" if no_toolbar else "false"}
     manage(ctx, "runserver 0.0.0.0:8000", env=env)
 
 

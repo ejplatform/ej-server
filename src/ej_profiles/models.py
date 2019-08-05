@@ -33,7 +33,7 @@ class Profile(models.Model):
     gender_other = models.CharField(_("User provided gender"), max_length=50, blank=True)
     birth_date = models.DateField(_("Birth Date"), null=True, blank=True)
     country = models.CharField(_("Country"), blank=True, max_length=50)
-    state = models.CharField(_("State"), blank=True, max_length=2)
+    state = models.CharField(_("State"), blank=True, max_length=3)
     city = models.CharField(_("City"), blank=True, max_length=140)
     biography = models.TextField(_("Biography"), blank=True)
     occupation = models.CharField(_("Occupation"), blank=True, max_length=50)
