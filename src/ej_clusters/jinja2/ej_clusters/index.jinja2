@@ -7,7 +7,7 @@
     <h1 class="h2 center text-accent">{% trans %}Opinion groups{% endtrans %}</h1>
     {% if clusters %}
         <p class="measure margin-xauto center">
-            {% trans %}We votes to classify different users according to their opinions.{% endtrans %}
+            {% trans %}We use votes to classify different users according to their opinions. Users who vote similarly tend to be in the same group{% endtrans %}
             {% if user_group|default(False) %}{{ ' ' }}
                 {% trans %}You belong to group <strong>{{ user_group }}</strong>, for instance.{% endtrans %}
                 {% else %}{{ ' ' }}

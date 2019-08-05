@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-05 04:58+0000\n"
-"PO-Revision-Date: 2019-08-05 02:00-0300\n"
+"POT-Creation-Date: 2019-08-05 14:19+0000\n"
+"PO-Revision-Date: 2019-08-05 11:20-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
 "Language: pt_BR\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Loco-Source-Locale: pt_BR\n"
 "Generated-By: Babel 2.5.3\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 1.8.7.1\n"
 "X-Loco-Parser: loco_parse_po\n"
 
 #: docs/_templates_simple/layout.html:3
@@ -2222,8 +2222,12 @@ msgid "Delete"
 msgstr "Excluir"
 
 #: src/ej_clusters/jinja2/ej_clusters/index.jinja2:10
-msgid "We votes to classify different users according to their opinions."
-msgstr "Usamos votos para classificar os usuários de acordo com suas opiniões."
+msgid ""
+"We use votes to classify different users according to their opinions. Users "
+"who vote similarly tend to be in the same group"
+msgstr ""
+"Usamos os votos para classificar usuários de acordo com suas opiniões. "
+"Usuários que votam de forma parecida, tendem a estar no mesmo grupo"
 
 #: src/ej_clusters/jinja2/ej_clusters/index.jinja2:12
 #, python-format
@@ -2590,8 +2594,12 @@ msgid "Opinion profiles"
 msgstr "Perfis de opinião"
 
 #: src/ej_dataviz/jinja2/ej_dataviz/scatter.jinja2:9
-msgid "Each point in the plot represents a different user."
-msgstr "Cada ponto no gráfico representa um usuário diferente."
+msgid ""
+"Each point in the plot represents a different user. Users who vote similarly "
+"get closer"
+msgstr ""
+"Cada ponto no gráfico representa um usuário diferente. Usuários que votam de "
+"forma parecida, ficam mais próximos"
 
 #: src/ej_dataviz/jinja2/ej_dataviz/scatter.jinja2:11
 msgid "Select a filter bellow"
