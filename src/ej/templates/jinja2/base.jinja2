@@ -25,7 +25,7 @@
     {% if has_content_link|default(aria_flow|default(false)) %}<a id="first-link" href="#{{ aria_flowto|default('page-wrapper') }}" accesskey="1">{{ _('Jump to main content') }}</a>{% endif %}
     <div id="page-wrapper">
         {%- block main %}
-            <{{ main_tag }} id="main-content" tabindex=0 class="{{ main_class|default('container') }}{% if request is defined %}{{- '' if request.user.is_authenticated else ' is-anonymous' }}"{% endif %}>
+            <{{ main_tag }} id="main-content" tabindex=0 class="{{ main_class|default('container-1') }}{% if request is defined %}{{- '' if request.user.is_authenticated else ' is-anonymous' }}"{% endif %}>
             {%- block message_area %}
                 <div id="message-area" up-hungry role="status" role="alert" aria-live="polite" {% if aria_flowto is defined %}aria-flowto="{{ aria_flowto }}"{% endif %}>
                     {% for msg in get_messages() %}

@@ -35,6 +35,7 @@ def index(request, conversation, slug, check=check_promoted):
     check(conversation, request)
     user = request.user
     clusterization = getattr(conversation, "clusterization", None)
+    user_group = None
 
     if clusterization and clusterization.clusters.count() == 0:
         clusterization = None
@@ -55,6 +56,11 @@ def index(request, conversation, slug, check=check_promoted):
             log.error(f"Error found during clusterization: {exc} ({exc_name})")
             clusters = ()
             shapes_json = {"shapes": [{"name": _("Error"), "size": 0, "intersections": [[0.0]]}]}
+        else:
+            names = list(clusterization.clusters.filter(users=user).values_list("name", flat=True))
+            print(names)
+            if names:
+                user_group = names[0]
 
     can_edit = user.has_perm("ej.can_edit_conversation", conversation)
     return {
@@ -64,6 +70,7 @@ def index(request, conversation, slug, check=check_promoted):
         "has_edit_perm": can_edit,
         "edit_link": a(_("here"), href=conversation.url("cluster:edit")),
         "json_data": shapes_json,
+        "user_group": user_group,
     }
 
 

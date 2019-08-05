@@ -154,7 +154,7 @@ class Conversation(HasFavoriteMixin, TimeStampedModel):
         except AttributeError:
             return 0
 
-    n_endorsements = 0
+    n_endorsements = 0  # FIXME: endorsements
 
     def __str__(self):
         return self.title
