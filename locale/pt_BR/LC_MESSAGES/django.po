@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-05 14:19+0000\n"
-"PO-Revision-Date: 2019-08-05 11:20-0300\n"
+"POT-Creation-Date: 2019-08-05 17:30-0300\n"
+"PO-Revision-Date: 2019-08-05 17:32-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
 "Language: pt_BR\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Loco-Source-Locale: pt_BR\n"
 "Generated-By: Babel 2.5.3\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 2.2.1\n"
 "X-Loco-Parser: loco_parse_po\n"
 
 #: docs/_templates_simple/layout.html:3
@@ -1618,7 +1618,7 @@ msgstr "Senha"
 
 #: src/ej_rocketchat/forms.py:77
 msgid "Error connecting to server"
-msgstr "Erro ao conectar ao server"
+msgstr "Erro ao conectar com o servidor"
 
 #: src/ej_rocketchat/forms.py:79
 msgid "Invalid username or password"
@@ -1769,7 +1769,13 @@ msgstr "Configurações do rocketchat"
 msgid "Invalid email or password"
 msgstr "Email ou senha inválidos"
 
-#: src/ej_rocketchat/validators.py:22
+#: src/ej_rocketchat/validators.py:13
+msgid "Must be a full URL (i.e., do not forget the https:// part)."
+msgstr ""
+"Certifique-se que a URL está completa (i.e., não esqueça do prefixo como em "
+"http://)."
+
+#: src/ej_rocketchat/validators.py:19
 msgid ""
 "Empty passwords are only allowed if EJ_ROCKETCHAT_ADMIN_PASSWORD environment "
 "variable is set."

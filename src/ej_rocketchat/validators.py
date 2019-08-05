@@ -1,19 +1,16 @@
 from django.conf import settings
 from django.core.exceptions import ValidationError
-from django.core.validators import URLValidator
+from django.core.validators import RegexValidator
 from django.utils.translation import ugettext as _
 
-EJ_WHITELIST_DOMAINS = [
-    x.strip() for x in getattr(settings, "EJ_ROCKETCHAT_INTERNAL_DOMAINS", "").split(",")
-]
 
-
-class WhiteListedURLValidator(URLValidator):
+class WhiteListedURLValidator(RegexValidator):
     """
-    Accepts all validator
+    Accepts any semi-valid URL validator ;)
     """
 
-    host_re = URLValidator.host_re[:-1] + "|".join(EJ_WHITELIST_DOMAINS) + ")"
+    regex = r"(http|https|ftp|ftps)://.+"
+    message = _("Must be a full URL (i.e., do not forget the https:// part).")
 
 
 def requires_setup_for_blank(password):
