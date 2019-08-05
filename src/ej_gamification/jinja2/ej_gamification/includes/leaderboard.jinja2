@@ -10,7 +10,7 @@
 
         {% for name, points in users_before %}
             <tr>
-                <td class="center">{{ loop.index }}</td>
+                <td class="center">{{ loop.index + position_idx - users_before|length }}</td>
                 <td>{{ name }}</td>
                 <td>{{ points }}</td>
             </tr>

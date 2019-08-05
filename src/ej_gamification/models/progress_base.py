@@ -30,6 +30,15 @@ class ProgressBase(models.Model):
             setattr(cls, "_level_fields", fields)
             return fields
 
+    @classmethod
+    def level_field_names(cls):
+        try:
+            return cls.__dict__["_level_field_names"]
+        except KeyError:
+            fields = [f.name for f in cls._meta.fields if f.name.endswith("_level")]
+            setattr(cls, "_level_field_names", fields)
+            return fields
+
     @property
     def level_achievement_signal(self):
         raise NotImplementedError("must be defined in subclass")

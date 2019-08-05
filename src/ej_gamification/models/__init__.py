@@ -42,6 +42,7 @@ def _patch_models():
         agg = user.participation_progresses.aggregate(r=Sum("score"))
         return agg["r"] or 0
 
+    # FIXME: gamification
     user.n_endorsements = 0
     user.n_given_opinion_bridge_powers = 0
     user.n_given_minority_activist_powers = 0

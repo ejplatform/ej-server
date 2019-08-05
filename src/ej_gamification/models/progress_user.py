@@ -68,7 +68,7 @@ class UserProgress(ProgressBase):
         return Comment.objects.filter(author=self.user).exclude(conversation__author=self.user).count()
 
     # Gamification app
-    n_endorsements = delegate_to("user")
+    n_endorsements = 0  # FIXME: delegate_to("user")
     n_given_opinion_bridge_powers = delegate_to("user")
     n_given_minority_activist_powers = delegate_to("user")
 

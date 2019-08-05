@@ -42,7 +42,7 @@ class ConversationProgress(ProgressBase):
     n_stereotypes = delegate_to("conversation")
 
     # Gamification
-    n_endorsements = delegate_to("conversation")
+    n_endorsements = 0  # FIXME: delegate_to("conversation")
 
     # Signals
     level_achievement_signal = lazy(lambda _: signals.conversation_level_achieved, shared=True)

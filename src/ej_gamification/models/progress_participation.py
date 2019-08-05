@@ -65,7 +65,7 @@ class ParticipationProgress(ProgressBase):
     n_conversation_rejected_comments = delegate_to("conversation", name="n_rejected_comments")
     votes_ratio = lazy(this.n_final_votes / (this.n_conversation_comments + 1e-50))
 
-    # Gamification
+    # FIXME: Gamification
     # n_endorsements = lazy(lambda p: Endorsement.objects.filter(comment__author=p.user).count())
     # n_given_opinion_bridge_powers = delegate_to('user')
     # n_given_minority_activist_powers = delegate_to('user')

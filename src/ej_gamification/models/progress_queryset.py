@@ -5,10 +5,10 @@ class ProgressQuerySet(QuerySet):
     def sync_and_save(self):
         """
         Synchronize and save all elements from queryset.
+
+        Return a list of saved elements.
         """
 
-        def sync_and_save(x):
-            x.sync_and_save()
-            return x
-
-        return self.map(sync_and_save)
+        elems = [e.sync() for e in self]
+        self.bulk_update(elems, ["score", *self.model.level_field_names()])
+        return elems

@@ -1,11 +1,12 @@
 from operator import attrgetter as attr
 
-from boogie.models import F
+from boogie.models import Count, Q, F
 from boogie.router import Router
 from django.shortcuts import render
 from django.utils.translation import ugettext as _
 from sidekick import import_later
 
+from ej_conversations.models import Comment
 from ej_dataviz.roles import render_dataframe
 from . import models
 
@@ -38,12 +39,45 @@ def achievements(request):
 
     # Trophies
     conversation_trophies = list(
-        models.ConversationProgress.objects.filter(conversation__author=user).order_by(
-            "-conversation_level"
+        models.ConversationProgress.objects.filter(conversation__author_id=user.id)
+        .annotate(n_final_votes=Count("conversation__comments__votes"))
+        .annotate(
+            n_approved_comments=Count(
+                "conversation__comments", filter=Q(conversation__comments__status=Comment.STATUS.approved)
+            )
         )
+        .annotate(
+            n_rejected_comments=Count(
+                "conversation__comments", filter=Q(conversation__comments__status=Comment.STATUS.rejected)
+            )
+        )
+        .order_by("-conversation_level")
+        .sync_and_save()
     )
+
     participation_trophies = list(
-        user.participation_progresses.exclude(conversation__author=F.user).order_by("-voter_level")
+        user.participation_progresses.select_related("user", "conversation")
+        .exclude(conversation__author_id=F.user.id)
+        .annotate(
+            n_approved_comments=Count(
+                "conversation__comments",
+                filter=Q(
+                    conversation__comments__status=Comment.STATUS.approved,
+                    conversation__comments__author_id=user.id,
+                ),
+            )
+        )
+        .annotate(
+            n_rejected_comments=Count(
+                "conversation__comments",
+                filter=Q(
+                    conversation__comments__status=Comment.STATUS.rejected,
+                    conversation__comments__author_id=user.id,
+                ),
+            )
+        )
+        .order_by("-voter_level")
+        .sync_and_save()
     )
 
     return {
@@ -85,14 +119,14 @@ def progress_flag(request, position, total):
 
 
 @urlpatterns.route("leaderboard/", staff=True)
-def leaderboard(request):
+def leaderboard():
     scores = models.UserProgress.objects.filter(score__gt=0).order_by("-score")
     transforms = {_("Name"): attr("user.name"), **FN_BASE}
     return {"leaderboard": prepare_dataframe(scores, transforms, class_="table")}
 
 
 @urlpatterns.route("leaderboard/conversations/", staff=True, template="ej_gamification/leaderboard.jinja2")
-def leaderboard_conversations(request):
+def leaderboard_conversations():
     scores = models.ConversationProgress.objects.filter(score__gt=0).order_by("-score")
     return {"leaderboard": prepare_dataframe(scores, FN_EXT, class_="table")}
 
