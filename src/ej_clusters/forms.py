@@ -40,8 +40,8 @@ class ClusterForm(EjModelForm):
         help_texts = {
             "stereotypes": _(
                 "You can select multiple personas for each group. Personas are "
-                "fake users that you control and define the opinion profile of "
-                "your group."
+                "users used as reference that you control and define the opinion "
+                "profile of groups."
             )
         }
         labels = {"stereotypes": _("Personas"), "new_persona": ""}
