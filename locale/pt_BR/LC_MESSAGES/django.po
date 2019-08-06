@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-05 17:30-0300\n"
-"PO-Revision-Date: 2019-08-05 17:32-0300\n"
+"PO-Revision-Date: 2019-08-06 06:39-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
 "Language: pt_BR\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Loco-Source-Locale: pt_BR\n"
 "Generated-By: Babel 2.5.3\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 1.8.7.1\n"
 "X-Loco-Parser: loco_parse_po\n"
 
 #: docs/_templates_simple/layout.html:3
@@ -2384,7 +2384,7 @@ msgstr "por:"
 #: src/ej_conversations/jinja2/ej/role/comment-moderate.jinja2:8
 #, python-format
 msgid "(moderated by <strong>%(moderator)s</strong>)"
-msgstr "(modeado por <strong>%(moderator)s</strong>)"
+msgstr "(moderado por <strong>%(moderator)s</strong>)"
 
 #: src/ej_conversations/jinja2/ej/role/comment-reject-reason.jinja2:10
 msgid "See Conversation"
