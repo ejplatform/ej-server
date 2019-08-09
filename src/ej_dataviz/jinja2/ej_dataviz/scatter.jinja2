@@ -11,9 +11,10 @@
     <p class="text-6 center bold text-brand lowercase margin-b1">{{ _('Select a filter bellow') }}</p>
     <div class="categories" id="scatter-categories">
         <i class="fa fa-chevron-left"></i>
-        <span onclick="organizeBy(this, 2)" is-selected>{{ _('Opinions') }}</span>
+        <span onclick="organizeBy(this, 3)" is-selected>{{ _('Opinions') }}</span>
         <span onclick="organizeBy(this, 0)">{{ gender_field }}</span>
         <span onclick="organizeBy(this, 1)">{{ race_field }}</span>
+        <span onclick="organizeBy(this, 2)">{{ _('State') }}</span>
         <i class="fa fa-chevron-right"></i>
     </div>
 
@@ -53,9 +54,11 @@
                     var name = e.data[2],
                         gender = e.data[3],
                         race = e.data[4],
-                        cluster = e.data[5];
+                        state = e.data[5],
+                        cluster = e.data[6];
+                    state = (state && chart.organizeBy === 2)? ' (' + state + ')': '';
                     return (
-                        '<strong>' + name + '</strong>'
+                        '<strong>' + name + state + '</strong>'
                     );
                 };
                 chart.option.visualMap = [data.visualMap[data.visualMap.length - 1]];
@@ -70,6 +73,7 @@
             $(elem).attr('is-selected', '');
 
             var chart = $('#scatter-container')[0].chart;
+            chart.organizeBy = idx;
             chart.option.visualMap = [chart.visualMap[idx]];
             chart.setOption(chart.option, true);
         }

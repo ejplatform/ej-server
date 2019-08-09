@@ -1,6 +1,6 @@
 from collections import defaultdict
 from logging import getLogger
-from typing import Callable
+from typing import Callable, Sequence
 
 from boogie.router import Router
 from django.apps import apps
@@ -13,7 +13,7 @@ from sidekick import import_later
 from ej_conversations.models import Conversation
 from ej_conversations.routes import conversation_url
 from ej_conversations.utils import check_promoted
-from ej_profiles.enums import Gender, Race
+from ej_profiles.enums import Gender, Race, STATE_CHOICES
 
 np = import_later("numpy")
 
@@ -72,7 +72,7 @@ def scatter_pca_json(request, conversation, slug, check=check_promoted):
 
     # Add extra columns (for now it is hardcoded as name, gender and race)
     # In the future, it might be configurable.
-    extra_fields = ["name", "gender", "race"]
+    extra_fields = ["name", "gender", "race", "state"]
     kwargs["extra_fields"] = extra_fields
     data[extra_fields] = User.objects.filter(id__in=data.index).dataframe(
         *(FIELD_DATA[f]["query"] for f in extra_fields)
@@ -194,7 +194,6 @@ def format_echarts_option(data, user_coords, stereotype_coords, extra_fields: li
     return JsonResponse(
         {
             "option": {
-                "legend": {"data": ["all"], "xAxis": "center"},
                 "tooltip": {
                     "showDelay": 0,
                     "axisPointer": {
@@ -264,6 +263,87 @@ def field_descriptor(enum):
     return formatter
 
 
+def get_state_colors(states: Sequence):
+    keys = set(states)
+    keys.discard("")
+
+    # We try to infer better colors for special configurations
+    # For now, only Brazil is supported. It colors according to geographic region.
+    if is_brazil(keys):
+        cmap = state_colors_brazil(*COLORS[:5])
+        return [cmap[st] for st in states]
+
+    # Generic procedure: 1 color per state
+    colors = COLORS[:]
+    while len(colors) < len(states):
+        colors.extend(COLORS)
+    return colors[: len(states)]
+
+
+def is_brazil(states: set):
+    return states == {
+        "AC",
+        "AL",
+        "AP",
+        "AM",
+        "BA",
+        "CE",
+        "DF",
+        "ES",
+        "GO",
+        "MA",
+        "MT",
+        "MS",
+        "MG",
+        "PA",
+        "PB",
+        "PR",
+        "PE",
+        "PI",
+        "RJ",
+        "RN",
+        "RS",
+        "RO",
+        "RR",
+        "SC",
+        "SP",
+        "SE",
+        "TO",
+    }
+
+
+def state_colors_brazil(N, NE, CW, SE, S):
+    return {
+        "AC": N,
+        "AL": NE,
+        "AP": N,
+        "AM": N,
+        "BA": NE,
+        "CE": NE,
+        "DF": CW,
+        "ES": SE,
+        "GO": CW,
+        "MA": NE,
+        "MT": CW,
+        "MS": CW,
+        "MG": SE,
+        "PA": N,
+        "PB": NE,
+        "PR": S,
+        "PE": NE,
+        "PI": NE,
+        "RJ": SE,
+        "RN": NE,
+        "RS": S,
+        "RO": N,
+        "RR": N,
+        "SC": S,
+        "SP": SE,
+        "SE": NE,
+        "TO": CW,
+    }
+
+
 VALID_GROUP_BY = {"gender": "profile__gender", "race": "profile__race"}
 
 GROUP_NAMES = {
@@ -331,6 +411,7 @@ PIECEWISE_OPTIONS = {
     "padding": [20, 10, 10, 10],
     "outOfRange": {"opacity": 0.25, "colorSaturation": 0.0},
 }
+VALID_STATE_CHOICES = sorted((st for st, _ in STATE_CHOICES if st))
 FIELD_DATA = {
     "gender": {
         "query": "profile__gender",
@@ -351,6 +432,22 @@ FIELD_DATA = {
             "inRange": {"color": COLORS[: len(list(Race))]},
         },
         "transform": lambda col: col.apply(field_descriptor(Race)),
+    },
+    "state": {
+        "query": "profile__state",
+        "name": FIELD_NAMES.get("state", _("State")),
+        "visual_map": {
+            "piecewise": True,
+            "padding": [20, 5, 5, 10],
+            "top": "center",
+            "outOfRange": PIECEWISE_OPTIONS["outOfRange"],
+            "categories": VALID_STATE_CHOICES,
+            "inRange": {"color": get_state_colors(VALID_STATE_CHOICES)},
+            "itemGap": 2,
+            "textStyle": {"fontSize": 8},
+            "legend": {"type": "scroll"},
+        },
+        "transform": lambda x: x,
     },
     "name": {"query": "name", "name": _("Name")},
 }
