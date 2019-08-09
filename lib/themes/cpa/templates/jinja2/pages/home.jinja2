@@ -24,6 +24,10 @@
         #list-conversations {
             order: 3;
         }
+
+        #logo-conanda {
+            order: 4;
+        }
     </style>
 
     <div class="container-1" id="main">
@@ -107,6 +111,12 @@
                     <div class="margin-y3">{{ conversation|role('card') }}</div>
                 {% endfor %}
             </div>
+        </div>
+
+        <div id="logo-conanda" class="measure-narrow pad-3 margin-xauto">
+            <a href="https://www.direitosdacrianca.gov.br">
+                <img src="{{ static('/img/logo/conanda.jpg') }}" alt="CONANDA, Conselho Nacional dos Direitos da Criança e do Adolescente" class="width-full">
+            </a>
         </div>
     </div>
 {% endblock %}
