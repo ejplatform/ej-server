@@ -1,8 +1,11 @@
+from functools import lru_cache
+
 from boogie.router import Router
 from django.contrib.auth import get_user_model
 from django.http import HttpResponse, Http404
 from django.shortcuts import get_object_or_404
 from django.utils.text import slugify
+from django.utils.translation import ugettext as _, ugettext_lazy
 from sidekick import import_later
 
 from ej_clusters.models import Cluster
@@ -179,11 +182,14 @@ def get_user_data(conversation):
 #
 # Auxiliary functions
 #
-def data_response(data: pd.DataFrame, fmt: str, filename: str):
+def data_response(data: pd.DataFrame, fmt: str, filename: str, translate=True):
     """
     Prepare data response for file from dataframe.
     """
     response = HttpResponse(content_type=f"text/{fmt}")
+    if translate:
+        data = data.copy()
+        data.columns = [_(x) for x in data.columns]
     response["Content-Disposition"] = f"attachment; filename={filename}.{fmt}"
     if fmt == "json":
         data.to_json(response, orient="records")
@@ -206,3 +212,25 @@ def get_cluster_or_404(cluster_id, conversation=None):
     if conversation is not None and cluster.clusterization.conversation_id != conversation.id:
         raise Http404
     return cluster
+
+
+@lru_cache(1)
+def get_translation_map():
+    _ = ugettext_lazy
+    return {
+        "agree": _("agree"),
+        "author": _("author"),
+        "author_id": _("author_id"),
+        "choice": _("choice"),
+        "cluster": _("cluster"),
+        "cluster_id": _("cluster_id"),
+        "comment": _("comment"),
+        "comment_id": _("comment_id"),
+        "convergence": _("convergence"),
+        "disagree": _("disagree"),
+        "email": _("email"),
+        "id": _("id"),
+        "name": _("name"),
+        "participation": _("participation"),
+        "skipped": _("skipped"),
+    }

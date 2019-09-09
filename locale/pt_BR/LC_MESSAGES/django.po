@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-09 16:23+0000\n"
-"PO-Revision-Date: 2019-09-09 13:23-0300\n"
+"POT-Creation-Date: 2019-09-09 16:54+0000\n"
+"PO-Revision-Date: 2019-09-09 13:55-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
 "Language: pt_BR\n"
@@ -845,6 +845,58 @@ msgstr "Você!"
 msgid "State"
 msgstr "Estado"
 
+#: src/ej_dataviz/routes_report.py:222
+msgid "agree"
+msgstr "concorda"
+
+#: src/ej_dataviz/routes_report.py:223
+msgid "author"
+msgstr "autor"
+
+#: src/ej_dataviz/routes_report.py:224
+msgid "author_id"
+msgstr "autor_id"
+
+#: src/ej_dataviz/routes_report.py:225
+msgid "choice"
+msgstr "escolha"
+
+#: src/ej_dataviz/routes_report.py:226
+msgid "comment"
+msgstr "comentário"
+
+#: src/ej_dataviz/routes_report.py:227
+msgid "comment_id"
+msgstr "comentário_id"
+
+#: src/ej_dataviz/routes_report.py:228
+msgid "convergence"
+msgstr "convergência"
+
+#: src/ej_dataviz/routes_report.py:229
+msgid "disagree"
+msgstr "discorda"
+
+#: src/ej_dataviz/routes_report.py:230 src/ej_profiles/enums.py:70
+msgid "email"
+msgstr "email"
+
+#: src/ej_dataviz/routes_report.py:231
+msgid "id"
+msgstr "id"
+
+#: src/ej_dataviz/routes_report.py:232 src/ej_profiles/enums.py:69
+msgid "name"
+msgstr "nome"
+
+#: src/ej_dataviz/routes_report.py:233
+msgid "participation"
+msgstr "participação"
+
+#: src/ej_dataviz/routes_report.py:234
+msgid "skipped"
+msgstr "pulados"
+
 #: src/ej_experiments/admin.py:17
 msgid "dbg: Fill profile randomly"
 msgstr "dbg: preencher perfil aleatoriamente"
@@ -1016,25 +1068,13 @@ msgstr "Parabéns! Seu perfil está completo!"
 msgid "Please take the site tour!"
 msgstr "Por favor, faça o tour pelo site!"
 
-#: src/ej_gamification/enums/profile_level.py:72 src/ej_profiles/enums.py:52
-msgid "race"
-msgstr "raça"
-
-#: src/ej_gamification/enums/profile_level.py:74 src/ej_profiles/enums.py:55
-msgid "gender"
-msgstr "gênero"
-
-#: src/ej_gamification/enums/profile_level.py:76 src/ej_profiles/enums.py:68
-msgid "profile photo"
-msgstr "foto de perfil"
-
-#: src/ej_gamification/enums/profile_level.py:117
+#: src/ej_gamification/enums/profile_level.py:118
 msgid "Please fill up the {} field of your profile"
 msgid_plural "Please fill up the {} fields of your profile"
 msgstr[0] "Por favor, preencha o campo {} do seu perfil"
 msgstr[1] "Por favor, preencha o campo {} do seu perfil"
 
-#: src/ej_gamification/enums/profile_level.py:128
+#: src/ej_gamification/enums/profile_level.py:129
 msgid "{} and {}"
 msgstr "{} e {}"
 
@@ -1398,6 +1438,10 @@ msgstr "Masculino"
 msgid "user"
 msgstr "usuário"
 
+#: src/ej_profiles/enums.py:52
+msgid "race"
+msgstr "raça"
+
 #: src/ej_profiles/enums.py:53 src/ej_profiles/tests/test_models.py:43
 msgid "ethnicity"
 msgstr "etnia"
@@ -1405,6 +1449,10 @@ msgstr "etnia"
 #: src/ej_profiles/enums.py:54
 msgid "education"
 msgstr "escolaridade"
+
+#: src/ej_profiles/enums.py:55
+msgid "gender"
+msgstr "gênero"
 
 #: src/ej_profiles/enums.py:56
 msgid "gender_other"
@@ -1454,13 +1502,9 @@ msgstr "atividade política"
 msgid "profile_photo"
 msgstr "foto de perfil"
 
-#: src/ej_profiles/enums.py:69
-msgid "name"
-msgstr "nome"
-
-#: src/ej_profiles/enums.py:70
-msgid "email"
-msgstr "email"
+#: src/ej_profiles/enums.py:68
+msgid "profile photo"
+msgstr "foto de perfil"
 
 #: src/ej_profiles/enums.py:71
 msgid "is_active"
@@ -3435,9 +3479,6 @@ msgstr "Autenticação"
 #~ msgid "{n} comments removed!"
 #~ msgstr "{n} comentários removidos!"
 
-#~ msgid "Participation"
-#~ msgstr "Participação"
-
 #~ msgid "Start now!"
 #~ msgstr "Começar agora!"
 
@@ -4144,9 +4185,6 @@ msgstr "Autenticação"
 
 #~ msgid "finished"
 #~ msgstr "finalizado"
-
-#~ msgid "skipped"
-#~ msgstr "pulados"
 
 #~ msgid "failed"
 #~ msgstr "com falha"
