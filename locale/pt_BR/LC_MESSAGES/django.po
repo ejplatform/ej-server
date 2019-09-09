@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-06 09:47+0000\n"
-"PO-Revision-Date: 2019-08-06 06:47-0300\n"
+"POT-Creation-Date: 2019-09-09 16:23+0000\n"
+"PO-Revision-Date: 2019-09-09 13:23-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
 "Language: pt_BR\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Loco-Source-Locale: pt_BR\n"
 "Generated-By: Babel 2.5.3\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 2.2.1\n"
 "X-Loco-Parser: loco_parse_po\n"
 
 #: docs/_templates_simple/layout.html:3
@@ -285,7 +285,7 @@ msgid "Opinion groups"
 msgstr "Grupos de opinião"
 
 #: src/ej_clusters/models/cluster.py:26 src/ej_clusters/models/stereotype.py:22
-#: src/ej_dataviz/roles.py:139 src/ej_dataviz/routes.py:355
+#: src/ej_dataviz/roles.py:139 src/ej_dataviz/routes.py:452
 #: src/ej_gamification/admin.py:33 src/ej_gamification/routes.py:124
 #: src/ej_gamification/routes.py:145
 msgid "Name"
@@ -806,11 +806,11 @@ msgstr ""
 "0%: votos estão igualmente distribuidos\n"
 "100%: todos tem a mesma opinião"
 
-#: src/ej_dataviz/routes.py:41 src/ej_dataviz/routes.py:337
+#: src/ej_dataviz/routes.py:41 src/ej_dataviz/routes.py:418
 msgid "Gender"
 msgstr "Gênero"
 
-#: src/ej_dataviz/routes.py:42 src/ej_dataviz/routes.py:347
+#: src/ej_dataviz/routes.py:42 src/ej_dataviz/routes.py:428
 #: src/ej_profiles/models.py:29 src/ej_profiles/tests/test_models.py:45
 msgid "Race"
 msgstr "Raça"
@@ -831,14 +831,19 @@ msgstr "{} persona"
 msgid "*Unknown*"
 msgstr "*Desconhecido*"
 
-#: src/ej_dataviz/routes.py:211
+#: src/ej_dataviz/routes.py:210
 msgid "PCA data"
 msgstr "Dados do PCA"
 
-#: src/ej_dataviz/routes.py:216 src/ej_dataviz/routes.py:217
-#: src/ej_dataviz/routes.py:218 src/ej_dataviz/routes.py:220
+#: src/ej_dataviz/routes.py:215 src/ej_dataviz/routes.py:216
+#: src/ej_dataviz/routes.py:217 src/ej_dataviz/routes.py:219
 msgid "You!"
 msgstr "Você!"
+
+#: src/ej_dataviz/routes.py:438 src/ej_profiles/models.py:36
+#: src/ej_profiles/tests/test_models.py:38
+msgid "State"
+msgstr "Estado"
 
 #: src/ej_experiments/admin.py:17
 msgid "dbg: Fill profile randomly"
@@ -1028,6 +1033,10 @@ msgid "Please fill up the {} field of your profile"
 msgid_plural "Please fill up the {} fields of your profile"
 msgstr[0] "Por favor, preencha o campo {} do seu perfil"
 msgstr[1] "Por favor, preencha o campo {} do seu perfil"
+
+#: src/ej_gamification/enums/profile_level.py:128
+msgid "{} and {}"
+msgstr "{} e {}"
 
 #: src/ej_gamification/enums/score_level.py:9
 msgid "Beginner"
@@ -1509,10 +1518,6 @@ msgstr "Data de Nascimento"
 msgid "Country"
 msgstr "País"
 
-#: src/ej_profiles/models.py:36 src/ej_profiles/tests/test_models.py:38
-msgid "State"
-msgstr "Estado"
-
 #: src/ej_profiles/models.py:37 src/ej_profiles/tests/test_models.py:37
 msgid "City"
 msgstr "Cidade"
@@ -1917,22 +1922,22 @@ msgstr "Lamentamos que você vá :( <br> <br> Boa sorte em sua jornada."
 msgid "Login using {}"
 msgstr "Logue usando {}"
 
-#: lib/themes/cpa/templates/jinja2/pages/home.jinja2:75
+#: lib/themes/cpa/templates/jinja2/pages/home.jinja2:79
 #: src/ej/templates/jinja2/pages/home.jinja2:49
 msgid "Community driven"
 msgstr "Orientado pela comunidade"
 
-#: lib/themes/cpa/templates/jinja2/pages/home.jinja2:76
+#: lib/themes/cpa/templates/jinja2/pages/home.jinja2:80
 #: src/ej/templates/jinja2/pages/home.jinja2:50
 msgid "No attacks or fakes"
 msgstr "Sem ataques ou fakes"
 
-#: lib/themes/cpa/templates/jinja2/pages/home.jinja2:77
+#: lib/themes/cpa/templates/jinja2/pages/home.jinja2:81
 #: src/ej/templates/jinja2/pages/home.jinja2:51
 msgid "Nuances instead of bubbles"
 msgstr "Nuances invés de bolhas"
 
-#: lib/themes/cpa/templates/jinja2/pages/home.jinja2:78
+#: lib/themes/cpa/templates/jinja2/pages/home.jinja2:82
 #: src/ej/templates/jinja2/pages/home.jinja2:52
 msgid "Free and open source"
 msgstr "Código livre e aberta"
@@ -2616,15 +2621,15 @@ msgstr "Selecione um filtro abaixo"
 msgid "Opinions"
 msgstr "Opiniões"
 
-#: src/ej_dataviz/jinja2/ej_dataviz/scatter.jinja2:21
+#: src/ej_dataviz/jinja2/ej_dataviz/scatter.jinja2:22
 msgid "Loading data..."
 msgstr "Carregando dados..."
 
-#: src/ej_dataviz/jinja2/ej_dataviz/scatter.jinja2:24
+#: src/ej_dataviz/jinja2/ej_dataviz/scatter.jinja2:25
 msgid "PCA plot"
 msgstr "Gráfico PCA"
 
-#: src/ej_dataviz/jinja2/ej_dataviz/scatter.jinja2:25
+#: src/ej_dataviz/jinja2/ej_dataviz/scatter.jinja2:26
 msgid ""
 "Similar opinions are represented by nearby points, while users with "
 "different opinions are\n"

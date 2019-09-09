@@ -1,6 +1,6 @@
 from boogie.fields import IntEnum
 from django.conf import settings
-from django.utils.translation import ugettext_lazy as _, ngettext, ugettext as __
+from django.utils.translation import ugettext_lazy as _, ngettext, ugettext
 
 from ej_profiles.enums import Race, Gender
 from ej_profiles.forms import EDITABLE_FIELDS as PROFILE_EDITABLE_FIELDS
@@ -69,13 +69,13 @@ class ProfileLevel(LevelMixin, IntEnum):
         elif self == self.PROFILE_LVL1:
             missing = []
             if "race" in fields and p.race == Race.NOT_FILLED:
-                missing.append(_("race"))
+                missing.append("race")
             if "gender" in fields and p.gender == Gender.NOT_FILLED:
-                missing.append(_("gender"))
+                missing.append("gender")
             if not p.profile_photo:
-                missing.append(_("profile photo"))
+                missing.append("profile photo")
             if missing:
-                return missing_fields_message(missing[:3])
+                return missing_fields_message(missing)
 
         elif self == self.PROFILE_LVL2:
             fields_ = basic_profile_fields(fields)
@@ -107,11 +107,12 @@ def missing_fields(profile, fields):
     missing = []
     for field in fields:
         if getattr(profile, field, None) in (None, ""):
-            missing.append(_(field.replace("_", " ")))
+            missing.append(field.replace("_", " "))
     return missing[:3]
 
 
 def missing_fields_message(fields):
+    fields = [normalize_field(f) for f in fields]
     data = fields[0] if len(fields) == 1 else humanize_list(fields)
     return ngettext(
         "Please fill up the {} field of your profile",
@@ -125,4 +126,14 @@ def humanize_list(lst):
         return ""
     lst = lst.copy()
     last = lst.pop()
-    return __("{} and {}").format(", ".join(map(str, lst)), last)
+    return ugettext("{} and {}").format(", ".join(map(str, lst)), last)
+
+
+def normalize_field(f):
+    """
+    Either translate input string or use translation in settings.
+    """
+    try:
+        return settings.EJ_PROFILE_FIELD_NAMES[f].lower()
+    except (KeyError, AttributeError):
+        return ugettext(f)
