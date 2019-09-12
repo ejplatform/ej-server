@@ -3,6 +3,12 @@
 {% endmacro %}
 
 <nav class="main-footer" aria-label="{{ _('Navigation bar') }}">
+    {% if settings.has_profiles %}
+        {% call link_macro('gamification:achievements', title=_('Achievements'), class_='main-footer__link') %}
+            <img src="{{ static('img/icons/navbar_profile.svg') }}" alt="">
+            <span>{{ ('Achievements') }}</span>
+        {% endcall %}
+    {% endif %}
     {% call link_macro('conversation:list', title=_('Conversations'), class_='main-footer__link') %}
         <img src="{{ static('img/icons/navbar_conversations.svg') }}" alt="">
         <span>{{ _('Conversations') }}</span>
@@ -16,7 +22,7 @@
     {% if settings.has_profiles %}
         {% call link_macro('profile:detail', title=_('Profile'), class_='main-footer__link') %}
             <img src="{{ static('img/icons/navbar_profile.svg') }}" alt="">
-            <span>{{ _('Profile') }}</span>
+            <span>{{ ('Profile') }}</span>
         {% endcall %}
     {% endif %}
 </nav>
