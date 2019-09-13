@@ -5,8 +5,8 @@
 <nav class="main-footer" aria-label="{{ _('Navigation bar') }}">
     {% if settings.has_profiles %}
         {% call link_macro('gamification:achievements', title=_('Achievements'), class_='main-footer__link') %}
-            <img src="{{ static('img/icons/navbar_profile.svg') }}" alt="">
-            <span>{{ ('Achievements') }}</span>
+            <img src="{{ static('img/icons/icon_trofeu_dark.svg') }}" alt="">
+            <span>{{ ('Achievements ') }} <i class="fa fa-trophy">{{ (' : ') }} {{ n_trophies }}</i> </span>
         {% endcall %}
     {% endif %}
     {% call link_macro('conversation:list', title=_('Conversations'), class_='main-footer__link') %}
