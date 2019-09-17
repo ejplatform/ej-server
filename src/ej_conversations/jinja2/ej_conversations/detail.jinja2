@@ -18,6 +18,16 @@
                 });
                 alert('ON')
             })
+
+            function toogleComment() {
+                var x = document.getElementById("comment-form-containner");
+
+                if (x.style.display === 'none') {
+                    x.style.display = 'block';
+                } else {
+                    x.style.display = 'none';
+                }
+            }
         </script>
         {{ conversation|role('balloon') }}
         {% if conversation.is_hidden %}
@@ -40,9 +50,14 @@
                         </article>
                     </div>
                 {% endif %}
-                <h2 class="text-accent">{{ _('Suggest a new comment') }}</h2>
-                {{ conversation|role('comment-form', form=comment_form, target='.comment-area') }}
-                {{ conversation|role('create-comment') }}
+                <button onclick="toogleComment()" >
+                    Comentar
+                </button>
+                <div style="text-align: center" id="comment-form-containner">
+                    <h2 class="text-accent">{{ _('Suggest a new comment') }}</h2>
+                    {{ conversation|role('comment-form', form=comment_form, target='.comment-area') }}
+                    {{ conversation|role('create-comment') }}
+                </div>
             </div>
         {% endif %}
         {{ conversation|role('detail-page-extra') }}
