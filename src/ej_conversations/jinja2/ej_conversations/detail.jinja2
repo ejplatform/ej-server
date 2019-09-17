@@ -10,7 +10,31 @@
 {% endblock %}
 
 {% block content %}
+
     <div>
+        <style>
+            animafade {
+            animation-duration: 3.5s;
+            animation-name: fadeInUp;
+            }
+
+            @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translate3d(0, 100%, 0);
+            }
+
+            to {
+                opacity: 1;
+                transform: translate3d(0, 0, 0);
+            }
+            }
+
+            .fadeInUp {
+            animation-name: fadeInUp;
+            }
+            </style>
+
         <script>
             document.addEventListener('load', function () {
                 $('form').on('submit', function () {
@@ -22,12 +46,13 @@
             function toogleComment() {
                 var x = document.getElementById("comment-form-containner");
 
-                if (x.style.display === 'none') {
-                    x.style.display = 'block';
-                } else {
+                if (x.style.display === 'block') {
                     x.style.display = 'none';
+                } else {
+                    x.style.display = 'block';
                 }
             }
+        
         </script>
         {{ conversation|role('balloon') }}
         {% if conversation.is_hidden %}
@@ -37,7 +62,9 @@
                     {% trans here=edit_link() %} Click {{ here }} to edit and make it visible again.{% endtrans %}</p>
             </div>
         {% else %}
-            {# <h1 class="h2 text-accent margin-y0 center">{{ _('Comments') }}</h1>#}
+        <br>
+        <br>
+        <br>
             <div class="col items-center margin-y3 pad-x2" id="comment-card">
                 {% if comment %}
                     {{ comment|role('card', target='#comment-card') }}
@@ -50,14 +77,16 @@
                         </article>
                     </div>
                 {% endif %}
-                <button onclick="toogleComment()" >
-                    Comentar
-                </button>
-                <div style="text-align: center" id="comment-form-containner">
-                    <h2 class="text-accent">{{ _('Suggest a new comment') }}</h2>
-                    {{ conversation|role('comment-form', form=comment_form, target='.comment-area') }}
-                    {{ conversation|role('create-comment') }}
+                <animafade>
+                <div style="text-align: center; display: none; position: relative; top: -490px; z-index: 2;" id="comment-form-containner">
+                        <h2 class="text-accent">{{ _('Comentários') }}</h2>
+                        {{ conversation|role('comment-form', form=comment_form, target='.comment-area') }}
+                        {{ conversation|role('create-comment') }}
                 </div>
+                </animafade>
+                <button onclick="toogleComment()" >
+                    Criar
+                </button>
             </div>
         {% endif %}
         {{ conversation|role('detail-page-extra') }}
