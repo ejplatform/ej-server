@@ -8,7 +8,8 @@
 
 
 
-# EJ Platform  :speech_balloon:
+EJ Platform  :speech_balloon:
+=
 
 Would you like to visit the EJ website?
 
@@ -16,8 +17,8 @@ Acess Here: :arrow_right: http://ejplatform.org.
 
 
 
-## Getting started :runner:
-
+Getting started :runner:
+=
 
 First clone the repository::
 
@@ -25,7 +26,8 @@ First clone the repository::
     $ cd ej-server
 
 
-## Using Docker to start development server :computer:
+Using Docker to start development server :computer:
+=
 
 Run the Commands::
 
@@ -58,8 +60,8 @@ version::
     $ inv docker-run dev
 
 
-## Using Virtualenv to start Local development :computer:
-
+Using Virtualenv to start Local development :computer:
+=
 
 For most cases, however, we recommend that you prepare your machine with some
 extra tools. Developers may choose between Docker or Poetry/Virtualenv for day to day
@@ -110,7 +112,8 @@ This step takes some time. Grab a cup of :coffee: while it downloads and install
 all dependencies. 
 
 
-### Running the project :trophy:
+Running the project :trophy:
+=
 
 Unless you prefer to type long Django management commands, use Invoke_ to start
 the dev server::
@@ -121,8 +124,8 @@ After the command, **ej-server** can be accessed at http://localhost:8000.
 
 
 
-## Configuration commands :wrench:
-
+Configuration commands :wrench:
+=
 
 You can control many configurations using environment variables. To run using
 the Brazilian Portuguese translation, for instance, just export the correct
@@ -152,15 +155,15 @@ EJ uses Pytest_::
 .. _Pytest: http://pytest.org
 
 
-## Documentation the project :file_folder:
-
+Documentation the project :file_folder:
+=
 
 Documentation can be updated with `$ inv docs` and will be available at the
 `build/docs/` directory.
 
 
-## Changing theme the project :art:
-
+Changing theme the project :art:
+=
 
 The previous commands build EJ using the "default" theme. EJ accepts additional
 themes and currently comes pre-installed with the alternate "cpa" theme. The
@@ -173,19 +176,19 @@ Now run the server using the --theme flag::
     $ inv run -t cpa
 
 
-## Tests :heavy_check_mark:
+Tests :heavy_check_mark:
+=
 
-
-### Running Tests with Docker
-
+Running Tests with Docker
+-------------------------
 
     use the following command::
 
         $ sudo docker-compose -f docker/docker-compose.yml run web tests
 
 
-### Running Tests with Inv
-
+Running Tests with Inv
+-------------------------
 
     use the following command::
 
