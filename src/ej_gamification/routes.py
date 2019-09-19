@@ -15,7 +15,6 @@ urlpatterns = Router(template="ej_gamification/{name}.jinja2", login=True)
 sign = lambda x: 1 if x >= 0 else -1
 pd = import_later("pandas")
 
-
 @urlpatterns.route("achievements/")
 def achievements(request):
     user = request.user

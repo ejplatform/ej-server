@@ -7,35 +7,64 @@
     :target: https://gitlab.com/ejplatform/ej-server/commits/master
 
 
-===========
-EJ Platform
-===========
 
-You can visit EJ website at http://ejplatform.org.
+EJ Platform :speech_balloon:
+=
 
-Getting started
-===============
+Would you like to visit the EJ website?
+
+Acess Here: :arrow_right: http://ejplatform.org.
+
+
+
+Getting started :runner:
+=
 
 First clone the repository::
 
     $ git clone http://github.com/ejplatform/ej-server/
     $ cd ej-server
 
-If you use Docker, you can quickly start the development server using the
-commands::
+
+Using Docker to start development server :computer:
+=
+
+Run the Commands::
 
     $ pip3 install invoke --user
     $ inv docker-build
     $ inv docker up
 
+If you want to use docker, build the containers and just start docker compose::
+
+    $ sudo docker-compose -f docker/deploy/docker-compose.yml build
+    $ sudo docker-compose -f docker/docker-compose.yml up -d
+
+After the command, **ej-server** can be accessed at http://localhost:8000.
+
+At some point, you probably will want to execute commands inside the container.
+It is possible to open a bash shell in the main "web" container with::
+
+    $ sudo docker-compose -f docker/docker-compose.yml run web bash
+
+
+In fact, it integrates with invoke and we can replace "bash" by any sequence of
+invoke tasks. For instance, we can migrate the database and run tests
+afterwards by doing::
+
+    $ sudo docker-compose -f docker/docker-compose.yml exec web db tests
+
+If you have invoke installed on the host machine, you can use the short
+version::
+
+    $ inv docker-run dev
+
+Using Virtualenv to start Local development :computer:
+=
 For most cases, however, we recommend that you prepare your machine with some
 extra tools. Developers may choose between Docker or Poetry/Virtualenv for day to day
 development. In both cases, we recommend that you have Invoke_ installed
 in your machine to make execution of chores easier.
-
-
-Local development (virtualenv)
-------------------------------
 
 This is a list of packages that you should have installed locally before we
 start:
@@ -67,22 +96,31 @@ The following steps are handled by the configure.sh script::
 
     $ sh configure.sh
 
+Or if you have problems, try::
+
+    $ bash configure.sh
+
 This task creates a test database with a few conversations, users, comments, and
-votes. Notably, it automatically creates an admin user (password:
-admin, email: admin@admin.com) a regular user (password: user, email: user@user.com).
+votes. Notably, it automatically creates an admin user 
+(password:admin, email: admin@admin.com) a regular user (password: user, email: user@user.com).
 
-This step takes some time. Grab a cup of coffee while it downloads and install
-all dependencies. If everything works as expected, you should be able to run
-the server using the ``inv run`` command after it is finished.
+This step takes some time. Grab a cup of :coffee: while it downloads and install
+all dependencies. 
 
 
-Running it
-----------
+Running the project :trophy:
+--------------------
 
 Unless you prefer to type long Django management commands, use Invoke_ to start
 the dev server::
 
     $ inv run
+
+After the command, **ej-server** can be accessed at http://localhost:8000.
+
+
+Configuration commands :wrench:
+=
 
 You can control many configurations using environment variables. To run using
 the Brazilian Portuguese translation, for instance, just export the correct
@@ -110,15 +148,16 @@ EJ uses Pytest_::
 .. _Invoke: http://www.pyinvoke.org/
 .. _Pytest: http://pytest.org
 
-Documentation
--------------
+
+Documentation the project :file_folder:
+=
 
 Documentation can be updated with `$ inv docs` and will be available at the
 `build/docs/` directory.
 
 
-Changing theme
---------------
+Changing theme the project :art:
+=
 
 The previous commands build EJ using the "default" theme. EJ accepts additional
 themes and currently comes pre-installed with the alternate "cpa" theme. The
@@ -131,43 +170,21 @@ Now run the server using the --theme flag::
     $ inv run -t cpa
 
 
-Using docker
-============
+Tests :heavy_check_mark:
+=
 
-If you want to use docker, build the containers and just start docker compose::
+Running Tests with Docker
+-------------------------
 
-    $ sudo docker-compose -f docker/deploy/docker-compose.yml build
-    $ sudo docker-compose -f docker/docker-compose.yml up -d
+    use the following command::
 
-After the command, **ej-server** can be accessed at http://localhost:8000.
-
-At some point, you probably will want to execute commands inside the container.
-It is possible to open a bash shell in the main "web" container with::
-
-    $ sudo docker-compose -f docker/docker-compose.yml run web bash
+        $ sudo docker-compose -f docker/docker-compose.yml run web tests
 
 
-In fact, it integrates with invoke and we can replace "bash" by any sequence of
-invoke tasks. For instance, we can migrate the database and run tests
-afterwards by doing::
+Running Tests with Inv
+-------------------------
+    use the following command::
 
-    $ sudo docker-compose -f docker/docker-compose.yml exec web db tests
-
-If you have invoke installed on the host machine, you can use the short
-version::
-
-    $ inv docker-run dev
-
-
-Tests
------
-
-Tests are run in a docker container by using the following command::
-
-    $ sudo docker-compose -f docker/docker-compose.yml run web tests
-
-or use inv for a more compact alternative::
-
-    $ inv docker-run run -c tests     # uses postgresql
-    $ inv docker-run single -c tests  # uses sqlite3
+        $ inv docker-run run -c tests     # uses postgresql
+        $ inv docker-run single -c tests  # uses sqlite3
 
