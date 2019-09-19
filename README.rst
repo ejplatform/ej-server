@@ -28,7 +28,7 @@ First clone the repository::
 
 
 Using Docker to start development server :computer:
-=
+---------------------------------------------------
 
 Run the Commands::
 
@@ -62,7 +62,7 @@ version::
 
 
 Using Virtualenv to start Local development :computer:
-=============================
+---------------------------------------------------
 
 For most cases, however, we recommend that you prepare your machine with some
 extra tools. Developers may choose between Docker or Poetry/Virtualenv for day to day
@@ -177,6 +177,13 @@ Now run the server using the --theme flag::
 
     $ inv run -t cpa
 
+
+Contributing :file_folder:
+=============================
+
+Please make sure to read the guide before making a pull request. After you've read, don't forget to take an issue!
+
+`Guide <https://github.com/gces-empjuntos/ej-server/blob/develop/CONTRIBUTING.rst>`_
 
 Tests :heavy_check_mark:
 =============================
