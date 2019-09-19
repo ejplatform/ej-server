@@ -8,8 +8,9 @@
 
 
 
+=============================
 EJ Platform  :speech_balloon:
-=
+=============================
 
 Would you like to visit the EJ website?
 
@@ -18,7 +19,7 @@ Acess Here: :arrow_right: http://ejplatform.org.
 
 
 Getting started :runner:
-=
+=============================
 
 First clone the repository::
 
@@ -61,7 +62,7 @@ version::
 
 
 Using Virtualenv to start Local development :computer:
-=
+=============================
 
 For most cases, however, we recommend that you prepare your machine with some
 extra tools. Developers may choose between Docker or Poetry/Virtualenv for day to day
@@ -113,7 +114,7 @@ all dependencies.
 
 
 Running the project :trophy:
-=
+=============================
 
 Unless you prefer to type long Django management commands, use Invoke_ to start
 the dev server::
@@ -125,7 +126,8 @@ After the command, **ej-server** can be accessed at http://localhost:8000.
 
 
 Configuration commands :wrench:
-=
+=============================
+
 
 You can control many configurations using environment variables. To run using
 the Brazilian Portuguese translation, for instance, just export the correct
@@ -156,14 +158,14 @@ EJ uses Pytest_::
 
 
 Documentation the project :file_folder:
-=
+=============================
 
 Documentation can be updated with `$ inv docs` and will be available at the
 `build/docs/` directory.
 
 
 Changing theme the project :art:
-=
+=============================
 
 The previous commands build EJ using the "default" theme. EJ accepts additional
 themes and currently comes pre-installed with the alternate "cpa" theme. The
@@ -177,7 +179,7 @@ Now run the server using the --theme flag::
 
 
 Tests :heavy_check_mark:
-=
+=============================
 
 Running Tests with Docker
 -------------------------
