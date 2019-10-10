@@ -1,5 +1,5 @@
 from boogie.configurations import Conf, env
-
+from constance import config
 
 class ConstanceConf(Conf):
     """
@@ -21,6 +21,16 @@ class ConstanceConf(Conf):
                 "State choices for state field in profile",
                 "choicesfield",
             ),
+            "EJ_USER": (
+                self.EJ_USER,
+                "Landing page for logged user",
+                str,
+            ),
+            "EJ_ANONYMOUS": (
+                self.EJ_ANONYMOUS,
+                "Landing page for anonymous user",
+                str,
+            ),
         }
 
     CONSTANCE_ADDITIONAL_FIELDS = {
@@ -31,9 +41,14 @@ class ConstanceConf(Conf):
         "choicesfield": ["django.forms.ChoiceField", {"required": False}],
     }
 
-    CONSTANCE_CONFIG_FIELDSETS = {"EJ Options": ("EJ_MAX_BOARD_NUMBER", "EJ_PROFILE_STATE_CHOICES")}
+    CONSTANCE_CONFIG_FIELDSETS = {
+        "EJ Options": ("EJ_MAX_BOARD_NUMBER", "EJ_STATE_MAX_LENGTH", "EJ_STATE_CHOICES", "EJ_USER", "EJ_ANONYMOUS")
+    }
 
     # Auxiliary options
+    EJ_USER = env("/start/", name="{attr}")
+    EJ_ANONYMOUS = env("/conversations/", name="{attr}")
+
     EJ_MAX_BOARD_NUMBER = env(1, name="{attr}")
     EJ_PROFILE_STATE_CHOICES = env(
         (

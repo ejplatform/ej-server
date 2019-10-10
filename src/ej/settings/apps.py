@@ -39,8 +39,8 @@ class InstalledAppsConf(Base, EjOptions):
         # 'rest_framework.authtoken',
         # 'rest_auth',
         # 'rest_auth.registration',
-        # 'constance',
-        # 'constance.backends.database',
+        'constance',
+        'constance.backends.database',
         # 'push_notifications',
     ]
 
