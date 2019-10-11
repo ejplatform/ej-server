@@ -52,6 +52,18 @@
                     x.style.display = 'block';
                 }
             }
+
+            function changeButtonName(){
+                var buttonName = document.getElementById("comment-button");
+
+                if (buttonName.innerHTML.includes("Create Comment"))
+                    buttonName.textContent = "Cancel Comment";
+
+                else if (buttonName.textContent === "Cancel Comment")
+                     buttonName.textContent = "Create Comment";
+
+                console.log(buttonName.textContent);
+            }
         
         </script>
         {{ conversation|role('balloon') }}
@@ -84,8 +96,8 @@
                         {{ conversation|role('create-comment') }}
                 </div>
                 </animafade>
-                <button onclick="toogleComment()" >
-                    Criar
+                <button onclick="changeButtonName(), toogleComment()" id="comment-button">
+                    Create Comment
                 </button>
             </div>
         {% endif %}
