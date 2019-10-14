@@ -1,3 +1,9 @@
+"""
+forms.py
+====================================
+Forms django project 
+"""
+
 from operator import attrgetter
 
 from django.forms import Form, ModelForm, widgets
