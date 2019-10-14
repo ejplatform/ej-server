@@ -96,7 +96,8 @@
                         </article>
                     </div>
                 {% endif %}
-                <div style="text-align: center; display: none; position: relative; top: -490px; z-index: 2;" id="comment-form-containner">
+                <animafade>
+                <div style="text-align: center; display: none; position: relative; top: -490px; z-index: 500;" id="comment-form-containner">
                         <h2 class="text-accent">{{ _('Comentários') }}</h2>
                         {{ conversation|role('comment-form', form=comment_form, target='.comment-area') }}
                         {{ conversation|role('create-comment') }}
@@ -104,9 +105,13 @@
                     Create Comment
                 </button>
                 </div>
+                </animafade>
+                {% if comment %}
                 <button onclick="changeButtonName(), toogleComment(),hideButton()" id="comment-button" class="hidableButton">
                     Create Comment
                 </button>
+                {% else %}
+                {% endif %}
             </div>
         {% endif %}
         {{ conversation|role('detail-page-extra') }}
