@@ -1,7 +1,7 @@
 """
 forms.py
 ====================================
-Forms django project 
+Forms django project
 """
 
 from operator import attrgetter
