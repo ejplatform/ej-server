@@ -21,13 +21,13 @@ class ConstanceConf(Conf):
                 "State choices for state field in profile",
                 "choicesfield",
             ),
-            "EJ_USER": (
-                self.EJ_USER,
+            "EJ_USER_HOME_PATH": (
+                self.EJ_USER_HOME_PATH,
                 "Landing page for logged user",
                 str,
             ),
-            "EJ_ANONYMOUS": (
-                self.EJ_ANONYMOUS,
+            "EJ_ANONYMOUS_HOME_PATH": (
+                self.EJ_ANONYMOUS_HOME_PATH,
                 "Landing page for anonymous user",
                 str,
             ),
@@ -42,12 +42,12 @@ class ConstanceConf(Conf):
     }
 
     CONSTANCE_CONFIG_FIELDSETS = {
-        "EJ Options": ("EJ_MAX_BOARD_NUMBER", "EJ_STATE_MAX_LENGTH", "EJ_STATE_CHOICES", "EJ_USER", "EJ_ANONYMOUS")
+        "EJ Options": ("EJ_MAX_BOARD_NUMBER", "EJ_PROFILE_STATE_CHOICES", "EJ_USER_HOME_PATH", "EJ_ANONYMOUS_HOME_PATH")
     }
 
     # Auxiliary options
-    EJ_USER = env("/start/", name="{attr}")
-    EJ_ANONYMOUS = env("/conversations/", name="{attr}")
+    EJ_USER_HOME_PATH = env("/start/", name="{attr}")
+    EJ_ANONYMOUS_HOME_PATH = env("/conversations/", name="{attr}")
 
     EJ_MAX_BOARD_NUMBER = env(1, name="{attr}")
     EJ_PROFILE_STATE_CHOICES = env(
