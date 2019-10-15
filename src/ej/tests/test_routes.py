@@ -2,7 +2,7 @@ from ej.testing import UrlTester
 from ej import routes
 from django.conf import settings
 from django.contrib.auth.models import AnonymousUser
-
+from constance import config
 
 class TestBasicUrls(UrlTester):
     # Urls visible to every one (even without login)
@@ -16,11 +16,11 @@ class TestViews:
         request.user = user
         response = routes.index(request)
         assert response.status_code == 302
-        assert response.url == settings.EJ_USER_HOME_PATH
+        assert response.url == config.EJ_USER_HOME_PATH
 
     def test_index_anonymous_user(self, rf):
         request = rf.get("", {})
         request.user = AnonymousUser()
         response = routes.index(request)
         assert response.status_code == 302
-        assert response.url == settings.EJ_ANONYMOUS_HOME_PATH
+        assert response.url == config.EJ_ANONYMOUS_HOME_PATH
