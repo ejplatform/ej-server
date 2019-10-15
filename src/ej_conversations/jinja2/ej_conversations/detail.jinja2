@@ -52,6 +52,25 @@
                     x.style.display = 'block';
                 }
             }
+
+            function changeButtonName(){
+                var buttonName = document.getElementById("comment-button");
+                var button = document.getElementsByClassName("hidableButton");
+
+                if (buttonName.innerHTML.includes("Create Comment"))
+                    buttonName.textContent = "Cancel Comment";
+
+                else if (buttonName.textContent === "Cancel Comment")
+                    buttonName.textContent = "Create Comment";
+                    button[0].style.visibility = "visible";
+
+                console.log(buttonName.textContent);
+            }
+
+            function hideButton() {
+                var button = document.getElementsByClassName("hidableButton");
+                button[0].style.visibility = "hidden";
+            }
         
         </script>
         {{ conversation|role('balloon') }}
@@ -78,15 +97,21 @@
                     </div>
                 {% endif %}
                 <animafade>
-                <div style="text-align: center; display: none; position: relative; top: -490px; z-index: 2;" id="comment-form-containner">
+                <div style="text-align: center; display: none; position: relative; top: -490px; z-index: 500;" id="comment-form-containner">
                         <h2 class="text-accent">{{ _('Comentários') }}</h2>
                         {{ conversation|role('comment-form', form=comment_form, target='.comment-area') }}
                         {{ conversation|role('create-comment') }}
+                <button onclick="changeButtonName(), toogleComment()" id="comment-button" style="margin-top:10px;">
+                    Create Comment
+                </button>
                 </div>
                 </animafade>
-                <button onclick="toogleComment()" >
-                    Criar
+                {% if comment %}
+                <button onclick="changeButtonName(), toogleComment(),hideButton()" id="comment-button" class="hidableButton">
+                    Create Comment
                 </button>
+                {% else %}
+                {% endif %}
             </div>
         {% endif %}
         {{ conversation|role('detail-page-extra') }}
