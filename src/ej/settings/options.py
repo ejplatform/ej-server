@@ -1,4 +1,5 @@
 from boogie.configurations import Conf, env
+from constance import config
 
 _ = lambda x: x
 
@@ -19,12 +20,7 @@ class EjOptions(Conf):
     EJ_ENABLE_CLUSTERS = env(True, name="{attr}")
     EJ_ENABLE_DATAVIZ = env(True, name="{attr}")
     EJ_ENABLE_GAMIFICATION = env(True, name="{attr}")
-
-    # TODO: remove those in the future? Maybe all personalization strings
-    # should be options in Django constance with a cache fallback
-    # Personalization
-    EJ_ANONYMOUS_HOME_PATH = env("/start/", name="{attr}")
-    EJ_USER_HOME_PATH = env("/conversations/", name="{attr}")
+    
 
     # Allow instances to exclude some profile fields from visualization
     EJ_PROFILE_EXCLUDE_FIELDS = env([], name="{attr}")

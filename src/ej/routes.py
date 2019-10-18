@@ -9,6 +9,7 @@ from django.http import Http404
 from django.shortcuts import render, redirect
 from django.utils.translation import ugettext as _
 from sidekick import import_later, once
+from constance import config
 
 from ej.utils.flatpages import flat_page_route
 
@@ -23,9 +24,9 @@ urlpatterns = Router(template="pages/{name}.jinja2")
 @urlpatterns.route("")
 def index(request):
     if request.user.is_authenticated:
-        return redirect(settings.EJ_USER_HOME_PATH)
+        return redirect(config.EJ_USER_HOME_PATH)
     else:
-        return redirect(settings.EJ_ANONYMOUS_HOME_PATH)
+        return redirect(config.EJ_ANONYMOUS_HOME_PATH)
 
 
 @urlpatterns.route("start/")
