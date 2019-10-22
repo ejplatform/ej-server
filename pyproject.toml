@@ -46,6 +46,7 @@ stop-words = "^2018.7"
 djangorestframework = "^3.9"
 django-debug-toolbar = "^1.11"
 openpyxl = "^2.6"
+django-picklefield = "^2.0"
 
 
 [tool.poetry.dev-dependencies]
@@ -72,6 +73,8 @@ watchdog = "^0.9.0"
 toml = "^0.10.0"
 pre-commit = "^1.17"
 notebook = "^6.0"
+django-picklefield = "^2.0"
+
 
 [tool.black]
 line-length = 108  # Strict maximum of 120
