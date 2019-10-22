@@ -14,12 +14,12 @@
     <h2 class="conversation-card__text" style="margin-top: 0;">
         <a href="{{ url }}">{{ text }}</a>
     </h2>
-    <div style="width: 100%">
-        <div class="conversation-card__author" style="order: 1; margin-top: 0; margin-bottom: 5px">
+    <div class="conversation-card__footer">
+        <div class="conversation-card__author">
             {{ _('by:') }} <strong>{{ author }}</strong>
         </div>
         {{ progress or '' }}
-        <div class="conversation-card__button" style="order: 1; margin: 0 auto;" >
+        <div class="conversation-card__button">
             {{ action_button(_('Participate now!'), url, tabindex=-1, aria_hidden="true") }}
         </div>
     </div>
