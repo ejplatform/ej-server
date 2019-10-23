@@ -11,12 +11,20 @@
         <li>{{ span_icon(n_votes, 'sliders-h') }}</li>
         <li>{{ span_icon(n_favorites, 'star') }}</li>
     </ul>
-    <h2 class="conversation-card__text">
+    <h2 class="conversation-card__text" style="margin-top: 0;">
         <a href="{{ url }}">{{ text }}</a>
     </h2>
-    <div class="conversation-card__author" style="order: 1">{{ _('by:') }} <strong>{{ author }}</strong></div>
-    {{ progress or '' }}
-    <div class="conversation-card__button" style="order: 1">{{ action_button(_('Participate now!'), url, tabindex=-1, aria_hidden="true") }}</div>
+    <div class="conversation-card__footer">
+        <div class="conversation-card__author">
+            {{ _('by:') }} <strong>{{ author }}</strong>
+        </div>
+        {{ progress or '' }}
+        <div class="conversation-card__button">
+            {{ action_button(_('Participate now!'), url, tabindex=-1, aria_hidden="true") }}
+        </div>
+    </div>
+
+    
 </div>
 
 
