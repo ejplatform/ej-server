@@ -2,7 +2,7 @@
     {% if user == None %}
         <p>{% trans %}Please {{ login_anchor }} to vote on this conversation.{% endtrans %}</p>
     {% elif comments_exceeded|default(False) %}
-        <h3>{% trans %}Ooops!{% endtrans %}</h3>
+        <h3 style="margin-top: 80px;">{% trans %}Ooops!{% endtrans %}</h3>
         <p>{% trans %}You reached the limit of comments in this conversation.{% endtrans %}</p>
     {% else %}
         {% set n_comments_span = '<em class="text-accent roman">{n}</em>'.format(n=n_comments)|safe %}
