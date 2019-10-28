@@ -190,6 +190,9 @@ Please make sure to read the guide before making a pull request. After you've re
 
 `Guide <https://github.com/gces-empjuntos/ej-server/blob/develop/CONTRIBUTING.rst>`_
 
+`Issues Templates for contributing <https://github.com/gces-empjuntos/ej-server/tree/change_README.md/ISSUE_TEMPLATES>`_
+
+
 Tests :heavy_check_mark:
 =============================
 
