@@ -116,8 +116,13 @@ all dependencies.
 Running the project :trophy:
 =============================
 
+First compile the part of the code responsible for the CSS of the application
+
+    $ inv sass
+
 Unless you prefer to type long Django management commands, use Invoke_ to start
 the dev server::
+
 
     $ inv run
 
