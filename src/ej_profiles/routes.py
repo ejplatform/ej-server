@@ -7,6 +7,7 @@ from django.urls import reverse
 
 from ej_conversations.models import Conversation, Comment
 from . import forms
+from .utils import get_loc
 
 app_name = "ej_profiles"
 urlpatterns = Router(template=["ej_profiles/{name}.jinja2", "generic.jinja2"], login=True)
@@ -31,6 +32,8 @@ def detail(request):
 def edit(request):
     profile = request.user.get_profile()
     form = forms.ProfileForm(instance=profile, request=request)
+    
+    ip_adr = str(request.remote_addr)
 
     if form.is_valid_post():
         form.files = request.FILES
