@@ -36,16 +36,12 @@ def edit(request):
     ip_adr = get_client_ip(request)
     
     location = get_loc(ip_adr)
-    print(ip_adr)
+    
     if form.is_valid_post():
         form.files = request.FILES
-        if location.country and location.state and location.city is not None:
-            if not profile.country:
-                profile.country = location.country
-            if not profile.state:
-                profile.state = location.state
-            if not profile.city:
-                profile.city = location.city
+        
+        if location.country is not None:
+            profile = check_location(profile, location)
         
         form.save()
 
@@ -59,6 +55,17 @@ def edit(request):
     state = models.CharField(_("State"), blank=True, max_length=3)
     city = models.CharField(_("City"), blank=True, max_length=140)
     
+
+def check_location(profile, location):
+    if not profile.country:
+        profile.country = location.country
+    if not profile.state:
+        profile.state = location.state
+    if not profile.city:
+        profile.city = location.city
+    
+    return profile        
+
 
 @urlpatterns.route("contributions/")
 def contributions(request):
