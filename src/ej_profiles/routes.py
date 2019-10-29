@@ -35,12 +35,14 @@ def edit(request):
 
     ip_adr = get_client_ip(request)
     
-    location = get_loc(ip_adr)
+    location = get_loc('172.68.27.22')
 
     if form.is_valid_post():
         form.files = request.FILES
         if not profile.country:
             profile.country = location.country
+        if not profile.state:
+            profile.state = location.state
         if not profile.city:
             profile.city = location.city
         
