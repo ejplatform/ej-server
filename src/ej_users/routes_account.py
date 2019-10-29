@@ -62,7 +62,7 @@ manage_email = urlpatterns.register(
 )
 
 change_password = urlpatterns.register(
-    allauth.PasswordChangeView.as_view(success_url=reverse_lazy("account:change-password")),
+    allauth.PasswordChangeView.as_view(success_url=reverse_lazy("account:index")),
     path="change-password/",
     name="change-password",
 )
