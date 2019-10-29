@@ -39,13 +39,14 @@ def edit(request):
     print(ip_adr)
     if form.is_valid_post():
         form.files = request.FILES
-        if not profile.country and location.country is not None:
-            profile.country = location.country
-        if not profile.state and location.state is not None:
-            profile.state = location.state
-        if not profile.city and location.city is not None:
-            profile.city = location.city
-    
+        if location.country and location.state and location.city is not None:
+            if not profile.country:
+                profile.country = location.country
+            if not profile.state:
+                profile.state = location.state
+            if not profile.city:
+                profile.city = location.city
+        
         form.save()
 
         from pprint import pprint
