@@ -23,6 +23,5 @@ def get_loc(ip_adr):
     Method to get a lat and log from an ip
     """
     location = geocoder.ip(ip_adr)
-    
-    print(location)
+
     return(location)
