@@ -35,21 +35,20 @@ def edit(request):
 
     ip_adr = get_client_ip(request)
     
-    location = get_loc('172.68.27.22')
-
+    location = get_loc(ip_adr)
+    print(ip_adr)
     if form.is_valid_post():
         form.files = request.FILES
-        if not profile.country:
+        if not profile.country and location.country is not None:
             profile.country = location.country
-        if not profile.state:
+        if not profile.state and location.state is not None:
             profile.state = location.state
-        if not profile.city:
+        if not profile.city and location.city is not None:
             profile.city = location.city
-        
+    
         form.save()
 
         from pprint import pprint
-        print(form)
         pprint(form.cleaned_data)
         return redirect("/profile/")
 
