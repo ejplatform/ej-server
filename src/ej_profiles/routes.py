@@ -7,6 +7,7 @@ from django.urls import reverse
 
 from ej_conversations.models import Conversation, Comment
 from . import forms
+from .utils import get_loc, get_client_ip
 
 app_name = "ej_profiles"
 urlpatterns = Router(template=["ej_profiles/{name}.jinja2", "generic.jinja2"], login=True)
@@ -32,15 +33,38 @@ def edit(request):
     profile = request.user.get_profile()
     form = forms.ProfileForm(instance=profile, request=request)
 
+    ip_adr = get_client_ip(request)
+    
+    location = get_loc(ip_adr)
+    
     if form.is_valid_post():
         form.files = request.FILES
+        
+        if location.country is not None:
+            profile = check_location(profile, location)
+        
         form.save()
-        from pprint import pprint
 
+        from pprint import pprint
         pprint(form.cleaned_data)
         return redirect("/profile/")
 
     return {"form": form, "profile": profile}
+    
+    country = models.CharField(_("Country"), blank=True, max_length=50)
+    state = models.CharField(_("State"), blank=True, max_length=3)
+    city = models.CharField(_("City"), blank=True, max_length=140)
+    
+
+def check_location(profile, location):
+    if not profile.country:
+        profile.country = location.country
+    if not profile.state:
+        profile.state = location.state
+    if not profile.city:
+        profile.city = location.city
+    
+    return profile        
 
 
 @urlpatterns.route("contributions/")

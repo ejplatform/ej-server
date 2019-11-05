@@ -44,7 +44,6 @@ class ProfileForm(EjModelForm):
             # they show as blanks
             # "birth_date": DateInput(attrs={"type": "date"}, format="D d M Y"),
             # "profile_photo": ej.forms.FileInput(attrs={"accept": "image/*"})
-            "state": forms.Select(choices=STATE_CHOICES)
         }
 
     def __init__(self, *args, instance, **kwargs):
