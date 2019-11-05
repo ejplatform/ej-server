@@ -151,6 +151,8 @@ $component-border-radius: size(config('ej.style.border-radius'));
     @include utilities('center text-black');
     @include themed('background', light);
 
+    height: 360px;
+
     label {
         @include utilities('regular margin-b2 text-black');
         text-transform: none;
