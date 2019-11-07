@@ -92,6 +92,18 @@ class Conf(
     #
     ACCOUNT_TEMPLATE_EXTENSION = "jinja2"
 
+    import os
+    DB_HOST = os.getenv('DB_HOST', 'db')
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'ej',
+            'USER': 'ej',
+            'HOST': DB_HOST,
+            'PORT': 5432,
+        }
+    }
+
 
 Conf.save_settings(globals())
 
