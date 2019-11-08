@@ -99,6 +99,7 @@ class Conf(
             'ENGINE': 'django.db.backends.postgresql',
             'NAME': 'ej',
             'USER': 'ej',
+            'PASSWORD': 'ej',
             'HOST': DB_HOST,
             'PORT': 5432,
         }
