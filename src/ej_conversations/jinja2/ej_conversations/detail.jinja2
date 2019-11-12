@@ -13,7 +13,7 @@
 
     <div>
         <style>
-            animafade {
+            animaFadeForm {
             animation-duration: 3.5s;
             animation-name: fadeInUp;
             }
@@ -44,12 +44,12 @@
             })
 
             function toogleComment() {
-                var x = document.getElementById("comment-form-containner");
+                var commentCard = document.getElementById("comment-form-containner");
 
-                if (x.style.display === 'block') {
-                    x.style.display = 'none';
+                if (commentCard.style.display === 'block') {
+                    commentCard.style.display = 'none';
                 } else {
-                    x.style.display = 'block';
+                    commentCard.style.display = 'block';
                 }
             }
 
@@ -96,16 +96,16 @@
                         </article>
                     </div>
                 {% endif %}
-                <animafade>
+                <animaFadeForm>
                 <div style="text-align: center; display: none; position: relative; top: -490px; z-index: 500;" id="comment-form-containner">
-                        <h2 class="text-accent">{{ _('Comentários') }}</h2>
+                        <h2 class="text-accent">{{ _('Comments') }}</h2>
                         {{ conversation|role('comment-form', form=comment_form, target='.comment-area') }}
                         {{ conversation|role('create-comment') }}
                 <button onclick="changeButtonName(), toogleComment()" id="comment-button" style="margin-top:10px;">
                     Create Comment
                 </button>
                 </div>
-                </animafade>
+                </animaFadeForm>
                 {% if comment %}
                 <button onclick="changeButtonName(), toogleComment(),hideButton()" id="comment-button" class="hidableButton">
                     Create Comment
