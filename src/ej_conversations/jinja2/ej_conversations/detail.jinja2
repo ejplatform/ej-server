@@ -35,7 +35,7 @@ exist on the voting screen. #}
             .fadeInUp {
             animation-name: fadeInUp;
             }
-            </style>
+        </style>
 
 {# Function ToogleComment is responsible for checking whether or not the comment card exists on the voting screen, 
 as well as the allocation of it on the screen when not present #}
@@ -85,16 +85,16 @@ when necessary #}
         </script>
 {# Block responsible for hiding conversation balloon until user chooses to be visible #}
         {{ conversation|role('balloon') }}
-        {% if conversation.is_hidden %}
-            <div class="color-negative margin-3 pad-x3 pad-y2 rounded-3 center">
-                <h2>{{ _('Warning!') }}</h2>
-                <p>{% trans %}This conversation is hidden.{% endtrans %}
-                    {% trans here=edit_link() %} Click {{ here }} to edit and make it visible again.{% endtrans %}</p>
-            </div>
-        {% else %}
-        <br>
-        <br>
-        <br>
+            {% if conversation.is_hidden %}
+                <div class="color-negative margin-3 pad-x3 pad-y2 rounded-3 center">
+                    <h2>{{ _('Warning!') }}</h2>
+                    <p>{% trans %}This conversation is hidden.{% endtrans %}
+                        {% trans here=edit_link() %} Click {{ here }} to edit and make it visible again.{% endtrans %}</p>
+                </div>
+            {% else %}
+            <br>
+            <br>
+            <br>
 {# Block responsible for informing the user that the number of balloons for voting has run out #}
             <div class="col items-center margin-y3 pad-x2" id="comment-card">
                 {% if comment %}
@@ -109,22 +109,22 @@ when necessary #}
                     </div>
                 {% endif %}
 {# Block responsible for creating the comment card #}
-                <animaFadeForm>
+            <animaFadeForm>
                 <div style="text-align: center; display: none; position: relative; top: -490px; z-index: 500;" id="comment-form-containner">
-                        <h2 class="text-accent">{{ _('Comments') }}</h2>
+                    <h2 class="text-accent">{{ _('Comments') }}</h2>
                         {{ conversation|role('comment-form', form=comment_form, target='.comment-area') }}
                         {{ conversation|role('create-comment') }}
-                <button onclick="changeButtonName(), toogleComment()" id="comment-button" style="margin-top:10px;">
-                    Create Comment
-                </button>
+                    <button onclick="changeButtonName(), toogleComment()" id="comment-button" style="margin-top:10px;">
+                        Create Comment
+                    </button>
                 </div>
-                </animaFadeForm>
+            </animaFadeForm>
                 
 {# Block responsible for changes applied to the comment card due to existing interactions #}
                 {% if comment %}
-                <button onclick="changeButtonName(), toogleComment(),hideButton()" id="comment-button" class="hidableButton">
+                    <button onclick="changeButtonName(), toogleComment(),hideButton()" id="comment-button" class="hidableButton">
                     Create Comment
-                </button>
+                    </button>
                 {% else %}
                 {% endif %}
             </div>
