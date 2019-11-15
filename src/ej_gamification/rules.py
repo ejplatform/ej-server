@@ -72,7 +72,7 @@ def has_opinion_bridge_power(user, conversation):
 @predicate
 def has_activist_power(user, conversation):
     """
-    Return true if user is a "activist" in conversation.
+    True value is returned if the user has "activist" status in conversation.
     """
     return models.GivenMinorityPower.objects.filter(user=user, conversation=conversation).exists()
 
