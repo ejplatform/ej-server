@@ -61,18 +61,20 @@ default_value_map["ej.max_comments_per_conversation"] = max_comments_per_convers
 # Permissions and predicates
 #
 
+"""
+The two functions bellow have the following behaviour:
+
+has_opinion_bridge_power(function) = True if user is a "opinion bridge" in conversation.
+has_activist_power(function) = True if the user has "activist" status in conversation.
+
+"""
+
 @predicate
 def has_opinion_bridge_power(user, conversation):
-    """
-    Return true if user is a "opinion bridge" in conversation.
-    """
     return models.GivenBridgePower.objects.filter(user=user, conversation=conversation).exists()
 
 
 @predicate
 def has_activist_power(user, conversation):
-    """
-    True value is returned if the user has "activist" status in conversation.
-    """
     return models.GivenMinorityPower.objects.filter(user=user, conversation=conversation).exists()
 
