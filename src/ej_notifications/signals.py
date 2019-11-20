@@ -17,14 +17,14 @@ def channel_iteration(channel, notificationConfig):
 
 
 @receiver(post_save, sender=Message)
-def generate_notifications(sender, instance, created, channel, **kwargs):
+def generate_notifications(sender, instance, created, channel:
     if created:
         for user in instance.channel.users.all():
             Notification.objects.create(receiver=user, channel=channel, message=instance)
 
 
 @receiver(post_save, sender=Message)
-def send_admin_fcm_message(sender, instance, created, **kwargs):
+def send_admin_fcm_message(sender, instance, created):
     if created:
         channel_id = instance.channel.id
         channel = Channel.objects.get(id=channel_id)
@@ -44,7 +44,7 @@ def send_admin_fcm_message(sender, instance, created, **kwargs):
 
 
 @receiver(post_save, sender=Message)
-def send_conversation_fcm_message(sender, instance, created, **kwargs):
+def send_conversation_fcm_message(sender, instance, created):
     if created:
         channel_id = instance.channel.id
         channel = Channel.objects.get(id=channel_id)
@@ -77,7 +77,7 @@ def insert_user_on_general_channels(sender, created, **kwargs):
 
 
 @receiver(post_save, sender=NotificationConfig)
-def create_user_trophy_channel(sender, instance, created, **kwargs):
+def create_user_trophy_channel(sender, instance, created):
     if created:
         user = instance.user
         channel = Channel.objects.create(name=str(Purpose.TROPHIES), purpose=Purpose.TROPHIES, owner=user)
