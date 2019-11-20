@@ -9,11 +9,12 @@ from .enums import Purpose, NotificationMode
 
 User = get_user_model()
 
+
 def channel_iteration(channel, notificationConfig):
-        for user in self.channel.users.all():
-            setting = NotificationConfig.objects.get(self.notificationConfig=user.id)
-            if setting.notification_option == NotificationMode.PUSH_NOTIFICATIONS:
-                users_to_send.append(user)
+    for user in self.channel.users.all():
+        setting = NotificationConfig.objects.get(self.notificationConfig=user.id)
+        if setting.notification_option == NotificationMode.PUSH_NOTIFICATIONS:
+            users_to_send.append(user)
 
 
 @receiver(post_save, sender=Message)
