@@ -46,4 +46,7 @@ def collapsible_list(lst, item_role="list-item", title=None, **kwargs):
 
 @html.register(Model)
 def render_model(obj, role=None, request=None):
+    """
+    Renders a text.
+    """
     return Text(str(obj))
