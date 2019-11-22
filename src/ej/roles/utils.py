@@ -101,9 +101,9 @@ def render_with_template(func, template):
     renderer = template.render
 
     def wrapped(obj, **kwargs):
-        ctx = func(obj, **kwargs)
-        request = ctx.get("request")
-        data = renderer(context=ctx, request=request)
+        context = func(obj, **kwargs)
+        request = context.get("request")
+        data = renderer(context=context, request=request)
         return Blob(data)
 
     return wrapped
