@@ -12,13 +12,29 @@ from ..routes_comments import comment_url
 
 HAS_GAMIFICATION = apps.is_installed("ej_gamification")
 
+
 @with_template(Comment, role="card")
-def comment_card(
-    comment: Comment, request=None, target=None, show_actions=None, **kwargs
-    ):
+def comment_card(comment: Comment, request=None, target=None, show_actions=None, **kwargs):
     """
     Render comment information inside a comment card.
     """
+
+    login_anchor, is_authenticated, user = authenticate_user()
+    badge, buttons = gamification(user, comment)
+
+    return {
+        "author": comment.author.username,
+        "comment": comment,
+        "show_actions": is_authenticated,
+        "csrf_input": csrf_input(request),
+        "buttons": buttons,
+        "login_anchor": login_anchor,
+        "target": target,
+        "badge": badge,
+        **kwargs,
+    }
+
+def authenticate_user():
 
     user = getattr(request, "user", None)
     is_authenticated = getattr(user, "is_authenticated", False)
@@ -27,9 +43,11 @@ def comment_card(
         login_anchor = None
     else:
         login = reverse("auth:login")
-        login_anchor = a(_("login"), 
-        href=f"{login}?next={comment.conversation.get_absolute_url()}")
+        login_anchor = a(_("login"), href=f"{login}?next={comment.conversation.get_absolute_url()}")
 
+    return login_anchor, is_authenticated, user
+
+def gamify(user, comment):
     badge = ""
     if HAS_GAMIFICATION:
         from ej_gamification import get_participation
@@ -43,17 +61,8 @@ def comment_card(
         "agree": ("fa-check", "text-positive", _("Agree")),
     }
 
-    return {
-        "author": comment.author.username,
-        "comment": comment,
-        "show_actions": is_authenticated,
-        "csrf_input": csrf_input(request),
-        "buttons": buttons,
-        "login_anchor": login_anchor,
-        "target": target,
-        "badge": badge,
-        **kwargs,
-    }
+    return badge, buttons
+
 
 
 @with_template(Comment, role="moderate")
@@ -87,9 +96,7 @@ def comment_reject_reason(comment: Comment, **kwargs):
         "comment": comment,
         "conversation_url": comment.conversation.get_absolute_url(),
         "status": comment.status,
-        "status_name": dict(
-            models.Comment.STATUS
-        )[comment.status].capitalize(),
+        "status_name": dict(models.Comment.STATUS)[comment.status].capitalize(),
         "rejection_reason": rejection_reason,
     }
 
