@@ -75,7 +75,9 @@ class Conf(
     REST_FRAMEWORK = {
         "DEFAULT_AUTHENTICATION_CLASSES": (
             "rest_framework.authentication.TokenAuthentication",
-            "rest_framework.authentication.SessionAuthentication",
+            # If SessionAuthentication is enabled, a csrf cookie is always set,
+            # and token auth does not works.
+            # "rest_framework.authentication.SessionAuthentication",
         ),
         "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticatedOrReadOnly",),
         "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
@@ -94,15 +96,25 @@ class Conf(
 
     import os
     DB_HOST = os.getenv('DB_HOST', 'db')
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'ej',
-            'USER': 'ej',
-            'PASSWORD': 'ej',
-            'HOST': DB_HOST,
-            'PORT': 5432,
+    if DB_HOST != 'db':
+        DATABASES = {
+            'default': {
+                'ENGINE': 'django.db.backends.postgresql',
+                'NAME': 'ej',
+                'USER': 'ej',
+                'PASSWORD': 'ej',
+                'HOST': DB_HOST,
+                'PORT': 5432,
+            }
         }
+
+    CORS_ORIGIN_ALLOW_ALL = True
+    CORS_ORIGIN_WHITELIST = [
+        "http://localhost",
+    ]
+
+    REST_AUTH_REGISTER_SERIALIZERS = {
+        'REGISTER_SERIALIZER': 'ej_users.rest_auth_serializer.RegistrationSerializer'
     }
 
 

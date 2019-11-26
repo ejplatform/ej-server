@@ -14,7 +14,7 @@ from .utils import random_name, token_factory
 log = getLogger("ej")
 
 
-@rest_api(["id", "display_name"])
+@rest_api(["id", "display_name", "email"])
 class User(AbstractUser):
     """
     Default user model for EJ platform.

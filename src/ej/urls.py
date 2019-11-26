@@ -76,8 +76,8 @@ def get_urlpatterns():
         path("api/v1/docs/", include_docs_urls(title="ej API Docs", public=False)),
         #
         #  REST API for user management
-        # path('rest-auth/', include('rest_auth.urls')),
-        # path('rest-auth/registration/', include('rest_auth.registration.urls')),
+        path('rest-auth/', include('rest_auth.urls')),
+        path('rest-auth/registration/', include('rest_auth.registration.urls')),
         # Static files for the dev server
         *static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),
         *static(settings.STATIC_URL, document_root=settings.STATIC_ROOT),

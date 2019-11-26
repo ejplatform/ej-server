@@ -32,16 +32,18 @@ class InstalledAppsConf(Base, EjOptions):
         "allauth.socialaccount.providers.facebook",
         "allauth.socialaccount.providers.twitter",
         "allauth.socialaccount.providers.google",
-        # 'allauth.socialaccount.providers.github',
         "ej_users",
-        # 'django_filters',
         "rest_framework",
-        # 'rest_framework.authtoken',
-        # 'rest_auth',
+        'rest_framework.authtoken',
+        'rest_auth',
+        'corsheaders',
+        'django.contrib.auth',
         # 'rest_auth.registration',
         # 'constance',
         # 'constance.backends.database',
         # 'push_notifications',
+        # 'django_filters',
+        # 'allauth.socialaccount.providers.github',
     ]
 
     def get_django_contrib_apps(self):
