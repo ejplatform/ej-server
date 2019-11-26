@@ -1,5 +1,6 @@
 from boogie.rest import rest_api
 from ej_conversations.models import Conversation
+from ej_conversations.models.vote import Vote
 
 
 #
@@ -42,6 +43,16 @@ def statistics(conversation):
 def save_vote(request, vote):
     user = request.user
 
+    try:
+        skipped_vote = Vote.objects.get(
+            comment=vote.comment,
+            choice=0,
+            author=user)
+        skipped_vote.choice = vote.choice
+        skipped_vote.save()
+        return skipped_vote
+    except Exception as e:
+        pass
     if vote.id is None:
         vote.author = user
         vote.save()
