@@ -47,6 +47,19 @@ class Profile(models.Model):
     is_superuser = delegate_to("user")
     limit_board_conversations = delegate_to("user")
 
+    basic_fields = [
+        "city",
+        "state",
+        "country",
+        "occupation",
+        "education",
+        "ethnicity",
+        "gender",
+        "race",
+        "political_activity",
+        "biography",
+    ]
+
     @property
     def age(self):
         return None if self.birth_date is None else years_from(self.birth_date)
@@ -97,20 +110,12 @@ class Profile(models.Model):
 
     @property
     def is_filled(self):
-        fields = (
-            "race",
-            "age",
-            "birth_date",
-            "education",
-            "ethnicity",
-            "country",
-            "state",
-            "city",
-            "biography",
-            "occupation",
-            "political_activity",
-            "has_image",
-            "gender_description",
+        fields = self.basic_fields
+        fields[fields.index('gender')] = 'gender_orientation'
+        fields = tuple(fields) + (
+             "age",
+             "birth_date",
+             "has_image",
         )
         return bool(all(getattr(self, field) for field in fields))
 
@@ -123,18 +128,7 @@ class Profile(models.Model):
         registered profile fields.
         """
 
-        fields = [
-            "city",
-            "state",
-            "country",
-            "occupation",
-            "education",
-            "ethnicity",
-            "gender",
-            "race",
-            "political_activity",
-            "biography",
-        ]
+        fields = self.basic_fields
         field_map = {field.name: field for field in self._meta.fields}
         null_values = {Gender.NOT_FILLED, Race.NOT_FILLED, None, ""}
 
