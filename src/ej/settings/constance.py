@@ -1,15 +1,24 @@
 from boogie.configurations import Conf, env
 from constance import config
 
+
 class ConstanceConf(Conf):
     """
+    This class is responsible for the
     Dynamic django settings, edit on admin page
+    https://django-constance.readthedocs.io/en/latest/
     """
 
+    # Constance requires its own backend to work
     CONSTANCE_BACKEND = env("constance.backends.database.DatabaseBackend")
     CONSTANCE_IGNORE_ADMIN_VERSION_CHECK = True
 
     def get_constance_config(self):
+        """
+        This function return the values that will be used in the admin
+        page
+        :return: constance_fields
+        """
         return {
             "EJ_MAX_BOARD_NUMBER": (
                 self.EJ_MAX_BOARD_NUMBER,
@@ -48,7 +57,6 @@ class ConstanceConf(Conf):
     # Auxiliary options
     EJ_USER_HOME_PATH = env("/start/", name="{attr}")
     EJ_ANONYMOUS_HOME_PATH = env("/conversations/", name="{attr}")
-
     EJ_MAX_BOARD_NUMBER = env(1, name="{attr}")
     EJ_PROFILE_STATE_CHOICES = env(
         (
