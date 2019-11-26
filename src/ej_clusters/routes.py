@@ -118,6 +118,57 @@ def edit(request, conversation, slug, check=check_promoted):
     }
 
 
+def get_stereotypes(all_stereotypes, all_votes, comments):
+    stereotypes = []
+    for stereotype in all_stereotypes:
+        votes = [vote for vote in all_votes if vote.author == stereotype]
+        voted = set(vote.comment for vote in votes)
+        stereotype.non_voted_comments = [x for x in comments if x not in voted]
+        stereotype.given_votes = votes
+        stereotypes.append(stereotype)
+
+
+def fetch_post_data(request, all_stereotypes):
+    """
+    Fetch data from POST dictionary
+    """
+
+    data = request.POST
+    action = data["action"]
+    votes = map(int, data.getlist("vote"))
+    comments = map(int, data.getlist("comment"))
+    stereotype = Stereotype.objects.get(id=data["stereotype"])
+    if stereotype not in all_stereotypes:
+        raise PermissionError
+
+    return {
+        "comments": comments,
+        "votes": votes,
+        "action": action,
+        "stereotype": stereotype,
+    }
+
+
+def post_stereotype(data):
+    """
+    Process results and save votes
+    """
+    comments = Comment.objects.filter(id__in=data['comments'])
+    votes = StereotypeVote.objects.filter(id__in=data['votes'])
+    if data['action'] == "discard":
+        votes.delete()
+    else:
+        choice_map = {"agree": Choice.AGREE, "disagree": Choice.DISAGREE, "skip": Choice.SKIP}
+        choice = choice_map[data['action']]
+        votes.update(choice=choice)
+        StereotypeVote.objects.bulk_create(
+            [
+                StereotypeVote(choice=choice, comment=comment, author_id=data['stereotype'].id)
+                for comment in comments
+            ]
+        )
+
+
 @urlpatterns.route(conversation_url + "stereotypes/", perms=["ej.can_edit_conversation:conversation"])
 def stereotype_votes(request, conversation, slug, check=check_promoted):
     check(conversation, request)
@@ -128,42 +179,14 @@ def stereotype_votes(request, conversation, slug, check=check_promoted):
     # Process form, if method is post
     all_stereotypes = clusterization.stereotypes.all()
     if request.method == "POST":
-        # Fetch data from POST dictionary
-        data = request.POST
-        action = data["action"]
-        votes = map(int, data.getlist("vote"))
-        comments = map(int, data.getlist("comment"))
-        stereotype = Stereotype.objects.get(id=data["stereotype"])
-        if stereotype not in all_stereotypes:
-            raise PermissionError
-
-        # Process results and save votes
-        comments = Comment.objects.filter(id__in=comments)
-        votes = StereotypeVote.objects.filter(id__in=votes)
-        if action == "discard":
-            votes.delete()
-        else:
-            choice_map = {"agree": Choice.AGREE, "disagree": Choice.DISAGREE, "skip": Choice.SKIP}
-            choice = choice_map[action]
-            votes.update(choice=choice)
-            StereotypeVote.objects.bulk_create(
-                [
-                    StereotypeVote(choice=choice, comment=comment, author_id=stereotype.id)
-                    for comment in comments
-                ]
-            )
+        data = fetch_post_data(request, all_stereotypes)
+        post_stereotype(data)
 
     all_votes = clusterization.stereotype_votes.all()
     comments = conversation.comments.approved()
 
     # Mark stereotypes with information about votes
-    stereotypes = []
-    for stereotype in all_stereotypes:
-        votes = [vote for vote in all_votes if vote.author == stereotype]
-        voted = set(vote.comment for vote in votes)
-        stereotype.non_voted_comments = [x for x in comments if x not in voted]
-        stereotype.given_votes = votes
-        stereotypes.append(stereotype)
+    stereotypes = get_stereotypes(all_stereotypes, all_votes, comments)
 
     return {
         "conversation": conversation,
