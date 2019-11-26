@@ -20,7 +20,6 @@ class EjOptions(Conf):
     EJ_ENABLE_CLUSTERS = env(True, name="{attr}")
     EJ_ENABLE_DATAVIZ = env(True, name="{attr}")
     EJ_ENABLE_GAMIFICATION = env(True, name="{attr}")
-    
 
     # Allow instances to exclude some profile fields from visualization
     EJ_PROFILE_EXCLUDE_FIELDS = env([], name="{attr}")
