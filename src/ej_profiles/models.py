@@ -122,17 +122,11 @@ class Profile(models.Model):
     def get_absolute_url(self):
         return reverse("user-detail", kwargs={"pk": self.id})
 
-    def profile_fields(self, user_fields=False, blacklist=None):
+    def create_tuple_of_interest(self, fields, null_values):
         """
-        Return a list of tuples of (field_description, field_value) for all
-        registered profile fields.
+        Return a tuples of (attribute, human-readable name, value)
         """
-
-        fields = self.basic_fields
         field_map = {field.name: field for field in self._meta.fields}
-        null_values = {Gender.NOT_FILLED, Race.NOT_FILLED, None, ""}
-
-        # Create a tuples of (attribute, human-readable name, value)
         triple_list = []
         for field in fields:
             description = field_map[field].verbose_name
@@ -142,7 +136,20 @@ class Profile(models.Model):
             elif hasattr(self, f"get_{field}_display"):
                 value = getattr(self, f"get_{field}_display")()
             triple_list.append((field, description, value))
+        return triple_list
 
+    def profile_fields(self, user_fields=False, blacklist=None):
+        """
+        Return a list of tuples of (field_description, field_value) for all
+        registered profile fields.
+        """
+
+        fields = self.basic_fields
+        null_values = {Gender.NOT_FILLED, Race.NOT_FILLED, None, ""}
+
+        # Create a tuples of (attribute, human-readable name, value)
+        triple_list = create_tuple_of_interest(self, fields, null_values)
+        
         # Age is not a real field, but a property. We insert it after occupation
         triple_list.insert(3, ("age", _("Age"), self.age))
 
