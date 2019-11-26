@@ -19,17 +19,17 @@ urlpatterns = Router(
 )
 
 # Constants
-board_profile_admin_url = "profile/boards/"
-board_base_url = "<model:board>/conversations/"
-board_conversation_url = board_base_url + "<model:conversation>/<slug:slug>/"
-reports_url = "<model:board>/conversations/<model:conversation>/reports/"
-reports_kwargs = {"login": True}
+BOARD_PROFILE_ADMIN_URL = "profile/boards/"
+BOARD_BASE_URL = "<model:board>/conversations/"
+BOARD_CONVERSATION_URL = BOARD_BASE_URL + "<model:conversation>/<slug:slug>/"
+REPORTS_URL = "<model:board>/conversations/<model:conversation>/reports/"
+REPORTS_KWARGS = {"login": True}
 
 
 #
 # Board URLs
 #
-@urlpatterns.route(board_profile_admin_url, login=True)
+@urlpatterns.route(BOARD_PROFILE_ADMIN_URL, login=True)
 def board_list(request):
     user = request.user
     boards = user.boards.all()
@@ -42,7 +42,7 @@ def board_list(request):
     return {"boards": boards, "can_add_board": can_add_board}
 
 
-@urlpatterns.route(board_profile_admin_url + "add/", login=True, perms=["ej.can_add_board"])
+@urlpatterns.route(BOARD_PROFILE_ADMIN_URL + "add/", login=True, perms=["ej.can_add_board"])
 def board_create(request):
     form = BoardForm(request=request)
     if form.is_valid_post():
@@ -66,29 +66,29 @@ def board_edit(request, board):
 #
 # Conversation URLs
 #
-@urlpatterns.route(board_base_url)
+@urlpatterns.route(BOARD_BASE_URL)
 def conversation_list(request, board):
     return conversations.list_view(
         request, queryset=board.conversations.annotate_attr(board=board), context={"board": board}
     )
 
 
-@urlpatterns.route(board_base_url + "add/", perms=["ej.can_edit_board:board"])
+@urlpatterns.route(BOARD_BASE_URL + "add/", perms=["ej.can_edit_board:board"])
 def conversation_create(request, board):
     return conversations.create(request, board=board, context={"board": board})
 
 
-@urlpatterns.route(board_conversation_url, login=True)
+@urlpatterns.route(BOARD_CONVERSATION_URL, login=True)
 def conversation_detail(request, board, **kwargs):
     return conversations.detail(request, **kwargs, check=check_board(board))
 
 
-@urlpatterns.route(board_conversation_url + "edit/", perms=["ej.can_edit_conversation:conversation"])
+@urlpatterns.route(BOARD_CONVERSATION_URL + "edit/", perms=["ej.can_edit_conversation:conversation"])
 def conversation_edit(request, board, **kwargs):
     return conversations.edit(request, board=board, check=check_board(board), **kwargs)
 
 
-@urlpatterns.route(board_conversation_url + "moderate/", perms=["ej.can_edit_conversation:conversation"])
+@urlpatterns.route(BOARD_CONVERSATION_URL + "moderate/", perms=["ej.can_edit_conversation:conversation"])
 def conversation_moderate(request, board, **kwargs):
     return conversations.moderate(request, check=check_board(board), **kwargs)
 
@@ -100,11 +100,11 @@ if apps.is_installed("ej_dataviz"):
     from ej_dataviz import routes as dataviz
     from ej_dataviz import routes_report as report
 
-    base_path = board_base_url + dataviz.urlpatterns.base_path
+    base_path = BOARD_BASE_URL + dataviz.urlpatterns.base_path
     for route in dataviz.urlpatterns.routes:
         register_route(urlpatterns, route, base_path, "dataviz")
 
-    base_path = board_base_url + report.urlpatterns.base_path
+    base_path = BOARD_BASE_URL + report.urlpatterns.base_path
     for route in report.urlpatterns.routes:
         register_route(urlpatterns, route, base_path, "report")
 
@@ -114,6 +114,6 @@ if apps.is_installed("ej_dataviz"):
 if apps.is_installed("ej_clusters"):
     from ej_clusters import routes as cluster
 
-    base_path = board_base_url + cluster.urlpatterns.base_path
+    base_path = BOARD_BASE_URL + cluster.urlpatterns.base_path
     for route in cluster.urlpatterns.routes:
         register_route(urlpatterns, route, base_path, "cluster")
