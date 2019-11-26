@@ -16,23 +16,37 @@ class DramatiqConf(Conf):
     kwargs = None
     broker = None
 
-    def get_dramatiq_attributes(self):
+    def set_broker_atribs(self):
         """
         This method sets the url, kind, host and port attributes for the broker object
         """ 
+        self.set_broker_url()
+        
+
+    def set_broker_url(self):
+        """
+        This method checks extract the broker url and sets to the url variable
+        """ 
         if self.DRAMATIQ_BROKER_URL:
             self.url = self.DRAMATIQ_BROKER_URL.strip()
-            if self.url is None:
-                self.kind, self.host, self.port = "stub", None, None
-            else:
-                self.kind, _, self.url = self.url.partition("://")
-                self.host, _, self.port = self.url.partition(":")
-                self.host = self.host or None
-                self.port = int(self.port) if self.port else None
+            self.set_atribs()
         else:
             self.kind = self.DRAMATIQ_BROKER_TYPE
             self.host = self.DRAMATIQ_BROKER_HOST or None
             self.port = self.DRAMATIQ_BROKER_PORT or None
+
+    def set_atribs(self):
+        """
+        This method checks if the url is none, then sets the kind, host and port attributes 
+        for the broker object
+        """ 
+        if self.url is None:
+                self.kind, self.host, self.port = "stub", None, None
+        else:
+            self.kind, _, self.url = self.url.partition("://")
+            self.host, _, self.port = self.url.partition(":")
+            self.host = self.host or None
+            self.port = int(self.port) if self.port else None
 
     def separate_non_null_args(self):
         """
@@ -57,14 +71,12 @@ class DramatiqConf(Conf):
         else:
             raise ValueError(f"invalid dramatiq broker: {self.kind}")
 
-    
-
     def get_dramatiq_broker_object(self):
         """
         This method initializes the broker object for Dramatiq and saves it in
         Django's settings.
         """
-        self.get_dramatiq_attributes()
+        self.set_broker_atribs()
 
         self.separate_non_null_args()
 
