@@ -4,6 +4,11 @@ from boogie.configurations import Conf, env
 
 
 class DramatiqConf(Conf):
+    """
+    Class to set setting for the Dramatiq that is a
+    distributed task processing library
+    https://dramatiq.io/
+    """
     DRAMATIQ_BROKER_URL = env("", name="{name}")
     DRAMATIQ_BROKER_TYPE = env("stub", name="{name}")
     DRAMATIQ_BROKER_HOST = env("", name="{name}")
@@ -13,6 +18,7 @@ class DramatiqConf(Conf):
         """
         This method initializes the broker object for Dramatiq and saves it in
         Django's settings.
+        :return: broker
         """
 
         if self.DRAMATIQ_BROKER_URL:
