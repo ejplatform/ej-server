@@ -1,3 +1,9 @@
+"""
+forms.py
+====================================
+Forms django project
+"""
+
 from operator import attrgetter
 
 from django.forms import Form, ModelForm, widgets
@@ -14,9 +20,7 @@ class EjForm(Form):
     """
 
     def __init__(self, data=None, files=None, *args, request=None, **kwargs):
-        if request is not None and request.method in self._meta_property(
-            "http_methods", ("POST",)
-        ):
+        if request is not None and request.method in self._meta_property("http_methods", ("POST",)):
             method = request.method
             data = getattr(request, method)
             kwargs.setdefault("files", request.FILES)
@@ -76,6 +80,18 @@ class EjForm(Form):
                 elem.field.widget.attrs.setdefault(attribute, value)
 
 
+class EjUserForm(EjForm):
+    def __init__(self, *args, **kwargs):
+        if "user" in kwargs:
+            user = kwargs.pop("user")
+        elif "request" in kwargs:
+            user = kwargs["request"].user
+        else:
+            raise TypeError("User must be provided from request or user parameter")
+        super().__init__(*args, **kwargs)
+        self.user = user
+
+
 class EjModelForm(EjForm, ModelForm):
     """
     A ModelForm version of the extended form.
@@ -121,8 +137,7 @@ class FileInput(widgets.FileInput):
 
         return div(class_="FileInput")[
             div(class_="PickFileButton")[
-                input_(style="opacity: 0", type_=w_type, name=w_name, **w_attrs),
-                _("Choose a file"),
+                input_(style="opacity: 0", type_=w_type, name=w_name, **w_attrs), _("Choose a file")
             ],
             div(class_="FileStatus")[_("No file chosen")],
         ].render()

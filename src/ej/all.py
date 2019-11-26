@@ -87,12 +87,7 @@ if apps.is_installed("ej_profiles"):
 
 # Clusterization app
 if apps.is_installed("ej_clusters"):
-    from ej_clusters.models import (
-        Clusterization,
-        Stereotype,
-        Cluster,
-        StereotypeVote,
-    )  # noqa: E402
+    from ej_clusters.models import Clusterization, Stereotype, Cluster, StereotypeVote  # noqa: E402
 
     clusterizations = Clusterization.objects
     clusterization = _first(clusterizations)
@@ -129,12 +124,7 @@ def fix_links(data, prefix="http://localhost:8000"):
 from ej_clusters import math as _cmath  # noqa: E402
 from ej_clusters.math import factories as _factories  # noqa: E402
 
-math = namespace(
-    clusters=_cmath,
-    kmeans=_cmath.kmeans,
-    pipeline=_cmath.pipeline,
-    factories=_factories,
-)
+math = namespace(clusters=_cmath, kmeans=_cmath.kmeans, pipeline=_cmath.pipeline, factories=_factories)
 
 
 #

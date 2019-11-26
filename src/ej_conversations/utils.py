@@ -1,12 +1,12 @@
 from logging import getLogger
 
-from django.contrib import messages
 from django.core.exceptions import ValidationError
-from django.http import Http404, HttpResponseServerError
-from django.utils.html import escape
+from django.http import Http404
 from django.utils.translation import ugettext_lazy as _
 from hyperpython import a
 from sidekick import import_later
+
+from ej.components.builtins import toast
 
 log = getLogger("ej")
 models = import_later(".models", package=__package__)
@@ -20,31 +20,10 @@ def check_promoted(conversation, request):
     """
     Raise a Http404 if conversation is not promoted
     """
-    if not conversation.is_promoted:
-        raise Http404
-    if conversation.is_hidden and not request.user.has_perm(
-        "ej.can_edit_conversation", conversation
-    ):
+    # Check if request.user.has_perm("ej.can_edit_conversation", conversation)))?
+    if not conversation.is_promoted or conversation.is_hidden:
         raise Http404
     return conversation
-
-
-def handle_detail_post(request, conversation, action):
-    """
-    Process a POST in a conversation:detail view..
-    """
-
-    if action == "vote":
-        return handle_detail_vote(request)
-    elif action == "comment":
-        return handle_detail_comment(request, conversation)
-    elif action == "favorite":
-        return handle_detail_favorite(request, conversation)
-    else:
-        log.warning(
-            f"user {request.user.id} se nt invalid POST request: {request.POST}"
-        )
-        return HttpResponseServerError("invalid action")
 
 
 def conversation_admin_menu_links(conversation, user):
@@ -119,7 +98,7 @@ def handle_detail_comment(request, conversation):
         new_comment = form.cleaned_data["content"]
         user = request.user
         new_comment = conversation.create_comment(user, new_comment)
-        toast(request, _("Your comment has been saved."))
+        toast(request, _("Thank you! Your comment was sent to moderation and will be evaluated soon."))
         log.info(f"user {user.id} posted comment {new_comment.id} on {conversation.id}")
     return {"form": form}
 
@@ -135,10 +114,5 @@ def handle_detail_favorite(request, conversation):
     else:
         toast(request, _("Conversation removed from favorites."))
 
-    log.info(
-        f"user {user.id} toggled favorite status of conversation {conversation.id}"
-    )
-
-
-def toast(request, msg, **kwargs):
-    messages.info(request, escape(msg), **kwargs)
+    log.info(f"user {user.id} toggled favorite status of conversation {conversation.id}")
+    return {}

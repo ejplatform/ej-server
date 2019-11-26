@@ -1,10 +1,10 @@
-<section title="{{ _('Authentication') }}">
-    <h1>{{ _('Authentication') }}</h1>
+<nav title="{{ _('Authentication') }}" aria-labelledby="menu-authentication">
+    <h3 id="menu-authentication">{{ _('Authentication') }}</h3>
     <ul>
         <li><a href="{{ url('auth:login') }}">{{ _('Login') }}</a></li>
         <li><a href="{{ url('auth:register') }}">{{ _('Register') }}</a></li>
         <li><a href="{{ url('auth:recover-password') }}">{{ _('Recover password') }}</a></li>
     </ul>
-</section>
-{{ page_menu.ABOUT() }}
+</nav>
+{{ page_menu.ABOUT(request) }}
 {{ page_menu.ACCESSIBILITY() }}

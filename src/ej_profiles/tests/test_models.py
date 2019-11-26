@@ -2,6 +2,7 @@ import datetime
 from datetime import date
 
 import pytest
+from django.conf import settings
 from django.utils.translation import ugettext as _
 
 from ej_profiles.enums import Gender, Race
@@ -28,21 +29,25 @@ class TestProfile:
             education="undergraduate",
         )
 
+    @pytest.mark.skipif(
+        settings.EJ_THEME not in ("default", None), reason="Do not work if theme modify profile fields"
+    )
     def test_profile_invariants(self, profile):
-        assert str(profile) == "name's profile"
-        assert profile.profile_fields() == [
-            ("City", "city"),
-            ("State", "state"),
-            ("Country", "country"),
-            ("Age", profile.age),
-            ("Occupation", "occupation"),
-            ("Education", "undergraduate"),
-            ("Ethnicity", "ethnicity"),
-            ("Gender identity", "Female"),
-            ("Race", "Indigenous"),
-            ("Political activity", "political_activity"),
-            ("Biography", "biography"),
-        ]
+        expected = {
+            (_("City"), _("city")),
+            (_("State"), _("state")),
+            (_("Country"), _("country")),
+            (_("Age"), profile.age),
+            (_("Occupation"), _("occupation")),
+            (_("Education"), _("undergraduate")),
+            (_("Ethnicity"), _("ethnicity")),
+            (_("Gender identity"), _("Female")),
+            (_("Race"), _("Indigenous")),
+            (_("Political activity"), _("political_activity")),
+            (_("Biography"), _("biography")),
+        }
+        assert str(profile) == _("name's profile")
+        assert set(profile.profile_fields()) - expected == set()
         assert profile.is_filled
         assert profile.statistics() == {"votes": 0, "comments": 0, "conversations": 0}
         assert profile.role() == _("Regular user")

@@ -7,7 +7,6 @@ from django.apps import apps
 from django.conf import settings
 from django.contrib.messages import get_messages
 from django.contrib.staticfiles.storage import staticfiles_storage
-from django.urls import reverse
 from django.utils import translation
 from django.utils.formats import date_format
 from django.utils.translation import get_language
@@ -20,6 +19,7 @@ from sidekick import record
 from . import components
 from . import roles
 from .roles import tags
+from .utils.url import SafeUrl
 
 
 def environment(autoescape=True, **options):
@@ -31,7 +31,7 @@ def environment(autoescape=True, **options):
 
     env.globals.update(
         static=staticfiles_storage.url,
-        url=reverse,
+        url=SafeUrl,
         settings=record(
             **{k: getattr(settings, k) for k in dir(settings)},
             has_boards=apps.is_installed("ej_boards"),
@@ -62,10 +62,7 @@ def environment(autoescape=True, **options):
         **FUNCTIONS,
     )
     env.filters.update(
-        markdown=lambda x: Markup(markdown(x)),
-        pc=format_percent,
-        salt=salt,
-        **hyperpython.jinja2.filters,
+        markdown=lambda x: Markup(markdown(x)), pc=format_percent, salt=salt, **hyperpython.jinja2.filters
     )
     env.install_gettext_translations(translation, newstyle=True)
     return env
@@ -211,6 +208,13 @@ def generic_context(ctx):
 #
 # Constants
 #
+def try_function(func, *args, **kwargs):
+    try:
+        return func(*args, **kwargs)
+    except Exception:
+        return StrictUndefined()
+
+
 FUNCTIONS = {}
 for _names, _mod in [(tags.__all__, tags), (dir(components), components)]:
     for _name in _names:
@@ -218,3 +222,4 @@ for _names, _mod in [(tags.__all__, tags), (dir(components), components)]:
         if not _name.startswith("_") and callable(value):
             FUNCTIONS[_name] = value
 SALT_CHARS = string.ascii_letters + string.digits + "-_"
+FUNCTIONS["try"] = try_function

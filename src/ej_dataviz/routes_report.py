@@ -11,17 +11,14 @@ from ej_conversations.routes import conversation_url
 from ej_conversations.utils import check_promoted
 from .routes import EXPOSED_PROFILE_FIELDS
 
-pd = import_later('pandas')
+pd = import_later("pandas")
 
 urlpatterns = Router(
     base_path=conversation_url + "reports/",
     template="ej_dataviz/report/{name}.jinja2",
-    models={
-        "conversation": Conversation,
-        "cluster": Cluster,
-    },
+    models={"conversation": Conversation, "cluster": Cluster},
     login=True,
-    perms=["ej.can_view_report_detail:conversation"],
+    perms=["ej.can_view_report:conversation"],
 )
 app_name = "ej_dataviz"
 User = get_user_model()
@@ -53,8 +50,10 @@ def index(request, conversation, slug, check=check_promoted):
     }
 
 
-@urlpatterns.route("users/")
+@urlpatterns.route("users/", perms=["ej.can_view_report_detail"])
 def users(request, conversation, slug, check=check_promoted):
+    if not request.user.has_perm("ej.can_view_report_detail"):
+        raise Http404
     return {"conversation": check(conversation, request)}
 
 
@@ -62,7 +61,8 @@ def users(request, conversation, slug, check=check_promoted):
 # Votes raw data
 # ------------------------------------------------------------------------------
 
-@urlpatterns.route("data/votes.<fmt>")
+
+@urlpatterns.route("data/votes.<fmt>", perms=["ej.can_view_report_detail"])
 def votes_data(request, conversation, fmt, slug, check=check_promoted):
     check(conversation, request)
     filename = conversation.slug + "-votes"
@@ -72,7 +72,7 @@ def votes_data(request, conversation, fmt, slug, check=check_promoted):
 
 # FIXME: why is <model:cluster> not working?
 # adjust conversation_download_data() after fixing this bug
-@urlpatterns.route("data/cluster-<int:cluster_id>/votes.<fmt>")
+@urlpatterns.route("data/cluster-<int:cluster_id>/votes.<fmt>", perms=["ej.can_view_report_detail"])
 def votes_data_cluster(request, conversation, fmt, cluster_id, slug, check=check_promoted):
     check(conversation, request)
     cluster = get_cluster_or_404(cluster_id, conversation)
@@ -87,13 +87,14 @@ def vote_data_common(votes, filename, fmt):
     columns = "author__email", "author__name", "author__id", "comment__content", "comment__id", "choice"
     df = votes.dataframe(*columns)
     df.columns = "email", "author", "author_id", "comment", "comment_id", "choice"
-    df.choice = list(map({-1: 'disagree', 1: 'agree', 0: 'skip'}.get, df['choice']))
+    df.choice = list(map({-1: "disagree", 1: "agree", 0: "skip"}.get, df["choice"]))
     return data_response(df, fmt, filename)
 
 
 # ==============================================================================
 # Comments raw data
 # ------------------------------------------------------------------------------
+
 
 @urlpatterns.route("data/comments.<fmt>")
 def comments_data(request, conversation, fmt, slug, check=check_promoted):
@@ -123,7 +124,7 @@ def comments_data_common(comments, votes, filename, fmt):
         "agree",
         "disagree",
         "skipped",
-        "divergence",
+        "convergence",
         "participation",
     ]
     df = df[columns]
@@ -135,6 +136,7 @@ def comments_data_common(comments, votes, filename, fmt):
 # Users raw data
 # ------------------------------------------------------------------------------
 
+
 @urlpatterns.route("data/users.<fmt>")
 def users_data(request, conversation, fmt, slug, check=check_promoted):
     check(conversation, request)
@@ -145,24 +147,32 @@ def users_data(request, conversation, fmt, slug, check=check_promoted):
     except AttributeError:
         pass
     else:
-        data = clusters.values_list('users__id', 'name', 'id')
-        extra = pd.DataFrame(data, columns=['user', 'cluster', 'cluster_id'])
-        extra.index = extra.pop('user')
-        df[['cluster', 'cluster_id']] = extra
-        df['cluster_id'] = df.cluster_id.fillna(-1).astype(int)
+        # Retrieve non empty clusters.
+        data = clusters.values_list("users__id", "name", "id")
+        data = filter(lambda x: x[0], data)
+        extra = pd.DataFrame(data, columns=["user", "cluster", "cluster_id"])
+        extra.index = extra.pop("user")
+        df[["cluster", "cluster_id"]] = extra
+        df["cluster_id"] = df.cluster_id.fillna(-1).astype(int)
     return data_response(df, fmt, filename)
 
 
 def get_user_data(conversation):
-    df = conversation.users.statistics_summary_dataframe(
-        extend_fields=('id', *EXPOSED_PROFILE_FIELDS),
-    )
-    df = df[[
-        'email', 'id', 'name',
-        *EXPOSED_PROFILE_FIELDS,
-        'agree', 'disagree', 'skipped', 'divergence', 'participation',
-    ]]
-    df.columns = ['email', 'user_id', *df.columns[2:]]
+    df = conversation.users.statistics_summary_dataframe(extend_fields=("id", *EXPOSED_PROFILE_FIELDS))
+    df = df[
+        [
+            "email",
+            "id",
+            "name",
+            *EXPOSED_PROFILE_FIELDS,
+            "agree",
+            "disagree",
+            "skipped",
+            "convergence",
+            "participation",
+        ]
+    ]
+    df.columns = ["email", "user_id", *df.columns[2:]]
     return df
 
 
@@ -174,14 +184,15 @@ def data_response(data: pd.DataFrame, fmt: str, filename: str):
     Prepare data response for file from dataframe.
     """
     response = HttpResponse(content_type=f"text/{fmt}")
-    filename = f"filename={filename}.{fmt}"
-    response["Content-Disposition"] = f"attachment; {filename}"
+    response["Content-Disposition"] = f"attachment; filename={filename}.{fmt}"
     if fmt == "json":
-        data.to_json(path_or_buf=response, force_ascii=False)
+        data.to_json(response, orient="records")
     elif fmt == "csv":
-        data.to_csv(path_or_buf=response, index=False, mode="a", float_format="%.3f")
+        data.to_csv(response, index=False, mode="a", float_format="%.3f")
     elif fmt == "msgpack":
-        data.to_msgpack(path_or_buf=response, encoding="utf-8")
+        data.to_msgpack(response, encoding="utf-8")
+    elif fmt == "xlsx":
+        data.to_excel(response, filename, index=False)
     else:
         raise ValueError(f"invalid format: {fmt}")
     return response

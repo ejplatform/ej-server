@@ -15,9 +15,7 @@ from .factories import (
 
 class CreateUsersForm(EjForm):
     size = forms.IntegerField(label=_("Number of new users"), initial=10)
-    fill_profile = forms.BooleanField(
-        label=_("Fill profile with random data?"), required=False
-    )
+    fill_profile = forms.BooleanField(label=_("Fill profile with random data?"), required=False)
 
     def create(self):
         size = self.cleaned_data["size"]
@@ -27,9 +25,7 @@ class CreateUsersForm(EjForm):
 
 class CreateConversationsForm(EjForm):
     size = forms.IntegerField(label=_("Number of new conversations"), initial=5)
-    comments = forms.IntegerField(
-        label=_("Number of comments per conversation"), initial=20
-    )
+    comments = forms.IntegerField(label=_("Number of comments per conversation"), initial=20)
 
     def create(self):
         data = self.cleaned_data
@@ -38,9 +34,7 @@ class CreateConversationsForm(EjForm):
 
 class CreateVotesForm(EjForm):
     conversation = forms.ModelChoiceField(Conversation.objects.filter(is_hidden=False))
-    n_votes = forms.IntegerField(
-        label=_("Average number of votes per comment"), initial=10
-    )
+    n_votes = forms.IntegerField(label=_("Average number of votes per comment"), initial=10)
     n_clusters = forms.IntegerField(label=_("Number of clusters/personas"), initial=4)
 
     def create(self):

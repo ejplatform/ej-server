@@ -17,15 +17,15 @@
         <label>{{ form.title.label }}{{ form.title }}</label>
         <legend>{{ form.title.help_text }}</legend>
 
-        {% if can_publish %}
-            {{ form.is_promoted.errors }}
-            <label>{{ form.is_promoted }} {{ form.is_promoted.label }}</label>
-            <legend>{{ form.is_promoted.help_text }}</legend>
-        {% endif %}
+{#        {% if can_publish %}#}
+{#            {{ form.is_promoted.errors }}#}
+{#            <label>{{ form.is_promoted }} {{ form.is_promoted.label }}</label>#}
+{#            <legend>{{ form.is_promoted.help_text }}</legend>#}
+{#        {% endif %}#}
 
-        {{ form.is_hidden.errors }}
-        <label>{{ form.is_hidden }} {{ form.is_hidden.label }}</label>
-        <legend>{{ form.is_hidden.help_text }}</legend>
+{#        {{ form.is_hidden.errors }}#}
+{#        <label>{{ form.is_hidden }} {{ form.is_hidden.label }}</label>#}
+{#        <legend>{{ form.is_hidden.help_text }}</legend>#}
 
         <div class="margin-xauto margin-y3 center">
             <input class="is-primary" type="submit" value="{{ _('Save modifications') }}">

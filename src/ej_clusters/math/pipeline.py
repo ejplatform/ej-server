@@ -1,20 +1,19 @@
 import sidekick as sk
-from sklearn import pipeline as pipeline_, impute, preprocessing, decomposition
+from sklearn import pipeline as pipeline_, preprocessing, decomposition
 
-from .kmeans import StereotypeKMeans
+from .kmeans_sklearn import StereotypeKMeans
 
 
 #
 # Default pipeline
 #
-def clusterization_pipeline(whiten=True, distance="l1", only_preprocess=False):
+def clusterization_pipeline(whiten=False, distance=None, only_preprocess=False):
     """
     Define the main clusterization pipeline that starts with some vote_table().
     that should include some stereotype votes.
     """
 
     def make_pipeline(k):
-        imputer = impute.SimpleImputer()
         scaler = preprocessing.StandardScaler()
         whitener = optional_whitener(whiten)
 
@@ -24,12 +23,7 @@ def clusterization_pipeline(whiten=True, distance="l1", only_preprocess=False):
         else:
             clusterization_method = StereotypeKMeans(k, distance=distance)
 
-        return pipeline(
-            impute=imputer,
-            scale=scaler,
-            whiten=whitener,
-            clusterize=clusterization_method,
-        )
+        return pipeline(scale=scaler, whiten=whitener, clusterize=clusterization_method)
 
     return make_pipeline
 

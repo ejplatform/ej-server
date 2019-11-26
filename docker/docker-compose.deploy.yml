@@ -1,13 +1,49 @@
+#
+# RECOMMENTED DEPLOYMENT CONFIGURATION
+#
 version: '3.5'
 
 
+#
+# We use a few environment variables to customize aspects of the docker-compose
+# configuration. For instance, you can control the name of organization used
+# to store those images by exporting an ORG variable in your shell before
+# calling Docker Compose.
+#
+#   $ export ORG=myOrganization
+#   $ export TAG=latest
+#   $ export THEME=default
+#   $ docker-compose -f docker-compose.deploy.yml build
+#
+# This give us some flexibility withing a single file, but most users should
+# not rely on this mechanism on the final production build. Instead, just replace
+# all ocurrences of those variables by the values actually used on your
+# installation
+
 services:
+
+  # We distribute a separate NGINX container to serve static files. This is
+  # not strictly necessary if there is already another reverse proxy in your
+  # network. In that case, configure your reverse proxy to communicate with the
+  # Web container using port 8000.
+  #
+  # This is just a small possibility for optimization. Leaving this container
+  # will work if you already have a reverse proxy or not and is generally
+  # recommended.
+  #
+  # The NGINX container simply builds an stock alpine image and saves a simple
+  # configuration file. You might also want to edit this file at /conf/nginx.conf
+  # and customize if your installation requires some specific security policy,
+  # specific headers, etc.
   nginx:
-    image: ejplatform/nginx:latest
+    image: ${ORG:-ej}/nginx:latest
+    build:
+      context: .
+      dockerfile: Dockerfile-nginx
+    restart: always
     volumes:
       - media_files:/usr/share/nginx/html/media
       - static_files:/usr/share/nginx/html/static
-      - docs:/usr/share/nginx/html/docs
     ports:
       - 80:80
     depends_on:
@@ -15,33 +51,60 @@ services:
     links:
       - web
 
+
+  # This is the container for the main application. EJ uses the 12-factors
+  # approach to configuration and relies heavily on environment variables.
+  # Configure it by setting the environment variables on ./config.env
+  # Remember that the variables of the host environment are not passed to
+  # the containers since that would break encapsulation. You control those
+  # variables using env files or by setting explicit values on the "enviroment"
+  # section of the container.
   web:
-    image: ej/web:latest
+    image: ${ORG:-ej}/web:${TAG:-latest}
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile
+      target: deploy
+      args:
+        - THEME=${EJ_THEME:-default}
     restart: always
     links:
       - postgres
     env_file:
-      - ./env/django.env
-      - ./env/postgres.env
-      - ./env/deploy.env
+      - ./config.env
     volumes:
       - media_files:/app/local/media/
       - static_files:/app/local/static/
-      - docs:/app/build/docs/
-      - nginx_conf:/etc/nginx/conf.d/
 
+
+  # The database. If your infra already has a postgres installation, it is
+  # probably better to drop this container and configure the DJANGO_DB_URL
+  # variable at the web container (or config.env) to point to your own database.
   postgres:
     image: postgres:10-alpine
     restart: always
     env_file:
-      - ./env/postgres.env
+      - ./config.env
     volumes:
-      - ej_db_data:/var/lib/postgresql/data
+      - db_ej:/var/lib/postgresql/data
 
 
+  #
+  # OTHER SERVICES
+  #
+  # If you want to enable Rocket.Chat integration, copy the corresponding sections
+  # for "rocketchat" and "mongo" here. You will also need to copy the rocketchat
+  # database volume in the corresponding section.
+  #
+  # ...
+
+
+
+# The default configuration uses Docker volumes managed by Docker Compose to
+# persist data. Many installations prefer to map those volumes to physical
+# folders in the host machine. If that is your case, just replace all instances
+# o a volume name by the corresponding physical folder
 volumes:
-  ej_db_data:
+  db_ej:
   media_files:
   static_files:
-  nginx_conf:
-  docs:

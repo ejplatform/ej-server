@@ -8,9 +8,7 @@ __all__ = ["UserRecipes"]
 
 
 class UserRecipes(EjRecipes):
-    token = Recipe(
-        PasswordResetToken, url="random-data", user=_foreign_key(EjRecipes.user)
-    )
+    token = Recipe(PasswordResetToken, url="random-data", user=_foreign_key(EjRecipes.user))
 
     def get_data(self, request):
         data = super().get_data(request)

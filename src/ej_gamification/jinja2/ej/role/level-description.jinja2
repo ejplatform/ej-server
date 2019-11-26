@@ -1,0 +1,7 @@
+<span class="block text-6"><strong>{{ level }}</strong>
+    ({% trans n=(level + 0) %}level {{ n }}{% endtrans %})
+    {% if stars|default(true) %}{{ level|role('stars', brackets='') }}{% endif %}</span>
+{% if progress is defined %}
+    <span class="block text-6">{{ level.achieve_next_level_msg(progress) }}</span>
+{% endif %}
+

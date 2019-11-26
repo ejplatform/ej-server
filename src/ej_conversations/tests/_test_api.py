@@ -15,11 +15,7 @@ class TestGetRoutes:
         assert api.get(url, raw=True).status_code == 200
 
         # Check inner links work
-        assert api.get(path + "user_data/") == {
-            "missing_votes": 0,
-            "participation_ratio": 0.0,
-            "votes": 0,
-        }
+        assert api.get(path + "user_data/") == {"missing_votes": 0, "participation_ratio": 0.0, "votes": 0}
         assert api.get(path + "votes/") == []
         assert api.get(path + "approved_comments/") == []
         assert api.get(path + "random_comment/") == {
@@ -33,12 +29,7 @@ class TestGetRoutes:
 
     def test_votes_endpoint(self, vote_db, api):
         # Requesting from non-authenticated user
-        assert api.get("/votes/") == {
-            "count": 0,
-            "next": None,
-            "previous": None,
-            "results": [],
-        }
+        assert api.get("/votes/") == {"count": 0, "next": None, "previous": None, "results": []}
 
         # Now we force authentication
         api.client.force_login(vote_db.author, backend=None)

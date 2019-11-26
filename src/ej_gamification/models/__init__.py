@@ -1,13 +1,9 @@
 from .endorsement import Endorsement, endorse_comment, is_endorsed
-
 from .given_powers import GivenBridgePower, GivenMinorityPower, GivenPower
-from .progress import (
-    UserProgress,
-    ConversationProgress,
-    ParticipationProgress,
-    get_participation,
-    get_progress,
-)
+from .progress_base import get_participation, get_progress
+from .progress_conversation import ConversationProgress
+from .progress_participation import ParticipationProgress
+from .progress_user import UserProgress
 
 # ------------------------------------------------------------------------------
 # Patch models
@@ -46,6 +42,11 @@ def _patch_models():
         agg = user.participation_progresses.aggregate(r=Sum("score"))
         return agg["r"] or 0
 
+    # @patch(user, lazy)
+    # def n_trophies(user):
+    #     return user.progress.n_trophies
+
+    # FIXME: gamification
     user.n_endorsements = 0
     user.n_given_opinion_bridge_powers = 0
     user.n_given_minority_activist_powers = 0

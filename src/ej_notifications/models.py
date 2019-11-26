@@ -18,15 +18,10 @@ User = get_user_model()
 @rest_api(["name", "users", "owner", "purpose", "created"], lookup_field="slug")
 class Channel(TimeStampedModel):
     name = models.CharField(max_length=100)
-    users = models.ManyToManyField(
-        settings.AUTH_USER_MODEL, related_name="channels", blank=True
-    )
+    users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="channels", blank=True)
     purpose = models.EnumField(Purpose, _("Purpose"), default=Purpose.GENERAL)
     owner = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        null=True,
-        related_name="owned_channels",
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, related_name="owned_channels"
     )
     slug = AutoSlugField(unique=True, populate_from="name")
 
@@ -50,9 +45,7 @@ class Notification(TimeStampedModel):
     receiver = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="notifications"
     )
-    message = models.ForeignKey(
-        Message, on_delete=models.CASCADE, related_name="notifications"
-    )
+    message = models.ForeignKey(Message, on_delete=models.CASCADE, related_name="notifications")
     channel = models.ForeignKey(Channel, on_delete=models.CASCADE)
     is_read = models.BooleanField(default=False)
 
@@ -60,9 +53,7 @@ class Notification(TimeStampedModel):
 @rest_api(["id", "notification_option"])
 class NotificationConfig(models.Model):
     user = models.OneToOneField(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name="notification_options",
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="notification_options"
     )
     notification_option = models.EnumField(
         NotificationMode, _("Notification options"), default=NotificationMode.ENABLED

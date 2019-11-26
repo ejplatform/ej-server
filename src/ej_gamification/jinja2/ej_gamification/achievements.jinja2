@@ -3,32 +3,93 @@
 {% block content %}
     <h1 class="h2 text-accent center">{{ _('Your achievements') }}</h1>
 
-    <div class="center">
-        <p class="margin-b2 margin-t3"><i class="fa fa-medal"></i>{{ _('Classification:') }} <strong>{{ position_idx + 1 }}</strong> / {{ n_users }}</p>
-        <img src="progress-flag-{{ position_idx }}-{{ n_users }}.svg" class="size-x6p">
-
-        <p class="margin-b2 margin-t3"><i class="fa fa-trophy"></i>{{ _('Trophies:') }} <strong>{{ n_trophies }}</strong></p>
-        <div class="row wrap center-content">
-            <div class="width-1/3">{{ participation_trophy }}</div>
-            <div class="width-1/3">{{ profile_trophy }}</div>
-            <div class="width-1/3">{{ host_trophy }}</div>
-
-            <h2 class="width-full h4">{{ _('Participation in conversations') }}</h2>
-            {% for trophy in participation_trophies %}
-                <div class="width-1/3">{{ trophy }}</div>
-            {% else %}
-                <div class="width-full">{{ _('Participate more to unlock achievements :-)') }}</div>
-            {% endfor %}
-
-            <h2 class="width-full h4">{{ _('Your conversations') }}</h2>
-            {% for trophy in conversation_trophies %}
-                <div class="width-1/3">{{ trophy }}</div>
-            {% else %}
-                <div class="width-full">{{ _('Participate more to unlock achievements :-)') }}</div>
-            {% endfor %}
+    <div class="measure margin-xauto">
+        <div class="center">
+            <p class="margin-b2 margin-t3">
+                <i class="fa fa-trophy"></i>
+                {{ _('Trophies:') }} <strong>{{ n_trophies }}</strong>
+            </p>
+            <div class="expand-details cursor-pointer">
+                <div>
+                    <i class="fa fa-medal"></i>{{ _('Classification:') }}
+                    <strong>{{ position_idx + 1 }}</strong> / {{ n_users }}
+                </div>
+                <img src="progress-flag-{{ position_idx }}-{{ n_users }}.svg" class="size-x6p">
+            </div>
+            {% include 'ej_gamification/includes/leaderboard.jinja2' %}
         </div>
+
+
+        <div class="row wrap center-content">
+            {% set trophies_class = 'border pad-x3 rounded-3 border-1 width-full margin-x2' %}
+
+            <h2 class="width-full h3">{{ _('Generic') }}</h2>
+            <div class="{{ trophies_class }}" style="background: rgba(0, 0, 0, 0.05)">
+                {{ render_trophy(progress, score_level, _('Total score'), url('profile:detail'), stars=False) }}
+                <hr>
+                {{ render_trophy(progress, profile_level, _('Profile'), url('profile:detail'), statistics=False) }}
+                <hr>
+                {{ render_trophy(progress, commenter_level, _('Comments'),
+                                 href=url('profile:contributions', extra='#contribution-comments')) }}
+                {% if progress.n_conversations %}
+                    <hr>
+                    {{ render_trophy(progress, host_level, _('Hosted conversations'),
+                                     href=url('profile:contributions', extra='#contribution-conversations')) }}
+                {% endif %}
+            </div>
+
+            <h2 class="width-full h3">{{ _('Participation in conversations') }}</h2>
+            <div class="{{ trophies_class }}" style="background: rgba(0, 0, 0, 0.05)">
+                {% for p in participation_trophies %}
+                    {% if not loop.first %}
+                        <hr>
+                    {% endif %}
+                    {{ render_trophy(p, p.voter_level, p.conversation.title, p.conversation.url()) }}
+                {% else %}
+                    <p class="margin-3">{{ _('You have not engaged in any conversation yet.') }}
+                        {{ _('Participate more to unlock achievements :-)') }}</p>
+                {% endfor %}
+            </div>
+
+            {% if conversation_trophies %}
+                <h2 class="width-full h3">{{ _('Your conversations') }}</h2>
+                <div class="{{ trophies_class }}" style="background: rgba(0, 0, 0, 0.05)">
+                    {% for p in conversation_trophies %}
+                        {% if not loop.first %}
+                            <hr>
+                        {% endif %}
+                        {{ render_trophy(p, p.conversation_level, p.conversation.title, p.conversation.url()) }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        <div class="size-4"></div>
     </div>
-{#    {{ html_map(achievements, class_='description') }}#}
+
+    <script up-always-execute>
+        window.addEventListener('load', function () {
+            $('.expand-details').off('click').on('click', function (e) {
+                $(e.target.parentNode.parentNode).find('.details').toggle(200);
+                e.preventDefault();
+            });
+        })
+    </script>
 {% endblock %}
 
 
+{% macro render_trophy(progress, level, title, href=url('profile:detail', extra='#profile-contributions'), statistics=True, stars=True) %}
+    <div class="row margin-y2">
+        {{ level|role('trophy-image') }}
+
+        <div class="flex-1 left">
+            <strong
+                class="block margin-b2">{{ link(title, href=href, class="text-4 bold text-accent") }}
+            </strong>
+
+            {{ level|role('description', progress=progress, stars=stars) }}
+            {% if statistics %}
+                <div class="hidden details">{{ progress|role('statistics', level=level) }}</div>
+            {% endif %}
+        </div>
+    </div>
+{% endmacro %}

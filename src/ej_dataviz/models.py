@@ -17,4 +17,7 @@ def dataviz_links(request, conversation):
 
 @register_menu("conversations:detail-admin")
 def report_links(request, conversation):
-    return [a(_("Usage report"), href=conversation.url("report:index"))]
+    if request.user.has_perm("ej.can_view_report", conversation):
+        return [a(_("Usage report"), href=conversation.url("report:index"))]
+    else:
+        return []

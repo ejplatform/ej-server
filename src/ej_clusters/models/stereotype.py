@@ -19,9 +19,7 @@ class Stereotype(models.Model):
     A "fake" user created to help with classification.
     """
 
-    name = models.CharField(
-        _("Name"), max_length=64, help_text=_("Public identification of persona.")
-    )
+    name = models.CharField(_("Name"), max_length=64, help_text=_("Public identification of persona."))
     owner = models.ForeignKey(
         settings.AUTH_USER_MODEL, related_name="stereotypes", on_delete=models.CASCADE
     )
@@ -38,7 +36,7 @@ class Stereotype(models.Model):
     class Meta:
         unique_together = [("name", "owner")]
 
-    __str__ = lambda self: f'{self.name} ({self.owner})'
+    __str__ = lambda self: f"{self.name} ({self.owner})"
 
     def vote(self, comment, choice, commit=True):
         """
@@ -66,9 +64,7 @@ class Stereotype(models.Model):
         """
         Return a queryset with all comments that did not receive votes.
         """
-        voted = StereotypeVote.objects.filter(
-            author=self, comment__conversation=conversation
-        )
+        voted = StereotypeVote.objects.filter(author=self, comment__conversation=conversation)
         comment_ids = voted.values_list("comment", flat=True)
         return conversation.comments.exclude(id__in=comment_ids)
 
@@ -79,11 +75,7 @@ class Stereotype(models.Model):
         The resulting queryset is annotated with the vote value using the choice
         attribute.
         """
-        voted = StereotypeVote.objects.filter(
-            author=self, comment__conversation=conversation
-        )
+        voted = StereotypeVote.objects.filter(author=self, comment__conversation=conversation)
         voted_subquery = voted.filter(comment=OuterRef("id")).values("choice")
         comment_ids = voted.values_list("comment", flat=True)
-        return conversation.comments.filter(id__in=comment_ids).annotate(
-            choice=Subquery(voted_subquery)
-        )
+        return conversation.comments.filter(id__in=comment_ids).annotate(choice=Subquery(voted_subquery))

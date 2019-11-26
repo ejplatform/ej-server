@@ -41,8 +41,10 @@ class SafeUrl(Url):
     instead of the raw url value.
     """
 
-    def __new__(cls, ref, *args, **kwargs):
+    def __new__(cls, ref, *args, extra=None, **kwargs):
         url = urls.reverse(ref, args=args, kwargs=kwargs)
+        if extra is not None:
+            url += extra
         new = Url.__new__(cls, url)
         new.url = url
         return new

@@ -1,9 +1,9 @@
 <div class="conversation-card"{% if hidden %} style="opacity: 0.5;"{% endif %}>
     <div class="conversation-card__tags">
         {% if hidden %}
-        {{ span_icon(_('Hidden'), 'user-secret') }}
+        {{ span_icon(_('Hidden'), 'user-secret', aria_label=_('Hidden conversation')) }}
         {% else %}
-        {{ span_icon(tag if tag else _('Conversation'), 'tags') }}
+        {{ span_icon(tag if tag else _('Conversation'), 'tags', icon_description=_('tags')) }}
         {% endif %}
     </div>
     <ul class="conversation-card__statistics">
@@ -11,12 +11,20 @@
         <li>{{ span_icon(n_votes, 'sliders-h') }}</li>
         <li>{{ span_icon(n_favorites, 'star') }}</li>
     </ul>
-    <div class="conversation-card__text">
+    <h2 class="conversation-card__text" style="margin-top: 0;">
         <a href="{{ url }}">{{ text }}</a>
+    </h2>
+    <div class="conversation-card__footer">
+        <div class="conversation-card__author">
+            {{ _('by:') }} <strong>{{ author }}</strong>
+        </div>
+        {{ progress or '' }}
+        <div class="conversation-card__button">
+            {{ action_button(_('Participate now!'), url, tabindex=-1, aria_hidden="true") }}
+        </div>
     </div>
-    {{ progress or '' }}
-    <div class="conversation-card__author">{{ _('by:') }} <strong>{{ author }}</strong></div>
-    <div class="conversation-card__button">{{ action_button(_('Participate now!'), url) }}</div>
+
+    
 </div>
 
 

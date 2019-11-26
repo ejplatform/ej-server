@@ -40,8 +40,8 @@ class ClusterForm(EjModelForm):
         help_texts = {
             "stereotypes": _(
                 "You can select multiple personas for each group. Personas are "
-                "fake users that you control and define the opinion profile of "
-                "your group."
+                "users used as reference that you control and define the opinion "
+                "profile of groups."
             )
         }
         labels = {"stereotypes": _("Personas"), "new_persona": ""}
@@ -55,28 +55,19 @@ class ClusterFormNew(ClusterForm):
     new_persona = forms.BooleanField(
         required=False,
         initial=True,
-        help_text=_(
-            "Create new persona with the name of the group if no other persona isselected."
-        ),
+        help_text=_("Create new persona with the name of the group if no other persona isselected."),
     )
 
     def clean(self):
-        if (
-            not self.cleaned_data["new_persona"]
-            and not self.cleaned_data["stereotypes"]
-        ):
-            self.add_error(
-                "stereotypes", _("You must select a persona or create a new one.")
-            )
+        if not self.cleaned_data["new_persona"] and not self.cleaned_data["stereotypes"]:
+            self.add_error("stereotypes", _("You must select a persona or create a new one."))
 
     def _save_m2m(self):
         super()._save_m2m()
-        has_stereotypes = len(self.cleaned_data['stereotypes']) != 0
+        has_stereotypes = len(self.cleaned_data["stereotypes"]) != 0
         if self.cleaned_data["new_persona"] and not has_stereotypes:
             owner = self.instance.clusterization.conversation.author
             stereotype, _ = Stereotype.objects.get_or_create(
-                name=self.cleaned_data["name"],
-                description=self.cleaned_data["description"],
-                owner=owner,
+                name=self.cleaned_data["name"], description=self.cleaned_data["description"], owner=owner
             )
             self.instance.stereotypes.add(stereotype)

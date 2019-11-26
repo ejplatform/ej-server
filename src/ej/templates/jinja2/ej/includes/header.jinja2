@@ -1,13 +1,14 @@
-<nav class="main-header" is-component>
-    <a title="{{ _('Back') }}" is-element="back:click">
+<header class="main-header" is-component aria-label="{{ _('Top header') }}" role="banner">
+    <a title="{{ _('Back') }}" is-element="back:click" aria-label="{{ _('Go back') }}" href="#">
         <i class="fa fa-chevron-left"></i>
     </a>
 
-    <a title="{{ _('Logo') }}" {{ link_attrs('index')|safe }} class="main-header__logo">
-        <img src={{ static("img/logo/logo.svg") }} alt="{{ settings.EJ_PAGE_TITLE }}">
+    <a {{ link_attrs('index')|safe }} class="main-header__logo">
+        <img src={{ static("img/logo/logo.svg") }} alt="{{ _('Logo') }}" aria-label="{{ _('Back to initial page') }}">
     </a>
 
-    <a title="{{ _('Menu') }}" is-element="toggleMenu:click">
+    <a is-element="toggleMenu:click" aria-haspopup="true" aria-controls="page-menu" href="#"
+       aria-label="{{ _('Toggle navigation menu') }}">
         <i class="fa fa-ellipsis-v"></i>
     </a>
-</nav>
+</header>

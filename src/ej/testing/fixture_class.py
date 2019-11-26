@@ -109,12 +109,8 @@ class EjRecipes(metaclass=FixtureMeta):
 
     user = Recipe(User, is_superuser=False, email="user@domain.com", name="user")
     author = Recipe(User, is_superuser=False, email="author@domain.com", name="author")
-    root = Recipe(
-        User, is_superuser=True, email="root@domain.com", is_staff=True, name="root"
-    )
-    admin = Recipe(
-        User, is_superuser=True, email="admin@domain.com", is_staff=True, name="admin"
-    )
+    root = Recipe(User, is_superuser=True, email="root@domain.com", is_staff=True, name="root")
+    admin = Recipe(User, is_superuser=True, email="admin@domain.com", is_staff=True, name="admin")
 
     @pytest.fixture
     def anonymous_user(self):

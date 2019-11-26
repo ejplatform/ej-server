@@ -6,18 +6,35 @@
 {% block content %}
     <h1 class="h2 center text-accent">{% trans %}Opinion groups{% endtrans %}</h1>
     {% if clusters %}
+        <p class="measure margin-xauto center">
+            {% trans %}We use votes to classify different users according to their opinions. Users who vote similarly tend to be in the same group{% endtrans %}
+            {% if user_group|default(False) %}{{ ' ' }}
+                {% trans %}You belong to group <strong>{{ user_group }}</strong>, for instance.{% endtrans %}
+                {% else %}{{ ' ' }}
+                {% trans %}We could not indentify your opinion group yet. Keep Voting!{% endtrans %}
+            {% endif %}
+        </p>
+
         <div id="cluster-canvas-container">
             <canvas id="cluster-canvas" class="margin-xauto block"></canvas>
         </div>
 
-        {{ categories(groups, class_='margin-t3') }}
 
+        {{ categories(groups, class_='margin-t3') }}
+        <script up-always-execute>
+            window.addEventListener('load', function () {
+                $('.expand-details').off('click').on('click', function (e) {
+                    $(e.target.parentNode).find('.details').toggle(200);
+                    e.preventDefault();
+                });
+            })
+        </script>
         {% for cluster in clusters %}
             <div id="cluster-{{ cluster.id }}">{{ show_cluster(cluster) }}</div>
         {% endfor %}
 
         {% if has_edit_perm %}
-            <div class="center bg-brand-lighter pad-2 rounded-2 margin-b4">
+            <div class="center bg-brand-lighter pad-2 rounded-2 margin-y4">
                 <h2 class="h4 uppercase margin-t2">{{ _('Admin actions') }}</h2>
                 <form class="margin-0" method="POST" action="./ctrl/">
                     {{ csrf_input }}
@@ -28,12 +45,13 @@
     {% else %}
         <div class="pad-x3 rounded-3 color-negative border-1">
             <h2 class="h3 center">{{ _('Error') }}</h2>
-            <p class="center">{% trans %}Could not determine the opinion groups for this
-                conversation.{% endtrans %}</p>
+            <p class="center">{{ _('Could not determine the opinion groups for this conversation.') }}</p>
         </div>
         {% if has_edit_perm %}
-            <p class="center margin-3">{% trans link=edit_link %}You can edit the clusterization options for this
-                conversation {{ link }}.{% endtrans %}</p>
+            <p class="center margin-3">
+                {% trans link=edit_link %}You can edit the clusterization options for this conversation {{ link }}
+                    .{% endtrans %}
+            </p>
         {% endif %}
     {% endif %}
 {% endblock %}
@@ -41,32 +59,43 @@
 
 {% macro show_cluster(cluster) %}
     <div class="collapsible">
-        <h2 class="h4 uppercase text-accent">{{ _('Positive comments') }}</h2>
         {% set agree = cluster.separated_comments[0] %}
         {% set disagree = cluster.separated_comments[1] %}
-        {% if agree %}
-            <dl>{% for comment in agree[:5] %}
-                {% set pc = '%.1f' % (100 * comment.agree) %}
-                <dt class="bold">{{ _('Agree: {pc}').format(pc=pc) }}%</dt>
-                <dd>{{ comment.content }}</dd>
-            {% endfor %}
-            </dl>
-        {% else %}
-            <p>{{ _('No positive comments in cluster') }}</p>
-        {% endif %}
 
-        <h2 class="h4 uppercase text-accent">{{ _('Negative comments') }}</h2>
-        {% if disagree %}
-            <dl>{% for comment in disagree[:5] %}
-                {% set pc = '%.1f' % (100 * comment.disagree) %}
-                <dt class="bold">{{ _('Disagree: {pc}').format(pc=pc) }}%</dt>
+        <h2 class="h3 text-accent screen-reader">{{ cluster.name }}</h2>
+        <p class="center margin-y3">
+            {% trans cluster=cluster.name %}Typical comments cor cluster <strong>{{ cluster }}</strong>.{% endtrans %}</p>
+        <div>
+            {{ expander(_('Positive comments'), agree) }}
+            {{ show_comments(agree, 'agree', _('No positive comments in cluster')) }}
+        </div>
+
+        <div>
+            {{ expander(_('Negative comments'), disagree) }}
+            {{ show_comments(disagree, 'disagree', _('No negative comments in cluster')) }}
+        </div>
+    </div>
+{% endmacro %}
+
+
+{% macro expander(title, expand) %}
+    <h3 class="h4 uppercase text-accent{% if expand %} expand-details cursor-pointer{% endif %}">
+        {%- if expand %}<i class="fa fa-plus"></i> {% endif %}{{ title }}
+    </h3>
+{% endmacro %}
+
+
+{% macro show_comments(comments, prop, error_msg) %}
+    {% if comments %}
+        <dl class="hidden details margin-x3">
+            {% for comment in comments[:5] %}
+                <dt class="bold">{{ '%.1f%%' % (100 * comment.__getattribute__(prop)) }}</dt>
                 <dd>{{ comment.content }}</dd>
             {% endfor %}
-            </dl>
-        {% else %}
-            <p>{{ _('No negative comments in cluster') }}</p>
-        {% endif %}
-    </div>
+        </dl>
+    {% else %}
+        <p>{{ error_message }}</p>
+    {% endif %}
 {% endmacro %}
 
 

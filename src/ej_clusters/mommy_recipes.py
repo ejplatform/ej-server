@@ -9,18 +9,12 @@ __all__ = ["ClusterRecipes"]
 
 
 class ClusterRecipes(ConversationRecipes):
-    clusterization = Recipe(
-        Clusterization, conversation=_foreign_key(ConversationRecipes.conversation)
-    )
-    cluster = Recipe(
-        Cluster, clusterization=_foreign_key(clusterization), name="cluster"
-    )
+    clusterization = Recipe(Clusterization, conversation=_foreign_key(ConversationRecipes.conversation))
+    cluster = Recipe(Cluster, clusterization=_foreign_key(clusterization), name="cluster")
     stereotype = Recipe(
         Stereotype,
         name="stereotype",
-        owner=_foreign_key(
-            ConversationRecipes.author.extend(email="stereotype-author@domain.com")
-        ),
+        owner=_foreign_key(ConversationRecipes.author.extend(email="stereotype-author@domain.com")),
     )
     stereotype_vote = Recipe(
         StereotypeVote,
@@ -32,10 +26,7 @@ class ClusterRecipes(ConversationRecipes):
     def get_data(self, request):
         data = super().get_data(request)
         stereotype = self.stereotype.make(owner=data.author)
-        votes = [
-            self.stereotype_vote.make(author=stereotype, comment=comment)
-            for comment in data.comments
-        ]
+        votes = [self.stereotype_vote.make(author=stereotype, comment=comment) for comment in data.comments]
         return record(data, stereotype=stereotype, stereotype_votes=votes)
 
 

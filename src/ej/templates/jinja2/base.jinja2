@@ -1,5 +1,5 @@
 {% set page_title = page_title|default(settings.EJ_PAGE_TITLE) -%}
-
+{% set main_tag = main_tag|default("main") %}
 
 <!DOCTYPE html>
 <html lang="{{ get_language() }}">
@@ -8,6 +8,7 @@
     <title>{{ page_title }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    {% block meta %}{% endblock %}
     {% block css %}{% include 'ej/includes/head/css.jinja2' %}{% endblock %}
     {% block javascript %}{% include 'ej/includes/head/javascript.jinja2' %}{% endblock %}
     {% include ['ej/includes/head/favicons.jinja2',
@@ -17,47 +18,52 @@
 
 
 {%- block body %}
-    <body class="{{ body_class|default('body') }}" data-current-url="{{ request.path }}" {{ salt_attr()|safe }}>
-    {% if settings.DEBUG %}
-        {% for id in ['summary', 'info', 'description'] %}<div id="{{ id }}" up-hungry></div>{% endfor %}
+    <body class="{{ body_class|default('body') }}" {% if request is defined %}data-current-url="{{ request.path }}"{% endif %} {{ salt_attr()|safe }}>
+    <script>(function () {
+        document.querySelector('body').classList.add('js')
+    })();</script>
+    {% if has_content_link|default(aria_flow|default(false)) %}<a id="first-link" href="#{{ aria_flowto|default('page-wrapper') }}" accesskey="1">{{ _('Jump to main content') }}</a>{% endif %}
+    <div id="page-wrapper">
+        {%- block main %}
+            <{{ main_tag }} id="main-content" tabindex=0 class="{{ main_class|default('container-1') }}{% if request is defined %}{{- '' if request.user.is_authenticated else ' is-anonymous' }}"{% endif %}>
+            {%- block message_area %}
+                <div id="message-area" up-hungry role="status" role="alert" aria-live="polite" {% if aria_flowto is defined %}aria-flowto="{{ aria_flowto }}"{% endif %}>
+                    {% for msg in get_messages() %}
+                        <div class="toast"{% if msg.tags %} {{ msg.tags }}{% endif %} tabindex="0">{{ msg|safe }}</div>
+                    {% endfor %}
+                </div>
+                <script> window.addEventListener('load', function () {
+                    var e = document.getElementById('message-area'),
+                        t = document.getElementById(e.getAttribute('aria-flowto'));
+                    if (!t) { e.removeAttribute('aria-flowto') }
+                });
+                </script>
+            {% endblock %}
+
+            {% if content is defined %}
+                {{ content }}
+            {% else %}
+                {% block content %}
+                    {% if content_html is defined %}
+                        {{ content_html|safe }}
+                    {% else %}
+                        <p>{{ _('Please override the "content" block of your template!') }}</p>
+                    {% endif %}
+                {% endblock content %}
+            {% endif %}
+            </{{ main_tag }}>
+        {% endblock %}
+    {%- if not hide_menu|default(False) %}
+        {%- if menu_contents is defined %}{{ page_menu(menu_contents|default([]), request=request) }}
+        {% else %}
+            {% call page_menu() %}
+                {%- block menu %}{{ page_menu.DEFAULT_MENU_SECTIONS(request)|safe }}{% endblock %}
+            {% endcall %}
+        {% endif %}
     {% endif %}
+    </div>
     {% if not hide_header|default(False) %}{% include 'ej/includes/header.jinja2' %}{% endif %}
     {% if not hide_footer|default(False) %}{% include 'ej/includes/footer.jinja2' %}{% endif %}
-    <div id="page-wrapper">
-        {%- if not hide_menu|default(False) %}
-            {%- if menu_contents is defined %}{{ page_menu(menu_contents|default([]), request=request) }}
-            {% else %}
-                {% call page_menu() %}
-                    {%- block menu %}{{ page_menu.DEFAULT_MENU_SECTIONS()|safe }}{% endblock %}
-                {% endcall %}
-            {% endif %}
-        {% endif %}
-
-        {%- block main %}
-            <main class="{{ main_class|default('container-1') }}
-                         {{- '' if request.user.is_authenticated else ' is-anonymous' }}">
-                {%- block message_area %}
-                    <div id="message-area" up-hungry>
-                        {% for msg in get_messages() %}
-                            <div class="toast"{% if msg.tags %} {{ msg.tags }}{% endif %}>{{ msg|safe }}</div>
-                        {% endfor %}
-                    </div>
-                {% endblock %}
-
-                {% if content is defined %}
-                    {{ content }}
-                {% else %}
-                    {% block content %}
-                        {% if content_html is defined %}
-                            {{ content_html|safe }}
-                        {% else %}
-                            <p>{{ _('Please override the "content" block of your template!') }}</p>
-                        {% endif %}
-                    {% endblock content %}
-                {% endif %}
-            </main>
-        {% endblock %}
-    </div>
     </body>
 {% endblock body %}
 </html>

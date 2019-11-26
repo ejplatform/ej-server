@@ -22,6 +22,10 @@ def with_template(model, role, template=None, queryset=False):
         queryset (bool):
             If true, register renderer to a queryset instead of a model object.
     """
+    if isinstance(model, (list, tuple)):
+        *models, model = list(model)
+    else:
+        models = []
 
     def decorator(func):
         nonlocal template
@@ -31,8 +35,12 @@ def with_template(model, role, template=None, queryset=False):
 
         if queryset:
             renderer = render_with_template(func, template)
-            html.register_queryset(model, role)(renderer)
+            for other in models:
+                html.register_queryset(other, role)(renderer)
+            return html.register_queryset(model, role)(renderer)
         else:
+            for other in models:
+                html.register_template(other, template, role=role)(func)
             return html.register_template(model, template, role=role)(func)
 
     return decorator

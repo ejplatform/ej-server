@@ -1,29 +1,30 @@
+import traceback
+
 from django.contrib.auth import get_user_model
 from django.core.management.base import BaseCommand
 from django.db.models import F
 
 from ej_conversations.models import Conversation, Vote
+from ...models import ParticipationProgress
 from ... import get_progress, get_participation
 
 User = get_user_model()
 
 
 class Command(BaseCommand):
-    help = (
-        "Update all scores, points and badges for users and conversations in your app"
-    )
+    help = "Update all scores, points and badges for users and conversations in your app"
     log = lambda self, *args, **kwargs: print(*args, **kwargs)
 
     def handle(self, *args, **options):
-        self.update_participation_points(self.get_participations())
         self.update_conversation_points(self.get_conversations())
         self.update_user_points(self.get_users())
+        self.update_participation_points(self.get_participations())
 
     def get_users(self):
         return User.objects.filter(is_active=True)
 
     def get_conversations(self):
-        return Conversation.objects.filter(is_hidden=False)
+        return Conversation.objects.filter()
 
     def get_participations(self):
         pairs = set(
@@ -49,15 +50,23 @@ class Command(BaseCommand):
 
     def update_participation_points(self, participations):
         action = lambda x, sync=True: get_participation(*x, sync=sync)
-        return self._update_points(participations, "participations", action)
+        self._update_points(participations, "participations", action)
+        ParticipationProgress.objects.filter(score=0).delete()
+        return participations
 
     def _update_points(self, coll, name, action=get_progress):
         self.log(f"Updating {name}".upper())
         n = 0
         for item in coll:
-            action(item, sync=True)
+            try:
+                action(item, sync=True)
+            except Exception as exc:
+                print()
+                print(f"Error processing: {item}")
+                traceback.print_tb(exc.__traceback__)
+                print(f"{exc.__class__.__name__}: {exc}")
             n += 1
             self.log(".", end="", flush=True)
-            if n % 40 == 0:
+            if n % 60 == 0:
                 print()
         self.log(f"\n(Updated {n} items)\n")

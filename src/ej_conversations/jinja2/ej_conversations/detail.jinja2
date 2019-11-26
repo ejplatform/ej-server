@@ -1,6 +1,7 @@
 {% extends 'ej_conversations/base.jinja2' %}
 {% set main_class = 'container-1 pad-x0' %}
-
+{% set page_title = _('Conversation: "{}"').format(conversation.text) %}
+{% set aria_flowto = 'comment-card' %}
 
 {% block metaOG %}
     <meta name="description" property="og:title" content="{{ conversation.title }}">
@@ -8,37 +9,113 @@
     <meta name="twitter:title" content="{{ conversation.title }}">
 {% endblock %}
 
-
 {% block content %}
-    {{ conversation|role('balloon') }}
-    {% if conversation.is_hidden %}
-        <div class="color-negative margin-3 pad-x3 pad-y2 rounded-3 center">
-            <h2>{{ _('Warning!') }}</h2>
-            <p>{% trans here=edit_link() %}This conversation is hidden. Click {{ here }} to edit and make it visible
-                again.{% endtrans %}</p>
-        </div>
 
-    {% else %}
-        <h1 class="h2 text-accent margin-y0 center">{{ _('Comments') }}</h1>
-        <div class="comment-area pad-x2">
-            {{ conversation|role('user-progress') }}
-            <div class="col items-center margin-y2">
+    <div>
+        <style>
+            animafade {
+            animation-duration: 3.5s;
+            animation-name: fadeInUp;
+            }
+
+            @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translate3d(0, 100%, 0);
+            }
+
+            to {
+                opacity: 1;
+                transform: translate3d(0, 0, 0);
+            }
+            }
+
+            .fadeInUp {
+            animation-name: fadeInUp;
+            }
+            </style>
+
+        <script>
+            document.addEventListener('load', function () {
+                $('form').on('submit', function () {
+                    $('h1').attr('aria-hidden', true)
+                });
+                alert('ON')
+            })
+
+            function toogleComment() {
+                var x = document.getElementById("comment-form-containner");
+
+                if (x.style.display === 'block') {
+                    x.style.display = 'none';
+                } else {
+                    x.style.display = 'block';
+                }
+            }
+
+            function changeButtonName(){
+                var buttonName = document.getElementById("comment-button");
+                var button = document.getElementsByClassName("hidableButton");
+
+                if (buttonName.innerHTML.includes("Create Comment"))
+                    buttonName.textContent = "Cancel Comment";
+
+                else if (buttonName.textContent === "Cancel Comment")
+                    buttonName.textContent = "Create Comment";
+                    button[0].style.visibility = "visible";
+
+                console.log(buttonName.textContent);
+            }
+
+            function hideButton() {
+                var button = document.getElementsByClassName("hidableButton");
+                button[0].style.visibility = "hidden";
+            }
+        
+        </script>
+        {{ conversation|role('balloon') }}
+        {% if conversation.is_hidden %}
+            <div class="color-negative margin-3 pad-x3 pad-y2 rounded-3 center">
+                <h2>{{ _('Warning!') }}</h2>
+                <p>{% trans %}This conversation is hidden.{% endtrans %}
+                    {% trans here=edit_link() %} Click {{ here }} to edit and make it visible again.{% endtrans %}</p>
+            </div>
+        {% else %}
+        <br>
+        <br>
+        <br>
+            <div class="col items-center margin-y3 pad-x2" id="comment-card">
                 {% if comment %}
-                    {{ comment|role('card', target='.comment-area') }}
+                    {{ comment|role('card', target='#comment-card') }}
+                    {{ conversation|role('user-progress', class='width-full', style="margin-top: 1.5rem;") }}
                 {% else %}
                     <div class="comment-card center">
                         <article>
-                            <h1 class="h3">{{ _('Congratulations!') }}</h1>
+                            <h2 class="h3 text-accent">{{ _('Congratulations!') }}</h2>
                             <p>{{ _("There are no comments left to vote :)") }}</p>
                         </article>
                     </div>
                 {% endif %}
-                {{ conversation|role('comment-form', form=comment_form, target='.comment-area') }}
+                <animafade>
+                <div style="text-align: center; display: none; position: relative; top: -490px; z-index: 500;" id="comment-form-containner">
+                        <h2 class="text-accent">{{ _('Comentários') }}</h2>
+                        {{ conversation|role('comment-form', form=comment_form, target='.comment-area') }}
+                        {{ conversation|role('create-comment') }}
+                <button onclick="changeButtonName(), toogleComment()" id="comment-button" style="margin-top:10px;">
+                    Create Comment
+                </button>
+                </div>
+                </animafade>
+                {% if comment %}
+                <button onclick="changeButtonName(), toogleComment(),hideButton()" id="comment-button" class="hidableButton">
+                    Create Comment
+                </button>
+                {% else %}
+                {% endif %}
             </div>
-            {{ conversation|role('create-comment') }}
-        </div>
-    {% endif %}
-    {{ conversation|role('detail-page-extra') }}
+        {% endif %}
+        {{ conversation|role('detail-page-extra') }}
+    </div>
 {% endblock %}
 
 

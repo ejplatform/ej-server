@@ -2,13 +2,7 @@ import matplotlib.pyplot as plt
 
 from sidekick import import_later
 from sklearn.decomposition import PCA, KernelPCA
-from sklearn.manifold import (
-    TSNE,
-    Isomap,
-    MDS,
-    LocallyLinearEmbedding,
-    SpectralEmbedding,
-)
+from sklearn.manifold import TSNE, Isomap, MDS, LocallyLinearEmbedding, SpectralEmbedding
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import Imputer
 
@@ -17,32 +11,61 @@ np = import_later("numpy")
 DEFAULT_ALPHA = 0.5
 
 
-def random_cluster(size, n_comments, alpha=DEFAULT_ALPHA, missing=0.5):
+def random_clusterization(shape, n_comments, alpha=DEFAULT_ALPHA, missing=0.5):
+    """
+    Similar to random_cluster, but produces a full clusterization.
+
+    First argument is either a list of cluster sizes.
+    """
+    # Fake data
+    results = [random_cluster(n_users, n_comments, missing=missing, alpha=alpha) for n_users in shape]
+    votes = np.vstack([v for v, _ in results])
+    centroids = np.vstack([c for _, c in results])
+    return votes, centroids
+
+
+def random_cluster(n_users, n_comments, alpha=DEFAULT_ALPHA, missing=0.25):
     """
     Return votes of a random cluster.
 
-    Result is a 2D array of (size, n_comments) with vote data on cells.
+    Result is (votes, stereotypes) in which "votes" is an array of
+    (size, n_comments) with vote data on cells and "stereotypes" is the location
+    of the stereotype.
     """
-    probs = random_probs(n_comments, alpha)
-    p_skip, p_disagree, _ = np.add.accumulate(probs, axis=1).T
-    votes = np.ones((size, n_comments))
-    rand = np.random.uniform(size=(size, n_comments))
-    votes[rand > p_skip] = 0
-    votes[rand > p_disagree] = -1
+    probs = np.random.dirichlet([alpha, alpha], size=n_comments)[:, 0]
+    # votes = np.ones((n_users, n_comments), dtype='int8')
+    # rand = np.random.uniform(size=(n_users, n_comments))
+    # votes[rand > probs] = -1
+    #
+    # rand = np.random.uniform(size=(n_users, n_comments))
+    # votes[rand < missing] = 0
 
-    if missing:
-        votes = remove_votes(votes, prob=missing, gamma=2 * alpha)
+    votes = np.vstack([random_user(probs, missing=missing) for _ in range(n_users)])
 
-        # Fill-in again users who did not vote in anything
-        for k, row in enumerate(votes):
-            while np.isnan(row).all():
-                row[:] = 1
-                rand = np.random.uniform(size=n_comments)
-                row[rand > p_skip] = 0
-                row[rand > p_disagree] = -1
-                votes[k] = row
+    # Fill-in again users who did not vote in anything
+    for k, row in enumerate(votes):
+        while (row == 0).all():
+            row[:] = 1
+            rand = np.random.uniform(size=n_comments)
+            row[rand > probs] = -1
 
-    return votes
+            rand = np.random.uniform(size=n_comments)
+            row[rand < missing] = 0
+
+    return votes, probs
+
+
+def random_user(probs, missing=0.25):
+    """
+    Return a random user profile from probabilities.
+    """
+    rand = np.random.uniform(size=len(probs))
+    user = np.ones(len(probs), dtype="int8")
+    user[rand > probs] = -1
+
+    rand = np.random.uniform(size=len(probs))
+    user[rand < missing] = 0
+    return user
 
 
 def random_probs(n_options, alpha=DEFAULT_ALPHA):
@@ -135,9 +158,7 @@ def reduce_dimensionality(votes, method="pca", **kwargs):
     return data, pipeline
 
 
-def show_votes(
-    votes, method="pca", display=True, title=None, labels=None, legend=None, **kwargs
-):
+def show_votes(votes, method="pca", display=True, title=None, labels=None, legend=None, **kwargs):
     """
     Show votes dataset in a 2D plot.
     """

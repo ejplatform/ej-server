@@ -21,3 +21,10 @@
         color: var(--theme-color);
     }
 }
+
+// Links
+p {
+    a:hover, a:focus, a:visited, a {
+        text-decoration: underline;
+    }
+}

@@ -8,10 +8,7 @@ np = import_later("numpy")
 
 # A very easy dataset with k=2
 STEREOTYPES = np.array([[1, 1, 1], [-1, -1, -1]], dtype=float)
-DATA = np.array(
-    [[1, 0, 1], [1, 1, 1], [0, 1, 1], [-1, 0, -1], [-1, -1, 0], [-1, -1, -1]],
-    dtype=float,
-)
+DATA = np.array([[1, 0, 1], [1, 1, 1], [0, 1, 1], [-1, 0, -1], [-1, -1, 0], [-1, -1, -1]], dtype=float)
 
 
 class TestAuxiliaryMathFunctions:
@@ -37,9 +34,7 @@ class TestAuxiliaryMathFunctions:
         assert kmeans.euclidean_distance_non_zero(a, a) == 0
         assert kmeans.euclidean_distance_non_zero(b, b) == 0
         assert_almost_equal(kmeans.euclidean_distance_non_zero(a, b), np.sqrt(12 / 3))
-        assert_almost_equal(
-            kmeans.euclidean_distance_non_zero([0, 1, 0], [-1, -1, 0]), 2.0
-        )
+        assert_almost_equal(kmeans.euclidean_distance_non_zero([0, 1, 0], [-1, -1, 0]), 2.0)
 
     def test_mean_aggregator(self):
         assert_almost_equal(kmeans.mean_aggregator(STEREOTYPES), [0, 0, 0])
@@ -62,9 +57,7 @@ class TestKmeansWithStereotypes:
 
     def test_kmeans_with_missing_data(self):
         distance = kmeans.euclidean_distance_non_zero
-        labels, clusters = kmeans.kmeans_stereotypes(
-            DATA, STEREOTYPES, distance=distance
-        )
+        labels, clusters = kmeans.kmeans_stereotypes(DATA, STEREOTYPES, distance=distance)
         assert_equal(labels, [0, 0, 0, 1, 1, 1])
 
 
@@ -81,9 +74,7 @@ class TestKmeans:
         with pytest.raises(ValueError):
             kmeans.kmeans(DATA, len(DATA) + 1, n_runs=5)
 
-    def test_trivial_classification_if_number_of_clusters_equal_to_number_of_samples(
-        self
-    ):
+    def test_trivial_classification_if_number_of_clusters_equal_to_number_of_samples(self):
         labels, clusters = kmeans.kmeans(DATA, len(DATA), n_runs=5)
         assert_equal(labels, range(len(DATA)))
         assert_equal(clusters, DATA)

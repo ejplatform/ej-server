@@ -22,9 +22,7 @@ def bulk_create(func):
         if commit and result:
             model = type(result[0])
             model.objects.bulk_create(result)
-            ids = model.objects.order_by("-id").values_list("id", flat=True)[
-                : len(result)
-            ]
+            ids = model.objects.order_by("-id").values_list("id", flat=True)[: len(result)]
             for id_, item in zip(ids, reversed(result)):
                 item.id = id_
         return result
@@ -63,14 +61,8 @@ class ExampleData:
                 "We want to create the best programming language. How should it be?",
                 "A better programming language",
             ),
-            new(
-                "How can we improve the schools and education in our community?",
-                "School system",
-            ),
-            new(
-                "How can we make our democracy more participative?",
-                "Participative democracy",
-            ),
+            new("How can we improve the schools and education in our community?", "School system"),
+            new("How can we make our democracy more participative?", "Participative democracy"),
         ]
 
     @bulk_create
@@ -94,10 +86,7 @@ class ExampleData:
             new("We need more arts and crafts lessons."),
             new("We have to encourage the use technology and teach programming."),
             new("Our curriculum should be open and focused on real problems."),
-            new(
-                "We don't need no education! We don't need no thought control!",
-                status="pending",
-            ),
+            new("We don't need no education! We don't need no thought control!", status="pending"),
         ]
 
     @bulk_create

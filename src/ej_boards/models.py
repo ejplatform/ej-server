@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.urls import reverse
 from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
 from model_utils.models import TimeStampedModel
@@ -24,17 +25,13 @@ class Board(TimeStampedModel):
         ("purple", _("Purple")),
     )
     slug = models.SlugField(_("Slug"), unique=True, validators=[validate_board_slug])
-    owner = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="boards"
-    )
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="boards")
     conversations = models.ManyToManyField(
         "ej_conversations.Conversation", blank=True, related_name="boards"
     )
     title = models.CharField(_("Title"), max_length=50)
     description = models.TextField(_("Description"), blank=True)
-    palette = models.CharField(
-        _("Palette"), max_length=10, choices=PALETTE_CHOICES, default="Blue"
-    )
+    palette = models.CharField(_("Palette"), max_length=10, choices=PALETTE_CHOICES, default="Blue")
     image = models.ImageField(_("Image"), blank=True, null=True)
 
     @property
@@ -63,7 +60,7 @@ class Board(TimeStampedModel):
             pass
 
     def get_absolute_url(self):
-        return f"/{self.slug}/"
+        return reverse("boards:conversation-list", kwargs={"board": self})
 
     def url(self, which, **kwargs):
         kwargs["board"] = self

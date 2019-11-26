@@ -1,77 +1,81 @@
 {% extends "account/base.jinja2" %}
 {% set page_title = _('Account: E-mail') %}
+{% set main_title = _('Manage e-mail') %}
 {% set user = request.user %}
 
 
 {% block content %}
-    <h1 class="h2 text-accent">{{ _('Manage e-mail') }}</h1>
-
     {% if user.emailaddress_set.all() %}
-        <p>{{ _('The following e-mail addresses are associated with your account:') }}</p>
+        <div class="pad-3 rounded-3 bg-brand-lighter left">
+            <p>{{ _('The following e-mail addresses are associated with your account:') }}</p>
 
-        <form method="post" class="width-full">
-            {{ csrf_input }}
-            {% for emailaddress in user.emailaddress_set.all() %}
-                <div class="radio">
-                    <label for="email_radio_{{ loop.index }}">
-                        <input id="email_radio_{{ loop.index }}" type="radio" name="email"
-                               {% if emailaddress.primary or user.emailaddress_set.count() == 1 %}checked="checked"{% endif %}
-                               value="{{ emailaddress.email }}"/>
+            <form method="post" class="width-full margin-y2" id="change-email-form">
+                {{ csrf_input }}
+                {% for emailaddress in user.emailaddress_set.all() %}
+                    <div class="radio">
+                        <label for="email_radio_{{ loop.index }}" class="margin-y2">
+                            <input id="email_radio_{{ loop.index }}" type="radio" name="email"
+                                   {% if emailaddress.primary or user.emailaddress_set.count() == 1 %}checked="checked"{% endif %}
+                                   value="{{ emailaddress.email }}"/>
 
-                        <span class="{% if emailaddress.primary %}bold{% else %}regular{% endif %}">
+                            <span class="{% if emailaddress.primary %}bold{% else %}regular{% endif %}">
                             {{ emailaddress.email }}
-                            {% if emailaddress.verified %}
-                                <span class="text-positive">({{ _("Verified") }})</span>
-                            {% else %}
-                                <span class="text-negative">({{ _("Unverified") }})</span>
-                            {% endif %}
+                                {% if emailaddress.verified %}
+                                    <span class="text-positive">({{ _("Verified") }})</span>
+                                {% else %}
+                                    <span class="text-negative">({{ _("Unverified") }})</span>
+                                {% endif %}
                         </span>
-                    </label>
-                </div>
-            {% endfor %}
+                        </label>
+                    </div>
+                {% endfor %}
+            </form>
+        </div>
 
-            <h2 class="h4">{% trans %}What do you want to do?{% endtrans %}</h2>
-            <ul class="width-full">
-                <li class="margin-y2">
-                    <button type="submit" name="action_primary" class="is-clear">
-                        {{ _('Make selected e-mail primary') }}
-                        <span class="button is-small is-primary margin-0"><i class="fa fa-check"></i></span>
-                    </button>
-                </li>
-                <li class="margin-y2">
-                    <button type="submit" name="action_send" class="is-clear">
-                        {{ _('Re-send Verification') }}
-                        <span class="button is-small margin-0"><i class="fa fa-redo"></i></span>
-                    </button>
-                </li>
-                <li class="margin-y2">
-                    <button type="submit" name="action_remove" class="is-clear">
-                        {{ _('Remove selected e-mail') }}
-                        <span class="button is-small is-negative margin-0"><i class="fa fa-times"></i></span>
-                    </button>
-                </li>
-            </ul>
-        </form>
+        <h2 class="h4 left">{% trans %}What do you want to do?{% endtrans %}</h2>
+        <ul class="width-full left">
+            <li class="margin-y2">
+                <button type="submit" name="action_primary" class="is-clear" form="change-email-form">
+                    {{ _('Make selected e-mail primary') }}
+                </button>
+            </li>
+            <li class="margin-y2">
+                <button type="submit" name="action_send" class="is-clear" form="change-email-form">
+                    {{ _('Re-send Verification') }}
+                </button>
+            </li>
+            <li class="margin-y2">
+                <button type="submit" name="action_remove" class="is-clear" form="change-email-form">
+                    {{ _('Remove selected e-mail') }}
+                </button>
+            </li>
+            <li class="margin-y2">
+                <button type="submit" name="action_add" class="is-clear" form="add-email-form">
+                    {{ _("Add new e-mail address") }}
+                </button>
+                <form class="pad-0 margin-0" id="add-email-form" method="post">
+                    <div>
+                        {{ csrf_input }}
+                        {{ form.email }}
+                        {{ form.email.errors }}
+                    </div>
+{#                    <button class="width-full is-primary" name="action_add" type="submit" form="add-email-form">{{ _("Add E-mail") }}</button>#}
+                </form>
+            </li>
+        </ul>
 
     {% else %}
         <p>
             <strong>{{ _('Warning:') }}</strong> {{ _("You currently do not have any e-mail address set up. You should really add an e-mail address so you can receive notifications, reset your password, etc.") }}
         </p>
     {% endif %}
-
-    <h2 class="h2 text-accent center">{{ _("Add new e-mail address") }}</h2>
-    <form method="post" class="width-full">
-        {{ csrf_input }}
-        {{ form }}
-        <button class="width-full is-primary" name="action_add" type="submit">{{ _("Add E-mail") }}</button>
-    </form>
 {% endblock %}
 
 
-{% block javascript_body %}
+{% block javascript %}
     {{ super() }}
     <script>
-        (function () {
+        window.addEventListener('load', function () {
             var message = "{{ _('Do you really want to remove the selected e-mail address?') }}";
             var actions = document.getElementsByName('action_remove');
             if (actions.length) {
@@ -81,7 +85,7 @@
                     }
                 });
             }
-        })();
+        });
     </script>
 {% endblock %}
 

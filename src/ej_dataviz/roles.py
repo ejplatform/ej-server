@@ -20,22 +20,19 @@ def conversation_download_data(conversation, *, which, formats=None, cluster=Non
     if ":" not in which:
         which = f"report:{which}"
         if cluster is not None:
-            which += '-cluster'
+            which += "-cluster"
 
     # Prepare urls
     url_kwargs = {}
     if cluster is not None:
-        url_kwargs['cluster_id'] = cluster.id
+        url_kwargs["cluster_id"] = cluster.id
 
     format_lst = []
     for format, name in (formats or DEFAULT_FORMATS).items():
         url = conversation.url(which, fmt=format, **url_kwargs)
         format_lst.append((format, name, url))
 
-    return {
-        "conversation": conversation,
-        "formats": format_lst,
-    }
+    return {"conversation": conversation, "formats": format_lst}
 
 
 @html.register(models.Conversation, role="stats-table")
@@ -44,9 +41,9 @@ def stats_table(conversation, stats=None, data="votes", request=None, **kwargs):
         stats = conversation.statistics()
 
     get = COLUMN_NAMES.get
-    return div(
-        [html_map({get(k, k): v}) for k, v in stats[data].items()], **kwargs
-    ).add_class("stat-slab", first=True)
+    return div([html_map({get(k, k): v}) for k, v in stats[data].items()], **kwargs).add_class(
+        "stat-slab", first=True
+    )
 
 
 @html.register(models.Conversation, role="comments-stats-table")
@@ -58,7 +55,7 @@ def comments_table(conversation, request=None, **kwargs):
 
 @html.register(models.Conversation, role="participants-stats-table")
 def participants_table(conversation, **kwargs):
-    data = conversation.users.statistics_summary_dataframe(normalization=100)
+    data = conversation.users.statistics_summary_dataframe(normalization=100, convergence=False)
     data = data.sort_values("agree", ascending=False)
     return prepare_dataframe(data, pc=True)
 
@@ -88,9 +85,7 @@ def prepare_dataframe(df, pc=False):
         for col, data in df.items():
             if data.dtype == float:
                 df[col] = data.apply(lambda x: "-" if np.isnan(x) else "%d%%" % x)
-    return render_dataframe(
-        df, col_display=TABLE_COLUMN_NAMES, class_="table long text-6"
-    )
+    return render_dataframe(df, col_display=TABLE_COLUMN_NAMES, class_="table long text-6")
 
 
 def render_dataframe(df, index=False, *, col_display=None, **kwargs):
@@ -127,7 +122,7 @@ def render_dataframe(df, index=False, *, col_display=None, **kwargs):
 
 # TODO: make list of formats configurable
 # "msgpack": "MsgPack"
-DEFAULT_FORMATS = {"csv": "CSV", "json": "JSON"}
+DEFAULT_FORMATS = {"xlsx": "Excel", "csv": "CSV", "json": "JSON"}
 
 COLUMN_NAMES = {
     "agree": _("Agree"),
@@ -136,6 +131,7 @@ COLUMN_NAMES = {
     "average": _("Average"),
     "comment": _("Comment"),
     "content": _("Comment"),
+    "convergence": _("Convergence"),
     "disagree": _("Disagree"),
     "divergence": _("Divergence"),
     "entropy": _("Entropy"),
@@ -155,7 +151,10 @@ COLUMN_NAMES = {
 TABLE_COLUMN_NAMES = {
     **COLUMN_NAMES,
     "agree": fa_icon("check", title=_("Agree")),
-    "divergence": fa_icon("not-equal", title=_("Divergence")),
+    "convergence": fa_icon(
+        "handshake",
+        title=_("Agreement level\n0%: votes are evenly split\n100%: everyone has the same opinion"),
+    ),
     "disagree": fa_icon("times", title=_("Disagree")),
     "participation": fa_icon("users", title=_("Participation ratio")),
     "skip": fa_icon("arrow-right", title=_("Skip")),
@@ -168,7 +167,7 @@ PC_COLUMNS = [
     "agree",
     "disagree",
     "average",
-    "divergence",
+    "convergence",
     "entropy",
     "participation",
 ]

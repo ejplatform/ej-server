@@ -11,19 +11,25 @@ class SecurityConf(Base):
         "allauth.account.auth_backends.AuthenticationBackend",
     ]
     X_FRAME_OPTIONS = env("SAMEORIGIN")
-    CORS_ORIGIN_ALLOW_ALL = True
-    CORS_ALLOW_CREDENTIALS = env(True)
+    CONTENT_SECURITY_POLICY_FRAME_ANCESTORS = env([])  # TODO: deprecated
+    CORS_ORIGIN_ALLOW_ALL = env(False)
+    CORS_ALLOW_CREDENTIALS = env(False)
+
+    # Configure HTTP headers
+    HTTP_CONTENT_SECURITY_POLICY = env("", name="{attr}")
+    HTTP_ACCESS_CONTROL_ALLOW_ORIGIN = env("", name="{attr}")
+    HTTP_ACCESS_CONTROL_ALLOW_CREDENTIALS = env("", name="{attr}")
+    HTTP_X_FRAME_OPTIONS = env("", name="{attr}")
 
     def get_cors_origin_whitelist(self, hostname):
         return self.CSRF_TRUSTED_ORIGINS
 
     def get_csrf_trusted_origins(self, hostname):
-        trusted = [
-            hostname,
-            *(self.env("DJANGO_CSRF_TRUSTED_ORIGINS", type=list) or ()),
-        ]
+        trusted = [hostname, *(self.env("DJANGO_CSRF_TRUSTED_ORIGINS", type=list) or ())]
         if self.EJ_ROCKETCHAT_INTEGRATION:
             trusted.append(remove_schema(self.EJ_ROCKETCHAT_URL))
+            if self.EJ_ROCKETCHAT_API_URL:
+                trusted.append(remove_schema(self.EJ_ROCKETCHAT_API_URL))
         return unique(trusted)
 
     def get_allowed_hosts(self, hostname):

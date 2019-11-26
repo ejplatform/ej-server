@@ -1,4 +1,5 @@
 import logging
+from django.utils.translation import ugettext as _
 
 from allauth.socialaccount import providers
 from allauth.socialaccount.models import SocialApp
@@ -39,23 +40,22 @@ def register_button(provider_id, fa_class=None, query=None):
     def social_button(request):
         redirect_url = reverse("conversation:list")
         provider = providers.registry.by_id(provider_id, request)
-        url = provider.get_login_url(
-            request, next=request.GET.get("next", redirect_url), **(query or {})
-        )
+        url = provider.get_login_url(request, next=request.GET.get("next", redirect_url), **(query or {}))
 
         return fa_icon(
             provider_id,
             href=url,
             id=f"{provider_id}-button",
-            aria_label=f"{provider_id.title()} Icon",
+            aria_label=_("Login using {}").format(provider_id.title()),
             class_=f"fab {fa_class} icon-{provider_id} rounded-icon",
+            style="font-size: 2.5rem",
         )
 
     SOCIAL_BUTTON_REGISTRY[provider_id] = social_button
     return social_button
 
 
-register_button("facebook", query={"method", "oauth2"})
+register_button("facebook", query={"method": "oauth2"})
 register_button("twitter")
 register_button("github")
 register_button("google", fa_class="fa-google-plus-g")

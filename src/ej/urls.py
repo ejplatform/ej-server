@@ -15,6 +15,7 @@ from ej.fixes import unregister_admin
 
 unregister_admin.unregister_apps()
 
+
 #
 # Optional urls
 #
@@ -22,76 +23,70 @@ def get_urlpatterns():
     fixes()
 
     patterns = [
+        #
         # Basic authentication and authorization
         path("", include("ej.routes")),
         *with_app("ej_users", "", namespace="auth"),
         *with_app("ej_users", "account/", "routes_account", namespace="account"),
-        # Conversations and other EJ-specific routes
-        path(
-            "conversations/",
-            include("ej_conversations.routes", namespace="conversation"),
-        ),
-        path(
-            "comments/",
-            include("ej_conversations.routes_comments", namespace="comments"),
-        ),
-        # Profile URLS
+        #
+        #  Conversations and other EJ-specific routes
+        path("conversations/", include("ej_conversations.routes", namespace="conversation")),
+        path("comments/", include("ej_conversations.routes_comments", namespace="comments")),
+        #
+        #  Profile URLS
         *with_app("ej_profiles", "profile/", namespace="profile"),
         *with_app("ej_notifications", "notifications/", namespace="notifications"),
-        # Data visualization
+        #
+        #  Data visualization
         *with_app("ej_dataviz", "conversations/", namespace="dataviz"),
-        *with_app(
-            "ej_dataviz", "conversations/", routes="routes_report", namespace="report"
-        ),
-        # Global stereotype and cluster management
+        *with_app("ej_dataviz", "conversations/", routes="routes_report", namespace="report"),
+        #
+        #  Global stereotype and cluster management
         *with_app("ej_clusters", "conversations/", namespace="cluster"),
-        *with_app(
-            "ej_clusters",
-            "stereotypes/",
-            routes="routes_stereotypes",
-            namespace="stereotypes",
-        ),
-        # Gamification
+        *with_app("ej_clusters", "stereotypes/", routes="routes_stereotypes", namespace="stereotypes"),
+        #
+        #  Gamification
         *with_app("ej_gamification", "profile/", namespace="gamification"),
-        *with_app(
-            "ej_gamification",
-            "leaderboard/",
-            routes="routes_leaderboard",
-            namespace="leaderboard",
-        ),
+        *with_app("ej_gamification", "leaderboard/", routes="routes_leaderboard", namespace="leaderboard"),
         *with_app(
             "ej_gamification",
             "conversations/",
             routes="routes_conversation",
             namespace="conversation-achievement",
         ),
-        # Rocket.chat integration
+        #
+        #  Rocket.chat integration
         *with_app("ej_rocketchat", "talks/", namespace="rocket"),
-        # Admin
+        #
+        #  Allauth
+        path("accounts/", include("allauth.urls")),
+        #
+        #  Admin
         *(
-            [path(fix_url(settings.ADMIN_URL.lstrip('/')), admin.site.urls)]
+            [path(fix_url(settings.ADMIN_URL.lstrip("/")), admin.site.urls)]
             if apps.is_installed("django.contrib.admin")
             else ()
         ),
+        #
         # Debug routes
         *with_app("ej_experiments", "info/experiments/", namespace="experiments"),
-        # REST API
+        #
+        #  REST API
         path("api/", include(rest_api.urls)),
         path("api/v1/docs/", include_docs_urls(title="ej API Docs", public=False)),
-        # REST API for user management
+        #
+        #  REST API for user management
         # path('rest-auth/', include('rest_auth.urls')),
         # path('rest-auth/registration/', include('rest_auth.registration.urls')),
         # Static files for the dev server
         *static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),
         *static(settings.STATIC_URL, document_root=settings.STATIC_ROOT),
-        # Documentation in development mode
-        re_path(
-            r"^static_docs/$",
-            serve,
-            {"document_root": "build/docs", "path": "index.html"},
-        ),
+        #
+        #  Documentation in development mode
+        re_path(r"^static_docs/$", serve, {"document_root": "build/docs", "path": "index.html"}),
         re_path(r"^static_docs/(?P<path>.*)$", serve, {"document_root": "build/docs/"}),
-        # Boards
+        #
+        #  Boards
         *with_app("ej_boards", "", namespace="boards"),
     ]
 
@@ -100,9 +95,7 @@ def get_urlpatterns():
         patterns.extend(
             [
                 path(
-                    "error/400/",
-                    default_views.bad_request,
-                    kwargs={"exception": Exception("Bad Request!")},
+                    "error/400/", default_views.bad_request, kwargs={"exception": Exception("Bad Request!")}
                 ),
                 path(
                     "error/403/",

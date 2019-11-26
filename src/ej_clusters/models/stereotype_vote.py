@@ -14,9 +14,7 @@ class StereotypeVote(models.Model):
     It forms a m2m relationship between Stereotypes and comments.
     """
 
-    author = models.ForeignKey(
-        "Stereotype", related_name="votes", on_delete=models.CASCADE
-    )
+    author = models.ForeignKey("Stereotype", related_name="votes", on_delete=models.CASCADE)
     comment = models.ForeignKey(
         "ej_conversations.Comment",
         verbose_name=_("Comment"),

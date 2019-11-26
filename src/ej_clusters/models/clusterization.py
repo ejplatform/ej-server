@@ -23,26 +23,9 @@ class Clusterization(TimeStampedModel):
     """
 
     conversation = models.OneToOneField(
-        "ej_conversations.Conversation",
-        on_delete=models.CASCADE,
-        related_name="clusterization",
+        "ej_conversations.Conversation", on_delete=models.CASCADE, related_name="clusterization"
     )
     cluster_status = EnumField(ClusterStatus, default=ClusterStatus.PENDING_DATA)
-    pending_comments = models.ManyToManyField(
-        "ej_conversations.Comment",
-        related_name="pending_in_clusterizations",
-        editable=False,
-        blank=True,
-    )
-    pending_votes = models.ManyToManyField(
-        "ej_conversations.Vote",
-        related_name="pending_in_clusterizations",
-        editable=False,
-        blank=True,
-    )
-
-    unprocessed_comments = property(lambda self: self.pending_comments.count())
-    unprocessed_votes = property(lambda self: self.pending_votes.count())
     comments = delegate_to("conversation")
     users = delegate_to("conversation")
     votes = delegate_to("conversation")
@@ -55,6 +38,10 @@ class Clusterization(TimeStampedModel):
     @property
     def stereotype_votes(self):
         return StereotypeVote.objects.filter(comment__in=self.comments.all())
+
+    @property
+    def n_unprocessed_votes(self):
+        return self.conversation.votes(created__gte=self.modified).count()
 
     #
     # Statistics and annotated values
@@ -91,13 +78,10 @@ class Clusterization(TimeStampedModel):
 
             with use_transaction(atomic=atomic):
                 try:
-                    self.clusters.clusterize_from_votes()
-                except ValueError:
-                    return
-                self.pending_comments.all().delete()
-                self.pending_votes.all().delete()
+                    self.clusters.find_clusters()
+                except ValueError as exc:
+                    log.error(f"[clusters] Error during clusterization: [{exc}]")
+                    raise
                 if self.cluster_status == ClusterStatus.PENDING_DATA:
                     self.cluster_status = ClusterStatus.ACTIVE
-                x = self.id
-                y = self.conversation_id
                 self.save()

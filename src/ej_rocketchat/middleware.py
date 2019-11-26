@@ -1,7 +1,7 @@
 from .decorators import with_headers
 
 
-def ContentSecurityPolicyMiddleware(get_response):
+def ContentSecurityPolicyMiddleware(get_response):  # noqa: N802
     """
     Apply Content-Security-Policy headers in all pages.
     """

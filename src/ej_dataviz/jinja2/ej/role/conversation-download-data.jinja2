@@ -5,11 +5,13 @@
             <li class="margin-0"><a href="{{ url }}">
                 <span class="brand bold">{{ name }}</span></a>
                 {%- if format == 'csv' %}
-                    - {{ _('Text-based table format that can be imported to Excel and other spreadsheets.') }}
+                    - {{ _('Text-based spreadsheet format.') }}
                 {% elif format == 'json' %}
-                    - {{ _('Simple data format expressed as a list of dictionaries. (For advanced users)') }}
+                    - {{ _('Useful format for advanced users.') }}
                 {% elif format == 'msgpack' %}
                     - {{ _('Binary faster alternative to JSON.') }}
+                {% elif format == 'xlsx' %}
+                    - {{ _('An Excel spreadsheet.') }}
                 {% endif %}
             </li>
         {% endfor %}

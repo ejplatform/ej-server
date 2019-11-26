@@ -7,13 +7,10 @@ from hyperpython.django import csrf_input
 from ej.roles import with_template, progress_bar
 from .. import forms
 from .. import models
-from ..rules import max_comments_per_conversation
 
 
 @with_template(models.Conversation, role="balloon")
-def conversation_balloon(
-    conversation, request=None, actions=None, is_favorite=False, **kwargs
-):
+def conversation_balloon(conversation, request=None, actions=None, is_favorite=False, **kwargs):
     """
     Render details of a conversation inside a conversation balloon.
     """
@@ -56,16 +53,14 @@ def conversation_card(conversation, url=None, request=None, text=None, hidden=No
         "hidden": conversation.is_hidden if hidden is None else hidden,
         "url": url or conversation.get_absolute_url(),
         "tag": conversation.first_tag,
-        "n_comments": conversation.n_comments,
-        "n_votes": conversation.n_votes,
+        "n_comments": conversation.n_approved_comments,
+        "n_votes": conversation.n_final_votes,
         "n_favorites": conversation.n_favorites,
     }
 
 
 @with_template(models.Conversation, role="comment-form")
-def conversation_comment_form(
-    conversation, request=None, content=None, user=None, form=None, target=None
-):
+def conversation_comment_form(conversation, request=None, content=None, user=None, form=None, target=None):
     """
     Render comment form for conversation.
     """
@@ -74,14 +69,11 @@ def conversation_comment_form(
     if not user.is_authenticated:
         conversation_url = conversation.get_absolute_url()
         login = reverse("auth:login")
-        return {
-            "user": None,
-            "login_anchor": a(_("login"), href=f"{login}?next={conversation_url}"),
-        }
+        return {"user": None, "login_anchor": a(_("login"), href=f"{login}?next={conversation_url}")}
 
     # Check if user still have comments left
     n_comments = rules.compute("ej.remaining_comments", conversation, user)
-    if conversation.author != user and n_comments <= 0:
+    if n_comments <= 0:
         return {"comments_exceeded": True, "user": user}
 
     # Everything is ok, proceed ;)
@@ -101,13 +93,15 @@ def conversation_create_comment(conversation, request=None, **kwargs):
     Render "create comment" button for one conversation.
     """
     conversation.set_request(request)
-    n_comments = conversation.n_user_comments
+    n_comments = conversation.n_user_total_comments
     n_moderation = conversation.n_pending_comments
-    max_comments = max_comments_per_conversation()
+
+    fn = rules.get_value("ej.max_comments_per_conversation")
+    user = getattr(request, "user", None)
+    max_comments = fn(conversation, user)
+
     moderation_msg = _("{n} awaiting moderation").format(n=n_moderation)
-    comments_count = _("{ratio} comments").format(
-        ratio=f"<strong>{n_comments}</strong> / {max_comments}"
-    )
+    comments_count = _("{n} of {m} comments").format(n=n_comments, m=max_comments)
 
     # FIXME: Reactivate when full UI for the comment form is implemented
     # return extra_content(
@@ -117,7 +111,7 @@ def conversation_create_comment(conversation, request=None, **kwargs):
     #     id="create-comment",
     # )
     return div(
-        Blob(f"{comments_count}" f'<div class="text-7 strong">{moderation_msg}</div>'),
+        Blob(f'<div style="position: relative; top: 40px;" class="text-7 strong">{comments_count}<br>{moderation_msg}</div>'),
         id="create-comment",
         class_="extra-content",
     )
@@ -142,13 +136,13 @@ def conversation_summary(conversation, request=None):
 
 
 @html.register(models.Conversation, role="user-progress")
-def conversation_user_progress(conversation, request=None, user=None):
+def conversation_user_progress(conversation, request=None, user=None, **kwargs):
     """
     Render comment form for one conversation.
     """
 
     user = user or request.user
     conversation.for_user = user
-    n = conversation.n_user_votes
-    total = conversation.n_comments
-    return progress_bar(min(n, total), total)
+    n = conversation.n_user_final_votes
+    total = conversation.n_approved_comments
+    return progress_bar(min(n, total), total, **kwargs)

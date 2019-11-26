@@ -11,12 +11,19 @@ from ej_profiles.models import Profile
 from ej_users.models import User
 
 fake = Factory.create()
-GENDERS = [Gender.FEMALE, Gender.MALE] * 3 + [Gender.OTHER]
-RACES = [Race.BLACK, Race.WHITE] * 3 + list(Race)
-COMMENT_STATUS = [Comment.STATUS.approved] * 4 + [
-    Comment.STATUS.rejected,
-    Comment.STATUS.pending,
-]
+
+# Create genders and make try to increase the probabilities of MALE and FEMALE
+# attributions if they likely exist.
+GENDERS = list(Gender)
+if len(GENDERS) > 3:
+    GENDERS += 3 * GENDERS[1:3]
+
+# Create races and increase the probability of the first 3 races.
+RACES = list(Race)
+if len(RACES) > 3:
+    RACES += 3 * RACES[1:3]
+
+COMMENT_STATUS = [Comment.STATUS.approved] * 4 + [Comment.STATUS.rejected, Comment.STATUS.pending]
 RANDOM_PROFILE_FIELDS = {
     "race": lambda: choice(RACES),
     "gender": lambda: choice(GENDERS),
@@ -39,9 +46,7 @@ def create_users(n, fill_profile=True):
     """
 
     ids = User.objects[:, "id"]
-    User.objects.bulk_create(
-        [User(name=fake.name(), email=fake.email()) for _ in range(n)]
-    )
+    User.objects.bulk_create([User(name=fake.name(), email=fake.email()) for _ in range(n)])
     user_ids = User.objects.exclude(id__in=ids)
 
     if fill_profile:
@@ -101,16 +106,7 @@ def create_conversation(users, n_comments):
 #
 # Votes in conversation
 #
-def random_votes(
-    n,
-    conversation,
-    users=None,
-    n_users=None,
-    bias=0.7,
-    skip=0.333,
-    miss=0.5,
-    profile=None,
-):
+def random_votes(n, conversation, users=None, n_users=None, bias=0.7, skip=0.333, miss=0.5, profile=None):
     """
     Create an average of n random votes per comment in the given conversation.
     """

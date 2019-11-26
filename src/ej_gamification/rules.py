@@ -1,9 +1,12 @@
 from datetime import timedelta
 
+from boogie.rules.valuemap import default_value_map
 from django.conf import settings
 from django.utils import timezone
 from rules import predicate
-from . import models
+from ej_conversations.rules import max_comments_per_conversation as _max_comments_per_conversation
+
+from . import models, get_participation
 
 # from .models import GivenBridgePower
 POWER_ROLE_CONFIGURATION_MAP = {
@@ -37,6 +40,23 @@ def power_expiration_time(role, start=None):
 
 
 #
+# Override other EJ rules
+#
+def max_comments_per_conversation(conversation, user):
+    """
+    Limit the number of comments in a single conversation
+    """
+    default = _max_comments_per_conversation(conversation, user)
+    extra = 0
+    if conversation.author_id != getattr(user, "id", None):
+        extra = get_participation(user, conversation).voter_level.comment_bonus
+    return default + extra
+
+
+default_value_map["ej.max_comments_per_conversation"] = max_comments_per_conversation
+
+
+#
 # Permissions and predicates
 #
 @predicate
@@ -44,9 +64,7 @@ def has_opinion_bridge_power(user, conversation):
     """
     Return true if user is a "opinion bridge" in conversation.
     """
-    return models.GivenBridgePower.objects.filter(
-        user=user, conversation=conversation
-    ).exists()
+    return models.GivenBridgePower.objects.filter(user=user, conversation=conversation).exists()
 
 
 @predicate
@@ -59,9 +77,7 @@ def can_be_opinion_bridge(user, conversation):
 
 @predicate
 def has_activist_power(user, conversation):
-    return models.GivenMinorityPower.objects.filter(
-        user=user, conversation=conversation
-    ).exists()
+    return models.GivenMinorityPower.objects.filter(user=user, conversation=conversation).exists()
 
 
 @predicate

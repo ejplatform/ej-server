@@ -4,6 +4,7 @@ from boogie.rest import rest_api
 from ej_conversations.models import Conversation
 from . import models
 from .utils import cluster_shapes
+
 math = import_later(".math", package=__package__)
 
 

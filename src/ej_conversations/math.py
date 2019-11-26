@@ -14,7 +14,7 @@ def comment_statistics(
     author="author",
     comment="comment",
     choice="choice",
-    divergence=False,
+    convergence=False,
     participation=False,
     ratios=False,
 ):
@@ -29,8 +29,8 @@ def comment_statistics(
         author, comment, choice (str):
             Names for the "author", "comment", and "choice" columns in the
             votes dataset.
-        divergence (bool):
-            If True, appends a "divergence" column to the dataframe that
+        convergence (bool):
+            If True, appends a "convergence" column to the dataframe that
             measures the proportional difference between "agree" and "disagree"
             choices.
         participation (bool):
@@ -49,9 +49,7 @@ def comment_statistics(
     table.index.name = "comment"
     if participation:
         participation = len(votes[author].unique())
-    return _statistics(
-        table, divergence=divergence, participation=participation, ratios=ratios
-    )
+    return _statistics(table, convergence=convergence, participation=participation, ratios=ratios)
 
 
 def user_statistics(
@@ -59,7 +57,7 @@ def user_statistics(
     author="author",
     comment="comment",
     choice="choice",
-    divergence=False,
+    convergence=False,
     participation=False,
     ratios=False,
 ):
@@ -71,9 +69,7 @@ def user_statistics(
     table.index.name = "user"
     if participation:
         participation = len(votes[comment].unique())
-    return _statistics(
-        table, divergence=divergence, participation=participation, ratios=ratios
-    )
+    return _statistics(table, convergence=convergence, participation=participation, ratios=ratios)
 
 
 def _make_table(votes, row, col, choice):
@@ -92,7 +88,7 @@ def _make_table(votes, row, col, choice):
     return df.pivot_table(index=row, columns=choice, values=col, fill_value=0)
 
 
-def _statistics(table, divergence=False, ratios=False, participation=False):
+def _statistics(table, convergence=False, ratios=False, participation=False):
     """
     Common implementation to :func:`comment_statistics` and :func:`user_statistics`
     functions.
@@ -106,8 +102,8 @@ def _statistics(table, divergence=False, ratios=False, participation=False):
     table = table[["agree", "disagree", "skipped"]].copy()
 
     # Adds additional columns
-    if divergence:
-        table["divergence"] = compute_divergence(table)
+    if convergence:
+        table["convergence"] = compute_convergence(table)
     if participation is not False:
         table["participation"] = compute_participation(table, participation)
     if ratios:
@@ -120,18 +116,16 @@ def _statistics(table, divergence=False, ratios=False, participation=False):
     return table
 
 
-def compute_divergence(df, agree="agree", disagree="disagree"):
+def compute_convergence(df, agree="agree", disagree="disagree"):
     """
-    Compute the fractional divergence coefficient from a dataframe that have an
+    Compute the fractional convergence coefficient from a dataframe that have an
     'agree' and a 'disagree' columns.
     """
     e = 1e-50
     return abs(df[agree] - df[disagree]) / (df[agree] + df[disagree] + e)
 
 
-def compute_participation(
-    df, n_users, agree="agree", disagree="disagree", skipped="skipped"
-):
+def compute_participation(df, n_users, agree="agree", disagree="disagree", skipped="skipped"):
     """
     Compute the participation ratio column from the total number of users and a
     dataframe that have 'agree', 'disagree' and 'skipped' columns.

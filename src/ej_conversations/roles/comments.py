@@ -1,6 +1,7 @@
+from django.apps import apps
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
-from hyperpython import a
+from hyperpython import a, html
 from hyperpython.django import csrf_input
 
 from ej.roles import with_template
@@ -9,11 +10,12 @@ from ..enums import RejectionReason
 from ..models import Comment
 from ..routes_comments import comment_url
 
+HAS_GAMIFICATION = apps.is_installed("ej_gamification")
 
 @with_template(Comment, role="card")
 def comment_card(
     comment: Comment, request=None, target=None, show_actions=None, **kwargs
-):
+    ):
     """
     Render comment information inside a comment card.
     """
@@ -25,9 +27,15 @@ def comment_card(
         login_anchor = None
     else:
         login = reverse("auth:login")
-        login_anchor = a(
-            _("login"), href=f"{login}?next={comment.conversation.get_absolute_url()}"
-        )
+        login_anchor = a(_("login"), 
+        href=f"{login}?next={comment.conversation.get_absolute_url()}")
+
+    badge = ""
+    if HAS_GAMIFICATION:
+        from ej_gamification import get_participation
+
+        level = get_participation(user, comment.conversation).voter_level
+        badge = html(level, role="stars")
 
     buttons = {
         "disagree": ("fa-times", "text-negative", _("Disagree")),
@@ -43,6 +51,7 @@ def comment_card(
         "buttons": buttons,
         "login_anchor": login_anchor,
         "target": target,
+        "badge": badge,
         **kwargs,
     }
 
@@ -53,10 +62,12 @@ def comment_moderate(comment: Comment, request=None, **kwargs):
     Render a comment inside a moderation card.
     """
 
+    moderator = getattr(comment.moderator, "name", None)
     return {
         "created": comment.created,
         "author": comment.author_name,
         "text": comment.content,
+        "moderator": moderator,
     }
 
 
@@ -76,7 +87,9 @@ def comment_reject_reason(comment: Comment, **kwargs):
         "comment": comment,
         "conversation_url": comment.conversation.get_absolute_url(),
         "status": comment.status,
-        "status_name": dict(models.Comment.STATUS)[comment.status].capitalize(),
+        "status_name": dict(
+            models.Comment.STATUS
+        )[comment.status].capitalize(),
         "rejection_reason": rejection_reason,
     }
 

@@ -1,6 +1,19 @@
 {% extends 'ej_conversations/list.jinja2' %}
 {% set body_class = 'body theme-' + board.palette %}
-
+{% block menu %}
+    <nav title="{{ _('Conversations') }}">
+        <h3>{{ _('Conversations') }}</h3>
+        <ul>
+            <li><a href="{{ url('boards:conversation-list', board=board) }}">{{ _('Conversations') }}</a></li>
+            {%- if request.user.has_perm('ej.can_edit_board', board) %}
+                <li><a href="{{ url('boards:conversation-create', board=board) }}">{{ _('New Conversation') }}</a></li>
+                <li><a href="{{ url('boards:board-edit', board=board) }}">{{ _('Edit board') }}</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+    {{ page_menu.ABOUT(request) }}
+    {{ page_menu.ACCESSIBILITY() }}
+{% endblock %}
 
 {% block metaOG2 %}
     <meta name="description" property="og:title" content="{{ board.title }}">

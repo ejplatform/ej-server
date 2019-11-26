@@ -27,16 +27,17 @@
 
         border-radius: size(0.25);
         display: inline;
+        line-height: size(1);
+        height: size(1);
         margin: 0 size(0.5);
         max-width: 10rem;
-        height: size(1);
-        line-height: size(1);
         min-width: 0;
+        padding: 0 0.25rem;
         width: inherit;
     }
 
     select {
-        max-width: 3rem;
+        width: 3rem;
     }
 }
 

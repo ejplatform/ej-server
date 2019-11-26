@@ -40,10 +40,7 @@ def can_add_board(user):
 def can_add_conversation(user, board):
     return bool(
         user.has_perm("ej.can_edit_board", board)
-        and (
-            board.conversations.count()
-            < rules.compute("ej.board_conversation_limit", user)
-        )
+        and (board.conversations.count() < rules.compute("ej.board_conversation_limit", user))
     )
 
 

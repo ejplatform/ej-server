@@ -2,44 +2,38 @@ from typing import Mapping
 
 from hyperpython import a, div
 
-from ej.roles.tags import icon
+from ..roles.tags import icon
 
 
 def tabs(items, select=0, js=True, **kwargs):
     """
     Return a tabbed interface.
     """
-    items = items.items() if isinstance(items, Mapping) else items
-    children = []
-    if js:
-        kwargs["is-component"] = True
-
-    for idx, (k, v) in enumerate(items):
-        args = {"href": v} if isinstance(v, str) else v
-        anchor = a(args, k, is_selected=select == idx)
-        children.append(anchor)
-
-    return div(children, **kwargs).add_class("tabs", first=True)
+    return _make_tabs("tabs", js, kwargs, list(_tab_anchors(items, select)))
 
 
 def categories(items, select=0, js=True, **kwargs):
     """
     Similar to tabs, but display several categories for the user to select.
     """
-    items = items.items() if isinstance(items, Mapping) else items
     children = [
-        icon("chevron-left", class_="categories__left", is_element="leftArrow:click")
+        icon("chevron-left", class_="categories__left", is_element="leftArrow:click"),
+        *_tab_anchors(items, select),
+        icon("chevron-right", class_="categories_right", is_element="rightArrow:click"),
     ]
-    if js:
-        kwargs["is-component"] = True
+    return _make_tabs("categories", js, kwargs, children)
 
+
+def _tab_anchors(items, select):
+    items = items.items() if isinstance(items, Mapping) else items
     for idx, (k, v) in enumerate(items):
         args = {"href": v} if isinstance(v, str) else v
-        if select == idx or select == v:
-            args["is-selected"] = True
-        children.append(a(args, k))
-    children.append(
-        icon("chevron-right", class_="categories_right", is_element="rightArrow:click")
-    )
+        args.update(role="tab", tabindex=0, is_selected=select == idx)
+        yield a(k, **args)
 
-    return div(children, **kwargs).add_class("categories", first=True)
+
+def _make_tabs(cls, js, kwargs, children):
+    if js:
+        kwargs["is-component"] = True
+    kwargs.setdefault("role", "tablist")
+    return div(children, **kwargs).add_class(cls, first=True)

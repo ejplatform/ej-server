@@ -2,7 +2,7 @@ import random
 
 from django.contrib.auth import get_user_model
 from django.db.models import Avg
-
+from django.conf import settings
 from ej_clusters.models import Cluster, Stereotype, StereotypeVote
 from ej_conversations import create_conversation
 from ej_conversations.enums import Choice
@@ -39,9 +39,7 @@ def set_clusters_from_comments(conversation, comment_map, exclusive=True, author
             description = f'Stereotype for the "{cluster_name}" cluster'
 
         # Create cluster and stereotype
-        cluster = Cluster.objects.create(
-            clusterization=clusterization, name=cluster_name
-        )
+        cluster = Cluster.objects.create(clusterization=clusterization, name=cluster_name)
         stereotype, _ = Stereotype.objects.get_or_create(
             name=cluster_name, description=description, owner=author
         )
@@ -52,20 +50,14 @@ def set_clusters_from_comments(conversation, comment_map, exclusive=True, author
         if isinstance(comments, str):
             comments = [comments]
         for text in comments:
-            comment = conversation.create_comment(
-                author, text, status="approved", check_limits=False
-            )
+            comment = conversation.create_comment(author, text, status="approved", check_limits=False)
             created_comments.append(comment)
             stereotype.vote(comment, "agree")
 
     if exclusive:
         for stereotype in created_stereotypes:
             voted_ids = stereotype.votes.values_list("comment_id", flat=True)
-            votes = {
-                comment: "disagree"
-                for comment in created_comments
-                if comment.id not in voted_ids
-            }
+            votes = {comment: "disagree" for comment in created_comments if comment.id not in voted_ids}
             stereotype.cast_votes(votes)
 
     return created_comments
@@ -119,7 +111,7 @@ def random_vote(prob):
 #
 # Examples
 #
-def make_conversation_with_clusters():
+def make_conversation_with_clusters_en():
     conversation = create_conversation(
         "How should our society organize the production of goods and services?",
         "Economy",
@@ -130,10 +122,8 @@ def make_conversation_with_clusters():
         conversation,
         {
             "Liberal": [
-                "Free market should regulate how enterprises invest money and hire "
-                "employees.",
-                "State should provide a stable judicial system and refrain from "
-                "regulating the economy.",
+                "Free market should regulate how enterprises invest money and hire " "employees.",
+                "State should provide a stable judicial system and refrain from " "regulating the economy.",
             ],
             "Socialist": [
                 "Government and the society as a whole must regulate business "
@@ -141,8 +131,7 @@ def make_conversation_with_clusters():
                 "State leadership is necessary to drive a strong economy.",
             ],
             "Fascist": [
-                "Government should eliminate opposition in order to ensure "
-                "governability.",
+                "Government should eliminate opposition in order to ensure " "governability.",
                 "Military should occupy high ranks in government.",
             ],
         },
@@ -150,7 +139,7 @@ def make_conversation_with_clusters():
     return conversation
 
 
-def make_conversation_with_clusters():
+def make_conversation_with_clusters_pt_br():
     conversation = create_conversation(
         "Que medidas devem ser feitas para melhorar a educação de jovens e adolescentes?",
         "Educação",
@@ -162,7 +151,8 @@ def make_conversation_with_clusters():
         {
             "Estatista": [
                 "É necessário aumentar a verba destinada à educação pública de qualidade",
-                "Devemos incentivar a participação da classe média na escola pública reservando vagas nas universidades.",
+                "Devemos incentivar a participação da classe média na escola pública reservando vagas nas "
+                "universidades.",
                 "O Brasil deve utilizar o dinheiro do pré-sal somente para a educação.",
             ],
             "Privatista": [
@@ -188,3 +178,10 @@ def make_conversation_with_clusters():
         },
     )
     return conversation
+
+
+def make_conversation_with_clusters():
+    if settings.COUNTRY in ("brasil", "brazil"):
+        return make_conversation_with_clusters_pt_br()
+    else:
+        return make_conversation_with_clusters_pt_br()

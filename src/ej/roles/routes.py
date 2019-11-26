@@ -31,9 +31,7 @@ def role_index():
         classes.add(cls)
         name = cls.__name__
         href = reverse("role-model-queryset", kwargs={"model": name.lower()})
-        data.append(
-            [name + " (queryset)", span([a(name, href=href), ": " + get_doc(cls)])]
-        )
+        data.append([name + " (queryset)", span([a(name, href=href), ": " + get_doc(cls)])])
 
     return {"data": html_map(data)}
 
@@ -59,9 +57,7 @@ def role_model_list(request, model, role):
     size = kwargs.pop("size", 10)
     data = []
     for idx, obj in enumerate(cls.objects.all()[:size], 1):
-        link = reverse(
-            "role-model-instance", kwargs={"model": model, "role": role, "id": obj.id}
-        )
+        link = reverse("role-model-instance", kwargs={"model": model, "role": role, "id": obj.id})
         key = span([f"{idx}) ", a(str(obj), href=link)])
         data.append((key, html(obj, role, **kwargs)))
 

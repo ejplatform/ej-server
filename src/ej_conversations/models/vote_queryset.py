@@ -37,9 +37,7 @@ class VoteQuerySet(QuerySet):
             data_imputation = 0
 
         if isinstance(data_imputation, Number):
-            return self.pivot_table(
-                "author", "comment", "choice", fill_value=data_imputation
-            )
+            return self.pivot_table("author", "comment", "choice", fill_value=data_imputation)
         else:
             data = self.pivot_table("author", "comment", "choice")
             return imputation(data, data_imputation)

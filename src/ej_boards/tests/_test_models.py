@@ -22,9 +22,7 @@ class TestBoardModel(BoardRecipes):
     def test_get_board_palette_from_conversation(self, mk_conversation, mk_user):
         user = mk_user(email="someuser@mail.com")
         conversation = create_conversation("foo", "conv1", user)
-        board = Board.objects.create(
-            slug="board1", owner=user, palette="Orange", description="board"
-        )
+        board = Board.objects.create(slug="board1", owner=user, palette="Orange", description="board")
         board.conversations.add(conversation)
         assert conversation.css_palette == "orangePalette"
         assert conversation.css_light_palette == "orangePalette-light"

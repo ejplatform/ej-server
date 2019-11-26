@@ -5,22 +5,41 @@
 {% block content %}
     <div class="measure margin-xauto margin-t3">
         <h1 class="h2 text-accent">{{ _('Administrative login') }}</h1>
-        <p>{% trans %}Administrative users do not have user accounts in Rocket.Chat. Instead, they all control
-            the common administrative account for Rocket.Chat.{% endtrans %}</p>
-{#        <h2 class="h3 text-accent">{{ _('Account info') }}</h2>#}
-{#        <dl>#}
-{#            <dt>{% trans %}Admin user{% endtrans %}</dt>#}
-{#            <dd>{{ username }}</dd>#}
-{#            <dt>{% trans %}Access token{% endtrans %}</dt>#}
-{#            <dd>{{ token }}</dd>#}
-{#        </dl>#}
+        <p>{% trans %}Administrative users do not have user accounts in Rocket.Chat.{% endtrans %}
+            {% trans %}Instead, they all control the common administrative account for Rocket.Chat.{% endtrans %}</p>
         <h2 class="h3 text-accent">{{ _('Login') }}</h2>
-        <p>{{ _('Please type the <strong>Rocket.Chat</strong> admin password')|safe }}</p>
+        <p>{{ _('Please type the Rocket.Chat admin password') }}</p>
         <form method="post">
             {{ csrf_input }}
             {{ form.as_p() }}
             <input type="submit" value="{{ _('Send') }}" name="send">
         </form>
+
+        <h2 class="h3 text-accent">{{ _('Configuration') }}</h2>
+        <p>{{ _("You can make the home page point to <code>/talks/intro/</code> by copying the following fragment into Rocket.Chat's <em>Administration > Layout > Content</em> panel.") }}</p>
+        <pre><code>{{ "".__class__(code())|e }}</code></pre>
     </div>
 {% endblock %}
 
+
+{% macro code() %}
+    <!DOCTYPE html>
+    <html lang="pt-br">
+    <style>
+        iframe {
+            width: 100%;
+            height: 100vh;
+        }
+
+        .content {
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+    </style>
+    <body>
+    <iframe src="{{ base_url }}{{ url('rocket:intro') }}">
+        Bem vindos ao EJ!
+    </iframe>
+    </body>
+    </html>
+{% endmacro %}

@@ -11,9 +11,7 @@ class NotificationsConf(Conf):
         elif ej_push_notifications == "fcm":
             return {"FCM_API_KEY": self.FCM_API_KEY}
         else:
-            raise ValueError(
-                f"invalid value for EJ_PUSH_NOTIFICATIONS = {ej_push_notifications}"
-            )
+            raise ValueError(f"invalid value for EJ_PUSH_NOTIFICATIONS = {ej_push_notifications}")
 
     FCM_API_KEY = env(
         (

@@ -3,8 +3,9 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 from sidekick import identity
 
-from ej.forms import EjModelForm
+from ej.forms import EjModelForm, EjUserForm
 from .models import Conversation, Comment
+from .signals import comment_moderated
 
 
 class CommentForm(EjModelForm):
@@ -17,6 +18,7 @@ class CommentForm(EjModelForm):
         self.conversation = conversation
         super(CommentForm, self).__init__(*args, **kwargs)
         self.fields["content"].widget.attrs["placeholder"] = _("Give your opinion here")
+        self.fields["content"].widget.attrs["title"] = _("Suggest a new comment")
 
     def clean(self):
         super().clean()
@@ -32,7 +34,7 @@ class CommentForm(EjModelForm):
         return self.cleaned_data
 
 
-class ModerationForm(EjModelForm):
+class ModerationForm(EjUserForm, EjModelForm):
     """
     Form used during moderation of a conversation's comments.
     """
@@ -44,6 +46,7 @@ class ModerationForm(EjModelForm):
 
     def _clean_fields(self):
         self.data = self.data.copy()
+
         if "reject_id" in self.data:
             comment_id = int(self.data["reject_id"])
             self.instance = Comment.objects.get(id=comment_id)
@@ -52,9 +55,22 @@ class ModerationForm(EjModelForm):
             comment_id = int(self.data["approve_id"])
             self.instance = Comment.objects.get(id=comment_id)
             self.data["status"] = Comment.STATUS.approved
+            self.fields["rejection_reason"].required = False
         else:
             raise ValueError("invalid POST data")
         super()._clean_fields()
+
+    def save(self, commit=True, **kwargs):
+        kwargs.setdefault("moderator", self.user)
+        comment = super().save(commit=commit, **kwargs)
+        comment_moderated.send(
+            Comment,
+            comment=comment,
+            moderator=self.user,
+            author=comment.author,
+            is_approved=comment.status == comment.STATUS.approved,
+        )
+        return comment
 
 
 class ConversationForm(EjModelForm):
@@ -63,13 +79,11 @@ class ConversationForm(EjModelForm):
     """
 
     comments_count = forms.IntegerField(initial=3, required=False)
-    tags = forms.CharField(
-        label=_("Tags"), help_text=_("Tags, separated by commas."), required=False
-    )
+    tags = forms.CharField(label=_("Tags"), help_text=_("Tags, separated by commas."), required=False)
 
     class Meta:
         model = Conversation
-        fields = ["title", "text", "is_promoted", "is_hidden"]
+        fields = ["title", "text", "is_promoted"]  # "is_hidden"
         help_texts = {
             "is_promoted": _("Place conversation in the main /conversations/ URL."),
             "is_hidden": _("Mark to make the conversation invisible."),
@@ -80,9 +94,7 @@ class ConversationForm(EjModelForm):
         for field in ("tags", "text"):
             self.set_placeholder(field, self[field].help_text)
         if self.instance and self.instance.id is not None:
-            self.fields["tags"].initial = ", ".join(
-                self.instance.tags.values_list("name", flat=True)
-            )
+            self.fields["tags"].initial = ", ".join(self.instance.tags.values_list("name", flat=True))
 
     def set_placeholder(self, field, value):
         self.fields[field].widget.attrs["placeholder"] = value
@@ -107,9 +119,7 @@ class ConversationForm(EjModelForm):
 
         return conversation
 
-    def save_comments(
-        self, author, check_limits=True, status=Comment.STATUS.approved, **kwargs
-    ):
+    def save_comments(self, author, check_limits=True, status=Comment.STATUS.approved, **kwargs):
         """
         Save model, tags and comments.
         """
@@ -122,6 +132,9 @@ class ConversationForm(EjModelForm):
             name = f"comment-{i + 1}"
             value = self.data.get(name)
             if value:
-                conversation.create_comment(author, value, **kwargs)
-
+                try:
+                    conversation.create_comment(author, value, **kwargs)
+                # Duplicate or empty comment...
+                except ValidationError:
+                    pass
         return conversation

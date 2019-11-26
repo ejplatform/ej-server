@@ -3,24 +3,30 @@ from logging import getLogger
 from boogie.models import F
 from boogie.router import Router
 from django.db import transaction
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseServerError
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from hyperpython import a
 
 from . import forms, models
+from .enums import TourStatus
 from .models import Conversation
 from .rules import next_comment
 from .tour import TOUR
-from .utils import check_promoted, conversation_admin_menu_links, handle_detail_post
+from .utils import (
+    check_promoted,
+    conversation_admin_menu_links,
+    handle_detail_favorite,
+    handle_detail_comment,
+    handle_detail_vote,
+)
 
 log = getLogger("ej")
 
 app_name = "ej_conversations"
 urlpatterns = Router(
-    template="ej_conversations/{name}.jinja2",
-    models={"conversation": models.Conversation},
+    template="ej_conversations/{name}.jinja2", models={"conversation": models.Conversation}
 )
 conversation_url = f"<model:conversation>/<slug:slug>/"
 
@@ -29,26 +35,17 @@ conversation_url = f"<model:conversation>/<slug:slug>/"
 # Display conversations
 #
 @urlpatterns.route("", name="list")
-def list_view(
-    request, queryset=Conversation.objects.filter(is_promoted=True), context=None
-):
+def list_view(request, queryset=Conversation.objects.filter(is_promoted=True), context=None):
     user = request.user
 
     # Select the list of conversations: staff get to see hidden conversations while
     # regular users cannot
-    if not (user.is_staff or user.is_superuser):
+    if not (user.is_staff or user.is_superuser or user.has_perm("ej_conversations.can_publish_promoted")):
         queryset = queryset.filter(is_hidden=False)
 
     # Annotate queryset for efficient db access
-    annotations = (
-        "n_votes",
-        "n_comments",
-        "n_user_votes",
-        "first_tag",
-        "n_favorites",
-        "author_name",
-    )
-    queryset = queryset.cache_annotations(*annotations, user=user)
+    annotations = ("n_votes", "n_comments", "n_user_votes", "first_tag", "n_favorites", "author_name")
+    queryset = queryset.cache_annotations(*annotations, user=user).order_by("-created")
 
     return {
         "conversations": queryset,
@@ -79,7 +76,16 @@ def detail(request, conversation, slug=None, check=check_promoted):
 
     if request.method == "POST":
         action = request.POST["action"]
-        ctx = handle_detail_post(request, conversation, action)
+
+        if action == "vote":
+            ctx = handle_detail_vote(request)
+        elif action == "comment":
+            ctx = handle_detail_comment(request, conversation)
+        elif action == "favorite":
+            ctx = handle_detail_favorite(request, conversation)
+        else:
+            log.warning(f"user {request.user.id} se nt invalid POST request: {request.POST}")
+            return HttpResponseServerError("invalid action")
 
     return {
         "conversation": conversation,
@@ -104,22 +110,22 @@ def create(request, context=None, **kwargs):
     return {"form": form, **(context or {})}
 
 
-@urlpatterns.route(
-    conversation_url + "edit/", perms=["ej.can_edit_conversation:conversation"]
-)
+@urlpatterns.route(conversation_url + "edit/", perms=["ej.can_edit_conversation:conversation"])
 def edit(request, conversation, slug=None, check=check_promoted, **kwargs):
     check(conversation, request)
     form = forms.ConversationForm(request=request, instance=conversation)
-    can_publish = request.user.has_perm("can_publish_promoted")
+    can_publish = request.user.has_perm("ej_conversations.can_publish_promoted")
+    is_promoted = conversation.is_promoted
 
     if form.is_valid_post():
         # Check if user is not trying to edit the is_promoted status without
         # permission. This is possible since the form sees this field
         # for all users and does not check if the user is authorized to
         # change is value.
-        if form.cleaned_data["is_promoted"] != conversation.is_promoted:
-            raise PermissionError("invalid operation")
-        form.save()
+        new = form.save()
+        if new.is_promoted != is_promoted:
+            new.is_promoted = is_promoted
+            new.save()
 
         # Now we decide the correct redirect page
         page = request.POST.get("next")
@@ -127,8 +133,10 @@ def edit(request, conversation, slug=None, check=check_promoted, **kwargs):
             url = reverse("cluster:conversation-stereotype")
         elif page == "moderate":
             url = reverse("conversation:moderate")
-        else:
+        elif conversation.is_promoted:
             url = conversation.get_absolute_url()
+        else:
+            url = reverse("conversation:list")
         return redirect(url)
 
     return {
@@ -139,16 +147,14 @@ def edit(request, conversation, slug=None, check=check_promoted, **kwargs):
     }
 
 
-@urlpatterns.route(
-    conversation_url + "moderate/", perms=["ej.can_moderate_conversation:conversation"]
-)
+@urlpatterns.route(conversation_url + "moderate/", perms=["ej.can_moderate_conversation:conversation"])
 def moderate(request, conversation, slug=None, check=check_promoted):
     check(conversation, request)
     form = forms.ModerationForm(request=request)
 
     if form.is_valid_post():
         form.save()
-        form = forms.ModerationForm()
+        form = forms.ModerationForm(user=request.user)
 
     # Fetch all comments and filter
     status_filter = lambda value: lambda x: x.status == value

@@ -6,6 +6,11 @@
 $_sm-header-height: size(2);
 $_md-header-height: size(2.5);
 
+body {
+    display: flex;
+    flex-direction: column;
+}
+
 //------------------------------------------------------------------------------
 // Footer and header navigation
 .main-header, .main-footer {
@@ -31,6 +36,7 @@ $_md-header-height: size(2.5);
     box-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.35);
     height: $_sm-header-height;
     line-height: $_sm-header-height;
+    order: -1;
     width: 100%;
 
     &__logo {
@@ -144,11 +150,11 @@ $_md-header-height: size(2.5);
         right: 0;
         z-index: 1002;
     }
-    section {
+    nav {
         @include utilities('pad-2');
 
         border-bottom: 1px solid color('brand');
-        h1 {
+        h1, h2, h3 {
             display: none;
         }
         ul:first-child {
@@ -161,12 +167,12 @@ $_md-header-height: size(2.5);
             @include utilities('margin-y1');
         }
     }
-    section:first-child {
+    nav:first-child {
         a {
             @include utilities('bold');
         }
     }
-    section:last-child {
+    nav:last-child {
         border-bottom: none;
     }
 }
@@ -187,11 +193,11 @@ $_md-header-height: size(2.5);
             width: 20%;
             z-index: 0;
         }
-        section {
+        nav {
             border: none;
             padding-top: 0;
 
-            h1 {
+            h1, h2, h3 {
                 display: block;
                 font-size: 0.875rem;
                 margin-top: 0;
@@ -201,7 +207,7 @@ $_md-header-height: size(2.5);
                 padding: size(0.25) size(0.5);
             }
         }
-        section::after {
+        nav::after {
             background: rgba(0, 0, 0, 0.12);
             display: block;
             content: ' ';
@@ -209,18 +215,36 @@ $_md-header-height: size(2.5);
             margin: size(0.5) auto 0 auto;
             width: 75%;
         }
-        section:last-child::after {
+        nav:last-child::after {
             content: none;
         }
     }
 
     #page-wrapper {
         display: flex;
-        flex-direction: row-reverse;
         align-items: stretch;
+    }
+
+    #page-wrapper > *:first-child {
+        flex: 1;
     }
 
     .page-menu + * {
         flex: 5;
+    }
+}
+
+
+#first-link {
+    @extend .screen-reader;
+    tab-index: 0;
+
+    :focus {
+        background: 0;
+        bottom: size(0.5);
+        padding: size(0.25);
+        position: fixed;
+        text-align: center;
+        z-index: 1002;
     }
 }

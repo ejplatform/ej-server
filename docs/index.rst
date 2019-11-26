@@ -7,3 +7,4 @@ Welcome to EJ documentation!
    user-guide/_index
    dev-docs/_index
    i18n/index
+   cod-docs/_index

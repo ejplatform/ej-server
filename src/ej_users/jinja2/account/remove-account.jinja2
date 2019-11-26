@@ -11,8 +11,7 @@
     {% else %}
         <h1 class="h2 text-negative">{% trans %}Danger! Remove account{% endtrans %}</h1>
         <p><i class="fa fa-skull-crossbones margin-4" style="font-size: 3em"></i></p>
-        <p>{% trans %}By removing your account, we will delete all your profile information and
-            assign your votes and comments to an anonymous account.{% endtrans %}
+        <p>{{ _('By removing your account, we will delete all your profile information and assign your votes and comments to an anonymous account.') }}
             <strong>{% trans %}This operation cannot be undone!{% endtrans %}</strong></p>
         <form method="POST" class="width-full">
             <p>{% trans %}You have to type your e-mail to confirm.{% endtrans %}</p>

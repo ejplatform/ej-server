@@ -8,10 +8,29 @@
     padding: 0;
 }
 
-@include breakpoint('sm') {
-    .container-1, .container-2, .container-3, .container-4 {
+.form-container {
+    margin: 0 auto;
+    max-width: 32rem;
+    padding: 0 size(1);
+    text-align: center;
+    width: 100%;
+
+    label {
+        text-align: initial;
+    }
+
+    form {
         padding: 0 size(1);
     }
+}
+
+.form-container.is-wide {
+    max-width: 47rem;
+}
+
+.form-narrow {
+    width: 21rem;
+    margin: 0 auto;
 }
 
 label {
@@ -26,4 +45,32 @@ legend {
     margin-right: size(1);
     text-align: center;
     opacity: 0.75;
+}
+
+html {
+    background-color: color('white');
+}
+
+a.button {
+    &:hover, &:focus, &:active {
+        @include utilities('shadow-1');
+        @include color('action');
+    }
+}
+
+a.button.is-primary {
+    &:hover, &:focus, &:active {
+        @include color('accent');
+    }
+}
+
+// Neat trick from https://accessible360.com/accessible360-blog/use-aria-label-screen-reader-text/
+.screen-reader {
+    clip: rect(1px, 1px, 1px, 1px);
+    clip-path: polygon(0px 0px, 0px 0px, 0px 0px);
+    height: 1px;
+    overflow: hidden !important;
+    position: absolute;
+    width: 1px;
+    z-index: -1000;
 }

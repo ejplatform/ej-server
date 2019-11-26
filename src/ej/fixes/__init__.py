@@ -1,14 +1,23 @@
 import logging
 
-log = logging.getLogger("ej-fixes")
+from django.core.exceptions import ImproperlyConfigured
 
 
 def apply_all():
-    from . import django_old_apis
+    # from . import django_old_apis
     from . import sidekick
 
-    fixes = [django_old_apis.fix, sidekick.fix]  # , pinax_points.fix]
+    fixes = [
+        # django_old_apis.fix,
+        # pinax_points.fix,
+        sidekick.fix
+    ]
+
+    try:
+        log = logging.getLogger("ej-fixes").info
+    except ImproperlyConfigured:
+        log = print
 
     for fix in fixes:
-        log.info("monkey patch: " + fix.__doc__.strip())
+        log("monkey patch: " + fix.__doc__.strip())
         fix()

@@ -35,34 +35,42 @@ __all__ = [
     "toast",
     "description",
 ]
+NOT_GIVEN = object()
 
 
-def link(value, href="#", target="body", **kwargs):
+def link(value, href="#", target=None, **kwargs):
     return a(link_kwargs(href=href, target=target, **kwargs), [value])
 
 
-def link_attrs(href="#", target="body", **kwargs):
+def link_attrs(href="#", target=None, **kwargs):
     return render_attrs(link_kwargs(href=href, target=target, **kwargs))
 
 
-def link_kwargs(  # noqa: C901
-    href="#",
-    target="body",
-    action="target",
-    instant=True,
-    button=False,
-    transition="cross-fade",
-    preload=False,
-    scroll=False,
-    prefetch=False,
-    primary=False,
-    secondary=False,
-    args=None,
-    query=None,
-    url_args=None,
-    class_=(),
-    **kwargs,
-):
+def link_kwargs(href="#", action=NOT_GIVEN, args=(), **kwargs):
+    kwargs = {
+        "href": _normalize_href(href, kwargs.pop("url_args", None), kwargs.pop("query", None)),
+        "class": _normalize_class(kwargs),
+        "up-instant": kwargs.pop("instant", True),
+        "up-restore-scroll": kwargs.pop("scroll", False),
+        "up-preload": kwargs.pop("preload", False),
+        "up-prefetch": kwargs.pop("prefetch", False),
+        **{k.replace("_", "-"): v for k, v in kwargs.items()},
+    }
+
+    target = kwargs.pop("target", "body")
+    if action is NOT_GIVEN:
+        if target:
+            kwargs["up-target"] = target
+    elif action and target:
+        kwargs[f"up-{action}"] = target or "body"
+    if kwargs.get("transition"):
+        kwargs["up-transition"] = kwargs.pop("transition", "cross-fade")
+    for arg in args.split() if isinstance(args, str) else args:
+        kwargs[arg] = True
+    return kwargs
+
+
+def _normalize_href(href, url_args, query):
     if isinstance(href, Url):
         href = str(href)
     elif href.startswith("/"):
@@ -75,43 +83,31 @@ def link_kwargs(  # noqa: C901
     elif href == "#" or href is None:
         href = "#"
     elif href.startswith("http"):
-        pass
+        href = href
     else:
         href = reverse(href, kwargs=url_args)
+
     if query is not None:
         query = "&".join(f"{k}={v}" for k, v in query.items())
         href = f"{href}?{query}"
+    return href
 
-    kwargs = {
-        "href": href,
-        "up-instant": instant,
-        "up-restore-scroll": scroll,
-        "up-preload": preload,
-        "up-prefetch": prefetch,
-        **{k.replace("_", "-"): v for k, v in kwargs.items()},
-    }
-    if action:
-        kwargs[f"up-{action}"] = target
-    if transition:
-        kwargs["up-transition"] = transition
-    if args:
-        for arg in args.split():
-            kwargs[arg] = True
 
-    # Class
-    if button and class_:
-        if isinstance(class_, str):
-            class_ = class_.split()
-        class_ = (*class_, "button")
+def _normalize_class(kwargs):
+    cls = kwargs.pop("class", kwargs.pop("class_", ()))
+    if isinstance(cls, str):
+        cls = tuple(cls.split())
+    button = kwargs.pop("button", False)
+
+    if button and cls:
+        cls = (*cls, "button")
     elif button:
-        class_ = ("button",)
-    if primary:
-        class_ = (*class_, "is-primary")
-    if secondary:
-        class_ = (*class_, "is-secondary")
-    if class_:
-        kwargs["class"] = class_
-    return kwargs
+        cls = ("button",)
+    if kwargs.pop("primary", False):
+        cls = (*cls, "is-primary")
+    if kwargs.pop("secondary", False):
+        cls = (*cls, "is-secondary")
+    return cls or None
 
 
 def action_button(value=_("Go!"), href="#", primary=True, **kwargs):
@@ -126,7 +122,7 @@ def _render_lazy_string(st, **kwargs):
 #
 # Special EJ ui elements
 #
-def icon(name, href=None, **kwargs):
+def icon(name, href=None, icon_description=None, **kwargs):
     """
     Generic icon function.
 
@@ -139,6 +135,8 @@ def icon(name, href=None, **kwargs):
     if "." in name:
         raise NotImplementedError
     else:
+        if icon_description:
+            kwargs["aria-label"] = icon_description
         return components.fa_icon(name, href=href, **kwargs)
 
 
@@ -155,7 +153,7 @@ def intro(title, description=None, **kwargs):
     return div(children, **kwargs).add_class("intro-paragraph", first=True)
 
 
-def span_icon(text, icon=None, **kwargs):
+def span_icon(text, icon=None, icon_description=None, **kwargs):
     """
     This element is a simple text with an icon placed on the left hand side.
 
@@ -165,7 +163,7 @@ def span_icon(text, icon=None, **kwargs):
     href can be given towraps content inside an <a> tag.
     """
     text = "" if text is None else str(text)
-    kwargs["children"] = [_icon(icon), text] if icon else [text]
+    kwargs["children"] = [_icon(icon, icon_description=icon_description), text] if icon else [text]
     return a_or_span(**kwargs).add_class("span-icon")
 
 
@@ -188,7 +186,7 @@ def extra_content(title, text, icon=None, **kwargs):
     return div([title, text], **kwargs).add_class("extra-content")
 
 
-def progress_bar(*args):
+def progress_bar(*args, **kwargs):
     """
     Display a progress bar.
 
@@ -200,14 +198,16 @@ def progress_bar(*args):
     if len(args) == 1:
         pc = args[0]
         n = total = None
+        aria_msg = _("Your progress: {pc} percent").format(pc=pc)
     else:
         e = 1e-50
         n, total = args
         pc = round(100 * (n + e) / (total + e))
+        aria_msg = _("Your progress: {n} of {total}").format(n=n, total=total)
 
     # Build children
     children = [
-        div(strong(f"{pc}%")),
+        strong(f"{pc}%", class_="block margin-r2", aria_hidden="true"),
         div(
             class_="progress-bar__progress",
             children=[
@@ -216,11 +216,12 @@ def progress_bar(*args):
             ],
         ),
     ]
+
     if total is not None:
-        children.append(div([strong(n), "/", total]))
+        children.append(div([strong(n), "/", total], aria_hidden="true"))
 
     # Return
-    return div(children, class_="progress-bar")
+    return div(children, aria_label=aria_msg, role="img", **kwargs).add_class("progress-bar", first=True)
 
 
 def popup(title, content, action=None, **kwargs):
@@ -238,8 +239,7 @@ def popup(title, content, action=None, **kwargs):
         [
             icon("times-circle", class_="popup__close", is_component="popup:close"),
             div(
-                [h1([title], class_="title"), p(content), action and div(action)],
-                class_="popup__contents",
+                [h1([title], class_="title"), p(content), action and div(action)], class_="popup__contents"
             ),
         ],
         **kwargs,
@@ -261,10 +261,9 @@ def toast(icon, title, description=None, **kwargs):
     body = [h1(title)]
     if description:
         body.append(p(description))
-    return div(
-        [_icon(icon, class_="toast__icon"), div(body, class_="toast__content")],
-        **kwargs,
-    ).add_class("toast")
+    return div([_icon(icon, class_="toast__icon"), div(body, class_="toast__content")], **kwargs).add_class(
+        "toast"
+    )
 
 
 def description(items, **kwargs):

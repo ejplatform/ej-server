@@ -1,5 +1,5 @@
-<section title="{{ _('Conversations') }}">
-    <h1>{{ _('Conversations') }}</h1>
+<nav title="{{ _('Conversations') }}" aria-labelledby="menu-conversations">
+    <h3 id="menu-conversations">{{ _('Conversations') }}</h3>
     <ul>
         <li><a href="{{ url('conversation:list') }}">{{ _('Conversations') }}</a></li>
         {%- if request.user.has_perm('ej.can_promote_conversations') %}
@@ -10,6 +10,6 @@
         {% endfor %}
     </ul>
 
-</section>
-{{ page_menu.ABOUT() }}
+</nav>
+{{ page_menu.ABOUT(request) }}
 {{ page_menu.ACCESSIBILITY() }}

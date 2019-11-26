@@ -1,7 +1,7 @@
 import logging
 
 from boogie.configurations import DjangoConf, env
-from ej.settings.dramatiq import DramatiqConf
+from .dramatiq import DramatiqConf
 from .apps import InstalledAppsConf
 from .constance import ConstanceConf
 from .email import EmailConf
@@ -58,10 +58,7 @@ class Conf(
     # MANAGER CONFIGURATION
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#admins
     MANAGERS = ADMINS = [
-        (
-            "Bruno Martin, Luan Guimarães, Ricardo Poppi, Henrique Parra",
-            "bruno@hacklab.com.br",
-        ),
+        ("Bruno Martin, Luan Guimarães, Ricardo Poppi, Henrique Parra", "bruno@hacklab.com.br"),
         ("Laury Bueno", "laury@hacklab.com.br"),
     ]
 
@@ -80,9 +77,7 @@ class Conf(
             "rest_framework.authentication.TokenAuthentication",
             "rest_framework.authentication.SessionAuthentication",
         ),
-        "DEFAULT_PERMISSION_CLASSES": (
-            "rest_framework.permissions.IsAuthenticatedOrReadOnly",
-        ),
+        "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticatedOrReadOnly",),
         "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
         "PAGE_SIZE": 50,
         "DEFAULT_VERSION": "v1",
@@ -91,7 +86,6 @@ class Conf(
     # REST_AUTH_REGISTER_SERIALIZERS = {
     #     'REGISTER_SERIALIZER': 'ej_users.serializers.RegistrationSerializer'
     # }
-
 
     #
     # Templates

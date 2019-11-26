@@ -1,4 +1,5 @@
 from django.db import transaction
+from django.utils.translation import ugettext as _
 
 from ej_conversations.forms import CommentForm, ConversationForm
 from ej_conversations.models import Comment
@@ -39,9 +40,7 @@ class TestConversationForm:
         assert conversation.comments.first().status == Comment.STATUS.approved
 
     def test_repeated_comments_error(self, conversation, db, user):
-        Comment.objects.create(
-            content="comment", conversation=conversation, author=user
-        )
+        Comment.objects.create(content="comment", conversation=conversation, author=user)
         form = CommentForm({"content": "comment"}, conversation=conversation)
         assert not form.is_valid()
-        assert "already submitted" in form.errors["content"][0]
+        assert _("You already submitted this comment.") == form.errors["content"][0]

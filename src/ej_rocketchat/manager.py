@@ -25,9 +25,11 @@ class RCConfigManager(models.Manager):
             if has_settings(settings):
                 return self.model(
                     url=settings.EJ_ROCKETCHAT_URL,
-                    admin_id=settings.EJ_ROCKETCHAT_AUTH_TOKEN,
-                    admin_token=settings.EJ_ROCKETCHAT_USER_IR,
-                    admin_username=settings.EJ_ROCKETCHAT_USERNAME,
+                    api_url=settings.EJ_ROCKETCHAT_API_URL,
+                    admin_id=settings.EJ_ROCKETCHAT_ADMIN_ID,
+                    admin_token=settings.EJ_ROCKETCHAT_AUTH_TOKEN,
+                    admin_username=settings.EJ_ROCKETCHAT_ADMIN_USERNAME,
+                    admin_password=settings.EJ_ROCKETCHAT_ADMIN_PASSWORD,
                 )
 
             log.error("RocketChat settings were not configured.")
@@ -45,8 +47,13 @@ def has_settings(settings):
     """
     Return True if all settings are defined.
     """
-    return (
-        settings.EJ_ROCKETCHAT_URL
-        and settings.EJ_ROCKETCHAT_AUTH_TOKEN
-        and settings.EJ_ROCKETCHAT_USER_ID
-    )
+    try:
+        return (
+            settings.EJ_ROCKETCHAT_URL
+            and settings.EJ_ROCKETCHAT_ADMIN_ID
+            and settings.EJ_ROCKETCHAT_ADMIN_USERNAME
+            and settings.EJ_ROCKETCHAT_ADMIN_PASSWORD
+            and settings.EJ_ROCKETCHAT_AUTH_TOKEN
+        )
+    except AttributeError:
+        return False

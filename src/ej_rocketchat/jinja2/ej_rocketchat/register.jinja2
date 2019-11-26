@@ -6,12 +6,10 @@
 {% block content %}
     <div class="measure margin-xauto margin-t3">
         <h1 class="h2 text-accent">{{ _('Rocket.Chat user name') }}</h1>
-        <p>{% trans %}You need a unique username to use the Rocket.Chat panel.
-        Please select the username and we will create an account for you.
-        {% endtrans %}</p>
+        <p>{{ _('You need a unique username to use the Rocket.Chat panel. Please select the username and we will create an account for you.') }}</p>
          <form method="post">
             {{ csrf_input }}
-            {{ form.as_p() }}
+            {{ form }}
             <input type="submit"  value="{{ _('Send') }}" name="send">
         </form>
     </div>

@@ -9,10 +9,11 @@ from django.http import Http404
 from django.shortcuts import render, redirect
 from django.utils.translation import ugettext as _
 from sidekick import import_later, once
+from constance import config
 
 from ej.utils.flatpages import flat_page_route
 
-conversations = import_later('ej_conversations.models:Conversation')
+conversations = import_later("ej_conversations.models:Conversation")
 log = logging.getLogger("ej")
 urlpatterns = Router(template="pages/{name}.jinja2")
 
@@ -23,16 +24,16 @@ urlpatterns = Router(template="pages/{name}.jinja2")
 @urlpatterns.route("")
 def index(request):
     if request.user.is_authenticated:
-        return redirect(settings.EJ_USER_HOME_PATH)
+        return redirect(config.EJ_USER_HOME_PATH)
     else:
-        return redirect(settings.EJ_ANONYMOUS_HOME_PATH)
+        return redirect(config.EJ_ANONYMOUS_HOME_PATH)
 
 
 @urlpatterns.route("start/")
 def home(request):
     return {
-        'conversations': once(lambda: conversations.objects.promoted()[:2]),
-        'profile': once(lambda: get_user_profile(request)),
+        "conversations": once(lambda: conversations.objects.promoted()[:2]),
+        "profile": once(lambda: get_user_profile(request)),
         **home_page_ns,
     }
 
@@ -49,7 +50,6 @@ def info(request):
         # Generic info
         "user_count": count(get_user_model()),
         "flatpages": FlatPage.objects.values_list("url"),
-
         # Conversations
         "conversations_counts": {
             _("Conversations"): count(Conversation),
@@ -70,11 +70,7 @@ def info_styles(request):
 def info_django_settings(request):
     if not request.user.is_superuser:
         raise Http404
-    data = [
-        (name, pformat(getattr(settings, name)))
-        for name in dir(settings)
-        if name.isupper()
-    ]
+    data = [(name, pformat(getattr(settings, name))) for name in dir(settings) if name.isupper()]
     return {"settings_data": sorted(data)}
 
 
@@ -96,9 +92,7 @@ def service_worker(request):
 #
 # Static pages
 #
-urlpatterns.register(
-    lambda: {}, "docs/", name="documentation", template="pages/docs.jinja2"
-)
+urlpatterns.register(lambda: {}, "docs/", name="documentation", template="pages/docs.jinja2")
 urlpatterns.register(flat_page_route("rules"), "rules/")
 urlpatterns.register(flat_page_route("faq"), "faq/")
 urlpatterns.register(flat_page_route("about-us"), "about-us/")
@@ -150,41 +144,17 @@ home_page_ns = {
         "vanessa.jpg": "Vanessa Tonini",
     },
     "documentation_items": [
-        {
-            "href": "/docs/?page=user-start.html",
-            "icon": "fa fa-user-circle",
-            "text": _("User Guides"),
-        },
-        {
-            "href": "/docs/?page=user-install.html",
-            "icon": "fa fa-download",
-            "text": _("Installation"),
-        },
-        {
-            "href": "/docs/?page=user-admin.html",
-            "icon": "fa fa-cog",
-            "text": _("Administration Guides"),
-        },
-        {
-            "href": "/docs/?page=dev.html",
-            "icon": "fa fa-code",
-            "text": _("Development Guides"),
-        },
+        {"href": "/docs/?page=user-start.html", "icon": "fa fa-user-circle", "text": _("User Guides")},
+        {"href": "/docs/?page=user-install.html", "icon": "fa fa-download", "text": _("Installation")},
+        {"href": "/docs/?page=user-admin.html", "icon": "fa fa-cog", "text": _("Administration Guides")},
+        {"href": "/docs/?page=dev.html", "icon": "fa fa-code", "text": _("Development Guides")},
         {
             "href": "/docs/?page=user-ai.html",
             "icon": "fas fa-microchip",
             "text": _("Our Artificial Intelligence"),
         },
-        {
-            "href": "/docs/?page=contributing.html",
-            "icon": "fab fa-github",
-            "text": _("Contributing"),
-        },
-        {
-            "href": "/docs/?page=user-report.html",
-            "icon": "far fa-life-ring",
-            "text": _("Getting Help"),
-        },
+        {"href": "/docs/?page=contributing.html", "icon": "fab fa-github", "text": _("Contributing")},
+        {"href": "/docs/?page=user-report.html", "icon": "far fa-life-ring", "text": _("Getting Help")},
     ],
     "partners": [
         {
@@ -192,36 +162,16 @@ home_page_ns = {
             "url": "https://instituto.cidadedemocratica.org.br",
             "img": "cidade.png",
         },
-        {
-            "name": "LAPPIS",
-            "url": "https://lappis.rocks",
-            "img": "lappis.png",
-        },
-        {
-            "name": "Hacklab",
-            "url": "https://hacklab.com.br",
-            "img": "hacklab.png",
-        },
-        {
-            "name": "Pencil Labs",
-            "url": "https://pencillabs.com.br",
-            "img": "pencil.png",
-        },
+        {"name": "LAPPIS", "url": "https://lappis.rocks", "img": "lappis.png"},
+        {"name": "Hacklab", "url": "https://hacklab.com.br", "img": "hacklab.png"},
+        {"name": "Pencil Labs", "url": "https://pencillabs.com.br", "img": "pencil.png"},
         {
             "name": "Transparência Internacional",
             "url": "https://transparenciainternacional.org.br",
             "img": "ti.png",
         },
-        {
-            "name": "Fundação Perseu Abramo",
-            "url": "https://fpabramo.org.br",
-            "img": "fpa.png",
-        },
-        {
-            "name": "PCdoB",
-            "url": "https://pcdob.org.br",
-            "img": "pcdob.png",
-        },
+        {"name": "Fundação Perseu Abramo", "url": "https://fpabramo.org.br", "img": "fpa.png"},
+        {"name": "PCdoB", "url": "https://pcdob.org.br", "img": "pcdob.png"},
     ],
 }
 

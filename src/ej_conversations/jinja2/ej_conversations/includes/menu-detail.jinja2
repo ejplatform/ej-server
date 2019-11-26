@@ -1,14 +1,14 @@
-<section title="{{ _('Conversation') }}">
-    <h1>{{ _('Conversation') }}</h1>
+<nav title="{{ _('Conversation') }}" aria-labelledby="menu-conversation">
+    <h3 id="menu-conversation">{{ _('Conversation') }}</h3>
     <ul>
         <li><a href="{{ conversation.url('conversation:detail') }}">{{ _('Conversation') }}</a></li>
         {% for link in page_menu.links('conversations:detail-actions', request, conversation) %}
             <li>{{ link }}</li>
         {% endfor %}
     </ul>
-</section>
-<section title="{{ _('Admin') }}">
-    <h1>{{ _('Admin') }}</h1>
+</nav>
+<nav title="{{ _('Admin') }}" aria-labelledby="menu-admin">
+    <h3 id="menu-admin">{{ _('Admin') }}</h3>
     <ul>
         {% if request.user.has_perm('ej.can_edit_conversation', conversation) %}
             <li><a href="{{ conversation.url('conversation:edit') }}">{{ _('Edit') }}</a></li>
@@ -22,5 +22,5 @@
             <li>{{ link }}</li>
         {% endfor %}
     </ul>
-</section>
+</nav>
 {{ page_menu.ACCESSIBILITY() }}

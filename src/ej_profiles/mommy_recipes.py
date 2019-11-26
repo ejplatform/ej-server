@@ -17,9 +17,7 @@ class ProfileRecipes(EjRecipes):
         return record(data, profile=profile)
 
 
-def get_random_profile(
-    user, genders=[Gender(i) for i in Gender], races=[Race(i) for i in Race]
-):
+def get_random_profile(user, genders=[Gender(i) for i in Gender], races=[Race(i) for i in Race]):
     try:
         return user.profile
     except (Profile.DoesNotExist, AttributeError):

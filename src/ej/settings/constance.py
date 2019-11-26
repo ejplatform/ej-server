@@ -1,5 +1,5 @@
 from boogie.configurations import Conf, env
-
+from constance import config
 
 class ConstanceConf(Conf):
     """
@@ -16,15 +16,20 @@ class ConstanceConf(Conf):
                 "Maximum number of boards that a common user can create",
                 int,
             ),
-            "EJ_STATE_MAX_LENGTH": (
-                self.EJ_STATE_MAX_LENGTH,
-                "Max length for state field in profile",
-                int,
-            ),
-            "EJ_STATE_CHOICES": (
-                self.EJ_STATE_CHOICES,
+            "EJ_PROFILE_STATE_CHOICES": (
+                self.EJ_PROFILE_STATE_CHOICES,
                 "State choices for state field in profile",
                 "choicesfield",
+            ),
+            "EJ_USER_HOME_PATH": (
+                self.EJ_USER_HOME_PATH,
+                "Landing page for logged user",
+                str,
+            ),
+            "EJ_ANONYMOUS_HOME_PATH": (
+                self.EJ_ANONYMOUS_HOME_PATH,
+                "Landing page for anonymous user",
+                str,
             ),
         }
 
@@ -37,13 +42,15 @@ class ConstanceConf(Conf):
     }
 
     CONSTANCE_CONFIG_FIELDSETS = {
-        "EJ Options": ("EJ_MAX_BOARD_NUMBER", "EJ_STATE_MAX_LENGTH", "EJ_STATE_CHOICES")
+        "EJ Options": ("EJ_MAX_BOARD_NUMBER", "EJ_PROFILE_STATE_CHOICES", "EJ_USER_HOME_PATH", "EJ_ANONYMOUS_HOME_PATH")
     }
 
     # Auxiliary options
+    EJ_USER_HOME_PATH = env("/start/", name="{attr}")
+    EJ_ANONYMOUS_HOME_PATH = env("/conversations/", name="{attr}")
+
     EJ_MAX_BOARD_NUMBER = env(1, name="{attr}")
-    EJ_STATE_MAX_LENGTH = env(2, name="{attr}")
-    EJ_STATE_CHOICES = env(
+    EJ_PROFILE_STATE_CHOICES = env(
         (
             ("AC", "Acre"),
             ("AL", "Alagoas"),

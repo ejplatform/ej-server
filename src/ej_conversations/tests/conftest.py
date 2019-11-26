@@ -22,9 +22,7 @@ def user(db):
 
 @pytest.fixture
 def conversation(db, user):
-    return create_conversation(
-        text="test", title="title", author=user, is_promoted=True
-    )
+    return create_conversation(text="test", title="title", author=user, is_promoted=True)
 
 
 @pytest.fixture

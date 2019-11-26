@@ -77,6 +77,7 @@ Override paths
 
 EJ_ANONYMOUS_HOME_PATH (/start/):
     Redirect users to this path before login.
+
 EJ_USER_HOME_PATH (/conversations/):
     Redirect logged users to this path.
 
@@ -92,7 +93,7 @@ EJ_ENABLE_BOARDS (true):
 EJ_MAX_COMMENTS_PER_CONVERSATION (2):
     Default number of comments that each user has in each conversation.
 
-EJ_EXCLUDE_PROFILE_FIELDS:
+EJ_PROFILE_EXCLUDE_FIELDS:
     Optional list of fields that should be excluded from user profile
     visualization.
 
@@ -105,9 +106,13 @@ EJ_ROCKETCHAT_INTEGRATION (false):
     the Rocket.Chat container if this option is enabled.
 
 EJ_ROCKETCHAT_URL:
-    URL of Rocket.Chat instance (e.g.: http://localhost:3000 or https://your-chat-instance.com)
+    Public URL of Rocket.Chat instance (e.g.: http://localhost:3000 or https://your-chat-instance.com)
 
-EJ_ROCKETCHAT_USERNAME:
+EJ_ROCKETCHAT_API_URL:
+    Internal URL used to access Rocket.Chat on the intranet. Used to make
+    API requests.
+
+EJ_ROCKETCHAT_ADMIN_USERNAME:
     Username of Rocket.Chat admin.
 
 EJ_ROCKETCHAT_AUTH_TOKEN:
@@ -115,7 +120,10 @@ EJ_ROCKETCHAT_AUTH_TOKEN:
     in Django backend after initial installation. Check `Rocket API`_ for more
     information.
 
-EJ_ROCKETCHAT_USER_ID:
+EJ_ROCKETCHAT_ADMIN_ID:
     Unique id of Rocket.Chat admin.
+
+EJ_ROCKETCHAT_ADMIN_PASSWORD:
+    Rocket.Chat admin password.
 
 .. _Rocket API: https://rocket.chat/docs/developer-guides/rest-api/authentication/

@@ -1,16 +1,17 @@
-<section title="{{ _('Profile') }}">
-    <h1>{{ _('Profile') }}</h1>
+<nav title="{{ _('Profile') }}">
+    <h3>{{ _('Profile') }}</h3>
     <ul>
         <li><a href="{{ url('profile:detail') }}">{{ _('Profile') }}</a></li>
         <li><a href="{{ url('profile:edit') }}">{{ _('Edit profile') }}</a></li>
         <li><a href="{{ url('profile:contributions') }}">{{ _('Contributions') }}</a></li>
     </ul>
-</section>
-<section title="{{ _('Account') }}">
-    <h1>{{ _('Account') }}</h1>
+</nav>
+<nav title="{{ _('Account') }}">
+    <h3>{{ _('Account') }}</h3>
     <ul>
         <li><a href="{{ url('account:index') }}">{{ _('Account') }}</a></li>
+        <li><a href="{{ url('account:logout') }}">{{ _('Logout') }}</a></li>
         {% if settings.has_clusters %}<li><a href="{{ url('stereotypes:list') }}">{{ _('Personas') }}</a></li>{% endif %}
     </ul>
-</section>
+</nav>
 {{ page_menu.ACCESSIBILITY() }}

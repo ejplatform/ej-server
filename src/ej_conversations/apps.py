@@ -12,7 +12,7 @@ class EjConversationsConfig(AppConfig):
 
     def ready(self):
         from . import rules, api, roles
-        from .models.conversation import patch_user_model
+        from ej_conversations.models.util import patch_user_model
 
         self.rules = rules
         self.api = api

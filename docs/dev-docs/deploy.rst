@@ -2,8 +2,8 @@
 Deployment
 ==========
 
-EJ relies on Docker and a Docker orchestration technology such as Docker Compose
-in its deployment process.
+EJ recommends using Docker with a container orchestration technology such as
+Docker Compose in its deployment process.
 
 The easiest way to proceed is to use the pre-build images available on `Docker Hub`_
 and personalize your installation using environment variables. You must
@@ -14,123 +14,215 @@ database.
 .. _Docker Hub: https://hub.docker.com/u/ejplatform/
 .. _EJ Architecture: architecture.html
 
-The first step is to build the deployment image for the main application. You
-must have a working development environment in your machine. Activate the virtualenv
-using ``workon ej`` and then enter the command::
 
-    $ inv docker-build --deploy
+Building images
+===============
 
-The docker-build command accepts additional configurations such as
-``--theme cpa``, ``--country brasil``, ``--tag v1.0``, and others
-(``inv docker-build -h`` shows additional options).
+EJ provides a few pre-build images on Docker-hub. This is enough for most users,
+but if you are developing new features, or making some advanced customization,
+or for just a matter of policy, it will be necessary to build your own images
+manually.
 
-After building the image, you must initialize the database. Open a terminal in
-the Django container with the command::
+EJ requires a relatively recent version of Docker (17.05+) that supports
+multi-stage builds. We recommend that you customize the provided docker-compose
+files for the specific needs of your own organization proceeding.
 
-    $ inv docker run --deploy
+Copy some files under the docker folder to a separate folder (ideally under
+private source control). We assume this folder is called ``deploy``,
+which is conveniently registered on .gitignore in the main ej-server repository::
 
-Now execute the commands to populate the database::
+    $ cp -r docker/ deploy/
 
-    $ python manage.py migrate ej_users
-    $ inv db db-assets
+For your own convenience, rename docker-compose.deploy.yml so we don't need to
+use the ``-f`` flag on all compose commands::
 
-(you can also add db-fake to add fake data and test users).
+    $ cd deploy/
+    $ mv docker-compose.deploy.yml docker-compose.yml
 
-Finally, fire all containers using::
+You may want change some configurations in this file and customize the
+important ``config.env`` file in this folder. Both files are self-explanatory
+and have lots of comments, so read them with patience and set the correct values.
+**ATTENTION:** you **must** edit config.env file and change at least the secret key,
+otherwise the security of your installation will be compromised.
 
-    $ inv docker up --deploy
-
-The EJ instance should be available at port 80.
-
-**Observation**
-
-The ``inv docker *`` tasks are simply alias to longer docker-compose commands.
-If you want to discover the equivalent docker command, add the --dry-run option
-to any command.
-
-::
-
-    $ inv docker up --deploy
-
-You will see that it is equivalent to::
-
-    sudo docker-compose -f docker/docker-compose.deploy.yml up
-
-
-Configuration
-=============
-
-EJ is configured using `Environment Variables`_. Those variables can be
-conveniently set up in the files inside the /docker/env/ folder. Edit those
-files and then run ``$ inv docker up --deploy`` in order to update the container
-with the new configurations. Bear in mind that many of the configuration
-variables are secrets that cannot be shared in a public location. Because of this,
-we recommend to store the environment files on a private fork of the main
-repository.
+You can also check the section on the `Environment Variables`_ used by EJ.
+Bear in mind that many of the configuration variables are secrets that cannot
+be shared in a public location. Because of this, we recommend to store the
+environment file on a private repository.
 
 .. _Environment Variables: environment-variables.html
+
+
+Now use docker-compose to build and start the containers::
+
+    $ docker-compose.yml build
+    $ docker-compose.yml up
+
+Grab a coffee and when you come back your system should be up and running :)
+
+
+Docker-build
+------------
+
+If you are in a hurry or do not need to customize the build process too much,
+consider using the docker-build shortcut::
+
+    $ inv docker-build
+
+This command accepts additional configurations (see: ``inv docker-build -h``).
+Here are some important options you probably should set manually:
+
+
+``--org, --tag``:
+    Name image as '<org>/web:<tag>'
+``--theme``:
+    Defines the current theme. (E.g. ``--theme cpa``. EJ currently accepts
+    "default" and "cpa").
+
+
+Initializing the application
+============================
+
+After building the image, you will be greeted with a bare bones EJ instance.
+We need to populate it with a few extra bits such as admin accounts, and perhaps
+to load some fake data or old dumps from the database. Open a shell in the
+"web" container so we can proceed with those extra steps::
+
+    $ docker-compose run web bash
+
+Once inside the container, you'll probably need to execute migrations and
+create a superuser:
+
+    $ python manage.py migrate
+    $ python manage.py createsuperuser
+
+Django's manage.py also has many other options that might be useful at this
+stage. Run ``$ python manage.py`` to see what is available.
+
+If you want to populate the database with some quick and dirty data, just type
+the command bellow. ATTENTION: this pollutes the database with a lot of random
+information and obviously should not be used in production!
+
+    $ inv db-fake -h
+
+Other potentially useful tasks are implemented on the invoke task file. Type
+``inv -l`` to list them all. Notice the production image is very limited and
+many tasks will not work because they require some missing dependencies.
+
+
+Troubleshooting
+---------------
+
+**Static assets are not showing up correctly or are displaying the wrong theme**
+
+Check if the EJ_THEME variable inside the "web" container is set correctly. If it
+is so, maybe you need to collect static files again. Try the commands::
+
+    $ inv collect
+    $ python manage.py collectstatic
+
+If even that fails, you might need to delete all contents from the volume and
+initialize it again::
+
+    $ rm /app/local/static/* -r
+    $ inv collect
+
+This can happen as the result of failed Docker builds or change in configuration
+for images that use the same volume to hold static assets.
 
 
 Rocket.Chat integration
 =======================
 
-Integrating Rocket.Chat to the stack requires a few additional steps. You must
-edit the docker/env/django.env file and set ``EJ_ROCKETCHAT_INTEGRATION=true``.
-Depending on your configuration, you might need to set other environment variables
-such as EJ_ROCKETCHAT_URL and EJ_ROCKETCHAT_USERNAME.
+Integrating Rocket.Chat to the stack requires a few additional steps. Remember to
+set at least ``EJ_ROCKETCHAT_INTEGRATION=true`` on the ``config.env`` file.
+This configuration enables the ``ej_rocketchat`` application, but does not
+prepare the environment to connect to the Rocket.Chat instance.
 
-You can start the Rocket.Chat containers either running
+The first step is to have a working Rocket.Chat instance. If you have not configured
+it already, just complete the setup wizard that is displayed the first time
+you access your Rocket.Chat instance. More crucially, remember the username
+and password for the administrative account.
 
-::
+Depending on your configuration, you might prefer to set other environment
+variables such as EJ_ROCKETCHAT_URL and EJ_ROCKETCHAT_ADMIN_USERNAME to create a fully
+functional connection. However, the easier way to proceed is to configure the
+integration using the wizard at http://<django-host>/talks/. Visit this URL
+as a superuser and complete the form.
 
-    $ sudo docker-compose -f docker/docker-compose.rocket.yml up
+Regular users do not have permission to connect to Rocket.Chat. This permission
+should be granted explicitly in the Django admin panel at http://<django-host>/admin/ej_users/user/
+or http://<django-host>/admin/auth/group/. EJ creates an username and password
+for each user allowed to connect to Rocket.Chat during the first attempt to login.
 
-or by adding a flag --rocket after the ``docker up`` command
+We still need a final configuration to make the integration functional.
 
-::
 
-    $ inv docker up --deploy --rocket
+Configuring Rocket.Chat
+-----------------------
 
-In order to integrate the main EJ application with an instance of Rocket.Chat,
-open your Rocket.Chat url and you will be redirected to /setup-wizard, create
-an admin user and configure the server. After you finish the setup-wizard, the
-next step is to login as an the superuser in EJ and point to <EJ URL>/talks/config/.
-This URL presents a form to configure the basic parameters of Rocket.Chat integration.
-Here you have to provide the admin credentials you created on Rocket.Chat setup-wizard.
+Go to the Rocket.Chat administration page as an administrative user at
+http://<rocket-host>/admin/Accounts. We need to enable the `IFrame login integration`_
+with Rocket.Chat. This system redirects an anonymous user that tries to access
+Rocket.Chat to an IFrame that contains a login page for EJ. The user login in
+and Rocket.Chat communicate with Django with an specific API endpoint.
 
-Now, go to the Rocket.Chat administration page. It will be something like
-``http://<rocket-host>/admin/Accounts``. Setup the
-`IFrame login integration`_ at ``Administration > Accounts > IFrame``.
-
-.. _Rocket.Chat API docs: https://rocket.chat/docs/developer-guides/rest-api/
-.. _IFrame login integration: https://rocket.chat/docs/developer-guides/iframe-integration/authentication/
-
-In this page, follow the instructions bellow:
+We must set a few parameters for this to work. Go to ``Administration > Accounts > IFrame``.
+In this page, follow the instructions:
 
 1. Set the ``Enabled`` option to ``True``.
 2. In order to enable redirection after successful *login*, set ``Iframe URL``
-   to ``http://<django-host>/talks/login/?next=/talks/`` (replacing Django with the
+   to ``https://<django-host>/talks/login/?next=/talks/`` (replacing Django with the
    address of your actual Django instance).
 3. Rocket.Chat needs to check if an user is already authenticated. Set
-   ``API URL`` to ``http://<django-host>/talks/api-login/``.
+   ``API URL`` to ``https://<django-host>/talks/api-login/``.
 4. Set ``API Method`` to ``POST``.
 5. Save the changes.
 
-Now, go to ``Administration > Accounts`` and disable the following features:
+This enables a bare bones integration, but leaves some dangerous options behind.
+We must prevent users from modifying some aspects of their accounts from
+Rocket.Chat, since they are now managed by EJ. Go to ``Administration > Accounts``
+and disable *at least* the following features:
 
 * Allow change username
 * Allow change e-mail
 * Allow change password
 
-The final step is to setup EJ using a superuser account. Go to http://<django-host>/talks/
-and it will request additional information before continuing.
 
-Now each time you try to access Rocket.Chat without Django authentication, the
-user will be redirected to the EJ login page.
+.. _Rocket.Chat API docs: https://rocket.chat/docs/developer-guides/rest-api/
+.. _IFrame login integration: https://rocket.chat/docs/developer-guides/iframe-integration/authentication/
 
 
-Rocket.Chat style
------------------
+Configuring headers
+-------------------
+
+The Rocket.Chat integration occurs mostly via API calls between the Django and
+Rocket.Chat services. Rocket.Chat, however, uses IFrames to redirect any login
+attempt to Django. In order for this integration to work, it may be necessary
+to configure `Access Control`_, Content-Security-Policy_ (CSP) and X-Frame-Options_
+headers manually.
+
+Like everything else, those options can be set in EJ via environment variables
+in config.env or exported in your own environment::
+
+    # Access control credentials
+    HTTP_ACCESS_CONTROL_ALLOW_CREDENTIALS=true
+    HTTP_ACCESS_CONTROL_ALLOW_ORIGIN=http://your-rocket-chat-host
+
+    # Enable CSP
+    HTTP_CONTENT_SECURITY_POLICY=frame-ancestors http://your-rocket-chat-host
+
+    # Enable X-Frame-Options for older browsers
+    HTTP_X_FRAME_OPTIONS=allow-from http://your-rocket-chat-host
+
+
+.. _Access Control: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Credentials
+.. _X-Frame-Options: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options
+.. _Content-Security-Policy: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy
+
+
+Rocket.Chat style and options
+-----------------------------
 
 It is possible to override the default style and some static content in the
 website. Go to ``Administration > Layout > Content`` and save the content of the
@@ -141,7 +233,34 @@ Rocket.Chat admin page at at ``Administration > Layout > Custom CSS``.
 The following command makes a few automatic customizations to the Rocket.Chat
 account::
 
-    $ sudo docker-compose -f docker/docker-compose.rocket.yml exec mongo bash
+    $ docker-compose exec mongo bash
 
 This command opens a bash CLI and must be executed while Mongo db is running on
 the background. Now execute ``mongo /scripts/mongo_script.js`` on the terminal.
+
+
+Troubleshooting
+---------------
+
+If you are still having problems with the integration, `Rocket.Chat documentation`_
+is a good place to start.
+
+Sometimes, when something goes wrong on the initial configuration, you may end
+up in a state in which Rocket.Chat redirects login to Django, but due to some
+integration problem, Django cannot successfully authenticate a user in
+Rocket.Chat. You can still login as Rocket.Chat administrator using a manual
+method that is very handy to fix things:
+
+1) Open the Rocket.Chat URL and wait for the broken login page.
+2) Open the JavaScript console on that page and type ``Meteor.loginWithPassword('user', 'password')``
+(replacing by your own username and password, of course)
+
+Now, it will login Rocket.Chat, and you will have a chance to fix any broken
+configuration that might be impeding the successful integration with Django.
+
+The usual culprit are the IFrame Integration parameters at Rocket.Chat accounts
+configuration. Check if the URL is correct (and include the correct schema like "https://").
+Other possibility, is that the Django service is not visible from the Rocket.Chat
+container due to some network or firewall configuration.
+
+.. _Rocket.Chat documentation: https://rocket.chat/docs/developer-guides/rest-api/

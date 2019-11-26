@@ -30,18 +30,18 @@ class GivenPower(PolymorphicModel, TimeFramedModel):
     by replacing the need for M2M fields that might spawn additional queries.
     """
 
-    user = models.ForeignKey(
-        get_user_model(), on_delete=models.CASCADE, related_name="given_powers"
-    )
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name="given_powers")
     conversation = models.ForeignKey(
-        "ej_conversations.Conversation",
-        on_delete=models.CASCADE,
-        related_name="given_powers",
+        "ej_conversations.Conversation", on_delete=models.CASCADE, related_name="given_powers"
     )
     data = JSONField(default=dict)
     is_exhausted = models.BooleanField(default=False)
     is_expired = property(lambda self: self.end < datetime.now(timezone.utc))
     is_active = property(lambda self: not (self.is_expired or self.is_exhausted))
+
+    class Meta:
+        verbose_name = _("Given Power")
+        verbose_name_plural = _("Given Powers")
 
     def use_power(self, request, related=None, info=None):
         """
@@ -107,17 +107,12 @@ class EndorsementPowerMixin(HasAffectedUsersMixin):
     def _use_power(self, _request, related, _info):
         comment = related
         if comment.conversation != self.conversation:
-            raise ValidationError(
-                _("Comment is not in conversation that user can promote.")
-            )
+            raise ValidationError(_("Comment is not in conversation that user can promote."))
         elif self.is_expired:
             raise ValidationError(_("Sorry, your power is expired"))
         else:
             return endorse_comment(
-                comment,
-                author=self.user,
-                users=self.affected_users.all(),
-                expires=self.end,
+                comment, author=self.user, users=self.affected_users.all(), expires=self.end
             )
 
 

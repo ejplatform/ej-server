@@ -44,18 +44,23 @@ class PathsConf(Base):
         return super().finalize(settings)
 
     def get_staticfiles_dirs(self, repo_dir):
-        return [repo_dir / "lib/build", repo_dir / "lib/assets"]
+        dirs = [repo_dir / "lib/build", repo_dir / "lib/assets"]
+        if self.EJ_THEME:
+            path = self.EJ_THEME_PATH / "assets"
+            if path.exists():
+                dirs.insert(0, path)
+        return dirs
 
     def get_django_templates_dirs(self):
         dirs = [self.ROOT_TEMPLATE_DIR / "django"]
         if self.EJ_THEME:
-            dirs.insert(0, self.EJ_THEME_PATH / 'templates' / 'django')
+            dirs.insert(0, self.EJ_THEME_PATH / "templates" / "django")
         return dirs
 
     def get_jinja_templates_dirs(self):
         dirs = [self.ROOT_TEMPLATE_DIR / "jinja2"]
         if self.EJ_THEME:
-            dirs.insert(0, self.EJ_THEME_PATH / 'templates' / 'jinja2')
+            dirs.insert(0, self.EJ_THEME_PATH / "templates" / "jinja2")
         return dirs
 
     def get_ej_theme_path(self):

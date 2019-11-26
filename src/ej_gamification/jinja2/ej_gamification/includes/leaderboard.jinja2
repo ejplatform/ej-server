@@ -1,0 +1,31 @@
+<div class="hidden details margin-xauto">
+    <h1 class="h3 text-accent">{{ _('Leaderboard') }}</h1>
+
+    <table class="margin-2">
+        <tr>
+            <th class="center">{{ _('#') }}</th>
+            <th>{{ _('User') }}</th>
+            <th>{{ _('Points') }}</th>
+        </tr>
+
+        {% for name, points in users_before %}
+            <tr>
+                <td class="center">{{ loop.index + position_idx - users_before|length }}</td>
+                <td>{{ name }}</td>
+                <td>{{ points }}</td>
+            </tr>
+        {% endfor %}
+        <tr class="color-accent">
+            <th class="center"><i class="fa fa-star" style="margin: 0 !important;"></i></th>
+            <th>{{ user.get_full_name() }}</th>
+            <th>{{ progress.score }}</th>
+        </tr>
+        {% for name, points in users_after %}
+            <tr>
+                <td class="center">{{ loop.index + position_idx + 1 }}</td>
+                <td>{{ name }}</td>
+                <td>{{ points }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>

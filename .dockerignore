@@ -22,6 +22,7 @@ htmlcov/
 node_modules/
 lib/.ipynb_checkpoints/
 lib/dist/
+lib/build/
 lib/node_modules/
 lib/.cache/
 
