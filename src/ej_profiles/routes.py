@@ -63,8 +63,8 @@ def check_location(profile, location):
         profile.state = location.state
     if not profile.city:
         profile.city = location.city
-    
-    return profile        
+
+    return profile
 
 
 @urlpatterns.route("contributions/")
