@@ -67,14 +67,7 @@ def check_location(profile, location):
     return profile        
 
 
-@urlpatterns.route("contributions/")
-def contributions(request):
-    user = request.user
-    """
-    Fetch all conversations the user created
-    """
-    created = user.conversations.cache_annotations("first_tag", "n_user_votes", "n_comments", user=user)
-
+def get_voted(user):
     """
     Fetch voted conversations
     This code merges in python 2 querysets. The first is annotated with
@@ -94,22 +87,40 @@ def contributions(request):
     for conversation in voted:
         conversation.annotation_total_votes = total_votes[conversation.id]
 
+    return voted
+
+
+def get_groups(user):
+    comments = user.comments.select_related("conversation").annotate(
+        skip_count=Count("votes", filter=Q(votes__choice=0)),
+        agree_count=Count("votes", filter=Q(votes__choice__gt=0)),
+        disagree_count=Count("votes", filter=Q(votes__choice__lt=0)),
+    )
+    return toolz.groupby(lambda x: x.status, comments)
+
+
+@urlpatterns.route("contributions/")
+def contributions(request):
+    
+    user = request.user
+
+    """
+    Fetch all conversations the user created
+    """
+    created = user.conversations.cache_annotations("first_tag", "n_user_votes", "n_comments", user=user)
+
+    voted = get_voted(user)
+
     """
     Now we get the favorite conversations from user
     """
     favorites = Conversation.objects.filter(favorites__user=user).cache_annotations(
         "first_tag", "n_user_votes", "n_comments", user=user
     )
-
     """
     Comments
     """
-    comments = user.comments.select_related("conversation").annotate(
-        skip_count=Count("votes", filter=Q(votes__choice=0)),
-        agree_count=Count("votes", filter=Q(votes__choice__gt=0)),
-        disagree_count=Count("votes", filter=Q(votes__choice__lt=0)),
-    )
-    groups = toolz.groupby(lambda x: x.status, comments)
+    groups = get_groups(user)
     approved = groups.get(Comment.STATUS.approved, ())
     rejected = groups.get(Comment.STATUS.rejected, ())
     pending = groups.get(Comment.STATUS.pending, ())
