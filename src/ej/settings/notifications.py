@@ -2,10 +2,19 @@ from boogie.configurations import Conf, env
 
 
 class NotificationsConf(Conf):
-
+    """
+    This class is responsible for the notification of the app using the fcm an app for Firebase Cloud Messaging.
+    Used as an unified platform for sending push notifications to mobile devices (android / ios).
+    https://fcm-django.readthedocs.io/en/latest/
+    """
     EJ_PUSH_NOTIFICATIONS = env("none", name="{name}")
 
     def get_push_notifications_settings(self, ej_push_notifications):
+        """
+        This receives the ej_push_notifications it must be either none or fcm
+        :param ej_push_notifications:
+        :return: FCM_API_KEY if fcm or none if none
+        """
         if ej_push_notifications == "none":
             return {}
         elif ej_push_notifications == "fcm":
