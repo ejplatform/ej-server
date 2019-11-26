@@ -14,8 +14,7 @@ HAS_GAMIFICATION = apps.is_installed("ej_gamification")
 
 
 @with_template(Comment, role="card")
-def comment_card(
-    comment: Comment, request=None, target=None, show_actions=None, **kwargs):
+def comment_card(comment: Comment, request=None, target=None, show_actions=None, **kwargs):
     """
     Render comment information inside a comment card.
     """
@@ -27,8 +26,7 @@ def comment_card(
         login_anchor = None
     else:
         login = reverse("auth:login")
-        login_anchor = a(_("login"),
-        href=f"{login}?next={comment.conversation.get_absolute_url()}")
+        login_anchor = a(_("login"), href=f"{login}?next={comment.conversation.get_absolute_url()}")
 
     badge = ""
     if HAS_GAMIFICATION:
