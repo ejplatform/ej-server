@@ -2,10 +2,9 @@ from boogie.configurations import Conf, env
 
 
 class EmailConf(Conf):
-
-    #
-    # E-mail settings
-    #
+    """
+    E-mail settings
+    """
     EMAIL_HOST = env("", name="{attr}")
     EMAIL_PORT = env(587, name="{attr}")
     EMAIL_HOST_USER = env("", name="{attr}")
@@ -16,6 +15,11 @@ class EmailConf(Conf):
     DEFAULT_FROM_NAME = env("Empurrando Juntos", name="{attr}")
 
     def get_email_backend(self):
+        """
+        Return the setting for the email
+        backend accordingly to the ENVIRONMENT variable
+        :return: email_backend
+        """
         backend = self.env("EMAIL_BACKEND", default=None)
         if backend:
             return backend
