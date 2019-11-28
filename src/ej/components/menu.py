@@ -106,6 +106,8 @@ def default_implementations(request=None, **kwargs):
 def menu_links(section, request=None, object=None):
     """
     Return a list of links for some menu section.
+    :param section:
+    :return: links
     """
     try:
         render_functions = MENU_FUNCTIONS[section]
@@ -122,6 +124,8 @@ def register_menu(section):
     (which can be None) pertaining to that section. Ex.: in a route that
     configures the user profile, that object can be the profile object for the
     request user.
+    :param section:
+    :return: function
     """
     return lambda f: MENU_FUNCTIONS[section].append(f) or f
 
