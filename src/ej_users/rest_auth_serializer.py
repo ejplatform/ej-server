@@ -15,7 +15,7 @@ except Exception as e:
 
 
 class RegistrationSerializer(serializers.Serializer):
-    username = serializers.CharField(
+    name = serializers.CharField(
         max_length=50,
         min_length=5,
         required=True
@@ -23,17 +23,17 @@ class RegistrationSerializer(serializers.Serializer):
     email = serializers.EmailField()
 
     def save(self, request):
+        try:
+            user = User.objects.get(email=request.data.get('email'))
+            return user
+        except Exception as e:
+            raise e
         email = request.data.get('email')
         user = User.objects.create_user(email=email)
-        print(user)
         return user
 
     def validate_email(self, email):
         email = get_adapter().clean_email(email)
-        if allauth_settings.UNIQUE_EMAIL:
-            if email and email_address_exists(email):
-                raise serializers.ValidationError(
-                    _("A user is already registered with this e-mail address."))
         return email
 
     def validate_password1(self, password):
