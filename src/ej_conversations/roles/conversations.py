@@ -111,7 +111,9 @@ def conversation_create_comment(conversation, request=None, **kwargs):
     #     id="create-comment",
     # )
     return div(
-        Blob(f'<div style="position: relative; top: 40px;" class="text-7 strong">{comments_count}<br>{moderation_msg}</div>'),
+        Blob(f"""<div style="position: relative; top: 40px;" 
+                class="text-7 strong">{comments_count}<br>{moderation_msg}</div>
+              """),
         id="create-comment",
         class_="extra-content",
     )
