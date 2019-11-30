@@ -18,7 +18,7 @@ from ..validators import is_not_empty
 
 
 # noinspection PyUnresolvedReferences
-@rest_api(["content", "author", "status", "created", "rejection_reason", "rejection_reason_text"])
+@rest_api(["content", "status", "created", "rejection_reason", "rejection_reason_text"])
 class Comment(StatusModel, TimeStampedModel):
     """
     A comment on a conversation.

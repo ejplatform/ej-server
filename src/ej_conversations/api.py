@@ -75,9 +75,23 @@ def delete_vote(request, vote):
         raise PermissionError("user is not allowed to delete votes")
 
 
-@rest_api.query_hook("ej_conversations.Vote")
 def query_vote(request, qs):
     user = request.user
     if user.id:
         return qs.filter(author_id=user.id)
     return qs.none()
+
+
+@rest_api.save_hook("ej_conversations.Comment")
+def save_comment(request, comment):
+    from ej_conversations.models.comment import Comment
+    from rest_framework.authtoken.models import Token
+    try:
+        conversation_id = request.data.get('conversation')
+        conversation = Conversation.objects.get(id=conversation_id)
+        comment.author = request.user
+        comment.conversation = conversation
+        comment.save()
+        return comment
+    except Exception:
+        raise PermissionError("could not create comment")
