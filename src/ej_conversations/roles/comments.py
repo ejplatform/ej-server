@@ -116,7 +116,6 @@ def comment_summary(comment: Comment, **kwargs):
         "disagree": comment.disagree_count,
     }
 
-
 @with_template(Comment, role="stats", template="ej/role/voting-stats.jinja2")
 def comment_stats(comment: Comment, request=None):
     return {
