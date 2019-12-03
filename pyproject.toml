@@ -47,7 +47,7 @@ djangorestframework = "^3.9"
 django-debug-toolbar = "^1.11"
 openpyxl = "^2.6"
 django-picklefield = "^2.0"
-geocoder = "1.38.1"
+geocoder = "^1.38.1"
 
 [tool.poetry.dev-dependencies]
 mock = "^2.0"
