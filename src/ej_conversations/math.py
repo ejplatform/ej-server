@@ -49,7 +49,8 @@ def comment_statistics(
     table.index.name = "comment"
     if participation:
         participation = len(votes[author].unique())
-    return _statistics(table, convergence=convergence, participation=participation, ratios=ratios)
+    return _statistics(table, convergence=convergence,
+                       participation=participation, ratios=ratios)
 
 
 def user_statistics(
@@ -69,7 +70,8 @@ def user_statistics(
     table.index.name = "user"
     if participation:
         participation = len(votes[comment].unique())
-    return _statistics(table, convergence=convergence, participation=participation, ratios=ratios)
+    return _statistics(table, convergence=convergence,
+                       participation=participation, ratios=ratios)
 
 
 def _make_table(votes, row, col, choice):
@@ -90,8 +92,8 @@ def _make_table(votes, row, col, choice):
 
 def _statistics(table, convergence=False, ratios=False, participation=False):
     """
-    Common implementation to :func:`comment_statistics` and :func:`user_statistics`
-    functions.
+    Common implementation to :func:`comment_statistics` and
+    :func:`user_statistics` functions.
     """
     # Fill empty columns and update their names.
     col_names = {1: "agree", -1: "disagree", 0: "skipped"}
@@ -110,7 +112,7 @@ def _statistics(table, convergence=False, ratios=False, participation=False):
         e = 1e-50
         data = table[["agree", "disagree", "skipped"]]
         norm = data.sum(axis=1).values
-        norm = norm[:, None][:, [0, 0, 0]]  # Adopts the same shape of the dataframe
+        norm = norm[:, None][:, [0, 0, 0]]  # Use same shape of the dataframe
         data /= norm + e
         table[["agree", "disagree", "skipped"]] = data
     return table
@@ -125,7 +127,8 @@ def compute_convergence(df, agree="agree", disagree="disagree"):
     return abs(df[agree] - df[disagree]) / (df[agree] + df[disagree] + e)
 
 
-def compute_participation(df, n_users, agree="agree", disagree="disagree", skipped="skipped"):
+def compute_participation(df, n_users, agree="agree",
+                          disagree="disagree", skipped="skipped"):
     """
     Compute the participation ratio column from the total number of users and a
     dataframe that have 'agree', 'disagree' and 'skipped' columns.
