@@ -22,3 +22,4 @@ toml ~= 0.10.0
 pre-commit ~= 1.17
 notebook ~= 6.0
 django-picklefield ~= 2.0
+geocoder ~= 1.38.1
