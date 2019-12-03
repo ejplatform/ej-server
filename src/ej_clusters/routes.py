@@ -127,6 +127,8 @@ def get_stereotypes(all_stereotypes, all_votes, comments):
         stereotype.given_votes = votes
         stereotypes.append(stereotype)
 
+    return stereotypes
+
 
 def fetch_post_data(request, all_stereotypes):
     """
