@@ -2,7 +2,14 @@ from boogie.configurations import MiddlewareConf as Base
 
 
 class MiddlewareConf(Base):
+    """
+    Class responsible for the middleware that are a framework of hooks
+    """
     def get_middleware(self):
+        """
+        Return the project Middleware
+        :return: middleware
+        """
         middleware = super().get_middleware()
         middleware = [
             # 'corsheaders.middleware.CorsMiddleware',

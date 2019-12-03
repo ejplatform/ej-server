@@ -5,6 +5,9 @@ from boogie.configurations import PathsConf as Base, env
 
 
 class PathsConf(Base):
+    """
+    Paths for the folders of the project
+    """
     BASE_DIR = REPO_DIR = pathlib.Path(__file__).parent.parent.parent.parent
     ROOT_DIR = SRC_DIR = APPS_DIR = REPO_DIR / "src"
     PROJECT_DIR = ROOT_DIR / "ej"
@@ -27,7 +30,16 @@ class PathsConf(Base):
 
     def finalize(self, settings):
         """
-        Create missing paths.
+        Return the paths for
+            self.LOCAL_DIR,
+            self.DB_DIR,
+            self.MEDIA_ROOT,
+            self.STATIC_ROOT,
+            self.LOG_DIR,
+            self.LIB_DIR,
+            self.LIB_BUILD,
+        :param settings:
+        :return: settings
         """
         for path in [
             self.LOCAL_DIR,
@@ -44,6 +56,14 @@ class PathsConf(Base):
         return super().finalize(settings)
 
     def get_staticfiles_dirs(self, repo_dir):
+        """
+        It return that path for the dirs that contains static files
+        lib/build
+        lib/assets
+
+        :param repo_dir:
+        :return: dirs
+        """
         dirs = [repo_dir / "lib/build", repo_dir / "lib/assets"]
         if self.EJ_THEME:
             path = self.EJ_THEME_PATH / "assets"
@@ -52,18 +72,30 @@ class PathsConf(Base):
         return dirs
 
     def get_django_templates_dirs(self):
+        """
+        Return the path for the template dirs
+        :return: dirs
+        """
         dirs = [self.ROOT_TEMPLATE_DIR / "django"]
         if self.EJ_THEME:
             dirs.insert(0, self.EJ_THEME_PATH / "templates" / "django")
         return dirs
 
     def get_jinja_templates_dirs(self):
+        """
+        Return  the path for the jinja2 dirs
+        :return: dirs
+        """
         dirs = [self.ROOT_TEMPLATE_DIR / "jinja2"]
         if self.EJ_THEME:
             dirs.insert(0, self.EJ_THEME_PATH / "templates" / "jinja2")
         return dirs
 
     def get_ej_theme_path(self):
+        """
+        Return  the path for the theme dirs
+        :return: dirs
+        """
         if os.path.sep in self.EJ_THEME:
             return self.EJ_THEME
         else:

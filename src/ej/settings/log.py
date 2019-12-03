@@ -7,6 +7,10 @@ class LoggingConf(Base):
     """
 
     def get_logging(self):
+        """
+        Return the information for the logger
+        :return: loggers
+        """
         return {
             "version": 1,
             "disable_existing_loggers": False,

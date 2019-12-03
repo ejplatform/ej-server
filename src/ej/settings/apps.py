@@ -4,6 +4,11 @@ from .options import EjOptions
 
 
 class InstalledAppsConf(Base, EjOptions):
+    """
+    This class contains a registry of installed applications
+    that stores configuration.
+    It also maintains a list of available models.
+    """
     USE_DJANGO_ADMIN = env(True, name="{attr}")
     DISABLE_DJANGO_DEBUG_TOOLBAR = env(True, name="{attr}")
 
@@ -22,6 +27,7 @@ class InstalledAppsConf(Base, EjOptions):
         "ej_profiles",
         "ej_conversations",
     ]
+
     third_party_apps = [
         "boogie.apps.fragments",
         "taggit",
@@ -45,9 +51,16 @@ class InstalledAppsConf(Base, EjOptions):
     ]
 
     def get_django_contrib_apps(self):
+        """
+        Return the contrib apps
+        """
         return [*super().get_django_contrib_apps(), "django.contrib.flatpages"]
 
     def get_project_apps(self):
+        """
+        This is used to return the project apps in the init
+        :return: middleware
+        """
         apps = [*super().get_project_apps(), *self.project_apps]
         if self.EJ_ROCKETCHAT_INTEGRATION:
             print("Rocket.Chat integration is ON")
@@ -55,6 +68,10 @@ class InstalledAppsConf(Base, EjOptions):
         return apps
 
     def get_third_party_apps(self):
+        """
+        This is used to return the third party apps in the init
+        :return: third_party_apps
+        """
         apps = [*super().get_third_party_apps(), *self.third_party_apps]
         if self.ENVIRONMENT == "local":
             if self.DISABLE_DJANGO_DEBUG_TOOLBAR:
