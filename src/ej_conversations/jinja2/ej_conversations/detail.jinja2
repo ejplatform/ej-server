@@ -11,9 +11,11 @@
 
 {% block content %}
 
+{# Style application for Fade in Form functionality applied to comment card
+exist on the voting screen. #}
     <div>
         <style>
-            animafade {
+            animaFadeForm {
             animation-duration: 3.5s;
             animation-name: fadeInUp;
             }
@@ -33,7 +35,15 @@
             .fadeInUp {
             animation-name: fadeInUp;
             }
-            </style>
+        </style>
+
+{# Function ToogleComment is responsible for checking whether or not the comment card exists on the voting screen, 
+as well as the allocation of it on the screen when not present #}
+
+{# ChangeButtonName function responsible for changing the name of the create comment button to cancel comment 
+when necessary #}
+
+{# HidableButton function responsible for hiding the comment button on the screen when needed #}
 
         <script>
             document.addEventListener('load', function () {
@@ -44,72 +54,98 @@
             })
 
             function toogleComment() {
-                var x = document.getElementById("comment-form-containner");
+                var commentCard = document.getElementById(
+                        "comment-form-containner"
+                    );
 
-                if (x.style.display === 'block') {
-                    x.style.display = 'none';
+                if (commentCard.style.display === 'block') {
+                    commentCard.style.display = 'none';
                 } else {
-                    x.style.display = 'block';
+                    commentCard.style.display = 'block';
                 }
             }
 
             function changeButtonName(){
                 var buttonName = document.getElementById("comment-button");
-                var button = document.getElementsByClassName("hidableButton");
+                var buttons = document.getElementsByClassName("hidableButton");
 
                 if (buttonName.innerHTML.includes("Create Comment"))
                     buttonName.textContent = "Cancel Comment";
 
                 else if (buttonName.textContent === "Cancel Comment")
                     buttonName.textContent = "Create Comment";
-                    button[0].style.visibility = "visible";
+                    buttons[0].style.visibility = "visible";
 
                 console.log(buttonName.textContent);
             }
 
             function hideButton() {
-                var button = document.getElementsByClassName("hidableButton");
-                button[0].style.visibility = "hidden";
+                var buttons = document.getElementsByClassName("hidableButton");
+                buttons[0].style.visibility = "hidden";
             }
         
         </script>
+        {# Block responsible for hiding conversation balloon until
+        user chooses to be visible #}
         {{ conversation|role('balloon') }}
-        {% if conversation.is_hidden %}
-            <div class="color-negative margin-3 pad-x3 pad-y2 rounded-3 center">
-                <h2>{{ _('Warning!') }}</h2>
-                <p>{% trans %}This conversation is hidden.{% endtrans %}
-                    {% trans here=edit_link() %} Click {{ here }} to edit and make it visible again.{% endtrans %}</p>
-            </div>
-        {% else %}
-        <br>
-        <br>
-        <br>
+            {% if conversation.is_hidden %}
+                <div class="color-negative margin-3 
+                pad-x3 pad-y2 rounded-3 center">
+                    <h2>{{ _('Warning!') }}</h2>
+                    <p> 
+                        {% trans %}This conversation is hidden.{% endtrans %}
+                        {% trans here=edit_link() %} Click {{ here }} 
+                        to edit and make it visible again.
+                        {% endtrans %}
+                    </p>
+                </div>
+            {% else %}
+            <br>
+            <br>
+            <br>
+            {# Block responsible for informing the user that 
+            the number of balloons for voting has run out #}
             <div class="col items-center margin-y3 pad-x2" id="comment-card">
                 {% if comment %}
                     {{ comment|role('card', target='#comment-card') }}
-                    {{ conversation|role('user-progress', class='width-full', style="margin-top: 1.5rem;") }}
+                    {{ conversation|role('user-progress', class='width-full', 
+                    style="margin-top: 1.5rem;") }}
                 {% else %}
                     <div class="comment-card center">
                         <article>
-                            <h2 class="h3 text-accent">{{ _('Congratulations!') }}</h2>
+                            <h2 class="h3 text-accent">
+                            {{ _('Congratulations!') }}</h2>
                             <p>{{ _("There are no comments left to vote :)") }}</p>
                         </article>
                     </div>
                 {% endif %}
-                <animafade>
-                <div style="text-align: center; display: none; position: relative; top: -490px; z-index: 500;" id="comment-form-containner">
-                        <h2 class="text-accent">{{ _('Comentários') }}</h2>
-                        {{ conversation|role('comment-form', form=comment_form, target='.comment-area') }}
+            {# Block responsible for creating the comment card #}
+            <animaFadeForm>
+                <div 
+                    style="text-align: center; display: none; 
+                    position: relative; top: -490px; z-index: 500;" 
+                    id="comment-form-containner">
+                        <h2 class="text-accent">{{ _('Comments') }}</h2>
+                        {{ conversation|role('comment-form', 
+                        form=comment_form, target='.comment-area') }}
                         {{ conversation|role('create-comment') }}
-                <button onclick="changeButtonName(), toogleComment()" id="comment-button" style="margin-top:10px;">
-                    Create Comment
-                </button>
+                    <button onclick="changeButtonName(), toogleComment()" 
+                        id="comment-button" 
+                        style="margin-top:10px;">
+                        Create Comment
+                    </button>
                 </div>
-                </animafade>
+            </animaFadeForm>
+                
+                {# Block responsible for changes applied to the comment card
+                 due to existing interactions #}
                 {% if comment %}
-                <button onclick="changeButtonName(), toogleComment(),hideButton()" id="comment-button" class="hidableButton">
-                    Create Comment
-                </button>
+                    <button 
+                        onclick="changeButtonName(), toogleComment(),hideButton()" 
+                        id="comment-button"
+                        class="hidableButton">
+                        Create Comment
+                    </button>
                 {% else %}
                 {% endif %}
             </div>
