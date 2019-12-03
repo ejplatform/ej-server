@@ -16,7 +16,9 @@ def max_comments_per_conversation(conversation, user):
     """
     Limit the number of comments in a single conversation
     """
-    return getattr(settings, "EJ_MAX_COMMENTS_PER_CONVERSATION", 2)
+    DEFAULT_MAX_COMMENTS_PER_CONVERSATION = 2
+    return getattr(settings, "EJ_MAX_COMMENTS_PER_CONVERSATION",
+                   DEFAULT_MAX_COMMENTS_PER_CONVERSATION)
 
 
 def comment_throttle():
@@ -26,14 +28,18 @@ def comment_throttle():
     We avoid spam and bots by preventing users from posting too many comments
     or votes in a short time span.
     """
-    return getattr(settings, "EJ_CONVERSATIONS_COMMENT_THROTTLE", 0)
+    DEFAULT_COMMENT_THROTTLE = 0
+    return getattr(settings, "EJ_CONVERSATIONS_COMMENT_THROTTLE",
+                   DEFAULT_COMMENT_THROTTLE)
 
 
 def vote_throttle():
     """
     Minimum interval between votes (in seconds)
     """
-    return getattr(settings, "EJ_CONVERSATIONS_VOTE_THROTTLE", 5)
+    DEFAULT_VOTE_THROTTLE = 5
+    return getattr(settings, "EJ_CONVERSATIONS_VOTE_THROTTLE",
+                   DEFAULT_VOTE_THROTTLE)
 
 
 @rules.predicate
@@ -56,10 +62,10 @@ def next_comment(conversation, user):
     """
     if user.is_authenticated:
         # Non voted user-created comments
-        comments = conversation.approved_comments.filter(author=user).exclude(votes__author=user)
-        size = comments.count()
+        non_voted_comments = conversation.approved_comments.filter(author=user).exclude(votes__author=user)
+        size = non_voted_comments.count()
         if size:
-            return comments[randrange(0, size)]
+            return non_voted_comments[randrange(0, size)]
 
         # Regular comments
         try:
@@ -68,10 +74,12 @@ def next_comment(conversation, user):
             pass
 
         # Comments the user has skip
-        comments = conversation.approved_comments.filter(votes__author=user, votes__choice=Choice.SKIP)
-        size = comments.count()
+        skipped_comments = conversation.approved_comments.filter(
+            votes__author=user,
+            votes__choice=Choice.SKIP)
+        size = skipped_comments.count()
         if size:
-            return comments[randrange(0, size)]
+            return skipped_comments[randrange(0, size)]
     return None
 
 
@@ -86,11 +94,14 @@ def remaining_comments(conversation, user):
     if user is None or user.id is None:
         return 0
 
-    fn = rules.get_value("ej.max_comments_per_conversation")
-    max_comments = fn(conversation, user)
-    minimum = 1 if user.has_perm("ej.can_edit_conversation", conversation) else 0
-    comments = user.comments.filter(conversation=conversation).count()
-    return max(max_comments - comments, minimum)
+    fn_max_comments_per_conversation = rules.get_value(
+        "ej.max_comments_per_conversation")
+    max_num_comments = fn_max_comments_per_conversation(conversation, user)
+    fallback_num_remaining_comments = 1 if user.has_perm(
+        "ej.can_edit_conversation", conversation) else 0
+    num_comments_made = user.comments.filter(conversation=conversation).count()
+    return max(max_num_comments - num_comments_made,
+               fallback_num_remaining_comments)
 
 
 @rules.register_value("ej.comments_under_moderation")
@@ -100,7 +111,8 @@ def comments_under_moderation(conversation, user):
     """
     if user.id is None:
         return 0
-    return user.comments.filter(conversation=conversation, status=Comment.STATUS.pending).count()
+    return user.comments.filter(conversation=conversation,
+                                status=Comment.STATUS.pending).count()
 
 
 @rules.register_value("ej.comments_made")
@@ -119,16 +131,18 @@ def vote_cooldown(conversation, user):
     """
     Number of seconds before user can vote again.
     """
-    time = (
+    FALLBACK_INTERVAL_BETWEEN_VOTES = 0.0
+    time_last_vote = (
         user.votes.filter(conversation=conversation)
         .order_by("created")
         .values_list("created", flat=True)
         .last()
     )
-    if time is None:
+    if time_last_vote is None:
         return 0.0
-    interval = now() - time
-    return max(vote_throttle() - interval.seconds, 0.0)
+    interval = now() - time_last_vote
+    return max(vote_throttle() - interval.seconds,
+               FALLBACK_INTERVAL_BETWEEN_VOTES)
 
 
 #
@@ -156,8 +170,8 @@ def can_comment(user, conversation):
         return False
     if user.has_perm("ej.can_edit_conversation", conversation):
         return True
-    remaining = remaining_comments(conversation, user)
-    return remaining > 0
+    num_remaining_comments = remaining_comments(conversation, user)
+    return num_remaining_comments > 0
 
 
 @rules.register_perm("ej.can_edit_conversation")
@@ -170,7 +184,8 @@ def can_edit_conversation(user, conversation):
     """
     if user.id == conversation.author_id:
         return True
-    elif conversation.is_promoted and user.has_perm("ej_conversations.can_publish_promoted"):
+    elif conversation.is_promoted and user.has_perm(
+            "ej_conversations.can_publish_promoted"):
         return True
     return False
 
