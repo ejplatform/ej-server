@@ -1,8 +1,8 @@
 from ej.testing import UrlTester
 from ej import routes
-from django.conf import settings
 from django.contrib.auth.models import AnonymousUser
 from constance import config
+
 
 class TestBasicUrls(UrlTester):
     # Urls visible to every one (even without login)

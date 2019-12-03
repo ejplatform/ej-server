@@ -54,3 +54,4 @@ def render_collapsible_list(_list, item_role="list-item", title=None, **kwargs):
 @html.register(Model)
 def render_model(_object, role=None, request=None):
     return Text(str(_object))
+
