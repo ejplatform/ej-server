@@ -19,9 +19,11 @@ class ApiError(Exception):
 
     @property
     def is_permission_error(self):
-        # Rocket.Chat error messages had changed in the past.
-        # We try to see if the error field of Payload is "unauthorized" or
-        # if the string "unauthorized" is present anywhere in the message.
+        """
+        Rocket.Chat error messages had changed in the past.
+        We try to see if the error field of Payload is "unauthorized" or
+        if the string "unauthorized" is present anywhere in the message.
+        """
         raise NotImplementedError
 
     @property

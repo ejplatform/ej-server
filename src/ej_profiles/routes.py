@@ -63,17 +63,13 @@ def check_location(profile, location):
     return profile
 
 
-@urlpatterns.route("contributions/")
-def contributions(request):
-    user = request.user
-
-    # Fetch all conversations the user created
-    created = user.conversations.cache_annotations("first_tag", "n_user_votes", "n_comments", user=user)
-
-    # Fetch voted conversations
-    # This code merges in python 2 querysets. The first is annotated with
-    # tag and the number of user votes. The second is annotated with the total
-    # number of comments in each conversation
+def get_voted(user):
+    """
+    Fetch voted conversations
+    This code merges in python 2 querysets. The first is annotated with
+    tag and the number of user votes. The second is annotated with the total
+    number of comments in each conversation
+    """
     voted = user.conversations_with_votes.exclude(id__in=[x.id for x in created])
     voted = voted.cache_annotations("first_tag", "n_user_votes", user=user)
     voted_extra = (
@@ -87,18 +83,40 @@ def contributions(request):
     for conversation in voted:
         conversation.annotation_total_votes = total_votes[conversation.id]
 
-    # Now we get the favorite conversations from user
-    favorites = Conversation.objects.filter(favorites__user=user).cache_annotations(
-        "first_tag", "n_user_votes", "n_comments", user=user
-    )
+    return voted
 
-    # Comments
+
+def get_groups(user):
     comments = user.comments.select_related("conversation").annotate(
         skip_count=Count("votes", filter=Q(votes__choice=0)),
         agree_count=Count("votes", filter=Q(votes__choice__gt=0)),
         disagree_count=Count("votes", filter=Q(votes__choice__lt=0)),
     )
-    groups = toolz.groupby(lambda x: x.status, comments)
+    return toolz.groupby(lambda x: x.status, comments)
+
+
+@urlpatterns.route("contributions/")
+def contributions(request):
+    
+    user = request.user
+
+    """
+    Fetch all conversations the user created
+    """
+    created = user.conversations.cache_annotations("first_tag", "n_user_votes", "n_comments", user=user)
+
+    voted = get_voted(user)
+
+    """
+    Now we get the favorite conversations from user
+    """
+    favorites = Conversation.objects.filter(favorites__user=user).cache_annotations(
+        "first_tag", "n_user_votes", "n_comments", user=user
+    )
+    """
+    Comments
+    """
+    groups = get_groups(user)
     approved = groups.get(Comment.STATUS.approved, ())
     rejected = groups.get(Comment.STATUS.rejected, ())
     pending = groups.get(Comment.STATUS.pending, ())
