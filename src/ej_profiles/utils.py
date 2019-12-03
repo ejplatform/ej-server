@@ -10,6 +10,7 @@ def years_from(date, now=None):
         return years - 1
     return years
 
+
 def get_client_ip(request):
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
     if x_forwarded_for:
@@ -17,6 +18,7 @@ def get_client_ip(request):
     else:
         ip = request.META.get('REMOTE_ADDR')
     return ip
+
 
 def get_loc(ip_adr):
     """

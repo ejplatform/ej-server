@@ -122,7 +122,11 @@ def render_dataframe(df, index=False, *, col_display=None, **kwargs):
 
 # TODO: make list of formats configurable
 # "msgpack": "MsgPack"
-DEFAULT_FORMATS = {"xlsx": "Excel", "csv": "CSV", "json": "JSON"}
+DEFAULT_FORMATS = {
+    "xlsx": "Excel", 
+    "csv": "CSV", 
+    "json": "JSON"
+}
 
 COLUMN_NAMES = {
     "agree": _("Agree"),

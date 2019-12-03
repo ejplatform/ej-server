@@ -44,21 +44,28 @@ def scatter(request, conversation, slug, check=check_promoted):
         "pca_link": _("https://en.wikipedia.org/wiki/Principal_component_analysis"),
     }
 
+def update_cluster(check, conversation):
+    clusterization = getattr(conversation, "clusterization", None)
+    if clusterization is not None:
+        clusterization.update_clusterization()
+
+def error_response(conversation):
+    df = conversation.votes.votes_table("mean")
+    if df.shape[0] <= 3 or df.shape[1] <= 3:
+        return JsonResponse({"error": "InsufficientData", "message": _("Not enough data")})
 
 @urlpatterns.route("scatter/pca.json", template=None)
 def scatter_pca_json(request, conversation, slug, check=check_promoted):
     from sklearn.decomposition import PCA
     from sklearn import impute
 
-    check(conversation, request)
     kwargs = {}
-    clusterization = getattr(conversation, "clusterization", None)
-    if clusterization is not None:
-        clusterization.update_clusterization()
+    check(conversation, request)
 
-    df = conversation.votes.votes_table("mean")
-    if df.shape[0] <= 3 or df.shape[1] <= 3:
-        return JsonResponse({"error": "InsufficientData", "message": _("Not enough data")})
+    update_cluster(check, conversation)
+    
+    error_response(conversation)
+    
     pca = PCA(2)
     data = pca.fit_transform(df.values)
     data = pd.DataFrame(data, index=df.index, columns=["x", "y"])

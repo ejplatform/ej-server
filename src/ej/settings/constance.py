@@ -1,5 +1,5 @@
 from boogie.configurations import Conf, env
-from constance import config
+
 
 
 class ConstanceConf(Conf):

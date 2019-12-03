@@ -15,10 +15,10 @@ POWER_ROLE_CONFIGURATION_MAP = {
     "minority-power": ("EJ_GAMIFICATION_MINORITY_POWER_DURATION", 7 * 24),
 }
 
-
 #
 # Global configurations
 #
+
 def power_expiration_time(role, start=None):
     """
     Return the default expiration time for endorsements created in the given
@@ -33,8 +33,8 @@ def power_expiration_time(role, start=None):
             the current datetime, but can be any date in the past or future.
     """
     start = start or timezone.now()
-    variable_name, default = POWER_ROLE_CONFIGURATION_MAP[role]
-    duration = getattr(settings, variable_name, default)
+    role_variable, default = POWER_ROLE_CONFIGURATION_MAP[role]
+    duration = getattr(settings, role_variable, default)
     duration *= 60 * 60
     return start + timedelta(seconds=duration)
 
@@ -42,6 +42,7 @@ def power_expiration_time(role, start=None):
 #
 # Override other EJ rules
 #
+
 def max_comments_per_conversation(conversation, user):
     """
     Limit the number of comments in a single conversation
@@ -59,31 +60,21 @@ default_value_map["ej.max_comments_per_conversation"] = max_comments_per_convers
 #
 # Permissions and predicates
 #
+
+"""
+The two functions bellow have the following behaviour:
+
+has_opinion_bridge_power(function) = True if user is a "opinion bridge" in conversation.
+has_activist_power(function) = True if the user has "activist" status in conversation.
+
+"""
+
 @predicate
 def has_opinion_bridge_power(user, conversation):
-    """
-    Return true if user is a "opinion bridge" in conversation.
-    """
     return models.GivenBridgePower.objects.filter(user=user, conversation=conversation).exists()
-
-
-@predicate
-def can_be_opinion_bridge(user, conversation):
-    """
-    Opinion bridges sits between two clusters and may help to promote dialogue
-    between both clusters.
-    """
 
 
 @predicate
 def has_activist_power(user, conversation):
     return models.GivenMinorityPower.objects.filter(user=user, conversation=conversation).exists()
 
-
-@predicate
-def can_be_activist(user, conversation):
-    """
-    Activist is someone that is in a cluster and agrees with most opinions, but
-    has some divergent opinion
-    """
-    pass

@@ -47,6 +47,19 @@ class Profile(models.Model):
     is_superuser = delegate_to("user")
     limit_board_conversations = delegate_to("user")
 
+    basic_fields = [
+        "city",
+        "state",
+        "country",
+        "occupation",
+        "education",
+        "ethnicity",
+        "gender",
+        "race",
+        "political_activity",
+        "biography",
+    ]
+
     @property
     def age(self):
         return None if self.birth_date is None else years_from(self.birth_date)
@@ -97,48 +110,23 @@ class Profile(models.Model):
 
     @property
     def is_filled(self):
-        fields = (
-            "race",
-            "age",
-            "birth_date",
-            "education",
-            "ethnicity",
-            "country",
-            "state",
-            "city",
-            "biography",
-            "occupation",
-            "political_activity",
-            "has_image",
-            "gender_description",
+        fields = self.basic_fields
+        fields[fields.index('gender')] = 'gender_orientation'
+        fields = tuple(fields) + (
+             "age",
+             "birth_date",
+             "has_image",
         )
         return bool(all(getattr(self, field) for field in fields))
 
     def get_absolute_url(self):
         return reverse("user-detail", kwargs={"pk": self.id})
 
-    def profile_fields(self, user_fields=False, blacklist=None):
+    def create_tuple_of_interest(self, fields, null_values):
         """
-        Return a list of tuples of (field_description, field_value) for all
-        registered profile fields.
+        Return a tuples of (attribute, human-readable name, value)
         """
-
-        fields = [
-            "city",
-            "state",
-            "country",
-            "occupation",
-            "education",
-            "ethnicity",
-            "gender",
-            "race",
-            "political_activity",
-            "biography",
-        ]
         field_map = {field.name: field for field in self._meta.fields}
-        null_values = {Gender.NOT_FILLED, Race.NOT_FILLED, None, ""}
-
-        # Create a tuples of (attribute, human-readable name, value)
         triple_list = []
         for field in fields:
             description = field_map[field].verbose_name
@@ -148,7 +136,20 @@ class Profile(models.Model):
             elif hasattr(self, f"get_{field}_display"):
                 value = getattr(self, f"get_{field}_display")()
             triple_list.append((field, description, value))
+        return triple_list
 
+    def profile_fields(self, user_fields=False, blacklist=None):
+        """
+        Return a list of tuples of (field_description, field_value) for all
+        registered profile fields.
+        """
+
+        fields = self.basic_fields
+        null_values = {Gender.NOT_FILLED, Race.NOT_FILLED, None, ""}
+
+        # Create a tuples of (attribute, human-readable name, value)
+        triple_list = create_tuple_of_interest(self, fields, null_values)
+        
         # Age is not a real field, but a property. We insert it after occupation
         triple_list.insert(3, ("age", _("Age"), self.age))
 
