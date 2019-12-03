@@ -116,8 +116,13 @@ all dependencies.
 Running the project :trophy:
 =============================
 
+First compile the part of the code responsible for the CSS of the application
+
+    $ inv sass
+
 Unless you prefer to type long Django management commands, use Invoke_ to start
 the dev server::
+
 
     $ inv run
 
@@ -184,6 +189,9 @@ Contributing :file_folder:
 Please make sure to read the guide before making a pull request. After you've read, don't forget to take an issue!
 
 `Guide <https://github.com/gces-empjuntos/ej-server/blob/develop/CONTRIBUTING.rst>`_
+
+`Issues Templates for contributing <https://github.com/gces-empjuntos/ej-server/tree/change_README.md/ISSUE_TEMPLATES>`_
+
 
 Tests :heavy_check_mark:
 =============================

@@ -34,15 +34,15 @@ def edit(request):
     form = forms.ProfileForm(instance=profile, request=request)
 
     ip_adr = get_client_ip(request)
-    
+
     location = get_loc(ip_adr)
-    
+
     if form.is_valid_post():
         form.files = request.FILES
-        
+
         if location.country is not None:
             profile = check_location(profile, location)
-        
+
         form.save()
 
         from pprint import pprint
@@ -50,11 +50,7 @@ def edit(request):
         return redirect("/profile/")
 
     return {"form": form, "profile": profile}
-    
-    country = models.CharField(_("Country"), blank=True, max_length=50)
-    state = models.CharField(_("State"), blank=True, max_length=3)
-    city = models.CharField(_("City"), blank=True, max_length=140)
-    
+
 
 def check_location(profile, location):
     if not profile.country:
@@ -63,8 +59,8 @@ def check_location(profile, location):
         profile.state = location.state
     if not profile.city:
         profile.city = location.city
-    
-    return profile        
+
+    return profile
 
 
 @urlpatterns.route("contributions/")
