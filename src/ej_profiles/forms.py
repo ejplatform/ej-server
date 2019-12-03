@@ -1,9 +1,7 @@
-from django import forms
 from django.conf import settings
 
 from ej.forms import EjModelForm
 from . import models
-from .enums import STATE_CHOICES
 
 FULL_EDITABLE_FIELDS = [
     "occupation",

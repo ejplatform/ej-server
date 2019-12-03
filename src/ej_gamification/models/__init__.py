@@ -42,9 +42,9 @@ def _patch_models():
         agg = user.participation_progresses.aggregate(r=Sum("score"))
         return agg["r"] or 0
 
-    @patch(user, lazy)
-    def n_trophies(user):
-        return user.progress.n_trophies
+    # @patch(user, lazy)
+    # def n_trophies(user):
+    #     return user.progress.n_trophies
 
     # FIXME: gamification
     user.n_endorsements = 0
