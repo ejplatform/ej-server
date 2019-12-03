@@ -6,7 +6,7 @@
     {% if settings.has_gamification and request.user.is_authenticated %}
         {% call link_macro('gamification:achievements', title=_('Achievements'), class_='main-footer__link') %}
             <img src="{{ static('img/icons/icon_trofeu_dark.svg') }}" alt="">
-            <span>{{ ('Achievements ') }} <i class="fa fa-trophy">{{ (' : ') }} {{ request.user.n_trophies }}</i> </span>
+            <span>{{ ('Achievements ') }} <i class="fa fa-trophy"></i> </span>
         {% endcall %}
     {% else %}
         {% call link_macro('gamification:achievements', title=_('Achievements'), class_='main-footer__link') %}

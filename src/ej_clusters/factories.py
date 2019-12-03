@@ -69,10 +69,10 @@ def cluster_votes(conversation, users):
     comments_map = {comment.id: comment for comment in comments}
     clusters = {cluster: [] for cluster in clusterization.clusters.all()}
     cluster_list = list(clusters)
-    n_clusters = len(cluster_list)
+    numberof_clusters = len(cluster_list)
 
-    for i, user in enumerate(users):
-        cluster = cluster_list[i % n_clusters]
+    for iterator, user in enumerate(users):
+        cluster = cluster_list[iterator % numberof_clusters]
         clusters[cluster].append(user)
 
     votes = []
@@ -84,10 +84,10 @@ def cluster_votes(conversation, users):
         )
         for data in vote_profiles:
             comment_id = data["comment"]
-            prob = 0.5 + data["average"] * 0.4
+            probability = 0.5 + data["average"] * 0.4
 
             for user in users:
-                vote = random_vote(prob)
+                vote = random_vote(probability)
 
                 if vote is not None:
                     vote = comments_map[comment_id].vote(user, vote, commit=False)
@@ -96,13 +96,13 @@ def cluster_votes(conversation, users):
     Vote.objects.bulk_create(votes)
 
 
-def random_vote(prob):
-    r = random.random()
-    if r < 0.25:
+def random_vote(probability):
+    random_var = random.random()
+    if random_var < 0.25:
         return Choice.SKIP
-    elif r < 0.50:
+    elif random_var < 0.50:
         return None
-    elif random.random() < prob:
+    elif random.random() < probability:
         return Choice.AGREE
     else:
         return Choice.DISAGREE

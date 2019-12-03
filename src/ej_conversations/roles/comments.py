@@ -19,6 +19,23 @@ def comment_card(comment: Comment, request=None, target=None, show_actions=None,
     Render comment information inside a comment card.
     """
 
+    login_anchor, is_authenticated, user = authenticate_user()
+    badge, buttons = gamification(user, comment)
+
+    return {
+        "author": comment.author.username,
+        "comment": comment,
+        "show_actions": is_authenticated,
+        "csrf_input": csrf_input(request),
+        "buttons": buttons,
+        "login_anchor": login_anchor,
+        "target": target,
+        "badge": badge,
+        **kwargs,
+    }
+
+def authenticate_user():
+
     user = getattr(request, "user", None)
     is_authenticated = getattr(user, "is_authenticated", False)
 
@@ -28,6 +45,9 @@ def comment_card(comment: Comment, request=None, target=None, show_actions=None,
         login = reverse("auth:login")
         login_anchor = a(_("login"), href=f"{login}?next={comment.conversation.get_absolute_url()}")
 
+    return login_anchor, is_authenticated, user
+
+def gamify(user, comment):
     badge = ""
     if HAS_GAMIFICATION:
         from ej_gamification import get_participation
@@ -41,17 +61,8 @@ def comment_card(comment: Comment, request=None, target=None, show_actions=None,
         "agree": ("fa-check", "text-positive", _("Agree")),
     }
 
-    return {
-        "author": comment.author.username,
-        "comment": comment,
-        "show_actions": is_authenticated,
-        "csrf_input": csrf_input(request),
-        "buttons": buttons,
-        "login_anchor": login_anchor,
-        "target": target,
-        "badge": badge,
-        **kwargs,
-    }
+    return badge, buttons
+
 
 
 @with_template(Comment, role="moderate")
@@ -104,7 +115,6 @@ def comment_summary(comment: Comment, **kwargs):
         "skip": comment.skip_count,
         "disagree": comment.disagree_count,
     }
-
 
 @with_template(Comment, role="stats", template="ej/role/voting-stats.jinja2")
 def comment_stats(comment: Comment, request=None):

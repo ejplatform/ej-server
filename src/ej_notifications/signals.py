@@ -10,24 +10,28 @@ from .enums import Purpose, NotificationMode
 User = get_user_model()
 
 
+def channel_iteration(channel, notificationConfig):
+    for user in self.channel.users.all():
+        setting = NotificationConfig.objects.get(self.notificationConfig=user.id)
+        if setting.notification_option == NotificationMode.PUSH_NOTIFICATIONS:
+            users_to_send.append(user)
+
+
 @receiver(post_save, sender=Message)
-def generate_notifications(sender, instance, created, channel, **kwargs):
+def generate_notifications(sender, instance, created, channel:
     if created:
         for user in instance.channel.users.all():
             Notification.objects.create(receiver=user, channel=channel, message=instance)
 
 
 @receiver(post_save, sender=Message)
-def send_admin_fcm_message(sender, instance, created, **kwargs):
+def send_admin_fcm_message(sender, instance, created):
     if created:
         channel_id = instance.channel.id
         channel = Channel.objects.get(id=channel_id)
         users_to_send = []
         if channel.purpose == "admin":
-            for user in channel.users.all():
-                setting = NotificationConfig.objects.get(profile__user__id=user.id)
-                if setting.notification_option == NotificationMode.PUSH_NOTIFICATIONS:
-                    users_to_send.append(user)
+            channel_iteration(channel,profile_user_id)
             fcm_devices = GCMDevice.objects.filter(cloud_message_type="FCM", user__in=users_to_send)
             fcm_devices.send_message(
                 "",
@@ -41,18 +45,14 @@ def send_admin_fcm_message(sender, instance, created, **kwargs):
 
 
 @receiver(post_save, sender=Message)
-def send_conversation_fcm_message(sender, instance, created, **kwargs):
+def send_conversation_fcm_message(sender, instance, created):
     if created:
         channel_id = instance.channel.id
         channel = Channel.objects.get(id=channel_id)
         users_to_send = []
         url = "https://localhost:8000/profile/" + str(instance.target) + "?notification=true"
         if channel.purpose:
-            for user in channel.users.all():
-
-                setting = NotificationConfig.objects.get(user__id=user.id)
-                if setting.notification_option == NotificationMode.PUSH_NOTIFICATIONS:
-                    users_to_send.append(user)
+            channel_iteration(channel,user_id)
             fcm_devices = GCMDevice.objects.filter(cloud_message_type="FCM", user__in=users_to_send)
             fcm_devices.send_message(
                 "",
@@ -78,7 +78,7 @@ def insert_user_on_general_channels(sender, created, **kwargs):
 
 
 @receiver(post_save, sender=NotificationConfig)
-def create_user_trophy_channel(sender, instance, created, **kwargs):
+def create_user_trophy_channel(sender, instance, created):
     if created:
         user = instance.user
         channel = Channel.objects.create(name=str(Purpose.TROPHIES), purpose=Purpose.TROPHIES, owner=user)
