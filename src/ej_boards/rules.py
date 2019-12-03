@@ -38,6 +38,10 @@ def can_add_board(user):
 
 @rules.register_perm("ej.can_add_conversation_to_board")
 def can_add_conversation(user, board):
+    """
+    Verify if a user can create a conversation following the
+    django admin permission and the max conversation number.
+    """
     return bool(
         user.has_perm("ej.can_edit_board", board)
         and (board.conversations.count() < rules.compute("ej.board_conversation_limit", user))
@@ -46,6 +50,9 @@ def can_add_conversation(user, board):
 
 @rules.register_value("ej.board_conversation_limit")
 def conversation_limit(user):
+    """
+    Verify if conversation limit on the board has been reached.
+    """
     user_limit = user.limit_board_conversations
     if user_limit != 0:
         return user_limit
