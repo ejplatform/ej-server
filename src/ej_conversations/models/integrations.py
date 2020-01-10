@@ -9,12 +9,12 @@ class Snapshot():
 
     def __init__(self, conversation, request, template_type='mautic'):
         self.PALETTE_CLASS = {
-            'green': CommonPalette,
-            'grey': CommonPalette,
-            'blue': CommonPalette,
-            'orange': CommonPalette,
-            'purple': CommonPalette,
-            'pink': CommonPalette,
+            'green': SnapshotPalette,
+            'grey': SnapshotPalette,
+            'blue': SnapshotPalette,
+            'orange': SnapshotPalette,
+            'purple': SnapshotPalette,
+            'pink': SnapshotPalette,
             'campaign': CampaignPalette
         }
         self.template_type = template_type
@@ -75,7 +75,7 @@ class Snapshot():
         return _site_url
 
 
-class CommonPalette():
+class SnapshotPalette():
 
     def __init__(self, palette='blue'):
         self.INLINE_PALETTES = {
