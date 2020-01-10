@@ -11,7 +11,7 @@ from hyperpython import a
 
 from . import forms, models
 from .enums import TourStatus
-from .models import Conversation
+from .models import Conversation, Snapshot
 from .rules import next_comment
 from .tour import TOUR
 from .utils import (
@@ -171,9 +171,26 @@ def moderate(request, conversation, slug=None, check=check_promoted):
     }
 
 
+@urlpatterns.route(conversation_url + "integrations/")
+def integrations(request, conversation, slug, perms=[]):
+    if request.method == "POST":
+        snapshot = Snapshot(conversation, request, "mautic")
+        template = snapshot.get_template()
+        response = HttpResponse(template, content_type="text/html")
+        response['Content-Disposition'] = 'attachment; filename=template.html'
+        return response
+    else:
+        return {
+            "conversation": conversation,
+            "request": request,
+            "menu_links": conversation_admin_menu_links(conversation, request.user)
+        }
+
 #
 # Auxiliary functions
 #
+
+
 def login_link(content, obj):
     path = obj.get_absolute_url()
     return a(content, href=reverse("auth:login") + f"?next={path}")
