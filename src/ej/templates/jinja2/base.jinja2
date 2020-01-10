@@ -14,6 +14,7 @@
     {% include ['ej/includes/head/favicons.jinja2',
                 'ej/includes/head/pwa.jinja2',
                 'ej/includes/head/open_graph.jinja2'] %}
+
 </head>
 
 
@@ -65,6 +66,7 @@
     {% if not hide_header|default(False) %}{% include 'ej/includes/header.jinja2' %}{% endif %}
     {% if not hide_footer|default(False) %}{% include 'ej/includes/footer.jinja2' %}{% endif %}
     </body>
+    <script src="/static/js/mail-campaign.js"></script>
 {% endblock body %}
 </html>
 
