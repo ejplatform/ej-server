@@ -93,6 +93,11 @@ def conversation_moderate(request, board, **kwargs):
     return conversations.moderate(request, check=check_board(board), **kwargs)
 
 
+@urlpatterns.route(board_conversation_url + "integrations/")
+def conversation_integrations(request, board, **kwargs):
+    return conversations.integrations(request, **kwargs, check=check_board(board))
+
+
 #
 # Dataviz
 #

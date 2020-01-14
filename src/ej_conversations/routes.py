@@ -172,7 +172,8 @@ def moderate(request, conversation, slug=None, check=check_promoted):
 
 
 @urlpatterns.route(conversation_url + "integrations/")
-def integrations(request, conversation, slug, perms=[]):
+def integrations(request, conversation, slug, check=check_promoted):
+    check(conversation, request)
     if request.method == "POST":
         snapshot = Snapshot(conversation, request, "mautic")
         template = snapshot.get_template()
