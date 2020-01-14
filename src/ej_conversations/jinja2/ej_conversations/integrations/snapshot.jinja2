@@ -1,0 +1,16 @@
+<h1>Snapshot</h1>
+<p>With snapshot feature, you can download an html version of this conversation page.
+You can use it as a template for automation marketing tools like mautic and mailchimp.</p>
+
+<span>Select a marketing tool to generate a compatible snapshot</span>
+<select id="" name="">
+	<option value="mautic">Mautic</option>
+</select>
+<form action="{{conversation.url("conversation:integrations")}}" method="post">
+	<input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+	<input type="submit" value="Download">
+</form>
+<p><a href="{{ conversation.get_absolute_url() }}" title="{{ _('Back to conversation') }}"
+		class="lowercase bold text-brand">
+	<i class="fa fa-chevron-left"></i>{% trans %}Back to conversation{% endtrans %}
+</a></p>
