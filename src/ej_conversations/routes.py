@@ -184,7 +184,7 @@ def integrations(request, conversation, slug, check=check_promoted):
         return {
             "conversation": conversation,
             "request": request,
-            "menu_links": conversation_admin_menu_links(conversation, request.user)
+            "menu_links": conversation_admin_menu_links(conversation, request.user),
         }
 
 #

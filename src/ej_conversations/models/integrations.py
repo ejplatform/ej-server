@@ -14,12 +14,12 @@ class Snapshot():
             'blue': SnapshotPalette,
             'orange': SnapshotPalette,
             'purple': SnapshotPalette,
-            'pink': SnapshotPalette,
+            'accent': SnapshotPalette,
             'campaign': CampaignPalette
         }
         self.template_type = template_type
         self.conversation = conversation
-        self.palette = self.palette_from_conversation()
+        self.palette = self.get_conversation_palette()
         self.host_url = Snapshot.get_host_url_with_schema(request)
 
     def get_template(self):
@@ -33,7 +33,7 @@ class Snapshot():
         templates_dir = os.path.join(root, '../integrations')
         env = Environment(loader=FileSystemLoader(templates_dir))
         template = env.get_template('{}_snapshot.html'.format(self.template_type))
-        data = template.render(
+        return template.render(
             conversation_title=self.conversation.text,
             comment_content=self.conversation.comments.all()[0].content,
             comment_author=self.conversation.comments.all()[0].author.name,
@@ -42,14 +42,13 @@ class Snapshot():
             tags=self.conversation.tags.all(),
             palette_css=self.palette
         )
-        return data
 
-    def palette_from_conversation(self):
+    def get_conversation_palette(self):
         try:
             conversation_palette = self.conversation.boards.first().palette.lower()
         except:
             conversation_palette = 'blue'
-        return conversation_palette
+        return self.get_palette_css(conversation_palette)
 
     def url_to_compute_vote(self):
         conversation_slug = self.conversation.slug
@@ -63,7 +62,7 @@ class Snapshot():
             url = '{}/conversations/{}/{}?comment_id={}&action=vote&origin=campaign'
             return url.format(self.host_url, conversation_id, conversation_slug, comment_id)
 
-    def get_css_from_palette(self, conversation_palette='blue'):
+    def get_palette_css(self, conversation_palette='blue'):
         paletteClass = self.PALETTE_CLASS[conversation_palette]
         return paletteClass(conversation_palette).css()
 
@@ -84,7 +83,7 @@ class SnapshotPalette():
             'blue': ['#30BFD3', '#C4F2F4'],
             'orange': ['#F5700A', '#FFE1CA'],
             'purple': ['#7758B3', '#E7DBFF'],
-            'pink': ['#C6027B', '#FFE3EA'],
+            'accent': ['#C6027B', '#FFE3EA'],
         }
         self.palette = palette
 
