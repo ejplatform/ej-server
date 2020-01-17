@@ -5,22 +5,29 @@ from ej_boards.models import Board
 from ej_conversations.models import Conversation
 
 
-class Snapshot():
+"""
+ A class to generate an html template from conversations-detail page.
+ This template serves for example to create marketing campaigns using
+ mailchimp or mautic.
+"""
+
+
+class TemplateGenerator():
 
     def __init__(self, conversation, request, template_type='mautic'):
         self.PALETTE_CLASS = {
-            'green': SnapshotPalette,
-            'grey': SnapshotPalette,
-            'blue': SnapshotPalette,
-            'orange': SnapshotPalette,
-            'purple': SnapshotPalette,
-            'accent': SnapshotPalette,
+            'green': BasePalette,
+            'grey': BasePalette,
+            'blue': BasePalette,
+            'orange': BasePalette,
+            'purple': BasePalette,
+            'accent': BasePalette,
             'campaign': CampaignPalette
         }
         self.template_type = template_type
         self.conversation = conversation
         self.palette = self.get_conversation_palette()
-        self.host_url = Snapshot.get_host_url_with_schema(request)
+        self.host_url = TemplateGenerator.get_host_url_with_schema(request)
 
     def get_template(self):
         try:
@@ -32,7 +39,7 @@ class Snapshot():
         root = os.path.dirname(os.path.abspath(__file__))
         templates_dir = os.path.join(root, '../integrations')
         env = Environment(loader=FileSystemLoader(templates_dir))
-        template = env.get_template('{}_snapshot.html'.format(self.template_type))
+        template = env.get_template('{}_template.jinja2'.format(self.template_type))
         return template.render(
             conversation_title=self.conversation.text,
             comment_content=self.conversation.comments.all()[0].content,
@@ -74,7 +81,7 @@ class Snapshot():
         return _site_url
 
 
-class SnapshotPalette():
+class BasePalette():
 
     def __init__(self, palette='blue'):
         self.INLINE_PALETTES = {

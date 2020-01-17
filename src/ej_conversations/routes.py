@@ -11,7 +11,7 @@ from hyperpython import a
 
 from . import forms, models
 from .enums import TourStatus
-from .models import Conversation, Snapshot
+from .models import Conversation
 from .rules import next_comment
 from .tour import TOUR
 from .utils import (
@@ -173,10 +173,12 @@ def moderate(request, conversation, slug=None, check=check_promoted):
 
 @urlpatterns.route(conversation_url + "integrations/")
 def integrations(request, conversation, slug, check=check_promoted):
+    from ej_conversations.integrations import TemplateGenerator
+
     check(conversation, request)
     if request.method == "POST":
-        snapshot = Snapshot(conversation, request, "mautic")
-        template = snapshot.get_template()
+        generator = TemplateGenerator(conversation, request, "mautic")
+        template = generator.get_template()
         response = HttpResponse(template, content_type="text/html")
         response['Content-Disposition'] = 'attachment; filename=template.html'
         return response
