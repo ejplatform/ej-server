@@ -18,7 +18,7 @@ class TemplateGenerator():
         self.PALETTE_CLASS = {
             'green': BasePalette,
             'grey': BasePalette,
-            'blue': BasePalette,
+            'brand': BasePalette,
             'orange': BasePalette,
             'purple': BasePalette,
             'accent': BasePalette,
@@ -83,11 +83,11 @@ class TemplateGenerator():
 
 class BasePalette():
 
-    def __init__(self, palette='blue'):
+    def __init__(self, palette='brand'):
         self.INLINE_PALETTES = {
             'green': ['#36C273', '#B4FDD4'],
             'grey': ['#666666', '#EEEEEE'],
-            'blue': ['#30BFD3', '#C4F2F4'],
+            'brand': ['#30BFD3', '#C4F2F4'],
             'orange': ['#F5700A', '#FFE1CA'],
             'purple': ['#7758B3', '#E7DBFF'],
             'accent': ['#C6027B', '#FFE3EA'],
