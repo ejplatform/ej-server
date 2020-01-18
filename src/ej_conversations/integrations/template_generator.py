@@ -15,27 +15,34 @@ from ej_conversations.models import Conversation
 class TemplateGenerator():
 
     def __init__(self, conversation, request, template_type='mautic'):
-        self.PALETTE_CLASS = {
-            'green': BasePalette,
-            'grey': BasePalette,
-            'brand': BasePalette,
-            'orange': BasePalette,
-            'purple': BasePalette,
-            'accent': BasePalette,
-            'campaign': CampaignPalette
+        self.PALETTE_CSS_GENERATORS = {
+            'green': BaseCssGenerator('green'),
+            'grey': BaseCssGenerator('grey'),
+            'brand': BaseCssGenerator('brand'),
+            'orange': BaseCssGenerator('orange'),
+            'purple': BaseCssGenerator('purple'),
+            'accent': BaseCssGenerator('accent'),
+            'campaign': CampaignCssGenerator
         }
         self.template_type = template_type
         self.conversation = conversation
-        self.palette = self.get_conversation_palette()
-        self.host_url = TemplateGenerator.get_host_url_with_schema(request)
+        self.ej_site = TemplateGenerator._get_ej_site_url(request)
 
     def get_template(self):
         try:
-            return self.render_jinja_template()
+            return self._render_jinja_template()
         except:
             raise
 
-    def render_jinja_template(self):
+    def _get_palette_css(self):
+        palette = self.conversation.boards.first().palette.lower()
+        try:
+            generator = self.PALETTE_CSS_GENERATORS[palette]
+        except:
+            generator = self.PALETTE_CSS_GENERATORS["brand"]
+        return generator.css()
+
+    def _render_jinja_template(self):
         root = os.path.dirname(os.path.abspath(__file__))
         templates_dir = os.path.join(root, '../integrations')
         env = Environment(loader=FileSystemLoader(templates_dir))
@@ -44,44 +51,33 @@ class TemplateGenerator():
             conversation_title=self.conversation.text,
             comment_content=self.conversation.comments.all()[0].content,
             comment_author=self.conversation.comments.all()[0].author.name,
-            vote_url=self.url_to_compute_vote(),
-            site_url=self.host_url,
+            vote_url=self._get_voting_url(),
+            ej_site=self.ej_site,
             tags=self.conversation.tags.all(),
-            palette_css=self.palette
+            palette_css=self._get_palette_css()
         )
 
-    def get_conversation_palette(self):
-        try:
-            conversation_palette = self.conversation.boards.first().palette.lower()
-        except:
-            conversation_palette = 'blue'
-        return self.get_palette_css(conversation_palette)
-
-    def url_to_compute_vote(self):
+    def _get_voting_url(self):
         conversation_slug = self.conversation.slug
         conversation_id = self.conversation.id
         comment_id = self.conversation.comments.all()[0].id
         try:
             board_slug = self.conversation.boards.first().slug
             url = '{}/{}/conversations/{}/{}?comment_id={}&action=vote&origin=campaign'
-            return url.format(self.host_url, board_slug, conversation_id, conversation_slug, comment_id)
+            return url.format(self.ej_site, board_slug, conversation_id, conversation_slug, comment_id)
         except:
             url = '{}/conversations/{}/{}?comment_id={}&action=vote&origin=campaign'
-            return url.format(self.host_url, conversation_id, conversation_slug, comment_id)
-
-    def get_palette_css(self, conversation_palette='blue'):
-        paletteClass = self.PALETTE_CLASS[conversation_palette]
-        return paletteClass(conversation_palette).css()
+            return url.format(self.ej_site, conversation_id, conversation_slug, comment_id)
 
     @staticmethod
-    def get_host_url_with_schema(request):
+    def _get_ej_site_url(request):
         scheme = request.META['wsgi.url_scheme']
         host = request.META['HTTP_HOST']
         _site_url = '{}://{}'.format(scheme, host)
         return _site_url
 
 
-class BasePalette():
+class BaseCssGenerator():
 
     def __init__(self, palette='brand'):
         self.INLINE_PALETTES = {
@@ -105,7 +101,7 @@ class BasePalette():
         return palette_style
 
 
-class CampaignPalette():
+class CampaignCssGenerator():
 
     def __init__(self, palette='campaign'):
         self.INLINE_PALETTES = {'campaign': ['#1c9dd9', '#332f82']}
