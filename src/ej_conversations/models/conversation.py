@@ -275,11 +275,20 @@ class Conversation(HasFavoriteMixin, TimeStampedModel):
         comment = rules.compute("ej.next_comment", self, user)
         if comment:
             return comment
-        elif default is NOT_GIVEN:
-            msg = _("No comments available for this user")
-            raise Comment.DoesNotExist(msg)
-        else:
-            return default
+        return None
+
+    def next_comment_with_id(self, user, comment_id=None):
+        """
+        Returns a comment with id if user didn't vote yet, otherwhise return
+        a random comment.
+        """
+        comments = self.approved_comments.filter(author=user).exclude(votes__author=user)
+        if comment_id:
+            try:
+                return comments.get(id=comment_id)
+            except Exception as e:
+                pass
+        return self.next_comment(user)
 
 
 #

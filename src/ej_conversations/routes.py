@@ -72,6 +72,7 @@ def detail(request, conversation, slug=None, check=check_promoted):
     check(conversation, request)
     user = request.user
     form = forms.CommentForm(conversation=conversation)
+    comment_id = request.GET.get('comment_id')
     ctx = {}
 
     if request.method == "POST":
@@ -89,7 +90,7 @@ def detail(request, conversation, slug=None, check=check_promoted):
 
     return {
         "conversation": conversation,
-        "comment": next_comment(conversation, user),
+        "comment": conversation.next_comment_with_id(user, comment_id),
         "menu_links": conversation_admin_menu_links(conversation, user),
         "comment_form": form,
         **ctx,
