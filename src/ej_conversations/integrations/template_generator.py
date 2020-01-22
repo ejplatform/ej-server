@@ -35,8 +35,8 @@ class TemplateGenerator():
             raise
 
     def _get_palette_css(self):
-        palette = self.conversation.boards.first().palette.lower()
         try:
+            palette = self.conversation.boards.first().palette.lower()
             generator = self.PALETTE_CSS_GENERATORS[palette]
         except:
             generator = self.PALETTE_CSS_GENERATORS["brand"]
