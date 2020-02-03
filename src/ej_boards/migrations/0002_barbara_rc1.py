@@ -37,5 +37,6 @@ class Migration(migrations.Migration):
                 verbose_name="Palette",
             ),
         ),
-        migrations.DeleteModel(name="BoardSubscription"),
+        # commenting this rule to fix pencil data migration
+        # migrations.DeleteModel(name="BoardSubscription"),
     ]
