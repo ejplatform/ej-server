@@ -26,6 +26,7 @@ class TemplateGenerator():
         }
         self.template_type = template_type
         self.conversation = conversation
+        self.comment = conversation.approved_comments.last()
         self.ej_site = TemplateGenerator._get_ej_site_url(request)
 
     def get_template(self):
@@ -49,8 +50,8 @@ class TemplateGenerator():
         template = env.get_template('{}_template.jinja2'.format(self.template_type))
         return template.render(
             conversation_title=self.conversation.text,
-            comment_content=self.conversation.comments.all()[0].content,
-            comment_author=self.conversation.comments.all()[0].author.name,
+            comment_content=self.comment.content,
+            comment_author=self.comment.author.name,
             vote_url=self._get_voting_url(),
             ej_site=self.ej_site,
             tags=self.conversation.tags.all(),
@@ -60,7 +61,7 @@ class TemplateGenerator():
     def _get_voting_url(self):
         conversation_slug = self.conversation.slug
         conversation_id = self.conversation.id
-        comment_id = self.conversation.comments.all()[0].id
+        comment_id = self.comment.id
         try:
             board_slug = self.conversation.boards.first().slug
             url = '{}/{}/conversations/{}/{}?comment_id={}&action=vote&origin=campaign'

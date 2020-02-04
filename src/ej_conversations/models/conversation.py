@@ -282,10 +282,9 @@ class Conversation(HasFavoriteMixin, TimeStampedModel):
         Returns a comment with id if user didn't vote yet, otherwhise return
         a random comment.
         """
-        comments = self.approved_comments.filter(author=user).exclude(votes__author=user)
         if comment_id:
             try:
-                return comments.get(id=comment_id)
+                return self.approved_comments.exclude(votes__author=user).get(id=comment_id)
             except Exception as e:
                 pass
         return self.next_comment(user)
