@@ -111,7 +111,10 @@ class Conf(
     CORS_ORIGIN_ALLOW_ALL = True
     CORS_ORIGIN_WHITELIST = [
         "http://localhost",
+        "https://agentesdacidadania.org.br",
     ]
+
+    ALLOWED_HOSTS = ['*']
 
     REST_AUTH_REGISTER_SERIALIZERS = {
         'REGISTER_SERIALIZER': 'ej_users.rest_auth_serializer.RegistrationSerializer'
