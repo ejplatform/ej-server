@@ -30,7 +30,6 @@ def random_comment(request, conversation):
 def random(request):
     return Conversation.objects.random(request.user)
 
-
 @rest_api.property("ej_conversations.Conversation")
 def statistics(conversation):
     return conversation.statistics()
