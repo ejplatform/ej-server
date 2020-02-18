@@ -112,6 +112,7 @@ class Conf(
     CORS_ORIGIN_WHITELIST = [
         "http://localhost",
         "https://agentesdacidadania.org.br",
+        "https://ejplatform.pencillabs.com.br"
     ]
 
     ALLOWED_HOSTS = ['*']

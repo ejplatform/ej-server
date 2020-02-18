@@ -17,6 +17,7 @@ django-polymorphic ~= 2.0
 django-pandas ~= 0.5.1
 django-filter ~= 1.1
 django-model-utils ~= 3.1
+django-cors-headers
 coreapi ~= 2.3
 hyperpython ~= 1.1.1
 rules<2.0
