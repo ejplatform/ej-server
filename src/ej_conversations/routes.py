@@ -184,10 +184,18 @@ def integrations(request, conversation, slug, check=check_promoted):
         response['Content-Disposition'] = 'attachment; filename=template.html'
         return response
     else:
+        schema = ''
+        if 'HTTP_X_FORWARDED_PROTO' in request.META:
+            schema = request.META['HTTP_X_FORWARDED_PROTO']
+        elif 'wsgi.url_scheme' in request.META:
+            schema = request.META['wsgi.url_scheme']
+        else:
+            schema = 'http'
         return {
             "conversation": conversation,
             "request": request,
             "menu_links": conversation_admin_menu_links(conversation, request.user),
+            "schema": schema
         }
 
 #
