@@ -176,7 +176,6 @@ def moderate(request, conversation, slug=None, check=check_promoted):
 def integrations(request, conversation, slug, check=check_promoted):
     from ej_conversations.integrations import TemplateGenerator
     from django.conf import settings
-
     check(conversation, request)
     if request.method == "POST":
         generator = TemplateGenerator(conversation, request, "mautic")

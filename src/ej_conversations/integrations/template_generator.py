@@ -27,7 +27,9 @@ class TemplateGenerator():
         self.template_type = template_type
         self.conversation = conversation
         self.comment = conversation.approved_comments.last()
-        self.ej_site = TemplateGenerator._get_ej_site_url(request)
+        self.request = request
+        self.vote_domain = self._get_vote_domain()
+        self.statics_domain = self._get_statics_domain()
 
     def get_template(self):
         try:
@@ -53,7 +55,7 @@ class TemplateGenerator():
             comment_content=self.comment.content,
             comment_author=self.comment.author.name,
             vote_url=self._get_voting_url(),
-            ej_site=self.ej_site,
+            statics_domain=self.statics_domain,
             tags=self.conversation.tags.all(),
             palette_css=self._get_palette_css()
         )
@@ -62,20 +64,27 @@ class TemplateGenerator():
         conversation_slug = self.conversation.slug
         conversation_id = self.conversation.id
         comment_id = self.comment.id
-        try:
-            board_slug = self.conversation.boards.first().slug
-            url = '{}/{}/conversations/{}/{}?comment_id={}&action=vote&origin=campaign'
-            return url.format(self.ej_site, board_slug, conversation_id, conversation_slug, comment_id)
-        except:
-            url = '{}/conversations/{}/{}?comment_id={}&action=vote&origin=campaign'
-            return url.format(self.ej_site, conversation_id, conversation_slug, comment_id)
+        if self.vote_domain == self.statics_domain:
+            try:
+                board_slug = self.conversation.boards.first().slug
+                url = '{}/{}/conversations/{}/{}?comment_id={}&action=vote&origin=campaign'
+                return url.format(self.vote_domain, board_slug, conversation_id, conversation_slug, comment_id)
+            except:
+                url = '{}/conversations/{}/{}?comment_id={}&action=vote&origin=campaign'
+                return url.format(self.vote_domain, conversation_id, conversation_slug, comment_id)
+        else:
+            url = '{}/?cid={}&comment_id={}'
+            return url.format(self.vote_domain, conversation_id, comment_id)
 
-    @staticmethod
-    def _get_ej_site_url(request):
-        scheme = request.META['wsgi.url_scheme']
-        host = request.META['HTTP_HOST']
-        _site_url = '{}://{}'.format(scheme, host)
-        return _site_url
+    def _get_vote_domain(self):
+        if self.request.POST.get('custom-domain'):
+            return self.request.POST.get('custom-domain')
+        return self._get_statics_domain()
+
+    def _get_statics_domain(self):
+        scheme = self.request.META['wsgi.url_scheme']
+        host = self.request.META['HTTP_HOST']
+        return '{}://{}'.format(scheme, host)
 
 
 class BaseCssGenerator():

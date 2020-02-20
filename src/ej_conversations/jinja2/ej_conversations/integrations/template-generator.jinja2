@@ -12,10 +12,15 @@
 		</p>
 
 		<span>Select a marketing tool to generate a compatible template</span>
-		<select id="" name="">
-			<option value="mautic">Mautic</option>
-		</select>
 		<form action="{{conversation.url("conversation:integrations")}}" method="post">
+			<select id="" name="">
+				<option value="mautic">Mautic</option>
+			</select>
+			<div style="padding-left: 10px; display: flex">
+				<input onchange="showDomainInput()" style="margin: 0; z-index: unset" type="checkbox">
+				<label for="default_domain"> Redirect user to a custom domain</label>
+			</div>
+			<input name="custom-domain" style="margin-left: 10px; margin-bottom:15px; margin-top: unset; display: none" id="domain-input" type="text" placeholder="domain to redirect the user on template">
 			<input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
 			<input type="submit" value="Download">
 		</form>
@@ -27,7 +32,7 @@
 		   let content = document.querySelector(".integration-content");
 		   let section = document.querySelector(".integration-section");
 		   if (window.getComputedStyle(content).maxHeight == "0px") {
-			content.style.maxHeight = "300px";
+			content.style.maxHeight = "400px";
 			section.style.borderRadius = "unset";
 			section.style.borderStyle = "unset";
 		   }
@@ -35,6 +40,15 @@
 			content.style.maxHeight = "0px";
 			section.style.borderStyle = "solid";
 			section.style.borderRadius = "1rem";
+		   }
+	   }
+
+	   function showDomainInput() {
+		   let input = document.querySelector("#domain-input");
+		   if (input.style.display == "none") {
+			   input.style.display = "block";
+		   } else {
+			input.style.display = "none";
 		   }
 	   }
    </script>
