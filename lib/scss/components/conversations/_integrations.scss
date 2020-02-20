@@ -1,0 +1,42 @@
+.integration-section,
+.integration-section-2 {
+	border-width: 1px;
+	border-color: #30BFD3;
+	border-radius: 1rem;
+	padding: 5px;
+}
+
+.integration-section-2 {
+	border-style: solid;
+}
+
+.integration-section .scrow,
+.integration-section-2 .scrow{
+	display: flex;
+}
+.integration-section .scrow div:first-child,
+.integration-section-2 .scrow div:first-child {
+	flex-grow: 2;
+	color: #30BFD3;
+	font-weight: 700;
+}
+
+.integration-section .integration-content {
+	overflow: hidden;
+	max-height: 300px;
+	transition: max-height 0.5s;
+}
+
+.integration-content-2 {
+	overflow: hidden;
+	max-height: 0px;
+	transition: max-height 0.5s;
+}
+
+.integration-section-2-snippet {
+	background-color: #E7E7E7;
+	min-height: 50px;
+	font-size: 0.8rem;
+	margin-top: 10px;
+	margin-bottom: 20px;
+}

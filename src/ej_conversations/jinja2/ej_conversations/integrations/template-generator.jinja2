@@ -1,15 +1,40 @@
-<h1>Template Generator</h1>
-<p>With this feature, you can download an html version of this conversation.
-	You can use it as a template on marketing automation tools like mautic and mailchimp.
-	The template will heritage the palette from conversation's board. If there is no board,
-	the default palette will be applied.
-</p>
+<div>
+	<div  class="integration-section">
+		<div class="scrow" onclick="showContent()">
+			<div>Generate a template for segmented marketing campaigns</div>
+			<div><i class="fas fa-angle-down"></i></div>
+		</div>
+	<div class="integration-content">
+		<p>With this feature, you can download an html version of this conversation.
+			You can use it as a template on marketing automation tools like mautic and mailchimp.
+			The template will heritage the palette from conversation's board. If there is no board,
+			the default palette will be applied.
+		</p>
 
-<span>Select a marketing tool to generate a compatible template</span>
-<select id="" name="">
-	<option value="mautic">Mautic</option>
-</select>
-<form action="{{conversation.url("conversation:integrations")}}" method="post">
-	<input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-	<input type="submit" value="Download">
-</form>
+		<span>Select a marketing tool to generate a compatible template</span>
+		<select id="" name="">
+			<option value="mautic">Mautic</option>
+		</select>
+		<form action="{{conversation.url("conversation:integrations")}}" method="post">
+			<input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+			<input type="submit" value="Download">
+		</form>
+	</div>
+	</div>
+</div>
+   <script>
+	   function showContent() {
+		   let content = document.querySelector(".integration-content");
+		   let section = document.querySelector(".integration-section");
+		   if (window.getComputedStyle(content).maxHeight == "0px") {
+			content.style.maxHeight = "300px";
+			section.style.borderRadius = "unset";
+			section.style.borderStyle = "unset";
+		   }
+		   else {
+			content.style.maxHeight = "0px";
+			section.style.borderStyle = "solid";
+			section.style.borderRadius = "1rem";
+		   }
+	   }
+   </script>
