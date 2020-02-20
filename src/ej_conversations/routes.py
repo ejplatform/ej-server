@@ -175,6 +175,7 @@ def moderate(request, conversation, slug=None, check=check_promoted):
 @urlpatterns.route(conversation_url + "integrations/")
 def integrations(request, conversation, slug, check=check_promoted):
     from ej_conversations.integrations import TemplateGenerator
+    from django.conf import settings
 
     check(conversation, request)
     if request.method == "POST":
@@ -184,13 +185,7 @@ def integrations(request, conversation, slug, check=check_promoted):
         response['Content-Disposition'] = 'attachment; filename=template.html'
         return response
     else:
-        schema = ''
-        if 'HTTP_X_FORWARDED_PROTO' in request.META:
-            schema = request.META['HTTP_X_FORWARDED_PROTO']
-        elif 'wsgi.url_scheme' in request.META:
-            schema = request.META['wsgi.url_scheme']
-        else:
-            schema = 'http'
+        schema = 'https' if settings.ENVIRONMENT != 'local' else 'http'
         return {
             "conversation": conversation,
             "request": request,
