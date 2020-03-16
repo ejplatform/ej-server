@@ -22,6 +22,11 @@ def approved_comments(conversation):
 
 
 @rest_api.action("ej_conversations.Conversation")
+def user_approved_comments(request, conversation):
+    return conversation.comments.approved().filter(author=request.user)
+
+
+@rest_api.action("ej_conversations.Conversation")
 def random_comment(request, conversation):
     return conversation.next_comment(request.user)
 
@@ -29,6 +34,7 @@ def random_comment(request, conversation):
 @rest_api.action("ej_conversations.Conversation", list=True)
 def random(request):
     return Conversation.objects.random(request.user)
+
 
 @rest_api.property("ej_conversations.Conversation")
 def statistics(conversation):
