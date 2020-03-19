@@ -3,7 +3,7 @@ from logging import getLogger
 from boogie.models import F
 from boogie.router import Router
 from django.db import transaction
-from django.http import HttpResponse, HttpResponseServerError
+from django.http import HttpResponse, HttpResponseServerError, HttpRequest
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
@@ -189,13 +189,22 @@ def integrations(request, conversation, slug, check=check_promoted):
             "conversation": conversation,
             "request": request,
             "menu_links": conversation_admin_menu_links(conversation, request.user),
-            "schema": schema
+            "schema": schema,
+            "npm_version": npm_version(),
         }
 
 #
 # Auxiliary functions
 #
 
+def npm_version():
+    from requests import get
+    version = get("https://registry.npmjs.org/-/package/ej-conversations/dist-tags")
+        
+    if version.status_code == 200:
+        return version.json()
+    else:
+        return {"latest": "request failed"}
 
 def login_link(content, obj):
     path = obj.get_absolute_url()
