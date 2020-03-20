@@ -38,5 +38,5 @@ class Migration(migrations.Migration):
             ),
         ),
         # commenting this rule to fix pencil data migration
-        # migrations.DeleteModel(name="BoardSubscription"),
+         migrations.DeleteModel(name="BoardSubscription"),
     ]
