@@ -22,8 +22,13 @@ def approved_comments(conversation):
 
 
 @rest_api.action("ej_conversations.Conversation")
-def user_approved_comments(request, conversation):
-    return conversation.comments.approved().filter(author=request.user)
+def user_comments(request, conversation):
+    return conversation.comments.filter(author=request.user)
+
+
+@rest_api.action("ej_conversations.Conversation")
+def user_pending_comments(request, conversation):
+    return conversation.comments.filter(status='pending')
 
 
 @rest_api.action("ej_conversations.Conversation")
@@ -96,6 +101,7 @@ def save_comment(request, comment):
         conversation = Conversation.objects.get(id=conversation_id)
         comment.author = request.user
         comment.conversation = conversation
+        comment.status = 'pending'
         comment.save()
         return comment
     except Exception:
