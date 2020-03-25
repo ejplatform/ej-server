@@ -69,7 +69,10 @@ def board_edit(request, board):
 @urlpatterns.route(board_base_url)
 def conversation_list(request, board):
     return conversations.list_view(
-        request, queryset=board.conversations.annotate_attr(board=board), context={"board": board}
+        request, 
+        queryset=board.conversations.annotate_attr(board=board), 
+        context={"board": board}, 
+        title=board.title,
     )
 
 
