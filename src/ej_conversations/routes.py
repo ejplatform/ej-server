@@ -14,6 +14,7 @@ from .enums import TourStatus
 from .models import Conversation
 from .rules import next_comment
 from .tour import TOUR
+from .integrations.utils import npm_version
 from .utils import (
     check_promoted,
     conversation_admin_menu_links,
@@ -173,7 +174,7 @@ def moderate(request, conversation, slug=None, check=check_promoted):
 
 
 @urlpatterns.route(conversation_url + "integrations/")
-def integrations(request, conversation, slug, check=check_promoted):
+def integrations(request, conversation, slug, check=check_promoted, npm=npm_version):
     from ej_conversations.integrations import TemplateGenerator
     from django.conf import settings
     check(conversation, request)
@@ -190,21 +191,12 @@ def integrations(request, conversation, slug, check=check_promoted):
             "request": request,
             "menu_links": conversation_admin_menu_links(conversation, request.user),
             "schema": schema,
-            "npm_version": npm_version(),
+            "npm_version": npm(),
         }
 
 #
 # Auxiliary functions
 #
-
-def npm_version():
-    from requests import get
-    version = get("https://registry.npmjs.org/-/package/ej-conversations/dist-tags")
-        
-    if version.status_code == 200:
-        return version.json()
-    else:
-        return {"latest": "request failed"}
 
 def login_link(content, obj):
     path = obj.get_absolute_url()
