@@ -3,16 +3,18 @@ stages:
     - prepare
     - test
 job_0:
-  stage: prepare
+    stage: prepare
     script:
-      - apt update && apt install -y bash git g++ gcc libstdc++ make
+        - apt update && apt install -y bash git
+    tags:
+        - osf
 
 job_1:
-  stage: test
-  script:
-    - /bin/sh -c 'git clone -b $CI_COMMIT_REF_NAME https://gitlab+deploy-token-154801:r9Qas_TYJeyzC1fmdpsD@gitlab.com/pencillabs/ej/ej-server.git'
-    - cd ej-server
-    - pip install -r etc/requirements-ci.txt
-    - inv test
-  tags:
-    - osf
+    stage: test
+    script:
+        - /bin/sh -c 'git clone -b $CI_COMMIT_REF_NAME https://gitlab+deploy-token-154801:r9Qas_TYJeyzC1fmdpsD@gitlab.com/pencillabs/ej/ej-server.git'
+        - cd ej-server
+        - pip install -r etc/requirements-ci.txt
+        - inv test
+    tags:
+        - osf
