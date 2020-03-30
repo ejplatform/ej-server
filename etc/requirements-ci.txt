@@ -1,5 +1,6 @@
 invoke
 django==2.2.7
+toolz==0.9
 sidekick
 django-boogie==0.13.3
 pytest==4.3.1
