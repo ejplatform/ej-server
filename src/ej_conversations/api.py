@@ -28,7 +28,7 @@ def user_comments(request, conversation):
 
 @rest_api.action("ej_conversations.Conversation")
 def user_pending_comments(request, conversation):
-    return conversation.comments.filter(status='pending')
+    return conversation.comments.filter(status='pending', author=request.user)
 
 
 @rest_api.action("ej_conversations.Conversation")
