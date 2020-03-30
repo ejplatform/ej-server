@@ -22,7 +22,7 @@ class TemplateGenerator():
             'orange': BaseCssGenerator('orange'),
             'purple': BaseCssGenerator('purple'),
             'accent': BaseCssGenerator('accent'),
-            'campaign': CampaignCssGenerator
+            'campaign': CampaignCssGenerator()
         }
         self.template_type = template_type
         self.conversation = conversation

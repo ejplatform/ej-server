@@ -29,7 +29,7 @@ class Conf(
     InstalledAppsConf,
     DjangoConf,
     EjOptions,
-    # EmailConf,
+    EmailConf,
 ):
     """
     Configuration class for the EJ platform.

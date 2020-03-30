@@ -3,7 +3,7 @@ from logging import getLogger
 from boogie.models import F
 from boogie.router import Router
 from django.db import transaction
-from django.http import HttpResponse, HttpResponseServerError
+from django.http import HttpResponse, HttpResponseServerError, HttpRequest
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
@@ -14,6 +14,7 @@ from .enums import TourStatus
 from .models import Conversation
 from .rules import next_comment
 from .tour import TOUR
+from .integrations.utils import npm_version
 from .utils import (
     check_promoted,
     conversation_admin_menu_links,
@@ -173,7 +174,7 @@ def moderate(request, conversation, slug=None, check=check_promoted):
 
 
 @urlpatterns.route(conversation_url + "integrations/")
-def integrations(request, conversation, slug, check=check_promoted):
+def integrations(request, conversation, slug, check=check_promoted, npm=npm_version):
     from ej_conversations.integrations import TemplateGenerator
     from django.conf import settings
     check(conversation, request)
@@ -189,13 +190,13 @@ def integrations(request, conversation, slug, check=check_promoted):
             "conversation": conversation,
             "request": request,
             "menu_links": conversation_admin_menu_links(conversation, request.user),
-            "schema": schema
+            "schema": schema,
+            "npm_version": npm(),
         }
 
 #
 # Auxiliary functions
 #
-
 
 def login_link(content, obj):
     path = obj.get_absolute_url()
