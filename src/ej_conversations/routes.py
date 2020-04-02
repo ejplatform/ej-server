@@ -36,7 +36,7 @@ conversation_url = f"<model:conversation>/<slug:slug>/"
 # Display conversations
 #
 @urlpatterns.route("", name="list")
-def list_view(request, queryset=Conversation.objects.filter(is_promoted=True), context=None):
+def list_view(request, queryset=Conversation.objects.filter(is_promoted=True), context=None, title="Public conversations"):
     user = request.user
 
     # Select the list of conversations: staff get to see hidden conversations while
@@ -50,7 +50,7 @@ def list_view(request, queryset=Conversation.objects.filter(is_promoted=True), c
 
     return {
         "conversations": queryset,
-        "title": _("Public conversations"),
+        "title": _(title),
         "subtitle": _("Participate voting and creating comments!"),
         **(context or {}),
     }
