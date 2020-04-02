@@ -66,6 +66,11 @@ def board_edit(request, board):
 #
 # Conversation URLs
 #
+@urlpatterns.route("<model:board>/")
+def board_base(request, board):
+    return redirect(board.get_absolute_url())
+
+
 @urlpatterns.route(board_base_url)
 def conversation_list(request, board):
     return conversations.list_view(
