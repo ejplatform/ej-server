@@ -131,14 +131,14 @@ def edit(request, conversation, slug=None, check=check_promoted, **kwargs):
 
         # Now we decide the correct redirect page
         page = request.POST.get("next")
-        if page == "stereotype":
-            url = reverse("cluster:conversation-stereotype")
+        if page == "stereotypes":
+            url = conversation.url("cluster:stereotype-votes")
         elif page == "moderate":
-            url = reverse("conversation:moderate")
+            url = conversation.url("conversation:moderate")
         elif conversation.is_promoted:
             url = conversation.get_absolute_url()
         else:
-            url = reverse("conversation:list")
+            url = conversation.url("conversation:list")
         return redirect(url)
 
     return {
