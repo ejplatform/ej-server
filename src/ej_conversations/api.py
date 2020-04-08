@@ -46,6 +46,15 @@ def statistics(conversation):
     return conversation.statistics()
 
 
+# This action will only works if the header 'accept=text/csv' is present on the request.
+@rest_api.action("ej_conversations.Conversation")
+def reports(request, conversation):
+    from ej_dataviz.routes_report import comments_data_common
+    fmt = request.GET.get('fmt')
+    filename = conversation.slug + "-comments"
+    return comments_data_common(conversation.comments, None, filename, fmt)
+
+
 #
 # Votes
 #
