@@ -12,44 +12,43 @@ USER = {"url": "http://testserver/users/user/", "username": "user"}
 
 COMMENT = {
     "links": {
-        "self": "http://testserver/comments/1/",
-        "author": "http://testserver/users/comment_author/",
-        "conversation": "http://testserver/conversations/conversation/",
-        "vote": "http://testserver/comments/1/vote",
+        "self": "http://testserver/api/v1/comments/1/"
     },
-    "author_name": "comment_author",
-    "content": "comment",
-    "id": 1,
-    "rejection_reason": None,
-    "statistics": {"agree": 0, "disagree": 0, "missing": 0, "skip": 0, "total": 0},
-    "status": "APPROVED",
+    "content": "content",
+    "status": "approved",
+    "rejection_reason": 0,
+    "rejection_reason_text": ""
 }
 
 CONVERSATION = {
     "links": {
-        "self": "http://testserver/conversations/conversation/",
-        "approved_comments": "http://testserver/conversations/conversation/approved_comments",
-        "author": "http://testserver/users/conversation_author/",
-        "category": "http://testserver/categories/category/",
-        "random_comment": "http://testserver/conversations/conversation/random_comment",
-        "user_data": "http://testserver/conversations/conversation/user_data",
-        "votes": "http://testserver/conversations/conversation/votes",
+        "self": "http://testserver/api/v1/conversations/1/",
+        "vote-dataset": "http://testserver/api/v1/conversations/1/vote-dataset/",
+        "user-statistics": "http://testserver/api/v1/conversations/1/user-statistics/",
+        "approved-comments": "http://testserver/api/v1/conversations/1/approved-comments/",
+        "user-comments": "http://testserver/api/v1/conversations/1/user-comments/",
+        "user-pending-comments": "http://testserver/api/v1/conversations/1/user-pending-comments/",
+        "random-comment": "http://testserver/api/v1/conversations/1/random-comment/",
+        "reports": "http://testserver/api/v1/conversations/1/reports/",
+        "clusterization": None,
+        "author": "http://testserver/api/v1/users/1/"
     },
-    "author_name": "conversation_author",
-    "category_name": "Category",
-    "title": "Conversation",
-    "slug": "conversation",
-    "question": "question?",
-    "is_promoted": False,
+    "author": "email@server.com",
+    "title": "title",
+    "slug": "title",
     "statistics": {
         "comments": {"approved": 0, "rejected": 0, "pending": 0, "total": 0},
         "votes": {"agree": 0, "disagree": 0, "skip": 0, "total": 0},
-        "participants": 0,
+        "participants": {'commenters': 0, 'voters': 0},
     },
+    "text": "test"
 }
 
 VOTE = {
-    "links": {"comment": "http://testserver/comments/1/", "self": "http://testserver/votes/1/"},
-    "action": "agree",
-    "comment_text": "comment",
+    "links": {
+        "self": "http://testserver/api/v1/votes/1/",
+        "comment": "http://testserver/api/v1/comments/1/"
+    },
+    "comment": "content",
+    "choice": 1
 }
