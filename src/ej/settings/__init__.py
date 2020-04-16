@@ -80,7 +80,10 @@ class Conf(
             # "rest_framework.authentication.SessionAuthentication",
         ),
         "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticatedOrReadOnly",),
-        "DEFAULT_RENDERER_CLASSES": ("rest_framework.renderers.JSONRenderer", "ej.settings.custom_api_renders.PlainTextRenderer"),
+        "DEFAULT_RENDERER_CLASSES": (
+            "rest_framework.renderers.JSONRenderer",
+            "rest_framework.renderers.BrowsableAPIRenderer",
+            "ej.settings.custom_api_renders.PlainTextRenderer"),
         "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
         "PAGE_SIZE": 50,
         "DEFAULT_VERSION": "v1",
