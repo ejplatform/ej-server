@@ -147,7 +147,7 @@ def create_stereotype_coords(conversation, table, comments: list, transformer: C
 
         labels = conversation.clusterization.clusters.all().dataframe("name", index="users")
         if labels.shape != (0, 0):
-            table["cluster"] = labels
+            table["cluster"] = labels.loc[labels.index.values != None]
             table["cluster"].fillna(__("*Unknown*"), inplace=True)
             kwargs["labels"] = labels
 
