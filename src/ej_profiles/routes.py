@@ -18,6 +18,7 @@ def detail(request):
     return {
         "profile": user.get_profile(),
         "n_conversations": user.conversations.count(),
+        "n_boards": user.boards.count(),
         "n_favorites": user.favorite_conversations.count(),
         "n_comments": user.comments.count(),
         "n_votes": user.votes.count(),

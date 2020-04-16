@@ -15,10 +15,12 @@
             {% set base_url = url('profile:contributions') %}
             <p><a href="{{ base_url }}#contribution-conversations" class="text-brand semi-bold"><i
                 class="fa fa-comments"></i> {{ n_conversations }} {{ _('Conversations') }}</a>
+            <p><a href="{{ url('boards:board-list') }}" class="text-brand semi-bold"><i
+                class="fa fa-clipboard-list"></i> {{ n_boards }} {{ _('Boards') }}</a>
             <p><a href="{{ base_url }}#contribution-comments" class="text-brand semi-bold"><i
                 class="fa fa-comment"></i> {{ n_comments }} {{ _('Comments') }}</a>
             <p><a href="{{ base_url }}#contribution-votes" class="text-brand semi-bold"><i
-                class="fas fa-vote-yea"></i> {{ n_votes }} {{ _('Votes') }}</a>
+                class="fa fa-vote-yea"></i> {{ n_votes }} {{ _('Votes') }}</a>
             <p><a href="{{ base_url }}#contribution-favorites" class="text-brand semi-bold"><i
                 class="fa fa-star"></i> {{ n_favorites }} {{ _('Favorites') }}</a>
                 {% if achievements_href %}
