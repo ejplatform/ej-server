@@ -29,7 +29,8 @@ class RegistrationSerializer(serializers.Serializer):
         except Exception as e:
             pass
         email = request.data.get('email')
-        user = User.objects.create_user(email=email)
+        name = request.data.get('name')
+        user = User.objects.create_user(email=email, name=name)
         return user
 
     def validate_email(self, email):
