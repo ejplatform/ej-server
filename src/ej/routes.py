@@ -87,6 +87,29 @@ def info_environ(request):
 def service_worker(request):
     return render(request, "js/sw.js", {}, content_type="application/javascript")
 
+#
+# Update a mautic contact with anaytics _ga cookie
+# This route fix a bug with mautic tracking script
+#
+@urlpatterns.route("mautic/contacts/")
+def update_mautic_contact(request):
+    from django.http import HttpResponse
+    import base64
+    import requests
+    import os
+
+    MAUTIC_USER = os.getenv('MAUTIC_USER', '').encode()
+    MAUTIC_PASSWORD = os.getenv('MAUTIC_PASSWORD', '').encode()
+    MAUTIC_HOST = os.getenv('MAUTIC_HOST', 'http://localhost')
+
+    token = base64.b64encode(MAUTIC_USER + b":" + MAUTIC_PASSWORD).decode()
+    headers = {'Authorization': f'Basic {token}'}
+    mtc_id = request.GET.get('mtc_id')
+    _ga = request.GET.get('_ga')
+    edit_route = f"/api/contacts/{mtc_id}/edit"
+    r = requests.patch(MAUTIC_HOST + edit_route, data={'gid': _ga}, headers=headers)
+    return HttpResponse(r.status_code)
+
 
 #
 # Static pages
