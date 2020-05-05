@@ -13,10 +13,12 @@
         </div>
         <div id="profile-contributions" class="pad-4 center text-4 uppercase">
             {% set base_url = url('profile:contributions') %}
-            <p><a href="{{ base_url }}#contribution-conversations" class="text-brand semi-bold"><i
-                class="fa fa-comments"></i> {{ n_conversations }} {{ _('Conversations') }}</a>
-            <p><a href="{{ url('boards:board-list') }}" class="text-brand semi-bold"><i
-                class="fa fa-clipboard-list"></i> {{ n_boards }} {{ _('Boards') }}</a>
+            {% if request.user.has_perm('ej.can_promote_conversations') %}
+                <p><a href="{{ base_url }}#contribution-conversations" class="text-brand semi-bold"><i
+                    class="fa fa-comments"></i> {{ n_conversations }} {{ _('Conversations') }}</a>
+                <p><a href="{{ url('boards:board-list') }}" class="text-brand semi-bold"><i
+                    class="fa fa-clipboard-list"></i> {{ n_boards }} {{ _('Boards') }}</a>
+            {% endif %}
             <p><a href="{{ base_url }}#contribution-comments" class="text-brand semi-bold"><i
                 class="fa fa-comment"></i> {{ n_comments }} {{ _('Comments') }}</a>
             <p><a href="{{ base_url }}#contribution-votes" class="text-brand semi-bold"><i
