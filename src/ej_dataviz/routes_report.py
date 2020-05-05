@@ -87,9 +87,9 @@ def vote_data_common(votes, filename, fmt):
     """
     Common implementation for votes_data and votes_data_cluster
     """
-    columns = "author__email", "author__name", "author__id", "comment__content", "comment__id", "choice"
+    columns = "author__email", "author__name", "author__id", "comment__content", "comment__id", "choice", "created"
     df = votes.dataframe(*columns)
-    df.columns = "email", "author", "author_id", "comment", "comment_id", "choice"
+    df.columns = "email", "author", "author_id", "comment", "comment_id", "choice", "created"
     df.choice = list(map({-1: "disagree", 1: "agree", 0: "skip"}.get, df["choice"]))
     return data_response(df, fmt, filename)
 
@@ -192,7 +192,7 @@ def data_response(data: pd.DataFrame, fmt: str, filename: str, translate=True):
         data.columns = [_(x) for x in data.columns]
     response["Content-Disposition"] = f"attachment; filename={filename}.{fmt}"
     if fmt == "json":
-        data.to_json(response, orient="records")
+        data.to_json(response, orient="records", date_format="iso")
     elif fmt == "csv":
         data.to_csv(response, index=False, mode="a", float_format="%.3f")
     elif fmt == "msgpack":

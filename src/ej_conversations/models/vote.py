@@ -14,7 +14,7 @@ VOTE_NAMES = {Choice.AGREE: "agree", Choice.DISAGREE: "disagree", Choice.SKIP: "
 VOTE_VALUES = {v: k for k, v in VOTE_NAMES.items()}
 
 
-@rest_api(exclude=["author", "created"])
+@rest_api(exclude=["author"])
 class Vote(models.Model):
     """
     A single vote cast for a comment.

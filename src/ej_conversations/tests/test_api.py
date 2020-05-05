@@ -29,6 +29,7 @@ class TestGetRoutes:
     def test_votes_endpoint(self, vote, api):
         path = BASE_URL + f"/votes/{vote.id}/"
         data = api.get(path)
+        data.pop('created')
         assert data == VOTE
 
 
