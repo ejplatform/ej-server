@@ -12,7 +12,7 @@ class ProgressBase(models.Model):
     Common features of all Progress models.
     """
 
-    score = models.PositiveSmallIntegerField(_("score"), default=0)
+    score = models.SmallIntegerField(_("score"), default=0)
     score_bias = models.SmallIntegerField(
         _("score adjustment"), default=0, help_text=_("Artificially increase score for any reason")
     )
