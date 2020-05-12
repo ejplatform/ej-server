@@ -257,7 +257,7 @@ def field_descriptor(enum):
             return x
         elif x is None or x == 0 or np.isnan(x):
             return None
-        else:
+        elif x == [1, 2, 3, 4, 5, 6, 20]:
             return enum(x).description
 
     return formatter
