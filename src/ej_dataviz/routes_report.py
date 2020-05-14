@@ -116,7 +116,7 @@ def comments_data_cluster(request, conversation, fmt, cluster_id, slug, check=ch
 
 def comments_data_common(comments, votes, filename, fmt):
     df = comments.statistics_summary_dataframe(votes=votes)
-    df = comments.extend_dataframe(df, "id", "author__email", "author__id")
+    df = comments.extend_dataframe(df, "id", "author__email", "author__id", "created")
 
     # Adjust column names
     columns = [
@@ -129,6 +129,7 @@ def comments_data_common(comments, votes, filename, fmt):
         "skipped",
         "convergence",
         "participation",
+        "created"
     ]
     df = df[columns]
     df.columns = ["comment", "comment_id", "author", "author_id", *columns[4:]]
