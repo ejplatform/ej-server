@@ -29,7 +29,7 @@ deploy_to_dev:
         - cd core
         # TODO: remove this after issue https://gitlab.com/pencillabs/infraestructure/core/-/issues/227 is done
         - 'sed -i "s#current: local#current: prod#" pencilctl/config.yml'
-        - bin/pencilctl build ej -i server -e dev -b develop && bin/pencilctl push ej -i server -e dev -b develop
+        - bin/pencilctl build ej -i server -e dev -b develop --no-cache && bin/pencilctl push ej -i server -e dev -b develop
     only:
         refs:
             - develop
@@ -41,7 +41,7 @@ deploy_to_prod:
         - cd core
         # TODO: remove this after issue https://gitlab.com/pencillabs/infraestructure/core/-/issues/227 is done
         - 'sed -i "s#current: local#current: prod#" pencilctl/config.yml'
-        - bin/pencilctl build ej -i server -e prod -b prod && bin/pencilctl push ej -i server -e prod -b prod
+        - bin/pencilctl build ej -i server -e prod -b prod --no-cache && bin/pencilctl push ej -i server -e prod -b prod
     only:
         refs:
             - prod
