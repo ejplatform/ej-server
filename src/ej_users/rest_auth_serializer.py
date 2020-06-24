@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User
+from .models import User, MetaData
 try:
     from allauth.account import app_settings as allauth_settings
     from allauth.utils import (email_address_exists,
@@ -25,13 +25,26 @@ class RegistrationSerializer(serializers.Serializer):
     def save(self, request):
         try:
             user = User.objects.get(email=request.data.get('email'))
+            self.check_metadata(user, request)
             return user
         except Exception as e:
             pass
         email = request.data.get('email')
         name = request.data.get('name')
         user = User.objects.create_user(email=email, name=name)
+        self.save_metadata(user, request)
         return user
+
+    def check_metadata(self, user, request):
+        if(not user.metadata_set.first()):
+            self.save_metadata(user, request)
+
+    def save_metadata(self, user, request):
+        metadata = request.data.get('metadata')
+        if(metadata):
+            MetaData.objects.create(analytics_id=metadata.get('analytics_id'),
+                                    mautic_id=metadata.get('mautic_id'),
+                                    user=user)
 
     def validate_email(self, email):
         email = get_adapter().clean_email(email)

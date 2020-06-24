@@ -54,6 +54,25 @@ class TestRoutes(UserRecipes, UrlTester):
         assert client.session["_auth_user_id"] == str(user.pk)
         self.assert_redirects(response, "/conversations/", 302, 200)
 
+    def test_registration_auth_valid_user(self, client, db):
+        response = client.post(
+            "/rest-auth/registration/",
+            data={
+                "name": "David Silva",
+                "email": "david@example.com",
+                "password": "pass123",
+                "password_confirm": "pass123",
+                "metadata": {
+                    "analytics_id": "GA.1.1234",
+                    "mautic_id": 123456
+                }
+            },
+            content_type='application/json'
+        )
+        user = User.objects.get(email="david@example.com")
+        assert user.metadata_set.first().analytics_id == "GA.1.1234"
+        assert user.metadata_set.first().mautic_id == 123456
+
     # Recover password
     def test_recover_user_password(self, db, user, client):
         user.save()
