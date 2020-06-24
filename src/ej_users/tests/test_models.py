@@ -2,7 +2,7 @@ import pytest
 from boogie.testing.pytest import ModelTester
 from ej.testing import EjRecipes
 from ej_users import password_reset_token
-from ej_users.models import User, PasswordResetToken, clean_expired_tokens
+from ej_users.models import User, PasswordResetToken, clean_expired_tokens, MetaData
 from ej_users.mommy_recipes import UserRecipes
 
 
@@ -53,3 +53,11 @@ class TestPasswordResetToken(EjRecipes):
         token.use()
         clean_expired_tokens()
         assert not PasswordResetToken.objects.filter(user=user_db).exists()
+
+
+class TestMetaData(EjRecipes):
+    def test_can_create_metadata(self, user_db):
+        user = User.objects.create_user("name@server.com", "1234", name="name")
+        metadata = MetaData.objects.create(analytics_id="GA.1.1234", mautic_id="9876", user=user)
+        assert metadata
+        assert user.metadata_set.first().id == metadata.id
