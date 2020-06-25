@@ -16,6 +16,8 @@
             {% if request.user.has_perm('ej.can_promote_conversations') %}
                 <p><a href="{{ base_url }}#contribution-conversations" class="text-brand semi-bold"><i
                     class="fa fa-comments"></i> {{ n_conversations }} {{ _('Conversations') }}</a>
+            {% endif %}
+            {% if request.user.has_perm('ej_boards.view_board') %}
                 <p><a href="{{ url('boards:board-list') }}" class="text-brand semi-bold"><i
                     class="fa fa-clipboard-list"></i> {{ n_boards }} {{ _('Boards') }}</a>
             {% endif %}
