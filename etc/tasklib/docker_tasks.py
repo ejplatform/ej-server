@@ -24,24 +24,23 @@ def docker(
     docker = su_docker("docker")
     do = runner(ctx, dry_run, pty=True)
     app = "web" if deploy else "app"
-    file = prepare_dockerfile(cmd.file, deploy)
-    compose = prepare_compose_cmd(file, task)
+    file = prepare_dockerfile(cmd, file, deploy)
+    compose = prepare_compose_cmd(file, task, rocket, docker)
 
     if task == "single":
         do(
             f"{docker} run"
             f"  -v `pwd`:/app"
-            f"  -p {port}:8000"
             f"  -u {os.getuid()}"
             f'  -it ej/app:latest {cmd or "bash"}'
         )
     elif task == "local":
-        do(f'{compose} run -p {port}:8000 {app} {cmd or "bash"}')
+        do(f'{compose} run {app} {cmd or "bash"}')
         do(f"{compose} stop")
     elif task in ("up", "down"):
         do(f"{compose} {task}")
     elif task in ("run", "exec"):
-        do(f'{compose} -p {port}:8000 {task} {app} {cmd or "bash"}')
+        do(f'{compose} {task} {app} {cmd or "bash"}')
     else:
         raise SystemExit(f"invalid task: {task}")
     if clean_perms:
@@ -86,6 +85,7 @@ def docker_deploy(ctx, task, environment="production", command=None, dry_run=Fal
     """
     Start a deploy build for the platform.
     """
+    
     os.environ.update(environment=environment, task=task)
     compose_file = "local/deploy/docker-compose.deploy.yml"
     env = docker_deploy_variables("local/deploy/config.py")
@@ -148,7 +148,7 @@ def prepare_dockerfile(cmd, file, deploy):
     return file
 
 
-def prepare_compose_cmd(file, task):
+def prepare_compose_cmd(file, task, rocket, docker):
     compose = f"{docker}-compose -f {file}"
     if rocket:
         if task in ("local", "run", "exec", "down"):

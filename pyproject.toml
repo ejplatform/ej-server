@@ -46,6 +46,7 @@ stop-words = "^2018.7"
 djangorestframework = "^3.9"
 django-debug-toolbar = "^1.11"
 openpyxl = "^2.6"
+django-cors-headers = "^3.3.0"
 
 
 [tool.poetry.dev-dependencies]

@@ -24,9 +24,13 @@ First clone the repository::
 If you use Docker, you can quickly start the development server using the
 commands::
 
-    $ pip3 install invoke --user
+    $ sudo pip3 install invoke --user
     $ inv docker-build
     $ inv docker up
+
+Finally, populate db with the fake users::
+
+    $ inv docker exec -c "inv db-fake"
 
 For most cases, however, we recommend that you prepare your machine with some
 extra tools. Developers may choose between Docker or Poetry/Virtualenv for day to day
@@ -40,7 +44,7 @@ Local development (virtualenv)
 This is a list of packages that you should have installed locally before we
 start:
 
-- Python 3.6+ (Python 3.7 is recommended)
+- Python 3.7
 - Virtualenv or virtualenvwrapper
 - Invoke (>= 1.0)
 - Node.js and npm
@@ -57,10 +61,9 @@ following commands::
 Once everything is installed, create and activate your virtualenv. We will create
 a new virtualenv called "ej"::
 
-    $ bash
-    $ mkvirtualenv ej -p /usr/bin/python3
+    $ mkvirtualenv --python=python3.7 ej
 
-This command creates and activates the virtualenv. When you want to work with the
+This command creates and activates the virtualenv with python3.7. When you want to work with the
 repository in a later time, activate the virtual env using the command ``workon ej``.
 
 The following steps are handled by the configure.sh script::
@@ -68,8 +71,8 @@ The following steps are handled by the configure.sh script::
     $ sh configure.sh
 
 This task creates a test database with a few conversations, users, comments, and
-votes. Notably, it automatically creates an admin user (password:
-admin, email: admin@admin.com) a regular user (password: user, email: user@user.com).
+votes. Notably, it automatically creates an admin user ``password: admin, email: admin@admin.com``
+a regular user ``password: user, email: user@user.com``.
 
 This step takes some time. Grab a cup of coffee while it downloads and install
 all dependencies. If everything works as expected, you should be able to run
@@ -86,15 +89,15 @@ the dev server::
 
 You can control many configurations using environment variables. To run using
 the Brazilian Portuguese translation, for instance, just export the correct
-COUNTRY setting:
+COUNTRY setting::
 
     $ export COUNTRY=brasil
 
-Depending on your network configurations, you might need to set the ALLOWED_HOSTS
+Depending on your network configurations, you might need to set the ``ALLOWED_HOSTS``
 setting for your Django installation. This is a basic security setting that
 controls which hosts can serve pages securely. In non-production settings, set
-DJANGO_ALLOWED_HOSTS environment variable to * to allow connections in any
-network topology.
+``DJANGO_ALLOWED_HOSTS`` environment variable to * to allow connections in any
+network topology::
 
     $ DJANGO_ALLOWED_HOSTS=*
 
@@ -102,20 +105,22 @@ Invoke manages many other important tasks, you can discover them using::
 
     $ inv -l
 
-If you are making changes to EJ codebase, do not forget to run tests frequently.
-EJ uses Pytest_::
-
-    $ pytest
-
 .. _Invoke: http://www.pyinvoke.org/
-.. _Pytest: http://pytest.org
 
 Documentation
 -------------
 
-Documentation can be updated with `$ inv docs` and will be available at the
-`build/docs/` directory.
+Documentation can be updated with::
 
+    $ inv docs 
+    
+will be available at the ``build/docs/`` directory.
+
+------
+
+with docker:
+
+    $ inv docker exec -c "inv docs"
 
 Changing theme
 --------------
@@ -124,50 +129,37 @@ The previous commands build EJ using the "default" theme. EJ accepts additional
 themes and currently comes pre-installed with the alternate "cpa" theme. The
 first step is to rebuild static assets::
 
-    $ inv sass -t cpa js db-assets
+    $ inv js db-assets
+    $ inv sass -t cpa 
 
 Now run the server using the --theme flag::
 
     $ inv run -t cpa
 
-
-Using docker
-============
-
-If you want to use docker, build the containers and just start docker compose::
-
-    $ sudo docker-compose -f docker/deploy/docker-compose.yml build
-    $ sudo docker-compose -f docker/docker-compose.yml up -d
-
-After the command, **ej-server** can be accessed at http://localhost:8000.
-
-At some point, you probably will want to execute commands inside the container.
-It is possible to open a bash shell in the main "web" container with::
-
-    $ sudo docker-compose -f docker/docker-compose.yml run web bash
-
-
-In fact, it integrates with invoke and we can replace "bash" by any sequence of
-invoke tasks. For instance, we can migrate the database and run tests
-afterwards by doing::
-
-    $ sudo docker-compose -f docker/docker-compose.yml exec web db tests
-
-If you have invoke installed on the host machine, you can use the short
-version::
-
-    $ inv docker-run dev
-
-
 Tests
 -----
 
-Tests are run in a docker container by using the following command::
+If you are making changes to EJ codebase, do not forget to run tests frequently.
+EJ uses Pytest_::
 
-    $ sudo docker-compose -f docker/docker-compose.yml run web tests
+    $ inv test
 
-or use inv for a more compact alternative::
+------
 
-    $ inv docker-run run -c tests     # uses postgresql
-    $ inv docker-run single -c tests  # uses sqlite3
+with docker:
 
+    $ inv docker exec -c "inv test"
+
+.. _Pytest: https://docs.pytest.org/
+
+Docker bash
+-----------
+
+You probably will want to execute commands inside the container.
+It is possible to open a bash shell in the main "web" container with::
+
+    $ inv docker run
+
+You also can execute commands without open docker bash shell::
+
+    $ inv docker exec -c " command "
