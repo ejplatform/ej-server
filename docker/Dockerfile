@@ -82,22 +82,15 @@ RUN curl https://nodejs.org/dist/v8.11.3/node-v8.11.3-linux-x64.tar.xz -o node.t
  && rm -rf /app/node* \
  && echo "NPM INSTALLATION IS DONE!"
 
-# Install global npm packages
-RUN npm install -g \
-        pnpm \
-        parcel \
- && echo "NPM PACKAGES INSTALLATION IS DONE!"
-
 # Install core Python deps
 COPY ./etc/requirements-dev.txt  /app/etc/
 RUN pip3 install -r etc/requirements-dev.txt \
  && echo "FINISH INSTALLING PYTHON DEV DEPENDENCIES"
 
-# Install core JS deps
-USER django
-COPY ./lib/package.json ./lib/pnpm-lock.yaml /app/lib/
-RUN cd lib && pnpm install \
- && echo "INSTALLED JS DEPENDENCIES"
+# Install global npm packages
+COPY ./lib/package.json /app/lib/
+RUN cd lib && npm install \
+ && echo "NPM PACKAGES INSTALLATION IS DONE!"
 
 
 #===============================================================================
@@ -132,7 +125,7 @@ FROM tools as local
 # Set environment variables from docker arguments
 ARG UID=1000
 ARG GID=1000
-ARG USERNAME=user
+ARG USERNAME=$USER
 
 # Configure environment
 ENV DJANGO_ENVIRONMENT=local
