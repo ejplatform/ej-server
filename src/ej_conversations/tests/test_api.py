@@ -21,6 +21,14 @@ class TestGetRoutes:
         response = _api.get(path, {}, HTTP_ACCEPT='text/csv')
         assert response.status_code == 200
 
+    def test_conversations_reports_endpoint_cluster(self, conversation, api):
+        path = BASE_URL + f"/conversations/{conversation.id}/reports/?fmt=csv&export=clusters"
+        _api = APIClient()
+        with pytest.raises(TypeError):
+            _api.get(path, {})
+        response = _api.get(path, {}, HTTP_ACCEPT='text/csv')
+        assert response.status_code == 200
+
     def test_comments_endpoint(self, comment, api):
         path = BASE_URL + f"/comments/{comment.id}/"
         data = api.get(path, exclude=["created"])
