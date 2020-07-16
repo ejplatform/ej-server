@@ -62,7 +62,7 @@ def cluster_shapes(clusterization, clusters=None, user=None):
         user_cluster_id = set()
     else:
         user_cluster_id = set(
-            user.clusters.filter(clusterization_id=clusterization.id).values_list("id", flat=True)
+            clusters.filter(clusterization_id=clusterization.id).values_list("id", flat=True)
         )
 
     result = {}

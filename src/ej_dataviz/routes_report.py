@@ -117,7 +117,6 @@ def comments_data_cluster(request, conversation, fmt, cluster_id, slug, check=ch
 def comments_data_common(comments, votes, filename, fmt):
     df = comments.statistics_summary_dataframe(votes=votes)
     df = comments.extend_dataframe(df, "id", "author__email", "author__id", "created")
-
     # Adjust column names
     columns = [
         "content",
@@ -179,10 +178,83 @@ def get_user_data(conversation):
     df.columns = ["email", "user_id", *df.columns[2:]]
     return df
 
+# ==============================================================================
+# Clusters raw data
+# ------------------------------------------------------------------------------
+
+def statistic_comment_on_cluster(total, author_votes):
+    # Return % of choices of comments in cluster
+    stats = author_votes.choice.value_counts()
+
+    agree = int(stats.get(1) or 0) / (total or 1)
+    desagree = int(stats.get(-1) or 0) / (total or 1)
+    skip = int(stats.get(0) or 0) / (total or 1)
+
+    return agree, desagree, skip
+
+def df_response(clusters, votes, comments):
+    # Constantes para preparar o data frame
+    _comment_id = []
+    _agree = []
+    _desagree = []
+    _skip = []
+    _cluster_name = []
+    _comment_content = []
+
+
+    for cluster in clusters:
+
+        users_cluster = cluster.users 
+        users_id = users_cluster.all().dataframe("id").id
+
+        for comment_id in comments.comment__id:
+            
+            comment_votes = votes[votes.comment__id == comment_id]
+            author_votes = comment_votes[comment_votes.author__id.isin(users_id)]
+            
+            total = author_votes.choice.size
+            agree, desagree, skip = statistic_comment_on_cluster(total, author_votes)
+
+            _agree.append(agree)
+            _desagree.append(desagree)
+            _skip.append(skip)
+            _comment_id.append(comment_id)
+            _cluster_name.append(cluster.name)
+            _comment_content.append(comments[comments.comment__id == comment_id].comment.values[0])
+
+
+    #Create dataframe
+    df = pd.DataFrame({ "comment": _comment_content, 
+                        "comment_id": _comment_id,
+                        "agree": _agree,
+                        "desagree": _desagree,
+                        "skip":_skip,
+                        "cluster": _cluster_name})
+    return df
+
+
+def cluster_data_common(clusters, comments, votes, filename, fmt):
+    # Preparando comentários
+    df_comments = comments.statistics_summary_dataframe()
+    df_comments = comments.extend_dataframe(df_comments, "id")
+    df_comments = df_comments[["id", "content"]]
+    df_comments.columns = ["comment__id", "comment"]
+
+    # Preparando votos
+    columns = "author__id", "comment__content", "comment__id", "choice"
+    df_votes = votes.dataframe(*columns)
+
+    # Requisitando todos os clusters
+    df_clusters = clusters.all()
+
+    df = df_response(df_clusters, df_votes, df_comments)
+    return data_response(df, fmt, filename)
+
 
 #
 # Auxiliary functions
 #
+
 def data_response(data: pd.DataFrame, fmt: str, filename: str, translate=True):
     """
     Prepare data response for file from dataframe.
