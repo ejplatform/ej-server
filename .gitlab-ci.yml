@@ -32,6 +32,8 @@ deploy_to_dev:
     only:
         refs:
             - develop
+    tags:
+        - osf
 
 deploy_to_prod:
     stage: deploy
@@ -44,3 +46,5 @@ deploy_to_prod:
     only:
         refs:
             - prod
+    tags:
+        - osf
