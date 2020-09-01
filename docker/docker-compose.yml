@@ -1,0 +1,24 @@
+version: "3.0"
+services:
+    db:
+        image: postgres:12.2
+        environment:
+            - POSTGRES_PASSWORD=ej
+            - POSTGRES_USER=ej
+            - POSTGRES_DB=ej
+        volumes:
+            - "backups:/var/lib/postgresql/data"
+    server:
+        build:
+            context: ../
+            dockerfile: docker/Dockerfile
+        volumes:
+            - "statics:/ej-server/local/"
+            - ../:/ej-server/
+        env_file:
+            - variables.env
+        ports:
+            - 8000:8000
+volumes:
+    statics:
+    backups:
