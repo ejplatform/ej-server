@@ -15,36 +15,30 @@ __all__ = ["docker", "docker_build", "docker_deploy", "docker_push", "rocket"]
         "rocket": "Enable Rocket.Chat",
     }
 )
-def docker(
-    ctx, task, cmd=None, port=8000, file=None, dry_run=False, deploy=False, rocket=False, clean_perms=False
-):
+def docker(ctx, task, dry_run=False, build=False):
     """
-    Runs EJ platform using a docker container.
-    """
-    docker = su_docker("docker")
-    do = runner(ctx, dry_run, pty=True)
-    app = "web" if deploy else "app"
-    file = prepare_dockerfile(cmd, file, deploy)
-    compose = prepare_compose_cmd(file, task, rocket, docker)
-
-    if task == "single":
-        do(
-            f"{docker} run"
-            f"  -v `pwd`:/app"
-            f"  -u {os.getuid()}"
-            f'  -it ej/app:latest {cmd or "bash"}'
-        )
-    elif task == "local":
-        do(f'{compose} run {app} {cmd or "bash"}')
-        do(f"{compose} stop")
-    elif task in ("up", "down"):
-        do(f"{compose} {task}")
-    elif task in ("run", "exec"):
-        do(f'{compose} {task} {app} {cmd or "bash"}')
-    else:
-        raise SystemExit(f"invalid task: {task}")
-    if clean_perms:
-        do(f"sudo chown `whoami`:`whoami` * -R")
+        Runs EJ platform using a docker container.
+        """
+    if task == "up":
+        docker = su_docker("docker")
+        do = runner(ctx, dry_run, pty=True)
+        # file = prepare_dockerfile(cmd, file, deploy)
+        file = "docker/docker-compose.yml"
+        # compose = prepare_compose_cmd(file, task, rocket, docker)
+        if(build):
+            compose = f"docker-compose -f {file}"
+            do(f'{compose} up  -d  --build')
+        else:
+            compose = f"docker-compose -f {file}"
+            do(f'{compose} up  -d')
+    if task == "stop":
+        docker = su_docker("docker")
+        do = runner(ctx, dry_run, pty=True)
+        # file = prepare_dockerfile(cmd, file, deploy)
+        file = "docker/docker-compose.yml"
+        # compose = prepare_compose_cmd(file, task, rocket, docker)
+        compose = f"docker-compose -f {file}"
+        do(f'{compose} stop')
 
 
 @task(
@@ -85,7 +79,7 @@ def docker_deploy(ctx, task, environment="production", command=None, dry_run=Fal
     """
     Start a deploy build for the platform.
     """
-    
+
     os.environ.update(environment=environment, task=task)
     compose_file = "local/deploy/docker-compose.deploy.yml"
     env = docker_deploy_variables("local/deploy/config.py")
