@@ -87,9 +87,9 @@ def vote_data_common(votes, filename, fmt):
     """
     Common implementation for votes_data and votes_data_cluster
     """
-    columns = "author__email", "author__name", "author__id", "comment__content", "comment__id", "choice", "created"
+    columns = "author__email", "author__name", "author__id", "author__metadata__analytics_id", "author__metadata__mautic_id", "comment__content", "comment__id", "choice", "created"
     df = votes.dataframe(*columns)
-    df.columns = "email", "author", "author_id", "comment", "comment_id", "choice", "created"
+    df.columns = "email", "author", "author_id", "author__metadata__analytics_id", "author__metadata__mautic_id", "comment", "comment_id", "choice", "created"
     df.choice = list(map({-1: "disagree", 1: "agree", 0: "skip"}.get, df["choice"]))
     return data_response(df, fmt, filename)
 
@@ -182,6 +182,7 @@ def get_user_data(conversation):
 # Clusters raw data
 # ------------------------------------------------------------------------------
 
+
 def statistic_comment_on_cluster(total, author_votes):
     # Return % of choices of comments in cluster
     stats = author_votes.choice.value_counts()
@@ -192,6 +193,7 @@ def statistic_comment_on_cluster(total, author_votes):
 
     return agree, desagree, skip
 
+
 def df_response(clusters, votes, comments):
     # Constantes para preparar o data frame
     _comment_id = []
@@ -201,17 +203,16 @@ def df_response(clusters, votes, comments):
     _cluster_name = []
     _comment_content = []
 
-
     for cluster in clusters:
 
-        users_cluster = cluster.users 
+        users_cluster = cluster.users
         users_id = users_cluster.all().dataframe("id").id
 
         for comment_id in comments.comment__id:
-            
+
             comment_votes = votes[votes.comment__id == comment_id]
             author_votes = comment_votes[comment_votes.author__id.isin(users_id)]
-            
+
             total = author_votes.choice.size
             agree, desagree, skip = statistic_comment_on_cluster(total, author_votes)
 
@@ -222,14 +223,13 @@ def df_response(clusters, votes, comments):
             _cluster_name.append(cluster.name)
             _comment_content.append(comments[comments.comment__id == comment_id].comment.values[0])
 
-
-    #Create dataframe
-    df = pd.DataFrame({ "comment": _comment_content, 
-                        "comment_id": _comment_id,
-                        "agree": _agree,
-                        "desagree": _desagree,
-                        "skip":_skip,
-                        "cluster": _cluster_name})
+    # Create dataframe
+    df = pd.DataFrame({"comment": _comment_content,
+                       "comment_id": _comment_id,
+                       "agree": _agree,
+                       "desagree": _desagree,
+                       "skip": _skip,
+                       "cluster": _cluster_name})
     return df
 
 
