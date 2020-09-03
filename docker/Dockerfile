@@ -23,7 +23,6 @@ WORKDIR ej-server
 RUN cd lib && npm install
 RUN pip install invoke markupsafe toolz libsass gunicorn
 RUN pip install sidekick psycopg2 toml
-RUN pip install -r etc/requirements.txt
-RUN inv -e i18n -c -l pt_BR
-RUN inv build-assets && inv collect
+RUN pip install -r etc/requirements-dev.txt
+RUN inv i18n && inv i18n -c && inv build-assets && inv collect
 ENTRYPOINT inv db && inv db-assets && ./manage.py runserver 0.0.0.0:8000
