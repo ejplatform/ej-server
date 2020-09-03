@@ -11,32 +11,31 @@
 EJ Platform
 ===========
 
-You can visit EJ website at http://ejplatform.org.
+You can visit EJ website at https://ejplatform.org.
 
 Getting started
 ===============
 
+Local development (Docker)
+------------------------------
+
 First clone the repository::
 
-    $ git clone http://github.com/ejplatform/ej-server/
+    $ git clone https://gitlab.com/pencillabs/ej/ej-server
     $ cd ej-server
 
-If you use Docker, you can quickly start the development server using the
+The recomended way to run EJ is with Docker. With it 
+you can quickly start the development server using the
 commands::
 
     $ sudo pip3 install invoke --user
-    $ inv docker-build
     $ inv docker up
 
-Finally, populate db with the fake users::
+This will deploy EJ using **docker/docker-compose.yml** file.
+Every change made on the repository will be reflected inside the
+`docker_server` container.
 
-    $ inv docker exec -c "inv db-fake"
-
-For most cases, however, we recommend that you prepare your machine with some
-extra tools. Developers may choose between Docker or Poetry/Virtualenv for day to day
-development. In both cases, we recommend that you have Invoke_ installed
-in your machine to make execution of chores easier.
-
+You can access the running instance accessing `http://localhost:8000`.
 
 Local development (virtualenv)
 ------------------------------
