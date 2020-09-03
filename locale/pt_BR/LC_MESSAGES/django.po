@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-09 16:54+0000\n"
+"POT-Creation-Date: 2020-09-03 18:51-0300\n"
 "PO-Revision-Date: 2019-09-09 13:55-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -581,10 +581,6 @@ msgstr "Usuário não tem permissão para criar uma conversa promovida."
 msgid "automatically rejected"
 msgstr "rejeitado automaticamente"
 
-#: src/ej_conversations/models/conversation.py:279
-msgid "No comments available for this user"
-msgstr "Não há comentários disponíveis para esse usuário"
-
 #: src/ej_conversations/models/vote.py:11
 #, python-brace-format
 msgid "vote should be one of 'agree', 'disagree' or 'skip', got {value}"
@@ -619,11 +615,7 @@ msgstr "{n} aguardando moderação"
 msgid "{n} of {m} comments"
 msgstr "{n} de {m} comentários"
 
-#: src/ej_conversations/routes.py:52
-msgid "Public conversations"
-msgstr "Conversas públicas"
-
-#: src/ej_conversations/routes.py:53
+#: src/ej_conversations/routes.py:54
 msgid "Participate voting and creating comments!"
 msgstr "Participe com votos e comentários!"
 
@@ -845,55 +837,65 @@ msgstr "Você!"
 msgid "State"
 msgstr "Estado"
 
-#: src/ej_dataviz/routes_report.py:222
+#: src/ej_dataviz/routes_report.py:294
 msgid "agree"
 msgstr "concorda"
 
-#: src/ej_dataviz/routes_report.py:223
+#: src/ej_dataviz/routes_report.py:295
 msgid "author"
 msgstr "autor"
 
-#: src/ej_dataviz/routes_report.py:224
+#: src/ej_dataviz/routes_report.py:296
 msgid "author_id"
 msgstr "autor_id"
 
-#: src/ej_dataviz/routes_report.py:225
+#: src/ej_dataviz/routes_report.py:297
 msgid "choice"
 msgstr "escolha"
 
-#: src/ej_dataviz/routes_report.py:226
+#: src/ej_dataviz/routes_report.py:298
+#, fuzzy
+msgid "cluster"
+msgstr "Grupos"
+
+#: src/ej_dataviz/routes_report.py:299
+#, fuzzy
+msgid "cluster_id"
+msgstr "Grupos"
+
+#: src/ej_dataviz/routes_report.py:300
 msgid "comment"
 msgstr "comentário"
 
-#: src/ej_dataviz/routes_report.py:227
+#: src/ej_dataviz/routes_report.py:301
 msgid "comment_id"
 msgstr "comentário_id"
 
-#: src/ej_dataviz/routes_report.py:228
+#: src/ej_dataviz/routes_report.py:302
 msgid "convergence"
 msgstr "convergência"
 
-#: src/ej_dataviz/routes_report.py:229
+#: src/ej_dataviz/routes_report.py:303
 msgid "disagree"
 msgstr "discorda"
 
-#: src/ej_dataviz/routes_report.py:230 src/ej_profiles/enums.py:70
+#: src/ej_dataviz/routes_report.py:304 src/ej_profiles/enums.py:70
 msgid "email"
 msgstr "email"
 
-#: src/ej_dataviz/routes_report.py:231
+#: src/ej_dataviz/routes_report.py:305
 msgid "id"
 msgstr "id"
 
-#: src/ej_dataviz/routes_report.py:232 src/ej_profiles/enums.py:69
+#: src/ej_dataviz/routes_report.py:306 src/ej_profiles/enums.py:69
 msgid "name"
 msgstr "nome"
 
-#: src/ej_dataviz/routes_report.py:233
+#: src/ej_dataviz/routes_report.py:307
 msgid "participation"
 msgstr "participação"
 
-#: src/ej_dataviz/routes_report.py:234
+#: src/ej_dataviz/routes_report.py:308
 msgid "skipped"
 msgstr "pulados"
 
@@ -1986,11 +1988,11 @@ msgstr "Nuances invés de bolhas"
 msgid "Free and open source"
 msgstr "Código livre e aberta"
 
-#: src/ej/templates/jinja2/base.jinja2:25
+#: src/ej/templates/jinja2/base.jinja2:26
 msgid "Jump to main content"
 msgstr "Pular para conteúdo principal"
 
-#: src/ej/templates/jinja2/base.jinja2:50
+#: src/ej/templates/jinja2/base.jinja2:51
 msgid "Please override the \"content\" block of your template!"
 msgstr "Por favor substitua o bloco \"content\" do seu template!"
 
@@ -2571,6 +2573,8 @@ msgid "Back (skip changes)"
 msgstr "Voltar (ignorar mudanças)"
 
 #: src/ej_conversations/jinja2/ej_conversations/edit.jinja2:9
+#: src/ej_conversations/jinja2/ej_conversations/integrations.jinja2:18
+#: src/ej_conversations/jinja2/ej_conversations/integrations.jinja2:20
 #: src/ej_conversations/jinja2/ej_conversations/moderate.jinja2:7
 #: src/ej_conversations/jinja2/ej_conversations/moderate.jinja2:9
 msgid "Back to conversation"
@@ -2624,6 +2628,11 @@ msgstr "Ir para conversa"
 #: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:16
 msgid "Back to conversations"
 msgstr "De volta às conversas"
+
+#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:21
+#, fuzzy
+msgid "Integrations"
+msgstr "Conversas"
 
 #: src/ej_dataviz/jinja2/ej/role/conversation-download-data.jinja2:2
 msgid "Downloads: "
@@ -2980,7 +2989,7 @@ msgid "Profile picture"
 msgstr "Foto de perfil"
 
 #: src/ej_profiles/jinja2/ej_profiles/contributions.jinja2:7
-#: src/ej_profiles/jinja2/ej_profiles/detail.jinja2:23
+#: src/ej_profiles/jinja2/ej_profiles/detail.jinja2:29
 msgid "Favorites"
 msgstr "Favoritos"
 
@@ -3029,20 +3038,20 @@ msgstr "Info"
 msgid "Contributions"
 msgstr "Contribuições"
 
-#: src/ej_profiles/jinja2/ej_profiles/detail.jinja2:26
+#: src/ej_profiles/jinja2/ej_profiles/detail.jinja2:32
 msgid "Achievements"
 msgstr "Suas conquistas"
 
-#: src/ej_profiles/jinja2/ej_profiles/detail.jinja2:31
+#: src/ej_profiles/jinja2/ej_profiles/detail.jinja2:37
 #: src/ej_profiles/jinja2/ej_profiles/includes/menu.jinja2:5
 msgid "Edit profile"
 msgstr "Editar perfil"
 
-#: src/ej_profiles/jinja2/ej_profiles/detail.jinja2:32
+#: src/ej_profiles/jinja2/ej_profiles/detail.jinja2:38
 msgid "Manage accounts"
 msgstr "Gerenciar conta"
 
-#: src/ej_profiles/jinja2/ej_profiles/detail.jinja2:33
+#: src/ej_profiles/jinja2/ej_profiles/detail.jinja2:39
 #: src/ej_profiles/jinja2/ej_profiles/includes/menu.jinja2:13
 #: src/ej_users/jinja2/account/index.jinja2:17
 #: src/ej_users/jinja2/account/logout.jinja2:2
@@ -3318,11 +3327,11 @@ msgstr "Confirme suas credenciais de acesso"
 msgid "Login form"
 msgstr "Formulário de login"
 
-#: src/ej_users/jinja2/ej_users/login.jinja2:24
+#: src/ej_users/jinja2/ej_users/login.jinja2:25
 msgid "Create your account!"
 msgstr "Criar uma conta!"
 
-#: src/ej_users/jinja2/ej_users/login.jinja2:24
+#: src/ej_users/jinja2/ej_users/login.jinja2:25
 msgid "Register now!"
 msgstr "Registrar!"
 
@@ -3401,6 +3410,12 @@ msgstr "Mudar a senha"
 msgid "Authentication"
 msgstr "Autenticação"
 
+#~ msgid "No comments available for this user"
+#~ msgstr "Não há comentários disponíveis para esse usuário"
+
+#~ msgid "Public conversations"
+#~ msgstr "Conversas públicas"
+
 #~ msgid "Agree: {pc}"
 #~ msgstr "Concordo: {pc}"
 
@@ -3436,9 +3451,6 @@ msgstr "Autenticação"
 
 #~ msgid "Menu"
 #~ msgstr "Menu"
-
-#~ msgid "Cluster"
-#~ msgstr "Grupos"
 
 #~ msgid "Vocal"
 #~ msgstr "Vocal"
