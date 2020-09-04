@@ -100,7 +100,7 @@ def gunicorn(_ctx, debug=None, environment="production", port=8000, workers=0, t
         env["DJANGO_DEBUG"] = str(debug).lower()
     os.environ.update(env)
     args = [
-        "--timeout 120",
+        "--timeout=120",
         "ej.wsgi",
         "-w",
         str(workers),
