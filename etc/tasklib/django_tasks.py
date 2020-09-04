@@ -106,6 +106,7 @@ def gunicorn(_ctx, debug=None, environment="production", port=8000, workers=0, t
         "-b",
         f"0.0.0.0:{port}",
         "--error-logfile=-",
+        "--timeout 120",
         "--access-logfile=-",
         "--log-level",
         "info",
