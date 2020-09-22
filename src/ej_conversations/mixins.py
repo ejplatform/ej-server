@@ -126,8 +126,6 @@ class UserMixin(ConversationMixin):
 
         votes = votes.dataframe("comment", "author", "choice")
         stats = user_statistics(votes, participation=participation, convergence=convergence, ratios=True)
-        print(stats)
-        print(votes)
         stats *= normalization
 
         # Extend fields with additional data
