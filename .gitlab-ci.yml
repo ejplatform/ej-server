@@ -26,9 +26,7 @@ deploy_to_dev:
     script:
         - /bin/sh -c 'git clone -b stable --depth=1 https://gitlab+deploy-token-155341:xWz-bGxYnvTLcZCzsHEG@gitlab.com/pencillabs/infraestructure/core.git'
         - cd core
-        # TODO: remove this after issue https://gitlab.com/pencillabs/infraestructure/core/-/issues/227 is done
-        - 'sed -i "s#current: local#current: prod#" pencilctl/config.yml'
-        - bin/pencilctl build ej -i server -e dev -b develop --no-cache && bin/pencilctl push ej -i server -e dev -b develop
+        - bin/pencilctl build ej -e dev -b develop -c prod --no-cache && bin/pencilctl push ej -e dev -b develop -c prod
     only:
         refs:
             - develop
@@ -40,9 +38,7 @@ deploy_to_prod:
     script:
         - /bin/sh -c 'git clone -b stable --depth=1 https://gitlab+deploy-token-155341:xWz-bGxYnvTLcZCzsHEG@gitlab.com/pencillabs/infraestructure/core.git'
         - cd core
-        # TODO: remove this after issue https://gitlab.com/pencillabs/infraestructure/core/-/issues/227 is done
-        - 'sed -i "s#current: local#current: prod#" pencilctl/config.yml'
-        - bin/pencilctl build ej -i server -e prod -b prod --no-cache && bin/pencilctl push ej -i server -e prod -b prod
+        - bin/pencilctl build ej -e prod -b prod -c prod --no-cache && bin/pencilctl push ej -e prod -b prod -c prod
     only:
         refs:
             - prod
