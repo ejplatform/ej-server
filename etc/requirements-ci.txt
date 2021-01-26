@@ -1,4 +1,4 @@
-invoke
+invoke==1.4.1
 django==2.2.7
 toolz==0.9
 sidekick==0.5.2
