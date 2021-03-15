@@ -4,6 +4,15 @@ CHANGELOG of EJPlatform releases
 
 Here you can follow all the fixes and new features on every EJPlatform release.
 
+
+2.2.0 release
+====================
+
+* Date: March 15, 2021
+* Features
+- Adds new page for  EJ opinion component configuration;
+- Adds new page for  ejBot configuration;
+
 2.1.0 release
 ====================
 
