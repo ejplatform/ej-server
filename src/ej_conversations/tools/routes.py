@@ -1,12 +1,11 @@
 from boogie.router import Router
 from django.utils.translation import ugettext_lazy as _
 from django.http import HttpResponse
-
 from .utils import npm_version
+from .forms import RasaConversationForm, ConversationComponentForm, ConversationComponent
+
 from .. import models
-from ..tools.utils import npm_version
 from ..tools.table import Tools
-from .forms import RasaConversationForm
 
 app_name = "ej_conversations_tools"
 urlpatterns = Router(
@@ -41,14 +40,18 @@ def mailing(request, conversation, slug):
 @urlpatterns.route(conversation_tools_url + "/component")
 def conversation_component(request, conversation, slug):
     from django.conf import settings
-
-    tools = Tools(conversation)
     schema = 'https' if settings.ENVIRONMENT != 'local' else 'http'
+    form = ConversationComponentForm(request.POST)
+    conversation_component = ConversationComponent(form)
+    tools = Tools(conversation)
+
     return {"schema": schema,
             "tool": tools.get(_('Conversation component')),
             "npm_version": npm_version(),
-            "conversation": conversation
-            }
+            "conversation": conversation,
+            "form": form,
+            "conversation_component": conversation_component,
+    }
 
 
 @urlpatterns.route(conversation_tools_url + "/rasa")

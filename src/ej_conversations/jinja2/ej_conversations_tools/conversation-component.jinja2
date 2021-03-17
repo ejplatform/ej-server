@@ -13,35 +13,115 @@
 	<h1>{{_("Tools")}} > {{ tool["integration"] }}</h1>
 <span>{{tool["description"] }}</span>
 </div>
-	<div>
-		<p>With this feature you can collect opinions from your audience without
-			using EJ interface directly. This component can be included in your
-			site's html, and it will allow users to participate on conversations
-			and add comments from within your personal site.
-		</p>
+	<div class="conversation-component">
 		<p>
-			To add this conversation to your site/platform, add the following
-			snippet of code to your page header:
-
-			<div class="tools-section-2-snippet">
-				<div>
-					<code>&lt;script src='https://unpkg.com/ej-conversations@{{npm_version.latest}}/dist/conversations.js'&gt&lt;/script&gt</code>
-					<br>
-					<code>&lt;link href='https://fonts.googleapis.com/css?family=Raleway&display=swap' rel="stylesheet"&gt&lt;/link&gt</code>
-					<br>
-					<code>&lt;link href='{{schema}}://{{request.META['HTTP_HOST']}}/static/css/fontawesome-all.min.css' rel="stylesheet"&gt&lt;/link&gt</code>
-				</div>
-			</div>
-			
-			and this snippet of code on the page body:
-
-			<div class="tools-section-2-snippet">
-				<div>
-					<code>&lt;ej-conversation host={{schema}}://{{request.META['HTTP_HOST']}}
-					cid="{{conversation.id}}"&gt&lt;/ej-conversation&gt</code>
-				</div>
-			</div>
+			{{_('With this feature you can collect opinions from your audience without') }}
+			{{_('using EJ interface directly. This component can be included in your') }}
+			{{_('site\'s html, and it will allow users to participate on conversations') }}
+			{{_('and add comments from within your personal site.') }}
 		</p>
+			{{_('To add this conversation to your site/platform, first select the authentication method and which visual theme the component will use. Than, just generate the script and adds to your site.') }}
+			
+			<form method="POST" class="tools-settings-form">
+				{{ csrf_input }}
+				{% block form_content %}
+					<section>
+						<h3>{{form.authentication_type.label}}</h3>
+						{{form.authentication_type}}
+					</section>
+					<hr>
+					<section>
+						<h3>{{form.theme.label}}</h3>
+						{{form.theme}}
+					</section>
+					<div><hr></div>
+
+				{% endblock %}
+		<div class="copy-script-header">
+			<div>
+				{{_('Add the following snippet of code to your page header:') }}
+			</div>
+			<div>
+			    <input type="submit" value="{{_('Generate Script')}}">
+				<button onclick="copySnippet('copy-header');" id="copy-header-button">{{_('Copy')}}</button>
+			</div>
+		</div>
+			</form>
+			
+			<div id="copy-header-message">{{_("Code was copied to your clipboard.")}}</div>
+
+
+			<div class="tools-section-2-snippet">
+				<textarea readonly id="copy-header">
+&lt;script src='https://unpkg.com/ej-conversations@{{npm_version.latest}}/dist/conversations.js'&gt&lt;/script&gt
+				
+&lt;link href='https://fonts.googleapis.com/css?family=Raleway&display=swap' rel="stylesheet"&gt&lt;/link&gt
+					
+&lt;link href='{{schema}}://{{request.META['HTTP_HOST']}}/static/css/fontawesome-all.min.css' rel="stylesheet"&gt&lt;/link&gt
+
+<style>
+		/* https://github.com/ionic-team/stencil/issues/2072 */
+@font-face {
+  font-family: Folio;
+  font-style: normal;
+  font-weight: 400;
+  font-display: auto;
+  src: url(https://unpkg.com/ej-conversations@{{npm_version.latest}}/dist/conversations/assets/fonts/folio_bold_condensed.ttf);
+}
+
+@font-face {
+  font-family: Helvetica;
+  font-style: normal;
+  font-weight: 400;
+  font-display: auto;
+	src: url('https://unpkg.com/ej-conversations@{{npm_version.latest}}/dist/conversations/assets/fonts/helvetica_neue_lts_roman.otf');
+}
+
+@font-face {
+  font-family: 'Font Awesome 5 Free';
+  font-style: normal;
+  font-weight: 400;
+  font-display: auto;
+	src: url('https://unpkg.com/ej-conversations@{{npm_version.latest}}/dist/conversations/assets/fonts/fa-regular-400.ttf');
+}
+
+@font-face {
+  font-family: 'Font Awesome 5 Free';
+  font-style: normal;
+  font-weight: 400;
+  font-display: auto;
+	src: url('https://unpkg.com/ej-conversations@{{npm_version.latest}}/dist/conversations/assets/fonts/fa-brands-400.ttf');
+}
+
+@font-face {
+  font-family: 'Font Awesome 5 Free';
+  font-style: normal;
+  font-weight: 400;
+  font-display: auto;
+	src: url('https://unpkg.com/ej-conversations@{{npm_version.latest}}/dist/conversations/assets/fonts/fa-solid-900.ttf');
+}
+
+</style>
+</textarea>
+
+			</div>
+
+			<p class="body-copy-p">
+			{{_('and this snippet of code on the page body:') }}
+				<button onclick="copySnippet('copy-body');" id="copy-body-button">
+						{{_('Copy')}}</button>
+				<div id="copy-body-message">{{_("Code was copied to your clipboard.")}}</div>
+			</p>
+
+			<div class="tools-section-2-snippet">
+				<textarea readonly id="copy-body">
+&lt;ej-conversation host={{schema}}://{{request.META['HTTP_HOST']}} cid="{{conversation.id}}" {{conversation_component.get_props()}}&gt&lt;/ej-conversation&gt
+				</textarea>
+				<div>
+
+				</div>
+			</div>
+		<br>
 </div>
 <p><a href="{{ conversation.url('conversation_tools:index') }}" title="{{ _('Back to tools') }}"
 		class="lowercase bold text-brand">
@@ -62,6 +142,17 @@
 			section.style.borderStyle = "solid";
 			section.style.borderRadius = "1rem";
 		   }
+	   }
+
+	   function copySnippet(elementId){
+		   	var copyText = document.getElementById(elementId);
+			copyText.select();
+			copyText.setSelectionRange(0, 99999)
+			document.execCommand("copy");
+
+			var success_message = document.getElementById(elementId.concat("-message"));
+			success_message.style.display = "inline";
+			setTimeout(() => {  success_message.style.display = "none"; }, 3000);
 	   }
    </script>
 {% endblock %}
