@@ -172,33 +172,6 @@ def moderate(request, conversation, slug=None, check=check_promoted):
     }
 
 
-# @urlpatterns.route(conversation_url + "tools/")
-# def tools(request, conversation, slug, check=check_promoted, npm=npm_version):
-#    from ej_conversations.tools import TemplateGenerator
-#    from django.conf import settings
-#    check(conversation, request)
-#    if request.method == "POST":
-#        generator = TemplateGenerator(conversation, request, "mautic")
-#        template = generator.get_template()
-#        response = HttpResponse(template, content_type="text/html")
-#        response['Content-Disposition'] = 'attachment; filename=template.html'
-#        return response
-#    else:
-#        schema = 'https' if settings.ENVIRONMENT != 'local' else 'http'
-#        return {
-#            "conversation": conversation,
-#            "request": request,
-#            "menu_links": conversation_admin_menu_links(conversation, request.user),
-#            "schema": schema,
-#            "npm_version": npm(),
-#        }
-
-
-#
-# Auxiliary functions
-#
-
-
 def login_link(content, obj):
     path = obj.get_absolute_url()
     return a(content, href=reverse("auth:login") + f"?next={path}")
