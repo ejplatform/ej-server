@@ -10,17 +10,17 @@ class Tools():
         return [{
             "integration": _("Mailing campaign"),
             "description": _("Generates a html template of this conversation, for mailing marketing campaigns."),
-            "link": self.conversation.url('conversation_tools:mailing'),
+            "link": self.conversation.url('conversation-tools:mailing'),
         },
             {
             "integration": _("Conversation component"),
             "description": _("Adds EJ directly to your site. Enables voting, commenting, and clusters visualization directly on a html page."),
-            "link": self.conversation.url('conversation_tools:conversation-component'),
+                "link": self.conversation.url('conversation-tools:opinion-component'),
         },
             {
             "integration": _("Rasa chatbot"),
             "description": _("Collect opinions using EJ's chatbot, also known as Duda. Allows, via webchat, to vote and comment on EJ's conversations."),
-            "link": self.conversation.url('conversation_tools:rasa'),
+            "link": self.conversation.url('conversation-tools:rasa'),
         }
         ]
 

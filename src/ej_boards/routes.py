@@ -29,6 +29,8 @@ reports_kwargs = {"login": True}
 #
 # Board URLs
 #
+
+
 @urlpatterns.route(board_profile_admin_url, login=True)
 def board_list(request):
     user = request.user
@@ -74,9 +76,9 @@ def board_base(request, board):
 @urlpatterns.route(board_base_url)
 def conversation_list(request, board):
     return conversations.list_view(
-        request, 
-        queryset=board.conversations.annotate_attr(board=board), 
-        context={"board": board}, 
+        request,
+        queryset=board.conversations.annotate_attr(board=board),
+        context={"board": board},
         title=board.title,
     )
 
@@ -101,14 +103,8 @@ def conversation_moderate(request, board, **kwargs):
     return conversations.moderate(request, check=check_board(board), **kwargs)
 
 
-@urlpatterns.route(board_conversation_url + "integrations/")
-def conversation_integrations(request, board, **kwargs):
-    return conversations.integrations(request,  check=check_board(board), **kwargs)
-
-
 @urlpatterns.route(board_conversation_url + "tools/", perms=["ej.can_edit_conversation:conversation"])
 def conversation_tools_index(request, board, **kwargs):
-    check_board(board)
     return tools_routes.index(request, **kwargs)
 
 
@@ -118,10 +114,10 @@ def conversation_tools_mailing(request, board, **kwargs):
     return tools_routes.mailing(request, **kwargs)
 
 
-@urlpatterns.route(board_conversation_url + "tools/component/", perms=["ej.can_edit_conversation:conversation"])
+@urlpatterns.route(board_conversation_url + "tools/opinion-component/", perms=["ej.can_edit_conversation:conversation"])
 def conversation_tools_component(request, board, **kwargs):
     check_board(board)
-    return tools_routes.conversation_component(request, **kwargs)
+    return tools_routes.opinion_component(request, **kwargs)
 
 
 @urlpatterns.route(board_conversation_url + "tools/rasa/", perms=["ej.can_edit_conversation:conversation"])

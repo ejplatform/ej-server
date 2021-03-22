@@ -2,8 +2,8 @@ import pytest
 from ej_conversations.mommy_recipes import ConversationRecipes
 
 from ej_conversations.tools.forms import ConversationComponentForm
-from ej_conversations.tools.routes import conversation_component
 from ej_conversations.tools.models import ConversationComponent
+from ej_conversations.tools.routes import opinion_component
 
 ConversationRecipes.update_globals(globals())
 
@@ -52,9 +52,9 @@ class TestComponentConversationRoute(ConversationRecipes):
 
         request = rf.post(
             conversation.get_absolute_url(
-            ) + '/tools/component', {'authentication_type': "register", 'theme': "default"}
+            ) + '/tools/opinion-component', {'authentication_type': "register", 'theme': "default"}
         )
-        response = conversation_component(request, conversation, None)
+        response = opinion_component(request, conversation, None)
         assert response['conversation_component'].get_props() == " authenticate-with=register"
         assert response['form'].is_valid()
         assert response['conversation'].id == conversation.id
@@ -64,10 +64,10 @@ class TestComponentConversationRoute(ConversationRecipes):
 
         request = rf.post(
             conversation.get_absolute_url(
-            ) + '/tools/component', {'authentication_type': "mautic", 'theme': "votorantim"}
+            ) + '/tools/opinion-component', {'authentication_type': "mautic", 'theme': "votorantim"}
         )
-        response = conversation_component(request, conversation, None)
-        assert response['conversation_component'].get_props() == 'theme=votorantim authenticate-with=mautic'
+        response = opinion_component(request, conversation, None)
+        assert response['conversation_component'].get_props() == 'theme=votorantim  authenticate-with=mautic'
         assert response['form'].is_valid()
         assert response['conversation'].id == conversation.id
 
@@ -75,9 +75,10 @@ class TestComponentConversationRoute(ConversationRecipes):
         conversation = mk_conversation()
 
         request = rf.post(
-            conversation.get_absolute_url() + '/tools/component', {'authentication_type': "analytics", 'theme': "icd"}
+            conversation.get_absolute_url(
+            ) + '/tools/opinion-component', {'authentication_type': "analytics", 'theme': "icd"}
         )
-        response = conversation_component(request, conversation, None)
-        assert response['conversation_component'].get_props() == 'theme=icd authenticate-with=analytics'
+        response = opinion_component(request, conversation, None)
+        assert response['conversation_component'].get_props() == 'theme=icd  authenticate-with=analytics'
         assert response['form'].is_valid()
         assert response['conversation'].id == conversation.id

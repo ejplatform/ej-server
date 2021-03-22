@@ -11,7 +11,7 @@ app_name = "ej_conversations_tools"
 urlpatterns = Router(
     template="ej_conversations_tools/{name}.jinja2", models={"conversation": models.Conversation}
 )
-conversation_tools_url = f"conversations/<model:conversation>/<slug:slug>/tools"
+conversation_tools_url = f"<model:conversation>/<slug:slug>/tools"
 
 
 @urlpatterns.route(conversation_tools_url)
@@ -37,8 +37,8 @@ def mailing(request, conversation, slug):
     return {"conversation": conversation, "tool": tools.get(_('Mailing campaign'))}
 
 
-@urlpatterns.route(conversation_tools_url + "/component")
-def conversation_component(request, conversation, slug):
+@urlpatterns.route(conversation_tools_url + "/opinion-component")
+def opinion_component(request, conversation, slug):
     from django.conf import settings
     schema = 'https' if settings.ENVIRONMENT != 'local' else 'http'
     form = ConversationComponentForm(request.POST)
@@ -51,7 +51,7 @@ def conversation_component(request, conversation, slug):
             "conversation": conversation,
             "form": form,
             "conversation_component": conversation_component,
-    }
+            }
 
 
 @urlpatterns.route(conversation_tools_url + "/rasa")
