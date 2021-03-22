@@ -15,12 +15,12 @@
 </div>
 	<div class="conversation-component">
 		<p>
-			{{_('With this feature you can collect opinions from your audience without') }}
-			{{_('using EJ interface directly. This component can be included in your') }}
-			{{_('site\'s html, and it will allow users to participate on conversations') }}
-			{{_('and add comments from within your personal site.') }}
+			{{_('With this tool you can collect opinions from your audience without '
+			'using EJ interface directly. This component can be included in your'
+			'site\'s html, and it will allow visitors to participate on this conversation,'
+			'voting and adding comments.') }}
 		</p>
-			{{_('To add this conversation to your site/platform, first select the authentication method and which visual theme the component will use. Than, just generate the script and adds to your site.') }}
+			{{_('To add this conversation to your site/platform, first select the authentication method and which visual theme the component will use. Than, just generate the script and adds it to the header and body tags.') }}
 			
 			<form method="POST" class="tools-settings-form">
 				{{ csrf_input }}
@@ -42,8 +42,8 @@
 				{{_('Add the following snippet of code to your page header:') }}
 			</div>
 			<div>
-			    <input type="submit" value="{{_('Generate Script')}}">
-				<button onclick="copySnippet('copy-header');" id="copy-header-button">{{_('Copy')}}</button>
+			  <input type="submit" value="{{_('Generate Script')}}">
+				<button type="button" onclick="copySnippet('copy-header');" id="copy-header-button">{{_('Copy')}}</button>
 			</div>
 		</div>
 			</form>
