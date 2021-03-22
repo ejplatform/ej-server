@@ -67,7 +67,7 @@ class TestComponentConversationRoute(ConversationRecipes):
             ) + '/tools/opinion-component', {'authentication_type': "mautic", 'theme': "votorantim"}
         )
         response = opinion_component(request, conversation, None)
-        assert response['conversation_component'].get_props() == 'theme=votorantim  authenticate-with=mautic'
+        assert response['conversation_component'].get_props() == 'theme=votorantim authenticate-with=mautic'
         assert response['form'].is_valid()
         assert response['conversation'].id == conversation.id
 
@@ -79,6 +79,6 @@ class TestComponentConversationRoute(ConversationRecipes):
             ) + '/tools/opinion-component', {'authentication_type': "analytics", 'theme': "icd"}
         )
         response = opinion_component(request, conversation, None)
-        assert response['conversation_component'].get_props() == 'theme=icd  authenticate-with=analytics'
+        assert response['conversation_component'].get_props() == 'theme=icd authenticate-with=analytics'
         assert response['form'].is_valid()
         assert response['conversation'].id == conversation.id
