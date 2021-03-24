@@ -1,7 +1,9 @@
 from django.utils.translation import ugettext_lazy as _
 from boogie import models
+from boogie.rest import rest_api
 
 
+@rest_api(["conversation", "domain"])
 class RasaConversation(models.Model):
     """
     Allows correlation between a conversation and an instance of rasa
@@ -16,6 +18,7 @@ class RasaConversation(models.Model):
 
     class Meta:
         unique_together = (('conversation', 'domain'),)
+        ordering = ['-id']
 
 
 class ConversationComponent:
