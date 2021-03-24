@@ -1,7 +1,7 @@
 from boogie.rest import rest_api
 from ej_conversations.models import Conversation
 from ej_conversations.models.vote import Vote
-
+from .tools import api
 
 #
 # Conversation extra actions and attributes
