@@ -39,3 +39,20 @@ O que são conversas públicas?
 
 As conversas públicas foram criadas ou promovidas pela administração de um ambiente e sua proposta é envolver toda participação possível. Confira a relação de conversas públicas através da `página de conversas públicas <https://your-host/conversations/>`_
 Você pode participar das conversas públicas registrando sua opinião com comentários e votos.
+
+Como faço para encontrar novas conversas?
+-----------------------------------------
+
+As novas conversas disponíveis para participação, estão listadas em Conversas Públicas.  Através  desta área é possível navegar em todas as conversas disponíveis no ambiente.  Ainda não é possível listar por ordem das mais recentes ou antigas, porém, todas estão esperando sua contribuição.  Participe!
+
+
+Como criar ou editar um mural de conversa?
+------------------------------------------
+
+Ao acessar pela primeira vez o item "Suas conversas" no menu, "Conversas", você será orientado a criar um "Mural" de conversas, ou seja, uma forma de organizar e agrupar conversas similares. Clique em "Criar um novo mural" para iniciar a criação do seu primeiro mural de conversas.
+
+* Insira um identificador curto, sem acentos e sem espaços, isso porque seu identificador é utilizado na formação do endereço do site para listar as conversas contidas neste mural. Exemplo: educacao, acoes-jovens, futebol-de-salao, etc.
+
+* Insira um título para o seu mural, evite utilizar um título muito longo.
+Faça uma breve descrição do seu mural de conversas. Neste espaço pode comentar a proposta das conversas agrupadas neste mural.
+

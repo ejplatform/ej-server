@@ -3,4 +3,4 @@ Bem vindo à documentação da EJ (PT-BR)
 =======================================
 
 .. toctree::
-   pt-br/_index
+   pt-br/index

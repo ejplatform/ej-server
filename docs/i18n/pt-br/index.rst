@@ -6,7 +6,5 @@ recursos, links e instruções, relacionados ao uso e administração da
 plataforma.
 
 .. toctree::
-   :maxdepth: 2
-
-   dev-docs/_index
-   user-docs/_index
+   dev-docs/index
+   user-docs/index

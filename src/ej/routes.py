@@ -143,17 +143,8 @@ home_page_ns = {
         "vanessa.jpg": "Vanessa Tonini",
     },
     "documentation_items": [
-        {"href": "/docs/?page=user-start.html", "icon": "fa fa-user-circle", "text": _("User Guides")},
-        {"href": "/docs/?page=user-install.html", "icon": "fa fa-download", "text": _("Installation")},
-        {"href": "/docs/?page=user-admin.html", "icon": "fa fa-cog", "text": _("Administration Guides")},
-        {"href": "/docs/?page=dev.html", "icon": "fa fa-code", "text": _("Development Guides")},
-        {
-            "href": "/docs/?page=user-ai.html",
-            "icon": "fas fa-microchip",
-            "text": _("Our Artificial Intelligence"),
-        },
-        {"href": "/docs/?page=contributing.html", "icon": "fab fa-github", "text": _("Contributing")},
-        {"href": "/docs/?page=user-report.html", "icon": "far fa-life-ring", "text": _("Getting Help")},
+        {"href": "/docs/?page=user-docs/index.html", "icon": "fa fa-user-circle", "text": _("User Guides")},
+        {"href": "/docs/?page=dev-docs/index.html", "icon": "fa fa-code", "text": _("Development Guides")},
     ],
     "partners": [
         {
