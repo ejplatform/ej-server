@@ -1,5 +1,5 @@
 invoke==1.4.1
-django==2.2.7
+django == 2.2.19
 toolz==0.9
 sidekick==0.5.2
 django-boogie==0.13.3
@@ -16,7 +16,7 @@ bleach==3.1
 django-taggit==1.1.0
 rules<2.0
 django-allauth==0.38.0
-djangorestframework==3.9
+djangorestframework ~= 3.12
 django-rest-auth==0.9.3
 django-cors-headers
 django-extensions==2.1
