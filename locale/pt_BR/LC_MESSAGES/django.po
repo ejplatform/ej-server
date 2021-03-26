@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-25 19:01-0300\n"
+"POT-Creation-Date: 2021-03-26 16:54-0300\n"
 "PO-Revision-Date: 2019-09-09 13:55-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -109,10 +109,6 @@ msgstr "Guias de Usuário"
 #: src/ej/routes.py:147
 msgid "Development Guides"
 msgstr "Guias de Desenvolvimento"
-
-#: src/ej/routes.py:148
-msgid "Administration Guides"
-msgstr "Guias de Administração"
 
 #: src/ej/settings/options.py:33
 msgid "EJ Platform"
@@ -3617,6 +3613,9 @@ msgstr "Mudar a senha"
 #, fuzzy
 msgid "Authentication"
 msgstr "Autenticação"
+
+#~ msgid "Administration Guides"
+#~ msgstr "Guias de Administração"
 
 #~ msgid "Installation"
 #~ msgstr "Guias de Instalação"
