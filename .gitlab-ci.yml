@@ -26,7 +26,7 @@ deploy_to_dev:
     script:
         - /bin/sh -c 'git clone -b stable --depth=1 https://gitlab+deploy-token-155341:xWz-bGxYnvTLcZCzsHEG@gitlab.com/pencillabs/infraestructure/core.git'
         - cd core
-        - bin/pencilctl build ej -e dev -b develop -c prod --no-cache && bin/pencilctl push ej -e dev -b develop -c prod
+        - bin/pencilctl build ej -e dev -b develop -c prod --no-cache --push
     only:
         refs:
             - develop
@@ -38,7 +38,7 @@ deploy_to_prod:
     script:
         - /bin/sh -c 'git clone -b stable --depth=1 https://gitlab+deploy-token-155341:xWz-bGxYnvTLcZCzsHEG@gitlab.com/pencillabs/infraestructure/core.git'
         - cd core
-        - bin/pencilctl build ej -e prod -b prod -c prod --no-cache && bin/pencilctl push ej -e prod -b prod -c prod
+        - bin/pencilctl build ej -e prod -b prod -c prod --no-cache --push
     only:
         refs:
             - prod
