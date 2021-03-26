@@ -41,3 +41,4 @@ django-debug-toolbar ~= 1.11
 openpyxl ~= 2.6
 django-cors-headers ~= 3.3.0
 Babel
+sphinx ~= 1.8
