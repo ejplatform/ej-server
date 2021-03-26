@@ -11,16 +11,19 @@ class Tools():
             "integration": _("Mailing campaign"),
             "description": _("Generates a html template of this conversation, for mailing marketing campaigns."),
             "link": self.conversation.url('conversation-tools:mailing'),
+            "about": "/docs/?page=user-docs/tools-mail-template.html"
         },
             {
             "integration": _("Conversation component"),
             "description": _("Adds EJ directly to your site. Enables voting, commenting, and clusters visualization directly on a html page."),
                 "link": self.conversation.url('conversation-tools:opinion-component'),
+                "about": "/docs/?page=user-docs/tools-opinion-component.html"
         },
             {
             "integration": _("Rasa chatbot"),
             "description": _("Collect opinions using EJ's chatbot, also known as Duda. Allows, via webchat, to vote and comment on EJ's conversations."),
             "link": self.conversation.url('conversation-tools:rasa'),
+            "about": "/docs/?page=user-docs/tools-rasa.html"
         }
         ]
 

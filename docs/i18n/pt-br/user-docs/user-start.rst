@@ -8,7 +8,7 @@ Criando um cadastro e começando a usar
 Como faço para criar minha conta?
 ---------------------------------
 
-Para criar uma conta, acesse https://your-host/register/
+Para criar uma conta, acesse https://ejplatform.org/register/
 
 * Informe seu nome conforme deseja que apareça nas conversas, um endereço de email válido, uma senha e logo após repita a mesma senha e clique em Registre agora! ou clique em Entrar com algum perfil de rede social compatível com a nossa plataforma.
 

@@ -1,11 +1,10 @@
-#################
-Developer's Guide
-#################
+########################
+Guia de desenvolvimento
+########################
 
-Em construção!
+Em construção
 
-.. comment
-   toctree::
+.. toctree::
    :maxdepth: 2
    quick-start
    architecture

@@ -23,7 +23,7 @@
 		{%  for tool in tools %}
 		<tr>
 			<td><a href="{{ tool["link"] }}">{{ tool["integration"] }}</a></td>
-			<td><a href="{{ tool["link"] }}">{{ tool["description"] }}</a></td>
+			<td>{{ tool["description"] }}<a class="tools-table-about" href="{{ tool["about"] }}"> {{ _('More information') }}.</a></td>
 		</tr>
 		{%  endfor %}
 	</table>
