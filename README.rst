@@ -37,6 +37,8 @@ Every change made on the repository will be reflected inside the
 
 You can access the running instance accessing `http://localhost:8000`.
 
+To rebuild the server image, you can run `inv docker-build --no-cache`.
+
 Documentation
 -------------
 
