@@ -30,6 +30,7 @@ commands::
 
     $ sudo pip3 install invoke==1.4.1 --user
     $ inv docker-up
+    $ inv docker-logs
 
 This will deploy EJ using **docker/docker-compose.yml** file.
 Every change made on the repository will be reflected inside the

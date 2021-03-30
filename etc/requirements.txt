@@ -1,5 +1,5 @@
 django == 2.2.19
-django-boogie ~= 0.13.1
+django-boogie == 0.13.3
 django-constance ~= 2.3
 django-constance[database]
 django-rest-auth ~= 0.9.3
@@ -19,7 +19,7 @@ django-model-utils ~= 3.1
 coreapi ~= 2.3
 hyperpython ~= 1.1.1
 rules<2.0
-sidekick ~= 0.5.1
+sidekick == 0.5.2
 numpy ~= 1.16
 scipy ~= 1.2
 pandas ~= 1.2

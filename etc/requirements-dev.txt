@@ -16,7 +16,6 @@ invoke == 1.4.1
 markupsafe
 toolz 
 libsass
-sidekick 
 psycopg2
 toml
 ipdb ~= 0.11.0

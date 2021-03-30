@@ -22,4 +22,3 @@ COPY ./ /ej-server
 WORKDIR ej-server
 RUN pip install -r etc/requirements-dev.txt
 RUN cd lib && npm i && inv build-assets
-RUN inv sass && inv i18n && inv i18n -c && inv docs && inv collect
