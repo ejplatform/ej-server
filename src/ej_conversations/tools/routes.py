@@ -1,8 +1,9 @@
+import json
 from boogie.router import Router
 from django.utils.translation import ugettext_lazy as _
 from django.http import HttpResponse
 from .utils import npm_version
-from .forms import RasaConversationForm, ConversationComponentForm, ConversationComponent
+from .forms import RasaConversationForm, ConversationComponentForm, ConversationComponent, MailingToolForm
 
 from .. import models
 from ..tools.table import Tools
@@ -26,15 +27,20 @@ def index(request, conversation, slug, npm=npm_version):
 @urlpatterns.route(conversation_tools_url + "/mailing")
 def mailing(request, conversation, slug):
     from .mailing import TemplateGenerator
+    template = None
+    form = MailingToolForm(request.POST)
     if request.method == "POST":
         generator = TemplateGenerator(conversation, request, "mautic")
         template = generator.get_template()
-        response = HttpResponse(template, content_type="text/html")
-        response['Content-Disposition'] = 'attachment; filename=template.html'
-        return response
-
+        if 'download' in request.POST:
+            response = HttpResponse(template, content_type="text/html")
+            response['Content-Disposition'] = 'attachment; filename=template.html'
+            return response
+        if 'preview' in request.POST:
+            template = json.dumps(template, ensure_ascii=False)
     tools = Tools(conversation)
-    return {"conversation": conversation, "tool": tools.get(_('Mailing campaign'))}
+    return {"conversation": conversation, "tool": tools.get(_('Mailing campaign')),
+            "template_preview": template, "form": form}
 
 
 @urlpatterns.route(conversation_tools_url + "/opinion-component")

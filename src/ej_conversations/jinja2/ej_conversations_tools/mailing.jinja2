@@ -18,21 +18,36 @@
 <div>
 	<div class="tools-section">
 	<div class="tools-content">
-		<span>Select a marketing tool to generate a compatible template</span>
-		<form action="{{conversation.url("conversation-tools:mailing")}}" method="post">
-			<select id="" name="">
-				<option value="mautic">Mautic</option>
-			</select>
-			<div style="padding-left: 10px; display: flex">
-				<input onchange="showDomainInput()" style="margin: 0; z-index: unset" type="checkbox">
-				<label for="default_domain"> Redirect user to a custom domain</label>
-			</div>
-			<input name="custom-domain" style="margin-left: 10px; margin-bottom:15px; margin-top: unset; display: none" id="domain-input" type="text" placeholder="domain to redirect the user on template">
+		<form action="{{conversation.url("conversation-tools:mailing")}}" method="post" class="tools-settings-form">
+			<section>
+				<h3>{{form.mailing_tool_type.label}}</h3>
+				{{form.mailing_tool_type}}
+			</section>
+			<section>
+				<h3>{{form.theme.label}}</h3>
+				{{form.theme}}
+			</section>
+			<section>
+				<label id="custom-domain-label">{{form.is_custom_domain.label}}</label>
+				{{form.is_custom_domain}}
+				<input name="custom-domain" id="domain-input" type="text" placeholder="{{ _('domain to redirect the user on template') }}">
+			</section>
 			<input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-			<input type="submit" value="Download">
+			<div class="group-button">
+				<input type="submit" name="download" value="{{ _('Download') }}">
+				<input type="submit" name="preview" value="{{ _('Preview') }}">
+			</div>
 		</form>
 	</div>
+		{% if template_preview %}
+			<div id="preview-template">
+				<iframe id="iframe" scroll="0"
+				frameborder="0"></iframe>
+			</div>
+		{% endif %}
 	</div>
+
+
 <p><a href="{{ conversation.url('conversation-tools:index') }}" title="{{ _('Back to tools') }}"
 		class="lowercase bold text-brand">
 	<i class="fa fa-chevron-left"></i>{% trans %}Back to tools{% endtrans %}
@@ -63,5 +78,22 @@
 			input.style.display = "none";
 		   }
 	   }
+
+	function setIframe(html){
+		let iframe = document.getElementById('iframe');
+		iframe.srcdoc = html;
+		iframe.width  = iframe.contentWindow.document.body.scrollWidth;
+  	iframe.height = iframe.contentWindow.document.body.scrollHeight;
+		if(iframe) {
+  			iframe.contentWindow.document.body.style.overflow = "auto";
+		}
+	}
+	window.onload = function() {
+		document.getElementById('id_is_custom_domain').onchange = showDomainInput;
+		if({{template_preview | safe}}){
+			setIframe({{template_preview | safe}})
+		}
+	};
+
    </script>
 {% endblock %}
