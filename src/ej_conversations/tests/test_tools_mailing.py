@@ -2,7 +2,7 @@ import pytest
 import mock
 from ej_conversations.tools.mailing import TemplateGenerator
 from ej_boards.mommy_recipes import BoardRecipes
-
+from ej_conversations.tools.forms import MailingToolForm
 
 class TestTemplateGenerator(BoardRecipes):
 
@@ -130,3 +130,13 @@ class TestTemplateGenerator(BoardRecipes):
 
         palette = campaign._get_palette_css()
         assert palette == expected_palette
+
+
+class TestConversationComponentForm:
+    def test_conversation_component_valid_mautic_form(self):
+        form = MailingToolForm({'mailing_tool_type': "mautic", 'theme': "default"})
+        assert form.is_valid()
+
+    def test_conversation_component_valid_mautic_form(self):
+        form = MailingToolForm({'mailing_tool_type': "mailchimp", 'theme': "icd"})
+        assert form.is_valid()

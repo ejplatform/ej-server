@@ -67,3 +67,14 @@ class ConversationComponent:
         if self.form.cleaned_data["authentication_type"]:
             result = result + f" authenticate-with={self.form.cleaned_data['authentication_type']}"
         return result
+
+class MailingTool:
+    MAILING_TOOL_CHOICES = (
+        ("mautic", _("Mautic")),
+        ("mailchimp", _("MailChimp")),
+    )
+
+    MAILING_TOOLTIP_TEXTS = {
+        "mailchimp": _("Mailchimp campaign"),
+        "mautic": _("Uses a mautic campaign "),
+    }
