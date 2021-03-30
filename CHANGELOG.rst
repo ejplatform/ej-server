@@ -5,6 +5,19 @@ CHANGELOG of EJPlatform releases
 Here you can follow all the fixes and new features on every EJPlatform release.
 
 
+2.3.0 release
+====================
+
+* Date: March 30, 2021
+* Features
+- Fixes /docs route;
+- Adds documentation page for opinion component tool;
+- Adds tool opinion component;
+- Adds documentation page for ejBot tool;
+- Adds new page for  ejBot configuration;
+- Adds new API endpoint api/v1/rasa-conversations/integrations?domain=URL
+- Fixes board route
+
 2.2.0 release
 ====================
 
