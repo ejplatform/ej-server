@@ -76,6 +76,7 @@ def docker_compose_entrypoint(ctx):
     do = runner(ctx, dry_run=False, pty=True)
     do(f'inv db')
     do(f'inv db-assets')
+    do(f'cd lib && npm i && inv build-assets')
     do(f'inv sass')
     do(f'inv i18n --compile')
     do(f'inv i18n')
