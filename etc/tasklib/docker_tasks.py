@@ -13,7 +13,6 @@ def docker_up(ctx, dry_run=False):
     """
     Executes EJ on url http://localhost:8000
     """
-    docker = su_docker("docker")
     do = runner(ctx, dry_run, pty=True)
     file = "docker/docker-compose.yml"
     compose = f"docker-compose -f {file}"
@@ -25,7 +24,6 @@ def docker_build(ctx, dry_run=False, no_cache=False):
     """
      Build EJ web server image;
     """
-    docker = su_docker("docker")
     do = runner(ctx, dry_run, pty=True)
     # file = prepare_dockerfile(cmd, file, deploy)
     file = "docker/docker-compose.yml"
@@ -42,7 +40,6 @@ def docker_exec(ctx, command, dry_run=False, build=False):
     """
      Executes a command inside EJ web server container;
     """
-    docker = su_docker("docker")
     do = runner(ctx, dry_run, pty=True)
     do(f'docker exec -it server {command}')
 
@@ -52,7 +49,6 @@ def docker_test(ctx, dry_run=False, build=False):
     """
      Runs EJ tests;
     """
-    docker = su_docker("docker")
     do = runner(ctx, dry_run, pty=True)
     do(f'docker exec -it server inv test')
 
@@ -62,9 +58,8 @@ def docker_attach(ctx):
     """
      Connect to EJ web server container;
     """
-    docker = su_docker("docker")
     do = runner(ctx, dry_run=False, pty=True)
-    do(f'{docker} exec -it server bash')
+    do(f'docker exec -it server bash')
 
 
 @task
@@ -72,7 +67,6 @@ def docker_compose_entrypoint(ctx):
     """
      Entrypoint commands for docker-compose.yml;
     """
-    docker = su_docker("docker")
     do = runner(ctx, dry_run=False, pty=True)
     do(f'inv db')
     do(f'inv db-assets')
@@ -100,6 +94,5 @@ def docker_logs(ctx):
     """
      Follows EJ web server log;
     """
-    docker = su_docker("docker")
     do = runner(ctx, dry_run=False, pty=True)
-    do(f'{docker} logs -f server')
+    do(f'docker logs -f server')
