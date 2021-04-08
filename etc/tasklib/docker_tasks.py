@@ -5,7 +5,7 @@ from invoke import task
 from .base import su_docker, runner
 
 __all__ = ["docker_up", "docker_build", "docker_exec", "docker_attach",
-           "docker_test", "docker_compose_entrypoint", "docker_stop", "docker_logs"]
+           "docker_test", "docker_stop", "docker_rm", "docker_logs"]
 
 
 @task
@@ -61,33 +61,21 @@ def docker_attach(ctx):
     do = runner(ctx, dry_run=False, pty=True)
     do(f'docker exec -it server bash')
 
-
-@task
-def docker_compose_entrypoint(ctx):
-    """
-     Entrypoint commands for docker-compose.yml;
-    """
-    do = runner(ctx, dry_run=False, pty=True)
-    do(f'inv db')
-    do(f'inv db-assets')
-    do(f'cd lib && npm i && inv build-assets')
-    do(f'inv sass')
-    do(f'inv i18n --compile')
-    do(f'inv i18n')
-    do(f'inv docs')
-    do(f'inv collect')
-    do(f'inv run')
-
-
 @task
 def docker_stop(ctx):
     """
      Stop EJ containers;
     """
-    docker = su_docker("docker-compose")
     do = runner(ctx, dry_run=False, pty=True)
-    do(f'{docker} -f docker/docker-compose.yml stop')
+    do(f'docker-compose -f docker/docker-compose.yml stop')
 
+@task
+def docker_rm(ctx):
+    """
+     Remove EJ containers;
+    """
+    do = runner(ctx, dry_run=False, pty=True)
+    do(f'docker-compose -f docker/docker-compose.yml rm')
 
 @task
 def docker_logs(ctx):

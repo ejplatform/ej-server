@@ -16,9 +16,9 @@ RUN apt-get update \
 # Move ej nginx conf to nginx volume
 RUN touch /etc/apt/preferences.d/nodejs && \
     echo "Package: nodejs\nPin: origin deb.nodesource.com\nPin-Priority: 1001" > /etc/apt/preferences.d/nodejs
-RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - \
+RUN curl -sL https://deb.nodesource.com/setup_10.x | bash - \
     && apt install nodejs -y && npm install -g yarn webpack@4.6.0
 COPY ./ /ej-server
 WORKDIR ej-server
-RUN pip install -r etc/requirements-dev.txt
-RUN cd lib && npm i && inv build-assets
+RUN pip install poetry
+RUN poetry install

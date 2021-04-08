@@ -40,6 +40,18 @@ You can access the running instance accessing `http://localhost:8000`.
 
 To rebuild the server image, you can run `inv docker-build --no-cache`.
 
+Some useful commands to manage environment tasks
+
+==================  ============================================= 
+Command             Description  
+==================  =============================================
+inv docker-up       Creates EJ containers and run the application
+inv docker-logs     Shows django logs 
+inv docker-stop     Stops EJ containers 
+inv docker-rm       Removes EJ containers
+inv docker-attach   Connects to ej-server container
+==================  =============================================
+
 Documentation
 -------------
 

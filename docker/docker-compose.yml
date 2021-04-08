@@ -19,7 +19,8 @@ services:
             - variables.env
         ports:
             - 8000:8000
-        entrypoint: ["inv", "docker-compose-entrypoint"]
+        entrypoint: ["/bin/bash", "docker/configure.sh"]
+        #entrypoint: ["tail", "-f", "/dev/null"]
 volumes:
     statics:
     backups:
