@@ -6,7 +6,7 @@ stages:
 install_dependencies:
     stage: prepare
     script:
-        - apt update && apt install -y bash git
+        - apt update && apt install -y bash git curl
     tags:
         - osf
 
@@ -15,9 +15,9 @@ run_tests:
     script:
         - /bin/sh -c 'git clone -b $CI_COMMIT_REF_NAME https://gitlab+deploy-token-154801:r9Qas_TYJeyzC1fmdpsD@gitlab.com/pencillabs/ej/ej-server.git'
         - cd ej-server
-        - pip install markupsafe toolz
-        - pip install -r etc/requirements-ci.txt
-        - inv test
+        - pip install poetry
+        - poetry install
+        - poetry run inv test
     tags:
         - osf
 

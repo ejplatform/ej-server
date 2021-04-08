@@ -1,14 +1,14 @@
 [tool.poetry]
 name = "ej-platform"
-version = "2.0.0"
+version = "2.3.0"
 description = "A Django-powered participation platform"
 authors = ["Fábio Macêdo Mendes <fabiomacedomendes@gmail.com>"]
 license = "AGPL-3.0"
 
 [tool.poetry.dependencies]
-python = ">= 3.6.1"
-django = "^2.2"
-django-boogie = {version = "^0.13.1", extras=["stack"]}
+python = ">= 3.7.10"
+django = "==2.2.19"
+django-boogie = {version = "==0.13.3"}
 django-constance = {version = "^2.3", extras = ["database"]}
 django-rest-auth = {version = "^0.9.3", extras = ["with_social"]}
 django-allauth = "^0.38.0"
@@ -26,10 +26,10 @@ django-model-utils = "^3.1"
 coreapi = "^2.3"
 hyperpython = "^1.1.1"
 rules = "<2.0"
-sidekick = "^0.5.1"
+sidekick = "==0.5.2"
 numpy = "^1.16"
 scipy = "^1.2"
-pandas = "^0.24.0"
+pandas = "^1.2"
 scikit-learn = "^0.20.2"
 pillow = "^5.4"
 matplotlib = "^3.0"
@@ -39,15 +39,17 @@ markdown = "^3.0"
 bleach = "^3.1"
 Faker = "^1.0"
 redis = "^3.1"
-invoke = "^1.2"
+invoke = "==1.4.1"
 bs4 = "^0.0.1"
 wordcloud = "^1.5"
 stop-words = "^2018.7"
-djangorestframework = "^3.9"
+djangorestframework = "^3.12"
 django-debug-toolbar = "^1.11"
 openpyxl = "^2.6"
 django-cors-headers = "^3.3.0"
-
+babel = "^2.9.0"
+sphinx = "^1.8"
+psycopg2 = "^2.8.6"
 
 [tool.poetry.dev-dependencies]
 mock = "^2.0"
@@ -62,9 +64,6 @@ splinter = "^0.10.0"
 selenium = "^3.141"
 codecov = "^2.0"
 black = {version = "^19.3b0", allows-prereleases = true}
-sphinx = "^1.8"
-invoke = "^1.2"
-virtualenvwrapper = "^4.8"
 ipdb = "^0.11.0"
 ipython = "^7.2"
 libsass = "^0.19.0"
