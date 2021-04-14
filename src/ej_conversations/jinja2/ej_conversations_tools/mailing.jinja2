@@ -72,10 +72,10 @@
 
 	   function showDomainInput() {
 		   let input = document.querySelector("#domain-input");
-		   if (input.style.display == "none") {
+		   if (document.getElementById('id_is_custom_domain').checked){
 			   input.style.display = "block";
 		   } else {
-			input.style.display = "none";
+			   input.style.display = "none";
 		   }
 	   }
 
@@ -83,9 +83,9 @@
 		let iframe = document.getElementById('iframe');
 		iframe.srcdoc = html;
 		iframe.width  = iframe.contentWindow.document.body.scrollWidth;
-  	iframe.height = iframe.contentWindow.document.body.scrollHeight;
+	iframe.height = iframe.contentWindow.document.body.scrollHeight;
 		if(iframe) {
-  			iframe.contentWindow.document.body.style.overflow = "auto";
+			iframe.contentWindow.document.body.style.overflow = "auto";
 		}
 	}
 	window.onload = function() {
