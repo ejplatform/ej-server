@@ -56,7 +56,9 @@ Caso você queira integrar a Duda à uma instância do Rocket.chat, siga os pass
 1. Crie no Rocket.chat um usuário com as mesmas credenciais presentes no arquivo `bot/credentials.yml`, no respositório do ejBot;
   * Esse usuário deve ter o papel `bot`, atrelado a sua conta;
   * No `bot/credentials.yml` deve haver uma configuração apontanto para a instância do Rocket.chat;
+
 2. Crie um novo canal, e adicione o usuário bot como participante;
+
 3. Ainda no Rocket, Vá em Administração -> Integrações, e crie uma nova integração de saída (*Outgoing*);
   * No campo url, informe a url da instância do Rasa, por exemplo: https://rasaserver.pencillabs.com.br/webhooks/rocketchat/webhook
   * Preencha os outros campos, de acordo com o nome do canal que foi criado e o nome do usuário bot;
@@ -67,3 +69,27 @@ Se tudo foi feito corretamente, agora basta mandar uma mensagem no canal, que a 
 
 .. _Rasa: https://rasa.com/ 
 .. _rasa-webchat: https://github.com/botfront/rasa-webchat
+
+
+Integrando o chatbot à uma instância de livechat do Rocket.chat
+----------------------------------------------------------------
+
+Para utilizar o bot no modo livechat do rocketchat é necessário fazer algumas configurações.
+
+1. Em Ominichannel > Gatilhos de Livechat, crie um novo gatilho:
+  * Ative as opções Ativo e Rodar apenas uma vez por visitante;
+  * Condition: Tempo de visitante no site;
+  * Action - Envie uma mensagem: Escolha a opção "Agente personalizado". Logo abaixo digite o nome do agente do bot no rocketchat. Por fim coloque a mensagem de ` welcome` do bot. Depois clique em salvar.
+
+.. figure:: ../images/ej-rasa-exemplo-gatilho.png
+
+2. Em Webhooks, caso não configurado, configure da seguinte forma:
+  * URL do webhook: https://rasaserver.pencillabs.com.br/webhooks/rocketchat/webhook;
+  * Token secreto: Insira o token de acesso;
+  * Send Request on: Selecione Visitor Messages. Depois clique em salvar.
+
+.. figure:: ../images/ej-rasa-webhook.png
+
+3. Para testar basta ir em Instalação do Livechat copiar o codigo no seu website.
+
+.. figure:: ../images/ej-rasa-livechat-install.png
