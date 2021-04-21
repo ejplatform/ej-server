@@ -41,7 +41,7 @@ def docker_exec(ctx, command, dry_run=False, build=False):
      Executes a command inside EJ web server container;
     """
     do = runner(ctx, dry_run, pty=True)
-    do(f'docker exec -it server {command}')
+    do(f"docker exec --user=root -it  server /bin/bash -c 'source /root/.bashrc && {command}'")
 
 
 @task
@@ -59,7 +59,7 @@ def docker_attach(ctx):
      Connect to EJ web server container;
     """
     do = runner(ctx, dry_run=False, pty=True)
-    do(f'docker exec -it server bash')
+    do(f"docker exec -it server bash")
 
 @task
 def docker_stop(ctx):

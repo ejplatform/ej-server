@@ -114,12 +114,16 @@ class ExampleData:
     def random_vote(self, comment, user, probs):
         p_vote, p_skip, p_ok = probs
         if random() < p_vote:
-            if random() < p_skip:
-                return comment.vote(user, "skip", commit=False)
-            elif random() < p_ok:
-                return comment.vote(user, "agree", commit=False)
-            else:
-                return comment.vote(user, "disagree", commit=False)
+            try:
+                if random() < p_skip:
+                    return comment.vote(user, "skip", commit=False)
+                elif random() < p_ok:
+                    return comment.vote(user, "agree", commit=False)
+                else:
+                    return comment.vote(user, "disagree", commit=False)
+            except:
+                print(f"could not vote on comment {comment.content}")
+
 
     def make_all(self):
         language, school, democracy = self.make_conversations()

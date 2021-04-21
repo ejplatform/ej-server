@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 # load poetry virtualenv
+echo "source $(poetry env info --path)/bin/activate" >> /root/.bashrc
 source $(poetry env info --path)/bin/activate
 
 # prepare database
