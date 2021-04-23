@@ -1,5 +1,5 @@
 ############
-Design Guide
+Guia de Design
 ############
 
 .. contents::
@@ -12,9 +12,9 @@ Intro
 
 O guia de design do ej foi criado para auxiliar na criação e execução de elementos visuais da interface de usuário.
 
-***************
-Visual Identity
-***************
+*****************
+Identidade visual
+*****************
 
 Assinatura Principal sobre fundo branco ou claro:
 
@@ -33,7 +33,7 @@ Assinatura Alternativa sobre fundo branco ou claro:
 Assinatura Alternativa sobre fundo branco ou claro:
 
 *******
-Coulors
+Cores
 *******
 
 A paleta de cores do ej é composta de 5 cores.
@@ -45,7 +45,7 @@ A paleta de cores do ej é composta de 5 cores.
 * Dessaturada #A3D8DD
 
 *****
-Fonts
+Fontes
 *****
 
 As famílias tipográficas da interface são Patua One e Raleway. Seguem orientações
@@ -54,10 +54,6 @@ As famílias tipográficas da interface são Patua One e Raleway. Seguem orienta
 
 * Fonte de texto: Raleway Regular (corpo de texto, legendas, notificações), Raleway Semibold (subtítulos, links, texto cor clara em fundo escuro), Raleway Bold (links, botões, subtítulos)
 
-***********
-Componentes
-***********
-Issue #532
 
 
 Templates
@@ -137,5 +133,5 @@ Menu secundário (principal é a barra de navegação). Funcionalidades e links 
 
 Os ícones da interface são definidos por fonte de ícones. A fonte escolhida foi Font Awesome. Além deles, a interface tem ícones próprios.
 
-Customização do tema #220 
+Customização do tema
 =========================

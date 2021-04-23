@@ -11,13 +11,80 @@ Visão de alto nível
 EJ adota uma arquitetura monolítica com o servidor principal que controla a
 lógica de negócios e alguns serviços adicionais que complementam o aplicativo.
 A maneira recomendada de distribuir o EJ é executar cada serviço em um
-recipiente separado a fim fornecer um bom nível de isolação. Os serviços acima
-mencionados são organizados em uma arquitetura de 3 camadas simples descrita
-abaixo:
+recipiente separado a fim fornecer um bom nível de isolação. Na imagem abaixo há a visualização
+de todo o ecossistema EJ, bem como serviços externos que são utilizados, que são representados em cinza.
 
-.. image:: img/ej_arch.svg
+.. figure:: ../images/dev-docs/c4-container-diagram.png
+
+Ecossistema Empurrando Juntas
+=============================
+
+EJ Server
+---------
+
+    Repositório: https://gitlab.com/pencillabs/ej/ej-server
+
+    Aplicação WEB, onde se encontra esta documentação.
+
+
+Componente de Conversa
+----------------------
+
+    Repositório: https://gitlab.com/pencillabs/ej/conversation-component
+
+    Componente de participação para permitir coleta de opinião via API da EJ, embutindo a EJ em outros sistemas.
+    A motivação desse projeto é permitir a participação de usuários sem a exigência
+    de ter que acessar a EJ diretamente. 
+
+Airflow DAGs
+------------
+
+    Repositório:https://gitlab.com/pencillabs/ej/airflow_dags
+
+    Responsável por coletar dados de voto (via api) na EJ, dados de contato (via api) na plataforma Mautic
+    e dados de comportamento via api do google analytics. Além de coletar
+    os dados, o DAG também consolida tais dados em uma estrutura única, utilizada posteriormente
+    pelo Jupyter, para análises e visualização. O jupyter carrega os dados consolidados pelo
+    airflow por meio de um volume Docker, compartilhado entre ambas as ferramentas.
+
+
+Rasa chatbot
+-------------
+
+    Repositório:https://gitlab.com/pencillabs/ej/ej-bot
+    Assim como o componente de conversa, permite coleta de opiniões usando a EJ sem acessar diretamente a plataforma.
+    A diferença é que utiliza uma interface conversacional, direcionada por uma inteligência de chatbot.
+
+
+Serviços externos
+
+Mautic
+------
+
+    Link: https://www.mautic.org/
+    É uma Ferramenta de Automação de marketing de código aberto.
+
+Google Analytics 
+-----------------
+
+    Link: https://analytics.google.com/analytics/web/provision/#/provision
+    Como o mautic, é uma ferramenta de automação de marketing, porém proprietária.
+
+Rocketchat
+----------
+    Link:  https://docs.rocket.chat/
+    Plataforma de comunicação via chat.
+
+Telegram api  
+------------
+    Link: https://core.telegram.org/
+    Plataforma de comunicação via chat.
+
+Componentes do EJ server
+========================
 
 Nginx
+------
     O tráfego da Web não deve ser manipulado diretamente pelo serviço de
     aplicativo. O Gunicorn (ver abaixo) não é eficiente para servir arquivos estáticos e
     um proxy reverso adicional também pode ser usado para impor políticas de
@@ -27,6 +94,7 @@ Nginx
     volumes com o aplicativo Django para localizar arquivos estáticos.
 
 Aplicação Django
+----------------
     EJ é escrito principalmente em Python e usa o Framework Web Django. O serviço
     de aplicação é responsável por todas as rotas dinâmicas, que são geradas
     pelo Django usando a linguagem de *templates* Jinja2. O aplicativo Django
@@ -36,6 +104,7 @@ Aplicação Django
     a configuração recomendada.
 
 Base SQL
+------------
     EJ não usa qualquer funcionalidade específica do banco de dados ou comandos
     SQL brutos. Isso significa que ele pode ser executado em qualquer banco de
     dados suportado pelo Django, como postgres SQL, MariaDB, sqlite3, etc.
@@ -43,29 +112,8 @@ Base SQL
     de banco de dados é controlada pela variável de ambiente DJANGO_DB_URL no
     contêiner do aplicativo principal.
 
-
-Integração com o Rocket.chat
-----------------------------
-
-As instâncias que implantam a integração opcional do Rocket. chat devem
-considerar os serviços adicionais.
-
-Rocket.Chat
-    Rocket.Chat é um aplicativo node. js baseado na estrutura Meteor que serve
-    arquivos estáticos e as rotas dinâmicas. O EJ é compatível com o contêiner
-    Rocket.Chat oficial no `Hub do Docker`_, que é o método de implantação
-    recomendado.
-
-Mongo DB
-    A camada de persistência Rocket. chat usa o Mongo. O contêiner Rocket.Chat
-    é compatível com a imagem oficial do Docker Hub e requer configuração mínima.
-
-.. _Hub do Docker: https://hub.docker.com/_/rocketchat
-
-
 Frontend
-........
-
+------------
 O frontend do EJ é implementado usando a linguagem de modelagem Jinja2 e usa
 aprimoramento progressivo para incluir estilos via CSS e comportamentos
 personalizados com JavaScript. A seguir apresenta uma breve visão geral
@@ -79,6 +127,8 @@ CSS
     Compilação Sass requer libsass, que é empacotado nas dependências do Python
     do aplicativo.
 
+    Localização: */lib/scss/*
+
 JavaScript/TypeScript
     EJ não adota qualquer estrutura JavaScript tradicional, mas em vez disso,
     depende de aprimoramento progressivo para adicionar funcionalidades opcionais.
@@ -88,6 +138,8 @@ JavaScript/TypeScript
     funcionalidades extras. A compilação do TypeScript requer o node Package
     Manager (NPM) e o Parcel_.
 
+    Localização: */lib/js/*
+
 .. _Mendeleev.css: https://www.npmjs.com/package/mendeleev.css
 .. _Unpoly: https://unpoly.com
 .. _jQuery: https://jquery.com
@@ -96,6 +148,25 @@ JavaScript/TypeScript
 
 Aplicação Django
 ================
+
+Arquitetura Django
+------------------
+A base da arquitetura é o MVT https://djangobook.com/mdj2-django-structure/, simplificado pela lógica de roteador do flask, 
+que foi permitida por meio da biblioteca do `django boogie` https://django-boogie.readthedocs.io/en/latest/overview.html resultando em:
+
+.. figure:: ../images/dev-docs/django-boogie-architecture.png
+
+Os templates são rodados no lado do cliente, sendo responsável pela visualização. São eles o centro do frontend, explicado anteriormente,
+sendo implementados em `jinja2`.
+
+As rotas possuem a lógica de negócio, assim como uma `View` do django, porém, além disso, 
+facilita a implementação de `urls`, trazendo um decorator que define a rota.
+A rota de login por exemplo, possui o decorator: `@urlpatterns.route("login/")`.
+
+Um objetivo importante da arquitetura é criar rotas e models leves. 
+Isso é feito movendo a funcionalidade para a própria estrutura do Boogie ou dividindo a funcionalidade em módulos diferentes.
+Outra parte que representa isso são os decorators de models, que tiram a necessidade de criar serializadores para a REST API, 
+sendo ela feita de forma automatica pelo boogie.
 
 Django divide um sistema Web em módulos chamados "apps" que implementam modelos
 de banco de dados reutilizáveis, rotas e funcionalidades. Esta seção descreve
@@ -126,69 +197,67 @@ ej.components
     dos usuários e desenvolvedores nunca deve tocar isso.
 
 ej.fixes
-Monkey patch módulos de terceira parte que têm problemas conhecidos com EJ ou qualquer uma de suas dependências.
+    Monkey patch módulos de terceira parte que têm problemas conhecidos com EJ ou qualquer uma de suas dependências.
 
 ej.forms``ej.components``
-    Similarly to ``ej.roles``, this module defines renderers for reusable UI
-    elements. The difference between the two modules is that components can have
-    a more complicated structure and may not be directly associated with some
-    known Python data type.
+    Da mesma forma que ``ej.roles``, este módulo define renderizadores para elementos reutilizáveis da IU.
+    A diferença entre os dois módulos é que os componentes podem ter uma estrutura mais complicada
+    e podem não estar diretamente associados a algum tipo de dados Python conhecido.
 
 ``ej.contrib``
-    Location to include ad-hoc migrations for specific deployments. Most users
-    and developers should never touch this.
+    Local para incluir migrações ad-hoc para implantações específicas. 
+    A maioria dos usuários e desenvolvedores *nunca* deve tocar nisso.
 
 ``ej.fixes``
-    Monkey patch third part modules that have known issues with EJ or any of
-    its dependencies.
+    Monkey patch de módulos de terceiros que tem problemas conhecidos com a EJ
+    ou com suas dependências.
 
 ``ej.forms``
-    Base form classes that are used in other EJ apps. Forms are derived from
-    django.forms.
+    Classes de formulário base que são usadas em outros aplicativos EJ.
+    Os formulários são derivados de django.forms.
 
 ``ej.jinja2``
-    EJ uses Jinja2 as the default templating language. This module configures the
-    Jinja2 environment and set global functions and filters.
+    EJ usa Jinja2 como a linguagem de modelagem padrão.
+    Este módulo configura o ambiente Jinja2 e define funções e filtros globais.
 
 ``ej.roles``
-    Functions that define Hyperpython roles. Roles are mappings of
-    ``(type, name) -> HTML`` that define how a certain object should be rendered
-    in a given context or role. This module defines many reusable UI elements
-    as Python functions.
+    Funções que definem as `roles` do Hyperpython. Roles são mapeamentos
+    ``(type, name) -> HTML`` que definem como um certo objeto deve ser definido
+    dado um contexto ou um role. Esse módulo define vários elementos de IU
+    reutilizáveis como funções Python.
 
 ``ej.routes``
-    Define some global view functions such as the home page that do not have
-    functionality tied to any app.
+    Define algumas funções de visualização global, como a página inicial, que não possui funcionalidade vinculada a nenhum aplicativo.
 
 ``ej.services``
-    Helper functions to initialize connections to external services such as
-    Postgres SQL database and redis (if enabled).
+    Funções auxiliares para inicializar conexões com serviços externos, como
+    Banco de dados Postgres SQL e redis (se habilitado).
 
 ``ej.settings``
-    Django settings module. Defines configuration using Django Boogie's
-    configuration framework in which configuration is defined in reusable classes
-    instead of a flat Python module.
+    Módulo de configurações do Django. 
+    Define a configuração usando a estrutura de configuração do Django Boogie, 
+    na qual a configuração é definida em classes reutilizáveis em vez de um módulo Python simples.
 
 ``ej/templates/jinja2``
-    Contains templates available globally. The global ``base.jinja2`` template
-    defines the base page HTML structure (navigation bars, meta information, etc)
-    that is shared among most pages in the site.
+    Contém templates globais. O template global ``base.jinja2``
+    define a estrutura base de HTML (navigation bars, meta information, etc)
+    que é compartilha na maioria das páginas do website.
 
 ``ej.testing``
-    Helper tools used in testing across apps.
+    Ferramentas auxiliares usadas em testes.
 
 ``ej.tests``
-    Global tests. Most tests are implemented in app-specific test folders.
+    Testes globais. A maioria dos testes são implementados nas pastas dos apps.
 
 ``ej.urls``
-    URL mapping for the project. Most URLs are included from an app's own
-    ``routes.py``.
+    Mapeamento de URLs para o projeto. A maioria das URLs são incluídas no próprio 
+    `` routes.py`` do aplicativo.
 
 ``ej.utils``
-    Utility functions module.
+   Módulo de funções de utilidades.
 
 ``ej.wsgi``
-    Django wrapper for the WSGI interface.
+    Wrapper Django para a interface WSGI.
 
 Classes de formulário base que são usadas em outros aplicativos EJ. Os formulários são derivados de Django. Forms.
 
@@ -225,23 +294,19 @@ Módulo de funções utilitárias.
 ej.wsgi
 Wrapper do Django para a interface WSGI.
 
-Applications
+Aplicações
 ------------
 
-The listing bellow describes all apps implemented inside EJ source tree.
+A lista abaixo descreve todos os apps implementados na source tree da EJ.
 
 
 ``ej_conversations``
-    .. image:: orm/ej_conversations.svg
-       :target: ../_images/ej_conversations.svg
 
     This is the main application and defines models for conversations, comments,
     and votes. The ej_applications app implements the UI for creating, configuring
     and interacting with conversations.
 
 ``ej_users``
-    .. image:: orm/ej_users.svg
-       :target: ../_images/ej_users.svg
 
     This app defines the main User model for EJ and all routes related to
     authentication and account management (e.g., reset passwords, cancel account,
@@ -249,16 +314,12 @@ The listing bellow describes all apps implemented inside EJ source tree.
     encouraged.
 
 ``ej_profiles``
-    .. image:: orm/ej_profiles.svg
-       :target: ../_images/ej_profiles.svg
 
     Implements profile management UI and defines a model that store profile
     information. This app can be easily modified to include extra profile fields
     or to remove unwanted fields for some particular installation.
 
 ``ej_clusters``
-    .. image:: orm/ej_clusters.svg
-       :target: ../_images/ej_clusters.svg
 
     Implements the mathematical routines to classify users into opinion groups.
     The ej_clusters.math module implements our modified K-means algorithm that
@@ -266,8 +327,6 @@ The listing bellow describes all apps implemented inside EJ source tree.
     manage those stereotypes and the resulting clusters.
 
 ``ej_dataviz``
-    .. image:: orm/ej_dataviz.svg
-       :target: ../_images/ej_dataviz.svg
 
     Implements routines to visualize data about conversations. It generates
     structured reports and export data to spreadsheet-compatible formats. This
@@ -275,8 +334,6 @@ The listing bellow describes all apps implemented inside EJ source tree.
     Scatter Maps of user opinions.
 
 ``ej_gamification``
-    .. image:: orm/ej_gamification.svg
-       :target: ../_images/ej_gamification.svg
 
     The gamification app implements the points and badges system in EJ. Most
     interactions in the platform are rewarded with points. Users that achieve
@@ -285,8 +342,6 @@ The listing bellow describes all apps implemented inside EJ source tree.
     conversations, etc.
 
 ``ej_boards``
-    .. image:: orm/ej_boards.svg
-       :target: ../_images/ej_boards.svg
 
     The boards app allow regular users to have their own "board" or "timeline"
     of conversations. The default conversation feed in "/conversations/" can
@@ -336,10 +391,7 @@ App structure
 =============
 
 EJ uses Django Boogie adopts an architecture that may be slightly different
-from a typical Django app. One important goal of the architecture is to make
-lightweight view functions and models. This is accomplished by either moving
-functionality to the Boogie framework itself or to splitting functionality
-into different modules.
+from a typical Django app.
 
 A typical EJ App has the following structure:
 
@@ -424,11 +476,13 @@ and save app-specific templates inside ``jinja2/<app-name>/<template-name>.jinja
 Templates names usually mirror the names of view functions in the ``routes.py``
 file. For instance, a edit view for some conversation would be declared as::
 
+.. code-block:: python
+
     urlpatterns = Router(template='ej_conversations/{name}.jinja2')
 
     @urlpatterns.route("/<model:conversation>/edit/")
     def edit(request, conversation):
-        ... # Implementation
+    ...
 
 This view function is automatically associated with the ``ej_conversations/edit.jinja2``
 template, unless specified otherwise.
