@@ -1,6 +1,6 @@
-============
-Login Social
-============
+==============================
+Login utilizando redes sociais
+==============================
 
 Usuários podem entrar no EJ com a conta do Twitter ou Facebook, também. Para isso, é necessário preparar o ambiente e criar os apps sociais nas respectivas redes sociais.
 
