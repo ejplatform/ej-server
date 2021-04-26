@@ -5,6 +5,20 @@ CHANGELOG of EJPlatform releases
 Here you can follow all the fixes and new features on every EJPlatform release.
 
 
+2.4.1 release
+====================
+
+* Date: April 26, 2021
+* Features
+- Improves dev and user documentation;
+
+2.4.0 release
+====================
+
+* Date: April 8, 2021
+* Features
+- Adds tool mautic template;
+
 2.3.0 release
 ====================
 
