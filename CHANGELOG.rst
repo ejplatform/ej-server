@@ -31,6 +31,7 @@ Here you can follow all the fixes and new features on every EJPlatform release.
 - Adds new page for  ejBot configuration;
 - Adds new API endpoint api/v1/rasa-conversations/integrations?domain=URL
 - Fixes board route
+- Adds poetry as default package manager 
 
 2.2.0 release
 ====================
