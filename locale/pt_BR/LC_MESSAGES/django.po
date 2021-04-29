@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-21 13:37-0300\n"
+"POT-Creation-Date: 2021-04-29 17:22-0300\n"
 "PO-Revision-Date: 2019-09-09 13:55-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -15,6 +15,10 @@ msgstr ""
 "Generated-By: Babel 2.5.3\n"
 "X-Generator: Poedit 2.2.1\n"
 "X-Loco-Parser: loco_parse_po\n"
+
+#: build/docs/_sources/i18n/pt-br/dev-docs/translations.rst.txt:64
+msgid "This string should be translated"
+msgstr ""
 
 #: docs/_templates_simple/layout.html:3
 msgid "Documentation"
@@ -622,25 +626,31 @@ msgstr "URL interna"
 msgid "Rasa conversation with this Conversation and Domain already exists."
 msgstr "Uma persona com esse nome já existe nessa conversa."
 
-#: src/ej_conversations/tools/forms.py:21
+#: src/ej_conversations/tools/forms.py:22
 #, fuzzy
 msgid "Authentication Type"
 msgstr "Autenticação"
 
-#: src/ej_conversations/tools/forms.py:25
-#: src/ej_conversations/tools/forms.py:36
+#: src/ej_conversations/tools/forms.py:26
+#: src/ej_conversations/tools/forms.py:37
 msgid "Theme"
 msgstr "Tema"
 
-#: src/ej_conversations/tools/forms.py:31
-msgid "Select a marketing tool to generate a compatible template"
-msgstr ""
-"Escolha uma ferramenta de marketing para que o template compatível seja "
-"gerado."
+#: src/ej_conversations/tools/forms.py:32
+msgid "Template type"
+msgstr "Tipo de template"
 
-#: src/ej_conversations/tools/forms.py:41
+#: src/ej_conversations/tools/forms.py:42
 msgid "Redirect user to a custom domain"
 msgstr "Redirecione o usuário para um endereço personalizado"
+
+#: src/ej_conversations/tools/forms.py:46
+msgid "Adds a custom title to the template (optional)."
+msgstr "Adicione um título customizado ao template (opicional)."
+
+#: src/ej_conversations/tools/forms.py:51
+msgid "selects a specific comment for user to vote (optional)."
+msgstr "Selecione um comentário específico para o usuário votar (opicional)."
 
 #: src/ej_conversations/tools/models.py:15
 msgid "Domain"
@@ -701,18 +711,18 @@ msgstr ""
 msgid "Mailchimp campaign"
 msgstr "Campanha de email"
 
-#: src/ej_conversations/tools/routes.py:42
+#: src/ej_conversations/tools/routes.py:43
 #: src/ej_conversations/tools/table.py:11
 msgid "Mailing campaign"
 msgstr "Campanha de email"
 
-#: src/ej_conversations/tools/routes.py:55
+#: src/ej_conversations/tools/routes.py:56
 #: src/ej_conversations/tools/table.py:17
 #, fuzzy
 msgid "Conversation component"
 msgstr "Componente de coleta"
 
-#: src/ej_conversations/tools/routes.py:72
+#: src/ej_conversations/tools/routes.py:73
 #: src/ej_conversations/tools/table.py:23
 msgid "Rasa chatbot"
 msgstr ""
@@ -2763,22 +2773,41 @@ msgstr "Integração"
 msgid "More information"
 msgstr "Saiba mais"
 
-#: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:33
-msgid "domain to redirect the user on template"
-msgstr ""
+#: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:23
+#, fuzzy
+msgid "Selects template type you want to use."
+msgstr "Selecione o tipo de template que deseja utilizar."
 
-#: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:37
+#: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:28
+#, fuzzy
+msgid "Changes template appearence."
+msgstr "Altere a aparência (cores) do template."
+
+#: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:32
+msgid "Custom fields"
+msgstr "Campos personalizáveis"
+
+#: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:34
+#, fuzzy
+msgid "Changes fields like comment and title."
+msgstr "Altere campos como comentário e título."
+
+#: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:43
+msgid "domain to redirect the user on template"
+msgstr "domínio que será embutido para redirecionamento do usuário"
+
+#: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:47
 #, fuzzy
 msgid "Download"
 msgstr "Download"
 
-#: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:38
+#: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:48
 #, fuzzy
 msgid "Preview"
 msgstr "Pré visualização"
 
-#: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:51
-#: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:53
+#: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:61
+#: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:63
 #: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:126
 #: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:128
 #: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:47
@@ -3649,6 +3678,23 @@ msgstr "Mudar a senha"
 #, fuzzy
 msgid "Authentication"
 msgstr "Autenticação"
+
+#~ msgid "If you want a custom title for the e-mail template, enter here"
+#~ msgstr "Caso queira um título diferente para o e-mail, digite aqui"
+
+#~ msgid "If you want a specific comment for the e-mail template, choose here"
+#~ msgstr "Caso queira um comentário específico para votação, escolha aqui"
+
+#~ msgid "Select a marketing tool to generate a compatible template"
+#~ msgstr ""
+#~ "Escolha uma ferramenta de marketing para que o template compatível seja "
+#~ "gerado."
+
+#~ msgid "Caso queira um título diferente para o e-mail, digite aqui"
+#~ msgstr "If you want a custom title for the e-mail template, enter here"
+
+#~ msgid "Caso queira um comentário específico para votação, escolha aqui"
+#~ msgstr "If you want a specific comment for the e-mail template, choose here"
 
 #~ msgid "Administration Guides"
 #~ msgstr "Guias de Administração"

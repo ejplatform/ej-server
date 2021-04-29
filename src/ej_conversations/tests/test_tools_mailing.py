@@ -131,12 +131,69 @@ class TestTemplateGenerator(BoardRecipes):
         palette = campaign._get_palette_css()
         assert palette == expected_palette
 
+    def test_set_custom_comment_template(self, mk_user, conversation_db):
+        request = mock.Mock()
+        request.META = {
+            'wsgi.url_scheme': 'http',
+            'HTTP_HOST': 'ejplatform.local'
+        }
+        request.POST = {
+            'custom-domain': 'http://ejplatform.local'
+        }
+        user = mk_user(email="test@domain.com")
+        comment_1 = conversation_db.create_comment(user, 'comment 1', status="approved", check_limits=False)
+        generator = TemplateGenerator(conversation_db, request, 'mautic')
+        generator.set_custom_values(None, comment_1)
+        assert generator.comment.content == comment_1.content
+        assert generator.comment == comment_1
+        assert generator.conversation.text == conversation_db.text
 
-class TestConversationComponentForm:
-    def test_conversation_component_valid_mautic_form(self):
-        form = MailingToolForm({'mailing_tool_type': "mautic", 'theme': "default"})
+    def test_set_custom_title_template(self, mk_user, conversation_db):
+        request = mock.Mock()
+        request.META = {
+            'wsgi.url_scheme': 'http',
+            'HTTP_HOST': 'ejplatform.local'
+        }
+        request.POST = {
+            'custom-domain': 'http://ejplatform.local'
+        }
+        new_title = "Text of the new title"
+        user = mk_user(email="test@domain.com")
+        conversation_db.create_comment(user, 'comment 1', status="approved", check_limits=False)
+        generator = TemplateGenerator(conversation_db, request, 'mautic')
+        generator.set_custom_values(new_title, None)
+        assert generator.comment.content == conversation_db.approved_comments.last().content
+        assert generator.comment == conversation_db.approved_comments.last()
+        assert generator.conversation.text == new_title
+
+class TestConversationComponentForm(BoardRecipes):
+    def test_conversation_component_valid_mautic_form(self, conversation_db, mk_user):
+        user = mk_user(email="test@domain.com")
+        conversation_db.create_comment(user, 'comment 1', status="approved", check_limits=False)
+        form = MailingToolForm({
+            'mailing_tool_type': "mautic",
+            'theme': "default", 
+            'custom_title': None,
+            'custom_comment': None}, conversation_id=conversation_db.id)
         assert form.is_valid()
 
-    def test_conversation_component_valid_mautic_form(self):
-        form = MailingToolForm({'mailing_tool_type': "mailchimp", 'theme': "icd"})
+    def test_conversation_component_valid_mautic_form(self, conversation_db, mk_user):
+        user = mk_user(email="test@domain.com")
+        conversation_db.create_comment(user, 'comment 1', status="approved", check_limits=False)
+        form = MailingToolForm({
+            'mailing_tool_type': "mailchimp",
+            'theme': "icd",
+            'custom_title': None,
+            'custom_comment': None}, conversation_id=conversation_db.id)
+        assert form.is_valid()
+    
+    def test_conversation_component_valid_custom_attributes(self, conversation_db, mk_user):
+        user = mk_user(email="test@domain.com")
+        comment_1 = conversation_db.create_comment(user, 'comment 1', status="approved", check_limits=False)
+        form = MailingToolForm({
+            'mailing_tool_type': "mailchimp",
+            'theme': "icd",
+            'custom_title': 'New title',
+            'custom_comment': comment_1.id}, conversation_id=conversation_db.id)
+        print(form.errors)
         assert form.is_valid()
