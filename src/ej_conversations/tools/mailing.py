@@ -31,6 +31,10 @@ class TemplateGenerator():
         self.vote_domain = self._get_vote_domain()
         self.statics_domain = self._get_statics_domain()
 
+    def set_custom_values(self, title, comment):
+        self.conversation.text = title or self.conversation.text
+        self.comment = comment or self.comment
+
     def get_template(self):
         try:
             return self._render_jinja_template()

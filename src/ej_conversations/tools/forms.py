@@ -3,6 +3,7 @@ from django.template.loader import get_template
 from django.utils.translation import ugettext_lazy as _
 
 from ej_boards.forms import PaletteWidget
+from ej_conversations.models import Comment
 from ej.forms import EjModelForm
 from .models import RasaConversation, ConversationComponent, MailingTool
 
@@ -28,7 +29,7 @@ class ConversationComponentForm(forms.Form):
 
 class MailingToolForm(forms.Form):
     mailing_tool_type = forms.ChoiceField(
-        label=_("Select a marketing tool to generate a compatible template"),
+        label=_("Template type"),
         choices=MailingTool.MAILING_TOOL_CHOICES, required=False,
         widget=CustomChoiceWidget(attrs=MailingTool.MAILING_TOOLTIP_TEXTS)
     )
@@ -40,6 +41,20 @@ class MailingToolForm(forms.Form):
         required=False,
         label=_("Redirect user to a custom domain")
     )
+    custom_title = forms.CharField(
+        required=False,
+        label=_("Adds a custom title to the template (optional).")
+    )
+    custom_comment = forms.ModelChoiceField(
+        queryset=None,
+        required=False,
+        label=_("selects a specific comment for user to vote (optional).")
+    )
+
+    def __init__(self, *args, **kwargs):
+        conversation_id = kwargs.pop('conversation_id')
+        super(MailingToolForm, self).__init__(*args, **kwargs)
+        self.fields['custom_comment'].queryset = Comment.objects.filter(conversation=conversation_id)
 
 class RasaConversationForm(EjModelForm):
     class Meta:

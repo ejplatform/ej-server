@@ -28,9 +28,10 @@ def index(request, conversation, slug, npm=npm_version):
 def mailing(request, conversation, slug):
     from .mailing import TemplateGenerator
     template = None
-    form = MailingToolForm(request.POST)
-    if request.method == "POST":
+    form = MailingToolForm(request.POST, conversation_id=conversation)
+    if request.method == "POST" and form.is_valid():
         generator = TemplateGenerator(conversation, request, "mautic")
+        generator.set_custom_values(form.cleaned_data['custom_title'], form.cleaned_data['custom_comment'])
         template = generator.get_template()
         if 'download' in request.POST:
             response = HttpResponse(template, content_type="text/html")
