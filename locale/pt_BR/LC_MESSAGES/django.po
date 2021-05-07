@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-29 17:22-0300\n"
+"POT-Creation-Date: 2021-05-07 16:21-0300\n"
 "PO-Revision-Date: 2019-09-09 13:55-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -93,7 +93,7 @@ msgid "Your progress: {n} of {total}"
 msgstr "Seu progresso: {n} de {total}"
 
 #: src/ej/routes.py:54 src/ej_conversations/apps.py:8
-#: src/ej_conversations/models/conversation.py:89
+#: src/ej_conversations/models/conversation.py:98
 msgid "Conversations"
 msgstr "Conversas"
 
@@ -131,6 +131,20 @@ msgstr "Boas vindas!"
 msgid "Page {slug} not found"
 msgstr "Página {slug} não encontrada"
 
+#: src/ej_analysis/apps.py:7 src/ej_conversations/models/conversation.py:34
+msgid "Analysis"
+msgstr "Analises"
+
+#: src/ej_analysis/opinion_component/aquisition.py:29
+#, fuzzy
+msgid "Engagement"
+msgstr "Engajamento"
+
+#: src/ej_analysis/opinion_component/aquisition.py:33
+#, fuzzy
+msgid "Aquisition"
+msgstr "Aquisição"
+
 #: src/ej_boards/apps.py:7 src/ej_boards/models.py:44
 msgid "Boards"
 msgstr "Murais"
@@ -167,7 +181,7 @@ msgstr "Roxa"
 msgid "Slug"
 msgstr "Identificador"
 
-#: src/ej_boards/models.py:32 src/ej_conversations/models/conversation.py:36
+#: src/ej_boards/models.py:32 src/ej_conversations/models/conversation.py:45
 msgid "Title"
 msgstr "Título"
 
@@ -502,66 +516,70 @@ msgstr "Comentário está com moderação pendente"
 msgid "Must give a reason to reject a comment"
 msgstr "Deve fornecer uma razão para rejeitar o comentário"
 
-#: src/ej_conversations/models/conversation.py:38
+#: src/ej_conversations/models/conversation.py:35
+msgid "Tools"
+msgstr "Ferramentas"
+
+#: src/ej_conversations/models/conversation.py:47
 msgid "Short description used to create URL slugs (e.g. School system)."
 msgstr ""
 "Uma breve descrição sobre essa conversa. Isso é usado internamente para "
 "criar identificadores de URL (slugs. Ex: sistema de ensino)"
 
-#: src/ej_conversations/models/conversation.py:40
+#: src/ej_conversations/models/conversation.py:49
 msgid "Question"
 msgstr "Questão"
 
-#: src/ej_conversations/models/conversation.py:40
+#: src/ej_conversations/models/conversation.py:49
 msgid "What do you want to ask?"
 msgstr "O que você deseja perguntar?"
 
-#: src/ej_conversations/models/conversation.py:45
+#: src/ej_conversations/models/conversation.py:54
 msgid "Only the author and administrative staff can edit this conversation."
 msgstr "Apenas o autor e o administrador podem editar esta conversa."
 
-#: src/ej_conversations/models/conversation.py:51
+#: src/ej_conversations/models/conversation.py:60
 msgid "Moderators can accept and reject comments."
 msgstr "Os moderadores podem aceitar e rejeitar comentários."
 
-#: src/ej_conversations/models/conversation.py:55
+#: src/ej_conversations/models/conversation.py:64
 msgid "Promote conversation?"
 msgstr "Promover conversa?"
 
-#: src/ej_conversations/models/conversation.py:57
+#: src/ej_conversations/models/conversation.py:66
 msgid "Promoted conversations appears in the main /conversations/ endpoint."
 msgstr "Conversas promovidas aparecem no mural principal /conversations."
 
-#: src/ej_conversations/models/conversation.py:60
+#: src/ej_conversations/models/conversation.py:69
 msgid "Hide conversation?"
 msgstr "Esconder conversa?"
 
-#: src/ej_conversations/models/conversation.py:63
+#: src/ej_conversations/models/conversation.py:72
 msgid ""
 "Hidden conversations does not appears in boards or in the main /"
 "conversations/ endpoint."
 msgstr "Conversas ocultas não aparecem no mural principal /conversations/."
 
-#: src/ej_conversations/models/conversation.py:88
+#: src/ej_conversations/models/conversation.py:97
 #: src/ej_conversations/roles/conversations.py:133
 #: src/ej_conversations/tour.py:75 src/ej_gamification/routes.py:148
 #: src/ej_notifications/enums.py:8
 msgid "Conversation"
 msgstr "Conversa"
 
-#: src/ej_conversations/models/conversation.py:91
+#: src/ej_conversations/models/conversation.py:100
 msgid "Can publish promoted conversations"
 msgstr "Pode publicar conversas promovidas"
 
-#: src/ej_conversations/models/conversation.py:92
+#: src/ej_conversations/models/conversation.py:101
 msgid "Can moderate comments in any conversation"
 msgstr "Pode moderar comentários em qualquer conversa"
 
-#: src/ej_conversations/models/conversation.py:188
+#: src/ej_conversations/models/conversation.py:197
 msgid "User does not have permission to create a promoted conversation."
 msgstr "Usuário não tem permissão para criar uma conversa promovida."
 
-#: src/ej_conversations/models/conversation.py:252
+#: src/ej_conversations/models/conversation.py:261
 msgid "automatically rejected"
 msgstr "rejeitado automaticamente"
 
@@ -2319,6 +2337,59 @@ msgstr "Mais informações"
 msgid "Execution environment"
 msgstr "Ambiente de execução"
 
+#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:3
+msgid "Engagement vs Aquisition"
+msgstr "Engajamento vs Aquisição"
+
+#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:12
+#, fuzzy
+msgid "Start date"
+msgstr "data de inicio"
+
+#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:16
+msgid "End date"
+msgstr "data de fim"
+
+#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:21
+msgid "Analytics view id"
+msgstr "view id do analytics"
+
+#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:42
+msgid "Invalid analytics view id"
+msgstr "view id do analytics invalida"
+
+#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:45
+msgid "end date must be gratter then start date"
+msgstr "data de fim deve ser maior que data de inicio"
+
+#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:69
+msgid "Total access to component (engagement): "
+msgstr "Total de acessos ao componente (engajamento): "
+
+#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:71
+#, fuzzy
+msgid "Total votes on component (aquisition): "
+msgstr "Total de votos no componente (aquisição): "
+
+#: src/ej_analysis/jinja2/ej_conversations_analysis/index.jinja2:13
+msgid "Dashboards and analysis"
+msgstr "Dashboards e analises"
+
+#: src/ej_analysis/jinja2/ej_conversations_analysis/index.jinja2:17
+#, fuzzy
+msgid "Opinion Component"
+msgstr "Componente de coleta"
+
+#: src/ej_analysis/jinja2/ej_conversations_analysis/index.jinja2:24
+#: src/ej_analysis/jinja2/ej_conversations_analysis/index.jinja2:26
+#: src/ej_conversations/jinja2/ej_conversations/edit.jinja2:9
+#: src/ej_conversations/jinja2/ej_conversations/moderate.jinja2:7
+#: src/ej_conversations/jinja2/ej_conversations/moderate.jinja2:9
+#: src/ej_conversations/jinja2/ej_conversations_tools/index.jinja2:31
+#: src/ej_conversations/jinja2/ej_conversations_tools/index.jinja2:33
+msgid "Back to conversation"
+msgstr "Voltar para conversas"
+
 #: src/ej_boards/jinja2/ej_boards/board-create.jinja2:6
 msgid "Create board"
 msgstr "Criar mural"
@@ -2693,14 +2764,6 @@ msgstr "Não há comentários para votar :)"
 msgid "Back (skip changes)"
 msgstr "Voltar (ignorar mudanças)"
 
-#: src/ej_conversations/jinja2/ej_conversations/edit.jinja2:9
-#: src/ej_conversations/jinja2/ej_conversations/moderate.jinja2:7
-#: src/ej_conversations/jinja2/ej_conversations/moderate.jinja2:9
-#: src/ej_conversations/jinja2/ej_conversations_tools/index.jinja2:31
-#: src/ej_conversations/jinja2/ej_conversations_tools/index.jinja2:33
-msgid "Back to conversation"
-msgstr "Voltar para conversas"
-
 #: src/ej_conversations/jinja2/ej_conversations/edit.jinja2:13
 msgid "Edit conversation"
 msgstr "Editar conversa"
@@ -2750,14 +2813,6 @@ msgstr "Voltar para conversa"
 msgid "Back to conversations"
 msgstr "Voltar para conversas"
 
-#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:25
-#: src/ej_conversations/jinja2/ej_conversations_tools/index.jinja2:15
-#: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:15
-#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:13
-#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:15
-msgid "Tools"
-msgstr "Ferramentas"
-
 #: src/ej_conversations/jinja2/ej_conversations_tools/index.jinja2:16
 #, fuzzy
 msgid "Integrates this conversation with external tools and platforms."
@@ -2792,7 +2847,7 @@ msgstr "Campos personalizáveis"
 msgid "Changes fields like comment and title."
 msgstr "Altere campos como comentário e título."
 
-#: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:43
+#: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:42
 msgid "domain to redirect the user on template"
 msgstr "domínio que será embutido para redirecionamento do usuário"
 
