@@ -21,6 +21,7 @@ class InstalledAppsConf(Base, EjOptions):
         # Core apps
         "ej_profiles",
         "ej_conversations",
+        "ej_analysis"
     ]
     third_party_apps = [
         "boogie.apps.fragments",

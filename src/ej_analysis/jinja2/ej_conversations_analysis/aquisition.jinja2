@@ -1,0 +1,271 @@
+<div class="row">
+    <div class="card">
+        <div class="card-title">{{ _('Engagement vs Aquisition') }} </div>
+        <div class="card-body">
+            <div class="card-filters">
+                <div class="card-filters-title">
+                    <span>Filtros</span>
+                </div>
+                <div class="card-filters-body">
+                    <div class="card-filters-body-daterange">
+                        <div>
+                            <label>{{ _('Start date') }}</label>
+                            <input type="date" id="aquisition-date-start">
+                        </div>
+                        <div>
+                            <label>{{ _('End date') }}</label>
+                            <input type="date" id="aquisition-date-end">
+                        </div>
+                    </div>
+                    <div class="card-filters-body-input">
+                        <label> {{ _('Analytics view id') }}</label>
+                        <input id="aquisition-analytics-view-id" type="text" minlength="9">
+                    </div>
+                </div>
+            </div>
+            <div class="card-body-content">
+                <div class="card-body-content-loading">
+                    <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+                </div>
+            <div class="card-body-content-infos">
+                <div class="card-body-content-infos-subcard">
+                    <div id="page-engagement-value">
+                    </div>
+                    <div id="page-aquisition-value">
+                    </div>
+                </div>
+            </div>
+            <div class="card-body-content-vizualization">
+                <div id="aquisition-viz"></div>
+            </div>
+            <div class="card-body-error-invalid-analytics">
+                <span class="helptext">{{ _('Invalid analytics view id') }}</span>
+            </div>
+            <div class="card-body-error-invalid-dates">
+                <span class="helptext">{{ _('end date must be gratter then start date') }}</span>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block javascript %}
+<script>
+
+async function requestData() {
+  var endDate = document.querySelector("#aquisition-date-end").value;
+  var startDate = document.querySelector("#aquisition-date-start").value;
+  var viewID = document.querySelector("#aquisition-analytics-view-id").value;
+  var url =
+    "/conversations/{{conversation.id}}/{{conversation.slug}}/analysis/aquisition_viz?startDate=" +
+    startDate +
+    "&endDate=" +
+    endDate +
+    "&viewId=" +
+    viewID;
+  var response = await fetch(url);
+  var data = await response.json();
+  document.querySelector("#page-engagement-value").textContent =
+      "{{ _('Total access to component (engagement): ') }}" + data["value"];
+  document.querySelector("#page-aquisition-value").textContent =
+      "{{ _('Total votes on component (aquisition): ') }}" +
+    data["children"][0]["value"];
+  return data;
+}
+
+function setDefaultDateFilter() {
+  var day = new Date(Date.now()).getDate();
+  day = day <= 9 ? "0" + day : day;
+  var month = new Date(Date.now()).getMonth() + 1;
+  month = month <= 9 ? "0" + month : month;
+  var year = new Date(Date.now()).getFullYear();
+  var formatedEndDate = [year, month, day].join("-");
+  document.querySelector("#aquisition-date-end").value = formatedEndDate;
+
+  var day = new Date(Date.now() - 5184000000).getDate();
+  day = day <= 9 ? "0" + day : day;
+  var month = new Date(Date.now() - 5184000000).getMonth() + 1;
+  month = month <= 9 ? "0" + month : month;
+  var year = new Date(Date.now() - 5184000000).getFullYear();
+  document.querySelector("#aquisition-date-start").value = [
+    year,
+    month,
+    day,
+  ].join("-");
+  document.querySelector("#aquisition-date-start").max = formatedEndDate;
+}
+
+function hideLoading() {
+  document.querySelector(".card-body-content-loading").style.display = "none";
+  document.querySelector(".card-body-content-infos").style.display = "flex";
+  document.querySelector(".card-body-content-vizualization").style.display =
+    "flex";
+}
+
+function showLoading() {
+  document.querySelector(".card-body-content-loading").style.display = "block";
+  document.querySelector(".card-body-content-infos").style.display = "none";
+  document.querySelector(".card-body-content-vizualization").style.display =
+    "none";
+}
+
+async function updateVisualization() {
+  if(!validAnalyticsID()) {
+      showErrors("invalid-analytics");
+      return;
+  }
+  if(startDateIsBiggerThenEndDate()) {
+      showErrors("invalid-dates");
+      return;
+  }
+  hideErrors();
+  showLoading();
+  var root = d3.hierarchy(await requestData());
+  hideLoading();
+  generateVisu(root);
+}
+
+function validAnalyticsID() {
+  var localStorageAnalyticsViewId = localStorage.getItem("analyticsViewId");
+  var inputAnalyticsViewId = document.querySelector(
+    "#aquisition-analytics-view-id"
+  ).value;
+  var analyticsId = inputAnalyticsViewId || localStorageAnalyticsViewId;
+  if (!analyticsId) {
+    return false;
+  }
+  return analyticsId.length < 9 ? false : true;
+}
+
+function showErrors(errorClass) {
+  document.querySelector(".card-body-content-infos").style.display = "none";
+  document.querySelector(".card-body-content-vizualization").style.display =
+    "none";
+  document.querySelector(".card-body-content-loading").style.display = "none";
+  document.querySelector(".card-body-error-" + errorClass).style.display = "block";
+}
+
+function hideErrors() {
+  document.querySelector(".card-body-error-invalid-analytics").style.display = "none";
+  document.querySelector(".card-body-error-invalid-dates").style.display = "none";
+}
+
+function startDateIsBiggerThenEndDate() {
+  var endDate = new Date(document.querySelector("#aquisition-date-end").value);
+  var startDate = new Date(document.querySelector("#aquisition-date-start").value);
+  return startDate > endDate;
+}
+
+function listenToChanges() {
+  var endDateInput = document.querySelector("#aquisition-date-end");
+  var startDateInput = document.querySelector("#aquisition-date-start");
+  var analyticsIdInput = document.querySelector(
+    "#aquisition-analytics-view-id"
+  );
+  endDateInput.onchange = updateVisualization;
+  startDateInput.onchange = updateVisualization;
+  analyticsIdInput.onchange = updateVisualization;
+}
+
+function storeAnalyticsViewIdOnLocalStorage() {
+  var analyticsId = document.querySelector("#aquisition-analytics-view-id")
+    .value;
+  if (analyticsId) {
+    localStorage.setItem("analyticsViewId", analyticsId);
+  } else {
+    localStorage.removeItem("analyticsViewId");
+  }
+}
+
+function overwriteCSS() {
+ var main = document.querySelector("main");
+ main.style.maxWidth = "90%";
+ var html = document.querySelector("html");
+ html.style.backgroundColor = "#f6f7f9";
+}
+
+async function loadAquisitionVizualization() {
+  overwriteCSS();
+  setDefaultDateFilter();
+  listenToChanges();
+  if (validAnalyticsID()) {
+    storeAnalyticsViewIdOnLocalStorage();
+    var root = d3.hierarchy(await requestData());
+    hideLoading();
+    generateVisu(root);
+  } else {
+    showErrors("invalid-analytics");
+  }
+}
+
+async function generateVisu(rootNode) {
+  var partition = d3.pack();
+  partition(rootNode);
+
+  var previusSvg = d3.select("#aquisition-viz");
+  previusSvg.select("svg").remove();
+  var svg = d3
+    .select("#aquisition-viz")
+    .append("svg")
+    .attr("width", "100%")
+    .attr("height", "420")
+    .append("g")
+    .attr("transform", "translate(130, 200)");
+
+  d3.select("#aquisition-viz svg")
+    .selectAll("legend")
+    .data(rootNode.descendants())
+    .enter()
+    .append("circle")
+    .attr("cx", (d) => 240)
+    .attr("cy", (d) => (d.data.name == "aquisition" ? 48 : 98))
+    .attr("r", (d) => 10)
+    .attr("fill", function (d) {
+      if (d.data.name == "engagement") {
+        return "#C4F2F4";
+      }
+        if (d.data.name == "aquisition") {
+        return "#042A46";
+      }
+    });
+
+  d3.select("#aquisition-viz svg")
+    .selectAll("legend")
+    .data(rootNode.descendants())
+    .enter()
+    .append("text")
+    .attr("x", (d) => 260)
+    .attr("y", (d) => (d.data.name == "aquisition" ? 55 : 105))
+    .text((d) => d.data.label)
+    .attr("stroke", "black");
+
+  var engagementValue = 0;
+
+  svg
+    .selectAll("circle.node")
+    .data(rootNode.descendants())
+    .enter()
+    .append("circle")
+    .classed("node", true)
+    .attr("cx", (d) => d.x)
+    .attr("cy", (d) => d.y)
+    .attr("r", function (d) {
+      if (d.data.name == "engagement") {
+        engagementValue = d.data.value;
+        return 121;
+      } else {
+        return (d.value * 121) / engagementValue;
+      }
+    })
+    .attr("fill", function (d) {
+      if (d.data.name == "aquisition") {
+        return "#042A46";
+      }
+      if (d.data.name == "engagement") {
+        return "#C4F2F4";
+      }
+    });
+}
+window.addEventListener('load', loadAquisitionVizualization);
+</script>
+{% endblock %}

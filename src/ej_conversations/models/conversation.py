@@ -23,8 +23,17 @@ from ..enums import Choice
 from ..signals import comment_moderated
 from ..utils import normalize_status
 
+from ej.components.menu import register_menu
+from hyperpython import a
+
 NOT_GIVEN = object()
 
+@register_menu("conversations:detail-actions")
+def conversation_links(request, conversation):
+    return [
+        a(_("Analysis"), href=conversation.url('conversation-analysis:index')),
+        a(_("Tools"), href=conversation.url('conversation-tools:index')),
+    ]
 
 @rest_api(["title", "text", "author", "slug", "created"])
 class Conversation(HasFavoriteMixin, TimeStampedModel):

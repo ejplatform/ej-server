@@ -47,7 +47,7 @@ You can access the running instance accessing `http://localhost:8000`.
 
 To rebuild the server image, you can run `inv docker-build --no-cache`.
 
-Some useful commands to manage environment tasks
+Some useful commands to manage docker environment:
 
 ==================  ============================================= 
 Command             Description  
@@ -58,6 +58,16 @@ inv docker-stop     Stops EJ containers
 inv docker-rm       Removes EJ containers
 inv docker-attach   Connects to ej-server container
 inv docker-exec     Executes a command on ej-server container
+==================  =============================================
+
+Some useful commands to manage the application (run this inside django container):
+==================  ============================================= 
+Command             Description  
+==================  =============================================
+inv i18n            Compile translations
+inv sass            Compile sass files
+inv sass --watch    Watch changes on code, and compile .sass files
+inv db              Prepare database and run migrations
 ==================  =============================================
 
 Documentation
