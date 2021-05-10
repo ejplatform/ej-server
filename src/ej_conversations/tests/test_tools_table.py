@@ -30,7 +30,7 @@ class TestTemplateGenerator(BoardRecipes):
         assert rasa_tool["link"] != ""
 
     def test_get_tool_conversation_component(self, tools):
-        conversation_component_tool = tools.get('Conversation component')
+        conversation_component_tool = tools.get('Opinion component')
         assert conversation_component_tool
         assert conversation_component_tool["integration"] != ""
         assert conversation_component_tool["description"] != ""
