@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-07 16:21-0300\n"
+"POT-Creation-Date: 2021-05-10 12:38-0300\n"
 "PO-Revision-Date: 2019-09-09 13:55-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -2824,9 +2824,8 @@ msgid "Integration"
 msgstr "Integração"
 
 #: src/ej_conversations/jinja2/ej_conversations_tools/index.jinja2:26
-#, fuzzy
-msgid "More information"
-msgstr "Saiba mais"
+msgid "Learn more about this integration"
+msgstr "Aprenda mais sobre esta integração"
 
 #: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:23
 #, fuzzy
@@ -3733,6 +3732,10 @@ msgstr "Mudar a senha"
 #, fuzzy
 msgid "Authentication"
 msgstr "Autenticação"
+
+#, fuzzy
+#~ msgid "More information"
+#~ msgstr "Saiba mais"
 
 #~ msgid "If you want a custom title for the e-mail template, enter here"
 #~ msgstr "Caso queira um título diferente para o e-mail, digite aqui"
