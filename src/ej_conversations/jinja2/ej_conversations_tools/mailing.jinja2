@@ -19,17 +19,17 @@
 	<div class="tools-section">
 	<div class="tools-content">
 		<form action="{{conversation.url("conversation-tools:mailing")}}" method="post" class="tools-settings-form">
-			<h2>{{form.mailing_tool_type.label}}</h3>
+			<h2 class="divider">{{form.mailing_tool_type.label}}</h3>
 			<span class="helptext">{{_("Selects template type you want to use.")}}</span>
 			<section>
 				{{form.mailing_tool_type}}
 			</section>
-			<h2>{{form.theme.label}}</h2>
+			<h2 class="divider">{{form.theme.label}}</h2>
 			<span class="helptext">{{_("Changes template appearence.")}}</span>
 			<section>
 				{{form.theme}}
 			</section>
-			<h2>{{ _('Custom fields') }}</h2>
+			<h2 class="divider">{{ _('Custom fields') }}</h2>
 			<span class="helptext"> </span>
 			<span class="helptext">{{_("Changes fields like comment and title.")}}</span>
 			<section>

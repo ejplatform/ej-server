@@ -10,43 +10,41 @@
 {% block content %}
 <div class="tools">
 <div class="tools-title">
-	<h1>{{_("Tools")}} > {{ tool["integration"] }}</h1>
+	<h1 class="h1 text-accent">{{_("Tools")}} > {{ tool["integration"] }}</h1>
 <span>{{tool["description"] }}</span>
 </div>
-	<div class="conversation-component">
-		<p>
-			{{_('With this tool you can collect opinions from your audience without '
-			'using EJ interface directly. This component can be included in your'
-			'site\'s html, and it will allow visitors to participate on this conversation,'
-			'voting and adding comments.') }}
-		</p>
-			{{_('To add this conversation to your site/platform, first select the authentication method and which visual theme the component will use. Than, just generate the script and adds it to the header and body tags.') }}
-			
+	<div class="tools-section">
+		<div class="tools-content">
 			<form method="POST" class="tools-settings-form">
 				{{ csrf_input }}
 				{% block form_content %}
+					<h2 class="divider">{{form.authentication_type.label}}</h2>
+					<span class="helptext">{{_("Selects authentication type you want to use.")}}</span>
 					<section>
-						<h3>{{form.authentication_type.label}}</h3>
 						{{form.authentication_type}}
 					</section>
-					<hr>
+					<h2 class="divider">{{form.theme.label}}</h2>
+					<span class="helptext">{{_("Selects a palette color.")}}</span>
 					<section>
-						<h3>{{form.theme.label}}</h3>
 						{{form.theme}}
 					</section>
-					<div><hr></div>
-
 				{% endblock %}
-		<div class="copy-script-header">
-			<div>
-				{{_('Add the following snippet of code to your page header:') }}
-			</div>
-			<div>
-			  <input type="submit" value="{{_('Generate Script')}}">
-				<button type="button" onclick="copySnippet('copy-header');" id="copy-header-button">{{_('Copy')}}</button>
-			</div>
-		</div>
+					<h2 class="divider">{{_("Opinion component")}}</h2>
+					<span class="helptext">{{_("Generate the script to integrates the opinion component on your site.")}}</span>
+					<section>
+						<div class="copy-script-header">
+							<div>
+								{{_('Add the following snippet of code to your page header:') }}
+							</div>
+							<div>
+								<input type="submit" value="{{_('Generate Script')}}">
+								<button type="button" onclick="copySnippet('copy-header');" id="copy-header-button">{{_('Copy')}}</button>
+							</div>
+						</div>
+					</section>
+
 			</form>
+		</div>
 			
 			<div id="copy-header-message">{{_("Code was copied to your clipboard.")}}</div>
 

@@ -13,7 +13,7 @@
 		border-radius: 0.5rem;
 	}
 	h2 {
-		margin-bottom: 0.1rem;
+		margin-bottom: 0.5rem;
 	}
 }
 
@@ -75,17 +75,22 @@
 	}
 }
 
+.divider {
+	border-bottom: 1px solid rgba(0,0,0,.12);
+	padding-bottom: 0.5rem;
+}
 .tools {
 	&-title {
-	border-bottom: 1px solid rgba(0,0,0,.12);
-  	padding-bottom: 10px;
+	span {
+		line-height: 1.6;
+	}
 }
 	&-table td a {
 		text-decoration: underline;
 	}
 
 	&-table td:last-child {
-		line-height: 1.75;
+		line-height: 1.6;
 	}
 }
 
@@ -161,7 +166,6 @@
 .copy-script-header {
 	display: flex;
 	flex-wrap: wrap;
-	margin: 5rem 0 0 0;
 	div:first-child {
 		width: 64%;
 		margin: 0 0 10px 0;

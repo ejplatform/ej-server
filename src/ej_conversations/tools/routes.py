@@ -53,7 +53,7 @@ def opinion_component(request, conversation, slug):
     tools = Tools(conversation)
 
     return {"schema": schema,
-            "tool": tools.get(_('Conversation component')),
+            "tool": tools.get(_('Opinion component')),
             "npm_version": npm_version(),
             "conversation": conversation,
             "form": form,

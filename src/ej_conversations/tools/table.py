@@ -14,7 +14,7 @@ class Tools():
             "about": "/docs/?page=user-docs/tools-mail-template.html"
         },
             {
-            "integration": _("Conversation component"),
+            "integration": _("Opinion component"),
             "description": _("Adds EJ directly to your site. Enables voting, commenting, and clusters visualization directly on a html page."),
                 "link": self.conversation.url('conversation-tools:opinion-component'),
                 "about": "/docs/?page=user-docs/tools-opinion-component.html"

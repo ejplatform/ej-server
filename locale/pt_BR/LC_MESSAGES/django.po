@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-10 12:38-0300\n"
+"POT-Creation-Date: 2021-05-10 15:58-0300\n"
 "PO-Revision-Date: 2019-09-09 13:55-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -735,7 +735,6 @@ msgid "Mailing campaign"
 msgstr "Campanha de email"
 
 #: src/ej_conversations/tools/routes.py:56
-#: src/ej_conversations/tools/table.py:17
 #, fuzzy
 msgid "Conversation component"
 msgstr "Componente de coleta"
@@ -753,6 +752,11 @@ msgstr ""
 "Gere um template html desta conversa, e faça coletas de opinião via disparo "
 "de email. Útil para campanhas de marketing com ferramentas como mautic e "
 "mailchimp."
+
+#: src/ej_conversations/tools/table.py:17
+#, fuzzy
+msgid "Opinion component"
+msgstr "Componente de opinião"
 
 #: src/ej_conversations/tools/table.py:18
 #, fuzzy
@@ -2862,62 +2866,56 @@ msgstr "Pré visualização"
 
 #: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:61
 #: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:63
+#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:124
 #: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:126
-#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:128
+#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:45
 #: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:47
-#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:49
 #, fuzzy
 msgid "Back to tools"
 msgstr "Voltar para ferramentas"
 
-#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:18
+#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:22
 #, fuzzy
-msgid ""
-"With this tool you can collect opinions from your audience without using EJ "
-"interface directly. This component can be included in yoursite's html, and "
-"it will allow visitors to participate on this conversation,voting and adding "
-"comments."
-msgstr ""
-"Com esta ferramenta você pode coletar opiniões do seu público sem precisar "
-"utilizar a interface convencional da EJ. Esse componente pode ser incluído "
-"no html do seu site, e irá permitir que visitantes participem desta "
-"conversa, votando e adicionando comentários."
+msgid "Selects authentication type you want to use."
+msgstr "Selecione o tipo de autenticação que deseja utilizar."
 
-#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:23
+#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:27
 #, fuzzy
-msgid ""
-"To add this conversation to your site/platform, first select the "
-"authentication method and which visual theme the component will use. Than, "
-"just generate the script and adds it to the header and body tags."
-msgstr ""
-"Para adicionar esta conversa no seu site/plataforma, primeiro selecione o "
-"tipo de autenticação e qual tema visual o componente irá utilizar. Depois, "
-"basta gerar o script e adiciona-lo às tags header e body do html. "
+msgid "Selects a palette color."
+msgstr "Selecione uma paleta de cor."
 
-#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:42
+#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:32
+msgid "Componente de coleta"
+msgstr ""
+
+#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:33
+msgid "Generate the script to integrates the opinion component on your site."
+msgstr "Gere o script para integrar o componente de opinião ao seu site."
+
+#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:37
 msgid "Add the following snippet of code to your page header:"
 msgstr ""
 "Gere o script e adicione o seguinte trecho de código no header da sua página"
 
-#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:45
+#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:40
 msgid "Generate Script"
 msgstr "Gerar Script"
 
-#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:46
-#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:112
+#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:41
+#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:110
 msgid "Copy"
 msgstr "Copiar"
 
-#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:51
-#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:113
+#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:49
+#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:111
 msgid "Code was copied to your clipboard."
 msgstr "O código foi copiado!"
 
-#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:110
+#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:108
 msgid "and this snippet of code on the page body:"
 msgstr "e esse trecho no body da página:"
 
-#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:21
+#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:19
 msgid ""
 "To integrate EJ chatbot with your site, enter the site domain in the field "
 "below."
@@ -2925,7 +2923,7 @@ msgstr ""
 "Para integrar o chatbot EJ ao seu site, digite o domínio do site no campo "
 "abaixo."
 
-#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:22
+#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:20
 msgid ""
 "When a new user reaches your site, the webchat will send to EJ the location "
 "where it is hosted, and will receive back this conversation."
@@ -2933,22 +2931,22 @@ msgstr ""
 "Quando um novo usuário chegar ao seu site, o webchat enviará para EJ a "
 "localização onde está hospedado e receberá de volta esta conversa."
 
-#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:23
+#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:21
 msgid ""
 "All chatbots that have access to this conversation are also displayed here."
 msgstr ""
 "Todos os chatbots que têm acesso a esta conversa também são exibidos aqui."
 
-#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:33
+#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:31
 #, fuzzy
 msgid "Add Integration"
 msgstr "Adicionar Integração"
 
-#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:37
+#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:35
 msgid "Linked websites"
 msgstr "Sites integrados"
 
-#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:43
+#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:41
 #, fuzzy
 msgid ""
 "There are no webchats linked with this conversation yet. What are you "
@@ -3732,6 +3730,28 @@ msgstr "Mudar a senha"
 #, fuzzy
 msgid "Authentication"
 msgstr "Autenticação"
+
+#, fuzzy
+#~ msgid ""
+#~ "With this tool you can collect opinions from your audience without using "
+#~ "EJ interface directly. This component can be included in yoursite's html, "
+#~ "and it will allow visitors to participate on this conversation,voting and "
+#~ "adding comments."
+#~ msgstr ""
+#~ "Com esta ferramenta você pode coletar opiniões do seu público sem "
+#~ "precisar utilizar a interface convencional da EJ. Esse componente pode "
+#~ "ser incluído no html do seu site, e irá permitir que visitantes "
+#~ "participem desta conversa, votando e adicionando comentários."
+
+#, fuzzy
+#~ msgid ""
+#~ "To add this conversation to your site/platform, first select the "
+#~ "authentication method and which visual theme the component will use. "
+#~ "Than, just generate the script and adds it to the header and body tags."
+#~ msgstr ""
+#~ "Para adicionar esta conversa no seu site/plataforma, primeiro selecione o "
+#~ "tipo de autenticação e qual tema visual o componente irá utilizar. "
+#~ "Depois, basta gerar o script e adiciona-lo às tags header e body do html. "
 
 #, fuzzy
 #~ msgid "More information"
