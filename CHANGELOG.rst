@@ -5,6 +5,18 @@ CHANGELOG of EJPlatform releases
 Here you can follow all the fixes and new features on every EJPlatform release.
 
 
+2.5.0 release
+====================
+
+* Date: May 11, 2021
+* Features
+- Adds new conversation analysis page;
+- Adds custom fields on mailing template tool;
+- Minor improvements on tools list;
+- Minor improvements on opinion component tool page;
+- Minor improvements on mailing template tool page;
+- Minor improvements on rasa webchat tool page;
+
 2.4.1 release
 ====================
 
