@@ -61,6 +61,7 @@ inv docker-exec     Executes a command on ej-server container
 ==================  =============================================
 
 Some useful commands to manage the application (run this inside django container):
+
 ==================  ============================================= 
 Command             Description  
 ==================  =============================================
