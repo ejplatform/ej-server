@@ -51,11 +51,11 @@
 
 			<div class="tools-section-2-snippet">
 				<textarea readonly id="copy-header">
-&lt;script src='https://unpkg.com/ej-conversations@{{npm_version.latest}}/dist/conversations.js'&gt&lt;/script&gt
+&lt;script src="https://unpkg.com/ej-conversations@{{npm_version.latest}}/dist/conversations/conversations.esm.js" type="module" &gt&lt;/script&gt
 				
-&lt;link href='https://fonts.googleapis.com/css?family=Raleway&display=swap' rel="stylesheet"&gt&lt;/link&gt
+&lt;link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet"&gt
 					
-&lt;link href='{{schema}}://{{request.META['HTTP_HOST']}}/static/css/fontawesome-all.min.css' rel="stylesheet"&gt&lt;/link&gt
+&lt;link href="{{schema}}://{{request.META['HTTP_HOST']}}/static/css/fontawesome-all.min.css" rel="stylesheet"&gt
 
 <style>
 		/* https://github.com/ionic-team/stencil/issues/2072 */
@@ -63,7 +63,6 @@
   font-family: Folio;
   font-style: normal;
   font-weight: 400;
-  font-display: auto;
   src: url(https://unpkg.com/ej-conversations@{{npm_version.latest}}/dist/conversations/assets/fonts/folio_bold_condensed.ttf);
 }
 
@@ -71,7 +70,6 @@
   font-family: Helvetica;
   font-style: normal;
   font-weight: 400;
-  font-display: auto;
 	src: url('https://unpkg.com/ej-conversations@{{npm_version.latest}}/dist/conversations/assets/fonts/helvetica_neue_lts_roman.otf');
 }
 
@@ -79,7 +77,6 @@
   font-family: 'Font Awesome 5 Free';
   font-style: normal;
   font-weight: 400;
-  font-display: auto;
 	src: url('https://unpkg.com/ej-conversations@{{npm_version.latest}}/dist/conversations/assets/fonts/fa-regular-400.ttf');
 }
 
@@ -87,7 +84,6 @@
   font-family: 'Font Awesome 5 Free';
   font-style: normal;
   font-weight: 400;
-  font-display: auto;
 	src: url('https://unpkg.com/ej-conversations@{{npm_version.latest}}/dist/conversations/assets/fonts/fa-brands-400.ttf');
 }
 
@@ -95,7 +91,6 @@
   font-family: 'Font Awesome 5 Free';
   font-style: normal;
   font-weight: 400;
-  font-display: auto;
 	src: url('https://unpkg.com/ej-conversations@{{npm_version.latest}}/dist/conversations/assets/fonts/fa-solid-900.ttf');
 }
 
@@ -113,7 +108,7 @@
 
 			<div class="tools-section-2-snippet">
 				<textarea readonly id="copy-body">
-&lt;ej-conversation host={{schema}}://{{request.META['HTTP_HOST']}} cid="{{conversation.id}}" {{conversation_component.get_props()}}&gt&lt;/ej-conversation&gt
+&lt;ej-conversation host="{{schema}}://{{request.META['HTTP_HOST']}}" cid="{{conversation.id}}" {{conversation_component.get_props()}}&gt&lt;/ej-conversation&gt
 				</textarea>
 				<div>
 
@@ -127,21 +122,6 @@
 </a></p>
 </div>
    <script>
-	   function showContent2() {
-		   let content = document.querySelector(".tools-content-2");
-		   let section = document.querySelector(".tools-section-2");
-		   if (window.getComputedStyle(content).maxHeight == "0px") {
-			content.style.maxHeight = "400px";
-			section.style.borderRadius = "unset";
-			section.style.borderStyle = "unset";
-		   }
-		   else {
-			content.style.maxHeight = "0px";
-			section.style.borderStyle = "solid";
-			section.style.borderRadius = "1rem";
-		   }
-	   }
-
 	   function copySnippet(elementId){
 		   	var copyText = document.getElementById(elementId);
 			copyText.select();
