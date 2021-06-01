@@ -35,7 +35,8 @@
     <h2>{{_("Linked websites")}}</h2>
         {% if connections %}
             {% for connection in connections %}
-                <a href={{connection.domain}} target="_blank">{{connection.domain}}</a><br>
+                <a href={{connection.domain}} target="_blank">{{connection.domain}}</a>
+                <a onclick="deleteConnection({{connection.id}})"><i class="far fa-trash-alt"></i></a><br>
            {% endfor %}
         {% else %}
             <p>{{ _("There are no webchats linked with this conversation yet. What are you waiting for?") }}</p>
@@ -47,4 +48,11 @@
 	    <i class="fa fa-chevron-left"></i>{% trans %}Back to tools{% endtrans %}
     </a></p>
 </div>
+
+<script>
+   async function deleteConnection(id) {
+    let content = await fetch("/api/v1/rasa-conversations/" + id + "/delete-connection")
+    location.reload();
+   }
+</script>
 {% endblock %}
