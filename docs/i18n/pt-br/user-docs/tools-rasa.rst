@@ -26,21 +26,23 @@ webchat à Duda.
     let e = document.createElement("script"),
       t = document.head || document.getElementsByTagName("head")[0];
     (e.src =
-      "https://cdn.jsdelivr.net/npm/rasa-webchat/lib/index.js"),
+      "https://cdn.jsdelivr.net/npm/rasa-webchat@1.0.0/lib/index.js"),
       (e.async = !0),
       (e.onload = () => {
         window.WebChat.default(
           {
-            initPayload: "novo usuario conectado",
-            socketUrl: "https://rasaserver.pencillabs.com.br?token=thisismysecret",
+            initPayload: window.location.href,
+            socketUrl: "http://localhost:5006?token=thisismysecret",
+            // add other props here
           },
           null
         );
       }),
       t.insertBefore(e, t.firstChild);
-  })();
-  </script>
+    })();
+    </script>
   </html>
+
 
 Uma vez integrados, seu público poderá dar opiniões por meio do webchat integrado à instância do Rasa.
 
