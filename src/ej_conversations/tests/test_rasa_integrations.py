@@ -80,11 +80,13 @@ class TestRasaConversationIntegrationsAPI(ConversationRecipes):
         client = Client()
         response = client.get(path)
         assert response.status_code == 200
-        assert self.BASE_URL + f"/conversations/{conversation.id}" in response.data[0]['links']['conversation']
-    
+        assert conversation.text == response.data.get("conversation").get("text")
+        assert conversation.id == response.data.get("conversation").get("id")
+        assert TEST_DOMAIN == response.data.get("domain")
+
     def test_no_integration_api(self, db):
-        path = self.BASE_URL + f"/rasa-conversations/integrations/?domain={TEST_DOMAIN}"
+        url = self.BASE_URL + f"/rasa-conversations/integrations/?domain={TEST_DOMAIN}"
         client = Client()
-        response = client.get(path)
+        response = client.get(url)
         assert response.status_code == 200
-        assert response.data == []
+        assert response.data == {}
