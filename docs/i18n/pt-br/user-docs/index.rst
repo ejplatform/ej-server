@@ -7,4 +7,5 @@ Guia de usuário
    user-conversation
    user-report
    user-vote
+   user-telegram
    tools
