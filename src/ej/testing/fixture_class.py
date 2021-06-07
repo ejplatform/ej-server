@@ -119,17 +119,20 @@ class EjRecipes(metaclass=FixtureMeta):
     @pytest.fixture
     def user_client(self, client, user_db):
         client.force_login(user_db)
-        return client
+        yield client
+        user_db.delete()
 
     @pytest.fixture
     def author_client(self, client, author_db):
         client.force_login(author_db)
-        return client
+        yield client
+        author_db.delete()
 
     @pytest.fixture
     def admin_client(self, client, root_db):
         client.force_login(root_db)
-        return client
+        yield client
+        root_db.delete()
 
     @pytest.fixture
     def data(self, request):
