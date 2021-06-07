@@ -17,7 +17,7 @@ def integrations(request):
                             "text": integration.conversation.text},
             "domain": integration.domain
         }
-    return {}
+    return {} 
 
 @rest_api.detail_action("ej_conversations.RasaConversation")
 def delete_connection(request, connection):

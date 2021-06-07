@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-10 15:58-0300\n"
+"POT-Creation-Date: 2021-06-04 15:13-0300\n"
 "PO-Revision-Date: 2019-09-09 13:55-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -735,9 +735,10 @@ msgid "Mailing campaign"
 msgstr "Campanha de email"
 
 #: src/ej_conversations/tools/routes.py:56
+#: src/ej_conversations/tools/table.py:17
 #, fuzzy
-msgid "Conversation component"
-msgstr "Componente de coleta"
+msgid "Opinion component"
+msgstr "Componente de opinião"
 
 #: src/ej_conversations/tools/routes.py:73
 #: src/ej_conversations/tools/table.py:23
@@ -752,11 +753,6 @@ msgstr ""
 "Gere um template html desta conversa, e faça coletas de opinião via disparo "
 "de email. Útil para campanhas de marketing com ferramentas como mautic e "
 "mailchimp."
-
-#: src/ej_conversations/tools/table.py:17
-#, fuzzy
-msgid "Opinion component"
-msgstr "Componente de opinião"
 
 #: src/ej_conversations/tools/table.py:18
 #, fuzzy
@@ -2868,8 +2864,8 @@ msgstr "Pré visualização"
 #: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:63
 #: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:124
 #: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:126
-#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:45
-#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:47
+#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:46
+#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:48
 #, fuzzy
 msgid "Back to tools"
 msgstr "Voltar para ferramentas"
@@ -2883,10 +2879,6 @@ msgstr "Selecione o tipo de autenticação que deseja utilizar."
 #, fuzzy
 msgid "Selects a palette color."
 msgstr "Selecione uma paleta de cor."
-
-#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:32
-msgid "Componente de coleta"
-msgstr ""
 
 #: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:33
 msgid "Generate the script to integrates the opinion component on your site."
@@ -2946,12 +2938,12 @@ msgstr "Adicionar Integração"
 msgid "Linked websites"
 msgstr "Sites integrados"
 
-#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:41
+#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:42
 #, fuzzy
 msgid ""
 "There are no webchats linked with this conversation yet. What are you "
 "waiting for?"
-msgstr "Não existem personas definidas para esta conversa"
+msgstr "Não existem sites integrados definidos para esta conversa"
 
 #: src/ej_dataviz/jinja2/ej/role/conversation-download-data.jinja2:2
 msgid "Downloads: "
@@ -3730,6 +3722,10 @@ msgstr "Mudar a senha"
 #, fuzzy
 msgid "Authentication"
 msgstr "Autenticação"
+
+#, fuzzy
+#~ msgid "Conversation component"
+#~ msgstr "Componente de coleta"
 
 #, fuzzy
 #~ msgid ""
