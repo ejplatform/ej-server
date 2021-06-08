@@ -68,6 +68,7 @@ class ConversationComponent:
             result = result + f" authenticate-with={self.form.cleaned_data['authentication_type']}"
         return result
 
+
 class MailingTool:
     MAILING_TOOL_CHOICES = (
         ("mautic", _("Mautic")),

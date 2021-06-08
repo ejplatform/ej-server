@@ -14,7 +14,7 @@ from ej_conversations.models import Conversation
 
 class TemplateGenerator():
 
-    def __init__(self, conversation, request, template_type='mautic'):
+    def __init__(self, conversation, request, template_type='mautic', theme=None):
         self.PALETTE_CSS_GENERATORS = {
             'green': BaseCssGenerator('green'),
             'grey': BaseCssGenerator('grey'),
@@ -22,6 +22,9 @@ class TemplateGenerator():
             'orange': BaseCssGenerator('orange'),
             'purple': BaseCssGenerator('purple'),
             'accent': BaseCssGenerator('accent'),
+            'default': BaseCssGenerator('default'),
+            'votorantim': BaseCssGenerator('votorantim'),
+            'icd': BaseCssGenerator('icd'),
             'campaign': CampaignCssGenerator()
         }
         self.template_type = template_type
@@ -30,6 +33,7 @@ class TemplateGenerator():
         self.request = request
         self.vote_domain = self._get_vote_domain()
         self.statics_domain = self._get_statics_domain()
+        self.theme = theme
 
     def set_custom_values(self, title, comment):
         self.conversation.text = title or self.conversation.text
@@ -43,8 +47,7 @@ class TemplateGenerator():
 
     def _get_palette_css(self):
         try:
-            palette = self.conversation.boards.first().palette.lower()
-            generator = self.PALETTE_CSS_GENERATORS[palette]
+            generator = self.PALETTE_CSS_GENERATORS[self.theme]
         except:
             generator = self.PALETTE_CSS_GENERATORS["brand"]
         return generator.css()
@@ -102,6 +105,9 @@ class BaseCssGenerator():
             'orange': ['#F5700A', '#FFE1CA'],
             'purple': ['#7758B3', '#E7DBFF'],
             'accent': ['#C6027B', '#FFE3EA'],
+            'default': ["#1D1088", "#F8127E"],
+            'votorantim': ["#04082D", "#F14236"],
+            'icd': ["#005BAA", "#F5821F"],
         }
         self.palette = palette
 

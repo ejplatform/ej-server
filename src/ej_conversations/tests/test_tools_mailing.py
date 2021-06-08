@@ -88,7 +88,8 @@ class TestTemplateGenerator(BoardRecipes):
         conversation = mk_conversation(author=user)
         comment_1 = conversation.create_comment(user, 'comment 1', 'approved')
         board.add_conversation(conversation)
-        generator = TemplateGenerator(conversation, request, 'mautic')
+        generator = TemplateGenerator(conversation, request, 'mautic', board.palette)
+
 
         arrow = 'border-top: 28px solid {} !important;'.format('#FFE1CA')
         dark = 'color: {} !important; background-color: {};'.format('#FFE1CA', '#F5700A')
@@ -115,7 +116,8 @@ class TestTemplateGenerator(BoardRecipes):
         conversation = mk_conversation(author=user)
         comment_1 = conversation.create_comment(user, 'comment 1', 'approved')
         board.add_conversation(conversation)
-        campaign = TemplateGenerator(conversation, request, 'mautic')
+        campaign = TemplateGenerator(conversation, request, 'mautic', 'campaign')
+
 
         arrow = 'border-top: 28px solid {} !important;'.format('#332f82')
         dark = 'color: {} !important; background-color: {}; border-radius: unset;'.format('#332f82', '#1c9dd9')
@@ -171,7 +173,7 @@ class TestConversationComponentForm(BoardRecipes):
         user = mk_user(email="test@domain.com")
         conversation_db.create_comment(user, 'comment 1', status="approved", check_limits=False)
         form = MailingToolForm({
-            'mailing_tool_type': "mautic",
+            'template_type': "mautic",
             'theme': "default", 
             'custom_title': None,
             'custom_comment': None}, conversation_id=conversation_db.id)
@@ -181,7 +183,7 @@ class TestConversationComponentForm(BoardRecipes):
         user = mk_user(email="test@domain.com")
         conversation_db.create_comment(user, 'comment 1', status="approved", check_limits=False)
         form = MailingToolForm({
-            'mailing_tool_type': "mailchimp",
+            'template_type': "mailchimp",
             'theme': "icd",
             'custom_title': None,
             'custom_comment': None}, conversation_id=conversation_db.id)
@@ -191,7 +193,7 @@ class TestConversationComponentForm(BoardRecipes):
         user = mk_user(email="test@domain.com")
         comment_1 = conversation_db.create_comment(user, 'comment 1', status="approved", check_limits=False)
         form = MailingToolForm({
-            'mailing_tool_type': "mailchimp",
+            'template_type': "mailchimp",
             'theme': "icd",
             'custom_title': 'New title',
             'custom_comment': comment_1.id}, conversation_id=conversation_db.id)

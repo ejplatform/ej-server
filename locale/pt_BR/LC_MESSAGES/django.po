@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-04 15:13-0300\n"
+"POT-Creation-Date: 2021-06-07 19:16-0300\n"
 "PO-Revision-Date: 2019-09-09 13:55-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -644,29 +644,29 @@ msgstr "URL interna"
 msgid "Rasa conversation with this Conversation and Domain already exists."
 msgstr "Uma persona com esse nome já existe nessa conversa."
 
-#: src/ej_conversations/tools/forms.py:22
+#: src/ej_conversations/tools/forms.py:30
 #, fuzzy
 msgid "Authentication Type"
 msgstr "Autenticação"
 
-#: src/ej_conversations/tools/forms.py:26
-#: src/ej_conversations/tools/forms.py:37
+#: src/ej_conversations/tools/forms.py:34
+#: src/ej_conversations/tools/forms.py:45
 msgid "Theme"
 msgstr "Tema"
 
-#: src/ej_conversations/tools/forms.py:32
+#: src/ej_conversations/tools/forms.py:40
 msgid "Template type"
 msgstr "Tipo de template"
 
-#: src/ej_conversations/tools/forms.py:42
+#: src/ej_conversations/tools/forms.py:50
 msgid "Redirect user to a custom domain"
 msgstr "Redirecione o usuário para um endereço personalizado"
 
-#: src/ej_conversations/tools/forms.py:46
+#: src/ej_conversations/tools/forms.py:54
 msgid "Adds a custom title to the template (optional)."
 msgstr "Adicione um título customizado ao template (opicional)."
 
-#: src/ej_conversations/tools/forms.py:51
+#: src/ej_conversations/tools/forms.py:59
 msgid "selects a specific comment for user to vote (optional)."
 msgstr "Selecione um comentário específico para o usuário votar (opicional)."
 
@@ -684,7 +684,7 @@ msgid "Register using name/email"
 msgstr "Registrar usando nome/email"
 
 #: src/ej_conversations/tools/models.py:32
-#: src/ej_conversations/tools/models.py:73
+#: src/ej_conversations/tools/models.py:74
 msgid "Mautic"
 msgstr ""
 
@@ -700,7 +700,7 @@ msgstr ""
 "pessoais (email e nome)."
 
 #: src/ej_conversations/tools/models.py:38
-#: src/ej_conversations/tools/models.py:79
+#: src/ej_conversations/tools/models.py:80
 msgid "Uses a mautic campaign "
 msgstr "Usa uma campanha do mautic"
 
@@ -720,27 +720,27 @@ msgstr ""
 msgid "ICD"
 msgstr ""
 
-#: src/ej_conversations/tools/models.py:74
+#: src/ej_conversations/tools/models.py:75
 msgid "MailChimp"
 msgstr ""
 
-#: src/ej_conversations/tools/models.py:78
+#: src/ej_conversations/tools/models.py:79
 #, fuzzy
 msgid "Mailchimp campaign"
 msgstr "Campanha de email"
 
-#: src/ej_conversations/tools/routes.py:43
+#: src/ej_conversations/tools/routes.py:46
 #: src/ej_conversations/tools/table.py:11
 msgid "Mailing campaign"
 msgstr "Campanha de email"
 
-#: src/ej_conversations/tools/routes.py:56
+#: src/ej_conversations/tools/routes.py:59
 #: src/ej_conversations/tools/table.py:17
 #, fuzzy
 msgid "Opinion component"
 msgstr "Componente de opinião"
 
-#: src/ej_conversations/tools/routes.py:73
+#: src/ej_conversations/tools/routes.py:76
 #: src/ej_conversations/tools/table.py:23
 msgid "Rasa chatbot"
 msgstr ""
@@ -2862,8 +2862,8 @@ msgstr "Pré visualização"
 
 #: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:61
 #: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:63
-#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:124
-#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:126
+#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:119
+#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:121
 #: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:46
 #: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:48
 #, fuzzy
@@ -2894,16 +2894,16 @@ msgid "Generate Script"
 msgstr "Gerar Script"
 
 #: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:41
-#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:110
+#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:105
 msgid "Copy"
 msgstr "Copiar"
 
 #: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:49
-#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:111
+#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:106
 msgid "Code was copied to your clipboard."
 msgstr "O código foi copiado!"
 
-#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:108
+#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:103
 msgid "and this snippet of code on the page body:"
 msgstr "e esse trecho no body da página:"
 

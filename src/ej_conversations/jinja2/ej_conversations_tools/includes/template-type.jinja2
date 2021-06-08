@@ -1,4 +1,4 @@
-<ul id="id_authentication_type" style="list-style: none;">
+<ul id="id_template_type" style="list-style: none;">
     {% for _, lst, __ in widget.optgroups %}
         {% set params = lst[0] %}
         {% if params.value != 'mailchimp' %}
@@ -8,8 +8,8 @@
                       <span class="tooltiptext">{{params.attrs[params.value]}}</span>
                   </i>
               </div>
-                  <input type="radio"{% if params.selected %} checked{% endif %} name="authentication_type" id="id_authentication_type_{{ params.value }}" value="{{ params.value }}">
-              <label for="id_authentication_type_{{ params.value }}">
+                  <input type="radio"{% if params.selected %} checked{% endif %} name="template_type" id="id_template_type_{{ params.value }}" value="{{ params.value }}">
+              <label for="id_template_type_{{ params.value }}">
                   {{ params.label }}
               </label>
           </li>

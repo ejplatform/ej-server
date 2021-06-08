@@ -18,11 +18,11 @@
 <div>
 	<div class="tools-section">
 	<div class="tools-content">
-		<form action="{{conversation.url("conversation-tools:mailing")}}" method="post" class="tools-settings-form">
-			<h2 class="divider">{{form.mailing_tool_type.label}}</h3>
+		<form action="{{conversation.url("conversation-tools:mailing")}}" method="post" class="tools-settings-form" name="mailingForm">
+			<h2 class="divider">{{form.template_type.label}}</h3>
 			<span class="helptext">{{_("Selects template type you want to use.")}}</span>
 			<section>
-				{{form.mailing_tool_type}}
+				{{form.template_type}}
 			</section>
 			<h2 class="divider">{{form.theme.label}}</h2>
 			<span class="helptext">{{_("Changes template appearence.")}}</span>
@@ -42,7 +42,7 @@
 				<input name="custom-domain" id="domain-input" type="text" placeholder="{{ _('domain to redirect the user on template') }}">
 			</section>
 			
-			<input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+			<input type="hidden" id="token" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
 			<div class="group-button">
 				<input type="submit" name="download" value="{{ _('Download') }}">
 				<input type="submit" name="preview" value="{{ _('Preview') }}">
@@ -65,29 +65,30 @@
 </div>
 </div>
    <script>
-	   function showContent() {
-		   let content = document.querySelector(".integration-content");
-		   let section = document.querySelector(".integration-section");
-		   if (window.getComputedStyle(content).maxHeight == "0px") {
-			content.style.maxHeight = "400px";
-			section.style.borderRadius = "unset";
-			section.style.borderStyle = "unset";
-		   }
-		   else {
-			content.style.maxHeight = "0px";
-			section.style.borderStyle = "solid";
-			section.style.borderRadius = "1rem";
-		   }
-	   }
 
-	   function showDomainInput() {
-		   let input = document.querySelector("#domain-input");
-		   if (document.getElementById('id_is_custom_domain').checked){
-			   input.style.display = "block";
-		   } else {
-			   input.style.display = "none";
-		   }
-	   }
+	function showContent() {
+		let content = document.querySelector(".integration-content");
+		let section = document.querySelector(".integration-section");
+		if (window.getComputedStyle(content).maxHeight == "0px") {
+		content.style.maxHeight = "400px";
+		section.style.borderRadius = "unset";
+		section.style.borderStyle = "unset";
+		}
+		else {
+		content.style.maxHeight = "0px";
+		section.style.borderStyle = "solid";
+		section.style.borderRadius = "1rem";
+		}
+	}
+
+	function showDomainInput() {
+		let input = document.querySelector("#domain-input");
+		if (document.getElementById('id_is_custom_domain').checked){
+			input.style.display = "block";
+		} else {
+			input.style.display = "none";
+		}
+	}
 
 	function setIframe(html){
 		let iframe = document.getElementById('iframe');
