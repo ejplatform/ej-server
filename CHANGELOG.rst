@@ -5,6 +5,16 @@ CHANGELOG of EJPlatform releases
 Here you can follow all the fixes and new features on every EJPlatform release.
 
 
+2.6.0 release
+====================
+
+* Date: Jun 8, 2021
+* Features
+- Fixes template color on mailing tool page;
+- Adds button to remove a webchat domain, on rasa tool page;
+- Fixes rasa webchat documentation;
+- Fixes opinion component snippets;
+
 2.5.0 release
 ====================
 
