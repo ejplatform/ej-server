@@ -9,6 +9,7 @@ from .models import RasaConversation
 from .. import models
 from ..tools.table import Tools
 
+
 app_name = "ej_conversations_tools"
 urlpatterns = Router(
     template="ej_conversations_tools/{name}.jinja2", models={"conversation": models.Conversation, "connection": RasaConversation}
@@ -31,8 +32,9 @@ def mailing(request, conversation, slug):
     template = None
     form = MailingToolForm(request.POST, conversation_id=conversation)
     if request.method == "POST" and form.is_valid():
-        generator = TemplateGenerator(conversation, request, "mautic")
-        generator.set_custom_values(form.cleaned_data['custom_title'], form.cleaned_data['custom_comment'])
+        form_data = form.cleaned_data
+        generator = TemplateGenerator(conversation, request, form_data['template_type'], form_data['theme'])
+        generator.set_custom_values(form_data['custom_title'], form_data['custom_comment'])
         template = generator.get_template()
         if 'download' in request.POST:
             response = HttpResponse(template, content_type="text/html")

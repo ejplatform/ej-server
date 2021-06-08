@@ -16,6 +16,14 @@ class CustomChoiceWidget(forms.RadioSelect):
         context = self.get_context(name, value, attrs)
         return self.renderer.render(context)
 
+class CustomTemplateChoiceWidget(forms.RadioSelect):
+    template_name = "ej_conversations_tools/includes/template-type.jinja2"
+    renderer = get_template(template_name)
+
+    def render(self, name, value, attrs=None, renderer=None):
+        context = self.get_context(name, value, attrs)
+        return self.renderer.render(context)
+
 
 class ConversationComponentForm(forms.Form):
     authentication_type = forms.ChoiceField(
@@ -28,10 +36,10 @@ class ConversationComponentForm(forms.Form):
     )
 
 class MailingToolForm(forms.Form):
-    mailing_tool_type = forms.ChoiceField(
+    template_type = forms.ChoiceField(
         label=_("Template type"),
         choices=MailingTool.MAILING_TOOL_CHOICES, required=False,
-        widget=CustomChoiceWidget(attrs=MailingTool.MAILING_TOOLTIP_TEXTS)
+        widget=CustomTemplateChoiceWidget(attrs=MailingTool.MAILING_TOOLTIP_TEXTS)
     )
     theme = forms.ChoiceField(
         label=_("Theme"), choices=ConversationComponent.THEME_CHOICES,
