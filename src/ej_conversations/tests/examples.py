@@ -24,12 +24,12 @@ CONVERSATION = {
     "links": {
         "self": "http://testserver/api/v1/conversations/1/",
         "vote-dataset": "http://testserver/api/v1/conversations/1/vote-dataset/",
+        "votes": "http://testserver/api/v1/conversations/1/votes/",
         "user-statistics": "http://testserver/api/v1/conversations/1/user-statistics/",
         "approved-comments": "http://testserver/api/v1/conversations/1/approved-comments/",
         "user-comments": "http://testserver/api/v1/conversations/1/user-comments/",
         "user-pending-comments": "http://testserver/api/v1/conversations/1/user-pending-comments/",
         "random-comment": "http://testserver/api/v1/conversations/1/random-comment/",
-        "reports": "http://testserver/api/v1/conversations/1/reports/",
         "clusterization": None,
         "author": "http://testserver/api/v1/users/1/"
     },
@@ -52,3 +52,18 @@ VOTE = {
     "comment": "content",
     "choice": 1
 }
+
+VOTES = [
+    {
+        "id": 1,
+        "email": "email@server.com",
+        "author": "",
+        "author_id": 1,
+        "author__metadata__analytics_id": None,
+        "author__metadata__mautic_id": None,
+        "comment": "content",
+        "comment_id": 1,
+        "choice": "agree",
+        "created": 1622928765251
+    }
+]

@@ -2,6 +2,10 @@ from boogie.rest import rest_api
 from ej_conversations.models import Conversation
 from ej_conversations.models.vote import Vote
 from .tools import api
+import json
+from datetime import datetime
+from rest_framework.response import Response
+from ej_dataviz.routes_report import votes_as_dataframe
 
 #
 # Conversation extra actions and attributes
@@ -10,6 +14,29 @@ from .tools import api
 def vote_dataset(request, conversation):
     return conversation.votes.dataframe().to_dict(orient="list")
 
+@rest_api.action("ej_conversations.Conversation")
+def votes(request, conversation):
+    """
+    Authenticated endpoint to retrieve conversation votes filtered by date range.
+
+    startDate: start date to retrieve votes
+    endDate: end date to retrieve votes
+    """
+    user = request.user
+    if not user.is_authenticated:
+        return Response(status=403)
+    if(not user.has_perm("ej.can_edit_conversation", conversation)):
+        return Response(status=403)
+    user = request.user
+    votes = conversation.votes
+    if(request.GET.get('startDate') and request.GET.get('endDate')):
+        start_date = datetime.fromisoformat(request.GET.get('startDate'))
+        end_date = datetime.fromisoformat(request.GET.get('endDate'))
+        votes = conversation.votes.filter(created__gte=start_date, created__lte=end_date)
+    votes_dataframe = votes_as_dataframe(votes)
+    votes_dataframe.reset_index(inplace=True)
+    votes_dataframe_as_json = votes_dataframe.to_json(orient='records')
+    return json.loads(votes_dataframe_as_json)
 
 @rest_api.action("ej_conversations.Conversation")
 def user_statistics(request, conversation):
@@ -44,22 +71,6 @@ def random(request):
 @rest_api.property("ej_conversations.Conversation")
 def statistics(conversation):
     return conversation.statistics()
-
-
-# This action will only works if the header 'accept=text/csv' is present on the request.
-@rest_api.action("ej_conversations.Conversation")
-def reports(request, conversation):
-    from ej_dataviz.routes_report import comments_data_common, vote_data_common, clusters_data_common
-    fmt = request.GET.get('fmt')
-    data_to_export = request.GET.get('export')
-    filename = conversation.slug + "-" + data_to_export
-    EXPORT_METHOD = {
-        "votes": vote_data_common(conversation.votes, filename, fmt),
-        "comments": comments_data_common(conversation.approved_comments, None, filename, fmt),
-        "clusters": clusters_data_common(conversation.clusters, filename, fmt)
-    }
-    return EXPORT_METHOD[data_to_export]
-
 
 #
 # Votes

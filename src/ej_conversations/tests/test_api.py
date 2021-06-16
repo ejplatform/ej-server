@@ -1,5 +1,5 @@
 from ej_conversations.models import Conversation, Comment
-from .examples import COMMENT, CONVERSATION, VOTE
+from .examples import COMMENT, CONVERSATION, VOTE, VOTES
 from rest_framework.test import APIClient
 from rest_framework.authtoken.models import Token
 import pytest
@@ -13,32 +13,34 @@ class TestGetRoutes:
         data = api.get(path, exclude=["created"])
         assert data == CONVERSATION
 
-    def test_conversations_reports_endpoint(self, conversation, api):
-        path = BASE_URL + f"/conversations/{conversation.id}/reports/?fmt=csv&export=votes"
-        _api = APIClient()
-        with pytest.raises(TypeError):
-            _api.get(path, {})
-        response = _api.get(path, {}, HTTP_ACCEPT='text/csv')
-        assert response.status_code == 200
-
-    def test_conversations_reports_endpoint_cluster(self, conversation, api):
-        path = BASE_URL + f"/conversations/{conversation.id}/reports/?fmt=csv&export=clusters"
-        _api = APIClient()
-        with pytest.raises(TypeError):
-            _api.get(path, {})
-        response = _api.get(path, {}, HTTP_ACCEPT='text/csv')
-        assert response.status_code == 200
-
     def test_comments_endpoint(self, comment, api):
         path = BASE_URL + f"/comments/{comment.id}/"
         data = api.get(path, exclude=["created"])
         assert data == COMMENT
 
-    def test_votes_endpoint(self, vote, api):
+    def test_vote_endpoint(self, vote, api):
         path = BASE_URL + f"/votes/{vote.id}/"
         data = api.get(path)
         data.pop('created')
         assert data == VOTE
+
+    def test_conversation_votes_endpoint_with_anonymous(self, conversation, vote, api):
+        path = BASE_URL + f"/conversations/{conversation.id}/votes/"
+        api.get(path)
+        assert api.response.status_code == 403
+
+    def test_conversation_votes_endpoint(self, conversation, vote, api):
+        auth_token = api.post("/rest-auth/registration/",
+                              {"email": "email@server.com", "name": "admin"})
+        path = BASE_URL + f"/conversations/{conversation.id}/votes/"
+        response = api.client.get(path, {}, HTTP_AUTHORIZATION=f"Token {auth_token.get('key')}")
+        data = response.data
+        assert type(data) == list
+        assert data[0].get("id") == VOTES[0].get("id")
+        assert data[0].get("content") == VOTES[0].get("content")
+        assert data[0].get("author__metadata__mautic_id") == VOTES[0].get("author__metadata__mautic_id")
+        assert data[0].get("author__metadata__analytics_id") == VOTES[0].get("author__metadata__analytics_id")
+        assert data[0].get("comment_id") == VOTES[0].get("comment_id")
 
 
 class TestPostRoutes:

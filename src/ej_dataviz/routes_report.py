@@ -87,11 +87,15 @@ def vote_data_common(votes, filename, fmt):
     """
     Common implementation for votes_data and votes_data_cluster
     """
+    df = votes_as_dataframe(votes)
+    return data_response(df, fmt, filename)
+
+def votes_as_dataframe(votes):
     columns = "author__email", "author__name", "author__id", "author__metadata__analytics_id", "author__metadata__mautic_id", "comment__content", "comment__id", "choice", "created"
     df = votes.dataframe(*columns)
     df.columns = "email", "author", "author_id", "author__metadata__analytics_id", "author__metadata__mautic_id", "comment", "comment_id", "choice", "created"
     df.choice = list(map({-1: "disagree", 1: "agree", 0: "skip"}.get, df["choice"]))
-    return data_response(df, fmt, filename)
+    return df
 
 
 # ==============================================================================

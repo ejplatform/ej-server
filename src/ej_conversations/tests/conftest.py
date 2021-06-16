@@ -69,6 +69,7 @@ def api(client):
 class ApiClient:
     def __init__(self, client: Client):
         self.client = client
+        self.response = None
 
     def _result(self, data, fields=None, exclude=(), skip=()):
         if fields is not None:
@@ -86,12 +87,13 @@ class ApiClient:
 
     def get(self, url, raw=False, **kwargs):
         response = self.client.get(url)
+        self.response = response
         data = response if raw else response.data
         return self._result(data, **kwargs)
 
     def post(self, url, data, **kwargs):
         data = self._prepare(data)
         response = self.client.post(url, data, content_type="application/json")
+        self.response = response
         obj = json.loads(response.content)
-        print(obj)
         return self._result(obj, **kwargs)

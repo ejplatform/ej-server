@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-07 19:16-0300\n"
+"POT-Creation-Date: 2021-06-14 10:50-0300\n"
 "PO-Revision-Date: 2019-09-09 13:55-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -976,65 +976,65 @@ msgstr "Você!"
 msgid "State"
 msgstr "Estado"
 
-#: src/ej_dataviz/routes_report.py:249
+#: src/ej_dataviz/routes_report.py:253
 msgid "agree"
 msgstr "concorda"
 
-#: src/ej_dataviz/routes_report.py:250
+#: src/ej_dataviz/routes_report.py:254
 msgid "author"
 msgstr "autor"
 
-#: src/ej_dataviz/routes_report.py:251
+#: src/ej_dataviz/routes_report.py:255
 msgid "author_id"
 msgstr "autor_id"
 
-#: src/ej_dataviz/routes_report.py:252
+#: src/ej_dataviz/routes_report.py:256
 msgid "choice"
 msgstr "escolha"
 
-#: src/ej_dataviz/routes_report.py:253
+#: src/ej_dataviz/routes_report.py:257
 #, fuzzy
 msgid "cluster"
 msgstr "Grupos"
 
-#: src/ej_dataviz/routes_report.py:254
+#: src/ej_dataviz/routes_report.py:258
 #, fuzzy
 msgid "cluster_id"
 msgstr "Grupos"
 
-#: src/ej_dataviz/routes_report.py:255
+#: src/ej_dataviz/routes_report.py:259
 msgid "comment"
 msgstr "comentário"
 
-#: src/ej_dataviz/routes_report.py:256
+#: src/ej_dataviz/routes_report.py:260
 msgid "comment_id"
 msgstr "comentário_id"
 
-#: src/ej_dataviz/routes_report.py:257
+#: src/ej_dataviz/routes_report.py:261
 msgid "convergence"
 msgstr "convergência"
 
-#: src/ej_dataviz/routes_report.py:258
+#: src/ej_dataviz/routes_report.py:262
 msgid "disagree"
 msgstr "discorda"
 
-#: src/ej_dataviz/routes_report.py:259 src/ej_profiles/enums.py:70
+#: src/ej_dataviz/routes_report.py:263 src/ej_profiles/enums.py:70
 msgid "email"
 msgstr "email"
 
-#: src/ej_dataviz/routes_report.py:260
+#: src/ej_dataviz/routes_report.py:264
 msgid "id"
 msgstr "id"
 
-#: src/ej_dataviz/routes_report.py:261 src/ej_profiles/enums.py:69
+#: src/ej_dataviz/routes_report.py:265 src/ej_profiles/enums.py:69
 msgid "name"
 msgstr "nome"
 
-#: src/ej_dataviz/routes_report.py:262
+#: src/ej_dataviz/routes_report.py:266
 msgid "participation"
 msgstr "participação"
 
-#: src/ej_dataviz/routes_report.py:263
+#: src/ej_dataviz/routes_report.py:267
 msgid "skipped"
 msgstr "pulados"
 
