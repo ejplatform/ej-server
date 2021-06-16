@@ -7,7 +7,7 @@ from django.utils.translation import ugettext as _
 
 from ej_profiles.enums import Gender, Race
 from ej_profiles.models import Profile
-from ej_users.models import User
+from ej_users.models import User 
 
 
 class TestProfile:
@@ -27,6 +27,7 @@ class TestProfile:
             race=Race.INDIGENOUS,
             ethnicity="ethnicity",
             education="undergraduate",
+            phone_number="phone_number",
         )
 
     @pytest.mark.skipif(
@@ -45,6 +46,7 @@ class TestProfile:
             (_("Race"), _("Indigenous")),
             (_("Political activity"), _("political_activity")),
             (_("Biography"), _("biography")),
+            (_("Phone number"), _("phone_number")),
         }
         assert str(profile) == _("name's profile")
         assert set(profile.profile_fields()) - expected == set()
@@ -78,3 +80,4 @@ class TestProfile:
         assert profile.biography == ""
         assert profile.occupation == ""
         assert profile.political_activity == ""
+        assert profile.phone_number == ""
