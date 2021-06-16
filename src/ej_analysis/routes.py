@@ -2,7 +2,9 @@ import json
 from boogie.router import Router
 from django.utils.translation import ugettext_lazy as _
 from django.http import HttpResponse
-from .opinion_component.aquisition import AquisitionService
+from .opinion_component.lib.analytics_wrapper import AnalyticsWrapper
+from .opinion_component.lib.mongodb_wrapper import MongodbWrapper
+from .opinion_component.lib.d3js_wrapper import D3jsWrapper
 from ej_conversations import models
 import datetime
 from django.http import JsonResponse
@@ -25,10 +27,12 @@ def aquisition(request, conversation, slug):
     start_date = datetime.date.fromisoformat(request.GET.get("startDate"))
     end_date = datetime.date.fromisoformat(request.GET.get("endDate"))
     view_id = request.GET.get("viewId")
-    authors = (
-        conversation.votes.filter(created__range=[start_date, end_date])
-        .order_by("author")
-        .distinct("author")
-    )
-    aquisition_service = AquisitionService(start_date, end_date, view_id, authors)
-    return JsonResponse(aquisition_service.d3js_data())
+    analytics_wrapper = AnalyticsWrapper(start_date, end_date, view_id)
+    mongodb_wrapper = MongodbWrapper()
+    aquisition = mongodb_wrapper.get_page_aquisition()
+    print("aquisition")
+    print(aquisition)
+    print("aquisition")
+    engajement = analytics_wrapper.get_page_engajement()
+    d3js_wrapper = D3jsWrapper(aquisition, engajement)
+    return JsonResponse(d3js_wrapper.get_data())

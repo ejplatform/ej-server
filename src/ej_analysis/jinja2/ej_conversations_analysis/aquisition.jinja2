@@ -68,7 +68,7 @@ async function requestData() {
   document.querySelector("#page-engagement-value").textContent =
       "{{ _('Total access to component (engagement): ') }}" + data["value"];
   document.querySelector("#page-aquisition-value").textContent =
-      "{{ _('Total votes on component (aquisition): ') }}" +
+      "{{ _('Total voters on component (aquisition): ') }}" +
     data["children"][0]["value"];
   return data;
 }

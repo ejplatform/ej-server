@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-24 13:54-0300\n"
+"POT-Creation-Date: 2021-06-16 19:05-0300\n"
 "PO-Revision-Date: 2019-09-09 13:55-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -135,12 +135,14 @@ msgstr "Página {slug} não encontrada"
 msgid "Analysis"
 msgstr "Analises"
 
-#: src/ej_analysis/opinion_component/aquisition.py:29
+#: src/ej_analysis/opinion_component/aquisition.py:20
+#: src/ej_analysis/opinion_component/lib/analytics_wrapper.py:20
 #, fuzzy
 msgid "Engagement"
 msgstr "Engajamento"
 
-#: src/ej_analysis/opinion_component/aquisition.py:33
+#: src/ej_analysis/opinion_component/aquisition.py:24
+#: src/ej_analysis/opinion_component/lib/analytics_wrapper.py:24
 #, fuzzy
 msgid "Aquisition"
 msgstr "Aquisição"
@@ -2376,8 +2378,8 @@ msgstr "Total de acessos ao componente (engajamento): "
 
 #: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:71
 #, fuzzy
-msgid "Total votes on component (aquisition): "
-msgstr "Total de votos no componente (aquisição): "
+msgid "Total voters on component (aquisition): "
+msgstr "Total de participantes na conversa (aquisição): "
 
 #: src/ej_analysis/jinja2/ej_conversations_analysis/index.jinja2:13
 msgid "Dashboards and analysis"
