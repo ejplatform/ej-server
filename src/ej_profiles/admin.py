@@ -11,7 +11,7 @@ class ProfileAdmin(admin.ModelAdmin):
     fieldsets = (
         (
             _("Basic information"),
-            {"fields": ["profile_photo", "race", "gender", "birth_date", "occupation"]},
+            {"fields": ["profile_photo", "race", "gender", "birth_date", "occupation", "phone_number"]},
         ),
         (_("Address"), {"fields": ["city", "state", "country"]}),
         (_("Advanced"), {"fields": ["political_activity", "biography"]}),

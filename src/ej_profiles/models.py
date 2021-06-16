@@ -39,6 +39,7 @@ class Profile(models.Model):
     occupation = models.CharField(_("Occupation"), blank=True, max_length=50)
     political_activity = models.TextField(_("Political activity"), blank=True)
     profile_photo = models.ImageField(_("Profile Photo"), blank=True, null=True, upload_to="profile_images")
+    phone_number = models.CharField(_("Phone number"), blank=True, unique=True, max_length=11)
 
     name = delegate_to("user")
     email = delegate_to("user")
@@ -111,6 +112,7 @@ class Profile(models.Model):
             "political_activity",
             "has_image",
             "gender_description",
+            "phone_number",
         )
         return bool(all(getattr(self, field) for field in fields))
 
@@ -134,6 +136,7 @@ class Profile(models.Model):
             "race",
             "political_activity",
             "biography",
+            "phone_number",
         ]
         field_map = {field.name: field for field in self._meta.fields}
         null_values = {Gender.NOT_FILLED, Race.NOT_FILLED, None, ""}

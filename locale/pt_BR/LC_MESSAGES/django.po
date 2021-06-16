@@ -734,7 +734,7 @@ msgstr "Campanha de email"
 msgid "Mailing campaign"
 msgstr "Campanha de email"
 
-#: src/ej_conversations/tools/routes.py:59
+#: src/ej_conversations/tools/routes.py:56
 #: src/ej_conversations/tools/table.py:17
 #, fuzzy
 msgid "Opinion component"
@@ -1723,28 +1723,32 @@ msgstr "Atividade política"
 msgid "Profile Photo"
 msgstr "Foto de Perfil"
 
-#: src/ej_profiles/models.py:153 src/ej_profiles/tests/test_models.py:40
+#: src/ej_profiles/models.py:42 src/ej_profiles/tests/test_models.py:48
+msgid "Phone number"
+msgstr "Número de telefone"
+
+#: src/ej_profiles/models.py:156 src/ej_profiles/tests/test_models.py:40
 msgid "Age"
 msgstr "Idade"
 
-#: src/ej_profiles/models.py:157 src/ej_users/forms.py:47
+#: src/ej_profiles/models.py:160 src/ej_users/forms.py:47
 #: src/ej_users/forms.py:56
 msgid "E-mail"
 msgstr "Email"
 
-#: src/ej_profiles/models.py:193
+#: src/ej_profiles/models.py:196
 msgid "Root"
 msgstr "Raiz"
 
-#: src/ej_profiles/models.py:195
+#: src/ej_profiles/models.py:198
 msgid "Administrative user"
 msgstr "Usuário administrativo"
 
-#: src/ej_profiles/models.py:196 src/ej_profiles/tests/test_models.py:53
+#: src/ej_profiles/models.py:199 src/ej_profiles/tests/test_models.py:54
 msgid "Regular user"
 msgstr "Usuário regular"
 
-#: src/ej_profiles/models.py:199
+#: src/ej_profiles/models.py:202
 msgid "(Not Filled)"
 msgstr "(Não preenchido)"
 
@@ -1752,7 +1756,11 @@ msgstr "(Não preenchido)"
 msgid "undergraduate"
 msgstr "sem nível"
 
-#: src/ej_profiles/tests/test_models.py:49
+#: src/ej_profiles/tests/test_models.py:48
+msgid "phone_number"
+msgstr "número de telefone"
+
+#: src/ej_profiles/tests/test_models.py:50
 msgid "name's profile"
 msgstr "perfil"
 
