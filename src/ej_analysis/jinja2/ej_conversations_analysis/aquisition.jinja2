@@ -22,18 +22,21 @@
                         <input id="aquisition-analytics-view-id" type="text" minlength="9">
                     </div>
                     <div class="card-filters-body-utm">
+                      <label> {{ _('utm_source') }}</label>
                       <select name="utm source" id="aquisition-utm-source">
                         {% for utm_source_option in utm_source_options %}
                         <option value={{utm_source_option}}>{{utm_source_option}}</option>
                         {% endfor %}
                       </select>
 
+                      <label> {{ _('utm_campaign') }}</label>
                       <select name="utm campaign" id="aquisition-utm-campaign">
                         {% for utm_campaign_option in utm_campaign_options %}
                         <option value={{utm_campaign_option}}>{{utm_campaign_option}}</option>
                         {% endfor %}
                       </select>
 
+                      <label> {{ _('utm_medium') }}</label>
                       <select name="utm medium" id="aquisition-utm-medium">
                         {% for utm_campaign_medium in utm_medium_options %}
                         <option value={{utm_campaign_medium}}>{{utm_campaign_medium}}</option>

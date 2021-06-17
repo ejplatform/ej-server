@@ -100,6 +100,7 @@ def votes_as_dataframe(votes):
         "author__metadata__mautic_id",
         "comment__content",
         "comment__id",
+        "comment__conversation",
         "choice",
         "created",
     )
@@ -112,6 +113,7 @@ def votes_as_dataframe(votes):
         "author__metadata__mautic_id",
         "comment",
         "comment_id",
+        "conversation_id",
         "choice",
         "created",
     )
