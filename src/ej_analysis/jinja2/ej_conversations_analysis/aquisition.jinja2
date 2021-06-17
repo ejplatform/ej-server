@@ -21,6 +21,25 @@
                         <label> {{ _('Analytics view id') }}</label>
                         <input id="aquisition-analytics-view-id" type="text" minlength="9">
                     </div>
+                    <div class="card-filters-body-utm">
+                      <select name="utm source" id="aquisition-utm-source">
+                        {% for utm_source_option in utm_source_options %}
+                        <option value={{utm_source_option}}>{{utm_source_option}}</option>
+                        {% endfor %}
+                      </select>
+
+                      <select name="utm campaign" id="aquisition-utm-campaign">
+                        {% for utm_campaign_option in utm_campaign_options %}
+                        <option value={{utm_campaign_option}}>{{utm_campaign_option}}</option>
+                        {% endfor %}
+                      </select>
+
+                      <select name="utm medium" id="aquisition-utm-medium">
+                        {% for utm_campaign_medium in utm_medium_options %}
+                        <option value={{utm_campaign_medium}}>{{utm_campaign_medium}}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
                 </div>
             </div>
             <div class="card-body-content">
@@ -56,13 +75,22 @@ async function requestData() {
   var endDate = document.querySelector("#aquisition-date-end").value;
   var startDate = document.querySelector("#aquisition-date-start").value;
   var viewID = document.querySelector("#aquisition-analytics-view-id").value;
+  var utmMedium = document.querySelector("#aquisition-utm-medium").value;
+  var utmCampaign = document.querySelector("#aquisition-utm-campaign").value;
+  var utmSource = document.querySelector("#aquisition-utm-source").value;
   var url =
     "/conversations/{{conversation.id}}/{{conversation.slug}}/analysis/aquisition_viz?startDate=" +
     startDate +
     "&endDate=" +
     endDate +
     "&viewId=" +
-    viewID;
+    viewID +
+    "&utmMedium=" +
+    utmMedium +
+    "&utmCampaign=" +
+    utmCampaign +
+    "&utmSource="+
+    utmSource;
   var response = await fetch(url);
   var data = await response.json();
   document.querySelector("#page-engagement-value").textContent =
@@ -74,25 +102,33 @@ async function requestData() {
 }
 
 function setDefaultDateFilter() {
-  var day = new Date(Date.now()).getDate();
-  day = day <= 9 ? "0" + day : day;
-  var month = new Date(Date.now()).getMonth() + 1;
-  month = month <= 9 ? "0" + month : month;
-  var year = new Date(Date.now()).getFullYear();
-  var formatedEndDate = [year, month, day].join("-");
-  document.querySelector("#aquisition-date-end").value = formatedEndDate;
+  var localStorageEndDate = localStorage.getItem("aquisitionDateEnd");
+  var localStorageStartDate = localStorage.getItem("aquisitionDateStart");
 
-  var day = new Date(Date.now() - 5184000000).getDate();
-  day = day <= 9 ? "0" + day : day;
-  var month = new Date(Date.now() - 5184000000).getMonth() + 1;
-  month = month <= 9 ? "0" + month : month;
-  var year = new Date(Date.now() - 5184000000).getFullYear();
-  document.querySelector("#aquisition-date-start").value = [
-    year,
-    month,
-    day,
-  ].join("-");
-  document.querySelector("#aquisition-date-start").max = formatedEndDate;
+  if(localStorageStartDate && localStorageStartDate) {
+      document.querySelector("#aquisition-date-end").value = localStorageEndDate;
+      document.querySelector("#aquisition-date-start").value = localStorageStartDate;
+      document.querySelector("#aquisition-date-start").max = localStorageEndDate;
+    } else {
+      var day = new Date(Date.now()).getDate();
+      day = day <= 9 ? "0" + day : day;
+      var month = new Date(Date.now()).getMonth() + 1;
+      month = month <= 9 ? "0" + month : month;
+      var year = new Date(Date.now()).getFullYear();
+      var formatedEndDate = [year, month, day].join("-");
+      document.querySelector("#aquisition-date-end").value = formatedEndDate;
+
+      var day = new Date(Date.now() - 5184000000).getDate();
+      day = day <= 9 ? "0" + day : day;
+      var month = new Date(Date.now() - 5184000000).getMonth() + 1;
+      month = month <= 9 ? "0" + month : month;
+      var year = new Date(Date.now() - 5184000000).getFullYear();
+      var formatedStartDate = [year, month, day].join("-");
+
+      document.querySelector("#aquisition-date-start").value = formatedStartDate;
+      document.querySelector("#aquisition-date-start").max = formatedEndDate;
+  }
+
 }
 
 function hideLoading() {
@@ -110,6 +146,15 @@ function showLoading() {
 }
 
 async function updateVisualization() {
+  var endDateInput = document.querySelector("#aquisition-date-end");
+  var startDateInput = document.querySelector("#aquisition-date-start");
+  var analyticsIdInput = document.querySelector(
+    "#aquisition-analytics-view-id"
+  );
+  localStorage.setItem("aquisitionDateEnd", endDateInput.value);
+  localStorage.setItem("aquisitionDateStart", startDateInput.value);
+  localStorage.setItem("analyticsViewId", analyticsIdInput.value);
+
   if(!validAnalyticsID()) {
       showErrors("invalid-analytics");
       return;
@@ -162,9 +207,17 @@ function listenToChanges() {
   var analyticsIdInput = document.querySelector(
     "#aquisition-analytics-view-id"
   );
+  var utmMedium = document.querySelector("#aquisition-utm-medium");
+  var utmCampaign = document.querySelector("#aquisition-utm-campaign");
+  var utmSource = document.querySelector("#aquisition-utm-source");
+
   endDateInput.onchange = updateVisualization;
   startDateInput.onchange = updateVisualization;
   analyticsIdInput.onchange = updateVisualization;
+  utmMedium.onchange = updateVisualization;
+  utmCampaign.onchange = updateVisualization;
+  utmSource.onchange = updateVisualization;
+
 }
 
 function storeAnalyticsViewIdOnLocalStorage() {

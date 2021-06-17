@@ -73,10 +73,7 @@ class TestPostRoutes:
         conversation_path = BASE_URL + f"/conversations/{conversation.id}/"
         comments_path = BASE_URL + f"/comments/"
         comment_data = dict(COMMENT, status="pending")
-        post_data = dict(
-            content=comment_data["content"],
-            conversation=conversation.id,
-        )
+        post_data = dict(content=comment_data["content"], conversation=conversation.id,)
 
         # Non authenticated user
         assert api.post(comments_path, post_data) == self.AUTH_ERROR

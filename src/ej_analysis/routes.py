@@ -19,7 +19,16 @@ conversation_analysis_url_aquisition_viz = f"<model:conversation>/<slug:slug>/an
 
 @urlpatterns.route(conversation_analysis_url)
 def index(request, conversation, slug):
-    return {"conversation": conversation}
+    mongodb_wrapper = MongodbWrapper()
+    utm_source_options = mongodb_wrapper.get_utm_sources()
+    utm_campaign_options = mongodb_wrapper.get_utm_campaigns()
+    utm_medium_options = mongodb_wrapper.get_utm_medium()
+    return {
+        "conversation": conversation,
+        "utm_source_options": utm_source_options,
+        "utm_campaign_options": utm_campaign_options,
+        "utm_medium_options": utm_medium_options,
+    }
 
 
 @urlpatterns.route(conversation_analysis_url_aquisition_viz)
@@ -27,12 +36,14 @@ def aquisition(request, conversation, slug):
     start_date = datetime.date.fromisoformat(request.GET.get("startDate"))
     end_date = datetime.date.fromisoformat(request.GET.get("endDate"))
     view_id = request.GET.get("viewId")
-    analytics_wrapper = AnalyticsWrapper(start_date, end_date, view_id)
-    mongodb_wrapper = MongodbWrapper()
-    aquisition = mongodb_wrapper.get_page_aquisition()
-    print("aquisition")
-    print(aquisition)
-    print("aquisition")
+    utm_medium = request.GET.get("utmMedium")
+    utm_campaign = request.GET.get("utmCampaign")
+    utm_source = request.GET.get("utmSource")
+    analytics_wrapper = AnalyticsWrapper(
+        start_date, end_date, view_id, utm_medium, utm_campaign, utm_source
+    )
     engajement = analytics_wrapper.get_page_engajement()
+    mongodb_wrapper = MongodbWrapper(start_date, end_date, utm_medium, utm_campaign, utm_source)
+    aquisition = mongodb_wrapper.get_page_aquisition()
     d3js_wrapper = D3jsWrapper(aquisition, engajement)
     return JsonResponse(d3js_wrapper.get_data())
