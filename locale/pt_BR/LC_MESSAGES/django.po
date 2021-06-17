@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-17 17:50-0300\n"
+"POT-Creation-Date: 2021-06-17 19:11-0300\n"
 "PO-Revision-Date: 2019-09-09 13:55-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -2383,15 +2383,27 @@ msgstr "view id do analytics invalida"
 msgid "end date must be gratter then start date"
 msgstr "data de fim deve ser maior que data de inicio"
 
-#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:74
-msgid "Trigger Collect"
-msgstr ""
+#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:75
+msgid ""
+"Welcome to EJ analysis area. Here we presents data crossing between EJ and "
+"other tools, like Analytics and Mautic. Before starting collecting, it is "
+"necessary to check if this conversation is available to data crossing. Read "
+"more on our documentation."
+msgstr "" 
+"Bem vinda a área de análises da EJ. Aqui apresentamos o cruzamento de dados da EJ "
+"com outras fontes, como Analytics e Mautic. Antes de iniciar a coleta dos dados, "
+"é necessário verificar se essa conversa está apta para o cruzamento. "
+"Leia mais na nossa documentação."
 
-#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:105
+#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:77
+msgid "Trigger Collect"
+msgstr "Iniciar coleta"
+
+#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:114
 msgid "Total access to component (engagement): "
 msgstr "Total de acessos ao componente (engajamento): "
 
-#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:107
+#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:116
 #, fuzzy
 msgid "Total voters on component (aquisition): "
 msgstr "Total de participantes na conversa (aquisição): "
