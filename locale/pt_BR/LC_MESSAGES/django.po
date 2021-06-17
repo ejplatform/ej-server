@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-16 19:05-0300\n"
+"POT-Creation-Date: 2021-06-17 17:50-0300\n"
 "PO-Revision-Date: 2019-09-09 13:55-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -93,7 +93,7 @@ msgid "Your progress: {n} of {total}"
 msgstr "Seu progresso: {n} de {total}"
 
 #: src/ej/routes.py:54 src/ej_conversations/apps.py:8
-#: src/ej_conversations/models/conversation.py:98
+#: src/ej_conversations/models/conversation.py:100
 msgid "Conversations"
 msgstr "Conversas"
 
@@ -131,18 +131,16 @@ msgstr "Boas vindas!"
 msgid "Page {slug} not found"
 msgstr "Página {slug} não encontrada"
 
-#: src/ej_analysis/apps.py:7 src/ej_conversations/models/conversation.py:34
+#: src/ej_analysis/apps.py:7 src/ej_conversations/models/conversation.py:35
 msgid "Analysis"
 msgstr "Analises"
 
-#: src/ej_analysis/opinion_component/aquisition.py:20
-#: src/ej_analysis/opinion_component/lib/analytics_wrapper.py:20
+#: src/ej_analysis/opinion_component/lib/d3js_wrapper.py:13
 #, fuzzy
 msgid "Engagement"
 msgstr "Engajamento"
 
-#: src/ej_analysis/opinion_component/aquisition.py:24
-#: src/ej_analysis/opinion_component/lib/analytics_wrapper.py:24
+#: src/ej_analysis/opinion_component/lib/d3js_wrapper.py:15
 #, fuzzy
 msgid "Aquisition"
 msgstr "Aquisição"
@@ -155,7 +153,7 @@ msgstr "Murais"
 msgid "You cannot change this value afterwards"
 msgstr "Você não pode alterar este valor depois"
 
-#: src/ej_boards/models.py:20 src/ej_conversations/tools/models.py:43
+#: src/ej_boards/models.py:20 src/ej_conversations/tools/models.py:44
 msgid "Default"
 msgstr "Padrão"
 
@@ -183,7 +181,7 @@ msgstr "Roxa"
 msgid "Slug"
 msgstr "Identificador"
 
-#: src/ej_boards/models.py:32 src/ej_conversations/models/conversation.py:45
+#: src/ej_boards/models.py:32 src/ej_conversations/models/conversation.py:47
 msgid "Title"
 msgstr "Título"
 
@@ -518,70 +516,70 @@ msgstr "Comentário está com moderação pendente"
 msgid "Must give a reason to reject a comment"
 msgstr "Deve fornecer uma razão para rejeitar o comentário"
 
-#: src/ej_conversations/models/conversation.py:35
+#: src/ej_conversations/models/conversation.py:36
 msgid "Tools"
 msgstr "Ferramentas"
 
-#: src/ej_conversations/models/conversation.py:47
+#: src/ej_conversations/models/conversation.py:49
 msgid "Short description used to create URL slugs (e.g. School system)."
 msgstr ""
 "Uma breve descrição sobre essa conversa. Isso é usado internamente para "
 "criar identificadores de URL (slugs. Ex: sistema de ensino)"
 
-#: src/ej_conversations/models/conversation.py:49
+#: src/ej_conversations/models/conversation.py:51
 msgid "Question"
 msgstr "Questão"
 
-#: src/ej_conversations/models/conversation.py:49
+#: src/ej_conversations/models/conversation.py:51
 msgid "What do you want to ask?"
 msgstr "O que você deseja perguntar?"
 
-#: src/ej_conversations/models/conversation.py:54
+#: src/ej_conversations/models/conversation.py:56
 msgid "Only the author and administrative staff can edit this conversation."
 msgstr "Apenas o autor e o administrador podem editar esta conversa."
 
-#: src/ej_conversations/models/conversation.py:60
+#: src/ej_conversations/models/conversation.py:62
 msgid "Moderators can accept and reject comments."
 msgstr "Os moderadores podem aceitar e rejeitar comentários."
 
-#: src/ej_conversations/models/conversation.py:64
+#: src/ej_conversations/models/conversation.py:66
 msgid "Promote conversation?"
 msgstr "Promover conversa?"
 
-#: src/ej_conversations/models/conversation.py:66
+#: src/ej_conversations/models/conversation.py:68
 msgid "Promoted conversations appears in the main /conversations/ endpoint."
 msgstr "Conversas promovidas aparecem no mural principal /conversations."
 
-#: src/ej_conversations/models/conversation.py:69
+#: src/ej_conversations/models/conversation.py:71
 msgid "Hide conversation?"
 msgstr "Esconder conversa?"
 
-#: src/ej_conversations/models/conversation.py:72
+#: src/ej_conversations/models/conversation.py:74
 msgid ""
 "Hidden conversations does not appears in boards or in the main /"
 "conversations/ endpoint."
 msgstr "Conversas ocultas não aparecem no mural principal /conversations/."
 
-#: src/ej_conversations/models/conversation.py:97
+#: src/ej_conversations/models/conversation.py:99
 #: src/ej_conversations/roles/conversations.py:133
 #: src/ej_conversations/tour.py:75 src/ej_gamification/routes.py:148
 #: src/ej_notifications/enums.py:8
 msgid "Conversation"
 msgstr "Conversa"
 
-#: src/ej_conversations/models/conversation.py:100
+#: src/ej_conversations/models/conversation.py:102
 msgid "Can publish promoted conversations"
 msgstr "Pode publicar conversas promovidas"
 
-#: src/ej_conversations/models/conversation.py:101
+#: src/ej_conversations/models/conversation.py:103
 msgid "Can moderate comments in any conversation"
 msgstr "Pode moderar comentários em qualquer conversa"
 
-#: src/ej_conversations/models/conversation.py:197
+#: src/ej_conversations/models/conversation.py:199
 msgid "User does not have permission to create a promoted conversation."
 msgstr "Usuário não tem permissão para criar uma conversa promovida."
 
-#: src/ej_conversations/models/conversation.py:261
+#: src/ej_conversations/models/conversation.py:263
 msgid "automatically rejected"
 msgstr "rejeitado automaticamente"
 
@@ -619,7 +617,7 @@ msgstr "{n} aguardando moderação"
 msgid "{n} of {m} comments"
 msgstr "{n} de {m} comentários"
 
-#: src/ej_conversations/routes.py:53
+#: src/ej_conversations/routes.py:58
 msgid "Participate voting and creating comments!"
 msgstr "Participe com votos e comentários!"
 
@@ -636,43 +634,43 @@ msgstr ""
 msgid "Your vote has been computed :-)"
 msgstr "Seu voto foi computado :-)"
 
-#: src/ej_conversations/tests/test_rasa_integrations.py:40
+#: src/ej_conversations/tests/test_rasa_integrations.py:44
 #, fuzzy
 msgid "Enter a valid URL."
 msgstr "URL interna"
 
-#: src/ej_conversations/tests/test_rasa_integrations.py:48
+#: src/ej_conversations/tests/test_rasa_integrations.py:55
 #, fuzzy
 msgid "Rasa conversation with this Conversation and Domain already exists."
 msgstr "Uma persona com esse nome já existe nessa conversa."
 
-#: src/ej_conversations/tools/forms.py:30
+#: src/ej_conversations/tools/forms.py:31
 #, fuzzy
 msgid "Authentication Type"
 msgstr "Autenticação"
 
-#: src/ej_conversations/tools/forms.py:34
-#: src/ej_conversations/tools/forms.py:45
+#: src/ej_conversations/tools/forms.py:37
+#: src/ej_conversations/tools/forms.py:49
 msgid "Theme"
 msgstr "Tema"
 
-#: src/ej_conversations/tools/forms.py:40
+#: src/ej_conversations/tools/forms.py:43
 msgid "Template type"
 msgstr "Tipo de template"
 
-#: src/ej_conversations/tools/forms.py:50
+#: src/ej_conversations/tools/forms.py:51
 msgid "Redirect user to a custom domain"
 msgstr "Redirecione o usuário para um endereço personalizado"
 
-#: src/ej_conversations/tools/forms.py:54
+#: src/ej_conversations/tools/forms.py:53
 msgid "Adds a custom title to the template (optional)."
 msgstr "Adicione um título customizado ao template (opicional)."
 
-#: src/ej_conversations/tools/forms.py:59
+#: src/ej_conversations/tools/forms.py:56
 msgid "selects a specific comment for user to vote (optional)."
 msgstr "Selecione um comentário específico para o usuário votar (opicional)."
 
-#: src/ej_conversations/tools/models.py:15
+#: src/ej_conversations/tools/models.py:17
 msgid "Domain"
 msgstr "Domínio"
 
@@ -680,33 +678,33 @@ msgstr "Domínio"
 msgid "The domain that the rasa bot webchat is hosted."
 msgstr "O domínio do site que hospeda o webchat do rasa bot."
 
-#: src/ej_conversations/tools/models.py:31
+#: src/ej_conversations/tools/models.py:32
 #, fuzzy
 msgid "Register using name/email"
 msgstr "Registrar usando nome/email"
 
-#: src/ej_conversations/tools/models.py:32
-#: src/ej_conversations/tools/models.py:74
+#: src/ej_conversations/tools/models.py:33
+#: src/ej_conversations/tools/models.py:77
 msgid "Mautic"
 msgstr ""
 
-#: src/ej_conversations/tools/models.py:33
+#: src/ej_conversations/tools/models.py:34
 msgid "Analytics"
 msgstr ""
 
-#: src/ej_conversations/tools/models.py:37
+#: src/ej_conversations/tools/models.py:38
 msgid ""
 "User will use EJ platform interface, creating an account using personal data"
 msgstr ""
 "Usuário interagirá com a interface da EJ, criando uma conta com dados "
 "pessoais (email e nome)."
 
-#: src/ej_conversations/tools/models.py:38
-#: src/ej_conversations/tools/models.py:80
+#: src/ej_conversations/tools/models.py:39
+#: src/ej_conversations/tools/models.py:83
 msgid "Uses a mautic campaign "
 msgstr "Usa uma campanha do mautic"
 
-#: src/ej_conversations/tools/models.py:39
+#: src/ej_conversations/tools/models.py:40
 msgid ""
 "Uses analytics cookies allowing you to cross vote data with user browser "
 "data."
@@ -714,40 +712,40 @@ msgstr ""
 "Usa cookies do analytics para cruzar dados de voto com os dados do navegador "
 "do usuário."
 
-#: src/ej_conversations/tools/models.py:44
+#: src/ej_conversations/tools/models.py:45
 msgid "Votorantim"
 msgstr ""
 
-#: src/ej_conversations/tools/models.py:45
+#: src/ej_conversations/tools/models.py:46
 msgid "ICD"
 msgstr ""
 
-#: src/ej_conversations/tools/models.py:75
+#: src/ej_conversations/tools/models.py:78
 msgid "MailChimp"
 msgstr ""
 
-#: src/ej_conversations/tools/models.py:79
+#: src/ej_conversations/tools/models.py:82
 #, fuzzy
 msgid "Mailchimp campaign"
 msgstr "Campanha de email"
 
-#: src/ej_conversations/tools/routes.py:46
+#: src/ej_conversations/tools/routes.py:47
 #: src/ej_conversations/tools/table.py:11
 msgid "Mailing campaign"
 msgstr "Campanha de email"
 
-#: src/ej_conversations/tools/routes.py:59
-#: src/ej_conversations/tools/table.py:17
+#: src/ej_conversations/tools/routes.py:64
+#: src/ej_conversations/tools/table.py:19
 #, fuzzy
 msgid "Opinion component"
 msgstr "Componente de opinião"
 
-#: src/ej_conversations/tools/routes.py:76
-#: src/ej_conversations/tools/table.py:23
+#: src/ej_conversations/tools/routes.py:84
+#: src/ej_conversations/tools/table.py:27
 msgid "Rasa chatbot"
 msgstr ""
 
-#: src/ej_conversations/tools/table.py:12
+#: src/ej_conversations/tools/table.py:13
 msgid ""
 "Generates a html template of this conversation, for mailing marketing "
 "campaigns."
@@ -756,7 +754,7 @@ msgstr ""
 "de email. Útil para campanhas de marketing com ferramentas como mautic e "
 "mailchimp."
 
-#: src/ej_conversations/tools/table.py:18
+#: src/ej_conversations/tools/table.py:21
 #, fuzzy
 msgid ""
 "Adds EJ directly to your site. Enables voting, commenting, and clusters "
@@ -765,7 +763,7 @@ msgstr ""
 "Adicione a EJ em sites e blogs. Permite votar, comentar e visualizar os "
 "grupos diretamente em páginas html."
 
-#: src/ej_conversations/tools/table.py:24
+#: src/ej_conversations/tools/table.py:29
 msgid ""
 "Collect opinions using EJ's chatbot, also known as Duda. Allows, via "
 "webchat, to vote and comment on EJ's conversations."
@@ -978,65 +976,65 @@ msgstr "Você!"
 msgid "State"
 msgstr "Estado"
 
-#: src/ej_dataviz/routes_report.py:253
+#: src/ej_dataviz/routes_report.py:278
 msgid "agree"
 msgstr "concorda"
 
-#: src/ej_dataviz/routes_report.py:254
+#: src/ej_dataviz/routes_report.py:279
 msgid "author"
 msgstr "autor"
 
-#: src/ej_dataviz/routes_report.py:255
+#: src/ej_dataviz/routes_report.py:280
 msgid "author_id"
 msgstr "autor_id"
 
-#: src/ej_dataviz/routes_report.py:256
+#: src/ej_dataviz/routes_report.py:281
 msgid "choice"
 msgstr "escolha"
 
-#: src/ej_dataviz/routes_report.py:257
+#: src/ej_dataviz/routes_report.py:282
 #, fuzzy
 msgid "cluster"
 msgstr "Grupos"
 
-#: src/ej_dataviz/routes_report.py:258
+#: src/ej_dataviz/routes_report.py:283
 #, fuzzy
 msgid "cluster_id"
 msgstr "Grupos"
 
-#: src/ej_dataviz/routes_report.py:259
+#: src/ej_dataviz/routes_report.py:284
 msgid "comment"
 msgstr "comentário"
 
-#: src/ej_dataviz/routes_report.py:260
+#: src/ej_dataviz/routes_report.py:285
 msgid "comment_id"
 msgstr "comentário_id"
 
-#: src/ej_dataviz/routes_report.py:261
+#: src/ej_dataviz/routes_report.py:286
 msgid "convergence"
 msgstr "convergência"
 
-#: src/ej_dataviz/routes_report.py:262
+#: src/ej_dataviz/routes_report.py:287
 msgid "disagree"
 msgstr "discorda"
 
-#: src/ej_dataviz/routes_report.py:263 src/ej_profiles/enums.py:70
+#: src/ej_dataviz/routes_report.py:288 src/ej_profiles/enums.py:70
 msgid "email"
 msgstr "email"
 
-#: src/ej_dataviz/routes_report.py:264
+#: src/ej_dataviz/routes_report.py:289
 msgid "id"
 msgstr "id"
 
-#: src/ej_dataviz/routes_report.py:265 src/ej_profiles/enums.py:69
+#: src/ej_dataviz/routes_report.py:290 src/ej_profiles/enums.py:69
 msgid "name"
 msgstr "nome"
 
-#: src/ej_dataviz/routes_report.py:266
+#: src/ej_dataviz/routes_report.py:291
 msgid "participation"
 msgstr "participação"
 
-#: src/ej_dataviz/routes_report.py:267
+#: src/ej_dataviz/routes_report.py:292
 msgid "skipped"
 msgstr "pulados"
 
@@ -2347,36 +2345,53 @@ msgstr "Mais informações"
 msgid "Execution environment"
 msgstr "Ambiente de execução"
 
-#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:3
+#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:4
 msgid "Engagement vs Aquisition"
 msgstr "Engajamento vs Aquisição"
 
-#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:12
+#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:13
 #, fuzzy
 msgid "Start date"
 msgstr "data de inicio"
 
-#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:16
+#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:17
 msgid "End date"
 msgstr "data de fim"
 
-#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:21
+#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:22
 msgid "Analytics view id"
 msgstr "view id do analytics"
 
-#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:42
+#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:26
+msgid "utm_source"
+msgstr ""
+
+#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:33
+#, fuzzy
+msgid "utm_campaign"
+msgstr "Campanha de email"
+
+#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:40
+msgid "utm_medium"
+msgstr ""
+
+#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:65
 msgid "Invalid analytics view id"
 msgstr "view id do analytics invalida"
 
-#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:45
+#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:68
 msgid "end date must be gratter then start date"
 msgstr "data de fim deve ser maior que data de inicio"
 
-#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:69
+#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:74
+msgid "Trigger Collect"
+msgstr ""
+
+#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:105
 msgid "Total access to component (engagement): "
 msgstr "Total de acessos ao componente (engajamento): "
 
-#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:71
+#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:107
 #, fuzzy
 msgid "Total voters on component (aquisition): "
 msgstr "Total de participantes na conversa (aquisição): "

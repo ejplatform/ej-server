@@ -1,4 +1,5 @@
 <div class="row">
+  {% if data_exists %}
     <div class="card">
         <div class="card-title">{{ _('Engagement vs Aquisition') }} </div>
         <div class="card-body">
@@ -69,10 +70,22 @@
             </div>
         </div>
     </div>
+    {% else %}
+    <div class="empty-viz">
+    <p>Bem vinda a área de análises da EJ. Aqui apresentamos o cruzamento de dados da EJ com outras fontes, como Analytics e Mautic. Antes de iniciar a coleta dos dados, é necessário verificar se essa conversa está apta para o cruzamento. Leia mais na nossa documentação.</p>
+    <input onClick="triggerCollect()" name="trigger-collect" type="button" value="{{ _('Trigger Collect')}}">
+    </div>
+    {% endif %}
 </div>
 
 {% block javascript %}
 <script>
+
+  async function triggerCollect() {
+    var url =
+      "/conversations/{{conversation.id}}/{{conversation.slug}}/analysis/aquisition_viz_data_collect";
+    await fetch(url);
+  }
 
 async function requestData() {
   var endDate = document.querySelector("#aquisition-date-end").value;
