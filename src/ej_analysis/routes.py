@@ -55,7 +55,7 @@ def aquisition(request, conversation, slug):
     )
     aquisition = mongodb_wrapper.get_page_aquisition()
     d3js_wrapper = D3jsWrapper(aquisition, engajement)
-    return JsonResponse(d3js_wrapper.get_data())
+    return JsonResponse(d3js_wrapper.get_aquisition_viz_data())
 
 
 @urlpatterns.route(conversation_analysis_url_aquisition_viz_start_collect)

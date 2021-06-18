@@ -1,3 +1,4 @@
+import os
 from pymongo import MongoClient
 
 
@@ -11,7 +12,13 @@ class MongodbWrapper:
         utm_campaign=False,
         utm_source=False,
     ):
-        client = MongoClient("192.168.15.101", 27017, username="mongo", password="mongo")
+        client_variables = self.get_mongodb_connection_variables()
+        client = MongoClient(
+            client_variables["DB_HOST"],
+            client_variables["DB_PORT"],
+            username=client_variables["DB_USERNAME"],
+            password=client_variables["DB_PASSWORD"],
+        )
         self.db = client.admin.conversations
         self.start_date = start_date
         self.end_date = end_date
@@ -46,3 +53,11 @@ class MongodbWrapper:
 
     def conversation_data_exists(self):
         return self.db.find_one({"conversation_id": int(self.conversation_id)})
+
+    def get_mongodb_connection_variables(self):
+        return {
+            "DB_HOST": os.getenv("MONGODB_ANALYSIS_HOST", "localhost"),
+            "DB_PORT": int(os.getenv("MONGODB_ANALYSIS_PORT", 27017)),
+            "DB_USERNAME": os.getenv("MONGODB_ANALYSIS_USERNAME", "mongo"),
+            "DB_PASSWORD": os.getenv("MONGODB_ANALYSIS_PASSWORD", "mongo"),
+        }

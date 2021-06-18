@@ -6,7 +6,7 @@ class D3jsWrapper:
         self.aquisition = aquisition
         self.engagement = engajement
 
-    def get_data(self):
+    def get_aquisition_viz_data(self):
         return {
             "name": "engagement",
             "value": self.engagement,

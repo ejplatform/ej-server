@@ -1,19 +1,28 @@
+import os
 import requests
 
 
 class AirflowClient:
     def __init__(self, conversation_id):
         self.conversation_id = conversation_id
+        self.client_variables = self.get_airflow_connection_variables()
 
     def trigger_dag(self):
         requests.post(
-            "http://192.168.15.101:8080/api/v1/dags/ej_analysis_dag/dagRuns",
+            f"{self.client_variables['API_HOST']}/api/v1/dags/ej_analysis_dag/dagRuns",
             json={
                 "conf": {
-                    "conversation_start_date": "2020-10-01",
-                    "conversation_end_date": "2021-04-01",
+                    "conversation_start_date": "",
+                    "conversation_end_date": "",
                     "conversation_id": self.conversation_id,
                 }
             },
-            auth=("airflow", "airflow"),
+            auth=(self.client_variables["AIRFLOW_USERNAME"], self.client_variables["AIRFLOW_PASSWORD"]),
         )
+
+    def get_airflow_connection_variables(self):
+        return {
+            "API_HOST": os.getenv("AIRFLOW_HOST", "http://localhost:8080"),
+            "AIRFLOW_USERNAME": os.getenv("AIRFLOW_HOST", "airflow"),
+            "AIRFLOW_PASSWORD": os.getenv("AIRFLOW_PASSWORD", "airflow"),
+        }

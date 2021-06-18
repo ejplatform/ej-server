@@ -1,4 +1,5 @@
 import logging
+import os
 
 from boogie.configurations import DjangoConf, env
 from .dramatiq import DramatiqConf
@@ -100,8 +101,6 @@ class Conf(
     # Templates
     #
     ACCOUNT_TEMPLATE_EXTENSION = "jinja2"
-
-    import os
 
     DB_HOST = os.getenv("DB_HOST", "db")
     if DB_HOST != "db":
