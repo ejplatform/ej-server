@@ -16,8 +16,8 @@ urlpatterns = Router(
 )
 conversation_analysis_url = f"<model:conversation>/<slug:slug>/analysis"
 conversation_analysis_url_aquisition_viz = f"<model:conversation>/<slug:slug>/analysis/aquisition_viz"
-conversation_analysis_url_aquisition_viz_start_collect = (
-    f"<model:conversation>/<slug:slug>/analysis/aquisition_viz_data_collect"
+conversation_analysis_url_aquisition_viz_trigger_collect = (
+    f"<model:conversation>/<slug:slug>/analysis/aquisition_viz_trigger_collect"
 )
 
 
@@ -58,8 +58,9 @@ def aquisition(request, conversation, slug):
     return JsonResponse(d3js_wrapper.get_aquisition_viz_data())
 
 
-@urlpatterns.route(conversation_analysis_url_aquisition_viz_start_collect)
+@urlpatterns.route(conversation_analysis_url_aquisition_viz_trigger_collect)
 def trigger_collect(request, conversation, slug):
-    airflow_client = AirflowClient(conversation.id)
+    analytics_view_id = request.GET.get('analytics_view_id')
+    airflow_client = AirflowClient(conversation.id, analytics_view_id)
     airflow_client.trigger_dag()
     return JsonResponse({})
