@@ -96,7 +96,7 @@
   async function triggerCollect() {
     var analyticsViewId = document.querySelector("input[name=analytics-view-id]").value;
     var url =
-        "/conversations/{{conversation.id}}/{{conversation.slug}}/analysis/aquisition_viz_trigger_collect?view_id="+analyticsViewId;
+        "/conversations/{{conversation.id}}/{{conversation.slug}}/analysis/aquisition_viz_trigger_collect?analytics_view_id="+analyticsViewId;
     await fetch(url);
   }
 

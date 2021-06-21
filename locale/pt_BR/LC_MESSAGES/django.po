@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-18 13:47-0300\n"
+"POT-Creation-Date: 2021-06-21 12:31-0300\n"
 "PO-Revision-Date: 2019-09-09 13:55-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -2404,17 +2404,19 @@ msgid ""
 "Please inform analytics property ID from the page, and clink to start "
 "collecting"
 msgstr ""
+"Por favor, informe o identificador do analytics para a pagina monitorada, "
+"e clique em iniciar."
 
 #: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:82
 #, fuzzy
 msgid "Start"
-msgstr "data de inicio"
+msgstr "Iniciar"
 
-#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:126
+#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:129
 msgid "Total access to component (engagement): "
 msgstr "Total de acessos ao componente (engajamento): "
 
-#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:128
+#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:131
 #, fuzzy
 msgid "Total voters on component (aquisition): "
 msgstr "Total de participantes na conversa (aquisição): "

@@ -1,14 +1,16 @@
-import json
-from boogie.router import Router
-from django.utils.translation import ugettext_lazy as _
-from django.http import HttpResponse
-from .opinion_component.lib.analytics_wrapper import AnalyticsWrapper
-from .opinion_component.lib.mongodb_wrapper import MongodbWrapper
-from .opinion_component.lib.d3js_wrapper import D3jsWrapper
-from .opinion_component.lib.airflow_client import AirflowClient
-from ej_conversations import models
 import datetime
+import json
+
+from boogie.router import Router
+from django.http import HttpResponse
 from django.http import JsonResponse
+from django.utils.translation import ugettext_lazy as _
+from ej_conversations import models
+
+from .opinion_component.lib.airflow_client import AirflowClient
+from .opinion_component.lib.analytics_wrapper import AnalyticsWrapper
+from .opinion_component.lib.d3js_wrapper import D3jsWrapper
+from .opinion_component.lib.mongodb_wrapper import MongodbWrapper
 
 app_name = "ej_analysis"
 urlpatterns = Router(
@@ -60,7 +62,7 @@ def aquisition(request, conversation, slug):
 
 @urlpatterns.route(conversation_analysis_url_aquisition_viz_trigger_collect)
 def trigger_collect(request, conversation, slug):
-    analytics_view_id = request.GET.get('analytics_view_id')
+    analytics_view_id = request.GET.get("analytics_view_id")
     airflow_client = AirflowClient(conversation.id, analytics_view_id)
     airflow_client.trigger_dag()
     return JsonResponse({})

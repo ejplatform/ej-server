@@ -13,8 +13,8 @@ class AirflowClient:
             f"{self.client_variables['API_HOST']}/api/v1/dags/ej_analysis_dag/dagRuns",
             json={
                 "conf": {
-                    "conversation_start_date": "",
-                    "conversation_end_date": "",
+                    "conversation_start_date": "2020-10-01",
+                    "conversation_end_date": "2021-04-01",
                     "conversation_id": self.conversation_id,
                     "analytics_view_id": self.analytics_view_id
                 }
