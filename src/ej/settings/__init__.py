@@ -52,7 +52,7 @@ class Conf(
     ACCOUNT_USER_MODEL_USERNAME_FIELD = None
     LOGIN_REDIRECT_URL = "/"
     ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
-    ACCOUNT_EMAIL_VERIFICATION = 'none'
+    ACCOUNT_EMAIL_VERIFICATION = "none"
     SOCIALACCOUNT_PROVIDERS = {"facebook": {"SCOPE": ["email"], "METHOD": "oauth2"}}
 
     # MANAGER CONFIGURATION
@@ -84,11 +84,12 @@ class Conf(
         "DEFAULT_RENDERER_CLASSES": (
             "rest_framework.renderers.JSONRenderer",
             "rest_framework.renderers.BrowsableAPIRenderer",
-            "ej.settings.custom_api_renders.PlainTextRenderer"),
+            "ej.settings.custom_api_renders.PlainTextRenderer",
+        ),
         "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
         "PAGE_SIZE": 50,
         "DEFAULT_VERSION": "v1",
-        'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema'
+        "DEFAULT_SCHEMA_CLASS": "rest_framework.schemas.coreapi.AutoSchema",
     }
 
     # REST_AUTH_REGISTER_SERIALIZERS = {
@@ -101,16 +102,17 @@ class Conf(
     ACCOUNT_TEMPLATE_EXTENSION = "jinja2"
 
     import os
-    DB_HOST = os.getenv('DB_HOST', 'db')
-    if DB_HOST != 'db':
+
+    DB_HOST = os.getenv("DB_HOST", "db")
+    if DB_HOST != "db":
         DATABASES = {
-            'default': {
-                'ENGINE': 'django.db.backends.postgresql',
-                'NAME': 'ej',
-                'USER': 'ej',
-                'PASSWORD': 'ej',
-                'HOST': DB_HOST,
-                'PORT': 5432,
+            "default": {
+                "ENGINE": "django.db.backends.postgresql",
+                "NAME": "ej",
+                "USER": "ej",
+                "PASSWORD": "ej",
+                "HOST": DB_HOST,
+                "PORT": 5432,
             }
         }
 
@@ -118,13 +120,13 @@ class Conf(
     CORS_ORIGIN_WHITELIST = [
         "http://localhost",
         "https://agentesdacidadania.org.br",
-        "https://ejplatform.pencillabs.com.br"
+        "https://ejplatform.pencillabs.com.br",
     ]
 
-    ALLOWED_HOSTS = ['*']
+    ALLOWED_HOSTS = ["*"]
 
     REST_AUTH_REGISTER_SERIALIZERS = {
-        'REGISTER_SERIALIZER': 'ej_users.rest_auth_serializer.RegistrationSerializer'
+        "REGISTER_SERIALIZER": "ej_users.rest_auth_serializer.RegistrationSerializer"
     }
 
 

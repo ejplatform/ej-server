@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('ej_profiles', '0003_barbara_change_state_max_length'),
+        ("ej_profiles", "0003_barbara_change_state_max_length"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='profile',
-            name='phone_number',
-            field=models.CharField(blank=True, max_length=11, unique=True, verbose_name='Phone number'),
+            model_name="profile",
+            name="phone_number",
+            field=models.CharField(blank=True, max_length=11, unique=True, verbose_name="Phone number"),
         ),
     ]

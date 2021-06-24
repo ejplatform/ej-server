@@ -7,19 +7,36 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('ej_conversations', '0003_barbara_relax_moderator_field'),
+        ("ej_conversations", "0003_barbara_relax_moderator_field"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='RasaConversation',
+            name="RasaConversation",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('domain', models.URLField(help_text='The domain that the rasa bot webchat is hosted.', max_length=255, verbose_name='Domain')),
-                ('conversation', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='rasa_conversations', to='ej_conversations.Conversation')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True, primary_key=True, serialize=False, verbose_name="ID"
+                    ),
+                ),
+                (
+                    "domain",
+                    models.URLField(
+                        help_text="The domain that the rasa bot webchat is hosted.",
+                        max_length=255,
+                        verbose_name="Domain",
+                    ),
+                ),
+                (
+                    "conversation",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="rasa_conversations",
+                        to="ej_conversations.Conversation",
+                    ),
+                ),
             ],
-            options={
-                'unique_together': {('conversation', 'domain')},
-            },
+            options={"unique_together": {("conversation", "domain")},},
         ),
     ]

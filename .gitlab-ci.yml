@@ -1,14 +1,23 @@
 image: python:3.7
 stages:
     - prepare
+    - style
     - test
     - deploy
+
 install_dependencies:
     stage: prepare
     script:
         - apt update && apt install -y bash git curl
     tags:
         - osf
+
+check_style:
+  before_script:
+    - pip install black==21.5b2
+  stage: style
+  script:
+    - black --check .
 
 run_tests:
     stage: test

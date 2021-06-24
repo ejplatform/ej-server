@@ -21,7 +21,7 @@ class InstalledAppsConf(Base, EjOptions):
         # Core apps
         "ej_profiles",
         "ej_conversations",
-        "ej_analysis"
+        "ej_analysis",
     ]
     third_party_apps = [
         "boogie.apps.fragments",
@@ -35,10 +35,10 @@ class InstalledAppsConf(Base, EjOptions):
         "allauth.socialaccount.providers.google",
         "ej_users",
         "rest_framework",
-        'rest_framework.authtoken',
-        'rest_auth',
-        'corsheaders',
-        'django.contrib.auth',
+        "rest_framework.authtoken",
+        "rest_auth",
+        "corsheaders",
+        "django.contrib.auth",
         # 'rest_auth.registration',
         # 'constance',
         # 'constance.backends.database',

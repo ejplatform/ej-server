@@ -9,10 +9,7 @@ __all__ = ["BoardRecipes"]
 
 class BoardRecipes(Base):
     board = Recipe(
-        Board, slug="board-slug", 
-        title="Title", 
-        description="Description", 
-        owner=foreign_key(Base.author)
+        Board, slug="board-slug", title="Title", description="Description", owner=foreign_key(Base.author)
     )
 
     def get_data(self, request):

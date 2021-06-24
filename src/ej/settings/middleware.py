@@ -5,7 +5,7 @@ class MiddlewareConf(Base):
     def get_middleware(self):
         middleware = super().get_middleware()
         middleware = [
-            'corsheaders.middleware.CorsMiddleware',
+            "corsheaders.middleware.CorsMiddleware",
             "django.contrib.flatpages.middleware.FlatpageFallbackMiddleware",
             "ej_boards.middleware.BoardFallbackMiddleware",
             "ej_conversations.integrations_middleware.KeepQueryParamsAfterLoginRedirect",

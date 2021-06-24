@@ -16,6 +16,7 @@ class CustomChoiceWidget(forms.RadioSelect):
         context = self.get_context(name, value, attrs)
         return self.renderer.render(context)
 
+
 class CustomTemplateChoiceWidget(forms.RadioSelect):
     template_name = "ej_conversations_tools/includes/template-type.jinja2"
     renderer = get_template(template_name)
@@ -27,42 +28,39 @@ class CustomTemplateChoiceWidget(forms.RadioSelect):
 
 class ConversationComponentForm(forms.Form):
     authentication_type = forms.ChoiceField(
-        label=_("Authentication Type"), choices=ConversationComponent.AUTH_TYPE_CHOICES,
-        required=False, widget=CustomChoiceWidget(attrs=ConversationComponent.AUTH_TOOLTIP_TEXTS)
+        label=_("Authentication Type"),
+        choices=ConversationComponent.AUTH_TYPE_CHOICES,
+        required=False,
+        widget=CustomChoiceWidget(attrs=ConversationComponent.AUTH_TOOLTIP_TEXTS),
     )
     theme = forms.ChoiceField(
-        label=_("Theme"), choices=ConversationComponent.THEME_CHOICES,
-        required=False, widget=PaletteWidget
+        label=_("Theme"), choices=ConversationComponent.THEME_CHOICES, required=False, widget=PaletteWidget
     )
+
 
 class MailingToolForm(forms.Form):
     template_type = forms.ChoiceField(
         label=_("Template type"),
-        choices=MailingTool.MAILING_TOOL_CHOICES, required=False,
-        widget=CustomTemplateChoiceWidget(attrs=MailingTool.MAILING_TOOLTIP_TEXTS)
+        choices=MailingTool.MAILING_TOOL_CHOICES,
+        required=False,
+        widget=CustomTemplateChoiceWidget(attrs=MailingTool.MAILING_TOOLTIP_TEXTS),
     )
     theme = forms.ChoiceField(
-        label=_("Theme"), choices=ConversationComponent.THEME_CHOICES,
-        required=False, widget=PaletteWidget
+        label=_("Theme"), choices=ConversationComponent.THEME_CHOICES, required=False, widget=PaletteWidget
     )
-    is_custom_domain = forms.BooleanField(
-        required=False,
-        label=_("Redirect user to a custom domain")
-    )
+    is_custom_domain = forms.BooleanField(required=False, label=_("Redirect user to a custom domain"))
     custom_title = forms.CharField(
-        required=False,
-        label=_("Adds a custom title to the template (optional).")
+        required=False, label=_("Adds a custom title to the template (optional).")
     )
     custom_comment = forms.ModelChoiceField(
-        queryset=None,
-        required=False,
-        label=_("selects a specific comment for user to vote (optional).")
+        queryset=None, required=False, label=_("selects a specific comment for user to vote (optional).")
     )
 
     def __init__(self, *args, **kwargs):
-        conversation_id = kwargs.pop('conversation_id')
+        conversation_id = kwargs.pop("conversation_id")
         super(MailingToolForm, self).__init__(*args, **kwargs)
-        self.fields['custom_comment'].queryset = Comment.objects.filter(conversation=conversation_id)
+        self.fields["custom_comment"].queryset = Comment.objects.filter(conversation=conversation_id)
+
 
 class RasaConversationForm(EjModelForm):
     class Meta:
@@ -71,7 +69,5 @@ class RasaConversationForm(EjModelForm):
         help_texts = {"conversation": None, "domain": None}
 
     def __init__(self, *args, conversation, **kwargs):
-        kwargs.update(initial={
-            'conversation': conversation
-        })
+        kwargs.update(initial={"conversation": conversation})
         super(RasaConversationForm, self).__init__(*args, **kwargs)

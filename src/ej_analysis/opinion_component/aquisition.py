@@ -1,8 +1,8 @@
 from .analytics.analytics_helper import AnalyticsClient
 from django.utils.translation import ugettext_lazy as _
 
-class AquisitionService():
 
+class AquisitionService:
     def __init__(self, start_date, end_date, view_id, votes):
         self.start_date = start_date
         self.end_date = end_date
@@ -15,10 +15,10 @@ class AquisitionService():
         return analytics_client.get_report_total_value(report)
 
     def count_aquisition(self):
-        page_aquisition = [] 
+        page_aquisition = []
         for vote in self.votes:
             metadata = vote.author.metadata_set.first()
-            if(metadata):
+            if metadata:
                 page_aquisition.append(metadata)
         return len(page_aquisition)
 
@@ -26,13 +26,10 @@ class AquisitionService():
         page_engagement = self.count_engajement()
         page_aquisition = self.count_aquisition()
         return {
-            "name": "engagement", "value": page_engagement, "label": _("Engagement"), 
+            "name": "engagement",
+            "value": page_engagement,
+            "label": _("Engagement"),
             "children": [
-            { 
-                "name": "aquisition", 
-                "label": _("Aquisition"), 
-                "value": page_aquisition, 
-                "children": []}
-            ]
+                {"name": "aquisition", "label": _("Aquisition"), "value": page_aquisition, "children": []}
+            ],
         }
-

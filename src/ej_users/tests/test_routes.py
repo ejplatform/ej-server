@@ -62,12 +62,9 @@ class TestRoutes(UserRecipes, UrlTester):
                 "email": "david@example.com",
                 "password": "pass123",
                 "password_confirm": "pass123",
-                "metadata": {
-                    "analytics_id": "GA.1.1234",
-                    "mautic_id": 123456
-                }
+                "metadata": {"analytics_id": "GA.1.1234", "mautic_id": 123456},
             },
-            content_type='application/json'
+            content_type="application/json",
         )
         user = User.objects.get(email="david@example.com")
         assert user.metadata_set.first().analytics_id == "GA.1.1234"
