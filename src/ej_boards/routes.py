@@ -108,13 +108,17 @@ def conversation_tools_index(request, board, **kwargs):
     return tools_routes.index(request, **kwargs)
 
 
-@urlpatterns.route(board_conversation_url + "tools/mailing/", perms=["ej.can_edit_conversation:conversation"])
+@urlpatterns.route(
+    board_conversation_url + "tools/mailing/", perms=["ej.can_edit_conversation:conversation"]
+)
 def conversation_tools_mailing(request, board, **kwargs):
     check_board(board)
     return tools_routes.mailing(request, **kwargs)
 
 
-@urlpatterns.route(board_conversation_url + "tools/opinion-component/", perms=["ej.can_edit_conversation:conversation"])
+@urlpatterns.route(
+    board_conversation_url + "tools/opinion-component/", perms=["ej.can_edit_conversation:conversation"]
+)
 def conversation_tools_component(request, board, **kwargs):
     check_board(board)
     return tools_routes.opinion_component(request, **kwargs)

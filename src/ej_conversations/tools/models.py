@@ -10,15 +10,18 @@ class RasaConversation(models.Model):
     running on an external website
     """
 
-    conversation = models.ForeignKey("Conversation", on_delete=models.CASCADE, related_name="rasa_conversations")
+    conversation = models.ForeignKey(
+        "Conversation", on_delete=models.CASCADE, related_name="rasa_conversations"
+    )
     domain = models.URLField(
         _("Domain"),
         max_length=255,
-        help_text=_("The domain that the rasa bot webchat is hosted."),)
+        help_text=_("The domain that the rasa bot webchat is hosted."),
+    )
 
     class Meta:
-        unique_together = (('conversation', 'domain'),)
-        ordering = ['-id']
+        unique_together = (("conversation", "domain"),)
+        ordering = ["-id"]
 
 
 class ConversationComponent:
@@ -36,7 +39,7 @@ class ConversationComponent:
     AUTH_TOOLTIP_TEXTS = {
         "register": _("User will use EJ platform interface, creating an account using personal data"),
         "mautic": _("Uses a mautic campaign "),
-        "analytics": _("Uses analytics cookies allowing you to cross vote data with user browser data.")
+        "analytics": _("Uses analytics cookies allowing you to cross vote data with user browser data."),
     }
 
     THEME_CHOICES = (
@@ -48,14 +51,16 @@ class ConversationComponent:
     THEME_PALETTES = {
         "default": ["#1D1088", "#F8127E"],
         "votorantim": ["#04082D", "#F14236"],
-        "icd": ["#005BAA", "#F5821F"]
+        "icd": ["#005BAA", "#F5821F"],
     }
 
     def __init__(self, form):
         self.form = form
 
     def _form_is_invalid(self):
-        return not self.form.is_valid() or (not self.form.cleaned_data["theme"] and not self.form.cleaned_data["authentication_type"])
+        return not self.form.is_valid() or (
+            not self.form.cleaned_data["theme"] and not self.form.cleaned_data["authentication_type"]
+        )
 
     def get_props(self):
         if self._form_is_invalid():

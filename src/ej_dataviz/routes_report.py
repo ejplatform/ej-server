@@ -90,10 +90,31 @@ def vote_data_common(votes, filename, fmt):
     df = votes_as_dataframe(votes)
     return data_response(df, fmt, filename)
 
+
 def votes_as_dataframe(votes):
-    columns = "author__email", "author__name", "author__id", "author__metadata__analytics_id", "author__metadata__mautic_id", "comment__content", "comment__id", "choice", "created"
+    columns = (
+        "author__email",
+        "author__name",
+        "author__id",
+        "author__metadata__analytics_id",
+        "author__metadata__mautic_id",
+        "comment__content",
+        "comment__id",
+        "choice",
+        "created",
+    )
     df = votes.dataframe(*columns)
-    df.columns = "email", "author", "author_id", "author__metadata__analytics_id", "author__metadata__mautic_id", "comment", "comment_id", "choice", "created"
+    df.columns = (
+        "email",
+        "author",
+        "author_id",
+        "author__metadata__analytics_id",
+        "author__metadata__mautic_id",
+        "comment",
+        "comment_id",
+        "choice",
+        "created",
+    )
     df.choice = list(map({-1: "disagree", 1: "agree", 0: "skip"}.get, df["choice"]))
     return df
 
@@ -132,7 +153,7 @@ def comments_data_common(comments, votes, filename, fmt):
         "skipped",
         "convergence",
         "participation",
-        "created"
+        "created",
     ]
     df = df[columns]
     df.columns = ["comment", "comment_id", "author", "author_id", *columns[4:]]
@@ -182,6 +203,7 @@ def get_user_data(conversation):
     df.columns = ["email", "user_id", *df.columns[2:]]
     return df
 
+
 # ==============================================================================
 # Clusters raw data
 # ------------------------------------------------------------------------------
@@ -194,12 +216,12 @@ def comments_stats_by_cluster(clusters):
         stats = cluster.comments_statistics_summary_dataframe(normalization=100.0)
         for index, row in stats.iterrows():
             data = {}
-            data['agree'] = row.agree
-            data['disagree'] = row.disagree
-            data['skipped'] = row.skipped
-            data['cluster_name'] = cluster.name
-            data['content'] = row.content
-            data['participation'] = row.participation
+            data["agree"] = row.agree
+            data["disagree"] = row.disagree
+            data["skipped"] = row.skipped
+            data["cluster_name"] = cluster.name
+            data["content"] = row.content
+            data["participation"] = row.participation
             rows.append(data)
 
     return pd.DataFrame(rows)
@@ -213,6 +235,7 @@ def clusters_data_common(clusters, filename, fmt):
 #
 # Auxiliary functions
 #
+
 
 def data_response(data: pd.DataFrame, fmt: str, filename: str, translate=True):
     """
@@ -246,7 +269,7 @@ def get_cluster_or_404(cluster_id, conversation=None):
     return cluster
 
 
-@ lru_cache(1)
+@lru_cache(1)
 def get_translation_map():
     _ = ugettext_lazy
     return {

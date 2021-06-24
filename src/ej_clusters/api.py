@@ -47,11 +47,12 @@ def negative_comments(cluster):
     top5_negative_comments = cluster.separate_comments()[1][0:5]
     return list(map(lambda comment: dict([(comment.disagree, comment.content)]), top5_negative_comments))
 
+
 #
 # Stereotypes and votes
 #
 
 
-@ rest_api.detail_action(models.Clusterization)
+@rest_api.detail_action(models.Clusterization)
 def stereotypes(clusterization):
     return clusterization.stereotypes.all()

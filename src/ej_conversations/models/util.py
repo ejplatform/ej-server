@@ -92,13 +92,15 @@ def statistics_for_user(conversation, user):
     """
     Get information about user.
     """
-    max_votes = (
-        conversation.comments.filter(status=Comment.STATUS.approved).count()
-    )
+    max_votes = conversation.comments.filter(status=Comment.STATUS.approved).count()
     given_votes = (
         0
         if user.id is None
-        else (models.Vote.objects.filter(comment__conversation_id=conversation.id, author=user).exclude(choice=0).count())
+        else (
+            models.Vote.objects.filter(comment__conversation_id=conversation.id, author=user)
+            .exclude(choice=0)
+            .count()
+        )
     )
 
     e = 1e-50  # for numerical stability

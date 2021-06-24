@@ -124,7 +124,6 @@ class ExampleData:
             except:
                 print(f"could not vote on comment {comment.content}")
 
-
     def make_all(self):
         language, school, democracy = self.make_conversations()
         self.make_language_comments(language)

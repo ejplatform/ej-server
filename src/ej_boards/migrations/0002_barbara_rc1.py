@@ -37,5 +37,5 @@ class Migration(migrations.Migration):
                 verbose_name="Palette",
             ),
         ),
-         migrations.DeleteModel(name="BoardSubscription"),
+        migrations.DeleteModel(name="BoardSubscription"),
     ]

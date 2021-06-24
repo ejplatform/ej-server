@@ -108,6 +108,7 @@ class MetaData(models.Model):
     """
     A model to stores user metadata.
     """
+
     # gid
     analytics_id = models.CharField(max_length=100, blank=True, null=True)
     # mtc_id

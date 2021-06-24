@@ -8,17 +8,27 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('ej_users', '0002_barbara_rc1'),
+        ("ej_users", "0002_barbara_rc1"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='MetaData',
+            name="MetaData",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('analytics_id', models.CharField(blank=True, max_length=100, null=True)),
-                ('mautic_id', models.IntegerField(blank=True, null=True)),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True, primary_key=True, serialize=False, verbose_name="ID"
+                    ),
+                ),
+                ("analytics_id", models.CharField(blank=True, max_length=100, null=True)),
+                ("mautic_id", models.IntegerField(blank=True, null=True)),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL
+                    ),
+                ),
             ],
         ),
     ]

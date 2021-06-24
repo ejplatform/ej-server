@@ -7,17 +7,20 @@ from .models import RasaConversation
 #
 @rest_api.list_action("ej_conversations.RasaConversation")
 def integrations(request):
-    domain = request.GET.get('domain')
+    domain = request.GET.get("domain")
     integrations = RasaConversation.objects.filter(domain=domain)
-    if(len(integrations) > 0):
+    if len(integrations) > 0:
         integration = integrations[0]
         return {
-            "conversation": {"id": integration.conversation.id,
-                            "title": integration.conversation.text,
-                            "text": integration.conversation.text},
-            "domain": integration.domain
+            "conversation": {
+                "id": integration.conversation.id,
+                "title": integration.conversation.text,
+                "text": integration.conversation.text,
+            },
+            "domain": integration.domain,
         }
-    return {} 
+    return {}
+
 
 @rest_api.detail_action("ej_conversations.RasaConversation")
 def delete_connection(request, connection):

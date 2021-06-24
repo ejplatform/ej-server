@@ -35,7 +35,12 @@ conversation_url = f"<model:conversation>/<slug:slug>/"
 # Display conversations
 #
 @urlpatterns.route("", name="list")
-def list_view(request, queryset=Conversation.objects.filter(is_promoted=True), context=None, title="Public conversations"):
+def list_view(
+    request,
+    queryset=Conversation.objects.filter(is_promoted=True),
+    context=None,
+    title="Public conversations",
+):
     user = request.user
 
     # Select the list of conversations: staff get to see hidden conversations while
@@ -72,7 +77,7 @@ def detail(request, conversation, slug=None, check=check_promoted):
     check(conversation, request)
     user = request.user
     form = forms.CommentForm(conversation=conversation)
-    comment_id = request.GET.get('comment_id')
+    comment_id = request.GET.get("comment_id")
     ctx = {}
 
     if request.method == "POST":

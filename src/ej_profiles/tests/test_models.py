@@ -7,7 +7,7 @@ from django.utils.translation import ugettext as _
 
 from ej_profiles.enums import Gender, Race
 from ej_profiles.models import Profile
-from ej_users.models import User 
+from ej_users.models import User
 
 
 class TestProfile:
