@@ -37,7 +37,7 @@ def conversation_links(request, conversation):
     ]
 
 
-@rest_api(["title", "text", "author", "slug", "created"])
+@rest_api(["title", "text", "author", "slug", "created", "id"])
 class Conversation(HasFavoriteMixin, TimeStampedModel):
     """
     A topic of conversation.

@@ -33,6 +33,7 @@ CONVERSATION = {
     },
     "author": "email@server.com",
     "title": "title",
+    "id": 1,
     "slug": "title",
     "statistics": {
         "comments": {"approved": 0, "rejected": 0, "pending": 0, "total": 0},
