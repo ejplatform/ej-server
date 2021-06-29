@@ -5,6 +5,18 @@ CHANGELOG of EJPlatform releases
 Here you can follow all the fixes and new features on every EJPlatform release.
 
 
+2.7.0 release
+====================
+
+* Date: Jun 29, 2021
+* Features
+- Adds integration between EJ and Airflow API;
+- Adds integration between EJ and Mongodb instance;
+- Improves integration between EJ and Analytics API;
+- Refactoring TemplateGenerator class;
+- Fixes template generation on mailing tool page, when no template is selected;
+- Adds pagination on votes api;
+
 2.6.0 release
 ====================
 
