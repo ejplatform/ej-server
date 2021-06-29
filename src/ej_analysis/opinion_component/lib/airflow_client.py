@@ -16,7 +16,7 @@ class AirflowClient:
                     "conversation_start_date": "2020-10-01",
                     "conversation_end_date": "2021-04-01",
                     "conversation_id": self.conversation_id,
-                    "analytics_view_id": self.analytics_view_id
+                    "analytics_view_id": self.analytics_view_id,
                 }
             },
             auth=(self.client_variables["AIRFLOW_USERNAME"], self.client_variables["AIRFLOW_PASSWORD"]),
