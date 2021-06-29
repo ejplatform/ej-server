@@ -13,7 +13,7 @@ from ej_conversations.models import Conversation
 
 
 class TemplateGenerator:
-    def __init__(self, conversation, request, template_type="mautic", theme=None):
+    def __init__(self, conversation, request, form_data):
         self.PALETTE_CSS_GENERATORS = {
             "green": BaseCssGenerator("green"),
             "grey": BaseCssGenerator("grey"),
@@ -26,17 +26,19 @@ class TemplateGenerator:
             "icd": BaseCssGenerator("icd"),
             "campaign": CampaignCssGenerator(),
         }
-        self.template_type = template_type
+        self.template_type = form_data.get("template_type") or "mautic"
         self.conversation = conversation
         self.comment = conversation.approved_comments.last()
         self.request = request
         self.vote_domain = self._get_vote_domain()
         self.statics_domain = self._get_statics_domain()
-        self.theme = theme
+        self.theme = form_data.get("theme")
+        self.form_data = form_data
+        self.set_custom_values()
 
-    def set_custom_values(self, title, comment):
-        self.conversation.text = title or self.conversation.text
-        self.comment = comment or self.comment
+    def set_custom_values(self):
+        self.conversation.text = self.form_data.get("custom_title") or self.conversation.text
+        self.comment = self.form_data.get("custom_comment") or self.comment
 
     def get_template(self):
         try:
