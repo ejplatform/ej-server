@@ -26,18 +26,21 @@ conversation_analysis_url_aquisition_viz_trigger_collect = (
 @urlpatterns.route(conversation_analysis_url)
 def index(request, conversation, slug):
     mongodb_wrapper = MongodbWrapper(conversation.id)
-    if mongodb_wrapper.conversation_data_exists():
-        utm_source_options = mongodb_wrapper.get_utm_sources()
-        utm_campaign_options = mongodb_wrapper.get_utm_campaigns()
-        utm_medium_options = mongodb_wrapper.get_utm_medium()
-        return {
-            "conversation": conversation,
-            "utm_source_options": utm_source_options,
-            "utm_campaign_options": utm_campaign_options,
-            "utm_medium_options": utm_medium_options,
-            "data_exists": True,
-        }
-    return {"data_exists": False, "conversation": conversation}
+    try:
+        if mongodb_wrapper.conversation_data_exists():
+            utm_source_options = mongodb_wrapper.get_utm_sources()
+            utm_campaign_options = mongodb_wrapper.get_utm_campaigns()
+            utm_medium_options = mongodb_wrapper.get_utm_medium()
+            return {
+                "conversation": conversation,
+                "utm_source_options": utm_source_options,
+                "utm_campaign_options": utm_campaign_options,
+                "utm_medium_options": utm_medium_options,
+                "data_exists": True,
+            }
+        return {"mongodb_timeout": False, "data_exists": False, "conversation": conversation}
+    except:
+        return {"mongodb_timeout": True, "data_exists": False, "conversation": conversation}
 
 
 @urlpatterns.route(conversation_analysis_url_aquisition_viz)

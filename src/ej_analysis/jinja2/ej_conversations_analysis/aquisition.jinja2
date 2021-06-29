@@ -1,4 +1,10 @@
 <div class="row">
+  {% if mongodb_timeout %}
+    <div class="empty-viz">
+      <p>{{ _('Welcome to EJ analysis area. Here we presents data crossing between EJ and other tools, like Analytics and Mautic. Before starting collecting, it is necessary to check if this conversation is available to data crossing. Read more on our documentation.')}}.</p>
+      <p class="pad-x3 rounded-3 color-negative border-1">{{ _('Could not connect to analysis database, try later')}}.</p>
+    </div>
+  {% endif %}
   {% if data_exists %}
     <div class="card">
         <div class="card-title">{{ _('Engagement vs Aquisition') }} </div>
@@ -70,7 +76,7 @@
             </div>
         </div>
     </div>
-    {% else %}
+    {% elif ( not data_exists and not mongodb_timeout) %}
     <div class="empty-viz">
       <p>{{ _('Welcome to EJ analysis area. Here we presents data crossing between EJ and other tools, like Analytics and Mautic. Before starting collecting, it is necessary to check if this conversation is available to data crossing. Read more on our documentation.')}}.</p>
     <input onClick="showRequirementsToStartCollecting()" name="trigger-collect" type="button" value="{{ _('Trigger Collect')}}">

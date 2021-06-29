@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-21 12:31-0300\n"
+"POT-Creation-Date: 2021-06-29 14:25-0300\n"
 "PO-Revision-Date: 2019-09-09 13:55-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -2346,44 +2346,7 @@ msgid "Execution environment"
 msgstr "Ambiente de execução"
 
 #: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:4
-msgid "Engagement vs Aquisition"
-msgstr "Engajamento vs Aquisição"
-
-#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:13
-#, fuzzy
-msgid "Start date"
-msgstr "data de inicio"
-
-#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:17
-msgid "End date"
-msgstr "data de fim"
-
-#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:22
-msgid "Analytics view id"
-msgstr "view id do analytics"
-
-#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:26
-msgid "utm_source"
-msgstr ""
-
-#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:33
-#, fuzzy
-msgid "utm_campaign"
-msgstr "Campanha de email"
-
-#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:40
-msgid "utm_medium"
-msgstr ""
-
-#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:65
-msgid "Invalid analytics view id"
-msgstr "view id do analytics invalida"
-
-#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:68
-msgid "end date must be gratter then start date"
-msgstr "data de fim deve ser maior que data de inicio"
-
-#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:75
+#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:81
 msgid ""
 "Welcome to EJ analysis area. Here we presents data crossing between EJ and "
 "other tools, like Analytics and Mautic. Before starting collecting, it is "
@@ -2395,28 +2358,70 @@ msgstr ""
 "dos dados, é necessário verificar se essa conversa está apta para o "
 "cruzamento. Leia mais na nossa documentação."
 
-#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:76
+#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:5
+msgid "Could not connect to analysis database, try later"
+msgstr "Não foi possível conectar no banco de análises, tente mais tarde"
+
+#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:10
+msgid "Engagement vs Aquisition"
+msgstr "Engajamento vs Aquisição"
+
+#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:19
+#, fuzzy
+msgid "Start date"
+msgstr "data de inicio"
+
+#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:23
+msgid "End date"
+msgstr "data de fim"
+
+#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:28
+msgid "Analytics view id"
+msgstr "view id do analytics"
+
+#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:32
+msgid "utm_source"
+msgstr ""
+
+#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:39
+#, fuzzy
+msgid "utm_campaign"
+msgstr "Campanha de email"
+
+#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:46
+msgid "utm_medium"
+msgstr ""
+
+#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:71
+msgid "Invalid analytics view id"
+msgstr "view id do analytics invalida"
+
+#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:74
+msgid "end date must be gratter then start date"
+msgstr "data de fim deve ser maior que data de inicio"
+
+#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:82
 msgid "Trigger Collect"
 msgstr "Iniciar coleta"
 
-#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:78
+#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:84
 msgid ""
 "Please inform analytics property ID from the page, and clink to start "
 "collecting"
 msgstr ""
-"Por favor, informe o identificador do analytics para a pagina monitorada, "
-"e clique em iniciar."
+"Por favor, informe o identificador do analytics para a pagina monitorada, e "
+"clique em iniciar."
 
-#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:82
+#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:88
 #, fuzzy
 msgid "Start"
 msgstr "Iniciar"
 
-#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:129
+#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:132
 msgid "Total access to component (engagement): "
 msgstr "Total de acessos ao componente (engajamento): "
 
-#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:131
+#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:134
 #, fuzzy
 msgid "Total voters on component (aquisition): "
 msgstr "Total de participantes na conversa (aquisição): "
