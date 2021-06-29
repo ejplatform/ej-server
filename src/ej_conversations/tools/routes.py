@@ -32,8 +32,7 @@ def mailing(request, conversation, slug):
     form = MailingToolForm(request.POST, conversation_id=conversation)
     if request.method == "POST" and form.is_valid():
         form_data = form.cleaned_data
-        generator = TemplateGenerator(conversation, request, form_data["template_type"], form_data["theme"])
-        generator.set_custom_values(form_data["custom_title"], form_data["custom_comment"])
+        generator = TemplateGenerator(conversation, request, form_data)
         template = generator.get_template()
         if "download" in request.POST:
             response = HttpResponse(template, content_type="text/html")

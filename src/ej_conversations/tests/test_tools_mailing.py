@@ -12,7 +12,8 @@ class TestTemplateGenerator(BoardRecipes):
         request.POST = {"custom-domain": "http://ejplatform.local"}
         user = mk_user(email="test@domain.com")
         comment_1 = conversation_db.create_comment(user, "comment 1", status="approved", check_limits=False)
-        generator = TemplateGenerator(conversation_db, request, "mautic")
+        form_data = {"template_type": "mautic"}
+        generator = TemplateGenerator(conversation_db, request, form_data)
         vote_url = generator._get_voting_url()
 
         expected_url = (
@@ -33,7 +34,8 @@ class TestTemplateGenerator(BoardRecipes):
         conversation = mk_conversation(author=user)
         comment_1 = conversation.create_comment(user, "comment 1", "approved")
         board.add_conversation(conversation)
-        generator = TemplateGenerator(conversation, request, "mautic")
+        form_data = {"template_type": "mautic"}
+        generator = TemplateGenerator(conversation, request, form_data)
         vote_url = generator._get_voting_url()
 
         expected_url = (
@@ -51,7 +53,8 @@ class TestTemplateGenerator(BoardRecipes):
         conversation = mk_conversation()
         user = mk_user(email="test2@domain.com")
         comment_1 = conversation.create_comment(user, "comment 1", "approved")
-        generator = TemplateGenerator(conversation, request, "mautic")
+        form_data = {"template_type": "mautic"}
+        generator = TemplateGenerator(conversation, request, form_data)
 
         arrow = "border-top: 28px solid {} !important;".format("#C4F2F4")
         dark = "color: {} !important; background-color: {};".format("#C4F2F4", "#30BFD3")
@@ -61,6 +64,32 @@ class TestTemplateGenerator(BoardRecipes):
         palette = generator._get_palette_css()
         assert palette == expected_palette
 
+    def test_apply_mautic_in_case_template_type_is_not_specified(self, mk_conversation, mk_board, mk_user):
+        request = mock.Mock()
+        request.META = {"wsgi.url_scheme": "http", "HTTP_HOST": "ejplatform.local"}
+        conversation = mk_conversation()
+        form_data1 = {"template_type": ""}
+        generator1 = TemplateGenerator(conversation, request, form_data1)
+
+        form_data2 = {}
+        generator2 = TemplateGenerator(conversation, request, form_data2)
+
+        assert generator1.template_type == "mautic"
+        assert generator2.template_type == "mautic"
+
+    def test_apply_board_palette_on_campaign_template(self, mk_board, mk_conversation, mk_user):
+        request = mock.Mock()
+        request.META = {"wsgi.url_scheme": "http", "HTTP_HOST": "ejplatform.local"}
+        conversation = mk_conversation()
+        form_data1 = {"template_type": ""}
+        generator1 = TemplateGenerator(conversation, request, form_data1)
+
+        form_data2 = {}
+        generator2 = TemplateGenerator(conversation, request, form_data2)
+
+        assert generator1.template_type == "mautic"
+        assert generator2.template_type == "mautic"
+
     def test_apply_board_palette_on_campaign_template(self, mk_board, mk_conversation, mk_user):
         request = mock.Mock()
         request.META = {"wsgi.url_scheme": "http", "HTTP_HOST": "ejplatform.local"}
@@ -69,7 +98,8 @@ class TestTemplateGenerator(BoardRecipes):
         conversation = mk_conversation(author=user)
         comment_1 = conversation.create_comment(user, "comment 1", "approved")
         board.add_conversation(conversation)
-        generator = TemplateGenerator(conversation, request, "mautic", board.palette)
+        form_data = {"template_type": "mautic", "theme": board.palette}
+        generator = TemplateGenerator(conversation, request, form_data)
 
         arrow = "border-top: 28px solid {} !important;".format("#FFE1CA")
         dark = "color: {} !important; background-color: {};".format("#FFE1CA", "#F5700A")
@@ -87,7 +117,8 @@ class TestTemplateGenerator(BoardRecipes):
         conversation = mk_conversation(author=user)
         comment_1 = conversation.create_comment(user, "comment 1", "approved")
         board.add_conversation(conversation)
-        campaign = TemplateGenerator(conversation, request, "mautic", "campaign")
+        form_data = {"template_type": "mautic", "theme": "campaign"}
+        campaign = TemplateGenerator(conversation, request, form_data)
 
         arrow = "border-top: 28px solid {} !important;".format("#332f82")
         dark = "color: {} !important; background-color: {}; border-radius: unset;".format(
@@ -111,8 +142,8 @@ class TestTemplateGenerator(BoardRecipes):
         request.POST = {"custom-domain": "http://ejplatform.local"}
         user = mk_user(email="test@domain.com")
         comment_1 = conversation_db.create_comment(user, "comment 1", status="approved", check_limits=False)
-        generator = TemplateGenerator(conversation_db, request, "mautic")
-        generator.set_custom_values(None, comment_1)
+        form_data = {"template_type": "mautic", "custom_comment": comment_1}
+        generator = TemplateGenerator(conversation_db, request, form_data)
         assert generator.comment.content == comment_1.content
         assert generator.comment == comment_1
         assert generator.conversation.text == conversation_db.text
@@ -124,8 +155,8 @@ class TestTemplateGenerator(BoardRecipes):
         new_title = "Text of the new title"
         user = mk_user(email="test@domain.com")
         conversation_db.create_comment(user, "comment 1", status="approved", check_limits=False)
-        generator = TemplateGenerator(conversation_db, request, "mautic")
-        generator.set_custom_values(new_title, None)
+        form_data = {"template_type": "mautic", "custom_title": new_title}
+        generator = TemplateGenerator(conversation_db, request, form_data)
         assert generator.comment.content == conversation_db.approved_comments.last().content
         assert generator.comment == conversation_db.approved_comments.last()
         assert generator.conversation.text == new_title
