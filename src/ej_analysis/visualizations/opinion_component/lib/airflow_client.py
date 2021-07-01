@@ -22,6 +22,21 @@ class AirflowClient:
             auth=(self.client_variables["AIRFLOW_USERNAME"], self.client_variables["AIRFLOW_PASSWORD"]),
         )
 
+    def get_dags(self):
+        response = requests.get(
+            f"{self.client_variables['API_HOST']}/api/v1/dags/ej_analysis_dag/dagRuns",
+            auth=(self.client_variables["AIRFLOW_USERNAME"], self.client_variables["AIRFLOW_PASSWORD"]),
+        )
+        return response.json()
+
+    def lattest_dag_is_running(self):
+        dags = self.get_dags()
+        dag_runs = dags.get("dag_runs")
+        conversation_dag_runs = list(
+            filter(lambda dag: dag.get("conf").get("conversation_id") == self.conversation_id, dag_runs)
+        )
+        return conversation_dag_runs[len(conversation_dag_runs) - 1].get("state") == "running"
+
     def get_airflow_connection_variables(self):
         return {
             "API_HOST": os.getenv("AIRFLOW_HOST", "http://localhost:8080"),

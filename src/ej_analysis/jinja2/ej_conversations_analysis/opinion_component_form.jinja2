@@ -1,0 +1,14 @@
+<div class="empty-viz">
+  <input onClick="showRequirementsToStartCollecting()" name="trigger-collect" type="button" value="{{ _('Trigger Collect')}}">
+  <div class="requirements-to-collect">
+  </div>
+  <form action={{conversation.url("conversation-analysis:start-opinion-component-analysis")}} method="post" id="opinion-component-form">
+    {{ csrf_input }}
+    <span class="helptext">{{_('Please inform analytics property ID from the page, and clink to start collecting')}}</span>
+    <label for="analytics_property_id">Identificador da propriedade do Analytics</label>
+    <input id="analytics_property_id" type="text" name="analytics_property_id">
+    <input id="conversation_id" type="hidden" name="conversation" value={{conversation.id}}>
+    <input type="submit" value={{ _('Start')}}>
+  </form>
+</div>
+

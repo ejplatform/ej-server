@@ -1,7 +1,9 @@
 #conversation-dataviz-page {
 
-    .content {
-        margin-bottom: 3rem;
+    .welcome-message, .collecing-data-state {
+        margin: auto auto 3rem auto;
+        max-width: 800px;
+        text-align: center;
     }
 
     .title {
@@ -25,15 +27,26 @@
         text-align: center;
         width: 60%;
         margin: auto;
+
+        form {
+            display: none;
+            text-align: center;
+            width: 60%;
+            margin: auto;
+        }
     }
 
-    .requirements-to-collect {
-        display: none;
-        text-align: center;
-        width: 60%;
-        margin: auto;
+
+    #aquisition-date-start, #aquisition-date-end, #aquisition-utm-source, #aquisition-utm-campaign, #aquisition-utm-medium {
+        min-width: 9rem;
+        max-width: 9rem;
+        font-size: 0.8rem;
     }
 
+    #aquisition-utm-source, #aquisition-utm-campaign, #aquisition-utm-medium {
+        min-width: 11rem;
+        max-width: 11rem;
+    }
     .card {
         border-radius: 8px;
         box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
@@ -41,25 +54,49 @@
         background-color: white;
         max-width: 1000px;
         margin: 2rem auto auto auto;
-        &-title {
-            padding: 15px;
+        &-header {
+            &-title {
+                span {
+                    color: #042A46;
+                    font-family: "Patua One";
+                }
+                flex-grow: 20;
+                padding: 1rem;
+            }
+            &-daterange{
+                display: flex;
+                flex-grow: 1;
+                div {
+                    margin-right: 0.4rem;
+                }
+                margin-top: 0.5rem;
+            }
+            display: flex;
             border-bottom: 1px solid #00000030;
         }
         &-body {
             min-height: 50vh;
             &-content {
                 display: flex;
-                flex-flow: wrap;
+                flex-wrap: wrap;
+                justify-content: space-evenly;
                 &-infos {
                     width: 100%;
-                    max-width: 450px;
-                    position: relative;
+                    display: flex;
+                    flex-wrap: wrap;
+                    max-width: 350px;
+                    height: 350px;
+                    margin-top: 2rem;
                     &-subcard {
-                        max-width: 20rem;
-                        margin: 8rem auto;
+                        width: 15rem;
+                        height: 10rem;
                         border: solid 1px #00000030;
                         padding: 1.5rem;
-                        box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+                        border-radius: 1rem;
+                        margin-right: 1rem;
+                        span:last-child {
+                            font-weight: bold;
+                        }
                     }
                     display: none;
                 }
@@ -67,6 +104,7 @@
                     display: none;
                     max-width: 450px;
                     min-width: 400px;
+                    padding: 2rem;
                 }
                 &-loading {
                     text-align: center;
@@ -82,7 +120,6 @@
         }
         &-filters {
             min-height: 15vh;
-            border: solid 1px #00000030;
             padding: 0.7rem;
             &-title {
                 span {
@@ -91,16 +128,15 @@
                 }
             }
             &-body {
-                padding: 1rem;
-                flex-wrap: wrap;
-                display: flex;
-                &-daterange{
+                &-utm {
                     display: flex;
-                    width: 35rem;
-                    flex-flow: wrap;
-                    flex-grow: 1;
+                    flex-wrap: wrap;
                     div {
-                        margin-right: 0.4rem;
+                        margin-left: 1rem;
+                    }
+                    label {
+                        font-size: 0.8rem;
+                        text-indent: unset;
                     }
                 }
             }

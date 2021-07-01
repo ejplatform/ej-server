@@ -118,3 +118,5 @@ coverage.xml
 cc-test-reporter
 .mypy_cache
 *.mo
+
+src/ej_analysis/visualizations/opinion_component/lib/analytics/client_secrets.json

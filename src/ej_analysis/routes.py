@@ -6,53 +6,65 @@ from django.http import HttpResponse
 from django.http import JsonResponse
 from django.utils.translation import ugettext_lazy as _
 from ej_conversations import models
+from .forms import OpinionComponentForm
+from .models import OpinionComponent
 
-from .opinion_component.lib.airflow_client import AirflowClient
-from .opinion_component.lib.analytics_wrapper import AnalyticsWrapper
-from .opinion_component.lib.d3js_wrapper import D3jsWrapper
-from .opinion_component.lib.mongodb_wrapper import MongodbWrapper
+from .visualizations.opinion_component.lib.airflow_client import AirflowClient
+from .visualizations.opinion_component.lib.analytics_wrapper import AnalyticsWrapper
+from .visualizations.opinion_component.lib.d3js_wrapper import D3jsWrapper
+from .visualizations.opinion_component.lib.mongodb_wrapper import MongodbWrapper
+from django.shortcuts import redirect
 
 app_name = "ej_analysis"
 urlpatterns = Router(
-    template="ej_conversations_analysis/{name}.jinja2", models={"conversation": models.Conversation}
+    template="ej_conversations_analysis/{name}.jinja2",
+    models={"conversation": models.Conversation},
+    login=True,
 )
 conversation_analysis_url = f"<model:conversation>/<slug:slug>/analysis"
-conversation_analysis_url_aquisition_viz = f"<model:conversation>/<slug:slug>/analysis/aquisition_viz"
-conversation_analysis_url_aquisition_viz_trigger_collect = (
-    f"<model:conversation>/<slug:slug>/analysis/aquisition_viz_trigger_collect"
+conversation_analysis_url_aquisition_viz = f"<model:conversation>/<slug:slug>/analysis/opinion_component"
+conversation_analysis_url_start_opinion_component_analysis = (
+    f"<model:conversation>/<slug:slug>/analysis/start_opinion_component_analysis"
 )
 
 
 @urlpatterns.route(conversation_analysis_url)
 def index(request, conversation, slug):
     mongodb_wrapper = MongodbWrapper(conversation.id)
-    try:
-        if mongodb_wrapper.conversation_data_exists():
-            utm_source_options = mongodb_wrapper.get_utm_sources()
-            utm_campaign_options = mongodb_wrapper.get_utm_campaigns()
-            utm_medium_options = mongodb_wrapper.get_utm_medium()
-            return {
-                "conversation": conversation,
-                "utm_source_options": utm_source_options,
-                "utm_campaign_options": utm_campaign_options,
-                "utm_medium_options": utm_medium_options,
-                "data_exists": True,
-            }
-        return {"mongodb_timeout": False, "data_exists": False, "conversation": conversation}
-    except:
-        return {"mongodb_timeout": True, "data_exists": False, "conversation": conversation}
+    opinion_component = OpinionComponent.objects.last()
+    airflow_client = AirflowClient(conversation.id, opinion_component.analytics_property_id)
+    collecting_is_running = airflow_client.lattest_dag_is_running()
+    if mongodb_wrapper.conversation_data_exists():
+        utm_source_options = mongodb_wrapper.get_utm_sources()
+        utm_campaign_options = mongodb_wrapper.get_utm_campaigns()
+        utm_medium_options = mongodb_wrapper.get_utm_medium()
+        return {
+            "conversation": conversation,
+            "utm_source_options": utm_source_options,
+            "utm_campaign_options": utm_campaign_options,
+            "utm_medium_options": utm_medium_options,
+            "data_exists": True,
+            "mongodb_timeout": False,
+            "collecting_is_running": collecting_is_running,
+        }
+    return {
+        "mongodb_timeout": False,
+        "data_exists": False,
+        "conversation": conversation,
+        "collecting_is_running": collecting_is_running,
+    }
 
 
 @urlpatterns.route(conversation_analysis_url_aquisition_viz)
-def aquisition(request, conversation, slug):
+def opinion_component(request, conversation, slug):
     start_date = datetime.date.fromisoformat(request.GET.get("startDate"))
     end_date = datetime.date.fromisoformat(request.GET.get("endDate"))
-    view_id = request.GET.get("viewId")
+    opinion_component = OpinionComponent.objects.get(conversation_id=conversation.id)
     utm_medium = request.GET.get("utmMedium")
     utm_campaign = request.GET.get("utmCampaign")
     utm_source = request.GET.get("utmSource")
     analytics_wrapper = AnalyticsWrapper(
-        start_date, end_date, view_id, utm_medium, utm_campaign, utm_source
+        start_date, end_date, opinion_component.analytics_property_id, utm_medium, utm_campaign, utm_source
     )
     engajement = analytics_wrapper.get_page_engajement()
     mongodb_wrapper = MongodbWrapper(
@@ -63,9 +75,18 @@ def aquisition(request, conversation, slug):
     return JsonResponse(d3js_wrapper.get_aquisition_viz_data())
 
 
-@urlpatterns.route(conversation_analysis_url_aquisition_viz_trigger_collect)
-def trigger_collect(request, conversation, slug):
-    analytics_view_id = request.GET.get("analytics_view_id")
-    airflow_client = AirflowClient(conversation.id, analytics_view_id)
-    airflow_client.trigger_dag()
-    return JsonResponse({})
+@urlpatterns.route(conversation_analysis_url_start_opinion_component_analysis)
+def start_opinion_component_analysis(request, conversation, slug):
+    if request.method == "POST":
+        form = OpinionComponentForm(request.POST)
+        if form.is_valid():
+            try:
+                opinion_component = OpinionComponent.objects.get(
+                    analytics_property_id=request.POST.get("analytics_property_id")
+                )
+            except:
+                opinion_component = form.save()
+            airflow_client = AirflowClient(conversation.id, opinion_component.analytics_property_id)
+            airflow_client.trigger_dag()
+            return redirect("conversation-analysis:index", conversation=conversation, slug=slug)
+    return {"conversation": conversation}

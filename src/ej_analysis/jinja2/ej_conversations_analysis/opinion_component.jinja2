@@ -1,54 +1,66 @@
-<div class="row">
-  {% if mongodb_timeout %}
-    <div class="empty-viz">
+<div>
+  <div class="welcome-message">
       <p>{{ _('Welcome to EJ analysis area. Here we presents data crossing between EJ and other tools, like Analytics and Mautic. Before starting collecting, it is necessary to check if this conversation is available to data crossing. Read more on our documentation.')}}.</p>
-      <p class="pad-x3 rounded-3 color-negative border-1">{{ _('Could not connect to analysis database, try later')}}.</p>
-    </div>
+    {% if mongodb_timeout %}
+      <div class="empty-viz">
+        <p class="pad-x3 rounded-3 color-negative border-1">{{ _('Could not connect to analysis database, try later')}}.</p>
+      </div>
   {% endif %}
+  </div>
+  <div class="collecing-data-state">
+    {% if collecting_is_running %}
+        <span class="helptext">{{ _('A data collection is running. Wait a few minutes to see the vizualizations') }}</span>
+        <div class="card-body-content-loading">
+            <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+        </div>
+    {% endif %}
+  </div>
   {% if data_exists %}
     <div class="card">
-        <div class="card-title">{{ _('Engagement vs Aquisition') }} </div>
+        <div class="card-header">
+          <div class="card-header-title">
+            <i class="fa fa-users"></i>
+            <span> {{ _('Engagement vs Aquisition') }}</span>
+          </div>
+          <div class="card-header-daterange">
+              <div>
+                  <input type="date" id="aquisition-date-start">
+              </div>
+              <div>
+                  <input type="date" id="aquisition-date-end">
+              </div>
+          </div>
+        </div>
         <div class="card-body">
             <div class="card-filters">
-                <div class="card-filters-title">
-                    <span>Filtros</span>
-                </div>
                 <div class="card-filters-body">
-                    <div class="card-filters-body-daterange">
-                        <div>
-                            <label>{{ _('Start date') }}</label>
-                            <input type="date" id="aquisition-date-start">
-                        </div>
-                        <div>
-                            <label>{{ _('End date') }}</label>
-                            <input type="date" id="aquisition-date-end">
-                        </div>
-                    </div>
-                    <div class="card-filters-body-input">
-                        <label> {{ _('Analytics view id') }}</label>
-                        <input id="aquisition-analytics-view-id" type="text" minlength="9">
-                    </div>
                     <div class="card-filters-body-utm">
-                      <label> {{ _('utm_source') }}</label>
-                      <select name="utm source" id="aquisition-utm-source">
-                        {% for utm_source_option in utm_source_options %}
-                        <option value={{utm_source_option}}>{{utm_source_option}}</option>
-                        {% endfor %}
-                      </select>
+                      <div>
+                        <label> {{ _('Engagement source') }}</label>
+                        <select name="utm source" id="aquisition-utm-source">
+                          {% for utm_source_option in utm_source_options %}
+                          <option value={{utm_source_option}}>{{utm_source_option}}</option>
+                          {% endfor %}
+                        </select>
+                      </div>
 
-                      <label> {{ _('utm_campaign') }}</label>
-                      <select name="utm campaign" id="aquisition-utm-campaign">
-                        {% for utm_campaign_option in utm_campaign_options %}
-                        <option value={{utm_campaign_option}}>{{utm_campaign_option}}</option>
-                        {% endfor %}
-                      </select>
+                      <div>
+                        <label> {{ _('Engagement campaign') }}</label>
+                        <select name="utm campaign" id="aquisition-utm-campaign">
+                          {% for utm_campaign_option in utm_campaign_options %}
+                          <option value={{utm_campaign_option}}>{{utm_campaign_option}}</option>
+                          {% endfor %}
+                        </select>
+                      </div>
 
-                      <label> {{ _('utm_medium') }}</label>
-                      <select name="utm medium" id="aquisition-utm-medium">
-                        {% for utm_campaign_medium in utm_medium_options %}
-                        <option value={{utm_campaign_medium}}>{{utm_campaign_medium}}</option>
-                        {% endfor %}
-                      </select>
+                      <div>
+                        <label> {{ _('Engagement media') }}</label>
+                        <select name="utm medium" id="aquisition-utm-medium">
+                          {% for utm_campaign_medium in utm_medium_options %}
+                          <option value={{utm_campaign_medium}}>{{utm_campaign_medium}}</option>
+                          {% endfor %}
+                        </select>
+                      </div>
                     </div>
                 </div>
             </div>
@@ -56,19 +68,20 @@
                 <div class="card-body-content-loading">
                     <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
                 </div>
-            <div class="card-body-content-infos">
-                <div class="card-body-content-infos-subcard">
-                    <div id="page-engagement-value">
-                    </div>
-                    <div id="page-aquisition-value">
-                    </div>
-                </div>
-            </div>
             <div class="card-body-content-vizualization">
                 <div id="aquisition-viz"></div>
             </div>
-            <div class="card-body-error-invalid-analytics">
-                <span class="helptext">{{ _('Invalid analytics view id') }}</span>
+            <div class="card-body-content-infos">
+                <div class="card-body-content-infos-subcard">
+                  <span>{{_("Total access to component (engagement)")}}</span>
+                  <br>
+                  <span id="page-engagement-value"></span>
+                </div>
+                <div class="card-body-content-infos-subcard">
+                  <span>{{_("Participants on the conversation (aquisition)")}}</span>
+                  <br>
+                <span id="page-aquisition-value"></span>
+                </div>
             </div>
             <div class="card-body-error-invalid-dates">
                 <span class="helptext">{{ _('end date must be gratter then start date') }}</span>
@@ -76,18 +89,8 @@
             </div>
         </div>
     </div>
-    {% elif ( not data_exists and not mongodb_timeout) %}
-    <div class="empty-viz">
-      <p>{{ _('Welcome to EJ analysis area. Here we presents data crossing between EJ and other tools, like Analytics and Mautic. Before starting collecting, it is necessary to check if this conversation is available to data crossing. Read more on our documentation.')}}.</p>
-    <input onClick="showRequirementsToStartCollecting()" name="trigger-collect" type="button" value="{{ _('Trigger Collect')}}">
-    <div class="requirements-to-collect">
-			<span class="helptext">{{_('Please inform analytics property ID from the page, and clink to start collecting')}}</span>
-      <div>
-        <input name="analytics-view-id" type="text">
-      </div>
-      <input onClick="triggerCollect()" name="trigger-collect" type="button" value="{{ _('Start')}}">
-    </div>
-    </div>
+    {% elif ( not data_exists and not mongodb_timeout and not collecting_is_running ) %}
+      {% include 'ej_conversations_analysis/opinion_component_form.jinja2' %}
     {% endif %}
 </div>
 
@@ -95,31 +98,21 @@
 <script>
 
   function showRequirementsToStartCollecting() {
-    document.querySelector(".requirements-to-collect").style.display = "block";
+    document.querySelector("#opinion-component-form").style.display = "block";
     document.querySelector("input[name=trigger-collect]").style.display = "none";
-  }
-
-  async function triggerCollect() {
-    var analyticsViewId = document.querySelector("input[name=analytics-view-id]").value;
-    var url =
-        "/conversations/{{conversation.id}}/{{conversation.slug}}/analysis/aquisition_viz_trigger_collect?analytics_view_id="+analyticsViewId;
-    await fetch(url);
   }
 
 async function requestData() {
   var endDate = document.querySelector("#aquisition-date-end").value;
   var startDate = document.querySelector("#aquisition-date-start").value;
-  var viewID = document.querySelector("#aquisition-analytics-view-id").value;
   var utmMedium = document.querySelector("#aquisition-utm-medium").value;
   var utmCampaign = document.querySelector("#aquisition-utm-campaign").value;
   var utmSource = document.querySelector("#aquisition-utm-source").value;
   var url =
-    "/conversations/{{conversation.id}}/{{conversation.slug}}/analysis/aquisition_viz?startDate=" +
+    "/conversations/{{conversation.id}}/{{conversation.slug}}/analysis/opinion_component?startDate=" +
     startDate +
     "&endDate=" +
     endDate +
-    "&viewId=" +
-    viewID +
     "&utmMedium=" +
     utmMedium +
     "&utmCampaign=" +
@@ -128,11 +121,8 @@ async function requestData() {
     utmSource;
   var response = await fetch(url);
   var data = await response.json();
-  document.querySelector("#page-engagement-value").textContent =
-      "{{ _('Total access to component (engagement): ') }}" + data["value"];
-  document.querySelector("#page-aquisition-value").textContent =
-      "{{ _('Total voters on component (aquisition): ') }}" +
-    data["children"][0]["value"];
+  document.querySelector("#page-engagement-value").textContent = data["value"];
+  document.querySelector("#page-aquisition-value").textContent = data["children"][0]["value"];
   return data;
 }
 
@@ -183,17 +173,8 @@ function showLoading() {
 async function updateVisualization() {
   var endDateInput = document.querySelector("#aquisition-date-end");
   var startDateInput = document.querySelector("#aquisition-date-start");
-  var analyticsIdInput = document.querySelector(
-    "#aquisition-analytics-view-id"
-  );
   localStorage.setItem("aquisitionDateEnd", endDateInput.value);
   localStorage.setItem("aquisitionDateStart", startDateInput.value);
-  localStorage.setItem("analyticsViewId", analyticsIdInput.value);
-
-  if(!validAnalyticsID()) {
-      showErrors("invalid-analytics");
-      return;
-  }
   if(startDateIsBiggerThenEndDate()) {
       showErrors("invalid-dates");
       return;
@@ -202,20 +183,9 @@ async function updateVisualization() {
   showLoading();
   var root = d3.hierarchy(await requestData());
   hideLoading();
-  generateVisu(root);
+  d3jsVisualization(root);
 }
 
-function validAnalyticsID() {
-  var localStorageAnalyticsViewId = localStorage.getItem("analyticsViewId");
-  var inputAnalyticsViewId = document.querySelector(
-    "#aquisition-analytics-view-id"
-  ).value;
-  var analyticsId = inputAnalyticsViewId || localStorageAnalyticsViewId;
-  if (!analyticsId) {
-    return false;
-  }
-  return analyticsId.length < 9 ? false : true;
-}
 
 function showErrors(errorClass) {
   document.querySelector(".card-body-content-infos").style.display = "none";
@@ -226,7 +196,6 @@ function showErrors(errorClass) {
 }
 
 function hideErrors() {
-  document.querySelector(".card-body-error-invalid-analytics").style.display = "none";
   document.querySelector(".card-body-error-invalid-dates").style.display = "none";
 }
 
@@ -239,30 +208,16 @@ function startDateIsBiggerThenEndDate() {
 function listenToChanges() {
   var endDateInput = document.querySelector("#aquisition-date-end");
   var startDateInput = document.querySelector("#aquisition-date-start");
-  var analyticsIdInput = document.querySelector(
-    "#aquisition-analytics-view-id"
-  );
   var utmMedium = document.querySelector("#aquisition-utm-medium");
   var utmCampaign = document.querySelector("#aquisition-utm-campaign");
   var utmSource = document.querySelector("#aquisition-utm-source");
 
   endDateInput.onchange = updateVisualization;
   startDateInput.onchange = updateVisualization;
-  analyticsIdInput.onchange = updateVisualization;
   utmMedium.onchange = updateVisualization;
   utmCampaign.onchange = updateVisualization;
   utmSource.onchange = updateVisualization;
 
-}
-
-function storeAnalyticsViewIdOnLocalStorage() {
-  var analyticsId = document.querySelector("#aquisition-analytics-view-id")
-    .value;
-  if (analyticsId) {
-    localStorage.setItem("analyticsViewId", analyticsId);
-  } else {
-    localStorage.removeItem("analyticsViewId");
-  }
 }
 
 function overwriteCSS() {
@@ -276,17 +231,12 @@ async function loadAquisitionVizualization() {
   overwriteCSS();
   setDefaultDateFilter();
   listenToChanges();
-  if (validAnalyticsID()) {
-    storeAnalyticsViewIdOnLocalStorage();
-    var root = d3.hierarchy(await requestData());
-    hideLoading();
-    generateVisu(root);
-  } else {
-    showErrors("invalid-analytics");
-  }
+  var root = d3.hierarchy(await requestData());
+  hideLoading();
+  d3jsVisualization(root);
 }
 
-async function generateVisu(rootNode) {
+async function d3jsVisualization(rootNode) {
   var partition = d3.pack();
   partition(rootNode);
 
