@@ -9,6 +9,7 @@ from ej_clusters.models import Stereotype
 from ej_conversations import routes as conversations
 from ej_conversations.models import Conversation
 from ej_conversations.tools import routes as tools_routes
+from ej_analysis import routes as analysis_routes
 from .forms import BoardForm
 
 app_name = "ej_boards"
@@ -128,6 +129,12 @@ def conversation_tools_component(request, board, **kwargs):
 def conversation_tools_rasa(request, board, **kwargs):
     check_board(board)
     return tools_routes.rasa(request, **kwargs)
+
+
+@urlpatterns.route(board_conversation_url + "analysis/", perms=["ej.can_edit_conversation:conversation"])
+def conversation_analysis_index(request, board, **kwargs):
+    check_board(board)
+    return analysis_routes.index(request, **kwargs)
 
 
 #
