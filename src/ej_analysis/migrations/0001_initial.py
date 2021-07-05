@@ -8,9 +8,7 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-        ('ej_conversations', '0007_auto_20210330_1605'),
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(

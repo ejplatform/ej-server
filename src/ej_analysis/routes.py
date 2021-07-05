@@ -31,28 +31,30 @@ conversation_analysis_url_start_opinion_component_analysis = (
 @urlpatterns.route(conversation_analysis_url)
 def index(request, conversation, slug):
     mongodb_wrapper = MongodbWrapper(conversation.id)
-    opinion_component = OpinionComponent.objects.last()
-    airflow_client = AirflowClient(conversation.id, opinion_component.analytics_property_id)
-    collecting_is_running = airflow_client.lattest_dag_is_running()
-    if mongodb_wrapper.conversation_data_exists():
-        utm_source_options = mongodb_wrapper.get_utm_sources()
-        utm_campaign_options = mongodb_wrapper.get_utm_campaigns()
-        utm_medium_options = mongodb_wrapper.get_utm_medium()
+    try:
+        opinion_component = OpinionComponent.objects.get(conversation_id=conversation.id)
+        airflow_client = AirflowClient(conversation.id, opinion_component.analytics_property_id)
+        collecting_is_running = airflow_client.lattest_dag_is_running()
+        if mongodb_wrapper.conversation_data_exists():
+            utm_source_options = mongodb_wrapper.get_utm_sources()
+            utm_campaign_options = mongodb_wrapper.get_utm_campaigns()
+            utm_medium_options = mongodb_wrapper.get_utm_medium()
+            return {
+                "conversation": conversation,
+                "utm_source_options": utm_source_options,
+                "utm_campaign_options": utm_campaign_options,
+                "utm_medium_options": utm_medium_options,
+                "data_exists": True,
+                "mongodb_timeout": False,
+                "collecting_is_running": collecting_is_running,
+            }
+    except:
         return {
-            "conversation": conversation,
-            "utm_source_options": utm_source_options,
-            "utm_campaign_options": utm_campaign_options,
-            "utm_medium_options": utm_medium_options,
-            "data_exists": True,
             "mongodb_timeout": False,
-            "collecting_is_running": collecting_is_running,
+            "data_exists": False,
+            "conversation": conversation,
+            "collecting_is_running": False,
         }
-    return {
-        "mongodb_timeout": False,
-        "data_exists": False,
-        "conversation": conversation,
-        "collecting_is_running": collecting_is_running,
-    }
 
 
 @urlpatterns.route(conversation_analysis_url_aquisition_viz)
