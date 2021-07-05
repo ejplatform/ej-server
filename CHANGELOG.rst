@@ -5,6 +5,15 @@ CHANGELOG of EJPlatform releases
 Here you can follow all the fixes and new features on every EJPlatform release.
 
 
+2.8.0 release
+====================
+
+* Date: Jul 5, 2021
+* Features
+- New model ConversationAnalysis, to store data for airflow integration;
+- Changes analytics authentication method;
+- Adds conversation ID on /api/v1/conversations/<id>;
+
 2.7.0 release
 ====================
 
