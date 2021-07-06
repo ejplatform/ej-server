@@ -16,34 +16,29 @@ class AnalyticsWrapper:
         return self.count_total_users_from_reports(report)
 
     def get_report(self):
-        return (
-            self.analytics_client.reports()
-            .batchGet(
-                body={
-                    "reportRequests": [
+        body = {
+            "reportRequests": [
+                {
+                    "viewId": self.view_id,
+                    "dateRanges": [
                         {
-                            "viewId": self.view_id,
-                            "dateRanges": {
-                                "startDate": self.start_date.strftime("%Y-%m-%d"),
-                                "endDate": self.start_date.strftime("%Y-%m-%d"),
-                            },
-                            "metrics": [
-                                {"expression": "ga:users", "alias": "users", "formattingType": "INTEGER"}
-                            ],
-                            "dimensions": [
-                                {"name": "ga:pagePath"},
-                                {"name": "ga:campaign"},
-                                {"name": "ga:medium"},
-                                {"name": "ga:source"},
-                            ],
-                            "filtersExpression": self.get_filter_expression(),
+                            "startDate": self.start_date.strftime("%Y-%m-%d"),
+                            "endDate": self.end_date.strftime("%Y-%m-%d"),
                         }
                     ],
-                    "useResourceQuotas": False,
+                    "metrics": [{"expression": "ga:users", "alias": "users", "formattingType": "INTEGER"}],
+                    "dimensions": [
+                        {"name": "ga:pagePath"},
+                        {"name": "ga:campaign"},
+                        {"name": "ga:medium"},
+                        {"name": "ga:source"},
+                    ],
+                    "filtersExpression": self.get_filter_expression()
                 }
-            )
-            .execute()
-        )
+            ],
+            "useResourceQuotas": False,
+        }
+        return self.analytics_client.reports().batchGet(body=body).execute()
 
     def get_filter_expression(self):
         if self.utm_source == "None" and self.utm_medium == "None" and self.utm_campaign == "None":

@@ -102,7 +102,6 @@ def votes_as_dataframe(votes):
         "comment__id",
         "comment__conversation",
         "choice",
-        "created",
     )
     df = votes.dataframe(*columns)
     df.columns = (
@@ -115,8 +114,9 @@ def votes_as_dataframe(votes):
         "comment_id",
         "conversation_id",
         "choice",
-        "created",
     )
+    votes_timestamps = list(map(lambda x: x[0].timestamp(), list(votes.values_list("created"))))
+    df["created"] = votes_timestamps
     df.choice = list(map({-1: "disagree", 1: "agree", 0: "skip"}.get, df["choice"]))
     return df
 

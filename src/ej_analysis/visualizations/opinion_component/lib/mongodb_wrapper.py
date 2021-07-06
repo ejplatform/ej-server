@@ -29,17 +29,38 @@ class MongodbWrapper:
 
     def get_page_aquisition(self):
         if self.utm_source == "None" and self.utm_medium == "None" and self.utm_campaign == "None":
-            return len(self.db.distinct("author"))
+            return len(
+                list(
+                    self.db.aggregate(
+                        [
+                            {
+                                "$match": {"conversation_id": self.conversation_id},
+                            },
+                            {
+                                "$group": {"_id": "$email", "count": {"$sum": 1}},
+                            },
+                        ]
+                    )
+                )
+            )
         return len(
-            self.db.find(
-                {
-                    "$or": [
-                        {"analytics_source": self.utm_source},
-                        {"analytics_campaign": self.utm_campaign},
-                        {"analytics_medium": self.utm_medium},
+            list(
+                self.db.aggregate(
+                    [
+                        {
+                            "$match": {
+                                "$or": [
+                                    {"analytics_source": self.utm_source},
+                                    {"analytics_campaign": self.utm_campaign},
+                                    {"analytics_medium": self.utm_medium},
+                                ],
+                                "conversation_id": self.conversation_id,
+                            },
+                        },
+                        {"$group": {"_id": "$email", "count": {"$sum": 1}}},
                     ]
-                }
-            ).distinct("author")
+                )
+            )
         )
 
     def get_utm_sources(self):

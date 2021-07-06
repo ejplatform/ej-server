@@ -48,6 +48,15 @@ def index(request, conversation, slug):
                 "mongodb_timeout": False,
                 "collecting_is_running": collecting_is_running,
             }
+        return {
+            "conversation": conversation,
+            "utm_source_options": [],
+            "utm_campaign_options": [],
+            "utm_medium_options": [],
+            "data_exists": False,
+            "mongodb_timeout": False,
+            "collecting_is_running": collecting_is_running,
+        }
     except:
         return {
             "mongodb_timeout": False,
@@ -91,4 +100,4 @@ def start_opinion_component_analysis(request, conversation, slug):
             airflow_client = AirflowClient(conversation.id, opinion_component.analytics_property_id)
             airflow_client.trigger_dag()
             return redirect("conversation-analysis:index", conversation=conversation, slug=slug)
-    return {"conversation": conversation}
+    return redirect("conversation-analysis:index", conversation=conversation, slug=slug)
