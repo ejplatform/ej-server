@@ -13,19 +13,23 @@ class MongodbWrapper:
         utm_source=False,
     ):
         client_variables = self.get_mongodb_connection_variables()
-        client = MongoClient(
+        self.client = MongoClient(
             client_variables["DB_HOST"],
             client_variables["DB_PORT"],
             username=client_variables["DB_USERNAME"],
             password=client_variables["DB_PASSWORD"],
+            serverSelectionTimeoutMS=1000,
         )
-        self.db = client.admin.conversations
+        self.db = self.client.admin.conversations
         self.start_date = start_date
         self.end_date = end_date
         self.utm_medium = utm_medium
         self.utm_campaign = utm_campaign
         self.utm_source = utm_source
         self.conversation_id = conversation_id
+
+    def try_mongodb_connection(self):
+        self.client.server_info()
 
     def get_page_aquisition(self):
         if self.utm_source == "None" and self.utm_medium == "None" and self.utm_campaign == "None":

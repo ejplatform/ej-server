@@ -69,4 +69,5 @@ def test(ctx, verbose=False, lf=False, cov=False):
             "DB_HOST": "db",
             "COUNTRY": "",
         },
+        pty=True,
     )

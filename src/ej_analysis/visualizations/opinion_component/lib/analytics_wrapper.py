@@ -13,10 +13,14 @@ class AnalyticsWrapper:
     def get_page_engajement(self):
         self.analytics_client = analytics.initialize_analyticsreporting()
         report = self.get_report()
-        return self.count_total_users_from_reports(report)
+        return self.count_report_users(report)
 
     def get_report(self):
-        body = {
+        body = self._get_report_body()
+        return self.analytics_client.reports().batchGet(body=body).execute()
+
+    def _get_report_body(self):
+        return {
             "reportRequests": [
                 {
                     "viewId": self.view_id,
@@ -33,20 +37,26 @@ class AnalyticsWrapper:
                         {"name": "ga:medium"},
                         {"name": "ga:source"},
                     ],
-                    "filtersExpression": self.get_filter_expression()
+                    "filtersExpression": self.get_filter_expression(),
                 }
             ],
             "useResourceQuotas": False,
         }
-        return self.analytics_client.reports().batchGet(body=body).execute()
 
     def get_filter_expression(self):
-        if self.utm_source == "None" and self.utm_medium == "None" and self.utm_campaign == "None":
-            return ""
-        return f"ga:campaign=={self.utm_campaign},ga:source=={self.utm_source},ga:medium=={self.utm_medium}"
+        if (
+            self.utm_is_valid(self.utm_source)
+            and self.utm_is_valid(self.utm_medium)
+            and self.utm_is_valid(self.utm_campaign)
+        ):
+            return f"ga:campaign=={self.utm_campaign},ga:source=={self.utm_source},ga:medium=={self.utm_medium}"
+        return ""
 
-    def count_total_users_from_reports(self, reports):
+    def count_report_users(self, reports):
         report = reports.get("reports")[0]
         if report:
             new_users = report.get("data").get("totals")[0].get("values")[0]
             return int(new_users)
+
+    def utm_is_valid(self, utm_value):
+        return utm_value != "None" and utm_value != ""
