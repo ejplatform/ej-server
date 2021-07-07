@@ -13,6 +13,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="profile",
             name="phone_number",
-            field=models.CharField(blank=True, max_length=11, unique=True, verbose_name="Phone number"),
+            field=models.CharField(blank=True, max_length=11, verbose_name="Phone number"),
         ),
     ]

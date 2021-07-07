@@ -39,7 +39,7 @@ class Profile(models.Model):
     occupation = models.CharField(_("Occupation"), blank=True, max_length=50)
     political_activity = models.TextField(_("Political activity"), blank=True)
     profile_photo = models.ImageField(_("Profile Photo"), blank=True, null=True, upload_to="profile_images")
-    phone_number = models.CharField(_("Phone number"), blank=True, unique=True, max_length=11)
+    phone_number = models.CharField(_("Phone number"), blank=True, max_length=11)
 
     name = delegate_to("user")
     email = delegate_to("user")
