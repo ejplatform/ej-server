@@ -16,6 +16,16 @@ forms = import_later(".forms", package=__package__)
 #
 # Functions
 #
+
+
+def request_comes_from_ej_bot(request):
+    return request_promoted_conversations(request) and (request.GET.get("participation_source") == "bot")
+
+
+def request_promoted_conversations(request):
+    return request.GET.get("is_promoted") == "true"
+
+
 def check_promoted(conversation, request):
     """
     Raise a Http404 if conversation is not promoted
