@@ -2,9 +2,25 @@ from ej_conversations.models import Conversation, Comment
 from .examples import COMMENT, CONVERSATION, VOTE, VOTES
 from rest_framework.test import APIClient
 from rest_framework.authtoken.models import Token
+from ej_boards.mommy_recipes import BoardRecipes
 import pytest
 
 BASE_URL = "/api/v1"
+
+
+class TestGetPromotedConversations(BoardRecipes):
+    def test_promoted_conversations_endpoint(self, mk_conversation, mk_user, api):
+        user = mk_user(email="someemail@domain.com")
+        unpromoted_conversation = mk_conversation(is_promoted=False, author=user)
+        mk_conversation(is_promoted=True, author=user)
+        path = BASE_URL + f"/conversations/?is_promoted=true"
+        data = api.get(path)
+        assert data.get("count") == 1
+        unpromoted_conversation.is_promoted = True
+        unpromoted_conversation.save()
+        path = BASE_URL + f"/conversations/?is_promoted=true"
+        data = api.get(path)
+        assert data.get("count") == 2
 
 
 class TestGetRoutes:

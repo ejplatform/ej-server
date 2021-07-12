@@ -1,6 +1,7 @@
 from boogie.rest import rest_api
 from ej_conversations.models import Conversation
 from ej_conversations.models.vote import Vote
+from ej_conversations.utils import request_comes_from_ej_bot, request_promoted_conversations
 from .tools import api
 import json
 from datetime import datetime
@@ -13,6 +14,23 @@ from ej_dataviz.routes_report import votes_as_dataframe
 @rest_api.action("ej_conversations.Conversation")
 def vote_dataset(request, conversation):
     return conversation.votes.dataframe().to_dict(orient="list")
+
+
+# EJ telegram bot has a /listarconversas command.
+# The command will list a maximum of ten conversations, because of telegram API payload size limit.
+# This query_hook will filter EJ conversations based on request query parameters.
+@rest_api.query_hook("ej_conversations.Conversation")
+def query_ej_bot_conversations(request, conversation):
+    if request_comes_from_ej_bot(request):
+        return query_promoted_conversations(request, conversation)
+    return Conversation.objects.all()
+
+
+@rest_api.query_hook("ej_conversations.Conversation")
+def query_promoted_conversations(request, conversation):
+    if request_promoted_conversations(request):
+        return Conversation.objects.filter(is_promoted=True)
+    return Conversation.objects.all()
 
 
 @rest_api.action("ej_conversations.Conversation")
