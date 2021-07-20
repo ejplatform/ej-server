@@ -3,7 +3,7 @@ from boogie.router import Router
 from django.utils.translation import ugettext_lazy as _
 from django.http import HttpResponse
 from django.shortcuts import redirect
-from .utils import npm_version
+from .utils import npm_version, user_can_add_new_domain
 from .forms import RasaConversationForm, ConversationComponentForm, ConversationComponent, MailingToolForm
 from .models import RasaConversation
 from .. import models
@@ -71,17 +71,23 @@ def opinion_component(request, conversation, slug):
 @urlpatterns.route(conversation_tools_url + "/rasa")
 def rasa(request, conversation, slug):
     form = RasaConversationForm(request=request, conversation=conversation)
-    if form.is_valid_post():
+    user = request.user
+    user_can_add = user_can_add_new_domain(user, conversation)
+
+    if form.is_valid_post() and user_can_add:
         form.save()
         form = RasaConversationForm(conversation=conversation)
+    elif form.is_valid_post() and not user_can_add:
+        raise PermissionError("user is not allowed to create conversation rasa connections")
 
-    connections = models.RasaConversation.objects.filter(conversation=conversation)
+    conversation_rasa_connections = models.RasaConversation.objects.filter(conversation=conversation)
     tools = Tools(conversation)
     return {
         "conversation": conversation,
-        "connections": connections,
-        "tool": tools.get(_("Rasa chatbot")),
+        "conversation_rasa_connections": conversation_rasa_connections,
+        "tool": tools.get(_("Rasa Webchat")),
         "form": form,
+        "is_valid_user": user_can_add,
     }
 
 
@@ -92,8 +98,8 @@ def delete_connection(request, conversation, slug, connection):
     if user.is_staff or user.is_superuser or connection.conversation.author.id == user.id:
         connection.delete()
     elif connection.conversation.author.id != user.id:
-        raise PermissionError("cannot delete connection from another user")
+        raise PermissionError("cannot delete conversation rasa connections from another user")
     else:
-        raise PermissionError("user is not allowed to delete connections")
+        raise PermissionError("user is not allowed to delete conversation rasa connections")
 
     return redirect(conversation.url("conversation-tools:rasa"))
