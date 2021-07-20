@@ -1,6 +1,7 @@
 from django import forms
 from django.template.loader import get_template
 from django.utils.translation import ugettext_lazy as _
+from django.core.exceptions import ValidationError
 
 from ej_boards.forms import PaletteWidget
 from ej_conversations.models import Comment

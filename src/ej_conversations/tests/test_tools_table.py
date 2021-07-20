@@ -22,7 +22,7 @@ class TestTemplateGenerator(BoardRecipes):
         assert mailing_tool["link"] != ""
 
     def test_get_tool_rasa(self, tools):
-        rasa_tool = tools.get("Rasa chatbot")
+        rasa_tool = tools.get("Rasa Webchat")
         assert rasa_tool
         assert rasa_tool["integration"] != ""
         assert rasa_tool["description"] != ""

@@ -56,30 +56,57 @@ class TestRasaConversationForm(ConversationRecipes):
             == form.errors["__all__"][0]
         )
 
+    def test_rasa_conversation_invalid_number_of_domains(self, db, mk_conversation):
+        conversation = mk_conversation()
+        RasaConversation.objects.create(conversation=conversation, domain="https://domain1.com.br/")
+        RasaConversation.objects.create(conversation=conversation, domain="https://domain2.com.br/")
+        RasaConversation.objects.create(conversation=conversation, domain="https://domain3.com.br/")
+        RasaConversation.objects.create(conversation=conversation, domain="https://domain4.com.br/")
+        RasaConversation.objects.create(conversation=conversation, domain="https://domain5.com.br/")
+        form = RasaConversationForm(
+            {"domain": "https://domain6.com.br/", "conversation": conversation.id},
+            conversation=conversation,
+        )
+        assert not form.is_valid()
+        assert _("a conversation can have a maximum of five domains") == form.errors["__all__"][0]
+
 
 class TestRasaConversationFormRoute(ConversationRecipes):
-    def test_post_rasa_conversation_valid_form(self, db, mk_conversation, rf):
+    def test_post_rasa_conversation_valid_form(self, db, mk_conversation, rf, admin):
         conversation = mk_conversation()
 
         request = rf.post(
             conversation.get_absolute_url() + "/tools/rasa",
             {"conversation": conversation.id, "domain": "http://domain.com.br"},
         )
+        request.user = admin
         response = rasa(request, conversation, None)
-        assert response["connections"]
-        assert response["connections"][0].domain == "http://domain.com.br"
-        assert response["connections"][0].conversation.id == conversation.id
+        assert response["conversation_rasa_connections"]
+        assert response["conversation_rasa_connections"][0].domain == "http://domain.com.br"
+        assert response["conversation_rasa_connections"][0].conversation.id == conversation.id
 
-    def test_post_rasa_conversation_invalid_form(self, db, mk_conversation, rf):
+    def test_post_rasa_conversation_invalid_form(self, db, mk_conversation, rf, admin):
         conversation = mk_conversation()
 
         request = rf.post(
             conversation.get_absolute_url() + "/tools/rasa",
             {"conversation": conversation.id, "domain": "nope"},
         )
+        request.user = admin
         response = rasa(request, conversation, None)
-        assert not response["connections"]
+        assert not response["conversation_rasa_connections"]
         assert not response["form"].is_valid()
+
+    def test_post_rasa_conversation_invalid_permission_form(self, db, mk_conversation, rf, user):
+        conversation = mk_conversation()
+
+        request = rf.post(
+            conversation.get_absolute_url() + "/tools/rasa",
+            {"conversation": conversation.id, "domain": "http://domain.com.br"},
+        )
+        request.user = user
+        with pytest.raises(PermissionError):
+            rasa(request, conversation, None)
 
 
 class TestRasaConversationIntegrationsAPI(ConversationRecipes):

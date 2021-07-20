@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-07-20 09:42-0300\n"
+"POT-Creation-Date: 2021-07-20 12:26-0300\n"
 "PO-Revision-Date: 2019-09-09 13:55-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -153,7 +153,7 @@ msgstr "Murais"
 msgid "You cannot change this value afterwards"
 msgstr "Você não pode alterar este valor depois"
 
-#: src/ej_boards/models.py:20 src/ej_conversations/tools/models.py:46
+#: src/ej_boards/models.py:20 src/ej_conversations/tools/models.py:61
 msgid "Default"
 msgstr "Padrão"
 
@@ -644,67 +644,73 @@ msgstr "URL interna"
 msgid "Rasa conversation with this Conversation and Domain already exists."
 msgstr "Uma persona com esse nome já existe nessa conversa."
 
-#: src/ej_conversations/tools/forms.py:31
+#: src/ej_conversations/tests/test_rasa_integrations.py:71
+#: src/ej_conversations/tools/models.py:39
+#, fuzzy
+msgid "a conversation can have a maximum of five domains"
+msgstr "Uma conversa pode ter no máximo cinco links integrados."
+
+#: src/ej_conversations/tools/forms.py:32
 #, fuzzy
 msgid "Authentication Type"
 msgstr "Autenticação"
 
-#: src/ej_conversations/tools/forms.py:37
-#: src/ej_conversations/tools/forms.py:49
+#: src/ej_conversations/tools/forms.py:38
+#: src/ej_conversations/tools/forms.py:50
 msgid "Theme"
 msgstr "Tema"
 
-#: src/ej_conversations/tools/forms.py:43
+#: src/ej_conversations/tools/forms.py:44
 msgid "Template type"
 msgstr "Tipo de template"
 
-#: src/ej_conversations/tools/forms.py:51
+#: src/ej_conversations/tools/forms.py:52
 msgid "Redirect user to a custom domain"
 msgstr "Redirecione o usuário para um endereço personalizado"
 
-#: src/ej_conversations/tools/forms.py:53
+#: src/ej_conversations/tools/forms.py:54
 msgid "Adds a custom title to the template (optional)."
 msgstr "Adicione um título customizado ao template (opicional)."
 
-#: src/ej_conversations/tools/forms.py:56
+#: src/ej_conversations/tools/forms.py:57
 msgid "selects a specific comment for user to vote (optional)."
 msgstr "Selecione um comentário específico para o usuário votar (opicional)."
 
-#: src/ej_conversations/tools/models.py:17
+#: src/ej_conversations/tools/models.py:19
 msgid "Domain"
 msgstr "Domínio"
 
-#: src/ej_conversations/tools/models.py:19
+#: src/ej_conversations/tools/models.py:21
 msgid "The domain that the rasa bot webchat is hosted."
 msgstr "O domínio do site que hospeda o webchat do rasa bot."
 
-#: src/ej_conversations/tools/models.py:34
+#: src/ej_conversations/tools/models.py:49
 #, fuzzy
 msgid "Register using name/email"
 msgstr "Registrar usando nome/email"
 
-#: src/ej_conversations/tools/models.py:35
-#: src/ej_conversations/tools/models.py:79
+#: src/ej_conversations/tools/models.py:50
+#: src/ej_conversations/tools/models.py:94
 msgid "Mautic"
 msgstr ""
 
-#: src/ej_conversations/tools/models.py:36
+#: src/ej_conversations/tools/models.py:51
 msgid "Analytics"
 msgstr ""
 
-#: src/ej_conversations/tools/models.py:40
+#: src/ej_conversations/tools/models.py:55
 msgid ""
 "User will use EJ platform interface, creating an account using personal data"
 msgstr ""
 "Usuário interagirá com a interface da EJ, criando uma conta com dados "
 "pessoais (email e nome)."
 
-#: src/ej_conversations/tools/models.py:41
-#: src/ej_conversations/tools/models.py:85
+#: src/ej_conversations/tools/models.py:56
+#: src/ej_conversations/tools/models.py:100
 msgid "Uses a mautic campaign "
 msgstr "Usa uma campanha do mautic"
 
-#: src/ej_conversations/tools/models.py:42
+#: src/ej_conversations/tools/models.py:57
 msgid ""
 "Uses analytics cookies allowing you to cross vote data with user browser "
 "data."
@@ -712,19 +718,19 @@ msgstr ""
 "Usa cookies do analytics para cruzar dados de voto com os dados do navegador "
 "do usuário."
 
-#: src/ej_conversations/tools/models.py:47
+#: src/ej_conversations/tools/models.py:62
 msgid "Votorantim"
 msgstr ""
 
-#: src/ej_conversations/tools/models.py:48
+#: src/ej_conversations/tools/models.py:63
 msgid "ICD"
 msgstr ""
 
-#: src/ej_conversations/tools/models.py:80
+#: src/ej_conversations/tools/models.py:95
 msgid "MailChimp"
 msgstr ""
 
-#: src/ej_conversations/tools/models.py:84
+#: src/ej_conversations/tools/models.py:99
 #, fuzzy
 msgid "Mailchimp campaign"
 msgstr "Campanha de email"
@@ -740,9 +746,9 @@ msgstr "Campanha de email"
 msgid "Opinion component"
 msgstr "Componente de opinião"
 
-#: src/ej_conversations/tools/routes.py:83
+#: src/ej_conversations/tools/routes.py:88
 #: src/ej_conversations/tools/table.py:27
-msgid "Rasa chatbot"
+msgid "Rasa Webchat"
 msgstr ""
 
 #: src/ej_conversations/tools/table.py:13
@@ -2911,8 +2917,8 @@ msgstr "Pré visualização"
 #: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:63
 #: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:119
 #: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:121
-#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:46
-#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:48
+#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:111
+#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:113
 #, fuzzy
 msgid "Back to tools"
 msgstr "Voltar para ferramentas"
@@ -2942,6 +2948,7 @@ msgstr "Gerar Script"
 
 #: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:41
 #: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:105
+#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:81
 msgid "Copy"
 msgstr "Copiar"
 
@@ -2970,27 +2977,46 @@ msgstr ""
 "Quando um novo usuário chegar ao seu site, o webchat enviará para EJ a "
 "localização onde está hospedado e receberá de volta esta conversa."
 
-#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:21
+#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:23
 msgid ""
 "All chatbots that have access to this conversation are also displayed here."
 msgstr ""
 "Todos os chatbots que têm acesso a esta conversa também são exibidos aqui."
 
-#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:31
-#, fuzzy
-msgid "Add Integration"
-msgstr "Adicionar Integração"
-
-#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:35
+#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:26
 msgid "Linked websites"
 msgstr "Sites integrados"
 
-#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:42
+#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:27
+#, fuzzy
+msgid "Manage the integrated links of this conversation."
+msgstr "Gerencie os domínios integrados à esta conversa."
+
+#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:33
+msgid "Remove"
+msgstr "Remover"
+
+#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:60
+msgid "new"
+msgstr "novo"
+
+#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:63
+#, fuzzy
+msgid "Add"
+msgstr "Adicionar"
+
+#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:72
+#, fuzzy
+msgid "Integration script"
+msgstr "Script de integração"
+
+#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:73
 #, fuzzy
 msgid ""
-"There are no webchats linked with this conversation yet. What are you "
-"waiting for?"
-msgstr "Não existem sites integrados definidos para esta conversa"
+"Add the script in the &ltbody&gt tag of the page where the collection will "
+"take place."
+msgstr ""
+"Adicionar o script na tag &ltbody&gt da página em que a coleta será feita."
 
 #: src/ej_dataviz/jinja2/ej/role/conversation-download-data.jinja2:2
 msgid "Downloads: "
@@ -3771,6 +3797,15 @@ msgid "Authentication"
 msgstr "Autenticação"
 
 #, fuzzy
+#~ msgid ""
+#~ "There are no webchats linked with this conversation yet. What are you "
+#~ "waiting for?"
+#~ msgstr "Não existem sites integrados definidos para esta conversa"
+
+#, fuzzy
+#~ msgid "Add Integration"
+#~ msgstr "Adicionar Integração"
+
 #~ msgid "Start date"
 #~ msgstr "data de inicio"
 
@@ -4144,9 +4179,6 @@ msgstr "Autenticação"
 
 #~ msgid "Make Primary"
 #~ msgstr "Tornar principal"
-
-#~ msgid "Remove"
-#~ msgstr "Remover"
 
 #~ msgid "Confirm E-mail Address"
 #~ msgstr "Confirme o endereço de email"

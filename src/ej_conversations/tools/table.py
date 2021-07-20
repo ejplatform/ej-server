@@ -24,12 +24,12 @@ class Tools:
                 "about": "/docs/?page=user-docs/tools-opinion-component.html",
             },
             {
-                "integration": _("Rasa chatbot"),
+                "integration": _("Rasa Webchat"),
                 "description": _(
                     "Collect opinions using EJ's chatbot, also known as Duda. Allows, via webchat, to vote and comment on EJ's conversations."
                 ),
                 "link": self.conversation.url("conversation-tools:rasa"),
-                "about": "/docs/?page=user-docs/tools-rasa.html",
+                "about": "/docs/?page=user-docs/tools-chatbot.html",
             },
         ]
 
