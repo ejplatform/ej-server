@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-07-08 12:09-0300\n"
+"POT-Creation-Date: 2021-07-20 09:42-0300\n"
 "PO-Revision-Date: 2019-09-09 13:55-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -826,28 +826,28 @@ msgstr ""
 msgid "Click here to join in!"
 msgstr "Clique aqui para entrar!"
 
-#: src/ej_conversations/utils.py:37
+#: src/ej_conversations/utils.py:47
 msgid "Edit"
 msgstr "Editar"
 
-#: src/ej_conversations/utils.py:40
+#: src/ej_conversations/utils.py:50
 msgid "Moderate"
 msgstr "Moderar"
 
-#: src/ej_conversations/utils.py:82
+#: src/ej_conversations/utils.py:92
 msgid "Thanks for voting."
 msgstr "Obrigado por votar."
 
-#: src/ej_conversations/utils.py:101
+#: src/ej_conversations/utils.py:111
 msgid ""
 "Thank you! Your comment was sent to moderation and will be evaluated soon."
 msgstr "Obrigado! Seu comentário foi enviado para moderação."
 
-#: src/ej_conversations/utils.py:113
+#: src/ej_conversations/utils.py:123
 msgid "This conversation is now favorite."
 msgstr "Esta conversa é agora favorita."
 
-#: src/ej_conversations/utils.py:115
+#: src/ej_conversations/utils.py:125
 msgid "Conversation removed from favorites."
 msgstr "Conversa removida dos favoritos."
 

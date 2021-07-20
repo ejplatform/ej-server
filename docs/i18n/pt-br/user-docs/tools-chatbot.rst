@@ -9,13 +9,45 @@ a API da EJ. Para instruções técnicas de como rodar o chatbot da EJ em
 um ambiente de homologação, acesse https://gitlab.com/pencillabs/ej/ej-bot.
 
 
-Integrando o chatbot à um webchat genérico
+Telegram
+==========================================
+
+Como faço para localizar o bot no Telegram?
 -------------------------------------------
 
-A forma mais rápida de integrar a Duda à um webchat é por meio do projeto rasa-webchat_. 
-Este projeto cria um webchat por meio de um script javascript incluído na página html que
-se deseja ter o webchat rodando. O seguinte *snippet* pode ser utilizado para integrar o
-webchat à Duda.
+Para começar a interagir com a Duda a partir do Telegram, clique no campo de busca do Telegram e digite DudaEjBot ou se preferir acesse http://t.me/dudaejbot
+
+* O bot está denominado como Duda - Empurrando Juntas.
+
+Como iniciar uma conversa com a Duda?
+-------------------------------------
+
+A Duda possui dois modos de uso. O primeiro é voltado para quem administra uma conversa na EJ e quer fazer uma coleta de opinião no telegram. Para esse perfil, o objetivo é gerar um link de participação que possa ser enviado para grupos, canais ou pessoas específicas. Ao clicar no link gerado, o usuário do telegram é direcionado para o bot, e inicia sua participação na coleta. Para gerar o link de participação, execute os seguintes passos:
+
+1. Encontre o bot. Basta digitar **DudaEjBot**, na barra de pesquisa do telegram;
+2. Inicie a interação com o bot clicando em **start** ou digitando **/start**;
+3. Liste as conversas públicas na EJ com o comando **/listarconversas**;
+4. Selecione o ID da conversa que deseja, e gere o link de participação fazendo **/selecionarconversa <ID>**;
+
+Se tudo der certo, o bot irá responder com o link de participação, que você pode enviar para a sua audiência. O link gerado fica no seguinte formato de exemplo: http://t.me/DudaEjBot?start=4.
+
+.. figure:: ../images/ej-rasa-telegram-link.png 
+
+O segundo modo de uso é voltado para quem vai participar de uma coleta. Nesse caso, basta o usuário clicar no link de participação, que a Duda identifica que é um participante e não um administrador, e inicia a coleta para a conversa selecionada.
+
+.. figure:: ../images/ej-rasa-telegram-user.png 
+
+
+Como obter mais informações sobre o ambiente de desenvolvimento?
+----------------------------------------------------------------
+
+Para saber mais detalhes sobre o ambiente de desenvolvimento, basta acessar o `repositório de implementação do bot <https://gitlab.com/pencillabs/ej/ej-bot#ej-bot>`_.
+
+
+Webchat
+==========================================
+
+Para fazer coletas de opinião via chatbot, o administrador da conversa pode configurar em sites e blogs o projeto rasa-webchat_. Este projeto criar um chat web na página html em que ele for incluído, permitindo que usuários que cheguem à pagina participem de uma coleta. O seguinte *snippet* pode ser utilizado para integrar o webchat à Duda.
 
 .. code-block:: html
 
@@ -32,7 +64,7 @@ webchat à Duda.
         window.WebChat.default(
           {
             initPayload: window.location.href,
-            socketUrl: "http://localhost:5006?token=thisismysecret",
+            socketUrl: "https://rasadefault.pencillabs.com.br?token=thisismysecret",
             // add other props here
           },
           null
@@ -44,13 +76,12 @@ webchat à Duda.
   </html>
 
 
-Uma vez integrados, seu público poderá dar opiniões por meio do webchat integrado à instância do Rasa.
+Uma vez configurado o script na página, o administrador precisa registrar na EJ a URL em que o webchat está integrado. Dessa forma, o bot saberá qual conversa da EJ ele deve apresentar para o visitante. Para realizar esse registro, basta acessar a área de ferramentas da conversa, selecionar a ferramenta `Rasa Webchat`, e cadastrar a URL em que o script foi configurado. Feito isso, o webchat irá apresentar para os visitantes a conversa integrada.
 
 .. figure:: ../images/ej-docs-webchat.png 
 
-
-Integrando o chatbot à uma instância do Rocket.chat
-----------------------------------------------------
+Rocket.chat
+==========================================
 
 Caso você queira integrar a Duda à uma instância do Rocket.chat, siga os passos a seguir.
 
@@ -73,8 +104,8 @@ Se tudo foi feito corretamente, agora basta mandar uma mensagem no canal, que a 
 .. _rasa-webchat: https://github.com/botfront/rasa-webchat
 
 
-Integrando o chatbot à uma instância de livechat do Rocket.chat
-----------------------------------------------------------------
+Livechat
+---------
 
 Para utilizar o bot no modo livechat do rocketchat é necessário fazer algumas configurações.
 
