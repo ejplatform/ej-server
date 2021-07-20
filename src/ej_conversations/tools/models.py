@@ -1,6 +1,8 @@
 from django.utils.translation import ugettext_lazy as _
 from boogie import models
 from boogie.rest import rest_api
+from django.core.exceptions import ValidationError
+from .constants import MAX_CONVERSATION_DOMAINS
 
 
 @rest_api(["conversation", "domain"])
@@ -22,6 +24,19 @@ class RasaConversation(models.Model):
     class Meta:
         unique_together = (("conversation", "domain"),)
         ordering = ["-id"]
+
+    @property
+    def reached_max_number_of_domains(self):
+        try:
+            num_domains = RasaConversation.objects.filter(conversation=self.conversation).count()
+            return num_domains >= MAX_CONVERSATION_DOMAINS
+        except Exception as e:
+            return False
+
+    def clean(self):
+        super().clean()
+        if self.reached_max_number_of_domains:
+            raise ValidationError(_("a conversation can have a maximum of five domains"))
 
 
 class ConversationComponent:

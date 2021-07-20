@@ -15,38 +15,113 @@
     <h1 class="h1 text-accent">{{_("Tools")}} > {{ tool["integration"] }}</h1>
     <span>{{tool["description"] }}</span>
     </div>
-    <p>
+    <p id="description-info"">
         {{_("To integrate EJ chatbot with your site, enter the site domain in the field below.")}}
         {{_("When a new user reaches your site, the webchat will send to EJ the location where it is hosted, and will receive back this conversation.")}}
+    </p>
+    <p>   
         {{_("All chatbots that have access to this conversation are also displayed here.")}}
     </p>
-    <form method="POST" class="width-full">
-        {{ csrf_input }}
-        {% block form_content %}
-                {{ form.conversation.as_hidden() }}
-                {{ form.non_field_errors() }}
-                {{ form.domain.errors }}
-                {{ form.errors }}
-                <label>{{ form.domain.label }}{{ form.domain }}</label>
-                 <input class="is-primary" type="submit" value="{{ _('Add Integration') }}">
-        {% endblock %}
-    </form>
 
-    <h2>{{_("Linked websites")}}</h2>
-        {% if connections %}
-            {% for connection in connections %}
-                <a href={{connection.domain}} target="_blank">{{connection.domain}}</a>
-                <a href="{{ conversation.url('conversation-tools:rasa') }}/delete/{{connection.id}}"><i class="far fa-trash-alt"></i></a><br>
-           {% endfor %} 
-        {% else %}
-            <p>{{ _("There are no webchats linked with this conversation yet. What are you waiting for?") }}</p>
+    <h2 class="divider">{{_("Linked websites")}}</h2>
+    <span class="helptext">{{_("Manage the integrated links of this conversation.")}}</span>
+        {% if conversation_rasa_connections %}
+            <table id="template-table">
+                <tr class="table-header">
+                    <th>{{_("Domain")}}</th>
+                    {% if is_valid_user %}
+                        <th id="th-remove">{{_("Remove")}}</th>
+                    {% endif %}
+                </tr>
+                {% for connection in conversation_rasa_connections %}
+                <tr class="url-table">
+                    <td>
+                        <a href={{connection.domain}} target="_blank">{{connection.domain}}</a>
+                    </td>
+                    {% if is_valid_user %}
+                        <td id="td-remove">
+                            <a href="{{ conversation.url('conversation-tools:rasa') }}/delete/{{connection.id}}"><i class="fas fa-trash-restore"></i></a><br>
+                        </td>
+                    {% endif %}
+                </tr>
+                {% endfor %} 
+            </table>
         {% endif %}
 
+    {% if is_valid_user %}
+        <form method="POST" class="width-full width-full-extended">
+            {{ csrf_input }}
+            {% block form_content %}
+                <div class="form-div">
+                    {{ form.conversation.as_hidden() }}
+                    {{ form.non_field_errors() }}
+                    {{ form.domain.errors }}
+                    {{ form.errors }}
+                    <label id="domain-label">{{_("new")}} {{ form.domain.label }}</label>
+                    <div class="domain-form">
+                        {{ form.domain }}
+                        <input id="domain-submit" class="is-primary" type="submit" value="{{ _('Add') }}">
+                    </div>
+                </div>
+            {% endblock %}
+        </form>
+    {% endif %}
+    
     <br>
+
+    <h2 class="divider">{{_("Integration script")}}</h2>
+    <span class="helptext">{{_("Add the script in the &ltbody&gt tag of the page where the collection will take place.")}}</span>
+    
+    <div class="tools-code-snippet">
+        <div style="position: relative;">
+            <div class="copy-icon">
+                <a href="#" onclick="copySnippet('copy-body')"><i class="fas fa-copy"></i></a>
+            </div>
+            <div class="copy-info">
+                <p>{{_("Copy")}}</p>
+            </div>
+        </div>
+        <textarea id="copy-body" readonly>
+        <html>
+            <head></head>
+            <body></body>
+            <script>!(function () {
+            let e = document.createElement("script"),
+                t = document.head || document.getElementsByTagName("head")[0];
+                (e.src =
+                "https://cdn.jsdelivr.net/npm/rasa-webchat@1.0.1/lib/index.js"),
+                (e.async = !0),
+                (e.onload = () => {
+                window.WebChat.default(
+                    {
+                    initPayload: window.location.href,
+                    socketUrl: "https://rasadefault.pencillabs.com.br/?token=thisismysecret",
+                    // add other props here
+                    },
+                    null
+                );
+                }),
+                t.insertBefore(e, t.firstChild);
+                })();
+            </script>
+        </html>
+        </textarea>
+    </div>
+    
     <p><a href="{{ conversation.url('conversation-tools:index') }}" title="{{ _('Back to tools') }}"
 		class="lowercase bold text-brand">
 	    <i class="fa fa-chevron-left"></i>{% trans %}Back to tools{% endtrans %}
     </a></p>
 </div>
+
+<script>
+    function copySnippet(elementId) {
+        event.preventDefault();
+
+        var copyText = document.getElementById(elementId);
+        var selected = copyText.select();
+		document.execCommand("copy");
+    }
+</script>
 
 {% endblock %}

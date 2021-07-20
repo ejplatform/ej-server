@@ -13,3 +13,7 @@ def npm_version():
         return response.json()
     else:
         return {"latest": "request failed"}
+
+
+def user_can_add_new_domain(user, conversation):
+    return user.is_staff or user.is_superuser or conversation.author.id == user.id
