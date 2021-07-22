@@ -113,8 +113,9 @@ def opinion_component(request, conversation, slug):
         aquisition = mongodb_wrapper.get_page_aquisition()
         d3js_wrapper = D3jsWrapper(aquisition, engajement)
         return JsonResponse(d3js_wrapper.get_aquisition_viz_data())
-    except:
+    except Exception as e:
         print("Could not generate D3js data")
+        print(e)
         return JsonResponse({})
 
 
