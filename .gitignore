@@ -29,6 +29,8 @@ db.sqlite3
 local/
 deploy/
 ej/media/
+src/ej_analysis/visualizations/opinion_component/lib/analytics/client_secrets\.json
+
 
 
 # Editors and system specific files

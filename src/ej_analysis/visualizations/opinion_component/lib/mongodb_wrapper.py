@@ -31,8 +31,15 @@ class MongodbWrapper:
     def try_mongodb_connection(self):
         self.client.server_info()
 
+    def utm_fields_are_valid(self):
+        utm_source_is_valid = self.utm_source != "None" and self.utm_source != ""
+        utm_medium_is_valid = self.utm_medium != "None" and self.utm_medium != ""
+        utm_campaign_is_valid = self.utm_campaign != "None" and self.utm_campaign != ""
+
+        return utm_source_is_valid and utm_medium_is_valid and utm_campaign_is_valid
+
     def get_page_aquisition(self):
-        if self.utm_source == "None" and self.utm_medium == "None" and self.utm_campaign == "None":
+        if not self.utm_fields_are_valid():
             return len(
                 list(
                     self.db.aggregate(
