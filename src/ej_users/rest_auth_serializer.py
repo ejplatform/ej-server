@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import User, MetaData
+from ej_profiles.models import Profile
 
 try:
     from allauth.account import app_settings as allauth_settings
@@ -21,17 +22,30 @@ class RegistrationSerializer(serializers.Serializer):
     def save(self, request):
         try:
             user = User.objects.get(email=request.data.get("email"))
-            self.check_metadata(user, request)
-            return user
         except Exception as e:
-            pass
-        email = request.data.get("email")
-        name = request.data.get("name")
-        user = User.objects.create_user(email=email, name=name)
-        self.save_metadata(user, request)
+            email = request.data.get("email")
+            name = request.data.get("name")
+            password = request.data.get("password")
+            user = User(email=email, name=name)
+            user.set_password(password)
+            user.save()
+
+        self.check_user_metadata(user, request)
+        self.check_profile(user, request)
         return user
 
-    def check_metadata(self, user, request):
+    def check_profile(self, user, request):
+        phone_number = request.data.get("phone_number")
+        profile = None
+        try:
+            profile = Profile.objects.get(user=user)
+        except Exception as e:
+            profile = Profile(user=user)
+        if phone_number:
+            profile.phone_number = phone_number
+        profile.save()
+
+    def check_user_metadata(self, user, request):
         if not user.metadata_set.first():
             self.save_metadata(user, request)
 
