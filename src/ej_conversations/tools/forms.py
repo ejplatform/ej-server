@@ -49,7 +49,9 @@ class MailingToolForm(forms.Form):
     theme = forms.ChoiceField(
         label=_("Theme"), choices=ConversationComponent.THEME_CHOICES, required=False, widget=PaletteWidget
     )
-    is_custom_domain = forms.BooleanField(required=False, label=_("Redirect user to a custom domain"))
+    is_custom_domain = forms.BooleanField(
+        required=False, label=_("Redirect user to a custom domain (optional)")
+    )
     custom_title = forms.CharField(
         required=False, label=_("Adds a custom title to the template (optional).")
     )

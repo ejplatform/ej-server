@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-07-20 12:26-0300\n"
+"POT-Creation-Date: 2021-07-28 14:15-0300\n"
 "PO-Revision-Date: 2019-09-09 13:55-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -664,17 +664,18 @@ msgstr "Tema"
 msgid "Template type"
 msgstr "Tipo de template"
 
-#: src/ej_conversations/tools/forms.py:52
-msgid "Redirect user to a custom domain"
-msgstr "Redirecione o usuário para um endereço personalizado"
+#: src/ej_conversations/tools/forms.py:53
+#, fuzzy
+msgid "Redirect user to a custom domain (optional)"
+msgstr "URL para redirecionamento (opcional)."
 
-#: src/ej_conversations/tools/forms.py:54
+#: src/ej_conversations/tools/forms.py:56
 msgid "Adds a custom title to the template (optional)."
-msgstr "Adicione um título customizado ao template (opicional)."
+msgstr "Adicione um título customizado ao template (opcional)."
 
-#: src/ej_conversations/tools/forms.py:57
+#: src/ej_conversations/tools/forms.py:59
 msgid "selects a specific comment for user to vote (optional)."
-msgstr "Selecione um comentário específico para o usuário votar (opicional)."
+msgstr "Selecione um comentário específico para o usuário votar (opcional)."
 
 #: src/ej_conversations/tools/models.py:19
 msgid "Domain"
@@ -2356,9 +2357,10 @@ msgid "Dashboards and analysis"
 msgstr "Dashboards e analises"
 
 #: src/ej_analysis/jinja2/ej_conversations_analysis/index.jinja2:17
+#: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:51
 #, fuzzy
 msgid "Opinion Component"
-msgstr "Componente de coleta"
+msgstr "Componente de Opinião"
 
 #: src/ej_analysis/jinja2/ej_conversations_analysis/index.jinja2:24
 #: src/ej_analysis/jinja2/ej_conversations_analysis/index.jinja2:26
@@ -2885,36 +2887,41 @@ msgstr "Aprenda mais sobre esta integração"
 msgid "Selects template type you want to use."
 msgstr "Selecione o tipo de template que deseja utilizar."
 
-#: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:28
+#: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:29
 #, fuzzy
 msgid "Changes template appearence."
 msgstr "Altere a aparência (cores) do template."
 
-#: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:32
+#: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:35
 msgid "Custom fields"
 msgstr "Campos personalizáveis"
 
-#: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:34
+#: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:42
 #, fuzzy
 msgid "Changes fields like comment and title."
 msgstr "Altere campos como comentário e título."
 
-#: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:42
-msgid "domain to redirect the user on template"
-msgstr "domínio que será embutido para redirecionamento do usuário"
+#: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:57
+msgid ""
+"Redirect your participant to a page with the integrated opinion component. "
+"The vote given in the email will be processed automatically by the component."
+msgstr ""
+"Redirecione seu participante para uma página com o componente de opinião "
+"integrado. O voto dado no email será processado automaticamente pelo "
+"componente."
 
-#: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:47
+#: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:65
 #, fuzzy
-msgid "Download"
-msgstr "Download"
+msgid "Preview Template"
+msgstr "Visualizar Template"
 
-#: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:48
+#: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:66
 #, fuzzy
-msgid "Preview"
-msgstr "Pré visualização"
+msgid "Download Template"
+msgstr "Baixar template"
 
-#: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:61
-#: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:63
+#: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:82
+#: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:84
 #: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:119
 #: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:121
 #: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:111
@@ -3796,7 +3803,13 @@ msgstr "Mudar a senha"
 msgid "Authentication"
 msgstr "Autenticação"
 
+#~ msgid "domain to redirect the user on template"
+#~ msgstr "domínio que será embutido para redirecionamento do usuário"
+
 #, fuzzy
+#~ msgid "Download"
+#~ msgstr "Download"
+
 #~ msgid ""
 #~ "There are no webchats linked with this conversation yet. What are you "
 #~ "waiting for?"

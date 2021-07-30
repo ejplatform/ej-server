@@ -2,17 +2,12 @@
     {% for _, lst, __ in widget.optgroups %}
         {% set params = lst[0] %}
         {% if params.value != 'mailchimp' %}
-          <li title="{{ params.value }}">
-              <div class="tooltip">
-                  <i class="far fa-question-circle">
-                      <span class="tooltiptext">{{params.attrs[params.value]}}</span>
-                  </i>
-              </div>
-                  <input type="radio"{% if params.selected %} checked{% endif %} name="template_type" id="id_template_type_{{ params.value }}" value="{{ params.value }}">
-              <label for="id_template_type_{{ params.value }}">
-                  {{ params.label }}
-              </label>
-          </li>
+            <li title="{{ params.value }}">
+                <input type="radio"{% if params.selected %} checked{% endif %} name="template_type" id="id_template_type_{{ params.value }}" value="{{ params.value }}">
+                <label for="id_template_type_{{ params.value }}">
+                    {{ params.label }}
+                </label>
+            </li>
         {% endif %}
     {% endfor %}
 </ul>
