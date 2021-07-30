@@ -131,6 +131,14 @@ def conversation_tools_rasa(request, board, **kwargs):
     return tools_routes.rasa(request, **kwargs)
 
 
+@urlpatterns.route(
+    board_conversation_url + "tools/mautic/", perms=["ej.can_edit_conversation:conversation"]
+)
+def conversation_tools_mautic(request, board, **kwargs):
+    check_board(board)
+    return tools_routes.mautic(request, **kwargs)
+
+
 @urlpatterns.route(board_conversation_url + "analysis/", perms=["ej.can_edit_conversation:conversation"])
 def conversation_analysis_index(request, board, **kwargs):
     check_board(board)

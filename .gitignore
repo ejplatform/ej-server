@@ -63,10 +63,6 @@ dump.rdb
 *.mo
 lib/assets/css/main*.css
 
-# Ignore automatic migrations
-src/*/migrations/*_auto_*.py
-src/*/migrations/*_merge_*.py
-
 # Themes
 lib/assets/cpa
 lib/assets/brasil-que-o-povo-quer

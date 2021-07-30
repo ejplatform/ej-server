@@ -1,4 +1,5 @@
 from django.utils.translation import ugettext_lazy as _
+from django.core.validators import RegexValidator
 from boogie import models
 from boogie.rest import rest_api
 from django.core.exceptions import ValidationError
@@ -99,3 +100,23 @@ class MailingTool:
         "mailchimp": _("Mailchimp campaign"),
         "mautic": _("Uses a mautic campaign "),
     }
+
+
+class ConversationMautic(models.Model):
+    """
+    Allows correlation between a conversation and an instance of Mautic
+    """
+
+    user_name = models.CharField(_("Mautic username"), max_length=100)
+
+    password = models.CharField(_("Mautic password"), max_length=200)
+
+    url = models.URLField(_("Mautic URL"), max_length=255, help_text=_("Generated Url from Mautic."))
+
+    conversation = models.ForeignKey(
+        "Conversation", on_delete=models.CASCADE, related_name="mautic_integration"
+    )
+
+    class Meta:
+        unique_together = (("conversation", "url"),)
+        ordering = ["-id"]

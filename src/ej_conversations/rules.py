@@ -199,3 +199,15 @@ def can_promote_conversation(user):
     * User is a publisher (explicit admin permission).
     """
     return user.has_perm("ej_conversations.can_publish_promoted")
+
+
+@rules.register_perm("ej.can_access_mautic_connection")
+def can_access_mautic_connection(user, conversation):
+    """
+    Can access a mautic connection to a conversation.
+
+    * User is staff
+    * OR user is an superuser
+    * OR user is the conversation author
+    """
+    return user.is_staff or user.is_superuser or conversation.author.id == user.id

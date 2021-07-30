@@ -4,8 +4,14 @@ from django.utils.translation import ugettext_lazy as _
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from .utils import npm_version, user_can_add_new_domain
-from .forms import RasaConversationForm, ConversationComponentForm, ConversationComponent, MailingToolForm
-from .models import RasaConversation
+from .forms import (
+    RasaConversationForm,
+    ConversationComponentForm,
+    ConversationComponent,
+    MailingToolForm,
+    MauticConversationForm,
+)
+from .models import RasaConversation, ConversationMautic
 from .. import models
 from ..tools.table import Tools
 
@@ -13,7 +19,11 @@ from ..tools.table import Tools
 app_name = "ej_conversations_tools"
 urlpatterns = Router(
     template="ej_conversations_tools/{name}.jinja2",
-    models={"conversation": models.Conversation, "connection": RasaConversation},
+    models={
+        "conversation": models.Conversation,
+        "connection": RasaConversation,
+        "mautic_connection": ConversationMautic,
+    },
 )
 conversation_tools_url = f"<model:conversation>/<slug:slug>/tools"
 
@@ -103,3 +113,42 @@ def delete_connection(request, conversation, slug, connection):
         raise PermissionError("user is not allowed to delete conversation rasa connections")
 
     return redirect(conversation.url("conversation-tools:rasa"))
+
+
+@urlpatterns.route(
+    conversation_tools_url + "/mautic", perms=["ej.can_access_mautic_connection:conversation"]
+)
+def mautic(request, conversation, slug):
+    tools = Tools(conversation)
+    conversation_kwargs = {
+        "conversation": conversation,
+    }
+    form = MauticConversationForm(request=request, initial=conversation_kwargs)
+    connections = models.ConversationMautic.objects.filter(conversation=conversation)
+    if request.method == "POST":
+        if form.is_valid():
+            form.save()
+    return {
+        "conversation": conversation,
+        "connections": connections,
+        "tool": tools.get(_("Mautic")),
+        "form": form,
+    }
+
+
+@urlpatterns.route(
+    conversation_tools_url + "/mautic/delete/<model:mautic_connection>",
+    perms=["ej.can_access_mautic_connection:conversation"],
+)
+def delete_mautic_connection(request, conversation, slug, mautic_connection):
+    mautic_connection.delete()
+    return redirect(conversation.url("conversation-tools:mautic"))
+
+
+@urlpatterns.route(conversation_tools_url + "/mautic/create_contact/<model:mautic_connection>")
+def create_mautic_contact(
+    request, conversation, slug, mautic_connection, oauth_token_secret, oauth_verifier
+):
+    # request.post(rota  de contato, payload, token?)
+
+    pass

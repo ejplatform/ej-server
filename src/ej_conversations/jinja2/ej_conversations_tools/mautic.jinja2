@@ -1,0 +1,49 @@
+{% extends 'base.jinja2' %}
+
+{% block metaOG2 %}
+
+    <meta name="description" property="og:title" content="Area de integração da EJ com outras ferramentas.">
+    <meta property="og:description" content="Area de integração da EJ com outras ferramentas.">
+
+{% endblock metaOG2 %}
+
+{% block _menu %} {{ menu(request.user, board_palette) }} {% endblock %}
+
+{% block content %}
+
+<div class="tools">
+    <div class="tools-title">
+    <h1 class="h1 text-accent">{{_("Tools")}} > {{ tool["integration"] }}</h1>
+    </div>
+    <p>
+        {{_("Integrate this conversation with the Mautic platform API, allowing users who participate in this conversation to be automatically synchronized with Mautic's contact base.")}}
+    </p>
+    {% if not connections %}
+        <input onClick="displayForm()" id="is-primary-centered" type="button" name="enable_integration" value="{{ _('Enable Integration') }}">
+    {% endif %}
+
+    {% if form %}
+        {% include 'ej_conversations_tools/mautic-form.jinja2' %}
+    {% endif %}
+
+    {% if connections %}
+        {% include 'ej_conversations_tools/mautic_connections.jinja2' %}
+    {% endif %}
+    
+    <br><br> 
+    <p><a href="{{ conversation.url('conversation-tools:index') }}" title="{{ _('Back to tools') }}"
+		class="lowercase bold text-brand">
+	    <i class="fa fa-chevron-left"></i>{% trans %}Back to tools{% endtrans %}
+    </a></p>
+</div>
+
+{% block javascript %}
+<script>
+  function displayForm() {
+    document.querySelector("input[name=enable_integration]").style.display = "none";
+    document.querySelector("#mautic-connection-form").style.display = "block";
+  }
+</script>
+{% endblock %}
+
+{% endblock %}

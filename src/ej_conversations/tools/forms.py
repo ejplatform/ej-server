@@ -6,7 +6,7 @@ from django.core.exceptions import ValidationError
 from ej_boards.forms import PaletteWidget
 from ej_conversations.models import Comment
 from ej.forms import EjModelForm
-from .models import RasaConversation, ConversationComponent, MailingTool
+from .models import RasaConversation, ConversationComponent, MailingTool, ConversationMautic
 
 
 class CustomChoiceWidget(forms.RadioSelect):
@@ -74,3 +74,9 @@ class RasaConversationForm(EjModelForm):
     def __init__(self, *args, conversation, **kwargs):
         kwargs.update(initial={"conversation": conversation})
         super(RasaConversationForm, self).__init__(*args, **kwargs)
+
+
+class MauticConversationForm(EjModelForm):
+    class Meta:
+        model = ConversationMautic
+        fields = ["user_name", "url", "conversation", "password"]
