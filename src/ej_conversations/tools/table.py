@@ -31,6 +31,14 @@ class Tools:
                 "link": self.conversation.url("conversation-tools:rasa"),
                 "about": "/docs/?page=user-docs/tools-chatbot.html",
             },
+            {
+                "integration": _("Mautic"),
+                "description": _(
+                    "Integrate this conversation with the Mautic platform API, allowing users who participate in this conversation to be automatically synchronized with Mautic's contact base."
+                ),
+                "link": self.conversation.url("conversation-tools:mautic"),
+                "about": "/docs/?page=user-docs/tools-mautic.html",
+            },
         ]
 
     def get(self, name):

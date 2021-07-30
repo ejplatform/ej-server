@@ -12,6 +12,7 @@ descr = lambda msg: lambda f: setattr(f, "short_description", msg) or f
 
 
 admin.site.register(models.RasaConversation)
+admin.site.register(models.ConversationMautic)
 
 
 class VoteInline(admin.TabularInline):
