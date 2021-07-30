@@ -11,100 +11,131 @@
 
 {% block content %}
 <div class="tools">
-<div class="tools-title">
-<h1 class="h1 text-accent">{{_("Tools")}} > {{ tool["integration"] }}</h1>
-<span>{{tool["description"] }}</span>
-</div>
-<div>
-	<div class="tools-section">
-	<div class="tools-content">
-		<form action="{{conversation.url("conversation-tools:mailing")}}" method="post" class="tools-settings-form" name="mailingForm">
-			<h2 class="divider">{{form.template_type.label}}</h3>
-			<span class="helptext">{{_("Selects template type you want to use.")}}</span>
-			<section>
-				{{form.template_type}}
-			</section>
-			<h2 class="divider">{{form.theme.label}}</h2>
-			<span class="helptext">{{_("Changes template appearence.")}}</span>
-			<section>
-				{{form.theme}}
-			</section>
-			<h2 class="divider">{{ _('Custom fields') }}</h2>
-			<span class="helptext"> </span>
-			<span class="helptext">{{_("Changes fields like comment and title.")}}</span>
-			<section>
-				<label>{{form.custom_title.label}}</label>
-				{{form.custom_title}}
-				<label>{{form.custom_comment.label}}</label>
-				{{form.custom_comment}}
-				<label id="custom-domain-label">{{form.is_custom_domain.label}}</label>
-				{{form.is_custom_domain}}
-				<input name="custom-domain" id="domain-input" type="text" placeholder="{{ _('domain to redirect the user on template') }}">
-			</section>
-			
-			<input type="hidden" id="token" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-			<div class="group-button">
-				<input type="submit" name="download" value="{{ _('Download') }}">
-				<input type="submit" name="preview" value="{{ _('Preview') }}">
-			</div>
-		</form>
+	<div class="tools-title">
+		<h1 class="h1 text-accent">{{_("Tools")}} > {{ tool["integration"] }}</h1>
+		<span>{{tool["description"] }}</span>
 	</div>
-		{% if template_preview %}
-			<div id="preview-template">
-				<iframe id="iframe" scroll="0"
-				frameborder="0"></iframe>
+	<div>
+		<div class="tools-section">
+			<div class="tools-content">
+				<form action="{{conversation.url('conversation-tools:mailing')}}" method="post" class="tools-settings-form" name="mailingForm">
+					<h2 class="divider">{{form.template_type.label}}</h2>
+					<span class="helptext">{{_("Selects template type you want to use.")}}</span>
+					<section>
+						{{form.template_type}}
+					</section>
+
+					<h2 class="divider">{{form.theme.label}}</h2>
+					<span class="helptext">{{_("Changes template appearence.")}}</span>
+					<section>
+						{{form.theme}}
+					</section>
+
+					<h2 class="divider" style="display: flex;justify-content: space-between;">
+						{{ _('Custom fields') }}
+						<div class="display-down" onclick="showSection(event.target.checked, 'custom-field-section');">
+							<input type="checkbox" id="isexpanded1"/>
+							<label for="isexpanded1"><i class="fa fa-chevron-down"></i></label>
+						</div>
+					</h2>
+					<span class="helptext"> </span>
+					<span class="helptext">{{_("Changes fields like comment and title.")}}</span>
+					<section id="custom-field-section" style="display: none">
+						<label>{{form.custom_title.label}}</label>
+						{{form.custom_title}}
+						<label>{{form.custom_comment.label}}</label>
+						{{form.custom_comment}}
+					</section>
+
+					<h2 style="display: flex;justify-content: space-between;" class="divider">
+						{{_('Opinion Component')}}
+						<div class="display-down" onclick="showSection(event.target.checked, 'component-opinion-section');">
+							<input type="checkbox" id="isexpanded2"/>
+							<label for="isexpanded2"><i class="fa fa-chevron-down"></i></label>
+						</div>
+					</h2>
+					<span class="helptext" style="display: block;">{{_("Redirect your participant to a page with the integrated opinion component. The vote given in the email will be processed automatically by the component.")}}</span>
+					<section id="component-opinion-section" style="display: none">
+						<label id="custom-domain-label">{{form.is_custom_domain.label}}</label>
+						<input name="custom-domain" id="domain-input" type="text" placeholder="https://example.com">
+					</section>
+					
+					<input type="hidden" id="token" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+					<div class="group-button">
+						<input id="preview-button" type="submit" name="preview" value="{{ _('Preview Template') }}">
+						<input type="submit" name="download" value="{{ _('Download Template') }}">
+					</div>
+				</form>
 			</div>
-		{% endif %}
+			<div id="backgroundModal" class="modal-background"></div>
+			<div id="previewModal" class="modal">
+				<div class="modal-content">
+					<span class="close" onclick="closeModal('previewModal')">&times;</span>
+					<div id="preview-template">
+						<iframe id="iframe" class="iframe-section" scroll="0"
+						frameborder="0"></iframe>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<p><a href="{{ conversation.url('conversation-tools:index') }}" title="{{ _('Back to tools') }}"
+				class="lowercase bold text-brand">
+			<i class="fa fa-chevron-left"></i>{% trans %}Back to tools{% endtrans %}
+		</a></p>
 	</div>
-
-
-<p><a href="{{ conversation.url('conversation-tools:index') }}" title="{{ _('Back to tools') }}"
-		class="lowercase bold text-brand">
-	<i class="fa fa-chevron-left"></i>{% trans %}Back to tools{% endtrans %}
-</a></p>
 </div>
-</div>
-   <script>
-
-	function showContent() {
-		let content = document.querySelector(".integration-content");
-		let section = document.querySelector(".integration-section");
-		if (window.getComputedStyle(content).maxHeight == "0px") {
-		content.style.maxHeight = "400px";
-		section.style.borderRadius = "unset";
-		section.style.borderStyle = "unset";
-		}
-		else {
-		content.style.maxHeight = "0px";
-		section.style.borderStyle = "solid";
-		section.style.borderRadius = "1rem";
-		}
-	}
-
-	function showDomainInput() {
-		let input = document.querySelector("#domain-input");
-		if (document.getElementById('id_is_custom_domain').checked){
-			input.style.display = "block";
-		} else {
-			input.style.display = "none";
-		}
-	}
-
+<script>
 	function setIframe(html){
 		let iframe = document.getElementById('iframe');
 		iframe.srcdoc = html;
 		iframe.width  = iframe.contentWindow.document.body.scrollWidth;
-	iframe.height = iframe.contentWindow.document.body.scrollHeight;
+		iframe.height = iframe.contentWindow.document.body.scrollHeight;
 		if(iframe) {
 			iframe.contentWindow.document.body.style.overflow = "auto";
 		}
 	}
 	window.onload = function() {
-		document.getElementById('id_is_custom_domain').onchange = showDomainInput;
 		if({{template_preview | safe}}){
-			setIframe({{template_preview | safe}})
+			setIframe({{template_preview | safe}});
+			showModal('previewModal');
 		}
 	};
 
-   </script>
+	function showSection(is_checked, section_id) {
+		let section = document.getElementById(section_id);
+		if (is_checked) {
+			section.style['opacity'] = 1;
+			section.style['display'] = 'block';
+		} else {
+			section.style['opacity'] = 0;
+			section.style['display'] = 'none';
+		}
+	}
+	function showModal(modal_id) {
+		let modal = document.getElementById(modal_id);
+		let backgroundModal = document.getElementById('backgroundModal');
+		let pageWapper = document.getElementById('page-wrapper');
+		pageWapper.appendChild(modal);
+		pageWapper.appendChild(backgroundModal);
+		backgroundModal.style.display = 'block';
+		modal.style.display = 'block';
+	}
+	function closeModal(modal_id) {
+		let modal = document.getElementById(modal_id);
+		let backgroundModal = document.getElementById('backgroundModal');
+		modal.style.display = 'none';
+		backgroundModal.style.display = 'none';
+	}
+
+	window.onclick = function(event) {
+		let modal = document.getElementById('previewModal');
+		let backgroundModal = document.getElementById('backgroundModal');
+		if (event.target != modal) {
+			modal.style.display = 'none';
+			backgroundModal.style.display = 'none';
+		}		
+	}	
+
+</script>
 {% endblock %}

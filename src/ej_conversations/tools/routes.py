@@ -28,7 +28,7 @@ def index(request, conversation, slug, npm=npm_version):
 def mailing(request, conversation, slug):
     from .mailing import TemplateGenerator
 
-    template = None
+    template = "null"
     form = MailingToolForm(request.POST, conversation_id=conversation)
     if request.method == "POST" and form.is_valid():
         form_data = form.cleaned_data

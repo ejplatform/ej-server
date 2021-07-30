@@ -2,10 +2,10 @@
     {% for _, lst, __ in widget.optgroups %}
         {% set params = lst[0] %}
         <li title="{{ params.value }}">
-            <label for="radio-{{ params.value }}" class="flex items-center content-center margin-2 size-x6">
+            <label for="radio-{{ params.value }}" class="content-center size-x6" style="display: flex; text-transform: capitalize; align-items: baseline;">
                 <input type="radio"{% if params.selected %} checked{% endif %} id="radio-{{ params.value }}" name="{{ params.name }}" value="{{ params.value }}">
-                    <span class="color-choice bg-theme-{{ params.value }}"> </span>
-                    <span class="color-choice bg-theme-{{ params.value }}-light"></span>
+                <span class="color-choice bg-theme-{{ params.value }}" style="margin-right: 0.3rem;"> </span>
+                <span class="color-choice bg-theme-{{ params.value }}-light" style="margin-right: 0.3rem;"></span>
                 {{ params.label }}
             </label>
         </li>
