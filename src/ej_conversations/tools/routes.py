@@ -80,15 +80,18 @@ def opinion_component(request, conversation, slug):
 
 @urlpatterns.route(conversation_tools_url + "/rasa")
 def rasa(request, conversation, slug):
-    form = RasaConversationForm(request=request, conversation=conversation)
-    user = request.user
-    user_can_add = user_can_add_new_domain(user, conversation)
+    user_can_add = user_can_add_new_domain(request.user, conversation)
 
-    if form.is_valid_post() and user_can_add:
-        form.save()
-        form = RasaConversationForm(conversation=conversation)
-    elif form.is_valid_post() and not user_can_add:
-        raise PermissionError("user is not allowed to create conversation rasa connections")
+    if request.method == "POST":
+        form = RasaConversationForm(request.POST)
+        if not user_can_add:
+            raise PermissionError("user is not allowed to create conversation rasa connections")
+
+        if form.is_valid():
+            form.save()
+
+    else:
+        form = RasaConversationForm()
 
     conversation_rasa_connections = models.RasaConversation.objects.filter(conversation=conversation)
     tools = Tools(conversation)

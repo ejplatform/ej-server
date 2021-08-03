@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-07-28 14:20-0300\n"
+"POT-Creation-Date: 2021-08-03 16:13-0300\n"
 "PO-Revision-Date: 2019-09-09 13:55-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -58,11 +58,11 @@ msgstr "Termos de uso"
 msgid "Admin panel"
 msgstr "Painel de administração"
 
-#: src/ej/forms.py:134
+#: src/ej/forms.py:135
 msgid "Choose a file"
 msgstr "Escolha um arquivo"
 
-#: src/ej/forms.py:136
+#: src/ej/forms.py:137
 msgid "No file chosen"
 msgstr "Nenhum arquivo selecionado"
 
@@ -693,7 +693,7 @@ msgstr "Registrar usando nome/email"
 
 #: src/ej_conversations/tools/models.py:51
 #: src/ej_conversations/tools/models.py:95
-#: src/ej_conversations/tools/routes.py:134
+#: src/ej_conversations/tools/routes.py:141
 #: src/ej_conversations/tools/table.py:35
 msgid "Mautic"
 msgstr ""
@@ -768,7 +768,7 @@ msgstr "Campanha de email"
 msgid "Opinion component"
 msgstr "Componente de opinião"
 
-#: src/ej_conversations/tools/routes.py:98
+#: src/ej_conversations/tools/routes.py:105
 #: src/ej_conversations/tools/table.py:27
 msgid "Rasa Webchat"
 msgstr ""
@@ -799,7 +799,7 @@ msgstr ""
 "Colete opiniões usando o chatbot da EJ, também conhecido como Duda. Permite, "
 "via webchat, votar e comentar as conversas da EJ."
 
-#: src/ej_conversations/tools/table.py:36
+#: src/ej_conversations/tools/table.py:37
 msgid ""
 "Integrate this conversation with the Mautic platform API, allowing users who "
 "participate in this conversation to be automatically synchronized with "
@@ -2955,6 +2955,8 @@ msgstr "Baixar template"
 
 #: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:82
 #: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:84
+#: src/ej_conversations/jinja2/ej_conversations_tools/mautic.jinja2:34
+#: src/ej_conversations/jinja2/ej_conversations_tools/mautic.jinja2:36
 #: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:119
 #: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:121
 #: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:111
@@ -3060,7 +3062,7 @@ msgstr "Sites integrados"
 msgid "Manage the integrated links of this conversation."
 msgstr "Gerencie os domínios integrados à esta conversa."
 
-#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:60
+#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:59
 msgid "new"
 msgstr "novo"
 

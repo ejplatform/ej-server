@@ -71,10 +71,6 @@ class RasaConversationForm(EjModelForm):
         fields = ["conversation", "domain"]
         help_texts = {"conversation": None, "domain": None}
 
-    def __init__(self, *args, conversation, **kwargs):
-        kwargs.update(initial={"conversation": conversation})
-        super(RasaConversationForm, self).__init__(*args, **kwargs)
-
 
 class MauticConversationForm(EjModelForm):
     class Meta:
