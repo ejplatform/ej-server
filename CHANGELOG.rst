@@ -5,6 +5,17 @@ CHANGELOG of EJPlatform releases
 Here you can follow all the fixes and new features on every EJPlatform release.
 
 
+2.9.0 release
+====================
+
+* Date: Ago 5, 2021
+* Features
+- Creates profile for user on /rest-auth/registration;
+- Improve rasa Webchat tools page;
+- Improves mailing tools page;
+- Improves /docs;
+- WIP: Adds Mautic tools page;
+
 2.8.0 release
 ====================
 
