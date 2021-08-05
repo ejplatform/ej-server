@@ -31,24 +31,19 @@ class TestRasaConversation(ConversationRecipes):
 class TestRasaConversationForm(ConversationRecipes):
     def test_rasa_conversation_valid_form(self, db, mk_conversation):
         conversation = mk_conversation()
-        form = RasaConversationForm(
-            {"domain": "http://another.com", "conversation": conversation.id}, conversation=conversation
-        )
-        print(form)
+        form = RasaConversationForm({"domain": "http://another.com", "conversation": conversation.id})
         assert form.is_valid()
 
     def test_rasa_conversation_invalid_form(self, db, mk_conversation):
         conversation = mk_conversation()
-        form = RasaConversationForm({"domain": "notadomain"}, conversation=conversation)
+        form = RasaConversationForm({"domain": "notadomain"})
         assert not form.is_valid()
         assert _("Enter a valid URL.") == form.errors["domain"][0]
 
     def test_rasa_conversation_form_exists(self, db, mk_conversation):
         conversation = mk_conversation()
         RasaConversation.objects.create(conversation=conversation, domain="https://domain.com.br")
-        form = RasaConversationForm(
-            {"domain": TEST_DOMAIN, "conversation": conversation.id}, conversation=conversation
-        )
+        form = RasaConversationForm({"domain": TEST_DOMAIN, "conversation": conversation.id})
         assert not form.is_valid()
         print(form.errors.keys())
         assert (
@@ -63,10 +58,7 @@ class TestRasaConversationForm(ConversationRecipes):
         RasaConversation.objects.create(conversation=conversation, domain="https://domain3.com.br/")
         RasaConversation.objects.create(conversation=conversation, domain="https://domain4.com.br/")
         RasaConversation.objects.create(conversation=conversation, domain="https://domain5.com.br/")
-        form = RasaConversationForm(
-            {"domain": "https://domain6.com.br/", "conversation": conversation.id},
-            conversation=conversation,
-        )
+        form = RasaConversationForm({"domain": "https://domain6.com.br/", "conversation": conversation.id})
         assert not form.is_valid()
         assert _("a conversation can have a maximum of five domains") == form.errors["__all__"][0]
 

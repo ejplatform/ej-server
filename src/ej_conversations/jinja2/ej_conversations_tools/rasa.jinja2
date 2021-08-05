@@ -15,7 +15,7 @@
     <h1 class="h1 text-accent">{{_("Tools")}} > {{ tool["integration"] }}</h1>
     <span>{{tool["description"] }}</span>
     </div>
-    <p id="description-info"">
+    <p id="description-info">
         {{_("To integrate EJ chatbot with your site, enter the site domain in the field below.")}}
         {{_("When a new user reaches your site, the webchat will send to EJ the location where it is hosted, and will receive back this conversation.")}}
     </p>
@@ -53,13 +53,13 @@
             {{ csrf_input }}
             {% block form_content %}
                 <div class="form-div">
-                    {{ form.conversation.as_hidden() }}
                     {{ form.non_field_errors() }}
                     {{ form.domain.errors }}
                     {{ form.errors }}
                     <label id="domain-label">{{_("new")}} {{ form.domain.label }}</label>
                     <div class="domain-form">
                         {{ form.domain }}
+                        <input type="hidden" id="id_conversation" name="conversation" value="{{conversation.id}}">
                         <input id="domain-submit" class="is-primary" type="submit" value="{{ _('Add') }}">
                     </div>
                 </div>
