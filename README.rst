@@ -1,12 +1,3 @@
-.. image:: https://api.codeclimate.com/v1/badges/fd8f8c7d5d2bc74c38df/maintainability
-   :target: https://codeclimate.com/github/ejplatform/ej-server/maintainability
-   :alt: Maintainability
-.. image:: https://codecov.io/gh/ejplatform/ej-server/branch/master/graph/badge.svg
-  :target: https://codecov.io/gh/ejplatform/ej-server
-.. image:: https://gitlab.com/ejplatform/ej-server/badges/master/pipeline.svg
-    :target: https://gitlab.com/ejplatform/ej-server/commits/master
-
-
 ===========
 EJ Platform
 ===========
@@ -14,6 +5,7 @@ EJ Platform
 You can visit EJ website at https://ejplatform.org.
 For detailed information on developing and using our system, you can access our documentation on:
 https://www.ejplatform.org/docs/.
+For contributions, issues or feature requests join us on https://gitlab.com/pencillabs/ej/ej-application
 
 Getting started
 ===============
