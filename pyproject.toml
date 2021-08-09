@@ -7,7 +7,7 @@ license = "AGPL-3.0"
 
 [tool.poetry.dependencies]
 python = ">= 3.7.10, <4"
-django = "==2.2.19"
+django = "==2.2.24"
 django-boogie = {version = "==0.13.3"}
 django-constance = {version = "^2.3", extras = ["database"]}
 django-rest-auth = {version = "^0.9.3", extras = ["with_social"]}
