@@ -56,54 +56,39 @@
 	transition: max-height 0.5s;
 }
 
-.body-copy-p {
-	margin-bottom: 50px;
-}
-
-.tools-section-2-snippet {
-	background-color: aliceblue;
-	min-height: 50px;
-	font-size: 0.8rem;
-	margin-top: 10px;
-	margin-bottom: 20px;
-
-	& textarea {
-		background-color: aliceblue;
-		border: 0;
-		min-width: 100%;
-		-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
-		-moz-box-sizing: border-box;    /* Firefox, other Gecko */
-		box-sizing: border-box;  
-		font-family: "IBM Plex Mono", monospace;
-		font-size: 1em;
-		color: black;
-		&#copy-header {
-			min-height: 300px;
-		}
-		&#copy-body {
-			min-height: 70px;
-		}
-	}
-}
-
 .tools-code-snippet {
 	position: relative;
 	margin-top: 1.5rem;
-	.copy-icon {
+	.corner-icon {
 		position: absolute; 
 		top:0; 
 		right: 0; 
-		padding-right: 5px;
-		padding-top: 5px;
+		margin-right: 10px;
+		padding-top: 10px;
 	}
-	.copy-icon:hover + .copy-info{
+	#copy-header-info {
+		opacity: 0;
+	}
+	#copy-header-icon:hover + #copy-header-info {
 		opacity: 1;
 	}
-	.copy-info {
+	#copy-info {
+		opacity: 0;
+	}
+	#copy-icon:hover + #copy-info {
+		opacity: 1;
+	}
+	#copy-script-info {
+		opacity: 0;
+	}
+	#copy-script-icon:hover + #copy-script-info {
+		opacity: 1;
+	}
+
+	.info {
 		position: absolute;
 		right: 0;
 		top: 1.5rem;
-		opacity: 0;
 		background-color: #042A46;
 		border-radius: 0.5rem;
 		p {
@@ -113,12 +98,14 @@
 			font-size: 80%;
 		}
 	}
+
 	textarea {
 		background-color: rgba(196, 196, 196, 0.38); 
 		min-width: 100%; 
 		border-color: rgba(196, 196, 196, 0.38); 
 		height: 259px; 
 		resize: none;
+		padding-right: 5%;
 	}
 }
 
@@ -292,6 +279,7 @@
 	  }
 	li {
 		display: inline-block;
+		margin-right: 0.8rem;
 	}
 }
 

@@ -9,128 +9,87 @@
 
 {% block content %}
 <div class="tools">
-<div class="tools-title">
-	<h1 class="h1 text-accent">{{_("Tools")}} > {{ tool["integration"] }}</h1>
-<span>{{tool["description"] }}</span>
-</div>
+	<div class="tools-title">
+		<h1 class="h1 text-accent">{{_("Tools")}} > {{ tool["integration"] }}</h1>
+		<span>{{tool["description"] }}</span>
+	</div>
 	<div class="tools-section">
 		<div class="tools-content">
-			<form method="POST" class="tools-settings-form">
+			<form method="POST" class="tools-settings-form" id="opinion-component-form">
 				{{ csrf_input }}
 				{% block form_content %}
 					<h2 class="divider">{{form.authentication_type.label}}</h2>
-					<span class="helptext">{{_("Selects authentication type you want to use.")}}</span>
+					<span class="helptext">{{_("Selects the type of authentication that will be used to register the user in the EJ API.")}}</span>
+					<span class="helptext">{{_("Not sure which option to choose?")}}<a href="https://www.ejplatform.org/docs/">{{_("Access our documentation.")}}</a></span>
 					<section>
 						{{form.authentication_type}}
 					</section>
 					<h2 class="divider">{{form.theme.label}}</h2>
-					<span class="helptext">{{_("Selects a palette color.")}}</span>
+					<span class="helptext">{{_("Selects a color palette for the component style.")}}</span>
 					<section>
 						{{form.theme}}
 					</section>
 				{% endblock %}
-					<h2 class="divider">{{_("Opinion component")}}</h2>
-					<span class="helptext">{{_("Generate the script to integrates the opinion component on your site.")}}</span>
-					<section>
-						<div class="copy-script-header">
-							<div>
-								{{_('Add the following snippet of code to your page header:') }}
-							</div>
-							<div>
-								<input type="submit" value="{{_('Generate Script')}}">
-								<button type="button" onclick="copySnippet('copy-header');" id="copy-header-button">{{_('Copy')}}</button>
-							</div>
-						</div>
-					</section>
-
+				<h2 class="divider">{{_("Integration script")}}</h2>
+				<span class="helptext">{{_("Generate scripts by clicking on the icon to integrate the component into your html page.")}}</span>
 			</form>
 		</div>
-			
-			<div id="copy-header-message">{{_("Code was copied to your clipboard.")}}</div>
 
-
-			<div class="tools-section-2-snippet">
-				<textarea readonly id="copy-header">
-&lt;script src="https://unpkg.com/ej-conversations@{{npm_version.latest}}/dist/conversations/conversations.esm.js" type="module" &gt&lt;/script&gt
-				
-&lt;link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet"&gt
-					
-&lt;link href="{{schema}}://{{request.META['HTTP_HOST']}}/static/css/fontawesome-all.min.css" rel="stylesheet"&gt
-
-<style>
-		/* https://github.com/ionic-team/stencil/issues/2072 */
-@font-face {
-  font-family: Folio;
-  font-style: normal;
-  font-weight: 400;
-  src: url(https://unpkg.com/ej-conversations@{{npm_version.latest}}/dist/conversations/assets/fonts/folio_bold_condensed.ttf);
-}
-
-@font-face {
-  font-family: Helvetica;
-  font-style: normal;
-  font-weight: 400;
-	src: url('https://unpkg.com/ej-conversations@{{npm_version.latest}}/dist/conversations/assets/fonts/helvetica_neue_lts_roman.otf');
-}
-
-@font-face {
-  font-family: 'Font Awesome 5 Free';
-  font-style: normal;
-  font-weight: 400;
-	src: url('https://unpkg.com/ej-conversations@{{npm_version.latest}}/dist/conversations/assets/fonts/fa-regular-400.ttf');
-}
-
-@font-face {
-  font-family: 'Font Awesome 5 Free';
-  font-style: normal;
-  font-weight: 400;
-	src: url('https://unpkg.com/ej-conversations@{{npm_version.latest}}/dist/conversations/assets/fonts/fa-brands-400.ttf');
-}
-
-@font-face {
-  font-family: 'Font Awesome 5 Free';
-  font-style: normal;
-  font-weight: 400;
-	src: url('https://unpkg.com/ej-conversations@{{npm_version.latest}}/dist/conversations/assets/fonts/fa-solid-900.ttf');
-}
-
-</style>
-</textarea>
-
-			</div>
-
-			<p class="body-copy-p">
-			{{_('and this snippet of code on the page body:') }}
-				<button onclick="copySnippet('copy-body');" id="copy-body-button">
-						{{_('Copy')}}</button>
-				<div id="copy-body-message">{{_("Code was copied to your clipboard.")}}</div>
-			</p>
-
-			<div class="tools-section-2-snippet">
-				<textarea readonly id="copy-body">
-&lt;ej-conversation host="{{schema}}://{{request.META['HTTP_HOST']}}" cid="{{conversation.id}}" {{conversation_component.get_props()}}&gt&lt;/ej-conversation&gt
-				</textarea>
-				<div>
-
+		<div class="tools-code-snippet">
+			<span class="helptext">{{_("Add this snippet to the website's header tag.")}}</span>
+			<div style="position: relative;">
+				<div class="corner-icon">
+					<a href="#" onclick="copySnippet('copy-header')" id="copy-header-icon"><i class="fas fa-copy"></i></a>
+					<div id="copy-header-info" class="info">
+						<p>{{_("Copy")}}</p>
+					</div>
 				</div>
-			</div>
-		<br>
-</div>
-<p><a href="{{ conversation.url('conversation-tools:index') }}" title="{{ _('Back to tools') }}"
-		class="lowercase bold text-brand">
-	<i class="fa fa-chevron-left"></i>{% trans %}Back to tools{% endtrans %}
-</a></p>
-</div>
-   <script>
-	   function copySnippet(elementId){
-		   	var copyText = document.getElementById(elementId);
-			copyText.select();
-			copyText.setSelectionRange(0, 99999)
-			document.execCommand("copy");
+				<div class="corner-icon" style="margin-right: 40px;">
+					<a href="#" id="copy-script-icon" onclick="generateScript()"><i class="fas fa-sync-alt"></i></a>
+					<div id="copy-script-info" class="info">
+						<p>{{_("Generate Script")}}</p>
+					</div>
+				</div>
+        	</div>
+			<textarea readonly id="copy-header">
+				{% include 'ej_conversations_tools/includes/opinion-component-copy-header.jinja2' %}
+			</textarea>
+		</div>
 
-			var success_message = document.getElementById(elementId.concat("-message"));
-			success_message.style.display = "inline";
-			setTimeout(() => {  success_message.style.display = "none"; }, 3000);
-	   }
-   </script>
+		<div class="tools-code-snippet" style="margin-top: 2.5rem;">
+			<span class="helptext">{{_("Add this snippet to the body tag of the page where the component will be presented.")}}</span>
+			<div style="position: relative;">
+				<div class="corner-icon">
+					<a href="#" onclick="copySnippet('copy-body')" id="copy-icon"><i class="fas fa-copy"></i></a>
+					<div id="copy-info" class="info">
+						<p>{{_("Copy")}}</p>
+					</div>
+				</div>
+        	</div>
+			<textarea readonly id="copy-body" style="height: auto;">
+				{% include 'ej_conversations_tools/includes/opinion-component-copy-body.jinja2'%}
+			</textarea>
+		</div>
+
+	</div>
+
+	<p><a href="{{ conversation.url('conversation-tools:index') }}" title="{{ _('Back to tools') }}"
+		class="lowercase bold text-brand">
+		<i class="fa fa-chevron-left"></i>{% trans %}Back to tools{% endtrans %}
+	</a></p>
+</div>
+
+<script>
+	function copySnippet(elementId) {
+        event.preventDefault();
+
+        var copyText = document.getElementById(elementId);
+        var selected = copyText.select();
+		document.execCommand("copy");
+    }
+	function generateScript() {
+		event.preventDefault();
+		document.getElementById('opinion-component-form').submit();
+	}
+</script>
 {% endblock %}

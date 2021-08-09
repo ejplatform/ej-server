@@ -1,0 +1,23 @@
+<html>
+    <head></head>
+    <body></body>
+    <script>!(function () {
+    let e = document.createElement("script"),
+        t = document.head || document.getElementsByTagName("head")[0];
+        (e.src =
+        "https://cdn.jsdelivr.net/npm/rasa-webchat@1.0.1/lib/index.js"),
+        (e.async = !0),
+        (e.onload = () => {
+        window.WebChat.default(
+            {
+            initPayload: window.location.href,
+            socketUrl: "https://rasadefault.pencillabs.com.br/?token=thisismysecret",
+            // add other props here
+            },
+            null
+        );
+        }),
+        t.insertBefore(e, t.firstChild);
+        })();
+    </script>
+</html>
