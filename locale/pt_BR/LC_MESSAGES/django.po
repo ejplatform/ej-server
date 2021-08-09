@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-03 16:13-0300\n"
+"POT-Creation-Date: 2021-08-05 19:34-0300\n"
 "PO-Revision-Date: 2019-09-09 13:55-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -783,13 +783,15 @@ msgstr ""
 "mailchimp."
 
 #: src/ej_conversations/tools/table.py:21
-#, fuzzy
 msgid ""
-"Adds EJ directly to your site. Enables voting, commenting, and clusters "
-"visualization directly on a html page."
+"Conduct opinion collections without your audience having to access EJ "
+"directly. Allows you to vote, comment and view groups directly on html "
+"pages, without impacting the experience of those who already access their "
+"networks and platforms."
 msgstr ""
-"Adicione a EJ em sites e blogs. Permite votar, comentar e visualizar os "
-"grupos diretamente em páginas html."
+"Realize coletas de opinião sem que seu público tenha que acessar diretamente "
+"a EJ. Permite votar, comentar e visualizar os grupos diretamente em páginas "
+"html, sem impactar na experiência de quem já acessa suas redes e plataformas."
 
 #: src/ej_conversations/tools/table.py:29
 msgid ""
@@ -2957,10 +2959,10 @@ msgstr "Baixar template"
 #: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:84
 #: src/ej_conversations/jinja2/ej_conversations_tools/mautic.jinja2:34
 #: src/ej_conversations/jinja2/ej_conversations_tools/mautic.jinja2:36
-#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:119
-#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:121
-#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:111
-#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:113
+#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:76
+#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:78
+#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:89
+#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:91
 #, fuzzy
 msgid "Back to tools"
 msgstr "Voltar para ferramentas"
@@ -2994,42 +2996,63 @@ msgid "Remove"
 msgstr "Remover"
 
 #: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:22
-#, fuzzy
-msgid "Selects authentication type you want to use."
-msgstr "Selecione o tipo de autenticação que deseja utilizar."
+msgid ""
+"Selects the type of authentication that will be used to register the user in "
+"the EJ API."
+msgstr ""
+"Selecione o tipo de autenticação que será utilizada para registrar o usuário "
+"na API da EJ."
 
-#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:27
+#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:23
+msgid "Not sure which option to choose?"
+msgstr "Não sabe qual opção escolher?"
+
+#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:23
 #, fuzzy
-msgid "Selects a palette color."
-msgstr "Selecione uma paleta de cor."
+msgid "Access our documentation."
+msgstr "Acesse nossa documentação."
+
+#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:28
+#, fuzzy
+msgid "Selects a color palette for the component style."
+msgstr "Selecione uma paleta de cor para o estilo do componente."
 
 #: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:33
-msgid "Generate the script to integrates the opinion component on your site."
-msgstr "Gere o script para integrar o componente de opinião ao seu site."
+#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:72
+#, fuzzy
+msgid "Integration script"
+msgstr "Script de integração"
 
-#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:37
-msgid "Add the following snippet of code to your page header:"
-msgstr ""
-"Gere o script e adicione o seguinte trecho de código no header da sua página"
+#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:34
+#, fuzzy
+msgid ""
+"Generate scripts by clicking on the icon to integrate the component into "
+"your html page."
+msgstr "Gere os scripts clicando no ícone, para integrar o componente na sua página html."
 
-#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:40
-msgid "Generate Script"
-msgstr "Gerar Script"
+#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:39
+#, fuzzy
+msgid "Add this snippet to the website's header tag."
+msgstr "Adicione esse trecho na tag header do site."
 
-#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:41
-#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:105
-#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:81
+#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:44
+#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:65
+#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:80
 msgid "Copy"
 msgstr "Copiar"
 
-#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:49
-#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:106
-msgid "Code was copied to your clipboard."
-msgstr "O código foi copiado!"
+#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:50
+msgid "Generate Script"
+msgstr "Gerar Script"
 
-#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:103
-msgid "and this snippet of code on the page body:"
-msgstr "e esse trecho no body da página:"
+#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:60
+#, fuzzy
+msgid ""
+"Add this snippet to the body tag of the page where the component will be "
+"presented."
+msgstr ""
+"Adicione esse trecho na tag body, da página em que o componente será "
+"apresentado."
 
 #: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:19
 msgid ""
@@ -3071,18 +3094,13 @@ msgstr "novo"
 msgid "Add"
 msgstr "Adicionar"
 
-#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:72
-#, fuzzy
-msgid "Integration script"
-msgstr "Script de integração"
-
 #: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:73
 #, fuzzy
 msgid ""
 "Add the script in the &ltbody&gt tag of the page where the collection will "
 "take place."
 msgstr ""
-"Adicionar o script na tag &ltbody&gt da página em que a coleta será feita."
+"Adicione o script na tag &ltbody&gt da página em que a coleta será feita."
 
 #: src/ej_dataviz/jinja2/ej/role/conversation-download-data.jinja2:2
 msgid "Downloads: "
@@ -3872,6 +3890,28 @@ msgstr "Autenticação"
 #, fuzzy
 #~ msgid "Download"
 #~ msgstr "Download"
+
+#~ msgid ""
+#~ "Adds EJ directly to your site. Enables voting, commenting, and clusters "
+#~ "visualization directly on a html page."
+#~ msgstr ""
+#~ "Adicione a EJ em sites e blogs. Permite votar, comentar e visualizar os "
+#~ "grupos diretamente em páginas html."
+
+#, fuzzy
+#~ msgid "Selects authentication type you want to use."
+#~ msgstr "Selecione o tipo de autenticação que deseja utilizar."
+
+#~ msgid "Add the following snippet of code to your page header:"
+#~ msgstr ""
+#~ "Gere o script e adicione o seguinte trecho de código no header da sua "
+#~ "página"
+
+#~ msgid "Code was copied to your clipboard."
+#~ msgstr "O código foi copiado!"
+
+#~ msgid "and this snippet of code on the page body:"
+#~ msgstr "e esse trecho no body da página:"
 
 #~ msgid ""
 #~ "There are no webchats linked with this conversation yet. What are you "
