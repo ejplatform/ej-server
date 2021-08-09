@@ -5,6 +5,7 @@ EJ Platform
 You can visit EJ website at https://ejplatform.org.
 For detailed information on developing and using our system, you can access our documentation on:
 https://www.ejplatform.org/docs/.
+
 For contributions, issues or feature requests join us on https://gitlab.com/pencillabs/ej/ej-application
 
 Getting started
