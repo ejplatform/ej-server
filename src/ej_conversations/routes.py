@@ -9,6 +9,8 @@ from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from hyperpython import a
 
+from ej_boards.models import Board
+
 from . import forms, models
 from .enums import TourStatus
 from .models import Conversation
@@ -40,9 +42,9 @@ def list_view(
     queryset=Conversation.objects.filter(is_promoted=True),
     context=None,
     title="Public conversations",
+    help_title="",
 ):
     user = request.user
-
     # Select the list of conversations: staff get to see hidden conversations while
     # regular users cannot
     if not (user.is_staff or user.is_superuser or user.has_perm("ej_conversations.can_publish_promoted")):
@@ -56,6 +58,8 @@ def list_view(
         "conversations": queryset,
         "title": _(title),
         "subtitle": _("Participate voting and creating comments!"),
+        "board": Board,
+        "help_title": help_title,
         **(context or {}),
     }
 

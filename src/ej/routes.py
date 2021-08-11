@@ -8,6 +8,7 @@ from django.contrib.flatpages.models import FlatPage
 from django.http import Http404
 from django.shortcuts import render, redirect
 from django.utils.translation import ugettext as _
+from django.utils.text import slugify
 from sidekick import import_later, once
 
 from ej.utils.flatpages import flat_page_route
@@ -23,7 +24,8 @@ urlpatterns = Router(template="pages/{name}.jinja2")
 @urlpatterns.route("")
 def index(request):
     if request.user.is_authenticated:
-        return redirect(settings.EJ_USER_HOME_PATH)
+        user_default_board = slugify(request.user.email)
+        return redirect(f"/{user_default_board}/conversations/")
     else:
         return redirect(settings.EJ_ANONYMOUS_HOME_PATH)
 

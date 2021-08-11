@@ -1,6 +1,7 @@
 from ej.testing import UrlTester
 from ej import routes
 from django.conf import settings
+from django.utils.text import slugify
 from django.contrib.auth.models import AnonymousUser
 
 
@@ -15,8 +16,9 @@ class TestViews:
         user.save()
         request.user = user
         response = routes.index(request)
+        user_default_board = slugify(request.user.email)
         assert response.status_code == 302
-        assert response.url == settings.EJ_USER_HOME_PATH
+        assert response.url == f"/{user_default_board}/conversations/"
 
     def test_index_anonymous_user(self, rf):
         request = rf.get("", {})

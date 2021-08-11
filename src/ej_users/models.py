@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 from logging import getLogger
 
+from django.contrib.auth.models import Permission
 from boogie.apps.users.models import AbstractUser
 from boogie.rest import rest_api
 from django.db import models
@@ -10,6 +11,7 @@ from model_utils.models import TimeStampedModel
 
 from .manager import UserManager
 from .utils import random_name, token_factory
+
 
 log = getLogger("ej")
 
@@ -33,6 +35,24 @@ class User(AbstractUser):
 
     class Meta:
         swappable = "AUTH_USER_MODEL"
+
+    @staticmethod
+    def create_user_default_board(instance):
+        from ej_boards.models import Board
+
+        board_default = Board(
+            slug=instance.email,
+            owner=instance,
+            title="My Board",
+            description="Default user board",
+            palette="brand",
+        )
+        board_default.save()
+
+    def default_board_url(self):
+        from django.utils.text import slugify
+
+        return "/" + slugify(self.email[:50]) + "/conversations"
 
 
 class PasswordResetToken(TimeStampedModel):

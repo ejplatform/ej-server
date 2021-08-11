@@ -40,7 +40,7 @@ def board_list(request):
 
     # Redirect to user's unique board, if that is the case
     if not can_add_board and user.boards.count() == 1:
-        return redirect(f"{boards[0].get_absolute_url()}conversations/")
+        return redirect(f"{boards[0].get_absolute_url()}")
 
     return {"boards": boards, "can_add_board": can_add_board}
 
@@ -81,6 +81,9 @@ def conversation_list(request, board):
         queryset=board.conversations.annotate_attr(board=board),
         context={"board": board},
         title=board.title,
+        help_title=_(
+            "Welcome to EJ. This is your personal board. Board is where your conversations will be available. Press 'New conversation' to starts collecting yours audience opinion."
+        ),
     )
 
 
