@@ -1,5 +1,28 @@
 {% extends 'ej_conversations/list.jinja2' %}
+{% set main_class = "form-container" %}
 {% set body_class = 'body theme-' + board.palette %}
+
+{% block content %}
+<h1 class="h2 text-accent center margin-b3">{{ title }}</h1>
+{%- if board.conversations.count() == 0 %}
+    <span class="help_text">{{ help_title }}</span>
+{% endif %}
+
+{%- if request.user.has_perm('ej.can_edit_board', board) and  board.conversations.count() == 0%}
+    <div class="width-full margin-y4">
+            <a class="is-primary button" href="{{ url('boards:conversation-create', board=board) }}">
+                {{ _('New Conversation') }}</a>
+    </div>
+{% endif %}
+
+    <div class="alternate-cards">
+        {% for conversation in conversations %}
+            <div class="margin-y3">{{ conversation|role('card') }}</div>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+
 {% block menu %}
     <nav title="{{ _('Conversations') }}">
         <h3>{{ _('Conversations') }}</h3>

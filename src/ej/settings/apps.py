@@ -40,7 +40,7 @@ class InstalledAppsConf(Base, EjOptions):
         "corsheaders",
         "django.contrib.auth",
         # 'rest_auth.registration',
-        # 'constance',
+        "constance",
         # 'constance.backends.database',
         # 'push_notifications',
         # 'django_filters',

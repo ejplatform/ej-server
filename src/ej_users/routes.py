@@ -23,6 +23,7 @@ from . import models
 from . import password_reset_token
 from .socialbuttons import social_buttons
 
+
 User = get_user_model()
 
 app_name = "ej_users"
@@ -52,6 +53,7 @@ def login(request, redirect_to="/"):
                 raise User.DoesNotExist
             auth.login(request, user, backend=user.backend)
             log.info(f"user {user} ({email}) successfully authenticated")
+            next_url = user.default_board_url()
         except User.DoesNotExist:
             form.add_error(None, error_msg)
             log.info(f"invalid login attempt: {email}")
@@ -82,6 +84,7 @@ def register(request):
 
         try:
             user = User.objects.create_user(email, password, name=name)
+            User.create_user_default_board(user)
             log.info(f"user {user} ({email}) successfully created")
         except IntegrityError as ex:
             form.add_error(None, str(ex))

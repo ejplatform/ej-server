@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-05 19:34-0300\n"
+"POT-Creation-Date: 2021-08-11 16:44-0300\n"
 "PO-Revision-Date: 2019-09-09 13:55-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -58,11 +58,11 @@ msgstr "Termos de uso"
 msgid "Admin panel"
 msgstr "Painel de administração"
 
-#: src/ej/forms.py:135
+#: src/ej/forms.py:134
 msgid "Choose a file"
 msgstr "Escolha um arquivo"
 
-#: src/ej/forms.py:137
+#: src/ej/forms.py:136
 msgid "No file chosen"
 msgstr "Nenhum arquivo selecionado"
 
@@ -92,25 +92,25 @@ msgstr "Seu progresso: {pc} por cento"
 msgid "Your progress: {n} of {total}"
 msgstr "Seu progresso: {n} de {total}"
 
-#: src/ej/routes.py:54 src/ej_conversations/apps.py:8
+#: src/ej/routes.py:56 src/ej_conversations/apps.py:8
 #: src/ej_conversations/models/conversation.py:100
 msgid "Conversations"
 msgstr "Conversas"
 
-#: src/ej/routes.py:55 src/ej_dataviz/roles.py:148
+#: src/ej/routes.py:57 src/ej_dataviz/roles.py:148
 #: src/ej_gamification/routes.py:139
 msgid "Votes"
 msgstr "Votos"
 
-#: src/ej/routes.py:56 src/ej_gamification/routes.py:140
+#: src/ej/routes.py:58 src/ej_gamification/routes.py:140
 msgid "Comments"
 msgstr "Comentários"
 
-#: src/ej/routes.py:146
+#: src/ej/routes.py:148
 msgid "User Guides"
 msgstr "Guias de Usuário"
 
-#: src/ej/routes.py:147
+#: src/ej/routes.py:149
 msgid "Development Guides"
 msgstr "Guias de Desenvolvimento"
 
@@ -152,6 +152,11 @@ msgstr "Murais"
 #: src/ej_boards/forms.py:26
 msgid "You cannot change this value afterwards"
 msgstr "Você não pode alterar este valor depois"
+
+#: src/ej_boards/migrations/0003_create_default_board.py:29
+#, fuzzy
+msgid "My Board"
+msgstr "Meu mural"
 
 #: src/ej_boards/models.py:20 src/ej_conversations/tools/models.py:62
 msgid "Default"
@@ -209,6 +214,16 @@ msgstr "Identificador já existe."
 #: src/ej_boards/routes.py:60
 msgid "You cannot change this value"
 msgstr "Você não pode mudar este valor"
+
+#: src/ej_boards/routes.py:85
+msgid ""
+"Welcome to EJ. This is your personal board. Board is where your "
+"conversations will be available. Press 'New conversation' to starts "
+"collecting yours audience opinion."
+msgstr ""
+"Bem vinda à EJ. Este é o seu mural. O mural é onde suas conversas ficarão "
+"disponíveis. Clique no botão “Nova conversa” para começar a ouvir a opinião "
+"da sua audiência."
 
 #: src/ej_boards/validators.py:9
 msgid "Invalid slug."
@@ -617,7 +632,7 @@ msgstr "{n} aguardando moderação"
 msgid "{n} of {m} comments"
 msgstr "{n} de {m} comentários"
 
-#: src/ej_conversations/routes.py:58
+#: src/ej_conversations/routes.py:60
 msgid "Participate voting and creating comments!"
 msgstr "Participe com votos e comentários!"
 
@@ -635,17 +650,17 @@ msgid "Your vote has been computed :-)"
 msgstr "Seu voto foi computado :-)"
 
 #: src/ej_conversations/tests/test_mautic_integrations.py:31
-#: src/ej_conversations/tests/test_rasa_integrations.py:44
+#: src/ej_conversations/tests/test_rasa_integrations.py:41
 #, fuzzy
 msgid "Enter a valid URL."
 msgstr "URL interna"
 
-#: src/ej_conversations/tests/test_rasa_integrations.py:55
+#: src/ej_conversations/tests/test_rasa_integrations.py:50
 #, fuzzy
 msgid "Rasa conversation with this Conversation and Domain already exists."
 msgstr "Uma persona com esse nome já existe nessa conversa."
 
-#: src/ej_conversations/tests/test_rasa_integrations.py:71
+#: src/ej_conversations/tests/test_rasa_integrations.py:63
 #: src/ej_conversations/tools/models.py:40
 #, fuzzy
 msgid "a conversation can have a maximum of five domains"
@@ -693,7 +708,7 @@ msgstr "Registrar usando nome/email"
 
 #: src/ej_conversations/tools/models.py:51
 #: src/ej_conversations/tools/models.py:95
-#: src/ej_conversations/tools/routes.py:141
+#: src/ej_conversations/tools/routes.py:137
 #: src/ej_conversations/tools/table.py:35
 msgid "Mautic"
 msgstr ""
@@ -768,7 +783,7 @@ msgstr "Campanha de email"
 msgid "Opinion component"
 msgstr "Componente de opinião"
 
-#: src/ej_conversations/tools/routes.py:105
+#: src/ej_conversations/tools/routes.py:101
 #: src/ej_conversations/tools/table.py:27
 msgid "Rasa Webchat"
 msgstr ""
@@ -819,7 +834,7 @@ msgstr "Próximo"
 msgid "Dismiss"
 msgstr "Dispensar"
 
-#: src/ej_conversations/tour.py:12 src/ej_users/routes.py:59
+#: src/ej_conversations/tour.py:12 src/ej_users/routes.py:61
 msgid "Welcome to EJ!"
 msgstr "Bem vindo ao EJ!"
 
@@ -2004,7 +2019,7 @@ msgstr "Configuração do rocketchat"
 msgid "Rocket.Chat Configurations"
 msgstr "Configurações do rocketchat"
 
-#: src/ej_rocketchat/routes.py:75 src/ej_users/routes.py:40
+#: src/ej_rocketchat/routes.py:75 src/ej_users/routes.py:41
 msgid "Invalid email or password"
 msgstr "Email ou senha inválidos"
 
@@ -2111,27 +2126,27 @@ msgstr ""
 msgid "Request to generate a new password"
 msgstr "Pedido para gerar uma nova senha"
 
-#: src/ej_users/models.py:26
+#: src/ej_users/models.py:28
 msgid "email address"
 msgstr "endereço de email"
 
-#: src/ej_users/models.py:26
+#: src/ej_users/models.py:28
 msgid "Your e-mail address"
 msgstr "Seu endereço de e-mail"
 
-#: src/ej_users/models.py:28
+#: src/ej_users/models.py:30
 msgid "Name used to publicly identify user"
 msgstr "Apelido público usado para identificar o usuário"
 
-#: src/ej_users/models.py:43
+#: src/ej_users/models.py:63
 msgid "User token"
 msgstr "Token do usuário"
 
-#: src/ej_users/models.py:89
+#: src/ej_users/models.py:109
 msgid "Anonymous"
 msgstr "Anônimo"
 
-#: src/ej_users/routes.py:173
+#: src/ej_users/routes.py:176
 msgid "Please reset your password"
 msgstr "Por favor reset sua senha"
 
@@ -2491,7 +2506,7 @@ msgid "Create Board"
 msgstr "Criar mural"
 
 #: src/ej_boards/jinja2/ej_boards/board-edit.jinja2:3
-#: src/ej_boards/jinja2/ej_boards/conversation-list.jinja2:10
+#: src/ej_boards/jinja2/ej_boards/conversation-list.jinja2:33
 msgid "Edit board"
 msgstr "Editar mural"
 
@@ -2530,7 +2545,8 @@ msgstr "Desculpe, você não pode criar novos murais."
 msgid "Create a new board!"
 msgstr "Criar um novo mural!"
 
-#: src/ej_boards/jinja2/ej_boards/conversation-list.jinja2:9
+#: src/ej_boards/jinja2/ej_boards/conversation-list.jinja2:14
+#: src/ej_boards/jinja2/ej_boards/conversation-list.jinja2:32
 #: src/ej_conversations/jinja2/ej_conversations/includes/menu-list.jinja2:6
 msgid "New Conversation"
 msgstr "Nova conversa"
@@ -3028,7 +3044,9 @@ msgstr "Script de integração"
 msgid ""
 "Generate scripts by clicking on the icon to integrate the component into "
 "your html page."
-msgstr "Gere os scripts clicando no ícone, para integrar o componente na sua página html."
+msgstr ""
+"Gere os scripts clicando no ícone, para integrar o componente na sua página "
+"html."
 
 #: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:39
 #, fuzzy

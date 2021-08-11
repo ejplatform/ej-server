@@ -5,9 +5,7 @@
         {% if request.user.has_perm('ej.can_promote_conversations') %}
             <li><a href="{{ url('conversation:create') }}">{{_('New Conversation') }}</a></li>
         {% endif %}
-        {% if request.user.has_perm('ej_boards.view_board') %}
             <li><a href="{{ url('boards:board-list') }}">{{ _('Boards') }}</a></li>
-        {% endif %}
         {% for link in page_menu.links('conversations:list', request) %}
             <li>{{ link }}</li>
         {% endfor %}

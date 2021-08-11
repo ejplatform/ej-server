@@ -3,8 +3,8 @@
 {% block menu %}{% include 'ej_conversations/includes/menu-list.jinja2' %}{% endblock %}
 
 {% block content %}
-    <h1 class="h2 text-accent center margin-b3">{{ title }}</h1>
-    <p class="measure center margin-xauto">{% trans %}{% endtrans %}</p>
+<h1 class="h2 text-accent center margin-b3">{{ title }}</h1>
+<p class="measure center margin-xauto">{% trans %}{% endtrans %}</p>
     <div class="alternate-cards">
         {% for conversation in conversations %}
             <div class="margin-y3">{{ conversation|role('card') }}</div>
