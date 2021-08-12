@@ -8,7 +8,9 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = []
+    dependencies = [
+        ("ej_conversations", "0003_barbara_relax_moderator_field"),
+    ]
 
     operations = [
         migrations.CreateModel(
