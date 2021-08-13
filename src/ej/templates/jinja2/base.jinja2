@@ -25,6 +25,15 @@
     })();</script>
     {% if has_content_link|default(aria_flow|default(false)) %}<a id="first-link" href="#{{ aria_flowto|default('page-wrapper') }}" accesskey="1">{{ _('Jump to main content') }}</a>{% endif %}
     <div id="page-wrapper">
+        {%- if not hide_menu|default(False) %}
+        {%- if menu_contents is defined %}{{ page_menu(menu_contents|default([]), request=request) }}
+        {% else %}
+            {% call page_menu() %}
+                {%- block menu %}{{ page_menu.DEFAULT_MENU_SECTIONS(request)|safe }}{% endblock %}
+            {% endcall %}
+        {% endif %}
+    {% endif %}
+
         {%- block main %}
             <{{ main_tag }} id="main-content" tabindex=0 class="{{ main_class|default('container-1') }}{% if request is defined %}{{- '' if request.user.is_authenticated else ' is-anonymous' }}"{% endif %}>
             {%- block message_area %}
@@ -54,14 +63,6 @@
             {% endif %}
             </{{ main_tag }}>
         {% endblock %}
-    {%- if not hide_menu|default(False) %}
-        {%- if menu_contents is defined %}{{ page_menu(menu_contents|default([]), request=request) }}
-        {% else %}
-            {% call page_menu() %}
-                {%- block menu %}{{ page_menu.DEFAULT_MENU_SECTIONS(request)|safe }}{% endblock %}
-            {% endcall %}
-        {% endif %}
-    {% endif %}
     </div>
     {% if not hide_header|default(False) %}{% include 'ej/includes/header.jinja2' %}{% endif %}
     {% if not hide_footer|default(False) %}{% include 'ej/includes/footer.jinja2' %}{% endif %}
