@@ -50,6 +50,7 @@ VOTE = {
     },
     "comment": "content",
     "choice": 1,
+    "channel": "unknown",
 }
 
 VOTES = [

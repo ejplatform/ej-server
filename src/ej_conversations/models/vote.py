@@ -3,6 +3,7 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 
 from boogie import models
+from django.db import models as django_models
 from boogie.fields import EnumField
 from boogie.rest import rest_api
 from .vote_queryset import VoteQuerySet
@@ -12,6 +13,24 @@ VOTE_ERROR_MESSAGE = _("vote should be one of 'agree', 'disagree' or 'skip', got
 VOTING_ERROR = lambda value: ValueError(VOTE_ERROR_MESSAGE.format(value=value))
 VOTE_NAMES = {Choice.AGREE: "agree", Choice.DISAGREE: "disagree", Choice.SKIP: "skip"}
 VOTE_VALUES = {v: k for k, v in VOTE_NAMES.items()}
+
+
+class VoteChannels:
+    TELEGRAM = "telegram"
+    WHATSAPP = "twillio"
+    OPINION_COMPONENT = "opinion_component"
+    RASA_WEBCHAT = "socketio"
+    UNKNOWN = "unknown"
+
+    @staticmethod
+    def choices():
+        return [
+            (VoteChannels.TELEGRAM, "Telegram"),
+            (VoteChannels.WHATSAPP, "Whatsapp"),
+            (VoteChannels.OPINION_COMPONENT, _("Opinion Component")),
+            (VoteChannels.RASA_WEBCHAT, _("Rasa webchat")),
+            (VoteChannels.UNKNOWN, _("Unknown")),
+        ]
 
 
 @rest_api(exclude=["author"])
@@ -24,6 +43,14 @@ class Vote(models.Model):
     comment = models.ForeignKey("Comment", related_name="votes", on_delete=models.CASCADE)
     choice = EnumField(Choice, _("Choice"), help_text=_("Agree, disagree or skip"))
     created = models.DateTimeField(_("Created at"), auto_now_add=True)
+    channel = models.CharField(
+        _("Channel"),
+        max_length=50,
+        blank=False,
+        help_text=_("From which EJ channel the vote comes from"),
+        choices=VoteChannels.choices(),
+        default=VoteChannels.UNKNOWN,
+    )
     objects = VoteQuerySet.as_manager()
 
     class Meta:
