@@ -41,7 +41,7 @@ def list_view(
     request,
     queryset=Conversation.objects.filter(is_promoted=True),
     context=None,
-    title="Public conversations",
+    title=_("Public conversations"),
     help_title="",
 ):
     user = request.user

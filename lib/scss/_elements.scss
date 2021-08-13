@@ -22,6 +22,11 @@ select + br + .helptext {
     font-size: 0.9rem;
     opacity: 0.8;
     text-align: left;
+    &-center{
+    text-align: center;
+    max-width: 50%;
+    margin: auto;
+    }
 }
 
 label + ul.errorlist {

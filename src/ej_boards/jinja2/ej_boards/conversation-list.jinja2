@@ -5,7 +5,7 @@
 {% block content %}
 <h1 class="h2 text-accent center margin-b3">{{ title }}</h1>
 {%- if board.conversations.count() == 0 %}
-    <span class="help_text">{{ help_title }}</span>
+    <div class="helptext helptext-center">{{ help_title }}</div>
 {% endif %}
 
 {%- if request.user.has_perm('ej.can_edit_board', board) and  board.conversations.count() == 0%}
