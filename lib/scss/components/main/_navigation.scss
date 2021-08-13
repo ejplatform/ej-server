@@ -34,8 +34,10 @@ body {
     @include utilities('sticky pin-top');
 
     box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.12);
-    height: $_sm-header-height;
-    line-height: $_sm-header-height;
+    //height: $_sm-header-height;
+    //line-height: $_sm-header-height;
+    height: 3rem;
+    line-height: 3.5rem;
     order: -1;
     width: 100%;
 
@@ -71,8 +73,10 @@ body {
 // Reorganize using media queries
 @include breakpoint('sm') {
     .main-header, .main-footer {
-        height: $_md-header-height;
-        line-height: 4rem;
+        //height: $_md-header-height;
+        //line-height: 4rem;
+        height: 3rem;
+        line-height: 2.5rem;
         top: 0;
 
         @include breakpoint('md') {
@@ -93,7 +97,8 @@ body {
             height: $_md-header-height * 0.6;
             left: size(1.2);
             position: absolute;
-            top: $_md-header-height * 0.21;
+            //top: $_md-header-height * 0.21;
+            top: 0.4rem;
         }
         a:nth-child(1), a:nth-child(3) {
             display: none;
@@ -117,7 +122,8 @@ body {
                 display: none;
             }
             span {
-                height: $_md-header-height;
+                //height: $_md-header-height;
+                height: 2.5rem;
                 border-bottom: 0 solid transparent;
             }
             span:hover {

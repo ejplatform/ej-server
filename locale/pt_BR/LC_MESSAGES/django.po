@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-13 12:15-0300\n"
+"POT-Creation-Date: 2021-08-13 19:41-0300\n"
 "PO-Revision-Date: 2019-09-09 13:55-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -334,7 +334,7 @@ msgid "Comment"
 msgstr "Comentar"
 
 #: src/ej_clusters/models/stereotype_vote.py:24
-#: src/ej_conversations/models/vote.py:25
+#: src/ej_conversations/models/vote.py:44
 msgid "Choice"
 msgstr "Escolha"
 
@@ -598,22 +598,44 @@ msgstr "Usuário não tem permissão para criar uma conversa promovida."
 msgid "automatically rejected"
 msgstr "rejeitado automaticamente"
 
-#: src/ej_conversations/models/vote.py:11
+#: src/ej_conversations/models/vote.py:12
 #, python-brace-format
 msgid "vote should be one of 'agree', 'disagree' or 'skip', got {value}"
 msgstr ""
 "voto que deve ser uma das opções de 'concorda', 'discorda' ou 'pula', foi "
 "{value}"
 
-#: src/ej_conversations/models/vote.py:25
+#: src/ej_conversations/models/vote.py:30
+#, fuzzy
+msgid "Opinion Component"
+msgstr "Componente de Opinião"
+
+#: src/ej_conversations/models/vote.py:31
+msgid "Rasa webchat"
+msgstr ""
+
+#: src/ej_conversations/models/vote.py:32
+#, fuzzy
+msgid "Unknown"
+msgstr "*Desconhecido*"
+
+#: src/ej_conversations/models/vote.py:44
 msgid "Agree, disagree or skip"
 msgstr "Concorda, discorda ou pula"
 
-#: src/ej_conversations/models/vote.py:26
+#: src/ej_conversations/models/vote.py:45
 msgid "Created at"
 msgstr "Criado em"
 
-#: src/ej_conversations/models/vote.py:39
+#: src/ej_conversations/models/vote.py:47
+msgid "Channel"
+msgstr ""
+
+#: src/ej_conversations/models/vote.py:50
+msgid "From which EJ channel the vote comes from"
+msgstr ""
+
+#: src/ej_conversations/models/vote.py:66
 msgid "non-moderated comments cannot receive votes"
 msgstr "comentários não-moderados não podem receber votos"
 
@@ -2407,12 +2429,6 @@ msgstr "Ambiente de execução"
 #: src/ej_analysis/jinja2/ej_conversations_analysis/index.jinja2:13
 msgid "Dashboards and analysis"
 msgstr "Dashboards e analises"
-
-#: src/ej_analysis/jinja2/ej_conversations_analysis/index.jinja2:17
-#: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:51
-#, fuzzy
-msgid "Opinion Component"
-msgstr "Componente de Opinião"
 
 #: src/ej_analysis/jinja2/ej_conversations_analysis/index.jinja2:24
 #: src/ej_analysis/jinja2/ej_conversations_analysis/index.jinja2:26
