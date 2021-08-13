@@ -33,7 +33,7 @@ body {
 .main-header {
     @include utilities('sticky pin-top');
 
-    box-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.12);
     height: $_sm-header-height;
     line-height: $_sm-header-height;
     order: -1;
@@ -44,9 +44,9 @@ body {
         vertical-align: middle;
 
         img {
-            height: $_sm-header-height * 0.8;
+            height: $_sm-header-height * 0.6;
             position: relative;
-            top: $_sm-header-height * 0.1;
+            top: $_sm-header-height * 0.21;
         }
     }
 }
@@ -54,7 +54,7 @@ body {
 .main-footer {
     @include utilities('fixed pin-bottom flex-around');
 
-    box-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.12);
     width: 100%;
 
     > * {
@@ -90,10 +90,10 @@ body {
             line-height: $_md-header-height;
         }
         img {
-            height: $_md-header-height * 0.8;
-            left: size(1.5);
+            height: $_md-header-height * 0.6;
+            left: size(1.2);
             position: absolute;
-            top: $_md-header-height * 0.1;
+            top: $_md-header-height * 0.21;
         }
         a:nth-child(1), a:nth-child(3) {
             display: none;
@@ -154,6 +154,7 @@ body {
         @include utilities('pad-2');
 
         border-bottom: 1px solid color('brand');
+        padding: 1.75rem;
         h1, h2, h3 {
             display: none;
         }

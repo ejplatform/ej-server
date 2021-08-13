@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-11 16:44-0300\n"
+"POT-Creation-Date: 2021-08-13 12:15-0300\n"
 "PO-Revision-Date: 2019-09-09 13:55-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -631,6 +631,10 @@ msgstr "{n} aguardando moderação"
 #, python-brace-format
 msgid "{n} of {m} comments"
 msgstr "{n} de {m} comentários"
+
+#: src/ej_conversations/routes.py:44
+msgid "Public conversations"
+msgstr "Conversas públicas"
 
 #: src/ej_conversations/routes.py:60
 msgid "Participate voting and creating comments!"
@@ -2194,7 +2198,7 @@ msgstr "Código livre e aberta"
 msgid "Jump to main content"
 msgstr "Pular para conteúdo principal"
 
-#: src/ej/templates/jinja2/base.jinja2:51
+#: src/ej/templates/jinja2/base.jinja2:60
 msgid "Please override the \"content\" block of your template!"
 msgstr "Por favor substitua o bloco \"content\" do seu template!"
 
@@ -4082,9 +4086,6 @@ msgstr "Autenticação"
 
 #~ msgid "No comments available for this user"
 #~ msgstr "Não há comentários disponíveis para esse usuário"
-
-#~ msgid "Public conversations"
-#~ msgstr "Conversas públicas"
 
 #~ msgid "Agree: {pc}"
 #~ msgstr "Concordo: {pc}"

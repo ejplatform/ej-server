@@ -10,7 +10,7 @@
 
 .form-container {
     margin: 0 auto;
-    max-width: 32rem;
+    max-width: 70rem;
     padding: 0 size(1);
     text-align: center;
     width: 100%;
@@ -21,6 +21,9 @@
 
     form {
         padding: 0 size(1);
+        max-width: 30rem;
+        width: 100%;
+        margin: auto;
     }
 }
 
