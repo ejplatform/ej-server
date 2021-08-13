@@ -180,12 +180,13 @@ body {
 
 @include breakpoint('sm') {
     .page-menu {
-        background-color: rgba(0, 0, 0, 0.008);
+        //background-color: rgba(0, 0, 0, 0.008);
+        background-color: #f0f0f061;
         border-radius: 0;
         box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.12);
         flex: 1;
         min-height: calc(100vh - 3rem);
-        min-width: size(7);
+        min-width: size(11);
         max-width: size(11);
 
         &, &[is-menu], &[is-menu][is-open] {
@@ -204,7 +205,7 @@ body {
                 margin-top: 0;
                 margin-left: -(size(0.5));
                 margin-right: -(size(0.5));
-                opacity: 0.5;
+                //opacity: 0.5;
                 padding: size(0.25) size(0.5);
             }
         }
@@ -218,6 +219,9 @@ body {
         }
         nav:last-child::after {
             content: none;
+        }
+        nav:first-child {
+            margin-top: 1.5rem;
         }
     }
 
