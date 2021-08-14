@@ -1,4 +1,4 @@
-{% extends 'base.jinja2' %}
+{% extends 'ej_conversations/base.jinja2' %}
 {% block metaOG2 %}
 
     <meta name="description" property="og:title" content="Area de integração da EJ com outras ferramentas.">
@@ -9,8 +9,9 @@
 
 {% block content %}
 <div class="tools">
+	<div class="tools-container">
 	<div class="tools-title">
-		<h1 class="h1 text-accent">{{_("Tools")}} > {{ tool["integration"] }}</h1>
+		<h1 class="h2 text-accent">{{_("Tools")}} > {{ tool["integration"] }}</h1>
 		<span>{{tool["description"] }}</span>
 	</div>
 	<div class="tools-section">
@@ -18,19 +19,19 @@
 			<form method="POST" class="tools-settings-form" id="opinion-component-form">
 				{{ csrf_input }}
 				{% block form_content %}
-					<h2 class="divider">{{form.authentication_type.label}}</h2>
+					<h3 class="h3 divider">{{form.authentication_type.label}}</h3>
 					<span class="helptext">{{_("Selects the type of authentication that will be used to register the user in the EJ API.")}}</span>
 					<span class="helptext">{{_("Not sure which option to choose?")}}<a href="https://www.ejplatform.org/docs/">{{_("Access our documentation.")}}</a></span>
 					<section>
 						{{form.authentication_type}}
 					</section>
-					<h2 class="divider">{{form.theme.label}}</h2>
+					<h3 class="h3 divider">{{form.theme.label}}</h3>
 					<span class="helptext">{{_("Selects a color palette for the component style.")}}</span>
 					<section>
 						{{form.theme}}
 					</section>
 				{% endblock %}
-				<h2 class="divider">{{_("Integration script")}}</h2>
+				<h3 class="h3 divider">{{_("Integration script")}}</h3>
 				<span class="helptext">{{_("Generate scripts by clicking on the icon to integrate the component into your html page.")}}</span>
 			</form>
 		</div>
@@ -77,6 +78,7 @@
 		class="lowercase bold text-brand">
 		<i class="fa fa-chevron-left"></i>{% trans %}Back to tools{% endtrans %}
 	</a></p>
+	</div>
 </div>
 
 <script>

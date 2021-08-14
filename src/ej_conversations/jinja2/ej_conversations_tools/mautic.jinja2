@@ -1,4 +1,4 @@
-{% extends 'base.jinja2' %}
+{% extends 'ej_conversations/base.jinja2' %}
 
 {% block metaOG2 %}
 
@@ -12,8 +12,9 @@
 {% block content %}
 
 <div class="tools">
+    <div class="tools-container">
     <div class="tools-title">
-    <h1 class="h1 text-accent">{{_("Tools")}} > {{ tool["integration"] }}</h1>
+    <h1 class="h2 text-accent">{{_("Tools")}} > {{ tool["integration"] }}</h1>
     </div>
     <p>
         {{_("Integrate this conversation with the Mautic platform API, allowing users who participate in this conversation to be automatically synchronized with Mautic's contact base.")}}
@@ -35,6 +36,7 @@
 		class="lowercase bold text-brand">
 	    <i class="fa fa-chevron-left"></i>{% trans %}Back to tools{% endtrans %}
     </a></p>
+    </div>
 </div>
 
 {% block javascript %}

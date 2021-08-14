@@ -1,4 +1,4 @@
-{% extends 'base.jinja2' %}
+{% extends 'ej_conversations/base.jinja2' %}
 
 {% block metaOG2 %}
 
@@ -11,8 +11,9 @@
 
 {% block content %}
 <div class="tools">
+    <div class="tools-container">
     <div class="tools-title">
-    <h1 class="h1 text-accent">{{_("Tools")}} > {{ tool["integration"] }}</h1>
+    <h1 class="h2 text-accent">{{_("Tools")}} > {{ tool["integration"] }}</h1>
     <span>{{tool["description"] }}</span>
     </div>
     <p id="description-info">
@@ -23,7 +24,7 @@
         {{_("All chatbots that have access to this conversation are also displayed here.")}}
     </p>
 
-    <h2 class="divider">{{_("Linked websites")}}</h2>
+    <h3 class="h3 divider">{{_("Linked websites")}}</h3>
     <span class="helptext">{{_("Manage the integrated links of this conversation.")}}</span>
         {% if conversation_rasa_connections %}
             <table id="template-table">
@@ -69,7 +70,7 @@
     
     <br>
 
-    <h2 class="divider">{{_("Integration script")}}</h2>
+    <h3 class="h3 divider">{{_("Integration script")}}</h3>
     <span class="helptext">{{_("Add the script in the &ltbody&gt tag of the page where the collection will take place.")}}</span>
     
     <div class="tools-code-snippet">
@@ -90,6 +91,7 @@
 		class="lowercase bold text-brand">
 	    <i class="fa fa-chevron-left"></i>{% trans %}Back to tools{% endtrans %}
     </a></p>
+    </div>
 </div>
 
 <script>

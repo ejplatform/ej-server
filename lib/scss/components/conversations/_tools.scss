@@ -1,7 +1,7 @@
 @import "../../config";
 
 .tools {
-	width: 95%;
+	width: 70vw;
 	margin: auto;
 	label {
 		text-indent: unset;
@@ -16,15 +16,14 @@
 	select {
 		border-radius: 0.5rem;
 	}
-	h2 {
+	.h3 {
 		margin-bottom: 0.5rem;
-		margin-top: 3rem;
+		margin-top: 2rem;
 		color: #042A46;
-		font-size: 1.31rem;
-		line-height: 28px;
-		font-family: "Roboto";
-		font-weight: 700;
-		font-family: "Roboto", sans-serif;
+	}
+
+	&-container {
+		width: 80%;
 	}
 }
 
@@ -541,6 +540,13 @@
 		}
 		#preview-template {
 			height: 850px;
+		}
+	}
+	.tools {
+		width: 100%;
+		&-container {
+			width: 95%;
+			margin: auto;
 		}
 	}
 }

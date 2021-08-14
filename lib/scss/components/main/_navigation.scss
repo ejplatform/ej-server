@@ -72,6 +72,15 @@ body {
 
 // Reorganize using media queries
 @include breakpoint('sm') {
+
+    .container-1 {
+        max-width: 60vw;
+    }
+
+    .measure-wide {
+        max-width: 60vw;
+    }
+
     .main-header, .main-footer {
         //height: $_md-header-height;
         //line-height: 4rem;
