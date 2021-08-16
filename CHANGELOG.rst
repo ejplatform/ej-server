@@ -5,6 +5,16 @@ CHANGELOG of EJPlatform releases
 Here you can follow all the fixes and new features on every EJPlatform release.
 
 
+2.10.0 release
+====================
+
+* Date: Ago 16, 2021
+* Features
+- Moves menu to the left side;
+- Creates default board to new users;
+- Adds channel field on Vote model;
+- Improves Opinion Component tool page;
+
 2.9.0 release
 ====================
 
