@@ -17,9 +17,10 @@ VOTE_VALUES = {v: k for k, v in VOTE_NAMES.items()}
 
 class VoteChannels:
     TELEGRAM = "telegram"
-    WHATSAPP = "twillio"
+    WHATSAPP = "twilio"
     OPINION_COMPONENT = "opinion_component"
     RASA_WEBCHAT = "socketio"
+    RASAX = "rasa"
     UNKNOWN = "unknown"
 
     @staticmethod
@@ -27,6 +28,7 @@ class VoteChannels:
         return [
             (VoteChannels.TELEGRAM, "Telegram"),
             (VoteChannels.WHATSAPP, "Whatsapp"),
+            (VoteChannels.RASAX, "RASAX"),
             (VoteChannels.OPINION_COMPONENT, _("Opinion Component")),
             (VoteChannels.RASA_WEBCHAT, _("Rasa webchat")),
             (VoteChannels.UNKNOWN, _("Unknown")),
