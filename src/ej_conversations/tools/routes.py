@@ -89,6 +89,7 @@ def rasa(request, conversation, slug):
 
         if form.is_valid():
             form.save()
+            form = RasaConversationForm()
 
     else:
         form = RasaConversationForm()
