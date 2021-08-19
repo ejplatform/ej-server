@@ -363,6 +363,9 @@
 	color: #30BFD3;
 	padding: 20%;
 	background-color: none;
+	th {
+		border-bottom: 1px solid #BABABA;
+	}
 }
 
 .url-table td {
@@ -370,7 +373,7 @@
 	font-size: 14.4px;
 	line-height: 17px;
 	border-bottom: 1px solid #BABABA;
-	border-top: 1px solid #BABABA;
+	padding: 1.4rem 0.75rem 1.1rem 0.75rem !important;
 }
 
 #is-primary-centered {

@@ -55,8 +55,7 @@
             {% block form_content %}
                 <div class="form-div">
                     {{ form.non_field_errors() }}
-                    {{ form.domain.errors }}
-                    {{ form.errors }}
+                    {{ form.domain.errors }}                 
                     <label id="domain-label">{{_("new")}} {{ form.domain.label }}</label>
                     <div class="domain-form">
                         {{ form.domain }}
