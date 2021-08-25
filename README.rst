@@ -48,8 +48,8 @@ inv docker-up       Creates EJ containers and run the application
 inv docker-logs     Shows django logs 
 inv docker-stop     Stops EJ containers 
 inv docker-rm       Removes EJ containers
-inv docker-attach   Connects to ej-server container
-inv docker-exec     Executes a command on ej-server container
+inv docker-attach   Connects to django container
+inv docker-exec     Executes a command on django container
 ==================  =============================================
 
 Some useful commands to manage the application (run this inside django container):
