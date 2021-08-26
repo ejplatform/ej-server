@@ -1,5 +1,6 @@
 from boogie.rest import rest_api
 from ej_conversations.models import Conversation
+from ej_conversations.tools.models import ConversationMautic, MauticClient
 from ej_conversations.models.vote import Vote
 from ej_conversations.utils import request_comes_from_ej_bot, request_promoted_conversations
 from .tools import api
@@ -99,6 +100,7 @@ def statistics(conversation):
 @rest_api.save_hook("ej_conversations.Vote")
 def save_vote(request, vote):
     user = request.user
+    create_mautic_contact_from_author(request, vote)
 
     try:
         skipped_vote = Vote.objects.get(comment=vote.comment, choice=0, author=user)
@@ -115,6 +117,14 @@ def save_vote(request, vote):
     else:
         vote.save(update_fields=["choice"])
     return vote
+
+
+def create_mautic_contact_from_author(request, vote):
+    conversation = vote.comment.conversation
+    conversation_mautic = ConversationMautic.objects.get(conversation=conversation)
+    mautic_client = MauticClient(conversation_mautic)
+    create_contact_from_author = mautic_client.create_contact(request, vote)
+    return create_contact_from_author
 
 
 @rest_api.delete_hook("ej_conversations.Vote")

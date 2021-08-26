@@ -1,9 +1,10 @@
 import json
+import requests
 from boogie.router import Router
 from django.utils.translation import ugettext_lazy as _
 from django.http import HttpResponse
 from django.shortcuts import redirect
-from .utils import npm_version, user_can_add_new_domain
+from .utils import npm_version, user_can_add_new_domain, prepare_host_with_https
 from .forms import (
     RasaConversationForm,
     ConversationComponentForm,
@@ -11,7 +12,7 @@ from .forms import (
     MailingToolForm,
     MauticConversationForm,
 )
-from .models import RasaConversation, ConversationMautic
+from .models import RasaConversation, ConversationMautic, MauticOauth2Service, MauticClient
 from .. import models
 from ..tools.table import Tools
 
@@ -122,21 +123,48 @@ def delete_connection(request, conversation, slug, connection):
 @urlpatterns.route(
     conversation_tools_url + "/mautic", perms=["ej.can_access_mautic_connection:conversation"]
 )
-def mautic(request, conversation, slug):
+def mautic(request, conversation, slug, oauth2_code=None):
+    error_message = None
+    connections = None
+
+    try:
+        connections = ConversationMautic.objects.get(conversation=conversation)
+        if oauth2_code:
+            connections.code = oauth2_code
+            connections.save()
+    except Exception as e:
+        print(e)
+
     tools = Tools(conversation)
     conversation_kwargs = {
         "conversation": conversation,
     }
     form = MauticConversationForm(request=request, initial=conversation_kwargs)
-    connections = models.ConversationMautic.objects.filter(conversation=conversation)
+    https_ej_server = prepare_host_with_https(request)
+
     if request.method == "POST":
         if form.is_valid():
-            form.save()
+            conversation_mautic = form.save()
+            try:
+                return MauticClient.redirect_to_mautic_oauth2(https_ej_server, conversation_mautic)
+            except Exception as e:
+                conversation_mautic.delete()
+                error_message = e.message
+
+    if request.method == "GET" and request.GET.get("code"):
+        try:
+            conversation_mautic = models.ConversationMautic.objects.get(conversation_id=conversation.id)
+            save_oauth2_tokens(https_ej_server, conversation_mautic, request.GET.get("code"))
+        except Exception as e:
+            conversation_mautic.delete()
+            error_message = e.message
+
     return {
         "conversation": conversation,
         "connections": connections,
         "tool": tools.get(_("Mautic")),
         "form": form,
+        "errors": error_message,
     }
 
 
@@ -149,10 +177,6 @@ def delete_mautic_connection(request, conversation, slug, mautic_connection):
     return redirect(conversation.url("conversation-tools:mautic"))
 
 
-@urlpatterns.route(conversation_tools_url + "/mautic/create_contact/<model:mautic_connection>")
-def create_mautic_contact(
-    request, conversation, slug, mautic_connection, oauth_token_secret, oauth_verifier
-):
-    # request.post(rota  de contato, payload, token?)
-
-    pass
+def save_oauth2_tokens(ej_server_url, conversation_mautic, code):
+    oauth2_service = MauticOauth2Service(ej_server_url, conversation_mautic)
+    oauth2_service.save_tokens(code)

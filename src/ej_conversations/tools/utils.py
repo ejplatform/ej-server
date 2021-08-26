@@ -17,3 +17,9 @@ def npm_version():
 
 def user_can_add_new_domain(user, conversation):
     return user.is_staff or user.is_superuser or conversation.author.id == user.id
+
+
+def prepare_host_with_https(request):
+    host = request.META["HTTP_HOST"]
+    ej_server_url = "https://" + host
+    return ej_server_url
