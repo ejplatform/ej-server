@@ -7,14 +7,14 @@
     <div id=centered-input> 
         {{ form.conversation.as_hidden() }}
         {{ form.non_field_errors() }}
-        {{ form.user_name.errors }}
-        {{ form.password.errors }}
+        {{ form.client_id.errors }}
+        {{ form.client_secret.errors }}
         {{ form.url.errors }}
-        <label class="label-mautic-form">{{_("Mautic username")}}</label>
-        <input type="text" name="user_name" maxlength="100" required="" id="id_user_name">
+        <label class="label-mautic-form">{{_("Mautic Client ID")}}</label>
+        <input type="text" name="client_id" maxlength="100" required="" id="id_client_id">
 
-        <label class="label-mautic-form">{{_("Mautic password")}}</label>
-        <input type="password" name="password" maxlength="200" required id="id_password">
+        <label class="label-mautic-form">{{_("Mautic Client Secret")}}</label>
+        <input type="text" name="client_secret" maxlength="200" required id="id_client_secret">
         
         <label class="label-mautic-form">{{_("Mautic URL")}}</label>
         <input type="url" name="url" maxlength="255" required id="id_url">

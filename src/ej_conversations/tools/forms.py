@@ -75,4 +75,4 @@ class RasaConversationForm(EjModelForm):
 class MauticConversationForm(EjModelForm):
     class Meta:
         model = ConversationMautic
-        fields = ["user_name", "url", "conversation", "password"]
+        fields = ["client_id", "url", "conversation", "client_secret"]

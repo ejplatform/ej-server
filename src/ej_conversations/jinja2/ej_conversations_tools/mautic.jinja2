@@ -19,6 +19,13 @@
     <p>
         {{_("Integrate this conversation with the Mautic platform API, allowing users who participate in this conversation to be automatically synchronized with Mautic's contact base.")}}
     </p>
+    <div style="text-align: center;">
+    {% if errors %}
+        <span id="errors-mautic-form">
+            {{errors}}
+        </span>
+    {% endif %}
+    </div>
     {% if not connections %}
         <input onClick="displayForm()" id="is-primary-centered" type="button" name="enable_integration" value="{{ _('Enable Integration') }}">
     {% endif %}
