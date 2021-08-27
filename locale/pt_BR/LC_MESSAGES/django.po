@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-26 17:18-0300\n"
+"POT-Creation-Date: 2021-08-27 18:26-0300\n"
 "PO-Revision-Date: 2019-09-09 13:55-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -695,7 +695,7 @@ msgstr ""
 "Verifique sua url do Mautic e a url de redirecionamento na página do Mautic."
 
 #: src/ej_conversations/tests/test_mautic_integrations.py:151
-#: src/ej_conversations/tools/models.py:323
+#: src/ej_conversations/tools/models.py:324
 msgid "There was an error connection to mautic server, please try again."
 msgstr "Houve um erro na conexao com o Mautic, por favor tente novamente."
 
@@ -752,7 +752,7 @@ msgstr "Registrar usando nome/email"
 
 #: src/ej_conversations/tools/models.py:57
 #: src/ej_conversations/tools/models.py:101
-#: src/ej_conversations/tools/routes.py:161
+#: src/ej_conversations/tools/routes.py:165
 #: src/ej_conversations/tools/table.py:35
 msgid "Mautic"
 msgstr ""
@@ -843,7 +843,7 @@ msgstr "Não foi possível gerar os tokens."
 msgid "There was an error connection to mautic server, please check your url."
 msgstr "Houve um erro na conexao com o Mautic, por favor verifique a URL."
 
-#: src/ej_conversations/tools/models.py:319
+#: src/ej_conversations/tools/models.py:320
 msgid "Couldn't create a new contact in Mautic."
 msgstr ""
 
@@ -2290,8 +2290,10 @@ msgstr "Menu de navegação"
 msgid "Talks"
 msgstr "Painel"
 
-#: src/ej/templates/jinja2/ej/includes/footer.jinja2:17
 #: src/ej/templates/jinja2/ej/includes/footer.jinja2:19
+#: src/ej/templates/jinja2/ej/includes/footer.jinja2:24
+#: src/ej/templates/jinja2/ej/includes/footer.jinja2:31
+#: src/ej/templates/jinja2/ej/includes/footer.jinja2:33
 #: src/ej_clusters/jinja2/ej_clusters/includes/stereotypes-menu.jinja2:2
 #: src/ej_clusters/jinja2/ej_clusters/includes/stereotypes-menu.jinja2:8
 #: src/ej_clusters/jinja2/ej_clusters/includes/stereotypes-menu.jinja2:9
@@ -2305,6 +2307,13 @@ msgstr "Painel"
 #: src/ej_users/jinja2/ej_users/includes/account-menu.jinja2:13
 msgid "Profile"
 msgstr "Perfil"
+
+#: src/ej/templates/jinja2/ej/includes/footer.jinja2:21
+#: src/ej/templates/jinja2/ej/includes/footer.jinja2:26
+#: src/ej_profiles/jinja2/ej_profiles/base.jinja2:10
+#: src/ej_profiles/jinja2/ej_profiles/base.jinja2:13
+msgid "Profile picture"
+msgstr "Foto de perfil"
 
 #: src/ej/templates/jinja2/ej/includes/header.jinja2:1
 msgid "Top header"
@@ -2575,7 +2584,7 @@ msgid "Create Board"
 msgstr "Criar mural"
 
 #: src/ej_boards/jinja2/ej_boards/board-edit.jinja2:3
-#: src/ej_boards/jinja2/ej_boards/includes/menu-board.jinja2:20
+#: src/ej_boards/jinja2/ej_boards/includes/menu-board.jinja2:18
 msgid "Edit board"
 msgstr "Editar mural"
 
@@ -2619,18 +2628,18 @@ msgstr "Criar um novo mural!"
 msgid "New Conversation"
 msgstr "Nova conversa"
 
-#: src/ej_boards/jinja2/ej_boards/includes/menu-board.jinja2:5
+#: src/ej_boards/jinja2/ej_boards/includes/menu-board.jinja2:4
 #: src/ej_boards/jinja2/ej_boards/includes/menu.jinja2:6
 msgid "New board"
 msgstr "Novo mural"
 
-#: src/ej_boards/jinja2/ej_boards/includes/menu-board.jinja2:17
-#: src/ej_boards/jinja2/ej_boards/includes/menu-board.jinja2:18
+#: src/ej_boards/jinja2/ej_boards/includes/menu-board.jinja2:15
+#: src/ej_boards/jinja2/ej_boards/includes/menu-board.jinja2:16
 #, fuzzy
 msgid "Administration"
 msgstr "Administração"
 
-#: src/ej_boards/jinja2/ej_boards/includes/menu-board.jinja2:22
+#: src/ej_boards/jinja2/ej_boards/includes/menu-board.jinja2:20
 #, fuzzy
 msgid "New conversation"
 msgstr "Nova conversa"
@@ -3558,11 +3567,6 @@ msgstr "Comentários endossados não são exibidos nesta lista."
 #: src/ej_gamification/jinja2/ej_gamification/conversation/endorse.jinja2:24
 msgid "Error: No available comments!"
 msgstr "Erro: Não há comentários disponíveis!"
-
-#: src/ej_profiles/jinja2/ej_profiles/base.jinja2:10
-#: src/ej_profiles/jinja2/ej_profiles/base.jinja2:13
-msgid "Profile picture"
-msgstr "Foto de perfil"
 
 #: src/ej_profiles/jinja2/ej_profiles/contributions.jinja2:7
 #: src/ej_profiles/jinja2/ej_profiles/detail.jinja2:29

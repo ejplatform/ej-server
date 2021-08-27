@@ -29,3 +29,4 @@ uma conversa na EJ. O link só fica disponível para o criador da conversa.
    tools-chatbot
    tools-opinion-component
    tools-mail-template
+   tools-mautic
