@@ -5,6 +5,8 @@
 
 $_sm-header-height: size(2);
 $_md-header-height: size(2.5);
+$avatar-height: 36px;
+$avatar-border: 66.5px;
 
 body {
     display: flex;
@@ -13,25 +15,27 @@ body {
 
 //------------------------------------------------------------------------------
 // Footer and header navigation
-.main-header, .main-footer {
-    @include utilities('row items-center center');
-    @include color('navigation');
+
+.main-header,
+.main-footer {
+    @include utilities("row items-center center");
+    @include color("navigation");
 
     z-index: 1000;
 
     > * {
-        @include utilities('pad-x1');
+        @include utilities("pad-x1");
     }
     > a {
-        @include utilities('margin-0');
+        @include utilities("margin-0");
 
-        color: color('navigation-text');
+        color: color("navigation-text");
         height: $_sm-header-height;
     }
 }
 
 .main-header {
-    @include utilities('sticky pin-top');
+    @include utilities("sticky pin-top");
 
     box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.12);
     //height: $_sm-header-height;
@@ -40,6 +44,7 @@ body {
     line-height: 3.5rem;
     order: -1;
     width: 100%;
+    padding-bottom: 1rem;
 
     &__logo {
         flex: 1;
@@ -51,28 +56,47 @@ body {
             top: $_sm-header-height * 0.21;
         }
     }
+
+    &__avatar {
+        object-fit: cover;
+        border-radius: $avatar-border;
+        width: $avatar-height;
+        height: $avatar-height;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+    }
 }
 
 .main-footer {
-    @include utilities('fixed pin-bottom flex-around');
+    @include utilities("fixed pin-bottom flex-around");
 
     box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.12);
     width: 100%;
 
     > * {
-        @include utilities('pad-y1');
+        @include utilities("pad-y1");
     }
     &__link {
-        @include utilities('col items-center uppercase text-8 bold');
+        @include utilities("col items-center uppercase text-8 bold");
         img {
             width: 1.75rem;
         }
     }
+
+    &__avatar {
+        object-fit: cover;
+        border-radius: $avatar-border;
+        width: $avatar-height;
+        height: $avatar-height;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+    }
 }
 
 // Reorganize using media queries
-@include breakpoint('sm') {
-
+@include breakpoint("sm") {
     .container-1 {
         max-width: 60vw;
     }
@@ -81,14 +105,16 @@ body {
         max-width: 60vw;
     }
 
-    .main-header, .main-footer {
+    .main-header,
+    .main-footer {
         //height: $_md-header-height;
         //line-height: 4rem;
         height: 3rem;
         line-height: 2.5rem;
         top: 0;
+        padding: 1rem;
 
-        @include breakpoint('md') {
+        @include breakpoint("md") {
             > * {
                 padding: 0 size(0.5);
             }
@@ -109,7 +135,8 @@ body {
             //top: $_md-header-height * 0.21;
             top: 0.4rem;
         }
-        a:nth-child(1), a:nth-child(3) {
+        a:nth-child(1),
+        a:nth-child(3) {
             display: none;
         }
     }
@@ -122,6 +149,7 @@ body {
         right: 0;
         width: initial;
         z-index: 1001;
+        margin-bottom: 1rem;
 
         &__link {
             flex-flow: row;
@@ -136,8 +164,19 @@ body {
                 border-bottom: 0 solid transparent;
             }
             span:hover {
-                border-bottom: 8px solid #{color('black')};
+                border-bottom: 8px solid #{color("black")};
             }
+        }
+
+        &__avatar {
+            object-fit: cover;
+            border-radius: $avatar-border;
+            width: $avatar-height;
+            height: $avatar-height;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            margin: auto;
         }
     }
 }
@@ -146,19 +185,19 @@ body {
 // Sidebar / menu
 
 .page-menu {
-    @include utilities('rounded-2');
+    @include utilities("rounded-2");
 
-    background-color: color('white');
+    background-color: color("white");
     box-shadow: 0 0 8px 1px rgba(0, 0, 0, 0.12);
     overflow: hidden auto;
 
     &[is-menu] {
-        @include utilities('size-x6');
+        @include utilities("size-x6");
 
         display: none;
     }
     &[is-menu][is-open] {
-        @include utilities('size-x6');
+        @include utilities("size-x6");
 
         display: block;
         position: fixed;
@@ -166,26 +205,28 @@ body {
         z-index: 1002;
     }
     nav {
-        @include utilities('pad-2');
+        @include utilities("pad-2");
 
-        border-bottom: 1px solid color('brand');
+        border-bottom: 1px solid color("brand");
         padding: 1.75rem;
-        h1, h2, h3 {
+        h1,
+        h2,
+        h3 {
             display: none;
         }
         ul:first-child {
-            @include utilities('pad-t2');
+            @include utilities("pad-t2");
         }
         ul {
-            @include utilities('list-reset');
+            @include utilities("list-reset");
         }
         li {
-            @include utilities('margin-y1');
+            @include utilities("margin-y1");
         }
     }
     nav:first-child {
         a {
-            @include utilities('bold');
+            @include utilities("bold");
         }
     }
     nav:last-child {
@@ -212,7 +253,7 @@ body {
     }
 }
 
-@include breakpoint('sm') {
+@include breakpoint("sm") {
     .page-menu {
         //background-color: rgba(0, 0, 0, 0.008);
         background-color: #f0f0f061;
@@ -223,7 +264,9 @@ body {
         min-width: size(11);
         max-width: size(11);
 
-        &, &[is-menu], &[is-menu][is-open] {
+        &,
+        &[is-menu],
+        &[is-menu][is-open] {
             display: block;
             position: relative;
             width: 20%;
@@ -233,7 +276,9 @@ body {
             border: none;
             padding-top: 0;
 
-            h1, h2, h3 {
+            h1,
+            h2,
+            h3 {
                 display: block;
                 font-size: 0.875rem;
                 margin-top: 0;
@@ -246,7 +291,7 @@ body {
         nav::after {
             background: rgba(0, 0, 0, 0.12);
             display: block;
-            content: ' ';
+            content: " ";
             height: 1px;
             margin: size(0.5) auto 0 auto;
             width: 75%;
@@ -273,7 +318,6 @@ body {
     }
 }
 
-
 #first-link {
     @extend .screen-reader;
     tab-index: 0;
@@ -288,24 +332,22 @@ body {
     }
 }
 
-
 #docs {
     width: 100%;
     height: 100vh;
     display: contents;
 
-iframe {
+    iframe {
         height: 100vh;
         width: 100%;
     }
 }
 
 @media (min-width: 560px) {
-#docs {
-    iframe {
+    #docs {
+        iframe {
             height: 100vh;
             width: 100%;
         }
     }
 }
-
