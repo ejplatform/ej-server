@@ -191,6 +191,25 @@ body {
     nav:last-child {
         border-bottom: none;
     }
+    .add-button {
+        color: #30BFD3;
+    }
+    .board-list {
+        overflow: auto;
+        height: 140px;
+        li {
+            display: flex;
+            justify-content: space-between;
+            height: 1.7rem;
+            a {
+                margin-left: 0.5rem;
+            }
+            p {
+                margin-right: 0.5rem; 
+                font-weight: 700;
+            }
+        }
+    }
 }
 
 @include breakpoint('sm') {

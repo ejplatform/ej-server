@@ -45,7 +45,7 @@ def board_list(request):
     return {"boards": boards, "can_add_board": can_add_board}
 
 
-@urlpatterns.route(board_profile_admin_url + "add/", login=True, perms=["ej.can_add_board"])
+@urlpatterns.route(board_profile_admin_url + "add/", login=True)
 def board_create(request):
     form = BoardForm(request=request)
     if form.is_valid_post():
@@ -56,6 +56,8 @@ def board_create(request):
 
 @urlpatterns.route("<model:board>/edit/", perms=["ej.can_edit_board:board"])
 def board_edit(request, board):
+    user = request.user
+    boards = user.boards.all()
     form = BoardForm(instance=board, request=request)
     form.fields["slug"].help_text = _("You cannot change this value")
     form.fields["slug"].disabled = True
@@ -63,7 +65,7 @@ def board_edit(request, board):
     if form.is_valid_post():
         form.save()
         return redirect(board.get_absolute_url())
-    return {"form": form, "board": board}
+    return {"form": form, "board": board, "user_boards": boards}
 
 
 #
@@ -76,10 +78,13 @@ def board_base(request, board):
 
 @urlpatterns.route(board_base_url)
 def conversation_list(request, board):
+    user = request.user
+    boards = user.boards.all()
+
     return conversations.list_view(
         request,
         queryset=board.conversations.annotate_attr(board=board),
-        context={"board": board},
+        context={"board": board, "user_boards": boards},
         title=board.title,
         help_title=_(
             "Welcome to EJ. This is your personal board. Board is where your conversations will be available. Press 'New conversation' to starts collecting yours audience opinion."

@@ -211,11 +211,11 @@ msgstr "Mural"
 msgid "Slug already exists."
 msgstr "Identificador já existe."
 
-#: src/ej_boards/routes.py:60
+#: src/ej_boards/routes.py:62
 msgid "You cannot change this value"
 msgstr "Você não pode mudar este valor"
 
-#: src/ej_boards/routes.py:85
+#: src/ej_boards/routes.py:90
 msgid ""
 "Welcome to EJ. This is your personal board. Board is where your "
 "conversations will be available. Press 'New conversation' to starts "
@@ -334,7 +334,7 @@ msgid "Comment"
 msgstr "Comentar"
 
 #: src/ej_clusters/models/stereotype_vote.py:24
-#: src/ej_conversations/models/vote.py:44
+#: src/ej_conversations/models/vote.py:46
 msgid "Choice"
 msgstr "Escolha"
 
@@ -608,37 +608,37 @@ msgstr ""
 "voto que deve ser uma das opções de 'concorda', 'discorda' ou 'pula', foi "
 "{value}"
 
-#: src/ej_conversations/models/vote.py:30
+#: src/ej_conversations/models/vote.py:32
 #, fuzzy
 msgid "Opinion Component"
 msgstr "Componente de Opinião"
 
-#: src/ej_conversations/models/vote.py:31
+#: src/ej_conversations/models/vote.py:33
 msgid "Rasa webchat"
 msgstr ""
 
-#: src/ej_conversations/models/vote.py:32
+#: src/ej_conversations/models/vote.py:34
 #, fuzzy
 msgid "Unknown"
 msgstr "*Desconhecido*"
 
-#: src/ej_conversations/models/vote.py:44
+#: src/ej_conversations/models/vote.py:46
 msgid "Agree, disagree or skip"
 msgstr "Concorda, discorda ou pula"
 
-#: src/ej_conversations/models/vote.py:45
+#: src/ej_conversations/models/vote.py:47
 msgid "Created at"
 msgstr "Criado em"
 
-#: src/ej_conversations/models/vote.py:47
+#: src/ej_conversations/models/vote.py:49
 msgid "Channel"
 msgstr ""
 
-#: src/ej_conversations/models/vote.py:50
+#: src/ej_conversations/models/vote.py:52
 msgid "From which EJ channel the vote comes from"
 msgstr ""
 
-#: src/ej_conversations/models/vote.py:66
+#: src/ej_conversations/models/vote.py:68
 msgid "non-moderated comments cannot receive votes"
 msgstr "comentários não-moderados não podem receber votos"
 
@@ -2575,7 +2575,7 @@ msgid "Create Board"
 msgstr "Criar mural"
 
 #: src/ej_boards/jinja2/ej_boards/board-edit.jinja2:3
-#: src/ej_boards/jinja2/ej_boards/conversation-list.jinja2:33
+#: src/ej_boards/jinja2/ej_boards/includes/menu-board.jinja2:20
 msgid "Edit board"
 msgstr "Editar mural"
 
@@ -2614,19 +2614,30 @@ msgstr "Desculpe, você não pode criar novos murais."
 msgid "Create a new board!"
 msgstr "Criar um novo mural!"
 
-#: src/ej_boards/jinja2/ej_boards/conversation-list.jinja2:14
-#: src/ej_boards/jinja2/ej_boards/conversation-list.jinja2:32
+#: src/ej_boards/jinja2/ej_boards/conversation-list.jinja2:23
 #: src/ej_conversations/jinja2/ej_conversations/includes/menu-list.jinja2:6
 msgid "New Conversation"
+msgstr "Nova conversa"
+
+#: src/ej_boards/jinja2/ej_boards/includes/menu-board.jinja2:5
+#: src/ej_boards/jinja2/ej_boards/includes/menu.jinja2:6
+msgid "New board"
+msgstr "Novo mural"
+
+#: src/ej_boards/jinja2/ej_boards/includes/menu-board.jinja2:17
+#: src/ej_boards/jinja2/ej_boards/includes/menu-board.jinja2:18
+#, fuzzy
+msgid "Administration"
+msgstr "Administração"
+
+#: src/ej_boards/jinja2/ej_boards/includes/menu-board.jinja2:22
+#, fuzzy
+msgid "New conversation"
 msgstr "Nova conversa"
 
 #: src/ej_boards/jinja2/ej_boards/includes/menu.jinja2:4
 msgid "Manage boards"
 msgstr "Gerenciar murais"
-
-#: src/ej_boards/jinja2/ej_boards/includes/menu.jinja2:6
-msgid "New board"
-msgstr "Novo mural"
 
 #: src/ej_clusters/jinja2/ej_clusters/edit.jinja2:16
 msgid "Configure opinion groups"
