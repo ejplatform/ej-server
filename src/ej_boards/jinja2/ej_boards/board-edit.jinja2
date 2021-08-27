@@ -2,3 +2,5 @@
 {% set body_class = 'body theme-' + board.palette %}
 {% set title = _('Edit board') %}
 {% set action = _('Save') %}
+
+{% block menu %}{% include 'ej_boards/includes/menu-board.jinja2' %}{% endblock %}

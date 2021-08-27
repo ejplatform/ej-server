@@ -1,0 +1,27 @@
+<nav title="{{ _('Boards') }}">
+    <h3>
+        {{ _('Boards') }}
+        <a href="{{ url('boards:board-create') }}" class="add-button" title="{{_('New board')}}"><i class="fa fa-plus-square fa-lg"></i></a>
+    </h3>
+    <ul class="board-list">
+        {% for board in user_boards %}
+        <li>
+            <a href="{{ url('boards:conversation-list', board.slug) }}">{{board.title}}</a>
+            <p>{{board.conversations.count()}}</p>
+        </li>
+        {% endfor %}
+    </ul>
+</nav>
+<nav title="{{ _('Administration') }}">
+    <h3>{{ _('Administration') }}</h3>
+    <ul>
+        <li><a href="{{ url('boards:board-edit', board=board) }}">{{ _('Edit board') }}</a></li>
+        {%- if request.user.has_perm('ej.can_edit_board', board) %}
+            <li><a href="{{ url('boards:conversation-create', board=board) }}">{{ _('New conversation') }}</a></li>
+            <li><a href="{{ url('conversation:list') }}">{{ _('Public conversations') }}</a></li>
+        {% endif %}
+    </ul>
+</nav>
+
+{{ page_menu.ABOUT(request) }}
+{{ page_menu.ACCESSIBILITY() }}
