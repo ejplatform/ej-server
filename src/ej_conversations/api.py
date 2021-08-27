@@ -121,10 +121,13 @@ def save_vote(request, vote):
 
 def create_mautic_contact_from_author(request, vote):
     conversation = vote.comment.conversation
-    conversation_mautic = ConversationMautic.objects.get(conversation=conversation)
-    mautic_client = MauticClient(conversation_mautic)
-    create_contact_from_author = mautic_client.create_contact(request, vote)
-    return create_contact_from_author
+    try:
+        conversation_mautic = ConversationMautic.objects.get(conversation=conversation)
+        mautic_client = MauticClient(conversation_mautic)
+        create_contact_from_author = mautic_client.create_contact(request, vote)
+        return create_contact_from_author
+    except:
+        pass
 
 
 @rest_api.delete_hook("ej_conversations.Vote")
