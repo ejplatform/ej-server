@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta
 from logging import getLogger
+from abc import abstractmethod
 
 from django.contrib.auth.models import Permission
 from boogie.apps.users.models import AbstractUser
@@ -12,11 +13,44 @@ from model_utils.models import TimeStampedModel
 from .manager import UserManager
 from .utils import random_name, token_factory
 
-
 log = getLogger("ej")
 
 
-@rest_api(["id", "display_name", "email"])
+class Signature:
+    """
+    EJ signature plans. It can be Hear your community, Hear your city and Hear the humanity
+    """
+
+    LISTEN_TO_COMMUNITY = "listen_to_community"
+    SIGNATURES_CONVERSATIONS_LIMIT = {
+        "listen_to_community": 3,
+    }
+
+    def __init__(self, user):
+        self.user = user
+        self.conversations_limit = Signature.SIGNATURES_CONVERSATIONS_LIMIT[user.signature]
+
+    @staticmethod
+    def plans():
+        return [
+            (Signature.LISTEN_TO_COMMUNITY, "Listen to community"),
+        ]
+
+    def can_add_conversation(self):
+        if self.user.is_superuser:
+            return True
+
+        user_conversations_count = self.user.conversations.count()
+        if user_conversations_count < self.conversations_limit:
+            return True
+        else:
+            return False
+
+    def current(self):
+        return self.user.signature
+
+
+@rest_api(["id", "display_name", "email", "signature"])
 class User(AbstractUser):
     """
     Default user model for EJ platform.
@@ -30,7 +64,14 @@ class User(AbstractUser):
         max_length=50, default=random_name, help_text=_("Name used to publicly identify user")
     )
     username = property(lambda self: self.name or self.email.replace("@", "__"))
-
+    signature = models.CharField(
+        _("Signature"),
+        max_length=50,
+        blank=False,
+        help_text=_("User signature"),
+        choices=Signature.plans(),
+        default=Signature.LISTEN_TO_COMMUNITY,
+    )
     objects = UserManager()
 
     class Meta:

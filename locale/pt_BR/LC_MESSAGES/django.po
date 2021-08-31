@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-27 18:26-0300\n"
+"POT-Creation-Date: 2021-08-30 14:24-0300\n"
 "PO-Revision-Date: 2019-09-09 13:55-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -657,11 +657,11 @@ msgstr "{n} aguardando moderação"
 msgid "{n} of {m} comments"
 msgstr "{n} de {m} comentários"
 
-#: src/ej_conversations/routes.py:44
+#: src/ej_conversations/routes.py:45
 msgid "Public conversations"
 msgstr "Conversas públicas"
 
-#: src/ej_conversations/routes.py:60
+#: src/ej_conversations/routes.py:65
 msgid "Participate voting and creating comments!"
 msgstr "Participe com votos e comentários!"
 
@@ -2201,23 +2201,33 @@ msgstr ""
 msgid "Request to generate a new password"
 msgstr "Pedido para gerar uma nova senha"
 
-#: src/ej_users/models.py:28
+#: src/ej_users/models.py:62
 msgid "email address"
 msgstr "endereço de email"
 
-#: src/ej_users/models.py:28
+#: src/ej_users/models.py:62
 msgid "Your e-mail address"
 msgstr "Seu endereço de e-mail"
 
-#: src/ej_users/models.py:30
+#: src/ej_users/models.py:64
 msgid "Name used to publicly identify user"
 msgstr "Apelido público usado para identificar o usuário"
 
-#: src/ej_users/models.py:63
+#: src/ej_users/models.py:68
+#, fuzzy
+msgid "Signature"
+msgstr "Registrar"
+
+#: src/ej_users/models.py:71
+#, fuzzy
+msgid "User signature"
+msgstr "Pontuação do usuário"
+
+#: src/ej_users/models.py:104
 msgid "User token"
 msgstr "Token do usuário"
 
-#: src/ej_users/models.py:109
+#: src/ej_users/models.py:150
 msgid "Anonymous"
 msgstr "Anônimo"
 
@@ -2623,7 +2633,15 @@ msgstr "Desculpe, você não pode criar novos murais."
 msgid "Create a new board!"
 msgstr "Criar um novo mural!"
 
-#: src/ej_boards/jinja2/ej_boards/conversation-list.jinja2:23
+#: src/ej_boards/jinja2/ej_boards/conversation-list.jinja2:20
+#, fuzzy, python-format
+msgid ""
+"In the current signature, you can create %(conversations_limit)s "
+"conversations."
+msgstr ""
+"Na sua assinatura atual, você pode criar %(conversations_limit)s conversas."
+
+#: src/ej_boards/jinja2/ej_boards/conversation-list.jinja2:26
 #: src/ej_conversations/jinja2/ej_conversations/includes/menu-list.jinja2:6
 msgid "New Conversation"
 msgstr "Nova conversa"
@@ -4430,9 +4448,6 @@ msgstr "Autenticação"
 #~ msgstr ""
 #~ "Este link de confirmação de email expirou ou é inválido. Por favor <a "
 #~ "href=\"%(email_url)s\">peça uma nova confirmação</a>."
-
-#~ msgid "Signup"
-#~ msgstr "Registrar"
 
 #~ msgid "Forgot Password?"
 #~ msgstr "Esqueceu a senha?"

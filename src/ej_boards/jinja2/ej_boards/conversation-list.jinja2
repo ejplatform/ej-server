@@ -16,6 +16,9 @@
 {%- if board.conversations.count() == 0 %}
     <div class="helptext helptext-center">{{ help_title }}</div>
 {% endif %}
+{% if not (request.user.is_staff or request.user.is_superuser) %}
+    <span class="helptext">{% trans %}In the current signature, you can create {{conversations_limit}} conversations.{% endtrans %}{{ ' ' }}</span>
+{% endif %}
 
 {%- if request.user.has_perm('ej.can_edit_board', board) and  board.conversations.count() == 0%}
     <div class="width-full margin-y4">
