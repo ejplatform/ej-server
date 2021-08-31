@@ -5,6 +5,17 @@ CHANGELOG of EJPlatform releases
 Here you can follow all the fixes and new features on every EJPlatform release.
 
 
+2.11.0 release
+====================
+
+* Date: Ago 31, 2021
+* Features
+- Adds new navigation menu for boards;
+- Adds user profile logo on header;
+- Adds limitation for conversation creation, based on user Signature;
+- Adds oauth2 authentication between EJ and Mautic;
+- Adds UI improvements on Webchat tool;
+
 2.10.0 release
 ====================
 
