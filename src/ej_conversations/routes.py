@@ -10,6 +10,7 @@ from django.utils.translation import ugettext_lazy as _
 from hyperpython import a
 
 from ej_boards.models import Board
+from ej_users.models import Signature
 
 from . import forms, models
 from .enums import TourStatus
@@ -53,6 +54,10 @@ def list_view(
     # Annotate queryset for efficient db access
     annotations = ("n_votes", "n_comments", "n_user_votes", "first_tag", "n_favorites", "author_name")
     queryset = queryset.cache_annotations(*annotations, user=user).order_by("-created")
+    if user.is_authenticated:
+        max_conversation_per_user = Signature(request.user).conversations_limit
+    else:
+        max_conversation_per_user = 0
 
     return {
         "conversations": queryset,
@@ -60,6 +65,7 @@ def list_view(
         "subtitle": _("Participate voting and creating comments!"),
         "board": Board,
         "help_title": help_title,
+        "conversations_limit": max_conversation_per_user,
         **(context or {}),
     }
 
@@ -113,7 +119,7 @@ def detail(request, conversation, slug=None, check=check_promoted):
 def create(request, context=None, **kwargs):
     kwargs.setdefault("is_promoted", True)
     form = forms.ConversationForm(request=request)
-    if form.is_valid_post():
+    if form.is_valid_post() and request.user.has_perm("ej.can_add_conversation"):
         with transaction.atomic():
             conversation = form.save_comments(request.user, **kwargs)
         return redirect(conversation.get_absolute_url())

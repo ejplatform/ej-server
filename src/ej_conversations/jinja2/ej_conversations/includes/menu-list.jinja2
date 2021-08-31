@@ -2,7 +2,7 @@
     <h3 id="menu-conversations">{{ _('Conversations') }}</h3>
     <ul>
         <li><a href="{{ url('conversation:list') }}">{{ _('Conversations') }}</a></li>
-        {% if request.user.has_perm('ej.can_promote_conversations') %}
+        {% if request.user.has_perm('ej.can_promote_conversations') and request.user.has_perm('ej.can_add_conversation') %}
             <li><a href="{{ url('conversation:create') }}">{{_('New Conversation') }}</a></li>
         {% endif %}
             <li><a href="{{ url('boards:board-list') }}">{{ _('Boards') }}</a></li>

@@ -15,6 +15,7 @@ FULL_EDITABLE_FIELDS = [
     "city",
     "state",
     "country",
+    "phone_number",
     "political_activity",
     "biography",
     "profile_photo",
