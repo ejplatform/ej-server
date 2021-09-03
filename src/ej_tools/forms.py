@@ -10,7 +10,7 @@ from .models import RasaConversation, ConversationComponent, MailingTool, Conver
 
 
 class CustomChoiceWidget(forms.RadioSelect):
-    template_name = "ej_conversations_tools/includes/custom-select.jinja2"
+    template_name = "ej_tools/includes/custom-select.jinja2"
     renderer = get_template(template_name)
 
     def render(self, name, value, attrs=None, renderer=None):
@@ -19,7 +19,7 @@ class CustomChoiceWidget(forms.RadioSelect):
 
 
 class CustomTemplateChoiceWidget(forms.RadioSelect):
-    template_name = "ej_conversations_tools/includes/template-type.jinja2"
+    template_name = "ej_tools/includes/template-type.jinja2"
     renderer = get_template(template_name)
 
     def render(self, name, value, attrs=None, renderer=None):

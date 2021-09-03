@@ -1,9 +1,9 @@
 from boogie.rest import rest_api
 from ej_conversations.models import Conversation
-from ej_conversations.tools.models import ConversationMautic, MauticClient
+from ej_tools.models import ConversationMautic, MauticClient
 from ej_conversations.models.vote import Vote
 from ej_conversations.utils import request_comes_from_ej_bot, request_promoted_conversations
-from .tools import api
+from ej_tools import api
 import json
 from datetime import datetime
 from rest_framework.response import Response

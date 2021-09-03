@@ -1,6 +1,6 @@
 import pytest
-from ej_conversations.tools.table import Tools
 from ej_boards.mommy_recipes import BoardRecipes
+from ej_tools.table import Tools
 
 
 class TestTemplateGenerator(BoardRecipes):

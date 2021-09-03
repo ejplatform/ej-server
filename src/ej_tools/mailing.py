@@ -55,7 +55,7 @@ class TemplateGenerator:
 
     def _render_jinja_template(self):
         root = os.path.dirname(os.path.abspath(__file__))
-        templates_dir = os.path.join(root, "../jinja2/ej_conversations_tools")
+        templates_dir = os.path.join(root, "./jinja2/ej_tools")
         print(templates_dir)
         env = Environment(loader=FileSystemLoader(templates_dir))
         template = env.get_template("{}_mailing_template.jinja2".format(self.template_type))
