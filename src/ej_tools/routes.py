@@ -12,16 +12,16 @@ from .forms import (
     MailingToolForm,
     MauticConversationForm,
 )
+from ej_conversations.models import Conversation
 from .models import RasaConversation, ConversationMautic, MauticOauth2Service, MauticClient
-from .. import models
-from ..tools.table import Tools
+from ej_conversations import models
+from .table import Tools
 
-
-app_name = "ej_conversations_tools"
+app_name = "ej_tools"
 urlpatterns = Router(
-    template="ej_conversations_tools/{name}.jinja2",
+    template="ej_tools/{name}.jinja2",
     models={
-        "conversation": models.Conversation,
+        "conversation": Conversation,
         "connection": RasaConversation,
         "mautic_connection": ConversationMautic,
     },

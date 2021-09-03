@@ -5,9 +5,9 @@ from django.test import TestCase
 from django.test.client import Client
 
 from ej_conversations.mommy_recipes import ConversationRecipes
-from ej_conversations.models import RasaConversation
-from ej_conversations.tools.forms import RasaConversationForm
-from ej_conversations.tools.routes import rasa
+from ej_tools.models import RasaConversation
+from ej_tools.forms import RasaConversationForm
+from ej_tools.routes import rasa
 
 ConversationRecipes.update_globals(globals())
 

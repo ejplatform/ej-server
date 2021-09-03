@@ -8,7 +8,7 @@ from ej_boards.utils import check_board, register_route
 from ej_clusters.models import Stereotype
 from ej_conversations import routes as conversations
 from ej_conversations.models import Conversation
-from ej_conversations.tools import routes as tools_routes
+from ej_tools import routes as tools_routes
 from ej_analysis import routes as analysis_routes
 from .forms import BoardForm
 

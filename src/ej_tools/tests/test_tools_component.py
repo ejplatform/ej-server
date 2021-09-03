@@ -1,9 +1,9 @@
 import pytest
 from ej_conversations.mommy_recipes import ConversationRecipes
 
-from ej_conversations.tools.forms import ConversationComponentForm
-from ej_conversations.tools.models import ConversationComponent
-from ej_conversations.tools.routes import opinion_component
+from ej_tools.forms import ConversationComponentForm
+from ej_tools.models import ConversationComponent
+from ej_tools.routes import opinion_component
 
 ConversationRecipes.update_globals(globals())
 

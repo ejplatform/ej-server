@@ -6,8 +6,8 @@ from unittest.mock import patch, MagicMock, Mock
 from django.core.exceptions import ValidationError
 
 from ej_conversations.mommy_recipes import ConversationRecipes
-from ej_conversations.tools.forms import MauticConversationForm
-from ej_conversations.tools.models import ConversationMautic, MauticOauth2Service, MauticClient
+from ej_tools.forms import MauticConversationForm
+from ej_tools.models import ConversationMautic, MauticOauth2Service, MauticClient
 
 ConversationRecipes.update_globals(globals())
 
@@ -80,9 +80,7 @@ class TestMauticConversationForm(ConversationRecipes):
 
 
 class TestConversationMauticModel:
-    @patch(
-        "ej_conversations.tools.models.requests", MockRequests(SUCCESS_CODE, CREATED_CODE, '{"total": 0}')
-    )
+    @patch("ej_tools.models.requests", MockRequests(SUCCESS_CODE, CREATED_CODE, '{"total": 0}'))
     def test_create_new_valid_contact_on_mautic(self, db, mk_conversation):
         conversation = mk_conversation()
         conversation_mautic_attributes = conversation_mautic_mock(conversation)
@@ -92,7 +90,7 @@ class TestConversationMauticModel:
         response = mautic_client.check_or_create_contact(TEST_PHONE_NUMBER, TEST_DOMAIN)
         assert response.status_code == 201
 
-    @patch("ej_conversations.tools.models.requests", MockRequests(SUCCESS_CODE, CREATED_CODE))
+    @patch("ej_tools.models.requests", MockRequests(SUCCESS_CODE, CREATED_CODE))
     def test_create_mautic_connection_with_valid_url(self, db, mk_conversation):
         conversation = mk_conversation()
         conversation_mautic_attributes = conversation_mautic_mock(conversation)
@@ -103,7 +101,7 @@ class TestConversationMauticModel:
         assert TEST_DOMAIN in response
 
     @patch(
-        "ej_conversations.tools.models.requests",
+        "ej_tools.models.requests",
         MockRequests(MauticOauth2Service.TIMEOUT_CODE, CREATED_CODE),
     )
     def test_create_mautic_connection_with_invalid_url(self, db, mk_conversation):
@@ -122,7 +120,7 @@ class TestConversationMauticModel:
         )
 
     @patch(
-        "ej_conversations.tools.models.requests",
+        "ej_tools.models.requests",
         MockRequests(
             CREATED_CODE,
             MauticOauth2Service.BAD_REQUEST_CODE,
@@ -138,7 +136,7 @@ class TestConversationMauticModel:
         response = oauth2_service.generate_new_token()
         assert response.status_code == MauticOauth2Service.BAD_REQUEST_CODE
 
-    @patch("ej_conversations.tools.models.requests", MockRequests(TIMEOUT_CODE, SUCCESS_CODE))
+    @patch("ej_tools.models.requests", MockRequests(TIMEOUT_CODE, SUCCESS_CODE))
     def test_create_mautic_connection_timeout(self, db, mk_conversation):
         conversation = mk_conversation()
         conversation_mautic_attributes = conversation_mautic_mock(conversation)

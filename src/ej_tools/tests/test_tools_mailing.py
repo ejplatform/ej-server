@@ -1,8 +1,8 @@
 import pytest
 import mock
-from ej_conversations.tools.mailing import TemplateGenerator
 from ej_boards.mommy_recipes import BoardRecipes
-from ej_conversations.tools.forms import MailingToolForm
+from ej_tools.mailing import TemplateGenerator
+from ej_tools.forms import MailingToolForm
 
 
 class TestTemplateGenerator(BoardRecipes):

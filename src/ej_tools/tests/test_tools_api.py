@@ -1,8 +1,9 @@
 import pytest
 from rest_framework.test import APIClient
 from rest_framework.authtoken.models import Token
-from ej_conversations.tools.models import RasaConversation
+from ej_tools.models import RasaConversation
 from ej_users.models import User
+from ej_conversations.tests.conftest import conversation, user, api
 
 BASE_URL = "/api/v1"
 TEST_DOMAIN = "https://domain.com.br"

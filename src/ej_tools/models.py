@@ -1,7 +1,6 @@
 import requests
 import json
 from django.utils.translation import ugettext_lazy as _
-from django.core.validators import RegexValidator
 from boogie import models
 from boogie.rest import rest_api
 from django.core.exceptions import ValidationError
@@ -20,8 +19,9 @@ class RasaConversation(models.Model):
     """
 
     conversation = models.ForeignKey(
-        "Conversation", on_delete=models.CASCADE, related_name="rasa_conversations"
+        "ej_conversations.Conversation", on_delete=models.CASCADE, related_name="rasa_conversations"
     )
+
     domain = models.URLField(
         _("Domain"),
         max_length=255,
@@ -119,7 +119,7 @@ class ConversationMautic(models.Model):
     refresh_token = models.CharField(_("Refresh Token"), max_length=200, blank=True)
     url = models.URLField(_("Mautic URL"), max_length=255, help_text=_("Generated Url from Mautic."))
     conversation = models.ForeignKey(
-        "Conversation", on_delete=models.CASCADE, related_name="mautic_integration"
+        "ej_conversations.Conversation", on_delete=models.CASCADE, related_name="mautic_integration"
     )
 
     class Meta:
