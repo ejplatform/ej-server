@@ -46,6 +46,7 @@ def list_view(
     help_title="",
 ):
     user = request.user
+    user_boards = []
     # Select the list of conversations: staff get to see hidden conversations while
     # regular users cannot
     if not (user.is_staff or user.is_superuser or user.has_perm("ej_conversations.can_publish_promoted")):
@@ -56,6 +57,7 @@ def list_view(
     queryset = queryset.cache_annotations(*annotations, user=user).order_by("-created")
     if user.is_authenticated:
         max_conversation_per_user = Signature(request.user).conversations_limit
+        user_boards = Board.objects.filter(owner=user)
     else:
         max_conversation_per_user = 0
 
@@ -63,10 +65,10 @@ def list_view(
         "conversations": queryset,
         "title": _(title),
         "subtitle": _("Participate voting and creating comments!"),
-        "board": Board,
+        "board": None,
         "help_title": help_title,
         "conversations_limit": max_conversation_per_user,
-        **(context or {}),
+        **(context or {"user_boards": user_boards}),
     }
 
 
@@ -118,12 +120,16 @@ def detail(request, conversation, slug=None, check=check_promoted):
 @urlpatterns.route("add/", perms=["ej.can_promote_conversations"])
 def create(request, context=None, **kwargs):
     kwargs.setdefault("is_promoted", True)
+    user = request.user
     form = forms.ConversationForm(request=request)
     if form.is_valid_post() and request.user.has_perm("ej.can_add_conversation"):
         with transaction.atomic():
             conversation = form.save_comments(request.user, **kwargs)
         return redirect(conversation.get_absolute_url())
-    return {"form": form, **(context or {})}
+    return {
+        "form": form,
+        **(context or {"board": None, "user_boards": Board.objects.filter(owner=user)}),
+    }  # TODO /conversation/add está funcionando para o admin, por isso foi preciso setar o board: None
 
 
 @urlpatterns.route(conversation_url + "edit/", perms=["ej.can_edit_conversation:conversation"])

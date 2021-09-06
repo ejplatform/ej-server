@@ -2,6 +2,13 @@
     <h3 id="menu-conversation">{{ _('Conversation') }}</h3>
     <ul>
         <li><a href="{{ conversation.url('conversation:detail') }}">{{ _('Conversation') }}</a></li>
+        <li>    
+            {% if request.user.id == conversation.author_id and conversation.boards.count() %}
+            <a href="{{ url('boards:conversation-list', board=conversation.boards.first()) }}">{{ _('Boards') }}</a>
+            {% elif request.user.id != conversation.author_id and request.user.boards.count() %}
+            <a href="{{ url('boards:conversation-list', board=request.user.boards.first()) }}">{{ _('Boards') }}</a>
+            {% endif %}
+        </li>
         {% for link in page_menu.links('conversations:detail-actions', request, conversation) %}
             <li>{{ link }}</li>
         {% endfor %}

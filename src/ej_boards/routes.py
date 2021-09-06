@@ -46,7 +46,7 @@ def board_list(request):
 
 
 @urlpatterns.route(board_profile_admin_url + "add/", login=True)
-def board_create(request):
+def board_create(request):  # TODO arrumar o navigation dele
     form = BoardForm(request=request)
     if form.is_valid_post():
         board = form.save(owner=request.user)
@@ -56,8 +56,6 @@ def board_create(request):
 
 @urlpatterns.route("<model:board>/edit/", perms=["ej.can_edit_board:board"])
 def board_edit(request, board):
-    user = request.user
-    boards = user.boards.all()
     form = BoardForm(instance=board, request=request)
     form.fields["slug"].help_text = _("You cannot change this value")
     form.fields["slug"].disabled = True
@@ -65,7 +63,7 @@ def board_edit(request, board):
     if form.is_valid_post():
         form.save()
         return redirect(board.get_absolute_url())
-    return {"form": form, "board": board, "user_boards": boards}
+    return {"form": form, "board": board, "user_boards": Board.objects.filter(owner=request.user)}
 
 
 #
@@ -78,13 +76,10 @@ def board_base(request, board):
 
 @urlpatterns.route(board_base_url)
 def conversation_list(request, board):
-    user = request.user
-    boards = user.boards.all()
-
     return conversations.list_view(
         request,
         queryset=board.conversations.annotate_attr(board=board),
-        context={"board": board, "user_boards": boards},
+        context={"board": board, "user_boards": Board.objects.filter(owner=request.user)},
         title=board.title,
         help_title=_(
             "Welcome to EJ. This is your personal board. Board is where your conversations will be available. Press 'New conversation' to starts collecting yours audience opinion."
@@ -94,7 +89,11 @@ def conversation_list(request, board):
 
 @urlpatterns.route(board_base_url + "add/", perms=["ej.can_edit_board:board"])
 def conversation_create(request, board):
-    return conversations.create(request, board=board, context={"board": board})
+    return conversations.create(
+        request,
+        board=board,
+        context={"board": board, "user_boards": Board.objects.filter(owner=request.user)},
+    )
 
 
 @urlpatterns.route(board_conversation_url, login=True)
