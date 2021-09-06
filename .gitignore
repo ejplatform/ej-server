@@ -118,3 +118,5 @@ cc-test-reporter
 *.mo
 
 src/ej_analysis/visualizations/opinion_component/lib/analytics/client_secrets.json
+
+.local.vimrc
