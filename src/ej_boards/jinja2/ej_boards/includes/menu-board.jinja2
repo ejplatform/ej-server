@@ -15,9 +15,11 @@
 <nav title="{{ _('Administration') }}">
     <h3>{{ _('Administration') }}</h3>
     <ul>
-        <li><a href="{{ url('boards:board-edit', board=board) }}">{{ _('Edit board') }}</a></li>
-        {%- if request.user.has_perm('ej.can_add_conversation')%}
-            <li><a href="{{ url('boards:conversation-create', board=board) }}">{{ _('New conversation') }}</a></li>
+        {% if board %}
+            <li><a href="{{ url('boards:board-edit', board=board) }}">{{ _('Edit board') }}</a></li>
+            {%- if request.user.has_perm('ej.can_edit_board', board) %}
+                <li><a href="{{ url('boards:conversation-create', board=board) }}">{{ _('New conversation') }}</a></li>
+            {% endif %}
         {% endif %}
         <li><a href="{{ url('conversation:list') }}">{{ _('Public conversations') }}</a></li>
     </ul>

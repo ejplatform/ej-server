@@ -1,6 +1,12 @@
 {% extends 'base.jinja2' %}
 {% set main_class = main_class|default('container pad-x0') %}
-{% block menu %}{% include 'ej_conversations/includes/menu-list.jinja2' %}{% endblock %}
+{% block menu %}
+    {% if request.user.is_authenticated %}
+        {% include 'ej_boards/includes/menu-board.jinja2' %}
+    {% else %}
+        {% include 'ej_conversations/includes/menu-list.jinja2' %}
+    {% endif %}
+{% endblock %}
 
 {% block content %}
 <h1 class="h2 text-accent center margin-b3">{{ title }}</h1>
