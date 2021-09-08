@@ -108,4 +108,6 @@ def statistics_for_user(conversation, user):
         "votes": given_votes,
         "missing_votes": max_votes - given_votes,
         "participation_ratio": given_votes / (max_votes + e),
+        "total_comments": max_votes,
+        "comments": given_votes + 1,
     }
