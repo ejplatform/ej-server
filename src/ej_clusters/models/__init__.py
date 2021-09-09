@@ -53,7 +53,3 @@ def _patch_conversation_app():
             ]
         else:
             return []
-
-    @register_menu("conversations:detail-actions")
-    def _detail_links(request, conversation):
-        return [a(_("Opinion groups"), href=conversation.url("cluster:index"))]
