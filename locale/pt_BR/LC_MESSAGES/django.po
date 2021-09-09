@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-03 15:07-0300\n"
+"POT-Creation-Date: 2021-09-09 19:47-0300\n"
 "PO-Revision-Date: 2019-09-09 13:55-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -158,7 +158,7 @@ msgstr "Você não pode alterar este valor depois"
 msgid "My Board"
 msgstr "Meu mural"
 
-#: src/ej_boards/models.py:20 src/ej_tools/models.py:69
+#: src/ej_boards/models.py:20 src/ej_tools/models.py:68
 msgid "Default"
 msgstr "Padrão"
 
@@ -211,11 +211,11 @@ msgstr "Mural"
 msgid "Slug already exists."
 msgstr "Identificador já existe."
 
-#: src/ej_boards/routes.py:61
+#: src/ej_boards/routes.py:60
 msgid "You cannot change this value"
 msgstr "Você não pode mudar este valor"
 
-#: src/ej_boards/routes.py:88
+#: src/ej_boards/routes.py:85
 msgid ""
 "Welcome to EJ. This is your personal board. Board is where your "
 "conversations will be available. Press 'New conversation' to starts "
@@ -293,10 +293,6 @@ msgstr "Editar grupos"
 msgid "Manage personas"
 msgstr "Gerenciar personas"
 
-#: src/ej_clusters/models/__init__.py:59 src/ej_clusters/roles.py:18
-msgid "Opinion groups"
-msgstr "Grupos de opinião"
-
 #: src/ej_clusters/models/cluster.py:26 src/ej_clusters/models/stereotype.py:22
 #: src/ej_dataviz/roles.py:139 src/ej_dataviz/routes.py:452
 #: src/ej_gamification/admin.py:33 src/ej_gamification/routes.py:124
@@ -344,6 +340,10 @@ msgid ""
 "This conversation has {n_groups} groups, and you are in group {group_id}."
 msgstr ""
 "Esta conversa possui {n_groups} grupos e você está no grupo {group_id}."
+
+#: src/ej_clusters/roles.py:18
+msgid "Opinion groups"
+msgstr "Grupos de opinião"
 
 #: src/ej_clusters/routes.py:58
 msgid "Error"
@@ -661,7 +661,7 @@ msgstr "{n} de {m} comentários"
 msgid "Public conversations"
 msgstr "Conversas públicas"
 
-#: src/ej_conversations/routes.py:66
+#: src/ej_conversations/routes.py:67
 msgid "Participate voting and creating comments!"
 msgstr "Participe com votos e comentários!"
 
@@ -773,10 +773,6 @@ msgstr "Nuvem de pontos"
 #: src/ej_dataviz/models.py:14
 msgid "Word cloud"
 msgstr "Nuvem de palavras"
-
-#: src/ej_dataviz/models.py:21
-msgid "Usage report"
-msgstr "Relatório de uso"
 
 #: src/ej_dataviz/roles.py:129 src/ej_gamification/routes.py:146
 msgid "Author"
@@ -1923,37 +1919,37 @@ msgstr "Domínio"
 msgid "The domain that the rasa bot webchat is hosted."
 msgstr "O domínio do site que hospeda o webchat do rasa bot."
 
-#: src/ej_tools/models.py:47 src/ej_tools/tests/test_rasa_integrations.py:63
+#: src/ej_tools/models.py:46 src/ej_tools/tests/test_rasa_integrations.py:63
 #, fuzzy
 msgid "a conversation can have a maximum of five domains"
 msgstr "Uma conversa pode ter no máximo cinco links integrados."
 
-#: src/ej_tools/models.py:57
+#: src/ej_tools/models.py:56
 #, fuzzy
 msgid "Register using name/email"
 msgstr "Registrar usando nome/email"
 
-#: src/ej_tools/models.py:58 src/ej_tools/models.py:102
+#: src/ej_tools/models.py:57 src/ej_tools/models.py:101
 #: src/ej_tools/routes.py:165 src/ej_tools/table.py:35
 msgid "Mautic"
 msgstr ""
 
-#: src/ej_tools/models.py:59
+#: src/ej_tools/models.py:58
 msgid "Analytics"
 msgstr ""
 
-#: src/ej_tools/models.py:63
+#: src/ej_tools/models.py:62
 msgid ""
 "User will use EJ platform interface, creating an account using personal data"
 msgstr ""
 "Usuário interagirá com a interface da EJ, criando uma conta com dados "
 "pessoais (email e nome)."
 
-#: src/ej_tools/models.py:64 src/ej_tools/models.py:108
+#: src/ej_tools/models.py:63 src/ej_tools/models.py:107
 msgid "Uses a mautic campaign "
 msgstr "Usa uma campanha do mautic"
 
-#: src/ej_tools/models.py:65
+#: src/ej_tools/models.py:64
 msgid ""
 "Uses analytics cookies allowing you to cross vote data with user browser "
 "data."
@@ -1961,56 +1957,56 @@ msgstr ""
 "Usa cookies do analytics para cruzar dados de voto com os dados do navegador "
 "do usuário."
 
-#: src/ej_tools/models.py:70
+#: src/ej_tools/models.py:69
 msgid "Votorantim"
 msgstr ""
 
-#: src/ej_tools/models.py:71
+#: src/ej_tools/models.py:70
 msgid "ICD"
 msgstr ""
 
-#: src/ej_tools/models.py:103
+#: src/ej_tools/models.py:102
 msgid "MailChimp"
 msgstr ""
 
-#: src/ej_tools/models.py:107
+#: src/ej_tools/models.py:106
 #, fuzzy
 msgid "Mailchimp campaign"
 msgstr "Campanha de email"
 
-#: src/ej_tools/models.py:117
+#: src/ej_tools/models.py:116
 msgid "Client ID"
 msgstr "Chave pública"
 
-#: src/ej_tools/models.py:118
+#: src/ej_tools/models.py:117
 #, fuzzy
 msgid "Client Secret"
 msgstr "Chave secreta"
 
-#: src/ej_tools/models.py:119
+#: src/ej_tools/models.py:118
 #, fuzzy
 msgid "Mautic Access Token"
 msgstr "Token de acesso"
 
-#: src/ej_tools/models.py:120
+#: src/ej_tools/models.py:119
 #, fuzzy
 msgid "Refresh Token"
 msgstr "Atualizar token"
 
-#: src/ej_tools/models.py:121
+#: src/ej_tools/models.py:120
 msgid "Mautic URL"
 msgstr "URL do Mautic"
 
-#: src/ej_tools/models.py:121
+#: src/ej_tools/models.py:120
 msgid "Generated Url from Mautic."
 msgstr "Url gerada no Mautic."
 
-#: src/ej_tools/models.py:188
+#: src/ej_tools/models.py:187
 msgid "Client not found."
 msgstr "Chave do Mautic não encontrada"
 
-#: src/ej_tools/models.py:192
-#: src/ej_tools/tests/test_mautic_integrations.py:119
+#: src/ej_tools/models.py:191
+#: src/ej_tools/tests/test_mautic_integrations.py:117
 #, fuzzy
 msgid ""
 "Couldn't find a mautic instance on the url provided. Check your mautic url "
@@ -2019,26 +2015,26 @@ msgstr ""
 "Não foi possível localizar uma instância do Mautic com a URL fornecida. "
 "Verifique sua url do Mautic e a url de redirecionamento na página do Mautic."
 
-#: src/ej_tools/models.py:213
+#: src/ej_tools/models.py:212
 msgid "Couldn't generate tokens."
 msgstr "Não foi possível gerar os tokens."
 
-#: src/ej_tools/models.py:236
+#: src/ej_tools/models.py:235
 #, fuzzy
 msgid "Couldn't generate new token."
 msgstr "Não foi possível gerar os tokens."
 
-#: src/ej_tools/models.py:282
+#: src/ej_tools/models.py:281
 #, fuzzy
 msgid "There was an error connection to mautic server, please check your url."
 msgstr "Houve um erro na conexao com o Mautic, por favor verifique a URL."
 
-#: src/ej_tools/models.py:321
+#: src/ej_tools/models.py:320
 msgid "Couldn't create a new contact in Mautic."
 msgstr ""
 
-#: src/ej_tools/models.py:325
-#: src/ej_tools/tests/test_mautic_integrations.py:151
+#: src/ej_tools/models.py:324
+#: src/ej_tools/tests/test_mautic_integrations.py:149
 msgid "There was an error connection to mautic server, please try again."
 msgstr "Houve um erro na conexao com o Mautic, por favor tente novamente."
 
@@ -3013,7 +3009,21 @@ msgstr "Aprovar"
 msgid "Go to conversation"
 msgstr "Voltar para conversa"
 
-#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:23
+#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:21
+msgid "Reports"
+msgstr "Relatórios"
+
+#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:25
+#, fuzzy
+msgid "General report"
+msgstr "Relatório Geral"
+
+#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:27
+#, fuzzy
+msgid "Comments report"
+msgstr "Relatório de comentários"
+
+#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:39
 msgid "Back to conversations"
 msgstr "Voltar para conversas"
 
@@ -4001,6 +4011,9 @@ msgstr "Mudar a senha"
 #, fuzzy
 msgid "Authentication"
 msgstr "Autenticação"
+
+#~ msgid "Usage report"
+#~ msgstr "Relatório de uso"
 
 #, fuzzy
 #~ msgid "A contact with your phone number already exists."

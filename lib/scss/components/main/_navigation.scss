@@ -251,6 +251,30 @@ body {
             }
         }
     }
+    .report-section {
+        .display-reports {
+            label {
+                cursor: pointer;
+                color: unset;
+                text-indent: unset;
+                margin-bottom: unset;
+            }
+            #isexpanded3 {
+                display: none;
+            }
+        }
+        ul {
+            display: none;
+            position: relative;
+            left: 20px;
+            li a{
+                font-weight: unset;
+            }
+        }
+        #isexpanded3:checked + label > i {
+            transform: rotate(180deg);
+        }
+    }
 }
 
 @include breakpoint("sm") {
