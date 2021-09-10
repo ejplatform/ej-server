@@ -2291,7 +2291,6 @@ msgstr "Painel"
 #: src/ej/templates/jinja2/ej/includes/footer.jinja2:15
 #: src/ej/templates/jinja2/ej/includes/footer.jinja2:20
 #: src/ej/templates/jinja2/ej/includes/footer.jinja2:27
-#: src/ej/templates/jinja2/ej/includes/footer.jinja2:29
 #: src/ej_clusters/jinja2/ej_clusters/includes/stereotypes-menu.jinja2:2
 #: src/ej_clusters/jinja2/ej_clusters/includes/stereotypes-menu.jinja2:8
 #: src/ej_clusters/jinja2/ej_clusters/includes/stereotypes-menu.jinja2:9

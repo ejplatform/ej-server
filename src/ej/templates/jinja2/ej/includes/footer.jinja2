@@ -24,9 +24,8 @@
         {% endif %}
     {# For route without profile #}   
     {% else %}
-        {% call link_macro('profile:detail', title=_('Profile'), class_='main-footer__link') %}
-            <img src="{{ static('img/icons/navbar_profile.svg') }}" alt="">
-            <span>{{ _('Profile') }}</span>
+        {% call link_macro('profile:detail', title=_('Profile')) %}
+            <img class="main-footer__avatar" src="{{ static('img/icons/navbar_profile.svg') }}" alt="">
         {% endcall %}
     {% endif %}  
 </nav>
