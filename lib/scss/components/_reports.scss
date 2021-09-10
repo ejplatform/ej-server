@@ -1,0 +1,44 @@
+.report-card {
+    margin-bottom: 42px;
+}
+.report-card dl {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: unset;
+
+    dt {
+        width: unset;
+    }
+    dd {
+        position: unset;
+        margin-bottom: 1.5rem;
+    }
+}
+
+.report-card dl:not(:last-child) {
+    margin-right: 1rem;
+    width: 5rem;
+}
+
+.word-cloud-card {
+    box-sizing: border-box;
+    border: 1px solid #BABABA;
+    width: 100%;
+    height: 388px;
+    border-radius: 5px;
+    margin-bottom: 42px;
+    position: relative;
+    p {
+        position: absolute;
+        left: 1rem;
+        top: 1rem;
+    }
+}
+
+@media (min-width: 1460px) {
+    .report-card-list {
+        display: flex; 
+        flex-wrap: wrap; 
+        justify-content: space-between;
+    }
+}

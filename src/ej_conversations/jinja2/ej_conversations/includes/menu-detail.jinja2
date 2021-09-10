@@ -22,7 +22,7 @@
             </div>
             <ul id="report-options-list">
                 {% if request.user.has_perm("ej.can_view_report", conversation) %}
-                <li><a href=" {{ conversation.url('report:index') }}">{{ _('General report') }}</a></li>
+                <li><a href=" {{ conversation.url('report:general-report') }}">{{ _('General report') }}</a></li>
                 {% endif %}
                 <li><a href="">{{ _('Comments report') }}</a></li>
                 <li><a href=" {{ conversation.url('cluster:index') }}">{{ _('Opinion groups') }}</a></li>

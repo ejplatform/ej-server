@@ -6,16 +6,10 @@
         {% trans n = statistics.participants.voters %}Basic report ({{ n }} users){% endtrans %}
     </h1>
 
-    <div class="pad-3 rounded-3 shadow margin-3" style="background: rgba(0, 0, 0, 0.05)">
-        <strong class="uppercase bold text-4">{% trans %}Votes{% endtrans %}</strong>
-        {{ conversation|role('stats-table', class_='margin-x3') }}
+    {% include 'ej_dataviz/report/includes/votes-card.jinja2' %}
 
-    </div>
+    {% include 'ej_dataviz/report/includes/comments-card.jinja2' %}
 
-    <div class="pad-3 rounded-3 shadow margin-3" style="background: rgba(0, 0, 0, 0.05)">
-        <strong class="uppercase bold text-4">{% trans %}Comments{% endtrans %}</strong>
-        {{ conversation|role('stats-table', data='comments', class_='margin-x3') }}
-    </div>
     {% if can_view_detail %}{{ conversation|role('download-data', which='votes-data') }}{% endif %}
 
     <h2 class="h3 text-accent center" id="report-comments">{% trans %}Comments{% endtrans %}</h2>
