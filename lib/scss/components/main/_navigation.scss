@@ -85,7 +85,7 @@ body {
     }
 
     &__avatar {
-        object-fit: cover;
+        object-fit: contain !important;
         border-radius: $avatar-border;
         width: $avatar-height;
         height: $avatar-height;
@@ -169,7 +169,7 @@ body {
         }
 
         &__avatar {
-            object-fit: cover;
+            object-fit: contain;
             border-radius: $avatar-border;
             width: $avatar-height;
             height: $avatar-height;
