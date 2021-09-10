@@ -11,5 +11,4 @@ from ej.components.menu import register_menu
 def dataviz_links(request, conversation):
     return [
         a(_("Scatter plot"), href=conversation.url("dataviz:scatter")),
-        a(_("Word cloud"), href=conversation.url("dataviz:word-cloud")),
     ]

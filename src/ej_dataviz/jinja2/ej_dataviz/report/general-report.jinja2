@@ -1,0 +1,15 @@
+{% extends 'ej_dataviz/report/base.jinja2' %}
+
+{% block report %}
+    <h1 class="h2 text-accent divider">
+        {{_('General Report')}}
+    </h1>
+    <div class="report-card-list">
+    {% include 'ej_dataviz/report/includes/votes-card.jinja2' %}
+    {% include 'ej_dataviz/report/includes/comments-card.jinja2' %}
+    </div>
+    <div id="word-cloud-card-id" class="word-cloud-card">
+        <p>{{ _('Word cloud')}}</p> 
+        {% include 'ej_dataviz/report/includes/word-cloud-card.jinja2' %}   
+    </div>
+{% endblock %}
