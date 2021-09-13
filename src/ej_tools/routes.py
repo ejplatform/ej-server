@@ -4,6 +4,7 @@ from boogie.router import Router
 from django.utils.translation import ugettext_lazy as _
 from django.http import HttpResponse
 from django.shortcuts import redirect
+from django.core.exceptions import ValidationError
 from .utils import npm_version, user_can_add_new_domain, prepare_host_with_https
 from .forms import (
     RasaConversationForm,
@@ -16,6 +17,7 @@ from ej_conversations.models import Conversation
 from .models import RasaConversation, ConversationMautic, MauticOauth2Service, MauticClient
 from ej_conversations import models
 from .table import Tools
+
 
 app_name = "ej_tools"
 urlpatterns = Router(
@@ -91,7 +93,6 @@ def rasa(request, conversation, slug):
         if form.is_valid():
             form.save()
             form = RasaConversationForm()
-
     else:
         form = RasaConversationForm()
 

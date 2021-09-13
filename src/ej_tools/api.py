@@ -8,9 +8,8 @@ from .models import RasaConversation
 @rest_api.list_action("ej_tools.RasaConversation")
 def integrations(request):
     domain = request.GET.get("domain")
-    integrations = RasaConversation.objects.filter(domain=domain)
-    if len(integrations) > 0:
-        integration = integrations[0]
+    try:
+        integration = RasaConversation.objects.get(domain=domain)
         return {
             "conversation": {
                 "id": integration.conversation.id,
@@ -19,7 +18,8 @@ def integrations(request):
             },
             "domain": integration.domain,
         }
-    return {}
+    except RasaConversation.DoesNotExist:
+        return {}
 
 
 @rest_api.detail_action("ej_tools.RasaConversation")

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-09 19:47-0300\n"
+"POT-Creation-Date: 2021-09-08 23:22-0300\n"
 "PO-Revision-Date: 2019-09-09 13:55-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -1911,6 +1911,17 @@ msgstr "Adicione um título customizado ao template (opcional)."
 msgid "selects a specific comment for user to vote (optional)."
 msgstr "Selecione um comentário específico para o usuário votar (opcional)."
 
+#: src/ej_tools/forms.py:76 src/ej_tools/tests/test_rasa_integrations.py:49
+#, fuzzy
+msgid "Rasa conversation with this Conversation and Domain already exists."
+msgstr "Uma conexão com esse nome já existe nessa conversa."
+
+#: src/ej_tools/forms.py:79
+#, python-format
+msgid ""
+"Site already integrated with conversation %(conversation)s, try another url."
+msgstr "Esse site já está integrado com a conversa %(conversation)s, tente outra url."
+
 #: src/ej_tools/models.py:26
 msgid "Domain"
 msgstr "Domínio"
@@ -1919,7 +1930,7 @@ msgstr "Domínio"
 msgid "The domain that the rasa bot webchat is hosted."
 msgstr "O domínio do site que hospeda o webchat do rasa bot."
 
-#: src/ej_tools/models.py:46 src/ej_tools/tests/test_rasa_integrations.py:63
+#: src/ej_tools/models.py:46 src/ej_tools/tests/test_rasa_integrations.py:73
 #, fuzzy
 msgid "a conversation can have a maximum of five domains"
 msgstr "Uma conversa pode ter no máximo cinco links integrados."
@@ -1930,7 +1941,7 @@ msgid "Register using name/email"
 msgstr "Registrar usando nome/email"
 
 #: src/ej_tools/models.py:57 src/ej_tools/models.py:101
-#: src/ej_tools/routes.py:165 src/ej_tools/table.py:35
+#: src/ej_tools/routes.py:166 src/ej_tools/table.py:35
 msgid "Mautic"
 msgstr ""
 
@@ -2038,16 +2049,16 @@ msgstr ""
 msgid "There was an error connection to mautic server, please try again."
 msgstr "Houve um erro na conexao com o Mautic, por favor tente novamente."
 
-#: src/ej_tools/routes.py:57 src/ej_tools/table.py:11
+#: src/ej_tools/routes.py:59 src/ej_tools/table.py:11
 msgid "Mailing campaign"
 msgstr "Campanha de email"
 
-#: src/ej_tools/routes.py:74 src/ej_tools/table.py:19
+#: src/ej_tools/routes.py:76 src/ej_tools/table.py:19
 #, fuzzy
 msgid "Opinion component"
 msgstr "Componente de opinião"
 
-#: src/ej_tools/routes.py:103 src/ej_tools/table.py:27
+#: src/ej_tools/routes.py:104 src/ej_tools/table.py:27
 msgid "Rasa Webchat"
 msgstr ""
 
@@ -2095,10 +2106,10 @@ msgstr ""
 msgid "Enter a valid URL."
 msgstr "Insira uma URL válida."
 
-#: src/ej_tools/tests/test_rasa_integrations.py:50
-#, fuzzy
-msgid "Rasa conversation with this Conversation and Domain already exists."
-msgstr "Uma conexão com esse nome já existe nessa conversa."
+#: src/ej_tools/tests/test_rasa_integrations.py:60
+msgid ""
+"Site already integrated with conversation Conversation, try another url."
+msgstr "Esse site já está integrado com a conversa Conversation, tente outra url."
 
 #: src/ej_users/admin.py:14
 msgid "Permissions"
