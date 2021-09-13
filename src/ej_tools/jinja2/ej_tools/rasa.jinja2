@@ -29,7 +29,7 @@
         {% if conversation_rasa_connections %}
             <table id="template-table">
                 <tr class="table-header">
-                    <th>{{_("Domain")}}</th>
+                    <th>URL</th>
                     {% if is_valid_user %}
                         <th id="th-remove">{{_("Remove")}}</th>
                     {% endif %}
@@ -55,7 +55,7 @@
             {% block form_content %}
                 <div class="form-div">
                     {{ form.non_field_errors() }}
-                    {{ form.domain.errors }}                 
+                    {{ form.domain.errors }}
                     <label id="domain-label">{{_("new")}} {{ form.domain.label }}</label>
                     <div class="domain-form">
                         {{ form.domain }}

@@ -1,7 +1,9 @@
 from django import forms
 from django.template.loader import get_template
 from django.utils.translation import ugettext_lazy as _
-from django.core.exceptions import ValidationError
+from django.core.exceptions import ValidationError, NON_FIELD_ERRORS
+from django.db.models import Q
+
 
 from ej_boards.forms import PaletteWidget
 from ej_conversations.models import Comment
@@ -66,6 +68,22 @@ class MailingToolForm(forms.Form):
 
 
 class RasaConversationForm(EjModelForm):
+    def clean_domain(self):
+        incoming_domain = str(self.cleaned_data["domain"])
+        if incoming_domain[-1] == "/":
+            incoming_domain = str(self.cleaned_data["domain"])[:-1]
+        domain = RasaConversation.objects.filter(
+            Q(domain=incoming_domain) | Q(domain=incoming_domain + "/")
+        ).first()
+        if domain == None:
+            return self.cleaned_data["domain"]
+        if domain.conversation == self.cleaned_data["conversation"]:
+            raise ValidationError(_("Rasa conversation with this Conversation and Domain already exists."))
+        raise ValidationError(
+            _("Site already integrated with conversation %(conversation)s, try another url."),
+            params={"conversation": domain.conversation},
+        )
+
     class Meta:
         model = RasaConversation
         fields = ["conversation", "domain"]
