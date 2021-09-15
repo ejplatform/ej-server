@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-08 23:22-0300\n"
+"POT-Creation-Date: 2021-09-14 14:08-0300\n"
 "PO-Revision-Date: 2019-09-09 13:55-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -294,7 +294,7 @@ msgid "Manage personas"
 msgstr "Gerenciar personas"
 
 #: src/ej_clusters/models/cluster.py:26 src/ej_clusters/models/stereotype.py:22
-#: src/ej_dataviz/roles.py:139 src/ej_dataviz/routes.py:453
+#: src/ej_dataviz/roles.py:139 src/ej_dataviz/routes.py:452
 #: src/ej_gamification/admin.py:33 src/ej_gamification/routes.py:124
 #: src/ej_gamification/routes.py:145
 msgid "Name"
@@ -770,10 +770,6 @@ msgstr "Visualização"
 msgid "Scatter plot"
 msgstr "Nuvem de pontos"
 
-#: src/ej_dataviz/models.py:14
-msgid "Word cloud"
-msgstr "Nuvem de palavras"
-
 #: src/ej_dataviz/roles.py:129 src/ej_gamification/routes.py:146
 msgid "Author"
 msgstr "Autor"
@@ -840,11 +836,11 @@ msgstr ""
 "0%: votos estão igualmente distribuidos\n"
 "100%: todos tem a mesma opinião"
 
-#: src/ej_dataviz/routes.py:41 src/ej_dataviz/routes.py:419
+#: src/ej_dataviz/routes.py:41 src/ej_dataviz/routes.py:418
 msgid "Gender"
 msgstr "Gênero"
 
-#: src/ej_dataviz/routes.py:42 src/ej_dataviz/routes.py:429
+#: src/ej_dataviz/routes.py:42 src/ej_dataviz/routes.py:428
 #: src/ej_profiles/models.py:29 src/ej_profiles/tests/test_models.py:46
 msgid "Race"
 msgstr "Raça"
@@ -857,87 +853,87 @@ msgstr "https://pt.wikipedia.org/wiki/An%C3%A1lise_de_componentes_principais"
 msgid "Not enough data"
 msgstr "Não há dados suficientes"
 
-#: src/ej_dataviz/routes.py:172
+#: src/ej_dataviz/routes.py:171
 msgid "{} persona"
 msgstr "{} persona"
 
-#: src/ej_dataviz/routes.py:184
+#: src/ej_dataviz/routes.py:183
 msgid "*Unknown*"
 msgstr "*Desconhecido*"
 
-#: src/ej_dataviz/routes.py:211
+#: src/ej_dataviz/routes.py:210
 msgid "PCA data"
 msgstr "Dados do PCA"
 
-#: src/ej_dataviz/routes.py:216 src/ej_dataviz/routes.py:217
-#: src/ej_dataviz/routes.py:218 src/ej_dataviz/routes.py:220
+#: src/ej_dataviz/routes.py:215 src/ej_dataviz/routes.py:216
+#: src/ej_dataviz/routes.py:217 src/ej_dataviz/routes.py:219
 msgid "You!"
 msgstr "Você!"
 
-#: src/ej_dataviz/routes.py:439 src/ej_profiles/models.py:36
+#: src/ej_dataviz/routes.py:438 src/ej_profiles/models.py:36
 #: src/ej_profiles/tests/test_models.py:39
 msgid "State"
 msgstr "Estado"
 
-#: src/ej_dataviz/routes_report.py:290
+#: src/ej_dataviz/routes_report.py:298
 msgid "agree"
 msgstr "concorda"
 
-#: src/ej_dataviz/routes_report.py:291
+#: src/ej_dataviz/routes_report.py:299
 msgid "author"
 msgstr "autor"
 
-#: src/ej_dataviz/routes_report.py:292
+#: src/ej_dataviz/routes_report.py:300
 msgid "author_id"
 msgstr "autor_id"
 
-#: src/ej_dataviz/routes_report.py:293
+#: src/ej_dataviz/routes_report.py:301
 msgid "choice"
 msgstr "escolha"
 
-#: src/ej_dataviz/routes_report.py:294
+#: src/ej_dataviz/routes_report.py:302
 #, fuzzy
 msgid "cluster"
 msgstr "Grupos"
 
-#: src/ej_dataviz/routes_report.py:295
+#: src/ej_dataviz/routes_report.py:303
 #, fuzzy
 msgid "cluster_id"
 msgstr "Grupos"
 
-#: src/ej_dataviz/routes_report.py:296
+#: src/ej_dataviz/routes_report.py:304
 msgid "comment"
 msgstr "comentário"
 
-#: src/ej_dataviz/routes_report.py:297
+#: src/ej_dataviz/routes_report.py:305
 msgid "comment_id"
 msgstr "comentário_id"
 
-#: src/ej_dataviz/routes_report.py:298
+#: src/ej_dataviz/routes_report.py:306
 msgid "convergence"
 msgstr "convergência"
 
-#: src/ej_dataviz/routes_report.py:299
+#: src/ej_dataviz/routes_report.py:307
 msgid "disagree"
 msgstr "discorda"
 
-#: src/ej_dataviz/routes_report.py:300 src/ej_profiles/enums.py:70
+#: src/ej_dataviz/routes_report.py:308 src/ej_profiles/enums.py:70
 msgid "email"
 msgstr "email"
 
-#: src/ej_dataviz/routes_report.py:301
+#: src/ej_dataviz/routes_report.py:309
 msgid "id"
 msgstr "id"
 
-#: src/ej_dataviz/routes_report.py:302 src/ej_profiles/enums.py:69
+#: src/ej_dataviz/routes_report.py:310 src/ej_profiles/enums.py:69
 msgid "name"
 msgstr "nome"
 
-#: src/ej_dataviz/routes_report.py:303
+#: src/ej_dataviz/routes_report.py:311
 msgid "participation"
 msgstr "participação"
 
-#: src/ej_dataviz/routes_report.py:304
+#: src/ej_dataviz/routes_report.py:312
 msgid "skipped"
 msgstr "pulados"
 
@@ -1885,42 +1881,43 @@ msgstr ""
 "Senhas vazias são permitidas somente se a variável "
 "EJ_ROCKETCHAT_ADMIN_PASSWORD estiver configurada."
 
-#: src/ej_tools/forms.py:32
+#: src/ej_tools/forms.py:34
 #, fuzzy
 msgid "Authentication Type"
 msgstr "Autenticação"
 
-#: src/ej_tools/forms.py:38 src/ej_tools/forms.py:50
+#: src/ej_tools/forms.py:40 src/ej_tools/forms.py:52
 msgid "Theme"
 msgstr "Tema"
 
-#: src/ej_tools/forms.py:44
+#: src/ej_tools/forms.py:46
 msgid "Template type"
 msgstr "Tipo de template"
 
-#: src/ej_tools/forms.py:53
+#: src/ej_tools/forms.py:55
 #, fuzzy
 msgid "Redirect user to a custom domain (optional)"
 msgstr "URL para redirecionamento (opcional)."
 
-#: src/ej_tools/forms.py:56
+#: src/ej_tools/forms.py:58
 msgid "Adds a custom title to the template (optional)."
 msgstr "Adicione um título customizado ao template (opcional)."
 
-#: src/ej_tools/forms.py:59
+#: src/ej_tools/forms.py:61
 msgid "selects a specific comment for user to vote (optional)."
 msgstr "Selecione um comentário específico para o usuário votar (opcional)."
 
-#: src/ej_tools/forms.py:76 src/ej_tools/tests/test_rasa_integrations.py:49
+#: src/ej_tools/forms.py:81 src/ej_tools/tests/test_rasa_integrations.py:49
 #, fuzzy
 msgid "Rasa conversation with this Conversation and Domain already exists."
 msgstr "Uma conexão com esse nome já existe nessa conversa."
 
-#: src/ej_tools/forms.py:79
+#: src/ej_tools/forms.py:83
 #, python-format
 msgid ""
 "Site already integrated with conversation %(conversation)s, try another url."
-msgstr "Esse site já está integrado com a conversa %(conversation)s, tente outra url."
+msgstr ""
+"Esse site já está integrado com a conversa %(conversation)s, tente outra url."
 
 #: src/ej_tools/models.py:26
 msgid "Domain"
@@ -2109,7 +2106,8 @@ msgstr "Insira uma URL válida."
 #: src/ej_tools/tests/test_rasa_integrations.py:60
 msgid ""
 "Site already integrated with conversation Conversation, try another url."
-msgstr "Esse site já está integrado com a conversa Conversation, tente outra url."
+msgstr ""
+"Esse site já está integrado com a conversa Conversation, tente outra url."
 
 #: src/ej_users/admin.py:14
 msgid "Permissions"
@@ -3095,6 +3093,11 @@ msgstr ""
 "com opiniões diferentes são\n"
 "            representadas por pontos distantes."
 
+#: src/ej_dataviz/jinja2/ej_dataviz/report/general-report.jinja2:12
+#: src/ej_dataviz/jinja2/ej_dataviz/word-cloud.jinja2:6
+msgid "Word cloud"
+msgstr "Nuvem de palavras"
+
 #: src/ej_dataviz/jinja2/ej_dataviz/word-cloud.jinja2:8
 msgid "Display the most commonly found words in conversation."
 msgstr "Mostra as palavras mais frequentes."
@@ -3103,7 +3106,7 @@ msgstr "Mostra as palavras mais frequentes."
 msgid "Size of the word is proportional to frequency."
 msgstr "O tamanho de cada palavra é proporcional à frequência de uso."
 
-#: src/ej_dataviz/jinja2/ej_dataviz/includes/word-cloud-card.jinja2:3
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/word-cloud-card.jinja2:3
 #: src/ej_dataviz/jinja2/ej_dataviz/word-cloud.jinja2:12
 msgid "Generating word cloud. Please wait..."
 msgstr "Criando nuvem de palavras. Espere..."
@@ -3163,6 +3166,11 @@ msgstr "Ordena de forma ascendente"
 #: src/ej_dataviz/jinja2/ej_dataviz/includes/datatables.jinja2:26
 msgid "Sort column descending"
 msgstr "Ordena de forma decrescente"
+
+#: src/ej_dataviz/jinja2/ej_dataviz/report/comments-report.jinja2:5
+#, fuzzy
+msgid "Comments Report"
+msgstr "Relatório de comentários"
 
 #: src/ej_dataviz/jinja2/ej_dataviz/report/general-report.jinja2:5
 #, fuzzy

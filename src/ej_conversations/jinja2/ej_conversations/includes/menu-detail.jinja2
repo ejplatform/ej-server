@@ -12,22 +12,24 @@
         {% for link in page_menu.links('conversations:detail-actions', request, conversation) %}
             <li>{{ link }}</li>
         {% endfor %}
-        <li class="report-section">
-            <div style="display:flex;" onclick="showSection('isexpanded3', 'report-options-list');">
-                <div class="display-reports">
-                    <input type="checkbox" id="isexpanded3"/>
-                    <label for="isexpanded3"><i style="margin-left: unset;" class="fa fa-chevron-down"></i></label>
+
+        {% if request.user.has_perm("ej.can_view_report", conversation) %}
+            <li class="report-section">
+                <div style="display:flex;" onclick="showSection('isexpanded3', 'report-options-list');">
+                    <div class="display-reports">
+                        <input type="checkbox" id="isexpanded3"/>
+                        <label for="isexpanded3"><i style="margin-left: unset;" class="fa fa-chevron-down"></i></label>
+                    </div>
+                    <a href="" onclick="setChecked('isexpanded3')">{{ _('Reports') }}</a>
                 </div>
-                <a href="" onclick="setChecked('isexpanded3')">{{ _('Reports') }}</a>
-            </div>
-            <ul id="report-options-list">
-                {% if request.user.has_perm("ej.can_view_report", conversation) %}
-                <li><a href=" {{ conversation.url('report:general-report') }}">{{ _('General report') }}</a></li>
-                {% endif %}
-                <li><a href="">{{ _('Comments report') }}</a></li>
-                <li><a href=" {{ conversation.url('cluster:index') }}">{{ _('Opinion groups') }}</a></li>
-            </ul>    
-        </li>
+                <ul id="report-options-list">
+                    <li><a href=" {{ conversation.url('report:general-report') }}">{{ _('General report') }}</a></li>
+                    <li><a href=" {{ conversation.url('report:comments-report') }}">{{ _('Comments report') }}</a></li>
+                    <li><a href=" {{ conversation.url('cluster:index') }}">{{ _('Opinion groups') }}</a></li>
+                </ul>    
+            </li>
+        {% endif %}
+
     </ul>
 </nav>
 <nav title="{{ _('Admin') }}" aria-labelledby="menu-admin">
