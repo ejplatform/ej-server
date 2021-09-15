@@ -12,27 +12,6 @@
 
     {% if can_view_detail %}{{ conversation|role('download-data', which='votes-data') }}{% endif %}
 
-    <h2 class="h3 text-accent center" id="report-comments">{% trans %}Comments{% endtrans %}</h2>
-    {{ conversation|role('comments-stats-table') }}
-    {% if can_view_detail %}{{ conversation|role('download-data', which='comments-data') }}{% endif %}
-
-    {% if clusters %}
-        <h2>{% trans %}Clusters{% endtrans %}</h2>
-        {% for cluster in clusters %}
-            <h3>{{ cluster.name }} ({{ _('{n} users').format(n=cluster.n_users) }})</h3>
-            {{ cluster|role('comments-stats-table') }}
-            {% if can_view_detail %}{{ conversation|role('download-data', which='comments-data', cluster=cluster) }}{% endif %}
-
-        {% endfor %}
-    {% endif %}
-
-    {% if can_view_detail %}
-        <h2 class="h3 text-accent center">{% trans %}More info{% endtrans %}</h2>
-        <dl>
-            <dt>{% block participant_table_link %}
-                <a href="{{ conversation.url('report:users') }}">{{ _('Participants') }}</a>
-            {% endblock %}</dt>
-            <dd>{% trans %}See statistics about each participant.{% endtrans %}</dd>
-        </dl>
-    {% endif %}
+    {% include 'ej_dataviz/report/includes/comments-stats.jinja2' %}
+    
 {% endblock %}

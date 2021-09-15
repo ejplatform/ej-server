@@ -37,16 +37,8 @@ def index(request, conversation, slug, check=check_promoted):
     can_view_detail = user.has_perm("ej.can_view_report_detail", conversation)
     statistics = conversation.statistics()
 
-    # Force clusterization, when possible
-    clusterization = getattr(conversation, "clusterization", None)
-    if clusterization:
-        clusterization.update_clusterization()
-        clusters = clusterization.clusters.all()
-    else:
-        clusters = ()
-
     return {
-        "clusters": clusters,
+        "clusters": get_clusters(conversation),
         "conversation": conversation,
         "statistics": statistics,
         "can_view_detail": can_view_detail,
@@ -64,6 +56,18 @@ def general_report(request, conversation, slug, check=check_promoted):
 @urlpatterns.route("general-report/words.json")
 def report_card_words(request, conversation, slug, check=check_promoted):
     return words(request, conversation, slug, check=check_promoted)
+
+
+@urlpatterns.route("comments-report/")
+def comments_report(request, conversation, slug, check=check_promoted):
+    check(conversation, request)
+    can_view_detail = request.user.has_perm("ej.can_view_report_detail", conversation)
+
+    return {
+        "conversation": conversation,
+        "clusters": get_clusters(conversation),
+        "can_view_detail": can_view_detail,
+    }
 
 
 @urlpatterns.route("users/", perms=["ej.can_view_report_detail"])
@@ -282,6 +286,17 @@ def get_cluster_or_404(cluster_id, conversation=None):
     if conversation is not None and cluster.clusterization.conversation_id != conversation.id:
         raise Http404
     return cluster
+
+
+def get_clusters(conversation):
+    # Force clusterization, when possible
+    clusterization = getattr(conversation, "clusterization", None)
+    if clusterization:
+        clusterization.update_clusterization()
+        clusters = clusterization.clusters.all()
+    else:
+        clusters = ()
+    return clusters
 
 
 @lru_cache(1)

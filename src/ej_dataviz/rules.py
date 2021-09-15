@@ -19,4 +19,4 @@ def can_view_report_detail(user, conversation):
 
     * Must be staff
     """
-    return user.is_superuser or user.is_staff
+    return user.is_superuser or user.is_staff or conversation and conversation.author.id == user.id
