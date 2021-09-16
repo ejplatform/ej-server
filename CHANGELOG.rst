@@ -5,6 +5,18 @@ CHANGELOG of EJPlatform releases
 Here you can follow all the fixes and new features on every EJPlatform release.
 
 
+2.12.0 release
+====================
+
+* Date: Set 16, 2021
+* Features
+- Adds new reports menu;
+- Minor fixes on header;
+- Minor fixes on user navigation;
+- Fixes comment count;
+- Fixes webchat tool page, when adding a existent domain;
+- Adds new ej_tools app;
+
 2.11.0 release
 ====================
 
