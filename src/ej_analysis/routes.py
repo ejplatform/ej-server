@@ -17,7 +17,7 @@ from django.shortcuts import redirect
 
 app_name = "ej_analysis"
 urlpatterns = Router(
-    template="ej_conversations_analysis/{name}.jinja2",
+    template="ej_analysis/{name}.jinja2",
     models={"conversation": models.Conversation},
     login=True,
 )
