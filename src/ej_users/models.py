@@ -22,9 +22,7 @@ class Signature:
     """
 
     LISTEN_TO_COMMUNITY = "listen_to_community"
-    SIGNATURES_CONVERSATIONS_LIMIT = {
-        "listen_to_community": 3,
-    }
+    SIGNATURES_CONVERSATIONS_LIMIT = {"listen_to_community": 20}
 
     def __init__(self, user):
         self.user = user
