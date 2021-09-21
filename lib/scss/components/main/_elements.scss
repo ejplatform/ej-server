@@ -170,6 +170,7 @@ $toast-opacity: 0.75;
     top: $toast-height;
     width: 90%;
     z-index: 1001;
+    margin-left: 45%;
 
     &__icon {
         @extend .pad-2;
@@ -189,6 +190,11 @@ $toast-opacity: 0.75;
         h1 {
             @include utilities('text-4 uppercase bold text-brand');
         }
+    }
+}
+@media only screen and (max-width: 600px) {
+    .toast {
+        margin-left: auto;
     }
 }
 
