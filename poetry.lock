@@ -62,6 +62,20 @@ docs = ["sphinx"]
 tests = ["coverage", "hypothesis", "pytest"]
 
 [[package]]
+name = "asgiref"
+version = "3.4.1"
+description = "ASGI specs, helper code, and adapters"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.dependencies]
+typing-extensions = {version = "*", markers = "python_version < \"3.8\""}
+
+[package.extras]
+tests = ["pytest", "pytest-asyncio", "mypy (>=0.800)"]
+
+[[package]]
 name = "aspy.yaml"
 version = "1.3.0"
 description = "A few extensions to pyyaml."
@@ -306,6 +320,25 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, <4"
 toml = ["toml"]
 
 [[package]]
+name = "cryptography"
+version = "3.4.8"
+description = "cryptography is a package which provides cryptographic recipes and primitives to Python developers."
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.dependencies]
+cffi = ">=1.12"
+
+[package.extras]
+docs = ["sphinx (>=1.6.5,!=1.8.0,!=3.1.0,!=3.1.1)", "sphinx-rtd-theme"]
+docstest = ["doc8", "pyenchant (>=1.6.11)", "twine (>=1.12.0)", "sphinxcontrib-spelling (>=4.0.1)"]
+pep8test = ["black", "flake8", "flake8-import-order", "pep8-naming"]
+sdist = ["setuptools-rust (>=0.11.4)"]
+ssh = ["bcrypt (>=3.1.5)"]
+test = ["pytest (>=6.0)", "pytest-cov", "pytest-subtests", "pytest-xdist", "pretend", "iso8601", "pytz", "hypothesis (>=1.11.4,!=3.79.2)"]
+
+[[package]]
 name = "cycler"
 version = "0.10.0"
 description = "Composable style cycles"
@@ -336,7 +369,7 @@ python-versions = ">=3.5"
 name = "defusedxml"
 version = "0.7.1"
 description = "XML bomb protection for Python stdlib modules"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 
@@ -350,31 +383,33 @@ python-versions = "*"
 
 [[package]]
 name = "django"
-version = "2.2.19"
+version = "3.2"
 description = "A high-level Python Web framework that encourages rapid development and clean, pragmatic design."
 category = "main"
 optional = false
-python-versions = ">=3.5"
+python-versions = ">=3.6"
 
 [package.dependencies]
+asgiref = ">=3.3.2,<4"
 pytz = "*"
 sqlparse = ">=0.2.2"
 
 [package.extras]
-argon2 = ["argon2-cffi (>=16.1.0)"]
+argon2 = ["argon2-cffi (>=19.1.0)"]
 bcrypt = ["bcrypt"]
 
 [[package]]
 name = "django-allauth"
-version = "0.38.0"
+version = "0.44.0"
 description = "Integrated set of Django applications addressing authentication, registration, account management as well as 3rd party (social) account authentication."
 category = "main"
 optional = false
 python-versions = "*"
 
 [package.dependencies]
-Django = ">=1.11"
-python-openid = ">=2.2.5"
+Django = ">=2.0"
+pyjwt = {version = ">=1.7", extras = ["crypto"]}
+python3-openid = ">=3.0.8"
 requests = "*"
 requests-oauthlib = ">=0.3.0"
 
@@ -392,11 +427,12 @@ translitcodec = ["translitcodec (>=0.3)"]
 
 [[package]]
 name = "django-boogie"
-version = "0.13.3"
+version = "0.13.2"
 description = "Django with swagger: better managers, APIs, configurations and url mappers."
 category = "main"
 optional = false
 python-versions = "*"
+develop = false
 
 [package.dependencies]
 django = ">=2.0"
@@ -404,13 +440,19 @@ sidekick = ">=0.5.0,<0.6.0"
 
 [package.extras]
 configurations = ["django-environ (>=0.4,<1.0)"]
-dev_stack = ["hyperpython (>=1.1.0,<1.2.0)", "django-spaghetti-and-meatballs", "django-debug-toolbar", "invoke (>=1.0)", "flake8 (>=3.5)", "manuel (>=1.10)", "docutils (>=0.14,<1.0)", "sphinx-autobuild (>=0.7,<1.0)", "django-boogie", "django-boogie"]
+dev-stack = ["hyperpython (>=1.1.0,<1.2.0)", "django-spaghetti-and-meatballs", "django-debug-toolbar", "invoke (>=1.0)", "flake8 (>=3.5)", "manuel (>=1.10)", "docutils (>=0.14,<1.0)", "sphinx-autobuild (>=0.7,<1.0)", "django-boogie", "django-boogie"]
 extra = ["django-model-utils (>=3.0)", "django-manager-utils (>=1.1)", "django-bulk-update (>=2.2)", "django-polymorphic (>=2.0,<3.0)"]
 pandas = ["pandas (>=0.22,<1.0)", "django-pandas (>=0.5.0,<0.6.0)"]
 rest = ["djangorestframework (>=3.8,<4.0)", "django-filter (>=1.1,<2.0)"]
 rules = ["rules (<2)"]
 stack = ["django-extensions (>=2.1,<3.0)", "django-environ (>=0.4,<1.0)", "djangorestframework (>=3.8,<4.0)", "django-filter (>=1.1,<2.0)", "rules (<2)", "django-model-utils (>=3.0)", "django-manager-utils (>=1.1)", "django-bulk-update (>=2.2)", "django-polymorphic (>=2.0,<3.0)", "pandas (>=0.22,<1.0)", "django-pandas (>=0.5.0,<0.6.0)"]
-test = ["pytest (>=3.8,<4.0)", "pytest-cov (>=2.6,<3.0)", "pytest-django (>=3.1,<4.0)", "factory_boy (>=2.0,<3.0)", "model_mommy (>=1.6,<2.0)", "beautifulsoup4 (>=4.6,<5.0)", "mypy (>=0.701,<1.0)", "django-stubs (>=0.12.1,<0.13.0)", "faker"]
+test = ["pytest (>=3.8,<4.0)", "pytest-cov (>=2.6,<3.0)", "pytest-django (>=3.1,<4.0)", "factory-boy (>=2.0,<3.0)", "model-mommy (>=1.6,<2.0)", "beautifulsoup4 (>=4.6,<5.0)", "faker"]
+
+[package.source]
+type = "git"
+url = "https://github.com/pencil-labs/django-boogie.git"
+reference = "django_3"
+resolved_reference = "e217cc58e817293743c9d3f2ec00269dc5b82334"
 
 [[package]]
 name = "django-bulk-update"
@@ -451,14 +493,14 @@ Django = ">=2.2"
 
 [[package]]
 name = "django-debug-toolbar"
-version = "1.11.1"
+version = "3.2"
 description = "A configurable set of panels that display various debug information about the current request/response."
 category = "main"
 optional = false
-python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
+python-versions = ">=3.6"
 
 [package.dependencies]
-Django = ">=1.11"
+Django = ">=2.2"
 sqlparse = ">=0.2.0"
 
 [[package]]
@@ -514,14 +556,21 @@ django-query-builder = ">=1.1.0"
 
 [[package]]
 name = "django-model-utils"
-version = "3.2.0"
+version = "4.1.1.post10+g8e19699"
 description = "Django model mixins and utilities"
 category = "main"
 optional = false
 python-versions = "*"
+develop = false
 
 [package.dependencies]
-Django = ">=1.11"
+Django = ">=2.0.1"
+
+[package.source]
+type = "git"
+url = "https://github.com/jazzband/django-model-utils.git"
+reference = "8e19699b0f8edbb93863de5c72256017080f2af0"
+resolved_reference = "8e19699b0f8edbb93863de5c72256017080f2af0"
 
 [[package]]
 name = "django-pandas"
@@ -999,7 +1048,7 @@ format_nongpl = ["idna", "jsonpointer (>1.13)", "webcolors", "rfc3986-validator 
 
 [[package]]
 name = "jupyter-client"
-version = "7.0.2"
+version = "7.0.3"
 description = "Jupyter protocol implementation and client libraries"
 category = "dev"
 optional = false
@@ -1553,6 +1602,23 @@ optional = false
 python-versions = ">=3.5"
 
 [[package]]
+name = "pyjwt"
+version = "2.1.0"
+description = "JSON Web Token implementation in Python"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.dependencies]
+cryptography = {version = ">=3.3.1,<4.0.0", optional = true, markers = "extra == \"crypto\""}
+
+[package.extras]
+crypto = ["cryptography (>=3.3.1,<4.0.0)"]
+dev = ["sphinx", "sphinx-rtd-theme", "zope.interface", "cryptography (>=3.3.1,<4.0.0)", "pytest (>=6.0.0,<7.0.0)", "coverage[toml] (==5.0.4)", "mypy", "pre-commit"]
+docs = ["sphinx", "sphinx-rtd-theme", "zope.interface"]
+tests = ["pytest (>=6.0.0,<7.0.0)", "coverage[toml] (==5.0.4)"]
+
+[[package]]
 name = "pymongo"
 version = "3.12.0"
 description = "Python driver for MongoDB <http://www.mongodb.org>"
@@ -1677,12 +1743,19 @@ python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,>=2.7"
 six = ">=1.5"
 
 [[package]]
-name = "python-openid"
-version = "2.2.5"
-description = "OpenID support for servers and consumers."
+name = "python3-openid"
+version = "3.2.0"
+description = "OpenID support for modern servers and consumers."
 category = "main"
 optional = false
 python-versions = "*"
+
+[package.dependencies]
+defusedxml = "*"
+
+[package.extras]
+mysql = ["mysql-connector-python"]
+postgresql = ["psycopg2"]
 
 [[package]]
 name = "pytz"
@@ -2172,7 +2245,7 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytes
 [metadata]
 lock-version = "1.1"
 python-versions = ">= 3.7.10, <4"
-content-hash = "2e6424c6a1d15df871b4816041fec95ec3678c9dc9401aecbf4e4de51bdea0df"
+content-hash = "57e0e488a5a924a2bd98176f54880d76e4cae88e510a832bd763d3e4335ff189"
 
 [metadata.files]
 alabaster = [
@@ -2214,6 +2287,10 @@ argon2-cffi = [
     {file = "argon2_cffi-19.2.0-cp37-cp37m-win_amd64.whl", hash = "sha256:e27488da690afac92e87cb61ba9cf9a22bff790413f55655ad017456cd58f22c"},
     {file = "argon2_cffi-19.2.0-cp38-cp38-win32.whl", hash = "sha256:72fae6bf37c25fdb9b4d30c2b9d658a72ac775249dd132ab3ac03adde619dc14"},
     {file = "argon2_cffi-19.2.0-cp38-cp38-win_amd64.whl", hash = "sha256:61d2b16c08ce5c24f91d2d2917c2300a90bb78672060876a335e1014727ced57"},
+]
+asgiref = [
+    {file = "asgiref-3.4.1-py3-none-any.whl", hash = "sha256:ffc141aa908e6f175673e7b1b3b7af4fdb0ecb738fc5c8b88f69f055c2415214"},
+    {file = "asgiref-3.4.1.tar.gz", hash = "sha256:4ef1ab46b484e3c706329cedeff284a5d40824200638503f5768edb6de7d58e9"},
 ]
 "aspy.yaml" = [
     {file = "aspy.yaml-1.3.0-py2.py3-none-any.whl", hash = "sha256:463372c043f70160a9ec950c3f1e4c3a82db5fca01d334b6bc89c7164d744bdc"},
@@ -2392,6 +2469,25 @@ coverage = [
     {file = "coverage-5.5-pp37-none-any.whl", hash = "sha256:2a3859cb82dcbda1cfd3e6f71c27081d18aa251d20a17d87d26d4cd216fb0af4"},
     {file = "coverage-5.5.tar.gz", hash = "sha256:ebe78fe9a0e874362175b02371bdfbee64d8edc42a044253ddf4ee7d3c15212c"},
 ]
+cryptography = [
+    {file = "cryptography-3.4.8-cp36-abi3-macosx_10_10_x86_64.whl", hash = "sha256:a00cf305f07b26c351d8d4e1af84ad7501eca8a342dedf24a7acb0e7b7406e14"},
+    {file = "cryptography-3.4.8-cp36-abi3-macosx_11_0_arm64.whl", hash = "sha256:f44d141b8c4ea5eb4dbc9b3ad992d45580c1d22bf5e24363f2fbf50c2d7ae8a7"},
+    {file = "cryptography-3.4.8-cp36-abi3-manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:0a7dcbcd3f1913f664aca35d47c1331fce738d44ec34b7be8b9d332151b0b01e"},
+    {file = "cryptography-3.4.8-cp36-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:34dae04a0dce5730d8eb7894eab617d8a70d0c97da76b905de9efb7128ad7085"},
+    {file = "cryptography-3.4.8-cp36-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:1eb7bb0df6f6f583dd8e054689def236255161ebbcf62b226454ab9ec663746b"},
+    {file = "cryptography-3.4.8-cp36-abi3-manylinux_2_24_x86_64.whl", hash = "sha256:9965c46c674ba8cc572bc09a03f4c649292ee73e1b683adb1ce81e82e9a6a0fb"},
+    {file = "cryptography-3.4.8-cp36-abi3-win32.whl", hash = "sha256:21ca464b3a4b8d8e86ba0ee5045e103a1fcfac3b39319727bc0fc58c09c6aff7"},
+    {file = "cryptography-3.4.8-cp36-abi3-win_amd64.whl", hash = "sha256:3520667fda779eb788ea00080124875be18f2d8f0848ec00733c0ec3bb8219fc"},
+    {file = "cryptography-3.4.8-pp36-pypy36_pp73-manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:d2a6e5ef66503da51d2110edf6c403dc6b494cc0082f85db12f54e9c5d4c3ec5"},
+    {file = "cryptography-3.4.8-pp36-pypy36_pp73-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:a305600e7a6b7b855cd798e00278161b681ad6e9b7eca94c721d5f588ab212af"},
+    {file = "cryptography-3.4.8-pp36-pypy36_pp73-manylinux_2_24_x86_64.whl", hash = "sha256:3fa3a7ccf96e826affdf1a0a9432be74dc73423125c8f96a909e3835a5ef194a"},
+    {file = "cryptography-3.4.8-pp37-pypy37_pp73-macosx_10_10_x86_64.whl", hash = "sha256:d9ec0e67a14f9d1d48dd87a2531009a9b251c02ea42851c060b25c782516ff06"},
+    {file = "cryptography-3.4.8-pp37-pypy37_pp73-manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:5b0fbfae7ff7febdb74b574055c7466da334a5371f253732d7e2e7525d570498"},
+    {file = "cryptography-3.4.8-pp37-pypy37_pp73-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:94fff993ee9bc1b2440d3b7243d488c6a3d9724cc2b09cdb297f6a886d040ef7"},
+    {file = "cryptography-3.4.8-pp37-pypy37_pp73-manylinux_2_24_x86_64.whl", hash = "sha256:8695456444f277af73a4877db9fc979849cd3ee74c198d04fc0776ebc3db52b9"},
+    {file = "cryptography-3.4.8-pp37-pypy37_pp73-win_amd64.whl", hash = "sha256:cd65b60cfe004790c795cc35f272e41a3df4631e2fb6b35aa7ac6ef2859d554e"},
+    {file = "cryptography-3.4.8.tar.gz", hash = "sha256:94cc5ed4ceaefcbe5bf38c8fba6a21fc1d365bb8fb826ea1688e3370b2e24a1c"},
+]
 cycler = [
     {file = "cycler-0.10.0-py2.py3-none-any.whl", hash = "sha256:1d8a5ae1ff6c5cf9b93e8811e581232ad8920aeec647c37316ceac982b08cb2d"},
     {file = "cycler-0.10.0.tar.gz", hash = "sha256:cd7b2d1018258d7247a71425e9f26463dfb444d411c39569972f4ce586b0c9d8"},
@@ -2429,19 +2525,17 @@ distlib = [
     {file = "distlib-0.3.2.zip", hash = "sha256:106fef6dc37dd8c0e2c0a60d3fca3e77460a48907f335fa28420463a6f799736"},
 ]
 django = [
-    {file = "Django-2.2.19-py3-none-any.whl", hash = "sha256:e319a7164d6d30cb177b3fd74d02c52f1185c37304057bb76d74047889c605d9"},
-    {file = "Django-2.2.19.tar.gz", hash = "sha256:30c235dec87e05667597e339f194c9fed6c855bda637266ceee891bf9093da43"},
+    {file = "Django-3.2-py3-none-any.whl", hash = "sha256:0604e84c4fb698a5e53e5857b5aea945b2f19a18f25f10b8748dbdf935788927"},
+    {file = "Django-3.2.tar.gz", hash = "sha256:21f0f9643722675976004eb683c55d33c05486f94506672df3d6a141546f389d"},
 ]
 django-allauth = [
-    {file = "django-allauth-0.38.0.tar.gz", hash = "sha256:45661b6fe308466154adf54461679fab6f0c6850b10c56dc322fbbb9d47e03d9"},
+    {file = "django-allauth-0.44.0.tar.gz", hash = "sha256:e51af457466022f52154d74c8523ac69375120fad2acce6e239635d85e610b25"},
 ]
 django-autoslug = [
     {file = "django-autoslug-1.9.8.tar.gz", hash = "sha256:bae66c27d35615f472865b99c4d107f3b3add3d22ee337e84960fc07694abd45"},
     {file = "django_autoslug-1.9.8-py2.py3-none-any.whl", hash = "sha256:26459eeddec207e307c55777a10fc25d17f4978753695340b16a17ed248a6f70"},
 ]
-django-boogie = [
-    {file = "django-boogie-0.13.3.tar.gz", hash = "sha256:657799ae308a04ab32ac153c4204c5f7b8d12c032e89146d9112e662baa08c3a"},
-]
+django-boogie = []
 django-bulk-update = [
     {file = "django-bulk-update-2.2.0.tar.gz", hash = "sha256:5ab7ce8a65eac26d19143cc189c0f041d5c03b9d1b290ca240dc4f3d6aaeb337"},
     {file = "django_bulk_update-2.2.0-py2.py3-none-any.whl", hash = "sha256:49a403392ae05ea872494d74fb3dfa3515f8df5c07cc277c3dc94724c0ee6985"},
@@ -2455,8 +2549,8 @@ django-cors-headers = [
     {file = "django_cors_headers-3.8.0-py3-none-any.whl", hash = "sha256:425c20ceffa42b9ac11b02611eece4ae6c5fef2ff0f039c14c1df20e00c80df8"},
 ]
 django-debug-toolbar = [
-    {file = "django-debug-toolbar-1.11.1.tar.gz", hash = "sha256:10f5ef59c97fad34b803b02e5850b6422082e2e44544c2ec03feb4eeee0f9158"},
-    {file = "django_debug_toolbar-1.11.1-py2.py3-none-any.whl", hash = "sha256:2d240517dac3b02b7d78c9109ee88546f99171a2ec2a3efa70450771cb55735e"},
+    {file = "django-debug-toolbar-3.2.tar.gz", hash = "sha256:84e2607d900dbd571df0a2acf380b47c088efb787dce9805aefeb407341961d2"},
+    {file = "django_debug_toolbar-3.2-py3-none-any.whl", hash = "sha256:9e5a25d0c965f7e686f6a8ba23613ca9ca30184daa26487706d4829f5cfb697a"},
 ]
 django-environ = [
     {file = "django-environ-0.4.5.tar.gz", hash = "sha256:6c9d87660142608f63ec7d5ce5564c49b603ea8ff25da595fd6098f6dc82afde"},
@@ -2478,10 +2572,7 @@ django-manager-utils = [
     {file = "django-manager-utils-1.4.0.tar.gz", hash = "sha256:fa3f7b29eb65fb6bd540ea141d884fa64f383567e00012785caa5f261b2b4191"},
     {file = "django_manager_utils-1.4.0-py2.py3-none-any.whl", hash = "sha256:29ca35fe5e668e5aaf27237d2525a0487dbfe0c094cd8fc5cf36687abf688237"},
 ]
-django-model-utils = [
-    {file = "django-model-utils-3.2.0.tar.gz", hash = "sha256:682f58c1de330cedcda58cc85d5232c5b47a9e2cb67bef4541fb43fdaeb18e96"},
-    {file = "django_model_utils-3.2.0-py2.py3-none-any.whl", hash = "sha256:3f130a262e45d73e0950d2be76af4bf4ee86804dd60e5f90afc5cd948fcfe760"},
-]
+django-model-utils = []
 django-pandas = [
     {file = "django-pandas-0.5.2.tar.gz", hash = "sha256:fa17bce54b3449412d7a4b29f46a860cdcc30968a40374bbfa5c30c3e2613a76"},
     {file = "django_pandas-0.5.2-py3-none-any.whl", hash = "sha256:22cd6675572ea467e1388c014cb26c65e603c1bba35d0d637e237010c8a2fba4"},
@@ -2626,8 +2717,8 @@ jsonschema = [
     {file = "jsonschema-3.2.0.tar.gz", hash = "sha256:c8a85b28d377cc7737e46e2d9f2b4f44ee3c0e1deac6bf46ddefc7187d30797a"},
 ]
 jupyter-client = [
-    {file = "jupyter_client-7.0.2-py3-none-any.whl", hash = "sha256:37a30c13d3655b819add61c830594090af7fca40cd2d74f41cad9e2e12118501"},
-    {file = "jupyter_client-7.0.2.tar.gz", hash = "sha256:0c6cabd07e003a2e9692394bf1ae794188ad17d2e250ed747232d7a473aa772c"},
+    {file = "jupyter_client-7.0.3-py3-none-any.whl", hash = "sha256:b07ceecb8f845f908bbd0f78bb17c0abac7b393de9d929bd92190e36c24c201e"},
+    {file = "jupyter_client-7.0.3.tar.gz", hash = "sha256:bb58e3218d74e072673948bd1e2a6bb3b65f32447b3e8c143eeca16b946ee230"},
 ]
 jupyter-core = [
     {file = "jupyter_core-4.7.1-py3-none-any.whl", hash = "sha256:8c6c0cac5c1b563622ad49321d5ec47017bd18b94facb381c6973a0486395f8e"},
@@ -3081,6 +3172,10 @@ pygments = [
     {file = "Pygments-2.10.0-py3-none-any.whl", hash = "sha256:b8e67fe6af78f492b3c4b3e2970c0624cbf08beb1e493b2c99b9fa1b67a20380"},
     {file = "Pygments-2.10.0.tar.gz", hash = "sha256:f398865f7eb6874156579fdf36bc840a03cab64d1cde9e93d68f46a425ec52c6"},
 ]
+pyjwt = [
+    {file = "PyJWT-2.1.0-py3-none-any.whl", hash = "sha256:934d73fbba91b0483d3857d1aff50e96b2a892384ee2c17417ed3203f173fca1"},
+    {file = "PyJWT-2.1.0.tar.gz", hash = "sha256:fba44e7898bbca160a2b2b501f492824fc8382485d3a6f11ba5d0c1937ce6130"},
+]
 pymongo = [
     {file = "pymongo-3.12.0-cp27-cp27m-macosx_10_14_intel.whl", hash = "sha256:072ba7cb65c8aa4d5c5659bf6722ee85781c9d7816dc00679b8b6f3dff1ddafc"},
     {file = "pymongo-3.12.0-cp27-cp27m-manylinux1_i686.whl", hash = "sha256:d6e11ffd43184d529d6752d6dcb62b994f903038a17ea2168ef1910c96324d26"},
@@ -3230,9 +3325,9 @@ python-dateutil = [
     {file = "python-dateutil-2.8.2.tar.gz", hash = "sha256:0123cacc1627ae19ddf3c27a5de5bd67ee4586fbdd6440d9748f8abb483d3e86"},
     {file = "python_dateutil-2.8.2-py2.py3-none-any.whl", hash = "sha256:961d03dc3453ebbc59dbdea9e4e11c5651520a876d0f4db161e8674aae935da9"},
 ]
-python-openid = [
-    {file = "python-openid-2.2.5.tar.gz", hash = "sha256:92c51c3ecec846cbec4aeff11f9ff47303d4a63f93b0e6ac0ec02a091fed70ef"},
-    {file = "python-openid-2.2.5.zip", hash = "sha256:c2d133e47e0a7705c9272eef00d7a09c174f5bf17a127fed8e2c6499556cc782"},
+python3-openid = [
+    {file = "python3-openid-3.2.0.tar.gz", hash = "sha256:33fbf6928f401e0b790151ed2b5290b02545e8775f982485205a066f874aaeaf"},
+    {file = "python3_openid-3.2.0-py3-none-any.whl", hash = "sha256:6626f771e0417486701e0b4daff762e7212e820ca5b29fcc0d05f6f8736dfa6b"},
 ]
 pytz = [
     {file = "pytz-2021.1-py2.py3-none-any.whl", hash = "sha256:eb10ce3e7736052ed3623d49975ce333bcd712c7bb19a58b9e2089d4057d0798"},

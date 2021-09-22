@@ -8,22 +8,15 @@ class InstalledAppsConf(Base, EjOptions):
     DISABLE_DJANGO_DEBUG_TOOLBAR = env(True, name="{attr}")
 
     project_apps = [
-        # Gamification
-        "ej_gamification",
-        "ej_experiments",
-        # Notifications
-        # 'ej_notifications',
-        # Boards
         "ej_boards",
-        # Math
         "ej_clusters",
         "ej_dataviz",
-        # Core apps
         "ej_profiles",
         "ej_conversations",
         "ej_analysis",
         "ej_tools",
     ]
+
     third_party_apps = [
         "boogie.apps.fragments",
         "taggit",
