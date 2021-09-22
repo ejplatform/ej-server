@@ -7,11 +7,11 @@ license = "AGPL-3.0"
 
 [tool.poetry.dependencies]
 python = ">= 3.7.10, <4"
-django = "==2.2.19"
-django-boogie = {version = "==0.13.3"}
+django = "==3.2"
+django-boogie = {git = "https://github.com/pencil-labs/django-boogie.git", rev = "django_3"}
 django-constance = {version = "^2.3", extras = ["database"]}
 django-rest-auth = {version = "^0.9.3", extras = ["with_social"]}
-django-allauth = "^0.38.0"
+django-allauth = "0.44.0"
 django-taggit = "^1.1.0"
 django-autoslug = "^1.9"
 django-jsonfield = "^1.0"
@@ -22,7 +22,7 @@ django-manager-utils = "^1.4"
 django-polymorphic = "^2.0"
 django-pandas = "^0.5.1"
 django-filter = "^1.1"
-django-model-utils = "^3.1"
+django-model-utils = {git = "https://github.com/jazzband/django-model-utils.git", rev = "8e19699b0f8edbb93863de5c72256017080f2af0"}
 coreapi = "^2.3"
 hyperpython = "^1.1.1"
 rules = "<2.0"
@@ -44,7 +44,7 @@ bs4 = "^0.0.1"
 wordcloud = "^1.5"
 stop-words = "^2018.7"
 djangorestframework = "^3.12"
-django-debug-toolbar = "^1.11"
+django-debug-toolbar = "3.2.0"
 openpyxl = "^2.6"
 django-cors-headers = "^3.3.0"
 babel = "^2.9.0"

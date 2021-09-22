@@ -7,7 +7,7 @@ from PIL import Image
 from django.conf import settings
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import Client
-from django.utils.six import BytesIO
+from io import BytesIO
 
 from ej.testing import UrlTester
 from ej_profiles import enums

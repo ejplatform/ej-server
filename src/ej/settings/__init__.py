@@ -128,6 +128,8 @@ class Conf(
         "REGISTER_SERIALIZER": "ej_users.rest_auth_serializer.RegistrationSerializer"
     }
 
+    DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
+
 
 Conf.save_settings(globals())
 
