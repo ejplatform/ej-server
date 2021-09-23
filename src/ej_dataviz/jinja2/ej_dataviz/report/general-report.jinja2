@@ -2,7 +2,7 @@
 
 {% block report %}
     <h1 class="h2 text-accent divider">
-        {{_('General Report')}}
+        {% trans n = statistics.participants.voters %}General Report ({{ n }} users){% endtrans %}
     </h1>
     <div class="report-card-list">
     {% include 'ej_dataviz/report/includes/votes-card.jinja2' %}

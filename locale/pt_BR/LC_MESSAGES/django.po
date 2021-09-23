@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-14 14:08-0300\n"
+"POT-Creation-Date: 2021-09-23 18:32-0300\n"
 "PO-Revision-Date: 2019-09-09 13:55-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -875,65 +875,65 @@ msgstr "Você!"
 msgid "State"
 msgstr "Estado"
 
-#: src/ej_dataviz/routes_report.py:298
+#: src/ej_dataviz/routes_report.py:308
 msgid "agree"
 msgstr "concorda"
 
-#: src/ej_dataviz/routes_report.py:299
+#: src/ej_dataviz/routes_report.py:309
 msgid "author"
 msgstr "autor"
 
-#: src/ej_dataviz/routes_report.py:300
+#: src/ej_dataviz/routes_report.py:310
 msgid "author_id"
 msgstr "autor_id"
 
-#: src/ej_dataviz/routes_report.py:301
+#: src/ej_dataviz/routes_report.py:311
 msgid "choice"
 msgstr "escolha"
 
-#: src/ej_dataviz/routes_report.py:302
+#: src/ej_dataviz/routes_report.py:312
 #, fuzzy
 msgid "cluster"
 msgstr "Grupos"
 
-#: src/ej_dataviz/routes_report.py:303
+#: src/ej_dataviz/routes_report.py:313
 #, fuzzy
 msgid "cluster_id"
 msgstr "Grupos"
 
-#: src/ej_dataviz/routes_report.py:304
+#: src/ej_dataviz/routes_report.py:314
 msgid "comment"
 msgstr "comentário"
 
-#: src/ej_dataviz/routes_report.py:305
+#: src/ej_dataviz/routes_report.py:315
 msgid "comment_id"
 msgstr "comentário_id"
 
-#: src/ej_dataviz/routes_report.py:306
+#: src/ej_dataviz/routes_report.py:316
 msgid "convergence"
 msgstr "convergência"
 
-#: src/ej_dataviz/routes_report.py:307
+#: src/ej_dataviz/routes_report.py:317
 msgid "disagree"
 msgstr "discorda"
 
-#: src/ej_dataviz/routes_report.py:308 src/ej_profiles/enums.py:70
+#: src/ej_dataviz/routes_report.py:318 src/ej_profiles/enums.py:70
 msgid "email"
 msgstr "email"
 
-#: src/ej_dataviz/routes_report.py:309
+#: src/ej_dataviz/routes_report.py:319
 msgid "id"
 msgstr "id"
 
-#: src/ej_dataviz/routes_report.py:310 src/ej_profiles/enums.py:69
+#: src/ej_dataviz/routes_report.py:320 src/ej_profiles/enums.py:69
 msgid "name"
 msgstr "nome"
 
-#: src/ej_dataviz/routes_report.py:311
+#: src/ej_dataviz/routes_report.py:321
 msgid "participation"
 msgstr "participação"
 
-#: src/ej_dataviz/routes_report.py:312
+#: src/ej_dataviz/routes_report.py:322
 msgid "skipped"
 msgstr "pulados"
 
@@ -2198,33 +2198,33 @@ msgstr ""
 msgid "Request to generate a new password"
 msgstr "Pedido para gerar uma nova senha"
 
-#: src/ej_users/models.py:62
+#: src/ej_users/models.py:60
 msgid "email address"
 msgstr "endereço de email"
 
-#: src/ej_users/models.py:62
+#: src/ej_users/models.py:60
 msgid "Your e-mail address"
 msgstr "Seu endereço de e-mail"
 
-#: src/ej_users/models.py:64
+#: src/ej_users/models.py:62
 msgid "Name used to publicly identify user"
 msgstr "Apelido público usado para identificar o usuário"
 
-#: src/ej_users/models.py:68
+#: src/ej_users/models.py:66
 #, fuzzy
 msgid "Signature"
 msgstr "Registrar"
 
-#: src/ej_users/models.py:71
+#: src/ej_users/models.py:69
 #, fuzzy
 msgid "User signature"
 msgstr "Pontuação do usuário"
 
-#: src/ej_users/models.py:104
+#: src/ej_users/models.py:102
 msgid "User token"
 msgstr "Token do usuário"
 
-#: src/ej_users/models.py:150
+#: src/ej_users/models.py:148
 msgid "Anonymous"
 msgstr "Anônimo"
 
@@ -2482,7 +2482,7 @@ msgid "Registered users"
 msgstr "Usuários registrados"
 
 #: src/ej/templates/jinja2/pages/info.jinja2:40
-#: src/ej_dataviz/jinja2/ej_dataviz/report/index.jinja2:30
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comments-stats.jinja2:16
 msgid "More info"
 msgstr "Mais informações"
 
@@ -2490,12 +2490,12 @@ msgstr "Mais informações"
 msgid "Execution environment"
 msgstr "Ambiente de execução"
 
-#: src/ej_analysis/jinja2/ej_conversations_analysis/index.jinja2:13
+#: src/ej_analysis/jinja2/ej_analysis/index.jinja2:13
 msgid "Dashboards and analysis"
 msgstr "Dashboards e analises"
 
-#: src/ej_analysis/jinja2/ej_conversations_analysis/index.jinja2:24
-#: src/ej_analysis/jinja2/ej_conversations_analysis/index.jinja2:26
+#: src/ej_analysis/jinja2/ej_analysis/index.jinja2:24
+#: src/ej_analysis/jinja2/ej_analysis/index.jinja2:26
 #: src/ej_conversations/jinja2/ej_conversations/edit.jinja2:9
 #: src/ej_conversations/jinja2/ej_conversations/moderate.jinja2:7
 #: src/ej_conversations/jinja2/ej_conversations/moderate.jinja2:9
@@ -2504,7 +2504,7 @@ msgstr "Dashboards e analises"
 msgid "Back to conversation"
 msgstr "Voltar para conversas"
 
-#: src/ej_analysis/jinja2/ej_conversations_analysis/opinion_component.jinja2:3
+#: src/ej_analysis/jinja2/ej_analysis/opinion_component.jinja2:3
 msgid ""
 "Welcome to EJ analysis area. Here we presents data crossing between EJ and "
 "other tools, like Analytics and Mautic. Before starting collecting, it is "
@@ -2516,55 +2516,55 @@ msgstr ""
 "dos dados, é necessário verificar se essa conversa está apta para o "
 "cruzamento. Leia mais na nossa documentação."
 
-#: src/ej_analysis/jinja2/ej_conversations_analysis/opinion_component.jinja2:6
+#: src/ej_analysis/jinja2/ej_analysis/opinion_component.jinja2:6
 msgid "Could not connect to analysis database, try later"
 msgstr "Não foi possível conectar no banco de análises, tente mais tarde"
 
-#: src/ej_analysis/jinja2/ej_conversations_analysis/opinion_component.jinja2:12
+#: src/ej_analysis/jinja2/ej_analysis/opinion_component.jinja2:12
 msgid ""
 "A data collection is running. Wait a few minutes to see the vizualizations"
 msgstr ""
 "Uma coleta de dados está sendo executada. Aguarde alguns minutos para "
 "gerarmos as visualizações."
 
-#: src/ej_analysis/jinja2/ej_conversations_analysis/opinion_component.jinja2:23
+#: src/ej_analysis/jinja2/ej_analysis/opinion_component.jinja2:23
 msgid "Engagement vs Aquisition"
 msgstr "Engajamento vs Aquisição"
 
-#: src/ej_analysis/jinja2/ej_conversations_analysis/opinion_component.jinja2:39
+#: src/ej_analysis/jinja2/ej_analysis/opinion_component.jinja2:39
 #, fuzzy
 msgid "Engagement source"
 msgstr "Origem do engajamento"
 
-#: src/ej_analysis/jinja2/ej_conversations_analysis/opinion_component.jinja2:48
+#: src/ej_analysis/jinja2/ej_analysis/opinion_component.jinja2:48
 #, fuzzy
 msgid "Engagement campaign"
 msgstr "Campanha do engajamento"
 
-#: src/ej_analysis/jinja2/ej_conversations_analysis/opinion_component.jinja2:57
+#: src/ej_analysis/jinja2/ej_analysis/opinion_component.jinja2:57
 #, fuzzy
 msgid "Engagement media"
 msgstr "Mídia do engajamento"
 
-#: src/ej_analysis/jinja2/ej_conversations_analysis/opinion_component.jinja2:76
+#: src/ej_analysis/jinja2/ej_analysis/opinion_component.jinja2:76
 #, fuzzy
 msgid "Total access to component (engagement)"
 msgstr "Total de acessos ao componente (engajamento)"
 
-#: src/ej_analysis/jinja2/ej_conversations_analysis/opinion_component.jinja2:81
+#: src/ej_analysis/jinja2/ej_analysis/opinion_component.jinja2:81
 #, fuzzy
 msgid "Participants on the conversation (aquisition)"
 msgstr "Participantes na conversa (aquisição)"
 
-#: src/ej_analysis/jinja2/ej_conversations_analysis/opinion_component.jinja2:87
+#: src/ej_analysis/jinja2/ej_analysis/opinion_component.jinja2:87
 msgid "end date must be gratter then start date"
 msgstr "data de fim deve ser maior que data de inicio"
 
-#: src/ej_analysis/jinja2/ej_conversations_analysis/opinion_component_form.jinja2:2
+#: src/ej_analysis/jinja2/ej_analysis/opinion_component_form.jinja2:2
 msgid "Trigger Collect"
 msgstr "Iniciar coleta"
 
-#: src/ej_analysis/jinja2/ej_conversations_analysis/opinion_component_form.jinja2:7
+#: src/ej_analysis/jinja2/ej_analysis/opinion_component_form.jinja2:7
 msgid ""
 "Please inform analytics property ID from the page, and clink to start "
 "collecting"
@@ -2572,7 +2572,7 @@ msgstr ""
 "Por favor, informe o identificador do analytics para a pagina monitorada, e "
 "clique em iniciar."
 
-#: src/ej_analysis/jinja2/ej_conversations_analysis/opinion_component_form.jinja2:11
+#: src/ej_analysis/jinja2/ej_analysis/opinion_component_form.jinja2:11
 #, fuzzy
 msgid "Start"
 msgstr "Iniciar"
@@ -3017,11 +3017,11 @@ msgstr "Aprovar"
 msgid "Go to conversation"
 msgstr "Voltar para conversa"
 
-#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:21
+#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:23
 msgid "Reports"
 msgstr "Relatórios"
 
-#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:25
+#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:26
 #, fuzzy
 msgid "General report"
 msgstr "Relatório Geral"
@@ -3031,7 +3031,7 @@ msgstr "Relatório Geral"
 msgid "Comments report"
 msgstr "Relatório de comentários"
 
-#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:39
+#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:41
 msgid "Back to conversations"
 msgstr "Voltar para conversas"
 
@@ -3167,32 +3167,15 @@ msgstr "Ordena de forma ascendente"
 msgid "Sort column descending"
 msgstr "Ordena de forma decrescente"
 
-#: src/ej_dataviz/jinja2/ej_dataviz/report/comments-report.jinja2:5
-#, fuzzy
-msgid "Comments Report"
-msgstr "Relatório de comentários"
-
 #: src/ej_dataviz/jinja2/ej_dataviz/report/general-report.jinja2:5
-#, fuzzy
-msgid "General Report"
-msgstr "Relatório Geral"
+#, fuzzy, python-format
+msgid "General Report (%(n)s users)"
+msgstr "Relatório Geral (%(n)s usuários)"
 
 #: src/ej_dataviz/jinja2/ej_dataviz/report/index.jinja2:6
 #, python-format
 msgid "Basic report (%(n)s users)"
 msgstr "Relatório Básico (%(n)s usuários)"
-
-#: src/ej_dataviz/jinja2/ej_dataviz/report/index.jinja2:22
-msgid "{n} users"
-msgstr "{n} usuários"
-
-#: src/ej_dataviz/jinja2/ej_dataviz/report/index.jinja2:33
-msgid "Participants"
-msgstr "Participantes"
-
-#: src/ej_dataviz/jinja2/ej_dataviz/report/index.jinja2:35
-msgid "See statistics about each participant."
-msgstr "Veja as estatísticas de cada participante."
 
 #: src/ej_dataviz/jinja2/ej_dataviz/report/users.jinja2:5
 msgid "List of participants"
@@ -3201,6 +3184,18 @@ msgstr "Lista de participantes"
 #: src/ej_dataviz/jinja2/ej_dataviz/report/users.jinja2:7
 msgid "Usage data"
 msgstr "Dados de uso"
+
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comments-stats.jinja2:8
+msgid "{n} users"
+msgstr "{n} usuários"
+
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comments-stats.jinja2:19
+msgid "Participants"
+msgstr "Participantes"
+
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comments-stats.jinja2:21
+msgid "See statistics about each participant."
+msgstr "Veja as estatísticas de cada participante."
 
 #: src/ej_experiments/jinja2/ej_experiments/index.jinja2:6
 msgid "Create random data"
@@ -4035,6 +4030,14 @@ msgstr "Mudar a senha"
 #, fuzzy
 msgid "Authentication"
 msgstr "Autenticação"
+
+#, fuzzy
+#~ msgid "Comments Report"
+#~ msgstr "Relatório de comentários"
+
+#, fuzzy
+#~ msgid "General Report"
+#~ msgstr "Relatório Geral"
 
 #~ msgid "Usage report"
 #~ msgstr "Relatório de uso"
