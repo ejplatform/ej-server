@@ -85,7 +85,7 @@ class Profile(models.Model):
                 for account in SocialAccount.objects.filter(user=self.user):
                     picture = account.get_avatar_url()
                     return picture
-            return staticfiles_storage.url("/img/login/avatar.svg")
+            return staticfiles_storage.url("/img/icons/navbar_profile.svg")
 
     @property
     def has_image(self):

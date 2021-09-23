@@ -85,7 +85,7 @@ body {
     }
 
     &__avatar {
-        object-fit: contain !important;
+        object-fit: cover !important;
         border-radius: $avatar-border;
         width: $avatar-height;
         height: $avatar-height;
@@ -169,7 +169,7 @@ body {
         }
 
         &__avatar {
-            object-fit: contain;
+            object-fit: cover;
             border-radius: $avatar-border;
             width: $avatar-height;
             height: $avatar-height;
@@ -233,7 +233,7 @@ body {
         border-bottom: none;
     }
     .add-button {
-        color: #30BFD3;
+        color: #30bfd3;
     }
     .board-list {
         overflow: auto;
@@ -246,7 +246,7 @@ body {
                 margin-left: 0.5rem;
             }
             p {
-                margin-right: 0.5rem; 
+                margin-right: 0.5rem;
                 font-weight: 700;
             }
         }
@@ -267,7 +267,7 @@ body {
             display: none;
             position: relative;
             left: 20px;
-            li a{
+            li a {
                 font-weight: unset;
             }
         }
