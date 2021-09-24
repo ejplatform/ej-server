@@ -10,7 +10,11 @@ BASE_URL = "/api/v1"
 
 class TestRoutes(ConversationRecipes, UrlTester):
     user_urls = ["/conversations/1/conversation/scatter/", "/conversations/1/conversation/word-cloud/"]
-    admin_urls = ["/conversations/1/conversation/reports/", "/conversations/1/conversation/reports/users/"]
+    admin_urls = [
+        "/conversations/1/conversation/reports/users/",
+        "/conversations/1/conversation/reports/comments-report/",
+        "/conversations/1/conversation/reports/general-report/",
+    ]
 
     @pytest.fixture
     def data(self, conversation, author_db):

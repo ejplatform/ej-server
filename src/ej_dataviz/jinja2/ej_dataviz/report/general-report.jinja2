@@ -1,9 +1,15 @@
 {% extends 'ej_dataviz/report/base.jinja2' %}
+{% from "ej_dataviz/report/export-data.jinja2" import export_modal %}
 
 {% block report %}
-    <h1 class="h2 text-accent divider">
-        {% trans n = statistics.participants.voters %}General Report ({{ n }} users){% endtrans %}
-    </h1>
+
+    <div class="title-export">
+        <span class="h2 text-accent"> 
+            {% trans n = statistics.participants.voters %}General Report ({{ n }} users){% endtrans %}
+        </span>
+        {{ export_modal(can_view_detail, conversation, type_data, conversation.slug) }}
+    </div>
+    
     <div class="report-card-list">
     {% include 'ej_dataviz/report/includes/votes-card.jinja2' %}
     {% include 'ej_dataviz/report/includes/comments-card.jinja2' %}
@@ -12,4 +18,5 @@
         <p>{{ _('Word cloud')}}</p> 
         {% include 'ej_dataviz/report/includes/word-cloud-card.jinja2' %}   
     </div>
+
 {% endblock %}
