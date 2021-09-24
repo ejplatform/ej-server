@@ -1,14 +1,20 @@
-<h2 class="h3 text-accent center" id="report-comments">{% trans %}Comments{% endtrans %}</h2>
+{% from "ej_dataviz/report/export-data.jinja2" import export_modal %}
+<div class="title-export">
+    <span class="h2 text-accent"> 
+        {{_('Comments Report')}}
+    </span>
+    {{ export_modal(can_view_detail, conversation, type_data, conversation.slug) }}
+</div>
 {{ conversation|role('comments-stats-table') }}
-{% if can_view_detail %}{{ conversation|role('download-data', which='comments-data') }}{% endif %}
 
 {% if clusters %}
     <h2>{% trans %}Clusters{% endtrans %}</h2>
     {% for cluster in clusters %}
-        <h3>{{ cluster.name }} ({{ _('{n} users').format(n=cluster.n_users) }})</h3>
+        <div class="title-export">
+            <h3>{{ cluster.name }} ({{ _('{n} users').format(n=cluster.n_users) }})</h3>
+            {{ export_modal(can_view_detail, conversation, type_data, cluster.name) }}
+        </div>
         {{ cluster|role('comments-stats-table') }}
-        {% if can_view_detail %}{{ conversation|role('download-data', which='comments-data', cluster=cluster) }}{% endif %}
-
     {% endfor %}
 {% endif %}
 

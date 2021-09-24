@@ -1,18 +1,8 @@
-<div class="margin-t3">
-    <span class="bold">{{ title|default(_('Downloads: ')) }}</span>
+<div class="margin-t3"> 
     <ul class="list-reset margin-x3">
         {%- for format, name, url in formats -%}
-            <li class="margin-0"><a href="{{ url }}">
-                <span class="brand bold">{{ name }}</span></a>
-                {%- if format == 'csv' %}
-                    - {{ _('Text-based spreadsheet format.') }}
-                {% elif format == 'json' %}
-                    - {{ _('Useful format for advanced users.') }}
-                {% elif format == 'msgpack' %}
-                    - {{ _('Binary faster alternative to JSON.') }}
-                {% elif format == 'xlsx' %}
-                    - {{ _('An Excel spreadsheet.') }}
-                {% endif %}
+            <li style="padding-left:0;"><a href="{{ url }}">
+                <span id="format-name">{{ name }}</span></a>
             </li>
         {% endfor %}
     </ul>
