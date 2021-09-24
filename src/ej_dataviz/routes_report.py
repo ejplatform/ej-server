@@ -48,8 +48,10 @@ def index(request, conversation, slug, check=check_promoted):
 @urlpatterns.route("general-report/")
 def general_report(request, conversation, slug, check=check_promoted):
     check(conversation, request)
+    statistics = conversation.statistics()
     return {
         "conversation": conversation,
+        "statistics": statistics,
     }
 
 
