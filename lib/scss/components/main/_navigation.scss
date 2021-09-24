@@ -266,9 +266,11 @@ body {
         ul {
             display: none;
             position: relative;
-            left: 20px;
-            li a {
+            width: 130%;
+            margin-left: -30px;
+            li a{
                 font-weight: unset;
+                margin-left: 3.4em;
             }
         }
         #isexpanded3:checked + label > i {

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-24 11:05-0300\n"
+"POT-Creation-Date: 2021-09-24 14:52-0300\n"
 "PO-Revision-Date: 2019-09-09 13:55-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -93,7 +93,7 @@ msgid "Your progress: {n} of {total}"
 msgstr "Seu progresso: {n} de {total}"
 
 #: src/ej/routes.py:56 src/ej_conversations/apps.py:8
-#: src/ej_conversations/models/conversation.py:100
+#: src/ej_conversations/models/conversation.py:99
 msgid "Conversations"
 msgstr "Conversas"
 
@@ -131,9 +131,9 @@ msgstr "Boas vindas!"
 msgid "Page {slug} not found"
 msgstr "Página {slug} não encontrada"
 
-#: src/ej_analysis/apps.py:7 src/ej_conversations/models/conversation.py:35
+#: src/ej_analysis/apps.py:7
 msgid "Analysis"
-msgstr "Analises"
+msgstr "Análises"
 
 #: src/ej_analysis/visualizations/opinion_component/lib/d3js_wrapper.py:13
 #, fuzzy
@@ -186,7 +186,7 @@ msgstr "Roxa"
 msgid "Slug"
 msgstr "Identificador"
 
-#: src/ej_boards/models.py:32 src/ej_conversations/models/conversation.py:47
+#: src/ej_boards/models.py:32 src/ej_conversations/models/conversation.py:46
 msgid "Title"
 msgstr "Título"
 
@@ -534,70 +534,70 @@ msgstr "Comentário está com moderação pendente"
 msgid "Must give a reason to reject a comment"
 msgstr "Deve fornecer uma razão para rejeitar o comentário"
 
-#: src/ej_conversations/models/conversation.py:36 src/ej_tools/apps.py:7
+#: src/ej_conversations/models/conversation.py:35 src/ej_tools/apps.py:7
 msgid "Tools"
 msgstr "Ferramentas"
 
-#: src/ej_conversations/models/conversation.py:49
+#: src/ej_conversations/models/conversation.py:48
 msgid "Short description used to create URL slugs (e.g. School system)."
 msgstr ""
 "Uma breve descrição sobre essa conversa. Isso é usado internamente para "
 "criar identificadores de URL (slugs. Ex: sistema de ensino)"
 
-#: src/ej_conversations/models/conversation.py:51
+#: src/ej_conversations/models/conversation.py:50
 msgid "Question"
 msgstr "Questão"
 
-#: src/ej_conversations/models/conversation.py:51
+#: src/ej_conversations/models/conversation.py:50
 msgid "What do you want to ask?"
 msgstr "O que você deseja perguntar?"
 
-#: src/ej_conversations/models/conversation.py:56
+#: src/ej_conversations/models/conversation.py:55
 msgid "Only the author and administrative staff can edit this conversation."
 msgstr "Apenas o autor e o administrador podem editar esta conversa."
 
-#: src/ej_conversations/models/conversation.py:62
+#: src/ej_conversations/models/conversation.py:61
 msgid "Moderators can accept and reject comments."
 msgstr "Os moderadores podem aceitar e rejeitar comentários."
 
-#: src/ej_conversations/models/conversation.py:66
+#: src/ej_conversations/models/conversation.py:65
 msgid "Promote conversation?"
 msgstr "Promover conversa?"
 
-#: src/ej_conversations/models/conversation.py:68
+#: src/ej_conversations/models/conversation.py:67
 msgid "Promoted conversations appears in the main /conversations/ endpoint."
 msgstr "Conversas promovidas aparecem no mural principal /conversations."
 
-#: src/ej_conversations/models/conversation.py:71
+#: src/ej_conversations/models/conversation.py:70
 msgid "Hide conversation?"
 msgstr "Esconder conversa?"
 
-#: src/ej_conversations/models/conversation.py:74
+#: src/ej_conversations/models/conversation.py:73
 msgid ""
 "Hidden conversations does not appears in boards or in the main /"
 "conversations/ endpoint."
 msgstr "Conversas ocultas não aparecem no mural principal /conversations/."
 
-#: src/ej_conversations/models/conversation.py:99
+#: src/ej_conversations/models/conversation.py:98
 #: src/ej_conversations/roles/conversations.py:133
 #: src/ej_conversations/tour.py:75 src/ej_gamification/routes.py:148
 #: src/ej_notifications/enums.py:8
 msgid "Conversation"
 msgstr "Conversa"
 
-#: src/ej_conversations/models/conversation.py:102
+#: src/ej_conversations/models/conversation.py:101
 msgid "Can publish promoted conversations"
 msgstr "Pode publicar conversas promovidas"
 
-#: src/ej_conversations/models/conversation.py:103
+#: src/ej_conversations/models/conversation.py:102
 msgid "Can moderate comments in any conversation"
 msgstr "Pode moderar comentários em qualquer conversa"
 
-#: src/ej_conversations/models/conversation.py:199
+#: src/ej_conversations/models/conversation.py:198
 msgid "User does not have permission to create a promoted conversation."
 msgstr "Usuário não tem permissão para criar uma conversa promovida."
 
-#: src/ej_conversations/models/conversation.py:263
+#: src/ej_conversations/models/conversation.py:262
 msgid "automatically rejected"
 msgstr "rejeitado automaticamente"
 
@@ -3017,21 +3017,30 @@ msgstr "Aprovar"
 msgid "Go to conversation"
 msgstr "Voltar para conversa"
 
+#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:4
+msgid "Home"
+msgstr "Início"
+
 #: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:23
 msgid "Reports"
 msgstr "Relatórios"
 
-#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:26
+#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:28
 #, fuzzy
 msgid "General report"
 msgstr "Relatório Geral"
 
-#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:27
+#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:29
 #, fuzzy
 msgid "Comments report"
 msgstr "Relatório de comentários"
 
-#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:41
+#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:32
+#, fuzzy
+msgid "Crossings"
+msgstr "Cruzamentos"
+
+#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:45
 msgid "Back to conversations"
 msgstr "Voltar para conversas"
 
@@ -3116,6 +3125,7 @@ msgid "Loading..."
 msgstr "Carregando dados..."
 
 #: src/ej_dataviz/jinja2/ej_dataviz/includes/datatables.jinja2:13
+#, fuzzy
 msgid "Processing..."
 msgstr "Processando..."
 
@@ -4022,9 +4032,6 @@ msgid "Authentication"
 msgstr "Autenticação"
 
 #, fuzzy
-#~ msgid "General Report"
-#~ msgstr "Relatório Geral"
-
 #~ msgid "Text-based spreadsheet format."
 #~ msgstr "Formato de texto para planilhas."
 
@@ -4752,9 +4759,6 @@ msgstr "Autenticação"
 
 #~ msgid "Alerts"
 #~ msgstr "Alertas"
-
-#~ msgid "Home"
-#~ msgstr "Início"
 
 #~ msgid "Increase font size"
 #~ msgstr "Aumentar o tamanho da fonte"
