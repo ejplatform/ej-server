@@ -5,6 +5,18 @@ CHANGELOG of EJPlatform releases
 Here you can follow all the fixes and new features on every EJPlatform release.
 
 
+2.13.0 release
+====================
+
+* Date: Set 27, 2021
+* Features
+- Adds new page to comments report;
+- Adds visual improvements on reports menu;
+- Adds modal to export reports data;
+- Fixes participants counter, on general report; 
+- Fixes profile image on header; 
+- Upgrades aplication to django 3;
+
 2.12.0 release
 ====================
 
