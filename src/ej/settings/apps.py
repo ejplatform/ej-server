@@ -30,7 +30,7 @@ class InstalledAppsConf(Base, EjOptions):
         "ej_users",
         "rest_framework",
         "rest_framework.authtoken",
-        "rest_auth",
+        "dj_rest_auth",
         "corsheaders",
         "django.contrib.auth",
         # 'rest_auth.registration',
