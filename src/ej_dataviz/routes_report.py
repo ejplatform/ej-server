@@ -278,8 +278,6 @@ def data_response(data: pd.DataFrame, fmt: str, filename: str, translate=True):
         data.to_csv(response, index=False, mode="a", float_format="%.3f")
     elif fmt == "msgpack":
         data.to_msgpack(response, encoding="utf-8")
-    elif fmt == "xlsx":
-        data.to_excel(response, filename, index=False)
     else:
         raise ValueError(f"invalid format: {fmt}")
     return response
