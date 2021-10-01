@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     "django_filters",
     "rest_framework",
     "debug_toolbar",
+    "dj_rest_auth",
 ]
 
 MIDDLEWARE = [
