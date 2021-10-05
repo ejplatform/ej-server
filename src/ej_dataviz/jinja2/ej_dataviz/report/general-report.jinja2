@@ -14,6 +14,17 @@
     {% include 'ej_dataviz/report/includes/votes-card.jinja2' %}
     {% include 'ej_dataviz/report/includes/comments-card.jinja2' %}
     </div>
+
+    <div class="report-charts">
+        <div class="vote-chart">
+            <p>{{_('Vote')}}</p>
+        </div>
+        <div class="channel-vote-chart">
+            <p>{{ _('Votes per channel') }}</p>
+            {% include 'ej_dataviz/report/includes/channel-chart-card.jinja2' %}
+        </div>
+    </div>
+
     <div id="word-cloud-card-id" class="word-cloud-card">
         <p>{{ _('Word cloud')}}</p> 
         {% include 'ej_dataviz/report/includes/word-cloud-card.jinja2' %}   
