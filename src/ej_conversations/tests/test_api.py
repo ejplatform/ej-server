@@ -7,6 +7,7 @@ from .examples import COMMENT, CONVERSATION, VOTE, VOTES
 from ej_conversations.models.util import vote_count, statistics_for_user, statistics
 from ej_conversations.mommy_recipes import ConversationRecipes
 from ej_conversations.enums import Choice
+from ej_conversations.models.vote import VoteChannels
 
 BASE_URL = "/api/v1"
 
@@ -185,6 +186,14 @@ class TestConversartionStatistics(ConversationRecipes):
         assert "participants" in statistics_result
         assert "voters" in statistics_result["participants"]
         assert "commenters" in statistics_result["participants"]
+
+        assert "channel_votes" in statistics_result
+        assert "webchat" in statistics_result["channel_votes"]
+        assert "telegram" in statistics_result["channel_votes"]
+        assert "whatsapp" in statistics_result["channel_votes"]
+        assert "opinion_component" in statistics_result["channel_votes"]
+        assert "unknown" in statistics_result["channel_votes"]
+
         assert conversation._cached_statistics == statistics_result
 
     def test_statistics_for_user(self, db, mk_conversation, mk_user):
@@ -197,3 +206,42 @@ class TestConversartionStatistics(ConversationRecipes):
         assert "participation_ratio" in statistics_for_user_result
         assert "total_comments" in statistics_for_user_result
         assert "comments" in statistics_for_user_result
+
+    def test_statistics_for_channel_votes(self, db, mk_conversation, mk_user):
+        conversation = mk_conversation()
+        user1 = mk_user(email="user1@domain.com")
+        user2 = mk_user(email="user2@domain.com")
+        user3 = mk_user(email="user3@domain.com")
+        comment = conversation.create_comment(user1, "ad", status="approved", check_limits=False)
+        comment2 = conversation.create_comment(user1, "ad2", status="approved", check_limits=False)
+
+        vote = comment.vote(user1, Choice.AGREE)
+        vote.channel = VoteChannels.TELEGRAM
+        vote.save()
+
+        vote = comment.vote(user2, Choice.AGREE)
+        vote.channel = VoteChannels.WHATSAPP
+        vote.save()
+
+        vote = comment.vote(user3, Choice.AGREE)
+        vote.channel = VoteChannels.WHATSAPP
+        vote.save()
+
+        vote = comment2.vote(user1, Choice.AGREE)
+        vote.channel = VoteChannels.OPINION_COMPONENT
+        vote.save()
+
+        vote = comment2.vote(user2, Choice.AGREE)
+        vote.channel = VoteChannels.RASA_WEBCHAT
+        vote.save()
+
+        vote = comment2.vote(user3, Choice.AGREE)
+        vote.channel = VoteChannels.UNKNOWN
+        vote.save()
+
+        statistics = conversation.statistics()
+        assert statistics["channel_votes"]["telegram"] == 1
+        assert statistics["channel_votes"]["whatsapp"] == 2
+        assert statistics["channel_votes"]["opinion_component"] == 1
+        assert statistics["channel_votes"]["webchat"] == 1
+        assert statistics["channel_votes"]["unknown"] == 1

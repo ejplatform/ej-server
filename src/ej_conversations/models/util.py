@@ -4,6 +4,7 @@ from sidekick import import_later
 from sidekick import property as property
 
 from .comment import Comment
+from .vote import VoteChannels
 
 models = import_later("ej_conversations.models")
 
@@ -85,6 +86,13 @@ def statistics(conversation, cache=True):
                 .count()
             ),
         },
+        "channel_votes": conversation.votes.aggregate(
+            webchat=Count("channel", filter=Q(channel=VoteChannels.RASA_WEBCHAT)),
+            telegram=Count("channel", filter=Q(channel=VoteChannels.TELEGRAM)),
+            whatsapp=Count("channel", filter=Q(channel=VoteChannels.WHATSAPP)),
+            opinion_component=Count("channel", filter=Q(channel=VoteChannels.OPINION_COMPONENT)),
+            unknown=Count("channel", filter=Q(channel=VoteChannels.UNKNOWN)),
+        ),
     }
 
 

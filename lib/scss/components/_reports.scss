@@ -32,14 +32,64 @@
         position: absolute;
         left: 1rem;
         top: 1rem;
+        font-size: 18px;
+        line-height: 21px;
     }
 }
+
+.report-charts {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 40px;
+    
+    p {
+        position: absolute;
+        left: 1rem;
+        top: 1rem;
+        font-size: 18px;
+        line-height: 21px;
+    }
+
+    .channel-vote-chart {
+        width: 324px;
+        height: 406px;
+        box-sizing: border-box;
+        border: 1px solid #BABABA;
+        border-radius: 5px;
+        position: relative;
+        text-align: center;
+    }
+
+    .vote-chart {
+        box-sizing: border-box;
+        border: 1px solid #BABABA;
+        width: 70%;
+        margin-right: 0.5rem;
+        border-radius: 5px;
+        position: relative;
+        height: 406px;
+    }
+}
+
 
 @media (min-width: 1460px) {
     .report-card-list {
         display: flex; 
         flex-wrap: wrap; 
         justify-content: space-between;
+    }
+}
+
+@media (max-width:1200px) {
+    .report-charts {
+        flex-direction: column;
+    }
+    .vote-chart {
+        margin-bottom: 40px;
+        width: 100% !important;
+    }
+    .channel-vote-chart {
+        width: 100% !important;
     }
 }
 
@@ -89,6 +139,9 @@
 @media only screen and (max-width: 600px) {
     .modal-content {
         margin: 25% 0 0 60%;
+    }
+    .report-charts {
+        flex-direction: column;
     }
 }
   

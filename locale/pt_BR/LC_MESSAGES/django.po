@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-24 14:52-0300\n"
+"POT-Creation-Date: 2021-09-30 19:13-0300\n"
 "PO-Revision-Date: 2019-09-09 13:55-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -766,10 +766,6 @@ msgstr "Campo não pode estar vazio!"
 msgid "Visualization"
 msgstr "Visualização"
 
-#: src/ej_dataviz/models.py:13
-msgid "Scatter plot"
-msgstr "Nuvem de pontos"
-
 #: src/ej_dataviz/roles.py:129 src/ej_gamification/routes.py:146
 msgid "Author"
 msgstr "Autor"
@@ -875,65 +871,65 @@ msgstr "Você!"
 msgid "State"
 msgstr "Estado"
 
-#: src/ej_dataviz/routes_report.py:313
+#: src/ej_dataviz/routes_report.py:314
 msgid "agree"
 msgstr "concorda"
 
-#: src/ej_dataviz/routes_report.py:314
+#: src/ej_dataviz/routes_report.py:315
 msgid "author"
 msgstr "autor"
 
-#: src/ej_dataviz/routes_report.py:315
+#: src/ej_dataviz/routes_report.py:316
 msgid "author_id"
 msgstr "autor_id"
 
-#: src/ej_dataviz/routes_report.py:316
+#: src/ej_dataviz/routes_report.py:317
 msgid "choice"
 msgstr "escolha"
 
-#: src/ej_dataviz/routes_report.py:317
+#: src/ej_dataviz/routes_report.py:318
 #, fuzzy
 msgid "cluster"
 msgstr "Grupos"
 
-#: src/ej_dataviz/routes_report.py:318
+#: src/ej_dataviz/routes_report.py:319
 #, fuzzy
 msgid "cluster_id"
 msgstr "Grupos"
 
-#: src/ej_dataviz/routes_report.py:319
+#: src/ej_dataviz/routes_report.py:320
 msgid "comment"
 msgstr "comentário"
 
-#: src/ej_dataviz/routes_report.py:320
+#: src/ej_dataviz/routes_report.py:321
 msgid "comment_id"
 msgstr "comentário_id"
 
-#: src/ej_dataviz/routes_report.py:321
+#: src/ej_dataviz/routes_report.py:322
 msgid "convergence"
 msgstr "convergência"
 
-#: src/ej_dataviz/routes_report.py:322
+#: src/ej_dataviz/routes_report.py:323
 msgid "disagree"
 msgstr "discorda"
 
-#: src/ej_dataviz/routes_report.py:323 src/ej_profiles/enums.py:70
+#: src/ej_dataviz/routes_report.py:324 src/ej_profiles/enums.py:70
 msgid "email"
 msgstr "email"
 
-#: src/ej_dataviz/routes_report.py:324
+#: src/ej_dataviz/routes_report.py:325
 msgid "id"
 msgstr "id"
 
-#: src/ej_dataviz/routes_report.py:325 src/ej_profiles/enums.py:69
+#: src/ej_dataviz/routes_report.py:326 src/ej_profiles/enums.py:69
 msgid "name"
 msgstr "nome"
 
-#: src/ej_dataviz/routes_report.py:326
+#: src/ej_dataviz/routes_report.py:327
 msgid "participation"
 msgstr "participação"
 
-#: src/ej_dataviz/routes_report.py:327
+#: src/ej_dataviz/routes_report.py:328
 msgid "skipped"
 msgstr "pulados"
 
@@ -3035,6 +3031,10 @@ msgstr "Relatório Geral"
 msgid "Comments report"
 msgstr "Relatório de comentários"
 
+#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:31
+msgid "Scatter plot"
+msgstr "Nuvem de pontos"
+
 #: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:32
 #, fuzzy
 msgid "Crossings"
@@ -3082,7 +3082,7 @@ msgstr ""
 "com opiniões diferentes são\n"
 "            representadas por pontos distantes."
 
-#: src/ej_dataviz/jinja2/ej_dataviz/report/general-report.jinja2:18
+#: src/ej_dataviz/jinja2/ej_dataviz/report/general-report.jinja2:29
 #: src/ej_dataviz/jinja2/ej_dataviz/word-cloud.jinja2:6
 msgid "Word cloud"
 msgstr "Nuvem de palavras"
@@ -3166,6 +3166,15 @@ msgstr "Exportar"
 #, fuzzy, python-format
 msgid "General Report (%(n)s users)"
 msgstr "Relatório Geral (%(n)s usuários)"
+
+#: src/ej_dataviz/jinja2/ej_dataviz/report/general-report.jinja2:20
+#, fuzzy
+msgid "Vote"
+msgstr "Votação"
+
+#: src/ej_dataviz/jinja2/ej_dataviz/report/general-report.jinja2:23
+msgid "Votes per channel"
+msgstr "Votos por canal"
 
 #: src/ej_dataviz/jinja2/ej_dataviz/report/index.jinja2:6
 #, python-format
