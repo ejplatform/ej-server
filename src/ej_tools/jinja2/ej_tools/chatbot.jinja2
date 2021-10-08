@@ -1,0 +1,37 @@
+{% extends 'ej_conversations/base.jinja2' %}
+{% from "ej_tools/card_tools.jinja2" import card_tools %}
+
+{% block metaOG2 %}
+
+    <meta name="description" property="og:title" content="Area de integração da EJ com outras ferramentas.">
+    <meta property="og:description" content="Area de integração da EJ com outras ferramentas.">
+
+{% endblock metaOG2 %}
+
+{% block _menu %} {{ menu(request.user, board_palette) }} {% endblock %}
+
+{% block content %}
+<div class="tools">
+	<div class="tools-container">	
+    <div class="tools-section">
+    <div class="tools-title">
+      <h1 class="h2 text-accent">{{_("Tools")}} > {{ tool["integration"] }}</h1>
+      <span>{{tool["description_chatbots"] }}</span>
+    </div>
+      <div class="tools-content">
+        <h3 class="h3 divider">{{_("Integration options")}}</h3>
+        <span class="helptext">{{_("Integrate this conversation with one of the available collection channels.")}}</span>
+        <div id="container" class="chatbotOptions">
+          {{ card_tools(static('/img/icons/talks.svg'), "Webchat", tool["description_webchat"],  conversation.url('conversation-tools:rasa'), "oversize") }}
+          {{ card_tools(static('/img/logo/channel_wpp.svg'), "Whatsapp", tool["description_telegram"], conversation.url('conversation-tools:rasa') , "") }}
+          {{ card_tools(static('/img/logo/channel_telegram.svg'), "Telegram", tool["description_telegram"], conversation.url('conversation-tools:rasa') , "") }}
+        </div>  
+    </div>   
+    <p><a href="{{ conversation.url('conversation-tools:index') }}" title="{{ _('Back to tools') }}"
+		class="lowercase bold text-brand">
+	    <i class="fa fa-chevron-left"></i>{% trans %}Back to tools{% endtrans %}
+    </a></p> 
+  </div>
+  
+</div>  
+{% endblock %}  

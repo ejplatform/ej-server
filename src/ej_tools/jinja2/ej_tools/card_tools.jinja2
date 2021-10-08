@@ -1,0 +1,15 @@
+{% macro card_tools(image, channel, description, link, oversize) %}
+
+<div class="column">
+  <div class="card" onclick="location.href='{{ link }}'">
+    {% if oversize %}
+      <img class="balance-bigger-margin" src="{{ image }}" alt=""/>
+    {% else %}
+      <img class="imgcard" src="{{ image }}" alt=""/>
+    {% endif %}
+    <h3>{{channel}}</h3>
+    <p>{{ description }}</p>
+  </div>
+</div>
+
+{% endmacro %}

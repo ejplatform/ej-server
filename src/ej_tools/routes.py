@@ -81,6 +81,15 @@ def opinion_component(request, conversation, slug):
     }
 
 
+@urlpatterns.route(conversation_tools_url + "/chatbot")
+def chatbot(request, conversation, slug):
+    tools = Tools(conversation)
+    return {
+        "conversation": conversation,
+        "tool": tools.get(_("Chatbot")),
+    }
+
+
 @urlpatterns.route(conversation_tools_url + "/rasa")
 def rasa(request, conversation, slug):
     user_can_add = user_can_add_new_domain(request.user, conversation)
@@ -101,7 +110,7 @@ def rasa(request, conversation, slug):
     return {
         "conversation": conversation,
         "conversation_rasa_connections": conversation_rasa_connections,
-        "tool": tools.get(_("Rasa Webchat")),
+        "tool": tools.get(_("Chatbot")),
         "form": form,
         "is_valid_user": user_can_add,
     }
