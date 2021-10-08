@@ -1,29 +1,24 @@
 {% macro export_modal(can_view_detail, conversation, type_data, _id) %}
 
-<a data-toggle="modal" href="#export-modal" id="export-btn-{{_id}}" class="export-button"><i class="fas fa-cloud-download-alt"></i>{{_("Export")}}</a>
-    <div id="export-modal-{{_id}}" class="modal">
-        <div class="modal-content">
-            <span class="close" id="{{_id}}">&times;</span>
-            {% if can_view_detail %}{{ conversation|role('download-data', which=type_data) }}{% endif %}
-        </div>
-    </div>
+<div>
+
+  <a data-toggle="modal" id="export-btn-{{_id}}" class="export-button"><i class="fas fa-cloud-download-alt"></i>{{_("Export")}}</a>
+
+  <div id="export-modal-{{_id}}" class="modal-report">
+      <div class="modal-content">
+          <span class="close-report" id="{{_id}}">&times;</span>
+          {% if can_view_detail %}{{ conversation|role('download-data', which=type_data) }}{% endif %}
+      </div>
+  </div>
+
+</div>
+
 
 <script>
 var modal = document.getElementById("export-modal-{{_id}}");
-var btn = document.getElementById("export-btn-{{_id}}");
-var span = document.getElementById("{{_id}}");
-
-btn.onclick = function() {
-  modal.style.display = "block";
-}
-span.onclick = function() {
-  modal.style.display = "none";
-}
-
 window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
+  const link = event.target.classList.contains('export-button')  
+  modal.style.display = !link ? "none" : "block"
 }
 </script>
 
