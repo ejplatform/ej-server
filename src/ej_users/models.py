@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 from logging import getLogger
 from abc import abstractmethod
+from constance import config
 
 from django.contrib.auth.models import Permission
 from boogie.apps.users.models import AbstractUser
@@ -22,7 +23,9 @@ class Signature:
     """
 
     LISTEN_TO_COMMUNITY = "listen_to_community"
-    SIGNATURES_CONVERSATIONS_LIMIT = {"listen_to_community": 20}
+    SIGNATURES_CONVERSATIONS_LIMIT = {
+        "listen_to_community": config.EJ_LISTEN_TO_COMMUNITY_SIGNATURE_CONVERSATIONS_LIMIT
+    }
 
     def __init__(self, user):
         self.user = user

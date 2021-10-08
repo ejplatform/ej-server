@@ -16,6 +16,16 @@ class ConstanceConf(Conf):
                 "Maximum number of boards that a common user can create",
                 int,
             ),
+            "EJ_LISTEN_TO_COMMUNITY_SIGNATURE_CONVERSATIONS_LIMIT": (
+                self.EJ_LISTEN_TO_COMMUNITY_SIGNATURE_CONVERSATIONS_LIMIT,
+                "Maximum number of conversations that a common user can create if they have Listen to Community signature.",
+                int,
+            ),
+            "EJ_LISTEN_TO_CITY_SIGNATURE_CONVERSATIONS_LIMIT": (
+                self.EJ_LISTEN_TO_CITY_SIGNATURE_CONVERSATIONS_LIMIT,
+                "Maximum number of conversations that a common user can create if they have Listen to City signature.",
+                int,
+            ),
             "EJ_PROFILE_STATE_CHOICES": (
                 self.EJ_PROFILE_STATE_CHOICES,
                 "State choices for state field in profile",
@@ -31,10 +41,19 @@ class ConstanceConf(Conf):
         "choicesfield": ["django.forms.ChoiceField", {"required": False}],
     }
 
-    CONSTANCE_CONFIG_FIELDSETS = {"EJ Options": ("EJ_MAX_BOARD_NUMBER", "EJ_PROFILE_STATE_CHOICES")}
+    CONSTANCE_CONFIG_FIELDSETS = {
+        "EJ Options": (
+            "EJ_MAX_BOARD_NUMBER",
+            "EJ_LISTEN_TO_COMMUNITY_SIGNATURE_CONVERSATIONS_LIMIT",
+            "EJ_LISTEN_TO_CITY_SIGNATURE_CONVERSATIONS_LIMIT",
+            "EJ_PROFILE_STATE_CHOICES",
+        )
+    }
 
     # Auxiliary options
     EJ_MAX_BOARD_NUMBER = env(1, name="{attr}")
+    EJ_LISTEN_TO_COMMUNITY_SIGNATURE_CONVERSATIONS_LIMIT = env(20, name="{attr}")
+    EJ_LISTEN_TO_CITY_SIGNATURE_CONVERSATIONS_LIMIT = env(10, name="{attr}")
     EJ_PROFILE_STATE_CHOICES = env(
         (
             ("AC", "Acre"),
