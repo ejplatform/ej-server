@@ -9,7 +9,7 @@ from .models import User
 class UserAdmin(AuthUserAdmin):
     list_display = ("name", "email", "is_superuser")
     fieldsets = (
-        (None, {"fields": ("email", "name", "display_name", "password")}),
+        (None, {"fields": ("email", "name", "display_name", "password", "signature")}),
         (
             _("Permissions"),
             {"fields": ("is_active", "is_staff", "is_superuser", "groups", "user_permissions")},

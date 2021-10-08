@@ -35,7 +35,7 @@ class InstalledAppsConf(Base, EjOptions):
         "django.contrib.auth",
         # 'rest_auth.registration',
         "constance",
-        # 'constance.backends.database',
+        "constance.backends.database",
         # 'push_notifications',
         # 'django_filters',
         # 'allauth.socialaccount.providers.github',
