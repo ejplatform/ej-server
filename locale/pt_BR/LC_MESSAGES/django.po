@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-30 19:13-0300\n"
+"POT-Creation-Date: 2021-10-04 16:24-0300\n"
 "PO-Revision-Date: 2019-09-09 13:55-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -1934,7 +1934,7 @@ msgid "Register using name/email"
 msgstr "Registrar usando nome/email"
 
 #: src/ej_tools/models.py:57 src/ej_tools/models.py:101
-#: src/ej_tools/routes.py:166 src/ej_tools/table.py:35
+#: src/ej_tools/routes.py:175 src/ej_tools/table.py:47
 msgid "Mautic"
 msgstr ""
 
@@ -2051,8 +2051,9 @@ msgstr "Campanha de email"
 msgid "Opinion component"
 msgstr "Componente de opinião"
 
-#: src/ej_tools/routes.py:104 src/ej_tools/table.py:27
-msgid "Rasa Webchat"
+#: src/ej_tools/routes.py:89 src/ej_tools/routes.py:113
+#: src/ej_tools/table.py:27
+msgid "Chatbot"
 msgstr ""
 
 #: src/ej_tools/table.py:13
@@ -2076,14 +2077,53 @@ msgstr ""
 "html, sem impactar na experiência de quem já acessa suas redes e plataformas."
 
 #: src/ej_tools/table.py:29
+#, fuzzy
 msgid ""
 "Collect opinions using EJ's chatbot, also known as Duda. Allows, via "
-"webchat, to vote and comment on EJ's conversations."
+"webchat, telegram and whatsapp to vote and comment on EJ's conversations."
 msgstr ""
 "Colete opiniões usando o chatbot da EJ, também conhecido como Duda. Permite, "
-"via webchat, votar e comentar as conversas da EJ."
+"via webchat, telegram e whatsapp votar e comentar as conversas da EJ."
 
-#: src/ej_tools/table.py:37
+#: src/ej_tools/table.py:32
+#, fuzzy
+msgid ""
+"Collect opinions using EJ's chatbot, also known as Duda. You are going to be "
+"able to do collects from whatsapp, telegram or through webchat. Select one "
+"of the options to conduct the collect configuration"
+msgstr ""
+"Colete opiniões usando o chatbot da EJ, também conhecido como Duda. Você "
+"será capaz de realizar coletas no whatsapp,  telegram ou  via webchat. "
+"Selecione uma das opções a seguir para configurar a coleta."
+
+#: src/ej_tools/table.py:35
+#, fuzzy
+msgid ""
+"Whatsapp user will interact with the bot in the private chat. Use Twilio as "
+"a broker for connection."
+msgstr ""
+"O usuário do whatsapp irá interagir com o bot no privado. Utiliza o Twillio "
+"como broker para conexão."
+
+#: src/ej_tools/table.py:38
+#, fuzzy
+msgid ""
+"Telegram user will interact with the bot in the private chat. Use telegram "
+"API for connection."
+msgstr ""
+"O usuário do telegram irá interagir com o bot no privado. Utiliza a API do "
+"telegram para conexão."
+
+#: src/ej_tools/table.py:41
+#, fuzzy
+msgid ""
+"Integrate this conversation with a web client, called a webchat. Create a "
+"chat on your website page."
+msgstr ""
+"Integre esta conversa com  um cliente web, chamado webchat. \n"
+" Cria um chat na página do seu site."
+
+#: src/ej_tools/table.py:49
 msgid ""
 "Integrate this conversation with the Mautic platform API, allowing users who "
 "participate in this conversation to be automatically synchronized with "
@@ -3588,6 +3628,31 @@ msgstr ""
 "Você precisa de um nome de usuário exclusivo para usar o painel Rocket.Chat. "
 "Selecione o nome de usuário e criaremos uma conta para você."
 
+#: src/ej_tools/jinja2/ej_tools/chatbot.jinja2:21
+#, fuzzy
+msgid "Integration options"
+msgstr "Opções de integração"
+
+#: src/ej_tools/jinja2/ej_tools/chatbot.jinja2:22
+#, fuzzy
+msgid ""
+"Integrate this conversation with one of the available collection channels."
+msgstr "Integre esta conversa com um dos canais de coleta disponíveis."
+
+#: src/ej_tools/jinja2/ej_tools/chatbot.jinja2:47
+#: src/ej_tools/jinja2/ej_tools/chatbot.jinja2:49
+#: src/ej_tools/jinja2/ej_tools/mailing.jinja2:83
+#: src/ej_tools/jinja2/ej_tools/mailing.jinja2:85
+#: src/ej_tools/jinja2/ej_tools/mautic.jinja2:42
+#: src/ej_tools/jinja2/ej_tools/mautic.jinja2:44
+#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:77
+#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:79
+#: src/ej_tools/jinja2/ej_tools/rasa.jinja2:89
+#: src/ej_tools/jinja2/ej_tools/rasa.jinja2:91
+#, fuzzy
+msgid "Back to tools"
+msgstr "Voltar para ferramentas"
+
 #: src/ej_tools/jinja2/ej_tools/index.jinja2:14
 #, fuzzy
 msgid "Integrates this conversation with external tools and platforms."
@@ -3640,18 +3705,6 @@ msgstr "Visualizar Template"
 #, fuzzy
 msgid "Download Template"
 msgstr "Baixar template"
-
-#: src/ej_tools/jinja2/ej_tools/mailing.jinja2:83
-#: src/ej_tools/jinja2/ej_tools/mailing.jinja2:85
-#: src/ej_tools/jinja2/ej_tools/mautic.jinja2:42
-#: src/ej_tools/jinja2/ej_tools/mautic.jinja2:44
-#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:77
-#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:79
-#: src/ej_tools/jinja2/ej_tools/rasa.jinja2:89
-#: src/ej_tools/jinja2/ej_tools/rasa.jinja2:91
-#, fuzzy
-msgid "Back to tools"
-msgstr "Voltar para ferramentas"
 
 #: src/ej_tools/jinja2/ej_tools/mautic-connections.jinja2:3
 msgid ""
@@ -4041,6 +4094,48 @@ msgid "Authentication"
 msgstr "Autenticação"
 
 #, fuzzy
+#~ msgid ""
+#~ "Collect opinions using EJ's chatbot, also known as Duda. Allow collect "
+#~ "opinion from users of whatsapp. To allow the collect, share the link of "
+#~ "participation to groups, channels or direct in the private chat of the "
+#~ "user"
+#~ msgstr ""
+#~ "Colete opiniões usando o chatbot da EJ, também conhecido como Duda. "
+#~ "Permite, via webchat, telegram e whatsapp votar e comentar as conversas "
+#~ "da EJ."
+
+#, fuzzy
+#~ msgid ""
+#~ "Collect opinions using EJ's chatbot, also known as Duda. Allow collect "
+#~ "opinion from users of telegram. To allow the collect, share the link of "
+#~ "participation to groups, channels or direct in the private chat of the "
+#~ "user"
+#~ msgstr ""
+#~ "Colete opiniões usando o chatbot da EJ, também conhecido como Duda. "
+#~ "Permite, via webchat, telegram e whatsapp votar e comentar as conversas "
+#~ "da EJ."
+
+#, fuzzy
+#~ msgid ""
+#~ "Collect opinions using EJ's chatbot, also known as Duda. Allow collect "
+#~ "opinion from users of telegram.\n"
+#~ "To integrate the EJ chatbot into your website, enter your website's "
+#~ "domain in the field below. When a new user arrives at your site, the "
+#~ "webchat will send EJ the location where he is hosted and receive this "
+#~ "conversation back. All chatbots that have access to this conversation are "
+#~ "also displayed here."
+#~ msgstr ""
+#~ "\n"
+#~ "       Para integrar o chatbot EJ ao seu site, insira o domínio do site "
+#~ "no campo abaixo. \n"
+#~ "        Quando um novo usuário chegar ao seu site, o webchat enviará ao "
+#~ "EJ o endereço do site que está integrado e receberá de volta esta "
+#~ "conversa.\n"
+#~ "        Todos os chatbots que têm acesso a esta conversa também são "
+#~ "exibidos aqui.\n"
+#~ "    "
+
+#, fuzzy
 #~ msgid "Text-based spreadsheet format."
 #~ msgstr "Formato de texto para planilhas."
 
@@ -4070,10 +4165,6 @@ msgstr "Autenticação"
 #, fuzzy
 #~ msgid "domain to redirect the user on template"
 #~ msgstr "domínio que será embutido para redirecionamento do usuário"
-
-#, fuzzy
-#~ msgid "Integrate this conversation with the Mautic platform API."
-#~ msgstr "Integre a sua conversa com outras ferramentas e plataformas"
 
 #, fuzzy
 #~ msgid "Download"
@@ -4213,28 +4304,6 @@ msgstr "Autenticação"
 
 #~ msgid "and add comments from within your personal site."
 #~ msgstr "e adicionem comentários a partir de seu site pessoal."
-
-#, fuzzy
-#~ msgid ""
-#~ "\n"
-#~ "        To integrate EJ chatbot with your site, enter the site domain in "
-#~ "the field below. \n"
-#~ "        When a new user reaches your site, the webchat will send to EJ "
-#~ "the location where it is hosted, and will receive back this "
-#~ "conversation.\n"
-#~ "        All chatbots that have access to this conversation are also "
-#~ "displayed here.\n"
-#~ "    "
-#~ msgstr ""
-#~ "\n"
-#~ "       Para integrar o chatbot EJ ao seu site, insira o domínio do site "
-#~ "no campo abaixo. \n"
-#~ "        Quando um novo usuário chegar ao seu site, o webchat enviará ao "
-#~ "EJ o endereço do site que está integrado e receberá de volta esta "
-#~ "conversa.\n"
-#~ "        Todos os chatbots que têm acesso a esta conversa também são "
-#~ "exibidos aqui.\n"
-#~ "    "
 
 #~ msgid ""
 #~ "Add this conversation to a webchat instance, so that you can collect "

@@ -24,11 +24,23 @@ class Tools:
                 "about": "/docs/?page=user-docs/tools-opinion-component.html",
             },
             {
-                "integration": _("Rasa Webchat"),
+                "integration": _("Chatbot"),
                 "description": _(
-                    "Collect opinions using EJ's chatbot, also known as Duda. Allows, via webchat, to vote and comment on EJ's conversations."
+                    "Collect opinions using EJ's chatbot, also known as Duda. Allows, via webchat, telegram and whatsapp to vote and comment on EJ's conversations."
                 ),
-                "link": self.conversation.url("conversation-tools:rasa"),
+                "description_chatbots": _(
+                    "Collect opinions using EJ's chatbot, also known as Duda. You are going to be able to do collects from whatsapp, telegram or through webchat. Select one of the options to conduct the collect configuration"
+                ),
+                "description_whatsapp": _(
+                    "Whatsapp user will interact with the bot in the private chat. Use Twilio as a broker for connection."
+                ),
+                "description_telegram": _(
+                    "Telegram user will interact with the bot in the private chat. Use telegram API for connection."
+                ),
+                "description_webchat": _(
+                    "Integrate this conversation with a web client, called a webchat. Create a chat on your website page."
+                ),
+                "link": self.conversation.url("conversation-tools:chatbot"),
                 "about": "/docs/?page=user-docs/tools-chatbot.html",
             },
             {

@@ -17,6 +17,12 @@ class TestIntegrationsRoutes(ConversationRecipes):
         )
         assert response.status_code == 200
 
+    def test_chatbots(self, user_client, conversation_db):
+        response = user_client.get(
+            "/conversations/" + str(conversation_db.id) + "/" + conversation_db.slug + "/tools/chatbot"
+        )
+        assert response.status_code == 200
+
 
 class TestRemoveRasaConnection(ConversationRecipes):
     def test_superuser_delete_connection(self, conversation_db, admin_client):
