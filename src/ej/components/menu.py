@@ -1,6 +1,6 @@
 from collections import defaultdict
 
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from hyperpython import nav, Block, a, div, h3
 from hyperpython.components import hyperlink, html_list, fa_icon
 

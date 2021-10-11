@@ -1,5 +1,6 @@
 from model_mommy.recipe import Recipe, foreign_key as _foreign_key
 from sidekick import record
+from ej_boards.mommy_recipes import BoardRecipes
 
 from ej.testing import EjRecipes
 from ej_conversations.enums import Choice
@@ -8,7 +9,7 @@ from .models import Comment, Conversation, Vote
 __all__ = ["ConversationRecipes"]
 
 
-class ConversationRecipes(EjRecipes):
+class ConversationRecipes(BoardRecipes):
     conversation = Recipe(
         Conversation,
         title="Conversation",
@@ -33,7 +34,7 @@ class ConversationRecipes(EjRecipes):
 
     def get_data(self, request):
         data = super().get_data(request)
-        conversation = self.conversation.make(author=data.author)
+        conversation = self.conversation.make(author=data.author, board=data.board)
         comments = [
             self.comment.make(author=data.author, conversation=conversation, content="comment-author"),
             self.comment.make(author=data.user, conversation=conversation),

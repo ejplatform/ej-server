@@ -11,11 +11,18 @@ from ej_conversations.models import Conversation
 from ej_tools import routes as tools_routes
 from ej_analysis import routes as analysis_routes
 from .forms import BoardForm
+from ej_tools.models import RasaConversation, ConversationMautic
 
 app_name = "ej_boards"
 urlpatterns = Router(
     template=["ej_boards/{name}.jinja2", "generic.jinja2"],
-    models={"board": Board, "conversation": Conversation, "stereotype": Stereotype},
+    models={
+        "board": Board,
+        "conversation": Conversation,
+        "stereotype": Stereotype,
+        "connection": RasaConversation,
+        "mautic_connection": ConversationMautic,
+    },
     lookup_field={"board": "slug"},
     lookup_type={"board": "slug"},
 )
@@ -127,15 +134,18 @@ def conversation_tools_mailing(request, board, **kwargs):
 @urlpatterns.route(
     board_conversation_url + "tools/opinion-component/", perms=["ej.can_edit_conversation:conversation"]
 )
-def conversation_tools_component(request, board, **kwargs):
+def conversation_tools_opinion_component(request, board, **kwargs):
     check_board(board)
     return tools_routes.opinion_component(request, **kwargs)
 
 
-@urlpatterns.route(board_conversation_url + "tools/rasa/", perms=["ej.can_edit_conversation:conversation"])
-def conversation_tools_rasa(request, board, **kwargs):
+@urlpatterns.route(
+    board_conversation_url + "tools/mautic/delete/<model:mautic_connection>",
+    perms=["ej.can_edit_conversation:conversation"],
+)
+def conversation_tools_mautic_delete(request, board, **kwargs):
     check_board(board)
-    return tools_routes.rasa(request, **kwargs)
+    return tools_routes.delete_mautic_connection(request, **kwargs)
 
 
 @urlpatterns.route(
@@ -144,6 +154,31 @@ def conversation_tools_rasa(request, board, **kwargs):
 def conversation_tools_mautic(request, board, **kwargs):
     check_board(board)
     return tools_routes.mautic(request, **kwargs)
+
+
+@urlpatterns.route(
+    board_conversation_url + "tools/chatbot/", perms=["ej.can_edit_conversation:conversation"]
+)
+def conversation_tools_chatbot(request, board, **kwargs):
+    check_board(board)
+    return tools_routes.chatbot(request, **kwargs)
+
+
+@urlpatterns.route(
+    board_conversation_url + "tools/chatbot/rasa/", perms=["ej.can_edit_conversation:conversation"]
+)
+def conversation_tools_rasa(request, board, **kwargs):
+    check_board(board)
+    return tools_routes.rasa(request, **kwargs)
+
+
+@urlpatterns.route(
+    board_conversation_url + "tools/chatbot/rasa/delete/<model:connection>",
+    perms=["ej.can_edit_conversation:conversation"],
+)
+def conversation_tools_rasa_delete(request, board, **kwargs):
+    check_board(board)
+    return tools_routes.delete_connection(request, **kwargs)
 
 
 @urlpatterns.route(board_conversation_url + "analysis/", perms=["ej.can_edit_conversation:conversation"])

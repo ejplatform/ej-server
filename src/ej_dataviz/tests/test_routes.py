@@ -17,8 +17,11 @@ class TestRoutes(ConversationRecipes, UrlTester):
     ]
 
     @pytest.fixture
-    def data(self, conversation, author_db):
+    def data(self, conversation, board, author_db):
         conversation.author = author_db
+        board.owner = author_db
+        board.save()
+        conversation.board = board
         conversation.save()
 
 

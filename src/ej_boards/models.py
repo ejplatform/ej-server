@@ -5,12 +5,14 @@ from django.urls import reverse
 from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
 from model_utils.models import TimeStampedModel
+from boogie.rest import rest_api
 
 from ej.utils.url import SafeUrl
-from ej_conversations.models import ConversationTag
+
 from .validators import validate_board_slug
 
 
+@rest_api(["title", "slug", "owner", "description"])
 class Board(TimeStampedModel):
     """
     A board that contains a list of conversations.
@@ -26,9 +28,6 @@ class Board(TimeStampedModel):
     )
     slug = models.SlugField(_("Slug"), unique=True, validators=[validate_board_slug])
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="boards")
-    conversations = models.ManyToManyField(
-        "ej_conversations.Conversation", blank=True, related_name="boards"
-    )
     title = models.CharField(_("Title"), max_length=50)
     description = models.TextField(_("Description"), blank=True)
     palette = models.CharField(_("Palette"), max_length=10, choices=PALETTE_CHOICES, default="Blue")
@@ -36,8 +35,11 @@ class Board(TimeStampedModel):
 
     @property
     def tags(self):
-        tags = ConversationTag.objects
-        return tags.filter(content_object__in=self.conversations.all())
+        return [tag for conversation in self.conversations.all() for tag in conversation.tags.all()]
+
+    @property
+    def conversations(self):
+        return self.conversation_set.all()
 
     class Meta:
         verbose_name = _("Board")
@@ -72,10 +74,10 @@ class Board(TimeStampedModel):
         """
         if conversation.id is None:
             conversation.save()
-        self.conversations.add(conversation)
+        self.conversation_set.add(conversation)
 
     def has_conversation(self, conversation):
         """
         Return True if conversation is present in board.
         """
-        return conversation in self.conversations.all()
+        return conversation in self.conversations

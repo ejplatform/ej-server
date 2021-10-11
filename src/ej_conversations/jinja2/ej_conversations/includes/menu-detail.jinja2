@@ -3,8 +3,8 @@
     <ul>
         <li><a href="{{ conversation.url('conversation:detail') }}">{{ _('Home') }}</a></li>
         <li>    
-            {% if request.user.id == conversation.author_id and conversation.boards.count() %}
-            <a href="{{ url('boards:conversation-list', board=conversation.boards.first()) }}">{{ _('Boards') }}</a>
+            {% if request.user.id == conversation.author_id and conversation.board %}
+            <a href="{{ url('boards:conversation-list', board=conversation.board) }}">{{ _('Boards') }}</a>
             {% elif request.user.id != conversation.author_id and request.user.boards.count() %}
             <a href="{{ url('boards:conversation-list', board=request.user.boards.first()) }}">{{ _('Boards') }}</a>
             {% endif %}

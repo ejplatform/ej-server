@@ -75,7 +75,7 @@ class TemplateGenerator:
         comment_id = self.comment.id
         if self.vote_domain == self.statics_domain:
             try:
-                board_slug = self.conversation.boards.first().slug
+                board_slug = self.conversation.board.slug
                 url = "{}/{}/conversations/{}/{}?comment_id={}&action=vote&origin=campaign"
                 return url.format(
                     self.vote_domain, board_slug, conversation_id, conversation_slug, comment_id

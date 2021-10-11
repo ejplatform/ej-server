@@ -1,7 +1,7 @@
+from ej_boards.models import Board
 import pytest
 from rest_framework.test import APIClient
 from rest_framework.authtoken.models import Token
-from ej_boards.mommy_recipes import BoardRecipes
 from ej_conversations.models import Conversation, Comment
 from .examples import COMMENT, CONVERSATION, VOTE, VOTES
 from ej_conversations.models.util import vote_count, statistics_for_user, statistics
@@ -12,11 +12,12 @@ from ej_conversations.models.vote import VoteChannels
 BASE_URL = "/api/v1"
 
 
-class TestGetPromotedConversations(BoardRecipes):
-    def test_promoted_conversations_endpoint(self, mk_conversation, mk_user, api):
+class TestGetPromotedConversations(ConversationRecipes):
+    def test_promoted_conversations_endpoint(self, mk_conversation, mk_board, mk_user, api):
         user = mk_user(email="someemail@domain.com")
         unpromoted_conversation = mk_conversation(is_promoted=False, author=user)
-        mk_conversation(is_promoted=True, author=user)
+        board = mk_board(owner=user)
+        mk_conversation(is_promoted=True, author=user, board=board)
         path = BASE_URL + f"/conversations/?is_promoted=true"
         data = api.get(path)
         assert data.get("count") == 1
@@ -70,7 +71,10 @@ class TestPostRoutes:
 
     def test_post_conversation(self, api, user):
         path = BASE_URL + f"/conversations/"
-        post_data = dict(title=CONVERSATION["title"], text=CONVERSATION["text"], author=user.id)
+        board = Board.objects.create(slug="board1", title="My Board", owner=user, description="board")
+        post_data = dict(
+            title=CONVERSATION["title"], text=CONVERSATION["text"], author=user.id, board=board.id
+        )
 
         # Non authenticated user
         assert api.post(path, post_data) == self.AUTH_ERROR

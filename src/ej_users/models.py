@@ -82,14 +82,18 @@ class User(AbstractUser):
     def create_user_default_board(instance):
         from ej_boards.models import Board
 
-        board_default = Board(
-            slug=instance.email,
-            owner=instance,
-            title="My Board",
-            description="Default user board",
-            palette="brand",
-        )
-        board_default.save()
+        try:
+            board_default = Board.objects.get(slug=instance.email)
+        except Exception:
+            board_default = Board(
+                slug=instance.email,
+                owner=instance,
+                title="My Board",
+                description="Default user board",
+                palette="brand",
+            )
+            board_default.save()
+        return board_default
 
     def default_board_url(self):
         from django.utils.text import slugify

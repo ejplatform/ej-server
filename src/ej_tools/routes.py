@@ -29,6 +29,7 @@ urlpatterns = Router(
     },
 )
 conversation_tools_url = f"<model:conversation>/<slug:slug>/tools"
+conversation_tools_chatbot_url = f"{conversation_tools_url}/chatbot"
 
 
 @urlpatterns.route(conversation_tools_url)
@@ -90,7 +91,7 @@ def chatbot(request, conversation, slug):
     }
 
 
-@urlpatterns.route(conversation_tools_url + "/rasa")
+@urlpatterns.route(conversation_tools_chatbot_url + "/rasa")
 def rasa(request, conversation, slug):
     user_can_add = user_can_add_new_domain(request.user, conversation)
 
@@ -116,7 +117,7 @@ def rasa(request, conversation, slug):
     }
 
 
-@urlpatterns.route(conversation_tools_url + "/rasa/delete/<model:connection>")
+@urlpatterns.route(conversation_tools_chatbot_url + "/rasa/delete/<model:connection>")
 def delete_connection(request, conversation, slug, connection):
     user = request.user
 
@@ -131,7 +132,7 @@ def delete_connection(request, conversation, slug, connection):
 
 
 @urlpatterns.route(
-    conversation_tools_url + "/mautic", perms=["ej.can_access_mautic_connection:conversation"]
+    conversation_tools_chatbot_url + "/mautic", perms=["ej.can_access_mautic_connection:conversation"]
 )
 def mautic(request, conversation, slug, oauth2_code=None):
     error_message = None
@@ -179,7 +180,7 @@ def mautic(request, conversation, slug, oauth2_code=None):
 
 
 @urlpatterns.route(
-    conversation_tools_url + "/mautic/delete/<model:mautic_connection>",
+    conversation_tools_chatbot_url + "/mautic/delete/<model:mautic_connection>",
     perms=["ej.can_access_mautic_connection:conversation"],
 )
 def delete_mautic_connection(request, conversation, slug, mautic_connection):
