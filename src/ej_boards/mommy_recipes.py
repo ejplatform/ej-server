@@ -1,15 +1,19 @@
 from model_mommy.recipe import Recipe, foreign_key
 from sidekick import record
 
-from ej_conversations.mommy_recipes import ConversationRecipes as Base
+from ej.testing import EjRecipes
 from .models import Board
 
 __all__ = ["BoardRecipes"]
 
 
-class BoardRecipes(Base):
+class BoardRecipes(EjRecipes):
     board = Recipe(
-        Board, slug="board-slug", title="Title", description="Description", owner=foreign_key(Base.author)
+        Board,
+        slug="board-slug",
+        title="Title",
+        description="Description",
+        owner=foreign_key(EjRecipes.user),
     )
 
     def get_data(self, request):

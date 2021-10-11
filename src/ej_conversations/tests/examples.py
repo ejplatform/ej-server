@@ -30,6 +30,7 @@ CONVERSATION = {
         "random-comment": "http://testserver/api/v1/conversations/1/random-comment/",
         "clusterization": None,
         "author": "http://testserver/api/v1/users/1/",
+        "board": "http://testserver/api/v1/boards/1/",
     },
     "author": "email@server.com",
     "title": "title",
@@ -42,6 +43,7 @@ CONVERSATION = {
         "channel_votes": {"opinion_component": 0, "telegram": 0, "unknown": 0, "webchat": 0, "whatsapp": 0},
     },
     "text": "test",
+    "board": "My Board",
 }
 
 VOTE = {

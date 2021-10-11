@@ -1,5 +1,6 @@
 import pytest
 from ej_conversations.mommy_recipes import ConversationRecipes
+from ej_boards.mommy_recipes import BoardRecipes
 from ej.testing import UrlTester
 
 from ej_conversations.routes_comments import comment_url
@@ -20,9 +21,16 @@ class TestRoutes(UrlTester, ConversationRecipes):
 
     def get_data(self, request):
         conversation = request.getfixturevalue("conversation")
-        conversation.author = request.getfixturevalue("author_db")
-        conversation.is_promoted = True
-        conversation.save()
+        try:
+            board = request.getfixturevalue("board")
+            board.owner = request.getfixturevalue("author_db")
+            conversation.board = board
+            conversation.author = board.owner
+            conversation.is_promoted = True
+            board.save()
+            conversation.save()
+        except Exception as e:
+            pass
 
     def test_can_view_user_url(self, user_client, comment_db):
         url = comment_url(comment_db)

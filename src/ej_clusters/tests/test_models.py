@@ -7,6 +7,7 @@ class TestClusterization(ClusterRecipes):
         assert hasattr(conversation_db.clusterization, "clusters")
         assert hasattr(conversation_db, "clusters")
 
-    def test_clusterization_str_method(self, clusterization, conversation):
+    def test_clusterization_str_method(self, clusterization):
+        conversation = clusterization.conversation
         assert str(clusterization) == f"{conversation} (0 clusters)"
-        assert clusterization.get_absolute_url() == f"{conversation.get_absolute_url()}clusters/"
+        assert f"{clusterization.get_absolute_url()}" == f"{conversation.get_absolute_url().url}clusters/"

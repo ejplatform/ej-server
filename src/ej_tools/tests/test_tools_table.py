@@ -1,9 +1,9 @@
 import pytest
-from ej_boards.mommy_recipes import BoardRecipes
+from ej_conversations.mommy_recipes import ConversationRecipes
 from ej_tools.table import Tools
 
 
-class TestTemplateGenerator(BoardRecipes):
+class TestTemplateGenerator(ConversationRecipes):
     @pytest.fixture
     def tools(self, conversation_db):
         conversation = conversation_db

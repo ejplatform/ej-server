@@ -1,6 +1,7 @@
 from django import forms
 from django.template.loader import get_template
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
+
 from django.core.exceptions import ValidationError, NON_FIELD_ERRORS
 from django.db.models import Q
 

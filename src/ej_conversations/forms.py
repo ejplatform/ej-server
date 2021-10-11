@@ -100,7 +100,11 @@ class ConversationForm(EjModelForm):
         self.fields[field].widget.attrs["placeholder"] = value
 
     def save(self, commit=True, board=None, **kwargs):
+        if not board:
+            raise ValidationError("Board field should not be empty")
         conversation = super().save(commit=False)
+        conversation.board = board
+
         for k, v in kwargs.items():
             setattr(conversation, k, v)
 
@@ -111,11 +115,6 @@ class ConversationForm(EjModelForm):
             tags = self.cleaned_data["tags"].split(",")
             tags = map(lambda x: x.strip(",."), tags)
             conversation.tags.set(*filter(identity, tags), clear=True)
-
-            # Save board
-            if board:
-                conversation.board = board
-                board.add_conversation(conversation)
 
         return conversation
 

@@ -5,7 +5,8 @@ from boogie.rest import rest_api
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
+
 from model_utils.models import TimeStampedModel
 from sidekick import lazy, property as property, placeholder as this
 from taggit.managers import TaggableManager
@@ -25,6 +26,7 @@ from ..utils import normalize_status
 
 from ej.components.menu import register_menu
 from hyperpython import a
+from ej_boards.models import Board
 
 NOT_GIVEN = object()
 
@@ -36,7 +38,7 @@ def conversation_links(request, conversation):
     ]
 
 
-@rest_api(["title", "text", "author", "slug", "created", "id"])
+@rest_api(["title", "text", "author", "slug", "created", "id", "board"])
 class Conversation(HasFavoriteMixin, TimeStampedModel):
     """
     A topic of conversation.
@@ -61,6 +63,7 @@ class Conversation(HasFavoriteMixin, TimeStampedModel):
         help_text=_("Moderators can accept and reject comments."),
     )
     slug = AutoSlugField(unique=False, populate_from="title")
+    board = models.ForeignKey(Board, on_delete=models.CASCADE, null=False, blank=False)
     is_promoted = models.BooleanField(
         _("Promote conversation?"),
         default=False,

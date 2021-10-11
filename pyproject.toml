@@ -8,7 +8,7 @@ license = "AGPL-3.0"
 [tool.poetry.dependencies]
 python = ">= 3.7.10, <4"
 django = "==3.2"
-django-boogie = {git = "https://github.com/pencil-labs/django-boogie.git", rev = "django_3"}
+django-boogie = {git = "https://github.com/pencil-labs/django-boogie.git", rev = "b1aad3c618e6fccee011ece056dd2fbfeb25c661"}
 django-constance = {version = "^2.3", extras = ["database"]}
 django-allauth = "0.44.0"
 django-taggit = "^1.1.0"

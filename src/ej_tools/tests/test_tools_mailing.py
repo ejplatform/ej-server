@@ -1,11 +1,11 @@
 import pytest
 import mock
-from ej_boards.mommy_recipes import BoardRecipes
+from ej_conversations.mommy_recipes import ConversationRecipes
 from ej_tools.mailing import TemplateGenerator
 from ej_tools.forms import MailingToolForm
 
 
-class TestTemplateGenerator(BoardRecipes):
+class TestTemplateGenerator(ConversationRecipes):
     def test_generate_vote_url(self, mk_user, conversation_db):
         request = mock.Mock()
         request.META = {"wsgi.url_scheme": "http", "HTTP_HOST": "ejplatform.local"}
@@ -15,11 +15,10 @@ class TestTemplateGenerator(BoardRecipes):
         form_data = {"template_type": "mautic"}
         generator = TemplateGenerator(conversation_db, request, form_data)
         vote_url = generator._get_voting_url()
-
         expected_url = (
-            "http://ejplatform.local/conversations/{}/{}"
+            "http://ejplatform.local/{}/conversations/{}/{}"
             "?comment_id={}&action=vote&origin=campaign".format(
-                conversation_db.id, conversation_db.slug, comment_1.id
+                conversation_db.board.slug, conversation_db.id, conversation_db.slug, comment_1.id
             )
         )
 
@@ -97,7 +96,6 @@ class TestTemplateGenerator(BoardRecipes):
         user = mk_user(email="test@domain.com")
         conversation = mk_conversation(author=user)
         comment_1 = conversation.create_comment(user, "comment 1", "approved")
-        board.add_conversation(conversation)
         form_data = {"template_type": "mautic", "theme": board.palette}
         generator = TemplateGenerator(conversation, request, form_data)
 
@@ -162,7 +160,7 @@ class TestTemplateGenerator(BoardRecipes):
         assert generator.conversation.text == new_title
 
 
-class TestConversationComponentForm(BoardRecipes):
+class TestConversationComponentForm(ConversationRecipes):
     def test_conversation_component_valid_mautic_form(self, conversation_db, mk_user):
         user = mk_user(email="test@domain.com")
         conversation_db.create_comment(user, "comment 1", status="approved", check_limits=False)

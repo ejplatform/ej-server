@@ -2,7 +2,6 @@ from django.contrib.auth import get_user_model
 
 from boogie.testing.pytest import CrawlerTester, UrlTester
 
-# from ej_boards.mommy_recipes import BoardRecipes
 from ej_clusters.mommy_recipes import ClusterRecipes
 from ej_conversations.mommy_recipes import ConversationRecipes
 from ej_profiles.mommy_recipes import ProfileRecipes
@@ -20,7 +19,6 @@ User = get_user_model()
 
 class DataMixin(
     ClusterRecipes,
-    # BoardRecipes,
     ConversationRecipes,
     ProfileRecipes,
     UserRecipes,
@@ -35,8 +33,7 @@ class Base(DataMixin, CrawlerTester):
     """
 
     start = "/"
-    conversation_url = "/conversations/1/conversation/"
-    must_visit = ("/", "/conversations/", conversation_url)
+    must_visit = start
 
 
 class TestUserCrawl(Base):
@@ -55,10 +52,11 @@ class TestAuthorCrawl(TestUserCrawl):
 
     user = "author"
     conversation_actions = []
-    must_visit = (*TestUserCrawl.must_visit, *[Base.conversation_url + x for x in conversation_actions])
+    conversation_url = "/board-slug/conversations/1/conversation/"
+    must_visit = (*TestUserCrawl.must_visit, *[conversation_url + x for x in conversation_actions])
 
 
-class TestAdminCrawl(TestUserCrawl):
+class TestAdminCrawl(TestAuthorCrawl):
     """
     Crawl on all urls accessible by the admin user resource.
     """

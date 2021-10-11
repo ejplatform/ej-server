@@ -1,6 +1,7 @@
 from django.apps import apps
 from django.urls import reverse
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
+
 from hyperpython import a, html
 from hyperpython.django import csrf_input
 
