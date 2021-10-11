@@ -263,18 +263,37 @@ body {
                 display: none;
             }
         }
+        div {
+            display: flex;
+        }
+        label {
+            i {
+                margin-left: unset;
+            }
+        }
         ul {
             display: none;
             position: relative;
             width: 130%;
             margin-left: -30px;
-            li a{
+            li a {
                 font-weight: unset;
                 margin-left: 3.4em;
             }
         }
         #isexpanded3:checked + label > i {
             transform: rotate(180deg);
+        }
+        .selected {
+            background: #c4c4c4;
+        }
+        .show {
+            opacity: 1;
+            display: block;
+        }
+        .hide {
+            opacity: 0;
+            display: none;
         }
     }
 }
