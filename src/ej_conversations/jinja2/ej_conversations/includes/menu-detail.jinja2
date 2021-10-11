@@ -15,21 +15,21 @@
         
         {% if request.user.has_perm("ej.can_view_report", conversation) %}
             <li class="report-section">
-                <div style="display:flex;" onclick="showSection('isexpanded3', 'report-options-list');">
+                <div onclick="showSection('isexpanded3', 'report-options-list');">
                     <div class="display-reports">
                         <input type="checkbox" id="isexpanded3"/>
-                        <label for="isexpanded3"><i style="margin-left: unset;" class="fa fa-chevron-down"></i></label>
+                        <label for="isexpanded3"><i class="fa fa-chevron-down"></i></label>
                     </div>
                     <a id="reports" href="" onclick="setChecked('isexpanded3')">{{ _('Reports') }}</a>
                 </div>
                 
             <ul id="report-options-list">
                 {% if request.user.has_perm("ej.can_view_report", conversation) %}
-                <li><div id="general-report" class="general-item"><a href=" {{ conversation.url('report:general-report') }}">{{ _('General report') }}</a></div></li>
-                <li><div id="comments-report" class="comments-item"><a href=" {{ conversation.url('report:comments-report') }}">{{ _('Comments report') }}</a></div></li>
-                <li><div id="clusters" class="clusters-item"><a href=" {{ conversation.url('cluster:index') }}">{{ _('Opinion groups') }}</a></div></li>
-                <li><div id="scatter" class="scatter-item"><a href=" {{ conversation.url('dataviz:scatter') }}">{{ _('Scatter plot') }}</a></div></li>
-                <li><a href=" {{ conversation.url('conversation-analysis:index') }}">{{ _('Crossings') }}</a></li>
+                    <li><div id="general-report" class="general-item"><a href=" {{ conversation.url('report:general-report') }}">{{ _('General report') }}</a></div></li>
+                    <li><div id="comments-report" class="comments-item"><a href=" {{ conversation.url('report:comments-report') }}">{{ _('Comments report') }}</a></div></li>
+                    <li><div id="clusters" class="clusters-item"><a href=" {{ conversation.url('cluster:index') }}">{{ _('Opinion groups') }}</a></div></li>
+                    <li><div id="scatter" class="scatter-item"><a href=" {{ conversation.url('dataviz:scatter') }}">{{ _('Scatter plot') }}</a></div></li>
+                    <li><a href=" {{ conversation.url('conversation-analysis:index') }}">{{ _('Crossings') }}</a></li>
                 {% endif %}
             </ul>    
         </li>
@@ -65,18 +65,16 @@ function showSection(check_id, section_id) {
     let checkbox = document.getElementById(check_id)
     let section = document.getElementById(section_id);
     if (checkbox.checked) {
-        section.style['opacity'] = 1;
-        section.style['display'] = 'block';
+        section.className = "show"
     } else {
-        section.style['opacity'] = 0;
-        section.style['display'] = 'none';
+        section.className = "hide"
     }
 }
 
 window.onload = function() {
     let url = window.location.href.split("/");
     let menuItem = url[url.length-2].split("-")[0];
-    let backgroundColor = document.querySelector("." + menuItem + "-item").style.background = "#C4C4C4";
+    let backgroundColor = document.querySelector("." + menuItem + "-item").className = "selected";
 
     document.getElementById("reports").click();
 
