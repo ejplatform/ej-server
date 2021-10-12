@@ -99,15 +99,10 @@ class ConversationForm(EjModelForm):
     def set_placeholder(self, field, value):
         self.fields[field].widget.attrs["placeholder"] = value
 
-    def save(self, commit=True, board=None, **kwargs):
-        if not board:
-            raise ValidationError("Board field should not be empty")
+    def save(self, commit=True, **kwargs):
         conversation = super().save(commit=False)
-        conversation.board = board
-
         for k, v in kwargs.items():
             setattr(conversation, k, v)
-
         if commit:
             conversation.save()
 
