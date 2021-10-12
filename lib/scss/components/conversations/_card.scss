@@ -29,8 +29,8 @@ $_card-bg: config('ej.conversation-card.bg-image');
             background-color: css-var(--theme-light-color, color('brand-lighter'));
             color: css-var(--theme-color, color('brand'));
         }
-        padding: size(0.5) 0 size(0.25) 0;
         width: 100%;
+        padding: 0.1rem;
     }
     &__statistics {
         @include utilities('list-inline pad-y1');
@@ -43,13 +43,19 @@ $_card-bg: config('ej.conversation-card.bg-image');
         @include utilities('col flex-center pad-3');
 
         flex-grow: 1;
+        padding: 1rem;
 
         a {
             @include utilities('text-4 sans-serif');
 
             color: color('white');
-            display: block;
             font-weight: 600;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            padding: 0px 3.5px 0px 3.5px;
         }
     }
     &__moderate {
@@ -59,13 +65,20 @@ $_card-bg: config('ej.conversation-card.bg-image');
         display: block;
     }
     &__button {
-        @include utilities('pad-b3 pad-t1 margin-t1');
+        @include utilities('pad-t1 margin-t1');
+        padding-top: 0.8rem;
 
         @if $_card-bg {
             background: css-var(--theme-color, color('brand')) url("#{$_card-bg}") repeat;
         }
         background-blend-mode: luminosity;
         width: 100%;
+        
+        @media only screen and (max-width: 560px) {
+            a {
+                margin-bottom: 1.5rem;
+            }
+        }
     }
 
     .progress-bar {
