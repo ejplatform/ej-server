@@ -144,7 +144,7 @@ def edit(request, conversation, slug=None, check=check_promoted, **kwargs):
         # permission. This is possible since the form sees this field
         # for all users and does not check if the user is authorized to
         # change is value.
-        new = form.save()
+        new = form.save(**kwargs)
         if new.is_promoted != is_promoted:
             new.is_promoted = is_promoted
             new.save()
