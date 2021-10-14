@@ -1,5 +1,7 @@
+import datetime
 from django.contrib.auth import get_user_model
 from django.db.models import Count, Q
+from django.db.models.functions import TruncDay
 from sidekick import import_later
 from sidekick import property as property
 
@@ -119,3 +121,39 @@ def statistics_for_user(conversation, user):
         "total_comments": max_votes,
         "comments": given_votes + 1,
     }
+
+
+def set_date_range(start_date, end_date):
+    """
+    Set all date range values ​​with 0.
+    """
+    date_range = end_date - start_date
+    initial_values = [
+        {"date": start_date + datetime.timedelta(days=i), "value": 0} for i in range(date_range.days + 1)
+    ]
+    return initial_values
+
+
+def get_all_interval_dates(start_date, end_date, date_votes):
+    initial_values = set_date_range(start_date, end_date)
+    for data in date_votes:
+        index = (data["date"].date() - start_date).days
+        initial_values[index]["value"] = data["value"]
+    return initial_values
+
+
+def vote_distribution_over_time(conversation, start_date, end_date):
+    """
+    Returns the total votes for each day in a time interval.
+    """
+    # contains total votes only for days on which votes occurred.
+    date_votes = conversation.votes.filter(
+        created__range=(start_date, end_date + datetime.timedelta(days=1))
+    )
+    date_votes = (
+        date_votes.annotate(date=TruncDay("created"))
+        .values("date")
+        .annotate(value=Count("id"))
+        .order_by("-date")
+    )
+    return get_all_interval_dates(start_date, end_date, date_votes)

@@ -1,0 +1,161 @@
+<div class="vote-date-picker">
+  <div>
+    <p>{{_('Vote')}}</p>
+  </div>
+  <div>
+    <input id="start-date" type="date">
+    <input id="end-date" type="date">
+  </div>
+</div>
+
+<div id="svg-container">
+  <div class="card-body-content-loading">
+    <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+  </div>
+  <svg id="votes-over-time" width="506" height="326"></svg>
+</div>
+
+<div class="card-body-error-invalid-dates">
+  <span class="helptext">{{ _('end date must be gratter then start date') }}</span>
+</div>
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+
+<script>
+function setDateFilter() {
+    let today = new Date();
+    let sevenDaysBefore = new Date(today.getTime() - (7 * 24 * 60 * 60 * 1000))
+    document.getElementById('end-date').value = formatDate(today);
+    document.getElementById('start-date').value = formatDate(sevenDaysBefore);
+}
+function formatDate(date) {
+    return date.toISOString().slice(0, 10);
+}
+
+function listenToDateChanges() {
+    let startDateInput = document.getElementById("start-date");
+    let endDateInput = document.getElementById("end-date");
+
+    startDateInput.onchange = updateVisualization
+    endDateInput.onchange = updateVisualization
+}
+
+function showLoading() {
+  document.querySelector(".card-body-content-loading").style.display = "block";
+}
+
+function hideLoading() {
+  document.querySelector(".card-body-content-loading").style.display = "none";
+}
+
+async function updateVisualization() {
+    if (startDateIsBiggerThenEndDate()) {
+      showErrors("invalid-dates");
+      return;
+    }
+    hideErrors();
+    showLoading();
+    var voteData = await requestData();
+    hideLoading();
+    d3jsVisualization(voteData);
+}
+
+async function loadVoteVisualization() {
+    setDateFilter();
+    listenToDateChanges();
+    showLoading();
+    var voteData = await requestData();
+    hideLoading();
+    d3jsVisualization(voteData);
+}
+
+function parseDate(voteData) {
+  return voteData.data.map(d => ({date: Date.parse(d.date), value: d.value}))
+}
+
+function startDateIsBiggerThenEndDate() {
+  var startDate = document.getElementById("start-date").value;
+  var endDate = document.getElementById("end-date").value;
+  return startDate > endDate;
+}
+
+function showErrors() {
+  document.querySelector(".card-body-error-invalid-dates").style.display = "block";
+}
+
+function hideErrors() {
+  document.querySelector(".card-body-error-invalid-dates").style.display = "none";
+}
+
+async function requestData() {
+  var startDate = document.getElementById("start-date").value;
+  var endDate = document.getElementById("end-date").value;
+  
+  var url =
+    "/conversations/{{conversation.id}}/{{conversation.slug}}/reports/votes-over-time?startDate=" +
+    startDate +
+    "&endDate=" +
+    endDate
+  var response = await fetch(url);
+  var data = await response.json();
+
+  if (data.error) {
+    showErrors();
+    return {};
+  }
+
+  return parseDate(data);
+}
+
+async function d3jsVisualization(voteData) {
+    let margin = ({top: 20, right: 30, bottom: 30, left: 40})
+    let svgWidth = d3.select('#votes-over-time').attr('width');
+    let svgHeight = d3.select('#votes-over-time').attr('height');
+
+    var previusSvg = d3.select("#votes-over-time");
+    previusSvg.remove();
+
+    d3.select("#svg-container")
+    .append("svg")
+    .attr("id", 'votes-over-time')
+    .attr("width", svgWidth)
+    .attr("height", svgHeight)
+
+    const x = d3.scaleUtc()
+                .domain(d3.extent(voteData, d => d.date))
+                .range([margin.left, svgWidth - margin.right])
+
+    const xAxis = g => g.attr("transform", `translate(0,${svgHeight - margin.bottom})`)
+                        .call(d3.axisBottom(x).ticks(svgWidth / 80).tickSizeOuter(0))
+    
+    const y = d3.scaleLinear()
+            .domain([0, d3.max(voteData, d => d.value)]).nice()
+            .range([svgHeight - margin.bottom, margin.top])
+    
+    const yAxis = g => g.attr("transform", `translate(${margin.left},0)`)
+                        .call(d3.axisLeft(y))
+                        .call(g => g.select('.domain').remove())
+                        .call(g => g.select(".tick:last-of-type text").clone()
+                            .attr("x", 3)
+                            .attr("text-anchor", "start")
+                            .attr("font-weight", "bold")
+                            .text(voteData.y))
+    
+    const line = d3.line().defined(d => !isNaN(d.value)).x(d => x(d.date)).y(d => y(d.value))
+
+    const svgVotesOverTime = d3.select('#votes-over-time').attr("viewBox", [0, 0, svgWidth, svgHeight]); 
+    svgVotesOverTime.append("g").call(xAxis);
+    svgVotesOverTime.append("g").call(yAxis);
+    
+    svgVotesOverTime.append("path")
+        .datum(voteData)
+        .attr("fill", "none")
+        .attr("stroke", "steelblue")
+        .attr("stroke-width", 1.5)
+        .attr("stroke-linejoin", "round")
+        .attr("stroke-linecap", "round")
+        .attr("d", line)
+}
+
+window.addEventListener('load', loadVoteVisualization);
+</script>

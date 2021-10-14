@@ -148,3 +148,68 @@
     text-decoration: none;
     cursor: pointer;
 }
+
+.vote-date-picker {
+    display: flex;
+    :first-child {
+        width: 20%;
+    }
+    :last-child {
+        display: flex; 
+        margin-left: auto;
+    }
+    #start-date, #end-date {
+        min-width: 10em;
+        width: 0%;
+        margin-right: 4px;
+    }
+}
+#votes-over-time {
+    width: 100%;
+}
+
+.card-body-error-invalid-dates {
+    color: red;
+    display: none;
+}
+
+.card-body-content-loading {
+    text-align: center;
+    display: none;
+}
+
+@media (min-width: 1460px) {
+    .report-card-list {
+        display: flex; 
+        flex-wrap: wrap; 
+        justify-content: space-between;
+    }
+}
+
+@media (max-width:1200px) {
+    .report-charts {
+        flex-direction: column;
+    }
+    .vote-chart {
+        margin-bottom: 40px;
+        width: 100% !important;
+    }
+    .channel-vote-chart {
+        width: 100% !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .vote-date-picker :last-child {
+        display: block !important;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .modal-content {
+        margin: 25% 0 0 60%;
+    }
+    .report-charts {
+        flex-direction: column;
+    }
+}
