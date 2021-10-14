@@ -1,6 +1,8 @@
 from functools import lru_cache
+import datetime
 
 from boogie.router import Router
+from django.http import JsonResponse
 from django.contrib.auth import get_user_model
 from django.http import HttpResponse, Http404
 from django.shortcuts import get_object_or_404
@@ -76,6 +78,28 @@ def comments_report(request, conversation, slug, check=check_promoted):
         "can_view_detail": can_view_detail,
         "type_data": "comments-data",
     }
+
+
+@urlpatterns.route("votes-over-time/")
+def votes_over_time(request, conversation, slug, check=check_promoted):
+    start_date = request.GET.get("startDate")
+    end_date = request.GET.get("endDate")
+    if start_date and end_date:
+        start_date = datetime.date.fromisoformat(start_date)
+        end_date = datetime.date.fromisoformat(end_date)
+    else:
+        return JsonResponse({"error": "end date and start date should be passed as a parameter."})
+
+    if start_date > end_date:
+        return JsonResponse({"error": "end date must be gratter then start date."})
+
+    try:
+        votes = conversation.time_interval_votes(start_date, end_date)
+        return JsonResponse({"data": list(votes)})
+    except Exception as e:
+        print("Could not generate D3js data")
+        print(e)
+        return JsonResponse({})
 
 
 @urlpatterns.route("users/", perms=["ej.can_view_report_detail"])

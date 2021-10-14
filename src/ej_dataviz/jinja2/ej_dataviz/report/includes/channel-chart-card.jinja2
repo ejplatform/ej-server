@@ -1,4 +1,4 @@
-<svg width="324" height="406"></svg>
+<svg id="channel-chart" width="324" height="406"></svg>
 <script src="https://d3js.org/d3.v7.min.js"></script>
 <script>
         let data = [
@@ -10,8 +10,8 @@
         ];
 
         data = data.filter(d => d.value != 0)
-        const width = d3.select('svg').attr('width');
-        const height = d3.select('svg').attr('height');
+        const width = d3.select('#channel-chart').attr('width');
+        const height = d3.select('#channel-chart').attr('height');
 
         const pie = d3.pie()
             .sort(null)
@@ -29,7 +29,7 @@
             .domain(data.map(d => d.name))
             .range(d3.quantize(t => d3.interpolateSpectral(t * 0.8 + 0.1), data.length + 1).reverse())
 
-        const svg = d3.select('svg').attr("viewBox", [-width / 2, -height / 2, width, height]);
+        const svg = d3.select('#channel-chart').attr("viewBox", [-width / 2, -height / 2, width, height]);
 
         svg.append("g")
         .attr("stroke", "white")

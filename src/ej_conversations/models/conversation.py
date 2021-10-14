@@ -18,7 +18,7 @@ from .comment import Comment
 from .conversation_queryset import log, ConversationQuerySet
 from .favorites import HasFavoriteMixin
 from .util import make_clean
-from .util import vote_count, statistics, statistics_for_user
+from .util import vote_count, statistics, statistics_for_user, vote_distribution_over_time
 from .vote import Vote
 from ..enums import Choice
 from ..signals import comment_moderated
@@ -142,6 +142,7 @@ class Conversation(HasFavoriteMixin, TimeStampedModel):
     vote_count = vote_count
     statistics = statistics
     statistics_for_user = statistics_for_user
+    time_interval_votes = vote_distribution_over_time
 
     @lazy
     def for_user(self):
