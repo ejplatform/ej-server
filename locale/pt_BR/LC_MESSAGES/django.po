@@ -3784,7 +3784,7 @@ msgstr ""
 #: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:40
 #, fuzzy
 msgid "Add this snippet to the website's header tag."
-msgstr "Adicione esse trecho na tag header do site."
+msgstr "Adicione esse trecho na tag body do site."
 
 #: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:45
 #: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:66
