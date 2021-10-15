@@ -15,14 +15,14 @@ Local development (Docker)
 
 First clone the repository::
 
-    $ git clone https://gitlab.com/pencillabs/ej/ej-server
-    $ cd ej-server
+    $ git clone https://gitlab.com/pencillabs/ej/ej-application
+    $ cd ej-application
 
 The recomended way to run EJ is with Docker. With it 
 you can quickly start the development server using the
 commands::
 
-    $ sudo pip3 install invoke==1.4.1 --user
+    $ pip3 install invoke==1.4.1 --user
     $ inv docker-up
     $ inv docker-logs
 
