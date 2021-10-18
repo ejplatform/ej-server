@@ -100,6 +100,7 @@ def statistics(conversation):
 @rest_api.save_hook("ej_conversations.Vote")
 def save_vote(request, vote):
     user = request.user
+    vote.utm
     create_mautic_contact_from_author(request, vote)
 
     try:

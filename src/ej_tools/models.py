@@ -68,12 +68,14 @@ class ConversationComponent:
         ("default", _("Default")),
         ("votorantim", _("Votorantim")),
         ("icd", _("ICD")),
+        ("bocadelobo", _("Boca de Lobo")),
     )
 
     THEME_PALETTES = {
         "default": ["#1D1088", "#F8127E"],
         "votorantim": ["#04082D", "#F14236"],
         "icd": ["#005BAA", "#F5821F"],
+        "bocadelobo": ["#83E760", "#161616"],
     }
 
     def __init__(self, form):

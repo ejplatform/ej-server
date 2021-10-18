@@ -102,9 +102,10 @@ def votes_over_time(request, conversation, slug, check=check_promoted):
         return JsonResponse({})
 
 
-@urlpatterns.route("users/")
+@urlpatterns.route("users/", perms=["ej.can_view_report_detail"])
 def users(request, conversation, slug, check=check_promoted):
-    print("ENTROU")
+    if not request.user.has_perm("ej.can_view_report_detail"):
+        raise Http404
     return {"conversation": check(conversation, request)}
 
 

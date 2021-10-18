@@ -1,6 +1,7 @@
 // Create utilities for the themes
 // Color themes
-@each $color in (theme-brand theme-accent theme-green theme-orange theme-purple theme-grey theme-icd theme-votorantim theme-default) {
+@each $color in (theme-brand theme-accent theme-green theme-orange theme-purple theme-grey theme-icd
+theme-votorantim theme-default theme-bocadelobo) {
     .#{$color} {
         --theme-color: #{color($color)};
         --theme-light-color: #{color(#{$color}-light)};

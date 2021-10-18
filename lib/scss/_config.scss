@@ -40,6 +40,8 @@ $color-theme-grey-light: #EEEEEE !default;
 
 
 //Opinion component colors
+$color-theme-bocadelobo: #83E760 !default;
+$color-theme-bocadelobo-light: #161616 !default;
 $color-theme-icd: #005BAA !default;
 $color-theme-icd-light: #F5821F !default;
 $color-theme-votorantim: #04082D !default;
@@ -95,6 +97,8 @@ $mendeleev-color-palette: (
     'theme-grey-light': $color-theme-grey-light,
 
     //Opinion component themes
+    'theme-bocadelobo': $color-theme-bocadelobo,
+    'theme-bocadelobo-light': $color-theme-bocadelobo-light,
     'theme-icd': $color-theme-icd,
     'theme-icd-light': $color-theme-icd-light,
     'theme-votorantim': $color-theme-votorantim,
