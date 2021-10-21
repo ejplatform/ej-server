@@ -12,7 +12,7 @@
     {% for cluster in clusters %}
         <div class="title-export">
             <h3>{{ cluster.name }} ({{ _('{n} users').format(n=cluster.n_users) }})</h3>
-            {{ export_modal(can_view_detail, conversation, type_data, cluster.name) }}
+            {{ export_modal(can_view_detail, conversation, type_data, cluster.name, cluster) }}
         </div>
         {{ cluster|role('comments-stats-table') }}
     {% endfor %}
