@@ -54,6 +54,7 @@ VOTE = {
     "comment": "content",
     "choice": 1,
     "channel": "unknown",
+    "analytics_utm": None,
 }
 
 VOTES = [
