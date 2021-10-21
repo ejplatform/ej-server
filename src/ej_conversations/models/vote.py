@@ -53,6 +53,7 @@ class Vote(models.Model):
         choices=VoteChannels.choices(),
         default=VoteChannels.UNKNOWN,
     )
+    analytics_utm = models.JSONField(blank=True, null=True)
     objects = VoteQuerySet.as_manager()
 
     class Meta:

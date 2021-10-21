@@ -101,10 +101,10 @@ def statistics(conversation):
 def save_vote(request, vote):
     user = request.user
     create_mautic_contact_from_author(request, vote)
-
     try:
         skipped_vote = Vote.objects.get(comment=vote.comment, choice=0, author=user)
         skipped_vote.choice = vote.choice
+        skipped_vote.analytics_utm = vote.analytics_utm
         skipped_vote.save()
         return skipped_vote
     except Exception as e:
@@ -115,7 +115,7 @@ def save_vote(request, vote):
     elif vote.author != user:
         raise PermissionError("cannot update vote of a different user")
     else:
-        vote.save(update_fields=["choice"])
+        vote.save(update_fields=["choice", "analytics_utm"])
     return vote
 
 

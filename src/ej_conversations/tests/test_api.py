@@ -119,6 +119,88 @@ class TestPostRoutes:
         data = api.get(comments_path + f"{comment.id}/", **self.EXCLUDES)
         assert data == comment_data
 
+    def test_post_vote(self, api, comment, user):
+        path = BASE_URL + f"/votes/"
+        post_data = {
+            "analytics_utm": {
+                "utm_campaign": 1,
+                "utm_test": "test",
+            },
+            "choice": 1,
+            "comment": comment.id,
+        }
+
+        # Non authenticated user
+        assert api.post(path, post_data) == self.AUTH_ERROR
+
+        # Authenticated user
+        token = Token.objects.create(user=user)
+        _api = APIClient()
+        _api.credentials(HTTP_AUTHORIZATION="Token " + token.key)
+        _api.post(path, post_data, format="json")
+
+        vote = comment.votes.last()
+
+        assert vote.analytics_utm == {"utm_campaign": 1, "utm_test": "test"}
+
+    def test_post_vote_without_analytics_utm(self, api, comment, user):
+        path = BASE_URL + f"/votes/"
+        post_data = {
+            "choice": 0,
+            "comment": comment.id,
+        }
+
+        # Authenticated user
+        token = Token.objects.create(user=user)
+        _api = APIClient()
+        _api.credentials(HTTP_AUTHORIZATION="Token " + token.key)
+        _api.post(path, post_data, format="json")
+
+        vote = comment.votes.last()
+        assert vote.analytics_utm == None
+
+        post_data["analytics_utm"] = {}
+        _api.post(path, post_data, format="json")
+
+        vote = comment.votes.last()
+        assert vote.analytics_utm == {}
+
+    def test_post_skipped_vote(self, api, comment, user):
+        path = BASE_URL + f"/votes/"
+        post_data = {
+            "analytics_utm": {
+                "utm_campaign": 1,
+                "utm_test": "test",
+            },
+            "choice": 0,
+            "comment": comment.id,
+        }
+
+        # Authenticated user
+        token = Token.objects.create(user=user)
+        _api = APIClient()
+        _api.credentials(HTTP_AUTHORIZATION="Token " + token.key)
+
+        _api.post(path, post_data, format="json")
+
+        post_data = {
+            "analytics_utm": {
+                "utm_campaign": 2,
+            },
+            "choice": 1,
+            "comment": comment.id,
+        }
+
+        vote = comment.votes.last()
+        assert vote.analytics_utm == {"utm_campaign": 1, "utm_test": "test"}
+
+        _api.post(path, post_data, format="json")
+
+        vote = comment.votes.last()
+        assert vote.analytics_utm == {
+            "utm_campaign": 2,
+        }
+
 
 class TestConversartionStatistics(ConversationRecipes):
     def test_vote_count_of_a_conversation(self, db, mk_conversation, mk_user):
