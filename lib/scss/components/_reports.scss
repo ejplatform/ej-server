@@ -124,7 +124,6 @@
 .modal-content {
     background-color: #fefefe;
     position: absolute;
-    border: 1px solid #888;
     z-index: 1;
     width: 100px;
 }
@@ -206,9 +205,6 @@
 }
 
 @media only screen and (max-width: 600px) {
-    .modal-content {
-        margin: 25% 0 0 60%;
-    }
     .report-charts {
         flex-direction: column;
     }

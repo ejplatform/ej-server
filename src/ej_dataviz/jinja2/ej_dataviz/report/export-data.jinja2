@@ -1,4 +1,4 @@
-{% macro export_modal(can_view_detail, conversation, type_data, _id) %}
+{% macro export_modal(can_view_detail, conversation, type_data, _id, cluster=None) %}
 
 <div>
 
@@ -6,8 +6,8 @@
 
   <div id="export-modal-{{_id}}" class="modal-report">
       <div class="modal-content">
-          <span class="close-report" id="{{_id}}">&times;</span>
-          {% if can_view_detail %}{{ conversation|role('download-data', which=type_data) }}{% endif %}
+          <span class="close-report" id="{{_id}}" onclick='closeExportDropdown(this)'>&times;</span>
+          {% if can_view_detail %}{{ conversation|role('download-data', which=type_data, cluster=cluster) }}{% endif %}
       </div>
   </div>
 
@@ -15,11 +15,18 @@
 
 
 <script>
-var modal = document.getElementById("export-modal-{{_id}}");
-window.onclick = function(event) {
-  const link = event.target.classList.contains('export-button')  
-  modal.style.display = !link ? "none" : "block"
+var exportBtn = document.getElementById("export-btn-{{_id}}");
+function closeExportDropdown(closeIcon) {
+  exportOptions = closeIcon.parentElement.parentElement;
+  exportOptions.style.display = "none";
 }
+
+function openExportDropdown(event) {
+  exportOptions = event.target.nextElementSibling;
+  exportOptions.style.display = exportOptions.style.display == "block" ? "none" : "block";
+}
+
+exportBtn.onclick = openExportDropdown
 </script>
 
 {% endmacro %}
