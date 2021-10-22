@@ -530,11 +530,14 @@
     display: none;
 }
 
-.modal-content {
+.modal-mailing-preview {
     border-radius: 10px;
     background-color: white;
     box-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.35);
-    padding: 0.5rem;
+    padding: 1rem;
+    height: 48rem;
+    overflow: hidden;
+
     .close {
         color: #aaa;
         position: absolute;
@@ -550,6 +553,10 @@
         color: black;
         text-decoration: none;
         cursor: pointer;
+    }
+
+    @media only screen and (max-width: 560px) {
+        height: 53rem;
     }
 }
 
