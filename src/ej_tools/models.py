@@ -65,7 +65,7 @@ class ConversationComponent:
     }
 
     THEME_CHOICES = (
-        ("default", _("Default")),
+        ("default", _("UCC")),
         ("votorantim", _("Votorantim")),
         ("icd", _("ICD")),
         ("bocadelobo", _("Boca de Lobo")),
@@ -91,7 +91,7 @@ class ConversationComponent:
             return "theme= authenticate-with=register"
 
         result = ""
-        if self.form.cleaned_data["theme"] != "default":
+        if self.form.cleaned_data["theme"]:
             result = result + f"theme={self.form.cleaned_data['theme']}"
         if self.form.cleaned_data["authentication_type"]:
             result = result + f" authenticate-with={self.form.cleaned_data['authentication_type']}"

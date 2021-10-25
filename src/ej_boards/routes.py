@@ -140,6 +140,15 @@ def conversation_tools_opinion_component(request, board, **kwargs):
 
 
 @urlpatterns.route(
+    board_conversation_url + "tools/opinion-component/preview/",
+    perms=["ej.can_edit_conversation:conversation"],
+)
+def conversation_tools_opinion_component_preview(request, board, **kwargs):
+    check_board(board)
+    return tools_routes.opinion_component_preview(request, **kwargs)
+
+
+@urlpatterns.route(
     board_conversation_url + "tools/mautic/delete/<model:mautic_connection>",
     perms=["ej.can_edit_conversation:conversation"],
 )

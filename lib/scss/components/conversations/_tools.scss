@@ -303,6 +303,37 @@
     }
 }
 
+.title-theme {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+
+    input[type="submit"] {
+        color: #BABABA;
+        font-weight: bold;
+        background-color: transparent;
+        border-color: transparent;
+        margin-top: 29px;
+        box-shadow: 0px 0px;
+        padding: 0px;
+        margin-left: -10px;
+    }
+    input[type="submit"]:hover {
+        box-shadow: 0px 0px;
+    }
+    
+    #eye-icon { 
+        color: #052B47;
+        margin-top: 39px;
+    }
+    #preview-option{
+        display: flex;
+        flex-wrap: nowrap;
+        column-gap: 10px;
+    }
+}
+
 #preview-template {
     table tbody tr {
         background: none !important;

@@ -5,7 +5,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.core.exceptions import ValidationError
-from .utils import npm_version, user_can_add_new_domain, prepare_host_with_https
+from .utils import npm_version, user_can_add_new_domain, prepare_host_with_https, get_statics_domain
 from .forms import (
     RasaConversationForm,
     ConversationComponentForm,
@@ -72,6 +72,12 @@ def opinion_component(request, conversation, slug):
     conversation_component = ConversationComponent(form)
     tools = Tools(conversation)
 
+    if "preview" in request.POST:
+        form.is_valid()
+        request.session["theme"] = form.cleaned_data["theme"] or "icd"
+        request.session["authentication_type"] = form.cleaned_data["authentication_type"]
+        return redirect(conversation.url("conversation-tools:opinion-component-preview"))
+
     return {
         "schema": schema,
         "tool": tools.get(_("Opinion component")),
@@ -79,6 +85,19 @@ def opinion_component(request, conversation, slug):
         "conversation": conversation,
         "form": form,
         "conversation_component": conversation_component,
+    }
+
+
+@urlpatterns.route(conversation_tools_url + "/opinion-component/preview")
+def opinion_component_preview(request, conversation, slug):
+    host = get_statics_domain(request)
+    theme = request.session.get("theme")
+    auth_type = request.session.get("authentication_type")
+    return {
+        "conversation": conversation,
+        "authentication_type": auth_type,
+        "theme": theme,
+        "host": host,
     }
 
 

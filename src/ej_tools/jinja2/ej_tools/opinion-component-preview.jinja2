@@ -1,0 +1,45 @@
+<script src="https://unpkg.com/ej-conversations@1.8.0/dist/conversations/conversations.esm.js" type="module" ></script>
+				
+<link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+					
+<link href="http://localhost:8000/static/css/fontawesome-all.min.css" rel="stylesheet">
+<style>
+		/* https://github.com/ionic-team/stencil/issues/2072 */
+@font-face {
+font-family: Folio;
+font-style: normal;
+font-weight: 400;
+src: url(https://unpkg.com/ej-conversations@1.8.0/dist/conversations/assets/fonts/folio_bold_condensed.ttf);
+}
+
+@font-face {
+font-family: Helvetica;
+font-style: normal;
+font-weight: 400;
+	src: url('https://unpkg.com/ej-conversations@1.8.0/dist/conversations/assets/fonts/helvetica_neue_lts_roman.otf');
+}
+
+@font-face {
+font-family: 'Font Awesome 5 Free';
+font-style: normal;
+font-weight: 400;
+	src: url('https://unpkg.com/ej-conversations@1.8.0/dist/conversations/assets/fonts/fa-regular-400.ttf');
+}
+
+@font-face {
+font-family: 'Font Awesome 5 Free';
+font-style: normal;
+font-weight: 400;
+	src: url('https://unpkg.com/ej-conversations@1.8.0/dist/conversations/assets/fonts/fa-brands-400.ttf');
+}
+
+@font-face {
+font-family: 'Font Awesome 5 Free';
+font-style: normal;
+font-weight: 400;
+	src: url('https://unpkg.com/ej-conversations@1.8.0/dist/conversations/assets/fonts/fa-solid-900.ttf');
+}
+
+</style>
+
+<ej-conversation host={{host}} cid={{conversation.id}} theme={{theme}} authenticate-with={{authentication_type}}></ej-conversation>			
