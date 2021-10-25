@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-18 11:19-0300\n"
+"POT-Creation-Date: 2021-10-25 16:43-0300\n"
 "PO-Revision-Date: 2019-09-09 13:55-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -159,7 +159,7 @@ msgstr "Você não pode alterar este valor depois"
 msgid "My Board"
 msgstr "Meu mural"
 
-#: src/ej_boards/models.py:22 src/ej_tools/models.py:68
+#: src/ej_boards/models.py:22
 msgid "Default"
 msgstr "Padrão"
 
@@ -639,7 +639,7 @@ msgstr ""
 msgid "From which EJ channel the vote comes from"
 msgstr ""
 
-#: src/ej_conversations/models/vote.py:68
+#: src/ej_conversations/models/vote.py:69
 msgid "non-moderated comments cannot receive votes"
 msgstr "comentários não-moderados não podem receber votos"
 
@@ -1934,8 +1934,8 @@ msgstr "Uma conversa pode ter no máximo cinco links integrados."
 msgid "Register using name/email"
 msgstr "Registrar usando nome/email"
 
-#: src/ej_tools/models.py:57 src/ej_tools/models.py:101
-#: src/ej_tools/routes.py:176 src/ej_tools/table.py:47
+#: src/ej_tools/models.py:57 src/ej_tools/models.py:103
+#: src/ej_tools/routes.py:195 src/ej_tools/table.py:47
 msgid "Mautic"
 msgstr ""
 
@@ -1950,7 +1950,7 @@ msgstr ""
 "Usuário interagirá com a interface da EJ, criando uma conta com dados "
 "pessoais (email e nome)."
 
-#: src/ej_tools/models.py:63 src/ej_tools/models.py:107
+#: src/ej_tools/models.py:63 src/ej_tools/models.py:109
 msgid "Uses a mautic campaign "
 msgstr "Usa uma campanha do mautic"
 
@@ -1962,6 +1962,10 @@ msgstr ""
 "Usa cookies do analytics para cruzar dados de voto com os dados do navegador "
 "do usuário."
 
+#: src/ej_tools/models.py:68
+msgid "UCC"
+msgstr ""
+
 #: src/ej_tools/models.py:69
 msgid "Votorantim"
 msgstr ""
@@ -1970,47 +1974,51 @@ msgstr ""
 msgid "ICD"
 msgstr ""
 
-#: src/ej_tools/models.py:102
+#: src/ej_tools/models.py:71
+msgid "Boca de Lobo"
+msgstr ""
+
+#: src/ej_tools/models.py:104
 msgid "MailChimp"
 msgstr ""
 
-#: src/ej_tools/models.py:106
+#: src/ej_tools/models.py:108
 #, fuzzy
 msgid "Mailchimp campaign"
 msgstr "Campanha de email"
 
-#: src/ej_tools/models.py:116
+#: src/ej_tools/models.py:118
 msgid "Client ID"
 msgstr "Chave pública"
 
-#: src/ej_tools/models.py:117
+#: src/ej_tools/models.py:119
 #, fuzzy
 msgid "Client Secret"
 msgstr "Chave secreta"
 
-#: src/ej_tools/models.py:118
+#: src/ej_tools/models.py:120
 #, fuzzy
 msgid "Mautic Access Token"
 msgstr "Token de acesso"
 
-#: src/ej_tools/models.py:119
+#: src/ej_tools/models.py:121
 #, fuzzy
 msgid "Refresh Token"
 msgstr "Atualizar token"
 
-#: src/ej_tools/models.py:120
+#: src/ej_tools/models.py:122
 msgid "Mautic URL"
 msgstr "URL do Mautic"
 
-#: src/ej_tools/models.py:120
+#: src/ej_tools/models.py:122
 msgid "Generated Url from Mautic."
 msgstr "Url gerada no Mautic."
 
-#: src/ej_tools/models.py:187
+#: src/ej_tools/models.py:189
 msgid "Client not found."
 msgstr "Chave do Mautic não encontrada"
 
-#: src/ej_tools/models.py:191
+#: src/ej_tools/models.py:193
 #: src/ej_tools/tests/test_mautic_integrations.py:117
 #, fuzzy
 msgid ""
@@ -2020,25 +2028,25 @@ msgstr ""
 "Não foi possível localizar uma instância do Mautic com a URL fornecida. "
 "Verifique sua url do Mautic e a url de redirecionamento na página do Mautic."
 
-#: src/ej_tools/models.py:212
+#: src/ej_tools/models.py:214
 msgid "Couldn't generate tokens."
 msgstr "Não foi possível gerar os tokens."
 
-#: src/ej_tools/models.py:235
+#: src/ej_tools/models.py:237
 #, fuzzy
 msgid "Couldn't generate new token."
 msgstr "Não foi possível gerar os tokens."
 
-#: src/ej_tools/models.py:281
+#: src/ej_tools/models.py:283
 #, fuzzy
 msgid "There was an error connection to mautic server, please check your url."
 msgstr "Houve um erro na conexao com o Mautic, por favor verifique a URL."
 
-#: src/ej_tools/models.py:320
+#: src/ej_tools/models.py:322
 msgid "Couldn't create a new contact in Mautic."
 msgstr ""
 
-#: src/ej_tools/models.py:324
+#: src/ej_tools/models.py:326
 #: src/ej_tools/tests/test_mautic_integrations.py:149
 msgid "There was an error connection to mautic server, please try again."
 msgstr "Houve um erro na conexao com o Mautic, por favor tente novamente."
@@ -2047,12 +2055,12 @@ msgstr "Houve um erro na conexao com o Mautic, por favor tente novamente."
 msgid "Mailing campaign"
 msgstr "Campanha de email"
 
-#: src/ej_tools/routes.py:77 src/ej_tools/table.py:19
+#: src/ej_tools/routes.py:83 src/ej_tools/table.py:19
 #, fuzzy
 msgid "Opinion component"
 msgstr "Componente de opinião"
 
-#: src/ej_tools/routes.py:90 src/ej_tools/routes.py:114
+#: src/ej_tools/routes.py:109 src/ej_tools/routes.py:133
 #: src/ej_tools/table.py:27
 msgid "Chatbot"
 msgstr ""
@@ -3647,8 +3655,8 @@ msgstr "Integre esta conversa com um dos canais de coleta disponíveis."
 #: src/ej_tools/jinja2/ej_tools/mailing.jinja2:85
 #: src/ej_tools/jinja2/ej_tools/mautic.jinja2:42
 #: src/ej_tools/jinja2/ej_tools/mautic.jinja2:44
-#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:77
-#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:79
+#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:85
+#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:87
 #: src/ej_tools/jinja2/ej_tools/rasa.jinja2:89
 #: src/ej_tools/jinja2/ej_tools/rasa.jinja2:91
 #, fuzzy
@@ -3763,18 +3771,23 @@ msgstr "Não sabe qual opção escolher?"
 msgid "Access our documentation."
 msgstr "Acesse nossa documentação."
 
-#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:29
+#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:34
+#, fuzzy
+msgid "Visualize"
+msgstr "Visualizar"
+
+#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:37
 #, fuzzy
 msgid "Selects a color palette for the component style."
 msgstr "Selecione uma paleta de cor para o estilo do componente."
 
-#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:34
+#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:42
 #: src/ej_tools/jinja2/ej_tools/rasa.jinja2:72
 #, fuzzy
 msgid "Integration script"
 msgstr "Script de integração"
 
-#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:35
+#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:43
 #, fuzzy
 msgid ""
 "Generate scripts by clicking on the icon to integrate the component into "
@@ -3783,22 +3796,22 @@ msgstr ""
 "Gere os scripts clicando no ícone, para integrar o componente na sua página "
 "html."
 
-#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:40
+#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:48
 #, fuzzy
 msgid "Add this snippet to the website's body tag."
 msgstr "Adicione esse trecho na tag body do site."
 
-#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:45
-#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:66
+#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:53
+#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:74
 #: src/ej_tools/jinja2/ej_tools/rasa.jinja2:80
 msgid "Copy"
 msgstr "Copiar"
 
-#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:51
+#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:59
 msgid "Generate Script"
 msgstr "Gerar Script"
 
-#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:61
+#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:69
 #, fuzzy
 msgid ""
 "Add this snippet to the body tag of the page where the component will be "

@@ -10,22 +10,22 @@ ConversationRecipes.update_globals(globals())
 
 class TestConversationComponentModel:
     def test_conversation_component_get_props_with_analytics_auth(self):
-        form = ConversationComponentForm({"authentication_type": "analytics", "theme": "default"})
+        form = ConversationComponentForm({"authentication_type": "analytics", "theme": "icd"})
         component = ConversationComponent(form)
         props = component.get_props()
-        assert props == " authenticate-with=analytics"
+        assert props == "theme=icd authenticate-with=analytics"
 
     def test_conversation_component_get_props_with_mautic_auth(self):
-        form = ConversationComponentForm({"authentication_type": "mautic", "theme": "default"})
+        form = ConversationComponentForm({"authentication_type": "mautic", "theme": "icd"})
         component = ConversationComponent(form)
         props = component.get_props()
-        assert props == " authenticate-with=mautic"
+        assert props == "theme=icd authenticate-with=mautic"
 
     def test_conversation_component_get_props_with_register_auth(self):
-        form = ConversationComponentForm({"authentication_type": "register", "theme": "default"})
+        form = ConversationComponentForm({"authentication_type": "register", "theme": "icd"})
         component = ConversationComponent(form)
         props = component.get_props()
-        assert props == " authenticate-with=register"
+        assert props == "theme=icd authenticate-with=register"
 
     def test_conversation_component_get_props_with_custom_theme(self):
         form = ConversationComponentForm({"authentication_type": "mautic", "theme": "votorantim"})
@@ -42,7 +42,7 @@ class TestConversationComponentModel:
 
 class TestConversationComponentForm:
     def test_conversation_component_valid_form(self):
-        form = ConversationComponentForm({"authentication_type": "register", "theme": "default"})
+        form = ConversationComponentForm({"authentication_type": "register", "theme": "icd"})
         assert form.is_valid()
 
 
@@ -52,10 +52,10 @@ class TestComponentConversationRoute(ConversationRecipes):
 
         request = rf.post(
             conversation.get_absolute_url() + "/tools/opinion-component",
-            {"authentication_type": "register", "theme": "default"},
+            {"authentication_type": "register", "theme": "icd"},
         )
         response = opinion_component(request, conversation, None)
-        assert response["conversation_component"].get_props() == " authenticate-with=register"
+        assert response["conversation_component"].get_props() == "theme=icd authenticate-with=register"
         assert response["form"].is_valid()
         assert response["conversation"].id == conversation.id
 

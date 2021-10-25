@@ -25,7 +25,15 @@
 					<section>
 						{{form.authentication_type}}
 					</section>
-					<h3 class="h3 divider">{{form.theme.label}}</h3>
+
+					<div class="title-theme">
+						<span class="h3"> 
+							{{form.theme.label}}
+						</span>
+						<div id="preview-option">
+							<i id="eye-icon" class="fas fa-eye"></i><input id="visualize-btn" type="submit" name="preview" value="{{_('Visualize')}}">
+						</div>
+					</div>
 					<span class="helptext">{{_("Selects a color palette for the component style.")}}</span>
 					<section>
 						{{form.theme}}

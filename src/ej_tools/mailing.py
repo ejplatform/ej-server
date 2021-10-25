@@ -3,6 +3,7 @@ from jinja2 import Environment, FileSystemLoader
 
 from ej_boards.models import Board
 from ej_conversations.models import Conversation
+from .utils import get_statics_domain
 
 
 """
@@ -31,7 +32,6 @@ class TemplateGenerator:
         self.comment = conversation.approved_comments.last()
         self.request = request
         self.vote_domain = self._get_vote_domain()
-        self.statics_domain = self._get_statics_domain()
         self.theme = form_data.get("theme")
         self.form_data = form_data
         self.set_custom_values()
@@ -64,7 +64,7 @@ class TemplateGenerator:
             comment_content=self.comment.content,
             comment_author=self.comment.author.name,
             vote_url=self._get_voting_url(),
-            statics_domain=self.statics_domain,
+            statics_domain=get_statics_domain(self.request),
             tags=self.conversation.tags.all(),
             palette_css=self._get_palette_css(),
         )
@@ -73,7 +73,8 @@ class TemplateGenerator:
         conversation_slug = self.conversation.slug
         conversation_id = self.conversation.id
         comment_id = self.comment.id
-        if self.vote_domain == self.statics_domain:
+        statics_domain = get_statics_domain(self.request)
+        if self.vote_domain == statics_domain:
             try:
                 board_slug = self.conversation.board.slug
                 url = "{}/{}/conversations/{}/{}?comment_id={}&action=vote&origin=campaign"
@@ -90,12 +91,7 @@ class TemplateGenerator:
     def _get_vote_domain(self):
         if self.request.POST.get("custom-domain"):
             return self.request.POST.get("custom-domain")
-        return self._get_statics_domain()
-
-    def _get_statics_domain(self):
-        scheme = self.request.META["wsgi.url_scheme"]
-        host = self.request.META["HTTP_HOST"]
-        return "{}://{}".format(scheme, host)
+        return get_statics_domain(self.request)
 
 
 class BaseCssGenerator:
