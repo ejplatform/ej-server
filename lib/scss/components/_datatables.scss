@@ -7,6 +7,15 @@
 
     table {
         @extend .margin-y2;
+        overflow-x: auto;
+    }
+}
+
+#stats-table_wrapper {
+    overflow-x: auto !important;
+    margin: 0rem -1rem 0rem -0.5rem;
+    @media only screen and (max-width: 560px) {
+            margin: 0rem -1rem 0rem -1rem;
     }
 }
 

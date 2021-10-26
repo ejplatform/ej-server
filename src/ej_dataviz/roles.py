@@ -85,7 +85,9 @@ def prepare_dataframe(df, pc=False):
         for col, data in df.items():
             if data.dtype == float:
                 df[col] = data.apply(lambda x: "-" if np.isnan(x) else "%d%%" % x)
-    return render_dataframe(df, col_display=TABLE_COLUMN_NAMES, class_="table long text-6")
+    return render_dataframe(
+        df, col_display=TABLE_COLUMN_NAMES, class_="table long text-6", id_="stats-table"
+    )
 
 
 def render_dataframe(df, index=False, *, col_display=None, **kwargs):
