@@ -12,18 +12,16 @@
         {% endfor %}
     </ul>
 </nav>
+{% if board %}
 <nav title="{{ _('Administration') }}">
     <h3>{{ _('Administration') }}</h3>
     <ul>
-        {% if board %}
-            <li><a href="{{ url('boards:board-edit', board=board) }}">{{ _('Edit board') }}</a></li>
-            {%- if request.user.has_perm('ej.can_edit_board', board) and request.user.has_perm('ej.can_add_conversation') %}
-                <li><a href="{{ url('boards:conversation-create', board=board) }}">{{ _('New conversation') }}</a></li>
-            {% endif %}
+        <li><a href="{{ url('boards:board-edit', board=board) }}">{{ _('Edit board') }}</a></li>
+        {%- if request.user.has_perm('ej.can_edit_board', board) and request.user.has_perm('ej.can_add_conversation') %}
+            <li><a href="{{ url('boards:conversation-create', board=board) }}">{{ _('New conversation') }}</a></li>
         {% endif %}
-        <li><a href="{{ url('conversation:list') }}">{{ _('Public conversations') }}</a></li>
     </ul>
 </nav>
+{% endif %}
 
-{{ page_menu.ABOUT(request) }}
 {{ page_menu.ACCESSIBILITY() }}

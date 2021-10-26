@@ -2343,24 +2343,8 @@ msgid "Talks"
 msgstr "Painel"
 
 #: src/ej/templates/jinja2/ej/includes/footer.jinja2:15
-#: src/ej/templates/jinja2/ej/includes/footer.jinja2:20
-#: src/ej/templates/jinja2/ej/includes/footer.jinja2:27
-#: src/ej_clusters/jinja2/ej_clusters/includes/stereotypes-menu.jinja2:2
-#: src/ej_clusters/jinja2/ej_clusters/includes/stereotypes-menu.jinja2:8
-#: src/ej_clusters/jinja2/ej_clusters/includes/stereotypes-menu.jinja2:9
-#: src/ej_clusters/jinja2/ej_clusters/includes/stereotypes-menu.jinja2:11
-#: src/ej_gamification/jinja2/ej_gamification/achievements.jinja2:30
-#: src/ej_profiles/jinja2/ej_profiles/includes/menu.jinja2:1
-#: src/ej_profiles/jinja2/ej_profiles/includes/menu.jinja2:2
-#: src/ej_profiles/jinja2/ej_profiles/includes/menu.jinja2:4
-#: src/ej_users/jinja2/ej_users/includes/account-menu.jinja2:9
-#: src/ej_users/jinja2/ej_users/includes/account-menu.jinja2:10
-#: src/ej_users/jinja2/ej_users/includes/account-menu.jinja2:13
-msgid "Profile"
-msgstr "Perfil"
-
-#: src/ej/templates/jinja2/ej/includes/footer.jinja2:17
-#: src/ej/templates/jinja2/ej/includes/footer.jinja2:22
+#: src/ej/templates/jinja2/ej/includes/profile-menu.jinja2:5
+#: src/ej/templates/jinja2/ej/includes/profile-menu.jinja2:8
 #: src/ej_profiles/jinja2/ej_profiles/base.jinja2:10
 #: src/ej_profiles/jinja2/ej_profiles/base.jinja2:13
 msgid "Profile picture"
@@ -2389,6 +2373,26 @@ msgstr "Voltar para a página inicial"
 #: src/ej/templates/jinja2/ej/includes/header.jinja2:11
 msgid "Toggle navigation menu"
 msgstr "Ligar/desligar menu de navegação"
+
+#: src/ej/templates/jinja2/ej/includes/profile-menu.jinja2:18
+#, fuzzy
+msgid "My Boards"
+msgstr "Meus murais"
+
+#: src/ej/templates/jinja2/ej/includes/profile-menu.jinja2:20
+#: src/ej_clusters/jinja2/ej_clusters/includes/stereotypes-menu.jinja2:2
+#: src/ej_clusters/jinja2/ej_clusters/includes/stereotypes-menu.jinja2:8
+#: src/ej_clusters/jinja2/ej_clusters/includes/stereotypes-menu.jinja2:9
+#: src/ej_clusters/jinja2/ej_clusters/includes/stereotypes-menu.jinja2:11
+#: src/ej_gamification/jinja2/ej_gamification/achievements.jinja2:30
+#: src/ej_profiles/jinja2/ej_profiles/includes/menu.jinja2:1
+#: src/ej_profiles/jinja2/ej_profiles/includes/menu.jinja2:2
+#: src/ej_profiles/jinja2/ej_profiles/includes/menu.jinja2:4
+#: src/ej_users/jinja2/ej_users/includes/account-menu.jinja2:9
+#: src/ej_users/jinja2/ej_users/includes/account-menu.jinja2:10
+#: src/ej_users/jinja2/ej_users/includes/account-menu.jinja2:13
+msgid "Profile"
+msgstr "Perfil"
 
 #: src/ej/templates/jinja2/ej/includes/head/open_graph.jinja2:11
 msgid "EJ - A platform for social participation."
