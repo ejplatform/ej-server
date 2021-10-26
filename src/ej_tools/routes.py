@@ -5,7 +5,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.core.exceptions import ValidationError
-from .utils import npm_version, user_can_add_new_domain, prepare_host_with_https, get_statics_domain
+from .utils import npm_version, user_can_add_new_domain, prepare_host_with_https, get_host_with_protocol
 from .forms import (
     RasaConversationForm,
     ConversationComponentForm,
@@ -90,7 +90,7 @@ def opinion_component(request, conversation, slug):
 
 @urlpatterns.route(conversation_tools_url + "/opinion-component/preview")
 def opinion_component_preview(request, conversation, slug):
-    host = get_statics_domain(request)
+    host = get_host_with_protocol(request)
     theme = request.session.get("theme")
     auth_type = request.session.get("authentication_type")
     return {

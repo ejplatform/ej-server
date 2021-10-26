@@ -3,7 +3,7 @@ from jinja2 import Environment, FileSystemLoader
 
 from ej_boards.models import Board
 from ej_conversations.models import Conversation
-from .utils import get_statics_domain
+from .utils import get_host_with_protocol
 
 
 """
@@ -64,7 +64,7 @@ class TemplateGenerator:
             comment_content=self.comment.content,
             comment_author=self.comment.author.name,
             vote_url=self._get_voting_url(),
-            statics_domain=get_statics_domain(self.request),
+            statics_domain=get_host_with_protocol(self.request),
             tags=self.conversation.tags.all(),
             palette_css=self._get_palette_css(),
         )
@@ -73,7 +73,7 @@ class TemplateGenerator:
         conversation_slug = self.conversation.slug
         conversation_id = self.conversation.id
         comment_id = self.comment.id
-        statics_domain = get_statics_domain(self.request)
+        statics_domain = get_host_with_protocol(self.request)
         if self.vote_domain == statics_domain:
             try:
                 board_slug = self.conversation.board.slug
@@ -91,7 +91,7 @@ class TemplateGenerator:
     def _get_vote_domain(self):
         if self.request.POST.get("custom-domain"):
             return self.request.POST.get("custom-domain")
-        return get_statics_domain(self.request)
+        return get_host_with_protocol(self.request)
 
 
 class BaseCssGenerator:

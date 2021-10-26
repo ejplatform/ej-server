@@ -6,10 +6,14 @@ from ej_tools.forms import MailingToolForm
 
 
 class TestTemplateGenerator(ConversationRecipes):
+    def __init__(self):
+        self.REQUEST_META = {"HTTP_X_FORWARDED_PROTO": "http", "HTTP_HOST": "ejplatform.local"}
+        self.REQUEST_POST = {"custom-domain": "http://ejplatform.local"}
+
     def test_generate_vote_url(self, mk_user, conversation_db):
         request = mock.Mock()
-        request.META = {"wsgi.url_scheme": "http", "HTTP_HOST": "ejplatform.local"}
-        request.POST = {"custom-domain": "http://ejplatform.local"}
+        request.META = self.REQUEST_META
+        request.POST = self.REQUEST_POST
         user = mk_user(email="test@domain.com")
         comment_1 = conversation_db.create_comment(user, "comment 1", status="approved", check_limits=False)
         form_data = {"template_type": "mautic"}
@@ -26,8 +30,8 @@ class TestTemplateGenerator(ConversationRecipes):
 
     def test_generate_vote_url_with_board(self, mk_board, mk_conversation, mk_user):
         request = mock.Mock()
-        request.META = {"wsgi.url_scheme": "http", "HTTP_HOST": "ejplatform.local"}
-        request.POST = {"custom-domain": "http://ejplatform.local"}
+        request.META = self.REQUEST_META
+        request.POST = self.REQUEST_POST
         board = mk_board()
         user = mk_user(email="test@domain.com")
         conversation = mk_conversation(author=user)
@@ -48,7 +52,7 @@ class TestTemplateGenerator(ConversationRecipes):
 
     def test_apply_default_palette_on_mail_template(self, mk_conversation, mk_board, mk_user):
         request = mock.Mock()
-        request.META = {"wsgi.url_scheme": "http", "HTTP_HOST": "ejplatform.local"}
+        request.META = self.REQUEST_META
         conversation = mk_conversation()
         user = mk_user(email="test2@domain.com")
         comment_1 = conversation.create_comment(user, "comment 1", "approved")
@@ -65,7 +69,7 @@ class TestTemplateGenerator(ConversationRecipes):
 
     def test_apply_mautic_in_case_template_type_is_not_specified(self, mk_conversation, mk_board, mk_user):
         request = mock.Mock()
-        request.META = {"wsgi.url_scheme": "http", "HTTP_HOST": "ejplatform.local"}
+        request.META = self.REQUEST_META
         conversation = mk_conversation()
         form_data1 = {"template_type": ""}
         generator1 = TemplateGenerator(conversation, request, form_data1)
@@ -78,7 +82,7 @@ class TestTemplateGenerator(ConversationRecipes):
 
     def test_apply_board_palette_on_campaign_template(self, mk_board, mk_conversation, mk_user):
         request = mock.Mock()
-        request.META = {"wsgi.url_scheme": "http", "HTTP_HOST": "ejplatform.local"}
+        request.META = self.REQUEST_META
         conversation = mk_conversation()
         form_data1 = {"template_type": ""}
         generator1 = TemplateGenerator(conversation, request, form_data1)
@@ -91,7 +95,7 @@ class TestTemplateGenerator(ConversationRecipes):
 
     def test_apply_board_palette_on_campaign_template(self, mk_board, mk_conversation, mk_user):
         request = mock.Mock()
-        request.META = {"wsgi.url_scheme": "http", "HTTP_HOST": "ejplatform.local"}
+        request.META = self.REQUEST_META
         board = mk_board(palette="orange")
         user = mk_user(email="test@domain.com")
         conversation = mk_conversation(author=user)
@@ -109,7 +113,7 @@ class TestTemplateGenerator(ConversationRecipes):
 
     def test_apply_campaign_palette_on_mail_template(self, mk_board, mk_conversation, mk_user):
         request = mock.Mock()
-        request.META = {"wsgi.url_scheme": "http", "HTTP_HOST": "ejplatform.local"}
+        request.META = self.REQUEST_META
         board = mk_board(palette="campaign")
         user = mk_user(email="test@domain.com")
         conversation = mk_conversation(author=user)
@@ -136,8 +140,8 @@ class TestTemplateGenerator(ConversationRecipes):
 
     def test_set_custom_comment_template(self, mk_user, conversation_db):
         request = mock.Mock()
-        request.META = {"wsgi.url_scheme": "http", "HTTP_HOST": "ejplatform.local"}
-        request.POST = {"custom-domain": "http://ejplatform.local"}
+        request.META = self.REQUEST_META
+        request.POST = self.REQUEST_POST
         user = mk_user(email="test@domain.com")
         comment_1 = conversation_db.create_comment(user, "comment 1", status="approved", check_limits=False)
         form_data = {"template_type": "mautic", "custom_comment": comment_1}
@@ -148,8 +152,8 @@ class TestTemplateGenerator(ConversationRecipes):
 
     def test_set_custom_title_template(self, mk_user, conversation_db):
         request = mock.Mock()
-        request.META = {"wsgi.url_scheme": "http", "HTTP_HOST": "ejplatform.local"}
-        request.POST = {"custom-domain": "http://ejplatform.local"}
+        request.META = self.REQUEST_META
+        request.POST = self.REQUEST_POST
         new_title = "Text of the new title"
         user = mk_user(email="test@domain.com")
         conversation_db.create_comment(user, "comment 1", status="approved", check_limits=False)

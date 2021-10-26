@@ -25,7 +25,7 @@ def prepare_host_with_https(request):
     return ej_server_url
 
 
-def get_statics_domain(request):
-    scheme = request.META["wsgi.url_scheme"]
+def get_host_with_protocol(request):
+    scheme = request.META["HTTP_X_FORWARDED_PROTO"]
     host = request.META["HTTP_HOST"]
     return "{}://{}".format(scheme, host)
