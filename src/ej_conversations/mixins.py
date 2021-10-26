@@ -6,6 +6,7 @@ from boogie.models import QuerySet
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ImproperlyConfigured
 from django.utils.timezone import now
+from django.utils.translation import gettext_lazy as _
 from sidekick import import_later
 
 from ej_profiles.enums import Gender, Race
@@ -153,6 +154,8 @@ class UserMixin(ConversationMixin):
             *(["participation"] if participation else ()),
         ]
         stats = stats[cols]
+        phone_numbers = [user.profile.phone_number for user in self]
+        stats.insert(1, _("Phone number"), phone_numbers, True)
 
         # Use better values for extended columns
         for field, transform in transforms.items():
