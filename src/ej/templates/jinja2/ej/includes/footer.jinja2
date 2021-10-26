@@ -11,21 +11,17 @@
     {% endif %}
 
     {% if request.user.profile|default(None) %}
-        {% if settings.has_profiles%}
-            {% call link_macro('profile:detail', title=_('Profile'),) %}
-                <img class="main-footer__avatar"
-                    src="{{ request.user.profile.image_url }}" alt="{{ _('Profile picture') }}">
-            {% endcall %}
-        {% else %}
-            {% call link_macro('profile:detail', title=_('Profile'),) %}
-                <img class="main-footer__avatar"
-                    src="{{ request.user.profile.image_url }}" alt="{{ _('Profile picture') }}">
-            {% endcall %}
-        {% endif %}
+        <a id="img-profile"><img class="main-footer__avatar" src="{{ request.user.profile.image_url }}" 
+            alt="{{ _('Profile picture') }}"></a>
+
+        <div id="show-profile-menu" class="profile-menu"> 
+            {% include 'ej/includes/profile-menu.jinja2' %}
+        </div>
+
     {# For route without profile #}   
     {% else %}
         {% call link_macro('profile:detail', title=_('Profile')) %}
             <img class="main-footer__avatar" src="{{ static('img/icons/navbar_profile.svg') }}" alt="">
         {% endcall %}
-    {% endif %}  
+    {% endif %}
 </nav>
