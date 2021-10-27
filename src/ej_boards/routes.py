@@ -174,6 +174,14 @@ def conversation_tools_chatbot(request, board, **kwargs):
 
 
 @urlpatterns.route(
+    board_conversation_url + "tools/chatbot/telegram/", perms=["ej.can_edit_conversation:conversation"]
+)
+def conversation_tools_telegram(request, board, **kwargs):
+    check_board(board)
+    return tools_routes.telegram(request, **kwargs)
+
+
+@urlpatterns.route(
     board_conversation_url + "tools/chatbot/rasa/", perms=["ej.can_edit_conversation:conversation"]
 )
 def conversation_tools_rasa(request, board, **kwargs):
