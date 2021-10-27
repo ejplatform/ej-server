@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-25 16:43-0300\n"
+"POT-Creation-Date: 2021-10-26 18:14-0300\n"
 "PO-Revision-Date: 2019-09-09 13:55-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -1934,8 +1934,8 @@ msgstr "Uma conversa pode ter no máximo cinco links integrados."
 msgid "Register using name/email"
 msgstr "Registrar usando nome/email"
 
-#: src/ej_tools/models.py:57 src/ej_tools/models.py:103
-#: src/ej_tools/routes.py:195 src/ej_tools/table.py:47
+#: src/ej_tools/models.py:57 src/ej_tools/models.py:110
+#: src/ej_tools/routes.py:213 src/ej_tools/table.py:47
 msgid "Mautic"
 msgstr ""
 
@@ -1950,7 +1950,7 @@ msgstr ""
 "Usuário interagirá com a interface da EJ, criando uma conta com dados "
 "pessoais (email e nome)."
 
-#: src/ej_tools/models.py:63 src/ej_tools/models.py:109
+#: src/ej_tools/models.py:63 src/ej_tools/models.py:116
 msgid "Uses a mautic campaign "
 msgstr "Usa uma campanha do mautic"
 
@@ -1978,47 +1978,66 @@ msgstr ""
 msgid "Boca de Lobo"
 msgstr ""
 
+#: src/ej_tools/models.py:102
+msgid "BocaDeLoboBot"
+msgstr ""
+
+#: src/ej_tools/models.py:102
+msgid "DudaEjBot"
+msgstr ""
+
 #: src/ej_tools/models.py:104
+#, fuzzy
+msgid ""
+"I am the virtual assistant for the EJ platform. Empurrando Juntos, or EJ "
+"Platform, is an opinion consultation platform focused on States and "
+"Organizations. We would like your participation in the following discussion:"
+msgstr ""
+"Eu sou a assistente virtual da plataforma EJ. A Empurrando Juntos, ou "
+"Platforma EJ, é uma plataforma de consultas de opinião com foco em Estado e "
+"Organizações. Gostaríamos da sua participação na seguinte discussão: "
+
+#: src/ej_tools/models.py:111
 msgid "MailChimp"
 msgstr ""
 
-#: src/ej_tools/models.py:108
+#: src/ej_tools/models.py:115
 #, fuzzy
 msgid "Mailchimp campaign"
 msgstr "Campanha de email"
 
-#: src/ej_tools/models.py:118
+#: src/ej_tools/models.py:125
 msgid "Client ID"
 msgstr "Chave pública"
 
-#: src/ej_tools/models.py:119
+#: src/ej_tools/models.py:126
 #, fuzzy
 msgid "Client Secret"
 msgstr "Chave secreta"
 
-#: src/ej_tools/models.py:120
+#: src/ej_tools/models.py:127
 #, fuzzy
 msgid "Mautic Access Token"
 msgstr "Token de acesso"
 
-#: src/ej_tools/models.py:121
+#: src/ej_tools/models.py:128
 #, fuzzy
 msgid "Refresh Token"
 msgstr "Atualizar token"
 
-#: src/ej_tools/models.py:122
+#: src/ej_tools/models.py:129
 msgid "Mautic URL"
 msgstr "URL do Mautic"
 
-#: src/ej_tools/models.py:122
+#: src/ej_tools/models.py:129
 msgid "Generated Url from Mautic."
 msgstr "Url gerada no Mautic."
 
-#: src/ej_tools/models.py:189
+#: src/ej_tools/models.py:196
 msgid "Client not found."
 msgstr "Chave do Mautic não encontrada"
 
-#: src/ej_tools/models.py:193
+#: src/ej_tools/models.py:200
 #: src/ej_tools/tests/test_mautic_integrations.py:117
 #, fuzzy
 msgid ""
@@ -2028,40 +2047,40 @@ msgstr ""
 "Não foi possível localizar uma instância do Mautic com a URL fornecida. "
 "Verifique sua url do Mautic e a url de redirecionamento na página do Mautic."
 
-#: src/ej_tools/models.py:214
+#: src/ej_tools/models.py:221
 msgid "Couldn't generate tokens."
 msgstr "Não foi possível gerar os tokens."
 
-#: src/ej_tools/models.py:237
+#: src/ej_tools/models.py:244
 #, fuzzy
 msgid "Couldn't generate new token."
 msgstr "Não foi possível gerar os tokens."
 
-#: src/ej_tools/models.py:283
+#: src/ej_tools/models.py:290
 #, fuzzy
 msgid "There was an error connection to mautic server, please check your url."
 msgstr "Houve um erro na conexao com o Mautic, por favor verifique a URL."
 
-#: src/ej_tools/models.py:322
+#: src/ej_tools/models.py:329
 msgid "Couldn't create a new contact in Mautic."
 msgstr ""
 
-#: src/ej_tools/models.py:326
+#: src/ej_tools/models.py:333
 #: src/ej_tools/tests/test_mautic_integrations.py:149
 msgid "There was an error connection to mautic server, please try again."
 msgstr "Houve um erro na conexao com o Mautic, por favor tente novamente."
 
-#: src/ej_tools/routes.py:60 src/ej_tools/table.py:11
+#: src/ej_tools/routes.py:66 src/ej_tools/table.py:11
 msgid "Mailing campaign"
 msgstr "Campanha de email"
 
-#: src/ej_tools/routes.py:83 src/ej_tools/table.py:19
+#: src/ej_tools/routes.py:89 src/ej_tools/table.py:19
 #, fuzzy
 msgid "Opinion component"
 msgstr "Componente de opinião"
 
-#: src/ej_tools/routes.py:109 src/ej_tools/routes.py:133
-#: src/ej_tools/table.py:27
+#: src/ej_tools/routes.py:115 src/ej_tools/routes.py:125
+#: src/ej_tools/routes.py:151 src/ej_tools/table.py:27
 msgid "Chatbot"
 msgstr ""
 
@@ -3663,6 +3682,7 @@ msgstr "Integre esta conversa com um dos canais de coleta disponíveis."
 #: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:87
 #: src/ej_tools/jinja2/ej_tools/rasa.jinja2:89
 #: src/ej_tools/jinja2/ej_tools/rasa.jinja2:91
+#: src/ej_tools/jinja2/ej_tools/telegram.jinja2:55
 #, fuzzy
 msgid "Back to tools"
 msgstr "Voltar para ferramentas"
@@ -3871,6 +3891,38 @@ msgid ""
 "take place."
 msgstr ""
 "Adicione o script na tag &ltbody&gt da página em que a coleta será feita."
+
+#: src/ej_tools/jinja2/ej_tools/telegram.jinja2:20
+#, fuzzy
+msgid ""
+"Collect opinions using EJ's chatbot, also known as Duda. Allows you to "
+"collect the opinion of whatsapp users. To make the collection available, "
+"forward the participation link to groups, channels or directly in the user's "
+"private chat."
+msgstr ""
+"Colete opiniões usando o chatbot da EJ, também conhecido como Duda. Permite "
+"coletar a opinião de usuários do whatsapp. Para disponibilizar a coleta, "
+"encaminhe o link de participação para grupos, canais ou diretamente no chat "
+"privado do usuário."
+
+#: src/ej_tools/jinja2/ej_tools/telegram.jinja2:23
+#, fuzzy
+msgid "Participation link"
+msgstr "Link de participação"
+
+#: src/ej_tools/jinja2/ej_tools/telegram.jinja2:24
+msgid "Share the call for participation to start the collection."
+msgstr "Compartilhe a chamada de participação para iniciar a coleta."
+
+#: src/ej_tools/jinja2/ej_tools/telegram.jinja2:39
+#, fuzzy
+msgid "Copied to clipboard!"
+msgstr "Copiado para área de transferência"
+
+#: src/ej_tools/jinja2/ej_tools/telegram.jinja2:53
+#, fuzzy
+msgid "Back to channels"
+msgstr "Voltar para ferramentas"
 
 #: src/ej_users/jinja2/account/account_inactive.jinja2:2
 msgid "Account is inactive"
@@ -4113,18 +4165,12 @@ msgid "Authentication"
 msgstr "Autenticação"
 
 #, fuzzy
+#~ msgid "Channels"
+#~ msgstr "Mudar votos"
+
+#, fuzzy
 #~ msgid "Modify limit to create conversation"
 #~ msgstr "limita conversas do board"
-
-#~ msgid ""
-#~ "Collect opinions using EJ's chatbot, also known as Duda. Allow collect "
-#~ "opinion from users of whatsapp. To allow the collect, share the link of "
-#~ "participation to groups, channels or direct in the private chat of the "
-#~ "user"
-#~ msgstr ""
-#~ "Colete opiniões usando o chatbot da EJ, também conhecido como Duda. "
-#~ "Permite, via webchat, telegram e whatsapp votar e comentar as conversas "
-#~ "da EJ."
 
 #, fuzzy
 #~ msgid ""
@@ -4207,9 +4253,6 @@ msgstr "Autenticação"
 #~ msgstr ""
 #~ "Gere o script e adicione o seguinte trecho de código no header da sua "
 #~ "página"
-
-#~ msgid "Code was copied to your clipboard."
-#~ msgstr "O código foi copiado!"
 
 #~ msgid "and this snippet of code on the page body:"
 #~ msgstr "e esse trecho no body da página:"
@@ -4936,9 +4979,6 @@ msgstr "Autenticação"
 
 #~ msgid "The stereotype has voted in the following comments."
 #~ msgstr "A persona já votou nos seguintes comentários."
-
-#~ msgid "Change votes"
-#~ msgstr "Mudar votos"
 
 #~ msgid "Search Stereotype:"
 #~ msgstr "Pesquisar Persona:"

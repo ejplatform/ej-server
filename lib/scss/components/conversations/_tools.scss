@@ -602,6 +602,7 @@
             height: 850px;
         }
     }
+
     .tools {
         width: 100%;
         &-container {
@@ -609,10 +610,6 @@
             margin: auto;
         }
     }
-}
-
-* {
-    box-sizing: border-box;
 }
 
 /* Float four columns side by side */
@@ -669,4 +666,107 @@
         display: block;
         margin-bottom: 20px;
     }
+}
+
+.tools-divider {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: stretch;
+    padding-top: 40px;
+    gap: 5px 2em;
+    max-width: 1520px;
+}
+@media (max-width: 875px) {
+    .tools-select {
+        flex-grow: 1;
+    }
+    .tools-share {
+        flex-grow: 1;
+    }
+}
+
+@media (min-width: 876px) and (max-width: 1300px) {
+    .tools-select {
+        width: 470px !important;
+    }
+    .tools-share {
+        width: 470px;
+    }
+}
+
+@media (min-width: 1301px) {
+    .tools-select {
+        flex-grow: 1;
+    }
+    .tools-share {
+        width: clamp(45ch, 50%, 75ch);
+    }
+}
+
+.tools-select {
+    label::first-letter {
+        text-transform: uppercase;
+    }
+}
+
+.tools-share-content {
+    border: 1px solid #cccccc;
+    border-width: 1px;
+    box-sizing: border-box;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    padding: 40px;
+}
+
+.tools-icon-share {
+    width: 18px;
+    height: 19.92px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: block;
+}
+
+.tools-share-container {
+    cursor: pointer;
+    position: relative;
+    transition: 0.3s;
+}
+
+.tools-share-container:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+#tools-tip-text {
+    visibility: hidden;
+    font-size: 12px;
+    width: 14ch;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    padding: 5px 5px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    transition-delay: 1.2s;
+    position: absolute;
+    z-index: 1;
+    top: -5px;
+    right: 105%;
+}
+
+.tools-tip-text-show {
+    visibility: visible !important;
+}
+
+.tools-tip-text-hidde {
+    visibility: hidden;
+}
+
+.tools-share-container:hover .tool-tip-text {
+    visibility: visible;
+}
+
+.tools-link {
+    font-weight: bold;
 }

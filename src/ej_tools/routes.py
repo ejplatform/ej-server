@@ -14,7 +14,13 @@ from .forms import (
     MauticConversationForm,
 )
 from ej_conversations.models import Conversation
-from .models import RasaConversation, ConversationMautic, MauticOauth2Service, MauticClient
+from .models import (
+    RasaConversation,
+    ConversationMautic,
+    MauticOauth2Service,
+    MauticClient,
+    ChatbotTelegramTool,
+)
 from ej_conversations import models
 from .table import Tools
 
@@ -32,7 +38,7 @@ conversation_tools_url = f"<model:conversation>/<slug:slug>/tools"
 conversation_tools_chatbot_url = f"{conversation_tools_url}/chatbot"
 
 
-@urlpatterns.route(conversation_tools_url)
+@urlpatterns.route(conversation_tools_url, perms=["ej.can_edit_conversation:conversation"])
 def index(request, conversation, slug, npm=npm_version):
     tools = Tools(conversation)
     return {"tools": tools.list(), "conversation": conversation}
@@ -107,6 +113,18 @@ def chatbot(request, conversation, slug):
     return {
         "conversation": conversation,
         "tool": tools.get(_("Chatbot")),
+    }
+
+
+@urlpatterns.route(conversation_tools_url + "/telegram")
+def telegram(request, conversation, slug):
+    tools = Tools(conversation)
+
+    return {
+        "conversation": conversation,
+        "tool": tools.get(_("Chatbot")),
+        "channels": ChatbotTelegramTool.CHANNELS_CHOICES,
+        "shareText": ChatbotTelegramTool.SHARE,
     }
 
 
