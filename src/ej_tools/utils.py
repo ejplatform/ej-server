@@ -26,6 +26,7 @@ def prepare_host_with_https(request):
 
 
 def get_host_with_protocol(request):
-    scheme = request.META["HTTP_X_FORWARDED_PROTO"]
+    scheme = request.META.get("HTTP_X_FORWARDED_PROTO") or "http"
     host = request.META["HTTP_HOST"]
     return "{}://{}".format(scheme, host)
+
