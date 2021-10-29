@@ -154,7 +154,9 @@ class UserMixin(ConversationMixin):
             *(["participation"] if participation else ()),
         ]
         stats = stats[cols]
-        phone_numbers = [user.profile.phone_number for user in self]
+
+        # Add phone number to data
+        phone_numbers = [user.profile.phone_number if hasattr(user, "profile") else " " for user in self]
         stats.insert(1, _("Phone number"), phone_numbers, True)
 
         # Use better values for extended columns
