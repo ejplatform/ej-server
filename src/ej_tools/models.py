@@ -105,6 +105,16 @@ class ChatbotTelegramTool:
     )
 
 
+class ChatbotWhatsappTool:
+    CHANNEL_CHOICES = (
+        ("611234", "Boca de Lobo"),
+        ("614567", "DudaEjBot"),
+    )
+    SHARE = _(
+        "I am the virtual assistant for the EJ platform. Empurrando Juntos, or EJ Platform, is an opinion consultation platform focused on the State and Organizations. We would like your participation in the following discussion:"
+    )
+
+
 class MailingTool:
     MAILING_TOOL_CHOICES = (
         ("mautic", _("Mautic")),

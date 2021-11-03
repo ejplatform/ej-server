@@ -67,7 +67,11 @@ function showSection(check_id, section_id) {
 window.onload = function() {
     let url = window.location.href.split("/");
     let menuItem = url[url.length-2].split("-")[0];
-    let backgroundColor = document.querySelector("." + menuItem + "-item").className = "selected";
+    let backgroundColor = document.querySelector("." + menuItem + "-item"); 
+    
+    if (backgroundColor) {
+        backgroundColor.className = "selected";
+    }
 
     document.getElementById("reports").click();
 

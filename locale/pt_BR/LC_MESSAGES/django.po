@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-26 18:14-0300\n"
+"POT-Creation-Date: 2021-10-29 14:21-0300\n"
 "PO-Revision-Date: 2019-09-09 13:55-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -97,7 +97,7 @@ msgstr "Seu progresso: {n} de {total}"
 msgid "Conversations"
 msgstr "Conversas"
 
-#: src/ej/routes.py:57 src/ej_dataviz/roles.py:148
+#: src/ej/routes.py:57 src/ej_dataviz/roles.py:150
 #: src/ej_gamification/routes.py:139
 msgid "Votes"
 msgstr "Votos"
@@ -295,7 +295,7 @@ msgid "Manage personas"
 msgstr "Gerenciar personas"
 
 #: src/ej_clusters/models/cluster.py:26 src/ej_clusters/models/stereotype.py:22
-#: src/ej_dataviz/roles.py:139 src/ej_dataviz/routes.py:452
+#: src/ej_dataviz/roles.py:141 src/ej_dataviz/routes.py:452
 #: src/ej_gamification/admin.py:33 src/ej_gamification/routes.py:124
 #: src/ej_gamification/routes.py:145
 msgid "Name"
@@ -325,8 +325,8 @@ msgstr ""
 "capturar. Esta informação é opcional e não é pública."
 
 #: src/ej_clusters/models/stereotype_vote.py:20
-#: src/ej_conversations/roles/comments.py:101 src/ej_dataviz/roles.py:132
-#: src/ej_dataviz/roles.py:133
+#: src/ej_conversations/roles/comments.py:101 src/ej_dataviz/roles.py:134
+#: src/ej_dataviz/roles.py:135
 msgid "Comment"
 msgstr "Comentar"
 
@@ -441,17 +441,17 @@ msgid "Violates terms of service of the platform"
 msgstr "Viola os termos de uso da plataforma"
 
 #: src/ej_conversations/enums.py:24 src/ej_conversations/roles/comments.py:41
-#: src/ej_dataviz/roles.py:143 src/ej_dataviz/roles.py:160
+#: src/ej_dataviz/roles.py:145 src/ej_dataviz/roles.py:162
 msgid "Skip"
 msgstr "Pular"
 
 #: src/ej_conversations/enums.py:25 src/ej_conversations/roles/comments.py:42
-#: src/ej_dataviz/roles.py:128 src/ej_dataviz/roles.py:153
+#: src/ej_dataviz/roles.py:130 src/ej_dataviz/roles.py:155
 msgid "Agree"
 msgstr "Concorda"
 
 #: src/ej_conversations/enums.py:26 src/ej_conversations/roles/comments.py:40
-#: src/ej_dataviz/roles.py:135 src/ej_dataviz/roles.py:158
+#: src/ej_dataviz/roles.py:137 src/ej_dataviz/roles.py:160
 msgid "Disagree"
 msgstr "Discorda"
 
@@ -486,6 +486,11 @@ msgstr "Conversas promovidas aparecem no mural principal."
 #: src/ej_conversations/forms.py:89
 msgid "Mark to make the conversation invisible."
 msgstr "Selecione para fazer conversa invisível."
+
+#: src/ej_conversations/mixins.py:158 src/ej_profiles/models.py:42
+#: src/ej_profiles/tests/test_models.py:49 src/ej_tools/forms.py:84
+msgid "Phone number"
+msgstr "Número de telefone"
 
 #: src/ej_conversations/models/comment.py:28
 msgid "awaiting moderation"
@@ -767,63 +772,63 @@ msgstr "Campo não pode estar vazio!"
 msgid "Visualization"
 msgstr "Visualização"
 
-#: src/ej_dataviz/roles.py:129 src/ej_gamification/routes.py:146
+#: src/ej_dataviz/roles.py:131 src/ej_gamification/routes.py:146
 msgid "Author"
 msgstr "Autor"
 
-#: src/ej_dataviz/roles.py:130
+#: src/ej_dataviz/roles.py:132
 msgid "Approved"
 msgstr "Aprovado"
 
-#: src/ej_dataviz/roles.py:131
+#: src/ej_dataviz/roles.py:133
 msgid "Average"
 msgstr "Média"
 
-#: src/ej_dataviz/roles.py:134
+#: src/ej_dataviz/roles.py:136
 msgid "Convergence"
 msgstr "Convergëncia"
 
-#: src/ej_dataviz/roles.py:136
+#: src/ej_dataviz/roles.py:138
 msgid "Divergence"
 msgstr "Divergência"
 
-#: src/ej_dataviz/roles.py:137
+#: src/ej_dataviz/roles.py:139
 msgid "Entropy"
 msgstr "Entropia"
 
-#: src/ej_dataviz/roles.py:138
+#: src/ej_dataviz/roles.py:140
 msgid "Missing"
 msgstr "Faltando"
 
-#: src/ej_dataviz/roles.py:140 src/ej_dataviz/roles.py:159
+#: src/ej_dataviz/roles.py:142 src/ej_dataviz/roles.py:161
 msgid "Participation ratio"
 msgstr "Índice de participação"
 
-#: src/ej_dataviz/roles.py:141
+#: src/ej_dataviz/roles.py:143
 msgid "Pending"
 msgstr "Esperando"
 
-#: src/ej_dataviz/roles.py:142 src/ej_gamification/routes.py:141
+#: src/ej_dataviz/roles.py:144 src/ej_gamification/routes.py:141
 msgid "Rejected"
 msgstr "Rejeitado"
 
-#: src/ej_dataviz/roles.py:144 src/ej_dataviz/roles.py:161
+#: src/ej_dataviz/roles.py:146 src/ej_dataviz/roles.py:163
 msgid "Skipped"
 msgstr "Pulados"
 
-#: src/ej_dataviz/roles.py:145
+#: src/ej_dataviz/roles.py:147
 msgid "Text"
 msgstr "Texto"
 
-#: src/ej_dataviz/roles.py:146
+#: src/ej_dataviz/roles.py:148
 msgid "Total"
 msgstr "Total"
 
-#: src/ej_dataviz/roles.py:147
+#: src/ej_dataviz/roles.py:149
 msgid "User"
 msgstr "Usuário"
 
-#: src/ej_dataviz/roles.py:156
+#: src/ej_dataviz/roles.py:158
 msgid ""
 "Agreement level\n"
 "0%: votes are evenly split\n"
@@ -872,65 +877,65 @@ msgstr "Você!"
 msgid "State"
 msgstr "Estado"
 
-#: src/ej_dataviz/routes_report.py:336
+#: src/ej_dataviz/routes_report.py:334
 msgid "agree"
 msgstr "concorda"
 
-#: src/ej_dataviz/routes_report.py:337
+#: src/ej_dataviz/routes_report.py:335
 msgid "author"
 msgstr "autor"
 
-#: src/ej_dataviz/routes_report.py:338
+#: src/ej_dataviz/routes_report.py:336
 msgid "author_id"
 msgstr "autor_id"
 
-#: src/ej_dataviz/routes_report.py:339
+#: src/ej_dataviz/routes_report.py:337
 msgid "choice"
 msgstr "escolha"
 
-#: src/ej_dataviz/routes_report.py:340
+#: src/ej_dataviz/routes_report.py:338
 #, fuzzy
 msgid "cluster"
 msgstr "Grupos"
 
-#: src/ej_dataviz/routes_report.py:341
+#: src/ej_dataviz/routes_report.py:339
 #, fuzzy
 msgid "cluster_id"
 msgstr "Grupos"
 
-#: src/ej_dataviz/routes_report.py:342
+#: src/ej_dataviz/routes_report.py:340
 msgid "comment"
 msgstr "comentário"
 
-#: src/ej_dataviz/routes_report.py:343
+#: src/ej_dataviz/routes_report.py:341
 msgid "comment_id"
 msgstr "comentário_id"
 
-#: src/ej_dataviz/routes_report.py:344
+#: src/ej_dataviz/routes_report.py:342
 msgid "convergence"
 msgstr "convergência"
 
-#: src/ej_dataviz/routes_report.py:345
+#: src/ej_dataviz/routes_report.py:343
 msgid "disagree"
 msgstr "discorda"
 
-#: src/ej_dataviz/routes_report.py:346 src/ej_profiles/enums.py:70
+#: src/ej_dataviz/routes_report.py:344 src/ej_profiles/enums.py:70
 msgid "email"
 msgstr "email"
 
-#: src/ej_dataviz/routes_report.py:347
+#: src/ej_dataviz/routes_report.py:345
 msgid "id"
 msgstr "id"
 
-#: src/ej_dataviz/routes_report.py:348 src/ej_profiles/enums.py:69
+#: src/ej_dataviz/routes_report.py:346 src/ej_profiles/enums.py:69
 msgid "name"
 msgstr "nome"
 
-#: src/ej_dataviz/routes_report.py:349
+#: src/ej_dataviz/routes_report.py:347
 msgid "participation"
 msgstr "participação"
 
-#: src/ej_dataviz/routes_report.py:350
+#: src/ej_dataviz/routes_report.py:348
 msgid "skipped"
 msgstr "pulados"
 
@@ -1619,10 +1624,6 @@ msgstr "Atividade política"
 msgid "Profile Photo"
 msgstr "Foto de Perfil"
 
-#: src/ej_profiles/models.py:42 src/ej_profiles/tests/test_models.py:49
-msgid "Phone number"
-msgstr "Número de telefone"
-
 #: src/ej_profiles/models.py:156 src/ej_profiles/tests/test_models.py:41
 msgid "Age"
 msgstr "Idade"
@@ -1878,38 +1879,38 @@ msgstr ""
 "Senhas vazias são permitidas somente se a variável "
 "EJ_ROCKETCHAT_ADMIN_PASSWORD estiver configurada."
 
-#: src/ej_tools/forms.py:35
+#: src/ej_tools/forms.py:41
 #, fuzzy
 msgid "Authentication Type"
 msgstr "Autenticação"
 
-#: src/ej_tools/forms.py:41 src/ej_tools/forms.py:53
+#: src/ej_tools/forms.py:47 src/ej_tools/forms.py:59
 msgid "Theme"
 msgstr "Tema"
 
-#: src/ej_tools/forms.py:47
+#: src/ej_tools/forms.py:53
 msgid "Template type"
 msgstr "Tipo de template"
 
-#: src/ej_tools/forms.py:56
+#: src/ej_tools/forms.py:62
 #, fuzzy
 msgid "Redirect user to a custom domain (optional)"
 msgstr "URL para redirecionamento (opcional)."
 
-#: src/ej_tools/forms.py:59
+#: src/ej_tools/forms.py:65
 msgid "Adds a custom title to the template (optional)."
 msgstr "Adicione um título customizado ao template (opcional)."
 
-#: src/ej_tools/forms.py:62
+#: src/ej_tools/forms.py:68
 msgid "selects a specific comment for user to vote (optional)."
 msgstr "Selecione um comentário específico para o usuário votar (opcional)."
 
-#: src/ej_tools/forms.py:82 src/ej_tools/tests/test_rasa_integrations.py:49
+#: src/ej_tools/forms.py:102 src/ej_tools/tests/test_rasa_integrations.py:49
 #, fuzzy
 msgid "Rasa conversation with this Conversation and Domain already exists."
 msgstr "Uma conexão com esse nome já existe nessa conversa."
 
-#: src/ej_tools/forms.py:84
+#: src/ej_tools/forms.py:104
 #, python-format
 msgid ""
 "Site already integrated with conversation %(conversation)s, try another url."
@@ -1934,8 +1935,8 @@ msgstr "Uma conversa pode ter no máximo cinco links integrados."
 msgid "Register using name/email"
 msgstr "Registrar usando nome/email"
 
-#: src/ej_tools/models.py:57 src/ej_tools/models.py:110
-#: src/ej_tools/routes.py:213 src/ej_tools/table.py:47
+#: src/ej_tools/models.py:57 src/ej_tools/models.py:120
+#: src/ej_tools/routes.py:227 src/ej_tools/table.py:47
 msgid "Mautic"
 msgstr ""
 
@@ -1950,7 +1951,7 @@ msgstr ""
 "Usuário interagirá com a interface da EJ, criando uma conta com dados "
 "pessoais (email e nome)."
 
-#: src/ej_tools/models.py:63 src/ej_tools/models.py:116
+#: src/ej_tools/models.py:63 src/ej_tools/models.py:126
 msgid "Uses a mautic campaign "
 msgstr "Usa uma campanha do mautic"
 
@@ -1997,47 +1998,58 @@ msgstr ""
 "Platforma EJ, é uma plataforma de consultas de opinião com foco em Estado e "
 "Organizações. Gostaríamos da sua participação na seguinte discussão: "
 
-#: src/ej_tools/models.py:111
+#: src/ej_tools/models.py:114
+#, fuzzy
+msgid ""
+"I am the virtual assistant for the EJ platform. Empurrando Juntos, or EJ "
+"Platform, is an opinion consultation platform focused on the State and "
+"Organizations. We would like your participation in the following discussion:"
+msgstr ""
+"Eu sou a assistente virtual da plataforma EJ. A Empurrando Juntos, ou "
+"Platforma EJ, é uma plataforma de consultas de opinião com foco em Estado e "
+"Organizações. Gostaríamos da sua participação na seguinte discussão: "
+
+#: src/ej_tools/models.py:121
 msgid "MailChimp"
 msgstr ""
 
-#: src/ej_tools/models.py:115
+#: src/ej_tools/models.py:125
 #, fuzzy
 msgid "Mailchimp campaign"
 msgstr "Campanha de email"
 
-#: src/ej_tools/models.py:125
+#: src/ej_tools/models.py:135
 msgid "Client ID"
 msgstr "Chave pública"
 
-#: src/ej_tools/models.py:126
+#: src/ej_tools/models.py:136
 #, fuzzy
 msgid "Client Secret"
 msgstr "Chave secreta"
 
-#: src/ej_tools/models.py:127
+#: src/ej_tools/models.py:137
 #, fuzzy
 msgid "Mautic Access Token"
 msgstr "Token de acesso"
 
-#: src/ej_tools/models.py:128
+#: src/ej_tools/models.py:138
 #, fuzzy
 msgid "Refresh Token"
 msgstr "Atualizar token"
 
-#: src/ej_tools/models.py:129
+#: src/ej_tools/models.py:139
 msgid "Mautic URL"
 msgstr "URL do Mautic"
 
-#: src/ej_tools/models.py:129
+#: src/ej_tools/models.py:139
 msgid "Generated Url from Mautic."
 msgstr "Url gerada no Mautic."
 
-#: src/ej_tools/models.py:196
+#: src/ej_tools/models.py:206
 msgid "Client not found."
 msgstr "Chave do Mautic não encontrada"
 
-#: src/ej_tools/models.py:200
+#: src/ej_tools/models.py:210
 #: src/ej_tools/tests/test_mautic_integrations.py:117
 #, fuzzy
 msgid ""
@@ -2047,40 +2059,41 @@ msgstr ""
 "Não foi possível localizar uma instância do Mautic com a URL fornecida. "
 "Verifique sua url do Mautic e a url de redirecionamento na página do Mautic."
 
-#: src/ej_tools/models.py:221
+#: src/ej_tools/models.py:231
 msgid "Couldn't generate tokens."
 msgstr "Não foi possível gerar os tokens."
 
-#: src/ej_tools/models.py:244
+#: src/ej_tools/models.py:254
 #, fuzzy
 msgid "Couldn't generate new token."
 msgstr "Não foi possível gerar os tokens."
 
-#: src/ej_tools/models.py:290
+#: src/ej_tools/models.py:300
 #, fuzzy
 msgid "There was an error connection to mautic server, please check your url."
 msgstr "Houve um erro na conexao com o Mautic, por favor verifique a URL."
 
-#: src/ej_tools/models.py:329
+#: src/ej_tools/models.py:339
 msgid "Couldn't create a new contact in Mautic."
 msgstr ""
 
-#: src/ej_tools/models.py:333
+#: src/ej_tools/models.py:343
 #: src/ej_tools/tests/test_mautic_integrations.py:149
 msgid "There was an error connection to mautic server, please try again."
 msgstr "Houve um erro na conexao com o Mautic, por favor tente novamente."
 
-#: src/ej_tools/routes.py:66 src/ej_tools/table.py:11
+#: src/ej_tools/routes.py:68 src/ej_tools/table.py:11
 msgid "Mailing campaign"
 msgstr "Campanha de email"
 
-#: src/ej_tools/routes.py:89 src/ej_tools/table.py:19
+#: src/ej_tools/routes.py:91 src/ej_tools/table.py:19
 #, fuzzy
 msgid "Opinion component"
 msgstr "Componente de opinião"
 
-#: src/ej_tools/routes.py:115 src/ej_tools/routes.py:125
-#: src/ej_tools/routes.py:151 src/ej_tools/table.py:27
+#: src/ej_tools/routes.py:117 src/ej_tools/routes.py:127
+#: src/ej_tools/routes.py:139 src/ej_tools/routes.py:165
+#: src/ej_tools/table.py:27
 msgid "Chatbot"
 msgstr ""
 
@@ -2369,6 +2382,22 @@ msgstr "Painel"
 msgid "Profile picture"
 msgstr "Foto de perfil"
 
+#: src/ej/templates/jinja2/ej/includes/footer.jinja2:23
+#: src/ej/templates/jinja2/ej/includes/profile-menu.jinja2:23
+#: src/ej_clusters/jinja2/ej_clusters/includes/stereotypes-menu.jinja2:2
+#: src/ej_clusters/jinja2/ej_clusters/includes/stereotypes-menu.jinja2:8
+#: src/ej_clusters/jinja2/ej_clusters/includes/stereotypes-menu.jinja2:9
+#: src/ej_clusters/jinja2/ej_clusters/includes/stereotypes-menu.jinja2:11
+#: src/ej_gamification/jinja2/ej_gamification/achievements.jinja2:30
+#: src/ej_profiles/jinja2/ej_profiles/includes/menu.jinja2:1
+#: src/ej_profiles/jinja2/ej_profiles/includes/menu.jinja2:2
+#: src/ej_profiles/jinja2/ej_profiles/includes/menu.jinja2:4
+#: src/ej_users/jinja2/ej_users/includes/account-menu.jinja2:9
+#: src/ej_users/jinja2/ej_users/includes/account-menu.jinja2:10
+#: src/ej_users/jinja2/ej_users/includes/account-menu.jinja2:13
+msgid "Profile"
+msgstr "Perfil"
+
 #: src/ej/templates/jinja2/ej/includes/header.jinja2:1
 msgid "Top header"
 msgstr "Cabeçalho superior"
@@ -2393,25 +2422,21 @@ msgstr "Voltar para a página inicial"
 msgid "Toggle navigation menu"
 msgstr "Ligar/desligar menu de navegação"
 
-#: src/ej/templates/jinja2/ej/includes/profile-menu.jinja2:18
+#: src/ej/templates/jinja2/ej/includes/profile-menu.jinja2:20
 #, fuzzy
 msgid "My Boards"
 msgstr "Meus murais"
 
-#: src/ej/templates/jinja2/ej/includes/profile-menu.jinja2:20
-#: src/ej_clusters/jinja2/ej_clusters/includes/stereotypes-menu.jinja2:2
-#: src/ej_clusters/jinja2/ej_clusters/includes/stereotypes-menu.jinja2:8
-#: src/ej_clusters/jinja2/ej_clusters/includes/stereotypes-menu.jinja2:9
-#: src/ej_clusters/jinja2/ej_clusters/includes/stereotypes-menu.jinja2:11
-#: src/ej_gamification/jinja2/ej_gamification/achievements.jinja2:30
-#: src/ej_profiles/jinja2/ej_profiles/includes/menu.jinja2:1
-#: src/ej_profiles/jinja2/ej_profiles/includes/menu.jinja2:2
-#: src/ej_profiles/jinja2/ej_profiles/includes/menu.jinja2:4
-#: src/ej_users/jinja2/ej_users/includes/account-menu.jinja2:9
-#: src/ej_users/jinja2/ej_users/includes/account-menu.jinja2:10
-#: src/ej_users/jinja2/ej_users/includes/account-menu.jinja2:13
-msgid "Profile"
-msgstr "Perfil"
+#: src/ej/templates/jinja2/ej/includes/profile-menu.jinja2:34
+#: src/ej_profiles/jinja2/ej_profiles/detail.jinja2:39
+#: src/ej_profiles/jinja2/ej_profiles/includes/menu.jinja2:13
+#: src/ej_users/jinja2/account/index.jinja2:17
+#: src/ej_users/jinja2/account/logout.jinja2:2
+#: src/ej_users/jinja2/account/logout.jinja2:15
+#: src/ej_users/jinja2/account/logout.jinja2:19
+#: src/ej_users/jinja2/ej_users/includes/account-menu.jinja2:6
+msgid "Logout"
+msgstr "Sair"
 
 #: src/ej/templates/jinja2/ej/includes/head/open_graph.jinja2:11
 msgid "EJ - A platform for social participation."
@@ -2716,8 +2741,8 @@ msgstr "Nova conversa"
 msgid "New board"
 msgstr "Novo mural"
 
-#: src/ej_boards/jinja2/ej_boards/includes/menu-board.jinja2:15
 #: src/ej_boards/jinja2/ej_boards/includes/menu-board.jinja2:16
+#: src/ej_boards/jinja2/ej_boards/includes/menu-board.jinja2:17
 #, fuzzy
 msgid "Administration"
 msgstr "Administração"
@@ -3090,30 +3115,30 @@ msgstr "Voltar para conversa"
 msgid "Home"
 msgstr "Início"
 
-#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:23
+#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:16
 msgid "Reports"
 msgstr "Relatórios"
 
-#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:28
+#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:21
 #, fuzzy
 msgid "General report"
 msgstr "Relatório Geral"
 
-#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:29
+#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:22
 #, fuzzy
 msgid "Comments report"
 msgstr "Relatório de comentários"
 
-#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:31
+#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:24
 msgid "Scatter plot"
 msgstr "Nuvem de pontos"
 
-#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:32
+#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:25
 #, fuzzy
 msgid "Crossings"
 msgstr "Cruzamentos"
 
-#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:45
+#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:38
 msgid "Back to conversations"
 msgstr "Voltar para conversas"
 
@@ -3540,16 +3565,6 @@ msgstr "Editar perfil"
 msgid "Manage accounts"
 msgstr "Gerenciar conta"
 
-#: src/ej_profiles/jinja2/ej_profiles/detail.jinja2:39
-#: src/ej_profiles/jinja2/ej_profiles/includes/menu.jinja2:13
-#: src/ej_users/jinja2/account/index.jinja2:17
-#: src/ej_users/jinja2/account/logout.jinja2:2
-#: src/ej_users/jinja2/account/logout.jinja2:15
-#: src/ej_users/jinja2/account/logout.jinja2:19
-#: src/ej_users/jinja2/ej_users/includes/account-menu.jinja2:6
-msgid "Logout"
-msgstr "Sair"
-
 #: src/ej_rocketchat/jinja2/ej_rocketchat/config.jinja2:2
 msgid "Configure Rocket.Chat Integration"
 msgstr "Configurar a integração com o Rocket.Chat"
@@ -3683,6 +3698,7 @@ msgstr "Integre esta conversa com um dos canais de coleta disponíveis."
 #: src/ej_tools/jinja2/ej_tools/rasa.jinja2:89
 #: src/ej_tools/jinja2/ej_tools/rasa.jinja2:91
 #: src/ej_tools/jinja2/ej_tools/telegram.jinja2:55
+#: src/ej_tools/jinja2/ej_tools/whatsapp.jinja2:51
 #, fuzzy
 msgid "Back to tools"
 msgstr "Voltar para ferramentas"
@@ -3893,6 +3909,7 @@ msgstr ""
 "Adicione o script na tag &ltbody&gt da página em que a coleta será feita."
 
 #: src/ej_tools/jinja2/ej_tools/telegram.jinja2:20
+#: src/ej_tools/jinja2/ej_tools/whatsapp.jinja2:18
 #, fuzzy
 msgid ""
 "Collect opinions using EJ's chatbot, also known as Duda. Allows you to "
@@ -3906,23 +3923,37 @@ msgstr ""
 "privado do usuário."
 
 #: src/ej_tools/jinja2/ej_tools/telegram.jinja2:23
+#: src/ej_tools/jinja2/ej_tools/whatsapp.jinja2:21
 #, fuzzy
 msgid "Participation link"
 msgstr "Link de participação"
 
 #: src/ej_tools/jinja2/ej_tools/telegram.jinja2:24
+#, fuzzy
 msgid "Share the call for participation to start the collection."
 msgstr "Compartilhe a chamada de participação para iniciar a coleta."
 
 #: src/ej_tools/jinja2/ej_tools/telegram.jinja2:39
+#: src/ej_tools/jinja2/ej_tools/whatsapp.jinja2:33
 #, fuzzy
 msgid "Copied to clipboard!"
-msgstr "Copiado para área de transferência"
+msgstr "Copiado para a área de transferência!"
 
 #: src/ej_tools/jinja2/ej_tools/telegram.jinja2:53
+#: src/ej_tools/jinja2/ej_tools/whatsapp.jinja2:49
 #, fuzzy
 msgid "Back to channels"
 msgstr "Voltar para ferramentas"
+
+#: src/ej_tools/jinja2/ej_tools/whatsapp.jinja2:22
+msgid "Share the participation link to start the collection."
+msgstr "Compartilhe a chamada de participação para iniciar a coleta."
+
+#: src/ej_tools/jinja2/ej_tools/whatsapp.jinja2:41
+#: src/ej_tools/jinja2/ej_tools/whatsapp.jinja2:107
+#, fuzzy
+msgid "To participate, just click on the link:"
+msgstr "Para participar basta clicar no link:"
 
 #: src/ej_users/jinja2/account/account_inactive.jinja2:2
 msgid "Account is inactive"
@@ -4164,9 +4195,11 @@ msgstr "Mudar a senha"
 msgid "Authentication"
 msgstr "Autenticação"
 
-#, fuzzy
-#~ msgid "Channels"
-#~ msgstr "Mudar votos"
+#~ msgid "Copied!"
+#~ msgstr "Copiado!"
+
+#~ msgid "We would like your participation in the following discussion:"
+#~ msgstr "Gostaríamos da sua participação na seguinte discussão:"
 
 #, fuzzy
 #~ msgid "Modify limit to create conversation"
@@ -4979,6 +5012,9 @@ msgstr "Autenticação"
 
 #~ msgid "The stereotype has voted in the following comments."
 #~ msgstr "A persona já votou nos seguintes comentários."
+
+#~ msgid "Change votes"
+#~ msgstr "Mudar votos"
 
 #~ msgid "Search Stereotype:"
 #~ msgstr "Pesquisar Persona:"
