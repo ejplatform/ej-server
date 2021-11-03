@@ -198,6 +198,14 @@ def conversation_tools_rasa_delete(request, board, **kwargs):
     return tools_routes.delete_connection(request, **kwargs)
 
 
+@urlpatterns.route(
+    board_conversation_url + "tools/chatbot/whatsapp/", perms=["ej.can_edit_conversation:conversation"]
+)
+def conversation_tools_whatsapp(request, board, **kwargs):
+    check_board(board)
+    return tools_routes.whatsapp(request, **kwargs)
+
+
 @urlpatterns.route(board_conversation_url + "analysis/", perms=["ej.can_edit_conversation:conversation"])
 def conversation_analysis_index(request, board, **kwargs):
     check_board(board)

@@ -83,21 +83,7 @@
     #copy-script-icon:hover + #copy-script-info {
         opacity: 1;
     }
-
-    .info {
-        position: absolute;
-        right: 0;
-        top: 1.5rem;
-        background-color: #042a46;
-        border-radius: 0.5rem;
-        p {
-            padding: 0.1rem 0.7rem;
-            color: aliceblue;
-            margin-bottom: 0rem;
-            font-size: 80%;
-        }
-    }
-
+    
     textarea {
         background-color: rgba(196, 196, 196, 0.38);
         min-width: 100%;
@@ -105,6 +91,20 @@
         height: 259px;
         resize: none;
         padding-right: 5%;
+    }
+}
+
+.info {
+    position: absolute;
+    right: 0;
+    top: 1.5rem;
+    background-color: #042a46;
+    border-radius: 0.5rem;
+    p {
+        padding: 0.1rem 0.7rem;
+        color: aliceblue;
+        margin-bottom: 0rem;
+        font-size: 80%;
     }
 }
 
@@ -769,4 +769,8 @@
 
 .tools-link {
     font-weight: bold;
+}
+
+.participation-link {
+    margin-bottom: unset;
 }

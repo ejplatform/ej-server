@@ -9,7 +9,13 @@ from django.db.models import Q
 from ej_boards.forms import PaletteWidget
 from ej_conversations.models import Comment
 from ej.forms import EjModelForm
-from .models import RasaConversation, ConversationComponent, MailingTool, ConversationMautic
+from .models import (
+    ChatbotWhatsappTool,
+    RasaConversation,
+    ConversationComponent,
+    MailingTool,
+    ConversationMautic,
+)
 
 
 class CustomChoiceWidget(forms.RadioSelect):
@@ -66,6 +72,14 @@ class MailingToolForm(forms.Form):
         conversation_id = kwargs.pop("conversation_id")
         super(MailingToolForm, self).__init__(*args, **kwargs)
         self.fields["custom_comment"].queryset = Comment.objects.filter(conversation=conversation_id)
+
+
+class WhatsappToolForm(forms.Form):
+    bot_type = forms.ChoiceField(
+        label="Bot",
+        choices=ChatbotWhatsappTool.CHANNEL_CHOICES,
+        required=True,
+    )
 
 
 class RasaConversationForm(EjModelForm):
