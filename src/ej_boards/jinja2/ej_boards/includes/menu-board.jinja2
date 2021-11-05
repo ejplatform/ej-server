@@ -5,7 +5,7 @@
     </h3>
     <ul class="board-list">
         {% for board in user_boards %}
-        <li>
+        <li class="{{ board.slug }}" id="{{ board.slug }}-link">
             <a href="{{ url('boards:conversation-list', board.slug) }}">{{board.title}}</a>
             <p>{{board.conversations.count()}}</p>
         </li>
@@ -24,4 +24,15 @@
 </nav>
 {% endif %}
 
+<script>
+    let url = window.location.href.split("/");
+    let selectedBoard = url[url.length-3].split("-")[0].replace(":","") ;
+    let backgroundColor = document.querySelector("." + selectedBoard);
+
+    if (backgroundColor) {
+         backgroundColor.className = "selected-board";
+        document.getElementById(selectedBoard + "-link").click();
+    }
+</script>
+{{ page_menu.ABOUT(request) }}
 {{ page_menu.ACCESSIBILITY() }}

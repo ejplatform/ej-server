@@ -13,7 +13,7 @@
 <p class="measure center margin-xauto">{% trans %}{% endtrans %}</p>
     <div class="alternate-cards">
         {% for conversation in conversations %}
-            <div class="margin-y3">{{ conversation|role('card') }}</div>
+                <div class="margin-y3">{{ conversation|role('card',url=conversation.url('report:general-report')) }}</div>
         {% endfor %}
     </div>
 {% endblock %}

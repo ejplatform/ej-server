@@ -17,13 +17,3 @@
         {{ cluster|role('comments-stats-table') }}
     {% endfor %}
 {% endif %}
-
-{% if can_view_detail %}
-    <h2 class="h3 text-accent center">{% trans %}More info{% endtrans %}</h2>
-    <dl>
-        <dt>{% block participant_table_link %}
-            <a href="{{ conversation.url('report:users') }}">{{ _('Participants') }}</a>
-        {% endblock %}</dt>
-        <dd>{% trans %}See statistics about each participant.{% endtrans %}</dd>
-    </dl>
-{% endif %}

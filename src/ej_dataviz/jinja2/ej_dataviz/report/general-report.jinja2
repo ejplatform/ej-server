@@ -4,8 +4,11 @@
 {% block report %}
 
     <div class="title-export">
-        <span class="h2 text-accent"> 
-            {% trans n = statistics.participants.voters %}General Report ({{ n }} users){% endtrans %}
+        <span class="h2 text-accent">
+            General Report
+            <a href=" {{ conversation.url('report:users') }}">
+                ({{ statistics.participants.voters }} {{ _('Participants') }})
+            </a>
         </span>
         {{ export_modal(can_view_detail, conversation, type_data, conversation.slug) }}
     </div>
