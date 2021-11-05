@@ -1,11 +1,13 @@
 .report-card {
     margin-bottom: 42px;
+    font-family: 'Roboto', sans-serif;
+    background: #E5E5E5;
 }
 .report-card dl {
     display: flex;
     flex-direction: column;
     margin-bottom: unset;
-
+    
     dt {
         width: unset;
     }
@@ -207,5 +209,12 @@
 @media only screen and (max-width: 600px) {
     .report-charts {
         flex-direction: column;
+    }
+}
+
+.text-accent {
+    a {
+        color: #ff3e72;
+        text-decoration: underline;
     }
 }
