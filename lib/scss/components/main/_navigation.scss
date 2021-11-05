@@ -236,7 +236,7 @@ body {
         color: #30bfd3;
     }
     .board-list {
-        display: contents;
+        overflow-x: hidden;
         height: 140px;
         li {
             display: flex;
