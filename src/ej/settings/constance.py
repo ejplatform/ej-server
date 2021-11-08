@@ -21,9 +21,19 @@ class ConstanceConf(Conf):
                 "Maximum number of conversations that a common user can create if they have Listen to Community signature.",
                 int,
             ),
+            "EJ_LISTEN_TO_COMMUNITY_SIGNATURE_VOTE_LIMIT": (
+                self.EJ_LISTEN_TO_COMMUNITY_SIGNATURE_VOTE_LIMIT,
+                "Maximum number of votes that a common user can give if they have Listen to Community signature.",
+                int,
+            ),
             "EJ_LISTEN_TO_CITY_SIGNATURE_CONVERSATIONS_LIMIT": (
                 self.EJ_LISTEN_TO_CITY_SIGNATURE_CONVERSATIONS_LIMIT,
                 "Maximum number of conversations that a common user can create if they have Listen to City signature.",
+                int,
+            ),
+            "EJ_LISTEN_TO_CITY_SIGNATURE_VOTE_LIMIT": (
+                self.EJ_LISTEN_TO_CITY_SIGNATURE_VOTE_LIMIT,
+                "Maximum number of votes that a common user can give if they have Listen to City signature.",
                 int,
             ),
             "EJ_PROFILE_STATE_CHOICES": (
@@ -45,7 +55,9 @@ class ConstanceConf(Conf):
         "EJ Options": (
             "EJ_MAX_BOARD_NUMBER",
             "EJ_LISTEN_TO_COMMUNITY_SIGNATURE_CONVERSATIONS_LIMIT",
+            "EJ_LISTEN_TO_COMMUNITY_SIGNATURE_VOTE_LIMIT",
             "EJ_LISTEN_TO_CITY_SIGNATURE_CONVERSATIONS_LIMIT",
+            "EJ_LISTEN_TO_CITY_SIGNATURE_VOTE_LIMIT",
             "EJ_PROFILE_STATE_CHOICES",
         )
     }
@@ -53,7 +65,9 @@ class ConstanceConf(Conf):
     # Auxiliary options
     EJ_MAX_BOARD_NUMBER = env(1, name="{attr}")
     EJ_LISTEN_TO_COMMUNITY_SIGNATURE_CONVERSATIONS_LIMIT = env(20, name="{attr}")
-    EJ_LISTEN_TO_CITY_SIGNATURE_CONVERSATIONS_LIMIT = env(10, name="{attr}")
+    EJ_LISTEN_TO_COMMUNITY_SIGNATURE_VOTE_LIMIT = env(100000, name="{attr}")
+    EJ_LISTEN_TO_CITY_SIGNATURE_CONVERSATIONS_LIMIT = env(21, name="{attr}")
+    EJ_LISTEN_TO_CITY_SIGNATURE_VOTE_LIMIT = env(100000, name="{attr}")
     EJ_PROFILE_STATE_CHOICES = env(
         (
             ("AC", "Acre"),

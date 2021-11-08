@@ -7,6 +7,7 @@ from hyperpython import a
 from sidekick import import_later
 
 from ej.components.builtins import toast
+from ej_users.models import SignatureFactory
 
 log = getLogger("ej")
 models = import_later(".models", package=__package__)
@@ -73,6 +74,16 @@ def normalize_status(value):
         return Comment.STATUS_MAP[value.lower()]
     except KeyError:
         raise ValueError(f"invalid status value: {value}")
+
+
+def show_vote_actions_on_card(request):
+    user = request.user
+    user_signature = SignatureFactory.get_user_signature(user)
+    if not user_signature.can_vote():
+        show_actions = False
+        message = _("You've reached vote limit. Contact an administrator and request subscription change.")
+        return show_actions, message
+    return True, None
 
 
 #
