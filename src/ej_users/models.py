@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 from logging import getLogger
-from abc import abstractmethod
+from abc import ABC, abstractmethod
 from constance import config
 
 from django.contrib.auth.models import Permission
@@ -17,38 +17,84 @@ from .utils import random_name, token_factory
 log = getLogger("ej")
 
 
-class Signature:
+class Signature(ABC):
     """
-    EJ signature plans. It can be Hear your community, Hear your city and Hear the humanity
+    Abstract class that defines generic actions to be performed by its signature subclasses.
     """
-
-    LISTEN_TO_COMMUNITY = "listen_to_community"
-    SIGNATURES_CONVERSATIONS_LIMIT = {
-        "listen_to_community": config.EJ_LISTEN_TO_COMMUNITY_SIGNATURE_CONVERSATIONS_LIMIT
-    }
 
     def __init__(self, user):
         self.user = user
-        self.conversations_limit = Signature.SIGNATURES_CONVERSATIONS_LIMIT[user.signature]
 
-    @staticmethod
-    def plans():
-        return [
-            (Signature.LISTEN_TO_COMMUNITY, "Listen to community"),
-        ]
-
-    def can_add_conversation(self):
+    def can_add_conversation(self) -> bool:
         if self.user.is_superuser:
             return True
 
         user_conversations_count = self.user.conversations.count()
-        if user_conversations_count < self.conversations_limit:
+        if user_conversations_count < self.get_conversation_limit():
             return True
         else:
             return False
 
-    def current(self):
-        return self.user.signature
+    def can_vote(self) -> bool:
+        if self.user.is_superuser:
+            return True
+
+        user_vote_count = self.user.votes.count()
+        if user_vote_count < self.get_vote_limit():
+            return True
+        else:
+            return False
+
+    @abstractmethod
+    def get_conversation_limit(self) -> int:
+        pass
+
+    @abstractmethod
+    def get_vote_limit(self) -> int:
+        pass
+
+
+class SignatureFactory:
+    """
+    Instantiates signature subclasses
+    Usage:
+
+    signature = SignatureFactory.get_user_signature(request.user)
+    signature.<method-from-class>()
+    """
+
+    LISTEN_TO_COMMUNITY = "listen_to_community"
+    LISTEN_TO_CITY = "listen_to_city"
+
+    @staticmethod
+    def get_user_signature(user) -> Signature:
+        if user.signature == SignatureFactory.LISTEN_TO_COMMUNITY:
+            return ListenToCommunity(user)
+        else:
+            return ListenToCity(user)
+
+    @staticmethod
+    def plans():
+        return [
+            (SignatureFactory.LISTEN_TO_COMMUNITY, "Listen to community"),
+            (SignatureFactory.LISTEN_TO_CITY, "Listen to city"),
+        ]
+
+
+class ListenToCommunity(Signature):
+    def get_conversation_limit(self) -> int:
+        return config.EJ_LISTEN_TO_COMMUNITY_SIGNATURE_CONVERSATIONS_LIMIT
+
+    def get_vote_limit(self) -> int:
+        return config.EJ_LISTEN_TO_COMMUNITY_SIGNATURE_VOTE_LIMIT
+
+
+class ListenToCity(Signature):
+    def get_conversation_limit(self) -> int:
+        return config.EJ_LISTEN_TO_CITY_SIGNATURE_CONVERSATIONS_LIMIT
+
+    def get_vote_limit(self) -> int:
+        return config.EJ_LISTEN_TO_CITY_SIGNATURE_VOTE_LIMIT
 
 
 @rest_api(["id", "display_name", "email", "signature"])
@@ -70,8 +116,8 @@ class User(AbstractUser):
         max_length=50,
         blank=False,
         help_text=_("User signature"),
-        choices=Signature.plans(),
-        default=Signature.LISTEN_TO_COMMUNITY,
+        choices=SignatureFactory.plans(),
+        default=SignatureFactory.LISTEN_TO_COMMUNITY,
     )
     objects = UserManager()
 

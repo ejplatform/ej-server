@@ -4,6 +4,7 @@ from ej_tools.models import ConversationMautic, MauticClient
 from ej_conversations.models.vote import Vote
 from ej_conversations.utils import request_comes_from_ej_bot, request_promoted_conversations
 from ej_tools import api
+from ej_users.models import SignatureFactory
 import json
 from datetime import datetime
 from rest_framework.response import Response
@@ -101,22 +102,27 @@ def statistics(conversation):
 def save_vote(request, vote):
     user = request.user
     create_mautic_contact_from_author(request, vote)
-    try:
-        skipped_vote = Vote.objects.get(comment=vote.comment, choice=0, author=user)
-        skipped_vote.choice = vote.choice
-        skipped_vote.analytics_utm = vote.analytics_utm
-        skipped_vote.save()
-        return skipped_vote
-    except Exception as e:
-        pass
-    if vote.id is None:
-        vote.author = user
-        vote.save()
-    elif vote.author != user:
-        raise PermissionError("cannot update vote of a different user")
+
+    user_signature = SignatureFactory.get_user_signature(user)
+    if user_signature.can_vote():
+        try:
+            skipped_vote = Vote.objects.get(comment=vote.comment, choice=0, author=user)
+            skipped_vote.choice = vote.choice
+            skipped_vote.analytics_utm = vote.analytics_utm
+            skipped_vote.save()
+            return skipped_vote
+        except Exception as e:
+            pass
+        if vote.id is None:
+            vote.author = user
+            vote.save()
+        elif vote.author != user:
+            raise PermissionError("cannot update vote of a different user")
+        else:
+            vote.save(update_fields=["choice", "analytics_utm"])
+        return vote
     else:
-        vote.save(update_fields=["choice", "analytics_utm"])
-    return vote
+        raise PermissionError("vote limit reached")
 
 
 def create_mautic_contact_from_author(request, vote):

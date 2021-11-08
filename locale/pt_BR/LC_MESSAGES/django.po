@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-05 10:54-0300\n"
+"POT-Creation-Date: 2021-11-05 15:31-0300\n"
 "PO-Revision-Date: 2019-09-09 13:55-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -325,7 +325,7 @@ msgstr ""
 "capturar. Esta informação é opcional e não é pública."
 
 #: src/ej_clusters/models/stereotype_vote.py:20
-#: src/ej_conversations/roles/comments.py:101 src/ej_dataviz/roles.py:134
+#: src/ej_conversations/roles/comments.py:109 src/ej_dataviz/roles.py:134
 #: src/ej_dataviz/roles.py:135
 msgid "Comment"
 msgstr "Comentar"
@@ -440,17 +440,17 @@ msgstr "Conteúdo duplicado"
 msgid "Violates terms of service of the platform"
 msgstr "Viola os termos de uso da plataforma"
 
-#: src/ej_conversations/enums.py:24 src/ej_conversations/roles/comments.py:41
+#: src/ej_conversations/enums.py:24 src/ej_conversations/roles/comments.py:42
 #: src/ej_dataviz/roles.py:145 src/ej_dataviz/roles.py:162
 msgid "Skip"
 msgstr "Pular"
 
-#: src/ej_conversations/enums.py:25 src/ej_conversations/roles/comments.py:42
+#: src/ej_conversations/enums.py:25 src/ej_conversations/roles/comments.py:43
 #: src/ej_dataviz/roles.py:130 src/ej_dataviz/roles.py:155
 msgid "Agree"
 msgstr "Concorda"
 
-#: src/ej_conversations/enums.py:26 src/ej_conversations/roles/comments.py:40
+#: src/ej_conversations/enums.py:26 src/ej_conversations/roles/comments.py:41
 #: src/ej_dataviz/roles.py:137 src/ej_dataviz/roles.py:160
 msgid "Disagree"
 msgstr "Discorda"
@@ -648,10 +648,19 @@ msgstr ""
 msgid "non-moderated comments cannot receive votes"
 msgstr "comentários não-moderados não podem receber votos"
 
-#: src/ej_conversations/roles/comments.py:30
+#: src/ej_conversations/roles/comments.py:31
 #: src/ej_conversations/roles/conversations.py:72
 msgid "login"
 msgstr "entrar"
+
+#: src/ej_conversations/roles/comments.py:50
+#, fuzzy
+msgid ""
+"You've reached vote limit. Contact an administrator and request subscription "
+"change."
+msgstr ""
+"Você atingiu o limite de votos. Entre em contato com um administrador e "
+"solicite uma mudança de assinatura."
 
 #: src/ej_conversations/roles/conversations.py:103
 #, python-brace-format
@@ -667,7 +676,7 @@ msgstr "{n} de {m} comentários"
 msgid "Public conversations"
 msgstr "Conversas públicas"
 
-#: src/ej_conversations/routes.py:67
+#: src/ej_conversations/routes.py:68
 msgid "Participate voting and creating comments!"
 msgstr "Participe com votos e comentários!"
 
@@ -2275,33 +2284,33 @@ msgstr ""
 msgid "Request to generate a new password"
 msgstr "Pedido para gerar uma nova senha"
 
-#: src/ej_users/models.py:63
+#: src/ej_users/models.py:109
 msgid "email address"
 msgstr "endereço de email"
 
-#: src/ej_users/models.py:63
+#: src/ej_users/models.py:109
 msgid "Your e-mail address"
 msgstr "Seu endereço de e-mail"
 
-#: src/ej_users/models.py:65
+#: src/ej_users/models.py:111
 msgid "Name used to publicly identify user"
 msgstr "Apelido público usado para identificar o usuário"
 
-#: src/ej_users/models.py:69
+#: src/ej_users/models.py:115
 #, fuzzy
 msgid "Signature"
 msgstr "Registrar"
 
-#: src/ej_users/models.py:72
+#: src/ej_users/models.py:118
 #, fuzzy
 msgid "User signature"
 msgstr "Pontuação do usuário"
 
-#: src/ej_users/models.py:109
+#: src/ej_users/models.py:155
 msgid "User token"
 msgstr "Token do usuário"
 
-#: src/ej_users/models.py:155
+#: src/ej_users/models.py:201
 msgid "Anonymous"
 msgstr "Anônimo"
 

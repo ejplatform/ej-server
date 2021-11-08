@@ -10,20 +10,22 @@ from .. import models
 from ..enums import RejectionReason
 from ..models import Comment
 from ..routes_comments import comment_url
+from ..utils import show_vote_actions_on_card
+from ej_users.models import SignatureFactory
 
 HAS_GAMIFICATION = apps.is_installed("ej_gamification")
 
 
 @with_template(Comment, role="card")
-def comment_card(comment: Comment, request=None, target=None, show_actions=None, **kwargs):
+def comment_card(comment: Comment, request=None, target=None, show_actions=None, message=None, **kwargs):
     """
     Render comment information inside a comment card.
     """
 
     user = getattr(request, "user", None)
-    is_authenticated = getattr(user, "is_authenticated", False)
+    show_actions = getattr(user, "is_authenticated", False)
 
-    if is_authenticated:
+    if show_actions:
         login_anchor = None
     else:
         login = reverse("auth:login")
@@ -42,10 +44,13 @@ def comment_card(comment: Comment, request=None, target=None, show_actions=None,
         "agree": ("fa-check", "text-positive", _("Agree")),
     }
 
+    show_actions, message = show_vote_actions_on_card(request)
+
     return {
         "author": comment.author.username,
         "comment": comment,
-        "show_actions": is_authenticated,
+        "show_actions": show_actions,
+        "message": message,
         "csrf_input": csrf_input(request),
         "buttons": buttons,
         "login_anchor": login_anchor,

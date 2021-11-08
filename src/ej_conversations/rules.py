@@ -6,7 +6,7 @@ from django.utils.timezone import now
 from boogie import rules
 from .enums import Choice
 from .models import Comment, Conversation
-from ej_users.models import Signature
+from ej_users.models import SignatureFactory
 
 
 #
@@ -208,7 +208,7 @@ def can_add_conversation(user):
     Check if user can add a conversation
     """
     # Creates a instance from user signature
-    user_signature = Signature(user)
+    user_signature = SignatureFactory.get_user_signature(user)
 
     return user_signature.can_add_conversation()
 

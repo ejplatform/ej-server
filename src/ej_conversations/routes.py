@@ -10,7 +10,7 @@ from django.utils.translation import ugettext_lazy as _
 from hyperpython import a
 
 from ej_boards.models import Board
-from ej_users.models import Signature
+from ej_users.models import SignatureFactory
 
 from . import forms, models
 from .enums import TourStatus
@@ -56,7 +56,8 @@ def list_view(
     annotations = ("n_votes", "n_comments", "n_user_votes", "first_tag", "n_favorites", "author_name")
     queryset = queryset.cache_annotations(*annotations, user=user).order_by("-created")
     if user.is_authenticated:
-        max_conversation_per_user = Signature(request.user).conversations_limit
+        user_signature = SignatureFactory.get_user_signature(request.user)
+        max_conversation_per_user = user_signature.get_conversation_limit()
         user_boards = Board.objects.filter(owner=user)
     else:
         max_conversation_per_user = 0

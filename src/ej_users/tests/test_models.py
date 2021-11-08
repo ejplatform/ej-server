@@ -1,9 +1,11 @@
 import pytest
+import mock
 from boogie.testing.pytest import ModelTester
 from ej.testing import EjRecipes
 from ej_users import password_reset_token
-from ej_users.models import User, PasswordResetToken, clean_expired_tokens, MetaData
+from ej_users.models import User, PasswordResetToken, clean_expired_tokens, MetaData, SignatureFactory
 from ej_users.mommy_recipes import UserRecipes
+from ej_conversations.mommy_recipes import ConversationRecipes
 
 
 class TestUser(UserRecipes, ModelTester):
@@ -61,3 +63,53 @@ class TestMetaData(EjRecipes):
         metadata = MetaData.objects.create(analytics_id="GA.1.1234", mautic_id="9876", user=user)
         assert metadata
         assert user.metadata_set.first().id == metadata.id
+
+
+class TestSignatureClass(ConversationRecipes):
+    def test_user_get_default_signature(self, db, mk_user):
+        user = mk_user(email="user@domain.com")
+        assert user.signature == "listen_to_community"
+
+    def test_admin_can_add_conversation(self, db):
+        admin_user = User.objects.create_superuser("admin@test.com", "pass")
+        admin_user.save()
+        signature = SignatureFactory.get_user_signature(admin_user)
+        assert signature.can_add_conversation()
+
+    def test_admin_can_vote(self, db):
+        admin_user = User.objects.create_superuser("admin@test.com", "pass")
+        admin_user.save()
+        signature = SignatureFactory.get_user_signature(admin_user)
+        assert signature.can_vote()
+
+    def test_community_signature_can_add_conversation(self, db, mk_user):
+        user = mk_user(email="user@domain.com")
+        signature = SignatureFactory.get_user_signature(user)
+        assert signature.can_add_conversation()
+
+    def test_community_signature_can_vote(self, db, mk_user):
+        user = mk_user(email="user@domain.com")
+        signature = SignatureFactory.get_user_signature(user)
+        assert signature.can_vote()
+
+    def test_community_signature_cannot_add_conversation_due_to_limit(self, db, mk_user):
+        user = mk_user(email="user@domain.com")
+        signature = SignatureFactory.get_user_signature(user)
+        signature.get_conversation_limit = mock.MagicMock(return_value=0)
+        assert not signature.can_add_conversation()
+
+    def test_community_signature_cannot_vote_due_to_limit(self, db, mk_user):
+        user = mk_user(email="user@domain.com")
+        signature = SignatureFactory.get_user_signature(user)
+        signature.get_vote_limit = mock.MagicMock(return_value=0)
+        assert not signature.can_vote()
+
+    def test_number_conversation_limit(self, db, mk_user):
+        user = mk_user(email="user@domain.com")
+        signature = SignatureFactory.get_user_signature(user)
+        assert signature.get_conversation_limit() == 20
+
+    def test_number_vote_limit(self, db, mk_user):
+        user = mk_user(email="user@domain.com")
+        signature = SignatureFactory.get_user_signature(user)
+        assert signature.get_vote_limit() == 100000
