@@ -1,18 +1,40 @@
-<svg id="channel-chart" width="324" height="406"></svg>
+<span class="chart-title">{{ _('Channel participation') }}</span>
+<div class="filter-participation">
+    <span class="filter-text">{{ _('Filter by:') }}</span>
+    <button id="id_vote_button" onclick="selectParticipation(event.target)" class="filter-button">{{ _('Votes')}}</button>
+    <button id="id_part_button" onclick="selectParticipation(event.target)" class="filter-button">{{ _('Participants')}}</button>
+</div>
+<div class="participation-channel-chart" id="svg-chart-container">
+    <svg id="channel-chart" width="324" height="350"></svg>
+</div>
 <script src="https://d3js.org/d3.v7.min.js"></script>
-<script>
-        let data = [
-            {name: 'telegram', value: {{channel_votes['telegram'] | safe}} },
-            {name: 'whatsapp', value: {{channel_votes['whatsapp'] | safe}} },
-            {name: 'opinionComponent', value: {{channel_votes['opinion_component'] | safe}} },
-            {name: 'webchat', value: {{channel_votes['webchat'] | safe}} },
-            {name: 'unknown', value: {{channel_votes['unknown'] | safe}} }
-        ];
 
+<script>
+    let voteButton = document.getElementById('id_vote_button');
+    let partButton = document.getElementById('id_part_button');
+    let data = [];
+
+    window.addEventListener('load', loadVoteVisualization);
+
+    async function loadVoteVisualization() {
+        selectParticipation(voteButton);
+        d3jsPartVisualization(data);
+    }
+
+    async function d3jsPartVisualization(data) {
         data = data.filter(d => d.value != 0)
         const width = d3.select('#channel-chart').attr('width');
         const height = d3.select('#channel-chart').attr('height');
 
+        var previusSvg = d3.select("#channel-chart");
+        previusSvg.remove();
+
+        d3.select("#svg-chart-container")
+            .append("svg")
+            .attr("id", 'channel-chart')
+            .attr("width", width)
+            .attr("height", height)
+        
         const pie = d3.pie()
             .sort(null)
             .value(d => d.value)
@@ -58,4 +80,34 @@
                 .attr("y", "0.7em")
                 .attr("fill-opacity", 0.7)
                 .text(d => d.data.value.toLocaleString()));
+    }
+
+    function setData(option) {
+        data = [
+            {name: "telegram", value: option.telegram },
+            {name: "whatsapp", value: option.whatsapp },
+            {name: "opinionComponent", value: option.opinion_component },
+            {name: "webchat", value: option.webchat },
+            {name: "unknown", value: option.unknown }
+        ]
+    }
+
+    function selectParticipation(selectedButton) {
+        let notSelected;
+
+        if (selectedButton == voteButton) {
+            notSelected = partButton;
+            setData({{statistics.channel_votes|safe}});
+        } 
+        else {
+            notSelected = voteButton;
+            setData({{statistics.channel_participants|safe}});
+        }
+
+        selectedButton.classList.add('selected-button');
+        notSelected.classList.remove('selected-button');
+
+        d3jsPartVisualization(data);
+
+    }
 </script>

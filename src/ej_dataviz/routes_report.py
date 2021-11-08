@@ -1,5 +1,6 @@
 from functools import lru_cache
 import datetime
+import json
 
 from boogie.router import Router
 from django.http import JsonResponse
@@ -52,13 +53,11 @@ def general_report(request, conversation, slug, check=check_promoted):
     check(conversation, request)
     can_view_detail = request.user.has_perm("ej.can_view_report_detail", conversation)
     statistics = conversation.statistics()
-    channel_votes = statistics["channel_votes"]
     return {
         "conversation": conversation,
         "type_data": "votes-data",
         "can_view_detail": can_view_detail,
         "statistics": statistics,
-        "channel_votes": channel_votes,
     }
 
 

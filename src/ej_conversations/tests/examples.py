@@ -41,6 +41,13 @@ CONVERSATION = {
         "votes": {"agree": 0, "disagree": 0, "skip": 0, "total": 0},
         "participants": {"commenters": 0, "voters": 0},
         "channel_votes": {"opinion_component": 0, "telegram": 0, "unknown": 0, "webchat": 0, "whatsapp": 0},
+        "channel_participants": {
+            "opinion_component": 0,
+            "telegram": 0,
+            "unknown": 0,
+            "webchat": 0,
+            "whatsapp": 0,
+        },
     },
     "text": "test",
     "board": "My Board",
