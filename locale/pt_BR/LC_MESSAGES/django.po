@@ -886,65 +886,65 @@ msgstr "Você!"
 msgid "State"
 msgstr "Estado"
 
-#: src/ej_dataviz/routes_report.py:334
+#: src/ej_dataviz/routes_report.py:333
 msgid "agree"
 msgstr "concorda"
 
-#: src/ej_dataviz/routes_report.py:335
+#: src/ej_dataviz/routes_report.py:334
 msgid "author"
 msgstr "autor"
 
-#: src/ej_dataviz/routes_report.py:336
+#: src/ej_dataviz/routes_report.py:335
 msgid "author_id"
 msgstr "autor_id"
 
-#: src/ej_dataviz/routes_report.py:337
+#: src/ej_dataviz/routes_report.py:336
 msgid "choice"
 msgstr "escolha"
 
-#: src/ej_dataviz/routes_report.py:338
+#: src/ej_dataviz/routes_report.py:337
 #, fuzzy
 msgid "cluster"
 msgstr "Grupos"
 
-#: src/ej_dataviz/routes_report.py:339
+#: src/ej_dataviz/routes_report.py:338
 #, fuzzy
 msgid "cluster_id"
 msgstr "Grupos"
 
-#: src/ej_dataviz/routes_report.py:340
+#: src/ej_dataviz/routes_report.py:339
 msgid "comment"
 msgstr "comentário"
 
-#: src/ej_dataviz/routes_report.py:341
+#: src/ej_dataviz/routes_report.py:340
 msgid "comment_id"
 msgstr "comentário_id"
 
-#: src/ej_dataviz/routes_report.py:342
+#: src/ej_dataviz/routes_report.py:341
 msgid "convergence"
 msgstr "convergência"
 
-#: src/ej_dataviz/routes_report.py:343
+#: src/ej_dataviz/routes_report.py:342
 msgid "disagree"
 msgstr "discorda"
 
-#: src/ej_dataviz/routes_report.py:344 src/ej_profiles/enums.py:70
+#: src/ej_dataviz/routes_report.py:343 src/ej_profiles/enums.py:70
 msgid "email"
 msgstr "email"
 
-#: src/ej_dataviz/routes_report.py:345
+#: src/ej_dataviz/routes_report.py:344
 msgid "id"
 msgstr "id"
 
-#: src/ej_dataviz/routes_report.py:346 src/ej_profiles/enums.py:69
+#: src/ej_dataviz/routes_report.py:345 src/ej_profiles/enums.py:69
 msgid "name"
 msgstr "nome"
 
-#: src/ej_dataviz/routes_report.py:347
+#: src/ej_dataviz/routes_report.py:346
 msgid "participation"
 msgstr "participação"
 
-#: src/ej_dataviz/routes_report.py:348
+#: src/ej_dataviz/routes_report.py:347
 msgid "skipped"
 msgstr "pulados"
 
@@ -2658,7 +2658,7 @@ msgid "Participants on the conversation (aquisition)"
 msgstr "Participantes na conversa (aquisição)"
 
 #: src/ej_analysis/jinja2/ej_analysis/opinion_component.jinja2:87
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/votes-over-time.jinja2:19
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/votes-over-time.jinja2:17
 msgid "end date must be gratter then start date"
 msgstr "data de fim deve ser maior que data de inicio"
 
@@ -3189,7 +3189,7 @@ msgstr ""
 "com opiniões diferentes são\n"
 "            representadas por pontos distantes."
 
-#: src/ej_dataviz/jinja2/ej_dataviz/report/general-report.jinja2:32
+#: src/ej_dataviz/jinja2/ej_dataviz/report/general-report.jinja2:33
 #: src/ej_dataviz/jinja2/ej_dataviz/word-cloud.jinja2:6
 msgid "Word cloud"
 msgstr "Nuvem de palavras"
@@ -3207,60 +3207,60 @@ msgstr "O tamanho de cada palavra é proporcional à frequência de uso."
 msgid "Generating word cloud. Please wait..."
 msgstr "Criando nuvem de palavras. Espere..."
 
-#: src/ej_dataviz/jinja2/ej_dataviz/includes/datatables.jinja2:7
+#: src/ej_dataviz/jinja2/ej_dataviz/includes/datatables.jinja2:8
 msgid "Do data available"
 msgstr "Nenhum dado disponível"
 
-#: src/ej_dataviz/jinja2/ej_dataviz/includes/datatables.jinja2:8
+#: src/ej_dataviz/jinja2/ej_dataviz/includes/datatables.jinja2:9
 msgid "Showing from _START_ to _END_ of _TOTAL_ entries"
 msgstr "Mostrando _START_ até _END_ de _TOTAL_ entradas"
 
-#: src/ej_dataviz/jinja2/ej_dataviz/includes/datatables.jinja2:9
+#: src/ej_dataviz/jinja2/ej_dataviz/includes/datatables.jinja2:10
 msgid "No entries found"
 msgstr "Nenhuma entrada encontrada"
 
-#: src/ej_dataviz/jinja2/ej_dataviz/includes/datatables.jinja2:10
+#: src/ej_dataviz/jinja2/ej_dataviz/includes/datatables.jinja2:11
 msgid "(Filtered from _MAX_ entries)"
 msgstr "(Filtrado de _MAX_ entradas)"
 
-#: src/ej_dataviz/jinja2/ej_dataviz/includes/datatables.jinja2:11
+#: src/ej_dataviz/jinja2/ej_dataviz/includes/datatables.jinja2:12
 msgid "Show _MENU_ entries"
 msgstr "Mostra _MENU_ entradas"
 
-#: src/ej_dataviz/jinja2/ej_dataviz/includes/datatables.jinja2:12
+#: src/ej_dataviz/jinja2/ej_dataviz/includes/datatables.jinja2:13
 msgid "Loading..."
 msgstr "Carregando dados..."
 
-#: src/ej_dataviz/jinja2/ej_dataviz/includes/datatables.jinja2:13
+#: src/ej_dataviz/jinja2/ej_dataviz/includes/datatables.jinja2:14
 #, fuzzy
 msgid "Processing..."
 msgstr "Processando..."
 
-#: src/ej_dataviz/jinja2/ej_dataviz/includes/datatables.jinja2:14
+#: src/ej_dataviz/jinja2/ej_dataviz/includes/datatables.jinja2:15
 msgid "Search"
 msgstr "Busca"
 
-#: src/ej_dataviz/jinja2/ej_dataviz/includes/datatables.jinja2:15
+#: src/ej_dataviz/jinja2/ej_dataviz/includes/datatables.jinja2:16
 msgid "No entry found"
 msgstr "Nenhuma entrada encontrada"
 
-#: src/ej_dataviz/jinja2/ej_dataviz/includes/datatables.jinja2:18
+#: src/ej_dataviz/jinja2/ej_dataviz/includes/datatables.jinja2:19
 msgid "First"
 msgstr "Primeiro"
 
-#: src/ej_dataviz/jinja2/ej_dataviz/includes/datatables.jinja2:19
+#: src/ej_dataviz/jinja2/ej_dataviz/includes/datatables.jinja2:20
 msgid "Last"
 msgstr "Último"
 
-#: src/ej_dataviz/jinja2/ej_dataviz/includes/datatables.jinja2:21
+#: src/ej_dataviz/jinja2/ej_dataviz/includes/datatables.jinja2:22
 msgid "Previous"
 msgstr "Anterior"
 
-#: src/ej_dataviz/jinja2/ej_dataviz/includes/datatables.jinja2:25
+#: src/ej_dataviz/jinja2/ej_dataviz/includes/datatables.jinja2:26
 msgid "Sort column ascending"
 msgstr "Ordena de forma ascendente"
 
-#: src/ej_dataviz/jinja2/ej_dataviz/includes/datatables.jinja2:26
+#: src/ej_dataviz/jinja2/ej_dataviz/includes/datatables.jinja2:27
 msgid "Sort column descending"
 msgstr "Ordena de forma decrescente"
 
@@ -3270,12 +3270,10 @@ msgid "Export"
 msgstr "Exportar"
 
 #: src/ej_dataviz/jinja2/ej_dataviz/report/general-report.jinja2:10
+#: src/ej_dataviz/jinja2/ej_dataviz/report/general-report.jinja2:27
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/channel-chart-card.jinja2:6
 msgid "Participants"
 msgstr "Participantes"
-
-#: src/ej_dataviz/jinja2/ej_dataviz/report/general-report.jinja2:26
-msgid "Votes per channel"
-msgstr "Votos por canal"
 
 #: src/ej_dataviz/jinja2/ej_dataviz/report/index.jinja2:6
 #, python-format
@@ -3290,6 +3288,15 @@ msgstr "Lista de participantes"
 msgid "Usage data"
 msgstr "Dados de uso"
 
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/channel-chart-card.jinja2:2
+#, fuzzy
+msgid "Channel participation"
+msgstr "Participação por canal"
+
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/channel-chart-card.jinja2:4
+msgid "Filter by:"
+msgstr "Filtrar por:"
+
 #: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comments-stats.jinja2:4
 #, fuzzy
 msgid "Comments Report"
@@ -3299,7 +3306,7 @@ msgstr "Relatório de comentários"
 msgid "{n} users"
 msgstr "{n} usuários"
 
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/votes-over-time.jinja2:3
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/votes-over-time.jinja2:2
 #, fuzzy
 msgid "Vote"
 msgstr "Votação"
@@ -4194,6 +4201,9 @@ msgstr "Mudar a senha"
 #, fuzzy
 msgid "Authentication"
 msgstr "Autenticação"
+
+#~ msgid "Votes per channel"
+#~ msgstr "Votos por canal"
 
 #~ msgid "Copied!"
 #~ msgstr "Copiado!"

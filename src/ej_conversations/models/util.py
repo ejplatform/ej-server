@@ -95,6 +95,15 @@ def statistics(conversation, cache=True):
             opinion_component=Count("channel", filter=Q(channel=VoteChannels.OPINION_COMPONENT)),
             unknown=Count("channel", filter=Q(channel=VoteChannels.UNKNOWN)),
         ),
+        "channel_participants": conversation.votes.aggregate(
+            webchat=Count("author", filter=Q(channel=VoteChannels.RASA_WEBCHAT), distinct="author"),
+            telegram=Count("author", filter=Q(channel=VoteChannels.TELEGRAM), distinct="author"),
+            whatsapp=Count("author", filter=Q(channel=VoteChannels.WHATSAPP), distinct="author"),
+            opinion_component=Count(
+                "author", filter=Q(channel=VoteChannels.OPINION_COMPONENT), distinct="author"
+            ),
+            unknown=Count("author", filter=Q(channel=VoteChannels.UNKNOWN), distinct="author"),
+        ),
     }
 
 

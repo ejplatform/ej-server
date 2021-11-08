@@ -24,7 +24,7 @@
 
 .word-cloud-card {
     box-sizing: border-box;
-    border: 1px solid #bababa;
+    border: 1px solid $color-theme-report-gray;
     width: 100%;
     height: 388px;
     border-radius: 5px;
@@ -44,32 +44,69 @@
     justify-content: space-between;
     margin-bottom: 40px;
 
-    p {
-        position: absolute;
-        left: 1rem;
-        top: 1rem;
+    .chart-title {
         font-size: 18px;
         line-height: 21px;
+        font-weight: bold;
+        margin-left: 14px;
+        margin-top: 1rem;
+        display: flex;
     }
 
     .channel-vote-chart {
         width: 324px;
         height: 406px;
         box-sizing: border-box;
-        border: 1px solid #bababa;
+        border: 1px solid $color-theme-report-gray;
         border-radius: 5px;
-        position: relative;
-        text-align: center;
     }
 
     .vote-chart {
         box-sizing: border-box;
-        border: 1px solid #bababa;
+        border: 1px solid $color-theme-report-gray;
         width: 70%;
         margin-right: 0.5rem;
         border-radius: 5px;
         position: relative;
         height: 406px;
+    }
+}
+
+.participation-channel-chart {
+    position: relative;
+    text-align: center;
+    bottom: 10px;
+}
+
+.filter-participation {
+    margin-top: 1rem;
+    display: flex;
+    align-items: baseline;
+    .filter-text {
+        margin-left: 14px;
+        margin-right: 9px;
+    }
+    .filter-button {
+        border: 1px solid $color-theme-report-light;
+        border-radius: 5px;
+        background-color: $color-theme-report-light;
+        color: $color-theme-report-blue;
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 16px;
+        text-transform: capitalize;
+        padding: 0 0.5rem;
+        margin-right: 9px;
+    }
+    .selected-button {
+        background-color: $color-theme-default-light;
+        color: $color-white;
+    }
+    .filter-button:focus {
+        box-shadow: unset;
+    }
+    .filter-button:active {
+        box-shadow: unset;
     }
 }
 
@@ -104,7 +141,7 @@
 }
 
 #format-name {
-    color: #000;
+    color: $color-theme-report-black;
     font-weight: bold;
 }
 
@@ -112,9 +149,9 @@
     display: inline-flex;
     margin-bottom: 10px;
     font-weight: bold;
-    color: #bababa;
+    color: $color-theme-report-gray;
     i {
-        color: black;
+        color: $color-theme-report-black;
     }
 }
 
@@ -124,7 +161,7 @@
 }
 
 .modal-content {
-    background-color: #fefefe;
+    background-color: $color-theme-report-lighter;
     position: absolute;
     z-index: 1;
     width: 100px;
@@ -137,7 +174,7 @@
 }
 
 .close-report {
-    color: #aaaaaa;
+    color: $color-theme-report-gray-light;
     float: right;
     font-size: 28px;
     font-weight: bold;
@@ -145,16 +182,13 @@
 
 .close-report:hover,
 .close-report:focus {
-    color: #000;
+    color: $color-theme-report-black;
     text-decoration: none;
     cursor: pointer;
 }
 
 .vote-date-picker {
     display: flex;
-    :first-child {
-        width: 20%;
-    }
     :last-child {
         display: flex; 
         margin-left: auto;
@@ -170,7 +204,7 @@
 }
 
 .card-body-error-invalid-dates {
-    color: red;
+    color: $color-theme-report-red;
     display: none;
 }
 
