@@ -22,7 +22,7 @@ class TemplateGenerator:
             "orange": BaseCssGenerator("orange"),
             "purple": BaseCssGenerator("purple"),
             "accent": BaseCssGenerator("accent"),
-            "default": BaseCssGenerator("default"),
+            "osf": BaseCssGenerator("osf"),
             "votorantim": BaseCssGenerator("votorantim"),
             "icd": BaseCssGenerator("icd"),
             "campaign": CampaignCssGenerator(),
@@ -103,7 +103,7 @@ class BaseCssGenerator:
             "orange": ["#F5700A", "#FFE1CA"],
             "purple": ["#7758B3", "#E7DBFF"],
             "accent": ["#C6027B", "#FFE3EA"],
-            "default": ["#1D1088", "#F8127E"],
+            "osf": ["#1D1088", "#F8127E"],
             "votorantim": ["#04082D", "#F14236"],
             "icd": ["#005BAA", "#F5821F"],
         }

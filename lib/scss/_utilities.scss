@@ -1,7 +1,7 @@
 // Create utilities for the themes
 // Color themes
 @each $color in (theme-brand theme-accent theme-green theme-orange theme-purple theme-grey theme-icd
-theme-votorantim theme-default theme-bocadelobo) {
+theme-votorantim theme-osf theme-bocadelobo) {
     .#{$color} {
         --theme-color: #{color($color)};
         --theme-light-color: #{color(#{$color}-light)};
@@ -14,7 +14,7 @@ theme-votorantim theme-default theme-bocadelobo) {
     }
 }
 
-.theme-brand, .theme-accent, .theme-green, .theme-orange, .theme-purple, .theme-grey, .theme-icd, .theme-votorantim, .theme-default {
+.theme-brand, .theme-accent, .theme-green, .theme-orange, .theme-purple, .theme-grey, .theme-icd, .theme-votorantim, .theme-osf {
     input[type="text"], textarea {
         border-color: var(--theme-color);
     }

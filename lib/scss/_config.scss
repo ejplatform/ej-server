@@ -46,8 +46,8 @@ $color-theme-icd: #005BAA !default;
 $color-theme-icd-light: #F5821F !default;
 $color-theme-votorantim: #04082D !default;
 $color-theme-votorantim-light: #F14236 !default;
-$color-theme-default: #1D1088 !default;
-$color-theme-default-light: #F8127E !default;
+$color-theme-osf: #1D1088 !default;
+$color-theme-osf-light: #F8127E !default;
 
 //Report colors
 $color-theme-report-light: #E5E5E5 !default;
@@ -112,8 +112,8 @@ $mendeleev-color-palette: (
     'theme-icd-light': $color-theme-icd-light,
     'theme-votorantim': $color-theme-votorantim,
     'theme-votorantim-light': $color-theme-votorantim-light,
-    'theme-default': $color-theme-default,
-    'theme-default-light': $color-theme-default-light, 
+    'theme-osf': $color-theme-osf,
+    'theme-osf-light': $color-theme-osf-light, 
 );
 
 //------------------------------------------------------------------------------
