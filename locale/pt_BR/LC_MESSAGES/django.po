@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-05 15:31-0300\n"
+"POT-Creation-Date: 2021-11-09 16:47-0300\n"
 "PO-Revision-Date: 2019-09-09 13:55-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -325,7 +325,7 @@ msgstr ""
 "capturar. Esta informação é opcional e não é pública."
 
 #: src/ej_clusters/models/stereotype_vote.py:20
-#: src/ej_conversations/roles/comments.py:109 src/ej_dataviz/roles.py:134
+#: src/ej_conversations/roles/comments.py:106 src/ej_dataviz/roles.py:134
 #: src/ej_dataviz/roles.py:135
 msgid "Comment"
 msgstr "Comentar"
@@ -440,17 +440,17 @@ msgstr "Conteúdo duplicado"
 msgid "Violates terms of service of the platform"
 msgstr "Viola os termos de uso da plataforma"
 
-#: src/ej_conversations/enums.py:24 src/ej_conversations/roles/comments.py:42
+#: src/ej_conversations/enums.py:24 src/ej_conversations/roles/comments.py:43
 #: src/ej_dataviz/roles.py:145 src/ej_dataviz/roles.py:162
 msgid "Skip"
 msgstr "Pular"
 
-#: src/ej_conversations/enums.py:25 src/ej_conversations/roles/comments.py:43
+#: src/ej_conversations/enums.py:25 src/ej_conversations/roles/comments.py:44
 #: src/ej_dataviz/roles.py:130 src/ej_dataviz/roles.py:155
 msgid "Agree"
 msgstr "Concorda"
 
-#: src/ej_conversations/enums.py:26 src/ej_conversations/roles/comments.py:41
+#: src/ej_conversations/enums.py:26 src/ej_conversations/roles/comments.py:42
 #: src/ej_dataviz/roles.py:137 src/ej_dataviz/roles.py:160
 msgid "Disagree"
 msgstr "Discorda"
@@ -648,19 +648,10 @@ msgstr ""
 msgid "non-moderated comments cannot receive votes"
 msgstr "comentários não-moderados não podem receber votos"
 
-#: src/ej_conversations/roles/comments.py:31
+#: src/ej_conversations/roles/comments.py:32
 #: src/ej_conversations/roles/conversations.py:72
 msgid "login"
 msgstr "entrar"
-
-#: src/ej_conversations/roles/comments.py:50
-#, fuzzy
-msgid ""
-"You've reached vote limit. Contact an administrator and request subscription "
-"change."
-msgstr ""
-"Você atingiu o limite de votos. Entre em contato com um administrador e "
-"solicite uma mudança de assinatura."
 
 #: src/ej_conversations/roles/conversations.py:103
 #, python-brace-format
@@ -748,28 +739,37 @@ msgstr ""
 msgid "Click here to join in!"
 msgstr "Clique aqui para entrar!"
 
-#: src/ej_conversations/utils.py:47
+#: src/ej_conversations/utils.py:48
 msgid "Edit"
 msgstr "Editar"
 
-#: src/ej_conversations/utils.py:50
+#: src/ej_conversations/utils.py:51
 msgid "Moderate"
 msgstr "Moderar"
 
-#: src/ej_conversations/utils.py:92
+#: src/ej_conversations/utils.py:84
+#, fuzzy
+msgid ""
+"You've reached vote limit. Contact an administrator and request subscription "
+"change."
+msgstr ""
+"Você atingiu o limite de votos. Entre em contato com um administrador e "
+"solicite uma mudança de assinatura."
+
+#: src/ej_conversations/utils.py:103
 msgid "Thanks for voting."
 msgstr "Obrigado por votar."
 
-#: src/ej_conversations/utils.py:111
+#: src/ej_conversations/utils.py:122
 msgid ""
 "Thank you! Your comment was sent to moderation and will be evaluated soon."
 msgstr "Obrigado! Seu comentário foi enviado para moderação."
 
-#: src/ej_conversations/utils.py:123
+#: src/ej_conversations/utils.py:134
 msgid "This conversation is now favorite."
 msgstr "Esta conversa é agora favorita."
 
-#: src/ej_conversations/utils.py:125
+#: src/ej_conversations/utils.py:136
 msgid "Conversation removed from favorites."
 msgstr "Conversa removida dos favoritos."
 
@@ -1973,7 +1973,7 @@ msgstr ""
 "do usuário."
 
 #: src/ej_tools/models.py:68
-msgid "UCC"
+msgid "OSF"
 msgstr ""
 
 #: src/ej_tools/models.py:69
@@ -3189,7 +3189,7 @@ msgstr ""
 "com opiniões diferentes são\n"
 "            representadas por pontos distantes."
 
-#: src/ej_dataviz/jinja2/ej_dataviz/report/general-report.jinja2:33
+#: src/ej_dataviz/jinja2/ej_dataviz/report/general-report.jinja2:31
 #: src/ej_dataviz/jinja2/ej_dataviz/word-cloud.jinja2:6
 msgid "Word cloud"
 msgstr "Nuvem de palavras"
@@ -3269,9 +3269,13 @@ msgstr "Ordena de forma decrescente"
 msgid "Export"
 msgstr "Exportar"
 
+#: src/ej_dataviz/jinja2/ej_dataviz/report/general-report.jinja2:8
+#, fuzzy
+msgid "General Report"
+msgstr "Relatório Geral"
+
 #: src/ej_dataviz/jinja2/ej_dataviz/report/general-report.jinja2:10
-#: src/ej_dataviz/jinja2/ej_dataviz/report/general-report.jinja2:27
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/channel-chart-card.jinja2:6
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/channel-chart-card.jinja2:5
 msgid "Participants"
 msgstr "Participantes"
 
@@ -3288,12 +3292,12 @@ msgstr "Lista de participantes"
 msgid "Usage data"
 msgstr "Dados de uso"
 
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/channel-chart-card.jinja2:2
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/channel-chart-card.jinja2:1
 #, fuzzy
 msgid "Channel participation"
 msgstr "Participação por canal"
 
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/channel-chart-card.jinja2:4
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/channel-chart-card.jinja2:3
 msgid "Filter by:"
 msgstr "Filtrar por:"
 
