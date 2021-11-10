@@ -237,7 +237,7 @@ body {
     }
     .board-list {
         overflow-x: hidden;
-        height: 140px;
+        max-height: 15rem;
         li {
             display: flex;
             justify-content: space-between;
