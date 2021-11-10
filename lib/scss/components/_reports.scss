@@ -110,14 +110,6 @@
     }
 }
 
-@media (min-width: 1460px) {
-    .report-card-list {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-    }
-}
-
 @media (max-width: 1200px) {
     .report-charts {
         flex-direction: column;
@@ -189,14 +181,17 @@
 
 .vote-date-picker {
     display: flex;
-    :last-child {
+    .date-selector {
         display: flex; 
         margin-left: auto;
+        flex-wrap: wrap;
+        justify-content: flex-end;
     }
     #start-date, #end-date {
-        min-width: 10em;
+        min-width: 11em;
         width: 0%;
         margin-right: 4px;
+        margin-bottom: unset;
     }
 }
 #votes-over-time {
@@ -213,7 +208,7 @@
     display: none;
 }
 
-@media (min-width: 1460px) {
+@media (min-width: 1510px) {
     .report-card-list {
         display: flex; 
         flex-wrap: wrap; 
@@ -221,7 +216,7 @@
     }
 }
 
-@media (max-width:1200px) {
+@media (max-width:1400px) {
     .report-charts {
         flex-direction: column;
     }
@@ -231,12 +226,6 @@
     }
     .channel-vote-chart {
         width: 100% !important;
-    }
-}
-
-@media (max-width: 768px) {
-    .vote-date-picker :last-child {
-        display: block !important;
     }
 }
 
