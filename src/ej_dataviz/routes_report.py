@@ -103,7 +103,13 @@ def votes_over_time(request, conversation, slug, check=check_promoted):
 
 @urlpatterns.route("users/")
 def users(request, conversation, slug, check=check_promoted):
-    return {"conversation": check(conversation, request)}
+    check(conversation, request)
+    can_view_detail = request.user.has_perm("ej.can_view_report_detail", conversation)
+    return {
+        "conversation": conversation,
+        "type_data": "users-data",
+        "can_view_detail": can_view_detail,
+    }
 
 
 # ==============================================================================
