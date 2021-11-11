@@ -198,6 +198,11 @@
     width: 100%;
 }
 
+#svg-container {
+    position: relative;
+    top: 16px;
+}
+
 .card-body-error-invalid-dates {
     color: $color-theme-report-red;
     display: none;

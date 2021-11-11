@@ -105,54 +105,74 @@ async function requestData() {
   return parseDate(data);
 }
 
+// Copyright 2021 Observable, Inc.
+// Released under the ISC license.
+// https://observablehq.com/@d3/area-chart
+function AreaChart(voteData, color) {
+  const curve = d3.curveLinear;
+  const margin = ({top: 20, right: 30, bottom: 30, left: 40})
+
+  let width = d3.select('#votes-over-time').attr('width');
+  let height = d3.select('#votes-over-time').attr('height');
+
+  const X = voteData.map(d => d.date)
+  const Y = voteData.map(d => d.value)
+  const I = d3.range(X.length);
+
+  const xScale = d3.scaleUtc()
+                  .domain(d3.extent(voteData, d => d.date))
+                  .range([margin.left, width - margin.right])
+  
+  const yScale = d3.scaleLinear()
+                  .domain([0, d3.max(voteData, d => d.value)]).nice()
+                  .range([height - margin.bottom, margin.top])
+
+  const xAxis = d3.axisBottom(xScale).ticks(width / 80).tickSizeOuter(0);
+  const yAxis = d3.axisLeft(yScale).ticks(height / 40);
+
+  const D = voteData.map((d, i) => {
+    return !isNaN(X[i]) && !isNaN(Y[i])
+  })
+
+  const area = d3.area()
+      .defined(i => D[i])
+      .curve(curve)
+      .x(i => xScale(X[i]))
+      .y0(yScale(0))
+      .y1(i => yScale(Y[i]));
+
+  let previusSvg = d3.select("#votes-over-time");
+  previusSvg.remove();
+
+  let svg = d3.select("#svg-container")
+  .append("svg")
+  .attr("id", 'votes-over-time')
+  .attr("width", width)
+  .attr("height", height)
+  .attr("viewBox", [0, 0, width, height])
+
+  svg.append("g")
+      .attr("transform", `translate(${margin.left},0)`)
+      .call(yAxis)
+      .call(g => g.select(".domain").remove())
+      .call(g => g.selectAll(".tick line").clone()
+          .attr("x2", width - margin.left - margin.right)
+          .attr("stroke-opacity", 0.1))
+
+  svg.append("path")
+      .attr("fill", color)
+      .attr("d", area(I));
+
+  svg.append("g")
+      .attr("transform", `translate(0,${height - margin.bottom})`)
+      .call(xAxis);
+
+  return svg.node();
+
+}
+
 async function d3jsVisualization(voteData) {
-    let margin = ({top: 20, right: 30, bottom: 30, left: 40})
-    let svgWidth = d3.select('#votes-over-time').attr('width');
-    let svgHeight = d3.select('#votes-over-time').attr('height');
-
-    var previusSvg = d3.select("#votes-over-time");
-    previusSvg.remove();
-
-    d3.select("#svg-container")
-    .append("svg")
-    .attr("id", 'votes-over-time')
-    .attr("width", svgWidth)
-    .attr("height", svgHeight)
-
-    const x = d3.scaleUtc()
-                .domain(d3.extent(voteData, d => d.date))
-                .range([margin.left, svgWidth - margin.right])
-
-    const xAxis = g => g.attr("transform", `translate(0,${svgHeight - margin.bottom})`)
-                        .call(d3.axisBottom(x).ticks(svgWidth / 80).tickSizeOuter(0))
-    
-    const y = d3.scaleLinear()
-            .domain([0, d3.max(voteData, d => d.value)]).nice()
-            .range([svgHeight - margin.bottom, margin.top])
-    
-    const yAxis = g => g.attr("transform", `translate(${margin.left},0)`)
-                        .call(d3.axisLeft(y))
-                        .call(g => g.select('.domain').remove())
-                        .call(g => g.select(".tick:last-of-type text").clone()
-                            .attr("x", 3)
-                            .attr("text-anchor", "start")
-                            .attr("font-weight", "bold")
-                            .text(voteData.y))
-    
-    const line = d3.line().defined(d => !isNaN(d.value)).x(d => x(d.date)).y(d => y(d.value))
-
-    const svgVotesOverTime = d3.select('#votes-over-time').attr("viewBox", [0, 0, svgWidth, svgHeight]); 
-    svgVotesOverTime.append("g").call(xAxis);
-    svgVotesOverTime.append("g").call(yAxis);
-    
-    svgVotesOverTime.append("path")
-        .datum(voteData)
-        .attr("fill", "none")
-        .attr("stroke", "steelblue")
-        .attr("stroke-width", 1.5)
-        .attr("stroke-linejoin", "round")
-        .attr("stroke-linecap", "round")
-        .attr("d", line)
+  AreaChart(voteData, "#042A46")
 }
 
 window.addEventListener('load', loadVoteVisualization);
