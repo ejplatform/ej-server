@@ -47,10 +47,6 @@
 
         const arcs = pie(data);
 
-        const color = d3.scaleOrdinal()
-            .domain(data.map(d => d.name))
-            .range(d3.quantize(t => d3.interpolateSpectral(t * 0.8 + 0.1), data.length + 1).reverse())
-
         const svg = d3.select('#channel-chart').attr("viewBox", [-width / 2, -height / 2, width, height]);
 
         svg.append("g")
@@ -58,7 +54,7 @@
         .selectAll("path")
         .data(arcs)
         .join("path")
-        .attr("fill", d => color(d.data.name))
+        .attr("fill", d => d.data.fill)
         .attr("d", arc)
         .append("title")
         .text(d => `${d.data.name}: ${d.data.value.toLocaleString()}`)
@@ -84,11 +80,11 @@
 
     function setData(option) {
         data = [
-            {name: "telegram", value: option.telegram },
-            {name: "whatsapp", value: option.whatsapp },
-            {name: "opinionComponent", value: option.opinion_component },
-            {name: "webchat", value: option.webchat },
-            {name: "unknown", value: option.unknown }
+            {name: "telegram", value: option.telegram, fill: "#0088cc" },
+            {name: "whatsapp", value: option.whatsapp, fill: "#128c7e" },
+            {name: "opinionComponent", value: option.opinion_component, fill: "#ff3e72" },
+            {name: "webchat", value: option.webchat, fill: "rgb(90, 22, 238)" },
+            {name: "unknown", value: option.unknown, fill: "#c4c4c4" }
         ]
     }
 
