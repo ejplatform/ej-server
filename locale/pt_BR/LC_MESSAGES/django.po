@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-09 16:47-0300\n"
+"POT-Creation-Date: 2021-11-10 16:43-0300\n"
 "PO-Revision-Date: 2019-09-09 13:55-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -886,65 +886,65 @@ msgstr "Você!"
 msgid "State"
 msgstr "Estado"
 
-#: src/ej_dataviz/routes_report.py:333
+#: src/ej_dataviz/routes_report.py:339
 msgid "agree"
 msgstr "concorda"
 
-#: src/ej_dataviz/routes_report.py:334
+#: src/ej_dataviz/routes_report.py:340
 msgid "author"
 msgstr "autor"
 
-#: src/ej_dataviz/routes_report.py:335
+#: src/ej_dataviz/routes_report.py:341
 msgid "author_id"
 msgstr "autor_id"
 
-#: src/ej_dataviz/routes_report.py:336
+#: src/ej_dataviz/routes_report.py:342
 msgid "choice"
 msgstr "escolha"
 
-#: src/ej_dataviz/routes_report.py:337
+#: src/ej_dataviz/routes_report.py:343
 #, fuzzy
 msgid "cluster"
 msgstr "Grupos"
 
-#: src/ej_dataviz/routes_report.py:338
+#: src/ej_dataviz/routes_report.py:344
 #, fuzzy
 msgid "cluster_id"
 msgstr "Grupos"
 
-#: src/ej_dataviz/routes_report.py:339
+#: src/ej_dataviz/routes_report.py:345
 msgid "comment"
 msgstr "comentário"
 
-#: src/ej_dataviz/routes_report.py:340
+#: src/ej_dataviz/routes_report.py:346
 msgid "comment_id"
 msgstr "comentário_id"
 
-#: src/ej_dataviz/routes_report.py:341
+#: src/ej_dataviz/routes_report.py:347
 msgid "convergence"
 msgstr "convergência"
 
-#: src/ej_dataviz/routes_report.py:342
+#: src/ej_dataviz/routes_report.py:348
 msgid "disagree"
 msgstr "discorda"
 
-#: src/ej_dataviz/routes_report.py:343 src/ej_profiles/enums.py:70
+#: src/ej_dataviz/routes_report.py:349 src/ej_profiles/enums.py:70
 msgid "email"
 msgstr "email"
 
-#: src/ej_dataviz/routes_report.py:344
+#: src/ej_dataviz/routes_report.py:350
 msgid "id"
 msgstr "id"
 
-#: src/ej_dataviz/routes_report.py:345 src/ej_profiles/enums.py:69
+#: src/ej_dataviz/routes_report.py:351 src/ej_profiles/enums.py:69
 msgid "name"
 msgstr "nome"
 
-#: src/ej_dataviz/routes_report.py:346
+#: src/ej_dataviz/routes_report.py:352
 msgid "participation"
 msgstr "participação"
 
-#: src/ej_dataviz/routes_report.py:347
+#: src/ej_dataviz/routes_report.py:353
 msgid "skipped"
 msgstr "pulados"
 
@@ -3284,13 +3284,10 @@ msgstr "Participantes"
 msgid "Basic report (%(n)s users)"
 msgstr "Relatório Básico (%(n)s usuários)"
 
-#: src/ej_dataviz/jinja2/ej_dataviz/report/users.jinja2:5
-msgid "List of participants"
-msgstr "Lista de participantes"
-
-#: src/ej_dataviz/jinja2/ej_dataviz/report/users.jinja2:7
-msgid "Usage data"
-msgstr "Dados de uso"
+#: src/ej_dataviz/jinja2/ej_dataviz/report/users.jinja2:8
+#, fuzzy
+msgid "Users report"
+msgstr "Relatório de Participantes"
 
 #: src/ej_dataviz/jinja2/ej_dataviz/report/includes/channel-chart-card.jinja2:1
 #, fuzzy
@@ -4206,6 +4203,12 @@ msgstr "Mudar a senha"
 msgid "Authentication"
 msgstr "Autenticação"
 
+#~ msgid "List of participants"
+#~ msgstr "Lista de participantes"
+
+#~ msgid "Usage data"
+#~ msgstr "Dados de uso"
+
 #~ msgid "Votes per channel"
 #~ msgstr "Votos por canal"
 
@@ -4279,9 +4282,6 @@ msgstr "Autenticação"
 
 #~ msgid "Downloads: "
 #~ msgstr "Downloads: "
-
-#~ msgid "Usage report"
-#~ msgstr "Relatório de uso"
 
 #, fuzzy
 #~ msgid "A contact with your phone number already exists."
