@@ -4,14 +4,16 @@ from django.shortcuts import redirect
 from django.utils.translation import ugettext_lazy as _
 
 from ej_boards.models import Board
-from ej_boards.utils import check_board, register_route
+from ej_boards.utils import register_app_routes
 from ej_clusters.models import Stereotype
 from ej_conversations import routes as conversations
 from ej_conversations.models import Conversation
 from ej_tools import routes as tools_routes
-from ej_analysis import routes as analysis_routes
 from .forms import BoardForm
 from ej_tools.models import RasaConversation, ConversationMautic
+from ej_dataviz import routes as dataviz
+from ej_dataviz import routes_report as report
+from ej_clusters import routes as cluster
 
 app_name = "ej_boards"
 urlpatterns = Router(
@@ -105,134 +107,20 @@ def conversation_create(request, board):
 
 @urlpatterns.route(board_conversation_url, login=True)
 def conversation_detail(request, board, **kwargs):
-    return conversations.detail(request, **kwargs, check=check_board(board))
+    return conversations.detail(request, **kwargs)
 
 
 @urlpatterns.route(board_conversation_url + "edit/", perms=["ej.can_edit_conversation:conversation"])
 def conversation_edit(request, board, **kwargs):
-    return conversations.edit(request, board=board, check=check_board(board), **kwargs)
+    return conversations.edit(request, board=board, **kwargs)
 
 
 @urlpatterns.route(board_conversation_url + "moderate/", perms=["ej.can_edit_conversation:conversation"])
 def conversation_moderate(request, board, **kwargs):
-    return conversations.moderate(request, check=check_board(board), **kwargs)
+    return conversations.moderate(request, **kwargs)
 
 
-@urlpatterns.route(board_conversation_url + "tools/", perms=["ej.can_edit_conversation:conversation"])
-def conversation_tools_index(request, board, **kwargs):
-    return tools_routes.index(request, **kwargs)
-
-
-@urlpatterns.route(
-    board_conversation_url + "tools/mailing/", perms=["ej.can_edit_conversation:conversation"]
-)
-def conversation_tools_mailing(request, board, **kwargs):
-    check_board(board)
-    return tools_routes.mailing(request, **kwargs)
-
-
-@urlpatterns.route(
-    board_conversation_url + "tools/opinion-component/", perms=["ej.can_edit_conversation:conversation"]
-)
-def conversation_tools_opinion_component(request, board, **kwargs):
-    check_board(board)
-    return tools_routes.opinion_component(request, **kwargs)
-
-
-@urlpatterns.route(
-    board_conversation_url + "tools/opinion-component/preview/",
-    perms=["ej.can_edit_conversation:conversation"],
-)
-def conversation_tools_opinion_component_preview(request, board, **kwargs):
-    check_board(board)
-    return tools_routes.opinion_component_preview(request, **kwargs)
-
-
-@urlpatterns.route(
-    board_conversation_url + "tools/mautic/delete/<model:mautic_connection>",
-    perms=["ej.can_edit_conversation:conversation"],
-)
-def conversation_tools_mautic_delete(request, board, **kwargs):
-    check_board(board)
-    return tools_routes.delete_mautic_connection(request, **kwargs)
-
-
-@urlpatterns.route(
-    board_conversation_url + "tools/mautic/", perms=["ej.can_edit_conversation:conversation"]
-)
-def conversation_tools_mautic(request, board, **kwargs):
-    check_board(board)
-    return tools_routes.mautic(request, **kwargs)
-
-
-@urlpatterns.route(
-    board_conversation_url + "tools/chatbot/", perms=["ej.can_edit_conversation:conversation"]
-)
-def conversation_tools_chatbot(request, board, **kwargs):
-    check_board(board)
-    return tools_routes.chatbot(request, **kwargs)
-
-
-@urlpatterns.route(
-    board_conversation_url + "tools/chatbot/telegram/", perms=["ej.can_edit_conversation:conversation"]
-)
-def conversation_tools_telegram(request, board, **kwargs):
-    check_board(board)
-    return tools_routes.telegram(request, **kwargs)
-
-
-@urlpatterns.route(
-    board_conversation_url + "tools/chatbot/rasa/", perms=["ej.can_edit_conversation:conversation"]
-)
-def conversation_tools_rasa(request, board, **kwargs):
-    check_board(board)
-    return tools_routes.rasa(request, **kwargs)
-
-
-@urlpatterns.route(
-    board_conversation_url + "tools/chatbot/rasa/delete/<model:connection>",
-    perms=["ej.can_edit_conversation:conversation"],
-)
-def conversation_tools_rasa_delete(request, board, **kwargs):
-    check_board(board)
-    return tools_routes.delete_connection(request, **kwargs)
-
-
-@urlpatterns.route(
-    board_conversation_url + "tools/chatbot/whatsapp/", perms=["ej.can_edit_conversation:conversation"]
-)
-def conversation_tools_whatsapp(request, board, **kwargs):
-    check_board(board)
-    return tools_routes.whatsapp(request, **kwargs)
-
-
-@urlpatterns.route(board_conversation_url + "analysis/", perms=["ej.can_edit_conversation:conversation"])
-def conversation_analysis_index(request, board, **kwargs):
-    check_board(board)
-    return analysis_routes.index(request, **kwargs)
-
-
-#
-# Dataviz
-#
-if apps.is_installed("ej_dataviz"):
-    from ej_dataviz import routes as dataviz
-    from ej_dataviz import routes_report as report
-
-    base_path = board_base_url + dataviz.urlpatterns.base_path
-    for route in dataviz.urlpatterns.routes:
-        register_route(urlpatterns, route, base_path, "dataviz")
-
-    base_path = board_base_url + report.urlpatterns.base_path
-    for route in report.urlpatterns.routes:
-        register_route(urlpatterns, route, base_path, "report")
-
-#
-# Clusters
-#
-if apps.is_installed("ej_clusters"):
-    from ej_clusters import routes as cluster
-
-    base_path = board_base_url + cluster.urlpatterns.base_path
-    for route in cluster.urlpatterns.routes:
-        register_route(urlpatterns, route, base_path, "cluster")
+register_app_routes(tools_routes, board_base_url, urlpatterns, "conversation-tools")
+register_app_routes(dataviz, board_base_url, urlpatterns, "dataviz")
+register_app_routes(report, board_base_url, urlpatterns, "report")
+register_app_routes(cluster, board_base_url, urlpatterns, "cluster")

@@ -41,13 +41,13 @@ conversation_tools_chatbot_url = f"{conversation_tools_url}/chatbot"
 
 
 @urlpatterns.route(conversation_tools_url, perms=["ej.can_edit_conversation:conversation"])
-def index(request, conversation, slug, npm=npm_version):
+def index(request, board, conversation, slug, npm=npm_version):
     tools = Tools(conversation)
     return {"tools": tools.list(), "conversation": conversation}
 
 
 @urlpatterns.route(conversation_tools_url + "/mailing")
-def mailing(request, conversation, slug):
+def mailing(request, board, conversation, slug):
     from .mailing import TemplateGenerator
 
     template = "null"
@@ -72,7 +72,7 @@ def mailing(request, conversation, slug):
 
 
 @urlpatterns.route(conversation_tools_url + "/opinion-component")
-def opinion_component(request, conversation, slug):
+def opinion_component(request, conversation, **kwargs):
     from django.conf import settings
 
     schema = "https" if settings.ENVIRONMENT != "local" else "http"
@@ -97,7 +97,7 @@ def opinion_component(request, conversation, slug):
 
 
 @urlpatterns.route(conversation_tools_url + "/opinion-component/preview")
-def opinion_component_preview(request, conversation, slug):
+def opinion_component_preview(request, board, conversation, slug):
     host = get_host_with_protocol(request)
     theme = request.session.get("theme")
     auth_type = request.session.get("authentication_type")
@@ -110,7 +110,7 @@ def opinion_component_preview(request, conversation, slug):
 
 
 @urlpatterns.route(conversation_tools_url + "/chatbot")
-def chatbot(request, conversation, slug):
+def chatbot(request, board, conversation, slug):
     tools = Tools(conversation)
     return {
         "conversation": conversation,
@@ -119,7 +119,7 @@ def chatbot(request, conversation, slug):
 
 
 @urlpatterns.route(conversation_tools_url + "/telegram")
-def telegram(request, conversation, slug):
+def telegram(request, board, conversation, slug):
     tools = Tools(conversation)
 
     return {
@@ -131,7 +131,7 @@ def telegram(request, conversation, slug):
 
 
 @urlpatterns.route(conversation_tools_chatbot_url + "/whatsapp")
-def whatsapp(request, conversation, slug):
+def whatsapp(request, board, conversation, slug):
     form = WhatsappToolForm()
     tools = Tools(conversation)
     return {
@@ -143,7 +143,7 @@ def whatsapp(request, conversation, slug):
 
 
 @urlpatterns.route(conversation_tools_chatbot_url + "/rasa")
-def rasa(request, conversation, slug):
+def rasa(request, conversation, **kwargs):
     user_can_add = user_can_add_new_domain(request.user, conversation)
 
     if request.method == "POST":
@@ -169,7 +169,7 @@ def rasa(request, conversation, slug):
 
 
 @urlpatterns.route(conversation_tools_chatbot_url + "/rasa/delete/<model:connection>")
-def delete_connection(request, conversation, slug, connection):
+def delete_connection(request, board, conversation, slug, connection):
     user = request.user
 
     if user.is_staff or user.is_superuser or connection.conversation.author.id == user.id:
@@ -185,7 +185,7 @@ def delete_connection(request, conversation, slug, connection):
 @urlpatterns.route(
     conversation_tools_chatbot_url + "/mautic", perms=["ej.can_access_mautic_connection:conversation"]
 )
-def mautic(request, conversation, slug, oauth2_code=None):
+def mautic(request, board, conversation, slug, oauth2_code=None):
     error_message = None
     connections = None
 
@@ -234,7 +234,7 @@ def mautic(request, conversation, slug, oauth2_code=None):
     conversation_tools_chatbot_url + "/mautic/delete/<model:mautic_connection>",
     perms=["ej.can_access_mautic_connection:conversation"],
 )
-def delete_mautic_connection(request, conversation, slug, mautic_connection):
+def delete_mautic_connection(request, board, conversation, slug, mautic_connection):
     mautic_connection.delete()
     return redirect(conversation.url("conversation-tools:mautic"))
 
