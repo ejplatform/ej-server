@@ -12,7 +12,7 @@ urlpatterns = Router(
 
 
 @urlpatterns.route("")
-def list(request):
+def list(request, **kwargs):
     qs = request.user.stereotypes.prefetch_related("clusters__clusterization__conversation")
     stereotypes = []
     for stereotype in qs:
@@ -24,7 +24,7 @@ def list(request):
 
 
 @urlpatterns.route("add/")
-def create(request):
+def create(request, **kwargs):
     form = StereotypeForm(request=request, owner=request.user)
     if form.is_valid_post():
         form.save()
@@ -33,7 +33,7 @@ def create(request):
 
 
 @urlpatterns.route("<model:stereotype>/edit/")
-def edit(request, stereotype):
+def edit(request, stereotype, **kwargs):
     check_stereotype(stereotype, request.user)
     form = StereotypeForm(request=request, instance=stereotype)
 

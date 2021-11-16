@@ -35,22 +35,22 @@ User = get_user_model()
 # Scatter plot
 #
 @urlpatterns.route("scatter/")
-def scatter(request, conversation, slug, check=check_promoted):
+def scatter(request, conversation, **kwargs):
     names = getattr(settings, "EJ_PROFILE_FIELD_NAMES", {})
     return {
         "gender_field": names.get("gender", _("Gender")),
         "race_field": names.get("race", _("Race")),
-        "conversation": check(conversation, request),
+        "conversation": check_promoted(conversation, request),
         "pca_link": _("https://en.wikipedia.org/wiki/Principal_component_analysis"),
     }
 
 
 @urlpatterns.route("scatter/pca.json", template=None)
-def scatter_pca_json(request, conversation, slug, check=check_promoted):
+def scatter_pca_json(request, conversation, **kwargs):
     from sklearn.decomposition import PCA
     from sklearn import impute
 
-    check(conversation, request)
+    check_promoted(conversation, request)
     kwargs = {}
     clusterization = getattr(conversation, "clusterization", None)
     if clusterization is not None:
@@ -94,8 +94,7 @@ def scatter_pca_json(request, conversation, slug, check=check_promoted):
 
 
 @urlpatterns.route("scatter/group-<groupby>.json")
-def scatter_group(request, conversation, slug, groupby, check=check_promoted):
-    check(conversation, request)
+def scatter_group(request, conversation, groupby, **kwargs):
     if groupby not in VALID_GROUP_BY:
         return JsonResponse({"error": "AttributeError", "message": "invalid groupby parameter"})
     param = VALID_GROUP_BY[groupby]
@@ -122,15 +121,12 @@ def scatter_group(request, conversation, slug, groupby, check=check_promoted):
 # Word cloud
 #
 @urlpatterns.route("word-cloud/")
-def word_cloud(request, conversation, slug, check=check_promoted):
-    check(conversation, request)
+def word_cloud(request, conversation, **kwargs):
     return {"conversation": conversation}
 
 
 @urlpatterns.route("word-cloud/words.json")
-def words(request, conversation, slug, check=check_promoted):
-    check(conversation, request)
-
+def words(request, conversation, **kwargs):
     data = "\n".join(conversation.approved_comments.values_list("content", flat=True))
     regexp = r"\w[\w'\u0327]+"
     wc = wordcloud.WordCloud(stopwords=get_stop_words(), regexp=regexp)

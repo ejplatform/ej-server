@@ -28,9 +28,9 @@ def register_route(router, route, base_path, prefix):
 
 def make_view(view):
     if "request" in Signature.from_callable(view).parameters:
-        return lambda request, board, **kwargs: view(request, check=check_board(board), **kwargs)
+        return lambda request, board, **kwargs: view(request, board=board, **kwargs)
     else:
-        return lambda board, **kwargs: view(check=check_board(board), **kwargs)
+        return lambda **kwargs: view(**kwargs)
 
 
 def assure_correct_board(conversation, board):
@@ -56,3 +56,9 @@ def check_board(board):
         return conversation
 
     return check_function
+
+
+def register_app_routes(app_routes, board_base_url, urlpatterns, route_name):
+    base_path = board_base_url + app_routes.urlpatterns.base_path
+    for route in app_routes.urlpatterns.routes:
+        register_route(urlpatterns, route, base_path, route_name)

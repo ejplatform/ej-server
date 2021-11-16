@@ -41,7 +41,7 @@
                     </td>
                     {% if is_valid_user %}
                         <td id="td-remove">
-                            <a href="{{ conversation.url('conversation-tools:rasa') }}delete/{{connection.id}}"><i class="fas fa-trash-restore"></i></a><br>
+                            <a href="{{ conversation.url('conversation-tools:rasa') }}/delete/{{connection.id}}"><i class="fas fa-trash-restore"></i></a><br>
                         </td>
                     {% endif %}
                 </tr>

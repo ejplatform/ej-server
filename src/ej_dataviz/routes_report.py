@@ -34,8 +34,8 @@ User = get_user_model()
 # Base report URLs
 #
 @urlpatterns.route("")
-def index(request, conversation, slug, check=check_promoted):
-    check(conversation, request)
+def index(request, conversation, **kwargs):
+    check_promoted(conversation, request)
     user = request.user
     can_view_detail = user.has_perm("ej.can_view_report_detail", conversation)
     statistics = conversation.statistics()
@@ -49,8 +49,8 @@ def index(request, conversation, slug, check=check_promoted):
 
 
 @urlpatterns.route("general-report/")
-def general_report(request, conversation, slug, check=check_promoted):
-    check(conversation, request)
+def general_report(request, conversation, **kwargs):
+    check_promoted(conversation, request)
     can_view_detail = request.user.has_perm("ej.can_view_report_detail", conversation)
     statistics = conversation.statistics()
     return {
@@ -62,13 +62,13 @@ def general_report(request, conversation, slug, check=check_promoted):
 
 
 @urlpatterns.route("general-report/words.json")
-def report_card_words(request, conversation, slug, check=check_promoted):
-    return words(request, conversation, slug, check=check_promoted)
+def report_card_words(request, conversation, **kwargs):
+    return words(request, conversation)
 
 
 @urlpatterns.route("comments-report/")
-def comments_report(request, conversation, slug, check=check_promoted):
-    check(conversation, request)
+def comments_report(request, conversation, **kwargs):
+    check_promoted(conversation, request)
     can_view_detail = request.user.has_perm("ej.can_view_report_detail", conversation)
 
     return {
@@ -80,7 +80,7 @@ def comments_report(request, conversation, slug, check=check_promoted):
 
 
 @urlpatterns.route("votes-over-time/")
-def votes_over_time(request, conversation, slug, check=check_promoted):
+def votes_over_time(request, conversation, **kwargs):
     start_date = request.GET.get("startDate")
     end_date = request.GET.get("endDate")
     if start_date and end_date:
@@ -102,8 +102,8 @@ def votes_over_time(request, conversation, slug, check=check_promoted):
 
 
 @urlpatterns.route("users/")
-def users(request, conversation, slug, check=check_promoted):
-    check(conversation, request)
+def users(request, conversation, **kwargs):
+    check_promoted(conversation, request)
     can_view_detail = request.user.has_perm("ej.can_view_report_detail", conversation)
     return {
         "conversation": conversation,
@@ -118,8 +118,8 @@ def users(request, conversation, slug, check=check_promoted):
 
 
 @urlpatterns.route("data/votes.<fmt>", perms=["ej.can_view_report_detail"])
-def votes_data(request, conversation, fmt, slug, check=check_promoted):
-    check(conversation, request)
+def votes_data(request, conversation, fmt, **kwargs):
+    check_promoted(conversation, request)
     filename = conversation.slug + "-votes"
     votes = conversation.votes
     return vote_data_common(votes, filename, fmt)
@@ -128,8 +128,8 @@ def votes_data(request, conversation, fmt, slug, check=check_promoted):
 # FIXME: why is <model:cluster> not working?
 # adjust conversation_download_data() after fixing this bug
 @urlpatterns.route("data/cluster-<int:cluster_id>/votes.<fmt>", perms=["ej.can_view_report_detail"])
-def votes_data_cluster(request, conversation, fmt, cluster_id, slug, check=check_promoted):
-    check(conversation, request)
+def votes_data_cluster(request, conversation, fmt, cluster_id, **kwargs):
+    check_promoted(conversation, request)
     cluster = get_cluster_or_404(cluster_id, conversation)
     filename = conversation.slug + f"-{slugify(cluster.name)}-votes"
     return vote_data_common(cluster.votes.all(), filename, fmt)
@@ -179,15 +179,15 @@ def votes_as_dataframe(votes):
 
 
 @urlpatterns.route("data/comments.<fmt>")
-def comments_data(request, conversation, fmt, slug, check=check_promoted):
-    check(conversation, request)
+def comments_data(request, conversation, fmt, **kwargs):
+    check_promoted(conversation, request)
     filename = conversation.slug + "-comments"
     return comments_data_common(conversation.comments, None, filename, fmt)
 
 
 @urlpatterns.route("data/cluster-<cluster_id>/comments.<fmt>")
-def comments_data_cluster(request, conversation, fmt, cluster_id, slug, check=check_promoted):
-    check(conversation, request)
+def comments_data_cluster(request, conversation, fmt, cluster_id, **kwargs):
+    check_promoted(conversation, request)
     cluster = get_cluster_or_404(cluster_id, conversation)
     filename = conversation.slug + f"-{slugify(cluster.name)}-comments"
     return comments_data_common(conversation.comments, cluster.votes, filename, fmt)
@@ -220,8 +220,8 @@ def comments_data_common(comments, votes, filename, fmt):
 
 
 @urlpatterns.route("data/users.<fmt>")
-def users_data(request, conversation, fmt, slug, check=check_promoted):
-    check(conversation, request)
+def users_data(request, conversation, fmt, **kwargs):
+    check_promoted(conversation, request)
     filename = conversation.slug + "-users"
     df = get_user_data(conversation)
     try:

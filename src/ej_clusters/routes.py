@@ -31,8 +31,8 @@ stereotype_perms = {"perms": ["ej.can_manage_stereotypes:conversation"]}
 # Cluster visualization
 #
 @urlpatterns.route(conversation_url + "clusters/")
-def index(request, conversation, slug, check=check_promoted):
-    check(conversation, request)
+def index(request, conversation, **kwargs):
+    check_promoted(conversation, request)
     user = request.user
     clusterization = getattr(conversation, "clusterization", None)
     user_group = None
@@ -75,8 +75,8 @@ def index(request, conversation, slug, check=check_promoted):
 
 
 @urlpatterns.route(conversation_url + "clusters/edit/", perms=["ej.can_edit_conversation:conversation"])
-def edit(request, conversation, slug, check=check_promoted):
-    check(conversation, request)
+def edit(request, conversation, **kwargs):
+    check_promoted(conversation, request)
     new_cluster_form = forms.ClusterFormNew(request=request)
     clusterization = getattr(conversation, "clusterization", None)
 
@@ -119,9 +119,9 @@ def edit(request, conversation, slug, check=check_promoted):
 
 
 @urlpatterns.route(conversation_url + "stereotypes/", perms=["ej.can_edit_conversation:conversation"])
-def stereotype_votes(request, conversation, slug, check=check_promoted):
-    check(conversation, request)
+def stereotype_votes(request, conversation, **kwargs):
     clusterization = conversation.get_clusterization(default=None)
+
     if clusterization is None:
         return {"conversation": conversation}
 

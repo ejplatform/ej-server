@@ -82,7 +82,7 @@ class TestRasaConversationFormRoute(ConversationRecipes):
             {"conversation": conversation.id, "domain": "http://domain.com.br"},
         )
         request.user = admin
-        response = rasa(request, conversation, None)
+        response = rasa(request, conversation)
         assert response["conversation_rasa_connections"]
         assert response["conversation_rasa_connections"][0].domain == "http://domain.com.br"
         assert response["conversation_rasa_connections"][0].conversation.id == conversation.id
@@ -95,7 +95,7 @@ class TestRasaConversationFormRoute(ConversationRecipes):
             {"conversation": conversation.id, "domain": "nope"},
         )
         request.user = admin
-        response = rasa(request, conversation, None)
+        response = rasa(request, conversation)
         assert not response["conversation_rasa_connections"]
         assert not response["form"].is_valid()
 
@@ -108,7 +108,7 @@ class TestRasaConversationFormRoute(ConversationRecipes):
         )
         request.user = user
         with pytest.raises(PermissionError):
-            rasa(request, conversation, None)
+            rasa(request, conversation)
 
 
 class TestRasaConversationIntegrationsAPI(ConversationRecipes):
