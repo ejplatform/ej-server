@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-10 16:43-0300\n"
+"POT-Creation-Date: 2021-11-17 15:10-0300\n"
 "PO-Revision-Date: 2019-09-09 13:55-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -212,11 +212,11 @@ msgstr "Mural"
 msgid "Slug already exists."
 msgstr "Identificador já existe."
 
-#: src/ej_boards/routes.py:67
+#: src/ej_boards/routes.py:69
 msgid "You cannot change this value"
 msgstr "Você não pode mudar este valor"
 
-#: src/ej_boards/routes.py:92
+#: src/ej_boards/routes.py:94
 msgid ""
 "Welcome to EJ. This is your personal board. Board is where your "
 "conversations will be available. Press 'New conversation' to starts "
@@ -295,7 +295,7 @@ msgid "Manage personas"
 msgstr "Gerenciar personas"
 
 #: src/ej_clusters/models/cluster.py:26 src/ej_clusters/models/stereotype.py:22
-#: src/ej_dataviz/roles.py:141 src/ej_dataviz/routes.py:452
+#: src/ej_dataviz/roles.py:141 src/ej_dataviz/routes.py:448
 #: src/ej_gamification/admin.py:33 src/ej_gamification/routes.py:124
 #: src/ej_gamification/routes.py:145
 msgid "Name"
@@ -847,11 +847,11 @@ msgstr ""
 "0%: votos estão igualmente distribuidos\n"
 "100%: todos tem a mesma opinião"
 
-#: src/ej_dataviz/routes.py:41 src/ej_dataviz/routes.py:418
+#: src/ej_dataviz/routes.py:41 src/ej_dataviz/routes.py:414
 msgid "Gender"
 msgstr "Gênero"
 
-#: src/ej_dataviz/routes.py:42 src/ej_dataviz/routes.py:428
+#: src/ej_dataviz/routes.py:42 src/ej_dataviz/routes.py:424
 #: src/ej_profiles/models.py:29 src/ej_profiles/tests/test_models.py:46
 msgid "Race"
 msgstr "Raça"
@@ -864,24 +864,24 @@ msgstr "https://pt.wikipedia.org/wiki/An%C3%A1lise_de_componentes_principais"
 msgid "Not enough data"
 msgstr "Não há dados suficientes"
 
-#: src/ej_dataviz/routes.py:171
+#: src/ej_dataviz/routes.py:167
 msgid "{} persona"
 msgstr "{} persona"
 
-#: src/ej_dataviz/routes.py:183
+#: src/ej_dataviz/routes.py:179
 msgid "*Unknown*"
 msgstr "*Desconhecido*"
 
-#: src/ej_dataviz/routes.py:210
+#: src/ej_dataviz/routes.py:206
 msgid "PCA data"
 msgstr "Dados do PCA"
 
-#: src/ej_dataviz/routes.py:215 src/ej_dataviz/routes.py:216
-#: src/ej_dataviz/routes.py:217 src/ej_dataviz/routes.py:219
+#: src/ej_dataviz/routes.py:211 src/ej_dataviz/routes.py:212
+#: src/ej_dataviz/routes.py:213 src/ej_dataviz/routes.py:215
 msgid "You!"
 msgstr "Você!"
 
-#: src/ej_dataviz/routes.py:438 src/ej_profiles/models.py:36
+#: src/ej_dataviz/routes.py:434 src/ej_profiles/models.py:36
 #: src/ej_profiles/tests/test_models.py:39
 msgid "State"
 msgstr "Estado"
@@ -3705,7 +3705,7 @@ msgstr "Integre esta conversa com um dos canais de coleta disponíveis."
 #: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:87
 #: src/ej_tools/jinja2/ej_tools/rasa.jinja2:89
 #: src/ej_tools/jinja2/ej_tools/rasa.jinja2:91
-#: src/ej_tools/jinja2/ej_tools/telegram.jinja2:55
+#: src/ej_tools/jinja2/ej_tools/telegram.jinja2:82
 #: src/ej_tools/jinja2/ej_tools/whatsapp.jinja2:49
 #, fuzzy
 msgid "Back to tools"
@@ -3916,7 +3916,57 @@ msgid ""
 msgstr ""
 "Adicione o script na tag &ltbody&gt da página em que a coleta será feita."
 
+#: src/ej_tools/jinja2/ej_tools/telegram.jinja2:18
+msgid ""
+"Collect opinions using EJ's chatbots. Allows you to collect the opinion of "
+"Telegram users."
+msgstr ""
+"Colete opiniões usando os chatbots da EJ. Permite coletar a opinião de "
+"usuários do Telegram."
+
 #: src/ej_tools/jinja2/ej_tools/telegram.jinja2:20
+msgid "Collect Bot"
+msgstr "Bot de Coleta"
+
+#: src/ej_tools/jinja2/ej_tools/telegram.jinja2:21
+msgid "Use one of our bots to make collections on Telegram."
+msgstr "Utilize um dos nossos bots para realizar coletas no Telegram."
+
+#: src/ej_tools/jinja2/ej_tools/telegram.jinja2:28
+#: src/ej_tools/jinja2/ej_tools/whatsapp.jinja2:31
+#, fuzzy
+msgid "Copied to clipboard!"
+msgstr "Copiado para a área de transferência!"
+
+#: src/ej_tools/jinja2/ej_tools/telegram.jinja2:32
+#, fuzzy
+msgid "Opinion Bot"
+msgstr "Bot de Opinião"
+
+#: src/ej_tools/jinja2/ej_tools/telegram.jinja2:33
+msgid ""
+"Collect your audience's opinion using our guided bot. Click on the share "
+"button to send the collection to the telegram or other networks."
+msgstr ""
+"Colete a opinião do seu público utilizando o nosso bot guiado. Clique no "
+"botão compartilhar para enviar a coleta para o Telegram ou para outras redes."
+
+#: src/ej_tools/jinja2/ej_tools/telegram.jinja2:36
+#, fuzzy
+msgid "Collect with:"
+msgstr "Coletar com:"
+
+#: src/ej_tools/jinja2/ej_tools/telegram.jinja2:49
+#, fuzzy
+msgid "Para participar basta clicar no link: "
+msgstr "Para participar basta clicar no link:"
+
+#: src/ej_tools/jinja2/ej_tools/telegram.jinja2:80
+#: src/ej_tools/jinja2/ej_tools/whatsapp.jinja2:47
+#, fuzzy
+msgid "Back to channels"
+msgstr "Voltar para ferramentas"
+
 #: src/ej_tools/jinja2/ej_tools/whatsapp.jinja2:18
 #, fuzzy
 msgid ""
@@ -3930,28 +3980,10 @@ msgstr ""
 "encaminhe o link de participação para grupos, canais ou diretamente no chat "
 "privado do usuário."
 
-#: src/ej_tools/jinja2/ej_tools/telegram.jinja2:23
 #: src/ej_tools/jinja2/ej_tools/whatsapp.jinja2:21
 #, fuzzy
 msgid "Participation link"
 msgstr "Link de participação"
-
-#: src/ej_tools/jinja2/ej_tools/telegram.jinja2:24
-#, fuzzy
-msgid "Share the call for participation to start the collection."
-msgstr "Compartilhe a chamada de participação para iniciar a coleta."
-
-#: src/ej_tools/jinja2/ej_tools/telegram.jinja2:39
-#: src/ej_tools/jinja2/ej_tools/whatsapp.jinja2:31
-#, fuzzy
-msgid "Copied to clipboard!"
-msgstr "Copiado para a área de transferência!"
-
-#: src/ej_tools/jinja2/ej_tools/telegram.jinja2:53
-#: src/ej_tools/jinja2/ej_tools/whatsapp.jinja2:47
-#, fuzzy
-msgid "Back to channels"
-msgstr "Voltar para ferramentas"
 
 #: src/ej_tools/jinja2/ej_tools/whatsapp.jinja2:22
 msgid "Share the participation link to start the collection."
@@ -4203,14 +4235,51 @@ msgstr "Mudar a senha"
 msgid "Authentication"
 msgstr "Autenticação"
 
-#~ msgid "List of participants"
-#~ msgstr "Lista de participantes"
+#~ msgid "Survey Bot"
+#~ msgstr "Bot de Enquetes"
 
-#~ msgid "Usage data"
-#~ msgstr "Dados de uso"
+#~ msgid "Take collections in the form of telegram polls."
+#~ msgstr "Realize coletas no formato de enquetes do telegram."
 
-#~ msgid "Votes per channel"
-#~ msgstr "Votos por canal"
+#, fuzzy
+#~ msgid "Survey to:"
+#~ msgstr "Enquete para:"
+
+#, fuzzy
+#~ msgid "Find @EjGroupsBot bot on Telegram;"
+#~ msgstr "Encontre o bot @EjGroupsBot no Telegram;"
+
+#, fuzzy
+#~ msgid "Write down /enquetenocanal 64 command;"
+#~ msgstr "Escreva o comando /enquetenocanal 64;"
+
+#~ msgid "Forward the generated poll to the desired channel."
+#~ msgstr "Encaminhe a enquete gerada para o canal desejado."
+
+#, fuzzy
+#~ msgid ""
+#~ "Collect opinions using EJ's chatbot, also known as Duda. Allows you to "
+#~ "collect the opinion of Telegram users. To make the collection available, "
+#~ "forward the participation link to groups, channels or directly in the "
+#~ "user's private chat."
+#~ msgstr ""
+#~ "Colete opiniões usando o chatbot da EJ, também conhecido como Duda. "
+#~ "Permite coletar a opinião de usuários do Telegram. Para disponibilizar a "
+#~ "coleta, encaminhe o link de participação para grupos, canais ou "
+#~ "diretamente no chat privado do usuário."
+
+#~ msgid "Canal"
+#~ msgstr "Channel"
+
+#~ msgid "Grupo"
+#~ msgstr "Group"
+
+#~ msgid "Encaminhe a enquete gerada para o canal desejado."
+#~ msgstr "Forward the generated poll to the desired channel."
+
+#, fuzzy
+#~ msgid "Share the call for participation to start the collection."
+#~ msgstr "Compartilhe a chamada de participação para iniciar a coleta."
 
 #~ msgid "Copied!"
 #~ msgstr "Copiado!"
