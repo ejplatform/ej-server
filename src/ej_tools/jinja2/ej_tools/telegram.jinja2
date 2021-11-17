@@ -13,48 +13,76 @@
 {% block content %}
 
 <div class="tools">
-	<div class="tools-container">	
-    <div class="tools-section">
-    <div class="tools-title">
-      <h1 class="h2 text-accent">{{_("Tools")}} > {{ tool["integration"] }} > Telegram </h1>
-      <span>{{_("Collect opinions using EJ's chatbot, also known as Duda. Allows you to collect the opinion of whatsapp users. To make the collection available, forward the participation link to groups, channels or directly in the user's private chat.") }}</span>
-    </div>
-      <div class="tools-content">
-        <h3 class="h3 divider">{{_("Participation link")}}</h3>
-        <span class="helptext">{{_("Share the call for participation to start the collection.")}}</span>
-        <div class="tools-divider">
+      <div class="tools-title">
+        <h1 class="h2 text-accent">{{_("Tools")}} > {{ tool["integration"] }} > Telegram </h1>
+        <span>{{_("Collect opinions using EJ's chatbots. Allows you to collect the opinion of Telegram users.")}}</span>
+      </div>
+      <h3 class="h3 divider">{{_("Collect Bot")}}</h3>
+      <span class="helptext">{{_("Use one of our bots to make collections on Telegram.")}}</span>
 
-          <div class="tools-select">
-            <label for="bot">Bot</label>
-            <select name="bot" id="tools-select-bot">
-              {% for channel in channels %}
-                <option value={{channel[1]}}>{{channel[0]}}</option>
-              {% endfor %}
-            </select>
-              
-          </div>
-          <div class="tools-share tools-cards-width">
-            <div class="tools-share-container">
-              <span id="tools-icon-share" class="tools-icon-share" style="background: url({{static('/img/icons/share.svg')}}) repeat;" alt="Share icon">
-                <span id="tools-tip-text">{{_("Copied to clipboard!")}}</span>
-              </span>
-            </div>
+      <div class="tools-divider">
 
-            <div class="tools-share-content">
-              <span id="helptext-tool" class="helptext">
-                {{shareText}}
-                {{conversation.text}}
-                <a class="tools-link" id="tools-channel">https://t.me/BOT_NAME?start={{conversation.id}}</a>
-              </span>
+        <div class="tools-card-container tools-share-content">
+         
+          <span id="tools-icon-share" class="tools-icon-share" style="background: url({{static('/img/icons/share.svg')}}) repeat;" alt="Share icon">
+            <span id="tools-tip-text">{{_("Copied to clipboard!")}}</span>
+          </span>
+         
+          <span id="helptext-tool" class="helptext">
+            <h5 class="card-title">{{_("Opinion Bot")}}</h5>
+            <p>{{_("Collect your audience's opinion using our guided bot. Click on the share button to send the collection to the telegram or other networks.")}}</p>
+            
+            <div class="tools-label-buttons">
+              <h6 class="card-subtitle">{{_("Collect with:")}}</h6>
+              <div id="btn-father" class="tools-buttons">
+                {% for channel in channels %}
+                  <button value={{channel[1]}} id="id-{{channel[1]}}" class="grey-button-channel" onclick="ChangeButtonClass(event.target)">{{channel[0]}}</button>
+                {% endfor %}
+              </div>
             </div>
-          </div>
+            <br>
+            <div id="share-text">
+              {{shareText}}
+              {{conversation.text}}
+              <br>
+              <div id="instructions-link">
+                {{_("Para participar basta clicar no link: ")}}
+              </div>
+              <a class="tools-link" id="tools-channel">https://t.me/BOT_NAME?start={{conversation.id}}</a>
+            </div>
+          </span>
         </div>
-    </div>   
-    <p><a href="{{ conversation.url('conversation-tools:chatbot') }}" title="{{ _('Back to channels') }}"
+
+        {# <div class="tools-card-container tools-survey-bot-card"> 
+          <span id="helptext-tool" class="helptext">
+            <span id="telegram-eye-icon" style="background: url({{static('/img/icons/eye_icon.svg')}}) repeat;" alt="Share icon">
+          </span>
+          
+          <h5 class="card-title">{{_("Survey Bot")}}</h5>
+            <p>{{_("Take collections in the form of telegram polls.")}}</p>
+            <div class="tools-label-buttons">
+              <h6 class="card-subtitle">{{_("Survey to:")}}</h6>
+              <div class="tools-buttons">
+                <button class="pink-button-channel">{{_("Channel")}}</button>
+                <button class="pink-button-channel">{{_("Group")}}</button>
+              </div>
+            </div>
+            <br>
+            <ol>
+              <li>{{_("Find @EjGroupsBot bot on Telegram;")}}</li>
+              <li>{{_("Write down /enquetenocanal 64 command;")}}</li>
+              <li>{{_("Forward the generated poll to the desired channel.")}}</li>
+            </ol> 
+          </span>
+          
+        </div>  #}
+      </div>
+      <p><a href="{{ conversation.url('conversation-tools:chatbot') }}" title="{{ _('Back to channels') }}"
 		class="lowercase bold text-brand">
 	    <i class="fa fa-chevron-left"></i>{% trans %}Back to tools{% endtrans %}
     </a></p> 
   </div>
+    
   
 </div>  
 
@@ -64,57 +92,82 @@ const makeText = function(){
   return "{{shareText + conversation.text}}"
 }
 
-window.onload = function() {
+const instructionsLink = function(){
+  instructionsLink = document.getElementById("instructions-link").textContent.replaceAll("\n", "").trim()
+  return "instructionsLink"
+}
 
-  const btn = document.getElementById('tools-icon-share');
-  const select = document.getElementById('tools-select-bot')
-
+function ChangeButtonClass(e) {
+  const father = document.getElementById("btn-father")
   const anchor = document.getElementById('tools-channel')
-  anchor.text = anchor.text.replace("BOT_NAME", select.value)
-
-  let shareData = {
-    title: "{{conversation.title}}",
-    text: makeText(),
-    url: anchor.text
-  }
   
-  const copyText = async function() {
-    try {
-      var range = document.createRange();
-      const text = document.getElementById("helptext-tool");
-      const tip = document.getElementById("tools-tip-text")
-      range.selectNode(text);
-      window.getSelection().removeAllRanges(); // clear current selection
-      window.getSelection().addRange(range); // to select text
-      document.execCommand("copy");
-      window.getSelection().removeAllRanges();// to deselect
-
-      tip.classList.add('tools-tip-text-show');  
-
-      await new Promise(r => setTimeout(r, 2000));
-      tip.classList.remove('tools-tip-text-show');  
-      tip.classList.add('tools-tip-text-hidde');  
-    } catch(err){
-      alert("Error")
+  for (let item of father.children) {
+    if (item.classList.contains("pink-button-channel")) {
+      anchor.text = anchor.text.replace(item.value, e.value)
+      item.classList.remove("pink-button-channel")
+      item.classList.add("grey-button-channel")
+      break
     }
   }
+  
+  e.classList.remove('grey-button-channel');
+  e.classList.add('pink-button-channel'); 
+}  
+
+function initiateButtons(){
+  // Set the first button as default selection
+  const id = "id-{{channels[0][1]}}"
+  var btn = document.getElementById(id)
+  btn.classList.remove('grey-button-channel');
+  btn.classList.add('pink-button-channel');
+  initiateLink()
+}
+
+function initiateLink(){
+  const anchor = document.getElementById('tools-channel')
+  anchor.text = anchor.text.replace("BOT_NAME", "{{channels[0][1]}}")
+}
+
+window.onload = function() {
+  const btn = document.getElementById('tools-icon-share');
+  
+  initiateButtons()
 
   btn.addEventListener('click', async () => {
+    const anchor = document.getElementById('tools-channel')
+    let shareData = {
+        title: "{{conversation.title}}",
+        text: makeText(),
+        url: anchor.text
+    }
     try {
       await navigator.share(shareData)
     } catch (err) {
       await copyText()
     }
   });
-
-  select.addEventListener('change', (e) => {
-    const url = "https://t.me/" + e.target.value + "?start={{conversation.id}}"
-    anchor.text = url
-    shareData.url = url 
-    shareData.text = makeText() 
-  });
 };
 
+const copyText = async function() {
+  try {
+    var range = document.createRange();
+    const text = document.getElementById("share-text");
+    const tip = document.getElementById("tools-tip-text")
+    range.selectNode(text);
+    window.getSelection().removeAllRanges(); // clear current selection
+    window.getSelection().addRange(range); // to select text
+    document.execCommand("copy");
+    window.getSelection().removeAllRanges();// to deselect
+
+    tip.classList.add('tools-tip-text-show');  
+
+    await new Promise(r => setTimeout(r, 2000));
+    tip.classList.remove('tools-tip-text-show');  
+    tip.classList.add('tools-tip-text-hidde');  
+  } catch(err){
+    alert("Error")
+    }
+}
 </script>
 
 {% endblock %}

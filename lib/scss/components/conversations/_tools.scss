@@ -673,7 +673,7 @@
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-between;
-    align-items: stretch;
+    // align-items: flex-end;
     padding-top: 40px;
     gap: 5px 2em;
     max-width: 1520px;
@@ -711,20 +711,75 @@
     }
 }
 
-.tools-share-content {
+.tools-card-container {
     border: 1px solid #cccccc;
     border-width: 1px;
     box-sizing: border-box;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    padding: 40px;
+    padding: 16px;
+}
+
+.tools-share-content {  
+    margin-bottom: 25px;
+    width: clamp(35ch, 55%, 75ch);
+    position: relative;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.tools-survey-bot-card {
+    width: clamp(35ch, 40%, 75ch);
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    height: min-content;
+}
+
+.tools-label-buttons {
+    display: flex; 
+    justify-content: flex-start; 
+    align-items: baseline;
+    flex-wrap: wrap;
+    column-gap: 10px;
+}
+
+.tools-buttons {
+    display: flex; 
+    justify-content: space-between;  
+    column-gap: 10px;
+    flex-wrap: wrap;    
+}
+
+
+.pink-button-channel {
+    background-color: $color-theme-osf-light;
+    color: $color-white;
+    border-color: $color-white;
+    border-radius: 5px;
+}
+
+.grey-button-channel {
+    background-color: $color-theme-report-gray;
+    border-color: $color-theme-report-gray;
+    color: #052B47;
+    border-radius: 5px;
+}
+
+.card-title { 
+    color: $color-theme-report-black;
+    margin: .5rem 0 0.75rem 0;
+}
+
+.card-subtitle {
+    color: $color-theme-report-black; 
 }
 
 .tools-icon-share {
     width: 18px;
     height: 19.92px;
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 15px;
+    right: 15px;
     display: block;
 }
 
@@ -736,6 +791,25 @@
 
 .tools-share-container:hover {
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.tools-opinion-bot-card {
+    width: 60%;
+}
+
+.tools-cards-section {
+    display: flex; 
+    justify-content: space-between;
+}
+
+#telegram-eye-icon {
+    width: 18px;
+    height: 12px;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    display: block;
+    color: #052B47;
 }
 
 #tools-tip-text {
