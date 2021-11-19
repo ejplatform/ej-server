@@ -54,33 +54,6 @@ class Signature(ABC):
         pass
 
 
-class SignatureFactory:
-    """
-    Instantiates signature subclasses
-    Usage:
-
-    signature = SignatureFactory.get_user_signature(request.user)
-    signature.<method-from-class>()
-    """
-
-    LISTEN_TO_COMMUNITY = "listen_to_community"
-    LISTEN_TO_CITY = "listen_to_city"
-
-    @staticmethod
-    def get_user_signature(user) -> Signature:
-        if user.signature == SignatureFactory.LISTEN_TO_COMMUNITY:
-            return ListenToCommunity(user)
-        else:
-            return ListenToCity(user)
-
-    @staticmethod
-    def plans():
-        return [
-            (SignatureFactory.LISTEN_TO_COMMUNITY, "Listen to community"),
-            (SignatureFactory.LISTEN_TO_CITY, "Listen to city"),
-        ]
-
-
 class ListenToCommunity(Signature):
     def get_conversation_limit(self) -> int:
         return config.EJ_LISTEN_TO_COMMUNITY_SIGNATURE_CONVERSATIONS_LIMIT
@@ -95,6 +68,36 @@ class ListenToCity(Signature):
 
     def get_vote_limit(self) -> int:
         return config.EJ_LISTEN_TO_CITY_SIGNATURE_VOTE_LIMIT
+
+
+class SignatureFactory:
+    """
+    Instantiates signature subclasses
+    Usage:
+
+    signature = SignatureFactory.get_user_signature(request.user)
+    signature.<method-from-class>()
+    """
+
+    LISTEN_TO_COMMUNITY = "listen_to_community"
+    LISTEN_TO_CITY = "listen_to_city"
+
+    signatures = {LISTEN_TO_COMMUNITY: ListenToCommunity, LISTEN_TO_CITY: ListenToCity}
+
+    @staticmethod
+    def get_user_signature(user) -> Signature:
+        signature = SignatureFactory.signatures.get(user.signature)
+        try:
+            return signature(user)
+        except:
+            return None
+
+    @staticmethod
+    def plans():
+        return [
+            (SignatureFactory.LISTEN_TO_COMMUNITY, "Listen to community"),
+            (SignatureFactory.LISTEN_TO_CITY, "Listen to city"),
+        ]
 
 
 @rest_api(["id", "display_name", "email", "signature"])
