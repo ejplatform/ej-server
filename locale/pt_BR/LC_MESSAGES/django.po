@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-17 15:10-0300\n"
+"POT-Creation-Date: 2021-11-18 22:59-0300\n"
 "PO-Revision-Date: 2019-09-09 13:55-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -910,7 +910,7 @@ msgstr "Grupos"
 #: src/ej_dataviz/routes_report.py:344
 #, fuzzy
 msgid "cluster_id"
-msgstr "Grupos"
+msgstr "Grupo_id"
 
 #: src/ej_dataviz/routes_report.py:345
 msgid "comment"
