@@ -3961,11 +3961,57 @@ msgstr "Coletar com:"
 msgid "Para participar basta clicar no link: "
 msgstr "Para participar basta clicar no link:"
 
+#: src/ej_tools/jinja2/ej_tools/telegram.jinja2:61
+msgid "Survey Bot"
+msgstr "Bot de Enquetes"
+
+#: src/ej_tools/jinja2/ej_tools/telegram.jinja2:62
+msgid "Take collections in the form of telegram polls."
+msgstr "Realize coletas no formato de enquetes do telegram."
+
+#: src/ej_tools/jinja2/ej_tools/telegram.jinja2:64
+#, fuzzy
+msgid "Survey to:"
+msgstr "Enquete para:"
+
+#: src/ej_tools/jinja2/ej_tools/telegram.jinja2:72
+#, fuzzy
+msgid "Find @EjGroupsBot bot on Telegram;"
+msgstr "Encontre o bot @EjGroupsBot no Telegram;"
+
+#: src/ej_tools/jinja2/ej_tools/telegram.jinja2:73
+#, fuzzy
+msgid "Write down /enquetenocanal X command;"
+msgstr "Escreva o comando /enquetenocanal X;"
+
+#: src/ej_tools/jinja2/ej_tools/telegram.jinja2:74
+msgid "Forward the generated poll to the desired channel."
+msgstr "Encaminhe a enquete gerada para o canal desejado."
+
 #: src/ej_tools/jinja2/ej_tools/telegram.jinja2:80
 #: src/ej_tools/jinja2/ej_tools/whatsapp.jinja2:47
 #, fuzzy
 msgid "Back to channels"
 msgstr "Voltar para ferramentas"
+
+#: src/ej_tools/jinja2/ej_tools/telegram.jinja2:92
+#, fuzzy
+msgid "Write down the command "
+msgstr "Escreva o comando "
+
+#: src/ej_tools/jinja2/ej_tools/telegram.jinja2:93
+msgid "Add the bot on your group;"
+msgstr "Adicione o Bot no seu grupo;"
+
+#: src/ej_tools/jinja2/ej_tools/telegram.jinja2:96
+#, fuzzy
+msgid "Forward the generated poll to the desired channel;"
+msgstr "Encaminhe a enquete gerada para o canal desejado;"
+
+#: src/ej_tools/jinja2/ej_tools/telegram.jinja2:97
+#, fuzzy
+msgid "In the group, write down the command "
+msgstr "No grupo, escreva o comando "
 
 #: src/ej_tools/jinja2/ej_tools/whatsapp.jinja2:18
 #, fuzzy
@@ -4235,26 +4281,9 @@ msgstr "Mudar a senha"
 msgid "Authentication"
 msgstr "Autenticação"
 
-#~ msgid "Survey Bot"
-#~ msgstr "Bot de Enquetes"
-
-#~ msgid "Take collections in the form of telegram polls."
-#~ msgstr "Realize coletas no formato de enquetes do telegram."
-
 #, fuzzy
-#~ msgid "Survey to:"
-#~ msgstr "Enquete para:"
-
-#, fuzzy
-#~ msgid "Find @EjGroupsBot bot on Telegram;"
-#~ msgstr "Encontre o bot @EjGroupsBot no Telegram;"
-
-#, fuzzy
-#~ msgid "Write down /enquetenocanal 64 command;"
-#~ msgstr "Escreva o comando /enquetenocanal 64;"
-
-#~ msgid "Forward the generated poll to the desired channel."
-#~ msgstr "Encaminhe a enquete gerada para o canal desejado."
+#~ msgid "command"
+#~ msgstr "comando"
 
 #, fuzzy
 #~ msgid ""
