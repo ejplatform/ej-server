@@ -13,80 +13,87 @@
 {% block content %}
 
 <div class="tools">
-      <div class="tools-title">
-        <h1 class="h2 text-accent">{{_("Tools")}} > {{ tool["integration"] }} > Telegram </h1>
-        <span>{{_("Collect opinions using EJ's chatbots. Allows you to collect the opinion of Telegram users.")}}</span>
-      </div>
-      <h3 class="h3 divider">{{_("Collect Bot")}}</h3>
-      <span class="helptext">{{_("Use one of our bots to make collections on Telegram.")}}</span>
+  <div class="tools-container-full-width">
+    <div class="tools-title">
+      <h1 class="h2 text-accent">{{_("Tools")}} > {{ tool["integration"] }} > Telegram </h1>
+      <span>{{_("Collect opinions using EJ's chatbots. Allows you to collect the opinion of Telegram users.")}}</span>
+    </div>
+    <h3 class="h3 divider">{{_("Collect Bot")}}</h3>
+    <span class="helptext">{{_("Use one of our bots to make collections on Telegram.")}}</span>
 
-      <div class="tools-divider">
+    <div class="tools-divider">
 
-        <div class="tools-card-container tools-share-content">
-         
-          <span id="tools-icon-share" class="tools-icon-share" style="background: url({{static('/img/icons/share.svg')}}) repeat;" alt="Share icon">
-            <span id="tools-tip-text">{{_("Copied to clipboard!")}}</span>
-          </span>
-         
-          <span id="helptext-tool" class="helptext">
-            <h5 class="card-title">{{_("Opinion Bot")}}</h5>
-            <p>{{_("Collect your audience's opinion using our guided bot. Click on the share button to send the collection to the telegram or other networks.")}}</p>
-            
-            <div class="tools-label-buttons">
-              <h6 class="card-subtitle">{{_("Collect with:")}}</h6>
-              <div id="btn-father" class="tools-buttons">
-                {% for channel in channels %}
-                  <button value={{channel[1]}} id="id-{{channel[1]}}" class="grey-button-channel" onclick="ChangeButtonClass(event.target)">{{channel[0]}}</button>
-                {% endfor %}
-              </div>
-            </div>
-            <br>
-            <div id="share-text">
-              {{shareText}}
-              {{conversation.text}}
-              <br>
-              <div id="instructions-link">
-                {{_("Para participar basta clicar no link: ")}}
-              </div>
-              <a class="tools-link" id="tools-channel">https://t.me/BOT_NAME?start={{conversation.id}}</a>
-            </div>
-          </span>
-        </div>
-
-        {# <div class="tools-card-container tools-survey-bot-card"> 
-          <span id="helptext-tool" class="helptext">
-            <span id="telegram-eye-icon" style="background: url({{static('/img/icons/eye_icon.svg')}}) repeat;" alt="Share icon">
-          </span>
+      <div class="tools-card-container tools-share-content">   
+        <span id="tools-icon-share" class="tools-icon-share" style="background: url({{static('/img/icons/share.svg')}}) repeat;" alt="Share icon">
+          <span id="tools-tip-text">{{_("Copied to clipboard!")}}</span>
+        </span>
+        
+        <span id="helptext-tool" class="helptext">
+          <h5 class="card-title">{{_("Opinion Bot")}}</h5>
+          <p>{{_("Collect your audience's opinion using our guided bot. Click on the share button to send the collection to the telegram or other networks.")}}</p>
           
-          <h5 class="card-title">{{_("Survey Bot")}}</h5>
-            <p>{{_("Take collections in the form of telegram polls.")}}</p>
-            <div class="tools-label-buttons">
-              <h6 class="card-subtitle">{{_("Survey to:")}}</h6>
-              <div class="tools-buttons">
-                <button class="pink-button-channel">{{_("Channel")}}</button>
-                <button class="pink-button-channel">{{_("Group")}}</button>
-              </div>
+          <div class="tools-label-buttons">
+            <h6 class="card-subtitle">{{_("Collect with:")}}</h6>
+            <div id="btn-father" class="tools-buttons">
+              {% for channel in channels %}
+                <button value={{channel[1]}} id="id-{{channel[1]}}" class="grey-button-channel" onclick="ChangeButtonClass('btn-father', event.target, updateOpinionBotLink)">{{channel[0]}}</button>
+              {% endfor %}
             </div>
+          </div>
+          <br>
+          <div id="share-text">
+            {{shareText}}
+            {{conversation.text}}
             <br>
-            <ol>
-              <li>{{_("Find @EjGroupsBot bot on Telegram;")}}</li>
-              <li>{{_("Write down /enquetenocanal 64 command;")}}</li>
-              <li>{{_("Forward the generated poll to the desired channel.")}}</li>
-            </ol> 
-          </span>
-          
-        </div>  #}
+            <div id="instructions-link">
+              {{_("Para participar basta clicar no link: ")}}
+            </div>
+            <a class="tools-link" id="tools-channel">https://t.me/BOT_NAME?start={{conversation.id}}</a>
+          </div>
+        </span>
       </div>
-      <p><a href="{{ conversation.url('conversation-tools:chatbot') }}" title="{{ _('Back to channels') }}"
-		class="lowercase bold text-brand">
-	    <i class="fa fa-chevron-left"></i>{% trans %}Back to tools{% endtrans %}
+
+      <div class="tools-card-container tools-survey-bot-card"> 
+        <span id="helptext-tool" class="helptext">
+          <span id="telegram-eye-icon" style="background: url({{static('/img/icons/eye_icon.svg')}}) repeat;" alt="Share icon">
+        </span>
+        
+        <h5 class="card-title">{{_("Survey Bot")}}</h5>
+          <p>{{_("Take collections in the form of telegram polls.")}}</p>
+          <div class="tools-label-buttons">
+            <h6 class="card-subtitle">{{_("Survey to:")}}</h6>
+            <div id="btn-father-survey" class="tools-buttons">
+              <button value="channel" id="id-channel" class="grey-button-channel" onclick="ChangeButtonClass('btn-father-survey',event.target, updateSurveyText)">{{_("Channel")}}</button>
+              <button value="group" id="id-group" class="grey-button-channel" onclick="ChangeButtonClass('btn-father-survey', event.target, updateSurveyText)">{{_("Group")}}</button>
+            </div>
+          </div>
+          <br>
+          <ol class="tools-ol">
+            <li>{{_("Find @EjGroupsBot bot on Telegram;")}}</li>
+            <li id="id-second-command">{{_("Write down /enquetenocanal X command;")}}</li>
+            <li id="id-third-command">{{_("Forward the generated poll to the desired channel.")}}</li>
+          </ol> 
+        </span>          
+      </div>
+    
+    </div>
+    <p><a href="{{ conversation.url('conversation-tools:chatbot') }}" title="{{ _('Back to channels') }}"
+      class="lowercase bold text-brand">
+      <i class="fa fa-chevron-left"></i>{% trans %}Back to tools{% endtrans %}
     </a></p> 
   </div>
-    
-  
-</div>  
+</div> 
 
 <script type="text/javascript">
+
+const secondCommandText = {
+  "channel": "{{_('Write down the command ')}}", 
+  "group": "{{_('Add the bot on your group;')}}"
+  }
+const thirdCommandText = {
+  "channel": "{{_('Forward the generated poll to the desired channel;')}}", 
+  "group": "{{_('In the group, write down the command ')}}"
+  }
 
 const makeText = function(){
   return "{{shareText + conversation.text}}"
@@ -97,41 +104,71 @@ const instructionsLink = function(){
   return "instructionsLink"
 }
 
-function ChangeButtonClass(e) {
-  const father = document.getElementById("btn-father")
+function ChangeButtonClass(father_id, target, updateText) {
+  const father = document.getElementById(father_id)
   const anchor = document.getElementById('tools-channel')
   
   for (let item of father.children) {
     if (item.classList.contains("pink-button-channel")) {
-      anchor.text = anchor.text.replace(item.value, e.value)
+      updateText(item.value, target.value)
       item.classList.remove("pink-button-channel")
       item.classList.add("grey-button-channel")
       break
     }
   }
   
-  e.classList.remove('grey-button-channel');
-  e.classList.add('pink-button-channel'); 
+  target.classList.remove('grey-button-channel');
+  target.classList.add('pink-button-channel'); 
 }  
 
-function initiateButtons(){
-  // Set the first button as default selection
-  const id = "id-{{channels[0][1]}}"
+
+function updateButtonClass(id){
+  // Set the button as default selection
   var btn = document.getElementById(id)
   btn.classList.remove('grey-button-channel');
   btn.classList.add('pink-button-channel');
-  initiateLink()
 }
 
-function initiateLink(){
+function updateOpinionBotLink(current_value, new_value){
   const anchor = document.getElementById('tools-channel')
-  anchor.text = anchor.text.replace("BOT_NAME", "{{channels[0][1]}}")
+  anchor.text = anchor.text.replace(current_value, new_value)
+}
+
+function updateSurveyText(current_button, new_button) {
+  let second_command_li = document.getElementById("id-second-command");
+  let third_command_li = document.getElementById("id-third-command");
+  let a_tag = document.createElement("a");
+  a_tag.classList.add('tools-link');
+
+
+  second_command_li.innerHTML = secondCommandText[new_button];
+  third_command_li.innerHTML = thirdCommandText[new_button];
+  
+  if (new_button == "channel") {
+    a_tag.text = "/enquetenocanal {{conversation.id}}"
+    second_command_li.appendChild(a_tag)
+  }
+  else {
+    a_tag.text = "/enquetenogrupo {{conversation.id}}"
+    third_command_li.appendChild(a_tag)
+  }
+}
+
+function initiateOpinionButtons() {
+  updateButtonClass("id-{{channels[0][1]}}")
+  updateOpinionBotLink("BOT_NAME", "{{channels[0][1]}}")
+}
+
+function initiateSurveyButtons() {
+  updateButtonClass("id-channel")
+  updateSurveyText(null, "channel")
 }
 
 window.onload = function() {
   const btn = document.getElementById('tools-icon-share');
   
-  initiateButtons()
+  initiateOpinionButtons()
+  initiateSurveyButtons()
 
   btn.addEventListener('click', async () => {
     const anchor = document.getElementById('tools-channel')
