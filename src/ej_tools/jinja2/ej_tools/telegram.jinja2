@@ -23,7 +23,7 @@
 
     <div class="tools-divider">
 
-      <div class="tools-card-container tools-share-content">   
+      <div class="tools-card-container tools-card-expand tools-share-content">   
         <span id="tools-icon-share" class="tools-icon-share" style="background: url({{static('/img/icons/share.svg')}}) repeat;" alt="Share icon">
           <span id="tools-tip-text">{{_("Copied to clipboard!")}}</span>
         </span>
@@ -46,14 +46,14 @@
             {{conversation.text}}
             <br>
             <div id="instructions-link">
-              {{_("Para participar basta clicar no link: ")}}
+              {{_("To participate just click on the link: ")}}
             </div>
             <a class="tools-link" id="tools-channel">https://t.me/BOT_NAME?start={{conversation.id}}</a>
           </div>
         </span>
       </div>
 
-      <div class="tools-card-container tools-survey-bot-card"> 
+      <div class="tools-card-container tools-card-expand tools-survey-bot-card"> 
         <span id="helptext-tool" class="helptext">
           <span id="telegram-eye-icon" style="background: url({{static('/img/icons/eye_icon.svg')}}) repeat;" alt="Share icon">
         </span>

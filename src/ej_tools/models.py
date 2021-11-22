@@ -107,8 +107,8 @@ class ChatbotTelegramTool:
 
 class ChatbotWhatsappTool:
     CHANNEL_CHOICES = (
-        ("611234", "Boca de Lobo"),
-        ("614567", "DudaEjBot"),
+        ("Boca de Lobo", "611234"),
+        ("Duda", "614567"),
     )
     SHARE = _(
         "I am the virtual assistant for the EJ platform. Empurrando Juntos, or EJ Platform, is an opinion consultation platform focused on the State and Organizations. We would like your participation in the following discussion:"
