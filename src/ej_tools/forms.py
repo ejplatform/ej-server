@@ -74,14 +74,6 @@ class MailingToolForm(forms.Form):
         self.fields["custom_comment"].queryset = Comment.objects.filter(conversation=conversation_id)
 
 
-class WhatsappToolForm(forms.Form):
-    bot_type = forms.ChoiceField(
-        label="Bot",
-        choices=ChatbotWhatsappTool.CHANNEL_CHOICES,
-        required=True,
-    )
-
-
 class RasaConversationForm(EjModelForm):
     def clean_domain(self):
         incoming_domain = str(self.cleaned_data["domain"])

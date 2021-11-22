@@ -11,104 +11,130 @@
 
 {% block content %}
 <div class="tools">
-    <div class="tools-container">
-        <div class="tools-sections">
-            <div class="tools-title">
-                <h1 class="h2 text-accent">{{_("Tools")}} > {{ tool["integration"] }} > Whatsapp</h1>
-                <span>{{ _("Collect opinions using EJ's chatbot, also known as Duda. Allows you to collect the opinion of whatsapp users. To make the collection available, forward the participation link to groups, channels or directly in the user's private chat.") }}</span>
-            </div>
-            <div class="tools-content">
-                <h3 class="h3 divider">{{_("Participation link")}}</h3>
-                <span class="helptext">{{ _("Share the participation link to start the collection.") }}</span>
-                <div class="tools-divider">
-                    <div class="tools-select">
-                            <label>{{form.bot_type.label}}</label>
-                            {{form.bot_type}}
-                    </div>
-                    <div class="tools-share tools-cards-width">
-                        <div class="tools-share-container">
-                            <span id="share-whatsapp-link" class="tools-icon-share" style="background: url({{static('/img/icons/share.svg')}}) repeat;" alt="Share icon">
-                                <span id="tools-tip-text">{{_("Copied to clipboard!")}}</span>
-                            </span>
-                        </div>
-
-                        <div class="tools-share-content">
-                            <span id="helptext-tool" class="helptext">
-                                {{share_text}}
-                                {{conversation.text}}
-                                {{_("To participate, just click on the link:")}}
-                                <a class="tools-link" id="whatsapp-link"></a>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <p><a href="{{ conversation.url('conversation-tools:chatbot') }}" title="{{ _('Back to channels') }}"
-		class="lowercase bold text-brand">
-	    <i class="fa fa-chevron-left"></i>{% trans %}Back to tools{% endtrans %}
-        </a></p> 
+  <div class="tools-container-full-width">
+    <div class="tools-title">
+      <h1 class="h2 text-accent">{{_("Tools")}} > {{ tool["integration"] }} > Whatsapp </h1>
+      <span>{{ _("Collect opinions using EJ's chatbot, also known as Duda. Allows you to collect the opinion of whatsapp users. To make the collection available, forward the participation link to groups, channels or directly in the user's private chat.") }}</span>
     </div>
+    <h3 class="h3 divider">{{_("Collect Bot")}}</h3>
+    <span class="helptext">{{ _("Share the participation link to start the collection.") }}</span>
+
+    <div class="tools-divider">
+      <div class="tools-card-container tools-share-content">
+
+        <span id="tools-icon-share" class="tools-icon-share" style="background: url({{static('/img/icons/share.svg')}}) repeat;" alt="Share icon">
+          <span id="tools-tip-text">{{_("Copied to clipboard!")}}</span>
+        </span>
+
+        <span id="helptext-tool" class="helptext">
+          <h5 class="card-title">{{_("Opinion Bot")}}</h5>
+          <p>{{_("Collect your audience's opinion using our guided bot. Click on the share button to send the collection to the whatsapp or other networks.")}}</p>
+
+          <div class="tools-label-buttons">
+            <h6 class="card-subtitle">{{_("Collect with:")}}</h6>
+            <div id="btn-father" class="tools-buttons">
+              {% for channel in channels %}
+                <button value={{channel[1]}} id="id-{{channel[1]}}" class="grey-button-channel" onclick="ChangeButtonClass(event.target)">{{channel[0]}}</button>
+              {% endfor %}
+            </div>
+          </div>
+          <br>
+          <div id="share-text">
+            {{shareText}}
+            {{conversation.text}}
+            <br>
+            <div id="instructions-link">
+              {{_("To participate just click on the link: ")}}
+            </div>
+            <a class="tools-link" id="tools-channel">https://api.whatsapp.com/send?phone=BOT_NUMBER&text=start+{{conversation.id}}</a>
+          </div>
+        </span>
+
+      </div>
+    </div>
+    <p><a href="{{ conversation.url('conversation-tools:chatbot') }}" title="{{ _('Back to channels') }}"
+      class="lowercase bold text-brand">
+      <i class="fa fa-chevron-left"></i>{% trans %}Back to tools{% endtrans %}
+    </a></p> 
+  </div>
 </div>
 
-<script>
-let bot = document.getElementById("id_bot_type");
-let whatsapp_link = document.getElementById("whatsapp-link");
-let share_link = document.getElementById("share-whatsapp-link");
-
-window.onload = function () {
-    updateUrl();
+<script type="text/javascript">
+const makeText = function(){
+  return "{{shareText + conversation.text}}"
 }
 
-bot.addEventListener('change', (event) => {
-    updateUrl();
-})
+function ChangeButtonClass(e) {
+  const father = document.getElementById("btn-father")
+  const anchor = document.getElementById('tools-channel')
+  
+  for (let item of father.children) {
+    if (item.classList.contains("pink-button-channel")) {
+      anchor.text = anchor.text.replace(item.value, e.value)
+      item.classList.remove("pink-button-channel")
+      item.classList.add("grey-button-channel")
+      break
+    }
+  }
+  
+  e.classList.remove('grey-button-channel');
+  e.classList.add('pink-button-channel'); 
+}  
 
-function updateUrl() {
-    let phone_number = bot.value;
-    let newUrl = generate_whatsapp_link(phone_number, {{conversation.id}});
-    whatsapp_link.innerText = newUrl;
-    whatsapp_link.href = newUrl;
+function initiateButtons(){
+  // Set the first button as default selection
+  const id = "id-{{channels[0][1]}}"
+  var btn = document.getElementById(id)
+  btn.classList.remove('grey-button-channel');
+  btn.classList.add('pink-button-channel');
+  initiateLink()
 }
 
-function generate_whatsapp_link(phone_number, conversation_id) {
-    return `https://api.whatsapp.com/send?phone=${phone_number}&text=start+${conversation_id}`
+function initiateLink(){
+  const anchor = document.getElementById('tools-channel')
+  anchor.text = anchor.text.replace("BOT_NUMBER", "{{channels[0][1]}}")
 }
+
+window.onload = function() {
+  const btn = document.getElementById('tools-icon-share');
+  
+  initiateButtons()
+
+  btn.addEventListener('click', async () => {
+    const anchor = document.getElementById('tools-channel')
+    let shareData = {
+        title: "{{conversation.title}}",
+        text: makeText(),
+        url: anchor.text
+    }
+    try {
+      await navigator.share(shareData)
+    } catch (err) {
+      await copyText()
+    }
+  });
+};
 
 const copyText = async function() {
-    try {
-      var range = document.createRange();
-      const text = document.getElementById("helptext-tool");
-      const tip = document.getElementById("tools-tip-text")
-      range.selectNode(text);
-      window.getSelection().removeAllRanges(); // clear current selection
-      window.getSelection().addRange(range); // to select text
-      document.execCommand("copy");
-      window.getSelection().removeAllRanges();// to deselect
+  try {
+    var range = document.createRange();
+    const text = document.getElementById("share-text");
+    const tip = document.getElementById("tools-tip-text")
+    range.selectNode(text);
+    window.getSelection().removeAllRanges(); // clear current selection
+    window.getSelection().addRange(range); // to select text
+    document.execCommand("copy");
+    window.getSelection().removeAllRanges();// to deselect
 
-      tip.classList.add('tools-tip-text-show');  
+    tip.classList.add('tools-tip-text-show');  
 
-      await new Promise(r => setTimeout(r, 2000));
-      tip.classList.remove('tools-tip-text-show');  
-      tip.classList.add('tools-tip-text-hidde');  
-    } catch(err){
-      alert("Error")
+    await new Promise(r => setTimeout(r, 2000));
+    tip.classList.remove('tools-tip-text-show');  
+    tip.classList.add('tools-tip-text-hidde');  
+  } catch(err){
+    alert("Error")
     }
 }
-
-share_link.addEventListener("click", async (event) => {
-    event.preventDefault();
-    let shareData = {
-        title: '{{conversation.title}}',
-        text: `{{share_text}}\n{{conversation.text}}\n{{_("To participate, just click on the link:")}}`,
-        url: whatsapp_link.innerText
-    }
-    try {
-        await navigator.share(shareData);
-    } catch(err) {
-        await copyText();
-    }
-})
 
 </script>
 

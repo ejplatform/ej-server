@@ -12,7 +12,6 @@ from .forms import (
     ConversationComponent,
     MailingToolForm,
     MauticConversationForm,
-    WhatsappToolForm,
 )
 from ej_conversations.models import Conversation
 from .models import (
@@ -132,13 +131,12 @@ def telegram(request, board, conversation, slug):
 
 @urlpatterns.route(conversation_tools_chatbot_url + "/whatsapp")
 def whatsapp(request, board, conversation, slug):
-    form = WhatsappToolForm()
     tools = Tools(conversation)
     return {
         "conversation": conversation,
         "tool": tools.get(_("Chatbot")),
-        "form": form,
-        "share_text": ChatbotWhatsappTool.SHARE,
+        "channels": ChatbotWhatsappTool.CHANNEL_CHOICES,
+        "shareText": ChatbotWhatsappTool.SHARE,
     }
 
 
