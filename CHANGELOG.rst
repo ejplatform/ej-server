@@ -5,6 +5,20 @@ CHANGELOG of EJPlatform releases
 Here you can follow all the fixes and new features on every EJPlatform release.
 
 
+2.17.0 release
+====================
+* Date: Nov 23, 2021
+* Features
+- Refactoring ej_boards routes.py, to loading other apps routes automatically; 
+- Fixes participants report export, as json format;
+- Adds new Whatsapp tool frontend;
+- Improves boards menu UI;
+- Adds new Telegram tool frontend;
+- Refactoring singnatures arquitecture;
+- Adds support for telegram poll bot, on tools area;
+- Fixes vote distribuition graph UI;
+- Improves participants report UI;
+
 2.16.0 release
 ====================
 * Date: Nov 09, 2021
