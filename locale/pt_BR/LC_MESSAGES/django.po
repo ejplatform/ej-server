@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-20 10:49-0300\n"
+"POT-Creation-Date: 2021-11-26 11:33-0300\n"
 "PO-Revision-Date: 2019-09-09 13:55-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -3706,6 +3706,7 @@ msgstr "Integre esta conversa com um dos canais de coleta disponíveis."
 #: src/ej_tools/jinja2/ej_tools/rasa.jinja2:89
 #: src/ej_tools/jinja2/ej_tools/rasa.jinja2:91
 #: src/ej_tools/jinja2/ej_tools/telegram.jinja2:82
+#: src/ej_tools/jinja2/ej_tools/whatsapp.jinja2:57
 #, fuzzy
 msgid "Back to tools"
 msgstr "Voltar para ferramentas"
@@ -3992,6 +3993,7 @@ msgid "Forward the generated poll to the desired channel."
 msgstr "Encaminhe a enquete gerada para o canal desejado."
 
 #: src/ej_tools/jinja2/ej_tools/telegram.jinja2:80
+#: src/ej_tools/jinja2/ej_tools/whatsapp.jinja2:55
 #, fuzzy
 msgid "Back to channels"
 msgstr "Voltar para ferramentas"
