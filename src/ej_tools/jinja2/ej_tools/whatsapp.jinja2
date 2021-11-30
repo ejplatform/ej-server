@@ -13,7 +13,9 @@
 <div class="tools">
   <div class="tools-container-full-width">
     <div class="tools-title">
-      <h1 class="h2 text-accent">{{_("Tools")}} > {{ tool["integration"] }} > Whatsapp </h1>
+      <h1 class="h2 text-accent"><a href="{{ conversation.url('conversation-tools:index') }}">{{_("Tools")}}</a>
+        > <a href="{{ conversation.url('conversation-tools:chatbot') }}">{{ tool["integration"] }}</a>
+        > Whatsapp </h1>
       <span>{{ _("Collect opinions using EJ's chatbot, also known as Duda. Allows you to collect the opinion of whatsapp users. To make the collection available, forward the participation link to groups, channels or directly in the user's private chat.") }}</span>
     </div>
     <h3 class="h3 divider">{{_("Collect Bot")}}</h3>
@@ -52,10 +54,6 @@
 
       </div>
     </div>
-    <p><a href="{{ conversation.url('conversation-tools:chatbot') }}" title="{{ _('Back to channels') }}"
-      class="lowercase bold text-brand">
-      <i class="fa fa-chevron-left"></i>{% trans %}Back to tools{% endtrans %}
-    </a></p> 
   </div>
 </div>
 

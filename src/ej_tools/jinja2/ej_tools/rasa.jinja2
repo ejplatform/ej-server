@@ -13,7 +13,9 @@
 <div class="tools">
     <div class="tools-container">
     <div class="tools-title">
-    <h1 class="h2 text-accent">{{_("Tools")}} > {{ tool["integration"] }} > Webchat</h1>
+    <h1 class="h2 text-accent"><a href="{{ conversation.url('conversation-tools:index') }}">{{_("Tools")}}</a>
+        > <a href="{{ conversation.url('conversation-tools:chatbot') }}">{{ tool["integration"] }}</a>
+        > Webchat</h1>
     <span>{{tool["description"] }}</span>
     </div>
     <p id="description-info">
@@ -85,11 +87,6 @@
             {% include 'ej_tools/includes/rasa-copy-body.jinja2'%}
         </textarea>
     </div>
-    
-    <p><a href="{{ conversation.url('conversation-tools:chatbot') }}" title="{{ _('Back to tools') }}"
-		class="lowercase bold text-brand">
-	    <i class="fa fa-chevron-left"></i>{% trans %}Back to tools{% endtrans %}
-    </a></p>
     </div>
 </div>
 
