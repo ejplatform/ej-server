@@ -126,7 +126,7 @@ def create(request, context=None, **kwargs):
     if form.is_valid_post() and request.user.has_perm("ej.can_add_conversation"):
         with transaction.atomic():
             conversation = form.save_comments(request.user, **kwargs)
-        return redirect(conversation.get_absolute_url())
+        return redirect(conversation.url("report:general-report"))
     return {
         "form": form,
         **(context or {"board": None, "user_boards": Board.objects.filter(owner=user)}),
