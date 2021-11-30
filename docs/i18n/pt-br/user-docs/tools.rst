@@ -27,6 +27,7 @@ uma conversa na EJ. O link só fica disponível para o criador da conversa.
 .. toctree::
 
    tools-chatbot
+   tools-ejgroups
    tools-opinion-component
    tools-mail-template
    tools-mautic
