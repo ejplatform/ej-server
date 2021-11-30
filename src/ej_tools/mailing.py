@@ -25,6 +25,7 @@ class TemplateGenerator:
             "osf": BaseCssGenerator("osf"),
             "votorantim": BaseCssGenerator("votorantim"),
             "icd": BaseCssGenerator("icd"),
+            "bocadelobo": BaseCssGenerator("bocadelobo"),
             "campaign": CampaignCssGenerator(),
         }
         self.template_type = form_data.get("template_type") or "mautic"
@@ -106,6 +107,7 @@ class BaseCssGenerator:
             "osf": ["#1D1088", "#F8127E"],
             "votorantim": ["#04082D", "#F14236"],
             "icd": ["#005BAA", "#F5821F"],
+            "bocadelobo": ["#83E760", "#161616"],
         }
         self.palette = palette
 
