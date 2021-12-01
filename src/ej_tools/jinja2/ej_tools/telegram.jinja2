@@ -1,4 +1,5 @@
 {% extends 'ej_conversations/base.jinja2' %}
+{% from "ej_tools/survey-comments.jinja2" import survey_modal %}
 
 {% block metaOG2 %}
 
@@ -28,7 +29,7 @@
       <div class="tools-card-container tools-card-expand tools-share-content">   
         <span id="tools-icon-share" class="tools-icon-share" style="background: url({{static('/img/icons/share.svg')}}) repeat;" alt="Share icon">
           <span id="tools-tip-text">{{_("Copied to clipboard!")}}</span>
-        </span>
+        </span> 
         
         <span id="helptext-tool" class="helptext">
           <h5 class="card-title">{{_("Opinion Bot")}}</h5>
@@ -57,10 +58,15 @@
 
       <div class="tools-card-container tools-card-expand tools-survey-bot-card"> 
         <span id="helptext-tool" class="helptext">
-          <span id="telegram-eye-icon" style="background: url({{static('/img/icons/eye_icon.svg')}}) repeat;" alt="Share icon">
-        </span>
-        
-        <h5 class="card-title">{{_("Survey Bot")}}</h5>
+          
+          <div>
+            <h5 class="card-title">{{_("Survey Bot")}}</h5>
+
+            <div class="telegram-eye-icon">
+              {{survey_modal(conversation)}}
+            </div>
+
+          </div>
           <p>{{_("Take collections in the form of telegram polls.")}}</p>
           <div class="tools-label-buttons">
             <h6 class="card-subtitle">{{_("Survey to:")}}</h6>
@@ -137,17 +143,22 @@ function updateSurveyText(current_button, new_button) {
   let third_command_li = document.getElementById("id-third-command");
   let a_tag = document.createElement("a");
   a_tag.classList.add('tools-link');
+  let a_tag_modal = document.getElementById("a_tag_modal")
 
 
   second_command_li.innerHTML = secondCommandText[new_button];
   third_command_li.innerHTML = thirdCommandText[new_button];
   
   if (new_button == "channel") {
-    a_tag.text = "/enquetenocanal {{conversation.id}}"
+    let link = "/enquetenocanal {{conversation.id}}"
+    a_tag.text = link
+    a_tag_modal.text = link
     second_command_li.appendChild(a_tag)
   }
   else {
-    a_tag.text = "/enquetenogrupo {{conversation.id}}"
+    let link = "/enquetenogrupo {{conversation.id}}"
+    a_tag.text = link
+    a_tag_modal.text = link
     third_command_li.appendChild(a_tag)
   }
 }
