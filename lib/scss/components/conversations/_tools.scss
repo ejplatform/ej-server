@@ -1,4 +1,9 @@
 @import "../../config";
+@import "../../1_settings/spacing";
+@import "../../1_settings/typography";
+
+$modal-transparent-backgound: rgba(0, 0, 0, 0.4);
+$modal-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.35);
 
 .tools {
     width: 70vw;
@@ -556,7 +561,7 @@
 }
 
 .modal-background {
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: $modal-transparent-backgound;
     z-index: 1;
     position: fixed;
     width: 100%;
@@ -568,7 +573,7 @@
 .modal-mailing-preview {
     border-radius: 10px;
     background-color: white;
-    box-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.35);
+    box-shadow: $modal-shadow;
     padding: 1rem;
     height: 48rem;
     overflow: hidden;
@@ -686,6 +691,12 @@
 @media (max-width: 875px) {
     .tools-select {
         flex-grow: 1;
+    }
+    .tools-share {
+        flex-grow: 1;
+    }
+    .group-comments-content {
+        width: 100% !important;
     }
 }
 
@@ -805,7 +816,7 @@
     justify-content: space-between;
 }
 
-#telegram-eye-icon {
+.telegram-eye-icon {
     width: 18px;
     height: 12px;
     position: absolute;
@@ -857,5 +868,86 @@
     
     li {
         margin-bottom: 0.25rem;
+    }
+}
+
+.group-comments {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: $modal-transparent-backgound; /* Black w/ opacity */
+  }
+  
+  /* group-comments Content/Box */
+  .group-comments-content {
+    background: white;
+    opacity: 1 !important;
+    box-shadow: $modal-shadow;
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+    max-width: 930px;
+
+    table {
+        border-collapse: collapse;
+        table-layout:fixed;
+        border: 1px solid #999;
+    }
+      
+    td, th {
+        border-bottom: 1px solid #999;
+        padding: 0.5rem;
+        text-align: left;
+        white-space: wrap;
+        word-break: break-all;
+        font-size: $font-size-large;
+        font-weight: normal;
+    }
+
+    .header{
+        font-family: Roboto;
+        font-weight: bold;
+    }
+
+    .footer{
+        font-size: 14px;
+        line-height: 16px;
+        word-break: keep-all;
+        height: 38.5px;
+        vertical-align: bottom;
+
+    }
+    .command {
+        font-weight: 700;
+    }
+
+}
+.edit-pool-comments{
+    float: right;
+    margin-top: 30px;
+}
+
+.pools-comments-divider{
+    border-top: 1px solid #E5E5E5;
+    margin-right: -20px;
+    margin-left: -20px;
+    width: -moz-available;
+    margin-top: 30px
+}
+
+.pool-text{
+    margin-bottom: 10px;
+}
+
+.modal-without-trasparency{
+    :not(.group-comments-content) {
+        opacity: 1;
     }
 }
