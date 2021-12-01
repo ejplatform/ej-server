@@ -9,11 +9,16 @@ from django.urls import include, path, re_path
 from django.views import defaults as default_views
 from django.views.static import serve
 from rest_framework.documentation import include_docs_urls
+from rest_framework.routers import DefaultRouter
+from ej_tools.api import RasaConversationViewSet
 
 from ej import services
 from ej.fixes import unregister_admin
 
 unregister_admin.unregister_apps()
+
+api_router = DefaultRouter()
+api_router.register(r"rasa-conversations", RasaConversationViewSet, basename="rasa-conversations")
 
 
 #
@@ -74,6 +79,7 @@ def get_urlpatterns():
         *with_app("ej_experiments", "info/experiments/", namespace="experiments"),
         #
         #  REST API
+        path("api/v1/", include(api_router.urls)),
         path("api/", include(rest_api.urls)),
         path("api/v1/docs/", include_docs_urls(title="ej API Docs", public=False)),
         #

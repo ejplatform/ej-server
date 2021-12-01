@@ -1,8 +1,9 @@
 import requests
 import json
 from django.utils.translation import ugettext_lazy as _
-from boogie import models
-from boogie.rest import rest_api
+
+# from boogie import models
+from django.db import models
 from django.core.exceptions import ValidationError
 from django.shortcuts import redirect
 from requests import Request
@@ -11,7 +12,6 @@ from .constants import MAX_CONVERSATION_DOMAINS
 from .utils import prepare_host_with_https
 
 
-@rest_api(["conversation", "domain"])
 class RasaConversation(models.Model):
     """
     Allows correlation between a conversation and an instance of rasa
