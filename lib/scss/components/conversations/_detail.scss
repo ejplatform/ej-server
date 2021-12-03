@@ -57,6 +57,7 @@ $component-border-radius: size(config('ej.style.border-radius'));
         height: 2rem;
         line-height: 2rem;
         max-width: 100%;
+        min-width: 9em;
     }
     textarea {
         height: 4.5rem;
@@ -64,6 +65,10 @@ $component-border-radius: size(config('ej.style.border-radius'));
         line-height: 2.25rem;
         text-align: center;
     }
+}
+
+.side-space {
+    padding: 0 1.5em;
 }
 
 .comment-card, .comment-form {
