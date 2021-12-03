@@ -95,8 +95,8 @@ class SignatureFactory:
     @staticmethod
     def plans():
         return [
-            (SignatureFactory.LISTEN_TO_COMMUNITY, "Listen to community"),
-            (SignatureFactory.LISTEN_TO_CITY, "Listen to city"),
+            (SignatureFactory.LISTEN_TO_COMMUNITY, _("Listen to community")),
+            (SignatureFactory.LISTEN_TO_CITY, _("Listen to city")),
         ]
 
 

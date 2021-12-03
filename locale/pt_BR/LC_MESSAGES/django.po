@@ -145,7 +145,7 @@ msgstr "Engajamento"
 msgid "Aquisition"
 msgstr "Aquisição"
 
-#: src/ej_boards/apps.py:7 src/ej_boards/models.py:46
+#: src/ej_boards/apps.py:7 src/ej_boards/models.py:49
 msgid "Boards"
 msgstr "Murais"
 
@@ -159,56 +159,56 @@ msgstr "Você não pode alterar este valor depois"
 msgid "My Board"
 msgstr "Meu mural"
 
-#: src/ej_boards/models.py:22
+#: src/ej_boards/models.py:23
 msgid "Default"
 msgstr "Padrão"
 
-#: src/ej_boards/models.py:23
+#: src/ej_boards/models.py:24
 msgid "Alternative"
 msgstr "Alternativo"
 
-#: src/ej_boards/models.py:24
+#: src/ej_boards/models.py:25
 msgid "Grey"
 msgstr "Cinza"
 
-#: src/ej_boards/models.py:25
+#: src/ej_boards/models.py:26
 msgid "Green"
 msgstr "Verde"
 
-#: src/ej_boards/models.py:26
+#: src/ej_boards/models.py:27
 msgid "Orange"
 msgstr "Laranja"
 
-#: src/ej_boards/models.py:27
+#: src/ej_boards/models.py:28
 msgid "Purple"
 msgstr "Roxa"
 
-#: src/ej_boards/models.py:29
+#: src/ej_boards/models.py:30
 msgid "Slug"
 msgstr "Identificador"
 
-#: src/ej_boards/models.py:31 src/ej_conversations/models/conversation.py:48
+#: src/ej_boards/models.py:32 src/ej_conversations/models/conversation.py:48
 msgid "Title"
 msgstr "Título"
 
-#: src/ej_boards/models.py:32 src/ej_clusters/models/cluster.py:28
+#: src/ej_boards/models.py:33 src/ej_clusters/models/cluster.py:28
 #: src/ej_clusters/models/stereotype.py:27
 msgid "Description"
 msgstr "Descrição"
 
-#: src/ej_boards/models.py:33
+#: src/ej_boards/models.py:34
 msgid "Palette"
 msgstr "Paleta"
 
-#: src/ej_boards/models.py:34
+#: src/ej_boards/models.py:35
 msgid "Image"
 msgstr "Imagem"
 
-#: src/ej_boards/models.py:45
+#: src/ej_boards/models.py:48
 msgid "Board"
 msgstr "Mural"
 
-#: src/ej_boards/models.py:60
+#: src/ej_boards/models.py:63
 msgid "Slug already exists."
 msgstr "Identificador já existe."
 
@@ -667,7 +667,7 @@ msgstr "{n} de {m} comentários"
 msgid "Public conversations"
 msgstr "Conversas públicas"
 
-#: src/ej_conversations/routes.py:68
+#: src/ej_conversations/routes.py:69
 msgid "Participate voting and creating comments!"
 msgstr "Participe com votos e comentários!"
 
@@ -2284,6 +2284,15 @@ msgstr ""
 msgid "Request to generate a new password"
 msgstr "Pedido para gerar uma nova senha"
 
+#: src/ej_users/models.py:98
+msgid "Listen to community"
+msgstr "Ouça a Comunidade"
+
+#: src/ej_users/models.py:99
+#, fuzzy
+msgid "Listen to city"
+msgstr "Ouça a Cidade"
+
 #: src/ej_users/models.py:112
 msgid "email address"
 msgstr "endereço de email"
@@ -2477,6 +2486,7 @@ msgstr ""
 "serviços ou equipamentos públicos."
 
 #: src/ej/templates/jinja2/pages/home.jinja2:32
+#, fuzzy
 msgid "Listen to the people"
 msgstr "Escute a população"
 
@@ -2729,7 +2739,32 @@ msgstr "Desculpe, você não pode criar novos murais."
 msgid "Create a new board!"
 msgstr "Criar um novo mural!"
 
+#: src/ej_boards/jinja2/ej_boards/conversation-list.jinja2:15
+#, fuzzy
+msgid "My conversations"
+msgstr "Minhas Conversas"
+
+#: src/ej_boards/jinja2/ej_boards/conversation-list.jinja2:17
+#, fuzzy
+msgid "Total votes"
+msgstr "Total de votos"
+
 #: src/ej_boards/jinja2/ej_boards/conversation-list.jinja2:20
+#, fuzzy
+msgid "Total participants"
+msgstr "Total de participantes"
+
+#: src/ej_boards/jinja2/ej_boards/conversation-list.jinja2:23
+#, fuzzy
+msgid "Total conversations"
+msgstr "Total de conversas"
+
+#: src/ej_boards/jinja2/ej_boards/conversation-list.jinja2:27
+#, fuzzy
+msgid "Signature model"
+msgstr "Modelo de assinatura"
+
+#: src/ej_boards/jinja2/ej_boards/conversation-list.jinja2:33
 #, fuzzy, python-format
 msgid ""
 "In the current signature, you can create %(conversations_limit)s "
@@ -2737,7 +2772,7 @@ msgid ""
 msgstr ""
 "Na sua assinatura atual, você pode criar %(conversations_limit)s conversas."
 
-#: src/ej_boards/jinja2/ej_boards/conversation-list.jinja2:26
+#: src/ej_boards/jinja2/ej_boards/conversation-list.jinja2:39
 #: src/ej_conversations/jinja2/ej_conversations/includes/menu-list.jinja2:6
 msgid "New Conversation"
 msgstr "Nova conversa"

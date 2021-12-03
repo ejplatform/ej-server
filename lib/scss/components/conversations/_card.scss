@@ -97,7 +97,6 @@ $_card-bg: config('ej.conversation-card.bg-image');
     @include breakpoint('md') {
         display: flex;
         flex-wrap: wrap;
-        justify-content: center;
     }
 
     @include breakpoint('md') {
@@ -105,10 +104,70 @@ $_card-bg: config('ej.conversation-card.bg-image');
         display: flex;
 
         > * {
-            margin: size(0.5);
+            margin-top: size(0.5);
+            margin-bottom: size(0.5);
+            margin-right: size(1);
             > * {
                 border-radius: size(0.5);
             }
         }
     }
+}
+
+.statistics-card {
+    &-container {
+        width: 250px;
+        height: 144px;
+        background: $color-theme-brand-light;
+        border: 1px solid #FFFFFF;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        border-radius: 5px;
+        padding-left: 18px;
+    }
+    &-title {
+        padding-top: 24px;
+        padding-bottom: 18px;
+        text-align: start;
+        margin-bottom: unset;
+    }
+    &-value {
+        text-align: start;
+        font-size: 36px;
+        line-height: 42px;
+        font-weight: bold;
+    }
+
+}
+
+.cards-divider {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 26px;
+    margin-bottom: 23px;
+
+    row-gap: 23px;
+    column-gap: 38px;
+
+    @media only screen and (max-width: 560px) {
+        justify-content: center;
+    }
+}
+
+.signature-text {
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 21px;
+}
+
+.signature-link {
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 21px;
+    text-decoration: underline;
+}
+
+.board-statistics-container {
+    text-align: start;
 }
