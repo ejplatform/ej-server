@@ -13,10 +13,11 @@
                 {# CONVERSATION FORM #}
                 <h1 class="h2 text-accent center">{{ _('Conversation') }}</h1>
                 <p class="center">{% trans %}Please fill the details bellow.{% endtrans %}</p>
-
-                {{ form.non_field_errors() }}
-                {{ form.title.errors }}
-                <label>{{ form.title.label }}{{ form.title }}</label>
+                <div class="side-space">
+                    {{ form.non_field_errors() }}
+                    {{ form.title.errors }}
+                    <label>{{ form.title.label }}{{ form.title }}</label>
+                </div>
                 <legend>{{ form.title.help_text }}</legend>
 
 
@@ -28,7 +29,7 @@
                     {{ _('You can add as many comments as you want later.') }}
                 </p>
                 <input type="hidden" name="comments_count" value="3">
-                <div id="comment-list">
+                <div id="comment-list" class="side-space">
                     {% for i in range(1, 4) %}
                         <label>
                             {% trans %}Comment {{ i }}{% endtrans %}
