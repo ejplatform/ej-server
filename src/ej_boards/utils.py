@@ -62,3 +62,20 @@ def register_app_routes(app_routes, board_base_url, urlpatterns, route_name):
     base_path = board_base_url + app_routes.urlpatterns.base_path
     for route in app_routes.urlpatterns.routes:
         register_route(urlpatterns, route, base_path, route_name)
+
+
+def statistics(board):
+    """
+    Return a dictionary with basic statistics about board.
+    """
+    votes = 0
+    participants = 0
+    conversations = 0
+
+    for conversation in board.conversations:
+        stats = conversation.statistics()
+        votes += stats["votes"]["total"]
+        participants += stats["participants"]["voters"]
+        conversations += 1
+
+    return {"votes": votes, "participants": participants, "conversations": conversations}

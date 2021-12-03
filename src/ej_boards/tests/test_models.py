@@ -3,6 +3,7 @@ from ej_conversations import create_conversation
 from django.db import IntegrityError
 from ej_conversations.models.conversation import Conversation
 from ej_conversations.mommy_recipes import ConversationRecipes
+from ej_conversations.enums import Choice
 import pytest
 
 
@@ -60,3 +61,23 @@ class TestBoardModel(ConversationRecipes):
 
         assert "tag1" == board.tags[0].name
         assert "tag2" == board.tags[1].name
+
+    def test_board_statistics(self, mk_user):
+        user = mk_user(email="someuser@mail.com")
+        user2 = mk_user(email="someuser2@mail.com")
+        board = Board.objects.create(slug="board", owner=user, description="board")
+        conversation1 = create_conversation("foo", "conv1", user, board=board)
+        conversation2 = create_conversation("bar", "conv2", user, board=board)
+
+        comment = conversation1.create_comment(user, "ad", status="approved", check_limits=False)
+        comment2 = conversation2.create_comment(user, "ad2", status="approved", check_limits=False)
+
+        comment.vote(user, Choice.AGREE)
+        comment.vote(user2, Choice.AGREE)
+        comment2.vote(user2, Choice.AGREE)
+
+        statistics = board.statistics()
+
+        assert statistics["conversations"] == 2
+        assert statistics["votes"] == 3
+        assert statistics["participants"] == 3

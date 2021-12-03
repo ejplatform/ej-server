@@ -1,4 +1,4 @@
-{% extends 'ej_conversations/list.jinja2' %}
+{% extends 'base.jinja2' %}
 
 {% block metaOG2 %}
     <meta name="description" property="og:title" content="{{ board.title }}">
@@ -12,7 +12,21 @@
 {% block menu %}{% include 'ej_boards/includes/menu-board.jinja2' %}{% endblock %}
 
 {% block content %}
-<h1 class="h2 text-accent center margin-b3">{{ title }}</h1>
+<div class="divider board-statistics-container">
+    <h1 class="h2 text-accent">{{ _('My conversations') }}</h1>
+    <div class="cards-divider">
+        {% with value=board.statistics()["votes"], title=_('Total votes') %}
+            {% include 'ej_boards/includes/stats-card.jinja2' %}
+        {% endwith %}
+        {% with value=board.statistics()["participants"], title=_('Total participants') %}
+            {% include 'ej_boards/includes/stats-card.jinja2' %}
+        {% endwith %}
+        {% with value=board.statistics()["conversations"], title=_('Total conversations') %}
+            {% include 'ej_boards/includes/stats-card.jinja2' %}
+        {% endwith %}
+    </div>
+    <span class="signature-text">{{_('Signature model')}}: <a class="signature-link">{{request.user.get_signature_display()}}</a><span>
+</div>
 {%- if board.conversations.count() == 0 %}
     <div class="helptext helptext-center">{{ help_title }}</div>
 {% endif %}

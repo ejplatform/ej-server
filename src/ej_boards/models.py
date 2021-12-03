@@ -4,6 +4,7 @@ from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
+from .utils import statistics
 from model_utils.models import TimeStampedModel
 from boogie.rest import rest_api
 
@@ -32,6 +33,8 @@ class Board(TimeStampedModel):
     description = models.TextField(_("Description"), blank=True)
     palette = models.CharField(_("Palette"), max_length=10, choices=PALETTE_CHOICES, default="Blue")
     image = models.ImageField(_("Image"), blank=True, null=True)
+
+    statistics = statistics
 
     @property
     def tags(self):
