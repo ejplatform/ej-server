@@ -116,7 +116,7 @@ $_card-bg: config('ej.conversation-card.bg-image');
 
 .statistics-card {
     &-container {
-        width: 250px;
+        width: 230px;
         height: 144px;
         background: $color-theme-brand-light;
         border: 1px solid #FFFFFF;
@@ -132,7 +132,7 @@ $_card-bg: config('ej.conversation-card.bg-image');
     }
     &-value {
         text-align: start;
-        font-size: 36px;
+        font-size: 1.5rem;
         line-height: 42px;
         font-weight: bold;
     }
@@ -146,7 +146,7 @@ $_card-bg: config('ej.conversation-card.bg-image');
     margin-bottom: 23px;
 
     row-gap: 23px;
-    column-gap: 38px;
+    column-gap: 32px;
 
     @media only screen and (max-width: 560px) {
         justify-content: center;

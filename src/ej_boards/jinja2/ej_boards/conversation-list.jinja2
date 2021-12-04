@@ -25,8 +25,11 @@
             {% include 'ej_boards/includes/stats-card.jinja2' %}
         {% endwith %}
     </div>
-    <span class="signature-text">{{_('Signature model')}}: <a class="signature-link">{{request.user.get_signature_display()}}</a><span>
+    <div class="signature-text">{{_('Signature model')}}: <a
+            class="signature-link">{{request.user.get_signature_display()}}</a><div>
 </div>
+
+<hr>
 {%- if board.conversations.count() == 0 %}
     <div class="helptext helptext-center">{{ help_title }}</div>
 {% endif %}
