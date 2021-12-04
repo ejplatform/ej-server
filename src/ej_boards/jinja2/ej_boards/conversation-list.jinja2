@@ -12,7 +12,7 @@
 {% block menu %}{% include 'ej_boards/includes/menu-board.jinja2' %}{% endblock %}
 
 {% block content %}
-<div class="divider board-statistics-container">
+<div class="board-statistics-container">
     <h1 class="h2 text-accent">{{ _('My conversations') }}</h1>
     <div class="cards-divider">
         {% with value=board.statistics()["votes"], title=_('Total votes') %}
@@ -26,7 +26,7 @@
         {% endwith %}
     </div>
     <div class="signature-text">{{_('Signature model')}}: <a
-            class="signature-link">{{request.user.get_signature_display()}}</a><div>
+         class="signature-link">{{request.user.get_signature_display()}}</a></div>
 </div>
 
 <hr>
@@ -38,7 +38,7 @@
 {% endif %}
 
 {%- if request.user.has_perm('ej.can_edit_board', board) and  board.conversations.count() == 0%}
-    <div class="width-full margin-y4">
+    <div class="width-full margin-y4 center">
             <a class="is-primary button" href="{{ url('boards:conversation-create', board=board) }}">
                 {{ _('New Conversation') }}</a>
     </div>
