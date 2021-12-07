@@ -2,7 +2,7 @@
 EJ Platform
 ===========
 
-You can visit EJ website at https://ejplatform.org.
+You can visit EJ website at https://www.ejplatform.org.
 For detailed information on developing and using our system, you can access our documentation on:
 https://www.ejplatform.org/docs/.
 
