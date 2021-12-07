@@ -28,9 +28,13 @@ link é feita na Plataforma EJ pelo administrador da conversa.  Ao clicar no lin
 sua participação na coleta. Para gerar o link de participação, execute os seguintes passos:
 
 1. Como administrador, selecione uma conversa para realizar a coleta de opinião e, dentro do menu lateral dessa conversa, vá até a seção **Ferramentas**.
+
 2. Depois, entre na seção **Chatbot > Telegram** dessa conversa.
+
 3. Escolha qual dos bots disponíveis será utilizado para fazer a coleta. Basta selecionar um dos botões.
+
 4. Copie o texto e o link de participação presente no card **Bot de Opinião**, conforme mostra a figura. 
+
   * Também é possível copiar o texto e o link clicando no ícone de compartilhamento no canto superior direito. Nesse caso, se o celular ou outro dispositivo usado possuir compartilhamento nativo, o compartilhamento é feito por meio dessa ferramenta.
 
 O link gerado fica no seguinte formato de exemplo: *http://t.me/DudaEjBot?start=<ID da conversa>*.
@@ -44,13 +48,43 @@ Como iniciar uma conversa com a Duda?
 Para iniciar a coleta de opinião, basta o usuário clicar no link de participação.
 
 .. figure:: ../images/coleta-telegram.png 
+  :align: center
 
 
-Como obter mais informações sobre o ambiente de desenvolvimento?
-----------------------------------------------------------------
+Whatsapp
+==========================================
 
-Para saber mais detalhes sobre o ambiente de desenvolvimento, basta acessar o `repositório de implementação do bot <https://gitlab.com/pencillabs/ej/ej-bot#ej-bot>`_.
+Como gerar um link de participação?
+-----------------------------------
 
+Para fazer a coleta de opinião é necessário gerar um link de participação que será enviado para grupos ou pessoas específicas. A geração do 
+link é feita na Plataforma EJ pelo administrador da conversa.  Ao clicar no link gerado, o usuário do Whatsapp é direcionado para o bot, e inicia
+sua participação na coleta. Para gerar o link de participação, execute os seguintes passos:
+
+1. Como administrador, selecione uma conversa para realizar a coleta de opinião e, dentro do menu lateral dessa conversa, vá até a seção **Ferramentas**.
+
+2. Depois, entre na seção **Chatbot > Whatsapp** dessa conversa.
+
+3. Escolha qual dos bots disponíveis será utilizado para fazer a coleta. Basta selecionar um dos botões.
+
+4. Copie o texto e o link de participação presente no card **Bot de Opinião**, conforme mostra a figura. 
+
+  * Também é possível copiar o texto e o link clicando no ícone de compartilhamento no canto superior direito. Nesse caso, se o celular ou outro dispositivo usado possuir compartilhamento nativo, o compartilhamento é feito por meio dessa ferramenta.
+
+O link gerado fica no seguinte formato de exemplo: *https://api.whatsapp.com/send?phone=<Número de telefone>&text=start+<ID da conversa>*.
+
+.. figure:: ../images/ferramenta-chatbot.png 
+.. figure:: ../images/whatsapp-chatbot.png 
+
+Como iniciar uma conversa com a Duda no *Whatsapp*?
+-----------------------------------------------------
+
+Para iniciar a coleta de opinião, o usuário deve clicar no link de participação que possui uma mensagem inicial padrão no formato: *start <ID da conversa>* 
+
+A Duda precisa que o usuário envie essa mensagem para poder iniciar a conversa.   
+
+.. figure:: ../images/coleta-whatsapp.png
+  :align: center 
 
 Webchat
 ==========================================
@@ -95,12 +129,14 @@ Caso você queira integrar a Duda à uma instância do Rocket.chat, siga os pass
 
 
 1. Crie no Rocket.chat um usuário com as mesmas credenciais presentes no arquivo `bot/credentials.yml`, no respositório do ejBot;
+
   * Esse usuário deve ter o papel `bot`, atrelado a sua conta;
   * No `bot/credentials.yml` deve haver uma configuração apontanto para a instância do Rocket.chat;
 
 2. Crie um novo canal, e adicione o usuário bot como participante;
 
 3. Ainda no Rocket, Vá em Administração -> Integrações, e crie uma nova integração de saída (*Outgoing*);
+
   * No campo url, informe a url da instância do Rasa, por exemplo: https://rasaserver.pencillabs.com.br/webhooks/rocketchat/webhook
   * Preencha os outros campos, de acordo com o nome do canal que foi criado e o nome do usuário bot;
 
@@ -118,6 +154,7 @@ Livechat
 Para utilizar o bot no modo livechat do rocketchat é necessário fazer algumas configurações.
 
 1. Em Ominichannel > Gatilhos de Livechat, crie um novo gatilho:
+
   * Ative as opções Ativo e Rodar apenas uma vez por visitante;
   * Condition: Tempo de visitante no site;
   * Action - Envie uma mensagem: Escolha a opção "Agente personalizado". Logo abaixo digite o nome do agente do bot no rocketchat. Por fim coloque a mensagem de ` welcome` do bot. Depois clique em salvar.
@@ -125,6 +162,7 @@ Para utilizar o bot no modo livechat do rocketchat é necessário fazer algumas 
 .. figure:: ../images/ej-rasa-exemplo-gatilho.png
 
 2. Em Webhooks, caso não configurado, configure da seguinte forma:
+
   * URL do webhook: https://rasaserver.pencillabs.com.br/webhooks/rocketchat/webhook;
   * Token secreto: Insira o token de acesso;
   * Send Request on: Selecione Visitor Messages. Depois clique em salvar.
@@ -134,3 +172,8 @@ Para utilizar o bot no modo livechat do rocketchat é necessário fazer algumas 
 3. Para testar basta ir em Instalação do Livechat copiar o codigo no seu website.
 
 .. figure:: ../images/ej-rasa-livechat-install.png
+
+Como obter mais informações sobre o ambiente de desenvolvimento?
+====================================================================================
+Para saber mais detalhes sobre o ambiente de desenvolvimento, basta acessar o `repositório de implementação do bot <https://gitlab.com/pencillabs/ej/ej-bot#ej-bot>`_.
+
