@@ -5,6 +5,19 @@ CHANGELOG of EJPlatform releases
 Here you can follow all the fixes and new features on every EJPlatform release.
 
 
+2.18.0 release
+====================
+* Date: Dec 07, 2021
+* Features
+- Redirects user to conversation report after conversation creation;
+- Improves tools cards UI;
+- Improves tools pages navigation; 
+- Improves documentations;
+- Adds an option to preview poll comments on poll bot card;
+- Adds board statistics;
+- Fixes boca de lobo opinion component theme;
+- Removes django-boogie from ej_tools api; 
+
 2.17.0 release
 ====================
 * Date: Nov 23, 2021
