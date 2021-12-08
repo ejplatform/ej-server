@@ -33,12 +33,10 @@ class InstalledAppsConf(Base, EjOptions):
         "dj_rest_auth",
         "corsheaders",
         "django.contrib.auth",
-        # 'rest_auth.registration',
+        "django.contrib.messages",
+        "django.contrib.sites",
         "constance",
         "constance.backends.database",
-        # 'push_notifications',
-        # 'django_filters',
-        # 'allauth.socialaccount.providers.github',
     ]
 
     def get_django_contrib_apps(self):
