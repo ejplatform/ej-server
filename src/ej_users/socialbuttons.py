@@ -25,7 +25,8 @@ def social_buttons(request):
     Return a list of all active social buttons for the current request.
     """
     if apps.is_installed("allauth.socialaccount"):
-        active_apps = SocialApp.objects.values_list("provider", flat=True)
+        # TODO: Generates new credentials to Facebook login
+        active_apps = SocialApp.objects.exclude(provider="facebook").values_list("provider", flat=True)
         return [social_button(id_, request) for id_ in active_apps]
     else:
         return ()

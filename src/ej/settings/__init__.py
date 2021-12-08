@@ -54,7 +54,17 @@ class Conf(
     LOGIN_REDIRECT_URL = "/"
     ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
     ACCOUNT_EMAIL_VERIFICATION = "none"
-    SOCIALACCOUNT_PROVIDERS = {"facebook": {"SCOPE": ["email"], "METHOD": "oauth2"}}
+    SOCIALACCOUNT_PROVIDERS = {
+        "google": {
+            "SCOPE": [
+                "profile",
+                "email",
+            ],
+            "AUTH_PARAMS": {
+                "access_type": "online",
+            },
+        }
+    }
 
     # MANAGER CONFIGURATION
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#admins
@@ -75,12 +85,7 @@ class Conf(
     }
 
     REST_FRAMEWORK = {
-        "DEFAULT_AUTHENTICATION_CLASSES": (
-            "rest_framework.authentication.TokenAuthentication",
-            # If SessionAuthentication is enabled, a csrf cookie is always set,
-            # and token auth does not works.
-            # "rest_framework.authentication.SessionAuthentication",
-        ),
+        "DEFAULT_AUTHENTICATION_CLASSES": ("rest_framework.authentication.TokenAuthentication",),
         "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticatedOrReadOnly",),
         "DEFAULT_RENDERER_CLASSES": (
             "rest_framework.renderers.JSONRenderer",
@@ -92,15 +97,6 @@ class Conf(
         "DEFAULT_VERSION": "v1",
         "DEFAULT_SCHEMA_CLASS": "rest_framework.schemas.coreapi.AutoSchema",
     }
-
-    # REST_AUTH_REGISTER_SERIALIZERS = {
-    #     'REGISTER_SERIALIZER': 'ej_users.serializers.RegistrationSerializer'
-    # }
-
-    #
-    # Templates
-    #
-    ACCOUNT_TEMPLATE_EXTENSION = "jinja2"
 
     DB_HOST = os.getenv("DB_HOST", "db")
     if DB_HOST != "db":
