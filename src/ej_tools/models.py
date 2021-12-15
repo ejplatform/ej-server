@@ -368,3 +368,15 @@ class MauticClient:
         oauth2_service = MauticOauth2Service(ej_server_url, conversation_mautic)
         oauth2_url = oauth2_service.generate_oauth2_url()
         return redirect(oauth2_url)
+
+
+class WebchatHelper:
+    AVAILABLE_ENVIRONMENT_MAPPING = {
+        "http://localhost:8000": "http://localhost:5006/?token=thisismysecret",
+        "https://ejplatform.pencillabs.com.br/": "https://rasadefaultdev.pencillabs.com.br/?token=thisismysecret",
+        "https://www.ejplatform.org": "https://rasadefault.pencillabs.com.br/?token=thisismysecret",
+    }
+
+    @staticmethod
+    def get_rasa_domain(host):
+        return WebchatHelper.AVAILABLE_ENVIRONMENT_MAPPING.get(host)

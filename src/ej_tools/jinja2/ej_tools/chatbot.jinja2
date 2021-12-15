@@ -23,7 +23,7 @@
         <h3 class="h3 divider">{{_("Integration options")}}</h3>
         <span class="helptext">{{_("Integrate this conversation with one of the available collection channels.")}}</span>
         <div id="container" class="chatbotOptions">
-          {{ card_tools(static('/img/icons/talks.svg'), "Webchat", tool["description_webchat"],  conversation.url('conversation-tools:rasa'), "oversize") }}
+          {{ card_tools(static('/img/icons/talks.svg'), "Webchat", tool["description_webchat"],  conversation.url('conversation-tools:webchat'), "oversize") }}
           {{ card_tools(static('/img/logo/channel_telegram.svg'), "Telegram", tool["description_telegram"], conversation.url('conversation-tools:telegram') , "") }}
           {{ card_tools(static('/img/logo/channel_wpp.svg'), "Whatsapp", tool["description_whatsapp"], conversation.url('conversation-tools:whatsapp') , "") }}
         </div>

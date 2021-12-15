@@ -951,3 +951,37 @@ $modal-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.35);
         opacity: 1;
     }
 }
+
+.title-webchat-preview {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    padding-top: 30px;
+
+    button[type="submit"] {
+        background-color: transparent;
+        border-color: transparent;
+        color: #BABABA;
+        font-size: 15px;
+        font-weight: bold;
+        text-transform: capitalize;
+        padding: 0;
+    }
+
+    button:hover {
+        color: #052B47;
+        box-shadow: 0px 0px;
+        font-size: 15px;
+        font-weight: bold;
+        padding: 0;
+    }
+
+    #webchat-preview-form {
+        margin-bottom: -1rem;
+    }
+
+    #eye-icon-preview { 
+        color: #052B47;
+    }
+}

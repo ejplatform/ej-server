@@ -8,7 +8,7 @@ CONVERSATION_BOARD_URL = "/board-slug/conversations"
 
 class TestIntegrationsRoutes(ConversationRecipes):
     def __init__(self):
-        self.ROUTES = ["tools/", "tools/chatbot/", "tools/rasa/", "tools/telegram", "tools/whatsapp"]
+        self.ROUTES = ["tools/", "tools/chatbot/", "tools/webchat/", "tools/telegram", "tools/whatsapp"]
 
     def test_do_not_get_tools_routes(self, user_client, conversation_db):
         for route in self.ROUTES:

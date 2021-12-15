@@ -1,17 +1,17 @@
 import pytest
+import random
+from ej_users.models import User
 from django.db import IntegrityError
 from django.utils.translation import ugettext as _
-from django.test import TestCase
 from django.test.client import Client
-
 from ej_conversations.mommy_recipes import ConversationRecipes
-from ej_tools.models import RasaConversation
+from ej_tools.models import RasaConversation, WebchatHelper
 from ej_tools.forms import RasaConversationForm
-from ej_tools.routes import rasa
 
 ConversationRecipes.update_globals(globals())
 
 TEST_DOMAIN = "https://domain.com.br"
+HTTP_HOST = "docs.djangoproject.dev:8000"
 
 
 class TestRasaConversation(ConversationRecipes):
@@ -74,41 +74,48 @@ class TestRasaConversationForm(ConversationRecipes):
 
 
 class TestRasaConversationFormRoute(ConversationRecipes):
-    def test_post_rasa_conversation_valid_form(self, db, mk_conversation, rf, admin):
+    def test_post_rasa_conversation_valid_form(self, db, mk_conversation):
         conversation = mk_conversation()
 
-        request = rf.post(
-            conversation.get_absolute_url() + "/tools/rasa",
-            {"conversation": conversation.id, "domain": "http://domain.com.br"},
+        client = Client()
+        admin = User.objects.create_superuser("myemail@test.com", "password")
+        client.force_login(user=admin)
+        response = client.post(
+            conversation.get_absolute_url() + "tools/chatbot/webchat",
+            {"conversation": conversation.id, "domain": TEST_DOMAIN},
+            HTTP_HOST=HTTP_HOST,
         )
-        request.user = admin
-        response = rasa(request, conversation)
-        assert response["conversation_rasa_connections"]
-        assert response["conversation_rasa_connections"][0].domain == "http://domain.com.br"
-        assert response["conversation_rasa_connections"][0].conversation.id == conversation.id
 
-    def test_post_rasa_conversation_invalid_form(self, db, mk_conversation, rf, admin):
+        assert response.status_code == 200
+        assert RasaConversation.objects.filter(conversation=conversation, domain=TEST_DOMAIN).exists()
+
+    def test_post_rasa_conversation_invalid_form(self, db, mk_conversation):
         conversation = mk_conversation()
 
-        request = rf.post(
-            conversation.get_absolute_url() + "/tools/rasa",
-            {"conversation": conversation.id, "domain": "nope"},
+        client = Client()
+        admin = User.objects.create_superuser("myemail@test.com", "password")
+        client.force_login(user=admin)
+        invalid_domain = "nope"
+        response = client.post(
+            conversation.get_absolute_url() + "tools/chatbot/webchat",
+            {"conversation": conversation.id, "domain": invalid_domain},
+            HTTP_HOST=HTTP_HOST,
         )
-        request.user = admin
-        response = rasa(request, conversation)
-        assert not response["conversation_rasa_connections"]
-        assert not response["form"].is_valid()
+        response_content = response.content.decode("utf-8")
+        assert _("Enter a valid URL") in response_content
+        assert not RasaConversation.objects.filter(
+            conversation=conversation, domain=invalid_domain
+        ).exists()
 
-    def test_post_rasa_conversation_invalid_permission_form(self, db, mk_conversation, rf, user):
+    def test_post_rasa_conversation_invalid_permission_form(self, db, mk_conversation):
         conversation = mk_conversation()
-
-        request = rf.post(
-            conversation.get_absolute_url() + "/tools/rasa",
-            {"conversation": conversation.id, "domain": "http://domain.com.br"},
-        )
-        request.user = user
+        client = Client()
         with pytest.raises(PermissionError):
-            rasa(request, conversation)
+            client.post(
+                conversation.get_absolute_url() + "tools/chatbot/webchat",
+                {"conversation": conversation.id, "domain": "http://domain.com.br"},
+                HTTP_HOST=HTTP_HOST,
+            )
 
 
 class TestRasaConversationIntegrationsAPI(ConversationRecipes):
@@ -133,3 +140,21 @@ class TestRasaConversationIntegrationsAPI(ConversationRecipes):
         response = client.get(url)
         assert response.status_code == 200
         assert response.data == {}
+
+
+class TestWebchatHelper:
+    EJ_POSSIBLE_URLS = [
+        "http://localhost:8000",
+        "https://ejplatform.pencillabs.com.br/",
+        "https://www.ejplatform.org",
+    ]
+
+    def test_get_current_available_instance(self):
+        current_host = random.choice(TestWebchatHelper.EJ_POSSIBLE_URLS)
+        rasa_instance_url = WebchatHelper.get_rasa_domain(current_host)
+        assert rasa_instance_url
+        assert rasa_instance_url == WebchatHelper.AVAILABLE_ENVIRONMENT_MAPPING.get(current_host)
+
+    def test_if_instance_not_available(self):
+        rasa_instance_url = WebchatHelper.get_rasa_domain(HTTP_HOST)
+        assert not rasa_instance_url

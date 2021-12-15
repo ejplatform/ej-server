@@ -1,0 +1,60 @@
+<html>
+	<head></head>
+	<body>
+    {% if rasa_domain %}
+        <input type="hidden" id="socket-url" value="{{rasa_domain}}">
+    {% else %}
+      {% block content %}
+          <p id="instance-error-webchat">
+            {{_("Something went wrong! Check if you are accessing an official Pushing Together URL.")}}
+          </p>
+      {% endblock %}
+    {% endif %}
+  </body>
+	<script>!(function () {
+  localStorage.removeItem("chat_session");
+  let e = document.createElement("script"),
+    t = document.head || document.getElementsByTagName("head")[0];
+  socketEnviroment = document.getElementById("socket-url").value;
+  (e.src =
+    "https://cdn.jsdelivr.net/npm/rasa-webchat@1.0.1/lib/index.js"),
+    (e.async = !0),
+    (e.onload = () => {
+      window.WebChat.default(
+        {
+          initPayload: window.location.href,
+          title: "Duda",
+          socketUrl: socketEnviroment,
+          profileAvatar: "/static/img/icons/duda.png",
+          embedded: true
+        },
+        null
+      );
+    }),
+    t.insertBefore(e, t.firstChild);
+})();
+</script>
+<style>
+
+#rasaWebchatPro {
+  height: 100vh;
+}
+
+.rw-avatar {
+  width: 3rem !important;
+  height: 3rem !important;
+  border-radius: 100%;
+  margin-right: 6px;
+  position: relative;
+  bottom: 5px;
+}
+
+#main-content {
+  display: none;
+}
+
+#instance-error-webchat {
+  margin: 30px;
+} 
+</style>
+</html>

@@ -21,6 +21,7 @@ from .models import (
     MauticClient,
     ChatbotTelegramTool,
     ChatbotWhatsappTool,
+    WebchatHelper,
 )
 from ej_conversations import models
 from .table import Tools
@@ -140,15 +141,21 @@ def whatsapp(request, board, conversation, slug):
     }
 
 
-@urlpatterns.route(conversation_tools_chatbot_url + "/rasa")
-def rasa(request, conversation, **kwargs):
+@urlpatterns.route(conversation_tools_chatbot_url + "/webchat")
+def webchat(request, conversation, **kwargs):
     user_can_add = user_can_add_new_domain(request.user, conversation)
+    host = get_host_with_protocol(request)
+    request.session["host"] = host
+    webchat_preview_url = host + conversation.url("conversation-tools:webchat-preview")
+
+    if "webchat-preview" in request.POST:
+        RasaConversation.objects.get_or_create(conversation=conversation, domain=webchat_preview_url)
+        return redirect(conversation.url("conversation-tools:webchat-preview"))
 
     if request.method == "POST":
         form = RasaConversationForm(request.POST)
         if not user_can_add:
             raise PermissionError("user is not allowed to create conversation rasa connections")
-
         if form.is_valid():
             form.save()
             form = RasaConversationForm()
@@ -166,7 +173,14 @@ def rasa(request, conversation, **kwargs):
     }
 
 
-@urlpatterns.route(conversation_tools_chatbot_url + "/rasa/delete/<model:connection>")
+@urlpatterns.route(conversation_tools_chatbot_url + "/webchat/preview")
+def webchat_preview(request, board, conversation, slug):
+    host = request.session.get("host")
+    rasa_domain = WebchatHelper.get_rasa_domain(host)
+    return {"conversation": conversation, "rasa_domain": rasa_domain}
+
+
+@urlpatterns.route(conversation_tools_chatbot_url + "/webchat/delete/<model:connection>")
 def delete_connection(request, board, conversation, slug, connection):
     user = request.user
 
@@ -177,7 +191,7 @@ def delete_connection(request, board, conversation, slug, connection):
     else:
         raise PermissionError("user is not allowed to delete conversation rasa connections")
 
-    return redirect(conversation.url("conversation-tools:rasa"))
+    return redirect(conversation.url("conversation-tools:webchat"))
 
 
 @urlpatterns.route(

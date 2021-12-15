@@ -16,18 +16,20 @@
     <h1 class="h2 text-accent"><a href="{{ conversation.url('conversation-tools:index') }}">{{_("Tools")}}</a>
         > <a href="{{ conversation.url('conversation-tools:chatbot') }}">{{ tool["integration"] }}</a>
         > Webchat</h1>
-    <span>{{tool["description"] }}</span>
     </div>
     <p id="description-info">
-        {{_("To integrate EJ chatbot with your site, enter the site domain in the field below.")}}
-        {{_("When a new user reaches your site, the webchat will send to EJ the location where it is hosted, and will receive back this conversation.")}}
+        {{_("Collect opinions using EJ's chatbot infrastructure.")}}<br>
+        {{_("With Webchat you can perform collections on web pages using our guided bot.")}}
     </p>
-    <p>   
-        {{_("All chatbots that have access to this conversation are also displayed here.")}}
-    </p>
-
-    <h3 class="h3 divider">{{_("Linked websites")}}</h3>
-    <span class="helptext">{{_("Manage the integrated links of this conversation.")}}</span>
+    <br>
+    <div class=title-webchat-preview>
+        <div><span class="h3">{{_("Linked websites")}}</h3></div>
+        <form method="POST" id="webchat-preview-form">
+            {{ csrf_input }}
+            <i id="eye-icon-preview" class="fas fa-eye"></i><button type="submit" name="webchat-preview">{{_("Visualize")}}</button>
+        </form>
+    </div>
+    <span class="helptext">{{_("Integrate a new page with the webchat or click <b>view</b> to use our standard integration.")}}</span>
         {% if conversation_rasa_connections %}
             <table id="template-table">
                 <tr class="table-header">
@@ -43,7 +45,7 @@
                     </td>
                     {% if is_valid_user %}
                         <td id="td-remove">
-                            <a href="{{ conversation.url('conversation-tools:rasa') }}/delete/{{connection.id}}"><i class="fas fa-trash-restore"></i></a><br>
+                            <a href="{{ conversation.url('conversation-tools:webchat') }}/delete/{{connection.id}}"><i class="fas fa-trash-restore"></i></a><br>
                         </td>
                     {% endif %}
                 </tr>
