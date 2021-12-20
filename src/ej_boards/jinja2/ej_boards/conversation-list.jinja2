@@ -6,7 +6,7 @@
     <meta name="twitter:title" content="{{ board.title }}">
 {% endblock metaOG2 %}
 
-{% set main_class = "form-container" %}
+{% set main_class = "board-container" %}
 {% set body_class = 'body theme-' + board.palette %}
 
 {% block menu %}{% include 'ej_boards/includes/menu-board.jinja2' %}{% endblock %}
@@ -36,20 +36,23 @@
         {% endwith %}
     </div>
     <div class="signature-text">{{_('Signature model')}}: <a
-         class="signature-link">{{board.owner.get_signature_display()}}</a></div>
+         class="help-text signature-link">{{board.owner.get_signature_display()}}</a>
+
+    </div>
+    {% if not (request.user.is_staff or request.user.is_superuser) %} 
+        <div class="helptext">{% trans %}In the current signature, you can create <span
+                class="text-accent">{{conversations_limit}}</span> conversations.{% endtrans %}{{ '
+            ' }}</div>
+    {% endif %}
 
     {%- if request.user.has_perm('ej.can_edit_board', board) and request.user.has_perm('ej.can_add_conversation') %}
         <a class="is-primary button square" href="{{ url('boards:conversation-create', board=board) }}">{{ _('New conversation') }}</a>
     {% endif %}
-
 </div>
 
 <hr>
-{% if not (request.user.is_staff or request.user.is_superuser) %} 
-    <span class="helptext">{% trans %}In the current signature, you can create {{conversations_limit}} conversations.{% endtrans %}{{ ' ' }}</span>
-{% endif %}
 
-    <div class="alternate-cards"> 
+    <div class="alternate-cards">
         {% for conversation in conversations %}
             <div class="margin-y3">{{ conversation|role('card',url=conversation.url('report:general-report')) }}</div>
         {% endfor %}

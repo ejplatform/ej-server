@@ -9,11 +9,13 @@
     text-align: center;
 }
 
+.board-container {
+    margin: 0 1.5rem 1rem 1.5rem;
+}
+
 .form-container {
     margin: 0 auto;
     max-width: 70rem;
-    padding: 0 size(1);
-    text-align: center;
     width: 100%;
 
     label {

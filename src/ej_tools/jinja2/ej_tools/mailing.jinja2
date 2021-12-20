@@ -8,6 +8,7 @@
 {% endblock metaOG2 %}
 
 {% block _menu %} {{ menu(request.user, board_palette) }} {% endblock %}
+{% set main_class = "board-container" %}
 
 {% block content %}
 <div class="tools">
@@ -16,7 +17,7 @@
 		<h1 class="h2 text-accent">
 		<a href="{{ conversation.url('conversation-tools:index') }}">{{_("Tools")}}</a>
 		> {{ tool["integration"] }}</h1>
-		<span>{{tool["description"] }}</span>
+		<span class="helptext">{{tool["description"] }}</span>
 	</div>
 	<div>
 		<div class="tools-section">
@@ -34,6 +35,7 @@
 						{{form.theme}}
 					</section>
 
+					<section >
 					<h3 class="h3 divider" style="display: flex;justify-content: space-between;">
 						{{ _('Custom fields') }}
 						<div class="display-down" onclick="showSection(event.target.checked, 'custom-field-section');">
@@ -41,15 +43,16 @@
 							<label for="isexpanded1"><i class="fa fa-chevron-down"></i></label>
 						</div>
 					</h3>
-					<span class="helptext"> </span>
 					<span class="helptext">{{_("Changes fields like comment and title.")}}</span>
-					<section id="custom-field-section" style="display: none">
+					<div id="custom-field-section" style="display: none">
 						<label>{{form.custom_title.label}}</label>
 						{{form.custom_title}}
 						<label>{{form.custom_comment.label}}</label>
 						{{form.custom_comment}}
+					</div>
 					</section>
 
+					<section>
 					<h3 style="display: flex;justify-content: space-between;" class="h3 divider">
 						{{_('Opinion Component')}}
 						<div class="display-down" onclick="showSection(event.target.checked, 'component-opinion-section');">
@@ -58,9 +61,10 @@
 						</div>
 					</h3>
 					<span class="helptext" style="display: block;">{{_("Redirect your participant to a page with the integrated opinion component. The vote given in the email will be processed automatically by the component.")}}</span>
-					<section id="component-opinion-section" style="display: none">
+					<div id="component-opinion-section" style="display: none">
 						<label id="custom-domain-label">{{form.is_custom_domain.label}}</label>
 						<input name="custom-domain" id="domain-input" type="text" placeholder="https://example.com">
+					</div>
 					</section>
 					
 					<input type="hidden" id="token" name="csrfmiddlewaretoken" value="{{ csrf_token }}">

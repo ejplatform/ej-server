@@ -10,7 +10,7 @@ class Tools:
             {
                 "integration": _("Mailing campaign"),
                 "description": _(
-                    "Generates a html template of this conversation, for mailing marketing campaigns."
+                    "Generates a html template from this conversation and send it by email to your audience. Allows redirect the user to the opinion component or webchat."
                 ),
                 "link": self.conversation.url("conversation-tools:mailing"),
                 "about": "/docs/?page=user-docs/tools-mail-template.html",
