@@ -20,8 +20,10 @@
 
 
 {% block form_footer %}
-    <hr class="width-2/3 margin-y2">
-    <div class="bold margin-y2" aria-hidden="true">{{ _(settings.EJ_REGISTER_TEXT) }}</div>
-    <p><a class="button" href="{{ url('auth:register') + next }}" secondary aria-label="{{ _('Create your account!') }}">{{ _('Register now!') }}</a></p>
+    <hr class="width-2/3 margin-y2 margin-auto">
+    <div class="bold margin-y2 center" aria-hidden="true">
+        <span>{{ _(settings.EJ_REGISTER_TEXT) }}</span>
+        <p class="margin-y2"><a class="button" href="{{ url('auth:register') + next }}" secondary aria-label="{{ _('Create your account!') }}">{{ _('Register now!') }}</a></p>
+    </div>
 {% endblock %}
 

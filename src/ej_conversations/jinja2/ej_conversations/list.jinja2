@@ -1,5 +1,5 @@
 {% extends 'base.jinja2' %}
-{% set main_class = main_class|default('container pad-x0') %}
+{% set main_class = "board-container" %}
 {% block menu %}
     {% if request.user.is_authenticated %}
         {% include 'ej_boards/includes/menu-board.jinja2' %}
@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block content %}
-<h1 class="h2 text-accent center margin-b3">{{ title }}</h1>
+<h1 class="h2 text-accent margin-b3"> {{ title }}</h1>
 <p class="measure center margin-xauto">{% trans %}{% endtrans %}</p>
     <div class="alternate-cards">
         {% for conversation in conversations %}

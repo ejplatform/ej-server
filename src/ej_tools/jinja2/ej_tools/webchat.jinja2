@@ -8,6 +8,7 @@
 {% endblock metaOG2 %}
 
 {% block _menu %} {{ menu(request.user, board_palette) }} {% endblock %}
+{% set main_class = "board-container" %}
 
 {% block content %}
 <div class="tools">
@@ -16,14 +17,14 @@
     <h1 class="h2 text-accent"><a href="{{ conversation.url('conversation-tools:index') }}">{{_("Tools")}}</a>
         > <a href="{{ conversation.url('conversation-tools:chatbot') }}">{{ tool["integration"] }}</a>
         > Webchat</h1>
+    <span class="helptext">{{tool["description"] }}</span>
+    <span class="helptext" id="description-info">
+        {{_("To integrate EJ chatbot with your site, enter the site domain in the field below.")}}
+        {{_("When a new user reaches your site, the webchat will send to EJ the location where it is hosted, and will receive back this conversation. All chatbots that have access to this conversation are also displayed here.")}}
     </div>
-    <p id="description-info">
-        {{_("Collect opinions using EJ's chatbot infrastructure.")}}<br>
-        {{_("With Webchat you can perform collections on web pages using our guided bot.")}}
-    </p>
-    <br>
+
     <div class=title-webchat-preview>
-        <div><span class="h3">{{_("Linked websites")}}</h3></div>
+        <h3 class="h3 divider">{{_("Linked websites")}}</h3>
         <form method="POST" id="webchat-preview-form">
             {{ csrf_input }}
             <i id="eye-icon-preview" class="fas fa-eye"></i><button type="submit" name="webchat-preview">{{_("Visualize")}}</button>

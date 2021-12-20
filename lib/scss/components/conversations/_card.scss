@@ -147,23 +147,16 @@ $_card-bg: config('ej.conversation-card.bg-image');
 
     row-gap: 23px;
     column-gap: 32px;
-
-    @media only screen and (max-width: 560px) {
-        justify-content: center;
-    }
 }
 
 .signature-text {
-    font-size: 18px;
+    font-size: 1rem;
     font-style: normal;
     font-weight: 400;
     line-height: 21px;
 }
 
 .signature-link {
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 700;
     line-height: 21px;
     text-decoration: underline;
 }

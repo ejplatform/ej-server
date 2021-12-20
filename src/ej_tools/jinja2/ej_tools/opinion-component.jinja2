@@ -5,6 +5,7 @@
     <meta property="og:description" content="Area de integração da EJ com outras ferramentas.">
 
 {% endblock metaOG2 %}
+{% set main_class = "board-container" %}
 {% block _menu %} {{ menu(request.user, board_palette) }} {% endblock %}
 
 {% block content %}
@@ -13,7 +14,7 @@
 	<div class="tools-title">
 		<h1 class="h2 text-accent"><a href="{{ conversation.url('conversation-tools:index') }}">{{_("Tools")}}</a>
 		 > {{ tool["integration"] }}</h1>
-		<span>{{tool["description"] }}</span>
+		<span class="helptext">{{tool["description"] }}</span>
 	</div>
 	<div class="tools-section">
 		<div class="tools-content">
@@ -31,8 +32,9 @@
 						<span class="h3"> 
 							{{form.theme.label}}
 						</span>
-						<div id="preview-option">
-							<i id="eye-icon" class="fas fa-eye"></i><input id="visualize-btn" type="submit" name="preview" value="{{_('Visualize')}}">
+						<div id="preview-option" onclick="preview()">
+							<i id="eye-icon" class="fas fa-eye"></i>
+							<span> {{_('Visualize')}}</span>
 						</div>
 					</div>
 					<span class="helptext">{{_("Selects a color palette for the component style.")}}</span>
@@ -95,6 +97,10 @@
 	function generateScript() {
 		event.preventDefault();
 		document.getElementById('opinion-component-form').submit();
+	}
+
+	function preview() {
+		window.location.href ="{{conversation.url('conversation-tools:opinion-component-preview')}}";
 	}
 </script>
 {% endblock %}

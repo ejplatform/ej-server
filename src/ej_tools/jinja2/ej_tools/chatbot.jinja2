@@ -9,6 +9,7 @@
 {% endblock metaOG2 %}
 
 {% block _menu %} {{ menu(request.user, board_palette) }} {% endblock %}
+{% set main_class = "board-container" %}
 
 {% block content %}
 <div class="tools">
@@ -17,7 +18,7 @@
     <div class="tools-title">
       <h1 class="h2 text-accent"><a href="{{ conversation.url('conversation-tools:index') }}">{{_("Tools")}}</a>
         > {{ tool["integration"] }}</h1>
-      <span>{{tool["description_chatbots"] }}</span>
+      <span class="helptext">{{tool["description_chatbots"] }}</span>
     </div>
       <div class="tools-content">
         <h3 class="h3 divider">{{_("Integration options")}}</h3>

@@ -8,6 +8,7 @@
 {% endblock metaOG2 %}
 
 {% block _menu %} {{ menu(request.user, board_palette) }} {% endblock %}
+{% set main_class = "board-container" %}
 
 {% block content %}
 <div class="tools">
@@ -16,7 +17,7 @@
       <h1 class="h2 text-accent"><a href="{{ conversation.url('conversation-tools:index') }}">{{_("Tools")}}</a>
         > <a href="{{ conversation.url('conversation-tools:chatbot') }}">{{ tool["integration"] }}</a>
         > Whatsapp </h1>
-      <span>{{ _("Collect opinions using EJ's chatbot, also known as Duda. Allows you to collect the opinion of whatsapp users. To make the collection available, forward the participation link to groups, channels or directly in the user's private chat.") }}</span>
+      <span class="helptext">{{ _("Collect opinions using EJ's chatbot, also known as Duda. Allows you to collect the opinion of whatsapp users. To make the collection available, forward the participation link to groups, channels or directly in the user's private chat.") }}</span>
     </div>
     <h3 class="h3 divider">{{_("Collect Bot")}}</h3>
     <span class="helptext">{{ _("Share the participation link to start the collection.") }}</span>
