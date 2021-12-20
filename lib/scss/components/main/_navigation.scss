@@ -492,3 +492,20 @@ body {
         right: unset;
     }
 }
+
+
+#edit-board { 
+    display: flex;
+
+    h1 {
+        margin-bottom: 0.1rem;
+    }
+    i {
+        font-size: 1rem;
+        padding: 37px 0 0 5px;
+    }
+}
+
+.board-helptext {
+    max-width: 580px;
+}

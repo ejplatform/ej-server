@@ -2729,7 +2729,6 @@ msgid "Create Board"
 msgstr "Criar mural"
 
 #: src/ej_boards/jinja2/ej_boards/board-edit.jinja2:3
-#: src/ej_boards/jinja2/ej_boards/includes/menu-board.jinja2:19
 msgid "Edit board"
 msgstr "Editar mural"
 
@@ -2768,32 +2767,37 @@ msgstr "Desculpe, você não pode criar novos murais."
 msgid "Create a new board!"
 msgstr "Criar um novo mural!"
 
-#: src/ej_boards/jinja2/ej_boards/conversation-list.jinja2:16
+#: src/ej_boards/jinja2/ej_boards/conversation-list.jinja2:17
 #, fuzzy
 msgid "My conversations"
 msgstr "Minhas Conversas"
 
-#: src/ej_boards/jinja2/ej_boards/conversation-list.jinja2:18
+#: src/ej_boards/jinja2/ej_boards/conversation-list.jinja2:24
 #, fuzzy
 msgid "Total votes"
 msgstr "Total de votos"
 
-#: src/ej_boards/jinja2/ej_boards/conversation-list.jinja2:21
+#: src/ej_boards/jinja2/ej_boards/conversation-list.jinja2:27
 #, fuzzy
 msgid "Total participants"
 msgstr "Total de participantes"
 
-#: src/ej_boards/jinja2/ej_boards/conversation-list.jinja2:24
+#: src/ej_boards/jinja2/ej_boards/conversation-list.jinja2:30
 #, fuzzy
 msgid "Total conversations"
 msgstr "Total de conversas"
 
-#: src/ej_boards/jinja2/ej_boards/conversation-list.jinja2:28
+#: src/ej_boards/jinja2/ej_boards/conversation-list.jinja2:34
 #, fuzzy
 msgid "Signature model"
 msgstr "Modelo de assinatura"
 
-#: src/ej_boards/jinja2/ej_boards/conversation-list.jinja2:37
+#: src/ej_boards/jinja2/ej_boards/conversation-list.jinja2:38
+#, fuzzy
+msgid "New conversation"
+msgstr "Nova conversa"
+
+#: src/ej_boards/jinja2/ej_boards/conversation-list.jinja2:48
 #, fuzzy, python-format
 msgid ""
 "In the current signature, you can create %(conversations_limit)s "
@@ -2801,26 +2805,10 @@ msgid ""
 msgstr ""
 "Na sua assinatura atual, você pode criar %(conversations_limit)s conversas."
 
-#: src/ej_boards/jinja2/ej_boards/conversation-list.jinja2:43
-#: src/ej_conversations/jinja2/ej_conversations/includes/menu-list.jinja2:6
-msgid "New Conversation"
-msgstr "Nova conversa"
-
 #: src/ej_boards/jinja2/ej_boards/includes/menu-board.jinja2:4
 #: src/ej_boards/jinja2/ej_boards/includes/menu.jinja2:6
 msgid "New board"
 msgstr "Novo mural"
-
-#: src/ej_boards/jinja2/ej_boards/includes/menu-board.jinja2:16
-#: src/ej_boards/jinja2/ej_boards/includes/menu-board.jinja2:17
-#, fuzzy
-msgid "Administration"
-msgstr "Administração"
-
-#: src/ej_boards/jinja2/ej_boards/includes/menu-board.jinja2:21
-#, fuzzy
-msgid "New conversation"
-msgstr "Nova conversa"
 
 #: src/ej_boards/jinja2/ej_boards/includes/menu.jinja2:4
 msgid "Manage boards"
@@ -3212,6 +3200,10 @@ msgstr "Nuvem de pontos"
 #: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:38
 msgid "Back to conversations"
 msgstr "Voltar para conversas"
+
+#: src/ej_conversations/jinja2/ej_conversations/includes/menu-list.jinja2:6
+msgid "New Conversation"
+msgstr "Nova conversa"
 
 #: src/ej_dataviz/jinja2/ej_dataviz/scatter.jinja2:7
 msgid "Opinion profiles"
@@ -4397,6 +4389,10 @@ msgstr "Autenticação"
 #, fuzzy
 #~ msgid "Manage the integrated links of this conversation."
 #~ msgstr "Gerencie os domínios integrados à esta conversa."
+
+#, fuzzy
+#~ msgid "Administration"
+#~ msgstr "Administração"
 
 #, fuzzy
 #~ msgid "Back to tools"

@@ -13,7 +13,17 @@
 
 {% block content %}
 <div class="board-statistics-container">
-    <h1 class="h2 text-accent">{{ _('My conversations') }}</h1>
+    <div id="edit-board">
+        <h1 class="h2 text-accent">{{ board.title}}</h1>
+
+        {%- if request.user.has_perm('ej.can_edit_board', board) %}
+            <a href="{{ url('boards:board-edit', board=board) }}"><i class="fas fa-pen"></i></a>
+        {% endif %}
+
+    </div>
+    {%- if board.conversations.count() == 0 %}
+        <div class="helptext board-helptext">{{ help_title }}</div>
+    {% endif %}
     <div class="cards-divider">
         {% with value=board.statistics()["votes"], title=_('Total votes') %}
             {% include 'ej_boards/includes/stats-card.jinja2' %}
@@ -27,24 +37,19 @@
     </div>
     <div class="signature-text">{{_('Signature model')}}: <a
          class="signature-link">{{board.owner.get_signature_display()}}</a></div>
+
+    {%- if request.user.has_perm('ej.can_edit_board', board) and request.user.has_perm('ej.can_add_conversation') %}
+        <a class="is-primary button square" href="{{ url('boards:conversation-create', board=board) }}">{{ _('New conversation') }}</a>
+    {% endif %}
+
 </div>
 
 <hr>
-{%- if board.conversations.count() == 0 %}
-    <div class="helptext helptext-center">{{ help_title }}</div>
-{% endif %}
 {% if not (request.user.is_staff or request.user.is_superuser) %} 
     <span class="helptext">{% trans %}In the current signature, you can create {{conversations_limit}} conversations.{% endtrans %}{{ ' ' }}</span>
 {% endif %}
 
-{%- if request.user.has_perm('ej.can_edit_board', board) and  board.conversations.count() == 0%}
-    <div class="width-full margin-y4 center">
-            <a class="is-primary button" href="{{ url('boards:conversation-create', board=board) }}">
-                {{ _('New Conversation') }}</a>
-    </div>
-{% endif %}
-
-    <div class="alternate-cards">
+    <div class="alternate-cards"> 
         {% for conversation in conversations %}
             <div class="margin-y3">{{ conversation|role('card',url=conversation.url('report:general-report')) }}</div>
         {% endfor %}
