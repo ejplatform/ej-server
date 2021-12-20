@@ -12,17 +12,6 @@
         {% endfor %}
     </ul>
 </nav>
-{% if board %}
-<nav title="{{ _('Administration') }}">
-    <h3>{{ _('Administration') }}</h3>
-    <ul>
-        <li><a href="{{ url('boards:board-edit', board=board) }}">{{ _('Edit board') }}</a></li>
-        {%- if request.user.has_perm('ej.can_edit_board', board) and request.user.has_perm('ej.can_add_conversation') %}
-            <li><a href="{{ url('boards:conversation-create', board=board) }}">{{ _('New conversation') }}</a></li>
-        {% endif %}
-    </ul>
-</nav>
-{% endif %}
 
 <script>
     let url = window.location.href.split("/");
