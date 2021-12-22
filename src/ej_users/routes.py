@@ -84,7 +84,6 @@ def register(request):
 
         try:
             user = User.objects.create_user(email, password, name=name)
-            User.create_user_default_board(user)
             log.info(f"user {user} ({email}) successfully created")
         except IntegrityError as ex:
             form.add_error(None, str(ex))
