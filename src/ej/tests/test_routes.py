@@ -1,13 +1,15 @@
+from django.conf import settings
 from ej.testing import UrlTester
 from ej import routes
-from django.conf import settings
+from constance import config
 from django.utils.text import slugify
 from django.contrib.auth.models import AnonymousUser
+import pytest
 
 
 class TestBasicUrls(UrlTester):
     # Urls visible to every one (even without login)
-    public_urls = ["/start/"]
+    public_urls = ["/login/"]
 
 
 class TestViews:
@@ -20,9 +22,10 @@ class TestViews:
         assert response.status_code == 302
         assert response.url == f"/{user_default_board}/conversations/"
 
+    @pytest.mark.django_db
     def test_index_anonymous_user(self, rf):
         request = rf.get("", {})
         request.user = AnonymousUser()
         response = routes.index(request)
         assert response.status_code == 302
-        assert response.url == settings.EJ_ANONYMOUS_HOME_PATH
+        assert response.url == config.EJ_LANDING_PAGE_DOMAIN

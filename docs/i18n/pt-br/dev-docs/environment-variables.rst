@@ -74,9 +74,6 @@ EJ_LOGIN_TITLE_TEXT (Login in EJ):
 Override paths
 --------------
 
-EJ_ANONYMOUS_HOME_PATH (/start/):
-    Redirect users to this path before login.
-
 EJ_USER_HOME_PATH (/conversations/):
     Redirect logged users to this path.
 
