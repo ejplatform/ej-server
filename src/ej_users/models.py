@@ -6,6 +6,7 @@ from constance import config
 from django.contrib.auth.models import Permission
 from boogie.apps.users.models import AbstractUser
 from boogie.rest import rest_api
+from django.utils.text import slugify
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
@@ -132,7 +133,7 @@ class User(AbstractUser):
         from ej_boards.models import Board
 
         try:
-            board_default = Board.objects.get(slug=instance.email)
+            board_default = Board.objects.get(slug=slugify(instance.email))
         except Exception:
             board_default = Board(
                 slug=instance.email,
@@ -145,8 +146,6 @@ class User(AbstractUser):
         return board_default
 
     def default_board_url(self):
-        from django.utils.text import slugify
-
         return "/" + slugify(self.email[:50]) + "/conversations"
 
 
