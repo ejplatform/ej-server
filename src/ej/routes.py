@@ -3,6 +3,7 @@ import os
 from pprint import pformat
 from boogie.router import Router
 from django.conf import settings
+from constance import config
 from django.contrib.auth import get_user_model
 from django.contrib.flatpages.models import FlatPage
 from django.http import Http404
@@ -27,7 +28,7 @@ def index(request):
         user_default_board = slugify(request.user.email)
         return redirect(f"/{user_default_board}/conversations/")
     else:
-        return redirect(settings.EJ_ANONYMOUS_HOME_PATH)
+        return redirect(config.EJ_LANDING_PAGE_DOMAIN)
 
 
 @urlpatterns.route("start/")

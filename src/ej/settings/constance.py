@@ -41,6 +41,11 @@ class ConstanceConf(Conf):
                 "State choices for state field in profile",
                 "choicesfield",
             ),
+            "EJ_LANDING_PAGE_DOMAIN": (
+                self.EJ_LANDING_PAGE_DOMAIN,
+                "Redirect url for when the user is not logged in to the platform",
+                "charfield",
+            ),
         }
 
     CONSTANCE_ADDITIONAL_FIELDS = {
@@ -59,6 +64,7 @@ class ConstanceConf(Conf):
             "EJ_LISTEN_TO_CITY_SIGNATURE_CONVERSATIONS_LIMIT",
             "EJ_LISTEN_TO_CITY_SIGNATURE_VOTE_LIMIT",
             "EJ_PROFILE_STATE_CHOICES",
+            "EJ_LANDING_PAGE_DOMAIN",
         )
     }
 
@@ -100,3 +106,4 @@ class ConstanceConf(Conf):
         ),
         name="{attr}",
     )
+    EJ_LANDING_PAGE_DOMAIN = env("/login", name="{attr}")

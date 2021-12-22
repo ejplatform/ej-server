@@ -6,7 +6,6 @@ print("Executing custom settings for theme CPA")
 
 # Override EJ configurtions
 CPA_SHOW_START_PAGE_EXPLANATION_BANNER = env("CPA_SHOW_START_PAGE_EXPLANATION_BANNER", default=False)
-EJ_ANONYMOUS_HOME_PATH = env("EJ_ANONYMOUS_HOME_PATH", default="/start/")
 EJ_PAGE_TITLE = env("EJ_PAGE_TITLE", default="Plataforma CPA")
 EJ_REGISTER_TEXT = env("EJ_REGISTER_TEXT", default="Não faz parte da Plataforma CPA?")
 EJ_LOGIN_TITLE_TEXT = env(
