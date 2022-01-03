@@ -83,7 +83,6 @@ def opinion_component(request, conversation, **kwargs):
     if "preview" in request.POST:
         form.is_valid()
         request.session["theme"] = form.cleaned_data["theme"] or "icd"
-        request.session["authentication_type"] = form.cleaned_data["authentication_type"]
         return redirect(conversation.url("conversation-tools:opinion-component-preview"))
 
     return {
@@ -100,10 +99,8 @@ def opinion_component(request, conversation, **kwargs):
 def opinion_component_preview(request, board, conversation, slug):
     host = get_host_with_protocol(request)
     theme = request.session.get("theme")
-    auth_type = request.session.get("authentication_type")
     return {
         "conversation": conversation,
-        "authentication_type": auth_type,
         "theme": theme,
         "host": host,
     }

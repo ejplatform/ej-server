@@ -37,12 +37,6 @@ class CustomTemplateChoiceWidget(forms.RadioSelect):
 
 
 class ConversationComponentForm(forms.Form):
-    authentication_type = forms.ChoiceField(
-        label=_("Authentication Type"),
-        choices=ConversationComponent.AUTH_TYPE_CHOICES,
-        required=False,
-        widget=CustomChoiceWidget(attrs=ConversationComponent.AUTH_TOOLTIP_TEXTS),
-    )
     theme = forms.ChoiceField(
         label=_("Theme"), choices=ConversationComponent.THEME_CHOICES, required=False, widget=PaletteWidget
     )
