@@ -18,7 +18,7 @@ class Tools:
             {
                 "integration": _("Opinion component"),
                 "description": _(
-                    "Conduct opinion collections without your audience having to access EJ directly. Allows you to vote, comment and view groups directly on html pages, without impacting the experience of those who already access their networks and platforms."
+                    "Conduct opinion collections on your site or plataform.  Allows voting, commenting and viewing EJ groups on html pages. The tool comunicates with EJ from our API. "
                 ),
                 "link": self.conversation.url("conversation-tools:opinion-component"),
                 "about": "/docs/?page=user-docs/tools-opinion-component.html",

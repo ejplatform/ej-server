@@ -1,4 +1,5 @@
 {% extends 'ej_conversations/base.jinja2' %}
+{% from "ej_tools/includes/help-card.jinja2" import help_card %}
 {% block metaOG2 %}
 
     <meta name="description" property="og:title" content="Area de integração da EJ com outras ferramentas.">
@@ -9,98 +10,45 @@
 {% block _menu %} {{ menu(request.user, board_palette) }} {% endblock %}
 
 {% block content %}
-<div class="tools">
-	<div class="tools-container">
-	<div class="tools-title">
-		<h1 class="h2 text-accent"><a href="{{ conversation.url('conversation-tools:index') }}">{{_("Tools")}}</a>
-		 > {{ tool["integration"] }}</h1>
-		<span class="helptext">{{tool["description"] }}</span>
-	</div>
-	<div class="tools-section">
-		<div class="tools-content">
-			<form method="POST" class="tools-settings-form" id="opinion-component-form">
-				{{ csrf_input }}
-				{% block form_content %}
-					<h3 class="h3 divider">{{form.authentication_type.label}}</h3>
-					<span class="helptext">{{_("Selects the type of authentication that will be used to register the user in the EJ API.")}}</span>
-					<span class="helptext">{{_("Not sure which option to choose?")}}<a href="https://www.ejplatform.org/docs/">{{_("Access our documentation.")}}</a></span>
-					<section>
-						{{form.authentication_type}}
-					</section>
+	<div class="tools">
+		<div class="tools-container">
+			<div class="tools-title">
+				<h1 class="h2 text-accent"><a href="{{ conversation.url('conversation-tools:index') }}">{{_("Tools")}}</a>
+				> {{ tool["integration"] }}</h1>
+				<span class="helptext">{{tool["description"] }}</span>
+			</div>
 
-					<div class="title-theme">
-						<span class="h3"> 
-							{{form.theme.label}}
-						</span>
-						<div id="preview-option" onclick="preview()">
-							<i id="eye-icon" class="fas fa-eye"></i>
-							<span> {{_('Visualize')}}</span>
+			<h3 class="h3 divider">{{_("Collection Link")}}</h3>
+			<span class="helptext">{{_("Select a theme and start a collection with the opinion component built into EJ.")}}</span>
+		</div>
+		<div class="opinion-component-container">
+			<div class="card-opinion-component">
+				<form method="POST" class="tools-settings-form" id="opinion-component-form" target="_blank">
+					{{ csrf_input }}
+					{% block form_content %}
+						<div class="title-theme">
+							<span class="h3"> 
+								{{form.theme.label}}
+							</span><br>
+							<span class="helptext">
+								{{_("Selects a color palette for the component style.")}}
+							</span>
 						</div>
-					</div>
-					<span class="helptext">{{_("Selects a color palette for the component style.")}}</span>
-					<section>
-						{{form.theme}}
-					</section>
-				{% endblock %}
-				<h3 class="h3 divider">{{_("Integration script")}}</h3>
-				<span class="helptext">{{_("Generate scripts by clicking on the icon to integrate the component into your html page.")}}</span>
-			</form>
-		</div>
 
-		<div class="tools-code-snippet">
-			<span class="helptext">{{_("Add this snippet to the website's body tag.")}}</span>
-			<div style="position: relative;">
-				<div class="corner-icon">
-					<a href="#" onclick="copySnippet('copy-header')" id="copy-header-icon"><i class="fas fa-copy"></i></a>
-					<div id="copy-header-info" class="info">
-						<p>{{_("Copy")}}</p>
-					</div>
-				</div>
-				<div class="corner-icon" style="margin-right: 40px;">
-					<a href="#" id="copy-script-icon" onclick="generateScript()"><i class="fas fa-sync-alt"></i></a>
-					<div id="copy-script-info" class="info">
-						<p>{{_("Generate Script")}}</p>
-					</div>
-				</div>
-        	</div>
-			<textarea readonly id="copy-header">
-				{% include 'ej_tools/includes/opinion-component-copy-header.jinja2' %}
-			</textarea>
-		</div>
-
-		<div class="tools-code-snippet" style="margin-top: 2.5rem;">
-			<span class="helptext">{{_("Add this snippet to the body tag of the page where the component will be presented.")}}</span>
-			<div style="position: relative;">
-				<div class="corner-icon">
-					<a href="#" onclick="copySnippet('copy-body')" id="copy-icon"><i class="fas fa-copy"></i></a>
-					<div id="copy-info" class="info">
-						<p>{{_("Copy")}}</p>
-					</div>
-				</div>
-        	</div>
-			<textarea readonly id="copy-body" style="height: auto;">
-				{% include 'ej_tools/includes/opinion-component-copy-body.jinja2'%}
-			</textarea>
+						<section>
+							{{form.theme}}
+						</section>
+						<div id="start-collection-div">
+							<button class="start-collection-btn" type="submit" name="preview"><p>{{_('Start Collection')}}</p></button>
+						</div>
+					{% endblock %}
+				</form>
+			</div>
+			<div class="opinion-component-card-list">
+				{{ help_card(_("Integrate opinion component with Mautic."), "/static_docs/i18n/pt-br/user-docs/tools-opinion-component.html")}}
+				{{ help_card(_("Integrate opinion component with Google Analytics."), "/static_docs/i18n/pt-br/user-docs/tools-opinion-component.html")}}
+			</div>
 		</div>
 	</div>
-	</div>
-</div>
-
-<script>
-	function copySnippet(elementId) {
-        event.preventDefault();
-
-        var copyText = document.getElementById(elementId);
-        var selected = copyText.select();
-		document.execCommand("copy");
-    }
-	function generateScript() {
-		event.preventDefault();
-		document.getElementById('opinion-component-form').submit();
-	}
-
-	function preview() {
-		window.location.href ="{{conversation.url('conversation-tools:opinion-component-preview')}}";
-	}
-</script>
+				
 {% endblock %}

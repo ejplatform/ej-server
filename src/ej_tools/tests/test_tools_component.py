@@ -9,29 +9,11 @@ ConversationRecipes.update_globals(globals())
 
 
 class TestConversationComponentModel:
-    def test_conversation_component_get_props_with_analytics_auth(self):
-        form = ConversationComponentForm({"authentication_type": "analytics", "theme": "icd"})
-        component = ConversationComponent(form)
-        props = component.get_props()
-        assert props == "theme=icd authenticate-with=analytics"
-
-    def test_conversation_component_get_props_with_mautic_auth(self):
-        form = ConversationComponentForm({"authentication_type": "mautic", "theme": "icd"})
-        component = ConversationComponent(form)
-        props = component.get_props()
-        assert props == "theme=icd authenticate-with=mautic"
-
     def test_conversation_component_get_props_with_register_auth(self):
         form = ConversationComponentForm({"authentication_type": "register", "theme": "icd"})
         component = ConversationComponent(form)
         props = component.get_props()
-        assert props == "theme=icd authenticate-with=register"
-
-    def test_conversation_component_get_props_with_custom_theme(self):
-        form = ConversationComponentForm({"authentication_type": "mautic", "theme": "votorantim"})
-        component = ConversationComponent(form)
-        props = component.get_props()
-        assert props == "theme=votorantim authenticate-with=mautic"
+        assert props == "theme=icd"
 
     def test_conversation_component_get_props_with_empty_form(self):
         form = ConversationComponentForm({"authentication_type": "", "theme": ""})
@@ -55,7 +37,7 @@ class TestComponentConversationRoute(ConversationRecipes):
             {"authentication_type": "register", "theme": "icd"},
         )
         response = opinion_component(request, conversation)
-        assert response["conversation_component"].get_props() == "theme=icd authenticate-with=register"
+        assert response["conversation_component"].get_props() == "theme=icd"
         assert response["form"].is_valid()
         assert response["conversation"].id == conversation.id
 
@@ -67,7 +49,7 @@ class TestComponentConversationRoute(ConversationRecipes):
             {"authentication_type": "mautic", "theme": "votorantim"},
         )
         response = opinion_component(request, conversation)
-        assert response["conversation_component"].get_props() == "theme=votorantim authenticate-with=mautic"
+        assert response["conversation_component"].get_props() == "theme=votorantim"
         assert response["form"].is_valid()
         assert response["conversation"].id == conversation.id
 
@@ -79,6 +61,6 @@ class TestComponentConversationRoute(ConversationRecipes):
             {"authentication_type": "analytics", "theme": "icd"},
         )
         response = opinion_component(request, conversation)
-        assert response["conversation_component"].get_props() == "theme=icd authenticate-with=analytics"
+        assert response["conversation_component"].get_props() == "theme=icd"
         assert response["form"].is_valid()
         assert response["conversation"].id == conversation.id

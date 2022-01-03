@@ -31,6 +31,7 @@ $modal-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.35);
 
     &-container {
         width: 80%;
+        margin: 1rem;
     }
     &-container-full-width {
         margin-left: 10px;
@@ -145,7 +146,6 @@ $modal-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.35);
 }
 
 .tools-settings-form {
-    margin-bottom: 0rem;
     position: relative;
     h3 {
         margin-block-start: 0;
@@ -154,12 +154,11 @@ $modal-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.35);
         color: rgba(0, 0, 0, 0.12);
     }
     section {
-        margin: 1.5rem auto 2rem 0.2rem;
+        margin: 1.5rem auto 0 0.2rem;
     }
 
     ul {
         list-style-type: none;
-        margin-bottom: 0;
     }
 
     &-table-about {
@@ -206,6 +205,70 @@ $modal-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.35);
             text-transform: unset;
         }
     }
+}
+.opinion-component-container {
+    display: flex;
+    margin-bottom: 3rem;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.card-opinion-component {
+    box-sizing: border-box; 
+    border: 1px solid #e5e5e5; 
+    border-radius: 10px; 
+    width: 30rem; 
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); 
+    margin: 1rem;
+    position: relative;
+}
+
+#opinion-component-form {
+    margin-bottom: 0;
+    padding-bottom: 40px;
+    
+    section {
+        ul {
+            justify-content: center;
+        }
+    }
+}
+
+.start-collection-btn {
+    width: 100%; 
+    border-color: #042a46;
+    margin-bottom: 0;
+    padding-left: 40px;
+    text-align: center;
+    border-radius: 0;
+    background-color: #042a46;
+    p { 
+        font-size: 14px; 
+        &::first-letter {
+            display: block;
+            background: url(/static/img/icons/comments.svg) no-repeat 0 50%; padding-left: 25px;
+        }
+    }
+}
+
+.help-card {
+    box-sizing: border-box; 
+    background: rgba(255, 86, 130, 0.2); 
+    border-radius: 5px; 
+    padding: 20px 0; 
+    display: flex; 
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); 
+    margin-bottom: 20px;
+    i {
+        font-size:x-large;
+    }
+}
+
+.opinion-component-card-list {
+    display: block; 
+    margin-top: 1rem;
+    width: 22rem;
+    padding: 0 1rem;
 }
 
 #id_is_custom_domain {
@@ -319,40 +382,20 @@ $modal-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.35);
 }
 
 .title-theme {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: nowrap;
+    margin-bottom: 0.5rem;
+    margin-top: 1rem;
+    color: #042a46;
+    padding-left: 1rem;
+}
 
-    input[type="submit"] {
-        color: #BABABA;
-        font-weight: bold;
-        background-color: transparent;
-        border-color: transparent;
-        margin-top: 29px;
-        box-shadow: 0px 0px;
-        padding: 0px;
-        margin-left: -10px;
-    }
-    input[type="submit"]:hover {
-        box-shadow: 0px 0px;
-    }
-    
-    #eye-icon { 
-        color: #052B47;
-        margin: 0.3rem 0 0 0;
-    }
-    #preview-option{
-        display: flex;
-        flex-wrap: nowrap;
-        column-gap: 10px;
-        cursor: pointer;
-        background-color: $color-theme-grey-light;
-        padding: 0.4rem;
-        span {
-            color: $color-black;
-        }
-    }
+#start-collection-div{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    border-radius: 0 0 5px 5px; 
+    padding: 0.5rem 0;
+    background-color: #042a46;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px -4px 4px rgba(0, 0, 0, 0.25);
 }
 
 #preview-template {
