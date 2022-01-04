@@ -1,142 +1,94 @@
-from boogie.rest import rest_api
-from ej_conversations.models import Conversation
-from ej_tools.models import ConversationMautic, MauticClient
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from ej_conversations.models import Conversation, Comment, Vote
+from ej_conversations.serializers import ConversationSerializer, CommentSerializer, VoteSerializer
 from ej_conversations.models.vote import Vote
-from ej_conversations.utils import request_comes_from_ej_bot, request_promoted_conversations
-from ej_tools import api
-from ej_users.models import SignatureFactory
+from ej_dataviz.routes_report import votes_as_dataframe
+from ej.viewsets import RestAPIBaseViewSet
 import json
 from datetime import datetime
-from rest_framework.response import Response
-from ej_dataviz.routes_report import votes_as_dataframe
-
-#
-# Conversation extra actions and attributes
-#
-@rest_api.action("ej_conversations.Conversation")
-def vote_dataset(request, conversation):
-    return conversation.votes.dataframe().to_dict(orient="list")
 
 
-# EJ telegram bot has a /listarconversas command.
-# The command will list a maximum of ten conversations, because of telegram API payload size limit.
-# This query_hook will filter EJ conversations based on request query parameters.
-@rest_api.query_hook("ej_conversations.Conversation")
-def query_ej_bot_conversations(request, conversation):
-    if request_comes_from_ej_bot(request):
-        return query_promoted_conversations(request, conversation)
-    return Conversation.objects.all()
+class CommentViewSet(RestAPIBaseViewSet):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
 
 
-@rest_api.query_hook("ej_conversations.Conversation")
-def query_promoted_conversations(request, conversation):
-    if request_promoted_conversations(request):
-        return Conversation.objects.filter(is_promoted=True)
-    return Conversation.objects.all()
+class VoteViewSet(RestAPIBaseViewSet):
+    queryset = Vote.objects.all()
+    serializer_class = VoteSerializer
+
+    def delete_hook(self, request, instance):
+        delete_vote(request, instance)
 
 
-@rest_api.action("ej_conversations.Conversation")
-def votes(request, conversation):
-    """
-    Authenticated endpoint to retrieve conversation votes filtered by date range.
+class ConversationViewSet(RestAPIBaseViewSet):
+    queryset = Conversation.objects.all()
+    serializer_class = ConversationSerializer
 
-    startDate: start date to retrieve votes
-    endDate: end date to retrieve votes
-    """
-    user = request.user
-    if not user.is_authenticated:
-        return Response(status=403)
-    if not user.has_perm("ej.can_edit_conversation", conversation):
-        return Response(status=403)
-    user = request.user
-    votes = conversation.votes
-    if request.GET.get("startDate") and request.GET.get("endDate"):
-        start_date = datetime.fromisoformat(request.GET.get("startDate"))
-        end_date = datetime.fromisoformat(request.GET.get("endDate"))
-        votes = conversation.votes.filter(created__gte=start_date, created__lte=end_date)
-    votes_dataframe = votes_as_dataframe(votes)
-    votes_dataframe.reset_index(inplace=True)
-    votes_dataframe_as_json = votes_dataframe.to_json(orient="records")
-    return json.loads(votes_dataframe_as_json)
+    @action(detail=True, url_path="vote-dataset")
+    def vote_dataset(self, request, pk):
+        conversation = self.get_object()
+        response = conversation.votes.dataframe().to_dict(orient="list")
+        return Response(response)
 
+    @action(detail=True)
+    def votes(self, request, pk):
+        conversation = self.get_object()
+        user = request.user
+        if not user.is_authenticated:
+            return Response(status=403)
+        if not user.has_perm("ej.can_edit_conversation", conversation):
+            return Response(status=403)
+        votes = conversation.votes
+        if request.GET.get("startDate") and request.GET.get("endDate"):
+            start_date = datetime.fromisoformat(request.GET.get("startDate"))
+            end_date = datetime.fromisoformat(request.GET.get("endDate"))
+            votes = conversation.votes.filter(created__gte=start_date, created__lte=end_date)
+        votes_dataframe = votes_as_dataframe(votes)
+        votes_dataframe.reset_index(inplace=True)
+        votes_dataframe_as_json = votes_dataframe.to_json(orient="records")
+        return Response(json.loads(votes_dataframe_as_json))
 
-@rest_api.action("ej_conversations.Conversation")
-def user_statistics(request, conversation):
-    return conversation.statistics_for_user(request.user)
+    @action(detail=True, url_path="user-statistics")
+    def user_statistics(self, request, pk):
+        conversation = self.get_object()
+        response = conversation.statistics_for_user(request.user)
+        return Response(response)
 
+    @action(detail=True, url_path="approved-comments")
+    def approved_comments(self, request, pk):
+        conversation = self.get_object()
+        comments = conversation.comments.approved()
+        serializer = CommentSerializer(comments, context={"request": request}, many=True)
 
-@rest_api.action("ej_conversations.Conversation")
-def approved_comments(conversation):
-    return conversation.comments.approved()
+        return Response(serializer.data)
 
+    @action(detail=True, url_path="user-comments")
+    def user_comments(self, request, pk):
+        conversation = self.get_object()
+        comments = conversation.comments.filter(author=request.user)
+        serializer = CommentSerializer(comments, context={"request": request}, many=True)
 
-@rest_api.action("ej_conversations.Conversation")
-def user_comments(request, conversation):
-    return conversation.comments.filter(author=request.user)
+        return Response(serializer.data)
 
+    @action(detail=True, url_path="user-pending-comments")
+    def user_pending_comments(self, request, pk):
+        conversation = self.get_object()
+        comments = conversation.comments.filter(status="pending", author=request.user)
+        serializer = CommentSerializer(comments, context={"request": request}, many=True)
 
-@rest_api.action("ej_conversations.Conversation")
-def user_pending_comments(request, conversation):
-    return conversation.comments.filter(status="pending", author=request.user)
+        return Response(serializer.data)
 
+    @action(detail=True, url_path="random-comment")
+    def random_comment(self, request, pk):
+        conversation = self.get_object()
+        comment = conversation.next_comment(request.user)
+        serializer = CommentSerializer(comment, context={"request": request})
 
-@rest_api.action("ej_conversations.Conversation")
-def random_comment(request, conversation):
-    return conversation.next_comment(request.user)
-
-
-@rest_api.action("ej_conversations.Conversation", list=True)
-def random(request):
-    return Conversation.objects.random(request.user)
-
-
-@rest_api.property("ej_conversations.Conversation")
-def statistics(conversation):
-    return conversation.statistics()
-
-
-#
-# Votes
-#
-@rest_api.save_hook("ej_conversations.Vote")
-def save_vote(request, vote):
-    user = request.user
-    create_mautic_contact_from_author(request, vote)
-
-    user_signature = SignatureFactory.get_user_signature(user)
-    if user_signature.can_vote():
-        try:
-            skipped_vote = Vote.objects.get(comment=vote.comment, choice=0, author=user)
-            skipped_vote.choice = vote.choice
-            skipped_vote.analytics_utm = vote.analytics_utm
-            skipped_vote.save()
-            return skipped_vote
-        except Exception as e:
-            pass
-        if vote.id is None:
-            vote.author = user
-            vote.save()
-        elif vote.author != user:
-            raise PermissionError("cannot update vote of a different user")
-        else:
-            vote.save(update_fields=["choice", "analytics_utm"])
-        return vote
-    else:
-        raise PermissionError("vote limit reached")
+        return Response(serializer.data)
 
 
-def create_mautic_contact_from_author(request, vote):
-    conversation = vote.comment.conversation
-    try:
-        conversation_mautic = ConversationMautic.objects.get(conversation=conversation)
-        mautic_client = MauticClient(conversation_mautic)
-        create_contact_from_author = mautic_client.create_contact(request, vote)
-        return create_contact_from_author
-    except:
-        pass
-
-
-@rest_api.delete_hook("ej_conversations.Vote")
 def delete_vote(request, vote):
     user = request.user
 
@@ -146,27 +98,3 @@ def delete_vote(request, vote):
         raise PermissionError("cannot delete vote from another user")
     else:
         raise PermissionError("user is not allowed to delete votes")
-
-
-def query_vote(request, qs):
-    user = request.user
-    if user.id:
-        return qs.filter(author_id=user.id)
-    return qs.none()
-
-
-@rest_api.save_hook("ej_conversations.Comment")
-def save_comment(request, comment):
-    from ej_conversations.models.comment import Comment
-    from rest_framework.authtoken.models import Token
-
-    try:
-        conversation_id = request.data.get("conversation")
-        conversation = Conversation.objects.get(id=conversation_id)
-        comment.author = request.user
-        comment.conversation = conversation
-        comment.status = "pending"
-        comment.save()
-        return comment
-    except Exception:
-        raise PermissionError("could not create comment")

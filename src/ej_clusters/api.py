@@ -1,58 +1,35 @@
+from ej_clusters.models.clusterization import Clusterization
 from sidekick import import_later
-
-from boogie.rest import rest_api
-from ej_conversations.models import Conversation
-from . import models
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from ej.viewsets import RestAPIBaseViewSet
 from .utils import cluster_shapes
+from ej_clusters.serializers import ClusterizationSerializer, ClusterSerializer, StereotypeSerializer
 
 math = import_later(".math", package=__package__)
 
 
-@rest_api.link(Conversation, name="clusterization")
-def clusterization_link(request, conversation):
-    try:
-        clusterization = conversation.clusterization
-    except models.Clusterization.DoesNotExist:
-        return None
-    else:
-        return rest_api.get_hyperlink(clusterization, request)
+class ClusterizationViewSet(RestAPIBaseViewSet):
+    queryset = Clusterization.objects.all()
+    serializer_class = ClusterizationSerializer
 
+    @action(detail=True)
+    def clusters(self, request, pk):
+        clusterization = self.get_object()
+        clusters = clusterization.clusters.all()
+        serializer = ClusterSerializer(clusters, context={"request": request}, many=True)
+        return Response(serializer.data)
 
-#
-# Cluster info
-#
-@rest_api.detail_action(models.Clusterization)
-def clusters(clusterization):
-    return clusterization.clusters.all()
+    @action(detail=True)
+    def affinities(self, request, pk):
+        clusterization = self.get_object()
+        shapes = cluster_shapes(clusterization, user=request.user)
+        return Response(shapes)
 
-
-@rest_api.detail_action(models.Clusterization)
-def affinities(request, clusterization):
-    return cluster_shapes(clusterization, user=request.user)
-
-
-@rest_api.property(models.Cluster)
-def user_list(cluster):
-    return list(cluster.users.all().values_list("id", flat=True))
-
-
-@rest_api.property(models.Cluster)
-def positive_comments(cluster):
-    top5_positive_comments = cluster.separate_comments()[0][0:5]
-    return list(map(lambda comment: dict([(comment.agree, comment.content)]), top5_positive_comments))
-
-
-@rest_api.property(models.Cluster)
-def negative_comments(cluster):
-    top5_negative_comments = cluster.separate_comments()[1][0:5]
-    return list(map(lambda comment: dict([(comment.disagree, comment.content)]), top5_negative_comments))
-
-
-#
-# Stereotypes and votes
-#
-
-
-@rest_api.detail_action(models.Clusterization)
-def stereotypes(clusterization):
-    return clusterization.stereotypes.all()
+    @action(detail=True)
+    def stereotypes(self, request, pk):
+        clusterization = self.get_object()
+        serializer = StereotypeSerializer(
+            clusterization.stereotypes.all(), context={"request": request}, many=True
+        )
+        return Response(serializer.data)

@@ -1,31 +1,16 @@
-from ej_boards.models import Board
 import pytest
 from rest_framework.test import APIClient
 from rest_framework.authtoken.models import Token
-from ej_conversations.models import Conversation, Comment
+from ej_conversations.models import Conversation, Comment, Vote
 from .examples import COMMENT, CONVERSATION, VOTE, VOTES
 from ej_conversations.models.util import vote_count, statistics_for_user, statistics
 from ej_conversations.mommy_recipes import ConversationRecipes
 from ej_conversations.enums import Choice
 from ej_conversations.models.vote import VoteChannels
+from ej_boards.models import Board
+from ej_users.models import User
 
 BASE_URL = "/api/v1"
-
-
-class TestGetPromotedConversations(ConversationRecipes):
-    def test_promoted_conversations_endpoint(self, mk_conversation, mk_board, mk_user, api):
-        user = mk_user(email="someemail@domain.com")
-        unpromoted_conversation = mk_conversation(is_promoted=False, author=user)
-        board = mk_board(owner=user)
-        mk_conversation(is_promoted=True, author=user, board=board)
-        path = BASE_URL + f"/conversations/?is_promoted=true"
-        data = api.get(path)
-        assert data.get("count") == 1
-        unpromoted_conversation.is_promoted = True
-        unpromoted_conversation.save()
-        path = BASE_URL + f"/conversations/?is_promoted=true"
-        data = api.get(path)
-        assert data.get("count") == 2
 
 
 class TestGetRoutes:
@@ -65,9 +50,21 @@ class TestGetRoutes:
         assert data[0].get("comment_id") == VOTES[0].get("comment_id")
 
 
-class TestPostRoutes:
+class TestApiRoutes:
     AUTH_ERROR = {"detail": "Authentication credentials were not provided."}
     EXCLUDES = dict(skip=["created", "modified"])
+
+    @pytest.fixture
+    def admin_user(self, db):
+        admin_user = User.objects.create_superuser("admin@test.com", "pass")
+        admin_user.save()
+        return admin_user
+
+    @pytest.fixture
+    def other_user(db):
+        user = User.objects.create_user("email2@server.com", "password")
+        user.save()
+        return user
 
     def test_post_conversation(self, api, user):
         path = BASE_URL + f"/conversations/"
@@ -93,8 +90,61 @@ class TestPostRoutes:
         data = api.get(path + f"{conversation.id}/", **self.EXCLUDES)
         assert data == CONVERSATION
 
+    def test_delete_conversation(self, user):
+        path = BASE_URL + f"/conversations/"
+        board = Board.objects.create(slug="board1", title="My Board", owner=user, description="board")
+        post_data = dict(
+            title=CONVERSATION["title"], text=CONVERSATION["text"], author=user.id, board=board.id
+        )
+
+        # Authenticated user
+        token = Token.objects.create(user=user)
+        _api = APIClient()
+        _api.credentials(HTTP_AUTHORIZATION="Token " + token.key)
+
+        # creates a conversation
+        _api.post(path, post_data, format="json")
+        conversation = Conversation.objects.first()
+        assert conversation
+
+        # delete the conversation
+        path = path + f"{conversation.id}/"
+        _api.delete(path, HTTP_AUTHORIZATION=f"Token {token.key}")
+        conversation = Conversation.objects.first()
+        assert not conversation
+
+    def test_update_conversation(self, user):
+        path = BASE_URL + f"/conversations/"
+        board = Board.objects.create(slug="board1", title="My Board", owner=user, description="board")
+        post_data = dict(
+            title=CONVERSATION["title"], text=CONVERSATION["text"], author=user.id, board=board.id
+        )
+
+        # Authenticated user
+        token = Token.objects.create(user=user)
+        _api = APIClient()
+        _api.credentials(HTTP_AUTHORIZATION="Token " + token.key)
+
+        # creates a conversation
+        response = _api.post(path, post_data, format="json")
+        data = response.data
+        del data["created"]
+        assert data == CONVERSATION
+
+        # updates the conversation
+        conversation = Conversation.objects.first()
+        path = path + f"{conversation.id}/"
+        response = _api.put(
+            path,
+            data={"title": "updated title", "text": "updated text"},
+            HTTP_AUTHORIZATION=f"Token {token.key}",
+        )
+
+        conversation = Conversation.objects.first()
+        assert conversation.title == "updated title"
+        assert conversation.text == "updated text"
+
     def test_post_comment(self, api, conversation, user):
-        conversation_path = BASE_URL + f"/conversations/{conversation.id}/"
         comments_path = BASE_URL + f"/comments/"
         comment_data = dict(COMMENT, status="pending")
         post_data = dict(
@@ -118,6 +168,70 @@ class TestPostRoutes:
         comment = Comment.objects.first()
         data = api.get(comments_path + f"{comment.id}/", **self.EXCLUDES)
         assert data == comment_data
+
+    def test_delete_comment(self, conversation, user):
+        comments_path = BASE_URL + f"/comments/"
+        comment_data = dict(COMMENT, status="pending")
+        post_data = dict(
+            content=comment_data["content"],
+            conversation=conversation.id,
+        )
+
+        # Authenticated user
+        token = Token.objects.create(user=user)
+        _api = APIClient()
+        _api.credentials(HTTP_AUTHORIZATION="Token " + token.key)
+
+        # Creates a comment
+        _api.post(comments_path, post_data, format="json")
+        comment = Comment.objects.first()
+        assert comment
+
+        # delete the comment
+        path = comments_path + f"{comment.id}/"
+        _api.delete(path, HTTP_AUTHORIZATION=f"Token {token.key}")
+        comment = Comment.objects.first()
+        assert not comment
+
+    def test_update_comment(self, conversation, user):
+        comments_path = BASE_URL + f"/comments/"
+        comment_data = dict(COMMENT, status="pending")
+        post_data = dict(
+            content=comment_data["content"],
+            conversation=conversation.id,
+        )
+
+        # Authenticated user
+        token = Token.objects.create(user=user)
+        _api = APIClient()
+        _api.credentials(HTTP_AUTHORIZATION="Token " + token.key)
+
+        # Creates a comment
+        response = _api.post(comments_path, post_data, format="json")
+        data = response.data
+        del data["created"]
+        assert data == comment_data
+
+        # Updates the comment
+        comment = Comment.objects.first()
+        path = comments_path + f"{comment.id}/"
+        update_data = {
+            "content": "updated content",
+            "rejection_reason": "10",
+            "rejection_reason_text": "updated rejection text",
+            "status": "rejected",
+        }
+        response = _api.put(
+            path,
+            data=update_data,
+            HTTP_AUTHORIZATION=f"Token {token.key}",
+        )
+
+        comment = Comment.objects.first()
+        assert comment.content == "updated content"
+        assert comment.rejection_reason == 10
+        assert comment.rejection_reason_text == "updated rejection text"
+        assert comment.status == "rejected"
 
     def test_post_vote(self, api, comment, user):
         path = BASE_URL + f"/votes/"
@@ -200,6 +314,80 @@ class TestPostRoutes:
         assert vote.analytics_utm == {
             "utm_campaign": 2,
         }
+
+    def test_delete_vote(self, comment, user, admin_user, other_user):
+        path = BASE_URL + f"/votes/"
+        post_data = {
+            "analytics_utm": {
+                "utm_campaign": 1,
+                "utm_test": "test",
+            },
+            "choice": 0,
+            "comment": comment.id,
+        }
+
+        # Authenticated normal user
+        token = Token.objects.create(user=user)
+        _api = APIClient()
+        _api.credentials(HTTP_AUTHORIZATION="Token " + token.key)
+
+        # Creates a vote
+        _api.post(path, post_data, format="json")
+        vote = Vote.objects.first()
+        assert vote
+
+        path = path + f"{vote.id}/"
+        response = _api.delete(path, HTTP_AUTHORIZATION=f"Token {token.key}")
+        assert response.status_code == 403
+
+        # User try to delete another user vote
+        token3 = Token.objects.create(user=other_user)
+        _api.credentials(HTTP_AUTHORIZATION="Token " + token3.key)
+        response = _api.delete(path, HTTP_AUTHORIZATION=f"Token {token3.key}")
+        assert response.status_code == 403
+
+        # Authenticated superuser
+        token2 = Token.objects.create(user=admin_user)
+        _api.credentials(HTTP_AUTHORIZATION="Token " + token2.key)
+        response = _api.delete(path, HTTP_AUTHORIZATION=f"Token {token2.key}")
+        assert response.status_code == 204
+        vote = Vote.objects.first()
+        assert not vote
+
+    def test_update_vote(self, comment, user):
+        path = BASE_URL + f"/votes/"
+        post_data = {
+            "analytics_utm": {
+                "utm_campaign": 1,
+                "utm_test": "test",
+            },
+            "choice": 1,
+            "comment": comment.id,
+        }
+
+        # Authenticated user
+        token = Token.objects.create(user=user)
+        _api = APIClient()
+        _api.credentials(HTTP_AUTHORIZATION="Token " + token.key)
+
+        # Creates a vote
+        _api.post(path, post_data, format="json")
+        vote = Vote.objects.first()
+        assert vote
+
+        # Updates the vote
+        path = path + f"{vote.id}/"
+        update_data = {"choice": "-1", "analytics_utm": {"utm_test": "updated test"}}
+        _api.put(
+            path,
+            data=update_data,
+            format="json",
+            HTTP_AUTHORIZATION=f"Token {token.key}",
+        )
+
+        vote = Vote.objects.first()
+        assert vote.analytics_utm == {"utm_test": "updated test"}
+        assert vote.choice == Choice.DISAGREE
 
 
 class TestConversartionStatistics(ConversationRecipes):

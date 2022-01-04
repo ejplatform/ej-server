@@ -2,7 +2,6 @@ from logging import getLogger
 
 from boogie import models, rules
 from boogie.fields import EnumField
-from boogie.rest import rest_api
 from model_utils.models import TimeStampedModel
 from sidekick import delegate_to, lazy, placeholder as this
 
@@ -16,7 +15,6 @@ NOT_GIVEN = object()
 log = getLogger("ej")
 
 
-@rest_api(["conversation", "cluster_status"])
 class Clusterization(TimeStampedModel):
     """
     Manages clusterization tasks for a given conversation.

@@ -1,7 +1,6 @@
 from logging import getLogger
 
 from boogie import models
-from boogie.rest import rest_api
 from django.conf import settings
 from django.db.models import OuterRef, Subquery
 from django.utils.translation import ugettext_lazy as _
@@ -13,7 +12,6 @@ from .stereotype_vote import StereotypeVote
 log = getLogger("ej")
 
 
-@rest_api(["name", "description", "owner"], inline=True)
 class Stereotype(models.Model):
     """
     A "fake" user created to help with classification.
