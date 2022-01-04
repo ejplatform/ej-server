@@ -1,5 +1,4 @@
 from boogie import models
-from boogie.rest import rest_api
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.core.validators import MinLengthValidator
@@ -17,8 +16,6 @@ from ..utils import votes_counter
 from ..validators import is_not_empty
 
 
-# noinspection PyUnresolvedReferences
-@rest_api(["content", "status", "created", "rejection_reason", "rejection_reason_text"])
 class Comment(StatusModel, TimeStampedModel):
     """
     A comment on a conversation.

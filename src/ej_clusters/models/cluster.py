@@ -1,5 +1,4 @@
 from boogie import models
-from boogie.rest import rest_api
 from django.contrib.auth import get_user_model
 from django.db.models import Subquery
 from django.urls import reverse
@@ -16,7 +15,6 @@ np = import_later("numpy")
 clusterization_pipeline = import_later("..math:clusterization_pipeline", package=__package__)
 
 
-@rest_api(["clusterization", "name", "description"], inline=True)
 class Cluster(TimeStampedModel):
     """
     Represents an opinion group.

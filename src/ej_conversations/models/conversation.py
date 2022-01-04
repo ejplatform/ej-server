@@ -1,7 +1,6 @@
 from autoslug import AutoSlugField
 from boogie import models
 from boogie import rules
-from boogie.rest import rest_api
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
@@ -38,7 +37,6 @@ def conversation_links(request, conversation):
     ]
 
 
-@rest_api(["title", "text", "author", "slug", "created", "id", "board"])
 class Conversation(HasFavoriteMixin, TimeStampedModel):
     """
     A topic of conversation.

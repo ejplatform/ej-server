@@ -5,7 +5,6 @@ from django.utils.translation import ugettext_lazy as _
 from boogie import models
 from django.db import models as django_models
 from boogie.fields import EnumField
-from boogie.rest import rest_api
 from .vote_queryset import VoteQuerySet
 from ..enums import Choice
 
@@ -35,7 +34,6 @@ class VoteChannels:
         ]
 
 
-@rest_api(exclude=["author"])
 class Vote(models.Model):
     """
     A single vote cast for a comment.
