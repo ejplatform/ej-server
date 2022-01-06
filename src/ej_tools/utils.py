@@ -25,7 +25,7 @@ def prepare_host_with_https(request):
     return ej_server_url
 
 
-def get_host_with_protocol(request):
+def get_host_with_schema(request):
     scheme = request.META.get("HTTP_X_FORWARDED_PROTO") or "http"
     host = request.META["HTTP_HOST"]
     return "{}://{}".format(scheme, host)
