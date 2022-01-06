@@ -15,7 +15,7 @@
   <div class="tools-container-full-width">
     <div class="tools-title">
       <h1 class="h2 text-accent"><a href="{{ conversation.url('conversation-tools:index') }}">{{_("Tools")}}</a>
-        > <a href="{{ conversation.url('conversation-tools:chatbot') }}">{{ tool["integration"] }}</a>
+        > <a href="{{ conversation.url('conversation-tools:chatbot') }}">{{ _("Opinion Bots") }}</a>
         > Whatsapp </h1>
       <span class="helptext">{{ _("Collect opinions using EJ's chatbot, also known as Duda. Allows you to collect the opinion of whatsapp users. To make the collection available, forward the participation link to groups, channels or directly in the user's private chat.") }}</span>
     </div>
@@ -36,14 +36,14 @@
           <div class="tools-label-buttons">
             <h6 class="card-subtitle">{{_("Collect with:")}}</h6>
             <div id="btn-father" class="tools-buttons">
-              {% for channel in channels %}
+              {% for channel in tool.options %}
                 <button value={{channel[1]}} id="id-{{channel[1]}}" class="grey-button-channel" onclick="ChangeButtonClass(event.target)">{{channel[0]}}</button>
               {% endfor %}
             </div>
           </div>
           <br>
           <div id="share-text">
-            {{shareText}}
+            {{tool.share}}
             {{conversation.text}}
             <br>
             <div id="instructions-link">
@@ -60,7 +60,7 @@
 
 <script type="text/javascript">
 const makeText = function(){
-  return "{{shareText + conversation.text}}"
+  return "{{tool.share + conversation.text}}"
 }
 
 function ChangeButtonClass(e) {
@@ -82,7 +82,7 @@ function ChangeButtonClass(e) {
 
 function initiateButtons(){
   // Set the first button as default selection
-  const id = "id-{{channels[0][1]}}"
+  const id = "id-{{tool.options[0][1]}}"
   var btn = document.getElementById(id)
   btn.classList.remove('grey-button-channel');
   btn.classList.add('pink-button-channel');
@@ -91,7 +91,7 @@ function initiateButtons(){
 
 function initiateLink(){
   const anchor = document.getElementById('tools-channel')
-  anchor.text = anchor.text.replace("BOT_NUMBER", "{{channels[0][1]}}")
+  anchor.text = anchor.text.replace("BOT_NUMBER", "{{tool.options[0][1]}}")
 }
 
 window.onload = function() {

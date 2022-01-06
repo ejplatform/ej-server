@@ -18,7 +18,7 @@
   <div class="tools-container-full-width">
     <div class="tools-title">
       <h1 class="h2 text-accent"><a href="{{ conversation.url('conversation-tools:index') }}">{{_("Tools")}}</a>
-        > <a href="{{ conversation.url('conversation-tools:chatbot') }}">{{ tool["integration"] }}</a>
+        > <a href="{{ conversation.url('conversation-tools:chatbot') }}">{{ _("Opinion Bots") }}</a>
         > Telegram </h1>
       <span class="helptext">{{_("Collect opinions using EJ's chatbots. Allows you to collect the opinion of Telegram users.")}}</span>
     </div>
@@ -39,14 +39,14 @@
           <div class="tools-label-buttons">
             <h6 class="card-subtitle">{{_("Collect with:")}}</h6>
             <div id="btn-father" class="tools-buttons">
-              {% for channel in channels %}
+              {% for channel in tool.options %}
                 <button value={{channel[1]}} id="id-{{channel[1]}}" class="grey-button-channel" onclick="ChangeButtonClass('btn-father', event.target, updateOpinionBotLink)">{{channel[0]}}</button>
               {% endfor %}
             </div>
           </div>
           <br>
           <div id="share-text">
-            {{shareText}}
+            {{tool.share}}
             {{conversation.text}}
             <br>
             <div id="instructions-link">
@@ -101,7 +101,7 @@ const thirdCommandText = {
   }
 
 const makeText = function(){
-  return "{{shareText + conversation.text}}"
+  return "{{tool.share + conversation.text}}"
 }
 
 const instructionsLink = function(){
@@ -165,9 +165,8 @@ function updateSurveyText(current_button, new_button) {
 }
 
 function initiateOpinionButtons() {
-  updateButtonClass("id-{{channels[0][1]}}")
-  updateOpinionBotLink("BOT_NAME", "{{channels[0][1]}}")
-}
+  updateButtonClass("id-{{tool.options[0][1]}}")
+  updateOpinionBotLink("BOT_NAME", "{{tool.options[0][1]}}") }
 
 function initiateSurveyButtons() {
   updateButtonClass("id-channel")

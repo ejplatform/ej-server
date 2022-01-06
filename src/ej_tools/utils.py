@@ -1,5 +1,6 @@
 from requests import get
 from .constants import BASE_URL_NPM
+from django.core.exceptions import PermissionDenied
 
 
 def get_npm_tag(url=BASE_URL_NPM):
@@ -27,5 +28,5 @@ def prepare_host_with_https(request):
 
 def get_host_with_schema(request):
     scheme = request.META.get("HTTP_X_FORWARDED_PROTO") or "http"
-    host = request.META["HTTP_HOST"]
+    host = request.META.get("HTTP_HOST") or "localhost:8000"
     return "{}://{}".format(scheme, host)

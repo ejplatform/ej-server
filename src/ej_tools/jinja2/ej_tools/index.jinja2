@@ -2,8 +2,8 @@
 
 {% block metaOG2 %}
 
-    <meta name="description" property="og:title" content="Area de integração da EJ com outras ferramentas.">
-    <meta property="og:description" content="Area de integração da EJ com outras ferramentas.">
+<meta name="description" property="og:title" content="Area de integração da EJ com outras ferramentas.">
+<meta property="og:description" content="Area de integração da EJ com outras ferramentas.">
 
 {% endblock metaOG2 %}
 
@@ -11,8 +11,8 @@
 {% block content %}
 <div class="tools">
 	<div class="tools-title">
-	<h1 class="h2 text-accent">{{_('Tools') }}</h1>
-	<span class="helptext">{{_('Integrates this conversation with external tools and platforms.') }}</span>
+		<h1 class="h2 text-accent">{{_('Tools') }}</h1>
+		<span class="helptext">{{_('Integrates this conversation with external tools and platforms.') }}</span>
 	</div>
 	<table class="tools-table">
 		<tr>
@@ -20,10 +20,22 @@
 			<th>{{ _('Description') }}</th>
 		</tr>
 		{%  for tool in tools %}
+		{% if not tool.is_active %}
 		<tr>
-			<td><a href="{{ tool["link"] }}">{{ tool["integration"] }}</a></td>
-			<td>{{ tool["description"] }}<a class="tools-table-about" href="{{ tool["about"] }}"> {{ _('Learn more about this integration') }}.</a></td>
+			<td><span>{{ tool.name }}<span></td>
+			<td>
+				{{ tool.description }}&ensp;<a class="tools-table-about" href="{{ tool.about }}">{{ _('Learn more about this integration') }}.</a>
+				<br>
+				<span class="helptext text-accent">{{_("This tool is not available on your current signature.")}}</span>
+				
+			</td>
 		</tr>
+		{% else %}
+			<tr>
+				<td><a href="{{ tool.link }}">{{ tool.name }}</a></td>
+				<td>{{ tool.description }}&ensp;<a class="tools-table-about" href="{{ tool.about }}">{{_('Learn more about this integration') }}.</a></td>
+			</tr>
+		{% endif %}
 		{%  endfor %}
 	</table>
 </div>

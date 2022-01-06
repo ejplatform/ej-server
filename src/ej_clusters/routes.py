@@ -173,7 +173,7 @@ def stereotype_votes(request, conversation, **kwargs):
 
 
 @urlpatterns.route(conversation_url + "clusters/ctrl/")
-def ctrl(request, conversation, slug, check=check_promoted):
+def ctrl(request, board, conversation, slug, check=check_promoted):
     check(conversation, request)
     user = request.user
     if not user.has_perm("ej.can_edit_conversation", conversation):
