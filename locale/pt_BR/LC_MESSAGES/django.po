@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-03 11:01-0300\n"
+"POT-Creation-Date: 2022-01-06 11:24-0300\n"
 "PO-Revision-Date: 2019-09-09 13:55-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -92,25 +92,25 @@ msgstr "Seu progresso: {pc} por cento"
 msgid "Your progress: {n} of {total}"
 msgstr "Seu progresso: {n} de {total}"
 
-#: src/ej/routes.py:56 src/ej_conversations/apps.py:8
+#: src/ej/routes.py:57 src/ej_conversations/apps.py:8
 #: src/ej_conversations/models/conversation.py:102
 msgid "Conversations"
 msgstr "Conversas"
 
-#: src/ej/routes.py:57 src/ej_dataviz/roles.py:150
+#: src/ej/routes.py:58 src/ej_dataviz/roles.py:150
 #: src/ej_gamification/routes.py:139
 msgid "Votes"
 msgstr "Votos"
 
-#: src/ej/routes.py:58 src/ej_gamification/routes.py:140
+#: src/ej/routes.py:59 src/ej_gamification/routes.py:140
 msgid "Comments"
 msgstr "Comentários"
 
-#: src/ej/routes.py:148
+#: src/ej/routes.py:149
 msgid "User Guides"
 msgstr "Guias de Usuário"
 
-#: src/ej/routes.py:149
+#: src/ej/routes.py:150
 msgid "Development Guides"
 msgstr "Guias de Desenvolvimento"
 
@@ -1888,33 +1888,42 @@ msgstr ""
 "Senhas vazias são permitidas somente se a variável "
 "EJ_ROCKETCHAT_ADMIN_PASSWORD estiver configurada."
 
-#: src/ej_tools/forms.py:41 src/ej_tools/forms.py:53
+#: src/ej_signatures/models.py:136
+msgid "Listen to community"
+msgstr "Ouça a Comunidade"
+
+#: src/ej_signatures/models.py:137
+#, fuzzy
+msgid "Listen to city"
+msgstr "Ouça a Cidade"
+
+#: src/ej_tools/forms.py:40 src/ej_tools/forms.py:52
 msgid "Theme"
 msgstr "Tema"
 
-#: src/ej_tools/forms.py:47
+#: src/ej_tools/forms.py:46
 msgid "Template type"
 msgstr "Tipo de template"
 
-#: src/ej_tools/forms.py:56
+#: src/ej_tools/forms.py:55
 #, fuzzy
 msgid "Redirect user to a custom domain (optional)"
 msgstr "URL para redirecionamento (opcional)."
 
-#: src/ej_tools/forms.py:59
+#: src/ej_tools/forms.py:58
 msgid "Adds a custom title to the template (optional)."
 msgstr "Adicione um título customizado ao template (opcional)."
 
-#: src/ej_tools/forms.py:62
+#: src/ej_tools/forms.py:61
 msgid "selects a specific comment for user to vote (optional)."
 msgstr "Selecione um comentário específico para o usuário votar (opcional)."
 
-#: src/ej_tools/forms.py:82 src/ej_tools/tests/test_rasa_integrations.py:49
+#: src/ej_tools/forms.py:81 src/ej_tools/tests/test_rasa_integrations.py:48
 #, fuzzy
 msgid "Rasa conversation with this Conversation and Domain already exists."
 msgstr "Uma conexão com esse nome já existe nessa conversa."
 
-#: src/ej_tools/forms.py:84
+#: src/ej_tools/forms.py:83
 #, python-format
 msgid ""
 "Site already integrated with conversation %(conversation)s, try another url."
@@ -1929,7 +1938,7 @@ msgstr "Domínio"
 msgid "The domain that the rasa bot webchat is hosted."
 msgstr "O domínio do site que hospeda o webchat do rasa bot."
 
-#: src/ej_tools/models.py:46 src/ej_tools/tests/test_rasa_integrations.py:73
+#: src/ej_tools/models.py:46 src/ej_tools/tests/test_rasa_integrations.py:72
 #, fuzzy
 msgid "a conversation can have a maximum of five domains"
 msgstr "Uma conversa pode ter no máximo cinco links integrados."
@@ -1946,7 +1955,7 @@ msgstr ""
 "Usuário interagirá com a interface da EJ, criando uma conta com dados "
 "pessoais (email e nome)."
 
-#: src/ej_tools/models.py:59 src/ej_tools/models.py:118
+#: src/ej_tools/models.py:59 src/ej_tools/tools.py:134
 msgid "Uses a mautic campaign "
 msgstr "Usa uma campanha do mautic"
 
@@ -1974,82 +1983,38 @@ msgstr ""
 msgid "Boca de Lobo"
 msgstr ""
 
-#: src/ej_tools/models.py:94
-msgid "BocaDeLoboBot"
-msgstr ""
-
-#: src/ej_tools/models.py:94
-msgid "DudaEjBot"
-msgstr ""
-
-#: src/ej_tools/models.py:96
-#, fuzzy
-msgid ""
-"I am the virtual assistant for the EJ platform. Empurrando Juntos, or EJ "
-"Platform, is an opinion consultation platform focused on States and "
-"Organizations. We would like your participation in the following discussion:"
-msgstr ""
-"Eu sou a assistente virtual da plataforma EJ. A Empurrando Juntos, ou "
-"Platforma EJ, é uma plataforma de consultas de opinião com foco em Estado e "
-"Organizações. Gostaríamos da sua participação na seguinte discussão: "
-
-#: src/ej_tools/models.py:106
-#, fuzzy
-msgid ""
-"I am the virtual assistant for the EJ platform. Empurrando Juntos, or EJ "
-"Platform, is an opinion consultation platform focused on the State and "
-"Organizations. We would like your participation in the following discussion:"
-msgstr ""
-"Eu sou a assistente virtual da plataforma EJ. A Empurrando Juntos, ou "
-"Platforma EJ, é uma plataforma de consultas de opinião com foco em Estado e "
-"Organizações. Gostaríamos da sua participação na seguinte discussão: "
-
-#: src/ej_tools/models.py:112 src/ej_tools/routes.py:236
-#: src/ej_tools/table.py:47
-msgid "Mautic"
-msgstr ""
-
-#: src/ej_tools/models.py:113
-msgid "MailChimp"
-msgstr ""
-
-#: src/ej_tools/models.py:117
-#, fuzzy
-msgid "Mailchimp campaign"
-msgstr "Campanha de email"
-
-#: src/ej_tools/models.py:127
+#: src/ej_tools/models.py:98
 msgid "Client ID"
 msgstr "Chave pública"
 
-#: src/ej_tools/models.py:128
+#: src/ej_tools/models.py:99
 #, fuzzy
 msgid "Client Secret"
 msgstr "Chave secreta"
 
-#: src/ej_tools/models.py:129
+#: src/ej_tools/models.py:100
 #, fuzzy
 msgid "Mautic Access Token"
 msgstr "Token de acesso"
 
-#: src/ej_tools/models.py:130
+#: src/ej_tools/models.py:101
 #, fuzzy
 msgid "Refresh Token"
 msgstr "Atualizar token"
 
-#: src/ej_tools/models.py:131
+#: src/ej_tools/models.py:102
 msgid "Mautic URL"
 msgstr "URL do Mautic"
 
-#: src/ej_tools/models.py:131
+#: src/ej_tools/models.py:102
 msgid "Generated Url from Mautic."
 msgstr "Url gerada no Mautic."
 
-#: src/ej_tools/models.py:198
+#: src/ej_tools/models.py:169
 msgid "Client not found."
 msgstr "Chave do Mautic não encontrada"
 
-#: src/ej_tools/models.py:202
+#: src/ej_tools/models.py:173
 #: src/ej_tools/tests/test_mautic_integrations.py:117
 #, fuzzy
 msgid ""
@@ -2059,42 +2024,53 @@ msgstr ""
 "Não foi possível localizar uma instância do Mautic com a URL fornecida. "
 "Verifique sua url do Mautic e a url de redirecionamento na página do Mautic."
 
-#: src/ej_tools/models.py:223
+#: src/ej_tools/models.py:194
 msgid "Couldn't generate tokens."
 msgstr "Não foi possível gerar os tokens."
 
-#: src/ej_tools/models.py:246
+#: src/ej_tools/models.py:217
 #, fuzzy
 msgid "Couldn't generate new token."
 msgstr "Não foi possível gerar os tokens."
 
-#: src/ej_tools/models.py:292
+#: src/ej_tools/models.py:263
 #, fuzzy
 msgid "There was an error connection to mautic server, please check your url."
 msgstr "Houve um erro na conexao com o Mautic, por favor verifique a URL."
 
-#: src/ej_tools/models.py:331
+#: src/ej_tools/models.py:302
 msgid "Couldn't create a new contact in Mautic."
 msgstr ""
 
-#: src/ej_tools/models.py:335
+#: src/ej_tools/models.py:306
 #: src/ej_tools/tests/test_mautic_integrations.py:149
 msgid "There was an error connection to mautic server, please try again."
 msgstr "Houve um erro na conexao com o Mautic, por favor tente novamente."
 
-#: src/ej_tools/routes.py:68 src/ej_tools/table.py:11
+#: src/ej_tools/routes.py:50 src/ej_tools/table.py:11 src/ej_tools/tools.py:139
 msgid "Mailing campaign"
 msgstr "Campanha de email"
 
-#: src/ej_tools/routes.py:90 src/ej_tools/table.py:19
+#: src/ej_tools/routes.py:76 src/ej_tools/routes.py:98 src/ej_tools/table.py:19
+#: src/ej_tools/tools.py:115
 #, fuzzy
 msgid "Opinion component"
 msgstr "Componente de opinião"
 
-#: src/ej_tools/routes.py:114 src/ej_tools/routes.py:124
-#: src/ej_tools/routes.py:135 src/ej_tools/routes.py:167
-#: src/ej_tools/table.py:27
-msgid "Chatbot"
+#: src/ej_tools/routes.py:113 src/ej_tools/routes.py:119
+#: src/ej_tools/routes.py:127 src/ej_tools/routes.py:135
+#: src/ej_tools/tools.py:84
+#, fuzzy
+msgid "Opinion Bots"
+msgstr "Bot de Opinião"
+
+#: src/ej_tools/routes.py:170 src/ej_tools/routes.py:182
+msgid "Webchat"
+msgstr ""
+
+#: src/ej_tools/routes.py:200 src/ej_tools/routes.py:252
+#: src/ej_tools/table.py:47 src/ej_tools/tools.py:70 src/ej_tools/tools.py:128
+msgid "Mautic"
 msgstr ""
 
 #: src/ej_tools/table.py:13
@@ -2113,17 +2089,18 @@ msgid ""
 "from our API. "
 msgstr ""
 "Realize coletas de opinião em seu site ou plataforma. Permite votar, "
-"comentar e visualizar os grupos da EJ em páginas html."
-" A ferramenta se comunica com a EJ por meio da nossa API."
+"comentar e visualizar os grupos da EJ em páginas html. A ferramenta se "
+"comunica com a EJ por meio da nossa API."
+
+#: src/ej_tools/table.py:27
+msgid "Chatbot"
+msgstr ""
 
 #: src/ej_tools/table.py:29
-#, fuzzy
 msgid ""
 "Collect opinions using EJ's chatbot, also known as Duda. Allows, via "
 "webchat, telegram and whatsapp to vote and comment on EJ's conversations."
 msgstr ""
-"Colete opiniões usando o chatbot da EJ, também conhecido como Duda. Permite, "
-"via webchat, telegram e whatsapp votar e comentar as conversas da EJ."
 
 #: src/ej_tools/table.py:32
 #, fuzzy
@@ -2132,9 +2109,8 @@ msgid ""
 "able to do collects from whatsapp, telegram or through webchat. Select one "
 "of the options to conduct the collect configuration"
 msgstr ""
-"Colete opiniões usando o chatbot da EJ, também conhecido como Duda. Você "
-"será capaz de realizar coletas no whatsapp,  telegram ou  via webchat. "
-"Selecione uma das opções a seguir para configurar a coleta."
+"Colete opiniões usando o chatbot da EJ, também conhecido como Duda. Permite, "
+"via webchat, telegram e whatsapp votar e comentar as conversas da EJ."
 
 #: src/ej_tools/table.py:35
 #, fuzzy
@@ -2145,7 +2121,7 @@ msgstr ""
 "O usuário do whatsapp irá interagir com o bot no privado. Utiliza o Twillio "
 "como broker para conexão."
 
-#: src/ej_tools/table.py:38
+#: src/ej_tools/table.py:38 src/ej_tools/tools.py:35
 #, fuzzy
 msgid ""
 "Telegram user will interact with the bot in the private chat. Use telegram "
@@ -2163,7 +2139,7 @@ msgstr ""
 "Integre esta conversa com  um cliente web, chamado webchat. \n"
 " Cria um chat na página do seu site."
 
-#: src/ej_tools/table.py:49
+#: src/ej_tools/table.py:49 src/ej_tools/tools.py:72
 msgid ""
 "Integrate this conversation with the Mautic platform API, allowing users who "
 "participate in this conversation to be automatically synchronized with "
@@ -2174,21 +2150,119 @@ msgstr ""
 "com a base de contatos do Mautic."
 
 #: src/ej_tools/tests/test_mautic_integrations.py:63
-#: src/ej_tools/tests/test_rasa_integrations.py:41
+#: src/ej_tools/tests/test_rasa_integrations.py:40
 #, fuzzy
 msgid "Enter a valid URL."
 msgstr "Insira uma URL válida."
 
-#: src/ej_tools/tests/test_rasa_integrations.py:60
+#: src/ej_tools/tests/test_rasa_integrations.py:59
 msgid ""
 "Site already integrated with conversation Conversation, try another url."
 msgstr ""
 "Esse site já está integrado com a conversa Conversation, tente outra url."
 
-#: src/ej_tools/tests/test_rasa_integrations.py:105
+#: src/ej_tools/tests/test_rasa_integrations.py:104
 #, fuzzy
 msgid "Enter a valid URL"
 msgstr "Insira uma URL válida."
+
+#: src/ej_tools/tools.py:24
+#, fuzzy
+msgid ""
+"Integrate this conversation with a web client, called a webchat.Create a "
+"chat on your website page."
+msgstr ""
+"Integre esta conversa com  um cliente web, chamado webchat. \n"
+" Cria um chat na página do seu site."
+
+#: src/ej_tools/tools.py:39
+#, fuzzy
+msgid ""
+"I am the virtual assistant for the EJ platform. Empurrando Juntos, or EJ "
+"Platform,is an opinion consultation platform focused on States and "
+"Organizations.We would like your participation in the following discussion:"
+msgstr ""
+"Eu sou a assistente virtual da plataforma EJ. A Empurrando Juntos, ou "
+"Platforma EJ, é uma plataforma de consultas de opinião com foco em Estado e "
+"Organizações. Gostaríamos da sua participação na seguinte discussão: "
+
+#: src/ej_tools/tools.py:43
+msgid "BocaDeLoboBot"
+msgstr ""
+
+#: src/ej_tools/tools.py:43
+msgid "DudaEjBot"
+msgstr ""
+
+#: src/ej_tools/tools.py:52
+#, fuzzy
+msgid ""
+"Whatsapp user will interact with the bot in the private chat.Use Twilio as a "
+"broker for connection."
+msgstr ""
+"O usuário do whatsapp irá interagir com o bot no privado. Utiliza o Twillio "
+"como broker para conexão."
+
+#: src/ej_tools/tools.py:56
+#, fuzzy
+msgid ""
+"I am the virtual assistant for the EJ platform. Empurrando Juntos, or EJ "
+"Platform, is an opinion consultation platform focused on the State and "
+"Organizations. We would like your participation in the following discussion:"
+msgstr ""
+"Eu sou a assistente virtual da plataforma EJ. A Empurrando Juntos, ou "
+"Platforma EJ, é uma plataforma de consultas de opinião com foco em Estado e "
+"Organizações. Gostaríamos da sua participação na seguinte discussão: "
+
+#: src/ej_tools/tools.py:77
+msgid "/docs/?page=user-docs/tools-mautic.html"
+msgstr ""
+
+#: src/ej_tools/tools.py:86
+#, fuzzy
+msgid ""
+"Collect opinions using EJ's bots. You can collect on Whatsapp, Telegram and "
+"web pages."
+msgstr ""
+"Colete opiniões usando os chatbots da EJ. Permite coletar a opinião de "
+"usuários do Telegram."
+
+#: src/ej_tools/tools.py:117
+msgid ""
+"Conduct opinion collections without your audience having to access EJ "
+"directly. Allows you to vote, comment and view groups directly on html "
+"pages, without impacting the experience of those who already access their "
+"networks and platforms."
+msgstr ""
+"Realize coletas de opinião em seu site ou plataforma.Permite votar, comentar "
+"e visualizar os da EJ em páginas html. A ferramenta se comunica com a EJ por "
+"meio da nossa API."
+
+#: src/ej_tools/tools.py:122
+msgid "/docs/?page=user-docs/tools-opinion-component.html"
+msgstr ""
+
+#: src/ej_tools/tools.py:129
+msgid "MailChimp"
+msgstr ""
+
+#: src/ej_tools/tools.py:133
+#, fuzzy
+msgid "Mailchimp campaign"
+msgstr "Campanha de email"
+
+#: src/ej_tools/tools.py:141
+msgid ""
+"Generates a html template of this conversation, for mailing marketing "
+"campaigns."
+msgstr ""
+"Gere um template html desta conversa, e faça coletas de opinião via disparo "
+"de email. Útil para campanhas de marketing com ferramentas como mautic e "
+"mailchimp."
+
+#: src/ej_tools/tools.py:144
+msgid "/docs/?page=user-docs/tools-mail-template.html"
+msgstr ""
 
 #: src/ej_users/admin.py:14
 msgid "Permissions"
@@ -2303,42 +2377,34 @@ msgid ""
 msgstr ""
 "Já tem uma conta? Então por favor  <a href=\"%(login_url)s\">faça login</a>."
 
-#: src/ej_users/models.py:99
-msgid "Listen to community"
-msgstr "Ouça a Comunidade"
-
-#: src/ej_users/models.py:100
+#: src/ej_users/models.py:28
 #, fuzzy
-msgid "Listen to city"
-msgstr "Ouça a Cidade"
-
-#: src/ej_users/models.py:113
 msgid "email address"
-msgstr "endereço de email"
+msgstr "Seu endereço de e-mail"
 
-#: src/ej_users/models.py:113
+#: src/ej_users/models.py:28
 msgid "Your e-mail address"
 msgstr "Seu endereço de e-mail"
 
-#: src/ej_users/models.py:115
+#: src/ej_users/models.py:30
 msgid "Name used to publicly identify user"
 msgstr "Apelido público usado para identificar o usuário"
 
-#: src/ej_users/models.py:119
+#: src/ej_users/models.py:34
 #, fuzzy
 msgid "Signature"
 msgstr "Registrar"
 
-#: src/ej_users/models.py:122
+#: src/ej_users/models.py:37
 #, fuzzy
 msgid "User signature"
 msgstr "Pontuação do usuário"
 
-#: src/ej_users/models.py:157
+#: src/ej_users/models.py:72
 msgid "User token"
 msgstr "Token do usuário"
 
-#: src/ej_users/models.py:203
+#: src/ej_users/models.py:118
 msgid "Anonymous"
 msgstr "Anônimo"
 
@@ -3724,6 +3790,11 @@ msgstr ""
 "Você precisa de um nome de usuário exclusivo para usar o painel Rocket.Chat. "
 "Selecione o nome de usuário e criaremos uma conta para você."
 
+#: src/ej_tools/jinja2/ej_tools/card_tools.jinja2:22
+#: src/ej_tools/jinja2/ej_tools/index.jinja2:29
+msgid "This tool is not available on your current signature."
+msgstr "Essa ferramenta não está diponível na sua assinatura atual."
+
 #: src/ej_tools/jinja2/ej_tools/chatbot.jinja2:24
 #, fuzzy
 msgid "Integration options"
@@ -3738,7 +3809,7 @@ msgstr "Integre esta conversa com um dos canais de coleta disponíveis."
 #: src/ej_tools/jinja2/ej_tools/index.jinja2:15
 #, fuzzy
 msgid "Integrates this conversation with external tools and platforms."
-msgstr "Integre a sua conversa com outras ferramentas e plataformas"
+msgstr "Integre a sua conversa com outras ferramentas e plataformas."
 
 #: src/ej_tools/jinja2/ej_tools/index.jinja2:19
 #: src/ej_tools/jinja2/ej_tools/mautic-connections.jinja2:2
@@ -3746,7 +3817,8 @@ msgstr "Integre a sua conversa com outras ferramentas e plataformas"
 msgid "Integration"
 msgstr "Integração"
 
-#: src/ej_tools/jinja2/ej_tools/index.jinja2:25
+#: src/ej_tools/jinja2/ej_tools/index.jinja2:27
+#: src/ej_tools/jinja2/ej_tools/index.jinja2:36
 msgid "Learn more about this integration"
 msgstr "Aprenda mais sobre esta integração"
 
@@ -4331,15 +4403,19 @@ msgstr "Mudar a senha"
 msgid "Authentication"
 msgstr "Autenticação"
 
-#~ msgid ""
-#~ "Conduct opinion collections without your audience having to access EJ "
-#~ "directly. Allows you to vote, comment and view groups directly on html "
-#~ "pages, without impacting the experience of those who already access their "
-#~ "networks and platforms."
+#, fuzzy
+#~ msgid "Click here to"
+#~ msgstr "Clique aqui para fazer"
+
+#, fuzzy
+#~ msgid "This tool is not available on your current signature. Click to"
 #~ msgstr ""
-#~ "Realize coletas de opinião em seu site ou plataforma.Permite votar, "
-#~ "comentar e visualizar os da EJ em páginas html. A ferramenta se comunica "
-#~ "com a EJ por meio da nossa API."
+#~ "Essa ferramenta não está diponível na sua assinatura atual. Clique para "
+#~ "fazer"
+
+#, fuzzy
+#~ msgid "Authentication Type"
+#~ msgstr "Autenticação"
 
 #, fuzzy
 #~ msgid "My conversations"
@@ -4382,10 +4458,6 @@ msgstr "Autenticação"
 #, fuzzy
 #~ msgid "Administration"
 #~ msgstr "Administração"
-
-#, fuzzy
-#~ msgid "Authentication Type"
-#~ msgstr "Autenticação"
 
 #~ msgid ""
 #~ "Selects the type of authentication that will be used to register the user "
@@ -4468,17 +4540,6 @@ msgstr "Autenticação"
 #, fuzzy
 #~ msgid "Modify limit to create conversation"
 #~ msgstr "limita conversas do board"
-
-#, fuzzy
-#~ msgid ""
-#~ "Collect opinions using EJ's chatbot, also known as Duda. Allow collect "
-#~ "opinion from users of telegram. To allow the collect, share the link of "
-#~ "participation to groups, channels or direct in the private chat of the "
-#~ "user"
-#~ msgstr ""
-#~ "Colete opiniões usando o chatbot da EJ, também conhecido como Duda. "
-#~ "Permite, via webchat, telegram e whatsapp votar e comentar as conversas "
-#~ "da EJ."
 
 #, fuzzy
 #~ msgid ""

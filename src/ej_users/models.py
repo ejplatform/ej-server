@@ -1,104 +1,19 @@
 from datetime import datetime, timedelta
 from logging import getLogger
-from abc import ABC, abstractmethod
-from constance import config
 
-from django.contrib.auth.models import Permission
 from boogie.apps.users.models import AbstractUser
 from boogie.rest import rest_api
 from django.utils.text import slugify
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
+from ej_signatures.models import SignatureFactory
 from model_utils.models import TimeStampedModel
 
 from .manager import UserManager
 from .utils import random_name, token_factory
 
 log = getLogger("ej")
-
-
-class Signature(ABC):
-    """
-    Abstract class that defines generic actions to be performed by its signature subclasses.
-    """
-
-    def __init__(self, user):
-        self.user = user
-
-    def can_add_conversation(self) -> bool:
-        if self.user.is_superuser:
-            return True
-
-        user_conversations_count = self.user.conversations.count()
-        if user_conversations_count < self.get_conversation_limit():
-            return True
-        else:
-            return False
-
-    def can_vote(self) -> bool:
-        if self.user.is_superuser:
-            return True
-
-        user_vote_count = self.user.votes.count()
-        if user_vote_count < self.get_vote_limit():
-            return True
-        else:
-            return False
-
-    @abstractmethod
-    def get_conversation_limit(self) -> int:
-        pass
-
-    @abstractmethod
-    def get_vote_limit(self) -> int:
-        pass
-
-
-class ListenToCommunity(Signature):
-    def get_conversation_limit(self) -> int:
-        return config.EJ_LISTEN_TO_COMMUNITY_SIGNATURE_CONVERSATIONS_LIMIT
-
-    def get_vote_limit(self) -> int:
-        return config.EJ_LISTEN_TO_COMMUNITY_SIGNATURE_VOTE_LIMIT
-
-
-class ListenToCity(Signature):
-    def get_conversation_limit(self) -> int:
-        return config.EJ_LISTEN_TO_CITY_SIGNATURE_CONVERSATIONS_LIMIT
-
-    def get_vote_limit(self) -> int:
-        return config.EJ_LISTEN_TO_CITY_SIGNATURE_VOTE_LIMIT
-
-
-class SignatureFactory:
-    """
-    Instantiates signature subclasses
-    Usage:
-
-    signature = SignatureFactory.get_user_signature(request.user)
-    signature.<method-from-class>()
-    """
-
-    LISTEN_TO_COMMUNITY = "listen_to_community"
-    LISTEN_TO_CITY = "listen_to_city"
-
-    signatures = {LISTEN_TO_COMMUNITY: ListenToCommunity, LISTEN_TO_CITY: ListenToCity}
-
-    @staticmethod
-    def get_user_signature(user) -> Signature:
-        signature = SignatureFactory.signatures.get(user.signature)
-        try:
-            return signature(user)
-        except:
-            return None
-
-    @staticmethod
-    def plans():
-        return [
-            (SignatureFactory.LISTEN_TO_COMMUNITY, _("Listen to community")),
-            (SignatureFactory.LISTEN_TO_CITY, _("Listen to city")),
-        ]
 
 
 @rest_api(["id", "display_name", "email", "signature"])

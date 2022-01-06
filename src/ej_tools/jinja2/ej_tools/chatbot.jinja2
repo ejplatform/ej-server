@@ -17,16 +17,18 @@
     <div class="tools-section">
     <div class="tools-title">
       <h1 class="h2 text-accent"><a href="{{ conversation.url('conversation-tools:index') }}">{{_("Tools")}}</a>
-        > {{ tool["integration"] }}</h1>
-      <span class="helptext">{{tool["description_chatbots"] }}</span>
+        > {{ tool.name }}</h1>
+      <span class="helptext">{{tool.description }}</span>
     </div>
       <div class="tools-content">
         <h3 class="h3 divider">{{_("Integration options")}}</h3>
         <span class="helptext">{{_("Integrate this conversation with one of the available collection channels.")}}</span>
         <div id="container" class="chatbotOptions">
-          {{ card_tools(static('/img/icons/talks.svg'), "Webchat", tool["description_webchat"],  conversation.url('conversation-tools:webchat'), "oversize") }}
-          {{ card_tools(static('/img/logo/channel_telegram.svg'), "Telegram", tool["description_telegram"], conversation.url('conversation-tools:telegram') , "") }}
-          {{ card_tools(static('/img/logo/channel_wpp.svg'), "Whatsapp", tool["description_whatsapp"], conversation.url('conversation-tools:whatsapp') , "") }}
+          {{ card_tools(tool.webchat, static('/img/icons/talks.svg'), tool.webchat.name, tool.webchat.description,  conversation.url('conversation-tools:webchat'), "oversize") }}
+          {{ card_tools(tool.telegram, static('/img/logo/channel_telegram.svg'), tool.telegram.name,
+          tool.telegram.description, conversation.url('conversation-tools:telegram') , "") }}
+          {{ card_tools(tool.whatsapp, static('/img/logo/channel_wpp.svg'), tool.whatsapp.name,
+          tool.whatsapp.description, conversation.url('conversation-tools:whatsapp') , "") }}
         </div>
     </div>
   </div>

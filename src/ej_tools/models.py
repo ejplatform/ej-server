@@ -90,35 +90,6 @@ class ConversationComponent:
         return result
 
 
-class ChatbotTelegramTool:
-    CHANNELS_CHOICES = ("Boca De Lobo", _("BocaDeLoboBot")), ("Duda", _("DudaEjBot"))
-    SHARE = _(
-        "I am the virtual assistant for the EJ platform. Empurrando Juntos, or EJ Platform, is an opinion consultation platform focused on States and Organizations. We would like your participation in the following discussion:"
-    )
-
-
-class ChatbotWhatsappTool:
-    CHANNEL_CHOICES = (
-        ("Boca de Lobo", "611234"),
-        ("Duda", "614567"),
-    )
-    SHARE = _(
-        "I am the virtual assistant for the EJ platform. Empurrando Juntos, or EJ Platform, is an opinion consultation platform focused on the State and Organizations. We would like your participation in the following discussion:"
-    )
-
-
-class MailingTool:
-    MAILING_TOOL_CHOICES = (
-        ("mautic", _("Mautic")),
-        ("mailchimp", _("MailChimp")),
-    )
-
-    MAILING_TOOLTIP_TEXTS = {
-        "mailchimp": _("Mailchimp campaign"),
-        "mautic": _("Uses a mautic campaign "),
-    }
-
-
 class ConversationMautic(models.Model):
     """
     Allows correlation between a conversation and an instance of Mautic
