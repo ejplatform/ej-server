@@ -5,7 +5,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.core.exceptions import ValidationError
-from .utils import npm_version, user_can_add_new_domain, prepare_host_with_https, get_host_with_protocol
+from .utils import npm_version, user_can_add_new_domain, prepare_host_with_https, get_host_with_schema
 from .forms import (
     RasaConversationForm,
     ConversationComponentForm,
@@ -97,7 +97,7 @@ def opinion_component(request, conversation, **kwargs):
 
 @urlpatterns.route(conversation_tools_url + "/opinion-component/preview")
 def opinion_component_preview(request, board, conversation, slug):
-    host = get_host_with_protocol(request)
+    host = get_host_with_schema(request)
     theme = request.session.get("theme")
     return {
         "conversation": conversation,
@@ -141,7 +141,7 @@ def whatsapp(request, board, conversation, slug):
 @urlpatterns.route(conversation_tools_chatbot_url + "/webchat")
 def webchat(request, conversation, **kwargs):
     user_can_add = user_can_add_new_domain(request.user, conversation)
-    host = get_host_with_protocol(request)
+    host = get_host_with_schema(request)
     request.session["host"] = host
     webchat_preview_url = host + conversation.url("conversation-tools:webchat-preview")
 
@@ -172,7 +172,7 @@ def webchat(request, conversation, **kwargs):
 
 @urlpatterns.route(conversation_tools_chatbot_url + "/webchat/preview")
 def webchat_preview(request, board, conversation, slug):
-    host = request.session.get("host")
+    host = get_host_with_schema(request)
     rasa_domain = WebchatHelper.get_rasa_domain(host)
     return {"conversation": conversation, "rasa_domain": rasa_domain}
 
