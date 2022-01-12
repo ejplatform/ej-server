@@ -146,7 +146,7 @@ class TestRasaConversationIntegrationsAPI(ConversationRecipes):
 class TestWebchatHelper:
     EJ_POSSIBLE_URLS = [
         "http://localhost:8000",
-        "https://ejplatform.pencillabs.com.br/",
+        "https://ejplatform.pencillabs.com.br",
         "https://www.ejplatform.org",
     ]
 

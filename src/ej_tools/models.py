@@ -56,8 +56,6 @@ class ConversationComponent:
 
     AUTH_TOOLTIP_TEXTS = {
         "register": _("User will use EJ platform interface, creating an account using personal data"),
-        "mautic": _("Uses a mautic campaign "),
-        "analytics": _("Uses analytics cookies allowing you to cross vote data with user browser data."),
     }
 
     THEME_CHOICES = (
