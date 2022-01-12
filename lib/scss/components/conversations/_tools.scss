@@ -785,7 +785,6 @@ $modal-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.35);
 .tools-share-content {  
     width: clamp(35ch, 55%, 75ch);
     position: relative;
-    cursor: pointer;
     transition: 0.3s;
 }
 
@@ -844,6 +843,7 @@ $modal-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.35);
     top: 25px;
     right: 15px;
     display: block;
+    cursor: pointer;
 }
 
 .tools-share-container {
