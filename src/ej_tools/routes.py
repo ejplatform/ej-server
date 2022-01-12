@@ -81,8 +81,10 @@ def opinion_component(request, conversation, **kwargs):
     conversation_component = ConversationComponent(form)
     if "preview" in request.POST:
         form.is_valid()
-        request.session["theme"] = form.cleaned_data["theme"] or "icd"
-        return redirect(conversation.url("conversation-tools:opinion-component-preview"))
+        theme = form.cleaned_data["theme"]
+        if theme:
+            theme = f"?theme={theme}"
+        return redirect(conversation.url("conversation-tools:opinion-component-preview") + theme)
     return {
         "ej_domain": get_host_with_schema(request),
         "tool": tool,
@@ -100,7 +102,7 @@ def opinion_component_preview(request, conversation, **kwargs):
     tool.raise_error_if_not_active()
 
     host = get_host_with_schema(request)
-    theme = request.session.get("theme")
+    theme = request.GET.get("theme", "icd")
     return {
         "conversation": conversation,
         "theme": theme,
