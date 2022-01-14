@@ -1,6 +1,5 @@
 from ej_tools.routes import webchat
 import pytest
-import random
 from ej_users.models import User
 from django.db import IntegrityError
 from django.utils.translation import ugettext as _
@@ -144,18 +143,25 @@ class TestRasaConversationIntegrationsAPI(ConversationRecipes):
 
 
 class TestWebchatHelper:
-    EJ_POSSIBLE_URLS = [
-        "http://localhost:8000",
-        "https://ejplatform.pencillabs.com.br",
-        "https://www.ejplatform.org",
-    ]
+    def __init__(self):
+        self.environments = {
+            "local": "http://localhost:8000",
+            "dev": "https://ejplatform.pencillabs.com.br",
+            "prod": "https://www.ejplatform.org",
+        }
 
-    def test_get_current_available_instance(self):
-        current_host = random.choice(TestWebchatHelper.EJ_POSSIBLE_URLS)
-        rasa_instance_url = WebchatHelper.get_rasa_domain(current_host)
-        assert rasa_instance_url
-        assert rasa_instance_url == WebchatHelper.AVAILABLE_ENVIRONMENT_MAPPING.get(current_host)
+    def test_local_webchat_integration(self):
+        rasa_environment = WebchatHelper.get_rasa_domain(self.environments["local"])
+        assert rasa_environment
+
+    def test_dev_webchat_integration(self):
+        rasa_environment = WebchatHelper.get_rasa_domain(self.environments["dev"])
+        assert rasa_environment
+
+    def test_prod_webchat_integration(self):
+        rasa_environment = WebchatHelper.get_rasa_domain(self.environments["prod"])
+        assert rasa_environment
 
     def test_if_instance_not_available(self):
-        rasa_instance_url = WebchatHelper.get_rasa_domain(HTTP_HOST)
-        assert not rasa_instance_url
+        rasa_environment = WebchatHelper.get_rasa_domain(HTTP_HOST)
+        assert not rasa_environment
