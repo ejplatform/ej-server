@@ -38,7 +38,7 @@ conversation_tools_chatbot_url = f"{conversation_tools_url}/chatbot"
 
 @urlpatterns.route(conversation_tools_url, perms=["ej.can_edit_conversation:conversation"])
 def index(request, board, conversation, slug, npm=npm_version):
-    user_signature = SignatureFactory.get_user_signature(request.user)
+    user_signature = SignatureFactory.get_user_signature(conversation.author)
     tools = user_signature.get_conversation_tools(conversation)
     return {"tools": tools, "conversation": conversation}
 
@@ -47,7 +47,7 @@ def index(request, board, conversation, slug, npm=npm_version):
 def mailing(request, board, conversation, slug):
     from .mailing import TemplateGenerator
 
-    user_signature = SignatureFactory.get_user_signature(request.user)
+    user_signature = SignatureFactory.get_user_signature(conversation.author)
     tool = user_signature.get_tool(_("Mailing campaign"), conversation)
     tool.raise_error_if_not_active()
 
@@ -73,7 +73,7 @@ def mailing(request, board, conversation, slug):
 
 @urlpatterns.route(conversation_tools_url + "/opinion-component")
 def opinion_component(request, conversation, **kwargs):
-    user_signature = SignatureFactory.get_user_signature(request.user)
+    user_signature = SignatureFactory.get_user_signature(conversation.author)
     tool = user_signature.get_tool(_("Opinion component"), conversation)
     tool.raise_error_if_not_active()
 
@@ -97,7 +97,7 @@ def opinion_component(request, conversation, **kwargs):
 
 @urlpatterns.route(conversation_tools_url + "/opinion-component/preview")
 def opinion_component_preview(request, conversation, **kwargs):
-    user_signature = SignatureFactory.get_user_signature(request.user)
+    user_signature = SignatureFactory.get_user_signature(conversation.author)
     tool = user_signature.get_tool(_("Opinion component"), conversation)
     tool.raise_error_if_not_active()
 
@@ -112,13 +112,13 @@ def opinion_component_preview(request, conversation, **kwargs):
 
 @urlpatterns.route(conversation_tools_url + "/chatbot")
 def chatbot(request, conversation, **kwargs):
-    user_signature = SignatureFactory.get_user_signature(request.user)
+    user_signature = SignatureFactory.get_user_signature(conversation.author)
     return {"conversation": conversation, "tool": user_signature.get_tool(_("Opinion Bots"), conversation)}
 
 
 @urlpatterns.route(conversation_tools_url + "/telegram")
 def telegram(request, conversation, **kwargs):
-    user_signature = SignatureFactory.get_user_signature(request.user)
+    user_signature = SignatureFactory.get_user_signature(conversation.author)
     tool = user_signature.get_tool(_("Opinion Bots"), conversation).telegram
     tool.raise_error_if_not_active()
     return {"conversation": conversation, "tool": tool}
@@ -126,7 +126,7 @@ def telegram(request, conversation, **kwargs):
 
 @urlpatterns.route(conversation_tools_chatbot_url + "/whatsapp")
 def whatsapp(request, board, conversation, slug):
-    user_signature = SignatureFactory.get_user_signature(request.user)
+    user_signature = SignatureFactory.get_user_signature(conversation.author)
     tool = user_signature.get_tool(_("Opinion Bots"), conversation).whatsapp
     tool.raise_error_if_not_active()
     return {"conversation": conversation, "tool": tool}
@@ -134,7 +134,7 @@ def whatsapp(request, board, conversation, slug):
 
 @urlpatterns.route(conversation_tools_chatbot_url + "/webchat")
 def webchat(request, conversation, **kwargs):
-    user_signature = SignatureFactory.get_user_signature(request.user)
+    user_signature = SignatureFactory.get_user_signature(conversation.author)
     tool = user_signature.get_tool(_("Opinion Bots"), conversation).webchat
     tool.raise_error_if_not_active()
 
@@ -168,7 +168,7 @@ def webchat(request, conversation, **kwargs):
 
 @urlpatterns.route(conversation_tools_chatbot_url + "/webchat/preview")
 def webchat_preview(request, board, conversation, slug):
-    user_signature = SignatureFactory.get_user_signature(request.user)
+    user_signature = SignatureFactory.get_user_signature(conversation.author)
     tool = user_signature.get_tool(_("Opinion Bots"), conversation).webchat
     tool.raise_error_if_not_active()
 
@@ -180,7 +180,7 @@ def webchat_preview(request, board, conversation, slug):
 @urlpatterns.route(conversation_tools_chatbot_url + "/webchat/delete/<model:connection>")
 def delete_connection(request, board, conversation, slug, connection):
     user = request.user
-    user_signature = SignatureFactory.get_user_signature(user)
+    user_signature = SignatureFactory.get_user_signature(conversation.author)
     tool = user_signature.get_tool(_("Opinion Bots"), conversation).webchat
     tool.raise_error_if_not_active()
 
@@ -198,7 +198,7 @@ def delete_connection(request, board, conversation, slug, connection):
     conversation_tools_url + "/mautic", perms=["ej.can_access_mautic_connection:conversation"]
 )
 def mautic(request, board, conversation, slug, oauth2_code=None):
-    user_signature = SignatureFactory.get_user_signature(request.user)
+    user_signature = SignatureFactory.get_user_signature(conversation.author)
     tool = user_signature.get_tool(_("Mautic"), conversation)
     tool.raise_error_if_not_active()
 
@@ -250,7 +250,7 @@ def mautic(request, board, conversation, slug, oauth2_code=None):
     perms=["ej.can_access_mautic_connection:conversation"],
 )
 def delete_mautic_connection(request, board, conversation, slug, mautic_connection):
-    user_signature = SignatureFactory.get_user_signature(request.user)
+    user_signature = SignatureFactory.get_user_signature(conversation.author)
     tool = user_signature.get_tool(_("Mautic"), conversation)
     tool.raise_error_if_not_active()
 
