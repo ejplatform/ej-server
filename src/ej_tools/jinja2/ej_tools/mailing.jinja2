@@ -15,14 +15,14 @@
 	<div class="tools-container">
 	<div class="tools-title">
 		<h1 class="h2 text-accent">
-		<a href="{{ conversation.url('conversation-tools:index') }}">{{_("Tools")}}</a>
+		<a href="{{ conversation.patch_url('conversation-tools:index') }}">{{_("Tools")}}</a>
 		> {{ tool.name }}</h1>
-		<span class="helptext">{{tool.description }}</span>
+		<span class="helptext">{{tool.description }}</span>	
 	</div>
 	<div>
 		<div class="tools-section">
 			<div class="tools-content">
-				<form action="{{conversation.url('conversation-tools:mailing')}}" method="post" class="tools-settings-form" name="mailingForm">
+				<form action="{{conversation.patch_url('conversation-tools:mailing')}}" method="post" class="tools-settings-form" name="mailingForm">
 					<h3 class="h3 divider">{{form.template_type.label}}</h3>
 					<span class="helptext">{{_("Selects template type you want to use.")}}</span>
 					<section>

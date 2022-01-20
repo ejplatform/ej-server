@@ -33,7 +33,7 @@ NOT_GIVEN = object()
 @register_menu("conversations:detail-actions")
 def conversation_links(request, conversation):
     return [
-        a(_("Tools"), href=conversation.url("conversation-tools:index")),
+        a(_("Tools"), href=conversation.patch_url("conversation-tools:index")),
     ]
 
 
@@ -221,6 +221,23 @@ class Conversation(HasFavoriteMixin, TimeStampedModel):
 
         if board:
             kwargs["board"] = board
+            which = "boards:" + which.replace(":", "-")
+            return SafeUrl(which, **kwargs)
+
+        return SafeUrl(which, **kwargs)
+
+    def patch_url(self, which="conversation:detail", board=None, **kwargs):
+        """
+        Return a url pertaining to the current conversation.
+        """
+        if board is None:
+            board = getattr(self, "board", None)
+
+        kwargs["conversation_id"] = self.id
+        kwargs["slug"] = self.slug
+
+        if board:
+            kwargs["board_slug"] = board.slug
             which = "boards:" + which.replace(":", "-")
             return SafeUrl(which, **kwargs)
 

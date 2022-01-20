@@ -73,7 +73,7 @@ class MauticTool(AbstractTool):
             + "allowing users who participate in this conversation to be automatically "
             + "synchronized with Mautic's contact base."
         )
-        self.link: str = conversation.url("conversation-tools:mautic")
+        self.link: str = conversation.patch_url("conversation-tools:mautic")
         self.about: str = _("/docs/?page=user-docs/tools-mautic.html")
         self.is_active: bool = is_active
 
@@ -85,7 +85,7 @@ class BotsTool(AbstractTool):
         self.description: str = _(
             "Collect opinions using EJ's bots. You can collect on Whatsapp, Telegram and web pages."
         )
-        self.link: str = conversation.url("conversation-tools:chatbot")
+        self.link: str = conversation.patch_url("conversation-tools:chatbot")
         self.telegram = BotsTelegramTool()
         self.whatsapp = BotsWhatsappTool()
         self.webchat = BotsWebchatTool()
@@ -118,7 +118,7 @@ class OpinionComponentTool(AbstractTool):
             + "Allows you to vote, comment and view groups directly on html pages, "
             + "without impacting the experience of those who already access their networks and platforms."
         )
-        self.link: str = conversation.url("conversation-tools:opinion-component")
+        self.link: str = conversation.patch_url("conversation-tools:opinion-component")
         self.about: str = _("/docs/?page=user-docs/tools-opinion-component.html")
         self.is_active = is_active
 
@@ -140,7 +140,7 @@ class MailingTool(AbstractTool):
         self.description: str = _(
             "Generates a html template of this conversation, for mailing marketing campaigns."
         )
-        self.link: str = conversation.url("conversation-tools:mailing")
+        self.link: str = conversation.patch_url("conversation-tools:mailing")
         self.about: str = _("/docs/?page=user-docs/tools-mail-template.html")
         self.is_active = is_active
 
