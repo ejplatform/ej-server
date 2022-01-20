@@ -1,6 +1,5 @@
 from requests import get
 from .constants import BASE_URL_NPM
-from django.core.exceptions import PermissionDenied
 
 
 def get_npm_tag(url=BASE_URL_NPM):

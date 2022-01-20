@@ -4,11 +4,11 @@ from django.shortcuts import redirect
 from django.utils.translation import ugettext_lazy as _
 
 from ej_boards.models import Board
-from ej_boards.utils import register_app_routes
+from ej_boards.utils import patched_register_app_routes, register_app_routes
 from ej_clusters.models import Stereotype
 from ej_conversations import routes as conversations
 from ej_conversations.models import Conversation
-from ej_tools import routes as tools_routes
+from ej_tools.urls import urlpatterns as conversation_tools_urlpatterns
 from .forms import BoardForm
 from ej_tools.models import RasaConversation, ConversationMautic
 from ej_dataviz import routes as dataviz
@@ -120,7 +120,7 @@ def conversation_moderate(request, board, **kwargs):
     return conversations.moderate(request, **kwargs)
 
 
-register_app_routes(tools_routes, board_base_url, urlpatterns, "conversation-tools")
 register_app_routes(dataviz, board_base_url, urlpatterns, "dataviz")
 register_app_routes(report, board_base_url, urlpatterns, "report")
 register_app_routes(cluster, board_base_url, urlpatterns, "cluster")
+patched_register_app_routes(urlpatterns.urls, conversation_tools_urlpatterns, "conversation-tools")

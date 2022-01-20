@@ -1,10 +1,14 @@
 import json
-from boogie.router import Router
 from django.utils.translation import ugettext_lazy as _
-from django.http import HttpResponse
+from django.shortcuts import render
 from django.shortcuts import redirect
-from django.core.exceptions import ValidationError
-from .utils import npm_version, user_can_add_new_domain, prepare_host_with_https, get_host_with_schema
+from .utils import (
+    npm_version,
+    user_can_add_new_domain,
+    prepare_host_with_https,
+    get_host_with_schema,
+)
+from django.http import HttpResponse
 from .forms import (
     RasaConversationForm,
     ConversationComponentForm,
@@ -12,41 +16,31 @@ from .forms import (
     MailingToolForm,
     MauticConversationForm,
 )
-from ej_tools.models import (
+from .models import (
     RasaConversation,
     ConversationMautic,
     MauticOauth2Service,
     MauticClient,
     WebchatHelper,
 )
-from ej_conversations import models
+from ej_conversations.models import Conversation
 from ej_signatures.models import SignatureFactory
+from ej.decorators import can_access_mautic_connection, can_edit_conversation
 
 
-app_name = "ej_tools"
-urlpatterns = Router(
-    template="ej_tools/{name}.jinja2",
-    models={
-        "conversation": models.Conversation,
-        "connection": RasaConversation,
-        "mautic_connection": ConversationMautic,
-    },
-)
-conversation_tools_url = f"<model:conversation>/<slug:slug>/tools"
-conversation_tools_chatbot_url = f"{conversation_tools_url}/chatbot"
-
-
-@urlpatterns.route(conversation_tools_url, perms=["ej.can_edit_conversation:conversation"])
-def index(request, board, conversation, slug, npm=npm_version):
+@can_edit_conversation
+def index(request, board_slug, conversation_id, slug):
+    conversation = Conversation.objects.get(id=conversation_id)
     user_signature = SignatureFactory.get_user_signature(conversation.author)
     tools = user_signature.get_conversation_tools(conversation)
-    return {"tools": tools, "conversation": conversation}
+    context = {"tools": tools, "conversation": conversation}
+    return render(request, "ej_tools/index.jinja2", context)
 
 
-@urlpatterns.route(conversation_tools_url + "/mailing")
-def mailing(request, board, conversation, slug):
+def mailing(request, board_slug, conversation_id, slug):
     from .mailing import TemplateGenerator
 
+    conversation = Conversation.objects.get(id=conversation_id)
     user_signature = SignatureFactory.get_user_signature(conversation.author)
     tool = user_signature.get_tool(_("Mailing campaign"), conversation)
     tool.raise_error_if_not_active()
@@ -63,16 +57,17 @@ def mailing(request, board, conversation, slug):
             return response
         if "preview" in request.POST:
             template = json.dumps(template, ensure_ascii=False)
-    return {
+    context = {
         "conversation": conversation,
         "tool": tool,
         "template_preview": template,
         "form": form,
     }
+    return render(request, "ej_tools/mailing.jinja2", context)
 
 
-@urlpatterns.route(conversation_tools_url + "/opinion-component")
-def opinion_component(request, conversation, **kwargs):
+def opinion_component(request, board_slug, conversation_id, slug):
+    conversation = Conversation.objects.get(id=conversation_id)
     user_signature = SignatureFactory.get_user_signature(conversation.author)
     tool = user_signature.get_tool(_("Opinion component"), conversation)
     tool.raise_error_if_not_active()
@@ -84,8 +79,8 @@ def opinion_component(request, conversation, **kwargs):
         theme = form.cleaned_data["theme"]
         if theme:
             theme = f"?theme={theme}"
-        return redirect(conversation.url("conversation-tools:opinion-component-preview") + theme)
-    return {
+        return redirect(conversation.patch_url("conversation-tools:opinion-component-preview") + theme)
+    context = {
         "ej_domain": get_host_with_schema(request),
         "tool": tool,
         "npm_version": npm_version(),
@@ -93,58 +88,66 @@ def opinion_component(request, conversation, **kwargs):
         "form": form,
         "conversation_component": conversation_component,
     }
+    return render(request, "ej_tools/opinion-component.jinja2", context)
 
 
-@urlpatterns.route(conversation_tools_url + "/opinion-component/preview")
-def opinion_component_preview(request, conversation, **kwargs):
+def opinion_component_preview(request, board_slug, conversation_id, slug):
+    conversation = Conversation.objects.get(id=conversation_id)
     user_signature = SignatureFactory.get_user_signature(conversation.author)
     tool = user_signature.get_tool(_("Opinion component"), conversation)
     tool.raise_error_if_not_active()
 
     host = get_host_with_schema(request)
     theme = request.GET.get("theme", "icd")
-    return {
+    context = {
         "conversation": conversation,
         "theme": theme,
         "host": host,
     }
+    return render(request, "ej_tools/opinion-component-preview.jinja2", context)
 
 
-@urlpatterns.route(conversation_tools_url + "/chatbot")
-def chatbot(request, conversation, **kwargs):
+def chatbot(request, board_slug, conversation_id, slug):
+    conversation = Conversation.objects.get(id=conversation_id)
     user_signature = SignatureFactory.get_user_signature(conversation.author)
-    return {"conversation": conversation, "tool": user_signature.get_tool(_("Opinion Bots"), conversation)}
+    context = {
+        "conversation": conversation,
+        "tool": user_signature.get_tool(_("Opinion Bots"), conversation),
+    }
+    return render(request, "ej_tools/chatbot.jinja2", context)
 
 
-@urlpatterns.route(conversation_tools_url + "/telegram")
-def telegram(request, conversation, **kwargs):
+def telegram(request, board_slug, conversation_id, slug):
+    conversation = Conversation.objects.get(id=conversation_id)
     user_signature = SignatureFactory.get_user_signature(conversation.author)
     tool = user_signature.get_tool(_("Opinion Bots"), conversation).telegram
     tool.raise_error_if_not_active()
-    return {"conversation": conversation, "tool": tool}
+    context = {"conversation": conversation, "tool": tool}
+    return render(request, "ej_tools/telegram.jinja2", context)
 
 
-@urlpatterns.route(conversation_tools_chatbot_url + "/whatsapp")
-def whatsapp(request, board, conversation, slug):
+def whatsapp(request, board_slug, conversation_id, slug):
+    conversation = Conversation.objects.get(id=conversation_id)
     user_signature = SignatureFactory.get_user_signature(conversation.author)
     tool = user_signature.get_tool(_("Opinion Bots"), conversation).whatsapp
     tool.raise_error_if_not_active()
-    return {"conversation": conversation, "tool": tool}
+    context = {"conversation": conversation, "tool": tool}
+    return render(request, "ej_tools/whatsapp.jinja2", context)
 
 
-@urlpatterns.route(conversation_tools_chatbot_url + "/webchat")
-def webchat(request, conversation, **kwargs):
+def webchat(request, board_slug, conversation_id, slug):
+    conversation = Conversation.objects.get(id=conversation_id)
     user_signature = SignatureFactory.get_user_signature(conversation.author)
     tool = user_signature.get_tool(_("Opinion Bots"), conversation).webchat
     tool.raise_error_if_not_active()
 
     user_can_add = user_can_add_new_domain(request.user, conversation)
     host = get_host_with_schema(request)
-    webchat_preview_url = host + conversation.url("conversation-tools:webchat-preview")
+    webchat_preview_url = host + conversation.patch_url("conversation-tools:webchat-preview")
 
     if "webchat-preview" in request.POST:
         RasaConversation.objects.get_or_create(conversation=conversation, domain=webchat_preview_url)
-        return redirect(conversation.url("conversation-tools:webchat-preview"))
+        return redirect(conversation.patch_url("conversation-tools:webchat-preview"))
 
     if request.method == "POST":
         form = RasaConversationForm(request.POST)
@@ -156,48 +159,52 @@ def webchat(request, conversation, **kwargs):
     else:
         form = RasaConversationForm()
 
-    conversation_rasa_connections = models.RasaConversation.objects.filter(conversation=conversation)
-    return {
+    conversation_rasa_connections = RasaConversation.objects.filter(conversation=conversation)
+    context = {
         "conversation": conversation,
         "conversation_rasa_connections": conversation_rasa_connections,
         "tool": tool,
         "form": form,
         "is_valid_user": user_can_add,
     }
+    return render(request, "ej_tools/webchat.jinja2", context)
 
 
-@urlpatterns.route(conversation_tools_chatbot_url + "/webchat/preview")
-def webchat_preview(request, board, conversation, slug):
+def webchat_preview(request, board_slug, conversation_id, slug):
+    conversation = Conversation.objects.get(id=conversation_id)
     user_signature = SignatureFactory.get_user_signature(conversation.author)
     tool = user_signature.get_tool(_("Opinion Bots"), conversation).webchat
     tool.raise_error_if_not_active()
 
     host = get_host_with_schema(request)
     rasa_domain = WebchatHelper.get_rasa_domain(host)
-    return {"conversation": conversation, "rasa_domain": rasa_domain}
+    context = {"conversation": conversation, "rasa_domain": rasa_domain}
+    return render(request, "ej_tools/webchat-preview.jinja2", context)
 
 
-@urlpatterns.route(conversation_tools_chatbot_url + "/webchat/delete/<model:connection>")
-def delete_connection(request, board, conversation, slug, connection):
+def delete_connection(request, board_slug, conversation_id, slug, connection_id):
     user = request.user
+
+    rasa_connection = RasaConversation.objects.get(id=connection_id)
+    conversation = Conversation.objects.get(id=conversation_id)
+
     user_signature = SignatureFactory.get_user_signature(conversation.author)
     tool = user_signature.get_tool(_("Opinion Bots"), conversation).webchat
     tool.raise_error_if_not_active()
 
-    if user.is_staff or user.is_superuser or connection.conversation.author.id == user.id:
-        connection.delete()
-    elif connection.conversation.author.id != user.id:
+    if user.is_staff or user.is_superuser or rasa_connection.conversation.author.id == user.id:
+        rasa_connection.delete()
+    elif rasa_connection.conversation.author.id != user.id:
         raise PermissionError("cannot delete conversation rasa connections from another user")
     else:
         raise PermissionError("user is not allowed to delete conversation rasa connections")
 
-    return redirect(conversation.url("conversation-tools:webchat"))
+    return redirect(conversation.patch_url("conversation-tools:webchat"))
 
 
-@urlpatterns.route(
-    conversation_tools_url + "/mautic", perms=["ej.can_access_mautic_connection:conversation"]
-)
-def mautic(request, board, conversation, slug, oauth2_code=None):
+@can_access_mautic_connection
+def mautic(request, board_slug, conversation_id, slug, oauth2_code=None):
+    conversation = Conversation.objects.get(id=conversation_id)
     user_signature = SignatureFactory.get_user_signature(conversation.author)
     tool = user_signature.get_tool(_("Mautic"), conversation)
     tool.raise_error_if_not_active()
@@ -230,32 +237,33 @@ def mautic(request, board, conversation, slug, oauth2_code=None):
 
     if request.method == "GET" and request.GET.get("code"):
         try:
-            conversation_mautic = models.ConversationMautic.objects.get(conversation_id=conversation.id)
+            conversation_mautic = ConversationMautic.objects.get(conversation_id=conversation.id)
             save_oauth2_tokens(https_ej_server, conversation_mautic, request.GET.get("code"))
         except Exception as e:
             conversation_mautic.delete()
             error_message = e.message
 
-    return {
+    context = {
         "conversation": conversation,
         "connections": connections,
         "tool": tool,
         "form": form,
         "errors": error_message,
     }
+    return render(request, "ej_tools/mautic.jinja2", context)
 
 
-@urlpatterns.route(
-    conversation_tools_chatbot_url + "/mautic/delete/<model:mautic_connection>",
-    perms=["ej.can_access_mautic_connection:conversation"],
-)
-def delete_mautic_connection(request, board, conversation, slug, mautic_connection):
+@can_access_mautic_connection
+def delete_mautic_connection(request, board_slug, conversation_id, slug, mautic_connection_id):
+    conversation = Conversation.objects.get(id=conversation_id)
+    mautic_connection = ConversationMautic.objects.get(conversation_id=conversation_id)
+
     user_signature = SignatureFactory.get_user_signature(conversation.author)
     tool = user_signature.get_tool(_("Mautic"), conversation)
     tool.raise_error_if_not_active()
 
     mautic_connection.delete()
-    return redirect(conversation.url("conversation-tools:mautic"))
+    return redirect(conversation.patch_url("conversation-tools:mautic"))
 
 
 def save_oauth2_tokens(ej_server_url, conversation_mautic, code):

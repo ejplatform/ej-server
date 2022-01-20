@@ -14,8 +14,8 @@
 <div class="tools">
     <div class="tools-container">
     <div class="tools-title">
-    <h1 class="h2 text-accent"><a href="{{ conversation.url('conversation-tools:index') }}">{{_("Tools")}}</a>
-        > <a href="{{ conversation.url('conversation-tools:chatbot') }}">{{ _("Opinion Bots") }}</a>
+    <h1 class="h2 text-accent"><a href="{{ conversation.patch_url('conversation-tools:index') }}">{{_("Tools")}}</a>
+        > <a href="{{ conversation.patch_url('conversation-tools:chatbot') }}">{{ _("Opinion Bots") }}</a>
         > Webchat</h1>
     <span class="helptext">{{tool["description"] }}</span>
     <span class="helptext" id="description-info">
@@ -46,7 +46,7 @@
                     </td>
                     {% if is_valid_user %}
                         <td id="td-remove">
-                            <a href="{{ conversation.url('conversation-tools:webchat') }}/delete/{{connection.id}}"><i class="fas fa-trash-restore"></i></a><br>
+                            <a href="{{ conversation.patch_url('conversation-tools:webchat') }}/delete/{{connection.id}}"><i class="fas fa-trash-restore"></i></a><br>
                         </td>
                     {% endif %}
                 </tr>

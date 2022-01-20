@@ -129,7 +129,7 @@ class MauticOauth2Service:
 
     def __init__(self, ej_server_url, conversation_mautic):
         self.conversation_mautic = conversation_mautic
-        self.redirect_uri = ej_server_url + self.conversation_mautic.conversation.url(
+        self.redirect_uri = ej_server_url + self.conversation_mautic.conversation.patch_url(
             "conversation-tools:mautic"
         )
         self.oauth2_authorization_url = self.conversation_mautic.url + "/oauth/v2/authorize"

@@ -1,4 +1,5 @@
 from inspect import Signature
+from django.urls import path
 
 from django.http import Http404
 
@@ -62,6 +63,18 @@ def register_app_routes(app_routes, board_base_url, urlpatterns, route_name):
     base_path = board_base_url + app_routes.urlpatterns.base_path
     for route in app_routes.urlpatterns.routes:
         register_route(urlpatterns, route, base_path, route_name)
+
+
+def patched_register_app_routes(board_urls, app_urls, app_name):
+    """
+    Register an app's routes in the boards namespace using django's default routes, not boogie's.
+    """
+    for url in app_urls:
+        board_url = "<slug:board_slug>/conversations/" + str(url.pattern)
+        view = url.callback
+        pattern = path(board_url, view, name=f"{app_name}-{url.name}")
+        board_urls.append(pattern)
+    return board_urls
 
 
 def statistics(board):

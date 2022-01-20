@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-06 11:24-0300\n"
+"POT-Creation-Date: 2022-01-14 10:49-0300\n"
 "PO-Revision-Date: 2019-09-09 13:55-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -93,7 +93,7 @@ msgid "Your progress: {n} of {total}"
 msgstr "Seu progresso: {n} de {total}"
 
 #: src/ej/routes.py:57 src/ej_conversations/apps.py:8
-#: src/ej_conversations/models/conversation.py:102
+#: src/ej_conversations/models/conversation.py:100
 msgid "Conversations"
 msgstr "Conversas"
 
@@ -187,12 +187,12 @@ msgstr "Roxa"
 msgid "Slug"
 msgstr "Identificador"
 
-#: src/ej_boards/models.py:32 src/ej_conversations/models/conversation.py:48
+#: src/ej_boards/models.py:32 src/ej_conversations/models/conversation.py:46
 msgid "Title"
 msgstr "Título"
 
-#: src/ej_boards/models.py:33 src/ej_clusters/models/cluster.py:28
-#: src/ej_clusters/models/stereotype.py:27
+#: src/ej_boards/models.py:33 src/ej_clusters/models/cluster.py:26
+#: src/ej_clusters/models/stereotype.py:25
 msgid "Description"
 msgstr "Descrição"
 
@@ -294,29 +294,29 @@ msgstr "Editar grupos"
 msgid "Manage personas"
 msgstr "Gerenciar personas"
 
-#: src/ej_clusters/models/cluster.py:26 src/ej_clusters/models/stereotype.py:22
+#: src/ej_clusters/models/cluster.py:24 src/ej_clusters/models/stereotype.py:20
 #: src/ej_dataviz/roles.py:141 src/ej_dataviz/routes.py:448
 #: src/ej_gamification/admin.py:33 src/ej_gamification/routes.py:124
 #: src/ej_gamification/routes.py:145
 msgid "Name"
 msgstr "Nome"
 
-#: src/ej_clusters/models/cluster.py:28
+#: src/ej_clusters/models/cluster.py:26
 msgid "How was this cluster conceived?"
 msgstr "Como este grupo foi concebido?"
 
-#: src/ej_clusters/models/cluster.py:50
+#: src/ej_clusters/models/cluster.py:48
 #, python-brace-format
 msgid "{name} (\"{conversation}\" conversation, {n} users)"
 msgstr ""
 "{name} (conversa \"{conversation}\", {n} usuários\n"
 ")"
 
-#: src/ej_clusters/models/stereotype.py:22
+#: src/ej_clusters/models/stereotype.py:20
 msgid "Public identification of persona."
 msgstr "Nome público da persona."
 
-#: src/ej_clusters/models/stereotype.py:30
+#: src/ej_clusters/models/stereotype.py:28
 msgid ""
 "Specify a background history, or give hints about the profile this persona "
 "wants to capture. This information is optional and is not made public."
@@ -331,7 +331,7 @@ msgid "Comment"
 msgstr "Comentar"
 
 #: src/ej_clusters/models/stereotype_vote.py:24
-#: src/ej_conversations/models/vote.py:46
+#: src/ej_conversations/models/vote.py:44
 msgid "Choice"
 msgstr "Escolha"
 
@@ -492,35 +492,35 @@ msgstr "Selecione para fazer conversa invisível."
 msgid "Phone number"
 msgstr "Número de telefone"
 
-#: src/ej_conversations/models/comment.py:28
+#: src/ej_conversations/models/comment.py:25
 msgid "awaiting moderation"
 msgstr "aguardando moderação"
 
-#: src/ej_conversations/models/comment.py:28
+#: src/ej_conversations/models/comment.py:25
 msgid "approved"
 msgstr "aprovado"
 
-#: src/ej_conversations/models/comment.py:28
+#: src/ej_conversations/models/comment.py:25
 msgid "rejected"
 msgstr "rejeitado"
 
-#: src/ej_conversations/models/comment.py:35
+#: src/ej_conversations/models/comment.py:32
 msgid "Content"
 msgstr "Conteúdo"
 
-#: src/ej_conversations/models/comment.py:38
+#: src/ej_conversations/models/comment.py:35
 msgid "Body of text for the comment"
 msgstr "Corpo de texto do comentário"
 
-#: src/ej_conversations/models/comment.py:41
+#: src/ej_conversations/models/comment.py:38
 msgid "Rejection reason"
 msgstr "Motivo para rejeição"
 
-#: src/ej_conversations/models/comment.py:44
+#: src/ej_conversations/models/comment.py:41
 msgid "Rejection reason (free-form)"
 msgstr "Motivo para rejeição (livre)"
 
-#: src/ej_conversations/models/comment.py:46
+#: src/ej_conversations/models/comment.py:43
 msgid ""
 "You must provide a reason to reject a comment. Users will receive this "
 "feedback."
@@ -528,123 +528,123 @@ msgstr ""
 "Você deve fornecer uma razão para rejeitar um comentário. O autor do "
 "comentário verá este feedback."
 
-#: src/ej_conversations/models/comment.py:78
+#: src/ej_conversations/models/comment.py:75
 msgid "Comment is approved"
 msgstr "Comentário aprovado"
 
-#: src/ej_conversations/models/comment.py:80
+#: src/ej_conversations/models/comment.py:77
 msgid "Comment is pending moderation"
 msgstr "Comentário está com moderação pendente"
 
-#: src/ej_conversations/models/comment.py:99
+#: src/ej_conversations/models/comment.py:96
 msgid "Must give a reason to reject a comment"
 msgstr "Deve fornecer uma razão para rejeitar o comentário"
 
-#: src/ej_conversations/models/conversation.py:37 src/ej_tools/apps.py:7
+#: src/ej_conversations/models/conversation.py:36 src/ej_tools/apps.py:7
 msgid "Tools"
 msgstr "Ferramentas"
 
-#: src/ej_conversations/models/conversation.py:50
+#: src/ej_conversations/models/conversation.py:48
 msgid "Short description used to create URL slugs (e.g. School system)."
 msgstr ""
 "Uma breve descrição sobre essa conversa. Isso é usado internamente para "
 "criar identificadores de URL (slugs. Ex: sistema de ensino)"
 
-#: src/ej_conversations/models/conversation.py:52
+#: src/ej_conversations/models/conversation.py:50
 msgid "Question"
 msgstr "Questão"
 
-#: src/ej_conversations/models/conversation.py:52
+#: src/ej_conversations/models/conversation.py:50
 msgid "What do you want to ask?"
 msgstr "O que você deseja perguntar?"
 
-#: src/ej_conversations/models/conversation.py:57
+#: src/ej_conversations/models/conversation.py:55
 msgid "Only the author and administrative staff can edit this conversation."
 msgstr "Apenas o autor e o administrador podem editar esta conversa."
 
-#: src/ej_conversations/models/conversation.py:63
+#: src/ej_conversations/models/conversation.py:61
 msgid "Moderators can accept and reject comments."
 msgstr "Os moderadores podem aceitar e rejeitar comentários."
 
-#: src/ej_conversations/models/conversation.py:68
+#: src/ej_conversations/models/conversation.py:66
 msgid "Promote conversation?"
 msgstr "Promover conversa?"
 
-#: src/ej_conversations/models/conversation.py:70
+#: src/ej_conversations/models/conversation.py:68
 msgid "Promoted conversations appears in the main /conversations/ endpoint."
 msgstr "Conversas promovidas aparecem no mural principal /conversations."
 
-#: src/ej_conversations/models/conversation.py:73
+#: src/ej_conversations/models/conversation.py:71
 msgid "Hide conversation?"
 msgstr "Esconder conversa?"
 
-#: src/ej_conversations/models/conversation.py:76
+#: src/ej_conversations/models/conversation.py:74
 msgid ""
 "Hidden conversations does not appears in boards or in the main /"
 "conversations/ endpoint."
 msgstr "Conversas ocultas não aparecem no mural principal /conversations/."
 
-#: src/ej_conversations/models/conversation.py:101
+#: src/ej_conversations/models/conversation.py:99
 #: src/ej_conversations/roles/conversations.py:133
 #: src/ej_conversations/tour.py:75 src/ej_gamification/routes.py:148
 #: src/ej_notifications/enums.py:8
 msgid "Conversation"
 msgstr "Conversa"
 
-#: src/ej_conversations/models/conversation.py:104
+#: src/ej_conversations/models/conversation.py:102
 msgid "Can publish promoted conversations"
 msgstr "Pode publicar conversas promovidas"
 
-#: src/ej_conversations/models/conversation.py:105
+#: src/ej_conversations/models/conversation.py:103
 msgid "Can moderate comments in any conversation"
 msgstr "Pode moderar comentários em qualquer conversa"
 
-#: src/ej_conversations/models/conversation.py:202
+#: src/ej_conversations/models/conversation.py:200
 msgid "User does not have permission to create a promoted conversation."
 msgstr "Usuário não tem permissão para criar uma conversa promovida."
 
-#: src/ej_conversations/models/conversation.py:266
+#: src/ej_conversations/models/conversation.py:283
 msgid "automatically rejected"
 msgstr "rejeitado automaticamente"
 
-#: src/ej_conversations/models/vote.py:12
+#: src/ej_conversations/models/vote.py:11
 #, python-brace-format
 msgid "vote should be one of 'agree', 'disagree' or 'skip', got {value}"
 msgstr ""
 "voto que deve ser uma das opções de 'concorda', 'discorda' ou 'pula', foi "
 "{value}"
 
-#: src/ej_conversations/models/vote.py:32
+#: src/ej_conversations/models/vote.py:31
 #, fuzzy
 msgid "Opinion Component"
 msgstr "Componente de Opinião"
 
-#: src/ej_conversations/models/vote.py:33
+#: src/ej_conversations/models/vote.py:32
 msgid "Rasa webchat"
 msgstr ""
 
-#: src/ej_conversations/models/vote.py:34
+#: src/ej_conversations/models/vote.py:33
 #, fuzzy
 msgid "Unknown"
 msgstr "*Desconhecido*"
 
-#: src/ej_conversations/models/vote.py:46
+#: src/ej_conversations/models/vote.py:44
 msgid "Agree, disagree or skip"
 msgstr "Concorda, discorda ou pula"
 
-#: src/ej_conversations/models/vote.py:47
+#: src/ej_conversations/models/vote.py:45
 msgid "Created at"
 msgstr "Criado em"
 
-#: src/ej_conversations/models/vote.py:49
+#: src/ej_conversations/models/vote.py:47
 msgid "Channel"
 msgstr ""
 
-#: src/ej_conversations/models/vote.py:52
+#: src/ej_conversations/models/vote.py:50
 msgid "From which EJ channel the vote comes from"
 msgstr ""
 
-#: src/ej_conversations/models/vote.py:69
+#: src/ej_conversations/models/vote.py:67
 msgid "non-moderated comments cannot receive votes"
 msgstr "comentários não-moderados não podem receber votos"
 
@@ -1918,7 +1918,7 @@ msgstr "Adicione um título customizado ao template (opcional)."
 msgid "selects a specific comment for user to vote (optional)."
 msgstr "Selecione um comentário específico para o usuário votar (opcional)."
 
-#: src/ej_tools/forms.py:81 src/ej_tools/tests/test_rasa_integrations.py:48
+#: src/ej_tools/forms.py:81 src/ej_tools/tests/test_rasa_integrations.py:47
 #, fuzzy
 msgid "Rasa conversation with this Conversation and Domain already exists."
 msgstr "Uma conexão com esse nome já existe nessa conversa."
@@ -1938,7 +1938,7 @@ msgstr "Domínio"
 msgid "The domain that the rasa bot webchat is hosted."
 msgstr "O domínio do site que hospeda o webchat do rasa bot."
 
-#: src/ej_tools/models.py:46 src/ej_tools/tests/test_rasa_integrations.py:72
+#: src/ej_tools/models.py:46 src/ej_tools/tests/test_rasa_integrations.py:71
 #, fuzzy
 msgid "a conversation can have a maximum of five domains"
 msgstr "Uma conversa pode ter no máximo cinco links integrados."
@@ -1955,66 +1955,54 @@ msgstr ""
 "Usuário interagirá com a interface da EJ, criando uma conta com dados "
 "pessoais (email e nome)."
 
-#: src/ej_tools/models.py:59 src/ej_tools/tools.py:134
-msgid "Uses a mautic campaign "
-msgstr "Usa uma campanha do mautic"
-
-#: src/ej_tools/models.py:60
-msgid ""
-"Uses analytics cookies allowing you to cross vote data with user browser "
-"data."
-msgstr ""
-"Usa cookies do analytics para cruzar dados de voto com os dados do navegador "
-"do usuário."
-
-#: src/ej_tools/models.py:64
+#: src/ej_tools/models.py:62
 msgid "OSF"
 msgstr ""
 
-#: src/ej_tools/models.py:65
+#: src/ej_tools/models.py:63
 msgid "Votorantim"
 msgstr ""
 
-#: src/ej_tools/models.py:66
+#: src/ej_tools/models.py:64
 msgid "ICD"
 msgstr ""
 
-#: src/ej_tools/models.py:67
+#: src/ej_tools/models.py:65
 msgid "Boca de Lobo"
 msgstr ""
 
-#: src/ej_tools/models.py:98
+#: src/ej_tools/models.py:96
 msgid "Client ID"
 msgstr "Chave pública"
 
-#: src/ej_tools/models.py:99
+#: src/ej_tools/models.py:97
 #, fuzzy
 msgid "Client Secret"
 msgstr "Chave secreta"
 
-#: src/ej_tools/models.py:100
+#: src/ej_tools/models.py:98
 #, fuzzy
 msgid "Mautic Access Token"
 msgstr "Token de acesso"
 
-#: src/ej_tools/models.py:101
+#: src/ej_tools/models.py:99
 #, fuzzy
 msgid "Refresh Token"
 msgstr "Atualizar token"
 
-#: src/ej_tools/models.py:102
+#: src/ej_tools/models.py:100
 msgid "Mautic URL"
 msgstr "URL do Mautic"
 
-#: src/ej_tools/models.py:102
+#: src/ej_tools/models.py:100
 msgid "Generated Url from Mautic."
 msgstr "Url gerada no Mautic."
 
-#: src/ej_tools/models.py:169
+#: src/ej_tools/models.py:167
 msgid "Client not found."
 msgstr "Chave do Mautic não encontrada"
 
-#: src/ej_tools/models.py:173
+#: src/ej_tools/models.py:171
 #: src/ej_tools/tests/test_mautic_integrations.py:117
 #, fuzzy
 msgid ""
@@ -2024,52 +2012,54 @@ msgstr ""
 "Não foi possível localizar uma instância do Mautic com a URL fornecida. "
 "Verifique sua url do Mautic e a url de redirecionamento na página do Mautic."
 
-#: src/ej_tools/models.py:194
+#: src/ej_tools/models.py:192
 msgid "Couldn't generate tokens."
 msgstr "Não foi possível gerar os tokens."
 
-#: src/ej_tools/models.py:217
+#: src/ej_tools/models.py:215
 #, fuzzy
 msgid "Couldn't generate new token."
 msgstr "Não foi possível gerar os tokens."
 
-#: src/ej_tools/models.py:263
+#: src/ej_tools/models.py:261
 #, fuzzy
 msgid "There was an error connection to mautic server, please check your url."
 msgstr "Houve um erro na conexao com o Mautic, por favor verifique a URL."
 
-#: src/ej_tools/models.py:302
+#: src/ej_tools/models.py:300
 msgid "Couldn't create a new contact in Mautic."
 msgstr ""
 
-#: src/ej_tools/models.py:306
+#: src/ej_tools/models.py:304
 #: src/ej_tools/tests/test_mautic_integrations.py:149
 msgid "There was an error connection to mautic server, please try again."
 msgstr "Houve um erro na conexao com o Mautic, por favor tente novamente."
 
-#: src/ej_tools/routes.py:50 src/ej_tools/table.py:11 src/ej_tools/tools.py:139
+#: src/ej_tools/routes.py:51 src/ej_tools/table.py:11 src/ej_tools/tools.py:139
+#: src/ej_tools/views.py:46
 msgid "Mailing campaign"
 msgstr "Campanha de email"
 
-#: src/ej_tools/routes.py:76 src/ej_tools/routes.py:98 src/ej_tools/table.py:19
-#: src/ej_tools/tools.py:115
+#: src/ej_tools/routes.py:77 src/ej_tools/routes.py:101
+#: src/ej_tools/table.py:19 src/ej_tools/tools.py:115 src/ej_tools/views.py:73
+#: src/ej_tools/views.py:98
 #, fuzzy
 msgid "Opinion component"
 msgstr "Componente de opinião"
 
-#: src/ej_tools/routes.py:113 src/ej_tools/routes.py:119
-#: src/ej_tools/routes.py:127 src/ej_tools/routes.py:135
-#: src/ej_tools/tools.py:84
+#: src/ej_tools/routes.py:116 src/ej_tools/routes.py:122
+#: src/ej_tools/routes.py:130 src/ej_tools/routes.py:138
+#: src/ej_tools/routes.py:172 src/ej_tools/routes.py:184
+#: src/ej_tools/tools.py:84 src/ej_tools/views.py:116 src/ej_tools/views.py:124
+#: src/ej_tools/views.py:133 src/ej_tools/views.py:142
+#: src/ej_tools/views.py:177 src/ej_tools/views.py:193
 #, fuzzy
 msgid "Opinion Bots"
 msgstr "Bot de Opinião"
 
-#: src/ej_tools/routes.py:170 src/ej_tools/routes.py:182
-msgid "Webchat"
-msgstr ""
-
-#: src/ej_tools/routes.py:200 src/ej_tools/routes.py:252
+#: src/ej_tools/routes.py:202 src/ej_tools/routes.py:254
 #: src/ej_tools/table.py:47 src/ej_tools/tools.py:70 src/ej_tools/tools.py:128
+#: src/ej_tools/views.py:210 src/ej_tools/views.py:263
 msgid "Mautic"
 msgstr ""
 
@@ -2150,18 +2140,18 @@ msgstr ""
 "com a base de contatos do Mautic."
 
 #: src/ej_tools/tests/test_mautic_integrations.py:63
-#: src/ej_tools/tests/test_rasa_integrations.py:40
+#: src/ej_tools/tests/test_rasa_integrations.py:39
 #, fuzzy
 msgid "Enter a valid URL."
 msgstr "Insira uma URL válida."
 
-#: src/ej_tools/tests/test_rasa_integrations.py:59
+#: src/ej_tools/tests/test_rasa_integrations.py:58
 msgid ""
 "Site already integrated with conversation Conversation, try another url."
 msgstr ""
 "Esse site já está integrado com a conversa Conversation, tente outra url."
 
-#: src/ej_tools/tests/test_rasa_integrations.py:104
+#: src/ej_tools/tests/test_rasa_integrations.py:103
 #, fuzzy
 msgid "Enter a valid URL"
 msgstr "Insira uma URL válida."
@@ -2250,6 +2240,10 @@ msgstr ""
 #, fuzzy
 msgid "Mailchimp campaign"
 msgstr "Campanha de email"
+
+#: src/ej_tools/tools.py:134
+msgid "Uses a mautic campaign "
+msgstr "Usa uma campanha do mautic"
 
 #: src/ej_tools/tools.py:141
 msgid ""
@@ -4402,6 +4396,13 @@ msgstr "Mudar a senha"
 #, fuzzy
 msgid "Authentication"
 msgstr "Autenticação"
+
+#~ msgid ""
+#~ "Uses analytics cookies allowing you to cross vote data with user browser "
+#~ "data."
+#~ msgstr ""
+#~ "Usa cookies do analytics para cruzar dados de voto com os dados do "
+#~ "navegador do usuário."
 
 #, fuzzy
 #~ msgid "Click here to"

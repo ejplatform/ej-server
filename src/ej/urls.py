@@ -42,7 +42,6 @@ def get_urlpatterns():
         #
         #  Conversations and other EJ-specific routes
         path("conversations/", include("ej_conversations.routes", namespace="conversation")),
-        path("conversations/", include("ej_tools.routes", namespace="conversation-tools")),
         path("conversations/", include("ej_analysis.routes", namespace="conversation-analysis")),
         path("comments/", include("ej_conversations.routes_comments", namespace="comments")),
         #
