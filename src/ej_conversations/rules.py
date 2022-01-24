@@ -213,10 +213,10 @@ def can_add_conversation(user):
     return user_signature.can_add_conversation()
 
 
-@rules.register_perm("ej.can_access_mautic_connection")
-def can_access_mautic_connection(user, conversation):
+@rules.register_perm("ej.can_access_tools_page")
+def can_access_tools_page(user, conversation):
     """
-    Can access a mautic connection to a conversation.
+    Can access a tool page from a conversation.
 
     * User is staff
     * OR user is an superuser
