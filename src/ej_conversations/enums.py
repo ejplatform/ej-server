@@ -24,7 +24,3 @@ class Choice(IntEnum):
     SKIP = 0, _("Skip")
     AGREE = 1, _("Agree")
     DISAGREE = -1, _("Disagree")
-
-
-class TourStatus(IntEnum):
-    DONE = 0, _("Done")

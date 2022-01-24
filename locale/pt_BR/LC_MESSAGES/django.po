@@ -212,11 +212,11 @@ msgstr "Mural"
 msgid "Slug already exists."
 msgstr "Identificador já existe."
 
-#: src/ej_boards/routes.py:69
+#: src/ej_boards/routes.py:70
 msgid "You cannot change this value"
 msgstr "Você não pode mudar este valor"
 
-#: src/ej_boards/routes.py:94
+#: src/ej_boards/routes.py:97 src/ej_boards/routes.py:116
 msgid ""
 "Welcome to EJ. This is your personal board. Board is where your "
 "conversations will be available. Press 'New conversation' to starts "
@@ -455,10 +455,6 @@ msgstr "Concorda"
 msgid "Disagree"
 msgstr "Discorda"
 
-#: src/ej_conversations/enums.py:30
-msgid "Done"
-msgstr "Concluir"
-
 #: src/ej_conversations/forms.py:20
 msgid "Give your opinion here"
 msgstr "Dê a sua opinião aqui"
@@ -663,11 +659,11 @@ msgstr "{n} aguardando moderação"
 msgid "{n} of {m} comments"
 msgstr "{n} de {m} comentários"
 
-#: src/ej_conversations/routes.py:45
+#: src/ej_conversations/routes.py:44
 msgid "Public conversations"
 msgstr "Conversas públicas"
 
-#: src/ej_conversations/routes.py:68
+#: src/ej_conversations/routes.py:67
 msgid "Participate voting and creating comments!"
 msgstr "Participe com votos e comentários!"
 
@@ -2394,11 +2390,11 @@ msgstr "Registrar"
 msgid "User signature"
 msgstr "Pontuação do usuário"
 
-#: src/ej_users/models.py:72
+#: src/ej_users/models.py:73
 msgid "User token"
 msgstr "Token do usuário"
 
-#: src/ej_users/models.py:118
+#: src/ej_users/models.py:119
 msgid "Anonymous"
 msgstr "Anônimo"
 

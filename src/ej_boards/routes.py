@@ -8,6 +8,7 @@ from ej_boards.utils import patched_register_app_routes, register_app_routes
 from ej_clusters.models import Stereotype
 from ej_conversations import routes as conversations
 from ej_conversations.models import Conversation
+from ej_signatures.models import SignatureFactory
 from ej_tools.urls import urlpatterns as conversation_tools_urlpatterns
 from .forms import BoardForm
 from ej_tools.models import RasaConversation, ConversationMautic
@@ -85,6 +86,8 @@ def board_base(request, board):
 
 @urlpatterns.route(board_base_url)
 def conversation_list(request, board):
+    if not request.user.get_profile().completed_tour:
+        return redirect(f"{board.get_absolute_url()}tour")
     return conversations.list_view(
         request,
         queryset=board.conversations.annotate_attr(board=board),
@@ -94,6 +97,26 @@ def conversation_list(request, board):
             "Welcome to EJ. This is your personal board. Board is where your conversations will be available. Press 'New conversation' to starts collecting yours audience opinion."
         ),
     )
+
+
+@urlpatterns.route(board_base_url + "tour/", login=True)
+def tour(request, board):
+    if request.user.get_profile().completed_tour:
+        return redirect(f"{board.get_absolute_url()}")
+    if request.method == "POST":
+        request.user.get_profile().completed_tour = True
+        request.user.get_profile().save()
+        return redirect(f"{board.get_absolute_url()}")
+    user_signature = SignatureFactory.get_user_signature(request.user)
+    max_conversation_per_user = user_signature.get_conversation_limit()
+    return {
+        "board": board,
+        "conversations": board.conversations.annotate_attr(board=board),
+        "help_title": _(
+            "Welcome to EJ. This is your personal board. Board is where your conversations will be available. Press 'New conversation' to starts collecting yours audience opinion."
+        ),
+        "conversations_limit": max_conversation_per_user,
+    }
 
 
 @urlpatterns.route(board_base_url + "add/", perms=["ej.can_edit_board:board"])
