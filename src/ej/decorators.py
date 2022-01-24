@@ -19,9 +19,9 @@ def can_edit_conversation(view_func):
     return wrapper_func
 
 
-def can_access_mautic_connection(view_func):
+def can_access_tool_page(view_func):
     """
-    Can access a mautic connection to a conversation.
+    Can access a tool page from a conversation.
 
     * User is staff
     * OR user is an superuser

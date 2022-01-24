@@ -25,7 +25,7 @@ from .models import (
 )
 from ej_conversations.models import Conversation
 from ej_signatures.models import SignatureFactory
-from ej.decorators import can_access_mautic_connection, can_edit_conversation
+from ej.decorators import can_access_tool_page, can_edit_conversation
 
 
 @can_edit_conversation
@@ -37,6 +37,7 @@ def index(request, board_slug, conversation_id, slug):
     return render(request, "ej_tools/index.jinja2", context)
 
 
+@can_access_tool_page
 def mailing(request, board_slug, conversation_id, slug):
     from .mailing import TemplateGenerator
 
@@ -66,6 +67,7 @@ def mailing(request, board_slug, conversation_id, slug):
     return render(request, "ej_tools/mailing.jinja2", context)
 
 
+@can_access_tool_page
 def opinion_component(request, board_slug, conversation_id, slug):
     conversation = Conversation.objects.get(id=conversation_id)
     user_signature = SignatureFactory.get_user_signature(conversation.author)
@@ -107,6 +109,7 @@ def opinion_component_preview(request, board_slug, conversation_id, slug):
     return render(request, "ej_tools/opinion-component-preview.jinja2", context)
 
 
+@can_access_tool_page
 def chatbot(request, board_slug, conversation_id, slug):
     conversation = Conversation.objects.get(id=conversation_id)
     user_signature = SignatureFactory.get_user_signature(conversation.author)
@@ -117,6 +120,7 @@ def chatbot(request, board_slug, conversation_id, slug):
     return render(request, "ej_tools/chatbot.jinja2", context)
 
 
+@can_access_tool_page
 def telegram(request, board_slug, conversation_id, slug):
     conversation = Conversation.objects.get(id=conversation_id)
     user_signature = SignatureFactory.get_user_signature(conversation.author)
@@ -126,6 +130,7 @@ def telegram(request, board_slug, conversation_id, slug):
     return render(request, "ej_tools/telegram.jinja2", context)
 
 
+@can_access_tool_page
 def whatsapp(request, board_slug, conversation_id, slug):
     conversation = Conversation.objects.get(id=conversation_id)
     user_signature = SignatureFactory.get_user_signature(conversation.author)
@@ -135,6 +140,7 @@ def whatsapp(request, board_slug, conversation_id, slug):
     return render(request, "ej_tools/whatsapp.jinja2", context)
 
 
+@can_access_tool_page
 def webchat(request, board_slug, conversation_id, slug):
     conversation = Conversation.objects.get(id=conversation_id)
     user_signature = SignatureFactory.get_user_signature(conversation.author)
@@ -202,7 +208,7 @@ def delete_connection(request, board_slug, conversation_id, slug, connection_id)
     return redirect(conversation.patch_url("conversation-tools:webchat"))
 
 
-@can_access_mautic_connection
+@can_access_tool_page
 def mautic(request, board_slug, conversation_id, slug, oauth2_code=None):
     conversation = Conversation.objects.get(id=conversation_id)
     user_signature = SignatureFactory.get_user_signature(conversation.author)
@@ -253,7 +259,7 @@ def mautic(request, board_slug, conversation_id, slug, oauth2_code=None):
     return render(request, "ej_tools/mautic.jinja2", context)
 
 
-@can_access_mautic_connection
+@can_access_tool_page
 def delete_mautic_connection(request, board_slug, conversation_id, slug, mautic_connection_id):
     conversation = Conversation.objects.get(id=conversation_id)
     mautic_connection = ConversationMautic.objects.get(conversation_id=conversation_id)

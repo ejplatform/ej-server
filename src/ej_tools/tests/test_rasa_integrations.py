@@ -104,17 +104,11 @@ class TestRasaConversationFormRoute(ConversationRecipes):
             conversation=conversation, domain=invalid_domain
         ).exists()
 
-    def test_post_rasa_conversation_invalid_permission_form(self, rf, user_db, conversation_db):
-        conversation = conversation_db
-        client = Client()
-        client.force_login(user_db)
-        tool_url = conversation_db.patch_url("conversation-tools:webchat")
-        with pytest.raises(PermissionError):
-            client.post(
-                tool_url,
-                {"conversation": conversation.id, "domain": "http://domain.com.br"},
-                HTTP_HOST=HTTP_HOST,
-            )
+    def test_access_to_rasa_conversation_invalid_permission_form(self, rf, user_client, conversation_db):
+        response = user_client.get(conversation_db.get_absolute_url() + "tools/chatbot/webchat")
+
+        assert response.status_code == 302
+        assert response.url == f"/login/"
 
 
 class TestRasaConversationIntegrationsAPI(ConversationRecipes):
