@@ -1,3 +1,6 @@
+from ej_clusters.enums import ClusterStatus
+from ej_clusters.models.cluster import Cluster
+from ej_clusters.models.stereotype import Stereotype
 import pytest
 import json
 import datetime
@@ -7,6 +10,7 @@ from django.test import Client
 from ej.testing import UrlTester
 from ej_conversations.mommy_recipes import ConversationRecipes
 from ej_users.models import User
+from ej_clusters.models.clusterization import Clusterization
 
 BASE_URL = "/api/v1"
 
@@ -149,3 +153,43 @@ class TestReportRoutes(ConversationRecipes):
         assert json.loads(response.content) == {
             "error": "end date and start date should be passed as a parameter."
         }
+
+    def test_conversation_has_no_stereotypes(self, conversation, board, author_db, logged_client):
+        conversation.author = author_db
+        board.owner = author_db
+        board.save()
+        conversation.board = board
+        conversation.save()
+
+        clusterization = Clusterization.objects.create(
+            conversation=conversation, cluster_status=ClusterStatus.ACTIVE
+        )
+        Cluster.objects.create(name="name", clusterization=clusterization)
+
+        url = f"/{conversation.board.slug}/conversations/{conversation.id}/{conversation.slug}/reports/general-report/"
+        response = logged_client.get(url)
+        assert (
+            "Your conversation still does not have defined personas. Without personas, it is not possible to generate opinion groups."
+            in response.content.decode()
+        )
+
+    def test_conversation_has_stereotypes(self, conversation, board, author_db, logged_client):
+        conversation.author = author_db
+        board.owner = author_db
+        board.save()
+        conversation.board = board
+        conversation.save()
+
+        clusterization = Clusterization.objects.create(
+            conversation=conversation, cluster_status=ClusterStatus.ACTIVE
+        )
+        cluster = Cluster.objects.create(name="name", clusterization=clusterization)
+        stereotype, _ = Stereotype.objects.get_or_create(name="name", owner=author_db)
+        cluster.stereotypes.add(stereotype)
+
+        url = f"/{conversation.board.slug}/conversations/{conversation.id}/{conversation.slug}/reports/general-report/"
+        response = logged_client.get(url)
+        assert (
+            not "Your conversation still does not have defined personas. Without personas, it is not possible to generate opinion groups."
+            in response.content.decode()
+        )

@@ -2,6 +2,9 @@
 {% from "ej_dataviz/report/export-data.jinja2" import export_modal %}
 
 {% block report %}
+    {% if not conversation_has_stereotypes %}
+        {% include 'ej_dataviz/report/missing-personas-card.jinja2' %}
+    {% endif %}
 
     <div class="title-export">
         <span class="h2 text-accent">
