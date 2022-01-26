@@ -9,6 +9,7 @@ from django.http import HttpResponse, Http404
 from django.shortcuts import get_object_or_404
 from django.utils.text import slugify
 from django.utils.translation import ugettext as _, ugettext_lazy
+from ej_clusters.models.clusterization import Clusterization
 from sidekick import import_later
 
 from ej_clusters.models import Cluster
@@ -53,11 +54,19 @@ def general_report(request, conversation, **kwargs):
     check_promoted(conversation, request)
     can_view_detail = request.user.has_perm("ej.can_view_report_detail", conversation)
     statistics = conversation.statistics()
+
+    conversation_clusterization = Clusterization.objects.filter(conversation=conversation)
+    conversation_has_stereotypes = False
+
+    if conversation_clusterization.exists():
+        conversation_has_stereotypes = conversation_clusterization.stereotypes().count() > 0
+
     return {
         "conversation": conversation,
         "type_data": "votes-data",
         "can_view_detail": can_view_detail,
         "statistics": statistics,
+        "conversation_has_stereotypes": conversation_has_stereotypes,
     }
 
 
