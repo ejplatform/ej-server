@@ -1,0 +1,47 @@
+.tools-label-buttons {
+    width: 68px;
+    height: 14px;
+    left: 95px;
+    top: 150px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 14px;
+}
+
+.card-title { 
+    color: $color-theme-report-blue;
+    font-family: Raleway;
+    font-weight: bold;
+}
+
+#helptext-tool {
+    .avatar {
+        width: 60px;
+        height: 60px;
+        left: 18px;
+        top: 25px;
+    }
+
+    p {
+        height: 32px;
+        left: 94px;
+        top: 52px;
+        margin: 1px 0px 10px 69px;
+        font-family: Raleway;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 16px;
+
+    }
+    p.instruction {
+        width: 357px;
+        height: 21px;
+        left: 90px;
+        top: 105px;
+        font-size: 18px;
+        line-height: 21px;
+    }
+}

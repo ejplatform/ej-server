@@ -23,7 +23,7 @@
       <div class="tools-content">
         <h3 class="h3 divider">{{_("Integration options")}}</h3>
         <span class="helptext">{{_("Integrate this conversation with one of the available collection channels.")}}</span>
-        <div id="container" class="chatbotOptions">
+        <div id="container" class="chatbot-options">
           {{ card_tools(tool.webchat, static('/img/icons/talks.svg'), tool.webchat.name, tool.webchat.description,  conversation.patch_url('conversation-tools:webchat'), "oversize") }}
           {{ card_tools(tool.telegram, static('/img/logo/channel_telegram.svg'), tool.telegram.name,
           tool.telegram.description, conversation.patch_url('conversation-tools:telegram') , "") }}

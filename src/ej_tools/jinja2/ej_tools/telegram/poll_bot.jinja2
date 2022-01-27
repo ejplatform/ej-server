@@ -1,0 +1,60 @@
+<div class="tools-card-container"> 
+  <div class="tools-card-body">
+    <div class="tools-card-body-img"><img class="avatar" src="{{ static('/img/icons/poll-icon.svg') }}"/></div>
+    <div class="tools-card-content">
+      <span class="tools-card-title">{{_("Survey Bot")}}</span>
+      <p class="helptext">{{_("Collect your audience's opinion using our polling bot. Turn an EJ conversation into a Telegram poll.")}}</p>
+    <div class="tools-card-body-buttons">
+      <span >{{_("Survey to:")}}</span>
+      <div id="poll-bot-options" class="bots-buttons">
+        <button value="channel" class="pink" id="poll-bot-channel-btn" onclick="selectPollBot(event.target)">{{_("Channel")}}</button>
+        <button value="group" class="grey" id="poll-bot-group-btn" onclick="selectPollBot(event.target)">{{_("Group")}}</button>
+      </div>
+    </div>
+    <p class="instruction">{{_("Follow the steps below to start collecting")}}</p>
+    <ol class="poll-bot-instructions">
+      <div id="channel">
+        <li>{{_("Find <a href='https://t.me/EjGroupsBot' target='_blank'>@EjGroupsBot</a> on Telegram.")}}</li>
+        <li> {{_("Type the command <b>/enquetenocanal {conversation_id}</b> on bot's chat.").format(conversation_id=conversation.id)}} </li>
+        <li>{{_("Forward the generated poll to the desired channel.")}}</li>
+      </div>
+      <div id="group" class="hide">
+        <li>{{_("Invite <a href='https://t.me/EjGroupsBot' target='_blank'>@EjGroupsBot</a> to your group;")}}</li>
+        <li>{{_("In the group, write down the command <b>/enquetenogrupo {conversation_id}</b>. The poll will be generated and participants group will be able to
+          voting.").format(conversation_id=conversation.id)}}</li>
+      </div>
+    </ol>
+    </div>
+  </div>
+    <div class="tools-card-footer">
+      <button id="export-btn" class="grey" data-toggle="modal" data-target="#export-modal">
+        <i class="fas fa-pen"></i>
+        <span> {{_("Edit survey")}}</span>
+      </button>
+    </div>
+    {{survey_modal(conversation)}}
+  </span>
+</div>
+
+{{ help_card(_("When should I use the survey bot?"), "/static_docs/i18n/pt-br/user-docs/tools-ejgroups.html")}}
+
+<script charset="utf-8">
+
+function selectPollBot(target) {
+  let groupButton = document.getElementById("poll-bot-group-btn");
+  let channelButton = document.getElementById("poll-bot-channel-btn");
+  let channelInstructions = document.getElementById("channel");
+  let groupInstructions = document.getElementById("group");
+  target.classList = ["pink"];
+  if(target.id == "poll-bot-channel-btn") {
+    groupButton.classList = ["grey"];
+    channelInstructions.classList.remove("hide");
+    groupInstructions.classList.add("hide");
+  } else {
+    channelButton.classList = ["grey"];
+    groupInstructions.classList.remove("hide");
+    channelInstructions.classList.add("hide");
+  }
+}
+
+</script>

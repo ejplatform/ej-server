@@ -40,7 +40,10 @@ class BotsTelegramTool(AbstractTool):
             + "is an opinion consultation platform focused on States and Organizations."
             + "We would like your participation in the following discussion:"
         )
-        self.options = [("Boca De Lobo", _("BocaDeLoboBot")), ("Duda", _("DudaEjBot"))]
+        self.options = [
+            ("Duda", _("DudaEjBot")),
+            ("Boca De Lobo", _("BocaDeLoboBot")),
+        ]
         self.is_active = is_active
 
 
