@@ -46,12 +46,9 @@ def list_view(
 ):
     user = request.user
     user_boards = []
-    # Select the list of conversations: staff get to see hidden conversations while
-    # regular users cannot
     if not (user.is_staff or user.is_superuser or user.has_perm("ej_conversations.can_publish_promoted")):
         queryset = queryset.filter(is_hidden=False)
 
-    # Annotate queryset for efficient db access
     annotations = ("n_votes", "n_comments", "n_user_votes", "first_tag", "n_favorites", "author_name")
     queryset = queryset.cache_annotations(*annotations, user=user).order_by("-created")
     if user.is_authenticated:

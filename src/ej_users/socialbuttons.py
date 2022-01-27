@@ -39,7 +39,7 @@ def register_button(provider_id, fa_class=None, query=None):
     fa_class = fa_class or "fa-" + provider_id
 
     def social_button(request):
-        redirect_url = reverse("conversation:list")
+        redirect_url = reverse("boards:board-list")
         provider = providers.registry.by_id(provider_id, request)
         url = provider.get_login_url(request, next=request.GET.get("next", redirect_url), **(query or {}))
 
