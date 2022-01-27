@@ -3,7 +3,18 @@
 @import 'components/main/elements';
 @import 'components/conversations/card';
 @import 'components/conversations/detail';
-@import 'components/conversations/tools';
+
+
+@import 'components/tools/card';
+@import 'components/tools/tools';
+@import 'components/tools/generic';
+@import 'components/tools/chatbot';
+@import 'components/tools/mailing';
+@import 'components/tools/mautic';
+@import 'components/tools/opinion-component';
+@import 'components/tools/telegram';
+@import 'components/tools/webchat';
+@import 'components/tools/whatsapp';
 
 // Generic
 @import 'components/collapsible';

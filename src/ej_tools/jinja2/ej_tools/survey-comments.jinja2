@@ -1,12 +1,6 @@
 {% macro survey_modal(conversation) %}
 
 <div>
-
-  <a id="export-btn" class="export-button" data-toggle="modal" data-target="#export-modal">
-    <i class="fas fa-eye"></i>
-  </a>
-  
-
   <div id="export-modal" class="group-comments" tabindex="-1" role="dialog" aria-labelledby="modal-comments-selections" aria-hidden="true" data-backdrop="true" data-keyboard="true">  
     <div id="export-modal-content" class="group-comments-content">
       <span class="close-report" onclick='closeExportDropdown(this)'>&times;</span>
@@ -43,24 +37,7 @@
 
 
               function validateRow() {
-                const MAX_COMMENTS = 11
-                const MAX_COMMENTS_LENGTH = 100
-                const getChildrens = document.getElementById("comments-body")
-                if (getChildrens.children.length > MAX_COMMENTS) {
-                  return false;
-                }else if ("{{comment}}".length > MAX_COMMENTS_LENGTH) {
-                  return false;
-                }else {
-                  try{
-                    let total = localStorage.getItem("comments_total")    
-                    total = parseInt(total)
-                    total = total + 1
-                    localStorage.setItem("comments_total", "" + total);
-                  }catch(e){
-                    localStorage.setItem("comments_total", "" + 1);
-                  }
-                  return true;
-                }
+                return true;
               }
 
               function insertRow(col1, col2) {
@@ -81,9 +58,6 @@
                 c2.appendChild(text2);
               }
 
-              if(validateRow()) {
-                insertRow("{{comment.id}}", "{{comment}}")
-              }
             </script>
             </tr>
            
@@ -145,8 +119,6 @@ function closeExportDropdown(closeIcon) {
 }
 
 function openExportDropdown(event) {
-  el = event.target.parentElement.nextElementSibling
-  if(el.id === "export-modal") {
     var bd = document.body
     if(bd.classList.contains("modal-without-trasparency")){
       bd.classList.remove("modal-without-trasparency")
@@ -154,9 +126,8 @@ function openExportDropdown(event) {
       bd.classList.add("modal-without-trasparency")
     }
 
-    exportOptions = el
-    exportOptions.style.display = exportOptions.style.display == "block" ? "none" : "block";
-  }
+    let modal = document.querySelector("#export-modal");
+    modal.style.display = modal.style.display == "block" ? "none" : "block";
 }
 
 exportBtn.onclick = openExportDropdown

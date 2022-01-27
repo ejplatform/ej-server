@@ -1,0 +1,142 @@
+.tools-code-snippet {
+    position: relative;
+    margin-top: 1.5rem;
+    .corner-icon {
+        position: absolute;
+        top: 0;
+        right: 0;
+        margin-right: 10px;
+        padding-top: 10px;
+    }
+    #copy-header-info {
+        opacity: 0;
+    }
+    #copy-header-icon:hover + #copy-header-info {
+        opacity: 1;
+    }
+    #copy-info {
+        opacity: 0;
+    }
+    #copy-icon:hover + #copy-info {
+        opacity: 1;
+    }
+    #copy-script-info {
+        opacity: 0;
+    }
+    #copy-script-icon:hover + #copy-script-info {
+        opacity: 1;
+    }
+    
+    textarea {
+        background-color: rgba(196, 196, 196, 0.38);
+        min-width: 100%;
+        border-color: rgba(196, 196, 196, 0.38);
+        height: 259px;
+        resize: none;
+        padding-right: 5%;
+    }
+}
+
+.info {
+    position: absolute;
+    right: 0;
+    top: 1.5rem;
+    background-color: #042a46;
+    border-radius: 0.5rem;
+    p {
+        padding: 0.1rem 0.7rem;
+        color: aliceblue;
+        margin-bottom: 0rem;
+        font-size: 80%;
+    }
+}
+
+#template-table {
+    margin-top: 0.5rem;
+    margin-bottom: 1.5rem;
+    tbody tr {
+        background: none !important;
+    }
+}
+
+.form-div {
+    padding-left: 0.75rem;
+}
+
+.domain-form {
+    display: flex;
+    justify-content: space-between;
+    input:first-child {
+        margin-right: 10px;
+        box-sizing: content-box;
+        -moz-box-sizing: content-box;
+        -webkit-box-sizing: content-box;
+        margin-bottom: unset;
+        margin-top: unset;
+        max-width: unset;
+        min-width: unset;
+    }
+    #domain-submit {
+        height: unset;
+        margin: unset;
+        box-sizing: content-box;
+        -moz-box-sizing: content-box;
+        -webkit-box-sizing: content-box;
+    }
+}
+
+#domain-label {
+    margin-bottom: 0.5rem;
+    text-transform: capitalize;
+}
+
+.width-full-extended {
+    margin-bottom: 0.25rem;
+    margin-top: 1rem;
+}
+
+#description-info {
+    margin-bottom: 0rem;
+    margin-top: 1.25rem;
+}
+
+#th-remove {
+    text-align: end;
+}
+
+#td-remove {
+    text-align: end;
+}
+
+.title-webchat-preview {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+
+    button[type="submit"] {
+        background-color: transparent;
+        border-color: transparent;
+        color: #BABABA;
+        font-size: 15px;
+        font-weight: bold;
+        text-transform: capitalize;
+        padding: 0;
+    }
+
+    button:hover {
+        color: #052B47;
+        box-shadow: 0px 0px;
+        font-size: 15px;
+        font-weight: bold;
+        padding: 0;
+    }
+
+    #webchat-preview-form {
+        margin-bottom: -1rem;
+    }
+
+    #eye-icon-preview { 
+        color: #052B47;
+    }
+}

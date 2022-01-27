@@ -1,0 +1,33 @@
+.chatbot-options {
+    margin-top: 30px;
+    margin-left: -8px;
+
+    /* Style the counter cards */
+    .card {
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        padding: 14px;
+        border: 1px solid #e5e5e5;
+        margin-bottom: 40px;
+        cursor: pointer;
+        max-width: 500px;
+        h3 {
+            margin-top: 20px;
+            margin-bottom: 10px;
+            color: #042a46;
+            font-size: 18px;
+        }
+    }
+
+    .card:hover {
+        box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    }
+
+    .imgcard {
+        width: 65px;
+        height: 65px;
+    }
+    .balance-bigger-margin {
+        width: 50px;
+        height: 65px;
+    }
+}
