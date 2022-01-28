@@ -94,6 +94,7 @@ def statistics(conversation, cache=True):
             whatsapp=Count("channel", filter=Q(channel=VoteChannels.WHATSAPP)),
             opinion_component=Count("channel", filter=Q(channel=VoteChannels.OPINION_COMPONENT)),
             unknown=Count("channel", filter=Q(channel=VoteChannels.UNKNOWN)),
+            ej=Count("channel", filter=Q(channel=VoteChannels.EJ)),
         ),
         "channel_participants": conversation.votes.aggregate(
             webchat=Count("author", filter=Q(channel=VoteChannels.RASA_WEBCHAT), distinct="author"),
@@ -103,6 +104,7 @@ def statistics(conversation, cache=True):
                 "author", filter=Q(channel=VoteChannels.OPINION_COMPONENT), distinct="author"
             ),
             unknown=Count("author", filter=Q(channel=VoteChannels.UNKNOWN), distinct="author"),
+            ej=Count("author", filter=Q(channel=VoteChannels.EJ), distinct="author"),
         ),
     }
 

@@ -40,11 +40,19 @@ CONVERSATION = {
         "comments": {"approved": 0, "rejected": 0, "pending": 0, "total": 0},
         "votes": {"agree": 0, "disagree": 0, "skip": 0, "total": 0},
         "participants": {"commenters": 0, "voters": 0},
-        "channel_votes": {"opinion_component": 0, "telegram": 0, "unknown": 0, "webchat": 0, "whatsapp": 0},
+        "channel_votes": {
+            "opinion_component": 0,
+            "telegram": 0,
+            "unknown": 0,
+            "webchat": 0,
+            "whatsapp": 0,
+            "ej": 0,
+        },
         "channel_participants": {
             "opinion_component": 0,
             "telegram": 0,
             "unknown": 0,
+            "ej": 0,
             "webchat": 0,
             "whatsapp": 0,
         },
@@ -60,7 +68,7 @@ VOTE = {
     },
     "comment": "content",
     "choice": 1,
-    "channel": "unknown",
+    "channel": "ej",
     "analytics_utm": None,
 }
 

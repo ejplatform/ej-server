@@ -95,7 +95,7 @@ class Comment(StatusModel, TimeStampedModel):
         if self.status == self.STATUS.rejected and not self.has_rejection_explanation:
             raise ValidationError({"rejection_reason": _("Must give a reason to reject a comment")})
 
-    def vote(self, author, choice, commit=True):
+    def vote(self, author, choice, channel="ej", commit=True):
         """
         Cast a vote for the current comment. Vote must be one of 'agree', 'skip'
         or 'disagree'.
@@ -106,7 +106,7 @@ class Comment(StatusModel, TimeStampedModel):
 
         # We do not full_clean since the uniqueness constraint will only be
         # enforced when strictly necessary.
-        vote = Vote(author=author, comment=self, choice=choice)
+        vote = Vote(author=author, comment=self, choice=choice, channel=channel)
         vote.clean_fields()
 
         # Check if vote exists and if its existence represents an error

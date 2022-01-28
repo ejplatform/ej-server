@@ -1,3 +1,4 @@
+from ej_conversations.decorators import author_can_receive_tool_vote
 from rest_framework import serializers
 from rest_framework.reverse import reverse
 from ej_tools.models import ConversationMautic, MauticClient
@@ -127,10 +128,10 @@ class VoteSerializer(BaseApiSerializer):
         validated_data["comment"] = comment
         return Vote(**validated_data)
 
+    @author_can_receive_tool_vote
     def save_hook(self, request, vote):
         user = request.user
         create_mautic_contact_from_author(request, vote)
-
         user_signature = SignatureFactory.get_user_signature(user)
         if user_signature.can_vote():
             try:
