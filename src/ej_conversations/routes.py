@@ -15,7 +15,6 @@ from ej_users.models import SignatureFactory
 from . import forms, models
 from .models import Conversation
 from .rules import next_comment
-from .tour import TOUR
 from .utils import (
     check_promoted,
     conversation_admin_menu_links,
