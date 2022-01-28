@@ -242,6 +242,7 @@ class TestApiRoutes:
             },
             "choice": 1,
             "comment": comment.id,
+            "channel": "telegram",
         }
 
         # Non authenticated user
@@ -262,6 +263,7 @@ class TestApiRoutes:
         post_data = {
             "choice": 0,
             "comment": comment.id,
+            "channel": "socketio",
         }
 
         # Authenticated user
@@ -288,6 +290,7 @@ class TestApiRoutes:
             },
             "choice": 0,
             "comment": comment.id,
+            "channel": "telegram",
         }
 
         # Authenticated user
@@ -303,6 +306,7 @@ class TestApiRoutes:
             },
             "choice": 1,
             "comment": comment.id,
+            "channel": "telegram",
         }
 
         vote = comment.votes.last()
@@ -324,6 +328,7 @@ class TestApiRoutes:
             },
             "choice": 0,
             "comment": comment.id,
+            "channel": "opinion_component",
         }
 
         # Authenticated normal user
@@ -363,6 +368,7 @@ class TestApiRoutes:
             },
             "choice": 1,
             "comment": comment.id,
+            "channel": "telegram",
         }
 
         # Authenticated user
@@ -388,6 +394,44 @@ class TestApiRoutes:
         vote = Vote.objects.first()
         assert vote.analytics_utm == {"utm_test": "updated test"}
         assert vote.choice == Choice.DISAGREE
+
+    def test_should_not_create_unknown_vote(self, comment, user):
+        path = BASE_URL + f"/votes/"
+        post_data = {
+            "choice": 1,
+            "comment": comment.id,
+            "channel": "unknown",
+        }
+
+        # Authenticated user
+        token = Token.objects.create(user=user)
+        _api = APIClient()
+        _api.credentials(HTTP_AUTHORIZATION="Token " + token.key)
+
+        response = _api.post(path, post_data, format="json")
+        assert response.status_code == 403
+
+        vote = comment.votes.last()
+        assert vote is None
+
+    def test_should_not_create_twilio_vote(self, comment, user):
+        path = BASE_URL + f"/votes/"
+        post_data = {
+            "choice": 1,
+            "comment": comment.id,
+            "channel": "twilio",
+        }
+
+        # Authenticated user
+        token = Token.objects.create(user=user)
+        _api = APIClient()
+        _api.credentials(HTTP_AUTHORIZATION="Token " + token.key)
+
+        response = _api.post(path, post_data, format="json")
+        assert response.status_code == 403
+
+        vote = comment.votes.last()
+        assert vote is None
 
 
 class TestConversartionStatistics(ConversationRecipes):
@@ -467,6 +511,7 @@ class TestConversartionStatistics(ConversationRecipes):
         assert "whatsapp" in statistics_result["channel_votes"]
         assert "opinion_component" in statistics_result["channel_votes"]
         assert "unknown" in statistics_result["channel_votes"]
+        assert "ej" in statistics_result["channel_votes"]
 
         assert "channel_participants" in statistics_result
         assert "webchat" in statistics_result["channel_participants"]
@@ -474,6 +519,7 @@ class TestConversartionStatistics(ConversationRecipes):
         assert "whatsapp" in statistics_result["channel_participants"]
         assert "opinion_component" in statistics_result["channel_participants"]
         assert "unknown" in statistics_result["channel_participants"]
+        assert "ej" in statistics_result["channel_participants"]
 
         assert conversation._cached_statistics == statistics_result
 
@@ -495,6 +541,7 @@ class TestConversartionStatistics(ConversationRecipes):
         user3 = mk_user(email="user3@domain.com")
         comment = conversation.create_comment(user1, "ad", status="approved", check_limits=False)
         comment2 = conversation.create_comment(user1, "ad2", status="approved", check_limits=False)
+        comment3 = conversation.create_comment(user2, "ad3", status="approved", check_limits=False)
 
         vote = comment.vote(user1, Choice.AGREE)
         vote.channel = VoteChannels.TELEGRAM
@@ -520,12 +567,17 @@ class TestConversartionStatistics(ConversationRecipes):
         vote.channel = VoteChannels.UNKNOWN
         vote.save()
 
+        vote = comment3.vote(user3, Choice.AGREE)
+        vote.channel = VoteChannels.EJ
+        vote.save()
+
         statistics = conversation.statistics()
         assert statistics["channel_votes"]["telegram"] == 1
         assert statistics["channel_votes"]["whatsapp"] == 2
         assert statistics["channel_votes"]["opinion_component"] == 1
         assert statistics["channel_votes"]["webchat"] == 1
         assert statistics["channel_votes"]["unknown"] == 1
+        assert statistics["channel_votes"]["ej"] == 1
 
     def test_statistics_for_channel_participants(self, db, mk_conversation, mk_user):
         conversation = mk_conversation()
