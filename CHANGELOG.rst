@@ -4,6 +4,18 @@ CHANGELOG of EJPlatform releases
 
 Here you can follow all the fixes and new features on every EJPlatform release.
 
+2.21.0 release
+====================
+* Date: Jan 31, 2022
+* Features
+- Fixes social login redirect;
+- Fixes tools routes for unauthenticated user;
+- Advises user that no personas was created for the conversation;
+- Limit API usage based on conversation author signature;
+- Removes django-boogie from ej_tools routes;
+- Implements new Telegram tool page;
+- Adds new user tour;
+
 2.20.0 release
 ====================
 * Date: Jan 19, 2022
