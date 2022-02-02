@@ -22,6 +22,11 @@ $_card-bg: config('ej.conversation-card.bg-image');
     overflow: hidden;
     width: $_card-width;
 
+    @media only screen and (max-width: 320px) {
+        width: 17rem;
+        height: 17rem;
+    }
+
     &__tags {
         @include utilities('text-6 bold');
 
@@ -57,6 +62,10 @@ $_card-bg: config('ej.conversation-card.bg-image');
             -webkit-box-orient: vertical;
             padding: 0px 3.5px 0px 3.5px;
         }
+
+        @media only screen and (max-width: 560px) {
+            padding: .8rem;
+        }
     }
     &__moderate {
         @include utilities('uppercase text-6 margin-2 bold');
@@ -91,7 +100,6 @@ $_card-bg: config('ej.conversation-card.bg-image');
 }
 
 .alternate-cards {
-    //max-width: size(40);
     margin: 0 auto;
 
     @include breakpoint('md') {

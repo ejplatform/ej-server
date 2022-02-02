@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-26 19:26-0300\n"
+"POT-Creation-Date: 2022-01-31 17:28-0300\n"
 "PO-Revision-Date: 2019-09-09 13:55-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -331,7 +331,7 @@ msgid "Comment"
 msgstr "Comentar"
 
 #: src/ej_clusters/models/stereotype_vote.py:24
-#: src/ej_conversations/models/vote.py:44
+#: src/ej_conversations/models/vote.py:46
 msgid "Choice"
 msgstr "Escolha"
 
@@ -415,6 +415,21 @@ msgstr "{n} votos criados"
 #: src/ej_conversations/admin.py:160
 msgid "Compute the opinion bridge user for all conversations."
 msgstr "Calcule o usuário da ponte de opinião para todas as conversas."
+
+#: src/ej_conversations/decorators.py:9 src/ej_conversations/decorators.py:10
+#: src/ej_conversations/decorators.py:11 src/ej_tools/tools.py:87
+#: src/ej_tools/views.py:118 src/ej_tools/views.py:127
+#: src/ej_tools/views.py:137 src/ej_tools/views.py:147
+#: src/ej_tools/views.py:182 src/ej_tools/views.py:198
+#, fuzzy
+msgid "Opinion Bots"
+msgstr "Bot de Opinião"
+
+#: src/ej_conversations/decorators.py:12 src/ej_tools/tools.py:118
+#: src/ej_tools/views.py:74 src/ej_tools/views.py:99
+#, fuzzy
+msgid "Opinion component"
+msgstr "Componente de opinião"
 
 #: src/ej_conversations/enums.py:11
 msgid "User provided"
@@ -582,8 +597,7 @@ msgstr "Conversas ocultas não aparecem no mural principal /conversations/."
 
 #: src/ej_conversations/models/conversation.py:99
 #: src/ej_conversations/roles/conversations.py:133
-#: src/ej_conversations/tour.py:75 src/ej_gamification/routes.py:148
-#: src/ej_notifications/enums.py:8
+#: src/ej_gamification/routes.py:148 src/ej_notifications/enums.py:8
 msgid "Conversation"
 msgstr "Conversa"
 
@@ -610,37 +624,41 @@ msgstr ""
 "voto que deve ser uma das opções de 'concorda', 'discorda' ou 'pula', foi "
 "{value}"
 
-#: src/ej_conversations/models/vote.py:31
+#: src/ej_conversations/models/vote.py:32
 #, fuzzy
 msgid "Opinion Component"
 msgstr "Componente de Opinião"
 
-#: src/ej_conversations/models/vote.py:32
+#: src/ej_conversations/models/vote.py:33
 msgid "Rasa webchat"
 msgstr ""
 
-#: src/ej_conversations/models/vote.py:33
+#: src/ej_conversations/models/vote.py:34
+msgid "EJ"
+msgstr ""
+
+#: src/ej_conversations/models/vote.py:35
 #, fuzzy
 msgid "Unknown"
 msgstr "*Desconhecido*"
 
-#: src/ej_conversations/models/vote.py:44
+#: src/ej_conversations/models/vote.py:46
 msgid "Agree, disagree or skip"
 msgstr "Concorda, discorda ou pula"
 
-#: src/ej_conversations/models/vote.py:45
+#: src/ej_conversations/models/vote.py:47
 msgid "Created at"
 msgstr "Criado em"
 
-#: src/ej_conversations/models/vote.py:47
+#: src/ej_conversations/models/vote.py:49
 msgid "Channel"
 msgstr ""
 
-#: src/ej_conversations/models/vote.py:50
+#: src/ej_conversations/models/vote.py:52
 msgid "From which EJ channel the vote comes from"
 msgstr ""
 
-#: src/ej_conversations/models/vote.py:67
+#: src/ej_conversations/models/vote.py:69
 msgid "non-moderated comments cannot receive votes"
 msgstr "comentários não-moderados não podem receber votos"
 
@@ -659,11 +677,11 @@ msgstr "{n} aguardando moderação"
 msgid "{n} of {m} comments"
 msgstr "{n} de {m} comentários"
 
-#: src/ej_conversations/routes.py:44
+#: src/ej_conversations/routes.py:43
 msgid "Public conversations"
 msgstr "Conversas públicas"
 
-#: src/ej_conversations/routes.py:67
+#: src/ej_conversations/routes.py:63
 msgid "Participate voting and creating comments!"
 msgstr "Participe com votos e comentários!"
 
@@ -679,61 +697,6 @@ msgstr ""
 #: src/ej_conversations/routes_comments.py:45
 msgid "Your vote has been computed :-)"
 msgstr "Seu voto foi computado :-)"
-
-#: src/ej_conversations/tour.py:4
-msgid "Next"
-msgstr "Próximo"
-
-#: src/ej_conversations/tour.py:4
-msgid "Dismiss"
-msgstr "Dispensar"
-
-#: src/ej_conversations/tour.py:12 src/ej_users/routes.py:61
-msgid "Welcome to EJ!"
-msgstr "Bem vindo ao EJ!"
-
-#: src/ej_conversations/tour.py:12
-msgid "Creating a Shepherd is easy too! Just create ..."
-msgstr "Criar um pastor também é fácil! Apenas crie ..."
-
-#: src/ej_conversations/tour.py:17 src/ej_conversations/tour.py:25
-#: src/ej_conversations/tour.py:33
-msgid "App header"
-msgstr "Cabeçalho do aplicativo"
-
-#: src/ej_conversations/tour.py:18
-msgid "This header displays the main actions you can do in each page."
-msgstr ""
-"Este cabeçalho exibe as ações principais que você pode fazer em cada página."
-
-#: src/ej_conversations/tour.py:26
-msgid "Like going back to the previous page..."
-msgstr "Como voltar para a página anterior ..."
-
-#: src/ej_conversations/tour.py:34
-msgid "... or opening the \"options\" menu."
-msgstr "... ou abrindo o menu \"Opções\"."
-
-#: src/ej_conversations/tour.py:44 src/ej_conversations/tour.py:52
-#: src/ej_conversations/tour.py:62
-msgid "Conversation Card"
-msgstr "Cartão de Conversa"
-
-#: src/ej_conversations/tour.py:45
-msgid "But here is where the magic starts..."
-msgstr "Mas aqui é onde a mágica começa ..."
-
-#: src/ej_conversations/tour.py:54
-msgid ""
-"Conversations consist questions asked by other users about interesting "
-"topics of discussion."
-msgstr ""
-"Conversas consistem em perguntas feitas por outros usuários sobre tópicos "
-"interessantes de discussão."
-
-#: src/ej_conversations/tour.py:63 src/ej_conversations/tour.py:76
-msgid "Click here to join in!"
-msgstr "Clique aqui para entrar!"
 
 #: src/ej_conversations/utils.py:48
 msgid "Edit"
@@ -2124,13 +2087,6 @@ msgstr ""
 msgid "/docs/?page=user-docs/tools-mautic.html"
 msgstr ""
 
-#: src/ej_tools/tools.py:87 src/ej_tools/views.py:118 src/ej_tools/views.py:127
-#: src/ej_tools/views.py:137 src/ej_tools/views.py:147
-#: src/ej_tools/views.py:182 src/ej_tools/views.py:198
-#, fuzzy
-msgid "Opinion Bots"
-msgstr "Bot de Opinião"
-
 #: src/ej_tools/tools.py:89
 #, fuzzy
 msgid ""
@@ -2139,11 +2095,6 @@ msgid ""
 msgstr ""
 "Colete opiniões usando os chatbots da EJ. Permite coletar a opinião de "
 "usuários do Telegram."
-
-#: src/ej_tools/tools.py:118 src/ej_tools/views.py:74 src/ej_tools/views.py:99
-#, fuzzy
-msgid "Opinion component"
-msgstr "Componente de opinião"
 
 #: src/ej_tools/tools.py:120
 msgid ""
@@ -2333,6 +2284,10 @@ msgstr "Token do usuário"
 #: src/ej_users/models.py:118
 msgid "Anonymous"
 msgstr "Anônimo"
+
+#: src/ej_users/routes.py:61
+msgid "Welcome to EJ!"
+msgstr "Bem vindo ao EJ!"
 
 #: src/ej_users/routes.py:175
 msgid "Please reset your password"
@@ -3284,6 +3239,10 @@ msgstr "Primeiro"
 #: src/ej_dataviz/jinja2/ej_dataviz/includes/datatables.jinja2:20
 msgid "Last"
 msgstr "Último"
+
+#: src/ej_dataviz/jinja2/ej_dataviz/includes/datatables.jinja2:21
+msgid "Next"
+msgstr "Próximo"
 
 #: src/ej_dataviz/jinja2/ej_dataviz/includes/datatables.jinja2:22
 msgid "Previous"
@@ -4377,6 +4336,42 @@ msgstr "Mudar a senha"
 #, fuzzy
 msgid "Authentication"
 msgstr "Autenticação"
+
+#~ msgid "Dismiss"
+#~ msgstr "Dispensar"
+
+#~ msgid "Creating a Shepherd is easy too! Just create ..."
+#~ msgstr "Criar um pastor também é fácil! Apenas crie ..."
+
+#~ msgid "App header"
+#~ msgstr "Cabeçalho do aplicativo"
+
+#~ msgid "This header displays the main actions you can do in each page."
+#~ msgstr ""
+#~ "Este cabeçalho exibe as ações principais que você pode fazer em cada "
+#~ "página."
+
+#~ msgid "Like going back to the previous page..."
+#~ msgstr "Como voltar para a página anterior ..."
+
+#~ msgid "... or opening the \"options\" menu."
+#~ msgstr "... ou abrindo o menu \"Opções\"."
+
+#~ msgid "Conversation Card"
+#~ msgstr "Cartão de Conversa"
+
+#~ msgid "But here is where the magic starts..."
+#~ msgstr "Mas aqui é onde a mágica começa ..."
+
+#~ msgid ""
+#~ "Conversations consist questions asked by other users about interesting "
+#~ "topics of discussion."
+#~ msgstr ""
+#~ "Conversas consistem em perguntas feitas por outros usuários sobre tópicos "
+#~ "interessantes de discussão."
+
+#~ msgid "Click here to join in!"
+#~ msgstr "Clique aqui para entrar!"
 
 #, fuzzy
 #~ msgid "Find @EjGroupsBot bot on Telegram;"
