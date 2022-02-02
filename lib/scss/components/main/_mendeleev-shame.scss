@@ -11,6 +11,9 @@
 
 .board-container {
     margin: 0 1.5rem 1rem 1.5rem;
+    @media only screen and (max-width: 320px) {
+        margin: 0 1.5rem 1rem .5rem;
+    }
 }
 
 .form-container {

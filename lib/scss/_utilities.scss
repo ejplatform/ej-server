@@ -34,5 +34,8 @@ p {
 hr {
 border-color: rgba(0, 0, 0, 0.12);
 margin: 1rem 1rem 0 0;
+    @media only screen and (max-width: 768px) {
+        margin: unset;
+    }
 }
 
