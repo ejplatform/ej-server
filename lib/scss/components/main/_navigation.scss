@@ -494,18 +494,75 @@ body {
 }
 
 
-#edit-board { 
+#edit-board {
     display: flex;
+    place-items: baseline;
+    justify-content: space-between;
+    padding-bottom: 1rem;
 
-    h1 {
-        margin-bottom: 0.1rem;
+    .left-side {
+        display: flex;
+        place-items: baseline;
+
+        h1 {
+            margin-bottom: 0.1rem;
+        }
+
+        i {
+            font-size: 1rem;
+            padding-bottom: 5px;
+        }
     }
-    i {
-        font-size: 1rem;
-        padding: 37px 0 0 5px;
+
+    .right-side {
+        display: none;
     }
+
+    @media screen and (max-width: 559px) {
+        .right-side {
+            display: flex;
+            place-items: center;
+            justify-content: center;
+            width: 25px;
+            height: 25px;
+            background: $color-primary;
+            border-radius: 50%;
+
+            i {
+                color: white;
+            }
+        }
+    }
+
+}
+
+#bg-modal {
+    opacity: 0;
+
+    &.show-board-statistics {
+        display: block;
+        opacity: .7;
+    }
+    
+    @media screen and (max-width: 559px) {
+        background: black;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+
+        z-index: 1005;
+    }
+    
 }
 
 .board-helptext {
     max-width: 580px;
+}
+
+.hide-board-statistics {
+    @media screen and (max-width: 559px) {
+        display: none;
+    }
 }

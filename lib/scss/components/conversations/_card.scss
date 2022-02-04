@@ -148,13 +148,84 @@ $_card-bg: config('ej.conversation-card.bg-image');
 }
 
 .cards-divider {
-    display: flex;
-    flex-wrap: wrap;
-    margin-top: 26px;
-    margin-bottom: 23px;
+    .cards-divider-body {
+        background: $color-white;
+        display: flex;
+        height: 100%;
+        flex-wrap: wrap;
+        margin-top: 26px;
+        margin-bottom: 23px;
 
-    row-gap: 23px;
-    column-gap: 32px;
+        row-gap: 23px;
+        column-gap: 32px;
+    }
+
+    .cards-divider-header {
+        display: none;
+        width: 100%;
+        padding: 1rem 1rem 0 1rem;
+
+        flex-direction: column;
+
+        .close-btn {
+            display: flex;
+            justify-content: flex-end;
+            padding: .5rem;
+        }
+        
+        h2 {
+            color: $color-secondary;
+            text-align: center;
+            margin-top: .5rem;
+        }
+    }
+
+    @media screen and (max-width: 559px) {
+        &.show-board-statistics {
+            display: flex;
+            bottom: 0;
+            
+            .cards-divider-header {
+                display: flex;
+            }
+        }
+
+        flex-direction: column;
+        margin: 0;
+
+        transition: .25s;
+        
+        position: fixed;
+        bottom: -100%;
+        left: 0;
+        z-index: 1006;
+        
+        border-radius: 10px 10px 0 0;
+        background-color: $color-white;
+        width: 100%;
+        max-height: 80%;
+
+        .cards-divider-body {
+            display: grid;
+            justify-content: center;
+            overflow-y: auto;
+            margin: 0;
+            padding: 1.25rem 0;
+        }
+        
+
+        p {
+            text-align: center;
+        }
+
+        .statistics-card-container {
+            padding: 0;
+        }
+
+        .cards-divider-header {
+            display: block;
+        }
+    }
 }
 
 .signature-text {

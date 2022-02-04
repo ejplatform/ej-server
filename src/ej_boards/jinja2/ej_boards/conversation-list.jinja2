@@ -14,29 +14,43 @@
 {% block content %}
 <div class="board-statistics-container">
     <div id="edit-board">
-        <h1 class="h2 text-accent">{{ board.title}}</h1>
+        <div class="left-side">
+            <h1 class="h2 text-accent">{{ board.title}}</h1>
 
-        {%- if request.user.has_perm('ej.can_edit_board', board) %}
-            <a href="{{ url('boards:board-edit', board=board) }}"><i class="fas fa-pen"></i></a>
-        {% endif %}
+            {%- if request.user.has_perm('ej.can_edit_board', board) %}
+                <a href="{{ url('boards:board-edit', board=board) }}"><i class="fas fa-pen"></i></a>
+            {% endif %}
 
+        </div>
+        <div onclick="toggleStatisticsMenu()" class="right-side">
+            <i class="fas fa-info"></i>
+        </div>
     </div>
+    <div onclick="toggleStatisticsMenu()" id="bg-modal" class="hide-board-statistics"></div>
     {%- if board.conversations.count() == 0 %}
         <div class="helptext board-helptext">{{ help_title }}</div>
     {% endif %}
-    <div class="cards-divider">
-        {% with value=board.statistics()["votes"], title=_('Total votes') %}
-            {% include 'ej_boards/includes/stats-card.jinja2' %}
-        {% endwith %}
-        {% with value=board.statistics()["participants"], title=_('Total participants') %}
-            {% include 'ej_boards/includes/stats-card.jinja2' %}
-        {% endwith %}
-        {% with value=board.statistics()["conversations"], title=_('Total conversations') %}
-            {% include 'ej_boards/includes/stats-card.jinja2' %}
-        {% endwith %}
+    <div class="cards-divider hide-board-statistics">
+        <div class="cards-divider-header">
+            <div class="close-btn">
+                <i onclick="toggleStatisticsMenu()" class="fas fa-times"></i>
+            </div>
+            <h2>Estatísticas do mural</h2>
+        </div>
+        <div class="cards-divider-body">
+            {% with value=board.statistics()["votes"], title=_('Total votes') %}
+                {% include 'ej_boards/includes/stats-card.jinja2' %}
+            {% endwith %}
+            {% with value=board.statistics()["participants"], title=_('Total participants') %}
+                {% include 'ej_boards/includes/stats-card.jinja2' %}
+            {% endwith %}
+            {% with value=board.statistics()["conversations"], title=_('Total conversations') %}
+                {% include 'ej_boards/includes/stats-card.jinja2' %}
+            {% endwith %}
+        </div>
     </div>
     <div class="signature-text">{{_('Signature model')}}: <a
-         class="help-text signature-link">{{board.owner.get_signature_display()}}</a>
+        class="help-text signature-link">{{board.owner.get_signature_display()}}</a>
 
     </div>
     {% if not (request.user.is_staff or request.user.is_superuser) %} 
@@ -57,4 +71,21 @@
             <div class="margin-y3">{{ conversation|role('card',url=conversation.url('report:general-report')) }}</div>
         {% endfor %}
     </div>
+    <script>
+        cards = document.querySelector(".cards-divider");
+        modalBg = document.getElementById('bg-modal');
+
+        function toggleStatisticsMenu(){
+            let classToAdd = cards.classList.contains('hide-board-statistics') ? "hide-board-statistics" : "show-board-statistics";
+            let classToRemove = classToAdd === 'hide-board-statistics' ? "show-board-statistics" : "hide-board-statistics";
+
+            cards.classList.toggle(classToAdd);
+            modalBg.classList.toggle(classToAdd);
+
+            setTimeout( () => {
+                modalBg.classList.toggle(classToRemove);
+                cards.classList.toggle(classToRemove);
+            }, 150);
+        }
+    </script>
 {% endblock %}
