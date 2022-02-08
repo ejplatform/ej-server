@@ -1,5 +1,5 @@
 {% extends 'ej_conversations/base.jinja2' %}
-{% from "ej_tools/survey-comments.jinja2" import survey_modal %}
+{# {% from "ej_tools/survey-comments.jinja2" import survey_modal %} #}
 {% from "ej_tools/includes/help-card.jinja2" import help_card %}
 
 {% block metaOG2 %}
@@ -27,9 +27,12 @@
     <span class="helptext">{{_("Use one of our bots to make collections on Telegram.")}}</span>
 
     <div class="tools-divider">
-      {% include 'ej_tools/telegram/opinion_bot.jinja2' %}
-      {% include 'ej_tools/telegram/poll_bot.jinja2' %}
+      {% with comments=conversation.poll_comments %}
+        {% include 'ej_tools/telegram/opinion_bot.jinja2' %}
+        {% include 'ej_tools/telegram/poll_bot.jinja2' %}
+      {% endwith %}
     </div>
   </div>
 </div> 
+
 {% endblock %}

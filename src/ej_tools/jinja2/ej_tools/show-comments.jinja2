@@ -1,0 +1,62 @@
+<span class="close-report" onclick='closeCommentsModal(this)'>&times;</span>
+
+<div class="tools-title">
+  <h1 id="pool-title" class="h2 text-accent">{{_('Poll Comments')}}</h1>
+  <span id="pool-text" class="pool-text">
+    {{_('It presents the list of comments that will compose the telegram poll.')}}
+    <p class="warning-comments">{{_('Only comments shorter than 100 characters can be selected.')}}</p>
+  </span>
+</div>
+<hr class="pools-comments-divider">
+  
+{%if comments.count() < 2 %}  
+  <span>
+    {{_("You don't have enough approved comments")}}
+  </span>
+  
+{% endif %}
+
+{%if comments.count() >= 2  %}
+
+  <span>
+    {{_("Pool command: ")}}
+  </span>
+  <span class="command command-channel">
+    <a id="a_tag_modal" class="tools-link">/enquetenocanal {{conversation.id}}</a>
+  </span>
+  <span class="command command-group hide">
+    <a id="a_tag_modal" class="tools-link">/enquetenogrupo {{conversation.id}}</a>
+  </span>
+
+    
+  <div class="comments-table">
+    <div class="edit-pool-container">
+      <a id="open-edit-comments" class="edit-pool-comments">
+        <i class="fas fa-pen"></i>{{ _("Edit")}}
+      </a>
+    </div>
+    <table id="comments-table">
+      <tr class="header">
+        <th colspan="1">ID</th>
+        <th colspan="7">{{_("Comments")}}</th>
+      </tr>
+
+      <tbody id="comments-body">
+        {% for comment in comments %}
+          <tr>
+            <td colspan="1">{{comment.id}}</td>
+            <td colspan="7" class="table-text">{{comment}}</td>
+          </tr>
+        {% endfor %}      
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="8" class="footer">
+            {{comments.count()}} {{_("comments")}}
+          </td>
+        </tr>
+      </tfoot>
+
+    </table>
+  </div>
+  {% endif %} 

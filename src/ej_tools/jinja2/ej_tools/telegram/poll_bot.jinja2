@@ -27,12 +27,14 @@
     </div>
   </div>
     <div class="tools-card-footer">
-      <button id="export-btn" class="grey" data-toggle="modal" data-target="#export-modal">
+      <button id="pool-btn" class="grey">
         <i class="fas fa-pen"></i>
         <span> {{_("Edit survey")}}</span>
       </button>
     </div>
-    {{survey_modal(conversation)}}
+    {% with comments=comments %}
+      {% include 'ej_tools/survey-comments.jinja2' %}
+    {% endwith %}
   </span>
 </div>
 
@@ -40,20 +42,59 @@
 
 <script charset="utf-8">
 
+function toggleSelectChannelGroup(item, type){
+
+  let rows = document.getElementsByClassName(`${item}`)
+  if(!rows){
+    console.log("You don't have comments")
+    return 
+  }
+  if(type === "invisible"){
+    for(row of rows){
+      row.classList.add("hide")
+    }
+  }else{
+    for(row of rows){
+      row.classList.remove("hide")
+    }
+  }
+}
+
 function selectPollBot(target) {
-  let groupButton = document.getElementById("poll-bot-group-btn");
-  let channelButton = document.getElementById("poll-bot-channel-btn");
-  let channelInstructions = document.getElementById("channel");
-  let groupInstructions = document.getElementById("group");
+  let groupButton = document.querySelector("#poll-bot-group-btn");
+  let channelButton = document.querySelector("#poll-bot-channel-btn");
+  let channelInstructions = document.querySelector("#channel");
+  let groupInstructions = document.querySelector("#group");
+
   target.classList = ["pink"];
+  //channel
+  const inv = "invisible";
+  const vis = "visible";
+
   if(target.id == "poll-bot-channel-btn") {
     groupButton.classList = ["grey"];
     channelInstructions.classList.remove("hide");
     groupInstructions.classList.add("hide");
+
+    toggleSelectChannelGroup("channel-footer", vis)    
+    toggleSelectChannelGroup("group-footer", inv)        
+    toggleSelectChannelGroup("command-channel", vis)    
+    toggleSelectChannelGroup("command-group", inv)    
+    toggleSelectChannelGroup("channel-input", vis)
+    toggleSelectChannelGroup("group-input", inv)
+
+
   } else {
     channelButton.classList = ["grey"];
     groupInstructions.classList.remove("hide");
     channelInstructions.classList.add("hide");
+
+    toggleSelectChannelGroup("channel-footer", inv)    
+    toggleSelectChannelGroup("group-footer", vis)    
+    toggleSelectChannelGroup("command-channel", inv)    
+    toggleSelectChannelGroup("command-group", vis)    
+    toggleSelectChannelGroup("channel-input", inv)
+    toggleSelectChannelGroup("group-input", vis)
   }
 }
 

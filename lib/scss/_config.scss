@@ -60,6 +60,10 @@ $color-theme-report-blue: #052B47 !default;
 $color-theme-report-black: black !default;
 $color-theme-report-red: red !default;
 
+//Poll bot 
+$modal-transparent-backgound: rgba(0, 0, 0, 0.4);
+$modal-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.35);
+
 // Action colors
 $color-action: $color-brand !default;
 $color-primary: $color-black !default;

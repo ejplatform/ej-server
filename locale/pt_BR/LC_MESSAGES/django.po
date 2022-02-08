@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-31 17:28-0300\n"
+"POT-Creation-Date: 2022-02-01 11:07-0300\n"
 "PO-Revision-Date: 2019-09-09 13:55-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -539,15 +539,15 @@ msgstr ""
 "Você deve fornecer uma razão para rejeitar um comentário. O autor do "
 "comentário verá este feedback."
 
-#: src/ej_conversations/models/comment.py:75
+#: src/ej_conversations/models/comment.py:76
 msgid "Comment is approved"
 msgstr "Comentário aprovado"
 
-#: src/ej_conversations/models/comment.py:77
+#: src/ej_conversations/models/comment.py:78
 msgid "Comment is pending moderation"
 msgstr "Comentário está com moderação pendente"
 
-#: src/ej_conversations/models/comment.py:96
+#: src/ej_conversations/models/comment.py:97
 msgid "Must give a reason to reject a comment"
 msgstr "Deve fornecer uma razão para rejeitar o comentário"
 
@@ -3700,6 +3700,32 @@ msgid ""
 "Integrate this conversation with one of the available collection channels."
 msgstr "Integre esta conversa com um dos canais de coleta disponíveis."
 
+#: src/ej_tools/jinja2/ej_tools/edit-comments.jinja2:4
+#, fuzzy
+msgid "Selection of comments"
+msgstr "Seleção de comentários"
+
+#: src/ej_tools/jinja2/ej_tools/edit-comments.jinja2:6
+#, fuzzy
+msgid "Select which comments you would like to include in the poll."
+msgstr "Selecione quais comentários gostaria de incluir na enquete."
+
+#: src/ej_tools/jinja2/ej_tools/edit-comments.jinja2:8
+#, fuzzy
+msgid "Copy and paste the generated command into the poll bot."
+msgstr "Copie e cole no bot de enquetes o comando gerado."
+
+#: src/ej_tools/jinja2/ej_tools/edit-comments.jinja2:13
+#: src/ej_tools/jinja2/ej_tools/show-comments.jinja2:23
+msgid "Pool command: "
+msgstr "Comando da enquete: "
+
+#: src/ej_tools/jinja2/ej_tools/edit-comments.jinja2:87
+#: src/ej_tools/jinja2/ej_tools/show-comments.jinja2:56
+#, fuzzy
+msgid "comments"
+msgstr " comentários"
+
 #: src/ej_tools/jinja2/ej_tools/index.jinja2:15
 #, fuzzy
 msgid "Integrates this conversation with external tools and platforms."
@@ -3823,47 +3849,24 @@ msgstr "Integre o componente de opinião com o Mautic."
 msgid "Integrate opinion component with Google Analytics."
 msgstr "Integre o componente de opinião com o Google Analytics."
 
-#: src/ej_tools/jinja2/ej_tools/survey-comments.jinja2:14
-msgid "Pool command: "
-msgstr ""
-
-#: src/ej_tools/jinja2/ej_tools/survey-comments.jinja2:67
-#: src/ej_tools/jinja2/ej_tools/survey-comments.jinja2:97
-msgid "You don't have enough valid comments. See more about limitations in: "
-msgstr ""
-
-#: src/ej_tools/jinja2/ej_tools/survey-comments.jinja2:88
-#, fuzzy
-msgid " comments"
-msgstr " comentários"
-
-#: src/ej_tools/jinja2/ej_tools/survey-comments.jinja2:97
-#, fuzzy
-msgid "limitations"
-msgstr "limitações"
-
-#: src/ej_tools/jinja2/ej_tools/survey-comments.jinja2:136
+#: src/ej_tools/jinja2/ej_tools/show-comments.jinja2:4
 #, fuzzy
 msgid "Poll Comments"
 msgstr "Comentários da Enquete"
 
-#: src/ej_tools/jinja2/ej_tools/survey-comments.jinja2:137
+#: src/ej_tools/jinja2/ej_tools/show-comments.jinja2:6
 msgid "It presents the list of comments that will compose the telegram poll."
 msgstr ""
 "Apresenta a lista de comentários que irão compor a enquete no telegram."
 
-#: src/ej_tools/jinja2/ej_tools/survey-comments.jinja2:141
-#, fuzzy
-msgid "Selection of comments"
-msgstr "Seleção de comentários"
+#: src/ej_tools/jinja2/ej_tools/show-comments.jinja2:8
+msgid "Only comments shorter than 100 characters can be selected."
+msgstr "Apenas comentários com menos de 100 caracteres podem ser selecionados."
 
-#: src/ej_tools/jinja2/ej_tools/survey-comments.jinja2:142
-msgid ""
-"Select which comments you would like to include in the poll. A custom "
-"command will be generated."
-msgstr ""
-"Selecione quais comentários gostaria de ver na enquete. Um comentário "
-"customizado será gerado."
+#: src/ej_tools/jinja2/ej_tools/show-comments.jinja2:15
+#, fuzzy
+msgid "You don't have enough approved comments"
+msgstr "Você não tem comentários aprovados suficientes"
 
 #: src/ej_tools/jinja2/ej_tools/telegram.jinja2:24
 #, fuzzy
@@ -4093,7 +4096,7 @@ msgstr ""
 msgid "Edit survey"
 msgstr "Editar enquete"
 
-#: src/ej_tools/jinja2/ej_tools/telegram/poll_bot.jinja2:39
+#: src/ej_tools/jinja2/ej_tools/telegram/poll_bot.jinja2:41
 msgid "When should I use the survey bot?"
 msgstr "Quando eu devo utilizar o bot de enquetes?"
 
@@ -4372,6 +4375,17 @@ msgstr "Autenticação"
 
 #~ msgid "Click here to join in!"
 #~ msgstr "Clique aqui para entrar!"
+
+#, fuzzy
+#~ msgid "limitations"
+#~ msgstr "limitações"
+
+#~ msgid ""
+#~ "Select which comments you would like to include in the poll. A custom "
+#~ "command will be generated."
+#~ msgstr ""
+#~ "Selecione quais comentários gostaria de ver na enquete. Um comentário "
+#~ "customizado será gerado."
 
 #, fuzzy
 #~ msgid "Find @EjGroupsBot bot on Telegram;"
