@@ -1,0 +1,201 @@
+.modal-tools-close{
+    display: none;
+    z-index: 9999;
+}
+
+.modal-tools-open {
+    display: block;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+}
+
+.modal-tools-bg {
+    display: grid;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(0,0,0,0.4);
+    place-items: center;
+    justify-content: center;
+}
+
+.modal-tools-content{
+    position: relative;
+    width: 70%;
+    max-width: 1200px;
+    background: $color-white;
+    border-radius: 5px;
+
+    display: flex;
+    flex-direction: column;
+    place-items: center;
+    justify-content: center;
+    gap: .75rem;
+
+    button {
+        width: 200px;
+        height: 50px;
+        background: $color-black;
+        border-radius: 70px;
+        padding-top: 10px;
+
+        span {
+            text-transform: capitalize;
+            color: $color-white;
+            font-family: Raleway;
+            font-style: normal;
+            font-weight: bold;
+            font-size: 24px;
+            line-height: 28px;
+        }
+    }
+
+    @media only screen and (max-width: 760px) {
+        width: 100%;
+        height: 100%;
+        max-width: none;
+        border-radius: 0px;
+        
+        justify-content: flex-start;
+    }
+}
+
+.close-modal {
+    position: absolute;
+    right: 5px;
+    top: 0px;
+    text-align: right;
+    font-size: 28px;
+    margin-right: 17px;
+    cursor: pointer;
+}
+
+.modal-tools-title {
+    h3 {
+        width: 100%;
+        color: $color-theme-report-black;
+        margin-top: 1rem;
+        font-family: Raleway;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 18px;
+        line-height: 21px;
+        text-align: center;
+        text-transform: uppercase;
+    }
+
+    span {
+        display: block;
+        padding: 2% 14%;
+        font-family: Raleway;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 24px;
+        line-height: 28px;
+        text-align: center;
+    }
+
+    @media only screen and (max-width: 760px) {
+        margin-top: 5rem;
+        span {
+            padding: 2% 7%;
+        }
+    }
+}
+
+.modal-tools-card {
+    overflow: hidden;
+    display: flex;
+    width: 73%;
+
+    .column {
+        width: 100%;
+    }
+
+    .card {
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        padding: 1rem;
+        border: 1px solid #e5e5e5;
+        cursor: pointer;
+        
+        display: flex;
+        place-items: center;
+        justify-content: initial;
+
+        .card-text {
+            display: flex;
+            flex-direction: column;
+            place-items: flex-start;
+
+            h3 {
+                color: $color-theme-report-black;
+                font-family: Raleway;
+                font-style: normal;
+                font-weight: normal;
+                font-size: 24px;
+                line-height: 28px;
+                text-decoration: underline;
+            }
+            p {
+                font-family: Raleway;
+                font-style: normal;
+                font-weight: normal;
+                font-size: 16px;
+                line-height: 19px;
+            }
+        }
+        .card-icon {
+                margin-right: 0.3rem;
+
+                .imgcard {
+                    width: 75px;
+                    height: 65px;
+                    max-width: unset;
+                }
+        }
+
+    }
+    
+    .card:hover {
+        box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    }
+    
+    .balance-bigger-margin {
+        width: 50px;
+        height: 65px;
+    }
+    @media only screen and (max-width: 860px) {
+        width: 90%;
+        .card {
+            justify-content: center;
+            .card-text {
+                h3 {
+                    font-size: 18px;
+                    line-height: 21px;
+                }
+            }
+            .card-icon {
+                margin-left: -1rem;
+                margin-right: 0rem;
+            }
+        }
+        }
+}
+
+.modal-tools-footer {
+    p {
+        font-family: Raleway;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 18px;
+        line-height: 21px;
+        text-align: center;
+        text-decoration-line: underline;
+    }
+}

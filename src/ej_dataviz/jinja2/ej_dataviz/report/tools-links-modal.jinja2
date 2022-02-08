@@ -1,0 +1,57 @@
+{% from "ej_tools/links_tools.jinja2" import links_tools %}
+
+<div>
+  <div id="tools-modal-{{ conversation.slug }}" class="modal-tools-close">
+    <div class="modal-tools-bg">
+      <div class="modal-tools-content">
+        <span class="close-modal">&times;</span>
+        <div class="modal-tools-title"><h3>{{ _('Take the EJ wherever you want!') }}</h3>
+          <span>
+            {{ _('Begin your collect journey with our quick links. For more integrations, access the tools area.') }}
+          </span>
+        </div>
+        <div class="modal-tools-card">
+          {{ links_tools(static('/img/logo/channel_telegram.svg'), bot + (conversation.id | string), 
+          _('Use this link to make collect into Telegram.'), bot + (conversation.id | string) , "") }}
+        </div>
+        <button class="close">
+          <span>{% trans %}Close{% endtrans %}</span>
+        </button>
+        <div class="modal-tools-footer">
+          <p><a href="{{ conversation.patch_url('conversation-tools:index') }}" target="_blank" rel="noopener noreferrer"
+            title="{{ _('Go to Tools') }}" class="text-accent">
+            {% trans %}Go to Tools{% endtrans %}
+          </a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+let modal = document.getElementById("tools-modal-{{ conversation.slug }}");
+let span_close = document.getElementsByClassName("close-modal")[0];
+let btn_close = document.getElementsByClassName("close")[0];
+let modal_bg = document.getElementsByClassName("modal-tools-bg")[0];
+
+span_close.onclick = function() {
+  modal.className = "modal-tools-close";
+  document.getElementsByClassName("body")[0].style.overflowY = "auto"
+}
+
+btn_close.onclick = function() {
+  modal.className = "modal-tools-close";
+  document.getElementsByClassName("body")[0].style.overflowY = "auto"
+}
+modal_bg.onclick = function() {
+  modal.className = "modal-tools-close";
+  document.getElementsByClassName("body")[0].style.overflowY = "auto"
+}
+window.onload = function() {
+  if({{statistics.participants.voters}} == 0) {
+    modal.className = "modal-tools-open";
+    document.getElementsByClassName("body")[0].style.overflowY = "hidden"
+  }
+}
+</script>

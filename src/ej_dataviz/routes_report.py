@@ -10,6 +10,7 @@ from django.shortcuts import get_object_or_404
 from django.utils.text import slugify
 from django.utils.translation import ugettext as _, ugettext_lazy
 from ej_clusters.models.clusterization import Clusterization
+from ej_tools.utils import get_host_with_schema
 from sidekick import import_later
 
 from ej_clusters.models import Cluster
@@ -17,6 +18,8 @@ from ej_conversations.models import Conversation
 from ej_conversations.routes import conversation_url
 from ej_conversations.utils import check_promoted
 from .routes import EXPOSED_PROFILE_FIELDS, words
+from .models import ToolsLinksHelper
+
 
 pd = import_later("pandas")
 
@@ -61,12 +64,14 @@ def general_report(request, conversation, **kwargs):
     if conversation_clusterization.exists():
         conversation_has_stereotypes = conversation_clusterization.stereotypes().count() > 0
 
+    host = get_host_with_schema(request)
     return {
         "conversation": conversation,
         "type_data": "votes-data",
         "can_view_detail": can_view_detail,
         "statistics": statistics,
         "conversation_has_stereotypes": conversation_has_stereotypes,
+        "bot": ToolsLinksHelper.get_bot_link(host),
     }
 
 
