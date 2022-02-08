@@ -1,166 +1,67 @@
-{% macro survey_modal(conversation) %}
-
-<div>
-  <div id="export-modal" class="group-comments" tabindex="-1" role="dialog" aria-labelledby="modal-comments-selections" aria-hidden="true" data-backdrop="true" data-keyboard="true">  
-    <div id="export-modal-content" class="group-comments-content">
-      <span class="close-report" onclick='closeExportDropdown(this)'>&times;</span>
-      
-      <div class="tools-title">
-        <h1 id="pool-title" class="h2 text-accent"></h1>
-        <span id="pool-text" class="pool-text"></span>
-      </div>
-      <hr class="pools-comments-divider">
-      <span>
-        {{_("Pool command: ")}}
-      </span>
-      <span class="command">
-        <a id="a_tag_modal" class="tools-link"></a>
-      </span>
-      <span class="edit-pool-comments">
-        <i class="fas fa-pen"></i><span>{{ _("Edit")}}</span> 
-      </span>
-   
-      <table id="comments-table">
-        <tr class="header">
-          <th>ID</th>
-          <th colspan="4">{{_("Comments")}}</th>
-        </tr>
-        <tbody id="comments-body">
-        <script type="text/javascript">
-         
-          localStorage.setItem("comments_total", 0);
-
-        </script>
-          {% for comment in conversation.comments %}
-            <tr>
-            <script type="text/javascript">
-
-
-              function validateRow() {
-                return true;
-              }
-
-              function insertRow(col1, col2) {
-                var tbodyRef = document.getElementById('comments-table').getElementsByTagName('tbody')[0];
-                // Insert a row at the end of table
-                var newRow = tbodyRef.insertRow();
-
-                // Insert a cell at the end of the row
-                var c1 = newRow.insertCell(0);
-                var c2 = newRow.insertCell(1);
-                c2.colSpan = "4";
-
-                // Append a text node to the cell
-                var newText = document.createTextNode(col1);
-                c1.appendChild(newText);
-
-                var text2 = document.createTextNode(col2);
-                c2.appendChild(text2);
-              }
-
-            </script>
-            </tr>
-           
-          {% endfor %}
-          <tfoot>
-            <script type="text/javascript">
-              const invalidMessage = "{{_("You don't have enough valid comments. See more about limitations in: ")}}"
-              const MIN_COMMENTS = 2;
-              function insertFooter(item) {
-                var tbodyRef = document.getElementById('comments-table').getElementsByTagName('tfoot')[0];
-                // Insert a row at the end of table
-                var newRow = tbodyRef.insertRow();
-
-                // Insert a cell at the end of the row
-                var c1 = newRow.insertCell(0);
-                c1.colSpan = "5";
-                c1.className="footer"
-
-                // Append a text node to the cell
-                var newText = document.createTextNode(item);
-                
-                c1.appendChild(newText);
-              }
-
-              const total = parseInt(localStorage.getItem("comments_total"))
-
-              if (total >= MIN_COMMENTS) {
-                insertFooter(total + "{{_(" comments")}}")
-              } else {
-                let tb = document.getElementById("comments-table")
-                while(tb.firstChild) {
-                  tb.removeChild(tb.firstChild);
-                }
-                md = document.getElementById("export-modal-content");
-          
-                var par = document.createElement('p');
-                par.innerHTML = "{{_("You don't have enough valid comments. See more about limitations in: ")}}" + "<a href='https://www.ejplatform.org/static_docs/i18n/pt-br/user-docs/tools-chatbot.html'>{{_("limitations")}}</a>" 
-
-                md.appendChild(par)
-              }
-            </script>
-          </tfoot>
-        </tbody>
-      </table>
+<div id="export-modal" class="group-comments desative" tabindex="-1" role="dialog" aria-labelledby="modal-comments-selections" aria-hidden="true" data-backdrop="true" data-keyboard="true">  
+  <div id="export-modal-content" class="group-comments-content">
+    
+    <div id="show-comments">
+      {% with comments=comments %}
+        {% include 'ej_tools/show-comments.jinja2' %}
+      {% endwith %}
     </div>
-  </div>
 
+    <div id="edit-comments" class="desative">
+      {% with comments=comments %}
+        {% include 'ej_tools/edit-comments.jinja2' %}
+      {% endwith %}
+    </div>
+
+  </div>
 </div>
 
 
 <script>
-var exportBtn = document.getElementById("export-btn");
+const tableShow = document.getElementById("show-comments")
+const tableEdit = document.getElementById("edit-comments")
 
-
-function closeExportDropdown(closeIcon) {
-  exportOptions = closeIcon.parentElement.parentElement;
-  exportOptions.style.display = "none";
+function closeCommentsModal(closeIcon) {
+  document.getElementById("export-modal").classList.add("desative")
   document.body.classList.remove("modal-without-trasparency")
+
+  //prevent scroll
+  const body = document.body;
+  const scrollY = body.style.top;
+  body.style.position = '';
+  body.style.top = '';
+  window.scrollTo(0, parseInt(scrollY || '0') * -1);
+
+  //Sort tables
+  tableEdit.classList.add("desative")
+  tableShow.classList.remove("desative")
+
 }
 
-function openExportDropdown(event) {
+function openCommentsModal(event) {
+  let el = document.getElementById("export-modal")
+  if(el.id === "export-modal") {
     var bd = document.body
-    if(bd.classList.contains("modal-without-trasparency")){
-      bd.classList.remove("modal-without-trasparency")
-    }else{
-      bd.classList.add("modal-without-trasparency")
-    }
-
-    let modal = document.querySelector("#export-modal");
-    modal.style.display = modal.style.display == "block" ? "none" : "block";
+    bd.classList.toggle("modal-without-trasparency")
+    el.classList.remove("desative")
+    //prevent scrool
+    const scrollY = document.documentElement.style.getPropertyValue('--scroll-y');
+    const body = document.body;
+    body.style.position = 'fixed';
+    body.style.top = `-${scrollY}`;
+  }
 }
 
-exportBtn.onclick = openExportDropdown
+document.getElementById("pool-btn").onclick = openCommentsModal
 
-const read = {
-  "title": "{{_('Poll Comments')}}", 
-  "text": "{{_('It presents the list of comments that will compose the telegram poll.')}}"
+document.getElementById("open-edit-comments").onclick = function() {
+  tableShow.classList.add("desative")
+  tableEdit.classList.remove("desative")
 }
 
-const edit = {
-  "title": "{{_('Selection of comments')}}", 
-  "text": "{{_('Select which comments you would like to include in the poll. A custom command will be generated.')}}"
-}
-
-
-title = document.getElementById("pool-title")
-text = document.getElementById("pool-text")
-
-title.innerHTML = read.title;
-text.innerHTML = read.text;
-
-
-function toggleText() {
-  if (title.innerHTML == read.title) {
-    title.innerHTML = read.title;
-    text.innerHTML = read.text;    
-  } else {
-    title.innerHTML = edit.title;
-    text.innerHTML = edit.text;        
-  }  
-}
-
+window.addEventListener('scroll', () => {
+  //Fixe position when modal open
+  document.documentElement.style.setProperty('--scroll-y', `${window.scrollY}px`);
+});
 
 </script>
-
-{% endmacro %}

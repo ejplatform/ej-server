@@ -5,6 +5,7 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
+from django.db.models.functions import Length
 
 from model_utils.models import TimeStampedModel
 from sidekick import lazy, property as property, placeholder as this
@@ -92,6 +93,9 @@ class Conversation(HasFavoriteMixin, TimeStampedModel):
     approved_comments = _filter_comments("approved")
     rejected_comments = _filter_comments("rejected")
     pending_comments = _filter_comments("pending")
+    poll_comments = property(
+        this.approved_comments.annotate(text_len=Length("content")).filter(text_len__lt=101)
+    )
     del _filter_comments
 
     class Meta:

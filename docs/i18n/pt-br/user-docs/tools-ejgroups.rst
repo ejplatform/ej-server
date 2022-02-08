@@ -20,7 +20,7 @@ EjGroupsBot ou se preferir acesse https://t.me/ejgroupsbot
 Como configurar e interagir com o bot de enquetes?
 --------------------------------------------------
 
-O Bot de Enquetes possui dois modos de operação: Canal e Grupo.
+O Bot de Enquetes possui dois modos de operação: *Canal* e *Grupo*.
 
 Para realizar uma coleta através de um Canal, execute os seguintes passos:
 
@@ -42,9 +42,22 @@ Para realizar uma coleta através de um Grupo, execute os seguintes passos:
 3. Escreva o comando **/enquetenogrupo <ID da conversa>**. Esse comando também vai buscar os 10 primeiros comentários. 
   * Também é possível passar uma lista de comentários. Para isso escreva o comando **/enquetenogrupo <ID da conversa> id_comentario id_comentario id_comentario**. É possível passar de 2 à 10 comentários para a enquete;
 
-É possível configurar os comandos **enquetenogrupo** e **enquetenocanal** de forma facilitada na EJ, através da Ferramenta **Chatbot > Telegram**.
+É possível configurar os comandos **enquetenogrupo** e **enquetenocanal** de forma facilitada na EJ, selecione a sua conversa e através de **Ferramentas > Chatbot > Telegram**. Agora basta selecionar entre canal e grupo nos botões e o comando a ser utilizado é atualizado no cartão.
 
-.. figure:: ../images/bot-de-enquete.png 
+.. figure:: ../images/bot-de-enquetes_0.png 
+
+Para selecionar os comentários que vão compor a enquete, depois de selecionar entre **canal** e **grupo** clique no botão **Editar enquete**.  
+
+.. figure:: ../images/bot-de-enquetes_1.png 
+
+Uma janela com todos os comentários válidos da conversa vai aparecer. Clique em **Editar** para poder selecionar os comentários. 
+
+.. figure:: ../images/bot-de-enquetes_2.png 
+
+Defina os comentários clicando na **caixa** do lado esquerdo do *ID* do comentário. Ao clicar o comando de geração da enquete é atualizado na parte superior do cartão. 
+
+.. figure:: ../images/bot-de-enquetes_3.png 
+
 
 Limitações
 ----------

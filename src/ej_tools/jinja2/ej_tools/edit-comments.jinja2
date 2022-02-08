@@ -1,0 +1,128 @@
+<span class="close-report" onclick='closeCommentsModal(this)'>&times;</span>
+
+<div class="tools-title">
+  <h1 id="pool-title" class="h2 text-accent">{{_('Selection of comments')}}</h1>
+  <span id="pool-text" class="pool-text">
+    {{_('Select which comments you would like to include in the poll.')}}
+    <br>
+    {{_('Copy and paste the generated command into the poll bot.')}}
+  </span>
+</div>
+<hr class="pools-comments-divider">
+<span>
+  {{_("Pool command: ")}}
+</span>
+
+<span class="command command-channel">
+  <a id="channel-link" class="tools-link">/enqutenocanal {{conversation.id}}</a>
+</span>
+<span class="command command-group hide">
+  <a id="group-link" class="tools-link">/enqutenogrupo {{conversation.id}}</a>
+</span>
+
+<div class="comments-table">
+
+  <table id="comments-edit-table">
+    <tr class="header">
+      <th colspan="1"></th>
+      <th colspan="1">ID</th>
+      <th colspan="5">{{_("Comments")}}</th>
+    </tr>
+
+    <tbody id="comments-body-edit">
+  
+      {% for comment in comments %}
+        <tr>
+          <td colspan="1">
+            <div class="channel-input">
+              <input 
+                id="{{comment.id}}" 
+                type="checkbox" 
+                class="comments-input" 
+                onclick=selectCommentsChannel(event) 
+                autocomplete="off">
+              </input>
+            </div>
+            <div class="group-input hide">
+              <input 
+                id="{{comment.id}}" 
+                type="checkbox" 
+                class="comments-input" 
+                onclick=selectCommentsGroup(event)
+                autocomplete="off">
+              </input>                                      
+            </div>            
+          </td>
+          <td colspan="1">{{comment.id}}</td>
+          <td colspan="5" class="table-text">
+            {{comment}}
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+    <tfoot id="channel-footer" class="channel-footer">
+      <tr>
+        <td colspan="7" class="footer">0 {{_("comment")}}</td>
+      </tr>
+    </tfoot>
+
+    <tfoot id="group-footer" class="group-footer hide">
+      <tr>
+        <td colspan="7" class="footer">0 {{_("comment")}}</td>
+      </tr>
+    </tfoot>
+
+  </table> 
+  
+</div>
+
+<script>
+let commentsSelectedChannel = new Set() // list of selected elements
+let commentsSelectedGroup = new Set() // list of selected elements
+
+function updateFooter(platform, refElement) {
+  var footer = document.getElementById(refElement)
+  let text = platform.size <= 1 ? "{{_("comment")}}" : "{{_("comments")}}";  
+  const ftHTML =`<tr><td colspan=\"7\" class=\"footer\">${platform.size} ${text}</td></tr>`
+  footer.innerHTML = ftHTML
+}
+
+function updateCommand(platform, refElement){
+  let element = document.getElementById(refElement)
+  const command = element.text.split(" ")[0] + " " + element.text.split(" ")[1] + " ";
+  if(!platform.size){
+    element.text= command
+  }else{
+    element.text = command + [...platform].reduce((ids, id) => ids + "," +id)
+  }
+}
+
+function selectComments(item, platform){
+  const MAX_SELECTABLE = 10
+
+  if (item.target.checked) {
+    if(platform.size < MAX_SELECTABLE){
+      platform.add(item.target.id)
+    }else{
+      item.target.checked = false
+      return
+    }
+  } else{
+    platform.delete(item.target.id)
+  }
+}
+
+function selectCommentsGroup(item){
+  selectComments(item, commentsSelectedGroup)
+  updateCommand(commentsSelectedGroup, "group-link")
+  updateFooter(commentsSelectedGroup, "group-footer")
+}
+
+function selectCommentsChannel(item){
+  selectComments(item, commentsSelectedChannel)
+  updateCommand(commentsSelectedChannel, "channel-link")
+  updateFooter(commentsSelectedChannel, "channel-footer")
+}
+
+
+</script>
