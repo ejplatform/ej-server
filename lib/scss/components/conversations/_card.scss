@@ -3,7 +3,7 @@
 //------------------------------------------------------------------------------
 @import "../../config";
 
-$_card-width: 20rem;
+$_card-width: 100%;
 $_card-bg: config('ej.conversation-card.bg-image');
 
 :root {
@@ -17,14 +17,13 @@ $_card-bg: config('ej.conversation-card.bg-image');
     background-color: css-var(--theme-color, color('brand'));
     border-radius: size(config('ej.conversation-card.border-radius'));
     color: css-var(--theme-light-color, color('brand-lighter'));
-    height: $_card-width;
+    width: $_card-width;
+    height: 20rem;
     margin: auto;
     overflow: hidden;
-    width: $_card-width;
 
-    @media only screen and (max-width: 320px) {
-        width: 17rem;
-        height: 17rem;
+    @media screen and (max-width: 800px) {
+        width: 20rem;
     }
 
     &__tags {
@@ -103,22 +102,30 @@ $_card-bg: config('ej.conversation-card.bg-image');
     margin: 0 auto;
 
     @include breakpoint('md') {
-        display: flex;
-        flex-wrap: wrap;
-    }
-
-    @include breakpoint('md') {
         align-items: center;
-        display: flex;
-
+        display: grid;
+        grid-gap: size(0.5);
+        grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+        
         > * {
-            margin-top: size(0.5);
-            margin-bottom: size(0.5);
-            margin-right: size(1);
+            justify-self: center;
+            width: 100%;
+            display: flex;
+
+            @media screen and (max-width: 60.25rem) {
+                max-width: 24rem;
+            }
+
             > * {
                 border-radius: size(0.5);
             }
         }
+    }
+
+    @media screen and (min-width: 163rem) {
+        max-width: 150rem;
+        margin-left: 0;
+        grid-template-columns: repeat(6, minmax(calc((100% / 6) - .75rem), 1fr));
     }
 }
 
