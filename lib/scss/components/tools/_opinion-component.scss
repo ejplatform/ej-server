@@ -42,24 +42,10 @@
             margin-bottom: 0;
         }
     }
-    .group-button {
-        margin: 1rem auto;
-        #preview-button {
-            background-color: $color-black;
-            border-color: $color-black;
-            margin-right: 1rem;
-        }
-        input {
-            text-transform: unset;
-        }
+    
+    &-submit-button {
+        float: left;
     }
-}
-
-.opinion-component-container {
-    display: flex;
-    margin-bottom: 3rem;
-    gap: 20px;
-    flex-wrap: wrap;
 }
 
 .card-opinion-component {
@@ -83,10 +69,6 @@
 
 #opinion-component-form {
     section {
-        position: relative;
-        width: 60%;
-        left: 7rem;
-        top: 0.813rem;
         ul {
             max-width: 24rem;
             justify-content: center;
@@ -111,9 +93,6 @@
 }
 
 .title-theme {
-    display: flex;
-    flex-wrap: wrap;
-
     .avatar {
         width: 3.438rem;
         margin-top: 0.844rem;
@@ -131,29 +110,11 @@
         line-height: 23px;
     }
     h4 {
-        position: relative;
-        width: 80%;
-        margin: 0.5rem 0rem 1.5rem 0rem;
-        left: 6rem;
         color: $color-black;
         font-family: Raleway;
         font-weight: bold;
         line-height: 21px;
-    }
-    span {
-        position: relative;
-        width: 63%;
-        height: max-content;
-        top: -1rem;
-        left: 6.2rem;
-        font-size: 14px;
-        line-height: 16px;
-        color: rgba(0, 0, 0, 0.8);
-    }
-    .helptext {
-        position: relative;
-        font-size: 16px;
-        line-height: 19px;
+        margin: unset !important;
     }
     @media only screen and (max-width: 760px) {
         h3 {

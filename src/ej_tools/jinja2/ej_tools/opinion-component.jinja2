@@ -11,47 +11,61 @@
 
 {% block content %}
 	<div class="tools">
-		<div class="tools-container">
-			<div class="tools-title">
-				<h1 class="h2 text-accent"><a href="{{ conversation.patch_url('conversation-tools:index') }}">{{_("Tools")}}</a>
-				> {{ tool.name }}</h1>
-				<span class="helptext">{{tool.description }}</span>
-			</div>
-			<h3 class="h3 divider">{{_("Collection Link")}}</h3>
-			<span class="helptext">{{_("Select a theme and start a collection with the opinion component built into EJ.")}}</span>
-		</div>
-		<div class="opinion-component-container">
-			<div class="card-opinion-component">
-				<form method="POST" class="tools-settings-form" id="opinion-component-form" target="_blank">
-					{{ csrf_input }}
-					{% block form_content %}
-						<div class="title-theme">
-						<img class="avatar" src="{{ static('/img/icons/opinion-component-icon.svg') }}"/>
-							<h3>{{ tool.name }}</h3>
-							<span>{{_("Web component that allows you to integrate EJ into external sites and systems.")}}</span>
-							<h4> 
-								{{form.theme.label}}
-							</h4>
-							<span class="helptext">
-								{{_("Customize the collection component with our color options.")}}
-							</span>
+		<div class="tools-container-full-width">
+				<div class="tools-title">
+					<h1 class="h2 text-accent"><a href="{{ conversation.patch_url('conversation-tools:index') }}">{{_("Tools")}}</a>
+					> {{ tool.name }}</h1>
+					<span class="helptext tool-description">{{tool.description }}</span>
+				</div>
+				<h3 class="h3 divider">{{_("Collection Link")}}</h3>
+				<span class="helptext">{{_("Select a theme and start a collection with the opinion component built into EJ.")}}</span>
+			<div class="tools-divider">
+				<div class="tools-card-container">
+					<div class="tools-card-body">
+				  		<div class="tools-card-body-img">
+							<img class="avatar" src="{{ static('/img/icons/opinion-component-icon.svg') }}"/>
 						</div>
-						<section>
-							{{form.theme}}
-						</section>
-						<button class="blue" type="submit" name="preview">
-							<img class="comments-icon" src="{{ static('/img/icons/comments.svg') }}"/>
-							<a>{{_('Start Collection')}}</a>
-						</button>
-					{% endblock %}
-				</form>
-			</div>
-			<div class="opinion-component-card-list">
-				{# {{ help_card(_("Integrate opinion component with Mautic."), "/static_docs/i18n/pt-br/user-docs/tools-mautic.html#como-faco-para-configurar-a-instancia-do-mautic-para-conectar-a-ej")}}
-				{{ help_card(_("Integrate opinion component with Google Analytics."), "/static_docs/i18n/pt-br/user-docs/tools-opinion-component.html")}} #}
-				{{ help_card(_("How to integrate the opinion component to my website?"), "/static_docs/i18n/pt-br/user-docs/tools-opinion-component.html#incluindo-o-componente-em-uma-pagina")}}
+						<div class="tools-card-content">
+							<span class="tools-card-title">{{ tool.name }}</span>
+							<p class="helptext">{{_("Web component that allows you to integrate EJ into external sites and systems.")}}</p>
+							<form method="GET" action="opinion-component/preview" class="tools-settings-form" id="opinion-component-form" target="_blank">
+									{% block form_content %}
+									<div class="title-theme">
+										<h4> 
+											{{form.theme.label}}
+										</h4>
+										<span class="helptext">
+											{{_("Customize the collection component with our color options.")}}
+										</span>
+									</div>
+									<section>
+										{{form.theme}}
+									</section>
+						{% endblock %}
+						</form>
+						</div>
+					</div>
+					<div class="tools-card-footer">
+						<span class="tools-icon-share">
+							<button class="blue" onclick='submitForm()'>
+								<img class="comments-icon" src="{{ static('/img/icons/comments.svg') }}"/>
+								<a>{{_('Start Collection')}}</a>
+							</button>
+						</span>
+					</div>
+				</div>
 			</div>
 		</div>
-	</div>
+			
+				<div class="opinion-component-card-list">
+					{{ help_card(_("How to integrate the opinion component to my website?"), "/static_docs/i18n/pt-br/user-docs/tools-opinion-component.html#incluindo-o-componente-em-uma-pagina")}}
+				</div>
+		</div>
 				
+
+<script charset="utf-8">
+	function submitForm() {
+		document.getElementById('opinion-component-form').submit();
+	}
+</script>
 {% endblock %}
