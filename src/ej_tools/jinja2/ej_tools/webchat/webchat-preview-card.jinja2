@@ -1,0 +1,65 @@
+<div id="ej-card-section">
+    <img class="avatar" src="/static/img/icons/duda.png" alt="drawing of a woman with blue acessory in her brown hair">
+    <div id="ej-card-content">
+        <span class="tools-card-title">{{_("Webchat in EJ")}}</span>
+        <span class="helptext description">{{_("Use EJ's web chatbot from our infrastructure. It does not require any additional configuration. The user will access an EJ route to participate.")}}</span>
+        <form method="POST" id="form-size">
+            {{ csrf_input }}
+            <div class="buttons-div">
+                <button class="blue" type="submit" name="webchat-preview" formtarget="_blank">
+                    <span class="tools-icon-share">
+                    <img src="{{ static('/img/icons/comments.svg') }}" alt="Share icon"/>
+                    <span> {{_("Starts conversation")}} </span>
+                    </span>
+                </button>
+                <button class="grey" type="button" id="webchat-share" data-url="{{webchat_preview_url}}">
+                    <span id="tools-icon-share" class="tools-icon-share">
+                    <img src="{{ static('/img/icons/share.svg') }}" alt="Share icon"/>
+                        <span> {{_("Share Bot")}} </span>
+                    </span>
+                </button>
+                <span id="tools-tip-text">{{_("Copied to clipboard!")}}</span>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+const makeText = function() {
+    let conversationText = "{{conversation.text.replace('\r', '').replace('\n', '')}}";
+    return "{{tool.share }}" + $('#webchat-share').data().url; + "\n";
+}
+
+const copyText = async function(link) {
+  try {
+    const tip = document.getElementById("tools-tip-text");
+    var text = link
+    console.log(text)
+    navigator.clipboard.writeText(text);
+    tip.classList.add('tools-tip-text-show');
+
+    await new Promise(r => setTimeout(r, 2000));
+    tip.classList.remove('tools-tip-text-show', 'tip-text-position');
+    tip.classList.add('tools-tip-text-hidde');
+  } catch(err){
+    alert("Error")
+    }
+}
+
+window.onload = function() {
+  btn_share = document.getElementById('webchat-share');
+  btn_share.addEventListener('click', async () => {
+  link = $('#webchat-share').data().url;
+    let shareData = {
+        title: "{{conversation.title}}",
+        text: makeText(),
+        url: link
+    }
+    try {
+      await navigator.share(shareData)
+    } catch (err) {
+        await copyText(makeText())
+    }
+  });
+};
+</script>

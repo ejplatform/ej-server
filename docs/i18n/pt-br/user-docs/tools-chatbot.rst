@@ -98,10 +98,29 @@ A Duda precisa que o usuário envie a mensagem *start <ID da conversa>* para pod
 .. figure:: ../images/coleta-whatsapp.png
   :align: center 
 
+
 Webchat
 ==========================================
 
-Para fazer coletas de opinião via chatbot, o administrador da conversa pode configurar em sites e blogs o projeto rasa-webchat_. Este projeto criar um chat web na página html em que ele for incluído, permitindo que usuários que cheguem à pagina participem de uma coleta. O seguinte *snippet* pode ser utilizado para integrar o webchat à Duda.
+O que é o WebChat?
+------------------
+
+O WebChat é um chat em uma página web, em formato de chatbot. Com ele, você pode realizar a coleta de opiniões integrando as suas conversas que estão cadastradas na EJ. 
+Esta ferramenta cria um chat web na página html em que ele for incluído, permitindo que usuários que cheguem à pagina participem de uma coleta.
+
+Quando usar o WebChat? 
+----------------------
+
+O WebChat é recomendado se você deseja que as coletas de opinião sejam realizadas com seu público alvo sem que eles precisem sair da sua página web. 
+Ou seja, você precisa possuir um site ou plataforma disponível. Desta forma, todo o processo de coleta com o público estará centralizado no seu domínio.
+
+
+Como posso integrar o webchat ao meu site?
+-------------------------------------------
+
+Para fazer coletas de opinião via chatbot, o administrador da conversa pode configurar em seu site ou plataforma o WebChat. 
+O seguinte *snippet* pode ser utilizado para integrar o webchat à Duda.
+
 
 .. code-block:: html
 
@@ -109,28 +128,52 @@ Para fazer coletas de opinião via chatbot, o administrador da conversa pode con
     <head></head>
     <body></body>
     <script>!(function () {
-    let e = document.createElement("script"),
-      t = document.head || document.getElementsByTagName("head")[0];
-    (e.src =
-      "https://cdn.jsdelivr.net/npm/rasa-webchat@1.0.0/lib/index.js"),
-      (e.async = !0),
-      (e.onload = () => {
-        window.WebChat.default(
-          {
-            initPayload: window.location.href,
-            socketUrl: "https://rasadefault.pencillabs.com.br?token=thisismysecret",
-            // add other props here
-          },
-          null
-        );
-      }),
-      t.insertBefore(e, t.firstChild);
-    })();
+      localStorage.removeItem("chat_session");
+      let e = document.createElement("script"),
+        t = document.head || document.getElementsByTagName("head")[0];
+      socketEnviroment = document.getElementById("socket-url").value;
+      (e.src =
+        "https://cdn.jsdelivr.net/npm/rasa-webchat@1.0.1/lib/index.js"),
+        (e.async = !0),
+        (e.onload = () => {
+          window.WebChat.default(
+            {
+              initPayload: window.location.href,
+              title: "Duda",
+              socketUrl: "https://rasadefault.pencillabs.com.br?token=thisismysecret",
+              profileAvatar: "path-from-your-chosen-avatar>",
+              embedded: true
+            },
+            null
+          );
+        }),
+        t.insertBefore(e, t.firstChild);
+      })();
     </script>
+    <style>
+    #rasaWebchatPro {
+      height: 100vh;
+    }
+
+    .rw-avatar {
+      width: 3rem !important;
+      height: 3rem !important;
+      border-radius: 100%;
+      margin-right: 6px;
+      position: relative;
+      bottom: 5px;
+    }
+
+    #main-content {
+      display: none;
+    }
+    </style>
   </html>
 
 
-Uma vez configurado o script na página, o administrador precisa registrar na EJ a URL em que o webchat está integrado. Dessa forma, o bot saberá qual conversa da EJ ele deve apresentar para o visitante. Para realizar esse registro, basta acessar a área de ferramentas da conversa, selecionar a ferramenta `Rasa Webchat`, e cadastrar a URL em que o script foi configurado. Feito isso, o webchat irá apresentar para os visitantes a conversa integrada.
+Uma vez configurado o script na página, o administrador precisa registrar na EJ a URL em que o webchat está integrado. Dessa forma, o bot saberá qual conversa da EJ ele deve apresentar para o visitante. 
+
+Para realizar esse registro, basta acessar a área de **ferramentas** da conversa, clicar em **Bots de Opinião** e selecionar a ferramenta **WebChat**. Cadastre então a URL em que o script foi configurado. Feito isso, o webchat irá apresentar para os visitantes a conversa integrada.
 
 .. figure:: ../images/ej-docs-webchat.png 
 

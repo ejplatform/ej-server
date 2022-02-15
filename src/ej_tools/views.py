@@ -172,6 +172,7 @@ def webchat(request, board_slug, conversation_id, slug):
         "tool": tool,
         "form": form,
         "is_valid_user": user_can_add,
+        "webchat_preview_url": webchat_preview_url,
     }
     return render(request, "ej_tools/webchat.jinja2", context)
 
