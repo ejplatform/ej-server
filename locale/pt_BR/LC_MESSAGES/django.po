@@ -4060,7 +4060,7 @@ msgstr "Iniciar coleta"
 
 #: src/ej_tools/jinja2/ej_tools/telegram/opinion_bot.jinja2:37
 msgid "When should I use the opinion component?"
-msgstr "Quando eu devo utilizar o componente de opinião?"
+msgstr "Quando eu devo utilizar o bot de opinião?"
 
 #: src/ej_tools/jinja2/ej_tools/telegram/poll_bot.jinja2:5
 msgid "Survey Bot"
