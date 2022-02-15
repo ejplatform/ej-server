@@ -24,6 +24,11 @@ class BotsWebchatTool(AbstractTool):
             "Integrate this conversation with a web client, called a webchat."
             + "Create a chat on your website page."
         )
+        self.share: str = _(
+            "I am the virtual assistant for the EJ platform. Empurrando Juntos, or EJ Platform,"
+            + "is an opinion consultation platform focused on States and Organizations."
+            + "We would like your participation in the following discussion:"
+        )
         self.is_active = is_active
 
 

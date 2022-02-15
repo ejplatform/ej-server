@@ -1,71 +1,16 @@
-.tools-code-snippet {
-    position: relative;
-    margin-top: 1.5rem;
-    .corner-icon {
-        position: absolute;
-        top: 0;
-        right: 0;
-        margin-right: 10px;
-        padding-top: 10px;
-    }
-    #copy-header-info {
-        opacity: 0;
-    }
-    #copy-header-icon:hover + #copy-header-info {
-        opacity: 1;
-    }
-    #copy-info {
-        opacity: 0;
-    }
-    #copy-icon:hover + #copy-info {
-        opacity: 1;
-    }
-    #copy-script-info {
-        opacity: 0;
-    }
-    #copy-script-icon:hover + #copy-script-info {
-        opacity: 1;
-    }
-    
-    textarea {
-        background-color: rgba(196, 196, 196, 0.38);
-        min-width: 100%;
-        border-color: rgba(196, 196, 196, 0.38);
-        height: 259px;
-        resize: none;
-        padding-right: 5%;
-    }
-}
-
-.info {
-    position: absolute;
-    right: 0;
-    top: 1.5rem;
-    background-color: #042a46;
-    border-radius: 0.5rem;
-    p {
-        padding: 0.1rem 0.7rem;
-        color: aliceblue;
-        margin-bottom: 0rem;
-        font-size: 80%;
-    }
-}
-
 #template-table {
     margin-top: 0.5rem;
     margin-bottom: 1.5rem;
+    max-width: 699px;
     tbody tr {
         background: none !important;
     }
 }
 
-.form-div {
-    padding-left: 0.75rem;
-}
-
 .domain-form {
     display: flex;
     justify-content: space-between;
+    margin-bottom: 76px;
     input:first-child {
         margin-right: 10px;
         box-sizing: content-box;
@@ -73,16 +18,88 @@
         -webkit-box-sizing: content-box;
         margin-bottom: unset;
         margin-top: unset;
-        max-width: unset;
-        min-width: unset;
+        max-width: 565px;
     }
     #domain-submit {
         height: unset;
-        margin: unset;
         box-sizing: content-box;
         -moz-box-sizing: content-box;
         -webkit-box-sizing: content-box;
     }
+}
+
+#webchat-card {
+    box-sizing: border-box; 
+    width: 838px; 
+    max-height: fit-content; 
+    border: 1px solid #CCCCCC; 
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); 
+    border-radius: 5px; 
+    margin-top: 9px;
+
+    #ej-card-section {
+        display: flex; 
+        margin-top: 12px;
+    }
+}
+
+.description {
+    display: block;
+    max-width: 590px; 
+}
+
+.avatar {
+    left: 19px; 
+    position: relative; 
+    margin-right: 35px;
+    width:60px; 
+    height: 60px;
+}
+
+#form-size {
+    margin-bottom: 0 !important;
+}
+
+.buttons-div {
+    display: flex; 
+    gap: 23px;
+    position: relative;
+    margin-top: 23px;
+}
+
+.divider-card {
+    border-bottom: 1px solid #c4c4c4; 
+    margin-top: 46.5px; 
+    margin-bottom: 25.5px; 
+    width: 669px; 
+    margin-left: 95px;
+}
+
+#webchat-integration { 
+    display: flex;
+}
+
+#integrations-table-title {
+    font-size: 18px;
+    line-height: 21px; 
+    margin: 29px 0 12px;
+    color: $color-black-alternative-light;
+}
+
+#webchat-help-card {
+    display: flex; 
+    gap: 21px; 
+    margin-top: 18px;
+}
+
+.webchat-text-element {
+    position: absolute;
+    left: -9999px; 
+}
+
+.tip-text-position {
+    margin-top: auto;
+    height: 45px;
 }
 
 #domain-label {
@@ -97,7 +114,8 @@
 
 #description-info {
     margin-bottom: 0rem;
-    margin-top: 1.25rem;
+    margin-top: 12px;
+    display: block;
 }
 
 #th-remove {
@@ -108,35 +126,3 @@
     text-align: end;
 }
 
-.title-webchat-preview {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: nowrap;
-
-    button[type="submit"] {
-        background-color: transparent;
-        border-color: transparent;
-        color: #BABABA;
-        font-size: 15px;
-        font-weight: bold;
-        text-transform: capitalize;
-        padding: 0;
-    }
-
-    button:hover {
-        color: #052B47;
-        box-shadow: 0px 0px;
-        font-size: 15px;
-        font-weight: bold;
-        padding: 0;
-    }
-
-    #webchat-preview-form {
-        margin-bottom: -1rem;
-    }
-
-    #eye-icon-preview { 
-        color: #052B47;
-    }
-}

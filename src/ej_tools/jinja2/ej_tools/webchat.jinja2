@@ -1,4 +1,5 @@
 {% extends 'ej_conversations/base.jinja2' %}
+{% from "ej_tools/includes/help-card.jinja2" import help_card %}
 
 {% block metaOG2 %}
 
@@ -14,93 +15,27 @@
 <div class="tools">
     <div class="tools-container">
     <div class="tools-title">
-    <h1 class="h2 text-accent"><a href="{{ conversation.patch_url('conversation-tools:index') }}">{{_("Tools")}}</a>
-        > <a href="{{ conversation.patch_url('conversation-tools:chatbot') }}">{{ _("Opinion Bots") }}</a>
-        > Webchat</h1>
-    <span class="helptext">{{tool["description"] }}</span>
-    <span class="helptext" id="description-info">
-        {{_("To integrate EJ chatbot with your site, enter the site domain in the field below.")}}
-        {{_("When a new user reaches your site, the webchat will send to EJ the location where it is hosted, and will receive back this conversation. All chatbots that have access to this conversation are also displayed here.")}}
+        <h1 class="h2 text-accent"><a href="{{ conversation.patch_url('conversation-tools:index') }}">{{_("Tools")}}</a>
+            > <a href="{{ conversation.patch_url('conversation-tools:chatbot') }}">{{ _("Opinion Bots") }}</a>
+            > Webchat</h1>
+        <span class="helptext" id="description-info">
+            {{_("Gather feedback using EJ's chatbot infrastructure.")}}
+        </span>
+        <span class="helptext">{{_("With Webchat you can perform collections on web pages using our guided bot.")}}</span>
     </div>
-
-    <div class=title-webchat-preview>
-        <h3 class="h3 divider">{{_("Linked websites")}}</h3>
-        <form method="POST" id="webchat-preview-form">
-            {{ csrf_input }}
-            <i id="eye-icon-preview" class="fas fa-eye"></i><button type="submit" name="webchat-preview">{{_("Visualize")}}</button>
-        </form>
-    </div>
-    <span class="helptext">{{_("Integrate a new page with the webchat or click <b>view</b> to use our standard integration.")}}</span>
-        {% if conversation_rasa_connections %}
-            <table id="template-table">
-                <tr class="table-header">
-                    <th>URL</th>
-                    {% if is_valid_user %}
-                        <th id="th-remove">{{_("Remove")}}</th>
-                    {% endif %}
-                </tr>
-                {% for connection in conversation_rasa_connections %}
-                <tr class="url-table">
-                    <td>
-                        <a href={{connection.domain}} target="_blank">{{connection.domain}}</a>
-                    </td>
-                    {% if is_valid_user %}
-                        <td id="td-remove">
-                            <a href="{{ conversation.patch_url('conversation-tools:webchat') }}/delete/{{connection.id}}"><i class="fas fa-trash-restore"></i></a><br>
-                        </td>
-                    {% endif %}
-                </tr>
-                {% endfor %} 
-            </table>
-        {% endif %}
-
-    {% if is_valid_user %}
-        <form method="POST" class="width-full width-full-extended">
-            {{ csrf_input }}
-            {% block form_content %}
-                <div class="form-div">
-                    {{ form.non_field_errors() }}
-                    {{ form.domain.errors }}
-                    <label id="domain-label">{{_("new")}} {{ form.domain.label }}</label>
-                    <div class="domain-form">
-                        {{ form.domain }}
-                        <input type="hidden" id="id_conversation" name="conversation" value="{{conversation.id}}">
-                        <input id="domain-submit" class="is-primary" type="submit" value="{{ _('Add') }}">
-                    </div>
-                </div>
-            {% endblock %}
-        </form>
-    {% endif %}
     
-    <br>
+    <h3 class="h3 divider">{{_("Webchat")}}</h3>
+    <span class="helptext">{{_("Integrate a new page with webchat or click <b>Start Collection</b> to utilize our standard integration.")}}</span>
+    <div id="webchat-card">
+        {% include 'ej_tools/webchat/webchat-preview-card.jinja2' %}
+        <hr class="divider-card">
+        {% include 'ej_tools/webchat/form-integration.jinja2' %}
+    </div>    
 
-    <h3 class="h3 divider">{{_("Integration script")}}</h3>
-    <span class="helptext">{{_("Add the script in the &ltbody&gt tag of the page where the collection will take place.")}}</span>
-    
-    <div class="tools-code-snippet">
-        <div style="position: relative;">
-            <div class="corner-icon">
-                <a href="#" onclick="copySnippet('copy-body')" id="copy-icon"><i class="fas fa-copy"></i></a>
-                <div id="copy-info" class="info">
-                    <p>{{_("Copy")}}</p>
-                </div>
-            </div>
-        </div>
-        <textarea id="copy-body" readonly>
-            {% include 'ej_tools/includes/rasa-copy-body.jinja2'%}
-        </textarea>
-    </div>
+    <div id="webchat-help-card">
+        {{ help_card(_("When should I use webchat?"), "/static_docs/i18n/pt-br/user-docs/tools-chatbot.html#webchat")}}
+        {{ help_card(_("How can I integrate webchat into my website?"), "/static_docs/i18n/pt-br/user-docs/tools-chatbot.html#webchat")}}
     </div>
 </div>
-
-<script>
-    function copySnippet(elementId) {
-        event.preventDefault();
-
-        var copyText = document.getElementById(elementId);
-        var selected = copyText.select();
-		document.execCommand("copy");
-    }
-</script>
 
 {% endblock %}
