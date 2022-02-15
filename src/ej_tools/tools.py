@@ -61,8 +61,8 @@ class BotsWhatsappTool(AbstractTool):
             + "We would like your participation in the following discussion:"
         )
         self.options = [
-            ("Boca de Lobo", "611234"),
             ("Duda", "614567"),
+            ("Boca de Lobo", "611234"),
         ]
         self.is_active = True
 

@@ -29,24 +29,30 @@ sua participação na coleta. Para gerar o link de participação, execute os se
 
 1. Como administrador, selecione uma conversa para realizar a coleta de opinião e, dentro do menu lateral dessa conversa, vá até a seção **Ferramentas**.
 
-2. Depois, entre na seção **Chatbot > Telegram** dessa conversa.
+2. Depois, entre na seção **Bot de Opinião**.
 
-3. Escolha qual dos bots disponíveis será utilizado para fazer a coleta. Basta selecionar um dos botões.
+3. Selecione a plataforma **Telegram**.
 
-4. Copie o texto e o link de participação presente no card **Bot de Opinião**, conforme mostra a figura. 
+4. Escolha qual dos bots disponíveis será utilizado para fazer a coleta. Basta selecionar um dos botões.
 
-  * Também é possível copiar o texto e o link clicando no ícone de compartilhamento no canto superior direito. Nesse caso, se o celular ou outro dispositivo usado possuir compartilhamento nativo, o compartilhamento é feito por meio dessa ferramenta.
+5. Copie o texto e o link de participação clicando no botão **Compartilhar Bot**, conforme mostra a figura. 
+
 
 O link gerado fica no seguinte formato de exemplo: *http://t.me/DudaEjBot?start=<ID da conversa>*.
 
-.. figure:: ../images/ferramenta-chatbot.png 
-.. figure:: ../images/telegram-chatbot.png 
+.. figure:: ../images/ferramenta-chatbot_12.png 
+.. figure:: ../images/ferramenta-chatbot_3.png
+.. figure:: ../images/ferramenta-chatbot_41.png 
 
 Como iniciar uma conversa com a Duda?
 -------------------------------------
 
-Para iniciar a coleta de opinião, basta o usuário clicar no link de participação.
+Repita os passos de 1 à 4 do item anterior *Como gerar um link de participação?*
 
+5. Para iniciar a conversa diretamente no bot, selecione o botão **Iniciar Coleta**.
+
+
+.. figure:: ../images/ferramenta-chatbot_42.png 
 .. figure:: ../images/coleta-telegram.png 
   :align: center
 
@@ -63,26 +69,32 @@ sua participação na coleta. Para gerar o link de participação, execute os se
 
 1. Como administrador, selecione uma conversa para realizar a coleta de opinião e, dentro do menu lateral dessa conversa, vá até a seção **Ferramentas**.
 
-2. Depois, entre na seção **Chatbot > Whatsapp** dessa conversa.
+2. Depois, entre na seção **Bot de Opinião**.
 
-3. Escolha qual dos bots disponíveis será utilizado para fazer a coleta. Basta selecionar um dos botões.
+3. Selecione a plataforma **Whatsapp**.
 
-4. Copie o texto e o link de participação presente no card **Bot de Opinião**, conforme mostra a figura. 
+4. Escolha qual dos bots disponíveis será utilizado para fazer a coleta. Basta selecionar um dos botões.
 
-  * Também é possível copiar o texto e o link clicando no ícone de compartilhamento no canto superior direito. Nesse caso, se o celular ou outro dispositivo usado possuir compartilhamento nativo, o compartilhamento é feito por meio dessa ferramenta.
+5. Copie o texto e o link de participação clicando no botão **Compartilhar Bot**, conforme mostra a figura.
+
+
+.. figure:: ../images/ferramenta-chatbot_12.png 
+.. figure:: ../images/ferramenta-chatbot-wpp_3.png
+.. figure:: ../images/ferramenta-chatbot-wpp_41.png 
 
 O link gerado fica no seguinte formato de exemplo: *https://api.whatsapp.com/send?phone=<Número de telefone>&text=start+<ID da conversa>*.
 
-.. figure:: ../images/ferramenta-chatbot.png 
-.. figure:: ../images/whatsapp-chatbot.png 
 
 Como iniciar uma conversa com a Duda no *Whatsapp*?
 -----------------------------------------------------
 
-Para iniciar a coleta de opinião, o usuário deve clicar no link de participação que possui uma mensagem inicial padrão no formato: *start <ID da conversa>* 
+Repita os passos de 1 à 4 do item anterior *Como gerar um link de participação?*
 
-A Duda precisa que o usuário envie essa mensagem para poder iniciar a conversa.   
+5. Para iniciar a conversa diretamente no bot, selecione o botão **Iniciar Coleta**.
 
+A Duda precisa que o usuário envie a mensagem *start <ID da conversa>* para poder iniciar a conversa. 
+
+.. figure:: ../images/ferramenta-chatbot-wpp_42.png 
 .. figure:: ../images/coleta-whatsapp.png
   :align: center 
 

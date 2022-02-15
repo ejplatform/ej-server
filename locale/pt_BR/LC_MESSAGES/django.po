@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-14 10:55-0300\n"
+"POT-Creation-Date: 2022-02-15 16:31-0300\n"
 "PO-Revision-Date: 2019-09-09 13:55-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -3897,7 +3897,7 @@ msgstr "Apenas comentários com menos de 100 caracteres podem ser selecionados."
 msgid "You don't have enough approved comments"
 msgstr "Você não tem comentários aprovados suficientes"
 
-#: src/ej_tools/jinja2/ej_tools/telegram.jinja2:24
+#: src/ej_tools/jinja2/ej_tools/telegram.jinja2:27
 #, fuzzy
 msgid ""
 "Collect opinions using EJ's chatbots. Allows you to collect the opinion of "
@@ -3906,12 +3906,12 @@ msgstr ""
 "Colete opiniões usando os chatbots da EJ. Permite coletar a opinião de "
 "usuários do Telegram."
 
-#: src/ej_tools/jinja2/ej_tools/telegram.jinja2:26
-#: src/ej_tools/jinja2/ej_tools/whatsapp.jinja2:22
+#: src/ej_tools/jinja2/ej_tools/telegram.jinja2:29
+#: src/ej_tools/jinja2/ej_tools/whatsapp.jinja2:31
 msgid "Collect Bot"
 msgstr "Bot de Coleta"
 
-#: src/ej_tools/jinja2/ej_tools/telegram.jinja2:27
+#: src/ej_tools/jinja2/ej_tools/telegram.jinja2:30
 msgid "Use one of our bots to make collections on Telegram."
 msgstr "Utilize um dos nossos bots para realizar coletas no Telegram."
 
@@ -3985,55 +3985,36 @@ msgstr ""
 msgid "Copy"
 msgstr ""
 
-#: src/ej_tools/jinja2/ej_tools/whatsapp.jinja2:20
+#: src/ej_tools/jinja2/ej_tools/whatsapp.jinja2:26
+#, fuzzy
+msgid "Collect opinions using EJ's chatbot, also known as Duda."
+msgstr "Colete opiniões usando o chatbot da EJ, também conhecido como Duda."
+
+#: src/ej_tools/jinja2/ej_tools/whatsapp.jinja2:27
+#, fuzzy
+msgid "Allows you to collect the opinion of whatsapp users."
+msgstr "Permite coletar a opinião de usuários do whatsapp."
+
+#: src/ej_tools/jinja2/ej_tools/whatsapp.jinja2:28
 #, fuzzy
 msgid ""
-"Collect opinions using EJ's chatbot, also known as Duda. Allows you to "
-"collect the opinion of whatsapp users. To make the collection available, "
-"forward the participation link to groups, channels or directly in the user's "
-"private chat."
+"To make the collection available, forward the participation link to groups, "
+"channels or directly in the user's private chat."
 msgstr ""
-"Colete opiniões usando o chatbot da EJ, também conhecido como Duda. Permite "
-"coletar a opinião de usuários do whatsapp. Para disponibilizar a coleta, "
-"encaminhe o link de participação para grupos, canais ou diretamente no chat "
-"privado do usuário."
+"Para disponibilizar a coleta, encaminhe o link de participação para grupos, "
+"canais ou diretamente no chat privado do usuário."
 
-#: src/ej_tools/jinja2/ej_tools/whatsapp.jinja2:23
+#: src/ej_tools/jinja2/ej_tools/whatsapp.jinja2:32
 msgid "Share the participation link to start the collection."
 msgstr "Compartilhe a chamada de participação para iniciar a coleta."
 
-#: src/ej_tools/jinja2/ej_tools/telegram/opinion_bot.jinja2:20
-#: src/ej_tools/jinja2/ej_tools/whatsapp.jinja2:29
-#, fuzzy
-msgid "Copied to clipboard!"
-msgstr "Copiado para a área de transferência!"
-
+#: src/ej_tools/jinja2/ej_tools/chatbots/opinion_bot.jinja2:8
 #: src/ej_tools/jinja2/ej_tools/telegram/opinion_bot.jinja2:5
-#: src/ej_tools/jinja2/ej_tools/whatsapp.jinja2:33
 #, fuzzy
 msgid "Opinion Bot"
 msgstr "Bot de Opinião"
 
-#: src/ej_tools/jinja2/ej_tools/whatsapp.jinja2:34
-#, fuzzy
-msgid ""
-"Collect your audience's opinion using our guided bot. Click on the share "
-"button to send the collection to the whatsapp or other networks."
-msgstr ""
-"Colete a opinião do seu público utilizando o nosso bot guiado. Clique no "
-"botão compartilhar para enviar a coleta para o Whatsapp ou para outras redes."
-
-#: src/ej_tools/jinja2/ej_tools/telegram/opinion_bot.jinja2:9
-#: src/ej_tools/jinja2/ej_tools/whatsapp.jinja2:37
-#, fuzzy
-msgid "Collect with:"
-msgstr "Coletar com:"
-
-#: src/ej_tools/jinja2/ej_tools/whatsapp.jinja2:50
-#, fuzzy
-msgid "To participate just click on the link: "
-msgstr "Para participar basta clicar no link:"
-
+#: src/ej_tools/jinja2/ej_tools/chatbots/opinion_bot.jinja2:9
 #: src/ej_tools/jinja2/ej_tools/telegram/opinion_bot.jinja2:6
 #, fuzzy
 msgid ""
@@ -4043,23 +4024,40 @@ msgstr ""
 "Colete a opinião do seu público utilizando o nosso bot guiado. Permite que o "
 "usuário vote nos comentários da conversa via chat."
 
+#: src/ej_tools/jinja2/ej_tools/chatbots/opinion_bot.jinja2:10
 #: src/ej_tools/jinja2/ej_tools/telegram/opinion_bot.jinja2:7
 #, fuzzy
 msgid "Select one of the bots to start collecting"
 msgstr "Selecione um dos bots para iniciar a coleta"
 
+#: src/ej_tools/jinja2/ej_tools/chatbots/opinion_bot.jinja2:12
+#: src/ej_tools/jinja2/ej_tools/telegram/opinion_bot.jinja2:9
+#, fuzzy
+msgid "Collect with:"
+msgstr "Coletar com:"
+
+#: src/ej_tools/jinja2/ej_tools/chatbots/opinion_bot.jinja2:23
+#: src/ej_tools/jinja2/ej_tools/telegram/opinion_bot.jinja2:20
+#, fuzzy
+msgid "Copied to clipboard!"
+msgstr "Copiado para a área de transferência!"
+
+#: src/ej_tools/jinja2/ej_tools/chatbots/opinion_bot.jinja2:27
 #: src/ej_tools/jinja2/ej_tools/telegram/opinion_bot.jinja2:24
 #, fuzzy
 msgid "Share Bot"
 msgstr "Compartilhar Bot"
 
+#: src/ej_tools/jinja2/ej_tools/chatbots/opinion_bot.jinja2:34
 #: src/ej_tools/jinja2/ej_tools/telegram/opinion_bot.jinja2:31
 #, fuzzy
 msgid "Starts conversation"
 msgstr "Iniciar coleta"
 
+#: src/ej_tools/jinja2/ej_tools/chatbots/opinion_bot.jinja2:40
 #: src/ej_tools/jinja2/ej_tools/telegram/opinion_bot.jinja2:37
-msgid "When should I use the opinion component?"
+#, fuzzy
+msgid "When should I use the opinion bot?"
 msgstr "Quando eu devo utilizar o bot de opinião?"
 
 #: src/ej_tools/jinja2/ej_tools/telegram/poll_bot.jinja2:5
@@ -4511,10 +4509,6 @@ msgstr "Autenticação"
 #, fuzzy
 #~ msgid "Add this snippet to the website's body tag."
 #~ msgstr "Adicione esse trecho na tag body do site."
-
-#, fuzzy
-#~ msgid "Collect opinions using EJ's chatbot infrastructure."
-#~ msgstr "Colete opiniões usando a infraestrutura de chatbots da EJ."
 
 #, fuzzy
 #~ msgid ""
