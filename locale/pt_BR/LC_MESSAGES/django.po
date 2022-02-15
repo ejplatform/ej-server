@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-01 11:07-0300\n"
+"POT-Creation-Date: 2022-02-14 10:55-0300\n"
 "PO-Revision-Date: 2019-09-09 13:55-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -93,7 +93,7 @@ msgid "Your progress: {n} of {total}"
 msgstr "Seu progresso: {n} de {total}"
 
 #: src/ej/routes.py:57 src/ej_conversations/apps.py:8
-#: src/ej_conversations/models/conversation.py:100
+#: src/ej_conversations/models/conversation.py:104
 msgid "Conversations"
 msgstr "Conversas"
 
@@ -187,7 +187,7 @@ msgstr "Roxa"
 msgid "Slug"
 msgstr "Identificador"
 
-#: src/ej_boards/models.py:32 src/ej_conversations/models/conversation.py:46
+#: src/ej_boards/models.py:32 src/ej_conversations/models/conversation.py:47
 msgid "Title"
 msgstr "Título"
 
@@ -539,81 +539,81 @@ msgstr ""
 "Você deve fornecer uma razão para rejeitar um comentário. O autor do "
 "comentário verá este feedback."
 
-#: src/ej_conversations/models/comment.py:76
+#: src/ej_conversations/models/comment.py:75
 msgid "Comment is approved"
 msgstr "Comentário aprovado"
 
-#: src/ej_conversations/models/comment.py:78
+#: src/ej_conversations/models/comment.py:77
 msgid "Comment is pending moderation"
 msgstr "Comentário está com moderação pendente"
 
-#: src/ej_conversations/models/comment.py:97
+#: src/ej_conversations/models/comment.py:96
 msgid "Must give a reason to reject a comment"
 msgstr "Deve fornecer uma razão para rejeitar o comentário"
 
-#: src/ej_conversations/models/conversation.py:36 src/ej_tools/apps.py:7
+#: src/ej_conversations/models/conversation.py:37 src/ej_tools/apps.py:7
 msgid "Tools"
 msgstr "Ferramentas"
 
-#: src/ej_conversations/models/conversation.py:48
+#: src/ej_conversations/models/conversation.py:49
 msgid "Short description used to create URL slugs (e.g. School system)."
 msgstr ""
 "Uma breve descrição sobre essa conversa. Isso é usado internamente para "
 "criar identificadores de URL (slugs. Ex: sistema de ensino)"
 
-#: src/ej_conversations/models/conversation.py:50
+#: src/ej_conversations/models/conversation.py:51
 msgid "Question"
 msgstr "Questão"
 
-#: src/ej_conversations/models/conversation.py:50
+#: src/ej_conversations/models/conversation.py:51
 msgid "What do you want to ask?"
 msgstr "O que você deseja perguntar?"
 
-#: src/ej_conversations/models/conversation.py:55
+#: src/ej_conversations/models/conversation.py:56
 msgid "Only the author and administrative staff can edit this conversation."
 msgstr "Apenas o autor e o administrador podem editar esta conversa."
 
-#: src/ej_conversations/models/conversation.py:61
+#: src/ej_conversations/models/conversation.py:62
 msgid "Moderators can accept and reject comments."
 msgstr "Os moderadores podem aceitar e rejeitar comentários."
 
-#: src/ej_conversations/models/conversation.py:66
+#: src/ej_conversations/models/conversation.py:67
 msgid "Promote conversation?"
 msgstr "Promover conversa?"
 
-#: src/ej_conversations/models/conversation.py:68
+#: src/ej_conversations/models/conversation.py:69
 msgid "Promoted conversations appears in the main /conversations/ endpoint."
 msgstr "Conversas promovidas aparecem no mural principal /conversations."
 
-#: src/ej_conversations/models/conversation.py:71
+#: src/ej_conversations/models/conversation.py:72
 msgid "Hide conversation?"
 msgstr "Esconder conversa?"
 
-#: src/ej_conversations/models/conversation.py:74
+#: src/ej_conversations/models/conversation.py:75
 msgid ""
 "Hidden conversations does not appears in boards or in the main /"
 "conversations/ endpoint."
 msgstr "Conversas ocultas não aparecem no mural principal /conversations/."
 
-#: src/ej_conversations/models/conversation.py:99
+#: src/ej_conversations/models/conversation.py:103
 #: src/ej_conversations/roles/conversations.py:133
 #: src/ej_gamification/routes.py:148 src/ej_notifications/enums.py:8
 msgid "Conversation"
 msgstr "Conversa"
 
-#: src/ej_conversations/models/conversation.py:102
+#: src/ej_conversations/models/conversation.py:106
 msgid "Can publish promoted conversations"
 msgstr "Pode publicar conversas promovidas"
 
-#: src/ej_conversations/models/conversation.py:103
+#: src/ej_conversations/models/conversation.py:107
 msgid "Can moderate comments in any conversation"
 msgstr "Pode moderar comentários em qualquer conversa"
 
-#: src/ej_conversations/models/conversation.py:200
+#: src/ej_conversations/models/conversation.py:204
 msgid "User does not have permission to create a promoted conversation."
 msgstr "Usuário não tem permissão para criar uma conversa promovida."
 
-#: src/ej_conversations/models/conversation.py:281
+#: src/ej_conversations/models/conversation.py:285
 msgid "automatically rejected"
 msgstr "rejeitado automaticamente"
 
@@ -2103,9 +2103,9 @@ msgid ""
 "pages, without impacting the experience of those who already access their "
 "networks and platforms."
 msgstr ""
-"Realize coletas de opinião em seu site ou plataforma.Permite votar, comentar "
-"e visualizar os da EJ em páginas html. A ferramenta se comunica com a EJ por "
-"meio da nossa API."
+"Realize coletas de opinião sem que seu público tenha que acessar diretamente "
+"a EJ Permite votar, comentar e visualizar os grupos diretamente em páginas "
+"html, sem impactar na experiência de quem já acessa suas redes e plataformas."
 
 #: src/ej_tools/tools.py:125
 msgid "/docs/?page=user-docs/tools-opinion-component.html"
@@ -2704,27 +2704,27 @@ msgstr "Desculpe, você não pode criar novos murais."
 msgid "Create a new board!"
 msgstr "Criar um novo mural!"
 
-#: src/ej_boards/jinja2/ej_boards/conversation-list.jinja2:28
+#: src/ej_boards/jinja2/ej_boards/conversation-list.jinja2:41
 #, fuzzy
 msgid "Total votes"
 msgstr "Total de votos"
 
-#: src/ej_boards/jinja2/ej_boards/conversation-list.jinja2:31
+#: src/ej_boards/jinja2/ej_boards/conversation-list.jinja2:44
 #, fuzzy
 msgid "Total participants"
 msgstr "Total de participantes"
 
-#: src/ej_boards/jinja2/ej_boards/conversation-list.jinja2:34
+#: src/ej_boards/jinja2/ej_boards/conversation-list.jinja2:47
 #, fuzzy
 msgid "Total conversations"
 msgstr "Total de conversas"
 
-#: src/ej_boards/jinja2/ej_boards/conversation-list.jinja2:38
+#: src/ej_boards/jinja2/ej_boards/conversation-list.jinja2:52
 #, fuzzy
 msgid "Signature model"
 msgstr "Modelo de assinatura"
 
-#: src/ej_boards/jinja2/ej_boards/conversation-list.jinja2:43
+#: src/ej_boards/jinja2/ej_boards/conversation-list.jinja2:57
 #, fuzzy, python-format
 msgid ""
 "In the current signature, you can create <span\n"
@@ -2733,7 +2733,7 @@ msgid ""
 msgstr ""
 "Na sua assinatura atual, você pode criar %(conversations_limit)s conversas."
 
-#: src/ej_boards/jinja2/ej_boards/conversation-list.jinja2:49
+#: src/ej_boards/jinja2/ej_boards/conversation-list.jinja2:63
 #, fuzzy
 msgid "New conversation"
 msgstr "Nova conversa"
@@ -3284,11 +3284,11 @@ msgstr ""
 "Sua conversa ainda não tem personas definidas. Sem personas, não é possível "
 "gerar os grupos de opinião."
 
-#: src/ej_dataviz/jinja2/ej_dataviz/report/tools-links-modal.jinja2:7
+#: src/ej_dataviz/jinja2/ej_dataviz/report/tools-links-modal.jinja2:8
 msgid "Take the EJ wherever you want!"
 msgstr "Leve a EJ para onde quiser!"
 
-#: src/ej_dataviz/jinja2/ej_dataviz/report/tools-links-modal.jinja2:9
+#: src/ej_dataviz/jinja2/ej_dataviz/report/tools-links-modal.jinja2:10
 msgid ""
 "Begin your collect journey with our quick links. For more integrations, "
 "access the tools area."
@@ -3296,17 +3296,17 @@ msgstr ""
 "Inicie sua jornada de coleta com nossos links rápidos. Para mais "
 "integrações, acesse a área de Ferramentas."
 
-#: src/ej_dataviz/jinja2/ej_dataviz/report/tools-links-modal.jinja2:14
+#: src/ej_dataviz/jinja2/ej_dataviz/report/tools-links-modal.jinja2:15
 #, fuzzy
 msgid "Use this link to make collect into Telegram."
 msgstr "Utilize esse link para realizar a coleta no telegram."
 
-#: src/ej_dataviz/jinja2/ej_dataviz/report/tools-links-modal.jinja2:17
+#: src/ej_dataviz/jinja2/ej_dataviz/report/tools-links-modal.jinja2:18
 msgid "Close"
 msgstr "Fechar"
 
-#: src/ej_dataviz/jinja2/ej_dataviz/report/tools-links-modal.jinja2:21
 #: src/ej_dataviz/jinja2/ej_dataviz/report/tools-links-modal.jinja2:22
+#: src/ej_dataviz/jinja2/ej_dataviz/report/tools-links-modal.jinja2:23
 #, fuzzy
 msgid "Go to Tools"
 msgstr "Ir para Ferramentas"
@@ -3743,12 +3743,12 @@ msgid "Copy and paste the generated command into the poll bot."
 msgstr "Copie e cole no bot de enquetes o comando gerado."
 
 #: src/ej_tools/jinja2/ej_tools/edit-comments.jinja2:13
-#: src/ej_tools/jinja2/ej_tools/show-comments.jinja2:23
+#: src/ej_tools/jinja2/ej_tools/show-comments.jinja2:22
 msgid "Pool command: "
 msgstr "Comando da enquete: "
 
-#: src/ej_tools/jinja2/ej_tools/edit-comments.jinja2:87
-#: src/ej_tools/jinja2/ej_tools/show-comments.jinja2:56
+#: src/ej_tools/jinja2/ej_tools/edit-comments.jinja2:85
+#: src/ej_tools/jinja2/ej_tools/show-comments.jinja2:55
 #, fuzzy
 msgid "comments"
 msgstr " comentários"
@@ -3845,12 +3845,12 @@ msgstr "Voltar"
 msgid "Enable Integration"
 msgstr "Habilitar Integração"
 
-#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:21
+#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:20
 #, fuzzy
 msgid "Collection Link"
 msgstr "Link de coleta"
 
-#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:22
+#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:21
 msgid ""
 "Select a theme and start a collection with the opinion component built into "
 "EJ."
@@ -3858,23 +3858,25 @@ msgstr ""
 "Selecione um tema e inicie uma coleta com o componente de opinião integrado "
 "à EJ."
 
-#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:34
-#, fuzzy
-msgid "Selects a color palette for the component style."
-msgstr "Selecione uma paleta de cor para o estilo do componente."
+#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:31
+msgid ""
+"Web component that allows you to integrate EJ into external sites and "
+"systems."
+msgstr "Componente web que permite integrar a EJ em sites e sistemas externos."
 
-#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:42
+#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:36
+msgid "Customize the collection component with our color options."
+msgstr "Personalize o componente de coleta com nossas opções de cores."
+
+#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:44
 #, fuzzy
 msgid "Start Collection"
 msgstr "Iniciar coleta"
 
-#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:48
-msgid "Integrate opinion component with Mautic."
-msgstr "Integre o componente de opinião com o Mautic."
-
-#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:49
-msgid "Integrate opinion component with Google Analytics."
-msgstr "Integre o componente de opinião com o Google Analytics."
+#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:52
+#, fuzzy
+msgid "How to integrate the opinion component to my website?"
+msgstr "Como integrar o componente de opinião ao meu site?"
 
 #: src/ej_tools/jinja2/ej_tools/show-comments.jinja2:4
 #, fuzzy
@@ -3886,11 +3888,11 @@ msgid "It presents the list of comments that will compose the telegram poll."
 msgstr ""
 "Apresenta a lista de comentários que irão compor a enquete no telegram."
 
-#: src/ej_tools/jinja2/ej_tools/show-comments.jinja2:8
+#: src/ej_tools/jinja2/ej_tools/show-comments.jinja2:7
 msgid "Only comments shorter than 100 characters can be selected."
 msgstr "Apenas comentários com menos de 100 caracteres podem ser selecionados."
 
-#: src/ej_tools/jinja2/ej_tools/show-comments.jinja2:15
+#: src/ej_tools/jinja2/ej_tools/show-comments.jinja2:14
 #, fuzzy
 msgid "You don't have enough approved comments"
 msgstr "Você não tem comentários aprovados suficientes"
@@ -4407,12 +4409,11 @@ msgstr "Autenticação"
 #~ msgid "limitations"
 #~ msgstr "limitações"
 
-#~ msgid ""
-#~ "Select which comments you would like to include in the poll. A custom "
-#~ "command will be generated."
-#~ msgstr ""
-#~ "Selecione quais comentários gostaria de ver na enquete. Um comentário "
-#~ "customizado será gerado."
+#~ msgid "Selects a color palette for the component style."
+#~ msgstr "Selecione uma paleta de cor para o estilo do componente."
+
+#~ msgid "Integrate opinion component with Google Analytics."
+#~ msgstr "Integre o componente de opinião com o Google Analytics."
 
 #, fuzzy
 #~ msgid "Find @EjGroupsBot bot on Telegram;"

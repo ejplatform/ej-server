@@ -169,3 +169,36 @@
 .show {
     display: block;
 }
+
+.tools-card-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: $color-black;
+}
+
+button.blue, button.grey {
+    border-radius: 5px;
+    height: 45px;
+    width: 145px;
+    padding: 0 !important;
+    text-transform: capitalize;
+    margin: 0 !important;
+}
+
+button.grey {
+    background-color: $color-theme-report-gray;
+    border-color: $color-theme-report-gray;
+    color: $color-theme-report-blue;
+    font-size: 0.7rem;
+}
+
+button.blue {
+    background-color: $color-theme-report-blue;
+    color: $color-white;
+    border-color: $color-white;
+    font-size: 0.75rem;
+    a {
+        font-weight: bold;
+        color: $color-white;
+    }
+}

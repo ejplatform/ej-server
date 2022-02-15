@@ -1,15 +1,12 @@
 .tools-settings-form {
     position: relative;
+    margin-bottom: 0.844rem;
     h3 {
         margin-block-start: 0;
     }
     hr {
         color: rgba(0, 0, 0, 0.12);
     }
-    section {
-        margin: 1.5rem auto 0 0.2rem;
-    }
-
     ul {
         list-style-type: none;
     }
@@ -19,8 +16,6 @@
     }
 
     &-settings-form {
-        margin-bottom: 1rem;
-        position: relative;
         h3 {
             margin-block-start: 0;
         }
@@ -50,8 +45,8 @@
     .group-button {
         margin: 1rem auto;
         #preview-button {
-            background-color: #042a46;
-            border-color: #042a46;
+            background-color: $color-black;
+            border-color: $color-black;
             margin-right: 1rem;
         }
         input {
@@ -68,39 +63,36 @@
 }
 
 .card-opinion-component {
-    box-sizing: border-box; 
-    border: 1px solid #e5e5e5; 
-    border-radius: 10px; 
-    width: 30rem; 
+    display: grid;
+    width: 80%;
+    height: auto;
+    margin-left: 18px;
+    padding-right: 1.219rem;
+    border: 1px solid $color-theme-grey-light;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); 
-    margin: 1rem;
-    position: relative;
-}
-
-#opinion-component-form {
-    margin-bottom: 0;
-    padding-bottom: 40px;
+    border-radius: 5px;
     
-    section {
-        ul {
-            justify-content: center;
-        }
+    button {
+        display: flex;
+        place-content: center;
+        align-items: center;
+        justify-content: space-evenly;
+        float: right;
     }
 }
 
-.start-collection-btn {
-    width: 100%; 
-    border-color: #042a46;
-    margin-bottom: 0;
-    padding-left: 40px;
-    text-align: center;
-    border-radius: 0;
-    background-color: #042a46;
-    p { 
-        font-size: 14px; 
-        &::first-letter {
-            display: block;
-            background: url(/static/img/icons/comments.svg) no-repeat 0 50%; padding-left: 25px;
+#opinion-component-form {
+    section {
+        position: relative;
+        width: 60%;
+        left: 7rem;
+        top: 0.813rem;
+        ul {
+            max-width: 24rem;
+            justify-content: center;
+        }
+        @media only screen and (max-width: 740px) {
+            left: 2.5rem;
         }
     }
 }
@@ -119,18 +111,60 @@
 }
 
 .title-theme {
-    margin-bottom: 0.5rem;
-    margin-top: 1rem;
-    color: #042a46;
-    padding-left: 1rem;
-}
+    display: flex;
+    flex-wrap: wrap;
 
-#start-collection-div{
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    border-radius: 0 0 5px 5px; 
-    padding: 0.5rem 0;
-    background-color: #042a46;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px -4px 4px rgba(0, 0, 0, 0.25);
+    .avatar {
+        width: 3.438rem;
+        margin-top: 0.844rem;
+        margin-right: 1.5rem;
+        margin-left: 1.219rem;
+    }
+    h3 {
+        width: 70%;
+        margin-top: 0.75rem;
+        color: $color-black;
+        font-family: Raleway;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 20px;
+        line-height: 23px;
+    }
+    h4 {
+        position: relative;
+        width: 80%;
+        margin: 0.5rem 0rem 1.5rem 0rem;
+        left: 6rem;
+        color: $color-black;
+        font-family: Raleway;
+        font-weight: bold;
+        line-height: 21px;
+    }
+    span {
+        position: relative;
+        width: 63%;
+        height: max-content;
+        top: -1rem;
+        left: 6.2rem;
+        font-size: 14px;
+        line-height: 16px;
+        color: rgba(0, 0, 0, 0.8);
+    }
+    .helptext {
+        position: relative;
+        font-size: 16px;
+        line-height: 19px;
+    }
+    @media only screen and (max-width: 760px) {
+        h3 {
+            margin-left: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        h4 {
+            left: 2rem;
+        }
+        span {
+            left: 2rem;
+        }
+    }
 }

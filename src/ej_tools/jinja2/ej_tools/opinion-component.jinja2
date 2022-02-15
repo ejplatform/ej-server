@@ -17,7 +17,6 @@
 				> {{ tool.name }}</h1>
 				<span class="helptext">{{tool.description }}</span>
 			</div>
-
 			<h3 class="h3 divider">{{_("Collection Link")}}</h3>
 			<span class="helptext">{{_("Select a theme and start a collection with the opinion component built into EJ.")}}</span>
 		</div>
@@ -27,26 +26,30 @@
 					{{ csrf_input }}
 					{% block form_content %}
 						<div class="title-theme">
-							<span class="h3"> 
+						<img class="avatar" src="{{ static('/img/icons/opinion-component-icon.svg') }}"/>
+							<h3>{{ tool.name }}</h3>
+							<span>{{_("Web component that allows you to integrate EJ into external sites and systems.")}}</span>
+							<h4> 
 								{{form.theme.label}}
-							</span><br>
+							</h4>
 							<span class="helptext">
-								{{_("Selects a color palette for the component style.")}}
+								{{_("Customize the collection component with our color options.")}}
 							</span>
 						</div>
-
 						<section>
 							{{form.theme}}
 						</section>
-						<div id="start-collection-div">
-							<button class="start-collection-btn" type="submit" name="preview"><p>{{_('Start Collection')}}</p></button>
-						</div>
+						<button class="blue" type="submit" name="preview">
+							<img class="comments-icon" src="{{ static('/img/icons/comments.svg') }}"/>
+							<a>{{_('Start Collection')}}</a>
+						</button>
 					{% endblock %}
 				</form>
 			</div>
 			<div class="opinion-component-card-list">
-				{{ help_card(_("Integrate opinion component with Mautic."), "/static_docs/i18n/pt-br/user-docs/tools-opinion-component.html")}}
-				{{ help_card(_("Integrate opinion component with Google Analytics."), "/static_docs/i18n/pt-br/user-docs/tools-opinion-component.html")}}
+				{# {{ help_card(_("Integrate opinion component with Mautic."), "/static_docs/i18n/pt-br/user-docs/tools-mautic.html#como-faco-para-configurar-a-instancia-do-mautic-para-conectar-a-ej")}}
+				{{ help_card(_("Integrate opinion component with Google Analytics."), "/static_docs/i18n/pt-br/user-docs/tools-opinion-component.html")}} #}
+				{{ help_card(_("How to integrate the opinion component to my website?"), "/static_docs/i18n/pt-br/user-docs/tools-opinion-component.html#incluindo-o-componente-em-uma-pagina")}}
 			</div>
 		</div>
 	</div>
