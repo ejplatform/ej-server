@@ -23,24 +23,81 @@ Como o visitante não é redirecionado para a EJ mas ainda precisa estar autenti
 Temas
 -------------
 
-O componente possui três temas visuais que podem ser escolhidos na tela de configuração da ferramenta.
+O componente possui quatro temas visuais que podem ter escolhidos na tela de configuração da ferramenta.
+
+.. figure:: ../images/ej-opinion-component-theme.png
 
 
 Incluíndo o componente em uma pagina
 -------------------------------------
-Para iniciar a configuração do componente de opinião, o primeiro passo
-é seguir o fluxo de configuração na tela interna da ferramenta. 
+Para incluir o componente de opinião em uma página basta copiar o script abaixo e substituir as variáveis pelos valores desejados:
 
-.. figure:: ../images/ej-opinion-component.png
+* **host**: `https://www.ejplatform.org` ou outra instancia da EJ.
+* **cid**: Identificador da conversa na EJ.
+* **theme**: Tema.
+* **authenticate-with**: Metodo de autenticação.
 
-Um vez incluído os scripts na pagina, o componente deve carregar automaticamente.
+.. code-block:: shell
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://unpkg.com/ej-conversations@1.9.2/dist/conversations/conversations.esm.js" type="module" ></script>
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+  <link href="http://localhost:8000/static/css/fontawesome-all.min.css" rel="stylesheet">
+  <style>
+      /* https://github.com/ionic-team/stencil/issues/2072 */
+  @font-face {
+  font-family: Folio;
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://unpkg.com/ej-conversations@1.9.1-beta/dist/conversations/assets/fonts/folio_bold_condensed.ttf);
+  }
+
+  @font-face {
+  font-family: Helvetica;
+  font-style: normal;
+  font-weight: 400;
+    src: url('https://unpkg.com/ej-conversations@1.9.1-beta/dist/conversations/assets/fonts/helvetica_neue_lts_roman.otf');
+  }
+
+  @font-face {
+  font-family: 'Font Awesome 5 Free';
+  font-style: normal;
+  font-weight: 400;
+    src: url('https://unpkg.com/ej-conversations@1.9.1-beta/dist/conversations/assets/fonts/fa-regular-400.ttf');
+  }
+
+  @font-face {
+  font-family: 'Font Awesome 5 Free';
+  font-style: normal;
+  font-weight: 400;
+    src: url('https://unpkg.com/ej-conversations@1.9.1-beta/dist/conversations/assets/fonts/fa-brands-400.ttf');
+  }
+
+  @font-face {
+  font-family: 'Font Awesome 5 Free';
+  font-style: normal;
+  font-weight: 400;
+    src: url('https://unpkg.com/ej-conversations@1.9.1-beta/dist/conversations/assets/fonts/fa-solid-900.ttf');
+  }
+  </style>
+
+  <ej-conversation host="$HOST" cid="$CONVERSATION_ID" theme="$THEME" authenticate-with="$AUTHENTICATION"></ej-conversation>
 
 
-.. figure:: ../images/ej-opinion-component1.png
+O **cid** e o **theme** a serem utilizados podem ser encontrados na url da pagina de coleta via componente de opinião:
 
-.. figure:: ../images/ej-opinion-component2.png
+.. figure:: ../images/ej-opinion-component-link.png
+.. figure:: ../images/ej-opinion-component-link1.png
 
 
+O atributo ``authenticate-with`` aceita os seguintes valores:
+
+* ``default`` (autenticação por nome e email)
+* ``analytics``
+* ``mautic``
+
+Caso queria utilizar uma versão diferente ou verificar qual a última versão publicada no npm acesse:
+https://www.npmjs.com/package/ej-conversations
 
 Correções de css na pagina do componente
 ----------------------------------------
