@@ -4,6 +4,19 @@ CHANGELOG of EJPlatform releases
 
 Here you can follow all the fixes and new features on every EJPlatform release.
 
+2.22.0 release
+====================
+* Date: Jan 31, 2022
+* Features
+- Fixes tour images;
+- Fixes conversation cards responsiveness;
+- Adds mobile UI for board statistics;
+- Adds modal to quickly access conversation tools after conversation creation; 
+- Adds new UI for whatsapp Tool;
+- Adds new UI for opinion component Tool;
+- Adds new UI for webchat Tool;
+- Adds edit option for telegram poll bot;
+
 2.21.0 release
 ====================
 * Date: Jan 31, 2022
