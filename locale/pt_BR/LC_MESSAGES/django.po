@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-15 16:31-0300\n"
+"POT-Creation-Date: 2022-02-16 18:01-0300\n"
 "PO-Revision-Date: 2019-09-09 13:55-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -3858,22 +3858,22 @@ msgstr ""
 "Selecione um tema e inicie uma coleta com o componente de opinião integrado "
 "à EJ."
 
-#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:31
+#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:30
 msgid ""
 "Web component that allows you to integrate EJ into external sites and "
 "systems."
 msgstr "Componente web que permite integrar a EJ em sites e sistemas externos."
 
-#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:36
+#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:38
 msgid "Customize the collection component with our color options."
 msgstr "Personalize o componente de coleta com nossas opções de cores."
 
-#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:44
+#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:52
 #, fuzzy
 msgid "Start Collection"
 msgstr "Iniciar coleta"
 
-#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:52
+#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:61
 #, fuzzy
 msgid "How to integrate the opinion component to my website?"
 msgstr "Como integrar o componente de opinião ao meu site?"
@@ -3897,7 +3897,7 @@ msgstr "Apenas comentários com menos de 100 caracteres podem ser selecionados."
 msgid "You don't have enough approved comments"
 msgstr "Você não tem comentários aprovados suficientes"
 
-#: src/ej_tools/jinja2/ej_tools/telegram.jinja2:27
+#: src/ej_tools/jinja2/ej_tools/telegram.jinja2:26
 #, fuzzy
 msgid ""
 "Collect opinions using EJ's chatbots. Allows you to collect the opinion of "
@@ -3906,12 +3906,12 @@ msgstr ""
 "Colete opiniões usando os chatbots da EJ. Permite coletar a opinião de "
 "usuários do Telegram."
 
-#: src/ej_tools/jinja2/ej_tools/telegram.jinja2:29
+#: src/ej_tools/jinja2/ej_tools/telegram.jinja2:28
 #: src/ej_tools/jinja2/ej_tools/whatsapp.jinja2:31
 msgid "Collect Bot"
 msgstr "Bot de Coleta"
 
-#: src/ej_tools/jinja2/ej_tools/telegram.jinja2:30
+#: src/ej_tools/jinja2/ej_tools/telegram.jinja2:29
 msgid "Use one of our bots to make collections on Telegram."
 msgstr "Utilize um dos nossos bots para realizar coletas no Telegram."
 
@@ -4011,6 +4011,7 @@ msgstr "Coletar com:"
 
 #: src/ej_tools/jinja2/ej_tools/chatbots/opinion_bot.jinja2:23
 #: src/ej_tools/jinja2/ej_tools/telegram/opinion_bot.jinja2:20
+#: src/ej_tools/jinja2/ej_tools/webchat/webchat-preview-card.jinja2:21
 #, fuzzy
 msgid "Copied to clipboard!"
 msgstr "Copiado para a área de transferência!"
@@ -4572,14 +4573,6 @@ msgstr "Autenticação"
 #, fuzzy
 #~ msgid "Add this snippet to the website's body tag."
 #~ msgstr "Adicione esse trecho na tag body do site."
-
-#, fuzzy
-#~ msgid ""
-#~ "With Webchat you can perform collections on web pages using our guided "
-#~ "bot."
-#~ msgstr ""
-#~ "Com o Webchat você pode realizar coletas em páginas web utilizando o "
-#~ "nosso bot guiado."
 
 #~ msgid ""
 #~ "All chatbots that have access to this conversation are also displayed "
