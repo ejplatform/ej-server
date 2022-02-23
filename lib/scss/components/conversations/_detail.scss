@@ -17,23 +17,37 @@ $component-border-radius: size(config('ej.style.border-radius'));
 
 .conversation-balloon {
     @extend .center;
+    margin-bottom: .75rem;
 
     article {
-        @include utilities('pad-y3 pad-x4');
+        @include utilities('pad-y3 pad-x3');
         @include themed('background', light);
 
+        
+        text-align: left;
         border-radius: 0 0 $component-border-radius $component-border-radius;
-
+        
         span {
             @include themed('color');
+            font-family: 'roboto', sans-serif;
+
+            i {
+                margin-left: 0;
+            }
         }
     }
     h1 {
         @include utilities('sans-serif margin-y3');
         @extend .h2;
+        font-family: 'roboto', sans-serif;
     }
     &__arrow {
-        @include create-arrow(down, 2rem, color('brand-lighter'));
+        @include create-arrow(down, 4rem, color('brand-lighter'));
+
+        border-left: 4rem solid transparent;
+        border-right: 4rem solid transparent;
+        border-top: 2.75rem solid;
+        margin-left: 2rem;
 
         bottom: 1px;
         color: var(--theme-light-color);
