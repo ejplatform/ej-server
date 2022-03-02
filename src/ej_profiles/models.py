@@ -1,7 +1,6 @@
 import hashlib
 
 from boogie.fields import EnumField
-from boogie.rest import rest_api
 from django.apps import apps
 from django.conf import settings
 from django.contrib.auth import get_user_model
@@ -19,7 +18,6 @@ SocialAccount = import_later("allauth.socialaccount.models:SocialAccount")
 User = get_user_model()
 
 
-@rest_api(exclude=["user"])
 class Profile(models.Model):
     """
     User profile
