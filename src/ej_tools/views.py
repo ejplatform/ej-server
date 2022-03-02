@@ -94,17 +94,19 @@ def opinion_component(request, board_slug, conversation_id, slug):
 
 
 def opinion_component_preview(request, board_slug, conversation_id, slug):
+
     conversation = Conversation.objects.get(id=conversation_id)
     user_signature = SignatureFactory.get_user_signature(conversation.author)
     tool = user_signature.get_tool(_("Opinion component"), conversation)
+    preview_token = tool.get_preview_token(request, conversation)
     tool.raise_error_if_not_active()
-
     host = get_host_with_schema(request)
     theme = request.GET.get("theme", "icd")
     context = {
         "conversation": conversation,
         "theme": theme,
         "host": host,
+        "conversation_author_token": preview_token,
     }
     return render(request, "ej_tools/opinion-component-preview.jinja2", context)
 

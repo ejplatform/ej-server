@@ -2,6 +2,7 @@ from ej_signatures.models import ListenToCity, ListenToCommunity, SignatureFacto
 import pytest
 from ej_conversations.mommy_recipes import ConversationRecipes
 from ej_tools.tools import BotsTool, MailingTool, MauticTool, OpinionComponentTool
+import mock
 
 
 class TestTools(ConversationRecipes):
@@ -44,7 +45,7 @@ class TestTools(ConversationRecipes):
         assert bots_tool.telegram.name == "Telegram"
         assert bots_tool.webchat.name == "Webchat"
 
-    def test_get_tool_conversation_component(self, conversation_db, user_with_listen_to_community):
+    def test_get_tool_opinion_component(self, conversation_db, user_with_listen_to_community):
         conversation_component_tool = user_with_listen_to_community.get_tool(
             "Opinion component", conversation_db
         )
@@ -53,6 +54,34 @@ class TestTools(ConversationRecipes):
         assert conversation_component_tool.name == "Opinion component"
         assert conversation_component_tool.description != ""
         assert conversation_component_tool.link != ""
+
+    def test_get_tool_opinion_component_preview_token(self, conversation_db, user_with_listen_to_community):
+        conversation_component_tool = user_with_listen_to_community.get_tool(
+            "Opinion component", conversation_db
+        )
+        mock_request = mock.Mock()
+        mock_request.user = mock.Mock()
+        mock_request.user.is_authenticated = True
+        mock_request.user.id = conversation_db.author.id
+        author_token = conversation_component_tool.get_preview_token(mock_request, conversation_db)
+        assert author_token
+
+    def test_not_get_tool_opinion_component_preview_token(
+        self, conversation_db, user_with_listen_to_community
+    ):
+        conversation_component_tool = user_with_listen_to_community.get_tool(
+            "Opinion component", conversation_db
+        )
+        mock_request = mock.Mock()
+        mock_request.user = mock.Mock()
+        mock_request.user.is_authenticated = True
+        mock_request.user.id = 0
+        author_token = conversation_component_tool.get_preview_token(mock_request, conversation_db)
+        assert not author_token
+        mock_request.user.is_authenticated = False
+        mock_request.user.id = conversation_db.author.id
+        author_token = conversation_component_tool.get_preview_token(mock_request, conversation_db)
+        assert not author_token
 
     def test_get_tool_mautic(self, conversation_db, user_with_listen_to_community):
         mautic_tool = user_with_listen_to_community.get_tool("Mautic", conversation_db)

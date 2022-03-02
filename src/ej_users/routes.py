@@ -14,7 +14,6 @@ from django.template.loader import get_template
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from rest_framework import status
-from rest_framework.authtoken.models import Token
 from sidekick import record
 
 from ej.components.builtins import toast
