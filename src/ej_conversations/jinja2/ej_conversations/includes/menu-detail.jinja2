@@ -1,11 +1,46 @@
 <nav title="{{ _('Conversation') }}" aria-labelledby="menu-conversation">
-    <h3 id="menu-conversation">{{ _('Conversation') }}</h3>
-    <ul>
-        <li><a href="{{ conversation.url('conversation:detail') }}">{{ _('Home') }}</a></li>
+    <ul class="nav-header menu-padding-vertical menu-padding-horizontal">
+        <li id="board-name">
+            <a href="{{ url('boards:conversation-list', board=request.user.boards.first()) }}">
+                <i class="fa fa-arrow-circle-left"></i>
+                <span>{{ conversation.board }}</span>
+            </a>
+        </li>
+
+        <li class="menu-item">
+            <a href={{conversation.url("report:general-report")}}><span>{{ conversation.title }}</span></a>
+            
+        </li>
+        
+        {% if request.user.has_perm('ej.can_edit_conversation', conversation) %}
+            <li class="menu-item">
+                <a href="{{ conversation.url('conversation:edit') }}">{{ _('Edit') }}</a>
+            </li>
+        {% else %}
+            <li>
+                <a href="{{ url('conversation:list') }}">{{ _('Back to conversations') }}</a>
+            </li>
+        {% endif %}
+    </ul>
+
+    <ul class="menu-padding-vertical menu-padding-horizontal nav-categories">
+        <h3 id="menu-conversation">{{ _('Collect opinions') }}</h3>
+        
         {% for link in page_menu.links('conversations:detail-actions', request, conversation) %}
             <li>{{ link }}</li>
         {% endfor %}
-        
+        {%- if request.user.has_perm('ej.can_moderate_conversation', conversation) %}
+            <li><a href="{{ conversation.url('conversation:moderate') }}">{{ _('Moderate') }}</a></li>
+        {% endif %}
+    </ul>
+
+    <hr class="nav-divider">
+
+    <ul class="menu-padding-vertical menu-padding-horizontal nav-categories">
+        <h3 id="menu-conversation">{{ _('Model and Analyze') }}</h3>
+        {% for link in page_menu.links('conversations:detail-admin', request, conversation) %}
+            <li>{{ link }}</li>
+        {% endfor %}
         {% if request.user.has_perm("ej.can_view_report", conversation) %}
             <li class="report-section">
                 <div onclick="showSection('isexpanded3', 'report-options-list');">
@@ -27,25 +62,7 @@
             </ul>    
         </li>
         {% endif %}
-    </ul>
-</nav>
-<nav title="{{ _('Admin') }}" aria-labelledby="menu-admin">
-    <h3 id="menu-admin">{{ _('Admin') }}</h3>
-    <ul>
-        {% if request.user.has_perm('ej.can_edit_conversation', conversation) %}
-            <li><a href="{{ conversation.url('conversation:edit') }}">{{ _('Edit') }}</a></li>
-        {% else %}
-            <li><a href="{{ url('conversation:list') }}">{{ _('Back to conversations') }}</a></li>
-        {% endif %}
-        {%- if request.user.has_perm('ej.can_moderate_conversation', conversation) %}
-            <li><a href="{{ conversation.url('conversation:moderate') }}">{{ _('Moderate') }}</a></li>
-        {% endif %}
-        {% for link in page_menu.links('conversations:detail-admin', request, conversation) %}
-            <li>{{ link }}</li>
-        {% endfor %}
-    </ul>
-</nav>
-{{ page_menu.ACCESSIBILITY() }}
+    </ul>    
 
 <script>
 function setChecked(check_id) {
@@ -64,7 +81,7 @@ function showSection(check_id, section_id) {
     }
 }
 
-window.onload = function() {
+ function menuController() {
     let url = window.location.href.split("/");
     let menuItem = url[url.length-2].split("-")[0];
     let backgroundColor = document.querySelector("." + menuItem + "-item"); 
@@ -75,5 +92,5 @@ window.onload = function() {
     }
 
 };
-
+window.addEventListener('load', menuController);
 </script>
