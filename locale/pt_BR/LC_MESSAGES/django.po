@@ -3104,36 +3104,41 @@ msgstr "Aprovar"
 msgid "Go to conversation"
 msgstr "Voltar para conversa"
 
-#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:4
-msgid "Home"
-msgstr "Início"
+#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:20
+msgid "Back to conversations"
+msgstr "Voltar para conversas"
 
-#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:16
+#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:26
+#, fuzzy
+msgid "Collect opinions"
+msgstr "Coletar opiniões"
+
+#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:39
+msgid "Model and Analyze"
+msgstr "Modelar e Analisar"
+
+#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:50
 msgid "Reports"
 msgstr "Relatórios"
 
-#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:21
+#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:55
 #, fuzzy
 msgid "General report"
 msgstr "Relatório Geral"
 
-#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:22
+#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:56
 #, fuzzy
 msgid "Comments report"
 msgstr "Relatório de comentários"
 
-#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:23
+#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:57
 #, fuzzy
 msgid "Participants report"
 msgstr "Relatório de participantes"
 
-#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:25
+#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:59
 msgid "Scatter plot"
 msgstr "Nuvem de pontos"
-
-#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:38
-msgid "Back to conversations"
-msgstr "Voltar para conversas"
 
 #: src/ej_conversations/jinja2/ej_conversations/includes/menu-list.jinja2:6
 msgid "New Conversation"
@@ -4394,8 +4399,8 @@ msgstr "Autenticação"
 #~ msgstr "novo"
 
 #, fuzzy
-#~ msgid "Share bot"
-#~ msgstr "Compartilhar bot"
+#~ msgid "Home"
+#~ msgstr "Início"
 
 #~ msgid "Dismiss"
 #~ msgstr "Dispensar"

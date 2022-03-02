@@ -1,4 +1,4 @@
-<nav title="{{ _('Authentication') }}" aria-labelledby="menu-authentication">
+<nav title="{{ _('Authentication') }}" aria-labelledby="menu-authentication" class="menu-padding-vertical menu-padding-horizontal">
     <h3 id="menu-authentication">{{ _('Authentication') }}</h3>
     <ul>
         <li><a href="{{ url('auth:login') }}">{{ _('Login') }}</a></li>
@@ -6,5 +6,10 @@
         <li><a href="{{ url('auth:recover-password') }}">{{ _('Recover password') }}</a></li>
     </ul>
 </nav>
-{{ page_menu.ABOUT(request) }}
-{{ page_menu.ACCESSIBILITY() }}
+
+<nav class="menu-padding-vertical menu-padding-horizontal">
+    {{ page_menu.ABOUT(request) }}
+</nav>
+<nav class="menu-padding-vertical menu-padding-horizontal">
+    {{ page_menu.ACCESSIBILITY() }}
+</nav>
