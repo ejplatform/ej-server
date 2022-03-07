@@ -11,11 +11,13 @@ from hyperpython.components import fa_icon
 
 from ej_conversations.enums import Choice
 from ej_conversations.models import Conversation, Comment
-from ej_conversations.routes import conversation_url, check_promoted
+
 from . import forms
 from .models import Stereotype, Cluster
 from .models import StereotypeVote
 from .utils import cluster_shapes
+
+from ej_conversations.utils import check_promoted
 
 log = getLogger("ej")
 app_name = "ej_cluster"
@@ -26,6 +28,7 @@ urlpatterns = Router(
 )
 stereotype_perms = {"perms": ["ej.can_manage_stereotypes:conversation"]}
 
+conversation_url = f"<model:conversation>/<slug:slug>/"
 
 #
 # Cluster visualization

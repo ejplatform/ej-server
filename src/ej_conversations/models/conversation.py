@@ -204,19 +204,20 @@ class Conversation(HasFavoriteMixin, TimeStampedModel):
             raise ValidationError(_("User does not have permission to create a promoted " "conversation."))
 
     def get_absolute_url(self, board=None):
-        kwargs = {"conversation": self, "slug": self.slug}
+        kwargs = {"conversation_id": self.id, "slug": self.slug}
         if board is None:
             board = getattr(self, "board", None)
         if board:
-            kwargs["board"] = board
+            kwargs["board_slug"] = board.slug
             return SafeUrl("boards:conversation-detail", **kwargs)
         else:
-            return SafeUrl("conversation:detail", **kwargs)
+            raise ValidationError("Board should not be None")
 
-    def url(self, which="conversation:detail", board=None, **kwargs):
+    def url(self, which="boards:conversation-detail", board=None, **kwargs):
         """
         Return a url pertaining to the current conversation.
         """
+
         if board is None:
             board = getattr(self, "board", None)
 
@@ -230,7 +231,7 @@ class Conversation(HasFavoriteMixin, TimeStampedModel):
 
         return SafeUrl(which, **kwargs)
 
-    def patch_url(self, which="conversation:detail", board=None, **kwargs):
+    def patch_url(self, which, board=None, **kwargs):
         """
         Return a url pertaining to the current conversation.
         """
@@ -245,7 +246,7 @@ class Conversation(HasFavoriteMixin, TimeStampedModel):
             which = "boards:" + which.replace(":", "-")
             return SafeUrl(which, **kwargs)
 
-        return SafeUrl(which, **kwargs)
+        raise ValidationError("Board should not be None")
 
     def votes_for_user(self, user):
         """

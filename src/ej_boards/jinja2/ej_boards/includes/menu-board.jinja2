@@ -6,7 +6,7 @@
     <ul class="board-list">
         {% for board in user_boards %}
         <li class="{{ board.slug }}" id="{{ board.slug }}-link">
-            <a href="{{ url('boards:conversation-list', board.slug) }}">{{board.title}}</a>
+            <a href="{{ url('boards:conversation-list', board_slug=board.slug) }}">{{board.title}}</a>
             <p>{{board.conversations.count()}}</p>
         </li>
         {% endfor %}

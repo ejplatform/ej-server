@@ -15,7 +15,7 @@
     {% if boards %}
         {% for board in boards %}
             <dl>
-                {% set url = board.url('boards:conversation-list') %}
+                {% set url = board.url('boards:conversation-list', board_slug=board.slug) %}
                 <dt class="uppercase"><i class="fa fa-clipboard-list"></i> {{ link(board.title, href=url, class_='bold underline') }}</dt>
                 <dd>{{ link(board.slug + '/', href=url, class_='bold') }} - {{ board.description }}</dd>
             </dl>

@@ -65,7 +65,7 @@ class Board(TimeStampedModel):
             pass
 
     def get_absolute_url(self):
-        return reverse("boards:conversation-list", kwargs={"board": self})
+        return reverse("boards:conversation-list", kwargs={"board_slug": self.slug})
 
     def url(self, which, **kwargs):
         kwargs["board"] = self

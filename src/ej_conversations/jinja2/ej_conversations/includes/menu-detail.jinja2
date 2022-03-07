@@ -1,7 +1,7 @@
 <nav title="{{ _('Conversation') }}" aria-labelledby="menu-conversation">
     <ul class="nav-header menu-padding-vertical menu-padding-horizontal">
         <li id="board-name">
-            <a href="{{ url('boards:conversation-list', board=request.user.boards.first()) }}">
+            <a href="{{ url('boards:conversation-list', board_slug=request.user.boards.first().slug) }}">
                 <i class="fa fa-arrow-circle-left"></i>
                 <span>{{ conversation.board }}</span>
             </a>
@@ -14,7 +14,7 @@
         
         {% if request.user.has_perm('ej.can_edit_conversation', conversation) %}
             <li class="menu-item">
-                <a href="{{ conversation.url('conversation:edit') }}">{{ _('Edit') }}</a>
+                <a href="{{ conversation.patch_url('conversation:edit') }}">{{ _('Edit') }}</a>
             </li>
         {% else %}
             <li>
@@ -30,7 +30,7 @@
             <li>{{ link }}</li>
         {% endfor %}
         {%- if request.user.has_perm('ej.can_moderate_conversation', conversation) %}
-            <li><a href="{{ conversation.url('conversation:moderate') }}">{{ _('Moderate') }}</a></li>
+            <li><a href="{{ conversation.patch_url('conversation:moderate') }}">{{ _('Moderate') }}</a></li>
         {% endif %}
     </ul>
 
@@ -62,7 +62,7 @@
             </ul>    
         </li>
         {% endif %}
-    </ul>    
+    </ul>
 
 <script>
 function setChecked(check_id) {

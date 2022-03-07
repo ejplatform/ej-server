@@ -60,7 +60,7 @@
     {% endif %}
 
     {%- if request.user.has_perm('ej.can_edit_board', board) and request.user.has_perm('ej.can_add_conversation') %}
-        <a class="is-primary button square" href="{{ url('boards:conversation-create', board=board) }}">{{ _('New conversation') }}</a>
+        <a class="is-primary button square" href="{{ url('boards:conversation-create', board_slug=board.slug) }}">{{ _('New conversation') }}</a>
     {% endif %}
 </div>
 
