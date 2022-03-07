@@ -7,7 +7,9 @@ $modal-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.35);
 
 .tools {
     max-width: 70vw;
-    margin-top: 2rem;
+    padding: 2rem 0;
+    margin: auto 6rem;
+
     label {
         text-indent: unset;
         color: $color-black;
@@ -113,6 +115,7 @@ $modal-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.35);
 @media (max-width: 768px) {
     .tools {
         max-width: unset;
+        margin: auto;
     }
 }
 
