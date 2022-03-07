@@ -2,6 +2,7 @@
 {% set main_class = 'container-1 pad-x0' %}
 {% set page_title = _('Conversation: "{}"').format(conversation.text) %}
 {% set aria_flowto = 'comment-card' %}
+{% set body_class = 'body theme-' + conversation.board.palette %}
 
 {% block metaOG %}
     <meta name="description" property="og:title" content="{{ conversation.title }}">
@@ -52,5 +53,5 @@
 
 
 {% macro edit_link() %}
-    <a href="{{ conversation.url('conversation:edit') }}" class="bold">{{ _('here') }}</a>
+    <a href="{{ conversation.patch_url('conversation:edit') }}" class="bold">{{ _('here') }}</a>
 {% endmacro %}

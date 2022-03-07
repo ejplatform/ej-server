@@ -9,5 +9,6 @@ class TestClusterization(ClusterRecipes):
 
     def test_clusterization_str_method(self, clusterization):
         conversation = clusterization.conversation
+        conversation.id = 1
         assert str(clusterization) == f"{conversation} (0 clusters)"
         assert f"{clusterization.get_absolute_url()}" == f"{conversation.get_absolute_url().url}clusters/"

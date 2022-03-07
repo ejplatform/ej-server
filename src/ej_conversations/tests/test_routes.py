@@ -1,11 +1,9 @@
 import pytest
 from ej_conversations.mommy_recipes import ConversationRecipes
-from ej_boards.mommy_recipes import BoardRecipes
 from ej.testing import UrlTester
 
 from ej_conversations.routes_comments import comment_url
-from ej_conversations import routes
-from ej_users.models import User
+
 
 TEST_DOMAIN = "https://domain.com.br"
 
@@ -13,11 +11,11 @@ TEST_DOMAIN = "https://domain.com.br"
 class TestRoutes(UrlTester, ConversationRecipes):
     public_urls = ["/conversations/"]
     user_urls = [
-        "/conversations/1/slug/",
+        "/board-slug/conversations/1/slug/",
         # '/comments/<id>-<hash>/'
     ]
-    admin_urls = ["/conversations/add/"]
-    owner_urls = ["/conversations/1/slug/edit/", "/conversations/1/slug/moderate/"]
+    admin_urls = ["/board-slug/conversations/add/"]
+    owner_urls = ["/board-slug/conversations/1/slug/edit/", "/board-slug/conversations/1/slug/moderate/"]
 
     def get_data(self, request):
         conversation = request.getfixturevalue("conversation")

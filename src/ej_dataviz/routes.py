@@ -11,7 +11,7 @@ from django.utils.translation import ugettext_lazy as _, ugettext as __
 from sidekick import import_later
 
 from ej_conversations.models import Conversation
-from ej_conversations.routes import conversation_url
+from ej_conversations.urls import conversation_url
 from ej_conversations.utils import check_promoted
 from ej_profiles.enums import Gender, Race, STATE_CHOICES
 
@@ -22,7 +22,7 @@ stop_words = import_later("stop_words")
 pd = import_later("pandas")
 log = getLogger("ej")
 urlpatterns = Router(
-    base_path=conversation_url,
+    base_path=f"<model:conversation>/<slug:slug>/",
     template="ej_dataviz/{name}.jinja2",
     models={"conversation": Conversation},
     login=True,

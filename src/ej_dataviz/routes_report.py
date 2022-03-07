@@ -15,7 +15,7 @@ from sidekick import import_later
 
 from ej_clusters.models import Cluster
 from ej_conversations.models import Conversation
-from ej_conversations.routes import conversation_url
+from ej_conversations.urls import conversation_url
 from ej_conversations.utils import check_promoted
 from .routes import EXPOSED_PROFILE_FIELDS, words
 from .models import ToolsLinksHelper
@@ -24,7 +24,7 @@ from .models import ToolsLinksHelper
 pd = import_later("pandas")
 
 urlpatterns = Router(
-    base_path=conversation_url + "reports/",
+    base_path=f"<model:conversation>/<slug:slug>/" + "reports/",
     template="ej_dataviz/report/{name}.jinja2",
     models={"conversation": Conversation, "cluster": Cluster},
     login=True,

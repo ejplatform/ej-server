@@ -43,7 +43,7 @@ def get_urlpatterns():
         *with_app("ej_users", "account/", "routes_account", namespace="account"),
         #
         #  Conversations and other EJ-specific routes
-        path("conversations/", include("ej_conversations.routes", namespace="conversation")),
+        path("conversations/", include("ej_conversations.public_urls", namespace="conversation")),
         path("conversations/", include("ej_analysis.routes", namespace="conversation-analysis")),
         path("comments/", include("ej_conversations.routes_comments", namespace="comments")),
         #

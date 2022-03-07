@@ -44,10 +44,10 @@ def conversation_admin_menu_links(conversation, user):
 
     menu_links = []
     if user.has_perm("ej.can_edit_conversation", conversation):
-        url = conversation.url("conversation:edit")
+        url = conversation.patch_url("conversation:edit")
         menu_links.append(a(_("Edit"), href=url))
     if user.has_perm("ej.can_moderate_conversation", conversation):
-        url = conversation.url("conversation:moderate")
+        url = conversation.patch_url("conversation:moderate")
         menu_links.append(a(_("Moderate"), href=url))
     return menu_links
 

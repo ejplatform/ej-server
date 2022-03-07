@@ -1,4 +1,5 @@
-{% extends 'ej_conversations/create.jinja2' %}
+{% extends 'ej_conversations/conversation-create.jinja2' %}
+{% set body_class = 'body theme-' + conversation.board.palette %}
 {% block menu %}{% include 'ej_conversations/includes/menu-detail.jinja2' %}{% endblock %}
 
 

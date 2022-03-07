@@ -17,7 +17,7 @@
 <nav class="menu-profile-section divider">
     <ul>
         {% if request.user.boards.count() %}
-        <li><a href="{{ url('boards:conversation-list', board=request.user.boards.first()) }}">{{ _('My Boards') }}</a></li>
+        <li><a href="{{ url('boards:conversation-list', board_slug=request.user.boards.first().slug) }}">{{ _('My Boards') }}</a></li>
         {% endif %}
         <li><a href="{{ url('conversation:list') }}">{{ _('Public conversations') }}</a></li>
         <li><a href="{{ url('profile:detail')}}">{{ _('Profile') }}</a></li>
