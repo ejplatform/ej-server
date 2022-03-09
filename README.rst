@@ -105,3 +105,17 @@ It is possible to open a bash shell in the main "web" container with::
 You also can execute commands without open docker bash shell::
 
     $ inv docker-exec "command"
+
+Configuring SMTP Email Server
+-----------
+
+To configure an Email server, it's necessary a Google Account, but you can use other SMTP servers, as Mailgun or Sendgrid, just changing the SMTP_HOST_EMAIL and SMTP_HOST_PASSWORD variables as defined below.
+With your account logged, access https://myaccount.google.com/security.
+If you have two steps verification enabled, you'll need to create an app password in the "How to Login" Section. Click on the Apps Passwords button and confirm your password. I'll be on screen a list of password apps that you created. Choose in the first dropdown selector for "Others" and label your new password. You have a new password to copy and use in the next section.
+If your account isn't two steps verification enabled, simply enable insecurity access in the "How to Login" section, copy your account password and skip forward to the next section.
+With your password noted, put your email and that password on the environment file (variables.env):
+	...
+	SMTP_HOST_PASSWORD=YOUR_PASSWORD_HERE
+	SMTP_HOST_EMAIL=YOUR@EMAIL.COM
+	---
+Now, your SMTP server is ready to go!
