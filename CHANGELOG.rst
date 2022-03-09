@@ -4,6 +4,16 @@ CHANGELOG of EJPlatform releases
 
 Here you can follow all the fixes and new features on every EJPlatform release.
 
+2.23.0 release
+====================
+* Date: Jan 31, 2022
+* Features
+- Fixes tools pages margin;
+- Implements new conversation balloon;
+- Implements new conversation side menu;
+- Removes django-boogie from ej_conversations routes;
+- Fixes opinion-component preview bug;
+
 2.22.0 release
 ====================
 * Date: Jan 31, 2022
