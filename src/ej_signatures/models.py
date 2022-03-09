@@ -75,10 +75,14 @@ class ListenToCommunity(Signature):
         :arg1: conversation
         :returns: list of tools
         """
+        exclude = []
+        if not self.user.is_superuser:
+            exclude.append("whatsapp")
+
         return [
             MailingTool(conversation),
             OpinionComponentTool(conversation),
-            BotsTool(conversation, exclude=["whatsapp"]),
+            BotsTool(conversation, exclude=exclude),
             MauticTool(conversation, is_active=False),
         ]
 
