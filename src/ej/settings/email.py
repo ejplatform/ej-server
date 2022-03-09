@@ -1,4 +1,5 @@
-from boogie.configurations import Conf, env
+from boogie.configurations import Conf
+import os
 
 
 class EmailConf(Conf):
@@ -6,20 +7,14 @@ class EmailConf(Conf):
     #
     # E-mail settings
     #
-    EMAIL_HOST = env("", name="{attr}")
-    EMAIL_PORT = env(587, name="{attr}")
-    EMAIL_HOST_USER = env("", name="{attr}")
-    EMAIL_HOST_PASSWORD = env("", name="{attr}")
-    EMAIL_USE_SSL = env(False, name="{attr}")
-    EMAIL_USE_TLS = env(False, name="{attr}")
-    DEFAULT_FROM_EMAIL = env("noreply@mail.ejplatform.org", name="{attr}")
-    DEFAULT_FROM_NAME = env("Empurrando Juntos", name="{attr}")
+    DEFAULT_FROM_EMAIL = os.environ.get("SMTP_DEFAULT_EMAIL", "noreply@mail.ejplatform.org")
+    SERVER_EMAIL = os.environ.get("SMTP_HOST_EMAIL", "user@mail.com")
+    EMAIL_USE_TLS = True
+    EMAIL_HOST = os.environ.get("SMTP_HOST", "smtp.gmail.com")
+    EMAIL_PORT = os.environ.get("SMTP_PORT", 587)
+    EMAIL_HOST_USER = os.environ.get("SMTP_HOST_EMAIL", "user@mail.com")
+    EMAIL_HOST_PASSWORD = os.environ.get("SMTP_HOST_PASSWORD", "password")
+    DEFAULT_FROM_NAME = os.environ.get("SMTP_DEFAULT_NAME", "Empurrando Juntos")
 
     def get_email_backend(self):
-        backend = self.env("EMAIL_BACKEND", default=None)
-        if backend:
-            return backend
-        elif self.ENVIRONMENT == "production":
-            return "django.core.mail.backends.smtp.EmailBackend"
-        else:
-            return "django.core.mail.backends.console.EmailBackend"
+        return "django.core.mail.backends.smtp.EmailBackend"
