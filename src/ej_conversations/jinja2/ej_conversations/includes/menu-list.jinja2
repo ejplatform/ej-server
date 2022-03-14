@@ -1,4 +1,4 @@
-<nav title="{{ _('Conversations') }}" aria-labelledby="menu-conversations">
+<nav title="{{ _('Conversations') }}" aria-labelledby="menu-conversations" class="menu-padding">
     <h3 id="menu-conversations">{{ _('Conversations') }}</h3>
     <ul>
         <li><a href="{{ url('conversation:list') }}">{{ _('Conversations') }}</a></li>
@@ -12,5 +12,9 @@
     </ul>
 
 </nav>
-{{ page_menu.ABOUT(request) }}
-{{ page_menu.ACCESSIBILITY() }}
+<nav class="menu-padding">
+    {{ page_menu.ABOUT(request) }}
+</nav>
+<nav class="menu-padding">
+    {{ page_menu.ACCESSIBILITY() }}
+</nav>

@@ -1,5 +1,5 @@
 <nav title="{{ _('Conversation') }}" aria-labelledby="menu-conversation">
-    <ul class="nav-header menu-padding-vertical menu-padding-horizontal">
+    <ul class="nav-header menu-padding">
         <li id="board-name">
             <a href="{{ url('boards:conversation-list', board_slug=request.user.boards.first().slug) }}">
                 <i class="fa fa-arrow-circle-left"></i>
@@ -23,7 +23,7 @@
         {% endif %}
     </ul>
 
-    <ul class="menu-padding-vertical menu-padding-horizontal nav-categories">
+    <ul class="menu-padding nav-categories">
         <h3 id="menu-conversation">{{ _('Collect opinions') }}</h3>
         
         {% for link in page_menu.links('conversations:detail-actions', request, conversation) %}
@@ -36,7 +36,7 @@
 
     <hr class="nav-divider">
 
-    <ul class="menu-padding-vertical menu-padding-horizontal nav-categories">
+    <ul class="menu-padding nav-categories">
         <h3 id="menu-conversation">{{ _('Model and Analyze') }}</h3>
         {% for link in page_menu.links('conversations:detail-admin', request, conversation) %}
             <li>{{ link }}</li>

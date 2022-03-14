@@ -1,4 +1,4 @@
-<nav title="{{ _('Account') }}" aria-labelledby="menu-account" class="menu-padding-vertical menu-padding-horizontal">
+<nav title="{{ _('Account') }}" aria-labelledby="menu-account" class="menu-padding">
     <h3 id="menu-account">{{ _('Account') }}</h3>
     <ul>
         <li><a href="{{ url('account:index') }}">{% trans %}Manage account{% endtrans %}</a></li>
@@ -6,7 +6,7 @@
         <li><a href="{{ url('account:logout') }}">{% trans %}Logout{% endtrans %}</a></li>
     </ul>
 </nav>
-<nav title="{{ _('Profile') }}" aria-labelledby="menu-profile" class="menu-padding-vertical menu-padding-horizontal">
+<nav title="{{ _('Profile') }}" aria-labelledby="menu-profile" class="menu-padding">
     <h3 id="menu-profile">{{ _('Profile') }}</h3>
     <ul>
         {% if settings.has_profiles %}
