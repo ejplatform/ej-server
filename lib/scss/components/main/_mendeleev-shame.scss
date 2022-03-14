@@ -10,9 +10,9 @@
 }
 
 .board-container {
-    margin: 0 1.5rem 1rem 1.5rem;
-    @media only screen and (max-width: 320px) {
-        margin: 0 1.5rem 1rem .5rem;
+    margin: auto 6rem;
+    @media only screen and (max-width: 667px) {
+        margin: 0 1.5rem 1rem;
     }
 }
 
