@@ -1,14 +1,46 @@
+{% macro link_macro(url) %}
+{{- link(caller(), url, **kwargs) -}}
+{% endmacro %}
+
 <header class="main-header" is-component aria-label="{{ _('Top header') }}" role="banner">
-    <a title="{{ _('Back') }}" is-element="back:click" aria-label="{{ _('Go back') }}" href="#">
-        <i class="fa fa-chevron-left"></i>
+    <a is-element="toggleMenu:click" aria-haspopup="true" aria-controls="page-menu" href="#"
+       aria-label="{{ _('Toggle navigation menu') }}">
+        <i class="fa fa-ellipsis-v"></i>
     </a>
 
     <a {{ link_attrs('index')|safe }} class="main-header__logo">
         <img src={{ static("img/logo/logo.svg") }} alt="{{ _('Logo') }}" aria-label="{{ _('Back to initial page') }}">
     </a>
 
-    <a is-element="toggleMenu:click" aria-haspopup="true" aria-controls="page-menu" href="#"
-       aria-label="{{ _('Toggle navigation menu') }}">
-        <i class="fa fa-ellipsis-v"></i>
-    </a>
+    {% if request.user.profile|default(None) %}
+    <div class="main-header__user">
+        <a aria-haspopup="true" href="#" id="img-profile">
+        <img is-element="createOverlay:click" class="main-header__avatar" src="{{ request.user.profile.image_url }}" 
+            alt="{{ _('Profile picture') }}"></a>
+
+        <div id="show-profile-menu" class="profile-menu hide"> 
+            {% include 'ej/includes/profile-menu.jinja2' %}
+        </div>
+    </div>
+
+    {# For route without profile #}   
+    {% else %}
+        {% call link_macro('profile:detail', title=_('Profile')) %}
+            <img class="main-header__avatar" src="{{ static('img/icons/navbar_profile.svg') }}" alt="">
+        {% endcall %}
+    {% endif %}
 </header>
+
+<script>
+    var header = document.querySelector("header");
+
+    header.addEventListener("click", function(event) {
+        if(event.target != header) return;
+
+        var menu = document.getElementById("page-menu");
+        let overlayComp = document.getElementById("page-menu-overlay")
+
+        if (overlayComp) overlayComp.remove();
+        menu.classList.add("hide");
+    });
+</script>
