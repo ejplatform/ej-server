@@ -1,25 +1,22 @@
 <nav class="menu-profile-section divider">
     <div class="user-profile-info">
         {% if request.user.profile|default(None) %}
-            <img class="profile-avatar" src="{{ request.user.profile.image_url }}" 
-                alt="{{ _('Profile picture') }}">  
+        <img class="profile-avatar" src="{{ request.user.profile.image_url }}" 
+        alt="{{ _('Profile picture') }}">  
         {% else %}
             <img class="profile-avatar" src="{{ static('img/icons/navbar_profile.svg') }}"
                 alt="{{ _('Profile picture') }}">
         {% endif %}
         <div>
             <p>{{request.user.profile.name}}</p>
-            <p>{{request.user.profile.email}}</p>
         </div>
     </div>
 </nav>
 
+<i onclick="closePageMenu()" id="profile-menu-close-btn" class="fas fa-times"></i>
+
 <nav class="menu-profile-section divider">
     <ul>
-        {% if request.user.boards.count() %}
-        <li><a href="{{ url('boards:conversation-list', board_slug=request.user.boards.first().slug) }}">{{ _('My Boards') }}</a></li>
-        {% endif %}
-        <li><a href="{{ url('conversation:list') }}">{{ _('Public conversations') }}</a></li>
         <li><a href="{{ url('profile:detail')}}">{{ _('Profile') }}</a></li>
     </ul>
 </nav>
@@ -28,40 +25,40 @@
 {{ page_menu.ABOUT(request)}}
 </nav>
 
-<div class="menu-profile-logout">
+<nav class="menu-profile-section divider menu-profile-logout">
     <form method="post" id="logout-form" action="{{ url('account:logout') }}">
         {{ csrf_input }}
         <a onclick="logout()">{{ _('Logout')}}</a>
     </form>
-</div>
+</nav>
 
 <script>
-    let menu = document.getElementById("show-profile-menu");
-    let profile = document.getElementById("img-profile").firstElementChild;
+    var menuProfile = document.getElementById("show-profile-menu");
+    var profile = document.getElementById("img-profile").firstElementChild;
+    var logoutForm = document.getElementById("logout-form");
+    var profileMenuCloseBtn = document.getElementById("profile-menu-close-btn");
 
-    let clicked = false;
+    function closeProfileMenu() {
+        menuProfile.classList.add('hide');
+    }
 
     window.onclick = function(event) {
-        if (clicked && event.target != menu && event.target != profile) {
-            menu.style.visibility = "hidden";
-            menu.style.opacity = 0;
-            clicked = false;
-        }
+        if (event.target === menuProfile|| event.target === profile) return;
+        closeProfileMenu()
     }
-    profile.onclick = function(event) {
-        clicked = !clicked;
-        if (clicked) {
-            menu.style.visibility = "visible";
-            menu.style.opacity = 1;
-        }
-        else {
-            menu.style.visibility = "hidden";
-            menu.style.opacity = 0;
-        }
+
+    profile.onclick = function() {
+        menuProfile.classList.toggle('hide');
+        let pageMenu = document.getElementById("page-menu")
+        let overlayComp = document.getElementById("page-menu-overlay")
+        pageMenu.removeAttribute('is-open')
+        if(overlayComp) overlayComp.remove()
     }
 
     function logout() {
-        document.getElementById("logout-form").submit();
+        logoutForm.submit();
     }
+
+    profileMenuCloseBtn.addEventListener("click", closeProfileMenu)
 
 </script>

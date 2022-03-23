@@ -1,5 +1,6 @@
 <nav title="{{ _('Conversation') }}" aria-labelledby="menu-conversation">
     <ul class="nav-header menu-padding">
+        <i class="fas fa-times close-btn"></i>
         <li id="board-name">
             <a href="{{ url('boards:conversation-list', board_slug=conversation.board.slug) }}">
                 <i class="fa fa-arrow-circle-left"></i>
@@ -9,7 +10,6 @@
 
         <li class="menu-item">
             <a href={{conversation.url("report:general-report")}}><span>{{ conversation.title }}</span></a>
-            
         </li>
         
         {% if request.user.has_perm('ej.can_edit_conversation', conversation) %}
@@ -65,32 +65,41 @@
     </ul>
 
 <script>
-function setChecked(check_id) {
-    event.preventDefault();
-    let checkbox = document.getElementById(check_id);
-    checkbox.checked = !checkbox.checked;
-}
+    const closeBtn = document.querySelector(".close-btn");
 
-function showSection(check_id, section_id) {
-    let checkbox = document.getElementById(check_id)
-    let section = document.getElementById(section_id);
-    if (checkbox.checked) {
-        section.className = "show"
-    } else {
-        section.className = "hide"
-    }
-}
-
- function menuController() {
-    let url = window.location.href.split("/");
-    let menuItem = url[url.length-2].split("-")[0];
-    let backgroundColor = document.querySelector("." + menuItem + "-item"); 
-
-    if (backgroundColor) {
-        backgroundColor.className = "selected";
-        document.getElementById("reports").click();
+    function closePageMenu() {
+        var pageMenu = document.getElementById("page-menu")
+        var overlayComp = document.getElementById("page-menu-overlay")
+        pageMenu.removeAttribute('is-open')
+        if(overlayComp) overlayComp.remove()
     }
 
-};
-window.addEventListener('load', menuController);
+    function setChecked(check_id) {
+        event.preventDefault();
+        let checkbox = document.getElementById(check_id);
+        checkbox.checked = !checkbox.checked;
+    }
+
+    function showSection(check_id, section_id) {
+        let checkbox = document.getElementById(check_id)
+        let section = document.getElementById(section_id);
+        section.className = checkbox.checked ? "show" : "hide";
+    }
+
+    function menuStarter() {
+        let reports = document.getElementById('reports');
+        let url = window.location.href.split("/");
+        var menuItem = url[url.length-2].split("-")[0];
+        menuItem = document.querySelector("." + menuItem + "-item"); 
+
+        if (!menuItem) return
+        menuItem.classList.add("selected");
+        reports.click();
+
+        var menuProfile = document.getElementById("show-profile-menu");
+    };
+
+    closeBtn.addEventListener("click", closePageMenu);
+
+    menuStarter();
 </script>

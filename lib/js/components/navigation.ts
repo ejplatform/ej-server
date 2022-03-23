@@ -20,13 +20,11 @@ class MainHeader extends Component {
     }
 
     openMenu() {
-        let yCoord = $('.main-header').innerHeight();
         $('.page-menu')
-            .css('top', `${yCoord - 4}px`)
             .attr('is-open', '');
         this.createOverlay();
         this.isOpen = true;
-    }
+    }                
 
     closeMenu() {
         $('.page-menu').attr('is-open', null);
@@ -39,6 +37,8 @@ class MainHeader extends Component {
     }
 
     createOverlay() {
+        if($(window).width() >= 560) return;
+        
         let self = this;
         let overlay = document.createElement('div');
         $(overlay)
@@ -46,7 +46,7 @@ class MainHeader extends Component {
             .attr('id', 'page-menu-overlay')
             .on('click', () => {
                 self.removeOverlay();
-                self.toggleMenu();
+                self.closeMenu();
             });
         document.body.appendChild(overlay);
         return overlay;
@@ -67,7 +67,7 @@ class PageMenu extends Component {
         this.hicontrast = Cookies.get('hicontrast') === 'y';
         this.scaleFactor = 1.35;
         this.setContrast();
-        if (this.largefont && $('html').data('large-font') !== 'true') {
+        if (this.largefont && $('html').data('large-font') !== '                true') {
             this.makeFontsLarge();
         }
     }
@@ -121,7 +121,7 @@ class PageMenu extends Component {
         $elem.data('original-font-size', {
             size: $elem.css('font-size'),
             hasOwnStyle: $elem[0].style.fontStyle != '',
-        });
+        });                
         return $elem;
     }
 
