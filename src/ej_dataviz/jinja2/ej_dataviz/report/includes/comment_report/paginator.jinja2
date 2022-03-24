@@ -1,0 +1,21 @@
+<div class="paginator-container">
+    <span class="paginator-entries-info">{{_("Showing")}} {{comments.start_index()}} {{_("to")}} {{comments.end_index()}} {{_("of")}} {{paginator.count}} {{_("entries")}}</span>
+    {% if paginator.num_pages > 1 %}
+    <div id="pagination-section" class="paginator">
+        <a onclick="updateCommentCards({{current_page - 1}})">{{_("Previous")}}</a>
+        <ul>
+            {% for i in range(1, paginator.num_pages + 1) %}
+                <li><a id="page-{{i}}" onclick="updateCommentCards({{i}})">{{i}}</a></li>
+            {% endfor %}
+        </ul>
+        <a onclick="updateCommentCards({{current_page + 1}})">{{_("Next")}}</a>
+    </div>
+    {% endif %}
+</div>
+
+<script>
+var current_page = document.getElementById("page-{{current_page}}");
+if (current_page) {
+    current_page.classList.add("selected-page");
+}
+</script>

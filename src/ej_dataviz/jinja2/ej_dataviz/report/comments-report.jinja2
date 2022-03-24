@@ -1,5 +1,60 @@
 {% extends 'ej_dataviz/report/base.jinja2' %}
 
 {% block report %}
-{% include 'ej_dataviz/report/includes/comments-stats.jinja2' %}
+    <div class="comment-report-title">
+        <span class="report-title text-accent"> 
+            {{_('Comments Report')}}
+        </span>
+        <a class="show-reports-link" href="#all-comments-section">{{_('see all')}}</a>
+    </div>
+    {% if clusters %}
+        {% for cluster in clusters_main_comments %}
+            <h3>{{_("Group")}} {{cluster.cluster_name}}</h3>
+            {% if "lower_convergence" in cluster %}
+                <div class="comment-card-group">
+                    {% include 'ej_dataviz/report/includes/comment_report/convergence-card.jinja2' %}
+                    {% include 'ej_dataviz/report/includes/comment_report/agreement-card.jinja2' %}
+                </div>
+            {% else %}
+                <p class="cluster-no-comments">{{_("The cluster has no comments")}}</p>
+            {% endif %}
+
+        {% endfor %}
+    {% endif %}
+    {% include 'ej_dataviz/report/includes/comment_report/filter-section.jinja2' %}
+    {% include 'ej_dataviz/report/includes/comment_report/show-comments.jinja2' %}
+<script>
+let clusterFilters = ["general"];
+let sortFilter = "desc";
+let searchString = "";
+
+function checkOverflow(comment) {
+    if (comment.scrollHeight > comment.clientHeight) {
+        comment.classList.add("text-comment-overflow");
+        let expand_text = comment.nextElementSibling;
+        expand_text.classList.add("show-card");
+        expand_text.classList.remove("disable-card");
+    }
+}
+
+function setExpandedComments() {
+    let disagree_comments = document.querySelectorAll("[id^=disagreement-comment]");
+    let agree_comments = document.querySelectorAll("[id^=agreement-comment]");
+    let convergence_comments = document.querySelectorAll("[id^=convergence-comment]");
+
+    convergence_comments.forEach(comment => checkOverflow(comment));
+    disagree_comments.forEach(comment => checkOverflow(comment));
+    agree_comments.forEach(comment => {
+        checkOverflow(comment);
+        comment.parentNode.classList.add("disable-card");  // the agreement card is disabled by default
+    });
+}
+
+window.onload = function () {
+    setExpandedComments();
+    updateCommentCards('1');
+}
+
+</script>
+
 {% endblock %}

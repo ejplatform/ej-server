@@ -17,11 +17,13 @@
 
 @import 'components/conversations/links-modal';
 
+@import 'components/reports/reports';
+@import 'components/reports/comment';
+
 // Generic
 @import 'components/collapsible';
 @import 'components/landing-page';
 @import 'components/datatables';
-@import 'components/reports';
 
 // FIXME (forever): remove shame ;-)
 @import 'components/main/mendeleev-shame';

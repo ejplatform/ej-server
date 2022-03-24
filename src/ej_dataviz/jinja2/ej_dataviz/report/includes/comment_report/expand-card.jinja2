@@ -1,0 +1,36 @@
+<span class="disable-card text-bold">
+    <span class="selected-link select-expand">
+        [...] <span onclick="showCompleteComment(event.target.parentNode)">{{_('show all')}}</span>
+        <i onclick="showCompleteComment(event.target.parentNode)" class="fas fa-angle-down"></i>
+    </span>
+    <span class="disable-card select-expand">
+        <span onclick="hideCompleteComment(event.target.parentNode)">{{_('show less')}}</span>
+        <i onclick="hideCompleteComment(event.target.parentNode)" class="fas fa-angle-up"></i>
+    </span>
+</span>
+
+<script>
+function showCompleteComment(target) {
+    let show_icon = target;
+    let hide_icon = target.nextElementSibling;
+
+    show_icon.classList.add("disable-card");
+    hide_icon.classList.remove("disable-card");
+
+    let comment = target.parentNode.previousElementSibling;
+    comment.classList.remove("text-comment-overflow");
+    comment.classList.remove("comment-limited-height");
+}
+
+function hideCompleteComment(target) {
+    let hide_icon = target;
+    let show_icon = target.previousElementSibling;
+
+    hide_icon.classList.add("disable-card");
+    show_icon.classList.remove("disable-card");
+
+    let comment = target.parentNode.previousElementSibling;
+    comment.classList.add("text-comment-overflow");
+    comment.classList.add("comment-limited-height");
+}
+</script>

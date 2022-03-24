@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from ej_conversations.models import Conversation, Comment, Vote
 from ej_conversations.serializers import ConversationSerializer, CommentSerializer, VoteSerializer
 from ej_conversations.models.vote import Vote
-from ej_dataviz.routes_report import votes_as_dataframe
+from ej_dataviz.utils import votes_as_dataframe
 from ej.viewsets import RestAPIBaseViewSet
 import json
 from datetime import datetime

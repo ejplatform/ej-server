@@ -52,13 +52,19 @@ $color-theme-osf: #1D1088 !default;
 $color-theme-osf-light: #F8127E !default;
 
 //Report colors
-$color-theme-report-light: #E5E5E5 !default;
-$color-theme-report-lighter: #fefefe !default;
+$color-theme-report-light-gray: #E5E5E5 !default;
 $color-theme-report-gray: #bababa !default; 
-$color-theme-report-gray-light: #aaaaaa !default;
+$color-theme-report-dark-gray: #777777 !default;
+$color-theme-report-lighter: #fefefe !default;
 $color-theme-report-blue: #052B47 !default;
+$color-theme-report-light-blue: #30BFD3 !default;
 $color-theme-report-black: black !default;
+$color-theme-report-transparent-black: rgba(0, 0, 0, 0.12) !default;
 $color-theme-report-red: red !default;
+$color-theme-report-dark-red: #E20000 !default;
+$color-theme-info-card-report: #FFCEDB !default;
+$color-theme-report-pink: #FF3D72 !default;
+$color-theme-report-green: #18AE00 !default;
 
 //Poll bot 
 $modal-transparent-backgound: rgba(0, 0, 0, 0.4);

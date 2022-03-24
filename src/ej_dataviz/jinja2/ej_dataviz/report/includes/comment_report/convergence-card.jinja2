@@ -1,0 +1,34 @@
+<div class="comment-report-card">
+    <h5 class="card-title-section">{{_("less convergence")}}
+        <a class="info-icon" onclick="changeDisplay('convergence-info-card-{{cluster.id}}')">
+            <i class="fas fa-info-circle"></i>
+        </a>
+        <div class="info-card disable-card" id="convergence-info-card-{{cluster.id}}">
+            <p class="info-card-text">{{_("The comment with the least convergence is the one that divided the opinion 
+of the group participants. This can occur when a group is not well modeled.")}} <a class="info-card-link">{{_("How can I improve the modeling of a group?")}}</a></p>
+        </div>
+    </h5>
+    <div id="convergence-card-{{cluster.id}}" class="cluster-comment-card">
+        <p class="text-comment comment-limited-height" id="convergence-comment-{{cluster.id}}">{{cluster.lower_convergence.content}}</p>
+        {% include 'ej_dataviz/report/includes/comment_report/expand-card.jinja2' %}
+        <h6 class="comment-owner">{{cluster.lower_convergence.author}}</h6>
+        <ul class="comment-stats">
+            <li class="text-bold"><i class="fas fa-handshake"></i>{{"%d%%" % cluster.lower_convergence.convergence_level}}</li>
+        </ul>
+    </div>
+</div>
+
+<script>
+
+function changeDisplay(card_id) {
+    let info_card = document.getElementById(card_id);
+    if (info_card.classList.contains("disable-card")) {
+        info_card.classList.remove("disable-card");
+    }
+    else {
+        info_card.classList.add("disable-card");
+    }
+
+}
+
+</script>
