@@ -18,7 +18,6 @@ $component-border-radius: size(config('ej.style.border-radius'));
 .conversation-balloon {
     @extend .center;
     margin-bottom: .75rem;
-    margin: 0 -1rem .75rem;
 
     article {
         @include utilities('pad-y3 pad-x3');

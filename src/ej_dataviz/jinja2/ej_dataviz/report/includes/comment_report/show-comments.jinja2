@@ -1,0 +1,21 @@
+<div id="all-comments-section">
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.9.1/d3.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3-cloud/1.2.5/d3.layout.cloud.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js" defer></script>
+<script defer>
+
+function updateCommentCards(page) {
+    let order_by = document.getElementById("orderby-select").value;
+    let cards_per_page = document.getElementById("pages-select").value;
+    $.ajax({
+        url: `comments-pagination/?page=${page}&cardsPerPage=${cards_per_page}&orderBy=${order_by}&sort=${sortFilter}&clusterFilters=${clusterFilters}&searchString=${searchString}`,
+        success: function(data) {
+            $("#all-comments-section").html(data);
+            let commentCards = document.querySelectorAll("[id^=comment-content-]");
+            commentCards.forEach(comment => checkOverflow(comment));
+        }
+    });
+}
+</script>

@@ -1,24 +1,39 @@
 from functools import lru_cache
 import datetime
-import json
 
 from boogie.router import Router
-from django.http import JsonResponse
 from django.contrib.auth import get_user_model
-from django.http import HttpResponse, Http404
-from django.shortcuts import get_object_or_404
+from django.http import JsonResponse
+from django.shortcuts import render
 from django.utils.text import slugify
 from django.utils.translation import ugettext as _, ugettext_lazy
 from ej_clusters.models.clusterization import Clusterization
 from ej_tools.utils import get_host_with_schema
 from sidekick import import_later
+from django.core.paginator import Paginator
 
 from ej_clusters.models import Cluster
 from ej_conversations.models import Conversation
-from ej_conversations.urls import conversation_url
 from ej_conversations.utils import check_promoted
-from .routes import EXPOSED_PROFILE_FIELDS, words
+from .routes import words
 from .models import ToolsLinksHelper
+from .utils import OrderByOptions
+from .utils import (
+    add_id_column,
+    filter_comments_by_group,
+    get_page,
+    get_cluster_names,
+    get_comments_dataframe,
+    sort_comments_df,
+    search_comments_df,
+    get_cluster_main_comments,
+    get_clusters,
+    get_cluster_or_404,
+    data_response,
+    get_user_data,
+    comments_data_common,
+    vote_data_common,
+)
 
 
 pd = import_later("pandas")
@@ -32,24 +47,6 @@ urlpatterns = Router(
 )
 app_name = "ej_dataviz"
 User = get_user_model()
-
-
-#
-# Base report URLs
-#
-@urlpatterns.route("")
-def index(request, conversation, **kwargs):
-    check_promoted(conversation, request)
-    user = request.user
-    can_view_detail = user.has_perm("ej.can_view_report_detail", conversation)
-    statistics = conversation.statistics()
-
-    return {
-        "clusters": get_clusters(conversation),
-        "conversation": conversation,
-        "statistics": statistics,
-        "can_view_detail": can_view_detail,
-    }
 
 
 @urlpatterns.route("general-report/")
@@ -84,13 +81,54 @@ def report_card_words(request, conversation, **kwargs):
 def comments_report(request, conversation, **kwargs):
     check_promoted(conversation, request)
     can_view_detail = request.user.has_perm("ej.can_view_report_detail", conversation)
+    clusters = get_clusters(conversation)
+    clusters_main_comments = [get_cluster_main_comments(cluster) for cluster in clusters]
 
     return {
         "conversation": conversation,
         "clusters": get_clusters(conversation),
+        "clusters_main_comments": clusters_main_comments,
         "can_view_detail": can_view_detail,
         "type_data": "comments-data",
+        "groups": get_cluster_names(clusters),
     }
+
+
+@urlpatterns.route("comments-report/comments-pagination/")
+def comments_report_pagination(request, conversation, **kwargs):
+    check_promoted(conversation, request)
+    clusters = get_clusters(conversation)
+
+    page = request.GET.get("page", 1)
+    cards_per_page = request.GET.get("cardsPerPage", 6)
+    order_by = request.GET.get("orderBy", OrderByOptions.AGREEMENT)
+    sort_order = request.GET.get("sort", "desc")
+    cluster_filters = request.GET.get("clusterFilters", ["general"])
+    search_string = request.GET.get("searchString", "")
+
+    comments_df = get_comments_dataframe(conversation.comments, "")
+    comments_df = filter_comments_by_group(comments_df, clusters, cluster_filters)
+
+    if search_string:
+        comments_df = search_comments_df(comments_df, search_string)
+
+    sorted_comments_df = sort_comments_df(comments_df, order_by, sort_order)
+    add_id_column(sorted_comments_df)
+
+    comments_dict = sorted_comments_df.to_dict(orient="records")
+
+    paginator = Paginator(comments_dict, cards_per_page)
+    comments = get_page(paginator, page)
+
+    return render(
+        request,
+        "ej_dataviz/report/includes/comment_report/comments-section.jinja2",
+        {
+            "comments": comments,
+            "current_page": comments.number,
+            "paginator": paginator,
+        },
+    )
 
 
 @urlpatterns.route("votes-over-time/")
@@ -129,8 +167,6 @@ def users(request, conversation, **kwargs):
 # ==============================================================================
 # Votes raw data
 # ------------------------------------------------------------------------------
-
-
 @urlpatterns.route("data/votes.<fmt>", perms=["ej.can_view_report_detail"])
 def votes_data(request, conversation, fmt, **kwargs):
     check_promoted(conversation, request)
@@ -149,49 +185,9 @@ def votes_data_cluster(request, conversation, fmt, cluster_id, **kwargs):
     return vote_data_common(cluster.votes.all(), filename, fmt)
 
 
-def vote_data_common(votes, filename, fmt):
-    """
-    Common implementation for votes_data and votes_data_cluster
-    """
-    df = votes_as_dataframe(votes)
-    return data_response(df, fmt, filename)
-
-
-def votes_as_dataframe(votes):
-    columns = (
-        "author__email",
-        "author__name",
-        "author__id",
-        "author__metadata__analytics_id",
-        "author__metadata__mautic_id",
-        "comment__content",
-        "comment__id",
-        "comment__conversation",
-        "choice",
-    )
-    df = votes.dataframe(*columns)
-    df.columns = (
-        "email",
-        "author",
-        "author_id",
-        "author__metadata__analytics_id",
-        "author__metadata__mautic_id",
-        "comment",
-        "comment_id",
-        "conversation_id",
-        "choice",
-    )
-    votes_timestamps = list(map(lambda x: x[0].timestamp(), list(votes.values_list("created"))))
-    df["created"] = votes_timestamps
-    df.choice = list(map({-1: "disagree", 1: "agree", 0: "skip"}.get, df["choice"]))
-    return df
-
-
 # ==============================================================================
 # Comments raw data
 # ------------------------------------------------------------------------------
-
-
 @urlpatterns.route("data/comments.<fmt>")
 def comments_data(request, conversation, fmt, **kwargs):
     check_promoted(conversation, request)
@@ -207,32 +203,9 @@ def comments_data_cluster(request, conversation, fmt, cluster_id, **kwargs):
     return comments_data_common(conversation.comments, cluster.votes, filename, fmt)
 
 
-def comments_data_common(comments, votes, filename, fmt):
-    df = comments.statistics_summary_dataframe(votes=votes)
-    df = comments.extend_dataframe(df, "id", "author__email", "author__id", "created")
-    # Adjust column names
-    columns = [
-        "content",
-        "id",
-        "author__email",
-        "author__id",
-        "agree",
-        "disagree",
-        "skipped",
-        "convergence",
-        "participation",
-        "created",
-    ]
-    df = df[columns]
-    df.columns = ["comment", "comment_id", "author", "author_id", *columns[4:]]
-    return data_response(df, fmt, filename)
-
-
 # ==============================================================================
 # Users raw data
 # ------------------------------------------------------------------------------
-
-
 @urlpatterns.route("data/users.<fmt>")
 def users_data(request, conversation, fmt, **kwargs):
     check_promoted(conversation, request)
@@ -251,99 +224,6 @@ def users_data(request, conversation, fmt, **kwargs):
         df[["cluster", "cluster_id"]] = extra
         df["cluster_id"] = df.cluster_id.fillna(-1).astype(int)
     return data_response(df, fmt, filename)
-
-
-def get_user_data(conversation):
-    df = conversation.users.statistics_summary_dataframe(extend_fields=("id", *EXPOSED_PROFILE_FIELDS))
-    df = df[
-        [
-            "email",
-            "id",
-            "name",
-            *EXPOSED_PROFILE_FIELDS,
-            "agree",
-            "disagree",
-            "skipped",
-            "convergence",
-            "participation",
-        ]
-    ]
-    df.columns = ["email", "user_id", *df.columns[2:]]
-    return df
-
-
-# ==============================================================================
-# Clusters raw data
-# ------------------------------------------------------------------------------
-
-
-def comments_stats_by_cluster(clusters):
-    rows = []
-
-    for cluster in clusters:
-        stats = cluster.comments_statistics_summary_dataframe(normalization=100.0)
-        for index, row in stats.iterrows():
-            data = {}
-            data["agree"] = row.agree
-            data["disagree"] = row.disagree
-            data["skipped"] = row.skipped
-            data["cluster_name"] = cluster.name
-            data["content"] = row.content
-            data["participation"] = row.participation
-            rows.append(data)
-
-    return pd.DataFrame(rows)
-
-
-def clusters_data_common(clusters, filename, fmt):
-    df = comments_stats_by_cluster(clusters)
-    return data_response(df, fmt, filename)
-
-
-#
-# Auxiliary functions
-#
-
-
-def data_response(data: pd.DataFrame, fmt: str, filename: str, translate=True):
-    """
-    Prepare data response for file from dataframe.
-    """
-    response = HttpResponse(content_type=f"text/{fmt}")
-    if translate:
-        data = data.copy()
-        data.columns = [_(x) for x in data.columns]
-    response["Content-Disposition"] = f"attachment; filename={filename}.{fmt}"
-    if fmt == "json":
-        data.to_json(response, orient="records", date_format="iso")
-    elif fmt == "csv":
-        data.to_csv(response, index=False, mode="a", float_format="%.3f")
-    elif fmt == "msgpack":
-        data.to_msgpack(response, encoding="utf-8")
-    else:
-        raise ValueError(f"invalid format: {fmt}")
-    return response
-
-
-def get_cluster_or_404(cluster_id, conversation=None):
-    """
-    Return cluster and checks if cluster belongs to conversation
-    """
-    cluster = get_object_or_404(Cluster, id=cluster_id)
-    if conversation is not None and cluster.clusterization.conversation_id != conversation.id:
-        raise Http404
-    return cluster
-
-
-def get_clusters(conversation):
-    # Force clusterization, when possible
-    clusterization = getattr(conversation, "clusterization", None)
-    if clusterization:
-        clusterization.update_clusterization()
-        clusters = clusterization.clusters.all()
-    else:
-        clusters = ()
-    return clusters
 
 
 @lru_cache(1)

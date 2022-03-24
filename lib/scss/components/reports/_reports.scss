@@ -87,9 +87,9 @@
         margin-right: 9px;
     }
     .filter-button {
-        border: 1px solid $color-theme-report-light;
+        border: 1px solid $color-theme-report-light-gray;
         border-radius: 5px;
-        background-color: $color-theme-report-light;
+        background-color: $color-theme-report-light-gray;
         color: $color-theme-report-blue;
         font-weight: normal;
         font-size: 14px;
@@ -172,19 +172,6 @@
     }
 }
 
-.close-report {
-    color: $color-theme-report-gray-light;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.close-report:hover,
-.close-report:focus {
-    color: $color-theme-report-black;
-    text-decoration: none;
-    cursor: pointer;
-}
 
 .vote-date-picker {
     display: flex;
@@ -297,4 +284,3 @@
         }
     }
 }
-

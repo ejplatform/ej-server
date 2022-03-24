@@ -1,0 +1,24 @@
+<div id="cards-group" class="comment-card-group">
+    {% for comment in comments %}
+    <div class="comment-report-card card-space">
+        {% if comment.group %}
+        <h5 class="group-title group-title-color">{{ comment.group }}</h5>
+        {% else %}
+        <h5 class="group-title whitout-group-title-color">{{_("without group")}}</h5>
+        {% endif %}
+            <p class="text-comment comment-limited-height" id="comment-content-{{comment.id}}">{{comment.content}}</p>
+            {% include 'ej_dataviz/report/includes/comment_report/expand-card.jinja2' %}
+            <h6 class="comment-owner">{{comment.author}}</h6>
+            <ul class="comment-stats">
+                <li class="text-bold"><i class="fas fa-check green-icon"></i>{{"%d%%" % comment.agree}}</li>
+                <li class="text-bold"><i class="fas fa-times red-icon"></i>{{"%d%%" % comment.disagree}}</li>
+
+                <li class="text-bold left-align-icon"><i class="fas fa-arrow-right"></i>{{"%d%%" % comment.skipped}}</li>
+                <li class="text-bold"><i class="fas fa-handshake"></i>{{"%d%%" % comment.convergence}}</li>
+                <li class="text-bold"><i class="fas fa-users"></i>{{"%d%%" % comment.participation}}</li>
+            </ul>
+    </div>
+    {% endfor %}
+</div>
+
+{% include 'ej_dataviz/report/includes/comment_report/paginator.jinja2' %}

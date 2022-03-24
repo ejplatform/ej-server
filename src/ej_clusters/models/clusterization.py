@@ -39,7 +39,7 @@ class Clusterization(TimeStampedModel):
 
     @property
     def n_unprocessed_votes(self):
-        return self.conversation.votes(created__gte=self.modified).count()
+        return self.conversation.votes.filter(created__gte=self.modified).count()
 
     #
     # Statistics and annotated values

@@ -1,0 +1,55 @@
+<div class="comment-report-card" id="comment-card-{{cluster.id}}">
+    <h5 class="card-title-section">
+        <a id="disagreement-title-{{cluster.id}}" class="selected-card-title" onclick="displayDisagree('{{cluster.id}}')">{{_("greater disagreement")}}</a> <span class="agreement-title">/</span>
+        <a id="agreement-title-{{cluster.id}}" class="deselected-card-title" onclick="displayAgree('{{cluster.id}}')">{{_("greater agreement")}}</a>
+    </h5>
+    <div id="disagreement-card-{{cluster.id}}" class="cluster-comment-card">
+        <p id="disagreement-comment-{{cluster.id}}" class="text-comment comment-limited-height">{{cluster.greater_disagree.content}}</p>
+        {% include 'ej_dataviz/report/includes/comment_report/expand-card.jinja2' %}
+        <h6 class="comment-owner">{{cluster.greater_disagree.author}}</h6>
+        <ul class="comment-stats">
+            <li class="text-bold"><i class="fas fa-check"></i>{{"%d%%" % cluster.greater_disagree.agree_level}}</li>
+            <li class="text-bold"><i class="fas fa-times red-icon"></i>{{"%d%%" % cluster.greater_disagree.disagree_level}}</li>
+        </ul>
+    </div>
+    <div id="agreement-card-{{cluster.id}}" class="cluster-comment-card">
+        <p id="agreement-comment-{{cluster.id}}" class="text-comment comment-limited-height">{{cluster.greater_agree.content}}</p>
+        {% include 'ej_dataviz/report/includes/comment_report/expand-card.jinja2' %}
+        <h6 class="comment-owner">{{cluster.greater_agree.author}}</h6>
+        <ul class="comment-stats">
+            <li class="text-bold"><i class="fas fa-check green-icon"></i>{{"%d%%" % cluster.greater_agree.agree_level}}</li>
+            <li class="text-bold"><i class="fas fa-times"></i>{{"%d%%" % cluster.greater_agree.disagree_level}}</li>
+        </ul>
+    </div>
+</div>
+<script>
+
+function displayAgree(cluster_id) {
+    let hidden_elem = document.getElementById(`disagreement-card-${cluster_id}`);
+    let show_elem = document.getElementById(`agreement-card-${cluster_id}`);
+
+    hidden_elem.classList = ['disable-card'];
+    show_elem.classList = ['cluster-comment-card'];
+
+    let selected_elem = document.getElementById(`agreement-title-${cluster_id}`);
+    let deselected_elem = document.getElementById(`disagreement-title-${cluster_id}`);
+
+    selected_elem.classList = ['selected-card-title'];
+    deselected_elem.classList = ['deselected-card-title'];
+}
+
+function displayDisagree(cluster_id) {
+    let hidden_elem = document.getElementById(`agreement-card-${cluster_id}`);
+    let show_elem = document.getElementById(`disagreement-card-${cluster_id}`);
+
+    hidden_elem.classList = ['disable-card'];
+    show_elem.classList = ['cluster-comment-card'];
+
+    let selected_elem = document.getElementById(`disagreement-title-${cluster_id}`);
+    let deselected_elem = document.getElementById(`agreement-title-${cluster_id}`);
+
+    selected_elem.classList = ['selected-card-title'];
+    deselected_elem.classList = ['deselected-card-title'];
+}
+
+</script>

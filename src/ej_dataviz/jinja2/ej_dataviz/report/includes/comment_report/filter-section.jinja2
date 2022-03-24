@@ -1,0 +1,94 @@
+<div class="comment-report-title comment-report-align">
+    <span class="report-title text-accent"> 
+        {{_('All comments')}}
+    </span>
+    <div class="filter-section">
+        <span class="select-filter-container inputs-filter">
+            {{_("show")}}
+            <select id="pages-select" onchange="updateCommentCards('1')" class="select-filter">
+                <option value="6">6</option>
+                <option value="12">12</option>
+                <option value="24">24</option>
+                <option value="48">48</option>
+            </select>
+            {{_("inputs")}}
+        </span>
+        <span id="pipe-divider">|</span>
+        <span class="select-filter-container orderby-filter">
+            {{_("order by")}}
+            <select id="orderby-select" onchange="updateCommentCards('1')" class="select-filter">
+                <option value="0">{{_("agreement")}}</option>
+                <option value="1">{{_("disagreement")}}</option>
+                <option value="2">{{_("convergence")}}</option>
+                <option value="3">{{_("participation")}}</option>
+            </select>
+        </span>
+        <span class="sort-filter">
+            <a onclick="updateSortFilter('desc', event.target, 'sort-up-icon')"><i id="sort-down-icon" class="fa fa-sort-down fa-lg"></i></a>
+            <a onclick="updateSortFilter('asc', event.target, 'sort-down-icon')"><i id="sort-up-icon" class="fa fa-sort-up fa-lg"></i></a>
+        </span>
+    </div>
+</div>
+<div class="group-filter-container">
+    <div class="cluster-filters">
+        <span class="cluster-section-title">
+            <i class="fas fa-filter"></i>
+            <span>{{_("groups")}}</span>
+            <i class="fa fa-sort-down fa-lg"></i>
+        </span>
+    </div>
+    <div class="input-filter-container">
+        <i class="fas fa-search"></i>
+        <input type="search" onkeypress="updateSearch(event.target.value)">
+    </div>
+</div>
+<div class="button-filters">
+    <button id="general-button" onclick="setCluster('general', event.target)" class="group-button">{{_("general")}}</button>
+    {% for group in groups %}
+        <button id="{{group}}-button" onclick="setCluster('{{group}}', event.target)" class="group-button">{{group}}</button>
+    {% endfor %}
+</div>
+
+<script>
+let generalButton = document.getElementById("general-button");
+generalButton.classList.add("selected-group-button");
+
+let sortDownIcon = document.getElementById("sort-down-icon");
+sortDownIcon.classList.add("pink-icon");
+
+function updateSearch(str) {
+    searchString = str;
+    updateCommentCards('1');
+}
+
+function updateSortFilter(sort, target, previous) {
+    let previousIcon = document.getElementById(previous);
+    sortFilter = sort;
+
+    target.classList.add("pink-icon");
+    previousIcon.classList.remove("pink-icon");
+
+    updateCommentCards('1');
+}
+
+function setCluster(cluster, target) {
+    if(clusterFilters.includes(cluster)) {
+        removeCluster(cluster, target);
+    }
+    else {
+        addCluster(cluster, target);
+    }
+    updateCommentCards('1');
+}
+
+function addCluster(cluster, target) {
+    clusterFilters.push(cluster);
+    target.classList.add("selected-group-button");
+}
+
+function removeCluster(cluster, target) {
+    clusterFilters = clusterFilters.filter(item => item !== cluster);
+    target.classList.remove("selected-group-button");
+}
+
+</script>
