@@ -1,6 +1,7 @@
 import json
 from logging import getLogger
 
+from rest_framework.response import Response
 from boogie.models import F
 from boogie.router import Router
 from django.db.models import Count
@@ -80,45 +81,15 @@ def index(request, conversation, **kwargs):
 @urlpatterns.route(conversation_url + "clusters/edit/", perms=["ej.can_edit_conversation:conversation"])
 def edit(request, conversation, **kwargs):
     check_promoted(conversation, request)
-    new_cluster_form = forms.ClusterFormNew(request=request)
-    clusterization = getattr(conversation, "clusterization", None)
-
-    # Handle POST requests for new clusters
-    if request.method == "POST" and request.POST["action"] == "new" and new_cluster_form.is_valid():
-        clusterization = clusterization or conversation.get_clusterization()
-        new_cluster_form.save(clusterization=clusterization)
-        new_cluster_form = forms.ClusterFormNew()
 
     # Decorate clusters
-    if clusterization is None:
-        clusters = ()
-    else:
-        clusters = clusterization.clusters.annotate_attr(
-            form=lambda x: forms.ClusterForm(request=request, instance=x)
-        )
-    groups = [
-        (fa_icon("plus", alt=__("Create new group")), "#cluster-new"),
-        # (_('New'), '#cluster-new'),
-        *((cluster.name, f"#cluster-{cluster.id}") for cluster in clusters),
-    ]
+    clusters = get_conversation_clusters_decorated_with_forms(conversation, request)
 
-    # Handle POST requests for existing clusters
-    if request.method == "POST" and request.POST["action"] != "new":
-        cluster_map = {x.id: x for x in clusters}
-        cluster = cluster_map[int(request.POST["action"])]
-        if request.POST["submit"] == "delete":
-            cluster.delete()
-            return redirect(conversation.url("cluster:edit"))
-        elif cluster.form.is_valid():
-            cluster.form.save()
-            cluster.form = forms.ClusterForm(instance=cluster)
-
-    return {
-        "conversation": conversation,
-        "groups": groups,
-        "clusters": clusters,
-        "new_cluster_form": new_cluster_form,
-    }
+    if request.method == "GET":
+        return get_edit_view(request, clusters, conversation)
+    elif request.method == "POST":
+        return post_edit_view(request, conversation, clusters)
+    return Response(status=403)
 
 
 @urlpatterns.route(conversation_url + "stereotypes/", perms=["ej.can_edit_conversation:conversation"])
@@ -187,3 +158,72 @@ def ctrl(request, board, conversation, slug, check=check_promoted):
         conversation.clusterization.update_clusterization(force=True)
 
     return redirect(conversation.url("cluster:index"))
+
+
+def get_edit_view(request, clusters, conversation):
+    new_cluster_form = forms.ClusterFormNew(user=conversation.author)
+    edit_cluster = None
+    show_modal = False
+    DELETED_GROUP = "deleted_group"
+
+    if "cluster-select" in request.GET:
+        current_cluster_select = request.GET["cluster-select"]
+        if current_cluster_select != "new":
+            new_cluster_form = None
+            edit_cluster = clusters.get(id=current_cluster_select)
+    elif "delete-success" in request.GET:
+        show_modal = DELETED_GROUP
+
+    return {
+        "conversation": conversation,
+        "clusters": clusters,
+        "new_cluster_form": new_cluster_form,
+        "edit_cluster": edit_cluster,
+        "show_modal": show_modal,
+    }
+
+
+def post_edit_view(request, conversation, clusters):
+    new_cluster_form = forms.ClusterFormNew(request=request, user=conversation.author)
+    edit_cluster = None
+    show_modal = False
+    CREATED_GROUP = "created_group_modal"
+
+    # Handle POST requests for new clusters
+    if request.POST["action"] == "new" and new_cluster_form.is_valid():
+        clusterization = conversation.get_clusterization()
+        new_cluster_form.save(clusterization=clusterization)
+        new_cluster_form = forms.ClusterFormNew(user=conversation.author)
+        show_modal = CREATED_GROUP
+        clusters = get_conversation_clusters_decorated_with_forms(conversation, request)
+
+    # Handle POST requests for existing clusters
+    if request.POST["action"] != "new":
+        new_cluster_form = None
+        cluster_map = {x.id: x for x in clusters}
+        cluster = cluster_map[int(request.POST["action"])]
+        if "delete" in request.POST:
+            cluster.delete()
+            return redirect(conversation.url("cluster:edit") + "?delete-success")
+        elif cluster.form.is_valid():
+            edit_cluster = cluster.form.save()
+            edit_cluster.form = forms.ClusterForm(instance=edit_cluster, user=conversation.author)
+
+    return {
+        "conversation": conversation,
+        "clusters": clusters,
+        "new_cluster_form": new_cluster_form,
+        "edit_cluster": edit_cluster,
+        "show_modal": show_modal,
+    }
+
+
+def get_conversation_clusters_decorated_with_forms(conversation, request):
+    clusterization = getattr(conversation, "clusterization", None)
+    if clusterization is None:
+        clusters = ()
+    else:
+        clusters = clusterization.clusters.annotate_attr(
+            form=lambda x: forms.ClusterForm(request=request, instance=x, user=conversation.author)
+        )
+    return clusters

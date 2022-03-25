@@ -1,0 +1,15 @@
+<form method="GET" id="cluster-filter">
+    <button id="new-button" value="new" class="fa">&#xf067;</button>
+    <div name="cluster-select" id="cluster-select">
+        {% for cluster in clusters %}
+            {% if edit_cluster and cluster.id == edit_cluster.id %}
+                <button type="submit" class="options-groups select-button" id="cluster-{{ cluster.id }}" value="{{cluster.id}}" name="cluster-select" >{{cluster.name}}</button>
+            {% else %}
+                <button type="submit" class="options-groups" id="cluster-{{ cluster.id }}" value="{{cluster.id}}" name="cluster-select">{{cluster.name}}</button>
+            {% endif %}
+        {% endfor %}
+        {% if not clusters %}
+            <span class="options-groups no-cluster">{{_("you haven't created groups yet")}}</span>
+        {% endif %}
+    </div>
+</form>

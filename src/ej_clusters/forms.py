@@ -47,21 +47,28 @@ class ClusterForm(EjModelForm):
         }
         labels = {"stereotypes": _("Personas"), "new_persona": ""}
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, user=None, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["stereotypes"].required = False
+        if user:
+            self.owner = user
+            self.fields["stereotypes"].queryset = Stereotype.objects.filter(owner=self.owner)
 
 
 class ClusterFormNew(ClusterForm):
     new_persona = forms.BooleanField(
         required=False,
         initial=True,
-        help_text=_("Create new persona with the name of the group if no other persona isselected."),
+        help_text=_("Create new persona with the name of the group if no other persona is selected."),
     )
 
     def clean(self):
         if not self.cleaned_data["new_persona"] and not self.cleaned_data["stereotypes"]:
             self.add_error("stereotypes", _("You must select a persona or create a new one."))
+        if self.cleaned_data["new_persona"]:
+            stereotype = Stereotype.objects.filter(name=self.cleaned_data["name"], owner=self.owner)
+            if stereotype.exists():
+                self.add_error("name", _("A group with that name already exists. Choose a different name."))
 
     def _save_m2m(self):
         super()._save_m2m()

@@ -1,0 +1,87 @@
+<h3 class="title-cluster">{{ _('Edit group') }}</h3>
+<div class="form-elements">
+    <div class="form-cluster-description">
+        <form method="post" class="width-full" id="cluster-{{ edit_cluster.id }}" name="editForm">
+            {{ csrf_input }}
+            <input type="hidden" name="action" value="{{ edit_cluster.id }}">
+
+            <label>{{edit_cluster.form.name.label}}</label>
+            <input type="text" name="name" value="{{ edit_cluster.name }}" maxlength="64" required="" id="cluster-name">
+
+            <label>{{edit_cluster.form.description.label}}</label>
+            <textarea name="description" cols="40" rows="10" id="cluster_description" placeholder="{{ _('Description of the group') }}">{{ edit_cluster.description }}</textarea>
+    </div>
+    <div class="form-cluster-personas">
+        <label id="stereotypes_label">{{edit_cluster.form.stereotypes.label}}
+            <a onclick="showTooltip()"><img src="{{ static('/img/icons/info.svg') }}" alt="Personas info"/></a>
+            <div class="disable-tooltip tooltip-persona">
+                <p>{{_("The list below only matters to personas on this wall")}}</p>
+            </div>
+        </label>
+            <span class="personas-list">{{ edit_cluster.form.stereotypes }}</span>
+        
+        <p class="hint">{{_('You can select multiple personas for each group. "Personas" are reference users that you control and define the opinion profile of groups.')}}</p>
+        
+        <div class="new-persona-shortcut">
+            <input type="checkbox" disabled name="new_persona" id="new_persona_check" checked="">
+            <div id="new-persona-text" class="disable-div">
+                <label class="label-new-persona disable-div">{{_("New persona")}}</label>
+                <p id="text-new-persona">{{_("Create a new persona with the group name if no other personas are selected.")}}</p>
+            </div>
+        </div>
+
+        <div class="edit-buttons">
+            <button class="delete-group" type="button" onclick="showConfirmationDelete();"><i class="fas fa-times-circle"></i> {{ _('Delete group') }}</button>
+            <input class="create-group-btn" value="{{ _('Save edits') }}" type="button" id="save-edit" onclick="changeButton(); return false;"/>
+        </div>
+        </form>
+    </div>
+</div>
+
+<form method="post" id="form-confirmation-modal" class="close-modal-btn" onsubmit="closeModal();">
+{{ csrf_input }}
+    <input type="hidden" name="action" value="{{ edit_cluster.id }}">
+    <div class="overlay-modal" id="modal-confirm-delete">
+        <div class="confirmation-modal">
+            <div class="modal-confirmation-container">
+                <h3>{{_("Are you sure of this action?")}}</h3>
+                <button class="delete" name="delete">
+                    <i class="fa">&#xf057;</i> {{ _('Yes, I want to delete the group') }}
+                </button>
+                <button class="return" type="button" onclick="closeModal()">
+                    <i class="fa">&#xf056;</i> {{ _('No, I want to go back') }}
+                </button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+function changeButton() {
+    const buttonSave = document.getElementById("save-edit");
+    document.editForm.submit();
+    buttonSave.classList.remove('save-edit');
+    buttonSave.classList.add('save-edits-btn');
+    buttonSave.value = "Edições salvas";
+
+    setTimeout(function(){
+        buttonSave.classList.remove('save-edits-btn');
+        buttonSave.classList.add('save-edits');
+        buttonSave.value = "Salvar edições";
+    }, 2000);
+}
+
+function closeModal() {
+    const modal = document.getElementById('form-confirmation-modal');
+    const body = document.getElementsByClassName("body")[0].classList.add('modal-deactive');
+    modal.classList.add('close-modal-btn');
+    modal.classList.remove('form-modal-delete-show');
+}
+
+function showConfirmationDelete() {
+    const modal = document.getElementById('form-confirmation-modal');
+    const body = document.getElementsByClassName("body")[0].classList.add('modal-active');
+    modal.classList.add('form-modal-delete-show');
+    modal.classList.remove('close-modal-btn');   
+}
+</script>
