@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-03 03:31-0300\n"
+"POT-Creation-Date: 2022-03-23 14:34-0300\n"
 "PO-Revision-Date: 2019-09-09 13:55-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -275,20 +275,27 @@ msgstr ""
 msgid "Personas"
 msgstr "Personas"
 
-#: src/ej_clusters/forms.py:59
+#: src/ej_clusters/forms.py:62
+#, fuzzy
 msgid ""
-"Create new persona with the name of the group if no other persona isselected."
+"Create new persona with the name of the group if no other persona is "
+"selected."
 msgstr ""
 "Crie uma nova persona com o nome do grupo, se nenhuma outra persona for "
 "selecionada."
 
-#: src/ej_clusters/forms.py:64
+#: src/ej_clusters/forms.py:67
 msgid "You must select a persona or create a new one."
 msgstr "Você deve selecionar uma persona ou criar uma nova."
 
+#: src/ej_clusters/forms.py:71
+msgid "A group with that name already exists. Choose a different name."
+msgstr "Já existe um grupo com esse nome. Escolha um nome diferente."
+
 #: src/ej_clusters/models/__init__.py:51
-msgid "Edit groups"
-msgstr "Editar grupos"
+#, fuzzy
+msgid "Create/Edit groups"
+msgstr "Criar/Editar grupos"
 
 #: src/ej_clusters/models/__init__.py:52
 msgid "Manage personas"
@@ -2349,23 +2356,23 @@ msgstr "Em construção!"
 msgid "Context variables"
 msgstr "Varíaveis de contexto"
 
-#: src/ej/templates/jinja2/ej/includes/header.jinja2:1
+#: src/ej/templates/jinja2/ej/includes/header.jinja2:5
 msgid "Top header"
 msgstr "Cabeçalho superior"
 
-#: src/ej/templates/jinja2/ej/includes/header.jinja2:3
+#: src/ej/templates/jinja2/ej/includes/header.jinja2:7
 msgid "Toggle navigation menu"
 msgstr "Ligar/desligar menu de navegação"
 
-#: src/ej/templates/jinja2/ej/includes/header.jinja2:8
+#: src/ej/templates/jinja2/ej/includes/header.jinja2:12
 msgid "Logo"
 msgstr "Logotipo"
 
-#: src/ej/templates/jinja2/ej/includes/header.jinja2:8
+#: src/ej/templates/jinja2/ej/includes/header.jinja2:12
 msgid "Back to initial page"
 msgstr "Voltar para a página inicial"
 
-#: src/ej/templates/jinja2/ej/includes/header.jinja2:14
+#: src/ej/templates/jinja2/ej/includes/header.jinja2:19
 #: src/ej/templates/jinja2/ej/includes/profile-menu.jinja2:5
 #: src/ej/templates/jinja2/ej/includes/profile-menu.jinja2:8
 #: src/ej_profiles/jinja2/ej_profiles/base.jinja2:10
@@ -2373,8 +2380,8 @@ msgstr "Voltar para a página inicial"
 msgid "Profile picture"
 msgstr "Foto de perfil"
 
-#: src/ej/templates/jinja2/ej/includes/header.jinja2:23
-#: src/ej/templates/jinja2/ej/includes/profile-menu.jinja2:23
+#: src/ej/templates/jinja2/ej/includes/header.jinja2:28
+#: src/ej/templates/jinja2/ej/includes/profile-menu.jinja2:20
 #: src/ej_clusters/jinja2/ej_clusters/includes/stereotypes-menu.jinja2:2
 #: src/ej_clusters/jinja2/ej_clusters/includes/stereotypes-menu.jinja2:8
 #: src/ej_clusters/jinja2/ej_clusters/includes/stereotypes-menu.jinja2:9
@@ -2389,12 +2396,7 @@ msgstr "Foto de perfil"
 msgid "Profile"
 msgstr "Perfil"
 
-#: src/ej/templates/jinja2/ej/includes/profile-menu.jinja2:20
-#, fuzzy
-msgid "My Boards"
-msgstr "Meus murais"
-
-#: src/ej/templates/jinja2/ej/includes/profile-menu.jinja2:34
+#: src/ej/templates/jinja2/ej/includes/profile-menu.jinja2:31
 #: src/ej_profiles/jinja2/ej_profiles/detail.jinja2:39
 #: src/ej_profiles/jinja2/ej_profiles/includes/menu.jinja2:13
 #: src/ej_users/jinja2/account/index.jinja2:17
@@ -2653,7 +2655,6 @@ msgid "Edit board"
 msgstr "Editar mural"
 
 #: src/ej_boards/jinja2/ej_boards/board-edit.jinja2:4
-#: src/ej_clusters/jinja2/ej_clusters/edit.jinja2:43
 #: src/ej_clusters/jinja2/ej_clusters/stereotypes/create.jinja2:23
 #: src/ej_clusters/jinja2/ej_clusters/stereotypes/edit.jinja2:28
 #: src/ej_profiles/jinja2/ej_profiles/edit.jinja2:10
@@ -2696,22 +2697,9 @@ msgstr "Novo mural"
 msgid "Manage boards"
 msgstr "Gerenciar murais"
 
-#: src/ej_clusters/jinja2/ej_clusters/edit.jinja2:16
+#: src/ej_clusters/jinja2/ej_clusters/edit.jinja2:9
 msgid "Configure opinion groups"
 msgstr "Configurar grupos de opinião"
-
-#: src/ej_clusters/jinja2/ej_clusters/edit.jinja2:21
-msgid "New group"
-msgstr "Novo grupo"
-
-#: src/ej_clusters/jinja2/ej_clusters/edit.jinja2:28
-msgid "Create group"
-msgstr "Criar grupo"
-
-#: src/ej_clusters/jinja2/ej_clusters/edit.jinja2:41
-#: src/ej_clusters/jinja2/ej_clusters/stereotypes/edit.jinja2:25
-msgid "Delete"
-msgstr "Excluir"
 
 #: src/ej_clusters/jinja2/ej_clusters/index.jinja2:10
 msgid ""
@@ -2810,13 +2798,108 @@ msgstr "Descartar votos"
 msgid "Notes"
 msgstr "Notas"
 
-#: src/ej_clusters/jinja2/ej_clusters/includes/stereotypes-menu.jinja2:1
-msgid "Stereotypes"
-msgstr "Personas"
+#: src/ej_clusters/jinja2/ej_clusters/edit/edit-cluster-form.jinja2:1
+#, fuzzy
+msgid "Edit group"
+msgstr "Editar grupo"
 
+#: src/ej_clusters/jinja2/ej_clusters/edit/edit-cluster-form.jinja2:12
+#: src/ej_clusters/jinja2/ej_clusters/edit/new-cluster-form.jinja2:17
+#, fuzzy
+msgid "Description of the group"
+msgstr "Descrição do grupo"
+
+#: src/ej_clusters/jinja2/ej_clusters/edit/edit-cluster-form.jinja2:18
+#: src/ej_clusters/jinja2/ej_clusters/edit/new-cluster-form.jinja2:23
+msgid "The list below only matters to personas on this wall"
+msgstr "A lista abaixo importa apenas às personas deste mural"
+
+#: src/ej_clusters/jinja2/ej_clusters/edit/edit-cluster-form.jinja2:23
+#: src/ej_clusters/jinja2/ej_clusters/edit/new-cluster-form.jinja2:28
+#, fuzzy
+msgid ""
+"You can select multiple personas for each group. \"Personas\" are reference "
+"users that you control and define the opinion profile of groups."
+msgstr ""
+"Você pode selecionar várias personas para cada grupo. \"Personas\" são "
+"usuários usados como referência que você controla e definem o perfil de "
+"opinião dos grupos."
+
+#: src/ej_clusters/jinja2/ej_clusters/edit/edit-cluster-form.jinja2:28
+#: src/ej_clusters/jinja2/ej_clusters/edit/new-cluster-form.jinja2:33
 #: src/ej_clusters/jinja2/ej_clusters/includes/stereotypes-menu.jinja2:5
 msgid "New persona"
 msgstr "Nova persona"
+
+#: src/ej_clusters/jinja2/ej_clusters/edit/edit-cluster-form.jinja2:29
+#: src/ej_clusters/jinja2/ej_clusters/edit/new-cluster-form.jinja2:34
+#, fuzzy
+msgid ""
+"Create a new persona with the group name if no other personas are selected."
+msgstr ""
+"Crie uma nova persona com o nome do grupo, se nenhuma outra persona for "
+"selecionada."
+
+#: src/ej_clusters/jinja2/ej_clusters/edit/edit-cluster-form.jinja2:34
+#, fuzzy
+msgid "Delete group"
+msgstr "Excluir grupo"
+
+#: src/ej_clusters/jinja2/ej_clusters/edit/edit-cluster-form.jinja2:35
+#, fuzzy
+msgid "Save edits"
+msgstr "Salvar edições"
+
+#: src/ej_clusters/jinja2/ej_clusters/edit/edit-cluster-form.jinja2:47
+#, fuzzy
+msgid "Are you sure of this action?"
+msgstr "Você tem certeza dessa ação?"
+
+#: src/ej_clusters/jinja2/ej_clusters/edit/edit-cluster-form.jinja2:49
+#, fuzzy
+msgid "Yes, I want to delete the group"
+msgstr "Sim, quero excluir o grupo"
+
+#: src/ej_clusters/jinja2/ej_clusters/edit/edit-cluster-form.jinja2:52
+msgid "No, I want to go back"
+msgstr "Não, quero voltar"
+
+#: src/ej_clusters/jinja2/ej_clusters/edit/new-cluster-form.jinja2:3
+msgid "New group"
+msgstr "Novo grupo"
+
+#: src/ej_clusters/jinja2/ej_clusters/edit/new-cluster-form.jinja2:11
+#, fuzzy
+msgid "Group name"
+msgstr "Nome do grupo"
+
+#: src/ej_clusters/jinja2/ej_clusters/edit/new-cluster-form.jinja2:39
+#, fuzzy
+msgid "Create group"
+msgstr "Criar grupo"
+
+#: src/ej_clusters/jinja2/ej_clusters/edit/new-cluster-form.jinja2:46
+#, fuzzy
+msgid "Created Group"
+msgstr "Grupo criado"
+
+#: src/ej_clusters/jinja2/ej_clusters/edit/new-cluster-form.jinja2:50
+msgid "Excluded Group"
+msgstr "Grupo excluído"
+
+#: src/ej_clusters/jinja2/ej_clusters/edit/select-groups.jinja2:12
+#, fuzzy
+msgid "you haven't created groups yet"
+msgstr "você ainda não criou grupos"
+
+#: src/ej_clusters/jinja2/ej_clusters/includes/conclusion-action-modal.jinja2:7
+#, fuzzy
+msgid "close"
+msgstr "fechar"
+
+#: src/ej_clusters/jinja2/ej_clusters/includes/stereotypes-menu.jinja2:1
+msgid "Stereotypes"
+msgstr "Personas"
 
 #: src/ej_clusters/jinja2/ej_clusters/includes/stereotypes-menu.jinja2:12
 #: src/ej_profiles/jinja2/ej_profiles/includes/menu.jinja2:9
@@ -2835,6 +2918,10 @@ msgstr "Criar persona"
 #: src/ej_clusters/jinja2/ej_clusters/stereotypes/edit.jinja2:7
 msgid "Edit persona:"
 msgstr "Editar persona:"
+
+#: src/ej_clusters/jinja2/ej_clusters/stereotypes/edit.jinja2:25
+msgid "Delete"
+msgstr "Excluir"
 
 #: src/ej_clusters/jinja2/ej_clusters/stereotypes/edit.jinja2:38
 msgid "Are you sure you want to delete this persona?"
@@ -3087,39 +3174,39 @@ msgstr "Aprovar"
 msgid "Go to conversation"
 msgstr "Voltar para conversa"
 
-#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:22
+#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:21
 msgid "Back to conversations"
 msgstr "Voltar para conversas"
 
-#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:33
+#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:27
 #, fuzzy
 msgid "Collect opinions"
 msgstr "Coletar opiniões"
 
-#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:46
+#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:40
 msgid "Model and Analyze"
 msgstr "Modelar e Analisar"
 
-#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:57
+#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:51
 msgid "Reports"
 msgstr "Relatórios"
 
-#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:62
+#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:56
 #, fuzzy
 msgid "General report"
 msgstr "Relatório Geral"
 
-#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:63
+#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:57
 #, fuzzy
 msgid "Comments report"
 msgstr "Relatório de comentários"
 
-#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:64
+#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:58
 #, fuzzy
 msgid "Participants report"
 msgstr "Relatório de participantes"
 
-#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:66
+#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:60
 msgid "Scatter plot"
 msgstr "Nuvem de pontos"
 
@@ -4476,6 +4563,13 @@ msgstr "Mudar a senha"
 #, fuzzy
 msgid "Authentication"
 msgstr "Autenticação"
+
+#, fuzzy
+#~ msgid "My Boards"
+#~ msgstr "Meus murais"
+
+#~ msgid "There is already a stereotype with this name."
+#~ msgstr "Já existe uma persona com este nome."
 
 #~ msgid "Navigation bar"
 #~ msgstr "Menu de navegação"

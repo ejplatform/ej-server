@@ -1,0 +1,63 @@
+{% from "ej_clusters/includes/conclusion-action-modal.jinja2" import conclusion_action_modal %}
+
+<h3 class="title-cluster">{{ _('New group') }}</h3>
+<div class="form-elements">
+    <div class="form-cluster-description">
+        <form method="post" id="cluster-new">
+            {{ csrf_input }}
+            <input type="hidden" name="action" value="new">
+
+            <label>{{ new_cluster_form.name.label }}</label>
+            <input type="text" name="name" maxlength="64" required="" id="cluster-name" placeholder="{{ _('Group name') }}">
+            {% if "name" in new_cluster_form.errors %}
+                {{ new_cluster_form.errors["name"] }}
+            {% endif %}
+
+            <label>{{ new_cluster_form.description.label }}</label>
+            <textarea name="description" cols="40" rows="10" id="cluster-description" placeholder="{{ _('Description of the group') }}"></textarea>
+    </div>
+    <div class="form-cluster-personas">
+        <label id="stereotypes_label">{{ new_cluster_form.stereotypes.label }} 
+            <a onclick="showTooltip()"><img src="{{ static('/img/icons/info.svg') }}" alt="Personas info"/></a>
+            <div class="disable-tooltip tooltip-persona">
+                <p>{{_("The list below only matters to personas on this wall")}}</p>
+            </div>
+        </label>
+            <span class="personas-list">{{ new_cluster_form.stereotypes }}</span>
+        
+        <p class="hint">{{_('You can select multiple personas for each group. "Personas" are reference users that you control and define the opinion profile of groups.')}}</p>
+        
+        <div class="new-persona-shortcut">
+            <input type="checkbox" name="new_persona" id="new_persona_check" checked="">
+            <div id="new-persona-text">
+                <label class="label-new-persona">{{_("New persona")}}</label>
+                <p id="text-new-persona">{{_("Create a new persona with the group name if no other personas are selected.")}}</p>
+            </div>
+        </div>
+        <div class="btn-container">
+            <button class="is-primary create-group-btn" name="submit" value="new">
+                <i class="fa fa-plus-circle"></i> {{ _('Create group') }}
+            </button>
+        </div>
+        </form>
+    </div>
+</div>
+{% if show_modal == "created_group_modal" %}
+    {{ conclusion_action_modal(static('/img/icons/circle-check-solid.svg'), _("Created Group"), conversation) }}
+{% endif %}
+
+{% if show_modal == "deleted_group" %}
+    {{ conclusion_action_modal(static('/img/icons/circle-x.svg'), _("Excluded Group"), conversation) }}
+{% endif %}
+
+<script>
+function showTooltip() {
+    const tooltip = document.getElementsByClassName('tooltip-persona')[0];
+    if (tooltip.classList.contains("disable-tooltip")) {
+    tooltip.classList.remove("disable-tooltip");
+    }
+    else {
+        tooltip.classList.add("disable-tooltip");
+    }
+}
+</script>
