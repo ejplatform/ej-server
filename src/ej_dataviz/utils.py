@@ -1,13 +1,16 @@
 from django.core.paginator import PageNotAnInteger, EmptyPage
-from django.http import HttpResponse, Http404, JsonResponse
-from django.shortcuts import get_object_or_404, render
-from django.utils.translation import ugettext as _, ugettext_lazy
+from django.http import HttpResponse, Http404
+from django.shortcuts import get_object_or_404
+from django.utils.translation import gettext as _
 from sidekick import import_later
+from django.conf import settings
 
 from ej_clusters.models import Cluster
-from .routes import EXPOSED_PROFILE_FIELDS
+from .constants import EXPOSED_PROFILE_FIELDS
+from .constants import *
 
 pd = import_later("pandas")
+stop_words = import_later("stop_words")
 
 
 class OrderByOptions:
@@ -266,3 +269,56 @@ def votes_as_dataframe(votes):
     df["created"] = votes_timestamps
     df.choice = list(map({-1: "disagree", 1: "agree", 0: "skip"}.get, df["choice"]))
     return df
+
+
+def get_stop_words():
+    lang = getattr(settings, "LANGUAGE_CODE", "en")
+    lang = NORMALIZE_LANGUAGES.get(lang, lang)
+    if lang in stop_words.AVAILABLE_LANGUAGES:
+        return stop_words.get_stop_words(lang)
+
+    pre_lang = lang.split("-")[0]
+    pre_lang = NORMALIZE_LANGUAGES.get(pre_lang, pre_lang)
+    if pre_lang in stop_words.AVAILABLE_LANGUAGES:
+        return stop_words.get_stop_words(lang.split("-")[0])
+
+    log.error("Could not find stop words for language {lang!r}. Using English.")
+    return stop_words.get_stop_words("en")
+
+
+def get_biggest_cluster_data(cluster, cluster_as_dataframe):
+    """
+    returns the biggest cluster and the most positive comment from it.
+    """
+    import math
+
+    try:
+        positive_comment_content = cluster_as_dataframe.sort_values("agree", ascending=False).iloc[0][
+            "comment"
+        ]
+        positive_comment_percent = math.trunc(
+            cluster_as_dataframe.sort_values("agree", ascending=False).iloc[0]["agree"] * 100
+        )
+        return {
+            "name": cluster.name,
+            "content": positive_comment_content,
+            "percentage": positive_comment_percent,
+        }
+    except Exception as e:
+        print(e)
+    return {}
+
+
+def conversation_has_stereotypes(clusterization):
+    if clusterization and clusterization.exists():
+        return clusterization.stereotypes().count() > 0
+    return False
+
+
+def get_biggest_cluster(clusterization):
+    from django.db.models import Count, F
+
+    if conversation_has_stereotypes(clusterization):
+        clusters = clusterization.clusters().annotate(size=Count(F("users")))
+        return clusters.order_by("-size").first()
+    return None

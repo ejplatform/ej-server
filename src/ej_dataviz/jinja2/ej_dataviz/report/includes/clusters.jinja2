@@ -1,0 +1,54 @@
+<div class="conversation-dashboard cluster light-blue-bg">
+    <div class="cluster-container flex wrap">
+    <div class="cluster-col title flex">
+        <h2 class="text-accent">{{_('Opinion Groups')}}</h2>
+    </div>
+        {% if json_data %}
+            <div class="cluster-col clusters">
+                <div id="cluster-canvas-container">
+                    <canvas id="cluster-canvas"></canvas>
+                </div>
+            </div>
+            <div class="cluster-col detail detail-filled">
+                <h2 class="cluster-name"> {{ biggest_cluster_data.get('name') }}</h2>
+                <hr>
+                <div class="cluster-description">
+                    <p class="cluster-comment-percentage">{{ biggest_cluster_data.get('percentage') }}%
+                        {{_("agree with")}} </p>
+                    <p class="cluster-main-comment"> {{ biggest_cluster_data.get('content') }}</p>
+                </div>
+                <div class="conversation-dashboard-button">
+                    <a class="button square is-primary" href="{{conversation.url('cluster:index')}}">{{_("Manage groups")}}</a>
+                </div>
+            </div>
+            {% else %}
+            <div class="cluster-col detail detail-empty">
+                <div class="cluster-description">
+                    <p class="cluster-null">{{_("Your conversation does not have personas.")}}</p>
+                    <p class="bold">{{_("Without personas, it's not possible to create opinion groups.")}}</p>
+                    <p>{{_("After modeling groups, you can check then here.")}}</p>
+                </div>
+                <div class="conversation-dashboard-button">
+                    <a class="button square is-primary float-left"
+                        href="{{conversation.url('cluster:edit')}}">{{_("Creates groups")}}</a>
+                </div>
+            </div>
+            {% endif %}
+    </div>
+</div>
+
+{% block javascript %}
+    {% if json_data %}
+        <script src="{{ static('js/clusterviz.js') }}"></script>
+        <script>
+            window.addEventListener('load', function () {
+                var $canvas = $('#cluster-canvas'),
+                    $canvasContainer = $('#cluster-canvas-container'),
+                    size = Math.min($canvasContainer.width(), 500);
+
+                $canvas.css({width: size, maxWidth: 500, height: size * 0.80});
+                initializeForceLayout('#cluster-canvas', {{ json_data | safe }});
+            });
+        </script>
+    {% endif %}
+{% endblock %}

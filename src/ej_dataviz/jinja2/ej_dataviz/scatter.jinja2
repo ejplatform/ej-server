@@ -18,7 +18,7 @@
         <i class="fa fa-chevron-right"></i>
     </div>
 
-    <div id="scatter-container" class="center text-3" style="width: 100%">
+    <div id="scatter-container">
         <div class="size-y6p col flex-center"><p>{{ _('Loading data...') }}</p></div>
     </div>
     <p class="center measure margin-xauto">
@@ -33,9 +33,7 @@
             // Load main data from json.
             $.ajax('pca.json').then(function (data) {
                 // Prepare container
-                var $container = $("#scatter-container"),
-                    width = $container.width() + 100;
-                $container.height(((width < 500) ? width : 600) + 'px');
+                var $container = $("#scatter-container");
 
                 // Check if data is valid
                 if (data.error) {

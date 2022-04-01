@@ -68,7 +68,7 @@
 
     <div class="alternate-cards">
         {% for conversation in conversations %}
-            <div class="margin-y3">{{ conversation|role('card',url=conversation.url('report:general-report')) }}</div>
+            <div class="margin-y3">{{ conversation|role('card',url=conversation.url('dataviz:dashboard')) }}</div>
         {% endfor %}
     </div>
     <script>

@@ -17,8 +17,11 @@
 
 @import 'components/conversations/links-modal';
 
-@import 'components/reports/reports';
 @import 'components/reports/comment';
+@import 'components/reports/dashboard';
+@import 'components/reports/export-data';
+@import 'components/reports/users';
+@import 'components/reports/generics';
 
 // Generic
 @import 'components/collapsible';

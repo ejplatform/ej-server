@@ -1,0 +1,21 @@
+.modal-report {
+    position: relative;
+    display: none !important;
+
+    &.show-options {
+        display: block !important;
+    }
+}
+
+#format-name {
+    color: $color-theme-report-black;
+    font-weight: bold;
+}
+
+.modal-content {
+    background-color: $color-theme-report-lighter;
+    position: absolute;
+    z-index: 1;
+    width: 100px;
+}
+

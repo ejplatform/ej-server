@@ -1,0 +1,13 @@
+<div class="conversation-dashboard participants">
+    <div class="participants-card">
+        <div class="participants-card-container flex wrap">
+            <div class="flex wrap">
+                <div class="participants-card-container-label blue bold">{{_("Total of participants")}}</div>
+                <div class="participants-card-container-count bold">{{participants_statistics.get('voters')}}</div>
+            </div>
+            <div class="participants-card-container-report-link conversation-dashboard-button">
+                <a class="button is-primary" href="{{conversation.url('report:users')}}">{{_("Participants report")}}</a>
+            </div>
+        </div>
+    </div>
+</div>

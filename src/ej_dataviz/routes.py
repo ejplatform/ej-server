@@ -1,6 +1,6 @@
 from collections import defaultdict
 from logging import getLogger
-from typing import Callable, Sequence
+from typing import Callable
 
 from boogie.router import Router
 from django.apps import apps
@@ -8,32 +8,62 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.http import JsonResponse
 from django.utils.translation import ugettext_lazy as _, ugettext as __
+from ej_dataviz.models import ToolsLinksHelper
+from ej_dataviz.routes_report import comments_data_cluster
 from sidekick import import_later
 
 from ej_conversations.models import Conversation
-from ej_conversations.urls import conversation_url
 from ej_conversations.utils import check_promoted
-from ej_profiles.enums import Gender, Race, STATE_CHOICES
+from ej_clusters.models.clusterization import Clusterization
+from ej_tools.utils import get_host_with_schema
+from .constants import *
+from .utils import (
+    get_biggest_cluster,
+    get_biggest_cluster_data,
+    conversation_has_stereotypes,
+    get_stop_words,
+)
 
-np = import_later("numpy")
-
-wordcloud = import_later("wordcloud")
-stop_words = import_later("stop_words")
-pd = import_later("pandas")
 log = getLogger("ej")
+np = import_later("numpy")
+wordcloud = import_later("wordcloud")
+pd = import_later("pandas")
+
 urlpatterns = Router(
     base_path=f"<model:conversation>/<slug:slug>/",
     template="ej_dataviz/{name}.jinja2",
     models={"conversation": Conversation},
     login=True,
 )
+
 app_name = "ej_dataviz"
 User = get_user_model()
 
 
-#
-# Scatter plot
-#
+@urlpatterns.route("dashboard/", perms=["ej.can_view_report:conversation"])
+def dashboard(request, conversation, **kwargs):
+    check_promoted(conversation, request)
+    can_view_detail = request.user.has_perm("ej.can_view_report_detail", conversation)
+    statistics = conversation.statistics()
+    clusterization = Clusterization.objects.filter(conversation=conversation)
+    host = get_host_with_schema(request)
+    names = getattr(settings, "EJ_PROFILE_FIELD_NAMES", {})
+    biggest_cluster_data = get_dashboard_biggest_cluster(request, conversation, clusterization)
+    return {
+        "conversation": conversation,
+        "can_view_detail": can_view_detail,
+        "statistics": statistics,
+        "conversation_has_stereotypes": conversation_has_stereotypes(clusterization),
+        "bot": ToolsLinksHelper.get_bot_link(host),
+        "json_data": clusters(request, conversation),
+        "biggest_cluster_data": biggest_cluster_data,
+        "gender_field": names.get("gender", _("Gender")),
+        "race_field": names.get("race", _("Race")),
+        "conversation": check_promoted(conversation, request),
+        "pca_link": _("https://en.wikipedia.org/wiki/Principal_component_analysis"),
+    }
+
+
 @urlpatterns.route("scatter/")
 def scatter(request, conversation, **kwargs):
     names = getattr(settings, "EJ_PROFILE_FIELD_NAMES", {})
@@ -117,15 +147,7 @@ def scatter_group(request, conversation, groupby, **kwargs):
     )
 
 
-#
-# Word cloud
-#
-@urlpatterns.route("word-cloud/")
-def word_cloud(request, conversation, **kwargs):
-    return {"conversation": conversation}
-
-
-@urlpatterns.route("word-cloud/words.json")
+@urlpatterns.route("dashboard/words.json")
 def words(request, conversation, **kwargs):
     data = "\n".join(conversation.approved_comments.values_list("content", flat=True))
     regexp = r"\w[\w'\u0327]+"
@@ -220,230 +242,27 @@ def format_echarts_option(data, user_coords, stereotype_coords, extra_fields: li
                         "data": data.values.tolist(),
                     }
                 ],
+                "grid": {"left": 10, "right": 10, "top": 10, "bottom": 30},
             },
             "visualMap": visual_map,
         }
     )
 
 
-#
-# Utilities
-#
-def get_stop_words():
-    lang = getattr(settings, "LANGUAGE_CODE", "en")
-    lang = NORMALIZE_LANGUAGES.get(lang, lang)
-    if lang in stop_words.AVAILABLE_LANGUAGES:
-        return stop_words.get_stop_words(lang)
+def clusters(request, conversation):
+    """
+    Returns the cluster data as json format to render groups on frontend.
+    """
+    from ej_clusters.routes import index
 
-    pre_lang = lang.split("-")[0]
-    pre_lang = NORMALIZE_LANGUAGES.get(pre_lang, pre_lang)
-    if pre_lang in stop_words.AVAILABLE_LANGUAGES:
-        return stop_words.get_stop_words(lang.split("-")[0])
-
-    log.error("Could not find stop words for language {lang!r}. Using English.")
-    return stop_words.get_stop_words("en")
+    clusters_data = index(request, conversation)
+    clusters_shapes = clusters_data.get("json_data")
+    return clusters_shapes
 
 
-#
-# Grouping constants
-#
-def field_descriptor(enum):
-    def formatter(x):
-        if isinstance(x, str):
-            return x
-        elif x is None or x == 0 or np.isnan(x):
-            return None
-        elif x == [1, 2, 3, 4, 5, 6, 20]:
-            return enum(x).description
-
-    return formatter
-
-
-def get_state_colors(states: Sequence):
-    keys = set(states)
-    keys.discard("")
-
-    # We try to infer better colors for special configurations
-    # For now, only Brazil is supported. It colors according to geographic region.
-    if is_brazil(keys):
-        cmap = state_colors_brazil(*COLORS[:5])
-        return [cmap[st] for st in states]
-
-    # Generic procedure: 1 color per state
-    colors = COLORS[:]
-    while len(colors) < len(states):
-        colors.extend(COLORS)
-    return colors[: len(states)]
-
-
-def is_brazil(states: set):
-    return states == {
-        "AC",
-        "AL",
-        "AP",
-        "AM",
-        "BA",
-        "CE",
-        "DF",
-        "ES",
-        "GO",
-        "MA",
-        "MT",
-        "MS",
-        "MG",
-        "PA",
-        "PB",
-        "PR",
-        "PE",
-        "PI",
-        "RJ",
-        "RN",
-        "RS",
-        "RO",
-        "RR",
-        "SC",
-        "SP",
-        "SE",
-        "TO",
-    }
-
-
-def state_colors_brazil(N, NE, CW, SE, S):
-    return {
-        "AC": N,
-        "AL": NE,
-        "AP": N,
-        "AM": N,
-        "BA": NE,
-        "CE": NE,
-        "DF": CW,
-        "ES": SE,
-        "GO": CW,
-        "MA": NE,
-        "MT": CW,
-        "MS": CW,
-        "MG": SE,
-        "PA": N,
-        "PB": NE,
-        "PR": S,
-        "PE": NE,
-        "PI": NE,
-        "RJ": SE,
-        "RN": NE,
-        "RS": S,
-        "RO": N,
-        "RR": N,
-        "SC": S,
-        "SP": SE,
-        "SE": NE,
-        "TO": CW,
-    }
-
-
-VALID_GROUP_BY = {"gender": "profile__gender", "race": "profile__race"}
-
-GROUP_NAMES = {
-    "gender": lambda x: None if x is None else Gender(x).name.lower(),
-    "race": lambda x: None if x is None else Race(x).name.lower(),
-}
-
-GROUP_DESCRIPTIONS = {
-    "gender": lambda x: None if x is None else Gender(x).description,
-    "race": lambda x: None if x is None else Race(x).description,
-}
-
-EXPOSED_PROFILE_FIELDS = ("race", "gender", "age", "occupation", "education", "country", "state")
-
-# Reference: https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
-NORMALIZE_LANGUAGES = {
-    "ar": "arabic",
-    "bg": "bulgarian",
-    "ca": "catalan",
-    "cs": "czech",
-    "da": "danish",
-    "de": "german",
-    "en": "english",
-    "es": "spanish",
-    "fi": "finnish",
-    "fr": "french",
-    "hi": "hindi",
-    "hu": "hungarian",
-    "id": "indonesian",
-    "it": "italian",
-    "nl": "dutch",
-    "no": "norwegian",
-    "pl": "polish",
-    "pt": "portuguese",
-    "ro": "romanian",
-    "ru": "russian",
-    "sk": "slovak",
-    "sv": "swedish",
-    "tr": "turkish",
-    "uk": "ukrainian",
-    "vi": "vietnamese",
-}
-
-COLORS = [
-    "#042A46",
-    "#FF3E72",
-    "#30BFD3",
-    "#36C273",
-    "#7758B3",
-    "#797979",
-    "#F68128",
-    "#C4F2F4",
-    "#B4FDD4",
-    "#FFE1CA",
-    "#E7DBFF",
-    "#FFE3EA",
-    "#EEEEEE",
-]
-SYMBOLS = ["circle", "rect", "triangle", "diamond", "arrow", "roundRect", "pin"]
-FIELD_NAMES = getattr(settings, "EJ_PROFILE_FIELD_NAMES", {})
-PIECEWISE_OPTIONS = {
-    "piecewise": True,
-    "top": "top",
-    "orient": "horizontal",
-    "padding": [20, 10, 10, 10],
-    "outOfRange": {"opacity": 0.25, "colorSaturation": 0.0},
-}
-VALID_STATE_CHOICES = sorted((st for st, _ in STATE_CHOICES if st))
-FIELD_DATA = {
-    "gender": {
-        "query": "profile__gender",
-        "name": FIELD_NAMES.get("gender", _("Gender")),
-        "visual_map": {
-            **PIECEWISE_OPTIONS,
-            "categories": [x.description for x in Gender if x != 0],
-            "inRange": {"color": COLORS[: len(list(Gender))]},
-        },
-        "transform": lambda col: col.apply(field_descriptor(Gender)),
-    },
-    "race": {
-        "query": "profile__race",
-        "name": FIELD_NAMES.get("race", _("Race")),
-        "visual_map": {
-            **PIECEWISE_OPTIONS,
-            "categories": [x.description for x in Race if x != 0],
-            "inRange": {"color": COLORS[: len(list(Race))]},
-        },
-        "transform": lambda col: col.apply(field_descriptor(Race)),
-    },
-    "state": {
-        "query": "profile__state",
-        "name": FIELD_NAMES.get("state", _("State")),
-        "visual_map": {
-            "piecewise": True,
-            "padding": [20, 5, 5, 10],
-            "top": "center",
-            "outOfRange": PIECEWISE_OPTIONS["outOfRange"],
-            "categories": VALID_STATE_CHOICES,
-            "inRange": {"color": get_state_colors(VALID_STATE_CHOICES)},
-            "itemGap": 2,
-            "textStyle": {"fontSize": 8},
-            "legend": {"type": "scroll"},
-        },
-        "transform": lambda x: x,
-    },
-    "name": {"query": "name", "name": _("Name")},
-}
+def get_dashboard_biggest_cluster(request, conversation, clusterization):
+    biggest_cluster = get_biggest_cluster(clusterization)
+    if biggest_cluster:
+        biggest_cluster_df = comments_data_cluster(request, conversation, None, biggest_cluster.id)
+        return get_biggest_cluster_data(biggest_cluster, biggest_cluster_df)
+    return {}

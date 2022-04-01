@@ -2,22 +2,18 @@ from functools import lru_cache
 import datetime
 
 from boogie.router import Router
+from django.http import JsonResponse
 from django.contrib.auth import get_user_model
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.utils.text import slugify
 from django.utils.translation import ugettext as _, ugettext_lazy
-from ej_clusters.models.clusterization import Clusterization
-from ej_tools.utils import get_host_with_schema
 from sidekick import import_later
 from django.core.paginator import Paginator
 
 from ej_clusters.models import Cluster
 from ej_conversations.models import Conversation
 from ej_conversations.utils import check_promoted
-from .routes import words
-from .models import ToolsLinksHelper
-from .utils import OrderByOptions
 from .utils import (
     add_id_column,
     filter_comments_by_group,
@@ -33,6 +29,7 @@ from .utils import (
     get_user_data,
     comments_data_common,
     vote_data_common,
+    OrderByOptions,
 )
 
 
@@ -47,34 +44,6 @@ urlpatterns = Router(
 )
 app_name = "ej_dataviz"
 User = get_user_model()
-
-
-@urlpatterns.route("general-report/")
-def general_report(request, conversation, **kwargs):
-    check_promoted(conversation, request)
-    can_view_detail = request.user.has_perm("ej.can_view_report_detail", conversation)
-    statistics = conversation.statistics()
-
-    conversation_clusterization = Clusterization.objects.filter(conversation=conversation)
-    conversation_has_stereotypes = False
-
-    if conversation_clusterization.exists():
-        conversation_has_stereotypes = conversation_clusterization.stereotypes().count() > 0
-
-    host = get_host_with_schema(request)
-    return {
-        "conversation": conversation,
-        "type_data": "votes-data",
-        "can_view_detail": can_view_detail,
-        "statistics": statistics,
-        "conversation_has_stereotypes": conversation_has_stereotypes,
-        "bot": ToolsLinksHelper.get_bot_link(host),
-    }
-
-
-@urlpatterns.route("general-report/words.json")
-def report_card_words(request, conversation, **kwargs):
-    return words(request, conversation)
 
 
 @urlpatterns.route("comments-report/")
@@ -201,6 +170,29 @@ def comments_data_cluster(request, conversation, fmt, cluster_id, **kwargs):
     cluster = get_cluster_or_404(cluster_id, conversation)
     filename = conversation.slug + f"-{slugify(cluster.name)}-comments"
     return comments_data_common(conversation.comments, cluster.votes, filename, fmt)
+
+
+def comments_data_common(comments, votes, filename, fmt):
+    df = comments.statistics_summary_dataframe(votes=votes)
+    df = comments.extend_dataframe(df, "id", "author__email", "author__id", "created")
+    # Adjust column names
+    columns = [
+        "content",
+        "id",
+        "author__email",
+        "author__id",
+        "agree",
+        "disagree",
+        "skipped",
+        "convergence",
+        "participation",
+        "created",
+    ]
+    df = df[columns]
+    df.columns = ["comment", "comment_id", "author", "author_id", *columns[4:]]
+    if not fmt:
+        return df
+    return data_response(df, fmt, filename)
 
 
 # ==============================================================================

@@ -1,0 +1,31 @@
+<div class="conversation-dashboard comments flex light-blue-bg">
+    <div class="comments-container">
+        <div class="conversation-dashboard title flex light-blue-bg">
+            <h2 class="text-accent">{{_('Comments')}}</h2>
+            <span>&nbsp;{{_('General View')}}</span>
+        </div>
+        <section class="flex wrap">
+            <div class="comments-item">
+                <div class="comments-item-title">{{_("approved comments")}}</div>
+                <div class="comments-item-value">{{comments_statistics.get('approved')}}</div>
+            </div>
+            <div class="comments-item">
+                <div class="comments-item-title">{{_("rejected comments")}}</div>
+                <div class="comments-item-value">{{comments_statistics.get('rejected')}}</div>
+            </div>
+            <div class="comments-item">
+                <div class="comments-item-title">{{_("pending")}}</div>
+                <div class="comments-item-value">{{comments_statistics.get('pending')}}</div>
+            </div>
+            <div class="comments-item">
+                <div class="comments-item-title">{{_("total")}}</div>
+                <div class="comments-item-value">{{comments_statistics.get('total')}}</div>
+            </div>
+        </section>
+        <div class="conversation-dashboard-button">
+            <a class="button square is-primary float-right" href="{{conversation.url('report:comments-report')}}">{{_("comments report")}}</a>
+        </div>
+    </div>
+</div>
+
+

@@ -1,8 +1,16 @@
-<div id="word-cloud" class="width-full">
-    <div class="margin-3 text-2 center">
-        <div class="size-y6p col flex-center"><p>{{ _('Generating word cloud. Please wait...') }}</p></div>
+<div class="words-container">
+    <div class="conversation-dashboard title flex">
+        <h2 class="text-accent">{{_('Word cloud')}}</h2>
     </div>
+    <div id="word-cloud-card-id" class="word-cloud-card">
+        <div id="word-cloud" class="width-full">
+            <div class="margin-3 text-2 center">
+                <div class="size-y6p col flex-center"><p>{{ _('Generating word cloud. Please wait...') }}</p></div>
+            </div>
+        </div>
+    <div>
 </div>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.9.1/d3.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-cloud/1.2.5/d3.layout.cloud.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js" defer></script>
@@ -46,7 +54,8 @@
 
         $.ajax('words.json').then(function (json) {
             var $cloud = $('#word-cloud'),
-                aspect = ($cloud.height() - 4 * $('.main-header').height()) / $cloud.width(),
+                mainHeaderHeight = 16;
+                aspect = ($cloud.height() - 4 * mainHeaderHeight) / $cloud.width(),
                 scaleFunction = (x => Math.sqrt(x)),
                 pairs = _.sortBy(json.cloud, x => -x[1]).reverse(),
                 count = _.reduce(pairs.map(x => x[1]), (x, y) => x + y),

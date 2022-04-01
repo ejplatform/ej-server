@@ -110,7 +110,7 @@ def progress_flag(request, position, total):
     end = 35.76
     pc = (total - position + e) / (total + e)
     x = 2 * (pc - 0.5)
-    pc = 0.5 * sign(x) * x ** alpha + 0.5
+    pc = 0.5 * sign(x) * x**alpha + 0.5
     cx = scale * (pc * (end - start) + start)
 
     return render(

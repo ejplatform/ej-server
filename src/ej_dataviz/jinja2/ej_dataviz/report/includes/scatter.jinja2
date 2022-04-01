@@ -1,0 +1,79 @@
+{% block content %}
+<div class="conversation-dashboard scatter flex wrap">
+    <div class="scatter-col title flex">
+        <h2 class="text-accent">Nuvem de Pontos</h2>
+        <p>
+            {{_("Each chart point represents a different participant. Participants with similar voting, appears near each other.")}}
+        </p>
+
+    {% if json_data %}
+        <div class="scatter-filters">
+            <span class="filter-label bold">{{ _('filter by:') }}</span>
+            <div id="scatter-categories">
+                <button  class="" onclick="organizeBy(this, 3)">{{ _('Opinion') }}</button>
+                <button class="inactive-filter" onclick="organizeBy(this, 0)">{{ gender_field }}</button>
+                <button class="inactive-filter" onclick="organizeBy(this, 1)">{{ race_field }}</button>
+                <button class="inactive-filter" onclick="organizeBy(this, 2)">{{ _('State') }}</button>
+            </div>
+        </div>
+    {% else %}
+        <div class="scatter-filters">
+            <div class="filter-label bold"><span>{{ _('filter by:') }}</span></div>
+            <div class="scatter-without-groups"> 
+                <span>{{_("There is no groups for this conversation.")}}</span>
+            </div>
+        </div>
+    {% endif %}
+    </div>
+    <div class="scatter-col scatters">
+        <div id="scatter-container">
+            <div class="size-y6p col flex-center"><p>{{ _('Loading data...') }}</p></div>
+        </div>
+    </div>
+</div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/4.1.0/echarts.min.js" defer></script>
+    <script defer>
+        window.addEventListener('load', function () {
+            // Load main data from json.
+            $.ajax("{{conversation.url('dataviz-scatter')}}pca.json").then(function (data) {
+                // Prepare container
+               var $container = $("#scatter-container");
+               var dom = $container[0], chart = echarts.init(dom);
+               dom['chart'] = chart;
+               var chartOptions = {};
+                if (!data.error) {
+                    // Init chart
+                    chart.visualMap = data.visualMap;
+                    chart.option = data.option;
+                    chart.option.tooltip.formatter = function (e) {
+                        var name = e.data[2],
+                            gender = e.data[3],
+                            race = e.data[4],
+                            state = e.data[5],
+                            cluster = e.data[6];
+                        state = (state && chart.organizeBy === 2)? ' (' + state + ')': '';
+                        return (
+                            '<strong>' + name + state + '</strong>'
+                        );
+                    };
+                    chart.option.visualMap = [data.visualMap[data.visualMap.length - 1]];
+                    console.log("visual map: ", chart.option.visualMap);
+                    chart.setOption(chart.option, true);
+                } else {
+                    chart.setOption({series: [{data: [], type: "scatter"}], xAxis: {}, yAxis: {}}, true);
+                }
+                chart.resize();
+            });
+        });
+
+        function organizeBy(elem, idx) {
+            document.querySelector("button[class='']").classList.toggle('inactive-filter');
+            elem.classList.toggle('inactive-filter');
+            var chart = $('#scatter-container')[0].chart;
+            chart.organizeBy = idx;
+            chart.option.visualMap = [chart.visualMap[idx]];
+            chart.setOption(chart.option, true);
+        }
+    </script>
+{% endblock %}
