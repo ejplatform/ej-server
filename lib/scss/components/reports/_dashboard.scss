@@ -276,13 +276,13 @@
         border-radius: 0.5rem;
         width: 100%;
         padding: 0 22px 0 19px;
-        height: 75px;
+        min-height: 75px;
         &-container {
             justify-content: space-between;
 
             &-label {
                 margin: 0 37px 0 0;
-                padding: 27px 0 0 0;
+                padding: 22px 0 0 0;
                 font-size: 1.25rem;
             }
 
@@ -481,29 +481,19 @@
     }
 }
 
-@media (max-width: 1200px) {
+
+@media (max-width: 375px) {
     .charts-votes-on-time,
-    .charts-votes-by-channel
-    {
-        width: 100% !important;
-    }
-
-    .charts-votes-on-time {
-        margin: 0 0 1rem 0;
-    }
-}
-
-@media (max-width: 1366px) {
-    .conversation-dashboard .scatter-col.scatters {
-        max-width: 400px;
-    }
-
     .charts-votes-by-channel {
-        width: 22vw !important;
+        width: 100vw !important;
+        min-width: unset !important;
+    }
+
+    #channel-chart {
+        width: 265px !important;
     }
 }
 
-//size for menu to open
 @media (max-width: 559px) {
     .conversation-dashboard-button {
         a {
@@ -516,7 +506,7 @@
 
     .voting-item,
     .comments-item {
-        max-width: 109px !important;
+        max-width: 115px !important;
     }
 
 
@@ -665,14 +655,26 @@
     }
 }
 
-@media (max-width: 375px) {
-    .charts-votes-on-time,
-    .charts-votes-by-channel {
-        width: 100vw !important;
-        min-width: unset !important;
+
+
+@media (max-width: 1366px) {
+    .conversation-dashboard .scatter-col.scatters {
+        max-width: 400px;
     }
 
-    #channel-chart {
-        width: 265px !important;
+    .charts-votes-by-channel {
+        width: 22vw !important;
+    }
+}
+
+@media (max-width: 1200px) {
+    .charts-votes-on-time,
+    .charts-votes-by-channel
+    {
+        width: 100% !important;
+    }
+
+    .charts-votes-on-time {
+        margin: 0 0 1rem 0;
     }
 }
