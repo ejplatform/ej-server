@@ -1,0 +1,30 @@
+<div class="voting-container">
+    <section>
+        <div class="conversation-dashboard title flex">
+            <h2 class="text-accent">{{_('Voting')}}</h2>
+            <span>&nbsp;{{_('General View')}}</span>
+            {{ export_modal(can_view_detail, conversation, "votes-data", conversation.slug) }}
+        </div>
+        <div class="conversation-dashboard voting">
+            <div class="flex wrap">
+                <div class="voting-item">
+                    <div class="voting-item-title">{{_("agree")}}</div>
+                    <div class="voting-item-value">{{voting_statistics.get('agree')}}</div>
+                </div>
+                <div class="voting-item">
+                    <div class="voting-item-title">{{_("disagree")}}</div>
+                    <div class="voting-item-value">{{voting_statistics.get('disagree')}}</div>
+                </div>
+                <div class="voting-item">
+                    <div class="voting-item-title">{{_("skip")}}</div>
+                    <div class="voting-item-value">{{voting_statistics.get('skip')}}</div>
+                </div>
+                <div class="voting-item">
+                    <div class="voting-item-title">{{_("total")}}</div>
+                    <div class="voting-item-value">{{voting_statistics.get('total')}}</div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+

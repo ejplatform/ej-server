@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-23 14:34-0300\n"
+"POT-Creation-Date: 2022-04-01 12:27-0300\n"
 "PO-Revision-Date: 2019-09-09 13:55-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -302,7 +302,7 @@ msgid "Manage personas"
 msgstr "Gerenciar personas"
 
 #: src/ej_clusters/models/cluster.py:24 src/ej_clusters/models/stereotype.py:20
-#: src/ej_dataviz/roles.py:141 src/ej_dataviz/routes.py:448
+#: src/ej_dataviz/constants.py:211 src/ej_dataviz/roles.py:141
 #: src/ej_gamification/admin.py:33 src/ej_gamification/routes.py:124
 #: src/ej_gamification/routes.py:145
 msgid "Name"
@@ -353,11 +353,11 @@ msgstr ""
 msgid "Opinion groups"
 msgstr "Grupos de opinião"
 
-#: src/ej_clusters/routes.py:61
+#: src/ej_clusters/routes.py:62
 msgid "Error"
 msgstr "Erro"
 
-#: src/ej_clusters/routes.py:74
+#: src/ej_clusters/routes.py:75
 msgid "here"
 msgstr "aqui"
 
@@ -747,6 +747,22 @@ msgstr "Participe com votos e comentários!"
 msgid "Visualization"
 msgstr "Visualização"
 
+#: src/ej_dataviz/constants.py:177 src/ej_dataviz/routes.py:60
+#: src/ej_dataviz/routes.py:71
+msgid "Gender"
+msgstr "Gênero"
+
+#: src/ej_dataviz/constants.py:187 src/ej_dataviz/routes.py:61
+#: src/ej_dataviz/routes.py:72 src/ej_profiles/models.py:27
+#: src/ej_profiles/tests/test_models.py:46
+msgid "Race"
+msgstr "Raça"
+
+#: src/ej_dataviz/constants.py:197 src/ej_profiles/models.py:34
+#: src/ej_profiles/tests/test_models.py:39
+msgid "State"
+msgstr "Estado"
+
 #: src/ej_dataviz/roles.py:131 src/ej_gamification/routes.py:146
 msgid "Author"
 msgstr "Autor"
@@ -813,104 +829,90 @@ msgstr ""
 "0%: votos estão igualmente distribuidos\n"
 "100%: todos tem a mesma opinião"
 
-#: src/ej_dataviz/routes.py:41 src/ej_dataviz/routes.py:414
-msgid "Gender"
-msgstr "Gênero"
-
-#: src/ej_dataviz/routes.py:42 src/ej_dataviz/routes.py:424
-#: src/ej_profiles/models.py:27 src/ej_profiles/tests/test_models.py:46
-msgid "Race"
-msgstr "Raça"
-
-#: src/ej_dataviz/routes.py:44
+#: src/ej_dataviz/routes.py:63 src/ej_dataviz/routes.py:74
 msgid "https://en.wikipedia.org/wiki/Principal_component_analysis"
 msgstr "https://pt.wikipedia.org/wiki/An%C3%A1lise_de_componentes_principais"
 
-#: src/ej_dataviz/routes.py:61
+#: src/ej_dataviz/routes.py:91
 msgid "Not enough data"
 msgstr "Não há dados suficientes"
 
-#: src/ej_dataviz/routes.py:167
+#: src/ej_dataviz/routes.py:189
 msgid "{} persona"
 msgstr "{} persona"
 
-#: src/ej_dataviz/routes.py:179
+#: src/ej_dataviz/routes.py:201
 msgid "*Unknown*"
 msgstr "*Desconhecido*"
 
-#: src/ej_dataviz/routes.py:206
+#: src/ej_dataviz/routes.py:228
 msgid "PCA data"
 msgstr "Dados do PCA"
 
-#: src/ej_dataviz/routes.py:211 src/ej_dataviz/routes.py:212
-#: src/ej_dataviz/routes.py:213 src/ej_dataviz/routes.py:215
+#: src/ej_dataviz/routes.py:233 src/ej_dataviz/routes.py:234
+#: src/ej_dataviz/routes.py:235 src/ej_dataviz/routes.py:237
 msgid "You!"
 msgstr "Você!"
 
-#: src/ej_dataviz/routes.py:434 src/ej_profiles/models.py:34
-#: src/ej_profiles/tests/test_models.py:39
-msgid "State"
-msgstr "Estado"
-
-#: src/ej_dataviz/routes_report.py:233
+#: src/ej_dataviz/routes_report.py:225
 msgid "agree"
 msgstr "concorda"
 
-#: src/ej_dataviz/routes_report.py:234
+#: src/ej_dataviz/routes_report.py:226
 msgid "author"
 msgstr "autor"
 
-#: src/ej_dataviz/routes_report.py:235
+#: src/ej_dataviz/routes_report.py:227
 msgid "author_id"
 msgstr "autor_id"
 
-#: src/ej_dataviz/routes_report.py:236
+#: src/ej_dataviz/routes_report.py:228
 msgid "choice"
 msgstr "escolha"
 
-#: src/ej_dataviz/routes_report.py:237
+#: src/ej_dataviz/routes_report.py:229
 #, fuzzy
 msgid "cluster"
 msgstr "Grupos"
 
-#: src/ej_dataviz/routes_report.py:238
+#: src/ej_dataviz/routes_report.py:230
 #, fuzzy
 msgid "cluster_id"
 msgstr "Grupo_id"
 
-#: src/ej_dataviz/routes_report.py:239
+#: src/ej_dataviz/routes_report.py:231
 msgid "comment"
 msgstr "comentário"
 
-#: src/ej_dataviz/routes_report.py:240
+#: src/ej_dataviz/routes_report.py:232
 msgid "comment_id"
 msgstr "comentário_id"
 
-#: src/ej_dataviz/routes_report.py:241
+#: src/ej_dataviz/routes_report.py:233
 msgid "convergence"
 msgstr "convergência"
 
-#: src/ej_dataviz/routes_report.py:242
+#: src/ej_dataviz/routes_report.py:234
 msgid "disagree"
 msgstr "discorda"
 
-#: src/ej_dataviz/routes_report.py:243 src/ej_profiles/enums.py:70
+#: src/ej_dataviz/routes_report.py:235 src/ej_profiles/enums.py:70
 msgid "email"
 msgstr "email"
 
-#: src/ej_dataviz/routes_report.py:244
+#: src/ej_dataviz/routes_report.py:236
 msgid "id"
 msgstr "id"
 
-#: src/ej_dataviz/routes_report.py:245 src/ej_profiles/enums.py:69
+#: src/ej_dataviz/routes_report.py:237 src/ej_profiles/enums.py:69
 msgid "name"
 msgstr "nome"
 
-#: src/ej_dataviz/routes_report.py:246
+#: src/ej_dataviz/routes_report.py:238
 msgid "participation"
 msgstr "participação"
 
-#: src/ej_dataviz/routes_report.py:247
+#: src/ej_dataviz/routes_report.py:239
 msgid "skipped"
 msgstr "pulados"
 
@@ -2617,7 +2619,7 @@ msgid "Participants on the conversation (aquisition)"
 msgstr "Participantes na conversa (aquisição)"
 
 #: src/ej_analysis/jinja2/ej_analysis/opinion_component.jinja2:87
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/votes-over-time.jinja2:17
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/votes-over-time.jinja2:19
 msgid "end date must be gratter then start date"
 msgstr "data de fim deve ser maior que data de inicio"
 
@@ -2911,7 +2913,7 @@ msgid "Account"
 msgstr "Conta"
 
 #: src/ej_clusters/jinja2/ej_clusters/stereotypes/create.jinja2:7
-#: src/ej_dataviz/jinja2/ej_dataviz/report/missing-personas-card.jinja2:6
+#: src/ej_dataviz/jinja2/ej_dataviz/report/clusters-warning-card.jinja2:7
 msgid "Create persona"
 msgstr "Criar persona"
 
@@ -3193,20 +3195,16 @@ msgstr "Relatórios"
 
 #: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:56
 #, fuzzy
-msgid "General report"
-msgstr "Relatório Geral"
-
-#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:57
-#, fuzzy
 msgid "Comments report"
 msgstr "Relatório de comentários"
 
-#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:58
+#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:57
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/participants.jinja2:9
 #, fuzzy
 msgid "Participants report"
 msgstr "Relatório de participantes"
 
-#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:60
+#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:59
 msgid "Scatter plot"
 msgstr "Nuvem de pontos"
 
@@ -3234,6 +3232,7 @@ msgstr "Selecione um filtro abaixo"
 msgid "Opinions"
 msgstr "Opiniões"
 
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/scatter.jinja2:30
 #: src/ej_dataviz/jinja2/ej_dataviz/scatter.jinja2:22
 msgid "Loading data..."
 msgstr "Carregando dados..."
@@ -3251,24 +3250,6 @@ msgstr ""
 "Opiniões parecidas são representadas por pontos próximos, enquanto usuários "
 "com opiniões diferentes são\n"
 "            representadas por pontos distantes."
-
-#: src/ej_dataviz/jinja2/ej_dataviz/report/general-report.jinja2:35
-#: src/ej_dataviz/jinja2/ej_dataviz/word-cloud.jinja2:6
-msgid "Word cloud"
-msgstr "Nuvem de palavras"
-
-#: src/ej_dataviz/jinja2/ej_dataviz/word-cloud.jinja2:8
-msgid "Display the most commonly found words in conversation."
-msgstr "Mostra as palavras mais frequentes."
-
-#: src/ej_dataviz/jinja2/ej_dataviz/word-cloud.jinja2:9
-msgid "Size of the word is proportional to frequency."
-msgstr "O tamanho de cada palavra é proporcional à frequência de uso."
-
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/word-cloud-card.jinja2:3
-#: src/ej_dataviz/jinja2/ej_dataviz/word-cloud.jinja2:12
-msgid "Generating word cloud. Please wait..."
-msgstr "Criando nuvem de palavras. Espere..."
 
 #: src/ej_dataviz/jinja2/ej_dataviz/includes/datatables.jinja2:8
 msgid "Do data available"
@@ -3333,6 +3314,14 @@ msgstr "Ordena de forma ascendente"
 msgid "Sort column descending"
 msgstr "Ordena de forma decrescente"
 
+#: src/ej_dataviz/jinja2/ej_dataviz/report/clusters-warning-card.jinja2:5
+msgid ""
+"Your conversation still does not have defined personas. Without personas, it "
+"is not possible to generate opinion groups."
+msgstr ""
+"Sua conversa ainda não tem personas definidas. Sem personas, não é possível "
+"gerar os grupos de opinião."
+
 #: src/ej_dataviz/jinja2/ej_dataviz/report/comments-report.jinja2:6
 #, fuzzy
 msgid "Comments Report"
@@ -3345,30 +3334,12 @@ msgstr "ver todos"
 #: src/ej_dataviz/jinja2/ej_dataviz/report/comments-report.jinja2:19
 #, fuzzy
 msgid "The cluster has no comments"
-msgstr "O cluster não possui comentários"
+msgstr "Sugira um novo comentário"
 
-#: src/ej_dataviz/jinja2/ej_dataviz/report/export-data.jinja2:5
+#: src/ej_dataviz/jinja2/ej_dataviz/report/export-data.jinja2:4
 #, fuzzy
 msgid "Export"
 msgstr "Exportar"
-
-#: src/ej_dataviz/jinja2/ej_dataviz/report/general-report.jinja2:12
-#, fuzzy
-msgid "General Report"
-msgstr "Relatório Geral"
-
-#: src/ej_dataviz/jinja2/ej_dataviz/report/general-report.jinja2:14
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/channel-chart-card.jinja2:5
-msgid "Participants"
-msgstr "Participantes"
-
-#: src/ej_dataviz/jinja2/ej_dataviz/report/missing-personas-card.jinja2:4
-msgid ""
-"Your conversation still does not have defined personas. Without personas, it "
-"is not possible to generate opinion groups."
-msgstr ""
-"Sua conversa ainda não tem personas definidas. Sem personas, não é possível "
-"gerar os grupos de opinião."
 
 #: src/ej_dataviz/jinja2/ej_dataviz/report/tools-links-modal.jinja2:8
 msgid "Take the EJ wherever you want!"
@@ -3402,19 +3373,137 @@ msgstr "Ir para Ferramentas"
 msgid "Users report"
 msgstr "Relatório de Participantes"
 
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/channel-chart-card.jinja2:1
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/channel-chart-card.jinja2:3
 #, fuzzy
 msgid "Channel participation"
 msgstr "Participação por canal"
 
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/channel-chart-card.jinja2:3
-msgid "Filter by:"
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/channel-chart-card.jinja2:5
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/scatter.jinja2:11
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/scatter.jinja2:21
+#, fuzzy
+msgid "filter by:"
 msgstr "Filtrar por:"
 
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/votes-over-time.jinja2:2
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/channel-chart-card.jinja2:7
+#, fuzzy
+msgid "votes"
+msgstr "Votos"
+
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/channel-chart-card.jinja2:9
+#, fuzzy
+msgid "participants"
+msgstr "Participantes"
+
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/clusters.jinja2:4
+#, fuzzy
+msgid "Opinion Groups"
+msgstr "Grupos de opinião"
+
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/clusters.jinja2:17
+#, fuzzy
+msgid "agree with"
+msgstr "concorda que"
+
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/clusters.jinja2:21
+#, fuzzy
+msgid "Manage groups"
+msgstr "Gerenciar grupos"
+
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/clusters.jinja2:27
+#, fuzzy
+msgid "Your conversation does not have personas."
+msgstr "Sua conversa ainda não possui personas definidas."
+
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/clusters.jinja2:28
+#, fuzzy
+msgid "Without personas, it's not possible to create opinion groups."
+msgstr "Sem personas, não é possível gerar os grupos de opinião."
+
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/clusters.jinja2:29
+msgid "After modeling groups, you can check then here."
+msgstr "Depois de modelar os grupos, você terá uma visão geral deles aqui."
+
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/clusters.jinja2:33
+#, fuzzy
+msgid "Creates groups"
+msgstr "Criar grupo"
+
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comments.jinja2:5
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/voting.jinja2:5
+#, fuzzy
+msgid "General View"
+msgstr "Visão Geral"
+
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comments.jinja2:9
+#, fuzzy
+msgid "approved comments"
+msgstr "aprovados"
+
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comments.jinja2:13
+#, fuzzy
+msgid "rejected comments"
+msgstr "rejeitados"
+
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comments.jinja2:17
+msgid "pending"
+msgstr "esperando"
+
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comments.jinja2:21
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/voting.jinja2:23
+#, fuzzy
+msgid "total"
+msgstr "Total"
+
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comments.jinja2:26
+#, fuzzy
+msgid "comments report"
+msgstr "Relatório de comentários"
+
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/participants.jinja2:5
+#, fuzzy
+msgid "Total of participants"
+msgstr "Total de participantes"
+
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/scatter.jinja2:6
+msgid ""
+"Each chart point represents a different participant. Participants with "
+"similar voting, appears near each other."
+msgstr ""
+"Cada ponto no gráfico representa um participante diferente. Participantes "
+"que votam de forma parecida, ficam mais próximos. "
+
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/scatter.jinja2:13
+#, fuzzy
+msgid "Opinion"
+msgstr "Opinião"
+
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/scatter.jinja2:23
+#, fuzzy
+msgid "There is no groups for this conversation."
+msgstr "Não há grupos para esta conversa."
+
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/votes-over-time.jinja2:4
 #, fuzzy
 msgid "Vote"
 msgstr "Votação"
+
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/voting.jinja2:4
+msgid "Voting"
+msgstr "Votação"
+
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/voting.jinja2:19
+#, fuzzy
+msgid "skip"
+msgstr "pulados"
+
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/word-cloud-card.jinja2:3
+msgid "Word cloud"
+msgstr "Nuvem de palavras"
+
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/word-cloud-card.jinja2:8
+msgid "Generating word cloud. Please wait..."
+msgstr "Criando nuvem de palavras. Espere..."
 
 #: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/agreement-card.jinja2:3
 #, fuzzy
@@ -3447,10 +3536,9 @@ msgstr ""
 
 #: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/convergence-card.jinja2:8
 msgid "How can I improve the modeling of a group?"
-msgstr "Como posso melhorar a  modelagem de um grupo?"
+msgstr "Como posso melhorar a modelagem de um grupo?"
 
 #: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/expand-card.jinja2:3
-#, fuzzy
 msgid "show all"
 msgstr "ver tudo"
 
@@ -3466,7 +3554,7 @@ msgstr "Todos os comentários"
 #: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/filter-section.jinja2:7
 #, fuzzy
 msgid "show"
-msgstr "mostrar"
+msgstr "ver tudo"
 
 #: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/filter-section.jinja2:14
 msgid "inputs"
@@ -3484,12 +3572,12 @@ msgstr "concordância"
 #: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/filter-section.jinja2:21
 #, fuzzy
 msgid "disagreement"
-msgstr "discordância"
+msgstr "discorda"
 
 #: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/filter-section.jinja2:36
 #, fuzzy
 msgid "groups"
-msgstr "Grupos"
+msgstr "Grupo"
 
 #: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/filter-section.jinja2:46
 #, fuzzy
@@ -4565,6 +4653,22 @@ msgid "Authentication"
 msgstr "Autenticação"
 
 #, fuzzy
+#~ msgid "General report"
+#~ msgstr "Relatório Geral"
+
+#~ msgid "Display the most commonly found words in conversation."
+#~ msgstr "Mostra as palavras mais frequentes."
+
+#~ msgid "Size of the word is proportional to frequency."
+#~ msgstr "O tamanho de cada palavra é proporcional à frequência de uso."
+
+#~ msgid "Basic report (%(n)s users)"
+#~ msgstr "Relatório Básico (%(n)s usuários)"
+
+#~ msgid "{n} users"
+#~ msgstr "{n} usuários"
+
+#, fuzzy
 #~ msgid "My Boards"
 #~ msgstr "Meus murais"
 
@@ -4583,6 +4687,8 @@ msgstr "Autenticação"
 #~ msgid "Go back"
 #~ msgstr "Voltar"
 
+#~ msgid "General Report"
+#~ msgstr "Relatório Geral"
 
 #~ msgid "new"
 #~ msgstr "novo"
@@ -4590,11 +4696,6 @@ msgstr "Autenticação"
 #, fuzzy
 #~ msgid "Home"
 #~ msgstr "Início"
-#~ msgid "Basic report (%(n)s users)"
-#~ msgstr "Relatório Básico (%(n)s usuários)"
-
-#~ msgid "{n} users"
-#~ msgstr "{n} usuários"
 
 #~ msgid "Dismiss"
 #~ msgstr "Dispensar"
@@ -5201,9 +5302,6 @@ msgstr "Autenticação"
 #~ msgid "Had Comment Approved"
 #~ msgstr "Teve comentário aprovado"
 
-#~ msgid "Agreed With"
-#~ msgstr "Concordou com"
-
 #~ msgid "Passed On"
 #~ msgstr "Passou"
 
@@ -5797,9 +5895,6 @@ msgstr "Autenticação"
 
 #~ msgid "Enter your new password:"
 #~ msgstr "Digite sua nova senha:"
-
-#~ msgid "pending"
-#~ msgstr "esperando"
 
 #~ msgid "running"
 #~ msgstr "processando"

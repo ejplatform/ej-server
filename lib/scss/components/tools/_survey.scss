@@ -174,3 +174,18 @@
   display: inline-block;
   margin-top: 0.5rem;
 }
+
+
+.close-report {
+    color: $color-theme-report-light-gray;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-report:hover,
+.close-report:focus {
+    color: $color-theme-report-black;
+    text-decoration: none;
+    cursor: pointer;
+}

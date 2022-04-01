@@ -1,12 +1,11 @@
 {% macro export_modal(can_view_detail, conversation, type_data, _id, cluster=None) %}
 
-<div>
+<div class="export-button">
+  <a data-toggle="modal" id="export-btn-{{type_data}}-{{_id}}"><i class="fas fa-cloud-download-alt"></i>{{_("Export")}}</a>
 
-  <a data-toggle="modal" id="export-btn-{{_id}}" class="export-button"><i class="fas fa-cloud-download-alt"></i>{{_("Export")}}</a>
-
-  <div id="export-modal-{{_id}}" class="modal-report">
+  <div id="export-modal-{{type_data}}-{{_id}}" class="modal-report">
       <div class="modal-content">
-          <span class="close-report" id="{{_id}}" onclick='closeExportDropdown(this)'>&times;</span>
+        <span class="close-report" id="{{type_data}}-{{_id}}" onclick='closeExportDropdown(this)'>&times;</span>
           {% if can_view_detail %}{{ conversation|role('download-data', which=type_data, cluster=cluster) }}{% endif %}
       </div>
   </div>
@@ -15,15 +14,16 @@
 
 
 <script>
-var exportBtn = document.getElementById("export-btn-{{_id}}");
+var exportBtn = document.getElementById("export-btn-{{type_data}}-{{_id}}");
+console.log("button: ", exportBtn);
 function closeExportDropdown(closeIcon) {
   exportOptions = closeIcon.parentElement.parentElement;
-  exportOptions.style.display = "none";
+  exportOptions.classList.toggle("show-options");
 }
 
 function openExportDropdown(event) {
-  exportOptions = event.target.nextElementSibling;
-  exportOptions.style.display = exportOptions.style.display == "block" ? "none" : "block";
+  var exportOptions = event.target.nextElementSibling;
+  exportOptions.classList.toggle("show-options");
 }
 
 exportBtn.onclick = openExportDropdown

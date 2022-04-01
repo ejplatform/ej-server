@@ -1,31 +1,36 @@
-<div class="vote-date-picker">
-  <span class="chart-title">{{_('Vote')}}</span>
-  <div class="date-selector">
-    <input id="start-date" type="date">
-    <input id="end-date" type="date">
+<div class="charts-votes-on-time">
+  <div class="voting-container">
+    <div class="vote-date-picker">
+      <h3 class="chart-title">{{_('Vote')}}</h3>
+      <div class="date-selector">
+        <input id="start-date" type="date">
+        <input id="end-date" type="date">
+      </div>
+    </div>
+    
+    <div id="votes-over-time-container">
+      <div class="votes-over-time-loading">
+        <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+      </div>
+      <svg id="votes-over-time-chart" width="506" height="263"></svg>
+    </div>
+    
+    <div class="votes-over-time-invalid-dates">
+      <span class="helptext">{{ _('end date must be gratter then start date') }}</span>
+    </div>
   </div>
-</div>
-
-<div id="svg-container">
-  <div class="card-body-content-loading">
-    <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
-  </div>
-  <svg id="votes-over-time" width="506" height="326"></svg>
-</div>
-
-<div class="card-body-error-invalid-dates">
-  <span class="helptext">{{ _('end date must be gratter then start date') }}</span>
 </div>
 
 <script src="https://d3js.org/d3.v7.min.js"></script>
-
 <script>
+
 function setDateFilter() {
     let today = new Date();
     let sevenDaysBefore = new Date(today.getTime() - (7 * 24 * 60 * 60 * 1000))
     document.getElementById('end-date').value = formatDate(today);
     document.getElementById('start-date').value = formatDate(sevenDaysBefore);
 }
+
 function formatDate(date) {
     return date.toISOString().slice(0, 10);
 }
@@ -39,11 +44,11 @@ function listenToDateChanges() {
 }
 
 function showLoading() {
-  document.querySelector(".card-body-content-loading").style.display = "block";
+  document.querySelector(".votes-over-time-loading").style.display = "block";
 }
 
 function hideLoading() {
-  document.querySelector(".card-body-content-loading").style.display = "none";
+  document.querySelector(".votes-over-time-loading").style.display = "none";
 }
 
 async function updateVisualization() {
@@ -78,11 +83,11 @@ function startDateIsBiggerThenEndDate() {
 }
 
 function showErrors() {
-  document.querySelector(".card-body-error-invalid-dates").style.display = "block";
+  document.querySelector(".votes-over-time-invalid-dates").style.display = "block";
 }
 
 function hideErrors() {
-  document.querySelector(".card-body-error-invalid-dates").style.display = "none";
+  document.querySelector(".votes-over-time-invalid-dates").style.display = "none";
 }
 
 async function requestData() {
@@ -112,8 +117,8 @@ function AreaChart(voteData, color) {
   const curve = d3.curveLinear;
   const margin = ({top: 20, right: 30, bottom: 30, left: 40})
 
-  let width = d3.select('#votes-over-time').attr('width');
-  let height = d3.select('#votes-over-time').attr('height');
+  let width = d3.select('#votes-over-time-chart').attr('width');
+  let height = d3.select('#votes-over-time-chart').attr('height');
 
   const X = voteData.map(d => d.date)
   const Y = voteData.map(d => d.value)
@@ -144,7 +149,7 @@ function AreaChart(voteData, color) {
   let previusSvg = d3.select("#votes-over-time");
   previusSvg.remove();
 
-  let svg = d3.select("#svg-container")
+  let svg = d3.select("#votes-over-time-chart")
   .append("svg")
   .attr("id", 'votes-over-time')
   .attr("width", width)
@@ -175,5 +180,13 @@ async function d3jsVisualization(voteData) {
   AreaChart(voteData, "#042A46")
 }
 
+function showDatePickers () {
+  let startDate = document.getElementById("start-date");
+  let endDate = document.getElementById("end-date");
+  startDate.addEventListener('click', () => {startDate.showPicker()});
+  endDate.addEventListener('click', () => {endDate.showPicker()});
+}
+
 window.addEventListener('load', loadVoteVisualization);
+window.addEventListener('load', showDatePickers);
 </script>

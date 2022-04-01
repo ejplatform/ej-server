@@ -1,6 +1,8 @@
 from ej_clusters.enums import ClusterStatus
 from ej_clusters.models.cluster import Cluster
 from ej_clusters.models.stereotype import Stereotype
+from ej_clusters.mommy_recipes import ClusterRecipes
+from ej_conversations.models.conversation import Conversation
 import pytest
 import json
 import datetime
@@ -13,6 +15,7 @@ from ej_users.models import User
 from ej_clusters.models.clusterization import Clusterization
 from .examples import general_comments, general_and_cluster_comments, cluster_comments
 from ej_dataviz.utils import (
+    conversation_has_stereotypes,
     get_cluster_main_comments,
     get_comments_dataframe,
     get_cluster_comments_df,
@@ -27,11 +30,14 @@ BASE_URL = "/api/v1"
 
 
 class TestRoutes(ConversationRecipes, UrlTester):
-    user_urls = ["/conversations/1/conversation/scatter/", "/conversations/1/conversation/word-cloud/"]
+    user_urls = [
+        "/conversations/1/conversation/scatter/",
+        "/conversations/1/conversation/dashboard/words.json",
+    ]
     admin_urls = [
         "/conversations/1/conversation/reports/users/",
         "/conversations/1/conversation/reports/comments-report/",
-        "/conversations/1/conversation/reports/general-report/",
+        "/conversations/1/conversation/dashboard/",
     ]
 
     @pytest.fixture
@@ -43,7 +49,7 @@ class TestRoutes(ConversationRecipes, UrlTester):
         conversation.save()
 
 
-class TestReportRoutes(ConversationRecipes):
+class TestReportRoutes(ClusterRecipes):
     @pytest.fixture
     def request_factory(self):
         return RequestFactory()
@@ -61,8 +67,8 @@ class TestReportRoutes(ConversationRecipes):
         return request
 
     @pytest.fixture
-    def logged_client(self, author_db):
-        user = author_db
+    def logged_client(self):
+        user = User.objects.get(email="author@domain.com")
         client = Client()
         client.force_login(user)
         return client
@@ -117,26 +123,6 @@ class TestReportRoutes(ConversationRecipes):
         comment4.vote(user1, "disagree")
         conversation.save()
         return conversation
-
-    def test_report_csv_route(self, request_as_admin, mk_conversation):
-        # conversation = mk_conversation()
-        # path = BASE_URL + f'/conversations/{conversation.slug}/reports/'
-        # request = request_as_admin
-        # request.GET = QueryDict('action=generate_csv')
-        # request.get(path)
-        # response = index(request, conversation)
-
-        # assert response.status_code == 200
-
-        # content = response.content.decode('utf-8')
-        # csv.reader(io.StringIO(content))
-        # assert CSV_OUT['votes_header'] in content
-        # assert CSV_OUT['votes_content'] in content
-        # assert CSV_OUT['comments_header'] in content
-        # assert CSV_OUT['comments_content'] in content
-        # assert CSV_OUT['advanced_comments_header'] in content
-        # assert CSV_OUT['advanced_participants_header'] in content
-        pass
 
     def test_should_get_count_of_votes_in_a_period_of_time(self, conversation_with_votes, logged_client):
         conversation = conversation_with_votes
@@ -210,7 +196,7 @@ class TestReportRoutes(ConversationRecipes):
         )
         Cluster.objects.create(name="name", clusterization=clusterization)
 
-        url = f"/{conversation.board.slug}/conversations/{conversation.id}/{conversation.slug}/reports/general-report/"
+        url = f"/{conversation.board.slug}/conversations/{conversation.id}/{conversation.slug}/dashboard/"
         response = logged_client.get(url)
         assert (
             "Your conversation still does not have defined personas. Without personas, it is not possible to generate opinion groups."
@@ -231,7 +217,7 @@ class TestReportRoutes(ConversationRecipes):
         stereotype, _ = Stereotype.objects.get_or_create(name="name", owner=author_db)
         cluster.stereotypes.add(stereotype)
 
-        url = f"/{conversation.board.slug}/conversations/{conversation.id}/{conversation.slug}/reports/general-report/"
+        url = f"/{conversation.board.slug}/conversations/{conversation.id}/{conversation.slug}/dashboard/"
         response = logged_client.get(url)
         assert (
             not "Your conversation still does not have defined personas. Without personas, it is not possible to generate opinion groups."
@@ -506,3 +492,47 @@ class TestReportRoutes(ConversationRecipes):
                 "id": 3,
             }
         ]
+
+    def test_conversation_has_stereotypes(self, cluster_db, stereotype_vote):
+        cluster_db.stereotypes.add(stereotype_vote.author)
+        cluster_db.users.add(cluster_db.clusterization.conversation.author)
+        cluster_db.save()
+        clusterization = Clusterization.objects.filter(conversation=cluster_db.conversation)
+        assert conversation_has_stereotypes(clusterization)
+
+    def test_get_dashboard_with_clusters(self, cluster_db, stereotype_vote, comment, vote, logged_client):
+        """
+        EJ has several recipes for create objects for testing.
+        cluster_db creates objects based on ej_clusters/mommy_recipes.py and testing/fixture_class.py.
+        calling cluster_db on method signature creates and cluster belonging to a conversation and clusterization.
+        """
+        cluster_db.stereotypes.add(stereotype_vote.author)
+        cluster_db.users.add(cluster_db.clusterization.conversation.author)
+        cluster_db.save()
+        conversation = cluster_db.conversation
+        comment = conversation.create_comment(
+            conversation.author, "aa", status="approved", check_limits=False
+        )
+        comment.vote(conversation.author, "agree")
+        comment.save()
+        dashboard_url = conversation.url("dataviz:dashboard")
+        response = logged_client.get(dashboard_url)
+        assert response.status_code == 200
+        assert response.context["biggest_cluster_data"].get("name") == "cluster"
+        assert response.context["biggest_cluster_data"].get("content") == comment.content
+        assert response.context["biggest_cluster_data"].get("percentage")
+
+    def test_get_dashboard_without_clusters(self, cluster_db, stereotype_vote, logged_client):
+        """
+        EJ has several recipes for creating objects for testing.
+        cluster_db creates objects based on ej_clusters/mommy_recipes.py and testing/fixture_class.py.
+        calling cluster_db on method signature creates an cluster belonging to a conversation and clusterization.
+        """
+        cluster_db.stereotypes.add(stereotype_vote.author)
+        cluster_db.users.add(cluster_db.clusterization.conversation.author)
+        cluster_db.save()
+        conversation = cluster_db.conversation
+        dashboard_url = conversation.url("dataviz:dashboard")
+        response = logged_client.get(dashboard_url)
+        assert response.status_code == 200
+        assert response.context["biggest_cluster_data"] == {}

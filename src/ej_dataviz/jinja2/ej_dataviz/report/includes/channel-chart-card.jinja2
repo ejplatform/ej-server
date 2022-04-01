@@ -1,14 +1,20 @@
-<span class="chart-title">{{ _('Channel participation') }}</span>
-<div class="filter-participation">
-    <span class="filter-text">{{ _('Filter by:') }}</span>
-    <button id="id_vote_button" onclick="selectParticipation(event.target)" class="filter-button">{{ _('Votes')}}</button>
-    <button id="id_part_button" onclick="selectParticipation(event.target)" class="filter-button">{{ _('Participants')}}</button>
+<div class="charts-votes-by-channel">
+    <div class="voting-container">
+        <h3 class="chart-title">{{ _('Channel participation') }}</h3>
+        <div class="filter-participation">
+            <div class="filter-label"><span>{{ _('filter by:') }}</span></div>
+            <button id="id_vote_button" onclick="selectParticipation(event.target)"
+                class="filter-button">{{ _('votes')}}</button>
+            <button id="id_part_button" onclick="selectParticipation(event.target)"
+                class="filter-button">{{ _('participants')}}</button>
+        </div>
+        <div id="pizza-chart-container">
+            <svg id="pizza-chart"></svg>
+        </div>
+    </div>
 </div>
-<div class="participation-channel-chart" id="svg-chart-container">
-    <svg id="channel-chart" width="324" height="350"></svg>
-</div>
-<script src="https://d3js.org/d3.v7.min.js"></script>
 
+<script src="https://d3js.org/d3.v7.min.js"></script>
 <script>
     let voteButton = document.getElementById('id_vote_button');
     let partButton = document.getElementById('id_part_button');
@@ -23,15 +29,15 @@
 
     async function d3jsPartVisualization(data) {
         data = data.filter(d => d.value != 0)
-        const width = d3.select('#channel-chart').attr('width');
-        const height = d3.select('#channel-chart').attr('height');
+        const width = document.getElementById('pizza-chart-container').clientWidth;
+        const height = 250;
 
-        var previusSvg = d3.select("#channel-chart");
+        var previusSvg = d3.select("#pizza-chart");
         previusSvg.remove();
 
-        d3.select("#svg-chart-container")
+        d3.select("#pizza-chart-container")
             .append("svg")
-            .attr("id", 'channel-chart')
+            .attr("id", 'pizza-chart')
             .attr("width", width)
             .attr("height", height)
         
@@ -47,7 +53,7 @@
 
         const arcs = pie(data);
 
-        const svg = d3.select('#channel-chart').attr("viewBox", [-width / 2, -height / 2, width, height]);
+        const svg = d3.select('#pizza-chart').attr("viewBox", [-width / 2, -height / 2, width, height]);
 
         svg.append("g")
         .attr("stroke", "white")

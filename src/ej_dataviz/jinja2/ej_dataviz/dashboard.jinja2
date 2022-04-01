@@ -1,0 +1,39 @@
+{% extends 'base.jinja2' %}
+{% set main_class = 'report-container measure-wide margin-xauto' %}
+{% block menu %}{% include 'ej_conversations/includes/menu-detail.jinja2' %}{% endblock %}
+{% from "ej_dataviz/report/export-data.jinja2" import export_modal %}
+{% set main_class = "report-container" %}
+
+
+{% block content %}
+    {{ conversation|role('balloon', actions=False) }}
+{% block report %}
+    {% if not conversation_has_stereotypes %}
+        {% include 'ej_dataviz/report/clusters-warning-card.jinja2' %}
+    {% endif %}
+
+    {% include 'ej_dataviz/report/tools-links-modal.jinja2' %}
+    <section class="conversation-dashboard">
+        {% with voting_statistics = conversation.statistics().get('votes') %}
+            {% include 'ej_dataviz/report/includes/voting.jinja2' %}
+        {% endwith %}
+        <div class="charts wrap">
+            {% include 'ej_dataviz/report/includes/votes-over-time.jinja2' %}
+            {% include 'ej_dataviz/report/includes/channel-chart-card.jinja2' %}
+        </div>
+        {% with participants_statistics = conversation.statistics().get('participants') %}
+            {% include 'ej_dataviz/report/includes/participants.jinja2' %}
+        {% endwith %}
+        
+        {% include 'ej_dataviz/report/includes/clusters.jinja2' %}
+        {% include 'ej_dataviz/report/includes/scatter.jinja2' %}
+        {% with comments_statistics = conversation.statistics().get('comments') %}
+            {% include 'ej_dataviz/report/includes/comments.jinja2' %}
+        {% endwith %}
+            {% include 'ej_dataviz/report/includes/word-cloud-card.jinja2' %}   
+    </section>
+
+{% endblock %}
+    </div>
+    {% include 'ej_dataviz/includes/datatables.jinja2' %}
+{% endblock %}
