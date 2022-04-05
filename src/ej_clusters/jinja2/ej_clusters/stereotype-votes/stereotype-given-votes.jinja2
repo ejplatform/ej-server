@@ -1,0 +1,36 @@
+{% for vote in stereotype.given_votes %}
+    <div class="card-comments" id="given-vote-{{ vote.id }}">
+        <input type="hidden" name="vote" value="{{ vote.id }}">
+        <p>{{ vote.comment.content }}</p>
+        <div class="vote-buttons" id="vote-buttons-update-{{ vote.id }}">
+                <button type="button" 
+                        onclick="sendUpdateVoteInformation(this.value, '{{ vote.id }}', '{{stereotype.id}}', '{{ vote.comment.id }}')" 
+                        class="is-clear agree-{{vote.choice.value}}" 
+                        name="update" 
+                        value="agree-{{ vote.id }}">
+                    <i class="fa fa-check"></i> {{ _('Agree') }}
+                </button>
+                <button type="button"
+                        onclick="sendUpdateVoteInformation(this.value, '{{ vote.id }}', '{{stereotype.id}}', '{{ vote.comment.id }}')" 
+                        class="is-clear skip-{{vote.choice.value}}" 
+                        name="update" 
+                        value="skip-{{ vote.id }}">
+                    <i class="far fa-meh"></i> {{ _('Neutral') }}
+                </button>
+                <button type="button" 
+                        onclick="sendUpdateVoteInformation(this.value, '{{ vote.id }}', '{{stereotype.id}}', '{{ vote.comment.id }}')" 
+                        class="is-clear disagree-{{vote.choice.value}}" 
+                        name="update" 
+                        value="disagree-{{ vote.id }}">
+                    <i class="fa fa-times"></i> {{ _('Disagree') }}
+                </button>
+                <button class="delete-vote"
+                        name="update"
+                        type="button" 
+                        value="delete-{{ vote.id }}"
+                        onclick="sendUpdateVoteInformation(this.value, '{{ vote.id }}', '{{stereotype.id}}', '{{ vote.comment.id }}')" >
+                        {{ _('Clear vote') }}
+                </button>
+        </div>
+    </div>
+{% endfor %}

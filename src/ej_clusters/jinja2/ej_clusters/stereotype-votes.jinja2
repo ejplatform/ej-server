@@ -4,89 +4,178 @@
 
 
 {% block content %}
-    <style>
-        .votes-table td:nth-child(2) {
-            text-align: center;
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="/static/js/simplePagination.js"></script>
+
+    {% if groups %}
+        <h1 class="h2 text-accent big-title">{{ _('Define personas') }}</h1>
+        <p id="subtitle-persona">{% trans %}Mark the votes for each stereotype in your conversation.{% endtrans %}</p>
+
+        {% include 'ej_clusters/stereotype-votes/filter-section.jinja2' %} 
+        {% include 'ej_clusters/stereotype-votes/select-groups-filter.jinja2' %}
+        
+        <div class="stereotype-cards">
+            <form method="post" class="width-full" action="#stereotype-{{ stereotype.id }}">
+                {{ csrf_input }}
+                <input type="hidden" name="stereotype" value="{{ stereotype.id }}">
+                <div id="given-votes">
+                    {% include 'ej_clusters/stereotype-votes/stereotype-given-votes.jinja2' %}
+                </div>
+                <div id="comments-without-vote">
+                    {% include 'ej_clusters/stereotype-votes/stereotype-unvoted-votes.jinja2' %}
+                </div>
+            </form>
+        </div>
+        {% include 'ej_clusters/stereotype-votes/pagination.jinja2' %}
+
+    
+    <script>
+        let orderByVoteChoice = 1;
+        let sortByVoteChoice = '-';
+        const DELETE_BUTTON = '2';
+        const buttonValues = ["agree", "skip", "disagree"];
+
+        function sendUpdateVoteInformation(value, voteId, stereotypeId, commentId) {
+            $.post("{{ request.path }}",
+                {
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                    stereotype: stereotypeId,
+                    update: value
+                },
+                () => { updateAfterFormSubmit(voteId, getSelectedButton(value), commentId, stereotypeId) }
+            );
         }
 
-        .votes-table td:nth-child(3) {
-            text-align: center;
-            transform: scale(0.875);
+        function sendCreateVoteInformation(value, commentId, stereotypeId) {
+            $.post("{{ request.path }}stereotype-votes/create",
+                {
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                    comment: commentId,
+                    author: stereotypeId,
+                    choice: getSelectedButton(value)
+                },
+                (voteId) => {
+                    updateButtonCollors(commentId, "create", getSelectedButton(value));
+                    updateVoteCardTypeToUpdate(voteId, commentId, stereotypeId, getSelectedButton(value))
+                }
+            );
         }
-    </style>
 
-    {% if stereotypes is defined %}
-        <h1 class="h2 text-accent">{{ _('Define personas') }}</h1>
-        <p>{% trans %}Mark the votes for each stereotype in your conversation.{% endtrans %}</p>
+        function updateButtonCollors(divId, type, selectedButton){
+            const choiceCountButton = 3
+            const divElement = document.getElementById("vote-buttons-" + type + "-" + divId);
 
-        {{ categories(groups, class_='margin-t3') }}
+            for (let i = 0; i < choiceCountButton; i++) {
+                updateButtonColor(divElement.children[i], selectedButton);
+            }
+        }
 
-        {% for stereotype in stereotypes %}
-            <div id="stereotype-{{ stereotype.id }}">{{ show_stereotype(stereotype) }}</div>
-        {% endfor %}
+        function updateAfterFormSubmit(divId, selectedButton, commentId=null, stereotypeId=null){
+            updateButtonCollors(divId, "update", selectedButton);
+            if (selectedButton == DELETE_BUTTON) {
+                updateVoteCardTypeToCreate(divId, commentId, stereotypeId)
+            }
+        }
+
+        function updateButtonColor(button, selectedButton){        
+            button.className = 'is-clear ' + button.value.split("-")[0] + '-' + selectedButton;
+        }
+
+        function getSelectedButton(value){
+            const buttonValues = {
+                agree: "1",
+                disagree: "-1",
+                skip: "0",
+                delete: "2"
+            };
+            const selectedButtonValue = value.split("-")[0];
+            return buttonValues[selectedButtonValue];
+        }
+
+        function updateSortFilter(sort, target, previous) {
+            let previousIcon = document.getElementById(previous);
+            sortByVoteChoice = sort;
+
+            target.classList.add("pink-selected-sort");
+            previousIcon.classList.remove("pink-selected-sort");
+            updateStereotypeVoteCards(sort);
+        }
+
+        function updateOrderByVote(orderByChoice){
+            orderByVoteChoice = orderByChoice;
+            updateStereotypeVoteCards();
+        }
+
+        function updateStereotypeVoteCards() {
+            $.ajax({
+                url: `stereotype-votes-ordenation?sort=${sortByVoteChoice}&orderBy=${orderByVoteChoice}&stereotypeId={{stereotype.id}}`,
+                success: function(data) {
+                    $("#given-votes").html(data);
+                    items = $(".card-comments");
+                    showCurrentItems();
+                }
+            });
+        }
+
+        function updateVoteCardTypeToCreate(voteId, commentId, stereotypeId) {
+            const newId = 'vote-buttons-create-'+ commentId;
+            document.getElementById('vote-buttons-update-'+ voteId).id = newId;
+
+            const divButtonElement = document.getElementById(newId);
+            divButtonElement.removeChild(divButtonElement.children[3]);
+
+            const commentCardElement = document.getElementById("given-vote-" + voteId);
+            const newCardId = 'comment-without-vote-' + commentId;
+            commentCardElement.id = newCardId;
+            document.getElementById("comments-without-vote").appendChild(commentCardElement);
+
+            for (let i = 0; i < divButtonElement.children.length; i++) {
+                divButtonElement.children[i].name = 'create';
+                divButtonElement.children[i].value = buttonValues[i] + "-" + commentId;
+                divButtonElement.children[i].setAttribute('onclick',`sendCreateVoteInformation('${divButtonElement.children[i].value}', ${commentId}, ${stereotypeId})`);
+                updateButtonColor(divButtonElement.children[i], null);
+            }
+        }
+
+        function updateVoteCardTypeToUpdate(voteId, commentId, stereotypeId, selectedButton) {
+            const newId = 'vote-buttons-update-'+ voteId;
+            document.getElementById('vote-buttons-create-'+ commentId).id = newId;
+            const divButtonElement = document.getElementById(newId);
+
+            const commentCardElement = document.getElementById('comment-without-vote-' + commentId);
+            const newCardId = "given-vote-" + voteId;
+            commentCardElement.id = newCardId;
+            document.getElementById("given-votes").appendChild(commentCardElement);
+
+            for (let i = 0; i < divButtonElement.children.length; i++) {
+                divButtonElement.children[i].name = 'update';
+                divButtonElement.children[i].value = buttonValues[i] + "-" + voteId;
+                divButtonElement.children[i].setAttribute('onclick',`sendUpdateVoteInformation('${divButtonElement.children[i].value}', ${voteId}, ${stereotypeId}, ${commentId})`);
+
+                updateButtonColor(divButtonElement.children[i], selectedButton);
+            }
+            createDeleteButton(voteId, divButtonElement, stereotypeId, commentId)
+        }
+
+        function createDeleteButton(voteId, divButtonElement, stereotypeId, commentId) {
+            const deleteButton = document.createElement("button");
+            deleteButton.value = "delete-" + voteId;
+            deleteButton.type = "button";
+            deleteButton.name = "update";
+            deleteButton.innerHTML = "{{ _('Clear vote') }}";
+                
+            deleteButton.classList.add("delete-vote");
+            deleteButton.setAttribute('onclick',`sendUpdateVoteInformation('${deleteButton.value}', ${voteId}, ${stereotypeId}, ${commentId})`);
+            divButtonElement.append(deleteButton);
+        }
+
+    </script>
+
     {% else %}
-        <h1 class="h2 text-accent">{{ _('Error') }}
+        <h1 class="h2 text-accent"> 
             <br><small>{{ _('There are no personas defined for this conversation') }}</small>
         </h1>
-        <p>{% trans %}Mark the votes for each stereotype in your conversation.{% endtrans %}</p>
+        <p>{{_('Start by')}} <a href="{{ conversation.url('cluster:edit') }}">{{ _('creating personas')}}</a> {{ _('for this conversation.')}}</p>
     {% endif %}
+    
 {% endblock %}
-
-
-{% macro show_stereotype(stereotype) %}
-    <h2 class="h3 text-accent">{{ _('{name}\'s votes').format(name=stereotype.name) }}</h2>
-    <p>{% trans %}Select the votes you want to modify.{% endtrans %}</p>
-
-    <form method="post" class="width-full" action="#stereotype-{{ stereotype.id }}">
-        {{ csrf_input }}
-        <input type="hidden" name="stereotype" value="{{ stereotype.id }}">
-        <table class="votes-table">
-            <thead>
-            <tr>
-                <th>{{ _('Comment') }}</th>
-                <th>{{ _('Choice') }}</th>
-                <th><i class="fa fa-edit"></i></th>
-            </tr>
-            </thead>
-
-            <tbody class="text-6">
-            {% for vote in stereotype.given_votes %}
-                <tr>
-                    <td>{{ vote.comment.content }}</td>
-                    <td>{% if vote.choice == 0 %}{{ _('Neutral') }}{% else %}
-                        {{ vote.choice.description }}{% endif %}</td>
-                    <td><input type="checkbox" name="vote" value="{{ vote.id }}"></td>
-                </tr>
-            {% endfor %}
-            {% for comment in stereotype.non_voted_comments %}
-                <tr>
-                    <td>{{ comment.content }}</td>
-                    <td>{{ _('n/a') }}</td>
-                    <td><input type="checkbox" name="comment" value="{{ comment.id }}"></td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-
-        <div class="margin-t3">
-            <span class="text-negative"><button class="is-clear" name="action" value="disagree">
-                <i class="fa fa-times"></i> {{ _('Disagree') }}
-            </button></span>
-            <span class="margin-x2"><button class="is-clear" name="action" value="skip">
-                <i class="far fa-meh"></i> {{ _('Neutral') }}
-            </button></span>
-            <span class="text-positive"><button class="is-clear" name="action" value="agree">
-                <i class="fa fa-check"></i> {{ _('Agree') }}
-            </button></span>
-            <br>
-            <button class="is-primary margin-y3" name="action" value="discard">{{ _('Discard votes') }}</button>
-        </div>
-    </form>
-
-    {% if stereotype.description %}
-        <dl class="pad-x3 pad-y2 margin-b3 color-brand-lighter rounded-3 text-left">
-            <dt class="bold"><i class="fa fa-info"></i>{{ _('Notes') }}</dt>
-            <dd>{{ stereotype.description }}</dd>
-        </dl>
-    {% endif %}
-{% endmacro %}

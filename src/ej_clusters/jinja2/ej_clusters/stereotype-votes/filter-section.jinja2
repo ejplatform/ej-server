@@ -1,0 +1,26 @@
+<div class="ordination divider-section">
+    <span>
+        {{_("show")}}
+        <select id="pages-select" onchange="updateItemsPerPage()">
+            <option value="5" selected>5</option>
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="40">40</option>
+        </select>
+        {{_("comments")}} <span id="divider">|</span>
+    </span>
+
+    <span>
+        {{_("order by")}}
+        <select id="select-order-vote" name="order-vote" onchange="updateOrderByVote(this.value)">
+            <option value="1">{{_("agree")}}</option>
+            <option value="-1">{{_("disagree")}}</option>
+            <option value="0">{{_("neutral")}}</option>
+        </select>
+    </span>
+
+    <span id="sort-icons">
+        <a onclick="updateSortFilter('-', event.target, 'sort-up-icon')"><i id="sort-down-icon" class="fa fa-sort-down fa-lg pink-selected-sort"></i></a>
+        <a onclick="updateSortFilter('', event.target, 'sort-down-icon')"><i id="sort-up-icon" class="fa fa-sort-up fa-lg"></i></a>
+    </span>
+</div>

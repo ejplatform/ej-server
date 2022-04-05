@@ -1,0 +1,29 @@
+{% for comment in stereotype.non_voted_comments %}
+    <div class="card-comments" id="comment-without-vote-{{ comment.id }}">
+        <p>{{ comment.content }}</p>
+
+        <div class="vote-buttons" id="vote-buttons-create-{{ comment.id }}">
+            <button type="button" 
+                    onclick="sendCreateVoteInformation(this.value, '{{ comment.id }}', '{{stereotype.id}}')" 
+                    class="is-clear" 
+                    name="create"
+                    value="agree-{{ comment.id }}">
+                <i class="fa fa-check"></i> {{ _('Agree') }}
+            </button>
+            <button type="button" 
+                    onclick="sendCreateVoteInformation(this.value, '{{ comment.id }}', '{{stereotype.id}}')" 
+                    class="is-clear" 
+                    name="create" 
+                    value="skip-{{ comment.id }}">
+                <i class="far fa-meh"></i> {{ _('Neutral') }}
+            </button>
+            <button type="button" 
+                    onclick="sendCreateVoteInformation(this.value, '{{ comment.id }}', '{{stereotype.id}}')" 
+                    class="is-clear" 
+                    name="create" 
+                    value="disagree-{{ comment.id }}">
+                <i class="fa fa-times"></i> {{ _('Disagree') }}
+            </button>
+        </div>
+    </div>
+{% endfor %}

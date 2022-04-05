@@ -5,11 +5,11 @@ from rest_framework.response import Response
 from boogie.models import F
 from boogie.router import Router
 from django.db.models import Count
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.utils.translation import ugettext_lazy as _, ugettext as __
 from hyperpython import a
 from hyperpython.components import fa_icon
-
+from django.http import HttpResponse
 from ej_conversations.enums import Choice
 from ej_conversations.models import Conversation, Comment
 
@@ -19,6 +19,7 @@ from .models import StereotypeVote
 from .utils import cluster_shapes
 
 from ej_conversations.utils import check_promoted
+from ej_clusters.stereotypes_utils import extract_choice_id, stereotype_vote_information
 
 log = getLogger("ej")
 app_name = "ej_cluster"
@@ -95,55 +96,76 @@ def edit(request, conversation, **kwargs):
 @urlpatterns.route(conversation_url + "stereotypes/", perms=["ej.can_edit_conversation:conversation"])
 def stereotype_votes(request, conversation, **kwargs):
     clusterization = conversation.get_clusterization(default=None)
-
+    created_vote_id = None
     if clusterization is None:
         return {"conversation": conversation}
 
-    # Process form, if method is post
     all_stereotypes = clusterization.stereotypes.all()
+    stereotype = all_stereotypes.first()
+    order_votes_by = 1
+
+    if request.method == "GET":
+        if "stereotype-select" in request.GET:
+            stereotype = Stereotype.objects.get(id=request.GET["stereotype-select"])
+
     if request.method == "POST":
         # Fetch data from POST dictionary
         data = request.POST
-        action = data["action"]
-        votes = map(int, data.getlist("vote"))
-        comments = map(int, data.getlist("comment"))
         stereotype = Stereotype.objects.get(id=data["stereotype"])
         if stereotype not in all_stereotypes:
             raise PermissionError
 
-        # Process results and save votes
-        comments = Comment.objects.filter(id__in=comments)
-        votes = StereotypeVote.objects.filter(id__in=votes)
-        if action == "discard":
-            votes.delete()
-        else:
-            choice_map = {"agree": Choice.AGREE, "disagree": Choice.DISAGREE, "skip": Choice.SKIP}
-            choice = choice_map[action]
-            votes.update(choice=choice)
-            StereotypeVote.objects.bulk_create(
-                [
-                    StereotypeVote(choice=choice, comment=comment, author_id=stereotype.id)
-                    for comment in comments
-                ]
-            )
+        choice_map = {"agree": Choice.AGREE, "disagree": Choice.DISAGREE, "skip": Choice.SKIP}
 
-    all_votes = clusterization.stereotype_votes.all()
-    comments = conversation.comments.approved()
-
-    # Mark stereotypes with information about votes
-    stereotypes = []
-    for stereotype in all_stereotypes:
-        votes = [vote for vote in all_votes if vote.author == stereotype]
-        voted = set(vote.comment for vote in votes)
-        stereotype.non_voted_comments = [x for x in comments if x not in voted]
-        stereotype.given_votes = votes
-        stereotypes.append(stereotype)
-
+        if "update" in data:
+            action_object_id = extract_choice_id(data["update"])
+            if action_object_id["choice"] == "delete":
+                StereotypeVote.objects.get(pk=action_object_id["id"]).delete()
+            else:
+                choice = choice_map[action_object_id["choice"]]
+                StereotypeVote.objects.filter(pk=action_object_id["id"]).update(choice=choice)
     return {
         "conversation": conversation,
-        "stereotypes": stereotypes,
-        "groups": {x.name: f"#stereotype-{x.id}" for x in stereotypes},
+        "stereotype": stereotype_vote_information(stereotype, clusterization, conversation, order_votes_by),
+        "groups": {x.name: f"{x.id}" for x in clusterization.stereotypes.all()} or None,
+        "order_votes_by": order_votes_by,
+        "created_vote_id": created_vote_id,
     }
+
+
+@urlpatterns.route(
+    conversation_url + "stereotypes/stereotype-votes-ordenation",
+    perms=["ej.can_edit_conversation:conversation"],
+)
+def stereotype_votes_ordenation(request, conversation, **kwargs):
+    sort_order = request.GET.get("sort")
+    order_votes_by_choice = request.GET.get("orderBy")
+    clusterization = conversation.get_clusterization(default=None)
+    stereotype = Stereotype.objects.get(id=request.GET.get("stereotypeId"))
+    return render(
+        request,
+        "ej_clusters/stereotype-votes/stereotype-given-votes.jinja2",
+        {
+            "stereotype": stereotype_vote_information(
+                stereotype, clusterization, conversation, order_votes_by_choice, sort_order
+            ),
+        },
+    )
+
+
+@urlpatterns.route(
+    conversation_url + "stereotypes/stereotype-votes/create",
+    perms=["ej.can_edit_conversation:conversation"],
+)
+def stereotype_votes_create(request, conversation, **kwargs):
+    if request.method == "POST":
+        comment = request.POST.get("comment")
+        stereotype_id = request.POST.get("author")
+        choice = request.POST.get("choice")
+        stereotype_vote = StereotypeVote.objects.create(
+            choice=int(choice), comment_id=comment, author_id=stereotype_id
+        )
+    return HttpResponse(stereotype_vote.id)
 
 
 @urlpatterns.route(conversation_url + "clusters/ctrl/")

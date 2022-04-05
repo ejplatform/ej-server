@@ -188,7 +188,7 @@ $clusters-button-height: 2.313rem;
 }
 
 .personas-list {
-  select[multiple] {
+  select#id_stereotypes {
     padding: .3rem .5rem !important;
     border: 1px solid $color-bright-blue;
     box-sizing: border-box;
