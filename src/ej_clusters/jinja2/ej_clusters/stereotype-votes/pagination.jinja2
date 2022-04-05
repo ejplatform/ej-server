@@ -1,0 +1,43 @@
+<div class=footer-personas>
+    <p id="pagination-text"></p>
+    <div id="pagination"></div>
+</div>
+
+<script>
+    let items = $(".card-comments");
+    const numItems = items.length;
+    let itemsPerPage = 5;
+
+    items.slice(itemsPerPage).hide();
+    document.getElementById('select-order-vote').value='{{order_votes_by}}';
+    const pagination = $('#pagination').pagination({
+        items: numItems,
+        itemsOnPage: itemsPerPage,
+        prevText: "Anterior",
+        nextText: "Próximo",
+        onInit: showCurrentItems,
+        onPageClick: showCurrentItems,       
+    });
+    
+    function updateItemsPerPage(){
+        itemsPerPage = document.getElementById("pages-select").value;
+        showCurrentItems();
+        pagination.pagination('updateItemsOnPage', itemsPerPage);
+    }
+
+    function showCurrentItems(pageNumber=1) {
+        const showItemsBehind = itemsPerPage * (pageNumber - 1);
+        const showItemsFoward = showItemsBehind + Number(itemsPerPage);
+        missingItems = items.hide().slice(showItemsBehind, showItemsFoward).show();
+        currentSerie = showItemsBehind + 1
+        
+        if (showItemsBehind >= 0) {
+            text = " {{_('showing')}} " + currentSerie + " {{_('to')}} " + showItemsFoward + " {{_('from')}} " + numItems + " {{_('comments')}} ";
+        } 
+        if (showItemsFoward >= numItems) {
+            text = " {{_('showing')}} " + currentSerie + " {{_('from')}} " + numItems + " {{_('comments')}} ";
+        }
+        paginationText = document.getElementById("pagination-text").textContent=text;
+        
+    }
+</script>

@@ -353,11 +353,11 @@ msgstr ""
 msgid "Opinion groups"
 msgstr "Grupos de opinião"
 
-#: src/ej_clusters/routes.py:62
+#: src/ej_clusters/routes.py:63
 msgid "Error"
 msgstr "Erro"
 
-#: src/ej_clusters/routes.py:75
+#: src/ej_clusters/routes.py:76
 msgid "here"
 msgstr "aqui"
 
@@ -2762,43 +2762,38 @@ msgstr "Comentários negativos"
 msgid "No negative comments in cluster"
 msgstr "Nenhum comentário negativo no grupo"
 
-#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes.jinja2:19
+#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes.jinja2:11
 msgid "Define personas"
 msgstr "Gerenciar personas"
 
-#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes.jinja2:20
-#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes.jinja2:31
+#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes.jinja2:12
 msgid "Mark the votes for each stereotype in your conversation."
 msgstr "Marque os votos para cada persona na sua conversa."
 
-#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes.jinja2:29
+#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes.jinja2:165
+#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/stereotype-given-votes.jinja2:32
+#, fuzzy
+msgid "Clear vote"
+msgstr "Limpar voto"
+
+#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes.jinja2:176
 msgid "There are no personas defined for this conversation"
 msgstr "Não existem personas definidas para esta conversa"
 
-#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes.jinja2:37
-msgid "{name}'s votes"
-msgstr "Votos de {name}"
+#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes.jinja2:178
+#, fuzzy
+msgid "Start by"
+msgstr "Comece"
 
-#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes.jinja2:38
-msgid "Select the votes you want to modify."
-msgstr "Selecione os votos que você deseja modificar."
+#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes.jinja2:178
+#, fuzzy
+msgid "creating personas"
+msgstr "criando personas"
 
-#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes.jinja2:56
-#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes.jinja2:76
-msgid "Neutral"
-msgstr "Neutro"
-
-#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes.jinja2:64
-msgid "n/a"
-msgstr "n/d"
-
-#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes.jinja2:82
-msgid "Discard votes"
-msgstr "Descartar votos"
-
-#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes.jinja2:88
-msgid "Notes"
-msgstr "Notas"
+#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes.jinja2:178
+#, fuzzy
+msgid "for this conversation."
+msgstr "para esta conversa."
 
 #: src/ej_clusters/jinja2/ej_clusters/edit/edit-cluster-form.jinja2:1
 #, fuzzy
@@ -2911,6 +2906,51 @@ msgstr "Personas"
 #: src/ej_users/jinja2/ej_users/includes/account-menu.jinja2:2
 msgid "Account"
 msgstr "Conta"
+
+#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/filter-section.jinja2:3
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/filter-section.jinja2:7
+msgid "show"
+msgstr "mostrar"
+
+#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/filter-section.jinja2:10
+#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/pagination.jinja2:35
+#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/pagination.jinja2:38
+#: src/ej_tools/jinja2/ej_tools/edit-comments.jinja2:85
+#: src/ej_tools/jinja2/ej_tools/show-comments.jinja2:55
+#, fuzzy
+msgid "comments"
+msgstr " comentários"
+
+#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/filter-section.jinja2:14
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/filter-section.jinja2:18
+msgid "order by"
+msgstr "ordenar por"
+
+#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/filter-section.jinja2:18
+#, fuzzy
+msgid "neutral"
+msgstr "neutro"
+
+#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/pagination.jinja2:35
+#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/pagination.jinja2:38
+#, fuzzy
+msgid "showing"
+msgstr "Mostrando"
+
+#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/pagination.jinja2:35
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/paginator.jinja2:2
+msgid "to"
+msgstr "a"
+
+#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/pagination.jinja2:35
+#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/pagination.jinja2:38
+msgid "from"
+msgstr "de"
+
+#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/stereotype-given-votes.jinja2:18
+#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/stereotype-unvoted-votes.jinja2:18
+msgid "Neutral"
+msgstr "Neutro"
 
 #: src/ej_clusters/jinja2/ej_clusters/stereotypes/create.jinja2:7
 #: src/ej_dataviz/jinja2/ej_dataviz/report/clusters-warning-card.jinja2:7
@@ -3551,18 +3591,9 @@ msgstr "ver menos"
 msgid "All comments"
 msgstr "Todos os comentários"
 
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/filter-section.jinja2:7
-#, fuzzy
-msgid "show"
-msgstr "ver tudo"
-
 #: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/filter-section.jinja2:14
 msgid "inputs"
 msgstr "entradas"
-
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/filter-section.jinja2:18
-msgid "order by"
-msgstr "ordenar por"
 
 #: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/filter-section.jinja2:20
 #, fuzzy
@@ -3587,10 +3618,6 @@ msgstr "Geral"
 #: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/paginator.jinja2:2
 msgid "Showing"
 msgstr "Mostrando"
-
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/paginator.jinja2:2
-msgid "to"
-msgstr "a"
 
 #: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/paginator.jinja2:2
 msgid "of"
@@ -4685,6 +4712,21 @@ msgstr "Mudar a senha"
 #, fuzzy
 msgid "Authentication"
 msgstr "Autenticação"
+
+#~ msgid "{name}'s votes"
+#~ msgstr "Votos de {name}"
+
+#~ msgid "Select the votes you want to modify."
+#~ msgstr "Selecione os votos que você deseja modificar."
+
+#~ msgid "n/a"
+#~ msgstr "n/d"
+
+#~ msgid "Discard votes"
+#~ msgstr "Descartar votos"
+
+#~ msgid "Notes"
+#~ msgstr "Notas"
 
 #, fuzzy
 #~ msgid "General report"

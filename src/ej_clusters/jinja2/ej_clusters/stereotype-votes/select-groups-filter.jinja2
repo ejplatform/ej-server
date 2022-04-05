@@ -1,0 +1,9 @@
+<form method="GET" id="stereotype-filter">
+    {% for group in groups %}
+        {% if groups[group]|int == stereotype.id %}
+            <button class="groups selected-group" type="submit" id="{{ group }}" value="{{ groups[group] }}" name="stereotype-select">{{ group }}</button>
+        {% else %}
+            <button class="groups" type="submit" id="{{ group }}" value="{{ groups[group] }}" name="stereotype-select">{{ group }}</button>
+        {% endif %}
+    {% endfor %}
+</form>
