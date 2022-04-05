@@ -25,10 +25,14 @@ $modal-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.35);
     }
     .h2, .h3 {
         margin: unset;
+        a {
+            color: $color-pink-light;
+            text-decoration:underline;
+        }
     }
 
     .h3 {
-        color: #042a46;
+        color: $color-black;
     }
 
     &-container {
@@ -58,7 +62,7 @@ $modal-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.35);
 .tools-section,
 .tools-section-2 {
     border-width: 1px;
-    border-color: #30bfd3;
+    border-color: $color-theme-report-light-blue;
     border-radius: 1rem;
     padding: 5px;
 }
@@ -74,7 +78,7 @@ $modal-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.35);
 .tools-section .scrow div:first-child,
 .tools-section-2 .scrow div:first-child {
     flex-grow: 2;
-    color: #30bfd3;
+    color: $color-theme-report-light-blue;
     font-weight: 700;
 }
 
@@ -82,7 +86,6 @@ $modal-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.35);
     overflow: hidden;
     transition: max-height 0.5s;
 }
-
 
 @keyframes fadeIn {
     from {
@@ -118,26 +121,6 @@ $modal-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.35);
     }
 }
 
-@media (max-width: 768px) {
-    #page-wrapper {
-        .modal {
-            width: 100vw;
-            left: 0;
-            margin: 15% auto;
-        }
-        #preview-template {
-            height: 850px;
-        }
-    }
-
-    .tools {
-        width: 100%;
-        &-container {
-            width: 95%;
-            margin: auto;
-        }
-    }
-}
 @media (max-width: 875px) {
     .tools-select {
         flex-grow: 1;

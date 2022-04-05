@@ -1,53 +1,3 @@
-.tools-settings-form {
-    position: relative;
-    margin-bottom: 0.844rem;
-    h3 {
-        margin-block-start: 0;
-    }
-    hr {
-        color: rgba(0, 0, 0, 0.12);
-    }
-    ul {
-        list-style-type: none;
-    }
-
-    &-table-about {
-        font-weight: bold;
-    }
-
-    &-settings-form {
-        h3 {
-            margin-block-start: 0;
-        }
-        hr {
-            color: rgba(0, 0, 0, 0.12);
-        }
-        section {
-            margin: 20px 0px 20px 0px;
-        }
-        ul {
-            list-style-type: none;
-            margin-bottom: 0;
-        }
-        ul:after {
-            content: "";
-            display: table;
-            clear: both;
-        }
-        li {
-            float: left;
-            margin-right: 3%;
-            width: 35%;
-            width: auto;
-            margin-bottom: 0;
-        }
-    }
-    
-    &-submit-button {
-        float: left;
-    }
-}
-
 .card-opinion-component {
     display: grid;
     width: 80%;
@@ -67,65 +17,9 @@
     }
 }
 
-#opinion-component-form {
-    section {
-        ul {
-            max-width: 24rem;
-            justify-content: center;
-        }
-        @media only screen and (max-width: 740px) {
-            left: 2.5rem;
-        }
-    }
-}
-
 .opinion-component-card-list {
     display: block; 
     margin-top: 1rem;
     width: 22rem;
     padding: 0 1rem;
-}
-
-.tools-settings-form:after {
-    content: "";
-    display: table;
-    clear: both;
-}
-
-.title-theme {
-    .avatar {
-        width: 3.438rem;
-        margin-top: 0.844rem;
-        margin-right: 1.5rem;
-        margin-left: 1.219rem;
-    }
-    h3 {
-        width: 70%;
-        margin-top: 0.75rem;
-        color: $color-black;
-        font-family: Raleway;
-        font-style: normal;
-        font-weight: bold;
-        font-size: 20px;
-        line-height: 23px;
-    }
-    h4 {
-        color: $color-black;
-        font-family: Raleway;
-        font-weight: bold;
-        line-height: 21px;
-        margin: unset !important;
-    }
-    @media only screen and (max-width: 760px) {
-        h3 {
-            margin-left: 2rem;
-            margin-bottom: 1.5rem;
-        }
-        h4 {
-            left: 2rem;
-        }
-        span {
-            left: 2rem;
-        }
-    }
 }

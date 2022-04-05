@@ -1,0 +1,62 @@
+<div>
+  {% if conversation.n_approved_comments == 0 %}
+    <button class="grey" id="preview-button" type="submit" name="preview" value="{{ _('Preview Template') }}" disabled>
+      <img class="comments-icon" src="{{ static('/img/icons/eye_icon.svg') }}"/>
+      <a>{{ _('Preview') }}</a>
+    </button>
+  {% else %}
+    <button class="grey" id="preview-button" type="submit" name="preview" value="{{ _('Preview Template') }}">
+      <img class="comments-icon" src="{{ static('/img/icons/eye_icon.svg') }}"/>
+      <a>{{ _('Preview') }}</a>
+    </button>
+  {% endif %}
+  <div id="tools-modal-{{ conversation.slug }}" class="modal-tools-close">
+    <div class="modal-tools-bg">
+      <div class="modal-tools-content mailing">
+        <span class="close-modal">&times;</span>
+        <div id="preview-template">
+					<iframe id="iframe" class="iframe-section" scroll="0"
+					frameborder="0"></iframe>
+				</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+let modal = document.getElementById("tools-modal-{{ conversation.slug }}");
+let spanClose = document.getElementsByClassName("close-modal")[0];
+let modalbg = document.getElementsByClassName("modal-tools-bg")[0];
+
+function setIframe(html){
+	let iframe = document.getElementById('iframe');
+	iframe.srcdoc = html;
+	iframe.width  = iframe.contentWindow.document.body.scrollWidth;
+	iframe.height = iframe.contentWindow.document.body.scrollHeight;
+	if(iframe) {
+		iframe.contentWindow.document.body.style.overflow = "auto";
+	}
+}
+
+window.onload = function() {
+		if({{template_preview | safe}}){
+			setIframe({{template_preview | safe}});
+      showModal();
+		}
+	};
+
+spanClose.onclick = function() {
+  modal.className = "modal-tools-close";
+  document.getElementsByClassName("body")[0].style.overflowY = "auto"
+}
+
+modalbg.onclick = function() {
+  modal.className = "modal-tools-close";
+  document.getElementsByClassName("body")[0].style.overflowY = "auto"
+}
+
+function showModal() {
+  modal.className = "modal-tools-open";
+  document.getElementsByClassName("body")[0].style.overflowY = "hidden"
+}
+</script>

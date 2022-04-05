@@ -1,5 +1,5 @@
 {% extends 'ej_conversations/base.jinja2' %}
-
+{% from "ej_tools/includes/help-card.jinja2" import help_card %}
 {% block metaOG2 %}
 
     <meta name="description" property="og:title" content="Area de integração da EJ com outras ferramentas.">
@@ -12,132 +12,33 @@
 
 {% block content %}
 <div class="tools">
-	<div class="tools-container">
-	<div class="tools-title">
-		<h1 class="h2 text-accent">
-		<a href="{{ conversation.patch_url('conversation-tools:index') }}">{{_("Tools")}}</a>
-		> {{ tool.name }}</h1>
-		<span class="helptext">{{tool.description }}</span>	
-	</div>
-	<div>
-		<div class="tools-section">
-			<div class="tools-content">
-				<form action="{{conversation.patch_url('conversation-tools:mailing')}}" method="post" class="tools-settings-form" name="mailingForm">
-					<h3 class="h3 divider">{{form.template_type.label}}</h3>
-					<span class="helptext">{{_("Selects template type you want to use.")}}</span>
-					<section>
-						{{form.template_type}}
-					</section>
-
-					<h3 class="h3 divider">{{form.theme.label}}</h3>
-					<span class="helptext">{{_("Changes template appearence.")}}</span>
-					<section>
-						{{form.theme}}
-					</section>
-
-					<section >
-					<h3 class="h3 divider" style="display: flex;justify-content: space-between;">
-						{{ _('Custom fields') }}
-						<div class="display-down" onclick="showSection(event.target.checked, 'custom-field-section');">
-							<input type="checkbox" id="isexpanded1"/>
-							<label for="isexpanded1"><i class="fa fa-chevron-down"></i></label>
-						</div>
-					</h3>
-					<span class="helptext">{{_("Changes fields like comment and title.")}}</span>
-					<div id="custom-field-section" style="display: none">
-						<label>{{form.custom_title.label}}</label>
-						{{form.custom_title}}
-						<label>{{form.custom_comment.label}}</label>
-						{{form.custom_comment}}
+	<div class="tools-container-full-width">
+		<div class="tools-title">
+			<h1 class="h2 text-accent">
+			<a href="{{ conversation.patch_url('conversation-tools:index') }}">{{_("Tools")}}</a>
+			> {{ tool.name }}</h1>
+			<span class="helptext tool-description">{{tool.description }}</span>	
+		</div>
+		<h3 class="h3 divider">{{_("Template generator")}}</h3>
+		<span class="helptext">{{_("Generate the html template of this conversation")}}</span>
+		<div class="tools-divider">
+			<div class="tools-card-container">
+				<div class="tools-card-body">
+					<div class="tools-card-body-img">
+						<img class="avatar" src="/static/img/icons/icon-mailing.svg">
 					</div>
-					</section>
-
-					<section>
-					<h3 style="display: flex;justify-content: space-between;" class="h3 divider">
-						{{_('Opinion Component')}}
-						<div class="display-down" onclick="showSection(event.target.checked, 'component-opinion-section');">
-							<input type="checkbox" id="isexpanded2"/>
-							<label for="isexpanded2"><i class="fa fa-chevron-down"></i></label>
-						</div>
-					</h3>
-					<span class="helptext" style="display: block;">{{_("Redirect your participant to a page with the integrated opinion component. The vote given in the email will be processed automatically by the component.")}}</span>
-					<div id="component-opinion-section" style="display: none">
-						<label id="custom-domain-label">{{form.is_custom_domain.label}}</label>
-						<input name="custom-domain" id="domain-input" type="text" placeholder="https://example.com">
-					</div>
-					</section>
-					
-					<input type="hidden" id="token" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-					<div class="group-button">
-						<input id="preview-button" type="submit" name="preview" value="{{ _('Preview Template') }}">
-						<input type="submit" name="download" value="{{ _('Download Template') }}">
-					</div>
-				</form>
-			</div>
-			<div id="backgroundModal" class="modal-background"></div>
-			<div id="previewModal" class="modal">
-				<div class="modal-mailing-preview">
-					<span class="close" onclick="closeModal('previewModal')">&times;</span>
-					<div id="preview-template">
-						<iframe id="iframe" class="iframe-section" scroll="0"
-						frameborder="0"></iframe>
+					<div class="tools-card-content mailing">
+						<span class="tools-card-title">{{_("Generator")}}</span>
+						<p class="helptext">{{_("Configure the template so that it integrates with your firing strategy.")}}</p>
+						{% include 'ej_tools/form-mailing.jinja2' %}
 					</div>
 				</div>
 			</div>
 		</div>
-</div>
+		</div>
+		<div class="opinion-component-card-list">
+			{{ help_card(_("When should I use the email template?"), "/static_docs/i18n/pt-br/user-docs/tools-mail-template.html#utilizando-o-template-gerado")}}
+		</div>
 	</div>
-<script>
-	function setIframe(html){
-		let iframe = document.getElementById('iframe');
-		iframe.srcdoc = html;
-		iframe.width  = iframe.contentWindow.document.body.scrollWidth;
-		iframe.height = iframe.contentWindow.document.body.scrollHeight;
-		if(iframe) {
-			iframe.contentWindow.document.body.style.overflow = "auto";
-		}
-	}
-	window.onload = function() {
-		if({{template_preview | safe}}){
-			setIframe({{template_preview | safe}});
-			showModal('previewModal');
-		}
-	};
-
-	function showSection(is_checked, section_id) {
-		let section = document.getElementById(section_id);
-		if (is_checked) {
-			section.style['opacity'] = 1;
-			section.style['display'] = 'block';
-		} else {
-			section.style['opacity'] = 0;
-			section.style['display'] = 'none';
-		}
-	}
-	function showModal(modal_id) {
-		let modal = document.getElementById(modal_id);
-		let backgroundModal = document.getElementById('backgroundModal');
-		let pageWapper = document.getElementById('page-wrapper');
-		pageWapper.appendChild(modal);
-		pageWapper.appendChild(backgroundModal);
-		backgroundModal.style.display = 'block';
-		modal.style.display = 'block';
-	}
-	function closeModal(modal_id) {
-		let modal = document.getElementById(modal_id);
-		let backgroundModal = document.getElementById('backgroundModal');
-		modal.style.display = 'none';
-		backgroundModal.style.display = 'none';
-	}
-
-	window.onclick = function(event) {
-		let modal = document.getElementById('previewModal');
-		let backgroundModal = document.getElementById('backgroundModal');
-		if (event.target != modal) {
-			modal.style.display = 'none';
-			backgroundModal.style.display = 'none';
-		}		
-	}	
-
-</script>
+</div>
 {% endblock %}
