@@ -1,6 +1,5 @@
 <nav title="{{ _('Conversation') }}" aria-labelledby="menu-conversation">
     <ul class="nav-header menu-padding">
-        <i class="fas fa-times close-btn"></i>
         <li id="board-name">
             <a href="{{ url('boards:conversation-list', board_slug=conversation.board.slug) }}">
                 <i class="fa fa-arrow-circle-left"></i>
@@ -64,15 +63,6 @@
     </ul>
 
 <script>
-    const closeBtn = document.querySelector(".close-btn");
-
-    function closePageMenu() {
-        var pageMenu = document.getElementById("page-menu")
-        var overlayComp = document.getElementById("page-menu-overlay")
-        pageMenu.removeAttribute('is-open')
-        if(overlayComp) overlayComp.remove()
-    }
-
     function setChecked(check_id) {
         event.preventDefault();
         let checkbox = document.getElementById(check_id);
@@ -97,8 +87,6 @@
 
         var menuProfile = document.getElementById("show-profile-menu");
     };
-
-    closeBtn.addEventListener("click", closePageMenu);
 
     menuStarter();
 </script>

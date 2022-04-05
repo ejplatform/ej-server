@@ -13,8 +13,6 @@
     </div>
 </nav>
 
-<i onclick="closePageMenu()" id="profile-menu-close-btn" class="fas fa-times"></i>
-
 <nav class="menu-profile-section divider">
     <ul>
         <li><a href="{{ url('profile:detail')}}">{{ _('Profile') }}</a></li>
@@ -33,32 +31,10 @@
 </nav>
 
 <script>
-    var menuProfile = document.getElementById("show-profile-menu");
-    var profile = document.getElementById("img-profile").firstElementChild;
     var logoutForm = document.getElementById("logout-form");
-    var profileMenuCloseBtn = document.getElementById("profile-menu-close-btn");
-
-    function closeProfileMenu() {
-        menuProfile.classList.add('hide');
-    }
-
-    window.onclick = function(event) {
-        if (event.target === menuProfile|| event.target === profile) return;
-        closeProfileMenu()
-    }
-
-    profile.onclick = function() {
-        menuProfile.classList.toggle('hide');
-        let pageMenu = document.getElementById("page-menu")
-        let overlayComp = document.getElementById("page-menu-overlay")
-        pageMenu.removeAttribute('is-open')
-        if(overlayComp) overlayComp.remove()
-    }
 
     function logout() {
         logoutForm.submit();
     }
-
-    profileMenuCloseBtn.addEventListener("click", closeProfileMenu)
 
 </script>
