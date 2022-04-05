@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-01 12:27-0300\n"
+"POT-Creation-Date: 2022-04-01 19:30-0300\n"
 "PO-Revision-Date: 2019-09-09 13:55-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -4015,6 +4015,45 @@ msgstr "Comando da enquete: "
 msgid "comments"
 msgstr " comentários"
 
+#: src/ej_tools/jinja2/ej_tools/form-mailing.jinja2:7
+#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:38
+msgid "Customize the collection component with our color options."
+msgstr "Personalize o componente de coleta com nossas opções de cores."
+
+#: src/ej_tools/jinja2/ej_tools/form-mailing.jinja2:21
+msgid ""
+"Redirect your participant to a page with the integrated opinion component. "
+"The vote given in the email will be processed automatically by the component."
+msgstr ""
+"Redirecione seu participante para uma página com o componente de opinião "
+"integrado. O voto dado no email será processado automaticamente pelo "
+"componente."
+
+#: src/ej_tools/jinja2/ej_tools/form-mailing.jinja2:29
+msgid "Custom fields"
+msgstr "Campos personalizáveis"
+
+#: src/ej_tools/jinja2/ej_tools/form-mailing.jinja2:35
+#, fuzzy
+msgid "Changes fields like comment and title."
+msgstr "Altere campos como comentário e título."
+
+#: src/ej_tools/jinja2/ej_tools/form-mailing.jinja2:50
+#: src/ej_tools/jinja2/ej_tools/form-mailing.jinja2:56
+#, fuzzy
+msgid "Download Template"
+msgstr "Baixar template"
+
+#: src/ej_tools/jinja2/ej_tools/form-mailing.jinja2:52
+#: src/ej_tools/jinja2/ej_tools/form-mailing.jinja2:58
+#, fuzzy
+msgid "Download"
+msgstr "Download"
+
+#: src/ej_tools/jinja2/ej_tools/form-mailing.jinja2:54
+msgid "Create comments to use this tool."
+msgstr "Crie comentários para usar essa ferramenta."
+
 #: src/ej_tools/jinja2/ej_tools/index.jinja2:15
 #, fuzzy
 msgid "Integrates this conversation with external tools and platforms."
@@ -4031,43 +4070,30 @@ msgstr "Integração"
 msgid "Learn more about this integration"
 msgstr "Aprenda mais sobre esta integração"
 
-#: src/ej_tools/jinja2/ej_tools/mailing.jinja2:27
+#: src/ej_tools/jinja2/ej_tools/mailing.jinja2:22
 #, fuzzy
-msgid "Selects template type you want to use."
-msgstr "Selecione o tipo de template que deseja utilizar."
+msgid "Template generator"
+msgstr "Gerador de template"
 
-#: src/ej_tools/jinja2/ej_tools/mailing.jinja2:33
+#: src/ej_tools/jinja2/ej_tools/mailing.jinja2:23
 #, fuzzy
-msgid "Changes template appearence."
-msgstr "Altere a aparência (cores) do template."
+msgid "Generate the html template of this conversation"
+msgstr "Gere o template html dessa conversa"
+
+#: src/ej_tools/jinja2/ej_tools/mailing.jinja2:31
+#, fuzzy
+msgid "Generator"
+msgstr "Gerador"
+
+#: src/ej_tools/jinja2/ej_tools/mailing.jinja2:32
+msgid "Configure the template so that it integrates with your firing strategy."
+msgstr ""
+"Configure o template para que ele se integre na sua estratégia de disparo."
 
 #: src/ej_tools/jinja2/ej_tools/mailing.jinja2:40
-msgid "Custom fields"
-msgstr "Campos personalizáveis"
-
-#: src/ej_tools/jinja2/ej_tools/mailing.jinja2:46
 #, fuzzy
-msgid "Changes fields like comment and title."
-msgstr "Altere campos como comentário e título."
-
-#: src/ej_tools/jinja2/ej_tools/mailing.jinja2:63
-msgid ""
-"Redirect your participant to a page with the integrated opinion component. "
-"The vote given in the email will be processed automatically by the component."
-msgstr ""
-"Redirecione seu participante para uma página com o componente de opinião "
-"integrado. O voto dado no email será processado automaticamente pelo "
-"componente."
-
-#: src/ej_tools/jinja2/ej_tools/mailing.jinja2:72
-#, fuzzy
-msgid "Preview Template"
-msgstr "Visualizar Template"
-
-#: src/ej_tools/jinja2/ej_tools/mailing.jinja2:73
-#, fuzzy
-msgid "Download Template"
-msgstr "Baixar template"
+msgid "When should I use the email template?"
+msgstr "Quando eu devo utilizar o bot de enquetes?"
 
 #: src/ej_tools/jinja2/ej_tools/mautic-connections.jinja2:3
 msgid ""
@@ -4107,6 +4133,18 @@ msgstr "Voltar"
 msgid "Enable Integration"
 msgstr "Habilitar Integração"
 
+#: src/ej_tools/jinja2/ej_tools/modal-preview-mailing.jinja2:3
+#: src/ej_tools/jinja2/ej_tools/modal-preview-mailing.jinja2:8
+#, fuzzy
+msgid "Preview Template"
+msgstr "Visualizar Template"
+
+#: src/ej_tools/jinja2/ej_tools/modal-preview-mailing.jinja2:5
+#: src/ej_tools/jinja2/ej_tools/modal-preview-mailing.jinja2:10
+#, fuzzy
+msgid "Preview"
+msgstr "Visualizar"
+
 #: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:20
 #, fuzzy
 msgid "Collection Link"
@@ -4125,10 +4163,6 @@ msgid ""
 "Web component that allows you to integrate EJ into external sites and "
 "systems."
 msgstr "Componente web que permite integrar a EJ em sites e sistemas externos."
-
-#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:38
-msgid "Customize the collection component with our color options."
-msgstr "Personalize o componente de coleta com nossas opções de cores."
 
 #: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:52
 #, fuzzy
@@ -4687,6 +4721,14 @@ msgstr "Autenticação"
 #~ msgid "Go back"
 #~ msgstr "Voltar"
 
+#, fuzzy
+#~ msgid "Selects template type you want to use."
+#~ msgstr "Selecione o tipo de template que deseja utilizar."
+
+#, fuzzy
+#~ msgid "Changes template appearence."
+#~ msgstr "Altere a aparência (cores) do template."
+
 #~ msgid "General Report"
 #~ msgstr "Relatório Geral"
 
@@ -4881,10 +4923,6 @@ msgstr "Autenticação"
 #~ "Todos os chatbots que têm acesso a esta conversa também são exibidos aqui."
 
 #, fuzzy
-#~ msgid "Manage the integrated links of this conversation."
-#~ msgstr "Gerencie os domínios integrados à esta conversa."
-
-#, fuzzy
 #~ msgid "Administration"
 #~ msgstr "Administração"
 
@@ -5013,10 +5051,6 @@ msgstr "Autenticação"
 #, fuzzy
 #~ msgid "domain to redirect the user on template"
 #~ msgstr "domínio que será embutido para redirecionamento do usuário"
-
-#, fuzzy
-#~ msgid "Download"
-#~ msgstr "Download"
 
 #~ msgid ""
 #~ "Adds EJ directly to your site. Enables voting, commenting, and clusters "
