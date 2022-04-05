@@ -15,7 +15,7 @@
     {% if request.user.profile|default(None) %}
     <div class="main-header__user">
         <a aria-haspopup="true" href="#" id="img-profile">
-        <img is-element="createOverlay:click" class="main-header__avatar" src="{{ request.user.profile.image_url }}" 
+        <img is-element="toggleProfile:click" class="main-header__avatar" src="{{ request.user.profile.image_url }}" 
             alt="{{ _('Profile picture') }}"></a>
 
         <div id="show-profile-menu" class="profile-menu hide"> 
@@ -30,17 +30,3 @@
         {% endcall %}
     {% endif %}
 </header>
-
-<script>
-    var header = document.querySelector("header");
-
-    header.addEventListener("click", function(event) {
-        if(event.target != header) return;
-
-        var menu = document.getElementById("page-menu");
-        let overlayComp = document.getElementById("page-menu-overlay")
-
-        if (overlayComp) overlayComp.remove();
-        menu.classList.add("hide");
-    });
-</script>

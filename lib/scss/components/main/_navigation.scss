@@ -42,8 +42,6 @@ body {
     }
 
     box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.12);
-    //height: $_sm-header-height;
-    //line-height: $_sm-header-height;
     height: 3rem;
     line-height: 3.5rem;
     order: -1;
@@ -102,12 +100,12 @@ body {
                 align-items: center;
             }
 
-            &:hover > #show-profile-menu {
+            &:hover #show-profile-menu {
                 opacity: 1 !important;
                 visibility: visible !important;
-                transition-delay: 0s, 0s, 0.3s;
+                right: 0;
             }
-        }
+        }       
     }
 }
 
@@ -116,9 +114,9 @@ body {
 
 .page-menu {
     height: 100%;
-    z-index: 1005;
+    z-index: 750;
     position: fixed;
-    display: none;
+    transition: .3s;
 
     background-color: $color-navigation-menu-background;
     box-shadow: 0 0 8px 1px rgba(0, 0, 0, 0.12);
@@ -237,7 +235,7 @@ body {
             font-size: 1rem;
             font-weight: bold;
         }
-    }´
+    }
 
     .nav-divider{
         width: 100%;
@@ -253,14 +251,16 @@ body {
     }
 
     &[is-menu] {
-        display: none;
+        visibility: hidden;
+        left: -100%;
     }
+
     &[is-menu][is-open] {
         width: 75%;
-        display: block;
-        top: 0 !important;
+        visibility: visible;
         left: 0;
-        z-index: 1002;
+        top: 3rem;
+        z-index: 750;
     }
     
     nav {
@@ -351,28 +351,21 @@ body {
 }
 
 #show-profile-menu {
+    top: 3rem;
+    transition: .3s;
+    
     &.hide {
+        right: -20rem;
+        display: block;
         visibility: hidden;
     }
-
-    #profile-menu-close-btn {
-        position: absolute;
-        right: .5rem;
-        top: .5rem;
-        background-color: transparent;
-        border: none;
-        color: white;
-        padding: 0;
-    }
-    
-    transition: all 0.3s ease-in-out 0s, visibility 0s linear 0.3s;
 }
 
 .profile-menu {
     position: fixed;
     display: grid;
     top: 3rem;
-    right: 1rem;
+    right: 0;
     background: #F0F0F0;
     border: 1px solid #C4C4C4;
     box-sizing: border-box;
@@ -389,7 +382,7 @@ body {
 .user-profile-info {
     display: flex;
     align-items: center;
-    background: $color-navigation-header;
+    background: $color-navigation-menu-background;
     height: 100%;
     min-height: 5rem;
     
@@ -412,31 +405,24 @@ body {
 .menu-profile-section {
     @include utilities("pad-2");
 
-    ul {
-        margin-bottom: unset;
-    }
+    ul {margin-bottom: unset;}
+
     li {
         line-height: 19px;
-        margin-bottom: .5rem;
+        margin-bottom: 0;
         text-align: left;
         list-style-type: none;
         
-        
         @include utilities("pad-y2");
     }
-    a {
-        font-weight: bold;
-    }
-    h3 {
-        display: none;
-    }
 
-    &:first-child{
+    h3 {display: none;}
+
+    &:first-child {
         @include utilities("pad-y3");
         margin-top: 0;
         height: 5.75rem;
         padding: 0 .75rem;
-        background: $color-navigation-header;
     }
 }
 
@@ -446,12 +432,14 @@ body {
     form {
         margin-bottom: unset;
     }
+
+    a {font-weight: bold}
 }
 
 
 @include breakpoint("sm") {
     .page-menu {
-        z-index: 100;
+        z-index: 750;
         position: relative;
 
         .nav-header {
@@ -459,25 +447,15 @@ body {
             grid-template-columns: auto;
             grid-template-rows: unset;
 
-            #board-name i {
-                display: block;
-            }
-
-            .close-btn {
-                display: none;
-            }
+            #board-name i {display: block;}
 
             .menu-item {
                 padding-left: 1.5rem;
                 
-                a{
-                    color: $color-black-alternative;
-                }
+                a{color: $color-black-alternative;}
             }
 
-            a {
-                color: $color-navigation-header-text;
-            }
+            a {color: $color-navigation-header-text;}
 
             li {
                 grid-column: 1/span 1;
@@ -493,8 +471,7 @@ body {
                 justify-self: flex-start;
 
                 a {
-                    place-items: center;
-                }
+                    place-items: center;}
     
                 grid-row: 2/span 1;
                 grid-column: 1/span 1;
@@ -535,6 +512,8 @@ body {
             display: block;
             width: 20%;
             height: unset;
+            visibility: visible;
+            left: 0;
         }
         nav {
             border: none;
