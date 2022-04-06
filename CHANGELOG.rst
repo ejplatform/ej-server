@@ -4,6 +4,17 @@ CHANGELOG of EJPlatform releases
 
 Here you can follow all the fixes and new features on every EJPlatform release.
 
+3.0.0 release
+====================
+* Date: April 06, 2022
+* Features
+- Adds new user menu on mobile;
+- Adds new conversation menu on mobile;
+- Adds new conversation dashboard to improves analysis and modeling;
+- Adds new frontend for email template tool;
+- Adds new frontend for personas management;
+- Adds new comments report;
+
 2.23.0 release
 ====================
 * Date: Jan 31, 2022
