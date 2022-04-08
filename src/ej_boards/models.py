@@ -13,7 +13,7 @@ from ej.utils.url import SafeUrl
 from .validators import validate_board_slug
 
 
-@rest_api(["title", "slug", "owner", "description"])
+# @rest_api(["title", "slug", "owner", "description"])
 class Board(TimeStampedModel):
     """
     A board that contains a list of conversations.

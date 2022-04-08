@@ -2,7 +2,6 @@ from datetime import datetime, timedelta
 from logging import getLogger
 
 from boogie.apps.users.models import AbstractUser
-from boogie.rest import rest_api
 from django.utils.text import slugify
 from django.db import models
 from django.utils import timezone
@@ -16,7 +15,6 @@ from .utils import random_name, token_factory
 log = getLogger("ej")
 
 
-@rest_api(["id", "display_name", "email", "signature"])
 class User(AbstractUser):
     """
     Default user model for EJ platform.
