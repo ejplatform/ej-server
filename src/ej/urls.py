@@ -8,6 +8,7 @@ from django.core.exceptions import ImproperlyConfigured
 from django.urls import include, path, re_path
 from django.views import defaults as default_views
 from django.views.static import serve
+from ej_boards.api import BoardViewSet
 from rest_framework.documentation import include_docs_urls
 from rest_framework.routers import DefaultRouter
 
@@ -15,6 +16,7 @@ from ej_profiles.api import ProfileViewSet
 from ej_tools.api import RasaConversationViewSet
 from ej_conversations.api import ConversationViewSet, CommentViewSet, VoteViewSet
 from ej_clusters.api import ClusterizationViewSet
+from ej_users.api import UsersViewSet
 from ej import services
 from ej.fixes import unregister_admin
 
@@ -27,6 +29,8 @@ api_router.register(r"comments", CommentViewSet, basename="v1-comments")
 api_router.register(r"votes", VoteViewSet, basename="v1-votes")
 api_router.register(r"clusterizations", ClusterizationViewSet, basename="v1-clusterizations")
 api_router.register(r"profiles", ProfileViewSet, basename="v1-profiles")
+api_router.register(r"boards", BoardViewSet, basename="v1-boards")
+api_router.register(r"users", UsersViewSet, basename="v1-users")
 
 
 #

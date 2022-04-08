@@ -89,3 +89,46 @@ class TestRoutes(UserRecipes, UrlTester):
         client.post("/account/remove/", data={"confirm": "true", "email": user.email})
         updated_user = User.objects.get(id=user.id)
         assert updated_user.email.endswith("@deleted-account")
+
+    def test_registration_rest_auth_valid_user(self, client, db):
+        response = client.post(
+            "/api/v1/users/",
+            data={
+                "name": "jonatas Silva",
+                "email": "jonatas@example.com",
+                "password": "pass123",
+                "password_confirm": "pass123",
+                "metadata": {"analytics_id": "GA.1.1234", "mautic_id": 123456},
+            },
+            content_type="application/json",
+        )
+        user = User.objects.get(email="jonatas@example.com")
+        assert user.metadata_set.first().analytics_id == "GA.1.1234"
+        assert user.metadata_set.first().mautic_id == 123456
+
+    def test_registration_rest_auth_incorrect_confirm_password(self, client, db):
+        response = client.post(
+            "/api/v1/users/",
+            data={
+                "name": "jonatas Silva",
+                "email": "jonatassilva@example.com",
+                "password": "pass123",
+                "password_confirm": "pass1234",
+                "metadata": {"analytics_id": "GA.1.1234", "mautic_id": 123456},
+            },
+            content_type="application/json",
+        )
+        assert response.status_code == 400
+
+    def test_registration_rest_auth_missing_password(self, client, db):
+        response = client.post(
+            "/api/v1/users/",
+            data={
+                "name": "jonatas Silva",
+                "email": "jonatasgomes@mail.com",
+                "password_confirm": "pass123",
+                "metadata": {"analytics_id": "GA.1.1234", "mautic_id": 123456},
+            },
+            content_type="application/json",
+        )
+        assert response.status_code == 400
