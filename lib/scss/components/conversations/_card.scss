@@ -35,6 +35,17 @@ $_card-bg: config('ej.conversation-card.bg-image');
         }
         width: 100%;
         padding: 0.1rem;
+
+        @media screen and (max-width: 800px){
+            display: flex;
+            padding: .4rem 21%;
+            height: 6rem;
+
+            .span-icon {
+                display: grid;
+                margin: 0 auto;
+            }
+        }
     }
     &__statistics {
         @include utilities('list-inline pad-y1');
@@ -105,24 +116,20 @@ $_card-bg: config('ej.conversation-card.bg-image');
         align-items: center;
         display: grid;
         grid-gap: size(0.5);
-        grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
         
         > * {
             justify-self: center;
             width: 100%;
             display: flex;
 
-            @media screen and (max-width: 60.25rem) {
-                max-width: 24rem;
-            }
+            @media screen and (max-width: 65.5rem) {max-width: 24rem;}
 
-            > * {
-                border-radius: size(0.5);
-            }
+            > * {border-radius: size(0.5);}
         }
     }
 
-    @media screen and (min-width: 163rem) {
+    @media screen and (min-width: 158rem) {
         max-width: 150rem;
         margin-left: 0;
         grid-template-columns: repeat(6, minmax(calc((100% / 6) - .75rem), 1fr));
