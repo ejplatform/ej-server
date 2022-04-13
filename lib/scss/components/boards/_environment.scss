@@ -1,0 +1,85 @@
+.board {
+    &-section {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 24px;
+        margin-bottom: 1.7em;
+    }
+    &-card {
+        border: 2px solid $color-theme-report-light-blue;
+        border-radius: 5px;
+        width: 261px;
+        height: 214px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        align-items: center;
+    }
+
+    &-card-title {
+        text-decoration-line: underline;
+        font-size: 1.25rem;
+        font-weight: 700;
+        line-height: 1.4675rem;
+        margin-bottom: 17px;
+    }
+
+    &-card-owner {
+        width: 90%;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    &-card-owner, &-total-conversations {
+        color: $color-black;
+        margin-bottom: unset;
+    }
+
+    &-active-filter {
+        display: flex;
+        margin-bottom: 36px;
+        margin-top: 24px;
+    }
+
+    &-active-input {
+        z-index: unset !important;
+    }
+
+    &-active-text {
+        display: flex;
+        flex-direction: column;
+        text-align: start;
+    
+        span {
+            color: $color-black;
+        }
+    
+        span:first-child {
+            font-size: 0.875rem;
+            font-weight: bold;
+            line-height: 0.9025rem;
+        }
+    
+        span:last-child {
+            font-size: 0.75rem;
+            line-height: 0.88rem;
+        }
+    }
+
+    &-environment-statistics {
+        display: flex;
+        gap: 1.7em;
+        flex-wrap: wrap;
+        margin-top: 36px;
+    }
+
+    &-statistics {
+        margin-bottom: 4.75em;
+    }
+}
+
+.start-align-title {
+    text-align: start;
+}

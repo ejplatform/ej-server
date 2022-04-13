@@ -51,3 +51,8 @@ def conversation_limit(user):
         return user_limit
     else:
         return getattr(settings, "EJ_BOARD_MAX_CONVERSATIONS", float("inf"))
+
+
+@rules.register_perm("ej.can_access_environment_management")
+def can_access_admin_board(user):
+    return user.is_superuser

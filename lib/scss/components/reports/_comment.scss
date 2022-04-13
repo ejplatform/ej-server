@@ -226,7 +226,7 @@
     li {
         margin: auto 1rem auto 1rem;
     }
-    a {
+    a, li {
         color: $color-theme-report-dark-gray;
         font-weight: bold;
     }
@@ -407,6 +407,9 @@
     }
     .select-filter-container {
         margin-bottom: 0.5rem;
+    }
+    .paginator li {
+        margin: auto 0.2rem auto 0.2rem;
     }
 }
 
