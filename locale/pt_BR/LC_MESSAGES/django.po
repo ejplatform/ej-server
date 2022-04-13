@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-12 12:49-0300\n"
+"POT-Creation-Date: 2022-04-12 14:51-0300\n"
 "PO-Revision-Date: 2019-09-09 13:55-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -212,11 +212,11 @@ msgstr "Mural"
 msgid "Slug already exists."
 msgstr "Identificador já existe."
 
-#: src/ej_boards/routes.py:72
+#: src/ej_boards/routes.py:122
 msgid "You cannot change this value"
 msgstr "Você não pode mudar este valor"
 
-#: src/ej_boards/routes.py:103 src/ej_conversations/views.py:83
+#: src/ej_boards/routes.py:153 src/ej_conversations/views.py:83
 msgid ""
 "Welcome to EJ. This is your personal board. Board is where your "
 "conversations will be available. Press 'New conversation' to starts "
@@ -2699,14 +2699,94 @@ msgstr "Desculpe, você não pode criar novos murais."
 msgid "Create a new board!"
 msgstr "Criar um novo mural!"
 
+#: src/ej_boards/jinja2/ej_boards/environment.jinja2:11
+#, fuzzy
+msgid "Latest boards"
+msgstr "Murais mais recentes"
+
+#: src/ej_boards/jinja2/ej_boards/environment.jinja2:15
+msgid "Show only active boards"
+msgstr "Exibir apenas murais ativos"
+
+#: src/ej_boards/jinja2/ej_boards/environment.jinja2:16
+msgid "This option shows only boards that have created conversations"
+msgstr "Essa opção mostra apenas murais que tenham conversas criadas."
+
+#: src/ej_boards/jinja2/ej_boards/includes/environment-statistics.jinja2:2
+msgid "Environment statistics"
+msgstr "Estatísticas do ambiente"
+
+#: src/ej_boards/jinja2/ej_boards/includes/environment-statistics.jinja2:5
+#, fuzzy
+msgid "Boards count"
+msgstr "Total de murais"
+
+#: src/ej_boards/jinja2/ej_boards/includes/environment-statistics.jinja2:9
+#, fuzzy
+msgid "Conversations count"
+msgstr "Total de conversas"
+
+#: src/ej_boards/jinja2/ej_boards/includes/environment-statistics.jinja2:13
+#, fuzzy
+msgid "Users count"
+msgstr "Total de usuários"
+
 #: src/ej_boards/jinja2/ej_boards/includes/menu-board.jinja2:4
 #: src/ej_boards/jinja2/ej_boards/includes/menu.jinja2:6
 msgid "New board"
 msgstr "Novo mural"
 
+#: src/ej_boards/jinja2/ej_boards/includes/menu-board.jinja2:16
+#, fuzzy
+msgid "Manage"
+msgstr "Gerenciar"
+
+#: src/ej_boards/jinja2/ej_boards/includes/menu-board.jinja2:19
+#, fuzzy
+msgid "EJ Environment"
+msgstr "Ambiente EJ"
+
 #: src/ej_boards/jinja2/ej_boards/includes/menu.jinja2:4
 msgid "Manage boards"
 msgstr "Gerenciar murais"
+
+#: src/ej_boards/jinja2/ej_boards/includes/recent-boards-paginator.jinja2:2
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/paginator.jinja2:2
+msgid "Showing"
+msgstr "Mostrando"
+
+#: src/ej_boards/jinja2/ej_boards/includes/recent-boards-paginator.jinja2:2
+#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/pagination.jinja2:35
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/paginator.jinja2:2
+msgid "to"
+msgstr "a"
+
+#: src/ej_boards/jinja2/ej_boards/includes/recent-boards-paginator.jinja2:2
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/paginator.jinja2:2
+msgid "of"
+msgstr "de"
+
+#: src/ej_boards/jinja2/ej_boards/includes/recent-boards-paginator.jinja2:2
+#, fuzzy
+msgid "boards"
+msgstr "murais"
+
+#: src/ej_boards/jinja2/ej_boards/includes/recent-boards-paginator.jinja2:5
+#: src/ej_dataviz/jinja2/ej_dataviz/includes/datatables.jinja2:22
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/paginator.jinja2:5
+msgid "Previous"
+msgstr "Anterior"
+
+#: src/ej_boards/jinja2/ej_boards/includes/recent-boards-paginator.jinja2:19
+#: src/ej_dataviz/jinja2/ej_dataviz/includes/datatables.jinja2:21
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/paginator.jinja2:11
+msgid "Next"
+msgstr "Próximo"
+
+#: src/ej_boards/jinja2/ej_boards/includes/recent-boards.jinja2:6
+#, fuzzy
+msgid "conversations"
+msgstr "conversas"
 
 #: src/ej_clusters/jinja2/ej_clusters/edit.jinja2:9
 msgid "Configure opinion groups"
@@ -2945,11 +3025,6 @@ msgstr "neutro"
 #, fuzzy
 msgid "showing"
 msgstr "Mostrando"
-
-#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/pagination.jinja2:35
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/paginator.jinja2:2
-msgid "to"
-msgstr "a"
 
 #: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/pagination.jinja2:35
 #: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/pagination.jinja2:38
@@ -3345,16 +3420,6 @@ msgstr "Primeiro"
 msgid "Last"
 msgstr "Último"
 
-#: src/ej_dataviz/jinja2/ej_dataviz/includes/datatables.jinja2:21
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/paginator.jinja2:11
-msgid "Next"
-msgstr "Próximo"
-
-#: src/ej_dataviz/jinja2/ej_dataviz/includes/datatables.jinja2:22
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/paginator.jinja2:5
-msgid "Previous"
-msgstr "Anterior"
-
 #: src/ej_dataviz/jinja2/ej_dataviz/includes/datatables.jinja2:26
 msgid "Sort column ascending"
 msgstr "Ordena de forma ascendente"
@@ -3623,14 +3688,6 @@ msgstr "Grupo"
 #, fuzzy
 msgid "general"
 msgstr "Geral"
-
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/paginator.jinja2:2
-msgid "Showing"
-msgstr "Mostrando"
-
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/paginator.jinja2:2
-msgid "of"
-msgstr "de"
 
 #: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/paginator.jinja2:2
 #, fuzzy
@@ -4717,6 +4774,10 @@ msgid "Authentication"
 msgstr "Autenticação"
 
 #, fuzzy
+#~ msgid "My Boards"
+#~ msgstr "Meus Murais"
+
+#, fuzzy
 #~ msgid "General report"
 #~ msgstr "Relatório Geral"
 
@@ -4746,10 +4807,6 @@ msgstr "Autenticação"
 
 #~ msgid "{n} users"
 #~ msgstr "{n} usuários"
-
-#, fuzzy
-#~ msgid "My Boards"
-#~ msgstr "Meus murais"
 
 #~ msgid "There is already a stereotype with this name."
 #~ msgstr "Já existe uma persona com este nome."
@@ -5144,10 +5201,6 @@ msgstr "Autenticação"
 #, fuzzy
 #~ msgid "Total voters on component (aquisition): "
 #~ msgstr "Total de participantes na conversa (aquisição): "
-
-#, fuzzy
-#~ msgid "Conversation component"
-#~ msgstr "Componente de coleta"
 
 #, fuzzy
 #~ msgid ""

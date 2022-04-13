@@ -11,7 +11,14 @@
         </li>
         {% endfor %}
     </ul>
-
+    {% if request.user.is_superuser %}
+        <h3 class="section-margin">
+            {{_("Manage")}}
+        </h3>
+        <ul class="board-list">
+            <li><a href="{{ url('boards:environment')}}">{{ _("EJ Environment") }}</a></li>
+        </ul>
+    {% endif %}
 </nav>
 
 <script>

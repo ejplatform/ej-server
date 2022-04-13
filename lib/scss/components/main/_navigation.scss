@@ -250,6 +250,16 @@ body {
         padding: 0 1.75rem 1.75rem;
     }
 
+    .section-margin{
+        margin-top: 3.125rem;
+    }
+    
+    @include utilities("rounded-2");
+
+    background-color: color("white");
+    box-shadow: 0 0 8px 1px rgba(0, 0, 0, 0.12);
+    overflow: hidden auto;
+
     &[is-menu] {
         visibility: hidden;
         left: -100%;

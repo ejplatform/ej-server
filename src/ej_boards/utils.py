@@ -2,6 +2,14 @@ from inspect import Signature
 from django.urls import path
 
 from django.http import Http404
+from django.core.paginator import EmptyPage, PageNotAnInteger
+
+
+PAGINATOR_START_PAGE = 1
+PAGE_ELEMENTS_COUNT = 12
+
+MAX_PAGINATOR_ITEMS = 7
+ELLIPSE_LIMIT = 5
 
 
 def register_route(router, route, base_path, prefix):
@@ -92,3 +100,39 @@ def statistics(board):
         conversations += 1
 
     return {"votes": votes, "participants": participants, "conversations": conversations}
+
+
+def get_page(paginator, page):
+    """
+    Gets the boards from a specific page.
+    """
+    if page < 1:
+        page = 1
+    if page > paginator.num_pages:
+        page = paginator.num_pages
+
+    try:
+        recent_boards = paginator.page(page)
+    except PageNotAnInteger:
+        recent_boards = paginator.page(1)
+    except EmptyPage:
+        recent_boards = paginator.page(paginator.num_pages)
+
+    return recent_boards
+
+
+def get_paginator_visible_pages(current_page, num_pages, page_range):
+    if num_pages <= MAX_PAGINATOR_ITEMS:
+        mode = "no_ellipse"
+        pages = page_range
+    elif current_page <= ELLIPSE_LIMIT:
+        mode = "ellipse_end"
+        pages = page_range[:ELLIPSE_LIMIT]
+    elif current_page > num_pages - ELLIPSE_LIMIT:
+        mode = "ellipse_start"
+        pages = page_range[-ELLIPSE_LIMIT:]
+    else:
+        mode = "ellipse_both"
+        pages = [(current_page - 1), current_page, (current_page + 1)]
+
+    return {"mode": mode, "pages": pages}

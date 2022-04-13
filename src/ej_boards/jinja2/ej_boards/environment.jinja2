@@ -1,0 +1,39 @@
+{% extends 'base.jinja2' %}
+{% set main_class = "board-container" %}
+
+{% block menu %}{% include 'ej_boards/includes/menu-board.jinja2' %}{% endblock %}
+
+{% block content %}
+
+<div class="pad-x3">
+    {% include 'ej_boards/includes/environment-statistics.jinja2' %}
+
+    <h1 class="h2 text-accent start-align-title">{{_("Latest boards")}}</h1>
+    <div class="board-active-filter">
+        <input class="board-active-input" id="check-active-boards" type="checkbox" onchange="updateBoards('1')" checked/>
+        <div class="board-active-text">
+            <span>{{_("Show only active boards")}}</span>
+            <span>{{_("This option shows only boards that have created conversations")}}</span>
+        </div>
+    </div>
+    <div id="recent-boards"></div>
+</div>
+
+<script>
+
+function updateBoards(page) {
+    boardActive = document.getElementById("check-active-boards").checked;
+    $.ajax({
+        url: `recent-boards/?page=${page}&boardIsActive=${boardActive}`,
+        success: function(data) {
+            $("#recent-boards").html(data);
+        }
+    })
+}
+
+window.onload = function () {
+    updateBoards('1');
+}
+
+</script>
+{% endblock %}
