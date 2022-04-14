@@ -22,9 +22,7 @@ def detail(request):
         "n_favorites": user.favorite_conversations.count(),
         "n_comments": user.comments.count(),
         "n_votes": user.votes.count(),
-        "achievements_href": reverse("gamification:achievements")
-        if apps.is_installed("ej_gamification")
-        else None,
+        "achievements_href": None,
     }
 
 

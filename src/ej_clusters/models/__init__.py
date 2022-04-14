@@ -20,7 +20,7 @@ _apply_patch = lambda f: f()
 def _patch_conversation_app():
     from ej.components import register_menu
     from ej_conversations.models import Conversation
-    from django.utils.translation import ugettext as _
+    from django.utils.translation import gettext as _
     from sidekick import delegate_to, lazy
     from hyperpython import a
 

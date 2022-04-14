@@ -1,7 +1,7 @@
 from requests.api import request
 from urllib3.exceptions import HTTPError
 import pytest
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext as _
 from unittest.mock import patch, MagicMock, Mock
 from django.core.exceptions import ValidationError
 

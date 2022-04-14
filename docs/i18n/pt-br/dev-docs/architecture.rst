@@ -70,11 +70,6 @@ Google Analytics
     Link: https://analytics.google.com/analytics/web/provision/#/provision
     Como o mautic, é uma ferramenta de automação de marketing, porém proprietária.
 
-Rocketchat
-----------
-    Link:  https://docs.rocket.chat/
-    Plataforma de comunicação via chat.
-
 Telegram api  
 ------------
     Link: https://core.telegram.org/
@@ -333,24 +328,11 @@ A lista abaixo descreve todos os apps implementados na source tree da EJ.
     module also implements visualization techniques such as Word Cloud and
     Scatter Maps of user opinions.
 
-``ej_gamification``
-
-    The gamification app implements the points and badges system in EJ. Most
-    interactions in the platform are rewarded with points. Users that achieve
-    pre-defined levels of participation receive badges that recognize different
-    types of interactions such as voting on comments, creating popular
-    conversations, etc.
-
 ``ej_boards``
 
     The boards app allow regular users to have their own "board" or "timeline"
     of conversations. The default conversation feed in "/conversations/" can
     only be managed by users with special permissions.
-
-``ej_experiments``
-    This optional app is responsible for creating and saving testing data in the
-    database. It is useful for development, but it is not enabled in deployment
-    installations.
 
 
 Third party Apps

@@ -2,7 +2,7 @@ from ej_tools.tools import BotsTool
 from ej_users.models import SignatureFactory
 from ej_conversations.models.vote import VoteChannels
 from rest_framework.exceptions import PermissionDenied
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 
 TOOLS_CHANNEL = {

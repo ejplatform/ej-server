@@ -51,7 +51,7 @@ Mas como o código sabe o que deve traduzir? Quando uma string em python deve se
 
 .. code-block:: python
 
-    from django.utils.translation import ugettext_lazy as _
+    from django.utils.translation import gettext_lazy as _
 
 
     variable = _("This string should be translated")

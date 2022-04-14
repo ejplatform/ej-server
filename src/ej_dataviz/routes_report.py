@@ -7,7 +7,7 @@ from django.contrib.auth import get_user_model
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.utils.text import slugify
-from django.utils.translation import ugettext as _, ugettext_lazy
+from django.utils.translation import gettext as _, gettext_lazy
 from sidekick import import_later
 from django.core.paginator import Paginator
 
@@ -102,11 +102,13 @@ def comments_report_pagination(request, conversation, **kwargs):
 
 @urlpatterns.route("votes-over-time/")
 def votes_over_time(request, conversation, **kwargs):
+    from django.utils.timezone import make_aware
+
     start_date = request.GET.get("startDate")
     end_date = request.GET.get("endDate")
     if start_date and end_date:
-        start_date = datetime.date.fromisoformat(start_date)
-        end_date = datetime.date.fromisoformat(end_date)
+        start_date = make_aware(datetime.datetime.fromisoformat(start_date))  # convert js naive date
+        end_date = make_aware(datetime.datetime.fromisoformat(end_date))  # # convert js naive date
     else:
         return JsonResponse({"error": "end date and start date should be passed as a parameter."})
 
@@ -220,7 +222,7 @@ def users_data(request, conversation, fmt, **kwargs):
 
 @lru_cache(1)
 def get_translation_map():
-    _ = ugettext_lazy
+    _ = gettext_lazy
     return {
         "agree": _("agree"),
         "author": _("author"),

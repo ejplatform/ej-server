@@ -38,6 +38,16 @@ urlpatterns = [
         name="telegram",
     ),
     path(
+        f"{base_path}/mautic",
+        views.mautic,
+        name="mautic",
+    ),
+    path(
+        f"{base_path}/mautic/delete/<int:mautic_connection_id>",
+        views.delete_mautic_connection,
+        name="delete-mautic-connection",
+    ),
+    path(
         f"{chatbot_base_path}/whatsapp",
         views.whatsapp,
         name="whatsapp",
@@ -56,15 +66,5 @@ urlpatterns = [
         f"{chatbot_base_path}/webchat/delete/<int:connection_id>",
         views.delete_connection,
         name="delete-connection",
-    ),
-    path(
-        f"{chatbot_base_path}/mautic",
-        views.mautic,
-        name="mautic",
-    ),
-    path(
-        f"{chatbot_base_path}/mautic/delete/<int:mautic_connection_id>",
-        views.delete_mautic_connection,
-        name="delete-mautic-connection",
     ),
 ]

@@ -7,7 +7,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.db import models
 from django.urls import reverse
-from django.utils.translation import ugettext_lazy as _, ugettext as __
+from django.utils.translation import gettext_lazy as _, gettext as __
 from rest_framework.authtoken.models import Token
 from sidekick import delegate_to, import_later
 

@@ -2,7 +2,7 @@ from pathlib import Path
 
 from django.contrib.flatpages.models import FlatPage
 from django.shortcuts import render
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext as _
 
 REPO = Path(__file__).parent.parent.parent.parent
 LIB = REPO / "lib/resources/pages/"

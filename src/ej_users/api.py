@@ -2,7 +2,7 @@ from rest_framework.response import Response
 from rest_framework import viewsets
 from rest_framework.permissions import AllowAny, IsAdminUser
 from rest_framework.authtoken.models import Token
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from .models import User, MetaData
 from ej_profiles.models import Profile

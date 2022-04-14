@@ -8,9 +8,7 @@ from ej_profiles.mommy_recipes import ProfileRecipes
 from ej_users.mommy_recipes import UserRecipes
 
 # TODO: from ej_math.mommy_recipes import MathRecipes
-# TODO: from ej_gamification.mommy_recipes import GamificationRecipes
 # TODO: from ej_clusterviz.mommy_recipes import ClustervizRecipes
-# TODO: from ej_notifications.mommy_recipes import NotificationRecipes
 # TODO: from ej_dataviz.mommy_recipes import ReportsRecipes
 
 

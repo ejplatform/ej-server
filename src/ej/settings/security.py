@@ -26,10 +26,6 @@ class SecurityConf(Base):
 
     def get_csrf_trusted_origins(self, hostname):
         trusted = [hostname, *(self.env("DJANGO_CSRF_TRUSTED_ORIGINS", type=list) or ())]
-        if self.EJ_ROCKETCHAT_INTEGRATION:
-            trusted.append(remove_schema(self.EJ_ROCKETCHAT_URL))
-            if self.EJ_ROCKETCHAT_API_URL:
-                trusted.append(remove_schema(self.EJ_ROCKETCHAT_API_URL))
         return unique(trusted)
 
     def get_allowed_hosts(self, hostname):

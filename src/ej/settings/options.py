@@ -15,10 +15,8 @@ class EjOptions(Conf):
 
     # Disable parts of the system
     EJ_ENABLE_PROFILES = env(True, name="{attr}")
-    EJ_ENABLE_NOTIFICATIONS = env(True, name="{attr}")
     EJ_ENABLE_CLUSTERS = env(True, name="{attr}")
     EJ_ENABLE_DATAVIZ = env(True, name="{attr}")
-    EJ_ENABLE_GAMIFICATION = env(True, name="{attr}")
 
     # TODO: remove those in the future? Maybe all personalization strings
     # should be options in Django constance with a cache fallback
@@ -33,13 +31,3 @@ class EjOptions(Conf):
     EJ_PAGE_TITLE = env(_("EJ Platform"), name="{attr}")
     EJ_REGISTER_TEXT = _("Not part of EJ yet?")
     EJ_LOGIN_TITLE_TEXT = _("Welcome!")
-
-    # Integrations with Rocket.Chat
-    EJ_ROCKETCHAT_INTEGRATION = env(False, name="{attr}")
-    EJ_ROCKETCHAT_INTERNAL_DOMAINS = env("", name="{attr}")
-    EJ_ROCKETCHAT_URL = env("http://localhost:3000", name="{attr}")
-    EJ_ROCKETCHAT_API_URL = env("", name="{attr}")
-    EJ_ROCKETCHAT_AUTH_TOKEN = env("", name="{attr}")
-    EJ_ROCKETCHAT_ADMIN_USERNAME = env("", name="{attr}")
-    EJ_ROCKETCHAT_ADMIN_ID = env("", name="{attr}")
-    EJ_ROCKETCHAT_ADMIN_PASSWORD = env("", name="{attr}")

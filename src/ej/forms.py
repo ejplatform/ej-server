@@ -1,7 +1,7 @@
 from operator import attrgetter
 
 from django.forms import Form, ModelForm, widgets
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from hyperpython import div, input_
 
 NOT_GIVEN = object()

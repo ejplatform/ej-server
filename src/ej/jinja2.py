@@ -37,10 +37,8 @@ def environment(autoescape=True, **options):
             has_boards=apps.is_installed("ej_boards"),
             has_clusters=apps.is_installed("ej_clusters"),
             has_dataviz=apps.is_installed("ej_dataviz"),
-            has_gamification=apps.is_installed("ej_gamification"),
             has_profiles=apps.is_installed("ej_profiles"),
             has_users=apps.is_installed("ej_users"),
-            has_rocketchat=apps.is_installed("ej_rocketchat"),
             service_worker=getattr(settings, "SERVICE_WORKER", False),
             all=settings,
         ),
@@ -152,7 +150,7 @@ def generic_context(ctx):
     Renders the current context as a description list.
     """
     from django.http import Http404
-    from django.utils.translation import ugettext as _
+    from django.utils.translation import gettext as _
 
     blacklist = {
         # Jinja2

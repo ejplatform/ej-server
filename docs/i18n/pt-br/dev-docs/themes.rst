@@ -34,7 +34,7 @@ A theme is organized within the following file structure::
             |- hicontrast.scss
             \- rocket.scss
 
-Both main.scss and rocket.scss have standard implementations and can be simply
+Main.scss have standard implementations and can be simply
 copied from one theme to the other. Most of your work will probably concentrate
 in the _settings.scss file: it defines all overrides of scss variables and can
 be used to declare colors, fonts, layouts, spacing, etc.

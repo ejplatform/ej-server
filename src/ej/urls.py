@@ -48,12 +48,10 @@ def get_urlpatterns():
         #
         #  Conversations and other EJ-specific routes
         path("conversations/", include("ej_conversations.public_urls", namespace="conversation")),
-        path("conversations/", include("ej_analysis.routes", namespace="conversation-analysis")),
         path("comments/", include("ej_conversations.routes_comments", namespace="comments")),
         #
         #  Profile URLS
         *with_app("ej_profiles", "profile/", namespace="profile"),
-        *with_app("ej_notifications", "notifications/", namespace="notifications"),
         #
         #  Data visualization
         *with_app("ej_dataviz", "conversations/", namespace="dataviz"),
@@ -62,19 +60,6 @@ def get_urlpatterns():
         #  Global stereotype and cluster management
         *with_app("ej_clusters", "conversations/", namespace="cluster"),
         *with_app("ej_clusters", "stereotypes/", routes="routes_stereotypes", namespace="stereotypes"),
-        #
-        #  Gamification
-        *with_app("ej_gamification", "profile/", namespace="gamification"),
-        *with_app("ej_gamification", "leaderboard/", routes="routes_leaderboard", namespace="leaderboard"),
-        *with_app(
-            "ej_gamification",
-            "conversations/",
-            routes="routes_conversation",
-            namespace="conversation-achievement",
-        ),
-        #
-        #  Rocket.chat integration
-        *with_app("ej_rocketchat", "talks/", namespace="rocket"),
         #
         #  Allauth
         path("accounts/", include("allauth.urls")),
@@ -85,9 +70,6 @@ def get_urlpatterns():
             if apps.is_installed("django.contrib.admin")
             else ()
         ),
-        #
-        # Debug routes
-        *with_app("ej_experiments", "info/experiments/", namespace="experiments"),
         #
         #  REST API
         path("api/v1/", include(api_router.urls)),

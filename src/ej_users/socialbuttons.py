@@ -1,5 +1,5 @@
 import logging
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext as _
 
 from allauth.socialaccount import providers
 from allauth.socialaccount.models import SocialApp

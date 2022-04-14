@@ -1,7 +1,7 @@
 from logging import getLogger
 from abc import ABC, abstractmethod
 from constance import config
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from ej_tools.tools import *
 
 log = getLogger("ej")

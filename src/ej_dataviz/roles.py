@@ -1,6 +1,6 @@
 from django.apps import apps
 from django.contrib.auth import get_user_model
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext as _
 from hyperpython import html, div
 from hyperpython.components import html_table, html_map, fa_icon
 from sidekick import import_later

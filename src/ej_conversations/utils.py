@@ -2,7 +2,7 @@ from logging import getLogger
 
 from django.core.exceptions import ValidationError
 from django.http import Http404
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from hyperpython import a
 from sidekick import import_later
 

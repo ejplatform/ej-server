@@ -1,4 +1,4 @@
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext as _
 from ej_clusters.forms import StereotypeForm
 from ej_clusters.models import Stereotype
 from ej_clusters.mommy_recipes import ClusterRecipes

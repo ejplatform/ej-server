@@ -2,7 +2,7 @@ from django.conf import settings
 from django.contrib import admin
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext as _
 
 from . import models
 from .enums import Choice
@@ -149,14 +149,3 @@ class ConversationAdmin(AuthorIsUserMixin, admin.ModelAdmin):
             "random_comments_1000",
         ]
     )
-
-    #
-    #  Clusterization actions
-    #
-
-    #
-    #  Gamification actions
-    #
-    @descr(_("Compute the opinion bridge user for all conversations."))
-    def compute_opinion_bridge(self, request, queryset):
-        pass

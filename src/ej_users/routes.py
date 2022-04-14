@@ -12,7 +12,7 @@ from django.http import Http404, JsonResponse
 from django.shortcuts import redirect
 from django.template.loader import get_template
 from django.urls import reverse
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from rest_framework import status
 from sidekick import record
 

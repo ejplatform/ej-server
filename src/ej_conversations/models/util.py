@@ -148,7 +148,7 @@ def set_date_range(start_date, end_date):
 def get_all_interval_dates(start_date, end_date, date_votes):
     initial_values = set_date_range(start_date, end_date)
     for data in date_votes:
-        index = (data["date"].date() - start_date).days
+        index = (data["date"] - start_date).days
         initial_values[index]["value"] = data["value"]
     return initial_values
 

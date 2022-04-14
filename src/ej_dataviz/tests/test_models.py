@@ -3,7 +3,7 @@ from ej_dataviz.models import ToolsLinksHelper
 
 
 class TestToolsLinksHelper:
-    def __init__(self):
+    def setup_method(self, method):
         self.environments = {
             "local": "http://localhost:8000",
             "dev": "https://ejplatform.pencillabs.com.br",
@@ -21,7 +21,3 @@ class TestToolsLinksHelper:
     def test_bot_link_prod(self):
         bot_link = ToolsLinksHelper.get_bot_link(self.environments["prod"])
         assert bot_link == "https://t.me/DudaEjBot?start="
-
-    def test_bot_link_prod(self):
-        bot_link = ToolsLinksHelper.get_bot_link(self.environments["default"])
-        assert bot_link == "https://t.me/DudaLocalBot?start="

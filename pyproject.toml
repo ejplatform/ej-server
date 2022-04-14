@@ -26,10 +26,10 @@ coreapi = "^2.3"
 hyperpython = "^1.1.1"
 rules = "<2.0"
 sidekick = "==0.5.2"
-numpy = "^1.16"
+numpy = "==1.18"
 scipy = "^1.2"
 pandas = "^1.2"
-scikit-learn = "^0.20.2"
+scikit-learn = "^1.0"
 pillow = "^5.4"
 matplotlib = "^3.0"
 dramatiq = "^1.4"
@@ -49,10 +49,6 @@ django-cors-headers = "^3.3.0"
 babel = "^2.9.0"
 sphinx = "^1.8"
 psycopg2 = "==2.8.6"
-oauth2client = "^4.1.3"
-httplib2 = "^0.19.1"
-google-api-python-client = "^2.2.0"
-pymongo = "^3.11.4"
 sphinx-rtd-theme = "^0.5.2"
 dj-rest-auth = ">=2.1.11"
 
@@ -60,7 +56,7 @@ dj-rest-auth = ">=2.1.11"
 mock = "^2.0"
 factory-boy = "^2.11"
 model_mommy = "^1.6"
-pytest = "^4.3.0"
+pytest = "^6.0.0"
 pytest-cov = "^2.6"
 pytest-django = "^3.4"
 pytest-splinter = "^2.0.1"
@@ -96,10 +92,24 @@ exclude = '''
 '''
 
 [tool.ej.conf]
-themes=["default", "cpa"]
+themes=["default"]
 
 
 [build-system]
 requires = ["poetry>=0.12"]
 build-backend = "poetry.masonry.api"
 
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "ej.settings"
+django_find_project = true
+python_paths = ["src/"]
+testpaths = ["src/"]
+norecursedirs = [".tox/", "lib/"]
+addopts = "--nomigrations"
+filterwarnings = [
+    "error",
+    "ignore::UserWarning",
+    "ignore::DeprecationWarning",
+    "ignore::django.utils.deprecation.RemovedInDjango41Warning",
+    "ignore::django.utils.deprecation.RemovedInDjango40Warning",
+]

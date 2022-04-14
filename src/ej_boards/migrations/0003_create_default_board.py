@@ -3,7 +3,7 @@
 from django.db import migrations
 from django.utils.text import slugify
 from django.db import transaction
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 
 def create_default_board(apps, schema_editor):
