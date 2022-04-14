@@ -1,7 +1,8 @@
 from boogie.router import Router
 from django.apps import apps
-from django.shortcuts import redirect, render
-from django.utils.translation import ugettext_lazy as _
+from django.shortcuts import redirect
+from django.utils.translation import gettext_lazy as _
+from django.shortcuts import render
 
 from ej_boards.models import Board
 from ej_users.models import User
@@ -138,21 +139,22 @@ def board_base(request, board):
 
 @urlpatterns.route(board_base_url + "tour/", login=True)  # TODO: passar essa rota para o ej_conversations
 def tour(request, board):
-    if request.user.get_profile().completed_tour:
+    user = request.user
+    if user.get_profile().completed_tour:
         return redirect(f"{board.get_absolute_url()}")
     if request.method == "POST":
-        request.user.get_profile().completed_tour = True
-        request.user.get_profile().save()
+        user.get_profile().completed_tour = True
+        user.get_profile().save()
         return redirect(f"{board.get_absolute_url()}")
-    user_signature = SignatureFactory.get_user_signature(request.user)
+    user_signature = SignatureFactory.get_user_signature(user)
     max_conversation_per_user = user_signature.get_conversation_limit()
     return {
-        "board": board,
         "conversations": board.conversations.annotate_attr(board=board),
         "help_title": _(
             "Welcome to EJ. This is your personal board. Board is where your conversations will be available. Press 'New conversation' to starts collecting yours audience opinion."
         ),
         "conversations_limit": max_conversation_per_user,
+        "board": board,
     }
 
 

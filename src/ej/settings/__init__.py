@@ -8,7 +8,6 @@ from .constance import ConstanceConf
 from .email import EmailConf
 from .log import LoggingConf
 from .middleware import MiddlewareConf
-from .notifications import NotificationsConf
 from .options import EjOptions
 from .paths import PathsConf
 from .security import SecurityConf
@@ -22,7 +21,6 @@ class Conf(
     ThemesConf,
     ConstanceConf,
     MiddlewareConf,
-    NotificationsConf,
     DramatiqConf,
     SecurityConf,
     LoggingConf,

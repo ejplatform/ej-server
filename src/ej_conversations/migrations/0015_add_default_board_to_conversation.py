@@ -1,7 +1,7 @@
 from django.db import migrations
 from django.db import transaction
 from django.utils.text import slugify
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 
 def user_not_have_default_board(user):

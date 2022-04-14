@@ -98,18 +98,6 @@ if apps.is_installed("ej_clusters"):
     stereotype_votes = StereotypeVote.objects
     stereotype_vote = _first(StereotypeVote)
 
-# Gamification app
-if apps.is_installed("ej_gamification"):
-    from ej_gamification.models import (
-        UserProgress,
-        ConversationProgress,
-        ParticipationProgress,
-    )  # noqa: E402
-
-    user_progresses = UserProgress.objects
-    conversation_progresses = ConversationProgress.objects
-    participation_progresses = ParticipationProgress.objects
-
 
 def fix_links(data, prefix="http://localhost:8000"):
     soup = bs4.BeautifulSoup(data)

@@ -42,28 +42,6 @@ SQL Database
     the DJANGO_DB_URL environment variable in the main application container.
 
 
-
-Rocket.Chat integration
------------------------
-
-Instances that deploy the optional Rocket.Chat integration must consider the
-additional services.
-
-Rocket.Chat
-    Rocket.Chat is a Node.js application based on the Meteor framework that
-    serves static files and the dynamic routes. EJ is compatible with the
-    official Rocket.Chat container in `Docker Hub`_, which is the recommended
-    deployment method.
-
-Mongo DB
-    Rocket.Chat persistence layer uses Mongo. The Rocket.Chat container is
-    compatible with the official Docker Hub image and requires minimal
-    configuration.
-
-
-.. _Docker Hub: https://hub.docker.com/_/rocketchat
-
-
 Frontend
 ........
 
@@ -227,16 +205,6 @@ The listing bellow describes all apps implemented inside EJ source tree.
     module also implements visualization techniques such as Word Cloud and
     Scatter Maps of user opinions.
 
-``ej_gamification``
-    .. image:: orm/ej_gamification.svg
-       :target: ../_images/ej_gamification.svg
-
-    The gamification app implements the points and badges system in EJ. Most
-    interactions in the platform are rewarded with points. Users that achieve
-    pre-defined levels of participation receive badges that recognize different
-    types of interactions such as voting on comments, creating popular
-    conversations, etc.
-
 ``ej_boards``
     .. image:: orm/ej_boards.svg
        :target: ../_images/ej_boards.svg
@@ -244,11 +212,6 @@ The listing bellow describes all apps implemented inside EJ source tree.
     The boards app allow regular users to have their own "board" or "timeline"
     of conversations. The default conversation feed in "/conversations/" can
     only be managed by users with special permissions.
-
-``ej_experiments``
-    This optional app is responsible for creating and saving testing data in the
-    database. It is useful for development, but it is not enabled in deployment
-    installations.
 
 
 Third party Apps

@@ -13,8 +13,6 @@ from ..routes_comments import comment_url
 from ..utils import show_vote_actions_on_card
 from ej_users.models import SignatureFactory
 
-HAS_GAMIFICATION = apps.is_installed("ej_gamification")
-
 
 @with_template(Comment, role="card")
 def comment_card(comment: Comment, request=None, target=None, show_actions=None, message=None, **kwargs):
@@ -32,11 +30,6 @@ def comment_card(comment: Comment, request=None, target=None, show_actions=None,
         login_anchor = a(_("login"), href=f"{login}?next={comment.conversation.get_absolute_url()}")
 
     badge = ""
-    if HAS_GAMIFICATION:
-        from ej_gamification import get_participation
-
-        level = get_participation(user, comment.conversation).voter_level
-        badge = html(level, role="stars")
 
     buttons = {
         "disagree": ("fa-times", "text-negative", _("Disagree")),

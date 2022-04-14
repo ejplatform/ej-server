@@ -3,7 +3,7 @@ from typing import Mapping
 
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.urls import reverse
-from django.utils.translation import ugettext_lazy
+from django.utils.translation import gettext_lazy
 from hyperpython import a, h1, p, div, components, strong, dl, dt, dd
 from hyperpython import h, html
 from hyperpython.components import html_table, html_list, html_map, a_or_span
@@ -12,7 +12,7 @@ from hyperpython.renderers.attrs import render_attrs
 from ej.utils.url import Url
 
 static = staticfiles_storage.url
-lazy_string_class = type(ugettext_lazy("hello"))
+lazy_string_class = type(gettext_lazy("hello"))
 log = logging.getLogger("ej")
 _ = lambda x: x
 

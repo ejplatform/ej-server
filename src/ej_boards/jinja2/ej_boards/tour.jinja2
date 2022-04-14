@@ -25,14 +25,31 @@
         text: "<p class='subtitle'>A EJ é uma plataforma de consultas de opinião multicanal, que tem por objetivo fortalecer a estratégia de comunicação da sua organização. Clique em <b>iniciar</b> para começarmos a demonstração.</p>",
         buttons: [
             {
-            text: "Dispensar",
-            classes: "sheperd-decline-button",
-            action: tour.cancel
+                text: "Dispensar",
+                classes: "sheperd-decline-button",
+                action() {
+                    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+                    $(function(){ 
+                        const request = new Request(
+                            window.location.href,
+                            {
+                                method: 'POST',
+                                headers: {'X-CSRFToken': csrftoken},
+                                mode: 'same-origin'
+                            }
+                        );
+                        fetch(request).then((response) => {
+                            window.location.href = response.url;
+                        });
+                    })
+                    this.cancel();
+                    return true;
+                }
             },
             {
-            text: "Iniciar",
-            classes: "sheperd-button",
-            action: tour.next
+                text: "Iniciar",
+                classes: "sheperd-button",
+                action: tour.next
             }
         ],
         id: "creating"
@@ -50,24 +67,26 @@
         text: "<h4>DESCUBRA E ENTENDA SEU PÚBLICO!</h4> <p class='description-text'> Extraia pontos de informação das suas conversas por meio dos nossos relatórios e descubra o que o seu público pensa a respeito dos assuntos relevantes para a sua organização.</p> <img src='/static/img/tour/relatorio.png'>",
         buttons: [
             {
-            text: "Começar",
-            classes: "sheperd-button",
-            action() {
-                const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-                $(function(){ 
-                    const request = new Request(
-                        window.location,
-                        {
-                            method: 'POST',
-                            headers: {'X-CSRFToken': csrftoken},
-                            mode: 'same-origin'
-                        }
-                    );
-                    fetch(request);
-                })
-                this.complete();
-             return True;
-            }
+                text: "Começar",
+                classes: "sheperd-button",
+                action() {
+                    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+                    $(function(){ 
+                        const request = new Request(
+                            window.location.href,
+                            {
+                                method: 'POST',
+                                headers: {'X-CSRFToken': csrftoken},
+                                mode: 'same-origin'
+                            }
+                        );
+                        fetch(request).then((response) => {
+                            window.location.href = response.url;
+                        });
+                    })
+                    this.complete();
+                    return true;
+                }
             }
         ]
     });

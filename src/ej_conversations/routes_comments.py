@@ -4,7 +4,7 @@ from logging import getLogger
 from boogie.router import Router
 from django.http import Http404
 from django.urls import reverse
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from . import models
 from .enums import Choice

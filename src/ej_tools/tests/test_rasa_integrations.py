@@ -1,7 +1,7 @@
 import pytest
 from ej_users.models import User
 from django.db import IntegrityError
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext as _
 from django.test.client import Client
 from ej_conversations.mommy_recipes import ConversationRecipes
 from ej_tools.models import RasaConversation, WebchatHelper
@@ -136,7 +136,7 @@ class TestRasaConversationIntegrationsAPI(ConversationRecipes):
 
 
 class TestWebchatHelper:
-    def __init__(self):
+    def setup_method(self, method):
         self.environments = {
             "local": "http://localhost:8000",
             "dev": "https://ejplatform.pencillabs.com.br",

@@ -1,6 +1,6 @@
 from boogie import models
 from boogie.fields import EnumField
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from sidekick import alias
 
 from ej_conversations.enums import Choice

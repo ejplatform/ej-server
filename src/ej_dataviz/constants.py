@@ -1,7 +1,7 @@
 from typing import Callable, Sequence
 from sidekick import import_later
 from django.conf import settings
-from django.utils.translation import ugettext_lazy as _, ugettext as __
+from django.utils.translation import gettext_lazy as _, gettext as __
 
 from ej_profiles.enums import Gender, Race, STATE_CHOICES
 

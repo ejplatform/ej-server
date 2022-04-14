@@ -7,7 +7,7 @@ from django.apps import apps
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.http import JsonResponse
-from django.utils.translation import ugettext_lazy as _, ugettext as __
+from django.utils.translation import gettext_lazy as _, gettext as __
 from ej_dataviz.models import ToolsLinksHelper
 from ej_dataviz.routes_report import comments_data_cluster
 from sidekick import import_later

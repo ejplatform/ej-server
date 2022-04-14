@@ -14,7 +14,8 @@ services:
             context: ../
             dockerfile: docker/Dockerfile
         volumes:
-            - ../:/ej-server/
+            - ../:/ej-application/
+            - "statics:/ej-application/local/"
         env_file:
             - variables.env
         ports:
@@ -22,3 +23,4 @@ services:
         entrypoint: ["/bin/bash", "docker/run_local_server.sh"]
 volumes:
     backups:
+    statics:

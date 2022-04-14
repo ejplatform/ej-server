@@ -96,34 +96,3 @@ EJ_MAX_COMMENTS_PER_CONVERSATION (2):
 EJ_PROFILE_EXCLUDE_FIELDS:
     Optional list of fields that should be excluded from user profile
     visualization.
-
-
-Integration with Rocket.Chat
-============================
-
-EJ_ROCKETCHAT_INTEGRATION (false):
-    Enable/disable integration with Rocket.Chat. It is necessary to configure
-    the Rocket.Chat container if this option is enabled.
-
-EJ_ROCKETCHAT_URL:
-    Public URL of Rocket.Chat instance (e.g.: http://localhost:3000 or https://your-chat-instance.com)
-
-EJ_ROCKETCHAT_API_URL:
-    Internal URL used to access Rocket.Chat on the intranet. Used to make
-    API requests.
-
-EJ_ROCKETCHAT_ADMIN_USERNAME:
-    Username of Rocket.Chat admin.
-
-EJ_ROCKETCHAT_AUTH_TOKEN:
-    Authentication token for the Rocket.Chat admin. This can be configured
-    in Django backend after initial installation. Check `Rocket API`_ for more
-    information.
-
-EJ_ROCKETCHAT_ADMIN_ID:
-    Unique id of Rocket.Chat admin.
-
-EJ_ROCKETCHAT_ADMIN_PASSWORD:
-    Rocket.Chat admin password.
-
-.. _Rocket API: https://rocket.chat/docs/developer-guides/rest-api/authentication/

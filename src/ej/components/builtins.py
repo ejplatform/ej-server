@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.utils.html import escape
 from hyperpython import html
 import datetime
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext as _
 
 
 @html.register(datetime.datetime, role="simple")

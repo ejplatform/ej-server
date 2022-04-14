@@ -6,7 +6,7 @@ from django.http import HttpResponseServerError
 from django.urls import reverse
 from django.shortcuts import render
 from django.shortcuts import redirect
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from hyperpython import a
 from django.contrib.auth.decorators import login_required
 

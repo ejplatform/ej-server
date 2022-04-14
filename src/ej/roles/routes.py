@@ -1,7 +1,7 @@
 from django.db.models import Model
 from django.http import Http404
 from django.urls import reverse
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from hyperpython import html, a, span, div, h1
 from hyperpython.components import html_list, html_map
 

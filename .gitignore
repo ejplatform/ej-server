@@ -29,7 +29,6 @@ db.sqlite3
 local/
 deploy/
 ej/media/
-src/ej_analysis/visualizations/opinion_component/lib/analytics/client_secrets\.json
 
 
 
@@ -117,6 +116,5 @@ cc-test-reporter
 .mypy_cache
 *.mo
 
-src/ej_analysis/visualizations/opinion_component/lib/analytics/client_secrets.json
 
 .local.vimrc

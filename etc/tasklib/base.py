@@ -11,7 +11,6 @@ HELP_MESSAGES = {
     "watch": "Re-run when any file changes",
     "minify": "Minify resulting assets",
     "background": "Runs on background",
-    "rocket": "Enable Rocket.Chat",
 }
 
 

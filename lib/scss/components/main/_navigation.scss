@@ -6,7 +6,7 @@
 $_sm-header-height: size(2);
 $_md-header-height: size(2.5);
 $avatar-height: 36px;
-$avatar-border: 66.5px;
+$avatar-border: 50%;
 
 body {
     display: flex;
@@ -54,7 +54,6 @@ body {
 
     &__avatar {
         display: flex;
-        object-fit: contain;
         border-radius: $avatar-border;
         width: $avatar-height;
         height: $avatar-height;

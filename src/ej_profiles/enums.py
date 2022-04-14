@@ -1,6 +1,6 @@
 from boogie.fields import IntEnum
 from django.conf import settings
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from environ import ImproperlyConfigured
 
 _race_enums = getattr(settings, "EJ_PROFILE_RACE_CHOICES", None)

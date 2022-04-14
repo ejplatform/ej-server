@@ -126,7 +126,7 @@ class TestReportRoutes(ClusterRecipes):
 
     def test_should_get_count_of_votes_in_a_period_of_time(self, conversation_with_votes, logged_client):
         conversation = conversation_with_votes
-        today = datetime.date.today()
+        today = datetime.datetime.now().date()  # 2022-04-04
         one_week_ago = today - datetime.timedelta(days=7)
         url = f"/{conversation.board.slug}/conversations/{conversation.id}/{conversation.slug}/reports/votes-over-time/?startDate={one_week_ago}&endDate={today}"
         response = logged_client.get(url)
@@ -134,8 +134,8 @@ class TestReportRoutes(ClusterRecipes):
 
         assert response.status_code == 200
         assert len(data) == 8
-        assert data[0]["date"] == one_week_ago.strftime("%Y-%m-%d")
-        assert data[-1]["date"] == today.strftime("%Y-%m-%d")
+        assert data[0]["date"] == one_week_ago.strftime("%Y-%m-%dT%H:%M:%SZ")
+        assert data[-1]["date"] == today.strftime("%Y-%m-%dT%H:%M:%SZ")
 
         assert data[0]["value"] == 0
         assert data[1]["value"] == 0

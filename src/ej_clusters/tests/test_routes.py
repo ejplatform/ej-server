@@ -1,5 +1,5 @@
 import pytest
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from boogie.testing.pytest import UrlTester
 from ej_clusters.enums import ClusterStatus
 from ej_clusters.models.cluster import Cluster

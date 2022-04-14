@@ -29,9 +29,6 @@ recover-password/ (auth:recover-password):
 recover-password/<token> (auth:recover-password-token):
     URL sent by e-mail after user request a password reset.
     Implementation :func:`ej_users.routes.recover_password_token`.
-login/api-key/ (auth:api-key):
-    API-based authorization. Used by Rocket.Chat integration.
-    Implementation :func:`ej_users.routes.login`.
 
 
 Actions that require authentication
@@ -76,40 +73,6 @@ profile/contributions/ (profile:comments):
     conversations in the platform.
     Implementation :func:`ej_profiles.routes.contributions`.
 
-
-
-Gamification (ej_gamification)
-------------------------------
-
-Show gamification information for the user profile.
-
-profile/achievements/ (gamification:badges)
-    List of points and badges for the user. Also display user position on the
-    leaderboard.
-    Implementation :func:`ej_gamification.routes.achievements`.
-
-
-.. under construction
-    Global powers
-    -------------
-    |
-    Interface that users can use to manage global powers and resources in the
-    platform.
-    |
-    Notifications
-    =============
-    |
-    Notifications are displayed using alerts (push notifications) for most users.
-    However, some users may not have support for this technology on their browsers
-    and even the users who have, might want to keep a record of the later
-    notifications in the system.
-    |
-    profile/notifications/ (notifications:index):
-        List all unread notifications.
-    profile/notifications/history/ (notifications:history):
-        List all notifications.
-    |
-    All notifications are managed by the ej_notifications app.
 
 
 Conversations (ej_conversations)
@@ -205,23 +168,6 @@ either local/pages or lib/pages/.
 
 All URLs are implemented as flat pages in the Django Admin. The content
 of those URLs can be editable at ``/admin/flatpages/flatpage/``.
-
-
-
-Talks
-=====
-
-Rocket.Chat integration.
-
-/talks/ (rocket:index)
-    Display Rocketchat inside a <iframe>.
-/talks/intro (rocket:intro):
-    Initial page displayed by the Rocketchat instance.
-/talks/channels (rocket:channels):
-    List of Rocketchat channels available for the user.
-
-All urls are implemented in the ej_rocketchat app.
-
 
 
 Administrative URLs

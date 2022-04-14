@@ -10,6 +10,8 @@
             <input type="submit" name="submit" value="{{ _('Register') }}" class="width-full is-primary">
         </div>
     </form>
-    <a href="{{ url('auth:login') + next }}" class="semi-bold underline">{{ _('Login') }}</a>{{ ', ' }}
+    <div class="center">
+        <a href="{{ url('auth:login') + next }}" class="semi-bold underline">{{ _('Login') }}</a>
+    </div>
 	<script src="/static/js/vote-from-template.js"></script>
 {% endblock %}

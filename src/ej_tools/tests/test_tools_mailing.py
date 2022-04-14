@@ -6,7 +6,7 @@ from ej_tools.forms import MailingToolForm
 
 
 class TestTemplateGenerator(ConversationRecipes):
-    def __init__(self):
+    def setup_method(self, method):
         self.REQUEST_META = {"HTTP_X_FORWARDED_PROTO": "http", "HTTP_HOST": "ejplatform.local"}
         self.REQUEST_POST = {"custom-domain": "http://ejplatform.local"}
 

@@ -40,13 +40,11 @@ def docs(ctx, orm=False):
             "ej_conversations",
             "ej_boards",
             "ej_clusters",
-            "ej_gamification",
             "ej_dataviz",
-            "ej_rocketchat",
+            "ej_tools",
         ]:
             print(f"Making ORM graph for {app}")
-            env = {"EJ_ROCKETCHAT_INTEGRATION": "true"} if app == "ej_rocketchat" else {}
-            manage(ctx, "graph_models", app, env=env, output=f"docs/dev-docs/orm/{app}.svg")
+            manage(ctx, "graph_models", app, env={}, output=f"docs/dev-docs/orm/{app}.svg")
     else:
         print("call inv docs --orm to update ORM graphs")
 
@@ -129,7 +127,7 @@ def sass(ctx, theme=None, watch=False, background=False, suffix="", minify=False
         import sass
 
         root_url = f'file://{directory / "lib/build/css/"}'
-        for file in ("main", "rocket", "hicontrast"):
+        for file in ("main", "hicontrast"):
             try:
                 css_path = directory / f"lib/build/css/{file}{suffix}.css"
                 css_min_path = directory / f"lib/build/css/{file}{suffix}.min.css"

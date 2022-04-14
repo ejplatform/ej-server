@@ -1,5 +1,5 @@
 import json
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.shortcuts import render
 from django.shortcuts import redirect
 from .utils import (
@@ -196,7 +196,6 @@ def delete_connection(request, board_slug, conversation_id, slug, connection_id)
 
     rasa_connection = RasaConversation.objects.get(id=connection_id)
     conversation = Conversation.objects.get(id=conversation_id)
-
     user_signature = SignatureFactory.get_user_signature(conversation.author)
     tool = user_signature.get_tool(_("Opinion Bots"), conversation).webchat
     tool.raise_error_if_not_active()

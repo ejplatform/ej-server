@@ -5,8 +5,8 @@ from rest_framework.response import Response
 from boogie.models import F
 from boogie.router import Router
 from django.db.models import Count
-from django.shortcuts import redirect, render
-from django.utils.translation import ugettext_lazy as _, ugettext as __
+from django.shortcuts import redirect
+from django.utils.translation import gettext_lazy as _, gettext as __
 from hyperpython import a
 from hyperpython.components import fa_icon
 from django.http import HttpResponse

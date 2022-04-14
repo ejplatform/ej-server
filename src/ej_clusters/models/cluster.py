@@ -2,7 +2,7 @@ from boogie import models
 from django.contrib.auth import get_user_model
 from django.db.models import Subquery
 from django.urls import reverse
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from model_utils.models import TimeStampedModel
 from sidekick import delegate_to, lazy, import_later, placeholder as this
 

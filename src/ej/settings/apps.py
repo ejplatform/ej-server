@@ -13,7 +13,6 @@ class InstalledAppsConf(Base, EjOptions):
         "ej_dataviz",
         "ej_profiles",
         "ej_conversations",
-        "ej_analysis",
         "ej_tools",
     ]
 
@@ -43,11 +42,7 @@ class InstalledAppsConf(Base, EjOptions):
         return [*super().get_django_contrib_apps(), "django.contrib.flatpages"]
 
     def get_project_apps(self):
-        apps = [*super().get_project_apps(), *self.project_apps]
-        if self.EJ_ROCKETCHAT_INTEGRATION:
-            print("Rocket.Chat integration is ON")
-            apps = ["ej_rocketchat", *apps]
-        return apps
+        return [*super().get_project_apps(), *self.project_apps]
 
     def get_third_party_apps(self):
         apps = [*super().get_third_party_apps(), *self.third_party_apps]
