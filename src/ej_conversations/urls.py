@@ -11,6 +11,21 @@ urlpatterns = [
         name="list",
     ),
     path(
+        f"{conversation_url}/comments/new/",
+        views.new_comment,
+        name="new_comment",
+    ),
+    path(
+        f"{conversation_url}/comments/delete/",
+        views.delete_comment,
+        name="delete_comment",
+    ),
+    path(
+        f"{conversation_url}/comments/check/",
+        views.check_comment,
+        name="check_comment",
+    ),
+    path(
         f"{conversation_url}/moderate/",
         views.moderate,
         name="moderate",

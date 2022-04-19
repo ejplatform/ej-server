@@ -1,0 +1,49 @@
+{%- set n = comments|length -%}
+{%- set n_strong = ('<strong>%s</strong>' % n)|safe -%}
+
+<form method="POST" action="#moderate-{{ id }}" id="moderate-{{ id }}" class="measure-narrow margin-xauto block">
+    {{ csrf_input }}
+
+    {% if comments %}
+        <p class="margin-t3">
+            {% trans count=n, n=n_strong %}Found {{ n }} comment.{% pluralize %}Found {{ n }} comments.{% endtrans %}
+        </p>
+
+        {# Rejection reason form #}
+        {% if id != 'rejected' %}
+            <div is-element="rejection-reason-form">
+                {{ form.non_field_errors() }}
+                {% for field in [form.rejection_reason, form.rejection_reason_text] %}
+                    {{ field.errors }}
+                    <label>{{ field.label }}{{ field }}</label>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {# List of comments #}
+        {% for comment in comments %}
+            {% if loop.index != 1 %}
+                <hr class="margin-x4 margin-y3">
+            {% endif %}
+            
+            {{ comment|role('moderate') }}
+
+            {% if id == 'pending' %}
+                <div class="row margin-3">{{ reject_button(comment) }}{{ approve_button(comment) }}</div>
+            {% endif %}
+
+            {% if id == 'approved' %}
+                <div class="text-right margin-1">{{ reject_button(comment) }}</div>
+            {% endif %}
+
+            {% if id == 'rejected' %}
+                <p class="pad-x2 pad-y1 margin-y1 opacity-4 rounded-2 color-negative text-6">{{ comment.rejection_reason_display }}</p>
+                <div class="text-right margin-1">{{ approve_button(comment) }}</div>
+            {% endif %}
+        {% endfor %}
+
+    {% else %}
+        {# No comments found #}
+        <p class="margin-t3">{{ _('No comments left') }}</p>
+    {% endif %}
+</form>

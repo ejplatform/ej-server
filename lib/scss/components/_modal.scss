@@ -1,0 +1,74 @@
+.modal {
+    &__overlay {
+        display: flex;
+        position: fixed;
+        place-items: center;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: 750;
+
+        &.hide {display: none;}
+
+        > * {
+            min-height: 0;
+            margin: auto;
+        }
+
+        background: rgba($color-black-alternative, .25);
+    }
+
+    &__container {
+        @extend .pad-4;
+        min-width: 25rem;
+        z-index: 1250;
+        background-color: $color-theme-report-light-gray;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        
+        h3 {color: $color-black-alternative;}
+    }
+
+    &__icon {
+        width: 67px;
+        &--alert {color: $color-theme-red;}
+        &--success {color: $color-theme-green;}
+    }
+
+    &__title {
+        color: $color-black-alternative;
+        font-size: 1.5rem;
+        font-family: "Patua One", sans-serif;
+        margin-bottom: 1rem;
+    }
+
+    &__buttons {display: grid;}
+
+    &__btn {
+        @extend .pad-3;
+        width: 100%;
+
+        cursor: pointer;
+        display: flex;
+        place-items: center center;
+        justify-content: center;
+        gap: .5rem;
+        border: none !important;
+        border-radius: 3rem;
+        
+        font-size: .875rem;
+
+        i {margin: 0;}
+
+        &--red {background-color: $color-red-negative;}
+        &--blue {background-color: $color-theme-dark-blue;}
+        &--no-fill {
+            color: $color-navigation-header-text;
+            padding: 0;
+        }
+    }
+}
+
+.overflow-deactive {
+    overflow-y: hidden;
+}

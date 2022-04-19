@@ -29,7 +29,7 @@
             <li>{{ link }}</li>
         {% endfor %}
         {%- if request.user.has_perm('ej.can_moderate_conversation', conversation) %}
-            <li><a href="{{ conversation.patch_url('conversation:moderate') }}">{{ _('Moderate') }}</a></li>
+            <li><a href="{{ conversation.patch_url('conversation:moderate') }}">{{ _('Manage Comments') }}</a></li>
         {% endif %}
     </ul>
 

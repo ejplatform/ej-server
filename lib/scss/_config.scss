@@ -39,6 +39,8 @@ $color-theme-purple: #7758B3 !default;
 $color-theme-purple-light: #E7DBFF !default;
 $color-theme-grey: #797979 !default;
 $color-theme-grey-light: #EEEEEE !default;
+$color-theme-dark-blue: #052b47 !default;
+$color-theme-red: #E20000 !default;
 
 
 //Opinion component colors
@@ -140,6 +142,7 @@ $mendeleev-color-palette: (
     'theme-purple-light': $color-theme-purple-light,
     'theme-grey': $color-theme-grey,
     'theme-grey-light': $color-theme-grey-light,
+    'theme-red': $color-theme-red,
 
     //Opinion component themes
     'theme-bocadelobo': $color-theme-bocadelobo,

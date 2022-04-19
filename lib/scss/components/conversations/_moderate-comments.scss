@@ -1,0 +1,119 @@
+.moderate {
+    label {
+        display: grid;
+        text-indent: 0;
+        grid-gap: .5rem;
+    }
+
+    .hide {display: none;}
+
+    textarea {
+        max-width: unset;
+        border-radius: .3125rem;
+        margin-bottom: .375rem !important;
+    }
+
+    .comment-container {
+        &__error-message {
+            transition: .35s;
+            height: 0;
+            visibility: hidden;
+            color: $color-theme-red;
+        }
+
+        &.active {
+            textarea {
+                animation: background-alert;
+                animation-duration: 3s;
+                animation-iteration-count: infinite;
+            }
+
+            .comment-container__error-message {
+                visibility: visible;
+                height: inherit;
+            }
+        }
+    }
+
+    .comments-panel {
+        display: grid;
+        width: 100%;
+        grid-template-rows: auto auto;
+        grid-template-columns: 1fr 1fr;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: .5rem;
+
+        &__add-btn {
+            text-transform: uppercase;
+            font-weight: bold;
+            justify-self: start;
+            grid-row: 1/span 1;
+            grid-column: 1/span 2;
+        }
+
+        &__save-btn {
+            background-color: $color-theme-dark-blue;
+            border-color: $color-theme-dark-blue;
+            justify-self: end;
+            grid-row: 2/span 1;
+            grid-column: 2/span 1;
+        }
+
+        &__error-container {
+            transition: opacity .5s linear 0s, height .05s linear .5s;
+            color: $color-theme-red;
+            opacity: 0;
+            height: 0;
+            font-size: .75rem;
+            margin-top: .5rem;
+            text-transform: none;
+
+            &.show {
+                opacity: 1;
+                height: auto;
+            }
+        }
+    }
+
+    .added-comments {
+        @extend .left;
+
+        &__message {color: $color-navigation-header-text;}
+
+        .comment {
+            @extend .margin-b1, .pad-3;
+            background-color: $color-theme-report-light-gray;
+            border-radius: .3125rem;
+
+            &__text {font-size: 18px;}
+
+            &__details {
+                padding-top: .5rem;
+                font-size: 14px;
+                margin-bottom: 1rem;
+
+                > * {font-weight: bold}
+            }
+
+            &__author {@extend .text-accent;}
+
+            &__date {color: $color-navigation-header-text;}
+
+            &__delete-btn {
+                padding: 0;
+                text-transform: lowercase;
+                font-weight: bold;
+                font-size: 16px;
+                color: $color-navigation-header-text;
+
+                &:hover {box-shadow: unset}
+            }
+        }
+    }
+}
+
+@keyframes background-alert {
+    0%, 100% {background-color: rgba($color-theme-red, 0.05)}
+    50% {background-color: rgba($color-theme-red, 0.15)}
+}
