@@ -2,19 +2,22 @@ from logging import getLogger
 
 from django.db import transaction
 from django.db.models import F
-from django.http import HttpResponseServerError
+from django.http import HttpResponse, HttpResponseServerError
 from django.urls import reverse
 from django.shortcuts import render
 from django.shortcuts import redirect
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import ugettext_lazy as _
+from ej_conversations.models import conversation
 from hyperpython import a
 from django.contrib.auth.decorators import login_required
+from rest_framework import status
 
 from ej_boards.models import Board
 from ej_users.models import SignatureFactory
 
 from . import forms, models
-from .models import Conversation
+from .models import Conversation, Comment
+from ej_users.models import User
 from .utils import (
     check_promoted,
     conversation_admin_menu_links,
@@ -221,16 +224,83 @@ def moderate(request, conversation_id, slug, board_slug):
     status_filter = lambda value: lambda x: x.status == value
     status = models.Comment.STATUS
     comments = conversation.comments.annotate(annotation_author_name=F("author__name"))
+    created = list(filter(lambda x: x.author == conversation.author, comments))
+    created = sorted(created, key=lambda x: x.created, reverse=True)
 
     context = {
         "conversation": conversation,
         "approved": list(filter(status_filter(status.approved), comments)),
         "pending": list(filter(status_filter(status.pending), comments)),
         "rejected": list(filter(status_filter(status.rejected), comments)),
+        "created": created,
         "menu_links": conversation_admin_menu_links(conversation, request.user),
         "form": form,
+        "comment_saved": False,
     }
     return render(request, "ej_conversations/conversation-moderate.jinja2", context)
+
+
+@login_required
+@can_edit_conversation
+@can_moderate_conversation
+def new_comment(request, conversation_id, slug, board_slug):
+    conversation = Conversation.objects.get(id=conversation_id)
+    fields = dict(request.POST)
+    if "comment" in fields:
+        comments = dict(request.POST)["comment"]
+        for comment in comments:
+            comment = Comment.objects.create(
+                content=comment,
+                conversation=conversation,
+                author=request.user,
+                status=models.Comment.STATUS.approved,
+            )
+
+    form = forms.ModerationForm(user=request.user)
+
+    # Fetch all comments and filter
+    status_filter = lambda value: lambda x: x.status == value
+    status = models.Comment.STATUS
+    comments = conversation.comments.annotate(annotation_author_name=F("author__name"))
+    created = list(filter(lambda x: x.author == conversation.author, comments))
+    created = sorted(created, key=lambda x: x.created, reverse=True)
+
+    context = {
+        "conversation": conversation,
+        "approved": list(filter(status_filter(status.approved), comments)),
+        "pending": list(filter(status_filter(status.pending), comments)),
+        "rejected": list(filter(status_filter(status.rejected), comments)),
+        "created": created,
+        "menu_links": conversation_admin_menu_links(conversation, request.user),
+        "form": form,
+        "comment_saved": True,
+    }
+    return render(request, "ej_conversations/conversation-moderate.jinja2", context)
+
+
+@login_required
+@can_edit_conversation
+@can_moderate_conversation
+def delete_comment(request, conversation_id, slug, board_slug):
+    comment_id = request.POST.get("comment_id")
+    comment = Comment.objects.get(id=int(comment_id))
+
+    if comment.author == request.user:
+        comment.delete()
+
+    return HttpResponse(status=200)
+
+
+@login_required
+@can_edit_conversation
+@can_moderate_conversation
+def check_comment(request, conversation_id, slug, board_slug):
+    comment_content = request.POST.get("comment_content")
+    try:
+        Comment.objects.get(content=comment_content, conversation_id=conversation_id)
+        return HttpResponse(status=200)
+    except Comment.DoesNotExist:
+        return HttpResponse(status=204)
 
 
 def login_link(content, obj):

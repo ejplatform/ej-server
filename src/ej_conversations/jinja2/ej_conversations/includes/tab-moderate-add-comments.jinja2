@@ -1,0 +1,140 @@
+<form method="POST" action="{{ conversation.patch_url('conversation:new_comment') }}" id="moderate-add" class="block pad-t3">
+    {{ csrf_input }}
+
+    <div class="comments-list"></div>
+    
+    <div class="comments-panel left">
+        <a href="#" class="comments-panel__add-btn" onclick="addComment()">
+            <i class="fas fa-plus"></i>
+            {{ _('Add more comments') }}
+            <div class="tooltip">
+                <i class="tooltip__icon fas fa-info-circle"></i>
+                <div class="tooltip__content">
+                    {{ _('Click here to add multiple comments at the same time. Don\'t forget to save when you\'re done adding all the comments.') }}
+                </div>
+            </div>
+            <div class="comments-panel__error-container"></div>
+        </a>
+        <button type="button" onclick="submitComments()" class="comments-panel__save-btn button">{{ _('Save') }}</button>
+    </div>
+
+    <label class="left margin-b3">{{ _('added comments') }}</label>
+    <div class="added-comments">
+        {% if not created %}
+            <span class="added-comments__message">{{ _('You haven\'t added any comments yet. Once saved, they will appear here.') }}</span>
+        {% endif %}
+        {% for comment in created %}
+            <div class="comment" data-comment-id="{{comment.id}}">
+                <div class="comment__text">{{ comment }}</div>
+                <div class="comment__details">
+                    <span class="comment__author">{{ comment.author.name }}</span>
+                    <span class="comment__date"> em {{comment.created|role("simple")}}</span>
+                </div>
+                <a onclick="eraseComment('{{comment.id}}')" class="comment__delete-btn">
+                    <i class="fas fa-trash"></i> {{_('erase')}}
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+</form>
+
+<template id="comment-template">
+    <label class="comment-container left margin-b2">
+        <span>{{_("comment")}} </span>
+        <textarea name="comment" cols="40" rows="5" placeholder="{{_('Write your comment here')}}"></textarea>
+        <div class="comment-container__error-message ">{{_("There is already a published comment similar to this one. You must delete it or write another comment to proceed.")}}</div>
+    </label>
+</template>
+
+<script>
+    var commentsCount = 0;
+    var eraseCommentID = null;
+    const commentsContainer = document.querySelector("#moderate-add .comments-list");
+    const template = document.getElementById("comment-template");
+    const commentError = document.querySelector(".comments-panel__error-container");
+    const form = document.getElementById("moderate-add");
+
+    const addComment = () => {
+        const addCommentBtn = document.querySelector(".comments-panel__add-btn");
+        const lastTextarea = commentsContainer.querySelector(".comment-container:last-child textarea")
+
+        if(lastTextarea?.value == '') {
+            lastTextarea.placeholder = "{{_('You need to write something first')}}";
+            commentError.innerText = "{{ _('Before adding more comments, you must fill in the comments field above.') }}";
+            commentError.classList.add("show")
+            lastTextarea.focus();
+
+            setTimeout(() => {
+                lastTextarea.placeholder = "{{_('Write your comment here')}}";
+                commentError.classList.remove("show")
+            }, 4000);
+            return
+        }
+        
+        commentsCount++;
+        const clone = document.importNode(template.content, true);
+        clone.querySelector('span').innerText += commentsCount;
+        commentsContainer.appendChild(clone);
+    }
+
+    const eraseComment = (commentID) => {
+        const erasePopup = document.getElementById("erase-comment-confirm")
+        eraseCommentID = commentID;
+        erasePopup.classList.remove("hide");
+    }
+
+    const eraseFn = () => {
+        if(eraseCommentID == null) return;
+        $.ajax({
+            url:"{{ conversation.patch_url('conversation:delete_comment') }}",
+            type: 'POST',
+            data: {
+                comment_id: eraseCommentID,
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            success: function(data) {
+                const comment = document.querySelector(`.added-comments [data-comment-id="${eraseCommentID}"]`);
+                const commentPopup = document.getElementById("comment-erased");
+                comment.parentNode.removeChild(comment);
+                closePopup("erase-comment-confirm");
+                commentPopup.classList.remove("hide");
+            }
+        });
+    }
+
+    const submitComments = async () => {
+        const comments = Array.from(document.querySelectorAll(".comment-container textarea"))
+
+        const checkComment = ({value}) => new Promise( resolve => {
+            $.ajax({
+                url:"{{ conversation.patch_url('conversation:check_comment') }}",
+                type: 'POST',
+                data: {
+                    comment_content: value,
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                complete: (data, textStatus) => {
+                    resolve(textStatus === 'nocontent')
+                }
+            })
+        })
+
+        Promise.all(comments.map(checkComment))
+            .then(results => {
+                if(!results.some(x => !x)) form.submit()
+                const errorComments = comments.filter((comment, index) => !results[index])
+                errorComments.forEach(comment => comment.parentNode.classList.add("active"))
+                setTimeout(() => {
+                    errorComments.forEach(comment => comment.parentNode.classList.remove("active"))
+                }, 5000)
+            })
+
+    }
+
+    const closePopup = (popupID) => {
+        const popup = document.getElementById(popupID);
+        popup.classList.add("hide");
+    }
+
+    document.addEventListener("DOMContentLoaded", addComment);
+</script>

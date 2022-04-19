@@ -3,6 +3,7 @@
 @import 'components/main/elements';
 @import 'components/conversations/card';
 @import 'components/conversations/detail';
+@import 'components/conversations/moderate-comments';
 
 
 @import 'components/tools/card';
@@ -31,6 +32,7 @@
 @import 'components/datatables';
 @import 'components/clusters';
 @import 'components/stereotypes';
+@import 'components/modal';
 
 // FIXME (forever): remove shame ;-)
 @import 'components/main/mendeleev-shame';

@@ -20,7 +20,7 @@
 }
 
 @keyframes jump {
-    0% {
+    0%, 100% {
         bottom: size(1);
     }
     50% {

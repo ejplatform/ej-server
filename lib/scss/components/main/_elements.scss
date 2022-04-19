@@ -34,27 +34,30 @@ i.fa, i.fas, i.fab, i.far {
 //------------------------------------------------------------------------------
 // Tabs and categories
 .tabs, .categories {
-    @extend .center, .row, .flex-center, .wrap;
+    @extend .row, .wrap;    
 
     > * {
         border-bottom: 0.25rem solid transparent;
     }
     a {
-        font-weight: 600;
+        font-weight: bold;
+        color: $color-navigation-header-text;
         white-space: nowrap;
     }
     [is-selected] {
-        @extend .text-brand;
-        border-bottom-color: color('brand');
+        @extend .text-accent;
+        border-bottom-color: color('accent');
     }
 }
 
 .tabs {
     @extend .uppercase;
-    border-bottom: 1px solid color('brand-light');
+    border-bottom: 1px solid $color-theme-report-gray;
+    justify-content: flex-start;
 
     a {
-        @extend .pad-2, .margin-x2;
+        @extend .pad-y2;
+        margin-right: 3.625rem;
     }
 }
 
@@ -237,4 +240,42 @@ $toast-opacity: 0.75;
 .square { 
     border-radius: 5px;
     margin-top: 25px;
+}
+
+//------------------------------------------------------------------------------
+// Tooltip component
+.tooltip {
+    @extend .absolute;
+    display: contents;
+    font-size: 0.875rem;
+    text-align: center;
+    z-index: 100;
+    transition: .3s;
+
+    &__content {
+        @extend .pad-2, .absolute, .bold;
+        display: inline-block;
+        visibility: hidden;
+        opacity: 0;
+        transition: opacity .3s ease-in-out, visibility .1s;
+        max-width: 50%;
+        background-color: $color-theme-accent-light;
+        color: $color-black-alternative;
+        
+        text-transform: none;
+        font-family: "Raleway", sans-serif;
+        letter-spacing: 0;
+        text-align: left;
+        font-size: .625rem
+    }
+
+    &__icon {
+        color: $color-navigation-header-text;
+        margin-left: .5rem !important;
+    }
+    
+    &:hover .tooltip__content {
+        visibility: visible;
+        opacity: 1;
+    }
 }

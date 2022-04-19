@@ -1,20 +1,20 @@
 {% macro conclusion_action_modal(icon, title, conversation) %}
-<div class="overlay-modal">
-    <div class="new-group-modal">
-        <div class="modal-container">
-            <img src="{{icon}}"/>
-            <h3>{{title}}</h3>
-            <span onclick="closeModal()">{{_("close")}}</span>
-            
+    <div class="modal__overlay">
+        <div class="modal__container">
+                <img class="modal__icon" src="{{icon}}"/>
+                <h3>{{title}}</h3>
+                <div class="modal__btn modal__btn--no-fill bold underline" onclick="closeModal()">{{_("close")}}</div>
+            </div>
         </div>
     </div>
-</div>
 
-<script>
-    function closeModal() {
-        mainEditPage = "{{conversation.url('cluster:edit')}}";
-        window.location.href = mainEditPage;
-    }
-</script>
-
+    <script>
+        const body = document.getElementsByClassName("body")[0]
+        body.classList.add('overflow-deactive');
+        function closeModal() {
+            mainEditPage = "{{conversation.url('cluster:edit')}}";
+            window.location.href = mainEditPage;
+            body.classList.remove('overflow-deactive');
+        }
+    </script>
 {% endmacro %}
