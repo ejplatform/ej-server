@@ -4,6 +4,18 @@ CHANGELOG of EJPlatform releases
 
 Here you can follow all the fixes and new features on every EJPlatform release.
 
+3.1.0 release
+====================
+* Date: April 20, 2022
+* Features
+- Adds new UI for personas management;
+- Fixes boards page margin;
+- Removes ej_rocketchat, ej_analysis, ej_gamification and ej_experiments apps;
+- Adds new API endpoint /api/v1/users;
+- Adds new tab on comments moderation for adding new comments;
+- Adds new environment management area for admin profile;
+- Fixes mobile menus overlay;
+
 3.0.0 release
 ====================
 * Date: April 06, 2022
