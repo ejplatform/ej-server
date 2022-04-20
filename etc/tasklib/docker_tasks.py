@@ -33,9 +33,7 @@ def docker_build(ctx, dry_run=False, no_cache=False):
     Build EJ web server image;
     """
     do = runner(ctx, dry_run, pty=True)
-    # file = prepare_dockerfile(cmd, file, deploy)
     file = "docker/docker-compose.yml"
-    # compose = prepare_compose_cmd(file, task, rocket, docker)
     compose = f"docker-compose -f {file}"
     if no_cache:
         do(f"{compose} build  --no-cache")

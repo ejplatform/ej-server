@@ -56,7 +56,7 @@ def collect(ctx, theme=None):
     root_js = directory / "lib/build/js/"
 
     # Select the correct minified build for CSS assets
-    for file in ["main", "rocket", "hicontrast"]:
+    for file in ["main", "hicontrast"]:
         from_path = root_css / (file + f"-{theme}.min.css")
         to_path = root_css / (file + ".css")
         if not from_path.exists():

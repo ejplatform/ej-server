@@ -32,7 +32,6 @@ A theme is organized within the following file structure::
             |- _overrides.scss (ad-hoc overrides of styles)
             |- main.scss
             |- hicontrast.scss
-            \- rocket.scss
 
 Main.scss have standard implementations and can be simply
 copied from one theme to the other. Most of your work will probably concentrate
