@@ -2116,12 +2116,12 @@ msgstr ""
 "Crie uma nova persona com o nome do grupo, se nenhuma outra persona for "
 "selecionada."
 
-#: src/ej_clusters/jinja2/ej_clusters/edit/edit-cluster-form.jinja2:34
+#: src/ej_clusters/jinja2/ej_clusters/edit/edit-cluster-form.jinja2:33
 #, fuzzy
 msgid "Delete group"
 msgstr "Excluir grupo"
 
-#: src/ej_clusters/jinja2/ej_clusters/edit/edit-cluster-form.jinja2:35
+#: src/ej_clusters/jinja2/ej_clusters/edit/edit-cluster-form.jinja2:34
 #, fuzzy
 msgid "Save edits"
 msgstr "Salvar edições"
@@ -2131,12 +2131,12 @@ msgstr "Salvar edições"
 msgid "Are you sure of this action?"
 msgstr "Você tem certeza dessa ação?"
 
-#: src/ej_clusters/jinja2/ej_clusters/edit/edit-cluster-form.jinja2:49
+#: src/ej_clusters/jinja2/ej_clusters/edit/edit-cluster-form.jinja2:51
 #, fuzzy
 msgid "Yes, I want to delete the group"
 msgstr "Sim, quero excluir o grupo"
 
-#: src/ej_clusters/jinja2/ej_clusters/edit/edit-cluster-form.jinja2:52
+#: src/ej_clusters/jinja2/ej_clusters/edit/edit-cluster-form.jinja2:54
 msgid "No, I want to go back"
 msgstr "Não, quero voltar"
 
@@ -2154,12 +2154,12 @@ msgstr "Nome do grupo"
 msgid "Create group"
 msgstr "Criar grupo"
 
-#: src/ej_clusters/jinja2/ej_clusters/edit/new-cluster-form.jinja2:46
+#: src/ej_clusters/jinja2/ej_clusters/edit/new-cluster-form.jinja2:52
 #, fuzzy
 msgid "Created Group"
 msgstr "Grupo criado"
 
-#: src/ej_clusters/jinja2/ej_clusters/edit/new-cluster-form.jinja2:50
+#: src/ej_clusters/jinja2/ej_clusters/edit/new-cluster-form.jinja2:56
 msgid "Excluded Group"
 msgstr "Grupo excluído"
 

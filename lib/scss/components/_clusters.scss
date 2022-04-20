@@ -31,7 +31,8 @@ $clusters-button-height: 2.313rem;
   form {
     display: grid;
     grid-gap: 1rem;
-    grid-template-rows: 1.187rem auto 1.187rem 1fr;
+    grid-template-rows: 1.187rem auto 1.187rem 1fr; 
+    margin: 0;
   }
 
   label {
@@ -150,25 +151,6 @@ $clusters-button-height: 2.313rem;
   .btn-container {
     display: grid;
     justify-content: flex-end;
-  }
-  
-  .create-group-btn {
-    display: flex;
-    place-items: center;
-    justify-content: center;
-    gap: .5rem;
-    border-radius: 1.5rem; 
-    font-size: 0.875rem;
-    padding: 1.37rem 1.54rem;
-    width: min-content;
-    align-self: flex-end;
-    background-color: $color-theme-report-blue;
-    border: 1px solid $color-theme-report-blue;
-
-    i {
-      font-size: 0.875rem;
-      margin: 0;
-    }
   }
 }
 
@@ -307,22 +289,6 @@ $clusters-button-height: 2.313rem;
 
 // EDIT ELEMENTS
 
-.delete-group {
-  display: flex;
-  place-items: center;
-  justify-content: center;
-  background: $color-red-negative;
-  border: 1px solid $color-red-negative;
-  border-radius: 1.563rem;
-  font-size: 0.875rem;
-  padding: 1.37rem .9rem;
-  line-height: 1rem;
-  
-  i {
-    margin: 0.313rem;
-  }
-}
-
 .edit-buttons {
   display: flex;
   gap: 1.875rem;
@@ -330,6 +296,94 @@ $clusters-button-height: 2.313rem;
 
   input {
     line-height: 0;
+  }
+
+  #save-edit {
+    display: flex;
+    place-items: center;
+    justify-content: center;
+    gap: .5rem;
+    border-radius: 1.5rem; 
+    font-size: 0.875rem;
+    padding: 1.37rem 1.54rem;
+    width: min-content;
+    background-color: $color-theme-report-blue;
+    border: 1px solid $color-theme-report-blue;
+    margin-top: 1rem; 
+  
+    i {
+      font-size: 0.875rem;
+      margin: 0;
+    }
+  }
+
+  .delete-group {
+    display: flex;
+    place-items: center;
+    justify-content: center;
+    background: $color-red-negative;
+    border: 1px solid $color-red-negative;
+    border-radius: 1.563rem;
+    font-size: 0.875rem;
+    padding: 1.37rem .9rem;
+    line-height: 1rem;
+    margin: 0;
+    margin-top: 1rem;
+    
+    i {
+      margin: 0.313rem;
+    }
+  }
+
+  .divider-mobile {
+    display: none;
+  }
+}
+
+.manage-personas {
+  display: flex;
+  place-items: center;
+  justify-content: center;
+  font-size: 0.875rem;
+  padding: 1.37rem 1.063rem;
+  width: 13.875rem; 
+  background: $color-theme-report-blue;
+  border: 1px solid $color-theme-report-blue;
+  border-radius: 1.563rem;
+  margin: 0;
+  margin-top: 1rem;
+
+  i {
+    transform: rotate(45deg);
+    margin: 0.5em;
+  }
+}
+
+.manage-personas:hover {
+  background-color: $color-theme-report-blue !important;
+}
+
+.manage-personas-container {
+  position: relative;
+  bottom: 4.625rem;
+  width: fit-content;
+}
+
+.create-group-btn {
+  display: flex;
+  place-items: center;
+  justify-content: center;
+  gap: .5rem;
+  border-radius: 1.5rem; 
+  font-size: 0.875rem;
+  padding: 1.37rem 1.54rem;
+  width: min-content;
+  background-color: $color-theme-report-blue;
+  border: 1px solid $color-theme-report-blue;
+
+  i {
+    font-size: 0.875rem;
+    margin: 0;
   }
 }
 
@@ -344,12 +398,6 @@ $clusters-button-height: 2.313rem;
 
 .form-modal-delete-show {
   display: block;
-}
-
-@media (max-width: 330px) {
-  .edit-buttons {
-    display: grid;
-  }
 }
   
 @media (max-width: 875px) {
@@ -384,7 +432,7 @@ $clusters-button-height: 2.313rem;
       #new_persona_check { 
         left: 0;
       }
-    }
+    } 
 
     #new-persona-text {
       left: 1.875rem;
@@ -394,6 +442,10 @@ $clusters-button-height: 2.313rem;
     .tooltip-persona {
       position: absolute;
       height: 30px;
+    }
+
+    .btn-container {
+      justify-content: center;
     }
   }
 
@@ -410,14 +462,31 @@ $clusters-button-height: 2.313rem;
   }
 
   .edit-buttons {
-    gap: 0.625rem;
-    
+    display: flex;
+    flex-wrap: wrap-reverse;
+    gap: 0;
+
+    #save-edit {
+      margin-bottom: 2.625rem;
+    }
+
     .delete-group {
-      padding: 1.2rem .3rem;
+      margin-top: 1.938rem;
+      margin-bottom: 0.938rem;
     }
-    .create-group-btn {
-      padding: 1.2rem .8rem;
-    }
+  }
+
+  .divider-mobile {
+    border: 1px solid #BABABA;
+    display: block;
+    width: 100%;
+  }
+
+  .manage-personas-container { 
+    bottom: .625rem;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
   }
   
   .confirmation-modal {
@@ -435,10 +504,47 @@ $clusters-button-height: 2.313rem;
   
 }
 
-@media (max-width: 996px) and (min-width: 875px) {
+@media (max-width: 996px) and (min-width: 524px) {
   .edit-buttons {
-    display: block;
+    display: flex;
     place-self: center;
+    gap: 0;
+
+    .divider-mobile {
+      border: 1px solid #BABABA;
+      display: block;
+      width: 100%;
+    }
+  }
+
+  .form-cluster-description {
+    form {
+      grid-template-rows: 1.187rem auto 1.187rem 18.563rem;
+    }
+  }
+
+  .manage-personas-container {
+    bottom: 0;
+  }
+  
+}
+
+@media (max-width: 996px) and (min-width: 876px) {
+  .edit-buttons {
+    display: flex;
+    flex-wrap: wrap-reverse;
+    gap: 0;
+
+    .divider-mobile {
+      border: 1px solid #BABABA;
+      display: block;
+      width: 100%;
+    }
+  }
+
+  .manage-personas-container {
+    margin-right: 0.625rem;
+    float: right;
   }
 }
 
