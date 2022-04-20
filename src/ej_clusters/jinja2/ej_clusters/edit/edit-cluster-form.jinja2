@@ -29,13 +29,16 @@
                 <p id="text-new-persona">{{_("Create a new persona with the group name if no other personas are selected.")}}</p>
             </div>
         </div>
-
         <div class="edit-buttons">
             <button class="delete-group" type="button" onclick="showConfirmationDelete();"><i class="fas fa-times-circle"></i> {{ _('Delete group') }}</button>
-            <input class="create-group-btn" value="{{ _('Save edits') }}" type="button" id="save-edit" onclick="changeButton(); return false;"/>
+            <hr class="divider-mobile">
+            <input class="save-group-btn" value="{{ _('Save edits') }}" type="button" id="save-edit" onclick="changeButton(); return false;"/>
         </div>
         </form>
     </div>
+</div>
+<div class="manage-personas-container">
+    <a class="button manage-personas" href="{{conversation.url('cluster:stereotype-votes')}}"><i class="fas fa-times-circle"></i> {{ _('Manage personas') }}</a>
 </div>
 
 <form method="post" id="form-confirmation-modal" class="close-modal-btn" onsubmit="closeModal();">
