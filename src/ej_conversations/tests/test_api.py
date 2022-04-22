@@ -1,6 +1,8 @@
+import email
 import pytest
 from rest_framework.test import APIClient
 from rest_framework.authtoken.models import Token
+from rest_framework.test import force_authenticate
 from ej_conversations.models import Conversation, Comment, Vote
 from .examples import COMMENT, CONVERSATION, VOTE, VOTES
 from ej_conversations.models.util import vote_count, statistics_for_user, statistics
@@ -16,24 +18,26 @@ BASE_URL = "/api/v1"
 class TestGetRoutes:
     def test_conversations_endpoint(self, conversation, api):
         path = BASE_URL + f"/conversations/{conversation.id}/"
+        api.post("/rest-auth/registration/", {"email": "email@server.com", "name": "admin"})
         data = api.get(path, exclude=["created"])
         assert data == CONVERSATION
 
     def test_comments_endpoint(self, comment, api):
         path = BASE_URL + f"/comments/{comment.id}/"
+        api.post("/rest-auth/registration/", {"email": "email@server.com", "name": "admin"})
         data = api.get(path, exclude=["created"])
         assert data == COMMENT
 
     def test_vote_endpoint(self, vote, api):
         path = BASE_URL + f"/votes/{vote.id}/"
-        data = api.get(path)
-        data.pop("created")
+        api.post("/rest-auth/registration/", {"email": "email@server.com", "name": "admin"})
+        data = api.get(path, exclude=["created"])
         assert data == VOTE
 
     def test_conversation_votes_endpoint_with_anonymous(self, conversation, vote, api):
         path = BASE_URL + f"/conversations/{conversation.id}/votes/"
         api.get(path)
-        assert api.response.status_code == 403
+        assert api.response.status_code == 401
 
     def test_conversation_votes_endpoint(self, conversation, vote, api):
         auth_token = api.post("/rest-auth/registration/", {"email": "email@server.com", "name": "admin"})
@@ -76,19 +80,12 @@ class TestApiRoutes:
         # Non authenticated user
         assert api.post(path, post_data) == self.AUTH_ERROR
 
-        # Authenticated user
+        # # Authenticated user
         token = Token.objects.create(user=user)
         _api = APIClient()
         _api.credentials(HTTP_AUTHORIZATION="Token " + token.key)
         response = _api.post(path, post_data, format="json")
-        data = response.data
-        del data["created"]
-        assert data == CONVERSATION
-
-        # Check if endpoint matches...
-        conversation = Conversation.objects.first()
-        data = api.get(path + f"{conversation.id}/", **self.EXCLUDES)
-        assert data == CONVERSATION
+        assert response.status_code == 403
 
     def test_delete_conversation(self, user):
         path = BASE_URL + f"/conversations/"
@@ -102,16 +99,9 @@ class TestApiRoutes:
         _api = APIClient()
         _api.credentials(HTTP_AUTHORIZATION="Token " + token.key)
 
-        # creates a conversation
-        _api.post(path, post_data, format="json")
-        conversation = Conversation.objects.first()
-        assert conversation
-
-        # delete the conversation
-        path = path + f"{conversation.id}/"
-        _api.delete(path, HTTP_AUTHORIZATION=f"Token {token.key}")
-        conversation = Conversation.objects.first()
-        assert not conversation
+        # # attempts to create a conversation
+        response = _api.post(path, post_data, format="json")
+        assert response.status_code == 403
 
     def test_update_conversation(self, user):
         path = BASE_URL + f"/conversations/"
@@ -125,24 +115,18 @@ class TestApiRoutes:
         _api = APIClient()
         _api.credentials(HTTP_AUTHORIZATION="Token " + token.key)
 
-        # creates a conversation
+        # attempts to create a conversation
         response = _api.post(path, post_data, format="json")
-        data = response.data
-        del data["created"]
-        assert data == CONVERSATION
+        assert response.status_code == 403
 
-        # updates the conversation
-        conversation = Conversation.objects.first()
-        path = path + f"{conversation.id}/"
+        # attempts to update the conversation
+        path = path + "1/"
         response = _api.put(
             path,
             data={"title": "updated title", "text": "updated text"},
             HTTP_AUTHORIZATION=f"Token {token.key}",
         )
-
-        conversation = Conversation.objects.first()
-        assert conversation.title == "updated title"
-        assert conversation.text == "updated text"
+        assert response.status_code == 403
 
     def test_post_comment(self, api, conversation, user):
         comments_path = BASE_URL + f"/comments/"
@@ -166,6 +150,7 @@ class TestApiRoutes:
 
         # Check if endpoint matches...
         comment = Comment.objects.first()
+        api.post("/rest-auth/registration/", {"email": "email@server.com", "name": "admin"})
         data = api.get(comments_path + f"{comment.id}/", **self.EXCLUDES)
         assert data == comment_data
 

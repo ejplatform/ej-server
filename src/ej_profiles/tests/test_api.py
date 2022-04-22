@@ -37,7 +37,7 @@ class TestGetRoutesProfile(BoardRecipes):
         api = APIClient()
         path = BASE_URL + f"/profiles/phone-number/"
         response = api.get(path)
-        assert response.status_code == 403
+        assert response.status_code == 401
 
     def test_set_phone_number_endpoint_with_anonymous(self):
         api = APIClient()
