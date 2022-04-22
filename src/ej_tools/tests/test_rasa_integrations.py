@@ -1,4 +1,6 @@
 import pytest
+from rest_framework.test import APIClient
+from rest_framework.authtoken.models import Token
 from ej_users.models import User
 from django.db import IntegrityError
 from django.utils.translation import gettext as _
@@ -120,8 +122,13 @@ class TestRasaConversationIntegrationsAPI(ConversationRecipes):
 
         RasaConversation.objects.create(conversation=conversation, domain=TEST_DOMAIN)
         path = self.BASE_URL + f"/rasa-conversations/integrations/?domain={TEST_DOMAIN}"
-        client = Client()
-        response = client.get(path)
+
+        user = User.objects.create_user("email2@server.com", "password")
+        token = Token.objects.create(user=user)
+        api = APIClient()
+        api.credentials(HTTP_AUTHORIZATION="Token " + token.key)
+        response = api.get(path)
+
         assert response.status_code == 200
         assert conversation.text == response.data.get("conversation").get("text")
         assert conversation.id == response.data.get("conversation").get("id")
@@ -129,8 +136,12 @@ class TestRasaConversationIntegrationsAPI(ConversationRecipes):
 
     def test_no_integration_api(self, db):
         url = self.BASE_URL + f"/rasa-conversations/integrations/?domain={TEST_DOMAIN}"
-        client = Client()
-        response = client.get(url)
+
+        user = User.objects.create_user("email2@server.com", "password")
+        token = Token.objects.create(user=user)
+        api = APIClient()
+        api.credentials(HTTP_AUTHORIZATION="Token " + token.key)
+        response = api.get(url)
         assert response.status_code == 200
         assert response.data == {}
 

@@ -1,22 +1,43 @@
+import json
+from urllib import request
+from datetime import datetime
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from ej.permissions import IsAuthor, IsAuthenticatedOnlyGetView, IsSuperUser, IsAuthenticatedCreationView
+from ej.viewsets import RestAPIBaseViewSet
 from ej_conversations.models import Conversation, Comment, Vote
 from ej_conversations.serializers import ConversationSerializer, CommentSerializer, VoteSerializer
 from ej_conversations.models.vote import Vote
 from ej_dataviz.utils import votes_as_dataframe
-from ej.viewsets import RestAPIBaseViewSet
-import json
-from datetime import datetime
 
 
 class CommentViewSet(RestAPIBaseViewSet):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
+    permission_classes = [IsAuthenticated]
+
+    def list(self, request):
+        if request.user.is_superuser:
+            queryset = Comment.objects.all()
+        else:
+            queryset = Comment.objects.filter(author=request.user)
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
 
 
 class VoteViewSet(RestAPIBaseViewSet):
     queryset = Vote.objects.all()
     serializer_class = VoteSerializer
+    permission_classes = (IsAuthenticatedCreationView | IsAuthor | IsSuperUser | IsAdminUser,)
+
+    def list(self, request):
+        if request.user.is_superuser:
+            queryset = Vote.objects.all()
+        else:
+            queryset = Vote.objects.filter(author=request.user)
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
 
     def delete_hook(self, request, instance):
         delete_vote(request, instance)
@@ -25,6 +46,15 @@ class VoteViewSet(RestAPIBaseViewSet):
 class ConversationViewSet(RestAPIBaseViewSet):
     queryset = Conversation.objects.all()
     serializer_class = ConversationSerializer
+    permission_classes = [IsAuthenticatedOnlyGetView]
+
+    def list(self, request):
+        if request.user.is_superuser:
+            queryset = Conversation.objects.all()
+        else:
+            queryset = Conversation.objects.filter(is_promoted=True)
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
 
     @action(detail=True, url_path="vote-dataset")
     def vote_dataset(self, request, pk):
@@ -35,11 +65,6 @@ class ConversationViewSet(RestAPIBaseViewSet):
     @action(detail=True)
     def votes(self, request, pk):
         conversation = self.get_object()
-        user = request.user
-        if not user.is_authenticated:
-            return Response(status=403)
-        if not user.has_perm("ej.can_edit_conversation", conversation):
-            return Response(status=403)
         votes = conversation.votes
         if request.GET.get("startDate") and request.GET.get("endDate"):
             start_date = datetime.fromisoformat(request.GET.get("startDate"))

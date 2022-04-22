@@ -6,12 +6,22 @@ from django.http import JsonResponse
 from .models import Profile
 from .serializer import ProfileSerializer
 from rest_framework.authtoken.models import Token
+from ej.permissions import IsUser, IsSuperUser
+from rest_framework.permissions import IsAdminUser
 
 
 class ProfileViewSet(viewsets.ModelViewSet):
-
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
+    permission_classes = (IsUser | IsSuperUser | IsAdminUser,)
+
+    def list(self, request):
+        if request.user.is_superuser:
+            queryset = Profile.objects.all()
+        else:
+            queryset = Profile.objects.filter(user=request.user)
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
 
     @action(detail=False, methods=["post"], url_path="set-phone-number")
     def set_phone_number(self, request):
