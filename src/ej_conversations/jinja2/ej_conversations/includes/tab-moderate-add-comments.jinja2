@@ -105,6 +105,17 @@
     const submitComments = async () => {
         const comments = Array.from(document.querySelectorAll(".comment-container textarea"))
 
+        if(comments.filter( ({value}) => value.length > 2 ).length == 0) {
+            commentError.innerText = "{{ _('Comments with less than three characters will not be added') }}";
+            commentError.classList.add("show")
+            comments[0].focus();
+
+            setTimeout(() => {
+                commentError.classList.remove("show")
+            }, 4000);
+            return
+        }
+
         const checkComment = ({value}) => new Promise( resolve => {
             $.ajax({
                 url:"{{ conversation.patch_url('conversation:check_comment') }}",
