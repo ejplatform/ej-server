@@ -67,3 +67,11 @@ class IsAuthenticatedOnlyGetView(permissions.BasePermission):
 
             return True
         return False
+
+
+class IsViewRetrieve(permissions.BasePermission):
+    def has_permission(self, request, view):
+        if view.action == "retrieve":
+            return True
+
+        return False

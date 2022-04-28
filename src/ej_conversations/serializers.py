@@ -78,6 +78,14 @@ class ConversationSerializer(BaseApiSerializer):
         return Conversation(**validated_data)
 
 
+class ConversationTextSerializer(BaseApiSerializer):
+    class Meta:
+        model = Conversation
+        fields = [
+            "text",
+        ]
+
+
 class CommentSerializer(BaseApiSerializer):
     links = serializers.SerializerMethodField()
 

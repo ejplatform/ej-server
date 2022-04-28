@@ -15,12 +15,43 @@ from ej_users.models import User
 BASE_URL = "/api/v1"
 
 
+@pytest.fixture
+def admin_user(db):
+    admin_user = User.objects.create_superuser("admin@test.com", "pass")
+    admin_user.save()
+    return admin_user
+
+
+@pytest.fixture
+def other_user(db):
+    user = User.objects.create_user("email2@server.com", "password")
+    user.save()
+    return user
+
+
 class TestGetRoutes:
-    def test_conversations_endpoint(self, conversation, api):
+    def test_conversations_endpoint_author(self, conversation, api):
         path = BASE_URL + f"/conversations/{conversation.id}/"
         api.post("/rest-auth/registration/", {"email": "email@server.com", "name": "admin"})
         data = api.get(path, exclude=["created"])
         assert data == CONVERSATION
+
+    def test_conversations_endpoint_admin(self, conversation, api, admin_user):
+        path = BASE_URL + f"/conversations/{conversation.id}/"
+        api.post("/rest-auth/registration/", {"email": admin_user.email, "name": admin_user.name})
+        data = api.get(path, exclude=["created"])
+        assert data == CONVERSATION
+
+    def test_conversations_endpoint_not_authenticated(self, conversation, api):
+        path = BASE_URL + f"/conversations/{conversation.id}/"
+        data = api.get(path)
+        assert data == {"text": conversation.text}
+
+    def test_conversations_endpoint_other_user(self, conversation, api, other_user):
+        path = BASE_URL + f"/conversations/{conversation.id}/"
+        api.post("/rest-auth/registration/", {"email": other_user.email, "name": other_user.name})
+        data = api.get(path)
+        assert data == {"text": conversation.text}
 
     def test_comments_endpoint(self, comment, api):
         path = BASE_URL + f"/comments/{comment.id}/"
@@ -57,18 +88,6 @@ class TestGetRoutes:
 class TestApiRoutes:
     AUTH_ERROR = {"detail": "Authentication credentials were not provided."}
     EXCLUDES = dict(skip=["created", "modified"])
-
-    @pytest.fixture
-    def admin_user(self, db):
-        admin_user = User.objects.create_superuser("admin@test.com", "pass")
-        admin_user.save()
-        return admin_user
-
-    @pytest.fixture
-    def other_user(db):
-        user = User.objects.create_user("email2@server.com", "password")
-        user.save()
-        return user
 
     def test_post_conversation(self, api, user):
         path = BASE_URL + f"/conversations/"
