@@ -249,12 +249,13 @@ def new_comment(request, conversation_id, slug, board_slug):
     if "comment" in fields:
         comments = dict(request.POST)["comment"]
         for comment in comments:
-            comment = Comment.objects.create(
-                content=comment,
-                conversation=conversation,
-                author=request.user,
-                status=models.Comment.STATUS.approved,
-            )
+            if len(comment) > 2:
+                comment = Comment.objects.create(
+                    content=comment,
+                    conversation=conversation,
+                    author=request.user,
+                    status=models.Comment.STATUS.approved,
+                )
 
     form = forms.ModerationForm(user=request.user)
 
