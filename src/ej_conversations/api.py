@@ -3,11 +3,22 @@ from urllib import request
 from datetime import datetime
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated, IsAdminUser
-from ej.permissions import IsAuthor, IsAuthenticatedOnlyGetView, IsSuperUser, IsAuthenticatedCreationView
+from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
+from ej.permissions import (
+    IsAuthor,
+    IsAuthenticatedOnlyGetView,
+    IsSuperUser,
+    IsAuthenticatedCreationView,
+    IsViewRetrieve,
+)
 from ej.viewsets import RestAPIBaseViewSet
 from ej_conversations.models import Conversation, Comment, Vote
-from ej_conversations.serializers import ConversationSerializer, CommentSerializer, VoteSerializer
+from ej_conversations.serializers import (
+    ConversationSerializer,
+    CommentSerializer,
+    ConversationTextSerializer,
+    VoteSerializer,
+)
 from ej_conversations.models.vote import Vote
 from ej_dataviz.utils import votes_as_dataframe
 
@@ -46,7 +57,15 @@ class VoteViewSet(RestAPIBaseViewSet):
 class ConversationViewSet(RestAPIBaseViewSet):
     queryset = Conversation.objects.all()
     serializer_class = ConversationSerializer
-    permission_classes = [IsAuthenticatedOnlyGetView]
+    permission_classes = (IsAuthenticatedOnlyGetView | IsViewRetrieve,)
+
+    def retrieve(self, request, pk):
+        conversation = self.get_object()
+        if request.user.is_superuser or conversation.author == request.user:
+            return Response(self.get_serializer(conversation).data)
+
+        response = ConversationTextSerializer(conversation)
+        return Response(response.data)
 
     def list(self, request):
         if request.user.is_superuser:
