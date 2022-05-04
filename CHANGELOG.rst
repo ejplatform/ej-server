@@ -4,6 +4,15 @@ CHANGELOG of EJPlatform releases
 
 Here you can follow all the fixes and new features on every EJPlatform release.
 
+3.1.1 release
+====================
+* Date: May 04, 2022
+* Features
+- Fixes API for opinion bot requests;
+- Fixes stereotype management page when there is no stereotypes created;
+- Fixes adding comments tab, on manage comments page;
+- Adds several improvements on EJ's API access management;
+
 3.1.0 release
 ====================
 * Date: April 20, 2022
