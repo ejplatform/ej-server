@@ -1,0 +1,9 @@
+{% extends 'base.jinja2' %}
+{% set main_class = 'report-container measure-wide margin-xauto' %}
+{% block menu %}{% include 'ej_conversations/includes/menu-detail.jinja2' %}{% endblock %}
+
+{% block main %}
+    <div id="rocketchat" >
+        <iframe src="http://192.168.0.18:3000" style="width:100%; height: 100vh" ></iframe>
+    </div>
+{% endblock %}

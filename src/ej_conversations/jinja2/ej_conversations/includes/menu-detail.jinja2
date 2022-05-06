@@ -85,6 +85,11 @@
         </li>
         {% endif %}
     </ul>
+    
+    <ul class="menu-padding nav-categories">
+        <h3 id="menu-communication">{{ _('Segmented Comunication') }}</h3>
+        <li><a href="{{ conversation.url('dataviz:communication') }}">{{_("Channels")}}</a></li>
+    </ul>
 
 <script>
     function setChecked(check_id) {

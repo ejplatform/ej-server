@@ -141,6 +141,16 @@ class OpinionComponentTool(AbstractTool):
         return author_token
 
 
+class RocketChat(AbstractTool):
+    def __init__(self, conversation, is_active=True):
+        AbstractTool.__init__(self)
+        self.name: str = _("Rocket.Chat")
+        self.description: str = _("Rocket.Chat instance for segmented communication")
+        self.link: str = ""
+        self.about: str = ""
+        self.is_active = is_active
+
+
 class MailingTool(AbstractTool):
     MAILING_TOOL_CHOICES = (
         ("mautic", _("Mautic")),

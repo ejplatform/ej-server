@@ -10,6 +10,7 @@ TOOLS_CHANNEL = {
     "telegram": (_("Opinion Bots"), "telegram"),
     "twilio": (_("Opinion Bots"), "whatsapp"),
     "opinion_component": (_("Opinion component"),),
+    "rocketchat": (_("Rocket.Chat"),),
     "unknown": (),
 }
 

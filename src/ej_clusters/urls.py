@@ -1,4 +1,5 @@
 from django.urls import path
+<<<<<<< HEAD
 from . import views
 
 app_name = "ej_clusters"
@@ -35,4 +36,12 @@ urlpatterns = [
         views.ctrl,
         name="ctrl",
     ),
+=======
+from ej_clusters import routes as cluster
+
+app_name = "ej_clusters"
+cluster_base_url = "<int:conversation_id>/<slug:conversation_slug>/clusters"
+urlpatterns = [
+    path(cluster_base_url + "/edit", cluster.edit, name="edit"),
+>>>>>>> 2f5c7ccd (Adds rocketchat tool)
 ]

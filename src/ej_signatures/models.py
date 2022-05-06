@@ -84,6 +84,7 @@ class ListenToCommunity(Signature):
             OpinionComponentTool(conversation),
             BotsTool(conversation, exclude=exclude),
             MauticTool(conversation, is_active=False),
+            RocketChat(conversation),
         ]
 
 
@@ -109,6 +110,7 @@ class ListenToCity(Signature):
             OpinionComponentTool(conversation),
             BotsTool(conversation),
             MauticTool(conversation),
+            RocketChat(conversation),
         ]
 
 

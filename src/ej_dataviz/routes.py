@@ -64,6 +64,11 @@ def dashboard(request, conversation, **kwargs):
     }
 
 
+@urlpatterns.route("communication/", perms=["ej.can_view_report:conversation"])
+def communication(request, conversation, **kwargs):
+    return {"conversation": conversation}
+
+
 @urlpatterns.route("scatter/")
 def scatter(request, conversation, **kwargs):
     names = getattr(settings, "EJ_PROFILE_FIELD_NAMES", {})
