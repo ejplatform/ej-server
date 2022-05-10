@@ -1,10 +1,5 @@
-<div class="comment-moderation">
-    <div class="row semi-bold text-7">
-        <span>{{ _('by:') }} <strong>{{ author }}</strong></span>
-        <span>{{ created|role('simple') }}</span>
-    </div>
-    <p class="pad-t2 margin-b0">{{ text }}</p>
-    {% if moderator %}
-        <p class="text-7 right">{% trans %}(moderated by <strong>{{ moderator }}</strong>){% endtrans %}</p>
-    {% endif %}
+<div class="comment__text">{{ text }}</div>
+<div class="comment__details">
+    <span class="comment__author">{{ author }}</span>
+    <span class="comment__date"> em {{created|role("simple")}}</span>
 </div>

@@ -29,7 +29,7 @@
         <div class="modal__container">
             <i class="modal__icon--alert fas fa-times-circle fa-4x"></i>
             <div class="modal__title margin-b2">{{_("Comment excluded")}}</div>
-            <a class="modal__btn modal__btn--no-fill underline" onclick="closePopup('comment-erased')">{{_('Close')}}</a>
+            <a class="modal__btn underline" onclick="closePopup('comment-erased')">{{_('Close')}}</a>
         </div>
     </div>
 
@@ -42,6 +42,50 @@
                     <i class="fas fa-lg fa-times-circle"></i> {{_("Yes, I want to erase the comment")}}
                 </button>
                 <button class="modal__btn modal__btn--blue" onclick="closePopup('erase-comment-confirm')">
+                    <i class="fas fa-lg fa-minus-circle"></i> {{_("No, I want get back")}}
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal__overlay hide" id="reject-comment-confirm">
+        <div class="modal__container">
+            <div class="modal__title">{{_("Are you sure about this action?")}}</div>
+            <p>{{_("Modified comments will appear on the Reproved tab.")}}</p>
+            <div class="modal__buttons">
+                <button class="modal__btn--black" onclick="approveFormSubmit()">
+                    <i class="fas fa-lg fa-ban"></i> {{_("Yes, I want to disapprove the comments")}}
+                </button>
+                <button class="modal__btn--no-fill" onclick="closePopup('reject-comment-confirm')">
+                    <i class="fas fa-lg fa-minus-circle"></i> {{_("No, I want get back")}}
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal__overlay hide" id="approve-comment-confirm">
+        <div class="modal__container">
+            <div class="modal__title">{{_("Are you sure about this action?")}}</div>
+            <p>{{_("Modified comments will appear on the Approved tab.")}}</p>
+            <div class="modal__buttons">
+                <button class="modal__btn--black" onclick="reproveFormSubmit()">
+                    <i class="fas fa-lg fa-thumbtack"></i> {{_("Yes, I want to approve the comments")}}
+                </button>
+                <button class="modal__btn--no-fill" onclick="closePopup('approve-comment-confirm')">
+                    <i class="fas fa-lg fa-minus-circle"></i> {{_("No, I want get back")}}
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal__overlay hide" id="pending-comment-confirm">
+        <div class="modal__container">
+            <div class="modal__title">{{_("Are you sure about this action?")}}</div>
+            <div class="modal__buttons">
+                <button class="modal__btn--black" onclick="pendingFormSubmit()">
+                    <i class="fas fa-lg fa-thumbtack"></i> {{_("Yes, I want to change the comments")}}
+                </button>
+                <button class="modal__btn--no-fill" onclick="closePopup('pending-comment-confirm')">
                     <i class="fas fa-lg fa-minus-circle"></i> {{_("No, I want get back")}}
                 </button>
             </div>
@@ -64,7 +108,37 @@
         }
     </script>
 
-    
+    <script>
+        function toggleComment(commentID, status) {
+            const commentElem = document.querySelector(`[data-comment-id='${commentID}']`);
+            const commentInput = commentElem.querySelector("input");
+            const antistatus = status == 'approved' ? 'rejected' : 'approved';
+                
+            if (commentElem.classList.contains(status)) {
+                commentElem.classList.remove(status);
+                commentInput.name = '';
+                return;
+            }
+
+            commentElem.classList.remove(antistatus)
+            commentElem.classList.add(status);
+            commentInput.name = status;
+        }
+
+        const rejectComment = (commentID) => toggleComment(commentID, "rejected");
+        const approveComment = (commentID) => toggleComment(commentID, "approved");
+
+        const formSubmit = (formID) => {
+            const form = document.querySelector(`${formID}`);
+            form.submit();
+        }
+
+        const approveFormSubmit = () => formSubmit("#moderate-approved");
+        const reproveFormSubmit = () => formSubmit("#moderate-rejected");
+        const pendingFormSubmit = () => formSubmit("#moderate-pending");
+
+    </script>
+
     {% include 'ej_conversations/includes/tab-moderate-add-comments.jinja2' %}
 
 {% endblock %}
@@ -73,15 +147,16 @@
     {% include 'ej_conversations/includes/tab-moderate-show-comments.jinja2' %}
 {% endmacro %}
 
+
 {% macro reject_button(comment) %}
-    <span class="text-negative"><button class="is-clear" name="reject_id" value="{{ comment.id }}">
-        <i class="fa fa-times"></i>{{ _('Reject') }}
-    </button></span>
+    <a class="comment__action reject-btn" onclick="rejectComment({{ comment.id }})" value="{{ comment.id }}">
+        <i class="fa fa-ban"></i>{{ _('Reject') }}
+    </a>
 {% endmacro %}
 
 
 {% macro approve_button(comment) %}
-    <span class="text-positive"><button class="is-clear" name="approve_id" value="{{ comment.id }}">
-        <i class="fa fa-check"></i>{{ _('Approve') }}
-    </button></span>
+    <a class="comment__action approve-btn" onclick="approveComment({{ comment.id }})" value="{{ comment.id }}">
+        <i class="fa fa-thumbtack"></i>{{ _('Approve') }}
+    </a>
 {% endmacro %}
