@@ -5,7 +5,6 @@ from sidekick import identity
 
 from ej.forms import EjModelForm, EjUserForm
 from .models import Conversation, Comment
-from .signals import comment_moderated
 
 
 class CommentForm(EjModelForm):
@@ -32,45 +31,6 @@ class CommentForm(EjModelForm):
                 raise ValidationError({"content": msg})
             self.cleaned_data["content"] = content
         return self.cleaned_data
-
-
-class ModerationForm(EjUserForm, EjModelForm):
-    """
-    Form used during moderation of a conversation's comments.
-    """
-
-    class Meta:
-        model = Comment
-        fields = ["status", "rejection_reason", "rejection_reason_text"]
-        help_texts = {"rejection_reason_text": None}
-
-    def _clean_fields(self):
-        self.data = self.data.copy()
-
-        if "reject_id" in self.data:
-            comment_id = int(self.data["reject_id"])
-            self.instance = Comment.objects.get(id=comment_id)
-            self.data["status"] = Comment.STATUS.rejected
-        elif "approve_id" in self.data:
-            comment_id = int(self.data["approve_id"])
-            self.instance = Comment.objects.get(id=comment_id)
-            self.data["status"] = Comment.STATUS.approved
-            self.fields["rejection_reason"].required = False
-        else:
-            raise ValueError("invalid POST data")
-        super()._clean_fields()
-
-    def save(self, commit=True, **kwargs):
-        kwargs.setdefault("moderator", self.user)
-        comment = super().save(commit=commit, **kwargs)
-        comment_moderated.send(
-            Comment,
-            comment=comment,
-            moderator=self.user,
-            author=comment.author,
-            is_approved=comment.status == comment.STATUS.approved,
-        )
-        return comment
 
 
 class ConversationForm(EjModelForm):

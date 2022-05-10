@@ -214,16 +214,22 @@ def edit(request, conversation_id, slug, board_slug, **kwargs):
 @can_moderate_conversation
 def moderate(request, conversation_id, slug, board_slug):
     conversation = Conversation.objects.get(id=conversation_id)
-    form = forms.ModerationForm(request=request)
 
-    if form.is_valid_post():
-        form.save()
-        form = forms.ModerationForm(user=request.user)
+    if request.method == "POST":
+        post_parameters = dict(request.POST)
+        for status in ["rejected", "approved", "pending"]:
+            if status in post_parameters:
+                comments_ids = post_parameters[status]
+                for comment_id in comments_ids:
+                    comment = Comment.objects.get(id=comment_id)
+                    comment.status = Comment.STATUS_MAP[status]
+                    comment.save()
 
     # Fetch all comments and filter
     status_filter = lambda value: lambda x: x.status == value
     status = models.Comment.STATUS
     comments = conversation.comments.annotate(annotation_author_name=F("author__name"))
+    comments = sorted(comments, key=lambda x: x.created, reverse=True)
     created = list(filter(lambda x: x.author == conversation.author, comments))
     created = sorted(created, key=lambda x: x.created, reverse=True)
 
@@ -234,7 +240,6 @@ def moderate(request, conversation_id, slug, board_slug):
         "rejected": list(filter(status_filter(status.rejected), comments)),
         "created": created,
         "menu_links": conversation_admin_menu_links(conversation, request.user),
-        "form": form,
         "comment_saved": False,
     }
     return render(request, "ej_conversations/conversation-moderate.jinja2", context)
@@ -257,8 +262,6 @@ def new_comment(request, conversation_id, slug, board_slug):
                     status=models.Comment.STATUS.approved,
                 )
 
-    form = forms.ModerationForm(user=request.user)
-
     # Fetch all comments and filter
     status_filter = lambda value: lambda x: x.status == value
     status = models.Comment.STATUS
@@ -273,7 +276,6 @@ def new_comment(request, conversation_id, slug, board_slug):
         "rejected": list(filter(status_filter(status.rejected), comments)),
         "created": created,
         "menu_links": conversation_admin_menu_links(conversation, request.user),
-        "form": form,
         "comment_saved": True,
     }
     return render(request, "ej_conversations/conversation-moderate.jinja2", context)

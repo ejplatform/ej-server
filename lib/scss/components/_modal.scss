@@ -60,11 +60,32 @@
 
         i {margin: 0;}
 
-        &--red {background-color: $color-red-negative;}
-        &--blue {background-color: $color-theme-dark-blue;}
+        &--red {
+            @extend .modal__btn;
+
+            background-color: $color-red-negative;
+        }
+        
+        &--blue {
+            @extend .modal__btn;
+
+            background-color: $color-theme-dark-blue;
+        }
+
         &--no-fill {
+            @extend .modal__btn;
+
             color: $color-navigation-header-text;
+            background: none;
             padding: 0;
+
+            &:hover {box-shadow: none;}
+        }
+
+        &--black {
+            background-color: $color-black-alternative;
+            color: $color-white;
+            border: none;
         }
     }
 }

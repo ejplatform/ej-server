@@ -19,20 +19,18 @@
     </div>
 
     <label class="left margin-b3">{{ _('added comments') }}</label>
-    <div class="added-comments">
+    <div class="comments-container">
         {% if not created %}
-            <span class="added-comments__message">{{ _('You haven\'t added any comments yet. Once saved, they will appear here.') }}</span>
+            <span class="comments-container__message">{{ _('You haven\'t added any comments yet. Once saved, they will appear here.') }}</span>
         {% endif %}
         {% for comment in created %}
             <div class="comment" data-comment-id="{{comment.id}}">
-                <div class="comment__text">{{ comment }}</div>
-                <div class="comment__details">
-                    <span class="comment__author">{{ comment.author.name }}</span>
-                    <span class="comment__date"> em {{comment.created|role("simple")}}</span>
+                {{ comment|role('moderate') }}
+                <div class="comment__actions">
+                    <a onclick="eraseComment('{{comment.id}}')" class="comment__action">
+                        <i class="fas fa-trash"></i> {{_('erase')}}
+                    </a>
                 </div>
-                <a onclick="eraseComment('{{comment.id}}')" class="comment__delete-btn">
-                    <i class="fas fa-trash"></i> {{_('erase')}}
-                </a>
             </div>
         {% endfor %}
     </div>
@@ -78,9 +76,8 @@
     }
 
     const eraseComment = (commentID) => {
-        const erasePopup = document.getElementById("erase-comment-confirm")
         eraseCommentID = commentID;
-        erasePopup.classList.remove("hide");
+        showPopup("erase-comment-confirm")
     }
 
     const eraseFn = () => {
@@ -93,11 +90,10 @@
                 csrfmiddlewaretoken: '{{ csrf_token }}'
             },
             success: function(data) {
-                const comment = document.querySelector(`.added-comments [data-comment-id="${eraseCommentID}"]`);
-                const commentPopup = document.getElementById("comment-erased");
+                const comment = document.querySelector(`.comments-container [data-comment-id="${eraseCommentID}"]`);
                 comment.parentNode.removeChild(comment);
                 closePopup("erase-comment-confirm");
-                commentPopup.classList.remove("hide");
+                showPopup("comment-erased");
             }
         });
     }
@@ -140,6 +136,11 @@
                 }, 5000)
             })
 
+    }
+
+    const showPopup = (popupID) => {
+        const popup = document.getElementById(popupID);
+        popup.classList.remove("hide");
     }
 
     const closePopup = (popupID) => {

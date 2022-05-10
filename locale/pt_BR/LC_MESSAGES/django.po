@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-22 17:11-0300\n"
+"POT-Creation-Date: 2022-05-06 15:00-0300\n"
 "PO-Revision-Date: 2022-04-12 13:55-0300\n"
 "Last-Translator: David Carlos <davidcarlos@pencillabs.com.br>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -456,31 +456,31 @@ msgstr "Concorda"
 msgid "Disagree"
 msgstr "Discorda"
 
-#: src/ej_conversations/forms.py:20
+#: src/ej_conversations/forms.py:19
 msgid "Give your opinion here"
 msgstr "Dê a sua opinião aqui"
 
-#: src/ej_conversations/forms.py:21
+#: src/ej_conversations/forms.py:20
 msgid "Suggest a new comment"
 msgstr "Sugira um novo comentário"
 
-#: src/ej_conversations/forms.py:31 src/ej_conversations/tests/test_forms.py:66
+#: src/ej_conversations/forms.py:30 src/ej_conversations/tests/test_forms.py:66
 msgid "You already submitted this comment."
 msgstr "Você já enviou este comentário."
 
-#: src/ej_conversations/forms.py:82
+#: src/ej_conversations/forms.py:42
 msgid "Tags"
 msgstr "Tags"
 
-#: src/ej_conversations/forms.py:82
+#: src/ej_conversations/forms.py:42
 msgid "Tags, separated by commas."
 msgstr "Tags, separadas por vírgula."
 
-#: src/ej_conversations/forms.py:88
+#: src/ej_conversations/forms.py:48
 msgid "Place conversation in the main /conversations/ URL."
 msgstr "Conversas promovidas aparecem no mural principal."
 
-#: src/ej_conversations/forms.py:89
+#: src/ej_conversations/forms.py:49
 msgid "Mark to make the conversation invisible."
 msgstr "Selecione para fazer conversa invisível."
 
@@ -1157,7 +1157,7 @@ msgstr "Adicione um título customizado ao template (opcional)."
 msgid "selects a specific comment for user to vote (optional)."
 msgstr "Selecione um comentário específico para o usuário votar (opcional)."
 
-#: src/ej_tools/forms.py:81 src/ej_tools/tests/test_rasa_integrations.py:46
+#: src/ej_tools/forms.py:81 src/ej_tools/tests/test_rasa_integrations.py:48
 #, fuzzy
 msgid "Rasa conversation with this Conversation and Domain already exists."
 msgstr "Uma conexão com esse nome já existe nessa conversa."
@@ -1177,7 +1177,7 @@ msgstr "Domínio"
 msgid "The domain that the rasa bot webchat is hosted."
 msgstr "O domínio do site que hospeda o webchat do rasa bot."
 
-#: src/ej_tools/models.py:46 src/ej_tools/tests/test_rasa_integrations.py:70
+#: src/ej_tools/models.py:46 src/ej_tools/tests/test_rasa_integrations.py:72
 #, fuzzy
 msgid "a conversation can have a maximum of five domains"
 msgstr "Uma conversa pode ter no máximo cinco links integrados."
@@ -1275,18 +1275,18 @@ msgid "There was an error connection to mautic server, please try again."
 msgstr "Houve um erro na conexao com o Mautic, por favor tente novamente."
 
 #: src/ej_tools/tests/test_mautic_integrations.py:63
-#: src/ej_tools/tests/test_rasa_integrations.py:38
+#: src/ej_tools/tests/test_rasa_integrations.py:40
 #, fuzzy
 msgid "Enter a valid URL."
 msgstr "Insira uma URL válida."
 
-#: src/ej_tools/tests/test_rasa_integrations.py:57
+#: src/ej_tools/tests/test_rasa_integrations.py:59
 msgid ""
 "Site already integrated with conversation Conversation, try another url."
 msgstr ""
 "Esse site já está integrado com a conversa Conversation, tente outra url."
 
-#: src/ej_tools/tests/test_rasa_integrations.py:102
+#: src/ej_tools/tests/test_rasa_integrations.py:104
 #, fuzzy
 msgid "Enter a valid URL"
 msgstr "Insira uma URL válida."
@@ -1858,6 +1858,9 @@ msgstr "Editar mural"
 #: src/ej_clusters/jinja2/ej_clusters/stereotypes/create.jinja2:23
 #: src/ej_clusters/jinja2/ej_clusters/stereotypes/edit.jinja2:28
 #: src/ej_conversations/jinja2/ej_conversations/includes/tab-moderate-add-comments.jinja2:18
+#: src/ej_conversations/jinja2/ej_conversations/includes/tab-moderate-show-comments.jinja2:26
+#: src/ej_conversations/jinja2/ej_conversations/includes/tab-moderate-show-comments.jinja2:28
+#: src/ej_conversations/jinja2/ej_conversations/includes/tab-moderate-show-comments.jinja2:30
 #: src/ej_profiles/jinja2/ej_profiles/edit.jinja2:10
 #: src/ej_tools/jinja2/ej_tools/mautic-form.jinja2:23
 msgid "Save"
@@ -2266,16 +2269,6 @@ msgstr ""
 "É necessário %(login_anchor)s antes de votar ou\n"
 "            enviar um comentário!"
 
-#: src/ej_conversations/jinja2/ej/role/comment-moderate.jinja2:3
-#: src/ej_conversations/jinja2/ej/role/conversation-card.jinja2:17
-msgid "by:"
-msgstr "por:"
-
-#: src/ej_conversations/jinja2/ej/role/comment-moderate.jinja2:8
-#, python-format
-msgid "(moderated by <strong>%(moderator)s</strong>)"
-msgstr "(moderado por <strong>%(moderator)s</strong>)"
-
 #: src/ej_conversations/jinja2/ej/role/comment-reject-reason.jinja2:10
 msgid "See Conversation"
 msgstr "Ver Conversa"
@@ -2296,6 +2289,10 @@ msgstr "Oculta"
 #: src/ej_conversations/jinja2/ej/role/conversation-card.jinja2:6
 msgid "tags"
 msgstr "tags"
+
+#: src/ej_conversations/jinja2/ej/role/conversation-card.jinja2:17
+msgid "by:"
+msgstr "por:"
 
 #: src/ej_conversations/jinja2/ej/role/conversation-card.jinja2:19
 #, fuzzy
@@ -2493,6 +2490,9 @@ msgid "Comment excluded"
 msgstr "Comentário Excluído"
 
 #: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:38
+#: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:53
+#: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:68
+#: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:83
 #, fuzzy
 msgid "Are you sure about this action?"
 msgstr "Você tem certeza dessa ação?"
@@ -2507,22 +2507,48 @@ msgid "Yes, I want to erase the comment"
 msgstr "Sim, eu quero excluir o comentário"
 
 #: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:45
+#: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:60
+#: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:75
+#: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:89
 msgid "No, I want get back"
 msgstr "Não, quero voltar"
 
 #: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:54
+msgid "Modified comments will appear on the Reproved tab."
+msgstr "Os comentários modificados aparecerão na aba Rejeitado."
+
+#: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:57
+#, fuzzy
+msgid "Yes, I want to disapprove the comments"
+msgstr "sim, quero reprovar o(s) comentário(s)"
+
+#: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:69
+msgid "Modified comments will appear on the Approved tab."
+msgstr "Os comentários modificados aparecerão na aba Aprovado."
+
+#: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:72
+#, fuzzy
+msgid "Yes, I want to approve the comments"
+msgstr "sim, quero aprovar o(s) comentário(s)"
+
+#: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:86
+#, fuzzy
+msgid "Yes, I want to change the comments"
+msgstr "Sim, eu quero alterar o(s) comentário(s)"
+
+#: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:98
 #: src/ej_tools/jinja2/ej_tools/webchat/form-integration.jinja2:41
 #, fuzzy
 msgid "Add"
 msgstr "Adicionar"
 
-#: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:78
+#: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:153
 msgid "Reject"
-msgstr "Rejeitar"
+msgstr "rejeitar"
 
-#: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:85
+#: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:160
 msgid "Approve"
-msgstr "Aprovar"
+msgstr "aprovar"
 
 #: src/ej_conversations/jinja2/ej_conversations/comments/detail.jinja2:20
 #: src/ej_profiles/jinja2/ej_profiles/contributions.jinja2:79
@@ -2582,17 +2608,17 @@ msgid "You haven't added any comments yet. Once saved, they will appear here."
 msgstr ""
 "Você ainda não adicionou comentários. Depois de salvos, eles aparecerão aqui."
 
-#: src/ej_conversations/jinja2/ej_conversations/includes/tab-moderate-add-comments.jinja2:34
+#: src/ej_conversations/jinja2/ej_conversations/includes/tab-moderate-add-comments.jinja2:31
 msgid "erase"
 msgstr "apagar"
 
-#: src/ej_conversations/jinja2/ej_conversations/includes/tab-moderate-add-comments.jinja2:44
-#: src/ej_conversations/jinja2/ej_conversations/includes/tab-moderate-add-comments.jinja2:68
+#: src/ej_conversations/jinja2/ej_conversations/includes/tab-moderate-add-comments.jinja2:42
+#: src/ej_conversations/jinja2/ej_conversations/includes/tab-moderate-add-comments.jinja2:66
 #, fuzzy
 msgid "Write your comment here"
 msgstr "Escreva seu comentário aqui"
 
-#: src/ej_conversations/jinja2/ej_conversations/includes/tab-moderate-add-comments.jinja2:45
+#: src/ej_conversations/jinja2/ej_conversations/includes/tab-moderate-add-comments.jinja2:43
 msgid ""
 "There is already a published comment similar to this one. You must delete it "
 "or write another comment to proceed."
@@ -2600,29 +2626,22 @@ msgstr ""
 "Já existe um comentário publicado igual a esse. Você deve apagá-lo ou "
 "escrever outro comentário para prosseguir"
 
-#: src/ej_conversations/jinja2/ej_conversations/includes/tab-moderate-add-comments.jinja2:62
+#: src/ej_conversations/jinja2/ej_conversations/includes/tab-moderate-add-comments.jinja2:60
 msgid "You need to write something first"
 msgstr "Você precisa digitar algo antes"
 
-#: src/ej_conversations/jinja2/ej_conversations/includes/tab-moderate-add-comments.jinja2:63
+#: src/ej_conversations/jinja2/ej_conversations/includes/tab-moderate-add-comments.jinja2:61
 msgid "Before adding more comments, you must fill in the comments field above."
 msgstr ""
 "Para adicionar mais comentários, você deve antes prencher o campo de "
 "comentários acima."
 
-#: src/ej_conversations/jinja2/ej_conversations/includes/tab-moderate-add-comments.jinja2:109
+#: src/ej_conversations/jinja2/ej_conversations/includes/tab-moderate-add-comments.jinja2:105
 #, fuzzy
 msgid "Comments with less than three characters will not be added"
 msgstr "Comentários com menos de três caracteres não serão adicionados."
 
-#: src/ej_conversations/jinja2/ej_conversations/includes/tab-moderate-show-comments.jinja2:9
-#, python-format
-msgid "Found %(n)s comment."
-msgid_plural "Found %(n)s comments."
-msgstr[0] "Encontrado %(n)s comentários."
-msgstr[1] "Encontrados %(n)s comentários."
-
-#: src/ej_conversations/jinja2/ej_conversations/includes/tab-moderate-show-comments.jinja2:47
+#: src/ej_conversations/jinja2/ej_conversations/includes/tab-moderate-show-comments.jinja2:36
 msgid "No comments left"
 msgstr "Não há mais comentários"
 
@@ -3764,6 +3783,14 @@ msgstr "Mudar a senha"
 #, fuzzy
 msgid "Authentication"
 msgstr "Autenticação"
+
+#~ msgid "Found %(n)s comment."
+#~ msgid_plural "Found %(n)s comments."
+#~ msgstr[0] "Encontrado %(n)s comentários."
+#~ msgstr[1] "Encontrados %(n)s comentários."
+
+#~ msgid "(moderated by <strong>%(moderator)s</strong>)"
+#~ msgstr "(moderado por <strong>%(moderator)s</strong>)"
 
 #~ msgid "Dashboards and analysis"
 #~ msgstr "Dashboards e analises"

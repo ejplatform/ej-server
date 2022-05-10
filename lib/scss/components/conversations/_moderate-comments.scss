@@ -76,39 +76,70 @@
         }
     }
 
-    .added-comments {
-        @extend .left;
+    .comments-container {
+        @extend .left, .pad-b3;
 
         &__message {color: $color-navigation-header-text;}
 
-        .comment {
-            @extend .margin-b1, .pad-3;
-            background-color: $color-theme-report-light-gray;
+        &__save-btn {
+            @extend .comments-panel__save-btn;
+
+            float: right;
+        }
+    }
+
+    .comment {
+        @extend .margin-b3, .pad-3;
+        background-color: $color-theme-report-light-gray;
+        border-radius: .3125rem;
+        
+        &__text {font-size: 1.125rem;}
+
+        &__details {
+            padding-top: .5rem;
+            font-size: .875rem;
+            margin-bottom: .5rem;
+
+            > * {font-weight: bold}
+        }
+
+        &__author {@extend .text-accent;}
+
+        &__date {color: $color-navigation-header-text;}
+        
+        &__actions {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 2.5rem;
+        }
+        
+        &__action {
+            background: none;
+            border: none;
+            letter-spacing: unset;
+            line-height: unset;
+            height: unset;
+            margin: 0;
+            
             border-radius: .3125rem;
+            padding: 0.25rem 0.625rem;
+            text-transform: lowercase;
+            font-weight: bold;
+            font-size: 1rem;
+            color: $color-black-alternative;
 
-            &__text {font-size: 18px;}
+            & > * {transition: 0s;}
 
-            &__details {
-                padding-top: .5rem;
-                font-size: 14px;
-                margin-bottom: 1rem;
+            i {margin-left: 0;}
+            
+            &:hover {box-shadow: unset}
+        }
 
-                > * {font-weight: bold}
-            }
-
-            &__author {@extend .text-accent;}
-
-            &__date {color: $color-navigation-header-text;}
-
-            &__delete-btn {
-                padding: 0;
-                text-transform: lowercase;
-                font-weight: bold;
-                font-size: 16px;
-                color: $color-navigation-header-text;
-
-                &:hover {box-shadow: unset}
-            }
+        &.rejected .comment__action.reject-btn,
+        &.approved .comment__action.approve-btn {
+            color: $color-white;
+            background: $color-black-alternative;
         }
     }
 }
