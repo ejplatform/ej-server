@@ -2,10 +2,10 @@
     <span class="report-title text-accent"> 
         {{_('All comments')}}
     </span>
-    <div class="filter-section">
-        <span class="select-filter-container inputs-filter">
+    <div class="filter">
+        <span class="filter__container">
             {{_("show")}}
-            <select id="pages-select" onchange="updateCommentCards('1')" class="select-filter">
+            <select id="pages-select" onchange="updateCommentCards('1')" class="filter__select filter__entries-select">
                 <option value="6">6</option>
                 <option value="12">12</option>
                 <option value="24">24</option>
@@ -13,17 +13,17 @@
             </select>
             {{_("inputs")}}
         </span>
-        <span id="pipe-divider">|</span>
-        <span class="select-filter-container orderby-filter">
+        <span class="pipe--divider">|</span>
+        <span class="filter__container">
             {{_("order by")}}
-            <select id="orderby-select" onchange="updateCommentCards('1')" class="select-filter">
+            <select id="orderby-select" onchange="updateCommentCards('1')" class="filter__select filter__select--width-sm">
                 <option value="0">{{_("agreement")}}</option>
                 <option value="1">{{_("disagreement")}}</option>
                 <option value="2">{{_("convergence")}}</option>
                 <option value="3">{{_("participation")}}</option>
             </select>
         </span>
-        <span class="sort-filter">
+        <span class="filter__sort">
             <a onclick="updateSortFilter('desc', event.target, 'sort-up-icon')"><i id="sort-down-icon" class="fa fa-sort-down fa-lg"></i></a>
             <a onclick="updateSortFilter('asc', event.target, 'sort-down-icon')"><i id="sort-up-icon" class="fa fa-sort-up fa-lg"></i></a>
         </span>
@@ -37,7 +37,7 @@
             <i class="fa fa-sort-down fa-lg"></i>
         </span>
     </div>
-    <div class="input-filter-container">
+    <div class="filter__input filter__input--blue">
         <i class="fas fa-search"></i>
         <input type="search" onkeypress="updateSearch(event.target.value)">
     </div>
@@ -54,7 +54,7 @@ let generalButton = document.getElementById("general-button");
 generalButton.classList.add("selected-group-button");
 
 let sortDownIcon = document.getElementById("sort-down-icon");
-sortDownIcon.classList.add("pink-icon");
+sortDownIcon.classList.add("icon--pink");
 
 function updateSearch(str) {
     searchString = str;
@@ -65,8 +65,8 @@ function updateSortFilter(sort, target, previous) {
     let previousIcon = document.getElementById(previous);
     sortFilter = sort;
 
-    target.classList.add("pink-icon");
-    previousIcon.classList.remove("pink-icon");
+    target.classList.add("icon--pink");
+    previousIcon.classList.remove("icon--pink");
 
     updateCommentCards('1');
 }

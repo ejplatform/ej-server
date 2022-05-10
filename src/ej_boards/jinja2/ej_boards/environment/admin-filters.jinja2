@@ -1,0 +1,78 @@
+<div class="advanced-search__title">
+    <h1 class="h2 text-accent environment__title--align">{{_("Advanced Search")}}</h1>
+    <div class="filter">
+        <span class="filter__container">
+            {{_("show")}}
+            <select onchange="changeFilter()" id="num-entries" class="filter__select filter__entries-select">
+                <option value="6">6</option>
+                <option value="12">12</option>
+                <option value="24">24</option>
+                <option value="48">48</option>
+            </select>
+            {{_("inputs")}}
+        </span>
+        <span class="pipe--divider">|</span>
+        <span class="filter__container">
+            {{_("order by")}}
+            <select onchange="changeFilter()" id="orderby-select" class="filter__select filter__select--width-md">
+                <option value="date">{{_("date")}}</option>
+                <option value="comments-count">{{_("total of comments")}}</option>
+                <option value="conversations-count" id="conversation-option">{{_("total of conversations")}}</option>
+            </select>
+        </span>
+        <span class="filter__sort">
+            <a onclick="updateSort('desc', event.target, 'sort-up-icon')"><i class="fa fa-sort-down fa-lg icon--pink" id="sort-down-icon"></i></a>
+            <a onclick="updateSort('asc', event.target, 'sort-down-icon')"><i class="fa fa-sort-up fa-lg" id="sort-up-icon"></i></a>
+        </span>
+    </div>
+</div>
+<div class="advanced-search__title">
+    <span class="filter__container advanced-search__select">
+        {{_("search for")}}
+        <select id="searchfor-select" class="filter__select filter__select--width-sm" onchange="changeFilter()">
+            <option value="user">{{_("user")}}</option>
+            <option value="board">{{_("board")}}</option>
+            <option value="conversation">{{_("conversation")}}</option>
+        </select>
+    </span>
+    <span class="filter__input advanced-search__input--search">
+        <i class="fas fa-search"></i>
+        <input type="search" id="search-string" onkeyup="changeFilter()">
+    </span>
+</div>
+
+<script>
+    let sortFilter = "desc";
+
+    function updateSort(sort, target, previous) {
+        let previousIcon = document.getElementById(previous);
+        sortFilter = sort;
+
+        target.classList.add("icon--pink");
+        previousIcon.classList.remove("icon--pink");
+        
+        changeFilter();
+    }
+
+    function changeFilter() {
+        let numEntries = document.getElementById("num-entries").value;
+        let orderBy = document.getElementById("orderby-select").value;
+        let searchString = document.getElementById("search-string").value;      
+        let searchFor = document.getElementById("searchfor-select").value;
+        let convOption = document.getElementById("conversation-option");
+
+        convOption.classList.remove('conversation-option--hide');
+
+        if (searchFor == "user") {
+            updateUserSearch('1', numEntries, orderBy, sortFilter, searchString);
+        } 
+        else if (searchFor == "board") {
+            updateBoardSearch('1', numEntries, orderBy, sortFilter, searchString);
+        }
+        else if (searchFor == "conversation") {
+            convOption.classList.add('conversation-option--hide');
+            updateConversationSearch('1', numEntries, orderBy, sortFilter, searchString);
+        }
+    }
+    
+</script>

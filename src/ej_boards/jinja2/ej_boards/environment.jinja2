@@ -6,17 +6,19 @@
 {% block content %}
 
 <div class="pad-x3">
-    {% include 'ej_boards/includes/environment-statistics.jinja2' %}
+    {% include 'ej_boards/environment/environment-statistics.jinja2' %}
 
-    <h1 class="h2 text-accent start-align-title">{{_("Latest boards")}}</h1>
-    <div class="board-active-filter">
-        <input class="board-active-input" id="check-active-boards" type="checkbox" onchange="updateBoards('1')" checked/>
-        <div class="board-active-text">
+    <h1 class="h2 text-accent environment__title--align">{{_("Latest boards")}}</h1>
+    <div class="recent-boards__filter">
+        <input class="recent-boards__input" id="check-active-boards" type="checkbox" onchange="updateBoards('1')" checked/>
+        <div class="recent-boards__text">
             <span>{{_("Show only active boards")}}</span>
             <span>{{_("This option shows only boards that have created conversations")}}</span>
         </div>
     </div>
     <div id="recent-boards"></div>
+    {% include 'ej_boards/environment/admin-filters.jinja2' %}
+    <div id="advanced-search"></div>
 </div>
 
 <script>
@@ -31,8 +33,36 @@ function updateBoards(page) {
     })
 }
 
+function updateUserSearch(page, numEntries, orderBy, sort, searchString) {
+    $.ajax({
+        url: `searched-users/?page=${page}&numEntries=${numEntries}&orderBy=${orderBy}&sort=${sort}&searchString=${searchString}`,
+        success: function(data) {
+            $("#advanced-search").html(data);
+        }
+    })
+}
+
+function updateBoardSearch(page, numEntries, orderBy, sort, searchString) {
+    $.ajax({
+        url: `searched-boards/?page=${page}&numEntries=${numEntries}&orderBy=${orderBy}&sort=${sort}&searchString=${searchString}`,
+        success: function(data) {
+            $("#advanced-search").html(data);
+        }
+    })
+}
+
+function updateConversationSearch(page, numEntries, orderBy, sort, searchString) {
+    $.ajax({
+        url: `searched-conversations/?page=${page}&numEntries=${numEntries}&orderBy=${orderBy}&sort=${sort}&searchString=${searchString}`,
+        success: function(data) {
+            $("#advanced-search").html(data);
+        }
+    })
+}
+
 window.onload = function () {
     updateBoards('1');
+    changeFilter();
 }
 
 </script>

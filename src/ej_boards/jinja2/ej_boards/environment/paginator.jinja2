@@ -1,0 +1,30 @@
+{% macro pagination(page_object, function_call, text) %}
+<div class="paginator-container">
+    <span class="paginator-entries-info">{{_("Showing")}} {{page_object.start_index()}} {{_("to")}} {{page_object.end_index()}} {{_("of")}} {{page_object.paginator.count}} {{text}}</span>
+    {% if page_object.paginator.num_pages > 1 %}
+        <div class="paginator">
+            <a onclick="updatePage({{page_object.number - 1}}, '{{function_call}}')">{{_("Previous")}}</a>
+            {% for page_number in page_object.adjusted_elided_pages %}
+                <ul>
+                {% if page_number == page_object.paginator.ELLIPSIS %}
+                    <li>{{page_number}}</li>
+                {% else %}
+                    <li><a onclick="updatePage({{page_number}}, '{{function_call}}')" class="{% if page_number == page_object.number %}selected-page{% endif %}">
+                        {{page_number}}
+                    </a></li>
+                {% endif %}
+                </ul>
+            {% endfor %}
+            <a onclick="updatePage({{page_object.number + 1}}, '{{function_call}}')">{{_("Next")}}</a>
+        </div>
+    {% endif %}
+</div>
+<script>
+function updatePage(page, functionCall) {
+    let numEntries = document.getElementById("num-entries").value;
+    let orderBy = document.getElementById("orderby-select").value;
+    let searchString = document.getElementById("search-string").value;
+    window[functionCall](page, numEntries, orderBy, sortFilter, searchString);
+}
+</script>
+{% endmacro %}

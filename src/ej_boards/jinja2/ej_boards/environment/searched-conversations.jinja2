@@ -1,0 +1,16 @@
+{% from "ej_boards/environment/paginator.jinja2" import pagination %}
+
+<table>
+    <tr class="search-table__header">
+        <th class="search-table__title">{{_("Conversation")}}</th>
+        <th class="search-table__title search-table__title--width-md search-table__text--align">{{_("Author")}}</th>
+    </tr>
+    {% for conversation in page_object %}
+        <tr class="search-table__row">
+            <td class="search-table__text--align"><span class="search-table__text--ellipse"><a href="{{ conversation.get_absolute_url() }}">{{conversation.title}}</a></span></td>
+            <td class="search-table__text--align"><span class="search-table__text--ellipse">{{conversation.author.name}}</span></td>
+        </tr>
+    {% endfor %}
+</table>
+
+{{ pagination(page_object, "updateConversationSearch", _("conversations")) }}

@@ -122,10 +122,6 @@
     color: $color-theme-report-green !important;
 }
 
-.pink-icon {
-    color: $color-theme-report-pink !important;
-}
-
 .left-align-icon {
     margin-left: auto;
 }
@@ -224,7 +220,7 @@
         list-style-type: none;
     }
     li {
-        margin: auto 1rem auto 1rem;
+        margin: auto 0.4rem auto 0.4rem;
     }
     a, li {
         color: $color-theme-report-dark-gray;
@@ -238,63 +234,6 @@
 .paginator-entries-info {
     color: $color-theme-report-dark-gray;
     width: fit-content;
-}
-
-.filter-section {
-    display: flex;
-    align-items: center;
-    margin-bottom: 0.5rem;
-}
-
-.select-filter-container {
-    display: flex;
-    align-items: center;
-    color: $color-theme-report-dark-gray;
-    font-weight: bold;
-}
-
-.select-filter {
-    margin: 0 0.5rem 0 0.5rem;
-    border-radius: 5px;
-    border: 2px solid $color-theme-report-pink;
-    color: $color-theme-report-pink;
-    font-weight: bold;
-    height: 28px;
-}
-
-.orderby-filter {
-    select {
-        width: 169px;
-        min-width: 169px;
-        padding-right: unset;
-    }
-}
-
-.inputs-filter {
-    select {
-        width: 4rem;
-        min-width: 4rem;
-        padding-right: unset;
-    }
-}
-
-#pipe-divider {
-    font-weight: bold;
-    color: $color-theme-report-gray;
-    margin: 0 0.5rem 0 0.5rem;
-}
-
-.sort-filter {
-    display: flex;
-    i {
-        color: $color-theme-report-gray;
-        margin: unset;
-    }
-    .fa-sort-up {
-        position: relative;
-        top: 0.55rem;
-    }
-    
 }
 
 .comment-report-align {
@@ -353,25 +292,6 @@
     color: white;
 }
 
-.input-filter-container {
-    display: flex;
-    position: relative;
-    input {
-        padding-left: 2.5rem;
-        min-width: 150px;
-        height: 28px;
-        border: 2px solid $color-theme-report-light-blue;
-        border-radius: 5px;
-        margin: unset;
-    }
-    i {
-        color:  $color-theme-report-light-blue;
-        position: absolute;
-        top: 6px;
-        left: 10px;
-    }
-}
-
 .group-filter-container {
     margin-top: 25px;
     margin-bottom: 0.5rem;
@@ -399,15 +319,6 @@
 }
 
 @media (max-width: 820px) {
-    #pipe-divider {
-        display: none;
-    }
-    .filter-section {
-        display: block;
-    }
-    .select-filter-container {
-        margin-bottom: 0.5rem;
-    }
     .paginator li {
         margin: auto 0.2rem auto 0.2rem;
     }
