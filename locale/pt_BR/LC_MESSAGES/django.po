@@ -197,11 +197,11 @@ msgstr "Mural"
 msgid "Slug already exists."
 msgstr "Identificador já existe."
 
-#: src/ej_boards/routes.py:123
+#: src/ej_boards/routes.py:216
 msgid "You cannot change this value"
 msgstr "Você não pode mudar este valor"
 
-#: src/ej_boards/routes.py:154 src/ej_conversations/views.py:86
+#: src/ej_boards/routes.py:247 src/ej_conversations/views.py:86
 msgid ""
 "Welcome to EJ. This is your personal board. Board is where your "
 "conversations will be available. Press 'New conversation' to starts "
@@ -1905,24 +1905,128 @@ msgstr "Exibir apenas murais ativos"
 msgid "This option shows only boards that have created conversations"
 msgstr "Essa opção mostra apenas murais que tenham conversas criadas."
 
-#: src/ej_boards/jinja2/ej_boards/includes/environment-statistics.jinja2:2
+#: src/ej_boards/jinja2/ej_boards/environment/admin-filters.jinja2:2
+#, fuzzy
+msgid "Advanced Search"
+msgstr "Busca Avançada"
+
+#: src/ej_boards/jinja2/ej_boards/environment/admin-filters.jinja2:5
+#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/filter-section.jinja2:3
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/filter-section.jinja2:7
+#, fuzzy
+msgid "show"
+msgstr "ver tudo"
+
+#: src/ej_boards/jinja2/ej_boards/environment/admin-filters.jinja2:12
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/filter-section.jinja2:14
+msgid "inputs"
+msgstr "entradas"
+
+#: src/ej_boards/jinja2/ej_boards/environment/admin-filters.jinja2:16
+#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/filter-section.jinja2:14
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/filter-section.jinja2:18
+msgid "order by"
+msgstr "ordenar por"
+
+#: src/ej_boards/jinja2/ej_boards/environment/admin-filters.jinja2:18
+#, fuzzy
+msgid "date"
+msgstr "data"
+
+#: src/ej_boards/jinja2/ej_boards/environment/admin-filters.jinja2:19
+#, fuzzy
+msgid "total of comments"
+msgstr "número de comentários"
+
+#: src/ej_boards/jinja2/ej_boards/environment/admin-filters.jinja2:20
+#, fuzzy
+msgid "total of conversations"
+msgstr "número de conversas"
+
+#: src/ej_boards/jinja2/ej_boards/environment/admin-filters.jinja2:31
+#, fuzzy
+msgid "search for"
+msgstr "buscar por"
+
+#: src/ej_boards/jinja2/ej_boards/environment/admin-filters.jinja2:34
+#, fuzzy
+msgid "board"
+msgstr "mural"
+
+#: src/ej_boards/jinja2/ej_boards/environment/admin-filters.jinja2:35
+#, fuzzy
+msgid "conversation"
+msgstr "conversa"
+
+#: src/ej_boards/jinja2/ej_boards/environment/environment-statistics.jinja2:2
 msgid "Environment statistics"
 msgstr "Estatísticas do ambiente"
 
-#: src/ej_boards/jinja2/ej_boards/includes/environment-statistics.jinja2:5
+#: src/ej_boards/jinja2/ej_boards/environment/environment-statistics.jinja2:5
 #, fuzzy
 msgid "Boards count"
 msgstr "Total de murais"
 
-#: src/ej_boards/jinja2/ej_boards/includes/environment-statistics.jinja2:9
+#: src/ej_boards/jinja2/ej_boards/environment/environment-statistics.jinja2:9
 #, fuzzy
 msgid "Conversations count"
 msgstr "Total de conversas"
 
-#: src/ej_boards/jinja2/ej_boards/includes/environment-statistics.jinja2:13
+#: src/ej_boards/jinja2/ej_boards/environment/environment-statistics.jinja2:13
 #, fuzzy
 msgid "Users count"
 msgstr "Total de usuários"
+
+#: src/ej_boards/jinja2/ej_boards/environment/paginator.jinja2:3
+#: src/ej_boards/jinja2/ej_boards/environment/recent-boards-paginator.jinja2:2
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/paginator.jinja2:2
+msgid "Showing"
+msgstr "Mostrando"
+
+#: src/ej_boards/jinja2/ej_boards/environment/paginator.jinja2:3
+#: src/ej_boards/jinja2/ej_boards/environment/recent-boards-paginator.jinja2:2
+#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/pagination.jinja2:35
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/paginator.jinja2:2
+msgid "to"
+msgstr "a"
+
+#: src/ej_boards/jinja2/ej_boards/environment/paginator.jinja2:3
+#: src/ej_boards/jinja2/ej_boards/environment/recent-boards-paginator.jinja2:2
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/paginator.jinja2:2
+msgid "of"
+msgstr "de"
+
+#: src/ej_boards/jinja2/ej_boards/environment/paginator.jinja2:6
+#: src/ej_boards/jinja2/ej_boards/environment/recent-boards-paginator.jinja2:5
+#: src/ej_dataviz/jinja2/ej_dataviz/includes/datatables.jinja2:22
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/paginator.jinja2:5
+msgid "Previous"
+msgstr "Anterior"
+
+#: src/ej_boards/jinja2/ej_boards/environment/paginator.jinja2:18
+#: src/ej_boards/jinja2/ej_boards/environment/recent-boards-paginator.jinja2:17
+#: src/ej_dataviz/jinja2/ej_dataviz/includes/datatables.jinja2:21
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/paginator.jinja2:11
+msgid "Next"
+msgstr "Próximo"
+
+#: src/ej_boards/jinja2/ej_boards/environment/recent-boards-paginator.jinja2:2
+#: src/ej_boards/jinja2/ej_boards/environment/searched-boards.jinja2:13
+#, fuzzy
+msgid "boards"
+msgstr "murais"
+
+#: src/ej_boards/jinja2/ej_boards/environment/recent-boards.jinja2:6
+#: src/ej_boards/jinja2/ej_boards/environment/searched-boards.jinja2:8
+#: src/ej_boards/jinja2/ej_boards/environment/searched-conversations.jinja2:16
+#, fuzzy
+msgid "conversations"
+msgstr "conversas"
+
+#: src/ej_boards/jinja2/ej_boards/environment/searched-users.jinja2:17
+#, fuzzy
+msgid "users"
+msgstr "usuários"
 
 #: src/ej_boards/jinja2/ej_boards/includes/menu-board.jinja2:4
 #: src/ej_boards/jinja2/ej_boards/includes/menu.jinja2:6
@@ -1942,44 +2046,6 @@ msgstr "Ambiente EJ"
 #: src/ej_boards/jinja2/ej_boards/includes/menu.jinja2:4
 msgid "Manage boards"
 msgstr "Gerenciar murais"
-
-#: src/ej_boards/jinja2/ej_boards/includes/recent-boards-paginator.jinja2:2
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/paginator.jinja2:2
-msgid "Showing"
-msgstr "Mostrando"
-
-#: src/ej_boards/jinja2/ej_boards/includes/recent-boards-paginator.jinja2:2
-#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/pagination.jinja2:35
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/paginator.jinja2:2
-msgid "to"
-msgstr "a"
-
-#: src/ej_boards/jinja2/ej_boards/includes/recent-boards-paginator.jinja2:2
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/paginator.jinja2:2
-msgid "of"
-msgstr "de"
-
-#: src/ej_boards/jinja2/ej_boards/includes/recent-boards-paginator.jinja2:2
-#, fuzzy
-msgid "boards"
-msgstr "murais"
-
-#: src/ej_boards/jinja2/ej_boards/includes/recent-boards-paginator.jinja2:5
-#: src/ej_dataviz/jinja2/ej_dataviz/includes/datatables.jinja2:22
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/paginator.jinja2:5
-msgid "Previous"
-msgstr "Anterior"
-
-#: src/ej_boards/jinja2/ej_boards/includes/recent-boards-paginator.jinja2:19
-#: src/ej_dataviz/jinja2/ej_dataviz/includes/datatables.jinja2:21
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/paginator.jinja2:11
-msgid "Next"
-msgstr "Próximo"
-
-#: src/ej_boards/jinja2/ej_boards/includes/recent-boards.jinja2:6
-#, fuzzy
-msgid "conversations"
-msgstr "conversas"
 
 #: src/ej_clusters/jinja2/ej_clusters/edit.jinja2:9
 msgid "Configure opinion groups"
@@ -2189,11 +2255,6 @@ msgstr "Personas"
 msgid "Account"
 msgstr "Conta"
 
-#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/filter-section.jinja2:3
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/filter-section.jinja2:7
-msgid "show"
-msgstr "mostrar"
-
 #: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/filter-section.jinja2:10
 #: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/pagination.jinja2:35
 #: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/pagination.jinja2:38
@@ -2202,11 +2263,6 @@ msgstr "mostrar"
 #, fuzzy
 msgid "comments"
 msgstr " comentários"
-
-#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/filter-section.jinja2:14
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/filter-section.jinja2:18
-msgid "order by"
-msgstr "ordenar por"
 
 #: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/filter-section.jinja2:18
 #, fuzzy
@@ -2979,10 +3035,6 @@ msgstr "ver menos"
 #, fuzzy
 msgid "All comments"
 msgstr "Todos os comentários"
-
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/filter-section.jinja2:14
-msgid "inputs"
-msgstr "entradas"
 
 #: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/filter-section.jinja2:20
 #, fuzzy

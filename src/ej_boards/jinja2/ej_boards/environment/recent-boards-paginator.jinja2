@@ -1,0 +1,20 @@
+<div class="paginator-container">
+    <span class="paginator-entries-info">{{_("Showing")}} {{recent_boards.start_index()}} {{_("to")}} {{recent_boards.end_index()}} {{_("of")}} {{recent_boards.paginator.count}} {{_("boards")}}</span>
+    {% if recent_boards.paginator.num_pages > 1 %}
+        <div class="paginator">
+            <a onclick="updateBoards({{recent_boards.number - 1}})">{{_("Previous")}}</a>
+            {% for page_number in recent_boards.adjusted_elided_pages %}
+                <ul>
+                {% if page_number == recent_boards.paginator.ELLIPSIS %}
+                    <li>{{page_number}}</li>
+                {% else %}
+                    <li><a onclick="updateBoards({{page_number}})" class="{% if page_number == recent_boards.number %}selected-page{% endif %}">
+                        {{page_number}}
+                    </a></li>
+                {% endif %}
+                </ul>
+            {% endfor %}
+            <a onclick="updateBoards({{recent_boards.number + 1}})">{{_("Next")}}</a>
+        </div>
+    {% endif %}
+</div>

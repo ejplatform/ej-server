@@ -18,9 +18,14 @@ from ej_dataviz import routes as dataviz
 from ej_dataviz import routes_report as report
 from ej_clusters import routes as cluster
 from django.core.paginator import Paginator
-from .utils import get_page, get_paginator_visible_pages, PAGINATOR_START_PAGE, PAGE_ELEMENTS_COUNT
+from .utils import (
+    PAGINATOR_START_PAGE,
+    PAGE_ELEMENTS_COUNT,
+    NUM_ENTRIES_DEFAULT,
+)
 
 from ej_conversations.urls import conversation_url
+from .utils import apply_user_filters, apply_conversation_filters, apply_board_filters
 
 app_name = "ej_boards"
 urlpatterns = Router(
@@ -92,18 +97,106 @@ def get_recent_boards(request):
         recent_boards = Board.objects.order_by("-created")
 
     paginator = Paginator(recent_boards, PAGE_ELEMENTS_COUNT)
-    recent_boards = get_page(paginator, page)
+    recent_boards = paginator.get_page(page)
+    recent_boards.adjusted_elided_pages = paginator.get_elided_page_range(
+        recent_boards.number, on_each_side=1, on_ends=1
+    )
 
     return render(
         request,
-        "ej_boards/includes/recent-boards.jinja2",
+        "ej_boards/environment/recent-boards.jinja2",
         {
             "recent_boards": recent_boards,
-            "paginator": paginator,
-            "current_page": recent_boards.number,
-            "visible_pages": get_paginator_visible_pages(
-                recent_boards.number, paginator.num_pages, paginator.page_range
-            ),
+        },
+    )
+
+
+@urlpatterns.route(
+    board_profile_admin_url + "environment/searched-users/",
+    login=True,
+    perms=["ej.can_access_environment_management"],
+)
+def get_searched_users(request):
+    num_entries = request.GET.get("numEntries", NUM_ENTRIES_DEFAULT)
+    order_by = request.GET.get("orderBy", "date")
+    sort = request.GET.get("sort", "desc")
+    search_string = request.GET.get("searchString", "")
+    page = int(request.GET.get("page", PAGINATOR_START_PAGE))
+
+    searched_users = apply_user_filters(order_by, sort, search_string)
+
+    paginator = Paginator(searched_users, num_entries)
+
+    page_object = paginator.get_page(page)
+    page_object.adjusted_elided_pages = paginator.get_elided_page_range(
+        page_object.number, on_each_side=1, on_ends=1
+    )
+
+    return render(
+        request,
+        "ej_boards/environment/searched-users.jinja2",
+        {
+            "page_object": page_object,
+        },
+    )
+
+
+@urlpatterns.route(
+    board_profile_admin_url + "environment/searched-boards/",
+    login=True,
+    perms=["ej.can_access_environment_management"],
+)
+def get_searched_boards(request):
+    num_entries = request.GET.get("numEntries", NUM_ENTRIES_DEFAULT)
+    order_by = request.GET.get("orderBy")
+    sort = request.GET.get("sort", "desc")
+    search_string = request.GET.get("searchString", "")
+    page = int(request.GET.get("page", PAGINATOR_START_PAGE))
+
+    searched_boards = apply_board_filters(order_by, sort, search_string)
+
+    paginator = Paginator(searched_boards, num_entries)
+
+    page_object = paginator.get_page(page)
+    page_object.adjusted_elided_pages = paginator.get_elided_page_range(
+        page_object.number, on_each_side=1, on_ends=1
+    )
+
+    return render(
+        request,
+        "ej_boards/environment/searched-boards.jinja2",
+        {
+            "page_object": page_object,
+        },
+    )
+
+
+@urlpatterns.route(
+    board_profile_admin_url + "environment/searched-conversations/",
+    login=True,
+    perms=["ej.can_access_environment_management"],
+)
+def get_searched_conversations(request):
+    num_entries = request.GET.get("numEntries", NUM_ENTRIES_DEFAULT)
+    order_by = request.GET.get("orderBy")
+    sort = request.GET.get("sort", "desc")
+    search_string = request.GET.get("searchString", "")
+    page = int(request.GET.get("page", PAGINATOR_START_PAGE))
+
+    searched_conversations = apply_conversation_filters(order_by, sort, search_string)
+
+    paginator = Paginator(searched_conversations, num_entries)
+
+    page_object = paginator.get_page(page)
+    page_object.adjusted_elided_pages = paginator.get_elided_page_range(
+        page_object.number, on_each_side=1, on_ends=1
+    )
+
+    return render(
+        request,
+        "ej_boards/environment/searched-conversations.jinja2",
+        {
+            "page_object": page_object,
         },
     )
 

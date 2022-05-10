@@ -1,5 +1,7 @@
 from inspect import Signature
 from django.urls import path
+from django.db.models import Count, Q
+from ej_users.models import User
 
 from django.http import Http404
 from django.core.paginator import EmptyPage, PageNotAnInteger
@@ -7,9 +9,16 @@ from django.core.paginator import EmptyPage, PageNotAnInteger
 
 PAGINATOR_START_PAGE = 1
 PAGE_ELEMENTS_COUNT = 12
+NUM_ENTRIES_DEFAULT = 6
 
 MAX_PAGINATOR_ITEMS = 7
 ELLIPSE_LIMIT = 5
+
+
+class OrderByOptions:
+    DATE = "date"
+    CONVERSATION = "conversations-count"
+    COMMENT = "comments-count"
 
 
 def register_route(router, route, base_path, prefix):
@@ -102,37 +111,70 @@ def statistics(board):
     return {"votes": votes, "participants": participants, "conversations": conversations}
 
 
-def get_page(paginator, page):
-    """
-    Gets the boards from a specific page.
-    """
-    if page < 1:
-        page = 1
-    if page > paginator.num_pages:
-        page = paginator.num_pages
+def apply_user_filters(order_by, sort, search_string):
+    sort_order = "-" if sort == "desc" else ""
 
-    try:
-        recent_boards = paginator.page(page)
-    except PageNotAnInteger:
-        recent_boards = paginator.page(1)
-    except EmptyPage:
-        recent_boards = paginator.page(paginator.num_pages)
-
-    return recent_boards
-
-
-def get_paginator_visible_pages(current_page, num_pages, page_range):
-    if num_pages <= MAX_PAGINATOR_ITEMS:
-        mode = "no_ellipse"
-        pages = page_range
-    elif current_page <= ELLIPSE_LIMIT:
-        mode = "ellipse_end"
-        pages = page_range[:ELLIPSE_LIMIT]
-    elif current_page > num_pages - ELLIPSE_LIMIT:
-        mode = "ellipse_start"
-        pages = page_range[-ELLIPSE_LIMIT:]
+    if order_by == OrderByOptions.CONVERSATION:
+        searched_users = User.objects.annotate(count=Count("conversations")).order_by(f"{sort_order}count")
+    elif order_by == OrderByOptions.COMMENT:
+        searched_users = User.objects.annotate(count=Count("comments")).order_by(f"{sort_order}count")
     else:
-        mode = "ellipse_both"
-        pages = [(current_page - 1), current_page, (current_page + 1)]
+        searched_users = User.objects.order_by(f"{sort_order}date_joined")
 
-    return {"mode": mode, "pages": pages}
+    if search_string:
+        searched_users = searched_users.filter(
+            Q(email__icontains=search_string) | Q(name__icontains=search_string)
+        )
+
+    # will return a list, as returning a UserQuerySet brings inconsistent results in Paginator
+    searched_users = list(searched_users)
+
+    return searched_users
+
+
+def apply_conversation_filters(order_by, sort, search_string):
+    from ej_conversations.models import Conversation
+
+    sort_order = "-" if sort == "desc" else ""
+
+    if order_by == OrderByOptions.COMMENT:
+        searched_conversations = Conversation.objects.annotate(count=Count("comments")).order_by(
+            f"{sort_order}count"
+        )
+    else:
+        searched_conversations = Conversation.objects.order_by(f"{sort_order}created")
+
+    if search_string:
+        searched_conversations = searched_conversations.filter(
+            Q(title__icontains=search_string)
+            | Q(author__name__icontains=search_string)
+            | Q(slug__icontains=search_string)
+        )
+
+    return searched_conversations
+
+
+def apply_board_filters(order_by, sort, search_string):
+    from ej_boards.models import Board
+
+    sort_order = "-" if sort == "desc" else ""
+
+    if order_by == OrderByOptions.CONVERSATION:
+        searched_boards = Board.objects.annotate(count=Count("conversation")).order_by(f"{sort_order}count")
+    elif order_by == OrderByOptions.COMMENT:
+        searched_boards = Board.objects.annotate(count=Count("conversation__comments")).order_by(
+            f"{sort_order}count"
+        )
+    else:
+        searched_boards = Board.objects.order_by(f"{sort_order}created")
+
+    if search_string:
+        searched_boards = searched_boards.filter(
+            Q(owner__email__icontains=search_string)
+            | Q(owner__name__icontains=search_string)
+            | Q(title__icontains=search_string)
+            | Q(slug__icontains=search_string)
+        )
+        pass
+
+    return searched_boards
