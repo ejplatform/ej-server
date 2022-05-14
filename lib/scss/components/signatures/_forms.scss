@@ -1,0 +1,32 @@
+.signatures-page form {
+    background: $color-white;
+    display: grid;
+
+    input,
+    select,
+    textarea {
+        width: 100%;
+        max-width: unset;
+        border-radius: .625rem;
+    }
+
+    label {text-indent: 0;}
+
+    .form__inline {
+        display: flex;
+        gap: 2.25rem;
+    }
+
+    .form__group {width: 100%;}
+
+    button:not(.modal__close-btn) {
+        background: $color-black;
+        border-color: $color-black;
+        width: min-content;
+        height: 3rem;
+        border-radius: 3.725rem;
+        padding: 0 2.5rem;
+        justify-self: center;
+        font-size: 1rem;
+    }
+}

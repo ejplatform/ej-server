@@ -82,12 +82,14 @@ def register_app_routes(app_routes, board_base_url, urlpatterns, route_name):
         register_route(urlpatterns, route, base_path, route_name)
 
 
-def patched_register_app_routes(board_urls, app_urls, app_name):
+def patched_register_app_routes(
+    board_urls, app_urls, app_name, url_path="<slug:board_slug>/conversations/"
+):
     """
     Register an app's routes in the boards namespace using django's default routes, not boogie's.
     """
     for url in app_urls:
-        board_url = "<slug:board_slug>/conversations/" + str(url.pattern)
+        board_url = url_path + str(url.pattern)
         view = url.callback
         pattern = path(board_url, view, name=f"{app_name}-{url.name}")
         board_urls.append(pattern)

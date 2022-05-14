@@ -1,0 +1,99 @@
+.signatures-page {
+    .signatures {
+        &-container {
+            max-width: 85rem;
+            padding-top: 4.5rem;
+            margin-inline: 6rem;
+            display: grid;
+            grid-gap: 2.2rem;
+        }
+
+        &-header {
+            display: grid;
+            grid-gap: 1rem;
+            padding: 0 2.5rem;
+
+            &__title {
+                font-size: 2.25rem;
+
+                .plan { font-family: "Patua One", sans-serif; }
+            }
+
+            &__text {font-size: 1.25rem;}
+        }
+
+        &-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(17.5rem, 1fr));
+            grid-gap: 1.5rem;
+        }
+
+        &-card {
+            display: grid;
+            grid-gap: .75rem;
+
+            background: $color-theme-report-light-gray;
+            padding: 2.375rem;
+            border-top: .75rem solid var(--top-border-color, $color-navigation-header);
+
+            &--blue {
+                @extend .signatures-card;
+
+                --top-border-color: #97E0E9;
+                --button-background: #30C1D4;
+                --button-text-color: white;
+            }
+
+            &__title {
+                font-size: 1.5rem;
+                font-family: "Patua One", sans-serif;
+            }
+
+            &__descr {
+                align-self: center;
+
+                h5 {
+                    font-family: "Raleway", sans-serif;
+                    color: $color-black-alternative;
+                    font-weight: bold;
+                    font-size: .75rem;
+                    margin: 0;
+                }
+            }
+
+            &__button {
+                width: min-content;
+                height: 2.8rem;
+                border-radius: .5rem;
+
+                text-transform: uppercase;
+                align-self: flex-end;
+                
+                background-color: var(--button-background, $color-navigation-header);
+                border-color: var(--button-background, $color-navigation-header);
+                color: var(--button-text-color, $color-black-alternative);
+            }
+        }
+    }
+
+    #success-modal .modal__container--md {
+        display: grid;
+        place-items: center;
+        grid-gap: 1rem;
+
+        .modal__close-btn {padding: 3rem;}
+
+        img {
+            width: 12rem;
+            height: auto;
+            margin-left: 2rem;
+        }
+
+        h2, h4 {
+            color: $color-black-alternative;
+            margin: 0;
+        }
+
+        h4 {font-family: 'Raleway', sans-serif;}
+    }
+}
