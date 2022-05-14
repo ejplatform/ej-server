@@ -1,4 +1,4 @@
-.big-title {
+.title--big {
     font-size: 2.25rem;
 }
 
@@ -76,6 +76,10 @@
     padding-bottom: 0;
 }
 
+.hr--hide {
+    display: none;
+}
+
 .groups {
     background: $color-white;
     border: 3px solid $color-theme-report-gray;
@@ -90,7 +94,7 @@
     margin-right: 0.875rem;
 }
 
-.selected-group {
+.group--selected {
     background: $color-brand !important;
     border: 3px solid $color-brand !important;
     color: $color-white !important;
@@ -104,7 +108,7 @@
 .stereotype-cards {
     margin-top: 1.25rem;
 
-    .card-comments {
+    &__card-comments {
         height: fit-content;
         background: $color-card-gray-lighter; 
         border-radius: 0.313rem; 
@@ -118,12 +122,12 @@
         line-height: 1.438rem;
     }
 
-    .vote-buttons {
+    &__vote-buttons {
         padding-bottom: 1.438rem;
         display: grid;
         grid-gap: 2.5rem;
         justify-content: center;
-        grid-template-columns: auto auto auto auto;
+        grid-template-columns: auto auto auto;
 
         i {
             margin: auto 0.4em;
@@ -136,7 +140,7 @@
             box-shadow: 0 0;
         }
 
-        .delete-vote {
+        &__delete {
             background-color: transparent;
             border: 0;
             padding: 0;
@@ -207,10 +211,239 @@
     }
 }
 
+@media (max-width: 320px) {
+    .title--big {
+        font-size: 1.75rem;
+        text-align: left;
+    }
+    #subtitle-persona {
+        font-size: 1.25rem;
+        text-align: left;
+    }
+    .groups {
+        font-size: 1rem;
+    }
+    .ordination {
+        text-align: left;
+        span {
+            font-size: 0.875rem;
+        }
+
+        #divider {
+            display: none;
+        }
+    }
+
+    #pages-select, #select-order-vote {
+        border-bottom: 2px solid $color-base-pink;
+        border-top: 0;
+        border-left: 0;
+        border-right: 0;
+        border-radius: 0;
+        font-size: 0.875rem;
+    }
+
+    #stereotype-filter {
+        text-align: left;
+    }
+
+    .stereotype-cards {
+        p {
+            text-align: left;
+            font-size: 1rem;
+        }
+        &__vote-buttons {
+            grid-row-gap: 0.625rem;
+            justify-content: space-around;
+            button {
+                font-size: 0.875rem;
+                i {
+                    display: block;
+                }
+            }
+            &__delete {
+                left: 7.5rem;
+                position: relative;
+                font-size: 0.875rem;
+            }
+        }
+    }
+    .stereotype-cards {
+        &__card-comments {
+            border-radius: 0%;
+            margin: 0 -0.6875rem;
+        }
+    }
+
+    .footer-personas {
+        display: block;
+    
+        #pagination-text {
+            color: $color-brand;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+    }
+
+    #pagination {
+        ul {
+            justify-content: center;
+            .page-link{
+                color: $color-brand;
+            } 
+            .current {
+                color: $color-white;
+                border-radius: 1.25rem;
+                padding: 0.25rem 0.5625rem;
+                background-color: $color-brand;
+            }
+            li {
+                span.current.prev, span.prev, span.current.next, 
+                span.next, a.page-link.prev, a.page-link.next {
+                    display: none;
+                }
+            }
+        }   
+    }
+
+    .agree-1, .disagree--1, .skip-0 {
+        height: 3.125rem !important;
+    }
+
+    .hr--hide {
+        display: block;
+    }
+}
+
+
+@media (max-width: 875px) and (min-width: 321px) {
+    .title--big {
+        font-size: 1.75remm;
+        text-align: left;
+    }
+    #subtitle-persona {
+        font-size: 1.25rem;
+        text-align: left;
+    }
+    .groups {
+        font-size: 1rem;
+    }
+    .ordination {
+        text-align: left;
+        span {
+            font-size: 0.875rem;
+        }
+
+        #divider {
+            display: none;
+        }
+    }
+
+    #pages-select, #select-order-vote {
+        border-bottom: 2px solid $color-base-pink;
+        border-top: 0;
+        border-left: 0;
+        border-right: 0;
+        border-radius: 0;
+        font-size: 14px;
+    }
+
+    #stereotype-filter {
+        text-align: left;
+    }
+
+    .stereotype-cards {
+        p {
+            text-align: left;
+            font-size: 1rem;
+        }
+        &__vote-buttons {
+            grid-row-gap: 0.625rem;
+            justify-content: space-around;
+            button {
+                font-size: 0.875rem;
+                i {
+                    display: block;
+                }
+            }
+            &__delete {
+                left: 9rem;
+                position: relative;
+                font-size: 0.875rem;
+            }
+        }
+    }
+    .stereotype-cards {
+        &__card-comments {
+            border-radius: 0%;
+            margin: 0 -0.6875rem;
+        }
+    }
+
+    .footer-personas {
+        display: block;
+    
+        #pagination-text {
+            color: $color-brand;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+    }
+
+    #pagination {
+        ul {
+            justify-content: center;
+            .page-link{
+                color: $color-brand;
+            } 
+            .current {
+                color: $color-white;
+                border-radius: 1.25rem;
+                padding: 0.25rem 0.5625rem;
+                background-color: $color-brand;
+            }
+            li {
+                span.current.prev, span.prev, span.current.next, 
+                span.next, a.page-link.prev, a.page-link.next {
+                    display: none;
+                }
+            }
+        }   
+    }
+
+    .agree-1, .disagree--1, .skip-0 {
+        height: 3.125rem !important;
+    }
+
+    .hr--hide {
+        display: block;
+    }
+}
+
+@media (min-width: 876px) and (max-width: 1259px) {
+    .stereotype-cards {
+        &__vote-buttons {
+            grid-row-gap: 0.625rem;
+            justify-content: space-around;
+            button {
+                font-size: 14px;
+                i {
+                    display: block;
+                }
+            }
+            &__delete {
+                left: 12.5rem;
+                position: relative;
+                font-size: 0.875rem;
+            }
+        }
+    }  
+}
+
 @media (min-width: 1400px) {
     .stereotype-cards {
-        .vote-buttons {
-            .delete-vote {
+        &__vote-buttons {
+            &__delete {
                 right: 19rem;
             }
         }
@@ -219,8 +452,8 @@
 
 @media (min-width: 1500px) and (min-width: 1900px) {
     .stereotype-cards {
-        .vote-buttons {
-            .delete-vote {
+        &__vote-buttons {
+            &__delete {
                 right: 30rem;
             }
         }

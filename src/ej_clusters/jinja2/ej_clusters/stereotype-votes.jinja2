@@ -7,8 +7,8 @@
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script src="/static/js/simplePagination.js"></script>
 
-    {% if groups %}
-        <h1 class="h2 text-accent big-title">{{ _('Define personas') }}</h1>
+    {% if groups  %}
+        <h1 class="h2 text-accent .title--big">{{ _('Define personas') }}</h1>
         <p id="subtitle-persona">{% trans %}Mark the votes for each stereotype in your conversation.{% endtrans %}</p>
 
         {% include 'ej_clusters/stereotype-votes/filter-section.jinja2' %} 
@@ -111,7 +111,7 @@
                 url: `stereotype-votes-ordenation?sort=${sortByVoteChoice}&orderBy=${orderByVoteChoice}&stereotypeId={{stereotype.id}}`,
                 success: function(data) {
                     $("#given-votes").html(data);
-                    items = $(".card-comments");
+                    items = $(".stereotype-cards__card-comments");
                     showCurrentItems();
                 }
             });
@@ -164,7 +164,7 @@
             deleteButton.name = "update";
             deleteButton.innerHTML = "{{ _('Clear vote') }}";
                 
-            deleteButton.classList.add("delete-vote");
+            deleteButton.classList.add("stereotype-cards__vote-buttons__delete");
             deleteButton.setAttribute('onclick',`sendUpdateVoteInformation('${deleteButton.value}', ${voteId}, ${stereotypeId}, ${commentId})`);
             divButtonElement.append(deleteButton);
         }
