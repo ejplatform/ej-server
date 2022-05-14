@@ -49,8 +49,12 @@ class Cluster(TimeStampedModel):
         return msg.format(name=self.name, conversation=self.conversation, n=self.users.count())
 
     def get_absolute_url(self):
-        args = {"conversation": self.conversation, "cluster": self}
-        return reverse("cluster:detail", kwargs=args)
+        args = {
+            "conversation": self.conversation,
+            "cluster": self,
+            "board_slug": self.conversation.board.slug,
+        }
+        return reverse("boards:cluster-detail", kwargs=args)
 
     def mean_stereotype(self):
         """

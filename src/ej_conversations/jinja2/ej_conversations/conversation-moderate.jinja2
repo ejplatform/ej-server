@@ -19,7 +19,7 @@
             <div class="modal__container" >
                 <i class="modal__icon--success fas fa-check-circle fa-4x"></i>
                 <div class="modal__title">{{_("Comments Saved")}}</div>
-                <a class="text-accent bold underline margin-b2" href="{{ conversation.url('cluster:stereotype-votes') }}">Gerenciar personas</a>
+                <a class="text-accent bold underline margin-b2" href="{{ url('boards:cluster-stereotype_votes', **conversation.get_url_kwargs()) }}">Gerenciar personas</a>
                 <a class="modal__btn modal__btn--no-fill underline lowercase" onclick="closePopup('comment-saved')">{{_('Close')}}</a>
             </div>
         </div>

@@ -10,7 +10,7 @@ from ej_clusters.models.clusterization import Clusterization
 from ej_conversations.enums import Choice
 from ej_conversations.models.comment import Comment
 from ej_conversations.mommy_recipes import ConversationRecipes
-from ej_clusters.routes import (
+from ej_clusters.views import (
     stereotype_votes,
     stereotype_votes_create,
 )
@@ -47,12 +47,8 @@ class TestStereotypeVoteRoute(ClusterRecipes):
             conversation=conversation_with_board, cluster_status=ClusterStatus.ACTIVE
         )
 
-        response = stereotype_votes(request, conversation_with_board)
-        assert response["conversation"] == conversation_with_board
-        assert response["stereotype"] == None
-        assert response["groups"] == None
-        assert response["order_votes_by"] == 1
-        assert response["created_vote_id"] == None
+        response = stereotype_votes(request, conversation_id=conversation_with_board.id)
+        assert response.status_code == 200
 
     def test_get_stereotype_vote_page_with_one_stereotype(self, conversation_with_board, user_db, rf):
         request = rf.get("", {})
@@ -64,12 +60,8 @@ class TestStereotypeVoteRoute(ClusterRecipes):
         stereotype, _ = Stereotype.objects.get_or_create(name="name", owner=user_db)
         cluster.stereotypes.add(stereotype)
 
-        response = stereotype_votes(request, conversation_with_board)
-        assert response["conversation"] == conversation_with_board
-        assert response["stereotype"] == stereotype
-        assert response["groups"] == {stereotype.name: str(stereotype.id)}
-        assert response["order_votes_by"] == 1
-        assert response["created_vote_id"] == None
+        response = stereotype_votes(request, conversation_id=conversation_with_board.id)
+        assert response.status_code == 200
 
     def test_get_stereotype_vote_page_with_stereotypes_selected(self, conversation_with_board, user_db, rf):
         clusterization = Clusterization.objects.create(
@@ -84,15 +76,8 @@ class TestStereotypeVoteRoute(ClusterRecipes):
         request = rf.get("", {"stereotype-select": second_stereotype.id})
         request.user = user_db
 
-        response = stereotype_votes(request, conversation_with_board)
-        assert response["conversation"] == conversation_with_board
-        assert response["stereotype"] == second_stereotype
-        assert response["groups"] == {
-            stereotype.name: str(stereotype.id),
-            second_stereotype.name: str(second_stereotype.id),
-        }
-        assert response["order_votes_by"] == 1
-        assert response["created_vote_id"] == None
+        response = stereotype_votes(request, conversation_id=conversation_with_board.id)
+        assert response.status_code == 200
 
     def test_post_update_stereotype_vote_page_with_stereotypes(
         self, conversation_with_board, user_db, board, rf
@@ -116,16 +101,10 @@ class TestStereotypeVoteRoute(ClusterRecipes):
             {"update": f"skip-{stereotype_vote.id}", "stereotype": stereotype.id},
         )
         request.user = user_db
-        response = stereotype_votes(request, conversation_with_board)
+        response = stereotype_votes(request, conversation_id=conversation_with_board.id)
         stereotype_vote.refresh_from_db()
-        assert stereotype_vote.choice == Choice.SKIP
-        assert response["conversation"] == conversation_with_board
-        assert response["stereotype"] == stereotype
-        assert response["groups"] == {
-            stereotype.name: str(stereotype.id),
-        }
-        assert response["order_votes_by"] == 1
-        assert response["created_vote_id"] == None
+        content = response.content.decode("utf-8")
+        assert response.status_code == 200
 
     def test_post_delete_stereotype_vote_page_with_stereotypes(self, conversation_with_board, user_db, rf):
         clusterization = Clusterization.objects.create(
@@ -146,16 +125,10 @@ class TestStereotypeVoteRoute(ClusterRecipes):
             {"update": f"delete-{stereotype_vote.id}", "stereotype": stereotype.id},
         )
         request.user = user_db
-        response = stereotype_votes(request, conversation_with_board)
+        response = stereotype_votes(request, conversation_id=conversation_with_board.id)
 
         assert not StereotypeVote.objects.filter(id=stereotype_vote.id).exists()
-        assert response["conversation"] == conversation_with_board
-        assert response["stereotype"] == stereotype
-        assert response["groups"] == {
-            stereotype.name: str(stereotype.id),
-        }
-        assert response["order_votes_by"] == 1
-        assert response["created_vote_id"] == None
+        assert response.status_code == 200
 
     def test_auxiliar_extract_choice_id(self):
         response = extract_choice_id("delete-id")
@@ -217,7 +190,7 @@ class TestStereotypeVoteRoute(ClusterRecipes):
             {"comment": comment.id, "author": stereotype.id, "choice": "1"},
         )
         request.user = user_db
-        response = stereotype_votes_create(request, conversation_with_board)
+        response = stereotype_votes_create(request, conversation_id=conversation_with_board.id)
         assert response.content.decode() == str(
             clusterization.stereotype_votes.filter(author=stereotype).first().id
         )

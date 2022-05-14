@@ -1,3 +1,4 @@
+from django.urls import reverse
 from .cluster import Cluster
 from .cluster_queryset import ClusterQuerySet, ClusterManager
 from .clusterization import Clusterization
@@ -48,8 +49,20 @@ def _patch_conversation_app():
     def _detail_links(request, conversation):
         if request.user.has_perm("ej.can_edit_conversation", conversation):
             return [
-                a(_("Create/Edit groups"), href=conversation.url("cluster:edit")),
-                a(_("Manage personas"), href=conversation.url("cluster:stereotype-votes")),
+                a(
+                    _("Create/Edit groups"),
+                    href=reverse(
+                        "boards:cluster-edit",
+                        kwargs=conversation.get_url_kwargs(),
+                    ),
+                ),
+                a(
+                    _("Manage personas"),
+                    href=reverse(
+                        "boards:cluster-stereotype_votes",
+                        kwargs=conversation.get_url_kwargs(),
+                    ),
+                ),
             ]
         else:
             return []

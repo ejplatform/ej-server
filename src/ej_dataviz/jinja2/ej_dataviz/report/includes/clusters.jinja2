@@ -18,7 +18,9 @@
                     <p class="cluster-main-comment"> {{ biggest_cluster_data.get('content') }}</p>
                 </div>
                 <div class="conversation-dashboard-button">
-                    <a class="button square is-primary" href="{{conversation.url('cluster:index')}}">{{_("Manage groups")}}</a>
+                    <a class="button square is-primary" href="{{url('boards:cluster-index', **conversation.get_url_kwargs())}}">
+                        {{_("Manage groups")}}
+                    </a>
                 </div>
             </div>
             {% else %}
@@ -30,7 +32,7 @@
                 </div>
                 <div class="conversation-dashboard-button">
                     <a class="button square is-primary float-left"
-                        href="{{conversation.url('cluster:edit')}}">{{_("Creates groups")}}</a>
+                        href="{{ url('boards:cluster-edit', **conversation.get_url_kwargs()) }}">{{_("Creates groups")}}</a>
                 </div>
             </div>
             {% endif %}

@@ -7,7 +7,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script src="/static/js/simplePagination.js"></script>
 
-    {% if groups is defined %}
+    {% if groups %}
         <h1 class="h2 text-accent big-title">{{ _('Define personas') }}</h1>
         <p id="subtitle-persona">{% trans %}Mark the votes for each stereotype in your conversation.{% endtrans %}</p>
 
@@ -175,7 +175,11 @@
         <h1 class="h2 text-accent"> 
             <br><small>{{ _('There are no personas defined for this conversation') }}</small>
         </h1>
-        <p>{{_('Start by')}} <a href="{{ conversation.url('cluster:edit') }}">{{ _('creating personas')}}</a> {{ _('for this conversation.')}}</p>
+        <p>{{_('Start by')}} 
+            <a href="{{ url('boards:cluster-edit',  **conversation.get_url_kwargs()) }}">
+                {{ _('creating personas')}}
+            </a> {{ _('for this conversation.')}}
+        </p>
     {% endif %}
     
 {% endblock %}
