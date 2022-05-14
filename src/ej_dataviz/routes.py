@@ -253,9 +253,10 @@ def clusters(request, conversation):
     """
     Returns the cluster data as json format to render groups on frontend.
     """
-    from ej_clusters.routes import index
+    from ej_clusters.views import get_json_shape_user_group_from_clusterization
 
-    clusters_data = index(request, conversation)
+    clusterization = getattr(conversation, "clusterization", None)
+    clusters_data = get_json_shape_user_group_from_clusterization(clusterization, request.user)
     clusters_shapes = clusters_data.get("json_data")
     return clusters_shapes
 

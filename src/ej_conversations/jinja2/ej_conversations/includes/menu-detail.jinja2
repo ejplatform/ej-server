@@ -52,10 +52,34 @@
                 
             <ul id="report-options-list">
                 {% if request.user.has_perm("ej.can_view_report", conversation) %}
-                    <li><div id="comments-report" class="comments-item"><a href=" {{ conversation.url('report:comments-report') }}">{{ _('Comments report') }}</a></div></li>
-                    <li><div id="participants-report" class="users-item"><a href=" {{ conversation.url('report:users') }}">{{ _('Participants report') }}</a></div></li>
-                    <li><div id="clusters" class="clusters-item"><a href=" {{ conversation.url('cluster:index') }}">{{ _('Opinion groups') }}</a></div></li>
-                    <li><div id="scatter" class="scatter-item"><a href=" {{ conversation.url('dataviz:scatter') }}">{{ _('Scatter plot') }}</a></div></li>
+                    <li>
+                        <div id="comments-report" class="comments-item">
+                            <a href=" {{ conversation.url('report:comments-report') }}">
+                                {{ _('Comments report') }}
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div id="participants-report" class="users-item">
+                            <a href=" {{ conversation.url('report:users') }}">
+                                {{ _('Participants report') }}
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div id="clusters" class="clusters-item">
+                            <a href=" {{ url('boards:cluster-index', **conversation.get_url_kwargs()) }}">
+                                {{ _('Opinion groups') }}
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div id="scatter" class="scatter-item">
+                            <a href=" {{ conversation.url('dataviz:scatter') }}">
+                                {{ _('Scatter plot') }}
+                            </a>
+                        </div>
+                    </li>
                 {% endif %}
             </ul>    
         </li>

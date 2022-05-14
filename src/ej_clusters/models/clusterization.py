@@ -1,4 +1,5 @@
 from logging import getLogger
+from django.urls import reverse
 
 from boogie import models, rules
 from boogie.fields import EnumField
@@ -58,7 +59,10 @@ class Clusterization(TimeStampedModel):
         return f"{self.conversation} ({clusters} clusters)"
 
     def get_absolute_url(self):
-        return self.conversation.url("cluster:index")
+        return reverse(
+            "boards:cluster-index",
+            kwargs=self.conversation.get_url_kwargs(),
+        )
 
     def update_clusterization(self, force=False, atomic=False):
         """

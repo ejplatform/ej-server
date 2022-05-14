@@ -58,7 +58,7 @@ def get_urlpatterns():
         *with_app("ej_dataviz", "conversations/", routes="routes_report", namespace="report"),
         #
         #  Global stereotype and cluster management
-        *with_app("ej_clusters", "conversations/", namespace="cluster"),
+        path("conversations/", include("ej_clusters.urls", namespace="cluster")),
         *with_app("ej_clusters", "stereotypes/", routes="routes_stereotypes", namespace="stereotypes"),
         #
         #  Allauth

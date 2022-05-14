@@ -6,6 +6,7 @@ from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 from django.db.models.functions import Length
+from django.urls import reverse
 
 from model_utils.models import TimeStampedModel
 from sidekick import lazy, property as property, placeholder as this
@@ -204,12 +205,11 @@ class Conversation(HasFavoriteMixin, TimeStampedModel):
             raise ValidationError(_("User does not have permission to create a promoted " "conversation."))
 
     def get_absolute_url(self, board=None):
-        kwargs = {"conversation_id": self.id, "slug": self.slug}
         if board is None:
             board = getattr(self, "board", None)
         if board:
-            kwargs["board_slug"] = board.slug
-            return SafeUrl("boards:conversation-detail", **kwargs)
+            kwargs = self.get_url_kwargs()
+            return reverse("boards:conversation-detail", kwargs=kwargs)
         else:
             raise ValidationError("Board should not be None")
 
@@ -247,6 +247,9 @@ class Conversation(HasFavoriteMixin, TimeStampedModel):
             return SafeUrl(which, **kwargs)
 
         raise ValidationError("Board should not be None")
+
+    def get_url_kwargs(self):
+        return {"conversation_id": self.id, "slug": self.slug, "board_slug": self.board.slug}
 
     def votes_for_user(self, user):
         """

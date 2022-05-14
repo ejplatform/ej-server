@@ -12,7 +12,7 @@
         const body = document.getElementsByClassName("body")[0]
         body.classList.add('overflow-deactive');
         function closeModal() {
-            mainEditPage = "{{conversation.url('cluster:edit')}}";
+            mainEditPage = "{{url('boards:cluster-edit',  **conversation.get_url_kwargs())}}";
             window.location.href = mainEditPage;
             body.classList.remove('overflow-deactive');
         }

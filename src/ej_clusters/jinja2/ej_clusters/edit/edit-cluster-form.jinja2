@@ -38,7 +38,7 @@
     </div>
 </div>
 <div class="manage-personas-container">
-    <a class="button manage-personas" href="{{conversation.url('cluster:stereotype-votes')}}"><i class="fas fa-times-circle"></i> {{ _('Manage personas') }}</a>
+    <a class="button manage-personas" href="{{url('boards:cluster-stereotype_votes',  **conversation.get_url_kwargs())}}"><i class="fas fa-times-circle"></i> {{ _('Manage personas') }}</a>
 </div>
 
 <form method="post" id="form-confirmation-modal" class="close-modal-btn" onsubmit="closeModal();">
