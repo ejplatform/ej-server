@@ -1,8 +1,8 @@
 {% for vote in stereotype.given_votes %}
-    <div class="card-comments" id="given-vote-{{ vote.id }}">
+    <div class="stereotype-cards__card-comments" id="given-vote-{{ vote.id }}">
         <input type="hidden" name="vote" value="{{ vote.id }}">
         <p>{{ vote.comment.content }}</p>
-        <div class="vote-buttons" id="vote-buttons-update-{{ vote.id }}">
+        <div class="stereotype-cards__vote-buttons" id="vote-buttons-update-{{ vote.id }}">
                 <button type="button" 
                         onclick="sendUpdateVoteInformation(this.value, '{{ vote.id }}', '{{stereotype.id}}', '{{ vote.comment.id }}')" 
                         class="is-clear agree-{{vote.choice.value}}" 
@@ -24,7 +24,7 @@
                         value="disagree-{{ vote.id }}">
                     <i class="fa fa-times"></i> {{ _('Disagree') }}
                 </button>
-                <button class="delete-vote"
+                <button class="stereotype-cards__vote-buttons__delete"
                         name="update"
                         type="button" 
                         value="delete-{{ vote.id }}"
@@ -32,5 +32,7 @@
                         {{ _('Clear vote') }}
                 </button>
         </div>
+        <hr class="divider-section hr--hide">
     </div>
+    
 {% endfor %}
