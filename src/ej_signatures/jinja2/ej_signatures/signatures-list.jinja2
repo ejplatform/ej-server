@@ -1,0 +1,85 @@
+{% extends 'base.jinja2' %}
+
+{% set main_class = "signatures-page" %}
+{% set body_class = 'body'%}
+
+{% block menu %}{% include 'ej_boards/includes/menu-board.jinja2' %}{% endblock %}
+
+{% block content %}
+    <div class="signatures-container">
+        <section class="signatures-header">
+            <div class="signatures-header__title">{{_("Your plan is")}} <span class="plan">
+                {% if signature == "free"%}
+                    {{_("free")}}
+                {% elif signature == "listen_to_community"%}
+                    {{_("Listen to community")}}
+                {% elif signature == "listen_to_city"%}
+                    {{_("Listen to city")}}
+                {% else %}
+                    {{_("Custom Plan")}}
+                {% endif %}
+                </span>
+            </div>
+            <div class="signatures-header__text">{{_("Send us a budget request in order to use all EJ resources. We will reach you in the next 24 hours.")}} </div>
+        </section>
+        <section class="signatures-cards">
+            <div class="signatures-card">
+                <div class="signatures-card__title">
+                    {{_('Plan')}} {{_('Listen to community')}}
+                </div>
+                <div class="signatures-card__descr">
+                    <p>{{_('A free usage plan from EJ. The idea is to allow the user to experience the platform, create a conversation, collect comments and votes and track reports.')}}</p>
+                    <p>
+                        <h5>{{_('RESOURCES')}}</h5>
+                        - {{_('Three conversation creation limit')}}.<br>
+                        - {{_('Creation limit of five thousand votes')}}.<br>
+                        - {{_('Reports')}}.<br>
+                        - {{_('Access to multiple collect channels')}}.<br>
+                        - {{_('Clustering and persona creation')}}.
+                    </p>
+                </div>
+                <button
+                    class="signatures-card__button" disabled>
+                    {% if signature == 'listen_to_community'%}
+                        {{_('This is already your plan')}}
+                    {% else %}
+                        {{_('Request budget')}}
+                    {% endif %}
+                </button>
+            </div>
+
+            <div class="signatures-card--blue">
+                <div class="signatures-card__title">
+                    {{_('Plan')}} {{_('Custom Plan')}}
+                </div>
+                <div class="signatures-card__descr">
+                    <p>
+                        {{_('A plan that will be aimed at organizations that have specific demands, for example:
+                            Want persona/clustering support but don\'t need unlimited votes
+                            or any other feature of the Hear Humanity or Hear the City plans.')}}
+                    </p>
+                </div>
+                <button
+                    {% if signature != 'custom'%} onclick="toggleModal('form-modal')" {% endif%}
+                    class="signatures-card__button">
+                    {% if signature == 'custom'%}
+                        {{_('This is already your plan')}}
+                    {% else %}
+                        {{_('Request budget')}}
+                    {% endif %}
+                </button>
+            </div>
+        </section>
+    </div>
+
+    {% include 'ej_signatures/signatures-modals.jinja2' %}
+
+    <script>
+        const toggleModal = (id) => {
+            const modalElem = document.getElementById(id);
+            modalElem.classList.toggle("hide")
+            document.body.classList.toggle("overflow-deactive");
+        }
+    </script>
+
+{% endblock %}

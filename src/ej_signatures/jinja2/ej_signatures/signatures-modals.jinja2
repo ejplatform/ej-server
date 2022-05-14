@@ -1,0 +1,44 @@
+<div class="modal__overlay hide" id="form-modal">
+    <form method="post" action="{{ url('boards:signatures-upgrade', board_slug) }}" class="modal__container--lg">
+        {{ csrf_input }}
+        <div class="modal__title">
+            {{_("Request budget")}}
+            <button type="button" onclick="toggleModal('form-modal')" class="modal__close-btn">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <label for="name">{{_('Name')}}</label>
+        <input type="text" name="name" placeholder="{{_('Name')}}" required>
+        <div class="form__inline">
+            <div class="form__group">
+                <label for="email">{{_("Email")}}</label>
+                <input type="email" name="email" placeholder="{{_('Email')}}" required>
+            </div>
+            <div class="form__group">
+                <label for="phone">{{_("Phone")}}</label>
+                <input type="text" name="phone" placeholder="{{_('Phone')}}" required>
+            </div>
+        </div>
+        <label for="signature">{{_("Desired signature")}}</label>
+        <select name="signature">
+            <option value="listen_to_community">{{_("Listen to community")}}</option>
+            <option value="custom">{{_("Custom")}}</option>
+        </select>
+        <label for="goal">{{_("For what purpose will you use EJ?")}}</label>
+        <textarea name="goal" placeholder="{{_('For what purpose will you use EJ?')}}" required></textarea>
+        <button>{{_("Send")}}</button>
+    </form>
+</div>
+
+{% if success %}
+    <div class="modal__overlay" id="success-modal">
+        <div class="modal__container--md">
+            <div class="modal__close-btn" onclick="toggleModal('success-modal')">
+                <i class="fas fa-times"></i>
+            </div>
+            <img class="margin-t2" src="{{ static('/img/login/avatar.svg') }}" alt="Success"/>
+            <h3>{{_('Your request has been sent')}}</h3>
+            <h4>{{_('We will contact you soon')}}</h4>
+        </div>
+    </div>
+{% endif %}

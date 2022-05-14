@@ -13,6 +13,7 @@ from ej_signatures.models import SignatureFactory
 from ej_tools.urls import urlpatterns as conversation_tools_urlpatterns
 from ej_conversations.urls import urlpatterns as conversation_urlpatterns
 from ej_clusters.urls import urlpatterns as cluster_urlpatterns
+from ej_signatures.urls import urlpatterns as signatures_urlpatterns
 from .forms import BoardForm
 from ej_tools.models import RasaConversation, ConversationMautic
 from ej_dataviz import routes as dataviz
@@ -262,3 +263,4 @@ register_app_routes(report, board_base_url, urlpatterns, "report")
 patched_register_app_routes(urlpatterns.urls, conversation_tools_urlpatterns, "conversation-tools")
 patched_register_app_routes(urlpatterns.urls, conversation_urlpatterns, "conversation")
 patched_register_app_routes(urlpatterns.urls, cluster_urlpatterns, "cluster")
+patched_register_app_routes(urlpatterns.urls, signatures_urlpatterns, "signatures", "<slug:board_slug>/")

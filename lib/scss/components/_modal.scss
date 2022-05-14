@@ -8,8 +8,8 @@
         top: 0;
         left: 0;
         z-index: 750;
-
-        &.hide {display: none;}
+        
+        &.hide {visibility: hidden;}
 
         > * {
             min-height: 0;
@@ -18,15 +18,31 @@
 
         background: rgba($color-black-alternative, .25);
     }
-
+    
     &__container {
         @extend .pad-4;
+        position: relative;
         min-width: 25rem;
         z-index: 1250;
         background-color: $color-theme-report-light-gray;
         box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
         
         h3 {color: $color-black-alternative;}
+        
+        &--sm {
+            @extend .modal__container;
+            min-width: 20rem;
+        }
+
+        &--md {
+            @extend .modal__container;
+            min-width: 35rem;
+        }
+
+        &--lg {
+            @extend .modal__container;
+            min-width: 45rem;
+        }
     }
 
     &__icon {
@@ -36,10 +52,27 @@
     }
 
     &__title {
+        position: relative;
         color: $color-black-alternative;
         font-size: 1.5rem;
         font-family: "Patua One", sans-serif;
         margin-bottom: 1rem;
+    }
+
+    &__close-btn {
+        position: absolute;
+        right: 0;
+        top: 0;
+        color: $color-black-alternative;
+        cursor: pointer;
+        
+        background: transparent;
+        padding: 0;
+        margin: 0;
+        border: none;
+        font-size: 1rem;
+
+        &:hover {box-shadow: none;}
     }
 
     &__buttons {display: grid;}
@@ -90,6 +123,4 @@
     }
 }
 
-.overflow-deactive {
-    overflow-y: hidden;
-}
+.overflow-deactive {overflow-y: hidden;}

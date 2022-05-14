@@ -1770,6 +1770,18 @@ optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*"
 
 [[package]]
+name = "slack-sdk"
+version = "3.15.2"
+description = "The Slack API Platform SDK for Python"
+category = "main"
+optional = false
+python-versions = ">=3.6.0"
+
+[package.extras]
+optional = ["aiodns (>1.0)", "aiohttp (>=3.7.3,<4)", "boto3 (<=2)", "SQLAlchemy (>=1,<2)", "websockets (>=10,<11)", "websocket-client (>=1,<2)"]
+testing = ["pytest (>=6.2.5,<7)", "pytest-asyncio (<1)", "Flask-Sockets (>=0.2,<1)", "Flask (>=1,<2)", "Werkzeug (<2)", "itsdangerous (==2.0.1)", "pytest-cov (>=2,<3)", "codecov (>=2,<3)", "flake8 (>=4,<5)", "black (==22.1.0)", "psutil (>=5,<6)", "databases (>=0.5)", "boto3 (<=2)", "moto (>=3,<4)"]
+
+[[package]]
 name = "snowballstemmer"
 version = "2.1.0"
 description = "This package provides 29 stemmers for 28 languages generated from Snowball algorithms."
@@ -2085,7 +2097,7 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytes
 [metadata]
 lock-version = "1.1"
 python-versions = ">= 3.7.10, <4"
-content-hash = "da8066bd897faef74c173b2923377936d64a805098d8d4cf64f0efa7b5e7a05e"
+content-hash = "ae3a2963e083f02e2768eb513927bf3bbcf263935c206befa3fcf643425c388b"
 
 [metadata.files]
 alabaster = [
@@ -3188,6 +3200,10 @@ sidekick = [
 six = [
     {file = "six-1.16.0-py2.py3-none-any.whl", hash = "sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254"},
     {file = "six-1.16.0.tar.gz", hash = "sha256:1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926"},
+]
+slack-sdk = [
+    {file = "slack_sdk-3.15.2-py2.py3-none-any.whl", hash = "sha256:e1fa26786169176e707676decc287fd9d3d547bbc43c0a1a4f99eb373b07da94"},
+    {file = "slack_sdk-3.15.2.tar.gz", hash = "sha256:128f3bb0b5b91454a3d5f140a61f3db370a0e1b50ffe0a8d9e9ebe0e894faed7"},
 ]
 snowballstemmer = [
     {file = "snowballstemmer-2.1.0-py2.py3-none-any.whl", hash = "sha256:b51b447bea85f9968c13b650126a888aabd4cb4463fca868ec596826325dedc2"},
