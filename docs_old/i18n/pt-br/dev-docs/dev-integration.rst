@@ -1,6 +1,6 @@
-************
+============
 Integrações
-************
+============
 
 .. contents::
    :depth: 2
@@ -108,7 +108,8 @@ Com algumas configurações na linguagem de template, conseguimos utilizar as `r
   {{conversation|balloon}}
 
 
-.. code-block:: jinja
+.. code-block:: jinja2
+
   {{conversation|card}}
 
 
