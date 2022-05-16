@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-16 11:44-0300\n"
+"POT-Creation-Date: 2022-05-16 12:11-0300\n"
 "PO-Revision-Date: 2022-04-12 13:55-0300\n"
 "Last-Translator: David Carlos <davidcarlos@pencillabs.com.br>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -2862,28 +2862,6 @@ msgstr "Ir para Ferramentas"
 msgid "Users report"
 msgstr "Relatório de Participantes"
 
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/channel-chart-card.jinja2:3
-#, fuzzy
-msgid "Channel participation"
-msgstr "Participação por canal"
-
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/channel-chart-card.jinja2:5
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/scatter.jinja2:11
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/scatter.jinja2:21
-#, fuzzy
-msgid "filter by:"
-msgstr "Filtrar por:"
-
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/channel-chart-card.jinja2:7
-#, fuzzy
-msgid "votes"
-msgstr "Votos"
-
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/channel-chart-card.jinja2:9
-#, fuzzy
-msgid "participants"
-msgstr "Participantes"
-
 #: src/ej_dataviz/jinja2/ej_dataviz/report/includes/clusters.jinja2:4
 #, fuzzy
 msgid "Opinion Groups"
@@ -2962,6 +2940,13 @@ msgstr ""
 "Cada ponto no gráfico representa um participante diferente. Participantes "
 "que votam de forma parecida, ficam mais próximos. "
 
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/scatter.jinja2:11
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/scatter.jinja2:21
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/votes-by-channel-chart.jinja2:5
+#, fuzzy
+msgid "filter by:"
+msgstr "Filtrar por:"
+
 #: src/ej_dataviz/jinja2/ej_dataviz/report/includes/scatter.jinja2:13
 #, fuzzy
 msgid "Opinion"
@@ -2972,12 +2957,27 @@ msgstr "Opinião"
 msgid "There is no groups for this conversation."
 msgstr "Não há grupos para esta conversa."
 
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/votes-over-time.jinja2:4
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/votes-by-channel-chart.jinja2:3
+#, fuzzy
+msgid "Channel participation"
+msgstr "Participação por canal"
+
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/votes-by-channel-chart.jinja2:7
+#, fuzzy
+msgid "votes"
+msgstr "Votos"
+
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/votes-by-channel-chart.jinja2:9
+#, fuzzy
+msgid "participants"
+msgstr "Participantes"
+
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/votes-over-time-chart.jinja2:4
 #, fuzzy
 msgid "Vote"
 msgstr "Votação"
 
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/votes-over-time.jinja2:19
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/votes-over-time-chart.jinja2:19
 msgid "end date must be gratter then start date"
 msgstr "data de fim deve ser maior que data de inicio"
 

@@ -18,8 +18,8 @@
             {% include 'ej_dataviz/report/includes/voting.jinja2' %}
         {% endwith %}
         <div class="charts wrap">
-            {% include 'ej_dataviz/report/includes/votes-over-time.jinja2' %}
-            {% include 'ej_dataviz/report/includes/channel-chart-card.jinja2' %}
+            {% include 'ej_dataviz/report/includes/votes-over-time-chart.jinja2' %}
+            {% include 'ej_dataviz/report/includes/votes-by-channel-chart.jinja2' %}
         </div>
         {% with participants_statistics = conversation.statistics().get('participants') %}
             {% include 'ej_dataviz/report/includes/participants.jinja2' %}

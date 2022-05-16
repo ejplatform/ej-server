@@ -224,10 +224,11 @@
             border-radius: 5px;
             position: relative;
             min-width: 380px;
-            width: 35vw;
+            width: 36vw;
 
             svg {
-                width: 100%;
+                width: 90%;
+                margin: auto;
             }
         }
 
@@ -362,7 +363,6 @@
 
         width: 100%;
         display: flex;
-        justify-content: flex-start !important;
 
         &__title {
             div {
@@ -506,7 +506,7 @@
 }
 
 @media (max-width: 559px) {
-    .conversation-dashboard-button {
+    .conversation-dashboard__button {
         a {
             float: right;
         }
