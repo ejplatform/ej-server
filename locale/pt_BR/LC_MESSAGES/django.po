@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-14 11:51-0300\n"
+"POT-Creation-Date: 2022-05-16 11:44-0300\n"
 "PO-Revision-Date: 2022-04-12 13:55-0300\n"
 "Last-Translator: David Carlos <davidcarlos@pencillabs.com.br>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -3962,6 +3962,14 @@ msgstr "Mudar a senha"
 msgid "Authentication"
 msgstr "Autenticação"
 
+#, fuzzy
+#~ msgid "Segmented Comunication"
+#~ msgstr "Ver Conversa"
+
+#, fuzzy
+#~ msgid "Channels"
+#~ msgstr "Mudar votos"
+
 #~ msgid "Upgrade"
 #~ msgstr "Fazer upgrade"
 
@@ -4383,10 +4391,6 @@ msgstr "Autenticação"
 
 #~ msgid "We would like your participation in the following discussion:"
 #~ msgstr "Gostaríamos da sua participação na seguinte discussão:"
-
-#, fuzzy
-#~ msgid "Channels"
-#~ msgstr "Mudar votos"
 
 #~ msgid "Crossings"
 #~ msgstr "Cruzamentos"

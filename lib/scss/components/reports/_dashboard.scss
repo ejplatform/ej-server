@@ -96,13 +96,13 @@
 .report-container .conversation-dashboard.scatter,
 .report-container .conversation-dashboard .charts,
 .report-container .conversation-dashboard .word-cloud-card,
-.report-container .cluster-container,
+.report-container .clusters-section,
 .report-container .conversation-dashboard .comments-container,
 .report-container .conversation-dashboard .voting-container,
 .report-container .conversation-dashboard .words-container,
 .report-container .clusters-warning-card
 {
-    max-width: 60vw;
+    max-width: 61vw;
     margin-left: auto;
     margin-right: auto;
     width: 100%;
@@ -112,7 +112,7 @@
 .report-container .conversation-dashboard.scatter,
 .report-container .conversation-dashboard .charts,
 .report-container .conversation-dashboard .word-cloud-card,
-.report-container .cluster-container,
+.report-container .clusters-section,
 .report-container .conversation-dashboard .comments-container,
 .report-container .conversation-dashboard .voting-container,
 .report-container .conversation-dashboard .words-container,
@@ -120,7 +120,7 @@
     padding-left: 1.5rem !important;
 }
 
-.charts-votes-by-channel {
+.votes-by-channel-chart {
     .filter-participation {
         margin-top: 1rem;
         align-items: baseline;
@@ -183,7 +183,7 @@
     }
 
     .scatter,
-    .cluster-container,
+    .clusters-section,
     .comments-container {
         font-size: 1.5rem;
         padding: 68px 0px 45px 0px;
@@ -201,7 +201,7 @@
             padding: 1rem;
         }
 
-        .chart-title {
+        .chart__title {
             font-size: 1.25rem;
             line-height: 21px;
             margin: unset;
@@ -209,7 +209,7 @@
             text-transform: lowercase;
         }
 
-        &-votes-by-channel {
+        .votes-by-channel-chart {
             height: 406px;
             box-sizing: border-box;
             border: 1px solid $color-theme-report-gray;
@@ -358,24 +358,29 @@
         }
     }
 
-    .cluster {
+    .clusters-section {
 
-        &-container {
-            width: 100%;
-            display: flex;
+        width: 100%;
+        display: flex;
+        justify-content: flex-start !important;
+
+        &__title {
+            div {
+                max-width: 106px;
+                span {
+                    text-align: left;
+                    font-family: 'Patua One', 'sans-serif';
+                    font-size: 1.5rem;
+                }
+            }
         }
 
-        &-col.clusters {
-            flex-grow: 1;
-        }
-        &-comment-percentage,
-        &-null {
-            font-size: 2.25rem;
-        }
-        &-main-comment {
+        &__comment-percentage,
+        &__main-comment {
             font-size: 1.25rem;
         }
-        &-col.detail {
+
+        &__detail {
             h2,
             p {
                 color: $color-black;
@@ -392,11 +397,17 @@
                 text-transform: capitalize;
                 font-size: 1rem;
             }
-            &-empty {
+
+            &--empty {
                 max-width: 60%;
             }
-            &-filled {
-                max-width: 358px;
+
+            &--filled {
+                max-width: 280px;
+            }
+
+            &--null {
+                font-size: 2.25rem;
             }
         }
     }
@@ -484,7 +495,7 @@
 
 @media (max-width: 375px) {
     .charts-votes-on-time,
-    .charts-votes-by-channel {
+    .votes-by-channel-chart {
         width: 100vw !important;
         min-width: unset !important;
     }
@@ -521,7 +532,7 @@
     .report-container .conversation-dashboard.scatter,
     .report-container .conversation-dashboard.title,
     .report-container .conversation-dashboard .word-cloud-card,
-    .report-container .cluster-container,
+    .report-container .clusters-section,
     .report-container .comments-container,
     .report-container .voting-container,
     .report-container .participants-card-container,
@@ -546,7 +557,7 @@
     }
 
     .charts-votes-on-time,
-    .charts-votes-by-channel,
+    .votes-by-channel-chart,
     .conversation-dashboard .participants-card,
     .word-cloud-card
     {
@@ -554,18 +565,20 @@
         border-radius: unset !important;
     }
 
-    .conversation-dashboard .charts .chart-title {
+    .conversation-dashboard .charts .chart__title {
         color: $color-brand;
         margin: unset;
     }
 
-    .cluster-col.title {
-        h2 {
+    .clusters-section__title {
+        span {
             width: 100% !important;
             text-align: left;
+            font-family: 'Patua One', 'sans-serif';
+            font-size: 1.5rem;
         }
     }
-    .cluster-col.detail.detail-filled {
+    .clusters-section__detail--filled {
         margin: 36px 0 0 0;
 
         hr {
@@ -591,7 +604,7 @@
         background-color: $color-theme-report-light-gray;
     }
 
-    .charts-votes-by-channel {
+    .votes-by-channel-chart {
         margin: 25px 0 0 0;
         .filter-participation {
             display: flex;
@@ -646,7 +659,7 @@
     .report-container .conversation-dashboard.scatter,
     .report-container .conversation-dashboard .charts,
     .report-container .conversation-dashboard .word-cloud-card,
-    .report-container .cluster-container,
+    .report-container .clusters-section,
     .report-container .conversation-dashboard .comments-container,
     .report-container .conversation-dashboard .voting-container,
     .report-container .conversation-dashboard .words-container,
@@ -658,18 +671,26 @@
 
 
 @media (max-width: 1366px) {
+
+    .votes-by-channel-chart {
+        .filter-participation {
+            .filter-button, .selected-button {
+                font-size: 1rem;
+            }
+        }
+    }
     .conversation-dashboard .scatter-col.scatters {
         max-width: 400px;
     }
 
-    .charts-votes-by-channel {
+    .votes-by-channel-chart {
         width: 22vw !important;
     }
 }
 
 @media (max-width: 1200px) {
     .charts-votes-on-time,
-    .charts-votes-by-channel
+    .votes-by-channel-chart
     {
         width: 100% !important;
     }

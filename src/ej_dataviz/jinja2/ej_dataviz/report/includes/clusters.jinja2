@@ -1,21 +1,21 @@
 <div class="conversation-dashboard cluster light-blue-bg">
-    <div class="cluster-container flex wrap">
-    <div class="cluster-col title flex">
-        <h2 class="text-accent">{{_('Opinion Groups')}}</h2>
+    <div class="clusters-section flex wrap">
+    <div class="clusters-section__title flex">
+        <div><span class="text-accent">{{_('Opinion Groups')}}</span></div>
     </div>
         {% if json_data %}
-            <div class="cluster-col clusters">
-                <div id="cluster-canvas-container">
+            <div class="clusters-section__clusters">
+                <div id="clusters-canvas-container">
                     <canvas id="cluster-canvas"></canvas>
                 </div>
             </div>
-            <div class="cluster-col detail detail-filled">
-                <h2 class="cluster-name"> {{ biggest_cluster_data.get('name') }}</h2>
+            <div class="clusters-section__detail clusters-section__detail--filled">
+                <h2> {{ biggest_cluster_data.get('name') }}</h2>
                 <hr>
-                <div class="cluster-description">
-                    <p class="cluster-comment-percentage">{{ biggest_cluster_data.get('percentage') }}%
+                <div>
+                    <p class="clusters-section__comment-percentage">{{ biggest_cluster_data.get('percentage') }}%
                         {{_("agree with")}} </p>
-                    <p class="cluster-main-comment"> {{ biggest_cluster_data.get('content') }}</p>
+                    <p class="clusters-section__main-comment"> {{ biggest_cluster_data.get('content') }}</p>
                 </div>
                 <div class="conversation-dashboard-button">
                     <a class="button square is-primary" href="{{url('boards:cluster-index', **conversation.get_url_kwargs())}}">
@@ -24,9 +24,9 @@
                 </div>
             </div>
             {% else %}
-            <div class="cluster-col detail detail-empty">
-                <div class="cluster-description">
-                    <p class="cluster-null">{{_("Your conversation does not have personas.")}}</p>
+            <div class="clusters-section__detail clusters-section__detail--empty">
+                <div>
+                    <p class="cluster-section__detail--null">{{_("Your conversation does not have personas.")}}</p>
                     <p class="bold">{{_("Without personas, it's not possible to create opinion groups.")}}</p>
                     <p>{{_("After modeling groups, you can check then here.")}}</p>
                 </div>
