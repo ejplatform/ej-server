@@ -375,6 +375,10 @@
             }
         }
 
+        &__clusters {
+            width: calc(55vw - (109px + 280px));
+        }
+
         &__comment-percentage,
         &__main-comment {
             font-size: 1.25rem;
@@ -578,6 +582,7 @@
             font-size: 1.5rem;
         }
     }
+
     .clusters-section__detail--filled {
         margin: 36px 0 0 0;
 
