@@ -2,5 +2,11 @@ Welcome to EJ documentation!
 ============================
 
 .. toctree::
+   :caption: Guia de desenvolvimento
 
-   i18n/index
+   development-guides/pt-br/index
+
+.. toctree::
+   :caption: Guia de usuário
+
+   user-guides/pt-br/index

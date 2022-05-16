@@ -84,8 +84,8 @@ def get_urlpatterns():
         *static(settings.STATIC_URL, document_root=settings.STATIC_ROOT),
         #
         #  Documentation in development mode
-        re_path(r"^static_docs/$", serve, {"document_root": "build/docs", "path": "index.html"}),
-        re_path(r"^static_docs/(?P<path>.*)$", serve, {"document_root": "build/docs/"}),
+        re_path(r"^docs/$", serve, {"document_root": "build/docs", "path": "index.html"}),
+        re_path(r"^docs/(?P<path>.*)$", serve, {"document_root": "build/docs/"}),
         #
         #  Boards
         *with_app("ej_boards", "", namespace="boards"),
