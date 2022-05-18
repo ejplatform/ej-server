@@ -1,5 +1,6 @@
 import email
 import pytest
+from django.utils.translation import gettext_lazy as _
 from rest_framework.test import APIClient
 from rest_framework.authtoken.models import Token
 from rest_framework.test import force_authenticate
@@ -29,17 +30,28 @@ def other_user(db):
     return user
 
 
+def authenticate_user_api(user_info):
+    api = APIClient()
+    user = api.post(BASE_URL + "/users/", user_info, format="json").data
+    api.credentials(HTTP_AUTHORIZATION="Token " + user["token"])
+    return api
+
+
 class TestGetRoutes:
-    def test_conversations_endpoint_author(self, conversation, api):
+    def test_conversations_endpoint_author(self, conversation):
         path = BASE_URL + f"/conversations/{conversation.id}/"
-        api.post("/rest-auth/registration/", {"email": "email@server.com", "name": "admin"})
-        data = api.get(path, exclude=["created"])
+        api = authenticate_user_api({"email": "email@server.com", "name": "admin"})
+
+        data = api.get(path, format="json").data
+        del data["created"]
         assert data == CONVERSATION
 
-    def test_conversations_endpoint_admin(self, conversation, api, admin_user):
+    def test_conversations_endpoint_admin(self, conversation, admin_user):
         path = BASE_URL + f"/conversations/{conversation.id}/"
-        api.post("/rest-auth/registration/", {"email": admin_user.email, "name": admin_user.name})
-        data = api.get(path, exclude=["created"])
+        api = authenticate_user_api({"email": admin_user.email, "name": admin_user.name})
+
+        data = api.get(path, format="json").data
+        del data["created"]
         assert data == CONVERSATION
 
     def test_conversations_endpoint_not_authenticated(self, conversation, api):
@@ -47,22 +59,27 @@ class TestGetRoutes:
         data = api.get(path)
         assert data == {"text": conversation.text}
 
-    def test_conversations_endpoint_other_user(self, conversation, api, other_user):
+    def test_conversations_endpoint_other_user(self, conversation, other_user):
         path = BASE_URL + f"/conversations/{conversation.id}/"
-        api.post("/rest-auth/registration/", {"email": other_user.email, "name": other_user.name})
-        data = api.get(path)
+        api = authenticate_user_api({"email": other_user.email, "name": other_user.name})
+
+        data = api.get(path, format="json").data
         assert data == {"text": conversation.text}
 
-    def test_comments_endpoint(self, comment, api):
+    def test_comments_endpoint(self, comment):
         path = BASE_URL + f"/comments/{comment.id}/"
-        api.post("/rest-auth/registration/", {"email": "email@server.com", "name": "admin"})
-        data = api.get(path, exclude=["created"])
+        api = authenticate_user_api({"email": "email@server.com", "name": "admin"})
+
+        data = api.get(path, format="json").data
+        del data["created"]
         assert data == COMMENT
 
-    def test_vote_endpoint(self, vote, api):
+    def test_vote_endpoint(self, vote):
         path = BASE_URL + f"/votes/{vote.id}/"
-        api.post("/rest-auth/registration/", {"email": "email@server.com", "name": "admin"})
-        data = api.get(path, exclude=["created"])
+        api = authenticate_user_api({"email": "email@server.com", "name": "admin"})
+
+        data = api.get(path, format="json").data
+        del data["created"]
         assert data == VOTE
 
     def test_conversation_votes_endpoint_with_anonymous(self, conversation, vote, api):
@@ -71,9 +88,9 @@ class TestGetRoutes:
         assert api.response.status_code == 401
 
     def test_conversation_votes_endpoint(self, conversation, vote, api):
-        auth_token = api.post("/rest-auth/registration/", {"email": "email@server.com", "name": "admin"})
+        api = authenticate_user_api({"email": "email@server.com", "name": "admin"})
         path = BASE_URL + f"/conversations/{conversation.id}/votes/"
-        response = api.client.get(path, {}, HTTP_AUTHORIZATION=f"Token {auth_token.get('key')}")
+        response = api.get(path, format="json")
         data = response.data
         assert type(data) == list
         assert data[0].get("id") == VOTES[0].get("id")
@@ -86,7 +103,7 @@ class TestGetRoutes:
 
 
 class TestApiRoutes:
-    AUTH_ERROR = {"detail": "Authentication credentials were not provided."}
+    AUTH_ERROR = {"detail": _("Authentication credentials were not provided.")}
     EXCLUDES = dict(skip=["created", "modified"])
 
     def test_post_conversation(self, api, user):
@@ -169,8 +186,15 @@ class TestApiRoutes:
 
         # Check if endpoint matches...
         comment = Comment.objects.first()
-        api.post("/rest-auth/registration/", {"email": "email@server.com", "name": "admin"})
-        data = api.get(comments_path + f"{comment.id}/", **self.EXCLUDES)
+        auth_token = api.post(BASE_URL + "/users/", {"email": "email@server.com", "name": "admin"})
+        data = api.client.get(
+            comments_path + f"{comment.id}/",
+            {},
+            HTTP_AUTHORIZATION=f"Token {auth_token.get('token')}",
+            format="json",
+        ).data
+
+        del data["created"]
         assert data == comment_data
 
     def test_delete_comment(self, conversation, user):

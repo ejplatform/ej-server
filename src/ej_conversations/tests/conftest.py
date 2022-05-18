@@ -22,17 +22,23 @@ def user(db):
 
 @pytest.fixture
 def conversation(db, user):
-    return create_conversation(text="test", title="title", author=user, is_promoted=True)
+    conversation_object = create_conversation(text="test", title="title", author=user, is_promoted=True)
+    yield conversation_object
+    conversation_object.delete()
 
 
 @pytest.fixture
 def comment(db, conversation, user):
-    return conversation.create_comment(user, "content", "approved")
+    comment_object = conversation.create_comment(user, "content", "approved")
+    yield comment_object
+    comment_object.delete()
 
 
 @pytest.fixture
 def vote(db, user, comment):
-    return comment.vote(author=user, choice="agree")
+    vote_object = comment.vote(author=user, choice="agree")
+    yield vote_object
+    vote_object.delete()
 
 
 @pytest.fixture
