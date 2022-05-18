@@ -13,7 +13,6 @@
 
 {% block content %}
 <div class="tools">
-    <div class="tools-container">
     <div class="tools-title">
         <h1 class="h2 text-accent"><a href="{{ conversation.patch_url('conversation-tools:index') }}">{{_("Tools")}}</a>
             > <a href="{{ conversation.patch_url('conversation-tools:chatbot') }}">{{ _("Opinion Bots") }}</a>
@@ -26,9 +25,9 @@
     
     <h3 class="h3 divider">{{_("Webchat")}}</h3>
     <span class="helptext">{{_("Integrate a new page with webchat or click <b>Start Collection</b> to utilize our standard integration.")}}</span>
-    <div id="webchat-card">
+    <div class="webchat-card">
         {% include 'ej_tools/webchat/webchat-preview-card.jinja2' %}
-        <hr class="divider-card">
+        <hr class="webchat-card__divider">
         {% include 'ej_tools/webchat/form-integration.jinja2' %}
     </div>    
 

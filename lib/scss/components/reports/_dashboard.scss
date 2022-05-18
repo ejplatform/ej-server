@@ -379,11 +379,6 @@
             width: calc(55vw - (109px + 280px));
         }
 
-        &__comment-percentage,
-        &__main-comment {
-            font-size: 1.25rem;
-        }
-
         &__detail {
             h2,
             p {
@@ -413,6 +408,11 @@
             &--null {
                 font-size: 2.25rem;
             }
+        }
+
+        &__comment-percentage,
+        &__main-comment {
+            font-size: 1.25rem;
         }
     }
 

@@ -1,21 +1,22 @@
-<div id="webchat-integration">
+<div class="webchat-card__section">
     <img class="avatar" src="/static/img/icons/duda.png" alt="drawing of a woman with blue acessory in her brown hair">
-    <div>
+    <div class="webchat-card__section-content">
         <span class="tools-card-title">{{_("Webchat in your site")}}</span>
-        <span class="helptext description">{{_("Use EJ's web chatbot from your website or platform. It requires you to configure the integration script on the desired page and register this page in the integrations table.")}}</span>
-            <p id="integrations-table-title">{{_("Integrations table")}}</p>
+        <span class="helptext webchat-card__description">{{_("Use EJ's web chatbot from your website or platform. It requires you to configure the integration script on the desired page and register this page in the integrations table.")}}</span>
+            <p class="webchat-integrations__title">{{_("Integrations table")}}</p>
             {% if conversation_rasa_connections %}
-                <table id="template-table">
-                    <tr class="table-header">
+                <table class="webchat-integrations__table">
+                    <tr class="webchat-integrations__table-header">
                         <th>{{_("Page")}}</th>
                         {% if is_valid_user %}
                             <th id="th-remove">{{_("Remove")}}</th>
                         {% endif %}
                     </tr>
                     {% for connection in conversation_rasa_connections %}
-                    <tr class="url-table">
-                        <td>
-                            <a href={{connection.domain}} target="_blank">{{connection.domain}}</a>
+                    <tr>
+                        <td class="webchat-integrations__table-row">
+                            <a href={{connection.domain}} target="_blank"> {{connection.domain}}
+                            </a>
                         </td>
                         {% if is_valid_user %}
                             <td id="td-remove">

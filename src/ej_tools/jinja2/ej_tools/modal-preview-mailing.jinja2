@@ -1,12 +1,12 @@
 <div>
   {% if conversation.n_approved_comments == 0 %}
     <button class="grey" id="preview-button" type="submit" name="preview" value="{{ _('Preview Template') }}" disabled>
-      <img class="comments-icon" src="{{ static('/img/icons/eye_icon.svg') }}"/>
+      <img class="tools-icon-share" src="{{ static('/img/icons/eye_icon.svg') }}"/>
       <a>{{ _('Preview') }}</a>
     </button>
   {% else %}
     <button class="grey" id="preview-button" type="submit" name="preview" value="{{ _('Preview Template') }}">
-      <img class="comments-icon" src="{{ static('/img/icons/eye_icon.svg') }}"/>
+      <img class="tools-icon-share" src="{{ static('/img/icons/eye_icon.svg') }}"/>
       <a>{{ _('Preview') }}</a>
     </button>
   {% endif %}

@@ -42,23 +42,19 @@
   </section>
   <div class="tools-card-footer mailing">
     <input type="hidden" id="token" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-    <span class="tools-icon-share">
     {% include 'ej_tools/modal-preview-mailing.jinja2' %}
-    </span>
-    <span class="tools-icon-share">
-      {% if conversation.n_approved_comments == 0 %}
-        <button class="blue" type="submit" name="download" value="{{ _('Download Template') }}" disabled>
-          <i class="fas fa-cloud-download-alt" id="download-icon"></i>
-          <a>{{ _('Download') }}</a>
-        </button>
-        <span id="no-comments-helptext" class="helptext text-accent">{{_("Create comments to use this tool.")}}</span>
-      {% else %}
-        <button class="blue" type="submit" name="download" value="{{ _('Download Template') }}">
-          <i class="fas fa-cloud-download-alt" id="download-icon"></i>
-          <a>{{ _('Download') }}</a>
-        </button>
-      {% endif %}
-    </span>
+    {% if conversation.n_approved_comments == 0 %}
+      <button class="blue" type="submit" name="download" value="{{ _('Download Template') }}" disabled>
+        <i class="fas fa-cloud-download-alt" id="download-icon"></i>
+        <a>{{ _('Download') }}</a>
+      </button>
+      <span id="no-comments-helptext" class="helptext text-accent">{{_("Create comments to use this tool.")}}</span>
+    {% else %}
+      <button class="blue" type="submit" name="download" value="{{ _('Download Template') }}">
+        <i class="fas fa-cloud-download-alt" id="download-icon"></i>
+        <a>{{ _('Download') }}</a>
+      </button>
+    {% endif %}
   </div>
 </form>
 
