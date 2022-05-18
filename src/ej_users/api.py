@@ -17,46 +17,40 @@ class UsersViewSet(viewsets.ModelViewSet):
     permission_classes_by_action = {"create": [AllowAny], "list": [IsAdminUser]}
 
     def create(self, request, pk=None):
+        try:
+            user = User.objects.get(email=request.data.get("email"))
+            return self.get_user_token(user, request)
+
+        except:
+            return self.create_user(request)
+
+    def create_user(self, request):
         serializer = self.get_serializer(data=request.data)
         if not serializer.is_valid():
             return Response(serializer.errors, status=400)
-        try:
-            user = User.objects.get(email=request.data.get("email"))
-            return Response(
-                {
-                    "error": _(
-                        "User with {user.email} e-mail already exists.\n Please contact the system administrator."
-                    )
-                },
-                status=400,
-            )
-        except:
-            email = request.data.get("email")
-            name = request.data.get("name")
-            password = request.data.get("password")
-            password_confirm = request.data.get("password_confirm")
-            if password != password_confirm:
-                return Response({"error": _("Passwords do not match")}, status=400)
-            user = User(email=email, name=name)
-            user.set_password(password)
-            user.save()
 
+        user = serializer.create()
         token = Token.objects.create(user=user)
         self.check_user_metadata(user, request)
         self.check_profile(user, request)
         response = {"id": user.id, "name": user.name, "email": user.email, "token": token.key}
         return Response(response)
 
+    def get_user_token(self, user, request):
+        token, created = Token.objects.get_or_create(user=user)
+        self.check_user_metadata(user, request)
+        self.check_profile(user, request)
+        return Response(
+            {"token": token.key},
+        )
+
     def check_profile(self, user, request):
-        phone_number = request.data.get("phone_number")
-        profile = None
-        try:
-            profile = Profile.objects.get(user=user)
-        except Exception as e:
-            profile = Profile(user=user)
+        phone_number = request.data.get("phone_number", None)
+        profile, created = Profile.objects.get_or_create(user=user)
+
         if phone_number:
             profile.phone_number = phone_number
-        profile.save()
+            profile.save()
 
     def check_user_metadata(self, user, request):
         if not user.metadata_set.first():

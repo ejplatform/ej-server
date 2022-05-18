@@ -55,8 +55,8 @@ class TestRoutes(UserRecipes, UrlTester):
         self.assert_redirects(response, "/leelaexamplecom/conversations/tour/", 302, 200)
 
     def test_registration_auth_valid_user(self, client, db):
-        response = client.post(
-            "/rest-auth/registration/",
+        client.post(
+            "/api/v1/users/",
             data={
                 "name": "David Silva",
                 "email": "david@example.com",
@@ -132,3 +132,15 @@ class TestRoutes(UserRecipes, UrlTester):
             content_type="application/json",
         )
         assert response.status_code == 400
+
+    def test_user_endpoint_post_with_already_created_user(self, client, db):
+        User.objects.create_user("user@user.com", "password")
+        response = client.post(
+            "/api/v1/users/",
+            data={
+                "email": "user@user.com",
+            },
+            content_type="application/json",
+        )
+        assert "token" in response.content.decode()
+        assert response.status_code == 200

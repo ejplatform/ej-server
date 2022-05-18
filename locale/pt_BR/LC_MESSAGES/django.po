@@ -676,6 +676,10 @@ msgstr ""
 msgid "Your vote has been computed :-)"
 msgstr "Seu voto foi computado :-)"
 
+#: src/ej_conversations/tests/test_api.py:106
+msgid "Authentication credentials were not provided."
+msgstr ""
+
 #: src/ej_conversations/utils.py:48
 msgid "Edit"
 msgstr "Editar"
@@ -1435,19 +1439,6 @@ msgstr "Permissões"
 msgid "Important dates"
 msgstr "Datas importantes"
 
-#: src/ej_users/api.py:28
-#, fuzzy, python-brace-format
-msgid ""
-"User with {user.email} e-mail already exists.\n"
-" Please contact the system administrator."
-msgstr ""
-"Já existe um usuário com o e-mail {user.email}\n"
-"Favor contactar o administrador do sistema."
-
-#: src/ej_users/api.py:39 src/ej_users/forms.py:26
-msgid "Passwords do not match"
-msgstr "Senhas não são iguais"
-
 #: src/ej_users/apps.py:7
 msgid "Users"
 msgstr "Usuários"
@@ -1459,6 +1450,10 @@ msgstr "Senha"
 #: src/ej_users/forms.py:19
 msgid "Password confirmation"
 msgstr "Confirmação de senha"
+
+#: src/ej_users/forms.py:26 src/ej_users/serializers.py:17
+msgid "Passwords do not match"
+msgstr "Senhas não são iguais"
 
 #: src/ej_users/forms.py:65
 msgid "Yes, I understand the consequences."
