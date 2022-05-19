@@ -4,6 +4,19 @@ CHANGELOG of EJPlatform releases
 
 Here you can follow all the fixes and new features on every EJPlatform release.
 
+3.2.0 release
+====================
+* Date: May 04, 2022
+* Features
+- Improves EJ documentation on /docs route;
+- Adds page for signature upgrade request;
+- Adds comment moderation cards; 
+- Improves persona management page responsiveness;
+- Removes django-boogie from ej_clusters routes;
+- Adds advanced search on environment management;
+- Improves ej blog for mobile;
+- Refactoring EJ opinion bot;
+
 3.1.1 release
 ====================
 * Date: May 04, 2022
