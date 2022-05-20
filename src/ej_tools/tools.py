@@ -83,7 +83,7 @@ class MauticTool(AbstractTool):
             + "synchronized with Mautic's contact base."
         )
         self.link: str = conversation.patch_url("conversation-tools:mautic")
-        self.about: str = _("/docs/?page=user-docs/tools-mautic.html")
+        self.about: str = "/docs/?page=user-docs/tools-mautic.html"
         self.is_active: bool = is_active
 
 
@@ -128,7 +128,7 @@ class OpinionComponentTool(AbstractTool):
             + "without impacting the experience of those who already access their networks and platforms."
         )
         self.link: str = conversation.patch_url("conversation-tools:opinion-component")
-        self.about: str = _("/docs/?page=user-docs/tools-opinion-component.html")
+        self.about: str = "/docs/?page=user-docs/tools-opinion-component.html"
         self.is_active = is_active
 
     def get_preview_token(self, request, conversation):
@@ -145,9 +145,9 @@ class RocketChat(AbstractTool):
     def __init__(self, conversation, is_active=True):
         AbstractTool.__init__(self)
         self.name: str = _("Rocket.Chat")
-        self.description: str = _("Rocket.Chat instance for segmented communication")
+        self.description: str = _("Rocket.Chat instance for segmented communication with conversation participants.")
         self.link: str = ""
-        self.about: str = ""
+        self.about: str = "/docs/user-guides/pt-br/tools-chatbot.html#rocket-chat"
         self.is_active = is_active
 
 
@@ -169,7 +169,7 @@ class MailingTool(AbstractTool):
             "Generates a html template of this conversation, for mailing marketing campaigns."
         )
         self.link: str = conversation.patch_url("conversation-tools:mailing")
-        self.about: str = _("/docs/?page=user-docs/tools-mail-template.html")
+        self.about: str = "/docs/?page=user-docs/tools-mail-template.html"
         self.is_active = is_active
 
 

@@ -84,7 +84,7 @@ class ListenToCommunity(Signature):
             OpinionComponentTool(conversation),
             BotsTool(conversation, exclude=exclude),
             MauticTool(conversation, is_active=False),
-            RocketChat(conversation),
+            RocketChat(conversation, is_active=False),
         ]
 
 

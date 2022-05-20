@@ -23,11 +23,10 @@ def bot_tool_is_active(bots_tool, tool_name):
     return tool.is_active
 
 
-def author_can_receive_tool_vote(func):
+def conversation_can_receive_channel_vote(func):
     """
-    Checks if the conversation author is allowed to receive votes from a given tool.
-
-    If the author does not have permission, a 403 error is raised.
+    Checks if conversation is allowed to receive votes from a given channel (tool).
+    If  conversation author signature does not have permission, a 403 error is raised.
     """
 
     def wrapper_func(self, request, vote):

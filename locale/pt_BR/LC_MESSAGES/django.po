@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-16 12:11-0300\n"
+"POT-Creation-Date: 2022-05-20 17:44-0300\n"
 "PO-Revision-Date: 2022-04-12 13:55-0300\n"
 "Last-Translator: David Carlos <davidcarlos@pencillabs.com.br>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -21,7 +21,7 @@ msgstr ""
 msgid "This string should be translated"
 msgstr ""
 
-#: docs/_templates_simple/layout.html:3
+#: docs_old/_templates_simple/layout.html:3
 msgid "Documentation"
 msgstr "Documentação"
 
@@ -322,7 +322,7 @@ msgid "Comment"
 msgstr "Comentar"
 
 #: src/ej_clusters/models/stereotype_vote.py:24
-#: src/ej_conversations/models/vote.py:46
+#: src/ej_conversations/models/vote.py:48
 msgid "Choice"
 msgstr "Escolha"
 
@@ -417,6 +417,10 @@ msgstr "Bot de Opinião"
 #, fuzzy
 msgid "Opinion component"
 msgstr "Componente de opinião"
+
+#: src/ej_conversations/decorators.py:13 src/ej_tools/tools.py:147
+msgid "Rocket.Chat"
+msgstr "Rocket.Chat"
 
 #: src/ej_conversations/enums.py:11
 msgid "User provided"
@@ -610,41 +614,45 @@ msgstr ""
 "voto que deve ser uma das opções de 'concorda', 'discorda' ou 'pula', foi "
 "{value}"
 
-#: src/ej_conversations/models/vote.py:32
+#: src/ej_conversations/models/vote.py:33
 #, fuzzy
 msgid "Opinion Component"
 msgstr "Componente de Opinião"
 
-#: src/ej_conversations/models/vote.py:33
+#: src/ej_conversations/models/vote.py:34
 msgid "Rasa webchat"
 msgstr ""
 
-#: src/ej_conversations/models/vote.py:34
+#: src/ej_conversations/models/vote.py:35
 msgid "EJ"
 msgstr ""
 
-#: src/ej_conversations/models/vote.py:35
+#: src/ej_conversations/models/vote.py:36
+msgid "RocketChat"
+msgstr "RocketChat"
+
+#: src/ej_conversations/models/vote.py:37
 #, fuzzy
 msgid "Unknown"
 msgstr "*Desconhecido*"
 
-#: src/ej_conversations/models/vote.py:46
+#: src/ej_conversations/models/vote.py:48
 msgid "Agree, disagree or skip"
 msgstr "Concorda, discorda ou pula"
 
-#: src/ej_conversations/models/vote.py:47
+#: src/ej_conversations/models/vote.py:49
 msgid "Created at"
 msgstr "Criado em"
 
-#: src/ej_conversations/models/vote.py:49
+#: src/ej_conversations/models/vote.py:51
 msgid "Channel"
 msgstr ""
 
-#: src/ej_conversations/models/vote.py:52
+#: src/ej_conversations/models/vote.py:54
 msgid "From which EJ channel the vote comes from"
 msgstr ""
 
-#: src/ej_conversations/models/vote.py:69
+#: src/ej_conversations/models/vote.py:71
 msgid "non-moderated comments cannot receive votes"
 msgstr "comentários não-moderados não podem receber votos"
 
@@ -731,12 +739,12 @@ msgid "Visualization"
 msgstr "Visualização"
 
 #: src/ej_dataviz/constants.py:177 src/ej_dataviz/routes.py:60
-#: src/ej_dataviz/routes.py:71
+#: src/ej_dataviz/routes.py:76
 msgid "Gender"
 msgstr "Gênero"
 
 #: src/ej_dataviz/constants.py:187 src/ej_dataviz/routes.py:61
-#: src/ej_dataviz/routes.py:72 src/ej_profiles/models.py:27
+#: src/ej_dataviz/routes.py:77 src/ej_profiles/models.py:27
 #: src/ej_profiles/tests/test_models.py:46
 msgid "Race"
 msgstr "Raça"
@@ -812,28 +820,28 @@ msgstr ""
 "0%: votos estão igualmente distribuidos\n"
 "100%: todos tem a mesma opinião"
 
-#: src/ej_dataviz/routes.py:63 src/ej_dataviz/routes.py:74
+#: src/ej_dataviz/routes.py:63 src/ej_dataviz/routes.py:79
 msgid "https://en.wikipedia.org/wiki/Principal_component_analysis"
 msgstr "https://pt.wikipedia.org/wiki/An%C3%A1lise_de_componentes_principais"
 
-#: src/ej_dataviz/routes.py:91
+#: src/ej_dataviz/routes.py:96
 msgid "Not enough data"
 msgstr "Não há dados suficientes"
 
-#: src/ej_dataviz/routes.py:189
+#: src/ej_dataviz/routes.py:194
 msgid "{} persona"
 msgstr "{} persona"
 
-#: src/ej_dataviz/routes.py:201
+#: src/ej_dataviz/routes.py:206
 msgid "*Unknown*"
 msgstr "*Desconhecido*"
 
-#: src/ej_dataviz/routes.py:228
+#: src/ej_dataviz/routes.py:233
 msgid "PCA data"
 msgstr "Dados do PCA"
 
-#: src/ej_dataviz/routes.py:233 src/ej_dataviz/routes.py:234
-#: src/ej_dataviz/routes.py:235 src/ej_dataviz/routes.py:237
+#: src/ej_dataviz/routes.py:238 src/ej_dataviz/routes.py:239
+#: src/ej_dataviz/routes.py:240 src/ej_dataviz/routes.py:242
 msgid "You!"
 msgstr "Você!"
 
@@ -1137,11 +1145,11 @@ msgstr "perfil"
 msgid "Signatures"
 msgstr "Planos"
 
-#: src/ej_signatures/models.py:140
+#: src/ej_signatures/models.py:142
 msgid "Listen to community"
 msgstr "Ouça a Comunidade"
 
-#: src/ej_signatures/models.py:141
+#: src/ej_signatures/models.py:143
 #, fuzzy
 msgid "Listen to city"
 msgstr "Ouça a Cidade"
@@ -1358,7 +1366,7 @@ msgstr ""
 "Platforma EJ, é uma plataforma de consultas de opinião com foco em Estado e "
 "Organizações. Gostaríamos da sua participação na seguinte discussão: "
 
-#: src/ej_tools/tools.py:79 src/ej_tools/tools.py:146 src/ej_tools/views.py:217
+#: src/ej_tools/tools.py:79 src/ej_tools/tools.py:156 src/ej_tools/views.py:217
 #: src/ej_tools/views.py:270
 msgid "Mautic"
 msgstr ""
@@ -1401,24 +1409,30 @@ msgstr ""
 msgid "/docs/?page=user-docs/tools-opinion-component.html"
 msgstr ""
 
-#: src/ej_tools/tools.py:147
+#: src/ej_tools/tools.py:148
+msgid ""
+"Rocket.Chat instance for segmented communication with conversation "
+"participants."
+msgstr "Integração com o Rocket.Chat para comunicação segmentada com os participantes da conversa."
+
+#: src/ej_tools/tools.py:157
 msgid "MailChimp"
 msgstr ""
 
-#: src/ej_tools/tools.py:151
+#: src/ej_tools/tools.py:161
 #, fuzzy
 msgid "Mailchimp campaign"
 msgstr "Campanha de email"
 
-#: src/ej_tools/tools.py:152
+#: src/ej_tools/tools.py:162
 msgid "Uses a mautic campaign "
 msgstr "Usa uma campanha do mautic"
 
-#: src/ej_tools/tools.py:157 src/ej_tools/views.py:46
+#: src/ej_tools/tools.py:167 src/ej_tools/views.py:46
 msgid "Mailing campaign"
 msgstr "Campanha de email"
 
-#: src/ej_tools/tools.py:159
+#: src/ej_tools/tools.py:169
 msgid ""
 "Generates a html template of this conversation, for mailing marketing "
 "campaigns."
@@ -1427,7 +1441,7 @@ msgstr ""
 "de email. Útil para campanhas de marketing com ferramentas como mautic e "
 "mailchimp."
 
-#: src/ej_tools/tools.py:162
+#: src/ej_tools/tools.py:172
 msgid "/docs/?page=user-docs/tools-mail-template.html"
 msgstr ""
 
@@ -2595,7 +2609,7 @@ msgid "Yes, I want to change the comments"
 msgstr "Sim, eu quero alterar o(s) comentário(s)"
 
 #: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:98
-#: src/ej_tools/jinja2/ej_tools/webchat/form-integration.jinja2:41
+#: src/ej_tools/jinja2/ej_tools/webchat/form-integration.jinja2:42
 #, fuzzy
 msgid "Add"
 msgstr "Adicionar"
@@ -2645,6 +2659,16 @@ msgstr "Relatório de participantes"
 #: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:79
 msgid "Scatter plot"
 msgstr "Nuvem de pontos"
+
+#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:90
+#, fuzzy
+msgid "Segmented Comunication"
+msgstr "Ver Conversa"
+
+#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:91
+#, fuzzy
+msgid "Channels"
+msgstr "Mudar votos"
 
 #: src/ej_conversations/jinja2/ej_conversations/includes/menu-list.jinja2:6
 msgid "New Conversation"
@@ -2857,6 +2881,28 @@ msgstr "Ir para Ferramentas"
 msgid "Users report"
 msgstr "Relatório de Participantes"
 
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/channels-chart.jinja2:3
+#, fuzzy
+msgid "Channel participation"
+msgstr "Participação por canal"
+
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/channels-chart.jinja2:5
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/scatter.jinja2:11
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/scatter.jinja2:21
+#, fuzzy
+msgid "filter by:"
+msgstr "Filtrar por:"
+
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/channels-chart.jinja2:7
+#, fuzzy
+msgid "votes"
+msgstr "Votos"
+
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/channels-chart.jinja2:9
+#, fuzzy
+msgid "participants"
+msgstr "Participantes"
+
 #: src/ej_dataviz/jinja2/ej_dataviz/report/includes/clusters.jinja2:4
 #, fuzzy
 msgid "Opinion Groups"
@@ -2935,13 +2981,6 @@ msgstr ""
 "Cada ponto no gráfico representa um participante diferente. Participantes "
 "que votam de forma parecida, ficam mais próximos. "
 
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/scatter.jinja2:11
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/scatter.jinja2:21
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/votes-by-channel-chart.jinja2:5
-#, fuzzy
-msgid "filter by:"
-msgstr "Filtrar por:"
-
 #: src/ej_dataviz/jinja2/ej_dataviz/report/includes/scatter.jinja2:13
 #, fuzzy
 msgid "Opinion"
@@ -2952,27 +2991,12 @@ msgstr "Opinião"
 msgid "There is no groups for this conversation."
 msgstr "Não há grupos para esta conversa."
 
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/votes-by-channel-chart.jinja2:3
-#, fuzzy
-msgid "Channel participation"
-msgstr "Participação por canal"
-
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/votes-by-channel-chart.jinja2:7
-#, fuzzy
-msgid "votes"
-msgstr "Votos"
-
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/votes-by-channel-chart.jinja2:9
-#, fuzzy
-msgid "participants"
-msgstr "Participantes"
-
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/votes-over-time-chart.jinja2:4
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/time-chart.jinja2:4
 #, fuzzy
 msgid "Vote"
 msgstr "Votação"
 
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/votes-over-time-chart.jinja2:19
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/time-chart.jinja2:19
 msgid "end date must be gratter then start date"
 msgstr "data de fim deve ser maior que data de inicio"
 
@@ -3308,19 +3332,19 @@ msgstr "Campos personalizáveis"
 msgid "Changes fields like comment and title."
 msgstr "Altere campos como comentário e título."
 
-#: src/ej_tools/jinja2/ej_tools/form-mailing.jinja2:50
-#: src/ej_tools/jinja2/ej_tools/form-mailing.jinja2:56
+#: src/ej_tools/jinja2/ej_tools/form-mailing.jinja2:47
+#: src/ej_tools/jinja2/ej_tools/form-mailing.jinja2:53
 #, fuzzy
 msgid "Download Template"
 msgstr "Baixar template"
 
-#: src/ej_tools/jinja2/ej_tools/form-mailing.jinja2:52
-#: src/ej_tools/jinja2/ej_tools/form-mailing.jinja2:58
+#: src/ej_tools/jinja2/ej_tools/form-mailing.jinja2:49
+#: src/ej_tools/jinja2/ej_tools/form-mailing.jinja2:55
 #, fuzzy
 msgid "Download"
 msgstr "Download"
 
-#: src/ej_tools/jinja2/ej_tools/form-mailing.jinja2:54
+#: src/ej_tools/jinja2/ej_tools/form-mailing.jinja2:51
 msgid "Create comments to use this tool."
 msgstr "Crie comentários para usar essa ferramenta."
 
@@ -3489,12 +3513,12 @@ msgstr ""
 "Algo deu errado! Verifique se você está acessando uma URL oficial da "
 "Empurrando Juntas."
 
-#: src/ej_tools/jinja2/ej_tools/webchat.jinja2:22
+#: src/ej_tools/jinja2/ej_tools/webchat.jinja2:21
 #, fuzzy
 msgid "Gather feedback using EJ's chatbot infrastructure."
 msgstr "Colete opiniões usando a infraestrutura de chatbots da EJ."
 
-#: src/ej_tools/jinja2/ej_tools/webchat.jinja2:24
+#: src/ej_tools/jinja2/ej_tools/webchat.jinja2:23
 #, fuzzy
 msgid ""
 "With Webchat you can perform collections on web pages using our guided bot."
@@ -3502,12 +3526,12 @@ msgstr ""
 "Com o Webchat você pode realizar coletas em páginas web utilizando o nosso "
 "bot guiado."
 
-#: src/ej_tools/jinja2/ej_tools/webchat.jinja2:27
+#: src/ej_tools/jinja2/ej_tools/webchat.jinja2:26
 #, fuzzy
 msgid "Webchat"
 msgstr "Webchat"
 
-#: src/ej_tools/jinja2/ej_tools/webchat.jinja2:28
+#: src/ej_tools/jinja2/ej_tools/webchat.jinja2:27
 #, fuzzy
 msgid ""
 "Integrate a new page with webchat or click <b>Start Collection</b> to "
@@ -3516,11 +3540,11 @@ msgstr ""
 "Integre uma nova página com o webchat ou clique em <b>Iniciar coleta</b>, "
 "para utilizar nossa integração padrão."
 
-#: src/ej_tools/jinja2/ej_tools/webchat.jinja2:36
+#: src/ej_tools/jinja2/ej_tools/webchat.jinja2:35
 msgid "When should I use webchat?"
 msgstr "Quando devo utilizar o webchat?"
 
-#: src/ej_tools/jinja2/ej_tools/webchat.jinja2:37
+#: src/ej_tools/jinja2/ej_tools/webchat.jinja2:36
 msgid "How can I integrate webchat into my website?"
 msgstr "Como posso integrar o webchat ao meu site?"
 
@@ -3693,7 +3717,7 @@ msgstr "Tabela de integrações"
 msgid "Page"
 msgstr "Página"
 
-#: src/ej_tools/jinja2/ej_tools/webchat/form-integration.jinja2:37
+#: src/ej_tools/jinja2/ej_tools/webchat/form-integration.jinja2:38
 msgid "new page"
 msgstr "nova página"
 
@@ -3956,14 +3980,6 @@ msgstr "Mudar a senha"
 #, fuzzy
 msgid "Authentication"
 msgstr "Autenticação"
-
-#, fuzzy
-#~ msgid "Segmented Comunication"
-#~ msgstr "Ver Conversa"
-
-#, fuzzy
-#~ msgid "Channels"
-#~ msgstr "Mudar votos"
 
 #~ msgid "Upgrade"
 #~ msgstr "Fazer upgrade"
