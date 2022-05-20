@@ -1,6 +1,6 @@
-<div class="charts-votes-on-time">
+<div class="time-chart chart">
   <div class="voting-container">
-    <div class="vote-date-picker">
+    <div class="time-chart__date-picker">
       <h3 class="chart__title">{{_('Vote')}}</h3>
       <div class="date-selector">
         <input id="start-date" type="date">
@@ -8,14 +8,14 @@
       </div>
     </div>
     
-    <div id="votes-over-time-container">
-      <div class="votes-over-time-loading">
+    <div class="time-chart__container">
+      <div class="time-chart--loading">
         <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
       </div>
-      <svg id="votes-over-time-chart" width="506" height="263"></svg>
+      <svg class="time-chart__svg" width="100%" max-width="570" height="263"></svg>
     </div>
     
-    <div class="votes-over-time-invalid-dates">
+    <div class="time-chart--invalid-dates">
       <span class="helptext">{{ _('end date must be gratter then start date') }}</span>
     </div>
   </div>
@@ -44,11 +44,11 @@ function listenToDateChanges() {
 }
 
 function showLoading() {
-  document.querySelector(".votes-over-time-loading").style.display = "block";
+  document.querySelector(".time-chart--loading").style.display = "block";
 }
 
 function hideLoading() {
-  document.querySelector(".votes-over-time-loading").style.display = "none";
+  document.querySelector(".time-chart--loading").style.display = "none";
 }
 
 async function updateVisualization() {
@@ -83,11 +83,11 @@ function startDateIsBiggerThenEndDate() {
 }
 
 function showErrors() {
-  document.querySelector(".votes-over-time-invalid-dates").style.display = "block";
+  document.querySelector(".time-chart--invalid-dates").style.display = "block";
 }
 
 function hideErrors() {
-  document.querySelector(".votes-over-time-invalid-dates").style.display = "none";
+  document.querySelector(".time-chart--invalid-dates").style.display = "none";
 }
 
 async function requestData() {
@@ -117,8 +117,8 @@ function AreaChart(voteData, color) {
   const curve = d3.curveLinear;
   const margin = ({top: 20, right: 30, bottom: 30, left: 40})
 
-  let width = d3.select('#votes-over-time-chart').attr('width');
-  let height = d3.select('#votes-over-time-chart').attr('height');
+  let width = document.querySelector('.time-chart__container').clientWidth;
+  let height = d3.select('.time-chart__svg').attr('height');
 
   const X = voteData.map(d => d.date)
   const Y = voteData.map(d => d.value)
@@ -146,12 +146,12 @@ function AreaChart(voteData, color) {
       .y0(yScale(0))
       .y1(i => yScale(Y[i]));
 
-  let previusSvg = d3.select("#votes-over-time");
+  let previusSvg = d3.select("#time-chart-svg");
   previusSvg.remove();
 
-  let svg = d3.select("#votes-over-time-chart")
+  let svg = d3.select(".time-chart__svg")
   .append("svg")
-  .attr("id", 'votes-over-time')
+  .attr("id", 'time-chart-svg')
   .attr("width", width)
   .attr("height", height)
   .attr("viewBox", [0, 0, width, height])

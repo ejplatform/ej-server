@@ -1,10 +1,10 @@
-<div class="clusters-warning-card">
-    <div class="container">
-        <div class="content">
-            <span class="content-title">{{_('Personas')}}</span><br>
-            <span class="content-text">{{_('Your conversation still does not have defined personas. Without personas, it is not possible to generate opinion groups.')}}</span>
-            <div class="content-button">
-                <a id="content-button" href=" {{ url('boards:cluster-edit',  **conversation.get_url_kwargs()) }}">{{_('Create persona')}}</a>
+<div class="warning-card">
+    <div class="warning-card__container">
+        <div class="warning-card__content">
+            <span class="warning-card__title">{{_('Personas')}}</span><br>
+            <span class="warning-card__text">{{_('Your conversation still does not have defined personas. Without personas, it is not possible to generate opinion groups.')}}</span>
+            <div class="warning-card__button">
+                <a href=" {{ url('boards:cluster-edit',  **conversation.get_url_kwargs()) }}">{{_('Create persona')}}</a>
             </div>
         </div>
     </div>
