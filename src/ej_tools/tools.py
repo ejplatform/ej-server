@@ -145,7 +145,9 @@ class RocketChat(AbstractTool):
     def __init__(self, conversation, is_active=True):
         AbstractTool.__init__(self)
         self.name: str = _("Rocket.Chat")
-        self.description: str = _("Rocket.Chat instance for segmented communication with conversation participants.")
+        self.description: str = _(
+            "Rocket.Chat instance for segmented communication with conversation participants."
+        )
         self.link: str = ""
         self.about: str = "/docs/user-guides/pt-br/tools-chatbot.html#rocket-chat"
         self.is_active = is_active
