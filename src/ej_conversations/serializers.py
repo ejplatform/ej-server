@@ -139,7 +139,8 @@ class VoteSerializer(BaseApiSerializer):
     @conversation_can_receive_channel_vote
     def save_hook(self, request, vote):
         user = request.user
-        user_signature = SignatureFactory.get_user_signature(user)
+        author = vote.comment.conversation.author
+        user_signature = SignatureFactory.get_user_signature(author)
         create_mautic_contact_from_author(request, vote)
         if user_signature.can_vote():
             try:
