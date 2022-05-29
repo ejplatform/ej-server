@@ -15,7 +15,7 @@
                 {% endif %}
                 </ul>
             {% endfor %}
-            <a onclick="updatePage({{page_object.number + 1}}, '{{function_call}}')">{{_("Next")}}</a>
+            <a href="#advanced-search" onclick="updatePage({{page_object.number + 1}}, '{{function_call}}')">{{_("Next")}}</a>
         </div>
     {% endif %}
 </div>

@@ -2033,12 +2033,12 @@ msgstr "murais"
 
 #: src/ej_boards/jinja2/ej_boards/environment/recent-boards.jinja2:6
 #: src/ej_boards/jinja2/ej_boards/environment/searched-boards.jinja2:8
-#: src/ej_boards/jinja2/ej_boards/environment/searched-conversations.jinja2:16
+#: src/ej_boards/jinja2/ej_boards/environment/searched-conversations.jinja2:17
 #, fuzzy
 msgid "conversations"
 msgstr "conversas"
 
-#: src/ej_boards/jinja2/ej_boards/environment/searched-users.jinja2:17
+#: src/ej_boards/jinja2/ej_boards/environment/searched-users.jinja2:18
 #, fuzzy
 msgid "users"
 msgstr "usuários"
