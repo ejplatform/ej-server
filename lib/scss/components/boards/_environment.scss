@@ -112,6 +112,12 @@
 }
 
 .search-table {
+    margin-bottom: 0rem;
+
+    &__container {
+        min-height: 500px;
+    }
+
     &__header {
         height: 44px;
         
@@ -163,7 +169,7 @@
         text-align: left;
     }
     
-    &__text--elipse {
+    &__text--ellipse {
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;
